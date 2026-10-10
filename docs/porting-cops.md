@@ -228,6 +228,15 @@ More traps found while porting:
 - `rescue *X`: Prism puts the splat directly under RescueNode; parser wraps it in an unbracketed `array`.
 - A parser `(block ...)` pattern never matches numblock/itblock: exclude BlockNodes with numbered or
   `it` parameters.
+- `children.first != node` compares structurally: two identical `private` lines both count as
+  "first". Use `node_equality::same`, not the statement index.
+- Ruby correctors that hit `nil` raise and drop the offense (EmptyLineBetweenDefs with no newline after
+  the previous def; MultilineBlockLayout with lambda args before `{`): skip reporting there.
+- Heredoc end: parser `loc.heredoc_end.end_pos` excludes the terminator's newline, Prism's
+  `closing_loc` includes it.
+- A corrector shared by two offenses can be one reference-capturing closure (it is `Copy`).
+- Cops whose fix lives in a helper: reference `helpers::<name>` (whose file calls `add_fix`) or add a
+  `// corrector: <where>` line so `scripts/missing-correctors.sh` stays quiet.
 - `helpers::regexp_captures` counts named/numbered groups like `RegexpNode#each_capture`.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.
