@@ -760,6 +760,62 @@ pub fn parse_with_version<'a>(source: &'a [u8], version: &str) -> ParseResult<'a
     }
 }
 
+/// rbcop patch: a token as prism's lexer produced it (what `Prism.lex` returns).
+#[derive(Debug, Clone, Copy)]
+pub struct Token {
+    /// The token type's name (`"IDENTIFIER"`, `"PARENTHESIS_LEFT"`, ...).
+    pub kind: &'static str,
+    /// Byte offset of the token's start.
+    pub start: usize,
+    /// Byte offset of the token's end.
+    pub end: usize,
+    /// The lexer state after the token (`pm_lex_state_t` bits).
+    pub state: u32,
+}
+
+/// rbcop patch: `parse_with_version` that also returns every token lexed, in order.
+#[must_use]
+pub fn parse_with_version_and_tokens<'a>(source: &'a [u8], version: &str) -> (ParseResult<'a>, Vec<Token>) {
+    extern "C" {
+        fn pm_token_type_name(token_type: ruby_prism_sys::pm_token_type_t) -> *const c_char;
+    }
+    unsafe extern "C" fn collect(data: *mut std::ffi::c_void, parser: *mut pm_parser_t, token: *mut ruby_prism_sys::pm_token_t) {
+        unsafe {
+            let tokens = &mut *data.cast::<Vec<Token>>();
+            let base = (*parser).start;
+            let name = CStr::from_ptr(pm_token_type_name((*token).type_)).to_str().unwrap_or("");
+            tokens.push(Token {
+                kind: name,
+                start: (*token).start.offset_from(base) as usize,
+                end: (*token).end.offset_from(base) as usize,
+                state: (*parser).lex_state,
+            });
+        }
+    }
+    unsafe {
+        let mut options = MaybeUninit::<ruby_prism_sys::pm_options_t>::zeroed().assume_init();
+        pm_options_version_set(&mut options, version.as_ptr().cast(), version.len());
+        pm_options_partial_script_set(&mut options, true);
+
+        let uninit = Box::into_raw(Box::new(MaybeUninit::<pm_parser_t>::uninit()));
+        pm_parser_init((*uninit).as_mut_ptr(), source.as_ptr(), source.len(), &options);
+        let parser = (*uninit).assume_init_mut();
+        let mut tokens: Box<Vec<Token>> = Box::default();
+        let mut callback = Box::new(ruby_prism_sys::pm_lex_callback_t {
+            data: std::ptr::from_mut::<Vec<Token>>(&mut tokens).cast(),
+            callback: Some(collect),
+        });
+        parser.lex_callback = &mut *callback;
+        let parser = NonNull::new_unchecked(parser);
+
+        let node = NonNull::new_unchecked(pm_parse(parser.as_ptr()));
+        (*parser.as_ptr()).lex_callback = std::ptr::null_mut();
+        pm_options_free(&mut options);
+
+        (ParseResult { source, parser, node }, *tokens)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::parse;
