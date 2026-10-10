@@ -17,6 +17,7 @@ pub fn check(cx: &mut Cx, kind: u32, name: &str) {
         if left_curly_brace(t1) && lcurly_needs_space {
             continue;
         }
-        cx.add(t1.end, t2.start, format!("Space found before {name}."));
+        // PunctuationCorrector.remove_space
+        cx.add_fix(t1.end, t2.start, format!("Space found before {name}."), |c| c.remove(t1.end, t2.start));
     }
 }

@@ -10,7 +10,7 @@ fn check_space(cx: &mut Cx, begin: usize, end: usize) {
         return;
     }
     if cx.src.slice(begin, end).bytes().all(|b| b == b' ' || b == b'\t') {
-        cx.add(begin, end, "Avoid using spaces around a method call operator.");
+        cx.add_fix(begin, end, "Avoid using spaces around a method call operator.", |c| c.remove(begin, end));
     }
 }
 

@@ -38,9 +38,16 @@ impl Cop for OrderedDependencies {
 
     fn on_file(&self, cx: &mut Cx) {
         let decls = std::mem::take(&mut cx.state::<State>().0);
+        let src = cx.src;
         for pair in decls.windows(2) {
             if pair[0].method == pair[1].method {
-                check_pair(cx, &pair[0], &pair[1], message);
+                // previous_declaration: `declarations.find_index(node)` compares nodes structurally,
+                // so an identical earlier declaration wins; index 0 wraps to the last one.
+                // ponytail: compared by source text; `"a"` vs `'a'` are equal nodes but differ here.
+                let text = |d: &Declaration| src.slice(d.start, d.end);
+                let idx = decls.iter().position(|d| text(d) == text(&pair[1])).unwrap();
+                let swap_with = &decls[if idx == 0 { decls.len() - 1 } else { idx - 1 }];
+                check_pair(cx, &pair[0], &pair[1], swap_with, message);
             }
         }
     }

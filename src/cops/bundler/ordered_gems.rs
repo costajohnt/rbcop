@@ -37,7 +37,7 @@ impl Cop for OrderedGems {
     fn on_file(&self, cx: &mut Cx) {
         let decls = std::mem::take(&mut cx.state::<State>().0);
         for pair in decls.windows(2) {
-            check_pair(cx, &pair[0], &pair[1], message);
+            check_pair(cx, &pair[0], &pair[1], &pair[0], message);
         }
     }
 }

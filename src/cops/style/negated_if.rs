@@ -28,7 +28,10 @@ impl Cop for NegatedIf {
         }
         if helpers::negative_conditional::single_negative(n.predicate()) {
             let loc = node.location();
-            cx.add(loc.start_offset(), loc.end_offset(), helpers::negative_conditional::message("unless", "if"));
+            let keyword = (kw.start_offset(), kw.end_offset());
+            cx.add_fix(loc.start_offset(), loc.end_offset(), helpers::negative_conditional::message("unless", "if"), |c| {
+                helpers::negative_conditional::correct_negative_condition(c, keyword, "unless", n.predicate())
+            });
         }
     }
 }

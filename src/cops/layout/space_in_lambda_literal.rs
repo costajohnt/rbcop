@@ -25,10 +25,14 @@ impl Cop for SpaceInLambdaLiteral {
         let spaced = args.start_offset() > arrow_end;
         match cx.cfg.str("EnforcedStyle") {
             Some("require_space") if !spaced => {
-                cx.add(lambda.location().start_offset(), args.end_offset(), "Use a space between `->` and `(` in lambda literals.")
+                let (a, b) = (args.start_offset(), args.end_offset());
+                cx.add_fix(lambda.location().start_offset(), b, "Use a space between `->` and `(` in lambda literals.", |c| {
+                    c.insert_before(a, b, " ")
+                })
             }
             Some("require_no_space") if spaced => {
-                cx.add(arrow_end, args.start_offset(), "Do not use spaces between `->` and `(` in lambda literals.")
+                let a = args.start_offset();
+                cx.add_fix(arrow_end, a, "Do not use spaces between `->` and `(` in lambda literals.", |c| c.remove(arrow_end, a))
             }
             _ => {}
         }
