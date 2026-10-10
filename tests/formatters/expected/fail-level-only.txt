@@ -1,0 +1,11 @@
+== lib/nested/deep.rb ==
+W:  4:  1: Lint/Debugger: Remove debugger entry point binding.irb.
+== syntax_error.rb ==
+F:  4:  3: Lint/Syntax: unexpected integer; expected a ) to close the parameters
+(Using Ruby 3.4 parser; configure using TargetRubyVersion parameter, under AllCops)
+F:  4:  5: Lint/Syntax: unexpected '+', expecting end-of-input
+(Using Ruby 3.4 parser; configure using TargetRubyVersion parameter, under AllCops)
+F:  5:  1: Lint/Syntax: unexpected 'end', assuming it is closing the parent method definition
+(Using Ruby 3.4 parser; configure using TargetRubyVersion parameter, under AllCops)
+
+6 files inspected, 4 offenses detected

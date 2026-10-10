@@ -11,7 +11,14 @@ fn bin() -> &'static str {
 
 fn implemented() -> BTreeSet<String> {
     let out = Command::new(bin()).arg("--show-cops").output().unwrap();
-    String::from_utf8(out.stdout).unwrap().lines().map(String::from).collect()
+    // `--show-cops` prints RuboCop's YAML; cop names are the unindented keys.
+    String::from_utf8(out.stdout)
+        .unwrap()
+        .lines()
+        .filter(|l| !l.starts_with([' ', '#']))
+        .filter_map(|l| l.strip_suffix(':'))
+        .map(String::from)
+        .collect()
 }
 
 /// Cop name from an emacs-format line: `path:l:c: C: [Correctable] Cop/Name: message`.

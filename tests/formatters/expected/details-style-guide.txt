@@ -1,0 +1,26 @@
+== crlf.rb ==
+C:  3:  6: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected. (https://rubystyle.guide#no-trailing-whitespace)
+== lib/nested/deep.rb ==
+W:  4:  1: Lint/Debugger: Remove debugger entry point binding.irb.
+== lib/style.rb ==
+C:  3:  7: [Correctable] Style/DefWithParentheses: Omit the parentheses in defs when the method doesn't accept any arguments. (https://rubystyle.guide#method-parens)
+C:  4:  9: [Correctable] Layout/SpaceBeforeComma: Space found before comma.
+C:  4: 10: [Correctable] Layout/SpaceAfterComma: Space missing after comma. (https://rubystyle.guide#spaces-operators)
+C:  6:  3: [Correctable] Style/NegatedIf: Favor unless over if for negative conditions. (https://rubystyle.guide#unless-for-negatives)
+C:  7:  4: [Correctable] Layout/SpaceInsideRangeLiteral: Space inside range literal. (https://rubystyle.guide#no-space-inside-range-literals)
+== syntax_error.rb ==
+F:  4:  3: Lint/Syntax: unexpected integer; expected a ) to close the parameters
+(Using Ruby 3.4 parser; configure using TargetRubyVersion parameter, under AllCops)
+F:  4:  5: Lint/Syntax: unexpected '+', expecting end-of-input
+(Using Ruby 3.4 parser; configure using TargetRubyVersion parameter, under AllCops)
+F:  5:  1: Lint/Syntax: unexpected 'end', assuming it is closing the parent method definition
+(Using Ruby 3.4 parser; configure using TargetRubyVersion parameter, under AllCops)
+== unicode.rb ==
+C:  4: 18: [Correctable] Style/NilComparison: Prefer the use of the nil? predicate. (https://rubystyle.guide#predicate-methods)
+C:  4: 24: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected. (https://rubystyle.guide#no-trailing-whitespace)
+C:  5:  1: [Correctable] Layout/IndentationStyle: Tab detected in indentation. (https://rubystyle.guide#spaces-indentation)
+C:  5: 14: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected. (https://rubystyle.guide#no-trailing-whitespace)
+C:  6: 32: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected. (https://rubystyle.guide#no-trailing-whitespace)
+C:  8:  1: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected. (https://rubystyle.guide#newline-eof)
+
+6 files inspected, 16 offenses detected, 12 offenses autocorrectable

@@ -4,9 +4,11 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+libc = "0.2"
 regex = "1.13.1"
 ruby-prism = "1.9.0"
 ruby-prism-sys = "1.9.0"
+unicode-width = "0.2"
 yaml-rust2 = "0.13.0"
 
 # Vendored with an added parse_with_version (see vendor/ruby-prism/src/lib.rs, "rbcop patch").

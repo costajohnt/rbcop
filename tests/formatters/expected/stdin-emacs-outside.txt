@@ -1,0 +1,1 @@
+<root>/tests/formatters/foo.rb:1:6: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.

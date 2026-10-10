@@ -78,6 +78,7 @@ fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dy
                 ),
                 severity: Severity::Fatal,
                 correctable: false,
+                global: false,
             })
             .collect();
         dedup(&mut out);

@@ -1,0 +1,1 @@
+<root>/tests/formatters/project/crlf.rb:3:6: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.

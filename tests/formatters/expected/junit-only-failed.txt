@@ -1,0 +1,80 @@
+<?xml version='1.0'?>
+<testsuites>
+  <testsuite name='rubocop' tests='6' failures='16'>
+    <testcase classname='crlf' name='Layout/TrailingWhitespace'>
+      <failure type='Layout/TrailingWhitespace' message='Layout/TrailingWhitespace: Trailing whitespace detected.'>
+        <root>/tests/formatters/project/crlf.rb:3:6
+      </failure>
+    </testcase>
+    <testcase classname='lib.nested.deep' name='Lint/Debugger'>
+      <failure type='Lint/Debugger' message='Lint/Debugger: Remove debugger entry point `binding.irb`.'>
+        <root>/tests/formatters/project/lib/nested/deep.rb:4:1
+      </failure>
+    </testcase>
+    <testcase classname='lib.style' name='Layout/SpaceAfterComma'>
+      <failure type='Layout/SpaceAfterComma' message='Layout/SpaceAfterComma: Space missing after comma.'>
+        <root>/tests/formatters/project/lib/style.rb:4:10
+      </failure>
+    </testcase>
+    <testcase classname='lib.style' name='Layout/SpaceBeforeComma'>
+      <failure type='Layout/SpaceBeforeComma' message='Layout/SpaceBeforeComma: Space found before comma.'>
+        <root>/tests/formatters/project/lib/style.rb:4:9
+      </failure>
+    </testcase>
+    <testcase classname='lib.style' name='Layout/SpaceInsideRangeLiteral'>
+      <failure type='Layout/SpaceInsideRangeLiteral' message='Layout/SpaceInsideRangeLiteral: Space inside range literal.'>
+        <root>/tests/formatters/project/lib/style.rb:7:4
+      </failure>
+    </testcase>
+    <testcase classname='lib.style' name='Style/DefWithParentheses'>
+      <failure type='Style/DefWithParentheses' message='Style/DefWithParentheses: Omit the parentheses in defs when the method doesn&apos;t accept any arguments.'>
+        <root>/tests/formatters/project/lib/style.rb:3:7
+      </failure>
+    </testcase>
+    <testcase classname='lib.style' name='Style/NegatedIf'>
+      <failure type='Style/NegatedIf' message='Style/NegatedIf: Favor `unless` over `if` for negative conditions.'>
+        <root>/tests/formatters/project/lib/style.rb:6:3
+      </failure>
+    </testcase>
+    <testcase classname='syntax_error' name='Lint/Syntax'>
+      <failure type='Lint/Syntax' message='Lint/Syntax: unexpected integer; expected a `)` to close the parameters
+(Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)'>
+        <root>/tests/formatters/project/syntax_error.rb:4:3
+      </failure>
+      <failure type='Lint/Syntax' message='Lint/Syntax: unexpected &apos;+&apos;, expecting end-of-input
+(Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)'>
+        <root>/tests/formatters/project/syntax_error.rb:4:5
+      </failure>
+      <failure type='Lint/Syntax' message='Lint/Syntax: unexpected &apos;end&apos;, assuming it is closing the parent method definition
+(Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)'>
+        <root>/tests/formatters/project/syntax_error.rb:5:1
+      </failure>
+    </testcase>
+    <testcase classname='unicode' name='Layout/IndentationStyle'>
+      <failure type='Layout/IndentationStyle' message='Layout/IndentationStyle: Tab detected in indentation.'>
+        <root>/tests/formatters/project/unicode.rb:5:1
+      </failure>
+    </testcase>
+    <testcase classname='unicode' name='Layout/TrailingEmptyLines'>
+      <failure type='Layout/TrailingEmptyLines' message='Layout/TrailingEmptyLines: 2 trailing blank lines detected.'>
+        <root>/tests/formatters/project/unicode.rb:8:1
+      </failure>
+    </testcase>
+    <testcase classname='unicode' name='Layout/TrailingWhitespace'>
+      <failure type='Layout/TrailingWhitespace' message='Layout/TrailingWhitespace: Trailing whitespace detected.'>
+        <root>/tests/formatters/project/unicode.rb:4:24
+      </failure>
+      <failure type='Layout/TrailingWhitespace' message='Layout/TrailingWhitespace: Trailing whitespace detected.'>
+        <root>/tests/formatters/project/unicode.rb:5:14
+      </failure>
+      <failure type='Layout/TrailingWhitespace' message='Layout/TrailingWhitespace: Trailing whitespace detected.'>
+        <root>/tests/formatters/project/unicode.rb:6:32
+      </failure>
+    </testcase>
+    <testcase classname='unicode' name='Style/NilComparison'>
+      <failure type='Style/NilComparison' message='Style/NilComparison: Prefer the use of the `nil?` predicate.'>
+        <root>/tests/formatters/project/unicode.rb:4:18
+      </failure>
+    </testcase>
+  </testsuite>
+</testsuites>

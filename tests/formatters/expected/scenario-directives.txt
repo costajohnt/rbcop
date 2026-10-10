@@ -1,0 +1,8 @@
+== d.rb ==
+C:  3:  6: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+C:  8:  6: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+W: 12:  1: Lint/Debugger: Remove debugger entry point binding.pry.
+C: 15:  7: [Correctable] Style/NilComparison: Prefer the use of the nil? predicate.
+W: 20:  1: Lint/Debugger: Remove debugger entry point binding.pry.
+
+2 files inspected, 5 offenses detected, 3 offenses autocorrectable

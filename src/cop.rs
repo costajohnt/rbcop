@@ -53,6 +53,9 @@ pub struct Offense {
     pub message: String,
     pub severity: Severity,
     pub correctable: bool,
+    /// From `add_global_offense`: no location (Offense::NO_LOCATION). `start`/`end` are 0 so the
+    /// emacs-style formats print 1:1; formatters that show source lines print none.
+    pub global: bool,
 }
 
 /// A heredoc's body lines, `first..terminator` (1-based), and its closing delimiter.
@@ -114,8 +117,23 @@ impl Cx<'_, '_> {
         self.push(start, end, message.into(), correctable);
     }
 
+    /// Report an offense with no location (RuboCop's `add_global_offense`), e.g. a file name problem.
+    pub fn add_global(&mut self, message: impl Into<String>) {
+        let message = message.into();
+        self.out.push(Offense {
+            start: 0,
+            end: 0,
+            cop: self.cop,
+            message,
+            severity: Severity::Convention,
+            correctable: false,
+            global: true,
+        });
+    }
+
     fn push(&mut self, start: usize, end: usize, message: String, correctable: bool) {
-        self.out.push(Offense { start, end, cop: self.cop, message, severity: Severity::Convention, correctable });
+        let severity = Severity::Convention;
+        self.out.push(Offense { start, end, cop: self.cop, message, severity, correctable, global: false });
     }
 
     /// Nearest ancestor (the parent in Prism's tree).

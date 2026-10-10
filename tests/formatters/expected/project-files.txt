@@ -1,0 +1,5 @@
+<root>/tests/formatters/project/crlf.rb
+<root>/tests/formatters/project/lib/nested/deep.rb
+<root>/tests/formatters/project/lib/style.rb
+<root>/tests/formatters/project/syntax_error.rb
+<root>/tests/formatters/project/unicode.rb

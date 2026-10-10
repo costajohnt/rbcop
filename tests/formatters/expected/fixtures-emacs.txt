@@ -1,0 +1,11 @@
+<root>/tests/fixtures/basic.rb:1:10: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+<root>/tests/fixtures/basic.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+<root>/tests/fixtures/basic.rb:6:10: C: [Correctable] Style/NilComparison: Prefer the use of the `nil?` predicate.
+<root>/tests/fixtures/basic.rb:7:7: W: Lint/Debugger: Remove debugger entry point `binding.pry`.
+<root>/tests/fixtures/basic.rb:9:5: W: Lint/Debugger: Remove debugger entry point `byebug`.
+<root>/tests/fixtures/basic.rb:10:5: W: Lint/Debugger: Remove debugger entry point `debugger`.
+<root>/tests/fixtures/basic.rb:11:5: W: Lint/Debugger: Remove debugger entry point `Kernel.binding.irb`.
+<root>/tests/fixtures/basic.rb:12:121: C: Layout/LineLength: Line is too long. [140/120]
+<root>/tests/fixtures/basic.rb:14:19: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+<root>/tests/fixtures/basic.rb:23:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+<root>/tests/fixtures/no_newline.rb:1:7: C: [Correctable] Layout/TrailingEmptyLines: Final newline missing.

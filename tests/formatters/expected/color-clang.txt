@@ -1,0 +1,51 @@
+[36mcrlf.rb[0m:3:6: [33mC[0m: [33m[Correctable] [0mLayout/TrailingWhitespace: Trailing whitespace detected.
+x = 1  
+     ^^
+[36mlib/nested/deep.rb[0m:4:1: [35mW[0m: Lint/Debugger: Remove debugger entry point [33mbinding.irb[0m.
+binding.irb
+^^^^^^^^^^^
+[36mlib/style.rb[0m:3:7: [33mC[0m: [33m[Correctable] [0mStyle/DefWithParentheses: Omit the parentheses in defs when the method doesn't accept any arguments.
+def go()
+      ^^
+[36mlib/style.rb[0m:4:9: [33mC[0m: [33m[Correctable] [0mLayout/SpaceBeforeComma: Space found before comma.
+  puts 1 ,2
+        ^
+[36mlib/style.rb[0m:4:10: [33mC[0m: [33m[Correctable] [0mLayout/SpaceAfterComma: Space missing after comma.
+  puts 1 ,2
+         ^
+[36mlib/style.rb[0m:6:3: [33mC[0m: [33m[Correctable] [0mStyle/NegatedIf: Favor [33munless[0m over [33mif[0m for negative conditions.
+  puts x if !x
+  ^^^^^^^^^^^^
+[36mlib/style.rb[0m:7:4: [33mC[0m: [33m[Correctable] [0mLayout/SpaceInsideRangeLiteral: Space inside range literal.
+  (1 .. 2).each { |i| puts i }
+   ^^^^^^
+[36msyntax_error.rb[0m:4:3: [31mF[0m: Lint/Syntax: unexpected integer; expected a [33m)[0m to close the parameters
+(Using Ruby 3.4 parser; configure using [33mTargetRubyVersion[0m parameter, under [33mAllCops[0m)
+  1 +
+  ^
+[36msyntax_error.rb[0m:4:5: [31mF[0m: Lint/Syntax: unexpected '+', expecting end-of-input
+(Using Ruby 3.4 parser; configure using [33mTargetRubyVersion[0m parameter, under [33mAllCops[0m)
+  1 +
+    ^
+[36msyntax_error.rb[0m:5:1: [31mF[0m: Lint/Syntax: unexpected 'end', assuming it is closing the parent method definition
+(Using Ruby 3.4 parser; configure using [33mTargetRubyVersion[0m parameter, under [33mAllCops[0m)
+end
+^^^
+[36municode.rb[0m:4:18: [33mC[0m: [33m[Correctable] [0mStyle/NilComparison: Prefer the use of the [33mnil?[0m predicate.
+name = "日本語テキスト" == nil  
+                        ^^
+[36municode.rb[0m:4:24: [33mC[0m: [33m[Correctable] [0mLayout/TrailingWhitespace: Trailing whitespace detected.
+name = "日本語テキスト" == nil  
+                              ^^
+[36municode.rb[0m:5:1: [33mC[0m: [33m[Correctable] [0mLayout/IndentationStyle: Tab detected in indentation.
+	value = name   
+^
+[36municode.rb[0m:5:14: [33mC[0m: [33m[Correctable] [0mLayout/TrailingWhitespace: Trailing whitespace detected.
+	value = name   
+	            ^^^
+[36municode.rb[0m:6:32: [33mC[0m: [33m[Correctable] [0mLayout/TrailingWhitespace: Trailing whitespace detected.
+msg = "<b>&amp; `tick` 'q'</b>" 
+                               ^
+[36municode.rb[0m:8:1: [33mC[0m: [33m[Correctable] [0mLayout/TrailingEmptyLines: 2 trailing blank lines detected.
+
+6 files inspected, [31m16 offenses[0m detected, [33m12 offenses[0m autocorrectable

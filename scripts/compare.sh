@@ -15,7 +15,7 @@ dir=$(cd "$1" && pwd)
 bin=$(cd "$(dirname "$0")/.." && pwd)/target/release/rbcop
 out=${TMPDIR:-/tmp}/rbcop-compare/$(basename "$dir")${mode:+-default}
 mkdir -p "$out"
-cops=${2:-$("$bin" --show-cops | paste -sd, -)}
+cops=${2:-$("$bin" --show-cops | sed -n 's/^\([^ #].*\):$/\1/p' | paste -sd, -)}
 
 # LineLength's [Correctable] tag depends on CheckLineBreakable, which rbcop does not model yet.
 # rubocop-md lints Ruby inside Markdown; rbcop does not, so .md results are dropped.

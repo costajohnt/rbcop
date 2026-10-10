@@ -1,0 +1,1 @@
+1.91.0 (using Parser 3.3.12.0, Prism 1.9.0, default, rubocop-ast 1.50.0, analyzing as Ruby 3.4, running on ruby 4.0.6) [<platform>]

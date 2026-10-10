@@ -1,0 +1,9 @@
+
+6   unicode.rb
+5   lib/style.rb
+3   syntax_error.rb
+1   crlf.rb
+1   lib/nested/deep.rb
+--
+16  Total in 5 files
+

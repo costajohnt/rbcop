@@ -1,0 +1,108 @@
+# RuboCop Inspection Report
+
+6 files inspected, 16 offenses detected:
+
+### crlf.rb - (1 offense)
+  * **Line # 3 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
+
+    ```rb
+    x = 1  
+    ```
+
+### lib/nested/deep.rb - (1 offense)
+  * **Line # 4 - warning:** Lint/Debugger: Remove debugger entry point `binding.irb`.
+
+    ```rb
+    binding.irb
+    ```
+
+### lib/style.rb - (5 offenses)
+  * **Line # 3 - convention:** Style/DefWithParentheses: Omit the parentheses in defs when the method doesn't accept any arguments.
+
+    ```rb
+    def go()
+    ```
+
+  * **Line # 4 - convention:** Layout/SpaceBeforeComma: Space found before comma.
+
+    ```rb
+      puts 1 ,2
+    ```
+
+  * **Line # 4 - convention:** Layout/SpaceAfterComma: Space missing after comma.
+
+    ```rb
+      puts 1 ,2
+    ```
+
+  * **Line # 6 - convention:** Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+
+    ```rb
+      puts x if !x
+    ```
+
+  * **Line # 7 - convention:** Layout/SpaceInsideRangeLiteral: Space inside range literal.
+
+    ```rb
+      (1 .. 2).each { |i| puts i }
+    ```
+
+### syntax_error.rb - (3 offenses)
+  * **Line # 4 - fatal:** Lint/Syntax: unexpected integer; expected a `)` to close the parameters
+(Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+
+    ```rb
+      1 +
+    ```
+
+  * **Line # 4 - fatal:** Lint/Syntax: unexpected '+', expecting end-of-input
+(Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+
+    ```rb
+      1 +
+    ```
+
+  * **Line # 5 - fatal:** Lint/Syntax: unexpected 'end', assuming it is closing the parent method definition
+(Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+
+    ```rb
+    end
+    ```
+
+### unicode.rb - (6 offenses)
+  * **Line # 4 - convention:** Style/NilComparison: Prefer the use of the `nil?` predicate.
+
+    ```rb
+    name = "日本語テキスト" == nil  
+    ```
+
+  * **Line # 4 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
+
+    ```rb
+    name = "日本語テキスト" == nil  
+    ```
+
+  * **Line # 5 - convention:** Layout/IndentationStyle: Tab detected in indentation.
+
+    ```rb
+    	value = name   
+    ```
+
+  * **Line # 5 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
+
+    ```rb
+    	value = name   
+    ```
+
+  * **Line # 6 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
+
+    ```rb
+    msg = "<b>&amp; `tick` 'q'</b>" 
+    ```
+
+  * **Line # 8 - convention:** Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+
+    ```rb
+     ...
+    ```
+

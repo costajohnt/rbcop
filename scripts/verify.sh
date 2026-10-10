@@ -8,4 +8,4 @@ cargo clippy --release --all-targets -- -D warnings
 cargo test --release
 cargo build --release
 scripts/check-cops.sh all
-echo "verify: ok at $(git rev-parse --short HEAD) with $(target/release/rbcop --show-cops | wc -l | tr -d ' ') cops"
+echo "verify: ok at $(git rev-parse --short HEAD) with $(target/release/rbcop --show-cops | grep -c '^[^ #].*:$' | tr -d ' ') cops"

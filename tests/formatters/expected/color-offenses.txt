@@ -1,0 +1,15 @@
+
+4   Layout/TrailingWhitespace[33m [Safe Correctable][0m
+3   Lint/Syntax
+1   Layout/IndentationStyle[33m [Safe Correctable][0m
+1   Layout/SpaceAfterComma[33m [Safe Correctable][0m
+1   Layout/SpaceBeforeComma[33m [Safe Correctable][0m
+1   Layout/SpaceInsideRangeLiteral[33m [Safe Correctable][0m
+1   Layout/TrailingEmptyLines[33m [Safe Correctable][0m
+1   Lint/Debugger
+1   Style/DefWithParentheses[33m [Safe Correctable][0m
+1   Style/NegatedIf[33m [Safe Correctable][0m
+1   Style/NilComparison[33m [Safe Correctable][0m
+--
+16  Total in 5 files
+

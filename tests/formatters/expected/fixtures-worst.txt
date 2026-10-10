@@ -1,0 +1,6 @@
+
+10  basic.rb
+1   no_newline.rb
+--
+11  Total in 2 files
+

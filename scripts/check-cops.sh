@@ -13,7 +13,7 @@ corpus_root=${RBCOP_CORPUS:?set RBCOP_CORPUS to the corpus directory}
 oracle_root=${RBCOP_ORACLE:?set RBCOP_ORACLE to the oracle directory}
 out=${TMPDIR:-/tmp}/rbcop-check
 mkdir -p "$out"
-[ "$cops" = all ] && cops=$("$bin" --show-cops | paste -sd, -)
+[ "$cops" = all ] && cops=$("$bin" --show-cops | sed -n 's/^\([^ #].*\):$/\1/p' | paste -sd, -)
 pattern=": [CWEFRI]: (\[Correctable\] )?($(echo "$cops" | tr , '|')): "
 norm() { grep -E "$pattern" | LC_ALL=C sort; }
 

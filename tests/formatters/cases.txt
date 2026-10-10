@@ -1,0 +1,100 @@
+# name|directory|arguments[|stdin file]   (recorded by scripts/formatters.sh, replayed by tests/formatters.rs)
+# Every formatter on the fixtures and on a project with unicode, tabs, CRLF, syntax errors and nesting.
+# fuubar runs on one file: with several, where its bar line breaks depends on RuboCop's speed (refreshes <10ms apart are skipped).
+fixtures-progress|tests/fixtures|-f progress
+fixtures-simple|tests/fixtures|-f simple
+fixtures-clang|tests/fixtures|-f clang
+fixtures-emacs|tests/fixtures|-f emacs
+fixtures-files|tests/fixtures|-f files
+fixtures-fuubar|tests/fixtures|-f fuubar basic.rb
+fixtures-github|tests/fixtures|-f github
+fixtures-html|tests/fixtures|-f html
+fixtures-json|tests/fixtures|-f json
+fixtures-junit|tests/fixtures|-f junit
+fixtures-markdown|tests/fixtures|-f markdown
+fixtures-offenses|tests/fixtures|-f offenses
+fixtures-pacman|tests/fixtures|-f pacman
+fixtures-quiet|tests/fixtures|-f quiet
+fixtures-sarif|tests/fixtures|-f sarif
+fixtures-tap|tests/fixtures|-f tap
+fixtures-worst|tests/fixtures|-f worst
+project-progress|tests/formatters/project|-f p
+project-simple|tests/formatters/project|-f s
+project-clang|tests/formatters/project|-f c
+project-emacs|tests/formatters/project|-f e
+project-files|tests/formatters/project|-f fi
+project-fuubar|tests/formatters/project|-f fu unicode.rb
+project-github|tests/formatters/project|-f g
+project-html|tests/formatters/project|-f h
+project-json|tests/formatters/project|-f json
+project-junit|tests/formatters/project|-f ju
+project-markdown|tests/formatters/project|-f m
+project-offenses|tests/formatters/project|-f o
+project-pacman|tests/formatters/project|-f pa
+project-quiet|tests/formatters/project|-f q
+project-sarif|tests/formatters/project|-f sa
+project-tap|tests/formatters/project|-f t
+project-worst|tests/formatters/project|-f w
+scenario-directives|tests/scenarios/directives/project|-f s
+scenario-nested|tests/scenarios/nested/project|-f c
+scenario-default-json|tests/scenarios/default/project|-f j
+clean-progress|tests/formatters/project|-f p lib/clean.rb
+clean-quiet|tests/formatters/project|-f q lib/clean.rb
+none-progress|tests/formatters/project|-f p --stdin vendor/x.rb --force-exclusion|tests/formatters/stdin.rb
+# Colour.
+color-progress|tests/formatters/project|-f p --color
+color-simple|tests/formatters/project|-f s --color
+color-clang|tests/formatters/project|-f c --color
+color-tap|tests/formatters/project|-f t --color
+color-fuubar|tests/formatters/project|-f fu --color unicode.rb
+color-offenses|tests/formatters/project|-f o --color
+color-quiet|tests/formatters/project|-f q --color
+color-pacman|tests/formatters/project|-f pa --color
+# Message annotation.
+no-cop-names|tests/formatters/project|-f e --no-display-cop-names
+json-cop-names|tests/formatters/project|-f json -D
+json-abbrev-cop-names|tests/formatters/project|-f j
+details-style-guide|tests/formatters/project|-f s -E -S
+offenses-style-guide|tests/formatters/project|-f o -S
+# Exit status and filtering.
+fail-level-w|tests/formatters/project|-f s --fail-level W
+fail-level-a|tests/formatters/project|-f s --fail-level A
+fail-level-prefix|tests/formatters/project|-f e --fail-level fat lib/nested/deep.rb
+fail-level-only|tests/formatters/project|-f s --fail-level W --display-only-fail-level-offenses
+fail-level-only-clean|tests/formatters/project|-f s --fail-level E --display-only-fail-level-offenses lib/nested/deep.rb
+only-correctable|tests/formatters/project|-f s --display-only-correctable
+only-safe-correctable|tests/formatters/project|-f s --display-only-safe-correctable
+junit-only-failed|tests/formatters/project|-f junit --display-only-failed
+junit-only-failed-abbrev|tests/formatters/project|-f ju --display-only-failed
+github-fail-level|tests/formatters/project|-f g --fail-level F
+fail-fast|tests/formatters/project|-f s -F crlf.rb lib/style.rb
+missing-file|tests/formatters/project|-f s nope.rb unicode.rb
+missing-file-second|tests/formatters/project|-f e crlf.rb nope.rb
+# Several formatters, output files, option spellings.
+multi-stdout|tests/formatters/project|-f s -f e -f fi
+multi-out|tests/formatters/project|-f fi -o /dev/null -f s
+out-default|tests/formatters/project|-o /dev/null
+stderr|tests/formatters/project|-f s --stderr
+format-equals|tests/formatters/project|--format=emacs
+format-cluster|tests/formatters/project|-fe
+format-prefix|tests/formatters/project|--form e
+display-time|tests/formatters/project|-f q --display-time lib/clean.rb
+parallel-ignored|tests/formatters/project|-f e -P -F lib/clean.rb
+# Editors: --stdin.
+stdin-simple|tests/formatters/project|-f s --stdin lib/foo.rb|tests/formatters/stdin.rb
+stdin-emacs-outside|tests/formatters/project|-f e --stdin ../foo.rb|tests/formatters/stdin.rb
+stdin-json|tests/formatters/project|-f j --stdin lib/foo.rb|tests/formatters/stdin.rb
+# Other modes and errors.
+list-target-files|tests/formatters/project|-L
+version|tests/formatters/project|-v
+verbose-version|tests/formatters/project|-V
+version-conflict|tests/formatters/project|-v -V
+show-cops|tests/formatters/project|--show-cops Layout/LineLength,Lint/Debugger,Style/NilComparison,Layout/TrailingWhitespace
+bad-formatter|tests/formatters/project|-f bogus
+bad-fail-level|tests/formatters/project|-f e --fail-level bogus
+bad-option|tests/formatters/project|--bogus
+missing-argument|tests/formatters/project|-f e --fail-level
+only-failed-misuse|tests/formatters/project|-f s --display-only-failed
+except-syntax|tests/formatters/project|-f e --except Lint/Syntax
+cache-value|tests/formatters/project|-f e --cache maybe
+stdin-with-paths|tests/formatters/project|-f e --stdin a.rb b.rb|tests/formatters/stdin.rb

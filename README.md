@@ -45,14 +45,14 @@ Known gap: RuboCop tags some LineLength offenses `[Correctable]` when it finds a
 
 ```sh
 cargo build --release
-./target/release/rbcop [--only Cop1,Cop2] [paths...]   # emacs-format output, exit 1 on offenses
-./target/release/rbcop -L .                             # list files that would be inspected
+./target/release/rbcop [options] [paths...]   # same options, output and exit status as rubocop
 ```
+
+Every builtin RuboCop formatter except autogenconf (`-f progress|simple|clang|emacs|files|fuubar|github|html|json|junit|markdown|offenses|pacman|quiet|sarif|tap|worst`, with RuboCop's key abbreviations and `-o FILE`), the display options (`-D -E -S --display-time --display-only-*`), `--fail-level`, `--color`, `--stdin FILE`, `-L`, `--show-cops`, `-v` and `-V`. `scripts/formatters.sh` records RuboCop's output for `tests/formatters/cases.txt`; `tests/formatters.rs` checks rbcop reproduces it byte for byte.
 
 ## Not yet
 
 - `.rubocop.yml` (rbcop always behaves like `--force-default-config`)
-- Output formats other than emacs
 - Autocorrect
 - `# rubocop:push` / `pop`
 - Lint/Syntax: files with syntax errors are skipped with a warning
