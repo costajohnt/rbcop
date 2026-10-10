@@ -284,6 +284,12 @@ More traps found while porting:
 - A whole-file check that needs the AST subscribes to `PROGRAM_NODE` (the file hook has no
   ancestors).
 - Naming helpers: `configurable_naming` (formats, numbering, Allowed/Forbidden identifiers).
+- Corrections without an offense (`correct(range)` from an `after_class` hook, BisectedAttrAccessor):
+  build a `Corrector`, merge it into `cx.fixes.corrector` when `cx.fixes.autocorrect` is set, and
+  report the offenses with `add_with(.., false)`. It applies even on disabled lines.
+- Parser `begin` parent: any statement list except under a plain `begin..end` (`kwbegin`);
+  parenthesised statements and a 2+ statement program root are `begin`.
+- `helpers::comment_association`: leading comments parser's `Comment::Associator` gives a statement.
 - `helpers::regexp_captures` counts named/numbered groups like `RegexpNode#each_capture`.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.
