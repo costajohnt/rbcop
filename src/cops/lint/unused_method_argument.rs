@@ -50,7 +50,7 @@ impl<'pr> Visit<'pr> for Defs<'_> {
             match c.name().as_slice() {
                 b"fail" => true,
                 b"raise" => send_args(&c).first().is_some_and(|a| {
-                    const_name(a).is_some_and(|n| self.allowed.iter().any(|x| *x == n))
+                    const_name(a).is_some_and(|n| self.allowed.contains(&n))
                 }),
                 _ => false,
             }

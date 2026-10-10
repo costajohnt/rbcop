@@ -181,13 +181,15 @@ fn class_or_module_new_block(anc: &[Node], pa: PA, names: &[&str]) -> bool {
     };
     owner_is_send
         && name == "new"
-        && recv.is_some_and(|r| is_const(&r) && r.as_constant_path_node().map_or(true, |_| true) && {
-            let short = match r.as_constant_path_node() {
-                Some(p) => p.name().map(|n| String::from_utf8_lossy(n.as_slice()).into_owned()),
-                None => const_name(&r),
-            };
-            short.is_some_and(|s| names.contains(&s.as_str()))
-        })
+        && recv.is_some_and(|r| short_const(&r).is_some_and(|s| names.contains(&s.as_str())))
+}
+
+/// The last segment of a constant (`(const _ name)`).
+fn short_const(r: &Node) -> Option<String> {
+    match r.as_constant_path_node() {
+        Some(p) => p.name().map(|n| String::from_utf8_lossy(n.as_slice()).into_owned()),
+        None => r.as_constant_read_node().map(|c| String::from_utf8_lossy(c.name().as_slice()).into_owned()),
+    }
 }
 
 /// Namespace of a `defined_module`: nil, cbase, or a node.
@@ -420,13 +422,7 @@ impl<'pr> Ctx<'_, 'pr> {
                     && r.as_call_node().is_some_and(|c| {
                         !is_csend(&c)
                             && c.name().as_slice() == b"new"
-                            && c.receiver().is_some_and(|x| {
-                                let short = match x.as_constant_path_node() {
-                                    Some(p) => p.name().map(|n| String::from_utf8_lossy(n.as_slice()).into_owned()),
-                                    None => x.as_constant_read_node().map(|c| String::from_utf8_lossy(c.name().as_slice()).into_owned()),
-                                };
-                                short.is_some_and(|s| s == "Class" || s == "Module")
-                            })
+                            && c.receiver().is_some_and(|x| short_const(&x).is_some_and(|s| s == "Class" || s == "Module"))
                     })
             })
         });
@@ -553,11 +549,7 @@ impl Cop for DuplicateMethods {
                 match def.receiver() {
                     None => found.extend(ctx.found_instance_method(&name, src)),
                     Some(r) if is_const(&r) => {
-                        let short = match r.as_constant_path_node() {
-                            Some(p) => p.name().map(|n| String::from_utf8_lossy(n.as_slice()).into_owned()),
-                            None => const_name(&r),
-                        };
-                        if let Some(short) = short {
+                        if let Some(short) = short_const(&r) {
                             found.extend(ctx.found_const_method(&short, &name));
                         }
                     }

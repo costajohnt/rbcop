@@ -51,7 +51,7 @@ impl Cop for MissingSuper {
             return;
         }
         let allowed = |n: &Node| {
-            const_name(n).is_some_and(|c| c == "BasicObject" || c == "Object" || cx.cfg.strings("AllowedParentClasses").iter().any(|a| *a == c))
+            const_name(n).is_some_and(|c| c == "BasicObject" || c == "Object" || cx.cfg.strings("AllowedParentClasses").contains(&c))
         };
         let msg = if initialize && stateful_parent(cx.ancestors, &allowed) {
             CONSTRUCTOR_MSG
