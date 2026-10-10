@@ -1,0 +1,12 @@
+==> offenses exit=1 344 <==
+000.rb:1:7: C: Naming/ClassAndModuleCamelCase: Use CamelCase for classes and modules.
+000.rb:4:8: C: Naming/ClassAndModuleCamelCase: Use CamelCase for classes and modules.
+001.rb:1:7: C: Naming/ClassAndModuleCamelCase: Use CamelCase for classes and modules.
+001.rb:4:8: C: Naming/ClassAndModuleCamelCase: Use CamelCase for classes and modules.
+
+==> autocorrect exit=1 344 <==
+000.rb:1:7: C: Naming/ClassAndModuleCamelCase: Use CamelCase for classes and modules.
+000.rb:4:8: C: Naming/ClassAndModuleCamelCase: Use CamelCase for classes and modules.
+001.rb:1:7: C: Naming/ClassAndModuleCamelCase: Use CamelCase for classes and modules.
+001.rb:4:8: C: Naming/ClassAndModuleCamelCase: Use CamelCase for classes and modules.
+

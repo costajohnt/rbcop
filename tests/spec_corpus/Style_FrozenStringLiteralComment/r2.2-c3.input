@@ -1,0 +1,16 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.2
+
+==> 000.rb 10 <==
+"x".freeze
+==> 001.rb 10 <==
+"x" << "y"
+==> 002.rb 18 <==
+"#{foo}bar".freeze
+==> 003.rb 20 <==
+"#{foo}bar" << "baz"

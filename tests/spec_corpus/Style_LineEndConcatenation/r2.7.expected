@@ -1,0 +1,92 @@
+==> offenses exit=1 1841 <==
+000.rb:1:14: C: [Correctable] Style/LineEndConcatenation: Use `\` instead of `+` to concatenate multiline strings.
+001.rb:1:14: C: [Correctable] Style/LineEndConcatenation: Use `\` instead of `<<` to concatenate multiline strings.
+002.rb:2:7: C: [Correctable] Style/LineEndConcatenation: Use `\` instead of `<<` to concatenate multiline strings.
+003.rb:1:18: C: [Correctable] Style/LineEndConcatenation: Use `\` instead of `+` to concatenate multiline strings.
+004.rb:1:18: C: [Correctable] Style/LineEndConcatenation: Use `\` instead of `<<` to concatenate multiline strings.
+005.rb:1:18: C: [Correctable] Style/LineEndConcatenation: Use `\` instead of `<<` to concatenate multiline strings.
+005.rb:2:7: C: [Correctable] Style/LineEndConcatenation: Use `\` instead of `<<` to concatenate multiline strings.
+006.rb:1:18: C: [Correctable] Style/LineEndConcatenation: Use `\` instead of `+` to concatenate multiline strings.
+006.rb:2:7: C: [Correctable] Style/LineEndConcatenation: Use `\` instead of `+` to concatenate multiline strings.
+007.rb:1:18: C: [Correctable] Style/LineEndConcatenation: Use `\` instead of `<<` to concatenate multiline strings.
+007.rb:2:7: C: [Correctable] Style/LineEndConcatenation: Use `\` instead of `+` to concatenate multiline strings.
+007.rb:3:7: C: [Correctable] Style/LineEndConcatenation: Use `\` instead of `<<` to concatenate multiline strings.
+015.rb:4:7: C: [Correctable] Style/LineEndConcatenation: Use `\` instead of `+` to concatenate multiline strings.
+016.rb:1:14: C: [Correctable] Style/LineEndConcatenation: Use `\` instead of `+` to concatenate multiline strings.
+017.rb:1:18: C: [Correctable] Style/LineEndConcatenation: Use `\` instead of `<<` to concatenate multiline strings.
+017.rb:3:7: C: [Correctable] Style/LineEndConcatenation: Use `\` instead of `+` to concatenate multiline strings.
+
+==> autocorrect exit=0 1809 <==
+000.rb:1:14: C: [Corrected] Style/LineEndConcatenation: Use `\` instead of `+` to concatenate multiline strings.
+001.rb:1:14: C: [Corrected] Style/LineEndConcatenation: Use `\` instead of `<<` to concatenate multiline strings.
+002.rb:2:7: C: [Corrected] Style/LineEndConcatenation: Use `\` instead of `<<` to concatenate multiline strings.
+003.rb:1:18: C: [Corrected] Style/LineEndConcatenation: Use `\` instead of `+` to concatenate multiline strings.
+004.rb:1:18: C: [Corrected] Style/LineEndConcatenation: Use `\` instead of `<<` to concatenate multiline strings.
+005.rb:1:18: C: [Corrected] Style/LineEndConcatenation: Use `\` instead of `<<` to concatenate multiline strings.
+005.rb:2:7: C: [Corrected] Style/LineEndConcatenation: Use `\` instead of `<<` to concatenate multiline strings.
+006.rb:1:18: C: [Corrected] Style/LineEndConcatenation: Use `\` instead of `+` to concatenate multiline strings.
+006.rb:2:7: C: [Corrected] Style/LineEndConcatenation: Use `\` instead of `+` to concatenate multiline strings.
+007.rb:1:18: C: [Corrected] Style/LineEndConcatenation: Use `\` instead of `<<` to concatenate multiline strings.
+007.rb:2:7: C: [Corrected] Style/LineEndConcatenation: Use `\` instead of `+` to concatenate multiline strings.
+007.rb:3:7: C: [Corrected] Style/LineEndConcatenation: Use `\` instead of `<<` to concatenate multiline strings.
+015.rb:4:7: C: [Corrected] Style/LineEndConcatenation: Use `\` instead of `+` to concatenate multiline strings.
+016.rb:1:14: C: [Corrected] Style/LineEndConcatenation: Use `\` instead of `+` to concatenate multiline strings.
+017.rb:1:18: C: [Corrected] Style/LineEndConcatenation: Use `\` instead of `<<` to concatenate multiline strings.
+017.rb:3:7: C: [Corrected] Style/LineEndConcatenation: Use `\` instead of `+` to concatenate multiline strings.
+
+==> corrected/000.rb 21 <==
+top = "test" \
+"top"
+
+==> corrected/001.rb 21 <==
+top = "test" \
+"top"
+
+==> corrected/002.rb 30 <==
+top = "test " \
+"foo" \
+"bar"
+
+==> corrected/003.rb 25 <==
+top = "test#{x}" \
+"top"
+
+==> corrected/004.rb 25 <==
+top = "test#{x}" \
+"top"
+
+==> corrected/005.rb 37 <==
+top = "test#{x}" \
+"top" \
+"ubertop"
+
+==> corrected/006.rb 33 <==
+top = "test#{x}" \
+"top" \
+"foo"
+
+==> corrected/007.rb 41 <==
+top = "test#{x}" \
+"top" \
+"foo" \
+"bar"
+
+==> corrected/015.rb 60 <==
+top = "test#{x}" + # comment
+"foo" +
+%(bar) +
+"baz" \
+"qux"
+
+==> corrected/016.rb 21 <==
+top = "test" \
+"top"
+
+==> corrected/017.rb 68 <==
+top = "test#{x}" \
+"top" + # comment
+"foo" \
+"bar" +
+%(baz) +
+"qux"
+

@@ -92,7 +92,8 @@ impl Style<'_> {
 }
 
 /// `body.children.last` for the parser node a Prism body stands for.
-// ponytail: begin/kwbegin/parens, `||`/`&&`, if/unless/case, blocks and loops; other node types not modelled.
+// ponytail: begin/kwbegin/parens, `||`/`&&`, if/unless/case, blocks, sends, assignments and
+// loops; other node types not modelled.
 fn last_child<'pr>(body: &Node<'pr>) -> Option<Node<'pr>> {
     let last_stmt = |s: Option<ruby_prism::StatementsNode<'pr>>| s.and_then(|s| s.body().iter().last());
     // a body as one parser node: the single statement (a multi-statement `begin` never matches)
@@ -129,11 +130,15 @@ fn last_child<'pr>(body: &Node<'pr>) -> Option<Node<'pr>> {
         Node::WhileNode { .. } => one(body.as_while_node().unwrap().statements()),
         Node::UntilNode { .. } => one(body.as_until_node().unwrap().statements()),
         Node::CallNode { .. } => {
-            let b = body.as_call_node().unwrap().block()?;
-            let b = b.as_block_node()?;
-            one(b.body()?.as_statements_node())
+            let call = body.as_call_node().unwrap();
+            match call.block().filter(|b| b.as_block_node().is_some()) {
+                Some(b) => one(b.as_block_node().unwrap().body()?.as_statements_node()),
+                // a send's last child is its last argument
+                None => crate::ast::send_args(&call).pop(),
+            }
         }
-        _ => None,
+        // an assignment's last child is its value (`x = @a ||= 1`)
+        _ => crate::ast::assignment_parts(body).map(|(_, value)| value),
     }
 }
 

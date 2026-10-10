@@ -261,9 +261,11 @@ impl LiteralAsCondition {
         }
         let src = |r: (usize, usize)| cx.src.slice(r.0, r.1);
         let new_node = if p.elsif && result {
-            // range_with_comments(if_branch): plus comments associated with it (leading ones).
-            // ponytail: trailing "decorating" comments are not associated here.
+            // range_with_comments(if_branch): plus the comments associated with it, leading ones and
+            // one decorating its last line, when the branch is a single statement (a `begin`'s
+            // comments go to its statements).
             let (bs, be) = p.if_branch.unwrap();
+            let single = node.as_if_node().unwrap().statements().unwrap().body().iter().count() == 1;
             let cond_line = cx.src.line_of(cond.location().end_offset());
             let start = cx
                 .src
@@ -272,9 +274,16 @@ impl LiteralAsCondition {
                 .filter(|c| c.end <= bs && cx.src.line_of(c.start) > cond_line && c.start >= cond.location().end_offset())
                 .map(|c| c.start)
                 .min()
-                .filter(|_| node.as_if_node().unwrap().statements().unwrap().body().iter().count() == 1)
+                .filter(|_| single)
                 .unwrap_or(bs);
-            format!("else\n  {}", src((start, be)))
+            let end = cx
+                .src
+                .comments
+                .iter()
+                .find(|c| c.start >= be && cx.src.line_of(c.start) == cx.src.line_of(be))
+                .filter(|_| single)
+                .map_or(be, |c| c.end);
+            format!("else\n  {}", src((start, end)))
         } else if p.elsif && !result {
             format!("else\n  {}", src(p.else_branch.unwrap()))
         } else if let (Some(b), true) = (p.if_branch, result) {

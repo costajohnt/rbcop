@@ -1,0 +1,6 @@
+==> offenses exit=1 72 <==
+000.rb:2:1: W: Lint/EmptyInPattern: Avoid `in` branches without a body.
+
+==> autocorrect exit=1 72 <==
+000.rb:2:1: W: Lint/EmptyInPattern: Avoid `in` branches without a body.
+

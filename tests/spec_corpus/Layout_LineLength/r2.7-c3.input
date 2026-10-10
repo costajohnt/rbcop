@@ -1,0 +1,14 @@
+==> .rubocop.yml 154 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LineLength:
+  Max: 30
+  AllowURI: true
+
+==> 000.rb 44 <==
+				# There is some content http://test.com
+

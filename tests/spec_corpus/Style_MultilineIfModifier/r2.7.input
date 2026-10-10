@@ -1,0 +1,40 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 26 <==
+{
+  result: run
+} if cond
+
+==> 001.rb 12 <==
+run if cond
+
+==> 002.rb 28 <==
+run if cond &&
+       cond2
+
+==> 003.rb 22 <==
+[
+] if inner if outer
+
+==> 004.rb 30 <==
+{
+  result: run
+} unless cond
+
+==> 005.rb 16 <==
+run unless cond
+
+==> 006.rb 36 <==
+run unless cond &&
+           cond2
+
+==> 007.rb 30 <==
+[
+] unless inner unless outer
+

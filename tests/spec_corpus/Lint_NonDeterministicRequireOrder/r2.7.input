@@ -1,0 +1,95 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 55 <==
+Dir["./lib/**/*.rb"].each do |file|
+  require file
+end
+
+==> 001.rb 46 <==
+Dir["./lib/**/*.rb"].each do
+  require _1
+end
+
+==> 002.rb 64 <==
+Dir["./lib/**/*.rb"].each do |file|
+  require_relative file
+end
+
+==> 003.rb 122 <==
+Dir["./lib/**/*.rb"].each do |file|
+  if file.start_with?('_')
+    puts "Not required."
+  else
+    require file
+  end
+end
+
+==> 004.rb 45 <==
+Dir["./lib/**/*.rb"].each(&method(:require))
+
+==> 005.rb 54 <==
+Dir["./lib/**/*.rb"].each(&method(:require_relative))
+
+==> 006.rb 57 <==
+::Dir["./lib/**/*.rb"].each do |file|
+  require file
+end
+
+==> 007.rb 105 <==
+Dir.glob(Rails.root.join(__dir__, 'test', '*.rb'), File::FNM_DOTMATCH).each do |file|
+  require file
+end
+
+==> 008.rb 66 <==
+Dir.glob(Rails.root.join('test', '*.rb')).each(&method(:require))
+
+==> 009.rb 109 <==
+::Dir.glob(Rails.root.join(__dir__, 'test', '*.rb'), ::File::FNM_DOTMATCH).each do |file|
+  require file
+end
+
+==> 010.rb 55 <==
+Dir.glob("./lib/**/*.rb") do |file|
+  require file
+end
+
+==> 011.rb 90 <==
+Dir.glob(
+  Rails.root.join('./lib/**/*.rb'),
+  File::FNM_DOTMATCH,
+  &method(:require)
+)
+
+==> 012.rb 99 <==
+Dir.glob(
+  Rails.root.join('./lib/**/*.rb'),
+  File::FNM_DOTMATCH,
+  &method(:require_relative)
+)
+
+==> 013.rb 57 <==
+::Dir.glob("./lib/**/*.rb") do |file|
+  require file
+end
+
+==> 014.rb 60 <==
+Dir["./lib/**/*.rb"].sort.each do |file|
+  require file
+end
+
+==> 015.rb 110 <==
+Dir.glob(Rails.root.join(__dir__, 'test', '*.rb'), File::FNM_DOTMATCH).sort.each do |file|
+  require file
+end
+
+==> 016.rb 52 <==
+Dir["./lib/**/*.rb"].each do |file|
+  puts file
+end
+

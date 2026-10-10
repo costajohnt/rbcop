@@ -1,0 +1,11 @@
+==> offenses exit=1 139 <==
+000.rb:2:9: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+
+==> autocorrect exit=0 137 <==
+000.rb:2:9: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+
+==> corrected/000.rb 27 <==
+run(
+    :foo,
+    bar: 3)
+

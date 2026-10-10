@@ -1,0 +1,608 @@
+==> .rubocop.yml 157 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.3
+Layout/LineLength:
+  Max: 5
+  AllowHeredoc: true
+
+==> 000.rb 93 <==
+          def foo
+            <<-RUBY2
+            something
+            RUBY2
+          end
+
+==> 001.rb 45 <==
+def foo
+  <<-RUBY2
+    something
+  RUBY2
+end
+
+==> 002.rb 40 <==
+def foo
+  <<RUBY2
+  something
+RUBY2
+end
+
+==> 003.rb 42 <==
+def foo
+  <<RUBY2
+    something
+RUBY2
+end
+
+==> 004.rb 16 <==
+<<-RUBY2
+
+RUBY2
+
+==> 005.rb 25 <==
+<<~RUBY2
+something
+RUBY2
+
+==> 006.rb 41 <==
+def foo
+  <<~RUBY2
+something
+  RUBY2
+end
+
+==> 007.rb 29 <==
+<<~RUBY2
+    something
+RUBY2
+
+==> 008.rb 18 <==
+<<RUBY2
+foo
+RUBY2
+
+==> 009.rb 19 <==
+<<~RUBY2
+foo
+RUBY2
+
+==> 010.rb 46 <==
+        puts <<-RUBY2
+def foo
+  bar
+end
+RUBY2
+
+==> 011.rb 27 <==
+<<~RUBY2
+  something
+RUBY2
+
+==> 012.rb 28 <==
+<<~MSG
+
+  foo
+
+    bar
+
+MSG
+
+==> 013.rb 114 <==
+            def baz
+              <<~MSG
+              foo
+
+                bar
+              MSG
+            end
+
+==> 014.rb 82 <==
+            <<~RUBY2
+                  foo
+
+                bar
+            RUBY2
+
+==> 015.rb 118 <==
+            def baz
+              <<~MSG
+              foo
+    
+                bar
+              MSG
+            end
+
+==> 016.rb 86 <==
+            <<~RUBY2
+                  foo
+    
+                bar
+            RUBY2
+
+==> 017.rb 19 <==
+<<-RUBY2
+foo
+RUBY2
+
+==> 018.rb 100 <==
+          def foo
+            <<-RUBY2.squish
+            something
+            RUBY2
+          end
+
+==> 019.rb 102 <==
+          def foo
+            <<-RUBY2.squish
+              something
+            RUBY2
+          end
+
+==> 020.rb 104 <==
+          def foo
+            <<-RUBY2.squish
+                something
+            RUBY2
+          end
+
+==> 021.rb 101 <==
+          def foo
+            <<-RUBY2.squish!
+            something
+            RUBY2
+          end
+
+==> 022.rb 50 <==
+def foo
+  <<-RUBY2.squish
+  something
+  RUBY2
+end
+
+==> 023.rb 95 <==
+          def foo
+            <<-'RUBY2'
+            something
+            RUBY2
+          end
+
+==> 024.rb 47 <==
+def foo
+  <<-'RUBY2'
+    something
+  RUBY2
+end
+
+==> 025.rb 42 <==
+def foo
+  <<'RUBY2'
+  something
+RUBY2
+end
+
+==> 026.rb 44 <==
+def foo
+  <<'RUBY2'
+    something
+RUBY2
+end
+
+==> 027.rb 18 <==
+<<-'RUBY2'
+
+RUBY2
+
+==> 028.rb 27 <==
+<<~'RUBY2'
+something
+RUBY2
+
+==> 029.rb 43 <==
+def foo
+  <<~'RUBY2'
+something
+  RUBY2
+end
+
+==> 030.rb 31 <==
+<<~'RUBY2'
+    something
+RUBY2
+
+==> 031.rb 20 <==
+<<'RUBY2'
+foo
+RUBY2
+
+==> 032.rb 21 <==
+<<~'RUBY2'
+foo
+RUBY2
+
+==> 033.rb 48 <==
+        puts <<-'RUBY2'
+def foo
+  bar
+end
+RUBY2
+
+==> 034.rb 29 <==
+<<~'RUBY2'
+  something
+RUBY2
+
+==> 035.rb 30 <==
+<<~'MSG'
+
+  foo
+
+    bar
+
+MSG
+
+==> 036.rb 116 <==
+            def baz
+              <<~'MSG'
+              foo
+
+                bar
+              MSG
+            end
+
+==> 037.rb 84 <==
+            <<~'RUBY2'
+                  foo
+
+                bar
+            RUBY2
+
+==> 038.rb 120 <==
+            def baz
+              <<~'MSG'
+              foo
+    
+                bar
+              MSG
+            end
+
+==> 039.rb 88 <==
+            <<~'RUBY2'
+                  foo
+    
+                bar
+            RUBY2
+
+==> 040.rb 102 <==
+          def foo
+            <<-'RUBY2'.squish
+            something
+            RUBY2
+          end
+
+==> 041.rb 104 <==
+          def foo
+            <<-'RUBY2'.squish
+              something
+            RUBY2
+          end
+
+==> 042.rb 106 <==
+          def foo
+            <<-'RUBY2'.squish
+                something
+            RUBY2
+          end
+
+==> 043.rb 103 <==
+          def foo
+            <<-'RUBY2'.squish!
+            something
+            RUBY2
+          end
+
+==> 044.rb 52 <==
+def foo
+  <<-'RUBY2'.squish
+  something
+  RUBY2
+end
+
+==> 045.rb 95 <==
+          def foo
+            <<-"RUBY2"
+            something
+            RUBY2
+          end
+
+==> 046.rb 47 <==
+def foo
+  <<-"RUBY2"
+    something
+  RUBY2
+end
+
+==> 047.rb 42 <==
+def foo
+  <<"RUBY2"
+  something
+RUBY2
+end
+
+==> 048.rb 44 <==
+def foo
+  <<"RUBY2"
+    something
+RUBY2
+end
+
+==> 049.rb 18 <==
+<<-"RUBY2"
+
+RUBY2
+
+==> 050.rb 27 <==
+<<~"RUBY2"
+something
+RUBY2
+
+==> 051.rb 43 <==
+def foo
+  <<~"RUBY2"
+something
+  RUBY2
+end
+
+==> 052.rb 31 <==
+<<~"RUBY2"
+    something
+RUBY2
+
+==> 053.rb 20 <==
+<<"RUBY2"
+foo
+RUBY2
+
+==> 054.rb 21 <==
+<<~"RUBY2"
+foo
+RUBY2
+
+==> 055.rb 48 <==
+        puts <<-"RUBY2"
+def foo
+  bar
+end
+RUBY2
+
+==> 056.rb 29 <==
+<<~"RUBY2"
+  something
+RUBY2
+
+==> 057.rb 30 <==
+<<~"MSG"
+
+  foo
+
+    bar
+
+MSG
+
+==> 058.rb 116 <==
+            def baz
+              <<~"MSG"
+              foo
+
+                bar
+              MSG
+            end
+
+==> 059.rb 84 <==
+            <<~"RUBY2"
+                  foo
+
+                bar
+            RUBY2
+
+==> 060.rb 120 <==
+            def baz
+              <<~"MSG"
+              foo
+    
+                bar
+              MSG
+            end
+
+==> 061.rb 88 <==
+            <<~"RUBY2"
+                  foo
+    
+                bar
+            RUBY2
+
+==> 062.rb 102 <==
+          def foo
+            <<-"RUBY2".squish
+            something
+            RUBY2
+          end
+
+==> 063.rb 104 <==
+          def foo
+            <<-"RUBY2".squish
+              something
+            RUBY2
+          end
+
+==> 064.rb 106 <==
+          def foo
+            <<-"RUBY2".squish
+                something
+            RUBY2
+          end
+
+==> 065.rb 103 <==
+          def foo
+            <<-"RUBY2".squish!
+            something
+            RUBY2
+          end
+
+==> 066.rb 52 <==
+def foo
+  <<-"RUBY2".squish
+  something
+  RUBY2
+end
+
+==> 067.rb 95 <==
+          def foo
+            <<-`RUBY2`
+            something
+            RUBY2
+          end
+
+==> 068.rb 47 <==
+def foo
+  <<-`RUBY2`
+    something
+  RUBY2
+end
+
+==> 069.rb 42 <==
+def foo
+  <<`RUBY2`
+  something
+RUBY2
+end
+
+==> 070.rb 44 <==
+def foo
+  <<`RUBY2`
+    something
+RUBY2
+end
+
+==> 071.rb 18 <==
+<<-`RUBY2`
+
+RUBY2
+
+==> 072.rb 27 <==
+<<~`RUBY2`
+something
+RUBY2
+
+==> 073.rb 43 <==
+def foo
+  <<~`RUBY2`
+something
+  RUBY2
+end
+
+==> 074.rb 31 <==
+<<~`RUBY2`
+    something
+RUBY2
+
+==> 075.rb 20 <==
+<<`RUBY2`
+foo
+RUBY2
+
+==> 076.rb 21 <==
+<<~`RUBY2`
+foo
+RUBY2
+
+==> 077.rb 48 <==
+        puts <<-`RUBY2`
+def foo
+  bar
+end
+RUBY2
+
+==> 078.rb 29 <==
+<<~`RUBY2`
+  something
+RUBY2
+
+==> 079.rb 30 <==
+<<~`MSG`
+
+  foo
+
+    bar
+
+MSG
+
+==> 080.rb 116 <==
+            def baz
+              <<~`MSG`
+              foo
+
+                bar
+              MSG
+            end
+
+==> 081.rb 84 <==
+            <<~`RUBY2`
+                  foo
+
+                bar
+            RUBY2
+
+==> 082.rb 120 <==
+            def baz
+              <<~`MSG`
+              foo
+    
+                bar
+              MSG
+            end
+
+==> 083.rb 88 <==
+            <<~`RUBY2`
+                  foo
+    
+                bar
+            RUBY2
+
+==> 084.rb 102 <==
+          def foo
+            <<-`RUBY2`.squish
+            something
+            RUBY2
+          end
+
+==> 085.rb 104 <==
+          def foo
+            <<-`RUBY2`.squish
+              something
+            RUBY2
+          end
+
+==> 086.rb 106 <==
+          def foo
+            <<-`RUBY2`.squish
+                something
+            RUBY2
+          end
+
+==> 087.rb 103 <==
+          def foo
+            <<-`RUBY2`.squish!
+            something
+            RUBY2
+          end
+
+==> 088.rb 52 <==
+def foo
+  <<-`RUBY2`.squish
+  something
+  RUBY2
+end
+

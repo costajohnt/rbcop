@@ -1,0 +1,80 @@
+==> .rubocop.yml 166 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/RaiseException:
+  AllowedImplicitNamespaces:
+  - Gem
+
+==> 000.rb 18 <==
+raise ::Exception
+
+==> 001.rb 45 <==
+raise ::Exception.new 'Error with exception'
+
+==> 002.rb 42 <==
+raise ::Exception, 'Error with exception'
+
+==> 003.rb 16 <==
+raise Exception
+
+==> 004.rb 40 <==
+raise Exception, 'Error with exception'
+
+==> 005.rb 43 <==
+raise Exception.new 'Error with exception'
+
+==> 006.rb 36 <==
+raise Exception.new('arg1', 'arg2')
+
+==> 007.rb 15 <==
+fail Exception
+
+==> 008.rb 39 <==
+fail Exception, 'Error with exception'
+
+==> 009.rb 42 <==
+fail Exception.new 'Error with exception'
+
+==> 010.rb 5 <==
+raise
+==> 011.rb 4 <==
+fail
+==> 012.rb 21 <==
+raise Foo::Exception
+
+==> 013.rb 56 <==
+module Gem
+  def self.foo
+    raise Exception
+  end
+end
+
+==> 014.rb 83 <==
+module Gem
+  module Inner
+    def self.foo
+      raise Exception
+    end
+  end
+end
+
+==> 015.rb 81 <==
+module Foo
+  module Bar
+    def self.foo
+      raise Exception
+    end
+  end
+end
+
+==> 016.rb 58 <==
+module Gem
+  def self.foo
+    raise ::Exception
+  end
+end
+

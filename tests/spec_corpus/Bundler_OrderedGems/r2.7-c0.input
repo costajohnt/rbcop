@@ -1,0 +1,93 @@
+==> .rubocop.yml 169 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Bundler/OrderedGems:
+  TreatCommentsAsGroupSeparators: false
+
+==> 000.gemfile 26 <==
+gem 'rspec'
+gem 'rubocop'
+
+==> 001.gemfile 88 <==
+gem 'rspec'
+gem ENV['env_key_undefined'] if ENV.key?('env_key_undefined')
+gem 'rubocop'
+
+==> 002.gemfile 86 <==
+gem 'rubocop'
+gem ENV['env_key_undefined'] if ENV.key?('env_key_undefined')
+gem 'ast'
+
+==> 003.gemfile 26 <==
+gem 'rubocop'
+gem 'rspec'
+
+==> 004.gemfile 51 <==
+gem 'rspec'
+gem 'rubocop'
+
+gem 'hello'
+gem 'world'
+
+==> 005.gemfile 39 <==
+gem 'rubocop',
+    '0.1.1'
+gem 'rspec'
+
+==> 006.gemfile 9 <==
+# Gemfile
+==> 007.gemfile 81 <==
+gem "d"
+gem "b"
+gem "e"
+gem "a"
+gem "c"
+
+gem "h"
+gem "g"
+gem "j"
+gem "f"
+gem "i"
+
+==> 008.gemfile 58 <==
+# For code quality
+gem 'rubocop'
+# For
+# test
+gem 'rspec'
+
+==> 009.gemfile 68 <==
+gem 'rubocop' # For code quality
+gem 'pry'
+gem 'rspec'   # For test
+
+==> 010.gemfile 34 <==
+gem 'paperclip'
+gem 'paper_trail'
+
+==> 011.gemfile 16 <==
+gem 'a'
+gem 'Z'
+
+==> 012.gemfile 16 <==
+gem 'Z'
+gem 'a'
+
+==> 013.gemfile 81 <==
+gem 'active-admin-some_plugin'
+gem 'active_admin_other_plugin'
+gem 'activeadmin'
+
+==> 014.gemfile 65 <==
+gem 'a'
+
+group :development do
+  gem 'b'
+  gem 'c'
+  gem 'b'
+end
+

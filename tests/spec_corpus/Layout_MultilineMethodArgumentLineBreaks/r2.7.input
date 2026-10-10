@@ -1,0 +1,76 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 11 <==
+taz("abc")
+
+==> 001.rb 116 <==
+class Thing
+  def call
+    bar['foo'] = ::Time.zone.at(
+                   huh['foo'],
+                 )
+  end
+end
+
+==> 002.rb 25 <==
+a['b',
+    'c', 'd'] = e
+
+==> 003.rb 22 <==
+taz(
+  "abc", "foo"
+)
+
+==> 004.rb 33 <==
+taz("abc",
+"foo", "bar",
+"baz"
+)
+
+==> 005.rb 41 <==
+taz("abc",
+"foo", "bar", "barz",
+"baz"
+)
+
+==> 006.rb 47 <==
+taz("abc",
+"foo", "bar", z: "barz",
+x: "baz"
+)
+
+==> 007.rb 30 <==
+taz("abc", {
+  foo: "edf",
+})
+
+==> 008.rb 30 <==
+taz({
+  foo: "edf",
+}, "abc")
+
+==> 009.rb 36 <==
+do_something(foo, bar, baz,
+  quux)
+
+==> 010.rb 14 <==
+foo&.bar(baz)
+
+==> 011.rb 20 <==
+foo&.bar(baz, quux)
+
+==> 012.rb 29 <==
+foo&.bar(baz, quux,
+  corge)
+
+==> 013.rb 86 <==
+foo&.bar['foo'] = ::Time.zone.at(
+                    huh['foo'],
+                  )
+

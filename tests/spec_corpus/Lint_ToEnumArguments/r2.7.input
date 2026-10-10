@@ -1,0 +1,151 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 54 <==
+def m(x)
+  return to_enum(:m) unless block_given?
+end
+
+==> 001.rb 64 <==
+def m(x)
+  return to_enum(:m, x, extra) unless block_given?
+end
+
+==> 002.rb 70 <==
+def m(x, y = 1)
+  return to_enum(:m, x, y, z) unless block_given?
+end
+
+==> 003.rb 71 <==
+def m(x, *args)
+  return to_enum(:m, x, *args) unless block_given?
+end
+
+==> 004.rb 64 <==
+def m(x, y = 1)
+  return to_enum(:m, x) unless block_given?
+end
+
+==> 005.rb 74 <==
+def m(x, y = 1, *args)
+  return to_enum(:m, x, y) unless block_given?
+end
+
+==> 006.rb 92 <==
+def m(x, y = 1, *args, required:)
+  return to_enum(:m, x, y, *args) unless block_given?
+end
+
+==> 007.rb 128 <==
+def m(x, y = 1, *args, required:, optional: true)
+  return to_enum(:m, x, y, *args, required: required) unless block_given?
+end
+
+==> 008.rb 67 <==
+def m(x:)
+  return to_enum(:m, x: x, y: 1) unless block_given?
+end
+
+==> 009.rb 158 <==
+def m(x, y = 1, *args, required:, optional: true, **kwargs)
+  return to_enum(:m, x, y, *args, required: required, optional: optional) unless block_given?
+end
+
+==> 010.rb 77 <==
+def m(x:, **kwargs)
+  return to_enum(:m, x: x, y: 1) unless block_given?
+end
+
+==> 011.rb 67 <==
+def m(x, y = 1)
+  return to_enum(:m, y, x) unless block_given?
+end
+
+==> 012.rb 124 <==
+def m(required:, optional: true)
+  return to_enum(:m, required: something_else, optional: optional) unless block_given?
+end
+
+==> 013.rb 86 <==
+def m(required:)
+  return to_enum(:m, { required: required }) unless block_given?
+end
+
+==> 014.rb 75 <==
+def m(**kwargs)
+  return to_enum(:m, { **kwargs }) unless block_given?
+end
+
+==> 015.rb 12 <==
+to_enum(:m)
+
+==> 016.rb 58 <==
+def m(x)
+  return foo.to_enum(:m) unless block_given?
+end
+
+==> 017.rb 59 <==
+def m(x)
+  return self.to_enum(:m) unless block_given?
+end
+
+==> 018.rb 65 <==
+def m(x, &block)
+  return to_enum(:m, x) unless block_given?
+end
+
+==> 019.rb 58 <==
+def m(x)
+  return to_enum(:not_m) unless block_given?
+end
+
+==> 020.rb 55 <==
+def m
+  return to_enum(:not_m) unless block_given?
+end
+
+==> 021.rb 62 <==
+def m(x)
+  return to_enum(__method__) unless block_given?
+end
+
+==> 022.rb 56 <==
+def m(x)
+  return to_enum(never_nullable(value), x)
+end
+
+==> 023.rb 61 <==
+def m(x)
+  return to_enum(obj&.never_nullable(value), x)
+end
+
+==> 024.rb 176 <==
+def m(x, y = 1, *args, required:, optional: true, **kwargs, &block)
+  return to_enum(:m, x, y, *args, required: required, optional: optional, **kwargs) unless block_given?
+end
+
+==> 025.rb 184 <==
+def m(x, y = 1, *args, required:, optional: true, **kwargs, &block)
+  return to_enum(__callee__, x, y, *args, required: required, optional: optional, **kwargs) unless block_given?
+end
+
+==> 026.rb 184 <==
+def m(x, y = 1, *args, required:, optional: true, **kwargs, &block)
+  return to_enum(__method__, x, y, *args, required: required, optional: optional, **kwargs) unless block_given?
+end
+
+==> 027.rb 71 <==
+def m(x:)
+  return to_enum(:m, x: x, **kwargs) unless block_given?
+end
+
+==> 028.rb 87 <==
+def m(x:, **kwargs)
+  return to_enum(:m, x: x, y: 1, **kwargs) unless block_given?
+end
+

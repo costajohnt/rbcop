@@ -1,0 +1,138 @@
+==> offenses exit=1 1230 <==
+000.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+001.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+002.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+003.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+009.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+010.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+015.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+018.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+019.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+020.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+022.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+023.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+032.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+035.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+036.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+
+==> autocorrect exit=0 1200 <==
+000.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+001.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+002.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+003.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+009.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+010.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+015.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+018.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+019.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+020.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+022.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+023.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+032.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+035.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+036.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+
+==> corrected/000.rb 53 <==
+case x
+when Integer
+when /foo/
+when (1..10)
+else
+end
+
+==> corrected/001.rb 34 <==
+case x
+when 1
+when 'str'
+else
+end
+
+==> corrected/002.rb 46 <==
+case x
+when CONSTANT1
+when CONSTANT2
+else
+end
+
+==> corrected/003.rb 55 <==
+case foo
+when 1
+when 2
+else
+  foo == 3 ? bar : baz
+end
+
+==> corrected/009.rb 34 <==
+case x
+when Foo
+when Bar
+else
+end
+
+==> corrected/010.rb 38 <==
+case x
+when /foo/
+when /bar/
+else
+end
+
+==> corrected/015.rb 52 <==
+case x
+when /foo/
+when returns_regexp(arg)
+else
+end
+
+==> corrected/018.rb 52 <==
+case x
+when /foo/
+when returns_regexp(arg)
+else
+end
+
+==> corrected/019.rb 41 <==
+case x
+when 1..10
+when 11...100
+else
+end
+
+==> corrected/020.rb 55 <==
+case x
+when Integer, 2
+when 1, (1..10), /foo/
+else
+end
+
+==> corrected/022.rb 65 <==
+case x
+when Integer, 2, 3, /foo/
+when 1, (1..10), /bar/
+else
+end
+
+==> corrected/023.rb 42 <==
+case x.type
+when 1, 2
+when /foo/
+else
+end
+
+==> corrected/032.rb 41 <==
+case foo
+when /(?<name>.*)/
+when 123
+end
+
+==> corrected/035.rb 41 <==
+case foo
+when /(?<name>.*)/
+when 123
+end
+
+==> corrected/036.rb 41 <==
+case foo
+when /(?<name>.*)/
+when 123
+end
+

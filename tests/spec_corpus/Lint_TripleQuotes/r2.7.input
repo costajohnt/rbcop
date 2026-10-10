@@ -1,0 +1,44 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 15 <==
+"""a string"""
+
+==> 001.rb 19 <==
+"""
+  a string
+"""
+
+==> 002.rb 7 <==
+""""""
+
+==> 003.rb 12 <==
+" " " " " "
+
+==> 004.rb 23 <==
+"""""
+  a string
+"""""
+
+==> 005.rb 15 <==
+str = "#{abc}"
+
+==> 006.rb 21 <==
+str = "#{'''abc'''}"
+
+==> 007.rb 53 <==
+str = <<~STRING
+  a string
+  #{interpolation}
+STRING
+
+==> 008.rb 25 <==
+'' ''
+'a''b''c'
+'a''''b'
+

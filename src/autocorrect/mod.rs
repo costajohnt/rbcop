@@ -92,8 +92,6 @@ pub fn correct(
     selected: &dyn Fn(&str) -> bool,
     mode: Mode,
 ) -> Corrected {
-    // parser's Source::Buffer normalises CRLF; corrections are applied to (and written from) that.
-    let text = if text.contains("\r\n") { text.replace("\r\n", "\n") } else { text };
     let (mut offenses, mut current, changed, error, disabled) =
         inspection_loop(path, display, Arc::from(text), cfg, selected, mode);
     let mut changed = changed;
@@ -106,9 +104,11 @@ pub fn correct(
             (o.cop, line_col(text, o.start).0, line_col(text, o.end.max(o.start)).0)
         };
         let checked: Vec<runner::Span> = offenses.iter().map(span).chain(disabled).collect();
-        let (mut found, corrector) = runner::redundant_disables(path, display, &current, cfg, selected, mode, &checked);
+        let normalised = normalise(&current);
+        let (mut found, corrector) =
+            runner::redundant_disables(path, display, &normalised, cfg, selected, mode, &checked);
         for o in &mut found {
-            o.source = Some(current.clone());
+            o.source = Some(normalised.clone());
         }
         offenses.extend(found);
         if let Some(c) = corrector {
@@ -117,16 +117,24 @@ pub fn correct(
             current = text;
             changed = true;
             if let Some(e) = err {
-                eprintln!("{e}");
+                runner::file_error(e);
             }
         }
     }
-    let report = FileReport { offenses: uniq_sorted(offenses), text: current.to_string() };
+    let report = FileReport { offenses: uniq_sorted(offenses), text: normalise(&current).to_string() };
     Corrected { source: changed.then(|| current.to_string()), report, error }
+}
+
+/// parser's Source::Buffer#source: CRLF normalised to LF (what cops see and corrections apply to).
+fn normalise(text: &Arc<str>) -> Arc<str> {
+    if text.contains("\r\n") { Arc::from(text.replace("\r\n", "\n")) } else { text.clone() }
 }
 
 /// Runner#do_inspection_loop: the offenses (unsorted, may repeat), the final source, whether it
 /// changed, the infinite-loop error if any, and the last iteration's comment-disabled offenses.
+/// Each iteration parses the source as written so far (RuboCop re-reads the file): its raw text
+/// (CRLF intact, e.g. for Layout/EndOfLine) and the normalised text the corrections apply to, so
+/// a CRLF a correction produced (`a\r` + inserted `\n`) disappears only if a later pass corrects.
 fn inspection_loop(
     path: &Path,
     display: &str,
@@ -154,11 +162,13 @@ fn inspection_loop(
         if let Some(last) = by_iteration.last_mut() {
             last.retain(|o| o.corrected);
         }
+        let normalised = normalise(&current);
+        let raw = (normalised.len() != current.len()).then_some(&*current);
         let (mut offenses, corrector, off) =
-            runner::analyze_for_correction(path, display, &current, cfg, selected, mode);
+            runner::analyze_for_correction(path, display, &normalised, raw, cfg, selected, mode);
         disabled = off;
         for o in &mut offenses {
-            o.source = Some(current.clone());
+            o.source = Some(normalised.clone());
         }
         by_iteration.push(offenses);
         match corrector {
@@ -196,7 +206,13 @@ pub fn correct_bytes(
     mode: Mode,
 ) -> Corrected {
     match String::from_utf8(bytes) {
-        Ok(text) => correct(path, display, text, cfg, selected, mode),
+        Ok(text) if crate::source::encoding_error(text.as_bytes()).is_none() => {
+            correct(path, display, text, cfg, selected, mode)
+        }
+        Ok(text) => {
+            let report = runner::inspect_bytes(path, display, text.into_bytes(), cfg, selected);
+            Corrected { report, source: None, error: None }
+        }
         // ponytail: never rewrite a source that is not valid UTF-8; it is only inspected.
         Err(e) => {
             let report = runner::inspect_bytes(path, display, e.into_bytes(), cfg, selected);

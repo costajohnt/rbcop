@@ -1,0 +1,92 @@
+==> .rubocop.yml 165 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/AssignmentInCondition:
+  AllowSafeAssignment: false
+
+==> 000.rb 19 <==
+if (test = 10)
+end
+
+==> 001.rb 22 <==
+if (test[0] = 10)
+end
+
+==> 002.rb 33 <==
+if (foo == bar && test = 10)
+end
+
+==> 003.rb 35 <==
+if ((foo == bar && test = 10))
+end
+
+==> 004.rb 42 <==
+do_something if (foo == bar && test = 10)
+
+==> 005.rb 36 <==
+while (foo == bar && test = 10)
+end
+
+==> 006.rb 38 <==
+while ((foo == bar && test = 10))
+end
+
+==> 007.rb 45 <==
+do_something while (foo == bar && test = 10)
+
+==> 008.rb 36 <==
+until (foo == bar && test = 10)
+end
+
+==> 009.rb 38 <==
+until ((foo == bar && test = 10))
+end
+
+==> 010.rb 45 <==
+do_something until (foo == bar && test = 10)
+
+==> 011.rb 34 <==
+if (test = foo && bar == baz)
+end
+
+==> 012.rb 33 <==
+if (foo == bar || test = 10)
+end
+
+==> 013.rb 35 <==
+if ((foo == bar || test = 10))
+end
+
+==> 014.rb 42 <==
+do_something if (foo == bar || test = 10)
+
+==> 015.rb 36 <==
+while (foo == bar || test = 10)
+end
+
+==> 016.rb 38 <==
+while ((foo == bar || test = 10))
+end
+
+==> 017.rb 45 <==
+do_something while (foo == bar || test = 10)
+
+==> 018.rb 36 <==
+until (foo == bar || test = 10)
+end
+
+==> 019.rb 38 <==
+until ((foo == bar || test = 10))
+end
+
+==> 020.rb 45 <==
+do_something until (foo == bar || test = 10)
+
+==> 021.rb 34 <==
+if (test = foo || bar == baz)
+end
+

@@ -1,0 +1,19 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 23 <==
+-> () { do_something }
+
+==> 001.rb 27 <==
+lambda { || do_something }
+
+==> 002.rb 40 <==
+def foo
+  super { || do_something }
+end
+

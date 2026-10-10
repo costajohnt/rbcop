@@ -1,0 +1,485 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 29 <==
+return unless item.positive?
+
+==> 001.rb 46 <==
+def foo
+  return if need_return?
+  foobar
+end
+
+==> 002.rb 113 <==
+def foo
+  return another_object if something_different?
+  begin
+    bar
+  rescue SomeException
+    baz
+  end
+end
+
+==> 003.rb 102 <==
+def foo
+  raise ArgumentError, <<-MSG unless path
+    Must be called with mount point
+  MSG
+  bar
+end
+
+==> 004.rb 98 <==
+def foo
+  raise ArgumentError, <<-MSG if path
+    Must be called with mount point
+  MSG
+  bar
+end
+
+==> 005.rb 45 <==
+raise(<<-FAIL) unless true
+  #{1 + 1}
+FAIL
+1
+
+==> 006.rb 42 <==
+def foo
+  raise unless $1 == o
+
+  bar
+end
+
+==> 007.rb 147 <==
+def foo
+  raise SerializationError.new("Unsupported argument type: #{argument.class.name}") unless serializer
+  serializer.serialize(argument)
+end
+
+==> 008.rb 65 <==
+def foo
+  render :foo and return if condition
+  do_something
+end
+
+==> 009.rb 64 <==
+def foo
+  render :foo or return if condition
+  do_something
+end
+
+==> 010.rb 109 <==
+def foo
+  return if condition
+  # rubocop:disable Department/Cop
+  bar
+  # rubocop:enable Department/Cop
+end
+
+==> 011.rb 109 <==
+def foo
+  # rubocop:disable Department/Cop
+  return if condition
+  # rubocop:enable Department/Cop
+  bar
+end
+
+==> 012.rb 45 <==
+def foo
+  foo += 1 if need_add?
+  foobar
+end
+
+==> 013.rb 91 <==
+def method
+  if truthy
+    raise <<-MSG
+      This is an error.
+    MSG
+  end
+
+  value
+end
+
+==> 014.rb 90 <==
+def method
+  if truthy
+    raise <<-MSG
+      This is an error.
+    MSG
+  end
+  value
+end
+
+==> 015.rb 45 <==
+def foo
+  if something?
+    return
+  end
+end
+
+==> 016.rb 85 <==
+def foo
+  raise ArgumentError, 'HTTP redirect too deep' if limit.zero?
+
+  foobar
+end
+
+==> 017.rb 110 <==
+def foo
+  # rubocop:disable Department/Cop
+  return if condition
+  # rubocop:enable Department/Cop
+
+  bar
+end
+
+==> 018.rb 65 <==
+def foo
+  # :nocov:
+  return if condition
+  # :nocov:
+
+  bar
+end
+
+==> 019.rb 95 <==
+def foo
+  # :nocov: legacy adapter
+  return if condition
+  # :nocov: legacy adapter
+
+  bar
+end
+
+==> 020.rb 84 <==
+def foo
+  # simplecov:disable
+  return if condition
+  # simplecov:enable
+
+  bar
+end
+
+==> 021.rb 140 <==
+def foo
+  # simplecov:disable line, branch legacy adapter
+  return if condition
+  # simplecov:enable line, branch legacy adapter
+
+  bar
+end
+
+==> 022.rb 82 <==
+def foo
+  #simplecov:disable
+  return if condition
+  #simplecov:enable
+
+  bar
+end
+
+==> 023.rb 88 <==
+def foo
+  # simplecov : disable
+  return if condition
+  # simplecov : enable
+
+  bar
+end
+
+==> 024.rb 83 <==
+def foo
+  # simplecov:disable
+  return if condition
+  # simplecov:enable
+  bar
+end
+
+==> 025.rb 80 <==
+def foo
+  object.tap { |obj| return another_object if something? }
+  foobar
+end
+
+==> 026.rb 41 <==
+return if condition
+foo do
+  bar
+end
+baz
+
+==> 027.rb 42 <==
+return if condition; foo do
+  bar
+end
+baz
+
+==> 028.rb 46 <==
+return if condition; foo do
+  bar(_1)
+end
+baz
+
+==> 029.rb 151 <==
+def foo
+  return another_object if something?
+  return another_object if something_else?
+  return another_object if something_different?
+
+  foobar
+end
+
+==> 030.rb 102 <==
+def foo
+  render :bar and return if condition1?
+  render :baz and return if condition2?
+
+  foobar
+end
+
+==> 031.rb 93 <==
+def foo
+  return if something?
+  if something_else?
+    raise bar(
+      baz
+    )
+  end
+end
+
+==> 032.rb 92 <==
+def foo
+  return if something?
+  if something_else?
+    fail bar(
+      baz
+    )
+  end
+end
+
+==> 033.rb 94 <==
+def foo
+  return if something?
+  if something_else?
+    return bar(
+      baz
+    )
+  end
+end
+
+==> 034.rb 110 <==
+collection.each do |item|
+  break if something?
+  if something_else?
+    break bar(
+      baz
+    )
+  end
+end
+
+==> 035.rb 108 <==
+collection.each do |item|
+  next if something?
+  if something_else?
+    next bar(
+      baz
+    )
+  end
+end
+
+==> 036.rb 87 <==
+def foo
+  return if something?
+  if something_else?
+    bar(
+      baz
+    )
+  end
+end
+
+==> 037.rb 60 <==
+def foo
+  return another_object if something_different?
+end
+
+==> 038.rb 107 <==
+def foo
+  begin
+    return another_object if something_different?
+  rescue SomeException
+    bar
+  end
+end
+
+==> 039.rb 93 <==
+def foo
+  begin
+    return another_object if something_different?
+  ensure
+    bar
+  end
+end
+
+==> 040.rb 122 <==
+def foo
+  begin
+    bar
+  rescue SomeException
+    return another_object if something_different?
+  else
+    bar
+  end
+end
+
+==> 041.rb 93 <==
+def foo
+  if cond
+    return another_object if something_different?
+  else
+    bar
+  end
+end
+
+==> 042.rb 94 <==
+def foo
+  if cond
+    return another_object if something_different?
+  elsif
+    bar
+  end
+end
+
+==> 043.rb 103 <==
+def foo
+  raise ArgumentError, <<-MSG unless path
+    Must be called with mount point
+  MSG
+
+  bar
+end
+
+==> 044.rb 91 <==
+def foo
+  raise ArgumentError, <<-MSG unless path
+    foo
+    bar
+    baz
+  MSG
+
+  bar
+end
+
+==> 045.rb 143 <==
+def foo
+  raise ArgumentError, <<~END.squish.it.good unless guard
+    A multiline message
+    that will be squished.
+  END
+
+  return_value
+end
+
+==> 046.rb 141 <==
+def foo
+  raise ArgumentError, call(<<~END.squish) unless guard
+    A multiline message
+    that will be squished.
+  END
+
+  return_value
+end
+
+==> 047.rb 137 <==
+def foo
+  raise ArgumentError, (<<~END.squish) unless guard
+    A multiline message
+    that will be squished.
+  END
+
+  return_value
+end
+
+==> 048.rb 73 <==
+def foo
+  return true if <<~TEXT.length > bar
+    hi
+  TEXT
+
+  false
+end
+
+==> 049.rb 65 <==
+def foo
+  raise if <<~TEXT.length > bar
+    hi
+  TEXT
+
+  baz
+end
+
+==> 050.rb 100 <==
+def foo
+  puts 'some action happens here'
+rescue => e
+  a_check ? raise(e) : other_thing
+  true
+end
+
+==> 051.rb 51 <==
+def foo
+  return unless need_next?
+  end_this!
+end
+
+==> 052.rb 55 <==
+def foo
+  return if foo?
+  return if bar?
+  foobar
+end
+
+==> 053.rb 86 <==
+def foo
+  puts(<<~MSG) and return if bar
+    A multiline
+    message
+  MSG
+
+  baz
+end
+
+==> 054.rb 85 <==
+def foo
+  puts(<<~MSG) and return if bar
+    A multiline
+    message
+  MSG
+  baz
+end
+
+==> 055.rb 59 <==
+def foo(item)
+  return unless item.positive?; item * 2
+end
+
+==> 056.rb 61 <==
+def foo(item)
+  return unless item.positive?;
+  item * 2
+end
+
+==> 057.rb 36 <==
+if cond then return end.then { 42 }
+
+==> 058.rb 62 <==
+def foo(item)
+  return unless item.positive?;
+
+  item * 2
+end
+

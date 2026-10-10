@@ -1,0 +1,58 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 3 <==
+()
+
+==> 001.rb 5 <==
+(())
+
+==> 002.rb 11 <==
+if (); end
+
+==> 003.rb 28 <==
+if foo
+  1
+elsif ()
+  2
+end
+
+==> 004.rb 29 <==
+case ()
+when :foo then 1
+end
+
+==> 005.rb 28 <==
+case foo
+when () then 1
+end
+
+==> 006.rb 18 <==
+() ? true : false
+
+==> 007.rb 15 <==
+foo ? () : bar
+
+==> 008.rb 17 <==
+def foo
+  ()
+end
+
+==> 009.rb 16 <==
+if foo
+  ()
+end
+
+==> 010.rb 31 <==
+case foo
+when :bar then ()
+end
+
+==> 011.rb 9 <==
+foo = ()
+

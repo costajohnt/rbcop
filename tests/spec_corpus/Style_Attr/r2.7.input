@@ -1,0 +1,58 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 33 <==
+class SomeClass
+  attr :name
+end
+
+==> 001.rb 41 <==
+SomeClass.class_eval do
+  attr :name
+end
+
+==> 002.rb 42 <==
+SomeClass.module_eval do
+  attr :name
+end
+
+==> 003.rb 50 <==
+class SomeClass
+  attr :name
+
+  def foo
+  end
+end
+
+==> 004.rb 10 <==
+func(attr)
+==> 005.rb 10 <==
+x.attr arg
+==> 006.rb 82 <==
+class SomeClass
+  def attr(*args)
+    p args
+  end
+
+  def a
+    attr(1)
+  end
+end
+
+==> 007.rb 11 <==
+attr :name
+
+==> 008.rb 18 <==
+attr :name, false
+
+==> 009.rb 17 <==
+attr :name, true
+
+==> 010.rb 16 <==
+attr :foo, :bar
+

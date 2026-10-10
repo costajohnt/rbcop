@@ -1,0 +1,30 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 31 <==
+lambda(&proc { do_something })
+
+==> 001.rb 35 <==
+lambda(&Proc.new { do_something })
+
+==> 002.rb 43 <==
+pr = Proc.new { do_something }
+lambda(&pr)
+
+==> 003.rb 24 <==
+lambda { do_something }
+
+==> 004.rb 12 <==
+lambda.call
+
+==> 005.rb 23 <==
+lambda(&:do_something)
+
+==> 006.rb 18 <==
+lambda(&obj&.foo)
+

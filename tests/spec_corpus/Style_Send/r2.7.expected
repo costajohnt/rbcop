@@ -1,0 +1,10 @@
+==> offenses exit=1 261 <==
+000.rb:1:8: C: Style/Send: Prefer `Object#__send__` or `Object#public_send` to `send`.
+001.rb:1:9: C: Style/Send: Prefer `Object#__send__` or `Object#public_send` to `send`.
+003.rb:1:1: C: Style/Send: Prefer `Object#__send__` or `Object#public_send` to `send`.
+
+==> autocorrect exit=1 261 <==
+000.rb:1:8: C: Style/Send: Prefer `Object#__send__` or `Object#public_send` to `send`.
+001.rb:1:9: C: Style/Send: Prefer `Object#__send__` or `Object#public_send` to `send`.
+003.rb:1:1: C: Style/Send: Prefer `Object#__send__` or `Object#public_send` to `send`.
+

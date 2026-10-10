@@ -1,0 +1,110 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 40 <==
+attr_accessor :foo
+def do_something
+end
+
+==> 001.rb 50 <==
+attr_accessor :foo # comment
+def do_something
+end
+
+==> 002.rb 50 <==
+attr_accessor :foo
+# comment
+def do_something
+end
+
+==> 003.rb 84 <==
+attr_accessor :foo
+attr_reader :bar
+attr_writer :baz
+# comment
+def do_something
+end
+
+==> 004.rb 60 <==
+attr_accessor :foo
+# comment
+# comment
+def do_something
+end
+
+==> 005.rb 73 <==
+attr_accessor :foo
+# rubocop:disable Department/Cop
+def do_something
+end
+
+==> 006.rb 105 <==
+# rubocop:disable Department/Cop
+attr_accessor :foo
+# rubocop:enable Department/Cop
+def do_something
+end
+
+==> 007.rb 115 <==
+# rubocop:disable Department/Cop
+attr_accessor :foo
+# rubocop:enable Department/Cop
+# comment
+def do_something
+end
+
+==> 008.rb 41 <==
+attr_accessor :foo
+
+def do_something
+end
+
+==> 009.rb 106 <==
+# rubocop:disable Department/Cop
+attr_accessor :foo
+# rubocop:enable Department/Cop
+
+def do_something
+end
+
+==> 010.rb 18 <==
+attr_accessor :foo
+==> 011.rb 75 <==
+attr_accessor :foo
+attr_reader :bar
+attr_writer :baz
+
+def do_something
+end
+
+==> 012.rb 85 <==
+attr_accessor :foo
+attr_reader :bar
+attr_writer :baz
+
+# comment
+def do_something
+end
+
+==> 013.rb 35 <==
+class Foo
+  attr_accessor :foo
+end
+
+==> 014.rb 25 <==
+class Foo
+  attr.foo
+end
+
+==> 015.rb 56 <==
+if condition
+  attr_reader :foo
+else
+  do_something
+end
+

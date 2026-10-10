@@ -1,0 +1,171 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 4 <==
+/\#/
+==> 001.rb 6 <==
+%x{\#}
+==> 002.rb 10 <==
+"__FILE__"
+==> 003.rb 9 <==
+"__dir__"
+==> 004.rb 16 <==
+"\##{whatever}"
+
+==> 005.rb 13 <==
+"\#whatever"
+
+==> 006.rb 16 <==
+"#\{whatever\}"
+
+==> 007.rb 16 <==
+"\#\{whatever}"
+
+==> 008.rb 5 <==
+"\#"
+
+==> 009.rb 5 <==
+"\'"
+
+==> 010.rb 22 <==
+"\\\\ \\'foo\\' \\\\"
+
+==> 011.rb 13 <==
+"\""\
+  "\""
+
+==> 012.rb 13 <==
+"\'"\
+  "\'"
+
+==> 013.rb 4 <==
+"\""
+==> 014.rb 14 <==
+:"\"#{value}"
+
+==> 015.rb 18 <==
+%Q(\##{whatever})
+
+==> 016.rb 15 <==
+%Q(\#whatever)
+
+==> 017.rb 18 <==
+%Q(#\{whatever\})
+
+==> 018.rb 18 <==
+%Q(\#\{whatever})
+
+==> 019.rb 7 <==
+%Q(\#)
+
+==> 020.rb 7 <==
+%Q(\')
+
+==> 021.rb 18 <==
+%Q!\##{whatever}!
+
+==> 022.rb 15 <==
+%Q!\#whatever!
+
+==> 023.rb 18 <==
+%Q!#\{whatever\}!
+
+==> 024.rb 18 <==
+%Q!\#\{whatever}!
+
+==> 025.rb 7 <==
+%Q!\#!
+
+==> 026.rb 7 <==
+%Q!\'!
+
+==> 027.rb 17 <==
+%(\##{whatever})
+
+==> 028.rb 14 <==
+%(\#whatever)
+
+==> 029.rb 17 <==
+%(#\{whatever\})
+
+==> 030.rb 17 <==
+%(\#\{whatever})
+
+==> 031.rb 6 <==
+%(\#)
+
+==> 032.rb 6 <==
+%(\')
+
+==> 033.rb 19 <==
+%w[foo\  bar\  baz]
+==> 034.rb 18 <==
+%W[\##{whatever}]
+
+==> 035.rb 15 <==
+%W[\#whatever]
+
+==> 036.rb 18 <==
+%W[#\{whatever\}]
+
+==> 037.rb 18 <==
+%W[\#\{whatever}]
+
+==> 038.rb 7 <==
+%W[\#]
+
+==> 039.rb 7 <==
+%W[\']
+
+==> 040.rb 19 <==
+%W[foo\  bar\  baz]
+==> 041.rb 3 <==
+?a
+
+==> 042.rb 4 <==
+?\n
+
+==> 043.rb 53 <==
+<<~MYHEREDOC
+  #{foo.gsub(/[a-z]+/, '\"')}
+MYHEREDOC
+
+==> 044.rb 80 <==
+<<~MYHEREDOC
+  #{
+    <<~'OTHERHEREDOC'
+      \#
+    OTHERHEREDOC
+  }
+MYHEREDOC
+
+==> 045.rb 39 <==
+<<~MYHEREDOC
+  \##{whatever}
+MYHEREDOC
+
+==> 046.rb 36 <==
+<<~MYHEREDOC
+  \#whatever
+MYHEREDOC
+
+==> 047.rb 28 <==
+<<~MYHEREDOC
+  \#
+MYHEREDOC
+
+==> 048.rb 28 <==
+<<~MYHEREDOC
+  \'
+MYHEREDOC
+
+==> 049.rb 32 <==
+<<~MYHEREDOC
+  \ text
+MYHEREDOC
+

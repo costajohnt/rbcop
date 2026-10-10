@@ -1,0 +1,9 @@
+==> offenses exit=1 119 <==
+000.rb:1:16: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`. Use `+` instead of `+=`.
+
+==> autocorrect exit=0 117 <==
+000.rb:1:16: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`. Use `+` instead of `+=`.
+
+==> corrected/000.rb 26 <==
+do_something { foo + it }
+

@@ -1,0 +1,13 @@
+==> offenses exit=1 66 <==
+000.rb:2:3: C: [Correctable] Style/For: Prefer `for` over `each`.
+
+==> autocorrect exit=0 64 <==
+000.rb:2:3: C: [Corrected] Style/For: Prefer `for` over `each`.
+
+==> corrected/000.rb 55 <==
+def func
+  for _ in [1, 2, 3] do
+    puts it
+  end
+end
+

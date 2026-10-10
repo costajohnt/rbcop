@@ -1,0 +1,43 @@
+==> .rubocop.yml 192 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SpecialGlobalVars:
+  EnforcedStyle: use_english_names
+  RequireEnglish: false
+
+==> 000.rb 8 <==
+puts $:
+
+==> 001.rb 8 <==
+puts $"
+
+==> 002.rb 8 <==
+puts $0
+
+==> 003.rb 8 <==
+puts $$
+
+==> 004.rb 8 <==
+puts $*
+
+==> 005.rb 7 <==
+puts $1
+==> 006.rb 3 <==
+$/
+
+==> 007.rb 6 <==
+"#$:"
+
+==> 008.rb 8 <==
+"#{$!}"
+
+==> 009.rb 3 <==
+$0
+
+==> 010.rb 16 <==
+$!; $ERROR_INFO
+

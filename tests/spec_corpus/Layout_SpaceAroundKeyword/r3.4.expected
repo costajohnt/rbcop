@@ -1,0 +1,14 @@
+==> offenses exit=1 190 <==
+000.rb:1:6: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `do` is missing.
+001.rb:1:16: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `end` is missing.
+
+==> autocorrect exit=0 186 <==
+000.rb:1:6: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `do` is missing.
+001.rb:1:16: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `end` is missing.
+
+==> corrected/000.rb 16 <==
+a "b" do it end
+
+==> corrected/001.rb 20 <==
+a do it.to_s"a" end
+

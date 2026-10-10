@@ -1,0 +1,14 @@
+==> .rubocop.yml 192 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/ExtraSpacing:
+  AllowForAlignment: false
+  AllowBeforeTrailingComments: true
+
+==> 000.rb 45 <==
+object.method(argument)  # this is a comment
+

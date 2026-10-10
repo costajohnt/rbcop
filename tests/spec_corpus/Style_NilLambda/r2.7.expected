@@ -1,0 +1,123 @@
+==> offenses exit=1 2059 <==
+000.rb:1:1: C: [Correctable] Style/NilLambda: Use an empty lambda instead of always returning nil.
+001.rb:1:1: C: [Correctable] Style/NilLambda: Use an empty lambda instead of always returning nil.
+002.rb:1:1: C: [Correctable] Style/NilLambda: Use an empty lambda instead of always returning nil.
+003.rb:1:1: C: [Correctable] Style/NilLambda: Use an empty lambda instead of always returning nil.
+006.rb:1:6: C: [Correctable] Style/NilLambda: Use an empty lambda instead of always returning nil.
+007.rb:1:1: C: [Correctable] Style/NilLambda: Use an empty lambda instead of always returning nil.
+008.rb:1:1: C: [Correctable] Style/NilLambda: Use an empty lambda instead of always returning nil.
+009.rb:1:1: C: [Correctable] Style/NilLambda: Use an empty lambda instead of always returning nil.
+010.rb:1:1: C: [Correctable] Style/NilLambda: Use an empty lambda instead of always returning nil.
+011.rb:1:1: C: [Correctable] Style/NilLambda: Use an empty lambda instead of always returning nil.
+014.rb:1:1: C: [Correctable] Style/NilLambda: Use an empty lambda instead of always returning nil.
+015.rb:1:1: C: [Correctable] Style/NilLambda: Use an empty proc instead of always returning nil.
+017.rb:1:1: C: [Correctable] Style/NilLambda: Use an empty proc instead of always returning nil.
+018.rb:1:1: C: [Correctable] Style/NilLambda: Use an empty proc instead of always returning nil.
+021.rb:1:6: C: [Correctable] Style/NilLambda: Use an empty proc instead of always returning nil.
+022.rb:1:1: C: [Correctable] Style/NilLambda: Use an empty proc instead of always returning nil.
+023.rb:1:1: C: [Correctable] Style/NilLambda: Use an empty proc instead of always returning nil.
+025.rb:1:1: C: [Correctable] Style/NilLambda: Use an empty proc instead of always returning nil.
+026.rb:1:1: C: [Correctable] Style/NilLambda: Use an empty proc instead of always returning nil.
+029.rb:1:6: C: [Correctable] Style/NilLambda: Use an empty proc instead of always returning nil.
+030.rb:1:1: C: [Correctable] Style/NilLambda: Use an empty proc instead of always returning nil.
+
+==> autocorrect exit=0 2017 <==
+000.rb:1:1: C: [Corrected] Style/NilLambda: Use an empty lambda instead of always returning nil.
+001.rb:1:1: C: [Corrected] Style/NilLambda: Use an empty lambda instead of always returning nil.
+002.rb:1:1: C: [Corrected] Style/NilLambda: Use an empty lambda instead of always returning nil.
+003.rb:1:1: C: [Corrected] Style/NilLambda: Use an empty lambda instead of always returning nil.
+006.rb:1:6: C: [Corrected] Style/NilLambda: Use an empty lambda instead of always returning nil.
+007.rb:1:1: C: [Corrected] Style/NilLambda: Use an empty lambda instead of always returning nil.
+008.rb:1:1: C: [Corrected] Style/NilLambda: Use an empty lambda instead of always returning nil.
+009.rb:1:1: C: [Corrected] Style/NilLambda: Use an empty lambda instead of always returning nil.
+010.rb:1:1: C: [Corrected] Style/NilLambda: Use an empty lambda instead of always returning nil.
+011.rb:1:1: C: [Corrected] Style/NilLambda: Use an empty lambda instead of always returning nil.
+014.rb:1:1: C: [Corrected] Style/NilLambda: Use an empty lambda instead of always returning nil.
+015.rb:1:1: C: [Corrected] Style/NilLambda: Use an empty proc instead of always returning nil.
+017.rb:1:1: C: [Corrected] Style/NilLambda: Use an empty proc instead of always returning nil.
+018.rb:1:1: C: [Corrected] Style/NilLambda: Use an empty proc instead of always returning nil.
+021.rb:1:6: C: [Corrected] Style/NilLambda: Use an empty proc instead of always returning nil.
+022.rb:1:1: C: [Corrected] Style/NilLambda: Use an empty proc instead of always returning nil.
+023.rb:1:1: C: [Corrected] Style/NilLambda: Use an empty proc instead of always returning nil.
+025.rb:1:1: C: [Corrected] Style/NilLambda: Use an empty proc instead of always returning nil.
+026.rb:1:1: C: [Corrected] Style/NilLambda: Use an empty proc instead of always returning nil.
+029.rb:1:6: C: [Corrected] Style/NilLambda: Use an empty proc instead of always returning nil.
+030.rb:1:1: C: [Corrected] Style/NilLambda: Use an empty proc instead of always returning nil.
+
+==> corrected/000.rb 14 <==
+lambda do
+end
+
+==> corrected/001.rb 14 <==
+lambda do
+end
+
+==> corrected/002.rb 14 <==
+lambda do
+end
+
+==> corrected/003.rb 14 <==
+lambda do
+end
+
+==> corrected/006.rb 28 <==
+fn = lambda do |x|
+     end
+
+==> corrected/007.rb 10 <==
+lambda {}
+
+==> corrected/008.rb 6 <==
+-> {}
+
+==> corrected/009.rb 6 <==
+-> {}
+
+==> corrected/010.rb 6 <==
+-> {}
+
+==> corrected/011.rb 6 <==
+-> {}
+
+==> corrected/014.rb 10 <==
+-> do
+end
+
+==> corrected/015.rb 12 <==
+proc do
+end
+
+==> corrected/017.rb 12 <==
+proc do
+end
+
+==> corrected/018.rb 12 <==
+proc do
+end
+
+==> corrected/021.rb 26 <==
+fn = proc do |x|
+     end
+
+==> corrected/022.rb 8 <==
+proc {}
+
+==> corrected/023.rb 16 <==
+Proc.new do
+end
+
+==> corrected/025.rb 16 <==
+Proc.new do
+end
+
+==> corrected/026.rb 16 <==
+Proc.new do
+end
+
+==> corrected/029.rb 30 <==
+fn = Proc.new do |x|
+     end
+
+==> corrected/030.rb 12 <==
+Proc.new {}
+

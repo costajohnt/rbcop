@@ -1,0 +1,16 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 18 <==
+# 这是什么？
+
+==> 001.rb 14 <==
+# foo ∂ bar
+
+==> 002.rb 17 <==
+# AZaz1@$%~,;*_`|

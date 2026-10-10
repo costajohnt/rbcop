@@ -1,0 +1,38 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 15 <==
+x.flatten.join
+
+==> 001.rb 20 <==
+x.flatten.join(nil)
+
+==> 002.rb 22 <==
+x.flatten(depth).join
+
+==> 003.rb 17 <==
+x&.flatten&.join
+
+==> 004.rb 14 <==
+x.flatten.foo
+
+==> 005.rb 10 <==
+x.flatten
+
+==> 006.rb 26 <==
+x.flatten.join(separator)
+
+==> 007.rb 13 <==
+flatten.join
+
+==> 008.rb 33 <==
+x.flatten(depth, extra_arg).join
+
+==> 009.rb 37 <==
+x.flatten.join(separator, extra_arg)
+

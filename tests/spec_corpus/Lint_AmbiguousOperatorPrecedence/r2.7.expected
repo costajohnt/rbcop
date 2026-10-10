@@ -1,0 +1,54 @@
+==> offenses exit=1 2122 <==
+005.rb:1:5: W: [Correctable] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+006.rb:1:1: W: [Correctable] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+006.rb:2:6: W: [Correctable] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+007.rb:1:6: W: [Correctable] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+007.rb:2:1: W: [Correctable] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+008.rb:1:6: W: [Correctable] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+008.rb:1:10: W: [Correctable] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+009.rb:1:1: W: [Correctable] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+010.rb:1:6: W: [Correctable] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+010.rb:1:11: W: [Correctable] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+010.rb:1:19: W: [Correctable] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+010.rb:1:23: W: [Correctable] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+010.rb:1:33: W: [Correctable] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+010.rb:1:41: W: [Correctable] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+010.rb:1:53: W: [Correctable] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+
+==> autocorrect exit=0 2092 <==
+005.rb:1:5: W: [Corrected] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+006.rb:1:1: W: [Corrected] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+006.rb:2:6: W: [Corrected] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+007.rb:1:6: W: [Corrected] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+007.rb:2:1: W: [Corrected] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+008.rb:1:6: W: [Corrected] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+008.rb:1:10: W: [Corrected] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+009.rb:1:1: W: [Corrected] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+010.rb:1:6: W: [Corrected] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+010.rb:1:11: W: [Corrected] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+010.rb:1:19: W: [Corrected] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+010.rb:1:23: W: [Corrected] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+010.rb:1:33: W: [Corrected] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+010.rb:1:41: W: [Corrected] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+010.rb:1:53: W: [Corrected] Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
+
+==> corrected/005.rb 12 <==
+a + (b * c)
+
+==> corrected/006.rb 28 <==
+(a && b) || c
+a || (b && c)
+
+==> corrected/007.rb 26 <==
+a && (b * c)
+(a * b) && c
+
+==> corrected/008.rb 21 <==
+(a + (b * (c ** d)))
+
+==> corrected/009.rb 73 <==
+(((((((a ** b) * c / d % e) + f - g) << h >> i) & j) | k ^ l) && m) || n
+
+==> corrected/010.rb 73 <==
+a || (b && (c | d ^ (e & (f << g >> (h + i - (j * k / l % (n ** m)))))))
+

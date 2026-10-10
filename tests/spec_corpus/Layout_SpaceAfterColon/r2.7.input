@@ -1,0 +1,38 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 6 <==
+{a:3}
+
+==> 001.rb 6 <==
+x = :a
+==> 002.rb 13 <==
+x = w ? a : b
+==> 003.rb 6 <==
+{a: 3}
+==> 004.rb 12 <==
+x = {"a"=>1}
+==> 005.rb 25 <==
+x = if w
+      a
+    end
+
+==> 006.rb 10 <==
+str << ':'
+==> 007.rb 18 <==
+def f(x:, y:)
+end
+
+==> 008.rb 35 <==
+def initialize(table:, nodes:)
+end
+
+==> 009.rb 31 <==
+def m(var:1, other_var: 2)
+end
+

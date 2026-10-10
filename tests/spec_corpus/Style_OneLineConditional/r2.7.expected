@@ -1,0 +1,273 @@
+==> offenses exit=1 6794 <==
+000.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+002.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+005.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `unless/then/else/end` constructs.
+006.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+006.rb:1:23: C: Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+007.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor multi-line `if` over single-line `if/then/else/end` constructs.
+010.rb:1:5: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+011.rb:1:5: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+012.rb:1:5: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+013.rb:1:7: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+014.rb:1:6: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+015.rb:1:7: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+016.rb:1:6: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+017.rb:1:5: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+018.rb:1:6: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+019.rb:1:5: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+020.rb:1:6: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+021.rb:1:6: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+022.rb:1:6: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+023.rb:1:5: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+024.rb:1:5: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+025.rb:1:5: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+026.rb:1:5: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+027.rb:1:5: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+028.rb:1:6: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+029.rb:1:5: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+030.rb:1:5: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+031.rb:1:6: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+032.rb:1:6: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+033.rb:1:6: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+034.rb:1:6: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+035.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+036.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+037.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+038.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+039.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+040.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+041.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+042.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+043.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+044.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+045.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+046.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+047.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+048.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+049.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+050.rb:1:14: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+051.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor multi-line `if` over single-line `if/then/else/end` constructs.
+052.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor multi-line `if` over single-line `if/then/else/end` constructs.
+053.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor multi-line `if` over single-line `if/then/else/end` constructs.
+
+==> autocorrect exit=0 6708 <==
+000.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+002.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+005.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `unless/then/else/end` constructs.
+006.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+006.rb:1:15: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+007.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor multi-line `if` over single-line `if/then/else/end` constructs.
+010.rb:1:5: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+011.rb:1:5: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+012.rb:1:5: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+013.rb:1:7: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+014.rb:1:6: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+015.rb:1:7: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+016.rb:1:6: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+017.rb:1:5: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+018.rb:1:6: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+019.rb:1:5: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+020.rb:1:6: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+021.rb:1:6: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+022.rb:1:6: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+023.rb:1:5: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+024.rb:1:5: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+025.rb:1:5: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+026.rb:1:5: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+027.rb:1:5: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+028.rb:1:6: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+029.rb:1:5: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+030.rb:1:5: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+031.rb:1:6: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+032.rb:1:6: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+033.rb:1:6: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+034.rb:1:6: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+035.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+036.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+037.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+038.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+039.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+040.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+041.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+042.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+043.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+044.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+045.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+046.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+047.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+048.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+049.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+050.rb:1:14: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+051.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor multi-line `if` over single-line `if/then/else/end` constructs.
+052.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor multi-line `if` over single-line `if/then/else/end` constructs.
+053.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor multi-line `if` over single-line `if/then/else/end` constructs.
+
+==> corrected/000.rb 18 <==
+cond ? run : dont
+
+==> corrected/002.rb 18 <==
+cond ? nil : dont
+
+==> corrected/005.rb 18 <==
+cond ? dont : run
+
+==> corrected/006.rb 33 <==
+cond ? foo : (cond2 ? bar : baz)
+
+==> corrected/007.rb 34 <==
+if cond
+  foo
+else
+  bar; baz
+end
+
+==> corrected/010.rb 24 <==
+a | (cond ? run : dont)
+
+==> corrected/011.rb 24 <==
+a ^ (cond ? run : dont)
+
+==> corrected/012.rb 24 <==
+a & (cond ? run : dont)
+
+==> corrected/013.rb 26 <==
+a <=> (cond ? run : dont)
+
+==> corrected/014.rb 25 <==
+a == (cond ? run : dont)
+
+==> corrected/015.rb 26 <==
+a === (cond ? run : dont)
+
+==> corrected/016.rb 25 <==
+a =~ (cond ? run : dont)
+
+==> corrected/017.rb 24 <==
+a > (cond ? run : dont)
+
+==> corrected/018.rb 25 <==
+a >= (cond ? run : dont)
+
+==> corrected/019.rb 24 <==
+a < (cond ? run : dont)
+
+==> corrected/020.rb 25 <==
+a <= (cond ? run : dont)
+
+==> corrected/021.rb 25 <==
+a << (cond ? run : dont)
+
+==> corrected/022.rb 25 <==
+a >> (cond ? run : dont)
+
+==> corrected/023.rb 24 <==
+a + (cond ? run : dont)
+
+==> corrected/024.rb 24 <==
+a - (cond ? run : dont)
+
+==> corrected/025.rb 24 <==
+a * (cond ? run : dont)
+
+==> corrected/026.rb 24 <==
+a / (cond ? run : dont)
+
+==> corrected/027.rb 24 <==
+a % (cond ? run : dont)
+
+==> corrected/028.rb 25 <==
+a ** (cond ? run : dont)
+
+==> corrected/029.rb 24 <==
+a ~ (cond ? run : dont)
+
+==> corrected/030.rb 24 <==
+a ! (cond ? run : dont)
+
+==> corrected/031.rb 25 <==
+a != (cond ? run : dont)
+
+==> corrected/032.rb 25 <==
+a !~ (cond ? run : dont)
+
+==> corrected/033.rb 25 <==
+a && (cond ? run : dont)
+
+==> corrected/034.rb 25 <==
+a || (cond ? run : dont)
+
+==> corrected/035.rb 31 <==
+(puts 1) ? (puts 1) : (puts 1)
+
+==> corrected/036.rb 46 <==
+(defined? :A) ? (defined? :A) : (defined? :A)
+
+==> corrected/037.rb 34 <==
+(yield a) ? (yield a) : (yield a)
+
+==> corrected/038.rb 34 <==
+(super b) ? (super b) : (super b)
+
+==> corrected/039.rb 28 <==
+(not a) ? (not a) : (not a)
+
+==> corrected/040.rb 34 <==
+(a and b) ? (a and b) : (a and b)
+
+==> corrected/041.rb 31 <==
+(a or b) ? (a or b) : (a or b)
+
+==> corrected/042.rb 28 <==
+(a = b) ? (a = b) : (a = b)
+
+==> corrected/043.rb 40 <==
+(a ? b : c) ? (a ? b : c) : (a ? b : c)
+
+==> corrected/044.rb 35 <==
+(check 1) ? (run 2) : (dont_run 3)
+
+==> corrected/045.rb 26 <==
+a(0) ? puts(1) : yield(2)
+
+==> corrected/046.rb 22 <==
+0 + 0 ? 1 + 1 : 2 + 2
+
+==> corrected/047.rb 17 <==
+true ? break : 7
+
+==> corrected/048.rb 16 <==
+true ? self : 7
+
+==> corrected/049.rb 17 <==
+true ? raise : 7
+
+==> corrected/050.rb 71 <==
+map { |line| (line.match(/^ *#/) || line.strip.empty?) ? next : line }
+
+==> corrected/051.rb 39 <==
+if cond1
+  run
+elsif cond2
+  maybe
+end
+
+==> corrected/052.rb 51 <==
+if cond1
+  run
+elsif cond2
+  maybe
+else
+  dont
+end
+
+==> corrected/053.rb 73 <==
+if cond1
+  run
+elsif cond2
+  maybe
+elsif cond3
+  perhaps
+else
+  dont
+end
+

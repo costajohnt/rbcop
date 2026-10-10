@@ -1,0 +1,78 @@
+==> .rubocop.yml 223 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/QuotedSymbols:
+  EnforcedStyle: same_as_string_literals
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+==> 000.rb 3 <==
+:a
+
+==> 001.rb 5 <==
+:'a'
+
+==> 002.rb 8 <==
+:"#{a}"
+
+==> 003.rb 10 <==
+:"#@test"
+
+==> 004.rb 10 <==
+:"#$test"
+
+==> 005.rb 11 <==
+:"#@@test"
+
+==> 006.rb 8 <==
+:"a\nb"
+
+==> 007.rb 5 <==
+:'"'
+
+==> 008.rb 5 <==
+:"'"
+
+==> 009.rb 10 <==
+:'a
+  bc'
+
+==> 010.rb 10 <==
+:"a
+  bc"
+
+==> 011.rb 6 <==
+:"\e"
+
+==> 012.rb 15 <==
+:"Espa\u00f1a"
+
+==> 013.rb 34 <==
+g = :"\x3D"
+copyright = :"\u00A9"
+
+==> 014.rb 5 <==
+:"a"
+
+==> 015.rb 15 <==
+{ "a": value }
+
+==> 016.rb 13 <==
+:"my\"quote"
+
+==> 017.rb 12 <==
+:"foo\\bar"
+
+==> 018.rb 12 <==
+:'o\'clock'
+
+==> 019.rb 18 <==
+{ :'a' => value }
+
+==> 020.rb 18 <==
+{ :"a" => value }
+

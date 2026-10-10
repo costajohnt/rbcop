@@ -1,0 +1,58 @@
+==> offenses exit=1 1013 <==
+000.rb:1:25: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+001.rb:1:30: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+002.rb:2:9: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+003.rb:2:7: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+004.rb:1:19: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+005.rb:4:9: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+006.rb:2:9: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+007.rb:2:9: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+010.rb:3:9: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+011.rb:2:9: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+
+==> autocorrect exit=0 993 <==
+000.rb:1:25: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+001.rb:1:30: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+002.rb:2:9: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+003.rb:2:7: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+004.rb:1:19: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+005.rb:4:9: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+006.rb:2:9: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+007.rb:2:9: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+010.rb:3:9: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+011.rb:2:9: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+
+==> corrected/000.rb 23 <==
+foo = bar if condition
+
+==> corrected/001.rb 28 <==
+foo = bar(arg) if condition
+
+==> corrected/002.rb 30 <==
+foo = bar.
+  baz if condition
+
+==> corrected/003.rb 25 <==
+foo = (
+  ) if condition
+
+==> corrected/004.rb 27 <==
+foo = bar unless condition
+
+==> corrected/005.rb 23 <==
+foo = bar if condition
+
+==> corrected/006.rb 27 <==
+foo = bar unless condition
+
+==> corrected/007.rb 58 <==
+foo = <<~TEXT unless condition
+          bar
+        TEXT
+
+==> corrected/010.rb 23 <==
+foo = nil if condition
+
+==> corrected/011.rb 27 <==
+foo = nil unless condition
+

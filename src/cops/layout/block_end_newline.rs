@@ -4,33 +4,6 @@ pub const NAME: &str = "Layout/BlockEndNewline";
 pub static COP: BlockEndNewline = BlockEndNewline;
 pub struct BlockEndNewline;
 
-/// End offset of a parser-gem block body (Prism StatementsNode, or an implicit BeginNode holding
-/// rescue/else/ensure clauses, which parser nests as `ensure(rescue(body, resbody..., else))`).
-fn body_end(body: &Node) -> usize {
-    let Some(b) = body.as_begin_node() else { return body.location().end_offset() };
-    let stmts_end = |s: Option<ruby_prism::StatementsNode>| s.map(|s| s.location().end_offset());
-    if let Some(e) = b.ensure_clause() {
-        return stmts_end(e.statements()).unwrap_or(e.ensure_keyword_loc().end_offset());
-    }
-    if let Some(e) = b.else_clause() {
-        return stmts_end(e.statements()).unwrap_or(e.else_keyword_loc().end_offset());
-    }
-    if let Some(mut r) = b.rescue_clause() {
-        while let Some(next) = r.subsequent() {
-            r = next;
-        }
-        let ends = [
-            stmts_end(r.statements()),
-            r.reference().map(|n| n.location().end_offset()),
-            r.then_keyword_loc().map(|l| l.end_offset()),
-            r.exceptions().iter().last().map(|n| n.location().end_offset()),
-            Some(r.keyword_loc().end_offset()),
-        ];
-        return ends.into_iter().flatten().max().unwrap();
-    }
-    stmts_end(b.statements()).unwrap_or(body.location().start_offset())
-}
-
 /// `last_heredoc_argument(node.body)`: the terminator range (`loc.heredoc_end`, without the
 /// newline) of the last single-line `str` heredoc argument of a send, searching receivers too.
 fn last_heredoc_end(body: Option<&Node>) -> Option<(usize, usize)> {
@@ -78,7 +51,7 @@ impl Cop for BlockEndNewline {
             return;
         }
         let last_end = match (&body, &params) {
-            (Some(b), _) => body_end(b),
+            (Some(b), _) => crate::ast::body_range(b).1,
             // numbered/it parameters have no source in parser; RuboCop needs a body there.
             (None, Some(p)) if p.as_block_parameters_node().is_some() => p.location().end_offset(),
             _ => return, // RuboCop crashes (args without a source range)

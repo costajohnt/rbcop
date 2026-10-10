@@ -1,0 +1,26 @@
+==> .rubocop.yml 247 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/HashAlignment:
+  EnforcedHashRocketStyle: separator
+  EnforcedColonStyle: separator
+  EnforcedLastArgumentHashStyle: always_inspect
+
+==> 000.rb 34 <==
+f("aaaa" =>
+     foo,
+  "b" => 2)
+
+==> 001.rb 26 <==
+f(aaaa:
+     foo,
+  b: 2)
+
+==> 002.rb 29 <==
+f("aaaa" => foo,
+  "b" => 2)
+

@@ -1,0 +1,23 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 47 <==
+begin
+  something
+ensure # hello
+  # world
+end
+
+==> 001.rb 51 <==
+begin
+  something
+  return
+ensure
+  file.close
+end
+

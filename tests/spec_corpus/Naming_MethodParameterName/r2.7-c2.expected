@@ -1,0 +1,6 @@
+==> offenses exit=1 92 <==
+000.rb:1:9: C: Naming/MethodParameterName: Do not use arg as a name for a method parameter.
+
+==> autocorrect exit=1 92 <==
+000.rb:1:9: C: Naming/MethodParameterName: Do not use arg as a name for a method parameter.
+

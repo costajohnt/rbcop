@@ -1,0 +1,49 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 6 <==
+x * 0
+
+==> 001.rb 6 <==
+x / x
+
+==> 002.rb 7 <==
+x ** 0
+
+==> 003.rb 7 <==
+x *= 0
+
+==> 004.rb 7 <==
+x /= x
+
+==> 005.rb 8 <==
+x **= 0
+
+==> 006.rb 5 <==
+x - x
+==> 007.rb 6 <==
+x -= x
+==> 008.rb 5 <==
+x % x
+==> 009.rb 6 <==
+x %= x
+==> 010.rb 5 <==
+x % 1
+==> 011.rb 6 <==
+x %= 1
+==> 012.rb 7 <==
+x.*(0)
+
+==> 013.rb 7 <==
+x./(x)
+
+==> 014.rb 25 <==
+x&.*(0)
+x&.**(0)
+x&./(x)
+

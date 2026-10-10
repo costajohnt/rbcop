@@ -1,0 +1,64 @@
+==> offenses exit=1 637 <==
+001.rb:4:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Remove a blank line after `private`.
+004.rb:4:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Remove a blank line after `protected`.
+008.rb:3:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before `private`.
+010.rb:3:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before `protected`.
+012.rb:3:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before `public`.
+014.rb:3:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before `module_function`.
+
+==> autocorrect exit=0 625 <==
+001.rb:4:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Remove a blank line after `private`.
+004.rb:4:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Remove a blank line after `protected`.
+008.rb:3:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before `private`.
+010.rb:3:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before `protected`.
+012.rb:3:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before `public`.
+014.rb:3:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before `module_function`.
+
+==> corrected/001.rb 54 <==
+class Test
+  something
+
+  private
+  def test; end
+end
+
+==> corrected/004.rb 56 <==
+class Test
+  something
+
+  protected
+  def test; end
+end
+
+==> corrected/008.rb 54 <==
+class Test
+  something
+
+  private
+  def test; end
+end
+
+==> corrected/010.rb 56 <==
+class Test
+  something
+
+  protected
+  def test; end
+end
+
+==> corrected/012.rb 53 <==
+class Test
+  something
+
+  public
+  def test; end
+end
+
+==> corrected/014.rb 62 <==
+class Test
+  something
+
+  module_function
+  def test; end
+end
+

@@ -1,0 +1,155 @@
+==> offenses exit=1 3835 <==
+000.rb:2:3: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@my_var` does not match method name `x`. Use `@x` instead.
+001.rb:2:3: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@my_var` does not match method name `x`. Use `@x` instead.
+002.rb:2:3: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@y` does not match method name `x`. Use `@x` instead.
+003.rb:2:3: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@y` does not match method name `x`. Use `@x` instead.
+004.rb:3:3: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@bar` does not match method name `foo`. Use `@foo` instead.
+005.rb:3:3: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@bar` does not match method name `foo?`. Use `@foo` instead.
+006.rb:3:3: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@bar` does not match method name `foo!`. Use `@foo` instead.
+007.rb:3:3: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@bar` does not match method name `foo=`. Use `@foo` instead.
+025.rb:2:3: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+027.rb:3:5: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+029.rb:3:5: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+030.rb:2:10: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@my_var` does not match method name `x`. Use `@x` instead.
+030.rb:2:30: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@my_var` does not match method name `x`. Use `@x` instead.
+030.rb:3:3: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@my_var` does not match method name `x`. Use `@x` instead.
+031.rb:2:10: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@my_var` does not match method name `x`. Use `@x` instead.
+031.rb:2:30: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@my_var` does not match method name `x`. Use `@x` instead.
+031.rb:3:3: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@my_var` does not match method name `x`. Use `@x` instead.
+042.rb:2:10: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+042.rb:2:27: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+042.rb:3:3: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+044.rb:3:12: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+044.rb:3:29: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+044.rb:4:5: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+046.rb:3:12: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+046.rb:3:29: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+046.rb:4:5: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+
+==> autocorrect exit=0 3783 <==
+000.rb:2:3: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@my_var` does not match method name `x`. Use `@x` instead.
+001.rb:2:3: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@my_var` does not match method name `x`. Use `@x` instead.
+002.rb:2:3: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@y` does not match method name `x`. Use `@x` instead.
+003.rb:2:3: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@y` does not match method name `x`. Use `@x` instead.
+004.rb:3:3: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@bar` does not match method name `foo`. Use `@foo` instead.
+005.rb:3:3: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@bar` does not match method name `foo?`. Use `@foo` instead.
+006.rb:3:3: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@bar` does not match method name `foo!`. Use `@foo` instead.
+007.rb:3:3: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@bar` does not match method name `foo=`. Use `@foo` instead.
+025.rb:2:3: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+027.rb:3:5: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+029.rb:3:5: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+030.rb:2:10: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@my_var` does not match method name `x`. Use `@x` instead.
+030.rb:2:30: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@my_var` does not match method name `x`. Use `@x` instead.
+030.rb:3:3: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@my_var` does not match method name `x`. Use `@x` instead.
+031.rb:2:10: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@my_var` does not match method name `x`. Use `@x` instead.
+031.rb:2:30: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@my_var` does not match method name `x`. Use `@x` instead.
+031.rb:3:3: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@my_var` does not match method name `x`. Use `@x` instead.
+042.rb:2:10: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+042.rb:2:27: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+042.rb:3:3: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+044.rb:3:12: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+044.rb:3:29: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+044.rb:4:5: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+046.rb:3:12: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+046.rb:3:29: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+046.rb:4:5: C: [Corrected] Naming/MemoizedInstanceVariableName: Memoized variable `@foo` does not match method name `values`. Use `@values` instead.
+
+==> corrected/000.rb 24 <==
+def x
+  @x ||= :foo
+end
+
+==> corrected/001.rb 29 <==
+def self.x
+  @x ||= :foo
+end
+
+==> corrected/002.rb 30 <==
+foo = def x
+  @x ||= :foo
+end
+
+==> corrected/003.rb 40 <==
+def x
+  @x ||= begin
+    :foo
+  end
+end
+
+==> corrected/004.rb 121 <==
+def foo
+  helper_variable = something_we_need_to_calculate_foo
+  @foo ||= calculate_expensive_thing(helper_variable)
+end
+
+==> corrected/005.rb 122 <==
+def foo?
+  helper_variable = something_we_need_to_calculate_foo
+  @foo ||= calculate_expensive_thing(helper_variable)
+end
+
+==> corrected/006.rb 122 <==
+def foo!
+  helper_variable = something_we_need_to_calculate_foo
+  @foo ||= calculate_expensive_thing(helper_variable)
+end
+
+==> corrected/007.rb 128 <==
+def foo=(bar)
+  helper_variable = something_we_need_to_calculate(foo)
+  @foo ||= calculate_expensive_thing(helper_variable)
+end
+
+==> corrected/025.rb 57 <==
+define_method(:values) do
+  @values ||= do_something
+end
+
+==> corrected/027.rb 99 <==
+def self.inherited(klass)
+  klass.define_method(:values) do
+    @values ||= do_something
+  end
+end
+
+==> corrected/029.rb 109 <==
+def self.inherited(klass)
+  klass.define_singleton_method(:values) do
+    @values ||= do_something
+  end
+end
+
+==> corrected/030.rb 51 <==
+def x
+  return @x if defined?(@x)
+  @x = false
+end
+
+==> corrected/031.rb 56 <==
+def self.x
+  return @x if defined?(@x)
+  @x = false
+end
+
+==> corrected/042.rb 93 <==
+define_method(:values) do
+  return @values if defined?(@values)
+  @values = do_something
+end
+
+==> corrected/044.rb 137 <==
+def self.inherited(klass)
+  klass.define_method(:values) do
+    return @values if defined?(@values)
+    @values = do_something
+  end
+end
+
+==> corrected/046.rb 147 <==
+def self.inherited(klass)
+  klass.define_singleton_method(:values) do
+    return @values if defined?(@values)
+    @values = do_something
+  end
+end
+

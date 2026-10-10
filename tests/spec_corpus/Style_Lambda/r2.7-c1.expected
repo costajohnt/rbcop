@@ -1,0 +1,33 @@
+==> offenses exit=1 515 <==
+000.rb:1:5: C: [Correctable] Style/Lambda: Use the `-> { ... }` lambda literal syntax for all lambdas.
+001.rb:1:5: C: [Correctable] Style/Lambda: Use the `-> { ... }` lambda literal syntax for all lambdas.
+002.rb:1:5: C: [Correctable] Style/Lambda: Use the `-> { ... }` lambda literal syntax for all lambdas.
+003.rb:1:5: C: [Correctable] Style/Lambda: Use the `-> { ... }` lambda literal syntax for all lambdas.
+004.rb:1:5: C: [Correctable] Style/Lambda: Use the `-> { ... }` lambda literal syntax for all lambdas.
+
+==> autocorrect exit=0 505 <==
+000.rb:1:5: C: [Corrected] Style/Lambda: Use the `-> { ... }` lambda literal syntax for all lambdas.
+001.rb:1:5: C: [Corrected] Style/Lambda: Use the `-> { ... }` lambda literal syntax for all lambdas.
+002.rb:1:5: C: [Corrected] Style/Lambda: Use the `-> { ... }` lambda literal syntax for all lambdas.
+003.rb:1:5: C: [Corrected] Style/Lambda: Use the `-> { ... }` lambda literal syntax for all lambdas.
+004.rb:1:5: C: [Corrected] Style/Lambda: Use the `-> { ... }` lambda literal syntax for all lambdas.
+
+==> corrected/000.rb 16 <==
+f = ->(x) { x }
+
+==> corrected/001.rb 13 <==
+f = -> { x }
+
+==> corrected/002.rb 19 <==
+f = ->(x; y) { x }
+
+==> corrected/003.rb 21 <==
+f = ->(x) do
+  x
+end
+
+==> corrected/004.rb 18 <==
+f = -> do
+  x
+end
+

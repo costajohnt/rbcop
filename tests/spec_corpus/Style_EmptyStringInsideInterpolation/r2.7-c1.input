@@ -1,0 +1,19 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/EmptyStringInsideInterpolation:
+  EnforcedStyle: ternary
+
+==> 000.rb 24 <==
+"#{'foo' if condition}"
+
+==> 001.rb 28 <==
+"#{'foo' unless condition}"
+
+==> 002.rb 28 <==
+"#{condition ? 'foo' : ''}"
+

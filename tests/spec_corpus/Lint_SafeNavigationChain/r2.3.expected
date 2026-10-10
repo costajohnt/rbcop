@@ -1,0 +1,219 @@
+==> offenses exit=1 4970 <==
+022.rb:1:7: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+023.rb:1:10: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+024.rb:1:9: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+025.rb:2:7: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+026.rb:3:2: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+027.rb:1:10: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+028.rb:2:17: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+029.rb:2:25: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+030.rb:1:7: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+031.rb:1:7: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+032.rb:1:7: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+033.rb:1:7: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+034.rb:1:7: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+036.rb:1:22: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+037.rb:1:7: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+037.rb:1:21: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+038.rb:1:22: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+039.rb:1:22: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+040.rb:1:23: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+041.rb:1:23: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+042.rb:1:23: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+043.rb:1:24: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+044.rb:1:23: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+045.rb:1:23: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+046.rb:1:7: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+047.rb:1:7: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+048.rb:1:7: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+049.rb:1:7: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+050.rb:1:12: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+051.rb:1:13: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+052.rb:1:13: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+053.rb:1:13: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+054.rb:1:13: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+056.rb:1:26: W: Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+057.rb:1:24: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+058.rb:1:13: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+059.rb:1:14: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+060.rb:1:7: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+061.rb:2:9: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+062.rb:2:9: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+063.rb:1:7: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+
+==> autocorrect exit=1 5610 <==
+022.rb:1:7: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+023.rb:1:10: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+024.rb:1:9: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+025.rb:2:7: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+025.rb:2:12: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+026.rb:3:2: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+027.rb:1:10: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+027.rb:1:18: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+028.rb:2:17: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+029.rb:2:25: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+030.rb:1:7: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+031.rb:1:7: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+032.rb:1:7: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+033.rb:1:7: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+034.rb:1:7: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+036.rb:1:22: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+037.rb:1:7: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+037.rb:1:21: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+038.rb:1:22: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+039.rb:1:22: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+040.rb:1:23: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+041.rb:1:23: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+042.rb:1:23: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+043.rb:1:24: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+044.rb:1:23: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+045.rb:1:23: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+046.rb:1:7: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+047.rb:1:7: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+048.rb:1:7: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+049.rb:1:7: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+050.rb:1:12: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+051.rb:1:13: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+052.rb:1:13: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+053.rb:1:13: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+054.rb:1:13: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+056.rb:1:26: W: Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+057.rb:1:24: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+058.rb:1:13: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+059.rb:1:14: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+060.rb:1:7: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+060.rb:1:12: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+061.rb:2:9: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+061.rb:2:14: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+062.rb:2:9: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+062.rb:2:14: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+063.rb:1:7: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+063.rb:1:12: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+
+==> corrected/022.rb 12 <==
+x&.foo&.bar
+
+==> corrected/023.rb 18 <==
+x&.foo(x)&.bar(y)
+
+==> corrected/024.rb 14 <==
+(x&.foo)&.bar
+
+==> corrected/025.rb 27 <==
+something
+x&.foo&.bar&.baz
+
+==> corrected/026.rb 21 <==
+x&.foo
+ &.bar
+ &.baz
+
+==> corrected/027.rb 26 <==
+x&.foo(x)&.bar(y)&.baz(z)
+
+==> corrected/028.rb 32 <==
+something
+x&.select(&:foo)&.bar
+
+==> corrected/029.rb 40 <==
+something
+x&.select { |x| foo(x) }&.bar
+
+==> corrected/030.rb 15 <==
+x&.foo&. < bar
+
+==> corrected/031.rb 15 <==
+x&.foo&. > bar
+
+==> corrected/032.rb 16 <==
+x&.foo&. <= bar
+
+==> corrected/033.rb 16 <==
+x&.foo&. >= bar
+
+==> corrected/034.rb 26 <==
+x&.foo&.bar && x&.foo.baz
+
+==> corrected/036.rb 27 <==
+x&.foo&.bar && y&.foo&.baz
+
+==> corrected/037.rb 27 <==
+x&.foo&.bar || x&.foo&.baz
+
+==> corrected/038.rb 27 <==
+x&.foo&.bar || x&.foo&.baz
+
+==> corrected/039.rb 27 <==
+x&.foo&.bar || y&.foo&.baz
+
+==> corrected/040.rb 28 <==
+do_something && x&.foo&.bar
+
+==> corrected/041.rb 34 <==
+do_something && (x&.foo&. >= bar)
+
+==> corrected/042.rb 34 <==
+do_something || (x&.foo&. >= bar)
+
+==> corrected/043.rb 33 <==
+do_something and x&.foo&. >= bar
+
+==> corrected/044.rb 32 <==
+do_something or x&.foo&. >= bar
+
+==> corrected/045.rb 34 <==
+do_something == (x&.foo&. >= bar)
+
+==> corrected/046.rb 15 <==
+x&.foo&. + bar
+
+==> corrected/047.rb 16 <==
+x&.foo&.[](bar)
+
+==> corrected/048.rb 21 <==
+x&.foo&.[](bar).to_s
+
+==> corrected/049.rb 22 <==
+x&.foo&.[]=(bar, baz)
+
+==> corrected/050.rb 15 <==
+foo[bar]&.x&.y
+
+==> corrected/051.rb 18 <==
+x + foo&.bar&.baz
+
+==> corrected/052.rb 18 <==
+x - foo&.bar&.baz
+
+==> corrected/053.rb 18 <==
+x * foo&.bar&.baz
+
+==> corrected/054.rb 18 <==
+x / foo&.bar&.baz
+
+==> corrected/057.rb 30 <==
+cond ? baz : user&.team&.name
+
+==> corrected/058.rb 22 <==
+[foo, (a&.baz&. - 1)]
+
+==> corrected/059.rb 24 <==
+{ foo: (a&.baz&. - 1) }
+
+==> corrected/060.rb 27 <==
+x&.foo&.bar&.baz
+something
+
+==> corrected/061.rb 37 <==
+def something
+  x&.foo&.bar&.baz
+end
+
+==> corrected/062.rb 29 <==
+begin
+  x&.foo&.bar&.baz
+end
+
+==> corrected/063.rb 30 <==
+x&.foo&.bar&.baz if something
+

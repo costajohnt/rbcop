@@ -1,0 +1,113 @@
+==> offenses exit=1 1342 <==
+000.rb:1:1: C: [Correctable] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+002.rb:3:3: C: [Correctable] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+004.rb:1:1: C: [Correctable] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+006.rb:1:1: C: [Correctable] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+008.rb:1:1: C: [Correctable] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+010.rb:1:1: C: [Correctable] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+012.rb:1:1: C: [Correctable] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+014.rb:1:1: C: [Correctable] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+016.rb:1:1: C: [Correctable] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+017.rb:1:1: C: [Correctable] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+019.rb:2:1: C: [Correctable] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+
+==> autocorrect exit=0 1320 <==
+000.rb:1:1: C: [Corrected] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+002.rb:3:3: C: [Corrected] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+004.rb:1:1: C: [Corrected] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+006.rb:1:1: C: [Corrected] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+008.rb:1:1: C: [Corrected] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+010.rb:1:1: C: [Corrected] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+012.rb:1:1: C: [Corrected] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+014.rb:1:1: C: [Corrected] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+016.rb:1:1: C: [Corrected] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+017.rb:1:1: C: [Corrected] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+019.rb:2:1: C: [Corrected] Style/EmptyCaseCondition: Do not use empty `case` condition, instead use an `if` expression.
+
+==> corrected/000.rb 50 <==
+if 1 == 2
+  foo
+elsif 1 == 1
+  bar
+else
+  baz
+end
+
+==> corrected/002.rb 209 <==
+def example
+  # Comment before everything
+  # first comment
+  # condition a
+  # This is a multi-line comment
+  if 1 == 2
+    foo
+  # condition b
+  elsif 1 == 1
+    bar
+  # condition c
+  else
+    baz
+  end
+end
+
+==> corrected/004.rb 39 <==
+if 1 == 2
+  foo
+elsif 1 == 1
+  bar
+end
+
+==> corrected/006.rb 31 <==
+if 1 == 2
+  foo
+else
+  bar
+end
+
+==> corrected/008.rb 20 <==
+if 1 == 2
+  foo
+end
+
+==> corrected/010.rb 72 <==
+if false
+  foo
+elsif nil || false || 1
+  bar
+elsif false || 1
+  baz
+end
+
+==> corrected/012.rb 81 <==
+if false then foo
+elsif nil || false || 1 then bar
+elsif false || 1 then baz
+end
+
+==> corrected/014.rb 69 <==
+if my.foo? || my.bar?
+  something
+elsif my.baz?
+  something_else
+end
+
+==> corrected/016.rb 36 <==
+if (x ? a : b) || c
+  something
+end
+
+==> corrected/017.rb 46 <==
+if object.nil?
+  Object.new
+else
+  object
+end
+
+==> corrected/019.rb 59 <==
+# example.rb
+if object.nil?
+  Object.new
+else
+  object
+end
+

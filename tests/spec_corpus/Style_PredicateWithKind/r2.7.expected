@@ -1,0 +1,184 @@
+==> offenses exit=1 4150 <==
+000.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `any?(Integer)` to `any? { ... }` with a kind check.
+001.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `any?(String)` to `any? { ... }` with a kind check.
+002.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `all?(Integer)` to `all? { ... }` with a kind check.
+003.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `all?(String)` to `all? { ... }` with a kind check.
+004.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `none?(Integer)` to `none? { ... }` with a kind check.
+005.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `none?(String)` to `none? { ... }` with a kind check.
+006.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `one?(Integer)` to `one? { ... }` with a kind check.
+007.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `one?(String)` to `one? { ... }` with a kind check.
+008.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `any?(Integer)` to `any? { ... }` with a kind check.
+009.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `any?(String)` to `any? { ... }` with a kind check.
+010.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `any?(Float)` to `any? { ... }` with a kind check.
+011.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `any?(Integer)` to `any? { ... }` with a kind check.
+012.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `any?(Integer)` to `any? { ... }` with a kind check.
+013.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `any?(ActiveRecord::Base)` to `any? { ... }` with a kind check.
+019.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `any?(Integer)` to `any? { ... }` with a kind check.
+020.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `all?(Integer)` to `all? { ... }` with a kind check.
+021.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `all?(String)` to `all? { ... }` with a kind check.
+022.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `all?(Float)` to `all? { ... }` with a kind check.
+023.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `all?(Integer)` to `all? { ... }` with a kind check.
+024.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `all?(Integer)` to `all? { ... }` with a kind check.
+025.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `all?(ActiveRecord::Base)` to `all? { ... }` with a kind check.
+031.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `all?(Integer)` to `all? { ... }` with a kind check.
+032.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `none?(Integer)` to `none? { ... }` with a kind check.
+033.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `none?(String)` to `none? { ... }` with a kind check.
+034.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `none?(Float)` to `none? { ... }` with a kind check.
+035.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `none?(Integer)` to `none? { ... }` with a kind check.
+036.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `none?(Integer)` to `none? { ... }` with a kind check.
+037.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `none?(ActiveRecord::Base)` to `none? { ... }` with a kind check.
+043.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `none?(Integer)` to `none? { ... }` with a kind check.
+044.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `one?(Integer)` to `one? { ... }` with a kind check.
+045.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `one?(String)` to `one? { ... }` with a kind check.
+046.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `one?(Float)` to `one? { ... }` with a kind check.
+047.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `one?(Integer)` to `one? { ... }` with a kind check.
+048.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `one?(Integer)` to `one? { ... }` with a kind check.
+049.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `one?(ActiveRecord::Base)` to `one? { ... }` with a kind check.
+055.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `one?(Integer)` to `one? { ... }` with a kind check.
+
+==> autocorrect exit=0 4078 <==
+000.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `any?(Integer)` to `any? { ... }` with a kind check.
+001.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `any?(String)` to `any? { ... }` with a kind check.
+002.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `all?(Integer)` to `all? { ... }` with a kind check.
+003.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `all?(String)` to `all? { ... }` with a kind check.
+004.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `none?(Integer)` to `none? { ... }` with a kind check.
+005.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `none?(String)` to `none? { ... }` with a kind check.
+006.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `one?(Integer)` to `one? { ... }` with a kind check.
+007.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `one?(String)` to `one? { ... }` with a kind check.
+008.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `any?(Integer)` to `any? { ... }` with a kind check.
+009.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `any?(String)` to `any? { ... }` with a kind check.
+010.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `any?(Float)` to `any? { ... }` with a kind check.
+011.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `any?(Integer)` to `any? { ... }` with a kind check.
+012.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `any?(Integer)` to `any? { ... }` with a kind check.
+013.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `any?(ActiveRecord::Base)` to `any? { ... }` with a kind check.
+019.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `any?(Integer)` to `any? { ... }` with a kind check.
+020.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `all?(Integer)` to `all? { ... }` with a kind check.
+021.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `all?(String)` to `all? { ... }` with a kind check.
+022.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `all?(Float)` to `all? { ... }` with a kind check.
+023.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `all?(Integer)` to `all? { ... }` with a kind check.
+024.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `all?(Integer)` to `all? { ... }` with a kind check.
+025.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `all?(ActiveRecord::Base)` to `all? { ... }` with a kind check.
+031.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `all?(Integer)` to `all? { ... }` with a kind check.
+032.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `none?(Integer)` to `none? { ... }` with a kind check.
+033.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `none?(String)` to `none? { ... }` with a kind check.
+034.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `none?(Float)` to `none? { ... }` with a kind check.
+035.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `none?(Integer)` to `none? { ... }` with a kind check.
+036.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `none?(Integer)` to `none? { ... }` with a kind check.
+037.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `none?(ActiveRecord::Base)` to `none? { ... }` with a kind check.
+043.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `none?(Integer)` to `none? { ... }` with a kind check.
+044.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `one?(Integer)` to `one? { ... }` with a kind check.
+045.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `one?(String)` to `one? { ... }` with a kind check.
+046.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `one?(Float)` to `one? { ... }` with a kind check.
+047.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `one?(Integer)` to `one? { ... }` with a kind check.
+048.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `one?(Integer)` to `one? { ... }` with a kind check.
+049.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `one?(ActiveRecord::Base)` to `one? { ... }` with a kind check.
+055.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `one?(Integer)` to `one? { ... }` with a kind check.
+
+==> corrected/000.rb 20 <==
+array.any?(Integer)
+
+==> corrected/001.rb 19 <==
+array.any?(String)
+
+==> corrected/002.rb 20 <==
+array.all?(Integer)
+
+==> corrected/003.rb 19 <==
+array.all?(String)
+
+==> corrected/004.rb 21 <==
+array.none?(Integer)
+
+==> corrected/005.rb 20 <==
+array.none?(String)
+
+==> corrected/006.rb 20 <==
+array.one?(Integer)
+
+==> corrected/007.rb 19 <==
+array.one?(String)
+
+==> corrected/008.rb 20 <==
+array.any?(Integer)
+
+==> corrected/009.rb 19 <==
+array.any?(String)
+
+==> corrected/010.rb 18 <==
+array.any?(Float)
+
+==> corrected/011.rb 20 <==
+array.any?(Integer)
+
+==> corrected/012.rb 14 <==
+any?(Integer)
+
+==> corrected/013.rb 31 <==
+array.any?(ActiveRecord::Base)
+
+==> corrected/019.rb 21 <==
+array&.any?(Integer)
+
+==> corrected/020.rb 20 <==
+array.all?(Integer)
+
+==> corrected/021.rb 19 <==
+array.all?(String)
+
+==> corrected/022.rb 18 <==
+array.all?(Float)
+
+==> corrected/023.rb 20 <==
+array.all?(Integer)
+
+==> corrected/024.rb 14 <==
+all?(Integer)
+
+==> corrected/025.rb 31 <==
+array.all?(ActiveRecord::Base)
+
+==> corrected/031.rb 21 <==
+array&.all?(Integer)
+
+==> corrected/032.rb 21 <==
+array.none?(Integer)
+
+==> corrected/033.rb 20 <==
+array.none?(String)
+
+==> corrected/034.rb 19 <==
+array.none?(Float)
+
+==> corrected/035.rb 21 <==
+array.none?(Integer)
+
+==> corrected/036.rb 15 <==
+none?(Integer)
+
+==> corrected/037.rb 32 <==
+array.none?(ActiveRecord::Base)
+
+==> corrected/043.rb 22 <==
+array&.none?(Integer)
+
+==> corrected/044.rb 20 <==
+array.one?(Integer)
+
+==> corrected/045.rb 19 <==
+array.one?(String)
+
+==> corrected/046.rb 18 <==
+array.one?(Float)
+
+==> corrected/047.rb 20 <==
+array.one?(Integer)
+
+==> corrected/048.rb 14 <==
+one?(Integer)
+
+==> corrected/049.rb 31 <==
+array.one?(ActiveRecord::Base)
+
+==> corrected/055.rb 21 <==
+array&.one?(Integer)
+

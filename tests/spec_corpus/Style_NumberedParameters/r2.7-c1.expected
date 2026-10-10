@@ -1,0 +1,6 @@
+==> offenses exit=1 74 <==
+000.rb:1:1: C: Style/NumberedParameters: Avoid using numbered parameters.
+
+==> autocorrect exit=1 74 <==
+000.rb:1:1: C: Style/NumberedParameters: Avoid using numbered parameters.
+

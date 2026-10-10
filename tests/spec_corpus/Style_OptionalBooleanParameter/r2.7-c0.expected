@@ -1,0 +1,14 @@
+==> offenses exit=1 796 <==
+000.rb:1:17: C: Style/OptionalBooleanParameter: Prefer keyword arguments for arguments with a boolean default value; use `bar: false` instead of `bar = false`.
+001.rb:1:17: C: Style/OptionalBooleanParameter: Prefer keyword arguments for arguments with a boolean default value; use `bar: false` instead of `bar=false`.
+002.rb:1:22: C: Style/OptionalBooleanParameter: Prefer keyword arguments for arguments with a boolean default value; use `bar: false` instead of `bar = false`.
+003.rb:1:17: C: Style/OptionalBooleanParameter: Prefer keyword arguments for arguments with a boolean default value; use `foo: true` instead of `foo = true`.
+003.rb:1:38: C: Style/OptionalBooleanParameter: Prefer keyword arguments for arguments with a boolean default value; use `baz: false` instead of `baz = false`.
+
+==> autocorrect exit=1 796 <==
+000.rb:1:17: C: Style/OptionalBooleanParameter: Prefer keyword arguments for arguments with a boolean default value; use `bar: false` instead of `bar = false`.
+001.rb:1:17: C: Style/OptionalBooleanParameter: Prefer keyword arguments for arguments with a boolean default value; use `bar: false` instead of `bar=false`.
+002.rb:1:22: C: Style/OptionalBooleanParameter: Prefer keyword arguments for arguments with a boolean default value; use `bar: false` instead of `bar = false`.
+003.rb:1:17: C: Style/OptionalBooleanParameter: Prefer keyword arguments for arguments with a boolean default value; use `foo: true` instead of `foo = true`.
+003.rb:1:38: C: Style/OptionalBooleanParameter: Prefer keyword arguments for arguments with a boolean default value; use `baz: false` instead of `baz = false`.
+

@@ -1,0 +1,54 @@
+==> .rubocop.yml 150 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/ConstantResolution:
+  Enabled: false
+
+==> 000.rb 22 <==
+class Foo
+  ::Bar
+end
+
+==> 001.rb 23 <==
+module Foo
+  ::Bar
+end
+
+==> 002.rb 6 <==
+::Bar
+
+==> 003.rb 11 <==
+::Bar::Baz
+
+==> 004.rb 26 <==
+class << self
+  ::Bar
+end
+
+==> 005.rb 22 <==
+class Foo < ::Bar
+end
+
+==> 006.rb 28 <==
+class Foo < ::Bar
+  ::A
+end
+
+==> 007/current.rb 55 <==
+module App
+  def self.load
+    ::Config.load
+  end
+end
+
+==> 008/current.rb 67 <==
+module App
+  def self.parse(json)
+    ::JSON.parse(json)
+  end
+end
+

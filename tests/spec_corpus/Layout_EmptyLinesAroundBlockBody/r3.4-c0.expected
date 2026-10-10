@@ -1,0 +1,18 @@
+==> offenses exit=1 216 <==
+000.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body end.
+001.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body end.
+
+==> autocorrect exit=0 212 <==
+000.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body end.
+001.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body end.
+
+==> corrected/000.rb 23 <==
+some_method {
+  it
+  }
+
+==> corrected/001.rb 26 <==
+some_method do
+  it
+  end
+

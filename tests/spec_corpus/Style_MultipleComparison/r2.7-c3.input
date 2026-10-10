@@ -1,0 +1,14 @@
+==> .rubocop.yml 160 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/MultipleComparison:
+  ComparisonsThreshold: 2
+
+==> 000.rb 36 <==
+a = "a"
+foo if a == "a" || a == "b"
+

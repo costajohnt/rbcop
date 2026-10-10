@@ -1,0 +1,266 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 21 <==
+some_method(
+  a
+  )
+
+==> 001.rb 19 <==
+some_method(
+  a
+)
+
+==> 002.rb 16 <==
+some_method(a
+)
+
+==> 003.rb 27 <==
+some_method(a
+           )
+
+==> 004.rb 35 <==
+some_method(x: 1,
+  y: 2,
+  z: 3
+)
+
+==> 005.rb 29 <==
+some_method(x,
+  **options
+)
+
+==> 006.rb 68 <==
+some_method(a,
+  x: 1,
+  y: 2
+)
+b =
+  some_method(a,
+             )
+
+==> 007.rb 118 <==
+block_adds_extra_indentation do
+  some_method(a,
+    x: 1,
+    y: 2
+  )
+  b =
+    some_method(a,
+               )
+end
+
+==> 008.rb 81 <==
+some_method(a,
+  x: 1,
+  y: 2
+            )
+b =
+  some_method(a,
+              )
+
+==> 009.rb 49 <==
+some_method({ foo: 1, bar: 2 },
+  x: 1,
+  y: 2
+)
+
+==> 010.rb 13 <==
+some_method()
+==> 011.rb 15 <==
+some_method(
+)
+
+==> 012.rb 26 <==
+some_method(
+           )
+
+==> 013.rb 48 <==
+where(
+  "multiline
+   condition", second_arg
+)
+
+==> 014.rb 50 <==
+where(
+  "multiline
+   condition",
+  second_arg
+)
+
+==> 015.rb 44 <==
+foo = some_method(
+                   a
+  )
+
+==> 016.rb 59 <==
+foo = some_method(
+                   a
+                 )
+
+==> 017.rb 86 <==
+foo = some_method(a
+)
+some_method(a,
+            x: 1,
+            y: 2
+            )
+
+==> 018.rb 138 <==
+expect(response).to contain_exactly(
+                      { a: 1, b: 'x' },
+                      { a: 2, b: 'y' }
+                    )
+
+==> 019.rb 126 <==
+corrector.insert_before(
+  range,
+  "
+" + ' ' * (node.loc.keyword.column +
+                indent_steps * configured_width)
+)
+
+==> 020.rb 12 <==
+foo(
+a: b
+)
+
+==> 021.rb 134 <==
+corrector.insert_before(
+                         range,
+                         arg_1: 'foo', arg_2: 'bar'
+                       )
+
+==> 022.rb 39 <==
+foo = some_method(a
+                 )
+
+==> 023.rb 123 <==
+foo = some_method(a,
+                  x: 1,
+                  y: 2
+                 )
+b =
+  some_method(a,
+             )
+
+==> 024.rb 19 <==
+foo = some_method()
+==> 025.rb 38 <==
+foo = some_method(
+                 )
+
+==> 026.rb 21 <==
+foo = some_method(
+)
+
+==> 027.rb 27 <==
+foo = some_method(
+      )
+
+==> 028.rb 23 <==
+foo = some_method(
+  )
+
+==> 029.rb 300 <==
+good = foo.methA(:arg1, :arg2, options: :hash)
+         .methB(
+           :arg1,
+           :arg2,
+         )
+         .methC
+
+good = foo.methA(
+           :arg1,
+           :arg2,
+           options: :hash,
+         )
+         .methB(
+           :arg1,
+           :arg2,
+         )
+         .methC
+
+==> 030.rb 289 <==
+good = foo.methA(:arg1, :arg2, options: :hash)
+         .methB(
+           :arg1,
+           :arg2,
+     )
+         .methC
+
+good = foo.methA(
+           :arg1,
+           :arg2,
+           options: :hash,
+    )
+         .methB(
+           :arg1,
+           :arg2,
+       )
+         .methC
+
+==> 031.rb 31 <==
+receiver&.some_method(
+  a
+  )
+
+==> 032.rb 29 <==
+def some_method(
+  a
+  )
+end
+
+==> 033.rb 27 <==
+def some_method(
+  a
+)
+end
+
+==> 034.rb 24 <==
+def some_method(a
+)
+end
+
+==> 035.rb 39 <==
+def some_method(a
+               )
+end
+
+==> 036.rb 22 <==
+def some_method()
+end
+
+==> 037.rb 22 <==
+w = x * (
+  y + z
+  )
+
+==> 038.rb 20 <==
+w = x * (
+  y + z
+)
+
+==> 039.rb 17 <==
+w = x * (y + z
+)
+
+==> 040.rb 25 <==
+w = x * (y + z
+        )
+
+==> 041.rb 28 <==
+w = x * (y + z +
+        a)
+
+==> 042.rb 18 <==
+def a
+  x
+  y
+end
+

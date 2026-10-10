@@ -1,0 +1,19 @@
+==> offenses exit=1 399 <==
+000.rb:1:1: C: [Correctable] Style/ArrayIntersect: Use `array1.intersect?(array2)` instead of `array1.any? { array2.member?(it) }`.
+001.rb:1:1: C: [Correctable] Style/ArrayIntersect: Use `array1.intersect?([1, 2])` instead of `array1.any? { [1, 2].include?(it) }`.
+002.rb:1:1: C: [Correctable] Style/ArrayIntersect: Use `!array1.intersect?(array2)` instead of `array1.none? { array2.member?(it) }`.
+
+==> autocorrect exit=0 393 <==
+000.rb:1:1: C: [Corrected] Style/ArrayIntersect: Use `array1.intersect?(array2)` instead of `array1.any? { array2.member?(it) }`.
+001.rb:1:1: C: [Corrected] Style/ArrayIntersect: Use `array1.intersect?([1, 2])` instead of `array1.any? { [1, 2].include?(it) }`.
+002.rb:1:1: C: [Corrected] Style/ArrayIntersect: Use `!array1.intersect?(array2)` instead of `array1.none? { array2.member?(it) }`.
+
+==> corrected/000.rb 26 <==
+array1.intersect?(array2)
+
+==> corrected/001.rb 26 <==
+array1.intersect?([1, 2])
+
+==> corrected/002.rb 27 <==
+!array1.intersect?(array2)
+

@@ -1,0 +1,38 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 6 <==
+:true
+
+==> 001.rb 7 <==
+:false
+
+==> 002.rb 17 <==
+{ :false => 42 }
+
+==> 003.rb 16 <==
+{ true: 'Foo' }
+
+==> 004.rb 16 <==
+{ false: :bar }
+
+==> 005.rb 18 <==
+{ false: :false }
+
+==> 006.rb 11 <==
+:something
+
+==> 007.rb 5 <==
+true
+
+==> 008.rb 6 <==
+false
+
+==> 009.rb 14 <==
+%i[foo false]
+

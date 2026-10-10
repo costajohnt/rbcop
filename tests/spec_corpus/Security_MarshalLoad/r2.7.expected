@@ -1,0 +1,16 @@
+==> offenses exit=1 401 <==
+000.rb:1:9: W: Security/MarshalLoad: Avoid using `Marshal.load`.
+000.rb:2:11: W: Security/MarshalLoad: Avoid using `Marshal.load`.
+001.rb:1:9: W: Security/MarshalLoad: Avoid using `Marshal.restore`.
+001.rb:2:11: W: Security/MarshalLoad: Avoid using `Marshal.restore`.
+005.rb:1:9: W: Security/MarshalLoad: Avoid using `Marshal.load`.
+005.rb:2:9: W: Security/MarshalLoad: Avoid using `Marshal.restore`.
+
+==> autocorrect exit=1 401 <==
+000.rb:1:9: W: Security/MarshalLoad: Avoid using `Marshal.load`.
+000.rb:2:11: W: Security/MarshalLoad: Avoid using `Marshal.load`.
+001.rb:1:9: W: Security/MarshalLoad: Avoid using `Marshal.restore`.
+001.rb:2:11: W: Security/MarshalLoad: Avoid using `Marshal.restore`.
+005.rb:1:9: W: Security/MarshalLoad: Avoid using `Marshal.load`.
+005.rb:2:9: W: Security/MarshalLoad: Avoid using `Marshal.restore`.
+

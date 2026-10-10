@@ -1,0 +1,11 @@
+==> offenses exit=1 114 <==
+000.rb:2:11: C: [Correctable] Style/SymbolProc: Pass `&:upcase` as an argument to `something` instead of a block.
+
+==> autocorrect exit=0 112 <==
+000.rb:2:11: C: [Corrected] Style/SymbolProc: Pass `&:upcase` as an argument to `something` instead of a block.
+
+==> corrected/000.rb 56 <==
+# comment a
+something(&:upcase) # comment b
+# comment c
+

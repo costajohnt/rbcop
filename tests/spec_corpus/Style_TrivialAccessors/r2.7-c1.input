@@ -1,0 +1,24 @@
+==> .rubocop.yml 156 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/TrivialAccessors:
+  ExactNameMatch: false
+
+==> 000.rb 49 <==
+class Foo
+  def foo=(val)
+    @f = val
+  end
+end
+
+==> 001.rb 37 <==
+class Foo
+  def foo
+    @f
+  end
+end
+

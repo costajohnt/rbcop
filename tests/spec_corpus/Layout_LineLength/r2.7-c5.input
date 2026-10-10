@@ -1,0 +1,21 @@
+==> .rubocop.yml 182 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LineLength:
+  Max: 80
+  AllowURI: true
+  AllowQualifiedName: false
+
+==> 000.rb 92 <==
+# The argument passed to obj.do_something must be an instance of Networking::Http::Response
+
+==> 001.rb 90 <==
+# See: HTTPS://GITHUB.COM/RUBOCOP/RUBOCOP/COMMIT/3B48D8BDF5B1C2E05E35061837309890F04AB08C
+
+==> 002.rb 90 <==
+# See: https://github.com/rubocop/rubocop/commit/3b48d8bdf5b1c2e05e35061837309890f04ab08c
+

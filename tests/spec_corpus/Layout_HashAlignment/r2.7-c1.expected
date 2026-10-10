@@ -1,0 +1,166 @@
+==> offenses exit=1 3424 <==
+000.rb:3:5: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+001.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+001.rb:3:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+001.rb:5:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+005.rb:3:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+006.rb:5:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+007.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+008.rb:3:4: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+008.rb:7:2: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+009.rb:2:9: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+011.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+011.rb:3:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+011.rb:6:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+011.rb:7:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+012.rb:3:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+013.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+014.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+016.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+017.rb:2:4: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+020.rb:2:6: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+020.rb:3:12: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+020.rb:4:11: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+020.rb:5:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+020.rb:6:13: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+020.rb:7:11: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+020.rb:8:16: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+020.rb:9:5: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+021.rb:2:8: C: [Correctable] Layout/HashAlignment: Align keyword splats with the rest of the hash if it spans more than one line.
+022.rb:2:8: C: [Correctable] Layout/HashAlignment: Align keyword splats with the rest of the hash if it spans more than one line.
+
+==> autocorrect exit=0 3366 <==
+000.rb:3:5: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+001.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+001.rb:3:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+001.rb:5:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+005.rb:3:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+006.rb:5:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+007.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+008.rb:3:4: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+008.rb:7:2: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+009.rb:2:9: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+011.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+011.rb:3:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+011.rb:6:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+011.rb:7:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+012.rb:3:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+013.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+014.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+016.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+017.rb:2:4: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+020.rb:2:6: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+020.rb:3:12: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+020.rb:4:11: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+020.rb:5:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+020.rb:6:13: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+020.rb:7:11: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+020.rb:8:16: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+020.rb:9:5: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+021.rb:2:8: C: [Corrected] Layout/HashAlignment: Align keyword splats with the rest of the hash if it spans more than one line.
+022.rb:2:8: C: [Corrected] Layout/HashAlignment: Align keyword splats with the rest of the hash if it spans more than one line.
+
+==> corrected/000.rb 41 <==
+THINGS = {
+  oh: :io,
+  hi: 'neat'
+    }
+
+==> corrected/001.rb 169 <==
+config.fog_credentials_as_kwargs(
+  provider: 'AWS',
+  aws_access_key_id: ENV['S3_ACCESS_KEY'],
+  aws_secret_access_key: ENV['S3_SECRET'],
+  region: ENV['S3_REGION'],
+)
+
+==> corrected/005.rb 53 <==
+do_something(
+  foo, baz: true,
+       quux: false
+)
+
+==> corrected/006.rb 64 <==
+do_something(
+  foo(
+    bar
+  ), baz: true,
+     quux: false
+)
+
+==> corrected/007.rb 61 <==
+do_something.(foo: bar, baz: qux,
+              quux: corge)
+
+==> corrected/008.rb 68 <==
+hash1 = {
+  a: 0,
+  bb: 1
+}
+hash2 = {
+  'ccc' => 2,
+  'dddd' => 2
+}
+
+==> corrected/009.rb 37 <==
+hash = { a: 1, b: 2,
+         c: 3 }
+
+==> corrected/011.rb 69 <==
+hash1 = {
+  a: 0,
+  bb: 1,
+}
+hash2 = {
+  'ccc' => 2,
+  'dddd' => 3
+}
+
+==> corrected/012.rb 40 <==
+hash = {
+    'a' => 0,
+    'bbb' => 1
+}
+
+==> corrected/013.rb 36 <==
+hash = {
+  'a' => 0,
+  'bbb' => 1
+}
+
+==> corrected/014.rb 42 <==
+hash = {
+  'a' => (
+    ),
+  'bbb' => 1
+}
+
+==> corrected/016.rb 22 <==
+func(a: 0,
+     b: 1)
+
+==> corrected/017.rb 24 <==
+func(a: 0,
+     bbb: 1)
+
+==> corrected/020.rb 177 <==
+hash1 = { a: 0,
+          bb: 1,
+          ccc: 2 }
+hash2 = { :a => 0,
+          :bb => 1,
+          :ccc => 2 }
+hash3 = { 'a' => 0,
+          'bb' => 1,
+          'ccc' => 2 }
+
+==> corrected/021.rb 39 <==
+Hash(foo: 'bar',
+     **extra_params
+)
+
+==> corrected/022.rb 31 <==
+{foo: 'bar',
+ **extra_params
+}
+

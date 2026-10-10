@@ -1,0 +1,85 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/SpaceInsideReferenceBrackets:
+  EnforcedStyle: no_space
+
+==> 000.rb 48 <==
+a = [1, 2 ]
+b = [ 3, 4]
+c = [5, 6]
+d = [ 7, 8 ]
+
+==> 001.rb 38 <==
+a[1]
+b[index, 2]
+c["foo"]
+d[:bar]
+e[]
+
+==> 002.rb 80 <==
+a[1] = 2
+b[345] = [ 678, var, "", nil]
+c["foo"] = "qux"
+d[:bar] = var
+e[] = foo
+
+==> 003.rb 13 <==
+foo[
+  bar
+]
+
+==> 004.rb 27 <==
+a[ "foo"] = b["something"]
+
+==> 005.rb 27 <==
+a["foo" ] = b["something"]
+
+==> 006.rb 27 <==
+a["foo"] = b["something" ]
+
+==> 007.rb 26 <==
+def Vector.[](*array)
+end
+
+==> 008.rb 13 <==
+subject.[](0)
+==> 009.rb 11 <==
+a[[ 1, 2 ]]
+==> 010.rb 10 <==
+a[  :key]
+
+==> 011.rb 9 <==
+b[:key ]
+
+==> 012.rb 16 <==
+a[:key][ "key"]
+
+==> 013.rb 14 <==
+a[1][:key   ]
+
+==> 014.rb 18 <==
+a[:key][3][ :key]
+
+==> 015.rb 24 <==
+a[var]["key", 3][:key ]
+
+==> 016.rb 9 <==
+b[ 89  ]
+
+==> 017.rb 25 <==
+a[ :key]["foo"  ][   0 ]
+
+==> 018.rb 30 <==
+record[ options[:attribute] ]
+
+==> 019.rb 25 <==
+b[ :key]["foo"  ][   0 ]
+
+==> 020.rb 30 <==
+j[ "pop"] = [89, nil, ""    ]
+

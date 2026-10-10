@@ -1,0 +1,48 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+
+==> 000.rb 29 <==
+def method(*)
+  super(*)
+end
+
+==> 001.rb 34 <==
+def self.method(*)
+  super(*)
+end
+
+==> 002.rb 31 <==
+def method(**)
+  super(**)
+end
+
+==> 003.rb 36 <==
+def self.method(**)
+  super(**)
+end
+
+==> 004.rb 33 <==
+def method(*, **)
+  super(*)
+end
+
+==> 005.rb 38 <==
+def self.method(*, **)
+  super(*)
+end
+
+==> 006.rb 34 <==
+def method(*, **)
+  super(**)
+end
+
+==> 007.rb 39 <==
+def self.method(*, **)
+  super(**)
+end
+

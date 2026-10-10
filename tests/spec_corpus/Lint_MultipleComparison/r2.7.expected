@@ -1,0 +1,84 @@
+==> offenses exit=1 1664 <==
+000.rb:1:1: W: [Correctable] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+001.rb:1:1: W: [Correctable] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+002.rb:1:1: W: [Correctable] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+003.rb:1:1: W: [Correctable] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+004.rb:1:1: W: [Correctable] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+005.rb:1:1: W: [Correctable] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+006.rb:1:1: W: [Correctable] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+007.rb:1:1: W: [Correctable] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+008.rb:1:1: W: [Correctable] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+009.rb:1:1: W: [Correctable] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+010.rb:1:1: W: [Correctable] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+011.rb:1:1: W: [Correctable] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+012.rb:1:1: W: [Correctable] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+013.rb:1:1: W: [Correctable] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+014.rb:1:1: W: [Correctable] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+015.rb:1:1: W: [Correctable] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+
+==> autocorrect exit=0 1632 <==
+000.rb:1:1: W: [Corrected] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+001.rb:1:1: W: [Corrected] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+002.rb:1:1: W: [Corrected] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+003.rb:1:1: W: [Corrected] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+004.rb:1:1: W: [Corrected] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+005.rb:1:1: W: [Corrected] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+006.rb:1:1: W: [Corrected] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+007.rb:1:1: W: [Corrected] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+008.rb:1:1: W: [Corrected] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+009.rb:1:1: W: [Corrected] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+010.rb:1:1: W: [Corrected] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+011.rb:1:1: W: [Corrected] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+012.rb:1:1: W: [Corrected] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+013.rb:1:1: W: [Corrected] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+014.rb:1:1: W: [Corrected] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+015.rb:1:1: W: [Corrected] Lint/MultipleComparison: Use the `&&` operator to compare multiple values.
+
+==> corrected/000.rb 15 <==
+x < y && y < z
+
+==> corrected/001.rb 15 <==
+x < y && y > z
+
+==> corrected/002.rb 16 <==
+x < y && y <= z
+
+==> corrected/003.rb 16 <==
+x < y && y >= z
+
+==> corrected/004.rb 15 <==
+x > y && y < z
+
+==> corrected/005.rb 15 <==
+x > y && y > z
+
+==> corrected/006.rb 16 <==
+x > y && y <= z
+
+==> corrected/007.rb 16 <==
+x > y && y >= z
+
+==> corrected/008.rb 16 <==
+x <= y && y < z
+
+==> corrected/009.rb 16 <==
+x <= y && y > z
+
+==> corrected/010.rb 17 <==
+x <= y && y <= z
+
+==> corrected/011.rb 17 <==
+x <= y && y >= z
+
+==> corrected/012.rb 16 <==
+x >= y && y < z
+
+==> corrected/013.rb 16 <==
+x >= y && y > z
+
+==> corrected/014.rb 17 <==
+x >= y && y <= z
+
+==> corrected/015.rb 17 <==
+x >= y && y >= z
+

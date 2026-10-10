@@ -1,0 +1,22 @@
+==> .rubocop.yml 170 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LeadingCommentSpace:
+  AllowRBSInlineAnnotation: false
+
+==> 000.rb 147 <==
+include Enumerable #[Integer]
+
+attr_reader :name #: String
+attr_reader :age  #: Integer?
+
+#: (
+#|   Integer,
+#|   String
+#| ) -> void
+def foo; end
+

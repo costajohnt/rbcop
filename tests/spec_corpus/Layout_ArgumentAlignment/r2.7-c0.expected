@@ -1,0 +1,100 @@
+==> offenses exit=1 1877 <==
+000.rb:2:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+001.rb:2:8: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+001.rb:3:1: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+002.rb:2:5: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+009.rb:2:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+009.rb:3:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+009.rb:5:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+010.rb:5:6: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+011.rb:2:6: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+031.rb:2:7: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+032.rb:2:10: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+033.rb:3:5: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+034.rb:3:5: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+034.rb:4:12: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+035.rb:2:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+
+==> autocorrect exit=0 1847 <==
+000.rb:2:3: C: [Corrected] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+001.rb:2:8: C: [Corrected] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+001.rb:3:1: C: [Corrected] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+002.rb:2:5: C: [Corrected] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+009.rb:2:3: C: [Corrected] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+009.rb:3:3: C: [Corrected] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+009.rb:5:3: C: [Corrected] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+010.rb:5:6: C: [Corrected] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+011.rb:2:6: C: [Corrected] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+031.rb:2:7: C: [Corrected] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+032.rb:2:10: C: [Corrected] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+033.rb:3:5: C: [Corrected] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+034.rb:3:5: C: [Corrected] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+034.rb:4:12: C: [Corrected] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+035.rb:2:3: C: [Corrected] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+
+==> corrected/000.rb 45 <==
+function(a,
+         if b then c else d end)
+
+==> corrected/001.rb 24 <==
+func(a,
+     b,
+     c)
+
+==> corrected/002.rb 45 <==
+function(a,
+         if b then c else d end)
+
+==> corrected/009.rb 128 <==
+func1(foo: 'foo',
+      bar: 'bar',
+      baz: 'baz')
+func2(do_something,
+      foo: 'foo',
+      bar: 'bar',
+      baz: 'baz')
+
+==> corrected/010.rb 67 <==
+func1(*a,
+      *b,
+      c)
+func2(a,
+      *b,
+      c)
+func3(*a)
+
+==> corrected/011.rb 19 <==
+func1(a,
+      b,)
+
+==> corrected/031.rb 125 <==
+create :transaction, :closed,
+       account:          account,
+       open_price:       1.29,
+       close_price:      1.30
+
+==> corrected/032.rb 125 <==
+create :transaction, :closed,
+       account:          account,
+       open_price:       1.29,
+       close_price:      1.30
+
+==> corrected/033.rb 165 <==
+class MyModel < ActiveRecord::Base
+  has_many :other_models,
+           class_name: "legacy_name",
+           order: "#{legacy_name.table_name}.published DESC"
+
+end
+
+==> corrected/034.rb 44 <==
+callable[
+      foo,
+      bar,
+      baz
+]
+
+==> corrected/035.rb 65 <==
+receiver&.function(a,
+                   if b then c else d end)
+

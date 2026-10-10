@@ -1,0 +1,30 @@
+==> offenses exit=1 478 <==
+000.rb:1:1: C: [Correctable] Style/DateTime: Prefer `Time` over `DateTime`.
+001.rb:1:1: C: [Correctable] Style/DateTime: Prefer `Time` over `DateTime`.
+002.rb:1:1: C: [Correctable] Style/DateTime: Prefer `Time` over `DateTime`.
+003.rb:1:1: C: [Correctable] Style/DateTime: Prefer `Time` over `DateTime`.
+010.rb:1:1: C: Style/DateTime: Do not use `#to_datetime`.
+011.rb:1:1: C: Style/DateTime: Do not use `#to_datetime`.
+013.rb:1:1: C: Style/DateTime: Do not use `#to_datetime`.
+
+==> autocorrect exit=1 470 <==
+000.rb:1:1: C: [Corrected] Style/DateTime: Prefer `Time` over `DateTime`.
+001.rb:1:1: C: [Corrected] Style/DateTime: Prefer `Time` over `DateTime`.
+002.rb:1:1: C: [Corrected] Style/DateTime: Prefer `Time` over `DateTime`.
+003.rb:1:1: C: [Corrected] Style/DateTime: Prefer `Time` over `DateTime`.
+010.rb:1:1: C: Style/DateTime: Do not use `#to_datetime`.
+011.rb:1:1: C: Style/DateTime: Do not use `#to_datetime`.
+013.rb:1:1: C: Style/DateTime: Do not use `#to_datetime`.
+
+==> corrected/000.rb 9 <==
+Time.now
+
+==> corrected/001.rb 10 <==
+Time&.now
+
+==> corrected/002.rb 11 <==
+::Time.now
+
+==> corrected/003.rb 27 <==
+Time.iso8601('2016-06-29')
+

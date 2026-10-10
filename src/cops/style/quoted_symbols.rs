@@ -34,22 +34,8 @@ fn needs_double(src: &str) -> bool {
     })
 }
 
-/// Parser makes a symbol literal spanning lines a `dsym` (same split rule as strings), and an
-/// empty quoted one (`:""`, `%s()`) an empty `dsym`; an empty quoted label (`"": 1`) is a `dsym`
-/// for the parser gem (target below 3.3) but a `sym` for the Prism translation.
 fn parser_dsym(sym: &ruby_prism::SymbolNode, target_ruby: f64) -> bool {
-    let quoted = sym.opening_loc().is_some_and(|o| o.as_slice() != b":");
-    let content = sym.value_loc().map(|v| text(&v)).unwrap_or("");
-    if quoted && content.is_empty() {
-        let label = sym.closing_loc().is_some_and(|c| c.as_slice().ends_with(b":"));
-        return !label || target_ruby < 3.3;
-    }
-    let body = content.strip_suffix('\n').unwrap_or(content).as_bytes();
-    let opening = sym.opening_loc().map(|o| text(&o)).unwrap_or("");
-    let interpolating = !(opening.contains('\'') || opening.starts_with("%s"));
-    body.iter().enumerate().any(|(i, &b)| {
-        b == b'\n' && !(interpolating && body[..i].iter().rev().take_while(|&&c| c == b'\\').count() % 2 == 1)
-    })
+    crate::ast::is_parser_dsym(&sym.as_node(), target_ruby)
 }
 
 impl Cop for QuotedSymbols {

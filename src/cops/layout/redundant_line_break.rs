@@ -317,8 +317,7 @@ fn register(cx: &mut Cx, t: &Target) {
     let single = single.trim_matches(|c: char| c.is_ascii_whitespace() || c == '\0').to_string();
     let Some(program) = cx.ancestors.first() else { return };
     let ok = verified_by_reparse_folding(
-        cx.src.text,
-        cx.src.version,
+        cx.src,
         program,
         &[(s, e)],
         |r| r,

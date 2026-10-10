@@ -1,0 +1,17 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+
+==> 000.rb 15 <==
+"#{42 in var}"
+
+==> 001.rb 15 <==
+"#{42 => var}"
+
+==> 002.rb 18 <==
+"#{x; 42 => var}"
+

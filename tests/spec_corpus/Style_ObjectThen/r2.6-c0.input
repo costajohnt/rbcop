@@ -1,0 +1,16 @@
+==> .rubocop.yml 148 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.6
+Style/ObjectThen:
+  EnforcedStyle: then
+
+==> 000.rb 30 <==
+obj.yield_self { |e| e.test }
+
+==> 001.rb 31 <==
+obj&.yield_self { |e| e.test }
+

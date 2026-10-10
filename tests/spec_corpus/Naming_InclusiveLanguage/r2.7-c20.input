@@ -1,0 +1,16 @@
+==> .rubocop.yml 201 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/InclusiveLanguage:
+  CheckStrings: false
+  FlaggedTerms:
+    master: {}
+    slave: {}
+
+==> 000.rb 27 <==
+puts "master node #{node}"
+

@@ -1,0 +1,46 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 16 <==
+eval(something)
+
+==> 001.rb 15 <==
+eval something
+
+==> 002.rb 23 <==
+binding.eval something
+
+==> 003.rb 22 <==
+Kernel.eval something
+
+==> 004.rb 24 <==
+::Kernel.eval something
+
+==> 005.rb 23 <==
+eval "something#{foo}"
+
+==> 006.rb 16 <==
+eval = something
+==> 007.rb 14 <==
+something.eval
+==> 008.rb 14 <==
+eval("puts 1")
+==> 009.rb 4 <==
+eval
+==> 010.rb 28 <==
+eval "something\nsomething2"
+==> 011.rb 20 <==
+eval "something#{2}"
+==> 012.rb 39 <==
+eval(something, binding, "test.rb", 1)
+
+==> 013.rb 38 <==
+eval something, binding, "test.rb", 1
+
+==> 014.rb 37 <==
+eval("puts 1", binding, "test.rb", 1)

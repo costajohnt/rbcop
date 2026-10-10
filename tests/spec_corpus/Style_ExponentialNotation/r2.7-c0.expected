@@ -1,0 +1,10 @@
+==> offenses exit=1 216 <==
+000.rb:1:1: C: Style/ExponentialNotation: Use a mantissa >= 1 and < 10.
+001.rb:1:1: C: Style/ExponentialNotation: Use a mantissa >= 1 and < 10.
+002.rb:1:1: C: Style/ExponentialNotation: Use a mantissa >= 1 and < 10.
+
+==> autocorrect exit=1 216 <==
+000.rb:1:1: C: Style/ExponentialNotation: Use a mantissa >= 1 and < 10.
+001.rb:1:1: C: Style/ExponentialNotation: Use a mantissa >= 1 and < 10.
+002.rb:1:1: C: Style/ExponentialNotation: Use a mantissa >= 1 and < 10.
+

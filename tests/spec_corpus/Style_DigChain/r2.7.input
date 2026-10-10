@@ -1,0 +1,84 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 4 <==
+dig
+
+==> 001.rb 19 <==
+X::dig(:foo, :bar)
+
+==> 002.rb 32 <==
+x.dig(:foo).bar
+x.bar.dig(:foo)
+
+==> 003.rb 28 <==
+x.dig(:foo).first.dig(:bar)
+
+==> 004.rb 6 <==
+x.dig
+
+==> 005.rb 44 <==
+x.dig(:foo, :bar).dig
+x.dig.dig(:foo, :bar)
+
+==> 006.rb 51 <==
+x.dig({ foo: 1, bar: 2 }).dig({ baz: 3, quux: 4 })
+
+==> 007.rb 43 <==
+x.dig(foo: 1, bar: 2).dig(baz: 3, quux: 4)
+
+==> 008.rb 32 <==
+x.dig(:foo).dig(:bar).dig(:baz)
+
+==> 009.rb 36 <==
+x.y.z.dig(:foo).dig(:bar).dig(:baz)
+
+==> 010.rb 35 <==
+x.dig(:foo, :bar).dig(:baz, :quux)
+
+==> 011.rb 36 <==
+x.dig(:foo, :bar)&.dig(:baz, :quux)
+
+==> 012.rb 37 <==
+x&.dig(:foo, :bar)&.dig(:baz, :quux)
+
+==> 013.rb 33 <==
+dig(:foo, :bar).dig(:baz, :quux)
+
+==> 014.rb 36 <==
+x.dig(:foo, :bar)::dig(:baz, :quux)
+
+==> 015.rb 34 <==
+x.dig(:foo).dig(*names).dig(:bar)
+
+==> 016.rb 36 <==
+x.dig(:foo)
+ .dig(:bar)
+ .dig(:baz)
+
+==> 017.rb 72 <==
+x.dig(:foo) # comment 1
+ .dig(:bar) # comment 2
+ .dig(:baz) # comment 3
+
+==> 018.rb 36 <==
+def m
+  foo.dig(:a).dig(:b) # c
+end
+
+==> 019.rb 40 <==
+def foo(...)
+  x.dig(:foo).dig(...)
+end
+
+==> 020.rb 62 <==
+def foo(...)
+  x.dig(...).dig(:foo)
+  x.dig(...).dig(...)
+end
+

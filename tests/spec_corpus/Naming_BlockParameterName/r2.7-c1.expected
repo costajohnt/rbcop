@@ -1,0 +1,6 @@
+==> offenses exit=1 85 <==
+001.rb:1:19: C: Naming/BlockParameterName: Do not end block parameter with a number.
+
+==> autocorrect exit=1 85 <==
+001.rb:1:19: C: Naming/BlockParameterName: Do not end block parameter with a number.
+

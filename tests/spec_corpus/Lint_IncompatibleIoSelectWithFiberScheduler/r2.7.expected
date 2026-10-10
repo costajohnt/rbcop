@@ -1,0 +1,63 @@
+==> offenses exit=1 1857 <==
+000.rb:1:1: W: [Correctable] Lint/IncompatibleIoSelectWithFiberScheduler: Use `io.wait_readable` instead of `IO.select([io], [], [])`.
+001.rb:1:1: W: [Correctable] Lint/IncompatibleIoSelectWithFiberScheduler: Use `io.wait_readable` instead of `IO.select([io])`.
+002.rb:1:1: W: [Correctable] Lint/IncompatibleIoSelectWithFiberScheduler: Use `io.wait_readable(timeout)` instead of `IO.select([io], [], [], timeout)`.
+003.rb:1:1: W: [Correctable] Lint/IncompatibleIoSelectWithFiberScheduler: Use `io.wait_readable` instead of `::IO.select([io], [], [])`.
+004.rb:1:1: W: [Correctable] Lint/IncompatibleIoSelectWithFiberScheduler: Use `io.wait_readable(timeout)` instead of `::IO.select([io], [], [], timeout)`.
+005.rb:1:1: W: [Correctable] Lint/IncompatibleIoSelectWithFiberScheduler: Use `io.wait_readable(timeout)` instead of `IO.select([io], nil, nil, timeout)`.
+006.rb:1:1: W: [Correctable] Lint/IncompatibleIoSelectWithFiberScheduler: Use `io.wait_writable(timeout)` instead of `IO.select(nil, [io], nil, timeout)`.
+007.rb:1:1: W: [Correctable] Lint/IncompatibleIoSelectWithFiberScheduler: Use `io.wait_writable` instead of `IO.select([], [io], [])`.
+008.rb:1:1: W: [Correctable] Lint/IncompatibleIoSelectWithFiberScheduler: Use `io.wait_writable(timeout)` instead of `IO.select([], [io], [], timeout)`.
+009.rb:1:1: W: [Correctable] Lint/IncompatibleIoSelectWithFiberScheduler: Use `self.wait_readable(timeout)` instead of `IO.select([self], nil, nil, timeout)`.
+010.rb:1:1: W: [Correctable] Lint/IncompatibleIoSelectWithFiberScheduler: Use `self.wait_writable(timeout)` instead of `IO.select(nil, [self], nil, timeout)`.
+011.rb:1:9: W: Lint/IncompatibleIoSelectWithFiberScheduler: Use `rp.wait_readable` instead of `IO.select([rp], [])`.
+012.rb:1:9: W: Lint/IncompatibleIoSelectWithFiberScheduler: Use `wp.wait_writable` instead of `IO.select([], [wp])`.
+
+==> autocorrect exit=1 1835 <==
+000.rb:1:1: W: [Corrected] Lint/IncompatibleIoSelectWithFiberScheduler: Use `io.wait_readable` instead of `IO.select([io], [], [])`.
+001.rb:1:1: W: [Corrected] Lint/IncompatibleIoSelectWithFiberScheduler: Use `io.wait_readable` instead of `IO.select([io])`.
+002.rb:1:1: W: [Corrected] Lint/IncompatibleIoSelectWithFiberScheduler: Use `io.wait_readable(timeout)` instead of `IO.select([io], [], [], timeout)`.
+003.rb:1:1: W: [Corrected] Lint/IncompatibleIoSelectWithFiberScheduler: Use `io.wait_readable` instead of `::IO.select([io], [], [])`.
+004.rb:1:1: W: [Corrected] Lint/IncompatibleIoSelectWithFiberScheduler: Use `io.wait_readable(timeout)` instead of `::IO.select([io], [], [], timeout)`.
+005.rb:1:1: W: [Corrected] Lint/IncompatibleIoSelectWithFiberScheduler: Use `io.wait_readable(timeout)` instead of `IO.select([io], nil, nil, timeout)`.
+006.rb:1:1: W: [Corrected] Lint/IncompatibleIoSelectWithFiberScheduler: Use `io.wait_writable(timeout)` instead of `IO.select(nil, [io], nil, timeout)`.
+007.rb:1:1: W: [Corrected] Lint/IncompatibleIoSelectWithFiberScheduler: Use `io.wait_writable` instead of `IO.select([], [io], [])`.
+008.rb:1:1: W: [Corrected] Lint/IncompatibleIoSelectWithFiberScheduler: Use `io.wait_writable(timeout)` instead of `IO.select([], [io], [], timeout)`.
+009.rb:1:1: W: [Corrected] Lint/IncompatibleIoSelectWithFiberScheduler: Use `self.wait_readable(timeout)` instead of `IO.select([self], nil, nil, timeout)`.
+010.rb:1:1: W: [Corrected] Lint/IncompatibleIoSelectWithFiberScheduler: Use `self.wait_writable(timeout)` instead of `IO.select(nil, [self], nil, timeout)`.
+011.rb:1:9: W: Lint/IncompatibleIoSelectWithFiberScheduler: Use `rp.wait_readable` instead of `IO.select([rp], [])`.
+012.rb:1:9: W: Lint/IncompatibleIoSelectWithFiberScheduler: Use `wp.wait_writable` instead of `IO.select([], [wp])`.
+
+==> corrected/000.rb 17 <==
+io.wait_readable
+
+==> corrected/001.rb 17 <==
+io.wait_readable
+
+==> corrected/002.rb 26 <==
+io.wait_readable(timeout)
+
+==> corrected/003.rb 17 <==
+io.wait_readable
+
+==> corrected/004.rb 26 <==
+io.wait_readable(timeout)
+
+==> corrected/005.rb 26 <==
+io.wait_readable(timeout)
+
+==> corrected/006.rb 26 <==
+io.wait_writable(timeout)
+
+==> corrected/007.rb 17 <==
+io.wait_writable
+
+==> corrected/008.rb 26 <==
+io.wait_writable(timeout)
+
+==> corrected/009.rb 28 <==
+self.wait_readable(timeout)
+
+==> corrected/010.rb 28 <==
+self.wait_writable(timeout)
+

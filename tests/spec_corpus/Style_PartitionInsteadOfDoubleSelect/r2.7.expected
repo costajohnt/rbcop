@@ -1,0 +1,113 @@
+==> offenses exit=1 3172 <==
+000.rb:2:1: C: [Correctable] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+001.rb:2:1: C: [Correctable] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `reject` and `select` calls.
+002.rb:2:1: C: [Correctable] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `filter` and `reject` calls.
+003.rb:2:1: C: [Correctable] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `find_all` and `reject` calls.
+004.rb:4:1: C: [Correctable] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+005.rb:2:1: C: [Correctable] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+006.rb:2:1: C: [Correctable] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+007.rb:2:1: C: [Correctable] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+008.rb:2:1: C: Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+009.rb:2:1: C: Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+010.rb:2:1: C: Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+011.rb:3:1: C: [Correctable] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+012.rb:2:1: C: [Correctable] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+013.rb:2:1: C: [Correctable] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `reject` and `select` calls.
+014.rb:2:1: C: [Correctable] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `filter` and `reject` calls.
+015.rb:2:1: C: [Correctable] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+016.rb:2:1: C: Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+019.rb:2:1: C: [Correctable] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+020.rb:2:1: C: [Correctable] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+022.rb:2:1: C: [Correctable] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `select` calls.
+023.rb:2:1: C: [Correctable] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `select` calls.
+024.rb:2:1: C: [Correctable] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `reject` and `reject` calls.
+025.rb:2:1: C: [Correctable] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `select` calls.
+026.rb:2:1: C: Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `select` calls.
+
+==> autocorrect exit=1 3134 <==
+000.rb:2:1: C: [Corrected] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+001.rb:2:1: C: [Corrected] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `reject` and `select` calls.
+002.rb:2:1: C: [Corrected] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `filter` and `reject` calls.
+003.rb:2:1: C: [Corrected] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `find_all` and `reject` calls.
+004.rb:4:1: C: [Corrected] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+005.rb:2:1: C: [Corrected] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+006.rb:2:1: C: [Corrected] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+007.rb:2:1: C: [Corrected] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+008.rb:2:1: C: Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+009.rb:2:1: C: Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+010.rb:2:1: C: Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+011.rb:3:1: C: [Corrected] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+012.rb:2:1: C: [Corrected] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+013.rb:2:1: C: [Corrected] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `reject` and `select` calls.
+014.rb:2:1: C: [Corrected] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `filter` and `reject` calls.
+015.rb:2:1: C: [Corrected] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+016.rb:2:1: C: Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+019.rb:2:1: C: [Corrected] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+020.rb:2:1: C: [Corrected] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+022.rb:2:1: C: [Corrected] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `select` calls.
+023.rb:2:1: C: [Corrected] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `select` calls.
+024.rb:2:1: C: [Corrected] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `reject` and `reject` calls.
+025.rb:2:1: C: [Corrected] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `select` calls.
+026.rb:2:1: C: Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `select` calls.
+
+==> corrected/000.rb 51 <==
+positives, negatives = arr.partition { |x| x > 0 }
+
+==> corrected/001.rb 51 <==
+positives, negatives = arr.partition { |x| x > 0 }
+
+==> corrected/002.rb 51 <==
+positives, negatives = arr.partition { |x| x > 0 }
+
+==> corrected/003.rb 51 <==
+positives, negatives = arr.partition { |x| x > 0 }
+
+==> corrected/004.rb 56 <==
+positives, negatives = arr.partition do |x|
+  x > 0
+end
+
+==> corrected/005.rb 48 <==
+positives, negatives = arr.partition { _1 > 0 }
+
+==> corrected/006.rb 55 <==
+positives, negatives = foo.bar.partition { |x| x > 0 }
+
+==> corrected/007.rb 52 <==
+positives, negatives = arr&.partition { |x| x > 0 }
+
+==> corrected/011.rb 74 <==
+before_code
+positives, negatives = arr.partition { |x| x > 0 }
+after_code
+
+==> corrected/012.rb 50 <==
+positives, negatives = arr.partition(&:positive?)
+
+==> corrected/013.rb 50 <==
+positives, negatives = arr.partition(&:positive?)
+
+==> corrected/014.rb 50 <==
+positives, negatives = arr.partition(&:positive?)
+
+==> corrected/015.rb 51 <==
+positives, negatives = arr&.partition(&:positive?)
+
+==> corrected/019.rb 50 <==
+positives, negatives = arr.partition(&:positive?)
+
+==> corrected/020.rb 57 <==
+positives, negatives = arr.partition { |x| x.positive? }
+
+==> corrected/022.rb 41 <==
+a, b = arr.partition { |x| x.positive? }
+
+==> corrected/023.rb 41 <==
+a, b = arr.partition { |x| x.positive? }
+
+==> corrected/024.rb 41 <==
+b, a = arr.partition { |x| x.positive? }
+
+==> corrected/025.rb 38 <==
+a, b = arr.partition { _1.positive? }
+

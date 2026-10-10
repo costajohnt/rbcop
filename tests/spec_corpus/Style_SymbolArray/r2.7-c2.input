@@ -1,0 +1,35 @@
+==> .rubocop.yml 239 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SymbolArray:
+  EnforcedStyle: brackets
+  MinSize: 0
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: "()"
+
+==> 000.rb 20 <==
+[:one, :two, :three]
+==> 001.rb 18 <==
+%i(one two three)
+
+==> 002.rb 5 <==
+%i()
+
+==> 003.rb 30 <==
+%i(one @two $three four-five)
+
+==> 004.rb 26 <==
+%i(
+  one
+  two
+  three
+)
+
+==> 005.rb 35 <==
+%I(#{foo} #{foo}bar foo#{bar} foo)
+

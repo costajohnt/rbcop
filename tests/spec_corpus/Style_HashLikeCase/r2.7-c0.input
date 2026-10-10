@@ -1,0 +1,68 @@
+==> .rubocop.yml 150 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/HashLikeCase:
+  MinBranchesCount: 2
+
+==> 000.rb 49 <==
+case x
+when 'foo'
+  'FOO'
+when 'bar'
+  'BAR'
+end
+
+==> 001.rb 47 <==
+case x
+when :foo
+  'FOO'
+when :bar
+  'BAR'
+end
+
+==> 002.rb 48 <==
+case x
+when 'foo'
+  'FOO'
+when :bar
+  'BAR'
+end
+
+==> 003.rb 41 <==
+case x
+when y
+  'FOO'
+when z
+  'BAR'
+end
+
+==> 004.rb 45 <==
+case x
+when 'foo'
+  'FOO'
+when 'bar'
+  2
+end
+
+==> 005.rb 41 <==
+case x
+when 'foo'
+  y
+when 'bar'
+  z
+end
+
+==> 006.rb 62 <==
+case x
+when 'foo'
+  'FOO'
+when 'bar'
+  'BAR'
+else
+  'BAZ'
+end
+

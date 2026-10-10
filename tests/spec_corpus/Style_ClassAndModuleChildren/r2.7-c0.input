@@ -1,0 +1,117 @@
+==> .rubocop.yml 162 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/ClassAndModuleChildren:
+  EnforcedStyle: nested
+
+==> 000.rb 29 <==
+class FooClass::BarClass
+end
+
+==> 001.rb 49 <==
+class FooClass
+end
+
+class FooClass::BarClass
+end
+
+==> 002.rb 50 <==
+module FooClass
+end
+
+class FooClass::BarClass
+end
+
+==> 003.rb 37 <==
+class FooClass::BarClass < Super
+end
+
+==> 004.rb 32 <==
+module FooModule::BarModule
+end
+
+==> 005.rb 37 <==
+class Foo::Bar
+  class Baz
+  end
+end
+
+==> 006.rb 39 <==
+module Foo::Bar
+  module Baz
+  end
+end
+
+==> 007.rb 53 <==
+# top comment
+class Foo::Bar # describe Foo::Bar
+end
+
+==> 008.rb 89 <==
+class FooClass
+  class BarClass
+  end
+end
+
+module FooModule
+  module BarModule
+  end
+end
+
+==> 009.rb 16 <==
+class ::Foo
+end
+
+==> 010.rb 17 <==
+module ::Foo
+end
+
+==> 011.rb 26 <==
+class self.class::Foo
+end
+
+==> 012.rb 27 <==
+module self.class::Foo
+end
+
+==> 013.rb 31 <==
+class self.class::Foo::Bar
+end
+
+==> 014.rb 31 <==
+class ::FooClass::BarClass
+end
+
+==> 015.rb 83 <==
+class FooClass
+  class BarClass
+  end
+end
+
+class BazClass < FooClass::BarClass
+end
+
+==> 016.rb 33 <==
+module Z
+  module X::Y
+  end
+end
+
+==> 017.rb 32 <==
+class Z
+  module X::Y
+  end
+end
+
+==> 018.rb 69 <==
+module Wrap
+  class Other
+  end
+  class FooClass::BarClass
+  end
+end
+

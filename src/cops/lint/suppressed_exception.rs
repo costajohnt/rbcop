@@ -49,7 +49,7 @@ impl Cop for SuppressedException {
             let first = cx.src.line_of(s);
             // processed_source[first_line...end_line]: 0-based indexes, so the lines after the rescue line.
             let lines = cx.src.lines.get(first..end_line.min(cx.src.lines.len())).unwrap_or(&[]);
-            if lines.iter().any(|l| l.trim_start_matches(|c: char| c.is_ascii_whitespace()).starts_with('#')) {
+            if lines.iter().any(|l| helpers::code_length::comment_line(l)) {
                 return;
             }
         }

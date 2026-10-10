@@ -1,0 +1,73 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 38 <==
+def omg_wow(msg = msg)
+  puts msg
+end
+
+==> 001.rb 44 <==
+def omg_wow(msg = msg = msg)
+  puts msg
+end
+
+==> 002.rb 44 <==
+def omg_wow(msg = foo = msg)
+  puts msg
+end
+
+==> 003.rb 51 <==
+def omg_wow(msg = foo = msg2 = foo)
+  puts msg
+end
+
+==> 004.rb 49 <==
+def omg_wow(msg = foo = self.msg)
+  puts msg
+end
+
+==> 005.rb 32 <==
+def omg_wow(msg)
+  puts msg
+end
+
+==> 006.rb 43 <==
+def omg_wow(msg = self.msg)
+  puts msg
+end
+
+==> 007.rb 51 <==
+def some_method(some_arg: nil)
+  puts some_arg
+end
+
+==> 008.rb 59 <==
+def some_method(some_arg: some_method)
+  puts some_arg
+end
+
+==> 009.rb 56 <==
+def some_method(some_arg: some_arg)
+  puts some_arg
+end
+
+==> 010.rb 76 <==
+def puts_value(value: self.class.value, smile: self.smile)
+  puts value
+end
+
+==> 011.rb 59 <==
+def puts_length(length: mystring.length)
+  puts length
+end
+
+==> 012.rb 91 <==
+def some_method(some_arg: some_arg, other_arg: other_arg)
+  puts [some_arg, other_arg]
+end
+

@@ -1,0 +1,243 @@
+==> offenses exit=1 5554 <==
+000.rb:2:4: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+001.rb:2:4: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+002.rb:2:6: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+003.rb:2:6: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+004.rb:4:6: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+005.rb:1:10: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+006.rb:1:15: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+008.rb:2:6: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+016.rb:2:6: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+017.rb:2:6: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+018.rb:2:6: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+020.rb:4:6: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+021.rb:4:6: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+022.rb:1:21: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+022.rb:1:32: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+026.rb:3:6: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+027.rb:3:11: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+027.rb:4:6: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+030.rb:3:6: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+030.rb:4:9: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+030.rb:7:6: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+032.rb:5:6: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+032.rb:7:6: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+036.rb:6:6: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+037.rb:5:6: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+040.rb:5:6: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+041.rb:2:4: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+042.rb:2:4: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+045.rb:6:21: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+045.rb:9:14: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+045.rb:14:12: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+045.rb:15:18: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+048.rb:3:15: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+049.rb:3:6: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+
+==> autocorrect exit=0 5486 <==
+000.rb:2:4: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+001.rb:2:4: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+002.rb:2:6: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+003.rb:2:6: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+004.rb:4:6: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+005.rb:1:10: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+006.rb:1:15: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+008.rb:2:6: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+016.rb:2:6: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+017.rb:2:6: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+018.rb:2:6: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+020.rb:4:6: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+021.rb:4:6: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+022.rb:1:21: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+022.rb:1:32: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+026.rb:3:6: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+027.rb:3:11: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+027.rb:4:6: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+030.rb:3:6: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+030.rb:4:9: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+030.rb:7:6: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+032.rb:5:6: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+032.rb:7:6: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+036.rb:6:6: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+037.rb:5:6: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+040.rb:5:6: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+041.rb:2:4: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+042.rb:2:4: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+045.rb:6:21: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+045.rb:9:14: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+045.rb:14:12: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+045.rb:15:18: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+048.rb:3:15: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+049.rb:3:6: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+
+==> corrected/000.rb 16 <==
+foo.bar
+foo.baz
+
+==> corrected/001.rb 27 <==
+zoo(1, foo.bar, 2)
+foo.baz
+
+==> corrected/002.rb 32 <==
+if foo.condition?
+  foo.bar
+end
+
+==> corrected/003.rb 37 <==
+if foo
+  foo.bar
+else
+  foo&.baz
+end
+
+==> corrected/004.rb 58 <==
+if condition?
+  1
+elsif foo
+  foo.bar
+else
+  foo&.baz
+end
+
+==> corrected/005.rb 25 <==
+foo ? foo.bar : foo&.baz
+
+==> corrected/006.rb 29 <==
+foo&.bar ? foo.bar.baz : qux
+
+==> corrected/008.rb 30 <==
+if foo&.bar
+  foo.bar.baz
+end
+
+==> corrected/016.rb 31 <==
+if foo&.bar&.baz
+  foo.qux
+end
+
+==> corrected/017.rb 30 <==
+if foo.bar&.baz
+  foo.qux
+end
+
+==> corrected/018.rb 51 <==
+if foo.condition? && other_condition
+  foo.bar
+end
+
+==> corrected/020.rb 41 <==
+if foo.condition?
+  1
+else
+  foo.bar
+end
+
+==> corrected/021.rb 53 <==
+if condition?
+  1
+elsif foo.condition?
+  foo.bar
+end
+
+==> corrected/022.rb 35 <==
+foo.condition? ? foo.bar : foo.baz
+
+==> corrected/026.rb 25 <==
+[
+  foo.bar,
+  foo.baz
+]
+
+==> corrected/027.rb 51 <==
+{
+  bar: foo.bar,
+  baz: foo.baz,
+  foo.zoo => 3
+}
+
+==> corrected/030.rb 72 <==
+case foo.condition
+when 1
+  foo.bar
+when foo.baz
+  2
+else
+  foo.zoo
+end
+
+==> corrected/032.rb 58 <==
+case
+when 1
+  2
+when foo.bar
+  foo.bar
+else
+  foo.baz
+end
+
+==> corrected/036.rb 51 <==
+begin
+  foo.bar
+rescue
+  handle
+else
+  foo.baz
+end
+
+==> corrected/037.rb 52 <==
+begin
+  do_something
+rescue
+  foo.bar
+  foo.baz
+end
+
+==> corrected/040.rb 53 <==
+case foo.condition
+in Integer
+  1
+else
+  foo.baz
+end
+
+==> corrected/041.rb 28 <==
+x = foo.bar || true
+foo.baz
+
+==> corrected/042.rb 24 <==
+CONST = foo.bar
+foo.baz
+
+==> corrected/045.rb 216 <==
+x = 1 && foo.bar
+
+if true
+  foo&.bar
+elsif (foo.bar)
+  call(1, 2, 3 + foo.baz)
+else
+  case
+  when 1, foo.bar
+    [
+      1,
+      {
+        2 => 3,
+        foo.baz => 4,
+        4 => -foo.zoo
+      }
+    ]
+  end
+end
+
+==> corrected/048.rb 39 <==
+val = foo
+val.bar
+baz.each { val.qux }
+
+==> corrected/049.rb 43 <==
+foo.each do |v|
+  if v
+    v.bar
+  end
+end
+

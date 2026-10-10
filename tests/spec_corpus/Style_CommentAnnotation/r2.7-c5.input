@@ -1,0 +1,15 @@
+==> .rubocop.yml 177 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/CommentAnnotation:
+  Keywords:
+  - ISSUE
+  RequireColon: false
+
+==> 000.rb 21 <==
+# ISSUE: wrong order
+

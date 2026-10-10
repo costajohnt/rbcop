@@ -1,0 +1,48 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 30 <==
+ary.each_with_index { |v| v }
+
+==> 001.rb 37 <==
+ary.each_with_index { do_something }
+
+==> 002.rb 37 <==
+ary.each.with_index { do_something }
+
+==> 003.rb 31 <==
+ary&.each_with_index { |v| v }
+
+==> 004.rb 30 <==
+ary.each.with_index { |v| v }
+
+==> 005.rb 33 <==
+ary.each.with_index(1) { |v| v }
+
+==> 006.rb 46 <==
+ary.each_with_object([]).with_index { |v| v }
+
+==> 007.rb 35 <==
+ary.each_with_index { |v, i| v; i }
+==> 008.rb 27 <==
+ary.each_with_index { _1 }
+
+==> 009.rb 28 <==
+ary&.each_with_index { _1 }
+
+==> 010.rb 27 <==
+ary.each.with_index { _1 }
+
+==> 011.rb 30 <==
+ary.each_with_index { _1; _2 }
+==> 012.rb 24 <==
+ary.with_index { |v| v }
+==> 013.rb 20 <==
+with_index { |v| v }
+==> 014.rb 17 <==
+with_index { _1 }

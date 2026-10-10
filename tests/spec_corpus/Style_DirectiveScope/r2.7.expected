@@ -1,0 +1,55 @@
+==> offenses exit=1 750 <==
+000.rb:1:1: C: [Correctable] Style/DirectiveScope: Use `disable-next` instead of a `disable`/`enable` pair around a single statement.
+001.rb:1:1: C: [Correctable] Style/DirectiveScope: Use `todo-next` instead of a `todo`/`enable` pair around a single statement.
+002.rb:1:1: C: [Correctable] Style/DirectiveScope: Use `disable-next` instead of `push`/`pop` around a single statement.
+007.rb:2:1: C: [Correctable] Style/DirectiveScope: Use `next` instead of `push`/`pop` around a single statement.
+008.rb:2:1: C: [Correctable] Style/DirectiveScope: Use `enable-next` instead of `push`/`pop` around a single statement.
+009.rb:2:1: C: [Correctable] Style/DirectiveScope: Use `enable-next` instead of an `enable`/`disable` pair around a single statement.
+
+==> autocorrect exit=0 738 <==
+000.rb:1:1: C: [Corrected] Style/DirectiveScope: Use `disable-next` instead of a `disable`/`enable` pair around a single statement.
+001.rb:1:1: C: [Corrected] Style/DirectiveScope: Use `todo-next` instead of a `todo`/`enable` pair around a single statement.
+002.rb:1:1: C: [Corrected] Style/DirectiveScope: Use `disable-next` instead of `push`/`pop` around a single statement.
+007.rb:2:1: C: [Corrected] Style/DirectiveScope: Use `next` instead of `push`/`pop` around a single statement.
+008.rb:2:1: C: [Corrected] Style/DirectiveScope: Use `enable-next` instead of `push`/`pop` around a single statement.
+009.rb:2:1: C: [Corrected] Style/DirectiveScope: Use `enable-next` instead of an `enable`/`disable` pair around a single statement.
+
+==> corrected/000.rb 57 <==
+# rubocop:disable-next Metrics/AbcSize
+def foo
+  bar
+end
+
+==> corrected/001.rb 93 <==
+# rubocop:todo-next Metrics/AbcSize, Metrics/MethodLength -- legacy method
+def foo
+  bar
+end
+
+==> corrected/002.rb 73 <==
+# rubocop:disable-next Metrics/AbcSize -- special case
+def foo
+  bar
+end
+
+==> corrected/007.rb 110 <==
+# rubocop:disable Style/For
+# rubocop:next -Metrics/AbcSize +Style/For
+def foo
+end
+# rubocop:enable Style/For
+
+==> corrected/008.rb 129 <==
+# rubocop:disable Metrics/AbcSize
+# rubocop:enable-next Metrics/AbcSize -- reviewed
+def foo
+end
+# rubocop:enable Metrics/AbcSize
+
+==> corrected/009.rb 117 <==
+# rubocop:disable Metrics/AbcSize
+# rubocop:enable-next Metrics/AbcSize
+def foo
+end
+# rubocop:enable Metrics/AbcSize
+

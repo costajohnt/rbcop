@@ -1,0 +1,815 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 17 <==
+foo \
+  "string"
+
+==> 001.rb 19 <==
+super \
+  "string"
+
+==> 002.rb 28 <==
+foo \
+  "#{dynamic string}"
+
+==> 003.rb 30 <==
+super \
+  "#{dynamic string}"
+
+==> 004.rb 18 <==
+foo \
+  `xstring`
+
+==> 005.rb 20 <==
+super \
+  `xstring`
+
+==> 006.rb 16 <==
+foo \
+  :symbol
+
+==> 007.rb 18 <==
+super \
+  :symbol
+
+==> 008.rb 11 <==
+foo \
+  ?c
+
+==> 009.rb 13 <==
+super \
+  ?c
+
+==> 010.rb 12 <==
+foo \
+  123
+
+==> 011.rb 14 <==
+super \
+  123
+
+==> 012.rb 12 <==
+foo \
+  bar
+
+==> 013.rb 14 <==
+super \
+  bar
+
+==> 014.rb 13 <==
+foo \
+  !bar
+
+==> 015.rb 15 <==
+super \
+  !bar
+
+==> 016.rb 12 <==
+foo \
+  ..5
+
+==> 017.rb 14 <==
+super \
+  ..5
+
+==> 018.rb 13 <==
+foo \
+  ...5
+
+==> 019.rb 15 <==
+super \
+  ...5
+
+==> 020.rb 11 <==
+foo \
+  ~5
+
+==> 021.rb 13 <==
+super \
+  ~5
+
+==> 022.rb 16 <==
+foo \
+  ->() {}
+
+==> 023.rb 18 <==
+super \
+  ->() {}
+
+==> 024.rb 16 <==
+foo \
+  proc {}
+
+==> 025.rb 18 <==
+super \
+  proc {}
+
+==> 026.rb 13 <==
+foo \
+  *bar
+
+==> 027.rb 15 <==
+super \
+  *bar
+
+==> 028.rb 14 <==
+foo \
+  **bar
+
+==> 029.rb 16 <==
+super \
+  **bar
+
+==> 030.rb 15 <==
+foo \
+  &block
+
+==> 031.rb 17 <==
+super \
+  &block
+
+==> 032.rb 11 <==
+foo \
+  +1
+
+==> 033.rb 13 <==
+super \
+  +1
+
+==> 034.rb 11 <==
+foo \
+  -1
+
+==> 035.rb 13 <==
+super \
+  -1
+
+==> 036.rb 13 <==
+foo \
+  +bar
+
+==> 037.rb 15 <==
+super \
+  +bar
+
+==> 038.rb 13 <==
+foo \
+  -bar
+
+==> 039.rb 15 <==
+super \
+  -bar
+
+==> 040.rb 14 <==
+foo \
+  /bar/
+
+==> 041.rb 16 <==
+super \
+  /bar/
+
+==> 042.rb 15 <==
+foo \
+  %[bar]
+
+==> 043.rb 17 <==
+super \
+  %[bar]
+
+==> 044.rb 16 <==
+foo \
+  %w[bar]
+
+==> 045.rb 18 <==
+super \
+  %w[bar]
+
+==> 046.rb 16 <==
+foo \
+  %W[bar]
+
+==> 047.rb 18 <==
+super \
+  %W[bar]
+
+==> 048.rb 16 <==
+foo \
+  %i[bar]
+
+==> 049.rb 18 <==
+super \
+  %i[bar]
+
+==> 050.rb 16 <==
+foo \
+  %I[bar]
+
+==> 051.rb 18 <==
+super \
+  %I[bar]
+
+==> 052.rb 16 <==
+foo \
+  %r[bar]
+
+==> 053.rb 18 <==
+super \
+  %r[bar]
+
+==> 054.rb 16 <==
+foo \
+  %x[bar]
+
+==> 055.rb 18 <==
+super \
+  %x[bar]
+
+==> 056.rb 16 <==
+foo \
+  %s[bar]
+
+==> 057.rb 18 <==
+super \
+  %s[bar]
+
+==> 058.rb 22 <==
+foo \
+  defined?(bar)
+
+==> 059.rb 24 <==
+super \
+  defined?(bar)
+
+==> 060.rb 80 <==
+def a(...)
+  b \
+    ...; # the semicolon is necessary or ruby cannot parse
+end
+
+==> 061.rb 84 <==
+def a(...)
+  super \
+    ...; # the semicolon is necessary or ruby cannot parse
+end
+
+==> 062.rb 76 <==
+def a(&)
+  b \
+    &; # the semicolon is necessary or ruby cannot parse
+end
+
+==> 063.rb 80 <==
+def a(&)
+  super \
+    &; # the semicolon is necessary or ruby cannot parse
+end
+
+==> 064.rb 76 <==
+def a(*)
+  b \
+    *; # the semicolon is necessary or ruby cannot parse
+end
+
+==> 065.rb 80 <==
+def a(*)
+  super \
+    *; # the semicolon is necessary or ruby cannot parse
+end
+
+==> 066.rb 78 <==
+def a(**)
+  b \
+    **; # the semicolon is necessary or ruby cannot parse
+end
+
+==> 067.rb 82 <==
+def a(**)
+  super \
+    **; # the semicolon is necessary or ruby cannot parse
+end
+
+==> 068.rb 16 <==
+class Foo \
+end
+
+==> 069.rb 32 <==
+def foo(bar, \
+        baz)
+end
+
+==> 070.rb 43 <==
+def self.foo(bar, \
+              baz)
+end
+
+==> 071.rb 19 <==
+foo do \
+  bar
+end
+
+==> 072.rb 42 <==
+let :foo do \
+  foo(bar, \
+      baz)
+end
+
+==> 073.rb 38 <==
+foo. \
+  bar
+
+foo \
+  .bar \
+    .baz
+
+==> 074.rb 14 <==
+foo&. \
+  bar
+
+==> 075.rb 15 <==
+return \
+  foo
+
+==> 076.rb 17 <==
+return(\
+  foo
+)
+
+==> 077.rb 29 <==
+foo do
+  break \
+    bar
+end
+
+==> 078.rb 28 <==
+foo do
+  next \
+    bar
+end
+
+==> 079.rb 30 <==
+def foo
+  yield \
+    bar
+end
+
+==> 080.rb 22 <==
+if foo \
+then bar
+end
+
+==> 081.rb 15 <==
+bar \
+  if foo
+
+==> 082.rb 19 <==
+bar \
+  unless foo
+
+==> 083.rb 18 <==
+bar \
+  while foo
+
+==> 084.rb 18 <==
+bar \
+  until foo
+
+==> 085.rb 19 <==
+bar \
+  rescue foo
+
+==> 086.rb 30 <==
+if foo \
+  && (bar = baz)
+end
+
+==> 087.rb 23 <==
+obj
+ .foo(42) \
+
+ .bar
+
+==> 088.rb 24 <==
+obj
+ &.foo(42) \
+
+ .bar
+
+==> 089.rb 22 <==
+obj
+ .foo(42) \
+ .bar
+
+==> 090.rb 23 <==
+obj.
+ foo(42). \
+
+ bar
+
+==> 091.rb 22 <==
+obj.
+ foo(42). \
+ bar
+
+==> 092.rb 15 <==
+[foo, \
+  bar]
+
+==> 093.rb 15 <==
+{foo: \
+  bar}
+
+==> 094.rb 18 <==
+foo(bar, \
+  baz)
+
+==> 095.rb 34 <==
+foo = do_something( \
+  argument)
+
+==> 096.rb 20 <==
+foo = "foo \
+  bar"
+
+==> 097.rb 31 <==
+      "longlong-string \
+#{a}"
+
+==> 098.rb 32 <==
+      `longlong-command \
+#{a}`
+
+==> 099.rb 32 <==
+      /longlong-pattern \
+#{a}/
+
+==> 100.rb 32 <==
+      :"longlong-symbol \
+#{a}"
+
+==> 101.rb 20 <==
+foo = 'foo \
+  bar'
+
+==> 102.rb 34 <==
+class Foo
+  # foo \
+  #   bar
+end
+
+==> 103.rb 8 <==
+foo # \
+
+==> 104.rb 16 <==
+'bar' \
+  'baz'
+
+==> 105.rb 16 <==
+"bar" \
+  "baz"
+
+==> 106.rb 61 <==
+foo('bar' \
+  'baz')
+foo(bar('string1' \
+    'string2')).baz
+
+==> 107.rb 28 <==
+foo 'bar' \
+    \
+    'baz'
+
+==> 108.rb 19 <==
+foo 'bar' \
+
+'baz'
+
+==> 109.rb 23 <==
+foo("#{bar}", \
+  baz)
+
+==> 110.rb 30 <==
+foo do_something \
+  argument
+
+==> 111.rb 35 <==
+foo obj&.do_something \
+  argument
+
+==> 112.rb 36 <==
+foo.bar do_something \
+  key: value
+
+==> 113.rb 41 <==
+foo do
+  bar \
+    key: value
+
+  baz
+end
+
+==> 114.rb 32 <==
+foo = do_something \
+  argument
+
+==> 115.rb 38 <==
+foo.bar = do_something \
+  key: value
+
+==> 116.rb 47 <==
+argument = 42
+
+foo = do_something \
+  argument
+
+==> 117.rb 33 <==
+foo = do_something \
+  @argument
+
+==> 118.rb 34 <==
+foo = do_something \
+  @@argument
+
+==> 119.rb 33 <==
+foo = do_something \
+  $argument
+
+==> 120.rb 32 <==
+foo = do_something \
+  ARGUMENT
+
+==> 121.rb 34 <==
+foo = do_something \
+  ::ARGUMENT
+
+==> 122.rb 34 <==
+foo = do_something \
+  'argument'
+
+==> 123.rb 38 <==
+foo = do_something \
+  "argument#{x}"
+
+==> 124.rb 34 <==
+foo = do_something \
+  `argument`
+
+==> 125.rb 33 <==
+foo = do_something \
+  :argument
+
+==> 126.rb 30 <==
+foo = do_something \
+  (1..9)
+
+==> 127.rb 26 <==
+foo = do_something \
+  42
+
+==> 128.rb 28 <==
+foo = do_something \
+  42.0
+
+==> 129.rb 28 <==
+foo = do_something \
+  true
+
+==> 130.rb 29 <==
+foo = do_something \
+  false
+
+==> 131.rb 27 <==
+foo = do_something \
+  nil
+
+==> 132.rb 28 <==
+foo = do_something \
+  self
+
+==> 133.rb 26 <==
+foo = do_something \
+  []
+
+==> 134.rb 26 <==
+foo = do_something \
+  {}
+
+==> 135.rb 82 <==
+1 \
+  + 2 \
+    - 3 \
+      * 4 \
+        / 5  \
+          % 6 \
+            ** 7
+
+==> 136.rb 32 <==
+1 \
+  & 2 \
+    | 3 \
+      ^ 4
+
+==> 137.rb 19 <==
+(
+  42) \
+  == bar
+
+==> 138.rb 19 <==
+[
+  42] \
+  == bar
+
+==> 139.rb 22 <==
+{
+  k: :v} \
+  == bar
+
+==> 140.rb 15 <==
+foo \
+  && bar
+
+==> 141.rb 15 <==
+foo \
+  || bar
+
+==> 142.rb 20 <==
+foo = bar\
+  && baz
+
+==> 143.rb 20 <==
+foo = bar\
+  || baz
+
+==> 144.rb 40 <==
+def do_something
+  foo \
+    && bar
+end
+
+==> 145.rb 40 <==
+def do_something
+  foo \
+    || bar
+end
+
+==> 146.rb 42 <==
+def do_something
+  foo \
+    || bar \
+end
+
+==> 147.rb 61 <==
+x do
+  foo bar \
+    baz
+end
+
+y do
+  foo(bar, \
+    baz)
+end
+
+==> 148.rb 35 <==
+foo(bar, \
+  baz)
+
+foo bar \
+  baz
+
+==> 149.rb 35 <==
+foo bar \
+  baz
+
+foo(bar, \
+  baz)
+
+==> 150.rb 37 <==
+foo(bar, \
+  baz)
+
+foo(bar, \
+  baz)
+
+==> 151.rb 33 <==
+foo bar \
+  baz
+
+foo bar \
+  baz
+
+==> 152.rb 24 <==
+foo \
+  & bar \
+  & baz
+
+==> 153.rb 24 <==
+foo \
+  | bar \
+  | baz
+
+==> 154.rb 24 <==
+foo \
+  ? bar
+    : baz
+
+==> 155.rb 52 <==
+some_method \
+  (argument)
+some_method \
+  argument
+
+==> 156.rb 51 <==
+class Foo
+  memoize \
+  def do_something
+  end
+end
+
+==> 157.rb 65 <==
+foo == other.foo \
+  && bar == other.bar \
+  && baz == other.baz
+
+==> 158.rb 65 <==
+foo == other.foo \
+  || bar == other.bar \
+  || baz == other.baz
+
+==> 159.rb 28 <==
+var, = *foo
+
+bar \
+  && baz
+
+==> 160.rb 51 <==
+<<~SQL
+  SELECT * FROM foo \
+    WHERE bar = 1
+SQL
+
+==> 161.rb 76 <==
+foo
+  .bar
+    .baz
+foo
+  &.bar
+[foo,
+  bar]
+{ foo:
+  bar }
+foo(bar,
+  baz)
+
+==> 162.rb 6 <==
+foo \
+
+==> 163.rb 30 <==
+def foo
+  bar
+end
+some_code \
+
+==> 164.rb 22 <==
+foo \
+
+__END__
+data \
+
+==> 165.rb 27 <==
+foo(bar, \
+  %i[baz quux])
+
+==> 166.rb 20 <==
+def foo
+  bar \
+end
+
+==> 167.rb 22 <==
+def foo
+  super \
+end
+
+==> 168.rb 24 <==
+a, b, \
+  c = [1, 2, 3]
+
+==> 169.rb 75 <==
+class A
+  ROOT = __FILE__
+  def same
+    foo(bar, \
+        baz)
+  end
+end
+
+==> 170.rb 39 <==
+def foo
+  'first' \
+    'second' \
+end
+

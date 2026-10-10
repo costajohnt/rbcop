@@ -1,0 +1,24 @@
+==> offenses exit=1 1099 <==
+000.rb:1:18: W: Lint/StructNewOverride: `:members` member overrides `Struct#members` and it may be unexpected.
+001.rb:1:20: W: Lint/StructNewOverride: `:members` member overrides `Struct#members` and it may be unexpected.
+002.rb:1:19: W: Lint/StructNewOverride: `:members` member overrides `Struct#members` and it may be unexpected.
+003.rb:1:25: W: Lint/StructNewOverride: `:members` member overrides `Struct#members` and it may be unexpected.
+004.rb:1:25: W: Lint/StructNewOverride: `"members"` member overrides `Struct#members` and it may be unexpected.
+005.rb:1:12: W: Lint/StructNewOverride: `:members` member overrides `Struct#members` and it may be unexpected.
+006.rb:1:12: W: Lint/StructNewOverride: `:members` member overrides `Struct#members` and it may be unexpected.
+006.rb:1:22: W: Lint/StructNewOverride: `:clone` member overrides `Struct#clone` and it may be unexpected.
+006.rb:1:30: W: Lint/StructNewOverride: `:zip` member overrides `Struct#zip` and it may be unexpected.
+007.rb:1:12: W: Lint/StructNewOverride: `:members` member overrides `Struct#members` and it may be unexpected.
+
+==> autocorrect exit=1 1099 <==
+000.rb:1:18: W: Lint/StructNewOverride: `:members` member overrides `Struct#members` and it may be unexpected.
+001.rb:1:20: W: Lint/StructNewOverride: `:members` member overrides `Struct#members` and it may be unexpected.
+002.rb:1:19: W: Lint/StructNewOverride: `:members` member overrides `Struct#members` and it may be unexpected.
+003.rb:1:25: W: Lint/StructNewOverride: `:members` member overrides `Struct#members` and it may be unexpected.
+004.rb:1:25: W: Lint/StructNewOverride: `"members"` member overrides `Struct#members` and it may be unexpected.
+005.rb:1:12: W: Lint/StructNewOverride: `:members` member overrides `Struct#members` and it may be unexpected.
+006.rb:1:12: W: Lint/StructNewOverride: `:members` member overrides `Struct#members` and it may be unexpected.
+006.rb:1:22: W: Lint/StructNewOverride: `:clone` member overrides `Struct#clone` and it may be unexpected.
+006.rb:1:30: W: Lint/StructNewOverride: `:zip` member overrides `Struct#zip` and it may be unexpected.
+007.rb:1:12: W: Lint/StructNewOverride: `:members` member overrides `Struct#members` and it may be unexpected.
+

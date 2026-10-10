@@ -1,0 +1,23 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 44 <==
+[*paths].each { |path| do_something(path) }
+
+==> 001.rb 42 <==
+paths = [paths] unless paths.is_a?(Array)
+
+==> 002.rb 26 <==
+first_path, rest = *paths
+
+==> 003.rb 53 <==
+[*paths, '/root'].each { |path| do_something(path) }
+
+==> 004.rb 48 <==
+other_paths = [paths] unless paths.is_a?(Array)
+

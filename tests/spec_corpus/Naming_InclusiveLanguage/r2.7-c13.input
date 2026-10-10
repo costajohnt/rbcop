@@ -1,0 +1,15 @@
+==> .rubocop.yml 193 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/InclusiveLanguage:
+  CheckIdentifiers: true
+  FlaggedTerms:
+    whitelist: {}
+
+==> 000.rb 28 <==
+whitelist = %w(user1 user2)
+

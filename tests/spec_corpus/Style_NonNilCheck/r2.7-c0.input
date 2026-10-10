@@ -1,0 +1,49 @@
+==> .rubocop.yml 159 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/NonNilCheck:
+  IncludeSemanticChanges: false
+
+==> 000.rb 9 <==
+x != nil
+
+==> 001.rb 13 <==
+a + b != nil
+
+==> 002.rb 6 <==
+x != 0
+==> 003.rb 7 <==
+!x.nil?
+==> 004.rb 10 <==
+not x.nil?
+==> 005.rb 40 <==
+def signed_in?
+  !current_user.nil?
+end
+
+==> 006.rb 46 <==
+def Test.signed_in?
+  current_user != nil
+end
+
+==> 007.rb 53 <==
+def signed_in?
+  something
+  current_user != nil
+end
+
+==> 008.rb 58 <==
+def Test.signed_in?
+  something
+  current_user != nil
+end
+
+==> 009.rb 5 <==
+!nil?
+==> 010.rb 38 <==
+return nil unless (line =~ //) != nil
+

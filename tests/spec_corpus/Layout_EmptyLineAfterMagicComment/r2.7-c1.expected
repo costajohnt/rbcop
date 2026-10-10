@@ -1,0 +1,20 @@
+==> offenses exit=1 254 <==
+000.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 2 empty lines after magic comments; found 0.
+001.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 2 empty lines after magic comments; found 1.
+
+==> autocorrect exit=0 250 <==
+000.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 2 empty lines after magic comments; found 0.
+001.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 2 empty lines after magic comments; found 1.
+
+==> corrected/000.rb 47 <==
+# frozen_string_literal: true
+
+
+class Foo; end
+
+==> corrected/001.rb 47 <==
+# frozen_string_literal: true
+
+
+class Foo; end
+

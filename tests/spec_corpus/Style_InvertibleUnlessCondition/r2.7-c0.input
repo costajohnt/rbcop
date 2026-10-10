@@ -1,0 +1,71 @@
+==> .rubocop.yml 304 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/InvertibleUnlessCondition:
+  InverseMethods:
+    :!=: :==
+    :even?: :odd?
+    :odd?: :even?
+    :>=: :<
+    :<: :>=
+    :zero?: :nonzero?
+    :include?: :exclude?
+    :exclude?: :include?
+
+==> 000.rb 29 <==
+foo unless !x
+foo unless !!x
+
+==> 001.rb 18 <==
+foo unless x != y
+
+==> 002.rb 18 <==
+foo unless x.odd?
+
+==> 003.rb 82 <==
+foo unless array.include?(value)
+foo unless array.exclude? value # no parentheses
+
+==> 004.rb 22 <==
+foo unless ((x != y))
+
+==> 005.rb 61 <==
+foo unless x != y && (((x.odd?) || (((y >= 5)))) || z.zero?)
+
+==> 006.rb 38 <==
+foo unless x != y && y >= 5 || x.odd?
+
+==> 007.rb 16 <==
+foo unless odd?
+
+==> 008.rb 27 <==
+foo unless include?(value)
+
+==> 009.rb 26 <==
+foo unless include? value
+
+==> 010.rb 28 <==
+foo unless begin x != y end
+
+==> 011.rb 28 <==
+foo unless (x != y; x.odd?)
+
+==> 012.rb 32 <==
+foo unless x != y || x.awesome?
+
+==> 013.rb 19 <==
+foo unless x < Foo
+
+==> 014.rb 18 <==
+foo if !condition
+
+==> 015.rb 14 <==
+foo unless ()
+
+==> 016.rb 11 <==
+foo if !()
+

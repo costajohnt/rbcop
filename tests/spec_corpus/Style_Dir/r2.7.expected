@@ -1,0 +1,24 @@
+==> offenses exit=1 444 <==
+000.rb:1:1: C: [Correctable] Style/Dir: Use `__dir__` to get an absolute path to the current file's directory.
+001.rb:1:1: C: [Correctable] Style/Dir: Use `__dir__` to get an absolute path to the current file's directory.
+002.rb:1:1: C: [Correctable] Style/Dir: Use `__dir__` to get an absolute path to the current file's directory.
+003.rb:1:1: C: [Correctable] Style/Dir: Use `__dir__` to get an absolute path to the current file's directory.
+
+==> autocorrect exit=0 436 <==
+000.rb:1:1: C: [Corrected] Style/Dir: Use `__dir__` to get an absolute path to the current file's directory.
+001.rb:1:1: C: [Corrected] Style/Dir: Use `__dir__` to get an absolute path to the current file's directory.
+002.rb:1:1: C: [Corrected] Style/Dir: Use `__dir__` to get an absolute path to the current file's directory.
+003.rb:1:1: C: [Corrected] Style/Dir: Use `__dir__` to get an absolute path to the current file's directory.
+
+==> corrected/000.rb 8 <==
+__dir__
+
+==> corrected/001.rb 8 <==
+__dir__
+
+==> corrected/002.rb 8 <==
+__dir__
+
+==> corrected/003.rb 8 <==
+__dir__
+

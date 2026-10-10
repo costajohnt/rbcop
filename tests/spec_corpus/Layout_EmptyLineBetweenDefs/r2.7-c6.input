@@ -1,0 +1,62 @@
+==> .rubocop.yml 195 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/EmptyLineBetweenDefs:
+  DefLikeMacros:
+  - foo
+  AllowAdjacentOneLineDefs: true
+
+==> 000.rb 71 <==
+foo 'first foo' do
+  #foo body
+end
+foo 'second foo' do
+  #foo body
+end
+
+==> 001.rb 70 <==
+def foo_first_foo
+  #foo body
+end
+foo 'second foo' do
+  #foo body
+end
+
+==> 002.rb 64 <==
+foo 'first foo' do
+  #foo body
+end
+foo 'second foo' do
+  _1
+end
+
+==> 003.rb 72 <==
+foo 'first foo' do
+  #foo body
+end
+
+foo 'second foo' do
+  #foo body
+end
+
+==> 004.rb 112 <==
+bar "bar" do
+  #bar body
+end
+foo 'first foo' do
+  #foo body
+end
+
+sig {void}
+foo 'second foo' do
+  #foo body
+end
+
+==> 005.rb 43 <==
+foo :first_attribute
+foo :second_attribute
+

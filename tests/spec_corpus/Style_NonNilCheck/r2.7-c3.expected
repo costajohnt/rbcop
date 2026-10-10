@@ -1,0 +1,9 @@
+==> offenses exit=1 95 <==
+000.rb:1:1: C: [Correctable] Style/NonNilCheck: Explicit non-nil checks are usually redundant.
+
+==> autocorrect exit=0 93 <==
+000.rb:1:1: C: [Corrected] Style/NonNilCheck: Explicit non-nil checks are usually redundant.
+
+==> corrected/000.rb 4 <==
+foo
+

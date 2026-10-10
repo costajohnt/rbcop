@@ -1,0 +1,289 @@
+==> .rubocop.yml 194 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/MemoizedInstanceVariableName:
+  EnforcedStyleForLeadingUnderscores: disallowed
+
+==> 000.rb 29 <==
+def x
+  @my_var ||= :foo
+end
+
+==> 001.rb 34 <==
+def self.x
+  @my_var ||= :foo
+end
+
+==> 002.rb 30 <==
+foo = def x
+  @y ||= :foo
+end
+
+==> 003.rb 40 <==
+def x
+  @y ||= begin
+    :foo
+  end
+end
+
+==> 004.rb 121 <==
+def foo
+  helper_variable = something_we_need_to_calculate_foo
+  @bar ||= calculate_expensive_thing(helper_variable)
+end
+
+==> 005.rb 122 <==
+def foo?
+  helper_variable = something_we_need_to_calculate_foo
+  @bar ||= calculate_expensive_thing(helper_variable)
+end
+
+==> 006.rb 122 <==
+def foo!
+  helper_variable = something_we_need_to_calculate_foo
+  @bar ||= calculate_expensive_thing(helper_variable)
+end
+
+==> 007.rb 128 <==
+def foo=(bar)
+  helper_variable = something_we_need_to_calculate(foo)
+  @bar ||= calculate_expensive_thing(helper_variable)
+end
+
+==> 008.rb 24 <==
+def x
+  @x ||= :foo
+end
+
+==> 009.rb 29 <==
+def _foo
+  @foo ||= :foo
+end
+
+==> 010.rb 30 <==
+def _foo
+  @_foo ||= :foo
+end
+
+==> 011.rb 30 <==
+foo = def y
+  @y ||= :foo
+end
+
+==> 012.rb 40 <==
+def z
+  @z ||= begin
+    :foo
+  end
+end
+
+==> 013.rb 23 <==
+def a
+  x ||= :foo
+end
+
+==> 014.rb 25 <==
+def a?
+  @a ||= :foo
+end
+
+==> 015.rb 25 <==
+def a!
+  @a ||= :foo
+end
+
+==> 016.rb 24 <==
+def []
+  @foo ||= 1
+end
+
+==> 017.rb 34 <==
+def +(other)
+  @foo ||= other
+end
+
+==> 018.rb 46 <==
+def a
+  @b ||= :foo
+  call_something_else
+end
+
+==> 019.rb 121 <==
+def foo
+  helper_variable = something_we_need_to_calculate_foo
+  @foo ||= calculate_expensive_thing(helper_variable)
+end
+
+==> 020.rb 49 <==
+def initialize
+  @files_with_offenses ||= {}
+end
+
+==> 021.rb 60 <==
+def initialize_clone(obj)
+  @files_with_offenses ||= {}
+end
+
+==> 022.rb 59 <==
+def initialize_copy(obj)
+  @files_with_offenses ||= {}
+end
+
+==> 023.rb 58 <==
+def initialize_dup(obj)
+  @files_with_offenses ||= {}
+end
+
+==> 024.rb 57 <==
+define_method(:values) do
+  @values ||= do_something
+end
+
+==> 025.rb 54 <==
+define_method(:values) do
+  @foo ||= do_something
+end
+
+==> 026.rb 99 <==
+def self.inherited(klass)
+  klass.define_method(:values) do
+    @values ||= do_something
+  end
+end
+
+==> 027.rb 96 <==
+def self.inherited(klass)
+  klass.define_method(:values) do
+    @foo ||= do_something
+  end
+end
+
+==> 028.rb 109 <==
+def self.inherited(klass)
+  klass.define_singleton_method(:values) do
+    @values ||= do_something
+  end
+end
+
+==> 029.rb 106 <==
+def self.inherited(klass)
+  klass.define_singleton_method(:values) do
+    @foo ||= do_something
+  end
+end
+
+==> 030.rb 66 <==
+def x
+  return @my_var if defined?(@my_var)
+  @my_var = false
+end
+
+==> 031.rb 71 <==
+def self.x
+  return @my_var if defined?(@my_var)
+  @my_var = false
+end
+
+==> 032.rb 51 <==
+def x
+  return @x if defined?(@x)
+  @x = false
+end
+
+==> 033.rb 60 <==
+def _foo
+  return @foo if defined?(@foo)
+  @foo = false
+end
+
+==> 034.rb 63 <==
+def _foo
+  return @_foo if defined?(@_foo)
+  @_foo = false
+end
+
+==> 035.rb 44 <==
+def a
+  return x if defined?(x)
+  x = 1
+end
+
+==> 036.rb 52 <==
+def a?
+  return @a if defined?(@a)
+  @a = false
+end
+
+==> 037.rb 52 <==
+def a!
+  return @a if defined?(@a)
+  @a = false
+end
+
+==> 038.rb 66 <==
+def x
+  do_something
+  return @x if defined?(@x)
+  @x = false
+end
+
+==> 039.rb 66 <==
+def x
+  return @x if defined?(@x)
+  @x = false
+  do_something
+end
+
+==> 040.rb 38 <==
+def x
+  return @x if defined?(@x)
+end
+
+==> 041.rb 93 <==
+define_method(:values) do
+  return @values if defined?(@values)
+  @values = do_something
+end
+
+==> 042.rb 84 <==
+define_method(:values) do
+  return @foo if defined?(@foo)
+  @foo = do_something
+end
+
+==> 043.rb 137 <==
+def self.inherited(klass)
+  klass.define_method(:values) do
+    return @values if defined?(@values)
+    @values = do_something
+  end
+end
+
+==> 044.rb 128 <==
+def self.inherited(klass)
+  klass.define_method(:values) do
+    return @foo if defined?(@foo)
+    @foo = do_something
+  end
+end
+
+==> 045.rb 147 <==
+def self.inherited(klass)
+  klass.define_singleton_method(:values) do
+    return @values if defined?(@values)
+    @values = do_something
+  end
+end
+
+==> 046.rb 138 <==
+def self.inherited(klass)
+  klass.define_singleton_method(:values) do
+    return @foo if defined?(@foo)
+    @foo = do_something
+  end
+end
+

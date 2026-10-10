@@ -1,0 +1,44 @@
+==> offenses exit=1 984 <==
+000.rb:1:18: C: [Correctable] Style/VariableInterpolation: Replace interpolated variable `$test` with expression `#{$test}`.
+001.rb:1:18: C: [Correctable] Style/VariableInterpolation: Replace interpolated variable `$test` with expression `#{$test}`.
+002.rb:1:18: C: [Correctable] Style/VariableInterpolation: Replace interpolated variable `$test` with expression `#{$test}`.
+003.rb:1:19: C: [Correctable] Style/VariableInterpolation: Replace interpolated variable `$test` with expression `#{$test}`.
+004.rb:1:18: C: [Correctable] Style/VariableInterpolation: Replace interpolated variable `$1` with expression `#{$1}`.
+005.rb:1:18: C: [Correctable] Style/VariableInterpolation: Replace interpolated variable `$+` with expression `#{$+}`.
+006.rb:1:18: C: [Correctable] Style/VariableInterpolation: Replace interpolated variable `@test` with expression `#{@test}`.
+007.rb:1:18: C: [Correctable] Style/VariableInterpolation: Replace interpolated variable `@@t` with expression `#{@@t}`.
+
+==> autocorrect exit=0 968 <==
+000.rb:1:18: C: [Corrected] Style/VariableInterpolation: Replace interpolated variable `$test` with expression `#{$test}`.
+001.rb:1:18: C: [Corrected] Style/VariableInterpolation: Replace interpolated variable `$test` with expression `#{$test}`.
+002.rb:1:18: C: [Corrected] Style/VariableInterpolation: Replace interpolated variable `$test` with expression `#{$test}`.
+003.rb:1:19: C: [Corrected] Style/VariableInterpolation: Replace interpolated variable `$test` with expression `#{$test}`.
+004.rb:1:18: C: [Corrected] Style/VariableInterpolation: Replace interpolated variable `$1` with expression `#{$1}`.
+005.rb:1:18: C: [Corrected] Style/VariableInterpolation: Replace interpolated variable `$+` with expression `#{$+}`.
+006.rb:1:18: C: [Corrected] Style/VariableInterpolation: Replace interpolated variable `@test` with expression `#{@test}`.
+007.rb:1:18: C: [Corrected] Style/VariableInterpolation: Replace interpolated variable `@@t` with expression `#{@@t}`.
+
+==> corrected/000.rb 26 <==
+puts "this is a #{$test}"
+
+==> corrected/001.rb 26 <==
+puts /this is a #{$test}/
+
+==> corrected/002.rb 26 <==
+puts `this is a #{$test}`
+
+==> corrected/003.rb 27 <==
+puts :"this is a #{$test}"
+
+==> corrected/004.rb 23 <==
+puts "this is a #{$1}"
+
+==> corrected/005.rb 23 <==
+puts "this is a #{$+}"
+
+==> corrected/006.rb 26 <==
+puts "this is a #{@test}"
+
+==> corrected/007.rb 24 <==
+puts "this is a #{@@t}"
+

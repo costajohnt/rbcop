@@ -1,0 +1,32 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+
+==> 000.rb 27 <==
+YAML.load(File.read(path))
+
+==> 001.rb 32 <==
+YAML.safe_load(File.read(path))
+
+==> 002.rb 84 <==
+YAML.safe_load(File.read(path), permitted_classes: [Regexp, Symbol], aliases: true)
+
+==> 003.rb 28 <==
+YAML.parse(File.read(path))
+
+==> 004.rb 31 <==
+::YAML.load(::File.read(path))
+
+==> 005.rb 59 <==
+YAML.load(File.read(Rails.root.join('foo', 'bar', 'baz')))
+
+==> 006.rb 16 <==
+YAML.load(yaml)
+
+==> 007.rb 32 <==
+YAML.load_file(File.read(path))
+

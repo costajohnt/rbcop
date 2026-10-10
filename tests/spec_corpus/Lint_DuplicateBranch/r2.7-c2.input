@@ -1,0 +1,78 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/DuplicateBranch:
+  IgnoreConstantBranches: true
+
+==> 000.rb 55 <==
+if x
+  MY_CONST
+elsif y
+  MY_CONST
+else
+  MY_CONST
+end
+
+==> 001.rb 61 <==
+if x
+  Object.new
+elsif y
+  Object.new
+else
+  Object.new
+end
+
+==> 002.rb 69 <==
+case foo
+when x then MY_CONST
+when y then MY_CONST
+else MY_CONST
+end
+
+==> 003.rb 75 <==
+case foo
+when x then Object.new
+when y then Object.new
+else Object.new
+end
+
+==> 004.rb 65 <==
+case foo
+in x then MY_CONST
+in y then MY_CONST
+else MY_CONST
+end
+
+==> 005.rb 71 <==
+case foo
+in x then Object.new
+in y then Object.new
+else Object.new
+end
+
+==> 006.rb 86 <==
+begin
+  foo
+rescue FooError
+  MY_CONST
+rescue BarError
+  MY_CONST
+else
+  MY_CONST
+end
+
+==> 007.rb 92 <==
+begin
+  foo
+rescue FooError
+  Object.new
+rescue BarError
+  Object.new
+else
+  Object.new
+end
+

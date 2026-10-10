@@ -1,0 +1,50 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 22 <==
+foo = foo.concat(ary)
+
+==> 001.rb 24 <==
+@foo = @foo.concat(ary)
+
+==> 002.rb 26 <==
+@@foo = @@foo.concat(ary)
+
+==> 003.rb 24 <==
+$foo = $foo.concat(ary)
+
+==> 004.rb 23 <==
+foo = foo&.concat(ary)
+
+==> 005.rb 29 <==
+foo = foo.delete_if { true }
+
+==> 006.rb 22 <==
+foo = bar.concat(ary)
+
+==> 007.rb 18 <==
+foo = concat(ary)
+
+==> 008.rb 27 <==
+self.foo = foo.concat(ary)
+
+==> 009.rb 28 <==
+self.foo = foo&.concat(ary)
+
+==> 010.rb 34 <==
+other.foo = other.foo.concat(ary)
+
+==> 011.rb 35 <==
+other.foo = other.foo&.concat(ary)
+
+==> 012.rb 37 <==
+other&.foo = other&.foo&.concat(ary)
+
+==> 013.rb 27 <==
+self.foo = bar.concat(ary)
+

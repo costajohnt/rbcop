@@ -1,0 +1,155 @@
+==> offenses exit=1 2401 <==
+000.rb:1:7: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+001.rb:1:8: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+002.rb:1:8: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+003.rb:1:7: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+003.rb:6:7: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+004.rb:1:7: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+005.rb:1:8: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+005.rb:6:8: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+006.rb:3:7: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+011.rb:1:8: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+012.rb:1:8: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+013.rb:1:8: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+014.rb:1:8: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+015.rb:1:8: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+016.rb:1:8: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+017.rb:1:8: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+018.rb:1:7: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+019.rb:2:9: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+020.rb:3:11: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+021.rb:2:9: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+
+==> autocorrect exit=0 2361 <==
+000.rb:1:7: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+001.rb:1:8: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+002.rb:1:8: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+003.rb:1:7: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+003.rb:6:7: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+004.rb:1:7: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+005.rb:1:8: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+005.rb:6:8: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+006.rb:3:7: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+011.rb:1:8: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+012.rb:1:8: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+013.rb:1:8: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+014.rb:1:8: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+015.rb:1:8: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+016.rb:1:8: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+017.rb:1:8: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+018.rb:1:7: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+019.rb:2:9: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+020.rb:3:11: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+021.rb:2:9: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+
+==> corrected/000.rb 29 <==
+class FooClass::BarClass
+end
+
+==> corrected/001.rb 59 <==
+module FooModule::BarModule
+  def method_example
+  end
+end
+
+==> corrected/002.rb 94 <==
+module FooModule::BarModule::BazModule::QuxModule
+  CONST = 1
+
+  def method_example
+  end
+end
+
+==> corrected/003.rb 49 <==
+class Foo::Bar::Baz
+end
+
+class Foo::Bar::Baz
+end
+
+==> corrected/004.rb 24 <==
+class Foo::Bar::Baz
+end
+
+==> corrected/005.rb 51 <==
+module Foo::Bar::Baz
+end
+
+module Foo::Bar::Baz
+end
+
+==> corrected/006.rb 71 <==
+# describe Foo
+# more Foo
+# describe Bar
+# more Bar
+class Foo::Bar
+end
+
+==> corrected/011.rb 27 <==
+module A::B::C
+			body
+end
+
+==> corrected/012.rb 15 <==
+class M::C
+end
+
+==> corrected/013.rb 31 <==
+class M::C
+def foo; 1; end
+end
+
+==> corrected/014.rb 33 <==
+class M::C
+  def foo; 1; end
+end
+
+==> corrected/015.rb 26 <==
+module A::B::C
+		body
+end
+
+==> corrected/016.rb 25 <==
+module A::B::C
+	body
+end
+
+==> corrected/017.rb 26 <==
+module A::B::C
+		body
+end
+
+==> corrected/018.rb 29 <==
+class FooClass::BarClass
+end
+
+==> corrected/019.rb 52 <==
+class A < B
+  class C::D
+  end
+
+  class E
+  end
+end
+
+==> corrected/020.rb 76 <==
+class A < B
+  class F
+    class C::D
+    end
+
+    class E
+    end
+  end
+end
+
+==> corrected/021.rb 52 <==
+class A < B
+  class C::D
+  end
+
+  class E
+  end
+end
+

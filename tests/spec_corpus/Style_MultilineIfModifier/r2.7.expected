@@ -1,0 +1,44 @@
+==> offenses exit=1 540 <==
+000.rb:1:1: C: [Correctable] Style/MultilineIfModifier: Favor a normal if-statement over a modifier clause in a multiline statement.
+003.rb:1:1: C: [Correctable] Style/MultilineIfModifier: Favor a normal if-statement over a modifier clause in a multiline statement.
+004.rb:1:1: C: [Correctable] Style/MultilineIfModifier: Favor a normal unless-statement over a modifier clause in a multiline statement.
+007.rb:1:1: C: [Correctable] Style/MultilineIfModifier: Favor a normal unless-statement over a modifier clause in a multiline statement.
+
+==> autocorrect exit=0 798 <==
+000.rb:1:1: C: [Corrected] Style/MultilineIfModifier: Favor a normal if-statement over a modifier clause in a multiline statement.
+003.rb:1:1: C: [Corrected] Style/MultilineIfModifier: Favor a normal if-statement over a modifier clause in a multiline statement.
+003.rb:2:3: C: [Corrected] Style/MultilineIfModifier: Favor a normal if-statement over a modifier clause in a multiline statement.
+004.rb:1:1: C: [Corrected] Style/MultilineIfModifier: Favor a normal unless-statement over a modifier clause in a multiline statement.
+007.rb:1:1: C: [Corrected] Style/MultilineIfModifier: Favor a normal unless-statement over a modifier clause in a multiline statement.
+007.rb:2:3: C: [Corrected] Style/MultilineIfModifier: Favor a normal unless-statement over a modifier clause in a multiline statement.
+
+==> corrected/000.rb 36 <==
+if cond
+  {
+    result: run
+  }
+end
+
+==> corrected/003.rb 42 <==
+if outer
+  if inner
+    [
+    ]
+  end
+end
+
+==> corrected/004.rb 40 <==
+unless cond
+  {
+    result: run
+  }
+end
+
+==> corrected/007.rb 50 <==
+unless outer
+  unless inner
+    [
+    ]
+  end
+end
+

@@ -1,0 +1,45 @@
+==> .rubocop.yml 179 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/NumericPredicate:
+  EnforcedStyle: predicate
+  AutoCorrect: true
+
+==> 000.rb 24 <==
+number == 0
+0 == number
+
+==> 001.rb 26 <==
+foo - 1 == 0
+0 == foo - 1
+
+==> 002.rb 18 <==
+$CHILD_STATUS == 0
+==> 003.rb 18 <==
+0 == $CHILD_STATUS
+==> 004.rb 26 <==
+def m(foo)
+  foo == 0
+end
+
+==> 005.rb 30 <==
+def m(foo)
+  foo - 1 == 0
+end
+
+==> 006.rb 11 <==
+number != 0
+==> 007.rb 11 <==
+0 != number
+==> 008.rb 12 <==
+foo - 1 != 0
+==> 009.rb 12 <==
+0 != foo - 1
+==> 010.rb 18 <==
+$CHILD_STATUS != 0
+==> 011.rb 18 <==
+0 != $CHILD_STATUS

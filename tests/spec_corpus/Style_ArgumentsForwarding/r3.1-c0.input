@@ -1,0 +1,67 @@
+==> .rubocop.yml 315 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+Style/ArgumentsForwarding:
+  RedundantRestArgumentNames:
+  - args
+  - arguments
+  RedundantKeywordRestArgumentNames:
+  - kwargs
+  - options
+  - opts
+  RedundantBlockArgumentNames:
+  - blk
+  - block
+  - proc
+
+==> 000.rb 69 <==
+def foo(arg = {}, **kwargs, &block)
+  bar(arg, **kwargs, &block)
+end
+
+==> 001.rb 34 <==
+def foo(&block)
+  bar(&block)
+end
+
+==> 002.rb 24 <==
+def foo(&)
+  bar(&)
+end
+
+==> 003.rb 38 <==
+def foo(*args, &)
+  bar(*args, &)
+end
+
+==> 004.rb 58 <==
+def foo(*args, **kwargs, &)
+  bar(*args, **kwargs, &)
+end
+
+==> 005.rb 56 <==
+def baz(qux, quuz, &block)
+  bar(qux, quuz, &block)
+end
+
+==> 006.rb 65 <==
+def foo(x, y = 42, *args, &block)
+  bar(x, y, *args, &block)
+end
+
+==> 007.rb 80 <==
+def baz(qux, quuz, &block)
+  with_block do
+    bar(qux, quuz, &block)
+  end
+end
+
+==> 008.rb 152 <==
+def before_transition(options = {}, &block)
+  add_callback(type: :before, callback_class: Callback, from: options[:from], to: options[:to], &block)
+end
+

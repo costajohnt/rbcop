@@ -1,0 +1,70 @@
+==> offenses exit=1 1686 <==
+000.rb:1:4: C: [Correctable] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `if`.
+000.rb:2:7: C: [Correctable] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `elsif`.
+000.rb:4:8: C: [Correctable] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `unless`.
+000.rb:6:7: C: [Correctable] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of a `while`.
+000.rb:8:7: C: [Correctable] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `until`.
+000.rb:10:11: C: [Correctable] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `if`.
+000.rb:11:15: C: [Correctable] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `unless`.
+000.rb:12:14: C: [Correctable] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `until`.
+000.rb:13:14: C: [Correctable] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of a `while`.
+010.rb:1:6: C: [Correctable] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `if`.
+017.rb:1:7: C: [Correctable] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of a `while`.
+018.rb:1:7: C: [Correctable] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `until`.
+019.rb:1:4: C: [Correctable] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `if`.
+020.rb:1:4: C: [Correctable] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `if`.
+
+==> autocorrect exit=0 1658 <==
+000.rb:1:4: C: [Corrected] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `if`.
+000.rb:2:7: C: [Corrected] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `elsif`.
+000.rb:4:8: C: [Corrected] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `unless`.
+000.rb:6:7: C: [Corrected] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of a `while`.
+000.rb:8:7: C: [Corrected] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `until`.
+000.rb:10:11: C: [Corrected] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `if`.
+000.rb:11:15: C: [Corrected] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `unless`.
+000.rb:12:14: C: [Corrected] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `until`.
+000.rb:13:14: C: [Corrected] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of a `while`.
+010.rb:1:6: C: [Corrected] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `if`.
+017.rb:1:7: C: [Corrected] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of a `while`.
+018.rb:1:7: C: [Corrected] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `until`.
+019.rb:1:4: C: [Corrected] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `if`.
+020.rb:1:4: C: [Corrected] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `if`.
+
+==> corrected/000.rb 156 <==
+if x > 10
+elsif x < 3
+end
+unless x > 10
+end
+while x > 10
+end
+until x > 10
+end
+x += 1 if x < 10
+x += 1 unless x < 10
+x += 1 until x < 10
+x += 1 while x < 10
+
+==> corrected/010.rb 15 <==
+x if a ? b : c
+
+==> corrected/017.rb 24 <==
+while foo {
+      }
+end
+
+==> corrected/018.rb 24 <==
+until foo {
+      }
+end
+
+==> corrected/019.rb 21 <==
+if foo do
+   end
+end
+
+==> corrected/020.rb 18 <==
+if foo {
+   }
+end
+

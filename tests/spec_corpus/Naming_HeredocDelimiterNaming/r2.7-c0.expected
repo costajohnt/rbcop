@@ -1,0 +1,24 @@
+==> offenses exit=1 810 <==
+000.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+002.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+004.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+005.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+007.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+008.rb:1:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+009.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+011.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+015.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+016.rb:5:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+
+==> autocorrect exit=1 810 <==
+000.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+002.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+004.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+005.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+007.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+008.rb:1:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+009.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+011.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+015.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+016.rb:5:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+

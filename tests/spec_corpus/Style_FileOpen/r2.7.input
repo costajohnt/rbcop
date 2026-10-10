@@ -1,0 +1,75 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 18 <==
+File.open('file')
+
+==> 001.rb 20 <==
+::File.open('file')
+
+==> 002.rb 23 <==
+File.open('file').read
+
+==> 003.rb 23 <==
+File.open('file', 'w')
+
+==> 004.rb 22 <==
+f = File.open('file')
+
+==> 005.rb 26 <==
+@ivar = File.open('file')
+
+==> 006.rb 27 <==
+@@cvar = File.open('file')
+
+==> 007.rb 26 <==
+$gvar = File.open('file')
+
+==> 008.rb 26 <==
+CONST = File.open('file')
+
+==> 009.rb 27 <==
+process(File.open('file'))
+
+==> 010.rb 31 <==
+process(io: File.open('file'))
+
+==> 011.rb 40 <==
+def json_key_io
+  File.open('file')
+end
+
+==> 012.rb 33 <==
+File.open('file') { |f| f.read }
+
+==> 013.rb 38 <==
+File.open('file') do |f|
+  f.read
+end
+
+==> 014.rb 26 <==
+File.open('file', &:read)
+
+==> 015.rb 26 <==
+File.open('file', &block)
+
+==> 016.rb 18 <==
+File.read('file')
+
+==> 017.rb 13 <==
+open('file')
+
+==> 018.rb 17 <==
+Foo.open('file')
+
+==> 019.rb 23 <==
+Foo::File.open('file')
+
+==> 020.rb 19 <==
+File&.open('file')
+

@@ -1,0 +1,34 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/EmptyLinesAroundBlockBody:
+  EnforcedStyle: empty_lines
+
+==> 000.rb 31 <==
+some_method {
+  do_something
+}
+
+==> 001.rb 15 <==
+some_method {
+}
+==> 002.rb 44 <==
+some_method { do_something }
+something_else
+
+==> 003.rb 34 <==
+some_method do
+  do_something
+end
+
+==> 004.rb 18 <==
+some_method do
+end
+==> 005.rb 47 <==
+some_method do do_something end
+something_else
+

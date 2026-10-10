@@ -1,0 +1,28 @@
+==> offenses exit=1 846 <==
+000.rb:1:1: C: Naming/VariableName: Use camelCase for variable names.
+001.rb:1:1: C: Naming/VariableName: Use camelCase for variable names.
+005.rb:1:12: C: Naming/VariableName: Use camelCase for variable names.
+007.rb:1:9: C: Naming/VariableName: Use camelCase for variable names.
+008.rb:1:10: C: Naming/VariableName: Use camelCase for variable names.
+009.rb:1:9: C: Naming/VariableName: Use camelCase for variable names.
+010.rb:1:11: C: Naming/VariableName: Use camelCase for variable names.
+011.rb:1:10: C: Naming/VariableName: Use camelCase for variable names.
+012.rb:1:1: C: Naming/VariableName: Use camelCase for variable names.
+012.rb:2:1: C: Naming/VariableName: Use camelCase for variable names.
+012.rb:4:14: C: Naming/VariableName: Use camelCase for variable names.
+012.rb:4:25: C: Naming/VariableName: Use camelCase for variable names.
+
+==> autocorrect exit=1 846 <==
+000.rb:1:1: C: Naming/VariableName: Use camelCase for variable names.
+001.rb:1:1: C: Naming/VariableName: Use camelCase for variable names.
+005.rb:1:12: C: Naming/VariableName: Use camelCase for variable names.
+007.rb:1:9: C: Naming/VariableName: Use camelCase for variable names.
+008.rb:1:10: C: Naming/VariableName: Use camelCase for variable names.
+009.rb:1:9: C: Naming/VariableName: Use camelCase for variable names.
+010.rb:1:11: C: Naming/VariableName: Use camelCase for variable names.
+011.rb:1:10: C: Naming/VariableName: Use camelCase for variable names.
+012.rb:1:1: C: Naming/VariableName: Use camelCase for variable names.
+012.rb:2:1: C: Naming/VariableName: Use camelCase for variable names.
+012.rb:4:14: C: Naming/VariableName: Use camelCase for variable names.
+012.rb:4:25: C: Naming/VariableName: Use camelCase for variable names.
+

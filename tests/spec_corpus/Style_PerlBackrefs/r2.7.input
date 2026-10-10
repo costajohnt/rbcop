@@ -1,0 +1,55 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 8 <==
+puts $1
+
+==> 001.rb 3 <==
+$9
+
+==> 002.rb 3 <==
+$&
+
+==> 003.rb 3 <==
+$`
+
+==> 004.rb 3 <==
+$'
+
+==> 005.rb 3 <==
+$+
+
+==> 006.rb 7 <==
+$MATCH
+
+==> 007.rb 10 <==
+$PREMATCH
+
+==> 008.rb 11 <==
+$POSTMATCH
+
+==> 009.rb 18 <==
+$LAST_PAREN_MATCH
+
+==> 010.rb 6 <==
+"#$1"
+
+==> 011.rb 6 <==
+`#$1`
+
+==> 012.rb 6 <==
+/#$1/
+
+==> 013.rb 47 <==
+module Foo
+  class Regexp
+  end
+
+  puts $1
+end
+

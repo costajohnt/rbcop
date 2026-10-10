@@ -1,0 +1,49 @@
+==> offenses exit=1 881 <==
+000.rb:1:3: C: [Correctable] Style/UnpackFirst: Use `unpack1('h*')` instead of `unpack('h*').first`.
+001.rb:1:4: C: [Correctable] Style/UnpackFirst: Use `unpack1('h*')` instead of `unpack('h*').first`.
+002.rb:1:4: C: [Correctable] Style/UnpackFirst: Use `unpack1('h*')` instead of `unpack('h*')&.first`.
+003.rb:1:4: C: [Correctable] Style/UnpackFirst: Use `unpack1(y)` instead of `unpack(y)[0]`.
+004.rb:1:4: C: [Correctable] Style/UnpackFirst: Use `unpack1(y)` instead of `unpack(y).[](0)`.
+005.rb:1:4: C: [Correctable] Style/UnpackFirst: Use `unpack1(y)` instead of `unpack(y).slice(0)`.
+006.rb:1:5: C: [Correctable] Style/UnpackFirst: Use `unpack1(y)` instead of `unpack(y).slice(0)`.
+007.rb:1:5: C: [Correctable] Style/UnpackFirst: Use `unpack1(y)` instead of `unpack(y)&.slice(0)`.
+008.rb:1:4: C: [Correctable] Style/UnpackFirst: Use `unpack1(y)` instead of `unpack(y).at(0)`.
+
+==> autocorrect exit=0 863 <==
+000.rb:1:3: C: [Corrected] Style/UnpackFirst: Use `unpack1('h*')` instead of `unpack('h*').first`.
+001.rb:1:4: C: [Corrected] Style/UnpackFirst: Use `unpack1('h*')` instead of `unpack('h*').first`.
+002.rb:1:4: C: [Corrected] Style/UnpackFirst: Use `unpack1('h*')` instead of `unpack('h*')&.first`.
+003.rb:1:4: C: [Corrected] Style/UnpackFirst: Use `unpack1(y)` instead of `unpack(y)[0]`.
+004.rb:1:4: C: [Corrected] Style/UnpackFirst: Use `unpack1(y)` instead of `unpack(y).[](0)`.
+005.rb:1:4: C: [Corrected] Style/UnpackFirst: Use `unpack1(y)` instead of `unpack(y).slice(0)`.
+006.rb:1:5: C: [Corrected] Style/UnpackFirst: Use `unpack1(y)` instead of `unpack(y).slice(0)`.
+007.rb:1:5: C: [Corrected] Style/UnpackFirst: Use `unpack1(y)` instead of `unpack(y)&.slice(0)`.
+008.rb:1:4: C: [Corrected] Style/UnpackFirst: Use `unpack1(y)` instead of `unpack(y).at(0)`.
+
+==> corrected/000.rb 16 <==
+x.unpack1('h*')
+
+==> corrected/001.rb 17 <==
+x&.unpack1('h*')
+
+==> corrected/002.rb 17 <==
+x&.unpack1('h*')
+
+==> corrected/003.rb 14 <==
+''.unpack1(y)
+
+==> corrected/004.rb 14 <==
+''.unpack1(y)
+
+==> corrected/005.rb 14 <==
+''.unpack1(y)
+
+==> corrected/006.rb 15 <==
+''&.unpack1(y)
+
+==> corrected/007.rb 15 <==
+''&.unpack1(y)
+
+==> corrected/008.rb 14 <==
+''.unpack1(y)
+

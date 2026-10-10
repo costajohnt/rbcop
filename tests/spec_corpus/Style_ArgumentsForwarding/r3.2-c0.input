@@ -1,0 +1,480 @@
+==> .rubocop.yml 315 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+Style/ArgumentsForwarding:
+  RedundantRestArgumentNames:
+  - args
+  - arguments
+  RedundantKeywordRestArgumentNames:
+  - kwargs
+  - options
+  - opts
+  RedundantBlockArgumentNames:
+  - blk
+  - block
+  - proc
+
+==> 000.rb 77 <==
+def foo(x)
+  class << x
+    def bar(y, &)
+      baz.qux(&)
+    end
+  end
+end
+
+==> 001.rb 74 <==
+def foo(*, **, &)
+  with_block(*, **) do
+    bar(baz(*, **, &))
+  end
+end
+
+==> 002.rb 78 <==
+def foo(*, **, &)
+  with_block(*, **) do
+    bar(baz(*, **, &), _1)
+  end
+end
+
+==> 003.rb 46 <==
+def foo *args, &block
+  bar *args, &block
+end
+
+==> 004.rb 34 <==
+def foo(&block)
+  bar(&block)
+end
+
+==> 005.rb 86 <==
+def foo(*args, **kwargs, &block)
+  args = new_args
+  bar(*args, **kwargs, &block)
+end
+
+==> 006.rb 90 <==
+def foo(*args, **kwargs, &block)
+  kwargs = new_kwargs
+  bar(*args, **kwargs, &block)
+end
+
+==> 007.rb 88 <==
+def foo(*args, **kwargs, &block)
+  args.do_something
+  bar(*args, **kwargs, &block)
+end
+
+==> 008.rb 60 <==
+def foo(m, **kwargs, &block)
+  bar(m, **kwargs, &block)
+end
+
+==> 009.rb 74 <==
+def foo(m, *args, **kwargs, &block)
+  bar(*args, m, **kwargs, &block)
+end
+
+==> 010.rb 89 <==
+def foo(m, *args, **kwargs, &block)
+  bar(m, *args, extra: :kwarg, **kwargs, &block)
+end
+
+==> 011.rb 89 <==
+def foo(m, *args, **kwargs, &block)
+  bar(m, *args, **kwargs, extra: :kwarg, &block)
+end
+
+==> 012.rb 51 <==
+def foo(x, *args, &block)
+  bar(*args, &block)
+end
+
+==> 013.rb 65 <==
+def foo(x, y = 42, *args, &block)
+  bar(x, y, *args, &block)
+end
+
+==> 014.rb 54 <==
+def foo(**kwargs, &block)
+  baz(**kwargs, &block)
+end
+
+==> 015.rb 60 <==
+def foo(x, **kwargs, &block)
+  baz(x, **kwargs, &block)
+end
+
+==> 016.rb 52 <==
+def foo(*args, **kwargs)
+  bar(*args, **kwargs)
+end
+
+==> 017.rb 72 <==
+def foo(*args, **kwargs)
+  args_only(*args)
+  kwargs_only(**kwargs)
+end
+
+==> 018.rb 38 <==
+def foo(*args, &)
+  bar(*args, &)
+end
+
+==> 019.rb 85 <==
+def foo(arg, *args, kwarg:, **kwargs)
+  args_only(*args)
+  kwargs_only(**kwargs)
+end
+
+==> 020.rb 135 <==
+def method_missing(m, *args, **kwargs)
+  if @template.respond_to?(m)
+    @template.send(m, *args, **kwargs)
+  else
+    super
+  end
+end
+
+==> 021.rb 151 <==
+def method_missing(m, *args, **kwargs, &block)
+  if @template.respond_to?(m)
+    @template.send(m, *args, **kwargs, &block)
+  else
+    super
+  end
+end
+
+==> 022.rb 54 <==
+def foo(m, *args, &block)
+  bar(*args, m, &block)
+end
+
+==> 023.rb 59 <==
+def foo(m, *args, &block)
+  obj&.bar(*args, m, &block)
+end
+
+==> 024.rb 56 <==
+def foo(m, *args, &block)
+  super(*args, m, &block)
+end
+
+==> 025.rb 65 <==
+def post(*args, &block)
+  future_on(executor, *args, &block)
+end
+
+==> 026.rb 104 <==
+def self.get(*args, **kwargs, &block)
+  CanvasHttp.request(Net::HTTP::Get, *args, **kwargs, &block)
+end
+
+==> 027.rb 101 <==
+def foo(m, *args, foo:, **kwargs, &block)
+  bar(m, *args, foo:, extra: :kwarg, **kwargs, &block)
+end
+
+==> 028.rb 177 <==
+def foo(*args, **kwargs)
+  args_only(:another_arg, *args)
+  args_only(*args, :another_arg)
+  kwargs_only(another: :kwarg, **kwargs)
+  kwargs_only(**kwargs, another: :kwarg)
+end
+
+==> 029.rb 86 <==
+def foo(*args, **kwargs)
+  args_only(1, *args)
+  kwargs_only(foo: :bar, **kwargs)
+end
+
+==> 030.rb 86 <==
+def foo(*args, **kwargs)
+  args_only(*args, 1)
+  kwargs_only(**kwargs, foo: :bar)
+end
+
+==> 031.rb 100 <==
+def foo(*args, **kwargs)
+  args_only(1, *args, 2)
+  kwargs_only(foo: :bar, **kwargs, bar: :baz)
+end
+
+==> 032.rb 66 <==
+def foo((bar, baz), **kwargs)
+  forwarded(bar, baz, **kwargs)
+end
+
+==> 033.rb 72 <==
+def foo(*args, **kwargs)
+  args.do_something
+  bar(*args, **kwargs)
+end
+
+==> 034.rb 70 <==
+def foo(*args, **kwargs)
+  args = new_args
+  bar(*args, **kwargs)
+end
+
+==> 035.rb 74 <==
+def foo(*args, **kwargs)
+  kwargs.do_something
+  bar(*args, **kwargs)
+end
+
+==> 036.rb 74 <==
+def foo(*args, **kwargs)
+  kwargs = new_kwargs
+  bar(*args, **kwargs)
+end
+
+==> 037.rb 88 <==
+def foo(*args, **kwargs, &block)
+  block = new_block
+  bar(*args, **kwargs, &block)
+end
+
+==> 038.rb 61 <==
+def foo(*args, &block)
+  bar(*args, &block)
+  baz(*args)
+end
+
+==> 039.rb 70 <==
+def foo(**kwargs, &block)
+  bar(**kwargs, &block)
+  baz(**kwargs)
+end
+
+==> 040.rb 113 <==
+def foo(*args, **kwargs, &block)
+  bar(*args, **kwargs, &block)
+  bar(*args, &block)
+  bar(**kwargs, &block)
+end
+
+==> 041.rb 54 <==
+def foo(*, &block)
+  bar(*, &block)
+  bar(&block)
+end
+
+==> 042.rb 75 <==
+def foo(bar, *args)
+  baz(*args)
+
+  if something?
+    baz(*args)
+  end
+end
+
+==> 043.rb 84 <==
+def foo(bar, **kwargs)
+  baz(**kwargs)
+
+  if something?
+    baz(**kwargs)
+  end
+end
+
+==> 044.rb 52 <==
+def foo(*args, &block)
+  bar(*args).baz(&block)
+end
+
+==> 045.rb 72 <==
+def foo(*args, **kwargs, &block)
+  bar(*args, **kwargs).baz(&block)
+end
+
+==> 046.rb 90 <==
+def foo(*args, **kwargs, &block)
+  bar(first(*args), second(**kwargs), third(&block))
+end
+
+==> 047.rb 68 <==
+def foo(first:, **kwargs, &block)
+  forwarded(**kwargs, &block)
+end
+
+==> 048.rb 82 <==
+def foo(first:, **kwargs, &block)
+  forwarded(first: first, **kwargs, &block)
+end
+
+==> 049.rb 80 <==
+def foo(first: nil, **kwargs, &block)
+  forwarded(first:, **kwargs, &block)
+end
+
+==> 050.rb 86 <==
+def foo(first: nil, **kwargs, &block)
+  forwarded(first: first, **kwargs, &block)
+end
+
+==> 051.rb 100 <==
+def foo(*args, first: nil, **kwargs, &block)
+  forwarded(*args, first: first, **kwargs, &block)
+end
+
+==> 052.rb 48 <==
+def foo(*args, &block)
+  bar(*args, &block)
+end
+
+==> 053.rb 68 <==
+def foo(*args, **kwargs, &block)
+  bar(*args, **kwargs, &block)
+end
+
+==> 054.rb 83 <==
+def foo(*args, **kwargs, &block)
+  bar(*args, **kwargs, &block)
+  baz(1, 2, 3)
+end
+
+==> 055.rb 99 <==
+def foo(*args, **kwargs, &block)
+  bar(*args, **kwargs, &block)
+  baz(*args, **kwargs, &block)
+end
+
+==> 056.rb 53 <==
+def self.foo(*args, &block)
+  bar(*args, &block)
+end
+
+==> 057.rb 30 <==
+def foo *args
+  bar *args
+end
+
+==> 058.rb 36 <==
+def foo **kwargs
+  bar **kwargs
+end
+
+==> 059.rb 50 <==
+def foo *args, **kwargs
+  bar *args, **kwargs
+end
+
+==> 060.rb 38 <==
+def foo(*, **, &)
+  bar(*, **, &)
+end
+
+==> 061.rb 44 <==
+def foo(m, *, **, &)
+  bar(m, *, **, &)
+end
+
+==> 062.rb 47 <==
+def foo(m, *, **, &)
+  bar(self, *, **, &)
+end
+
+==> 063.rb 30 <==
+def foo(*, &)
+  bar(*, &)
+end
+
+==> 064.rb 32 <==
+def foo(*, **)
+  bar(*, **)
+end
+
+==> 065.rb 74 <==
+def foo(*args, &block)
+  do_something do
+    bar(*args, &block)
+  end
+end
+
+==> 066.rb 86 <==
+def foo(*args, &block)
+  do_something do
+    bar(*args, &block)
+    baz(_1)
+  end
+end
+
+==> 067.rb 80 <==
+def foo(**kwargs, &block)
+  do_something do
+    bar(**kwargs, &block)
+  end
+end
+
+==> 068.rb 92 <==
+def foo(**kwargs, &block)
+  do_something do
+    bar(**kwargs, &block)
+    baz(_1)
+  end
+end
+
+==> 069.rb 78 <==
+def foo(*args, **kwargs)
+  block_method do
+    bar(*args, **kwargs)
+  end
+end
+
+==> 070.rb 52 <==
+def foo(*args, &block)
+  obj.bar(*args, &block)
+end
+
+==> 071.rb 49 <==
+def foo(*args, &block)
+  bar.(*args, &block)
+end
+
+==> 072.rb 40 <==
+def foo(*args, &block)
+  bar(*args)
+end
+
+==> 073.rb 28 <==
+def foo(...)
+  bar(...)
+end
+
+==> 074.rb 33 <==
+def foo(arg)
+  bar(argument)
+end
+
+==> 075.rb 53 <==
+def foo(*args, &block)
+  bar(*arguments, &block)
+end
+
+==> 076.rb 59 <==
+def foo(**kwargs, &block)
+  bar(**kwarguments, &block)
+end
+
+==> 077.rb 61 <==
+def foo(*args, &block)
+  var = args
+  foo(*args, &block)
+end
+
+==> 078.rb 55 <==
+def foo(*args, &block)
+  args
+  foo(*args, &block)
+end
+
+==> 079.rb 27 <==
+def foo(*args, &block)
+end
+

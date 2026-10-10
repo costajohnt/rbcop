@@ -1,0 +1,14 @@
+==> offenses exit=1 270 <==
+000.rb:1:1: W: Lint/EmptyBlock: Empty block detected.
+001.rb:1:1: W: Lint/EmptyBlock: Empty block detected.
+002.rb:1:1: W: Lint/EmptyBlock: Empty block detected.
+003.rb:1:1: W: Lint/EmptyBlock: Empty block detected.
+004.rb:1:1: W: Lint/EmptyBlock: Empty block detected.
+
+==> autocorrect exit=1 270 <==
+000.rb:1:1: W: Lint/EmptyBlock: Empty block detected.
+001.rb:1:1: W: Lint/EmptyBlock: Empty block detected.
+002.rb:1:1: W: Lint/EmptyBlock: Empty block detected.
+003.rb:1:1: W: Lint/EmptyBlock: Empty block detected.
+004.rb:1:1: W: Lint/EmptyBlock: Empty block detected.
+

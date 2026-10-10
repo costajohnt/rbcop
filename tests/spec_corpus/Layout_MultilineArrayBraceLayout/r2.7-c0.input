@@ -1,0 +1,60 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/MultilineArrayBraceLayout:
+  EnforcedStyle: symmetrical
+
+==> 000.rb 11 <==
+foo = a,
+b
+
+==> 001.rb 9 <==
+[a, b, c]
+==> 002.rb 2 <==
+[]
+==> 003.rb 9 <==
+[a,
+b
+]
+
+
+==> 004.rb 17 <==
+[a, # a
+b # b
+]
+
+
+==> 005.rb 8 <==
+[
+a,
+b]
+
+==> 006.rb 32 <==
+bar([a: 1,
+b: 2 # comment b
+]
+)
+
+==> 007.rb 20 <==
+bar([a: 1,
+b: 2
+]
+)
+
+==> 008.rb 17 <==
+[a, # a
+b, # b
+]
+
+==> 009.rb 69 <==
+{
+  key1: [a, # comment 1
+        b # comment 2
+  ],
+  key2: 'foo'
+}
+

@@ -1,0 +1,59 @@
+==> offenses exit=1 1131 <==
+000.rb:1:17: C: [Correctable] Layout/SpaceInsideBlockBraces: Space missing inside {.
+000.rb:1:23: C: [Correctable] Layout/SpaceInsideBlockBraces: Space missing inside }.
+003.rb:1:7: C: [Correctable] Layout/SpaceInsideBlockBraces: Space missing inside {.
+004.rb:1:12: C: [Correctable] Layout/SpaceInsideBlockBraces: Space missing inside }.
+005.rb:2:7: C: [Correctable] Layout/SpaceInsideBlockBraces: Space missing inside {.
+005.rb:2:11: C: [Correctable] Layout/SpaceInsideBlockBraces: Space missing inside }.
+006.rb:2:4: C: [Correctable] Layout/SpaceInsideBlockBraces: Space inside empty braces detected.
+006.rb:3:7: C: [Correctable] Layout/SpaceInsideBlockBraces: Space missing inside {.
+006.rb:3:11: C: [Correctable] Layout/SpaceInsideBlockBraces: Space missing inside }.
+008.rb:1:6: C: [Correctable] Layout/SpaceInsideBlockBraces: Space between { and | missing.
+010.rb:1:6: C: [Correctable] Layout/SpaceInsideBlockBraces: Space between { and | missing.
+012.rb:1:6: C: [Correctable] Layout/SpaceInsideBlockBraces: Space between { and | missing.
+012.rb:1:15: C: [Correctable] Layout/SpaceInsideBlockBraces: Space missing inside }.
+
+==> autocorrect exit=0 1105 <==
+000.rb:1:17: C: [Corrected] Layout/SpaceInsideBlockBraces: Space missing inside {.
+000.rb:1:23: C: [Corrected] Layout/SpaceInsideBlockBraces: Space missing inside }.
+003.rb:1:7: C: [Corrected] Layout/SpaceInsideBlockBraces: Space missing inside {.
+004.rb:1:12: C: [Corrected] Layout/SpaceInsideBlockBraces: Space missing inside }.
+005.rb:2:7: C: [Corrected] Layout/SpaceInsideBlockBraces: Space missing inside {.
+005.rb:2:11: C: [Corrected] Layout/SpaceInsideBlockBraces: Space missing inside }.
+006.rb:2:4: C: [Corrected] Layout/SpaceInsideBlockBraces: Space inside empty braces detected.
+006.rb:3:7: C: [Corrected] Layout/SpaceInsideBlockBraces: Space missing inside {.
+006.rb:3:11: C: [Corrected] Layout/SpaceInsideBlockBraces: Space missing inside }.
+008.rb:1:6: C: [Corrected] Layout/SpaceInsideBlockBraces: Space between { and | missing.
+010.rb:1:6: C: [Corrected] Layout/SpaceInsideBlockBraces: Space between { and | missing.
+012.rb:1:6: C: [Corrected] Layout/SpaceInsideBlockBraces: Space between { and | missing.
+012.rb:1:15: C: [Corrected] Layout/SpaceInsideBlockBraces: Space missing inside }.
+
+==> corrected/000.rb 26 <==
+[1, 2, 3].each { _1 * 2 }
+
+==> corrected/003.rb 14 <==
+each { puts }
+
+==> corrected/004.rb 14 <==
+each { puts }
+
+==> corrected/005.rb 28 <==
+each { puts }
+each { puts }
+
+==> corrected/006.rb 24 <==
+a {}
+b {}
+each { puts }
+
+==> corrected/008.rb 18 <==
+each { |x| puts }
+
+==> corrected/010.rb 20 <==
+each { |x|
+  puts
+}
+
+==> corrected/012.rb 18 <==
+each { |x| puts }
+

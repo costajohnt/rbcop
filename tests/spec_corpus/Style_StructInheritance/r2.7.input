@@ -1,0 +1,91 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 70 <==
+class Person < Struct.new(:first_name, :last_name)
+  def foo; end
+end
+
+==> 001.rb 69 <==
+class Person < Struct.new :first_name, :last_name
+  def foo; end
+end
+
+==> 002.rb 72 <==
+class Person < ::Struct.new(:first_name, :last_name)
+  def foo; end
+end
+
+==> 003.rb 62 <==
+class Person < Struct.new(:first_name, :last_name) do end
+end
+
+==> 004.rb 55 <==
+class Person < Struct.new(:first_name, :last_name)
+end
+
+==> 005.rb 56 <==
+class Person < Struct.new(:first_name, :last_name); end
+
+==> 006.rb 64 <==
+class Person < ::Struct.new(:first_name, :last_name) do end
+end
+
+==> 007.rb 72 <==
+# comment
+class Person < Struct.new(:first_name, :last_name) do end
+end
+
+==> 008.rb 96 <==
+module MyModule
+  class Person < Struct.new(:first_name, :last_name)
+    def foo; end
+  end
+end
+
+==> 009.rb 71 <==
+class Person < Struct.new(:first_name, :last_name)
+  MAX_AGE = 120
+end
+
+==> 010.rb 94 <==
+class Person < Struct.new(:first_name, :last_name)
+  if something
+    MAX_AGE = 120
+  end
+end
+
+==> 011.rb 90 <==
+class Person < Struct.new(:first_name, :last_name)
+  class Error < StandardError; end
+end
+
+==> 012.rb 77 <==
+class Person < Struct.new(:first_name, :last_name)
+  module Helpers; end
+end
+
+==> 013.rb 17 <==
+class Person
+end
+
+==> 014.rb 41 <==
+class Person < DelegateClass(Animal)
+end
+
+==> 015.rb 44 <==
+Person = Struct.new(:first_name, :last_name)
+==> 016.rb 46 <==
+Person = ::Struct.new(:first_name, :last_name)
+==> 017.rb 75 <==
+Person = Struct.new(:first_name, :last_name) do
+  def age
+    42
+  end
+end
+

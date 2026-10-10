@@ -1,0 +1,375 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 107 <==
+e.select { |i| i.cond? }
+  .join
+a = e.select { |i| i.cond? }
+  .join
+e.select { |i| i.cond? }
+ .join + []
+
+==> 001.rb 114 <==
+e&.select { |i| i.cond? }
+  &.join
+a = e&.select { |i| i.cond? }
+  &.join
+e&.select { |i| i.cond? }
+  &.join + []
+
+==> 002.rb 109 <==
+e.select { |i| i.cond? }
+ .join
+a = e.select { |i| i.cond? }
+     .join
+e.select { |i| i.cond? }
+ .join + []
+
+==> 003.rb 112 <==
+e.select { |i| i.cond? }
+ &.join
+a = e.select { |i| i.cond? }
+     &.join
+e.select { |i| i.cond? }
+ &.join + []
+
+==> 004.rb 96 <==
+e.select { _1.cond? }
+ .join
+a = e.select { _1.cond? }
+ .join
+e.select { _1.cond? }
+ .join + []
+
+==> 005.rb 36 <==
+a =
+  if x
+    1
+  else
+    2
+  end
+
+==> 006.rb 48 <==
+a =
+  case x
+  when :a
+    1
+  else
+    2
+  end
+
+==> 007.rb 36 <==
+a +
+  if x
+    1
+  else
+    2
+  end
+
+==> 008.rb 17 <==
+a do
+  x
+  y
+end
+
+==> 009.rb 24 <==
+a ||= begin
+  x
+  y
+end
+
+==> 010.rb 25 <==
+x def self.y
+    z
+  end
+
+==> 011.rb 21 <==
+my_method(1, 2, "x")
+
+==> 012.rb 22 <==
+my_method(1) \
+  [:a]
+
+==> 013.rb 22 <==
+hash[:foo] \
+  [:bar]
+
+==> 014.rb 22 <==
+{
+  key: value
+}[key]
+
+==> 015.rb 15 <==
+foo && \
+  bar
+
+==> 016.rb 15 <==
+foo \
+  && bar
+
+==> 017.rb 15 <==
+foo || \
+  bar
+
+==> 018.rb 15 <==
+foo \
+  || bar
+
+==> 019.rb 515 <==
+def resolve_inheritance_from_gems(hash)
+  gems = hash.delete('inherit_gem')
+  (gems || {}).each_pair do |gem_name, config_path|
+    if gem_name == 'rubocop'
+      raise ArgumentError,
+            "can't inherit configuration from the rubocop gem"
+    end
+
+    hash['inherit_from'] = Array(hash['inherit_from'])
+    Array(config_path).reverse_each do |path|
+      # Put gem configuration first so local configuration overrides it.
+      hash['inherit_from'].unshift gem_config_path(gem_name, path)
+    end
+  end
+end
+
+==> 020.rb 41 <==
+my_method(1,
+          2,
+          "x")
+
+==> 021.rb 66 <==
+some_array.map do |something|
+  my_method(
+    something,
+  )
+end
+
+==> 022.rb 45 <==
+my_method(1,
+          2,
+          "x") # X
+
+==> 023.rb 31 <==
+my_method("a" \
+          "b")
+
+==> 024.rb 38 <==
+puts "(#{pl(i)}, " \
+     "#{pl(f)})"
+
+==> 025.rb 30 <==
+my_method('a'\
+          'b')
+
+==> 026.rb 62 <==
+my_method("a" \
+          'b')
+my_method('a' \
+          "b")
+
+==> 027.rb 41 <==
+my_method(1 +
+          2 +
+          3)
+
+==> 028.rb 100 <==
+a =
+  m(1 +
+    2 +
+    3)
+b = m(4 +
+      5 +
+      6)
+long_variable_name =
+  m(7 +
+    8 +
+    9)
+
+==> 029.rb 25 <==
+foo(' .x')
+  .bar
+  .baz
+
+==> 030.rb 35 <==
+foo(x,
+    y,
+    z)
+  .bar
+  .baz
+
+==> 031.rb 39 <==
+foo('....' \
+    '....')
+  .bar
+  .baz
+
+==> 032.rb 36 <==
+foo(<<~EOS)
+  xyz
+EOS
+  .bar
+  .baz
+
+==> 033.rb 29 <==
+foo('
+  xyz
+')
+  .bar
+  .baz
+
+==> 034.rb 3 <==
+%
+
+
+==> 035.rb 7 <==
+x = %
+
+
+==> 036.rb 110 <==
+my_method(11111,
+          22222,
+          "abcxyz")
+my_method(111111 +
+          222222 +
+          333333)
+
+==> 037.rb 10 <==
+foo(:"
+")
+
+==> 038.rb 79 <==
+VariableReference = Struct.new(:name) do
+  def assignment?
+    false
+  end
+end
+
+==> 039.rb 142 <==
+File.fnmatch?(
+  pattern, path,
+  File::FNM_PATHNAME | File::FNM_EXTGLOB
+) && a && File.basename(path).start_with?('.') && !hidden_dir?(path)
+
+==> 040.rb 139 <==
+File.fnmatch?(
+  pattern, path,
+  File::FNM_PATHNAME | File::FNM_EXTGLOB
+) + a + File.basename(path).start_with?('.') + !hidden_dir?(path)
+
+==> 041.rb 90 <==
+correct = lambda do
+  expect_no_offenses(<<~EOT1)
+    <<-EOT2
+    foo
+    EOT2
+  EOT1
+end
+
+==> 042.rb 132 <==
+node.each_node(:dstr)
+    .select(&:heredoc?)
+    .map { |n| n.loc.heredoc_body }
+    .flat_map { |b| (b.line...b.last_line).to_a }
+
+==> 043.rb 128 <==
+node.each_node(:dstr)
+    .select(&:heredoc?)
+    .map { _1.loc.heredoc_body }
+    .flat_map {  (_1.line..._1.last_line).to_a }
+
+==> 044.rb 103 <==
+context 'when the configuration includes ' \
+        'an unsafe cop that is 123456789012345678' do
+end
+
+==> 045.rb 100 <==
+context 'when the configuration includes ' \
+        'an unsafe cop that is 123456789012345' do
+end
+
+==> 046.rb 77 <==
+RSpec.shared_context 'ruby 2.4', :ruby24 do
+  let(:ruby_version) { 2.4 }
+end
+
+==> 047.rb 39 <==
+do_something do
+rescue CustomError
+end
+
+==> 048.rb 27 <==
+do_something do
+ensure
+end
+
+==> 049.rb 78 <==
+RSpec.shared_context('ruby 2.4', :ruby24) do
+  let(:ruby_version) { 2.4 }
+end
+
+==> 050.rb 57 <==
+RSpec.shared_context do
+  let(:ruby_version) { 2.4 }
+end
+
+==> 051.rb 9 <==
+f do
+end
+
+==> 052.rb 35 <==
+e.select do |i|
+  i.cond?
+end.join
+
+==> 053.rb 39 <==
+a = e.select do |i|
+  i.cond?
+end.join
+
+==> 054.rb 40 <==
+e.select do |i|
+  i.cond?
+end.join + []
+
+==> 055.rb 82 <==
+a = RSpec.shared_context('ruby 2.4', :ruby24) do
+  let(:ruby_version) { 2.4 }
+end
+
+==> 056.rb 38 <==
+a = Foo.do_something(arg) do
+  _1
+end
+
+==> 057.rb 19 <==
+f do
+  foo(_1)
+end
+
+==> 058.rb 114 <==
+e.select do |i|
+  i.cond?
+end.join
+a = e.select do |i|
+  i.cond?
+end.join
+e.select do |i|
+  i.cond?
+end.join + []
+
+==> 059.rb 105 <==
+e.select do
+  _1.cond?
+end.join
+a = e.select do
+  _1.cond?
+end.join
+e.select do
+  _1.cond?
+end.join + []
+

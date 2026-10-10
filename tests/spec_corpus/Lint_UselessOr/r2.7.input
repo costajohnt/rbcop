@@ -1,0 +1,389 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 19 <==
+x.to_a || fallback
+
+==> 001.rb 19 <==
+x.to_a or fallback
+
+==> 002.rb 37 <==
+x.to_a || fallback || other_fallback
+
+==> 003.rb 26 <==
+foo || x.to_a || fallback
+
+==> 004.rb 28 <==
+(foo || x.to_a) || fallback
+
+==> 005.rb 27 <==
+(foo || x.to_a) && operand
+
+==> 006.rb 14 <==
+foo || x.to_a
+
+==> 007.rb 20 <==
+x&.to_a || fallback
+
+==> 008.rb 7 <==
+x.to_a
+
+==> 009.rb 19 <==
+x.to_c || fallback
+
+==> 010.rb 19 <==
+x.to_c or fallback
+
+==> 011.rb 37 <==
+x.to_c || fallback || other_fallback
+
+==> 012.rb 26 <==
+foo || x.to_c || fallback
+
+==> 013.rb 28 <==
+(foo || x.to_c) || fallback
+
+==> 014.rb 27 <==
+(foo || x.to_c) && operand
+
+==> 015.rb 14 <==
+foo || x.to_c
+
+==> 016.rb 20 <==
+x&.to_c || fallback
+
+==> 017.rb 7 <==
+x.to_c
+
+==> 018.rb 19 <==
+x.to_d || fallback
+
+==> 019.rb 19 <==
+x.to_d or fallback
+
+==> 020.rb 37 <==
+x.to_d || fallback || other_fallback
+
+==> 021.rb 26 <==
+foo || x.to_d || fallback
+
+==> 022.rb 28 <==
+(foo || x.to_d) || fallback
+
+==> 023.rb 27 <==
+(foo || x.to_d) && operand
+
+==> 024.rb 14 <==
+foo || x.to_d
+
+==> 025.rb 20 <==
+x&.to_d || fallback
+
+==> 026.rb 7 <==
+x.to_d
+
+==> 027.rb 19 <==
+x.to_i || fallback
+
+==> 028.rb 19 <==
+x.to_i or fallback
+
+==> 029.rb 37 <==
+x.to_i || fallback || other_fallback
+
+==> 030.rb 26 <==
+foo || x.to_i || fallback
+
+==> 031.rb 28 <==
+(foo || x.to_i) || fallback
+
+==> 032.rb 27 <==
+(foo || x.to_i) && operand
+
+==> 033.rb 14 <==
+foo || x.to_i
+
+==> 034.rb 20 <==
+x&.to_i || fallback
+
+==> 035.rb 7 <==
+x.to_i
+
+==> 036.rb 19 <==
+x.to_f || fallback
+
+==> 037.rb 19 <==
+x.to_f or fallback
+
+==> 038.rb 37 <==
+x.to_f || fallback || other_fallback
+
+==> 039.rb 26 <==
+foo || x.to_f || fallback
+
+==> 040.rb 28 <==
+(foo || x.to_f) || fallback
+
+==> 041.rb 27 <==
+(foo || x.to_f) && operand
+
+==> 042.rb 14 <==
+foo || x.to_f
+
+==> 043.rb 20 <==
+x&.to_f || fallback
+
+==> 044.rb 7 <==
+x.to_f
+
+==> 045.rb 19 <==
+x.to_h || fallback
+
+==> 046.rb 19 <==
+x.to_h or fallback
+
+==> 047.rb 37 <==
+x.to_h || fallback || other_fallback
+
+==> 048.rb 26 <==
+foo || x.to_h || fallback
+
+==> 049.rb 28 <==
+(foo || x.to_h) || fallback
+
+==> 050.rb 27 <==
+(foo || x.to_h) && operand
+
+==> 051.rb 14 <==
+foo || x.to_h
+
+==> 052.rb 20 <==
+x&.to_h || fallback
+
+==> 053.rb 7 <==
+x.to_h
+
+==> 054.rb 19 <==
+x.to_r || fallback
+
+==> 055.rb 19 <==
+x.to_r or fallback
+
+==> 056.rb 37 <==
+x.to_r || fallback || other_fallback
+
+==> 057.rb 26 <==
+foo || x.to_r || fallback
+
+==> 058.rb 28 <==
+(foo || x.to_r) || fallback
+
+==> 059.rb 27 <==
+(foo || x.to_r) && operand
+
+==> 060.rb 14 <==
+foo || x.to_r
+
+==> 061.rb 20 <==
+x&.to_r || fallback
+
+==> 062.rb 7 <==
+x.to_r
+
+==> 063.rb 19 <==
+x.to_s || fallback
+
+==> 064.rb 19 <==
+x.to_s or fallback
+
+==> 065.rb 37 <==
+x.to_s || fallback || other_fallback
+
+==> 066.rb 26 <==
+foo || x.to_s || fallback
+
+==> 067.rb 28 <==
+(foo || x.to_s) || fallback
+
+==> 068.rb 27 <==
+(foo || x.to_s) && operand
+
+==> 069.rb 14 <==
+foo || x.to_s
+
+==> 070.rb 20 <==
+x&.to_s || fallback
+
+==> 071.rb 7 <==
+x.to_s
+
+==> 072.rb 21 <==
+x.to_sym || fallback
+
+==> 073.rb 21 <==
+x.to_sym or fallback
+
+==> 074.rb 39 <==
+x.to_sym || fallback || other_fallback
+
+==> 075.rb 28 <==
+foo || x.to_sym || fallback
+
+==> 076.rb 30 <==
+(foo || x.to_sym) || fallback
+
+==> 077.rb 29 <==
+(foo || x.to_sym) && operand
+
+==> 078.rb 16 <==
+foo || x.to_sym
+
+==> 079.rb 22 <==
+x&.to_sym || fallback
+
+==> 080.rb 9 <==
+x.to_sym
+
+==> 081.rb 21 <==
+x.intern || fallback
+
+==> 082.rb 21 <==
+x.intern or fallback
+
+==> 083.rb 39 <==
+x.intern || fallback || other_fallback
+
+==> 084.rb 28 <==
+foo || x.intern || fallback
+
+==> 085.rb 30 <==
+(foo || x.intern) || fallback
+
+==> 086.rb 29 <==
+(foo || x.intern) && operand
+
+==> 087.rb 16 <==
+foo || x.intern
+
+==> 088.rb 22 <==
+x&.intern || fallback
+
+==> 089.rb 9 <==
+x.intern
+
+==> 090.rb 22 <==
+x.inspect || fallback
+
+==> 091.rb 22 <==
+x.inspect or fallback
+
+==> 092.rb 40 <==
+x.inspect || fallback || other_fallback
+
+==> 093.rb 29 <==
+foo || x.inspect || fallback
+
+==> 094.rb 31 <==
+(foo || x.inspect) || fallback
+
+==> 095.rb 30 <==
+(foo || x.inspect) && operand
+
+==> 096.rb 17 <==
+foo || x.inspect
+
+==> 097.rb 23 <==
+x&.inspect || fallback
+
+==> 098.rb 10 <==
+x.inspect
+
+==> 099.rb 19 <==
+x.hash || fallback
+
+==> 100.rb 19 <==
+x.hash or fallback
+
+==> 101.rb 37 <==
+x.hash || fallback || other_fallback
+
+==> 102.rb 26 <==
+foo || x.hash || fallback
+
+==> 103.rb 28 <==
+(foo || x.hash) || fallback
+
+==> 104.rb 27 <==
+(foo || x.hash) && operand
+
+==> 105.rb 14 <==
+foo || x.hash
+
+==> 106.rb 20 <==
+x&.hash || fallback
+
+==> 107.rb 7 <==
+x.hash
+
+==> 108.rb 24 <==
+x.object_id || fallback
+
+==> 109.rb 24 <==
+x.object_id or fallback
+
+==> 110.rb 42 <==
+x.object_id || fallback || other_fallback
+
+==> 111.rb 31 <==
+foo || x.object_id || fallback
+
+==> 112.rb 33 <==
+(foo || x.object_id) || fallback
+
+==> 113.rb 32 <==
+(foo || x.object_id) && operand
+
+==> 114.rb 19 <==
+foo || x.object_id
+
+==> 115.rb 25 <==
+x&.object_id || fallback
+
+==> 116.rb 12 <==
+x.object_id
+
+==> 117.rb 21 <==
+x.__id__ || fallback
+
+==> 118.rb 21 <==
+x.__id__ or fallback
+
+==> 119.rb 39 <==
+x.__id__ || fallback || other_fallback
+
+==> 120.rb 28 <==
+foo || x.__id__ || fallback
+
+==> 121.rb 30 <==
+(foo || x.__id__) || fallback
+
+==> 122.rb 29 <==
+(foo || x.__id__) && operand
+
+==> 123.rb 16 <==
+foo || x.__id__
+
+==> 124.rb 22 <==
+x&.__id__ || fallback
+
+==> 125.rb 9 <==
+x.__id__
+
+==> 126.rb 18 <==
+x.foo || fallback
+

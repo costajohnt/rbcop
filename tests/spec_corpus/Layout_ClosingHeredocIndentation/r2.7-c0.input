@@ -1,0 +1,89 @@
+==> .rubocop.yml 158 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/ClosingHeredocIndentation:
+  Enabled: true
+
+==> 000.rb 60 <==
+class Test
+  def foo
+    <<-SQL
+      bar
+    SQL
+  end
+end
+
+==> 001.rb 120 <==
+include_examples :offense,
+                 <<-EOS
+                   foo
+                     bar
+                 EOS
+
+==> 002.rb 188 <==
+def_node_matcher :eval_without_location?, <<~PATTERN
+  {
+    (send $(send _ $:sort ...) ${:[] :at :slice} {(int 0) (int -1)})
+
+    (send $(send _ $:sort_by _) ${:last :first})
+  }
+PATTERN
+
+==> 003.rb 61 <==
+include_examples :offense,
+                 <<-EOS
+  bar
+EOS
+
+==> 004.rb 74 <==
+include_examples :offense,
+                 <<-EOS.strip_indent
+  bar
+EOS
+
+==> 005.rb 28 <==
+let(:source) { <<~EOS }
+EOS
+
+==> 006.rb 124 <==
+include_examples :offense,
+                 <<-EOS
+                   foo
+  bar
+                   baz
+                 EOS
+
+==> 007.rb 58 <==
+class Test
+  def foo
+    <<-SQL
+      bar
+  SQL
+  end
+end
+
+==> 008.rb 30 <==
+def foo
+  <<-NIL
+
+    NIL
+end
+
+==> 009.rb 28 <==
+def foo
+  <<-NIL
+
+  NIL
+end
+
+==> 010.rb 25 <==
+def foo
+  <<NIL
+
+NIL
+end
+

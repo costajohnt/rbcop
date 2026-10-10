@@ -1,0 +1,17 @@
+==> .rubocop.yml 197 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Gemspec/DevelopmentDependencies:
+  Enabled: true
+  EnforcedStyle: Gemfile
+  AllowedGems:
+
+==> 000/example.gemspec 77 <==
+Gem::Specification.new do |spec|
+  spec.add_development_dependency 'foo'
+end
+

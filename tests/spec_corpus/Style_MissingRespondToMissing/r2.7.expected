@@ -1,0 +1,22 @@
+==> offenses exit=1 969 <==
+000.rb:2:3: C: Style/MissingRespondToMissing: When using `method_missing`, define `respond_to_missing?`.
+001.rb:2:3: C: Style/MissingRespondToMissing: When using `method_missing`, define `respond_to_missing?`.
+006.rb:2:3: C: Style/MissingRespondToMissing: When using `method_missing`, define `respond_to_missing?`.
+007.rb:5:3: C: Style/MissingRespondToMissing: When using `method_missing`, define `respond_to_missing?`.
+008.rb:3:5: C: Style/MissingRespondToMissing: When using `method_missing`, define `respond_to_missing?`.
+010.rb:1:1: C: Style/MissingRespondToMissing: When using `method_missing`, define `respond_to_missing?`.
+011/current.rb:2:3: C: Style/MissingRespondToMissing: When using `method_missing`, define `respond_to_missing?`.
+012/current.rb:2:3: C: Style/MissingRespondToMissing: When using `method_missing`, define `respond_to_missing?`.
+013/current.rb:2:3: C: Style/MissingRespondToMissing: When using `method_missing`, define `respond_to_missing?`.
+
+==> autocorrect exit=1 969 <==
+000.rb:2:3: C: Style/MissingRespondToMissing: When using `method_missing`, define `respond_to_missing?`.
+001.rb:2:3: C: Style/MissingRespondToMissing: When using `method_missing`, define `respond_to_missing?`.
+006.rb:2:3: C: Style/MissingRespondToMissing: When using `method_missing`, define `respond_to_missing?`.
+007.rb:5:3: C: Style/MissingRespondToMissing: When using `method_missing`, define `respond_to_missing?`.
+008.rb:3:5: C: Style/MissingRespondToMissing: When using `method_missing`, define `respond_to_missing?`.
+010.rb:1:1: C: Style/MissingRespondToMissing: When using `method_missing`, define `respond_to_missing?`.
+011/current.rb:2:3: C: Style/MissingRespondToMissing: When using `method_missing`, define `respond_to_missing?`.
+012/current.rb:2:3: C: Style/MissingRespondToMissing: When using `method_missing`, define `respond_to_missing?`.
+013/current.rb:2:3: C: Style/MissingRespondToMissing: When using `method_missing`, define `respond_to_missing?`.
+

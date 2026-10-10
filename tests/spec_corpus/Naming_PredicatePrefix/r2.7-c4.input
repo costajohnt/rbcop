@@ -1,0 +1,37 @@
+==> .rubocop.yml 183 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/PredicatePrefix:
+  NamePrefix:
+  - is_
+  ForbiddenPrefixes:
+  - is_
+
+==> 000.rb 71 <==
+define_method(:is_hello) do |method_name|
+  method_name == 'hello'
+end
+
+==> 001.rb 107 <==
+def_node_matcher :is_hello, <<~PATTERN
+  (send
+    (send nil? :method_name) :==
+    (str 'hello'))
+PATTERN
+
+==> 002.rb 69 <==
+define_method(:is_2d?) do |method_name|
+  method_name == 'hello'
+end
+
+==> 003/current.rb 53 <==
+class Child < Base
+  def is_ready
+    true
+  end
+end
+

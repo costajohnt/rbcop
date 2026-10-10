@@ -1,0 +1,125 @@
+==> offenses exit=1 1770 <==
+000.rb:2:5: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+003.rb:1:11: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+003.rb:1:16: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+003.rb:1:20: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+004.rb:2:7: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+005.rb:2:13: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+006.rb:2:21: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+007.rb:1:2: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+011.rb:1:8: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+021.rb:1:24: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+022.rb:2:18: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+022.rb:3:21: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+022.rb:4:21: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+024.rb:1:8: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+024.rb:2:8: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+025.rb:1:8: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+025.rb:2:8: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+026.rb:1:8: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+026.rb:2:8: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+029.rb:6:12: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+030.rb:2:6: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+030.rb:5:6: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+
+==> autocorrect exit=0 1726 <==
+000.rb:2:5: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+003.rb:1:11: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+003.rb:1:16: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+003.rb:1:20: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+004.rb:2:7: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+005.rb:2:13: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+006.rb:2:21: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+007.rb:1:2: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+011.rb:1:8: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+021.rb:1:24: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+022.rb:2:18: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+022.rb:3:21: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+022.rb:4:21: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+024.rb:1:8: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+024.rb:2:8: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+025.rb:1:8: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+025.rb:2:8: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+026.rb:1:8: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+026.rb:2:8: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+029.rb:6:12: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+030.rb:2:6: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+030.rb:5:6: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+
+==> corrected/000.rb 37 <==
+website("example.org")
+name = "Jill"
+
+==> corrected/003.rb 20 <==
+hash = {a: 1, b: 2}
+
+==> corrected/004.rb 54 <==
+let(:single_line_hash) {
+  {"a" => "1", "b" => "2"}
+}
+
+==> corrected/005.rb 31 <==
+{:a => "a",
+ :b => [nil, 2.5]}
+
+==> corrected/006.rb 113 <==
+assert_difference(MyModel.count, +2,
+                  3, +3, # Extra spacing only here.
+                  4,+4)
+
+==> corrected/007.rb 12 <==
+m = "hello"
+
+==> corrected/011.rb 21 <==
+class A < String
+end
+
+==> corrected/021.rb 58 <==
+d_is_vertically_aligned do
+  _______________________d
+end
+
+==> corrected/022.rb 164 <==
+RSpec.describe 'Test' do
+  let(:low_group) { create(:low_group) }
+  let(:medium_group) { create(:medium_group) }
+  let(:normal_group) { create(:normal_group) }
+end
+
+==> corrected/024.rb 51 <==
+foo(:a) { bar }
+foo(:b) { bar }
+
+foo(:abc) { bar }
+
+==> corrected/025.rb 74 <==
+foo(:a) { bar }
+foo(:b) { bar }
+def unrelated
+  bar
+end
+foo(:abc) { bar }
+
+==> corrected/026.rb 52 <==
+foo(:a) { bar }
+foo(:b) { bar }
+xy    = 1
+abcde = 2
+
+==> corrected/029.rb 64 <==
+foo do
+  bar(:abcd) { it.qux }
+end
+
+foo do
+  bar(:b) { it }
+end
+
+==> corrected/030.rb 42 <==
+if foo
+  aaa = 1
+end
+if bar
+  bbb = 1
+end
+

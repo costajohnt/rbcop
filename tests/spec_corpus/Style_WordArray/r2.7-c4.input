@@ -1,0 +1,20 @@
+==> .rubocop.yml 251 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/WordArray:
+  MinSize: 0
+  WordRegex: !ruby/regexp /[\w \[\]()]/
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: "()"
+
+==> 000.rb 31 <==
+['hi there', 'something	else']
+
+==> 001.rb 16 <==
+[')', ']', '(']
+

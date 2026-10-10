@@ -1,0 +1,28 @@
+==> .rubocop.yml 174 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Style/SafeNavigation:
+  ConvertCodeThatCanStartToReturnNil: false
+
+==> 000.rb 35 <==
+foo.one.two(baz) { it.qux } if foo
+
+==> 001.rb 35 <==
+FOO.one.two(baz) { it.qux } if FOO
+
+==> 002.rb 45 <==
+FOO::BAR.one.two(baz) { it.qux } if FOO::BAR
+
+==> 003.rb 37 <==
+@foo.one.two(baz) { it.qux } if @foo
+
+==> 004.rb 39 <==
+@@foo.one.two(baz) { it.qux } if @@foo
+
+==> 005.rb 37 <==
+$FOO.one.two(baz) { it.qux } if $FOO
+

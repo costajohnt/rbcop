@@ -1,0 +1,45 @@
+==> .rubocop.yml 249 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Style/CollectionMethods:
+  PreferredMethods:
+    collect: map
+    inject: reduce
+    detect: find
+    find_all: select
+    member?: include?
+
+==> 000.rb 29 <==
+[1, 2, 3].collect { it + 1 }
+
+==> 001.rb 30 <==
+[1, 2, 3]&.collect { it + 1 }
+
+==> 002.rb 28 <==
+[1, 2, 3].inject { it + 1 }
+
+==> 003.rb 29 <==
+[1, 2, 3]&.inject { it + 1 }
+
+==> 004.rb 28 <==
+[1, 2, 3].detect { it + 1 }
+
+==> 005.rb 29 <==
+[1, 2, 3]&.detect { it + 1 }
+
+==> 006.rb 30 <==
+[1, 2, 3].find_all { it + 1 }
+
+==> 007.rb 31 <==
+[1, 2, 3]&.find_all { it + 1 }
+
+==> 008.rb 29 <==
+[1, 2, 3].member? { it + 1 }
+
+==> 009.rb 30 <==
+[1, 2, 3]&.member? { it + 1 }
+

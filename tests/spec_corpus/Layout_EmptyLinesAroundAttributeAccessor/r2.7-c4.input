@@ -1,0 +1,17 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/EmptyLinesAroundAttributeAccessor:
+  AllowedMethods: []
+
+==> 000.rb 54 <==
+attr_accessor :foo
+private :foo
+
+def do_something
+end
+

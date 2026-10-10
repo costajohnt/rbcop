@@ -1,0 +1,17 @@
+==> offenses exit=1 249 <==
+000.rb:1:5: C: [Correctable] Style/NumericLiteralPrefix: Use 0 for octal literals.
+000.rb:2:3: C: [Correctable] Style/NumericLiteralPrefix: Use 0 for octal literals.
+001.rb:1:5: C: [Correctable] Style/NumericLiteralPrefix: Use 0 for octal literals.
+
+==> autocorrect exit=0 243 <==
+000.rb:1:5: C: [Corrected] Style/NumericLiteralPrefix: Use 0 for octal literals.
+000.rb:2:3: C: [Corrected] Style/NumericLiteralPrefix: Use 0 for octal literals.
+001.rb:1:5: C: [Corrected] Style/NumericLiteralPrefix: Use 0 for octal literals.
+
+==> corrected/000.rb 19 <==
+a = 01234
+b(01234)
+
+==> corrected/001.rb 11 <==
+a = -01234
+

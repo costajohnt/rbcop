@@ -1,0 +1,24 @@
+==> offenses exit=1 272 <==
+000.rb:1:1: C: [Correctable] Style/EnvHome: Use `Dir.home` instead.
+001.rb:1:1: C: [Correctable] Style/EnvHome: Use `Dir.home` instead.
+002.rb:1:1: C: [Correctable] Style/EnvHome: Use `Dir.home` instead.
+003.rb:1:1: C: [Correctable] Style/EnvHome: Use `Dir.home` instead.
+
+==> autocorrect exit=0 264 <==
+000.rb:1:1: C: [Corrected] Style/EnvHome: Use `Dir.home` instead.
+001.rb:1:1: C: [Corrected] Style/EnvHome: Use `Dir.home` instead.
+002.rb:1:1: C: [Corrected] Style/EnvHome: Use `Dir.home` instead.
+003.rb:1:1: C: [Corrected] Style/EnvHome: Use `Dir.home` instead.
+
+==> corrected/000.rb 9 <==
+Dir.home
+
+==> corrected/001.rb 9 <==
+Dir.home
+
+==> corrected/002.rb 9 <==
+Dir.home
+
+==> corrected/003.rb 9 <==
+Dir.home
+

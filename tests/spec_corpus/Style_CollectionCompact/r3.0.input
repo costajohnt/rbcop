@@ -1,0 +1,19 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+
+==> 000.rb 73 <==
+array.to_enum.reject { |e| e.nil? }
+array.to_enum.reject! { |e| e.nil? }
+
+==> 001.rb 37 <==
+array&.to_enum.reject { |e| e.nil? }
+
+==> 002.rb 67 <==
+array.lazy.reject { |e| e.nil? }
+array.lazy.reject! { |e| e.nil? }
+

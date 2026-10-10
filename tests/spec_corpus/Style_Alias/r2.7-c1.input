@@ -1,0 +1,123 @@
+==> .rubocop.yml 151 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/Alias:
+  EnforcedStyle: prefer_alias
+
+==> 000.rb 17 <==
+alias :ala :bala
+
+==> 001.rb 14 <==
+alias ala bala
+==> 002.rb 25 <==
+alias_method :ala, :bala
+
+==> 003.rb 39 <==
+class C
+  alias_method :ala, :bala
+end
+
+==> 004.rb 40 <==
+module M
+  alias_method :ala, :bala
+end
+
+==> 005.rb 46 <==
+class C
+  public alias_method :ala, :bala
+end
+
+==> 006.rb 47 <==
+class C
+  private alias_method :ala, :bala
+end
+
+==> 007.rb 49 <==
+class C
+  protected alias_method :ala, :bala
+end
+
+==> 008.rb 56 <==
+module M
+  module_function alias_method :ala, :bala
+end
+
+==> 009.rb 46 <==
+class C
+  NAME = alias_method :ala, :bala
+end
+
+==> 010.rb 31 <==
+def foo
+  alias :ala :bala
+end
+
+==> 011.rb 48 <==
+def foo
+  alias :foo :bar
+  alias :baz :qux
+end
+
+==> 012.rb 40 <==
+alias :"string#{interpolation}" :symbol
+
+==> 013.rb 40 <==
+def some_obj.foo
+  alias :ala :bala
+end
+
+==> 014.rb 35 <==
+included do
+  alias :ala :bala
+end
+
+==> 015.rb 54 <==
+included do
+  do_something(_1)
+  alias :ala :bala
+end
+
+==> 016.rb 48 <==
+class C
+  receiver.alias_method :ala, :bala
+end
+
+==> 017.rb 47 <==
+def self.method
+  alias_method :ala, :bala
+end
+
+==> 018.rb 45 <==
+dsl_method do
+  alias_method :ala, :bala
+end
+
+==> 019.rb 64 <==
+dsl_method do
+  do_something(_1)
+  alias_method :ala, :bala
+end
+
+==> 020.rb 23 <==
+alias_method :bar, FOO
+
+==> 021.rb 27 <==
+alias_method :baz, foo.bar
+
+==> 022.rb 75 <==
+module M
+  def foo
+    instance_eval {
+      alias bar baz
+    }
+  end
+end
+
+==> 023.rb 12 <==
+alias_method
+==> 024.rb 17 <==
+alias_method :foo

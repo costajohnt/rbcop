@@ -1,0 +1,862 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 36 <==
+values.reduce do
+  do_something
+end
+
+==> 001.rb 18 <==
+values.reduce(:+)
+
+==> 002.rb 38 <==
+values.reduce(:+) { |result, value| }
+
+==> 003.rb 77 <==
+values.reduce(true) do |result, value|
+  next false if something?
+  true
+end
+
+==> 004.rb 39 <==
+(1..4).reduce(0) do |acc, el|
+  el
+end
+
+==> 005.rb 57 <==
+values.reduce({}) do |acc, el|
+  acc[el] = true
+  el
+end
+
+==> 006.rb 40 <==
+(1..4)&.reduce(0) do |acc, el|
+  el
+end
+
+==> 007.rb 58 <==
+values&.reduce({}) do |acc, el|
+  acc[el] = true
+  el
+end
+
+==> 008.rb 36 <==
+(1..4).reduce do |acc, el|
+  el
+end
+
+==> 009.rb 50 <==
+values.reduce(false) do |acc, el|
+  acc == el
+end
+
+==> 010.rb 50 <==
+values.reduce(false) do |acc, el|
+  el == acc
+end
+
+==> 011.rb 40 <==
+(1..4).reduce(0) do |acc, el|
+  acc
+end
+
+==> 012.rb 45 <==
+(1..4).reduce(0) do |acc, el|
+  acc = el
+end
+
+==> 013.rb 45 <==
+(1..4).reduce(0) do |acc, el|
+  acc += 5
+end
+
+==> 014.rb 46 <==
+(1..4).reduce(0) do |acc, el|
+  acc += el
+end
+
+==> 015.rb 46 <==
+(1..4).reduce(0) do |acc, el|
+  el += acc
+end
+
+==> 016.rb 47 <==
+(1..4).reduce(0) do |acc, el|
+  acc ||= el
+end
+
+==> 017.rb 47 <==
+(1..4).reduce(0) do |acc, el|
+  el ||= acc
+end
+
+==> 018.rb 46 <==
+(1..4).reduce(0) do |acc, el|
+  acc || el
+end
+
+==> 019.rb 46 <==
+(1..4).reduce(0) do |acc, el|
+  el || acc
+end
+
+==> 020.rb 47 <==
+(1..4).reduce(0) do |acc, el|
+  acc &&= el
+end
+
+==> 021.rb 47 <==
+(1..4).reduce(0) do |acc, el|
+  el &&= acc
+end
+
+==> 022.rb 46 <==
+(1..4).reduce(0) do |acc, el|
+  acc << el
+end
+
+==> 023.rb 46 <==
+(1..4).reduce(0) do |acc, el|
+  el << acc
+end
+
+==> 024.rb 59 <==
+values.reduce do |acc, el|
+  el.method!(acc, foo)
+  el
+end
+
+==> 025.rb 60 <==
+values.reduce do |acc, el|
+  method!(acc, foo, el)
+  el
+end
+
+==> 026.rb 48 <==
+values.reduce do |acc, el|
+  el << acc
+  el
+end
+
+==> 027.rb 52 <==
+values.reduce do |acc, el|
+  el << acc.foo
+  el
+end
+
+==> 028.rb 48 <==
+values.reduce do |acc, el|
+  el += acc
+  el
+end
+
+==> 029.rb 52 <==
+values.reduce do |acc, el|
+  el += acc.foo
+  el
+end
+
+==> 030.rb 49 <==
+values.reduce do |acc, el|
+  el &&= acc
+  el
+end
+
+==> 031.rb 53 <==
+values.reduce do |acc, el|
+  el &&= acc.foo
+  el
+end
+
+==> 032.rb 47 <==
+values.reduce do |acc, el|
+  el = acc
+  el
+end
+
+==> 033.rb 51 <==
+values.reduce do |acc, el|
+  el = acc.foo
+  el
+end
+
+==> 034.rb 56 <==
+values.reduce do |acc, el|
+  x = acc
+  el << x
+  el
+end
+
+==> 035.rb 54 <==
+values.reduce do |acc, el|
+  el.method!(foo)
+  el
+end
+
+==> 036.rb 55 <==
+values.reduce do |acc, el|
+  method!(foo, el)
+  el
+end
+
+==> 037.rb 51 <==
+values.reduce do |acc, el|
+  el = x = acc
+  el
+end
+
+==> 038.rb 102 <==
+values.reduce do |acc, el|
+  acc = el
+  acc += el
+  acc << el
+  acc &&= el
+  acc.method!(el)
+  el
+end
+
+==> 039.rb 50 <==
+(1..4).reduce(0) do |acc, el|
+  "#{acc}#{el}"
+end
+
+==> 040.rb 44 <==
+(1..4).reduce(0) do |acc, el|
+  "#{el}"
+end
+
+==> 041.rb 71 <==
+(1..4).reduce(0) do |acc, el|
+  <<~RESULT
+    #{acc}#{el}
+  RESULT
+end
+
+==> 042.rb 65 <==
+(1..4).reduce(0) do |acc, el|
+  <<~RESULT
+    #{el}
+  RESULT
+end
+
+==> 043.rb 45 <==
+(1..4).reduce(0) do |acc, el|
+  acc + el
+end
+
+==> 044.rb 45 <==
+(1..4).reduce(0) do |acc, el|
+  el + acc
+end
+
+==> 045.rb 47 <==
+(1..4).reduce(0) do |acc, el|
+  acc.method
+end
+
+==> 046.rb 48 <==
+(1..4).reduce(0) do |acc, el|
+  method(acc)
+end
+
+==> 047.rb 48 <==
+foo.reduce { |result, key| result.method(key) }
+
+==> 048.rb 53 <==
+%w(a b c).reduce({}) do |acc, letter|
+  acc[foo]
+end
+
+==> 049.rb 59 <==
+%w(a b c).reduce({}) do |acc, letter|
+  acc[foo] = bar
+end
+
+==> 050.rb 41 <==
+foo.reduce { |result, key| result[key] }
+
+==> 051.rb 47 <==
+foo.reduce { |result, key| result[key] = foo }
+
+==> 052.rb 43 <==
+(1..4).reduce(0) do |acc, el|
+  el + 2
+end
+
+==> 053.rb 67 <==
+(1..4).reduce(0) do |acc, el|
+  next el if el.even?
+  acc += 1
+end
+
+==> 054.rb 68 <==
+(1..4).reduce(0) do |acc, el|
+  break el if el.even?
+  acc += 1
+end
+
+==> 055.rb 65 <==
+(1..4).reduce(0) do |acc, el|
+  next el if el.even?
+  el * 2
+end
+
+==> 056.rb 43 <==
+(1..4).reduce(0) do |acc, el|
+  x + el
+end
+
+==> 057.rb 48 <==
+(1..4).reduce(0) do |acc, el|
+  self.x + el
+end
+
+==> 058.rb 42 <==
+(1..4).reduce(0) do |acc, el|
+  x + y
+end
+
+==> 059.rb 53 <==
+(1..4).reduce(0) do |acc, el|
+  x = acc + el
+  x
+end
+
+==> 060.rb 58 <==
+(1..4).reduce(0) do |acc, el|
+  x = acc + el
+  x ** 2
+end
+
+==> 061.rb 53 <==
+(1..4).reduce(0) do |acc, el|
+  x = acc
+  x + el
+end
+
+==> 062.rb 46 <==
+(1..4).reduce(0) do |acc, el|
+  @var + el
+end
+
+==> 063.rb 46 <==
+(1..4).reduce(0) do |acc, el|
+  el + @var
+end
+
+==> 064.rb 48 <==
+(1..4).reduce(0) do |acc, el|
+  foo.bar(el)
+end
+
+==> 065.rb 67 <==
+enum.reduce do |acc, el|
+  x = [*acc, el]
+  x << 42 if foo
+  x
+end
+
+==> 066.rb 43 <==
+(1..4).reduce(0) do |acc, el|
+  Foo.el
+end
+
+==> 067.rb 51 <==
+(1..4).reduce(0) do |acc, el|
+  foo.bar.baz.el
+end
+
+==> 068.rb 44 <==
+(1..4).reduce(0) do |acc, el|
+  self.el
+end
+
+==> 069.rb 54 <==
+(1..4).reduce(0) do |acc, el|
+  "#{self.el}#{el}"
+end
+
+==> 070.rb 92 <==
+foo.reduce(bar) do |acc, el|
+  values.map do |v|
+    next el if something?
+    el
+  end
+end
+
+==> 071.rb 88 <==
+foo.reduce(bar) do |acc, el|
+  values.map do
+    next el if something?
+    _1
+  end
+end
+
+==> 072.rb 66 <==
+foo.reduce([]) do |acc, el|
+  break if something?
+  acc << el
+end
+
+==> 073.rb 79 <==
+values.reduce(nil) do |result, value|
+  break result if something?
+  value
+end
+
+==> 074.rb 78 <==
+values.reduce(nil) do |result, value|
+  next value if something?
+  result
+end
+
+==> 075.rb 35 <==
+(1..4).reduce(0) { |acc| acc.foo }
+
+==> 076.rb 38 <==
+values.reduce(0) { |*x| x[0] + x[1] }
+
+==> 077.rb 91 <==
+(1..4).each_with_index.reduce([]) do |acc, (el, index)|
+  acc[el] = method(index)
+  el
+end
+
+==> 078.rb 24 <==
+(1..4).reduce(0) { _2 }
+
+==> 079.rb 25 <==
+(1..4)&.reduce(0) { _2 }
+
+==> 080.rb 29 <==
+values.reduce(0) { _1 + _2 }
+
+==> 081.rb 36 <==
+values.inject do
+  do_something
+end
+
+==> 082.rb 18 <==
+values.inject(:+)
+
+==> 083.rb 38 <==
+values.inject(:+) { |result, value| }
+
+==> 084.rb 39 <==
+(1..4).inject(0) do |acc, el|
+  el
+end
+
+==> 085.rb 57 <==
+values.inject({}) do |acc, el|
+  acc[el] = true
+  el
+end
+
+==> 086.rb 40 <==
+(1..4)&.inject(0) do |acc, el|
+  el
+end
+
+==> 087.rb 58 <==
+values&.inject({}) do |acc, el|
+  acc[el] = true
+  el
+end
+
+==> 088.rb 36 <==
+(1..4).inject do |acc, el|
+  el
+end
+
+==> 089.rb 50 <==
+values.inject(false) do |acc, el|
+  acc == el
+end
+
+==> 090.rb 50 <==
+values.inject(false) do |acc, el|
+  el == acc
+end
+
+==> 091.rb 40 <==
+(1..4).inject(0) do |acc, el|
+  acc
+end
+
+==> 092.rb 45 <==
+(1..4).inject(0) do |acc, el|
+  acc = el
+end
+
+==> 093.rb 45 <==
+(1..4).inject(0) do |acc, el|
+  acc += 5
+end
+
+==> 094.rb 46 <==
+(1..4).inject(0) do |acc, el|
+  acc += el
+end
+
+==> 095.rb 46 <==
+(1..4).inject(0) do |acc, el|
+  el += acc
+end
+
+==> 096.rb 47 <==
+(1..4).inject(0) do |acc, el|
+  acc ||= el
+end
+
+==> 097.rb 47 <==
+(1..4).inject(0) do |acc, el|
+  el ||= acc
+end
+
+==> 098.rb 46 <==
+(1..4).inject(0) do |acc, el|
+  acc || el
+end
+
+==> 099.rb 46 <==
+(1..4).inject(0) do |acc, el|
+  el || acc
+end
+
+==> 100.rb 47 <==
+(1..4).inject(0) do |acc, el|
+  acc &&= el
+end
+
+==> 101.rb 47 <==
+(1..4).inject(0) do |acc, el|
+  el &&= acc
+end
+
+==> 102.rb 46 <==
+(1..4).inject(0) do |acc, el|
+  acc << el
+end
+
+==> 103.rb 46 <==
+(1..4).inject(0) do |acc, el|
+  el << acc
+end
+
+==> 104.rb 59 <==
+values.inject do |acc, el|
+  el.method!(acc, foo)
+  el
+end
+
+==> 105.rb 60 <==
+values.inject do |acc, el|
+  method!(acc, foo, el)
+  el
+end
+
+==> 106.rb 48 <==
+values.inject do |acc, el|
+  el << acc
+  el
+end
+
+==> 107.rb 52 <==
+values.inject do |acc, el|
+  el << acc.foo
+  el
+end
+
+==> 108.rb 48 <==
+values.inject do |acc, el|
+  el += acc
+  el
+end
+
+==> 109.rb 52 <==
+values.inject do |acc, el|
+  el += acc.foo
+  el
+end
+
+==> 110.rb 49 <==
+values.inject do |acc, el|
+  el &&= acc
+  el
+end
+
+==> 111.rb 53 <==
+values.inject do |acc, el|
+  el &&= acc.foo
+  el
+end
+
+==> 112.rb 47 <==
+values.inject do |acc, el|
+  el = acc
+  el
+end
+
+==> 113.rb 51 <==
+values.inject do |acc, el|
+  el = acc.foo
+  el
+end
+
+==> 114.rb 56 <==
+values.inject do |acc, el|
+  x = acc
+  el << x
+  el
+end
+
+==> 115.rb 54 <==
+values.inject do |acc, el|
+  el.method!(foo)
+  el
+end
+
+==> 116.rb 55 <==
+values.inject do |acc, el|
+  method!(foo, el)
+  el
+end
+
+==> 117.rb 51 <==
+values.inject do |acc, el|
+  el = x = acc
+  el
+end
+
+==> 118.rb 102 <==
+values.inject do |acc, el|
+  acc = el
+  acc += el
+  acc << el
+  acc &&= el
+  acc.method!(el)
+  el
+end
+
+==> 119.rb 50 <==
+(1..4).inject(0) do |acc, el|
+  "#{acc}#{el}"
+end
+
+==> 120.rb 44 <==
+(1..4).inject(0) do |acc, el|
+  "#{el}"
+end
+
+==> 121.rb 71 <==
+(1..4).inject(0) do |acc, el|
+  <<~RESULT
+    #{acc}#{el}
+  RESULT
+end
+
+==> 122.rb 65 <==
+(1..4).inject(0) do |acc, el|
+  <<~RESULT
+    #{el}
+  RESULT
+end
+
+==> 123.rb 45 <==
+(1..4).inject(0) do |acc, el|
+  acc + el
+end
+
+==> 124.rb 45 <==
+(1..4).inject(0) do |acc, el|
+  el + acc
+end
+
+==> 125.rb 47 <==
+(1..4).inject(0) do |acc, el|
+  acc.method
+end
+
+==> 126.rb 48 <==
+(1..4).inject(0) do |acc, el|
+  method(acc)
+end
+
+==> 127.rb 48 <==
+foo.inject { |result, key| result.method(key) }
+
+==> 128.rb 53 <==
+%w(a b c).inject({}) do |acc, letter|
+  acc[foo]
+end
+
+==> 129.rb 59 <==
+%w(a b c).inject({}) do |acc, letter|
+  acc[foo] = bar
+end
+
+==> 130.rb 41 <==
+foo.inject { |result, key| result[key] }
+
+==> 131.rb 47 <==
+foo.inject { |result, key| result[key] = foo }
+
+==> 132.rb 43 <==
+(1..4).inject(0) do |acc, el|
+  el + 2
+end
+
+==> 133.rb 67 <==
+(1..4).inject(0) do |acc, el|
+  next el if el.even?
+  acc += 1
+end
+
+==> 134.rb 68 <==
+(1..4).inject(0) do |acc, el|
+  break el if el.even?
+  acc += 1
+end
+
+==> 135.rb 65 <==
+(1..4).inject(0) do |acc, el|
+  next el if el.even?
+  el * 2
+end
+
+==> 136.rb 43 <==
+(1..4).inject(0) do |acc, el|
+  x + el
+end
+
+==> 137.rb 48 <==
+(1..4).inject(0) do |acc, el|
+  self.x + el
+end
+
+==> 138.rb 42 <==
+(1..4).inject(0) do |acc, el|
+  x + y
+end
+
+==> 139.rb 53 <==
+(1..4).inject(0) do |acc, el|
+  x = acc + el
+  x
+end
+
+==> 140.rb 58 <==
+(1..4).inject(0) do |acc, el|
+  x = acc + el
+  x ** 2
+end
+
+==> 141.rb 53 <==
+(1..4).inject(0) do |acc, el|
+  x = acc
+  x + el
+end
+
+==> 142.rb 46 <==
+(1..4).inject(0) do |acc, el|
+  @var + el
+end
+
+==> 143.rb 46 <==
+(1..4).inject(0) do |acc, el|
+  el + @var
+end
+
+==> 144.rb 48 <==
+(1..4).inject(0) do |acc, el|
+  foo.bar(el)
+end
+
+==> 145.rb 67 <==
+enum.inject do |acc, el|
+  x = [*acc, el]
+  x << 42 if foo
+  x
+end
+
+==> 146.rb 43 <==
+(1..4).inject(0) do |acc, el|
+  Foo.el
+end
+
+==> 147.rb 51 <==
+(1..4).inject(0) do |acc, el|
+  foo.bar.baz.el
+end
+
+==> 148.rb 44 <==
+(1..4).inject(0) do |acc, el|
+  self.el
+end
+
+==> 149.rb 54 <==
+(1..4).inject(0) do |acc, el|
+  "#{self.el}#{el}"
+end
+
+==> 150.rb 92 <==
+foo.inject(bar) do |acc, el|
+  values.map do |v|
+    next el if something?
+    el
+  end
+end
+
+==> 151.rb 88 <==
+foo.inject(bar) do |acc, el|
+  values.map do
+    next el if something?
+    _1
+  end
+end
+
+==> 152.rb 66 <==
+foo.inject([]) do |acc, el|
+  break if something?
+  acc << el
+end
+
+==> 153.rb 79 <==
+values.inject(nil) do |result, value|
+  break result if something?
+  value
+end
+
+==> 154.rb 78 <==
+values.inject(nil) do |result, value|
+  next value if something?
+  result
+end
+
+==> 155.rb 35 <==
+(1..4).inject(0) { |acc| acc.foo }
+
+==> 156.rb 38 <==
+values.inject(0) { |*x| x[0] + x[1] }
+
+==> 157.rb 91 <==
+(1..4).each_with_index.inject([]) do |acc, (el, index)|
+  acc[el] = method(index)
+  el
+end
+
+==> 158.rb 24 <==
+(1..4).inject(0) { _2 }
+
+==> 159.rb 25 <==
+(1..4)&.inject(0) { _2 }
+
+==> 160.rb 29 <==
+values.inject(0) { _1 + _2 }
+

@@ -1,0 +1,122 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 22 <==
+Set[:foo, :bar, :foo]
+
+==> 001.rb 24 <==
+::Set[:foo, :bar, :foo]
+
+==> 002.rb 34 <==
+Set[:foo, :bar, :foo, :baz, :baz]
+
+==> 003.rb 46 <==
+foo = do_foo
+bar = do_bar
+
+Set[foo, bar, foo]
+
+==> 004.rb 22 <==
+Set[@foo, @bar, @foo]
+
+==> 005.rb 19 <==
+Set[Foo, Bar, Foo]
+
+==> 006.rb 19 <==
+Set[foo, bar, foo]
+
+==> 007.rb 34 <==
+Set[obj&.foo, obj&.bar, obj&.foo]
+
+==> 008.rb 44 <==
+Set[rand > 0.5 ? 1 : 2, rand > 0.5 ? 1 : 2]
+
+==> 009.rb 28 <==
+Set.new([:foo, :bar, :foo])
+
+==> 010.rb 25 <==
+Set.new(%i[foo bar foo])
+
+==> 011.rb 30 <==
+::Set.new([:foo, :bar, :foo])
+
+==> 012.rb 14 <==
+Set[foo, bar]
+
+==> 013.rb 22 <==
+Set.new([:foo, :bar])
+
+==> 014.rb 6 <==
+Set[]
+
+==> 015.rb 10 <==
+Set[:foo]
+
+==> 016.rb 28 <==
+SortedSet[:foo, :bar, :foo]
+
+==> 017.rb 30 <==
+::SortedSet[:foo, :bar, :foo]
+
+==> 018.rb 40 <==
+SortedSet[:foo, :bar, :foo, :baz, :baz]
+
+==> 019.rb 52 <==
+foo = do_foo
+bar = do_bar
+
+SortedSet[foo, bar, foo]
+
+==> 020.rb 28 <==
+SortedSet[@foo, @bar, @foo]
+
+==> 021.rb 25 <==
+SortedSet[Foo, Bar, Foo]
+
+==> 022.rb 25 <==
+SortedSet[foo, bar, foo]
+
+==> 023.rb 40 <==
+SortedSet[obj&.foo, obj&.bar, obj&.foo]
+
+==> 024.rb 50 <==
+SortedSet[rand > 0.5 ? 1 : 2, rand > 0.5 ? 1 : 2]
+
+==> 025.rb 34 <==
+SortedSet.new([:foo, :bar, :foo])
+
+==> 026.rb 31 <==
+SortedSet.new(%i[foo bar foo])
+
+==> 027.rb 36 <==
+::SortedSet.new([:foo, :bar, :foo])
+
+==> 028.rb 20 <==
+SortedSet[foo, bar]
+
+==> 029.rb 28 <==
+SortedSet.new([:foo, :bar])
+
+==> 030.rb 12 <==
+SortedSet[]
+
+==> 031.rb 16 <==
+SortedSet[:foo]
+
+==> 032.rb 26 <==
+[:foo, :bar, :foo].to_set
+
+==> 033.rb 27 <==
+[:foo, :bar, :foo]&.to_set
+
+==> 034.rb 24 <==
+Array[:foo, :bar, :foo]
+
+==> 035.rb 30 <==
+Array.new([:foo, :bar, :foo])
+

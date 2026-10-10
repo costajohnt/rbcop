@@ -1,0 +1,44 @@
+==> offenses exit=1 760 <==
+000.rb:1:1: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+001.rb:1:1: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+002.rb:1:1: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+003.rb:1:1: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+004.rb:1:1: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+009.rb:1:1: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+010.rb:1:1: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+011.rb:1:1: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+
+==> autocorrect exit=0 744 <==
+000.rb:1:1: C: [Corrected] Style/EmptyMethod: Put empty method definitions on a single line.
+001.rb:1:1: C: [Corrected] Style/EmptyMethod: Put empty method definitions on a single line.
+002.rb:1:1: C: [Corrected] Style/EmptyMethod: Put empty method definitions on a single line.
+003.rb:1:1: C: [Corrected] Style/EmptyMethod: Put empty method definitions on a single line.
+004.rb:1:1: C: [Corrected] Style/EmptyMethod: Put empty method definitions on a single line.
+009.rb:1:1: C: [Corrected] Style/EmptyMethod: Put empty method definitions on a single line.
+010.rb:1:1: C: [Corrected] Style/EmptyMethod: Put empty method definitions on a single line.
+011.rb:1:1: C: [Corrected] Style/EmptyMethod: Put empty method definitions on a single line.
+
+==> corrected/000.rb 13 <==
+def foo; end
+
+==> corrected/001.rb 23 <==
+def foo(bar, baz); end
+
+==> corrected/002.rb 22 <==
+def foo bar, baz; end
+
+==> corrected/003.rb 13 <==
+def foo; end
+
+==> corrected/004.rb 18 <==
+def foo(arg); end
+
+==> corrected/009.rb 18 <==
+def self.foo; end
+
+==> corrected/010.rb 28 <==
+def self.foo(bar, baz); end
+
+==> corrected/011.rb 18 <==
+def self.foo; end
+

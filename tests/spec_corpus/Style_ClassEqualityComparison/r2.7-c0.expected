@@ -1,0 +1,104 @@
+==> offenses exit=1 2203 <==
+000.rb:1:5: C: [Correctable] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+001.rb:1:5: C: [Correctable] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+002.rb:1:5: C: [Correctable] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+003.rb:1:5: C: [Correctable] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+004.rb:1:5: C: [Correctable] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+005.rb:1:5: C: [Correctable] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+007.rb:2:5: C: Style/ClassEqualityComparison: Use `instance_of?` instead of comparing classes.
+008.rb:1:5: C: Style/ClassEqualityComparison: Use `instance_of?` instead of comparing classes.
+009.rb:1:5: C: Style/ClassEqualityComparison: Use `instance_of?` instead of comparing classes.
+010.rb:1:5: C: Style/ClassEqualityComparison: Use `instance_of?` instead of comparing classes.
+011.rb:1:5: C: [Correctable] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+012.rb:1:5: C: [Correctable] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+013.rb:1:5: C: [Correctable] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+014.rb:1:5: C: [Correctable] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+015.rb:1:5: C: [Correctable] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+016.rb:1:5: C: [Correctable] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+018.rb:3:9: C: [Correctable] Style/ClassEqualityComparison: Use `instance_of?(::Bar)` instead of comparing classes.
+019.rb:3:9: C: [Correctable] Style/ClassEqualityComparison: Use `instance_of?(::Bar)` instead of comparing classes.
+020.rb:1:5: C: Style/ClassEqualityComparison: Use `instance_of?` instead of comparing classes.
+021.rb:3:9: C: [Correctable] Style/ClassEqualityComparison: Use `instance_of?(Model)` instead of comparing classes.
+
+==> autocorrect exit=1 2173 <==
+000.rb:1:5: C: [Corrected] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+001.rb:1:5: C: [Corrected] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+002.rb:1:5: C: [Corrected] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+003.rb:1:5: C: [Corrected] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+004.rb:1:5: C: [Corrected] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+005.rb:1:5: C: [Corrected] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+007.rb:2:5: C: Style/ClassEqualityComparison: Use `instance_of?` instead of comparing classes.
+008.rb:1:5: C: Style/ClassEqualityComparison: Use `instance_of?` instead of comparing classes.
+009.rb:1:5: C: Style/ClassEqualityComparison: Use `instance_of?` instead of comparing classes.
+010.rb:1:5: C: Style/ClassEqualityComparison: Use `instance_of?` instead of comparing classes.
+011.rb:1:5: C: [Corrected] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+012.rb:1:5: C: [Corrected] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+013.rb:1:5: C: [Corrected] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+014.rb:1:5: C: [Corrected] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+015.rb:1:5: C: [Corrected] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+016.rb:1:5: C: [Corrected] Style/ClassEqualityComparison: Use `instance_of?(Date)` instead of comparing classes.
+018.rb:3:9: C: [Corrected] Style/ClassEqualityComparison: Use `instance_of?(::Bar)` instead of comparing classes.
+019.rb:3:9: C: [Corrected] Style/ClassEqualityComparison: Use `instance_of?(::Bar)` instead of comparing classes.
+020.rb:1:5: C: Style/ClassEqualityComparison: Use `instance_of?` instead of comparing classes.
+021.rb:3:9: C: [Corrected] Style/ClassEqualityComparison: Use `instance_of?(Model)` instead of comparing classes.
+
+==> corrected/000.rb 23 <==
+var.instance_of?(Date)
+
+==> corrected/001.rb 23 <==
+var.instance_of?(Date)
+
+==> corrected/002.rb 23 <==
+var.instance_of?(Date)
+
+==> corrected/003.rb 23 <==
+var.instance_of?(Date)
+
+==> corrected/004.rb 23 <==
+var.instance_of?(Date)
+
+==> corrected/005.rb 23 <==
+var.instance_of?(Date)
+
+==> corrected/011.rb 23 <==
+var.instance_of?(Date)
+
+==> corrected/012.rb 23 <==
+var.instance_of?(Date)
+
+==> corrected/013.rb 23 <==
+var.instance_of?(Date)
+
+==> corrected/014.rb 23 <==
+var.instance_of?(Date)
+
+==> corrected/015.rb 23 <==
+var.instance_of?(Date)
+
+==> corrected/016.rb 23 <==
+var.instance_of?(Date)
+
+==> corrected/018.rb 86 <==
+module Foo
+  def bar?(value)
+    bar.instance_of?(::Bar)
+  end
+
+  class Bar
+  end
+end
+
+==> corrected/019.rb 67 <==
+module Foo
+  def bar?(value)
+    bar.instance_of?(::Bar)
+  end
+end
+
+==> corrected/021.rb 67 <==
+module Foo
+  def bar?(value)
+    bar.instance_of?(Model)
+  end
+end
+

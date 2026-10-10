@@ -1,0 +1,83 @@
+==> offenses exit=1 1476 <==
+000.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+000.rb:5:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+000.rb:8:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+001.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+002.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+002.rb:3:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+003.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+004.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+004.rb:3:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+005.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+006.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+007.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+007.rb:5:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+007.rb:8:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+014.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+020.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+
+==> autocorrect exit=1 1448 <==
+000.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+000.rb:5:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+000.rb:8:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+001.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+002.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+002.rb:3:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+003.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+004.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+004.rb:3:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+005.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+006.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+007.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+007.rb:5:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+007.rb:8:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+014.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+020.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+
+==> corrected/000.rb 231 <==
+items.each { |item| do_something(item)
+do_something_else(item, arg) }
+
+items.each_with_index { |item| do_something(item)
+do_something_else(item, arg) }
+
+items.reverse_each { |item| do_something(item)
+do_something_else(item, arg) }
+
+==> corrected/001.rb 59 <==
+items.each do |item| foo(item)
+bar(item)  end
+do_something
+
+==> corrected/002.rb 52 <==
+items.each { |item| foo(item)
+bar(item)
+baz(item) }
+
+==> corrected/004.rb 39 <==
+items.each { foo(_1)
+bar(_1)
+baz(_1) }
+
+==> corrected/005.rb 72 <==
+items.each do |item| do_something(item)
+do_something_else item, arg end
+
+==> corrected/006.rb 70 <==
+items.each { |item| do_something(item)
+do_something_else(item, arg) }
+
+==> corrected/007.rb 198 <==
+items.each { do_something(_1)
+do_something_else(_1, arg) }
+
+items.each_with_index { do_something(_1)
+do_something_else(_1, arg) }
+
+items.reverse_each { do_something(_1)
+do_something_else(_1, arg) }
+
+==> corrected/014.rb 73 <==
+for item in items do do_something(item)
+do_something_else(item, arg) end
+

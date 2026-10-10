@@ -1,0 +1,78 @@
+==> offenses exit=1 1356 <==
+000.rb:1:1: C: [Correctable] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+001.rb:1:1: C: [Correctable] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+002.rb:1:1: C: [Correctable] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+003.rb:1:1: C: [Correctable] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+004.rb:1:1: C: [Correctable] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+012.rb:1:5: C: [Correctable] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+013.rb:1:1: C: [Correctable] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+014.rb:1:1: C: [Correctable] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+015.rb:1:1: C: [Correctable] Style/SymbolArray: Use `[:one, :'[', :']', :two]` for an array of symbols.
+017.rb:1:1: C: [Correctable] Style/SymbolArray: Use `[:one, :two, :'[three four five]']` for an array of symbols.
+018.rb:1:1: C: [Correctable] Style/SymbolArray: Use `[:one, :two, :'[[]']` for an array of symbols.
+019.rb:1:1: C: [Correctable] Style/SymbolArray: Use `[:one, :'(', :')', :two]` for an array of symbols.
+021.rb:1:1: C: [Correctable] Style/SymbolArray: Use `[:one, :two, :'(()']` for an array of symbols.
+022.rb:1:1: C: [Correctable] Style/SymbolArray: Use `[:one, :two, :'(three four five)']` for an array of symbols.
+
+==> autocorrect exit=0 1328 <==
+000.rb:1:1: C: [Corrected] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+001.rb:1:1: C: [Corrected] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+002.rb:1:1: C: [Corrected] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+003.rb:1:1: C: [Corrected] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+004.rb:1:1: C: [Corrected] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+012.rb:1:5: C: [Corrected] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+013.rb:1:1: C: [Corrected] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+014.rb:1:1: C: [Corrected] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+015.rb:1:1: C: [Corrected] Style/SymbolArray: Use `[:one, :'[', :']', :two]` for an array of symbols.
+017.rb:1:1: C: [Corrected] Style/SymbolArray: Use `[:one, :two, :'[three four five]']` for an array of symbols.
+018.rb:1:1: C: [Corrected] Style/SymbolArray: Use `[:one, :two, :'[[]']` for an array of symbols.
+019.rb:1:1: C: [Corrected] Style/SymbolArray: Use `[:one, :'(', :')', :two]` for an array of symbols.
+021.rb:1:1: C: [Corrected] Style/SymbolArray: Use `[:one, :two, :'(()']` for an array of symbols.
+022.rb:1:1: C: [Corrected] Style/SymbolArray: Use `[:one, :two, :'(three four five)']` for an array of symbols.
+
+==> corrected/000.rb 18 <==
+%i[one two three]
+
+==> corrected/001.rb 8 <==
+%i[one]
+
+==> corrected/002.rb 19 <==
+%I[\t two\n three]
+
+==> corrected/003.rb 23 <==
+%i[one
+two three
+four]
+
+==> corrected/004.rb 16 <==
+%I[\t \n three]
+
+==> corrected/012.rb 25 <==
+foo(%i[bar baz]) { qux }
+
+==> corrected/013.rb 30 <==
+%i[one two three]
+%i(a b c d)
+
+==> corrected/014.rb 26 <==
+%i[one two three]
+%i(a b)
+
+==> corrected/015.rb 25 <==
+[:one, :'[', :']', :two]
+
+==> corrected/017.rb 35 <==
+[:one, :two, :'[three four five]']
+
+==> corrected/018.rb 21 <==
+[:one, :two, :'[[]']
+
+==> corrected/019.rb 25 <==
+[:one, :'(', :')', :two]
+
+==> corrected/021.rb 21 <==
+[:one, :two, :'(()']
+
+==> corrected/022.rb 35 <==
+[:one, :two, :'(three four five)']
+

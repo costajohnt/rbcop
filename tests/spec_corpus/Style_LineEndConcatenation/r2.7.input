@@ -1,0 +1,97 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 21 <==
+top = "test" +
+"top"
+
+==> 001.rb 22 <==
+top = "test" <<
+"top"
+
+==> 002.rb 31 <==
+top = "test " \
+"foo" <<
+"bar"
+
+==> 003.rb 25 <==
+top = "test#{x}" +
+"top"
+
+==> 004.rb 26 <==
+top = "test#{x}" <<
+"top"
+
+==> 005.rb 39 <==
+top = "test#{x}" <<
+"top" <<
+"ubertop"
+
+==> 006.rb 33 <==
+top = "test#{x}" +
+"top" +
+"foo"
+
+==> 007.rb 43 <==
+top = "test#{x}" <<
+"top" +
+"foo" <<
+"bar"
+
+==> 008.rb 20 <==
+top = "test" + "top"
+==> 009.rb 152 <==
+content_and_three_spaces = "content" +
+  " " * 3
+a_thing = 'a ' +
+  'gniht'.reverse
+output = 'value: ' +
+  '%d' % value
+'letter: ' +
+  'abcdefghij'[ix]
+
+==> 010.rb 40 <==
+x3a = 'x' +
+  "#{'a' + "#{3}"}".reverse
+
+==> 011.rb 33 <==
+top = "test" + # something
+"top"
+
+==> 012.rb 33 <==
+top = "test" +
+# something
+"top"
+
+==> 013.rb 22 <==
+top = %(test) +
+"top"
+
+==> 014.rb 23 <==
+top = __FILE__ +
+"top"
+
+==> 015.rb 60 <==
+top = "test#{x}" + # comment
+"foo" +
+%(bar) +
+"baz" +
+"qux"
+
+==> 016.rb 23 <==
+top = "test" + \
+"top"
+
+==> 017.rb 69 <==
+top = "test#{x}" <<
+"top" + # comment
+"foo" +
+"bar" +
+%(baz) +
+"qux"
+

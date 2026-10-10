@@ -1,0 +1,21 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.5
+
+==> 000.rb 89 <==
+require 'enumerator'
+require 'rational'
+require 'complex'
+require 'thread'
+require 'uri'
+
+==> 001.rb 97 <==
+require 'pp'
+
+# Imagine this code to be in a different file than the require.
+foo.pretty_inspect
+

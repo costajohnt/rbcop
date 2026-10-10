@@ -1,0 +1,63 @@
+==> .rubocop.yml 192 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/DefEndAlignment:
+  EnforcedStyleAlignWith: start_of_line
+  AutoCorrect: true
+
+==> 000.rb 15 <==
+def test
+  end
+
+==> 001.rb 20 <==
+def Test.test
+  end
+
+==> 002.rb 15 <==
+﻿def test
+end
+==> 003.rb 12 <==
+def test
+end
+==> 004.rb 17 <==
+def Test.test
+end
+==> 005.rb 16 <==
+foo def test
+end
+==> 006.rb 20 <==
+foo bar def test
+end
+==> 007.rb 21 <==
+foo def test
+    end
+
+==> 008.rb 47 <==
+foo def a
+  a1
+end
+
+foo def b
+      b1
+    end
+
+==> 009.rb 126 <==
+using Module.new {
+  refine Hash do
+    class << Hash
+      private def _ruby2_keywords_hash(*args)
+      end
+    end
+  end
+}
+
+==> 010.rb 47 <==
+include Module.new {
+  private def foo
+  end
+}
+

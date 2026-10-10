@@ -1,0 +1,54 @@
+==> .rubocop.yml 284 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/IndentationWidth:
+  Width: 2
+  EnforcedStyleAlignWith: relative_to_receiver
+  SupportedStylesAlignWith:
+  - start_of_line
+  - relative_to_receiver
+  AllowedPatterns: []
+
+==> 000.rb 24 <==
+foo
+  .bar do |x|
+x
+end
+
+==> 001.rb 28 <==
+foo
+  .bar do |x|
+    x
+end
+
+==> 002.rb 73 <==
+out
+  .break
+  .sep_with_breaks(inner) { |v|
+    simplified_process(v)
+}
+
+==> 003.rb 180 <==
+::Some::Very::Long::Module::Name.active
+                                .in_batches do |batch|
+                                  process(batch)
+                                end
+
+==> 004.rb 70 <==
+Foo.for_operation(arg).
+  pluck(:a, :b).
+  map do |a, b|
+  [b, a]
+end
+
+==> 005.rb 74 <==
+Foo.for_operation(arg).
+  pluck(:a, :b).
+  map do |a, b|
+    [b, a]
+  end
+

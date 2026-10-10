@@ -1,0 +1,37 @@
+==> .rubocop.yml 209 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/GuardClause:
+  AllowConsecutiveConditionals: true
+Layout/LineLength:
+  Enabled: true
+  Max: 80
+
+==> 000.rb 64 <==
+def func
+  if foo?
+    work
+  end
+
+  if bar?
+    work
+  end
+end
+
+==> 001.rb 80 <==
+def func
+  if foo?
+    work
+  end
+
+  do_something
+
+  if bar?
+    work
+  end
+end
+

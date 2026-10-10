@@ -1,0 +1,13 @@
+==> .rubocop.yml 149 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/ConstantResolution:
+  Enabled: true
+
+==> 000.rb 6 <==
+::Bar
+

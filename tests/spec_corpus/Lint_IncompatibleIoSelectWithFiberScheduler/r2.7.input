@@ -1,0 +1,68 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 24 <==
+IO.select([io], [], [])
+
+==> 001.rb 16 <==
+IO.select([io])
+
+==> 002.rb 33 <==
+IO.select([io], [], [], timeout)
+
+==> 003.rb 26 <==
+::IO.select([io], [], [])
+
+==> 004.rb 35 <==
+::IO.select([io], [], [], timeout)
+
+==> 005.rb 35 <==
+IO.select([io], nil, nil, timeout)
+
+==> 006.rb 35 <==
+IO.select(nil, [io], nil, timeout)
+
+==> 007.rb 24 <==
+IO.select([], [io], [])
+
+==> 008.rb 33 <==
+IO.select([], [io], [], timeout)
+
+==> 009.rb 37 <==
+IO.select([self], nil, nil, timeout)
+
+==> 010.rb 37 <==
+IO.select(nil, [self], nil, timeout)
+
+==> 011.rb 28 <==
+rs, _ = IO.select([rp], [])
+
+==> 012.rb 28 <==
+_, ws = IO.select([], [wp])
+
+==> 013.rb 30 <==
+IO.select([foo, bar], [], [])
+
+==> 014.rb 22 <==
+IO.select([foo, bar])
+
+==> 015.rb 30 <==
+IO.select([], [foo, bar], [])
+
+==> 016.rb 26 <==
+IO.select([rp], [wp], [])
+
+==> 017.rb 31 <==
+IO.select([rp], [], [excepts])
+
+==> 018.rb 48 <==
+collection.select { |item| item.do_something? }
+
+==> 019.rb 20 <==
+IO.select([*reads])
+

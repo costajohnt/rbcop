@@ -1,0 +1,498 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 16 <==
+format
+format()
+
+==> 001.rb 18 <==
+format('%s', foo)
+
+==> 002.rb 20 <==
+format('%s', *args)
+
+==> 003.rb 21 <==
+format('%s', **args)
+
+==> 004.rb 31 <==
+format('%<username>s', **args)
+
+==> 005.rb 18 <==
+foo.format('bar')
+
+==> 006.rb 14 <==
+format('foo')
+
+==> 007.rb 17 <==
+format("#{foo}")
+
+==> 008.rb 21 <==
+Kernel.format('foo')
+
+==> 009.rb 23 <==
+::Kernel.format('foo')
+
+==> 010.rb 13 <==
+format("\n")
+
+==> 011.rb 12 <==
+format('%%')
+==> 012.rb 12 <==
+format('%s')
+==> 013.rb 17 <==
+format('%s', [])
+
+==> 014.rb 17 <==
+format('%s', {})
+
+==> 015.rb 20 <==
+format('%d', '5.5')
+
+==> 016.rb 21 <==
+format('%d', "abcd")
+
+==> 017.rb 19 <==
+format('%d', true)
+
+==> 018.rb 20 <==
+format('%d', false)
+
+==> 019.rb 18 <==
+format('%d', nil)
+
+==> 020.rb 17 <==
+format('%d', [])
+
+==> 021.rb 17 <==
+format('%d', {})
+
+==> 022.rb 20 <==
+format('%i', '5.5')
+
+==> 023.rb 21 <==
+format('%i', "abcd")
+
+==> 024.rb 19 <==
+format('%i', true)
+
+==> 025.rb 20 <==
+format('%i', false)
+
+==> 026.rb 18 <==
+format('%i', nil)
+
+==> 027.rb 17 <==
+format('%i', [])
+
+==> 028.rb 17 <==
+format('%i', {})
+
+==> 029.rb 20 <==
+format('%u', '5.5')
+
+==> 030.rb 21 <==
+format('%u', "abcd")
+
+==> 031.rb 19 <==
+format('%u', true)
+
+==> 032.rb 20 <==
+format('%u', false)
+
+==> 033.rb 18 <==
+format('%u', nil)
+
+==> 034.rb 17 <==
+format('%u', [])
+
+==> 035.rb 17 <==
+format('%u', {})
+
+==> 036.rb 21 <==
+format('%f', "abcd")
+
+==> 037.rb 19 <==
+format('%f', true)
+
+==> 038.rb 20 <==
+format('%f', false)
+
+==> 039.rb 18 <==
+format('%f', nil)
+
+==> 040.rb 17 <==
+format('%f', [])
+
+==> 041.rb 17 <==
+format('%f', {})
+
+==> 042.rb 25 <==
+format('%10s', "#{foo}")
+
+==> 043.rb 25 <==
+format('%.1s', "#{foo}")
+
+==> 044.rb 21 <==
+format('%% %s', foo)
+
+==> 045.rb 48 <==
+format('%d.%d.%d.%d', *@address.unpack('CCCC'))
+
+==> 046.rb 38 <==
+format('%2$s %1$s', 'world', 'hello')
+
+==> 047.rb 33 <==
+format('%2$s %1$i', 'abcd', '5')
+
+==> 048.rb 77 <==
+format('%999999999999999999999999999999999999999999999999999999999999$d', 1)
+
+==> 049.rb 21 <==
+format('%*d', 5, 14)
+
+==> 050.rb 29 <==
+format('$%0*.*f', 5, 2, 0.5)
+
+==> 051.rb 22 <==
+format('%-*d', 5, 14)
+
+==> 052.rb 25 <==
+format('%1$*2$s', 14, 5)
+
+==> 053.rb 26 <==
+format('%1$-*2$s', 14, 5)
+
+==> 054.rb 26 <==
+format('%*d', 'a', 'foo')
+
+==> 055.rb 19 <==
+format('%*9$d', 1)
+
+==> 056.rb 78 <==
+format('%*999999999999999999999999999999999999999999999999999999999999$d', 1)
+
+==> 057.rb 26 <==
+format('%*s', foo, 'bar')
+
+==> 058.rb 27 <==
+format('%-*s', foo, 'bar')
+
+==> 059.rb 22 <==
+format('%*d', 5, foo)
+
+==> 060.rb 27 <==
+format('%*.*d', 5, 2, foo)
+
+==> 061.rb 50 <==
+format('%<foo>s %<bar>s', foo: 'foo', bar: 'bar')
+
+==> 062.rb 53 <==
+format('%<foo>s %<bar>s', foo: "#{foo}", bar: 'bar')
+
+==> 063.rb 28 <==
+format('%<foo>s', foo: foo)
+
+==> 064.rb 45 <==
+format('(%<foo>?%<bar>s:%<baz>s)', 'foobar')
+
+==> 065.rb 50 <==
+format('%{foo}s %{bar}s', foo: 'foo', bar: 'bar')
+
+==> 066.rb 53 <==
+format('%{foo}s %{bar}s', foo: "#{foo}", bar: 'bar')
+
+==> 067.rb 27 <==
+format('%{foo}', foo: foo)
+
+==> 068.rb 22 <==
+format('%{foo}', foo)
+
+==> 069.rb 56 <==
+format('%<placeholder>d, %<placeholder>f', placeholder)
+
+==> 070.rb 25 <==
+format("%0#{width}d", 3)
+
+==> 071.rb 30 <==
+format('%s %s', 'foo', 'bar')
+
+==> 072.rb 28 <==
+format('%s %s', 'foo', bar)
+
+==> 073.rb 37 <==
+format('%{y}-%{m}-%{d}', 2015, 1, 1)
+
+==> 074.rb 15 <==
+format(FORMAT)
+
+==> 075.rb 29 <==
+format(FORMAT, 'foo', 'bar')
+
+==> 076.rb 16 <==
+format(*FORMAT)
+
+==> 077.rb 36 <==
+format("%s\a\b\t\n\v\f\r\e", 'foo')
+
+==> 078.rb 33 <==
+format(<<~MESSAGE)
+  foo
+MESSAGE
+
+==> 079.rb 69 <==
+format(<<~MESSAGE, greeting: 'Hello')
+  %<greeting>s, world!
+MESSAGE
+
+==> 080.rb 35 <==
+format(<<~MESSAGE, 1)
+  %d
+MESSAGE
+
+==> 081.rb 18 <==
+sprintf
+sprintf()
+
+==> 082.rb 19 <==
+sprintf('%s', foo)
+
+==> 083.rb 21 <==
+sprintf('%s', *args)
+
+==> 084.rb 22 <==
+sprintf('%s', **args)
+
+==> 085.rb 32 <==
+sprintf('%<username>s', **args)
+
+==> 086.rb 19 <==
+foo.sprintf('bar')
+
+==> 087.rb 15 <==
+sprintf('foo')
+
+==> 088.rb 18 <==
+sprintf("#{foo}")
+
+==> 089.rb 22 <==
+Kernel.sprintf('foo')
+
+==> 090.rb 24 <==
+::Kernel.sprintf('foo')
+
+==> 091.rb 14 <==
+sprintf("\n")
+
+==> 092.rb 13 <==
+sprintf('%%')
+==> 093.rb 13 <==
+sprintf('%s')
+==> 094.rb 18 <==
+sprintf('%s', [])
+
+==> 095.rb 18 <==
+sprintf('%s', {})
+
+==> 096.rb 21 <==
+sprintf('%d', '5.5')
+
+==> 097.rb 22 <==
+sprintf('%d', "abcd")
+
+==> 098.rb 20 <==
+sprintf('%d', true)
+
+==> 099.rb 21 <==
+sprintf('%d', false)
+
+==> 100.rb 19 <==
+sprintf('%d', nil)
+
+==> 101.rb 18 <==
+sprintf('%d', [])
+
+==> 102.rb 18 <==
+sprintf('%d', {})
+
+==> 103.rb 21 <==
+sprintf('%i', '5.5')
+
+==> 104.rb 22 <==
+sprintf('%i', "abcd")
+
+==> 105.rb 20 <==
+sprintf('%i', true)
+
+==> 106.rb 21 <==
+sprintf('%i', false)
+
+==> 107.rb 19 <==
+sprintf('%i', nil)
+
+==> 108.rb 18 <==
+sprintf('%i', [])
+
+==> 109.rb 18 <==
+sprintf('%i', {})
+
+==> 110.rb 21 <==
+sprintf('%u', '5.5')
+
+==> 111.rb 22 <==
+sprintf('%u', "abcd")
+
+==> 112.rb 20 <==
+sprintf('%u', true)
+
+==> 113.rb 21 <==
+sprintf('%u', false)
+
+==> 114.rb 19 <==
+sprintf('%u', nil)
+
+==> 115.rb 18 <==
+sprintf('%u', [])
+
+==> 116.rb 18 <==
+sprintf('%u', {})
+
+==> 117.rb 22 <==
+sprintf('%f', "abcd")
+
+==> 118.rb 20 <==
+sprintf('%f', true)
+
+==> 119.rb 21 <==
+sprintf('%f', false)
+
+==> 120.rb 19 <==
+sprintf('%f', nil)
+
+==> 121.rb 18 <==
+sprintf('%f', [])
+
+==> 122.rb 18 <==
+sprintf('%f', {})
+
+==> 123.rb 26 <==
+sprintf('%10s', "#{foo}")
+
+==> 124.rb 26 <==
+sprintf('%.1s', "#{foo}")
+
+==> 125.rb 22 <==
+sprintf('%% %s', foo)
+
+==> 126.rb 49 <==
+sprintf('%d.%d.%d.%d', *@address.unpack('CCCC'))
+
+==> 127.rb 39 <==
+sprintf('%2$s %1$s', 'world', 'hello')
+
+==> 128.rb 34 <==
+sprintf('%2$s %1$i', 'abcd', '5')
+
+==> 129.rb 78 <==
+sprintf('%999999999999999999999999999999999999999999999999999999999999$d', 1)
+
+==> 130.rb 22 <==
+sprintf('%*d', 5, 14)
+
+==> 131.rb 30 <==
+sprintf('$%0*.*f', 5, 2, 0.5)
+
+==> 132.rb 23 <==
+sprintf('%-*d', 5, 14)
+
+==> 133.rb 26 <==
+sprintf('%1$*2$s', 14, 5)
+
+==> 134.rb 27 <==
+sprintf('%1$-*2$s', 14, 5)
+
+==> 135.rb 27 <==
+sprintf('%*d', 'a', 'foo')
+
+==> 136.rb 20 <==
+sprintf('%*9$d', 1)
+
+==> 137.rb 79 <==
+sprintf('%*999999999999999999999999999999999999999999999999999999999999$d', 1)
+
+==> 138.rb 27 <==
+sprintf('%*s', foo, 'bar')
+
+==> 139.rb 28 <==
+sprintf('%-*s', foo, 'bar')
+
+==> 140.rb 23 <==
+sprintf('%*d', 5, foo)
+
+==> 141.rb 28 <==
+sprintf('%*.*d', 5, 2, foo)
+
+==> 142.rb 51 <==
+sprintf('%<foo>s %<bar>s', foo: 'foo', bar: 'bar')
+
+==> 143.rb 54 <==
+sprintf('%<foo>s %<bar>s', foo: "#{foo}", bar: 'bar')
+
+==> 144.rb 29 <==
+sprintf('%<foo>s', foo: foo)
+
+==> 145.rb 51 <==
+sprintf('%{foo}s %{bar}s', foo: 'foo', bar: 'bar')
+
+==> 146.rb 54 <==
+sprintf('%{foo}s %{bar}s', foo: "#{foo}", bar: 'bar')
+
+==> 147.rb 28 <==
+sprintf('%{foo}', foo: foo)
+
+==> 148.rb 23 <==
+sprintf('%{foo}', foo)
+
+==> 149.rb 57 <==
+sprintf('%<placeholder>d, %<placeholder>f', placeholder)
+
+==> 150.rb 26 <==
+sprintf("%0#{width}d", 3)
+
+==> 151.rb 31 <==
+sprintf('%s %s', 'foo', 'bar')
+
+==> 152.rb 29 <==
+sprintf('%s %s', 'foo', bar)
+
+==> 153.rb 16 <==
+sprintf(FORMAT)
+
+==> 154.rb 30 <==
+sprintf(FORMAT, 'foo', 'bar')
+
+==> 155.rb 17 <==
+sprintf(*FORMAT)
+
+==> 156.rb 37 <==
+sprintf("%s\a\b\t\n\v\f\r\e", 'foo')
+
+==> 157.rb 34 <==
+sprintf(<<~MESSAGE)
+  foo
+MESSAGE
+
+==> 158.rb 70 <==
+sprintf(<<~MESSAGE, greeting: 'Hello')
+  %<greeting>s, world!
+MESSAGE
+
+==> 159.rb 36 <==
+sprintf(<<~MESSAGE, 1)
+  %d
+MESSAGE
+

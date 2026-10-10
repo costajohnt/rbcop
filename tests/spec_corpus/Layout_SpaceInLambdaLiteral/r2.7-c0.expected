@@ -1,0 +1,26 @@
+==> offenses exit=1 557 <==
+000.rb:1:5: C: [Correctable] Layout/SpaceInLambdaLiteral: Use a space between `->` and `(` in lambda literals.
+004.rb:1:13: C: [Correctable] Layout/SpaceInLambdaLiteral: Use a space between `->` and `(` in lambda literals.
+005.rb:1:5: C: [Correctable] Layout/SpaceInLambdaLiteral: Use a space between `->` and `(` in lambda literals.
+006.rb:1:5: C: [Correctable] Layout/SpaceInLambdaLiteral: Use a space between `->` and `(` in lambda literals.
+006.rb:1:12: C: [Correctable] Layout/SpaceInLambdaLiteral: Use a space between `->` and `(` in lambda literals.
+
+==> autocorrect exit=0 547 <==
+000.rb:1:5: C: [Corrected] Layout/SpaceInLambdaLiteral: Use a space between `->` and `(` in lambda literals.
+004.rb:1:13: C: [Corrected] Layout/SpaceInLambdaLiteral: Use a space between `->` and `(` in lambda literals.
+005.rb:1:5: C: [Corrected] Layout/SpaceInLambdaLiteral: Use a space between `->` and `(` in lambda literals.
+006.rb:1:5: C: [Corrected] Layout/SpaceInLambdaLiteral: Use a space between `->` and `(` in lambda literals.
+006.rb:1:12: C: [Corrected] Layout/SpaceInLambdaLiteral: Use a space between `->` and `(` in lambda literals.
+
+==> corrected/000.rb 24 <==
+a = -> (b, c) { b + c }
+
+==> corrected/004.rb 36 <==
+a = -> (b = -> (c) {}, d) { b + d }
+
+==> corrected/005.rb 36 <==
+a = -> (b = -> (c) {}, d) { b + d }
+
+==> corrected/006.rb 36 <==
+a = -> (b = -> (c) {}, d) { b + d }
+

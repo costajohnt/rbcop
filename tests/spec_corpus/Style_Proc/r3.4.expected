@@ -1,0 +1,9 @@
+==> offenses exit=1 75 <==
+000.rb:1:5: C: [Correctable] Style/Proc: Use `proc` instead of `Proc.new`.
+
+==> autocorrect exit=0 73 <==
+000.rb:1:5: C: [Corrected] Style/Proc: Use `proc` instead of `Proc.new`.
+
+==> corrected/000.rb 21 <==
+f = proc { puts it }
+

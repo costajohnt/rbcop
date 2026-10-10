@@ -1,0 +1,10 @@
+==> offenses exit=1 257 <==
+000.rb:1:18: C: Style/ClassVars: Replace class var @@test with a class instance var.
+001.rb:2:22: C: Style/ClassVars: Replace class var :@@test with a class instance var.
+002.rb:2:30: C: Style/ClassVars: Replace class var :@@test with a class instance var.
+
+==> autocorrect exit=1 257 <==
+000.rb:1:18: C: Style/ClassVars: Replace class var @@test with a class instance var.
+001.rb:2:22: C: Style/ClassVars: Replace class var :@@test with a class instance var.
+002.rb:2:30: C: Style/ClassVars: Replace class var :@@test with a class instance var.
+

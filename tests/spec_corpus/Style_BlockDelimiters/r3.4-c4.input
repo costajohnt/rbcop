@@ -1,0 +1,41 @@
+==> .rubocop.yml 217 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Style/BlockDelimiters:
+  EnforcedStyle: always_braces
+  AllowedMethods:
+  - proc
+  AllowedPatterns:
+  - test
+
+==> 000.rb 36 <==
+puts [1, 2, 3].map {
+  it * it
+}, 1
+
+==> 001.rb 40 <==
+puts [0] + [1,2,3].map {
+  it * it
+}, 1
+
+==> 002.rb 40 <==
+puts [1,2,3].map {
+  it * it
+} + [0], 1
+
+==> 003.rb 55 <==
+foo %
+  %w[bar baz].map {
+    it.upcase
+  }.join(', ')
+
+==> 004.rb 120 <==
+foo :bar, baz: 'Some text: %s' %
+               %w[foo bar].map {
+                it.upcase
+               }.join(', ')
+

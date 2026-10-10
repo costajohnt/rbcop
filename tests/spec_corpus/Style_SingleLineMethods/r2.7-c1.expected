@@ -1,0 +1,18 @@
+==> offenses exit=1 276 <==
+000.rb:1:1: C: [Correctable] Style/SingleLineMethods: Avoid single-line method definitions.
+000.rb:2:1: C: [Correctable] Style/SingleLineMethods: Avoid single-line method definitions.
+000.rb:3:1: C: [Correctable] Style/SingleLineMethods: Avoid single-line method definitions.
+
+==> autocorrect exit=0 270 <==
+000.rb:1:1: C: [Corrected] Style/SingleLineMethods: Avoid single-line method definitions.
+000.rb:2:1: C: [Corrected] Style/SingleLineMethods: Avoid single-line method definitions.
+000.rb:3:1: C: [Corrected] Style/SingleLineMethods: Avoid single-line method definitions.
+
+==> corrected/000.rb 79 <==
+def no_op; 
+end
+def self.resource_class=(klass); 
+end
+def @table.columns; 
+end
+

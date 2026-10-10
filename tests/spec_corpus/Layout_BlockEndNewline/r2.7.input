@@ -1,0 +1,87 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 15 <==
+test do foo end
+==> 001.rb 18 <==
+test do
+  foo
+end
+
+==> 002.rb 20 <==
+test do
+  foo
+; end
+
+==> 003.rb 18 <==
+test do
+  foo end
+
+==> 004.rb 15 <==
+test {
+  foo }
+
+==> 005.rb 17 <==
+test {
+  |foo| }
+
+==> 006.rb 23 <==
+test {
+  foo }.bar.baz
+
+==> 007.rb 30 <==
+foo(one {
+  x }, two {
+  y })
+
+==> 008.rb 47 <==
+test {
+  foo(<<~EOS) }
+    Heredoc text.
+  EOS
+
+==> 009.rb 89 <==
+test {
+  foo(<<~FIRST, <<~SECOND) }
+    Heredoc text.
+  FIRST
+    Heredoc text.
+  SECOND
+
+==> 010.rb 51 <==
+test {
+  foo(<<~EOS).bar }
+    Heredoc text.
+  EOS
+
+==> 011.rb 93 <==
+test {
+  foo(<<~FIRST).bar(<<~SECOND) }
+    Heredoc text.
+  FIRST
+    Heredoc text.
+  SECOND
+
+==> 012.rb 24 <==
+foo {
+  { bar: :baz } }
+
+==> 013.rb 26 <==
+foo {
+  bar(baz: :quux) }
+
+==> 014.rb 22 <==
+test {
+  _1 }.bar.baz
+
+==> 015.rb 51 <==
+test {
+  _1.push(<<~EOS) }
+    Heredoc text.
+  EOS
+

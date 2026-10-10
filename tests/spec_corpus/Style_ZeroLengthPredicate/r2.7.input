@@ -1,0 +1,218 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 22 <==
+[1, 2, 3].length == 0
+
+==> 001.rb 23 <==
+[1, 2, 3]&.length == 0
+
+==> 002.rb 20 <==
+[1, 2, 3].size == 0
+
+==> 003.rb 23 <==
+[1, 2, 3].length.zero?
+
+==> 004.rb 24 <==
+[1, 2, 3]&.length.zero?
+
+==> 005.rb 25 <==
+[1, 2, 3]&.length&.zero?
+
+==> 006.rb 21 <==
+[1, 2, 3].size.zero?
+
+==> 007.rb 22 <==
+0 == [1, 2, 3].length
+
+==> 008.rb 20 <==
+0 == [1, 2, 3].size
+
+==> 009.rb 21 <==
+[1, 2, 3].length < 1
+
+==> 010.rb 18 <==
+array&.length < 1
+
+==> 011.rb 19 <==
+[1, 2, 3].size < 1
+
+==> 012.rb 21 <==
+1 > [1, 2, 3].length
+
+==> 013.rb 18 <==
+1 > array&.length
+
+==> 014.rb 19 <==
+1 > [1, 2, 3].size
+
+==> 015.rb 21 <==
+[1, 2, 3].length > 0
+
+==> 016.rb 22 <==
+[1, 2, 3]&.length > 0
+
+==> 017.rb 19 <==
+[1, 2, 3].size > 0
+
+==> 018.rb 22 <==
+[1, 2, 3].length != 0
+
+==> 019.rb 20 <==
+[1, 2, 3].size != 0
+
+==> 020.rb 24 <==
+![1, 2, 3].length.zero?
+
+==> 021.rb 22 <==
+![1, 2, 3].size.zero?
+
+==> 022.rb 21 <==
+0 < [1, 2, 3].length
+
+==> 023.rb 19 <==
+0 < [1, 2, 3].size
+
+==> 024.rb 22 <==
+0 != [1, 2, 3].length
+
+==> 025.rb 20 <==
+0 != [1, 2, 3].size
+
+==> 026.rb 25 <==
+{ a: 1, b: 2 }.size == 0
+
+==> 027.rb 25 <==
+0 == { a: 1, b: 2 }.size
+
+==> 028.rb 25 <==
+{ a: 1, b: 2 }.size != 0
+
+==> 029.rb 25 <==
+0 != { a: 1, b: 2 }.size
+
+==> 030.rb 19 <==
+"string".size == 0
+
+==> 031.rb 19 <==
+0 == "string".size
+
+==> 032.rb 19 <==
+"string".size != 0
+
+==> 033.rb 19 <==
+0 != "string".size
+
+==> 034.rb 21 <==
+collection.size == 0
+
+==> 035.rb 21 <==
+0 == collection.size
+
+==> 036.rb 21 <==
+collection.size != 0
+
+==> 037.rb 21 <==
+0 != collection.size
+
+==> 038.rb 9 <==
+size == 0
+==> 039.rb 11 <==
+length == 0
+==> 040.rb 9 <==
+0 == size
+==> 041.rb 11 <==
+0 == length
+==> 042.rb 9 <==
+size <= 0
+==> 043.rb 10 <==
+length > 0
+==> 044.rb 9 <==
+0 <= size
+==> 045.rb 10 <==
+0 > length
+==> 046.rb 9 <==
+size != 0
+==> 047.rb 11 <==
+length != 0
+==> 048.rb 9 <==
+0 != size
+==> 049.rb 11 <==
+0 != length
+==> 050.rb 25 <==
+File.stat(foo).size == 0
+
+==> 051.rb 27 <==
+::File.stat(foo).size == 0
+
+==> 052.rb 26 <==
+File.stat(foo).size.zero?
+
+==> 053.rb 28 <==
+::File.stat(foo).size.zero?
+
+==> 054.rb 30 <==
+File::Stat.new(foo).size == 0
+
+==> 055.rb 32 <==
+::File::Stat.new(foo).size == 0
+
+==> 056.rb 31 <==
+File::Stat.new(foo).size.zero?
+
+==> 057.rb 33 <==
+::File::Stat.new(foo).size.zero?
+
+==> 058.rb 30 <==
+StringIO.new('foo').size == 0
+
+==> 059.rb 32 <==
+::StringIO.new('foo').size == 0
+
+==> 060.rb 31 <==
+StringIO.new('foo').size.zero?
+
+==> 061.rb 33 <==
+::StringIO.new('foo').size.zero?
+
+==> 062.rb 23 <==
+StringIO.new.size == 0
+
+==> 063.rb 25 <==
+::StringIO.new.size == 0
+
+==> 064.rb 24 <==
+StringIO.new.size.zero?
+
+==> 065.rb 26 <==
+::StringIO.new.size.zero?
+
+==> 066.rb 26 <==
+File.new('foo').size == 0
+
+==> 067.rb 28 <==
+::File.new('foo').size == 0
+
+==> 068.rb 27 <==
+File.new('foo').size.zero?
+
+==> 069.rb 29 <==
+::File.new('foo').size.zero?
+
+==> 070.rb 30 <==
+Tempfile.new('foo').size == 0
+
+==> 071.rb 32 <==
+::Tempfile.new('foo').size == 0
+
+==> 072.rb 31 <==
+Tempfile.new('foo').size.zero?
+
+==> 073.rb 33 <==
+::Tempfile.new('foo').size.zero?
+

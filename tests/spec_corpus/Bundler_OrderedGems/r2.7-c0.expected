@@ -1,0 +1,90 @@
+==> offenses exit=1 2196 <==
+003.gemfile:2:1: C: [Correctable] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `rspec` should appear before `rubocop`.
+005.gemfile:3:1: C: [Correctable] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `rspec` should appear before `rubocop`.
+007.gemfile:2:1: C: [Correctable] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `b` should appear before `d`.
+007.gemfile:4:1: C: [Correctable] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `a` should appear before `e`.
+007.gemfile:8:1: C: [Correctable] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `g` should appear before `h`.
+007.gemfile:10:1: C: [Correctable] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `f` should appear before `j`.
+008.gemfile:5:1: C: [Correctable] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `rspec` should appear before `rubocop`.
+009.gemfile:2:1: C: [Correctable] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `pry` should appear before `rubocop`.
+012.gemfile:2:1: C: [Correctable] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `a` should appear before `Z`.
+013.gemfile:2:1: C: [Correctable] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `active_admin_other_plugin` should appear before `active-admin-some_plugin`.
+013.gemfile:3:1: C: [Correctable] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `activeadmin` should appear before `active_admin_other_plugin`.
+014.gemfile:6:3: C: [Correctable] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `b` should appear before `c`.
+
+==> autocorrect exit=0 3960 <==
+003.gemfile:2:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `rspec` should appear before `rubocop`.
+005.gemfile:3:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `rspec` should appear before `rubocop`.
+007.gemfile:2:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `a` should appear before `b`.
+007.gemfile:2:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `b` should appear before `d`.
+007.gemfile:3:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `a` should appear before `d`.
+007.gemfile:4:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `a` should appear before `e`.
+007.gemfile:4:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `c` should appear before `d`.
+007.gemfile:5:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `c` should appear before `e`.
+007.gemfile:8:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `f` should appear before `g`.
+007.gemfile:8:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `g` should appear before `h`.
+007.gemfile:9:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `f` should appear before `h`.
+007.gemfile:10:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `f` should appear before `j`.
+007.gemfile:11:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `i` should appear before `j`.
+008.gemfile:5:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `rspec` should appear before `rubocop`.
+009.gemfile:2:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `pry` should appear before `rubocop`.
+009.gemfile:3:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `rspec` should appear before `rubocop`.
+012.gemfile:2:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `a` should appear before `Z`.
+013.gemfile:2:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `active_admin_other_plugin` should appear before `active-admin-some_plugin`.
+013.gemfile:2:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `activeadmin` should appear before `active_admin_other_plugin`.
+013.gemfile:3:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `activeadmin` should appear before `active-admin-some_plugin`.
+013.gemfile:3:1: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `activeadmin` should appear before `active_admin_other_plugin`.
+014.gemfile:6:3: C: [Corrected] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `b` should appear before `c`.
+
+==> corrected/003.gemfile 26 <==
+gem 'rspec'
+gem 'rubocop'
+
+==> corrected/005.gemfile 39 <==
+gem 'rspec'
+gem 'rubocop',
+    '0.1.1'
+
+==> corrected/007.gemfile 81 <==
+gem "a"
+gem "b"
+gem "c"
+gem "d"
+gem "e"
+
+gem "f"
+gem "g"
+gem "h"
+gem "i"
+gem "j"
+
+==> corrected/008.gemfile 58 <==
+# For
+# test
+gem 'rspec'
+# For code quality
+gem 'rubocop'
+
+==> corrected/009.gemfile 68 <==
+gem 'pry'
+gem 'rspec'   # For test
+gem 'rubocop' # For code quality
+
+==> corrected/012.gemfile 16 <==
+gem 'a'
+gem 'Z'
+
+==> corrected/013.gemfile 81 <==
+gem 'activeadmin'
+gem 'active_admin_other_plugin'
+gem 'active-admin-some_plugin'
+
+==> corrected/014.gemfile 65 <==
+gem 'a'
+
+group :development do
+  gem 'b'
+  gem 'b'
+  gem 'c'
+end
+

@@ -33,27 +33,34 @@ impl Cop for AmbiguousRegexpLiteral {
         let regexp = range(node);
         // Parser-gem ancestors, nearest first (indexes into `ancestors`).
         // A MatchWriteNode and its `=~` call are one parser `match_with_lvasgn`.
-        let chain: Vec<usize> = parser_ancestor_ranges(ancestors)
+        // (index, is the call's block): a call with a block seen from its receiver or arguments is
+        // two parser ancestors, the send and then the block.
+        let chain: Vec<(usize, bool)> = parser_ancestor_ranges(ancestors)
             .into_iter()
             .map(|(i, _, _)| i)
             .filter(|&i| kind::of(&ancestors[i]) != kind::MATCH_WRITE_NODE)
+            .flat_map(|i| {
+                let with_block = ancestors[i].as_call_node().and_then(|c| c.block()).is_some_and(|b| kind::of(&b) == kind::BLOCK_NODE);
+                std::iter::once((i, false)).chain(with_block.then_some((i, true)))
+            })
             .collect();
         // `/re/ =~ x` is parser `match_with_lvasgn`, not a send.
         let match_with_lvasgn = |c: &ruby_prism::CallNode| {
             method_name(c) == "=~" && !is_csend(c) && c.receiver().is_some_and(|r| is_regexp(&r))
         };
-        let call = |i: usize| ancestors[i].as_call_node().filter(|c| !match_with_lvasgn(c));
-        let is_send = |i: usize| call(i).is_some_and(|c| !is_csend(&c));
+        let call = |(i, block): (usize, bool)| ancestors[i].as_call_node().filter(|c| !block && !match_with_lvasgn(c));
+        let is_send = |f: (usize, bool)| call(f).is_some_and(|c| !is_csend(&c));
         // rubocop-ast Node#receiver: a send's receiver, or a block's send's receiver.
-        let receiver = |i: usize| -> Option<Node> {
+        let receiver = |(i, block): (usize, bool)| -> Option<Node> {
             match kind::of(&ancestors[i]) {
-                kind::CALL_NODE => call(i).and_then(|c| c.receiver()),
+                kind::CALL_NODE if block => ancestors[i].as_call_node().and_then(|c| c.receiver()),
+                kind::CALL_NODE => call((i, false)).and_then(|c| c.receiver()),
                 kind::BLOCK_NODE if i > 0 => ancestors[i - 1].as_call_node().and_then(|c| c.receiver()),
                 _ => None,
             }
         };
         let first_argument_is_regexp =
-            |i: usize| is_send(i) && send_args(&call(i).unwrap()).first().is_some_and(is_regexp);
+            |f: (usize, bool)| is_send(f) && send_args(&call(f).unwrap()).first().is_some_and(is_regexp);
         let Some(mut at) = chain.first().map(|_| 0) else { return };
         // find_offense_node
         while !first_argument_is_regexp(chain[at]) && at + 1 < chain.len() {
@@ -68,8 +75,14 @@ impl Cop for AmbiguousRegexpLiteral {
             }
             at += 1;
         }
-        let target = &ancestors[chain[at]];
-        let fix = if target.as_call_node().is_some_and(|c| match_with_lvasgn(&c)) {
+        let (ti, block_frame) = chain[at];
+        let target = &ancestors[ti];
+        let fix = if block_frame {
+            // add_parentheses on the block: `()` after it when it has no parameters.
+            let c = target.as_call_node().unwrap();
+            let params = c.block().and_then(|b| b.as_block_node()).and_then(|b| b.parameters());
+            params.is_none().then(|| ParenFix::Empty { start: range(target).0, end: range(target).1 })
+        } else if target.as_call_node().is_some_and(|c| match_with_lvasgn(&c)) {
             let (start, end) = range(target);
             Some(ParenFix::Wrap { start, end })
         } else {

@@ -1,0 +1,38 @@
+==> offenses exit=1 400 <==
+000.rb:1:9: C: [Correctable] Layout/LineContinuationSpacing: Use zero spaces in front of backslash.
+001.rb:1:9: C: [Correctable] Layout/LineContinuationSpacing: Use zero spaces in front of backslash.
+002.rb:4:9: C: [Correctable] Layout/LineContinuationSpacing: Use zero spaces in front of backslash.
+004.rb:2:7: C: [Correctable] Layout/LineContinuationSpacing: Use zero spaces in front of backslash.
+
+==> autocorrect exit=0 392 <==
+000.rb:1:9: C: [Corrected] Layout/LineContinuationSpacing: Use zero spaces in front of backslash.
+001.rb:1:9: C: [Corrected] Layout/LineContinuationSpacing: Use zero spaces in front of backslash.
+002.rb:4:9: C: [Corrected] Layout/LineContinuationSpacing: Use zero spaces in front of backslash.
+004.rb:2:7: C: [Corrected] Layout/LineContinuationSpacing: Use zero spaces in front of backslash.
+
+==> corrected/000.rb 27 <==
+if 2 + 2\
+  == 4
+  foo
+end
+
+==> corrected/001.rb 27 <==
+if 2 + 2\
+  == 4
+  foo
+end
+
+==> corrected/002.rb 39 <==
+foo
+bar
+baz
+if 2 + 2\
+  == 4
+  foo
+end
+
+==> corrected/004.rb 12 <==
+[
+  :foo\
+]
+

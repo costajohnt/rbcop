@@ -1,0 +1,113 @@
+==> .rubocop.yml 189 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/EmptyLinesAroundModuleBody:
+  EnforcedStyle: empty_lines_except_namespace
+
+==> 000.rb 58 <==
+module Parent
+  module Child
+
+    do_something
+
+  end
+end
+
+==> 001.rb 59 <==
+module Parent
+
+  module Child
+
+    do_something
+
+  end
+end
+
+==> 002.rb 59 <==
+module Parent
+  module Child
+
+    do_something
+
+  end
+
+end
+
+==> 003.rb 57 <==
+module Parent
+  module Child
+    do_something
+
+  end
+end
+
+==> 004.rb 57 <==
+module Parent
+  module Child
+
+    do_something
+  end
+end
+
+==> 005.rb 58 <==
+module Parent
+
+  module Child
+    do_something
+  end
+
+end
+
+==> 006.rb 59 <==
+module Parent
+  class SomeClass
+    do_something
+  end
+end
+
+==> 007.rb 60 <==
+module Parent
+
+  class SomeClass
+    do_something
+  end
+end
+
+==> 008.rb 60 <==
+module Parent
+  class SomeClass
+    do_something
+  end
+
+end
+
+==> 009.rb 78 <==
+module Parent
+
+  module Mom
+
+    do_something
+
+  end
+  module Dad
+
+  end
+
+end
+
+==> 010.rb 76 <==
+module Parent
+  module Mom
+
+    do_something
+
+  end
+  module Dad
+
+  end
+end
+

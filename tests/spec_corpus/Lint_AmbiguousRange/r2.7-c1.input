@@ -1,0 +1,52 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/AmbiguousRange:
+  RequireParenthesesForMethodChains: true
+
+==> 000.rb 5 <==
+a..b
+
+==> 001.rb 7 <==
++a..10
+
+==> 002.rb 7 <==
+-a..10
+
+==> 003.rb 12 <==
+1/10r..1/3r
+
+==> 004.rb 10 <==
+1..2.to_a
+
+==> 005.rb 12 <==
+foo.bar..10
+
+==> 006.rb 14 <==
+(foo.bar)..10
+
+==> 007.rb 6 <==
+a...b
+
+==> 008.rb 8 <==
++a...10
+
+==> 009.rb 8 <==
+-a...10
+
+==> 010.rb 13 <==
+1/10r...1/3r
+
+==> 011.rb 11 <==
+1...2.to_a
+
+==> 012.rb 13 <==
+foo.bar...10
+
+==> 013.rb 15 <==
+(foo.bar)...10
+

@@ -1,0 +1,32 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 68 <==
+Class.new(Parent) do
+  def initialize
+  end
+
+  do_something(it)
+end
+
+==> 001.rb 60 <==
+Class.new do
+  def initialize
+  end
+
+  do_something(it)
+end
+
+==> 002.rb 68 <==
+Class.new(Object) do
+  def initialize
+  end
+
+  do_something(it)
+end
+

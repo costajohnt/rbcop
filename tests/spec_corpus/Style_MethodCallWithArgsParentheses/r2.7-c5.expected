@@ -1,0 +1,18 @@
+==> offenses exit=1 233 <==
+000.rb:1:38: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+001.rb:5:9: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+
+==> autocorrect exit=0 229 <==
+000.rb:1:38: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+001.rb:5:9: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+
+==> corrected/000.rb 50 <==
+Rails.convoluted.example.logger.error "something"
+
+==> corrected/001.rb 62 <==
+Rails
+  .convoluted
+  .example
+  .logger
+  .error "something"
+

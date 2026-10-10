@@ -1,0 +1,29 @@
+==> offenses exit=1 339 <==
+006.rb:1:1: C: [Correctable] Style/MultilineMemoization: Wrap multiline memoization blocks in `begin` and `end`.
+007.rb:1:1: C: [Correctable] Style/MultilineMemoization: Wrap multiline memoization blocks in `begin` and `end`.
+008.rb:1:1: C: [Correctable] Style/MultilineMemoization: Wrap multiline memoization blocks in `begin` and `end`.
+
+==> autocorrect exit=0 333 <==
+006.rb:1:1: C: [Corrected] Style/MultilineMemoization: Wrap multiline memoization blocks in `begin` and `end`.
+007.rb:1:1: C: [Corrected] Style/MultilineMemoization: Wrap multiline memoization blocks in `begin` and `end`.
+008.rb:1:1: C: [Corrected] Style/MultilineMemoization: Wrap multiline memoization blocks in `begin` and `end`.
+
+==> corrected/006.rb 30 <==
+foo ||= begin
+  bar
+  baz
+end
+
+==> corrected/007.rb 38 <==
+foo ||=
+  begin
+    bar
+    baz
+  end
+
+==> corrected/008.rb 57 <==
+foo ||= begin
+          bar ||
+          baz
+        end
+

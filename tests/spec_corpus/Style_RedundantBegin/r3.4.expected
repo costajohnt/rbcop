@@ -1,0 +1,23 @@
+==> offenses exit=1 170 <==
+000.rb:2:3: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+000.rb:4:7: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+
+==> autocorrect exit=0 166 <==
+000.rb:2:3: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+000.rb:4:7: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+
+==> corrected/000.rb 127 <==
+var = do_something do
+  
+    do_something do
+      
+        it
+      ensure
+        bar
+      
+    end
+  ensure
+    baz
+  
+end
+

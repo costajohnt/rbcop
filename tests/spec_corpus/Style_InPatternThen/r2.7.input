@@ -1,0 +1,48 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 19 <==
+case a
+in b; c
+end
+
+==> 001.rb 25 <==
+case a
+in b, c, d; e
+end
+
+==> 002.rb 27 <==
+case a
+in 0 | 1 | 2; x
+end
+
+==> 003.rb 31 <==
+case a
+in 0 | 1 | 2 | 3; x
+end
+
+==> 004.rb 26 <==
+case a
+in 0, 1 | 2; x
+end
+
+==> 005.rb 50 <==
+case a
+in b then c; d
+end
+
+case e
+in f
+  g; h
+end
+
+==> 006.rb 30 <==
+case condition
+in pattern
+end
+

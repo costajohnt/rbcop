@@ -1,0 +1,807 @@
+==> .rubocop.yml 153 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LineLength:
+  Enabled: true
+  Max: 80
+
+==> 000.rb 91 <==
+def func
+  if something
+    work
+  end
+end
+
+def func
+  unless something
+    work
+  end
+end
+
+==> 001.rb 105 <==
+def func
+  test
+  if something
+    work
+  end
+end
+
+def func
+  test
+  unless something
+    work
+  end
+end
+
+==> 002.rb 107 <==
+define_method(:func) do
+  if _1
+    work
+  end
+end
+
+define_method(:func) do
+  unless _1
+    work
+  end
+end
+
+==> 003.rb 127 <==
+define_singleton_method(:func) do
+  if _1
+    work
+  end
+end
+
+define_singleton_method(:func) do
+  unless _1
+    work
+  end
+end
+
+==> 004.rb 121 <==
+define_method(:func) do
+  if something
+    work
+  end
+end
+
+define_method(:func) do
+  unless something
+    work
+  end
+end
+
+==> 005.rb 101 <==
+foo do
+  test
+  if something
+    work
+  end
+end
+
+foo do
+  test
+  unless something
+    work
+  end
+end
+
+==> 006.rb 95 <==
+def func
+  if something
+    # TODO
+  end
+end
+
+def func
+  unless something
+    # TODO
+  end
+end
+
+==> 007.rb 109 <==
+def func
+  test
+  if something
+    # TODO
+  end
+end
+
+def func
+  test
+  unless something
+    # TODO
+  end
+end
+
+==> 008.rb 111 <==
+define_method(:func) do
+  if _1
+    # TODO
+  end
+end
+
+define_method(:func) do
+  unless _1
+    # TODO
+  end
+end
+
+==> 009.rb 131 <==
+define_singleton_method(:func) do
+  if _1
+    # TODO
+  end
+end
+
+define_singleton_method(:func) do
+  unless _1
+    # TODO
+  end
+end
+
+==> 010.rb 125 <==
+define_method(:func) do
+  if something
+    # TODO
+  end
+end
+
+define_method(:func) do
+  unless something
+    # TODO
+  end
+end
+
+==> 011.rb 105 <==
+foo do
+  test
+  if something
+    # TODO
+  end
+end
+
+foo do
+  test
+  unless something
+    # TODO
+  end
+end
+
+==> 012.rb 117 <==
+def func
+  if something
+    do_something(foo)
+  end
+end
+
+def func
+  unless something
+    do_something(foo)
+  end
+end
+
+==> 013.rb 131 <==
+def func
+  test
+  if something
+    do_something(foo)
+  end
+end
+
+def func
+  test
+  unless something
+    do_something(foo)
+  end
+end
+
+==> 014.rb 133 <==
+define_method(:func) do
+  if _1
+    do_something(foo)
+  end
+end
+
+define_method(:func) do
+  unless _1
+    do_something(foo)
+  end
+end
+
+==> 015.rb 153 <==
+define_singleton_method(:func) do
+  if _1
+    do_something(foo)
+  end
+end
+
+define_singleton_method(:func) do
+  unless _1
+    do_something(foo)
+  end
+end
+
+==> 016.rb 147 <==
+define_method(:func) do
+  if something
+    do_something(foo)
+  end
+end
+
+define_method(:func) do
+  unless something
+    do_something(foo)
+  end
+end
+
+==> 017.rb 127 <==
+foo do
+  test
+  if something
+    do_something(foo)
+  end
+end
+
+foo do
+  test
+  unless something
+    do_something(foo)
+  end
+end
+
+==> 018.rb 69 <==
+def func
+  if something
+    a
+  elsif something_else
+    b
+  end
+end
+
+==> 019.rb 84 <==
+define_method(:func) do
+  if something
+    a
+  elsif something_else
+    b
+  end
+end
+
+==> 020.rb 145 <==
+def func
+  if something &&
+       something_else
+    work
+  end
+end
+
+def func
+  unless something &&
+           something_else
+    work
+  end
+end
+
+==> 021.rb 123 <==
+def func
+  if something
+    work
+  else
+    test
+  end
+end
+
+def func
+  unless something
+    work
+  else
+    test
+  end
+end
+
+==> 022.rb 79 <==
+def func
+  if something
+    work || raise('message')
+  else
+    test
+  end
+end
+
+==> 023.rb 79 <==
+def func
+  if something
+    work
+  else
+    test || raise('message')
+  end
+end
+
+==> 024.rb 49 <==
+if something then work else raise('message') end
+
+==> 025.rb 70 <==
+def func
+  if something
+    work and return
+  else
+    test
+  end
+end
+
+==> 026.rb 70 <==
+def func
+  if something
+    work
+  else
+    test and return
+  end
+end
+
+==> 027.rb 105 <==
+def func
+  if something
+    work
+  end
+  test
+end
+
+def func
+  unless something
+    work
+  end
+  test
+end
+
+==> 028.rb 71 <==
+def func
+  work if something
+end
+
+def func
+  work unless something
+end
+
+==> 029.rb 18 <==
+def func
+  ()
+end
+
+==> 030.rb 88 <==
+def func
+  result = if something
+    work || raise('message')
+  else
+    test
+  end
+end
+
+==> 031.rb 66 <==
+def func
+  if (foo = bar)
+    return foo
+  else
+    baz
+  end
+end
+
+==> 032.rb 87 <==
+def func
+  if (foo = bar && baz = qux)
+    return [foo, baz]
+  else
+    quux
+  end
+end
+
+==> 033.rb 66 <==
+def func
+  if (foo = bar)
+    return baz
+  else
+    qux
+  end
+end
+
+==> 034.rb 93 <==
+def func
+  if condition
+    foo
+  else
+    raise <<~MESSAGE
+      oops
+    MESSAGE
+  end
+end
+
+==> 035.rb 99 <==
+def func
+  if condition
+    foo
+  else
+    raise <<~MESSAGE.strip
+      oops
+    MESSAGE
+  end
+end
+
+==> 036.rb 107 <==
+def func
+  if condition
+    foo
+  else
+    raise do_something(<<~MESSAGE)
+      text
+    MESSAGE
+  end
+end
+
+==> 037.rb 97 <==
+def func
+  unless condition
+    raise <<~MESSAGE
+      oops
+    MESSAGE
+  else
+    foo
+  end
+end
+
+==> 038.rb 85 <==
+def func
+  if condition
+  else
+    raise <<~MESSAGE
+      oops
+    MESSAGE
+  end
+end
+
+==> 039.rb 78 <==
+def func
+  if condition
+    raise <<~MESSAGE
+      oops
+    MESSAGE
+  end
+end
+
+==> 040.rb 99 <==
+def func
+  unless condition
+    raise <<~`MESSAGE`
+      oops
+    MESSAGE
+  else
+    foo
+  end
+end
+
+==> 041.rb 115 <==
+def func
+  if condition
+    x = 1
+    do_something(x)
+  else
+    raise <<~MESSAGE
+      oops
+    MESSAGE
+  end
+end
+
+==> 042.rb 121 <==
+def func
+  if condition
+    do_something
+  else
+    raise obj&.do_something(<<~MESSAGE)
+      oops
+    MESSAGE
+  end
+end
+
+==> 043.rb 47 <==
+if condition
+  do_something
+else
+  raise e
+end
+
+==> 044.rb 112 <==
+def test
+  if something && something_that_makes_the_guard_clause_too_long_to_fit_on_one_line
+    work
+  end
+end
+
+==> 045.rb 144 <==
+def test
+  if something && something_that_makes_the_guard_clause_too_long_to_fit_on_one_line
+    if something_else
+      work
+    end
+  end
+end
+
+==> 046.rb 126 <==
+def test
+  if something && something_that_makes_the_guard_clause_too_long_to_fit_on_one_line
+    work
+    more_work
+  end
+end
+
+==> 047.rb 117 <==
+if foo?
+else
+  raise 'very long and detailed description of the error that makes it too long to fit on one line'
+end
+
+==> 048.rb 46 <==
+if something
+  return
+else
+  puts "hello"
+end
+
+==> 049.rb 45 <==
+if something
+ puts "hello"
+else
+  return
+end
+
+==> 050.rb 69 <==
+if something &&
+     something_else
+  return
+else
+  puts "hello"
+end
+
+==> 051.rb 51 <==
+if something
+  a
+elsif something_else
+  return
+end
+
+==> 052.rb 51 <==
+if something
+  return
+elsif something_else
+  a
+end
+
+==> 053.rb 60 <==
+if something
+  a
+elsif something_else
+  b
+else
+  return
+end
+
+==> 054.rb 90 <==
+if something
+  return 'blah blah blah' \
+        'blah blah blah'
+else
+  puts "hello"
+end
+
+==> 055.rb 72 <==
+if something
+  return
+else
+  puts "hello" \
+       "blah blah blah"
+end
+
+==> 056.rb 44 <==
+if something
+  next
+else
+  puts "hello"
+end
+
+==> 057.rb 43 <==
+if something
+ puts "hello"
+else
+  next
+end
+
+==> 058.rb 67 <==
+if something &&
+     something_else
+  next
+else
+  puts "hello"
+end
+
+==> 059.rb 49 <==
+if something
+  a
+elsif something_else
+  next
+end
+
+==> 060.rb 49 <==
+if something
+  next
+elsif something_else
+  a
+end
+
+==> 061.rb 58 <==
+if something
+  a
+elsif something_else
+  b
+else
+  next
+end
+
+==> 062.rb 88 <==
+if something
+  next 'blah blah blah' \
+        'blah blah blah'
+else
+  puts "hello"
+end
+
+==> 063.rb 70 <==
+if something
+  next
+else
+  puts "hello" \
+       "blah blah blah"
+end
+
+==> 064.rb 45 <==
+if something
+  break
+else
+  puts "hello"
+end
+
+==> 065.rb 44 <==
+if something
+ puts "hello"
+else
+  break
+end
+
+==> 066.rb 68 <==
+if something &&
+     something_else
+  break
+else
+  puts "hello"
+end
+
+==> 067.rb 50 <==
+if something
+  a
+elsif something_else
+  break
+end
+
+==> 068.rb 50 <==
+if something
+  break
+elsif something_else
+  a
+end
+
+==> 069.rb 59 <==
+if something
+  a
+elsif something_else
+  b
+else
+  break
+end
+
+==> 070.rb 89 <==
+if something
+  break 'blah blah blah' \
+        'blah blah blah'
+else
+  puts "hello"
+end
+
+==> 071.rb 71 <==
+if something
+  break
+else
+  puts "hello" \
+       "blah blah blah"
+end
+
+==> 072.rb 53 <==
+if something
+  raise "error"
+else
+  puts "hello"
+end
+
+==> 073.rb 52 <==
+if something
+ puts "hello"
+else
+  raise "error"
+end
+
+==> 074.rb 76 <==
+if something &&
+     something_else
+  raise "error"
+else
+  puts "hello"
+end
+
+==> 075.rb 58 <==
+if something
+  a
+elsif something_else
+  raise "error"
+end
+
+==> 076.rb 58 <==
+if something
+  raise "error"
+elsif something_else
+  a
+end
+
+==> 077.rb 67 <==
+if something
+  a
+elsif something_else
+  b
+else
+  raise "error"
+end
+
+==> 078.rb 97 <==
+if something
+  raise "error" 'blah blah blah' \
+        'blah blah blah'
+else
+  puts "hello"
+end
+
+==> 079.rb 79 <==
+if something
+  raise "error"
+else
+  puts "hello" \
+       "blah blah blah"
+end
+
+==> 080.rb 72 <==
+module CopTest
+  def test
+    if something
+      work
+    end
+  end
+end
+
+==> 081.rb 95 <==
+module CopTest
+  def self.test
+    if something && something_else
+      work
+    end
+  end
+end
+

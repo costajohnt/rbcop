@@ -1,0 +1,17 @@
+==> .rubocop.yml 168 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/ClassEqualityComparison:
+  AllowedPatterns:
+  - equal
+
+==> 000.rb 76 <==
+def equal?(other)
+  self.class == other.class &&
+    name == other.name
+end
+

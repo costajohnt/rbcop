@@ -1,0 +1,9 @@
+==> offenses exit=1 116 <==
+000.rb:1:4: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation with default literal detected.
+
+==> autocorrect exit=0 114 <==
+000.rb:1:4: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation with default literal detected.
+
+==> corrected/000.rb 16 <==
+foo.to_h { it }
+

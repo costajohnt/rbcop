@@ -1,0 +1,51 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 15 <==
+foo do bar end
+
+==> 001.rb 11 <==
+foo do end
+
+==> 002.rb 26 <==
+foo do |arg| bar(arg) end
+
+==> 003.rb 19 <==
+foo do bar(_1) end
+
+==> 004.rb 29 <==
+foo do <<~EOS end
+  text
+EOS
+
+==> 005.rb 34 <==
+foo do bar(<<~EOS) end
+  text
+EOS
+
+==> 006.rb 51 <==
+foo do bar(<<~ONE, <<~TWO) end
+  one
+ONE
+  two
+TWO
+
+==> 007.rb 23 <==
+->(arg) do foo arg end
+
+==> 008.rb 29 <==
+lambda do |arg| foo(arg) end
+
+==> 009.rb 17 <==
+foo do
+  bar
+end
+
+==> 010.rb 12 <==
+foo { bar }
+

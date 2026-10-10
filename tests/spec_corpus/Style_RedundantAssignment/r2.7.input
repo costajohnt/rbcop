@@ -1,0 +1,132 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 61 <==
+def func
+  some_preceding_statements
+  x = something
+  x
+end
+
+==> 001.rb 79 <==
+def func
+  some_preceding_statements
+  begin
+    x = something
+    x
+  end
+end
+
+==> 002.rb 94 <==
+def func
+  1
+  x = 2
+  x
+rescue SomeException
+  3
+  x = 4
+  x
+rescue AnotherException
+  5
+end
+
+==> 003.rb 40 <==
+def func
+  1
+  x = 2
+  x
+ensure
+  3
+end
+
+==> 004.rb 109 <==
+def func
+  some_preceding_statements
+  if x
+    z = 1
+    z
+  elsif y
+    2
+  else
+    z = 3
+    z
+  end
+end
+
+==> 005.rb 136 <==
+def func
+  some_preceding_statements
+  case x
+  when y
+    res = 1
+    res
+  when z
+    2
+  when q
+  else
+    res = 3
+    res
+  end
+end
+
+==> 006.rb 79 <==
+def func
+  case x
+  when y then 1
+  when z # do nothing
+  else
+    3
+  end
+end
+
+==> 007.rb 130 <==
+def func
+  some_preceding_statements
+  case x
+  in y
+    res = 1
+    res
+  in z
+    2
+  in q
+  else
+    res = 3
+    res
+  end
+end
+
+==> 008.rb 75 <==
+def func
+  case x
+  in y then 1
+  in z # do nothing
+  else
+    3
+  end
+end
+
+==> 009.rb 13 <==
+def func
+end
+
+==> 010.rb 43 <==
+def func
+  if x
+  elsif y
+  else
+  end
+end
+
+==> 011.rb 93 <==
+def func
+  some_preceding_statements
+  x = something
+  # something important about x
+  x
+end
+

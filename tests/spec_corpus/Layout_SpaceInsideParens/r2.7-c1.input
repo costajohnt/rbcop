@@ -1,0 +1,42 @@
+==> .rubocop.yml 157 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/SpaceInsideParens:
+  EnforcedStyle: space
+
+==> 000.rb 31 <==
+f( 3)
+g = (a + 3 )
+split("\n")
+
+==> 001.rb 5 <==
+f( )
+
+==> 002.rb 48 <==
+list.inject( Tms.new ) { |sum, (label, item)|
+}
+
+==> 003.rb 40 <==
+f(<<~HEREDOC)
+  This is my text
+HEREDOC
+
+==> 004.rb 3 <==
+f()
+==> 005.rb 35 <==
+f( 3 )
+g = ( a + 3 )
+split( "\n" )
+
+==> 006.rb 9 <==
+f(
+  1 )
+
+==> 007.rb 19 <==
+f( # Comment
+  1 )
+

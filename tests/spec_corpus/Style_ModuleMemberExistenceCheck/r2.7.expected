@@ -1,0 +1,129 @@
+==> offenses exit=1 2715 <==
+000.rb:1:3: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `class_variable_defined?(method)` instead.
+001.rb:1:3: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `class_variable_defined?(method)` instead.
+002.rb:1:3: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `class_variable_defined?(method)` instead.
+003.rb:1:4: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `class_variable_defined?(method)` instead.
+004.rb:1:1: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `class_variable_defined?(method)` instead.
+012.rb:1:3: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `method_defined?(method)` instead.
+013.rb:1:3: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `method_defined?(method)` instead.
+014.rb:1:3: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `method_defined?(method)` instead.
+015.rb:1:4: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `method_defined?(method)` instead.
+016.rb:1:1: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `method_defined?(method)` instead.
+023.rb:1:3: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `private_method_defined?(method)` instead.
+024.rb:1:3: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `private_method_defined?(method)` instead.
+025.rb:1:3: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `private_method_defined?(method)` instead.
+026.rb:1:4: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `private_method_defined?(method)` instead.
+027.rb:1:1: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `private_method_defined?(method)` instead.
+034.rb:1:3: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `protected_method_defined?(method)` instead.
+035.rb:1:3: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `protected_method_defined?(method)` instead.
+036.rb:1:3: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `protected_method_defined?(method)` instead.
+037.rb:1:4: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `protected_method_defined?(method)` instead.
+038.rb:1:1: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `protected_method_defined?(method)` instead.
+045.rb:1:3: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `public_method_defined?(method)` instead.
+046.rb:1:3: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `public_method_defined?(method)` instead.
+047.rb:1:3: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `public_method_defined?(method)` instead.
+048.rb:1:4: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `public_method_defined?(method)` instead.
+049.rb:1:1: C: [Correctable] Style/ModuleMemberExistenceCheck: Use `public_method_defined?(method)` instead.
+
+==> autocorrect exit=0 2665 <==
+000.rb:1:3: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `class_variable_defined?(method)` instead.
+001.rb:1:3: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `class_variable_defined?(method)` instead.
+002.rb:1:3: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `class_variable_defined?(method)` instead.
+003.rb:1:4: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `class_variable_defined?(method)` instead.
+004.rb:1:1: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `class_variable_defined?(method)` instead.
+012.rb:1:3: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `method_defined?(method)` instead.
+013.rb:1:3: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `method_defined?(method)` instead.
+014.rb:1:3: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `method_defined?(method)` instead.
+015.rb:1:4: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `method_defined?(method)` instead.
+016.rb:1:1: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `method_defined?(method)` instead.
+023.rb:1:3: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `private_method_defined?(method)` instead.
+024.rb:1:3: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `private_method_defined?(method)` instead.
+025.rb:1:3: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `private_method_defined?(method)` instead.
+026.rb:1:4: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `private_method_defined?(method)` instead.
+027.rb:1:1: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `private_method_defined?(method)` instead.
+034.rb:1:3: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `protected_method_defined?(method)` instead.
+035.rb:1:3: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `protected_method_defined?(method)` instead.
+036.rb:1:3: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `protected_method_defined?(method)` instead.
+037.rb:1:4: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `protected_method_defined?(method)` instead.
+038.rb:1:1: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `protected_method_defined?(method)` instead.
+045.rb:1:3: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `public_method_defined?(method)` instead.
+046.rb:1:3: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `public_method_defined?(method)` instead.
+047.rb:1:3: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `public_method_defined?(method)` instead.
+048.rb:1:4: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `public_method_defined?(method)` instead.
+049.rb:1:1: C: [Corrected] Style/ModuleMemberExistenceCheck: Use `public_method_defined?(method)` instead.
+
+==> corrected/000.rb 34 <==
+x.class_variable_defined?(method)
+
+==> corrected/001.rb 34 <==
+x.class_variable_defined?(method)
+
+==> corrected/002.rb 34 <==
+x.class_variable_defined?(method)
+
+==> corrected/003.rb 35 <==
+x&.class_variable_defined?(method)
+
+==> corrected/004.rb 32 <==
+class_variable_defined?(method)
+
+==> corrected/012.rb 26 <==
+x.method_defined?(method)
+
+==> corrected/013.rb 26 <==
+x.method_defined?(method)
+
+==> corrected/014.rb 26 <==
+x.method_defined?(method)
+
+==> corrected/015.rb 27 <==
+x&.method_defined?(method)
+
+==> corrected/016.rb 24 <==
+method_defined?(method)
+
+==> corrected/023.rb 34 <==
+x.private_method_defined?(method)
+
+==> corrected/024.rb 34 <==
+x.private_method_defined?(method)
+
+==> corrected/025.rb 34 <==
+x.private_method_defined?(method)
+
+==> corrected/026.rb 35 <==
+x&.private_method_defined?(method)
+
+==> corrected/027.rb 32 <==
+private_method_defined?(method)
+
+==> corrected/034.rb 36 <==
+x.protected_method_defined?(method)
+
+==> corrected/035.rb 36 <==
+x.protected_method_defined?(method)
+
+==> corrected/036.rb 36 <==
+x.protected_method_defined?(method)
+
+==> corrected/037.rb 37 <==
+x&.protected_method_defined?(method)
+
+==> corrected/038.rb 34 <==
+protected_method_defined?(method)
+
+==> corrected/045.rb 33 <==
+x.public_method_defined?(method)
+
+==> corrected/046.rb 33 <==
+x.public_method_defined?(method)
+
+==> corrected/047.rb 33 <==
+x.public_method_defined?(method)
+
+==> corrected/048.rb 34 <==
+x&.public_method_defined?(method)
+
+==> corrected/049.rb 31 <==
+public_method_defined?(method)
+

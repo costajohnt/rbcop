@@ -1,0 +1,44 @@
+==> offenses exit=1 800 <==
+000.rb:1:1: C: [Correctable] Style/NegatedUnless: Favor `if` over `unless` for negative conditions.
+000.rb:4:1: C: [Correctable] Style/NegatedUnless: Favor `if` over `unless` for negative conditions.
+001.rb:1:1: C: [Correctable] Style/NegatedUnless: Favor `if` over `unless` for negative conditions.
+001.rb:4:1: C: [Correctable] Style/NegatedUnless: Favor `if` over `unless` for negative conditions.
+005.rb:1:1: C: [Correctable] Style/NegatedUnless: Favor `if` over `unless` for negative conditions.
+006.rb:1:1: C: [Correctable] Style/NegatedUnless: Favor `if` over `unless` for negative conditions.
+007.rb:1:1: C: [Correctable] Style/NegatedUnless: Favor `if` over `unless` for negative conditions.
+008.rb:1:1: C: [Correctable] Style/NegatedUnless: Favor `if` over `unless` for negative conditions.
+
+==> autocorrect exit=0 784 <==
+000.rb:1:1: C: [Corrected] Style/NegatedUnless: Favor `if` over `unless` for negative conditions.
+000.rb:4:1: C: [Corrected] Style/NegatedUnless: Favor `if` over `unless` for negative conditions.
+001.rb:1:1: C: [Corrected] Style/NegatedUnless: Favor `if` over `unless` for negative conditions.
+001.rb:4:1: C: [Corrected] Style/NegatedUnless: Favor `if` over `unless` for negative conditions.
+005.rb:1:1: C: [Corrected] Style/NegatedUnless: Favor `if` over `unless` for negative conditions.
+006.rb:1:1: C: [Corrected] Style/NegatedUnless: Favor `if` over `unless` for negative conditions.
+007.rb:1:1: C: [Corrected] Style/NegatedUnless: Favor `if` over `unless` for negative conditions.
+008.rb:1:1: C: [Corrected] Style/NegatedUnless: Favor `if` over `unless` for negative conditions.
+
+==> corrected/000.rb 60 <==
+if a_condition
+  some_method
+end
+some_method if a_condition
+
+==> corrected/001.rb 60 <==
+if a_condition
+  some_method
+end
+some_method if a_condition
+
+==> corrected/005.rb 23 <==
+something if (x.even?)
+
+==> corrected/006.rb 11 <==
+if foo
+end
+
+==> corrected/007.rb 10 <==
+foo if bar
+==> corrected/008.rb 11 <==
+foo if bar
+

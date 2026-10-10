@@ -1,0 +1,182 @@
+==> offenses exit=1 5732 <==
+000.rb:1:9: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+001.rb:1:12: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+002.rb:1:12: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+003.rb:1:10: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+004.rb:1:11: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+005.rb:1:10: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+006.rb:1:9: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+007.rb:1:9: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+009.rb:1:25: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+019.rb:1:14: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+021.rb:1:47: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+022.rb:1:16: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+023.rb:1:17: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+031.rb:1:24: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+032.rb:1:25: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+033.rb:1:37: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+034.rb:1:27: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+035.rb:1:28: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+036.rb:1:40: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+037.rb:1:27: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+038.rb:1:28: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+039.rb:1:40: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+041.rb:1:24: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+042.rb:1:25: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+043.rb:1:37: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+044.rb:1:27: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+045.rb:1:28: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+046.rb:1:40: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+047.rb:1:27: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+048.rb:1:28: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+049.rb:1:40: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+
+==> autocorrect exit=0 5670 <==
+000.rb:1:9: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+001.rb:1:12: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+002.rb:1:12: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+003.rb:1:10: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+004.rb:1:11: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+005.rb:1:10: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+006.rb:1:9: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+007.rb:1:9: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+009.rb:1:25: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+019.rb:1:14: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+021.rb:1:47: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+022.rb:1:16: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+023.rb:1:17: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+031.rb:1:24: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+032.rb:1:25: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+033.rb:1:37: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+034.rb:1:27: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+035.rb:1:28: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+036.rb:1:40: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+037.rb:1:27: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+038.rb:1:28: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+039.rb:1:40: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+041.rb:1:24: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+042.rb:1:25: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+043.rb:1:37: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+044.rb:1:27: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+045.rb:1:28: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+046.rb:1:40: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+047.rb:1:27: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+048.rb:1:28: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+049.rb:1:40: W: [Corrected] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+
+==> corrected/000.rb 19 <==
+if (test = 10)
+end
+
+==> corrected/001.rb 22 <==
+while (test = 10)
+end
+
+==> corrected/002.rb 22 <==
+until (test = 10)
+end
+
+==> corrected/003.rb 20 <==
+if (@test = 10)
+end
+
+==> corrected/004.rb 21 <==
+if (@@test = 10)
+end
+
+==> corrected/005.rb 20 <==
+if ($test = 10)
+end
+
+==> corrected/006.rb 19 <==
+if (TEST = 10)
+end
+
+==> corrected/007.rb 19 <==
+if (a[3] = 10)
+end
+
+==> corrected/009.rb 34 <==
+if test == 10 || (foobar = 1)
+end
+
+==> corrected/019.rb 21 <==
+foo { x if (y = z) }
+
+==> corrected/021.rb 52 <==
+raise StandardError unless (foo ||= bar) || (a = b)
+
+==> corrected/022.rb 26 <==
+if (test.method = 10)
+end
+
+==> corrected/023.rb 27 <==
+if (test&.method = 10)
+end
+
+==> corrected/031.rb 35 <==
+if (foo == bar && (test = 10))
+end
+
+==> corrected/032.rb 37 <==
+if ((foo == bar && (test = 10)))
+end
+
+==> corrected/033.rb 44 <==
+do_something if (foo == bar && (test = 10))
+
+==> corrected/034.rb 38 <==
+while (foo == bar && (test = 10))
+end
+
+==> corrected/035.rb 40 <==
+while ((foo == bar && (test = 10)))
+end
+
+==> corrected/036.rb 47 <==
+do_something while (foo == bar && (test = 10))
+
+==> corrected/037.rb 38 <==
+until (foo == bar && (test = 10))
+end
+
+==> corrected/038.rb 40 <==
+until ((foo == bar && (test = 10)))
+end
+
+==> corrected/039.rb 47 <==
+do_something until (foo == bar && (test = 10))
+
+==> corrected/041.rb 35 <==
+if (foo == bar || (test = 10))
+end
+
+==> corrected/042.rb 37 <==
+if ((foo == bar || (test = 10)))
+end
+
+==> corrected/043.rb 44 <==
+do_something if (foo == bar || (test = 10))
+
+==> corrected/044.rb 38 <==
+while (foo == bar || (test = 10))
+end
+
+==> corrected/045.rb 40 <==
+while ((foo == bar || (test = 10)))
+end
+
+==> corrected/046.rb 47 <==
+do_something while (foo == bar || (test = 10))
+
+==> corrected/047.rb 38 <==
+until (foo == bar || (test = 10))
+end
+
+==> corrected/048.rb 40 <==
+until ((foo == bar || (test = 10)))
+end
+
+==> corrected/049.rb 47 <==
+do_something until (foo == bar || (test = 10))
+

@@ -1,0 +1,94 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 52 <==
+collection = do_something
+collection [index_or_key]
+
+==> 001.rb 27 <==
+@collection [index_or_key]
+
+==> 002.rb 28 <==
+@@collection [index_or_key]
+
+==> 003.rb 27 <==
+$collection [index_or_key]
+
+==> 004.rb 36 <==
+collection.call(arg) [index_or_key]
+
+==> 005.rb 37 <==
+do_something [item_of_array_literal]
+
+==> 006.rb 51 <==
+collection = do_something
+collection[index_or_key]
+
+==> 007.rb 36 <==
+do_something[item_of_array_literal]
+
+==> 008.rb 38 <==
+do_something([item_of_array_literal])
+
+==> 009.rb 26 <==
+expect(offenses).to eq []
+
+==> 010.rb 24 <==
+do_something [foo], bar
+
+==> 011.rb 15 <==
+[index_or_key]
+
+==> 012.rb 28 <==
+collection.[](index_or_key)
+
+==> 013.rb 29 <==
+collection. [](index_or_key)
+
+==> 014.rb 29 <==
+collection .[](index_or_key)
+
+==> 015.rb 30 <==
+collection&. [](index_or_key)
+
+==> 016.rb 30 <==
+collection &.[](index_or_key)
+
+==> 017.rb 29 <==
+@collection.[](index_or_key)
+
+==> 018.rb 30 <==
+@@collection.[](index_or_key)
+
+==> 019.rb 36 <==
+collection.[]=(index_or_key, value)
+
+==> 020.rb 36 <==
+@correction [index_or_key] = :value
+
+==> 021.rb 37 <==
+@correction [ index_or_key] = :value
+
+==> 022.rb 35 <==
+@correction[index_or_key] = :value
+
+==> 023.rb 38 <==
+@collections[ index_or_key ] = :value
+
+==> 024.rb 37 <==
+@collections[  index_or_key] = value
+
+==> 025.rb 31 <==
+task.options = ['--no-output']
+
+==> 026.rb 44 <==
+before_validation { to_downcase ['email'] }
+
+==> 027.rb 44 <==
+before_validation { to_downcase %w[email] }
+

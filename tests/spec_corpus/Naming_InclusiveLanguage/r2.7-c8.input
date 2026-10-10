@@ -1,0 +1,16 @@
+==> .rubocop.yml 196 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/InclusiveLanguage:
+  FlaggedTerms:
+    foo: {}
+    bar:
+      AllowedRegex: barx
+
+==> 000.rb 24 <==
+barx, foo = method_call
+

@@ -1,0 +1,32 @@
+==> offenses exit=1 511 <==
+000.rb:1:27: C: [Correctable] Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array, unless items are split onto multiple lines.
+005.rb:4:12: C: [Correctable] Style/TrailingCommaInArrayLiteral: Put a comma after the last item of a multiline array.
+007.rb:3:12: C: [Correctable] Style/TrailingCommaInArrayLiteral: Put a comma after the last item of a multiline array.
+009.rb:3:11: C: [Correctable] Style/TrailingCommaInArrayLiteral: Put a comma after the last item of a multiline array.
+
+==> autocorrect exit=0 503 <==
+000.rb:1:27: C: [Corrected] Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array, unless items are split onto multiple lines.
+005.rb:4:12: C: [Corrected] Style/TrailingCommaInArrayLiteral: Put a comma after the last item of a multiline array.
+007.rb:3:12: C: [Corrected] Style/TrailingCommaInArrayLiteral: Put a comma after the last item of a multiline array.
+009.rb:3:11: C: [Corrected] Style/TrailingCommaInArrayLiteral: Put a comma after the last item of a multiline array.
+
+==> corrected/000.rb 29 <==
+VALUES = [1001, 2020, 3333 ]
+
+==> corrected/005.rb 63 <==
+VALUES = [
+           1001,
+           2020,
+           3333,]
+
+==> corrected/007.rb 62 <==
+VALUES = [
+           1001, 2020,
+           3333,
+         ]
+
+==> corrected/009.rb 49 <==
+VALUES = [1001,
+          2020,
+          3333,]
+

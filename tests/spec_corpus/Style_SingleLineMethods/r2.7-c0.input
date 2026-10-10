@@ -1,0 +1,32 @@
+==> .rubocop.yml 162 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SingleLineMethods:
+  AllowIfMethodIsEmpty: true
+
+==> 000.rb 102 <==
+def some_method; body end
+def link_to(name, url); {:name => name}; end
+def @table.columns; super; end
+
+==> 001.rb 29 <==
+def foo() (do_something) end
+
+==> 002.rb 76 <==
+def no_op; end
+def self.resource_class=(klass); end
+def @table.columns; end
+
+==> 003.rb 27 <==
+def some_method
+  body
+end
+
+==> 004.rb 20 <==
+def NoSnakeCase
+end
+

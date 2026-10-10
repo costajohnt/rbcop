@@ -1,0 +1,18 @@
+==> .rubocop.yml 222 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/EmptyClassDefinition:
+  EnforcedStyle: class_keyword
+  AllowedParentClasses:
+  - Alchemy::Admin::PreviewUrl
+
+==> 000.rb 48 <==
+MyClass = Class.new(Alchemy::Admin::PreviewUrl)
+
+==> 001.rb 35 <==
+MyClass = Class.new(StandardError)
+

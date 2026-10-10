@@ -1,0 +1,124 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 40 <==
+array.each.each { |v| do_something(v) }
+
+==> 001.rb 41 <==
+array.each&.each { |v| do_something(v) }
+
+==> 002.rb 41 <==
+array&.each.each { |v| do_something(v) }
+
+==> 003.rb 42 <==
+array&.each&.each { |v| do_something(v) }
+
+==> 004.rb 23 <==
+array.each.each(&:foo)
+
+==> 005.rb 51 <==
+array.each.each_with_index { |v| do_something(v) }
+
+==> 006.rb 62 <==
+array.each.each_with_object([]) { |v, o| do_something(v, o) }
+
+==> 007.rb 66 <==
+context.each_child_node.each_with_index.any? do |node, index|
+end
+
+==> 008.rb 67 <==
+context.each_child_node.each_with_object([]) do |node, object|
+end
+
+==> 009.rb 50 <==
+context.reverse_each.each { |i| do_something(i) }
+
+==> 010.rb 26 <==
+context.reverse_each.each
+
+==> 011.rb 51 <==
+context.reverse_each&.each { |i| do_something(i) }
+
+==> 012.rb 51 <==
+context&.reverse_each.each { |i| do_something(i) }
+
+==> 013.rb 50 <==
+context.each.reverse_each { |i| do_something(i) }
+
+==> 014.rb 63 <==
+context.reverse_each.each_with_index.any? do |node, index|
+end
+
+==> 015.rb 72 <==
+scope_stack.reverse_each.each_with_object([]) do |scope, variables|
+end
+
+==> 016.rb 35 <==
+array.each { |v| do_something(v) }
+
+==> 017.rb 32 <==
+array.each { do_something(_1) }
+
+==> 018.rb 62 <==
+array.each_with_index { do_something(_1, _2) }.each { |v| v }
+
+==> 019.rb 11 <==
+array.each
+
+==> 020.rb 52 <==
+array.each.with_index { |v, i| do_something(v, i) }
+
+==> 021.rb 52 <==
+array.each_with_index { |v, i| do_something(v, i) }
+
+==> 022.rb 87 <==
+string.each_char.map(&:to_i).reverse.each_with_index.map { |v, i| do_something(v, i) }
+
+==> 023.rb 53 <==
+array.each.with_object { |v, o| do_something(v, o) }
+
+==> 024.rb 53 <==
+array.each_with_object { |v, o| do_something(v, o) }
+
+==> 025.rb 57 <==
+array.each_with_index.reverse_each do |value, index|
+end
+
+==> 026.rb 63 <==
+node.each_ancestor(:def, :defs, :block).each do |ancestor|
+end
+
+==> 027.rb 54 <==
+array.reverse_each { |i| foo(i) }.each { |i| bar(i) }
+
+==> 028.rb 54 <==
+array.each { |i| foo(i) }.reverse_each { |i| bar(i) }
+
+==> 029.rb 57 <==
+array.each { |i| foo(i) }.each_with_index { |i| bar(i) }
+
+==> 030.rb 62 <==
+array.each { |i| foo(i) }.each_with_object([]) { |i| bar(i) }
+
+==> 031.rb 66 <==
+array.each_foo { |i| foo(i) }.each_with_object([]) { |i| bar(i) }
+
+==> 032.rb 16 <==
+[foo.each].each
+
+==> 033.rb 34 <==
+array.each(&:foo).each do |i|
+end
+
+==> 034.rb 39 <==
+array.each(foo, &:bar).each do |i|
+end
+
+==> 035.rb 46 <==
+array.reverse_each(&:foo).each { |i| bar(i) }
+

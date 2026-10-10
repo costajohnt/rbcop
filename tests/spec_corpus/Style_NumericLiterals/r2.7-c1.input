@@ -1,0 +1,14 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/NumericLiterals:
+  MinDigits: 5
+  Strict: true
+
+==> 000.rb 21 <==
+a = 123_456_78_90_00
+

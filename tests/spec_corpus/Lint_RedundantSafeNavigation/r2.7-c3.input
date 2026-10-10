@@ -1,0 +1,379 @@
+==> .rubocop.yml 166 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/RedundantSafeNavigation:
+  InferNonNilReceiver: true
+
+==> 000.rb 17 <==
+foo.bar
+foo&.baz
+
+==> 001.rb 28 <==
+zoo(1, foo.bar, 2)
+foo&.baz
+
+==> 002.rb 33 <==
+if foo.condition?
+  foo&.bar
+end
+
+==> 003.rb 38 <==
+if foo
+  foo&.bar
+else
+  foo&.baz
+end
+
+==> 004.rb 59 <==
+if condition?
+  1
+elsif foo
+  foo&.bar
+else
+  foo&.baz
+end
+
+==> 005.rb 26 <==
+foo ? foo&.bar : foo&.baz
+
+==> 006.rb 30 <==
+foo&.bar ? foo&.bar.baz : qux
+
+==> 007.rb 30 <==
+foo&.bar ? qux : foo&.bar.baz
+
+==> 008.rb 31 <==
+if foo&.bar
+  foo&.bar.baz
+end
+
+==> 009.rb 42 <==
+if foo&.bar
+  qux
+else
+  foo&.bar.baz
+end
+
+==> 010.rb 31 <==
+unless foo&.bar&.baz
+  qux
+end
+
+==> 011.rb 35 <==
+unless foo&.ready?
+  foo&.name
+end
+
+==> 012.rb 29 <==
+foo&.name unless foo&.ready?
+
+==> 013.rb 27 <==
+unless foo
+  foo&.name
+end
+
+==> 014.rb 46 <==
+unless foo&.ready?
+  foo&.name
+else
+  bar
+end
+
+==> 015.rb 35 <==
+if foo&.bar&.baz
+  foo.bar.baz
+end
+
+==> 016.rb 32 <==
+if foo&.bar&.baz
+  foo&.qux
+end
+
+==> 017.rb 31 <==
+if foo.bar&.baz
+  foo&.qux
+end
+
+==> 018.rb 52 <==
+if foo.condition? && other_condition
+  foo&.bar
+end
+
+==> 019.rb 52 <==
+if other_condition && foo.condition?
+  foo&.bar
+end
+
+==> 020.rb 42 <==
+if foo.condition?
+  1
+else
+  foo&.bar
+end
+
+==> 021.rb 54 <==
+if condition?
+  1
+elsif foo.condition?
+  foo&.bar
+end
+
+==> 022.rb 37 <==
+foo.condition? ? foo&.bar : foo&.baz
+
+==> 023.rb 65 <==
+if condition1? && (foo.condition? || condition2?)
+  foo&.bar
+end
+
+==> 024.rb 48 <==
+if condition?
+  foo.bar
+elsif foo&.bar?
+  2
+end
+
+==> 025.rb 36 <==
+if foo
+  do_something
+end
+
+foo&.bar
+
+==> 026.rb 26 <==
+[
+  foo.bar,
+  foo&.baz
+]
+
+==> 027.rb 53 <==
+{
+  bar: foo.bar,
+  baz: foo&.baz,
+  foo&.zoo => 3
+}
+
+==> 028.rb 27 <==
+if foo.nil?
+  foo&.bar
+end
+
+==> 029.rb 22 <==
+foo.present?
+foo&.bar
+
+==> 030.rb 75 <==
+case foo.condition
+when 1
+  foo&.bar
+when foo&.baz
+  2
+else
+  foo&.zoo
+end
+
+==> 031.rb 60 <==
+case
+when 1
+  foo.bar
+when 2
+  foo&.baz
+else
+  foo&.zoo
+end
+
+==> 032.rb 60 <==
+case
+when 1
+  2
+when foo.bar
+  foo&.bar
+else
+  foo&.baz
+end
+
+==> 033.rb 38 <==
+begin
+  foo.bar
+rescue
+  foo&.baz
+end
+
+==> 034.rb 38 <==
+begin
+  foo.bar
+ensure
+  foo&.baz
+end
+
+==> 035.rb 54 <==
+begin
+  foo.bar
+rescue
+  handle
+ensure
+  foo&.baz
+end
+
+==> 036.rb 52 <==
+begin
+  foo.bar
+rescue
+  handle
+else
+  foo&.baz
+end
+
+==> 037.rb 53 <==
+begin
+  do_something
+rescue
+  foo.bar
+  foo&.baz
+end
+
+==> 038.rb 24 <==
+foo.bar rescue foo&.baz
+
+==> 039.rb 38 <==
+def x
+  foo.bar
+rescue
+  foo&.baz
+end
+
+==> 040.rb 54 <==
+case foo.condition
+in Integer
+  1
+else
+  foo&.baz
+end
+
+==> 041.rb 29 <==
+x = foo.bar || true
+foo&.baz
+
+==> 042.rb 25 <==
+CONST = foo.bar
+foo&.baz
+
+==> 043.rb 30 <==
+foo.bar
+
+def x
+  foo&.bar
+end
+
+==> 044.rb 35 <==
+foo.bar
+
+def self.x
+  foo&.bar
+end
+
+==> 045.rb 220 <==
+x = 1 && foo.bar
+
+if true
+  foo&.bar
+elsif (foo.bar)
+  call(1, 2, 3 + foo&.baz)
+else
+  case
+  when 1, foo&.bar
+    [
+      1,
+      {
+        2 => 3,
+        foo&.baz => 4,
+        4 => -foo&.zoo
+      }
+    ]
+  end
+end
+
+==> 046.rb 37 <==
+foo.map { |v| v.map { |v| v&.bar } }
+
+==> 047.rb 56 <==
+foo.each do |v|
+  if v
+    bar { |v| v&.baz }
+  end
+end
+
+==> 048.rb 40 <==
+val = foo
+val.bar
+baz.each { val&.qux }
+
+==> 049.rb 44 <==
+foo.each do |v|
+  if v
+    v&.bar
+  end
+end
+
+==> 050.rb 78 <==
+foo.each do |v|
+  if v
+    def m
+      v = bar
+      v&.baz
+    end
+  end
+end
+
+==> 051.rb 83 <==
+foo.each do |v|
+  if v
+    def self.m
+      v = bar
+      v&.baz
+    end
+  end
+end
+
+==> 052.rb 80 <==
+foo.each do |v|
+  if v
+    class C
+      v = bar
+      v&.baz
+    end
+  end
+end
+
+==> 053.rb 81 <==
+foo.each do |v|
+  if v
+    module M
+      v = bar
+      v&.baz
+    end
+  end
+end
+
+==> 054.rb 86 <==
+foo.each do |v|
+  if v
+    class << self
+      v = bar
+      v&.baz
+    end
+  end
+end
+
+==> 055.rb 47 <==
+foo.each { |v| v.bar }
+baz.each { |v| v&.qux }
+
+==> 056.rb 41 <==
+foo.each { _1.bar }
+baz.each { _1&.qux }
+

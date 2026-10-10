@@ -1,0 +1,26 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 30 <==
+foo.map { [_1, _1 * 2] }.to_h
+
+==> 001.rb 36 <==
+foo.map { [_1.to_s, _2.to_i] }.to_h
+
+==> 002.rb 47 <==
+foo.map { |x| x * 2 }.to_h { |x| [x.to_s, x] }
+
+==> 003.rb 34 <==
+foo.collect { [_1, _1 * 2] }.to_h
+
+==> 004.rb 40 <==
+foo.collect { [_1.to_s, _2.to_i] }.to_h
+
+==> 005.rb 51 <==
+foo.collect { |x| x * 2 }.to_h { |x| [x.to_s, x] }
+

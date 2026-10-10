@@ -1,0 +1,20 @@
+==> offenses exit=1 477 <==
+001.rb:1:5: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside empty hash literal braces missing.
+002.rb:1:5: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+002.rb:1:16: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+002.rb:1:21: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+002.rb:1:32: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+
+==> autocorrect exit=0 467 <==
+001.rb:1:5: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside empty hash literal braces missing.
+002.rb:1:5: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+002.rb:1:16: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+002.rb:1:21: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+002.rb:1:32: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+
+==> corrected/001.rb 8 <==
+h = { }
+
+==> corrected/002.rb 38 <==
+foo({ key: value } => { key: value })
+

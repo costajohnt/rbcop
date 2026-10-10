@@ -1,0 +1,21 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 25 <==
+%w(one two three) * ", "
+
+==> 001.rb 23 <==
+%w(one two three)*", "
+
+==> 002.rb 29 <==
+foo = %w(one two three)*", "
+
+==> 003.rb 21 <==
+%w(one two three) * 4
+==> 004.rb 24 <==
+%w(one two three) * test

@@ -1,0 +1,37 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 9 <==
+puts 1, 2
+==> 001.rb 4 <==
+puts
+==> 002.rb 24 <==
+puts(compute(something))
+==> 003.rb 24 <==
+puts(compute something)
+
+==> 004.rb 34 <==
+puts(receiver&.compute something)
+
+==> 005.rb 28 <==
+puts(compute first, second)
+
+==> 006.rb 13 <==
+puts(compute)
+==> 007.rb 14 <==
+method(obj[1])
+==> 008.rb 40 <==
+method(block_taker { another_method 1 })
+==> 009.rb 23 <==
+expect(obj).to(be true)
+==> 010.rb 32 <==
+expect(object1.attr = 1).to eq 1
+==> 011.rb 21 <==
+puts(nex \
+       5)
+

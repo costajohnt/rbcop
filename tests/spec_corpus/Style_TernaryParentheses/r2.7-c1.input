@@ -1,0 +1,119 @@
+==> .rubocop.yml 174 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/TernaryParentheses:
+  EnforcedStyle: require_no_parentheses
+
+==> 000.rb 21 <==
+foo = (bar?) ? a : b
+
+==> 001.rb 22 <==
+foo = (yield) ? a : b
+
+==> 002.rb 26 <==
+foo = (bar[:baz]) ? a : b
+
+==> 003.rb 23 <==
+(foo ||
+  bar) ? a : b
+
+==> 004.rb 25 <==
+(
+  foo || bar
+) ? a : b
+
+==> 005.rb 27 <==
+foo = (1 + 1 == 2) ? a : b
+
+==> 006.rb 29 <==
+foo = (foo1 == foo2) ? a : b
+
+==> 007.rb 27 <==
+foo = (bar && baz) ? a : b
+
+==> 008.rb 25 <==
+foo = (bar.baz?) ? a : b
+
+==> 009.rb 33 <==
+foo = bar && (baz || bar) ? a : b
+==> 010.rb 27 <==
+foo = (foo or bar) ? a : b
+
+==> 011.rb 24 <==
+foo = (not bar) ? a : b
+
+==> 012.rb 23 <==
+foo = (a if b) ? a : b
+
+==> 013.rb 27 <==
+foo = (a unless b) ? a : b
+
+==> 014.rb 29 <==
+foo = (defined? bar) ? a : b
+
+==> 015.rb 33 <==
+foo = (defined? bar.baz) ? a : b
+
+==> 016.rb 33 <==
+foo = (defined? Bar.baz) ? a : b
+
+==> 017.rb 34 <==
+foo = (defined? Bar::BAZ) ? a : b
+
+==> 018.rb 21 <==
+(foo in bar) ? a : b
+
+==> 019.rb 30 <==
+foo = (bar = find_bar) ? a : b
+==> 020.rb 36 <==
+foo = bar = (baz = find_baz) ? a : b
+==> 021.rb 31 <==
+foo = bar = (baz == 1) ? a : b
+
+==> 022.rb 36 <==
+foo = (bar = baz = find_baz) ? a : b
+==> 023.rb 30 <==
+foo = (defined?(bar)) ? a : b
+
+==> 024.rb 26 <==
+foo = (baz?(bar)) ? a : b
+
+==> 025.rb 32 <==
+foo = (bar.<(10)) ? 1000 : 2000
+
+==> 026.rb 33 <==
+foo = (bar&.<(10)) ? 1000 : 2000
+
+==> 027.rb 25 <==
+foo = (baz? bar) ? a : b
+
+==> 028.rb 34 <==
+foo = (bar&.foo 10) ? 1000 : 2000
+
+==> 029.rb 29 <==
+foo = (baz.foo? bar) ? a : b
+
+==> 030.rb 31 <==
+foo = ("bar".foo? bar) ? a : b
+
+==> 031.rb 29 <==
+foo = (Bar.foo? bar) ? a : b
+
+==> 032.rb 34 <==
+foo = (baz.foo? bar, baz) ? a : b
+
+==> 033.rb 31 <==
+foo = (bar.< 10) ? 1000 : 2000
+
+==> 034.rb 32 <==
+foo = (bar&.< 10) ? 1000 : 2000
+
+==> 035.rb 32 <==
+(foo..bar).include?(baz) ? a : b
+==> 036.rb 13 <==
+(foo)? a : b
+

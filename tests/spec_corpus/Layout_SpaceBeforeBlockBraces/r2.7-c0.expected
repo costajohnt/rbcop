@@ -1,0 +1,35 @@
+==> offenses exit=1 460 <==
+001.rb:1:5: C: [Correctable] Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
+002.rb:1:5: C: [Correctable] Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
+003.rb:1:8: C: [Correctable] Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
+004.rb:1:5: C: [Correctable] Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
+005.rb:1:8: C: [Correctable] Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
+
+==> autocorrect exit=0 450 <==
+001.rb:1:5: C: [Corrected] Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
+002.rb:1:5: C: [Corrected] Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
+003.rb:1:8: C: [Corrected] Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
+004.rb:1:5: C: [Corrected] Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
+005.rb:1:8: C: [Corrected] Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
+
+==> corrected/001.rb 14 <==
+each { puts }
+
+==> corrected/002.rb 28 <==
+each { puts }
+each { puts }
+
+==> corrected/003.rb 29 <==
+foo.map { |a|
+  a.bar.to_s
+}
+
+==> corrected/004.rb 24 <==
+each { _1 }
+each { _1 }
+
+==> corrected/005.rb 26 <==
+foo.map {
+  _1.bar.to_s
+}
+

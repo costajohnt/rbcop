@@ -1,0 +1,47 @@
+==> .rubocop.yml 173 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/RescuedExceptionsVariableName:
+  PreferredName: exception
+
+==> 000.rb 63 <==
+begin
+  something
+rescue MyException => e
+  # do something
+end
+
+==> 001.rb 64 <==
+begin
+  something
+rescue MyException => _e
+  # do something
+end
+
+==> 002.rb 110 <==
+begin
+  something
+rescue FooException => foo
+  # do something
+rescue BarException => bar
+  # do something
+end
+
+==> 003.rb 71 <==
+begin
+  something
+rescue MyException => exception
+  # do something
+end
+
+==> 004.rb 72 <==
+begin
+  something
+rescue MyException => _exception
+  # do something
+end
+

@@ -1,0 +1,133 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.4
+
+==> 000.rb 52 <==
+if x < low
+  low
+elsif high < x
+  high
+else
+  x
+end
+
+==> 001.rb 52 <==
+if low > x
+  low
+elsif high < x
+  high
+else
+  x
+end
+
+==> 002.rb 52 <==
+if x < low
+  low
+elsif x > high
+  high
+else
+  x
+end
+
+==> 003.rb 52 <==
+if low > x
+  low
+elsif x > high
+  high
+else
+  x
+end
+
+==> 004.rb 52 <==
+if high < x
+  high
+elsif x < low
+  low
+else
+  x
+end
+
+==> 005.rb 52 <==
+if x > high
+  high
+elsif x < low
+  low
+else
+  x
+end
+
+==> 006.rb 52 <==
+if high < x
+  high
+elsif low > x
+  low
+else
+  x
+end
+
+==> 007.rb 52 <==
+if x > high
+  high
+elsif low > x
+  low
+else
+  x
+end
+
+==> 008.rb 83 <==
+if condition
+  do_something
+elsif x > high
+  high
+elsif low > x
+  low
+else
+  x
+end
+
+==> 009.rb 47 <==
+if x < low
+  x
+elsif high < x
+  x
+else
+  x
+end
+
+==> 010.rb 25 <==
+[[x, low].max, high].min
+
+==> 011.rb 25 <==
+[[low, x].max, high].min
+
+==> 012.rb 25 <==
+[high, [x, low].max].min
+
+==> 013.rb 25 <==
+[high, [low, x].max].min
+
+==> 014.rb 25 <==
+[[x, high].min, low].max
+
+==> 015.rb 25 <==
+[[high, x].min, low].max
+
+==> 016.rb 25 <==
+[low, [x, high].min].max
+
+==> 017.rb 25 <==
+[low, [high, x].min].max
+
+==> 018.rb 64 <==
+if a + b < low
+  low
+elsif high < a + b
+  high
+else
+  a + b
+end
+

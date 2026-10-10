@@ -1,0 +1,16 @@
+==> offenses exit=1 321 <==
+000.rb:2:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout/LineLength.
+001.rb:2:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout/LineLength.
+001.rb:3:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout/LineLength.
+
+==> autocorrect exit=0 315 <==
+000.rb:2:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout/LineLength.
+001.rb:2:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout/LineLength.
+001.rb:3:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout/LineLength.
+
+==> corrected/000.rb 4 <==
+foo
+
+==> corrected/001.rb 4 <==
+foo
+

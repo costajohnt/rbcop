@@ -1,0 +1,206 @@
+==> .rubocop.yml 147 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Metrics/CyclomaticComplexity:
+  Max: 1
+
+==> 000.rb 31 <==
+def method_name
+  call_foo
+end
+
+==> 001.rb 20 <==
+def method_name
+end
+
+==> 002.rb 34 <==
+define_method :method_name do
+end
+
+==> 003.rb 160 <==
+def method_name
+  call_foo
+end
+
+if first_condition then
+  call_foo if second_condition && third_condition
+  call_bar if fourth_condition || fifth_condition
+end
+
+==> 004.rb 54 <==
+def self.method_name
+  call_foo if some_condition
+end
+
+==> 005.rb 128 <==
+def method_name
+  if first_condition then
+    call_foo
+  elsif second_condition then
+    call_bar
+  else
+    call_bam
+  end
+end
+
+==> 006.rb 53 <==
+def method_name
+  value = some_condition ? 1 : 2
+end
+
+==> 007.rb 65 <==
+def method_name
+  while some_condition do
+    call_foo
+  end
+end
+
+==> 008.rb 65 <==
+def method_name
+  until some_condition do
+    call_foo
+  end
+end
+
+==> 009.rb 61 <==
+def method_name
+  for i in 1..2 do
+    call_method
+  end
+end
+
+==> 010.rb 79 <==
+def method_name
+  begin
+    call_foo
+  rescue Exception
+    call_bar
+  end
+end
+
+==> 011.rb 83 <==
+def method_name
+  case value
+  when 1
+    call_foo
+  when 2
+    call_bar
+  end
+end
+
+==> 012.rb 79 <==
+def method_name
+  case value
+  in 1
+    call_foo
+  in 2
+    call_bar
+  end
+end
+
+==> 013.rb 43 <==
+def method_name
+  call_foo && call_bar
+end
+
+==> 014.rb 45 <==
+def method_name
+  foo = nil
+  foo &&= 42
+end
+
+==> 015.rb 44 <==
+def method_name
+  call_foo and call_bar
+end
+
+==> 016.rb 43 <==
+def method_name
+  call_foo || call_bar
+end
+
+==> 017.rb 45 <==
+def method_name
+  foo = nil
+  foo ||= 42
+end
+
+==> 018.rb 43 <==
+def method_name
+  call_foo or call_bar
+end
+
+==> 019.rb 156 <==
+def method_name
+  if first_condition then
+    call_foo if second_condition && third_condition
+    call_bar if fourth_condition || fifth_condition
+  end
+end
+
+==> 020.rb 42 <==
+def method_name
+  foo&.bar
+  foo&.bar
+end
+
+==> 021.rb 111 <==
+def method_name
+  var = 1
+  var&.foo
+  var&.dont_count_me
+  var = 2
+  var&.bar
+  var&.dont_count_me_either
+end
+
+==> 022.rb 103 <==
+def method_name_1
+  call_foo if some_condition
+end
+
+def method_name_2
+  call_foo if some_condition
+end
+
+==> 023.rb 63 <==
+define_method :method_name do
+  call_foo if some_condition
+end
+
+==> 024.rb 197 <==
+define_method :method_name do
+  (1..4).map do |i|                            # map: +1
+    i * 2
+  end.each.with_index { |val, i| puts val, i } # each: +0, with_index: +1
+  return treasure.map
+end
+
+==> 025.rb 197 <==
+define_method :method_name do
+  (_1.._2).map do |i|                          # map: +1
+    i * 2
+  end.each.with_index { |val, i| puts val, i } # each: +0, with_index: +1
+  return treasure.map
+end
+
+==> 026.rb 51 <==
+define_method :method_name do
+  [].map(&:to_s)
+end
+
+==> 027.rb 158 <==
+define_method :method_name do
+  Struct.new(:foo, :bar) do
+    String.class_eval do
+      [42].tap do |answer|
+        foo { bar }
+      end
+    end
+  end
+end
+

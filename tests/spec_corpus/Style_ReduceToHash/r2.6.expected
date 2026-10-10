@@ -1,0 +1,59 @@
+==> offenses exit=1 951 <==
+000.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+001.rb:2:33: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+002.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+003.rb:1:8: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+004.rb:1:1: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+005.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+013.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `inject`.
+014.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `inject`.
+015.rb:1:8: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `inject`.
+019.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `reduce`.
+
+==> autocorrect exit=0 1028 <==
+000.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+001.rb:1:8: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+001.rb:2:33: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+002.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+003.rb:1:8: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+004.rb:1:1: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+005.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+013.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `inject`.
+014.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `inject`.
+015.rb:1:8: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `inject`.
+019.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `reduce`.
+
+==> corrected/000.rb 43 <==
+array.to_h { |elem| [elem.id, elem.name] }
+
+==> corrected/001.rb 98 <==
+tables.to_h { |table| [table.node, table.columns.to_h { |column| [column.name, column.alias] }] }
+
+==> corrected/002.rb 48 <==
+array.to_h do |elem|
+  [elem.id, elem.name]
+end
+
+==> corrected/003.rb 44 <==
+array&.to_h { |elem| [elem.id, elem.name] }
+
+==> corrected/004.rb 34 <==
+to_h { |elem| [elem, elem.to_s] }
+
+==> corrected/005.rb 29 <==
+array.to_h { |x| [x, true] }
+
+==> corrected/013.rb 43 <==
+array.to_h { |elem| [elem.id, elem.name] }
+
+==> corrected/014.rb 48 <==
+array.to_h do |elem|
+  [elem.id, elem.name]
+end
+
+==> corrected/015.rb 44 <==
+array&.to_h { |elem| [elem.id, elem.name] }
+
+==> corrected/019.rb 43 <==
+array.to_h { |elem| [elem.id, elem.name] }
+

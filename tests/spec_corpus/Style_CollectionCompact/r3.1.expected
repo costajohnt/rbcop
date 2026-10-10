@@ -1,0 +1,20 @@
+==> offenses exit=1 424 <==
+000.rb:1:15: C: [Correctable] Style/CollectionCompact: Use `compact` instead of `reject { |e| e.nil? }`.
+000.rb:2:15: C: [Correctable] Style/CollectionCompact: Use `compact!` instead of `reject! { |e| e.nil? }`.
+001.rb:1:12: C: [Correctable] Style/CollectionCompact: Use `compact` instead of `reject { |e| e.nil? }`.
+001.rb:2:12: C: [Correctable] Style/CollectionCompact: Use `compact!` instead of `reject! { |e| e.nil? }`.
+
+==> autocorrect exit=0 416 <==
+000.rb:1:15: C: [Corrected] Style/CollectionCompact: Use `compact` instead of `reject { |e| e.nil? }`.
+000.rb:2:15: C: [Corrected] Style/CollectionCompact: Use `compact!` instead of `reject! { |e| e.nil? }`.
+001.rb:1:12: C: [Corrected] Style/CollectionCompact: Use `compact` instead of `reject { |e| e.nil? }`.
+001.rb:2:12: C: [Corrected] Style/CollectionCompact: Use `compact!` instead of `reject! { |e| e.nil? }`.
+
+==> corrected/000.rb 45 <==
+array.to_enum.compact
+array.to_enum.compact!
+
+==> corrected/001.rb 39 <==
+array.lazy.compact
+array.lazy.compact!
+

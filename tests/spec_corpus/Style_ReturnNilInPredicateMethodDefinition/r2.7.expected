@@ -1,0 +1,126 @@
+==> offenses exit=1 1524 <==
+000.rb:2:3: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+001.rb:2:3: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+002.rb:4:3: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+003.rb:2:3: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+014.rb:3:5: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+015.rb:5:5: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+016.rb:6:7: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+018.rb:2:3: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+019.rb:2:3: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+021.rb:3:5: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+022.rb:5:5: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+023.rb:6:7: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+
+==> autocorrect exit=0 1500 <==
+000.rb:2:3: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+001.rb:2:3: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+002.rb:4:3: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+003.rb:2:3: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+014.rb:3:5: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+015.rb:5:5: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+016.rb:6:7: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+018.rb:2:3: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+019.rb:2:3: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+021.rb:3:5: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+022.rb:5:5: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+023.rb:6:7: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+
+==> corrected/000.rb 49 <==
+def foo?
+  return false if condition
+
+  bar?
+end
+
+==> corrected/001.rb 49 <==
+def foo?
+  return false if condition
+
+  bar?
+end
+
+==> corrected/002.rb 49 <==
+def foo?
+  return true if condition
+
+  false
+end
+
+==> corrected/003.rb 21 <==
+def foo?
+  false
+end
+
+==> corrected/014.rb 54 <==
+def foo?
+  if bar
+    false
+  else
+    true
+  end
+end
+
+==> corrected/015.rb 54 <==
+def foo?
+  if bar
+    true
+  else
+    false
+  end
+end
+
+==> corrected/016.rb 79 <==
+def foo?
+  if bar
+    if baz
+      true
+    else
+      false
+    end
+  end
+end
+
+==> corrected/018.rb 54 <==
+def self.foo?
+  return false if condition
+
+  bar?
+end
+
+==> corrected/019.rb 54 <==
+def self.foo?
+  return false if condition
+
+  bar?
+end
+
+==> corrected/021.rb 59 <==
+def self.foo?
+  if bar
+    false
+  else
+    true
+  end
+end
+
+==> corrected/022.rb 59 <==
+def self.foo?
+  if bar
+    true
+  else
+    false
+  end
+end
+
+==> corrected/023.rb 84 <==
+def self.foo?
+  if bar
+    if baz
+      true
+    else
+      false
+    end
+  end
+end
+

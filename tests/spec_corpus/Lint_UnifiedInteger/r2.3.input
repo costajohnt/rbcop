@@ -1,0 +1,24 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.3
+
+==> 000.rb 16 <==
+1.is_a?(Fixnum)
+
+==> 001.rb 18 <==
+1.is_a?(::Fixnum)
+
+==> 002.rb 28 <==
+1.is_a?(MyNamespace::Fixnum)
+==> 003.rb 16 <==
+1.is_a?(Bignum)
+
+==> 004.rb 18 <==
+1.is_a?(::Bignum)
+
+==> 005.rb 28 <==
+1.is_a?(MyNamespace::Bignum)

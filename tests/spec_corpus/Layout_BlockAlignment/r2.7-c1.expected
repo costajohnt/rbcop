@@ -1,0 +1,37 @@
+==> offenses exit=1 424 <==
+001.rb:4:3: C: [Correctable] Layout/BlockAlignment: `end` at 4, 2 is not aligned with `foo.bar` at 1, 0.
+004.rb:3:3: C: [Correctable] Layout/BlockAlignment: `}` at 3, 2 is not aligned with `foo :x, ->(y) {` at 1, 0.
+006.rb:4:1: C: [Correctable] Layout/BlockAlignment: `end` at 4, 0 is not aligned with `bar do` at 2, 2.
+008.rb:4:1: C: [Correctable] Layout/BlockAlignment: `end` at 4, 0 is not aligned with `bar do` at 2, 2.
+
+==> autocorrect exit=0 416 <==
+001.rb:4:3: C: [Corrected] Layout/BlockAlignment: `end` at 4, 2 is not aligned with `foo.bar` at 1, 0.
+004.rb:3:3: C: [Corrected] Layout/BlockAlignment: `}` at 3, 2 is not aligned with `foo :x, ->(y) {` at 1, 0.
+006.rb:4:1: C: [Corrected] Layout/BlockAlignment: `end` at 4, 0 is not aligned with `bar do` at 2, 2.
+008.rb:4:1: C: [Corrected] Layout/BlockAlignment: `end` at 4, 0 is not aligned with `bar do` at 2, 2.
+
+==> corrected/001.rb 31 <==
+foo.bar
+  .each do
+    baz
+end
+
+==> corrected/004.rb 24 <==
+foo :x, ->(y) {
+  bar
+}
+
+==> corrected/006.rb 35 <==
+def foo
+  bar do
+    baz
+  end
+end
+
+==> corrected/008.rb 40 <==
+def self.foo
+  bar do
+    baz
+  end
+end
+

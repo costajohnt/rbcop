@@ -1,0 +1,59 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 12 <==
+p /pattern/
+
+==> 001.rb 17 <==
+p /pattern/, foo
+
+==> 002.rb 25 <==
+p /pattern/.do_something
+
+==> 003.rb 29 <==
+p /pattern/.do_something(42)
+
+==> 004.rb 38 <==
+p /pattern/.do_something.do_something
+
+==> 005.rb 76 <==
+class MyTest
+  test '#foo' do
+    assert_match /expected/, actual
+  end
+end
+
+==> 006.rb 34 <==
+expect('RuboCop').to(match /Cop/)
+
+==> 007.rb 34 <==
+expect('RuboCop').to match /Robo/
+
+==> 008.rb 30 <==
+p /pattern/, foo do |arg|
+end
+
+==> 009.rb 33 <==
+p /pattern/ do
+  p /pattern/
+end
+
+==> 010.rb 25 <==
+puts line.grep /pattern/
+
+==> 011.rb 12 <==
+p(/pattern/)
+==> 012.rb 38 <==
+assert(/some pattern/ =~ some_string)
+
+==> 013.rb 38 <==
+assert(/some pattern/) =~ some_string
+
+==> 014.rb 37 <==
+assert /some pattern/ =~ some_string
+

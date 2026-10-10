@@ -1,0 +1,8 @@
+==> offenses exit=1 196 <==
+001/Gemfile:1:1: C: Gemspec/DevelopmentDependencies: Specify development dependencies in gemspec.
+002/gems.rb:1:1: C: Gemspec/DevelopmentDependencies: Specify development dependencies in gemspec.
+
+==> autocorrect exit=1 196 <==
+001/Gemfile:1:1: C: Gemspec/DevelopmentDependencies: Specify development dependencies in gemspec.
+002/gems.rb:1:1: C: Gemspec/DevelopmentDependencies: Specify development dependencies in gemspec.
+

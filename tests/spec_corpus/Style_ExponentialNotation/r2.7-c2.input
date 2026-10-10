@@ -1,0 +1,26 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/ExponentialNotation:
+  EnforcedStyle: integral
+
+==> 000.rb 6 <==
+1.2e3
+
+==> 001.rb 7 <==
+120e-4
+
+==> 002.rb 6 <==
+120.03
+==> 003.rb 7 <==
+0.07390
+==> 004.rb 6 <==
+7652e7
+==> 005.rb 5 <==
+-84e7
+==> 006.rb 5 <==
+84e-7

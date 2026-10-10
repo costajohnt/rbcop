@@ -1,0 +1,27 @@
+==> .rubocop.yml 186 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/MultilineMethodParameterLineBreaks:
+  AllowMultilineFinalElement: true
+
+==> 000.rb 41 <==
+def foo(abc, foo, bar = {
+  a: 1,
+})
+end
+
+==> 001.rb 46 <==
+def foo(abc, foo, bar = {
+  a: 1,
+}, buz)
+end
+
+==> 002.rb 32 <==
+def foo(abc, foo, ghi,
+jkl)
+end
+

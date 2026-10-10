@@ -1,0 +1,6 @@
+==> offenses exit=1 69 <==
+001.rb:4:1: W: Lint/EmptyWhen: Avoid `when` branches without a body.
+
+==> autocorrect exit=1 69 <==
+001.rb:4:1: W: Lint/EmptyWhen: Avoid `when` branches without a body.
+

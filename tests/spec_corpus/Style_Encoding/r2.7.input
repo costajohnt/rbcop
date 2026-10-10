@@ -1,0 +1,63 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 14 <==
+def foo() end
+
+==> 001.rb 35 <==
+# encoding: us-ascii
+def foo() end
+
+==> 002.rb 44 <==
+# frozen_string_literal: true
+def foo() end
+
+==> 003.rb 32 <==
+# encoding: utf-8
+def foo() end
+
+==> 004.rb 18 <==
+# Encoding: UTF-8
+
+==> 005.rb 52 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+def foo() end
+
+==> 006.rb 48 <==
+# encoding: utf-8
+# coding: utf-8
+def foo() end
+
+==> 007.rb 62 <==
+# frozen_string_literal: true
+# encoding: utf-8
+def foo() end
+
+==> 008.rb 63 <==
+# frozen_string_literal: true
+
+# encoding: utf-8
+def foo() end
+
+==> 009.rb 32 <==
+def foo() end
+# encoding: utf-8
+
+==> 010.rb 54 <==
+# vim:filetype=ruby, fileencoding=utf-8
+def foo() end
+
+==> 011.rb 46 <==
+# -*- encoding : utf-8 -*-
+def foo() 'ä' end
+
+==> 012.rb 62 <==
+# -*- encoding : utf-8; mode: enh-ruby -*-
+def foo() 'ä' end
+

@@ -1,0 +1,18 @@
+==> .rubocop.yml 154 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LineLength:
+  Enabled: false
+  Max: 80
+
+==> 000.rb 112 <==
+def test
+  if something && something_that_makes_the_guard_clause_too_long_to_fit_on_one_line
+    work
+  end
+end
+

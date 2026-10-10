@@ -1,0 +1,170 @@
+==> offenses exit=1 2786 <==
+001.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body beginning.
+001.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+003.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body beginning.
+003.rb:5:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+004.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+004.rb:9:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body end.
+006.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body beginning.
+006.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+008.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing before first def definition
+008.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+009.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+009.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing before first def definition
+010.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+010.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing before first def definition
+012.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing before first def definition
+012.rb:6:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+013.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+013.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+013.rb:11:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body end.
+014.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing before first def definition
+014.rb:6:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+016.rb:5:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+017.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing before first class definition
+017.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body beginning.
+017.rb:5:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+017.rb:6:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+
+==> autocorrect exit=0 2734 <==
+001.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body beginning.
+001.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+003.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body beginning.
+003.rb:5:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+004.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+004.rb:9:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body end.
+006.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body beginning.
+006.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+008.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing before first def definition
+008.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+009.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+009.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing before first def definition
+010.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+010.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing before first def definition
+012.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing before first def definition
+012.rb:6:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+013.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+013.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+013.rb:11:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body end.
+014.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing before first def definition
+014.rb:6:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+016.rb:5:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+017.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing before first class definition
+017.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body beginning.
+017.rb:5:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+017.rb:6:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+
+==> corrected/001.rb 47 <==
+class SomeObject
+
+  def do_something; end
+
+end
+
+==> corrected/003.rb 73 <==
+class Parent
+  class SomeObject
+
+    def do_something
+    end
+
+  end
+end
+
+==> corrected/004.rb 73 <==
+class Parent
+  class SomeObject
+
+    def do_something
+    end
+
+  end
+end
+
+==> corrected/006.rb 57 <==
+class SomeObject
+
+  private
+  def do_something; end
+
+end
+
+==> corrected/008.rb 67 <==
+class SomeObject
+  include Something
+
+  def do_something; end
+
+end
+
+==> corrected/009.rb 67 <==
+class SomeObject
+  include Something
+
+  def do_something; end
+
+end
+
+==> corrected/010.rb 79 <==
+class SomeObject
+  include Something
+
+  # Comment
+  def do_something; end
+
+end
+
+==> corrected/012.rb 95 <==
+class Parent
+  class SomeObject
+    include Something
+
+    def do_something
+    end
+
+  end
+end
+
+==> corrected/013.rb 95 <==
+class Parent
+  class SomeObject
+    include Something
+
+    def do_something
+    end
+
+  end
+end
+
+==> corrected/014.rb 106 <==
+class Parent
+  class SomeObject
+    URL = %q(http://example.com)
+
+    def do_something
+    end
+
+  end
+end
+
+==> corrected/016.rb 115 <==
+class Parent
+  class SomeObject
+    URL = %q(http://example.com)
+    WSDL = %q(http://example.com/wsdl)
+
+  end
+end
+
+==> corrected/017.rb 103 <==
+class Parent
+  URL = %q(http://example.com)
+
+  class SomeObject
+
+    def do_something; end
+
+  end
+
+end
+

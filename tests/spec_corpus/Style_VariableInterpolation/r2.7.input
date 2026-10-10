@@ -1,0 +1,34 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 24 <==
+puts "this is a #$test"
+
+==> 001.rb 24 <==
+puts /this is a #$test/
+
+==> 002.rb 24 <==
+puts `this is a #$test`
+
+==> 003.rb 25 <==
+puts :"this is a #$test"
+
+==> 004.rb 21 <==
+puts "this is a #$1"
+
+==> 005.rb 21 <==
+puts "this is a #$+"
+
+==> 006.rb 24 <==
+puts "this is a #@test"
+
+==> 007.rb 22 <==
+puts "this is a #@@t"
+
+==> 008.rb 50 <==
+puts "this is a #{@test} #{@@t} #{$t} #{$1} #{$+}"

@@ -1,0 +1,285 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Metrics/ClassLength:
+  Max: 5
+  CountComments: false
+
+==> 000.rb 63 <==
+class Test
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 001.rb 97 <==
+class Test
+  class << self
+    a = 1
+    a = 2
+    a = 3
+    a = 4
+    a = 5
+    a = 6
+  end
+end
+
+==> 002.rb 55 <==
+class Test
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+end
+
+==> 003.rb 47 <==
+class Test
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+end
+
+==> 004.rb 57 <==
+class Test
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+
+
+  a = 7
+end
+
+==> 005.rb 15 <==
+class Test
+end
+
+==> 006.rb 209 <==
+class NamespaceClass
+  class TestOne
+    a = 1
+    a = 2
+    a = 3
+    a = 4
+    a = 5
+  end
+  class TestTwo
+    a = 1
+    a = 2
+    a = 3
+    a = 4
+    a = 5
+  end
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+end
+
+==> 007.rb 217 <==
+class NamespaceClass
+  class TestOne
+    a = 1
+    a = 2
+    a = 3
+    a = 4
+    a = 5
+  end
+  class TestTwo
+    a = 1
+    a = 2
+    a = 3
+    a = 4
+    a = 5
+  end
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 008.rb 87 <==
+class Test
+  # comment
+  # comment
+  # comment
+  # comment
+  # comment
+  # comment
+end
+
+==> 009.rb 65 <==
+class Test
+  a = 1
+  #a = 2
+  a = 3
+  #a = 4
+  a = 5
+  a = 6
+end
+
+==> 010.rb 62 <==
+class Test
+  a = 1
+  a = [
+    2,
+    3,
+    4,
+    5
+  ]
+end
+
+==> 011.rb 25 <==
+X = Y = Z = do_something
+
+==> 012.rb 66 <==
+class << self
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 013.rb 58 <==
+class << self
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+end
+
+==> 014.rb 71 <==
+Foo = Class.new do
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 015.rb 73 <==
+Foo = ::Class.new do
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 016.rb 77 <==
+Foo = Bar = Class.new do
+  a(_1)
+  b(_1)
+  c(_1)
+  d(_1)
+  e(_1)
+  f(_1)
+end
+
+==> 017.rb 86 <==
+Foo = Class.new do
+  self.a = self::B = 1
+  b(_1)
+  c(_1)
+  d(_1)
+  e(_1)
+  f(_1)
+end
+
+==> 018.rb 84 <==
+Foo = Struct.new(:foo, :bar) do
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 019.rb 86 <==
+Foo ||= Struct.new(:foo, :bar) do
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 020.rb 89 <==
+Foo, Bar = Struct.new(:foo, :bar) do
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 021.rb 71 <==
+Foo = Class.new do
+  a(_1)
+  b(_1)
+  c(_1)
+  d(_1)
+  e(_1)
+  f(_1)
+end
+
+==> 022.rb 73 <==
+Foo = ::Class.new do
+  a(_1)
+  b(_1)
+  c(_1)
+  d(_1)
+  e(_1)
+  f(_1)
+end
+
+==> 023.rb 84 <==
+Foo = Struct.new(:foo, :bar) do
+  a(_1)
+  b(_1)
+  c(_1)
+  d(_1)
+  e(_1)
+  f(_1)
+end
+
+==> 024.rb 86 <==
+Foo ||= Struct.new(:foo, :bar) do
+  a(_1)
+  b(_1)
+  c(_1)
+  d(_1)
+  e(_1)
+  f(_1)
+end
+
+==> 025.rb 89 <==
+Foo, Bar = Struct.new(:foo, :bar) do
+  a(_1)
+  b(_1)
+  c(_1)
+  d(_1)
+  e(_1)
+  f(_1)
+end
+

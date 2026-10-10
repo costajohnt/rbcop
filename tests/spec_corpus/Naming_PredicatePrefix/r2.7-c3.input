@@ -1,0 +1,33 @@
+==> .rubocop.yml 248 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/PredicatePrefix:
+  NamePrefix:
+  - is_
+  ForbiddenPrefixes:
+  - is_
+  MethodDefinitionMacros:
+  - define_method
+  - def_node_matcher
+
+==> 000.rb 71 <==
+define_method(:is_hello) do |method_name|
+  method_name == 'hello'
+end
+
+==> 001.rb 107 <==
+def_node_matcher :is_hello, <<~PATTERN
+  (send
+    (send nil? :method_name) :==
+    (str 'hello'))
+PATTERN
+
+==> 002.rb 69 <==
+define_method(:is_2d?) do |method_name|
+  method_name == 'hello'
+end
+

@@ -1,0 +1,58 @@
+==> .rubocop.yml 151 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Metrics/CollectionLiteralLength:
+  Max: 10
+
+==> 000.rb 31 <==
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+==> 001.rb 53 <==
+[
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9
+]
+
+==> 002.rb 34 <==
+Set[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+==> 003.rb 56 <==
+Set[
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9
+]
+
+==> 004.rb 56 <==
+foo[
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9
+]
+

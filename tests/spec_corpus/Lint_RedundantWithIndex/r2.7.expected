@@ -1,0 +1,54 @@
+==> offenses exit=1 905 <==
+000.rb:1:5: W: [Correctable] Lint/RedundantWithIndex: Use `each` instead of `each_with_index`.
+001.rb:1:5: W: [Correctable] Lint/RedundantWithIndex: Use `each` instead of `each_with_index`.
+002.rb:1:10: W: [Correctable] Lint/RedundantWithIndex: Remove redundant `with_index`.
+003.rb:1:6: W: [Correctable] Lint/RedundantWithIndex: Use `each` instead of `each_with_index`.
+004.rb:1:10: W: [Correctable] Lint/RedundantWithIndex: Remove redundant `with_index`.
+005.rb:1:10: W: [Correctable] Lint/RedundantWithIndex: Remove redundant `with_index`.
+006.rb:1:26: W: [Correctable] Lint/RedundantWithIndex: Remove redundant `with_index`.
+008.rb:1:5: W: [Correctable] Lint/RedundantWithIndex: Use `each` instead of `each_with_index`.
+009.rb:1:6: W: [Correctable] Lint/RedundantWithIndex: Use `each` instead of `each_with_index`.
+010.rb:1:10: W: [Correctable] Lint/RedundantWithIndex: Remove redundant `with_index`.
+
+==> autocorrect exit=0 885 <==
+000.rb:1:5: W: [Corrected] Lint/RedundantWithIndex: Use `each` instead of `each_with_index`.
+001.rb:1:5: W: [Corrected] Lint/RedundantWithIndex: Use `each` instead of `each_with_index`.
+002.rb:1:10: W: [Corrected] Lint/RedundantWithIndex: Remove redundant `with_index`.
+003.rb:1:6: W: [Corrected] Lint/RedundantWithIndex: Use `each` instead of `each_with_index`.
+004.rb:1:10: W: [Corrected] Lint/RedundantWithIndex: Remove redundant `with_index`.
+005.rb:1:10: W: [Corrected] Lint/RedundantWithIndex: Remove redundant `with_index`.
+006.rb:1:26: W: [Corrected] Lint/RedundantWithIndex: Remove redundant `with_index`.
+008.rb:1:5: W: [Corrected] Lint/RedundantWithIndex: Use `each` instead of `each_with_index`.
+009.rb:1:6: W: [Corrected] Lint/RedundantWithIndex: Use `each` instead of `each_with_index`.
+010.rb:1:10: W: [Corrected] Lint/RedundantWithIndex: Remove redundant `with_index`.
+
+==> corrected/000.rb 19 <==
+ary.each { |v| v }
+
+==> corrected/001.rb 26 <==
+ary.each { do_something }
+
+==> corrected/002.rb 26 <==
+ary.each { do_something }
+
+==> corrected/003.rb 20 <==
+ary&.each { |v| v }
+
+==> corrected/004.rb 19 <==
+ary.each { |v| v }
+
+==> corrected/005.rb 19 <==
+ary.each { |v| v }
+
+==> corrected/006.rb 35 <==
+ary.each_with_object([]) { |v| v }
+
+==> corrected/008.rb 16 <==
+ary.each { _1 }
+
+==> corrected/009.rb 17 <==
+ary&.each { _1 }
+
+==> corrected/010.rb 16 <==
+ary.each { _1 }
+

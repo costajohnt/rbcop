@@ -1,0 +1,33 @@
+==> .rubocop.yml 164 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LineLength:
+  Max: 80
+  AllowCopDirectives: true
+
+==> 000.rb 93 <==
+# rubocop:disable Metrics/SomeReallyLongMetricNameThatShouldBeMuchShorterAndNeedsANameChange
+
+==> 001.rb 130 <==
+def method_definition_that_is_just_under_the_line_length_limit(foo, bar) # rubocop:disable Metrics/AbcSize
+  # complex method
+end
+
+==> 002.rb 138 <==
+def method_definition_that_is_just_under_the_line_length_limit(foo) # rubocop:disable Metrics/AbcSize inherently complex!
+  # complex
+end
+
+==> 003.rb 117 <==
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcd # rubocop:enable Style/ClassVars
+
+==> 004.rb 122 <==
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa # bbbbbbbbbbbbbb # rubocop:enable Style/ClassVars'
+
+==> 005.rb 154 <==
+            LARGE_DATA_STRING_PATTERN = %r{\A([A-Za-z0-9+/#]*={0,2})#([A-Za-z0-9+/#]*={0,2})#([A-Za-z0-9+/#]*={0,2})\z} # rubocop:disable Style/ClassVars
+

@@ -1,0 +1,39 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+
+==> 000.rb 32 <==
+THINGS = {
+  oh:,
+    hi:
+    }
+
+==> 001.rb 107 <==
+config.fog_credentials_as_kwargs(
+  provider:,
+  aws_access_key_id:,
+  aws_secret_access_key:,
+  region:
+)
+
+==> 002.rb 13 <==
+func(a:, bb:)
+==> 003.rb 32 <==
+func(a:, bb:,
+     ccc:, dddd:)
+
+==> 004.rb 117 <==
+render :json => {a:,
+                 b:}, :status => 404
+def example
+  a(
+    b:,
+    c: d(
+      e:
+    ), f:)
+end
+

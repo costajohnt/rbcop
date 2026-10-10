@@ -1,0 +1,468 @@
+==> offenses exit=1 5772 <==
+000.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+001.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+002.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+003.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+004.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+005.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+006.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+007.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+008.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+009.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+010.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+011.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+012.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+013.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+014.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+015.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+016.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+017.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+018.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+019.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+020.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+021.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+022.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+023.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+024.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+025.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+026.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+027.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+028.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+029.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+030.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+031.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+032.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+033.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+034.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+035.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+036.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+037.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+038.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+039.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+040.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+041.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+042.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+043.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+044.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+045.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+046.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+047.rb:3:3: C: [Correctable] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+
+==> autocorrect exit=0 5676 <==
+000.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+001.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+002.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+003.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+004.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+005.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+006.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+007.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+008.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+009.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+010.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+011.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+012.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+013.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+014.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+015.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+016.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+017.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+018.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+019.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+020.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+021.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+022.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+023.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+024.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+025.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+026.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+027.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+028.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+029.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+030.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+031.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+032.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+033.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+034.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+035.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+036.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+037.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+038.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+039.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+040.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+041.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+042.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+043.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+044.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+045.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+046.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+047.rb:3:3: C: [Corrected] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+
+==> corrected/000.rb 34 <==
+class Test
+private
+
+attr :foo
+end
+
+==> corrected/001.rb 41 <==
+class Test
+private
+
+attr_reader :foo
+end
+
+==> corrected/002.rb 41 <==
+class Test
+private
+
+attr_writer :foo
+end
+
+==> corrected/003.rb 43 <==
+class Test
+private
+
+attr_accessor :foo
+end
+
+==> corrected/004.rb 46 <==
+class Foo
+  foo
+private
+
+attr_reader :bar
+end
+
+==> corrected/005.rb 52 <==
+class Foo
+  foo
+private
+
+attr_reader :bar, :baz
+end
+
+==> corrected/006.rb 46 <==
+class Foo
+  foo
+private
+
+attr_writer :bar
+end
+
+==> corrected/007.rb 52 <==
+class Foo
+  foo
+private
+
+attr_writer :bar, :baz
+end
+
+==> corrected/008.rb 48 <==
+class Foo
+  foo
+private
+
+attr_accessor :bar
+end
+
+==> corrected/009.rb 54 <==
+class Foo
+  foo
+private
+
+attr_accessor :bar, :baz
+end
+
+==> corrected/010.rb 39 <==
+class Foo
+  foo
+private
+
+attr :bar
+end
+
+==> corrected/011.rb 45 <==
+class Foo
+  foo
+private
+
+attr :bar, :baz
+end
+
+==> corrected/012.rb 36 <==
+class Test
+protected
+
+attr :foo
+end
+
+==> corrected/013.rb 43 <==
+class Test
+protected
+
+attr_reader :foo
+end
+
+==> corrected/014.rb 43 <==
+class Test
+protected
+
+attr_writer :foo
+end
+
+==> corrected/015.rb 45 <==
+class Test
+protected
+
+attr_accessor :foo
+end
+
+==> corrected/016.rb 48 <==
+class Foo
+  foo
+protected
+
+attr_reader :bar
+end
+
+==> corrected/017.rb 54 <==
+class Foo
+  foo
+protected
+
+attr_reader :bar, :baz
+end
+
+==> corrected/018.rb 48 <==
+class Foo
+  foo
+protected
+
+attr_writer :bar
+end
+
+==> corrected/019.rb 54 <==
+class Foo
+  foo
+protected
+
+attr_writer :bar, :baz
+end
+
+==> corrected/020.rb 50 <==
+class Foo
+  foo
+protected
+
+attr_accessor :bar
+end
+
+==> corrected/021.rb 56 <==
+class Foo
+  foo
+protected
+
+attr_accessor :bar, :baz
+end
+
+==> corrected/022.rb 41 <==
+class Foo
+  foo
+protected
+
+attr :bar
+end
+
+==> corrected/023.rb 47 <==
+class Foo
+  foo
+protected
+
+attr :bar, :baz
+end
+
+==> corrected/024.rb 33 <==
+class Test
+public
+
+attr :foo
+end
+
+==> corrected/025.rb 40 <==
+class Test
+public
+
+attr_reader :foo
+end
+
+==> corrected/026.rb 40 <==
+class Test
+public
+
+attr_writer :foo
+end
+
+==> corrected/027.rb 42 <==
+class Test
+public
+
+attr_accessor :foo
+end
+
+==> corrected/028.rb 45 <==
+class Foo
+  foo
+public
+
+attr_reader :bar
+end
+
+==> corrected/029.rb 51 <==
+class Foo
+  foo
+public
+
+attr_reader :bar, :baz
+end
+
+==> corrected/030.rb 45 <==
+class Foo
+  foo
+public
+
+attr_writer :bar
+end
+
+==> corrected/031.rb 51 <==
+class Foo
+  foo
+public
+
+attr_writer :bar, :baz
+end
+
+==> corrected/032.rb 47 <==
+class Foo
+  foo
+public
+
+attr_accessor :bar
+end
+
+==> corrected/033.rb 53 <==
+class Foo
+  foo
+public
+
+attr_accessor :bar, :baz
+end
+
+==> corrected/034.rb 38 <==
+class Foo
+  foo
+public
+
+attr :bar
+end
+
+==> corrected/035.rb 44 <==
+class Foo
+  foo
+public
+
+attr :bar, :baz
+end
+
+==> corrected/036.rb 42 <==
+class Test
+module_function
+
+attr :foo
+end
+
+==> corrected/037.rb 49 <==
+class Test
+module_function
+
+attr_reader :foo
+end
+
+==> corrected/038.rb 49 <==
+class Test
+module_function
+
+attr_writer :foo
+end
+
+==> corrected/039.rb 51 <==
+class Test
+module_function
+
+attr_accessor :foo
+end
+
+==> corrected/040.rb 54 <==
+class Foo
+  foo
+module_function
+
+attr_reader :bar
+end
+
+==> corrected/041.rb 60 <==
+class Foo
+  foo
+module_function
+
+attr_reader :bar, :baz
+end
+
+==> corrected/042.rb 54 <==
+class Foo
+  foo
+module_function
+
+attr_writer :bar
+end
+
+==> corrected/043.rb 60 <==
+class Foo
+  foo
+module_function
+
+attr_writer :bar, :baz
+end
+
+==> corrected/044.rb 56 <==
+class Foo
+  foo
+module_function
+
+attr_accessor :bar
+end
+
+==> corrected/045.rb 62 <==
+class Foo
+  foo
+module_function
+
+attr_accessor :bar, :baz
+end
+
+==> corrected/046.rb 47 <==
+class Foo
+  foo
+module_function
+
+attr :bar
+end
+
+==> corrected/047.rb 53 <==
+class Foo
+  foo
+module_function
+
+attr :bar, :baz
+end
+

@@ -1,0 +1,12 @@
+==> offenses exit=1 196 <==
+000.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a constant.
+000.rb:2:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a constant.
+
+==> autocorrect exit=0 192 <==
+000.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a constant.
+000.rb:2:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a constant.
+
+==> corrected/000.rb 20 <==
+X ? Y : N
+X ? Y : N
+

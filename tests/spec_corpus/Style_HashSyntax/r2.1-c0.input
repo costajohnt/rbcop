@@ -1,0 +1,21 @@
+==> .rubocop.yml 371 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.1
+Style/HashSyntax:
+  EnforcedStyle: ruby19
+  SupportedStyles:
+  - ruby19
+  - hash_rockets
+  EnforcedShorthandSyntax: always
+  SupportedShorthandSyntax:
+  - always
+  - never
+  UseHashRocketsWithSymbolValues: false
+  PreferHashRocketsForNonAlnumEndingSymbols: false
+
+==> 000.rb 22 <==
+x = { :"string" => 0 }

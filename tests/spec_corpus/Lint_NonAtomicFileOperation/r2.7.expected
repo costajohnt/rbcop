@@ -1,0 +1,217 @@
+==> offenses exit=1 5266 <==
+000.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+000.rb:2:3: W: Lint/NonAtomicFileOperation: Use atomic file operation method `FileUtils.mkdir_p`.
+001.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+002.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+003.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+004.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+004.rb:2:3: W: Lint/NonAtomicFileOperation: Use atomic file operation method `FileUtils.rm_f`.
+005.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+005.rb:2:3: W: Lint/NonAtomicFileOperation: Use atomic file operation method `FileUtils.rm_f`.
+006.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+006.rb:2:3: W: Lint/NonAtomicFileOperation: Use atomic file operation method `FileUtils.rm_f`.
+007.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+007.rb:2:3: W: Lint/NonAtomicFileOperation: Use atomic file operation method `FileUtils.rm_f`.
+008.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+008.rb:2:3: W: Lint/NonAtomicFileOperation: Use atomic file operation method `FileUtils.rm_f`.
+009.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+009.rb:2:3: W: Lint/NonAtomicFileOperation: Use atomic file operation method `FileUtils.rm_f`.
+010.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+010.rb:2:3: W: Lint/NonAtomicFileOperation: Use atomic file operation method `FileUtils.rm_f`.
+011.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+011.rb:2:3: W: Lint/NonAtomicFileOperation: Use atomic file operation method `FileUtils.rm_rf`.
+012.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+012.rb:2:3: W: Lint/NonAtomicFileOperation: Use atomic file operation method `FileUtils.rm_rf`.
+013.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+013.rb:2:3: W: Lint/NonAtomicFileOperation: Use atomic file operation method `FileUtils.rm_rf`.
+014.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+015.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+018.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exists?`.
+019.rb:3:1: W: Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+021.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exists?`.
+022.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exists?`.
+023.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+024.rb:1:1: W: Lint/NonAtomicFileOperation: Use atomic file operation method `FileUtils.mkdir_p`.
+024.rb:1:23: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+025.rb:1:1: W: Lint/NonAtomicFileOperation: Use atomic file operation method `FileUtils.mkdir_p`.
+025.rb:1:25: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `Dir.exist?`.
+026.rb:1:1: W: Lint/NonAtomicFileOperation: Use atomic file operation method `FileUtils.mkdir_p`.
+026.rb:1:17: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `Dir.exist?`.
+027.rb:1:1: W: Lint/NonAtomicFileOperation: Use atomic file operation method `FileUtils.rm_f`.
+027.rb:1:24: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+028.rb:1:1: W: Lint/NonAtomicFileOperation: Use atomic file operation method `FileUtils.mkdir_p`.
+028.rb:1:23: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+029.rb:1:1: W: Lint/NonAtomicFileOperation: Use atomic file operation method `FileUtils.mkdir_p`.
+029.rb:1:23: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+030.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+030.rb:2:3: W: Lint/NonAtomicFileOperation: Use atomic file operation method `FileUtils.rm_f`.
+031.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+031.rb:2:3: W: Lint/NonAtomicFileOperation: Use atomic file operation method `FileUtils.rm_f`.
+032.rb:1:1: W: [Correctable] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+032.rb:2:3: W: Lint/NonAtomicFileOperation: Use atomic file operation method `FileUtils.rm_f`.
+
+==> autocorrect exit=1 3287 <==
+000.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+001.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+002.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+003.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+004.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+005.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+006.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+007.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+008.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+009.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+010.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+011.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+012.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+013.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+014.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+015.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+018.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exists?`.
+019.rb:3:1: W: Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+021.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exists?`.
+022.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exists?`.
+023.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+024.rb:1:23: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+025.rb:1:25: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `Dir.exist?`.
+026.rb:1:17: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `Dir.exist?`.
+027.rb:1:24: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+028.rb:1:23: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+029.rb:1:23: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+030.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+031.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+032.rb:1:1: W: [Corrected] Lint/NonAtomicFileOperation: Remove unnecessary existence check `FileTest.exist?`.
+
+==> corrected/000.rb 28 <==
+
+  FileUtils.mkdir_p(path)
+
+
+==> corrected/001.rb 29 <==
+
+  FileUtils.makedirs(path)
+
+
+==> corrected/002.rb 28 <==
+
+  FileUtils.mkdir_p(path)
+
+
+==> corrected/003.rb 27 <==
+
+  FileUtils.mkpath(path)
+
+
+==> corrected/004.rb 25 <==
+
+  FileUtils.rm_f(path)
+
+
+==> corrected/005.rb 25 <==
+
+  FileUtils.rm_f(path)
+
+
+==> corrected/006.rb 25 <==
+
+  FileUtils.rm_f(path)
+
+
+==> corrected/007.rb 25 <==
+
+  FileUtils.rm_f(path)
+
+
+==> corrected/008.rb 25 <==
+
+  FileUtils.rm_f(path)
+
+
+==> corrected/009.rb 25 <==
+
+  FileUtils.rm_f(path)
+
+
+==> corrected/010.rb 25 <==
+
+  FileUtils.rm_f(path)
+
+
+==> corrected/011.rb 26 <==
+
+  FileUtils.rm_rf(path)
+
+
+==> corrected/012.rb 26 <==
+
+  FileUtils.rm_rf(path)
+
+
+==> corrected/013.rb 26 <==
+
+  FileUtils.rm_rf(path)
+
+
+==> corrected/014.rb 25 <==
+
+  FileUtils.rm_f(path)
+
+
+==> corrected/015.rb 26 <==
+
+  FileUtils.rm_rf(path)
+
+
+==> corrected/018.rb 42 <==
+
+  FileUtils.makedirs(path, force: true)
+
+
+==> corrected/021.rb 44 <==
+
+  FileUtils.makedirs(path, verbose: true)
+
+
+==> corrected/022.rb 29 <==
+
+  FileUtils.makedirs(path)
+
+
+==> corrected/023.rb 29 <==
+
+  FileUtils.makedirs(path)
+
+
+==> corrected/024.rb 24 <==
+FileUtils.mkdir_p(path)
+
+==> corrected/025.rb 38 <==
+FileUtils.mkdir_p(path, mode: 0o0755)
+
+==> corrected/026.rb 24 <==
+FileUtils.mkdir_p(path)
+
+==> corrected/027.rb 21 <==
+FileUtils.rm_f(path)
+
+==> corrected/028.rb 24 <==
+FileUtils.mkdir_p(path)
+
+==> corrected/029.rb 24 <==
+FileUtils.mkdir_p(path)
+
+==> corrected/030.rb 25 <==
+
+  FileUtils.rm_f(path)
+
+
+==> corrected/031.rb 27 <==
+
+  ::FileUtils.rm_f(path)
+
+
+==> corrected/032.rb 27 <==
+
+  ::FileUtils.rm_f(path)
+
+

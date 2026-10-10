@@ -1,0 +1,66 @@
+==> offenses exit=1 1017 <==
+000.rb:2:6: C: [Correctable] Style/TrailingMethodEndStatement: Place the end statement of a multi-line method on its own line.
+001.rb:3:15: C: [Correctable] Style/TrailingMethodEndStatement: Place the end statement of a multi-line method on its own line.
+002.rb:3:7: C: [Correctable] Style/TrailingMethodEndStatement: Place the end statement of a multi-line method on its own line.
+003.rb:4:7: C: [Correctable] Style/TrailingMethodEndStatement: Place the end statement of a multi-line method on its own line.
+004.rb:3:8: C: [Correctable] Style/TrailingMethodEndStatement: Place the end statement of a multi-line method on its own line.
+007.rb:3:8: C: [Correctable] Style/TrailingMethodEndStatement: Place the end statement of a multi-line method on its own line.
+007.rb:5:8: C: [Correctable] Style/TrailingMethodEndStatement: Place the end statement of a multi-line method on its own line.
+008.rb:2:6: C: [Correctable] Style/TrailingMethodEndStatement: Place the end statement of a multi-line method on its own line.
+
+==> autocorrect exit=0 1001 <==
+000.rb:2:6: C: [Corrected] Style/TrailingMethodEndStatement: Place the end statement of a multi-line method on its own line.
+001.rb:3:15: C: [Corrected] Style/TrailingMethodEndStatement: Place the end statement of a multi-line method on its own line.
+002.rb:3:7: C: [Corrected] Style/TrailingMethodEndStatement: Place the end statement of a multi-line method on its own line.
+003.rb:4:7: C: [Corrected] Style/TrailingMethodEndStatement: Place the end statement of a multi-line method on its own line.
+004.rb:3:8: C: [Corrected] Style/TrailingMethodEndStatement: Place the end statement of a multi-line method on its own line.
+007.rb:3:8: C: [Corrected] Style/TrailingMethodEndStatement: Place the end statement of a multi-line method on its own line.
+007.rb:5:8: C: [Corrected] Style/TrailingMethodEndStatement: Place the end statement of a multi-line method on its own line.
+008.rb:2:6: C: [Corrected] Style/TrailingMethodEndStatement: Place the end statement of a multi-line method on its own line.
+
+==> corrected/000.rb 26 <==
+def some_method
+foo; 
+end
+
+==> corrected/001.rb 29 <==
+def a
+  b
+{ foo: bar }; 
+end
+
+==> corrected/002.rb 47 <==
+def c
+  b = calculation
+  [b] 
+end # because b
+
+==> corrected/003.rb 36 <==
+def d
+  block do
+    foo
+  end 
+end
+
+==> corrected/004.rb 46 <==
+class Foo
+  def some_method
+  foo; 
+  end
+end
+
+==> corrected/007.rb 81 <==
+class Foo
+  def some_method
+    [] 
+  end
+  def another_method
+    {} 
+  end
+end
+
+==> corrected/008.rb 31 <==
+def self.some_method
+foo; 
+end
+

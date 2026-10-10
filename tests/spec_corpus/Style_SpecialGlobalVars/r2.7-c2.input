@@ -1,0 +1,33 @@
+==> .rubocop.yml 165 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SpecialGlobalVars:
+  EnforcedStyle: use_perl_names
+
+==> 000.rb 16 <==
+puts $LOAD_PATH
+
+==> 001.rb 22 <==
+puts $LOADED_FEATURES
+
+==> 002.rb 19 <==
+puts $PROGRAM_NAME
+
+==> 003.rb 10 <==
+puts $PID
+
+==> 004.rb 17 <==
+puts $PROCESS_ID
+
+==> 005.rb 7 <==
+puts $1
+==> 006.rb 24 <==
+$INPUT_RECORD_SEPARATOR
+
+==> 007.rb 16 <==
+"#{$LOAD_PATH}"
+

@@ -1,0 +1,19 @@
+==> .rubocop.yml 246 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/InclusiveLanguage:
+  CheckStrings: true
+  FlaggedTerms:
+    master:
+      Suggestions:
+      - main
+      - primary
+      - leader
+
+==> 000.rb 26 <==
+default_branch = 'master'
+

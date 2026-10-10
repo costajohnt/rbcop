@@ -1,0 +1,150 @@
+==> offenses exit=1 2983 <==
+004.rb:2:1: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+005.rb:2:2: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+007.rb:2:4: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+007.rb:4:4: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+008.rb:3:5: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+009.rb:3:2: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+019.rb:2:1: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+021.rb:2:5: C: [Correctable] Layout/MultilineOperationIndentation: Align the operands of a condition in an `if` statement spanning multiple lines.
+022.rb:3:3: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+023.rb:3:3: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+027.rb:2:3: C: [Correctable] Layout/MultilineOperationIndentation: Align the operands of an expression spanning multiple lines.
+027.rb:3:3: C: [Correctable] Layout/MultilineOperationIndentation: Align the operands of an expression spanning multiple lines.
+028.rb:2:3: C: [Correctable] Layout/MultilineOperationIndentation: Align the operands of an expression spanning multiple lines.
+029.rb:4:7: C: [Correctable] Layout/MultilineOperationIndentation: Align the operands of an expression in an assignment spanning multiple lines.
+030.rb:3:3: C: [Correctable] Layout/MultilineOperationIndentation: Align the operands of an expression in an assignment spanning multiple lines.
+031.rb:2:3: C: [Correctable] Layout/MultilineOperationIndentation: Align the operands of a condition in an `unless` statement spanning multiple lines.
+032.rb:2:5: C: [Correctable] Layout/MultilineOperationIndentation: Align the operands of a condition in an `if` statement spanning multiple lines.
+033.rb:2:5: C: [Correctable] Layout/MultilineOperationIndentation: Align the operands of a condition in an `unless` statement spanning multiple lines.
+034.rb:2:5: C: [Correctable] Layout/MultilineOperationIndentation: Align the operands of a condition in a `while` statement spanning multiple lines.
+035.rb:2:5: C: [Correctable] Layout/MultilineOperationIndentation: Align the operands of a condition in an `until` statement spanning multiple lines.
+038.rb:2:3: C: [Correctable] Layout/MultilineOperationIndentation: Align the operands of an expression in an assignment spanning multiple lines.
+
+==> autocorrect exit=0 2941 <==
+004.rb:2:1: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+005.rb:2:2: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+007.rb:2:4: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+007.rb:4:4: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+008.rb:3:5: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+009.rb:3:2: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+019.rb:2:1: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+021.rb:2:5: C: [Corrected] Layout/MultilineOperationIndentation: Align the operands of a condition in an `if` statement spanning multiple lines.
+022.rb:3:3: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+023.rb:3:3: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+027.rb:2:3: C: [Corrected] Layout/MultilineOperationIndentation: Align the operands of an expression spanning multiple lines.
+027.rb:3:3: C: [Corrected] Layout/MultilineOperationIndentation: Align the operands of an expression spanning multiple lines.
+028.rb:2:3: C: [Corrected] Layout/MultilineOperationIndentation: Align the operands of an expression spanning multiple lines.
+029.rb:4:7: C: [Corrected] Layout/MultilineOperationIndentation: Align the operands of an expression in an assignment spanning multiple lines.
+030.rb:3:3: C: [Corrected] Layout/MultilineOperationIndentation: Align the operands of an expression in an assignment spanning multiple lines.
+031.rb:2:3: C: [Corrected] Layout/MultilineOperationIndentation: Align the operands of a condition in an `unless` statement spanning multiple lines.
+032.rb:2:5: C: [Corrected] Layout/MultilineOperationIndentation: Align the operands of a condition in an `if` statement spanning multiple lines.
+033.rb:2:5: C: [Corrected] Layout/MultilineOperationIndentation: Align the operands of a condition in an `unless` statement spanning multiple lines.
+034.rb:2:5: C: [Corrected] Layout/MultilineOperationIndentation: Align the operands of a condition in a `while` statement spanning multiple lines.
+035.rb:2:5: C: [Corrected] Layout/MultilineOperationIndentation: Align the operands of a condition in an `until` statement spanning multiple lines.
+038.rb:2:3: C: [Corrected] Layout/MultilineOperationIndentation: Align the operands of an expression in an assignment spanning multiple lines.
+
+==> corrected/004.rb 8 <==
+a +
+  b
+
+==> corrected/005.rb 8 <==
+a +
+  b
+
+==> corrected/007.rb 19 <==
+a ||
+  b
+c and
+  d
+
+==> corrected/008.rb 16 <==
+a ||
+  b ||
+  c
+
+==> corrected/009.rb 14 <==
+[
+ a +
+   b
+]
+
+==> corrected/019.rb 12 <==
+a +
+  b < 3
+
+==> corrected/021.rb 28 <==
+if a +
+   b
+  something
+end
+
+==> corrected/022.rb 50 <==
+def config_to_allow_offenses
+  a +
+    b == c
+end
+
+==> corrected/023.rb 58 <==
+private def config_to_allow_offenses
+  a +
+    b == c
+end
+
+==> corrected/027.rb 50 <==
+it "should convert " +
+   "a to " +
+   "b" do
+end
+
+==> corrected/028.rb 22 <==
+puts a, 1 +
+        2
+
+==> corrected/029.rb 119 <==
+def f
+  flash[:error] = 'Here is a string ' \
+                  'That spans' <<
+                  'multiple lines'
+end
+
+==> corrected/030.rb 79 <==
+Error = 'Here is a string ' +
+        'That spans' <<
+        'multiple lines'
+
+==> corrected/031.rb 36 <==
+unless a +
+       b
+  something
+end
+
+==> corrected/032.rb 29 <==
+if a or
+   b
+  something
+end
+
+==> corrected/033.rb 37 <==
+unless a or
+       b
+  something
+end
+
+==> corrected/034.rb 35 <==
+while a or
+      b
+  something
+end
+
+==> corrected/035.rb 35 <==
+until a or
+      b
+  something
+end
+
+==> corrected/038.rb 36 <==
+bar *= Foo +
+       a +
+       b(c)
+

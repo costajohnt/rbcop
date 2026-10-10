@@ -1,0 +1,28 @@
+==> offenses exit=1 876 <==
+007.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+008.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+009.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+014.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+015.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+016.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+018.rb:5:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+019.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+020.rb:5:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+021.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+029.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+035.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+
+==> autocorrect exit=1 876 <==
+007.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+008.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+009.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+014.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+015.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+016.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+018.rb:5:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+019.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+020.rb:5:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+021.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+029.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+035.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+

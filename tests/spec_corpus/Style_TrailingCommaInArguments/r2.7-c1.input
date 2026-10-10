@@ -1,0 +1,207 @@
+==> .rubocop.yml 175 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+
+==> 000.rb 23 <==
+some_method(a, b, c, )
+
+==> 001.rb 24 <==
+some_method(a, b, c , )
+
+==> 002.rb 32 <==
+some_method(a, b, c: 0, d: 1, )
+
+==> 003.rb 20 <==
+some_method(a, b, c)
+==> 004.rb 32 <==
+obj
+  .do_something(:foo, :bar)
+
+==> 005.rb 17 <==
+some_method(a: 1)
+==> 006.rb 11 <==
+some_method
+==> 007.rb 25 <==
+target
+  .some_method(a)
+
+==> 008.rb 33 <==
+receiver&.some_method(a, b, c, )
+
+==> 009.rb 42 <==
+receiver&.some_method(a, b, c: 0, d: 1, )
+
+==> 010.rb 23 <==
+some_method[a, b, c, ]
+
+==> 011.rb 24 <==
+some_method[a, b, c , ]
+
+==> 012.rb 32 <==
+some_method[a, b, c: 0, d: 1, ]
+
+==> 013.rb 20 <==
+some_method[a, b, c]
+==> 014.rb 32 <==
+obj
+  .do_something[:foo, :bar]
+
+==> 015.rb 17 <==
+some_method[a: 1]
+==> 016.rb 25 <==
+target
+  .some_method[a]
+
+==> 017.rb 33 <==
+receiver&.some_method[a, b, c, ]
+
+==> 018.rb 42 <==
+receiver&.some_method[a, b, c: 0, d: 1, ]
+
+==> 019.rb 33 <==
+route(1, <<-HELP.chomp)
+...
+HELP
+
+==> 020.rb 40 <==
+some_method(a: "b",
+            c: "d")
+
+==> 021.rb 98 <==
+some_method(
+              a,
+              b,
+              c: 0,
+              d: 1
+          )
+
+==> 022.rb 29 <==
+some_method(a, b
+          )
+
+==> 023.rb 99 <==
+some_method(
+              a,
+              b,
+              c: 0,
+              d: 1,
+          )
+
+==> 024.rb 56 <==
+route(
+  a, <<-HELP.chomp
+  ,
+  # some comment
+  HELP
+)
+
+==> 025.rb 87 <==
+some_method(
+              a,
+              b: 0,
+              c: 0, d: 1
+          )
+
+==> 026.rb 47 <==
+some_method(
+{ a: 0, b: 1 },
+{ a: 1, b: 0 },
+)
+
+==> 027.rb 21 <==
+Foo.new({
+        })
+
+==> 028.rb 15 <==
+method(
+  1,
+)
+
+==> 029.rb 33 <==
+foo.bar(
+  baz: 1,
+).fetch(:qux)
+
+==> 030.rb 33 <==
+foo
+  &.do_something(:bar, :baz)
+
+==> 031.rb 34 <==
+foo.bar(
+  baz: 1,
+)&.fetch(:qux)
+
+==> 032.rb 40 <==
+some_method[a: "b",
+            c: "d"]
+
+==> 033.rb 98 <==
+some_method[
+              a,
+              b,
+              c: 0,
+              d: 1
+          ]
+
+==> 034.rb 29 <==
+some_method[a, b
+          ]
+
+==> 035.rb 99 <==
+some_method[
+              a,
+              b,
+              c: 0,
+              d: 1,
+          ]
+
+==> 036.rb 56 <==
+route[
+  a, <<-HELP.chomp
+  ,
+  # some comment
+  HELP
+]
+
+==> 037.rb 87 <==
+some_method[
+              a,
+              b: 0,
+              c: 0, d: 1
+          ]
+
+==> 038.rb 47 <==
+some_method[
+{ a: 0, b: 1 },
+{ a: 1, b: 0 },
+]
+
+==> 039.rb 21 <==
+Foo.new[{
+        }]
+
+==> 040.rb 15 <==
+method[
+  1,
+]
+
+==> 041.rb 33 <==
+foo.bar[
+  baz: 1,
+].fetch(:qux)
+
+==> 042.rb 33 <==
+foo
+  &.do_something[:bar, :baz]
+
+==> 043.rb 34 <==
+foo.bar[
+  baz: 1,
+]&.fetch(:qux)
+

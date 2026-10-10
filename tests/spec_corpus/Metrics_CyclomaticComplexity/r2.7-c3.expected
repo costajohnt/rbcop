@@ -1,0 +1,6 @@
+==> offenses exit=1 104 <==
+000.rb:1:1: R: Metrics/CyclomaticComplexity: Cyclomatic complexity for `method_name` is too high. [5/2]
+
+==> autocorrect exit=1 104 <==
+000.rb:1:1: R: Metrics/CyclomaticComplexity: Cyclomatic complexity for `method_name` is too high. [5/2]
+

@@ -1,0 +1,19 @@
+==> offenses exit=1 363 <==
+000.rb:1:1: C: [Correctable] Style/StderrPuts: Use `warn` instead of `$stderr.puts` to allow such output to be disabled.
+002.rb:1:1: C: [Correctable] Style/StderrPuts: Use `warn` instead of `STDERR.puts` to allow such output to be disabled.
+003.rb:1:1: C: [Correctable] Style/StderrPuts: Use `warn` instead of `::STDERR.puts` to allow such output to be disabled.
+
+==> autocorrect exit=0 357 <==
+000.rb:1:1: C: [Corrected] Style/StderrPuts: Use `warn` instead of `$stderr.puts` to allow such output to be disabled.
+002.rb:1:1: C: [Corrected] Style/StderrPuts: Use `warn` instead of `STDERR.puts` to allow such output to be disabled.
+003.rb:1:1: C: [Corrected] Style/StderrPuts: Use `warn` instead of `::STDERR.puts` to allow such output to be disabled.
+
+==> corrected/000.rb 14 <==
+warn('hello')
+
+==> corrected/002.rb 14 <==
+warn('hello')
+
+==> corrected/003.rb 14 <==
+warn('hello')
+

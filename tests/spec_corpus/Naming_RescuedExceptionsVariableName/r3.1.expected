@@ -1,0 +1,12 @@
+==> offenses exit=1 96 <==
+000.rb:2:11: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `e` instead of `error`.
+
+==> autocorrect exit=0 94 <==
+000.rb:2:11: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `e` instead of `error`.
+
+==> corrected/000.rb 47 <==
+begin
+rescue => e
+  do_something(error: e)
+end
+

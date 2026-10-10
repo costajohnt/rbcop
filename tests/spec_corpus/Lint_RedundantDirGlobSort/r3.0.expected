@@ -1,0 +1,30 @@
+==> offenses exit=1 410 <==
+000.rb:1:43: W: [Correctable] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+001.rb:1:45: W: [Correctable] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+002.rb:1:22: W: [Correctable] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+003.rb:1:22: W: [Correctable] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+009.rb:1:27: W: [Correctable] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+
+==> autocorrect exit=0 400 <==
+000.rb:1:43: W: [Corrected] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+001.rb:1:45: W: [Corrected] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+002.rb:1:22: W: [Corrected] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+003.rb:1:22: W: [Corrected] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+009.rb:1:27: W: [Corrected] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+
+==> corrected/000.rb 66 <==
+Dir.glob(Rails.root.join('test', '*.rb')).each(&method(:require))
+
+==> corrected/001.rb 68 <==
+::Dir.glob(Rails.root.join('test', '*.rb')).each(&method(:require))
+
+==> corrected/002.rb 40 <==
+Dir['./lib/**/*.rb'].each do |file|
+end
+
+==> corrected/003.rb 45 <==
+Dir['./lib/**/*.rb'].each(&method(:require))
+
+==> corrected/009.rb 26 <==
+Dir.glob('./lib/**/*.rb')
+

@@ -1,0 +1,198 @@
+==> offenses exit=1 3737 <==
+006.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'foo'` directly instead of `format`.
+007.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `"#{foo}"` directly instead of `format`.
+008.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'foo'` directly instead of `format`.
+009.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'foo'` directly instead of `format`.
+010.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `"\n"` directly instead of `format`.
+046.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'hello world'` directly instead of `format`.
+049.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'   14'` directly instead of `format`.
+050.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'$00.50'` directly instead of `format`.
+051.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'14   '` directly instead of `format`.
+052.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'   14'` directly instead of `format`.
+053.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'14   '` directly instead of `format`.
+061.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'foo bar'` directly instead of `format`.
+062.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `"#{foo} bar"` directly instead of `format`.
+065.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'foos bars'` directly instead of `format`.
+066.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `"#{foo}s bars"` directly instead of `format`.
+071.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'foo bar'` directly instead of `format`.
+074.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `FORMAT` directly instead of `format`.
+077.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `"foo\a\b\t\n\v\f\r\e"` directly instead of `format`.
+078.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `<<~MESSAGE` directly instead of `format`.
+087.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'foo'` directly instead of `sprintf`.
+088.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `"#{foo}"` directly instead of `sprintf`.
+089.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'foo'` directly instead of `sprintf`.
+090.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'foo'` directly instead of `sprintf`.
+091.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `"\n"` directly instead of `sprintf`.
+127.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'hello world'` directly instead of `sprintf`.
+130.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'   14'` directly instead of `sprintf`.
+131.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'$00.50'` directly instead of `sprintf`.
+132.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'14   '` directly instead of `sprintf`.
+133.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'   14'` directly instead of `sprintf`.
+134.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'14   '` directly instead of `sprintf`.
+142.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'foo bar'` directly instead of `sprintf`.
+143.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `"#{foo} bar"` directly instead of `sprintf`.
+145.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'foos bars'` directly instead of `sprintf`.
+146.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `"#{foo}s bars"` directly instead of `sprintf`.
+151.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `'foo bar'` directly instead of `sprintf`.
+153.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `FORMAT` directly instead of `sprintf`.
+156.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `"foo\a\b\t\n\v\f\r\e"` directly instead of `sprintf`.
+157.rb:1:1: C: [Correctable] Style/RedundantFormat: Use `<<~MESSAGE` directly instead of `sprintf`.
+
+==> autocorrect exit=0 3661 <==
+006.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'foo'` directly instead of `format`.
+007.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `"#{foo}"` directly instead of `format`.
+008.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'foo'` directly instead of `format`.
+009.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'foo'` directly instead of `format`.
+010.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `"\n"` directly instead of `format`.
+046.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'hello world'` directly instead of `format`.
+049.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'   14'` directly instead of `format`.
+050.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'$00.50'` directly instead of `format`.
+051.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'14   '` directly instead of `format`.
+052.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'   14'` directly instead of `format`.
+053.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'14   '` directly instead of `format`.
+061.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'foo bar'` directly instead of `format`.
+062.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `"#{foo} bar"` directly instead of `format`.
+065.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'foos bars'` directly instead of `format`.
+066.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `"#{foo}s bars"` directly instead of `format`.
+071.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'foo bar'` directly instead of `format`.
+074.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `FORMAT` directly instead of `format`.
+077.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `"foo\a\b\t\n\v\f\r\e"` directly instead of `format`.
+078.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `<<~MESSAGE` directly instead of `format`.
+087.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'foo'` directly instead of `sprintf`.
+088.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `"#{foo}"` directly instead of `sprintf`.
+089.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'foo'` directly instead of `sprintf`.
+090.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'foo'` directly instead of `sprintf`.
+091.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `"\n"` directly instead of `sprintf`.
+127.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'hello world'` directly instead of `sprintf`.
+130.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'   14'` directly instead of `sprintf`.
+131.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'$00.50'` directly instead of `sprintf`.
+132.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'14   '` directly instead of `sprintf`.
+133.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'   14'` directly instead of `sprintf`.
+134.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'14   '` directly instead of `sprintf`.
+142.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'foo bar'` directly instead of `sprintf`.
+143.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `"#{foo} bar"` directly instead of `sprintf`.
+145.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'foos bars'` directly instead of `sprintf`.
+146.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `"#{foo}s bars"` directly instead of `sprintf`.
+151.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `'foo bar'` directly instead of `sprintf`.
+153.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `FORMAT` directly instead of `sprintf`.
+156.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `"foo\a\b\t\n\v\f\r\e"` directly instead of `sprintf`.
+157.rb:1:1: C: [Corrected] Style/RedundantFormat: Use `<<~MESSAGE` directly instead of `sprintf`.
+
+==> corrected/006.rb 6 <==
+'foo'
+
+==> corrected/007.rb 9 <==
+"#{foo}"
+
+==> corrected/008.rb 6 <==
+'foo'
+
+==> corrected/009.rb 6 <==
+'foo'
+
+==> corrected/010.rb 5 <==
+"\n"
+
+==> corrected/046.rb 14 <==
+'hello world'
+
+==> corrected/049.rb 8 <==
+'   14'
+
+==> corrected/050.rb 9 <==
+'$00.50'
+
+==> corrected/051.rb 8 <==
+'14   '
+
+==> corrected/052.rb 8 <==
+'   14'
+
+==> corrected/053.rb 8 <==
+'14   '
+
+==> corrected/061.rb 10 <==
+'foo bar'
+
+==> corrected/062.rb 13 <==
+"#{foo} bar"
+
+==> corrected/065.rb 12 <==
+'foos bars'
+
+==> corrected/066.rb 15 <==
+"#{foo}s bars"
+
+==> corrected/071.rb 10 <==
+'foo bar'
+
+==> corrected/074.rb 7 <==
+FORMAT
+
+==> corrected/077.rb 22 <==
+"foo\a\b\t\n\v\f\r\e"
+
+==> corrected/078.rb 25 <==
+<<~MESSAGE
+  foo
+MESSAGE
+
+==> corrected/087.rb 6 <==
+'foo'
+
+==> corrected/088.rb 9 <==
+"#{foo}"
+
+==> corrected/089.rb 6 <==
+'foo'
+
+==> corrected/090.rb 6 <==
+'foo'
+
+==> corrected/091.rb 5 <==
+"\n"
+
+==> corrected/127.rb 14 <==
+'hello world'
+
+==> corrected/130.rb 8 <==
+'   14'
+
+==> corrected/131.rb 9 <==
+'$00.50'
+
+==> corrected/132.rb 8 <==
+'14   '
+
+==> corrected/133.rb 8 <==
+'   14'
+
+==> corrected/134.rb 8 <==
+'14   '
+
+==> corrected/142.rb 10 <==
+'foo bar'
+
+==> corrected/143.rb 13 <==
+"#{foo} bar"
+
+==> corrected/145.rb 12 <==
+'foos bars'
+
+==> corrected/146.rb 15 <==
+"#{foo}s bars"
+
+==> corrected/151.rb 10 <==
+'foo bar'
+
+==> corrected/153.rb 7 <==
+FORMAT
+
+==> corrected/156.rb 22 <==
+"foo\a\b\t\n\v\f\r\e"
+
+==> corrected/157.rb 25 <==
+<<~MESSAGE
+  foo
+MESSAGE
+

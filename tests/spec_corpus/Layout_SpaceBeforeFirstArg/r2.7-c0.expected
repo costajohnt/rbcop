@@ -1,0 +1,31 @@
+==> offenses exit=1 720 <==
+000.rb:1:10: C: [Correctable] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+000.rb:2:12: C: [Correctable] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+001.rb:1:13: C: [Correctable] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+002.rb:1:10: C: [Correctable] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+002.rb:2:12: C: [Correctable] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+003.rb:2:21: C: [Correctable] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+
+==> autocorrect exit=0 708 <==
+000.rb:1:10: C: [Corrected] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+000.rb:2:12: C: [Corrected] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+001.rb:1:13: C: [Corrected] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+002.rb:1:10: C: [Corrected] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+002.rb:2:12: C: [Corrected] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+003.rb:2:21: C: [Corrected] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+
+==> corrected/000.rb 29 <==
+something x
+a.something y, z
+
+==> corrected/001.rb 18 <==
+a&.something y, z
+
+==> corrected/002.rb 44 <==
+something 'hello'
+a.something 'hello world'
+
+==> corrected/003.rb 54 <==
+obj = a_method(arg, arg2)
+obj.no_parenthesized 'asdf'
+

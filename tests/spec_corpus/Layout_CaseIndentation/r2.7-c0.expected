@@ -1,0 +1,102 @@
+==> offenses exit=1 852 <==
+002.rb:2:1: C: [Correctable] Layout/CaseIndentation: Indent `when` as deep as `case`.
+003.rb:2:3: C: [Correctable] Layout/CaseIndentation: Indent `when` as deep as `case`.
+004.rb:8:1: C: [Correctable] Layout/CaseIndentation: Indent `when` as deep as `case`.
+005.rb:2:5: C: [Correctable] Layout/CaseIndentation: Indent `when` as deep as `case`.
+005.rb:5:10: C: [Correctable] Layout/CaseIndentation: Indent `when` as deep as `case`.
+012.rb:2:1: C: [Correctable] Layout/CaseIndentation: Indent `in` as deep as `case`.
+013.rb:2:3: C: [Correctable] Layout/CaseIndentation: Indent `in` as deep as `case`.
+014.rb:8:1: C: [Correctable] Layout/CaseIndentation: Indent `in` as deep as `case`.
+015.rb:2:5: C: [Correctable] Layout/CaseIndentation: Indent `in` as deep as `case`.
+015.rb:5:10: C: [Correctable] Layout/CaseIndentation: Indent `in` as deep as `case`.
+
+==> autocorrect exit=0 832 <==
+002.rb:2:1: C: [Corrected] Layout/CaseIndentation: Indent `when` as deep as `case`.
+003.rb:2:3: C: [Corrected] Layout/CaseIndentation: Indent `when` as deep as `case`.
+004.rb:8:1: C: [Corrected] Layout/CaseIndentation: Indent `when` as deep as `case`.
+005.rb:2:5: C: [Corrected] Layout/CaseIndentation: Indent `when` as deep as `case`.
+005.rb:5:10: C: [Corrected] Layout/CaseIndentation: Indent `when` as deep as `case`.
+012.rb:2:1: C: [Corrected] Layout/CaseIndentation: Indent `in` as deep as `case`.
+013.rb:2:3: C: [Corrected] Layout/CaseIndentation: Indent `in` as deep as `case`.
+014.rb:8:1: C: [Corrected] Layout/CaseIndentation: Indent `in` as deep as `case`.
+015.rb:2:5: C: [Corrected] Layout/CaseIndentation: Indent `in` as deep as `case`.
+015.rb:5:10: C: [Corrected] Layout/CaseIndentation: Indent `in` as deep as `case`.
+
+==> corrected/002.rb 79 <==
+output = case variable
+         when 'value1'
+  'output1'
+else
+  'output2'
+end
+
+==> corrected/003.rb 85 <==
+output = case variable
+         when 'value1'
+    'output1'
+  else
+    'output2'
+end
+
+==> corrected/004.rb 194 <==
+output = case variable
+         when 'value1'
+           'output1'
+         else
+           'output2'
+         end
+output = case variable
+         when 'value1'
+  'output1'
+else
+  'output2'
+end
+
+==> corrected/005.rb 93 <==
+case a
+when 0 then return
+    else
+        case b
+        when 1 then return
+        end
+end
+
+==> corrected/012.rb 76 <==
+output = case variable
+         in pattern
+  'output1'
+else
+  'output2'
+end
+
+==> corrected/013.rb 82 <==
+output = case variable
+         in pattern
+    'output1'
+  else
+    'output2'
+end
+
+==> corrected/014.rb 188 <==
+output = case variable
+         in pattern
+           'output1'
+         else
+           'output2'
+         end
+output = case variable
+         in pattern
+  'output1'
+else
+  'output2'
+end
+
+==> corrected/015.rb 89 <==
+case a
+in 0 then return
+    else
+        case b
+        in 1 then return
+        end
+end
+

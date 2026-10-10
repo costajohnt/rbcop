@@ -1,0 +1,14 @@
+==> offenses exit=1 232 <==
+000.rb:1:13: C: [Correctable] Style/RedundantRegexpArgument: Use string `'f'` as argument instead of regexp `/f/`.
+001.rb:1:13: C: [Correctable] Style/RedundantRegexpArgument: Use string `"\n"` as argument instead of regexp `/\n/`.
+
+==> autocorrect exit=0 228 <==
+000.rb:1:13: C: [Corrected] Style/RedundantRegexpArgument: Use string `'f'` as argument instead of regexp `/f/`.
+001.rb:1:13: C: [Corrected] Style/RedundantRegexpArgument: Use string `"\n"` as argument instead of regexp `/\n/`.
+
+==> corrected/000.rb 17 <==
+'foo'.split('f')
+
+==> corrected/001.rb 18 <==
+'foo'.split("\n")
+

@@ -1,0 +1,15 @@
+==> .rubocop.yml 164 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Layout/BlockAlignment:
+  EnforcedStyleAlignWith: either
+
+==> 000.rb 63 <==
+parser.diagnostics.consumer = lambda do
+  it << diagnostic
+end
+

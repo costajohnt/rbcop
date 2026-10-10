@@ -1,0 +1,8 @@
+==> offenses exit=1 160 <==
+001.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+002.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+
+==> autocorrect exit=1 160 <==
+001.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+002.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+

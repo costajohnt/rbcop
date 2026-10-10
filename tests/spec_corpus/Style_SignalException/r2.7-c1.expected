@@ -1,0 +1,36 @@
+==> offenses exit=1 372 <==
+000.rb:2:3: C: [Correctable] Style/SignalException: Always use `raise` to signal exceptions.
+001.rb:2:3: C: [Correctable] Style/SignalException: Always use `raise` to signal exceptions.
+002.rb:4:3: C: [Correctable] Style/SignalException: Always use `raise` to signal exceptions.
+006.rb:1:8: C: [Correctable] Style/SignalException: Always use `raise` to signal exceptions.
+
+==> autocorrect exit=0 364 <==
+000.rb:2:3: C: [Corrected] Style/SignalException: Always use `raise` to signal exceptions.
+001.rb:2:3: C: [Corrected] Style/SignalException: Always use `raise` to signal exceptions.
+002.rb:4:3: C: [Corrected] Style/SignalException: Always use `raise` to signal exceptions.
+006.rb:1:8: C: [Corrected] Style/SignalException: Always use `raise` to signal exceptions.
+
+==> corrected/000.rb 49 <==
+begin
+  raise
+rescue Exception
+  #do nothing
+end
+
+==> corrected/001.rb 52 <==
+def test
+  raise
+rescue Exception
+  #do nothing
+end
+
+==> corrected/002.rb 43 <==
+begin
+  raise
+rescue Exception
+  raise
+end
+
+==> corrected/006.rb 13 <==
+Kernel.raise
+

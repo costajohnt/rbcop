@@ -1,0 +1,102 @@
+==> offenses exit=1 1314 <==
+000.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+001.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+002.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+003.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+003.rb:5:1: C: [Correctable] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+003.rb:7:1: C: [Correctable] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+004.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+005.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+006.rb:8:1: C: [Correctable] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+007.rb:5:1: C: [Correctable] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+007.rb:11:1: C: [Correctable] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+008.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+009.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+
+==> autocorrect exit=0 1288 <==
+000.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+001.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+002.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+003.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+003.rb:5:1: C: [Corrected] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+003.rb:7:1: C: [Corrected] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+004.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+005.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+006.rb:8:1: C: [Corrected] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+007.rb:5:1: C: [Corrected] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+007.rb:11:1: C: [Corrected] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+008.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+009.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+
+==> corrected/000.rb 13 <==
+foo(
+  bar
+)
+
+==> corrected/001.rb 20 <==
+bar(
+  [baz, qux]
+)
+
+==> corrected/002.rb 36 <==
+foo.do_something(
+  baz,
+  qux: 0
+)
+
+==> corrected/003.rb 28 <==
+foo(
+  baz,
+  qux,
+  biz,
+)
+
+==> corrected/004.rb 21 <==
+foo(biz,
+    baz: 0)
+
+==> corrected/005.rb 88 <==
+Foo.prepend(
+  a,
+  Module.new do
+    def something; end
+
+    def anything; end
+  end
+)
+
+==> corrected/006.rb 87 <==
+class Foo
+
+  include Bar
+
+  def baz(qux)
+    fizz(
+      qux,
+      10
+    )
+  end
+end
+
+==> corrected/007.rb 93 <==
+something(1, 5)
+something_else
+
+foo(biz,
+    qux)
+
+quux.map do
+
+end.another.thing(
+  [baz]
+)
+
+==> corrected/008.rb 23 <==
+receiver&.foo(
+  bar
+)
+
+==> corrected/009.rb 17 <==
+bar(qux,
+    78)
+

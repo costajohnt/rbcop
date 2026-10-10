@@ -1,0 +1,62 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 19 <==
+arr.concat([item])
+
+==> 001.rb 20 <==
+arr&.concat([item])
+
+==> 002.rb 23 <==
+arr.concat([foo, bar])
+
+==> 003.rb 29 <==
+arr.concat([
+  foo,
+  bar
+])
+
+==> 004.rb 30 <==
+arr.concat([foo, bar], [baz])
+
+==> 005.rb 21 <==
+arr.concat(%i[item])
+
+==> 006.rb 28 <==
+arr.concat(%I[item #{foo}])
+
+==> 007.rb 28 <==
+arr.concat(%W[item #{foo}])
+
+==> 008.rb 21 <==
+arr.concat(%w[item])
+
+==> 009.rb 23 <==
+arr.concat(%W[#{foo}])
+
+==> 010.rb 18 <==
+arr.concat(items)
+
+==> 011.rb 28 <==
+arr.concat([foo, bar], baz)
+
+==> 012.rb 11 <==
+arr.concat
+
+==> 013.rb 15 <==
+arr.push(item)
+
+==> 014.rb 12 <==
+arr << item
+
+==> 015.rb 20 <==
+arr.concat([], [b])
+
+==> 016.rb 25 <==
+arr.concat([a], [], [b])
+

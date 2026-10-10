@@ -1,0 +1,162 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 74 <==
+positives = arr.select { |x| x > 0 }
+negatives = arr.reject { |x| x > 0 }
+
+==> 001.rb 74 <==
+negatives = arr.reject { |x| x > 0 }
+positives = arr.select { |x| x > 0 }
+
+==> 002.rb 74 <==
+positives = arr.filter { |x| x > 0 }
+negatives = arr.reject { |x| x > 0 }
+
+==> 003.rb 76 <==
+positives = arr.find_all { |x| x > 0 }
+negatives = arr.reject { |x| x > 0 }
+
+==> 004.rb 84 <==
+positives = arr.select do |x|
+  x > 0
+end
+negatives = arr.reject do |x|
+  x > 0
+end
+
+==> 005.rb 68 <==
+positives = arr.select { _1 > 0 }
+negatives = arr.reject { _1 > 0 }
+
+==> 006.rb 82 <==
+positives = foo.bar.select { |x| x > 0 }
+negatives = foo.bar.reject { |x| x > 0 }
+
+==> 007.rb 76 <==
+positives = arr&.select { |x| x > 0 }
+negatives = arr&.reject { |x| x > 0 }
+
+==> 008.rb 50 <==
+arr.select { |x| x > 0 }
+arr.reject { |x| x > 0 }
+
+==> 009.rb 76 <==
+@positives = arr.select { |x| x > 0 }
+@negatives = arr.reject { |x| x > 0 }
+
+==> 010.rb 75 <==
+positives = arr.select { |x| x > 0 }
+@negatives = arr.reject { |x| x > 0 }
+
+==> 011.rb 97 <==
+before_code
+positives = arr.select { |x| x > 0 }
+negatives = arr.reject { |x| x > 0 }
+after_code
+
+==> 012.rb 72 <==
+positives = arr.select(&:positive?)
+negatives = arr.reject(&:positive?)
+
+==> 013.rb 72 <==
+negatives = arr.reject(&:positive?)
+positives = arr.select(&:positive?)
+
+==> 014.rb 72 <==
+positives = arr.filter(&:positive?)
+negatives = arr.reject(&:positive?)
+
+==> 015.rb 74 <==
+positives = arr&.select(&:positive?)
+negatives = arr&.reject(&:positive?)
+
+==> 016.rb 48 <==
+arr.select(&:positive?)
+arr.reject(&:positive?)
+
+==> 017.rb 72 <==
+positives = arr.select(&:positive?)
+negatives = arr.reject(&:negative?)
+
+==> 018.rb 74 <==
+positives = arr1.select(&:positive?)
+negatives = arr2.reject(&:positive?)
+
+==> 019.rb 79 <==
+positives = arr.select(&:positive?)
+negatives = arr.reject { |x| x.positive? }
+
+==> 020.rb 79 <==
+positives = arr.select { |x| x.positive? }
+negatives = arr.reject(&:positive?)
+
+==> 021.rb 79 <==
+positives = arr.select(&:positive?)
+negatives = arr.reject { |x| x.negative? }
+
+==> 022.rb 71 <==
+a = arr.select { |x| x.positive? }
+b = arr.select { |x| !x.positive? }
+
+==> 023.rb 71 <==
+b = arr.select { |x| !x.positive? }
+a = arr.select { |x| x.positive? }
+
+==> 024.rb 71 <==
+a = arr.reject { |x| x.positive? }
+b = arr.reject { |x| !x.positive? }
+
+==> 025.rb 65 <==
+a = arr.select { _1.positive? }
+b = arr.select { !_1.positive? }
+
+==> 026.rb 63 <==
+arr.select { |x| x.positive? }
+arr.select { |x| !x.positive? }
+
+==> 027.rb 71 <==
+a = arr.select { |x| x.positive? }
+b = arr.select { |x| !x.negative? }
+
+==> 028.rb 58 <==
+a = arr.select { |x| x > 0 }
+b = arr.select { |x| x > 0 }
+
+==> 029.rb 58 <==
+a = arr.reject { |x| x > 0 }
+b = arr.reject { |x| x > 0 }
+
+==> 030.rb 74 <==
+positives = arr.select { |x| x > 0 }
+negatives = arr.reject { |x| x < 0 }
+
+==> 031.rb 74 <==
+positives = arr.select { |x| x > 0 }
+negatives = arr.reject { |y| y > 0 }
+
+==> 032.rb 71 <==
+positives = arr.select { |x| x > 0 }
+negatives = arr.reject { _1 > 0 }
+
+==> 033.rb 76 <==
+positives = arr1.select { |x| x > 0 }
+negatives = arr2.reject { |x| x > 0 }
+
+==> 034.rb 87 <==
+positives = arr.select { |x| x > 0 }
+do_something
+negatives = arr.reject { |x| x > 0 }
+
+==> 035.rb 76 <==
+if condition
+  arr.select { |x| x > 0 }
+else
+  arr.reject { |x| x > 0 }
+end
+

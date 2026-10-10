@@ -1,0 +1,45 @@
+==> offenses exit=1 695 <==
+000.rb:7:1: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
+001.rb:5:1: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
+002.rb:3:1: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
+003.rb:4:1: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
+004.rb:3:1: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
+
+==> autocorrect exit=0 685 <==
+000.rb:7:1: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
+001.rb:5:1: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
+002.rb:3:1: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
+003.rb:4:1: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
+004.rb:3:1: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
+
+==> corrected/000.rb 28 <==
+[a,
+{
+a: <<-EOM
+baz
+EOM
+}]
+
+
+==> corrected/001.rb 19 <==
+[a,
+{
+foo: bar
+}]
+
+
+==> corrected/002.rb 16 <==
+[a, # a
+b] # b
+
+
+==> corrected/003.rb 9 <==
+[
+a,
+b]
+
+
+==> corrected/004.rb 16 <==
+[a, # a
+b,] # b
+

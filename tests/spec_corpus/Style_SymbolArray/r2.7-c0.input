@@ -1,0 +1,81 @@
+==> .rubocop.yml 238 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SymbolArray:
+  MinSize: 0
+  EnforcedStyle: percent
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: "()"
+
+==> 000.rb 21 <==
+[:one, :two, :three]
+
+==> 001.rb 7 <==
+[:one]
+
+==> 002.rb 24 <==
+[:"	", :"two
+", :three]
+
+==> 003.rb 28 <==
+[:one,
+:two, :three,
+:four]
+
+==> 004.rb 23 <==
+[:"\t", :"\n", :three]
+
+==> 005.rb 21 <==
+[:one, :two, "three"]
+==> 006.rb 17 <==
+%i(one two three)
+==> 007.rb 69 <==
+%i[zero (one) [two] three[4] five[six] seven(8) nine(ten) ([]) [] ()]
+==> 008.rb 64 <==
+%I[one_#{two} three #{four}_five six#{seven}eight [nine_#{ten}]]
+==> 009.rb 27 <==
+[:one, :two, :"space here"]
+==> 010.rb 30 <==
+[:one, :")", :two, :"(", :"]"]
+==> 011.rb 28 <==
+[:one, :two, :"[ ]", :"( )"]
+==> 012.rb 26 <==
+foo([:bar, :baz]) { qux }
+
+==> 013.rb 33 <==
+[:one, :two, :three]
+%i(a b c d)
+
+==> 014.rb 29 <==
+[:one, :two, :three]
+%i(a b)
+
+==> 015.rb 18 <==
+%i[one \[ \] two]
+
+==> 016.rb 16 <==
+%i(one [ ] two)
+
+==> 017.rb 34 <==
+%i[one two \[three\ four\ five\]]
+
+==> 018.rb 19 <==
+%i[one two \[\[\]]
+
+==> 019.rb 18 <==
+%i(one \( \) two)
+
+==> 020.rb 16 <==
+%i[one ( ) two]
+
+==> 021.rb 19 <==
+%i(one two \(\(\))
+
+==> 022.rb 34 <==
+%i(one two \(three\ four\ five\))
+

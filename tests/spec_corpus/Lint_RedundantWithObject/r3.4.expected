@@ -1,0 +1,19 @@
+==> offenses exit=1 282 <==
+000.rb:1:5: W: [Correctable] Lint/RedundantWithObject: Use `each` instead of `each_with_object`.
+001.rb:1:6: W: [Correctable] Lint/RedundantWithObject: Use `each` instead of `each_with_object`.
+002.rb:1:10: W: [Correctable] Lint/RedundantWithObject: Remove redundant `with_object`.
+
+==> autocorrect exit=0 276 <==
+000.rb:1:5: W: [Corrected] Lint/RedundantWithObject: Use `each` instead of `each_with_object`.
+001.rb:1:6: W: [Corrected] Lint/RedundantWithObject: Use `each` instead of `each_with_object`.
+002.rb:1:10: W: [Corrected] Lint/RedundantWithObject: Remove redundant `with_object`.
+
+==> corrected/000.rb 16 <==
+ary.each { it }
+
+==> corrected/001.rb 17 <==
+ary&.each { it }
+
+==> corrected/002.rb 16 <==
+ary.each { it }
+

@@ -1,0 +1,53 @@
+==> offenses exit=1 1174 <==
+000.rb:1:18: C: [Correctable] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: nil`.
+001.rb:1:18: C: [Correctable] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: true`.
+002.rb:1:18: C: [Correctable] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: nil`.
+003.rb:1:12: C: [Correctable] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: true`.
+004.rb:1:12: C: [Correctable] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: true`.
+005.rb:1:19: C: [Correctable] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: true`.
+006.rb:1:20: C: [Correctable] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: true`.
+007.rb:1:18: C: [Correctable] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: true`.
+007.rb:1:38: C: [Correctable] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: true`.
+008.rb:1:18: C: [Correctable] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: nil`.
+008.rb:1:37: C: [Correctable] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: true`.
+
+==> autocorrect exit=0 1152 <==
+000.rb:1:18: C: [Corrected] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: nil`.
+001.rb:1:18: C: [Corrected] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: true`.
+002.rb:1:18: C: [Corrected] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: nil`.
+003.rb:1:12: C: [Corrected] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: true`.
+004.rb:1:12: C: [Corrected] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: true`.
+005.rb:1:19: C: [Corrected] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: true`.
+006.rb:1:20: C: [Corrected] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: true`.
+007.rb:1:18: C: [Corrected] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: true`.
+007.rb:1:38: C: [Corrected] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: true`.
+008.rb:1:18: C: [Corrected] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: nil`.
+008.rb:1:37: C: [Corrected] Style/RedundantStructKeywordInit: Remove the redundant `keyword_init: true`.
+
+==> corrected/000.rb 17 <==
+Struct.new(:foo)
+
+==> corrected/001.rb 17 <==
+Struct.new(:foo)
+
+==> corrected/002.rb 23 <==
+Struct.new(a: 1, b: 2)
+
+==> corrected/003.rb 17 <==
+Struct.new(a: 1)
+
+==> corrected/004.rb 13 <==
+Struct.new()
+
+==> corrected/005.rb 18 <==
+Struct&.new(:foo)
+
+==> corrected/006.rb 19 <==
+::Struct.new(:foo)
+
+==> corrected/007.rb 17 <==
+Struct.new(:foo)
+
+==> corrected/008.rb 17 <==
+Struct.new(:foo)
+

@@ -1,0 +1,26 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 20 <==
+array.max_by { it }
+
+==> 001.rb 21 <==
+array&.max_by { it }
+
+==> 002.rb 20 <==
+array.min_by { it }
+
+==> 003.rb 21 <==
+array&.min_by { it }
+
+==> 004.rb 23 <==
+array.minmax_by { it }
+
+==> 005.rb 24 <==
+array&.minmax_by { it }
+

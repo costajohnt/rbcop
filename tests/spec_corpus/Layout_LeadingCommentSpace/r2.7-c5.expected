@@ -1,0 +1,30 @@
+==> offenses exit=1 577 <==
+000.rb:1:20: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+000.rb:3:19: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+000.rb:4:19: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+000.rb:6:1: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+000.rb:7:1: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+000.rb:8:1: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+000.rb:9:1: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+
+==> autocorrect exit=0 563 <==
+000.rb:1:20: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+000.rb:3:19: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+000.rb:4:19: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+000.rb:6:1: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+000.rb:7:1: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+000.rb:8:1: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+000.rb:9:1: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+
+==> corrected/000.rb 154 <==
+include Enumerable # [Integer]
+
+attr_reader :name # : String
+attr_reader :age  # : Integer?
+
+# : (
+# |   Integer,
+# |   String
+# | ) -> void
+def foo; end
+

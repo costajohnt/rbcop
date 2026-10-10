@@ -1,0 +1,12 @@
+==> offenses exit=1 332 <==
+000.rb:3:7: W: Lint/DuplicateElsifCondition: Duplicate `elsif` condition detected.
+001.rb:3:7: W: Lint/DuplicateElsifCondition: Duplicate `elsif` condition detected.
+002.rb:3:7: W: Lint/DuplicateElsifCondition: Duplicate `elsif` condition detected.
+002.rb:4:7: W: Lint/DuplicateElsifCondition: Duplicate `elsif` condition detected.
+
+==> autocorrect exit=1 332 <==
+000.rb:3:7: W: Lint/DuplicateElsifCondition: Duplicate `elsif` condition detected.
+001.rb:3:7: W: Lint/DuplicateElsifCondition: Duplicate `elsif` condition detected.
+002.rb:3:7: W: Lint/DuplicateElsifCondition: Duplicate `elsif` condition detected.
+002.rb:4:7: W: Lint/DuplicateElsifCondition: Duplicate `elsif` condition detected.
+

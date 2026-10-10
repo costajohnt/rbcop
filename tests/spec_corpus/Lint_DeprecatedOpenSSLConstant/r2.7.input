@@ -1,0 +1,83 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 36 <==
+OpenSSL::Cipher::AES.new(128, :GCM)
+
+==> 001.rb 36 <==
+OpenSSL::Cipher::AES.new('128-GCM')
+
+==> 002.rb 35 <==
+OpenSSL::Cipher::AES128.new("GCM")
+
+==> 003.rb 32 <==
+OpenSSL::Cipher::DES.new('cbc')
+
+==> 004.rb 43 <==
+OpenSSL::Cipher::Cipher.new('AES-256-ECB')
+
+==> 005.rb 31 <==
+OpenSSL::Cipher::BF.new('ecb')
+
+==> 006.rb 34 <==
+OpenSSL::Cipher::AES128.new(:GCM)
+
+==> 007.rb 24 <==
+OpenSSL::Cipher::BF.new
+
+==> 008.rb 25 <==
+OpenSSL::Cipher::DES.new
+
+==> 009.rb 26 <==
+OpenSSL::Cipher::IDEA.new
+
+==> 010.rb 25 <==
+OpenSSL::Cipher::RC4.new
+
+==> 011.rb 28 <==
+OpenSSL::Cipher::AES128.new
+
+==> 012.rb 35 <==
+OpenSSL::Cipher.new('aes-128-gcm')
+
+==> 013.rb 47 <==
+mode = "cbc"
+OpenSSL::Cipher::AES128.new(mode)
+
+==> 014.rb 42 <==
+OpenSSL::Cipher::AES128.new(do_something)
+
+==> 015.rb 38 <==
+OpenSSL::Cipher::AES128.new(foo&.bar)
+
+==> 016.rb 34 <==
+OpenSSL::Cipher::AES128.new(MODE)
+
+==> 017.rb 28 <==
+OpenSSL::Digest::SHA256.new
+
+==> 018.rb 38 <==
+OpenSSL::Digest::SHA256.digest('foo')
+
+==> 019.rb 42 <==
+OpenSSL::Digest::SHA256.new.digest('foo')
+
+==> 020.rb 48 <==
+do_something do
+  OpenSSL::Digest::SHA1.new
+end
+
+==> 021.rb 30 <==
+OpenSSL::Digest.new('SHA256')
+
+==> 022.rb 38 <==
+OpenSSL::Digest::Digest.new('SHA256')
+
+==> 023.rb 40 <==
+OpenSSL::Digest.digest('SHA256', 'foo')
+

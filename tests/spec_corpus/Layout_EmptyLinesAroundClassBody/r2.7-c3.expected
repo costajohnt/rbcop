@@ -1,0 +1,12 @@
+==> offenses exit=1 108 <==
+001.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body end.
+
+==> autocorrect exit=0 106 <==
+001.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body end.
+
+==> corrected/001.rb 36 <==
+class SomeClass
+
+  do_something
+end
+

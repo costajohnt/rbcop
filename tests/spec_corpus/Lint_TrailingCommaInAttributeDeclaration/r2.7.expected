@@ -1,0 +1,33 @@
+==> offenses exit=1 390 <==
+000.rb:2:19: W: [Correctable] Lint/TrailingCommaInAttributeDeclaration: Avoid leaving a trailing comma in attribute declarations.
+001.rb:2:19: W: [Correctable] Lint/TrailingCommaInAttributeDeclaration: Avoid leaving a trailing comma in attribute declarations.
+002.rb:2:21: W: [Correctable] Lint/TrailingCommaInAttributeDeclaration: Avoid leaving a trailing comma in attribute declarations.
+
+==> autocorrect exit=0 384 <==
+000.rb:2:19: W: [Corrected] Lint/TrailingCommaInAttributeDeclaration: Avoid leaving a trailing comma in attribute declarations.
+001.rb:2:19: W: [Corrected] Lint/TrailingCommaInAttributeDeclaration: Avoid leaving a trailing comma in attribute declarations.
+002.rb:2:21: W: [Corrected] Lint/TrailingCommaInAttributeDeclaration: Avoid leaving a trailing comma in attribute declarations.
+
+==> corrected/000.rb 65 <==
+class Foo
+  attr_reader :bar
+
+  def baz
+    puts "Qux"
+  end
+end
+
+==> corrected/001.rb 54 <==
+class Foo
+  attr_reader :bar
+
+  def self.baz; end
+end
+
+==> corrected/002.rb 51 <==
+class Foo
+  attr_accessor :bar
+
+  def baz; end
+end
+

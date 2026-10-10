@@ -1,0 +1,29 @@
+==> offenses exit=1 540 <==
+000.rb:1:1: C: [Correctable] Style/TimeNow: Prefer `Time.now` over `Time.new` to retrieve the current time.
+001.rb:1:1: C: [Correctable] Style/TimeNow: Prefer `Time.now` over `Time.new` to retrieve the current time.
+002.rb:1:1: C: [Correctable] Style/TimeNow: Prefer `Time.now` over `Time.new` to retrieve the current time.
+003.rb:1:1: C: [Correctable] Style/TimeNow: Prefer `Time.now` over `Time.new` to retrieve the current time.
+004.rb:1:1: C: [Correctable] Style/TimeNow: Prefer `Time.now` over `Time.new` to retrieve the current time.
+
+==> autocorrect exit=0 530 <==
+000.rb:1:1: C: [Corrected] Style/TimeNow: Prefer `Time.now` over `Time.new` to retrieve the current time.
+001.rb:1:1: C: [Corrected] Style/TimeNow: Prefer `Time.now` over `Time.new` to retrieve the current time.
+002.rb:1:1: C: [Corrected] Style/TimeNow: Prefer `Time.now` over `Time.new` to retrieve the current time.
+003.rb:1:1: C: [Corrected] Style/TimeNow: Prefer `Time.now` over `Time.new` to retrieve the current time.
+004.rb:1:1: C: [Corrected] Style/TimeNow: Prefer `Time.now` over `Time.new` to retrieve the current time.
+
+==> corrected/000.rb 9 <==
+Time.now
+
+==> corrected/001.rb 9 <==
+Time.now
+
+==> corrected/002.rb 11 <==
+::Time.now
+
+==> corrected/003.rb 10 <==
+Time&.now
+
+==> corrected/004.rb 14 <==
+Time.now.year
+

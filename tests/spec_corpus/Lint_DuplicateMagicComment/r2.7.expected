@@ -1,0 +1,32 @@
+==> offenses exit=1 546 <==
+000.rb:2:1: W: [Correctable] Lint/DuplicateMagicComment: Duplicate magic comment detected.
+001.rb:2:1: W: [Correctable] Lint/DuplicateMagicComment: Duplicate magic comment detected.
+002.rb:2:1: W: [Correctable] Lint/DuplicateMagicComment: Duplicate magic comment detected.
+003.rb:2:1: W: [Correctable] Lint/DuplicateMagicComment: Duplicate magic comment detected.
+004.rb:3:1: W: [Correctable] Lint/DuplicateMagicComment: Duplicate magic comment detected.
+004.rb:4:1: W: [Correctable] Lint/DuplicateMagicComment: Duplicate magic comment detected.
+
+==> autocorrect exit=0 534 <==
+000.rb:2:1: W: [Corrected] Lint/DuplicateMagicComment: Duplicate magic comment detected.
+001.rb:2:1: W: [Corrected] Lint/DuplicateMagicComment: Duplicate magic comment detected.
+002.rb:2:1: W: [Corrected] Lint/DuplicateMagicComment: Duplicate magic comment detected.
+003.rb:2:1: W: [Corrected] Lint/DuplicateMagicComment: Duplicate magic comment detected.
+004.rb:3:1: W: [Corrected] Lint/DuplicateMagicComment: Duplicate magic comment detected.
+004.rb:4:1: W: [Corrected] Lint/DuplicateMagicComment: Duplicate magic comment detected.
+
+==> corrected/000.rb 30 <==
+# frozen_string_literal: true
+
+==> corrected/001.rb 30 <==
+# frozen_string_literal: true
+
+==> corrected/002.rb 18 <==
+# encoding: ascii
+
+==> corrected/003.rb 18 <==
+# encoding: ascii
+
+==> corrected/004.rb 48 <==
+# encoding: ascii
+# frozen_string_literal: true
+

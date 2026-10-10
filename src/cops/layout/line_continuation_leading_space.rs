@@ -41,9 +41,20 @@ impl Cop for LineContinuationLeadingSpace {
             .map(|p| (src.line_of(p.location().start_offset()), src.line_of(p.location().end_offset())))
             .collect();
         let mut end_of_first_line = src.line_start(first);
+        // `raw_source.lines`: CRLF intact, so `\\\r\n` is no continuation and lengths count the CR.
+        let raw_lines: Vec<&str> = if src.raw_text.len() == src.text.len() {
+            Vec::new()
+        } else {
+            src.raw_text.split_inclusive('\n').collect()
+        };
+        let line = |n: usize| match raw_lines.get(n - 1) {
+            Some(l) => *l,
+            None if raw_lines.is_empty() => line_text(src.text, src.line_start(n)),
+            None => "",
+        };
         for line_num in first..last {
-            let line_one = line_text(src.text, src.line_start(line_num));
-            let line_two = line_text(src.text, src.line_start(line_num + 1));
+            let line_one = line(line_num);
+            let line_two = line(line_num + 1);
             end_of_first_line += line_one.len();
             if !line_one.ends_with("\\\n") || spans.iter().any(|&(f, l)| f <= line_num && line_num < l) {
                 continue;

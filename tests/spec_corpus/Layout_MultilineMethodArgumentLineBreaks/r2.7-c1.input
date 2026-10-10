@@ -1,0 +1,29 @@
+==> .rubocop.yml 185 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/MultilineMethodArgumentLineBreaks:
+  AllowMultilineFinalElement: true
+
+==> 000.rb 31 <==
+foo&.bar(1, 2, 3, {
+  a: 1,
+})
+
+==> 001.rb 26 <==
+foo(1, 2, 3, {
+  a: 1,
+})
+
+==> 002.rb 29 <==
+foo(1, 2, 3, {
+  a: 1,
+}, 4)
+
+==> 003.rb 16 <==
+foo(1, 2, 3,
+4)
+

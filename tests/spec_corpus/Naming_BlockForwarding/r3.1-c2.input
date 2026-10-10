@@ -1,0 +1,17 @@
+==> .rubocop.yml 186 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+Naming/BlockForwarding:
+  EnforcedStyle: explicit
+  BlockForwardingName: proc
+
+==> 000.rb 38 <==
+def foo(&)
+  bar(&)
+  baz(qux, &)
+end
+

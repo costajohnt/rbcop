@@ -203,20 +203,17 @@ fn check_indentation(cx: &mut Cx, base: usize, body: Option<&Body>, style: &str,
     };
     let tabs = using_tabs(cx);
     let begin = range.0 as i64;
-    // `begin_pos - indentation` counts characters: a negative indentation reaches forward over
-    // the body text, which may be multibyte (or past the line end).
-    let ind = if tabs {
-        begin - line_indentation(src, range.0).chars().count() as i64
-    } else if indentation < 0 {
-        let n = (-indentation) as usize;
-        let rest = &src.text[range.0..];
-        match rest.char_indices().nth(n) {
-            Some((i, _)) => (range.0 + i) as i64,
-            // Past the end of the file, as RuboCop's range does: one byte per missing character.
-            None => (src.text.len() + n - rest.chars().count()) as i64,
+    let back = if tabs { line_indentation(src, range.0).chars().count() as i64 } else { indentation };
+    // `begin_pos - indentation` counts characters (a negative indentation moves forward over the
+    // body's own characters).
+    let ind = match back {
+        0 => begin,
+        1.. => src.text[..range.0].char_indices().rev().nth(back as usize - 1).map_or(-1, |(i, _)| i as i64),
+        // Past the end of the file the range keeps going, as RuboCop's does.
+        _ => {
+            let (k, rest) = ((-back) as usize, &src.text[range.0..]);
+            rest.char_indices().nth(k).map_or(src.text.len() + k - rest.chars().count().min(k), |(i, _)| range.0 + i) as i64
         }
-    } else {
-        begin - indentation
     };
     let (s, e) = if ind <= begin { (ind, begin) } else { (begin, ind) };
     let name = if style == "normal" { String::new() } else { format!(" {style}") };
@@ -279,7 +276,22 @@ fn check_members(cx: &mut Cx, base: usize, body: Option<&Body>, macro_scope: boo
         (Some(m), false) => check_indentation(cx, base, Some(m), "normal", &ctx),
         (None, _) => check_indentation(cx, base, body, "normal", &ctx),
     }
-    let Some(Body::Begin(children)) = body else { return };
+    // `members.first.begin_type?`: several statements, or a parenthesized body (its statements).
+    let paren_children: Vec<Node>;
+    let children: &[Node] = match body {
+        Some(Body::Begin(v)) => v,
+        Some(Body::Single(n)) if n.as_parentheses_node().is_some() => {
+            paren_children = match n.as_parentheses_node().unwrap().body() {
+                Some(b) => match b.as_statements_node() {
+                    Some(s) => s.body().iter().collect(),
+                    None => vec![b],
+                },
+                None => Vec::new(),
+            };
+            &paren_children
+        }
+        _ => return,
+    };
     if consistency_style(cx) == "indented_internal_methods" {
         let mut previous: Option<usize> = None;
         for m in children {

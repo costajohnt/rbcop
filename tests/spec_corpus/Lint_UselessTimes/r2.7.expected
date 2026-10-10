@@ -1,0 +1,126 @@
+==> offenses exit=1 2355 <==
+000.rb:1:1: W: [Correctable] Lint/UselessTimes: Useless call to `0.times` detected.
+001.rb:1:1: W: [Correctable] Lint/UselessTimes: Useless call to `0.times` detected.
+002.rb:1:1: W: [Correctable] Lint/UselessTimes: Useless call to `-1.times` detected.
+003.rb:1:1: W: [Correctable] Lint/UselessTimes: Useless call to `-1.times` detected.
+004.rb:1:1: W: [Correctable] Lint/UselessTimes: Useless call to `1.times` detected.
+005.rb:1:1: W: [Correctable] Lint/UselessTimes: Useless call to `1.times` detected.
+006.rb:1:1: W: Lint/UselessTimes: Useless call to `1.times` detected.
+007.rb:2:3: W: [Correctable] Lint/UselessTimes: Useless call to `1.times` detected.
+008.rb:2:3: W: [Correctable] Lint/UselessTimes: Useless call to `1.times` detected.
+010.rb:1:1: W: [Correctable] Lint/UselessTimes: Useless call to `0.times` detected.
+011.rb:1:1: W: [Correctable] Lint/UselessTimes: Useless call to `-1.times` detected.
+012.rb:1:1: W: [Correctable] Lint/UselessTimes: Useless call to `1.times` detected.
+014.rb:2:1: W: [Correctable] Lint/UselessTimes: Useless call to `0.times` detected.
+015.rb:1:1: W: [Correctable] Lint/UselessTimes: Useless call to `1.times` detected.
+016.rb:1:1: W: Lint/UselessTimes: Useless call to `1.times` detected.
+017.rb:1:1: W: Lint/UselessTimes: Useless call to `1.times` detected.
+018.rb:1:1: W: [Correctable] Lint/UselessTimes: Useless call to `1.times` detected.
+019.rb:2:3: W: [Correctable] Lint/UselessTimes: Useless call to `0.times` detected.
+020.rb:2:3: W: [Correctable] Lint/UselessTimes: Useless call to `0.times` detected.
+021.rb:2:3: W: [Correctable] Lint/UselessTimes: Useless call to `1.times` detected.
+022.rb:1:5: W: Lint/UselessTimes: Useless call to `0.times` detected.
+023.rb:1:5: W: Lint/UselessTimes: Useless call to `1.times` detected.
+024.rb:1:1: W: Lint/UselessTimes: Useless call to `1.times` detected.
+025.rb:1:1: W: Lint/UselessTimes: Useless call to `1.times` detected.
+026.rb:1:1: W: Lint/UselessTimes: Useless call to `1.times` detected.
+027.rb:1:1: W: Lint/UselessTimes: Useless call to `1.times` detected.
+028.rb:1:1: W: Lint/UselessTimes: Useless call to `1.times` detected.
+029.rb:1:1: W: Lint/UselessTimes: Useless call to `1.times` detected.
+030.rb:1:1: W: Lint/UselessTimes: Useless call to `1.times` detected.
+031.rb:1:1: W: [Correctable] Lint/UselessTimes: Useless call to `1.times` detected.
+
+==> autocorrect exit=1 2319 <==
+000.rb:1:1: W: [Corrected] Lint/UselessTimes: Useless call to `0.times` detected.
+001.rb:1:1: W: [Corrected] Lint/UselessTimes: Useless call to `0.times` detected.
+002.rb:1:1: W: [Corrected] Lint/UselessTimes: Useless call to `-1.times` detected.
+003.rb:1:1: W: [Corrected] Lint/UselessTimes: Useless call to `-1.times` detected.
+004.rb:1:1: W: [Corrected] Lint/UselessTimes: Useless call to `1.times` detected.
+005.rb:1:1: W: [Corrected] Lint/UselessTimes: Useless call to `1.times` detected.
+006.rb:1:1: W: Lint/UselessTimes: Useless call to `1.times` detected.
+007.rb:2:3: W: [Corrected] Lint/UselessTimes: Useless call to `1.times` detected.
+008.rb:2:3: W: [Corrected] Lint/UselessTimes: Useless call to `1.times` detected.
+010.rb:1:1: W: [Corrected] Lint/UselessTimes: Useless call to `0.times` detected.
+011.rb:1:1: W: [Corrected] Lint/UselessTimes: Useless call to `-1.times` detected.
+012.rb:1:1: W: [Corrected] Lint/UselessTimes: Useless call to `1.times` detected.
+014.rb:2:1: W: [Corrected] Lint/UselessTimes: Useless call to `0.times` detected.
+015.rb:1:1: W: [Corrected] Lint/UselessTimes: Useless call to `1.times` detected.
+016.rb:1:1: W: Lint/UselessTimes: Useless call to `1.times` detected.
+017.rb:1:1: W: Lint/UselessTimes: Useless call to `1.times` detected.
+018.rb:1:1: W: [Corrected] Lint/UselessTimes: Useless call to `1.times` detected.
+019.rb:2:3: W: [Corrected] Lint/UselessTimes: Useless call to `0.times` detected.
+020.rb:2:3: W: [Corrected] Lint/UselessTimes: Useless call to `0.times` detected.
+021.rb:2:3: W: [Corrected] Lint/UselessTimes: Useless call to `1.times` detected.
+022.rb:1:5: W: Lint/UselessTimes: Useless call to `0.times` detected.
+023.rb:1:5: W: Lint/UselessTimes: Useless call to `1.times` detected.
+024.rb:1:1: W: Lint/UselessTimes: Useless call to `1.times` detected.
+025.rb:1:1: W: Lint/UselessTimes: Useless call to `1.times` detected.
+026.rb:1:1: W: Lint/UselessTimes: Useless call to `1.times` detected.
+027.rb:1:1: W: Lint/UselessTimes: Useless call to `1.times` detected.
+028.rb:1:1: W: Lint/UselessTimes: Useless call to `1.times` detected.
+029.rb:1:1: W: Lint/UselessTimes: Useless call to `1.times` detected.
+030.rb:1:1: W: Lint/UselessTimes: Useless call to `1.times` detected.
+031.rb:1:1: W: [Corrected] Lint/UselessTimes: Useless call to `1.times` detected.
+
+==> corrected/000.rb 0 <==
+
+==> corrected/001.rb 0 <==
+
+==> corrected/002.rb 0 <==
+
+==> corrected/003.rb 0 <==
+
+==> corrected/004.rb 10 <==
+something
+
+==> corrected/005.rb 13 <==
+something(0)
+
+==> corrected/007.rb 12 <==
+def foo
+end
+
+==> corrected/008.rb 25 <==
+def foo
+  bar
+
+  baz
+end
+
+==> corrected/010.rb 0 <==
+
+==> corrected/011.rb 0 <==
+
+==> corrected/012.rb 10 <==
+something
+
+==> corrected/014.rb 27 <==
+precondition
+postcondition
+
+==> corrected/015.rb 37 <==
+do_something(0)
+do_something_else(0)
+
+==> corrected/018.rb 43 <==
+do_something(0)
+j = 1
+do_something_else(j)
+
+==> corrected/019.rb 18 <==
+def my_method
+end
+
+==> corrected/020.rb 18 <==
+def my_method
+end
+
+==> corrected/021.rb 53 <==
+def my_method
+  do_something
+  do_something_else
+end
+
+==> corrected/031.rb 21 <==
+[1, 2].each { next }
+

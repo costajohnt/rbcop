@@ -1,0 +1,6 @@
+==> offenses exit=1 91 <==
+000.rb:1:1: W: Lint/Debugger: Remove debugger entry point `Foo::Bar::Baz.debug.this.code`.
+
+==> autocorrect exit=1 91 <==
+000.rb:1:1: W: Lint/Debugger: Remove debugger entry point `Foo::Bar::Baz.debug.this.code`.
+

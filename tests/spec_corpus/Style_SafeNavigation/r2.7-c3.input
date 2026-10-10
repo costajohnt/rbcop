@@ -1,0 +1,64 @@
+==> .rubocop.yml 150 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SafeNavigation:
+  MaxChainLength: 3
+
+==> 000.rb 25 <==
+foo && foo.one.two.three
+
+==> 001.rb 30 <==
+foo && foo.one.two.three.four
+
+==> 002.rb 31 <==
+foo && foo.one.two.three&.four
+
+==> 003.rb 25 <==
+FOO && FOO.one.two.three
+
+==> 004.rb 30 <==
+FOO && FOO.one.two.three.four
+
+==> 005.rb 31 <==
+FOO && FOO.one.two.three&.four
+
+==> 006.rb 35 <==
+FOO::BAR && FOO::BAR.one.two.three
+
+==> 007.rb 40 <==
+FOO::BAR && FOO::BAR.one.two.three.four
+
+==> 008.rb 41 <==
+FOO::BAR && FOO::BAR.one.two.three&.four
+
+==> 009.rb 27 <==
+@foo && @foo.one.two.three
+
+==> 010.rb 32 <==
+@foo && @foo.one.two.three.four
+
+==> 011.rb 33 <==
+@foo && @foo.one.two.three&.four
+
+==> 012.rb 29 <==
+@@foo && @@foo.one.two.three
+
+==> 013.rb 34 <==
+@@foo && @@foo.one.two.three.four
+
+==> 014.rb 35 <==
+@@foo && @@foo.one.two.three&.four
+
+==> 015.rb 27 <==
+$FOO && $FOO.one.two.three
+
+==> 016.rb 32 <==
+$FOO && $FOO.one.two.three.four
+
+==> 017.rb 33 <==
+$FOO && $FOO.one.two.three&.four
+

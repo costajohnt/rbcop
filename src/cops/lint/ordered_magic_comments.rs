@@ -16,10 +16,7 @@ impl Cop for OrderedMagicComments {
             return;
         }
         // FrozenStringLiteral#leading_comment_lines
-        let leading = match cx.facts.first_code {
-            Some(off) => &src.lines[..(src.line_of(off) - 1).min(src.lines.len())],
-            None => &src.lines[..],
-        };
+        let leading = helpers::frozen_string_literal::leading(cx);
         let (mut encoding, mut other) = (None, None);
         for (i, line) in leading.iter().enumerate() {
             if magic_comment::encoding_specified(line) {

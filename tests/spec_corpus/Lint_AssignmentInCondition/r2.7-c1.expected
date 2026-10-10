@@ -1,0 +1,48 @@
+==> offenses exit=1 2926 <==
+000.rb:1:10: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+001.rb:1:13: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+002.rb:1:24: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+003.rb:1:25: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+004.rb:1:37: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+005.rb:1:27: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+006.rb:1:28: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+007.rb:1:40: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+008.rb:1:27: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+009.rb:1:28: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+010.rb:1:40: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+011.rb:1:10: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+012.rb:1:24: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+013.rb:1:25: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+014.rb:1:37: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+015.rb:1:27: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+016.rb:1:28: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+017.rb:1:40: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+018.rb:1:27: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+019.rb:1:28: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+020.rb:1:40: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+021.rb:1:10: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+
+==> autocorrect exit=1 2926 <==
+000.rb:1:10: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+001.rb:1:13: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+002.rb:1:24: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+003.rb:1:25: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+004.rb:1:37: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+005.rb:1:27: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+006.rb:1:28: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+007.rb:1:40: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+008.rb:1:27: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+009.rb:1:28: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+010.rb:1:40: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+011.rb:1:10: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+012.rb:1:24: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+013.rb:1:25: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+014.rb:1:37: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+015.rb:1:27: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+016.rb:1:28: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+017.rb:1:40: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+018.rb:1:27: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+019.rb:1:28: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+020.rb:1:40: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+021.rb:1:10: W: Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+

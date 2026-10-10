@@ -16,9 +16,11 @@ fn copy_dir(from: &Path, to: &Path) {
 #[test]
 fn autocorrect_matches_rubocop() {
     let root = Path::new(concat!(env!("CARGO_MANIFEST_DIR"), "/tests/autocorrect"));
-    let cops = fs::read_to_string(root.join("cops.txt")).unwrap();
-    for case in ["comparison", "default"] {
+    for case in ["comparison", "default", "fuzz"] {
         let dir = root.join(case);
+        // A case may list its own cops (`<case>/cops.txt`).
+        let cops =
+            fs::read_to_string(dir.join("cops.txt")).or_else(|_| fs::read_to_string(root.join("cops.txt"))).unwrap();
         let work = std::env::temp_dir().join(format!("rbcop-autocorrect-{case}-{}", std::process::id()));
         let _ = fs::remove_dir_all(&work);
         copy_dir(&dir.join("input"), &work);

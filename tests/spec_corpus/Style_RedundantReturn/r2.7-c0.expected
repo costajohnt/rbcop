@@ -1,0 +1,273 @@
+==> offenses exit=1 3125 <==
+000.rb:2:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+001.rb:2:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+002.rb:3:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+003.rb:2:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+004.rb:2:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+005.rb:3:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+006.rb:3:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+007.rb:3:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+008.rb:3:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+010.rb:3:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+011.rb:3:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+012.rb:2:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+016.rb:4:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+017.rb:4:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+018.rb:4:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+019.rb:2:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected. To return multiple values, use an array.
+020.rb:2:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected. To return multiple values, use an array.
+021.rb:4:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected. To return multiple values, use an array.
+022.rb:4:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected. To return multiple values, use an array.
+023.rb:2:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+024.rb:2:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+025.rb:2:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected. To return multiple values, use an array.
+026.rb:4:5: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+027.rb:4:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+027.rb:7:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+027.rb:9:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+028.rb:5:3: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+029.rb:4:5: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+029.rb:6:5: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+029.rb:8:5: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+030.rb:4:15: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+030.rb:5:15: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+030.rb:8:5: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+032.rb:4:13: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+032.rb:5:13: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+032.rb:8:5: C: [Correctable] Style/RedundantReturn: Redundant `return` detected.
+
+==> autocorrect exit=0 3053 <==
+000.rb:2:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+001.rb:2:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+002.rb:3:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+003.rb:2:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+004.rb:2:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+005.rb:3:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+006.rb:3:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+007.rb:3:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+008.rb:3:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+010.rb:3:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+011.rb:3:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+012.rb:2:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+016.rb:4:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+017.rb:4:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+018.rb:4:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+019.rb:2:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected. To return multiple values, use an array.
+020.rb:2:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected. To return multiple values, use an array.
+021.rb:4:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected. To return multiple values, use an array.
+022.rb:4:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected. To return multiple values, use an array.
+023.rb:2:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+024.rb:2:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+025.rb:2:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected. To return multiple values, use an array.
+026.rb:4:5: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+027.rb:4:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+027.rb:7:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+027.rb:9:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+028.rb:5:3: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+029.rb:4:5: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+029.rb:6:5: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+029.rb:8:5: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+030.rb:4:15: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+030.rb:5:15: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+030.rb:8:5: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+032.rb:4:13: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+032.rb:5:13: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+032.rb:8:5: C: [Corrected] Style/RedundantReturn: Redundant `return` detected.
+
+==> corrected/000.rb 36 <==
+def func
+  something
+ensure
+  2
+end
+
+==> corrected/001.rb 30 <==
+def Test.func
+  something
+end
+
+==> corrected/002.rb 53 <==
+def func
+  some_preceding_statements
+  something
+end
+
+==> corrected/003.rb 39 <==
+define_method(:foo) do
+  something
+end
+
+==> corrected/004.rb 49 <==
+define_singleton_method(:foo) do
+  something
+end
+
+==> corrected/005.rb 67 <==
+define_method(:foo) do
+  some_preceding_statements
+  something
+end
+
+==> corrected/006.rb 77 <==
+define_singleton_method(:foo) do
+  some_preceding_statements
+  something
+end
+
+==> corrected/007.rb 54 <==
+lambda do
+  some_preceding_statements
+  something
+end
+
+==> corrected/008.rb 50 <==
+-> do
+  some_preceding_statements
+  something
+end
+
+==> corrected/010.rb 53 <==
+def func
+  some_preceding_statements
+  something
+end
+
+==> corrected/011.rb 58 <==
+def self.func
+  some_preceding_statements
+  something
+end
+
+==> corrected/012.rb 43 <==
+def func
+  something if something_else
+end
+
+==> corrected/016.rb 37 <==
+def func
+  one
+  two
+  something
+end
+
+==> corrected/017.rb 43 <==
+def func
+  one
+  two
+  nil
+  # comment
+end
+
+==> corrected/018.rb 43 <==
+def func
+  one
+  two
+  nil
+  # comment
+end
+
+==> corrected/019.rb 33 <==
+def func
+  [something, test]
+end
+
+==> corrected/020.rb 38 <==
+def Test.func
+  [something, test]
+end
+
+==> corrected/021.rb 45 <==
+def func
+  one
+  two
+  [something, test]
+end
+
+==> corrected/022.rb 50 <==
+def self.func
+  one
+  two
+  [something, test]
+end
+
+==> corrected/023.rb 34 <==
+def func
+  {:a => 1, :b => 2}
+end
+
+==> corrected/024.rb 34 <==
+def func
+  {:a => 1, :b => 2}
+end
+
+==> corrected/025.rb 42 <==
+def do_something
+  [(foo && bar), 42]
+end
+
+==> corrected/026.rb 61 <==
+def func
+  some_preceding_statements
+  begin
+    1
+  end
+end
+
+==> corrected/027.rb 100 <==
+def func
+  1
+  2
+  3
+rescue SomeException
+  4
+  5
+rescue AnotherException
+  6
+ensure
+  return 7
+end
+
+==> corrected/028.rb 54 <==
+def func
+  return 3
+rescue SomeException
+else
+  4
+end
+
+==> corrected/029.rb 89 <==
+def func
+  some_preceding_statements
+  if x
+    1
+  elsif y
+    2
+  else
+    3
+  end
+end
+
+==> corrected/030.rb 110 <==
+def func
+  some_preceding_statements
+  case x
+  when y then 1
+  when z then 2
+  when q
+  else
+    3
+  end
+end
+
+==> corrected/032.rb 104 <==
+def func
+  some_preceding_statements
+  case x
+  in y then 1
+  in z then 2
+  in q
+  else
+    3
+  end
+end
+

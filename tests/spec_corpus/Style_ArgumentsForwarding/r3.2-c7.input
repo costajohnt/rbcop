@@ -1,0 +1,30 @@
+==> .rubocop.yml 314 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+Style/ArgumentsForwarding:
+  RedundantRestArgumentNames:
+  - args
+  - arguments
+  RedundantKeywordRestArgumentNames:
+  - meaningless_kwrestarg_name
+  RedundantBlockArgumentNames:
+  - blk
+  - block
+  - proc
+
+==> 000.rb 112 <==
+def foo(*args, **meaningless_kwrestarg_name)
+  args_only(*args)
+  kwargs_only(**meaningless_kwrestarg_name)
+end
+
+==> 001.rb 74 <==
+def foo(*args, **options)
+  args_only(*args)
+  kwargs_only(**options)
+end
+

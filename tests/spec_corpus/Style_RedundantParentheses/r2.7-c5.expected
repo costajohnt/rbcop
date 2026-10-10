@@ -1,0 +1,24 @@
+==> offenses exit=1 432 <==
+000.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+001.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+002.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+003.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+
+==> autocorrect exit=0 424 <==
+000.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+001.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+002.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+003.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+
+==> corrected/000.rb 7 <==
+x && y
+
+==> corrected/001.rb 7 <==
+x || y
+
+==> corrected/002.rb 8 <==
+x and y
+
+==> corrected/003.rb 7 <==
+x or y
+

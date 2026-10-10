@@ -1,0 +1,12 @@
+==> offenses exit=1 392 <==
+000.rb:1:1: W: Lint/EachWithObjectArgument: The argument to each_with_object cannot be immutable.
+001.rb:1:1: W: Lint/EachWithObjectArgument: The argument to each_with_object cannot be immutable.
+002.rb:1:1: W: Lint/EachWithObjectArgument: The argument to each_with_object cannot be immutable.
+006.rb:1:1: W: Lint/EachWithObjectArgument: The argument to each_with_object cannot be immutable.
+
+==> autocorrect exit=1 392 <==
+000.rb:1:1: W: Lint/EachWithObjectArgument: The argument to each_with_object cannot be immutable.
+001.rb:1:1: W: Lint/EachWithObjectArgument: The argument to each_with_object cannot be immutable.
+002.rb:1:1: W: Lint/EachWithObjectArgument: The argument to each_with_object cannot be immutable.
+006.rb:1:1: W: Lint/EachWithObjectArgument: The argument to each_with_object cannot be immutable.
+

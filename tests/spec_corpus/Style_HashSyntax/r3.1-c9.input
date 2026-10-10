@@ -1,0 +1,17 @@
+==> .rubocop.yml 237 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+Style/HashSyntax:
+  EnforcedStyle: hash_rockets
+  SupportedStyles:
+  - ruby19
+  - hash_rockets
+  EnforcedShorthandSyntax: always
+
+==> 000.rb 27 <==
+{:foo => foo, :bar => bar}
+

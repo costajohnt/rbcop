@@ -1,0 +1,49 @@
+==> offenses exit=1 1024 <==
+000.rb:1:6: C: [Correctable] Style/SpecialGlobalVars: Prefer `$PROCESS_ID` or `$PID` from the stdlib 'English' module (don't forget to require it) over `$$`.
+001.rb:5:8: C: [Correctable] Style/SpecialGlobalVars: Prefer `$PROCESS_ID` or `$PID` from the stdlib 'English' module (don't forget to require it) over `$$`.
+002.rb:3:6: C: [Correctable] Style/SpecialGlobalVars: Prefer `$ARGV` from the stdlib 'English' module (don't forget to require it) or `ARGV` over `$*`.
+002.rb:4:6: C: [Correctable] Style/SpecialGlobalVars: Prefer `$ARGV` from the stdlib 'English' module (don't forget to require it) or `ARGV` over `$*`.
+003.rb:1:6: C: [Correctable] Style/SpecialGlobalVars: Prefer `$PROGRAM_NAME` over `$0`.
+004.rb:2:6: C: [Correctable] Style/SpecialGlobalVars: Prefer `$PROCESS_ID` or `$PID` from the stdlib 'English' module (don't forget to require it) over `$$`.
+005.rb:1:6: C: [Correctable] Style/SpecialGlobalVars: Prefer `$PROCESS_ID` or `$PID` from the stdlib 'English' module (don't forget to require it) over `$$`.
+
+==> autocorrect exit=0 1010 <==
+000.rb:1:6: C: [Corrected] Style/SpecialGlobalVars: Prefer `$PROCESS_ID` or `$PID` from the stdlib 'English' module (don't forget to require it) over `$$`.
+001.rb:5:8: C: [Corrected] Style/SpecialGlobalVars: Prefer `$PROCESS_ID` or `$PID` from the stdlib 'English' module (don't forget to require it) over `$$`.
+002.rb:3:6: C: [Corrected] Style/SpecialGlobalVars: Prefer `$ARGV` from the stdlib 'English' module (don't forget to require it) or `ARGV` over `$*`.
+002.rb:4:6: C: [Corrected] Style/SpecialGlobalVars: Prefer `$ARGV` from the stdlib 'English' module (don't forget to require it) or `ARGV` over `$*`.
+003.rb:1:6: C: [Corrected] Style/SpecialGlobalVars: Prefer `$PROGRAM_NAME` over `$0`.
+004.rb:2:6: C: [Corrected] Style/SpecialGlobalVars: Prefer `$PROCESS_ID` or `$PID` from the stdlib 'English' module (don't forget to require it) over `$$`.
+005.rb:1:6: C: [Corrected] Style/SpecialGlobalVars: Prefer `$PROCESS_ID` or `$PID` from the stdlib 'English' module (don't forget to require it) over `$$`.
+
+==> corrected/000.rb 35 <==
+require 'English'
+puts $PROCESS_ID
+
+==> corrected/001.rb 86 <==
+# frozen_string_literal: true
+
+require 'English'
+x = true
+if x
+  puts $PROCESS_ID
+end
+
+==> corrected/002.rb 77 <==
+# frozen_string_literal: true
+
+require 'English'
+puts $ARGV[0]
+puts $ARGV[1]
+
+==> corrected/003.rb 19 <==
+puts $PROGRAM_NAME
+
+==> corrected/004.rb 35 <==
+require 'English'
+puts $PROCESS_ID
+
+==> corrected/005.rb 35 <==
+require 'English'
+puts $PROCESS_ID
+

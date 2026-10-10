@@ -1,0 +1,52 @@
+==> offenses exit=1 820 <==
+000.rb:1:1: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+007.rb:2:1: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+008.rb:2:1: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+008.rb:3:1: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+008.rb:4:1: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+010.rb:2:1: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+011.rb:1:1: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+013.rb:1:1: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+013.rb:2:1: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+014.rb:1:1: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+
+==> autocorrect exit=0 800 <==
+000.rb:1:1: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+007.rb:2:1: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+008.rb:2:1: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+008.rb:3:1: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+008.rb:4:1: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+010.rb:2:1: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+011.rb:1:1: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+013.rb:1:1: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+013.rb:2:1: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+014.rb:1:1: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+
+==> corrected/000.rb 16 <==
+# missing space
+
+==> corrected/007.rb 22 <==
+test
+# !/usr/bin/ruby
+
+==> corrected/008.rb 89 <==
+test
+# !/usr/bin/env nix-shell
+# ! nix-shell -i ruby --pure
+# ! nix-shell -p ruby gh git
+
+==> corrected/010.rb 20 <==
+test
+# \ -w -p 8765
+
+==> corrected/011.rb 20 <==
+# \ -w -p 8765
+test
+
+==> corrected/013.rb 8 <==
+# +
+# -
+
+==> corrected/014.rb 10 <==
+# :nodoc:
+

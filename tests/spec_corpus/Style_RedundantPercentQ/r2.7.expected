@@ -1,0 +1,63 @@
+==> offenses exit=1 1696 <==
+000.rb:1:1: C: [Correctable] Style/RedundantPercentQ: Use `%q` only for strings that contain both single quotes and double quotes.
+001.rb:1:1: C: [Correctable] Style/RedundantPercentQ: Use `%q` only for strings that contain both single quotes and double quotes.
+002.rb:1:1: C: [Correctable] Style/RedundantPercentQ: Use `%q` only for strings that contain both single quotes and double quotes.
+004.rb:1:1: C: [Correctable] Style/RedundantPercentQ: Use `%q` only for strings that contain both single quotes and double quotes.
+008.rb:1:1: C: [Correctable] Style/RedundantPercentQ: Use `%q` only for strings that contain both single quotes and double quotes.
+009.rb:1:1: C: [Correctable] Style/RedundantPercentQ: Use `%q` only for strings that contain both single quotes and double quotes.
+011.rb:1:1: C: [Correctable] Style/RedundantPercentQ: Use `%Q` only for strings that contain both single quotes and double quotes, or for dynamic strings that contain double quotes.
+012.rb:1:1: C: [Correctable] Style/RedundantPercentQ: Use `%Q` only for strings that contain both single quotes and double quotes, or for dynamic strings that contain double quotes.
+013.rb:1:1: C: [Correctable] Style/RedundantPercentQ: Use `%Q` only for strings that contain both single quotes and double quotes, or for dynamic strings that contain double quotes.
+019.rb:1:1: C: [Correctable] Style/RedundantPercentQ: Use `%Q` only for strings that contain both single quotes and double quotes, or for dynamic strings that contain double quotes.
+020.rb:1:1: C: [Correctable] Style/RedundantPercentQ: Use `%Q` only for strings that contain both single quotes and double quotes, or for dynamic strings that contain double quotes.
+
+==> autocorrect exit=0 1674 <==
+000.rb:1:1: C: [Corrected] Style/RedundantPercentQ: Use `%q` only for strings that contain both single quotes and double quotes.
+001.rb:1:1: C: [Corrected] Style/RedundantPercentQ: Use `%q` only for strings that contain both single quotes and double quotes.
+002.rb:1:1: C: [Corrected] Style/RedundantPercentQ: Use `%q` only for strings that contain both single quotes and double quotes.
+004.rb:1:1: C: [Corrected] Style/RedundantPercentQ: Use `%q` only for strings that contain both single quotes and double quotes.
+008.rb:1:1: C: [Corrected] Style/RedundantPercentQ: Use `%q` only for strings that contain both single quotes and double quotes.
+009.rb:1:1: C: [Corrected] Style/RedundantPercentQ: Use `%q` only for strings that contain both single quotes and double quotes.
+011.rb:1:1: C: [Corrected] Style/RedundantPercentQ: Use `%Q` only for strings that contain both single quotes and double quotes, or for dynamic strings that contain double quotes.
+012.rb:1:1: C: [Corrected] Style/RedundantPercentQ: Use `%Q` only for strings that contain both single quotes and double quotes, or for dynamic strings that contain double quotes.
+013.rb:1:1: C: [Corrected] Style/RedundantPercentQ: Use `%Q` only for strings that contain both single quotes and double quotes, or for dynamic strings that contain double quotes.
+019.rb:1:1: C: [Corrected] Style/RedundantPercentQ: Use `%Q` only for strings that contain both single quotes and double quotes, or for dynamic strings that contain double quotes.
+020.rb:1:1: C: [Corrected] Style/RedundantPercentQ: Use `%Q` only for strings that contain both single quotes and double quotes, or for dynamic strings that contain double quotes.
+
+==> corrected/000.rb 7 <==
+"'hi'"
+
+==> corrected/001.rb 7 <==
+'"hi"'
+
+==> corrected/002.rb 5 <==
+'hi'
+
+==> corrected/004.rb 14 <==
+'\\\\foo\\\\'
+
+==> corrected/008.rb 28 <==
+'foo bar baz' \
+  'boogers'
+
+==> corrected/009.rb 9 <==
+'#{foo}'
+
+==> corrected/011.rb 5 <==
+"hi"
+
+==> corrected/012.rb 7 <==
+'"hi"'
+
+==> corrected/013.rb 9 <==
+"hi#{4}"
+
+==> corrected/019.rb 28 <==
+"foo bar baz" \
+  'boogers'
+
+==> corrected/020.rb 35 <==
+'
+  Quoth the Raven "Nevermore."
+'
+

@@ -1,0 +1,30 @@
+==> offenses exit=1 414 <==
+000.rb:1:18: C: [Correctable] Style/HashSyntax: Omit the hash value.
+001.rb:1:14: C: [Correctable] Style/HashSyntax: Omit the hash value.
+002.rb:1:14: C: [Correctable] Style/HashSyntax: Omit the hash value.
+002.rb:1:28: C: [Correctable] Style/HashSyntax: Omit the hash value.
+003.rb:1:14: C: [Correctable] Style/HashSyntax: Omit the hash value.
+003.rb:1:28: C: [Correctable] Style/HashSyntax: Omit the hash value.
+
+==> autocorrect exit=0 402 <==
+000.rb:1:18: C: [Corrected] Style/HashSyntax: Omit the hash value.
+001.rb:1:14: C: [Corrected] Style/HashSyntax: Omit the hash value.
+002.rb:1:14: C: [Corrected] Style/HashSyntax: Omit the hash value.
+002.rb:1:28: C: [Corrected] Style/HashSyntax: Omit the hash value.
+003.rb:1:14: C: [Corrected] Style/HashSyntax: Omit the hash value.
+003.rb:1:28: C: [Corrected] Style/HashSyntax: Omit the hash value.
+
+==> corrected/000.rb 22 <==
+yield(:foo, bar:).baz
+
+==> corrected/001.rb 25 <==
+yield(value:) unless foo
+
+==> corrected/002.rb 35 <==
+yield(value:, other:)
+@ivar = ivar
+
+==> corrected/003.rb 30 <==
+yield(value:, other:)
+foo baz
+

@@ -1,0 +1,69 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 51 <==
+begin
+  something
+ensure
+  file.close
+  return
+end
+
+==> 001.rb 36 <==
+begin
+  foo
+ensure
+  return baz
+end
+
+==> 002.rb 62 <==
+begin
+  something
+ensure
+  do_something
+  return foo, bar
+end
+
+==> 003.rb 51 <==
+begin
+  something
+  return
+ensure
+  file.close
+end
+
+==> 004.rb 29 <==
+begin
+  something
+ensure
+end
+
+==> 005.rb 78 <==
+def foo
+  do_something
+ensure
+  handler = -> { return 42 }
+  handler.call
+end
+
+==> 006.rb 63 <==
+def foo
+  do_something
+ensure
+  def bar
+    return 1
+  end
+end
+
+==> 007.rb 59 <==
+def foo
+  do_something
+ensure
+  [1, 2].each { return }
+end
+

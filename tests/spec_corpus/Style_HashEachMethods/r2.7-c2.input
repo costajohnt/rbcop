@@ -1,0 +1,14 @@
+==> .rubocop.yml 170 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/HashEachMethods:
+  AllowedReceivers:
+  - Thread.current
+
+==> 000.rb 37 <==
+Thread.current.keys.each { |k| p k }
+

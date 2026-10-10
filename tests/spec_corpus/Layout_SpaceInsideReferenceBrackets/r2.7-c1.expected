@@ -1,0 +1,19 @@
+==> offenses exit=1 339 <==
+001.rb:1:4: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use one space inside empty reference brackets.
+002.rb:1:2: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use one space inside empty reference brackets.
+003.rb:1:2: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use one space inside empty reference brackets.
+
+==> autocorrect exit=0 333 <==
+001.rb:1:4: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use one space inside empty reference brackets.
+002.rb:1:2: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use one space inside empty reference brackets.
+003.rb:1:2: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use one space inside empty reference brackets.
+
+==> corrected/001.rb 7 <==
+foo[ ]
+
+==> corrected/002.rb 5 <==
+a[ ]
+
+==> corrected/003.rb 5 <==
+a[ ]
+

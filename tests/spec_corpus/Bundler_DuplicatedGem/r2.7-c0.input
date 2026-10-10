@@ -1,0 +1,80 @@
+==> .rubocop.yml 159 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Bundler/DuplicatedGem:
+  Include:
+  - "**/Gemfile"
+
+==> 000/foo.rb 65 <==
+# cop will not read these contents
+gem('rubocop')
+gem('rubocop')
+
+==> 001/Gemfile 0 <==
+
+==> 002/Gemfile 25 <==
+gem 'rubocop'
+gem 'flog'
+
+==> 003/Gemfile 58 <==
+source 'https://rubygems.org'
+gem 'rubocop'
+gem 'rubocop'
+
+==> 004/Gemfile 78 <==
+gem 'rubocop'
+group :development do
+  gem 'rubocop', path: '/path/to/gem'
+end
+
+==> 005/Gemfile 101 <==
+gem 'rubocop'
+if Dir.exist? local
+  gem 'rubocop', path: local
+else
+  gem 'rubocop', '~> 0.90.0'
+end
+
+==> 006/Gemfile 114 <==
+if Dir.exist?(local)
+  gem 'rubocop', path: local
+  gem 'flog', path: local
+else
+  gem 'rubocop', '~> 0.90.0'
+end
+
+==> 007/Gemfile 258 <==
+if Dir.exist?(local)
+  gem 'rubocop', path: local
+elsif ENV['RUBOCOP_VERSION'] == 'master'
+  gem 'rubocop', git: 'https://github.com/rubocop/rubocop.git'
+elsif (version = ENV['RUBOCOP_VERSION'])
+  gem 'rubocop', version
+else
+  gem 'rubocop', '~> 0.90.0'
+end
+
+==> 008/Gemfile 198 <==
+case
+when Dir.exist?(local)
+  gem 'rubocop', path: local
+when ENV['RUBOCOP_VERSION'] == 'master'
+  gem 'rubocop', git: 'https://github.com/rubocop/rubocop.git'
+else
+  gem 'rubocop', '~> 0.90.0'
+end
+
+==> 009/Gemfile 162 <==
+case
+when Dir.exist?(local)
+  gem 'rubocop', path: local
+when ENV['RUBOCOP_VERSION'] == 'master'
+  # no-op, do nothing club
+else
+  gem 'rubocop', '~> 0.90.0'
+end
+

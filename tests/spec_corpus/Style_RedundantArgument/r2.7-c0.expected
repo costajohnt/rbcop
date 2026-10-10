@@ -1,0 +1,76 @@
+==> offenses exit=1 2288 <==
+000.rb:1:9: C: [Correctable] Style/RedundantArgument: Argument '' is redundant because it is implied by default.
+000.rb:2:8: C: [Correctable] Style/RedundantArgument: Argument 0 is redundant because it is implied by default.
+000.rb:3:5: C: [Correctable] Style/RedundantArgument: Argument true is redundant because it is implied by default.
+000.rb:4:6: C: [Correctable] Style/RedundantArgument: Argument false is redundant because it is implied by default.
+000.rb:5:9: C: [Correctable] Style/RedundantArgument: Argument 10 is redundant because it is implied by default.
+000.rb:6:10: C: [Correctable] Style/RedundantArgument: Argument ' ' is redundant because it is implied by default.
+000.rb:7:10: C: [Correctable] Style/RedundantArgument: Argument "\n" is redundant because it is implied by default.
+000.rb:8:11: C: [Correctable] Style/RedundantArgument: Argument "\n" is redundant because it is implied by default.
+001.rb:1:10: C: [Correctable] Style/RedundantArgument: Argument '' is redundant because it is implied by default.
+001.rb:2:9: C: [Correctable] Style/RedundantArgument: Argument 0 is redundant because it is implied by default.
+001.rb:3:11: C: [Correctable] Style/RedundantArgument: Argument ' ' is redundant because it is implied by default.
+001.rb:4:11: C: [Correctable] Style/RedundantArgument: Argument "\n" is redundant because it is implied by default.
+001.rb:5:12: C: [Correctable] Style/RedundantArgument: Argument "\n" is redundant because it is implied by default.
+002.rb:1:9: C: [Correctable] Style/RedundantArgument: Argument '' is redundant because it is implied by default.
+002.rb:2:10: C: [Correctable] Style/RedundantArgument: Argument ' ' is redundant because it is implied by default.
+003.rb:1:15: C: [Correctable] Style/RedundantArgument: Argument '' is redundant because it is implied by default.
+003.rb:2:21: C: [Correctable] Style/RedundantArgument: Argument ' ' is redundant because it is implied by default.
+004.rb:1:15: C: [Correctable] Style/RedundantArgument: Argument '' is redundant because it is implied by default.
+005.rb:1:9: C: [Correctable] Style/RedundantArgument: Argument "" is redundant because it is implied by default.
+005.rb:2:21: C: [Correctable] Style/RedundantArgument: Argument " " is redundant because it is implied by default.
+
+==> autocorrect exit=0 2248 <==
+000.rb:1:9: C: [Corrected] Style/RedundantArgument: Argument '' is redundant because it is implied by default.
+000.rb:2:8: C: [Corrected] Style/RedundantArgument: Argument 0 is redundant because it is implied by default.
+000.rb:3:5: C: [Corrected] Style/RedundantArgument: Argument true is redundant because it is implied by default.
+000.rb:4:6: C: [Corrected] Style/RedundantArgument: Argument false is redundant because it is implied by default.
+000.rb:5:9: C: [Corrected] Style/RedundantArgument: Argument 10 is redundant because it is implied by default.
+000.rb:6:10: C: [Corrected] Style/RedundantArgument: Argument ' ' is redundant because it is implied by default.
+000.rb:7:10: C: [Corrected] Style/RedundantArgument: Argument "\n" is redundant because it is implied by default.
+000.rb:8:11: C: [Corrected] Style/RedundantArgument: Argument "\n" is redundant because it is implied by default.
+001.rb:1:10: C: [Corrected] Style/RedundantArgument: Argument '' is redundant because it is implied by default.
+001.rb:2:9: C: [Corrected] Style/RedundantArgument: Argument 0 is redundant because it is implied by default.
+001.rb:3:11: C: [Corrected] Style/RedundantArgument: Argument ' ' is redundant because it is implied by default.
+001.rb:4:11: C: [Corrected] Style/RedundantArgument: Argument "\n" is redundant because it is implied by default.
+001.rb:5:12: C: [Corrected] Style/RedundantArgument: Argument "\n" is redundant because it is implied by default.
+002.rb:1:9: C: [Corrected] Style/RedundantArgument: Argument '' is redundant because it is implied by default.
+002.rb:2:10: C: [Corrected] Style/RedundantArgument: Argument ' ' is redundant because it is implied by default.
+003.rb:1:15: C: [Corrected] Style/RedundantArgument: Argument '' is redundant because it is implied by default.
+003.rb:2:21: C: [Corrected] Style/RedundantArgument: Argument ' ' is redundant because it is implied by default.
+004.rb:1:15: C: [Corrected] Style/RedundantArgument: Argument '' is redundant because it is implied by default.
+005.rb:1:9: C: [Corrected] Style/RedundantArgument: Argument "" is redundant because it is implied by default.
+005.rb:2:21: C: [Corrected] Style/RedundantArgument: Argument " " is redundant because it is implied by default.
+
+==> corrected/000.rb 68 <==
+foo.join
+foo.sum
+exit
+exit!
+foo.to_i
+foo.split
+foo.chomp
+foo.chomp!
+
+==> corrected/001.rb 53 <==
+foo&.join
+foo&.sum
+foo&.split
+foo&.chomp
+foo&.chomp!
+
+==> corrected/002.rb 19 <==
+foo.join
+foo.split
+
+==> corrected/003.rb 36 <==
+[1, 2, 3].join
+"first second".split
+
+==> corrected/004.rb 15 <==
+[1, 2, 3].join
+
+==> corrected/005.rb 30 <==
+foo.join
+"first second".split
+

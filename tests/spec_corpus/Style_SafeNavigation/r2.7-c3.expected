@@ -1,0 +1,34 @@
+==> offenses exit=1 870 <==
+000.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+003.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+006.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+009.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+012.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+015.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+
+==> autocorrect exit=0 858 <==
+000.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+003.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+006.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+009.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+012.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+015.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+
+==> corrected/000.rb 21 <==
+foo&.one&.two&.three
+
+==> corrected/003.rb 21 <==
+FOO&.one&.two&.three
+
+==> corrected/006.rb 26 <==
+FOO::BAR&.one&.two&.three
+
+==> corrected/009.rb 22 <==
+@foo&.one&.two&.three
+
+==> corrected/012.rb 23 <==
+@@foo&.one&.two&.three
+
+==> corrected/015.rb 22 <==
+$FOO&.one&.two&.three
+

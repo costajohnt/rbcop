@@ -1,0 +1,24 @@
+==> offenses exit=1 344 <==
+000.rb:1:5: C: [Correctable] Style/ColonMethodCall: Do not use `::` for method calls.
+001.rb:1:5: C: [Correctable] Style/ColonMethodCall: Do not use `::` for method calls.
+002.rb:1:6: C: [Correctable] Style/ColonMethodCall: Do not use `::` for method calls.
+003.rb:1:6: C: [Correctable] Style/ColonMethodCall: Do not use `::` for method calls.
+
+==> autocorrect exit=0 336 <==
+000.rb:1:5: C: [Corrected] Style/ColonMethodCall: Do not use `::` for method calls.
+001.rb:1:5: C: [Corrected] Style/ColonMethodCall: Do not use `::` for method calls.
+002.rb:1:6: C: [Corrected] Style/ColonMethodCall: Do not use `::` for method calls.
+003.rb:1:6: C: [Corrected] Style/ColonMethodCall: Do not use `::` for method calls.
+
+==> corrected/000.rb 17 <==
+test.method_name
+
+==> corrected/001.rb 22 <==
+test.method_name(arg)
+
+==> corrected/002.rb 18 <==
+Class.method_name
+
+==> corrected/003.rb 29 <==
+Class.method_name(arg, arg2)
+

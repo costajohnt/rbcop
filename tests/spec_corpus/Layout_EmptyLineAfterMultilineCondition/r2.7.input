@@ -1,0 +1,155 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 48 <==
+if multiline &&
+   condition
+  do_something
+end
+
+==> 001.rb 49 <==
+if multiline &&
+   condition
+
+  do_something
+end
+
+==> 002.rb 33 <==
+if singleline
+  do_something
+end
+
+==> 003.rb 73 <==
+do_something if multiline &&
+                condition
+do_something_else
+
+==> 004.rb 74 <==
+do_something if multiline &&
+                condition
+
+do_something_else
+
+==> 005.rb 67 <==
+def m
+  do_something if multiline &&
+                condition
+end
+
+==> 006.rb 26 <==
+do_something if condition
+
+==> 007.rb 84 <==
+if condition
+  do_something
+elsif multiline &&
+   condition
+  do_something_else
+end
+
+==> 008.rb 85 <==
+if condition
+  do_something
+elsif multiline &&
+   condition
+
+  do_something_else
+end
+
+==> 009.rb 51 <==
+while multiline &&
+   condition
+  do_something
+end
+
+==> 010.rb 51 <==
+until multiline &&
+   condition
+  do_something
+end
+
+==> 011.rb 52 <==
+while multiline &&
+   condition
+
+  do_something
+end
+
+==> 012.rb 36 <==
+while singleline
+  do_something
+end
+
+==> 013.rb 78 <==
+begin
+  do_something
+end while multiline &&
+      condition
+do_something_else
+
+==> 014.rb 79 <==
+begin
+  do_something
+end while multiline &&
+      condition
+
+do_something_else
+
+==> 015.rb 78 <==
+def m
+  begin
+    do_something
+  end while multiline &&
+        condition
+end
+
+==> 016.rb 44 <==
+case x
+when foo,
+    bar
+  do_something
+end
+
+==> 017.rb 45 <==
+case x
+when foo,
+    bar
+
+  do_something
+end
+
+==> 018.rb 40 <==
+case x
+when foo, bar
+  do_something
+end
+
+==> 019.rb 68 <==
+begin
+  do_something
+rescue FooError,
+  BarError
+  handle_error
+end
+
+==> 020.rb 69 <==
+begin
+  do_something
+rescue FooError,
+  BarError
+
+  handle_error
+end
+
+==> 021.rb 56 <==
+begin
+  do_something
+rescue FooError
+  handle_error
+end
+

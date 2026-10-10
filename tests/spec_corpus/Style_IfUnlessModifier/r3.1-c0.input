@@ -1,0 +1,20 @@
+==> .rubocop.yml 137 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+Layout/LineLength:
+  Max: 80
+
+==> 000.rb 88 <==
+if aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb(a:)
+end
+
+==> 001.rb 88 <==
+unless aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb(a:)
+end
+

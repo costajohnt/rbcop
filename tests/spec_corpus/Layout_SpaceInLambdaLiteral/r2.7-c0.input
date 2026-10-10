@@ -1,0 +1,32 @@
+==> .rubocop.yml 168 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/SpaceInLambdaLiteral:
+  EnforcedStyle: require_space
+
+==> 000.rb 23 <==
+a = ->(b, c) { b + c }
+
+==> 001.rb 23 <==
+a = -> (b, c) { b + c }
+==> 002.rb 54 <==
+l = lambda do |a, b|
+  tmp = a * 7
+  tmp * b / 50
+end
+
+==> 003.rb 15 <==
+a = ->{ b + c }
+==> 004.rb 35 <==
+a = -> (b = ->(c) {}, d) { b + d }
+
+==> 005.rb 35 <==
+a = ->(b = -> (c) {}, d) { b + d }
+
+==> 006.rb 34 <==
+a = ->(b = ->(c) {}, d) { b + d }
+

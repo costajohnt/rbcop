@@ -1,0 +1,42 @@
+==> .rubocop.yml 177 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/HashAlignment:
+  EnforcedLastArgumentHashStyle: always_ignore
+
+==> 000.rb 19 <==
+func(a: 0,
+  b: 1)
+
+==> 001.rb 21 <==
+func({a: 0,
+  b: 1})
+
+==> 002.rb 20 <==
+super(a: 0,
+  b: 1)
+
+==> 003.rb 22 <==
+super({a: 0,
+  b: 1})
+
+==> 004.rb 20 <==
+yield(a: 0,
+  b: 1)
+
+==> 005.rb 22 <==
+yield({a: 0,
+  b: 1})
+
+==> 006.rb 23 <==
+foo&.bar(a: 0,
+  b: 1)
+
+==> 007.rb 25 <==
+foo&.bar({a: 0,
+  b: 1})
+

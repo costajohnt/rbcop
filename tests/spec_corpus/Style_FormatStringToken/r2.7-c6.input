@@ -1,0 +1,36 @@
+==> .rubocop.yml 329 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/FormatStringToken:
+  EnforcedStyle: :template
+  SupportedStyles:
+  - :annotated
+  - :template
+  - :unannotated
+  MaxUnannotatedPlaceholdersAllowed: 0
+  AllowedMethods: []
+  AllowedPatterns: []
+  Mode: :conservative
+
+==> 000.rb 16 <==
+'%<greetings>s'
+
+==> 001.rb 21 <==
+foo('%<greetings>s')
+
+==> 002.rb 15 <==
+'%{greetings}'
+
+==> 003.rb 20 <==
+foo('%{greetings}')
+
+==> 004.rb 5 <==
+'%s'
+
+==> 005.rb 10 <==
+foo('%s')
+

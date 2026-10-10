@@ -1,0 +1,8 @@
+==> offenses exit=1 138 <==
+000.rb:2:15: W: Lint/FlipFlop: Avoid the use of flip-flop operators.
+001.rb:2:15: W: Lint/FlipFlop: Avoid the use of flip-flop operators.
+
+==> autocorrect exit=1 138 <==
+000.rb:2:15: W: Lint/FlipFlop: Avoid the use of flip-flop operators.
+001.rb:2:15: W: Lint/FlipFlop: Avoid the use of flip-flop operators.
+

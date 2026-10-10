@@ -31,6 +31,11 @@ LOOPS = {
 # Stands in for an interpolation the evaluator cannot resolve; fine inside dropped annotation lines.
 HOLE = "\u0000unresolved\u0000"
 
+# SPEC=1 (tests/spec_corpus): untagged examples only at 2.7, the version RuboCop's specs default to,
+# and no expect_correction snippets (the recorded `-A` output of the expect_offense source covers them).
+SPEC_MODE = ENV["SPEC"] == "1"
+UNTAGGED_RUBIES = SPEC_MODE ? ["2.7"] : ["2.7", "3.4"]
+
 class Unresolved < StandardError; end
 
 Ctx = Struct.new(:env, :lets, :shared, :ruby, :tagged) do
@@ -50,8 +55,26 @@ class Extractor
   end
 
   def run
-    result = Prism.parse_file(@file)
-    walk(result.value.statements.body, Ctx.new({}, {}, {}, nil, false))
+    ctx = Ctx.new({}, {}, {}, nil, false)
+    # `RSpec.shared_examples` from spec/support, available to every spec.
+    Dir[File.join(@file[%r{\A.*/spec/}], "support", "*.rb")].sort.each do |f|
+      Prism.parse_file(f).value.statements.body.each { |n| prescan(n, ctx) }
+    end
+    walk(Prism.parse_file(@file).value.statements.body, ctx)
+  end
+
+  # For specs without expect_* examples (Lint/Syntax): every literal `let(:source)`.
+  def harvest_sources(node = Prism.parse_file(@file).value)
+    if node.is_a?(Prism::CallNode) && node.name == :let && node.arguments&.arguments&.first&.slice == ":source"
+      stmts = body_of(node.block)
+      text = begin
+        stmts.size == 1 && value(stmts.first, nil)
+      rescue Unresolved, NoMethodError
+        nil
+      end
+      @snippets << { ruby: UNTAGGED_RUBIES.first, config: { @cop => {} }, filename: nil, text: text } if text.is_a?(String)
+    end
+    node.compact_child_nodes.each { |c| harvest_sources(c) }
   end
 
   private
@@ -66,7 +89,7 @@ class Extractor
   end
 
   def prescan(node, ctx)
-    return unless node.is_a?(Prism::CallNode) && node.receiver.nil?
+    return unless node.is_a?(Prism::CallNode) && (node.receiver.nil? || node.receiver.slice == "RSpec")
 
     case node.name
     when :let, :let!
@@ -175,6 +198,8 @@ class Extractor
   end
 
   def record(node, ctx)
+    return if SPEC_MODE && node.name == :expect_correction
+
     args = node.arguments&.arguments || []
     kw = {}
     pos = []
@@ -192,18 +217,29 @@ class Extractor
       end
       text = text.lines.grep_v(ANNOTATION).join
     end
-    return if text.strip.empty?
+    return if text.strip.empty? && !SPEC_MODE # Lint/EmptyFile needs them
     raise Unresolved, "unresolved interpolation in source" if text.b.include?(HOLE.b)
 
     cop_config = let_value("cop_config", ctx) || {}
     other = let_value("other_cops", ctx) || {}
+    # A config value that is not valid UTF-8 (`"\x82"`) cannot be written to .rubocop.yml.
+    raise Unresolved, "invalid UTF-8 in cop_config" unless valid_utf8?([cop_config, other])
     ruby = ctx.ruby || (let_value("ruby_version", ctx)&.to_s)
-    rubies = ruby ? [ruby] : ["2.7", "3.4"]
+    rubies = ruby ? [ruby] : UNTAGGED_RUBIES
     rubies.each do |r|
       @snippets << { ruby: r, config: { @cop => cop_config }.merge(other), filename: filename, text: text }
     end
   rescue Unresolved => e
     fail_at(node, e.message)
+  end
+
+  def valid_utf8?(v)
+    case v
+    when String then v.dup.force_encoding(Encoding::UTF_8).valid_encoding?
+    when Array then v.all? { |e| valid_utf8?(e) }
+    when Hash then v.all? { |k, e| valid_utf8?(k) && valid_utf8?(e) }
+    else true
+    end
   end
 
   def let_value(name, ctx)
@@ -287,7 +323,9 @@ class Extractor
     when Prism::LocalVariableReadNode then lookup(node.name.to_s, ctx)
     when Prism::CallNode then call_value(node, ctx)
     when Prism::ConstantPathNode
-      if node.parent&.slice == "described_class"
+      if node.slice == "Float::INFINITY"
+        Float::INFINITY
+      elsif node.parent&.slice == "described_class"
         cop_constant(node.name.to_s)
       else
         node.slice
@@ -326,7 +364,7 @@ class Extractor
     when :*, :+, :size, :length, :to_a, :to_s, :to_sym, :upcase, :downcase, :capitalize, :join,
          :sub, :gsub, :chomp, :strip, :first, :last, :flatten, :product, :zip, :keys, :values, :inspect,
          :freeze, :dup, :tr, :delete, :count, :reverse, :sort, :uniq, :lines, :chars, :split,
-         :b, :==, :!=, :include?, :start_with?, :end_with?, :map, :to_h, :!, :-, :index, :match
+         :b, :==, :!=, :include?, :start_with?, :end_with?, :map, :to_h, :!, :-, :index, :match, :compact, :merge
       raise Unresolved, "#{node.name} on #{recv.class}" if recv.nil? && node.receiver
 
       blk = node.block
@@ -369,6 +407,11 @@ def rubocop_yml(snip)
   all = { "AllCops" => { "EnabledByDefault" => true, "NewCops" => "enable", "SuggestExtensions" => false,
                          "TargetRubyVersion" => snip[:ruby].to_f } }
   overrides = snip[:config].reject { |_, v| v.empty? }
+  # `--only` refuses Lint/RedundantCopDisableDirective, so the spec corpus runs it alone this way.
+  if SPEC_MODE && snip[:config].key?("Lint/RedundantCopDisableDirective")
+    all["AllCops"] = all["AllCops"].except("EnabledByDefault").merge("DisabledByDefault" => true)
+    overrides["Lint/RedundantCopDisableDirective"] = { "Enabled" => true }.merge(snip[:config]["Lint/RedundantCopDisableDirective"])
+  end
   all.merge(overrides).to_yaml
 end
 
@@ -390,14 +433,18 @@ cops.each do |cop|
   dept, name = cop.split("/")
   snake = name.gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2').gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
   spec = File.join(spec_root, dept.downcase, "#{snake}_spec.rb")
-  unless File.exist?(spec)
+  # Some cops split their spec (conditional_assignment_assign_in_condition_spec.rb, ...).
+  specs = File.exist?(spec) ? [spec] : Dir[File.join(spec_root, dept.downcase, "#{snake}_*_spec.rb")].sort
+  if specs.empty?
     warn "#{cop}: no spec #{spec}"
     next
   end
-  ex = Extractor.new(cop, spec)
-  ex.run
-  ex.failures.each { |f| warn "#{cop}: #{f}" }
-  variants = ex.snippets.group_by { |s| [s[:ruby], s[:config]] }
+  exs = specs.map { |f| Extractor.new(cop, f).tap(&:run) }
+  exs.each(&:harvest_sources) if SPEC_MODE && exs.all? { |e| e.snippets.empty? }
+  failures = exs.flat_map(&:failures)
+  snippets = exs.flat_map(&:snippets)
+  failures.each { |f| warn "#{cop}: #{f}" }
+  variants = snippets.group_by { |s| [s[:ruby], s[:config]] }
   configs = variants.keys.map(&:last).uniq
   variants.each do |(ruby, config), snips|
     tag = configs.index(config).zero? && config.values.all?(&:empty?) ? "" : "-c#{configs.index(config)}"
@@ -411,6 +458,6 @@ cops.each do |cop|
       total += 1
     end
   end
-  warn "#{cop}: #{ex.snippets.size} snippets, #{variants.size} variants, #{ex.failures.size} unresolved"
+  warn "#{cop}: #{snippets.size} snippets, #{variants.size} variants, #{failures.size} unresolved"
 end
 puts "#{total} files"

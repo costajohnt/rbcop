@@ -1,0 +1,78 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 27 <==
+while foo
+  bar if baz
+end
+
+==> 001.rb 27 <==
+until foo
+  bar if baz
+end
+
+==> 002.rb 31 <==
+while foo
+  bar unless baz
+end
+
+==> 003.rb 31 <==
+until foo
+  bar unless baz
+end
+
+==> 004.rb 37 <==
+while foo
+  x.odd? ? do_a : do_b
+end
+
+==> 005.rb 37 <==
+until foo
+  x.odd? ? do_a : do_b
+end
+
+==> 006.rb 30 <==
+while foo
+  bar while baz
+end
+
+==> 007.rb 30 <==
+until foo
+  bar while baz
+end
+
+==> 008.rb 30 <==
+while foo
+  bar until baz
+end
+
+==> 009.rb 30 <==
+until foo
+  bar until baz
+end
+
+==> 010.rb 44 <==
+while foo
+  case x; when 42 then a; end
+end
+
+==> 011.rb 44 <==
+until foo
+  case x; when 42 then a; end
+end
+
+==> 012.rb 42 <==
+while foo
+  case x; in 42 then a; end
+end
+
+==> 013.rb 42 <==
+until foo
+  case x; in 42 then a; end
+end
+

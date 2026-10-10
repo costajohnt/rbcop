@@ -1,0 +1,40 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.6
+
+==> 000.rb 30 <==
+{a: 1}.to_h { |k, v| [k, *v] }
+==> 001.rb 39 <==
+{a: 1, b: 2}.to_h {|k, v| [k, foo(v)]}
+
+==> 002.rb 37 <==
+x.merge(y).to_h {|k, v| [k, foo(v)]}
+
+==> 003.rb 34 <==
+x.tally.to_h {|k, v| [k, foo(v)]}
+
+==> 004.rb 55 <==
+{a: 1, b: 2}.to_h { |key, val| [key, { value: val }] }
+
+==> 005.rb 51 <==
+{a: 1, b: 2}.to_h { |key, val| [key, value: val] }
+
+==> 006.rb 48 <==
+{a: 1, b: 2}.to_h { |k, v| [k.to_sym, foo(v)] }
+
+==> 007.rb 35 <==
+{a: 1, b: 2}.to_h {|k, _v| [k, k]}
+
+==> 008.rb 30 <==
+x.to_h { |k, v| [k, foo(v)] }
+
+==> 009.rb 38 <==
+[1, 2, 3].to_h { |k, v| [k, foo(v)] }
+
+==> 010.rb 131 <==
+x.to_enum(:foreach, path).select { |e| e.file? }.map { |e| [e, name(e)] }.each { |e, p| e.extract(p) }.to_h { |k, v| [k, foo(v)] }
+

@@ -1,0 +1,29 @@
+==> .rubocop.yml 204 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Gemspec/DependencyVersion:
+  Enabled: true
+  EnforcedStyle: required
+  AllowedGems:
+  - rubocop
+
+==> 000.gemspec 159 <==
+Gem::Specification.new do |spec|
+  spec.add_dependency 'rubocop'
+  spec.add_development_dependency 'rubocop-ast', '~> 0.1'
+
+  spec.add_dependency 'parser'
+end
+
+==> 001.gemspec 162 <==
+Gem::Specification.new do |spec|
+  spec.add_dependency('rubocop')
+  spec.add_development_dependency('rubocop-ast', '~> 0.1')
+
+  spec.add_dependency('parser')
+end
+

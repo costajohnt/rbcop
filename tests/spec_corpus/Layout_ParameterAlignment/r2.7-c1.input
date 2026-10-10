@@ -1,0 +1,55 @@
+==> .rubocop.yml 175 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/ParameterAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+==> 000.rb 32 <==
+def method(a,
+           b)
+end
+
+==> 001.rb 25 <==
+def method(a,
+    b)
+end
+
+==> 002.rb 21 <==
+def method(a, b)
+end
+
+==> 003.rb 23 <==
+def method(a,
+  b)
+end
+
+==> 004.rb 26 <==
+def method(
+  a,
+  b)
+end
+
+==> 005.rb 15 <==
+def method
+end
+
+==> 006.rb 43 <==
+def func2(a,
+         *b,
+          c)
+end
+
+==> 007.rb 42 <==
+def self.method(a,
+                b)
+end
+
+==> 008.rb 28 <==
+def self.method(a,
+  b)
+end
+

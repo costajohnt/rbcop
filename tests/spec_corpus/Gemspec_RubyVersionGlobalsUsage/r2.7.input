@@ -1,0 +1,32 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.gemspec 52 <==
+Gem::Specification.new do |spec|
+  RUBY_VERSION
+end
+
+==> 001.gemspec 54 <==
+Gem::Specification.new do |spec|
+  ::RUBY_VERSION
+end
+
+==> 002.gemspec 53 <==
+Gem::Specification.new do |spec|
+  Ruby::VERSION
+end
+
+==> 003.gemspec 55 <==
+Gem::Specification.new do |spec|
+  ::Ruby::VERSION
+end
+
+==> 004.gemspec 37 <==
+Gem::Specification.new do |spec|
+end
+

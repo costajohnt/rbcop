@@ -1,0 +1,48 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 22 <==
+def foo(a = 1, b)
+end
+
+==> 001.rb 29 <==
+def foo(a = 1, b = 2, c)
+end
+
+==> 002.rb 27 <==
+def self.foo(a = 1, b)
+end
+
+==> 003.rb 12 <==
+def foo
+end
+
+==> 004.rb 15 <==
+def foo(a)
+end
+
+==> 005.rb 21 <==
+def foo(a, b, c)
+end
+
+==> 006.rb 19 <==
+def foo(a = 1)
+end
+
+==> 007.rb 33 <==
+def foo(a = 1, b = 2, c = 3)
+end
+
+==> 008.rb 29 <==
+def foo(a, b = 2, c = 3)
+end
+
+==> 009.rb 25 <==
+def foo(a = 1, b: 2)
+end
+

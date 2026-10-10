@@ -10,7 +10,7 @@ use regex::Regex;
 use std::collections::HashMap;
 use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
-use value::{Map, Value, parse_yaml, ruby_regex};
+use value::{Map, Value, parse_yaml, parse_yaml_file, ruby_regex};
 
 /// RuboCop's own default.yml, vendored from the release rbcop targets (MIT, see config/LICENSE).
 pub const DEFAULT_YML: &str = include_str!("../../config/default.yml");
@@ -58,8 +58,10 @@ impl Pattern {
     /// PathUtil.match_path?
     pub fn matches(&self, path: &str) -> bool {
         match self {
-            Pattern::Exact(s) => s == path,
+            Pattern::Exact(s) => s == path || hidden_file_in_not_hidden_dir(s, path),
             Pattern::Regex(r) => r.is_match(path),
+            // `pattern == path` first: a file named `[x].rb` matches itself.
+            Pattern::Glob(p) if p == path => true,
             Pattern::Glob(p) => {
                 let p = if p.starts_with("..") {
                     expand_path(Path::new(p), &cwd()).display().to_string()
@@ -108,11 +110,21 @@ pub struct CopConfig {
 }
 
 impl CopConfig {
+    /// `cop_config[key].to_s` of a String or Symbol (`Mode: :conservative` reads as `conservative`).
     pub fn str(&self, key: &str) -> Option<&str> {
-        self.params.str(key)
+        match self.params.get(key)? {
+            Value::Sym(s) => Some(s.strip_prefix(':').unwrap_or(s)),
+            _ => self.params.str(key),
+        }
     }
+    /// `cop_config[key]` as Ruby truthiness: a non-boolean value (`IgnoreMacros: 'true'`) is true;
+    /// None when absent or null.
     pub fn bool(&self, key: &str) -> Option<bool> {
-        self.params.bool(key)
+        match self.params.get(key)? {
+            Value::Null => None,
+            Value::Bool(b) => Some(*b),
+            _ => Some(true),
+        }
     }
     pub fn int(&self, key: &str) -> Option<i64> {
         self.params.int(key)
@@ -375,7 +387,8 @@ impl Resolved {
             if let Some(ext) = s.strip_prefix("**/*.") {
                 exts.push(format!(".{ext}"));
             } else {
-                names.push(s.replace("**/", ""));
+                // `sub`: only the first `**/` goes.
+                names.push(s.replacen("**/", "", 1));
             }
         }
         (exts, names)
@@ -560,14 +573,19 @@ impl Store {
             return Ok(m);
         }
         let start = self.emitted.len();
-        let text = std::fs::read_to_string(path).map_err(|e| format!("{}: {e}", path.display()))?;
+        let text = std::fs::read_to_string(path).map_err(|e| match e.kind() {
+            // ConfigLoader.read_file's ConfigNotFoundError.
+            std::io::ErrorKind::NotFound => format!("Configuration file not found: {}", path.display()),
+            _ => format!("{}: {e}", path.display()),
+        })?;
         if text.contains("<%") {
             self.warnings.push(format!("{}: ERB in config is not supported; parsed as plain YAML", path.display()));
         }
-        let mut hash = match parse_yaml(&text).map_err(|e| format!("{}: {e}", path.display()))? {
+        let mut hash = match parse_yaml_file(&text, &path.display().to_string())? {
             Value::Map(m) => Arc::unwrap_or_clone(m),
             Value::Null => Map::default(),
-            _ => return Err(format!("Malformed configuration in {}", path.display())),
+            // A ValidationError, which the CLI prints as `Error: ...`.
+            _ => return Err(format!("Error: Malformed configuration in {}", path.display())),
         };
         // Plugins (and plugin-capable `require:` gems) only matter here for their default configs.
         let mut plugins = Vec::new();

@@ -1,0 +1,31 @@
+==> offenses exit=1 623 <==
+000.rb:1:1: C: [Correctable] Layout/SpaceInsideRangeLiteral: Space inside range literal.
+000.rb:2:1: C: [Correctable] Layout/SpaceInsideRangeLiteral: Space inside range literal.
+000.rb:3:1: C: [Correctable] Layout/SpaceInsideRangeLiteral: Space inside range literal.
+002.rb:1:1: C: [Correctable] Layout/SpaceInsideRangeLiteral: Space inside range literal.
+002.rb:2:1: C: [Correctable] Layout/SpaceInsideRangeLiteral: Space inside range literal.
+002.rb:3:1: C: [Correctable] Layout/SpaceInsideRangeLiteral: Space inside range literal.
+006.rb:1:5: C: [Correctable] Layout/SpaceInsideRangeLiteral: Space inside range literal.
+
+==> autocorrect exit=0 609 <==
+000.rb:1:1: C: [Corrected] Layout/SpaceInsideRangeLiteral: Space inside range literal.
+000.rb:2:1: C: [Corrected] Layout/SpaceInsideRangeLiteral: Space inside range literal.
+000.rb:3:1: C: [Corrected] Layout/SpaceInsideRangeLiteral: Space inside range literal.
+002.rb:1:1: C: [Corrected] Layout/SpaceInsideRangeLiteral: Space inside range literal.
+002.rb:2:1: C: [Corrected] Layout/SpaceInsideRangeLiteral: Space inside range literal.
+002.rb:3:1: C: [Corrected] Layout/SpaceInsideRangeLiteral: Space inside range literal.
+006.rb:1:5: C: [Corrected] Layout/SpaceInsideRangeLiteral: Space inside range literal.
+
+==> corrected/000.rb 15 <==
+1..2
+1..2
+1..2
+
+==> corrected/002.rb 18 <==
+1...2
+1...2
+1...2
+
+==> corrected/006.rb 10 <==
+x = 0..10
+

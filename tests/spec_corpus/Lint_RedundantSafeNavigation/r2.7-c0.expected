@@ -1,0 +1,175 @@
+==> offenses exit=1 3965 <==
+000.rb:1:6: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+000.rb:2:10: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+000.rb:3:11: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+002.rb:1:11: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+002.rb:2:15: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+002.rb:3:16: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+004.rb:1:7: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+004.rb:3:10: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+005.rb:1:24: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+006.rb:1:22: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+007.rb:1:3: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+008.rb:1:10: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+009.rb:1:8: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+011.rb:1:5: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+012.rb:1:10: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+012.rb:7:14: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+013.rb:1:10: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+013.rb:7:14: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+014.rb:1:20: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+014.rb:1:47: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+019.rb:1:9: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+021.rb:1:4: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation with default literal detected.
+022.rb:1:4: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation with default literal detected.
+023.rb:1:4: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation with default literal detected.
+025.rb:1:4: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation with default literal detected.
+027.rb:1:4: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation with default literal detected.
+029.rb:1:4: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation with default literal detected.
+031.rb:1:4: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation with default literal detected.
+033.rb:1:9: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+035.rb:1:9: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+037.rb:1:9: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+039.rb:1:9: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+041.rb:1:9: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+043.rb:1:41: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+045.rb:1:30: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+
+==> autocorrect exit=0 3895 <==
+000.rb:1:6: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+000.rb:2:10: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+000.rb:3:11: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+002.rb:1:11: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+002.rb:2:15: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+002.rb:3:16: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+004.rb:1:7: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+004.rb:3:10: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+005.rb:1:24: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+006.rb:1:22: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+007.rb:1:3: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+008.rb:1:10: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+009.rb:1:8: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+011.rb:1:5: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+012.rb:1:10: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+012.rb:7:14: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+013.rb:1:10: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+013.rb:7:14: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+014.rb:1:20: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+014.rb:1:47: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+019.rb:1:9: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+021.rb:1:4: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation with default literal detected.
+022.rb:1:4: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation with default literal detected.
+023.rb:1:4: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation with default literal detected.
+025.rb:1:4: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation with default literal detected.
+027.rb:1:4: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation with default literal detected.
+029.rb:1:4: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation with default literal detected.
+031.rb:1:4: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation with default literal detected.
+033.rb:1:9: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+035.rb:1:9: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+037.rb:1:9: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+039.rb:1:9: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+041.rb:1:9: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+043.rb:1:41: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+045.rb:1:30: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+
+==> corrected/000.rb 139 <==
+Const.do_something
+ConstName.do_something
+Const_name.do_something # It is treated as camel case, similar to the `Naming/ConstantName` cop.
+
+==> corrected/002.rb 154 <==
+FOO::Const.do_something
+bar::ConstName.do_something
+BAZ::Const_name.do_something # It is treated as camel case, similar to the `Naming/ConstantName` cop.
+
+==> corrected/004.rb 92 <==
+if foo.respond_to?(:bar)
+  do_something
+elsif foo.respond_to?(:baz)
+  do_something_else
+end
+
+==> corrected/005.rb 42 <==
+do_something unless foo.respond_to?(:bar)
+
+==> corrected/006.rb 30 <==
+'2012-03-02 16:05:37'.to_time
+
+==> corrected/007.rb 11 <==
+42.minutes
+
+==> corrected/008.rb 21 <==
+[1, 2, 3].join(', ')
+
+==> corrected/009.rb 14 <==
+{k: :v}.count
+
+==> corrected/011.rb 9 <==
+self.foo
+
+==> corrected/012.rb 101 <==
+while foo.respond_to?(:bar)
+  do_something
+end
+
+begin
+  do_something
+end while foo.respond_to?(:bar)
+
+==> corrected/013.rb 101 <==
+until foo.respond_to?(:bar)
+  do_something
+end
+
+begin
+  do_something
+end until foo.respond_to?(:bar)
+
+==> corrected/014.rb 64 <==
+do_something if foo.respond_to?(:bar) && !foo.respond_to?(:baz)
+
+==> corrected/019.rb 29 <==
+foo.to_s.respond_to?(:class)
+
+==> corrected/021.rb 9 <==
+foo.to_h
+
+==> corrected/022.rb 27 <==
+foo.to_h { |k, v| [k, v] }
+
+==> corrected/023.rb 16 <==
+foo.to_h { _1 }
+
+==> corrected/025.rb 9 <==
+foo.to_a
+
+==> corrected/027.rb 9 <==
+foo.to_i
+
+==> corrected/029.rb 9 <==
+foo.to_f
+
+==> corrected/031.rb 9 <==
+foo.to_s
+
+==> corrected/033.rb 15 <==
+foo.to_s.strip
+
+==> corrected/035.rb 15 <==
+foo.to_i.zero?
+
+==> corrected/037.rb 15 <==
+foo.to_f.zero?
+
+==> corrected/039.rb 14 <==
+foo.to_a.size
+
+==> corrected/041.rb 14 <==
+foo.to_h.size
+
+==> corrected/043.rb 46 <==
+foo.to_h { |entry| do_something(entry) }.keys
+
+==> corrected/045.rb 35 <==
+foo.to_h { do_something(_1) }.keys
+

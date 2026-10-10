@@ -1,0 +1,481 @@
+==> .rubocop.yml 165 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/ShadowedArgument:
+  IgnoreImplicitReferences: false
+
+==> 000.rb 51 <==
+def do_something(foo = 1)
+  foo = 2
+  puts foo
+end
+
+==> 001.rb 48 <==
+def do_something(foo:)
+  foo = 2
+  puts foo
+end
+
+==> 002.rb 48 <==
+def do_something(*foo)
+  foo = 2
+  puts foo
+end
+
+==> 003.rb 48 <==
+def do_something(foo)
+  foo = 42
+  puts foo
+end
+
+==> 004.rb 45 <==
+def do_something(foo)
+  foo = 42
+  super
+end
+
+==> 005.rb 79 <==
+def select_fields(query, current_time)
+  query = super
+  query.select('*')
+end
+
+==> 006.rb 60 <==
+def do_something(bar)
+  bar = 'baz' if foo
+  bar ||= {}
+end
+
+==> 007.rb 68 <==
+def do_something(*items)
+  *items, last = [42, 42]
+  puts items
+end
+
+==> 008.rb 65 <==
+def do_something(*items)
+  *items, last = items
+  puts items
+end
+
+==> 009.rb 57 <==
+for item in items
+  do_something { |arg| arg = arg }
+end
+
+==> 010.rb 47 <==
+def do_something(foo)
+  foo = 42
+  binding
+end
+
+==> 011.rb 50 <==
+def do_something(foo)
+  puts 'done something'
+end
+
+==> 012.rb 76 <==
+def do_something(foo)
+  if bar
+    foo = 43
+  end
+  foo = 42
+  puts foo
+end
+
+==> 013.rb 89 <==
+def do_something(foo)
+  if bar
+    puts foo
+    foo = 43
+  end
+  foo = 42
+  puts foo
+end
+
+==> 014.rb 66 <==
+def do_something(foo)
+  if bar
+    foo = 42
+  end
+
+  puts foo
+end
+
+==> 015.rb 76 <==
+def do_something(foo)
+  foo = 43
+  if bar
+    foo = 42
+  end
+  puts foo
+end
+
+==> 016.rb 97 <==
+def do_something(foo)
+  if bar
+    if baz
+      foo = 43
+    end
+  end
+  foo = 42
+  puts foo
+end
+
+==> 017.rb 110 <==
+def do_something(foo)
+  if bar
+    puts foo
+    if baz
+      foo = 43
+    end
+  end
+  foo = 42
+  puts foo
+end
+
+==> 018.rb 100 <==
+def do_something(foo)
+  lambda do
+    if baz
+      foo = 43
+    end
+  end
+  foo = 42
+  puts foo
+end
+
+==> 019.rb 113 <==
+def do_something(foo)
+  lambda do
+    puts foo
+    if baz
+      foo = 43
+    end
+  end
+  foo = 42
+  puts foo
+end
+
+==> 020.rb 74 <==
+def do_something(foo)
+  something { foo = 43 }
+
+  foo = 42
+  puts foo
+end
+
+==> 021.rb 93 <==
+def do_something(foo)
+  lambda do
+    puts foo
+    foo = 43
+  end
+
+  foo = 42
+  puts foo
+end
+
+==> 022.rb 63 <==
+def do_something(foo)
+  something { foo = 43 }
+
+  puts foo
+end
+
+==> 023.rb 73 <==
+def do_something(foo)
+  foo = 43
+  something { foo = 42 }
+  puts foo
+end
+
+==> 024.rb 107 <==
+def do_something(foo)
+  something do
+    lambda do
+      foo = 43
+    end
+  end
+
+  foo = 42
+  puts foo
+end
+
+==> 025.rb 121 <==
+def do_something(foo)
+  lambda do
+    puts foo
+
+    something do
+      foo = 43
+    end
+  end
+
+  foo = 42
+  puts foo
+end
+
+==> 026.rb 101 <==
+def do_something(foo)
+  if baz
+    lambda do
+      foo = 43
+    end
+  end
+
+  foo = 42
+  puts foo
+end
+
+==> 027.rb 113 <==
+def do_something(foo)
+  if baz
+    puts foo
+    lambda do
+      foo = 43
+    end
+  end
+  foo = 42
+  puts foo
+end
+
+==> 028.rb 86 <==
+def do_something(foo)
+  foo = bar
+  begin
+  rescue
+    foo = baz
+  end
+  puts foo
+end
+
+==> 029.rb 76 <==
+  def do_something(foo)
+  begin
+  rescue
+    foo = bar
+  end
+  puts foo
+end
+
+==> 030.rb 91 <==
+def do_something(foo, bar)
+  lambda do
+    bar = 42
+  end
+
+  foo = 43
+  puts(foo, bar)
+end
+
+==> 031.rb 68 <==
+numbers = [1, 2, 3]
+numbers.each do |i; j|
+  j = i * 2
+  puts j
+end
+
+==> 032.rb 48 <==
+do_something do |foo|
+  foo = 42
+  puts foo
+end
+
+==> 033.rb 45 <==
+do_something do |foo|
+  foo = 42
+  super
+end
+
+==> 034.rb 47 <==
+do_something do |foo|
+  foo = 42
+  binding
+end
+
+==> 035.rb 50 <==
+do_something do |foo|
+  puts 'done something'
+end
+
+==> 036.rb 76 <==
+do_something do |foo|
+  if bar
+    foo = 43
+  end
+  foo = 42
+  puts foo
+end
+
+==> 037.rb 89 <==
+do_something do |foo|
+  if bar
+    puts foo
+    foo = 43
+  end
+  foo = 42
+  puts foo
+end
+
+==> 038.rb 66 <==
+do_something do |foo|
+  if bar
+    foo = 42
+  end
+
+  puts foo
+end
+
+==> 039.rb 76 <==
+do_something do |foo|
+  foo = 43
+  if bar
+    foo = 42
+  end
+  puts foo
+end
+
+==> 040.rb 97 <==
+do_something do |foo|
+  if bar
+    if baz
+      foo = 43
+    end
+  end
+  foo = 42
+  puts foo
+end
+
+==> 041.rb 110 <==
+do_something do |foo|
+  if bar
+    puts foo
+    if baz
+      foo = 43
+    end
+  end
+  foo = 42
+  puts foo
+end
+
+==> 042.rb 100 <==
+do_something do |foo|
+  lambda do
+    if baz
+      foo = 43
+    end
+  end
+  foo = 42
+  puts foo
+end
+
+==> 043.rb 113 <==
+do_something do |foo|
+  lambda do
+    puts foo
+    if baz
+      foo = 43
+    end
+  end
+  foo = 42
+  puts foo
+end
+
+==> 044.rb 74 <==
+do_something do |foo|
+  something { foo = 43 }
+
+  foo = 42
+  puts foo
+end
+
+==> 045.rb 93 <==
+do_something do |foo|
+  lambda do
+    puts foo
+    foo = 43
+  end
+
+  foo = 42
+  puts foo
+end
+
+==> 046.rb 63 <==
+do_something do |foo|
+  something { foo = 43 }
+
+  puts foo
+end
+
+==> 047.rb 73 <==
+do_something do |foo|
+  foo = 43
+  something { foo = 42 }
+  puts foo
+end
+
+==> 048.rb 107 <==
+do_something do |foo|
+  something do
+    lambda do
+      foo = 43
+    end
+  end
+
+  foo = 42
+  puts foo
+end
+
+==> 049.rb 121 <==
+do_something do |foo|
+  lambda do
+    puts foo
+
+    something do
+      foo = 43
+    end
+  end
+
+  foo = 42
+  puts foo
+end
+
+==> 050.rb 101 <==
+do_something do |foo|
+  if baz
+    lambda do
+      foo = 43
+    end
+  end
+
+  foo = 42
+  puts foo
+end
+
+==> 051.rb 113 <==
+do_something do |foo|
+  if baz
+    puts foo
+    lambda do
+      foo = 43
+    end
+  end
+  foo = 42
+  puts foo
+end
+
+==> 052.rb 91 <==
+do_something do |foo, bar|
+  lambda do
+    bar = 42
+  end
+
+  foo = 43
+  puts(foo, bar)
+end
+

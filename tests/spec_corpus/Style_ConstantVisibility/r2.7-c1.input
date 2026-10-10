@@ -1,0 +1,22 @@
+==> .rubocop.yml 156 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/ConstantVisibility:
+  IgnoreModules: true
+
+==> 000.rb 96 <==
+class Foo
+  SomeClass = Class.new()
+  SomeModule = Module.new()
+  SomeStruct = Struct.new()
+end
+
+==> 001.rb 26 <==
+module Foo
+  BAR = 42
+end
+

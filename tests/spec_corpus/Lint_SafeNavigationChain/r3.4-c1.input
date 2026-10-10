@@ -1,0 +1,16 @@
+==> .rubocop.yml 160 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Lint/SafeNavigationChain:
+  AllowedMethods:
+  - foo
+
+==> 000.rb 10 <==
+x&.bar.foo
+==> 001.rb 11 <==
+x&.bar.baz
+

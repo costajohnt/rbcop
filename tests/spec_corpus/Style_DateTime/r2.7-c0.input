@@ -1,0 +1,47 @@
+==> .rubocop.yml 147 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/DateTime:
+  AllowCoercion: false
+
+==> 000.rb 13 <==
+DateTime.now
+
+==> 001.rb 14 <==
+DateTime&.now
+
+==> 002.rb 15 <==
+::DateTime.now
+
+==> 003.rb 31 <==
+DateTime.iso8601('2016-06-29')
+
+==> 004.rb 8 <==
+Time.now
+==> 005.rb 26 <==
+Date.iso8601('2016-06-29')
+==> 006.rb 45 <==
+DateTime.iso8601('2016-06-29', Date::ENGLAND)
+==> 007.rb 47 <==
+::DateTime.iso8601('2016-06-29', ::Date::ITALY)
+==> 008.rb 46 <==
+DateTime&.iso8601('1751-04-23', Date::ENGLAND)
+==> 009.rb 41 <==
+Icalendar::Values::DateTime.new(start_at)
+==> 010.rb 18 <==
+thing.to_datetime
+
+==> 011.rb 19 <==
+thing&.to_datetime
+
+==> 012.rb 30 <==
+def to_time
+  to_datetime
+end
+
+==> 013.rb 17 <==
+thing.to_datetime

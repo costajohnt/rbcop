@@ -1,0 +1,15 @@
+==> .rubocop.yml 225 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/MethodCallWithArgsParentheses:
+  EnforcedStyle: omit_parentheses
+  AllowParenthesesInStringInterpolation: true
+
+==> 000.rb 50 <==
+"#{t('this.is.good')}"
+"#{t 'this.is.also.good'}"
+

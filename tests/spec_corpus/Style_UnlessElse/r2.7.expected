@@ -1,0 +1,52 @@
+==> offenses exit=1 606 <==
+000.rb:1:1: C: [Correctable] Style/UnlessElse: Do not use `unless` with `else`. Rewrite these with the positive case first.
+001.rb:1:1: C: [Correctable] Style/UnlessElse: Do not use `unless` with `else`. Rewrite these with the positive case first.
+001.rb:4:3: C: Style/UnlessElse: Do not use `unless` with `else`. Rewrite these with the positive case first.
+002.rb:1:1: C: [Correctable] Style/UnlessElse: Do not use `unless` with `else`. Rewrite these with the positive case first.
+003.rb:1:1: C: [Correctable] Style/UnlessElse: Do not use `unless` with `else`. Rewrite these with the positive case first.
+
+==> autocorrect exit=0 610 <==
+000.rb:1:1: C: [Corrected] Style/UnlessElse: Do not use `unless` with `else`. Rewrite these with the positive case first.
+001.rb:1:1: C: [Corrected] Style/UnlessElse: Do not use `unless` with `else`. Rewrite these with the positive case first.
+001.rb:2:3: C: [Corrected] Style/UnlessElse: Do not use `unless` with `else`. Rewrite these with the positive case first.
+002.rb:1:1: C: [Corrected] Style/UnlessElse: Do not use `unless` with `else`. Rewrite these with the positive case first.
+003.rb:1:1: C: [Corrected] Style/UnlessElse: Do not use `unless` with `else`. Rewrite these with the positive case first.
+
+==> corrected/000.rb 82 <==
+if x # positive 1
+  a = 0 # positive 2
+else # negative 1
+  a = 1 # negative 2
+end
+
+==> corrected/001.rb 54 <==
+if abc
+  if cde
+    c
+  else
+    b
+  end
+else
+  a
+end
+
+==> corrected/002.rb 95 <==
+if(x)
+  a = 3
+else
+  if(y == 0)
+    a = 0
+  elsif(z == 0)
+    a = 1
+  else
+    a = 2
+  end
+end
+
+==> corrected/003.rb 35 <==
+if x then
+  a = 0
+else
+  a = 1
+end
+

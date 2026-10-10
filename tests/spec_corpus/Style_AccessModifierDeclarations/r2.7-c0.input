@@ -1,0 +1,350 @@
+==> .rubocop.yml 165 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/AccessModifierDeclarations:
+  EnforcedStyle: group
+
+==> 000.rb 38 <==
+class Test
+  private def foo; end
+end
+
+==> 001.rb 21 <==
+private def foo; end
+
+==> 002.rb 25 <==
+class Test
+  private
+end
+
+==> 003.rb 8 <==
+private
+
+==> 004.rb 31 <==
+class Test
+  private # hey
+end
+
+==> 005.rb 114 <==
+class TestOne
+  private
+end
+
+class TestTwo
+  private def foo; end
+end
+
+class TestThree
+  private def foo; end
+end
+
+==> 006.rb 74 <==
+module MyModule
+  singleton_methods.each { |method| private(method) }
+end
+
+==> 007.rb 61 <==
+module MyModule
+  singleton_methods.each { private(_1) }
+end
+
+==> 008.rb 49 <==
+class Test
+  private def foo; end
+
+  private
+end
+
+==> 009.rb 65 <==
+class Test
+  # comment
+  private def foo
+    # comment
+  end
+end
+
+==> 010.rb 64 <==
+class Test
+  private :inspect if METHODS.include?(:inspect)
+end
+
+==> 011.rb 90 <==
+class Test
+  private get_method_name if get_method_name =~ /a/
+  private def bar; end
+end
+
+==> 012.rb 150 <==
+class Test
+  private get_method_name_1 if get_method_name_1 =~ /a/
+  private def bar; end
+  private get_method_name_2 if get_method_name_2 =~ /b/
+end
+
+==> 013.rb 40 <==
+class Foo
+  foo
+  bar(key: private)
+end
+
+==> 014.rb 40 <==
+class Test
+  protected def foo; end
+end
+
+==> 015.rb 23 <==
+protected def foo; end
+
+==> 016.rb 27 <==
+class Test
+  protected
+end
+
+==> 017.rb 10 <==
+protected
+
+==> 018.rb 33 <==
+class Test
+  protected # hey
+end
+
+==> 019.rb 120 <==
+class TestOne
+  protected
+end
+
+class TestTwo
+  protected def foo; end
+end
+
+class TestThree
+  protected def foo; end
+end
+
+==> 020.rb 76 <==
+module MyModule
+  singleton_methods.each { |method| protected(method) }
+end
+
+==> 021.rb 63 <==
+module MyModule
+  singleton_methods.each { protected(_1) }
+end
+
+==> 022.rb 53 <==
+class Test
+  protected def foo; end
+
+  protected
+end
+
+==> 023.rb 67 <==
+class Test
+  # comment
+  protected def foo
+    # comment
+  end
+end
+
+==> 024.rb 66 <==
+class Test
+  protected :inspect if METHODS.include?(:inspect)
+end
+
+==> 025.rb 94 <==
+class Test
+  protected get_method_name if get_method_name =~ /a/
+  protected def bar; end
+end
+
+==> 026.rb 156 <==
+class Test
+  protected get_method_name_1 if get_method_name_1 =~ /a/
+  protected def bar; end
+  protected get_method_name_2 if get_method_name_2 =~ /b/
+end
+
+==> 027.rb 42 <==
+class Foo
+  foo
+  bar(key: protected)
+end
+
+==> 028.rb 37 <==
+class Test
+  public def foo; end
+end
+
+==> 029.rb 20 <==
+public def foo; end
+
+==> 030.rb 24 <==
+class Test
+  public
+end
+
+==> 031.rb 7 <==
+public
+
+==> 032.rb 30 <==
+class Test
+  public # hey
+end
+
+==> 033.rb 111 <==
+class TestOne
+  public
+end
+
+class TestTwo
+  public def foo; end
+end
+
+class TestThree
+  public def foo; end
+end
+
+==> 034.rb 73 <==
+module MyModule
+  singleton_methods.each { |method| public(method) }
+end
+
+==> 035.rb 60 <==
+module MyModule
+  singleton_methods.each { public(_1) }
+end
+
+==> 036.rb 47 <==
+class Test
+  public def foo; end
+
+  public
+end
+
+==> 037.rb 64 <==
+class Test
+  # comment
+  public def foo
+    # comment
+  end
+end
+
+==> 038.rb 63 <==
+class Test
+  public :inspect if METHODS.include?(:inspect)
+end
+
+==> 039.rb 88 <==
+class Test
+  public get_method_name if get_method_name =~ /a/
+  public def bar; end
+end
+
+==> 040.rb 147 <==
+class Test
+  public get_method_name_1 if get_method_name_1 =~ /a/
+  public def bar; end
+  public get_method_name_2 if get_method_name_2 =~ /b/
+end
+
+==> 041.rb 39 <==
+class Foo
+  foo
+  bar(key: public)
+end
+
+==> 042.rb 46 <==
+class Test
+  module_function def foo; end
+end
+
+==> 043.rb 29 <==
+module_function def foo; end
+
+==> 044.rb 33 <==
+class Test
+  module_function
+end
+
+==> 045.rb 16 <==
+module_function
+
+==> 046.rb 39 <==
+class Test
+  module_function # hey
+end
+
+==> 047.rb 138 <==
+class TestOne
+  module_function
+end
+
+class TestTwo
+  module_function def foo; end
+end
+
+class TestThree
+  module_function def foo; end
+end
+
+==> 048.rb 82 <==
+module MyModule
+  singleton_methods.each { |method| module_function(method) }
+end
+
+==> 049.rb 69 <==
+module MyModule
+  singleton_methods.each { module_function(_1) }
+end
+
+==> 050.rb 65 <==
+class Test
+  module_function def foo; end
+
+  module_function
+end
+
+==> 051.rb 73 <==
+class Test
+  # comment
+  module_function def foo
+    # comment
+  end
+end
+
+==> 052.rb 72 <==
+class Test
+  module_function :inspect if METHODS.include?(:inspect)
+end
+
+==> 053.rb 106 <==
+class Test
+  module_function get_method_name if get_method_name =~ /a/
+  module_function def bar; end
+end
+
+==> 054.rb 174 <==
+class Test
+  module_function get_method_name_1 if get_method_name_1 =~ /a/
+  module_function def bar; end
+  module_function get_method_name_2 if get_method_name_2 =~ /b/
+end
+
+==> 055.rb 48 <==
+class Foo
+  foo
+  bar(key: module_function)
+end
+
+==> 056.rb 92 <==
+class Test
+  private def foo; end
+  private def bar; end
+  def baz; end
+  QUX = ['qux']
+end
+

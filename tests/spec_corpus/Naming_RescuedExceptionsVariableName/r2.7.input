@@ -1,0 +1,240 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 65 <==
+begin
+  something
+rescue MyException => exc
+  # do something
+end
+
+==> 001.rb 66 <==
+begin
+  something
+rescue MyException => _exc
+  # do something
+end
+
+==> 002.rb 54 <==
+begin
+  something
+rescue MyException => exc
+  exc
+end
+
+==> 003.rb 110 <==
+begin
+  something
+rescue FooException => foo
+  # do something
+rescue BarException => bar
+  # do something
+end
+
+==> 004.rb 55 <==
+begin
+rescue => error
+  do_something(error: error)
+end
+
+==> 005.rb 63 <==
+begin
+  something
+rescue MyException => e
+  # do something
+end
+
+==> 006.rb 64 <==
+begin
+  something
+rescue MyException => _e
+  # do something
+end
+
+==> 007.rb 110 <==
+begin
+  something
+rescue MyException => _e
+  # do something
+rescue AnotherException => e
+  # do something
+end
+
+==> 008.rb 58 <==
+begin
+  something
+rescue MyException
+  # do something
+end
+
+==> 009.rb 82 <==
+e = 'error message'
+begin
+  something
+rescue StandardError => e1
+  log(e, e1)
+end
+
+==> 010.rb 59 <==
+begin
+  something
+rescue my_exception
+  # do something
+end
+
+==> 011.rb 76 <==
+begin
+  something
+rescue ActiveSupport::JSON.my_method
+  # do something
+end
+
+==> 012.rb 81 <==
+begin
+  something
+rescue ActiveSupport::JSON.my_method => e
+  # do something
+end
+
+==> 013.rb 83 <==
+begin
+  something
+rescue ActiveSupport::JSON.my_method => exc
+  # do something
+end
+
+==> 014.rb 55 <==
+begin
+  something
+rescue *handled
+  # do something
+end
+
+==> 015.rb 60 <==
+begin
+  something
+rescue *handled => e
+  # do something
+end
+
+==> 016.rb 62 <==
+begin
+  something
+rescue *handled => exc
+  # do something
+end
+
+==> 017.rb 53 <==
+begin
+  something
+rescue => exc
+  # do something
+end
+
+==> 018.rb 54 <==
+begin
+  something
+rescue => _exc
+  # do something
+end
+
+==> 019.rb 51 <==
+begin
+  something
+rescue => e
+  # do something
+end
+
+==> 020.rb 52 <==
+begin
+  something
+rescue => _e
+  # do something
+end
+
+==> 021.rb 46 <==
+begin
+  something
+rescue
+  # do something
+end
+
+==> 022.rb 123 <==
+begin
+  get something
+rescue ActiveResource::Redirection => redirection
+  redirect_to redirection.response['Location']
+end
+
+==> 023.rb 113 <==
+def main
+  raise
+rescue StandardError => error
+  error = {
+    error_message: error.message
+  }
+  puts error
+end
+
+==> 024.rb 92 <==
+def main
+  raise
+rescue StandardError => error
+  message = error.message
+  puts message
+end
+
+==> 025.rb 97 <==
+begin
+  do_something
+rescue StandardError => error
+  error = build_message(error)
+end
+puts error
+
+==> 026.rb 88 <==
+def main
+  raise
+rescue StandardError => error
+  error, foo = 1, error
+  puts error
+end
+
+==> 027.rb 116 <==
+begin
+  something
+rescue MyException => exc
+  # do something
+rescue OtherException => exc
+  # do something else
+end
+
+==> 028.rb 108 <==
+begin
+rescue StandardError => e1
+  begin
+    log(e1)
+  rescue StandardError => e2
+    log(e1, e2)
+  end
+end
+
+==> 029.rb 57 <==
+begin
+  something
+rescue StandardError => e1
+end
+foo(e1)
+
+==> 030.rb 67 <==
+begin
+  something
+rescue => storage.exception
+  # do something
+end
+

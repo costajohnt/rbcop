@@ -1,0 +1,28 @@
+==> offenses exit=1 651 <==
+000.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+000.rb:1:36: C: [Correctable] Style/ArgumentsForwarding: Use anonymous keyword arguments forwarding (`**`).
+000.rb:2:13: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+000.rb:3:15: C: [Correctable] Style/ArgumentsForwarding: Use anonymous keyword arguments forwarding (`**`).
+001.rb:1:16: C: [Correctable] Style/ArgumentsForwarding: Use anonymous keyword arguments forwarding (`**`).
+001.rb:3:15: C: [Correctable] Style/ArgumentsForwarding: Use anonymous keyword arguments forwarding (`**`).
+
+==> autocorrect exit=0 639 <==
+000.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+000.rb:1:36: C: [Corrected] Style/ArgumentsForwarding: Use anonymous keyword arguments forwarding (`**`).
+000.rb:2:13: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+000.rb:3:15: C: [Corrected] Style/ArgumentsForwarding: Use anonymous keyword arguments forwarding (`**`).
+001.rb:1:16: C: [Corrected] Style/ArgumentsForwarding: Use anonymous keyword arguments forwarding (`**`).
+001.rb:3:15: C: [Corrected] Style/ArgumentsForwarding: Use anonymous keyword arguments forwarding (`**`).
+
+==> corrected/000.rb 52 <==
+def foo(*, **)
+  args_only(*)
+  kwargs_only(**)
+end
+
+==> corrected/001.rb 60 <==
+def foo(*args, **)
+  args_only(*args)
+  kwargs_only(**)
+end
+

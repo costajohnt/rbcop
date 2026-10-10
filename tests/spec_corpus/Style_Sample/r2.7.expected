@@ -1,0 +1,224 @@
+==> offenses exit=1 4293 <==
+000.rb:1:11: C: [Correctable] Style/Sample: Use `sample` instead of `shuffle.first`.
+001.rb:1:12: C: [Correctable] Style/Sample: Use `sample` instead of `shuffle.first`.
+002.rb:1:11: C: [Correctable] Style/Sample: Use `sample` instead of `shuffle.last`.
+003.rb:1:12: C: [Correctable] Style/Sample: Use `sample` instead of `shuffle.last`.
+004.rb:1:11: C: [Correctable] Style/Sample: Use `sample` instead of `shuffle&.first`.
+005.rb:1:12: C: [Correctable] Style/Sample: Use `sample` instead of `shuffle&.first`.
+006.rb:1:11: C: [Correctable] Style/Sample: Use `sample` instead of `shuffle&.last`.
+007.rb:1:12: C: [Correctable] Style/Sample: Use `sample` instead of `shuffle&.last`.
+008.rb:1:11: C: [Correctable] Style/Sample: Use `sample` instead of `shuffle[0]`.
+009.rb:1:12: C: [Correctable] Style/Sample: Use `sample` instead of `shuffle[0]`.
+010.rb:1:11: C: [Correctable] Style/Sample: Use `sample` instead of `shuffle[-1]`.
+011.rb:1:12: C: [Correctable] Style/Sample: Use `sample` instead of `shuffle[-1]`.
+012.rb:1:11: C: [Correctable] Style/Sample: Use `sample(3)` instead of `shuffle[...3]`.
+013.rb:1:12: C: [Correctable] Style/Sample: Use `sample(3)` instead of `shuffle[...3]`.
+014.rb:1:11: C: [Correctable] Style/Sample: Use `sample(3)` instead of `shuffle[0, 3]`.
+015.rb:1:12: C: [Correctable] Style/Sample: Use `sample(3)` instead of `shuffle[0, 3]`.
+016.rb:1:11: C: [Correctable] Style/Sample: Use `sample(4)` instead of `shuffle[0..3]`.
+017.rb:1:12: C: [Correctable] Style/Sample: Use `sample(4)` instead of `shuffle[0..3]`.
+018.rb:1:11: C: [Correctable] Style/Sample: Use `sample(3)` instead of `shuffle[0...3]`.
+019.rb:1:12: C: [Correctable] Style/Sample: Use `sample(3)` instead of `shuffle[0...3]`.
+020.rb:1:11: C: [Correctable] Style/Sample: Use `sample(2)` instead of `shuffle.first(2)`.
+021.rb:1:12: C: [Correctable] Style/Sample: Use `sample(2)` instead of `shuffle.first(2)`.
+022.rb:1:11: C: [Correctable] Style/Sample: Use `sample(3)` instead of `shuffle.last(3)`.
+023.rb:1:12: C: [Correctable] Style/Sample: Use `sample(3)` instead of `shuffle.last(3)`.
+024.rb:1:11: C: [Correctable] Style/Sample: Use `sample(foo)` instead of `shuffle.first(foo)`.
+025.rb:1:12: C: [Correctable] Style/Sample: Use `sample(foo)` instead of `shuffle.first(foo)`.
+026.rb:1:11: C: [Correctable] Style/Sample: Use `sample(bar)` instead of `shuffle.last(bar)`.
+027.rb:1:12: C: [Correctable] Style/Sample: Use `sample(bar)` instead of `shuffle.last(bar)`.
+028.rb:1:11: C: [Correctable] Style/Sample: Use `sample` instead of `shuffle.at(0)`.
+029.rb:1:12: C: [Correctable] Style/Sample: Use `sample` instead of `shuffle.at(0)`.
+030.rb:1:11: C: [Correctable] Style/Sample: Use `sample` instead of `shuffle.at(-1)`.
+031.rb:1:12: C: [Correctable] Style/Sample: Use `sample` instead of `shuffle.at(-1)`.
+032.rb:1:11: C: [Correctable] Style/Sample: Use `sample` instead of `shuffle.slice(0)`.
+033.rb:1:12: C: [Correctable] Style/Sample: Use `sample` instead of `shuffle.slice(0)`.
+034.rb:1:11: C: [Correctable] Style/Sample: Use `sample` instead of `shuffle.slice(-1)`.
+035.rb:1:12: C: [Correctable] Style/Sample: Use `sample` instead of `shuffle.slice(-1)`.
+036.rb:1:11: C: [Correctable] Style/Sample: Use `sample(3)` instead of `shuffle.slice(0, 3)`.
+037.rb:1:12: C: [Correctable] Style/Sample: Use `sample(3)` instead of `shuffle.slice(0, 3)`.
+038.rb:1:11: C: [Correctable] Style/Sample: Use `sample(4)` instead of `shuffle.slice(0..3)`.
+039.rb:1:12: C: [Correctable] Style/Sample: Use `sample(4)` instead of `shuffle.slice(0..3)`.
+040.rb:1:11: C: [Correctable] Style/Sample: Use `sample(3)` instead of `shuffle.slice(0...3)`.
+041.rb:1:12: C: [Correctable] Style/Sample: Use `sample(3)` instead of `shuffle.slice(0...3)`.
+042.rb:1:11: C: Style/Sample: Use `sample(random: Random.new)` instead of `shuffle(random: Random.new).first`.
+043.rb:1:11: C: Style/Sample: Use `sample(2, random: Random.new)` instead of `shuffle(random: Random.new).first(2)`.
+044.rb:1:11: C: Style/Sample: Use `sample(bar, random: foo)` instead of `shuffle(random: foo).last(bar)`.
+045.rb:1:11: C: Style/Sample: Use `sample(4, random: Random.new)` instead of `shuffle(random: Random.new)[0..3]`.
+046.rb:1:11: C: Style/Sample: Use `sample(5, random: Random.new(123))` instead of `shuffle(random: Random.new(123)).first(5)`.
+
+==> autocorrect exit=1 4209 <==
+000.rb:1:11: C: [Corrected] Style/Sample: Use `sample` instead of `shuffle.first`.
+001.rb:1:12: C: [Corrected] Style/Sample: Use `sample` instead of `shuffle.first`.
+002.rb:1:11: C: [Corrected] Style/Sample: Use `sample` instead of `shuffle.last`.
+003.rb:1:12: C: [Corrected] Style/Sample: Use `sample` instead of `shuffle.last`.
+004.rb:1:11: C: [Corrected] Style/Sample: Use `sample` instead of `shuffle&.first`.
+005.rb:1:12: C: [Corrected] Style/Sample: Use `sample` instead of `shuffle&.first`.
+006.rb:1:11: C: [Corrected] Style/Sample: Use `sample` instead of `shuffle&.last`.
+007.rb:1:12: C: [Corrected] Style/Sample: Use `sample` instead of `shuffle&.last`.
+008.rb:1:11: C: [Corrected] Style/Sample: Use `sample` instead of `shuffle[0]`.
+009.rb:1:12: C: [Corrected] Style/Sample: Use `sample` instead of `shuffle[0]`.
+010.rb:1:11: C: [Corrected] Style/Sample: Use `sample` instead of `shuffle[-1]`.
+011.rb:1:12: C: [Corrected] Style/Sample: Use `sample` instead of `shuffle[-1]`.
+012.rb:1:11: C: [Corrected] Style/Sample: Use `sample(3)` instead of `shuffle[...3]`.
+013.rb:1:12: C: [Corrected] Style/Sample: Use `sample(3)` instead of `shuffle[...3]`.
+014.rb:1:11: C: [Corrected] Style/Sample: Use `sample(3)` instead of `shuffle[0, 3]`.
+015.rb:1:12: C: [Corrected] Style/Sample: Use `sample(3)` instead of `shuffle[0, 3]`.
+016.rb:1:11: C: [Corrected] Style/Sample: Use `sample(4)` instead of `shuffle[0..3]`.
+017.rb:1:12: C: [Corrected] Style/Sample: Use `sample(4)` instead of `shuffle[0..3]`.
+018.rb:1:11: C: [Corrected] Style/Sample: Use `sample(3)` instead of `shuffle[0...3]`.
+019.rb:1:12: C: [Corrected] Style/Sample: Use `sample(3)` instead of `shuffle[0...3]`.
+020.rb:1:11: C: [Corrected] Style/Sample: Use `sample(2)` instead of `shuffle.first(2)`.
+021.rb:1:12: C: [Corrected] Style/Sample: Use `sample(2)` instead of `shuffle.first(2)`.
+022.rb:1:11: C: [Corrected] Style/Sample: Use `sample(3)` instead of `shuffle.last(3)`.
+023.rb:1:12: C: [Corrected] Style/Sample: Use `sample(3)` instead of `shuffle.last(3)`.
+024.rb:1:11: C: [Corrected] Style/Sample: Use `sample(foo)` instead of `shuffle.first(foo)`.
+025.rb:1:12: C: [Corrected] Style/Sample: Use `sample(foo)` instead of `shuffle.first(foo)`.
+026.rb:1:11: C: [Corrected] Style/Sample: Use `sample(bar)` instead of `shuffle.last(bar)`.
+027.rb:1:12: C: [Corrected] Style/Sample: Use `sample(bar)` instead of `shuffle.last(bar)`.
+028.rb:1:11: C: [Corrected] Style/Sample: Use `sample` instead of `shuffle.at(0)`.
+029.rb:1:12: C: [Corrected] Style/Sample: Use `sample` instead of `shuffle.at(0)`.
+030.rb:1:11: C: [Corrected] Style/Sample: Use `sample` instead of `shuffle.at(-1)`.
+031.rb:1:12: C: [Corrected] Style/Sample: Use `sample` instead of `shuffle.at(-1)`.
+032.rb:1:11: C: [Corrected] Style/Sample: Use `sample` instead of `shuffle.slice(0)`.
+033.rb:1:12: C: [Corrected] Style/Sample: Use `sample` instead of `shuffle.slice(0)`.
+034.rb:1:11: C: [Corrected] Style/Sample: Use `sample` instead of `shuffle.slice(-1)`.
+035.rb:1:12: C: [Corrected] Style/Sample: Use `sample` instead of `shuffle.slice(-1)`.
+036.rb:1:11: C: [Corrected] Style/Sample: Use `sample(3)` instead of `shuffle.slice(0, 3)`.
+037.rb:1:12: C: [Corrected] Style/Sample: Use `sample(3)` instead of `shuffle.slice(0, 3)`.
+038.rb:1:11: C: [Corrected] Style/Sample: Use `sample(4)` instead of `shuffle.slice(0..3)`.
+039.rb:1:12: C: [Corrected] Style/Sample: Use `sample(4)` instead of `shuffle.slice(0..3)`.
+040.rb:1:11: C: [Corrected] Style/Sample: Use `sample(3)` instead of `shuffle.slice(0...3)`.
+041.rb:1:12: C: [Corrected] Style/Sample: Use `sample(3)` instead of `shuffle.slice(0...3)`.
+042.rb:1:11: C: Style/Sample: Use `sample(random: Random.new)` instead of `shuffle(random: Random.new).first`.
+043.rb:1:11: C: Style/Sample: Use `sample(2, random: Random.new)` instead of `shuffle(random: Random.new).first(2)`.
+044.rb:1:11: C: Style/Sample: Use `sample(bar, random: foo)` instead of `shuffle(random: foo).last(bar)`.
+045.rb:1:11: C: Style/Sample: Use `sample(4, random: Random.new)` instead of `shuffle(random: Random.new)[0..3]`.
+046.rb:1:11: C: Style/Sample: Use `sample(5, random: Random.new(123))` instead of `shuffle(random: Random.new(123)).first(5)`.
+
+==> corrected/000.rb 17 <==
+[1, 2, 3].sample
+
+==> corrected/001.rb 18 <==
+[1, 2, 3]&.sample
+
+==> corrected/002.rb 17 <==
+[1, 2, 3].sample
+
+==> corrected/003.rb 18 <==
+[1, 2, 3]&.sample
+
+==> corrected/004.rb 17 <==
+[1, 2, 3].sample
+
+==> corrected/005.rb 18 <==
+[1, 2, 3]&.sample
+
+==> corrected/006.rb 17 <==
+[1, 2, 3].sample
+
+==> corrected/007.rb 18 <==
+[1, 2, 3]&.sample
+
+==> corrected/008.rb 17 <==
+[1, 2, 3].sample
+
+==> corrected/009.rb 18 <==
+[1, 2, 3]&.sample
+
+==> corrected/010.rb 17 <==
+[1, 2, 3].sample
+
+==> corrected/011.rb 18 <==
+[1, 2, 3]&.sample
+
+==> corrected/012.rb 20 <==
+[1, 2, 3].sample(3)
+
+==> corrected/013.rb 21 <==
+[1, 2, 3]&.sample(3)
+
+==> corrected/014.rb 20 <==
+[1, 2, 3].sample(3)
+
+==> corrected/015.rb 21 <==
+[1, 2, 3]&.sample(3)
+
+==> corrected/016.rb 20 <==
+[1, 2, 3].sample(4)
+
+==> corrected/017.rb 21 <==
+[1, 2, 3]&.sample(4)
+
+==> corrected/018.rb 20 <==
+[1, 2, 3].sample(3)
+
+==> corrected/019.rb 21 <==
+[1, 2, 3]&.sample(3)
+
+==> corrected/020.rb 20 <==
+[1, 2, 3].sample(2)
+
+==> corrected/021.rb 21 <==
+[1, 2, 3]&.sample(2)
+
+==> corrected/022.rb 20 <==
+[1, 2, 3].sample(3)
+
+==> corrected/023.rb 21 <==
+[1, 2, 3]&.sample(3)
+
+==> corrected/024.rb 22 <==
+[1, 2, 3].sample(foo)
+
+==> corrected/025.rb 23 <==
+[1, 2, 3]&.sample(foo)
+
+==> corrected/026.rb 22 <==
+[1, 2, 3].sample(bar)
+
+==> corrected/027.rb 23 <==
+[1, 2, 3]&.sample(bar)
+
+==> corrected/028.rb 17 <==
+[1, 2, 3].sample
+
+==> corrected/029.rb 18 <==
+[1, 2, 3]&.sample
+
+==> corrected/030.rb 17 <==
+[1, 2, 3].sample
+
+==> corrected/031.rb 18 <==
+[1, 2, 3]&.sample
+
+==> corrected/032.rb 17 <==
+[1, 2, 3].sample
+
+==> corrected/033.rb 18 <==
+[1, 2, 3]&.sample
+
+==> corrected/034.rb 17 <==
+[1, 2, 3].sample
+
+==> corrected/035.rb 18 <==
+[1, 2, 3]&.sample
+
+==> corrected/036.rb 20 <==
+[1, 2, 3].sample(3)
+
+==> corrected/037.rb 21 <==
+[1, 2, 3]&.sample(3)
+
+==> corrected/038.rb 20 <==
+[1, 2, 3].sample(4)
+
+==> corrected/039.rb 21 <==
+[1, 2, 3]&.sample(4)
+
+==> corrected/040.rb 20 <==
+[1, 2, 3].sample(3)
+
+==> corrected/041.rb 21 <==
+[1, 2, 3]&.sample(3)
+

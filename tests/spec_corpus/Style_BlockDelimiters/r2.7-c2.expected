@@ -1,0 +1,142 @@
+==> offenses exit=1 2167 <==
+011.rb:1:6: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+014.rb:1:6: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+017.rb:1:7: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+021.rb:1:5: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+022.rb:1:21: C: Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+024.rb:1:6: C: [Correctable] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+025.rb:1:19: C: [Correctable] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+026.rb:1:7: C: [Correctable] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+026.rb:3:7: C: [Correctable] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+027.rb:1:9: C: [Correctable] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+028.rb:1:6: C: [Correctable] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+029.rb:1:9: C: [Correctable] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+030.rb:1:9: C: [Correctable] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+031.rb:1:9: C: [Correctable] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+037.rb:1:21: C: [Correctable] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+037.rb:5:49: C: [Correctable] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+038.rb:1:19: C: [Correctable] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+039.rb:1:5: C: [Correctable] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+040.rb:1:13: C: [Correctable] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+045.rb:1:11: C: [Correctable] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+046.rb:1:5: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+047.rb:1:5: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+
+==> autocorrect exit=1 2313 <==
+011.rb:1:6: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+014.rb:1:6: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+017.rb:1:7: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+021.rb:1:5: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+022.rb:1:21: C: Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+024.rb:1:6: C: [Corrected] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+025.rb:1:19: C: [Corrected] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+026.rb:1:7: C: [Corrected] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+026.rb:3:7: C: [Corrected] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+026.rb:4:14: C: [Corrected] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+027.rb:1:9: C: [Corrected] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+028.rb:1:6: C: [Corrected] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+029.rb:1:9: C: [Corrected] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+030.rb:1:9: C: [Corrected] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+031.rb:1:9: C: [Corrected] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+037.rb:1:21: C: [Corrected] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+037.rb:5:49: C: [Corrected] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+038.rb:1:19: C: [Corrected] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+039.rb:1:5: C: [Corrected] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+040.rb:1:13: C: [Corrected] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+040.rb:1:28: C: [Corrected] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+045.rb:1:11: C: [Corrected] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+046.rb:1:5: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+047.rb:1:5: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+
+==> corrected/011.rb 13 <==
+each { |x| }
+
+==> corrected/014.rb 12 <==
+each { _1 }
+
+==> corrected/017.rb 14 <==
+block { |x| }
+
+==> corrected/021.rb 23 <==
+foo { bar rescue baz }
+
+==> corrected/024.rb 16 <==
+each do |x|
+end
+
+==> corrected/025.rb 29 <==
+foo.bar = baz.map do |x|
+end
+
+==> corrected/026.rb 51 <==
+blcck do
+end
+# comment
+block do foo do
+end end.bar
+
+==> corrected/027.rb 36 <==
+# comment
+baz.map do |x|
+foo(x) end
+
+==> corrected/028.rb 23 <==
+[# comment
+foo do
+end]
+
+==> corrected/029.rb 55 <==
+# comment
+baz.map do |x|
+foo(x) end.map { |x| x.quux }
+
+==> corrected/030.rb 45 <==
+# comment
+baz.map do |x|
+foo(x) end.qux.quux
+
+==> corrected/031.rb 29 <==
+# comment
+baz.map do |x|
+end
+
+==> corrected/037.rb 133 <==
+scope :foo, (lambda do |f|
+  where(condition: "value")
+end)
+
+expect { something }.to(raise_error(ErrorClass) do |error|
+  # ...
+end)
+
+==> corrected/038.rb 86 <==
+h2[k2] = Hash.new do |h3,k3|
+  h3[k3] = 0
+end
+
+x = done? list.reject { |e|
+  e.nil?
+}
+
+==> corrected/039.rb 45 <==
+each do |x|
+  some_method
+  other_method
+end
+
+==> corrected/040.rb 47 <==
+(0..3).each do |a| a.times do
+  puts a
+end end
+
+==> corrected/045.rb 50 <==
+# comment
+my_method do |x|
+  x.foo end unless bar
+
+==> corrected/046.rb 26 <==
+map { |x| x.y? rescue z }
+
+==> corrected/047.rb 46 <==
+foo { next unless bar rescue StandardError; }
+

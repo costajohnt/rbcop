@@ -1,0 +1,24 @@
+==> offenses exit=1 600 <==
+010.rb:1:1: C: [Correctable] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
+011.rb:1:1: C: [Correctable] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
+012.rb:1:1: C: [Correctable] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
+015.rb:1:3: C: [Correctable] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
+
+==> autocorrect exit=0 592 <==
+010.rb:1:1: C: [Corrected] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
+011.rb:1:1: C: [Corrected] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
+012.rb:1:1: C: [Corrected] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
+015.rb:1:3: C: [Corrected] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
+
+==> corrected/010.rb 5 <==
+:"a"
+
+==> corrected/011.rb 11 <==
+:"o'clock"
+
+==> corrected/012.rb 12 <==
+:"foo\\bar"
+
+==> corrected/015.rb 18 <==
+{ :"a" => value }
+

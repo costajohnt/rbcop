@@ -1,0 +1,42 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 104 <==
+module Foo body
+end
+module Bar extend self
+end
+module Bar; def bar; end
+end
+module Bar def bar; end
+end
+
+==> 001.rb 44 <==
+module Foo body
+  def bar
+    qux
+  end
+end
+
+==> 002.rb 25 <==
+module Foo; do_stuff
+end
+
+==> 003.rb 32 <==
+module Foo
+  def no_op; end
+end
+
+==> 004.rb 33 <==
+module BarQux; foo # comment
+end
+
+==> 005.rb 29 <==
+module Bar; def bar; end
+end
+

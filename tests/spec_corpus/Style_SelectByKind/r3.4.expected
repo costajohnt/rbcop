@@ -1,0 +1,104 @@
+==> offenses exit=1 1908 <==
+000.rb:1:1: C: [Correctable] Style/SelectByKind: Prefer `grep` to `select` with a kind check.
+001.rb:1:1: C: [Correctable] Style/SelectByKind: Prefer `grep` to `select` with a kind check.
+002.rb:1:1: C: [Correctable] Style/SelectByKind: Prefer `grep` to `select` with a kind check.
+003.rb:1:1: C: [Correctable] Style/SelectByKind: Prefer `grep` to `find_all` with a kind check.
+004.rb:1:1: C: [Correctable] Style/SelectByKind: Prefer `grep` to `find_all` with a kind check.
+005.rb:1:1: C: [Correctable] Style/SelectByKind: Prefer `grep` to `find_all` with a kind check.
+006.rb:1:1: C: [Correctable] Style/SelectByKind: Prefer `grep` to `filter` with a kind check.
+007.rb:1:1: C: [Correctable] Style/SelectByKind: Prefer `grep` to `filter` with a kind check.
+008.rb:1:1: C: [Correctable] Style/SelectByKind: Prefer `grep` to `filter` with a kind check.
+009.rb:1:1: C: [Correctable] Style/SelectByKind: Prefer `grep` to `reject` with a kind check.
+010.rb:1:1: C: [Correctable] Style/SelectByKind: Prefer `grep` to `reject` with a kind check.
+011.rb:1:1: C: [Correctable] Style/SelectByKind: Prefer `grep_v` to `select` with a kind check.
+012.rb:1:1: C: [Correctable] Style/SelectByKind: Prefer `grep_v` to `select` with a kind check.
+013.rb:1:1: C: [Correctable] Style/SelectByKind: Prefer `grep_v` to `find_all` with a kind check.
+014.rb:1:1: C: [Correctable] Style/SelectByKind: Prefer `grep_v` to `find_all` with a kind check.
+015.rb:1:1: C: [Correctable] Style/SelectByKind: Prefer `grep_v` to `filter` with a kind check.
+016.rb:1:1: C: [Correctable] Style/SelectByKind: Prefer `grep_v` to `filter` with a kind check.
+017.rb:1:1: C: [Correctable] Style/SelectByKind: Prefer `grep_v` to `reject` with a kind check.
+018.rb:1:1: C: [Correctable] Style/SelectByKind: Prefer `grep_v` to `reject` with a kind check.
+019.rb:1:1: C: [Correctable] Style/SelectByKind: Prefer `grep_v` to `reject` with a kind check.
+
+==> autocorrect exit=0 1868 <==
+000.rb:1:1: C: [Corrected] Style/SelectByKind: Prefer `grep` to `select` with a kind check.
+001.rb:1:1: C: [Corrected] Style/SelectByKind: Prefer `grep` to `select` with a kind check.
+002.rb:1:1: C: [Corrected] Style/SelectByKind: Prefer `grep` to `select` with a kind check.
+003.rb:1:1: C: [Corrected] Style/SelectByKind: Prefer `grep` to `find_all` with a kind check.
+004.rb:1:1: C: [Corrected] Style/SelectByKind: Prefer `grep` to `find_all` with a kind check.
+005.rb:1:1: C: [Corrected] Style/SelectByKind: Prefer `grep` to `find_all` with a kind check.
+006.rb:1:1: C: [Corrected] Style/SelectByKind: Prefer `grep` to `filter` with a kind check.
+007.rb:1:1: C: [Corrected] Style/SelectByKind: Prefer `grep` to `filter` with a kind check.
+008.rb:1:1: C: [Corrected] Style/SelectByKind: Prefer `grep` to `filter` with a kind check.
+009.rb:1:1: C: [Corrected] Style/SelectByKind: Prefer `grep` to `reject` with a kind check.
+010.rb:1:1: C: [Corrected] Style/SelectByKind: Prefer `grep` to `reject` with a kind check.
+011.rb:1:1: C: [Corrected] Style/SelectByKind: Prefer `grep_v` to `select` with a kind check.
+012.rb:1:1: C: [Corrected] Style/SelectByKind: Prefer `grep_v` to `select` with a kind check.
+013.rb:1:1: C: [Corrected] Style/SelectByKind: Prefer `grep_v` to `find_all` with a kind check.
+014.rb:1:1: C: [Corrected] Style/SelectByKind: Prefer `grep_v` to `find_all` with a kind check.
+015.rb:1:1: C: [Corrected] Style/SelectByKind: Prefer `grep_v` to `filter` with a kind check.
+016.rb:1:1: C: [Corrected] Style/SelectByKind: Prefer `grep_v` to `filter` with a kind check.
+017.rb:1:1: C: [Corrected] Style/SelectByKind: Prefer `grep_v` to `reject` with a kind check.
+018.rb:1:1: C: [Corrected] Style/SelectByKind: Prefer `grep_v` to `reject` with a kind check.
+019.rb:1:1: C: [Corrected] Style/SelectByKind: Prefer `grep_v` to `reject` with a kind check.
+
+==> corrected/000.rb 16 <==
+array.grep(Foo)
+
+==> corrected/001.rb 17 <==
+array&.grep(Foo)
+
+==> corrected/002.rb 16 <==
+array.grep(Foo)
+
+==> corrected/003.rb 16 <==
+array.grep(Foo)
+
+==> corrected/004.rb 17 <==
+array&.grep(Foo)
+
+==> corrected/005.rb 16 <==
+array.grep(Foo)
+
+==> corrected/006.rb 16 <==
+array.grep(Foo)
+
+==> corrected/007.rb 17 <==
+array&.grep(Foo)
+
+==> corrected/008.rb 16 <==
+array.grep(Foo)
+
+==> corrected/009.rb 16 <==
+array.grep(Foo)
+
+==> corrected/010.rb 16 <==
+array.grep(Foo)
+
+==> corrected/011.rb 18 <==
+array.grep_v(Foo)
+
+==> corrected/012.rb 18 <==
+array.grep_v(Foo)
+
+==> corrected/013.rb 18 <==
+array.grep_v(Foo)
+
+==> corrected/014.rb 18 <==
+array.grep_v(Foo)
+
+==> corrected/015.rb 18 <==
+array.grep_v(Foo)
+
+==> corrected/016.rb 18 <==
+array.grep_v(Foo)
+
+==> corrected/017.rb 18 <==
+array.grep_v(Foo)
+
+==> corrected/018.rb 19 <==
+array&.grep_v(Foo)
+
+==> corrected/019.rb 18 <==
+array.grep_v(Foo)
+

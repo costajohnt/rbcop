@@ -1,0 +1,9 @@
+==> offenses exit=1 114 <==
+003.rb:1:3: C: [Correctable] Style/StabbyLambdaParentheses: Do not wrap stabby lambda arguments with parentheses.
+
+==> autocorrect exit=0 112 <==
+003.rb:1:3: C: [Corrected] Style/StabbyLambdaParentheses: Do not wrap stabby lambda arguments with parentheses.
+
+==> corrected/003.rb 22 <==
+->a,b,c { a + b + c }
+

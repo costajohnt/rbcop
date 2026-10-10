@@ -1,0 +1,37 @@
+==> offenses exit=1 261 <==
+000.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+001.rb:2:3: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+002.rb:2:3: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+
+==> autocorrect exit=0 255 <==
+000.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+001.rb:2:3: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+002.rb:2:3: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+
+==> corrected/000.rb 39 <==
+begin
+  a = 1
+  b = 2
+rescue
+  foo
+end
+
+==> corrected/001.rb 41 <==
+def foo
+  a = 1
+  b = 2
+rescue
+  foo
+end
+
+==> corrected/002.rb 84 <==
+def foo
+  begin
+    a = '1'
+    b = '2'
+  rescue
+    foo
+  end
+  something_else
+end
+

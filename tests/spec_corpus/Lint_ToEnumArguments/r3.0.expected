@@ -1,0 +1,6 @@
+==> offenses exit=1 87 <==
+000.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+
+==> autocorrect exit=1 87 <==
+000.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+

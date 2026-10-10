@@ -1,0 +1,17 @@
+==> .rubocop.yml 182 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/DisableCopsWithinSourceCodeDirective:
+  AllowedDirectives:
+  - todo
+
+==> 000.rb 49 <==
+x = 0 # rubocop:todo Layout/SpaceAroundOperators
+
+==> 001.rb 52 <==
+y = 0 # rubocop:disable Layout/SpaceAroundOperators
+

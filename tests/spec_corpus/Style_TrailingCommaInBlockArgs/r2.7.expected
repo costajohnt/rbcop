@@ -1,0 +1,21 @@
+==> offenses exit=1 339 <==
+000.rb:1:13: C: [Correctable] Style/TrailingCommaInBlockArgs: Useless trailing comma present in block arguments.
+008.rb:1:14: C: [Correctable] Style/TrailingCommaInBlockArgs: Useless trailing comma present in block arguments.
+019.rb:1:19: C: [Correctable] Style/TrailingCommaInBlockArgs: Useless trailing comma present in block arguments.
+
+==> autocorrect exit=0 333 <==
+000.rb:1:13: C: [Corrected] Style/TrailingCommaInBlockArgs: Useless trailing comma present in block arguments.
+008.rb:1:14: C: [Corrected] Style/TrailingCommaInBlockArgs: Useless trailing comma present in block arguments.
+019.rb:1:19: C: [Corrected] Style/TrailingCommaInBlockArgs: Useless trailing comma present in block arguments.
+
+==> corrected/000.rb 22 <==
+test { |a, b| a + b }
+
+==> corrected/008.rb 27 <==
+test do |a, b|
+  a + b
+end
+
+==> corrected/019.rb 45 <==
+lambda { |foo, bar| do_something(foo, bar) }
+

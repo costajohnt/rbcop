@@ -1,0 +1,182 @@
+==> .rubocop.yml 209 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/RedundantSafeNavigation:
+  AllowedMethods:
+  - respond_to?
+  AdditionalNilMethods:
+  - present?
+
+==> 000.rb 142 <==
+Const&.do_something
+ConstName&.do_something
+Const_name&.do_something # It is treated as camel case, similar to the `Naming/ConstantName` cop.
+
+==> 001.rb 45 <==
+CONST&.do_something
+CONST_NAME&.do_something
+
+==> 002.rb 157 <==
+FOO::Const&.do_something
+bar::ConstName&.do_something
+BAZ::Const_name&.do_something # It is treated as camel case, similar to the `Naming/ConstantName` cop.
+
+==> 003.rb 55 <==
+FOO::CONST&.do_something
+bar::CONST_NAME&.do_something
+
+==> 004.rb 94 <==
+if foo&.respond_to?(:bar)
+  do_something
+elsif foo&.respond_to?(:baz)
+  do_something_else
+end
+
+==> 005.rb 43 <==
+do_something unless foo&.respond_to?(:bar)
+
+==> 006.rb 31 <==
+'2012-03-02 16:05:37'&.to_time
+
+==> 007.rb 12 <==
+42&.minutes
+
+==> 008.rb 22 <==
+[1, 2, 3]&.join(', ')
+
+==> 009.rb 15 <==
+{k: :v}&.count
+
+==> 010.rb 10 <==
+nil&.to_i
+
+==> 011.rb 10 <==
+self&.foo
+
+==> 012.rb 103 <==
+while foo&.respond_to?(:bar)
+  do_something
+end
+
+begin
+  do_something
+end while foo&.respond_to?(:bar)
+
+==> 013.rb 103 <==
+until foo&.respond_to?(:bar)
+  do_something
+end
+
+begin
+  do_something
+end until foo&.respond_to?(:bar)
+
+==> 014.rb 66 <==
+do_something if foo&.respond_to?(:bar) && !foo&.respond_to?(:baz)
+
+==> 015.rb 66 <==
+foo&.respond_to?(:bar)
+
+if condition
+  foo&.respond_to?(:bar)
+end
+
+==> 016.rb 26 <==
+do_something if foo&.bar?
+
+==> 017.rb 40 <==
+do_something if foo&.respond_to?(:to_a)
+
+==> 018.rb 41 <==
+do_something if foo&.respond_to?(:class)
+
+==> 019.rb 30 <==
+foo.to_s&.respond_to?(:class)
+
+==> 020.rb 71 <==
+foo&.to_s || 'Default string'
+foo&.to_i || 1
+do_something if foo&.to_d
+
+==> 021.rb 16 <==
+foo&.to_h || {}
+
+==> 022.rb 34 <==
+foo&.to_h { |k, v| [k, v] } || {}
+
+==> 023.rb 23 <==
+foo&.to_h { _1 } || {}
+
+==> 024.rb 22 <==
+foo&.to_h || { a: 1 }
+
+==> 025.rb 16 <==
+foo&.to_a || []
+
+==> 026.rb 17 <==
+foo&.to_a || [1]
+
+==> 027.rb 15 <==
+foo&.to_i || 0
+
+==> 028.rb 15 <==
+foo&.to_i || 1
+
+==> 029.rb 17 <==
+foo&.to_f || 0.0
+
+==> 030.rb 17 <==
+foo&.to_f || 1.0
+
+==> 031.rb 16 <==
+foo&.to_s || ''
+
+==> 032.rb 23 <==
+foo&.to_s || 'default'
+
+==> 033.rb 16 <==
+foo.to_s&.strip
+
+==> 034.rb 17 <==
+foo&.to_s&.zero?
+
+==> 035.rb 16 <==
+foo.to_i&.zero?
+
+==> 036.rb 17 <==
+foo&.to_i&.zero?
+
+==> 037.rb 16 <==
+foo.to_f&.zero?
+
+==> 038.rb 17 <==
+foo&.to_f&.zero?
+
+==> 039.rb 15 <==
+foo.to_a&.size
+
+==> 040.rb 17 <==
+foo&.to_a&.zero?
+
+==> 041.rb 15 <==
+foo.to_h&.size
+
+==> 042.rb 17 <==
+foo&.to_h&.zero?
+
+==> 043.rb 47 <==
+foo.to_h { |entry| do_something(entry) }&.keys
+
+==> 044.rb 48 <==
+foo&.to_h { |entry| do_something(entry) }&.keys
+
+==> 045.rb 36 <==
+foo.to_h { do_something(_1) }&.keys
+
+==> 046.rb 37 <==
+foo&.to_h { do_something(_1) }&.keys
+

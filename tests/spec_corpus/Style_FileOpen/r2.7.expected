@@ -1,0 +1,14 @@
+==> offenses exit=1 535 <==
+000.rb:1:1: C: Style/FileOpen: `File.open` without a block may leak a file descriptor; use the block form.
+001.rb:1:1: C: Style/FileOpen: `File.open` without a block may leak a file descriptor; use the block form.
+002.rb:1:1: C: Style/FileOpen: `File.open` without a block may leak a file descriptor; use the block form.
+003.rb:1:1: C: Style/FileOpen: `File.open` without a block may leak a file descriptor; use the block form.
+004.rb:1:5: C: Style/FileOpen: `File.open` without a block may leak a file descriptor; use the block form.
+
+==> autocorrect exit=1 535 <==
+000.rb:1:1: C: Style/FileOpen: `File.open` without a block may leak a file descriptor; use the block form.
+001.rb:1:1: C: Style/FileOpen: `File.open` without a block may leak a file descriptor; use the block form.
+002.rb:1:1: C: Style/FileOpen: `File.open` without a block may leak a file descriptor; use the block form.
+003.rb:1:1: C: Style/FileOpen: `File.open` without a block may leak a file descriptor; use the block form.
+004.rb:1:5: C: Style/FileOpen: `File.open` without a block may leak a file descriptor; use the block form.
+

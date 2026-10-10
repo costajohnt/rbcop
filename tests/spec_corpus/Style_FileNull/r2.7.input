@@ -1,0 +1,55 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 3 <==
+""
+
+==> 001.rb 7 <==
+"\xa4"
+
+==> 002.rb 19 <==
+path = '/dev/null'
+
+==> 003.rb 33 <==
+CONST = '/dev/null'
+path = 'NUL'
+
+==> 004.rb 13 <==
+path = 'NUL'
+
+==> 005.rb 35 <==
+path = cond ? '/dev/null' : 'NUL:'
+
+==> 006.rb 14 <==
+path = 'NUL:'
+
+==> 007.rb 32 <==
+file = "nul"
+path = "/DEV/NULL"
+
+==> 008.rb 60 <==
+'the null devices are /dev/null on Unix and NUL on Windows'
+
+==> 009.rb 28 <==
+path = "/dev/null#{suffix}"
+
+==> 010.rb 26 <==
+path = "/dev/null" "more"
+
+==> 011.rb 21 <==
+['/dev/null', 'NUL']
+
+==> 012.rb 18 <==
+%w[/dev/null NUL]
+
+==> 013.rb 40 <==
+{ "/dev/null" => true, "nul" => false }
+
+==> 014.rb 38 <==
+{ unix: "/dev/null", windows: "nul" }
+

@@ -1,0 +1,27 @@
+==> .rubocop.yml 168 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/NestedMethodDefinition:
+  AllowedMethods:
+  - has_many
+
+==> 000.rb 96 <==
+def do_something
+  has_many :articles do
+    def find_or_create_by_name(name)
+    end
+  end
+end
+
+==> 001.rb 101 <==
+def do_something
+  denied_method :articles do
+    def find_or_create_by_name(name)
+    end
+  end
+end
+

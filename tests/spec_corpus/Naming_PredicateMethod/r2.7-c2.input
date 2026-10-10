@@ -1,0 +1,25 @@
+==> .rubocop.yml 257 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/PredicateMethod:
+  Mode: :conservative
+  AllowedMethods: []
+  AllowedPatterns:
+  - "\\Afoo"
+  AllowBangMethods: false
+  WaywardPredicates: []
+
+==> 000.rb 21 <==
+def foo?
+  'foo'
+end
+
+==> 001.rb 24 <==
+def barfoo?
+  'bar'
+end
+

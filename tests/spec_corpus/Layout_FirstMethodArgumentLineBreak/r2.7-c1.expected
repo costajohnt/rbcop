@@ -1,0 +1,19 @@
+==> offenses exit=1 294 <==
+002.rb:1:5: C: [Correctable] Layout/FirstMethodArgumentLineBreak: Add a line break before the first argument of a multi-line method argument list.
+003.rb:1:5: C: [Correctable] Layout/FirstMethodArgumentLineBreak: Add a line break before the first argument of a multi-line method argument list.
+
+==> autocorrect exit=0 290 <==
+002.rb:1:5: C: [Corrected] Layout/FirstMethodArgumentLineBreak: Add a line break before the first argument of a multi-line method argument list.
+003.rb:1:5: C: [Corrected] Layout/FirstMethodArgumentLineBreak: Add a line break before the first argument of a multi-line method argument list.
+
+==> corrected/002.rb 27 <==
+foo(
+bar, {
+  a: b
+}, baz)
+
+==> corrected/003.rb 15 <==
+foo(
+bar,
+baz)
+

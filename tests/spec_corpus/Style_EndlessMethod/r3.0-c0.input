@@ -1,0 +1,33 @@
+==> .rubocop.yml 200 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Style/EndlessMethod:
+  EnforcedStyle: disallow
+Layout/LineLength:
+  Enabled: true
+  Max: 80
+
+==> 000.rb 18 <==
+def a = def b = 1
+
+==> 001.rb 20 <==
+def my_method() = x
+
+==> 002.rb 25 <==
+def self.my_method() = x
+
+==> 003.rb 26 <==
+def self::my_method() = x
+
+==> 004.rb 24 <==
+def my_method(a, b) = x
+
+==> 005.rb 22 <==
+def my_method
+  x
+end
+

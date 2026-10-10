@@ -1,0 +1,9 @@
+==> offenses exit=1 121 <==
+001.rb:1:7: W: [Correctable] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+
+==> autocorrect exit=0 119 <==
+001.rb:1:7: W: [Corrected] Lint/SafeNavigationChain: Do not chain ordinary method call after safe navigation operator.
+
+==> corrected/001.rb 12 <==
+x&.bar&.baz
+

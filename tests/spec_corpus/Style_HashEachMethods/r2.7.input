@@ -1,0 +1,167 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 26 <==
+foo.keys.each { |k| p k }
+
+==> 001.rb 28 <==
+foo&.keys&.each { |k| p k }
+
+==> 002.rb 28 <==
+foo.values.each { |v| p v }
+
+==> 003.rb 30 <==
+foo&.values&.each { |v| p v }
+
+==> 004.rb 21 <==
+foo.keys.each(&:bar)
+
+==> 005.rb 23 <==
+foo.values.each(&:bar)
+
+==> 006.rb 38 <==
+foo.each { |k, v| do_something(k, v) }
+==> 007.rb 43 <==
+foo.each { |k, (_, v)| do_something(k, v) }
+==> 008.rb 43 <==
+foo.each { |(_, k), v| do_something(k, v) }
+==> 009.rb 45 <==
+foo.each { |k, (_, *v)| do_something(k, *v) }
+==> 010.rb 45 <==
+foo.each { |(_, *k), v| do_something(*k, v) }
+==> 011.rb 32 <==
+foo.each { |e| do_something(e) }
+==> 012.rb 37 <==
+foo.each { |(k, v)| do_something(e) }
+==> 013.rb 40 <==
+foo.each { |k, *v| do_something(k, *v) }
+==> 014.rb 40 <==
+foo.each { |*k, v| do_something(*k, v) }
+==> 015.rb 32 <==
+foo.each { |k, v| do_something }
+==> 016.rb 19 <==
+foo.each { |k, v| }
+==> 017.rb 38 <==
+foo.each { |k, *v| do_something(*v) }
+
+==> 018.rb 38 <==
+foo.each { |*k, v| do_something(*k) }
+
+==> 019.rb 47 <==
+foo.each { |k, unused_value| do_something(k) }
+
+==> 020.rb 48 <==
+foo&.each { |k, unused_value| do_something(k) }
+
+==> 021.rb 52 <==
+foo.each { |k, (_, unused_value)| do_something(k) }
+
+==> 022.rb 45 <==
+foo.each { |unused_key, v| do_something(v) }
+
+==> 023.rb 56 <==
+foo.assoc(key).each { |unused_key, v| do_something(v) }
+
+==> 024.rb 74 <==
+foo.chunk { |i| i.do_something }.each { |unused_key, v| do_something(v) }
+
+==> 025.rb 53 <==
+foo.flatten.each { |unused_key, v| do_something(v) }
+
+==> 026.rb 59 <==
+foo.rassoc(value).each { |unused_key, v| do_something(v) }
+
+==> 027.rb 50 <==
+foo.sort.each { |unused_key, v| do_something(v) }
+
+==> 028.rb 66 <==
+foo.sort_by { |k, v| v }.each { |unused_key, v| do_something(v) }
+
+==> 029.rb 60 <==
+foo.sort_by { _2 }.each { |unused_key, v| do_something(v) }
+
+==> 030.rb 50 <==
+foo.to_a.each { |unused_key, v| do_something(v) }
+
+==> 031.rb 51 <==
+foo&.to_a.each { |unused_key, v| do_something(v) }
+
+==> 032.rb 50 <==
+foo.each { |(_, unused_key), v| do_something(v) }
+
+==> 033.rb 39 <==
+{hash: :literal}.keys.each { |k| p k }
+
+==> 034.rb 43 <==
+[[1, 2, 3], [4, 5, 6]].each { |a, _| p a }
+
+==> 035.rb 24 <==
+foo.each_key { |k| p k }
+==> 036.rb 26 <==
+foo.each_value { |v| p v }
+==> 037.rb 56 <==
+foo.keys.each do |key|
+  foo["#{key}_copy"] = value
+end
+
+==> 038.rb 62 <==
+foo.values.each do |value|
+  foo["#{value}_copy"] = value
+end
+
+==> 039.rb 56 <==
+foo.keys.each do |key|
+  bar["#{key}_copy"] = value
+end
+
+==> 040.rb 62 <==
+foo.values.each do |value|
+  bar["#{value}_copy"] = value
+end
+
+==> 041.rb 23 <==
+foo.keys.each { p _1 }
+
+==> 042.rb 25 <==
+{}.keys.each { |k| p k }
+
+==> 043.rb 27 <==
+{}.values.each { |k| p k }
+
+==> 044.rb 20 <==
+{}.keys.each(&:bar)
+
+==> 045.rb 22 <==
+{}&.keys&.each(&:bar)
+
+==> 046.rb 22 <==
+{}.values.each(&:bar)
+
+==> 047.rb 24 <==
+{}&.values&.each(&:bar)
+
+==> 048.rb 23 <==
+{}.each_key { |k| p k }
+==> 049.rb 25 <==
+{}.each_value { |v| p v }
+==> 050.rb 22 <==
+keys.each { |k| p k }
+
+==> 051.rb 24 <==
+values.each { |v| p v }
+
+==> 052.rb 17 <==
+keys.each(&:bar)
+
+==> 053.rb 19 <==
+values.each(&:bar)
+
+==> 054.rb 20 <==
+each_key { |k| p k }
+==> 055.rb 22 <==
+each_value { |v| p v }

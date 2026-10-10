@@ -1,0 +1,160 @@
+==> offenses exit=1 2582 <==
+000.rb:2:5: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+003.rb:1:11: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+003.rb:1:16: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+003.rb:1:20: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+004.rb:2:7: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+005.rb:2:13: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+006.rb:2:21: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+007.rb:1:2: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+011.rb:1:8: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+012.rb:2:5: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+013.rb:1:2: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+013.rb:4:3: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+013.rb:5:3: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+013.rb:7:2: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+014.rb:2:3: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+014.rb:2:15: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+015.rb:2:10: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+015.rb:2:29: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+015.rb:4:10: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+015.rb:4:33: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+015.rb:5:28: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+015.rb:6:2: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+016.rb:1:28: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+016.rb:1:45: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+016.rb:3:42: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+017.rb:2:16: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+017.rb:5:16: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+018.rb:1:20: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+019.rb:2:12: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+019.rb:6:12: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+019.rb:11:12: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+020.rb:1:20: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+
+==> autocorrect exit=0 2518 <==
+000.rb:2:5: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+003.rb:1:11: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+003.rb:1:16: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+003.rb:1:20: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+004.rb:2:7: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+005.rb:2:13: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+006.rb:2:21: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+007.rb:1:2: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+011.rb:1:8: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+012.rb:2:5: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+013.rb:1:2: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+013.rb:4:3: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+013.rb:5:3: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+013.rb:7:2: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+014.rb:2:3: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+014.rb:2:15: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+015.rb:2:10: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+015.rb:2:29: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+015.rb:4:10: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+015.rb:4:33: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+015.rb:5:28: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+015.rb:6:2: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+016.rb:1:28: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+016.rb:1:45: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+016.rb:3:42: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+017.rb:2:16: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+017.rb:5:16: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+018.rb:1:20: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+019.rb:2:12: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+019.rb:6:12: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+019.rb:11:12: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+020.rb:1:20: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+
+==> corrected/000.rb 37 <==
+website("example.org")
+name = "Jill"
+
+==> corrected/003.rb 20 <==
+hash = {a: 1, b: 2}
+
+==> corrected/004.rb 54 <==
+let(:single_line_hash) {
+  {"a" => "1", "b" => "2"}
+}
+
+==> corrected/005.rb 31 <==
+{:a => "a",
+ :b => [nil, 2.5]}
+
+==> corrected/006.rb 113 <==
+assert_difference(MyModel.count, +2,
+                  3, +3, # Extra spacing only here.
+                  4,+4)
+
+==> corrected/007.rb 12 <==
+m = "hello"
+
+==> corrected/011.rb 21 <==
+class A < String
+end
+
+==> corrected/012.rb 38 <==
+website = "example.org"
+name = "Jill"
+
+==> corrected/013.rb 41 <==
+a += 1
+
+# Comment
+aa = 2
+bb = 3
+
+a ||= 1
+
+==> corrected/014.rb 70 <==
+y, m = (year * 12 + (mon - 1) + n).divmod(12)
+m, = (m + 1) .divmod(1)
+
+==> corrected/015.rb 179 <==
+type_name ||= value.class.name if value
+type_name = type_name.to_s if type_name
+
+type_name = value.class.name if value
+type_name += type_name.to_s unless type_name
+a += 1
+aa -= 2
+
+==> corrected/016.rb 100 <==
+include_examples 'aligned', 'var = until', 'test'
+
+include_examples 'unaligned', "var = if", 'test'
+
+==> corrected/017.rb 110 <==
+unless nochdir
+  Dir.chdir "/" # Release old working directory.
+end
+
+File.umask 0000 # Ensure sensible umask.
+
+==> corrected/018.rb 366 <==
+size_attribute_name = FactoryGirl.create(:attribute,
+                                            name:   'Size',
+                                            values: %w{small large})
+carrier_attribute_name = FactoryGirl.create(:attribute,
+                                            name:   'Carrier',
+                                            values: %w{verizon})
+
+==> corrected/019.rb 184 <==
+a_long_var_name = 100 # this is 100
+short_name1 = 2
+
+clear
+
+short_name2 = 2
+a_long_var_name = 100 # this is 100
+
+clear
+
+short_name3 = 2 # this is 2
+a_long_var_name = 100 # this is 100
+
+==> corrected/020.rb 68 <==
+a_long_var_name = 2 # this is 2
+a_long_var_name = 100 # this is 100
+

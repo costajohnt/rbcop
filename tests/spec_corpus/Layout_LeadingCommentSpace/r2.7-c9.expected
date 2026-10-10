@@ -1,0 +1,12 @@
+==> offenses exit=1 82 <==
+000.rb:2:1: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+
+==> autocorrect exit=0 80 <==
+000.rb:2:1: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+
+==> corrected/000.rb 33 <==
+# Some comment
+# -
+class Foo
+end
+

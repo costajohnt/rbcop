@@ -1,0 +1,300 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 8 <==
+BEGIN{}
+
+==> 001.rb 6 <==
+END{}
+
+==> 002.rb 7 <==
+1and 2
+
+==> 003.rb 9 <==
+1 and(2)
+
+==> 004.rb 12 <==
+begin"" end
+
+==> 005.rb 8 <==
+break""
+
+==> 006.rb 8 <==
+break(1)
+==> 007.rb 19 <==
+case"" when 1; end
+
+==> 008.rb 18 <==
+case""; in 1; end
+
+==> 009.rb 12 <==
+a "b"do end
+
+==> 010.rb 12 <==
+a do|x| end
+
+==> 011.rb 15 <==
+a "b"do _1 end
+
+==> 012.rb 14 <==
+a do _1"a"end
+
+==> 013.rb 14 <==
+while 1do end
+
+==> 014.rb 18 <==
+while 1 do"x" end
+
+==> 015.rb 14 <==
+until 1do end
+
+==> 016.rb 18 <==
+until 1 do"x" end
+
+==> 017.rb 18 <==
+for x in []do end
+
+==> 018.rb 22 <==
+for x in [] do"x" end
+
+==> 019.rb 13 <==
+begin "a"end
+
+==> 020.rb 13 <==
+if a; "b"end
+
+==> 021.rb 12 <==
+a do "a"end
+
+==> 022.rb 18 <==
+while 1 do "x"end
+
+==> 023.rb 18 <==
+until 1 do "x"end
+
+==> 024.rb 22 <==
+for x in [] do "x"end
+
+==> 025.rb 17 <==
+begin end.inspect
+==> 026.rb 17 <==
+if a; ""else end
+
+==> 027.rb 17 <==
+if a; else"" end
+
+==> 028.rb 25 <==
+begin rescue; ""else end
+
+==> 029.rb 25 <==
+begin rescue; else"" end
+
+==> 030.rb 27 <==
+case a; when b; ""else end
+
+==> 031.rb 27 <==
+case a; when b; else"" end
+
+==> 032.rb 25 <==
+case a; in b; ""else end
+
+==> 033.rb 25 <==
+case a; in b; else"" end
+
+==> 034.rb 48 <==
+case a; in "pattern"if "condition"; else "" end
+
+==> 035.rb 48 <==
+case a; in "pattern" if"condition"; else "" end
+
+==> 036.rb 52 <==
+case a; in "pattern"unless "condition"; else "" end
+
+==> 037.rb 52 <==
+case a; in "pattern" unless"condition"; else "" end
+
+==> 038.rb 21 <==
+if a; ""elsif b; end
+
+==> 039.rb 19 <==
+if a; elsif""; end
+
+==> 040.rb 19 <==
+begin ""ensure end
+
+==> 041.rb 19 <==
+begin ensure"" end
+
+==> 042.rb 10 <==
+if""; end
+
+==> 043.rb 7 <==
+next""
+
+==> 044.rb 7 <==
+next(1)
+==> 045.rb 6 <==
+not""
+
+==> 046.rb 6 <==
+not(1)
+==> 047.rb 6 <==
+1or 2
+
+==> 048.rb 8 <==
+1 or(2)
+
+==> 049.rb 11 <==
+""rescue a
+
+==> 050.rb 11 <==
+a rescue""
+
+==> 051.rb 25 <==
+begin; rescue(Error); end
+==> 052.rb 9 <==
+return""
+
+==> 053.rb 10 <==
+return(1)
+
+==> 054.rb 8 <==
+super""
+
+==> 055.rb 8 <==
+super(1)
+==> 056.rb 8 <==
+super{}
+
+==> 057.rb 11 <==
+defined?(1)
+==> 058.rb 10 <==
+defined?1
+
+==> 059.rb 16 <==
+if ""then a end
+
+==> 060.rb 16 <==
+if a then"" end
+
+==> 061.rb 14 <==
+unless""; end
+
+==> 062.rb 10 <==
+1until ""
+
+==> 063.rb 10 <==
+1 until""
+
+==> 064.rb 19 <==
+case ""when a; end
+
+==> 065.rb 19 <==
+case a when""; end
+
+==> 066.rb 18 <==
+case a; in""; end
+
+==> 067.rb 7 <==
+""in a
+
+==> 068.rb 7 <==
+a in""
+
+==> 069.rb 10 <==
+1while ""
+
+==> 070.rb 10 <==
+1 while""
+
+==> 071.rb 8 <==
+yield""
+
+==> 072.rb 8 <==
+yield(1)
+==> 073.rb 10 <==
++begin end
+==> 074.rb 12 <==
+begin+1 end
+
+==> 075.rb 12 <==
+test do\
+end
+==> 076.rb 11 <==
+test do
+end
+==> 077.rb 6 <==
+(next)
+==> 078.rb 6 <==
+!yield
+==> 079.rb 12 <==
+yield.method
+==> 080.rb 13 <==
+!yield.method
+==> 081.rb 13 <==
+!super.method
+==> 082.rb 17 <==
+super::ModuleName
+==> 083.rb 10 <==
+super&.foo
+==> 084.rb 10 <==
+yield&.foo
+==> 085.rb 8 <==
+super[1]
+==> 086.rb 8 <==
+yield[1]
+==> 087.rb 17 <==
+loop { |x|break }
+==> 088.rb 13 <==
+1..super.size
+==> 089.rb 14 <==
+1...super.size
+==> 090.rb 11 <==
+a=begin end
+==> 091.rb 12 <==
+a==begin end
+==> 092.rb 11 <==
+a+begin end
+==> 093.rb 19 <==
+a+begin; end.method
+==> 094.rb 11 <==
+a-begin end
+==> 095.rb 11 <==
+a*begin end
+==> 096.rb 12 <==
+a**begin end
+==> 097.rb 11 <==
+a/begin end
+==> 098.rb 11 <==
+a<begin end
+==> 099.rb 11 <==
+a>begin end
+==> 100.rb 12 <==
+a&&begin end
+==> 101.rb 12 <==
+a||begin end
+==> 102.rb 12 <==
+a=*begin end
+==> 103.rb 6 <==
+loop{}
+==> 104.rb 9 <==
+a 1,foo,1
+==> 105.rb 12 <==
+next#comment
+==> 106.rb 11 <==
+test do;end
+==> 107.rb 11 <==
+[begin end]
+==> 108.rb 11 <==
+loop {next}
+==> 109.rb 14 <==
+{a: begin end}
+==> 110.rb 12 <==
+a[begin end]
+==> 111.rb 14 <==
+"#{begin end}"

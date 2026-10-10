@@ -10,8 +10,8 @@ fn span(n: &Node) -> (usize, usize) {
     (l.start_offset(), l.end_offset())
 }
 
-/// `class_constructor?` on a block's call: `Class.new`, `Module.new`, `Struct.new`, `Data.define`
-/// with a global (`X` or `::X`) constant receiver.
+/// `class_constructor?` on a call (or the call owning a block): `Class.new`, `Module.new`,
+/// `Struct.new`, `Data.define` with a global (`X` or `::X`) constant receiver.
 pub fn class_constructor(call: &CallNode) -> bool {
     let Some(r) = call.receiver() else { return false };
     let name = match kind::of(&r) {
@@ -52,6 +52,10 @@ pub fn in_macro_scope<'pr, N: Borrow<Node<'pr>>>(ancestors: &[N], subject: (usiz
                     return true;
                 }
                 2
+            }
+            // an argument of `Class.new(...)` itself (`class_constructor?` matches the send too)
+            kind::ARGUMENTS_NODE => {
+                return i >= 2 && ancestors[i - 2].borrow().as_call_node().is_some_and(|c| class_constructor(&c));
             }
             kind::BEGIN_NODE => {
                 let b = p.as_begin_node().unwrap();

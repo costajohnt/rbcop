@@ -1,0 +1,49 @@
+==> offenses exit=1 520 <==
+004.rb:1:1: C: [Correctable] Style/EndlessMethod: Avoid endless method definitions with multiple lines.
+005.rb:1:1: C: [Correctable] Style/EndlessMethod: Avoid endless method definitions with multiple lines.
+006.rb:1:1: C: [Correctable] Style/EndlessMethod: Avoid endless method definitions with multiple lines.
+007.rb:1:1: C: [Correctable] Style/EndlessMethod: Avoid endless method definitions with multiple lines.
+008.rb:1:1: C: [Correctable] Style/EndlessMethod: Avoid endless method definitions with multiple lines.
+
+==> autocorrect exit=0 510 <==
+004.rb:1:1: C: [Corrected] Style/EndlessMethod: Avoid endless method definitions with multiple lines.
+005.rb:1:1: C: [Corrected] Style/EndlessMethod: Avoid endless method definitions with multiple lines.
+006.rb:1:1: C: [Corrected] Style/EndlessMethod: Avoid endless method definitions with multiple lines.
+007.rb:1:1: C: [Corrected] Style/EndlessMethod: Avoid endless method definitions with multiple lines.
+008.rb:1:1: C: [Corrected] Style/EndlessMethod: Avoid endless method definitions with multiple lines.
+
+==> corrected/004.rb 74 <==
+def my_method
+  x.foo
+                   .bar
+                   .baz
+end
+
+==> corrected/005.rb 87 <==
+def self.my_method
+  x.foo
+                       .bar
+                       .baz
+end
+
+==> corrected/006.rb 92 <==
+def self::my_method
+  x.foo
+                         .bar
+                         .baz
+end
+
+==> corrected/007.rb 43 <==
+def my_method
+  begin
+  foo && bar
+end
+end
+
+==> corrected/008.rb 88 <==
+def my_method(a, b)
+  x.foo
+                       .bar
+                       .baz
+end
+

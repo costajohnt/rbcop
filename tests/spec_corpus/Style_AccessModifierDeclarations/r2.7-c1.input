@@ -1,0 +1,442 @@
+==> .rubocop.yml 175 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/AccessModifierDeclarations:
+  AllowModifiersOnSymbols: false
+
+==> 000.rb 45 <==
+class Test
+  def foo; end
+  private :foo
+end
+
+==> 001.rb 30 <==
+class Test
+  private :foo
+end
+
+==> 002.rb 13 <==
+private :foo
+
+==> 003.rb 35 <==
+class Foo
+  foo
+  private :bar
+end
+
+==> 004.rb 41 <==
+class Foo
+  foo
+  private :bar, :baz
+end
+
+==> 005.rb 67 <==
+module Foo
+  def bar; end
+  def baz; end
+
+  private :bar, :baz
+end
+
+==> 006.rb 79 <==
+module Foo
+  def bar; end
+  def baz; end
+
+  # comment
+  private :bar, :baz
+end
+
+==> 007.rb 94 <==
+module Foo
+  def bar; end
+  def baz; end
+
+  private :bar, :baz
+
+  private
+  def quux; end
+end
+
+==> 008.rb 52 <==
+module Foo
+  def bar; end
+
+  private :bar, :baz
+end
+
+==> 009.rb 70 <==
+class << self
+  def bar; end
+  def baz; end
+
+  private :bar, :baz
+end
+
+==> 010.rb 82 <==
+class << self
+  def bar; end
+  def baz; end
+
+  # comment
+  private :bar, :baz
+end
+
+==> 011.rb 97 <==
+class << self
+  def bar; end
+  def baz; end
+
+  private :bar, :baz
+
+  private
+  def quux; end
+end
+
+==> 012.rb 55 <==
+class << self
+  def bar; end
+
+  private :bar, :baz
+end
+
+==> 013.rb 43 <==
+class Foo
+  foo
+  private *%i[bar baz]
+end
+
+==> 014.rb 44 <==
+class Foo
+  foo
+  private *METHOD_NAMES
+end
+
+==> 015.rb 47 <==
+class Test
+  def foo; end
+  protected :foo
+end
+
+==> 016.rb 32 <==
+class Test
+  protected :foo
+end
+
+==> 017.rb 15 <==
+protected :foo
+
+==> 018.rb 37 <==
+class Foo
+  foo
+  protected :bar
+end
+
+==> 019.rb 43 <==
+class Foo
+  foo
+  protected :bar, :baz
+end
+
+==> 020.rb 69 <==
+module Foo
+  def bar; end
+  def baz; end
+
+  protected :bar, :baz
+end
+
+==> 021.rb 81 <==
+module Foo
+  def bar; end
+  def baz; end
+
+  # comment
+  protected :bar, :baz
+end
+
+==> 022.rb 98 <==
+module Foo
+  def bar; end
+  def baz; end
+
+  protected :bar, :baz
+
+  protected
+  def quux; end
+end
+
+==> 023.rb 54 <==
+module Foo
+  def bar; end
+
+  protected :bar, :baz
+end
+
+==> 024.rb 72 <==
+class << self
+  def bar; end
+  def baz; end
+
+  protected :bar, :baz
+end
+
+==> 025.rb 84 <==
+class << self
+  def bar; end
+  def baz; end
+
+  # comment
+  protected :bar, :baz
+end
+
+==> 026.rb 101 <==
+class << self
+  def bar; end
+  def baz; end
+
+  protected :bar, :baz
+
+  protected
+  def quux; end
+end
+
+==> 027.rb 57 <==
+class << self
+  def bar; end
+
+  protected :bar, :baz
+end
+
+==> 028.rb 45 <==
+class Foo
+  foo
+  protected *%i[bar baz]
+end
+
+==> 029.rb 46 <==
+class Foo
+  foo
+  protected *METHOD_NAMES
+end
+
+==> 030.rb 44 <==
+class Test
+  def foo; end
+  public :foo
+end
+
+==> 031.rb 29 <==
+class Test
+  public :foo
+end
+
+==> 032.rb 12 <==
+public :foo
+
+==> 033.rb 34 <==
+class Foo
+  foo
+  public :bar
+end
+
+==> 034.rb 40 <==
+class Foo
+  foo
+  public :bar, :baz
+end
+
+==> 035.rb 66 <==
+module Foo
+  def bar; end
+  def baz; end
+
+  public :bar, :baz
+end
+
+==> 036.rb 78 <==
+module Foo
+  def bar; end
+  def baz; end
+
+  # comment
+  public :bar, :baz
+end
+
+==> 037.rb 92 <==
+module Foo
+  def bar; end
+  def baz; end
+
+  public :bar, :baz
+
+  public
+  def quux; end
+end
+
+==> 038.rb 51 <==
+module Foo
+  def bar; end
+
+  public :bar, :baz
+end
+
+==> 039.rb 69 <==
+class << self
+  def bar; end
+  def baz; end
+
+  public :bar, :baz
+end
+
+==> 040.rb 81 <==
+class << self
+  def bar; end
+  def baz; end
+
+  # comment
+  public :bar, :baz
+end
+
+==> 041.rb 95 <==
+class << self
+  def bar; end
+  def baz; end
+
+  public :bar, :baz
+
+  public
+  def quux; end
+end
+
+==> 042.rb 54 <==
+class << self
+  def bar; end
+
+  public :bar, :baz
+end
+
+==> 043.rb 42 <==
+class Foo
+  foo
+  public *%i[bar baz]
+end
+
+==> 044.rb 43 <==
+class Foo
+  foo
+  public *METHOD_NAMES
+end
+
+==> 045.rb 53 <==
+class Test
+  def foo; end
+  module_function :foo
+end
+
+==> 046.rb 38 <==
+class Test
+  module_function :foo
+end
+
+==> 047.rb 21 <==
+module_function :foo
+
+==> 048.rb 43 <==
+class Foo
+  foo
+  module_function :bar
+end
+
+==> 049.rb 49 <==
+class Foo
+  foo
+  module_function :bar, :baz
+end
+
+==> 050.rb 75 <==
+module Foo
+  def bar; end
+  def baz; end
+
+  module_function :bar, :baz
+end
+
+==> 051.rb 87 <==
+module Foo
+  def bar; end
+  def baz; end
+
+  # comment
+  module_function :bar, :baz
+end
+
+==> 052.rb 110 <==
+module Foo
+  def bar; end
+  def baz; end
+
+  module_function :bar, :baz
+
+  module_function
+  def quux; end
+end
+
+==> 053.rb 60 <==
+module Foo
+  def bar; end
+
+  module_function :bar, :baz
+end
+
+==> 054.rb 78 <==
+class << self
+  def bar; end
+  def baz; end
+
+  module_function :bar, :baz
+end
+
+==> 055.rb 90 <==
+class << self
+  def bar; end
+  def baz; end
+
+  # comment
+  module_function :bar, :baz
+end
+
+==> 056.rb 113 <==
+class << self
+  def bar; end
+  def baz; end
+
+  module_function :bar, :baz
+
+  module_function
+  def quux; end
+end
+
+==> 057.rb 63 <==
+class << self
+  def bar; end
+
+  module_function :bar, :baz
+end
+
+==> 058.rb 51 <==
+class Foo
+  foo
+  module_function *%i[bar baz]
+end
+
+==> 059.rb 52 <==
+class Foo
+  foo
+  module_function *METHOD_NAMES
+end
+

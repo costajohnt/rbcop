@@ -1,0 +1,6 @@
+==> offenses exit=1 81 <==
+000.rb:1:1: C: Style/EmptyMethod: Put empty method definitions on a single line.
+
+==> autocorrect exit=1 81 <==
+000.rb:1:1: C: Style/EmptyMethod: Put empty method definitions on a single line.
+

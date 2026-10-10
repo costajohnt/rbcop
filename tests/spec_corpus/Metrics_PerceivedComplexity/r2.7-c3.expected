@@ -1,0 +1,6 @@
+==> offenses exit=1 102 <==
+000.rb:1:1: R: Metrics/PerceivedComplexity: Perceived complexity for `method_name` is too high. [7/2]
+
+==> autocorrect exit=1 102 <==
+000.rb:1:1: R: Metrics/PerceivedComplexity: Perceived complexity for `method_name` is too high. [7/2]
+

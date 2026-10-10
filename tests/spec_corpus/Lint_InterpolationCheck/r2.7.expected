@@ -1,0 +1,37 @@
+==> offenses exit=1 930 <==
+000.rb:1:1: W: [Correctable] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
+001.rb:1:1: W: [Correctable] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
+002.rb:1:1: W: [Correctable] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
+003.rb:2:3: W: [Correctable] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
+004.rb:2:3: W: [Correctable] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
+015.rb:1:7: W: [Correctable] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
+
+==> autocorrect exit=0 918 <==
+000.rb:1:1: W: [Corrected] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
+001.rb:1:1: W: [Corrected] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
+002.rb:1:1: W: [Corrected] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
+003.rb:2:3: W: [Corrected] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
+004.rb:2:3: W: [Corrected] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
+015.rb:1:7: W: [Corrected] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
+
+==> corrected/000.rb 13 <==
+"foo #{bar}"
+
+==> corrected/001.rb 15 <==
+"foo #{bar} }"
+
+==> corrected/002.rb 16 <==
+%{foo "#{bar}"}
+
+==> corrected/003.rb 21 <==
+'x' \
+  "foo #{bar}"
+
+==> corrected/004.rb 21 <==
+"x" \
+  "foo #{bar}"
+
+==> corrected/015.rb 55 <==
+foo = "something with #{interpolation}
+spanning lines"
+

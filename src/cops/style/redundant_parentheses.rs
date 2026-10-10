@@ -186,6 +186,14 @@ fn call_type(n: &Node) -> bool {
     })
 }
 
+/// `call_type?` of the parser parent: a call seen from its receiver or arguments is the `send`,
+/// even when it owns a block (inside the block the parent is the BlockNode).
+fn parent_call_type(n: &Node) -> bool {
+    n.as_call_node().is_some_and(|c| {
+        !(method_name(&c) == "=~" && c.receiver().is_some_and(|r| r.as_regular_expression_node().is_some()))
+    })
+}
+
 /// Parser arguments of a send/super/yield (a block pass included).
 fn arguments<'pr>(n: &Node<'pr>) -> Vec<Node<'pr>> {
     let (args, block) = match kind::of(n) {
@@ -385,7 +393,7 @@ impl<'pr> Check<'_, 'pr> {
             return true;
         }
         // in_pattern_matching_in_method_argument?
-        if self.parent_is(call_type) {
+        if self.parent_is(parent_call_type) {
             let pattern = if cx.config.target_ruby <= 2.7 {
                 kids[0].as_match_required_node().is_some()
             } else {
@@ -450,7 +458,7 @@ impl<'pr> Check<'_, 'pr> {
             return false;
         }
         self.parent().is_some_and(|p| {
-            call_type(p)
+            parent_call_type(p)
                 && parenthesized(p)
                 && p.as_call_node().unwrap().receiver().is_none_or(|r| !same(self.src, range(&r), self.me()))
         })
@@ -504,7 +512,7 @@ impl<'pr> Check<'_, 'pr> {
             }
             if parent.is_some_and(|p| {
                 matches!(kind::of(p), kind::OR_NODE | kind::SPLAT_NODE | kind::ASSOC_SPLAT_NODE)
-                    || (call_type(p) && is_send(p))
+                    || (parent_call_type(p) && is_send(p))
             }) {
                 return None;
             }
@@ -589,7 +597,7 @@ impl<'pr> Check<'_, 'pr> {
         if condition.is_some_and(|c| same(self.src, range(&c), self.me())) {
             return false;
         }
-        !(call_type(p) || matches!(kind::of(p), kind::ARRAY_NODE | kind::ASSOC_NODE))
+        !(parent_call_type(p) || matches!(kind::of(p), kind::ARRAY_NODE | kind::ASSOC_NODE))
     }
 
     /// check_send / check_unary: the message, if any.
@@ -765,7 +773,7 @@ impl Cop for RedundantParentheses {
             return;
         }
         let src = cx.src;
-        let result = ruby_prism::parse_with_version(src.text.as_bytes(), src.version);
+        let result = ruby_prism::parse_with_version(src.text.as_bytes(), src.version, !src.binary);
         let pending = &state.pending;
         let items: Vec<usize> = (0..pending.len()).collect();
         let apply = |c: &mut Corrector, i: usize| parentheses_corrector::apply(c, &pending[i].fix);

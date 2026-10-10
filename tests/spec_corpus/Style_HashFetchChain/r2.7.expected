@@ -1,0 +1,130 @@
+==> offenses exit=1 2092 <==
+006.rb:1:6: C: [Correctable] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+007.rb:1:6: C: [Correctable] Style/HashFetchChain: Use `dig(:foo, :bar)` instead.
+008.rb:1:6: C: [Correctable] Style/HashFetchChain: Use `dig(foo, bar)` instead.
+009.rb:1:6: C: [Correctable] Style/HashFetchChain: Use `dig('foo', :bar, baz)` instead.
+010.rb:1:7: C: [Correctable] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+011.rb:1:8: C: [Correctable] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+013.rb:1:6: C: [Correctable] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+014.rb:1:6: C: [Correctable] Style/HashFetchChain: Use `dig(:foo, :bar)` instead.
+015.rb:1:6: C: [Correctable] Style/HashFetchChain: Use `dig(foo, bar)` instead.
+016.rb:1:6: C: [Correctable] Style/HashFetchChain: Use `dig('foo', :bar, baz)` instead.
+017.rb:1:7: C: [Correctable] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+018.rb:1:8: C: [Correctable] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+020.rb:1:6: C: [Correctable] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+021.rb:1:6: C: [Correctable] Style/HashFetchChain: Use `dig(:foo, :bar)` instead.
+022.rb:1:6: C: [Correctable] Style/HashFetchChain: Use `dig(foo, bar)` instead.
+023.rb:1:6: C: [Correctable] Style/HashFetchChain: Use `dig('foo', :bar, baz)` instead.
+024.rb:1:7: C: [Correctable] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+025.rb:1:8: C: [Correctable] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+027.rb:1:6: C: [Correctable] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+028.rb:1:6: C: [Correctable] Style/HashFetchChain: Use `dig(:foo, :bar)` instead.
+029.rb:1:6: C: [Correctable] Style/HashFetchChain: Use `dig(foo, bar)` instead.
+030.rb:1:6: C: [Correctable] Style/HashFetchChain: Use `dig('foo', :bar, baz)` instead.
+031.rb:1:7: C: [Correctable] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+032.rb:1:8: C: [Correctable] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+033.rb:2:4: C: [Correctable] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+
+==> autocorrect exit=0 2042 <==
+006.rb:1:6: C: [Corrected] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+007.rb:1:6: C: [Corrected] Style/HashFetchChain: Use `dig(:foo, :bar)` instead.
+008.rb:1:6: C: [Corrected] Style/HashFetchChain: Use `dig(foo, bar)` instead.
+009.rb:1:6: C: [Corrected] Style/HashFetchChain: Use `dig('foo', :bar, baz)` instead.
+010.rb:1:7: C: [Corrected] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+011.rb:1:8: C: [Corrected] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+013.rb:1:6: C: [Corrected] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+014.rb:1:6: C: [Corrected] Style/HashFetchChain: Use `dig(:foo, :bar)` instead.
+015.rb:1:6: C: [Corrected] Style/HashFetchChain: Use `dig(foo, bar)` instead.
+016.rb:1:6: C: [Corrected] Style/HashFetchChain: Use `dig('foo', :bar, baz)` instead.
+017.rb:1:7: C: [Corrected] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+018.rb:1:8: C: [Corrected] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+020.rb:1:6: C: [Corrected] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+021.rb:1:6: C: [Corrected] Style/HashFetchChain: Use `dig(:foo, :bar)` instead.
+022.rb:1:6: C: [Corrected] Style/HashFetchChain: Use `dig(foo, bar)` instead.
+023.rb:1:6: C: [Corrected] Style/HashFetchChain: Use `dig('foo', :bar, baz)` instead.
+024.rb:1:7: C: [Corrected] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+025.rb:1:8: C: [Corrected] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+027.rb:1:6: C: [Corrected] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+028.rb:1:6: C: [Corrected] Style/HashFetchChain: Use `dig(:foo, :bar)` instead.
+029.rb:1:6: C: [Corrected] Style/HashFetchChain: Use `dig(foo, bar)` instead.
+030.rb:1:6: C: [Corrected] Style/HashFetchChain: Use `dig('foo', :bar, baz)` instead.
+031.rb:1:7: C: [Corrected] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+032.rb:1:8: C: [Corrected] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+033.rb:2:4: C: [Corrected] Style/HashFetchChain: Use `dig('foo', 'bar')` instead.
+
+==> corrected/006.rb 23 <==
+hash.dig('foo', 'bar')
+
+==> corrected/007.rb 21 <==
+hash.dig(:foo, :bar)
+
+==> corrected/008.rb 19 <==
+hash.dig(foo, bar)
+
+==> corrected/009.rb 27 <==
+hash.dig('foo', :bar, baz)
+
+==> corrected/010.rb 24 <==
+hash&.dig('foo', 'bar')
+
+==> corrected/011.rb 25 <==
+x.hash.dig('foo', 'bar')
+
+==> corrected/013.rb 23 <==
+hash.dig('foo', 'bar')
+
+==> corrected/014.rb 21 <==
+hash.dig(:foo, :bar)
+
+==> corrected/015.rb 19 <==
+hash.dig(foo, bar)
+
+==> corrected/016.rb 27 <==
+hash.dig('foo', :bar, baz)
+
+==> corrected/017.rb 24 <==
+hash&.dig('foo', 'bar')
+
+==> corrected/018.rb 25 <==
+x.hash.dig('foo', 'bar')
+
+==> corrected/020.rb 23 <==
+hash.dig('foo', 'bar')
+
+==> corrected/021.rb 21 <==
+hash.dig(:foo, :bar)
+
+==> corrected/022.rb 19 <==
+hash.dig(foo, bar)
+
+==> corrected/023.rb 27 <==
+hash.dig('foo', :bar, baz)
+
+==> corrected/024.rb 24 <==
+hash&.dig('foo', 'bar')
+
+==> corrected/025.rb 25 <==
+x.hash.dig('foo', 'bar')
+
+==> corrected/027.rb 23 <==
+hash.dig('foo', 'bar')
+
+==> corrected/028.rb 21 <==
+hash.dig(:foo, :bar)
+
+==> corrected/029.rb 19 <==
+hash.dig(foo, bar)
+
+==> corrected/030.rb 27 <==
+hash.dig('foo', :bar, baz)
+
+==> corrected/031.rb 24 <==
+hash&.dig('foo', 'bar')
+
+==> corrected/032.rb 25 <==
+x.hash.dig('foo', 'bar')
+
+==> corrected/033.rb 26 <==
+hash
+  .dig('foo', 'bar')
+

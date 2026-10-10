@@ -1,0 +1,15 @@
+==> .rubocop.yml 151 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/OptionHash:
+  Allowlist:
+  - to_json
+
+==> 000.rb 30 <==
+def to_json(options = {})
+end
+

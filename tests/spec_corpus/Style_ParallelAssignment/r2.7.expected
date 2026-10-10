@@ -1,0 +1,353 @@
+==> offenses exit=1 4002 <==
+000.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+001.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+002.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+003.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+004.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+005.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+006.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+007.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+008.rb:2:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+009.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+010.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+011.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+012.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+013.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+014.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+015.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+048.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+049.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+050.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+051.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+052.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+053.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+054.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+055.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+056.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+057.rb:2:3: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+058.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+059.rb:2:3: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+060.rb:3:5: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+061.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+062.rb:2:3: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+063.rb:2:3: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+064.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+065.rb:2:3: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+066.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+067.rb:2:3: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+068.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+069.rb:2:3: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+070.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+071.rb:2:3: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+072.rb:2:3: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+073.rb:2:3: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+074.rb:2:3: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+075.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+076.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+082.rb:3:7: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+
+==> autocorrect exit=0 3996 <==
+000.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+001.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+002.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+003.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+004.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+005.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+006.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+007.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+008.rb:2:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+009.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+010.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+011.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+012.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+013.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+014.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+015.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+015.rb:2:10: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+048.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+049.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+050.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+051.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+052.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+053.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+054.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+055.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+056.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+057.rb:2:3: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+058.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+059.rb:2:3: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+060.rb:3:5: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+061.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+062.rb:2:3: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+063.rb:2:3: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+064.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+065.rb:2:3: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+066.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+067.rb:2:3: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+068.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+069.rb:2:3: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+070.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+071.rb:2:3: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+072.rb:2:3: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+073.rb:2:3: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+074.rb:2:3: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+075.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+076.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+082.rb:3:7: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+
+==> corrected/000.rb 33 <==
+a = [1, 2]
+b = [3, 4]
+c = [5, 6]
+
+==> corrected/001.rb 33 <==
+a = {a: 1}
+b = {b: 2}
+c = {c: 3}
+
+==> corrected/002.rb 42 <==
+a = CONSTANT1
+b = CONSTANT2
+c = CONSTANT3
+
+==> corrected/003.rb 36 <==
+a = [1, 2]
+b = {a: 1}
+c = CONSTANT3
+
+==> corrected/004.rb 33 <==
+a = foo { |a| puts a }
+b = bar()
+
+==> corrected/005.rb 12 <==
+b = a
+a = 1
+
+==> corrected/006.rb 12 <==
+a = a
+b = b
+
+==> corrected/007.rb 50 <==
+a = foo.map { |e| e.id }
+b = bar.map { |e| e.id }
+
+==> corrected/008.rb 40 <==
+array = [1, 2, 3]
+a = 8
+b = 9
+c = array
+
+==> corrected/009.rb 40 <==
+a = Float::INFINITY
+b = Float::INFINITY
+
+==> corrected/010.rb 40 <==
+Float::INFINITY = 1
+Float::INFINITY = 2
+
+==> corrected/011.rb 24 <==
+a[0] = a[1]
+a[1] = a[2]
+
+==> corrected/012.rb 44 <==
+obj.attr2 = obj.attr1
+obj.attr1 = obj.attr3
+
+==> corrected/013.rb 38 <==
+ary[0] = obj.attr1
+obj.attr1 = ary[1]
+
+==> corrected/014.rb 24 <==
+a[0] = a[1]
+a[1] = b[0]
+
+==> corrected/015.rb 38 <==
+a = x
+b = -> { a = x
+         b = y }
+
+==> corrected/048.rb 18 <==
+a = 1
+b = 2
+c = 3
+
+==> corrected/049.rb 23 <==
+a = "1"
+b = "2"
+c = :c
+
+==> corrected/050.rb 24 <==
+a = '1'
+b = '2'
+c = '3'
+
+==> corrected/051.rb 23 <==
+a = 'it\'s'
+b = 'fine'
+
+==> corrected/052.rb 24 <==
+a = :"foo-bar"
+b = :baz
+
+==> corrected/053.rb 21 <==
+a = :a
+b = :b
+c = :c
+
+==> corrected/054.rb 20 <==
+a = foo()
+b = bar()
+
+==> corrected/055.rb 50 <==
+a = foo() { |c| puts c }
+b = bar() { |d| puts d }
+
+==> corrected/056.rb 44 <==
+CONSTANT1 = CONSTANT3
+CONSTANT2 = CONSTANT4
+
+==> corrected/057.rb 37 <==
+def self.foo
+  foo = 1
+  bar = 2
+end
+
+==> corrected/058.rb 18 <==
+a = 1
+b = 2
+c = 3
+
+==> corrected/059.rb 36 <==
+def foo
+  a = 1
+  b = 2
+  c = 3
+end
+
+==> corrected/060.rb 58 <==
+def foo
+  if true
+    a = 1
+    b = 2
+    c = 3
+  end
+end
+
+==> corrected/061.rb 27 <==
+if foo
+  a = 1
+  b = 2
+end
+
+==> corrected/062.rb 47 <==
+def foo
+  if foo
+    a = 1
+    b = 2
+  end
+end
+
+==> corrected/063.rb 27 <==
+if foo
+  a = 1
+  b = 2
+end
+
+==> corrected/064.rb 31 <==
+unless foo
+  a = 1
+  b = 2
+end
+
+==> corrected/065.rb 31 <==
+unless foo
+  a = 1
+  b = 2
+end
+
+==> corrected/066.rb 30 <==
+while foo
+  a = 1
+  b = 2
+end
+
+==> corrected/067.rb 30 <==
+while foo
+  a = 1
+  b = 2
+end
+
+==> corrected/068.rb 30 <==
+until foo
+  a = 1
+  b = 2
+end
+
+==> corrected/069.rb 30 <==
+until foo
+  a = 1
+  b = 2
+end
+
+==> corrected/070.rb 39 <==
+begin
+  a = 1
+  b = 2
+rescue
+  foo
+end
+
+==> corrected/071.rb 43 <==
+def bar
+  a = 1
+  b = 2
+rescue
+  'foo'
+end
+
+==> corrected/072.rb 41 <==
+begin
+  a = 1
+  b = 2
+rescue
+  'foo'
+end
+
+==> corrected/073.rb 41 <==
+def foo
+  a = 1
+  b = 2
+rescue
+  foo
+end
+
+==> corrected/074.rb 84 <==
+def foo
+  begin
+    a = '1'
+    b = '2'
+  rescue
+    foo
+  end
+  something_else
+end
+
+==> corrected/075.rb 40 <==
+d = a + b + c
+c = b + 1
+b = a + 1
+a = 1
+
+==> corrected/076.rb 19 <==
+a = c
+b = __FILE__
+
+==> corrected/082.rb 66 <==
+def foo
+   if true
+      a = 1
+      b = 2
+      c = 3
+   end
+end
+

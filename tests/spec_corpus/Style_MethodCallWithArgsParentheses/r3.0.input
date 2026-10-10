@@ -1,0 +1,20 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+
+==> 000.rb 21 <==
+def x() = foo("bar")
+
+==> 001.rb 14 <==
+def x() = foo
+
+==> 002.rb 17 <==
+def x() = foo(y)
+
+==> 003.rb 22 <==
+def self.x() = foo(y)
+

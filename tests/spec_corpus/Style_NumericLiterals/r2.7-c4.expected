@@ -1,0 +1,14 @@
+==> offenses exit=1 266 <==
+001.rb:1:1: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+002.rb:1:1: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+
+==> autocorrect exit=0 262 <==
+001.rb:1:1: C: [Corrected] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+002.rb:1:1: C: [Corrected] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+
+==> corrected/001.rb 16 <==
+123_456_789_012
+
+==> corrected/002.rb 11 <==
+12_345_678
+

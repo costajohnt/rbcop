@@ -1,0 +1,86 @@
+==> offenses exit=1 3163 <==
+000.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.irb`.
+001.rb:1:1: W: Lint/Debugger: Remove debugger entry point `Kernel.binding.irb`.
+002.rb:1:1: W: Lint/Debugger: Remove debugger entry point `byebug`.
+003.rb:1:1: W: Lint/Debugger: Remove debugger entry point `byebug foo`.
+004.rb:1:1: W: Lint/Debugger: Remove debugger entry point `Kernel.byebug`.
+005.rb:1:1: W: Lint/Debugger: Remove debugger entry point `remote_byebug`.
+006.rb:1:1: W: Lint/Debugger: Remove debugger entry point `Kernel.remote_byebug`.
+007.rb:1:1: W: Lint/Debugger: Remove debugger entry point `save_and_open_page`.
+008.rb:1:1: W: Lint/Debugger: Remove debugger entry point `save_and_open_screenshot`.
+009.rb:1:1: W: Lint/Debugger: Remove debugger entry point `save_page`.
+010.rb:1:1: W: Lint/Debugger: Remove debugger entry point `save_screenshot`.
+011.rb:1:1: W: Lint/Debugger: Remove debugger entry point `save_and_open_page foo`.
+012.rb:1:1: W: Lint/Debugger: Remove debugger entry point `save_and_open_screenshot foo`.
+013.rb:1:1: W: Lint/Debugger: Remove debugger entry point `save_page foo`.
+014.rb:1:1: W: Lint/Debugger: Remove debugger entry point `save_screenshot foo`.
+015.rb:1:1: W: Lint/Debugger: Remove debugger entry point `page.save_and_open_page`.
+016.rb:1:1: W: Lint/Debugger: Remove debugger entry point `page.save_and_open_screenshot`.
+017.rb:1:1: W: Lint/Debugger: Remove debugger entry point `page.save_page`.
+018.rb:1:1: W: Lint/Debugger: Remove debugger entry point `page.save_screenshot`.
+019.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.b`.
+020.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.break`.
+021.rb:1:1: W: Lint/Debugger: Remove debugger entry point `Kernel.binding.b`.
+022.rb:1:1: W: Lint/Debugger: Remove debugger entry point `Kernel.binding.break`.
+023.rb:1:1: W: Lint/Debugger: Remove debugger entry point `pry`.
+024.rb:1:1: W: Lint/Debugger: Remove debugger entry point `pry foo`.
+025.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.pry`.
+026.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.remote_pry`.
+027.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.pry_remote`.
+028.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.pry foo`.
+029.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.remote_pry foo`.
+030.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.pry_remote foo`.
+031.rb:1:1: W: Lint/Debugger: Remove debugger entry point `Kernel.binding.pry`.
+032.rb:2:3: W: Lint/Debugger: Remove debugger entry point `Pry.rescue`.
+032.rb:3:3: W: Lint/Debugger: Remove debugger entry point `::Pry.rescue`.
+034.rb:1:1: W: Lint/Debugger: Remove debugger entry point `debugger`.
+035.rb:1:1: W: Lint/Debugger: Remove debugger entry point `debugger foo`.
+036.rb:1:1: W: Lint/Debugger: Remove debugger entry point `Kernel.debugger`.
+037.rb:1:1: W: Lint/Debugger: Remove debugger entry point `::Kernel.debugger`.
+038.rb:1:1: W: Lint/Debugger: Remove debugger entry point `jard`.
+039.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.console`.
+062.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.pry`.
+
+==> autocorrect exit=1 3163 <==
+000.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.irb`.
+001.rb:1:1: W: Lint/Debugger: Remove debugger entry point `Kernel.binding.irb`.
+002.rb:1:1: W: Lint/Debugger: Remove debugger entry point `byebug`.
+003.rb:1:1: W: Lint/Debugger: Remove debugger entry point `byebug foo`.
+004.rb:1:1: W: Lint/Debugger: Remove debugger entry point `Kernel.byebug`.
+005.rb:1:1: W: Lint/Debugger: Remove debugger entry point `remote_byebug`.
+006.rb:1:1: W: Lint/Debugger: Remove debugger entry point `Kernel.remote_byebug`.
+007.rb:1:1: W: Lint/Debugger: Remove debugger entry point `save_and_open_page`.
+008.rb:1:1: W: Lint/Debugger: Remove debugger entry point `save_and_open_screenshot`.
+009.rb:1:1: W: Lint/Debugger: Remove debugger entry point `save_page`.
+010.rb:1:1: W: Lint/Debugger: Remove debugger entry point `save_screenshot`.
+011.rb:1:1: W: Lint/Debugger: Remove debugger entry point `save_and_open_page foo`.
+012.rb:1:1: W: Lint/Debugger: Remove debugger entry point `save_and_open_screenshot foo`.
+013.rb:1:1: W: Lint/Debugger: Remove debugger entry point `save_page foo`.
+014.rb:1:1: W: Lint/Debugger: Remove debugger entry point `save_screenshot foo`.
+015.rb:1:1: W: Lint/Debugger: Remove debugger entry point `page.save_and_open_page`.
+016.rb:1:1: W: Lint/Debugger: Remove debugger entry point `page.save_and_open_screenshot`.
+017.rb:1:1: W: Lint/Debugger: Remove debugger entry point `page.save_page`.
+018.rb:1:1: W: Lint/Debugger: Remove debugger entry point `page.save_screenshot`.
+019.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.b`.
+020.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.break`.
+021.rb:1:1: W: Lint/Debugger: Remove debugger entry point `Kernel.binding.b`.
+022.rb:1:1: W: Lint/Debugger: Remove debugger entry point `Kernel.binding.break`.
+023.rb:1:1: W: Lint/Debugger: Remove debugger entry point `pry`.
+024.rb:1:1: W: Lint/Debugger: Remove debugger entry point `pry foo`.
+025.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.pry`.
+026.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.remote_pry`.
+027.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.pry_remote`.
+028.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.pry foo`.
+029.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.remote_pry foo`.
+030.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.pry_remote foo`.
+031.rb:1:1: W: Lint/Debugger: Remove debugger entry point `Kernel.binding.pry`.
+032.rb:2:3: W: Lint/Debugger: Remove debugger entry point `Pry.rescue`.
+032.rb:3:3: W: Lint/Debugger: Remove debugger entry point `::Pry.rescue`.
+034.rb:1:1: W: Lint/Debugger: Remove debugger entry point `debugger`.
+035.rb:1:1: W: Lint/Debugger: Remove debugger entry point `debugger foo`.
+036.rb:1:1: W: Lint/Debugger: Remove debugger entry point `Kernel.debugger`.
+037.rb:1:1: W: Lint/Debugger: Remove debugger entry point `::Kernel.debugger`.
+038.rb:1:1: W: Lint/Debugger: Remove debugger entry point `jard`.
+039.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.console`.
+062.rb:1:1: W: Lint/Debugger: Remove debugger entry point `binding.pry`.
+

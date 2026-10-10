@@ -1,0 +1,78 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 22 <==
+x == y ? true : false
+
+==> 001.rb 22 <==
+x == y ? false : true
+
+==> 002.rb 15 <==
+x == y ? 1 : 10
+==> 003.rb 34 <==
+if x == y
+  true
+else
+  false
+end
+
+==> 004.rb 34 <==
+if x == y
+  false
+else
+  true
+end
+
+==> 005.rb 38 <==
+unless x == y
+  true
+else
+  false
+end
+
+==> 006.rb 38 <==
+unless x == y
+  false
+else
+  true
+end
+
+==> 007.rb 53 <==
+if cond
+  false
+elsif x == y
+  true
+else
+  false
+end
+
+==> 008.rb 53 <==
+if cond
+  false
+elsif x == y
+  false
+else
+  true
+end
+
+==> 009.rb 27 <==
+if x == y
+  1
+else
+  2
+end
+
+==> 010.rb 42 <==
+if cond
+  1
+elsif x == y
+  2
+else
+  3
+end
+

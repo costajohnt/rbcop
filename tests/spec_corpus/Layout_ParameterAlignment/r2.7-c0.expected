@@ -1,0 +1,44 @@
+==> offenses exit=1 799 <==
+000.rb:2:3: C: [Correctable] Layout/ParameterAlignment: Align the parameters of a method definition if they span more than one line.
+001.rb:2:5: C: [Correctable] Layout/ParameterAlignment: Align the parameters of a method definition if they span more than one line.
+006.rb:2:10: C: [Correctable] Layout/ParameterAlignment: Align the parameters of a method definition if they span more than one line.
+007.rb:2:3: C: [Correctable] Layout/ParameterAlignment: Align the parameters of a method definition if they span more than one line.
+009.rb:2:8: C: [Correctable] Layout/ParameterAlignment: Align the parameters of a method definition if they span more than one line.
+009.rb:3:1: C: [Correctable] Layout/ParameterAlignment: Align the parameters of a method definition if they span more than one line.
+
+==> autocorrect exit=0 787 <==
+000.rb:2:3: C: [Corrected] Layout/ParameterAlignment: Align the parameters of a method definition if they span more than one line.
+001.rb:2:5: C: [Corrected] Layout/ParameterAlignment: Align the parameters of a method definition if they span more than one line.
+006.rb:2:10: C: [Corrected] Layout/ParameterAlignment: Align the parameters of a method definition if they span more than one line.
+007.rb:2:3: C: [Corrected] Layout/ParameterAlignment: Align the parameters of a method definition if they span more than one line.
+009.rb:2:8: C: [Corrected] Layout/ParameterAlignment: Align the parameters of a method definition if they span more than one line.
+009.rb:3:1: C: [Corrected] Layout/ParameterAlignment: Align the parameters of a method definition if they span more than one line.
+
+==> corrected/000.rb 32 <==
+def method(a,
+           b)
+end
+
+==> corrected/001.rb 32 <==
+def method(a,
+           b)
+end
+
+==> corrected/006.rb 44 <==
+def func2(a,
+          *b,
+          c)
+end
+
+==> corrected/007.rb 42 <==
+def self.method(a,
+                b)
+end
+
+==> corrected/009.rb 46 <==
+def func(a,
+         b,
+         c)
+  123
+end
+

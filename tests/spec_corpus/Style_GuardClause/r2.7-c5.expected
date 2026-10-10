@@ -1,0 +1,13 @@
+==> offenses exit=1 226 <==
+000.rb:2:3: C: [Correctable] Style/GuardClause: Use a guard clause (`return unless something && something_that_makes_the_guard_clause_too_long_to_fit_on_one_line`) instead of wrapping the code inside a conditional expression.
+
+==> autocorrect exit=0 224 <==
+000.rb:2:3: C: [Corrected] Style/GuardClause: Use a guard clause (`return unless something && something_that_makes_the_guard_clause_too_long_to_fit_on_one_line`) instead of wrapping the code inside a conditional expression.
+
+==> corrected/000.rb 120 <==
+def test
+  return unless something && something_that_makes_the_guard_clause_too_long_to_fit_on_one_line
+    work
+  
+end
+

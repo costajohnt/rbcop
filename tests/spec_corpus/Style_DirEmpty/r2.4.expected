@@ -1,0 +1,44 @@
+==> offenses exit=1 690 <==
+000.rb:1:1: C: [Correctable] Style/DirEmpty: Use `Dir.empty?('path/to/dir')` instead.
+001.rb:1:1: C: [Correctable] Style/DirEmpty: Use `!Dir.empty?('path/to/dir')` instead.
+002.rb:1:1: C: [Correctable] Style/DirEmpty: Use `!Dir.empty?('path/to/dir')` instead.
+003.rb:1:1: C: [Correctable] Style/DirEmpty: Use `Dir.empty?('path/to/dir')` instead.
+004.rb:1:1: C: [Correctable] Style/DirEmpty: Use `Dir.empty?('path/to/dir')` instead.
+005.rb:1:1: C: [Correctable] Style/DirEmpty: Use `Dir.empty?('path/to/dir')` instead.
+006.rb:1:1: C: [Correctable] Style/DirEmpty: Use `Dir.empty?('path/to/dir')` instead.
+007.rb:1:2: C: [Correctable] Style/DirEmpty: Use `Dir.empty?('path/to/dir')` instead.
+
+==> autocorrect exit=0 674 <==
+000.rb:1:1: C: [Corrected] Style/DirEmpty: Use `Dir.empty?('path/to/dir')` instead.
+001.rb:1:1: C: [Corrected] Style/DirEmpty: Use `!Dir.empty?('path/to/dir')` instead.
+002.rb:1:1: C: [Corrected] Style/DirEmpty: Use `!Dir.empty?('path/to/dir')` instead.
+003.rb:1:1: C: [Corrected] Style/DirEmpty: Use `Dir.empty?('path/to/dir')` instead.
+004.rb:1:1: C: [Corrected] Style/DirEmpty: Use `Dir.empty?('path/to/dir')` instead.
+005.rb:1:1: C: [Corrected] Style/DirEmpty: Use `Dir.empty?('path/to/dir')` instead.
+006.rb:1:1: C: [Corrected] Style/DirEmpty: Use `Dir.empty?('path/to/dir')` instead.
+007.rb:1:2: C: [Corrected] Style/DirEmpty: Use `Dir.empty?('path/to/dir')` instead.
+
+==> corrected/000.rb 26 <==
+Dir.empty?('path/to/dir')
+
+==> corrected/001.rb 27 <==
+!Dir.empty?('path/to/dir')
+
+==> corrected/002.rb 27 <==
+!Dir.empty?('path/to/dir')
+
+==> corrected/003.rb 26 <==
+Dir.empty?('path/to/dir')
+
+==> corrected/004.rb 26 <==
+Dir.empty?('path/to/dir')
+
+==> corrected/005.rb 26 <==
+Dir.empty?('path/to/dir')
+
+==> corrected/006.rb 26 <==
+Dir.empty?('path/to/dir')
+
+==> corrected/007.rb 27 <==
+!Dir.empty?('path/to/dir')
+

@@ -1,0 +1,8 @@
+==> offenses exit=1 186 <==
+000.rb:1:1: C: Style/ExponentialNotation: Use an integer as mantissa, without trailing zero.
+001.rb:1:1: C: Style/ExponentialNotation: Use an integer as mantissa, without trailing zero.
+
+==> autocorrect exit=1 186 <==
+000.rb:1:1: C: Style/ExponentialNotation: Use an integer as mantissa, without trailing zero.
+001.rb:1:1: C: Style/ExponentialNotation: Use an integer as mantissa, without trailing zero.
+

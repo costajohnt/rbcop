@@ -1,0 +1,128 @@
+==> .rubocop.yml 151 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/AndOr:
+  EnforcedStyle: conditionals
+
+==> 000.rb 23 <==
+x = a + b and return x
+
+==> 001.rb 30 <==
+if a and b
+  do_something
+end
+
+==> 002.rb 48 <==
+if some_condition
+  do_something and return
+end
+
+==> 003.rb 33 <==
+while a and b
+  do_something
+end
+
+==> 004.rb 51 <==
+while some_condition
+  do_something and return
+end
+
+==> 005.rb 33 <==
+until a and b
+  do_something
+end
+
+==> 006.rb 51 <==
+until some_condition
+  do_something and return
+end
+
+==> 007.rb 39 <==
+begin
+  do_something
+end while a and b
+
+==> 008.rb 57 <==
+begin
+  do_something and return
+end while some_condition
+
+==> 009.rb 39 <==
+begin
+  do_something
+end until a and b
+
+==> 010.rb 57 <==
+begin
+  do_something and return
+end until some_condition
+
+==> 011.rb 22 <==
+x = a + b or return x
+
+==> 012.rb 29 <==
+if a or b
+  do_something
+end
+
+==> 013.rb 47 <==
+if some_condition
+  do_something or return
+end
+
+==> 014.rb 32 <==
+while a or b
+  do_something
+end
+
+==> 015.rb 50 <==
+while some_condition
+  do_something or return
+end
+
+==> 016.rb 32 <==
+until a or b
+  do_something
+end
+
+==> 017.rb 50 <==
+until some_condition
+  do_something or return
+end
+
+==> 018.rb 38 <==
+begin
+  do_something
+end while a or b
+
+==> 019.rb 56 <==
+begin
+  do_something or return
+end while some_condition
+
+==> 020.rb 38 <==
+begin
+  do_something
+end until a or b
+
+==> 021.rb 56 <==
+begin
+  do_something or return
+end until some_condition
+
+==> 022.rb 15 <==
+test if a && b
+
+==> 023.rb 11 <==
+x = a && b
+
+==> 024.rb 15 <==
+test if a || b
+
+==> 025.rb 11 <==
+x = a || b
+

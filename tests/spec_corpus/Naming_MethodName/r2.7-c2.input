@@ -1,0 +1,351 @@
+==> .rubocop.yml 154 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/MethodName:
+  EnforcedStyle: camelCase
+
+==> 000.rb 68 <==
+attr_reader :myMethod
+attr_accessor :myMethod
+attr_writer :myMethod
+
+==> 001.rb 25 <==
+def myMethod
+  # ...
+end
+
+==> 002.rb 30 <==
+def self.myMethod
+  # ...
+end
+
+==> 003.rb 98 <==
+attr_reader :my_method
+
+attr_accessor :my_method
+
+attr_writer :my_method
+
+attr_writer 'my_method'
+
+==> 004.rb 18 <==
+def my_method
+end
+
+==> 005.rb 35 <==
+def myMethod
+end
+def my_method
+end
+
+==> 006.rb 42 <==
+class Sequel
+  def self.foo_bar
+  end
+end
+
+==> 007.rb 88 <==
+Struct.new("foo_bar", var, *args, :snake_case, :camelCase, :snake_case_2, "camelCase2")
+
+==> 008.rb 90 <==
+::Struct.new("foo_bar", var, *args, :snake_case, :camelCase, :snake_case_2, "camelCase2")
+
+==> 009.rb 78 <==
+Data.define(var, *args, :snake_case, :camelCase, :snake_case_2, "camelCase2")
+
+==> 010.rb 80 <==
+::Data.define(var, *args, :snake_case, :camelCase, :snake_case_2, "camelCase2")
+
+==> 011.rb 18 <==
+alias foo_bar foo
+
+==> 012.rb 28 <==
+alias_method :foo_bar, :foo
+
+==> 013.rb 30 <==
+alias_method "foo_bar", "foo"
+
+==> 014.rb 16 <==
+def body; '' end
+==> 015.rb 25 <==
+def +(other)
+  # ...
+end
+
+==> 016.rb 12 <==
+def ~@; end
+
+==> 017.rb 12 <==
+def !@; end
+
+==> 018.rb 49 <==
+alias_method foo, :bar
+alias_method fooBar, :bar
+
+==> 019.rb 18 <==
+alias_method *ary
+
+==> 020.rb 63 <==
+alias_method :foo, :bar, :baz
+alias_method :fooBar, :bar, :baz
+
+==> 021.rb 69 <==
+class Sequel
+  def self.Model(source)
+  end
+
+  class Model
+  end
+end
+
+==> 022.rb 182 <==
+module DPN
+  module Flow
+    module BaseFlow
+      class Start
+      end
+      def self.included(base)
+        def base.Start(aws_env, *args)
+        end
+      end
+    end
+  end
+end
+
+==> 023.rb 70 <==
+module Sequel
+  def self.Model(source)
+  end
+
+  class Model
+  end
+end
+
+==> 024.rb 13 <==
+Struct.new()
+
+==> 025.rb 15 <==
+::Struct.new()
+
+==> 026.rb 25 <==
+define_method :== do
+end
+
+==> 027.rb 25 <==
+define_method :>= do
+end
+
+==> 028.rb 25 <==
+define_method :<= do
+end
+
+==> 029.rb 24 <==
+define_method :> do
+end
+
+==> 030.rb 24 <==
+define_method :< do
+end
+
+==> 031.rb 25 <==
+define_method :=~ do
+end
+
+==> 032.rb 24 <==
+define_method :! do
+end
+
+==> 033.rb 25 <==
+define_method :[] do
+end
+
+==> 034.rb 26 <==
+define_method :[]= do
+end
+
+==> 035.rb 30 <==
+define_method :gärten do
+end
+
+==> 036.rb 35 <==
+define_singleton_method :== do
+end
+
+==> 037.rb 35 <==
+define_singleton_method :>= do
+end
+
+==> 038.rb 35 <==
+define_singleton_method :<= do
+end
+
+==> 039.rb 34 <==
+define_singleton_method :> do
+end
+
+==> 040.rb 34 <==
+define_singleton_method :< do
+end
+
+==> 041.rb 35 <==
+define_singleton_method :=~ do
+end
+
+==> 042.rb 34 <==
+define_singleton_method :! do
+end
+
+==> 043.rb 35 <==
+define_singleton_method :[] do
+end
+
+==> 044.rb 36 <==
+define_singleton_method :[]= do
+end
+
+==> 045.rb 40 <==
+define_singleton_method :gärten do
+end
+
+==> 046.rb 223 <==
+attr :visit_Arel_Nodes_SelectStatement
+
+attr_reader :visit_Arel_Nodes_SelectStatement
+
+attr_accessor :visit_Arel_Nodes_SelectStatement
+
+attr_writer :visit_Arel_Nodes_SelectStatement
+
+attr 'visit_Arel_Nodes_SelectStatement'
+
+==> 047.rb 94 <==
+attr_reader :visit_Arel_Nodes_SelectStatement
+
+attr_reader 'visit_Arel_Nodes_SelectStatement'
+
+==> 048.rb 41 <==
+def visit_Arel_Nodes_SelectStatement
+end
+
+==> 049.rb 86 <==
+attr :MyMethod
+
+attr_reader :MyMethod
+
+attr_accessor :MyMethod
+
+attr_writer :MyMethod
+
+==> 050.rb 39 <==
+class MyClass
+  def MyMethod
+  end
+end
+
+==> 051.rb 49 <==
+module Sequel
+  def self.Model(source)
+  end
+end
+
+==> 052.rb 138 <==
+attr :my_method, :myMethod
+
+attr_reader :my_method, :myMethod
+
+attr_accessor :myMethod, :my_method
+
+attr_accessor 'myMethod', 'my_method'
+
+==> 053.rb 30 <==
+define_method :foo_bar do
+end
+
+==> 054.rb 31 <==
+define_method 'foo_bar' do
+end
+
+==> 055.rb 21 <==
+define_method do
+end
+
+==> 056.rb 25 <==
+define_method foo do
+end
+
+==> 057.rb 25 <==
+define_method '`' do
+end
+
+==> 058.rb 40 <==
+define_singleton_method :foo_bar do
+end
+
+==> 059.rb 41 <==
+define_singleton_method 'foo_bar' do
+end
+
+==> 060.rb 31 <==
+define_singleton_method do
+end
+
+==> 061.rb 35 <==
+define_singleton_method foo do
+end
+
+==> 062.rb 35 <==
+define_singleton_method '`' do
+end
+
+==> 063.rb 31 <==
+define_method :foo_bar? do
+end
+
+==> 064.rb 32 <==
+define_method 'foo_bar?' do
+end
+
+==> 065.rb 41 <==
+define_singleton_method :foo_bar? do
+end
+
+==> 066.rb 42 <==
+define_singleton_method 'foo_bar?' do
+end
+
+==> 067.rb 31 <==
+define_method :foo_bar! do
+end
+
+==> 068.rb 32 <==
+define_method 'foo_bar!' do
+end
+
+==> 069.rb 41 <==
+define_singleton_method :foo_bar! do
+end
+
+==> 070.rb 42 <==
+define_singleton_method 'foo_bar!' do
+end
+
+==> 071.rb 31 <==
+define_method :foo_bar= do
+end
+
+==> 072.rb 32 <==
+define_method 'foo_bar=' do
+end
+
+==> 073.rb 41 <==
+define_singleton_method :foo_bar= do
+end
+
+==> 074.rb 42 <==
+define_singleton_method 'foo_bar=' do
+end
+

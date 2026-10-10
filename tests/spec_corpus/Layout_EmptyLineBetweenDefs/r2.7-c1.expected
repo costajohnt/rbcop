@@ -1,0 +1,17 @@
+==> offenses exit=1 234 <==
+001.rb:3:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+001.rb:5:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+
+==> autocorrect exit=0 230 <==
+001.rb:3:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+001.rb:5:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+
+==> corrected/001.rb 136 <==
+def a; end
+def b; end
+
+def c # Not a one-liner, so this is an offense.
+end
+
+def d; end # Also an offense since previous was multi-line:
+

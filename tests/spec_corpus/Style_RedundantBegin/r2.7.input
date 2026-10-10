@@ -1,0 +1,427 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 42 <==
+def func; begin; x; y; rescue; z end; end
+
+==> 001.rb 58 <==
+def func
+  begin
+    ala
+  rescue => e
+    bala
+  end
+end
+
+==> 002.rb 63 <==
+def Test.func
+  begin
+    ala
+  rescue => e
+    bala
+  end
+end
+
+==> 003.rb 70 <==
+def func
+  begin
+    ala
+  rescue => e
+    bala
+  end
+  something
+end
+
+==> 004.rb 75 <==
+def Test.func
+  begin
+    ala
+  rescue => e
+    bala
+  end
+  something
+end
+
+==> 005.rb 75 <==
+def Test.func
+  something
+  begin
+    ala
+  rescue => e
+    bala
+  end
+end
+
+==> 006.rb 155 <==
+def method
+  begin
+    BlockA do |strategy|
+      foo
+    end
+
+    BlockB do |portfolio|
+      foo
+    end
+
+  rescue => e # some problem
+    bar
+  end
+end
+
+==> 007.rb 92 <==
+def method
+  begin # comment 1
+    do_some_stuff
+  rescue # comment 2
+  end # comment 3
+end
+
+==> 008.rb 25 <==
+begin
+  do_something
+end
+
+==> 009.rb 22 <==
+begin
+  foo
+  bar
+end
+
+==> 010.rb 51 <==
+begin
+  do_something
+rescue
+  handle_exception
+end
+
+==> 011.rb 43 <==
+begin
+  do_something
+ensure
+  finalize
+end
+
+==> 012.rb 28 <==
+var = begin
+  foo
+  bar
+end
+
+==> 013.rb 98 <==
+# outer comment
+var ||= begin # inner comment 1
+  # inner comment 2
+  foo
+  # inner comment 3
+end
+
+==> 014.rb 47 <==
+var ||= begin
+  foo do |arg|
+    bar
+  end
+end
+
+==> 015.rb 37 <==
+var ||= begin
+  foo if condition
+end
+
+==> 016.rb 47 <==
+var ||= begin
+  if condition
+    foo
+  end
+end
+
+==> 017.rb 47 <==
+if condition
+  begin
+    foo
+    bar
+  end
+end
+
+==> 018.rb 51 <==
+unless condition
+  begin
+    foo
+    bar
+  end
+end
+
+==> 019.rb 70 <==
+if condition
+  foo
+elsif condition2
+  begin
+    bar
+    baz
+  end
+end
+
+==> 020.rb 58 <==
+if condition
+  foo
+else
+  begin
+    bar
+    baz
+  end
+end
+
+==> 021.rb 68 <==
+case condition
+  when foo
+    begin
+      bar
+      baz
+    end
+end
+
+==> 022.rb 84 <==
+case condition
+  when foo
+    bar
+  else
+    begin
+      baz
+      quux
+    end
+end
+
+==> 023.rb 66 <==
+case condition
+  in foo
+    begin
+      bar
+      baz
+    end
+end
+
+==> 024.rb 82 <==
+case condition
+  in foo
+    bar
+  else
+    begin
+      baz
+      quux
+    end
+end
+
+==> 025.rb 50 <==
+while condition
+  begin
+    foo
+    bar
+  end
+end
+
+==> 026.rb 50 <==
+until condition
+  begin
+    foo
+    bar
+  end
+end
+
+==> 027.rb 78 <==
+if condition
+  begin
+    foo
+    bar
+  rescue StandardError
+    baz
+  end
+end
+
+==> 028.rb 64 <==
+if condition
+  begin
+    foo
+    bar
+  ensure
+    baz
+  end
+end
+
+==> 029.rb 104 <==
+case condition
+  when foo
+    begin
+      bar
+      baz
+    rescue StandardError
+      quux
+    end
+end
+
+==> 030.rb 90 <==
+case condition
+  when foo
+    begin
+      bar
+      baz
+    ensure
+      quux
+    end
+end
+
+==> 031.rb 81 <==
+while condition
+  begin
+    foo
+    bar
+  rescue StandardError
+    baz
+  end
+end
+
+==> 032.rb 67 <==
+while condition
+  begin
+    foo
+    bar
+  ensure
+    baz
+  end
+end
+
+==> 033.rb 81 <==
+until condition
+  begin
+    foo
+    bar
+  rescue StandardError
+    baz
+  end
+end
+
+==> 034.rb 67 <==
+until condition
+  begin
+    foo
+    bar
+  ensure
+    baz
+  end
+end
+
+==> 035.rb 30 <==
+var ||= begin
+  foo
+  bar
+end
+
+==> 036.rb 18 <==
+var ||= begin
+end
+
+==> 037.rb 75 <==
+begin
+  do_first_thing
+  some_value = do_second_thing
+end while some_value
+
+==> 038.rb 75 <==
+begin
+  do_first_thing
+  some_value = do_second_thing
+end until some_value
+
+==> 039.rb 10 <==
+begin
+end
+
+==> 040.rb 47 <==
+var ||= begin
+  foo
+  bar
+end.baz do
+  qux
+end
+
+==> 041.rb 35 <==
+do_something begin
+  foo
+  bar
+end
+
+==> 042.rb 35 <==
+condition && begin
+  foo
+  bar
+end
+
+==> 043.rb 36 <==
+condition and begin
+  foo
+  bar
+end
+
+==> 044.rb 37 <==
+begin foo; bar; end unless condition
+
+==> 045.rb 38 <==
+begin
+  foo; bar
+end unless condition
+
+==> 046.rb 31 <==
+begin foo end unless condition
+
+==> 047.rb 33 <==
+begin
+  foo
+end unless condition
+
+==> 048.rb 43 <==
+unless condition
+  begin
+    foo
+  end
+end
+
+==> 049.rb 50 <==
+@foo ||= begin
+  @bar ||= begin
+    baz
+  end
+end
+
+==> 050.rb 144 <==
+var = do_something do
+  begin
+    do_something do
+      begin
+        foo
+      ensure
+        bar
+      end
+    end
+  ensure
+    baz
+  end
+end
+
+==> 051.rb 143 <==
+var = do_something do
+  begin
+    do_something do
+      begin
+        _1
+      ensure
+        bar
+      end
+    end
+  ensure
+    baz
+  end
+end
+

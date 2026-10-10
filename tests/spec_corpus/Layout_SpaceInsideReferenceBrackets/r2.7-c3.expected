@@ -1,0 +1,66 @@
+==> offenses exit=1 1613 <==
+003.rb:1:2: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+004.rb:1:9: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+005.rb:1:28: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+009.rb:1:2: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+010.rb:1:8: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+011.rb:1:10: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+012.rb:1:16: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+013.rb:1:15: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+014.rb:1:24: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+015.rb:1:2: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+015.rb:1:5: C: Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+016.rb:1:2: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+016.rb:1:7: C: Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+016.rb:1:8: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+016.rb:1:16: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+016.rb:1:18: C: Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+
+==> autocorrect exit=0 1319 <==
+003.rb:1:2: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+004.rb:1:9: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+005.rb:1:28: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+009.rb:1:2: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+010.rb:1:8: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+011.rb:1:10: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+012.rb:1:16: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+013.rb:1:15: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+014.rb:1:24: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+015.rb:1:2: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+016.rb:1:2: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+016.rb:1:8: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+016.rb:1:16: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+
+==> corrected/003.rb 30 <==
+a[ "foo" ] = b[ "something" ]
+
+==> corrected/004.rb 30 <==
+a[ "foo" ] = b[ "something" ]
+
+==> corrected/005.rb 30 <==
+a[ "foo" ] = b[ "something" ]
+
+==> corrected/009.rb 10 <==
+a[ :key ]
+
+==> corrected/010.rb 10 <==
+b[ :key ]
+
+==> corrected/011.rb 19 <==
+a[ :key ][ "key" ]
+
+==> corrected/012.rb 18 <==
+a[ 5, 1 ][ :key ]
+
+==> corrected/013.rb 23 <==
+a[ :key ][ 3 ][ :key ]
+
+==> corrected/014.rb 26 <==
+a[ var ][ "key" ][ :key ]
+
+==> corrected/015.rb 8 <==
+b[ 89 ]
+
+==> corrected/016.rb 24 <==
+a[ :key ][ "foo" ][ 0 ]
+

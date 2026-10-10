@@ -1,0 +1,8 @@
+==> offenses exit=1 188 <==
+000.gemspec:4:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+001.gemspec:4:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+
+==> autocorrect exit=1 188 <==
+000.gemspec:4:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+001.gemspec:4:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+

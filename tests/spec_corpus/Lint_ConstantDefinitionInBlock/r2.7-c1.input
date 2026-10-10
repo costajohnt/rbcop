@@ -1,0 +1,37 @@
+==> .rubocop.yml 168 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/ConstantDefinitionInBlock:
+  AllowedMethods:
+  - enums
+
+==> 000.rb 67 <==
+class TestEnum < T::Enum
+  enums do
+    Foo = new("foo")
+  end
+end
+
+==> 001.rb 31 <==
+enums do
+  class Foo
+  end
+end
+
+==> 002.rb 32 <==
+enums do
+  module Foo
+  end
+end
+
+==> 003.rb 37 <==
+enums do
+  module Foo
+  end
+  _1
+end
+

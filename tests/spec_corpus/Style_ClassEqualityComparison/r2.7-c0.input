@@ -1,0 +1,92 @@
+==> .rubocop.yml 160 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/ClassEqualityComparison:
+  AllowedMethods: []
+
+==> 000.rb 18 <==
+var.class == Date
+
+==> 001.rb 23 <==
+var.class.equal?(Date)
+
+==> 002.rb 21 <==
+var.class.eql?(Date)
+
+==> 003.rb 25 <==
+var.class.name == 'Date'
+
+==> 004.rb 28 <==
+var.class.name == Date.name
+
+==> 005.rb 25 <==
+var.class.name == "Date"
+
+==> 006.rb 43 <==
+var.class.name == "String#{interpolation}"
+
+==> 007.rb 50 <==
+class_name = 'Model'
+var.class.name == class_name
+
+==> 008.rb 30 <==
+var.class.name == @class_name
+
+==> 009.rb 29 <==
+var.class.name == class_name
+
+==> 010.rb 34 <==
+var.class.name == obj&.class_name
+
+==> 011.rb 25 <==
+var.class.to_s == 'Date'
+
+==> 012.rb 28 <==
+var.class.to_s == Date.to_s
+
+==> 013.rb 25 <==
+var.class.to_s == "Date"
+
+==> 014.rb 28 <==
+var.class.inspect == 'Date'
+
+==> 015.rb 34 <==
+var.class.inspect == Date.inspect
+
+==> 016.rb 28 <==
+var.class.inspect == "Date"
+
+==> 017.rb 23 <==
+var.instance_of?(Date)
+
+==> 018.rb 86 <==
+module Foo
+  def bar?(value)
+    bar.class.name == 'Bar'
+  end
+
+  class Bar
+  end
+end
+
+==> 019.rb 69 <==
+module Foo
+  def bar?(value)
+    bar.class.name == '::Bar'
+  end
+end
+
+==> 020.rb 20 <==
+var.class == 'Date'
+
+==> 021.rb 67 <==
+module Foo
+  def bar?(value)
+    bar.class.name == Model
+  end
+end
+

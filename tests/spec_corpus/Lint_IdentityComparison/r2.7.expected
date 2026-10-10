@@ -1,0 +1,14 @@
+==> offenses exit=1 223 <==
+000.rb:1:1: W: [Correctable] Lint/IdentityComparison: Use `equal?` instead of `==` when comparing `object_id`.
+001.rb:1:1: W: [Correctable] Lint/IdentityComparison: Use `!equal?` instead of `!=` when comparing `object_id`.
+
+==> autocorrect exit=0 219 <==
+000.rb:1:1: W: [Corrected] Lint/IdentityComparison: Use `equal?` instead of `==` when comparing `object_id`.
+001.rb:1:1: W: [Corrected] Lint/IdentityComparison: Use `!equal?` instead of `!=` when comparing `object_id`.
+
+==> corrected/000.rb 16 <==
+foo.equal?(bar)
+
+==> corrected/001.rb 17 <==
+!foo.equal?(bar)
+

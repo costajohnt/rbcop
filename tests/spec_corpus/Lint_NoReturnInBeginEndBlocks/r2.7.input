@@ -1,0 +1,560 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 74 <==
+some_value = 10
+
+some_value = begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 001.rb 58 <==
+@some_value = begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 002.rb 59 <==
+@@some_value = begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 003.rb 58 <==
+$some_value = begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 004.rb 52 <==
+CONST = begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 005.rb 92 <==
+some_value = begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 006.rb 93 <==
+@some_value = begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 007.rb 94 <==
+@@some_value = begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 008.rb 93 <==
+$some_value = begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 009.rb 87 <==
+CONST = begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 010.rb 75 <==
+some_value = 10
+
+some_value += begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 011.rb 59 <==
+@some_value += begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 012.rb 60 <==
+@@some_value += begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 013.rb 59 <==
+$some_value += begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 014.rb 53 <==
+CONST += begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 015.rb 93 <==
+some_value += begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 016.rb 94 <==
+@some_value += begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 017.rb 95 <==
+@@some_value += begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 018.rb 94 <==
+$some_value += begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 019.rb 88 <==
+CONST += begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 020.rb 75 <==
+some_value = 10
+
+some_value -= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 021.rb 59 <==
+@some_value -= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 022.rb 60 <==
+@@some_value -= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 023.rb 59 <==
+$some_value -= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 024.rb 53 <==
+CONST -= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 025.rb 93 <==
+some_value -= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 026.rb 94 <==
+@some_value -= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 027.rb 95 <==
+@@some_value -= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 028.rb 94 <==
+$some_value -= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 029.rb 88 <==
+CONST -= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 030.rb 75 <==
+some_value = 10
+
+some_value *= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 031.rb 59 <==
+@some_value *= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 032.rb 60 <==
+@@some_value *= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 033.rb 59 <==
+$some_value *= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 034.rb 53 <==
+CONST *= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 035.rb 93 <==
+some_value *= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 036.rb 94 <==
+@some_value *= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 037.rb 95 <==
+@@some_value *= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 038.rb 94 <==
+$some_value *= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 039.rb 88 <==
+CONST *= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 040.rb 75 <==
+some_value = 10
+
+some_value /= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 041.rb 59 <==
+@some_value /= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 042.rb 60 <==
+@@some_value /= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 043.rb 59 <==
+$some_value /= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 044.rb 53 <==
+CONST /= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 045.rb 93 <==
+some_value /= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 046.rb 94 <==
+@some_value /= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 047.rb 95 <==
+@@some_value /= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 048.rb 94 <==
+$some_value /= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 049.rb 88 <==
+CONST /= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 050.rb 76 <==
+some_value = 10
+
+some_value **= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 051.rb 60 <==
+@some_value **= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 052.rb 61 <==
+@@some_value **= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 053.rb 60 <==
+$some_value **= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 054.rb 54 <==
+CONST **= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 055.rb 94 <==
+some_value **= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 056.rb 95 <==
+@some_value **= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 057.rb 96 <==
+@@some_value **= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 058.rb 95 <==
+$some_value **= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 059.rb 89 <==
+CONST **= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 060.rb 76 <==
+some_value = 10
+
+some_value ||= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 061.rb 60 <==
+@some_value ||= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 062.rb 61 <==
+@@some_value ||= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 063.rb 60 <==
+$some_value ||= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 064.rb 54 <==
+CONST ||= begin
+  return 1 if rand(1..2).odd?
+  2
+end
+
+==> 065.rb 94 <==
+some_value ||= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 066.rb 95 <==
+@some_value ||= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 067.rb 96 <==
+@@some_value ||= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 068.rb 95 <==
+$some_value ||= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 069.rb 89 <==
+CONST ||= begin
+  if rand(1..2).odd?
+    "odd number"
+  else
+    "even number"
+  end
+end
+
+==> 070.rb 43 <==
+x = begin
+  def foo
+    return 1
+  end
+end
+
+==> 071.rb 57 <==
+x = begin
+  handler = -> { return 1 }
+  handler.call
+end
+

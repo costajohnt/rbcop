@@ -1,0 +1,9 @@
+==> offenses exit=1 126 <==
+001.rb:1:7: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+
+==> autocorrect exit=0 124 <==
+001.rb:1:7: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+
+==> corrected/001.rb 7 <==
+y = 0 
+

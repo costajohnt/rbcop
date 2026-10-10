@@ -1,0 +1,299 @@
+==> offenses exit=1 6041 <==
+001.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department.
+002.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+003.rb:1:1: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `UnknownCop` (unknown cop).
+004.rb:1:1: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`, `UnknownCop` (unknown cop).
+005.rb:1:25: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Layout/LineLength`.
+009.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ClassLength`, `Metrics/MethodLength`.
+010.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Lint/AmbiguousOperator`, `Lint/Debugger`, `Metrics/ClassLength`, `Metrics/MethodLength`.
+011.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ClassLength`, `Metrics/MethodLength`.
+012.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Lint/AmbiguousOperator`, `Lint/AmbiguousOperatorPrecedence`.
+013.rb:2:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Lint/Debugger`, `Metrics/ClassLength`, `Metrics/MethodLength`.
+014.rb:2:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ClassLength`, `Metrics/MethodLength`.
+015.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+016.rb:2:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+017.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+017.rb:2:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+018.rb:1:8: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+019.rb:2:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+020.rb:1:8: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+021.rb:2:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/AbcSize`, `Metrics/MethodLength`.
+022.rb:2:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary enabling of `Metrics/MethodLength`.
+024.rb:1:1: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `Style/Void` (did you mean `Lint/Void`?).
+025.rb:1:1: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `KlassLength` (unknown cop), `Metrics/MethodLenght` (did you mean `Metrics/MethodLength`?).
+030.rb:2:21: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ParameterLists`.
+031.rb:3:16: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ParameterLists`.
+032.rb:2:3: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Style/ClassVars`.
+032.rb:7:3: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Style/ClassVars`.
+033.rb:2:3: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Style/ClassVars`.
+034.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Layout/IndentationStyle`.
+035.rb:5:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Layout/IndentationStyle`.
+037.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+038.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+039.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+040.rb:2:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+041.rb:3:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+042.rb:3:5: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ClassLength`.
+043.rb:3:23: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ClassLength`.
+044.rb:3:9: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ClassLength`.
+045.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Style` department.
+046.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Style` department, `Metrics/ClassLength`.
+047.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department, `Metrics/ClassLength`.
+048.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department.
+048.rb:3:16: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ClassLength`.
+049.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department.
+049.rb:3:16: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ClassLength`.
+050.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department.
+050.rb:3:16: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ClassLength`.
+051.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department.
+051.rb:3:3: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department.
+052.rb:3:18: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department.
+053.rb:3:16: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department.
+054.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department.
+
+==> autocorrect exit=1 5951 <==
+001.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department.
+002.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+003.rb:1:1: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `UnknownCop` (unknown cop).
+004.rb:1:1: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`, `UnknownCop` (unknown cop).
+005.rb:1:25: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Layout/LineLength`.
+009.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ClassLength`, `Metrics/MethodLength`.
+010.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Lint/AmbiguousOperator`, `Lint/Debugger`, `Metrics/ClassLength`, `Metrics/MethodLength`.
+011.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ClassLength`, `Metrics/MethodLength`.
+012.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Lint/AmbiguousOperator`, `Lint/AmbiguousOperatorPrecedence`.
+013.rb:2:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Lint/Debugger`, `Metrics/ClassLength`, `Metrics/MethodLength`.
+014.rb:2:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ClassLength`, `Metrics/MethodLength`.
+015.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+016.rb:2:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+017.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+017.rb:2:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+018.rb:1:8: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+019.rb:2:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+020.rb:1:8: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+021.rb:2:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/AbcSize`, `Metrics/MethodLength`.
+022.rb:2:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary enabling of `Metrics/MethodLength`.
+024.rb:1:1: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `Style/Void` (did you mean `Lint/Void`?).
+025.rb:1:1: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `KlassLength` (unknown cop), `Metrics/MethodLenght` (did you mean `Metrics/MethodLength`?).
+030.rb:2:21: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ParameterLists`.
+031.rb:3:16: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ParameterLists`.
+032.rb:2:3: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Style/ClassVars`.
+032.rb:7:3: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Style/ClassVars`.
+033.rb:2:3: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Style/ClassVars`.
+034.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Layout/IndentationStyle`.
+035.rb:5:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Layout/IndentationStyle`.
+037.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+038.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+039.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+040.rb:2:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+041.rb:3:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+042.rb:3:5: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ClassLength`.
+043.rb:3:23: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ClassLength`.
+044.rb:3:9: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ClassLength`.
+045.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Style` department.
+046.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Style` department, `Metrics/ClassLength`.
+047.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department, `Metrics/ClassLength`.
+048.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department.
+048.rb:3:16: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ClassLength`.
+049.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department.
+049.rb:3:16: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ClassLength`.
+050.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department.
+050.rb:3:16: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/ClassLength`.
+051.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department.
+051.rb:3:3: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department.
+052.rb:3:18: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department.
+053.rb:3:16: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department.
+054.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department.
+
+==> corrected/001.rb 0 <==
+
+==> corrected/002.rb 0 <==
+
+==> corrected/005.rb 24 <==
+# not very long comment
+
+==> corrected/009.rb 0 <==
+
+==> corrected/010.rb 0 <==
+
+==> corrected/011.rb 0 <==
+
+==> corrected/012.rb 0 <==
+
+==> corrected/013.rb 24 <==
+puts 1
+#
+# offense here
+
+==> corrected/014.rb 24 <==
+puts 1
+#
+# offense here
+
+==> corrected/015.rb 21 <==
+def foo
+  puts 1
+end
+
+==> corrected/016.rb 7 <==
+puts 1
+
+==> corrected/017.rb 22 <==
+
+def foo
+  puts 1
+end
+
+==> corrected/019.rb 7 <==
+puts 1
+
+==> corrected/021.rb 7 <==
+puts 1
+
+==> corrected/022.rb 7 <==
+puts 1
+
+==> corrected/030.rb 44 <==
+def foo(a:, b:, c:,
+        d:, e:, f:)
+end
+
+==> corrected/031.rb 59 <==
+def foo(a:, b:, c:,
+        d:, e:, f:)
+  do_something
+end
+
+==> corrected/032.rb 136 <==
+class One
+  @@class_var = 1  # offense here
+end
+
+class Two
+  @@class_var = 2  # offense and here
+  # rubocop:enable Style/ClassVars
+end
+
+==> corrected/033.rb 73 <==
+class One
+  # rubocop:disable all
+  @@class_var = 1
+  # offense here
+end
+
+==> corrected/034.rb 0 <==
+
+==> corrected/035.rb 73 <==
+# 1
+# 2
+# 3, offense here
+# 4
+#
+# rubocop:enable Layout/IndentationStyle
+
+==> corrected/037.rb 56 <==
+def my_method
+end
+# rubocop:enable Metrics/MethodLength
+
+==> corrected/038.rb 56 <==
+def my_method
+end
+# rubocop:enable Metrics/MethodLength
+
+==> corrected/039.rb 71 <==
+# @api private
+def my_method
+end
+# rubocop:enable Metrics/MethodLength
+
+==> corrected/040.rb 57 <==
+
+def my_method
+end
+# rubocop:enable Metrics/MethodLength
+
+==> corrected/041.rb 74 <==
+attr_reader :foo
+
+def my_method
+end
+# rubocop:enable Metrics/MethodLength
+
+==> corrected/042.rb 97 <==
+module Foo
+  module Bar
+    class Baz
+    end
+    # rubocop:enable Metrics/ClassLength
+  end
+end
+
+==> corrected/043.rb 56 <==
+module Foo
+  module Bar
+    class Baz
+    end
+  end
+end
+
+==> corrected/044.rb 50 <==
+def foo; end
+
+def bar
+  do_something do
+  end
+end
+
+==> corrected/045.rb 27 <==
+def bar
+  do_something
+end
+
+==> corrected/046.rb 27 <==
+def bar
+  do_something
+end
+
+==> corrected/047.rb 27 <==
+def bar
+  do_something
+end
+
+==> corrected/048.rb 27 <==
+def bar
+  do_something
+end
+
+==> corrected/049.rb 27 <==
+def bar
+  do_something
+end
+
+==> corrected/050.rb 36 <==
+def bar
+  do_something # - note
+end
+
+==> corrected/051.rb 73 <==
+class One
+  @@class_var = 1  # offense here
+end
+# rubocop:enable Metrics
+
+==> corrected/052.rb 56 <==
+# rubocop:disable Metrics
+class One
+@@class_var = 1
+end
+
+==> corrected/053.rb 62 <==
+# rubocop:disable Metrics
+def bar
+  do_something # - note
+end
+
+==> corrected/054.rb 27 <==
+def bar
+  do_something
+end
+

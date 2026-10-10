@@ -1,0 +1,209 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 43 <==
+def foo?
+  return if condition
+
+  bar?
+end
+
+==> 001.rb 47 <==
+def foo?
+  return nil if condition
+
+  bar?
+end
+
+==> 002.rb 47 <==
+def foo?
+  return true if condition
+
+  nil
+end
+
+==> 003.rb 19 <==
+def foo?
+  nil
+end
+
+==> 004.rb 48 <==
+def foo?
+  return true if condition
+
+  bar?
+end
+
+==> 005.rb 49 <==
+def foo?
+  return value if condition
+
+  bar?
+end
+
+==> 006.rb 51 <==
+def foo?
+  do_something
+
+  nil
+
+  do_something
+end
+
+==> 007.rb 29 <==
+def foo?
+  bar&.baz(nil)
+end
+
+==> 008.rb 28 <==
+def foo?
+  bar.baz(nil)
+end
+
+==> 009.rb 25 <==
+def foo?
+  bar = nil
+end
+
+==> 010.rb 49 <==
+def foo?
+  return false if condition
+
+  bar?
+end
+
+==> 011.rb 28 <==
+def foo?
+  do_something
+end
+
+==> 012.rb 13 <==
+def foo?
+end
+
+==> 013.rb 52 <==
+def foo?
+  return false unless condition
+rescue
+end
+
+==> 014.rb 52 <==
+def foo?
+  if bar
+    nil
+  else
+    true
+  end
+end
+
+==> 015.rb 52 <==
+def foo?
+  if bar
+    true
+  else
+    nil
+  end
+end
+
+==> 016.rb 77 <==
+def foo?
+  if bar
+    if baz
+      true
+    else
+      nil
+    end
+  end
+end
+
+==> 017.rb 58 <==
+def foo?
+  if bar
+    true
+  else
+    nil
+  end
+  baz
+end
+
+==> 018.rb 48 <==
+def self.foo?
+  return if condition
+
+  bar?
+end
+
+==> 019.rb 52 <==
+def self.foo?
+  return nil if condition
+
+  bar?
+end
+
+==> 020.rb 54 <==
+def self.foo?
+  return false if condition
+
+  bar?
+end
+
+==> 021.rb 57 <==
+def self.foo?
+  if bar
+    nil
+  else
+    true
+  end
+end
+
+==> 022.rb 57 <==
+def self.foo?
+  if bar
+    true
+  else
+    nil
+  end
+end
+
+==> 023.rb 82 <==
+def self.foo?
+  if bar
+    if baz
+      true
+    else
+      nil
+    end
+  end
+end
+
+==> 024.rb 63 <==
+def self.foo?
+  if bar
+    true
+  else
+    nil
+  end
+  baz
+end
+
+==> 025.rb 42 <==
+def foo
+  return if condition
+
+  bar?
+end
+
+==> 026.rb 51 <==
+def foo
+  if bar
+    nil
+  else
+    true
+  end
+end
+

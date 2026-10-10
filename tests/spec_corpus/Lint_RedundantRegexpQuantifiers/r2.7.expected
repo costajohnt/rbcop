@@ -1,0 +1,100 @@
+==> offenses exit=1 2610 <==
+013.rb:1:12: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `+` with a single `+`.
+014.rb:1:12: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `*` and `*` with a single `*`.
+015.rb:1:12: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `?` and `?` with a single `?`.
+016.rb:1:12: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `?` with a single `*`.
+017.rb:1:12: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `*` with a single `*`.
+018.rb:1:12: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `*` and `+` with a single `*`.
+019.rb:1:12: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `*` and `?` with a single `*`.
+020.rb:1:12: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `?` and `+` with a single `*`.
+021.rb:1:12: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `?` and `*` with a single `*`.
+022.rb:1:12: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `+` with a single `+`.
+022.rb:1:19: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `+` with a single `+`.
+023.rb:1:12: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `{1,}` and `{,1}` with a single `*`.
+024.rb:1:16: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `+` with a single `+`.
+025.rb:1:14: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `?` and `+` with a single `*`.
+027.rb:1:22: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `?` and `+` with a single `*`.
+028.rb:1:15: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `?` and `+` with a single `*`.
+028.rb:1:17: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `+` with a single `+`.
+029.rb:1:15: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `+` with a single `+`.
+029.rb:1:17: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `?` and `+` with a single `*`.
+030.rb:1:15: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `?` with a single `*`.
+030.rb:1:17: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `?` with a single `*`.
+
+==> autocorrect exit=0 2934 <==
+013.rb:1:12: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `+` with a single `+`.
+014.rb:1:12: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `*` and `*` with a single `*`.
+015.rb:1:12: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `?` and `?` with a single `?`.
+016.rb:1:12: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `?` with a single `*`.
+017.rb:1:12: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `*` with a single `*`.
+018.rb:1:12: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `*` and `+` with a single `*`.
+019.rb:1:12: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `*` and `?` with a single `*`.
+020.rb:1:12: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `?` and `+` with a single `*`.
+021.rb:1:12: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `?` and `*` with a single `*`.
+022.rb:1:12: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `+` with a single `+`.
+022.rb:1:19: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `+` with a single `+`.
+023.rb:1:12: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `{1,}` and `{,1}` with a single `*`.
+024.rb:1:16: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `+` with a single `+`.
+025.rb:1:14: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `?` and `+` with a single `*`.
+027.rb:1:22: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `?` and `+` with a single `*`.
+028.rb:1:15: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `*` and `+` with a single `*`.
+028.rb:1:15: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `?` and `+` with a single `*`.
+028.rb:1:17: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `+` with a single `+`.
+029.rb:1:15: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `*` with a single `*`.
+029.rb:1:15: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `+` with a single `+`.
+029.rb:1:17: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `?` and `+` with a single `*`.
+030.rb:1:15: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `*` and `*` with a single `*`.
+030.rb:1:15: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `?` with a single `*`.
+030.rb:1:17: W: [Corrected] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `?` with a single `*`.
+
+==> corrected/013.rb 15 <==
+foo = /(?:a+)/
+
+==> corrected/014.rb 15 <==
+foo = /(?:a*)/
+
+==> corrected/015.rb 15 <==
+foo = /(?:a?)/
+
+==> corrected/016.rb 15 <==
+foo = /(?:a*)/
+
+==> corrected/017.rb 15 <==
+foo = /(?:a*)/
+
+==> corrected/018.rb 15 <==
+foo = /(?:a*)/
+
+==> corrected/019.rb 15 <==
+foo = /(?:a*)/
+
+==> corrected/020.rb 15 <==
+foo = /(?:a*)/
+
+==> corrected/021.rb 15 <==
+foo = /(?:a*)/
+
+==> corrected/022.rb 21 <==
+foo = /(?:a+)(?:b+)/
+
+==> corrected/023.rb 15 <==
+foo = /(?:a*)/
+
+==> corrected/024.rb 19 <==
+foo = /(?:[abc]+)/
+
+==> corrected/025.rb 21 <==
+foo = /(?: a * )  /x
+
+==> corrected/027.rb 27 <==
+foo = /(?:(?:(?:(?:a)*)))/
+
+==> corrected/028.rb 19 <==
+foo = /(?:(?:a*))/
+
+==> corrected/029.rb 19 <==
+foo = /(?:(?:a*))/
+
+==> corrected/030.rb 19 <==
+foo = /(?:(?:a*))/
+

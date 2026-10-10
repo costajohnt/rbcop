@@ -1,0 +1,170 @@
+==> .rubocop.yml 141 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/For:
+  EnforcedStyle: each
+
+==> 000.rb 54 <==
+def func
+  for n in [1, 2, 3] do
+    puts n
+  end
+end
+
+==> 001.rb 95 <==
+def func
+  for n in [1, 2, 3] do
+    puts n
+  end
+  [1, 2, 3].each do |n|
+    puts n
+  end
+end
+
+==> 002.rb 105 <==
+for n in [1, 2, 3] do
+  puts n
+end
+[1, 2, 3].each do |n|
+  puts n
+end
+for n in [1, 2, 3] do
+  puts n
+end
+
+==> 003.rb 56 <==
+def func
+  for n in (1...value) do
+    puts n
+  end
+end
+
+==> 004.rb 53 <==
+def func
+  for n in (1...value)
+    puts n
+  end
+end
+
+==> 005.rb 54 <==
+def func
+  for n in 1...value do
+    puts n
+  end
+end
+
+==> 006.rb 51 <==
+def func
+  for n in 1...value
+    puts n
+  end
+end
+
+==> 007.rb 71 <==
+def func
+  for (a, b) in {a: 1, b: 2, c: 3} do
+    puts a, b
+  end
+end
+
+==> 008.rb 51 <==
+def func
+  for n in [1, 2, 3]
+    puts n
+  end
+end
+
+==> 009.rb 88 <==
+def func
+  a = [1, 2]
+  b = [3, 4]
+  c = [5]
+
+  for n in a + b + c
+    puts n
+  end
+end
+
+==> 010.rb 77 <==
+def func
+  a = [1, 2, 3, 4]
+  b = [3]
+
+  for n in a - b
+    puts n
+  end
+end
+
+==> 011.rb 58 <==
+def func
+  for n in [1, 2, 3, 4] * 3
+    puts n
+  end
+end
+
+==> 012.rb 80 <==
+def func
+  a = [1, 2, 3, 4]
+  b = [4, 5]
+
+  for n in a | b
+    puts n
+  end
+end
+
+==> 013.rb 80 <==
+def func
+  a = [1, 2, 3, 4]
+  b = [4, 5]
+
+  for n in a & b
+    puts n
+  end
+end
+
+==> 014.rb 74 <==
+def func
+  a = []
+  b = [1, 2, 3]
+
+  for n in a && b
+    puts n
+  end
+end
+
+==> 015.rb 75 <==
+def func
+  a = nil
+  b = [1, 2, 3]
+
+  for n in a || b
+    puts n
+  end
+end
+
+==> 016.rb 61 <==
+def func
+  for n in [1, 2, nil].compact
+    puts n
+  end
+end
+
+==> 017.rb 27 <==
+for item in foo&.items
+end
+
+==> 018.rb 54 <==
+def func
+  [1, 2, 3].each do |n|
+    puts n
+  end
+end
+
+==> 019.rb 19 <==
+[:for, :ala, :bala]
+==> 020.rb 12 <==
+def for; end

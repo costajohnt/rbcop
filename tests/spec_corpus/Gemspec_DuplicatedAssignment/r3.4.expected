@@ -1,0 +1,6 @@
+==> offenses exit=1 111 <==
+000.gemspec:3:3: W: Gemspec/DuplicatedAssignment: `name=` method calls already given on line 2 of the gemspec.
+
+==> autocorrect exit=1 111 <==
+000.gemspec:3:3: W: Gemspec/DuplicatedAssignment: `name=` method calls already given on line 2 of the gemspec.
+

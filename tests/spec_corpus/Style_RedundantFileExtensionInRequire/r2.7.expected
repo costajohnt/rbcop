@@ -1,0 +1,12 @@
+==> offenses exit=1 220 <==
+000.rb:1:13: C: [Correctable] Style/RedundantFileExtensionInRequire: Redundant `.rb` file extension detected.
+000.rb:2:25: C: [Correctable] Style/RedundantFileExtensionInRequire: Redundant `.rb` file extension detected.
+
+==> autocorrect exit=0 216 <==
+000.rb:1:13: C: [Corrected] Style/RedundantFileExtensionInRequire: Redundant `.rb` file extension detected.
+000.rb:2:25: C: [Corrected] Style/RedundantFileExtensionInRequire: Redundant `.rb` file extension detected.
+
+==> corrected/000.rb 40 <==
+require 'foo'
+require_relative '../foo'
+

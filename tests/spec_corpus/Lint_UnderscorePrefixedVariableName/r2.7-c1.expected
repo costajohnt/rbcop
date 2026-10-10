@@ -1,0 +1,6 @@
+==> offenses exit=1 104 <==
+000.rb:1:13: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+
+==> autocorrect exit=1 104 <==
+000.rb:1:13: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+

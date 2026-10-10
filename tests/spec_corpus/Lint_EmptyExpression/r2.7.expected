@@ -1,0 +1,28 @@
+==> offenses exit=1 745 <==
+000.rb:1:1: W: Lint/EmptyExpression: Avoid empty expressions.
+001.rb:1:2: W: Lint/EmptyExpression: Avoid empty expressions.
+002.rb:1:4: W: Lint/EmptyExpression: Avoid empty expressions.
+003.rb:3:7: W: Lint/EmptyExpression: Avoid empty expressions.
+004.rb:1:6: W: Lint/EmptyExpression: Avoid empty expressions.
+005.rb:2:6: W: Lint/EmptyExpression: Avoid empty expressions.
+006.rb:1:1: W: Lint/EmptyExpression: Avoid empty expressions.
+007.rb:1:7: W: Lint/EmptyExpression: Avoid empty expressions.
+008.rb:2:3: W: Lint/EmptyExpression: Avoid empty expressions.
+009.rb:2:3: W: Lint/EmptyExpression: Avoid empty expressions.
+010.rb:2:16: W: Lint/EmptyExpression: Avoid empty expressions.
+011.rb:1:7: W: Lint/EmptyExpression: Avoid empty expressions.
+
+==> autocorrect exit=1 745 <==
+000.rb:1:1: W: Lint/EmptyExpression: Avoid empty expressions.
+001.rb:1:2: W: Lint/EmptyExpression: Avoid empty expressions.
+002.rb:1:4: W: Lint/EmptyExpression: Avoid empty expressions.
+003.rb:3:7: W: Lint/EmptyExpression: Avoid empty expressions.
+004.rb:1:6: W: Lint/EmptyExpression: Avoid empty expressions.
+005.rb:2:6: W: Lint/EmptyExpression: Avoid empty expressions.
+006.rb:1:1: W: Lint/EmptyExpression: Avoid empty expressions.
+007.rb:1:7: W: Lint/EmptyExpression: Avoid empty expressions.
+008.rb:2:3: W: Lint/EmptyExpression: Avoid empty expressions.
+009.rb:2:3: W: Lint/EmptyExpression: Avoid empty expressions.
+010.rb:2:16: W: Lint/EmptyExpression: Avoid empty expressions.
+011.rb:1:7: W: Lint/EmptyExpression: Avoid empty expressions.
+

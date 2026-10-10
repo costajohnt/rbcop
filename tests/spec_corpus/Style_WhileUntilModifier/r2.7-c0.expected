@@ -1,0 +1,94 @@
+==> offenses exit=1 2088 <==
+002.rb:1:1: C: [Correctable] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+005.rb:1:1: C: [Correctable] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+006.rb:1:5: C: [Correctable] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+007.rb:1:6: C: [Correctable] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+008.rb:1:7: C: [Correctable] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+009.rb:1:5: C: [Correctable] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+010.rb:1:5: C: [Correctable] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+011.rb:1:1: C: [Correctable] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+012.rb:1:1: C: [Correctable] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+017.rb:1:1: C: [Correctable] Style/WhileUntilModifier: Favor modifier `until` usage when having a single-line body.
+020.rb:1:1: C: [Correctable] Style/WhileUntilModifier: Favor modifier `until` usage when having a single-line body.
+021.rb:1:5: C: [Correctable] Style/WhileUntilModifier: Favor modifier `until` usage when having a single-line body.
+022.rb:1:6: C: [Correctable] Style/WhileUntilModifier: Favor modifier `until` usage when having a single-line body.
+023.rb:1:7: C: [Correctable] Style/WhileUntilModifier: Favor modifier `until` usage when having a single-line body.
+024.rb:1:5: C: [Correctable] Style/WhileUntilModifier: Favor modifier `until` usage when having a single-line body.
+025.rb:1:5: C: [Correctable] Style/WhileUntilModifier: Favor modifier `until` usage when having a single-line body.
+026.rb:1:1: C: [Correctable] Style/WhileUntilModifier: Favor modifier `until` usage when having a single-line body.
+027.rb:1:1: C: [Correctable] Style/WhileUntilModifier: Favor modifier `until` usage when having a single-line body.
+
+==> autocorrect exit=0 2052 <==
+002.rb:1:1: C: [Corrected] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+005.rb:1:1: C: [Corrected] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+006.rb:1:5: C: [Corrected] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+007.rb:1:6: C: [Corrected] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+008.rb:1:7: C: [Corrected] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+009.rb:1:5: C: [Corrected] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+010.rb:1:5: C: [Corrected] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+011.rb:1:1: C: [Corrected] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+012.rb:1:1: C: [Corrected] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+017.rb:1:1: C: [Corrected] Style/WhileUntilModifier: Favor modifier `until` usage when having a single-line body.
+020.rb:1:1: C: [Corrected] Style/WhileUntilModifier: Favor modifier `until` usage when having a single-line body.
+021.rb:1:5: C: [Corrected] Style/WhileUntilModifier: Favor modifier `until` usage when having a single-line body.
+022.rb:1:6: C: [Corrected] Style/WhileUntilModifier: Favor modifier `until` usage when having a single-line body.
+023.rb:1:7: C: [Corrected] Style/WhileUntilModifier: Favor modifier `until` usage when having a single-line body.
+024.rb:1:5: C: [Corrected] Style/WhileUntilModifier: Favor modifier `until` usage when having a single-line body.
+025.rb:1:5: C: [Corrected] Style/WhileUntilModifier: Favor modifier `until` usage when having a single-line body.
+026.rb:1:1: C: [Corrected] Style/WhileUntilModifier: Favor modifier `until` usage when having a single-line body.
+027.rb:1:1: C: [Corrected] Style/WhileUntilModifier: Favor modifier `until` usage when having a single-line body.
+
+==> corrected/002.rb 29 <==
+do_something while condition
+
+==> corrected/005.rb 17 <==
+x = 0 while true
+
+==> corrected/006.rb 16 <==
+a = (1 while b)
+
+==> corrected/007.rb 17 <==
+@a = (1 while b)
+
+==> corrected/008.rb 18 <==
+@@a = (1 while b)
+
+==> corrected/009.rb 16 <==
+A = (1 while b)
+
+==> corrected/010.rb 16 <==
+a + (1 while b)
+
+==> corrected/011.rb 50 <==
+baz while bar # important comment not to be nuked
+
+==> corrected/012.rb 14 <==
+bar while foo
+
+==> corrected/017.rb 29 <==
+do_something until condition
+
+==> corrected/020.rb 17 <==
+x = 0 until true
+
+==> corrected/021.rb 16 <==
+a = (1 until b)
+
+==> corrected/022.rb 17 <==
+@a = (1 until b)
+
+==> corrected/023.rb 18 <==
+@@a = (1 until b)
+
+==> corrected/024.rb 16 <==
+A = (1 until b)
+
+==> corrected/025.rb 16 <==
+a + (1 until b)
+
+==> corrected/026.rb 50 <==
+baz until bar # important comment not to be nuked
+
+==> corrected/027.rb 14 <==
+bar until foo
+

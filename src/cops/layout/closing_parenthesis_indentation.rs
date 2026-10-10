@@ -30,7 +30,7 @@ impl Cop for ClosingParenthesisIndentation {
     }
 
     fn kinds(&self) -> &'static [usize] {
-        &[kind::CALL_NODE, kind::PARENTHESES_NODE, kind::DEF_NODE]
+        &[kind::CALL_NODE, kind::PARENTHESES_NODE, kind::EMBEDDED_STATEMENTS_NODE, kind::DEF_NODE]
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
@@ -53,6 +53,12 @@ impl Cop for ClosingParenthesisIndentation {
                     },
                 };
                 (node.location().start_offset(), p.opening_loc(), p.closing_loc(), elements)
+            }
+            // `#{...}` is a parser `begin` too (`on_begin` takes its `}` for the right paren).
+            kind::EMBEDDED_STATEMENTS_NODE => {
+                let e = node.as_embedded_statements_node().unwrap();
+                let elements = e.statements().map(|s| s.body().iter().collect()).unwrap_or_default();
+                (node.location().start_offset(), e.opening_loc(), e.closing_loc(), elements)
             }
             _ => {
                 let d = node.as_def_node().unwrap();

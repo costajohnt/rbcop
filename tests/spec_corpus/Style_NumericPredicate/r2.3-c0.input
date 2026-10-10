@@ -1,0 +1,35 @@
+==> .rubocop.yml 179 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.3
+Style/NumericPredicate:
+  EnforcedStyle: predicate
+  AutoCorrect: true
+
+==> 000.rb 11 <==
+number > 0
+
+==> 001.rb 11 <==
+0 < number
+
+==> 002.rb 12 <==
+foo - 1 > 0
+
+==> 003.rb 12 <==
+0 < foo - 1
+
+==> 004.rb 11 <==
+number < 0
+
+==> 005.rb 11 <==
+0 > number
+
+==> 006.rb 12 <==
+foo - 1 < 0
+
+==> 007.rb 12 <==
+0 > foo - 1
+

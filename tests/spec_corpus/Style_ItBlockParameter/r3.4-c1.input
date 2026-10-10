@@ -1,0 +1,34 @@
+==> .rubocop.yml 174 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Style/ItBlockParameter:
+  EnforcedStyle: only_numbered_parameters
+
+==> 000.rb 27 <==
+block { do_something(_1) }
+
+==> 001.rb 33 <==
+block do
+  foo(_1)
+  bar(_1)
+end
+
+==> 002.rb 36 <==
+foo { bar(_1, _2) }.baz { qux(_1) }
+
+==> 003.rb 27 <==
+block { do_something(it) }
+
+==> 004.rb 34 <==
+block { |arg| do_something(arg) }
+
+==> 005.rb 31 <==
+block { do_something(_1, _2) }
+
+==> 006.rb 27 <==
+block { do_something(_2) }
+

@@ -1,0 +1,62 @@
+==> .rubocop.yml 274 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/VariableNumber:
+  AllowedIdentifiers: []
+  AllowedPatterns:
+  - _v\d+\z
+  - allow_me
+  CheckSymbols: true
+  CheckMethodNames: true
+  EnforcedStyle: snake_case
+
+==> 000.rb 14 <==
+foo_a1 = :foo
+
+==> 001.rb 41 <==
+foo_v1 = :foo
+foo_allow_me_a1 = :allowed
+
+==> 002.rb 15 <==
+@foo_a1 = :foo
+
+==> 003.rb 43 <==
+@foo_v1 = :foo
+@foo_allow_me_a1 = :allowed
+
+==> 004.rb 16 <==
+@@foo_a1 = :foo
+
+==> 005.rb 45 <==
+@@foo_v1 = :foo
+@@foo_allow_me_a1 = :allowed
+
+==> 006.rb 15 <==
+$foo_a1 = :foo
+
+==> 007.rb 43 <==
+$foo_v1 = :foo
+$foo_allow_me_a1 = :allowed
+
+==> 008.rb 15 <==
+def foo_a1
+end
+
+==> 009.rb 40 <==
+def foo_v1
+end
+
+def foo_allow_me_a1
+end
+
+==> 010.rb 8 <==
+:foo_a1
+
+==> 011.rb 7 <==
+:foo_v1
+==> 012.rb 16 <==
+:foo_allow_me_a1
