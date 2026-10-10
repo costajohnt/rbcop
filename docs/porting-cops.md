@@ -268,6 +268,13 @@ More traps found while porting:
   is the next RescueNode as transparent in parser-ancestor walks.
 - Constants Ruby resolves at runtime: `helpers::ruby_exceptions` (regenerate with
   `scripts/dump-ruby-exceptions.rb`). Paths in messages go through PathUtil.smart_path semantics.
+- Ruby `format('%.4g')` is not correctly rounded (dtoa half-even on near-halfway values): use
+  `method_complexity::format_g4`.
+- A ternary has no `loc.else`; an empty `else` gives `else_branch` nil. `String#blank?` counts NUL as
+  whitespace. Parser has `send` nodes Prism lacks (`a.b ||= c`, `a[i] += c` left sides) and wraps
+  `rescue A, B` lists in an `array`.
+- Metrics helpers: `code_length` (CodeLength + CountAsOne), `method_complexity`,
+  `abc_size_calculator`.
 - `helpers::regexp_captures` counts named/numbered groups like `RegexpNode#each_capture`.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.
