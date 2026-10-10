@@ -22,6 +22,10 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - Deliberate: Style/WordArray correcting a `%W[...]` whose value is invalid UTF-8 (`%W[\xff]`)
   writes the escaped form (`["\xFF"]`); RuboCop writes the raw bytes and then crashes re-parsing
   its own output. The offense message matches RuboCop.
+- Review-loop security audit to run: every place a cop evaluates source-derived values at lint
+  time (format strings, numeric literals and arithmetic, string building, regexes compiled from
+  source, recursion depth on deeply nested code) must be bounded, so linting an untrusted file
+  cannot exhaust CPU or memory. First finding: Style/RedundantFormat padded `%999999999d` to ~1 GB.
 - Review-loop coverage to add: every corpus targets Ruby 3.x, so behaviour at TargetRubyVersion
   2.x (parser-gem grammar differences, min/max ruby cops) is only covered by scenarios. Record a
   specs-corpus oracle at 2.5 and 2.7 and compare.
