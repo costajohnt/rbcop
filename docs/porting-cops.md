@@ -268,6 +268,18 @@ More traps found while porting:
 - `ast_with_comments[arg]` for call arguments: one comment cursor over the arguments; each takes the
   comments ending before its end, then those starting on its last line.
 - Helper: `trailing_comma` (TrailingComma mixin, PunctuationCorrector swap_comma).
+- ReparsedEquivalence (`correction_parses?`, `parses_equivalently?`): `helpers::reparsed_equivalence`.
+  When an offense depends on the correction parsing, build the edit list once, test it on a
+  standalone Corrector, then replay it in `add_fix`.
+- `children.one?` counts only non-nil children (`if` with empty body is `[cond, nil, nil]`).
+- Prism `NumberedParametersNode` / `ItParametersNode` locations span the whole block: never use
+  their source as text.
+- Line-based `on_new_investigation` cops stop at the last parser token's line:
+  `parser_tokens::translated(src).last()`.
+- A Prism `'a' \ 'b'` concatenation is a flat InterpolatedStringNode without opening (parser's flat
+  dstr). A backslash-newline inside an interpolating literal is a continuation: still a `str`.
+- Always pass `--cache false` to RuboCop on reused scratch dirs.
+- Helpers: `if_node::{normal_keyword, parts, is_elsif}`, `ruby_string::symbol_inspect`.
 - `each_ancestor(:any_block).first` checks every ancestor, not just the innermost scope.
 - `Module#<=>` is 0 for the same class (truthy); `nil <=> nil` is 0, nil vs class is nil.
 - Prism nests subsequent `rescue` clauses; parser makes them siblings. Treat a RescueNode whose child
