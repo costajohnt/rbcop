@@ -4,8 +4,14 @@ pub const NAME: &str = "Layout/SpaceInsideStringInterpolation";
 pub static COP: SpaceInsideStringInterpolation = SpaceInsideStringInterpolation;
 pub struct SpaceInsideStringInterpolation;
 
+/// SurroundingSpace SINGLE_SPACE_REGEXP.
 fn blank(b: Option<&u8>) -> bool {
     matches!(b, Some(b' ' | b'\t'))
+}
+
+/// Token#space_after? / space_before? (`\s`).
+fn ws(b: Option<&u8>) -> bool {
+    matches!(b, Some(b' ' | b'\t' | b'\n' | b'\x0b' | b'\x0c' | b'\r'))
 }
 
 impl Cop for SpaceInsideStringInterpolation {
@@ -29,32 +35,47 @@ impl Cop for SpaceInsideStringInterpolation {
             return;
         }
         let text = src.text.as_bytes();
-        let left_space = blank(text.get(open.end_offset()));
-        let right_space = blank(text.get(close.start_offset().wrapping_sub(1)));
-        // The first offense's corrector fixes both sides; the second one finds the node ignored.
-        let mut correctable = true;
-        if cx.cfg.str("EnforcedStyle") == Some("space") {
-            let msg = "Use space inside string interpolation.";
-            if !left_space {
-                cx.add(open.start_offset(), open.end_offset(), msg);
-                correctable = false;
+        let (o, c) = ((open.start_offset(), open.end_offset()), (close.start_offset(), close.end_offset()));
+        let left_space = blank(text.get(o.1));
+        let right_space = blank(text.get(c.0.wrapping_sub(1)));
+        let lead = text[o.1..].iter().take_while(|&&b| b == b' ' || b == b'\t').count();
+        let trail = text[..c.0].iter().rev().take_while(|&&b| b == b' ' || b == b'\t').count();
+        let space_style = cx.cfg.str("EnforcedStyle") == Some("space");
+        let (after, before) = (ws(text.get(o.1)), ws(text.get(c.0.wrapping_sub(1))));
+        // SpaceCorrector.add_space / remove_space. The first offense's block corrects both sides
+        // and ignores the node, so a second offense's block does nothing.
+        let mut done = false;
+        let mut fix = |k: &mut Corrector| {
+            if done {
+                return;
             }
-            if !right_space {
-                cx.add_with(close.start_offset(), close.end_offset(), msg, correctable);
+            done = true;
+            if space_style {
+                if !after {
+                    k.insert_after(o.0, o.1, " ");
+                }
+                if !before {
+                    k.insert_before(c.0, c.1, " ");
+                }
+            } else {
+                if after {
+                    k.remove(o.1, o.1 + lead);
+                }
+                if before {
+                    k.remove(c.0 - trail, c.0);
+                }
             }
+        };
+        let (msg, ranges) = if space_style {
+            ("Use space inside string interpolation.", [(!left_space).then_some(o), (!right_space).then_some(c)])
         } else {
-            let msg = "Do not use space inside string interpolation.";
-            if left_space {
-                let s = open.end_offset();
-                let n = text[s..].iter().take_while(|&&b| b == b' ' || b == b'\t').count();
-                cx.add(s, s + n, msg);
-                correctable = false;
-            }
-            if right_space {
-                let e = close.start_offset();
-                let n = text[..e].iter().rev().take_while(|&&b| b == b' ' || b == b'\t').count();
-                cx.add_with(e - n, e, msg, correctable);
-            }
+            (
+                "Do not use space inside string interpolation.",
+                [left_space.then_some((o.1, o.1 + lead)), right_space.then_some((c.0 - trail, c.0))],
+            )
+        };
+        for (s, e) in ranges.into_iter().flatten() {
+            cx.add_fix(s, e, msg, &mut fix);
         }
     }
 }

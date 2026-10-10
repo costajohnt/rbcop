@@ -30,7 +30,8 @@ impl Cop for SpaceInsideArrayPercentLiteral {
         let mut pos = 0;
         while let Some(c) = MULTIPLE_SPACES.captures_at(contents, pos) {
             let g = c.get(1).unwrap();
-            cx.add(start + g.start(), start + g.end(), "Use only a single space inside array percent literal.");
+            let (s, e) = (start + g.start(), start + g.end());
+            cx.add_fix(s, e, "Use only a single space inside array percent literal.", |c| c.replace(s, e, " "));
             pos = g.end();
         }
     }

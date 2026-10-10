@@ -39,7 +39,7 @@ impl Cop for SpaceInsidePercentLiteralDelimiters {
         let body = cx.src.slice(start, end);
         // `range.source.strip.empty?` (Ruby strip: ASCII whitespace and NUL).
         if !body.is_empty() && body.bytes().all(|b| matches!(b, b' ' | b'\t' | b'\n' | b'\x0b' | b'\x0c' | b'\r' | 0)) {
-            cx.add(start, end, MSG);
+            cx.add_fix(start, end, MSG, |c| c.remove(start, end));
         }
         let loc = node.location();
         if cx.src.line_of(loc.start_offset()) != cx.src.line_of(loc.end_offset()) {
@@ -48,13 +48,13 @@ impl Cop for SpaceInsidePercentLiteralDelimiters {
         // BEGIN_REGEX /\A( +)/
         let lead = body.bytes().take_while(|&b| b == b' ').count();
         if lead > 0 {
-            cx.add(start, start + lead, MSG);
+            cx.add_fix(start, start + lead, MSG, |c| c.remove(start, start + lead));
         }
         // END_REGEX /(?<!\\)( +)\z/: leftmost start of the trailing space run not preceded by `\`.
         let trail = body.trim_end_matches(' ').len();
         let s = if trail > 0 && body.as_bytes()[trail - 1] == b'\\' { trail + 1 } else { trail };
         if s < body.len() {
-            cx.add(start + s, end, MSG);
+            cx.add_fix(start + s, end, MSG, |c| c.remove(start + s, end));
         }
     }
 }

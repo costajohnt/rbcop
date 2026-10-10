@@ -1,6 +1,7 @@
 //! RuboCop's MultilineLiteralBraceLayout mixin (plus what MultilineLiteralBraceCorrector edits).
 
 use crate::cop::Cx;
+use crate::helpers::range_help::{Side, Surrounding, range_with_surrounding_space};
 use crate::node_kind as kind;
 use ruby_prism::Node;
 
@@ -28,6 +29,9 @@ pub fn chained_or_argument(node: &Node, ancestors: &[Node]) -> bool {
 
 /// `check_brace_layout` for a literal with an explicit opening brace at `open` and closing brace
 /// `close` (byte ranges); `node` spans `node_range`; `children` in source order.
+/// `heredoc_chain`: the `.method...` range the corrector moves for a call whose first argument is
+/// a `str` heredoc (`correct_heredoc_argument_method_chain`), Err where RuboCop's corrector raises.
+#[allow(clippy::too_many_arguments)]
 pub fn check(
     cx: &mut Cx,
     msgs: &Messages,
@@ -36,6 +40,7 @@ pub fn check(
     node_range: (usize, usize),
     children: &[Node],
     chained_or_argument: bool,
+    heredoc_chain: Result<Option<(usize, usize)>, ()>,
 ) {
     let src = cx.src;
     let (Some(first), Some(last)) = (children.first(), children.last()) else { return };
@@ -58,15 +63,47 @@ pub fn check(
         "symmetrical" if !opening_same && closing_same => msgs[1],
         _ => return,
     };
-    // The corrector does nothing when a comment follows the last element of a chained/argument literal.
-    let correctable = closing_same || !chained_or_argument || {
-        let b = src.text.as_bytes();
-        let mut p = last_end;
-        while p < b.len() && matches!(b[p], b' ' | b'\t' | b'\n') {
-            p += 1;
-        }
-        let line = if b.get(p) == Some(&b',') { src.line_of(p) } else { last_line };
-        src.comment_on_line(line).is_none()
+    if closing_same {
+        cx.add_fix(close.0, close.1, msg, |c| c.insert_before(close.0, close.1, "\n"));
+        return;
+    }
+    // MultilineLiteralBraceCorrector, closing brace on a later line.
+    let (_, after) = range_with_surrounding_space(src.text, last.location().start_offset(), last_end, right());
+    let end_range = if src.text.as_bytes().get(after) == Some(&b',') { after + 1 } else { last_end };
+    // new_line_needed_before_closing_brace?: the corrector does nothing.
+    if src.comment_on_line(src.line_of(end_range)).is_some() && chained_or_argument {
+        cx.add_fix(close.0, close.1, msg, |_| {});
+        return;
+    }
+    let chain = match heredoc_chain {
+        Err(()) => return, // RuboCop's corrector raises (`loc.dot` of a call without one)
+        Ok(chain) => chain,
     };
-    cx.add_with(close.0, close.1, msg, correctable);
+    let (brace_start, _) = range_with_surrounding_space(src.text, close.0, close.1, left());
+    let comment = src.comment_on_line(last_line).is_some();
+    let node_line_end = {
+        let l = src.line_of(node_range.1);
+        let s = src.line_start(l);
+        s + src.text[s..].find('\n').unwrap_or(src.text.len() - s)
+    };
+    let content = if comment { src.slice(close.0, node_line_end) } else { src.slice(close.0, close.1) };
+    cx.add_fix(close.0, close.1, msg, |c| {
+        c.remove(brace_start, close.1);
+        if comment {
+            c.remove(close.0, node_line_end);
+        }
+        c.insert_before(end_range, end_range, content);
+        if let Some((s, e)) = chain {
+            c.remove(s, e);
+            c.insert_after(end_range, end_range, src.slice(s, e));
+        }
+    });
+}
+
+fn left() -> Surrounding {
+    Surrounding { side: Side::Left, ..Default::default() }
+}
+
+fn right() -> Surrounding {
+    Surrounding { side: Side::Right, ..Default::default() }
 }

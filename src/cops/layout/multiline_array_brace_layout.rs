@@ -28,6 +28,6 @@ impl Cop for MultilineArrayBraceLayout {
         let loc = node.location();
         let ca = mlbl::chained_or_argument(node, cx.ancestors);
         let close = (close.start_offset(), close.end_offset());
-        mlbl::check(cx, &MSGS, open.start_offset(), close, (loc.start_offset(), loc.end_offset()), &children, ca);
+        mlbl::check(cx, &MSGS, open.start_offset(), close, (loc.start_offset(), loc.end_offset()), &children, ca, Ok(None));
     }
 }

@@ -227,7 +227,15 @@ impl Cop for RescueEnsureAlignment {
             align_line,
             align_col
         );
-        let correctable = src.begins_its_line(kw.start_offset());
-        cx.add_with(kw.start_offset(), kw.end_offset(), msg, correctable);
+        // autocorrect: replace the text before the keyword with `align_col` spaces, unless some
+        // code sits there (`whitespace.source.strip.empty?`).
+        let line_start = src.line_start(kw_line);
+        let blank = src.slice(line_start, kw.start_offset()).bytes().all(|b| b.is_ascii_whitespace() || b == 0 || b == 0x0b);
+        let pad = " ".repeat(align_col);
+        cx.add_fix(kw.start_offset(), kw.end_offset(), msg, |c| {
+            if blank {
+                c.replace(line_start, kw.start_offset(), &pad);
+            }
+        });
     }
 }

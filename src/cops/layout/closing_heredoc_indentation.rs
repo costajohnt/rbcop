@@ -106,6 +106,9 @@ impl Cop for ClosingHeredocIndentation {
             if argument { " or beginning of method definition" } else { "" }
         );
         let start = src.line_start(src.line_of(close.start_offset()));
-        cx.add(start, start + closing.len(), msg);
+        // indented_end: `closing_text.gsub(/^\s{closing_indent}/, ' ' * opening_indent)`
+        let fixed = format!("{}{}", " ".repeat(oi), &closing[ci..]);
+        let end = start + closing.len();
+        cx.add_fix(start, end, msg, |c| c.replace(start, end, &fixed));
     }
 }

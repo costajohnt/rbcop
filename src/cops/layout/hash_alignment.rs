@@ -339,23 +339,38 @@ impl Cop for HashAlignment {
             for i in idxs {
                 let e = &ctx.elems[i];
                 let first_style = alignment_for(e)[0];
-                let correctable = column_deltas
-                    .iter()
-                    .find(|(s, j, _)| *s == first_style && *j == i)
-                    .is_some_and(|(_, _, d)| corrects(&ctx, e, d));
-                cx.add_with(e.range.0, e.range.1, style.message(), correctable);
+                let delta = column_deltas.iter().find(|(s, j, _)| *s == first_style && *j == i).map(|(_, _, d)| *d);
+                let ctx = &ctx;
+                cx.add_fix(e.range.0, e.range.1, style.message(), |c| {
+                    if let Some(d) = delta {
+                        correct_node(ctx, c, e, &d);
+                    }
+                });
             }
         }
     }
 }
 
 /// Whether `correct_node` makes an edit.
-fn corrects(ctx: &Ctx, e: &Elem, d: &Deltas) -> bool {
-    let key = d.key.unwrap_or(0).max(-ctx.col(e.key.0));
+fn correct_node(ctx: &Ctx, c: &mut Corrector, e: &Elem, d: &Deltas) {
     if e.splat || e.omission {
-        return key != 0;
+        let key = d.key.unwrap_or(0).max(-ctx.col(e.range.0));
+        return adjust(ctx, c, key, e.range);
     }
-    key != 0 || d.sep.unwrap_or(0) != 0 || d.value.unwrap_or(0) != 0
+    adjust(ctx, c, d.key.unwrap_or(0).max(-ctx.col(e.key.0)), e.key);
+    adjust(ctx, c, d.sep.unwrap_or(0), e.op);
+    adjust(ctx, c, d.value.unwrap_or(0), e.value);
+}
+
+/// Insert `delta` spaces before the range, or remove `-delta` characters before it.
+fn adjust(ctx: &Ctx, c: &mut Corrector, delta: i64, range: (usize, usize)) {
+    if delta > 0 {
+        c.insert_before(range.0, range.1, &" ".repeat(delta as usize));
+    } else if delta < 0 {
+        let before = &ctx.src.text[..range.0];
+        let n: usize = before.chars().rev().take(delta.unsigned_abs() as usize).map(char::len_utf8).sum();
+        c.remove(range.0 - n, range.0);
+    }
 }
 
 /// `autocorrect_incompatible_with_other_cops?`
