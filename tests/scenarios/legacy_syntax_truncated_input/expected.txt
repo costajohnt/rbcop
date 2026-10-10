@@ -1,5 +1,6 @@
 Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
 array.rb:1:4: F: Lint/Syntax: unexpected token $end (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+block.rb:1:17: F: Lint/Syntax: unexpected token tLCURLY (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 brace.rb:1:6: F: Lint/Syntax: unexpected token $end (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 call.rb:2:1: F: Lint/Syntax: unexpected token tIDENTIFIER (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 case.rb:1:5: F: Lint/Syntax: unexpected token $end (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)

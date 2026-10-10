@@ -84,7 +84,7 @@ pub fn failure_offset(kind: &str, start: usize, end: usize, tokens: &[Token]) ->
         })
     };
     // Most errors sit on the construct missing something; these sit on the token that failed.
-    let at_failing_token = kind.starts_with("unexpected_")
+    let at_failing_token = kind.contains("unexpected")
         || kind.contains("_term")
         || kind.starts_with("expect_eol")
         || kind == "expect_expression_after_operator";
