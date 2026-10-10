@@ -215,15 +215,16 @@ fn analyze(
             }
         };
         let fatal_at = result.errors().filter(|e| kept(e) && fatal(e)).map(|e| e.location().start_offset()).min();
-        // A string left open at the end of the file: the lexer's fatal string_eof, whatever the
-        // parser reported before.
-        let open_string = result
-            .errors()
-            .filter(|e| e.type_name() == "string_literal_eof")
-            .map(|e| e.location().start_offset())
-            .min();
+        // A string left open at the end of the file: the lexer's fatal string_eof at its opener,
+        // whatever the parser reported before.
+        let open_literal = crate::legacy_syntax::unterminated_literal(result.errors().map(|e| e.type_name()), &tokens);
+        let open_string = open_literal.map(|o| o.1);
         let semantic_kind = |e: &ruby_prism::Diagnostic| {
-            (crate::syntax::is_semantic(e.type_name()) && e.type_name() != "string_literal_eof") || bare_backslash(e)
+            let (k, l) = (e.type_name(), e.location());
+            (crate::syntax::is_semantic(k)
+                && k != "string_literal_eof"
+                && crate::legacy_syntax::class_name_failure(k, l.start_offset(), l.end_offset(), &tokens).is_none())
+                || bare_backslash(e)
         };
         let seed = result
             .errors()
@@ -246,12 +247,6 @@ fn analyze(
         let semantic: Vec<_> = result
             .errors()
             .filter(|e| kept(e) && semantic_kind(e) && !fatal(e) && e.location().start_offset() < cut)
-            // `class` with no name (Prism reports the keyword): the parser fails before a name
-            // reduces, so there is no name to check.
-            .filter(|e| {
-                !(matches!(e.type_name(), "class_name" | "module_name")
-                    && tokens.iter().any(|t| t.start == e.location().start_offset() && t.kind.starts_with("KEYWORD_")))
-            })
             .filter_map(|e| {
                 let (s, end) = crate::legacy_syntax::semantic_location(
                     e.type_name(),
@@ -319,7 +314,8 @@ fn analyze(
                 errors.push((f, f + 1, format!("unexpected `{}'", text.get(f..f + 1).unwrap_or(""))));
             }
             Some((s, 0)) => {
-                errors.retain(|e| e.0 < s);
+                let outer = open_literal.map_or(s, |o| o.0);
+                errors.retain(|e| e.0 < outer);
                 errors.push((s, s + 1, "unterminated string meets end of file".to_string()));
             }
             Some((s, _)) => {
