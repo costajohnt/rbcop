@@ -1,0 +1,113 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 54 <==
+email_with_name = user.name + ' <' + user.email + '>'
+
+==> 001.rb 43 <==
+users = (user.name + ' ' + user.email) * 5
+
+==> 002.rb 61 <==
+email_with_name = "\n" + user.name + ' ' + user.email + '\n'
+
+==> 003.rb 31 <==
+"\x0a" + "test" + "A" + "\xff"
+
+==> 004.rb 73 <==
+(user.vip? ? greeting + ', ' : '') + user.name + ' <' + user.email + '>'
+
+==> 005.rb 29 <==
+"foo" + "\"#{bar}\"" + 'baz'
+
+==> 006.rb 29 <==
+"foo" + "\'#{bar}\'" + 'baz'
+
+==> 007.rb 23 <==
+user.name + user.email
+
+==> 008.rb 14 <==
+"a" + "b" "c"
+
+==> 009.rb 14 <==
+"a" "b" + "c"
+
+==> 010.rb 20 <==
+"a" + "b" "c" + "d"
+
+==> 011.rb 40 <==
+"string #{interpolation}" 'foo' + 'bar'
+
+==> 012.rb 54 <==
+"this is a long string " +
+  "this is a continuation"
+
+==> 013.rb 60 <==
+email_with_name = user.name +
+  ' ' +
+  user.email +
+  '\n'
+
+==> 014.rb 53 <==
+"result:" + if condition
+  "true"
+else
+  "false"
+end
+
+==> 015.rb 60 <==
+'(' + values.map do |v|
+    v.titleize
+end.join(', ') + ')'
+
+==> 016.rb 22 <==
+"foo" + "bar: #{baz}"
+
+==> 017.rb 53 <==
+'(' + values.map { |v| v.titleize }.join(', ') + ')'
+
+==> 018.rb 50 <==
+'(' + values.map { _1.titleize }.join(', ') + ')'
+
+==> 019.rb 26 <==
+"foo" + <<~STR
+  text
+STR
+
+==> 020.rb 33 <==
+"foo" + <<~TEXT
+  bar
+  baz
+TEXT
+
+==> 021.rb 55 <==
+email_with_name = "He said " + "\"Arrest that man!\"."
+
+==> 022.rb 55 <==
+email_with_name = %(He said ) + %("Arrest that man!".)
+
+==> 023.rb 80 <==
+'"' + "foo" + '"'
+'"' + "foo" + "'"
+"'" + "foo" + '"'
+"'" + "foo" + '"' + "bar"
+
+==> 024.rb 14 <==
+'"bar"' + foo
+
+==> 025.rb 17 <==
+"foo" + '#{bar}'
+
+==> 026.rb 16 <==
+"foo" + '#@bar'
+
+==> 027.rb 17 <==
+"foo" + '#@@bar'
+
+==> 028.rb 16 <==
+"foo" + '#$bar'
+

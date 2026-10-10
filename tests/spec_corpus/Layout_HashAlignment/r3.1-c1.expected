@@ -1,0 +1,12 @@
+==> offenses exit=1 117 <==
+000.rb:3:5: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+
+==> autocorrect exit=0 115 <==
+000.rb:3:5: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+
+==> corrected/000.rb 30 <==
+THINGS = {
+  oh:,
+  hi:
+    }
+

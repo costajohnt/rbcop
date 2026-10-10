@@ -1,0 +1,73 @@
+==> offenses exit=1 1534 <==
+000.rb:2:4: C: [Correctable] Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+000.rb:4:4: C: [Correctable] Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+004.rb:2:6: C: [Correctable] Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+004.rb:3:5: C: [Correctable] Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+008.rb:2:4: C: [Correctable] Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+008.rb:3:7: C: Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+009.rb:2:2: C: [Correctable] Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+009.rb:3:3: C: Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+010.rb:8:2: C: [Correctable] Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+012.rb:3:4: C: [Correctable] Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+012.rb:5:4: C: [Correctable] Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+
+==> autocorrect exit=0 1540 <==
+000.rb:2:4: C: [Corrected] Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+000.rb:4:4: C: [Corrected] Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+004.rb:2:6: C: [Corrected] Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+004.rb:3:5: C: [Corrected] Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+008.rb:2:4: C: [Corrected] Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+008.rb:3:6: C: [Corrected] Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+009.rb:2:2: C: [Corrected] Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+009.rb:3:4: C: [Corrected] Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+010.rb:8:2: C: [Corrected] Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+012.rb:3:4: C: [Corrected] Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+012.rb:5:4: C: [Corrected] Layout/ArrayAlignment: Use one level of indentation for elements following the first line of a multi-line array.
+
+==> corrected/000.rb 27 <==
+array = [a,
+  b,
+  c,
+  d]
+
+==> corrected/004.rb 24 <==
+var =
+  first,
+  second
+
+==> corrected/008.rb 39 <==
+[:l1,
+  [:l2,
+    [:l3,
+      [:l4]]]]
+
+==> corrected/009.rb 39 <==
+[:l1,
+  [:l2,
+    [:l3,
+      [:l4]]]]
+
+==> corrected/010.rb 173 <==
+var = [
+  { :type => 'something',
+    :sql => <<EOF
+Select something
+from atable
+EOF
+  },
+  { :type => 'something',
+    :sql => <<EOF
+Select something
+from atable
+EOF
+  }
+]
+
+==> corrected/012.rb 31 <==
+array = [
+  a,
+  b,
+  c,
+  d
+]
+

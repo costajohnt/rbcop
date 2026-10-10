@@ -1,0 +1,28 @@
+==> offenses exit=1 960 <==
+001.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+002.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+003.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+003.rb:8:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+004.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+005.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+006.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+007.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+008.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+009.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+010.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+011.rb:5:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+
+==> autocorrect exit=1 960 <==
+001.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+002.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+003.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+003.rb:8:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+004.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+005.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+006.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+007.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+008.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+009.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+010.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+011.rb:5:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+

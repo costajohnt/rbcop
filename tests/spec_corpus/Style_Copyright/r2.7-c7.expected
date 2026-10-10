@@ -1,0 +1,10 @@
+==> offenses exit=1 122 <==
+000.rb:1:1: C: Style/Copyright: Include a copyright notice matching /^# Copyright (\(c\) )?2[0-9]{3} .+/ before any code.
+
+==> autocorrect exit=0 134 <==
+000.rb:1:1: C: [Corrected] Style/Copyright: Include a copyright notice matching /^# Copyright (\(c\) )?2[0-9]{3} .+/ before any code.
+
+==> corrected/000.rb 48 <==
+# Copyright (c) 2026 My Name
+puts 'Hello world'
+

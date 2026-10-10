@@ -1,0 +1,30 @@
+==> offenses exit=1 1239 <==
+000.rb:1:1: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+001.rb:1:9: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+002.rb:1:9: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+003.rb:1:9: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+004.rb:1:9: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+005.rb:1:10: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+006.rb:1:11: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+007.rb:1:10: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+008.rb:1:7: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+009.rb:2:3: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+010.rb:1:11: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+011.rb:1:7: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+012.rb:1:6: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+
+==> autocorrect exit=1 1239 <==
+000.rb:1:1: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+001.rb:1:9: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+002.rb:1:9: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+003.rb:1:9: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+004.rb:1:9: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+005.rb:1:10: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+006.rb:1:11: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+007.rb:1:10: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+008.rb:1:7: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+009.rb:2:3: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+010.rb:1:11: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+011.rb:1:7: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+012.rb:1:6: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+

@@ -1,0 +1,9 @@
+==> offenses exit=1 156 <==
+002.rb:1:7: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable directives without a `--` justification comment are not permitted.
+
+==> autocorrect exit=0 154 <==
+002.rb:1:7: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable directives without a `--` justification comment are not permitted.
+
+==> corrected/002.rb 7 <==
+x = 0 
+

@@ -1,0 +1,6 @@
+==> offenses exit=1 99 <==
+000.rb:1:1: W: Lint/UnexpectedBlockArity: `reduce` expects at least 2 positional arguments, got 1.
+
+==> autocorrect exit=1 99 <==
+000.rb:1:1: W: Lint/UnexpectedBlockArity: `reduce` expects at least 2 positional arguments, got 1.
+

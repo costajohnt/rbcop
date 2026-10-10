@@ -1,0 +1,221 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 57 <==
+unless FileTest.exist?(path)
+  FileUtils.mkdir(path)
+end
+
+==> 001.rb 60 <==
+unless FileTest.exist?(path)
+  FileUtils.makedirs(path)
+end
+
+==> 002.rb 59 <==
+unless FileTest.exist?(path)
+  FileUtils.mkdir_p(path)
+end
+
+==> 003.rb 58 <==
+unless FileTest.exist?(path)
+  FileUtils.mkpath(path)
+end
+
+==> 004.rb 54 <==
+if FileTest.exist?(path)
+  FileUtils.remove(path)
+end
+
+==> 005.rb 54 <==
+if FileTest.exist?(path)
+  FileUtils.delete(path)
+end
+
+==> 006.rb 54 <==
+if FileTest.exist?(path)
+  FileUtils.unlink(path)
+end
+
+==> 007.rb 59 <==
+if FileTest.exist?(path)
+  FileUtils.remove_file(path)
+end
+
+==> 008.rb 50 <==
+if FileTest.exist?(path)
+  FileUtils.rm(path)
+end
+
+==> 009.rb 53 <==
+if FileTest.exist?(path)
+  FileUtils.rmdir(path)
+end
+
+==> 010.rb 59 <==
+if FileTest.exist?(path)
+  FileUtils.safe_unlink(path)
+end
+
+==> 011.rb 58 <==
+if FileTest.exist?(path)
+  FileUtils.remove_dir(path)
+end
+
+==> 012.rb 60 <==
+if FileTest.exist?(path)
+  FileUtils.remove_entry(path)
+end
+
+==> 013.rb 67 <==
+if FileTest.exist?(path)
+  FileUtils.remove_entry_secure(path)
+end
+
+==> 014.rb 52 <==
+if FileTest.exist?(path)
+  FileUtils.rm_f(path)
+end
+
+==> 015.rb 53 <==
+if FileTest.exist?(path)
+  FileUtils.rm_rf(path)
+end
+
+==> 016.rb 52 <==
+if FileTest.exist?(path)
+  FileUtils.rm_r(path)
+end
+
+==> 017.rb 54 <==
+if FileTest.exist?(path)
+  FileUtils.rmtree(path)
+end
+
+==> 018.rb 74 <==
+unless FileTest.exists?(path)
+  FileUtils.makedirs(path, force: true)
+end
+
+==> 019.rb 82 <==
+if condition
+  do_something
+elsif FileTest.exist?(path)
+  FileUtils.rm_f path
+end
+
+==> 020.rb 75 <==
+unless FileTest.exists?(path)
+  FileUtils.makedirs(path, force: false)
+end
+
+==> 021.rb 76 <==
+unless FileTest.exists?(path)
+  FileUtils.makedirs(path, verbose: true)
+end
+
+==> 022.rb 61 <==
+unless FileTest.exists?(path)
+  FileUtils.makedirs(path)
+end
+
+==> 023.rb 57 <==
+if !FileTest.exist?(path)
+  FileUtils.makedirs(path)
+end
+
+==> 024.rb 51 <==
+FileUtils.mkdir(path) unless FileTest.exist?(path)
+
+==> 025.rb 48 <==
+Dir.mkdir(path, 0o0755) unless Dir.exist?(path)
+
+==> 026.rb 40 <==
+Dir.mkdir(path) unless Dir.exist?(path)
+
+==> 027.rb 48 <==
+FileUtils.remove(path) if FileTest.exist?(path)
+
+==> 028.rb 73 <==
+FileUtils.mkdir(path) unless
+                      FileTest.exist?(path)
+
+==> 029.rb 76 <==
+FileUtils.mkdir(path) unless (
+                      FileTest.exist?(path))
+
+==> 030.rb 56 <==
+if ::FileTest.exist?(path)
+  FileUtils.delete(path)
+end
+
+==> 031.rb 56 <==
+if FileTest.exist?(path)
+  ::FileUtils.delete(path)
+end
+
+==> 032.rb 58 <==
+if ::FileTest.exist?(path)
+  ::FileUtils.delete(path)
+end
+
+==> 033.rb 24 <==
+FileUtils.mkdir_p(path)
+
+==> 034.rb 50 <==
+FileUtils.mkdir_p(y) unless FileTest.exist?(path)
+
+==> 035.rb 119 <==
+unless FileUtils.exist?(path)
+  FileUtils.options_of(:rm)
+end
+unless FileUtils.exist?(path)
+  NotFile.remove(path)
+end
+
+==> 036.rb 122 <==
+unless FileUtils.options_of(:rm)
+  FileUtils.mkdir_p(path)
+end
+if FileTest.executable?(path)
+  FileUtils.remove(path)
+end
+
+==> 037.rb 151 <==
+unless FileTest.exist?(path)
+  FileUtils.makedirs(path)
+  do_something
+end
+
+unless FileTest.exist?(path)
+  do_something
+  FileUtils.makedirs(path)
+end
+
+==> 038.rb 73 <==
+if FileTest.exist?(path)
+  FileUtils.mkdir(path)
+else
+  do_something
+end
+
+==> 039.rb 80 <==
+if FileTest.exist?(path) && File.stat(path).socket?
+  FileUtils.mkdir(path)
+end
+
+==> 040.rb 66 <==
+if FileTest.exist?(path) || condition
+  FileUtils.mkdir(path)
+end
+
+==> 041.rb 41 <==
+mkdir(path) unless FileTest.exist?(path)
+
+==> 042.rb 55 <==
+storage[:files].delete(file) unless File.exists?(file)
+

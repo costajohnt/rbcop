@@ -1,0 +1,17 @@
+==> .rubocop.yml 162 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Lint/Debugger:
+  DebuggerMethods:
+  - custom_debugger
+
+==> 000.rb 52 <==
+x.y = do_something do
+  z(it)
+  custom_debugger
+end
+

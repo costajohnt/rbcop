@@ -1,0 +1,198 @@
+==> .rubocop.yml 150 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/FetchEnvVar:
+  AllowedVariables: []
+
+==> 000.rb 9 <==
+ENV['X']
+
+==> 001.rb 15 <==
+ENV['X' + 'Y']
+
+==> 002.rb 10 <==
+!ENV['X']
+
+==> 003.rb 21 <==
+ENV['X'].some_method
+
+==> 004.rb 22 <==
+ENV['X']&.some_method
+
+==> 005.rb 14 <==
+ENV['X'] == 1
+
+==> 006.rb 14 <==
+ENV['X'] != 1
+
+==> 007.rb 36 <==
+ENV['X'] ||= y
+x ||= ENV['X'] ||= y
+
+==> 008.rb 36 <==
+ENV['X'] &&= y
+x &&= ENV['X'] ||= y
+
+==> 009.rb 15 <==
+y ||= ENV['X']
+
+==> 010.rb 15 <==
+y &&= ENV['X']
+
+==> 011.rb 22 <==
+some_method(ENV['X'])
+
+==> 012.rb 24 <==
+x.some_method(ENV['X'])
+
+==> 013.rb 86 <==
+some_method(
+  ENV['A'].some_method,
+  ENV['B'] || ENV['C'],
+  ENV['X'],
+  ENV['Y']
+)
+
+==> 014.rb 13 <==
+x = ENV['X']
+
+==> 015.rb 33 <==
+x, y = ENV['X'],
+       ENV['Y']
+
+==> 016.rb 27 <==
+[
+  ENV['X'],
+  ENV['Y']
+]
+
+==> 017.rb 39 <==
+{
+  ENV['X'] => :x,
+  ENV['Y'] => :y
+}
+
+==> 018.rb 33 <==
+{
+  x: ENV['X'],
+  y: ENV['Y']
+}
+
+==> 019.rb 14 <==
+"#{ENV['X']}"
+
+==> 020.rb 15 <==
+ENV.fetch('X')
+
+==> 021.rb 30 <==
+ENV.fetch('X', default_value)
+
+==> 022.rb 25 <==
+if ENV['X']
+  puts x
+end
+
+==> 023.rb 29 <==
+unless ENV['X']
+  puts x
+end
+
+==> 024.rb 17 <==
+ENV['X'] ? x : y
+
+==> 025.rb 41 <==
+case ENV['X']
+when ENV['Y']
+  puts x
+end
+
+==> 026.rb 32 <==
+if ENV['X']
+  puts ENV['X']
+end
+
+==> 027.rb 184 <==
+if foo? || ENV["X"]
+  puts ENV.fetch("X")
+end
+if ENV["Y"] || bar?
+  puts ENV.fetch("Y")
+end
+if foo? && ENV["X"]
+  puts ENV.fetch("X")
+end
+if ENV["Y"] && bar?
+  puts ENV.fetch("Y")
+end
+
+==> 028.rb 78 <==
+if ENV['X'] == foo
+  puts ENV['X']
+end
+if ENV['X'] != foo
+  puts ENV['X']
+end
+
+==> 029.rb 177 <==
+if ENV["X"].present?
+  puts ENV["X"]
+end
+if ENV["X"].in?(%w[A B C])
+  puts ENV["X"]
+end
+if %w[A B C].include?(ENV["X"])
+  puts ENV["X"]
+end
+if ENV.key?("X")
+  puts ENV["X"]
+end
+
+==> 030.rb 32 <==
+if ENV['X']
+  puts ENV['Y']
+end
+
+==> 031.rb 36 <==
+if ENV['X'] = x
+  puts ENV['X']
+end
+
+==> 032.rb 36 <==
+if ENV['X'] = x
+  puts ENV['Y']
+end
+
+==> 033.rb 25 <==
+if ENV && x
+  ENV[x]
+end
+
+==> 034.rb 25 <==
+if ENV || x
+  ENV[x]
+end
+
+==> 035.rb 25 <==
+if a == b
+  ENV['X']
+end
+
+==> 036.rb 35 <==
+if a || b && c
+  puts ENV['X']
+end
+
+==> 037.rb 34 <==
+y || ENV['X']
+
+y || z || ENV['X']
+
+==> 038.rb 34 <==
+ENV['X'] || y
+
+z || ENV['X'] || y
+

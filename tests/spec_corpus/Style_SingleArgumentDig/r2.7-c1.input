@@ -1,0 +1,13 @@
+==> .rubocop.yml 140 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/DigChain:
+  Enabled: true
+
+==> 000.rb 25 <==
+data.dig(var1).dig(var2)
+

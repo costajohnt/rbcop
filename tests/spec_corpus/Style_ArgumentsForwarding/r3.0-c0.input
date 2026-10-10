@@ -1,0 +1,133 @@
+==> .rubocop.yml 315 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Style/ArgumentsForwarding:
+  RedundantRestArgumentNames:
+  - args
+  - arguments
+  RedundantKeywordRestArgumentNames:
+  - kwargs
+  - options
+  - opts
+  RedundantBlockArgumentNames:
+  - blk
+  - block
+  - proc
+
+==> 000.rb 34 <==
+def foo(&block)
+  bar(&block)
+end
+
+==> 001.rb 151 <==
+def method_missing(m, *args, **kwargs, &block)
+  if @template.respond_to?(m)
+    @template.send(m, *args, **kwargs, &block)
+  else
+    super
+  end
+end
+
+==> 002.rb 89 <==
+def method_missing(m, *args, **kwargs, &block)
+  obj.foo(m, *args, **kwargs, &block)
+end
+
+==> 003.rb 87 <==
+def method_missing(m, *args, **kwargs, &block)
+  super(m, *args, **kwargs, &block)
+end
+
+==> 004.rb 74 <==
+def foo(m, *args, **kwargs, &block)
+  bar(m, *args, **kwargs, &block)
+end
+
+==> 005.rb 104 <==
+def self.get(*args, **kwargs, &block)
+  CanvasHttp.request(Net::HTTP::Get, *args, **kwargs, &block)
+end
+
+==> 006.rb 54 <==
+def foo(m, *args, &block)
+  bar(*args, m, &block)
+end
+
+==> 007.rb 68 <==
+def foo(first:, **kwargs, &block)
+  forwarded(**kwargs, &block)
+end
+
+==> 008.rb 82 <==
+def foo(first:, **kwargs, &block)
+  forwarded(first: first, **kwargs, &block)
+end
+
+==> 009.rb 72 <==
+def foo(first: nil, **kwargs, &block)
+  forwarded(**kwargs, &block)
+end
+
+==> 010.rb 86 <==
+def foo(first: nil, **kwargs, &block)
+  forwarded(first: first, **kwargs, &block)
+end
+
+==> 011.rb 74 <==
+def foo(m, *args, **kwargs, &block)
+  bar(*args, m, **kwargs, &block)
+end
+
+==> 012.rb 133 <==
+def foo(m, *args, **kwargs, &block)
+  baz(m, *args, **kwargs, &block)
+
+  if something?
+    baz(m, *args, **kwargs, &block)
+  end
+end
+
+==> 013.rb 89 <==
+def foo(m, *args, **kwargs, &block)
+  bar(m, *args, extra: :kwarg, **kwargs, &block)
+end
+
+==> 014.rb 89 <==
+def foo(m, *args, **kwargs, &block)
+  bar(m, *args, **kwargs, extra: :kwarg, &block)
+end
+
+==> 015.rb 51 <==
+def foo(x, *args, &block)
+  bar(*args, &block)
+end
+
+==> 016.rb 65 <==
+def foo(x, y = 42, *args, &block)
+  bar(x, y, *args, &block)
+end
+
+==> 017.rb 65 <==
+def post(*args, &block)
+  future_on(executor, *args, &block)
+end
+
+==> 018.rb 54 <==
+def foo(**kwargs, &block)
+  baz(**kwargs, &block)
+end
+
+==> 019.rb 60 <==
+def foo(x, **kwargs, &block)
+  baz(x, **kwargs, &block)
+end
+
+==> 020.rb 92 <==
+def foo(**kwargs, &block)
+  bar(baz, 'qux', quux&.corge, @grault, 42, **kwargs, &block)
+end
+

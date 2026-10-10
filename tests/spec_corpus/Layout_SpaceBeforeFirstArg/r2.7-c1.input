@@ -1,0 +1,17 @@
+==> .rubocop.yml 163 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/SpaceBeforeFirstArg:
+  AllowForAlignment: false
+
+==> 000.rb 236 <==
+form.inline_input   :full_name,     as: :string
+form.disabled_input :password,      as: :passwd
+form.masked_input   :zip_code,      as: :string
+form.masked_input   :email_address, as: :email
+form.masked_input   :phone_number,  as: :tel
+

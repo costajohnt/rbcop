@@ -1,0 +1,13 @@
+==> .rubocop.yml 172 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/MethodCallWithArgsParentheses:
+  AllowedMethods:
+  - puts
+
+==> 000.rb 10 <==
+puts :test

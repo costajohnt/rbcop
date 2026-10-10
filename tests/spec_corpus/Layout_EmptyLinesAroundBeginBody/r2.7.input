@@ -1,0 +1,99 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 17 <==
+begin
+
+  foo
+end
+
+==> 001.rb 30 <==
+begin
+  foo
+ensure
+  bar
+
+end
+
+==> 002.rb 17 <==
+begin
+  foo
+
+end
+
+==> 003.rb 35 <==
+def bar
+  begin
+
+    foo
+  end
+end
+
+==> 004.rb 35 <==
+def bar
+  begin
+    foo
+
+  end
+end
+
+==> 005.rb 30 <==
+begin
+
+  foo
+rescue
+  bar
+end
+
+==> 006.rb 30 <==
+begin
+  foo
+rescue
+  bar
+
+end
+
+==> 007.rb 41 <==
+begin
+  foo
+rescue
+  bar
+else
+  baz
+
+end
+
+==> 008.rb 174 <==
+begin
+
+  do_something1
+rescue RuntimeError
+  do_something2
+rescue ArgumentError => ex
+  do_something3
+rescue
+  do_something3
+else
+  do_something4
+ensure
+  do_something4
+
+end
+
+==> 009.rb 16 <==
+begin
+  foo
+end
+
+==> 010.rb 34 <==
+def foo
+  begin
+    bar
+  end
+end
+

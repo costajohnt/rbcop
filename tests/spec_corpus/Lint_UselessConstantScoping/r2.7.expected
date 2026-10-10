@@ -1,0 +1,20 @@
+==> offenses exit=1 784 <==
+000.rb:3:3: W: Lint/UselessConstantScoping: Useless `private` access modifier for constant scope.
+002.rb:6:3: W: Lint/UselessConstantScoping: Useless `private` access modifier for constant scope.
+004.rb:6:3: W: Lint/UselessConstantScoping: Useless `private` access modifier for constant scope.
+005.rb:4:3: W: Lint/UselessConstantScoping: Useless `private` access modifier for constant scope.
+006.rb:4:3: W: Lint/UselessConstantScoping: Useless `private` access modifier for constant scope.
+007.rb:3:3: W: Lint/UselessConstantScoping: Useless `private` access modifier for constant scope.
+009.rb:4:5: W: Lint/UselessConstantScoping: Useless `private` access modifier for constant scope.
+026.rb:7:3: W: Lint/UselessConstantScoping: Useless `private` access modifier for constant scope.
+
+==> autocorrect exit=1 784 <==
+000.rb:3:3: W: Lint/UselessConstantScoping: Useless `private` access modifier for constant scope.
+002.rb:6:3: W: Lint/UselessConstantScoping: Useless `private` access modifier for constant scope.
+004.rb:6:3: W: Lint/UselessConstantScoping: Useless `private` access modifier for constant scope.
+005.rb:4:3: W: Lint/UselessConstantScoping: Useless `private` access modifier for constant scope.
+006.rb:4:3: W: Lint/UselessConstantScoping: Useless `private` access modifier for constant scope.
+007.rb:3:3: W: Lint/UselessConstantScoping: Useless `private` access modifier for constant scope.
+009.rb:4:5: W: Lint/UselessConstantScoping: Useless `private` access modifier for constant scope.
+026.rb:7:3: W: Lint/UselessConstantScoping: Useless `private` access modifier for constant scope.
+

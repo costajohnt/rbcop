@@ -1,0 +1,237 @@
+==> .rubocop.yml 162 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Metrics/ModuleLength:
+  Max: 5
+  CountComments: false
+
+==> 000.rb 64 <==
+module Test
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 001.rb 56 <==
+module Test
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+end
+
+==> 002.rb 48 <==
+module Test
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+end
+
+==> 003.rb 58 <==
+module Test
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+
+
+  a = 7
+end
+
+==> 004.rb 16 <==
+module Test
+end
+
+==> 005.rb 213 <==
+module NamespaceModule
+  module TestOne
+    a = 1
+    a = 2
+    a = 3
+    a = 4
+    a = 5
+  end
+  module TestTwo
+    a = 1
+    a = 2
+    a = 3
+    a = 4
+    a = 5
+  end
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+end
+
+==> 006.rb 221 <==
+module NamespaceModule
+  module TestOne
+    a = 1
+    a = 2
+    a = 3
+    a = 4
+    a = 5
+  end
+  module TestTwo
+    a = 1
+    a = 2
+    a = 3
+    a = 4
+    a = 5
+  end
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 007.rb 211 <==
+module NamespaceModule
+  class TestOne
+    a = 1
+    a = 2
+    a = 3
+    a = 4
+    a = 5
+  end
+  class TestTwo
+    a = 1
+    a = 2
+    a = 3
+    a = 4
+    a = 5
+  end
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+end
+
+==> 008.rb 98 <==
+module Test
+  class << self
+    a = 1
+    a = 2
+    a = 3
+    a = 4
+    a = 5
+    a = 6
+  end
+end
+
+==> 009.rb 147 <==
+module NamespaceModule
+  class << self
+    a = 1
+    a = 2
+    a = 3
+    a = 4
+    a = 5
+  end
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 010.rb 219 <==
+module NamespaceModule
+  class TestOne
+    a = 1
+    a = 2
+    a = 3
+    a = 4
+    a = 5
+  end
+  class TestTwo
+    a = 1
+    a = 2
+    a = 3
+    a = 4
+    a = 5
+  end
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 011.rb 66 <==
+module Test
+  a = 1
+  #a = 2
+  a = 3
+  #a = 4
+  a = 5
+  a = 6
+end
+
+==> 012.rb 63 <==
+module Test
+  a = 1
+  a = [
+    2,
+    3,
+    4,
+    5
+  ]
+end
+
+==> 013.rb 72 <==
+Foo = Module.new do
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 014.rb 74 <==
+Foo = ::Module.new do
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 015.rb 72 <==
+Foo = Module.new do
+  a(_1)
+  b(_1)
+  c(_1)
+  d(_1)
+  e(_1)
+  f(_1)
+end
+
+==> 016.rb 74 <==
+Foo = ::Module.new do
+  a(_1)
+  b(_1)
+  c(_1)
+  d(_1)
+  e(_1)
+  f(_1)
+end
+

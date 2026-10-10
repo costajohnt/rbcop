@@ -1,0 +1,42 @@
+==> .rubocop.yml 371 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+Style/HashSyntax:
+  EnforcedStyle: ruby19
+  SupportedStyles:
+  - ruby19
+  - hash_rockets
+  EnforcedShorthandSyntax: always
+  SupportedShorthandSyntax:
+  - always
+  - never
+  UseHashRocketsWithSymbolValues: false
+  PreferHashRocketsForNonAlnumEndingSymbols: false
+
+==> 000.rb 26 <==
+if foo bar: bar
+  baz
+end
+
+==> 001.rb 30 <==
+unless foo bar: bar
+  baz
+end
+
+==> 002.rb 29 <==
+while foo bar: bar
+  baz
+end
+
+==> 003.rb 29 <==
+until foo bar: bar
+  baz
+end
+
+==> 004.rb 20 <==
+baz if foo bar: bar
+

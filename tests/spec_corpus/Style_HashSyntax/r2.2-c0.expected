@@ -1,0 +1,9 @@
+==> offenses exit=1 81 <==
+000.rb:1:7: C: [Correctable] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
+
+==> autocorrect exit=0 79 <==
+000.rb:1:7: C: [Corrected] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
+
+==> corrected/000.rb 20 <==
+x = { "string": 0 }
+

@@ -1,0 +1,63 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/TernaryParentheses:
+  EnforcedStyle: require_parentheses
+
+==> 000.rb 19 <==
+foo = bar? ? a : b
+
+==> 001.rb 20 <==
+foo = yield ? a : b
+
+==> 002.rb 24 <==
+foo = bar[:baz] ? a : b
+
+==> 003.rb 25 <==
+foo = 1 + 1 == 2 ? a : b
+
+==> 004.rb 25 <==
+foo = bar && baz ? a : b
+
+==> 005.rb 27 <==
+foo = foo1 == foo2 ? a : b
+
+==> 006.rb 23 <==
+foo = bar.baz? ? a : b
+
+==> 007.rb 34 <==
+foo = bar && (baz || bar) ? a : b
+
+==> 008.rb 25 <==
+foo = bar or baz ? a : b
+
+==> 009.rb 16 <==
+not bar ? a : b
+
+==> 010.rb 28 <==
+foo = defined?(bar) ? a : b
+
+==> 011.rb 32 <==
+foo = defined?(bar.baz) ? a : b
+
+==> 012.rb 32 <==
+foo = defined?(Bar.baz) ? a : b
+
+==> 013.rb 33 <==
+foo = defined?(Bar::BAZ) ? a : b
+
+==> 014.rb 24 <==
+foo = bar = baz ? a : b
+
+==> 015.rb 35 <==
+foo = bar = baz = find_baz ? a : b
+
+==> 016.rb 29 <==
+foo = bar = baz == 1 ? a : b
+
+==> 017.rb 36 <==
+foo = (bar = baz = find_baz) ? a : b

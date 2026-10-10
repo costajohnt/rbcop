@@ -1,0 +1,49 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 23 <==
+hash.fetch(:key) { 5 }
+
+==> 001.rb 24 <==
+hash&.fetch(:key) { 5 }
+
+==> 002.rb 25 <==
+hash.fetch(:key) { 2.5 }
+
+==> 003.rb 28 <==
+hash.fetch(:key) { :value }
+
+==> 004.rb 26 <==
+hash.fetch(:key) { 2.0r }
+
+==> 005.rb 24 <==
+hash.fetch(:key) { 1i }
+
+==> 006.rb 20 <==
+hash.fetch(:key) {}
+
+==> 007.rb 30 <==
+hash.fetch(:key) { CONSTANT }
+
+==> 008.rb 59 <==
+# frozen_string_literal: true
+hash.fetch(:key) { 'value' }
+
+==> 009.rb 29 <==
+hash.fetch(:key) { 'value' }
+
+==> 010.rb 25 <==
+hash.fetch(:key, :value)
+
+==> 011.rb 38 <==
+hash.fetch(:key) { :"value_#{value}" }
+==> 012.rb 39 <==
+hash.fetch(:key) { |k| "missing-#{k}" }
+==> 013.rb 35 <==
+Rails.cache.fetch(:key) { :value }
+

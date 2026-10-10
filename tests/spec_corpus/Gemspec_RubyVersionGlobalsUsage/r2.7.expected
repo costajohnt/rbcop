@@ -1,0 +1,12 @@
+==> offenses exit=1 390 <==
+000.gemspec:2:3: W: Gemspec/RubyVersionGlobalsUsage: Do not use `RUBY_VERSION` in gemspec file.
+001.gemspec:2:3: W: Gemspec/RubyVersionGlobalsUsage: Do not use `::RUBY_VERSION` in gemspec file.
+002.gemspec:2:3: W: Gemspec/RubyVersionGlobalsUsage: Do not use `Ruby::VERSION` in gemspec file.
+003.gemspec:2:3: W: Gemspec/RubyVersionGlobalsUsage: Do not use `::Ruby::VERSION` in gemspec file.
+
+==> autocorrect exit=1 390 <==
+000.gemspec:2:3: W: Gemspec/RubyVersionGlobalsUsage: Do not use `RUBY_VERSION` in gemspec file.
+001.gemspec:2:3: W: Gemspec/RubyVersionGlobalsUsage: Do not use `::RUBY_VERSION` in gemspec file.
+002.gemspec:2:3: W: Gemspec/RubyVersionGlobalsUsage: Do not use `Ruby::VERSION` in gemspec file.
+003.gemspec:2:3: W: Gemspec/RubyVersionGlobalsUsage: Do not use `::Ruby::VERSION` in gemspec file.
+

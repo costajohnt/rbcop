@@ -1,0 +1,165 @@
+==> .rubocop.yml 157 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/AccessorGrouping:
+  EnforcedStyle: grouped
+
+==> 000.rb 122 <==
+class Foo
+  attr_reader :bar1
+  attr_reader :bar2
+  attr_accessor :quux
+  attr_reader :bar3, :bar4
+  other_macro :zoo
+end
+
+==> 001.rb 216 <==
+class Foo
+  attr_reader :bar1
+  attr_reader :bar2
+
+  protected
+  attr_accessor :quux
+
+  private
+  attr_reader :baz1, :baz2
+  attr_writer :baz3
+  attr_reader :baz4
+
+  public
+  attr_reader :bar3
+  other_macro :zoo
+end
+
+==> 002.rb 167 <==
+class Foo
+  attr_reader :bar
+
+  class << self
+    attr_reader :baz1, :baz2
+    attr_reader :baz3
+
+    private
+
+    attr_reader :quux1
+    attr_reader :quux2
+  end
+end
+
+==> 003.rb 39 <==
+class Foo
+  attr_reader :bar, :baz
+end
+
+==> 004.rb 94 <==
+class Foo
+  # @return [String] value of foo
+  attr_reader :one, :two
+
+  attr_reader :four
+end
+
+==> 005.rb 169 <==
+class Foo
+  extend T::Sig
+
+  annotation_method :one
+  attr_reader :one
+
+  annotation_method :two
+  attr_reader :two
+
+  sig { returns(Integer) }
+  attr_reader :three
+end
+
+==> 006.rb 105 <==
+class Foo
+  extend T::Sig
+
+  sig { returns(Integer) }
+  attr_reader :one
+
+  attr_reader :two, :three
+end
+
+==> 007.rb 126 <==
+class Foo
+  extend T::Sig
+
+  sig { returns(Integer) }
+  attr_reader :one
+
+  attr_reader :two, :three
+
+  attr_reader :four
+end
+
+==> 008.rb 85 <==
+class Foo
+  def foo
+  end
+  attr_reader :one
+
+  def bar
+  end
+  attr_reader :two
+end
+
+==> 009.rb 171 <==
+class Foo
+  # @return [String] value of foo
+  attr_reader :one, :two
+
+  # [String] Some bar value return
+  attr_reader :three
+
+  attr_reader :four
+  attr_reader :five
+end
+
+==> 010.rb 71 <==
+class Foo
+  attr_reader :one
+  attr_reader :two
+  attr_reader :one
+end
+
+==> 011.rb 39 <==
+class Foo
+  attr_reader :one, :one
+end
+
+==> 012.rb 71 <==
+class Foo
+  attr_reader :one #: String
+
+  attr_reader :two, :three
+end
+
+==> 013.rb 80 <==
+class Foo
+  attr_reader :one # comment #: String
+  attr_reader :two, :three
+end
+
+==> 014.rb 99 <==
+class Foo
+  attr_reader :one
+  OTHER_ATTRS = %i[two three].freeze
+
+  attr_reader(*OTHER_ATTRS)
+end
+
+==> 015.rb 90 <==
+class Foo
+  attr_reader :one
+  attr_reader :bar
+
+  OTHER_ATTRS = %i[two three].freeze
+end
+

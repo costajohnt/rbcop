@@ -1,0 +1,97 @@
+==> .rubocop.yml 174 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+==> 000.rb 110 <==
+create :transaction, :closed,
+       account:     account,
+       open_price:  1.29,
+       close_price: 1.30
+
+==> 001.rb 89 <==
+create :transaction, :closed,
+account:     account,
+open_price:  1.29,
+close_price: 1.30
+
+==> 002.rb 51 <==
+validates :foo,
+          bar: 1,
+       bazqux: 2
+
+==> 003.rb 22 <==
+func(:foo,
+     :bar)
+
+==> 004.rb 128 <==
+func1(foo: 'foo',
+      bar: 'bar',
+      baz: 'baz')
+func2(do_something,
+      foo: 'foo',
+      bar: 'bar',
+      baz: 'baz')
+
+==> 005.rb 93 <==
+func(do_something, foo: 'foo',
+                   bar: 'bar',
+                   baz: 'baz')
+
+==> 006.rb 50 <==
+something
+  .method_name(
+    a,
+    b,
+    c
+  )
+
+==> 007.rb 56 <==
+something
+  .method_name(
+      a,
+      b,
+      c
+  )
+
+==> 008.rb 39 <==
+something
+  .(
+    a,
+    b,
+    c
+  )
+
+==> 009.rb 47 <==
+callable[
+      foo,
+    bar,
+           baz
+]
+
+==> 010.rb 46 <==
+assigned_value = match(
+    a,
+    b,
+    c
+)
+
+==> 011.rb 41 <==
+assigned_value = match(a,
+    b,
+    c
+)
+
+==> 012.rb 55 <==
+do_something(
+  {
+    foo: 'bar',
+    baz: 'qux'
+  }
+)
+

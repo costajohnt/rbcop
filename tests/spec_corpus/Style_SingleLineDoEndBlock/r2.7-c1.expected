@@ -1,0 +1,11 @@
+==> offenses exit=1 94 <==
+000.rb:1:1: C: [Correctable] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+
+==> autocorrect exit=0 92 <==
+000.rb:1:1: C: [Corrected] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+
+==> corrected/000.rb 17 <==
+foo do
+ bar 
+end
+

@@ -1,0 +1,130 @@
+==> .rubocop.yml 159 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+Naming/BlockForwarding:
+  EnforcedStyle: anonymous
+
+==> 000.rb 53 <==
+def foo(&block)
+  bar(&block)
+  baz(qux, &block)
+end
+
+==> 001.rb 68 <==
+def self.foo(&block)
+  self.bar(&block)
+  self.baz(qux, &block)
+end
+
+==> 002.rb 42 <==
+def foo(&block)
+  bar(&:do_something)
+end
+
+==> 003.rb 28 <==
+def foo(&block)
+  yield
+end
+
+==> 004.rb 20 <==
+def foo(&block)
+end
+
+==> 005.rb 55 <==
+def foo arg, &block
+  bar &block
+  baz qux, &block
+end
+
+==> 006.rb 60 <==
+def foo(bar, &block)
+  delegator.foo(&bar).each(&block)
+end
+
+==> 007.rb 24 <==
+def foo(&)
+  bar(&)
+end
+
+==> 008.rb 15 <==
+def foo(&)
+end
+
+==> 009.rb 77 <==
+def foo(&block)
+  bar(&block) if block
+end
+
+def foo(&block)
+  block.call
+end
+
+==> 010.rb 28 <==
+def foo(&block)
+  block
+end
+
+==> 011.rb 24 <==
+def foo(arg1, arg2)
+end
+
+==> 012.rb 38 <==
+def foo(k:, &block)
+  bar(&block)
+end
+
+==> 013.rb 40 <==
+def foo(k: v, &block)
+  bar(&block)
+end
+
+==> 014.rb 60 <==
+def foo(&block)
+  block_method do
+    bar(&block)
+  end
+end
+
+==> 015.rb 72 <==
+def foo(&block)
+  block_method do
+    bar(&block)
+    baz(_1)
+  end
+end
+
+==> 016.rb 74 <==
+def foo(&block)
+  block_method do
+    bar(&block)
+  end
+  baz(&block)
+end
+
+==> 017.rb 74 <==
+def foo(&block)
+  bar(&block)
+  block_method do
+    baz(&block)
+  end
+end
+
+==> 018.rb 12 <==
+def foo
+end
+
+==> 019.rb 139 <==
+def example(&block)
+  block ||= -> { :foo }
+  bar(&block)
+end
+
+def example(&block)
+  block = proc {} unless block_given?
+  bar(&block)
+end
+

@@ -1,0 +1,9 @@
+==> offenses exit=1 112 <==
+000.rb:1:6: C: [Correctable] Style/RedundantArgument: Argument 2 is redundant because it is implied by default.
+
+==> autocorrect exit=0 110 <==
+000.rb:1:6: C: [Corrected] Style/RedundantArgument: Argument 2 is redundant because it is implied by default.
+
+==> corrected/000.rb 6 <==
+A.foo
+

@@ -1,0 +1,34 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 4 <==
+%i[]
+==> 001.rb 15 <==
+%i[a b c d xyz]
+==> 002.rb 32 <==
+%i[% %i %I %q %Q %r %s %w %W %x]
+==> 003.rb 17 <==
+%[a b %[c d] xyz]
+==> 004.rb 18 <==
+%[a b %i[c d] xyz]
+==> 005.rb 9 <==
+%w[1%+ 2]
+==> 006.rb 20 <==
+%i[a b %i[c d] xyz]
+
+==> 007.rb 24 <==
+%i[a b %i[c d] %i[xyz]]
+
+==> 008.rb 24 <==
+%i[a %i[b %i[c d]] xyz]
+
+==> 009.rb 8 <==
+%W[\xff]
+==> 010.rb 14 <==
+%W[\xff %W[]]
+

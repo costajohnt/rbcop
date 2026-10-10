@@ -1,0 +1,28 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 71 <==
+Dir.glob(Rails.root.join('test', '*.rb')).sort.each(&method(:require))
+
+==> 001.rb 73 <==
+::Dir.glob(Rails.root.join('test', '*.rb')).sort.each(&method(:require))
+
+==> 002.rb 45 <==
+Dir['./lib/**/*.rb'].sort.each do |file|
+end
+
+==> 003.rb 50 <==
+Dir['./lib/**/*.rb'].sort.each(&method(:require))
+
+==> 004.rb 40 <==
+Dir['./lib/**/*.rb'].each do |file|
+end
+
+==> 005.rb 18 <==
+sort.do_something
+

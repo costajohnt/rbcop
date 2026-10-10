@@ -1,0 +1,40 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 27 <==
+{ key: 'value' }.dig(:key)
+
+==> 001.rb 28 <==
+{ key: 'value' }&.dig(:key)
+
+==> 002.rb 46 <==
+{ key1: { key2: 'value' } }.dig(:key1, :key2)
+
+==> 003.rb 48 <==
+{ key1: { key2: 'value' } }.dig(*%i[key1 key2])
+
+==> 004.rb 45 <==
+def foo(...)
+  { key: 'value' }.dig(...)
+end
+
+==> 005.rb 14 <==
+data.dig(var)
+
+==> 006.rb 21 <==
+data.dig(var1, var2)
+
+==> 007.rb 28 <==
+data.dig(var1)[0].dig(var2)
+
+==> 008.rb 24 <==
+data.dig(*[var1, var2])
+
+==> 009.rb 10 <==
+dig(:key)
+

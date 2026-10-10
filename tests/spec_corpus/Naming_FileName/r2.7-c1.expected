@@ -1,0 +1,6 @@
+==> offenses exit=1 77 <==
+001/z.rb:1:1: C: Naming/FileName: `z.rb` should match `(?-mix:\A[aeiou]\z)`.
+
+==> autocorrect exit=1 77 <==
+001/z.rb:1:1: C: Naming/FileName: `z.rb` should match `(?-mix:\A[aeiou]\z)`.
+

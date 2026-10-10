@@ -1,0 +1,54 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.5
+
+==> 000.rb 64 <==
+do_something do
+  begin
+    foo
+  rescue => e
+    bar
+  end
+end
+
+==> 001.rb 61 <==
+do_something {
+  begin
+    foo
+  rescue => e
+    bar
+  end
+}
+
+==> 002.rb 77 <==
+do_something do
+  something
+  begin
+    ala
+  rescue => e
+    bala
+  end
+end
+
+==> 003.rb 54 <==
+-> do
+  begin
+    foo
+  rescue => e
+    bar
+  end
+end
+
+==> 004.rb 70 <==
+def a_method
+  super do |arg|
+    foo
+  rescue => e
+    bar
+  end
+end
+

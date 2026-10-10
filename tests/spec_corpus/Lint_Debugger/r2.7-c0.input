@@ -1,0 +1,48 @@
+==> .rubocop.yml 162 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/Debugger:
+  DebuggerMethods:
+  - custom_debugger
+
+==> 000.rb 7 <==
+byebug
+
+==> 001.rb 22 <==
+x.y = custom_debugger
+
+==> 002.rb 16 <==
+custom_debugger
+
+==> 003.rb 39 <==
+x.y = do_something { custom_debugger }
+
+==> 004.rb 52 <==
+x.y = do_something do
+  z(_1)
+  custom_debugger
+end
+
+==> 005.rb 29 <==
+x.y = -> { custom_debugger }
+
+==> 006.rb 33 <==
+x.y = lambda { custom_debugger }
+
+==> 007.rb 31 <==
+x.y = proc { custom_debugger }
+
+==> 008.rb 35 <==
+x.y = Proc.new { custom_debugger }
+
+==> 009.rb 50 <==
+do_something(
+  begin
+    custom_debugger
+  end
+)
+

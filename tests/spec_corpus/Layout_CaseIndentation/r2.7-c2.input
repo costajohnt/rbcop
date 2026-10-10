@@ -1,0 +1,28 @@
+==> .rubocop.yml 198 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/CaseIndentation:
+  EnforcedStyle: case
+  IndentOneStep: true
+  IndentationWidth: 5
+
+==> 000.rb 129 <==
+output = case variable
+              when 'value1'
+             'output1'
+              else
+             'output2'
+         end
+
+==> 001.rb 126 <==
+output = case variable
+              in pattern
+             'output1'
+              else
+             'output2'
+         end
+

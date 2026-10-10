@@ -1,0 +1,8 @@
+==> offenses exit=1 200 <==
+004.rb:5:5: W: Lint/DuplicateMethods: Method `Object#foo` is defined at both 004.rb:2 and 004.rb:5.
+005.rb:5:5: W: Lint/DuplicateMethods: Method `Object.foo` is defined at both 005.rb:2 and 005.rb:5.
+
+==> autocorrect exit=1 200 <==
+004.rb:5:5: W: Lint/DuplicateMethods: Method `Object#foo` is defined at both 004.rb:2 and 004.rb:5.
+005.rb:5:5: W: Lint/DuplicateMethods: Method `Object.foo` is defined at both 005.rb:2 and 005.rb:5.
+

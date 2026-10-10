@@ -1,0 +1,17 @@
+==> .rubocop.yml 251 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/WordArray:
+  MinSize: 0
+  WordRegex: !ruby/regexp /\A[\w@.]+\z/
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: "()"
+
+==> 000.rb 35 <==
+['a@example.com', 'b@example.com']
+

@@ -1,0 +1,21 @@
+==> .rubocop.yml 330 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/FormatStringToken:
+  EnforcedStyle: :unannotated
+  SupportedStyles:
+  - :annotated
+  - :template
+  - :unannotated
+  MaxUnannotatedPlaceholdersAllowed: 0
+  AllowedMethods: []
+  AllowedPatterns: []
+  Mode: :aggressive
+
+==> 000.rb 9 <==
+"%{foo}"
+

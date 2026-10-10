@@ -1,0 +1,15 @@
+==> .rubocop.yml 157 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+Style/HashConversion:
+  AllowSplatArgument: true
+
+==> 000.rb 25 <==
+def foo(*)
+  Hash[*]
+end
+

@@ -1,0 +1,20 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 50 <==
+Data.define do
+  protected
+  do_something(it)
+end
+
+==> 001.rb 48 <==
+Data.define do
+  private
+  do_something(it)
+end
+

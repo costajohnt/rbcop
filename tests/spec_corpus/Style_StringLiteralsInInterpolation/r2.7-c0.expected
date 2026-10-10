@@ -1,0 +1,28 @@
+==> offenses exit=1 591 <==
+000.rb:1:4: C: [Correctable] Style/StringLiteralsInInterpolation: Prefer single-quoted strings inside interpolations.
+001.rb:1:5: C: [Correctable] Style/StringLiteralsInInterpolation: Prefer single-quoted strings inside interpolations.
+002.rb:2:3: C: [Correctable] Style/StringLiteralsInInterpolation: Prefer single-quoted strings inside interpolations.
+003.rb:1:7: C: [Correctable] Style/StringLiteralsInInterpolation: Prefer single-quoted strings inside interpolations.
+003.rb:1:17: C: [Correctable] Style/StringLiteralsInInterpolation: Prefer single-quoted strings inside interpolations.
+
+==> autocorrect exit=0 581 <==
+000.rb:1:4: C: [Corrected] Style/StringLiteralsInInterpolation: Prefer single-quoted strings inside interpolations.
+001.rb:1:5: C: [Corrected] Style/StringLiteralsInInterpolation: Prefer single-quoted strings inside interpolations.
+002.rb:2:3: C: [Corrected] Style/StringLiteralsInInterpolation: Prefer single-quoted strings inside interpolations.
+003.rb:1:7: C: [Corrected] Style/StringLiteralsInInterpolation: Prefer single-quoted strings inside interpolations.
+003.rb:1:17: C: [Corrected] Style/StringLiteralsInInterpolation: Prefer single-quoted strings inside interpolations.
+
+==> corrected/000.rb 9 <==
+"#{'A'}"
+
+==> corrected/001.rb 10 <==
+:"#{'A'}"
+
+==> corrected/002.rb 19 <==
+<<RUBY
+#{'A'}
+RUBY
+
+==> corrected/003.rb 28 <==
+/foo#{'sar'.sub('s', 'b')}/
+

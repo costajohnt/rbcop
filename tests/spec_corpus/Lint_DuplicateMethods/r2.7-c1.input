@@ -1,0 +1,49 @@
+==> .rubocop.yml 173 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/DuplicateMethods:
+  AllowedCrossFilePaths:
+  - scripts/**/*
+
+==> 000/scripts/import.rb 52 <==
+class A
+  def some_method
+    implement 1
+  end
+end
+
+==> 001/app/model.rb 52 <==
+class A
+  def some_method
+    implement 2
+  end
+end
+
+==> 002/app/model.rb 52 <==
+class A
+  def some_method
+    implement 1
+  end
+end
+
+==> 003/app/other.rb 52 <==
+class A
+  def some_method
+    implement 2
+  end
+end
+
+==> 004/scripts/import.rb 92 <==
+class A
+  def some_method
+    implement 1
+  end
+  def some_method
+    implement 2
+  end
+end
+

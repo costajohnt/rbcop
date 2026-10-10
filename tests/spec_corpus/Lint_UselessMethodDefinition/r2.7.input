@@ -1,0 +1,143 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 49 <==
+class Foo
+  def initialize(arg1, arg2)
+  end
+end
+
+==> 001.rb 37 <==
+def initialize(arg)
+  # Comment.
+end
+
+==> 002.rb 47 <==
+def initialize(arg)
+  super
+  do_something
+end
+
+==> 003.rb 24 <==
+def self.initialize
+end
+
+==> 004.rb 588 <==
+class Foo
+  def useful_instance_method
+    do_something
+  end
+
+  def instance_method
+    super
+  end
+
+  def instance_method_with_args(arg)
+    super(arg)
+  end
+
+  def self.useful_class_method
+    do_something
+  end
+
+  def self.class_method
+    super
+  end
+
+  def self.class_method_with_args(arg)
+    super(arg)
+  end
+
+  class << self
+    def self.other_useful_class_method
+      do_something
+    end
+
+    def other_class_method
+      super
+    end
+
+    def other_class_method_with_parens
+      super()
+    end
+
+    def other_class_method_with_args(arg)
+      super(arg)
+    end
+  end
+end
+
+==> 005.rb 30 <==
+public def method
+  super
+end
+
+==> 006.rb 33 <==
+protected def method
+  super
+end
+
+==> 007.rb 31 <==
+private def method
+  super
+end
+
+==> 008.rb 39 <==
+module_function def method
+  super
+end
+
+==> 009.rb 38 <==
+def method
+  super
+  do_something
+end
+
+==> 010.rb 116 <==
+def method1(foo)
+  super(bar)
+end
+
+def method2(foo, bar)
+  super(bar, foo)
+end
+
+def method3(foo, bar)
+  super()
+end
+
+==> 011.rb 30 <==
+def method(*args)
+  super
+end
+
+==> 012.rb 30 <==
+def method(x = 1)
+  super
+end
+
+==> 013.rb 29 <==
+def method(x: 1)
+  super
+end
+
+==> 014.rb 34 <==
+def method(**options)
+  super
+end
+
+==> 015.rb 36 <==
+do_something def method
+  super
+end
+
+==> 016.rb 37 <==
+def non_constructor
+  # Comment.
+end
+

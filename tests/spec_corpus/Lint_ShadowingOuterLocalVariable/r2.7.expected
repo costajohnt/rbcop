@@ -1,0 +1,32 @@
+==> offenses exit=1 1260 <==
+000.rb:4:15: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+001.rb:4:15: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+002.rb:4:32: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+003.rb:4:18: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+004.rb:6:18: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `var`.
+005.rb:6:18: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `var`.
+006.rb:4:16: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+007.rb:5:18: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+008.rb:6:20: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+009.rb:5:18: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+010.rb:6:18: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+011.rb:5:18: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+012.rb:2:15: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+018.rb:3:16: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+
+==> autocorrect exit=1 1260 <==
+000.rb:4:15: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+001.rb:4:15: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+002.rb:4:32: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+003.rb:4:18: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+004.rb:6:18: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `var`.
+005.rb:6:18: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `var`.
+006.rb:4:16: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+007.rb:5:18: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+008.rb:6:20: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+009.rb:5:18: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+010.rb:6:18: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+011.rb:5:18: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+012.rb:2:15: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+018.rb:3:16: W: Lint/ShadowingOuterLocalVariable: Shadowing outer local variable - `foo`.
+

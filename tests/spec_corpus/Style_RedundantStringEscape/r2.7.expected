@@ -1,0 +1,190 @@
+==> offenses exit=1 3713 <==
+004.rb:1:2: C: [Correctable] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+005.rb:1:2: C: [Correctable] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+006.rb:1:13: C: [Correctable] Style/RedundantStringEscape: Redundant escape of } inside string literal.
+007.rb:1:4: C: [Correctable] Style/RedundantStringEscape: Redundant escape of { inside string literal.
+008.rb:1:2: C: [Correctable] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+009.rb:1:2: C: [Correctable] Style/RedundantStringEscape: Redundant escape of ' inside string literal.
+012.rb:1:2: C: [Correctable] Style/RedundantStringEscape: Redundant escape of ' inside string literal.
+012.rb:2:4: C: [Correctable] Style/RedundantStringEscape: Redundant escape of ' inside string literal.
+015.rb:1:4: C: [Correctable] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+016.rb:1:4: C: [Correctable] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+017.rb:1:15: C: [Correctable] Style/RedundantStringEscape: Redundant escape of } inside string literal.
+018.rb:1:6: C: [Correctable] Style/RedundantStringEscape: Redundant escape of { inside string literal.
+019.rb:1:4: C: [Correctable] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+020.rb:1:4: C: [Correctable] Style/RedundantStringEscape: Redundant escape of ' inside string literal.
+021.rb:1:4: C: [Correctable] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+022.rb:1:4: C: [Correctable] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+023.rb:1:15: C: [Correctable] Style/RedundantStringEscape: Redundant escape of } inside string literal.
+024.rb:1:6: C: [Correctable] Style/RedundantStringEscape: Redundant escape of { inside string literal.
+025.rb:1:4: C: [Correctable] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+026.rb:1:4: C: [Correctable] Style/RedundantStringEscape: Redundant escape of ' inside string literal.
+027.rb:1:3: C: [Correctable] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+028.rb:1:3: C: [Correctable] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+029.rb:1:14: C: [Correctable] Style/RedundantStringEscape: Redundant escape of } inside string literal.
+030.rb:1:5: C: [Correctable] Style/RedundantStringEscape: Redundant escape of { inside string literal.
+031.rb:1:3: C: [Correctable] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+032.rb:1:3: C: [Correctable] Style/RedundantStringEscape: Redundant escape of ' inside string literal.
+034.rb:1:4: C: [Correctable] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+035.rb:1:4: C: [Correctable] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+036.rb:1:15: C: [Correctable] Style/RedundantStringEscape: Redundant escape of } inside string literal.
+037.rb:1:6: C: [Correctable] Style/RedundantStringEscape: Redundant escape of { inside string literal.
+038.rb:1:4: C: [Correctable] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+039.rb:1:4: C: [Correctable] Style/RedundantStringEscape: Redundant escape of ' inside string literal.
+045.rb:2:3: C: [Correctable] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+046.rb:2:3: C: [Correctable] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+047.rb:2:3: C: [Correctable] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+048.rb:2:3: C: [Correctable] Style/RedundantStringEscape: Redundant escape of ' inside string literal.
+
+==> autocorrect exit=0 3641 <==
+004.rb:1:2: C: [Corrected] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+005.rb:1:2: C: [Corrected] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+006.rb:1:13: C: [Corrected] Style/RedundantStringEscape: Redundant escape of } inside string literal.
+007.rb:1:4: C: [Corrected] Style/RedundantStringEscape: Redundant escape of { inside string literal.
+008.rb:1:2: C: [Corrected] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+009.rb:1:2: C: [Corrected] Style/RedundantStringEscape: Redundant escape of ' inside string literal.
+012.rb:1:2: C: [Corrected] Style/RedundantStringEscape: Redundant escape of ' inside string literal.
+012.rb:2:4: C: [Corrected] Style/RedundantStringEscape: Redundant escape of ' inside string literal.
+015.rb:1:4: C: [Corrected] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+016.rb:1:4: C: [Corrected] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+017.rb:1:15: C: [Corrected] Style/RedundantStringEscape: Redundant escape of } inside string literal.
+018.rb:1:6: C: [Corrected] Style/RedundantStringEscape: Redundant escape of { inside string literal.
+019.rb:1:4: C: [Corrected] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+020.rb:1:4: C: [Corrected] Style/RedundantStringEscape: Redundant escape of ' inside string literal.
+021.rb:1:4: C: [Corrected] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+022.rb:1:4: C: [Corrected] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+023.rb:1:15: C: [Corrected] Style/RedundantStringEscape: Redundant escape of } inside string literal.
+024.rb:1:6: C: [Corrected] Style/RedundantStringEscape: Redundant escape of { inside string literal.
+025.rb:1:4: C: [Corrected] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+026.rb:1:4: C: [Corrected] Style/RedundantStringEscape: Redundant escape of ' inside string literal.
+027.rb:1:3: C: [Corrected] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+028.rb:1:3: C: [Corrected] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+029.rb:1:14: C: [Corrected] Style/RedundantStringEscape: Redundant escape of } inside string literal.
+030.rb:1:5: C: [Corrected] Style/RedundantStringEscape: Redundant escape of { inside string literal.
+031.rb:1:3: C: [Corrected] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+032.rb:1:3: C: [Corrected] Style/RedundantStringEscape: Redundant escape of ' inside string literal.
+034.rb:1:4: C: [Corrected] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+035.rb:1:4: C: [Corrected] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+036.rb:1:15: C: [Corrected] Style/RedundantStringEscape: Redundant escape of } inside string literal.
+037.rb:1:6: C: [Corrected] Style/RedundantStringEscape: Redundant escape of { inside string literal.
+038.rb:1:4: C: [Corrected] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+039.rb:1:4: C: [Corrected] Style/RedundantStringEscape: Redundant escape of ' inside string literal.
+045.rb:2:3: C: [Corrected] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+046.rb:2:3: C: [Corrected] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+047.rb:2:3: C: [Corrected] Style/RedundantStringEscape: Redundant escape of # inside string literal.
+048.rb:2:3: C: [Corrected] Style/RedundantStringEscape: Redundant escape of ' inside string literal.
+
+==> corrected/004.rb 15 <==
+"##{whatever}"
+
+==> corrected/005.rb 12 <==
+"#whatever"
+
+==> corrected/006.rb 15 <==
+"#\{whatever}"
+
+==> corrected/007.rb 15 <==
+"\#{whatever}"
+
+==> corrected/008.rb 4 <==
+"#"
+
+==> corrected/009.rb 4 <==
+"'"
+
+==> corrected/012.rb 11 <==
+"'"\
+  "'"
+
+==> corrected/015.rb 17 <==
+%Q(##{whatever})
+
+==> corrected/016.rb 14 <==
+%Q(#whatever)
+
+==> corrected/017.rb 17 <==
+%Q(#\{whatever})
+
+==> corrected/018.rb 17 <==
+%Q(\#{whatever})
+
+==> corrected/019.rb 6 <==
+%Q(#)
+
+==> corrected/020.rb 6 <==
+%Q(')
+
+==> corrected/021.rb 17 <==
+%Q!##{whatever}!
+
+==> corrected/022.rb 14 <==
+%Q!#whatever!
+
+==> corrected/023.rb 17 <==
+%Q!#\{whatever}!
+
+==> corrected/024.rb 17 <==
+%Q!\#{whatever}!
+
+==> corrected/025.rb 6 <==
+%Q!#!
+
+==> corrected/026.rb 6 <==
+%Q!'!
+
+==> corrected/027.rb 16 <==
+%(##{whatever})
+
+==> corrected/028.rb 13 <==
+%(#whatever)
+
+==> corrected/029.rb 16 <==
+%(#\{whatever})
+
+==> corrected/030.rb 16 <==
+%(\#{whatever})
+
+==> corrected/031.rb 5 <==
+%(#)
+
+==> corrected/032.rb 5 <==
+%(')
+
+==> corrected/034.rb 17 <==
+%W[##{whatever}]
+
+==> corrected/035.rb 14 <==
+%W[#whatever]
+
+==> corrected/036.rb 17 <==
+%W[#\{whatever}]
+
+==> corrected/037.rb 17 <==
+%W[\#{whatever}]
+
+==> corrected/038.rb 6 <==
+%W[#]
+
+==> corrected/039.rb 6 <==
+%W[']
+
+==> corrected/045.rb 38 <==
+<<~MYHEREDOC
+  ##{whatever}
+MYHEREDOC
+
+==> corrected/046.rb 35 <==
+<<~MYHEREDOC
+  #whatever
+MYHEREDOC
+
+==> corrected/047.rb 27 <==
+<<~MYHEREDOC
+  #
+MYHEREDOC
+
+==> corrected/048.rb 27 <==
+<<~MYHEREDOC
+  '
+MYHEREDOC
+

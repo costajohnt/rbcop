@@ -1,0 +1,24 @@
+==> offenses exit=1 318 <==
+000.rb:1:22: C: [Correctable] Style/ItBlockParameter: Use `it` block parameter.
+001.rb:2:7: C: [Correctable] Style/ItBlockParameter: Use `it` block parameter.
+001.rb:3:7: C: [Correctable] Style/ItBlockParameter: Use `it` block parameter.
+002.rb:1:31: C: [Correctable] Style/ItBlockParameter: Use `it` block parameter.
+
+==> autocorrect exit=0 310 <==
+000.rb:1:22: C: [Corrected] Style/ItBlockParameter: Use `it` block parameter.
+001.rb:2:7: C: [Corrected] Style/ItBlockParameter: Use `it` block parameter.
+001.rb:3:7: C: [Corrected] Style/ItBlockParameter: Use `it` block parameter.
+002.rb:1:31: C: [Corrected] Style/ItBlockParameter: Use `it` block parameter.
+
+==> corrected/000.rb 27 <==
+block { do_something(it) }
+
+==> corrected/001.rb 33 <==
+block do
+  foo(it)
+  bar(it)
+end
+
+==> corrected/002.rb 36 <==
+foo { bar(_1, _2) }.baz { qux(it) }
+

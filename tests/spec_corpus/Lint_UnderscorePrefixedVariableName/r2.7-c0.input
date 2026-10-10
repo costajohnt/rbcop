@@ -1,0 +1,99 @@
+==> .rubocop.yml 181 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/UnderscorePrefixedVariableName:
+  AllowKeywordBlockArguments: false
+
+==> 000.rb 43 <==
+def some_method
+  _foo = 1
+  puts _foo
+end
+
+==> 001.rb 41 <==
+def some_method
+  foo = 1
+  puts foo
+end
+
+==> 002.rb 42 <==
+def some_method
+  _foo = 1
+  _foo = 2
+end
+
+==> 003.rb 38 <==
+def some_method(_foo)
+  puts _foo
+end
+
+==> 004.rb 34 <==
+1.times do |_foo|
+  puts _foo
+end
+
+==> 005.rb 57 <==
+define_method(:foo) do |_foo: 'default'|
+  puts _foo
+end
+
+==> 006.rb 19 <==
+_foo = 1
+puts _foo
+
+==> 007.rb 35 <==
+_foo = 1
+1.times do
+  _foo = 2
+end
+
+==> 008.rb 34 <==
+/(?<_foo>\w+)/ =~ 'FOO'
+puts _foo
+
+==> 009.rb 32 <==
+def some_method(*_)
+  super
+end
+
+==> 010.rb 41 <==
+def some_method(*_)
+  super
+  puts _
+end
+
+==> 011.rb 44 <==
+def some_method(*_)
+  super(:something)
+end
+
+==> 012.rb 36 <==
+def some_method(*_)
+  super(*_)
+end
+
+==> 013.rb 34 <==
+def some_method(*_)
+  binding
+end
+
+==> 014.rb 43 <==
+def some_method(*_)
+  binding
+  puts _
+end
+
+==> 015.rb 46 <==
+def some_method(*_)
+  binding(:something)
+end
+
+==> 016.rb 38 <==
+def some_method(*_)
+  binding(*_)
+end
+

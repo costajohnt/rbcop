@@ -1,0 +1,29 @@
+==> .rubocop.yml 159 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/FloatDivision:
+  EnforcedStyle: right_coerce
+
+==> 000.rb 11 <==
+a.to_f / b
+
+==> 001.rb 12 <==
+$1.to_f / b
+
+==> 002.rb 30 <==
+Regexp.last_match(1).to_f / b
+
+==> 003.rb 16 <==
+a.to_f / b.to_f
+
+==> 004.rb 31 <==
+(a - b).to_f / (c * 3 * d / 2)
+
+==> 005.rb 8 <==
+to_f / b
+==> 006.rb 10 <==
+a / b.to_f

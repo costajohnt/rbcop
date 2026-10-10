@@ -1,0 +1,31 @@
+==> .rubocop.yml 158 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.3
+Layout/LineLength:
+  Max: 5
+  AllowHeredoc: false
+
+==> 000.rb 23 <==
+<<RUBY2
+12345678
+RUBY2
+
+==> 001.rb 25 <==
+<<'RUBY2'
+12345678
+RUBY2
+
+==> 002.rb 25 <==
+<<"RUBY2"
+12345678
+RUBY2
+
+==> 003.rb 25 <==
+<<`RUBY2`
+12345678
+RUBY2
+

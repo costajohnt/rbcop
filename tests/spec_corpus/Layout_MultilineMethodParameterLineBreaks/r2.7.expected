@@ -1,0 +1,79 @@
+==> offenses exit=1 1525 <==
+003.rb:2:6: C: [Correctable] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+004.rb:2:6: C: [Correctable] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+004.rb:2:11: C: [Correctable] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+005.rb:2:6: C: [Correctable] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+005.rb:2:11: C: [Correctable] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+006.rb:1:14: C: [Correctable] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+007.rb:3:4: C: [Correctable] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+008.rb:1:23: C: [Correctable] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+008.rb:1:28: C: [Correctable] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+010.rb:2:6: C: [Correctable] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+
+==> autocorrect exit=0 1505 <==
+003.rb:2:6: C: [Corrected] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+004.rb:2:6: C: [Corrected] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+004.rb:2:11: C: [Corrected] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+005.rb:2:6: C: [Corrected] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+005.rb:2:11: C: [Corrected] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+006.rb:1:14: C: [Corrected] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+007.rb:3:4: C: [Corrected] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+008.rb:1:23: C: [Corrected] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+008.rb:1:28: C: [Corrected] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+010.rb:2:6: C: [Corrected] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+
+==> corrected/003.rb 34 <==
+def taz(abc,
+foo, 
+bar,
+baz
+)
+end
+
+==> corrected/004.rb 41 <==
+def taz(abc,
+foo, 
+bar, 
+barz,
+baz
+)
+end
+
+==> corrected/005.rb 45 <==
+def taz(abc,
+foo, 
+bar, 
+z: "barz",
+x:
+)
+end
+
+==> corrected/006.rb 43 <==
+def taz(abc, 
+foo = {
+  foo: "edf",
+})
+end
+
+==> corrected/007.rb 44 <==
+def taz(abc = {
+  foo: "edf",
+}, 
+bar:)
+end
+
+==> corrected/008.rb 46 <==
+def do_something(foo, 
+bar, 
+baz,
+  quux)
+end
+
+==> corrected/010.rb 39 <==
+def self.taz(abc,
+foo, 
+bar,
+baz
+)
+end
+

@@ -1,0 +1,14 @@
+==> .rubocop.yml 155 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/NameTypo:
+  AllowedNames:
+  - UserCraetor
+
+==> 000.rb 26 <==
+Services::UserCraetor.new
+

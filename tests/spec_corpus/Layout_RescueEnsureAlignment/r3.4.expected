@@ -1,0 +1,15 @@
+==> offenses exit=1 125 <==
+001.rb:4:1: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 4, 0 is not aligned with `[1, 2, 3].each do` at 2, 2.
+
+==> autocorrect exit=0 123 <==
+001.rb:4:1: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 4, 0 is not aligned with `[1, 2, 3].each do` at 2, 2.
+
+==> corrected/001.rb 96 <==
+def foo
+  [1, 2, 3].each do
+    it.to_s
+  rescue StandardError => _exception
+    next
+  end
+end
+

@@ -1,0 +1,37 @@
+==> offenses exit=1 522 <==
+008.rb:2:13: C: [Correctable] Layout/FirstParameterIndentation: Use 2 spaces for indentation in method args, relative to the start of the line where the left parenthesis is.
+009.rb:2:11: C: [Correctable] Layout/FirstParameterIndentation: Use 2 spaces for indentation in method args, relative to the start of the line where the left parenthesis is.
+010.rb:2:11: C: [Correctable] Layout/FirstParameterIndentation: Use 2 spaces for indentation in method args, relative to the start of the line where the left parenthesis is.
+
+==> autocorrect exit=0 516 <==
+008.rb:2:13: C: [Corrected] Layout/FirstParameterIndentation: Use 2 spaces for indentation in method args, relative to the start of the line where the left parenthesis is.
+009.rb:2:11: C: [Corrected] Layout/FirstParameterIndentation: Use 2 spaces for indentation in method args, relative to the start of the line where the left parenthesis is.
+010.rb:2:11: C: [Corrected] Layout/FirstParameterIndentation: Use 2 spaces for indentation in method args, relative to the start of the line where the left parenthesis is.
+
+==> corrected/008.rb 61 <==
+def abc(
+  foo,
+            bar,
+            baz
+)
+  foo
+end
+
+==> corrected/009.rb 66 <==
+def abc(
+  foo: 1,
+          bar: 3,
+          baz: 3
+)
+  foo
+end
+
+==> corrected/010.rb 71 <==
+def self.abc(
+  foo: 1,
+          bar: 3,
+          baz: 3
+)
+  foo
+end
+

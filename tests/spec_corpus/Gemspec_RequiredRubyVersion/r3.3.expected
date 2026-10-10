@@ -1,0 +1,8 @@
+==> offenses exit=1 330 <==
+000/bar.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.3, which may be specified in .rubocop.yml) should be equal.
+001/bar.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.3, which may be specified in .rubocop.yml) should be equal.
+
+==> autocorrect exit=1 330 <==
+000/bar.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.3, which may be specified in .rubocop.yml) should be equal.
+001/bar.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.3, which may be specified in .rubocop.yml) should be equal.
+

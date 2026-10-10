@@ -1,0 +1,32 @@
+==> offenses exit=1 408 <==
+000.rb:2:3: W: [Correctable] Layout/DefEndAlignment: `end` at 2, 2 is not aligned with `def` at 1, 0.
+001.rb:2:3: W: [Correctable] Layout/DefEndAlignment: `end` at 2, 2 is not aligned with `def` at 1, 0.
+005.rb:2:1: W: [Correctable] Layout/DefEndAlignment: `end` at 2, 0 is not aligned with `def` at 1, 4.
+006.rb:3:1: W: [Correctable] Layout/DefEndAlignment: `end` at 3, 0 is not aligned with `def` at 1, 4.
+
+==> autocorrect exit=0 400 <==
+000.rb:2:3: W: [Corrected] Layout/DefEndAlignment: `end` at 2, 2 is not aligned with `def` at 1, 0.
+001.rb:2:3: W: [Corrected] Layout/DefEndAlignment: `end` at 2, 2 is not aligned with `def` at 1, 0.
+005.rb:2:1: W: [Corrected] Layout/DefEndAlignment: `end` at 2, 0 is not aligned with `def` at 1, 4.
+006.rb:3:1: W: [Corrected] Layout/DefEndAlignment: `end` at 3, 0 is not aligned with `def` at 1, 4.
+
+==> corrected/000.rb 13 <==
+def test
+end
+
+==> corrected/001.rb 18 <==
+def Test.test
+end
+
+==> corrected/005.rb 21 <==
+foo def test
+    end
+
+==> corrected/006.rb 50 <==
+foo def a
+  a1
+    end
+foo def b
+      b1
+    end
+

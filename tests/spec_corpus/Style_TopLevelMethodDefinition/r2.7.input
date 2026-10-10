@@ -1,0 +1,70 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 13 <==
+def foo; end
+
+==> 001.rb 18 <==
+def self.foo; end
+
+==> 002.rb 31 <==
+define_method(:foo) { puts 1 }
+
+==> 003.rb 32 <==
+define_method(:foo) { puts _1 }
+
+==> 004.rb 40 <==
+define_method(:foo) do |x|
+  puts 1
+end
+
+==> 005.rb 43 <==
+define_method(:foo, instance_method(:bar))
+
+==> 006.rb 28 <==
+class Foo
+end
+
+def foo; end
+
+==> 007.rb 30 <==
+module Foo
+  def foo; end
+end
+
+==> 008.rb 34 <==
+class Foo
+  def self.foo; end
+end
+
+==> 009.rb 39 <==
+Foo = Struct.new do
+  def foo; end
+end
+
+==> 010.rb 67 <==
+Foo = types.each do |type|
+  def foo(type)
+    puts type
+  end
+end
+
+==> 011.rb 132 <==
+class Foo
+  define_method(:a) { puts 1 }
+
+  define_method(:b) do |x|
+    puts x
+  end
+
+  define_method(:c, instance_method(:d))
+end
+
+==> 012.rb 23 <==
+require_relative 'foo'
+

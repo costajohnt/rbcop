@@ -1,0 +1,24 @@
+==> offenses exit=1 408 <==
+000.rb:1:5: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+001.rb:1:5: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+003.rb:1:5: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+004.rb:1:5: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+
+==> autocorrect exit=0 400 <==
+000.rb:1:5: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+001.rb:1:5: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+003.rb:1:5: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+004.rb:1:5: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+
+==> corrected/000.rb 26 <==
+foo.to_h { [_1, _1 * 2] }
+
+==> corrected/001.rb 32 <==
+foo.to_h { [_1.to_s, _2.to_i] }
+
+==> corrected/003.rb 26 <==
+foo.to_h { [_1, _1 * 2] }
+
+==> corrected/004.rb 32 <==
+foo.to_h { [_1.to_s, _2.to_i] }
+

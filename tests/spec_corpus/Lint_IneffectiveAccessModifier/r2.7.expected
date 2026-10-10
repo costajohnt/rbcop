@@ -1,0 +1,12 @@
+==> offenses exit=1 740 <==
+000.rb:4:3: W: Lint/IneffectiveAccessModifier: `private` (on line 2) does not make singleton methods private. Use `private_class_method` or `private` inside a `class << self` block instead.
+001.rb:4:3: W: Lint/IneffectiveAccessModifier: `protected` (on line 2) does not make singleton methods protected. Use `protected` inside a `class << self` block instead.
+003.rb:4:3: W: Lint/IneffectiveAccessModifier: `private` (on line 2) does not make singleton methods private. Use `private_class_method` or `private` inside a `class << self` block instead.
+006.rb:8:3: W: Lint/IneffectiveAccessModifier: `private` (on line 3) does not make singleton methods private. Use `private_class_method` or `private` inside a `class << self` block instead.
+
+==> autocorrect exit=1 740 <==
+000.rb:4:3: W: Lint/IneffectiveAccessModifier: `private` (on line 2) does not make singleton methods private. Use `private_class_method` or `private` inside a `class << self` block instead.
+001.rb:4:3: W: Lint/IneffectiveAccessModifier: `protected` (on line 2) does not make singleton methods protected. Use `protected` inside a `class << self` block instead.
+003.rb:4:3: W: Lint/IneffectiveAccessModifier: `private` (on line 2) does not make singleton methods private. Use `private_class_method` or `private` inside a `class << self` block instead.
+006.rb:8:3: W: Lint/IneffectiveAccessModifier: `private` (on line 3) does not make singleton methods private. Use `private_class_method` or `private` inside a `class << self` block instead.
+

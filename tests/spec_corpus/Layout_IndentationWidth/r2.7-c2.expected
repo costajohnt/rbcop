@@ -1,0 +1,665 @@
+==> offenses exit=1 8293 <==
+000.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+001.rb:4:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+002.rb:4:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+003.rb:6:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+004.rb:4:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+005.rb:4:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 5) spaces for indentation.
+006.rb:4:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+015.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+015.rb:5:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+015.rb:7:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+016.rb:3:1: C: Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+016.rb:12:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+016.rb:13:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+017.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+018.rb:4:18: C: [Correctable] Layout/IndentationWidth: Use 2 (not 7) spaces for indentation.
+021.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+028.rb:2:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -8) spaces for indentation.
+029.rb:2:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -9) spaces for indentation.
+030.rb:2:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
+030.rb:5:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -5) spaces for indentation.
+030.rb:8:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -5) spaces for indentation.
+030.rb:11:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -6) spaces for indentation.
+030.rb:14:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -6) spaces for indentation.
+030.rb:17:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -5) spaces for indentation.
+030.rb:20:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
+031.rb:2:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
+032.rb:2:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
+033.rb:2:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
+040.rb:2:7: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+041.rb:2:7: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+042.rb:2:7: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+043.rb:2:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
+044.rb:2:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
+045.rb:2:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
+045.rb:6:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
+048.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+050.rb:3:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+051.rb:7:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+057.rb:3:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+058.rb:7:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+065.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+066.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+070.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+071.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+072.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+074.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+076.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+077.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+082.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 6) spaces for indentation.
+083.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 6) spaces for indentation.
+085.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 6) spaces for indentation.
+086.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 6) spaces for indentation.
+088.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+089.rb:3:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+090.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 6) spaces for indentation.
+093.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+097.rb:3:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+097.rb:6:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+098.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 6) spaces for indentation.
+100.rb:7:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+100.rb:12:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+101.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+103.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+106.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+106.rb:5:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+108.rb:4:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+108.rb:6:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+108.rb:8:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+108.rb:10:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+108.rb:12:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+109.rb:4:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+109.rb:6:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+110.rb:4:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+110.rb:6:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+113.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+114.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+118.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+119.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+121.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+122.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+124.rb:3:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+132.rb:2:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+132.rb:3:4: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+133.rb:2:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+135.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+136.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+137.rb:3:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+138.rb:2:2: C: [Correctable] Layout/IndentationWidth: Use 2 (not -5) spaces for indentation.
+139.rb:3:7: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+141.rb:3:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+
+==> autocorrect exit=1 8181 <==
+000.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+001.rb:4:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+002.rb:4:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+003.rb:6:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+004.rb:4:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+005.rb:4:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 5) spaces for indentation.
+006.rb:4:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+015.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+015.rb:5:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+015.rb:7:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+016.rb:3:1: C: Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+016.rb:12:1: C: Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+016.rb:13:1: C: Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+017.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+018.rb:4:18: C: [Corrected] Layout/IndentationWidth: Use 2 (not 7) spaces for indentation.
+021.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+028.rb:2:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not -8) spaces for indentation.
+029.rb:2:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not -9) spaces for indentation.
+030.rb:2:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
+030.rb:5:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not -5) spaces for indentation.
+030.rb:8:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not -5) spaces for indentation.
+030.rb:11:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not -6) spaces for indentation.
+030.rb:14:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not -6) spaces for indentation.
+030.rb:17:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not -5) spaces for indentation.
+030.rb:20:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
+031.rb:2:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
+032.rb:2:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
+033.rb:2:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
+040.rb:2:7: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+041.rb:2:7: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+042.rb:2:7: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+043.rb:2:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
+044.rb:2:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
+045.rb:2:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
+045.rb:6:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
+048.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+050.rb:3:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+051.rb:7:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+057.rb:3:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+058.rb:7:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+065.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+066.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+070.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+071.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+072.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+074.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+076.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+077.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+082.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 6) spaces for indentation.
+083.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 6) spaces for indentation.
+085.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 6) spaces for indentation.
+086.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 6) spaces for indentation.
+088.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+089.rb:3:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+090.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 6) spaces for indentation.
+093.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+097.rb:3:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+097.rb:6:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+098.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 6) spaces for indentation.
+100.rb:7:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+100.rb:12:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+101.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+103.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+106.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+106.rb:5:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+108.rb:4:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+108.rb:6:5: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+108.rb:8:5: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+108.rb:10:5: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+108.rb:12:5: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+109.rb:4:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+109.rb:6:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+110.rb:4:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+110.rb:6:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+113.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+114.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+118.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+118.rb:4:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+119.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+121.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+122.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+124.rb:3:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+132.rb:2:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+132.rb:3:5: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+133.rb:2:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+135.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+136.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+137.rb:3:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+138.rb:2:2: C: [Corrected] Layout/IndentationWidth: Use 2 (not -5) spaces for indentation.
+139.rb:3:7: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+141.rb:3:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+
+==> corrected/000.rb 19 <==
+if cond
+  func
+end
+
+==> corrected/001.rb 33 <==
+if cond
+  func1
+else
+  func2
+end
+
+==> corrected/002.rb 42 <==
+if cond
+  # nothing here
+else
+  func2
+end
+
+==> corrected/003.rb 78 <==
+if cond
+  # nothing here
+elsif cond2
+  # nothing here either
+else
+  func2
+end
+
+==> corrected/004.rb 38 <==
+if a1
+  b1
+elsif a2
+  b2
+else
+  c
+end
+
+==> corrected/005.rb 30 <==
+if a
+  b
+else
+  x ? y : z
+end
+
+==> corrected/006.rb 27 <==
+if a
+  b
+else
+  x if y
+end
+
+==> corrected/015.rb 44 <==
+if a1
+  b1
+   b1
+elsif a2
+  b2
+else
+  c
+end
+
+==> corrected/017.rb 126 <==
+module Foo
+  module Bar
+    SOMETHING = <<GOO
+text
+more text
+foo
+GOO
+    def baz
+      do_something("#{x}")
+    end
+  end
+end
+
+==> corrected/018.rb 166 <==
+var1 = nil
+array_list = []
+if var1.attr1 != 0 || array_list.select{ |w|
+                   (w.attr2 == var1.attr2)
+                 }.blank?
+  array_list << var1
+end
+
+==> corrected/021.rb 22 <==
+def x
+  y
+
+rescue
+end
+
+==> corrected/028.rb 38 <==
+foo.bar = if baz
+            derp
+end
+
+==> corrected/029.rb 40 <==
+foo[bar] = if baz
+             derp
+end
+
+==> corrected/030.rb 189 <==
+var = if a
+        0
+end
+@var = if a
+         0
+end
+$var = if a
+         0
+end
+var ||= if a
+          0
+end
+var &&= if a
+          0
+end
+var -= if a
+         0
+end
+VAR = if a
+        0
+end
+
+==> corrected/031.rb 34 <==
+var = if a
+        0
+else
+  1
+end
+
+==> corrected/032.rb 47 <==
+var = if a
+        0
+else
+  1
+end.abc.join("")
+
+==> corrected/033.rb 45 <==
+var = if a
+        0
+else
+  1
+end.abc.tap {}
+
+==> corrected/040.rb 31 <==
+var = if a
+        0
+      end
+
+==> corrected/041.rb 34 <==
+var = while a
+        b
+      end
+
+==> corrected/042.rb 34 <==
+var = until a
+        b
+      end
+
+==> corrected/043.rb 25 <==
+var = if a
+        0
+end
+
+==> corrected/044.rb 28 <==
+var = while a
+        b
+end
+
+==> corrected/045.rb 54 <==
+var = if a
+        b
+end
+
+var = while a
+        b
+end
+
+==> corrected/048.rb 23 <==
+unless cond
+  func
+end
+
+==> corrected/050.rb 22 <==
+case a
+when b
+  c
+end
+
+==> corrected/051.rb 42 <==
+case a
+when b
+  c
+when d
+  e
+else
+  f
+end
+
+==> corrected/057.rb 20 <==
+case a
+in b
+  c
+end
+
+==> corrected/058.rb 38 <==
+case a
+in b
+  c
+in d
+  e
+else
+  f
+end
+
+==> corrected/065.rb 20 <==
+x = (
+  foo - bar
+)
+
+==> corrected/066.rb 27 <==
+x = (
+  foo - bar
+).freeze
+
+==> corrected/070.rb 22 <==
+while cond
+  func
+end
+
+==> corrected/071.rb 50 <==
+something = begin
+  func1
+   func2
+end while cond
+
+==> corrected/072.rb 22 <==
+until cond
+  func
+end
+
+==> corrected/074.rb 28 <==
+for var in 1..10
+  func
+end
+
+==> corrected/076.rb 66 <==
+def test
+  func1
+     func2 # No offense registered for this.
+end
+
+==> corrected/077.rb 25 <==
+def self.test
+  func
+end
+
+==> corrected/082.rb 33 <==
+foo def test
+  something
+    end
+
+==> corrected/083.rb 38 <==
+foo def self.test
+  something
+    end
+
+==> corrected/085.rb 36 <==
+public foo def test
+  something
+end
+
+==> corrected/086.rb 41 <==
+public foo def self.test
+  something
+end
+
+==> corrected/088.rb 64 <==
+obj = Class.new do
+  private def private_property
+  end
+end.new
+
+==> corrected/089.rb 91 <==
+obj = Class.new do
+  private def private_property
+    "That would be great."
+  end
+end.new
+
+==> corrected/090.rb 29 <==
+foo def test
+  something
+end
+
+==> corrected/093.rb 32 <==
+class Test
+  def func
+  end
+end
+
+==> corrected/097.rb 53 <==
+class Test
+  public
+  def e
+  end
+
+  def f
+  end
+end
+
+==> corrected/098.rb 41 <==
+class Foo
+  private
+
+  def foo
+  end
+end
+
+==> corrected/100.rb 83 <==
+class Test
+  def e
+  end
+
+  protected
+
+  def f
+  end
+
+  private
+
+  def g
+  end
+end
+
+==> corrected/101.rb 42 <==
+class Test
+  private
+
+  def foo
+  end
+end
+
+==> corrected/103.rb 33 <==
+module Test
+  def func
+  end
+end
+
+==> corrected/106.rb 62 <==
+module Test
+  def func1
+  end
+  private
+  def func2
+  end
+end
+
+==> corrected/108.rb 361 <==
+def my_func
+  puts 'do something outside block'
+  begin
+    puts 'do something error prone'
+    rescue SomeException, SomeOther => e
+      puts 'wrongly indented error handling'
+    rescue
+      puts 'wrongly indented error handling'
+    else
+      puts 'wrongly indented normal case handling'
+    ensure
+      puts 'wrongly indented common handling'
+  end
+end
+
+==> corrected/109.rb 160 <==
+def my_func
+  puts 'do something error prone'
+rescue SomeException
+  puts 'wrongly indented error handling'
+rescue
+  puts 'wrongly indented error handling'
+end
+
+==> corrected/110.rb 169 <==
+foo def self.my_func
+  puts 'do something error prone'
+rescue SomeException
+  puts 'wrongly indented error handling'
+rescue
+  puts 'wrongly indented error handling'
+end
+
+==> corrected/113.rb 20 <==
+a = func do
+  b
+end
+
+==> corrected/114.rb 13 <==
+func {
+  b
+}
+
+==> corrected/118.rb 48 <==
+do_something do
+  foo
+ensure
+  handle_error
+end
+
+==> corrected/119.rb 23 <==
+func {
+  receiver&.b
+}
+
+==> corrected/121.rb 19 <==
+func {
+  _1&.foo
+}
+
+==> corrected/122.rb 22 <==
+func do
+  _1&.foo
+end
+
+==> corrected/124.rb 26 <==
+foo
+  .bar do |x|
+  x
+end
+
+==> corrected/132.rb 56 <==
+  class A
+  	 def test
+   		 puts 'hello'
+   	end
+  end
+
+==> corrected/133.rb 25 <==
+  if cond
+  	 func
+  end
+
+==> corrected/135.rb 29 <==
+class A
+  def test
+  end
+end
+
+==> corrected/136.rb 28 <==
+def test
+		puts 'hello'
+end
+
+==> corrected/137.rb 47 <==
+module Foo
+		module Bar
+			 baz = 1
+		end
+	end
+
+==> corrected/138.rb 27 <==
+		a = if b
+	       c
+		end
+
+==> corrected/139.rb 59 <==
+    class Test
+      def foo
+     		 bar
+      end
+    end
+
+==> corrected/141.rb 39 <==
+class Test
+  def foo
+ 		 bar
+  end
+end
+

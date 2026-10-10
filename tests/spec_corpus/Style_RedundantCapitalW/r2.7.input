@@ -1,0 +1,52 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 23 <==
+["one", "two", "three"]
+==> 001.rb 27 <==
+["one", "two", "th#{?r}ee"]
+==> 002.rb 12 <==
+%W(cat dog)
+
+==> 003.rb 12 <==
+%W[cat dog]
+
+==> 004.rb 15 <==
+%W(c#{?a}t dog)
+==> 005.rb 194 <==
+def dangerous_characters
+  %W(\000) +
+  %W(\001) +
+  %W(\027) +
+  %W(\002) +
+  %W(\003) +
+  %W(\004) +
+  %W(\005) +
+  %W(\006) +
+  %W(\007) +
+  %W(\00) +
+  %W(\a)
+  %W(\s)
+  %W(\n)
+  %W(\!)
+end
+
+==> 006.rb 11 <==
+%w(cat dog)
+==> 007.rb 15 <==
+%w(c#{?a}t dog)
+==> 008.rb 12 <==
+["one", ?\n]
+==> 009.rb 29 <==
+["one space", "two", "three"]
+==> 010.rb 17 <==
+["one", "two", 3]
+==> 011.rb 9 <==
+["three"]
+==> 012.rb 20 <==
+["", "two", "three"]

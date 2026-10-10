@@ -1,0 +1,34 @@
+==> .rubocop.yml 154 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/ObjectThen:
+  EnforcedStyle: yield_self
+
+==> 000.rb 24 <==
+obj.then { |e| e.test }
+
+==> 001.rb 25 <==
+obj&.then { |e| e.test }
+
+==> 002.rb 17 <==
+obj.then(&:test)
+
+==> 003.rb 18 <==
+obj&.then(&:test)
+
+==> 004.rb 24 <==
+obj.then(other, &:test)
+
+==> 005.rb 25 <==
+obj&.then(other, &:test)
+
+==> 006.rb 9 <==
+obj.then
+
+==> 007.rb 10 <==
+obj&.then
+

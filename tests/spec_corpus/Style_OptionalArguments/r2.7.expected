@@ -1,0 +1,12 @@
+==> offenses exit=1 426 <==
+000.rb:1:9: C: Style/OptionalArguments: Optional arguments should appear at the end of the argument list.
+001.rb:1:9: C: Style/OptionalArguments: Optional arguments should appear at the end of the argument list.
+001.rb:1:16: C: Style/OptionalArguments: Optional arguments should appear at the end of the argument list.
+002.rb:1:14: C: Style/OptionalArguments: Optional arguments should appear at the end of the argument list.
+
+==> autocorrect exit=1 426 <==
+000.rb:1:9: C: Style/OptionalArguments: Optional arguments should appear at the end of the argument list.
+001.rb:1:9: C: Style/OptionalArguments: Optional arguments should appear at the end of the argument list.
+001.rb:1:16: C: Style/OptionalArguments: Optional arguments should appear at the end of the argument list.
+002.rb:1:14: C: Style/OptionalArguments: Optional arguments should appear at the end of the argument list.
+

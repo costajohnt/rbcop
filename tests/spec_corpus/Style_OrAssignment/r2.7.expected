@@ -1,0 +1,94 @@
+==> offenses exit=1 1700 <==
+000.rb:1:1: C: [Correctable] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+001.rb:1:1: C: [Correctable] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+002.rb:1:1: C: [Correctable] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+003.rb:1:1: C: [Correctable] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+006.rb:1:1: C: [Correctable] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+007.rb:1:1: C: [Correctable] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+008.rb:1:1: C: [Correctable] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+009.rb:1:1: C: [Correctable] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+012.rb:1:1: C: [Correctable] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+013.rb:1:1: C: [Correctable] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+014.rb:1:1: C: [Correctable] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+015.rb:1:1: C: [Correctable] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+018.rb:2:1: C: [Correctable] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+019.rb:2:1: C: [Correctable] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+020.rb:2:1: C: [Correctable] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+021.rb:2:1: C: [Correctable] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+022.rb:2:1: C: [Correctable] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+
+==> autocorrect exit=0 1666 <==
+000.rb:1:1: C: [Corrected] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+001.rb:1:1: C: [Corrected] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+002.rb:1:1: C: [Corrected] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+003.rb:1:1: C: [Corrected] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+006.rb:1:1: C: [Corrected] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+007.rb:1:1: C: [Corrected] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+008.rb:1:1: C: [Corrected] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+009.rb:1:1: C: [Corrected] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+012.rb:1:1: C: [Corrected] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+013.rb:1:1: C: [Corrected] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+014.rb:1:1: C: [Corrected] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+015.rb:1:1: C: [Corrected] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+018.rb:2:1: C: [Corrected] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+019.rb:2:1: C: [Corrected] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+020.rb:2:1: C: [Corrected] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+021.rb:2:1: C: [Corrected] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+022.rb:2:1: C: [Corrected] Style/OrAssignment: Use the double pipe equals operator `||=` instead.
+
+==> corrected/000.rb 18 <==
+foo ||= 'default'
+
+==> corrected/001.rb 19 <==
+@foo ||= 'default'
+
+==> corrected/002.rb 20 <==
+@@foo ||= 'default'
+
+==> corrected/003.rb 19 <==
+$foo ||= 'default'
+
+==> corrected/006.rb 18 <==
+foo ||= 'default'
+
+==> corrected/007.rb 19 <==
+@foo ||= 'default'
+
+==> corrected/008.rb 20 <==
+@@foo ||= 'default'
+
+==> corrected/009.rb 19 <==
+$foo ||= 'default'
+
+==> corrected/012.rb 18 <==
+foo ||= 'default'
+
+==> corrected/013.rb 19 <==
+@foo ||= 'default'
+
+==> corrected/014.rb 20 <==
+@@foo ||= 'default'
+
+==> corrected/015.rb 19 <==
+$foo ||= 'default'
+
+==> corrected/018.rb 28 <==
+foo = nil
+foo ||= 'default'
+
+==> corrected/019.rb 30 <==
+@foo = nil
+@foo ||= 'default'
+
+==> corrected/020.rb 32 <==
+@@foo = nil
+@@foo ||= 'default'
+
+==> corrected/021.rb 30 <==
+$foo = nil
+$foo ||= 'default'
+
+==> corrected/022.rb 20 <==
+foo = nil
+foo ||= 2
+

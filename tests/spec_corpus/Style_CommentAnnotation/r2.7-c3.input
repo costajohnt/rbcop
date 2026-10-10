@@ -1,0 +1,22 @@
+==> .rubocop.yml 186 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/CommentAnnotation:
+  Keywords:
+  - TODO
+  - DO SOMETHING
+  - TODO LATER
+
+==> 000.rb 22 <==
+# TODO blah blah blah
+
+==> 001.rb 30 <==
+# DO SOMETHING blah blah blah
+
+==> 002.rb 28 <==
+# TODO LATER blah blah blah
+

@@ -1,0 +1,199 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 12 <==
+binding.irb
+
+==> 001.rb 19 <==
+Kernel.binding.irb
+
+==> 002.rb 7 <==
+byebug
+
+==> 003.rb 11 <==
+byebug foo
+
+==> 004.rb 14 <==
+Kernel.byebug
+
+==> 005.rb 14 <==
+remote_byebug
+
+==> 006.rb 21 <==
+Kernel.remote_byebug
+
+==> 007.rb 19 <==
+save_and_open_page
+
+==> 008.rb 25 <==
+save_and_open_screenshot
+
+==> 009.rb 10 <==
+save_page
+
+==> 010.rb 16 <==
+save_screenshot
+
+==> 011.rb 23 <==
+save_and_open_page foo
+
+==> 012.rb 29 <==
+save_and_open_screenshot foo
+
+==> 013.rb 14 <==
+save_page foo
+
+==> 014.rb 20 <==
+save_screenshot foo
+
+==> 015.rb 24 <==
+page.save_and_open_page
+
+==> 016.rb 30 <==
+page.save_and_open_screenshot
+
+==> 017.rb 15 <==
+page.save_page
+
+==> 018.rb 21 <==
+page.save_screenshot
+
+==> 019.rb 10 <==
+binding.b
+
+==> 020.rb 14 <==
+binding.break
+
+==> 021.rb 17 <==
+Kernel.binding.b
+
+==> 022.rb 21 <==
+Kernel.binding.break
+
+==> 023.rb 4 <==
+pry
+
+==> 024.rb 8 <==
+pry foo
+
+==> 025.rb 12 <==
+binding.pry
+
+==> 026.rb 19 <==
+binding.remote_pry
+
+==> 027.rb 19 <==
+binding.pry_remote
+
+==> 028.rb 16 <==
+binding.pry foo
+
+==> 029.rb 23 <==
+binding.remote_pry foo
+
+==> 030.rb 23 <==
+binding.pry_remote foo
+
+==> 031.rb 19 <==
+Kernel.binding.pry
+
+==> 032.rb 65 <==
+def method
+  Pry.rescue { puts 1 }
+  ::Pry.rescue { puts 1 }
+end
+
+==> 033.rb 31 <==
+begin
+rescue StandardError
+end
+
+==> 034.rb 9 <==
+debugger
+
+==> 035.rb 13 <==
+debugger foo
+
+==> 036.rb 16 <==
+Kernel.debugger
+
+==> 037.rb 18 <==
+::Kernel.debugger
+
+==> 038.rb 5 <==
+jard
+
+==> 039.rb 16 <==
+binding.console
+
+==> 040.rb 7 <==
+console
+==> 041.rb 14 <==
+binding.pirate
+==> 042.rb 29 <==
+# debugger
+# Kernel.debugger
+
+==> 043.rb 13 <==
+code.debugger
+==> 044.rb 25 <==
+# byebug
+# Kernel.byebug
+
+==> 045.rb 11 <==
+code.byebug
+==> 046.rb 27 <==
+# console
+# Kernel.console
+
+==> 047.rb 12 <==
+code.console
+==> 048.rb 19 <==
+# pry
+# Kernel.pry
+
+==> 049.rb 8 <==
+code.pry
+==> 050.rb 33 <==
+# remote_pry
+# Kernel.remote_pry
+
+==> 051.rb 15 <==
+code.remote_pry
+==> 052.rb 33 <==
+# pry_remote
+# Kernel.pry_remote
+
+==> 053.rb 15 <==
+code.pry_remote
+==> 054.rb 19 <==
+# irb
+# Kernel.irb
+
+==> 055.rb 8 <==
+code.irb
+==> 056.rb 49 <==
+# save_and_open_page
+# Kernel.save_and_open_page
+
+==> 057.rb 23 <==
+code.save_and_open_page
+==> 058.rb 61 <==
+# save_and_open_screenshot
+# Kernel.save_and_open_screenshot
+
+==> 059.rb 29 <==
+code.save_and_open_screenshot
+==> 060.rb 39 <==
+# remote_byebug
+# Kernel.remote_byebug
+
+==> 061.rb 18 <==
+code.remote_byebug
+==> 062.rb 11 <==
+binding.pry

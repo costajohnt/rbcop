@@ -1,0 +1,12 @@
+==> offenses exit=1 160 <==
+000.rb:1:1: C: [Correctable] Layout/EmptyComment: Source code comment is empty.
+001.rb:1:1: C: [Correctable] Layout/EmptyComment: Source code comment is empty.
+
+==> autocorrect exit=0 156 <==
+000.rb:1:1: C: [Corrected] Layout/EmptyComment: Source code comment is empty.
+001.rb:1:1: C: [Corrected] Layout/EmptyComment: Source code comment is empty.
+
+==> corrected/000.rb 0 <==
+
+==> corrected/001.rb 0 <==
+

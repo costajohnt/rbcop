@@ -1,0 +1,364 @@
+==> offenses exit=1 6288 <==
+000.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `+=`.
+001.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `+=`.
+002.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `+=`.
+003.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `-=`.
+004.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `-=`.
+005.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `-=`.
+006.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `*=`.
+007.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `*=`.
+008.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `*=`.
+009.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `**=`.
+010.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `**=`.
+011.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `**=`.
+012.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `/=`.
+013.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `/=`.
+014.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `/=`.
+015.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `%=`.
+016.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `%=`.
+017.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `%=`.
+018.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `^=`.
+019.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `^=`.
+020.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `^=`.
+021.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `<<=`.
+022.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `<<=`.
+023.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `<<=`.
+024.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `>>=`.
+025.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `>>=`.
+026.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `>>=`.
+027.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `|=`.
+028.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `|=`.
+029.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `|=`.
+030.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `&=`.
+031.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `&=`.
+032.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `&=`.
+033.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `||=`.
+034.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `||=`.
+035.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `||=`.
+036.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `&&=`.
+037.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `&&=`.
+038.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `&&=`.
+039.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `+=`.
+041.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `+=`.
+043.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `+=`.
+045.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `-=`.
+047.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `-=`.
+049.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `-=`.
+051.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `*=`.
+053.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `*=`.
+055.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `*=`.
+057.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `**=`.
+059.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `**=`.
+061.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `**=`.
+063.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `/=`.
+065.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `/=`.
+067.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `/=`.
+069.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `%=`.
+071.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `%=`.
+073.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `%=`.
+075.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `^=`.
+077.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `^=`.
+079.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `^=`.
+081.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `<<=`.
+083.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `<<=`.
+085.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `<<=`.
+087.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `>>=`.
+089.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `>>=`.
+091.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `>>=`.
+093.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `|=`.
+095.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `|=`.
+097.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `|=`.
+099.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `&=`.
+101.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `&=`.
+103.rb:1:1: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand `&=`.
+
+==> autocorrect exit=0 6144 <==
+000.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `+=`.
+001.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `+=`.
+002.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `+=`.
+003.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `-=`.
+004.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `-=`.
+005.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `-=`.
+006.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `*=`.
+007.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `*=`.
+008.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `*=`.
+009.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `**=`.
+010.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `**=`.
+011.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `**=`.
+012.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `/=`.
+013.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `/=`.
+014.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `/=`.
+015.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `%=`.
+016.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `%=`.
+017.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `%=`.
+018.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `^=`.
+019.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `^=`.
+020.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `^=`.
+021.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `<<=`.
+022.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `<<=`.
+023.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `<<=`.
+024.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `>>=`.
+025.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `>>=`.
+026.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `>>=`.
+027.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `|=`.
+028.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `|=`.
+029.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `|=`.
+030.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `&=`.
+031.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `&=`.
+032.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `&=`.
+033.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `||=`.
+034.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `||=`.
+035.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `||=`.
+036.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `&&=`.
+037.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `&&=`.
+038.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `&&=`.
+039.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `+=`.
+041.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `+=`.
+043.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `+=`.
+045.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `-=`.
+047.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `-=`.
+049.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `-=`.
+051.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `*=`.
+053.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `*=`.
+055.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `*=`.
+057.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `**=`.
+059.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `**=`.
+061.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `**=`.
+063.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `/=`.
+065.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `/=`.
+067.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `/=`.
+069.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `%=`.
+071.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `%=`.
+073.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `%=`.
+075.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `^=`.
+077.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `^=`.
+079.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `^=`.
+081.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `<<=`.
+083.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `<<=`.
+085.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `<<=`.
+087.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `>>=`.
+089.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `>>=`.
+091.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `>>=`.
+093.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `|=`.
+095.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `|=`.
+097.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `|=`.
+099.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `&=`.
+101.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `&=`.
+103.rb:1:1: C: [Corrected] Style/SelfAssignment: Use self-assignment shorthand `&=`.
+
+==> corrected/000.rb 7 <==
+x += y
+
+==> corrected/001.rb 8 <==
+@x += y
+
+==> corrected/002.rb 9 <==
+@@x += y
+
+==> corrected/003.rb 7 <==
+x -= y
+
+==> corrected/004.rb 8 <==
+@x -= y
+
+==> corrected/005.rb 9 <==
+@@x -= y
+
+==> corrected/006.rb 7 <==
+x *= y
+
+==> corrected/007.rb 8 <==
+@x *= y
+
+==> corrected/008.rb 9 <==
+@@x *= y
+
+==> corrected/009.rb 8 <==
+x **= y
+
+==> corrected/010.rb 9 <==
+@x **= y
+
+==> corrected/011.rb 10 <==
+@@x **= y
+
+==> corrected/012.rb 7 <==
+x /= y
+
+==> corrected/013.rb 8 <==
+@x /= y
+
+==> corrected/014.rb 9 <==
+@@x /= y
+
+==> corrected/015.rb 7 <==
+x %= y
+
+==> corrected/016.rb 8 <==
+@x %= y
+
+==> corrected/017.rb 9 <==
+@@x %= y
+
+==> corrected/018.rb 7 <==
+x ^= y
+
+==> corrected/019.rb 8 <==
+@x ^= y
+
+==> corrected/020.rb 9 <==
+@@x ^= y
+
+==> corrected/021.rb 8 <==
+x <<= y
+
+==> corrected/022.rb 9 <==
+@x <<= y
+
+==> corrected/023.rb 10 <==
+@@x <<= y
+
+==> corrected/024.rb 8 <==
+x >>= y
+
+==> corrected/025.rb 9 <==
+@x >>= y
+
+==> corrected/026.rb 10 <==
+@@x >>= y
+
+==> corrected/027.rb 7 <==
+x |= y
+
+==> corrected/028.rb 8 <==
+@x |= y
+
+==> corrected/029.rb 9 <==
+@@x |= y
+
+==> corrected/030.rb 7 <==
+x &= y
+
+==> corrected/031.rb 8 <==
+@x &= y
+
+==> corrected/032.rb 9 <==
+@@x &= y
+
+==> corrected/033.rb 8 <==
+x ||= y
+
+==> corrected/034.rb 9 <==
+@x ||= y
+
+==> corrected/035.rb 10 <==
+@@x ||= y
+
+==> corrected/036.rb 8 <==
+x &&= y
+
+==> corrected/037.rb 9 <==
+@x &&= y
+
+==> corrected/038.rb 10 <==
+@@x &&= y
+
+==> corrected/039.rb 7 <==
+x += y
+
+==> corrected/041.rb 8 <==
+@x += y
+
+==> corrected/043.rb 9 <==
+@@x += y
+
+==> corrected/045.rb 7 <==
+x -= y
+
+==> corrected/047.rb 8 <==
+@x -= y
+
+==> corrected/049.rb 9 <==
+@@x -= y
+
+==> corrected/051.rb 7 <==
+x *= y
+
+==> corrected/053.rb 8 <==
+@x *= y
+
+==> corrected/055.rb 9 <==
+@@x *= y
+
+==> corrected/057.rb 8 <==
+x **= y
+
+==> corrected/059.rb 9 <==
+@x **= y
+
+==> corrected/061.rb 10 <==
+@@x **= y
+
+==> corrected/063.rb 7 <==
+x /= y
+
+==> corrected/065.rb 8 <==
+@x /= y
+
+==> corrected/067.rb 9 <==
+@@x /= y
+
+==> corrected/069.rb 7 <==
+x %= y
+
+==> corrected/071.rb 8 <==
+@x %= y
+
+==> corrected/073.rb 9 <==
+@@x %= y
+
+==> corrected/075.rb 7 <==
+x ^= y
+
+==> corrected/077.rb 8 <==
+@x ^= y
+
+==> corrected/079.rb 9 <==
+@@x ^= y
+
+==> corrected/081.rb 8 <==
+x <<= y
+
+==> corrected/083.rb 9 <==
+@x <<= y
+
+==> corrected/085.rb 10 <==
+@@x <<= y
+
+==> corrected/087.rb 8 <==
+x >>= y
+
+==> corrected/089.rb 9 <==
+@x >>= y
+
+==> corrected/091.rb 10 <==
+@@x >>= y
+
+==> corrected/093.rb 7 <==
+x |= y
+
+==> corrected/095.rb 8 <==
+@x |= y
+
+==> corrected/097.rb 9 <==
+@@x |= y
+
+==> corrected/099.rb 7 <==
+x &= y
+
+==> corrected/101.rb 8 <==
+@x &= y
+
+==> corrected/103.rb 9 <==
+@@x &= y
+

@@ -1,0 +1,364 @@
+==> offenses exit=1 4343 <==
+005.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+006.rb:3:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+007.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+008.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+009.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+010.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<-`.
+013.rb:3:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+014.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+015.rb:3:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+016.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+017.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<-`.
+028.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+029.rb:3:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+030.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+031.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+032.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+033.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<-`.
+036.rb:3:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+037.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+038.rb:3:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+039.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+050.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+051.rb:3:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+052.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+053.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+054.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+055.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<-`.
+058.rb:3:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+059.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+060.rb:3:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+061.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+072.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+073.rb:3:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+074.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+075.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+076.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+077.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<-`.
+080.rb:3:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+081.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+082.rb:3:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+083.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+
+==> autocorrect exit=0 5134 <==
+005.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+006.rb:3:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+007.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+008.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+008.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+009.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+010.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<-`.
+010.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+013.rb:3:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+014.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+015.rb:3:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+016.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+017.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<-`.
+017.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+028.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+029.rb:3:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+030.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+031.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+031.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+032.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+033.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<-`.
+033.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+036.rb:3:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+037.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+038.rb:3:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+039.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+050.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+051.rb:3:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+052.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+053.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+053.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+054.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+055.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<-`.
+055.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+058.rb:3:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+059.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+060.rb:3:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+061.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+072.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+073.rb:3:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+074.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+075.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+075.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+076.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+077.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<-`.
+077.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+080.rb:3:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+081.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+082.rb:3:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+083.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+
+==> corrected/005.rb 27 <==
+<<~RUBY2
+  something
+RUBY2
+
+==> corrected/006.rb 45 <==
+def foo
+  <<~RUBY2
+    something
+  RUBY2
+end
+
+==> corrected/007.rb 27 <==
+<<~RUBY2
+  something
+RUBY2
+
+==> corrected/008.rb 21 <==
+<<~RUBY2
+  foo
+RUBY2
+
+==> corrected/009.rb 21 <==
+<<~RUBY2
+  foo
+RUBY2
+
+==> corrected/010.rb 84 <==
+        puts <<~RUBY2
+          def foo
+            bar
+          end
+        RUBY2
+
+==> corrected/013.rb 118 <==
+            def baz
+              <<~MSG
+                foo
+
+                  bar
+              MSG
+            end
+
+==> corrected/014.rb 78 <==
+            <<~RUBY2
+                foo
+
+              bar
+            RUBY2
+
+==> corrected/015.rb 122 <==
+            def baz
+              <<~MSG
+                foo
+    
+                  bar
+              MSG
+            end
+
+==> corrected/016.rb 82 <==
+            <<~RUBY2
+                foo
+    
+              bar
+            RUBY2
+
+==> corrected/017.rb 21 <==
+<<~RUBY2
+  foo
+RUBY2
+
+==> corrected/028.rb 29 <==
+<<~'RUBY2'
+  something
+RUBY2
+
+==> corrected/029.rb 47 <==
+def foo
+  <<~'RUBY2'
+    something
+  RUBY2
+end
+
+==> corrected/030.rb 29 <==
+<<~'RUBY2'
+  something
+RUBY2
+
+==> corrected/031.rb 23 <==
+<<~'RUBY2'
+  foo
+RUBY2
+
+==> corrected/032.rb 23 <==
+<<~'RUBY2'
+  foo
+RUBY2
+
+==> corrected/033.rb 86 <==
+        puts <<~'RUBY2'
+          def foo
+            bar
+          end
+        RUBY2
+
+==> corrected/036.rb 120 <==
+            def baz
+              <<~'MSG'
+                foo
+
+                  bar
+              MSG
+            end
+
+==> corrected/037.rb 80 <==
+            <<~'RUBY2'
+                foo
+
+              bar
+            RUBY2
+
+==> corrected/038.rb 124 <==
+            def baz
+              <<~'MSG'
+                foo
+    
+                  bar
+              MSG
+            end
+
+==> corrected/039.rb 84 <==
+            <<~'RUBY2'
+                foo
+    
+              bar
+            RUBY2
+
+==> corrected/050.rb 29 <==
+<<~"RUBY2"
+  something
+RUBY2
+
+==> corrected/051.rb 47 <==
+def foo
+  <<~"RUBY2"
+    something
+  RUBY2
+end
+
+==> corrected/052.rb 29 <==
+<<~"RUBY2"
+  something
+RUBY2
+
+==> corrected/053.rb 23 <==
+<<~"RUBY2"
+  foo
+RUBY2
+
+==> corrected/054.rb 23 <==
+<<~"RUBY2"
+  foo
+RUBY2
+
+==> corrected/055.rb 86 <==
+        puts <<~"RUBY2"
+          def foo
+            bar
+          end
+        RUBY2
+
+==> corrected/058.rb 120 <==
+            def baz
+              <<~"MSG"
+                foo
+
+                  bar
+              MSG
+            end
+
+==> corrected/059.rb 80 <==
+            <<~"RUBY2"
+                foo
+
+              bar
+            RUBY2
+
+==> corrected/060.rb 124 <==
+            def baz
+              <<~"MSG"
+                foo
+    
+                  bar
+              MSG
+            end
+
+==> corrected/061.rb 84 <==
+            <<~"RUBY2"
+                foo
+    
+              bar
+            RUBY2
+
+==> corrected/072.rb 29 <==
+<<~`RUBY2`
+  something
+RUBY2
+
+==> corrected/073.rb 47 <==
+def foo
+  <<~`RUBY2`
+    something
+  RUBY2
+end
+
+==> corrected/074.rb 29 <==
+<<~`RUBY2`
+  something
+RUBY2
+
+==> corrected/075.rb 23 <==
+<<~`RUBY2`
+  foo
+RUBY2
+
+==> corrected/076.rb 23 <==
+<<~`RUBY2`
+  foo
+RUBY2
+
+==> corrected/077.rb 86 <==
+        puts <<~`RUBY2`
+          def foo
+            bar
+          end
+        RUBY2
+
+==> corrected/080.rb 120 <==
+            def baz
+              <<~`MSG`
+                foo
+
+                  bar
+              MSG
+            end
+
+==> corrected/081.rb 80 <==
+            <<~`RUBY2`
+                foo
+
+              bar
+            RUBY2
+
+==> corrected/082.rb 124 <==
+            def baz
+              <<~`MSG`
+                foo
+    
+                  bar
+              MSG
+            end
+
+==> corrected/083.rb 84 <==
+            <<~`RUBY2`
+                foo
+    
+              bar
+            RUBY2
+

@@ -1,0 +1,17 @@
+==> .rubocop.yml 239 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Layout/SpaceInsideBlockBraces:
+  EnforcedStyle: space
+  SupportedStyles:
+  - space
+  - no_space
+  SpaceBeforeBlockParameters: true
+
+==> 000.rb 24 <==
+[1, 2, 3].each {it * 2}
+

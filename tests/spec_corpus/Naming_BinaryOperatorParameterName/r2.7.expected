@@ -1,0 +1,52 @@
+==> offenses exit=1 878 <==
+000.rb:1:7: C: [Correctable] Naming/BinaryOperatorParameterName: When defining the `+` operator, name its argument `other`.
+001.rb:1:10: C: [Correctable] Naming/BinaryOperatorParameterName: When defining the `eql?` operator, name its argument `other`.
+002.rb:1:12: C: [Correctable] Naming/BinaryOperatorParameterName: When defining the `equal?` operator, name its argument `other`.
+003.rb:1:7: C: [Correctable] Naming/BinaryOperatorParameterName: When defining the `+` operator, name its argument `other`.
+004.rb:1:7: C: [Correctable] Naming/BinaryOperatorParameterName: When defining the `+` operator, name its argument `other`.
+005.rb:1:7: C: [Correctable] Naming/BinaryOperatorParameterName: When defining the `+` operator, name its argument `other`.
+006.rb:1:7: C: [Correctable] Naming/BinaryOperatorParameterName: When defining the `+` operator, name its argument `other`.
+
+==> autocorrect exit=0 864 <==
+000.rb:1:7: C: [Corrected] Naming/BinaryOperatorParameterName: When defining the `+` operator, name its argument `other`.
+001.rb:1:10: C: [Corrected] Naming/BinaryOperatorParameterName: When defining the `eql?` operator, name its argument `other`.
+002.rb:1:12: C: [Corrected] Naming/BinaryOperatorParameterName: When defining the `equal?` operator, name its argument `other`.
+003.rb:1:7: C: [Corrected] Naming/BinaryOperatorParameterName: When defining the `+` operator, name its argument `other`.
+004.rb:1:7: C: [Corrected] Naming/BinaryOperatorParameterName: When defining the `+` operator, name its argument `other`.
+005.rb:1:7: C: [Corrected] Naming/BinaryOperatorParameterName: When defining the `+` operator, name its argument `other`.
+006.rb:1:7: C: [Corrected] Naming/BinaryOperatorParameterName: When defining the `+` operator, name its argument `other`.
+
+==> corrected/000.rb 18 <==
+def +(other); end
+
+==> corrected/001.rb 21 <==
+def eql?(other); end
+
+==> corrected/002.rb 23 <==
+def equal?(other); end
+
+==> corrected/003.rb 24 <==
+def + other
+  other
+end
+
+==> corrected/004.rb 61 <==
+def +(other)
+  lvar = 'lvar'
+  do_something(other, lvar)
+end
+
+==> corrected/005.rb 93 <==
+def +(other)
+  result = other
+  [1, 2, 3].each do |foo|
+    result += foo
+  end
+  result
+end
+
+==> corrected/006.rb 40 <==
+def +(other)
+  other = do_something
+end
+

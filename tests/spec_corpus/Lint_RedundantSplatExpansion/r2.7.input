@@ -1,0 +1,179 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 14 <==
+*, rhs = *node
+==> 001.rb 18 <==
+lhs, *args = *node
+==> 002.rb 6 <==
+a = *b
+==> 003.rb 10 <==
+a = *1..10
+==> 004.rb 19 <==
+a = [10, 11, *1..9]
+==> 005.rb 33 <==
+foo = [1, 2, 3]
+array.push(*foo)
+
+==> 006.rb 23 <==
+array.push(*[1, 2, 3])
+
+==> 007.rb 15 <==
+a = *[1, 2, 3]
+
+==> 008.rb 17 <==
+array.push(*'a')
+
+==> 009.rb 20 <==
+array.push(*"#{a}")
+
+==> 010.rb 15 <==
+array.push(*1)
+
+==> 011.rb 17 <==
+array.push(*1.1)
+
+==> 012.rb 25 <==
+a = *Array.new(3) { 42 }
+
+==> 013.rb 26 <==
+@a = *Array.new(3) { 42 }
+
+==> 014.rb 27 <==
+@@a = *Array.new(3) { 42 }
+
+==> 015.rb 26 <==
+$a = *Array.new(3) { 42 }
+
+==> 016.rb 25 <==
+A = *Array.new(3) { 42 }
+
+==> 017.rb 27 <==
+a = *::Array.new(3) { 42 }
+
+==> 018.rb 41 <==
+case foo
+when *[first, second]
+  bar
+end
+
+==> 019.rb 42 <==
+case foo
+when *%w(first second)
+  bar
+end
+
+==> 020.rb 45 <==
+case foo
+when *%W(#{first} second)
+  bar
+end
+
+==> 021.rb 42 <==
+case foo
+when *%i(first second)
+  baz
+end
+
+==> 022.rb 45 <==
+case foo
+when *%I(#{first} second)
+  baz
+end
+
+==> 023.rb 45 <==
+baz = [1, 2, 3]
+case foo
+when *baz
+  bar
+end
+
+==> 024.rb 45 <==
+case foo
+when *Array.new(3) { 42 }
+  bar
+end
+
+==> 025.rb 46 <==
+begin
+  foo
+rescue *[First, Second]
+  bar
+end
+
+==> 026.rb 72 <==
+ERRORS = [FirstError, SecondError]
+begin
+  foo
+rescue *ERRORS
+  bar
+end
+
+==> 027.rb 58 <==
+begin
+  foo
+rescue *Array.new(3) { 42 }
+  bad_example
+end
+
+==> 028.rb 28 <==
+case foo
+when *[]
+  bar
+end
+
+==> 029.rb 30 <==
+case foo
+when *%w()
+  bar
+end
+
+==> 030.rb 33 <==
+begin
+  foo
+rescue *[]
+  bar
+end
+
+==> 031.rb 18 <==
+do_something(*[])
+
+==> 032.rb 6 <==
+[*[]]
+
+==> 033.rb 25 <==
+[1, 2, *[3, 4, 5], 6, 7]
+
+==> 034.rb 33 <==
+['a', 'b', *%w(c d e), 'f', 'g']
+
+==> 035.rb 28 <==
+["a", "b", *%W(#{one} two)]
+
+==> 036.rb 17 <==
+["a", "b", *"c"]
+
+==> 037.rb 36 <==
+[1, 2, *[3, 4, 5].map(&:to_s), 6, 7]
+==> 038.rb 18 <==
+[*Array.new(foo)]
+
+==> 039.rb 26 <==
+[1, 2, *Array.new(foo), 6]
+==> 040.rb 20 <==
+[*::Array.new(foo)]
+
+==> 041.rb 30 <==
+send(method, *Array.new(foo))
+
+==> 042.rb 23 <==
+[:a, :b, *%i(c d), :e]
+
+==> 043.rb 30 <==
+[:a, :b, *%I(#{one} two), :e]
+

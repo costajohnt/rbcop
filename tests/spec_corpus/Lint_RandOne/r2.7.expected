@@ -1,0 +1,22 @@
+==> offenses exit=1 929 <==
+000.rb:1:1: W: Lint/RandOne: `rand 1` always returns `0`. Perhaps you meant `rand(2)` or `rand`?
+001.rb:1:1: W: Lint/RandOne: `rand(-1)` always returns `0`. Perhaps you meant `rand(2)` or `rand`?
+002.rb:1:1: W: Lint/RandOne: `rand(1.0)` always returns `0`. Perhaps you meant `rand(2)` or `rand`?
+003.rb:1:1: W: Lint/RandOne: `rand(-1.0)` always returns `0`. Perhaps you meant `rand(2)` or `rand`?
+007.rb:1:1: W: Lint/RandOne: `Kernel.rand(1)` always returns `0`. Perhaps you meant `rand(2)` or `rand`?
+008.rb:1:1: W: Lint/RandOne: `Kernel.rand(-1)` always returns `0`. Perhaps you meant `rand(2)` or `rand`?
+009.rb:1:1: W: Lint/RandOne: `Kernel.rand 1.0` always returns `0`. Perhaps you meant `rand(2)` or `rand`?
+010.rb:1:1: W: Lint/RandOne: `Kernel.rand(-1.0)` always returns `0`. Perhaps you meant `rand(2)` or `rand`?
+014.rb:1:1: W: Lint/RandOne: `::Kernel.rand(1)` always returns `0`. Perhaps you meant `rand(2)` or `rand`?
+
+==> autocorrect exit=1 929 <==
+000.rb:1:1: W: Lint/RandOne: `rand 1` always returns `0`. Perhaps you meant `rand(2)` or `rand`?
+001.rb:1:1: W: Lint/RandOne: `rand(-1)` always returns `0`. Perhaps you meant `rand(2)` or `rand`?
+002.rb:1:1: W: Lint/RandOne: `rand(1.0)` always returns `0`. Perhaps you meant `rand(2)` or `rand`?
+003.rb:1:1: W: Lint/RandOne: `rand(-1.0)` always returns `0`. Perhaps you meant `rand(2)` or `rand`?
+007.rb:1:1: W: Lint/RandOne: `Kernel.rand(1)` always returns `0`. Perhaps you meant `rand(2)` or `rand`?
+008.rb:1:1: W: Lint/RandOne: `Kernel.rand(-1)` always returns `0`. Perhaps you meant `rand(2)` or `rand`?
+009.rb:1:1: W: Lint/RandOne: `Kernel.rand 1.0` always returns `0`. Perhaps you meant `rand(2)` or `rand`?
+010.rb:1:1: W: Lint/RandOne: `Kernel.rand(-1.0)` always returns `0`. Perhaps you meant `rand(2)` or `rand`?
+014.rb:1:1: W: Lint/RandOne: `::Kernel.rand(1)` always returns `0`. Perhaps you meant `rand(2)` or `rand`?
+

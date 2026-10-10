@@ -1,0 +1,17 @@
+==> .rubocop.yml 197 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/ClassAndModuleChildren:
+  EnforcedStyle: nested
+  EnforcedStyleForClasses: compact
+
+==> 000.rb 42 <==
+class FooClass
+  class BarClass
+  end
+end
+

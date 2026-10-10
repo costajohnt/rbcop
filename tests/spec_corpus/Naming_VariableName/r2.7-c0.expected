@@ -1,0 +1,34 @@
+==> offenses exit=1 1071 <==
+000.rb:1:1: C: Naming/VariableName: Use snake_case for variable names.
+001.rb:2:1: C: Naming/VariableName: Use snake_case for variable names.
+002.rb:1:1: C: Naming/VariableName: Use snake_case for variable names.
+003.rb:1:1: C: Naming/VariableName: Use snake_case for variable names.
+004.rb:1:1: C: Naming/VariableName: Use snake_case for variable names.
+005.rb:1:12: C: Naming/VariableName: Use snake_case for variable names.
+006.rb:1:9: C: Naming/VariableName: Use snake_case for variable names.
+007.rb:1:10: C: Naming/VariableName: Use snake_case for variable names.
+008.rb:1:9: C: Naming/VariableName: Use snake_case for variable names.
+009.rb:1:11: C: Naming/VariableName: Use snake_case for variable names.
+010.rb:1:10: C: Naming/VariableName: Use snake_case for variable names.
+011.rb:1:1: C: Naming/VariableName: Use snake_case for variable names.
+011.rb:2:1: C: Naming/VariableName: Use snake_case for variable names.
+011.rb:4:14: C: Naming/VariableName: Use snake_case for variable names.
+011.rb:4:24: C: Naming/VariableName: Use snake_case for variable names.
+
+==> autocorrect exit=1 1071 <==
+000.rb:1:1: C: Naming/VariableName: Use snake_case for variable names.
+001.rb:2:1: C: Naming/VariableName: Use snake_case for variable names.
+002.rb:1:1: C: Naming/VariableName: Use snake_case for variable names.
+003.rb:1:1: C: Naming/VariableName: Use snake_case for variable names.
+004.rb:1:1: C: Naming/VariableName: Use snake_case for variable names.
+005.rb:1:12: C: Naming/VariableName: Use snake_case for variable names.
+006.rb:1:9: C: Naming/VariableName: Use snake_case for variable names.
+007.rb:1:10: C: Naming/VariableName: Use snake_case for variable names.
+008.rb:1:9: C: Naming/VariableName: Use snake_case for variable names.
+009.rb:1:11: C: Naming/VariableName: Use snake_case for variable names.
+010.rb:1:10: C: Naming/VariableName: Use snake_case for variable names.
+011.rb:1:1: C: Naming/VariableName: Use snake_case for variable names.
+011.rb:2:1: C: Naming/VariableName: Use snake_case for variable names.
+011.rb:4:14: C: Naming/VariableName: Use snake_case for variable names.
+011.rb:4:24: C: Naming/VariableName: Use snake_case for variable names.
+

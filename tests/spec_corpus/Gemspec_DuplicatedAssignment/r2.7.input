@@ -1,0 +1,130 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.gemspec 86 <==
+Gem::Specification.new do |spec|
+  spec.name = 'rubocop'
+  spec.name = 'rubocop2'
+end
+
+==> 001.gemspec 75 <==
+Gem::Specification.new do
+  _1.name = 'rubocop'
+  _1.name = 'rubocop2'
+end
+
+==> 002.gemspec 148 <==
+require 'rubocop/version'
+
+Gem::Specification.new do |spec|
+  spec.version = RuboCop::Version::STRING
+  spec.version = RuboCop::Version::STRING
+end
+
+==> 003.gemspec 88 <==
+::Gem::Specification.new do |spec|
+  spec.name = 'rubocop'
+  spec.name = 'rubocop2'
+end
+
+==> 004.gemspec 113 <==
+::Gem::Specification.new do |spec|
+  spec.required_ruby_version = '2.5'
+  spec.required_ruby_version = '2.6'
+end
+
+==> 005.gemspec 146 <==
+::Gem::Specification.new do |spec|
+  spec.metadata['key'] = 1
+  spec.metadata[:key] = 2
+  spec.metadata['key'] = 2
+  spec.metadata['key'] = 3
+end
+
+==> 006.gemspec 124 <==
+Gem::Specification.new do |spec|
+  spec.requirements << 'libmagick, v6.0'
+  spec.requirements << 'A good graphics card'
+end
+
+==> 007.gemspec 153 <==
+Gem::Specification.new do |spec|
+  spec.add_runtime_dependency('parallel', '~> 1.10')
+  spec.add_runtime_dependency('parser', '>= 2.3.3.1', '< 3.0')
+end
+
+==> 008.gemspec 89 <==
+Gem::Specification.new do |spec|
+  foo = Foo.new
+  foo.name = :foo
+  foo.name = :bar
+end
+
+==> 009.gemspec 117 <==
+Gem::Specification.new do |spec|
+  spec.name = 'gem1'
+end
+
+Gem::Specification.new do |spec|
+  spec.name = 'gem2'
+end
+
+==> 010.gemspec 143 <==
+Gem::Specification.new do |spec|
+  spec.metadata['key'] = 'value1'
+end
+
+Gem::Specification.new do |spec|
+  spec.metadata['key'] = 'value2'
+end
+
+==> 011.gemspec 91 <==
+Gem::Specification.new do |spec|
+  spec.metadata['foo'] = 1
+  spec.metadata['bar'] = 2
+end
+
+==> 012.gemspec 87 <==
+Gem::Specification.new do |spec|
+  spec.misc['foo'] = 1
+  spec.metadata['foo'] = 2
+end
+
+==> 013.gemspec 97 <==
+Gem::Specification.new do |spec|
+  spec.metadata = { 'foo' => 1 }
+  spec.metadata['foo'] = 1
+end
+
+==> 014.gemspec 177 <==
+Gem::Specification.new do |spec|
+  spec.authors = []
+  spec.authors[0] = "author-1"
+  spec.authors[1] = "author-2"
+  spec.authors << "author-3"
+  spec.authors << "author-4"
+end
+
+==> 015.gemspec 91 <==
+Gem::Specification.new do |spec|
+  spec.metadata[foo()] = 1
+  spec.metadata[foo()] = 2
+end
+
+==> 016.gemspec 83 <==
+Gem::Specification.new do |spec|
+  spec.metadata.[]=(1)
+  spec.metadata.[]=(2)
+end
+
+==> 017.gemspec 89 <==
+Gem::Specification.new do |spec|
+  spec.metadata[1, 2] = 3
+  spec.metadata[1, 2] = 3
+end
+

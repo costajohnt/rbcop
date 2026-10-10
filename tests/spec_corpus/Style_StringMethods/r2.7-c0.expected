@@ -1,0 +1,14 @@
+==> offenses exit=1 164 <==
+000.rb:1:13: C: [Correctable] Style/StringMethods: Prefer `to_sym` over `intern`.
+001.rb:1:12: C: [Correctable] Style/StringMethods: Prefer `to_sym` over `intern`.
+
+==> autocorrect exit=0 160 <==
+000.rb:1:13: C: [Corrected] Style/StringMethods: Prefer `to_sym` over `intern`.
+001.rb:1:12: C: [Corrected] Style/StringMethods: Prefer `to_sym` over `intern`.
+
+==> corrected/000.rb 19 <==
+'something'.to_sym
+
+==> corrected/001.rb 18 <==
+something&.to_sym
+

@@ -1,0 +1,19 @@
+==> offenses exit=1 291 <==
+001.rb:1:1: C: [Correctable] Style/HashTransformKeys: Prefer `transform_keys` over `to_h {...}`.
+002.rb:1:1: C: [Correctable] Style/HashTransformKeys: Prefer `transform_keys` over `to_h {...}`.
+003.rb:1:1: C: [Correctable] Style/HashTransformKeys: Prefer `transform_keys` over `to_h {...}`.
+
+==> autocorrect exit=0 285 <==
+001.rb:1:1: C: [Corrected] Style/HashTransformKeys: Prefer `transform_keys` over `to_h {...}`.
+002.rb:1:1: C: [Corrected] Style/HashTransformKeys: Prefer `transform_keys` over `to_h {...}`.
+003.rb:1:1: C: [Corrected] Style/HashTransformKeys: Prefer `transform_keys` over `to_h {...}`.
+
+==> corrected/001.rb 43 <==
+{a: 1, b: 2}.transform_keys {|k| k.to_sym}
+
+==> corrected/002.rb 41 <==
+x.merge(y).transform_keys {|k| k.to_sym}
+
+==> corrected/003.rb 38 <==
+x.tally.transform_keys {|k| k.to_sym}
+

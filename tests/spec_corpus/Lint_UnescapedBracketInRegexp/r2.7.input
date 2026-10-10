@@ -1,0 +1,161 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 4 <==
+/]/
+
+==> 001.rb 10 <==
+/abc]123/
+
+==> 002.rb 12 <==
+/abc\\]123/
+
+==> 003.rb 11 <==
+/abc]123/i
+
+==> 004.rb 11 <==
+/abc]123]/
+
+==> 005.rb 11 <==
+/abc\]123/
+
+==> 006.rb 8 <==
+/[abc]/
+
+==> 007.rb 7 <==
+/[^]]/
+
+==> 008.rb 8 <==
+/[^]x]/
+
+==> 009.rb 13 <==
+/foo[^]]bar/
+
+==> 010.rb 9 <==
+/[^]\]]/
+
+==> 011.rb 9 <==
+/[^]]x]/
+
+==> 012.rb 7 <==
+/[a]]/
+
+==> 013.rb 14 <==
+/(?<=[<>=:])/
+
+==> 014.rb 6 <==
+%r{]}
+
+==> 015.rb 12 <==
+%r{abc]123}
+
+==> 016.rb 13 <==
+%r{abc]123}i
+
+==> 017.rb 13 <==
+%r{abc]123]}
+
+==> 018.rb 13 <==
+%r{abc\]123}
+
+==> 019.rb 10 <==
+%r{[abc]}
+
+==> 020.rb 16 <==
+%r{(?<=[<>=:])}
+
+==> 021.rb 16 <==
+Regexp.new(']')
+
+==> 022.rb 22 <==
+Regexp.new('abc]123')
+
+==> 023.rb 27 <==
+Regexp.new('abc]123', 'i')
+
+==> 024.rb 23 <==
+Regexp.new('abc]123]')
+
+==> 025.rb 23 <==
+Regexp.new('abc\]123')
+
+==> 026.rb 20 <==
+Regexp.new('[abc]')
+
+==> 027.rb 32 <==
+Regexp.new("(?:#{arr[1]}:\s*)")
+
+==> 028.rb 16 <==
+Regexp.new("+")
+
+==> 029.rb 41 <==
+[Regexp.new('+'), Regexp.new('abc]123')]
+
+==> 030.rb 16 <==
+Regexp.new("*")
+
+==> 031.rb 41 <==
+[Regexp.new('*'), Regexp.new('abc]123')]
+
+==> 032.rb 19 <==
+Regexp.new("{42}")
+
+==> 033.rb 44 <==
+[Regexp.new('{42}'), Regexp.new('abc]123')]
+
+==> 034.rb 19 <==
+Regexp.new("\xff")
+
+==> 035.rb 44 <==
+[Regexp.new('\xff'), Regexp.new('abc]123')]
+
+==> 036.rb 20 <==
+Regexp.compile(']')
+
+==> 037.rb 26 <==
+Regexp.compile('abc]123')
+
+==> 038.rb 31 <==
+Regexp.compile('abc]123', 'i')
+
+==> 039.rb 27 <==
+Regexp.compile('abc]123]')
+
+==> 040.rb 27 <==
+Regexp.compile('abc\]123')
+
+==> 041.rb 24 <==
+Regexp.compile('[abc]')
+
+==> 042.rb 36 <==
+Regexp.compile("(?:#{arr[1]}:\s*)")
+
+==> 043.rb 20 <==
+Regexp.compile("+")
+
+==> 044.rb 49 <==
+[Regexp.compile('+'), Regexp.compile('abc]123')]
+
+==> 045.rb 20 <==
+Regexp.compile("*")
+
+==> 046.rb 49 <==
+[Regexp.compile('*'), Regexp.compile('abc]123')]
+
+==> 047.rb 23 <==
+Regexp.compile("{42}")
+
+==> 048.rb 52 <==
+[Regexp.compile('{42}'), Regexp.compile('abc]123')]
+
+==> 049.rb 23 <==
+Regexp.compile("\xff")
+
+==> 050.rb 52 <==
+[Regexp.compile('\xff'), Regexp.compile('abc]123')]
+

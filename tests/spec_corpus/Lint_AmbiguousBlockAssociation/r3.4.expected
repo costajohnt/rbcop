@@ -1,0 +1,9 @@
+==> offenses exit=1 173 <==
+000.rb:1:1: W: [Correctable] Lint/AmbiguousBlockAssociation: Parenthesize the param `a { puts it }` to make sure that the block will be associated with the `a` method call.
+
+==> autocorrect exit=0 171 <==
+000.rb:1:1: W: [Corrected] Lint/AmbiguousBlockAssociation: Parenthesize the param `a { puts it }` to make sure that the block will be associated with the `a` method call.
+
+==> corrected/000.rb 27 <==
+some_method(a { puts it })
+

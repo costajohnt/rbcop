@@ -1,0 +1,136 @@
+==> .rubocop.yml 306 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/WordArray:
+  MinSize: 0
+  WordRegex: !ruby/regexp /\A(?:\p{Word}|\p{Word}-\p{Word}|\n|\t)+\z/
+  EnforcedStyle: percent
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: "()"
+
+==> 000.rb 24 <==
+['one', 'two', 'three']
+
+==> 001.rb 24 <==
+["one", "two", "three"]
+
+==> 002.rb 26 <==
+['foo', 'bar', 'foo-bar']
+
+==> 003.rb 34 <==
+["ВУЗ", "вуз", "中文网"]
+
+==> 004.rb 13 <==
+["one", ?\n]
+
+==> 005.rb 21 <==
+["one
+", "hi	there"]
+
+==> 006.rb 23 <==
+["one\n", "hi\tthere"]
+
+==> 007.rb 29 <==
+["one space", "two", "three"]
+==> 008.rb 17 <==
+["one", "two", 3]
+==> 009.rb 17 <==
+%w(one two three)
+==> 010.rb 20 <==
+["", "two", "three"]
+==> 011.rb 13 <==
+['-', '----']
+==> 012.rb 37 <==
+[<<~FOO, <<~BAR]
+  foo
+FOO
+  bar
+BAR
+
+==> 013.rb 33 <==
+['foo', 'bar', <<~BAZ]
+  baz
+BAZ
+
+==> 014.rb 28 <==
+foo(['bar', 'baz']) { qux }
+
+==> 015.rb 23 <==
+["one", "two", "three"]
+==> 016.rb 104 <==
+[
+"foo", # comment here
+"bar", # this thing was done because of a bug
+"baz" # do not delete this line
+]
+
+==> 017.rb 31 <==
+[
+"foo",
+"bar",
+"baz"
+] # test
+
+==> 018.rb 26 <==
+['one', %q(two), 'three']
+
+==> 019.rb 8 <==
+['one']
+
+==> 020.rb 28 <==
+[%|one|, %Q(two), ?\n, ?\t]
+
+==> 021.rb 24 <==
+['one',
+'two', 'three']
+
+==> 022.rb 24 <==
+[
+"foo",
+"bar",
+"baz"
+]
+
+==> 023.rb 43 <==
+["foo", "bar", "baz",
+"boz", "buz",
+"biz"]
+
+==> 024.rb 36 <==
+['one', 'two', 'three']
+%w(a b c d)
+
+==> 025.rb 32 <==
+['one', 'two', 'three']
+%w(a b)
+
+==> 026.rb 25 <==
+%w(one\ two three\ four)
+
+==> 027.rb 33 <==
+%w(% %i %I %q %Q %r %s %w %W %x)
+
+==> 028.rb 20 <==
+A = ["one", "two",]
+
+==> 029.rb 39 <==
+[
+  ['one', 'One'],
+  ['two', 'Two']
+]
+
+==> 030.rb 69 <==
+[
+  ['one', 'One'],
+  ['two', 'Two'],
+  ['forty two', 'Forty Two']
+]
+
+==> 031.rb 23 <==
+[['one', 'One'], 2, 3]
+

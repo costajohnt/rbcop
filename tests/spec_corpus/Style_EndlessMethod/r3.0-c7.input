@@ -1,0 +1,21 @@
+==> .rubocop.yml 166 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Style/EndlessMethod:
+  EnforcedStyle: require_single_line
+
+==> 000.rb 27 <==
+def a
+  b
+    .c { d }
+end
+
+==> 001.rb 20 <==
+def a
+  b { c }
+end
+

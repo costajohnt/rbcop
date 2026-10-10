@@ -1,0 +1,195 @@
+==> offenses exit=1 2267 <==
+000.rb:1:1: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+001.rb:1:1: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+002.rb:1:1: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+003.rb:1:1: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+004.rb:1:1: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+005.rb:1:1: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+009.rb:2:25: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+010.rb:5:1: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+011.rb:1:1: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+012.rb:2:1: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+012.rb:6:1: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+013.rb:1:1: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+014.rb:1:16: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+015.rb:4:7: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+016.rb:3:5: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+017.rb:4:5: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+018.rb:1:30: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+019.rb:1:1: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+020.rb:1:1: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+021.rb:1:16: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+022.rb:4:7: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+023.rb:3:5: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+024.rb:4:5: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+025.rb:1:30: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+026.rb:1:1: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+027.rb:1:1: C: [Correctable] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+
+==> autocorrect exit=0 2215 <==
+000.rb:1:1: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+001.rb:1:1: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+002.rb:1:1: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+003.rb:1:1: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+004.rb:1:1: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+005.rb:1:1: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+009.rb:2:25: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+010.rb:5:1: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+011.rb:1:1: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+012.rb:2:1: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+012.rb:6:1: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+013.rb:1:1: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+014.rb:1:16: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+015.rb:4:7: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+016.rb:3:5: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+017.rb:4:5: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+018.rb:1:30: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+019.rb:1:1: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+020.rb:1:1: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+021.rb:1:16: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+022.rb:4:7: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+023.rb:3:5: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+024.rb:4:5: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+025.rb:1:30: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+026.rb:1:1: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+027.rb:1:1: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+
+==> corrected/000.rb 18 <==
+loop do
+  top
+end
+
+==> corrected/001.rb 18 <==
+loop do
+  top
+end
+
+==> corrected/002.rb 18 <==
+loop do
+  top
+end
+
+==> corrected/003.rb 18 <==
+loop do
+  top
+end
+
+==> corrected/004.rb 18 <==
+loop do
+  top
+end
+
+==> corrected/005.rb 18 <==
+loop do
+  top
+end
+
+==> corrected/009.rb 45 <==
+a = nil
+loop { a = next_value or break }
+p a
+
+==> corrected/010.rb 217 <==
+while true
+  a = 42
+  break
+end
+loop do
+  # The variable `a` already exists here, having been introduced in the
+  # above `while` loop. We can therefore safely change it too `Kernel#loop`.
+  a = 43
+  break
+end
+puts a
+
+==> corrected/011.rb 29 <==
+loop do
+  a = 43
+  break
+end
+
+==> corrected/012.rb 153 <==
+a = 0
+loop do
+  a = 42 # `a` is in scope outside of the `while`
+  break
+end
+loop do
+  a = 43 # `a` is in scope outside of the `until`
+  break
+end
+puts a
+
+==> corrected/013.rb 38 <==
+loop do
+  @a = 42
+  break
+end
+puts @a
+
+==> corrected/014.rb 34 <==
+loop { something += 1 } # comment
+
+==> corrected/015.rb 75 <==
+# comment
+loop do
+  something 1, # comment 1
+      # comment 2
+      2
+end
+
+==> corrected/016.rb 65 <==
+loop do # comment 1
+  something += 1 # comment 2
+end # comment 3
+
+==> corrected/017.rb 51 <==
+loop do
+  something += 1
+  something_else += 1
+end
+
+==> corrected/018.rb 38 <==
+loop { something and something_else }
+
+==> corrected/019.rb 12 <==
+loop do
+end
+
+==> corrected/020.rb 12 <==
+loop do
+end
+
+==> corrected/021.rb 34 <==
+loop { something += 1 } # comment
+
+==> corrected/022.rb 75 <==
+# comment
+loop do
+  something 1, # comment 1
+      # comment 2
+      2
+end
+
+==> corrected/023.rb 65 <==
+loop do # comment 1
+  something += 1 # comment 2
+end # comment 3
+
+==> corrected/024.rb 51 <==
+loop do
+  something += 1
+  something_else += 1
+end
+
+==> corrected/025.rb 38 <==
+loop { something and something_else }
+
+==> corrected/026.rb 12 <==
+loop do
+end
+
+==> corrected/027.rb 12 <==
+loop do
+end
+

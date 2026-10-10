@@ -1,0 +1,34 @@
+==> .rubocop.yml 158 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/NonNilCheck:
+  IncludeSemanticChanges: true
+
+==> 000.rb 8 <==
+!x.nil?
+
+==> 001.rb 21 <==
+puts b unless x.nil?
+
+==> 002.rb 6 <==
+x.nil?
+==> 003.rb 2 <==
+!x
+==> 004.rb 11 <==
+not x.nil?
+
+==> 005.rb 19 <==
+my_var.nil? ? 1 : 0
+==> 006.rb 9 <==
+x != nil
+
+==> 007.rb 6 <==
+!nil?
+
+==> 008.rb 38 <==
+return nil unless (line =~ //) != nil
+

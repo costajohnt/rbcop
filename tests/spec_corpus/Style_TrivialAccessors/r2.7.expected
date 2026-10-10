@@ -1,0 +1,77 @@
+==> offenses exit=1 1037 <==
+000.rb:2:3: C: [Correctable] Style/TrivialAccessors: Use `attr_reader` to define trivial reader methods.
+001.rb:2:3: C: [Correctable] Style/TrivialAccessors: Use `attr_writer` to define trivial writer methods.
+002.rb:2:3: C: [Correctable] Style/TrivialAccessors: Use `attr_reader` to define trivial reader methods.
+003.rb:2:3: C: [Correctable] Style/TrivialAccessors: Use `attr_writer` to define trivial writer methods.
+004.rb:2:3: C: [Correctable] Style/TrivialAccessors: Use `attr_reader` to define trivial reader methods.
+005.rb:2:3: C: [Correctable] Style/TrivialAccessors: Use `attr_writer` to define trivial writer methods.
+006.rb:2:3: C: [Correctable] Style/TrivialAccessors: Use `attr_reader` to define trivial reader methods.
+007.rb:2:3: C: [Correctable] Style/TrivialAccessors: Use `attr_writer` to define trivial writer methods.
+009.rb:2:11: C: Style/TrivialAccessors: Use `attr_reader` to define trivial reader methods.
+027.rb:4:7: C: [Correctable] Style/TrivialAccessors: Use `attr_reader` to define trivial reader methods.
+
+==> autocorrect exit=1 1019 <==
+000.rb:2:3: C: [Corrected] Style/TrivialAccessors: Use `attr_reader` to define trivial reader methods.
+001.rb:2:3: C: [Corrected] Style/TrivialAccessors: Use `attr_writer` to define trivial writer methods.
+002.rb:2:3: C: [Corrected] Style/TrivialAccessors: Use `attr_reader` to define trivial reader methods.
+003.rb:2:3: C: [Corrected] Style/TrivialAccessors: Use `attr_writer` to define trivial writer methods.
+004.rb:2:3: C: [Corrected] Style/TrivialAccessors: Use `attr_reader` to define trivial reader methods.
+005.rb:2:3: C: [Corrected] Style/TrivialAccessors: Use `attr_writer` to define trivial writer methods.
+006.rb:2:3: C: [Corrected] Style/TrivialAccessors: Use `attr_reader` to define trivial reader methods.
+007.rb:2:3: C: [Corrected] Style/TrivialAccessors: Use `attr_writer` to define trivial writer methods.
+009.rb:2:11: C: Style/TrivialAccessors: Use `attr_reader` to define trivial reader methods.
+027.rb:4:7: C: [Corrected] Style/TrivialAccessors: Use `attr_reader` to define trivial reader methods.
+
+==> corrected/000.rb 33 <==
+class Foo
+  attr_reader :foo
+end
+
+==> corrected/001.rb 33 <==
+class Foo
+  attr_writer :foo
+end
+
+==> corrected/002.rb 57 <==
+class Foo
+  class << self
+    attr_reader :foo
+  end
+end
+
+==> corrected/003.rb 57 <==
+class Foo
+  class << self
+    attr_writer :foo
+  end
+end
+
+==> corrected/004.rb 33 <==
+class Foo
+  attr_reader :foo
+end
+
+==> corrected/005.rb 33 <==
+class Foo
+  attr_writer :foo
+end
+
+==> corrected/006.rb 33 <==
+class Foo
+  attr_reader :foo
+end
+
+==> corrected/007.rb 33 <==
+class Foo
+  attr_writer :foo
+end
+
+==> corrected/027.rb 95 <==
+something.instance_eval do
+  class << @blah
+    begin
+      attr_reader :bar
+    end
+  end
+end
+

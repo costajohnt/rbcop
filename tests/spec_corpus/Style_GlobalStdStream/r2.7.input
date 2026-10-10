@@ -1,0 +1,36 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 102 <==
+STDOUT.puts('hello')
+
+hash = { out: STDOUT, key: value }
+
+def m(out = STDOUT)
+  out.puts('hello')
+end
+
+==> 001.rb 23 <==
+::STDOUT.puts('hello')
+
+==> 002.rb 25 <==
+SOME_CONST.puts('hello')
+
+==> 003.rb 15 <==
+$stdin = STDIN
+
+==> 004.rb 20 <==
+$stdin = SOME_CONST
+
+==> 005.rb 144 <==
+Foo::STDOUT.puts('hello')
+Foo::Bar::STDOUT.puts('hello')
+::Foo::STDOUT.puts('hello')
+::Foo::BaR::STDOUT.puts('hello')
+foo::STDOUT.puts('hello')
+

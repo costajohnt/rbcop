@@ -1,0 +1,51 @@
+==> .rubocop.yml 157 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/SuppressedException:
+  AllowComments: false
+
+==> 000.rb 43 <==
+begin
+  something
+rescue
+  #do nothing
+end
+
+==> 001.rb 51 <==
+begin
+  something
+  return
+rescue
+  file.close
+end
+
+==> 002.rb 34 <==
+def foo
+  do_something
+rescue
+end
+
+==> 003.rb 49 <==
+def foo
+  do_something
+rescue
+  # do nothing
+end
+
+==> 004.rb 39 <==
+def self.foo
+  do_something
+rescue
+end
+
+==> 005.rb 54 <==
+def self.foo
+  do_something
+rescue
+  # do nothing
+end
+

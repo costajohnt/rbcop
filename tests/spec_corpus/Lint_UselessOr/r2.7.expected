@@ -1,0 +1,368 @@
+==> offenses exit=1 8793 <==
+000.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_a` always returns a truthy value.
+001.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_a` always returns a truthy value.
+002.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_a` always returns a truthy value.
+003.rb:1:15: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_a` always returns a truthy value.
+004.rb:1:17: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_a` always returns a truthy value.
+009.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_c` always returns a truthy value.
+010.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_c` always returns a truthy value.
+011.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_c` always returns a truthy value.
+012.rb:1:15: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_c` always returns a truthy value.
+013.rb:1:17: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_c` always returns a truthy value.
+018.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_d` always returns a truthy value.
+019.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_d` always returns a truthy value.
+020.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_d` always returns a truthy value.
+021.rb:1:15: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_d` always returns a truthy value.
+022.rb:1:17: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_d` always returns a truthy value.
+027.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_i` always returns a truthy value.
+028.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_i` always returns a truthy value.
+029.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_i` always returns a truthy value.
+030.rb:1:15: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_i` always returns a truthy value.
+031.rb:1:17: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_i` always returns a truthy value.
+036.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_f` always returns a truthy value.
+037.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_f` always returns a truthy value.
+038.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_f` always returns a truthy value.
+039.rb:1:15: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_f` always returns a truthy value.
+040.rb:1:17: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_f` always returns a truthy value.
+045.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_h` always returns a truthy value.
+046.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_h` always returns a truthy value.
+047.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_h` always returns a truthy value.
+048.rb:1:15: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_h` always returns a truthy value.
+049.rb:1:17: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_h` always returns a truthy value.
+054.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_r` always returns a truthy value.
+055.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_r` always returns a truthy value.
+056.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_r` always returns a truthy value.
+057.rb:1:15: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_r` always returns a truthy value.
+058.rb:1:17: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_r` always returns a truthy value.
+063.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_s` always returns a truthy value.
+064.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_s` always returns a truthy value.
+065.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_s` always returns a truthy value.
+066.rb:1:15: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_s` always returns a truthy value.
+067.rb:1:17: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_s` always returns a truthy value.
+072.rb:1:10: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_sym` always returns a truthy value.
+073.rb:1:10: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_sym` always returns a truthy value.
+074.rb:1:10: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_sym` always returns a truthy value.
+075.rb:1:17: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_sym` always returns a truthy value.
+076.rb:1:19: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.to_sym` always returns a truthy value.
+081.rb:1:10: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.intern` always returns a truthy value.
+082.rb:1:10: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.intern` always returns a truthy value.
+083.rb:1:10: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.intern` always returns a truthy value.
+084.rb:1:17: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.intern` always returns a truthy value.
+085.rb:1:19: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.intern` always returns a truthy value.
+090.rb:1:11: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.inspect` always returns a truthy value.
+091.rb:1:11: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.inspect` always returns a truthy value.
+092.rb:1:11: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.inspect` always returns a truthy value.
+093.rb:1:18: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.inspect` always returns a truthy value.
+094.rb:1:20: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.inspect` always returns a truthy value.
+099.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.hash` always returns a truthy value.
+100.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.hash` always returns a truthy value.
+101.rb:1:8: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.hash` always returns a truthy value.
+102.rb:1:15: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.hash` always returns a truthy value.
+103.rb:1:17: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.hash` always returns a truthy value.
+108.rb:1:13: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.object_id` always returns a truthy value.
+109.rb:1:13: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.object_id` always returns a truthy value.
+110.rb:1:13: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.object_id` always returns a truthy value.
+111.rb:1:20: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.object_id` always returns a truthy value.
+112.rb:1:22: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.object_id` always returns a truthy value.
+117.rb:1:10: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.__id__` always returns a truthy value.
+118.rb:1:10: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.__id__` always returns a truthy value.
+119.rb:1:10: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.__id__` always returns a truthy value.
+120.rb:1:17: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.__id__` always returns a truthy value.
+121.rb:1:19: W: [Correctable] Lint/UselessOr: `fallback` will never evaluate because `x.__id__` always returns a truthy value.
+
+==> autocorrect exit=0 10464 <==
+000.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_a` always returns a truthy value.
+001.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_a` always returns a truthy value.
+002.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_a` always returns a truthy value.
+002.rb:1:8: W: [Corrected] Lint/UselessOr: `other_fallback` will never evaluate because `x.to_a` always returns a truthy value.
+003.rb:1:15: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_a` always returns a truthy value.
+004.rb:1:17: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_a` always returns a truthy value.
+009.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_c` always returns a truthy value.
+010.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_c` always returns a truthy value.
+011.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_c` always returns a truthy value.
+011.rb:1:8: W: [Corrected] Lint/UselessOr: `other_fallback` will never evaluate because `x.to_c` always returns a truthy value.
+012.rb:1:15: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_c` always returns a truthy value.
+013.rb:1:17: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_c` always returns a truthy value.
+018.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_d` always returns a truthy value.
+019.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_d` always returns a truthy value.
+020.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_d` always returns a truthy value.
+020.rb:1:8: W: [Corrected] Lint/UselessOr: `other_fallback` will never evaluate because `x.to_d` always returns a truthy value.
+021.rb:1:15: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_d` always returns a truthy value.
+022.rb:1:17: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_d` always returns a truthy value.
+027.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_i` always returns a truthy value.
+028.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_i` always returns a truthy value.
+029.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_i` always returns a truthy value.
+029.rb:1:8: W: [Corrected] Lint/UselessOr: `other_fallback` will never evaluate because `x.to_i` always returns a truthy value.
+030.rb:1:15: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_i` always returns a truthy value.
+031.rb:1:17: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_i` always returns a truthy value.
+036.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_f` always returns a truthy value.
+037.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_f` always returns a truthy value.
+038.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_f` always returns a truthy value.
+038.rb:1:8: W: [Corrected] Lint/UselessOr: `other_fallback` will never evaluate because `x.to_f` always returns a truthy value.
+039.rb:1:15: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_f` always returns a truthy value.
+040.rb:1:17: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_f` always returns a truthy value.
+045.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_h` always returns a truthy value.
+046.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_h` always returns a truthy value.
+047.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_h` always returns a truthy value.
+047.rb:1:8: W: [Corrected] Lint/UselessOr: `other_fallback` will never evaluate because `x.to_h` always returns a truthy value.
+048.rb:1:15: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_h` always returns a truthy value.
+049.rb:1:17: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_h` always returns a truthy value.
+054.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_r` always returns a truthy value.
+055.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_r` always returns a truthy value.
+056.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_r` always returns a truthy value.
+056.rb:1:8: W: [Corrected] Lint/UselessOr: `other_fallback` will never evaluate because `x.to_r` always returns a truthy value.
+057.rb:1:15: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_r` always returns a truthy value.
+058.rb:1:17: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_r` always returns a truthy value.
+063.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_s` always returns a truthy value.
+064.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_s` always returns a truthy value.
+065.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_s` always returns a truthy value.
+065.rb:1:8: W: [Corrected] Lint/UselessOr: `other_fallback` will never evaluate because `x.to_s` always returns a truthy value.
+066.rb:1:15: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_s` always returns a truthy value.
+067.rb:1:17: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_s` always returns a truthy value.
+072.rb:1:10: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_sym` always returns a truthy value.
+073.rb:1:10: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_sym` always returns a truthy value.
+074.rb:1:10: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_sym` always returns a truthy value.
+074.rb:1:10: W: [Corrected] Lint/UselessOr: `other_fallback` will never evaluate because `x.to_sym` always returns a truthy value.
+075.rb:1:17: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_sym` always returns a truthy value.
+076.rb:1:19: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.to_sym` always returns a truthy value.
+081.rb:1:10: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.intern` always returns a truthy value.
+082.rb:1:10: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.intern` always returns a truthy value.
+083.rb:1:10: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.intern` always returns a truthy value.
+083.rb:1:10: W: [Corrected] Lint/UselessOr: `other_fallback` will never evaluate because `x.intern` always returns a truthy value.
+084.rb:1:17: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.intern` always returns a truthy value.
+085.rb:1:19: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.intern` always returns a truthy value.
+090.rb:1:11: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.inspect` always returns a truthy value.
+091.rb:1:11: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.inspect` always returns a truthy value.
+092.rb:1:11: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.inspect` always returns a truthy value.
+092.rb:1:11: W: [Corrected] Lint/UselessOr: `other_fallback` will never evaluate because `x.inspect` always returns a truthy value.
+093.rb:1:18: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.inspect` always returns a truthy value.
+094.rb:1:20: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.inspect` always returns a truthy value.
+099.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.hash` always returns a truthy value.
+100.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.hash` always returns a truthy value.
+101.rb:1:8: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.hash` always returns a truthy value.
+101.rb:1:8: W: [Corrected] Lint/UselessOr: `other_fallback` will never evaluate because `x.hash` always returns a truthy value.
+102.rb:1:15: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.hash` always returns a truthy value.
+103.rb:1:17: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.hash` always returns a truthy value.
+108.rb:1:13: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.object_id` always returns a truthy value.
+109.rb:1:13: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.object_id` always returns a truthy value.
+110.rb:1:13: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.object_id` always returns a truthy value.
+110.rb:1:13: W: [Corrected] Lint/UselessOr: `other_fallback` will never evaluate because `x.object_id` always returns a truthy value.
+111.rb:1:20: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.object_id` always returns a truthy value.
+112.rb:1:22: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.object_id` always returns a truthy value.
+117.rb:1:10: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.__id__` always returns a truthy value.
+118.rb:1:10: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.__id__` always returns a truthy value.
+119.rb:1:10: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.__id__` always returns a truthy value.
+119.rb:1:10: W: [Corrected] Lint/UselessOr: `other_fallback` will never evaluate because `x.__id__` always returns a truthy value.
+120.rb:1:17: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.__id__` always returns a truthy value.
+121.rb:1:19: W: [Corrected] Lint/UselessOr: `fallback` will never evaluate because `x.__id__` always returns a truthy value.
+
+==> corrected/000.rb 7 <==
+x.to_a
+
+==> corrected/001.rb 7 <==
+x.to_a
+
+==> corrected/002.rb 7 <==
+x.to_a
+
+==> corrected/003.rb 14 <==
+foo || x.to_a
+
+==> corrected/004.rb 16 <==
+(foo || x.to_a)
+
+==> corrected/009.rb 7 <==
+x.to_c
+
+==> corrected/010.rb 7 <==
+x.to_c
+
+==> corrected/011.rb 7 <==
+x.to_c
+
+==> corrected/012.rb 14 <==
+foo || x.to_c
+
+==> corrected/013.rb 16 <==
+(foo || x.to_c)
+
+==> corrected/018.rb 7 <==
+x.to_d
+
+==> corrected/019.rb 7 <==
+x.to_d
+
+==> corrected/020.rb 7 <==
+x.to_d
+
+==> corrected/021.rb 14 <==
+foo || x.to_d
+
+==> corrected/022.rb 16 <==
+(foo || x.to_d)
+
+==> corrected/027.rb 7 <==
+x.to_i
+
+==> corrected/028.rb 7 <==
+x.to_i
+
+==> corrected/029.rb 7 <==
+x.to_i
+
+==> corrected/030.rb 14 <==
+foo || x.to_i
+
+==> corrected/031.rb 16 <==
+(foo || x.to_i)
+
+==> corrected/036.rb 7 <==
+x.to_f
+
+==> corrected/037.rb 7 <==
+x.to_f
+
+==> corrected/038.rb 7 <==
+x.to_f
+
+==> corrected/039.rb 14 <==
+foo || x.to_f
+
+==> corrected/040.rb 16 <==
+(foo || x.to_f)
+
+==> corrected/045.rb 7 <==
+x.to_h
+
+==> corrected/046.rb 7 <==
+x.to_h
+
+==> corrected/047.rb 7 <==
+x.to_h
+
+==> corrected/048.rb 14 <==
+foo || x.to_h
+
+==> corrected/049.rb 16 <==
+(foo || x.to_h)
+
+==> corrected/054.rb 7 <==
+x.to_r
+
+==> corrected/055.rb 7 <==
+x.to_r
+
+==> corrected/056.rb 7 <==
+x.to_r
+
+==> corrected/057.rb 14 <==
+foo || x.to_r
+
+==> corrected/058.rb 16 <==
+(foo || x.to_r)
+
+==> corrected/063.rb 7 <==
+x.to_s
+
+==> corrected/064.rb 7 <==
+x.to_s
+
+==> corrected/065.rb 7 <==
+x.to_s
+
+==> corrected/066.rb 14 <==
+foo || x.to_s
+
+==> corrected/067.rb 16 <==
+(foo || x.to_s)
+
+==> corrected/072.rb 9 <==
+x.to_sym
+
+==> corrected/073.rb 9 <==
+x.to_sym
+
+==> corrected/074.rb 9 <==
+x.to_sym
+
+==> corrected/075.rb 16 <==
+foo || x.to_sym
+
+==> corrected/076.rb 18 <==
+(foo || x.to_sym)
+
+==> corrected/081.rb 9 <==
+x.intern
+
+==> corrected/082.rb 9 <==
+x.intern
+
+==> corrected/083.rb 9 <==
+x.intern
+
+==> corrected/084.rb 16 <==
+foo || x.intern
+
+==> corrected/085.rb 18 <==
+(foo || x.intern)
+
+==> corrected/090.rb 10 <==
+x.inspect
+
+==> corrected/091.rb 10 <==
+x.inspect
+
+==> corrected/092.rb 10 <==
+x.inspect
+
+==> corrected/093.rb 17 <==
+foo || x.inspect
+
+==> corrected/094.rb 19 <==
+(foo || x.inspect)
+
+==> corrected/099.rb 7 <==
+x.hash
+
+==> corrected/100.rb 7 <==
+x.hash
+
+==> corrected/101.rb 7 <==
+x.hash
+
+==> corrected/102.rb 14 <==
+foo || x.hash
+
+==> corrected/103.rb 16 <==
+(foo || x.hash)
+
+==> corrected/108.rb 12 <==
+x.object_id
+
+==> corrected/109.rb 12 <==
+x.object_id
+
+==> corrected/110.rb 12 <==
+x.object_id
+
+==> corrected/111.rb 19 <==
+foo || x.object_id
+
+==> corrected/112.rb 21 <==
+(foo || x.object_id)
+
+==> corrected/117.rb 9 <==
+x.__id__
+
+==> corrected/118.rb 9 <==
+x.__id__
+
+==> corrected/119.rb 9 <==
+x.__id__
+
+==> corrected/120.rb 16 <==
+foo || x.__id__
+
+==> corrected/121.rb 18 <==
+(foo || x.__id__)
+

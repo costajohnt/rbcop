@@ -1,0 +1,148 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 48 <==
+class Child < Parent
+  def initialize
+  end
+end
+
+==> 001.rb 74 <==
+class Child < Parent
+  def initialize
+  end
+
+  def do_something
+  end
+end
+
+==> 002.rb 39 <==
+class Child
+  def initialize
+  end
+end
+
+==> 003.rb 48 <==
+class Child < Object
+  def initialize
+  end
+end
+
+==> 004.rb 73 <==
+class Child < Parent
+  Class.new do
+    def initialize
+    end
+  end
+end
+
+==> 005.rb 36 <==
+module M
+  def initialize
+  end
+end
+
+==> 006.rb 58 <==
+class Child < Parent
+  def initialize
+    super
+  end
+end
+
+==> 007.rb 48 <==
+Class.new(Parent) do
+  def initialize
+  end
+end
+
+==> 008.rb 40 <==
+Class.new do
+  def initialize
+  end
+end
+
+==> 009.rb 48 <==
+Class.new(Object) do
+  def initialize
+  end
+end
+
+==> 010.rb 68 <==
+Class.new(Parent) do
+  def initialize
+  end
+
+  do_something(_1)
+end
+
+==> 011.rb 60 <==
+Class.new do
+  def initialize
+  end
+
+  do_something(_1)
+end
+
+==> 012.rb 68 <==
+Class.new(Object) do
+  def initialize
+  end
+
+  do_something(_1)
+end
+
+==> 013.rb 45 <==
+module M
+  def self.included(base)
+  end
+end
+
+==> 014.rb 47 <==
+class Foo
+  def self.inherited(base)
+  end
+end
+
+==> 015.rb 68 <==
+class Foo
+  class << self
+    def inherited(base)
+    end
+  end
+end
+
+==> 016.rb 42 <==
+class Foo
+  def method_added(*)
+  end
+end
+
+==> 017.rb 74 <==
+class Foo
+  def self.inherited(base)
+    do_something
+    super
+  end
+end
+
+==> 018/current.rb 61 <==
+class Child < Parent
+  def initialize
+    @foo = 1
+  end
+end
+
+==> 019/current.rb 87 <==
+module Wrap
+  class Child < Parent
+    def initialize
+      @foo = 1
+    end
+  end
+end
+

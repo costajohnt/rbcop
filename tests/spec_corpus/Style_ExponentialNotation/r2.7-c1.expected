@@ -1,0 +1,14 @@
+==> offenses exit=1 535 <==
+000.rb:1:1: C: Style/ExponentialNotation: Use an exponent divisible by 3 and a mantissa >= 0.1 and < 1000.
+001.rb:1:1: C: Style/ExponentialNotation: Use an exponent divisible by 3 and a mantissa >= 0.1 and < 1000.
+002.rb:1:1: C: Style/ExponentialNotation: Use an exponent divisible by 3 and a mantissa >= 0.1 and < 1000.
+003.rb:1:1: C: Style/ExponentialNotation: Use an exponent divisible by 3 and a mantissa >= 0.1 and < 1000.
+004.rb:1:1: C: Style/ExponentialNotation: Use an exponent divisible by 3 and a mantissa >= 0.1 and < 1000.
+
+==> autocorrect exit=1 535 <==
+000.rb:1:1: C: Style/ExponentialNotation: Use an exponent divisible by 3 and a mantissa >= 0.1 and < 1000.
+001.rb:1:1: C: Style/ExponentialNotation: Use an exponent divisible by 3 and a mantissa >= 0.1 and < 1000.
+002.rb:1:1: C: Style/ExponentialNotation: Use an exponent divisible by 3 and a mantissa >= 0.1 and < 1000.
+003.rb:1:1: C: Style/ExponentialNotation: Use an exponent divisible by 3 and a mantissa >= 0.1 and < 1000.
+004.rb:1:1: C: Style/ExponentialNotation: Use an exponent divisible by 3 and a mantissa >= 0.1 and < 1000.
+

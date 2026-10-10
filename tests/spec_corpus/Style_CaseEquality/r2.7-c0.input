@@ -1,0 +1,34 @@
+==> .rubocop.yml 153 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/CaseEquality:
+  AllowOnConstant: false
+
+==> 000.rb 14 <==
+Array === var
+
+==> 001.rb 16 <==
+Array === a + b
+
+==> 002.rb 15 <==
+Array === !foo
+
+==> 003.rb 18 <==
+puts "No offense"
+
+==> 004.rb 24 <==
+REGEXP_CONSTANT === var
+
+==> 005.rb 14 <==
+/OMG/ === var
+
+==> 006.rb 16 <==
+(1..10) === var
+
+==> 007.rb 12 <==
+foo === var
+

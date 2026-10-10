@@ -1,0 +1,68 @@
+==> offenses exit=1 1031 <==
+001.rb:1:1: W: [Correctable] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+002.rb:1:1: W: [Correctable] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+002.rb:3:1: W: [Correctable] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+002.rb:5:1: W: [Correctable] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+005.rb:5:1: W: [Correctable] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+006.rb:5:1: W: [Correctable] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+008.rb:2:1: W: [Correctable] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+008.rb:4:1: W: [Correctable] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+008.rb:5:1: W: [Correctable] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+009.rb:3:24: W: [Correctable] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+
+==> autocorrect exit=0 1011 <==
+001.rb:1:1: W: [Corrected] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+002.rb:1:1: W: [Corrected] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+002.rb:3:1: W: [Corrected] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+002.rb:5:1: W: [Corrected] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+005.rb:5:1: W: [Corrected] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+006.rb:5:1: W: [Corrected] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+008.rb:2:1: W: [Corrected] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+008.rb:4:1: W: [Corrected] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+008.rb:5:1: W: [Corrected] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+009.rb:3:24: W: [Corrected] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+
+==> corrected/001.rb 7 <==
+return
+
+==> corrected/002.rb 23 <==
+return
+
+return
+
+return
+
+==> corrected/005.rb 56 <==
+foo
+
+[1, 2, 3, 4, 5].each { |n| return n }
+
+return
+
+bar
+
+==> corrected/006.rb 46 <==
+def method
+  return 'Hello World'
+end
+
+return
+
+==> corrected/008.rb 88 <==
+foo
+return if 1 == 1
+bar
+return
+return
+
+def method
+  return "Hello World" if 1 == 1
+end
+
+==> corrected/009.rb 45 <==
+foo
+
+if a == b; warn 'hey'; return; end
+
+bar
+

@@ -1,0 +1,27 @@
+==> .rubocop.yml 167 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Metrics/BlockNesting:
+  Max: 2
+  CountModifierForms: false
+
+==> 000.rb 44 <==
+if a
+  if b
+    puts 'hello' if c
+  end
+end
+
+==> 001.rb 58 <==
+if a
+  if b
+    if c
+      puts 'hello'
+    end
+  end
+end
+

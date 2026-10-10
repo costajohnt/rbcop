@@ -1,0 +1,40 @@
+==> offenses exit=1 424 <==
+000.rb:3:1: C: [Correctable] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+001.rb:3:1: C: [Correctable] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+008.rb:3:1: C: [Correctable] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+009.rb:3:1: C: [Correctable] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+
+==> autocorrect exit=0 416 <==
+000.rb:3:1: C: [Corrected] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+001.rb:3:1: C: [Corrected] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+008.rb:3:1: C: [Corrected] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+009.rb:3:1: C: [Corrected] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+
+==> corrected/000.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/001.rb 48 <==
+begin
+  foo
+rescue StandardError => e
+  bar
+end
+
+==> corrected/008.rb 45 <==
+def baz
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/009.rb 50 <==
+def baz
+  foo
+rescue StandardError => e
+  bar
+end
+

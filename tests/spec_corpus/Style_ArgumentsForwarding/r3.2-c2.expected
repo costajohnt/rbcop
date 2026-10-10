@@ -1,0 +1,22 @@
+==> offenses exit=1 432 <==
+000.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+000.rb:2:7: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+001.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use anonymous keyword arguments forwarding (`**`).
+001.rb:2:7: C: [Correctable] Style/ArgumentsForwarding: Use anonymous keyword arguments forwarding (`**`).
+
+==> autocorrect exit=0 424 <==
+000.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+000.rb:2:7: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+001.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use anonymous keyword arguments forwarding (`**`).
+001.rb:2:7: C: [Corrected] Style/ArgumentsForwarding: Use anonymous keyword arguments forwarding (`**`).
+
+==> corrected/000.rb 24 <==
+def foo(*)
+  bar(*)
+end
+
+==> corrected/001.rb 26 <==
+def foo(**)
+  bar(**)
+end
+

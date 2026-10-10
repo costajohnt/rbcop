@@ -1,0 +1,23 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 24 <==
+array.include?(element)
+
+==> 001.rb 28 <==
+array.intersect?([element])
+
+==> 002.rb 30 <==
+array.intersect?(%i[element])
+
+==> 003.rb 29 <==
+array&.intersect?([element])
+
+==> 004.rb 25 <==
+array.intersect?([*foo])
+

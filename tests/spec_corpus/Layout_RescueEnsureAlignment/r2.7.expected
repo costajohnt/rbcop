@@ -1,0 +1,280 @@
+==> offenses exit=1 4048 <==
+001.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `begin` at 1, 0.
+002.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `def test` at 1, 0.
+003.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `def Test.test` at 1, 0.
+004.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `class C` at 1, 0.
+005.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `module M` at 1, 0.
+006.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `class << self` at 1, 0.
+007.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `ensure` at 3, 4 is not aligned with `begin` at 1, 0.
+008.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `ensure` at 3, 4 is not aligned with `def test` at 1, 0.
+009.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `ensure` at 3, 4 is not aligned with `def Test.test` at 1, 0.
+010.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `ensure` at 3, 4 is not aligned with `class C` at 1, 0.
+011.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `ensure` at 3, 4 is not aligned with `module M` at 1, 0.
+012.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `ensure` at 3, 4 is not aligned with `class << self` at 1, 0.
+019.rb:3:7: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 6 is not aligned with `foo = begin` at 1, 0.
+023.rb:4:7: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 4, 6 is not aligned with `[1, 2, 3]   .each do` at 1, 0.
+026.rb:4:7: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 4, 6 is not aligned with `[1, 2, 3].   each do` at 1, 0.
+029.rb:4:7: C: [Correctable] Layout/RescueEnsureAlignment: `ensure` at 4, 6 is not aligned with `[1, 2, 3]   .each do` at 1, 0.
+032.rb:4:7: C: [Correctable] Layout/RescueEnsureAlignment: `ensure` at 4, 6 is not aligned with `[1, 2, 3].   each do` at 1, 0.
+045.rb:4:1: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 4, 0 is not aligned with `[1, 2, 3].each do` at 2, 2.
+047.rb:4:1: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 4, 0 is not aligned with `[1, 2, 3].each do` at 2, 2.
+048.rb:2:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `result` at 1, 0.
+049.rb:2:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `@instance` at 1, 0.
+050.rb:2:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `@@class` at 1, 0.
+051.rb:2:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `$global` at 1, 0.
+052.rb:2:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `CLASS` at 1, 0.
+053.rb:2:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `obj` at 1, 0.
+054.rb:2:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `a, b` at 1, 0.
+055.rb:2:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `a` at 1, 0.
+056.rb:2:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `a` at 1, 0.
+057.rb:2:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `a` at 1, 0.
+058.rb:4:5: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 4, 4 is not aligned with `proc do` at 2, 2.
+059.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `ensure` at 3, 4 is not aligned with `super do` at 1, 0.
+062.rb:2:10: C: Layout/RescueEnsureAlignment: `rescue` at 2, 9 is not aligned with `def test` at 1, 0.
+062.rb:7:12: C: Layout/RescueEnsureAlignment: `rescue` at 7, 11 is not aligned with `begin` at 6, 2.
+063.rb:2:10: C: Layout/RescueEnsureAlignment: `ensure` at 2, 9 is not aligned with `def test` at 1, 0.
+063.rb:7:12: C: Layout/RescueEnsureAlignment: `ensure` at 7, 11 is not aligned with `begin` at 6, 2.
+
+==> autocorrect exit=1 3986 <==
+001.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `begin` at 1, 0.
+002.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `def test` at 1, 0.
+003.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `def Test.test` at 1, 0.
+004.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `class C` at 1, 0.
+005.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `module M` at 1, 0.
+006.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `class << self` at 1, 0.
+007.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `ensure` at 3, 4 is not aligned with `begin` at 1, 0.
+008.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `ensure` at 3, 4 is not aligned with `def test` at 1, 0.
+009.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `ensure` at 3, 4 is not aligned with `def Test.test` at 1, 0.
+010.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `ensure` at 3, 4 is not aligned with `class C` at 1, 0.
+011.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `ensure` at 3, 4 is not aligned with `module M` at 1, 0.
+012.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `ensure` at 3, 4 is not aligned with `class << self` at 1, 0.
+019.rb:3:7: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 6 is not aligned with `foo = begin` at 1, 0.
+023.rb:4:7: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 4, 6 is not aligned with `[1, 2, 3]   .each do` at 1, 0.
+026.rb:4:7: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 4, 6 is not aligned with `[1, 2, 3].   each do` at 1, 0.
+029.rb:4:7: C: [Corrected] Layout/RescueEnsureAlignment: `ensure` at 4, 6 is not aligned with `[1, 2, 3]   .each do` at 1, 0.
+032.rb:4:7: C: [Corrected] Layout/RescueEnsureAlignment: `ensure` at 4, 6 is not aligned with `[1, 2, 3].   each do` at 1, 0.
+045.rb:4:1: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 4, 0 is not aligned with `[1, 2, 3].each do` at 2, 2.
+047.rb:4:1: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 4, 0 is not aligned with `[1, 2, 3].each do` at 2, 2.
+048.rb:2:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `result` at 1, 0.
+049.rb:2:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `@instance` at 1, 0.
+050.rb:2:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `@@class` at 1, 0.
+051.rb:2:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `$global` at 1, 0.
+052.rb:2:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `CLASS` at 1, 0.
+053.rb:2:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `obj` at 1, 0.
+054.rb:2:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `a, b` at 1, 0.
+055.rb:2:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `a` at 1, 0.
+056.rb:2:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `a` at 1, 0.
+057.rb:2:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `a` at 1, 0.
+058.rb:4:5: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 4, 4 is not aligned with `proc do` at 2, 2.
+059.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `ensure` at 3, 4 is not aligned with `super do` at 1, 0.
+062.rb:2:10: C: Layout/RescueEnsureAlignment: `rescue` at 2, 9 is not aligned with `def test` at 1, 0.
+062.rb:7:12: C: Layout/RescueEnsureAlignment: `rescue` at 7, 11 is not aligned with `begin` at 6, 2.
+063.rb:2:10: C: Layout/RescueEnsureAlignment: `ensure` at 2, 9 is not aligned with `def test` at 1, 0.
+063.rb:7:12: C: Layout/RescueEnsureAlignment: `ensure` at 7, 11 is not aligned with `begin` at 6, 2.
+
+==> corrected/001.rb 39 <==
+begin
+  something
+rescue
+    error
+end
+
+==> corrected/002.rb 42 <==
+def test
+  something
+rescue
+    error
+end
+
+==> corrected/003.rb 47 <==
+def Test.test
+  something
+rescue
+    error
+end
+
+==> corrected/004.rb 41 <==
+class C
+  something
+rescue
+    error
+end
+
+==> corrected/005.rb 42 <==
+module M
+  something
+rescue
+    error
+end
+
+==> corrected/006.rb 47 <==
+class << self
+  something
+rescue
+    error
+end
+
+==> corrected/007.rb 39 <==
+begin
+  something
+ensure
+    error
+end
+
+==> corrected/008.rb 42 <==
+def test
+  something
+ensure
+    error
+end
+
+==> corrected/009.rb 47 <==
+def Test.test
+  something
+ensure
+    error
+end
+
+==> corrected/010.rb 41 <==
+class C
+  something
+ensure
+    error
+end
+
+==> corrected/011.rb 42 <==
+module M
+  something
+ensure
+    error
+end
+
+==> corrected/012.rb 47 <==
+class << self
+  something
+ensure
+    error
+end
+
+==> corrected/019.rb 62 <==
+foo = begin
+        bar
+rescue BazError
+        qux
+      end
+
+==> corrected/023.rb 88 <==
+[1, 2, 3]
+  .each do |el|
+    el.to_s
+rescue StandardError => _exception
+    next
+  end
+
+==> corrected/026.rb 88 <==
+[1, 2, 3].
+  each do |el|
+    el.to_s
+rescue StandardError => _exception
+    next
+  end
+
+==> corrected/029.rb 60 <==
+[1, 2, 3]
+  .each do |el|
+    el.to_s
+ensure
+    next
+  end
+
+==> corrected/032.rb 60 <==
+[1, 2, 3].
+  each do |el|
+    el.to_s
+ensure
+    next
+  end
+
+==> corrected/045.rb 101 <==
+def foo
+  [1, 2, 3].each do |el|
+    el.to_s
+  rescue StandardError => _exception
+    next
+  end
+end
+
+==> corrected/047.rb 96 <==
+def foo
+  [1, 2, 3].each do
+    _1.to_s
+  rescue StandardError => _exception
+    next
+  end
+end
+
+==> corrected/048.rb 70 <==
+result = [1, 2, 3].map do |el|
+rescue StandardError => _exception
+end
+
+==> corrected/049.rb 73 <==
+@instance = [1, 2, 3].map do |el|
+rescue StandardError => _exception
+end
+
+==> corrected/050.rb 54 <==
+@@class = [].map do |_|
+rescue StandardError => _
+end
+
+==> corrected/051.rb 54 <==
+$global = [].map do |_|
+rescue StandardError => _
+end
+
+==> corrected/052.rb 52 <==
+CLASS = [].map do |_|
+rescue StandardError => _
+end
+
+==> corrected/053.rb 52 <==
+obj.attr = do_something do
+rescue StandardError
+end
+
+==> corrected/054.rb 51 <==
+a, b = [].map do |_|
+rescue StandardError => _
+end
+
+==> corrected/055.rb 49 <==
+a += [].map do |_|
+rescue StandardError => _
+end
+
+==> corrected/056.rb 50 <==
+a &&= [].map do |_|
+rescue StandardError => _
+end
+
+==> corrected/057.rb 50 <==
+a ||= [].map do |_|
+rescue StandardError => _
+end
+
+==> corrected/058.rb 55 <==
+valid =
+  proc do |bar|
+    baz
+  rescue
+    qux
+  end
+
+==> corrected/059.rb 32 <==
+super do
+  nil
+ensure
+  nil
+end
+

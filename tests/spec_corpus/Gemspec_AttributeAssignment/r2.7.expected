@@ -1,0 +1,10 @@
+==> offenses exit=1 315 <==
+004.gemspec:3:3: C: Gemspec/AttributeAssignment: Use consistent style for Gemspec attributes assignment.
+004.gemspec:4:3: C: Gemspec/AttributeAssignment: Use consistent style for Gemspec attributes assignment.
+005.gemspec:3:3: C: Gemspec/AttributeAssignment: Use consistent style for Gemspec attributes assignment.
+
+==> autocorrect exit=1 315 <==
+004.gemspec:3:3: C: Gemspec/AttributeAssignment: Use consistent style for Gemspec attributes assignment.
+004.gemspec:4:3: C: Gemspec/AttributeAssignment: Use consistent style for Gemspec attributes assignment.
+005.gemspec:3:3: C: Gemspec/AttributeAssignment: Use consistent style for Gemspec attributes assignment.
+

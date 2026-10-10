@@ -1,0 +1,75 @@
+==> .rubocop.yml 191 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/ExtraSpacing:
+  AllowForAlignment: true
+  AllowBeforeTrailingComments: true
+
+==> 000.rb 41 <==
+website = "example.org"
+name    = "Jill"
+
+==> 001.rb 48 <==
+a   += 1
+
+# Comment
+aa   = 2
+bb   = 3
+
+a  ||= 1
+
+==> 002.rb 91 <==
+y, m = (year * 12 + (mon - 1) + n).divmod(12)
+m,   = (m + 1)                    .divmod(1)
+
+==> 003.rb 191 <==
+type_name ||= value.class.name if value
+type_name   = type_name.to_s   if type_name
+
+type_name  = value.class.name if     value
+type_name += type_name.to_s   unless type_name
+a  += 1
+aa -= 2
+
+==> 004.rb 107 <==
+include_examples 'aligned',   'var = until',  'test'
+
+include_examples 'unaligned', "var = if",     'test'
+
+==> 005.rb 116 <==
+unless nochdir
+  Dir.chdir "/"    # Release old working directory.
+end
+
+File.umask 0000    # Ensure sensible umask.
+
+==> 006.rb 369 <==
+size_attribute_name    = FactoryGirl.create(:attribute,
+                                            name:   'Size',
+                                            values: %w{small large})
+carrier_attribute_name = FactoryGirl.create(:attribute,
+                                            name:   'Carrier',
+                                            values: %w{verizon})
+
+==> 007.rb 196 <==
+a_long_var_name = 100 # this is 100
+short_name1     = 2
+
+clear
+
+short_name2     = 2
+a_long_var_name = 100 # this is 100
+
+clear
+
+short_name3     = 2 # this is 2
+a_long_var_name = 100 # this is 100
+
+==> 008.rb 70 <==
+a_long_var_name = 2   # this is 2
+a_long_var_name = 100 # this is 100
+

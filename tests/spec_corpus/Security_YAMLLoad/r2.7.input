@@ -1,0 +1,15 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 61 <==
+YAML.dump("foo")
+::YAML.dump("foo")
+Module::YAML.dump("foo")
+
+==> 001.rb 24 <==
+Module::YAML.load("foo")

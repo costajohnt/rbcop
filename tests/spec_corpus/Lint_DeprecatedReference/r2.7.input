@@ -1,0 +1,90 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 49 <==
+class Client
+  def call
+    old_method
+  end
+end
+
+==> 001/current.rb 55 <==
+class Client < Api
+  def call
+    old_method
+  end
+end
+
+==> 002/current.rb 60 <==
+class Client < Api
+  def call
+    self.old_method
+  end
+end
+
+==> 003/current.rb 61 <==
+class Client < Api
+  def call
+    bare_deprecation
+  end
+end
+
+==> 004/current.rb 17 <==
+Api.legacy_build
+
+==> 005/current.rb 38 <==
+class Client < Api
+  legacy_build
+end
+
+==> 006/current.rb 55 <==
+class Client < Api
+  def call
+    new_method
+  end
+end
+
+==> 007/current.rb 64 <==
+class Client < Api
+  def call(api)
+    api.old_method
+  end
+end
+
+==> 008/current.rb 99 <==
+class Client < Api
+  # @deprecated Use `#modern_call` instead.
+  def call
+    old_method
+  end
+end
+
+==> 009/current.rb 64 <==
+class Client < Api
+  def timeout
+    Api::OLD_TIMEOUT
+  end
+end
+
+==> 010/current.rb 11 <==
+Legacy.new
+
+==> 011/current.rb 50 <==
+# @deprecated
+class Legacy
+  def helper
+  end
+end
+
+==> 012/current.rb 51 <==
+class Client < Api
+  def timeout
+    Api
+  end
+end
+

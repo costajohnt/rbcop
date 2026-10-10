@@ -1,0 +1,19 @@
+==> .rubocop.yml 185 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyleForEmptyBraces: no_space
+
+==> 000.rb 6 <==
+h = {}
+==> 001.rb 8 <==
+h = { }
+
+==> 002.rb 8 <==
+h = {
+}
+

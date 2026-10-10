@@ -1,0 +1,165 @@
+==> offenses exit=1 1872 <==
+000.rb:8:5: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+001.rb:6:3: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+003.rb:5:3: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+004.rb:5:3: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+005.rb:5:3: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+012.rb:2:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+013.rb:2:5: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+014.rb:5:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 3.
+016.rb:6:3: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 2.
+017.rb:1:13: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+018.rb:3:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between class definitions; found 0.
+018.rb:5:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+019.rb:3:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between module definitions; found 0.
+019.rb:5:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+020.rb:3:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between module definitions; found 0.
+020.rb:5:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+
+==> autocorrect exit=0 2070 <==
+000.rb:8:5: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+001.rb:6:3: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+003.rb:5:3: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+004.rb:5:3: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+005.rb:5:3: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+012.rb:2:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+013.rb:2:5: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+013.rb:3:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+014.rb:5:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 3.
+016.rb:6:3: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 2.
+017.rb:1:13: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+017.rb:2:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+018.rb:3:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between class definitions; found 0.
+018.rb:5:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+019.rb:3:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between module definitions; found 0.
+019.rb:5:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+020.rb:3:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between module definitions; found 0.
+020.rb:5:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+
+==> corrected/000.rb 116 <==
+class K
+  def m
+  end
+
+  class J
+    def n
+    end
+
+    def o
+    end
+  end
+
+  # checks something
+  def p
+  end
+end
+
+==> corrected/001.rb 97 <==
+class J
+  def n
+  end # n-related
+
+  # checks something o-related
+  # and more
+  def o
+  end
+end
+
+==> corrected/003.rb 99 <==
+if condition
+  def foo
+    true
+  end
+
+  def bar
+    true
+  end
+else
+  def foo
+    false
+  end
+end
+
+==> corrected/004.rb 76 <==
+class Test
+  def self.foo
+    true
+  end
+
+  def self.bar
+    true
+  end
+end
+
+==> corrected/005.rb 71 <==
+class Test
+  def foo
+    true
+  end
+
+  def self.bar
+    true
+  end
+end
+
+==> corrected/012.rb 23 <==
+def a; end
+
+def b; end
+
+==> corrected/013.rb 22 <==
+def a
+end;
+
+def b
+end
+
+==> corrected/014.rb 23 <==
+def a; end
+
+def b; end
+
+==> corrected/016.rb 41 <==
+class A
+  def n
+  end
+
+  def o
+  end
+end
+
+==> corrected/017.rb 25 <==
+def a; end; 
+
+def b; end
+
+==> corrected/018.rb 46 <==
+class Foo
+end
+
+class Baz
+end
+
+def example
+end
+
+==> corrected/019.rb 48 <==
+module Foo
+end
+
+module Baz
+end
+
+def example
+end
+
+==> corrected/020.rb 47 <==
+class Foo
+end
+
+module Baz
+end
+
+def example
+end
+

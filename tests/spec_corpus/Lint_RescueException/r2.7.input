@@ -1,0 +1,90 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 53 <==
+begin
+  something
+rescue Exception
+  #do nothing
+end
+
+==> 001.rb 55 <==
+begin
+  something
+rescue ::Exception
+  #do nothing
+end
+
+==> 002.rb 68 <==
+begin
+  something
+rescue StandardError, Exception
+  #do nothing
+end
+
+==> 003.rb 58 <==
+begin
+  something
+rescue Exception => e
+  #do nothing
+end
+
+==> 004.rb 51 <==
+begin
+  something
+  return
+rescue
+  file.close
+end
+
+==> 005.rb 56 <==
+begin
+  something
+  return
+rescue => e
+  file.close
+end
+
+==> 006.rb 70 <==
+begin
+  something
+  return
+rescue ArgumentError => e
+  file.close
+end
+
+==> 007.rb 80 <==
+begin
+  something
+  return
+rescue EOFError, ArgumentError => e
+  file.close
+end
+
+==> 008.rb 72 <==
+begin
+  something
+  return
+rescue Test::Exception => e
+  file.close
+end
+
+==> 009.rb 67 <==
+ERRORS = [Exception]
+begin
+  a = 3 / 0
+rescue *ERRORS
+  puts e
+end
+
+==> 010.rb 63 <==
+adapter = current_adapter
+begin
+rescue adapter::ParseError
+end
+

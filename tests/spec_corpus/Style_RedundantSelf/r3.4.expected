@@ -1,0 +1,11 @@
+==> offenses exit=1 77 <==
+000.rb:2:3: C: [Correctable] Style/RedundantSelf: Redundant `self` detected.
+
+==> autocorrect exit=0 75 <==
+000.rb:2:3: C: [Corrected] Style/RedundantSelf: Redundant `self` detected.
+
+==> corrected/000.rb 37 <==
+%w[x y z].select do
+  axis == it
+end
+

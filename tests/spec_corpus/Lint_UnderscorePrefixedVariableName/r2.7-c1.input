@@ -1,0 +1,20 @@
+==> .rubocop.yml 180 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/UnderscorePrefixedVariableName:
+  AllowKeywordBlockArguments: true
+
+==> 000.rb 34 <==
+1.times do |_foo|
+  puts _foo
+end
+
+==> 001.rb 57 <==
+define_method(:foo) do |_foo: 'default'|
+  puts _foo
+end
+

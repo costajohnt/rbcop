@@ -1,0 +1,42 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Layout/BlockAlignment:
+  EnforcedStyleAlignWith: start_of_line
+
+==> 000.rb 27 <==
+def foo = bar do
+  baz
+end
+
+==> 001.rb 51 <==
+def foo = bar(123,
+              456) do
+  baz
+end
+
+==> 002.rb 31 <==
+def foo = bar do
+  baz
+    end
+
+==> 003.rb 32 <==
+def self.foo = bar do
+  baz
+end
+
+==> 004.rb 61 <==
+def self.foo = bar(123,
+                   456) do
+  baz
+end
+
+==> 005.rb 36 <==
+def self.foo = bar do
+  baz
+    end
+

@@ -1,0 +1,62 @@
+==> .rubocop.yml 157 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/VariableName:
+  EnforcedStyle: snake_case
+
+==> 000.rb 12 <==
+myLocal = 1
+
+==> 001.rb 25 <==
+my_local = 1
+myLocal = 1
+
+==> 002.rb 17 <==
+@myAttribute = 3
+
+==> 003.rb 13 <==
+@@myAttr = 2
+
+==> 004.rb 13 <==
+_myLocal = 1
+
+==> 005.rb 26 <==
+def method(funnyArg); end
+
+==> 006.rb 25 <==
+def foo(optArg = 1); end
+
+==> 007.rb 23 <==
+def foo(*restArg); end
+
+==> 008.rb 23 <==
+def foo(kwArg: 1); end
+
+==> 009.rb 23 <==
+def foo(**kwRest); end
+
+==> 010.rb 24 <==
+def foo(&blockArg); end
+
+==> 011.rb 70 <==
+firstArg = 'foo'
+secondArg = 'foo'
+
+do_something(firstArg, secondArg)
+
+==> 012.rb 14 <==
+$MY_GLOBAL = 0
+==> 013.rb 15 <==
+MY_CONSTANT = 0
+==> 014.rb 39 <==
+Paren = Struct.new :left, :right, :kind
+==> 015.rb 12 <==
+self[:a] = b
+==> 016.rb 5 <==
+_ = 1
+==> 017.rb 5 <==
+i = 1

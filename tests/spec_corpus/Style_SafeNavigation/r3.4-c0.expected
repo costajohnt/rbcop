@@ -1,0 +1,34 @@
+==> offenses exit=1 870 <==
+000.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+001.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+002.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+003.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+004.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+005.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+
+==> autocorrect exit=0 858 <==
+000.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+001.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+002.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+003.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+004.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+005.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+
+==> corrected/000.rb 30 <==
+foo&.one&.two(baz) { it.qux }
+
+==> corrected/001.rb 30 <==
+FOO&.one&.two(baz) { it.qux }
+
+==> corrected/002.rb 35 <==
+FOO::BAR&.one&.two(baz) { it.qux }
+
+==> corrected/003.rb 31 <==
+@foo&.one&.two(baz) { it.qux }
+
+==> corrected/004.rb 32 <==
+@@foo&.one&.two(baz) { it.qux }
+
+==> corrected/005.rb 31 <==
+$FOO&.one&.two(baz) { it.qux }
+

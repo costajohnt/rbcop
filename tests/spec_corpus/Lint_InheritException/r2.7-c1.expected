@@ -1,0 +1,30 @@
+==> offenses exit=1 424 <==
+000.rb:1:11: W: [Correctable] Lint/InheritException: Inherit from `StandardError` instead of `Exception`.
+001.rb:1:11: W: [Correctable] Lint/InheritException: Inherit from `StandardError` instead of `Exception`.
+002.rb:2:13: W: [Correctable] Lint/InheritException: Inherit from `StandardError` instead of `Exception`.
+003.rb:3:13: W: [Correctable] Lint/InheritException: Inherit from `StandardError` instead of `Exception`.
+
+==> autocorrect exit=0 416 <==
+000.rb:1:11: W: [Corrected] Lint/InheritException: Inherit from `StandardError` instead of `Exception`.
+001.rb:1:11: W: [Corrected] Lint/InheritException: Inherit from `StandardError` instead of `Exception`.
+002.rb:2:13: W: [Corrected] Lint/InheritException: Inherit from `StandardError` instead of `Exception`.
+003.rb:3:13: W: [Corrected] Lint/InheritException: Inherit from `StandardError` instead of `Exception`.
+
+==> corrected/000.rb 29 <==
+class C < StandardError; end
+
+==> corrected/001.rb 25 <==
+Class.new(StandardError)
+
+==> corrected/002.rb 133 <==
+module Foo
+  class C < StandardError; end # This `Exception` is the same as `::Exception`.
+  class Exception < RuntimeError; end
+end
+
+==> corrected/003.rb 84 <==
+module Foo
+  class Exception < RuntimeError; end
+  class C < StandardError; end
+end
+

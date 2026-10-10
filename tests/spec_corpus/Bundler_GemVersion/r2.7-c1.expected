@@ -1,0 +1,18 @@
+==> offenses exit=1 560 <==
+000.gemfile:1:1: C: Bundler/GemVersion: Gem version specification is forbidden.
+000.gemfile:2:1: C: Bundler/GemVersion: Gem version specification is forbidden.
+000.gemfile:3:1: C: Bundler/GemVersion: Gem version specification is forbidden.
+000.gemfile:4:1: C: Bundler/GemVersion: Gem version specification is forbidden.
+000.gemfile:5:1: C: Bundler/GemVersion: Gem version specification is forbidden.
+000.gemfile:6:1: C: Bundler/GemVersion: Gem version specification is forbidden.
+000.gemfile:7:1: C: Bundler/GemVersion: Gem version specification is forbidden.
+
+==> autocorrect exit=1 560 <==
+000.gemfile:1:1: C: Bundler/GemVersion: Gem version specification is forbidden.
+000.gemfile:2:1: C: Bundler/GemVersion: Gem version specification is forbidden.
+000.gemfile:3:1: C: Bundler/GemVersion: Gem version specification is forbidden.
+000.gemfile:4:1: C: Bundler/GemVersion: Gem version specification is forbidden.
+000.gemfile:5:1: C: Bundler/GemVersion: Gem version specification is forbidden.
+000.gemfile:6:1: C: Bundler/GemVersion: Gem version specification is forbidden.
+000.gemfile:7:1: C: Bundler/GemVersion: Gem version specification is forbidden.
+

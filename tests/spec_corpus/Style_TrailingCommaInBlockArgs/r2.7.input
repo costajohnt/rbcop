@@ -1,0 +1,85 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 23 <==
+test { |a, b,| a + b }
+
+==> 001.rb 16 <==
+test { |a,| a }
+
+==> 002.rb 11 <==
+test { a }
+
+==> 003.rb 22 <==
+test { |a, b| a + b }
+
+==> 004.rb 35 <==
+test { |a, b, c = nil| a + b + c }
+
+==> 005.rb 32 <==
+test { |a, b, c: 1| a + b + c }
+
+==> 006.rb 35 <==
+add { |foo, bar = ','| foo + bar }
+
+==> 007.rb 35 <==
+add { |foo, bar,; baz| foo + bar }
+
+==> 008.rb 28 <==
+test do |a, b,|
+  a + b
+end
+
+==> 009.rb 21 <==
+test do |a,|
+  a
+end
+
+==> 010.rb 16 <==
+test do
+  a
+end
+
+==> 011.rb 15 <==
+test do ||
+end
+
+==> 012.rb 27 <==
+test do |a, b|
+  a + b
+end
+
+==> 013.rb 41 <==
+test do |a, b, c = nil|
+   a + b + c
+end
+
+==> 014.rb 38 <==
+test do |a, b, c: 1|
+   a + b + c
+end
+
+==> 015.rb 40 <==
+add do |foo, bar = ','|
+  foo + bar
+end
+
+==> 016.rb 40 <==
+add do |foo, bar,; baz|
+  foo + bar
+end
+
+==> 017.rb 41 <==
+-> (foo, bar) { do_something(foo, bar) }
+
+==> 018.rb 45 <==
+lambda { |foo, bar| do_something(foo, bar) }
+
+==> 019.rb 46 <==
+lambda { |foo, bar,| do_something(foo, bar) }
+

@@ -1,0 +1,49 @@
+==> offenses exit=1 1053 <==
+000.rb:2:19: C: [Correctable] Style/SingleLineBlockParams: Name `reduce` block params `|a, e|`.
+000.rb:3:18: C: [Correctable] Style/SingleLineBlockParams: Name `reduce` block params `|a, e|`.
+000.rb:4:22: C: [Correctable] Style/SingleLineBlockParams: Name `reduce` block params `|a, e|`.
+000.rb:5:21: C: [Correctable] Style/SingleLineBlockParams: Name `reduce` block params `|a, e|`.
+000.rb:6:23: C: [Correctable] Style/SingleLineBlockParams: Name `reduce` block params `|a, e|`.
+000.rb:7:22: C: [Correctable] Style/SingleLineBlockParams: Name `reduce` block params `|a, e|`.
+000.rb:8:14: C: [Correctable] Style/SingleLineBlockParams: Name `test` block params `|x, y|`.
+003.rb:1:36: C: [Correctable] Style/SingleLineBlockParams: Name `reduce` block params `|_a, _e|`.
+008.rb:1:18: C: [Correctable] Style/SingleLineBlockParams: Name `reduce` block params `|a, e|`.
+009.rb:1:18: C: [Correctable] Style/SingleLineBlockParams: Name `reduce` block params `|a, e|`.
+011.rb:1:18: C: [Correctable] Style/SingleLineBlockParams: Name `reduce` block params `|a|`.
+
+==> autocorrect exit=0 1031 <==
+000.rb:2:19: C: [Corrected] Style/SingleLineBlockParams: Name `reduce` block params `|a, e|`.
+000.rb:3:18: C: [Corrected] Style/SingleLineBlockParams: Name `reduce` block params `|a, e|`.
+000.rb:4:22: C: [Corrected] Style/SingleLineBlockParams: Name `reduce` block params `|a, e|`.
+000.rb:5:21: C: [Corrected] Style/SingleLineBlockParams: Name `reduce` block params `|a, e|`.
+000.rb:6:23: C: [Corrected] Style/SingleLineBlockParams: Name `reduce` block params `|a, e|`.
+000.rb:7:22: C: [Corrected] Style/SingleLineBlockParams: Name `reduce` block params `|a, e|`.
+000.rb:8:14: C: [Corrected] Style/SingleLineBlockParams: Name `test` block params `|x, y|`.
+003.rb:1:36: C: [Corrected] Style/SingleLineBlockParams: Name `reduce` block params `|_a, _e|`.
+008.rb:1:18: C: [Corrected] Style/SingleLineBlockParams: Name `reduce` block params `|a, e|`.
+009.rb:1:18: C: [Corrected] Style/SingleLineBlockParams: Name `reduce` block params `|a, e|`.
+011.rb:1:18: C: [Corrected] Style/SingleLineBlockParams: Name `reduce` block params `|a|`.
+
+==> corrected/000.rb 246 <==
+def m
+  [0, 1].reduce { |a, e| a + e }
+  [0, 1].reduce{ |a, e| a + e }
+  [0, 1].reduce(5) { |a, e| a + e }
+  [0, 1].reduce(5){ |a, e| a + e }
+  [0, 1].reduce (5) { |a, e| a + e }
+  [0, 1].reduce(5) { |a, e| a + e }
+  ala.test { |x, y| bala }
+end
+
+==> corrected/003.rb 46 <==
+File.foreach(filename).reduce(0) { |_a, _e| }
+
+==> corrected/008.rb 36 <==
+test.reduce(x) { |a, e| foo(a, e) }
+
+==> corrected/009.rb 36 <==
+test.reduce(x) { |a, e| foo(a, e) }
+
+==> corrected/011.rb 30 <==
+test.reduce(x) { |a| foo(a) }
+

@@ -1,0 +1,21 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 7 <==
+x = ?x
+
+==> 001.rb 8 <==
+x = ?\n
+
+==> 002.rb 12 <==
+x = ?\C-\M-d
+==> 003.rb 7 <==
+%w{? A}
+==> 004.rb 7 <==
+x = ?'
+

@@ -1,0 +1,35 @@
+==> offenses exit=1 857 <==
+000.rb:1:5: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives for `Lint/Void` are not permitted.
+002.rb:1:5: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives for `Lint/Void` are not permitted.
+003.rb:1:5: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives for `all` are not permitted.
+004.rb:1:5: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives for `all` are not permitted.
+005.rb:1:5: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives for `Lint/Void` are not permitted.
+006.rb:1:5: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives for `Lint/Void`, `Security/Eval` are not permitted.
+
+==> autocorrect exit=0 989 <==
+000.rb:1:5: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives for `Lint/Void` are not permitted.
+002.rb:1:5: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives for `Lint/Void` are not permitted.
+003.rb:1:5: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives for `all` are not permitted.
+004.rb:1:5: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives for `all` are not permitted.
+005.rb:1:5: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives for `Lint/Void` are not permitted.
+006.rb:1:5: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives for `Lint/Void`, `Security/Eval` are not permitted.
+006.rb:1:5: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives for `Security/Eval` are not permitted.
+
+==> corrected/000.rb 5 <==
+foo 
+
+==> corrected/002.rb 5 <==
+foo 
+
+==> corrected/003.rb 5 <==
+foo 
+
+==> corrected/004.rb 5 <==
+foo 
+
+==> corrected/005.rb 51 <==
+foo # rubocop:disable Metrics/AbcSize, Style/AndOr
+
+==> corrected/006.rb 38 <==
+foo # rubocop:disable Metrics/AbcSize
+

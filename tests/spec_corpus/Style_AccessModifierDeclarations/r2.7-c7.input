@@ -1,0 +1,519 @@
+==> .rubocop.yml 166 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/AccessModifierDeclarations:
+  EnforcedStyle: inline
+
+==> 000.rb 53 <==
+class Test
+  private if condition
+  def foo; end
+end
+
+==> 001.rb 63 <==
+class Test
+  if condition
+    private
+  end
+  def foo; end
+end
+
+==> 002.rb 21 <==
+private if condition
+
+==> 003.rb 40 <==
+class Test
+  private
+  def foo; end
+end
+
+==> 004.rb 46 <==
+class Test
+  private # hey
+  def foo; end
+end
+
+==> 005.rb 38 <==
+class Test
+  private def foo; end
+end
+
+==> 006.rb 46 <==
+class Test
+  private :foo
+
+  def foo; end
+end
+
+==> 007.rb 85 <==
+class TestOne
+  private def foo; end
+end
+
+class TestTwo
+  private
+  def foo; end
+end
+
+==> 008.rb 8 <==
+private
+
+==> 009.rb 57 <==
+class Test
+  private
+
+  def foo; end
+
+  def bar; end
+end
+
+==> 010.rb 140 <==
+class Test
+  def something_else; end
+
+  def a_method_that_is_public; end
+
+  private
+
+  def my_other_private_method; end
+
+  def bar; end
+end
+
+==> 011.rb 34 <==
+private;
+def foo
+end
+
+def bar
+end
+
+==> 012.rb 22 <==
+private; def foo; end
+
+==> 013.rb 36 <==
+private; def foo; end; def bar; end
+
+==> 014.rb 49 <==
+private; def foo; end; some_method; def bar; end
+
+==> 015.rb 63 <==
+class Test
+  private
+
+  # Computes the foo.
+  def foo; end
+end
+
+==> 016.rb 90 <==
+class Test
+  private
+
+  # First comment line.
+  # Second comment line.
+  def foo; end
+end
+
+==> 017.rb 75 <==
+class Test
+  private
+
+  # Docs for foo.
+  def foo; end
+
+  def bar; end
+end
+
+==> 018.rb 51 <==
+class Test
+  private
+  def foo; end # trailing
+end
+
+==> 019.rb 58 <==
+class A
+  private
+  def b; end
+  private
+  def c; end
+end
+
+==> 020.rb 40 <==
+class Foo
+  foo
+  bar(key: private)
+end
+
+==> 021.rb 42 <==
+class Test
+  protected
+  def foo; end
+end
+
+==> 022.rb 48 <==
+class Test
+  protected # hey
+  def foo; end
+end
+
+==> 023.rb 40 <==
+class Test
+  protected def foo; end
+end
+
+==> 024.rb 48 <==
+class Test
+  protected :foo
+
+  def foo; end
+end
+
+==> 025.rb 89 <==
+class TestOne
+  protected def foo; end
+end
+
+class TestTwo
+  protected
+  def foo; end
+end
+
+==> 026.rb 10 <==
+protected
+
+==> 027.rb 59 <==
+class Test
+  protected
+
+  def foo; end
+
+  def bar; end
+end
+
+==> 028.rb 142 <==
+class Test
+  def something_else; end
+
+  def a_method_that_is_public; end
+
+  protected
+
+  def my_other_private_method; end
+
+  def bar; end
+end
+
+==> 029.rb 36 <==
+protected;
+def foo
+end
+
+def bar
+end
+
+==> 030.rb 24 <==
+protected; def foo; end
+
+==> 031.rb 38 <==
+protected; def foo; end; def bar; end
+
+==> 032.rb 51 <==
+protected; def foo; end; some_method; def bar; end
+
+==> 033.rb 65 <==
+class Test
+  protected
+
+  # Computes the foo.
+  def foo; end
+end
+
+==> 034.rb 92 <==
+class Test
+  protected
+
+  # First comment line.
+  # Second comment line.
+  def foo; end
+end
+
+==> 035.rb 77 <==
+class Test
+  protected
+
+  # Docs for foo.
+  def foo; end
+
+  def bar; end
+end
+
+==> 036.rb 53 <==
+class Test
+  protected
+  def foo; end # trailing
+end
+
+==> 037.rb 62 <==
+class A
+  protected
+  def b; end
+  protected
+  def c; end
+end
+
+==> 038.rb 42 <==
+class Foo
+  foo
+  bar(key: protected)
+end
+
+==> 039.rb 39 <==
+class Test
+  public
+  def foo; end
+end
+
+==> 040.rb 45 <==
+class Test
+  public # hey
+  def foo; end
+end
+
+==> 041.rb 37 <==
+class Test
+  public def foo; end
+end
+
+==> 042.rb 45 <==
+class Test
+  public :foo
+
+  def foo; end
+end
+
+==> 043.rb 83 <==
+class TestOne
+  public def foo; end
+end
+
+class TestTwo
+  public
+  def foo; end
+end
+
+==> 044.rb 7 <==
+public
+
+==> 045.rb 56 <==
+class Test
+  public
+
+  def foo; end
+
+  def bar; end
+end
+
+==> 046.rb 139 <==
+class Test
+  def something_else; end
+
+  def a_method_that_is_public; end
+
+  public
+
+  def my_other_private_method; end
+
+  def bar; end
+end
+
+==> 047.rb 33 <==
+public;
+def foo
+end
+
+def bar
+end
+
+==> 048.rb 21 <==
+public; def foo; end
+
+==> 049.rb 35 <==
+public; def foo; end; def bar; end
+
+==> 050.rb 48 <==
+public; def foo; end; some_method; def bar; end
+
+==> 051.rb 62 <==
+class Test
+  public
+
+  # Computes the foo.
+  def foo; end
+end
+
+==> 052.rb 89 <==
+class Test
+  public
+
+  # First comment line.
+  # Second comment line.
+  def foo; end
+end
+
+==> 053.rb 74 <==
+class Test
+  public
+
+  # Docs for foo.
+  def foo; end
+
+  def bar; end
+end
+
+==> 054.rb 50 <==
+class Test
+  public
+  def foo; end # trailing
+end
+
+==> 055.rb 56 <==
+class A
+  public
+  def b; end
+  public
+  def c; end
+end
+
+==> 056.rb 39 <==
+class Foo
+  foo
+  bar(key: public)
+end
+
+==> 057.rb 48 <==
+class Test
+  module_function
+  def foo; end
+end
+
+==> 058.rb 54 <==
+class Test
+  module_function # hey
+  def foo; end
+end
+
+==> 059.rb 46 <==
+class Test
+  module_function def foo; end
+end
+
+==> 060.rb 54 <==
+class Test
+  module_function :foo
+
+  def foo; end
+end
+
+==> 061.rb 101 <==
+class TestOne
+  module_function def foo; end
+end
+
+class TestTwo
+  module_function
+  def foo; end
+end
+
+==> 062.rb 16 <==
+module_function
+
+==> 063.rb 65 <==
+class Test
+  module_function
+
+  def foo; end
+
+  def bar; end
+end
+
+==> 064.rb 148 <==
+class Test
+  def something_else; end
+
+  def a_method_that_is_public; end
+
+  module_function
+
+  def my_other_private_method; end
+
+  def bar; end
+end
+
+==> 065.rb 42 <==
+module_function;
+def foo
+end
+
+def bar
+end
+
+==> 066.rb 30 <==
+module_function; def foo; end
+
+==> 067.rb 44 <==
+module_function; def foo; end; def bar; end
+
+==> 068.rb 57 <==
+module_function; def foo; end; some_method; def bar; end
+
+==> 069.rb 71 <==
+class Test
+  module_function
+
+  # Computes the foo.
+  def foo; end
+end
+
+==> 070.rb 98 <==
+class Test
+  module_function
+
+  # First comment line.
+  # Second comment line.
+  def foo; end
+end
+
+==> 071.rb 83 <==
+class Test
+  module_function
+
+  # Docs for foo.
+  def foo; end
+
+  def bar; end
+end
+
+==> 072.rb 59 <==
+class Test
+  module_function
+  def foo; end # trailing
+end
+
+==> 073.rb 74 <==
+class A
+  module_function
+  def b; end
+  module_function
+  def c; end
+end
+
+==> 074.rb 48 <==
+class Foo
+  foo
+  bar(key: module_function)
+end
+

@@ -1,0 +1,69 @@
+==> offenses exit=1 1080 <==
+000.rb:1:6: C: [Correctable] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+001.rb:1:18: C: [Correctable] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+001.rb:1:48: C: Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+002.rb:1:10: C: [Correctable] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+003.rb:3:5: C: [Correctable] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+005.rb:1:9: C: [Correctable] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+005.rb:1:17: C: Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+006.rb:1:7: C: [Correctable] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+
+==> autocorrect exit=0 954 <==
+000.rb:1:6: C: [Corrected] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+001.rb:1:18: C: [Corrected] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+002.rb:1:10: C: [Corrected] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+003.rb:3:5: C: [Corrected] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+005.rb:1:9: C: [Corrected] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+005.rb:4:9: C: [Corrected] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+006.rb:1:7: C: [Corrected] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+
+==> corrected/000.rb 29 <==
+if a
+b ? b1 : b2
+else
+a2
+end
+
+==> corrected/001.rb 77 <==
+if cond
+foo
+else
+bar(foo.a ? foo.b : foo) { |e, k| e.nil? ? nil : e[k] }
+end
+
+==> corrected/002.rb 34 <==
+if x
+y + (z ? 1 : 0)
+else
+nil
+end
+
+==> corrected/003.rb 45 <==
+if a
+
+  if b
+    c ? 1 : 2
+  end
+
+else
+3
+end
+
+==> corrected/005.rb 42 <==
+if a
+b
+else
+if c
+d
+else
+e ? f : g
+end
+end
+
+==> corrected/006.rb 48 <==
+if foo
+(bar && baz) ? qux : quux
+else
+corge
+end
+

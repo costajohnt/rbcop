@@ -1,0 +1,18 @@
+==> offenses exit=1 233 <==
+002.rb:3:5: C: [Correctable] Layout/BlockAlignment: `end` at 3, 4 is not aligned with `def foo = bar do` at 1, 0.
+005.rb:3:5: C: [Correctable] Layout/BlockAlignment: `end` at 3, 4 is not aligned with `def self.foo = bar do` at 1, 0.
+
+==> autocorrect exit=0 229 <==
+002.rb:3:5: C: [Corrected] Layout/BlockAlignment: `end` at 3, 4 is not aligned with `def foo = bar do` at 1, 0.
+005.rb:3:5: C: [Corrected] Layout/BlockAlignment: `end` at 3, 4 is not aligned with `def self.foo = bar do` at 1, 0.
+
+==> corrected/002.rb 27 <==
+def foo = bar do
+  baz
+end
+
+==> corrected/005.rb 32 <==
+def self.foo = bar do
+  baz
+end
+

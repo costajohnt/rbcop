@@ -1,0 +1,30 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 26 <==
+return unless foo&.empty?
+
+==> 001.rb 45 <==
+foo = build_collection
+return if foo&.empty?
+
+==> 002.rb 23 <==
+return if @foo&.empty?
+
+==> 003.rb 22 <==
+return if FOO&.empty?
+
+==> 004.rb 21 <==
+return if foo.empty?
+
+==> 005.rb 27 <==
+return if foo&.bar&.empty?
+
+==> 006.rb 18 <==
+bar = foo&.empty?
+

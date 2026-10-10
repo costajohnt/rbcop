@@ -1,0 +1,79 @@
+==> offenses exit=1 1800 <==
+003.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+004.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+005.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+006.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+007.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+011.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+012.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+013.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+014.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+015.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+016.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+017.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+018.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+019.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+020.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+
+==> autocorrect exit=0 1770 <==
+003.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+004.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+005.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+006.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+007.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+011.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+012.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+013.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+014.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+015.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+016.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+017.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+018.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+019.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+020.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+
+==> corrected/003.rb 24 <==
+"#{'foo' if condition}"
+
+==> corrected/004.rb 21 <==
+"#{42 if condition}"
+
+==> corrected/005.rb 24 <==
+"#{'foo' if condition}"
+
+==> corrected/006.rb 28 <==
+"#{'foo' unless condition}"
+
+==> corrected/007.rb 28 <==
+"#{'foo' unless condition}"
+
+==> corrected/011.rb 24 <==
+"#{'foo' if condition}"
+
+==> corrected/012.rb 21 <==
+"#{42 if condition}"
+
+==> corrected/013.rb 24 <==
+"#{'foo' if condition}"
+
+==> corrected/014.rb 28 <==
+"#{'foo' unless condition}"
+
+==> corrected/015.rb 28 <==
+"#{'foo' unless condition}"
+
+==> corrected/016.rb 24 <==
+"#{'foo' if condition}"
+
+==> corrected/017.rb 21 <==
+"#{42 if condition}"
+
+==> corrected/018.rb 24 <==
+"#{'foo' if condition}"
+
+==> corrected/019.rb 28 <==
+"#{'foo' unless condition}"
+
+==> corrected/020.rb 28 <==
+"#{'foo' unless condition}"
+

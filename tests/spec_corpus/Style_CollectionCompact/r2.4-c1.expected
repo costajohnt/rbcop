@@ -1,0 +1,9 @@
+==> offenses exit=1 112 <==
+002.rb:1:5: C: [Correctable] Style/CollectionCompact: Use `compact` instead of `reject { |param| param.nil? }`.
+
+==> autocorrect exit=0 110 <==
+002.rb:1:5: C: [Corrected] Style/CollectionCompact: Use `compact` instead of `reject { |param| param.nil? }`.
+
+==> corrected/002.rb 12 <==
+foo.compact
+

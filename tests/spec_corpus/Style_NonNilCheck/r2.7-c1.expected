@@ -1,0 +1,34 @@
+==> offenses exit=1 572 <==
+000.rb:1:1: C: [Correctable] Style/NonNilCheck: Explicit non-nil checks are usually redundant.
+001.rb:1:15: C: [Correctable] Style/NonNilCheck: Explicit non-nil checks are usually redundant.
+004.rb:1:1: C: [Correctable] Style/NonNilCheck: Explicit non-nil checks are usually redundant.
+006.rb:1:1: C: [Correctable] Style/NonNilCheck: Explicit non-nil checks are usually redundant.
+007.rb:1:1: C: [Correctable] Style/NonNilCheck: Explicit non-nil checks are usually redundant.
+008.rb:1:19: C: [Correctable] Style/NonNilCheck: Explicit non-nil checks are usually redundant.
+
+==> autocorrect exit=0 560 <==
+000.rb:1:1: C: [Corrected] Style/NonNilCheck: Explicit non-nil checks are usually redundant.
+001.rb:1:15: C: [Corrected] Style/NonNilCheck: Explicit non-nil checks are usually redundant.
+004.rb:1:1: C: [Corrected] Style/NonNilCheck: Explicit non-nil checks are usually redundant.
+006.rb:1:1: C: [Corrected] Style/NonNilCheck: Explicit non-nil checks are usually redundant.
+007.rb:1:1: C: [Corrected] Style/NonNilCheck: Explicit non-nil checks are usually redundant.
+008.rb:1:19: C: [Corrected] Style/NonNilCheck: Explicit non-nil checks are usually redundant.
+
+==> corrected/000.rb 2 <==
+x
+
+==> corrected/001.rb 12 <==
+puts b if x
+
+==> corrected/004.rb 2 <==
+x
+
+==> corrected/006.rb 2 <==
+x
+
+==> corrected/007.rb 5 <==
+self
+
+==> corrected/008.rb 31 <==
+return nil unless (line =~ //)
+

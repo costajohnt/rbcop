@@ -1,0 +1,398 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 37 <==
+class MyClass
+  def method
+  end
+end
+
+==> 001.rb 39 <==
+class ::MyClass
+  def method
+  end
+end
+
+==> 002.rb 43 <==
+class self::MyClass
+  def method
+  end
+end
+
+==> 003.rb 48 <==
+class my_method::MyClass
+  def method
+  end
+end
+
+==> 004.rb 53 <==
+class obj&.my_method::MyClass
+  def method
+  end
+end
+
+==> 005.rb 50 <==
+m = Module.new
+module m::N
+  def method
+  end
+end
+
+==> 006.rb 36 <==
+module @m::N
+  def method
+  end
+end
+
+==> 007.rb 37 <==
+module @@m::N
+  def method
+  end
+end
+
+==> 008.rb 36 <==
+module $m::N
+  def method
+  end
+end
+
+==> 009.rb 68 <==
+m = Module.new
+n = Module.new
+module m::n::M
+  def method
+  end
+end
+
+==> 010.rb 70 <==
+# Copyright 2014
+# Some company
+
+class MyClass
+  def method
+  end
+end
+
+==> 011.rb 39 <==
+module MyModule
+  def method
+  end
+end
+
+==> 012.rb 16 <==
+module Test
+end
+
+==> 013.rb 53 <==
+# class comment
+class MyClass
+  def method
+  end
+end
+
+==> 014.rb 67 <==
+# OPTIMIZE: Make this faster.
+class MyClass
+  def method
+  end
+end
+
+==> 015.rb 65 <==
+# rubocop:disable Style/For
+class MyClass
+  def method
+  end
+end
+
+==> 016.rb 67 <==
+# frozen_string_literal: true
+class MyClass
+  def method
+  end
+end
+
+==> 017.rb 60 <==
+# encoding: ascii-8bit
+class MyClass
+  def method
+  end
+end
+
+==> 018.rb 84 <==
+# OPTIMIZE: Make this faster.
+# Class comment.
+class MyClass
+  def method
+  end
+end
+
+==> 019.rb 82 <==
+# Does fooing.
+# FIXME: Not yet implemented.
+class Foo
+  def initialize
+  end
+end
+
+==> 020.rb 55 <==
+# class comment
+module MyModule
+  def method
+  end
+end
+
+==> 021.rb 18 <==
+class MyClass
+end
+
+==> 022.rb 46 <==
+module Test
+  class A; end
+  class B; end
+end
+
+==> 023.rb 45 <==
+class Test
+  class A; end
+  class B; end
+end
+
+==> 024.rb 90 <==
+class Test
+  A = Class.new
+  B = Class.new(A)
+  C = Class.new { call_method }
+  D = 1
+end
+
+==> 025.rb 91 <==
+module Test
+  A = Class.new
+  B = Class.new(A)
+  C = Class.new { call_method }
+  D = 1
+end
+
+==> 026.rb 72 <==
+module Namespace
+  class Private
+  end
+
+  private_constant :Private
+end
+
+==> 027.rb 71 <==
+class Namespace
+  class Private
+  end
+
+  private_constant :Private
+end
+
+==> 028.rb 52 <==
+class Foo < ApplicationRecord
+  belongs_to :bar
+end
+
+==> 029.rb 29 <==
+module Foo
+  include Bar
+end
+
+==> 030.rb 28 <==
+module Foo
+  extend Bar
+end
+
+==> 031.rb 29 <==
+module Foo
+  prepend Bar
+end
+
+==> 032.rb 62 <==
+module Foo
+  include A
+  include B
+  extend C
+  prepend D
+end
+
+==> 033.rb 54 <==
+module Foo
+  extend B
+  include C
+
+  def foo; end
+end
+
+==> 034.rb 77 <==
+module A # The A Module
+  class B
+    C = 1
+    def method
+    end
+  end
+end
+
+==> 035.rb 43 <==
+module A::B
+  C = 1
+  def method
+  end
+end
+
+==> 036.rb 42 <==
+class A::B
+  C = 1
+  def method
+  end
+end
+
+==> 037.rb 111 <==
+module A::B
+  module C
+    class D
+      class E::F
+        def method
+        end
+      end
+    end
+  end
+end
+
+==> 038.rb 111 <==
+module TestModule
+  # documentation comment
+  class Test
+    def method
+    end
+  end # decorating comment
+end
+
+==> 039.rb 85 <==
+module TestModule
+  class Test
+    def method
+    end
+    # sparse comment
+  end
+end
+
+==> 040.rb 112 <==
+module TestModule
+  # documentation comment
+  module Test
+    def method
+    end
+  end # decorating comment
+end
+
+==> 041.rb 86 <==
+module TestModule
+  module Test
+    def method
+    end
+    # sparse comment
+  end
+end
+
+==> 042.rb 43 <==
+class Test #:nodoc:
+  def method
+  end
+end
+
+==> 043.rb 49 <==
+class A::B::Test #:nodoc:
+  def method
+  end
+end
+
+==> 044.rb 85 <==
+module TestModule #:nodoc:
+  TEST = 20
+  class Test
+    def method
+    end
+  end
+end
+
+==> 045.rb 96 <==
+module A #:nodoc: all
+  module B
+    TEST = 20
+    class Test
+      TEST = 20
+    end
+  end
+end
+
+==> 046.rb 44 <==
+module Test #:nodoc:
+  def method
+  end
+end
+
+==> 047.rb 50 <==
+module A::B::Test #:nodoc:
+  def method
+  end
+end
+
+==> 048.rb 86 <==
+module TestModule #:nodoc:
+  TEST = 20
+  module Test
+    def method
+    end
+  end
+end
+
+==> 049.rb 97 <==
+module A #:nodoc: all
+  module B
+    TEST = 20
+    module Test
+      TEST = 20
+    end
+  end
+end
+
+==> 050.rb 52 <==
+class Test < Parent #:nodoc:
+  def method
+  end
+end
+
+==> 051.rb 94 <==
+module TestModule #:nodoc:
+  TEST = 20
+  class Test < Parent
+    def method
+    end
+  end
+end
+
+==> 052.rb 105 <==
+module A #:nodoc: all
+  module B
+    TEST = 20
+    class Test < Parent
+      TEST = 20
+    end
+  end
+end
+
+==> 053.rb 70 <==
+module A
+  module ClassMethods
+    def do_something
+    end
+  end
+end
+

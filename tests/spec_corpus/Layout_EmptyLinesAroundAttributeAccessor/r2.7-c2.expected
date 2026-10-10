@@ -1,0 +1,14 @@
+==> offenses exit=1 115 <==
+000.rb:1:1: C: [Correctable] Layout/EmptyLinesAroundAttributeAccessor: Add an empty line after attribute accessor.
+
+==> autocorrect exit=0 113 <==
+000.rb:1:1: C: [Corrected] Layout/EmptyLinesAroundAttributeAccessor: Add an empty line after attribute accessor.
+
+==> corrected/000.rb 57 <==
+attr_accessor :foo
+
+alias foo? foo
+
+def do_something
+end
+

@@ -1,0 +1,95 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 8 <==
+top.test
+==> 001.rb 14 <==
+top.test(a, b)
+==> 002.rb 23 <==
+foo(:arg) do
+  bar
+end
+
+==> 003.rb 14 <==
+top.test a, b
+
+==> 004.rb 15 <==
+top&.test a, b
+
+==> 005.rb 24 <==
+def foo
+  test a, b
+end
+
+==> 006.rb 24 <==
+def foo
+  Test a, b
+end
+
+==> 007.rb 22 <==
+def foo
+  super a
+end
+
+==> 008.rb 5 <==
+super
+==> 009.rb 5 <==
+yield
+==> 010.rb 8 <==
+super(a)
+==> 011.rb 22 <==
+def foo
+  yield a
+end
+
+==> 012.rb 12 <==
+top.test + a
+==> 013.rb 12 <==
+top.test = a
+==> 014.rb 5 <==
+!test
+==> 015.rb 15 <==
+top.eq (1 + 2)
+
+==> 016.rb 25 <==
+def foo
+  eq (1 + 2)
+end
+
+==> 017.rb 41 <==
+def foo
+  eq 1, (2 + 3)
+  eq 1, 2, 3
+end
+
+==> 018.rb 19 <==
+top.eq (1 + 2) + 3
+
+==> 019.rb 18 <==
+top.eq (1 + 2), 3
+
+==> 020.rb 42 <==
+def my_method
+  foo bar.baz(abc, xyz)
+end
+
+==> 021.rb 52 <==
+def my_method
+  foo bar.baz(abc, xyz), foo(baz)
+end
+
+==> 022.rb 46 <==
+def my_method
+  raise NotImplementedError
+end
+
+==> 023.rb 28 <==
+def my_method
+  sleep 1
+end
+

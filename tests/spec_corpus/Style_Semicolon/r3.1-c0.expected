@@ -1,0 +1,22 @@
+==> offenses exit=1 284 <==
+000.rb:1:15: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+001.rb:1:8: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+002.rb:1:12: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+
+==> autocorrect exit=0 278 <==
+000.rb:1:15: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+001.rb:1:8: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+002.rb:1:12: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+
+==> corrected/000.rb 29 <==
+m(key1:, key2:)
+do_something
+
+==> corrected/001.rb 21 <==
+m(key:)
+do_something
+
+==> corrected/002.rb 26 <==
+obj&.m(key:)
+do_something
+

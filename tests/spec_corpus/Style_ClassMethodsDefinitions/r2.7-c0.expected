@@ -1,0 +1,112 @@
+==> offenses exit=1 999 <==
+000.rb:2:3: C: [Correctable] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+001.rb:2:3: C: [Correctable] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+002.rb:2:3: C: [Correctable] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+003.rb:2:3: C: [Correctable] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+004.rb:2:3: C: [Correctable] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+005.rb:5:3: C: [Correctable] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+006.rb:2:3: C: [Correctable] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+007.rb:2:3: C: [Correctable] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+008.rb:2:3: C: [Correctable] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+
+==> autocorrect exit=0 981 <==
+000.rb:2:3: C: [Corrected] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+001.rb:2:3: C: [Corrected] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+002.rb:2:3: C: [Corrected] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+003.rb:2:3: C: [Corrected] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+004.rb:2:3: C: [Corrected] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+005.rb:5:3: C: [Corrected] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+006.rb:2:3: C: [Corrected] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+007.rb:2:3: C: [Corrected] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+008.rb:2:3: C: [Corrected] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+
+==> corrected/000.rb 80 <==
+class A
+  class << self
+    attr_reader :two
+
+  end
+
+  def self.three
+  end
+end
+
+==> corrected/001.rb 68 <==
+class A
+  # See def two for usage
+  def self.two
+    :two
+  end
+end
+
+==> corrected/002.rb 79 <==
+class A
+  class << self
+    attr_reader :two
+  end
+
+  def self.three
+  end
+end
+
+==> corrected/003.rb 105 <==
+class A
+  class << self
+    attr_reader :one
+
+  end
+
+  # Multiline
+  # comment.
+  def self.two
+  end
+end
+
+==> corrected/004.rb 73 <==
+class A
+  def self.one
+    :one
+  end
+
+  def self.two
+    :two
+  end
+end
+
+==> corrected/005.rb 79 <==
+class A
+  def self.one
+  end
+
+  def self.two
+  end
+
+  def self.three
+  end
+end
+
+==> corrected/006.rb 82 <==
+class A
+  class << self
+    def self.one
+    end
+
+  end
+
+  def self.two
+  end
+end
+
+==> corrected/007.rb 55 <==
+class Foo
+  def self.do_something
+    # TODO
+  end
+end
+
+==> corrected/008.rb 51 <==
+class Foo
+  def self.do_something # TODO
+  end
+end
+

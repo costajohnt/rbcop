@@ -1,0 +1,14 @@
+==> offenses exit=1 145 <==
+000.rb:1:1: C: Style/Copyright: Include a copyright notice matching /Copyright (\(c\) )?2026 Acme Inc.  License details\.\.\. / before any code.
+
+==> autocorrect exit=0 157 <==
+000.rb:1:1: C: [Corrected] Style/Copyright: Include a copyright notice matching /Copyright (\(c\) )?2026 Acme Inc.  License details\.\.\. / before any code.
+
+==> corrected/000.rb 69 <==
+# Copyright (c) 2026 Acme Inc.
+#
+# License details...
+
+class Foo
+end
+

@@ -1,0 +1,19 @@
+==> offenses exit=1 351 <==
+012.rb:1:9: C: [Correctable] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+013.rb:1:9: C: [Correctable] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+014.rb:1:9: C: [Correctable] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+
+==> autocorrect exit=0 345 <==
+012.rb:1:9: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+013.rb:1:9: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+014.rb:1:9: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+
+==> corrected/012.rb 12 <==
+CONST = /./
+
+==> corrected/013.rb 15 <==
+CONST = (1..5)
+
+==> corrected/014.rb 16 <==
+CONST = (1...5)
+

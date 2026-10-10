@@ -1,0 +1,32 @@
+==> offenses exit=1 276 <==
+000.rb:1:13: C: [Correctable] Style/HashSyntax: Omit the hash value.
+001.rb:1:17: C: [Correctable] Style/HashSyntax: Omit the hash value.
+002.rb:1:16: C: [Correctable] Style/HashSyntax: Omit the hash value.
+003.rb:1:16: C: [Correctable] Style/HashSyntax: Omit the hash value.
+
+==> autocorrect exit=0 268 <==
+000.rb:1:13: C: [Corrected] Style/HashSyntax: Omit the hash value.
+001.rb:1:17: C: [Corrected] Style/HashSyntax: Omit the hash value.
+002.rb:1:16: C: [Corrected] Style/HashSyntax: Omit the hash value.
+003.rb:1:16: C: [Corrected] Style/HashSyntax: Omit the hash value.
+
+==> corrected/000.rb 23 <==
+if foo(bar:)
+  baz
+end
+
+==> corrected/001.rb 27 <==
+unless foo(bar:)
+  baz
+end
+
+==> corrected/002.rb 26 <==
+while foo(bar:)
+  baz
+end
+
+==> corrected/003.rb 26 <==
+until foo(bar:)
+  baz
+end
+

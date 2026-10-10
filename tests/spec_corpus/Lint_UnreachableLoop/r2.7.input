@@ -1,0 +1,210 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 33 <==
+while x > 0
+  x += 1
+  break
+end
+
+==> 001.rb 72 <==
+while x > 0
+  if condition
+    break
+  else
+    raise MyError
+  end
+end
+
+==> 002.rb 89 <==
+while x > 0
+  if condition
+    break
+  elsif other_condition
+    raise MyError
+  end
+end
+
+==> 003.rb 113 <==
+while x > 0
+  if condition
+    break
+  elsif other_condition
+    do_something
+  else
+    raise MyError
+  end
+end
+
+==> 004.rb 75 <==
+while x > 0
+  case x
+  when 1
+    break
+  else
+    raise MyError
+  end
+end
+
+==> 005.rb 50 <==
+while x > 0
+  case x
+  when 1
+    break
+  end
+end
+
+==> 006.rb 101 <==
+while x > 0
+  case x
+  when 1
+    break
+  when 2
+    do_something
+  else
+    raise MyError
+  end
+end
+
+==> 007.rb 73 <==
+while x > 0
+  case x
+  in 1
+    break
+  else
+    raise MyError
+  end
+end
+
+==> 008.rb 48 <==
+while x > 0
+  case x
+  in 1
+    break
+  end
+end
+
+==> 009.rb 97 <==
+while x > 0
+  case x
+  in 1
+    break
+  in 2
+    do_something
+  else
+    raise MyError
+  end
+end
+
+==> 010.rb 50 <==
+while x > 0
+  next if x.odd?
+  x += 1
+  break
+end
+
+==> 011.rb 89 <==
+while x > 0
+  next if x.odd?
+  if condition
+    break
+  else
+    raise MyError
+  end
+end
+
+==> 012.rb 93 <==
+while x > 0
+  redo if x.odd?
+
+  case x
+  when 1
+    break
+  else
+    raise MyError
+  end
+end
+
+==> 013.rb 91 <==
+while x > 0
+  redo if x.odd?
+
+  case x
+  in 1
+    break
+  else
+    raise MyError
+  end
+end
+
+==> 014.rb 46 <==
+string.split('-').map { raise StandardError }
+
+==> 015.rb 35 <==
+string.map { raise StandardError }
+
+==> 016.rb 49 <==
+exactly(2).times.with(x) { raise StandardError }
+
+==> 017.rb 263 <==
+until x > 0
+
+  items.each do |item|
+    next if item.odd?
+    break
+  end
+
+  if x > 0
+    break some_value
+  else
+    raise MyError
+  end
+
+  loop do
+
+    case y
+    when 1
+      return something
+    when 2
+      break
+    else
+      throw :exit
+    end
+  end
+end
+
+==> 018.rb 78 <==
+while x > 0
+  if y
+    next if something
+    break
+  else
+    break
+  end
+end
+
+==> 019.rb 72 <==
+[nil, nil, 42].each do |value|
+  return do_something(value) || next
+end
+
+==> 020.rb 72 <==
+[nil, nil, 42].each do |value|
+  return do_something(value) || redo
+end
+
+==> 021.rb 73 <==
+[nil, nil, 42].each do |value|
+  return do_something(value) || break
+end
+
+==> 022.rb 48 <==
+[1, 2, 3].each do
+  return _1.odd? || break
+end
+

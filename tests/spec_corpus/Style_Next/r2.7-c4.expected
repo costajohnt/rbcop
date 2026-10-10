@@ -1,0 +1,16 @@
+==> offenses exit=1 71 <==
+000.rb:6:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+
+==> autocorrect exit=0 69 <==
+000.rb:6:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+
+==> corrected/000.rb 67 <==
+[].each do
+  if foo?
+    work
+  end
+
+  next unless bar?
+  work
+end
+

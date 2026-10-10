@@ -1,0 +1,56 @@
+==> .rubocop.yml 179 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+Style/MethodCallWithArgsParentheses:
+  EnforcedStyle: omit_parentheses
+
+==> 000.rb 16 <==
+foo(bar:, baz:)
+
+==> 001.rb 34 <==
+do_something(value:) if condition
+
+==> 002.rb 40 <==
+do_something(value: value) if condition
+
+==> 003.rb 11 <==
+foo value:
+
+==> 004.rb 21 <==
+foo(value:)
+foo(arg)
+
+==> 005.rb 27 <==
+var = foo(value:)
+foo(arg)
+
+==> 006.rb 84 <==
+var =
+  unless object.action(value:, other:)
+    condition || other_condition
+  end
+
+==> 007.rb 69 <==
+case match
+in :pattern1
+  foo(value:)
+in :pattern2
+  bar(value:)
+end
+
+==> 008.rb 75 <==
+case match
+in :pattern1 then foo(value:)
+in :pattern2 then bar(value:)
+end
+
+==> 009.rb 81 <==
+case match
+when /pattern1/ then foo(value:)
+when /pattern2/ then bar(value:)
+end
+

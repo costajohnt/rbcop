@@ -1,0 +1,32 @@
+==> .rubocop.yml 325 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/IndentationWidth:
+  Width: 4
+  EnforcedStyleAlignWith: start_of_line
+  SupportedStylesAlignWith:
+  - start_of_line
+  - relative_to_receiver
+  AllowedPatterns:
+  - "^\\s*module"
+  - "^\\s*(els)?if.*[A-Z][a-z]+"
+
+==> 000.rb 195 <==
+module Foo
+class Test
+    if blah
+        if blah == Apple
+puts "sweet"
+        elsif blah == Lemon
+puts "sour"
+        elsif blah == popcorn
+            puts "salty"
+        end
+    end
+end
+end
+

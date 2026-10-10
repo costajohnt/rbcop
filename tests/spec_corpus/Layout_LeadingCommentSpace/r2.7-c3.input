@@ -1,0 +1,16 @@
+==> .rubocop.yml 169 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LeadingCommentSpace:
+  AllowGemfileRubyComment: false
+
+==> 000.rb 100 <==
+# Specific version (comment) will be used by RVM
+#ruby=2.7.0
+#ruby-gemset=myproject
+ruby '~> 2.7.0'
+

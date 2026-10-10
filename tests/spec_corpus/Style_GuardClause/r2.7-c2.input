@@ -1,0 +1,30 @@
+==> .rubocop.yml 191 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/GuardClause:
+  MinBodyLength: 4
+Layout/LineLength:
+  Enabled: true
+  Max: 80
+
+==> 000.rb 127 <==
+def func
+  if something
+    work
+    work
+    work
+  end
+end
+
+def func
+  unless something
+    work
+    work
+    work
+  end
+end
+

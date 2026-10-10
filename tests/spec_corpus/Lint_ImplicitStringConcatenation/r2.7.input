@@ -1,0 +1,52 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 3 <==
+abc
+==> 001.rb 52 <==
+class A; "abc" "def"; end
+class B; 'ghi' 'jkl'; end
+
+==> 002.rb 31 <==
+"string#{interpolation}" "def"
+
+==> 003.rb 35 <==
+"foo""string#{interpolation}""bar"
+
+==> 004.rb 13 <==
+"""string"""
+
+==> 005.rb 29 <==
+array = [
+  'abc'\
+  'def'
+]
+
+==> 006.rb 48 <==
+'single-quoted string'"string
+#{interpolation}"
+
+==> 007.rb 31 <==
+def method
+  "ab
+c" "de
+f"
+end
+
+==> 008.rb 10 <==
+'abc
+def'
+
+==> 009.rb 47 <==
+array = ["abc#{something}def#{something_else}"]
+==> 010.rb 22 <==
+array = ["abc" "def"]
+
+==> 011.rb 20 <==
+method("abc" "def")
+

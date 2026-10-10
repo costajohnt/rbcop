@@ -1,0 +1,34 @@
+==> offenses exit=1 575 <==
+000.rb:1:6: C: [Correctable] Style/YAMLFileRead: Use `load_file(path)` instead.
+001.rb:1:6: C: [Correctable] Style/YAMLFileRead: Use `safe_load_file(path)` instead.
+002.rb:1:6: C: [Correctable] Style/YAMLFileRead: Use `safe_load_file(path, permitted_classes: [Regexp, Symbol], aliases: true)` instead.
+003.rb:1:6: C: [Correctable] Style/YAMLFileRead: Use `parse_file(path)` instead.
+004.rb:1:8: C: [Correctable] Style/YAMLFileRead: Use `load_file(path)` instead.
+005.rb:1:6: C: [Correctable] Style/YAMLFileRead: Use `load_file(Rails.root.join('foo', 'bar', 'baz'))` instead.
+
+==> autocorrect exit=0 563 <==
+000.rb:1:6: C: [Corrected] Style/YAMLFileRead: Use `load_file(path)` instead.
+001.rb:1:6: C: [Corrected] Style/YAMLFileRead: Use `safe_load_file(path)` instead.
+002.rb:1:6: C: [Corrected] Style/YAMLFileRead: Use `safe_load_file(path, permitted_classes: [Regexp, Symbol], aliases: true)` instead.
+003.rb:1:6: C: [Corrected] Style/YAMLFileRead: Use `parse_file(path)` instead.
+004.rb:1:8: C: [Corrected] Style/YAMLFileRead: Use `load_file(path)` instead.
+005.rb:1:6: C: [Corrected] Style/YAMLFileRead: Use `load_file(Rails.root.join('foo', 'bar', 'baz'))` instead.
+
+==> corrected/000.rb 21 <==
+YAML.load_file(path)
+
+==> corrected/001.rb 26 <==
+YAML.safe_load_file(path)
+
+==> corrected/002.rb 78 <==
+YAML.safe_load_file(path, permitted_classes: [Regexp, Symbol], aliases: true)
+
+==> corrected/003.rb 22 <==
+YAML.parse_file(path)
+
+==> corrected/004.rb 23 <==
+::YAML.load_file(path)
+
+==> corrected/005.rb 53 <==
+YAML.load_file(Rails.root.join('foo', 'bar', 'baz'))
+

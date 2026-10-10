@@ -1,0 +1,31 @@
+==> offenses exit=1 411 <==
+000.rb:4:2: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the line after the last array element.
+001.rb:2:2: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the line after the last array element.
+002.rb:3:2: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the line after the last array element.
+
+==> autocorrect exit=0 405 <==
+000.rb:4:2: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the line after the last array element.
+001.rb:2:2: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the line after the last array element.
+002.rb:3:2: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the line after the last array element.
+
+==> corrected/000.rb 20 <==
+[a,
+{
+foo: bar
+}
+]
+
+
+==> corrected/001.rb 17 <==
+[a, # a
+b
+] # b
+
+
+==> corrected/002.rb 10 <==
+[
+a,
+b
+]
+
+

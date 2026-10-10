@@ -1,0 +1,74 @@
+==> offenses exit=1 920 <==
+000.rb:3:1: C: [Correctable] Naming/HeredocDelimiterCase: Use uppercase heredoc delimiters.
+001.rb:3:1: C: [Correctable] Naming/HeredocDelimiterCase: Use uppercase heredoc delimiters.
+003.rb:3:1: C: [Correctable] Naming/HeredocDelimiterCase: Use uppercase heredoc delimiters.
+004.rb:3:1: C: [Correctable] Naming/HeredocDelimiterCase: Use uppercase heredoc delimiters.
+006.rb:3:1: C: [Correctable] Naming/HeredocDelimiterCase: Use uppercase heredoc delimiters.
+007.rb:3:1: C: [Correctable] Naming/HeredocDelimiterCase: Use uppercase heredoc delimiters.
+009.rb:3:1: C: [Correctable] Naming/HeredocDelimiterCase: Use uppercase heredoc delimiters.
+010.rb:3:1: C: [Correctable] Naming/HeredocDelimiterCase: Use uppercase heredoc delimiters.
+014.rb:3:1: C: [Correctable] Naming/HeredocDelimiterCase: Use uppercase heredoc delimiters.
+015.rb:3:1: C: [Correctable] Naming/HeredocDelimiterCase: Use uppercase heredoc delimiters.
+
+==> autocorrect exit=0 900 <==
+000.rb:3:1: C: [Corrected] Naming/HeredocDelimiterCase: Use uppercase heredoc delimiters.
+001.rb:3:1: C: [Corrected] Naming/HeredocDelimiterCase: Use uppercase heredoc delimiters.
+003.rb:3:1: C: [Corrected] Naming/HeredocDelimiterCase: Use uppercase heredoc delimiters.
+004.rb:3:1: C: [Corrected] Naming/HeredocDelimiterCase: Use uppercase heredoc delimiters.
+006.rb:3:1: C: [Corrected] Naming/HeredocDelimiterCase: Use uppercase heredoc delimiters.
+007.rb:3:1: C: [Corrected] Naming/HeredocDelimiterCase: Use uppercase heredoc delimiters.
+009.rb:3:1: C: [Corrected] Naming/HeredocDelimiterCase: Use uppercase heredoc delimiters.
+010.rb:3:1: C: [Corrected] Naming/HeredocDelimiterCase: Use uppercase heredoc delimiters.
+014.rb:3:1: C: [Corrected] Naming/HeredocDelimiterCase: Use uppercase heredoc delimiters.
+015.rb:3:1: C: [Corrected] Naming/HeredocDelimiterCase: Use uppercase heredoc delimiters.
+
+==> corrected/000.rb 17 <==
+<<-SQL
+  foo
+SQL
+
+==> corrected/001.rb 17 <==
+<<-SQL
+  foo
+SQL
+
+==> corrected/003.rb 19 <==
+<<-'SQL'
+  foo
+SQL
+
+==> corrected/004.rb 19 <==
+<<-'SQL'
+  foo
+SQL
+
+==> corrected/006.rb 19 <==
+<<-"SQL"
+  foo
+SQL
+
+==> corrected/007.rb 19 <==
+<<-"SQL"
+  foo
+SQL
+
+==> corrected/009.rb 19 <==
+<<-`SQL`
+  foo
+SQL
+
+==> corrected/010.rb 19 <==
+<<-`SQL`
+  foo
+SQL
+
+==> corrected/014.rb 17 <==
+<<~SQL
+  foo
+SQL
+
+==> corrected/015.rb 17 <==
+<<~SQL
+  foo
+SQL
+

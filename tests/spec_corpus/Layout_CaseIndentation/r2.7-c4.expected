@@ -1,0 +1,44 @@
+==> offenses exit=1 370 <==
+002.rb:2:10: C: [Correctable] Layout/CaseIndentation: Indent `when` one step more than `end`.
+003.rb:2:8: C: [Correctable] Layout/CaseIndentation: Indent `when` one step more than `end`.
+006.rb:2:10: C: [Correctable] Layout/CaseIndentation: Indent `in` one step more than `end`.
+007.rb:2:8: C: [Correctable] Layout/CaseIndentation: Indent `in` one step more than `end`.
+
+==> autocorrect exit=0 362 <==
+002.rb:2:10: C: [Corrected] Layout/CaseIndentation: Indent `when` one step more than `end`.
+003.rb:2:8: C: [Corrected] Layout/CaseIndentation: Indent `when` one step more than `end`.
+006.rb:2:10: C: [Corrected] Layout/CaseIndentation: Indent `in` one step more than `end`.
+007.rb:2:8: C: [Corrected] Layout/CaseIndentation: Indent `in` one step more than `end`.
+
+==> corrected/002.rb 117 <==
+output = case variable
+           when 'value1'
+           'output1'
+         else
+           'output2'
+         end
+
+==> corrected/003.rb 107 <==
+output = case variable
+         when 'value1'
+         'output1'
+       else
+         'output2'
+       end
+
+==> corrected/006.rb 114 <==
+output = case variable
+           in pattern
+           'output1'
+         else
+           'output2'
+         end
+
+==> corrected/007.rb 104 <==
+output = case variable
+         in pattern
+         'output1'
+       else
+         'output2'
+       end
+

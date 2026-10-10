@@ -1,0 +1,128 @@
+==> offenses exit=1 2001 <==
+012.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+014.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+015.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+017.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+019.rb:5:7: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+020.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+021.rb:2:3: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+023.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+024.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+025.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+026.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+026.rb:3:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+027.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+028.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+028.rb:5:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+028.rb:8:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+029.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+030.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+031.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+036.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+036.rb:4:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+044.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+045.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+
+==> autocorrect exit=0 1955 <==
+012.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+014.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+015.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+017.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+019.rb:5:7: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+020.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+021.rb:2:3: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+023.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+024.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+025.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+026.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+026.rb:3:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+027.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+028.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+028.rb:5:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+028.rb:8:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+029.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+030.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+031.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+036.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+036.rb:4:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+044.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+045.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+
+==> corrected/012.rb 18 <==
+my_method(1) [:a]
+
+==> corrected/014.rb 20 <==
+{ key: value }[key]
+
+==> corrected/015.rb 11 <==
+foo && bar
+
+==> corrected/017.rb 11 <==
+foo || bar
+
+==> corrected/019.rb 503 <==
+def resolve_inheritance_from_gems(hash)
+  gems = hash.delete('inherit_gem')
+  (gems || {}).each_pair do |gem_name, config_path|
+    if gem_name == 'rubocop'
+      raise ArgumentError, "can't inherit configuration from the rubocop gem"
+    end
+
+    hash['inherit_from'] = Array(hash['inherit_from'])
+    Array(config_path).reverse_each do |path|
+      # Put gem configuration first so local configuration overrides it.
+      hash['inherit_from'].unshift gem_config_path(gem_name, path)
+    end
+  end
+end
+
+==> corrected/020.rb 21 <==
+my_method(1, 2, "x")
+
+==> corrected/021.rb 60 <==
+some_array.map do |something|
+  my_method( something, )
+end
+
+==> corrected/023.rb 16 <==
+my_method("ab")
+
+==> corrected/024.rb 28 <==
+puts "(#{pl(i)}, #{pl(f)})"
+
+==> corrected/025.rb 16 <==
+my_method('ab')
+
+==> corrected/026.rb 42 <==
+my_method("a" + 'b')
+my_method('a' + "b")
+
+==> corrected/027.rb 21 <==
+my_method(1 + 2 + 3)
+
+==> corrected/028.rb 68 <==
+a = m(1 + 2 + 3)
+b = m(4 + 5 + 6)
+long_variable_name = m(7 + 8 + 9)
+
+==> corrected/029.rb 19 <==
+foo(' .x').bar.baz
+
+==> corrected/030.rb 21 <==
+foo(x, y, z).bar.baz
+
+==> corrected/031.rb 24 <==
+foo('........').bar.baz
+
+==> corrected/036.rb 70 <==
+my_method(11111, 22222, "abcxyz")
+my_method(111111 + 222222 + 333333)
+
+==> corrected/044.rb 90 <==
+context 'when the configuration includes an unsafe cop that is 123456789012345678' do
+end
+
+==> corrected/045.rb 87 <==
+context 'when the configuration includes an unsafe cop that is 123456789012345' do
+end
+

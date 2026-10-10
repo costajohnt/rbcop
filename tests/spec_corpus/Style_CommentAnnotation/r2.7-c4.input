@@ -1,0 +1,53 @@
+==> .rubocop.yml 219 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/CommentAnnotation:
+  Keywords:
+  - TODO
+  - FIXME
+  - OPTIMIZE
+  - HACK
+  - REVIEW
+  RequireColon: false
+
+==> 000.rb 20 <==
+# TODO: make better
+
+==> 001.rb 22 <==
+# fixme does not work
+
+==> 002.rb 8 <==
+# HACK:
+
+==> 003.rb 28 <==
+# REVIEW not sure about this
+==> 004.rb 10 <==
+# OPTIMIZE
+==> 005.rb 17 <==
+# Todo.destroy(1)
+==> 006.rb 71 <==
+# Optimize if you want. I wouldn't recommend it.
+# Hack is a fun game.
+
+==> 007.rb 193 <==
+# Example: There are three reviews, with ranks 1, 2, and 3. A new
+# review is saved with rank 2. The two reviews that originally had
+# ranks 2 and 3 will have their ranks increased to 3 and 4.
+
+==> 008.rb 88 <==
+class ToBeDone
+  ITEMS = [
+    '', # TODO: Item 1
+    '', # TODO: Item 2
+  ].freeze
+end
+
+==> 009.rb 45 <==
+# TODO: line 1
+# TODO: line 2
+# TODO: line 3
+

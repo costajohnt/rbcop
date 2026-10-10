@@ -1,0 +1,69 @@
+==> offenses exit=1 1131 <==
+000.rb:1:6: C: [Correctable] Style/PerlBackrefs: Prefer `Regexp.last_match(1)` over `$1`.
+001.rb:1:1: C: [Correctable] Style/PerlBackrefs: Prefer `Regexp.last_match(9)` over `$9`.
+002.rb:1:1: C: [Correctable] Style/PerlBackrefs: Prefer `Regexp.last_match(0)` over `$&`.
+003.rb:1:1: C: [Correctable] Style/PerlBackrefs: Prefer `Regexp.last_match.pre_match` over `$``.
+004.rb:1:1: C: [Correctable] Style/PerlBackrefs: Prefer `Regexp.last_match.post_match` over `$'`.
+006.rb:1:1: C: [Correctable] Style/PerlBackrefs: Prefer `Regexp.last_match(0)` over `$MATCH`.
+007.rb:1:1: C: [Correctable] Style/PerlBackrefs: Prefer `Regexp.last_match.pre_match` over `$PREMATCH`.
+008.rb:1:1: C: [Correctable] Style/PerlBackrefs: Prefer `Regexp.last_match.post_match` over `$POSTMATCH`.
+010.rb:1:3: C: [Correctable] Style/PerlBackrefs: Prefer `Regexp.last_match(1)` over `$1`.
+011.rb:1:3: C: [Correctable] Style/PerlBackrefs: Prefer `Regexp.last_match(1)` over `$1`.
+012.rb:1:3: C: [Correctable] Style/PerlBackrefs: Prefer `Regexp.last_match(1)` over `$1`.
+013.rb:5:8: C: [Correctable] Style/PerlBackrefs: Prefer `::Regexp.last_match(1)` over `$1`.
+
+==> autocorrect exit=0 1107 <==
+000.rb:1:6: C: [Corrected] Style/PerlBackrefs: Prefer `Regexp.last_match(1)` over `$1`.
+001.rb:1:1: C: [Corrected] Style/PerlBackrefs: Prefer `Regexp.last_match(9)` over `$9`.
+002.rb:1:1: C: [Corrected] Style/PerlBackrefs: Prefer `Regexp.last_match(0)` over `$&`.
+003.rb:1:1: C: [Corrected] Style/PerlBackrefs: Prefer `Regexp.last_match.pre_match` over `$``.
+004.rb:1:1: C: [Corrected] Style/PerlBackrefs: Prefer `Regexp.last_match.post_match` over `$'`.
+006.rb:1:1: C: [Corrected] Style/PerlBackrefs: Prefer `Regexp.last_match(0)` over `$MATCH`.
+007.rb:1:1: C: [Corrected] Style/PerlBackrefs: Prefer `Regexp.last_match.pre_match` over `$PREMATCH`.
+008.rb:1:1: C: [Corrected] Style/PerlBackrefs: Prefer `Regexp.last_match.post_match` over `$POSTMATCH`.
+010.rb:1:3: C: [Corrected] Style/PerlBackrefs: Prefer `Regexp.last_match(1)` over `$1`.
+011.rb:1:3: C: [Corrected] Style/PerlBackrefs: Prefer `Regexp.last_match(1)` over `$1`.
+012.rb:1:3: C: [Corrected] Style/PerlBackrefs: Prefer `Regexp.last_match(1)` over `$1`.
+013.rb:5:8: C: [Corrected] Style/PerlBackrefs: Prefer `::Regexp.last_match(1)` over `$1`.
+
+==> corrected/000.rb 26 <==
+puts Regexp.last_match(1)
+
+==> corrected/001.rb 21 <==
+Regexp.last_match(9)
+
+==> corrected/002.rb 21 <==
+Regexp.last_match(0)
+
+==> corrected/003.rb 28 <==
+Regexp.last_match.pre_match
+
+==> corrected/004.rb 29 <==
+Regexp.last_match.post_match
+
+==> corrected/006.rb 21 <==
+Regexp.last_match(0)
+
+==> corrected/007.rb 28 <==
+Regexp.last_match.pre_match
+
+==> corrected/008.rb 29 <==
+Regexp.last_match.post_match
+
+==> corrected/010.rb 26 <==
+"#{Regexp.last_match(1)}"
+
+==> corrected/011.rb 26 <==
+`#{Regexp.last_match(1)}`
+
+==> corrected/012.rb 26 <==
+/#{Regexp.last_match(1)}/
+
+==> corrected/013.rb 67 <==
+module Foo
+  class Regexp
+  end
+
+  puts ::Regexp.last_match(1)
+end
+

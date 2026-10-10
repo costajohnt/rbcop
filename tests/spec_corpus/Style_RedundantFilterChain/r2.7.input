@@ -1,0 +1,134 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 30 <==
+arr.select { |x| x > 1 }.any?
+
+==> 001.rb 32 <==
+arr.select { |x| x > 1 }.empty?
+
+==> 002.rb 31 <==
+arr.select { |x| x > 1 }.none?
+
+==> 003.rb 25 <==
+arr.select(&:odd?).none?
+
+==> 004.rb 27 <==
+arr.select { _1 > 1 }.any?
+
+==> 005.rb 31 <==
+arr.select { |x| x > 1 }.many?
+
+==> 006.rb 34 <==
+arr.select { |x| x > 1 }.present?
+
+==> 007.rb 44 <==
+relation.select(:name).any?
+foo.select.any?
+
+==> 008.rb 72 <==
+arr.select(&:odd?).any?(Integer)
+arr.select(&:odd?).any? { |x| x > 10 }
+
+==> 009.rb 32 <==
+arr&.select { |x| x > 1 }&.any?
+
+==> 010.rb 34 <==
+arr&.select { |x| x > 1 }&.empty?
+
+==> 011.rb 33 <==
+arr&.select { |x| x > 1 }&.none?
+
+==> 012.rb 27 <==
+arr&.select(&:odd?)&.none?
+
+==> 013.rb 30 <==
+arr.filter { |x| x > 1 }.any?
+
+==> 014.rb 32 <==
+arr.filter { |x| x > 1 }.empty?
+
+==> 015.rb 31 <==
+arr.filter { |x| x > 1 }.none?
+
+==> 016.rb 25 <==
+arr.filter(&:odd?).none?
+
+==> 017.rb 27 <==
+arr.filter { _1 > 1 }.any?
+
+==> 018.rb 31 <==
+arr.filter { |x| x > 1 }.many?
+
+==> 019.rb 34 <==
+arr.filter { |x| x > 1 }.present?
+
+==> 020.rb 44 <==
+relation.filter(:name).any?
+foo.filter.any?
+
+==> 021.rb 72 <==
+arr.filter(&:odd?).any?(Integer)
+arr.filter(&:odd?).any? { |x| x > 10 }
+
+==> 022.rb 32 <==
+arr&.filter { |x| x > 1 }&.any?
+
+==> 023.rb 34 <==
+arr&.filter { |x| x > 1 }&.empty?
+
+==> 024.rb 33 <==
+arr&.filter { |x| x > 1 }&.none?
+
+==> 025.rb 27 <==
+arr&.filter(&:odd?)&.none?
+
+==> 026.rb 32 <==
+arr.find_all { |x| x > 1 }.any?
+
+==> 027.rb 34 <==
+arr.find_all { |x| x > 1 }.empty?
+
+==> 028.rb 33 <==
+arr.find_all { |x| x > 1 }.none?
+
+==> 029.rb 27 <==
+arr.find_all(&:odd?).none?
+
+==> 030.rb 29 <==
+arr.find_all { _1 > 1 }.any?
+
+==> 031.rb 33 <==
+arr.find_all { |x| x > 1 }.many?
+
+==> 032.rb 36 <==
+arr.find_all { |x| x > 1 }.present?
+
+==> 033.rb 48 <==
+relation.find_all(:name).any?
+foo.find_all.any?
+
+==> 034.rb 76 <==
+arr.find_all(&:odd?).any?(Integer)
+arr.find_all(&:odd?).any? { |x| x > 10 }
+
+==> 035.rb 34 <==
+arr&.find_all { |x| x > 1 }&.any?
+
+==> 036.rb 36 <==
+arr&.find_all { |x| x > 1 }&.empty?
+
+==> 037.rb 35 <==
+arr&.find_all { |x| x > 1 }&.none?
+
+==> 038.rb 29 <==
+arr&.find_all(&:odd?)&.none?
+
+==> 039.rb 23 <==
+arr.any? { |x| x > 1 }
+

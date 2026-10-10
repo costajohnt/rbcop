@@ -1,0 +1,465 @@
+==> .rubocop.yml 160 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SoleNestedConditional:
+  AllowModifier: false
+
+==> 000.rb 43 <==
+if foo
+  if bar
+    do_something
+  end
+end
+
+==> 001.rb 47 <==
+if foo
+  unless bar
+    do_something
+  end
+end
+
+==> 002.rb 47 <==
+unless foo
+  if bar
+    do_something
+  end
+end
+
+==> 003.rb 54 <==
+unless foo == bar
+  if baz
+    do_something
+  end
+end
+
+==> 004.rb 49 <==
+if foo = bar
+  if baz
+    do_something
+  end
+end
+
+==> 005.rb 58 <==
+if foo = bar and baz
+  if quux
+    do_something
+  end
+end
+
+==> 006.rb 57 <==
+if baz && foo = bar
+  if quux
+    do_something
+  end
+end
+
+==> 007.rb 60 <==
+if baz &&
+   foo = bar
+  if quux
+    do_something
+  end
+end
+
+==> 008.rb 76 <==
+if baz && foo = bar and fred = garply
+  if corge
+    do_something
+  end
+end
+
+==> 009.rb 59 <==
+if baz && (foo = bar)
+  if quux
+    do_something
+  end
+end
+
+==> 010.rb 49 <==
+if foo
+  if bar = baz
+    do_something
+  end
+end
+
+==> 011.rb 57 <==
+if foo
+  if quux && bar = baz
+    do_something
+  end
+end
+
+==> 012.rb 57 <==
+if foo = bar or baz
+  if quux
+    do_something
+  end
+end
+
+==> 013.rb 57 <==
+if baz || foo = bar
+  if quux
+    do_something
+  end
+end
+
+==> 014.rb 53 <==
+unless foo & bar
+  if baz
+    do_something
+  end
+end
+
+==> 015.rb 49 <==
+if foo & bar
+  if baz
+    do_something
+  end
+end
+
+==> 016.rb 51 <==
+unless foo
+  unless bar
+    do_something
+  end
+end
+
+==> 017.rb 36 <==
+if foo
+elsif bar
+  if baz
+  end
+end
+
+==> 018.rb 33 <==
+if foo
+  do_something if bar
+end
+
+==> 019.rb 37 <==
+if foo
+  do_something unless bar
+end
+
+==> 020.rb 90 <==
+class A
+  def foo
+    if h[:a]
+      h[:b] = true unless h.has_key?(:b)
+    end
+  end
+end
+
+==> 021.rb 44 <==
+if foo
+  do_something unless bar && baz
+end
+
+==> 022.rb 50 <==
+if foo
+  if bar || baz
+    do_something
+  end
+end
+
+==> 023.rb 40 <==
+if foo
+  do_something if bar || baz
+end
+
+==> 024.rb 57 <==
+if foo || bar
+  if baz || qux
+    do_something
+  end
+end
+
+==> 025.rb 47 <==
+if foo || bar
+  do_something if baz || qux
+end
+
+==> 026.rb 46 <==
+unless (foo || bar)
+  do_something if baz
+end
+
+==> 027.rb 44 <==
+unless foo || bar
+  do_something if baz
+end
+
+==> 028.rb 48 <==
+if result
+  do_something unless foo === bar
+end
+
+==> 029.rb 55 <==
+unless foo && bar && baz
+  do_something unless qux
+end
+
+==> 030.rb 47 <==
+unless foo.is_a? Foo
+  do_something if bar
+end
+
+==> 031.rb 48 <==
+unless foo.is_a?(Foo)
+  do_something if bar
+end
+
+==> 032.rb 52 <==
+unless foo.bar arg1, arg2
+  do_something if baz
+end
+
+==> 033.rb 64 <==
+if foo
+  if bar
+    if baz
+      do_something
+    end
+  end
+end
+
+==> 034.rb 68 <==
+if foo.is_a? Foo
+  if bar && baz
+    do_something if quux
+  end
+end
+
+==> 035.rb 56 <==
+if foo
+  # Comment.
+  if bar
+    do_something
+  end
+end
+
+==> 036.rb 99 <==
+if foo
+  # Comments.
+  if bar
+    # More comments.
+    if baz
+      do_something
+    end
+  end
+end
+
+==> 037.rb 92 <==
+# Outer comment.
+if foo
+  # Comment.
+  if bar # nested condition
+    do_something
+  end
+end
+
+==> 038.rb 47 <==
+if foo
+  if not bar
+    do_something
+  end
+end
+
+==> 039.rb 47 <==
+if not foo
+  if bar
+    do_something
+  end
+end
+
+==> 040.rb 44 <==
+if foo
+  if !bar
+    do_something
+  end
+end
+
+==> 041.rb 25 <==
+if foo; if bar; end; end
+
+==> 042.rb 44 <==
+# Comment.
+if foo
+  do_something if bar
+end
+
+==> 043.rb 42 <==
+if foo
+  if bar
+    # Comments.
+  end
+end
+
+==> 044.rb 33 <==
+if foo
+  do_something
+end if bar
+
+==> 045.rb 37 <==
+if foo
+  do_something
+end unless bar
+
+==> 046.rb 37 <==
+unless foo
+  do_something
+end if bar
+
+==> 047.rb 40 <==
+if foo
+  do_something
+end if bar && baz
+
+==> 048.rb 40 <==
+if foo && bar
+  do_something
+end if baz
+
+==> 049.rb 44 <==
+if foo
+  do_something
+end unless bar && baz
+
+==> 050.rb 44 <==
+if foo && bar
+  do_something
+end unless baz
+
+==> 051.rb 44 <==
+unless foo && bar
+  do_something
+end if baz
+
+==> 052.rb 53 <==
+if foo
+  unless bar & baz
+    do_something
+  end
+end
+
+==> 053.rb 54 <==
+if foo
+  unless bar || baz
+    do_something
+  end
+end
+
+==> 054.rb 43 <==
+if foo
+  do_something unless bar & baz
+end
+
+==> 055.rb 30 <==
+if foo
+  bar ? baz : quux
+end
+
+==> 056.rb 26 <==
+if foo
+  do_something
+end
+
+==> 057.rb 63 <==
+if foo
+  if bar
+    do_something
+  end
+  do_something_more
+end
+
+==> 058.rb 72 <==
+if foo
+  if bar
+    do_something
+  else
+    do_something_else
+  end
+end
+
+==> 059.rb 58 <==
+if foo
+  do_something if bar
+else
+  do_something_else
+end
+
+==> 060.rb 39 <==
+if var = foo
+  do_something if var
+end
+
+==> 061.rb 47 <==
+if cond && var = foo
+  do_something if var
+end
+
+==> 062.rb 37 <==
+if foo
+  do_something if ok? bar
+end
+
+==> 063.rb 42 <==
+if foo
+  do_something if obj&.ok? bar
+end
+
+==> 064.rb 47 <==
+if foo
+  if ok? bar
+    do_something
+  end
+end
+
+==> 065.rb 53 <==
+if foo
+  if bar&.baz quux
+    do_something
+  end
+end
+
+==> 066.rb 60 <==
+if foo
+  if ok? bar do
+      do_something
+    end
+  end
+end
+
+==> 067.rb 50 <==
+if foo
+  if ok? bar do
+      _1
+    end
+  end
+end
+
+==> 068.rb 38 <==
+if foo
+  do_something if ok?(bar)
+end
+
+==> 069.rb 48 <==
+if foo
+  if ok?(bar)
+    do_something
+  end
+end
+
+==> 070.rb 68 <==
+if foo
+  unless bar
+    if baz
+      do_something
+    end
+  end
+end
+

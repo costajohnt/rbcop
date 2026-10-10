@@ -1,0 +1,93 @@
+==> .rubocop.yml 152 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/EmptyInPattern:
+  AllowComments: false
+
+==> 000.rb 47 <==
+case foo
+in [a] then 1
+in [a, b] # nothing
+end
+
+==> 001.rb 54 <==
+case foo
+in [a] then 1
+in [a, b] # nothing
+else 3
+end
+
+==> 002.rb 52 <==
+case foo
+in [a] then 1
+in [a, b] then # nothing
+end
+
+==> 003.rb 59 <==
+case foo
+in [a] then 1
+in [a, b] then # nothing
+else 3
+end
+
+==> 004.rb 46 <==
+case foo
+in [a]
+  1
+in [a, b]
+  # nothing
+end
+
+==> 005.rb 55 <==
+case foo
+in [a]
+  1
+in [a, b]
+  # nothing
+else
+  3
+end
+
+==> 006.rb 44 <==
+case foo
+in [a] then 1
+in [a, b] then 2
+end
+
+==> 007.rb 51 <==
+case foo
+in [a] then 1
+in [a, b] then 2
+else 3
+end
+
+==> 008.rb 38 <==
+case foo
+in [a]
+  1
+in [a, b]
+  2
+end
+
+==> 009.rb 47 <==
+case foo
+in [a]
+  1
+in [a, b]
+  2
+else
+  3
+end
+
+==> 010.rb 66 <==
+case condition
+in [a]
+  do_something
+in [a, b]
+  # do nothing
+end
+

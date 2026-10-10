@@ -1,0 +1,22 @@
+==> .rubocop.yml 182 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/YodaCondition:
+  EnforcedStyle: require_for_equality_operators_only
+
+==> 000.rb 8 <==
+bar > 42
+==> 001.rb 10 <==
+bar <= nil
+==> 002.rb 14 <==
+a > 3 && 5 > a
+==> 003.rb 13 <==
+answer != 42
+
+==> 004.rb 13 <==
+foo == false
+

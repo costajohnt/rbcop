@@ -1,0 +1,16 @@
+==> .rubocop.yml 217 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/DisableCopsWithinSourceCodeDirective:
+  AllowedCops:
+  - Lint/Void
+  DisallowedCops:
+  - Security/Eval
+
+==> 000.rb 47 <==
+foo # rubocop:disable Lint/Void, Security/Eval
+

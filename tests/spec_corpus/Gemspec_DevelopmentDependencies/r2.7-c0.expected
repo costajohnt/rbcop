@@ -1,0 +1,6 @@
+==> offenses exit=1 106 <==
+000/example.gemspec:2:3: C: Gemspec/DevelopmentDependencies: Specify development dependencies in Gemfile.
+
+==> autocorrect exit=1 106 <==
+000/example.gemspec:2:3: C: Gemspec/DevelopmentDependencies: Specify development dependencies in Gemfile.
+

@@ -1,0 +1,24 @@
+==> .rubocop.yml 246 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/FirstArgumentIndentation:
+  EnforcedStyle: consistent_relative_to_receiver
+  IndentationWidth: 4
+Layout/IndentationWidth:
+  Width:
+
+==> 000.rb 28 <==
+run(
+    :foo,
+    bar: 3
+)
+
+==> 001.rb 31 <==
+run(
+        :foo,
+    bar: 3)
+

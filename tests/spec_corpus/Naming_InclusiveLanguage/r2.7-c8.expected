@@ -1,0 +1,6 @@
+==> offenses exit=1 85 <==
+000.rb:1:7: C: Naming/InclusiveLanguage: Consider replacing 'foo' with another term.
+
+==> autocorrect exit=1 85 <==
+000.rb:1:7: C: Naming/InclusiveLanguage: Consider replacing 'foo' with another term.
+

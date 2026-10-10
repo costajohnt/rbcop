@@ -1,0 +1,33 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 21 <==
+case a
+when b; c
+end
+
+==> 001.rb 24 <==
+case a
+when b, c; d
+end
+
+==> 002.rb 54 <==
+case a
+when b then c; d
+end
+
+case e
+when f
+  g; h
+end
+
+==> 003.rb 26 <==
+case value
+when cond1
+end
+

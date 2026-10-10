@@ -117,7 +117,13 @@ fn check_branch(cx: &mut Cx, node: &Node) {
 
 fn check_return(cx: &mut Cx, node: &Node) {
     let ret = node.as_return_node().unwrap();
-    let args: Vec<Node> = ret.arguments().map(|a| a.arguments().iter().collect()).unwrap_or_default();
+    let mut args: Vec<Node> = ret.arguments().map(|a| a.arguments().iter().collect()).unwrap_or_default();
+    // `return()` is parser's `(return (begin))`, whose WrappedArguments are empty.
+    if let [only] = args.as_slice()
+        && only.as_parentheses_node().is_some_and(|p| p.body().is_none())
+    {
+        args.clear();
+    }
     let allow_multiple = cx.cfg.bool("AllowMultipleReturnValues").unwrap_or(false);
     if allow_multiple && args.len() > 1 {
         return;

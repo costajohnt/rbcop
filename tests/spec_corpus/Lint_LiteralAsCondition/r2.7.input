@@ -1,0 +1,1344 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 15 <==
+if 1
+  top
+end
+
+==> 001.rb 26 <==
+if 1
+  top
+else
+  foo
+end
+
+==> 002.rb 20 <==
+if 1
+else
+  foo
+end
+
+==> 003.rb 31 <==
+if 1
+elsif condition
+  foo
+end
+
+==> 004.rb 37 <==
+if condition
+  top
+elsif 1
+  foo
+end
+
+==> 005.rb 31 <==
+if condition
+  top
+elsif 1
+end
+
+==> 006.rb 33 <==
+if 1
+  x = 1
+elsif 1
+  x = 2
+end
+
+==> 007.rb 48 <==
+if condition
+  top
+elsif 1
+  foo
+else
+  bar
+end
+
+==> 008.rb 72 <==
+if condition
+  top # comment 1
+elsif 1
+  foo # comment 2
+else
+  bar
+end
+
+==> 009.rb 9 <==
+top if 1
+
+==> 010.rb 14 <==
+1 ? top : bar
+
+==> 011.rb 19 <==
+unless 1
+  top
+end
+
+==> 012.rb 24 <==
+unless 1
+  top
+else
+end
+
+==> 013.rb 13 <==
+top unless 1
+
+==> 014.rb 18 <==
+while 1
+  top
+end
+
+==> 015.rb 24 <==
+begin
+  top
+end while 1
+
+==> 016.rb 18 <==
+until 1
+  top
+end
+
+==> 017.rb 24 <==
+begin
+  top
+end until 1
+
+==> 018.rb 27 <==
+case 1
+when x then top
+end
+
+==> 019.rb 25 <==
+case
+when 1 then top
+end
+
+==> 020.rb 27 <==
+case x
+when 1 then top
+end
+
+==> 021.rb 30 <==
+case %{lit}
+in x then top
+end
+
+==> 022.rb 29 <==
+case 1
+in CONST then top
+end
+
+==> 023.rb 25 <==
+case x
+in 1 then top
+end
+
+==> 024.rb 20 <==
+if 1 && x
+  top
+end
+
+==> 025.rb 23 <==
+if 1 && true
+  top
+end
+
+==> 026.rb 25 <==
+if x && %{lit}
+  top
+end
+
+==> 027.rb 38 <==
+if x && !(1 && a) && y && z
+  top
+end
+
+==> 028.rb 16 <==
+if !1
+  top
+end
+
+==> 029.rb 21 <==
+if test(1)
+  top
+end
+
+==> 030.rb 32 <==
+if (a || 1).something
+  top
+end
+
+==> 031.rb 29 <==
+case a || 1
+when b
+  top
+end
+
+==> 032.rb 3 <==
+!1
+
+==> 033.rb 7 <==
+not(1)
+
+==> 034.rb 17 <==
+if 2.0
+  top
+end
+
+==> 035.rb 28 <==
+if 2.0
+  top
+else
+  foo
+end
+
+==> 036.rb 22 <==
+if 2.0
+else
+  foo
+end
+
+==> 037.rb 33 <==
+if 2.0
+elsif condition
+  foo
+end
+
+==> 038.rb 39 <==
+if condition
+  top
+elsif 2.0
+  foo
+end
+
+==> 039.rb 33 <==
+if condition
+  top
+elsif 2.0
+end
+
+==> 040.rb 37 <==
+if 2.0
+  x = 1
+elsif 2.0
+  x = 2
+end
+
+==> 041.rb 50 <==
+if condition
+  top
+elsif 2.0
+  foo
+else
+  bar
+end
+
+==> 042.rb 74 <==
+if condition
+  top # comment 1
+elsif 2.0
+  foo # comment 2
+else
+  bar
+end
+
+==> 043.rb 11 <==
+top if 2.0
+
+==> 044.rb 16 <==
+2.0 ? top : bar
+
+==> 045.rb 21 <==
+unless 2.0
+  top
+end
+
+==> 046.rb 26 <==
+unless 2.0
+  top
+else
+end
+
+==> 047.rb 15 <==
+top unless 2.0
+
+==> 048.rb 20 <==
+while 2.0
+  top
+end
+
+==> 049.rb 26 <==
+begin
+  top
+end while 2.0
+
+==> 050.rb 20 <==
+until 2.0
+  top
+end
+
+==> 051.rb 26 <==
+begin
+  top
+end until 2.0
+
+==> 052.rb 29 <==
+case 2.0
+when x then top
+end
+
+==> 053.rb 27 <==
+case
+when 2.0 then top
+end
+
+==> 054.rb 29 <==
+case x
+when 2.0 then top
+end
+
+==> 055.rb 31 <==
+case 2.0
+in CONST then top
+end
+
+==> 056.rb 27 <==
+case x
+in 2.0 then top
+end
+
+==> 057.rb 22 <==
+if 2.0 && x
+  top
+end
+
+==> 058.rb 25 <==
+if 2.0 && true
+  top
+end
+
+==> 059.rb 40 <==
+if x && !(2.0 && a) && y && z
+  top
+end
+
+==> 060.rb 18 <==
+if !2.0
+  top
+end
+
+==> 061.rb 23 <==
+if test(2.0)
+  top
+end
+
+==> 062.rb 34 <==
+if (a || 2.0).something
+  top
+end
+
+==> 063.rb 31 <==
+case a || 2.0
+when b
+  top
+end
+
+==> 064.rb 5 <==
+!2.0
+
+==> 065.rb 9 <==
+not(2.0)
+
+==> 066.rb 17 <==
+if [1]
+  top
+end
+
+==> 067.rb 28 <==
+if [1]
+  top
+else
+  foo
+end
+
+==> 068.rb 22 <==
+if [1]
+else
+  foo
+end
+
+==> 069.rb 33 <==
+if [1]
+elsif condition
+  foo
+end
+
+==> 070.rb 39 <==
+if condition
+  top
+elsif [1]
+  foo
+end
+
+==> 071.rb 33 <==
+if condition
+  top
+elsif [1]
+end
+
+==> 072.rb 37 <==
+if [1]
+  x = 1
+elsif [1]
+  x = 2
+end
+
+==> 073.rb 50 <==
+if condition
+  top
+elsif [1]
+  foo
+else
+  bar
+end
+
+==> 074.rb 74 <==
+if condition
+  top # comment 1
+elsif [1]
+  foo # comment 2
+else
+  bar
+end
+
+==> 075.rb 11 <==
+top if [1]
+
+==> 076.rb 16 <==
+[1] ? top : bar
+
+==> 077.rb 21 <==
+unless [1]
+  top
+end
+
+==> 078.rb 26 <==
+unless [1]
+  top
+else
+end
+
+==> 079.rb 15 <==
+top unless [1]
+
+==> 080.rb 20 <==
+while [1]
+  top
+end
+
+==> 081.rb 26 <==
+begin
+  top
+end while [1]
+
+==> 082.rb 20 <==
+until [1]
+  top
+end
+
+==> 083.rb 26 <==
+begin
+  top
+end until [1]
+
+==> 084.rb 29 <==
+case [1]
+when x then top
+end
+
+==> 085.rb 27 <==
+case
+when [1] then top
+end
+
+==> 086.rb 29 <==
+case x
+when [1] then top
+end
+
+==> 087.rb 31 <==
+case [1]
+in CONST then top
+end
+
+==> 088.rb 27 <==
+case x
+in [1] then top
+end
+
+==> 089.rb 22 <==
+if [1] && x
+  top
+end
+
+==> 090.rb 25 <==
+if [1] && true
+  top
+end
+
+==> 091.rb 40 <==
+if x && !([1] && a) && y && z
+  top
+end
+
+==> 092.rb 18 <==
+if ![1]
+  top
+end
+
+==> 093.rb 23 <==
+if test([1])
+  top
+end
+
+==> 094.rb 34 <==
+if (a || [1]).something
+  top
+end
+
+==> 095.rb 31 <==
+case a || [1]
+when b
+  top
+end
+
+==> 096.rb 5 <==
+![1]
+
+==> 097.rb 9 <==
+not([1])
+
+==> 098.rb 16 <==
+if {}
+  top
+end
+
+==> 099.rb 27 <==
+if {}
+  top
+else
+  foo
+end
+
+==> 100.rb 21 <==
+if {}
+else
+  foo
+end
+
+==> 101.rb 32 <==
+if {}
+elsif condition
+  foo
+end
+
+==> 102.rb 38 <==
+if condition
+  top
+elsif {}
+  foo
+end
+
+==> 103.rb 32 <==
+if condition
+  top
+elsif {}
+end
+
+==> 104.rb 35 <==
+if {}
+  x = 1
+elsif {}
+  x = 2
+end
+
+==> 105.rb 49 <==
+if condition
+  top
+elsif {}
+  foo
+else
+  bar
+end
+
+==> 106.rb 73 <==
+if condition
+  top # comment 1
+elsif {}
+  foo # comment 2
+else
+  bar
+end
+
+==> 107.rb 10 <==
+top if {}
+
+==> 108.rb 15 <==
+{} ? top : bar
+
+==> 109.rb 20 <==
+unless {}
+  top
+end
+
+==> 110.rb 25 <==
+unless {}
+  top
+else
+end
+
+==> 111.rb 14 <==
+top unless {}
+
+==> 112.rb 19 <==
+while {}
+  top
+end
+
+==> 113.rb 25 <==
+begin
+  top
+end while {}
+
+==> 114.rb 19 <==
+until {}
+  top
+end
+
+==> 115.rb 25 <==
+begin
+  top
+end until {}
+
+==> 116.rb 28 <==
+case {}
+when x then top
+end
+
+==> 117.rb 26 <==
+case
+when {} then top
+end
+
+==> 118.rb 28 <==
+case x
+when {} then top
+end
+
+==> 119.rb 30 <==
+case {}
+in CONST then top
+end
+
+==> 120.rb 26 <==
+case x
+in {} then top
+end
+
+==> 121.rb 21 <==
+if {} && x
+  top
+end
+
+==> 122.rb 24 <==
+if {} && true
+  top
+end
+
+==> 123.rb 39 <==
+if x && !({} && a) && y && z
+  top
+end
+
+==> 124.rb 17 <==
+if !{}
+  top
+end
+
+==> 125.rb 22 <==
+if test({})
+  top
+end
+
+==> 126.rb 33 <==
+if (a || {}).something
+  top
+end
+
+==> 127.rb 30 <==
+case a || {}
+when b
+  top
+end
+
+==> 128.rb 4 <==
+!{}
+
+==> 129.rb 8 <==
+not({})
+
+==> 130.rb 18 <==
+if :sym
+  top
+end
+
+==> 131.rb 29 <==
+if :sym
+  top
+else
+  foo
+end
+
+==> 132.rb 23 <==
+if :sym
+else
+  foo
+end
+
+==> 133.rb 34 <==
+if :sym
+elsif condition
+  foo
+end
+
+==> 134.rb 40 <==
+if condition
+  top
+elsif :sym
+  foo
+end
+
+==> 135.rb 34 <==
+if condition
+  top
+elsif :sym
+end
+
+==> 136.rb 39 <==
+if :sym
+  x = 1
+elsif :sym
+  x = 2
+end
+
+==> 137.rb 51 <==
+if condition
+  top
+elsif :sym
+  foo
+else
+  bar
+end
+
+==> 138.rb 75 <==
+if condition
+  top # comment 1
+elsif :sym
+  foo # comment 2
+else
+  bar
+end
+
+==> 139.rb 12 <==
+top if :sym
+
+==> 140.rb 17 <==
+:sym ? top : bar
+
+==> 141.rb 22 <==
+unless :sym
+  top
+end
+
+==> 142.rb 27 <==
+unless :sym
+  top
+else
+end
+
+==> 143.rb 16 <==
+top unless :sym
+
+==> 144.rb 21 <==
+while :sym
+  top
+end
+
+==> 145.rb 27 <==
+begin
+  top
+end while :sym
+
+==> 146.rb 21 <==
+until :sym
+  top
+end
+
+==> 147.rb 27 <==
+begin
+  top
+end until :sym
+
+==> 148.rb 30 <==
+case :sym
+when x then top
+end
+
+==> 149.rb 28 <==
+case
+when :sym then top
+end
+
+==> 150.rb 30 <==
+case x
+when :sym then top
+end
+
+==> 151.rb 32 <==
+case :sym
+in CONST then top
+end
+
+==> 152.rb 28 <==
+case x
+in :sym then top
+end
+
+==> 153.rb 23 <==
+if :sym && x
+  top
+end
+
+==> 154.rb 26 <==
+if :sym && true
+  top
+end
+
+==> 155.rb 41 <==
+if x && !(:sym && a) && y && z
+  top
+end
+
+==> 156.rb 19 <==
+if !:sym
+  top
+end
+
+==> 157.rb 24 <==
+if test(:sym)
+  top
+end
+
+==> 158.rb 35 <==
+if (a || :sym).something
+  top
+end
+
+==> 159.rb 32 <==
+case a || :sym
+when b
+  top
+end
+
+==> 160.rb 6 <==
+!:sym
+
+==> 161.rb 10 <==
+not(:sym)
+
+==> 162.rb 21 <==
+if :"#{a}"
+  top
+end
+
+==> 163.rb 32 <==
+if :"#{a}"
+  top
+else
+  foo
+end
+
+==> 164.rb 26 <==
+if :"#{a}"
+else
+  foo
+end
+
+==> 165.rb 37 <==
+if :"#{a}"
+elsif condition
+  foo
+end
+
+==> 166.rb 43 <==
+if condition
+  top
+elsif :"#{a}"
+  foo
+end
+
+==> 167.rb 37 <==
+if condition
+  top
+elsif :"#{a}"
+end
+
+==> 168.rb 45 <==
+if :"#{a}"
+  x = 1
+elsif :"#{a}"
+  x = 2
+end
+
+==> 169.rb 54 <==
+if condition
+  top
+elsif :"#{a}"
+  foo
+else
+  bar
+end
+
+==> 170.rb 78 <==
+if condition
+  top # comment 1
+elsif :"#{a}"
+  foo # comment 2
+else
+  bar
+end
+
+==> 171.rb 15 <==
+top if :"#{a}"
+
+==> 172.rb 20 <==
+:"#{a}" ? top : bar
+
+==> 173.rb 25 <==
+unless :"#{a}"
+  top
+end
+
+==> 174.rb 30 <==
+unless :"#{a}"
+  top
+else
+end
+
+==> 175.rb 19 <==
+top unless :"#{a}"
+
+==> 176.rb 24 <==
+while :"#{a}"
+  top
+end
+
+==> 177.rb 30 <==
+begin
+  top
+end while :"#{a}"
+
+==> 178.rb 24 <==
+until :"#{a}"
+  top
+end
+
+==> 179.rb 30 <==
+begin
+  top
+end until :"#{a}"
+
+==> 180.rb 33 <==
+case :"#{a}"
+when x then top
+end
+
+==> 181.rb 31 <==
+case
+when :"#{a}" then top
+end
+
+==> 182.rb 33 <==
+case x
+when :"#{a}" then top
+end
+
+==> 183.rb 35 <==
+case :"#{a}"
+in CONST then top
+end
+
+==> 184.rb 31 <==
+case x
+in :"#{a}" then top
+end
+
+==> 185.rb 26 <==
+if :"#{a}" && x
+  top
+end
+
+==> 186.rb 29 <==
+if :"#{a}" && true
+  top
+end
+
+==> 187.rb 44 <==
+if x && !(:"#{a}" && a) && y && z
+  top
+end
+
+==> 188.rb 22 <==
+if !:"#{a}"
+  top
+end
+
+==> 189.rb 27 <==
+if test(:"#{a}")
+  top
+end
+
+==> 190.rb 38 <==
+if (a || :"#{a}").something
+  top
+end
+
+==> 191.rb 35 <==
+case a || :"#{a}"
+when b
+  top
+end
+
+==> 192.rb 9 <==
+!:"#{a}"
+
+==> 193.rb 13 <==
+not(:"#{a}")
+
+==> 194.rb 43 <==
+case [1, 2, x]
+when [1, 2, 5] then top
+end
+
+==> 195.rb 48 <==
+case [1, 2, [x, 1]]
+when [1, 2, 5] then top
+end
+
+==> 196.rb 48 <==
+case [1, 2, [3, 4]]
+when [1, 2, 5] then top
+end
+
+==> 197.rb 40 <==
+case "#{x}"
+when [1, 2, 5] then top
+end
+
+==> 198.rb 41 <==
+case [1, 2, x]
+in [1, 2, 5] then top
+end
+
+==> 199.rb 46 <==
+case [1, 2, [x, 1]]
+in [1, 2, 5] then top
+end
+
+==> 200.rb 46 <==
+case [1, 2, [3, 4]]
+in [1, 2, 5] then top
+end
+
+==> 201.rb 49 <==
+case { a: 1, b: 2, c: 3 }
+in a: Integer => m
+end
+
+==> 202.rb 38 <==
+case "#{x}"
+in [1, 2, 5] then top
+end
+
+==> 203.rb 36 <==
+while true
+  break if condition
+end
+
+==> 204.rb 42 <==
+begin
+  break if condition
+end while true
+
+==> 205.rb 37 <==
+until false
+  break if condition
+end
+
+==> 206.rb 43 <==
+begin
+  break if condition
+end until false
+
+==> 207.rb 17 <==
+if nil
+  top
+end
+
+==> 208.rb 28 <==
+if nil
+  top
+else
+  foo
+end
+
+==> 209.rb 22 <==
+if nil
+  top
+else
+end
+
+==> 210.rb 39 <==
+if condition
+  top
+elsif nil
+  foo
+end
+
+==> 211.rb 39 <==
+if nil
+  top
+elsif condition
+  foo
+end
+
+==> 212.rb 50 <==
+if condition
+  top
+elsif nil
+  foo
+else
+  bar
+end
+
+==> 213.rb 86 <==
+if condition
+  top # comment 1
+elsif nil
+  foo # comment 2
+else
+  bar # comment 3
+end
+
+==> 214.rb 11 <==
+top if nil
+
+==> 215.rb 16 <==
+nil ? top : bar
+
+==> 216.rb 21 <==
+unless nil
+  top
+end
+
+==> 217.rb 26 <==
+unless nil
+else
+  foo
+end
+
+==> 218.rb 15 <==
+top unless nil
+
+==> 219.rb 20 <==
+while nil
+  top
+end
+
+==> 220.rb 26 <==
+begin
+  top
+end while nil
+
+==> 221.rb 32 <==
+begin
+  top
+  foo
+end while nil
+
+==> 222.rb 26 <==
+case nil
+when x
+  top
+end
+
+==> 223.rb 22 <==
+if nil || x
+  top
+end
+
+==> 224.rb 19 <==
+if false
+  top
+end
+
+==> 225.rb 30 <==
+if false
+  top
+else
+  foo
+end
+
+==> 226.rb 24 <==
+if false
+  top
+else
+end
+
+==> 227.rb 41 <==
+if condition
+  top
+elsif false
+  foo
+end
+
+==> 228.rb 41 <==
+if false
+  top
+elsif condition
+  foo
+end
+
+==> 229.rb 52 <==
+if condition
+  top
+elsif false
+  foo
+else
+  bar
+end
+
+==> 230.rb 88 <==
+if condition
+  top # comment 1
+elsif false
+  foo # comment 2
+else
+  bar # comment 3
+end
+
+==> 231.rb 13 <==
+top if false
+
+==> 232.rb 18 <==
+false ? top : bar
+
+==> 233.rb 23 <==
+unless false
+  top
+end
+
+==> 234.rb 28 <==
+unless false
+else
+  foo
+end
+
+==> 235.rb 17 <==
+top unless false
+
+==> 236.rb 22 <==
+while false
+  top
+end
+
+==> 237.rb 28 <==
+begin
+  top
+end while false
+
+==> 238.rb 34 <==
+begin
+  top
+  foo
+end while false
+
+==> 239.rb 28 <==
+case false
+when x
+  top
+end
+
+==> 240.rb 24 <==
+if false || x
+  top
+end
+
+==> 241.rb 20 <==
+until nil
+  top
+end
+
+==> 242.rb 26 <==
+begin
+  top
+end until nil
+
+==> 243.rb 41 <==
+def foo
+  puts 123 && return if bar?
+end
+
+==> 244.rb 41 <==
+def foo
+  puts nil || return if bar?
+end
+
+==> 245.rb 51 <==
+def clone(opts = nil || (return self))
+  super
+end
+
+==> 246.rb 54 <==
+def foo(opts = 123 && (foo; return self))
+  super
+end
+
+==> 247.rb 36 <==
+def foo
+  baz? if 123 && return
+end
+
+==> 248.rb 57 <==
+def foo
+  bar do
+    puts 123 && break if baz?
+  end
+end
+
+==> 249.rb 56 <==
+def foo
+  bar do
+    puts 123 && next if baz?
+  end
+end
+
+==> 250.rb 10 <==
+if 42
+end
+

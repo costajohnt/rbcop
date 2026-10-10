@@ -1,0 +1,20 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 3 <==
+0.0
+==> 001.rb 8 <==
+1.1e-100
+==> 002.rb 7 <==
+55.7e89
+==> 003.rb 11 <==
+9.9999e999
+
+==> 004.rb 9 <==
+1.0e-400
+

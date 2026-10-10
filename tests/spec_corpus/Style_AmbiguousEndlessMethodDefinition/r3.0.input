@@ -1,0 +1,96 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+
+==> 000.rb 12 <==
+def foo
+end
+
+==> 001.rb 20 <==
+def foo
+end and bar
+
+==> 002.rb 25 <==
+def foo = (true and bar)
+
+==> 003.rb 25 <==
+(def foo = true) and bar
+
+==> 004.rb 23 <==
+def foo = true and bar
+
+==> 005.rb 19 <==
+def foo
+end or bar
+
+==> 006.rb 24 <==
+def foo = (true or bar)
+
+==> 007.rb 24 <==
+(def foo = true) or bar
+
+==> 008.rb 22 <==
+def foo = true or bar
+
+==> 009.rb 19 <==
+def foo
+end if bar
+
+==> 010.rb 24 <==
+def foo = (true if bar)
+
+==> 011.rb 24 <==
+(def foo = true) if bar
+
+==> 012.rb 22 <==
+def foo = true if bar
+
+==> 013.rb 23 <==
+def foo
+end unless bar
+
+==> 014.rb 28 <==
+def foo = (true unless bar)
+
+==> 015.rb 28 <==
+(def foo = true) unless bar
+
+==> 016.rb 26 <==
+def foo = true unless bar
+
+==> 017.rb 22 <==
+def foo
+end while bar
+
+==> 018.rb 27 <==
+def foo = (true while bar)
+
+==> 019.rb 27 <==
+(def foo = true) while bar
+
+==> 020.rb 25 <==
+def foo = true while bar
+
+==> 021.rb 22 <==
+def foo
+end until bar
+
+==> 022.rb 27 <==
+def foo = (true until bar)
+
+==> 023.rb 27 <==
+(def foo = true) until bar
+
+==> 024.rb 25 <==
+def foo = true until bar
+
+==> 025.rb 22 <==
+def foo = true && bar
+
+==> 026.rb 22 <==
+def foo = true || bar
+

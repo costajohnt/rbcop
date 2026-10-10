@@ -1,0 +1,38 @@
+==> offenses exit=1 780 <==
+000.rb:1:1: C: [Correctable] Style/EmptyClassDefinition: Use `Class.new` instead of the `class` keyword to define an empty class.
+001.rb:1:1: C: [Correctable] Style/EmptyClassDefinition: Use `Class.new` instead of the `class` keyword to define an empty class.
+004.rb:2:3: C: [Correctable] Style/EmptyClassDefinition: Use `Class.new` instead of the `class` keyword to define an empty class.
+005.rb:1:1: C: [Correctable] Style/EmptyClassDefinition: Use `Class.new` instead of the `class` keyword to define an empty class.
+006.rb:1:1: C: [Correctable] Style/EmptyClassDefinition: Use `Class.new` instead of the `class` keyword to define an empty class.
+009.rb:2:3: C: [Correctable] Style/EmptyClassDefinition: Use `Class.new` instead of the `class` keyword to define an empty class.
+
+==> autocorrect exit=0 768 <==
+000.rb:1:1: C: [Corrected] Style/EmptyClassDefinition: Use `Class.new` instead of the `class` keyword to define an empty class.
+001.rb:1:1: C: [Corrected] Style/EmptyClassDefinition: Use `Class.new` instead of the `class` keyword to define an empty class.
+004.rb:2:3: C: [Corrected] Style/EmptyClassDefinition: Use `Class.new` instead of the `class` keyword to define an empty class.
+005.rb:1:1: C: [Corrected] Style/EmptyClassDefinition: Use `Class.new` instead of the `class` keyword to define an empty class.
+006.rb:1:1: C: [Corrected] Style/EmptyClassDefinition: Use `Class.new` instead of the `class` keyword to define an empty class.
+009.rb:2:3: C: [Corrected] Style/EmptyClassDefinition: Use `Class.new` instead of the `class` keyword to define an empty class.
+
+==> corrected/000.rb 36 <==
+FooError = Class.new(StandardError)
+
+==> corrected/001.rb 36 <==
+FooError = Class.new(StandardError)
+
+==> corrected/004.rb 53 <==
+module Foo
+  BarError = Class.new(StandardError)
+end
+
+==> corrected/005.rb 48 <==
+MyClass = Class.new(Alchemy::Admin::PreviewUrl)
+
+==> corrected/006.rb 38 <==
+MyClass = Class.new(::Safemode::Jail)
+
+==> corrected/009.rb 38 <==
+module Foo
+  Bar = Class.new(Baz)
+end
+

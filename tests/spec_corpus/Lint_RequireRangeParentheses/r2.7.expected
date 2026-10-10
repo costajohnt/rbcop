@@ -1,0 +1,10 @@
+==> offenses exit=1 397 <==
+000.rb:1:1: W: Lint/RequireRangeParentheses: Wrap the range literal `42..` in parentheses to avoid confusion with an endless range.
+001.rb:1:1: W: Lint/RequireRangeParentheses: Wrap the range literal `42...` in parentheses to avoid confusion with an endless range.
+002.rb:2:6: W: Lint/RequireRangeParentheses: Wrap the range literal `42..` in parentheses to avoid confusion with an endless range.
+
+==> autocorrect exit=1 397 <==
+000.rb:1:1: W: Lint/RequireRangeParentheses: Wrap the range literal `42..` in parentheses to avoid confusion with an endless range.
+001.rb:1:1: W: Lint/RequireRangeParentheses: Wrap the range literal `42...` in parentheses to avoid confusion with an endless range.
+002.rb:2:6: W: Lint/RequireRangeParentheses: Wrap the range literal `42..` in parentheses to avoid confusion with an endless range.
+

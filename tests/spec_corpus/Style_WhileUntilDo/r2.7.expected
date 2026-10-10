@@ -1,0 +1,23 @@
+==> offenses exit=1 273 <==
+000.rb:1:12: C: [Correctable] Style/WhileUntilDo: Do not use `do` with multi-line `while`.
+001.rb:1:12: C: [Correctable] Style/WhileUntilDo: Do not use `do` with multi-line `until`.
+002.rb:1:13: C: [Correctable] Style/WhileUntilDo: Do not use `do` with multi-line `while`.
+
+==> autocorrect exit=0 267 <==
+000.rb:1:12: C: [Corrected] Style/WhileUntilDo: Do not use `do` with multi-line `while`.
+001.rb:1:12: C: [Corrected] Style/WhileUntilDo: Do not use `do` with multi-line `until`.
+002.rb:1:13: C: [Corrected] Style/WhileUntilDo: Do not use `do` with multi-line `while`.
+
+==> corrected/000.rb 15 <==
+while cond
+end
+
+==> corrected/001.rb 15 <==
+until cond
+end
+
+==> corrected/002.rb 25 <==
+while i < 3
+  i += 1
+end
+

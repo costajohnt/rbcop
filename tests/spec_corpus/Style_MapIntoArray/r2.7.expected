@@ -1,0 +1,129 @@
+==> offenses exit=1 2160 <==
+000.rb:2:1: C: [Correctable] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+001.rb:2:1: C: [Correctable] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+002.rb:2:1: C: [Correctable] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+003.rb:2:1: C: [Correctable] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+004.rb:2:1: C: [Correctable] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+005.rb:2:1: C: [Correctable] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+006.rb:2:1: C: [Correctable] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+007.rb:3:1: C: [Correctable] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+008.rb:2:1: C: [Correctable] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+009.rb:2:1: C: [Correctable] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+010.rb:2:1: C: [Correctable] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+011.rb:2:1: C: [Correctable] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+012.rb:2:1: C: [Correctable] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+013.rb:2:1: C: [Correctable] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+014.rb:2:1: C: [Correctable] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+015.rb:4:1: C: [Correctable] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+016.rb:2:1: C: [Correctable] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+017.rb:2:1: C: [Correctable] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+017.rb:5:5: C: [Correctable] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+018.rb:2:3: C: [Correctable] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+
+==> autocorrect exit=0 2120 <==
+000.rb:2:1: C: [Corrected] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+001.rb:2:1: C: [Corrected] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+002.rb:2:1: C: [Corrected] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+003.rb:2:1: C: [Corrected] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+004.rb:2:1: C: [Corrected] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+005.rb:2:1: C: [Corrected] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+006.rb:2:1: C: [Corrected] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+007.rb:3:1: C: [Corrected] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+008.rb:2:1: C: [Corrected] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+009.rb:2:1: C: [Corrected] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+010.rb:2:1: C: [Corrected] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+011.rb:2:1: C: [Corrected] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+012.rb:2:1: C: [Corrected] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+013.rb:2:1: C: [Corrected] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+014.rb:2:1: C: [Corrected] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+015.rb:4:1: C: [Corrected] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+016.rb:2:1: C: [Corrected] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+017.rb:2:1: C: [Corrected] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+017.rb:5:5: C: [Corrected] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+018.rb:2:3: C: [Corrected] Style/MapIntoArray: Use `map` instead of `each` to map elements into an array.
+
+==> corrected/000.rb 29 <==
+dest = src.map { |e| e * 2 }
+
+==> corrected/001.rb 29 <==
+dest = src.map { |e| e * 2 }
+
+==> corrected/002.rb 32 <==
+dest = src.map { |e| { e: 2 } }
+
+==> corrected/003.rb 32 <==
+dest = src.map { |e| { e: 2 } }
+
+==> corrected/004.rb 29 <==
+dest = src.map { |e| e * 2 }
+
+==> corrected/005.rb 32 <==
+dest = src.map { |e| { e: 2 } }
+
+==> corrected/006.rb 32 <==
+dest = src.map { |e| { e: 2 } }
+
+==> corrected/007.rb 42 <==
+do_something
+dest = src.map { |e| e * 2 }
+
+==> corrected/008.rb 42 <==
+dest = src.map { |e| e * 2 }
+do_something
+
+==> corrected/009.rb 66 <==
+dest = src.map do |e|
+  if cond?
+    e
+  else
+    e * 2
+  end
+end
+
+==> corrected/010.rb 75 <==
+dest = src.map do |e|
+  case foo
+  when 1
+    e
+  else
+    e * 2
+  end
+end
+
+==> corrected/011.rb 58 <==
+dest = src.map do |e|
+  begin
+    foo
+    e * 2
+  end
+end
+
+==> corrected/012.rb 30 <==
+dest = src.map { |e| [1, e] }
+
+==> corrected/013.rb 28 <==
+dest = src.map { |e| true }
+
+==> corrected/014.rb 26 <==
+dest = src.map { _1 * 2 }
+
+==> corrected/015.rb 58 <==
+dest = []
+do_something(dest)
+dest = src.map { |e| e * 2 }
+
+==> corrected/016.rb 29 <==
+dest = src.map { |e| e * 2 }
+
+==> corrected/017.rb 77 <==
+dest = src.map do |e|
+  (
+    dest2 = src.map do |e|
+      e
+    end
+  )
+end
+
+==> corrected/018.rb 29 <==
+dest = src.map { |e| e * 2 }
+

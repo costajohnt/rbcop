@@ -1,0 +1,13 @@
+==> .rubocop.yml 153 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/InclusiveLanguage:
+  FlaggedTerms: {}
+
+==> 000.rb 14 <==
+whitelist = 1
+

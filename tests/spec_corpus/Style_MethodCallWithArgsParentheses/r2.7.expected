@@ -1,0 +1,95 @@
+==> offenses exit=1 1725 <==
+003.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+004.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+005.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+006.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+011.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+015.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+016.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+017.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+017.rb:3:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+018.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+019.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+020.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+021.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+022.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+023.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+
+==> autocorrect exit=0 1695 <==
+003.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+004.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+005.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+006.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+011.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+015.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+016.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+017.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+017.rb:3:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+018.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+019.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+020.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+021.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+022.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+023.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+
+==> corrected/003.rb 15 <==
+top.test(a, b)
+
+==> corrected/004.rb 16 <==
+top&.test(a, b)
+
+==> corrected/005.rb 25 <==
+def foo
+  test(a, b)
+end
+
+==> corrected/006.rb 25 <==
+def foo
+  Test(a, b)
+end
+
+==> corrected/011.rb 23 <==
+def foo
+  yield(a)
+end
+
+==> corrected/015.rb 14 <==
+top.eq(1 + 2)
+
+==> corrected/016.rb 24 <==
+def foo
+  eq(1 + 2)
+end
+
+==> corrected/017.rb 43 <==
+def foo
+  eq(1, (2 + 3))
+  eq(1, 2, 3)
+end
+
+==> corrected/018.rb 20 <==
+top.eq((1 + 2) + 3)
+
+==> corrected/019.rb 19 <==
+top.eq((1 + 2), 3)
+
+==> corrected/020.rb 43 <==
+def my_method
+  foo(bar.baz(abc, xyz))
+end
+
+==> corrected/021.rb 53 <==
+def my_method
+  foo(bar.baz(abc, xyz), foo(baz))
+end
+
+==> corrected/022.rb 47 <==
+def my_method
+  raise(NotImplementedError)
+end
+
+==> corrected/023.rb 29 <==
+def my_method
+  sleep(1)
+end
+

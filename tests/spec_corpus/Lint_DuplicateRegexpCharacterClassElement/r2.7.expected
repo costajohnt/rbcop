@@ -1,0 +1,56 @@
+==> offenses exit=1 1329 <==
+000.rb:1:11: W: [Correctable] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+001.rb:1:11: W: [Correctable] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+005.rb:1:5: W: [Correctable] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+006.rb:1:9: W: [Correctable] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+007.rb:1:10: W: [Correctable] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+008.rb:1:13: W: [Correctable] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+009.rb:1:12: W: [Correctable] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+010.rb:1:20: W: [Correctable] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+011.rb:1:17: W: [Correctable] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+011.rb:1:24: W: [Correctable] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+012.rb:1:13: W: [Correctable] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+
+==> autocorrect exit=0 1307 <==
+000.rb:1:11: W: [Corrected] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+001.rb:1:11: W: [Corrected] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+005.rb:1:5: W: [Corrected] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+006.rb:1:9: W: [Corrected] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+007.rb:1:10: W: [Corrected] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+008.rb:1:13: W: [Corrected] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+009.rb:1:12: W: [Corrected] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+010.rb:1:20: W: [Corrected] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+011.rb:1:17: W: [Corrected] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+011.rb:1:24: W: [Corrected] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+012.rb:1:13: W: [Corrected] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+
+==> corrected/000.rb 13 <==
+foo = /[xy]/
+
+==> corrected/001.rb 14 <==
+foo = /[xy]+/
+
+==> corrected/005.rb 8 <==
+/[\08]/
+
+==> corrected/006.rb 12 <==
+/[\07\018]/
+
+==> corrected/007.rb 13 <==
+/[\177\018]/
+
+==> corrected/008.rb 15 <==
+foo = %r{[xy]}
+
+==> corrected/009.rb 15 <==
+foo = /([xy])/
+
+==> corrected/010.rb 23 <==
+foo = /([[:alnum:]y])/
+
+==> corrected/011.rb 26 <==
+foo = /([a#{foo}#{bar}])/
+
+==> corrected/012.rb 15 <==
+foo = /[0-9x]/
+

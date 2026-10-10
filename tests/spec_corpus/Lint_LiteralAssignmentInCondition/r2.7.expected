@@ -1,0 +1,36 @@
+==> offenses exit=1 2279 <==
+000.rb:1:9: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 42` in conditional, should be `==` or non-literal operand.
+001.rb:1:9: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 'foo'` in conditional, should be `==` or non-literal operand.
+004.rb:1:9: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= []` in conditional, should be `==` or non-literal operand.
+005.rb:1:9: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= [1, 2, 3]` in conditional, should be `==` or non-literal operand.
+007.rb:1:9: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= {}` in conditional, should be `==` or non-literal operand.
+008.rb:1:9: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= {x: :y}` in conditional, should be `==` or non-literal operand.
+013.rb:1:12: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 42` in conditional, should be `==` or non-literal operand.
+014.rb:1:12: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 42` in conditional, should be `==` or non-literal operand.
+015.rb:1:10: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 42` in conditional, should be `==` or non-literal operand.
+016.rb:1:11: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 42` in conditional, should be `==` or non-literal operand.
+017.rb:1:10: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 42` in conditional, should be `==` or non-literal operand.
+018.rb:1:9: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 42` in conditional, should be `==` or non-literal operand.
+021.rb:1:22: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 1` in conditional, should be `==` or non-literal operand.
+025.rb:1:14: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 42` in conditional, should be `==` or non-literal operand.
+028.rb:1:47: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 42` in conditional, should be `==` or non-literal operand.
+034.rb:1:10: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 42` in conditional, should be `==` or non-literal operand.
+
+==> autocorrect exit=1 2279 <==
+000.rb:1:9: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 42` in conditional, should be `==` or non-literal operand.
+001.rb:1:9: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 'foo'` in conditional, should be `==` or non-literal operand.
+004.rb:1:9: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= []` in conditional, should be `==` or non-literal operand.
+005.rb:1:9: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= [1, 2, 3]` in conditional, should be `==` or non-literal operand.
+007.rb:1:9: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= {}` in conditional, should be `==` or non-literal operand.
+008.rb:1:9: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= {x: :y}` in conditional, should be `==` or non-literal operand.
+013.rb:1:12: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 42` in conditional, should be `==` or non-literal operand.
+014.rb:1:12: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 42` in conditional, should be `==` or non-literal operand.
+015.rb:1:10: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 42` in conditional, should be `==` or non-literal operand.
+016.rb:1:11: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 42` in conditional, should be `==` or non-literal operand.
+017.rb:1:10: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 42` in conditional, should be `==` or non-literal operand.
+018.rb:1:9: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 42` in conditional, should be `==` or non-literal operand.
+021.rb:1:22: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 1` in conditional, should be `==` or non-literal operand.
+025.rb:1:14: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 42` in conditional, should be `==` or non-literal operand.
+028.rb:1:47: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 42` in conditional, should be `==` or non-literal operand.
+034.rb:1:10: W: Lint/LiteralAssignmentInCondition: Don't use literal assignment `= 42` in conditional, should be `==` or non-literal operand.
+

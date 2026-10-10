@@ -1,0 +1,19 @@
+==> offenses exit=1 277 <==
+000.rb:1:1: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X')` instead of `ENV['X']`.
+001.rb:1:5: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X')` instead of `ENV['X']`.
+002.rb:1:13: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X')` instead of `ENV['X']`.
+
+==> autocorrect exit=0 271 <==
+000.rb:1:1: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X')` instead of `ENV['X']`.
+001.rb:1:5: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X')` instead of `ENV['X']`.
+002.rb:1:13: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X')` instead of `ENV['X']`.
+
+==> corrected/000.rb 15 <==
+ENV.fetch('X')
+
+==> corrected/001.rb 19 <==
+x = ENV.fetch('X')
+
+==> corrected/002.rb 28 <==
+some_method(ENV.fetch('X'))
+

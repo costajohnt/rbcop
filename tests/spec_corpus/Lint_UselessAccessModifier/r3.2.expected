@@ -1,0 +1,42 @@
+==> offenses exit=1 558 <==
+001.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+002.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+003.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+005.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+006.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+007.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+
+==> autocorrect exit=0 546 <==
+001.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+002.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+003.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+005.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+006.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+007.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+
+==> corrected/001.rb 19 <==
+Data.define do
+end
+
+==> corrected/002.rb 21 <==
+::Data.define do
+end
+
+==> corrected/003.rb 38 <==
+Data.define do
+  do_something(_1)
+end
+
+==> corrected/005.rb 19 <==
+Data.define do
+end
+
+==> corrected/006.rb 21 <==
+::Data.define do
+end
+
+==> corrected/007.rb 38 <==
+Data.define do
+  do_something(_1)
+end
+

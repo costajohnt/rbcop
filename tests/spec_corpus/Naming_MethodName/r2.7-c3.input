@@ -1,0 +1,31 @@
+==> .rubocop.yml 240 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/MethodName:
+  EnforcedStyle: camelCase
+  AllowedPatterns:
+  - "\\AonSelectionBulkChange\\z"
+  - "\\Aon_selection_cleared\\z"
+
+==> 000.rb 107 <==
+attr_reader :onSelectionBulkChange
+attr_accessor :onSelectionBulkChange
+attr_writer :onSelectionBulkChange
+
+==> 001.rb 35 <==
+def onSelectionBulkChange(arg)
+end
+
+==> 002.rb 104 <==
+attr_reader :on_selection_cleared
+attr_accessor :on_selection_cleared
+attr_writer :on_selection_cleared
+
+==> 003.rb 34 <==
+def on_selection_cleared(arg)
+end
+

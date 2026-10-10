@@ -1,0 +1,32 @@
+==> offenses exit=1 396 <==
+000.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+001.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+002.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+003.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+
+==> autocorrect exit=0 388 <==
+000.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+001.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+002.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+003.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+
+==> corrected/000.rb 27 <==
+<<~RUBY2
+  something
+RUBY2
+
+==> corrected/001.rb 29 <==
+<<~'RUBY2'
+  something
+RUBY2
+
+==> corrected/002.rb 29 <==
+<<~"RUBY2"
+  something
+RUBY2
+
+==> corrected/003.rb 29 <==
+<<~`RUBY2`
+  something
+RUBY2
+

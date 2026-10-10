@@ -1,0 +1,188 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.3
+
+==> 000.rb 13 <==
+x.foo.bar.baz
+==> 001.rb 22 <==
+x.foo(x).bar(y).baz(z)
+==> 002.rb 16 <==
+x&.foo&.bar&.baz
+==> 003.rb 25 <==
+x&.foo(x)&.bar(y)&.baz(z)
+==> 004.rb 14 <==
+x.foo.bar&.baz
+==> 005.rb 23 <==
+x.foo(x).bar(y)&.baz(z)
+==> 006.rb 13 <==
+x&.foo == bar
+==> 007.rb 14 <==
+x&.foo === bar
+==> 008.rb 13 <==
+x&.foo || bar
+==> 009.rb 13 <==
+x&.foo && bar
+==> 010.rb 12 <==
+x&.foo | bar
+==> 011.rb 12 <==
+x&.foo & bar
+==> 012.rb 11 <==
+x&.foo.nil?
+==> 013.rb 15 <==
+x&.foo.present?
+==> 014.rb 13 <==
+x&.foo.blank?
+==> 015.rb 12 <==
+a&.b.try(:c)
+==> 016.rb 12 <==
+x&.foo = bar
+==> 017.rb 13 <==
+x&.foo += bar
+==> 018.rb 11 <==
+x&.foo.to_d
+==> 019.rb 24 <==
+x&.foo.in?([:baz, :qux])
+==> 020.rb 10 <==
++str&.to_i
+==> 021.rb 10 <==
+-str&.to_i
+==> 022.rb 11 <==
+x&.foo.bar
+
+==> 023.rb 17 <==
+x&.foo(x).bar(y)
+
+==> 024.rb 13 <==
+(x&.foo).bar
+
+==> 025.rb 25 <==
+something
+x&.foo.bar.baz
+
+==> 026.rb 20 <==
+x&.foo
+ &.bar
+ .baz
+
+==> 027.rb 24 <==
+x&.foo(x).bar(y).baz(z)
+
+==> 028.rb 31 <==
+something
+x&.select(&:foo).bar
+
+==> 029.rb 39 <==
+something
+x&.select { |x| foo(x) }.bar
+
+==> 030.rb 13 <==
+x&.foo < bar
+
+==> 031.rb 13 <==
+x&.foo > bar
+
+==> 032.rb 14 <==
+x&.foo <= bar
+
+==> 033.rb 14 <==
+x&.foo >= bar
+
+==> 034.rb 25 <==
+x&.foo.bar && x&.foo.baz
+
+==> 035.rb 26 <==
+x&.foo&.bar && x&.foo.baz
+
+==> 036.rb 26 <==
+x&.foo&.bar && y&.foo.baz
+
+==> 037.rb 25 <==
+x&.foo.bar || x&.foo.baz
+
+==> 038.rb 26 <==
+x&.foo&.bar || x&.foo.baz
+
+==> 039.rb 26 <==
+x&.foo&.bar || y&.foo.baz
+
+==> 040.rb 27 <==
+do_something && x&.foo.bar
+
+==> 041.rb 30 <==
+do_something && x&.foo >= bar
+
+==> 042.rb 30 <==
+do_something || x&.foo >= bar
+
+==> 043.rb 31 <==
+do_something and x&.foo >= bar
+
+==> 044.rb 30 <==
+do_something or x&.foo >= bar
+
+==> 045.rb 30 <==
+do_something == x&.foo >= bar
+
+==> 046.rb 13 <==
+x&.foo + bar
+
+==> 047.rb 12 <==
+x&.foo[bar]
+
+==> 048.rb 17 <==
+x&.foo[bar].to_s
+
+==> 049.rb 18 <==
+x&.foo[bar] = baz
+
+==> 050.rb 14 <==
+foo[bar]&.x.y
+
+==> 051.rb 17 <==
+x + foo&.bar.baz
+
+==> 052.rb 17 <==
+x - foo&.bar.baz
+
+==> 053.rb 17 <==
+x * foo&.bar.baz
+
+==> 054.rb 17 <==
+x / foo&.bar.baz
+
+==> 055.rb 30 <==
+foo&.bar ? foo&.bar - 1 : baz
+
+==> 056.rb 30 <==
+foo&.bar ? baz : foo&.bar - 1
+
+==> 057.rb 29 <==
+cond ? baz : user&.team.name
+
+==> 058.rb 18 <==
+[foo, a&.baz - 1]
+
+==> 059.rb 20 <==
+{ foo: a&.baz - 1 }
+
+==> 060.rb 25 <==
+x&.foo.bar.baz
+something
+
+==> 061.rb 35 <==
+def something
+  x&.foo.bar.baz
+end
+
+==> 062.rb 27 <==
+begin
+  x&.foo.bar.baz
+end
+
+==> 063.rb 28 <==
+x&.foo.bar.baz if something
+

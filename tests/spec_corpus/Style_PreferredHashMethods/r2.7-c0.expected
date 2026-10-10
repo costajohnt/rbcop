@@ -1,0 +1,19 @@
+==> offenses exit=1 311 <==
+000.rb:1:3: C: [Correctable] Style/PreferredHashMethods: Use `Hash#key?` instead of `Hash#has_key?`.
+002.rb:1:3: C: [Correctable] Style/PreferredHashMethods: Use `Hash#value?` instead of `Hash#has_value?`.
+003.rb:1:4: C: [Correctable] Style/PreferredHashMethods: Use `Hash#value?` instead of `Hash#has_value?`.
+
+==> autocorrect exit=0 305 <==
+000.rb:1:3: C: [Corrected] Style/PreferredHashMethods: Use `Hash#key?` instead of `Hash#has_key?`.
+002.rb:1:3: C: [Corrected] Style/PreferredHashMethods: Use `Hash#value?` instead of `Hash#has_value?`.
+003.rb:1:4: C: [Corrected] Style/PreferredHashMethods: Use `Hash#value?` instead of `Hash#has_value?`.
+
+==> corrected/000.rb 10 <==
+o.key?(o)
+
+==> corrected/002.rb 12 <==
+o.value?(o)
+
+==> corrected/003.rb 13 <==
+o&.value?(o)
+

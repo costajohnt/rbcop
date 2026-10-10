@@ -1,0 +1,9 @@
+==> offenses exit=1 105 <==
+000.rb:1:1: C: [Correctable] Style/SuperWithArgsParentheses: Use parentheses for `super` with arguments.
+
+==> autocorrect exit=0 103 <==
+000.rb:1:1: C: [Corrected] Style/SuperWithArgsParentheses: Use parentheses for `super` with arguments.
+
+==> corrected/000.rb 17 <==
+super(name, age)
+

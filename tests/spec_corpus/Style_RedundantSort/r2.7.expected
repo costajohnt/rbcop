@@ -1,0 +1,209 @@
+==> offenses exit=1 3540 <==
+000.rb:1:11: C: [Correctable] Style/RedundantSort: Use `min` instead of `sort...first`.
+001.rb:1:12: C: [Correctable] Style/RedundantSort: Use `min` instead of `sort...first`.
+002.rb:1:12: C: [Correctable] Style/RedundantSort: Use `min` instead of `sort...first`.
+003.rb:1:8: C: [Correctable] Style/RedundantSort: Use `max` instead of `sort...last`.
+004.rb:1:9: C: [Correctable] Style/RedundantSort: Use `max` instead of `sort...last`.
+005.rb:1:9: C: [Correctable] Style/RedundantSort: Use `max` instead of `sort...last`.
+006.rb:1:5: C: [Correctable] Style/RedundantSort: Use `max` instead of `sort...last`.
+007.rb:1:6: C: [Correctable] Style/RedundantSort: Use `max` instead of `sort...last`.
+008.rb:1:6: C: [Correctable] Style/RedundantSort: Use `max` instead of `sort...last`.
+009.rb:1:11: C: [Correctable] Style/RedundantSort: Use `min_by` instead of `sort_by...first`.
+010.rb:1:12: C: [Correctable] Style/RedundantSort: Use `min_by` instead of `sort_by...first`.
+011.rb:1:12: C: [Correctable] Style/RedundantSort: Use `min_by` instead of `sort_by...first`.
+012.rb:1:5: C: [Correctable] Style/RedundantSort: Use `max_by` instead of `sort_by...last`.
+013.rb:2:4: C: [Correctable] Style/RedundantSort: Use `min_by` instead of `sort_by...first`.
+014.rb:2:4: C: [Correctable] Style/RedundantSort: Use `min_by` instead of `sort_by...first`.
+015.rb:2:4: C: [Correctable] Style/RedundantSort: Use `min_by` instead of `sort_by...first`.
+016.rb:2:4: C: [Correctable] Style/RedundantSort: Use `min_by` instead of `sort_by...first`.
+017.rb:2:4: C: [Correctable] Style/RedundantSort: Use `min_by` instead of `sort_by...first`.
+018.rb:1:8: C: [Correctable] Style/RedundantSort: Use `min_by` instead of `sort_by...first`.
+019.rb:1:11: C: [Correctable] Style/RedundantSort: Use `max_by` instead of `sort_by...last`.
+020.rb:1:8: C: [Correctable] Style/RedundantSort: Use `max` instead of `sort...at(-1)`.
+021.rb:1:9: C: [Correctable] Style/RedundantSort: Use `max` instead of `sort...at(-1)`.
+022.rb:1:9: C: [Correctable] Style/RedundantSort: Use `max` instead of `sort...at(-1)`.
+023.rb:1:11: C: [Correctable] Style/RedundantSort: Use `min` instead of `sort...slice(0)`.
+024.rb:1:11: C: [Correctable] Style/RedundantSort: Use `min` instead of `sort...[0]`.
+025.rb:1:11: C: [Correctable] Style/RedundantSort: Use `min` instead of `sort...[](0)`.
+026.rb:1:5: C: [Correctable] Style/RedundantSort: Use `max_by` instead of `sort_by...[](-1)`.
+027.rb:1:11: C: [Correctable] Style/RedundantSort: Use `min_by` instead of `sort_by...at(0)`.
+028.rb:1:8: C: [Correctable] Style/RedundantSort: Use `min_by` instead of `sort_by...slice(0)`.
+029.rb:1:11: C: [Correctable] Style/RedundantSort: Use `max_by` instead of `sort_by...slice(-1)`.
+030.rb:1:11: C: [Correctable] Style/RedundantSort: Use `max` instead of `sort...[-1]`.
+031.rb:1:8: C: [Correctable] Style/RedundantSort: Use `min_by` instead of `sort_by...[0]`.
+032.rb:1:5: C: [Correctable] Style/RedundantSort: Use `max_by` instead of `sort_by...[-1]`.
+041.rb:1:3: C: [Correctable] Style/RedundantSort: Use `max_by` instead of `sort_by...last`.
+045.rb:1:5: C: [Correctable] Style/RedundantSort: Use `max` instead of `sort...last`.
+046.rb:1:11: C: [Correctable] Style/RedundantSort: Use `min_by` instead of `sort_by...first`.
+047.rb:1:11: C: [Correctable] Style/RedundantSort: Use `min_by` instead of `sort_by...at(0)`.
+048.rb:1:12: C: [Correctable] Style/RedundantSort: Use `min_by` instead of `sort_by...at(0)`.
+049.rb:1:12: C: [Correctable] Style/RedundantSort: Use `min_by` instead of `sort_by...at(0)`.
+
+==> autocorrect exit=0 3462 <==
+000.rb:1:11: C: [Corrected] Style/RedundantSort: Use `min` instead of `sort...first`.
+001.rb:1:12: C: [Corrected] Style/RedundantSort: Use `min` instead of `sort...first`.
+002.rb:1:12: C: [Corrected] Style/RedundantSort: Use `min` instead of `sort...first`.
+003.rb:1:8: C: [Corrected] Style/RedundantSort: Use `max` instead of `sort...last`.
+004.rb:1:9: C: [Corrected] Style/RedundantSort: Use `max` instead of `sort...last`.
+005.rb:1:9: C: [Corrected] Style/RedundantSort: Use `max` instead of `sort...last`.
+006.rb:1:5: C: [Corrected] Style/RedundantSort: Use `max` instead of `sort...last`.
+007.rb:1:6: C: [Corrected] Style/RedundantSort: Use `max` instead of `sort...last`.
+008.rb:1:6: C: [Corrected] Style/RedundantSort: Use `max` instead of `sort...last`.
+009.rb:1:11: C: [Corrected] Style/RedundantSort: Use `min_by` instead of `sort_by...first`.
+010.rb:1:12: C: [Corrected] Style/RedundantSort: Use `min_by` instead of `sort_by...first`.
+011.rb:1:12: C: [Corrected] Style/RedundantSort: Use `min_by` instead of `sort_by...first`.
+012.rb:1:5: C: [Corrected] Style/RedundantSort: Use `max_by` instead of `sort_by...last`.
+013.rb:2:4: C: [Corrected] Style/RedundantSort: Use `min_by` instead of `sort_by...first`.
+014.rb:2:4: C: [Corrected] Style/RedundantSort: Use `min_by` instead of `sort_by...first`.
+015.rb:2:4: C: [Corrected] Style/RedundantSort: Use `min_by` instead of `sort_by...first`.
+016.rb:2:4: C: [Corrected] Style/RedundantSort: Use `min_by` instead of `sort_by...first`.
+017.rb:2:4: C: [Corrected] Style/RedundantSort: Use `min_by` instead of `sort_by...first`.
+018.rb:1:8: C: [Corrected] Style/RedundantSort: Use `min_by` instead of `sort_by...first`.
+019.rb:1:11: C: [Corrected] Style/RedundantSort: Use `max_by` instead of `sort_by...last`.
+020.rb:1:8: C: [Corrected] Style/RedundantSort: Use `max` instead of `sort...at(-1)`.
+021.rb:1:9: C: [Corrected] Style/RedundantSort: Use `max` instead of `sort...at(-1)`.
+022.rb:1:9: C: [Corrected] Style/RedundantSort: Use `max` instead of `sort...at(-1)`.
+023.rb:1:11: C: [Corrected] Style/RedundantSort: Use `min` instead of `sort...slice(0)`.
+024.rb:1:11: C: [Corrected] Style/RedundantSort: Use `min` instead of `sort...[0]`.
+025.rb:1:11: C: [Corrected] Style/RedundantSort: Use `min` instead of `sort...[](0)`.
+026.rb:1:5: C: [Corrected] Style/RedundantSort: Use `max_by` instead of `sort_by...[](-1)`.
+027.rb:1:11: C: [Corrected] Style/RedundantSort: Use `min_by` instead of `sort_by...at(0)`.
+028.rb:1:8: C: [Corrected] Style/RedundantSort: Use `min_by` instead of `sort_by...slice(0)`.
+029.rb:1:11: C: [Corrected] Style/RedundantSort: Use `max_by` instead of `sort_by...slice(-1)`.
+030.rb:1:11: C: [Corrected] Style/RedundantSort: Use `max` instead of `sort...[-1]`.
+031.rb:1:8: C: [Corrected] Style/RedundantSort: Use `min_by` instead of `sort_by...[0]`.
+032.rb:1:5: C: [Corrected] Style/RedundantSort: Use `max_by` instead of `sort_by...[-1]`.
+041.rb:1:3: C: [Corrected] Style/RedundantSort: Use `max_by` instead of `sort_by...last`.
+045.rb:1:5: C: [Corrected] Style/RedundantSort: Use `max` instead of `sort...last`.
+046.rb:1:11: C: [Corrected] Style/RedundantSort: Use `min_by` instead of `sort_by...first`.
+047.rb:1:11: C: [Corrected] Style/RedundantSort: Use `min_by` instead of `sort_by...at(0)`.
+048.rb:1:12: C: [Corrected] Style/RedundantSort: Use `min_by` instead of `sort_by...at(0)`.
+049.rb:1:12: C: [Corrected] Style/RedundantSort: Use `min_by` instead of `sort_by...at(0)`.
+
+==> corrected/000.rb 14 <==
+[1, 2, 3].min
+
+==> corrected/001.rb 15 <==
+[1, 2, 3]&.min
+
+==> corrected/002.rb 15 <==
+[1, 2, 3]&.min
+
+==> corrected/003.rb 11 <==
+[1, 2].max
+
+==> corrected/004.rb 12 <==
+[1, 2]&.max
+
+==> corrected/005.rb 12 <==
+[1, 2]&.max
+
+==> corrected/006.rb 27 <==
+foo.max { |a, b| b <=> a }
+
+==> corrected/007.rb 28 <==
+foo&.max { |a, b| b <=> a }
+
+==> corrected/008.rb 28 <==
+foo&.max { |a, b| b <=> a }
+
+==> corrected/009.rb 34 <==
+[1, 2, 3].min_by { |x| x.length }
+
+==> corrected/010.rb 35 <==
+[1, 2, 3]&.min_by { |x| x.length }
+
+==> corrected/011.rb 35 <==
+[1, 2, 3]&.min_by { |x| x.length }
+
+==> corrected/012.rb 31 <==
+foo.max_by { |x| x.something }
+
+==> corrected/013.rb 40 <==
+[1, 2, 3]
+  .min_by { |x| x.length }
+  
+
+==> corrected/014.rb 47 <==
+[1, 2, 3]
+  .min_by { |x| x.length } ||
+    []
+
+==> corrected/015.rb 47 <==
+[1, 2, 3]
+  .min_by { |x| x.length } &&
+    []
+
+==> corrected/016.rb 47 <==
+[1, 2, 3]
+  .min_by { |x| x.length } or
+    []
+
+==> corrected/017.rb 48 <==
+[1, 2, 3]
+  .min_by { |x| x.length } and
+    []
+
+==> corrected/018.rb 27 <==
+[1, 2].min_by(&:something)
+
+==> corrected/019.rb 27 <==
+[1, 2, 3].max_by(&:length)
+
+==> corrected/020.rb 11 <==
+[1, 2].max
+
+==> corrected/021.rb 12 <==
+[1, 2]&.max
+
+==> corrected/022.rb 12 <==
+[1, 2]&.max
+
+==> corrected/023.rb 14 <==
+[1, 2, 3].min
+
+==> corrected/024.rb 14 <==
+[1, 2, 3].min
+
+==> corrected/025.rb 14 <==
+[1, 2, 3].min
+
+==> corrected/026.rb 25 <==
+foo.max_by { |x| x.foo }
+
+==> corrected/027.rb 24 <==
+[1, 2, 3].min_by(&:foo)
+
+==> corrected/028.rb 21 <==
+[1, 2].min_by(&:foo)
+
+==> corrected/029.rb 24 <==
+[1, 2, 3].max_by(&:foo)
+
+==> corrected/030.rb 14 <==
+[1, 2, 3].max
+
+==> corrected/031.rb 21 <==
+[1, 2].min_by(&:foo)
+
+==> corrected/032.rb 25 <==
+foo.max_by { |x| x.foo }
+
+==> corrected/041.rb 30 <==
+x.max_by { |y| y.foo || bar }
+
+==> corrected/045.rb 22 <==
+foo.max { _2 <=> _1 }
+
+==> corrected/046.rb 31 <==
+[1, 2, 3].min_by { _1.length }
+
+==> corrected/047.rb 28 <==
+[1, 2, 3].min_by { _1.foo }
+
+==> corrected/048.rb 29 <==
+[1, 2, 3]&.min_by { _1.foo }
+
+==> corrected/049.rb 29 <==
+[1, 2, 3]&.min_by { _1.foo }
+

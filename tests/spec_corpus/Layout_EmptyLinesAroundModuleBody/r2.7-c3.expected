@@ -1,0 +1,170 @@
+==> offenses exit=1 2833 <==
+001.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body beginning.
+001.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+003.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body beginning.
+003.rb:5:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+004.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body beginning.
+004.rb:9:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body end.
+006.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body beginning.
+006.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+008.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing before first def definition
+008.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+009.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body beginning.
+009.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing before first def definition
+010.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body beginning.
+010.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing before first def definition
+012.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing before first def definition
+012.rb:6:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+013.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body beginning.
+013.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body beginning.
+013.rb:11:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body end.
+014.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing before first def definition
+014.rb:6:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+016.rb:5:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+017.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing before first module definition
+017.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body beginning.
+017.rb:5:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+017.rb:6:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+
+==> autocorrect exit=0 2781 <==
+001.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body beginning.
+001.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+003.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body beginning.
+003.rb:5:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+004.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body beginning.
+004.rb:9:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body end.
+006.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body beginning.
+006.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+008.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing before first def definition
+008.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+009.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body beginning.
+009.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing before first def definition
+010.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body beginning.
+010.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing before first def definition
+012.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing before first def definition
+012.rb:6:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+013.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body beginning.
+013.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body beginning.
+013.rb:11:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body end.
+014.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing before first def definition
+014.rb:6:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+016.rb:5:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+017.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing before first module definition
+017.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body beginning.
+017.rb:5:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+017.rb:6:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+
+==> corrected/001.rb 48 <==
+module SomeObject
+
+  def do_something; end
+
+end
+
+==> corrected/003.rb 75 <==
+module Parent
+  module SomeObject
+
+    def do_something
+    end
+
+  end
+end
+
+==> corrected/004.rb 75 <==
+module Parent
+  module SomeObject
+
+    def do_something
+    end
+
+  end
+end
+
+==> corrected/006.rb 58 <==
+module SomeObject
+
+  private
+  def do_something; end
+
+end
+
+==> corrected/008.rb 68 <==
+module SomeObject
+  include Something
+
+  def do_something; end
+
+end
+
+==> corrected/009.rb 68 <==
+module SomeObject
+  include Something
+
+  def do_something; end
+
+end
+
+==> corrected/010.rb 80 <==
+module SomeObject
+  include Something
+
+  # Comment
+  def do_something; end
+
+end
+
+==> corrected/012.rb 97 <==
+module Parent
+  module SomeObject
+    include Something
+
+    def do_something
+    end
+
+  end
+end
+
+==> corrected/013.rb 97 <==
+module Parent
+  module SomeObject
+    include Something
+
+    def do_something
+    end
+
+  end
+end
+
+==> corrected/014.rb 108 <==
+module Parent
+  module SomeObject
+    URL = %q(http://example.com)
+
+    def do_something
+    end
+
+  end
+end
+
+==> corrected/016.rb 117 <==
+module Parent
+  module SomeObject
+    URL = %q(http://example.com)
+    WSDL = %q(http://example.com/wsdl)
+
+  end
+end
+
+==> corrected/017.rb 105 <==
+module Parent
+  URL = %q(http://example.com)
+
+  module SomeObject
+
+    def do_something; end
+
+  end
+
+end
+

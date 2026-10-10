@@ -1,0 +1,19 @@
+==> offenses exit=1 152 <==
+001.rb:8:3: C: [Correctable] Style/GuardClause: Use a guard clause (`return unless bar?`) instead of wrapping the code inside a conditional expression.
+
+==> autocorrect exit=0 150 <==
+001.rb:8:3: C: [Corrected] Style/GuardClause: Use a guard clause (`return unless bar?`) instead of wrapping the code inside a conditional expression.
+
+==> corrected/001.rb 88 <==
+def func
+  if foo?
+    work
+  end
+
+  do_something
+
+  return unless bar?
+    work
+  
+end
+

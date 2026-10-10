@@ -1,0 +1,10 @@
+==> offenses exit=1 317 <==
+000.rb:1:1: C: Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+002.rb:1:1: C: Style/StringLiterals: Inconsistent quote style.
+003.rb:1:1: C: Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+
+==> autocorrect exit=1 317 <==
+000.rb:1:1: C: Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+002.rb:1:1: C: Style/StringLiterals: Inconsistent quote style.
+003.rb:1:1: C: Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+

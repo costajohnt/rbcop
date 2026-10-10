@@ -1,0 +1,39 @@
+==> offenses exit=1 1403 <==
+000.rb:2:14: W: [Correctable] Lint/AmbiguousOperator: Ambiguous positive number operator. Parenthesize the method arguments if it's surely a positive number operator, or add a whitespace to the right of the `+` if it should be an addition.
+001.rb:2:14: W: [Correctable] Lint/AmbiguousOperator: Ambiguous positive number operator. Parenthesize the method arguments if it's surely a positive number operator, or add a whitespace to the right of the `+` if it should be an addition.
+004.rb:2:14: W: [Correctable] Lint/AmbiguousOperator: Ambiguous negative number operator. Parenthesize the method arguments if it's surely a negative number operator, or add a whitespace to the right of the `-` if it should be a subtraction.
+007.rb:2:6: W: [Correctable] Lint/AmbiguousOperator: Ambiguous splat operator. Parenthesize the method arguments if it's surely a splat operator, or add a whitespace to the right of the `*` if it should be a multiplication.
+010.rb:2:9: W: [Correctable] Lint/AmbiguousOperator: Ambiguous block operator. Parenthesize the method arguments if it's surely a block operator, or add a whitespace to the right of the `&` if it should be a binary AND.
+013.rb:1:14: W: [Correctable] Lint/AmbiguousOperator: Ambiguous keyword splat operator. Parenthesize the method arguments if it's surely a keyword splat operator, or add a whitespace to the right of the `**` if it should be an exponent.
+
+==> autocorrect exit=0 1391 <==
+000.rb:2:14: W: [Corrected] Lint/AmbiguousOperator: Ambiguous positive number operator. Parenthesize the method arguments if it's surely a positive number operator, or add a whitespace to the right of the `+` if it should be an addition.
+001.rb:2:14: W: [Corrected] Lint/AmbiguousOperator: Ambiguous positive number operator. Parenthesize the method arguments if it's surely a positive number operator, or add a whitespace to the right of the `+` if it should be an addition.
+004.rb:2:14: W: [Corrected] Lint/AmbiguousOperator: Ambiguous negative number operator. Parenthesize the method arguments if it's surely a negative number operator, or add a whitespace to the right of the `-` if it should be a subtraction.
+007.rb:2:6: W: [Corrected] Lint/AmbiguousOperator: Ambiguous splat operator. Parenthesize the method arguments if it's surely a splat operator, or add a whitespace to the right of the `*` if it should be a multiplication.
+010.rb:2:9: W: [Corrected] Lint/AmbiguousOperator: Ambiguous block operator. Parenthesize the method arguments if it's surely a block operator, or add a whitespace to the right of the `&` if it should be a binary AND.
+013.rb:1:14: W: [Corrected] Lint/AmbiguousOperator: Ambiguous keyword splat operator. Parenthesize the method arguments if it's surely a keyword splat operator, or add a whitespace to the right of the `**` if it should be an exponent.
+
+==> corrected/000.rb 36 <==
+do_something(+24)
+do_something(+42)
+
+==> corrected/001.rb 31 <==
+do_something
+do_something(+42)
+
+==> corrected/004.rb 36 <==
+do_something(-24)
+do_something(-42)
+
+==> corrected/007.rb 31 <==
+array = [1, 2, 3]
+puts(*array)
+
+==> corrected/010.rb 50 <==
+process = proc { do_something }
+2.times(&process)
+
+==> corrected/013.rb 23 <==
+do_something(**kwargs)
+

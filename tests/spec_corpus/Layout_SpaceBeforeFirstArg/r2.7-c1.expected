@@ -1,0 +1,19 @@
+==> offenses exit=1 480 <==
+000.rb:1:18: C: [Correctable] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+000.rb:3:18: C: [Correctable] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+000.rb:4:18: C: [Correctable] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+000.rb:5:18: C: [Correctable] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+
+==> autocorrect exit=0 472 <==
+000.rb:1:18: C: [Corrected] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+000.rb:3:18: C: [Corrected] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+000.rb:4:18: C: [Corrected] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+000.rb:5:18: C: [Corrected] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+
+==> corrected/000.rb 228 <==
+form.inline_input :full_name,     as: :string
+form.disabled_input :password,      as: :passwd
+form.masked_input :zip_code,      as: :string
+form.masked_input :email_address, as: :email
+form.masked_input :phone_number,  as: :tel
+

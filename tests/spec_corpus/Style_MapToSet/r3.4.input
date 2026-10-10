@@ -1,0 +1,14 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 49 <==
+foo.map { |x| x * 2 }.to_set { |x| [x.to_s, x] }
+
+==> 001.rb 53 <==
+foo.collect { |x| x * 2 }.to_set { |x| [x.to_s, x] }
+

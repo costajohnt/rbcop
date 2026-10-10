@@ -1,0 +1,73 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 17 <==
+def taz(abc)
+end
+
+==> 001.rb 12 <==
+def taz
+end
+
+==> 002.rb 26 <==
+def taz(
+  foo, bar
+)
+end
+
+==> 003.rb 33 <==
+def taz(abc,
+foo, bar,
+baz
+)
+end
+
+==> 004.rb 39 <==
+def taz(abc,
+foo, bar, barz,
+baz
+)
+end
+
+==> 005.rb 43 <==
+def taz(abc,
+foo, bar, z: "barz",
+x:
+)
+end
+
+==> 006.rb 42 <==
+def taz(abc, foo = {
+  foo: "edf",
+})
+end
+
+==> 007.rb 43 <==
+def taz(abc = {
+  foo: "edf",
+}, bar:)
+end
+
+==> 008.rb 44 <==
+def do_something(foo, bar, baz,
+  quux)
+end
+
+==> 009.rb 31 <==
+def self.taz(
+  foo, bar
+)
+end
+
+==> 010.rb 38 <==
+def self.taz(abc,
+foo, bar,
+baz
+)
+end
+

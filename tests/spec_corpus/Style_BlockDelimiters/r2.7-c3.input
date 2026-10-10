@@ -1,0 +1,166 @@
+==> .rubocop.yml 223 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/BlockDelimiters:
+  EnforcedStyle: braces_for_chaining
+  AllowedMethods:
+  - proc
+  AllowedPatterns:
+  - test
+
+==> 000.rb 35 <==
+puts [1, 2, 3].map { |n|
+  n * n
+}
+
+==> 001.rb 38 <==
+puts [1, 2, 3].map { |n|
+  n * n
+}, 1
+
+==> 002.rb 42 <==
+puts [0] + [1,2,3].map { |n|
+  n * n
+}, 1
+
+==> 003.rb 42 <==
+puts [1,2,3].map { |n|
+  n * n
+} + [0], 1
+
+==> 004.rb 70 <==
+'Some text: %s' %
+  %w[foo bar].map { |v|
+    v.upcase
+  }.join(', ')
+
+==> 005.rb 123 <==
+foo :bar, baz: 'Some text: %s' %
+               %w[foo bar].map { |v|
+                v.upcase
+               }.join(', ')
+
+==> 006.rb 36 <==
+puts [1, 2, 3].map {
+  _1 * _1
+}, 1
+
+==> 007.rb 40 <==
+puts [0] + [1,2,3].map {
+  _1 * _1
+}, 1
+
+==> 008.rb 40 <==
+puts [1,2,3].map {
+  _1 * _1
+} + [0], 1
+
+==> 009.rb 55 <==
+foo %
+  %w[bar baz].map {
+    _1.upcase
+  }.join(', ')
+
+==> 010.rb 120 <==
+foo :bar, baz: 'Some text: %s' %
+               %w[foo bar].map {
+                _1.upcase
+               }.join(', ')
+
+==> 011.rb 16 <==
+each do |x| end
+
+==> 012.rb 12 <==
+each { |x| }
+==> 013.rb 16 <==
+each do |x|
+end
+
+==> 014.rb 15 <==
+each do _1 end
+
+==> 015.rb 11 <==
+each { _1 }
+==> 016.rb 17 <==
+each do
+  _1
+end
+
+==> 017.rb 28 <==
+each do |x|
+end.map(&:to_s)
+
+==> 018.rb 25 <==
+foo = proc {
+  puts 42
+}
+
+==> 019.rb 32 <==
+foo = test_method {
+  puts 42
+}
+
+==> 020.rb 54 <==
+foo = [{foo: :bar}].find { |h|
+  h.key?(:foo)
+}[:foo]
+
+==> 021.rb 53 <==
+Hash[
+  {foo: :bar}.map do |k, v|
+    [k, v]
+  end
+]
+
+==> 022.rb 55 <==
+Hash[
+  {foo: :bar}.map { |k, v|
+    [k, v]
+  }.uniq
+]
+
+==> 023.rb 50 <==
+Hash[
+  {foo: :bar}.map { |k, v|
+    [k, v]
+  }
+]
+
+==> 024.rb 13 <==
+each { |x|
+}
+
+==> 025.rb 26 <==
+foo.bar = baz.map { |x|
+}
+
+==> 026.rb 27 <==
+each { |x|
+}.map(&:to_sym)
+
+==> 027.rb 40 <==
+foo.bar = baz.map { |x|
+}.map(&:to_sym)
+
+==> 028.rb 34 <==
+arr&.each do |x|
+end&.map(&:to_s)
+
+==> 029.rb 81 <==
+map do |a|
+  do_something
+rescue StandardError => e
+  puts 'oh no'
+end.join('-')
+
+==> 030.rb 62 <==
+map do |a|
+  do_something
+ensure
+  puts 'oh no'
+end.join('-')
+

@@ -1,0 +1,77 @@
+==> .rubocop.yml 204 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SingleLineBlockParams:
+  Methods:
+  - reduce:
+    - a
+    - e
+  - test:
+    - x
+    - "y"
+
+==> 000.rb 246 <==
+def m
+  [0, 1].reduce { |c, d| c + d }
+  [0, 1].reduce{ |c, d| c + d }
+  [0, 1].reduce(5) { |c, d| c + d }
+  [0, 1].reduce(5){ |c, d| c + d }
+  [0, 1].reduce (5) { |c, d| c + d }
+  [0, 1].reduce(5) { |c, d| c + d }
+  ala.test { |x, z| bala }
+end
+
+==> 001.rb 246 <==
+def m
+  [0, 1].reduce { |a, e| a + e }
+  [0, 1].reduce{ |a, e| a + e }
+  [0, 1].reduce(5) { |a, e| a + e }
+  [0, 1].reduce(5){ |a, e| a + e }
+  [0, 1].reduce (5) { |a, e| a + e }
+  [0, 1].reduce(5) { |a, e| a + e }
+  ala.test { |x, y| bala }
+end
+
+==> 002.rb 50 <==
+File.foreach(filename).reduce(0) { |a, _e| a + 1 }
+==> 003.rb 46 <==
+File.foreach(filename).reduce(0) { |_x, _y| }
+
+==> 004.rb 52 <==
+def m
+  [0, 1].reduce do |c, d|
+    c + d
+  end
+end
+
+==> 005.rb 49 <==
+def m
+  call_method(:reduce) { |a, b| a + b}
+end
+
+==> 006.rb 47 <==
+def m
+  test.reduce { |a, (id, _)| a + id}
+end
+
+==> 007.rb 33 <==
+def m
+  test.reduce { true }
+end
+
+==> 008.rb 36 <==
+test.reduce(x) { |a, b| foo(a, b) }
+
+==> 009.rb 36 <==
+test.reduce(x) { |e, a| foo(e, a) }
+
+==> 010.rb 30 <==
+test.reduce(x) { |a| foo(a) }
+
+==> 011.rb 30 <==
+test.reduce(x) { |b| foo(b) }
+

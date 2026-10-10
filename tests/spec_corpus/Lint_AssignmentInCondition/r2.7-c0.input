@@ -1,0 +1,213 @@
+==> .rubocop.yml 164 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/AssignmentInCondition:
+  AllowSafeAssignment: true
+
+==> 000.rb 17 <==
+if test = 10
+end
+
+==> 001.rb 20 <==
+while test = 10
+end
+
+==> 002.rb 20 <==
+until test = 10
+end
+
+==> 003.rb 18 <==
+if @test = 10
+end
+
+==> 004.rb 19 <==
+if @@test = 10
+end
+
+==> 005.rb 18 <==
+if $test = 10
+end
+
+==> 006.rb 17 <==
+if TEST = 10
+end
+
+==> 007.rb 17 <==
+if a[3] = 10
+end
+
+==> 008.rb 18 <==
+if test == 10
+end
+
+==> 009.rb 32 <==
+if test == 10 || foobar = 1
+end
+
+==> 010.rb 45 <==
+return 1 if any_errors? { o = inspect(file) }
+==> 011.rb 45 <==
+return 1 if any_errors? { o = file }.present?
+==> 012.rb 43 <==
+return 1 if any_errors? { o = inspect(_1) }
+==> 013.rb 43 <==
+return 1 if any_errors? { o = _1 }.present?
+==> 014.rb 39 <==
+if x?(bar) || y? { z = baz }
+  foo
+end
+
+==> 015.rb 42 <==
+if !a || (
+  b = c
+  b == 'd'
+)
+  foo
+end
+
+==> 016.rb 36 <==
+if a || (
+  foo
+  b = c
+)
+  bar
+end
+
+==> 017.rb 53 <==
+if a || (
+  obj.foo = c
+  obj.foo == 'd'
+)
+  bar
+end
+
+==> 018.rb 36 <==
+if (
+  b = c
+  b == 'd'
+)
+  foo
+end
+
+==> 019.rb 19 <==
+foo { x if y = z }
+
+==> 020.rb 38 <==
+raise StandardError unless foo ||= bar
+==> 021.rb 50 <==
+raise StandardError unless (foo ||= bar) || a = b
+
+==> 022.rb 24 <==
+if test.method = 10
+end
+
+==> 023.rb 25 <==
+if test&.method = 10
+end
+
+==> 024.rb 10 <==
+if ()
+end
+
+==> 025.rb 14 <==
+unless ()
+end
+
+==> 026.rb 60 <==
+return unless %i[asc desc].include?(order = params[:order])
+
+==> 027.rb 48 <==
+if defined?(foo.bar = ())
+  foo.bar = false
+end
+
+==> 028.rb 27 <==
+if defined?(test = 10)
+end
+
+==> 029.rb 19 <==
+if (test = 10)
+end
+
+==> 030.rb 22 <==
+if (test[0] = 10)
+end
+
+==> 031.rb 33 <==
+if (foo == bar && test = 10)
+end
+
+==> 032.rb 35 <==
+if ((foo == bar && test = 10))
+end
+
+==> 033.rb 42 <==
+do_something if (foo == bar && test = 10)
+
+==> 034.rb 36 <==
+while (foo == bar && test = 10)
+end
+
+==> 035.rb 38 <==
+while ((foo == bar && test = 10))
+end
+
+==> 036.rb 45 <==
+do_something while (foo == bar && test = 10)
+
+==> 037.rb 36 <==
+until (foo == bar && test = 10)
+end
+
+==> 038.rb 38 <==
+until ((foo == bar && test = 10))
+end
+
+==> 039.rb 45 <==
+do_something until (foo == bar && test = 10)
+
+==> 040.rb 34 <==
+if (test = foo && bar == baz)
+end
+
+==> 041.rb 33 <==
+if (foo == bar || test = 10)
+end
+
+==> 042.rb 35 <==
+if ((foo == bar || test = 10))
+end
+
+==> 043.rb 42 <==
+do_something if (foo == bar || test = 10)
+
+==> 044.rb 36 <==
+while (foo == bar || test = 10)
+end
+
+==> 045.rb 38 <==
+while ((foo == bar || test = 10))
+end
+
+==> 046.rb 45 <==
+do_something while (foo == bar || test = 10)
+
+==> 047.rb 36 <==
+until (foo == bar || test = 10)
+end
+
+==> 048.rb 38 <==
+until ((foo == bar || test = 10))
+end
+
+==> 049.rb 45 <==
+do_something until (foo == bar || test = 10)
+
+==> 050.rb 34 <==
+if (test = foo || bar == baz)
+end
+

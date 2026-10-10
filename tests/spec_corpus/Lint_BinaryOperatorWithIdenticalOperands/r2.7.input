@@ -1,0 +1,82 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 25 <==
+y = a.x(arg) == a.x(arg)
+
+==> 001.rb 25 <==
+y = a.x(arg) != a.x(arg)
+
+==> 002.rb 26 <==
+y = a.x(arg) === a.x(arg)
+
+==> 003.rb 26 <==
+y = a.x(arg) <=> a.x(arg)
+
+==> 004.rb 25 <==
+y = a.x(arg) =~ a.x(arg)
+
+==> 005.rb 25 <==
+y = a.x(arg) && a.x(arg)
+
+==> 006.rb 25 <==
+y = a.x(arg) || a.x(arg)
+
+==> 007.rb 24 <==
+y = a.x(arg) > a.x(arg)
+
+==> 008.rb 25 <==
+y = a.x(arg) >= a.x(arg)
+
+==> 009.rb 24 <==
+y = a.x(arg) < a.x(arg)
+
+==> 010.rb 25 <==
+y = a.x(arg) <= a.x(arg)
+
+==> 011.rb 24 <==
+y = a.x(arg) | a.x(arg)
+
+==> 012.rb 24 <==
+y = a.x(arg) ^ a.x(arg)
+
+==> 013.rb 24 <==
+y = a.x(arg) - a.x(arg)
+
+==> 014.rb 24 <==
+y = a.x(arg) + a.x(arg)
+
+==> 015.rb 24 <==
+y = a.x(arg) * a.x(arg)
+
+==> 016.rb 24 <==
+y = a.x(arg) / a.x(arg)
+
+==> 017.rb 25 <==
+y = a.x(arg) ** a.x(arg)
+
+==> 018.rb 25 <==
+y = a.x(arg) << a.x(arg)
+
+==> 019.rb 25 <==
+y = a.x(arg) >> a.x(arg)
+
+==> 020.rb 66 <==
+x == y
+y = x && z
+y = a.x + b.x
+a.x(arg) > b.x(arg)
+a.(x) > b.(x)
+
+==> 021.rb 21 <==
+x = 2 + 2
+x = 1 << 1
+
+==> 022.rb 6 <==
+foo.*
+

@@ -1,0 +1,94 @@
+==> offenses exit=1 2610 <==
+000.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+002.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+004.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+006.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+007.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+009.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+011.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+012.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+014.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+016.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+017.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+019.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+021.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+022.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+024.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+026.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+027.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+029.rb:1:1: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+
+==> autocorrect exit=0 2574 <==
+000.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+002.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+004.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+006.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+007.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+009.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+011.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+012.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+014.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+016.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+017.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+019.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+021.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+022.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+024.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+026.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+027.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+029.rb:1:1: C: [Corrected] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+
+==> corrected/000.rb 9 <==
+foo&.one
+
+==> corrected/002.rb 9 <==
+foo&.one
+
+==> corrected/004.rb 9 <==
+foo&.one
+
+==> corrected/006.rb 9 <==
+FOO&.one
+
+==> corrected/007.rb 9 <==
+FOO&.one
+
+==> corrected/009.rb 9 <==
+FOO&.one
+
+==> corrected/011.rb 14 <==
+FOO::BAR&.one
+
+==> corrected/012.rb 14 <==
+FOO::BAR&.one
+
+==> corrected/014.rb 14 <==
+FOO::BAR&.one
+
+==> corrected/016.rb 10 <==
+@foo&.one
+
+==> corrected/017.rb 10 <==
+@foo&.one
+
+==> corrected/019.rb 10 <==
+@foo&.one
+
+==> corrected/021.rb 11 <==
+@@foo&.one
+
+==> corrected/022.rb 11 <==
+@@foo&.one
+
+==> corrected/024.rb 11 <==
+@@foo&.one
+
+==> corrected/026.rb 10 <==
+$FOO&.one
+
+==> corrected/027.rb 10 <==
+$FOO&.one
+
+==> corrected/029.rb 10 <==
+$FOO&.one
+

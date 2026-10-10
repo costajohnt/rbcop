@@ -1,0 +1,40 @@
+==> .rubocop.yml 209 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Gemspec/DevelopmentDependencies:
+  Enabled: true
+  EnforcedStyle: gems.rb
+  AllowedGems:
+  - allowed
+
+==> 000/example.gemspec 145 <==
+Gem::Specification.new do |spec|
+  spec.name = 'example'
+  spec.add_development_dependency 'foo'
+  spec.add_development_dependency 'allowed'
+end
+
+==> 001/example.gemspec 165 <==
+Gem::Specification.new do |spec|
+  spec.name = 'example'
+  spec.add_development_dependency 'foo', '>= 1.0'
+  spec.add_development_dependency 'allowed', '>= 1.0'
+end
+
+==> 002/example.gemspec 183 <==
+Gem::Specification.new do |spec|
+  spec.name = 'example'
+  spec.add_development_dependency 'foo', '>= 1.0', '< 2.0'
+  spec.add_development_dependency 'allowed', '>= 1.0', '< 2.0'
+end
+
+==> 003/Gemfile 14 <==
+gem 'example'
+
+==> 004/gems.rb 14 <==
+gem 'example'
+

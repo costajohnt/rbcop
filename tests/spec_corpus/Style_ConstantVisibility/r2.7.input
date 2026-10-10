@@ -1,0 +1,102 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 25 <==
+class Foo
+  BAR = 42
+end
+
+==> 001.rb 44 <==
+class Foo
+  BAR = 42
+  private_constant
+end
+
+==> 002.rb 47 <==
+class Foo
+  BAR = 42
+  private_constant 42
+end
+
+==> 003.rb 39 <==
+class Foo
+  include Bar
+  BAR = 42
+end
+
+==> 004.rb 63 <==
+class Foo
+  include Bar
+  BAR = 42
+  private_constant :FOO
+end
+
+==> 005.rb 49 <==
+class Foo
+  BAR = 42
+  private_constant :BAR
+end
+
+==> 006.rb 26 <==
+module Foo
+  BAR = 42
+end
+
+==> 007.rb 48 <==
+class Foo
+  BAR = 42
+  public_constant :BAR
+end
+
+==> 008.rb 65 <==
+class Foo
+  BAR = 42
+  BAZ = 43
+  public_constant :BAR, :BAZ
+end
+
+==> 009.rb 39 <==
+module Foo
+  MyClass = Class.new()
+end
+
+==> 010.rb 50 <==
+class Foo
+  BAR = 42
+  private_constant "BAR"
+end
+
+==> 011.rb 70 <==
+class Foo
+  BAR = 42
+  BAZ = 43
+  private_constant ["BAR", "BAZ"]
+end
+
+==> 012.rb 71 <==
+class Foo
+  BAR = 42
+  BAZ = 43
+  private_constant *["BAR", "BAZ"]
+end
+
+==> 013.rb 63 <==
+class Foo
+  BAR = 42
+  private_constant(*constants(false))
+end
+
+==> 014.rb 54 <==
+class Foo
+  BAR = 42
+  private_constant(*%i[BAZ])
+end
+
+==> 015.rb 9 <==
+BAR = 42
+

@@ -1,0 +1,6 @@
+==> offenses exit=1 61 <==
+000.rb:2:81: C: Layout/LineLength: Line is too long. [99/80]
+
+==> autocorrect exit=1 61 <==
+000.rb:2:81: C: Layout/LineLength: Line is too long. [99/80]
+

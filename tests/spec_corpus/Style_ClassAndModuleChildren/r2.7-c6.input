@@ -1,0 +1,37 @@
+==> .rubocop.yml 197 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+  EnforcedStyleForClasses: nested
+
+==> 000.rb 29 <==
+class FooClass::BarClass
+end
+
+==> 001.rb 37 <==
+class FooClass::BarClass < Super
+end
+
+==> 002.rb 48 <==
+class FooClass
+end
+class FooClass::BarClass
+end
+
+==> 003.rb 46 <==
+module FooModule
+  module BarModule
+  end
+end
+
+==> 004.rb 44 <==
+module FooModule
+  class BarClass
+  end
+end
+

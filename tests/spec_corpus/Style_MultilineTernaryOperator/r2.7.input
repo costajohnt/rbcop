@@ -1,0 +1,84 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 19 <==
+a = cond ?
+  b : c
+
+==> 001.rb 21 <==
+a = cond ? b :
+    c
+
+==> 002.rb 13 <==
+cond ? b :
+c
+
+==> 003.rb 58 <==
+cond_a? ? foo :
+  cond_b? ? bar :
+    cond_c? ? baz : qux
+
+==> 004.rb 25 <==
+a = cond ?
+    b :
+    c
+
+==> 005.rb 25 <==
+a =
+  b ==
+    c ? d : e
+
+==> 006.rb 29 <==
+a[:a] =
+  b ==
+    c ? d : e
+
+==> 007.rb 29 <==
+a.foo =
+  b ==
+    c ? d : e
+
+==> 008.rb 50 <==
+do_something(arg
+               .foo ? bar : baz)
+
+==> 009.rb 38 <==
+return cond ?
+       foo :
+       bar
+
+==> 010.rb 56 <==
+do_something cond ?
+             foo :
+             bar
+
+==> 011.rb 71 <==
+obj&.do_something cond ?
+                  foo :
+                  bar
+
+==> 012.rb 16 <==
+a = cond ? b : c
+==> 013.rb 55 <==
+# comment a
+a = cond ?
+  b : c # comment b
+# comment c
+
+==> 014.rb 107 <==
+a = cond ? # comment a
+  # comment b
+  b : c
+
+a = cond ?
+  b : # comment
+  c
+
+a = cond ? b : # comment
+  c
+

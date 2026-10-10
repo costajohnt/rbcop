@@ -1,0 +1,50 @@
+==> offenses exit=1 1451 <==
+003.rb:3:1: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element when the opening brace is on the same line as the first array element.
+004.rb:3:1: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element when the opening brace is on the same line as the first array element.
+005.rb:3:2: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the line after the last array element when the opening brace is on a separate line from the first array element.
+006.rb:3:1: C: Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element when the opening brace is on the same line as the first array element.
+007.rb:3:1: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element when the opening brace is on the same line as the first array element.
+008.rb:3:1: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element when the opening brace is on the same line as the first array element.
+009.rb:4:3: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element when the opening brace is on the same line as the first array element.
+
+==> autocorrect exit=1 1439 <==
+003.rb:3:1: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element when the opening brace is on the same line as the first array element.
+004.rb:3:1: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element when the opening brace is on the same line as the first array element.
+005.rb:3:2: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the line after the last array element when the opening brace is on a separate line from the first array element.
+006.rb:3:1: C: Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element when the opening brace is on the same line as the first array element.
+007.rb:3:1: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element when the opening brace is on the same line as the first array element.
+008.rb:3:1: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element when the opening brace is on the same line as the first array element.
+009.rb:4:3: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element when the opening brace is on the same line as the first array element.
+
+==> corrected/003.rb 8 <==
+[a,
+b]
+
+
+==> corrected/004.rb 16 <==
+[a, # a
+b] # b
+
+
+==> corrected/005.rb 9 <==
+[
+a,
+b
+]
+
+==> corrected/007.rb 19 <==
+bar([a: 1,
+b: 2]
+)
+
+==> corrected/008.rb 16 <==
+[a, # a
+b,] # b
+
+==> corrected/009.rb 66 <==
+{
+  key1: [a, # comment 1
+        b], # comment 2
+  key2: 'foo'
+}
+

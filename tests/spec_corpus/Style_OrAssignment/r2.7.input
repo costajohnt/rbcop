@@ -1,0 +1,125 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 28 <==
+foo = foo ? foo : 'default'
+
+==> 001.rb 31 <==
+@foo = @foo ? @foo : 'default'
+
+==> 002.rb 34 <==
+@@foo = @@foo ? @@foo : 'default'
+
+==> 003.rb 31 <==
+$foo = $foo ? $foo : 'default'
+
+==> 004.rb 19 <==
+foo = bar ? foo : 3
+==> 005.rb 19 <==
+foo = foo ? bar : 3
+==> 006.rb 64 <==
+foo = if foo
+        foo
+      else
+        'default'
+      end
+
+==> 007.rb 71 <==
+@foo = if @foo
+         @foo
+       else
+         'default'
+       end
+
+==> 008.rb 78 <==
+@@foo = if @@foo
+          @@foo
+        else
+          'default'
+        end
+
+==> 009.rb 71 <==
+$foo = if $foo
+         $foo
+       else
+         'default'
+       end
+
+==> 010.rb 56 <==
+foo = if foo
+        bar
+      else
+        3
+      end
+
+==> 011.rb 56 <==
+foo = if bar
+        foo
+      else
+        3
+      end
+
+==> 012.rb 27 <==
+foo = 'default' unless foo
+
+==> 013.rb 29 <==
+@foo = 'default' unless @foo
+
+==> 014.rb 31 <==
+@@foo = 'default' unless @@foo
+
+==> 015.rb 29 <==
+$foo = 'default' unless $foo
+
+==> 016.rb 18 <==
+foo = 3 unless bar
+==> 017.rb 25 <==
+unless foo
+  bar = 3
+end
+
+==> 018.rb 43 <==
+foo = nil
+unless foo
+  foo = 'default'
+end
+
+==> 019.rb 46 <==
+@foo = nil
+unless @foo
+  @foo = 'default'
+end
+
+==> 020.rb 49 <==
+@@foo = nil
+unless @@foo
+  @@foo = 'default'
+end
+
+==> 021.rb 46 <==
+$foo = nil
+unless $foo
+  $foo = 'default'
+end
+
+==> 022.rb 36 <==
+foo = nil
+if foo
+else
+  foo = 2
+end
+
+==> 023.rb 88 <==
+foo = if foo
+        foo
+      elsif
+        bar
+      else
+        'default'
+      end
+

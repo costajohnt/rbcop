@@ -1,0 +1,44 @@
+==> offenses exit=1 968 <==
+000.rb:1:1: W: [Correctable] Lint/NumericOperationWithConstantResult: Numeric operation with a constant result detected.
+001.rb:1:1: W: [Correctable] Lint/NumericOperationWithConstantResult: Numeric operation with a constant result detected.
+002.rb:1:1: W: [Correctable] Lint/NumericOperationWithConstantResult: Numeric operation with a constant result detected.
+003.rb:1:1: W: [Correctable] Lint/NumericOperationWithConstantResult: Numeric operation with a constant result detected.
+004.rb:1:1: W: [Correctable] Lint/NumericOperationWithConstantResult: Numeric operation with a constant result detected.
+005.rb:1:1: W: [Correctable] Lint/NumericOperationWithConstantResult: Numeric operation with a constant result detected.
+012.rb:1:1: W: [Correctable] Lint/NumericOperationWithConstantResult: Numeric operation with a constant result detected.
+013.rb:1:1: W: [Correctable] Lint/NumericOperationWithConstantResult: Numeric operation with a constant result detected.
+
+==> autocorrect exit=0 952 <==
+000.rb:1:1: W: [Corrected] Lint/NumericOperationWithConstantResult: Numeric operation with a constant result detected.
+001.rb:1:1: W: [Corrected] Lint/NumericOperationWithConstantResult: Numeric operation with a constant result detected.
+002.rb:1:1: W: [Corrected] Lint/NumericOperationWithConstantResult: Numeric operation with a constant result detected.
+003.rb:1:1: W: [Corrected] Lint/NumericOperationWithConstantResult: Numeric operation with a constant result detected.
+004.rb:1:1: W: [Corrected] Lint/NumericOperationWithConstantResult: Numeric operation with a constant result detected.
+005.rb:1:1: W: [Corrected] Lint/NumericOperationWithConstantResult: Numeric operation with a constant result detected.
+012.rb:1:1: W: [Corrected] Lint/NumericOperationWithConstantResult: Numeric operation with a constant result detected.
+013.rb:1:1: W: [Corrected] Lint/NumericOperationWithConstantResult: Numeric operation with a constant result detected.
+
+==> corrected/000.rb 2 <==
+0
+
+==> corrected/001.rb 2 <==
+1
+
+==> corrected/002.rb 2 <==
+1
+
+==> corrected/003.rb 6 <==
+x = 0
+
+==> corrected/004.rb 6 <==
+x = 1
+
+==> corrected/005.rb 6 <==
+x = 1
+
+==> corrected/012.rb 2 <==
+0
+
+==> corrected/013.rb 2 <==
+1
+

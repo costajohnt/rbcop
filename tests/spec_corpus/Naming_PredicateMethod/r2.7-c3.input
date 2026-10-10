@@ -1,0 +1,19 @@
+==> .rubocop.yml 246 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/PredicateMethod:
+  Mode: :conservative
+  AllowedMethods: []
+  AllowedPatterns: []
+  AllowBangMethods: true
+  WaywardPredicates: []
+
+==> 000.rb 21 <==
+def save!
+  true
+end
+

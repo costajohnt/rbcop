@@ -1,0 +1,9 @@
+==> offenses exit=1 91 <==
+000.rb:1:5: C: [Correctable] Style/HashEachMethods: Use `each_key` instead of `keys.each`.
+
+==> autocorrect exit=0 89 <==
+000.rb:1:5: C: [Corrected] Style/HashEachMethods: Use `each_key` instead of `keys.each`.
+
+==> corrected/000.rb 22 <==
+foo.each_key { p it }
+

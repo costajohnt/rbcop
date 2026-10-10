@@ -1,0 +1,6 @@
+==> offenses exit=1 66 <==
+000.rb:1:1: C: Style/BeginBlock: Avoid the use of `BEGIN` blocks.
+
+==> autocorrect exit=1 66 <==
+000.rb:1:1: C: Style/BeginBlock: Avoid the use of `BEGIN` blocks.
+

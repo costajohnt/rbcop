@@ -1,0 +1,347 @@
+==> .rubocop.yml 194 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented_relative_to_receiver
+
+==> 000.rb 14 <==
+a
+  .b[c] = 0
+
+==> 001.rb 69 <==
+a = b.map do |c|
+  c
+    .b
+    .d do
+      x
+        .y
+    end
+end
+
+==> 002.rb 107 <==
+node
+  .children.map { |n| string_source(n) }.compact
+  .any? { |s| preferred.any? { |d| s.include?(d) } }
+
+==> 003.rb 7 <==
+a.
+  b
+
+==> 004.rb 12 <==
+a.
+  b.
+  c
+
+==> 005.rb 47 <==
+for x in a
+  something.
+    something_else
+end
+
+==> 006.rb 8 <==
+(a.
+ b)
+
+==> 007.rb 26 <==
+(
+  a * b do
+  end
+)
+  .c
+
+==> 008.rb 74 <==
+subject.each do |item|
+  result = resolve(locale) and return result
+end.a
+
+==> 009.rb 115 <==
+payment = Models::IncomingPayments[
+        id:      input['incoming-payment-id'],
+           user_id: @user[:id]]
+
+==> 010.rb 34 <==
+a(b)
+  .c(
+    d do
+    end.f
+  )
+
+==> 011.rb 31 <==
+MyClass.(my_args)
+  .my_method
+
+==> 012.rb 51 <==
+Foo
+  .do_something(
+    key: value do
+    end
+  )
+
+==> 013.rb 28 <==
+query = x.|(
+  foo,
+  bar
+)
+
+==> 014.rb 175 <==
+def slugs(type, path_prefix)
+  expanded_links_item(type)
+    .reject { |item| item["base_path"].nil? }
+    .map { |item| item["base_path"].gsub(%r{^#{path_prefix}}, "") }
+end
+
+==> 015.rb 23 <==
+(a +
+ b)
+  .foo
+  .bar
+
+==> 016.rb 81 <==
+foo(
+  key => Model.joins(
+    Other
+      .arel_table
+      .join_sources
+  )
+)
+
+==> 017.rb 74 <==
+foo(
+  key => (Other
+            .arel_table
+            .join_sources)
+)
+
+==> 018.rb 17 <==
+User.a
+  .c
+  .b
+
+==> 019.rb 157 <==
+def targets_for(path)
+  fullpath = fullpath_for(path)
+  [
+    Dir.glob(fullpath),
+  ].flatten
+    .uniq
+    .delete_if { |entry| dot_directory?(entry) }
+end
+
+==> 020.rb 25 <==
+def foo
+  !0
+  .nil?
+end
+
+==> 021.rb 24 <==
+1 + a
+      .b
+      .c
+
+==> 022.rb 27 <==
+hash[:key]
+  .do_something
+
+==> 023.rb 82 <==
+expect { Foo.new }.to change { Bar.count }
+                        .from(1).to(2)
+
+==> 024.rb 5 <==
+a.
+b
+
+==> 025.rb 67 <==
+expect { Foo.new }.
+  to change { Bar.count }.
+      from(1).to(2)
+
+==> 026.rb 11 <==
+a
+ .(args)
+
+==> 027.rb 32 <==
+[
+  *foo
+    .bar(
+      arg)
+]
+
+==> 028.rb 39 <==
+[
+  *foo
+    .bar { |arg| baz(arg) }
+]
+
+==> 029.rb 32 <==
+[
+  *foo
+    .bar { baz(_1) }
+]
+
+==> 030.rb 33 <==
+[
+  **foo
+    .bar(
+      arg)
+]
+
+==> 031.rb 40 <==
+[
+  **foo
+    .bar { |arg| baz(arg) }
+]
+
+==> 032.rb 33 <==
+[
+  **foo
+    .bar { baz(_1) }
+]
+
+==> 033.rb 45 <==
+(0..foo).bar { baz }
+          .qux { quux }
+
+==> 034.rb 36 <==
+(0..foo).bar { baz }
+          .qux
+
+==> 035.rb 37 <==
+(0..foo).bar
+          .qux { quux }
+
+==> 036.rb 6 <==
+a
+ .b
+
+==> 037.rb 16 <==
+a.
+   b
+c.
+   d
+
+==> 038.rb 14 <==
+a.
+  b.
+    c
+
+==> 039.rb 11 <==
+[
+ a.
+ b
+]
+
+==> 040.rb 136 <==
+def foo
+  bar(
+    key: VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName
+ .veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery_long_method_name
+  )
+end
+
+==> 041.rb 151 <==
+def foo
+  bar(
+    key: VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName
+                .veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery_long_method_name
+  )
+end
+
+==> 042.rb 200 <==
+parsed_params = refusal_advice_params.merge(
+  actions: refusal_advice_params.fetch(:actions).
+    each_pair do |_, suggestions|
+      suggestions.transform_values! { |v| v == 'true' }
+    end
+).to_h
+
+==> 043.rb 437 <==
+def payload
+  {
+    type: 'action',
+    params: {
+      page: get_page_name,
+      email: @action.member.email,
+      mailing_id: @mailing_id
+    }.reverse_merge(@action.form_data)
+      .merge(UserLanguageISO.for(page.language))
+      .tap do |params|
+        params[:country] = country(member.country) if member.country.present?
+        params[:action_bucket] = data[:bucket] if data.key? :bucket
+      end
+  }.deep_symbolize_keys
+end
+
+==> 044.rb 188 <==
+add_to_git_repo(
+  initial_repo,
+  "about.json" =>
+    JSON
+        .parse(about_json(about_url: "https://updated.site.com"))
+        .tap { |h| h[:component] = true }
+        .to_json,
+)
+
+==> 045.rb 139 <==
+def run
+  (date_columns + candidate_columns).uniq
+                                    .select { |column_name| castable?(column_name) }
+end
+
+==> 046.rb 221 <==
+def run
+  (date_columns + candidate_columns).uniq
+                                      .select { |column_name| castable?(column_name) }
+                                      .each { |column_name| cast(column_name) }
+end
+
+==> 047.rb 21 <==
+(a +
+ b).foo
+   .bar
+
+==> 048.rb 41 <==
+{ a: 1, b: 2 }.keys
+              .first
+
+==> 049.rb 46 <==
+method(key: value.foo.bar
+              .baz)
+
+==> 050.rb 112 <==
+@foo = Foo
+         .where(id: Bar.select(:id)
+           .joins(:bar)
+           .where.not(bar: { id: 123 }))
+
+==> 051.rb 72 <==
+@foo = Foo.
+         where(id: Bar.select(:id)
+           .joins(:bar))
+
+==> 052.rb 94 <==
+Foo
+  .where(id: Bar.select(:id)
+    .joins(:bar),
+         name: Car.find(:name)
+    .strip)
+
+==> 053.rb 67 <==
+Foo
+  .where(id: Bar.select(:id)
+    .joins(:bar))
+  .order(:name)
+
+==> 054.rb 74 <==
+@foo = Foo
+         &.where(id: Bar.select(:id)
+           &.joins(:bar))
+
+==> 055.rb 53 <==
+Foo
+  .where({id: Bar.select(:id)
+    .joins(:bar)})
+

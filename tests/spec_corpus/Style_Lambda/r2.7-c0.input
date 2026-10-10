@@ -1,0 +1,32 @@
+==> .rubocop.yml 146 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/Lambda:
+  EnforcedStyle: lambda
+
+==> 000.rb 16 <==
+f = ->(x) { x }
+
+==> 001.rb 19 <==
+f = ->(x; y) { x }
+
+==> 002.rb 13 <==
+f = -> { x }
+
+==> 003.rb 15 <==
+f = ->x{ p x }
+
+==> 004.rb 21 <==
+f = ->(x) do
+  x
+end
+
+==> 005.rb 18 <==
+f = -> do
+  x
+end
+

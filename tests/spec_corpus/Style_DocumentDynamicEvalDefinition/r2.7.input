@@ -1,0 +1,232 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 137 <==
+class_eval <<-EOT, __FILE__, __LINE__ + 1
+  def #{unsafe_method}(*params, &block)
+    to_str.#{unsafe_method}(*params, &block)
+  end
+EOT
+
+==> 001.rb 125 <==
+class_eval <<-EOT, __FILE__, __LINE__ + 1
+  def capitalize(*params, &block)
+    to_str.capitalize(*params, &block)
+  end
+EOT
+
+==> 002.rb 264 <==
+class_eval <<-EOT, __FILE__, __LINE__ + 1
+  def #{unsafe_method}(*params, &block)       # def capitalize(*params, &block)
+    to_str.#{unsafe_method}(*params, &block)  #   to_str.capitalize(*params, &block)
+  end                                          # end
+EOT
+
+==> 003.rb 73 <==
+stringio.instance_eval("def original_filename; 'stringio#{n}.txt'; end")
+
+==> 004.rb 121 <==
+stringio.instance_eval("def original_filename; 'stringio#{n}.txt'; end # def original_filename; 'stringiofoo.txt'; end")
+
+==> 005.rb 223 <==
+class_eval <<-EOT, __FILE__, __LINE__ + 1
+  # def capitalize(*params, &block)
+  #   to_str.capitalize(*params, &block)
+  # end
+
+  def #{unsafe_method}(*params, &block)
+    to_str.#{unsafe_method}(*params, &block)
+  end
+EOT
+
+==> 006.rb 240 <==
+class_eval <<-EOT, __FILE__, __LINE__ + 1
+  # def capitalize(*params, &block)
+  #   to_str.capitalize(*params, &block)
+  # end
+
+  def #{unsafe_method}(*params, &block)
+    to_str.#{unsafe_method}(*params, &block) # { note: etc. }
+  end
+EOT
+
+==> 007.rb 232 <==
+class_eval <<-EOT, __FILE__, __LINE__ + 1
+  # EXAMPLE: def capitalize(*params, &block)
+  #   to_str.capitalize(*params, &block)
+  # end
+
+  def #{unsafe_method}(*params, &block)
+    to_str.#{unsafe_method}(*params, &block)
+  end
+EOT
+
+==> 008.rb 364 <==
+class_eval <<-EOT, __FILE__, __LINE__ + 1
+  # def capitalize(*params, &block)
+  #   to_str.capitalize(*params, &block)
+  # end
+  #
+  # def capitalize!(*params)
+  #   @dirty = true
+  #   super
+  # end
+
+  def #{unsafe_method}(*params, &block)
+    to_str.#{unsafe_method}(*params, &block)
+  end
+
+  def #{unsafe_method}!(*params)
+    @dirty = true
+    super
+  end
+EOT
+
+==> 009.rb 359 <==
+class_eval <<-EOT, __FILE__, __LINE__ + 1
+  # def capitalize(*params, &block)
+  #   to_str.capitalize(*params, &block)
+  # end
+  def #{unsafe_method}(*params, &block)
+    to_str.#{unsafe_method}(*params, &block)
+  end
+
+  # def capitalize!(*params)
+  #   @dirty = true
+  #   super
+  # end
+  def #{unsafe_method}!(*params)
+    @dirty = true
+    super
+  end
+EOT
+
+==> 010.rb 220 <==
+class_eval <<-EOT, __FILE__, __LINE__ + 1
+  # def capitalize(*params, &block)
+  #   str.capitalize(*params, &block)
+  # end
+
+  def #{unsafe_method}(*params, &block)
+    to_str.#{unsafe_method}(*params, &block)
+  end
+EOT
+
+==> 011.rb 236 <==
+class_eval(
+  # def capitalize(*params, &block)
+  #   to_str.capitalize(*params, &block)
+  # end
+
+  <<-EOT, __FILE__, __LINE__ + 1
+    def #{unsafe_method}(*params, &block)
+      to_str.#{unsafe_method}(*params, &block)
+    end
+  EOT
+)
+
+==> 012.rb 235 <==
+class_eval(
+  <<-EOT, __FILE__, __LINE__ + 1
+    def #{unsafe_method}(*params, &block)
+      to_str.#{unsafe_method}(*params, &block)
+    end
+  EOT
+  # def capitalize(*params, &block)
+  #   to_str.capitalize(*params, &block)
+  # end
+)
+
+==> 013.rb 186 <==
+class_eval(
+  # def something
+  #   puts "escaped #{interpolation}"
+  # end
+
+  <<~EOT, __FILE__, __LINE__ + 1
+    def #{my_method}
+      puts "escaped \#{interpolation}"
+    end
+  EOT
+)
+
+==> 014.rb 187 <==
+class_eval(
+  # def something
+  #   puts "escaped \#{interpolation}"
+  # end
+
+  <<~EOT, __FILE__, __LINE__ + 1
+    def #{my_method}
+      puts "escaped \#{interpolation}"
+    end
+  EOT
+)
+
+==> 015.rb 253 <==
+class_eval(
+  # def capitalize(*params, &block)
+  #   to_str.capitalize(*params, &block)
+  # end
+
+  <<-EOT, __FILE__, __LINE__ + 1
+    def #{unsafe_method}(*params, &block)
+      to_str.#{unsafe_method}(*params, &block) # { note: etc. }
+    end
+  EOT
+)
+
+==> 016.rb 245 <==
+class_eval(
+  # EXAMPLE: def capitalize(*params, &block)
+  #   to_str.capitalize(*params, &block)
+  # end
+
+  <<-EOT, __FILE__, __LINE__ + 1
+    def #{unsafe_method}(*params, &block)
+      to_str.#{unsafe_method}(*params, &block)
+    end
+  EOT
+)
+
+==> 017.rb 233 <==
+class_eval(
+  # def capitalize(*params, &block)
+  #   str.capitalize(*params, &block)
+  # end
+
+  <<-EOT, __FILE__, __LINE__ + 1
+    def #{unsafe_method}(*params, &block)
+      to_str.#{unsafe_method}(*params, &block)
+    end
+  EOT
+)
+
+==> 018.rb 385 <==
+class_eval(
+  # def capitalize(*params, &block)
+  #   to_str.capitalize(*params, &block)
+  # end
+  #
+  # def capitalize!(*params)
+  #   @dirty = true
+  #   super
+  # end
+
+  <<-EOT, __FILE__, __LINE__ + 1
+    def #{unsafe_method}(*params, &block)
+      to_str.#{unsafe_method}(*params, &block)
+    end
+
+    def #{unsafe_method}!(*params)
+      @dirty = true
+      super
+    end
+  EOT
+)
+

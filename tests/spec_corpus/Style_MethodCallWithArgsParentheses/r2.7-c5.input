@@ -1,0 +1,31 @@
+==> .rubocop.yml 214 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/MethodCallWithArgsParentheses:
+  EnforcedStyle: omit_parentheses
+  AllowParenthesesInChaining: true
+
+==> 000.rb 51 <==
+Rails.convoluted.example.logger.error("something")
+
+==> 001.rb 63 <==
+Rails
+  .convoluted
+  .example
+  .logger
+  .error("something")
+
+==> 002.rb 19 <==
+foo().bar(3).wait 4
+==> 003.rb 52 <==
+[a, b].map { _1.call 'something' }.uniq.join(' - ')
+
+==> 004.rb 25 <==
+foo().bar(3).quux.wait(4)
+==> 005.rb 21 <==
+params.should eq({})
+

@@ -1,0 +1,70 @@
+==> .rubocop.yml 174 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/UnexpectedBlockArity:
+  Methods:
+    reduce: 2
+    inject: 2
+
+==> 000.rb 31 <==
+values.reduce { |a, b| a + b }
+
+==> 001.rb 34 <==
+values.reduce { |a, b, c| a + b }
+
+==> 002.rb 25 <==
+values.reduce { |*x| x }
+
+==> 003.rb 18 <==
+values.reduce { }
+
+==> 004.rb 24 <==
+values.reduce { |a| a }
+
+==> 005.rb 33 <==
+values.reduce { |a:, b:| a + b }
+
+==> 006.rb 36 <==
+values.reduce { |**kwargs| kwargs }
+
+==> 007.rb 33 <==
+values.reduce { |(a, b)| a + b }
+
+==> 008.rb 40 <==
+values.reduce { |(a, b), c| a + b + c }
+
+==> 009.rb 28 <==
+values.reduce { |a = 1| a }
+
+==> 010.rb 39 <==
+values.reduce { |a = 1, b = 2| a + b }
+
+==> 011.rb 31 <==
+values.reduce { |a; b| a + b }
+
+==> 012.rb 11 <==
+reduce { }
+
+==> 013.rb 21 <==
+values.reduce { _1 }
+
+==> 014.rb 26 <==
+values.reduce { _1 + _2 }
+
+==> 015.rb 31 <==
+values.reduce { _1 + _2 + _3 }
+
+==> 016.rb 21 <==
+values.reduce { _2 }
+
+==> 017.rb 14 <==
+reduce { _1 }
+
+==> 018.rb 42 <==
+values.reduce { |a| a }
+values.inject { }
+

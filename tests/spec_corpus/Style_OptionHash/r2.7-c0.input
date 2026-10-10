@@ -1,0 +1,57 @@
+==> .rubocop.yml 162 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/OptionHash:
+  SuspiciousParamNames:
+  - options
+
+==> 000.rb 50 <==
+def some_method(options = {})
+  puts some_arg
+end
+
+==> 001.rb 100 <==
+def steep(flavor, duration, config={})
+  mug = config.fetch(:mug)
+  prep(flavor, duration, mug)
+end
+
+==> 002.rb 41 <==
+def meditate
+  puts true
+  puts true
+end
+
+==> 003.rb 84 <==
+def cook(instructions, ingredients = { hot: [], cold: [] })
+  prep(ingredients)
+end
+
+==> 004.rb 43 <==
+def allowed(foo, options = {})
+  super
+end
+
+==> 005.rb 50 <==
+def allowed(foo, options = {})
+  bar
+
+  super
+end
+
+==> 006.rb 64 <==
+def allowed(foo, options = {})
+  5.times do
+    super
+  end
+end
+
+==> 007.rb 52 <==
+def allowed(foo, options = {})
+  super(options)
+end
+

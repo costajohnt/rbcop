@@ -1,0 +1,3748 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/first.rb 52 <==
+class A
+  def some_method
+    implement 1
+  end
+end
+
+==> 001/second.rb 94 <==
+class A
+  alias_method :some_method, :some_method
+  def some_method
+    implement 2
+  end
+end
+
+==> 002/second.rb 84 <==
+class A
+  alias some_method some_method
+  def some_method
+    implement 2
+  end
+end
+
+==> 003/first.rb 94 <==
+class A
+  alias_method :some_method, :some_method
+  def some_method
+    implement 1
+  end
+end
+
+==> 004/second.rb 52 <==
+class A
+  def some_method
+    implement 2
+  end
+end
+
+==> 005/test.rb 134 <==
+class A
+  alias_method :some_method, :some_method
+  def some_method
+    implement 1
+  end
+  def some_method
+    implement 2
+  end
+end
+
+==> 006/second.rb 98 <==
+class A
+  silence_redefinition_of_method :some_method
+  def some_method
+    implement 2
+  end
+end
+
+==> 007/second.rb 99 <==
+class A
+  silence_redefinition_of_method 'some_method'
+  def some_method
+    implement 2
+  end
+end
+
+==> 008/second.rb 110 <==
+class A
+  redefine_method(:some_method) do
+    implement 2
+  end
+
+  def some_method
+    implement 3
+  end
+end
+
+==> 009/second.rb 99 <==
+class A
+  silence_redefinition_of_method :other_method
+  def some_method
+    implement 2
+  end
+end
+
+==> 010/test.rb 138 <==
+class A
+  silence_redefinition_of_method :some_method
+  def some_method
+    implement 1
+  end
+  def some_method
+    implement 2
+  end
+end
+
+==> 011.rb 92 <==
+class A
+  def some_method
+    implement 1
+  end
+  def some_method
+    implement 2
+  end
+end
+
+==> 012.rb 91 <==
+class A
+  def some_method
+    implement 1
+  end
+  def any_method
+    implement 2
+  end
+end
+
+==> 013/dups.rb 102 <==
+class A
+  def self.some_method
+    implement 1
+  end
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 014.rb 101 <==
+class A
+  def self.some_method
+    implement 1
+  end
+  def self.any_method
+    implement 2
+  end
+end
+
+==> 015.rb 97 <==
+class A
+  def some_method
+    implement 1
+  end
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 016.rb 108 <==
+class A
+  private def some_method
+    implement 1
+  end
+  private def some_method
+    implement 2
+  end
+end
+
+==> 017.rb 118 <==
+class A
+  private def self.some_method
+    implement 1
+  end
+  private def self.some_method
+    implement 2
+  end
+end
+
+==> 018.rb 107 <==
+class A
+  private def some_method
+    implement 1
+  end
+  private def any_method
+    implement 2
+  end
+end
+
+==> 019.rb 112 <==
+class A
+  protected def some_method
+    implement 1
+  end
+  protected def some_method
+    implement 2
+  end
+end
+
+==> 020/dups.rb 170 <==
+class A
+  def some_method
+    implement 1
+  end
+  def some_method
+    implement 2
+  end
+  def any_method
+    implement 1
+  end
+  def any_method
+    implement 2
+  end
+end
+
+==> 021/dups.rb 104 <==
+class A
+  def some_method
+    implement 1
+  end
+end
+class A
+  def some_method
+    implement 2
+  end
+end
+
+==> 022/test.rb 114 <==
+class A
+  def self.some_method
+    implement 1
+  end
+end
+class A
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 023/test.rb 126 <==
+class A
+  class << self
+    def some_method
+      implement 1
+    end
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 024/test.rb 179 <==
+module B
+  class A
+    def some_method
+      implement 1
+    end
+    def some_method
+      implement 2
+    end
+    def self.another
+    end
+    def self.another
+    end
+  end
+end
+
+==> 025/test.rb 126 <==
+class A
+  class << blah
+    def some_method
+      implement 1
+    end
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 026/example.rb 83 <==
+class A
+  def some_method
+    implement 1
+  end
+  alias some_method any_method
+end
+
+==> 027/example.rb 84 <==
+class A
+  alias some_method some_method
+  def some_method
+    implement 1
+  end
+end
+
+==> 028.rb 83 <==
+class A
+  def some_method
+    implement 1
+  end
+  alias any_method some_method
+end
+
+==> 029/example.rb 93 <==
+class A
+  def some_method
+    implement 1
+  end
+  alias_method :some_method, :any_method
+end
+
+==> 030/example.rb 94 <==
+class A
+  alias_method :some_method, :some_method
+  def some_method
+    implement 1
+  end
+end
+
+==> 031/example.rb 91 <==
+class A
+  alias_method :some_method, unknown()
+  def some_method
+    implement 1
+  end
+end
+
+==> 032.rb 93 <==
+class A
+  def some_method
+    implement 1
+  end
+  alias_method :any_method, :some_method
+end
+
+==> 033.rb 30 <==
+class A
+  alias $foo $bar
+end
+
+==> 034/example.rb 59 <==
+class A
+  def something
+  end
+  attr_reader :something
+end
+
+==> 035/example.rb 67 <==
+class A
+  def something=(right)
+  end
+  attr_writer :something
+end
+
+==> 036/example.rb 92 <==
+class A
+  attr_accessor :something
+
+  def something
+  end
+  def something=(right)
+  end
+end
+
+==> 037/example.rb 52 <==
+class A
+  def something
+  end
+  attr :something
+end
+
+==> 038/example.rb 89 <==
+class A
+  attr :something, true
+
+  def something
+  end
+  def something=(right)
+  end
+end
+
+==> 039.rb 67 <==
+class A
+  def something=(right)
+  end
+  attr_reader :something
+end
+
+==> 040.rb 59 <==
+class A
+  def something
+  end
+  attr_writer :something
+end
+
+==> 041/example.rb 137 <==
+class A
+  def foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def foo
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 042/example.rb 147 <==
+class A
+  def self.foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def self.foo
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 043.rb 137 <==
+class A
+  def foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def bar
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 044.rb 147 <==
+class A
+  def self.foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def self.bar
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 045.rb 159 <==
+class A
+  dsl_like('foo') do
+    def some_method
+      implement 1
+    end
+  end
+
+  dsl_like('bar') do
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 046/example.rb 86 <==
+class A
+  def some_method
+    implement 1
+  end
+  delegate :some_method, to: :foo
+end
+
+==> 047/example.rb 87 <==
+class A
+  def some_method
+    implement 1
+  end
+  delegate 'some_method', to: :foo
+end
+
+==> 048/example.rb 87 <==
+class A
+  def some_method
+    implement 1
+  end
+  delegate :some_method, to: 'foo'
+end
+
+==> 049/example.rb 96 <==
+class A
+  def some_method
+    implement 1
+  end
+  delegate :method, to: :foo, prefix: :some
+end
+
+==> 050/example.rb 97 <==
+class A
+  def some_method
+    implement 1
+  end
+  delegate :method, to: :foo, prefix: 'some'
+end
+
+==> 051/example.rb 96 <==
+class A
+  def some_method
+    implement 1
+  end
+  delegate :method, to: :some, prefix: true
+end
+
+==> 052/example.rb 101 <==
+class A
+  def some_method
+    implement 1
+  end
+  delegate :other_method, :some_method, to: :foo
+end
+
+==> 053/example.rb 97 <==
+class A
+  def some_method
+    implement 1
+  end
+  delegate :method, prefix: false, to: :some
+end
+
+==> 054/example.rb 139 <==
+class A
+  def some_method
+    implement 1
+  end
+
+  %w[any none some].each do |type|
+    delegate :method, prefix: true, to: type
+  end
+end
+
+==> 055/example.rb 107 <==
+class A
+  def some_method
+    implement 1
+  end
+
+  delegate :method, prefix: some_condition, to: :some
+end
+
+==> 056/example.rb 87 <==
+class A
+  def some_method
+    implement 1
+  end
+  delegate :other_method, to: :foo
+end
+
+==> 057/example.rb 105 <==
+class A
+  def some_method
+    implement 1
+  end
+
+  if cond
+    delegate :some_method, to: :foo
+  end
+end
+
+==> 058/example.rb 88 <==
+class A
+  def some_method
+    implement 1
+  end
+
+  delegate :some_method, **options
+end
+
+==> 059/example.rb 77 <==
+class A
+  def some_method
+    implement 1
+  end
+
+  delegate :some_method
+end
+
+==> 060/example.rb 91 <==
+class A
+  def some_method
+    implement 1
+  end
+
+  delegate :some_method, prefix: true
+end
+
+==> 061/example.rb 85 <==
+class A
+  def some_method
+    implement 1
+  end
+
+  expose :some_method, to: :foo
+end
+
+==> 062/example.rb 84 <==
+class A
+  def some_method
+    implement 1
+  end
+  expose :some_method, to: :foo
+end
+
+==> 063.rb 55 <==
+class A
+  def_delegator :foo, :bar
+
+  def bar; end
+end
+
+==> 064.rb 57 <==
+class A
+  def_delegator 'foo', 'bar'
+
+  def bar; end
+end
+
+==> 065.rb 64 <==
+class A
+  def_instance_delegator :foo, :bar
+
+  def bar; end
+end
+
+==> 066.rb 77 <==
+class A
+  def_delegator :foo, :bar, :baz
+
+  def bar; end
+
+  def baz; end
+end
+
+==> 067.rb 63 <==
+class A
+  def_delegator :foo, :bar if baz?
+
+  def bar; end
+end
+
+==> 068.rb 62 <==
+class A
+  def_delegators :foo, :bar, :baz
+
+  def bar; end
+end
+
+==> 069.rb 65 <==
+class A
+  def_delegators 'foo', 'bar', 'baz'
+
+  def bar; end
+end
+
+==> 070.rb 71 <==
+class A
+  def_instance_delegators :foo, :bar, :baz
+
+  def bar; end
+end
+
+==> 071.rb 70 <==
+class A
+  def_delegators :foo, :bar, :baz if qux?
+
+  def bar; end
+end
+
+==> 072.rb 93 <==
+module A
+  def some_method
+    implement 1
+  end
+  def some_method
+    implement 2
+  end
+end
+
+==> 073.rb 92 <==
+module A
+  def some_method
+    implement 1
+  end
+  def any_method
+    implement 2
+  end
+end
+
+==> 074/dups.rb 103 <==
+module A
+  def self.some_method
+    implement 1
+  end
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 075.rb 102 <==
+module A
+  def self.some_method
+    implement 1
+  end
+  def self.any_method
+    implement 2
+  end
+end
+
+==> 076.rb 98 <==
+module A
+  def some_method
+    implement 1
+  end
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 077.rb 109 <==
+module A
+  private def some_method
+    implement 1
+  end
+  private def some_method
+    implement 2
+  end
+end
+
+==> 078.rb 119 <==
+module A
+  private def self.some_method
+    implement 1
+  end
+  private def self.some_method
+    implement 2
+  end
+end
+
+==> 079.rb 108 <==
+module A
+  private def some_method
+    implement 1
+  end
+  private def any_method
+    implement 2
+  end
+end
+
+==> 080.rb 113 <==
+module A
+  protected def some_method
+    implement 1
+  end
+  protected def some_method
+    implement 2
+  end
+end
+
+==> 081/dups.rb 171 <==
+module A
+  def some_method
+    implement 1
+  end
+  def some_method
+    implement 2
+  end
+  def any_method
+    implement 1
+  end
+  def any_method
+    implement 2
+  end
+end
+
+==> 082/dups.rb 106 <==
+module A
+  def some_method
+    implement 1
+  end
+end
+module A
+  def some_method
+    implement 2
+  end
+end
+
+==> 083/test.rb 116 <==
+module A
+  def self.some_method
+    implement 1
+  end
+end
+module A
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 084/first.rb 53 <==
+module A
+  def some_method
+    implement 1
+  end
+end
+
+==> 085/second.rb 53 <==
+module A
+  def some_method
+    implement 2
+  end
+end
+
+==> 086/test.rb 127 <==
+module A
+  class << self
+    def some_method
+      implement 1
+    end
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 087/test.rb 180 <==
+module B
+  module A
+    def some_method
+      implement 1
+    end
+    def some_method
+      implement 2
+    end
+    def self.another
+    end
+    def self.another
+    end
+  end
+end
+
+==> 088/test.rb 127 <==
+module A
+  class << blah
+    def some_method
+      implement 1
+    end
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 089/example.rb 84 <==
+module A
+  def some_method
+    implement 1
+  end
+  alias some_method any_method
+end
+
+==> 090/example.rb 85 <==
+module A
+  alias some_method some_method
+  def some_method
+    implement 1
+  end
+end
+
+==> 091.rb 84 <==
+module A
+  def some_method
+    implement 1
+  end
+  alias any_method some_method
+end
+
+==> 092/example.rb 94 <==
+module A
+  def some_method
+    implement 1
+  end
+  alias_method :some_method, :any_method
+end
+
+==> 093/example.rb 95 <==
+module A
+  alias_method :some_method, :some_method
+  def some_method
+    implement 1
+  end
+end
+
+==> 094/example.rb 92 <==
+module A
+  alias_method :some_method, unknown()
+  def some_method
+    implement 1
+  end
+end
+
+==> 095.rb 94 <==
+module A
+  def some_method
+    implement 1
+  end
+  alias_method :any_method, :some_method
+end
+
+==> 096.rb 31 <==
+module A
+  alias $foo $bar
+end
+
+==> 097/example.rb 60 <==
+module A
+  def something
+  end
+  attr_reader :something
+end
+
+==> 098/example.rb 68 <==
+module A
+  def something=(right)
+  end
+  attr_writer :something
+end
+
+==> 099/example.rb 93 <==
+module A
+  attr_accessor :something
+
+  def something
+  end
+  def something=(right)
+  end
+end
+
+==> 100/example.rb 53 <==
+module A
+  def something
+  end
+  attr :something
+end
+
+==> 101/example.rb 90 <==
+module A
+  attr :something, true
+
+  def something
+  end
+  def something=(right)
+  end
+end
+
+==> 102.rb 68 <==
+module A
+  def something=(right)
+  end
+  attr_reader :something
+end
+
+==> 103.rb 60 <==
+module A
+  def something
+  end
+  attr_writer :something
+end
+
+==> 104/example.rb 138 <==
+module A
+  def foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def foo
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 105/example.rb 148 <==
+module A
+  def self.foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def self.foo
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 106.rb 138 <==
+module A
+  def foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def bar
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 107.rb 148 <==
+module A
+  def self.foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def self.bar
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 108.rb 160 <==
+module A
+  dsl_like('foo') do
+    def some_method
+      implement 1
+    end
+  end
+
+  dsl_like('bar') do
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 109/example.rb 87 <==
+module A
+  def some_method
+    implement 1
+  end
+  delegate :some_method, to: :foo
+end
+
+==> 110/example.rb 88 <==
+module A
+  def some_method
+    implement 1
+  end
+  delegate 'some_method', to: :foo
+end
+
+==> 111/example.rb 88 <==
+module A
+  def some_method
+    implement 1
+  end
+  delegate :some_method, to: 'foo'
+end
+
+==> 112/example.rb 97 <==
+module A
+  def some_method
+    implement 1
+  end
+  delegate :method, to: :foo, prefix: :some
+end
+
+==> 113/example.rb 98 <==
+module A
+  def some_method
+    implement 1
+  end
+  delegate :method, to: :foo, prefix: 'some'
+end
+
+==> 114/example.rb 97 <==
+module A
+  def some_method
+    implement 1
+  end
+  delegate :method, to: :some, prefix: true
+end
+
+==> 115/example.rb 102 <==
+module A
+  def some_method
+    implement 1
+  end
+  delegate :other_method, :some_method, to: :foo
+end
+
+==> 116/example.rb 98 <==
+module A
+  def some_method
+    implement 1
+  end
+  delegate :method, prefix: false, to: :some
+end
+
+==> 117/example.rb 140 <==
+module A
+  def some_method
+    implement 1
+  end
+
+  %w[any none some].each do |type|
+    delegate :method, prefix: true, to: type
+  end
+end
+
+==> 118/example.rb 108 <==
+module A
+  def some_method
+    implement 1
+  end
+
+  delegate :method, prefix: some_condition, to: :some
+end
+
+==> 119/example.rb 88 <==
+module A
+  def some_method
+    implement 1
+  end
+  delegate :other_method, to: :foo
+end
+
+==> 120/example.rb 106 <==
+module A
+  def some_method
+    implement 1
+  end
+
+  if cond
+    delegate :some_method, to: :foo
+  end
+end
+
+==> 121/example.rb 89 <==
+module A
+  def some_method
+    implement 1
+  end
+
+  delegate :some_method, **options
+end
+
+==> 122/example.rb 78 <==
+module A
+  def some_method
+    implement 1
+  end
+
+  delegate :some_method
+end
+
+==> 123/example.rb 92 <==
+module A
+  def some_method
+    implement 1
+  end
+
+  delegate :some_method, prefix: true
+end
+
+==> 124/example.rb 86 <==
+module A
+  def some_method
+    implement 1
+  end
+
+  expose :some_method, to: :foo
+end
+
+==> 125/example.rb 85 <==
+module A
+  def some_method
+    implement 1
+  end
+  expose :some_method, to: :foo
+end
+
+==> 126.rb 56 <==
+module A
+  def_delegator :foo, :bar
+
+  def bar; end
+end
+
+==> 127.rb 58 <==
+module A
+  def_delegator 'foo', 'bar'
+
+  def bar; end
+end
+
+==> 128.rb 65 <==
+module A
+  def_instance_delegator :foo, :bar
+
+  def bar; end
+end
+
+==> 129.rb 78 <==
+module A
+  def_delegator :foo, :bar, :baz
+
+  def bar; end
+
+  def baz; end
+end
+
+==> 130.rb 64 <==
+module A
+  def_delegator :foo, :bar if baz?
+
+  def bar; end
+end
+
+==> 131.rb 63 <==
+module A
+  def_delegators :foo, :bar, :baz
+
+  def bar; end
+end
+
+==> 132.rb 66 <==
+module A
+  def_delegators 'foo', 'bar', 'baz'
+
+  def bar; end
+end
+
+==> 133.rb 72 <==
+module A
+  def_instance_delegators :foo, :bar, :baz
+
+  def bar; end
+end
+
+==> 134.rb 71 <==
+module A
+  def_delegators :foo, :bar, :baz if qux?
+
+  def bar; end
+end
+
+==> 135.rb 101 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+  def some_method
+    implement 2
+  end
+end
+
+==> 136.rb 100 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+  def any_method
+    implement 2
+  end
+end
+
+==> 137/dups.rb 111 <==
+A = Class.new do
+  def self.some_method
+    implement 1
+  end
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 138.rb 110 <==
+A = Class.new do
+  def self.some_method
+    implement 1
+  end
+  def self.any_method
+    implement 2
+  end
+end
+
+==> 139.rb 106 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 140.rb 117 <==
+A = Class.new do
+  private def some_method
+    implement 1
+  end
+  private def some_method
+    implement 2
+  end
+end
+
+==> 141.rb 127 <==
+A = Class.new do
+  private def self.some_method
+    implement 1
+  end
+  private def self.some_method
+    implement 2
+  end
+end
+
+==> 142.rb 116 <==
+A = Class.new do
+  private def some_method
+    implement 1
+  end
+  private def any_method
+    implement 2
+  end
+end
+
+==> 143.rb 121 <==
+A = Class.new do
+  protected def some_method
+    implement 1
+  end
+  protected def some_method
+    implement 2
+  end
+end
+
+==> 144/dups.rb 179 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+  def some_method
+    implement 2
+  end
+  def any_method
+    implement 1
+  end
+  def any_method
+    implement 2
+  end
+end
+
+==> 145/dups.rb 122 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+end
+A = Class.new do
+  def some_method
+    implement 2
+  end
+end
+
+==> 146/test.rb 132 <==
+A = Class.new do
+  def self.some_method
+    implement 1
+  end
+end
+A = Class.new do
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 147/first.rb 61 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+end
+
+==> 148/second.rb 61 <==
+A = Class.new do
+  def some_method
+    implement 2
+  end
+end
+
+==> 149/test.rb 135 <==
+A = Class.new do
+  class << self
+    def some_method
+      implement 1
+    end
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 150/test.rb 188 <==
+module B
+  A = Class.new do
+    def some_method
+      implement 1
+    end
+    def some_method
+      implement 2
+    end
+    def self.another
+    end
+    def self.another
+    end
+  end
+end
+
+==> 151/test.rb 135 <==
+A = Class.new do
+  class << blah
+    def some_method
+      implement 1
+    end
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 152/example.rb 92 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+  alias some_method any_method
+end
+
+==> 153/example.rb 93 <==
+A = Class.new do
+  alias some_method some_method
+  def some_method
+    implement 1
+  end
+end
+
+==> 154.rb 92 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+  alias any_method some_method
+end
+
+==> 155/example.rb 102 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+  alias_method :some_method, :any_method
+end
+
+==> 156/example.rb 103 <==
+A = Class.new do
+  alias_method :some_method, :some_method
+  def some_method
+    implement 1
+  end
+end
+
+==> 157/example.rb 100 <==
+A = Class.new do
+  alias_method :some_method, unknown()
+  def some_method
+    implement 1
+  end
+end
+
+==> 158.rb 102 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+  alias_method :any_method, :some_method
+end
+
+==> 159.rb 39 <==
+A = Class.new do
+  alias $foo $bar
+end
+
+==> 160/example.rb 68 <==
+A = Class.new do
+  def something
+  end
+  attr_reader :something
+end
+
+==> 161/example.rb 76 <==
+A = Class.new do
+  def something=(right)
+  end
+  attr_writer :something
+end
+
+==> 162/example.rb 101 <==
+A = Class.new do
+  attr_accessor :something
+
+  def something
+  end
+  def something=(right)
+  end
+end
+
+==> 163/example.rb 61 <==
+A = Class.new do
+  def something
+  end
+  attr :something
+end
+
+==> 164/example.rb 98 <==
+A = Class.new do
+  attr :something, true
+
+  def something
+  end
+  def something=(right)
+  end
+end
+
+==> 165.rb 76 <==
+A = Class.new do
+  def something=(right)
+  end
+  attr_reader :something
+end
+
+==> 166.rb 68 <==
+A = Class.new do
+  def something
+  end
+  attr_writer :something
+end
+
+==> 167/example.rb 146 <==
+A = Class.new do
+  def foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def foo
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 168/example.rb 156 <==
+A = Class.new do
+  def self.foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def self.foo
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 169.rb 146 <==
+A = Class.new do
+  def foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def bar
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 170.rb 156 <==
+A = Class.new do
+  def self.foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def self.bar
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 171.rb 168 <==
+A = Class.new do
+  dsl_like('foo') do
+    def some_method
+      implement 1
+    end
+  end
+
+  dsl_like('bar') do
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 172/example.rb 95 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+  delegate :some_method, to: :foo
+end
+
+==> 173/example.rb 96 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+  delegate 'some_method', to: :foo
+end
+
+==> 174/example.rb 96 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+  delegate :some_method, to: 'foo'
+end
+
+==> 175/example.rb 105 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+  delegate :method, to: :foo, prefix: :some
+end
+
+==> 176/example.rb 106 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+  delegate :method, to: :foo, prefix: 'some'
+end
+
+==> 177/example.rb 105 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+  delegate :method, to: :some, prefix: true
+end
+
+==> 178/example.rb 110 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+  delegate :other_method, :some_method, to: :foo
+end
+
+==> 179/example.rb 106 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+  delegate :method, prefix: false, to: :some
+end
+
+==> 180/example.rb 148 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+
+  %w[any none some].each do |type|
+    delegate :method, prefix: true, to: type
+  end
+end
+
+==> 181/example.rb 116 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+
+  delegate :method, prefix: some_condition, to: :some
+end
+
+==> 182/example.rb 96 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+  delegate :other_method, to: :foo
+end
+
+==> 183/example.rb 114 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+
+  if cond
+    delegate :some_method, to: :foo
+  end
+end
+
+==> 184/example.rb 97 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+
+  delegate :some_method, **options
+end
+
+==> 185/example.rb 86 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+
+  delegate :some_method
+end
+
+==> 186/example.rb 100 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+
+  delegate :some_method, prefix: true
+end
+
+==> 187/example.rb 94 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+
+  expose :some_method, to: :foo
+end
+
+==> 188/example.rb 93 <==
+A = Class.new do
+  def some_method
+    implement 1
+  end
+  expose :some_method, to: :foo
+end
+
+==> 189.rb 64 <==
+A = Class.new do
+  def_delegator :foo, :bar
+
+  def bar; end
+end
+
+==> 190.rb 66 <==
+A = Class.new do
+  def_delegator 'foo', 'bar'
+
+  def bar; end
+end
+
+==> 191.rb 73 <==
+A = Class.new do
+  def_instance_delegator :foo, :bar
+
+  def bar; end
+end
+
+==> 192.rb 86 <==
+A = Class.new do
+  def_delegator :foo, :bar, :baz
+
+  def bar; end
+
+  def baz; end
+end
+
+==> 193.rb 72 <==
+A = Class.new do
+  def_delegator :foo, :bar if baz?
+
+  def bar; end
+end
+
+==> 194.rb 71 <==
+A = Class.new do
+  def_delegators :foo, :bar, :baz
+
+  def bar; end
+end
+
+==> 195.rb 74 <==
+A = Class.new do
+  def_delegators 'foo', 'bar', 'baz'
+
+  def bar; end
+end
+
+==> 196.rb 80 <==
+A = Class.new do
+  def_instance_delegators :foo, :bar, :baz
+
+  def bar; end
+end
+
+==> 197.rb 79 <==
+A = Class.new do
+  def_delegators :foo, :bar, :baz if qux?
+
+  def bar; end
+end
+
+==> 198.rb 102 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+  def some_method
+    implement 2
+  end
+end
+
+==> 199.rb 101 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+  def any_method
+    implement 2
+  end
+end
+
+==> 200/dups.rb 112 <==
+A = Module.new do
+  def self.some_method
+    implement 1
+  end
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 201.rb 111 <==
+A = Module.new do
+  def self.some_method
+    implement 1
+  end
+  def self.any_method
+    implement 2
+  end
+end
+
+==> 202.rb 107 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 203.rb 118 <==
+A = Module.new do
+  private def some_method
+    implement 1
+  end
+  private def some_method
+    implement 2
+  end
+end
+
+==> 204.rb 128 <==
+A = Module.new do
+  private def self.some_method
+    implement 1
+  end
+  private def self.some_method
+    implement 2
+  end
+end
+
+==> 205.rb 117 <==
+A = Module.new do
+  private def some_method
+    implement 1
+  end
+  private def any_method
+    implement 2
+  end
+end
+
+==> 206.rb 122 <==
+A = Module.new do
+  protected def some_method
+    implement 1
+  end
+  protected def some_method
+    implement 2
+  end
+end
+
+==> 207/dups.rb 180 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+  def some_method
+    implement 2
+  end
+  def any_method
+    implement 1
+  end
+  def any_method
+    implement 2
+  end
+end
+
+==> 208/dups.rb 124 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+end
+A = Module.new do
+  def some_method
+    implement 2
+  end
+end
+
+==> 209/test.rb 134 <==
+A = Module.new do
+  def self.some_method
+    implement 1
+  end
+end
+A = Module.new do
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 210/first.rb 62 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+end
+
+==> 211/second.rb 62 <==
+A = Module.new do
+  def some_method
+    implement 2
+  end
+end
+
+==> 212/test.rb 136 <==
+A = Module.new do
+  class << self
+    def some_method
+      implement 1
+    end
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 213/test.rb 189 <==
+module B
+  A = Module.new do
+    def some_method
+      implement 1
+    end
+    def some_method
+      implement 2
+    end
+    def self.another
+    end
+    def self.another
+    end
+  end
+end
+
+==> 214/test.rb 136 <==
+A = Module.new do
+  class << blah
+    def some_method
+      implement 1
+    end
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 215/example.rb 93 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+  alias some_method any_method
+end
+
+==> 216/example.rb 94 <==
+A = Module.new do
+  alias some_method some_method
+  def some_method
+    implement 1
+  end
+end
+
+==> 217.rb 93 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+  alias any_method some_method
+end
+
+==> 218/example.rb 103 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+  alias_method :some_method, :any_method
+end
+
+==> 219/example.rb 104 <==
+A = Module.new do
+  alias_method :some_method, :some_method
+  def some_method
+    implement 1
+  end
+end
+
+==> 220/example.rb 101 <==
+A = Module.new do
+  alias_method :some_method, unknown()
+  def some_method
+    implement 1
+  end
+end
+
+==> 221.rb 103 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+  alias_method :any_method, :some_method
+end
+
+==> 222.rb 40 <==
+A = Module.new do
+  alias $foo $bar
+end
+
+==> 223/example.rb 69 <==
+A = Module.new do
+  def something
+  end
+  attr_reader :something
+end
+
+==> 224/example.rb 77 <==
+A = Module.new do
+  def something=(right)
+  end
+  attr_writer :something
+end
+
+==> 225/example.rb 102 <==
+A = Module.new do
+  attr_accessor :something
+
+  def something
+  end
+  def something=(right)
+  end
+end
+
+==> 226/example.rb 62 <==
+A = Module.new do
+  def something
+  end
+  attr :something
+end
+
+==> 227/example.rb 99 <==
+A = Module.new do
+  attr :something, true
+
+  def something
+  end
+  def something=(right)
+  end
+end
+
+==> 228.rb 77 <==
+A = Module.new do
+  def something=(right)
+  end
+  attr_reader :something
+end
+
+==> 229.rb 69 <==
+A = Module.new do
+  def something
+  end
+  attr_writer :something
+end
+
+==> 230/example.rb 147 <==
+A = Module.new do
+  def foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def foo
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 231/example.rb 157 <==
+A = Module.new do
+  def self.foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def self.foo
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 232.rb 147 <==
+A = Module.new do
+  def foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def bar
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 233.rb 157 <==
+A = Module.new do
+  def self.foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def self.bar
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 234.rb 169 <==
+A = Module.new do
+  dsl_like('foo') do
+    def some_method
+      implement 1
+    end
+  end
+
+  dsl_like('bar') do
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 235/example.rb 96 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+  delegate :some_method, to: :foo
+end
+
+==> 236/example.rb 97 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+  delegate 'some_method', to: :foo
+end
+
+==> 237/example.rb 97 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+  delegate :some_method, to: 'foo'
+end
+
+==> 238/example.rb 106 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+  delegate :method, to: :foo, prefix: :some
+end
+
+==> 239/example.rb 107 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+  delegate :method, to: :foo, prefix: 'some'
+end
+
+==> 240/example.rb 106 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+  delegate :method, to: :some, prefix: true
+end
+
+==> 241/example.rb 111 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+  delegate :other_method, :some_method, to: :foo
+end
+
+==> 242/example.rb 107 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+  delegate :method, prefix: false, to: :some
+end
+
+==> 243/example.rb 149 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+
+  %w[any none some].each do |type|
+    delegate :method, prefix: true, to: type
+  end
+end
+
+==> 244/example.rb 117 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+
+  delegate :method, prefix: some_condition, to: :some
+end
+
+==> 245/example.rb 97 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+  delegate :other_method, to: :foo
+end
+
+==> 246/example.rb 115 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+
+  if cond
+    delegate :some_method, to: :foo
+  end
+end
+
+==> 247/example.rb 98 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+
+  delegate :some_method, **options
+end
+
+==> 248/example.rb 87 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+
+  delegate :some_method
+end
+
+==> 249/example.rb 101 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+
+  delegate :some_method, prefix: true
+end
+
+==> 250/example.rb 95 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+
+  expose :some_method, to: :foo
+end
+
+==> 251/example.rb 94 <==
+A = Module.new do
+  def some_method
+    implement 1
+  end
+  expose :some_method, to: :foo
+end
+
+==> 252.rb 65 <==
+A = Module.new do
+  def_delegator :foo, :bar
+
+  def bar; end
+end
+
+==> 253.rb 67 <==
+A = Module.new do
+  def_delegator 'foo', 'bar'
+
+  def bar; end
+end
+
+==> 254.rb 74 <==
+A = Module.new do
+  def_instance_delegator :foo, :bar
+
+  def bar; end
+end
+
+==> 255.rb 87 <==
+A = Module.new do
+  def_delegator :foo, :bar, :baz
+
+  def bar; end
+
+  def baz; end
+end
+
+==> 256.rb 73 <==
+A = Module.new do
+  def_delegator :foo, :bar if baz?
+
+  def bar; end
+end
+
+==> 257.rb 72 <==
+A = Module.new do
+  def_delegators :foo, :bar, :baz
+
+  def bar; end
+end
+
+==> 258.rb 75 <==
+A = Module.new do
+  def_delegators 'foo', 'bar', 'baz'
+
+  def bar; end
+end
+
+==> 259.rb 81 <==
+A = Module.new do
+  def_instance_delegators :foo, :bar, :baz
+
+  def bar; end
+end
+
+==> 260.rb 80 <==
+A = Module.new do
+  def_delegators :foo, :bar, :baz if qux?
+
+  def bar; end
+end
+
+==> 261.rb 100 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+  def some_method
+    implement 2
+  end
+end
+
+==> 262.rb 99 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+  def any_method
+    implement 2
+  end
+end
+
+==> 263/dups.rb 110 <==
+A.class_eval do
+  def self.some_method
+    implement 1
+  end
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 264.rb 109 <==
+A.class_eval do
+  def self.some_method
+    implement 1
+  end
+  def self.any_method
+    implement 2
+  end
+end
+
+==> 265.rb 105 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 266.rb 116 <==
+A.class_eval do
+  private def some_method
+    implement 1
+  end
+  private def some_method
+    implement 2
+  end
+end
+
+==> 267.rb 126 <==
+A.class_eval do
+  private def self.some_method
+    implement 1
+  end
+  private def self.some_method
+    implement 2
+  end
+end
+
+==> 268.rb 115 <==
+A.class_eval do
+  private def some_method
+    implement 1
+  end
+  private def any_method
+    implement 2
+  end
+end
+
+==> 269.rb 120 <==
+A.class_eval do
+  protected def some_method
+    implement 1
+  end
+  protected def some_method
+    implement 2
+  end
+end
+
+==> 270/dups.rb 178 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+  def some_method
+    implement 2
+  end
+  def any_method
+    implement 1
+  end
+  def any_method
+    implement 2
+  end
+end
+
+==> 271/dups.rb 120 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+end
+A.class_eval do
+  def some_method
+    implement 2
+  end
+end
+
+==> 272/test.rb 130 <==
+A.class_eval do
+  def self.some_method
+    implement 1
+  end
+end
+A.class_eval do
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 273/first.rb 60 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+end
+
+==> 274/second.rb 60 <==
+A.class_eval do
+  def some_method
+    implement 2
+  end
+end
+
+==> 275/test.rb 134 <==
+A.class_eval do
+  class << self
+    def some_method
+      implement 1
+    end
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 276/test.rb 187 <==
+module B
+  A.class_eval do
+    def some_method
+      implement 1
+    end
+    def some_method
+      implement 2
+    end
+    def self.another
+    end
+    def self.another
+    end
+  end
+end
+
+==> 277/test.rb 134 <==
+A.class_eval do
+  class << blah
+    def some_method
+      implement 1
+    end
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 278/example.rb 91 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+  alias some_method any_method
+end
+
+==> 279/example.rb 92 <==
+A.class_eval do
+  alias some_method some_method
+  def some_method
+    implement 1
+  end
+end
+
+==> 280.rb 91 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+  alias any_method some_method
+end
+
+==> 281/example.rb 101 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+  alias_method :some_method, :any_method
+end
+
+==> 282/example.rb 102 <==
+A.class_eval do
+  alias_method :some_method, :some_method
+  def some_method
+    implement 1
+  end
+end
+
+==> 283/example.rb 99 <==
+A.class_eval do
+  alias_method :some_method, unknown()
+  def some_method
+    implement 1
+  end
+end
+
+==> 284.rb 101 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+  alias_method :any_method, :some_method
+end
+
+==> 285.rb 38 <==
+A.class_eval do
+  alias $foo $bar
+end
+
+==> 286/example.rb 67 <==
+A.class_eval do
+  def something
+  end
+  attr_reader :something
+end
+
+==> 287/example.rb 75 <==
+A.class_eval do
+  def something=(right)
+  end
+  attr_writer :something
+end
+
+==> 288/example.rb 100 <==
+A.class_eval do
+  attr_accessor :something
+
+  def something
+  end
+  def something=(right)
+  end
+end
+
+==> 289/example.rb 60 <==
+A.class_eval do
+  def something
+  end
+  attr :something
+end
+
+==> 290/example.rb 97 <==
+A.class_eval do
+  attr :something, true
+
+  def something
+  end
+  def something=(right)
+  end
+end
+
+==> 291.rb 75 <==
+A.class_eval do
+  def something=(right)
+  end
+  attr_reader :something
+end
+
+==> 292.rb 67 <==
+A.class_eval do
+  def something
+  end
+  attr_writer :something
+end
+
+==> 293/example.rb 145 <==
+A.class_eval do
+  def foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def foo
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 294/example.rb 155 <==
+A.class_eval do
+  def self.foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def self.foo
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 295.rb 145 <==
+A.class_eval do
+  def foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def bar
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 296.rb 155 <==
+A.class_eval do
+  def self.foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def self.bar
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 297.rb 167 <==
+A.class_eval do
+  dsl_like('foo') do
+    def some_method
+      implement 1
+    end
+  end
+
+  dsl_like('bar') do
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 298/example.rb 94 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+  delegate :some_method, to: :foo
+end
+
+==> 299/example.rb 95 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+  delegate 'some_method', to: :foo
+end
+
+==> 300/example.rb 95 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+  delegate :some_method, to: 'foo'
+end
+
+==> 301/example.rb 104 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+  delegate :method, to: :foo, prefix: :some
+end
+
+==> 302/example.rb 105 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+  delegate :method, to: :foo, prefix: 'some'
+end
+
+==> 303/example.rb 104 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+  delegate :method, to: :some, prefix: true
+end
+
+==> 304/example.rb 109 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+  delegate :other_method, :some_method, to: :foo
+end
+
+==> 305/example.rb 105 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+  delegate :method, prefix: false, to: :some
+end
+
+==> 306/example.rb 147 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+
+  %w[any none some].each do |type|
+    delegate :method, prefix: true, to: type
+  end
+end
+
+==> 307/example.rb 115 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+
+  delegate :method, prefix: some_condition, to: :some
+end
+
+==> 308/example.rb 95 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+  delegate :other_method, to: :foo
+end
+
+==> 309/example.rb 113 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+
+  if cond
+    delegate :some_method, to: :foo
+  end
+end
+
+==> 310/example.rb 96 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+
+  delegate :some_method, **options
+end
+
+==> 311/example.rb 85 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+
+  delegate :some_method
+end
+
+==> 312/example.rb 99 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+
+  delegate :some_method, prefix: true
+end
+
+==> 313/example.rb 93 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+
+  expose :some_method, to: :foo
+end
+
+==> 314/example.rb 92 <==
+A.class_eval do
+  def some_method
+    implement 1
+  end
+  expose :some_method, to: :foo
+end
+
+==> 315.rb 63 <==
+A.class_eval do
+  def_delegator :foo, :bar
+
+  def bar; end
+end
+
+==> 316.rb 65 <==
+A.class_eval do
+  def_delegator 'foo', 'bar'
+
+  def bar; end
+end
+
+==> 317.rb 72 <==
+A.class_eval do
+  def_instance_delegator :foo, :bar
+
+  def bar; end
+end
+
+==> 318.rb 85 <==
+A.class_eval do
+  def_delegator :foo, :bar, :baz
+
+  def bar; end
+
+  def baz; end
+end
+
+==> 319.rb 71 <==
+A.class_eval do
+  def_delegator :foo, :bar if baz?
+
+  def bar; end
+end
+
+==> 320.rb 70 <==
+A.class_eval do
+  def_delegators :foo, :bar, :baz
+
+  def bar; end
+end
+
+==> 321.rb 73 <==
+A.class_eval do
+  def_delegators 'foo', 'bar', 'baz'
+
+  def bar; end
+end
+
+==> 322.rb 79 <==
+A.class_eval do
+  def_instance_delegators :foo, :bar, :baz
+
+  def bar; end
+end
+
+==> 323.rb 78 <==
+A.class_eval do
+  def_delegators :foo, :bar, :baz if qux?
+
+  def bar; end
+end
+
+==> 324.rb 97 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+  def some_method
+    implement 2
+  end
+end
+
+==> 325.rb 96 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+  def any_method
+    implement 2
+  end
+end
+
+==> 326/dups.rb 107 <==
+Class.new do
+  def self.some_method
+    implement 1
+  end
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 327.rb 106 <==
+Class.new do
+  def self.some_method
+    implement 1
+  end
+  def self.any_method
+    implement 2
+  end
+end
+
+==> 328.rb 102 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 329.rb 113 <==
+Class.new do
+  private def some_method
+    implement 1
+  end
+  private def some_method
+    implement 2
+  end
+end
+
+==> 330.rb 123 <==
+Class.new do
+  private def self.some_method
+    implement 1
+  end
+  private def self.some_method
+    implement 2
+  end
+end
+
+==> 331.rb 112 <==
+Class.new do
+  private def some_method
+    implement 1
+  end
+  private def any_method
+    implement 2
+  end
+end
+
+==> 332.rb 117 <==
+Class.new do
+  protected def some_method
+    implement 1
+  end
+  protected def some_method
+    implement 2
+  end
+end
+
+==> 333/dups.rb 175 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+  def some_method
+    implement 2
+  end
+  def any_method
+    implement 1
+  end
+  def any_method
+    implement 2
+  end
+end
+
+==> 334/dups.rb 114 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+end
+Class.new do
+  def some_method
+    implement 2
+  end
+end
+
+==> 335/test.rb 124 <==
+Class.new do
+  def self.some_method
+    implement 1
+  end
+end
+Class.new do
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 336/first.rb 57 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+end
+
+==> 337/second.rb 57 <==
+Class.new do
+  def some_method
+    implement 2
+  end
+end
+
+==> 338/test.rb 131 <==
+Class.new do
+  class << self
+    def some_method
+      implement 1
+    end
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 339/test.rb 184 <==
+module B
+  Class.new do
+    def some_method
+      implement 1
+    end
+    def some_method
+      implement 2
+    end
+    def self.another
+    end
+    def self.another
+    end
+  end
+end
+
+==> 340/test.rb 131 <==
+Class.new do
+  class << blah
+    def some_method
+      implement 1
+    end
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 341/example.rb 88 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+  alias some_method any_method
+end
+
+==> 342/example.rb 89 <==
+Class.new do
+  alias some_method some_method
+  def some_method
+    implement 1
+  end
+end
+
+==> 343.rb 88 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+  alias any_method some_method
+end
+
+==> 344/example.rb 98 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+  alias_method :some_method, :any_method
+end
+
+==> 345/example.rb 99 <==
+Class.new do
+  alias_method :some_method, :some_method
+  def some_method
+    implement 1
+  end
+end
+
+==> 346/example.rb 96 <==
+Class.new do
+  alias_method :some_method, unknown()
+  def some_method
+    implement 1
+  end
+end
+
+==> 347.rb 98 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+  alias_method :any_method, :some_method
+end
+
+==> 348.rb 35 <==
+Class.new do
+  alias $foo $bar
+end
+
+==> 349/example.rb 64 <==
+Class.new do
+  def something
+  end
+  attr_reader :something
+end
+
+==> 350/example.rb 72 <==
+Class.new do
+  def something=(right)
+  end
+  attr_writer :something
+end
+
+==> 351/example.rb 97 <==
+Class.new do
+  attr_accessor :something
+
+  def something
+  end
+  def something=(right)
+  end
+end
+
+==> 352/example.rb 57 <==
+Class.new do
+  def something
+  end
+  attr :something
+end
+
+==> 353/example.rb 94 <==
+Class.new do
+  attr :something, true
+
+  def something
+  end
+  def something=(right)
+  end
+end
+
+==> 354.rb 72 <==
+Class.new do
+  def something=(right)
+  end
+  attr_reader :something
+end
+
+==> 355.rb 64 <==
+Class.new do
+  def something
+  end
+  attr_writer :something
+end
+
+==> 356/example.rb 142 <==
+Class.new do
+  def foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def foo
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 357/example.rb 152 <==
+Class.new do
+  def self.foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def self.foo
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 358.rb 142 <==
+Class.new do
+  def foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def bar
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 359.rb 152 <==
+Class.new do
+  def self.foo
+    def some_method
+      implement 1
+    end
+  end
+
+  def self.bar
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 360.rb 164 <==
+Class.new do
+  dsl_like('foo') do
+    def some_method
+      implement 1
+    end
+  end
+
+  dsl_like('bar') do
+    def some_method
+      implement 2
+    end
+  end
+end
+
+==> 361/example.rb 91 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+  delegate :some_method, to: :foo
+end
+
+==> 362/example.rb 92 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+  delegate 'some_method', to: :foo
+end
+
+==> 363/example.rb 92 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+  delegate :some_method, to: 'foo'
+end
+
+==> 364/example.rb 101 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+  delegate :method, to: :foo, prefix: :some
+end
+
+==> 365/example.rb 102 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+  delegate :method, to: :foo, prefix: 'some'
+end
+
+==> 366/example.rb 101 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+  delegate :method, to: :some, prefix: true
+end
+
+==> 367/example.rb 106 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+  delegate :other_method, :some_method, to: :foo
+end
+
+==> 368/example.rb 102 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+  delegate :method, prefix: false, to: :some
+end
+
+==> 369/example.rb 144 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+
+  %w[any none some].each do |type|
+    delegate :method, prefix: true, to: type
+  end
+end
+
+==> 370/example.rb 112 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+
+  delegate :method, prefix: some_condition, to: :some
+end
+
+==> 371/example.rb 92 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+  delegate :other_method, to: :foo
+end
+
+==> 372/example.rb 110 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+
+  if cond
+    delegate :some_method, to: :foo
+  end
+end
+
+==> 373/example.rb 93 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+
+  delegate :some_method, **options
+end
+
+==> 374/example.rb 82 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+
+  delegate :some_method
+end
+
+==> 375/example.rb 96 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+
+  delegate :some_method, prefix: true
+end
+
+==> 376/example.rb 90 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+
+  expose :some_method, to: :foo
+end
+
+==> 377/example.rb 89 <==
+Class.new do
+  def some_method
+    implement 1
+  end
+  expose :some_method, to: :foo
+end
+
+==> 378.rb 60 <==
+Class.new do
+  def_delegator :foo, :bar
+
+  def bar; end
+end
+
+==> 379.rb 62 <==
+Class.new do
+  def_delegator 'foo', 'bar'
+
+  def bar; end
+end
+
+==> 380.rb 69 <==
+Class.new do
+  def_instance_delegator :foo, :bar
+
+  def bar; end
+end
+
+==> 381.rb 82 <==
+Class.new do
+  def_delegator :foo, :bar, :baz
+
+  def bar; end
+
+  def baz; end
+end
+
+==> 382.rb 68 <==
+Class.new do
+  def_delegator :foo, :bar if baz?
+
+  def bar; end
+end
+
+==> 383.rb 67 <==
+Class.new do
+  def_delegators :foo, :bar, :baz
+
+  def bar; end
+end
+
+==> 384.rb 70 <==
+Class.new do
+  def_delegators 'foo', 'bar', 'baz'
+
+  def bar; end
+end
+
+==> 385.rb 76 <==
+Class.new do
+  def_instance_delegators :foo, :bar, :baz
+
+  def bar; end
+end
+
+==> 386.rb 75 <==
+Class.new do
+  def_delegators :foo, :bar, :baz if qux?
+
+  def bar; end
+end
+
+==> 387.rb 98 <==
+Module.new do
+  def some_method
+    implement 1
+  end
+  def some_method
+    implement 2
+  end
+end
+
+==> 388.rb 97 <==
+Module.new do
+  def some_method
+    implement 1
+  end
+  def any_method
+    implement 2
+  end
+end
+
+==> 389/dups.rb 108 <==
+Module.new do
+  def self.some_method
+    implement 1
+  end
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 390.rb 107 <==
+Module.new do
+  def self.some_method
+    implement 1
+  end
+  def self.any_method
+    implement 2
+  end
+end
+
+==> 391.rb 103 <==
+Module.new do
+  def some_method
+    implement 1
+  end
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 392.rb 114 <==
+Module.new do
+  private def some_method
+    implement 1
+  end
+  private def some_method
+    implement 2
+  end
+end
+
+==> 393.rb 124 <==
+Module.new do
+  private def self.some_method
+    implement 1
+  end
+  private def self.some_method
+    implement 2
+  end
+end
+
+==> 394.rb 113 <==
+Module.new do
+  private def some_method
+    implement 1
+  end
+  private def any_method
+    implement 2
+  end
+end
+
+==> 395.rb 118 <==
+Module.new do
+  protected def some_method
+    implement 1
+  end
+  protected def some_method
+    implement 2
+  end
+end
+
+==> 396/dups.rb 176 <==
+Module.new do
+  def some_method
+    implement 1
+  end
+  def some_method
+    implement 2
+  end
+  def any_method
+    implement 1
+  end
+  def any_method
+    implement 2
+  end
+end
+
+==> 397/dups.rb 116 <==
+Module.new do
+  def some_method
+    implement 1
+  end
+end
+Module.new do
+  def some_method
+    implement 2
+  end
+end
+
+==> 398/test.rb 126 <==
+Module.new do
+  def self.some_method
+    implement 1
+  end
+end
+Module.new do
+  def self.some_method
+    implement 2
+  end
+end
+
+==> 399/first.rb 58 <==
+Module.new do
+  def some_method
+    implement 1
+  end
+end
+

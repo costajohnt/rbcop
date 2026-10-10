@@ -1,0 +1,18 @@
+==> offenses exit=1 819 <==
+000.gemspec:3:3: W: Gemspec/DuplicatedAssignment: `name=` method calls already given on line 2 of the gemspec.
+001.gemspec:3:3: W: Gemspec/DuplicatedAssignment: `name=` method calls already given on line 2 of the gemspec.
+002.gemspec:5:3: W: Gemspec/DuplicatedAssignment: `version=` method calls already given on line 4 of the gemspec.
+003.gemspec:3:3: W: Gemspec/DuplicatedAssignment: `name=` method calls already given on line 2 of the gemspec.
+004.gemspec:3:3: W: Gemspec/DuplicatedAssignment: `required_ruby_version=` method calls already given on line 2 of the gemspec.
+005.gemspec:4:3: W: Gemspec/DuplicatedAssignment: `metadata['key']=` method calls already given on line 2 of the gemspec.
+005.gemspec:5:3: W: Gemspec/DuplicatedAssignment: `metadata['key']=` method calls already given on line 2 of the gemspec.
+
+==> autocorrect exit=1 819 <==
+000.gemspec:3:3: W: Gemspec/DuplicatedAssignment: `name=` method calls already given on line 2 of the gemspec.
+001.gemspec:3:3: W: Gemspec/DuplicatedAssignment: `name=` method calls already given on line 2 of the gemspec.
+002.gemspec:5:3: W: Gemspec/DuplicatedAssignment: `version=` method calls already given on line 4 of the gemspec.
+003.gemspec:3:3: W: Gemspec/DuplicatedAssignment: `name=` method calls already given on line 2 of the gemspec.
+004.gemspec:3:3: W: Gemspec/DuplicatedAssignment: `required_ruby_version=` method calls already given on line 2 of the gemspec.
+005.gemspec:4:3: W: Gemspec/DuplicatedAssignment: `metadata['key']=` method calls already given on line 2 of the gemspec.
+005.gemspec:5:3: W: Gemspec/DuplicatedAssignment: `metadata['key']=` method calls already given on line 2 of the gemspec.
+

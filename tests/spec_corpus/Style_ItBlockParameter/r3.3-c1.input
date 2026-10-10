@@ -1,0 +1,13 @@
+==> .rubocop.yml 174 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.3
+Style/ItBlockParameter:
+  EnforcedStyle: only_numbered_parameters
+
+==> 000.rb 27 <==
+block { do_something(_1) }
+

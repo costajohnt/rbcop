@@ -1,0 +1,19 @@
+==> offenses exit=1 225 <==
+000.rb:1:5: C: [Correctable] Style/Proc: Use `proc` instead of `Proc.new`.
+001.rb:1:5: C: [Correctable] Style/Proc: Use `proc` instead of `Proc.new`.
+004.rb:1:5: C: [Correctable] Style/Proc: Use `proc` instead of `Proc.new`.
+
+==> autocorrect exit=0 219 <==
+000.rb:1:5: C: [Corrected] Style/Proc: Use `proc` instead of `Proc.new`.
+001.rb:1:5: C: [Corrected] Style/Proc: Use `proc` instead of `Proc.new`.
+004.rb:1:5: C: [Corrected] Style/Proc: Use `proc` instead of `Proc.new`.
+
+==> corrected/000.rb 24 <==
+f = proc { |x| puts x }
+
+==> corrected/001.rb 24 <==
+f = proc { |x| puts x }
+
+==> corrected/004.rb 21 <==
+f = proc { puts _1 }
+

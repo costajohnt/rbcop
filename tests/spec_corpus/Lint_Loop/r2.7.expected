@@ -1,0 +1,20 @@
+==> offenses exit=1 228 <==
+000.rb:3:5: W: [Correctable] Lint/Loop: Use `Kernel#loop` with `break` rather than `begin/end/until`(or `while`).
+001.rb:3:5: W: [Correctable] Lint/Loop: Use `Kernel#loop` with `break` rather than `begin/end/until`(or `while`).
+
+==> autocorrect exit=0 224 <==
+000.rb:3:5: W: [Corrected] Lint/Loop: Use `Kernel#loop` with `break` rather than `begin/end/until`(or `while`).
+001.rb:3:5: W: [Corrected] Lint/Loop: Use `Kernel#loop` with `break` rather than `begin/end/until`(or `while`).
+
+==> corrected/000.rb 42 <==
+loop do
+  something
+break unless test
+end
+
+==> corrected/001.rb 38 <==
+loop do
+  something
+break if test
+end
+

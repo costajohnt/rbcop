@@ -1,0 +1,31 @@
+==> .rubocop.yml 163 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/ExponentialNotation:
+  EnforcedStyle: scientific
+
+==> 000.rb 5 <==
+10e6
+
+==> 001.rb 8 <==
+12.34e3
+
+==> 002.rb 8 <==
+0.314e1
+
+==> 003.rb 6 <==
+120.03
+==> 004.rb 7 <==
+0.07390
+==> 005.rb 3 <==
+1e6
+==> 006.rb 8 <==
+3.1415e3
+==> 007.rb 8 <==
+-9.999e3
+==> 008.rb 7 <==
+5.02e-3

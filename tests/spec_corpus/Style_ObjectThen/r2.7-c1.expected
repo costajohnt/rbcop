@@ -1,0 +1,24 @@
+==> offenses exit=1 320 <==
+000.rb:1:5: C: [Correctable] Style/ObjectThen: Prefer `yield_self` over `then`.
+001.rb:1:6: C: [Correctable] Style/ObjectThen: Prefer `yield_self` over `then`.
+002.rb:1:5: C: [Correctable] Style/ObjectThen: Prefer `yield_self` over `then`.
+003.rb:1:6: C: [Correctable] Style/ObjectThen: Prefer `yield_self` over `then`.
+
+==> autocorrect exit=0 312 <==
+000.rb:1:5: C: [Corrected] Style/ObjectThen: Prefer `yield_self` over `then`.
+001.rb:1:6: C: [Corrected] Style/ObjectThen: Prefer `yield_self` over `then`.
+002.rb:1:5: C: [Corrected] Style/ObjectThen: Prefer `yield_self` over `then`.
+003.rb:1:6: C: [Corrected] Style/ObjectThen: Prefer `yield_self` over `then`.
+
+==> corrected/000.rb 30 <==
+obj.yield_self { |e| e.test }
+
+==> corrected/001.rb 31 <==
+obj&.yield_self { |e| e.test }
+
+==> corrected/002.rb 23 <==
+obj.yield_self(&:test)
+
+==> corrected/003.rb 24 <==
+obj&.yield_self(&:test)
+

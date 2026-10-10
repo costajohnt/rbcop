@@ -1,0 +1,35 @@
+==> offenses exit=1 406 <==
+000.rb:3:23: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `exception` instead of `e`.
+001.rb:3:23: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `_exception` instead of `_e`.
+002.rb:3:24: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `exception` instead of `foo`.
+002.rb:5:24: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `exception` instead of `bar`.
+
+==> autocorrect exit=0 398 <==
+000.rb:3:23: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `exception` instead of `e`.
+001.rb:3:23: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `_exception` instead of `_e`.
+002.rb:3:24: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `exception` instead of `foo`.
+002.rb:5:24: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `exception` instead of `bar`.
+
+==> corrected/000.rb 71 <==
+begin
+  something
+rescue MyException => exception
+  # do something
+end
+
+==> corrected/001.rb 72 <==
+begin
+  something
+rescue MyException => _exception
+  # do something
+end
+
+==> corrected/002.rb 122 <==
+begin
+  something
+rescue FooException => exception
+  # do something
+rescue BarException => exception
+  # do something
+end
+

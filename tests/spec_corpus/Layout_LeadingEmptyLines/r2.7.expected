@@ -1,0 +1,26 @@
+==> offenses exit=1 440 <==
+005.rb:2:1: C: [Correctable] Layout/LeadingEmptyLines: Unnecessary blank line at the beginning of the source.
+006.rb:2:1: C: [Correctable] Layout/LeadingEmptyLines: Unnecessary blank line at the beginning of the source.
+007.rb:2:1: C: [Correctable] Layout/LeadingEmptyLines: Unnecessary blank line at the beginning of the source.
+008.rb:3:1: C: [Correctable] Layout/LeadingEmptyLines: Unnecessary blank line at the beginning of the source.
+
+==> autocorrect exit=0 432 <==
+005.rb:2:1: C: [Corrected] Layout/LeadingEmptyLines: Unnecessary blank line at the beginning of the source.
+006.rb:2:1: C: [Corrected] Layout/LeadingEmptyLines: Unnecessary blank line at the beginning of the source.
+007.rb:2:1: C: [Corrected] Layout/LeadingEmptyLines: Unnecessary blank line at the beginning of the source.
+008.rb:3:1: C: [Corrected] Layout/LeadingEmptyLines: Unnecessary blank line at the beginning of the source.
+
+==> corrected/005.rb 14 <==
+class Foo
+end
+
+==> corrected/006.rb 7 <==
+puts 1
+
+==> corrected/007.rb 12 <==
+# something
+
+==> corrected/008.rb 14 <==
+class Foo
+end
+

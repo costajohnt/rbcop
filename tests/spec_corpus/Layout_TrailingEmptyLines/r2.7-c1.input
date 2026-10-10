@@ -1,0 +1,37 @@
+==> .rubocop.yml 169 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/TrailingEmptyLines:
+  EnforcedStyle: final_blank_line
+
+==> 000.rb 7 <==
+x = 0
+
+
+==> 001.rb 9 <==
+x = 0
+
+
+
+
+==> 002.rb 4 <==
+
+
+
+
+
+==> 003.rb 6 <==
+x = 0
+
+==> 004.rb 3 <==
+%
+
+
+==> 005.rb 7 <==
+x = %
+
+

@@ -1,0 +1,282 @@
+==> .rubocop.yml 173 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/AccessModifierDeclarations:
+  AllowModifiersOnAttrs: false
+
+==> 000.rb 35 <==
+class Test
+  private attr :foo
+end
+
+==> 001.rb 42 <==
+class Test
+  private attr_reader :foo
+end
+
+==> 002.rb 42 <==
+class Test
+  private attr_writer :foo
+end
+
+==> 003.rb 44 <==
+class Test
+  private attr_accessor :foo
+end
+
+==> 004.rb 47 <==
+class Foo
+  foo
+  private attr_reader :bar
+end
+
+==> 005.rb 53 <==
+class Foo
+  foo
+  private attr_reader :bar, :baz
+end
+
+==> 006.rb 47 <==
+class Foo
+  foo
+  private attr_writer :bar
+end
+
+==> 007.rb 53 <==
+class Foo
+  foo
+  private attr_writer :bar, :baz
+end
+
+==> 008.rb 49 <==
+class Foo
+  foo
+  private attr_accessor :bar
+end
+
+==> 009.rb 55 <==
+class Foo
+  foo
+  private attr_accessor :bar, :baz
+end
+
+==> 010.rb 40 <==
+class Foo
+  foo
+  private attr :bar
+end
+
+==> 011.rb 46 <==
+class Foo
+  foo
+  private attr :bar, :baz
+end
+
+==> 012.rb 37 <==
+class Test
+  protected attr :foo
+end
+
+==> 013.rb 44 <==
+class Test
+  protected attr_reader :foo
+end
+
+==> 014.rb 44 <==
+class Test
+  protected attr_writer :foo
+end
+
+==> 015.rb 46 <==
+class Test
+  protected attr_accessor :foo
+end
+
+==> 016.rb 49 <==
+class Foo
+  foo
+  protected attr_reader :bar
+end
+
+==> 017.rb 55 <==
+class Foo
+  foo
+  protected attr_reader :bar, :baz
+end
+
+==> 018.rb 49 <==
+class Foo
+  foo
+  protected attr_writer :bar
+end
+
+==> 019.rb 55 <==
+class Foo
+  foo
+  protected attr_writer :bar, :baz
+end
+
+==> 020.rb 51 <==
+class Foo
+  foo
+  protected attr_accessor :bar
+end
+
+==> 021.rb 57 <==
+class Foo
+  foo
+  protected attr_accessor :bar, :baz
+end
+
+==> 022.rb 42 <==
+class Foo
+  foo
+  protected attr :bar
+end
+
+==> 023.rb 48 <==
+class Foo
+  foo
+  protected attr :bar, :baz
+end
+
+==> 024.rb 34 <==
+class Test
+  public attr :foo
+end
+
+==> 025.rb 41 <==
+class Test
+  public attr_reader :foo
+end
+
+==> 026.rb 41 <==
+class Test
+  public attr_writer :foo
+end
+
+==> 027.rb 43 <==
+class Test
+  public attr_accessor :foo
+end
+
+==> 028.rb 46 <==
+class Foo
+  foo
+  public attr_reader :bar
+end
+
+==> 029.rb 52 <==
+class Foo
+  foo
+  public attr_reader :bar, :baz
+end
+
+==> 030.rb 46 <==
+class Foo
+  foo
+  public attr_writer :bar
+end
+
+==> 031.rb 52 <==
+class Foo
+  foo
+  public attr_writer :bar, :baz
+end
+
+==> 032.rb 48 <==
+class Foo
+  foo
+  public attr_accessor :bar
+end
+
+==> 033.rb 54 <==
+class Foo
+  foo
+  public attr_accessor :bar, :baz
+end
+
+==> 034.rb 39 <==
+class Foo
+  foo
+  public attr :bar
+end
+
+==> 035.rb 45 <==
+class Foo
+  foo
+  public attr :bar, :baz
+end
+
+==> 036.rb 43 <==
+class Test
+  module_function attr :foo
+end
+
+==> 037.rb 50 <==
+class Test
+  module_function attr_reader :foo
+end
+
+==> 038.rb 50 <==
+class Test
+  module_function attr_writer :foo
+end
+
+==> 039.rb 52 <==
+class Test
+  module_function attr_accessor :foo
+end
+
+==> 040.rb 55 <==
+class Foo
+  foo
+  module_function attr_reader :bar
+end
+
+==> 041.rb 61 <==
+class Foo
+  foo
+  module_function attr_reader :bar, :baz
+end
+
+==> 042.rb 55 <==
+class Foo
+  foo
+  module_function attr_writer :bar
+end
+
+==> 043.rb 61 <==
+class Foo
+  foo
+  module_function attr_writer :bar, :baz
+end
+
+==> 044.rb 57 <==
+class Foo
+  foo
+  module_function attr_accessor :bar
+end
+
+==> 045.rb 63 <==
+class Foo
+  foo
+  module_function attr_accessor :bar, :baz
+end
+
+==> 046.rb 48 <==
+class Foo
+  foo
+  module_function attr :bar
+end
+
+==> 047.rb 54 <==
+class Foo
+  foo
+  module_function attr :bar, :baz
+end
+

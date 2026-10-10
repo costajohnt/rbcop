@@ -1,0 +1,20 @@
+==> offenses exit=1 768 <==
+002.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+003.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+006.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+007.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+008.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+011.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+012.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+013.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+
+==> autocorrect exit=1 768 <==
+002.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+003.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+006.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+007.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+008.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+011.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+012.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+013.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+

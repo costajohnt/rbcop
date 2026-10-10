@@ -1,0 +1,94 @@
+==> offenses exit=1 1728 <==
+000.rb:1:7: C: [Correctable] Style/RedundantMinMaxBy: Use `max` instead of `max_by { |x| x }`.
+001.rb:1:8: C: [Correctable] Style/RedundantMinMaxBy: Use `max` instead of `max_by { |x| x }`.
+002.rb:1:7: C: [Correctable] Style/RedundantMinMaxBy: Use `max` instead of `max_by { |y| y }`.
+003.rb:1:7: C: [Correctable] Style/RedundantMinMaxBy: Use `max` instead of `max_by { |x| x }`.
+007.rb:1:7: C: [Correctable] Style/RedundantMinMaxBy: Use `min` instead of `min_by { |x| x }`.
+008.rb:1:8: C: [Correctable] Style/RedundantMinMaxBy: Use `min` instead of `min_by { |x| x }`.
+009.rb:1:7: C: [Correctable] Style/RedundantMinMaxBy: Use `min` instead of `min_by { |y| y }`.
+010.rb:1:7: C: [Correctable] Style/RedundantMinMaxBy: Use `min` instead of `min_by { |x| x }`.
+014.rb:1:7: C: [Correctable] Style/RedundantMinMaxBy: Use `minmax` instead of `minmax_by { |x| x }`.
+015.rb:1:8: C: [Correctable] Style/RedundantMinMaxBy: Use `minmax` instead of `minmax_by { |x| x }`.
+016.rb:1:7: C: [Correctable] Style/RedundantMinMaxBy: Use `minmax` instead of `minmax_by { |y| y }`.
+017.rb:1:7: C: [Correctable] Style/RedundantMinMaxBy: Use `minmax` instead of `minmax_by { |x| x }`.
+021.rb:1:7: C: [Correctable] Style/RedundantMinMaxBy: Use `max` instead of `max_by { _1 }`.
+022.rb:1:8: C: [Correctable] Style/RedundantMinMaxBy: Use `max` instead of `max_by { _1 }`.
+023.rb:1:7: C: [Correctable] Style/RedundantMinMaxBy: Use `min` instead of `min_by { _1 }`.
+024.rb:1:8: C: [Correctable] Style/RedundantMinMaxBy: Use `min` instead of `min_by { _1 }`.
+025.rb:1:7: C: [Correctable] Style/RedundantMinMaxBy: Use `minmax` instead of `minmax_by { _1 }`.
+026.rb:1:8: C: [Correctable] Style/RedundantMinMaxBy: Use `minmax` instead of `minmax_by { _1 }`.
+
+==> autocorrect exit=0 1692 <==
+000.rb:1:7: C: [Corrected] Style/RedundantMinMaxBy: Use `max` instead of `max_by { |x| x }`.
+001.rb:1:8: C: [Corrected] Style/RedundantMinMaxBy: Use `max` instead of `max_by { |x| x }`.
+002.rb:1:7: C: [Corrected] Style/RedundantMinMaxBy: Use `max` instead of `max_by { |y| y }`.
+003.rb:1:7: C: [Corrected] Style/RedundantMinMaxBy: Use `max` instead of `max_by { |x| x }`.
+007.rb:1:7: C: [Corrected] Style/RedundantMinMaxBy: Use `min` instead of `min_by { |x| x }`.
+008.rb:1:8: C: [Corrected] Style/RedundantMinMaxBy: Use `min` instead of `min_by { |x| x }`.
+009.rb:1:7: C: [Corrected] Style/RedundantMinMaxBy: Use `min` instead of `min_by { |y| y }`.
+010.rb:1:7: C: [Corrected] Style/RedundantMinMaxBy: Use `min` instead of `min_by { |x| x }`.
+014.rb:1:7: C: [Corrected] Style/RedundantMinMaxBy: Use `minmax` instead of `minmax_by { |x| x }`.
+015.rb:1:8: C: [Corrected] Style/RedundantMinMaxBy: Use `minmax` instead of `minmax_by { |x| x }`.
+016.rb:1:7: C: [Corrected] Style/RedundantMinMaxBy: Use `minmax` instead of `minmax_by { |y| y }`.
+017.rb:1:7: C: [Corrected] Style/RedundantMinMaxBy: Use `minmax` instead of `minmax_by { |x| x }`.
+021.rb:1:7: C: [Corrected] Style/RedundantMinMaxBy: Use `max` instead of `max_by { _1 }`.
+022.rb:1:8: C: [Corrected] Style/RedundantMinMaxBy: Use `max` instead of `max_by { _1 }`.
+023.rb:1:7: C: [Corrected] Style/RedundantMinMaxBy: Use `min` instead of `min_by { _1 }`.
+024.rb:1:8: C: [Corrected] Style/RedundantMinMaxBy: Use `min` instead of `min_by { _1 }`.
+025.rb:1:7: C: [Corrected] Style/RedundantMinMaxBy: Use `minmax` instead of `minmax_by { _1 }`.
+026.rb:1:8: C: [Corrected] Style/RedundantMinMaxBy: Use `minmax` instead of `minmax_by { _1 }`.
+
+==> corrected/000.rb 10 <==
+array.max
+
+==> corrected/001.rb 11 <==
+array&.max
+
+==> corrected/002.rb 10 <==
+array.max
+
+==> corrected/003.rb 10 <==
+array.max
+
+==> corrected/007.rb 10 <==
+array.min
+
+==> corrected/008.rb 11 <==
+array&.min
+
+==> corrected/009.rb 10 <==
+array.min
+
+==> corrected/010.rb 10 <==
+array.min
+
+==> corrected/014.rb 13 <==
+array.minmax
+
+==> corrected/015.rb 14 <==
+array&.minmax
+
+==> corrected/016.rb 13 <==
+array.minmax
+
+==> corrected/017.rb 13 <==
+array.minmax
+
+==> corrected/021.rb 10 <==
+array.max
+
+==> corrected/022.rb 11 <==
+array&.max
+
+==> corrected/023.rb 10 <==
+array.min
+
+==> corrected/024.rb 11 <==
+array&.min
+
+==> corrected/025.rb 13 <==
+array.minmax
+
+==> corrected/026.rb 14 <==
+array&.minmax
+

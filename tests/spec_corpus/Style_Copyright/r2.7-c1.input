@@ -1,0 +1,25 @@
+==> .rubocop.yml 202 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/Copyright:
+  Notice: |
+    Copyright (\(c\) )?2015 Acme Inc.
+
+    License details\.\.\.
+
+==> 000.rb 64 <==
+# Copyright 2015 Acme Inc.
+#
+# License details...
+class Foo
+end
+
+==> 001.rb 24 <==
+# Comment
+class Foo
+end
+

@@ -1,0 +1,12 @@
+==> offenses exit=1 452 <==
+000.rb:1:1: W: Lint/UselessDefined: Calling `defined?` with a string argument will always return a truthy value.
+001.rb:1:1: W: Lint/UselessDefined: Calling `defined?` with a string argument will always return a truthy value.
+002.rb:1:1: W: Lint/UselessDefined: Calling `defined?` with a symbol argument will always return a truthy value.
+003.rb:1:1: W: Lint/UselessDefined: Calling `defined?` with a symbol argument will always return a truthy value.
+
+==> autocorrect exit=1 452 <==
+000.rb:1:1: W: Lint/UselessDefined: Calling `defined?` with a string argument will always return a truthy value.
+001.rb:1:1: W: Lint/UselessDefined: Calling `defined?` with a string argument will always return a truthy value.
+002.rb:1:1: W: Lint/UselessDefined: Calling `defined?` with a symbol argument will always return a truthy value.
+003.rb:1:1: W: Lint/UselessDefined: Calling `defined?` with a symbol argument will always return a truthy value.
+

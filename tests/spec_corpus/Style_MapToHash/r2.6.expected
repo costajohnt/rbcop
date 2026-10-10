@@ -1,0 +1,138 @@
+==> offenses exit=1 2662 <==
+000.rb:1:5: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+001.rb:1:5: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+002.rb:1:5: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+003.rb:1:1: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+004.rb:1:6: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `map&.to_h`.
+005.rb:1:6: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+006.rb:1:6: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `map&.to_h`.
+007.rb:1:5: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+008.rb:1:6: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `map&.to_h`.
+009.rb:1:11: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+010.rb:1:15: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+011.rb:1:5: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+014.rb:2:4: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+015.rb:1:5: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+016.rb:1:5: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+017.rb:1:5: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+018.rb:1:1: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+019.rb:1:6: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `collect&.to_h`.
+020.rb:1:6: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+021.rb:1:6: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `collect&.to_h`.
+022.rb:1:5: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+023.rb:1:6: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `collect&.to_h`.
+024.rb:1:11: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+025.rb:1:15: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+026.rb:1:5: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+029.rb:2:4: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+
+==> autocorrect exit=0 2610 <==
+000.rb:1:5: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+001.rb:1:5: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+002.rb:1:5: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+003.rb:1:1: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+004.rb:1:6: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `map&.to_h`.
+005.rb:1:6: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+006.rb:1:6: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `map&.to_h`.
+007.rb:1:5: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+008.rb:1:6: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `map&.to_h`.
+009.rb:1:11: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+010.rb:1:15: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+011.rb:1:5: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+014.rb:2:4: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+015.rb:1:5: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+016.rb:1:5: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+017.rb:1:5: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+018.rb:1:1: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+019.rb:1:6: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `collect&.to_h`.
+020.rb:1:6: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+021.rb:1:6: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `collect&.to_h`.
+022.rb:1:5: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+023.rb:1:6: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `collect&.to_h`.
+024.rb:1:11: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+025.rb:1:15: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+026.rb:1:5: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+029.rb:2:4: C: [Corrected] Style/MapToHash: Pass a block to `to_h` instead of calling `collect.to_h`.
+
+==> corrected/000.rb 28 <==
+foo.to_h { |x| [x, x * 2] }
+
+==> corrected/001.rb 31 <==
+foo.to_h { |k, v| [k, v * 2] }
+
+==> corrected/002.rb 37 <==
+foo.to_h { |x, y| [x.to_s, y.to_i] }
+
+==> corrected/003.rb 24 <==
+to_h { |x| [x, x * 2] }
+
+==> corrected/004.rb 29 <==
+foo&.to_h { |x| [x, x * 2] }
+
+==> corrected/005.rb 28 <==
+foo.to_h { |x| [x, x * 2] }
+
+==> corrected/006.rb 38 <==
+foo&.to_h { |x, y| [x.to_s, y.to_i] }
+
+==> corrected/007.rb 25 <==
+foo.to_h(&:do_something)
+
+==> corrected/008.rb 26 <==
+foo&.to_h(&:do_something)
+
+==> corrected/009.rb 34 <==
+[1, 2, 3].to_h { |x| [x, x * 2] }
+
+==> corrected/010.rb 47 <==
+{ foo: :bar }.to_h { |x, y| [x.to_s, y.to_s] }
+
+==> corrected/011.rb 27 <==
+foo.to_h { |x| x * 2 }.bar
+
+==> corrected/014.rb 65 <==
+{foo: bar}
+  .to_h { |k, v| [k.to_s, v.do_something] }
+  .freeze
+
+==> corrected/015.rb 28 <==
+foo.to_h { |x| [x, x * 2] }
+
+==> corrected/016.rb 31 <==
+foo.to_h { |k, v| [k, v * 2] }
+
+==> corrected/017.rb 37 <==
+foo.to_h { |x, y| [x.to_s, y.to_i] }
+
+==> corrected/018.rb 24 <==
+to_h { |x| [x, x * 2] }
+
+==> corrected/019.rb 29 <==
+foo&.to_h { |x| [x, x * 2] }
+
+==> corrected/020.rb 28 <==
+foo.to_h { |x| [x, x * 2] }
+
+==> corrected/021.rb 38 <==
+foo&.to_h { |x, y| [x.to_s, y.to_i] }
+
+==> corrected/022.rb 25 <==
+foo.to_h(&:do_something)
+
+==> corrected/023.rb 26 <==
+foo&.to_h(&:do_something)
+
+==> corrected/024.rb 34 <==
+[1, 2, 3].to_h { |x| [x, x * 2] }
+
+==> corrected/025.rb 47 <==
+{ foo: :bar }.to_h { |x, y| [x.to_s, y.to_s] }
+
+==> corrected/026.rb 27 <==
+foo.to_h { |x| x * 2 }.bar
+
+==> corrected/029.rb 65 <==
+{foo: bar}
+  .to_h { |k, v| [k.to_s, v.do_something] }
+  .freeze
+

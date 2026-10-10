@@ -1,0 +1,14 @@
+==> offenses exit=1 160 <==
+000.rb:1:5: C: [Correctable] Style/ObjectThen: Prefer `then` over `yield_self`.
+001.rb:1:6: C: [Correctable] Style/ObjectThen: Prefer `then` over `yield_self`.
+
+==> autocorrect exit=0 156 <==
+000.rb:1:5: C: [Corrected] Style/ObjectThen: Prefer `then` over `yield_self`.
+001.rb:1:6: C: [Corrected] Style/ObjectThen: Prefer `then` over `yield_self`.
+
+==> corrected/000.rb 21 <==
+obj.then { it.test }
+
+==> corrected/001.rb 22 <==
+obj&.then { it.test }
+

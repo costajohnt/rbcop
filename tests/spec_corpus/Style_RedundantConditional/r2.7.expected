@@ -1,0 +1,52 @@
+==> offenses exit=1 980 <==
+000.rb:1:1: C: [Correctable] Style/RedundantConditional: This conditional expression can just be replaced by `x == y`.
+001.rb:1:1: C: [Correctable] Style/RedundantConditional: This conditional expression can just be replaced by `!(x == y)`.
+003.rb:1:1: C: [Correctable] Style/RedundantConditional: This conditional expression can just be replaced by `x == y`.
+004.rb:1:1: C: [Correctable] Style/RedundantConditional: This conditional expression can just be replaced by `!(x == y)`.
+005.rb:1:1: C: [Correctable] Style/RedundantConditional: This conditional expression can just be replaced by `!(x == y)`.
+006.rb:1:1: C: [Correctable] Style/RedundantConditional: This conditional expression can just be replaced by `x == y`.
+007.rb:3:1: C: [Correctable] Style/RedundantConditional: This conditional expression can just be replaced by ` else   x == y`.
+008.rb:3:1: C: [Correctable] Style/RedundantConditional: This conditional expression can just be replaced by ` else   !(x == y)`.
+
+==> autocorrect exit=0 964 <==
+000.rb:1:1: C: [Corrected] Style/RedundantConditional: This conditional expression can just be replaced by `x == y`.
+001.rb:1:1: C: [Corrected] Style/RedundantConditional: This conditional expression can just be replaced by `!(x == y)`.
+003.rb:1:1: C: [Corrected] Style/RedundantConditional: This conditional expression can just be replaced by `x == y`.
+004.rb:1:1: C: [Corrected] Style/RedundantConditional: This conditional expression can just be replaced by `!(x == y)`.
+005.rb:1:1: C: [Corrected] Style/RedundantConditional: This conditional expression can just be replaced by `!(x == y)`.
+006.rb:1:1: C: [Corrected] Style/RedundantConditional: This conditional expression can just be replaced by `x == y`.
+007.rb:3:1: C: [Corrected] Style/RedundantConditional: This conditional expression can just be replaced by ` else   x == y`.
+008.rb:3:1: C: [Corrected] Style/RedundantConditional: This conditional expression can just be replaced by ` else   !(x == y)`.
+
+==> corrected/000.rb 7 <==
+x == y
+
+==> corrected/001.rb 10 <==
+!(x == y)
+
+==> corrected/003.rb 7 <==
+x == y
+
+==> corrected/004.rb 10 <==
+!(x == y)
+
+==> corrected/005.rb 10 <==
+!(x == y)
+
+==> corrected/006.rb 7 <==
+x == y
+
+==> corrected/007.rb 34 <==
+if cond
+  false
+else
+  x == y
+end
+
+==> corrected/008.rb 37 <==
+if cond
+  false
+else
+  !(x == y)
+end
+

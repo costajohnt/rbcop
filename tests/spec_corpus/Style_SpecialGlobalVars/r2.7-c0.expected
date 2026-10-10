@@ -1,0 +1,54 @@
+==> offenses exit=1 1212 <==
+000.rb:1:6: C: [Correctable] Style/SpecialGlobalVars: Prefer `$LOAD_PATH` over `$:`.
+001.rb:1:6: C: [Correctable] Style/SpecialGlobalVars: Prefer `$LOADED_FEATURES` over `$"`.
+002.rb:1:6: C: [Correctable] Style/SpecialGlobalVars: Prefer `$PROGRAM_NAME` over `$0`.
+003.rb:1:6: C: [Correctable] Style/SpecialGlobalVars: Prefer `$PROCESS_ID` or `$PID` from the stdlib 'English' module (don't forget to require it) over `$$`.
+004.rb:1:6: C: [Correctable] Style/SpecialGlobalVars: Prefer `$ARGV` from the stdlib 'English' module (don't forget to require it) or `ARGV` over `$*`.
+006.rb:1:1: C: [Correctable] Style/SpecialGlobalVars: Prefer `$INPUT_RECORD_SEPARATOR` or `$RS` from the stdlib 'English' module (don't forget to require it) over `$/`.
+007.rb:1:3: C: [Correctable] Style/SpecialGlobalVars: Prefer `$LOAD_PATH` over `$:`.
+008.rb:1:4: C: [Correctable] Style/SpecialGlobalVars: Prefer `$ERROR_INFO` from the stdlib 'English' module (don't forget to require it) over `$!`.
+009.rb:1:1: C: [Correctable] Style/SpecialGlobalVars: Prefer `$PROGRAM_NAME` over `$0`.
+010.rb:1:1: C: [Correctable] Style/SpecialGlobalVars: Prefer `$ERROR_INFO` from the stdlib 'English' module (don't forget to require it) over `$!`.
+
+==> autocorrect exit=0 1192 <==
+000.rb:1:6: C: [Corrected] Style/SpecialGlobalVars: Prefer `$LOAD_PATH` over `$:`.
+001.rb:1:6: C: [Corrected] Style/SpecialGlobalVars: Prefer `$LOADED_FEATURES` over `$"`.
+002.rb:1:6: C: [Corrected] Style/SpecialGlobalVars: Prefer `$PROGRAM_NAME` over `$0`.
+003.rb:1:6: C: [Corrected] Style/SpecialGlobalVars: Prefer `$PROCESS_ID` or `$PID` from the stdlib 'English' module (don't forget to require it) over `$$`.
+004.rb:1:6: C: [Corrected] Style/SpecialGlobalVars: Prefer `$ARGV` from the stdlib 'English' module (don't forget to require it) or `ARGV` over `$*`.
+006.rb:1:1: C: [Corrected] Style/SpecialGlobalVars: Prefer `$INPUT_RECORD_SEPARATOR` or `$RS` from the stdlib 'English' module (don't forget to require it) over `$/`.
+007.rb:1:3: C: [Corrected] Style/SpecialGlobalVars: Prefer `$LOAD_PATH` over `$:`.
+008.rb:1:4: C: [Corrected] Style/SpecialGlobalVars: Prefer `$ERROR_INFO` from the stdlib 'English' module (don't forget to require it) over `$!`.
+009.rb:1:1: C: [Corrected] Style/SpecialGlobalVars: Prefer `$PROGRAM_NAME` over `$0`.
+010.rb:1:1: C: [Corrected] Style/SpecialGlobalVars: Prefer `$ERROR_INFO` from the stdlib 'English' module (don't forget to require it) over `$!`.
+
+==> corrected/000.rb 16 <==
+puts $LOAD_PATH
+
+==> corrected/001.rb 22 <==
+puts $LOADED_FEATURES
+
+==> corrected/002.rb 19 <==
+puts $PROGRAM_NAME
+
+==> corrected/003.rb 17 <==
+puts $PROCESS_ID
+
+==> corrected/004.rb 11 <==
+puts $ARGV
+
+==> corrected/006.rb 24 <==
+$INPUT_RECORD_SEPARATOR
+
+==> corrected/007.rb 16 <==
+"#{$LOAD_PATH}"
+
+==> corrected/008.rb 17 <==
+"#{$ERROR_INFO}"
+
+==> corrected/009.rb 14 <==
+$PROGRAM_NAME
+
+==> corrected/010.rb 25 <==
+$ERROR_INFO; $ERROR_INFO
+

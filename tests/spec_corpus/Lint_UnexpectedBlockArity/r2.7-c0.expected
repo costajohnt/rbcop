@@ -1,0 +1,24 @@
+==> offenses exit=1 990 <==
+003.rb:1:1: W: Lint/UnexpectedBlockArity: `reduce` expects at least 2 positional arguments, got 0.
+004.rb:1:1: W: Lint/UnexpectedBlockArity: `reduce` expects at least 2 positional arguments, got 1.
+005.rb:1:1: W: Lint/UnexpectedBlockArity: `reduce` expects at least 2 positional arguments, got 0.
+006.rb:1:1: W: Lint/UnexpectedBlockArity: `reduce` expects at least 2 positional arguments, got 0.
+007.rb:1:1: W: Lint/UnexpectedBlockArity: `reduce` expects at least 2 positional arguments, got 1.
+009.rb:1:1: W: Lint/UnexpectedBlockArity: `reduce` expects at least 2 positional arguments, got 1.
+011.rb:1:1: W: Lint/UnexpectedBlockArity: `reduce` expects at least 2 positional arguments, got 1.
+013.rb:1:1: W: Lint/UnexpectedBlockArity: `reduce` expects at least 2 positional arguments, got 1.
+018.rb:1:1: W: Lint/UnexpectedBlockArity: `reduce` expects at least 2 positional arguments, got 1.
+018.rb:2:1: W: Lint/UnexpectedBlockArity: `inject` expects at least 2 positional arguments, got 0.
+
+==> autocorrect exit=1 990 <==
+003.rb:1:1: W: Lint/UnexpectedBlockArity: `reduce` expects at least 2 positional arguments, got 0.
+004.rb:1:1: W: Lint/UnexpectedBlockArity: `reduce` expects at least 2 positional arguments, got 1.
+005.rb:1:1: W: Lint/UnexpectedBlockArity: `reduce` expects at least 2 positional arguments, got 0.
+006.rb:1:1: W: Lint/UnexpectedBlockArity: `reduce` expects at least 2 positional arguments, got 0.
+007.rb:1:1: W: Lint/UnexpectedBlockArity: `reduce` expects at least 2 positional arguments, got 1.
+009.rb:1:1: W: Lint/UnexpectedBlockArity: `reduce` expects at least 2 positional arguments, got 1.
+011.rb:1:1: W: Lint/UnexpectedBlockArity: `reduce` expects at least 2 positional arguments, got 1.
+013.rb:1:1: W: Lint/UnexpectedBlockArity: `reduce` expects at least 2 positional arguments, got 1.
+018.rb:1:1: W: Lint/UnexpectedBlockArity: `reduce` expects at least 2 positional arguments, got 1.
+018.rb:2:1: W: Lint/UnexpectedBlockArity: `inject` expects at least 2 positional arguments, got 0.
+

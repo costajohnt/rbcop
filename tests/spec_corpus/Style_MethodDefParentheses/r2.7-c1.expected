@@ -1,0 +1,47 @@
+==> offenses exit=1 604 <==
+000.rb:1:9: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
+002.rb:1:9: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
+003.rb:1:14: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
+005.rb:1:9: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
+007.rb:1:14: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
+009.rb:1:8: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
+010.rb:1:8: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
+
+==> autocorrect exit=0 590 <==
+000.rb:1:9: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
+002.rb:1:9: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
+003.rb:1:14: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
+005.rb:1:9: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
+007.rb:1:14: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
+009.rb:1:8: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
+010.rb:1:8: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
+
+==> corrected/000.rb 18 <==
+def func a, b
+end
+
+==> corrected/002.rb 36 <==
+def func a, b
+end
+def func a, b
+end
+
+==> corrected/003.rb 23 <==
+def Test.func a, b
+end
+
+==> corrected/005.rb 14 <==
+def func 
+end
+
+==> corrected/007.rb 25 <==
+def self.test param; end
+
+==> corrected/009.rb 18 <==
+def foo *rest
+end
+
+==> corrected/010.rb 19 <==
+def foo **opts
+end
+

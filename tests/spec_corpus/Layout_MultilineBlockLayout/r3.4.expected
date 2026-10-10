@@ -1,0 +1,18 @@
+==> offenses exit=1 240 <==
+000.rb:1:8: C: [Correctable] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+001.rb:1:9: C: [Correctable] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+
+==> autocorrect exit=0 236 <==
+000.rb:1:8: C: [Corrected] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+001.rb:1:9: C: [Corrected] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+
+==> corrected/000.rb 15 <==
+test { 
+  it
+}
+
+==> corrected/001.rb 18 <==
+test do 
+  it
+end
+

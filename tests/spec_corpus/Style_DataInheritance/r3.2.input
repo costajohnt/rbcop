@@ -1,0 +1,87 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+
+==> 000.rb 71 <==
+class Person < Data.define(:first_name, :last_name)
+  def foo; end
+end
+
+==> 001.rb 73 <==
+class Person < ::Data.define(:first_name, :last_name)
+  def foo; end
+end
+
+==> 002.rb 63 <==
+class Person < Data.define(:first_name, :last_name) do end
+end
+
+==> 003.rb 60 <==
+class Person < Data.define(:first_name, :last_name) { }
+end
+
+==> 004.rb 73 <==
+class Person < Data.define(:first_name, :last_name) { def age = 42 }
+end
+
+==> 005.rb 56 <==
+class Person < Data.define(:first_name, :last_name)
+end
+
+==> 006.rb 57 <==
+class Person < Data.define(:first_name, :last_name); end
+
+==> 007.rb 65 <==
+class Person < ::Data.define(:first_name, :last_name) do end
+end
+
+==> 008.rb 73 <==
+# comment
+class Person < Data.define(:first_name, :last_name) do end
+end
+
+==> 009.rb 72 <==
+class Person < Data.define(:first_name, :last_name)
+  MAX_AGE = 120
+end
+
+==> 010.rb 95 <==
+class Person < Data.define(:first_name, :last_name)
+  if something
+    MAX_AGE = 120
+  end
+end
+
+==> 011.rb 91 <==
+class Person < Data.define(:first_name, :last_name)
+  class Error < StandardError; end
+end
+
+==> 012.rb 78 <==
+class Person < Data.define(:first_name, :last_name)
+  module Helpers; end
+end
+
+==> 013.rb 17 <==
+class Person
+end
+
+==> 014.rb 41 <==
+class Person < DelegateClass(Animal)
+end
+
+==> 015.rb 45 <==
+Person = Data.define(:first_name, :last_name)
+==> 016.rb 47 <==
+Person = ::Data.define(:first_name, :last_name)
+==> 017.rb 76 <==
+Person = Data.define(:first_name, :last_name) do
+  def age
+    42
+  end
+end
+

@@ -1,0 +1,158 @@
+==> .rubocop.yml 137 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LineLength:
+  Max: 80
+
+==> 000.rb 88 <==
+while aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+end
+
+==> 001.rb 60 <==
+while some_condition
+  do_something
+  do_something_else
+end
+
+==> 002.rb 35 <==
+while condition
+  do_something
+end
+
+==> 003.rb 15 <==
+while cond
+end
+
+==> 004.rb 39 <==
+while (var = something)
+  puts var
+end
+
+==> 005.rb 23 <==
+while true
+  x = 0
+end
+
+==> 006.rb 20 <==
+a = while b
+  1
+end
+
+==> 007.rb 21 <==
+@a = while b
+  1
+end
+
+==> 008.rb 22 <==
+@@a = while b
+  1
+end
+
+==> 009.rb 20 <==
+A = while b
+  1
+end
+
+==> 010.rb 20 <==
+a + while b
+  1
+end
+
+==> 011.rb 56 <==
+while bar # important comment not to be nuked
+  baz
+end
+
+==> 012.rb 20 <==
+while foo; bar; end
+
+==> 013.rb 36 <==
+foo while bar ||
+               baz
+
+==> 014.rb 48 <==
+[
+  1, while foo # bar
+       baz
+     end, 3
+]
+
+==> 015.rb 88 <==
+until aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+end
+
+==> 016.rb 60 <==
+until some_condition
+  do_something
+  do_something_else
+end
+
+==> 017.rb 35 <==
+until condition
+  do_something
+end
+
+==> 018.rb 15 <==
+until cond
+end
+
+==> 019.rb 39 <==
+until (var = something)
+  puts var
+end
+
+==> 020.rb 23 <==
+until true
+  x = 0
+end
+
+==> 021.rb 20 <==
+a = until b
+  1
+end
+
+==> 022.rb 21 <==
+@a = until b
+  1
+end
+
+==> 023.rb 22 <==
+@@a = until b
+  1
+end
+
+==> 024.rb 20 <==
+A = until b
+  1
+end
+
+==> 025.rb 20 <==
+a + until b
+  1
+end
+
+==> 026.rb 56 <==
+until bar # important comment not to be nuked
+  baz
+end
+
+==> 027.rb 20 <==
+until foo; bar; end
+
+==> 028.rb 36 <==
+foo until bar ||
+               baz
+
+==> 029.rb 48 <==
+[
+  1, until foo # bar
+       baz
+     end, 3
+]
+

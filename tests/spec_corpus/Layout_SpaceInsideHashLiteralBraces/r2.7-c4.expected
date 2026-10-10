@@ -1,0 +1,26 @@
+==> offenses exit=1 544 <==
+001.rb:1:24: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } detected.
+002.rb:1:5: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+003.rb:1:5: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+003.rb:1:16: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+003.rb:2:5: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+003.rb:2:12: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+
+==> autocorrect exit=0 532 <==
+001.rb:1:24: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside } detected.
+002.rb:1:5: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+003.rb:1:5: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+003.rb:1:16: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+003.rb:2:5: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+003.rb:2:12: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+
+==> corrected/001.rb 25 <==
+h = { a: { a: 1, b: 2 }}
+
+==> corrected/002.rb 13 <==
+h = { a: 1 }
+
+==> corrected/003.rb 34 <==
+h = { a: 1, b: 2 }
+h = { a => 1 }
+

@@ -1,0 +1,45 @@
+==> offenses exit=1 763 <==
+000.rb:1:14: W: [Correctable] Lint/EmptyInterpolation: Empty interpolation detected.
+001.rb:1:14: W: [Correctable] Lint/EmptyInterpolation: Empty interpolation detected.
+002.rb:1:14: W: [Correctable] Lint/EmptyInterpolation: Empty interpolation detected.
+003.rb:1:14: W: [Correctable] Lint/EmptyInterpolation: Empty interpolation detected.
+004.rb:1:14: W: [Correctable] Lint/EmptyInterpolation: Empty interpolation detected.
+005.rb:1:9: W: [Correctable] Lint/EmptyInterpolation: Empty interpolation detected.
+005.rb:2:12: W: [Correctable] Lint/EmptyInterpolation: Empty interpolation detected.
+005.rb:3:10: W: [Correctable] Lint/EmptyInterpolation: Empty interpolation detected.
+011.rb:1:3: W: [Correctable] Lint/EmptyInterpolation: Empty interpolation detected.
+
+==> autocorrect exit=0 745 <==
+000.rb:1:14: W: [Corrected] Lint/EmptyInterpolation: Empty interpolation detected.
+001.rb:1:14: W: [Corrected] Lint/EmptyInterpolation: Empty interpolation detected.
+002.rb:1:14: W: [Corrected] Lint/EmptyInterpolation: Empty interpolation detected.
+003.rb:1:14: W: [Corrected] Lint/EmptyInterpolation: Empty interpolation detected.
+004.rb:1:14: W: [Corrected] Lint/EmptyInterpolation: Empty interpolation detected.
+005.rb:1:9: W: [Corrected] Lint/EmptyInterpolation: Empty interpolation detected.
+005.rb:2:12: W: [Corrected] Lint/EmptyInterpolation: Empty interpolation detected.
+005.rb:3:10: W: [Corrected] Lint/EmptyInterpolation: Empty interpolation detected.
+011.rb:1:3: W: [Corrected] Lint/EmptyInterpolation: Empty interpolation detected.
+
+==> corrected/000.rb 15 <==
+"this is the "
+
+==> corrected/001.rb 15 <==
+"this is the "
+
+==> corrected/002.rb 15 <==
+"this is the "
+
+==> corrected/003.rb 15 <==
+"this is the "
+
+==> corrected/004.rb 15 <==
+"this is the "
+
+==> corrected/005.rb 34 <==
+/regexp /
+`backticks `
+:"symbol "
+
+==> corrected/011.rb 15 <==
+["", one, two]
+

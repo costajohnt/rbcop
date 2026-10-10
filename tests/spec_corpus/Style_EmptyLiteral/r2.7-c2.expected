@@ -1,0 +1,10 @@
+==> offenses exit=1 98 <==
+001.rb:2:8: C: [Correctable] Style/EmptyLiteral: Use string literal `''` instead of `String.new`.
+
+==> autocorrect exit=0 96 <==
+001.rb:2:8: C: [Corrected] Style/EmptyLiteral: Use string literal `''` instead of `String.new`.
+
+==> corrected/001.rb 41 <==
+# frozen_string_literal: false
+test = ''
+

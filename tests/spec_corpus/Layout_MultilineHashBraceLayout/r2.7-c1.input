@@ -1,0 +1,46 @@
+==> .rubocop.yml 168 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/MultilineHashBraceLayout:
+  EnforcedStyle: same_line
+
+==> 000.rb 29 <==
+{a,
+{
+a: <<-EOM
+baz
+EOM
+}
+}
+
+
+==> 001.rb 20 <==
+{a,
+{
+foo: bar
+}
+}
+
+
+==> 002.rb 17 <==
+{a, # a
+b # b
+}
+
+
+==> 003.rb 10 <==
+{
+a,
+b
+}
+
+
+==> 004.rb 17 <==
+{a, # a
+b, # b
+}
+

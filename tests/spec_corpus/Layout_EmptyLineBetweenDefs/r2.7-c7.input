@@ -1,0 +1,16 @@
+==> .rubocop.yml 196 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/EmptyLineBetweenDefs:
+  DefLikeMacros:
+  - foo
+  AllowAdjacentOneLineDefs: false
+
+==> 000.rb 43 <==
+foo :first_attribute
+foo :second_attribute
+

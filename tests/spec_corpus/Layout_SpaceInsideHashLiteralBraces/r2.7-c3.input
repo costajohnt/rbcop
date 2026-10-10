@@ -1,0 +1,54 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+==> 000.rb 19 <==
+h = { a: 1, b: 2 }
+
+==> 001.rb 12 <==
+h = {a: 1 }
+
+==> 002.rb 15 <==
+h = { a: '{' }
+
+==> 003.rb 30 <==
+h = {a: 1, b: 2}
+h = {a => 1}
+
+==> 004.rb 32 <==
+h = {
+      a: 1,
+      b: 2,
+}
+
+==> 005.rb 42 <==
+h = { # Comment
+      a: 1,
+      b: 2,
+}
+
+==> 006.rb 34 <==
+foo({key: value} => {key: value})
+
+==> 007.rb 33 <==
+case foo
+in { k1: 0, k2: 1 }
+end
+
+==> 008.rb 31 <==
+case foo
+in {k1: 0, k2: 1}
+end
+
+==> 009.rb 24 <==
+foo in { k1: 0, k2: 1 }
+
+==> 010.rb 22 <==
+foo in {k1: 0, k2: 1}
+

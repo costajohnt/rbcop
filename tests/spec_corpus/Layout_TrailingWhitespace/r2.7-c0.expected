@@ -1,0 +1,39 @@
+==> offenses exit=1 516 <==
+000.rb:1:6: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+001.rb:1:7: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+002.rb:2:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+003.rb:2:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+004.rb:1:6: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+004.rb:5:6: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+
+==> autocorrect exit=0 504 <==
+000.rb:1:6: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+001.rb:1:7: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+002.rb:2:1: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+003.rb:2:1: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+004.rb:1:6: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+004.rb:5:6: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+
+==> corrected/000.rb 6 <==
+x = 0
+
+==> corrected/001.rb 7 <==
+x = :a
+
+==> corrected/002.rb 14 <==
+<<~X
+#{'	'}
+X
+
+==> corrected/003.rb 16 <==
+<<~X
+#{'　'}
+X
+
+==> corrected/004.rb 32 <==
+x = 0
+=begin
+__END__
+=end
+x = 0
+

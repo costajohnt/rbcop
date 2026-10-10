@@ -1,0 +1,109 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 22 <==
+include M
+class C
+end
+
+==> 001.rb 22 <==
+class C
+end
+include M
+
+==> 002.rb 10 <==
+include M
+
+==> 003.rb 31 <==
+include Comparable, Enumerable
+
+==> 004.rb 24 <==
+def foo
+  include M
+end
+
+==> 005.rb 27 <==
+Foo.include M
+class C; end
+
+==> 006.rb 24 <==
+class C
+  include M
+end
+
+==> 007.rb 29 <==
+Class.new do
+  include M
+end
+
+==> 008.rb 65 <==
+klass.class_eval do
+  include M1
+  include M2 if defined?(M)
+end
+
+==> 009.rb 25 <==
+do_something(include(M))
+
+==> 010.rb 42 <==
+class X
+  def foo
+    include M
+  end
+end
+
+==> 011.rb 43 <==
+module X
+  def foo
+    include M
+  end
+end
+
+==> 012.rb 51 <==
+class C1
+  include M
+end
+
+class C2
+  include M
+end
+
+==> 013.rb 31 <==
+include M1::M2::M3
+class C
+end
+
+==> 014.rb 21 <==
+extend M
+class C
+end
+
+==> 015.rb 23 <==
+class C
+  extend M
+end
+
+==> 016.rb 22 <==
+prepend M
+class C
+end
+
+==> 017.rb 24 <==
+class C
+  prepend M
+end
+
+==> 018.rb 59 <==
+module M1
+  include M2
+
+  class C
+    include M3
+  end
+end
+

@@ -1,0 +1,130 @@
+==> .rubocop.yml 174 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/AccessModifierDeclarations:
+  AllowModifiersOnSymbols: true
+
+==> 000.rb 35 <==
+class Foo
+  foo
+  private :bar
+end
+
+==> 001.rb 41 <==
+class Foo
+  foo
+  private :bar, :baz
+end
+
+==> 002.rb 43 <==
+class Foo
+  foo
+  private *%i[bar baz]
+end
+
+==> 003.rb 44 <==
+class Foo
+  foo
+  private *METHOD_NAMES
+end
+
+==> 004.rb 35 <==
+class Foo
+  foo
+  private *bar
+end
+
+==> 005.rb 37 <==
+class Foo
+  foo
+  protected :bar
+end
+
+==> 006.rb 43 <==
+class Foo
+  foo
+  protected :bar, :baz
+end
+
+==> 007.rb 45 <==
+class Foo
+  foo
+  protected *%i[bar baz]
+end
+
+==> 008.rb 46 <==
+class Foo
+  foo
+  protected *METHOD_NAMES
+end
+
+==> 009.rb 37 <==
+class Foo
+  foo
+  protected *bar
+end
+
+==> 010.rb 34 <==
+class Foo
+  foo
+  public :bar
+end
+
+==> 011.rb 40 <==
+class Foo
+  foo
+  public :bar, :baz
+end
+
+==> 012.rb 42 <==
+class Foo
+  foo
+  public *%i[bar baz]
+end
+
+==> 013.rb 43 <==
+class Foo
+  foo
+  public *METHOD_NAMES
+end
+
+==> 014.rb 34 <==
+class Foo
+  foo
+  public *bar
+end
+
+==> 015.rb 43 <==
+class Foo
+  foo
+  module_function :bar
+end
+
+==> 016.rb 49 <==
+class Foo
+  foo
+  module_function :bar, :baz
+end
+
+==> 017.rb 51 <==
+class Foo
+  foo
+  module_function *%i[bar baz]
+end
+
+==> 018.rb 52 <==
+class Foo
+  foo
+  module_function *METHOD_NAMES
+end
+
+==> 019.rb 43 <==
+class Foo
+  foo
+  module_function *bar
+end
+

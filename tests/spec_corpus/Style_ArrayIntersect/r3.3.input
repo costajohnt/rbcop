@@ -1,0 +1,14 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.3
+
+==> 000.rb 35 <==
+array1.any? { array2.member?(it) }
+
+==> 001.rb 36 <==
+array1.none? { array2.member?(it) }
+

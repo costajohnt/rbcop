@@ -1,0 +1,82 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 7 <==
+it = 5
+
+==> 001.rb 16 <==
+def foo(it)
+end
+
+==> 002.rb 17 <==
+def foo(it:)
+end
+
+==> 003.rb 20 <==
+def foo(it = 5)
+end
+
+==> 004.rb 19 <==
+def foo(it: 5)
+end
+
+==> 005.rb 17 <==
+def foo(*it)
+end
+
+==> 006.rb 18 <==
+def foo(**it)
+end
+
+==> 007.rb 17 <==
+def foo(&it)
+end
+
+==> 008.rb 15 <==
+foo { it = 5 }
+
+==> 009.rb 30 <==
+foo do
+  it = 5
+  bar(it)
+end
+
+==> 010.rb 19 <==
+foo { |x| it = x }
+
+==> 011.rb 16 <==
+foo { it = _2 }
+
+==> 012.rb 14 <==
+-> { it = 5 }
+
+==> 013.rb 12 <==
+self.it = 5
+
+==> 014.rb 20 <==
+foo { self.it = 5 }
+
+==> 015.rb 8 <==
+@it = 5
+
+==> 016.rb 16 <==
+foo { @it = 5 }
+
+==> 017.rb 8 <==
+$it = 5
+
+==> 018.rb 16 <==
+foo { $it = 5 }
+
+==> 019.rb 7 <==
+IT = 5
+
+==> 020.rb 11 <==
+def it
+end
+

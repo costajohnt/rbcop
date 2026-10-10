@@ -1,0 +1,45 @@
+==> .rubocop.yml 180 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: no_comma
+
+==> 000.rb 37 <==
+MAP = { a: 1001, b: 2020, c: 3333, }
+
+==> 001.rb 35 <==
+MAP = { a: 1001, b: 2020, c: 3333 }
+==> 002.rb 18 <==
+MAP = { a: 10001 }
+==> 003.rb 8 <==
+MAP = {}
+==> 004.rb 59 <==
+MAP = { a: 1001,
+        b: 2020,
+        c: 3333,
+      }
+
+==> 005.rb 66 <==
+MAP = {
+        a: 1001,
+        b: 2020,
+        c: 3333
+      }
+
+==> 006.rb 50 <==
+route(help: {
+  'auth' => <<-HELP.chomp
+,
+HELP
+})
+
+==> 007.rb 45 <==
+{
+  foo: 'foo',
+  bar: 'bar'.delete(',')#,
+}
+

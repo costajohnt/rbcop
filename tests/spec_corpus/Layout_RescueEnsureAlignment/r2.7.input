@@ -1,0 +1,446 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 15 <==
+test rescue nil
+==> 001.rb 43 <==
+begin
+  something
+    rescue
+    error
+end
+
+==> 002.rb 46 <==
+def test
+  something
+    rescue
+    error
+end
+
+==> 003.rb 51 <==
+def Test.test
+  something
+    rescue
+    error
+end
+
+==> 004.rb 45 <==
+class C
+  something
+    rescue
+    error
+end
+
+==> 005.rb 46 <==
+module M
+  something
+    rescue
+    error
+end
+
+==> 006.rb 51 <==
+class << self
+  something
+    rescue
+    error
+end
+
+==> 007.rb 43 <==
+begin
+  something
+    ensure
+    error
+end
+
+==> 008.rb 46 <==
+def test
+  something
+    ensure
+    error
+end
+
+==> 009.rb 51 <==
+def Test.test
+  something
+    ensure
+    error
+end
+
+==> 010.rb 45 <==
+class C
+  something
+    ensure
+    error
+end
+
+==> 011.rb 46 <==
+module M
+  something
+    ensure
+    error
+end
+
+==> 012.rb 51 <==
+class << self
+  something
+    ensure
+    error
+end
+
+==> 013.rb 64 <==
+def method1
+  'foo'
+end
+
+def method2
+  'bar'
+rescue
+  'baz' end
+
+==> 014.rb 42 <==
+begin; puts 1; rescue; ensure; puts 2; end
+==> 015.rb 37 <==
+begin
+  something
+rescue
+  error
+end
+
+==> 016.rb 37 <==
+begin
+  something
+ensure
+  error
+end
+
+==> 017.rb 75 <==
+def foo
+  something
+rescue StandardError
+  handle_error
+ensure
+  error
+end
+
+==> 018.rb 63 <==
+def foo
+rescue StandardError
+  handle_error
+ensure
+  error
+end
+
+==> 019.rb 68 <==
+foo = begin
+        bar
+      rescue BazError
+        qux
+      end
+
+==> 020.rb 79 <==
+[1, 2, 3].each do |el|
+  el.to_s
+rescue StandardError => _exception
+  next
+end
+
+==> 021.rb 71 <==
+foo.() do |el|
+  el.to_s
+rescue StandardError => _exception
+  next
+end
+
+==> 022.rb 90 <==
+[1, 2, 3]
+  .each do |el|
+    el.to_s
+  rescue StandardError => _exception
+    next
+  end
+
+==> 023.rb 94 <==
+[1, 2, 3]
+  .each do |el|
+    el.to_s
+      rescue StandardError => _exception
+    next
+  end
+
+==> 024.rb 88 <==
+[1, 2, 3]
+  .each do |el|
+    el.to_s
+rescue StandardError => _exception
+    next
+  end
+
+==> 025.rb 90 <==
+[1, 2, 3].
+  each do |el|
+    el.to_s
+  rescue StandardError => _exception
+    next
+  end
+
+==> 026.rb 94 <==
+[1, 2, 3].
+  each do |el|
+    el.to_s
+      rescue StandardError => _exception
+    next
+  end
+
+==> 027.rb 88 <==
+[1, 2, 3].
+  each do |el|
+    el.to_s
+rescue StandardError => _exception
+    next
+  end
+
+==> 028.rb 62 <==
+[1, 2, 3]
+  .each do |el|
+    el.to_s
+  ensure
+    next
+  end
+
+==> 029.rb 66 <==
+[1, 2, 3]
+  .each do |el|
+    el.to_s
+      ensure
+    next
+  end
+
+==> 030.rb 60 <==
+[1, 2, 3]
+  .each do |el|
+    el.to_s
+ensure
+    next
+  end
+
+==> 031.rb 62 <==
+[1, 2, 3].
+  each do |el|
+    el.to_s
+  ensure
+    next
+  end
+
+==> 032.rb 66 <==
+[1, 2, 3].
+  each do |el|
+    el.to_s
+      ensure
+    next
+  end
+
+==> 033.rb 60 <==
+[1, 2, 3].
+  each do |el|
+    el.to_s
+ensure
+    next
+  end
+
+==> 034.rb 87 <==
+result = [1, 2, 3].map do |el|
+  el.to_s
+rescue StandardError => _exception
+  next
+end
+
+==> 035.rb 56 <==
+@instance = [].map do |_|
+rescue StandardError => _
+end
+
+==> 036.rb 54 <==
+@@class = [].map do |_|
+rescue StandardError => _
+end
+
+==> 037.rb 54 <==
+$global = [].map do |_|
+rescue StandardError => _
+end
+
+==> 038.rb 52 <==
+CLASS = [].map do |_|
+rescue StandardError => _
+end
+
+==> 039.rb 51 <==
+a, b = [].map do |_|
+rescue StandardError => _
+end
+
+==> 040.rb 49 <==
+a += [].map do |_|
+rescue StandardError => _
+end
+
+==> 041.rb 50 <==
+a &&= [].map do |_|
+rescue StandardError => _
+end
+
+==> 042.rb 50 <==
+a ||= [].map do |_|
+rescue StandardError => _
+end
+
+==> 043.rb 55 <==
+valid =
+  proc do |bar|
+    baz
+  rescue
+    qux
+  end
+
+==> 044.rb 101 <==
+def foo
+  [1, 2, 3].each do |el|
+    el.to_s
+  rescue StandardError => _exception
+    next
+  end
+end
+
+==> 045.rb 99 <==
+def foo
+  [1, 2, 3].each do |el|
+    el.to_s
+rescue StandardError => _exception
+    next
+  end
+end
+
+==> 046.rb 96 <==
+def foo
+  [1, 2, 3].each do
+    _1.to_s
+  rescue StandardError => _exception
+    next
+  end
+end
+
+==> 047.rb 94 <==
+def foo
+  [1, 2, 3].each do
+    _1.to_s
+rescue StandardError => _exception
+    next
+  end
+end
+
+==> 048.rb 72 <==
+result = [1, 2, 3].map do |el|
+  rescue StandardError => _exception
+end
+
+==> 049.rb 75 <==
+@instance = [1, 2, 3].map do |el|
+  rescue StandardError => _exception
+end
+
+==> 050.rb 56 <==
+@@class = [].map do |_|
+  rescue StandardError => _
+end
+
+==> 051.rb 56 <==
+$global = [].map do |_|
+  rescue StandardError => _
+end
+
+==> 052.rb 54 <==
+CLASS = [].map do |_|
+  rescue StandardError => _
+end
+
+==> 053.rb 54 <==
+obj.attr = do_something do
+  rescue StandardError
+end
+
+==> 054.rb 53 <==
+a, b = [].map do |_|
+  rescue StandardError => _
+end
+
+==> 055.rb 51 <==
+a += [].map do |_|
+  rescue StandardError => _
+end
+
+==> 056.rb 52 <==
+a &&= [].map do |_|
+  rescue StandardError => _
+end
+
+==> 057.rb 52 <==
+a ||= [].map do |_|
+  rescue StandardError => _
+end
+
+==> 058.rb 57 <==
+valid =
+  proc do |bar|
+    baz
+    rescue
+    qux
+  end
+
+==> 059.rb 36 <==
+super do
+  nil
+    ensure
+  nil
+end
+
+==> 060.rb 32 <==
+super do
+  nil
+ensure
+  nil
+end
+
+==> 061/foo.rb 29 <==
+begin
+  foo
+rescue
+  bar
+end
+
+==> 062.rb 89 <==
+def test
+  'foo'; rescue; 'baz'
+end
+
+def test
+  begin
+    'foo'; rescue; 'baz'
+  end
+end
+
+==> 063.rb 89 <==
+def test
+  'foo'; ensure; 'baz'
+end
+
+def test
+  begin
+    'foo'; ensure; 'baz'
+  end
+end
+

@@ -1,0 +1,34 @@
+==> .rubocop.yml 165 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/RedundantReturn:
+  AllowMultipleReturnValues: true
+
+==> 000.rb 38 <==
+def func
+  return something, test
+end
+
+==> 001.rb 43 <==
+def Test.func
+  return something, test
+end
+
+==> 002.rb 50 <==
+def func
+  one
+  two
+  return something, test
+end
+
+==> 003.rb 55 <==
+def self.func
+  one
+  two
+  return something, test
+end
+

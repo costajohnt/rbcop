@@ -1,0 +1,35 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 33 <==
+URI.escape('http://example.com')
+
+==> 001.rb 25 <==
+URI.escape('@?@!', '!?')
+
+==> 002.rb 35 <==
+::URI.escape('http://example.com')
+
+==> 003.rb 33 <==
+URI.encode('http://example.com')
+
+==> 004.rb 35 <==
+::URI.encode('http://example.com')
+
+==> 005.rb 22 <==
+URI.unescape(enc_uri)
+
+==> 006.rb 24 <==
+::URI.unescape(enc_uri)
+
+==> 007.rb 20 <==
+URI.decode(enc_uri)
+
+==> 008.rb 22 <==
+::URI.decode(enc_uri)
+

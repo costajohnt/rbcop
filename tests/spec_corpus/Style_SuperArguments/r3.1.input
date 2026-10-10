@@ -1,0 +1,33 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+
+==> 000.rb 31 <==
+def method(a:)
+  super(a:)
+end
+
+==> 001.rb 36 <==
+def self.method(a:)
+  super(a:)
+end
+
+==> 002.rb 29 <==
+def method(&)
+  super(&)
+end
+
+==> 003.rb 34 <==
+def self.method(&)
+  super(&)
+end
+
+==> 004.rb 35 <==
+def bar(a, b, &)
+  super(a, b)
+end
+

@@ -1,0 +1,275 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 33 <==
+a, b, c = [1, 2], [3, 4], [5, 6]
+
+==> 001.rb 33 <==
+a, b, c = {a: 1}, {b: 2}, {c: 3}
+
+==> 002.rb 42 <==
+a, b, c = CONSTANT1, CONSTANT2, CONSTANT3
+
+==> 003.rb 36 <==
+a, b, c = [1, 2], {a: 1}, CONSTANT3
+
+==> 004.rb 33 <==
+a, b = foo { |a| puts a }, bar()
+
+==> 005.rb 12 <==
+a, b = 1, a
+
+==> 006.rb 12 <==
+a, b = a, b
+
+==> 007.rb 50 <==
+a, b = foo.map { |e| e.id }, bar.map { |e| e.id }
+
+==> 008.rb 41 <==
+array = [1, 2, 3]
+a, b, c, = 8, 9, array
+
+==> 009.rb 40 <==
+a, b = Float::INFINITY, Float::INFINITY
+
+==> 010.rb 40 <==
+Float::INFINITY, Float::INFINITY = 1, 2
+
+==> 011.rb 24 <==
+a[0], a[1] = a[1], a[2]
+
+==> 012.rb 44 <==
+obj.attr1, obj.attr2 = obj.attr3, obj.attr1
+
+==> 013.rb 38 <==
+obj.attr1, ary[0] = ary[1], obj.attr1
+
+==> 014.rb 24 <==
+a[0], a[1] = a[1], b[0]
+
+==> 015.rb 29 <==
+a, b = x, -> { a, b = x, y }
+
+==> 016.rb 5 <==
+a = 1
+==> 017.rb 5 <==
+a = a
+==> 018.rb 6 <==
+a, = a
+==> 019.rb 6 <==
+a, = 1
+==> 020.rb 10 <==
+a = *'foo'
+==> 021.rb 11 <==
+a, = *'foo'
+==> 022.rb 12 <==
+a, = 1, 2, 3
+==> 023.rb 9 <==
+a, = *foo
+==> 024.rb 17 <==
+a, *b = [1, 2, 3]
+==> 025.rb 17 <==
+*a, b = [1, 2, 3]
+==> 026.rb 16 <==
+*, b = [1, 2, 3]
+==> 027.rb 19 <==
+a, *, b = [1, 2, 3]
+==> 028.rb 11 <==
+a, b = b, a
+==> 029.rb 17 <==
+a, b, c = b, c, a
+==> 030.rb 23 <==
+a, b = (a + b), (a - b)
+==> 031.rb 27 <==
+a, b = foo.map { |e| e.id }
+==> 032.rb 12 <==
+a, b = foo()
+==> 033.rb 11 <==
+a, b = *foo
+==> 034.rb 21 <==
+a, b, c = 1, 2, *node
+==> 035.rb 21 <==
+a, b, c = *node, 1, 2
+==> 036.rb 33 <==
+begin_token, end_token = CONSTANT
+==> 037.rb 16 <==
+CONSTANT, = 1, 2
+==> 038.rb 12 <==
+a = 1
+b = 2
+
+==> 039.rb 30 <==
+foo = [1, 2, 3]
+a, b, c = foo
+
+==> 040.rb 29 <==
+array = [1, 2, 3]
+a, = array
+
+==> 041.rb 22 <==
+a, b = Float::INFINITY
+==> 042.rb 23 <==
+a[0], a[1] = a[1], a[0]
+==> 043.rb 43 <==
+obj.attr1, obj.attr2 = obj.attr2, obj.attr1
+==> 044.rb 37 <==
+obj.attr1, ary[0] = ary[0], obj.attr1
+==> 045.rb 47 <==
+ary[0], ary[1], ary[2] = ary[1], ary[2], ary[0]
+==> 046.rb 31 <==
+self.a, self.b = self.b, self.a
+==> 047.rb 21 <==
+self.a, self.b = b, a
+==> 048.rb 18 <==
+a, b, c = 1, 2, 3
+
+==> 049.rb 25 <==
+a, b, c = ["1", "2", :c]
+
+==> 050.rb 20 <==
+a, b, c = %w(1 2 3)
+
+==> 051.rb 21 <==
+a, b = %w(it's fine)
+
+==> 052.rb 23 <==
+a, b = %i(foo-bar baz)
+
+==> 053.rb 20 <==
+a, b, c = %i(a b c)
+
+==> 054.rb 20 <==
+a, b = foo(), bar()
+
+==> 055.rb 50 <==
+a, b = foo() { |c| puts c }, bar() { |d| puts d }
+
+==> 056.rb 44 <==
+CONSTANT1, CONSTANT2 = CONSTANT3, CONSTANT4
+
+==> 057.rb 35 <==
+def self.foo
+  foo, bar = 1, 2
+end
+
+==> 058.rb 12 <==
+a,b,c=1,2,3
+
+==> 059.rb 32 <==
+def foo
+  a, b, c = 1, 2, 3
+end
+
+==> 060.rb 50 <==
+def foo
+  if true
+    a, b, c = 1, 2, 3
+  end
+end
+
+==> 061.rb 19 <==
+a, b = 1, 2 if foo
+
+==> 062.rb 33 <==
+def foo
+  a, b = 1, 2 if foo
+end
+
+==> 063.rb 25 <==
+if foo
+  a, b = 1, 2
+end
+
+==> 064.rb 23 <==
+a, b = 1, 2 unless foo
+
+==> 065.rb 29 <==
+unless foo
+  a, b = 1, 2
+end
+
+==> 066.rb 22 <==
+a, b = 1, 2 while foo
+
+==> 067.rb 28 <==
+while foo
+  a, b = 1, 2
+end
+
+==> 068.rb 22 <==
+a, b = 1, 2 until foo
+
+==> 069.rb 28 <==
+until foo
+  a, b = 1, 2
+end
+
+==> 070.rb 23 <==
+a, b = 1, 2 rescue foo
+
+==> 071.rb 41 <==
+def bar
+  a, b = 1, 2
+rescue
+  'foo'
+end
+
+==> 072.rb 39 <==
+begin
+  a, b = 1, 2
+rescue
+  'foo'
+end
+
+==> 073.rb 37 <==
+def foo
+  a, b = 1, 2 rescue foo
+end
+
+==> 074.rb 57 <==
+def foo
+  a, b = %w(1 2) rescue foo
+  something_else
+end
+
+==> 075.rb 40 <==
+a, b, c, d = 1, a + 1, b + 1, a + b + c
+
+==> 076.rb 19 <==
+a, b = c, __FILE__
+
+==> 077.rb 18 <==
+a, b, c, d = 1, 2
+
+==> 078.rb 15 <==
+a, b = 1, 2, 3
+
+==> 079.rb 34 <==
+a, b = <<~A, <<~B
+  one
+A
+  two
+B
+
+==> 080.rb 29 <==
+a, b = foo(<<~A), 2
+  text
+A
+
+==> 081.rb 36 <==
+a, b = 1, <<~B if condition
+  two
+B
+
+==> 082.rb 54 <==
+def foo
+   if true
+      a, b, c = 1, 2, 3
+   end
+end
+

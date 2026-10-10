@@ -1,0 +1,222 @@
+==> .rubocop.yml 146 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Metrics/PerceivedComplexity:
+  Max: 1
+
+==> 000.rb 31 <==
+def method_name
+  call_foo
+end
+
+==> 001.rb 20 <==
+def method_name
+end
+
+==> 002.rb 34 <==
+define_method :method_name do
+end
+
+==> 003.rb 160 <==
+def method_name
+  call_foo
+end
+
+if first_condition then
+  call_foo if second_condition && third_condition
+  call_bar if fourth_condition || fifth_condition
+end
+
+==> 004.rb 54 <==
+def self.method_name
+  call_foo if some_condition
+end
+
+==> 005.rb 53 <==
+def method_name
+  call_foo unless some_condition
+end
+
+==> 006.rb 128 <==
+def method_name
+  if first_condition then
+    call_foo
+  elsif second_condition then
+    call_bar
+  else
+    call_bam
+  end
+end
+
+==> 007.rb 53 <==
+def method_name
+  value = some_condition ? 1 : 2
+end
+
+==> 008.rb 65 <==
+def method_name
+  while some_condition do
+    call_foo
+  end
+end
+
+==> 009.rb 65 <==
+def method_name
+  until some_condition do
+    call_foo
+  end
+end
+
+==> 010.rb 61 <==
+def method_name
+  for i in 1..2 do
+    call_method
+  end
+end
+
+==> 011.rb 79 <==
+def method_name
+  begin
+    call_foo
+  rescue Exception
+    call_bar
+  end
+end
+
+==> 012.rb 139 <==
+def method_name
+  case value
+  when 1 then call_foo_1
+  when 2 then call_foo_2
+  when 3 then call_foo_3
+  when 4 then call_foo_4
+  end
+end
+
+==> 013.rb 95 <==
+def method_name
+  case
+  when value == 1
+    call_foo
+  when value == 2
+    call_bar
+  end
+end
+
+==> 014.rb 115 <==
+def method_name
+  case
+  when value == 1
+    call_foo
+  when value == 2
+    call_bar
+  else
+    call_baz
+  end
+end
+
+==> 015.rb 108 <==
+def method_name
+  case value
+  in 1 then call_foo_1
+  in 2 then call_foo_2
+  in 3 then call_foo_3
+  end
+end
+
+==> 016.rb 123 <==
+def method_name
+  case value
+  in Integer then call_foo_1
+  in String then call_foo_2
+  in Float then call_foo_3
+  end
+end
+
+==> 017.rb 126 <==
+def method_name
+  case value
+  in [1, a] then call_foo_1
+  in {b:} then call_foo_2
+  in String => c then call_foo_3
+  end
+end
+
+==> 018.rb 152 <==
+def method_name
+  case value
+  in Integer if value > 0 then call_foo_1
+  in Integer if value < 0 then call_foo_2
+  in Integer then call_foo_3
+  end
+end
+
+==> 019.rb 116 <==
+def method_name
+  case value
+  in [1, a] then call_foo_1
+  in {b:} then call_foo_2
+  in 3 then call_foo_3
+  end
+end
+
+==> 020.rb 43 <==
+def method_name
+  call_foo && call_bar
+end
+
+==> 021.rb 44 <==
+def method_name
+  call_foo and call_bar
+end
+
+==> 022.rb 43 <==
+def method_name
+  call_foo || call_bar
+end
+
+==> 023.rb 43 <==
+def method_name
+  call_foo or call_bar
+end
+
+==> 024.rb 156 <==
+def method_name
+  if first_condition then
+    call_foo if second_condition && third_condition
+    call_bar if fourth_condition || fifth_condition
+  end
+end
+
+==> 025.rb 103 <==
+def method_name_1
+  call_foo if some_condition
+end
+
+def method_name_2
+  call_foo if some_condition
+end
+
+==> 026.rb 63 <==
+define_method :method_name do
+  call_foo if some_condition
+end
+
+==> 027.rb 61 <==
+def method_name
+  bar.baz(:qux) do |x|
+    raise x
+  end
+end
+
+==> 028.rb 55 <==
+def method_name
+  ary.each do |x|
+    foo(x)
+  end
+end
+

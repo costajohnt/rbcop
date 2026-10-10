@@ -1,0 +1,110 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.gemspec 126 <==
+Gem::Specification.new do |s|
+  s.name = 'your_cool_gem_name'
+  s.date = Time.now.strftime('%Y-%m-%d')
+  s.bindir = 'exe'
+end
+
+==> 001.gemspec 138 <==
+Gem::Specification.new do |spec|
+  spec.name = 'your_cool_gem_name'
+  spec.date = Time.now.strftime('%Y-%m-%d')
+  spec.bindir = 'exe'
+end
+
+==> 002.gemspec 39 <==
+s.date = Time.now.strftime('%Y-%m-%d')
+
+==> 003.gemspec 78 <==
+Gem::Specification.new do |spec|
+  s.date = Time.now.strftime('%Y-%m-%d')
+end
+
+==> 004.gemspec 112 <==
+Gem::Specification.new do |s|
+  s.name = 'your_cool_gem_name'
+  s.rubygems_version = 2.5
+  s.bindir = 'exe'
+end
+
+==> 005.gemspec 124 <==
+Gem::Specification.new do |spec|
+  spec.name = 'your_cool_gem_name'
+  spec.rubygems_version = 2.5
+  spec.bindir = 'exe'
+end
+
+==> 006.gemspec 25 <==
+s.rubygems_version = 2.5
+
+==> 007.gemspec 64 <==
+Gem::Specification.new do |spec|
+  s.rubygems_version = 2.5
+end
+
+==> 008.gemspec 117 <==
+Gem::Specification.new do |s|
+  s.name = 'your_cool_gem_name'
+  s.specification_version = 2.5
+  s.bindir = 'exe'
+end
+
+==> 009.gemspec 129 <==
+Gem::Specification.new do |spec|
+  spec.name = 'your_cool_gem_name'
+  spec.specification_version = 2.5
+  spec.bindir = 'exe'
+end
+
+==> 010.gemspec 30 <==
+s.specification_version = 2.5
+
+==> 011.gemspec 69 <==
+Gem::Specification.new do |spec|
+  s.specification_version = 2.5
+end
+
+==> 012.gemspec 124 <==
+Gem::Specification.new do |s|
+  s.name = 'your_cool_gem_name'
+  s.test_files = Dir.glob('test/**/*')
+  s.bindir = 'exe'
+end
+
+==> 013.gemspec 136 <==
+Gem::Specification.new do |spec|
+  spec.name = 'your_cool_gem_name'
+  spec.test_files = Dir.glob('test/**/*')
+  spec.bindir = 'exe'
+end
+
+==> 014.gemspec 37 <==
+s.test_files = Dir.glob('test/**/*')
+
+==> 015.gemspec 76 <==
+Gem::Specification.new do |spec|
+  s.test_files = Dir.glob('test/**/*')
+end
+
+==> 016.gemspec 125 <==
+Gem::Specification.new do |s|
+  s.name = 'your_cool_gem_name'
+  s.test_files += Dir.glob('test/**/*')
+  s.bindir = 'exe'
+end
+
+==> 017.gemspec 137 <==
+Gem::Specification.new do |spec|
+  spec.name = 'your_cool_gem_name'
+  spec.test_files += Dir.glob('test/**/*')
+  spec.bindir = 'exe'
+end
+

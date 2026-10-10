@@ -1,0 +1,102 @@
+==> offenses exit=1 1372 <==
+000.rb:1:1: W: [Correctable] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+001.rb:1:1: W: [Correctable] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+002.rb:1:1: W: [Correctable] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+003.rb:1:1: W: [Correctable] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+004.rb:1:1: W: [Correctable] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+005.rb:1:1: W: [Correctable] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+006.rb:1:1: W: [Correctable] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+007.rb:1:1: W: [Correctable] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+008.rb:1:1: W: [Correctable] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+009.rb:1:1: W: [Correctable] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+010.rb:1:1: W: [Correctable] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+011.rb:1:1: W: [Correctable] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+012.rb:1:1: W: [Correctable] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+013.rb:1:1: W: [Correctable] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+
+==> autocorrect exit=0 1344 <==
+000.rb:1:1: W: [Corrected] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+001.rb:1:1: W: [Corrected] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+002.rb:1:1: W: [Corrected] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+003.rb:1:1: W: [Corrected] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+004.rb:1:1: W: [Corrected] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+005.rb:1:1: W: [Corrected] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+006.rb:1:1: W: [Corrected] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+007.rb:1:1: W: [Corrected] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+008.rb:1:1: W: [Corrected] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+009.rb:1:1: W: [Corrected] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+010.rb:1:1: W: [Corrected] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+011.rb:1:1: W: [Corrected] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+012.rb:1:1: W: [Corrected] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+013.rb:1:1: W: [Corrected] Lint/NonDeterministicRequireOrder: Sort files before requiring them.
+
+==> corrected/000.rb 60 <==
+Dir["./lib/**/*.rb"].sort.each do |file|
+  require file
+end
+
+==> corrected/001.rb 51 <==
+Dir["./lib/**/*.rb"].sort.each do
+  require _1
+end
+
+==> corrected/002.rb 69 <==
+Dir["./lib/**/*.rb"].sort.each do |file|
+  require_relative file
+end
+
+==> corrected/003.rb 127 <==
+Dir["./lib/**/*.rb"].sort.each do |file|
+  if file.start_with?('_')
+    puts "Not required."
+  else
+    require file
+  end
+end
+
+==> corrected/004.rb 50 <==
+Dir["./lib/**/*.rb"].sort.each(&method(:require))
+
+==> corrected/005.rb 59 <==
+Dir["./lib/**/*.rb"].sort.each(&method(:require_relative))
+
+==> corrected/006.rb 62 <==
+::Dir["./lib/**/*.rb"].sort.each do |file|
+  require file
+end
+
+==> corrected/007.rb 110 <==
+Dir.glob(Rails.root.join(__dir__, 'test', '*.rb'), File::FNM_DOTMATCH).sort.each do |file|
+  require file
+end
+
+==> corrected/008.rb 71 <==
+Dir.glob(Rails.root.join('test', '*.rb')).sort.each(&method(:require))
+
+==> corrected/009.rb 114 <==
+::Dir.glob(Rails.root.join(__dir__, 'test', '*.rb'), ::File::FNM_DOTMATCH).sort.each do |file|
+  require file
+end
+
+==> corrected/010.rb 65 <==
+Dir.glob("./lib/**/*.rb").sort.each do |file|
+  require file
+end
+
+==> corrected/011.rb 98 <==
+Dir.glob(
+  Rails.root.join('./lib/**/*.rb'),
+  File::FNM_DOTMATCH
+).sort.each(&method(:require))
+
+==> corrected/012.rb 107 <==
+Dir.glob(
+  Rails.root.join('./lib/**/*.rb'),
+  File::FNM_DOTMATCH
+).sort.each(&method(:require_relative))
+
+==> corrected/013.rb 67 <==
+::Dir.glob("./lib/**/*.rb").sort.each do |file|
+  require file
+end
+

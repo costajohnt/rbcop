@@ -1,0 +1,202 @@
+==> offenses exit=1 3722 <==
+000.rb:2:3: C: [Correctable] Layout/BlockAlignment: `end` at 2, 2 is not aligned with `test do` at 1, 0.
+001.rb:2:3: C: [Correctable] Layout/BlockAlignment: `end` at 2, 2 is not aligned with `test do |ala|` at 1, 0.
+005.rb:2:5: C: [Correctable] Layout/BlockAlignment: `end` at 2, 4 is not aligned with `a = b = c = test do |ala|` at 1, 0.
+008.rb:2:3: C: [Correctable] Layout/BlockAlignment: `end` at 2, 2 is not aligned with `variable = test do |ala|` at 1, 0.
+010.rb:4:1: C: [Correctable] Layout/BlockAlignment: `end` at 4, 0 is not aligned with `a_long_method_that_dont_fit_on_the_line do |v|` at 2, 2.
+012.rb:5:9: C: [Correctable] Layout/BlockAlignment: `end` at 5, 8 is not aligned with `bar.get_stuffs` at 2, 2 or `.reject do |stuff|` at 3, 6.
+012.rb:7:5: C: [Correctable] Layout/BlockAlignment: `end` at 7, 4 is not aligned with `bar.get_stuffs` at 2, 2 or `end.select do |stuff|` at 5, 8.
+012.rb:10:9: C: [Correctable] Layout/BlockAlignment: `end` at 10, 8 is not aligned with `bar.get_stuffs` at 2, 2 or `.select do |stuff|` at 8, 6.
+019.rb:5:7: C: [Correctable] Layout/BlockAlignment: `}` at 5, 6 is not aligned with `out` at 1, 0 or `.brackets(lft: foo,` at 2, 2.
+021.rb:4:5: C: [Correctable] Layout/BlockAlignment: `end` at 4, 4 is not aligned with `e,` at 1, 0 or `f = [5, 6].map do |i|` at 2, 0.
+023.rb:2:3: C: [Correctable] Layout/BlockAlignment: `end` at 2, 2 is not aligned with `@variable = test do |ala|` at 1, 0.
+025.rb:2:3: C: [Correctable] Layout/BlockAlignment: `end` at 2, 2 is not aligned with `@@variable = test do |ala|` at 1, 0.
+027.rb:2:3: C: [Correctable] Layout/BlockAlignment: `end` at 2, 2 is not aligned with `$variable = test do |ala|` at 1, 0.
+029.rb:2:3: C: [Correctable] Layout/BlockAlignment: `end` at 2, 2 is not aligned with `Module::CONSTANT = test do |ala|` at 1, 0.
+031.rb:3:3: C: [Correctable] Layout/BlockAlignment: `end` at 3, 2 is not aligned with `parser.children << lambda do |token|` at 1, 0.
+033.rb:3:3: C: [Correctable] Layout/BlockAlignment: `end` at 3, 2 is not aligned with `@h[:f] = f.each_pair.map do |f, v|` at 1, 0.
+036.rb:3:3: C: [Correctable] Layout/BlockAlignment: `end` at 3, 2 is not aligned with `arr.all? do |o|` at 1, 7 or `expect(arr.all? do |o|` at 1, 0.
+038.rb:3:3: C: [Correctable] Layout/BlockAlignment: `end` at 3, 2 is not aligned with `rb` at 1, 0.
+040.rb:2:3: C: [Correctable] Layout/BlockAlignment: `end` at 2, 2 is not aligned with `variable &&= test do |ala|` at 1, 0.
+042.rb:2:3: C: [Correctable] Layout/BlockAlignment: `end` at 2, 2 is not aligned with `variable ||= test do |ala|` at 1, 0.
+045.rb:3:3: C: [Correctable] Layout/BlockAlignment: `end` at 3, 2 is not aligned with `var1, var2` at 1, 0.
+046.rb:2:2: C: [Correctable] Layout/BlockAlignment: `end` at 2, 1 is not aligned with `a = test do` at 1, 0.
+046.rb:4:2: C: [Correctable] Layout/BlockAlignment: `end` at 4, 1 is not aligned with `b = test do` at 3, 0.
+048.rb:4:15: C: [Correctable] Layout/BlockAlignment: `}` at 4, 14 is not aligned with `*get_latest_gems.map { |gem|` at 2, 17 or `@gems ||= Hash[*get_latest_gems.map { |gem|` at 2, 2.
+050.rb:4:25: C: [Correctable] Layout/BlockAlignment: `}` at 4, 24 is not aligned with `~xyz { |x|` at 2, 13 or `@abc ||= A[~xyz { |x|` at 2, 2.
+052.rb:4:1: C: [Correctable] Layout/BlockAlignment: `}` at 4, 0 is not aligned with `!xyz { |x|` at 2, 13 or `@abc ||= A[!xyz { |x|` at 2, 2.
+054.rb:4:19: C: [Correctable] Layout/BlockAlignment: `}` at 4, 18 is not aligned with `-xyz { |x|` at 2, 13 or `@abc ||= A[-xyz { |x|` at 2, 2.
+055.rb:2:3: C: [Correctable] Layout/BlockAlignment: `}` at 2, 2 is not aligned with `test {` at 1, 0.
+057.rb:3:3: C: [Correctable] Layout/BlockAlignment: `end` at 3, 2 is not aligned with `var1, var2` at 1, 0.
+
+==> autocorrect exit=0 3664 <==
+000.rb:2:3: C: [Corrected] Layout/BlockAlignment: `end` at 2, 2 is not aligned with `test do` at 1, 0.
+001.rb:2:3: C: [Corrected] Layout/BlockAlignment: `end` at 2, 2 is not aligned with `test do |ala|` at 1, 0.
+005.rb:2:5: C: [Corrected] Layout/BlockAlignment: `end` at 2, 4 is not aligned with `a = b = c = test do |ala|` at 1, 0.
+008.rb:2:3: C: [Corrected] Layout/BlockAlignment: `end` at 2, 2 is not aligned with `variable = test do |ala|` at 1, 0.
+010.rb:4:1: C: [Corrected] Layout/BlockAlignment: `end` at 4, 0 is not aligned with `a_long_method_that_dont_fit_on_the_line do |v|` at 2, 2.
+012.rb:5:9: C: [Corrected] Layout/BlockAlignment: `end` at 5, 8 is not aligned with `bar.get_stuffs` at 2, 2 or `.reject do |stuff|` at 3, 6.
+012.rb:7:5: C: [Corrected] Layout/BlockAlignment: `end` at 7, 4 is not aligned with `bar.get_stuffs` at 2, 2 or `end.select do |stuff|` at 5, 8.
+012.rb:10:9: C: [Corrected] Layout/BlockAlignment: `end` at 10, 8 is not aligned with `bar.get_stuffs` at 2, 2 or `.select do |stuff|` at 8, 6.
+019.rb:5:7: C: [Corrected] Layout/BlockAlignment: `}` at 5, 6 is not aligned with `out` at 1, 0 or `.brackets(lft: foo,` at 2, 2.
+021.rb:4:5: C: [Corrected] Layout/BlockAlignment: `end` at 4, 4 is not aligned with `e,` at 1, 0 or `f = [5, 6].map do |i|` at 2, 0.
+023.rb:2:3: C: [Corrected] Layout/BlockAlignment: `end` at 2, 2 is not aligned with `@variable = test do |ala|` at 1, 0.
+025.rb:2:3: C: [Corrected] Layout/BlockAlignment: `end` at 2, 2 is not aligned with `@@variable = test do |ala|` at 1, 0.
+027.rb:2:3: C: [Corrected] Layout/BlockAlignment: `end` at 2, 2 is not aligned with `$variable = test do |ala|` at 1, 0.
+029.rb:2:3: C: [Corrected] Layout/BlockAlignment: `end` at 2, 2 is not aligned with `Module::CONSTANT = test do |ala|` at 1, 0.
+031.rb:3:3: C: [Corrected] Layout/BlockAlignment: `end` at 3, 2 is not aligned with `parser.children << lambda do |token|` at 1, 0.
+033.rb:3:3: C: [Corrected] Layout/BlockAlignment: `end` at 3, 2 is not aligned with `@h[:f] = f.each_pair.map do |f, v|` at 1, 0.
+036.rb:3:3: C: [Corrected] Layout/BlockAlignment: `end` at 3, 2 is not aligned with `arr.all? do |o|` at 1, 7 or `expect(arr.all? do |o|` at 1, 0.
+038.rb:3:3: C: [Corrected] Layout/BlockAlignment: `end` at 3, 2 is not aligned with `rb` at 1, 0.
+040.rb:2:3: C: [Corrected] Layout/BlockAlignment: `end` at 2, 2 is not aligned with `variable &&= test do |ala|` at 1, 0.
+042.rb:2:3: C: [Corrected] Layout/BlockAlignment: `end` at 2, 2 is not aligned with `variable ||= test do |ala|` at 1, 0.
+045.rb:3:3: C: [Corrected] Layout/BlockAlignment: `end` at 3, 2 is not aligned with `var1, var2` at 1, 0.
+046.rb:2:2: C: [Corrected] Layout/BlockAlignment: `end` at 2, 1 is not aligned with `a = test do` at 1, 0.
+046.rb:4:2: C: [Corrected] Layout/BlockAlignment: `end` at 4, 1 is not aligned with `b = test do` at 3, 0.
+048.rb:4:15: C: [Corrected] Layout/BlockAlignment: `}` at 4, 14 is not aligned with `*get_latest_gems.map { |gem|` at 2, 17 or `@gems ||= Hash[*get_latest_gems.map { |gem|` at 2, 2.
+050.rb:4:25: C: [Corrected] Layout/BlockAlignment: `}` at 4, 24 is not aligned with `~xyz { |x|` at 2, 13 or `@abc ||= A[~xyz { |x|` at 2, 2.
+052.rb:4:1: C: [Corrected] Layout/BlockAlignment: `}` at 4, 0 is not aligned with `!xyz { |x|` at 2, 13 or `@abc ||= A[!xyz { |x|` at 2, 2.
+054.rb:4:19: C: [Corrected] Layout/BlockAlignment: `}` at 4, 18 is not aligned with `-xyz { |x|` at 2, 13 or `@abc ||= A[-xyz { |x|` at 2, 2.
+055.rb:2:3: C: [Corrected] Layout/BlockAlignment: `}` at 2, 2 is not aligned with `test {` at 1, 0.
+057.rb:3:3: C: [Corrected] Layout/BlockAlignment: `end` at 3, 2 is not aligned with `var1, var2` at 1, 0.
+
+==> corrected/000.rb 12 <==
+test do
+end
+
+==> corrected/001.rb 18 <==
+test do |ala|
+end
+
+==> corrected/005.rb 30 <==
+a = b = c = test do |ala|
+end
+
+==> corrected/008.rb 29 <==
+variable = test do |ala|
+end
+
+==> corrected/010.rb 76 <==
+variable =
+  a_long_method_that_dont_fit_on_the_line do |v|
+    v.foo
+  end
+
+==> corrected/012.rb 323 <==
+def foo(bar)
+  bar.get_stuffs
+      .reject do |stuff|
+        stuff.with_a_very_long_expression_that_doesnt_fit_the_line
+  end.select do |stuff|
+        stuff.another_very_long_expression_that_doesnt_fit_the_line
+  end
+      .select do |stuff|
+        stuff.another_very_long_expression_that_doesnt_fit_the_line
+  end
+end
+
+==> corrected/019.rb 83 <==
+out
+  .brackets(lft: foo,
+            rgt: foo) {
+    process(scheme.constraint)
+}
+
+==> corrected/021.rb 37 <==
+e,
+f = [5, 6].map do |i|
+  i - 5
+end
+
+==> corrected/023.rb 30 <==
+@variable = test do |ala|
+end
+
+==> corrected/025.rb 31 <==
+@@variable = test do |ala|
+end
+
+==> corrected/027.rb 30 <==
+$variable = test do |ala|
+end
+
+==> corrected/029.rb 37 <==
+Module::CONSTANT = test do |ala|
+end
+
+==> corrected/031.rb 54 <==
+parser.children << lambda do |token|
+  token << 1
+end
+
+==> corrected/033.rb 47 <==
+@h[:f] = f.each_pair.map do |f, v|
+  v = 1
+end
+
+==> corrected/036.rb 39 <==
+expect(arr.all? do |o|
+  o.valid?
+end)
+
+==> corrected/038.rb 53 <==
+rb += files.select do |file|
+  file << something
+end
+
+==> corrected/040.rb 31 <==
+variable &&= test do |ala|
+end
+
+==> corrected/042.rb 31 <==
+variable ||= test do |ala|
+end
+
+==> corrected/045.rb 43 <==
+var1, var2 = lambda do |test|
+  [1, 2]
+end
+
+==> corrected/046.rb 32 <==
+a = test do
+end
+b = test do
+end
+
+==> corrected/048.rb 139 <==
+def get_gems_by_name
+  @gems ||= Hash[*get_latest_gems.map { |gem|
+                   [gem.name, gem, gem.full_name, gem]
+  }.flatten]
+end
+
+==> corrected/050.rb 66 <==
+def abc
+  @abc ||= A[~xyz { |x|
+               x
+  }.flatten]
+end
+
+==> corrected/052.rb 66 <==
+def abc
+  @abc ||= A[!xyz { |x|
+               x
+  }.flatten]
+end
+
+==> corrected/054.rb 66 <==
+def abc
+  @abc ||= A[-xyz { |x|
+               x
+  }.flatten]
+end
+
+==> corrected/055.rb 9 <==
+test {
+}
+
+==> corrected/057.rb 38 <==
+var1, var2 = lambda do
+  [_1, _2]
+end
+

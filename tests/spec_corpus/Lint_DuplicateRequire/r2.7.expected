@@ -1,0 +1,43 @@
+==> offenses exit=1 592 <==
+000.rb:2:1: W: [Correctable] Lint/DuplicateRequire: Duplicate `require` detected.
+001.rb:2:1: W: [Correctable] Lint/DuplicateRequire: Duplicate `require_relative` detected.
+002.rb:2:1: W: [Correctable] Lint/DuplicateRequire: Duplicate `require` detected.
+003.rb:4:1: W: [Correctable] Lint/DuplicateRequire: Duplicate `require_relative` detected.
+003.rb:5:1: W: [Correctable] Lint/DuplicateRequire: Duplicate `require` detected.
+004.rb:4:1: W: [Correctable] Lint/DuplicateRequire: Duplicate `require` detected.
+005.rb:3:3: W: [Correctable] Lint/DuplicateRequire: Duplicate `require` detected.
+
+==> autocorrect exit=0 578 <==
+000.rb:2:1: W: [Corrected] Lint/DuplicateRequire: Duplicate `require` detected.
+001.rb:2:1: W: [Corrected] Lint/DuplicateRequire: Duplicate `require_relative` detected.
+002.rb:2:1: W: [Corrected] Lint/DuplicateRequire: Duplicate `require` detected.
+003.rb:4:1: W: [Corrected] Lint/DuplicateRequire: Duplicate `require_relative` detected.
+003.rb:5:1: W: [Corrected] Lint/DuplicateRequire: Duplicate `require` detected.
+004.rb:4:1: W: [Corrected] Lint/DuplicateRequire: Duplicate `require` detected.
+005.rb:3:3: W: [Corrected] Lint/DuplicateRequire: Duplicate `require` detected.
+
+==> corrected/000.rb 14 <==
+require 'foo'
+
+==> corrected/001.rb 26 <==
+require_relative '../bar'
+
+==> corrected/002.rb 14 <==
+require 'foo'
+
+==> corrected/003.rb 73 <==
+require 'foo'
+require_relative '../bar'
+require 'foo/baz'
+require 'quux'
+
+==> corrected/004.rb 24 <==
+require 'foo'
+def m
+end
+
+==> corrected/005.rb 26 <==
+def m
+  require 'foo'
+end
+

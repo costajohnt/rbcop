@@ -1,0 +1,23 @@
+==> .rubocop.yml 212 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Style/EndlessMethod:
+  EnforcedStyle: require_single_line
+Layout/LineLength:
+  Enabled: false
+  Max: 80
+
+==> 000.rb 93 <==
+def my_method
+  'this_string_ends_at_column_75_________________________________________'
+end
+
+==> 001.rb 93 <==
+private def my_method
+  'this_string_ends_at_column_75_________________________________'
+end
+

@@ -1,0 +1,214 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 39 <==
+class Foo
+  def foo
+    @foo
+  end
+end
+
+==> 001.rb 51 <==
+class Foo
+  def foo=(val)
+    @foo = val
+  end
+end
+
+==> 002.rb 44 <==
+class Foo
+  def self.foo
+    @foo
+  end
+end
+
+==> 003.rb 56 <==
+class Foo
+  def self.foo=(val)
+    @foo = val
+  end
+end
+
+==> 004.rb 41 <==
+class Foo
+  def foo()
+    @foo
+  end
+end
+
+==> 005.rb 50 <==
+class Foo
+  def foo= val
+    @foo = val
+  end
+end
+
+==> 006.rb 35 <==
+class Foo
+  def foo; @foo; end
+end
+
+==> 007.rb 45 <==
+class Foo
+  def foo=(val); @foo=val; end
+end
+
+==> 008.rb 50 <==
+class Foo
+  def foo(val)
+    @foo = val
+  end
+end
+
+==> 009.rb 47 <==
+class Foo
+  private def foo
+    @foo
+  end
+end
+
+==> 010.rb 64 <==
+class Foo
+  def test
+    some_function_call
+    @test
+  end
+end
+
+==> 011.rb 93 <==
+class Foo
+  def test(val)
+    some_function_call(val)
+    @test = val
+    log(val)
+  end
+end
+
+==> 012.rb 73 <==
+class Foo
+  def splatomatic(*values)
+    @splatomatic = values
+  end
+end
+
+==> 013.rb 59 <==
+class Foo
+  def something(&block)
+    @b = block
+  end
+end
+
+==> 014.rb 45 <==
+class Foo
+  def bar
+    @bar + foo
+  end
+end
+
+==> 015.rb 56 <==
+class Foo
+  def bar(val)
+    @bar = val + foo
+  end
+end
+
+==> 016.rb 65 <==
+class Foo
+   def initialize(value)
+     @top = value
+   end
+ end
+
+==> 017.rb 38 <==
+class Foo
+  def foo
+    @fo
+  end
+end
+
+==> 018.rb 49 <==
+class Foo
+  def foo(val)
+    @fo = val
+  end
+end
+
+==> 019.rb 52 <==
+module Foo
+  def bar=(bar)
+    @bar = bar
+  end
+end
+
+==> 020.rb 72 <==
+module Foo
+  begin
+    def bar=(bar)
+      @bar = bar
+    end
+  end
+end
+
+==> 021.rb 60 <==
+module Foo
+  begin
+    def bar
+      @bar
+    end
+  end
+end
+
+==> 022.rb 19 <==
+def bar
+  @bar
+end
+
+==> 023.rb 31 <==
+def bar=(bar)
+  @bar = bar
+end
+
+==> 024.rb 88 <==
+something.instance_eval do
+  begin
+    def bar=(bar)
+      @bar = bar
+    end
+  end
+end
+
+==> 025.rb 93 <==
+something.instance_eval do
+  _1
+  begin
+    def bar=(bar)
+      @bar = bar
+    end
+  end
+end
+
+==> 026.rb 76 <==
+something.instance_eval do
+  begin
+    def bar
+      @bar
+    end
+  end
+end
+
+==> 027.rb 109 <==
+something.instance_eval do
+  class << @blah
+    begin
+      def bar
+        @bar
+      end
+    end
+  end
+end
+

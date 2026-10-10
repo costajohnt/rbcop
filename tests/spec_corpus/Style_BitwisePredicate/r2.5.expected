@@ -1,0 +1,44 @@
+==> offenses exit=1 990 <==
+000.rb:1:1: C: [Correctable] Style/BitwisePredicate: Replace with `variable.anybits?(flags)` for comparison with bit flags.
+001.rb:1:1: C: [Correctable] Style/BitwisePredicate: Replace with `variable.anybits?(flags)` for comparison with bit flags.
+002.rb:1:1: C: [Correctable] Style/BitwisePredicate: Replace with `variable.anybits?(flags)` for comparison with bit flags.
+003.rb:1:1: C: [Correctable] Style/BitwisePredicate: Replace with `variable.anybits?(flags)` for comparison with bit flags.
+007.rb:1:1: C: [Correctable] Style/BitwisePredicate: Replace with `variable.allbits?(flags)` for comparison with bit flags.
+008.rb:1:1: C: [Correctable] Style/BitwisePredicate: Replace with `variable.allbits?(flags)` for comparison with bit flags.
+011.rb:1:1: C: [Correctable] Style/BitwisePredicate: Replace with `variable.nobits?(flags)` for comparison with bit flags.
+012.rb:1:1: C: [Correctable] Style/BitwisePredicate: Replace with `variable.nobits?(flags)` for comparison with bit flags.
+
+==> autocorrect exit=0 974 <==
+000.rb:1:1: C: [Corrected] Style/BitwisePredicate: Replace with `variable.anybits?(flags)` for comparison with bit flags.
+001.rb:1:1: C: [Corrected] Style/BitwisePredicate: Replace with `variable.anybits?(flags)` for comparison with bit flags.
+002.rb:1:1: C: [Corrected] Style/BitwisePredicate: Replace with `variable.anybits?(flags)` for comparison with bit flags.
+003.rb:1:1: C: [Corrected] Style/BitwisePredicate: Replace with `variable.anybits?(flags)` for comparison with bit flags.
+007.rb:1:1: C: [Corrected] Style/BitwisePredicate: Replace with `variable.allbits?(flags)` for comparison with bit flags.
+008.rb:1:1: C: [Corrected] Style/BitwisePredicate: Replace with `variable.allbits?(flags)` for comparison with bit flags.
+011.rb:1:1: C: [Corrected] Style/BitwisePredicate: Replace with `variable.nobits?(flags)` for comparison with bit flags.
+012.rb:1:1: C: [Corrected] Style/BitwisePredicate: Replace with `variable.nobits?(flags)` for comparison with bit flags.
+
+==> corrected/000.rb 25 <==
+variable.anybits?(flags)
+
+==> corrected/001.rb 25 <==
+variable.anybits?(flags)
+
+==> corrected/002.rb 25 <==
+variable.anybits?(flags)
+
+==> corrected/003.rb 25 <==
+variable.anybits?(flags)
+
+==> corrected/007.rb 25 <==
+variable.allbits?(flags)
+
+==> corrected/008.rb 25 <==
+variable.allbits?(flags)
+
+==> corrected/011.rb 24 <==
+variable.nobits?(flags)
+
+==> corrected/012.rb 24 <==
+variable.nobits?(flags)
+

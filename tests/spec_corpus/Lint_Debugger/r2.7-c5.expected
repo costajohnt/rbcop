@@ -1,0 +1,10 @@
+==> offenses exit=1 258 <==
+000.rb:1:1: W: Lint/Debugger: Remove debugger entry point `require 'my_debugger'`.
+004.rb:1:1: W: Lint/Debugger: Remove debugger entry point `require "my_debugger"`.
+005.rb:1:1: W: Lint/Debugger: Remove debugger entry point `require 'other_debugger/start'`.
+
+==> autocorrect exit=1 258 <==
+000.rb:1:1: W: Lint/Debugger: Remove debugger entry point `require 'my_debugger'`.
+004.rb:1:1: W: Lint/Debugger: Remove debugger entry point `require "my_debugger"`.
+005.rb:1:1: W: Lint/Debugger: Remove debugger entry point `require 'other_debugger/start'`.
+

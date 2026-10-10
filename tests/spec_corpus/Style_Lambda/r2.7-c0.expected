@@ -1,0 +1,38 @@
+==> offenses exit=1 504 <==
+000.rb:1:5: C: [Correctable] Style/Lambda: Use the `lambda` method for all lambdas.
+001.rb:1:5: C: [Correctable] Style/Lambda: Use the `lambda` method for all lambdas.
+002.rb:1:5: C: [Correctable] Style/Lambda: Use the `lambda` method for all lambdas.
+003.rb:1:5: C: [Correctable] Style/Lambda: Use the `lambda` method for all lambdas.
+004.rb:1:5: C: [Correctable] Style/Lambda: Use the `lambda` method for all lambdas.
+005.rb:1:5: C: [Correctable] Style/Lambda: Use the `lambda` method for all lambdas.
+
+==> autocorrect exit=0 492 <==
+000.rb:1:5: C: [Corrected] Style/Lambda: Use the `lambda` method for all lambdas.
+001.rb:1:5: C: [Corrected] Style/Lambda: Use the `lambda` method for all lambdas.
+002.rb:1:5: C: [Corrected] Style/Lambda: Use the `lambda` method for all lambdas.
+003.rb:1:5: C: [Corrected] Style/Lambda: Use the `lambda` method for all lambdas.
+004.rb:1:5: C: [Corrected] Style/Lambda: Use the `lambda` method for all lambdas.
+005.rb:1:5: C: [Corrected] Style/Lambda: Use the `lambda` method for all lambdas.
+
+==> corrected/000.rb 21 <==
+f = lambda { |x| x }
+
+==> corrected/001.rb 24 <==
+f = lambda { |x; y| x }
+
+==> corrected/002.rb 17 <==
+f = lambda { x }
+
+==> corrected/003.rb 22 <==
+f = lambda{ |x| p x }
+
+==> corrected/004.rb 26 <==
+f = lambda do |x|
+  x
+end
+
+==> corrected/005.rb 22 <==
+f = lambda do
+  x
+end
+

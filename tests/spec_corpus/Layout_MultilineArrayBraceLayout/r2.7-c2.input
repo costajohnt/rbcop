@@ -1,0 +1,28 @@
+==> .rubocop.yml 168 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/MultilineArrayBraceLayout:
+  EnforcedStyle: new_line
+
+==> 000.rb 19 <==
+[a,
+{
+foo: bar
+}]
+
+
+==> 001.rb 16 <==
+[a, # a
+b] # b
+
+
+==> 002.rb 9 <==
+[
+a,
+b]
+
+

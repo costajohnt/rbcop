@@ -1,0 +1,20 @@
+==> .rubocop.yml 245 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Naming/PredicateMethod:
+  Mode: :aggressive
+  AllowedMethods: []
+  AllowedPatterns: []
+  AllowBangMethods: false
+  WaywardPredicates: []
+
+==> 000.rb 15 <==
+def foo = true
+
+==> 001.rb 13 <==
+def foo? = 5
+

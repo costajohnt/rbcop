@@ -1,0 +1,44 @@
+==> offenses exit=1 832 <==
+000.rb:1:1: C: [Correctable] Style/RedundantArrayConstructor: Remove the redundant `Array` constructor.
+001.rb:1:1: C: [Correctable] Style/RedundantArrayConstructor: Remove the redundant `Array` constructor.
+002.rb:1:1: C: [Correctable] Style/RedundantArrayConstructor: Remove the redundant `Array` constructor.
+003.rb:1:1: C: [Correctable] Style/RedundantArrayConstructor: Remove the redundant `Array` constructor.
+004.rb:1:1: C: [Correctable] Style/RedundantArrayConstructor: Remove the redundant `Array` constructor.
+005.rb:1:1: C: [Correctable] Style/RedundantArrayConstructor: Remove the redundant `Array` constructor.
+006.rb:1:1: C: [Correctable] Style/RedundantArrayConstructor: Remove the redundant `Array` constructor.
+007.rb:1:1: C: [Correctable] Style/RedundantArrayConstructor: Remove the redundant `Array` constructor.
+
+==> autocorrect exit=0 816 <==
+000.rb:1:1: C: [Corrected] Style/RedundantArrayConstructor: Remove the redundant `Array` constructor.
+001.rb:1:1: C: [Corrected] Style/RedundantArrayConstructor: Remove the redundant `Array` constructor.
+002.rb:1:1: C: [Corrected] Style/RedundantArrayConstructor: Remove the redundant `Array` constructor.
+003.rb:1:1: C: [Corrected] Style/RedundantArrayConstructor: Remove the redundant `Array` constructor.
+004.rb:1:1: C: [Corrected] Style/RedundantArrayConstructor: Remove the redundant `Array` constructor.
+005.rb:1:1: C: [Corrected] Style/RedundantArrayConstructor: Remove the redundant `Array` constructor.
+006.rb:1:1: C: [Corrected] Style/RedundantArrayConstructor: Remove the redundant `Array` constructor.
+007.rb:1:1: C: [Corrected] Style/RedundantArrayConstructor: Remove the redundant `Array` constructor.
+
+==> corrected/000.rb 3 <==
+[]
+
+==> corrected/001.rb 3 <==
+[]
+
+==> corrected/002.rb 3 <==
+[]
+
+==> corrected/003.rb 3 <==
+[]
+
+==> corrected/004.rb 3 <==
+[]
+
+==> corrected/005.rb 22 <==
+['foo', 'bar', 'baz']
+
+==> corrected/006.rb 22 <==
+['foo', 'bar', 'baz']
+
+==> corrected/007.rb 22 <==
+['foo', 'bar', 'baz']
+

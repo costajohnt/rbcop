@@ -1,0 +1,22 @@
+==> .rubocop.yml 194 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented_relative_to_receiver
+
+==> 000.rb 32 <==
+[
+  *foo
+    .bar { baz(it) }
+]
+
+==> 001.rb 33 <==
+[
+  **foo
+    .bar { baz(it) }
+]
+

@@ -1,0 +1,80 @@
+==> offenses exit=1 920 <==
+000.rb:1:1: C: [Correctable] Layout/EmptyLinesAroundAttributeAccessor: Add an empty line after attribute accessor.
+001.rb:1:1: C: [Correctable] Layout/EmptyLinesAroundAttributeAccessor: Add an empty line after attribute accessor.
+002.rb:1:1: C: [Correctable] Layout/EmptyLinesAroundAttributeAccessor: Add an empty line after attribute accessor.
+003.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundAttributeAccessor: Add an empty line after attribute accessor.
+004.rb:1:1: C: [Correctable] Layout/EmptyLinesAroundAttributeAccessor: Add an empty line after attribute accessor.
+005.rb:1:1: C: [Correctable] Layout/EmptyLinesAroundAttributeAccessor: Add an empty line after attribute accessor.
+006.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundAttributeAccessor: Add an empty line after attribute accessor.
+007.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundAttributeAccessor: Add an empty line after attribute accessor.
+
+==> autocorrect exit=0 904 <==
+000.rb:1:1: C: [Corrected] Layout/EmptyLinesAroundAttributeAccessor: Add an empty line after attribute accessor.
+001.rb:1:1: C: [Corrected] Layout/EmptyLinesAroundAttributeAccessor: Add an empty line after attribute accessor.
+002.rb:1:1: C: [Corrected] Layout/EmptyLinesAroundAttributeAccessor: Add an empty line after attribute accessor.
+003.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundAttributeAccessor: Add an empty line after attribute accessor.
+004.rb:1:1: C: [Corrected] Layout/EmptyLinesAroundAttributeAccessor: Add an empty line after attribute accessor.
+005.rb:1:1: C: [Corrected] Layout/EmptyLinesAroundAttributeAccessor: Add an empty line after attribute accessor.
+006.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundAttributeAccessor: Add an empty line after attribute accessor.
+007.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundAttributeAccessor: Add an empty line after attribute accessor.
+
+==> corrected/000.rb 41 <==
+attr_accessor :foo
+
+def do_something
+end
+
+==> corrected/001.rb 51 <==
+attr_accessor :foo # comment
+
+def do_something
+end
+
+==> corrected/002.rb 51 <==
+attr_accessor :foo
+
+# comment
+def do_something
+end
+
+==> corrected/003.rb 85 <==
+attr_accessor :foo
+attr_reader :bar
+attr_writer :baz
+
+# comment
+def do_something
+end
+
+==> corrected/004.rb 61 <==
+attr_accessor :foo
+
+# comment
+# comment
+def do_something
+end
+
+==> corrected/005.rb 74 <==
+attr_accessor :foo
+
+# rubocop:disable Department/Cop
+def do_something
+end
+
+==> corrected/006.rb 106 <==
+# rubocop:disable Department/Cop
+attr_accessor :foo
+# rubocop:enable Department/Cop
+
+def do_something
+end
+
+==> corrected/007.rb 116 <==
+# rubocop:disable Department/Cop
+attr_accessor :foo
+# rubocop:enable Department/Cop
+
+# comment
+def do_something
+end
+

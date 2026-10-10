@@ -1,0 +1,44 @@
+==> offenses exit=1 2021 <==
+000.rb:1:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+000.rb:2:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+000.rb:3:1: W: Lint/FloatComparison: Avoid inequality comparisons of floats as they are unreliable.
+000.rb:4:1: W: Lint/FloatComparison: Avoid inequality comparisons of floats as they are unreliable.
+000.rb:5:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+000.rb:6:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+001.rb:1:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+001.rb:2:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+001.rb:3:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+002.rb:1:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+002.rb:2:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+002.rb:3:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+003.rb:1:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+005.rb:1:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+012.rb:1:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+013.rb:1:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+014.rb:2:6: W: Lint/FloatComparison: Avoid float literal comparisons in case statements as they are unreliable.
+014.rb:4:6: W: Lint/FloatComparison: Avoid float literal comparisons in case statements as they are unreliable.
+015.rb:2:6: W: Lint/FloatComparison: Avoid float literal comparisons in case statements as they are unreliable.
+015.rb:2:11: W: Lint/FloatComparison: Avoid float literal comparisons in case statements as they are unreliable.
+
+==> autocorrect exit=1 2021 <==
+000.rb:1:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+000.rb:2:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+000.rb:3:1: W: Lint/FloatComparison: Avoid inequality comparisons of floats as they are unreliable.
+000.rb:4:1: W: Lint/FloatComparison: Avoid inequality comparisons of floats as they are unreliable.
+000.rb:5:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+000.rb:6:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+001.rb:1:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+001.rb:2:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+001.rb:3:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+002.rb:1:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+002.rb:2:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+002.rb:3:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+003.rb:1:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+005.rb:1:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+012.rb:1:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+013.rb:1:1: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+014.rb:2:6: W: Lint/FloatComparison: Avoid float literal comparisons in case statements as they are unreliable.
+014.rb:4:6: W: Lint/FloatComparison: Avoid float literal comparisons in case statements as they are unreliable.
+015.rb:2:6: W: Lint/FloatComparison: Avoid float literal comparisons in case statements as they are unreliable.
+015.rb:2:11: W: Lint/FloatComparison: Avoid float literal comparisons in case statements as they are unreliable.
+

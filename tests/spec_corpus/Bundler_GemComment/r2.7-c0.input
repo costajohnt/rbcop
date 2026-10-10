@@ -1,0 +1,70 @@
+==> .rubocop.yml 194 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Bundler/GemComment:
+  Include:
+  - "**/Gemfile"
+  AllowedGems:
+  - rake
+  OnlyFor: []
+
+==> 000/foo.rb 15 <==
+gem('rubocop')
+
+==> 001/Gemfile 0 <==
+
+==> 002/Gemfile 38 <==
+# Style-guide enforcer.
+gem 'rubocop'
+
+==> 003/Gemfile 38 <==
+gem 'rubocop' # Style-guide enforcer.
+
+==> 004/Gemfile 11 <==
+gem 'rake'
+
+==> 005/Gemfile 88 <==
+source 'http://rubygems.org'
+
+# Style-guide enforcer.
+group :development do
+  # …
+end
+
+==> 006/Gemfile 14 <==
+gem 'rubocop'
+
+==> 007/Gemfile 34 <==
+gem 'rubocop', group: development
+
+==> 008/Gemfile 25 <==
+gem 'rubocop', '~> 12.0'
+
+==> 009/Gemfile 36 <==
+gem 'rubocop', '~> 12.0', '>= 11.0'
+
+==> 010/Gemfile 41 <==
+gem 'rubocop', '~> 12.0', required: true
+
+==> 011/Gemfile 25 <==
+gem 'rubocop', '>= 12.0'
+
+==> 012/Gemfile 26 <==
+gem 'rubocop', ' ~> 12.0'
+
+==> 013/Gemfile 22 <==
+gem 'rubocop', '12.0'
+
+==> 014/Gemfile 24 <==
+gem 'rubocop', '= 12.0'
+
+==> 015/Gemfile 45 <==
+gem 'rubocop', github: 'some_user/some_fork'
+
+==> 016/Gemfile 30 <==
+gem 'rubocop', key => 'value'
+

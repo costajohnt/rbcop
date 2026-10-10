@@ -1,0 +1,64 @@
+==> offenses exit=1 1260 <==
+000.rb:1:14: W: [Correctable] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+001.rb:1:14: W: [Correctable] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+002.rb:1:15: W: [Correctable] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+003.rb:1:15: W: [Correctable] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+004.rb:1:14: W: [Correctable] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+005.rb:1:14: W: [Correctable] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+006.rb:1:14: W: [Correctable] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+007.rb:1:14: W: [Correctable] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+015.rb:1:17: W: [Correctable] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+016.rb:1:19: W: [Correctable] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+017.rb:1:17: W: [Correctable] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+018.rb:1:17: W: [Correctable] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+
+==> autocorrect exit=0 1236 <==
+000.rb:1:14: W: [Corrected] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+001.rb:1:14: W: [Corrected] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+002.rb:1:15: W: [Corrected] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+003.rb:1:15: W: [Corrected] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+004.rb:1:14: W: [Corrected] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+005.rb:1:14: W: [Corrected] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+006.rb:1:14: W: [Corrected] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+007.rb:1:14: W: [Corrected] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+015.rb:1:17: W: [Corrected] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+016.rb:1:19: W: [Corrected] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+017.rb:1:17: W: [Corrected] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+018.rb:1:17: W: [Corrected] Lint/UselessDefaultValueArgument: Block supersedes default value argument.
+
+==> corrected/000.rb 29 <==
+x.fetch(key) { block_value }
+
+==> corrected/001.rb 27 <==
+x.fetch(key) { |arg| arg }
+
+==> corrected/002.rb 30 <==
+x&.fetch(key) { block_value }
+
+==> corrected/003.rb 28 <==
+x&.fetch(key) { |arg| arg }
+
+==> corrected/004.rb 29 <==
+x.fetch(key) { block_value }
+
+==> corrected/005.rb 28 <==
+x.fetch(key) { fetch(arg) }
+
+==> corrected/006.rb 20 <==
+x.fetch(key) { _1 }
+
+==> corrected/007.rb 20 <==
+x.fetch(key) { it }
+
+==> corrected/015.rb 32 <==
+Array.new(size) { block_value }
+
+==> corrected/016.rb 34 <==
+::Array.new(size) { block_value }
+
+==> corrected/017.rb 23 <==
+Array.new(size) { _1 }
+
+==> corrected/018.rb 23 <==
+Array.new(size) { it }
+

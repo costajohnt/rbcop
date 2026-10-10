@@ -1,0 +1,127 @@
+==> .rubocop.yml 170 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/ParenthesesAroundCondition:
+  AllowSafeAssignment: true
+
+==> 000.rb 174 <==
+if (x > 10)
+elsif (x < 3)
+end
+unless (x > 10)
+end
+while (x > 10)
+end
+until (x > 10)
+end
+x += 1 if (x < 10)
+x += 1 unless (x < 10)
+x += 1 until (x < 10)
+x += 1 while (x < 10)
+
+==> 001.rb 55 <==
+if(x > 5) then something end
+do_something until(x > 5)
+
+==> 002.rb 16 <==
+(a == 0) ? b : a
+==> 003.rb 28 <==
+(a > b) && other ? one : two
+==> 004.rb 19 <==
+if (a + b).c()
+end
+
+==> 005.rb 30 <==
+if (something rescue top)
+end
+
+==> 006.rb 26 <==
+if (something if top)
+end
+
+==> 007.rb 30 <==
+if (something unless top)
+end
+
+==> 008.rb 29 <==
+if (something while top)
+end
+
+==> 009.rb 29 <==
+if (something until top)
+end
+
+==> 010.rb 17 <==
+x if (a ? b : c)
+
+==> 011.rb 10 <==
+if ()
+end
+
+==> 012.rb 14 <==
+unless ()
+end
+
+==> 013.rb 29 <==
+while (foo do
+      end)
+end
+
+==> 014.rb 29 <==
+until (foo do
+      end)
+end
+
+==> 015.rb 40 <==
+while (foo do
+        _1
+      end)
+end
+
+==> 016.rb 40 <==
+until (foo do
+        _1
+      end)
+end
+
+==> 017.rb 26 <==
+while (foo {
+      })
+end
+
+==> 018.rb 26 <==
+until (foo {
+      })
+end
+
+==> 019.rb 23 <==
+if (foo do
+   end)
+end
+
+==> 020.rb 20 <==
+if (foo {
+   })
+end
+
+==> 021.rb 33 <==
+if (foo; bar)
+  do_something
+end
+
+==> 022.rb 19 <==
+if (test = 10)
+end
+
+==> 023.rb 22 <==
+if (test[0] = 10)
+end
+
+==> 024.rb 24 <==
+if (self.test = 10)
+end
+

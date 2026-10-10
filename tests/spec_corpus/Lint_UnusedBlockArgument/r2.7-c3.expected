@@ -1,0 +1,18 @@
+==> offenses exit=1 1248 <==
+002.rb:1:4: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `arg`. If it's necessary, use `_` or `_arg` as an argument name to indicate that it won't be used. Also consider using a proc without arguments instead of a lambda if you want it to accept any arguments but don't care about them.
+004.rb:1:4: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `arg1`. If it's necessary, use `_` or `_arg1` as an argument name to indicate that it won't be used. Also consider using a proc without arguments instead of a lambda if you want it to accept any arguments but don't care about them.
+004.rb:1:10: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `arg2`. If it's necessary, use `_` or `_arg2` as an argument name to indicate that it won't be used. Also consider using a proc without arguments instead of a lambda if you want it to accept any arguments but don't care about them.
+004.rb:1:17: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `others`. If it's necessary, use `_` or `_others` as an argument name to indicate that it won't be used. Also consider using a proc without arguments instead of a lambda if you want it to accept any arguments but don't care about them.
+
+==> autocorrect exit=0 1240 <==
+002.rb:1:4: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `arg`. If it's necessary, use `_` or `_arg` as an argument name to indicate that it won't be used. Also consider using a proc without arguments instead of a lambda if you want it to accept any arguments but don't care about them.
+004.rb:1:4: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `arg1`. If it's necessary, use `_` or `_arg1` as an argument name to indicate that it won't be used. Also consider using a proc without arguments instead of a lambda if you want it to accept any arguments but don't care about them.
+004.rb:1:10: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `arg2`. If it's necessary, use `_` or `_arg2` as an argument name to indicate that it won't be used. Also consider using a proc without arguments instead of a lambda if you want it to accept any arguments but don't care about them.
+004.rb:1:17: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `others`. If it's necessary, use `_` or `_others` as an argument name to indicate that it won't be used. Also consider using a proc without arguments instead of a lambda if you want it to accept any arguments but don't care about them.
+
+==> corrected/002.rb 15 <==
+->(_arg) { 1 }
+
+==> corrected/004.rb 33 <==
+->(_arg1, _arg2, *_others) { 1 }
+

@@ -1,0 +1,61 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/MultilineMemoization:
+  EnforcedStyle: keyword
+
+==> 000.rb 11 <==
+foo ||= bar
+==> 001.rb 14 <==
+foo ||=
+  bar
+
+==> 002.rb 44 <==
+foo ||= bar.each do |b|
+  b.baz
+  bb.ax
+end
+
+==> 003.rb 52 <==
+foo ||=
+  bar.each do |b|
+    b.baz
+    b.bax
+  end
+
+==> 004.rb 68 <==
+foo ||= if bar
+          baz
+        else
+          bax
+        end
+
+==> 005.rb 46 <==
+foo ||=
+  if bar
+    baz
+  else
+    bax
+  end
+
+==> 006.rb 24 <==
+foo ||= (
+  bar
+  baz
+)
+
+==> 007.rb 32 <==
+foo ||=
+  (
+    bar
+    baz
+  )
+
+==> 008.rb 31 <==
+foo ||= (bar ||
+          baz)
+

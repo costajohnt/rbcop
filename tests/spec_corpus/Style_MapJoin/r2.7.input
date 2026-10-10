@@ -1,0 +1,79 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 29 <==
+array.map(&:to_s).join(', ')
+
+==> 001.rb 23 <==
+array.map(&:to_s).join
+
+==> 002.rb 36 <==
+array.map { |x| x.to_s }.join(', ')
+
+==> 003.rb 31 <==
+array&.map(&:to_s)&.join(', ')
+
+==> 004.rb 23 <==
+map(&:to_s).join(', ')
+
+==> 005.rb 30 <==
+map { |x| x.to_s }.join(', ')
+
+==> 006.rb 29 <==
+array.map(&:to_i).join(', ')
+
+==> 007.rb 36 <==
+array.map { |x| x.to_i }.join(', ')
+
+==> 008.rb 18 <==
+array.map(&:to_s)
+
+==> 009.rb 33 <==
+array.collect(&:to_s).join(', ')
+
+==> 010.rb 27 <==
+array.collect(&:to_s).join
+
+==> 011.rb 40 <==
+array.collect { |x| x.to_s }.join(', ')
+
+==> 012.rb 35 <==
+array&.collect(&:to_s)&.join(', ')
+
+==> 013.rb 27 <==
+collect(&:to_s).join(', ')
+
+==> 014.rb 34 <==
+collect { |x| x.to_s }.join(', ')
+
+==> 015.rb 33 <==
+array.collect(&:to_i).join(', ')
+
+==> 016.rb 40 <==
+array.collect { |x| x.to_i }.join(', ')
+
+==> 017.rb 22 <==
+array.collect(&:to_s)
+
+==> 018.rb 33 <==
+array.map { _1.to_s }.join(', ')
+
+==> 019.rb 35 <==
+array
+  .map(&:to_s)
+  .join(', ')
+
+==> 020.rb 26 <==
+array.map(&:to_s).compact
+
+==> 021.rb 17 <==
+array.join(', ')
+
+==> 022.rb 40 <==
+array.map { |x| x.to_s(16) }.join(', ')
+

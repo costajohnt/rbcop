@@ -1,0 +1,39 @@
+==> offenses exit=1 689 <==
+000.rb:1:14: C: [Correctable] Style/RedundantHeredocDelimiterQuotes: Remove the redundant heredoc delimiter quotes, use `<<~EOS` instead.
+001.rb:1:14: C: [Correctable] Style/RedundantHeredocDelimiterQuotes: Remove the redundant heredoc delimiter quotes, use `<<-EOS` instead.
+002.rb:1:14: C: [Correctable] Style/RedundantHeredocDelimiterQuotes: Remove the redundant heredoc delimiter quotes, use `<<EOS` instead.
+003.rb:1:14: C: [Correctable] Style/RedundantHeredocDelimiterQuotes: Remove the redundant heredoc delimiter quotes, use `<<~EOS` instead.
+004.rb:1:14: C: [Correctable] Style/RedundantHeredocDelimiterQuotes: Remove the redundant heredoc delimiter quotes, use `<<~EOS` instead.
+
+==> autocorrect exit=0 679 <==
+000.rb:1:14: C: [Corrected] Style/RedundantHeredocDelimiterQuotes: Remove the redundant heredoc delimiter quotes, use `<<~EOS` instead.
+001.rb:1:14: C: [Corrected] Style/RedundantHeredocDelimiterQuotes: Remove the redundant heredoc delimiter quotes, use `<<-EOS` instead.
+002.rb:1:14: C: [Corrected] Style/RedundantHeredocDelimiterQuotes: Remove the redundant heredoc delimiter quotes, use `<<EOS` instead.
+003.rb:1:14: C: [Corrected] Style/RedundantHeredocDelimiterQuotes: Remove the redundant heredoc delimiter quotes, use `<<~EOS` instead.
+004.rb:1:14: C: [Corrected] Style/RedundantHeredocDelimiterQuotes: Remove the redundant heredoc delimiter quotes, use `<<~EOS` instead.
+
+==> corrected/000.rb 62 <==
+do_something(<<~EOS)
+  no string interpolation style text
+EOS
+
+==> corrected/001.rb 62 <==
+do_something(<<-EOS)
+  no string interpolation style text
+EOS
+
+==> corrected/002.rb 61 <==
+do_something(<<EOS)
+  no string interpolation style text
+EOS
+
+==> corrected/003.rb 62 <==
+do_something(<<~EOS)
+  no string interpolation style text
+EOS
+
+==> corrected/004.rb 54 <==
+do_something(<<~EOS)
+  #{string} #{interpolation}
+EOS
+

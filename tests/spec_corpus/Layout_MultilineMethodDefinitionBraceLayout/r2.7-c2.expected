@@ -1,0 +1,8 @@
+==> offenses exit=1 278 <==
+000.rb:4:2: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+002.rb:3:3: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+
+==> autocorrect exit=1 278 <==
+000.rb:4:2: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+002.rb:3:3: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+

@@ -1,0 +1,43 @@
+==> offenses exit=1 536 <==
+000.rb:2:8: C: [Correctable] Style/MultilineInPatternThen: Do not use `then` for multiline `in` statement.
+001.rb:2:8: C: [Correctable] Style/MultilineInPatternThen: Do not use `then` for multiline `in` statement.
+002.rb:2:8: C: [Correctable] Style/MultilineInPatternThen: Do not use `then` for multiline `in` statement.
+010.rb:3:3: C: [Correctable] Style/MultilineInPatternThen: Do not use `then` for multiline `in` statement.
+011.rb:2:13: C: [Correctable] Style/MultilineInPatternThen: Do not use `then` for multiline `in` statement.
+
+==> autocorrect exit=0 526 <==
+000.rb:2:8: C: [Corrected] Style/MultilineInPatternThen: Do not use `then` for multiline `in` statement.
+001.rb:2:8: C: [Corrected] Style/MultilineInPatternThen: Do not use `then` for multiline `in` statement.
+002.rb:2:8: C: [Corrected] Style/MultilineInPatternThen: Do not use `then` for multiline `in` statement.
+010.rb:3:3: C: [Corrected] Style/MultilineInPatternThen: Do not use `then` for multiline `in` statement.
+011.rb:2:13: C: [Corrected] Style/MultilineInPatternThen: Do not use `then` for multiline `in` statement.
+
+==> corrected/000.rb 20 <==
+case foo
+in bar
+end
+
+==> corrected/001.rb 33 <==
+case foo
+in bar
+do_something
+end
+
+==> corrected/002.rb 48 <==
+case foo
+in bar
+do_something1
+do_something2
+end
+
+==> corrected/010.rb 34 <==
+case foo
+in bar
+ do_something
+end
+
+==> corrected/011.rb 25 <==
+case foo
+in bar, baz
+end
+

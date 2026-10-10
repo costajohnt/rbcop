@@ -1,0 +1,81 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 11 <==
+"#{1 + 1}"
+
+==> 001.rb 12 <==
+%|#{1 + 1}|
+
+==> 002.rb 13 <==
+%Q(#{1 + 1})
+
+==> 003.rb 18 <==
+"#{1 + 1; 2 + 2}"
+
+==> 004.rb 10 <==
+"#{@var}"
+
+==> 005.rb 8 <==
+"#@var"
+
+==> 006.rb 11 <==
+"#{@@var}"
+
+==> 007.rb 9 <==
+"#@@var"
+
+==> 008.rb 10 <==
+"#{$var}"
+
+==> 009.rb 8 <==
+"#$var"
+
+==> 010.rb 8 <==
+"#{$1}"
+
+==> 011.rb 6 <==
+"#$1"
+
+==> 012.rb 8 <==
+"#{$+}"
+
+==> 013.rb 6 <==
+"#$+"
+
+==> 014.rb 12 <==
+"#{number}"
+
+==> 015.rb 22 <==
+"#{do_something(42)}"
+
+==> 016.rb 21 <==
+"#{do_something 42}"
+
+==> 017.rb 25 <==
+"#{foo.do_something 42}"
+
+==> 018.rb 18 <==
+var = 1; "#{var}"
+
+==> 019.rb 19 <==
+["#{@var}", 'foo']
+
+==> 020.rb 15 <==
+"#{42 in var}"
+
+==> 021.rb 20 <==
+"this is #{@sparta}"
+==> 022.rb 20 <==
+"#{@sparta} this is"
+==> 023.rb 22 <==
+"#{sparta}" ' this is'
+==> 024.rb 22 <==
+'this is ' "#{sparta}"
+==> 025.rb 15 <==
+%W(#{@var} foo)

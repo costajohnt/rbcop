@@ -1,0 +1,9 @@
+==> offenses exit=1 188 <==
+001.rb:1:1: W: [Correctable] Lint/AmbiguousBlockAssociation: Parenthesize the param `update { order.events }` to make sure that the block will be associated with the `update` method call.
+
+==> autocorrect exit=0 186 <==
+001.rb:1:1: W: [Corrected] Lint/AmbiguousBlockAssociation: Parenthesize the param `update { order.events }` to make sure that the block will be associated with the `update` method call.
+
+==> corrected/001.rb 52 <==
+expect { order.expire }.to(update { order.events })
+

@@ -1,0 +1,113 @@
+==> offenses exit=1 2526 <==
+001.rb:1:23: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+001.rb:3:23: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+002.rb:1:23: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+002.rb:2:14: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+003.rb:1:23: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+003.rb:2:12: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+004.rb:1:12: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+004.rb:2:10: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+005.rb:1:14: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+005.rb:2:38: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+012.rb:1:12: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+012.rb:2:10: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+012.rb:5:12: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+015.rb:1:12: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+015.rb:2:7: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+017.rb:1:10: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+017.rb:2:23: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+018.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+018.rb:2:7: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+019.rb:1:12: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+019.rb:2:10: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+020.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+020.rb:2:45: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+
+==> autocorrect exit=0 2480 <==
+001.rb:1:23: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+001.rb:3:23: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+002.rb:1:23: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+002.rb:2:14: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+003.rb:1:23: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+003.rb:2:12: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+004.rb:1:12: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+004.rb:2:10: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+005.rb:1:14: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+005.rb:2:38: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+012.rb:1:12: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+012.rb:2:10: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+012.rb:5:12: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+015.rb:1:12: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+015.rb:2:7: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+017.rb:1:10: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+017.rb:2:23: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+018.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+018.rb:2:7: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+019.rb:1:12: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+019.rb:2:10: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+020.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+020.rb:2:45: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+
+==> corrected/001.rb 111 <==
+def method_missing(m, ...)
+  if @template.respond_to?(m)
+    @template.send(m, ...)
+  else
+    super
+  end
+end
+
+==> corrected/002.rb 49 <==
+def method_missing(m, ...)
+  obj.foo(m, ...)
+end
+
+==> corrected/003.rb 47 <==
+def method_missing(m, ...)
+  super(m, ...)
+end
+
+==> corrected/004.rb 34 <==
+def foo(m, ...)
+  bar(m, ...)
+end
+
+==> corrected/005.rb 64 <==
+def self.get(...)
+  CanvasHttp.request(Net::HTTP::Get, ...)
+end
+
+==> corrected/012.rb 73 <==
+def foo(m, ...)
+  baz(m, ...)
+
+  if something?
+    baz(m, ...)
+  end
+end
+
+==> corrected/015.rb 31 <==
+def foo(x, ...)
+  bar(...)
+end
+
+==> corrected/017.rb 45 <==
+def post(...)
+  future_on(executor, ...)
+end
+
+==> corrected/018.rb 28 <==
+def foo(...)
+  baz(...)
+end
+
+==> corrected/019.rb 34 <==
+def foo(x, ...)
+  baz(x, ...)
+end
+
+==> corrected/020.rb 66 <==
+def foo(...)
+  bar(baz, 'qux', quux&.corge, @grault, 42, ...)
+end
+

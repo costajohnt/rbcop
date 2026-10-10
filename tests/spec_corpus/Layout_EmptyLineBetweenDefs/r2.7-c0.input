@@ -1,0 +1,189 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/EmptyLineBetweenDefs:
+  AllowAdjacentOneLineDefs: false
+
+==> 000.rb 115 <==
+class K
+  def m
+  end
+
+  class J
+    def n
+    end
+    def o
+    end
+  end
+
+  # checks something
+  def p
+  end
+end
+
+==> 001.rb 96 <==
+class J
+  def n
+  end # n-related
+  # checks something o-related
+  # and more
+  def o
+  end
+end
+
+==> 002.rb 73 <==
+if condition
+  def foo
+    true
+  end
+else
+  def foo
+    false
+  end
+end
+
+==> 003.rb 98 <==
+if condition
+  def foo
+    true
+  end
+  def bar
+    true
+  end
+else
+  def foo
+    false
+  end
+end
+
+==> 004.rb 75 <==
+class Test
+  def self.foo
+    true
+  end
+  def self.bar
+    true
+  end
+end
+
+==> 005.rb 70 <==
+class Test
+  def foo
+    true
+  end
+  def self.bar
+    true
+  end
+end
+
+==> 006.rb 16 <==
+x = 0
+def m
+end
+
+==> 007.rb 22 <==
+x = 0
+# 123
+def m
+end
+
+==> 008.rb 26 <==
+class K
+  def m
+  end
+end
+
+==> 009.rb 92 <==
+class A
+  # calculates value
+  def m
+  end
+
+  private
+  # calculates size
+  def n
+  end
+end
+
+==> 010.rb 56 <==
+module Util
+  public
+  #
+  def html_escape(s)
+  end
+end
+
+==> 011.rb 87 <==
+def mock_model(*attributes)
+  Class.new do
+    def initialize(attrs)
+    end
+  end
+end
+
+==> 012.rb 22 <==
+def a; end
+def b; end
+
+==> 013.rb 20 <==
+def a
+end;def b
+end
+
+==> 014.rb 25 <==
+def a; end
+
+
+
+def b; end
+
+==> 015.rb 41 <==
+class J
+  def n
+  end
+
+  def o
+  end
+end
+
+==> 016.rb 42 <==
+class A
+  def n
+  end
+
+
+  def o
+  end
+end
+
+==> 017.rb 23 <==
+def a; end; def b; end
+
+==> 018.rb 44 <==
+class Foo
+end
+class Baz
+end
+def example
+end
+
+==> 019.rb 46 <==
+module Foo
+end
+module Baz
+end
+def example
+end
+
+==> 020.rb 45 <==
+class Foo
+end
+module Baz
+end
+def example
+end
+

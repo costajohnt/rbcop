@@ -1,0 +1,1210 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 28 <==
+a = nil
+puts a if (a = 123)
+
+==> 001.rb 30 <==
+a = nil
+puts a unless a = 123
+
+==> 002.rb 33 <==
+a = nil
+puts a if (a = 123) != 0
+
+==> 003.rb 66 <==
+nerrs = 0
+raise "there were #{nerrs}" if (nerrs = get_nerrs) != 0
+
+==> 004.rb 42 <==
+a = 0
+puts "x #{a}" if (a = 1) != 0
+a = 2
+
+==> 005.rb 46 <==
+a = nil
+a = 5
+puts "x #{a}" if (a = 123) != 0
+
+==> 006.rb 61 <==
+a = nil
+def foo
+  a = 10
+  puts "x #{a}" if (a = 1) != 0
+end
+
+==> 007.rb 37 <==
+x = 0
+y = 1 if (x = 2) > 0
+puts x, y
+
+==> 008.rb 33 <==
+a = nil
+puts a while (a = false)
+
+==> 009.rb 30 <==
+a = nil
+puts a until a = true
+
+==> 010.rb 102 <==
+class SomeClass
+  foo = 1
+  puts foo
+  def some_method
+    foo = 2
+    bar = 3
+    puts bar
+  end
+end
+
+==> 011.rb 107 <==
+class SomeClass
+  foo = 1
+  puts foo
+  def self.some_method
+    foo = 2
+    bar = 3
+    puts bar
+  end
+end
+
+==> 012.rb 130 <==
+1.times do
+  foo = 1
+  puts foo
+  instance = Object.new
+  def instance.some_method
+    foo = 2
+    bar = 3
+    puts bar
+  end
+end
+
+==> 013.rb 97 <==
+1.times do
+  foo = 1
+  puts foo
+  class SomeClass
+    foo = 2
+    bar = 3
+    puts bar
+  end
+end
+
+==> 014.rb 133 <==
+1.times do
+  foo = 1
+  puts foo
+  array_class = Array
+  class SomeClass < array_class
+    foo = 2
+    bar = 3
+    puts bar
+  end
+end
+
+==> 015.rb 123 <==
+1.times do
+  foo = 1
+  puts foo
+  instance = Object.new
+  class << instance
+    foo = 2
+    bar = 3
+    puts bar
+  end
+end
+
+==> 016.rb 99 <==
+1.times do
+  foo = 1
+  puts foo
+  module SomeModule
+    foo = 2
+    bar = 3
+    puts bar
+  end
+end
+
+==> 017.rb 33 <==
+x = Object.new
+module x::Foo
+end
+
+==> 018.rb 22 <==
+for item in items
+end
+
+==> 019.rb 53 <==
+node = foo
+for node in bar
+  return node if baz?
+end
+
+==> 020.rb 63 <==
+node = foo
+for node in node.children
+  return node if bar?
+end
+
+==> 021.rb 40 <==
+for i, j in items
+  do_something(i)
+end
+
+==> 022.rb 43 <==
+for item in items
+  do_something(item)
+end
+
+==> 023.rb 25 <==
+foo = 1
+bar = 2
+puts bar
+
+==> 024.rb 10 <==
+foo ||= 1
+
+==> 025.rb 24 <==
+def foo
+  bar &&= 1
+end
+
+==> 026.rb 61 <==
+def some_method
+  foo = 1
+  bar = 2
+  foo = 3
+  puts bar
+end
+
+==> 027.rb 51 <==
+def some_method
+  foo = 1
+  puts foo
+  foo = 3
+end
+
+==> 028.rb 51 <==
+def some_method
+  foo = 1
+  foo = 3
+  puts foo
+end
+
+==> 029.rb 285 <==
+def const_name(node)
+  const_names = []
+  const_node = node
+
+  loop do
+    namespace_node, name = *const_node
+    const_names << name
+    break unless namespace_node
+    break if namespace_node.type == :cbase
+    const_node = namespace_node
+  end
+
+  const_names.reverse.join('::')
+end
+
+==> 030.rb 72 <==
+def some_method
+  foo = 1
+  puts foo
+  1.times do
+    foo = 2
+  end
+end
+
+==> 031.rb 24 <==
+1.times do |i; foo|
+end
+
+==> 032.rb 34 <==
+1.times do |i; foo|
+  foo = 2
+end
+
+==> 033.rb 27 <==
+do_something { foo += _1 }
+
+==> 034.rb 51 <==
+def some_method
+  while true
+    foo = 1
+  end
+end
+
+==> 035.rb 108 <==
+def some_method
+  total = 0
+  foo = 0
+
+  while total < 100
+    total += foo
+    foo += 1
+  end
+
+  total
+end
+
+==> 036.rb 104 <==
+def some_method
+  total = 0
+  foo = 0
+
+  while foo < 100
+    total += 1
+    foo += 1
+  end
+
+  total
+end
+
+==> 037.rb 85 <==
+def some_method
+  obj = {}
+
+  while obj[:count] < 100
+    obj[:count] += 1
+  end
+end
+
+==> 038.rb 64 <==
+def some_method
+  foo = 1
+  foo = 2
+  bar {
+    foo = 3
+  }
+end
+
+==> 039.rb 103 <==
+def some_method
+  if baz
+    foo = 1
+  else
+    foo = 2
+    bar {
+      foo = 3
+    }
+  end
+
+  foo
+end
+
+==> 040.rb 114 <==
+def some_method
+  case baz
+  when 1
+    foo = 1
+  else
+    foo = 2
+    bar {
+      foo = 3
+    }
+  end
+
+  foo
+end
+
+==> 041.rb 140 <==
+def some_method
+  changed = false
+
+  if Random.rand > 1
+    changed = true
+  end
+
+  [].each do
+    changed = true
+  end
+
+  puts changed
+end
+
+==> 042.rb 215 <==
+def some_method
+  changed = false
+
+  case Random.rand
+  when 0.5
+    changed = true
+  when 1..20
+    changed = false
+  when 21..70
+    changed = true
+  end
+
+  [].each do
+    changed = true
+  end
+
+  puts changed
+end
+
+==> 043.rb 106 <==
+def some_method
+  total = 0
+  foo = 0
+
+  while total < 100
+    total += 1
+    foo += 1
+  end
+
+  total
+end
+
+==> 044.rb 76 <==
+while true
+  def some_method
+    foo = 1
+    puts foo
+    foo = 3
+  end
+end
+
+==> 045.rb 76 <==
+foo = 1
+
+while foo < 100
+  foo += 1
+  def some_method
+    foo = 1
+  end
+end
+
+==> 046.rb 54 <==
+def some_method(flag)
+  if flag
+    foo = 1
+  end
+end
+
+==> 047.rb 73 <==
+def some_method(flag)
+  if flag
+    foo = 1
+    foo = 2
+  end
+
+  foo
+end
+
+==> 048.rb 72 <==
+def some_method(flag)
+  foo = 1
+
+  if flag
+    foo = 2
+  end
+
+  foo
+end
+
+==> 049.rb 100 <==
+def while(param)
+  ret = 1
+
+  while param != 10
+    param += 2
+    ret = param + 1
+  end
+
+  ret
+end
+
+==> 050.rb 110 <==
+def post_while(param)
+  ret = 1
+
+  begin
+    param += 2
+    ret = param + 1
+  end while param < 40
+
+  ret
+end
+
+==> 051.rb 100 <==
+def until(param)
+  ret = 1
+
+  until param == 10
+    param += 2
+    ret = param + 1
+  end
+
+  ret
+end
+
+==> 052.rb 111 <==
+def post_until(param)
+  ret = 1
+
+  begin
+    param += 2
+    ret = param + 1
+  end until param == 10
+
+  ret
+end
+
+==> 053.rb 100 <==
+def for(param)
+  ret = 1
+
+  for x in param...10
+    param += x
+    ret = param + 1
+  end
+
+  ret
+end
+
+==> 054.rb 80 <==
+def some_method(flag)
+  if flag
+    foo = 2
+  else
+    foo = 3
+  end
+
+  foo
+end
+
+==> 055.rb 78 <==
+def some_method(flag)
+  foo = 1
+
+  if flag
+    foo = 2
+    puts foo
+  end
+end
+
+==> 056.rb 86 <==
+def some_method(flag)
+  if flag
+    foo = 2
+  else
+    foo = 3
+    puts foo
+  end
+end
+
+==> 057.rb 98 <==
+def some_method(flag)
+  foo = 1
+
+  if flag
+    puts foo
+    foo = 2
+  else
+    puts foo
+  end
+end
+
+==> 058.rb 38 <==
+if flag
+  foo = 1
+else
+  puts foo
+end
+
+==> 059.rb 118 <==
+def some_method(flag_a, flag_b)
+  foo = 1
+
+  if flag_a
+    puts foo
+    foo = 2
+  elsif flag_b
+    puts foo
+  end
+end
+
+==> 060.rb 145 <==
+def some_method(flag_a, flag_b)
+  foo = 1
+
+  if flag_a
+    puts foo
+    foo = 2
+  else
+    case
+    when flag_b
+      puts foo
+    end
+  end
+end
+
+==> 061.rb 98 <==
+def some_method(flag_a, flag_b)
+  if flag_a
+    foo = 1
+  end
+
+  if flag_b
+    puts foo
+  end
+end
+
+==> 062.rb 58 <==
+def some_method(flag)
+  foo = 1 unless foo
+  puts foo
+end
+
+==> 063.rb 47 <==
+def some_method(flag)
+  foo = 1 unless foo
+end
+
+==> 064.rb 84 <==
+def some_method
+  (foo = do_something_returns_object_or_nil) && (foo = 1)
+  foo
+end
+
+==> 065.rb 97 <==
+def some_method
+  foo = 1
+  (foo = do_something_returns_object_or_nil) && do_something
+  foo
+end
+
+==> 066.rb 84 <==
+def some_method
+  foo = 1
+  do_something_returns_object_or_nil && foo = 2
+  foo
+end
+
+==> 067.rb 68 <==
+def some_method(bar)
+  foo = 1
+  bar &&= (foo = 2)
+  [foo, bar]
+end
+
+==> 068.rb 68 <==
+def some_method(bar)
+  foo = 1
+  bar ||= (foo = 2)
+  [foo, bar]
+end
+
+==> 069.rb 67 <==
+def some_method(bar)
+  foo = 1
+  bar += (foo = 2)
+  [foo, bar]
+end
+
+==> 070.rb 76 <==
+def some_method
+  foo = [1, 2]
+  foo = foo.map { |i| i + 1 }
+  puts foo
+end
+
+==> 071.rb 41 <==
+foo = [1, 2]
+foo = foo.map { |i| i + 1 }
+
+==> 072.rb 47 <==
+def some_method
+  foo = 1
+  foo += 1
+  foo
+end
+
+==> 073.rb 81 <==
+def some_method
+  foo = do_something_returns_object_or_nil
+  foo ||= 1
+  foo
+end
+
+==> 074.rb 53 <==
+def some_method
+  foo = 1
+  foo += foo = 2
+  foo
+end
+
+==> 075.rb 38 <==
+def some_method
+  foo ||= 1
+  foo
+end
+
+==> 076.rb 75 <==
+def some_method
+  foo = do_something_returns_object_or_nil
+  foo ||= 1
+end
+
+==> 077.rb 95 <==
+def some_method
+  foo = do_something_returns_object_or_nil
+  foo ||= 1
+  some_return_value
+end
+
+==> 078.rb 57 <==
+def some_method
+  foo, bar = do_something
+  puts foo
+end
+
+==> 079.rb 50 <==
+def some_method
+  a, b = func(c = 3)
+  [a, b]
+end
+
+==> 080.rb 53 <==
+def some_method
+  a, b = func(c = 3)
+  [a, b, c]
+end
+
+==> 081.rb 47 <==
+def some_method
+  foo = bar = do_something
+end
+
+==> 082.rb 47 <==
+def some_method
+  foo = foo = do_something
+end
+
+==> 083.rb 48 <==
+def some_method
+  foo = -bar = do_something
+end
+
+==> 084.rb 39 <==
+def some_method
+  foo = 1, bar = 2
+end
+
+==> 085.rb 77 <==
+def some_method
+  foo = 1
+  foo, bar = do_something(foo)
+  puts foo, bar
+end
+
+==> 086.rb 69 <==
+def some_method
+  foo, (bar, baz) = do_something
+  puts foo, bar
+end
+
+==> 087.rb 81 <==
+def some_method
+  foo, (bar, (baz, qux)) = do_something
+  puts foo, bar, baz
+end
+
+==> 088.rb 70 <==
+def some_method
+  (foo, bar), *baz = do_something
+  puts foo, bar
+end
+
+==> 089.rb 70 <==
+def some_method
+  foo, (*bar, baz) = do_something
+  puts foo, baz
+end
+
+==> 090.rb 58 <==
+def some_method
+  foo, *bar = do_something
+  puts foo
+end
+
+==> 091.rb 51 <==
+begin
+  a = (a || 0) + 1
+  puts a
+end while a <= 2
+
+==> 092.rb 50 <==
+begin
+  a = (a || 0) + 1
+  puts a
+end until a > 2
+
+==> 093.rb 59 <==
+begin
+  do_something
+  foo = true
+rescue
+  do_anything
+end
+
+==> 094.rb 163 <==
+begin
+  do_something
+  foo = :in_begin
+rescue FirstError
+  foo = :in_first_rescue
+rescue SecondError
+  foo = :in_second_rescue
+else
+  foo = :in_else
+end
+
+puts foo
+
+==> 095.rb 159 <==
+begin
+  status = :initial
+  connect_sometimes_fails!
+  status = :connected
+  fetch_sometimes_fails!
+  status = :fetched
+rescue
+  do_something
+end
+
+puts status
+
+==> 096.rb 145 <==
+begin
+  status = :initial
+  connect_sometimes_fails!
+  status = :connected
+  fetch_sometimes_fails!
+  status = :fetched
+rescue
+  puts status
+end
+
+==> 097.rb 145 <==
+begin
+  status = :initial
+  connect_sometimes_fails!
+  status = :connected
+  fetch_sometimes_fails!
+  status = :fetched
+ensure
+  puts status
+end
+
+==> 098.rb 81 <==
+foo = false
+
+begin
+  do_something
+rescue
+  foo = true
+  foo = true
+end
+
+puts foo
+
+==> 099.rb 102 <==
+foo = false
+
+begin
+  do_something
+rescue
+  foo = true
+  foo = true
+ensure
+  do_anything
+end
+
+puts foo
+
+==> 100.rb 89 <==
+begin
+  do_something
+rescue
+  do_anything
+ensure
+  foo = true
+  foo = true
+end
+
+puts foo
+
+==> 101.rb 92 <==
+retried = false
+
+begin
+  do_something
+rescue
+  fail if retried
+  retried = true
+  retry
+end
+
+==> 102.rb 90 <==
+retry_count = 0
+
+begin
+  do_something
+rescue
+  fail if (retry_count += 1) > 3
+  retry
+end
+
+==> 103.rb 189 <==
+begin
+  do_something
+  foo = :in_begin
+rescue FirstError
+  foo = :in_first_rescue
+rescue SecondError
+  foo = :in_second_rescue
+else
+  foo = :in_else
+ensure
+  foo = :in_ensure
+end
+
+puts foo
+
+==> 104.rb 90 <==
+begin
+  do_something
+rescue FirstError => error
+rescue SecondError
+  p error # => nil
+end
+
+==> 105.rb 41 <==
+begin
+  do_something
+rescue => error
+end
+
+==> 106.rb 43 <==
+def some_method(foo)
+  foo = 1
+  super
+end
+
+==> 107.rb 43 <==
+def some_method(bar)
+  foo = 1
+  super
+end
+
+==> 108.rb 53 <==
+def some_method(foo, bar)
+  foo = 1
+  super(bar)
+end
+
+==> 109.rb 22 <==
+/(?<foo>w+)/ =~ 'FOO'
+
+==> 110.rb 45 <==
+def some_method
+  /(?<foo>\w+)/ =~ 'FOO'
+end
+
+==> 111.rb 76 <==
+def some_method
+  /(?<foo>w+)(?<bar> +)/ =~ 'FOO'
+  puts foo
+  puts bar
+end
+
+==> 112.rb 75 <==
+def some_method
+  foo = 'some string'
+  /(?<foo>w+)/ =~ foo
+  puts foo
+end
+
+==> 113.rb 67 <==
+def some_method
+  foo in { bar: bar }
+  baz { bar -= 1 }
+  foo
+end
+
+==> 114.rb 67 <==
+def some_method
+  foo in { bar: bar }
+  baz { qux -= 1 }
+  foo
+end
+
+==> 115.rb 57 <==
+def some_method
+  begin
+    foo = 1
+  end
+  puts foo
+end
+
+==> 116.rb 68 <==
+def some_method
+  foo = 1
+  1.times do |foo|
+    puts foo
+  end
+end
+
+==> 117.rb 52 <==
+def some_method
+  _foo = 1
+  bar = 2
+  puts bar
+end
+
+==> 118.rb 25 <==
+def some_method(arg)
+end
+
+==> 119.rb 31 <==
+def some_method(arg = nil)
+end
+
+==> 120.rb 28 <==
+def some_method(&block)
+end
+
+==> 121.rb 27 <==
+def some_method(*args)
+end
+
+==> 122.rb 33 <==
+def some_method(name: value)
+end
+
+==> 123.rb 68 <==
+def some_method(name: value, **rest_keywords)
+  p rest_keywords
+end
+
+==> 124.rb 50 <==
+def some_method(name: value, **rest_keywords)
+end
+
+==> 125.rb 37 <==
+def some_method(name: value, **)
+end
+
+==> 126.rb 19 <==
+1.times do |i|
+end
+
+==> 127.rb 8 <==
+foo = 1
+
+==> 128.rb 37 <==
+some_method(foo = 1) do
+end
+puts foo
+
+==> 129.rb 28 <==
+some_method(foo = 1) do
+end
+
+==> 130.rb 53 <==
+pattern = '*.rb'
+Dir.glob(pattern).map do |path|
+end
+
+==> 131.rb 49 <==
+foo = do_something {
+  bar = do_something_else
+}
+
+==> 132.rb 37 <==
+var = 42
+
+do_something { _1 == var }
+
+==> 133.rb 58 <==
+var = nil
+
+do_something { var = _1 }
+
+something_else(var)
+
+==> 134.rb 72 <==
+def foo
+  if bar
+    foo = 1
+  else
+    foo = 1
+  end
+  foo.bar.baz
+end
+
+==> 135.rb 75 <==
+def some_method
+  enviromnent = {}
+  another_symbol
+  puts environment
+end
+
+==> 136.rb 95 <==
+def some_method
+  environment = nil
+  another_symbol
+  enviromnent = {}
+  puts environment
+end
+
+==> 137.rb 72 <==
+def some_method
+  enviromnent = {}
+  another_symbol
+  puts envelope
+end
+
+==> 138.rb 80 <==
+def some_method
+  enviromnent = {}
+  another_symbol
+  puts self.environment
+end
+
+==> 139.rb 78 <==
+def some_method
+  enviromnent = {}
+  another_symbol
+  puts environment(1)
+end
+
+==> 140.rb 98 <==
+class SomeClass
+  enviromnent = {}
+
+  def some_method(environment)
+    puts environment
+  end
+end
+
+==> 141.rb 67 <==
+case '0'
+in String
+  res = 1
+else
+  res = 2
+end
+
+do_something(res)
+
+==> 142.rb 38 <==
+while
+  foo = 1
+  foo = 1
+  p foo
+end
+
+==> 143.rb 50 <==
+while
+  (
+    foo = 1
+    foo = 1
+  )
+  p foo
+end
+
+==> 144.rb 59 <==
+while
+  if cond
+    var += 1
+  else
+    var -= 1
+  end
+end
+
+==> 145.rb 101 <==
+var = false
+while loop_cond
+  if var
+    var = false
+    foo
+  else
+    var = true
+    bar
+  end
+end
+
+==> 146.rb 243 <==
+def parse_options
+  index = -1
+  while loop_cond
+    index += 1
+
+    if first_cond
+      index += 1
+    else
+      if second_cond
+        index += 1
+      else
+        if third_cond
+          index += 1
+        end
+      end
+    end
+  end
+end
+
+==> 147.rb 78 <==
+def testing
+rescue Foo
+  attempts += 1
+  retry
+rescue Bar
+  attempts += 1
+end
+
+==> 148.rb 75 <==
+while
+  case
+  when fizz then foo += 1
+  when buzz then foo -= 1
+  end
+end
+
+==> 149.rb 76 <==
+while
+  case expr
+  in fizz then foo += 1
+  in buzz then foo -= 1
+  end
+end
+
+==> 150.rb 104 <==
+keep_going = true
+while keep_going
+  keep_going = false
+  if rand < 0.5
+    keep_going = true
+  end
+end
+
+==> 151.rb 109 <==
+try = 0
+while try < max_tries
+  try += 1
+  next if weak?
+  try = 0
+end
+
+raise(CombinationPoolExhaustedError)
+

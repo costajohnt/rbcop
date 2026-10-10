@@ -1,0 +1,25 @@
+==> offenses exit=1 387 <==
+000.rb:1:6: C: [Correctable] Layout/FirstArrayElementLineBreak: Add a line break before the first element of a multi-line array.
+001.rb:1:4: C: [Correctable] Layout/FirstArrayElementLineBreak: Add a line break before the first element of a multi-line array.
+002.rb:1:9: C: [Correctable] Layout/FirstArrayElementLineBreak: Add a line break before the first element of a multi-line array.
+
+==> autocorrect exit=0 381 <==
+000.rb:1:6: C: [Corrected] Layout/FirstArrayElementLineBreak: Add a line break before the first element of a multi-line array.
+001.rb:1:4: C: [Corrected] Layout/FirstArrayElementLineBreak: Add a line break before the first element of a multi-line array.
+002.rb:1:9: C: [Corrected] Layout/FirstArrayElementLineBreak: Add a line break before the first element of a multi-line array.
+
+==> corrected/000.rb 19 <==
+a = [
+:a,
+     :b]
+
+==> corrected/001.rb 16 <==
+%w(
+a b
+   c d)
+
+==> corrected/002.rb 30 <==
+method([
+:foo,
+        :bar])
+

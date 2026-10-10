@@ -1,0 +1,9 @@
+==> offenses exit=1 135 <==
+000.rb:2:1: C: [Correctable] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+
+==> autocorrect exit=0 133 <==
+000.rb:2:1: C: [Corrected] Style/PartitionInsteadOfDoubleSelect: Use `partition` instead of consecutive `select` and `reject` calls.
+
+==> corrected/000.rb 48 <==
+positives, negatives = arr.partition { it > 0 }
+

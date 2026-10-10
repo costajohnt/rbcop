@@ -1,0 +1,43 @@
+==> .rubocop.yml 160 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Metrics/BlockNesting:
+  Max: 2
+  CountBlocks: false
+
+==> 000.rb 66 <==
+if a
+  if b
+    [1, 2].each do |c|
+      puts c
+    end
+  end
+end
+
+==> 001.rb 53 <==
+if a
+  if b
+    [1, 2].each { |c| puts c }
+  end
+end
+
+==> 002.rb 63 <==
+if a
+  if b
+    [1, 2].each do
+      puts _1
+    end
+  end
+end
+
+==> 003.rb 50 <==
+if a
+  if b
+    [1, 2].each { puts _1 }
+  end
+end
+

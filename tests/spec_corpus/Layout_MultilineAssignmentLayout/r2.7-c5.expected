@@ -1,0 +1,30 @@
+==> offenses exit=1 640 <==
+001.rb:1:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is not on the same line as the assignment operator `=`.
+005.rb:1:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is not on the same line as the assignment operator `=`.
+007.rb:1:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is not on the same line as the assignment operator `=`.
+008.rb:1:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is not on the same line as the assignment operator `=`.
+
+==> autocorrect exit=0 632 <==
+001.rb:1:1: C: [Corrected] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is not on the same line as the assignment operator `=`.
+005.rb:1:1: C: [Corrected] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is not on the same line as the assignment operator `=`.
+007.rb:1:1: C: [Corrected] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is not on the same line as the assignment operator `=`.
+008.rb:1:1: C: [Corrected] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is not on the same line as the assignment operator `=`.
+
+==> corrected/001.rb 35 <==
+lambda = -> {
+    puts 'hello'
+  }
+
+==> corrected/005.rb 45 <==
+foo = items.map { |item| item.do_something }
+
+==> corrected/007.rb 54 <==
+foo = items.map do |item|
+    item.do_something
+  end
+
+==> corrected/008.rb 32 <==
+bars = foo.map {
+    _1.bar
+  }
+

@@ -1,0 +1,189 @@
+==> .rubocop.yml 145 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/AndOr:
+  EnforcedStyle: always
+
+==> 000.rb 16 <==
+test if a and b
+
+==> 001.rb 41 <==
+def z(a, b)
+  return true if a and b
+end
+
+==> 002.rb 15 <==
+test if a or b
+
+==> 003.rb 40 <==
+def z(a, b)
+  return true if a or b
+end
+
+==> 004.rb 33 <==
+x = y or teststring.include? 'b'
+
+==> 005.rb 33 <==
+teststring.include? 'b' or x = y
+
+==> 006.rb 24 <==
+foo[:bar] and foo[:baz]
+
+==> 007.rb 23 <==
+x = a + b and return x
+
+==> 008.rb 21 <==
+x = a + b if a and b
+
+==> 009.rb 25 <==
+x = a + b unless a and b
+
+==> 010.rb 24 <==
+x = a + b while a and b
+
+==> 011.rb 24 <==
+x = a + b until a and b
+
+==> 012.rb 15 <==
+method a and b
+
+==> 013.rb 17 <==
+method a,b and b
+
+==> 014.rb 19 <==
+obj.method a and b
+
+==> 015.rb 21 <==
+obj.method a,b and b
+
+==> 016.rb 19 <==
+method(a, b) and b
+
+==> 017.rb 17 <==
+b and method a,b
+
+==> 018.rb 22 <==
+x = a + b or return x
+
+==> 019.rb 20 <==
+x = a + b if a or b
+
+==> 020.rb 24 <==
+x = a + b unless a or b
+
+==> 021.rb 23 <==
+x = a + b while a or b
+
+==> 022.rb 23 <==
+x = a + b until a or b
+
+==> 023.rb 14 <==
+method a or b
+
+==> 024.rb 16 <==
+method a,b or b
+
+==> 025.rb 18 <==
+obj.method a or b
+
+==> 026.rb 20 <==
+obj.method a,b or b
+
+==> 027.rb 18 <==
+method(a, b) or b
+
+==> 028.rb 16 <==
+b or method a,b
+
+==> 029.rb 15 <==
+foo and return
+
+==> 030.rb 17 <==
+foo and return x
+
+==> 031.rb 60 <==
+items.each do |item|
+  foo and next 1
+  bar and break 2
+end
+
+==> 032.rb 28 <==
+def m
+  foo and yield 1
+end
+
+==> 033.rb 22 <==
+x and !obj.method arg
+
+==> 034.rb 22 <==
+!obj.method arg and x
+
+==> 035.rb 23 <==
+obj.method = arg and x
+
+==> 036.rb 22 <==
+obj.method= arg and x
+
+==> 037.rb 24 <==
+false or 3.is_a?Integer
+
+==> 038.rb 25 <==
+false and 3.is_a?Integer
+
+==> 039.rb 35 <==
+'1'.is_a?Integer or 1.is_a?Integer
+
+==> 040.rb 36 <==
+'1'.is_a?Integer and 1.is_a?Integer
+
+==> 041.rb 36 <==
+'1'.is_a?Integer or 1.is_a? Integer
+
+==> 042.rb 37 <==
+'1'.is_a?Integer and 1.is_a? Integer
+
+==> 043.rb 14 <==
+x and not arg
+
+==> 044.rb 14 <==
+not arg and x
+
+==> 045.rb 19 <==
+!var or var.empty?
+
+==> 046.rb 37 <==
+def x
+end
+
+def y
+  a = b and a.c
+end
+
+==> 047.rb 19 <==
+foo == bar and baz
+
+==> 048.rb 19 <==
+foo or bar and baz
+
+==> 049.rb 18 <==
+foo or bar && baz
+
+==> 050.rb 19 <==
+foo and bar or baz
+
+==> 051.rb 19 <==
+foo and bar || baz
+
+==> 052.rb 28 <==
+(def y
+  a = b and a.c
+end)
+
+==> 053.rb 113 <==
+APP_ROOT = Pathname.new File.expand_path('../../', __FILE__)
+system('bundle check') or system!('bundle install')
+

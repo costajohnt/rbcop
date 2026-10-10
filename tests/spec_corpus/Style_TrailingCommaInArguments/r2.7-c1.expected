@@ -1,0 +1,74 @@
+==> offenses exit=1 1794 <==
+000.rb:1:20: C: [Correctable] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call, unless each item is on its own line.
+001.rb:1:21: C: [Correctable] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call, unless each item is on its own line.
+002.rb:1:29: C: [Correctable] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call, unless each item is on its own line.
+008.rb:1:30: C: [Correctable] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call, unless each item is on its own line.
+009.rb:1:39: C: [Correctable] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call, unless each item is on its own line.
+010.rb:1:20: C: [Correctable] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call, unless each item is on its own line.
+011.rb:1:21: C: [Correctable] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call, unless each item is on its own line.
+012.rb:1:29: C: [Correctable] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call, unless each item is on its own line.
+017.rb:1:30: C: [Correctable] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call, unless each item is on its own line.
+018.rb:1:39: C: [Correctable] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call, unless each item is on its own line.
+021.rb:5:15: C: [Correctable] Style/TrailingCommaInArguments: Put a comma after the last parameter of a multiline method call.
+033.rb:5:15: C: [Correctable] Style/TrailingCommaInArguments: Put a comma after the last parameter of a multiline method call.
+
+==> autocorrect exit=0 1770 <==
+000.rb:1:20: C: [Corrected] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call, unless each item is on its own line.
+001.rb:1:21: C: [Corrected] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call, unless each item is on its own line.
+002.rb:1:29: C: [Corrected] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call, unless each item is on its own line.
+008.rb:1:30: C: [Corrected] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call, unless each item is on its own line.
+009.rb:1:39: C: [Corrected] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call, unless each item is on its own line.
+010.rb:1:20: C: [Corrected] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call, unless each item is on its own line.
+011.rb:1:21: C: [Corrected] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call, unless each item is on its own line.
+012.rb:1:29: C: [Corrected] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call, unless each item is on its own line.
+017.rb:1:30: C: [Corrected] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call, unless each item is on its own line.
+018.rb:1:39: C: [Corrected] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call, unless each item is on its own line.
+021.rb:5:15: C: [Corrected] Style/TrailingCommaInArguments: Put a comma after the last parameter of a multiline method call.
+033.rb:5:15: C: [Corrected] Style/TrailingCommaInArguments: Put a comma after the last parameter of a multiline method call.
+
+==> corrected/000.rb 22 <==
+some_method(a, b, c )
+
+==> corrected/001.rb 23 <==
+some_method(a, b, c  )
+
+==> corrected/002.rb 31 <==
+some_method(a, b, c: 0, d: 1 )
+
+==> corrected/008.rb 32 <==
+receiver&.some_method(a, b, c )
+
+==> corrected/009.rb 41 <==
+receiver&.some_method(a, b, c: 0, d: 1 )
+
+==> corrected/010.rb 22 <==
+some_method[a, b, c ]
+
+==> corrected/011.rb 23 <==
+some_method[a, b, c  ]
+
+==> corrected/012.rb 31 <==
+some_method[a, b, c: 0, d: 1 ]
+
+==> corrected/017.rb 32 <==
+receiver&.some_method[a, b, c ]
+
+==> corrected/018.rb 41 <==
+receiver&.some_method[a, b, c: 0, d: 1 ]
+
+==> corrected/021.rb 99 <==
+some_method(
+              a,
+              b,
+              c: 0,
+              d: 1,
+          )
+
+==> corrected/033.rb 99 <==
+some_method[
+              a,
+              b,
+              c: 0,
+              d: 1,
+          ]
+

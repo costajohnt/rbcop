@@ -1,0 +1,46 @@
+==> .rubocop.yml 180 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/RedundantSplatExpansion:
+  AllowPercentLiteralArrayArgument: false
+
+==> 000.rb 31 <==
+array.push(*%w(one two three))
+
+==> 001.rb 23 <==
+a = *%w(one two three)
+
+==> 002.rb 34 <==
+array.push(*%W(one #{two} three))
+
+==> 003.rb 26 <==
+a = *%W(one #{two} three)
+
+==> 004.rb 31 <==
+do_something(*%w[foo bar baz])
+
+==> 005.rb 42 <==
+maybe_nil&.do_something(*%w[foo bar baz])
+
+==> 006.rb 30 <==
+array.push(*%i(first second))
+
+==> 007.rb 22 <==
+a = *%i(first second)
+
+==> 008.rb 39 <==
+array.push(*%I(first second #{third}))
+
+==> 009.rb 31 <==
+a = *%I(first second #{third})
+
+==> 010.rb 31 <==
+do_something(*%i[foo bar baz])
+
+==> 011.rb 33 <==
+array.push(*%I(#{first} second))
+

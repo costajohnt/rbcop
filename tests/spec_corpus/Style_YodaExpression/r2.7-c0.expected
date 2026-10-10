@@ -1,0 +1,37 @@
+==> offenses exit=1 595 <==
+000.rb:1:1: C: [Correctable] Style/YodaExpression: Non-literal operand (`x`) should be first.
+001.rb:1:1: C: [Correctable] Style/YodaExpression: Non-literal operand (`x`) should be first.
+002.rb:1:1: C: [Correctable] Style/YodaExpression: Non-literal operand (`(1 + x)`) should be first.
+003.rb:1:1: C: [Correctable] Style/YodaExpression: Non-literal operand (`(ONE + x)`) should be first.
+008.rb:1:1: C: [Correctable] Style/YodaExpression: Non-literal operand (`CONST.+(ary)`) should be first.
+009.rb:1:1: C: [Correctable] Style/YodaExpression: Non-literal operand (`CONST.*`) should be first.
+
+==> autocorrect exit=0 861 <==
+000.rb:1:1: C: [Corrected] Style/YodaExpression: Non-literal operand (`x`) should be first.
+001.rb:1:1: C: [Corrected] Style/YodaExpression: Non-literal operand (`x`) should be first.
+002.rb:1:1: C: [Corrected] Style/YodaExpression: Non-literal operand (`(1 + x)`) should be first.
+002.rb:1:2: C: [Corrected] Style/YodaExpression: Non-literal operand (`x`) should be first.
+003.rb:1:1: C: [Corrected] Style/YodaExpression: Non-literal operand (`(ONE + x)`) should be first.
+003.rb:1:2: C: [Corrected] Style/YodaExpression: Non-literal operand (`x`) should be first.
+008.rb:1:1: C: [Corrected] Style/YodaExpression: Non-literal operand (`CONST.+(ary)`) should be first.
+008.rb:1:1: C: [Corrected] Style/YodaExpression: Non-literal operand (`ary`) should be first.
+009.rb:1:1: C: [Corrected] Style/YodaExpression: Non-literal operand (`CONST.*`) should be first.
+
+==> corrected/000.rb 6 <==
+x + 1
+
+==> corrected/001.rb 10 <==
+x + CONST
+
+==> corrected/002.rb 12 <==
+(x + 1) + 2
+
+==> corrected/003.rb 16 <==
+(x + ONE) + TWO
+
+==> corrected/008.rb 17 <==
+ary.+(CONST) + 1
+
+==> corrected/009.rb 12 <==
+CONST.* + 1
+

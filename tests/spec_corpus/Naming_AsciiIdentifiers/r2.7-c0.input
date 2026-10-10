@@ -1,0 +1,28 @@
+==> .rubocop.yml 156 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/AsciiIdentifiers:
+  AsciiConstants: true
+
+==> 000.rb 9 <==
+älg = 1
+
+==> 001.rb 19 <==
+foo∂∂bar = baz
+
+==> 002.rb 8 <==
+x.empty?
+==> 003.rb 15 <==
+﻿
+puts 'foo'
+
+==> 004.rb 0 <==
+
+==> 005.rb 15 <==
+class Foö
+end
+

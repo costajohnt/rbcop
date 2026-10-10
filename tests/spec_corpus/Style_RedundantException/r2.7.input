@@ -1,0 +1,92 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 30 <==
+raise RuntimeError, "message"
+
+==> 001.rb 31 <==
+raise(RuntimeError, "message")
+
+==> 002.rb 33 <==
+raise RuntimeError.new "message"
+
+==> 003.rb 34 <==
+raise RuntimeError.new("message")
+
+==> 004.rb 37 <==
+raise RuntimeError, 'message', caller
+==> 005.rb 27 <==
+raise OtherError, 'message'
+==> 006.rb 32 <==
+raise ::RuntimeError, "message"
+
+==> 007.rb 33 <==
+raise(::RuntimeError, "message")
+
+==> 008.rb 35 <==
+raise ::RuntimeError.new "message"
+
+==> 009.rb 36 <==
+raise ::RuntimeError.new("message")
+
+==> 010.rb 39 <==
+raise ::RuntimeError, 'message', caller
+==> 011.rb 29 <==
+fail RuntimeError, "message"
+
+==> 012.rb 30 <==
+fail(RuntimeError, "message")
+
+==> 013.rb 32 <==
+fail RuntimeError.new "message"
+
+==> 014.rb 33 <==
+fail RuntimeError.new("message")
+
+==> 015.rb 36 <==
+fail RuntimeError, 'message', caller
+==> 016.rb 26 <==
+fail OtherError, 'message'
+==> 017.rb 31 <==
+fail ::RuntimeError, "message"
+
+==> 018.rb 32 <==
+fail(::RuntimeError, "message")
+
+==> 019.rb 34 <==
+fail ::RuntimeError.new "message"
+
+==> 020.rb 35 <==
+fail ::RuntimeError.new("message")
+
+==> 021.rb 38 <==
+fail ::RuntimeError, 'message', caller
+==> 022.rb 33 <==
+raise RuntimeError, "#{message}"
+
+==> 023.rb 30 <==
+raise RuntimeError, `command`
+
+==> 024.rb 31 <==
+raise RuntimeError, Object.new
+
+==> 025.rb 24 <==
+raise RuntimeError, nil
+
+==> 026.rb 28 <==
+raise RuntimeError.new(nil)
+
+==> 027.rb 35 <==
+raise RuntimeError.new(Object.new)
+
+==> 028.rb 34 <==
+raise RuntimeError.new Object.new
+
+==> 029.rb 29 <==
+raise RuntimeError, variable
+

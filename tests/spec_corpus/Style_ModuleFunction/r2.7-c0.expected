@@ -1,0 +1,19 @@
+==> offenses exit=1 198 <==
+000.rb:2:3: C: [Correctable] Style/ModuleFunction: Use `module_function` instead of `extend self`.
+001.rb:2:3: C: [Correctable] Style/ModuleFunction: Use `module_function` instead of `extend self`.
+
+==> autocorrect exit=0 194 <==
+000.rb:2:3: C: [Corrected] Style/ModuleFunction: Use `module_function` instead of `extend self`.
+001.rb:2:3: C: [Corrected] Style/ModuleFunction: Use `module_function` instead of `extend self`.
+
+==> corrected/000.rb 50 <==
+module Test
+  module_function
+  def test; end
+end
+
+==> corrected/001.rb 34 <==
+module Test
+  module_function
+end
+

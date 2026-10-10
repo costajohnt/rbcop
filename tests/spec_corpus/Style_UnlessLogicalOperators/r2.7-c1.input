@@ -1,0 +1,36 @@
+==> .rubocop.yml 180 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/UnlessLogicalOperators:
+  EnforcedStyle: forbid_logical_operators
+
+==> 000.rb 21 <==
+return unless a && b
+
+==> 001.rb 21 <==
+return unless a || b
+
+==> 002.rb 22 <==
+return unless a and b
+
+==> 003.rb 21 <==
+return unless a or b
+
+==> 004.rb 26 <==
+return unless a && b || c
+
+==> 005.rb 17 <==
+return if a || b
+
+==> 006.rb 28 <==
+def condition?
+  a || b
+end
+
+==> 007.rb 17 <==
+return unless a?
+

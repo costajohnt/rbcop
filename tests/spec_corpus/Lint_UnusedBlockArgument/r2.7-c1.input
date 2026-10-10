@@ -1,0 +1,20 @@
+==> .rubocop.yml 170 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/UnusedBlockArgument:
+  AllowUnusedKeywordArguments: true
+
+==> 000.rb 57 <==
+define_method(:foo) do |bar: 'default'|
+  puts 'bar'
+end
+
+==> 001.rb 47 <==
+foo(:foo) do |bar: 'default'|
+  puts 'bar'
+end
+

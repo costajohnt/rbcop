@@ -1,0 +1,22 @@
+==> offenses exit=1 366 <==
+000.rb:1:1: W: [Correctable] Lint/ToJSON: `#to_json` requires an optional argument to be parsable via JSON.generate(obj).
+001.rb:1:1: W: [Correctable] Lint/ToJSON: `#to_json` requires an optional argument to be parsable via JSON.generate(obj).
+002.rb:1:1: W: [Correctable] Lint/ToJSON: `#to_json` requires an optional argument to be parsable via JSON.generate(obj).
+
+==> autocorrect exit=0 360 <==
+000.rb:1:1: W: [Corrected] Lint/ToJSON: `#to_json` requires an optional argument to be parsable via JSON.generate(obj).
+001.rb:1:1: W: [Corrected] Lint/ToJSON: `#to_json` requires an optional argument to be parsable via JSON.generate(obj).
+002.rb:1:1: W: [Corrected] Lint/ToJSON: `#to_json` requires an optional argument to be parsable via JSON.generate(obj).
+
+==> corrected/000.rb 24 <==
+def to_json(*_args)
+end
+
+==> corrected/001.rb 24 <==
+def to_json(*_args)
+end
+
+==> corrected/002.rb 29 <==
+def self.to_json(*_args)
+end
+

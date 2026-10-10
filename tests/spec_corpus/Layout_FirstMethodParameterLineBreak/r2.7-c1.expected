@@ -1,0 +1,23 @@
+==> offenses exit=1 300 <==
+002.rb:1:9: C: [Correctable] Layout/FirstMethodParameterLineBreak: Add a line break before the first parameter of a multi-line method parameter list.
+003.rb:1:9: C: [Correctable] Layout/FirstMethodParameterLineBreak: Add a line break before the first parameter of a multi-line method parameter list.
+
+==> autocorrect exit=0 296 <==
+002.rb:1:9: C: [Corrected] Layout/FirstMethodParameterLineBreak: Add a line break before the first parameter of a multi-line method parameter list.
+003.rb:1:9: C: [Corrected] Layout/FirstMethodParameterLineBreak: Add a line break before the first parameter of a multi-line method parameter list.
+
+==> corrected/002.rb 64 <==
+def foo(
+bar, baz = {
+  a: b
+}, qux = false)
+  do_something
+end
+
+==> corrected/003.rb 53 <==
+def foo(
+bar, baz,
+  qux = false)
+  do_something
+end
+

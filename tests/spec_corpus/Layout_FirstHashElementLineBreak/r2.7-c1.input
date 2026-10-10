@@ -1,0 +1,29 @@
+==> .rubocop.yml 177 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/FirstHashElementLineBreak:
+  AllowMultilineFinalElement: true
+
+==> 000.rb 26 <==
+h = {a: b, c: {
+  d: e
+}}
+
+==> 001.rb 20 <==
+h = {a: {
+  b: c
+}}
+
+==> 002.rb 33 <==
+h = {a: b, c: {
+  d: e,
+}, f: g}
+
+==> 003.rb 23 <==
+h = {a: b, c: d,
+e: f}
+

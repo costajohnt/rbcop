@@ -1,0 +1,20 @@
+==> offenses exit=1 609 <==
+000.rb:1:1: W: Security/Eval: The use of `eval` is a serious security risk.
+001.rb:1:1: W: Security/Eval: The use of `eval` is a serious security risk.
+002.rb:1:9: W: Security/Eval: The use of `eval` is a serious security risk.
+003.rb:1:8: W: Security/Eval: The use of `eval` is a serious security risk.
+004.rb:1:10: W: Security/Eval: The use of `eval` is a serious security risk.
+005.rb:1:1: W: Security/Eval: The use of `eval` is a serious security risk.
+012.rb:1:1: W: Security/Eval: The use of `eval` is a serious security risk.
+013.rb:1:1: W: Security/Eval: The use of `eval` is a serious security risk.
+
+==> autocorrect exit=1 609 <==
+000.rb:1:1: W: Security/Eval: The use of `eval` is a serious security risk.
+001.rb:1:1: W: Security/Eval: The use of `eval` is a serious security risk.
+002.rb:1:9: W: Security/Eval: The use of `eval` is a serious security risk.
+003.rb:1:8: W: Security/Eval: The use of `eval` is a serious security risk.
+004.rb:1:10: W: Security/Eval: The use of `eval` is a serious security risk.
+005.rb:1:1: W: Security/Eval: The use of `eval` is a serious security risk.
+012.rb:1:1: W: Security/Eval: The use of `eval` is a serious security risk.
+013.rb:1:1: W: Security/Eval: The use of `eval` is a serious security risk.
+

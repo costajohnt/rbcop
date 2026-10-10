@@ -1,0 +1,22 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.6
+
+==> 000.rb 23 <==
+a, b = 1, 2 rescue foo
+
+==> 001.rb 37 <==
+def foo
+  a, b = 1, 2 rescue foo
+end
+
+==> 002.rb 57 <==
+def foo
+  a, b = %w(1 2) rescue foo
+  something_else
+end
+

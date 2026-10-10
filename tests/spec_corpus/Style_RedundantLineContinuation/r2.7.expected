@@ -1,0 +1,262 @@
+==> offenses exit=1 4136 <==
+062.rb:1:8: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+063.rb:1:8: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+064.rb:3:6: F: Lint/Syntax: unexpected token tSEMI (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+065.rb:3:6: F: Lint/Syntax: unexpected token tSEMI (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+066.rb:3:7: F: Lint/Syntax: unexpected token tSEMI (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+067.rb:3:7: F: Lint/Syntax: unexpected token tSEMI (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+068.rb:1:11: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+069.rb:1:14: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+070.rb:1:19: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+071.rb:1:8: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+072.rb:1:13: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+072.rb:2:12: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+073.rb:1:6: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+073.rb:4:5: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+073.rb:5:8: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+074.rb:1:7: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+076.rb:1:8: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+080.rb:1:8: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+089.rb:2:11: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+090.rb:2:11: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+091.rb:2:11: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+092.rb:1:7: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+093.rb:1:7: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+094.rb:1:10: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+095.rb:1:21: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+108.rb:1:11: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+109.rb:1:15: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+146.rb:3:12: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+147.rb:7:12: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+148.rb:1:10: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+149.rb:4:10: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+150.rb:1:10: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+150.rb:4:10: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+162.rb:1:5: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+163.rb:4:11: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+164.rb:1:5: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+165.rb:1:10: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+166.rb:2:7: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+167.rb:2:9: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+168.rb:1:7: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+169.rb:4:14: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+170.rb:3:14: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+
+==> autocorrect exit=1 4064 <==
+062.rb:1:8: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+063.rb:1:8: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+064.rb:3:6: F: Lint/Syntax: unexpected token tSEMI (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+065.rb:3:6: F: Lint/Syntax: unexpected token tSEMI (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+066.rb:3:7: F: Lint/Syntax: unexpected token tSEMI (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+067.rb:3:7: F: Lint/Syntax: unexpected token tSEMI (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+068.rb:1:11: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+069.rb:1:14: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+070.rb:1:19: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+071.rb:1:8: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+072.rb:1:13: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+072.rb:2:12: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+073.rb:1:6: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+073.rb:4:5: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+073.rb:5:8: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+074.rb:1:7: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+076.rb:1:8: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+080.rb:1:8: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+089.rb:2:11: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+090.rb:2:11: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+091.rb:2:11: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+092.rb:1:7: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+093.rb:1:7: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+094.rb:1:10: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+095.rb:1:21: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+108.rb:1:11: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+109.rb:1:15: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+146.rb:3:12: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+147.rb:7:12: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+148.rb:1:10: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+149.rb:4:10: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+150.rb:1:10: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+150.rb:4:10: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+162.rb:1:5: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+163.rb:4:11: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+164.rb:1:5: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+165.rb:1:10: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+166.rb:2:7: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+167.rb:2:9: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+168.rb:1:7: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+169.rb:4:14: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+170.rb:3:14: C: [Corrected] Style/RedundantLineContinuation: Redundant line continuation.
+
+==> corrected/068.rb 15 <==
+class Foo 
+end
+
+==> corrected/069.rb 31 <==
+def foo(bar, 
+        baz)
+end
+
+==> corrected/070.rb 42 <==
+def self.foo(bar, 
+              baz)
+end
+
+==> corrected/071.rb 18 <==
+foo do 
+  bar
+end
+
+==> corrected/072.rb 40 <==
+let :foo do 
+  foo(bar, 
+      baz)
+end
+
+==> corrected/073.rb 35 <==
+foo. 
+  bar
+
+foo 
+  .bar 
+    .baz
+
+==> corrected/074.rb 13 <==
+foo&. 
+  bar
+
+==> corrected/076.rb 16 <==
+return(
+  foo
+)
+
+==> corrected/080.rb 21 <==
+if foo 
+then bar
+end
+
+==> corrected/089.rb 21 <==
+obj
+ .foo(42) 
+ .bar
+
+==> corrected/090.rb 22 <==
+obj.
+ foo(42). 
+
+ bar
+
+==> corrected/091.rb 21 <==
+obj.
+ foo(42). 
+ bar
+
+==> corrected/092.rb 14 <==
+[foo, 
+  bar]
+
+==> corrected/093.rb 14 <==
+{foo: 
+  bar}
+
+==> corrected/094.rb 17 <==
+foo(bar, 
+  baz)
+
+==> corrected/095.rb 33 <==
+foo = do_something( 
+  argument)
+
+==> corrected/108.rb 18 <==
+foo 'bar' 
+
+'baz'
+
+==> corrected/109.rb 22 <==
+foo("#{bar}", 
+  baz)
+
+==> corrected/146.rb 41 <==
+def do_something
+  foo \
+    || bar 
+end
+
+==> corrected/147.rb 60 <==
+x do
+  foo bar \
+    baz
+end
+
+y do
+  foo(bar, 
+    baz)
+end
+
+==> corrected/148.rb 34 <==
+foo(bar, 
+  baz)
+
+foo bar \
+  baz
+
+==> corrected/149.rb 34 <==
+foo bar \
+  baz
+
+foo(bar, 
+  baz)
+
+==> corrected/150.rb 35 <==
+foo(bar, 
+  baz)
+
+foo(bar, 
+  baz)
+
+==> corrected/162.rb 5 <==
+foo 
+
+==> corrected/163.rb 29 <==
+def foo
+  bar
+end
+some_code 
+
+==> corrected/164.rb 21 <==
+foo 
+
+__END__
+data \
+
+==> corrected/165.rb 26 <==
+foo(bar, 
+  %i[baz quux])
+
+==> corrected/166.rb 19 <==
+def foo
+  bar 
+end
+
+==> corrected/167.rb 21 <==
+def foo
+  super 
+end
+
+==> corrected/168.rb 23 <==
+a, b, 
+  c = [1, 2, 3]
+
+==> corrected/169.rb 74 <==
+class A
+  ROOT = __FILE__
+  def same
+    foo(bar, 
+        baz)
+  end
+end
+
+==> corrected/170.rb 38 <==
+def foo
+  'first' \
+    'second' 
+end
+

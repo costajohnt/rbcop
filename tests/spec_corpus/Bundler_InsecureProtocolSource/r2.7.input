@@ -1,0 +1,20 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.gemfile 18 <==
+source :gemcutter
+
+==> 001.gemfile 17 <==
+source :rubygems
+
+==> 002.gemfile 18 <==
+source :rubyforge
+
+==> 003.gemfile 30 <==
+source 'https://rubygems.org'
+

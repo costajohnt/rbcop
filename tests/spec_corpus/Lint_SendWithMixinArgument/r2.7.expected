@@ -1,0 +1,78 @@
+==> offenses exit=1 1561 <==
+000.rb:1:5: W: [Correctable] Lint/SendWithMixinArgument: Use `include Bar` instead of `send(:include, Bar)`.
+001.rb:2:3: W: [Correctable] Lint/SendWithMixinArgument: Use `include Bar` instead of `send(:include, Bar)`.
+002.rb:2:8: W: [Correctable] Lint/SendWithMixinArgument: Use `include Bar` instead of `send(:include, Bar)`.
+003.rb:1:5: W: [Correctable] Lint/SendWithMixinArgument: Use `prepend Bar` instead of `send(:prepend, Bar)`.
+004.rb:1:5: W: [Correctable] Lint/SendWithMixinArgument: Use `extend Bar` instead of `send(:extend, Bar)`.
+005.rb:1:5: W: [Correctable] Lint/SendWithMixinArgument: Use `include Bar` instead of `send('include', Bar)`.
+006.rb:1:5: W: [Correctable] Lint/SendWithMixinArgument: Use `prepend Bar` instead of `send('prepend', Bar)`.
+007.rb:1:5: W: [Correctable] Lint/SendWithMixinArgument: Use `extend Bar` instead of `send('extend', Bar)`.
+008.rb:1:5: W: [Correctable] Lint/SendWithMixinArgument: Use `include Bar` instead of `public_send(:include, Bar)`.
+009.rb:1:5: W: [Correctable] Lint/SendWithMixinArgument: Use `prepend Bar` instead of `public_send(:prepend, Bar)`.
+010.rb:1:5: W: [Correctable] Lint/SendWithMixinArgument: Use `extend Bar` instead of `__send__(:extend, Bar)`.
+011.rb:1:5: W: [Correctable] Lint/SendWithMixinArgument: Use `include Bar` instead of `__send__(:include, Bar)`.
+016.rb:1:8: W: [Correctable] Lint/SendWithMixinArgument: Use `include B::Bar` instead of `send(:include, B::Bar)`.
+017.rb:1:5: W: [Correctable] Lint/SendWithMixinArgument: Use `include Bar, Baz` instead of `send(:include, Bar, Baz)`.
+
+==> autocorrect exit=0 1533 <==
+000.rb:1:5: W: [Corrected] Lint/SendWithMixinArgument: Use `include Bar` instead of `send(:include, Bar)`.
+001.rb:2:3: W: [Corrected] Lint/SendWithMixinArgument: Use `include Bar` instead of `send(:include, Bar)`.
+002.rb:2:8: W: [Corrected] Lint/SendWithMixinArgument: Use `include Bar` instead of `send(:include, Bar)`.
+003.rb:1:5: W: [Corrected] Lint/SendWithMixinArgument: Use `prepend Bar` instead of `send(:prepend, Bar)`.
+004.rb:1:5: W: [Corrected] Lint/SendWithMixinArgument: Use `extend Bar` instead of `send(:extend, Bar)`.
+005.rb:1:5: W: [Corrected] Lint/SendWithMixinArgument: Use `include Bar` instead of `send('include', Bar)`.
+006.rb:1:5: W: [Corrected] Lint/SendWithMixinArgument: Use `prepend Bar` instead of `send('prepend', Bar)`.
+007.rb:1:5: W: [Corrected] Lint/SendWithMixinArgument: Use `extend Bar` instead of `send('extend', Bar)`.
+008.rb:1:5: W: [Corrected] Lint/SendWithMixinArgument: Use `include Bar` instead of `public_send(:include, Bar)`.
+009.rb:1:5: W: [Corrected] Lint/SendWithMixinArgument: Use `prepend Bar` instead of `public_send(:prepend, Bar)`.
+010.rb:1:5: W: [Corrected] Lint/SendWithMixinArgument: Use `extend Bar` instead of `__send__(:extend, Bar)`.
+011.rb:1:5: W: [Corrected] Lint/SendWithMixinArgument: Use `include Bar` instead of `__send__(:include, Bar)`.
+016.rb:1:8: W: [Corrected] Lint/SendWithMixinArgument: Use `include B::Bar` instead of `send(:include, B::Bar)`.
+017.rb:1:5: W: [Corrected] Lint/SendWithMixinArgument: Use `include Bar, Baz` instead of `send(:include, Bar, Baz)`.
+
+==> corrected/000.rb 16 <==
+Foo.include Bar
+
+==> corrected/001.rb 28 <==
+class Foo
+  include Bar
+end
+
+==> corrected/002.rb 33 <==
+class Foo
+  self.include Bar
+end
+
+==> corrected/003.rb 16 <==
+Foo.prepend Bar
+
+==> corrected/004.rb 15 <==
+Foo.extend Bar
+
+==> corrected/005.rb 16 <==
+Foo.include Bar
+
+==> corrected/006.rb 16 <==
+Foo.prepend Bar
+
+==> corrected/007.rb 15 <==
+Foo.extend Bar
+
+==> corrected/008.rb 16 <==
+Foo.include Bar
+
+==> corrected/009.rb 16 <==
+Foo.prepend Bar
+
+==> corrected/010.rb 15 <==
+Foo.extend Bar
+
+==> corrected/011.rb 16 <==
+Foo.include Bar
+
+==> corrected/016.rb 22 <==
+A::Foo.include B::Bar
+
+==> corrected/017.rb 21 <==
+Foo.include Bar, Baz
+

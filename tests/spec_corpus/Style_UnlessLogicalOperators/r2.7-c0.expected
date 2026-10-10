@@ -1,0 +1,26 @@
+==> offenses exit=1 1056 <==
+000.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+001.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+002.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+003.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+004.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+005.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+006.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+007.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+008.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+009.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+010.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+
+==> autocorrect exit=1 1056 <==
+000.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+001.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+002.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+003.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+004.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+005.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+006.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+007.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+008.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+009.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+010.rb:1:1: C: Style/UnlessLogicalOperators: Do not use mixed logical operators in an `unless`.
+

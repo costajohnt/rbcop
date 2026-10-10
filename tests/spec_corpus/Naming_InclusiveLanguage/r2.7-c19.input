@@ -1,0 +1,34 @@
+==> .rubocop.yml 200 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/InclusiveLanguage:
+  CheckStrings: true
+  FlaggedTerms:
+    master: {}
+    slave: {}
+
+==> 000.rb 28 <==
+puts "master node #{node}"
+
+
+==> 001.rb 52 <==
+node_types = "master
+  slave
+  primary
+  secondary"
+
+==> 002.rb 64 <==
+node_text = <<~TEXT
+  master
+  primary
+  slave
+  secondary
+TEXT
+
+==> 003.rb 16 <==
+%W("a\255\255")
+

@@ -1,0 +1,224 @@
+==> offenses exit=1 3792 <==
+000.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `map` over `collect`.
+001.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `map` over `collect`.
+002.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `map` over `collect`.
+003.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `map` over `collect`.
+004.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `map` over `collect`.
+005.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `map` over `collect`.
+006.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `map` over `collect`.
+007.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `map` over `collect`.
+010.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `reduce` over `inject`.
+011.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `reduce` over `inject`.
+012.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `reduce` over `inject`.
+013.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `reduce` over `inject`.
+014.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `reduce` over `inject`.
+015.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `reduce` over `inject`.
+016.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `reduce` over `inject`.
+017.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `reduce` over `inject`.
+020.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `find` over `detect`.
+021.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `find` over `detect`.
+022.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `find` over `detect`.
+023.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `find` over `detect`.
+024.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `find` over `detect`.
+025.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `find` over `detect`.
+026.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `find` over `detect`.
+027.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `find` over `detect`.
+030.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `select` over `find_all`.
+031.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `select` over `find_all`.
+032.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `select` over `find_all`.
+033.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `select` over `find_all`.
+034.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `select` over `find_all`.
+035.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `select` over `find_all`.
+036.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `select` over `find_all`.
+037.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `select` over `find_all`.
+040.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `include?` over `member?`.
+041.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `include?` over `member?`.
+042.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `include?` over `member?`.
+043.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `include?` over `member?`.
+044.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `include?` over `member?`.
+045.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `include?` over `member?`.
+046.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `include?` over `member?`.
+047.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `include?` over `member?`.
+050.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `reduce` over `inject`.
+051.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `reduce` over `inject`.
+052.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `reduce` over `inject`.
+053.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `reduce` over `inject`.
+
+==> autocorrect exit=0 3704 <==
+000.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `map` over `collect`.
+001.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `map` over `collect`.
+002.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `map` over `collect`.
+003.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `map` over `collect`.
+004.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `map` over `collect`.
+005.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `map` over `collect`.
+006.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `map` over `collect`.
+007.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `map` over `collect`.
+010.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `reduce` over `inject`.
+011.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `reduce` over `inject`.
+012.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `reduce` over `inject`.
+013.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `reduce` over `inject`.
+014.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `reduce` over `inject`.
+015.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `reduce` over `inject`.
+016.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `reduce` over `inject`.
+017.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `reduce` over `inject`.
+020.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `find` over `detect`.
+021.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `find` over `detect`.
+022.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `find` over `detect`.
+023.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `find` over `detect`.
+024.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `find` over `detect`.
+025.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `find` over `detect`.
+026.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `find` over `detect`.
+027.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `find` over `detect`.
+030.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `select` over `find_all`.
+031.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `select` over `find_all`.
+032.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `select` over `find_all`.
+033.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `select` over `find_all`.
+034.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `select` over `find_all`.
+035.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `select` over `find_all`.
+036.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `select` over `find_all`.
+037.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `select` over `find_all`.
+040.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `include?` over `member?`.
+041.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `include?` over `member?`.
+042.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `include?` over `member?`.
+043.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `include?` over `member?`.
+044.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `include?` over `member?`.
+045.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `include?` over `member?`.
+046.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `include?` over `member?`.
+047.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `include?` over `member?`.
+050.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `reduce` over `inject`.
+051.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `reduce` over `inject`.
+052.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `reduce` over `inject`.
+053.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `reduce` over `inject`.
+
+==> corrected/000.rb 28 <==
+[1, 2, 3].map { |e| e + 1 }
+
+==> corrected/001.rb 29 <==
+[1, 2, 3]&.map { |e| e + 1 }
+
+==> corrected/002.rb 25 <==
+[1, 2, 3].map { _1 + 1 }
+
+==> corrected/003.rb 26 <==
+[1, 2, 3]&.map { _1 + 1 }
+
+==> corrected/004.rb 22 <==
+[1, 2, 3].map(&:test)
+
+==> corrected/005.rb 23 <==
+[1, 2, 3]&.map(&:test)
+
+==> corrected/006.rb 25 <==
+[1, 2, 3].map(0, &:test)
+
+==> corrected/007.rb 26 <==
+[1, 2, 3]&.map(0, &:test)
+
+==> corrected/010.rb 31 <==
+[1, 2, 3].reduce { |e| e + 1 }
+
+==> corrected/011.rb 32 <==
+[1, 2, 3]&.reduce { |e| e + 1 }
+
+==> corrected/012.rb 28 <==
+[1, 2, 3].reduce { _1 + 1 }
+
+==> corrected/013.rb 29 <==
+[1, 2, 3]&.reduce { _1 + 1 }
+
+==> corrected/014.rb 25 <==
+[1, 2, 3].reduce(&:test)
+
+==> corrected/015.rb 26 <==
+[1, 2, 3]&.reduce(&:test)
+
+==> corrected/016.rb 28 <==
+[1, 2, 3].reduce(0, &:test)
+
+==> corrected/017.rb 29 <==
+[1, 2, 3]&.reduce(0, &:test)
+
+==> corrected/020.rb 29 <==
+[1, 2, 3].find { |e| e + 1 }
+
+==> corrected/021.rb 30 <==
+[1, 2, 3]&.find { |e| e + 1 }
+
+==> corrected/022.rb 26 <==
+[1, 2, 3].find { _1 + 1 }
+
+==> corrected/023.rb 27 <==
+[1, 2, 3]&.find { _1 + 1 }
+
+==> corrected/024.rb 23 <==
+[1, 2, 3].find(&:test)
+
+==> corrected/025.rb 24 <==
+[1, 2, 3]&.find(&:test)
+
+==> corrected/026.rb 26 <==
+[1, 2, 3].find(0, &:test)
+
+==> corrected/027.rb 27 <==
+[1, 2, 3]&.find(0, &:test)
+
+==> corrected/030.rb 31 <==
+[1, 2, 3].select { |e| e + 1 }
+
+==> corrected/031.rb 32 <==
+[1, 2, 3]&.select { |e| e + 1 }
+
+==> corrected/032.rb 28 <==
+[1, 2, 3].select { _1 + 1 }
+
+==> corrected/033.rb 29 <==
+[1, 2, 3]&.select { _1 + 1 }
+
+==> corrected/034.rb 25 <==
+[1, 2, 3].select(&:test)
+
+==> corrected/035.rb 26 <==
+[1, 2, 3]&.select(&:test)
+
+==> corrected/036.rb 28 <==
+[1, 2, 3].select(0, &:test)
+
+==> corrected/037.rb 29 <==
+[1, 2, 3]&.select(0, &:test)
+
+==> corrected/040.rb 33 <==
+[1, 2, 3].include? { |e| e + 1 }
+
+==> corrected/041.rb 34 <==
+[1, 2, 3]&.include? { |e| e + 1 }
+
+==> corrected/042.rb 30 <==
+[1, 2, 3].include? { _1 + 1 }
+
+==> corrected/043.rb 31 <==
+[1, 2, 3]&.include? { _1 + 1 }
+
+==> corrected/044.rb 27 <==
+[1, 2, 3].include?(&:test)
+
+==> corrected/045.rb 28 <==
+[1, 2, 3]&.include?(&:test)
+
+==> corrected/046.rb 30 <==
+[1, 2, 3].include?(0, &:test)
+
+==> corrected/047.rb 31 <==
+[1, 2, 3]&.include?(0, &:test)
+
+==> corrected/050.rb 21 <==
+[1, 2, 3].reduce(:+)
+
+==> corrected/051.rb 22 <==
+[1, 2, 3]&.reduce(:+)
+
+==> corrected/052.rb 24 <==
+[1, 2, 3].reduce(0, :+)
+
+==> corrected/053.rb 25 <==
+[1, 2, 3]&.reduce(0, :+)
+

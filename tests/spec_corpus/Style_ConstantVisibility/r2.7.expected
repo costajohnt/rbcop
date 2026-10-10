@@ -1,0 +1,24 @@
+==> offenses exit=1 1374 <==
+000.rb:2:3: C: Style/ConstantVisibility: Explicitly make `BAR` public or private using either `#public_constant` or `#private_constant`.
+001.rb:2:3: C: Style/ConstantVisibility: Explicitly make `BAR` public or private using either `#public_constant` or `#private_constant`.
+002.rb:2:3: C: Style/ConstantVisibility: Explicitly make `BAR` public or private using either `#public_constant` or `#private_constant`.
+003.rb:3:3: C: Style/ConstantVisibility: Explicitly make `BAR` public or private using either `#public_constant` or `#private_constant`.
+004.rb:3:3: C: Style/ConstantVisibility: Explicitly make `BAR` public or private using either `#public_constant` or `#private_constant`.
+006.rb:2:3: C: Style/ConstantVisibility: Explicitly make `BAR` public or private using either `#public_constant` or `#private_constant`.
+009.rb:2:3: C: Style/ConstantVisibility: Explicitly make `MyClass` public or private using either `#public_constant` or `#private_constant`.
+011.rb:2:3: C: Style/ConstantVisibility: Explicitly make `BAR` public or private using either `#public_constant` or `#private_constant`.
+011.rb:3:3: C: Style/ConstantVisibility: Explicitly make `BAZ` public or private using either `#public_constant` or `#private_constant`.
+014.rb:2:3: C: Style/ConstantVisibility: Explicitly make `BAR` public or private using either `#public_constant` or `#private_constant`.
+
+==> autocorrect exit=1 1374 <==
+000.rb:2:3: C: Style/ConstantVisibility: Explicitly make `BAR` public or private using either `#public_constant` or `#private_constant`.
+001.rb:2:3: C: Style/ConstantVisibility: Explicitly make `BAR` public or private using either `#public_constant` or `#private_constant`.
+002.rb:2:3: C: Style/ConstantVisibility: Explicitly make `BAR` public or private using either `#public_constant` or `#private_constant`.
+003.rb:3:3: C: Style/ConstantVisibility: Explicitly make `BAR` public or private using either `#public_constant` or `#private_constant`.
+004.rb:3:3: C: Style/ConstantVisibility: Explicitly make `BAR` public or private using either `#public_constant` or `#private_constant`.
+006.rb:2:3: C: Style/ConstantVisibility: Explicitly make `BAR` public or private using either `#public_constant` or `#private_constant`.
+009.rb:2:3: C: Style/ConstantVisibility: Explicitly make `MyClass` public or private using either `#public_constant` or `#private_constant`.
+011.rb:2:3: C: Style/ConstantVisibility: Explicitly make `BAR` public or private using either `#public_constant` or `#private_constant`.
+011.rb:3:3: C: Style/ConstantVisibility: Explicitly make `BAZ` public or private using either `#public_constant` or `#private_constant`.
+014.rb:2:3: C: Style/ConstantVisibility: Explicitly make `BAR` public or private using either `#public_constant` or `#private_constant`.
+

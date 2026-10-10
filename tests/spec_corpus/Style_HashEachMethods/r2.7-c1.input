@@ -1,0 +1,24 @@
+==> .rubocop.yml 163 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/HashEachMethods:
+  AllowedReceivers:
+  - execute
+
+==> 000.rb 37 <==
+execute(sql).values.each { |v| p v }
+
+==> 001.rb 65 <==
+execute = do_something(argument)
+execute.values.each { |v| p v }
+
+==> 002.rb 32 <==
+execute(sql).values.each(&:bar)
+
+==> 003.rb 42 <==
+do_something(arg).values.each { |v| p v }
+

@@ -1,0 +1,27 @@
+==> offenses exit=1 330 <==
+000.rb:1:27: C: [Correctable] Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
+005.rb:4:16: C: [Correctable] Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
+008.rb:2:15: C: [Correctable] Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
+
+==> autocorrect exit=0 324 <==
+000.rb:1:27: C: [Corrected] Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
+005.rb:4:16: C: [Corrected] Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
+008.rb:2:15: C: [Corrected] Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
+
+==> corrected/000.rb 29 <==
+VALUES = [1001, 2020, 3333 ]
+
+==> corrected/005.rb 72 <==
+VALUES = [
+           1001,
+           2020,
+           3333
+         ]
+
+==> corrected/008.rb 55 <==
+[
+  <<-TEXT, 123
+    Something with a , in it
+  TEXT
+]
+

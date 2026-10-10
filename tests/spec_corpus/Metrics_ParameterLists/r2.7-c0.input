@@ -1,0 +1,88 @@
+==> .rubocop.yml 193 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Metrics/ParameterLists:
+  Max: 4
+  CountKeywordArgs: true
+  MaxOptionalParameters: 3
+
+==> 000.rb 28 <==
+def meth(a, b, c, d, e)
+end
+
+==> 001.rb 25 <==
+def meth(a, b, c, d)
+end
+
+==> 002.rb 78 <==
+def meth(a, b, c,
+         d, e) # rubocop:disable Metrics/ParameterLists
+end
+
+==> 003.rb 25 <==
+proc { |a, b, c, d, e| }
+
+==> 004.rb 22 <==
+->(a, b, c, d, e) { }
+
+==> 005.rb 34 <==
+def meth(a, b, c, d: 1, e: 2)
+end
+
+==> 006.rb 30 <==
+def meth(a, b, c, d:, e:)
+end
+
+==> 007.rb 102 <==
+def foo(a = 1, b = 2, c = 3, d = 4, e = 5, f = 6, g = 7)
+end
+
+def foo(a = 1, b = 2, c = 3, d = 4)
+end
+
+==> 008.rb 36 <==
+def foo(a, b = 2, c = 3, d = 4)
+end
+
+==> 009.rb 32 <==
+def foo(a, b, c, d, &block)
+end
+
+==> 010.rb 12 <==
+def foo
+end
+
+==> 011.rb 71 <==
+class Foo
+  def initialize(one:, two:, three:, four:, five:)
+  end
+end
+
+==> 012.rb 109 <==
+Struct.new(:one, :two, :three, :four, :five) do
+  def initialize(one:, two:, three:, four:, five:)
+  end
+end
+
+==> 013.rb 111 <==
+::Struct.new(:one, :two, :three, :four, :five) do
+  def initialize(one:, two:, three:, four:, five:)
+  end
+end
+
+==> 014.rb 110 <==
+Data.define(:one, :two, :three, :four, :five) do
+  def initialize(one:, two:, three:, four:, five:)
+  end
+end
+
+==> 015.rb 112 <==
+::Data.define(:one, :two, :three, :four, :five) do
+  def initialize(one:, two:, three:, four:, five:)
+  end
+end
+

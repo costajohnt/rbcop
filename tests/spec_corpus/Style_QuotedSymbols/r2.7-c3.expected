@@ -1,0 +1,29 @@
+==> offenses exit=1 700 <==
+014.rb:1:1: C: [Correctable] Style/QuotedSymbols: Prefer single-quoted symbols when you don't need string interpolation or special symbols.
+015.rb:1:3: C: [Correctable] Style/QuotedSymbols: Prefer single-quoted symbols when you don't need string interpolation or special symbols.
+016.rb:1:1: C: [Correctable] Style/QuotedSymbols: Prefer single-quoted symbols when you don't need string interpolation or special symbols.
+017.rb:1:1: C: [Correctable] Style/QuotedSymbols: Prefer single-quoted symbols when you don't need string interpolation or special symbols.
+020.rb:1:3: C: [Correctable] Style/QuotedSymbols: Prefer single-quoted symbols when you don't need string interpolation or special symbols.
+
+==> autocorrect exit=0 690 <==
+014.rb:1:1: C: [Corrected] Style/QuotedSymbols: Prefer single-quoted symbols when you don't need string interpolation or special symbols.
+015.rb:1:3: C: [Corrected] Style/QuotedSymbols: Prefer single-quoted symbols when you don't need string interpolation or special symbols.
+016.rb:1:1: C: [Corrected] Style/QuotedSymbols: Prefer single-quoted symbols when you don't need string interpolation or special symbols.
+017.rb:1:1: C: [Corrected] Style/QuotedSymbols: Prefer single-quoted symbols when you don't need string interpolation or special symbols.
+020.rb:1:3: C: [Corrected] Style/QuotedSymbols: Prefer single-quoted symbols when you don't need string interpolation or special symbols.
+
+==> corrected/014.rb 5 <==
+:'a'
+
+==> corrected/015.rb 15 <==
+{ 'a': value }
+
+==> corrected/016.rb 12 <==
+:'my"quote'
+
+==> corrected/017.rb 12 <==
+:'foo\\bar'
+
+==> corrected/020.rb 18 <==
+{ :'a' => value }
+

@@ -1,0 +1,170 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 109 <==
+if foo
+  do_foo
+else
+  do_foo
+end
+
+if foo
+  do_foo
+  do_something_else
+else
+  do_foo
+  do_something_else
+end
+
+==> 001.rb 38 <==
+unless foo
+  do_bar
+else
+  do_bar
+end
+
+==> 002.rb 39 <==
+if foo
+  do_foo
+elsif bar
+  do_foo
+end
+
+==> 003.rb 78 <==
+if foo
+  do_foo
+elsif bar
+  do_bar
+elsif baz
+  do_foo
+elsif quux
+  do_bar
+end
+
+==> 004.rb 39 <==
+if foo
+  do_foo
+elsif bar
+  do_bar
+end
+
+==> 005.rb 38 <==
+unless foo
+  do_bar
+else
+  do_foo
+end
+
+==> 006.rb 20 <==
+if foo
+  do_foo
+end
+
+==> 007.rb 24 <==
+unless foo
+  do_bar
+end
+
+==> 008.rb 24 <==
+if foo
+  # Comment.
+end
+
+==> 009.rb 28 <==
+unless foo
+  # Comment.
+end
+
+==> 010.rb 14 <==
+do_foo if foo
+
+==> 011.rb 18 <==
+do_bar unless foo
+
+==> 012.rb 28 <==
+res = foo ? do_foo : do_foo
+
+==> 013.rb 28 <==
+res = foo ? do_foo : do_bar
+
+==> 014.rb 47 <==
+case x
+when foo
+  do_foo
+when bar
+  do_foo
+end
+
+==> 015.rb 43 <==
+case x
+when foo
+  do_foo
+else
+  do_foo
+end
+
+==> 016.rb 84 <==
+case x
+when foo
+  do_foo
+when bar
+  do_bar
+when baz
+  do_foo
+when quux
+  do_bar
+end
+
+==> 017.rb 47 <==
+case x
+when foo
+  do_foo
+when bar
+  do_bar
+end
+
+==> 018.rb 93 <==
+begin
+  do_something
+rescue FooError
+  handle_error(x)
+rescue BarError
+  handle_error(x)
+end
+
+==> 019.rb 82 <==
+begin
+  do_something
+rescue FooError
+  handle_error(x)
+else
+  handle_error(x)
+end
+
+==> 020.rb 178 <==
+begin
+  do_something
+rescue FooError
+  handle_foo_error(x)
+rescue BarError
+  handle_bar_error(x)
+rescue BazError
+  handle_foo_error(x)
+rescue QuuxError
+  handle_bar_error(x)
+end
+
+==> 021.rb 101 <==
+begin
+  do_something
+rescue FooError
+  handle_foo_error(x)
+rescue BarError
+  handle_bar_error(x)
+end
+

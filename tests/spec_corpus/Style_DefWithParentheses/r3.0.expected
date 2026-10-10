@@ -1,0 +1,14 @@
+==> offenses exit=1 260 <==
+000.rb:1:8: C: [Correctable] Style/DefWithParentheses: Omit the parentheses in defs when the method doesn't accept any arguments.
+001.rb:1:8: C: [Correctable] Style/DefWithParentheses: Omit the parentheses in defs when the method doesn't accept any arguments.
+
+==> autocorrect exit=0 256 <==
+000.rb:1:8: C: [Corrected] Style/DefWithParentheses: Omit the parentheses in defs when the method doesn't accept any arguments.
+001.rb:1:8: C: [Corrected] Style/DefWithParentheses: Omit the parentheses in defs when the method doesn't accept any arguments.
+
+==> corrected/000.rb 23 <==
+def foo = do_something
+
+==> corrected/001.rb 22 <==
+def foo =do_something
+

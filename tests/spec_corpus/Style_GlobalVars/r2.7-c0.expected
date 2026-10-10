@@ -1,0 +1,6 @@
+==> offenses exit=1 68 <==
+000.rb:1:6: C: Style/GlobalVars: Do not introduce global variables.
+
+==> autocorrect exit=1 68 <==
+000.rb:1:6: C: Style/GlobalVars: Do not introduce global variables.
+

@@ -1,0 +1,107 @@
+==> offenses exit=1 3435 <==
+000.rb:1:20: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `value`. If it's necessary, use `_` or `_value` as an argument name to indicate that it won't be used.
+003.rb:1:15: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `key`. If it's necessary, use `_` or `_key` as an argument name to indicate that it won't be used.
+004.rb:1:21: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `bars`. If it's necessary, use `_` or `_bars` as an argument name to indicate that it won't be used.
+005.rb:1:21: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `bar`. If it's necessary, use `_` or `_bar` as an argument name to indicate that it won't be used.
+006.rb:2:15: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `key`. You can omit all the arguments if you don't care about them.
+006.rb:2:20: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `value`. You can omit all the arguments if you don't care about them.
+007.rb:1:15: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `key`. You can omit all the arguments if you don't care about them.
+007.rb:2:15: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `value`. You can omit all the arguments if you don't care about them.
+008.rb:1:13: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `index`. You can omit the argument if you don't care about it.
+009.rb:1:25: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `bar`. If it's necessary, use `_` or `_bar` as an argument name to indicate that it won't be used.
+010.rb:1:20: W: [Correctable] Lint/UnusedBlockArgument: Unused block local variable - `block_local_variable`.
+012.rb:1:5: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `foo`. If it's necessary, use `_` or `_foo` as an argument name to indicate that it won't be used. Also consider using a proc without arguments instead of a lambda if you want it to accept any arguments but don't care about them.
+012.rb:1:10: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `bar`. If it's necessary, use `_` or `_bar` as an argument name to indicate that it won't be used. Also consider using a proc without arguments instead of a lambda if you want it to accept any arguments but don't care about them.
+013.rb:1:5: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `foo`. If it's necessary, use `_` or `_foo` as an argument name to indicate that it won't be used.
+015.rb:1:25: W: Lint/UnusedBlockArgument: Unused block argument - `bar`. If it's necessary, use `_` or `_bar` as an argument name to indicate that it won't be used.
+016.rb:1:15: W: Lint/UnusedBlockArgument: Unused block argument - `bar`. You can omit the argument if you don't care about it.
+020.rb:1:10: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `key`. You can omit all the arguments if you don't care about them.
+020.rb:1:15: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `value`. You can omit all the arguments if you don't care about them.
+021.rb:1:10: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `key`. You can omit all the arguments if you don't care about them.
+021.rb:1:15: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `value`. You can omit all the arguments if you don't care about them.
+
+==> autocorrect exit=1 3399 <==
+000.rb:1:20: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `value`. If it's necessary, use `_` or `_value` as an argument name to indicate that it won't be used.
+003.rb:1:15: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `key`. If it's necessary, use `_` or `_key` as an argument name to indicate that it won't be used.
+004.rb:1:21: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `bars`. If it's necessary, use `_` or `_bars` as an argument name to indicate that it won't be used.
+005.rb:1:21: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `bar`. If it's necessary, use `_` or `_bar` as an argument name to indicate that it won't be used.
+006.rb:2:15: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `key`. You can omit all the arguments if you don't care about them.
+006.rb:2:20: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `value`. You can omit all the arguments if you don't care about them.
+007.rb:1:15: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `key`. You can omit all the arguments if you don't care about them.
+007.rb:2:15: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `value`. You can omit all the arguments if you don't care about them.
+008.rb:1:13: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `index`. You can omit the argument if you don't care about it.
+009.rb:1:25: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `bar`. If it's necessary, use `_` or `_bar` as an argument name to indicate that it won't be used.
+010.rb:1:20: W: [Corrected] Lint/UnusedBlockArgument: Unused block local variable - `block_local_variable`.
+012.rb:1:5: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `foo`. If it's necessary, use `_` or `_foo` as an argument name to indicate that it won't be used. Also consider using a proc without arguments instead of a lambda if you want it to accept any arguments but don't care about them.
+012.rb:1:10: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `bar`. If it's necessary, use `_` or `_bar` as an argument name to indicate that it won't be used. Also consider using a proc without arguments instead of a lambda if you want it to accept any arguments but don't care about them.
+013.rb:1:5: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `foo`. If it's necessary, use `_` or `_foo` as an argument name to indicate that it won't be used.
+015.rb:1:25: W: Lint/UnusedBlockArgument: Unused block argument - `bar`. If it's necessary, use `_` or `_bar` as an argument name to indicate that it won't be used.
+016.rb:1:15: W: Lint/UnusedBlockArgument: Unused block argument - `bar`. You can omit the argument if you don't care about it.
+020.rb:1:10: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `key`. You can omit all the arguments if you don't care about them.
+020.rb:1:15: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `value`. You can omit all the arguments if you don't care about them.
+021.rb:1:10: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `key`. You can omit all the arguments if you don't care about them.
+021.rb:1:15: W: [Corrected] Lint/UnusedBlockArgument: Unused block argument - `value`. You can omit all the arguments if you don't care about them.
+
+==> corrected/000.rb 42 <==
+hash.each do |key, _value|
+  puts key
+end
+
+==> corrected/003.rb 56 <==
+hash.each do |_key, value|
+  key, value = value, 42
+end
+
+==> corrected/004.rb 50 <==
+obj.method { |foo, *_bars, baz| stuff(foo, baz) }
+
+==> corrected/005.rb 49 <==
+obj.method do |foo, _bar = baz|
+  stuff(foo)
+end
+
+==> corrected/006.rb 84 <==
+hash = { foo: 'FOO', bar: 'BAR' }
+hash.each do |_key, _value|
+  puts :something
+end
+
+==> corrected/007.rb 64 <==
+hash.each do |_key,
+              _value|
+  puts :something
+end
+
+==> corrected/008.rb 42 <==
+1.times do |_index|
+  puts :something
+end
+
+==> corrected/009.rb 47 <==
+define_method(:foo) do |_bar|
+  puts 'baz'
+end
+
+==> corrected/010.rb 59 <==
+1.times do |index; _block_local_variable|
+  puts index
+end
+
+==> corrected/012.rb 33 <==
+-> (_foo, _bar) { do_something }
+
+==> corrected/013.rb 28 <==
+-> (_foo, bar) { puts bar }
+
+==> corrected/020.rb 76 <==
+test do |_key, _value|
+  def other(a)
+    puts something(binding)
+  end
+end
+
+==> corrected/021.rb 61 <==
+test do |_key, _value|
+  puts something(binding(:other))
+end
+

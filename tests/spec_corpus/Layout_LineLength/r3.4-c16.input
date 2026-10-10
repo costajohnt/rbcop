@@ -1,0 +1,19 @@
+==> .rubocop.yml 197 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Layout/LineLength:
+  Max: 40
+  AllowedPatterns:
+  AutoCorrect: true
+  SplitStrings: true
+
+==> 000.rb 70 <==
+foo.select { it + 4444000039123123129993912312312999199291203123123 }
+
+==> 001.rb 70 <==
+foo.select do it + 4444000039123123129993912312312999199291203123 end
+

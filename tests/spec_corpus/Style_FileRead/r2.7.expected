@@ -1,0 +1,29 @@
+==> offenses exit=1 310 <==
+001.rb:1:1: C: [Correctable] Style/FileRead: Use `File.read`.
+002.rb:1:1: C: [Correctable] Style/FileRead: Use `File.read`.
+003.rb:1:1: C: [Correctable] Style/FileRead: Use `File.read`.
+004.rb:1:1: C: [Correctable] Style/FileRead: Use `File.read`.
+005.rb:1:1: C: [Correctable] Style/FileRead: Use `File.read`.
+
+==> autocorrect exit=0 300 <==
+001.rb:1:1: C: [Corrected] Style/FileRead: Use `File.read`.
+002.rb:1:1: C: [Corrected] Style/FileRead: Use `File.read`.
+003.rb:1:1: C: [Corrected] Style/FileRead: Use `File.read`.
+004.rb:1:1: C: [Corrected] Style/FileRead: Use `File.read`.
+005.rb:1:1: C: [Corrected] Style/FileRead: Use `File.read`.
+
+==> corrected/001.rb 20 <==
+File.read(filename)
+
+==> corrected/002.rb 22 <==
+::File.read(filename)
+
+==> corrected/003.rb 20 <==
+File.read(filename)
+
+==> corrected/004.rb 20 <==
+File.read(filename)
+
+==> corrected/005.rb 20 <==
+File.read(filename)
+

@@ -1,0 +1,121 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 42 <==
+class Test
+  def method_missing
+  end
+end
+
+==> 001.rb 47 <==
+class Test
+  def self.method_missing
+  end
+end
+
+==> 002.rb 75 <==
+class Test
+  def respond_to_missing?
+  end
+
+  def method_missing
+  end
+end
+
+==> 003.rb 85 <==
+class Test
+  def self.respond_to_missing?
+  end
+
+  def self.method_missing
+  end
+end
+
+==> 004.rb 91 <==
+class Test
+  private def respond_to_missing?
+  end
+
+  private def method_missing
+  end
+end
+
+==> 005.rb 83 <==
+class Test
+  private def respond_to_missing?
+  end
+
+  def method_missing
+  end
+end
+
+==> 006.rb 80 <==
+class Test
+  def self.method_missing
+  end
+
+  def respond_to_missing?
+  end
+end
+
+==> 007.rb 80 <==
+class Test
+  def self.respond_to_missing?
+  end
+
+  def method_missing
+  end
+end
+
+==> 008.rb 165 <==
+class Outer
+  class A
+    def method_missing(name)
+    end
+  end
+
+  class B
+    def respond_to_missing?(name, include_private = false)
+      super
+    end
+  end
+end
+
+==> 009.rb 97 <==
+def respond_to_missing?(name, include_private = false)
+  super
+end
+
+def method_missing(name)
+end
+
+==> 010.rb 29 <==
+def method_missing(name)
+end
+
+==> 011/current.rb 65 <==
+class Tool
+  def method_missing(name, *args)
+    super
+  end
+end
+
+==> 012/current.rb 72 <==
+class Tool < Base
+  def method_missing(name, *args)
+    super
+  end
+end
+
+==> 013/current.rb 70 <==
+class Tool
+  def self.method_missing(name, *args)
+    super
+  end
+end
+

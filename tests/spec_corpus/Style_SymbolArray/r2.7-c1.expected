@@ -1,0 +1,25 @@
+==> offenses exit=1 270 <==
+000.rb:1:1: C: [Correctable] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+001.rb:1:1: C: [Correctable] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+002.rb:1:1: C: [Correctable] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+
+==> autocorrect exit=0 264 <==
+000.rb:1:1: C: [Corrected] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+001.rb:1:1: C: [Corrected] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+002.rb:1:1: C: [Corrected] Style/SymbolArray: Use `%i` or `%I` for an array of symbols.
+
+==> corrected/000.rb 18 <==
+%i[
+foo
+bar
+baz
+]
+
+==> corrected/001.rb 28 <==
+%i[foo bar baz
+boz buz
+biz]
+
+==> corrected/002.rb 16 <==
+%i[a b[] c[][]]
+

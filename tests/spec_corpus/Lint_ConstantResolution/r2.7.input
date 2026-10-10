@@ -1,0 +1,38 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 10 <==
+::MyConst
+
+==> 001.rb 20 <==
+::MyConst::MY_CONST
+
+==> 002.rb 8 <==
+MyConst
+
+==> 003.rb 18 <==
+MyConst::MY_CONST
+
+==> 004.rb 31 <==
+module Foo; end
+class Bar; end
+
+==> 005/current.rb 53 <==
+module App
+  def self.load
+    Config.load
+  end
+end
+
+==> 006/current.rb 65 <==
+module App
+  def self.parse(json)
+    JSON.parse(json)
+  end
+end
+

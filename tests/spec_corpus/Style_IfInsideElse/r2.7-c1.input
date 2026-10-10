@@ -1,0 +1,17 @@
+==> .rubocop.yml 152 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/IfInsideElse:
+  AllowIfModifier: true
+
+==> 000.rb 32 <==
+if a
+  blah
+else
+  foo if b
+end
+

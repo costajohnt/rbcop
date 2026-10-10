@@ -1,0 +1,21 @@
+==> .rubocop.yml 240 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/SpaceInsideBlockBraces:
+  EnforcedStyle: space
+  SupportedStyles:
+  - space
+  - no_space
+  SpaceBeforeBlockParameters: false
+
+==> 000.rb 18 <==
+each { |x| puts }
+
+==> 001.rb 11 <==
+->(x) { x }
+==> 002.rb 16 <==
+each {|x| puts }

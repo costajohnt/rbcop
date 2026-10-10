@@ -1,0 +1,57 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 317 <==
+[]
+{}
+Array.new
+Hash.new
+Hash.new { |h, k| h[k] = [] }
+Hash.new { |h, k| h[k] = {} }
+Hash.new { 0 }
+Hash.new { Array.new }
+Hash.new { Hash.new }
+Hash.new { {} }
+Hash.new { [] }
+Hash.new(0)
+Hash.new(false)
+Hash.new(true)
+Hash.new(nil)
+Hash.new(BigDecimal(0))
+Hash.new(BigDecimal(0.0))
+Hash.new(0.0)
+Hash.new(0.0.to_d)
+
+==> 001.rb 93 <==
+Hash.new([].freeze)
+Hash.new({}.freeze)
+Hash.new(Array.new.freeze)
+Hash.new(Hash.new.freeze)
+
+==> 002.rb 23 <==
+Hash.new(capacity: 42)
+
+==> 003.rb 94 <==
+Hash.new([], capacity: 42)
+Hash.new(Array.new, capacity: 42)
+Hash.new(Hash.new, capacity: 42)
+
+==> 004.rb 26 <==
+Hash.new(0, capacity: 42)
+
+==> 005.rb 32 <==
+Hash.new([])
+Hash.new Array.new
+
+==> 006.rb 32 <==
+Hash.new({})
+Hash.new(Hash.new)
+
+==> 007.rb 27 <==
+Hash.new({}, capacity: 42)
+

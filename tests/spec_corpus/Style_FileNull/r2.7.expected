@@ -1,0 +1,37 @@
+==> offenses exit=1 668 <==
+002.rb:1:8: C: [Correctable] Style/FileNull: Use `File::NULL` instead of `/dev/null`.
+003.rb:1:9: C: [Correctable] Style/FileNull: Use `File::NULL` instead of `/dev/null`.
+003.rb:2:8: C: [Correctable] Style/FileNull: Use `File::NULL` instead of `NUL`.
+005.rb:1:15: C: [Correctable] Style/FileNull: Use `File::NULL` instead of `/dev/null`.
+005.rb:1:29: C: [Correctable] Style/FileNull: Use `File::NULL` instead of `NUL:`.
+006.rb:1:8: C: [Correctable] Style/FileNull: Use `File::NULL` instead of `NUL:`.
+007.rb:1:8: C: [Correctable] Style/FileNull: Use `File::NULL` instead of `nul`.
+007.rb:2:8: C: [Correctable] Style/FileNull: Use `File::NULL` instead of `/DEV/NULL`.
+
+==> autocorrect exit=0 652 <==
+002.rb:1:8: C: [Corrected] Style/FileNull: Use `File::NULL` instead of `/dev/null`.
+003.rb:1:9: C: [Corrected] Style/FileNull: Use `File::NULL` instead of `/dev/null`.
+003.rb:2:8: C: [Corrected] Style/FileNull: Use `File::NULL` instead of `NUL`.
+005.rb:1:15: C: [Corrected] Style/FileNull: Use `File::NULL` instead of `/dev/null`.
+005.rb:1:29: C: [Corrected] Style/FileNull: Use `File::NULL` instead of `NUL:`.
+006.rb:1:8: C: [Corrected] Style/FileNull: Use `File::NULL` instead of `NUL:`.
+007.rb:1:8: C: [Corrected] Style/FileNull: Use `File::NULL` instead of `nul`.
+007.rb:2:8: C: [Corrected] Style/FileNull: Use `File::NULL` instead of `/DEV/NULL`.
+
+==> corrected/002.rb 18 <==
+path = File::NULL
+
+==> corrected/003.rb 37 <==
+CONST = File::NULL
+path = File::NULL
+
+==> corrected/005.rb 38 <==
+path = cond ? File::NULL : File::NULL
+
+==> corrected/006.rb 18 <==
+path = File::NULL
+
+==> corrected/007.rb 36 <==
+file = File::NULL
+path = File::NULL
+
