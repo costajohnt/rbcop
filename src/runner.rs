@@ -287,8 +287,14 @@ fn analyze(
         let stopped = diags.iter().find(|d| d.2.is_empty()).map(|d| d.0);
         let lexed = |o: &usize| stopped.is_none_or(|s| *o <= s);
         let (fatal_at, open_string) = (fatal_at.filter(lexed), open_string.filter(lexed));
-        let heredoc_term: Vec<usize> =
-            result.errors().filter(|e| e.type_name() == "heredoc_term").map(|e| e.location().start_offset()).collect();
+        // A tolerated `<<''` (ended by the end of the file) counts only on a last line without a
+        // newline, where the parser gem never starts the heredoc.
+        let heredoc_term: Vec<usize> = result
+            .errors()
+            .filter(|e| e.type_name() == "heredoc_term")
+            .filter(|e| kept(e) || !text[e.location().end_offset()..].contains('\n'))
+            .map(|e| e.location().start_offset())
+            .collect();
         let heredoc = crate::legacy_syntax::unterminated_heredoc(&tokens, text, &heredoc_term).filter(|h| lexed(&h.0));
         errors = diags
             .into_iter()
