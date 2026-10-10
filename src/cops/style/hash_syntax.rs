@@ -1,4 +1,4 @@
-use crate::helpers::parser_parent::parser_parent;
+use crate::helpers::parser_parent::{parser_parent, parser_parent_index as parent_index};
 use crate::helpers::range_help::{Side, Surrounding, range_with_surrounding_space};
 use crate::prelude::*;
 
@@ -72,13 +72,6 @@ enum Style {
     HashRockets,
     NoMixedKeys,
     Ruby19NoMixedKeys,
-}
-
-/// The parser parent of `ancestors[..i]`'s last node, as an index.
-fn parent_index(anc: &[Node], i: usize) -> Option<usize> {
-    let p = parser_parent(&anc[..i])?;
-    let off = (p.location().start_offset(), p.location().end_offset(), kind::of(p));
-    (0..i).rev().find(|&j| (anc[j].location().start_offset(), anc[j].location().end_offset(), kind::of(&anc[j])) == off)
 }
 
 /// `parentheses?(node)`: `loc.end` is `)`.
