@@ -22,12 +22,22 @@ impl Cop for ReturnNil {
             if matches!(kind::of(&anc[i]), kind::DEF_NODE | kind::LAMBDA_NODE) {
                 break;
             }
-            let Some(block) = anc[i].as_block_node() else { continue };
+            // A call owning a block, reached from its receiver or arguments, is also inside the
+            // parser `block` (`foo(proc { return nil }) do |x| ... end`).
+            let (block, call) = if let Some(block) = anc[i].as_block_node() {
+                (block, i.checked_sub(1).and_then(|j| anc[j].as_call_node()))
+            } else if let Some(call) = anc[i].as_call_node()
+                && let Some(block) = call.block().and_then(|b| b.as_block_node())
+                && anc.get(i + 1).is_none_or(|n| n.as_block_node().is_none())
+            {
+                (block, Some(call))
+            } else {
+                continue;
+            };
             // numblock / itblock are not `:block`.
             if block.parameters().is_some_and(|p| p.as_block_parameters_node().is_none()) {
                 continue;
             }
-            let call = i.checked_sub(1).and_then(|j| anc[j].as_call_node());
             if let Some(call) = &call {
                 // `lambda?`
                 if method_name(call) == "lambda" {
