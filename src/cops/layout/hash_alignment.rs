@@ -1,4 +1,4 @@
-use crate::helpers::alignment_mixin::enabled_cop_str;
+use crate::helpers::alignment::enabled_cop_str;
 use crate::prelude::*;
 use crate::source::Source;
 

@@ -1,6 +1,7 @@
 use crate::prelude::*;
 use crate::source::Source;
-use helpers::alignment_mixin::{begins_its_line, corrector_edits, indentation_width};
+use helpers::alignment::{begins_its_line, configured_indentation_width};
+use helpers::alignment_corrector::{self as ac, Settings};
 use ruby_prism::Location;
 
 pub const NAME: &str = "Layout/ClosingParenthesisIndentation";
@@ -71,7 +72,7 @@ impl Cop for ClosingParenthesisIndentation {
         let correct = if let Some(first) = elements.first() {
             let first_line = line(first.location().start_offset());
             if first_line > line(left.start_offset()) {
-                (line_indentation(src, first_line) as i64 - indentation_width(cx)).max(0)
+                (line_indentation(src, first_line) as i64 - configured_indentation_width(cx)).max(0)
             } else {
                 let cols: Vec<i64> = match first.as_keyword_hash_node().map(|h| h.elements()).or_else(|| first.as_hash_node().map(|h| h.elements())) {
                     Some(children) => children.iter().map(|c| col(c.location().start_offset())).collect(),
@@ -100,7 +101,7 @@ impl Cop for ClosingParenthesisIndentation {
         } else {
             format!("Indent `)` to column {correct} (not {right_col})")
         };
-        let fixable = corrector_edits(src, rp, right.end_offset(), delta, None);
-        cx.add_with(rp, right.end_offset(), msg, fixable);
+        let (re, set) = (right.end_offset(), Settings::of(cx));
+        cx.add_fix(rp, re, msg, |c| ac::correct(c, src, set, rp, re, None, delta, false));
     }
 }

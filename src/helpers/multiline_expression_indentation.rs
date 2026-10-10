@@ -357,5 +357,5 @@ impl<'a, 'pr> Ctx<'a, 'pr> {
 
 /// `node.source_range.source_line =~ /\S/` for a node starting at `start`.
 pub fn indentation(cx: &Cx, start: usize) -> i64 {
-    crate::helpers::alignment_check::first_non_space(cx.src.lines[cx.src.line_of(start) - 1]) as i64
+    crate::helpers::alignment::first_non_space(cx.src.lines[cx.src.line_of(start) - 1]).unwrap_or(0) as i64
 }

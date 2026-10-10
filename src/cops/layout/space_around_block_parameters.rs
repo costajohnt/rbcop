@@ -1,3 +1,4 @@
+use crate::helpers::range_help::{Side, Surrounding, range_with_surrounding_space};
 use crate::prelude::*;
 
 pub const NAME: &str = "Layout/SpaceAroundBlockParameters";
@@ -29,7 +30,8 @@ fn check_arg(cx: &mut Cx, arg: &Node) {
         }
     }
     let start = arg.location().start_offset();
-    let (ws, _) = helpers::range_help::with_surrounding_space(cx.src, start, start, true, false, true);
+    let left = Surrounding { side: Side::Left, ..Default::default() };
+    let (ws, _) = range_with_surrounding_space(cx.src.text, start, start, left);
     check_no_space(cx, ws, start.saturating_sub(1), "Extra space before");
 }
 

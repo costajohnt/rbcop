@@ -1,4 +1,4 @@
-use crate::helpers::alignment_check::{self as alignment, Item};
+use crate::helpers::alignment::{self as alignment, Item};
 use crate::prelude::*;
 
 pub const NAME: &str = "Layout/AssignmentIndentation";

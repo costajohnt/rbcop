@@ -9,13 +9,13 @@ const FIXED_INDENT_MSG: &str =
     "Use one level of indentation for arguments following the first line of a multi-line method call.";
 
 /// `hash.pairs`: the `key: value` / `key => value` elements (not `**splat`).
-fn pairs(hash: &Node) -> Vec<(usize, usize)> {
+fn pairs<'pr>(hash: &Node<'pr>) -> Vec<Node<'pr>> {
     let elements = match (hash.as_keyword_hash_node(), hash.as_hash_node()) {
         (Some(h), _) => h.elements(),
         (_, Some(h)) => h.elements(),
         _ => return Vec::new(),
     };
-    elements.iter().filter(|e| kind::of(e) == kind::ASSOC_NODE).map(|e| range(&e)).collect()
+    elements.iter().filter(|e| kind::of(e) == kind::ASSOC_NODE).collect()
 }
 
 fn range(node: &Node) -> (usize, usize) {
@@ -52,21 +52,23 @@ impl ArgumentAlignment {
         if style == Some("with_first_argument") && separator {
             return;
         }
-        let items: Vec<(usize, usize)> = if fixed {
-            let (last, init) = args.split_last().unwrap();
-            let mut items: Vec<_> = init.iter().map(range).collect();
-            if kind::of(last) == kind::KEYWORD_HASH_NODE {
+        let first_start = args[0].location().start_offset();
+        let mut args = args;
+        let items: Vec<Node> = if fixed {
+            let last = args.pop().unwrap();
+            let mut items = args;
+            if kind::of(&last) == kind::KEYWORD_HASH_NODE {
                 if !separator {
-                    items.extend(pairs(last));
+                    items.extend(pairs(&last));
                 }
             } else {
-                items.push(range(last));
+                items.push(last);
             }
             items
         } else if kind::of(&args[0]) == kind::KEYWORD_HASH_NODE {
             pairs(&args[0])
         } else {
-            args.iter().map(range).collect()
+            args
         };
         let src = cx.src;
         let base = if fixed {
@@ -74,11 +76,13 @@ impl ArgumentAlignment {
             let indent = line.chars().take_while(|c| c.is_ascii_whitespace()).count() as i64;
             indent + helpers::alignment::configured_indentation_width(cx)
         } else {
-            helpers::alignment::display_column(src, args[0].location().start_offset()) as i64
+            helpers::alignment::display_column(src, first_start) as i64
         };
         let msg = if fixed { FIXED_INDENT_MSG } else { ALIGN_PARAMS_MSG };
+        let set = helpers::alignment_corrector::Settings::of(cx);
         let mut prev_line = 0;
-        for &(start, end) in &items {
+        for item in &items {
+            let (start, end) = range(item);
             let line = src.line_of(start);
             if line > prev_line && src.begins_its_line(start) {
                 let delta = base - helpers::alignment::display_column(src, start) as i64;
@@ -86,8 +90,11 @@ impl ArgumentAlignment {
                     let reported = cx.state::<Vec<(usize, usize)>>();
                     let nested = reported.iter().any(|&(s, e)| start >= s && end <= e);
                     reported.push((start, end));
-                    let correctable = !nested && helpers::alignment::corrects(cx, start, end, delta);
-                    cx.add_with(start, end, msg, correctable);
+                    cx.add_fix(start, end, msg, |c| {
+                        if !nested {
+                            helpers::alignment_corrector::correct(c, src, set, start, end, Some(item), delta, false);
+                        }
+                    });
                 }
             }
             prev_line = line;

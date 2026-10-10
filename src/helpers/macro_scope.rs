@@ -1,8 +1,10 @@
-//! rubocop-ast `in_macro_scope?` / `macro?` / `class_constructor?` on Prism ancestors.
+//! rubocop-ast `in_macro_scope?` / `macro?` / `class_constructor?` on Prism ancestors: the one port
+//! (`macro_scope_nodes` is a deprecated shim over it).
 
 use crate::ast::method_name;
 use crate::node_kind as kind;
 use ruby_prism::{CallNode, Node};
+use std::borrow::Borrow;
 
 fn span(n: &Node) -> (usize, usize) {
     let l = n.location();
@@ -30,14 +32,14 @@ pub fn class_constructor(call: &CallNode) -> bool {
 /// `in_macro_scope?` for the node spanning `subject`, given its Prism ancestors (outermost first):
 /// the root, or a child of class/module/sclass/class-constructor block, or of a wrapper
 /// (`begin`, `kwbegin`, block, if-branch) that is itself in macro scope.
-pub fn in_macro_scope(ancestors: &[&Node], subject: (usize, usize)) -> bool {
+pub fn in_macro_scope<'pr, N: Borrow<Node<'pr>>>(ancestors: &[N], subject: (usize, usize)) -> bool {
     let mut i = ancestors.len();
     let mut subject = subject;
     loop {
         if i == 0 {
             return true;
         }
-        let p = ancestors[i - 1];
+        let p = ancestors[i - 1].borrow();
         let step = match kind::of(p) {
             kind::PROGRAM_NODE | kind::CLASS_NODE | kind::MODULE_NODE | kind::SINGLETON_CLASS_NODE => return true,
             // single-statement bodies are transparent; several statements make a `begin` wrapper
@@ -47,7 +49,7 @@ pub fn in_macro_scope(ancestors: &[&Node], subject: (usize, usize)) -> bool {
                 if i < 2 {
                     return false;
                 }
-                if ancestors[i - 2].as_call_node().is_some_and(|c| class_constructor(&c)) {
+                if ancestors[i - 2].borrow().as_call_node().is_some_and(|c| class_constructor(&c)) {
                     return true;
                 }
                 2
@@ -71,7 +73,7 @@ pub fn in_macro_scope(ancestors: &[&Node], subject: (usize, usize)) -> bool {
                 1
             }
             kind::ELSE_NODE => {
-                if !i.checked_sub(2).is_some_and(|j| matches!(kind::of(ancestors[j]), kind::IF_NODE | kind::UNLESS_NODE)) {
+                if !i.checked_sub(2).is_some_and(|j| matches!(kind::of(ancestors[j].borrow()), kind::IF_NODE | kind::UNLESS_NODE)) {
                     return false;
                 }
                 1
@@ -79,11 +81,24 @@ pub fn in_macro_scope(ancestors: &[&Node], subject: (usize, usize)) -> bool {
             _ => return false,
         };
         i -= step;
-        subject = span(ancestors[i]);
+        subject = span(ancestors[i].borrow());
     }
 }
 
 /// `macro?`: no receiver and in macro scope.
-pub fn is_macro(call: &CallNode, ancestors: &[&Node]) -> bool {
+pub fn is_macro<'pr, N: Borrow<Node<'pr>>>(call: &CallNode, ancestors: &[N]) -> bool {
     call.receiver().is_none() && in_macro_scope(ancestors, span(&call.as_node()))
+}
+
+/// `in_macro_scope?` of a node whose parent is `ancestors.last()`, without naming the node: only
+/// a statement (child of the program or of a `StatementsNode`) can be in macro scope. For a
+/// BlockNode pass the ancestors without its call (parser's block wraps the call).
+pub fn in_macro_scope_of_child<'pr, N: Borrow<Node<'pr>>>(ancestors: &[N]) -> bool {
+    let Some((p, rest)) = ancestors.split_last() else { return true };
+    let p = p.borrow();
+    match kind::of(p) {
+        kind::PROGRAM_NODE => true,
+        kind::STATEMENTS_NODE => in_macro_scope(rest, span(p)),
+        _ => false,
+    }
 }
