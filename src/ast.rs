@@ -318,9 +318,16 @@ pub fn is_parser_dstr(node: &Node) -> bool {
         return text(&s.content_loc()).trim_end_matches('\n').contains('\n');
     }
     // Parser splits a literal only on a newline before the last character of its content, so a
-    // literal whose only newline ends the content (`"a<newline>"`) stays a `str`.
+    // literal whose only newline ends the content (`"a<newline>"`) stays a `str`. In an
+    // interpolating literal a backslash-newline is a line continuation (not in the value), so it
+    // does not split either; in a single-quoted one it stays in the value and does.
     let content = text(&s.content_loc());
-    content.strip_suffix('\n').unwrap_or(content).contains('\n')
+    let body = content.strip_suffix('\n').unwrap_or(content).as_bytes();
+    let opening = s.opening_loc().map(|o| text(&o)).unwrap_or("");
+    let interpolating = !(opening.starts_with('\'') || opening.starts_with("%q"));
+    body.iter().enumerate().any(|(i, &b)| {
+        b == b'\n' && !(interpolating && body[..i].iter().rev().take_while(|&&c| c == b'\\').count() % 2 == 1)
+    })
 }
 
 /// Value of an integer literal node (parser `int`; Prism keeps a leading `-` in the literal), or None
