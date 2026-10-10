@@ -313,3 +313,15 @@ pub fn is_parser_dstr(node: &Node) -> bool {
     }
     node_text(node).contains('\n')
 }
+
+/// Value of an integer literal node (parser `int`; Prism keeps a leading `-` in the literal), or None
+/// for other nodes and values beyond i128.
+pub fn int_literal_value(node: &Node) -> Option<i128> {
+    let value = node.as_integer_node()?.value();
+    let (neg, digits) = value.to_u32_digits();
+    let mut v: i128 = 0;
+    for d in digits.iter().rev() {
+        v = v.checked_mul(1 << 32)?.checked_add(*d as i128)?;
+    }
+    Some(if neg { -v } else { v })
+}
