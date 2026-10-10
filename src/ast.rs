@@ -99,3 +99,27 @@ pub fn parser_ancestors(ancestors: &[Node]) -> Vec<Frame> {
         })
         .collect()
 }
+
+/// `in pat if cond` / `in pat unless cond`: Prism makes the guard an IfNode/UnlessNode wrapping the
+/// pattern, parser an `if_guard`/`unless_guard`, so RuboCop's `on_if` never sees it.
+pub fn is_pattern_guard(node: &Node, ancestors: &[Node]) -> bool {
+    let loc = node.location();
+    ancestors.last().and_then(|p| p.as_in_node()).is_some_and(|i| {
+        let p = i.pattern().location();
+        (p.start_offset(), p.end_offset()) == (loc.start_offset(), loc.end_offset())
+    })
+}
+
+/// Parser `(begin ...)` unwrapping: `condition = condition.children.last while condition.begin_type?`.
+/// None for an empty `()` (parser `(begin)`).
+pub fn strip_parens<'pr>(node: Node<'pr>) -> Option<Node<'pr>> {
+    let mut node = node;
+    while let Some(p) = node.as_parentheses_node() {
+        let body = p.body()?;
+        node = match body.as_statements_node() {
+            Some(s) => s.body().iter().last()?,
+            None => body,
+        };
+    }
+    Some(node)
+}
