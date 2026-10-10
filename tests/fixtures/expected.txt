@@ -18,6 +18,7 @@ basic.rb:12:121: C: Layout/LineLength: Line is too long. [140/120]
 basic.rb:13:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
 basic.rb:14:19: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
 basic.rb:19:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+basic.rb:19:9: C: [Correctable] Style/YodaCondition: Reverse the order of the operands `nil != x`.
 basic.rb:20:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
 basic.rb:23:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
 no_newline.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.

@@ -10,7 +10,9 @@ pub fn literal(node: &Node) -> bool {
     basic_literal(node)
         || matches!(
             node,
-            Node::InterpolatedStringNode { .. }
+            // A multi-line string is a parser `dstr`: not basic, but still a literal.
+            Node::StringNode { .. }
+                | Node::InterpolatedStringNode { .. }
                 | Node::XStringNode { .. }
                 | Node::InterpolatedXStringNode { .. }
                 | Node::InterpolatedSymbolNode { .. }

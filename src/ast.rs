@@ -311,7 +311,10 @@ pub fn is_parser_dstr(node: &Node) -> bool {
     if is_heredoc(node) {
         return text(&s.content_loc()).trim_end_matches('\n').contains('\n');
     }
-    node_text(node).contains('\n')
+    // Parser splits a literal only on a newline before the last character of its content, so a
+    // literal whose only newline ends the content (`"a<newline>"`) stays a `str`.
+    let content = text(&s.content_loc());
+    content.strip_suffix('\n').unwrap_or(content).contains('\n')
 }
 
 /// Value of an integer literal node (parser `int`; Prism keeps a leading `-` in the literal), or None

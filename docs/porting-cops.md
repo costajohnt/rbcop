@@ -319,6 +319,14 @@ More traps found while porting:
   `#@ivar` part loses its `#`, shifting later positions left by one (RuboCop reports them shifted).
 - Prism regexp `closing_loc` includes the options (`/i`); parser `loc.end` is the delimiter only.
 - RuboCop's RESTRICT_ON_SEND lists matter: RedundantReturn includes `lambda`, so `-> {}` is checked.
+- `nil` in a NodePattern matches a `(nil)` literal node; a missing child is `nil?`.
+- `__FILE__` is a parser `str` (Prism `SourceFileNode`).
+- Prism `BRACE_LEFT` is both `tLCURLY` (block) and `tLBRACE` (hash): tell them apart via the AST.
+- Chained modifier rescue `a rescue b rescue c`: parser visits the inner rescue first.
+- An `elsif` IfNode has an `end_keyword_loc()` in Prism; test that the keyword is `if`.
+- Helpers: `line_break_corrector` (TrailingBody, LineBreakCorrector), `parentheses_corrector`.
+- Cross-cop autocorrect interactions: `scripts/check-autocorrect-all.sh` runs -A with every ported
+  cop together (per-batch gates only cover their own cops).
 - `helpers::regexp_captures` counts named/numbered groups like `RegexpNode#each_capture`.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.
