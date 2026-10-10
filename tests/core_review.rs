@@ -423,3 +423,45 @@ fn inherit_gem_errors_worded_like_rubocop() {
     assert_eq!(out.status.code(), Some(2));
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// --init (InitDotfile), recorded with RuboCop 1.91: writes the commented template and says where;
+/// a second run finds the file and fails (exit 2).
+#[test]
+fn init_writes_rubocop_yml_once() {
+    let dir = scratch("init");
+    fs::remove_file(dir.join(".rubocop.yml")).unwrap();
+    let out = rbcop(&dir, &["--init"]);
+    let path = dir.join(".rubocop.yml").display().to_string();
+    assert_eq!(text(&out.stdout), format!("Writing new .rubocop.yml to {path}\n"));
+    assert_eq!(out.status.code(), Some(0));
+    let written = fs::read_to_string(dir.join(".rubocop.yml")).unwrap();
+    assert!(written.starts_with("# The behavior of RuboCop can be controlled via the .rubocop.yml\n"));
+    assert!(written.ends_with("#\n# See https://docs.rubocop.org/rubocop/configuration\n"));
+    assert_eq!(written.lines().count(), 10);
+    let out = rbcop(&dir, &["--init"]);
+    assert_eq!(text(&out.stderr), format!(".rubocop.yml already exists at {path}\n"));
+    assert_eq!(out.status.code(), Some(2));
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// -h under colour (CLICOLOR_FORCE=1 rubocop -h): the banner and section headings are bright,
+/// unless --no-color is on the command line.
+#[test]
+fn help_headings_are_bright_when_coloured() {
+    let dir = scratch("help");
+    let run = |args: &[&str]| {
+        common::command(env!("CARGO_BIN_EXE_rbcop"))
+            .args(args)
+            .env("CLICOLOR_FORCE", "1")
+            .current_dir(&dir)
+            .output()
+            .unwrap()
+    };
+    let out = text(&run(&["-h"]).stdout);
+    assert!(
+        out.starts_with("\x1b[1mUsage: rubocop [options] [file1, file2, ...]\x1b[0m\n\n\x1b[1mBasic Options\x1b[0m:\n")
+    );
+    assert_eq!(out.matches("\x1b[").count(), 24);
+    assert!(!text(&run(&["-h", "--no-color"]).stdout).contains('\x1b'));
+    let _ = fs::remove_dir_all(&dir);
+}

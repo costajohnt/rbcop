@@ -1,0 +1,11 @@
+a.rb:1:1: C: Style/Copyright: Include a copyright notice matching /^Copyright (\(c\) )?2[0-9]{3} .+/ before any code.
+a.rb:3:1: C: Style/DocumentationMethod: Missing method documentation comment.
+a.rb:3:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+a.rb:3:1: R: Metrics/MethodLength: Method has too many lines. [3/1]
+a.rb:3:9: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `unused`. If it's necessary, use `_` or `_unused` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `foo(*)` if you want the method to accept any arguments but don't care about them.
+a.rb:5:11: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+a.rb:5:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+a.rb:6:22: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+a.rb:6:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+a.rb:6:9: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.
+a.rb:6:9: W: [Correctable] Lint/RaiseException: Use `StandardError` over `Exception`.

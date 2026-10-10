@@ -6,7 +6,13 @@ use std::io::{BufRead, BufReader};
 use std::os::unix::ffi::OsStrExt;
 use std::path::{Path, PathBuf};
 
-pub fn find(store: &mut Store, args: &[PathBuf], force_exclusion: bool) -> Result<Vec<PathBuf>, String> {
+/// `only_recognized`: `--only-recognized-file-types` (TargetFinder mode :only_recognized_file_types).
+pub fn find(
+    store: &mut Store,
+    args: &[PathBuf],
+    force_exclusion: bool,
+    only_recognized: bool,
+) -> Result<Vec<PathBuf>, String> {
     let cwd = store.cwd().to_path_buf();
     let pwd_cfg = store.for_dir(&cwd)?;
     let (exts, names) = pwd_cfg.ruby_extensions_and_names();
@@ -34,9 +40,11 @@ pub fn find(store: &mut Store, args: &[PathBuf], force_exclusion: bool) -> Resul
                 }
             }
         } else if abs.exists() {
-            if force_exclusion {
+            // TargetFinder#process_explicit_path: included_file? under either option, then
+            // without_excluded under --force-exclusion.
+            if force_exclusion || only_recognized {
                 let cfg = store.for_dir(&cwd)?;
-                if cfg.file_to_exclude(&abs) || !(ruby.is(&abs) || cfg.file_to_include(&abs)) {
+                if (force_exclusion && cfg.file_to_exclude(&abs)) || !(ruby.is(&abs) || cfg.file_to_include(&abs)) {
                     continue;
                 }
             }
