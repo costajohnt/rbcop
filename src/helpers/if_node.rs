@@ -27,3 +27,19 @@ pub fn parser_end(node: &Node) -> usize {
         },
     }
 }
+
+/// End of parser's `loc.begin` of an if/unless: `then`, or a `;` right after the condition.
+pub fn parser_begin_end(node: &Node) -> Option<usize> {
+    let (then, pred) = match (node.as_if_node(), node.as_unless_node()) {
+        (Some(n), _) => (n.then_keyword_loc(), n.predicate()),
+        (_, Some(n)) => (n.then_keyword_loc(), n.predicate()),
+        _ => return None,
+    };
+    if let Some(t) = then {
+        return Some(t.end_offset());
+    }
+    let end = pred.location().end_offset();
+    let rest = &node.location().as_slice()[end - node.location().start_offset()..];
+    let blanks = rest.iter().take_while(|&&b| b == b' ' || b == b'\t').count();
+    (rest.get(blanks) == Some(&b';')).then_some(end + blanks + 1)
+}
