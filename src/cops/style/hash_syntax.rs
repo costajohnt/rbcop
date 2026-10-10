@@ -104,6 +104,16 @@ fn modifier_form(node: &Node) -> bool {
 // as having no right sibling.
 fn has_right_sibling(anc: &[Node], i: usize) -> bool {
     let (s, e) = (anc[i].location().start_offset(), anc[i].location().end_offset());
+    // A call with a `{}`/`do` block is the first child of a parser `block` (its arguments follow).
+    let block = match &anc[i] {
+        Node::CallNode { .. } => anc[i].as_call_node().unwrap().block(),
+        Node::SuperNode { .. } => anc[i].as_super_node().unwrap().block(),
+        Node::ForwardingSuperNode { .. } => anc[i].as_forwarding_super_node().unwrap().block().map(|b| b.as_node()),
+        _ => None,
+    };
+    if block.is_some_and(|b| b.as_block_node().is_some()) {
+        return true;
+    }
     // A Prism StatementsNode with 2+ statements is parser's `begin`.
     if let Some(st) = anc[..i].last().and_then(|n| n.as_statements_node())
         && st.body().iter().count() > 1

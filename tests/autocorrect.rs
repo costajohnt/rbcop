@@ -16,7 +16,15 @@ fn copy_dir(from: &Path, to: &Path) {
 #[test]
 fn autocorrect_matches_rubocop() {
     let root = Path::new(concat!(env!("CARGO_MANIFEST_DIR"), "/tests/autocorrect"));
-    for case in ["comparison", "default", "fuzz"] {
+    // Every case directory (each has input/, expected/, expected.txt and config.yml).
+    let mut cases: Vec<String> = fs::read_dir(root)
+        .unwrap()
+        .flatten()
+        .filter(|e| e.path().is_dir())
+        .map(|e| e.file_name().to_string_lossy().into_owned())
+        .collect();
+    cases.sort();
+    for case in &cases {
         let dir = root.join(case);
         // A case may list its own cops (`<case>/cops.txt`).
         let cops =
