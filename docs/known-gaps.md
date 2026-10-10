@@ -26,7 +26,10 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - Cleanup pending: deprecated shims `helpers/alignment_mixin.rs`, `alignment_check.rs`,
   `macro_scope_nodes.rs`, `range_help::with_surrounding_space` (no callers; delete once all batches
   that branched before R2a are merged). `helpers/variable_force.rs` and `nil_receiver_checker.rs`
-  each build a parser-shaped tree from Prism; share one builder.
+  each build a parser-shaped tree from Prism; share one builder. Private `parser_parent` copies in
+  lint/ambiguous_operator, lint/constant_definition_in_block, lint/redundant_splat_expansion,
+  layout/first_argument_indentation, style/access_modifier_declarations, style/double_negation and
+  style/nil_comparison should move to `helpers::parser_parent` (check each copy's semantics first).
 - One spec snippet (`naming/method_name/050.rb`, a `%{}` template) gets a duplicated
   "unexpected write target" syntax error location.
 - Lint/RedundantCopDisableDirective, Lint/RedundantCopEnableDirective, Lint/MissingCopEnableDirective
