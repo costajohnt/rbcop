@@ -1,0 +1,11 @@
+def m(row, file_stats, a, b)
+  row << format("%.3f", file_stats[:time])
+  row << format("%d", a + b)
+  row << format("%d", a.+(b))
+  row << format("%d", -a)
+  row << format("%d", !a)
+  row << format("%d", a[1, 2])
+  row << sprintf("%s", a&.[](1))
+  row << format("%d", a.==(b))
+  row << format("%d", a.foo)
+end
