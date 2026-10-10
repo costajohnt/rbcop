@@ -404,7 +404,10 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
         // parser gem lexes tNL there (unless the next line continues with a leading `.`/`&.`).
         if t.kind == "COMMENT" && text[t.start..t.end].ends_with('\n') && state & NEWLINE_IGNORED == 0 {
             let next = tokens[i..].iter().find(|n| n.kind != "COMMENT").map_or("", |n| n.kind);
-            if !matches!(next, "NEWLINE" | "IGNORED_NEWLINE" | "DOT" | "AMPERSAND_DOT") {
+            // Blank lines up to the end of the file come out as IGNORED_NEWLINE tokens; the
+            // comment's newline is still significant (`(a, # a\nb) # b\n\n`).
+            let blank_to_eof = tokens[i..].iter().all(|n| matches!(n.kind, "COMMENT" | "IGNORED_NEWLINE" | "EOF"));
+            if blank_to_eof || !matches!(next, "NEWLINE" | "IGNORED_NEWLINE" | "DOT" | "AMPERSAND_DOT") {
                 out.push(Tok { name: "tNL", start: t.end - 1, end: t.end, cmd_do: false });
                 state = EXPR_BEG;
             }

@@ -13,7 +13,6 @@ Lint_PercentSymbolArray/r2.7/011.rb
 Layout_LineLength/r2.7-c16
 #
 # rbcop bugs found by this corpus, filed as issues:
-Layout_MultilineMethodDefinitionBraceLayout/r2.7-c2/001.rb  # #60 Lint/Syntax first error position
 Style_RedundantParentheses/r3.2/000.rb  # #62 reparse rejects `retry` outside rescue
 Lint_SelfAssignment/r2.7-c2  # #63 AllowRBSInlineAnnotation not ported
 Style_RescueModifier/r2.6/000.rb  # #64 masgn rescue-modifier precedence below 2.7
