@@ -1,10 +1,12 @@
 //! Regressions from the core infrastructure review: file I/O, discovery and config edge cases the
 //! corpora do not reach. Expected behaviour is RuboCop 1.91's unless a test says otherwise.
 
+mod common;
+
 use std::fs;
 use std::os::unix::fs::{MetadataExt, PermissionsExt, symlink};
 use std::path::{Path, PathBuf};
-use std::process::{Command, Output};
+use std::process::Output;
 
 fn scratch(name: &str) -> PathBuf {
     let dir = std::env::temp_dir().join(format!("rbcop-core-{name}-{}", std::process::id()));
@@ -18,7 +20,7 @@ fn scratch(name: &str) -> PathBuf {
 }
 
 fn rbcop(dir: &Path, args: &[&str]) -> Output {
-    Command::new(env!("CARGO_BIN_EXE_rbcop")).args(args).current_dir(dir).output().unwrap()
+    common::command(env!("CARGO_BIN_EXE_rbcop")).args(args).current_dir(dir).output().unwrap()
 }
 
 fn text(b: &[u8]) -> String {
@@ -282,7 +284,7 @@ fn output_file_write_failure_is_an_error() {
     use std::os::unix::process::CommandExt;
     let dir = scratch("efbig");
     fs::write(dir.join("big.rb"), "x  =  1\n".repeat(3000)).unwrap();
-    let mut cmd = Command::new(env!("CARGO_BIN_EXE_rbcop"));
+    let mut cmd = common::command(env!("CARGO_BIN_EXE_rbcop"));
     cmd.args(["--only", "Layout/ExtraSpacing", "-f", "e", "-o", "out.txt", "big.rb"]).current_dir(&dir);
     // SAFETY: only async-signal-safe calls between fork and exec.
     unsafe {

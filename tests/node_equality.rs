@@ -1,8 +1,9 @@
 //! Structural node equality (helpers::node_equality) must include heredoc bodies, which lie
 //! outside a node's source range: same opener text with different bodies is not equal.
 
+mod common;
+
 use std::fs;
-use std::process::Command;
 
 #[test]
 fn heredoc_bodies_take_part_in_node_equality() {
@@ -12,7 +13,7 @@ fn heredoc_bodies_take_part_in_node_equality() {
     fs::write(dir.join("Gemfile"), "").unwrap();
     let src = "x = foo(<<~X) == foo(<<~X)\n  a\nX\n  b\nX\ny = foo(<<~X) == foo(<<~X)\n  a\nX\n  a\nX\n";
     fs::write(dir.join("t.rb"), src).unwrap();
-    let out = Command::new(env!("CARGO_BIN_EXE_rbcop"))
+    let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
         .args(["--force-default-config", "--only", "Lint/BinaryOperatorWithIdenticalOperands", "-f", "emacs", "t.rb"])
         .current_dir(&dir)
         .output()

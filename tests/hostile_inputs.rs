@@ -1,8 +1,9 @@
 //! Linting an untrusted file must not exhaust CPU or memory, overflow the stack, or fail a cop:
 //! deep nesting, huge evaluated values and long names run every cop within a time budget.
 
+mod common;
+
 use std::fs;
-use std::process::Command;
 use std::time::{Duration, Instant};
 
 /// Per run (every cop). Release builds take well under a second for each.
@@ -56,7 +57,7 @@ fn hostile_inputs_stay_bounded() {
         };
         for &autocorrect in modes {
             fs::write(dir.join(name), &text).unwrap();
-            let mut cmd = Command::new(env!("CARGO_BIN_EXE_rbcop"));
+            let mut cmd = common::command(env!("CARGO_BIN_EXE_rbcop"));
             cmd.args(["--force-default-config", "-c", config, "--format", "emacs"]).current_dir(&dir);
             if autocorrect {
                 cmd.arg("-A");

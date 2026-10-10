@@ -1,16 +1,17 @@
 //! Config scenarios: rbcop must reproduce RuboCop's recorded output (tests/scenarios/*/expected.txt,
 //! written by scripts/scenarios.sh) for every cop rbcop implements.
 
+mod common;
+
 use std::collections::BTreeSet;
 use std::path::Path;
-use std::process::Command;
 
 fn bin() -> &'static str {
     env!("CARGO_BIN_EXE_rbcop")
 }
 
 fn implemented() -> BTreeSet<String> {
-    let out = Command::new(bin()).arg("--show-cops").output().unwrap();
+    let out = common::command(bin()).arg("--show-cops").output().unwrap();
     // `--show-cops` prints RuboCop's YAML; cop names are the unindented keys.
     String::from_utf8(out.stdout)
         .unwrap()
@@ -40,7 +41,7 @@ fn config_scenarios_match_rubocop() {
     for dir in names {
         let project = dir.join("project");
         let args = std::fs::read_to_string(dir.join("args")).unwrap_or_default();
-        let out = Command::new(bin())
+        let out = common::command(bin())
             .args(["--format", "emacs"])
             .args(args.split_whitespace())
             .current_dir(&project)
