@@ -1,0 +1,9 @@
+# Corpus files (corpus/relative/path) the autocorrect gates skip because RuboCop 1.91 itself
+# crashes on them under -A, aborting the rest of its run. Keep this list minimal and explain each.
+#
+# Style/WordArray writes invalid-UTF-8 string values back as raw bytes; RuboCop's formatter then
+# raises "invalid byte sequence in UTF-8" (rbcop writes the escaped form, see docs/known-gaps.md).
+specs/lint/nested_percent_literal/003.rb
+specs/lint/percent_string_array/000.rb
+specs/lint/percent_string_array/001.rb
+specs/naming/inclusive_language/008.rb

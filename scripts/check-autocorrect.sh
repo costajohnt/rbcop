@@ -27,7 +27,10 @@ for c in $corpora; do
   mkdir -p "$dir/rubocop" "$dir/rbcop"
   # Files with at least one offense for these cops, relative to the corpus.
   grep -E "$pattern" "$oracle_root/$c.txt" | sed -E 's/:[0-9]+:[0-9]+(:[0-9]+:[0-9]+)?: .*//' | sort -u \
-    | sed "s|^$corpus_root/$c/||" | head -n "${LIMIT:-1000000}" > "$dir/files"
+    | sed "s|^$corpus_root/$c/||" | head -n "${LIMIT:-1000000}" > "$dir/files.all"
+  # Files on which RuboCop itself crashes under -A (scripts/autocorrect-skip.txt).
+  sed -n "s|^$c/||p" "$root/scripts/autocorrect-skip.txt" > "$dir/skip"
+  grep -vxF -f "$dir/skip" "$dir/files.all" > "$dir/files" || true
   # Keep the corpus's target Ruby (TargetRuby reads these at its root; a root gemspec's
   # required_ruby_version takes precedence over .ruby-version, so it must come along too).
   for v in .ruby-version .tool-versions mise.toml Gemfile.lock gems.locked; do
