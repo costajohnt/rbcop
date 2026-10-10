@@ -9,6 +9,8 @@ pub struct Semicolon;
 
 const MSG: &str = "Do not use semicolons to terminate expressions.";
 
+type Pair = ((usize, usize), (usize, usize), Option<usize>);
+
 /// What the corrector and `on_begin` need from the AST, gathered in one pre-order walk.
 #[derive(Default)]
 struct Facts {
@@ -17,7 +19,7 @@ struct Facts {
     /// irange/erange nodes, pre-order.
     ranges: Vec<(usize, usize)>,
     /// Value-omission pairs: (pair range, hash range, selector end of the hash's parent call).
-    pairs: Vec<((usize, usize), (usize, usize), Option<usize>)>,
+    pairs: Vec<Pair>,
     /// Heredoc openings: (start, end).
     heredocs: Vec<(usize, usize)>,
     /// `{` tokens opening a hash literal (parser tLBRACE, not tLCURLY).

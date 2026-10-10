@@ -34,10 +34,10 @@ fn in_resbody(node: &Node, ancestors: &[Node]) -> bool {
         if let Some(m) = a.as_rescue_modifier_node() {
             return within(&m.rescue_expression());
         }
-        if let Some(b) = a.as_begin_node().filter(|b| b.rescue_clause().is_some()) {
-            if !b.ensure_clause().is_some_and(|e| within(&e.as_node())) {
-                return false;
-            }
+        if let Some(b) = a.as_begin_node().filter(|b| b.rescue_clause().is_some())
+            && !b.ensure_clause().is_some_and(|e| within(&e.as_node()))
+        {
+            return false;
         }
     }
     false

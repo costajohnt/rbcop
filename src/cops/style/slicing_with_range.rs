@@ -4,11 +4,8 @@ pub const NAME: &str = "Style/SlicingWithRange";
 pub static COP: SlicingWithRange = SlicingWithRange;
 pub struct SlicingWithRange;
 
-fn int_is(node: &Node, want: i32) -> bool {
-    node.as_integer_node().is_some_and(|i| {
-        let v: Result<i32, _> = i.value().try_into();
-        v.is_ok_and(|v| v == want)
-    })
+fn int_is(node: &Node, want: i128) -> bool {
+    int_literal_value(node) == Some(want)
 }
 
 /// NodePattern `nil` is a `(nil)` literal node, not a missing child.
@@ -60,8 +57,8 @@ impl Cop for SlicingWithRange {
             (format!("Remove the useless `{offense_src}`."), (off_s, off_e))
         } else if lo.is_some() && till_end {
             (partial(format!("{}{op}", node_text(lo.as_ref().unwrap()))), range(&hi))
-        } else if !excl && nil_lit(&lo) && hi.is_some() && cx.config.target_ruby >= 2.7 {
-            (partial(format!("{op}{}", node_text(hi.as_ref().unwrap()))), range(&lo))
+        } else if let (false, true, Some(h), true) = (excl, nil_lit(&lo), &hi, cx.config.target_ruby >= 2.7) {
+            (partial(format!("{op}{}", node_text(h))), range(&lo))
         } else {
             return;
         };

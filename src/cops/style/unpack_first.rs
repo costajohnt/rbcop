@@ -5,10 +5,7 @@ pub static COP: UnpackFirst = UnpackFirst;
 pub struct UnpackFirst;
 
 fn int_zero(node: &Node) -> bool {
-    node.as_integer_node().is_some_and(|i| {
-        let v: Result<i32, _> = i.value().try_into();
-        v.is_ok_and(|v| v == 0)
-    })
+    int_literal_value(node) == Some(0)
 }
 
 impl Cop for UnpackFirst {
