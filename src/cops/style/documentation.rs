@@ -25,10 +25,12 @@ impl<'pr> Visit<'pr> for Ranges {
     }
 }
 
+/// The node ends and the node ranges, both sorted by end.
+type NodeSpans = (Vec<usize>, Vec<(usize, usize)>);
+
 #[derive(Default)]
 struct State {
-    /// The node ends and the node ranges, both sorted by end.
-    ranges: Option<(Vec<usize>, Vec<(usize, usize)>)>,
+    ranges: Option<NodeSpans>,
 }
 
 fn range(n: &Node) -> (usize, usize) {
