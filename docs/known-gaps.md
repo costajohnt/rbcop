@@ -9,6 +9,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - HTML formatter escapes `& < >` in messages outside code spans and fully escapes paths; GitHub
   Actions formatter escapes CR/LF in the `file=` property. Output differs only when those appear.
 - JUnit escapes cop names in attributes (no effect for real cop names).
+- Style/RedundantFormat evaluates `format` at lint time; a width, precision or result over 10,000
+  bytes (`format('%999999999d', 1)`) gets no offense instead of building a huge string
+  (`MAX_FORMAT_OUTPUT` in `src/cops/style/redundant_format.rs`).
 
 ## Open gaps
 
