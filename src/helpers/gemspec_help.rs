@@ -34,7 +34,7 @@ pub fn spec_block_var<'pr>(call: &CallNode<'pr>) -> Option<&'pr [u8]> {
     }
     let p = params.parameters()?;
     let only_required = p.optionals().iter().next().is_none()
-        && p.rest().is_none()
+        && crate::ast::parser_rest(p.rest()).is_none()
         && p.posts().iter().next().is_none()
         && p.keywords().iter().next().is_none()
         && p.keyword_rest().is_none()

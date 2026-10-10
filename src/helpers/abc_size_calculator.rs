@@ -127,7 +127,7 @@ fn send_targets(targets: &mut dyn Iterator<Item = Node>) -> i64 {
             kind::CALL_TARGET_NODE | kind::INDEX_TARGET_NODE => 1,
             kind::MULTI_TARGET_NODE => {
                 let m = t.as_multi_target_node().unwrap();
-                send_targets(&mut m.lefts().iter().chain(m.rest()).chain(m.rights().iter()))
+                send_targets(&mut m.lefts().iter().chain(crate::ast::parser_rest(m.rest())).chain(m.rights().iter()))
             }
             kind::SPLAT_NODE => t.as_splat_node().unwrap().expression().map_or(0, |e| {
                 matches!(kind::of(&e), kind::CALL_TARGET_NODE | kind::INDEX_TARGET_NODE) as i64
@@ -402,7 +402,7 @@ impl<'pr> Visit<'pr> for Abc {
     }
     fn visit_multi_write_node(&mut self, node: &ruby_prism::MultiWriteNode<'pr>) {
         ruby_prism::visit_multi_write_node(self, node);
-        self.a += send_targets(&mut node.lefts().iter().chain(node.rest()).chain(node.rights().iter()));
+        self.a += send_targets(&mut node.lefts().iter().chain(crate::ast::parser_rest(node.rest())).chain(node.rights().iter()));
     }
     fn visit_call_target_node(&mut self, node: &ruby_prism::CallTargetNode<'pr>) {
         let recv = node.receiver();

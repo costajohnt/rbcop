@@ -53,10 +53,10 @@ fn same_name_assignment(ancestors: &[Node], name: &str) -> bool {
     let name = name.as_bytes();
     ancestors.iter().any(|a| {
         if let Some(m) = a.as_multi_write_node() {
-            let mut targets = m.lefts().iter().chain(m.rest()).chain(m.rights().iter()).collect::<Vec<_>>();
+            let mut targets = m.lefts().iter().chain(crate::ast::parser_rest(m.rest())).chain(m.rights().iter()).collect::<Vec<_>>();
             while let Some(t) = targets.pop() {
                 if let Some(mt) = t.as_multi_target_node() {
-                    targets.extend(mt.lefts().iter().chain(mt.rest()).chain(mt.rights().iter()));
+                    targets.extend(mt.lefts().iter().chain(crate::ast::parser_rest(mt.rest())).chain(mt.rights().iter()));
                 } else if let Some(s) = t.as_splat_node() {
                     targets.extend(s.expression());
                 } else if target_name(&t).is_some_and(|n| n == name) {

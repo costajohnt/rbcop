@@ -150,7 +150,7 @@ fn assignment_first_child<'pr>(node: &Node<'pr>) -> Option<(usize, usize)> {
         });
     }
     if let Some(m) = node.as_multi_write_node() {
-        let lefts: Vec<Node> = m.lefts().iter().chain(m.rest()).chain(m.rights().iter()).collect();
+        let lefts: Vec<Node> = m.lefts().iter().chain(crate::ast::parser_rest(m.rest())).chain(m.rights().iter()).collect();
         let start = m.lparen_loc().map_or_else(|| lefts.first().map_or(0, |n| n.location().start_offset()), |l| l.start_offset());
         let end = m.rparen_loc().map_or_else(|| lefts.last().map_or(0, |n| n.location().end_offset()), |r| r.end_offset());
         return Some((start, end));

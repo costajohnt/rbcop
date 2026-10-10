@@ -10,7 +10,7 @@ pub fn children<'pr>(params: &BlockParametersNode<'pr>) -> Vec<Node<'pr>> {
     if let Some(p) = params.parameters() {
         out.extend(p.requireds().iter());
         out.extend(p.optionals().iter());
-        out.extend(p.rest());
+        out.extend(crate::ast::parser_rest(p.rest()));
         out.extend(p.posts().iter());
         out.extend(p.keywords().iter());
         out.extend(p.keyword_rest());
@@ -24,13 +24,12 @@ pub fn children<'pr>(params: &BlockParametersNode<'pr>) -> Vec<Node<'pr>> {
 pub fn mlhs_children<'pr>(node: &Node<'pr>) -> Vec<Node<'pr>> {
     let Some(m) = node.as_multi_target_node() else { return Vec::new() };
     let mut out: Vec<Node<'pr>> = m.lefts().iter().collect();
-    out.extend(m.rest());
+    out.extend(crate::ast::parser_rest(m.rest()));
     out.extend(m.rights().iter());
     finish(out)
 }
 
 fn finish(mut out: Vec<Node>) -> Vec<Node> {
-    out.retain(|n| kind::of(n) != kind::IMPLICIT_REST_NODE);
     out.sort_by_key(|n| n.location().start_offset());
     out
 }
