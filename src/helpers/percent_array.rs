@@ -12,7 +12,7 @@ fn range(node: &Node) -> (usize, usize) {
 }
 
 /// Util#double_quotes_required?: a `'`, or an odd run of backslashes not followed by `"`.
-fn double_quotes_required(s: &str) -> bool {
+pub fn double_quotes_required(s: &str) -> bool {
     if s.contains('\'') {
         return true;
     }
