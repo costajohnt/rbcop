@@ -183,40 +183,6 @@ fn assigned_name(node: &Node) -> Option<String> {
     Some(String::from_utf8_lossy(name.as_slice()).into_owned())
 }
 
-/// Bodies of the heredocs inside a node (outside its source range, but part of node equality).
-struct Heredocs<'pr> {
-    bodies: Vec<&'pr [u8]>,
-}
-
-impl<'pr> ruby_prism::Visit<'pr> for Heredocs<'pr> {
-    fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
-        if is_heredoc(&node) {
-            if let Some(s) = node.as_interpolated_string_node() {
-                for p in s.parts().iter() {
-                    self.bodies.push(p.location().as_slice());
-                }
-            } else if let Some(x) = node.as_interpolated_x_string_node() {
-                for p in x.parts().iter() {
-                    self.bodies.push(p.location().as_slice());
-                }
-            }
-        }
-    }
-    fn visit_leaf_node_enter(&mut self, node: Node<'pr>) {
-        if let Some(s) = node.as_string_node().filter(|_| is_heredoc(&node)) {
-            self.bodies.push(s.content_loc().as_slice());
-        } else if let Some(x) = node.as_x_string_node().filter(|_| is_heredoc(&node)) {
-            self.bodies.push(x.content_loc().as_slice());
-        }
-    }
-}
-
-fn heredoc_bodies<'pr>(node: &Node<'pr>) -> Vec<&'pr [u8]> {
-    let mut v = Heredocs { bodies: Vec::new() };
-    ruby_prism::Visit::visit(&mut v, node);
-    v.bodies
-}
-
 /// Visitor: does any parser node start at or after `from` and end by `to`?
 struct After {
     from: usize,
@@ -313,9 +279,8 @@ impl Cop for IdenticalConditionalBranches {
         let duplicated = |exprs: &[Option<&Node>]| -> Option<bool> {
             let Some(first) = exprs[0] else { return Some(exprs.iter().all(|e| e.is_none())) };
             let fr = range(first);
-            let bodies = heredoc_bodies(first);
             if !exprs.iter().all(|e| {
-                e.is_some_and(|e| helpers::node_equality::same(src, fr, range(e)) && heredoc_bodies(e) == bodies)
+                e.is_some_and(|e| helpers::node_equality::same(src, fr, range(e)))
             }) {
                 return Some(false);
             }
