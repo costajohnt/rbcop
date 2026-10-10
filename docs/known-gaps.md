@@ -52,28 +52,39 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - Metrics/CollectionLiteralLength does not count `rescue A, B` exception lists (parser `array`).
   Lint/SymbolConversion does not treat a backslash-newline inside `:"..."` as a continuation. Naming/PredicatePrefix `validate_config` is not ported.
 - LineLength `SplitStrings: true` break points (string splitting) are not modelled.
-- Cleanup pending: deprecated shims `helpers/alignment_mixin.rs`, `alignment_check.rs`,
-  `macro_scope_nodes.rs`, `range_help::with_surrounding_space` (no callers; delete once all batches
-  that branched before R2a are merged). `helpers/variable_force.rs` and `nil_receiver_checker.rs`
-  each build a parser-shaped tree from Prism; share one builder. Private `parser_parent` copies in
-  lint/ambiguous_operator, lint/constant_definition_in_block, lint/redundant_splat_expansion,
-  layout/first_argument_indentation, style/access_modifier_declarations, style/double_negation and
-  style/nil_comparison should move to `helpers::parser_parent` (check each copy's semantics first).
-  ENUMERATOR_METHODS is duplicated in lint/unreachable_loop and style/next. Parser-ancestor
-  builders now exist in `parser_parent`, `parser_path`, `variable_force` and `nil_receiver_checker`;
-  converge them on one. Style/SoleNestedConditional has an inline `correction_parses?`; switch it to
-  `helpers::reparsed_equivalence`. Layout/EmptyLinesAfterModuleInclusion copies the blank-line and
-  enable-directive closures of EmptyLinesAroundAttributeAccessor; share them.
-  `helpers::statement_modifier` copies Layout/LineLength's URI regex and validator; share them.
-  Private copies to switch to helpers: AllowedReceivers in style/hash_each_methods
-  (`helpers::allowed_receivers`); `float_to_s` in lint/literal_in_interpolation
-  (`ruby_string::float_to_s`); add_parentheses logic in style/method_def_parentheses
-  (`add_parentheses::ParenFix::Params`); `value_used?` in style/alias and style/block_delimiters
-  (`helpers::value_used`); StructInheritance's DefinesConstants visitor copied in
-  style/data_inheritance; the runner's `code_lines`/`StatementBounds` duplicated in
-  `helpers::comment_config`. Style/RedundantParentheses keeps its own `verified_by_reparse`
-  (switch to `reparsed_equivalence::verified_by_reparse`); Bundler/GemComment ports comment
-  association privately (switch to `helpers::comment_association`).
+- Cleanup pending: Style/SoleNestedConditional has an inline `correction_parses?` that parses with
+  Prism's default (latest) grammar; `reparsed_equivalence::correction_parses` parses at the target
+  version like RuboCop, so switching is a behaviour change to gate on its own, not a pure dedupe.
+- Look-alike code kept on purpose (different semantics, not duplicates):
+  - Parser-parent walkers: lint/constant_definition_in_block treats a multi-statement body inside
+    parentheses as one parser `begin` (the parentheses), where `helpers::parser_parent` stops at the
+    StatementsNode; style/double_negation builds the whole ancestor chain with cop-specific frames
+    (begin end offsets, `define_method` blocks, interpolation); style/access_modifier_declarations
+    classifies its parent with statement-list details (index, header bound, `kwbegin`);
+    layout/first_argument_indentation returns no parent for a call owning a block, then defers to
+    the helper.
+  - `value_used?` look-alikes: style/alias ports `alias_method_value_used?` (send argument or
+    assignment value) and style/block_delimiters ports its own `return_value_used?` (through
+    `begin`s to an assignment or send); neither is rubocop-ast `Node#value_used?`.
+  - Bundler/GemComment already takes leading comments from `helpers::comment_association`; its
+    private `Associate` walker ports the rest of `Comment::Associator` (trailing and interior
+    comments of the gem call's descendants), which the helper does not cover.
+  - Naming/BlockForwarding's `LocalUse` is `each_node` (the body root counts) and skips only an
+    lvar under block_pass; `helpers::local_references` is `each_descendant` (root excluded) and
+    skips lvars under splat, kwsplat and block_pass.
+  - Parser-shaped views of Prism: `helpers::parser_parent` (nearest parser parent, an index into
+    `cx.ancestors`), `ast::parser_ancestors`/`parser_ancestor_ranges` (ancestor frames), and
+    `helpers::parser_path` (send/csend/block/begin frames with names and call operators for a
+    descendant found below the visited node, splitting a call with a block into block + send) answer
+    "what is above this node" and differ in how they classify `begin` (parser_path counts
+    parentheses and multi-statement bodies; `ast::frame` only an explicit `begin`). The tree builders in
+    `helpers::variable_force` (whole program, only scopes, local variables and control flow, other
+    nodes hoisted away) and `helpers::nil_receiver_checker` (one subtree, every node with children,
+    receivers, arguments, when/pair/asgn/rescue shapes and block argument names) build different
+    node sets with different fields. One shared full-fidelity parser tree would serve both, but it
+    is a rewrite of two large ports rather than a dedupe; the ancestor helpers work on
+    `cx.ancestors` directly, so moving them onto a tree would add a tree build per file for cops
+    that only need a parent.
 - Style/DirectiveScope treats only ported cops as disabled by default config; an `enable X` ...
   `disable X` pair for an unported, default-disabled cop can differ (not hit by the gates).
 - Lint/RedundantCopDisableDirective, Lint/RedundantCopEnableDirective, Lint/MissingCopEnableDirective
