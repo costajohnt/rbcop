@@ -290,6 +290,10 @@ More traps found while porting:
 - Parser `begin` parent: any statement list except under a plain `begin..end` (`kwbegin`);
   parenthesised statements and a 2+ statement program root are `begin`.
 - `helpers::comment_association`: leading comments parser's `Comment::Associator` gives a statement.
+- `arg.children.first.to_s` on an mlhs parameter is an s-expression (`"(arg :aB)"`), and its length
+  can set an offense range past the line end. A single `|a|` is `arg`, not `procarg0`.
+- Parser heredoc `children.empty?` is true only for an empty body.
+- `helpers::uncommunicative_name`; `helpers::heredoc::parts` (opening, parser heredoc_end, empty?).
 - `helpers::regexp_captures` counts named/numbered groups like `RegexpNode#each_capture`.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.
