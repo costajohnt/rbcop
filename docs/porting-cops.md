@@ -113,6 +113,21 @@ More traps found while porting:
 - `add_global_offense` (no location): report at `cx.add(0, 0, ..)` for now; the formatter work adds a
   proper global flag.
 - The worktree sandbox reads a bare `-c` argument as `sh -c`; pass rbcop/RuboCop config with `--config`.
+- `assignment?` in node patterns includes setter sends (`a.b = x`, `a[i] = x`, `a&.b = x`); in Prism
+  that is a `CallNode` with `equal_loc()`.
+- Parser visits a `block` before its `send`, receiver and arguments; Prism visits the `BlockNode` last.
+  Cops keeping state from `on_block` must record it when they see the owning `CallNode`. RuboCop also
+  rarely resets such ivars between classes, and the leaking state is observable: copy it.
+- A Prism `CallNode` with a block, seen from its receiver or arguments, stands for two parser
+  ancestors: the `send` (`send_range`) and then the `block`.
+- Translation tokens: `PARENTHESIS_LEFT_PARENTHESES` is `tLPAREN_ARG`, `PARENTHESIS_RIGHT` is `tRPAREN`,
+  `BRACKET_LEFT` is `tLBRACK2`, `BRACKET_LEFT_ARRAY` is `tLBRACK`.
+- `RangeHelp#source_range(buffer, line, col)` has length 1 by default (not zero-width).
+- Ruby `\s` and `String#strip` are ASCII-only while `[[:alnum:]]` is Unicode; Rust defaults are the
+  other way round (`helpers::ruby_string`).
+- Where RuboCop crashes (e.g. `nil.blank?` past the last line) the oracle has no offense; the gate
+  skips crash-listed (cop, file) pairs, otherwise report nothing on that path.
+- `cx.src.raw_text` is the file as read (CRLF intact); offsets refer to the normalised `cx.src.text`.
 
 ### Prism tokens vs parser-gem tokens
 
