@@ -29,13 +29,13 @@ pub struct Directive {
 }
 
 impl Directive {
-    fn disabled(&self) -> bool {
+    pub fn disabled(&self) -> bool {
         matches!(self.mode.as_str(), "disable" | "todo" | "disable-next" | "todo-next")
     }
-    fn enabled(&self) -> bool {
+    pub fn enabled(&self) -> bool {
         self.mode == "enable" || self.mode == "enable-next"
     }
-    fn signed(&self) -> bool {
+    pub fn signed(&self) -> bool {
         self.mode == "push" || self.mode == "next"
     }
     /// DirectiveComment#raw_cop_names.
@@ -46,7 +46,7 @@ impl Directive {
             .unwrap_or_default()
     }
     /// DirectiveComment#signed_args: (op, name) pairs.
-    fn signed_args(&self) -> Vec<(char, &str)> {
+    pub fn signed_args(&self) -> Vec<(char, &str)> {
         if !self.signed() {
             return Vec::new();
         }
@@ -109,7 +109,7 @@ fn qualify(name: &str) -> String {
 
 /// DirectiveComment#cop_names (departments expanded, Lint/Syntax dropped; `all` = every cop
 /// except Lint/Syntax and Lint/RedundantCopDisableDirective), then qualified.
-fn cop_names(d: &Directive) -> Vec<String> {
+pub fn cop_names(d: &Directive) -> Vec<String> {
     if d.cops.as_deref() == Some("all") {
         return known().filter(|c| *c != LINT_SYNTAX && *c != LINT_REDUNDANT).map(String::from).collect();
     }
@@ -169,25 +169,30 @@ pub struct LineInfo<'a> {
 }
 
 impl LineInfo<'_> {
-    fn comment_only(&self, line: i64) -> bool {
+    pub fn comment_only(&self, line: i64) -> bool {
         line < 1 || !self.code.get(line as usize).copied().unwrap_or(false)
     }
 }
 
+/// A disabled line range and the index (in `src.comments`) of the directive that opened it
+/// (DirectiveRange#directive; None for cops disabled in config).
+pub type DirectiveRange = (i64, i64, Option<usize>);
+
 #[derive(Clone, Default)]
 struct Analysis {
-    ranges: Vec<(i64, i64)>,
+    ranges: Vec<DirectiveRange>,
     start: Option<i64>,
+    start_directive: Option<usize>,
 }
 
 impl Analysis {
     /// CopAnalysis#close.
-    fn close(&self, line: i64) -> Vec<(i64, i64)> {
+    fn close(&self, line: i64) -> Vec<DirectiveRange> {
         let mut r = self.ranges.clone();
         if let Some(s) = self.start
             && line >= s
         {
-            r.push((s, line));
+            r.push((s, line, self.start_directive));
         }
         r
     }
@@ -207,15 +212,27 @@ pub fn disabled_ranges(
     config_disabled: &[&'static str],
     lines: &LineInfo,
 ) -> HashMap<String, Vec<(i64, i64)>> {
+    analyze(src, config_disabled, lines)
+        .into_iter()
+        .map(|(cop, ranges)| (cop, ranges.into_iter().map(|(a, b, _)| (a, b)).collect()))
+        .collect()
+}
+
+/// `disabled_ranges` keeping each range's opening directive.
+pub fn analyze(
+    src: &Source,
+    config_disabled: &[&'static str],
+    lines: &LineInfo,
+) -> HashMap<String, Vec<DirectiveRange>> {
     if !src.text.contains("rubocop") {
         return HashMap::new();
     }
     let mut analyses: HashMap<String, Analysis> = HashMap::new();
     for cop in config_disabled {
-        analyses.insert(cop.to_string(), Analysis { ranges: Vec::new(), start: Some(i64::MIN) });
+        analyses.insert(cop.to_string(), Analysis { start: Some(i64::MIN), ..Analysis::default() });
     }
     let mut stack: Vec<HashMap<String, Analysis>> = Vec::new();
-    for c in &src.comments {
+    for (index, c) in src.comments.iter().enumerate() {
         let Some(d) = parse(src.slice(c.start, c.end)) else { continue };
         let line = src.line_of(c.start) as i64;
         match d.mode.as_str() {
@@ -225,8 +242,9 @@ pub fn disabled_ranges(
                     let a = analyses.entry(cop).or_default();
                     if op == '-' && a.start.is_none() {
                         a.start = Some(line);
+                        a.start_directive = Some(index);
                     } else if op == '+' && a.start.is_some() {
-                        *a = Analysis { ranges: a.close(line), start: None };
+                        *a = Analysis { ranges: a.close(line), ..Analysis::default() };
                     }
                 }
             }
@@ -236,8 +254,10 @@ pub fn disabled_ranges(
                     for cop in keys {
                         let current = analyses.get(&cop).cloned().unwrap_or_default();
                         let ranges = current.close(line - 1);
-                        let start = restore.get(&cop).and_then(|r| r.start).map(|_| line);
-                        analyses.insert(cop, Analysis { ranges, start });
+                        let restored = restore.get(&cop).filter(|r| r.start.is_some());
+                        let start = restored.map(|_| line);
+                        let start_directive = restored.and_then(|r| r.start_directive);
+                        analyses.insert(cop, Analysis { ranges, start, start_directive });
                     }
                 }
             }
@@ -252,10 +272,10 @@ pub fn disabled_ranges(
                 for (op, cop) in ops {
                     let a = analyses.entry(cop).or_default();
                     if op == '-' {
-                        a.ranges.push((first, last));
+                        a.ranges.push((first, last, Some(index)));
                     } else if a.start.is_some() {
                         // suspend_disable: close before the statement, reopen after it.
-                        *a = Analysis { ranges: a.close(first - 1), start: Some(last + 1) };
+                        *a = Analysis { ranges: a.close(first - 1), start: Some(last + 1), ..a.clone() };
                     }
                 }
             }
@@ -265,12 +285,12 @@ pub fn disabled_ranges(
                     let a = analyses.entry(cop).or_default();
                     if !lines.comment_only(line) || single_line {
                         if d.disabled() {
-                            a.ranges.push((line, line));
+                            a.ranges.push((line, line, Some(index)));
                         }
                     } else if d.disabled() {
-                        *a = Analysis { ranges: a.close(line), start: Some(line) };
+                        *a = Analysis { ranges: a.close(line), start: Some(line), start_directive: Some(index) };
                     } else {
-                        *a = Analysis { ranges: a.close(line), start: None };
+                        *a = Analysis { ranges: a.close(line), ..Analysis::default() };
                     }
                 }
             }
@@ -288,7 +308,7 @@ pub fn disabled_ranges(
 }
 
 /// DisableNext#statement_scope_after: the statement right below a comment-only directive line.
-fn statement_scope_after(lines: &LineInfo, src: &Source, directive_line: i64) -> Option<(usize, usize)> {
+pub fn statement_scope_after(lines: &LineInfo, src: &Source, directive_line: i64) -> Option<(usize, usize)> {
     if !lines.comment_only(directive_line) {
         return None;
     }
