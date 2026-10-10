@@ -62,3 +62,10 @@ pub fn is_binary_operation(call: &ruby_prism::CallNode) -> bool {
         is_operator_method(method_name(call)) && sel.start_offset() != call.location().start_offset()
     })
 }
+
+/// `unary_operation?`: an operator method whose selector starts the expression (`-a`, `!a`, `not a`).
+pub fn is_unary_operation(call: &ruby_prism::CallNode) -> bool {
+    call.message_loc().is_some_and(|sel| {
+        is_operator_method(method_name(call)) && sel.start_offset() == call.location().start_offset()
+    })
+}
