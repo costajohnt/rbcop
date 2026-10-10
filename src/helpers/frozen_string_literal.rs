@@ -67,3 +67,21 @@ fn frozen_string_type(cx: &Cx, node: &ruby_prism::Node) -> bool {
 pub fn frozen_string_literal(cx: &Cx, node: &ruby_prism::Node) -> bool {
     frozen_string_type(cx, node) && enabled(cx)
 }
+
+/// `uninterpolated_string?(node) || uninterpolated_heredoc?(node)` is false: a parser `dstr` with a
+/// `begin`/`ivar`/`cvar`/`gvar` descendant (an interpolated literal that is not frozen).
+pub fn interpolated_dstr(node: &ruby_prism::Node) -> bool {
+    use ruby_prism::Node;
+    fn interpolated(parts: ruby_prism::NodeList) -> bool {
+        parts.iter().any(|p| match &p {
+            Node::EmbeddedStatementsNode { .. } => true,
+            Node::EmbeddedVariableNode { .. } => matches!(
+                p.as_embedded_variable_node().unwrap().variable(),
+                Node::InstanceVariableReadNode { .. } | Node::ClassVariableReadNode { .. } | Node::GlobalVariableReadNode { .. }
+            ),
+            Node::InterpolatedStringNode { .. } => interpolated(p.as_interpolated_string_node().unwrap().parts()),
+            _ => false,
+        })
+    }
+    node.as_interpolated_string_node().is_some_and(|n| interpolated(n.parts()))
+}
