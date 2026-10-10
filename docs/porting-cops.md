@@ -329,6 +329,15 @@ More traps found while porting:
 - The `-> {}` literal has a parser `lambda` send that `on_send` sees.
 - Helpers: `element_line_breaks` (FirstElementLineBreak/MultilineElementLineBreaks),
   `reparsed_equivalence::*_folding` (fold_string_concatenation).
+- Symbol#inspect quotes non-printable names; an all-ASCII symbol prints controls as `\xNN`
+  (`ruby_string::symbol_inspect`).
+- Hash value omission `{ id: }`: parser's lvar covers `id` only; Prism's node inside the
+  ImplicitNode includes the colon.
+- `on_investigation_end` cops: queue items in `cx.state` from `on_node` and finish in `on_file`
+  (it runs after the walk).
+- build.rs registers every `.rs` in a department directory as a cop: keep a cop's sub-modules
+  inline.
+- Helpers: `visibility_help`, `method_preference`, `documentation_comment`.
 - Prism `CallNode#message_loc` of an index call (`foo[x]`, `foo[x] = y`) spans the brackets and
   arguments; use `name()` when you mean parser's method name.
 - Helpers: `if_node::{normal_keyword, parts, is_elsif}`, `ruby_string::symbol_inspect`.
