@@ -86,8 +86,9 @@ impl Cop for RescueModifier {
             let i = cx.ancestors.iter().rposition(|a| span(a) == s && kind::of(a) == kind::of(p)).unwrap();
             paren_fix(cx, i)
         });
-        // Below 2.6 the parser gem reads `a, b = 1, 2 rescue x` as `(a, b = 1, 2) rescue x`.
-        let masgn = (cx.config.target_ruby < 2.6)
+        // Below 2.7 (Parser::Ruby26 and older) the parser gem reads `a, b = 1, 2 rescue x` as
+        // `(a, b = 1, 2) rescue x`.
+        let masgn = (cx.config.target_ruby < 2.7)
             .then(|| cx.ancestors.last().and_then(|a| a.as_multi_write_node()))
             .flatten()
             .filter(|m| span(&m.value()) == me)
