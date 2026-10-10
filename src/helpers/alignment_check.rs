@@ -180,3 +180,10 @@ pub fn check_alignment(cx: &mut Cx, items: &[Item], base: Option<i64>, msg: &str
         prev_line = line;
     }
 }
+
+/// AlignmentCorrector#inside_string_ranges: string contents and heredoc bodies within `node`.
+pub fn taboo_ranges(src: &Source, node: &Node) -> Vec<(usize, usize)> {
+    let mut v = TabooVisit { taboo: Taboo::default(), src: src.text };
+    v.visit(node);
+    v.taboo.0
+}

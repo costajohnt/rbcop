@@ -17,7 +17,7 @@ impl Cop for SpaceAfterMethodName {
         let Some(lparen) = node.as_def_node().unwrap().lparen_loc() else { return };
         let pos = lparen.start_offset();
         if pos > 0 && cx.src.text.as_bytes()[pos - 1] == b' ' {
-            cx.add(pos - 1, pos, "Do not put a space between a method name and the opening parenthesis.");
+            cx.add_fix(pos - 1, pos, "Do not put a space between a method name and the opening parenthesis.", |c| c.remove(pos - 1, pos));
         }
     }
 }

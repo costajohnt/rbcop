@@ -68,12 +68,41 @@ fn first_line(cx: &Cx, start: usize) -> usize {
 }
 
 /// OrderedGemNode: report `current` if it directly follows `previous` and sorts before it.
-/// `msg` gets (current name, previous name).
-pub fn check_pair(cx: &mut Cx, previous: &Declaration, current: &Declaration, msg: fn(&str, &str) -> String) {
+/// `msg` gets (current name, previous name). The fix moves `current` above `swap_with` (the cop's
+/// `previous_declaration(current)`, normally `previous`).
+pub fn check_pair(
+    cx: &mut Cx,
+    previous: &Declaration,
+    current: &Declaration,
+    swap_with: &Declaration,
+    msg: fn(&str, &str) -> String,
+) {
     if cx.src.line_of(previous.end) + 1 != first_line(cx, current.start) {
         return;
     }
-    if canonical(cx, &current.name) < canonical(cx, &previous.name) {
-        cx.add(current.start, current.end, msg(&current.name, &previous.name));
+    if canonical(cx, &current.name) >= canonical(cx, &previous.name) {
+        return;
     }
+    // OrderedGemCorrector.correct
+    let cur = declaration_with_comment(cx, current);
+    let prev = declaration_with_comment(cx, swap_with);
+    let text = cx.src.text;
+    cx.add_fix(current.start, current.end, msg(&current.name, &previous.name), |c| {
+        if text[cur.0..cur.1].ends_with('\n') {
+            c.swap(cur, prev);
+        } else {
+            c.insert_before(prev.0, prev.1, &format!("{}\n", &text[cur.0..cur.1]));
+            c.remove(cur.0, cur.1);
+        }
+    });
+}
+
+/// OrderedGemCorrector#declaration_with_comment: whole lines from the first associated comment
+/// (or the node) through the node's last line, final newline included.
+fn declaration_with_comment(cx: &Cx, d: &Declaration) -> (usize, usize) {
+    let src = cx.src;
+    let begin = src.line_start(first_line(cx, d.start));
+    let end_line_start = src.line_start(src.line_of(d.end));
+    let end = src.text[end_line_start..].find('\n').map_or(src.text.len(), |i| end_line_start + i + 1);
+    (begin, end)
 }

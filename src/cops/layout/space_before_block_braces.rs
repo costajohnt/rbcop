@@ -46,15 +46,15 @@ impl Cop for SpaceBeforeBlockBraces {
                 return;
             }
             if empty_style == "space" {
-                cx.add(brace_s, brace_e, MISSING);
+                cx.add_fix(brace_s, brace_e, MISSING, |c| c.insert_before(brace_s, brace_e, " "));
             } else {
-                cx.add(space_s, brace_s, DETECTED);
+                cx.add_fix(space_s, brace_s, DETECTED, |c| c.remove(space_s, brace_s));
             }
         } else if used != style {
             if used == "space" {
-                cx.add(space_s, brace_s, DETECTED);
+                cx.add_fix(space_s, brace_s, DETECTED, |c| c.remove(space_s, brace_s));
             } else {
-                cx.add(brace_s, brace_e, MISSING);
+                cx.add_fix(brace_s, brace_e, MISSING, |c| c.insert_before(brace_s, brace_e, " "));
             }
         }
     }

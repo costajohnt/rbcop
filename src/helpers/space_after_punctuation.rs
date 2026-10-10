@@ -23,7 +23,9 @@ pub fn check(cx: &mut Cx, rcurly_style: &str, kind: impl Fn(&Token, &Token) -> O
             sys::PM_TOKEN_PARENTHESIS_RIGHT | sys::PM_TOKEN_BRACKET_RIGHT | sys::PM_TOKEN_PIPE | sys::PM_TOKEN_EMBEXPR_END
         ) || (t2.kind == sys::PM_TOKEN_BRACE_RIGHT && rcurly_style == "no_space");
         if !allowed {
-            cx.add(t1.start, t1.end, format!("Space missing after {k}."));
+            // PunctuationCorrector.add_space
+            let text = format!("{} ", &src.text[t1.start..t1.end]);
+            cx.add_fix(t1.start, t1.end, format!("Space missing after {k}."), |c| c.replace(t1.start, t1.end, &text));
         }
     }
 }

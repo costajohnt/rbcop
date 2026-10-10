@@ -16,3 +16,14 @@ pub fn single_negative(predicate: Node) -> bool {
 pub fn message(inverse: &str, current: &str) -> String {
     format!("Favor `{inverse}` over `{current}` for negative conditions.")
 }
+
+/// ConditionCorrector.correct_negative_condition: swap the keyword for its inverse and replace the
+/// negated condition (parentheses stripped) with its receiver's source.
+pub fn correct_negative_condition(c: &mut Corrector, keyword: (usize, usize), inverse: &str, predicate: Node) {
+    let Some(cond) = strip_parens(predicate) else { return };
+    let call = cond.as_call_node().unwrap();
+    let Some(recv) = call.receiver() else { return };
+    let (s, e) = send_range(&call);
+    c.replace(keyword.0, keyword.1, inverse);
+    c.replace(s, e, node_text(&recv));
+}

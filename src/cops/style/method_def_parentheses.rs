@@ -1,3 +1,4 @@
+use crate::helpers::range_help::{Side, Surrounding, range_with_surrounding_space};
 use crate::prelude::*;
 
 pub const NAME: &str = "Style/MethodDefParentheses";
@@ -25,8 +26,14 @@ impl Cop for MethodDefParentheses {
             if parens.is_none()
                 && let Some(p) = &params
             {
-                let loc = p.location();
-                cx.add(loc.start_offset(), loc.end_offset(), "Use def with parentheses when there are parameters.");
+                // Util#add_parentheses on an `args` node.
+                let (s, e) = (p.location().start_offset(), p.location().end_offset());
+                let side = Surrounding { side: Side::Left, ..Default::default() };
+                let (lead, _) = range_with_surrounding_space(cx.src.text, s, e, side);
+                cx.add_fix(s, e, "Use def with parentheses when there are parameters.", |c| {
+                    c.replace(lead, s, "(");
+                    c.insert_after(s, e, ")");
+                });
             }
             return;
         }
@@ -34,7 +41,10 @@ impl Cop for MethodDefParentheses {
             return;
         }
         if let Some((s, e)) = parens {
-            cx.add(s, e, "Use def without parentheses.");
+            cx.add_fix(s, e, "Use def without parentheses.", |c| {
+                c.replace(s, s + 1, " ");
+                c.remove(e - 1, e);
+            });
         }
     }
 }

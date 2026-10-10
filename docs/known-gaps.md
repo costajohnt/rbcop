@@ -26,3 +26,6 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - One spec snippet (`naming/method_name/050.rb`, a `%{}` template) gets a duplicated
   "unexpected write target" syntax error location.
 - Cops reported `[Correctable]` without a corrector are not fixed by `-a/-A` until retrofitted.
+- Lint/RedundantCopDisableDirective, Lint/RedundantCopEnableDirective, Lint/MissingCopEnableDirective
+  and Style/DisableCopsWithinSourceCodeDirective need every other cop's offenses (suppressed ones
+  included), so they are ported last, once all cops exist.

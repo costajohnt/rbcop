@@ -21,8 +21,9 @@ impl Cop for SpaceAfterNot {
         }
         let Some(recv) = call.receiver() else { return };
         let (start, end) = send_range(&call);
-        if recv.location().start_offset() > start + 1 {
-            cx.add(start, end, "Do not leave space between `!` and its argument.");
+        let (sel_end, recv_start) = (call.message_loc().unwrap().end_offset(), recv.location().start_offset());
+        if recv_start > start + 1 {
+            cx.add_fix(start, end, "Do not leave space between `!` and its argument.", |c| c.remove(sel_end, recv_start));
         }
     }
 }

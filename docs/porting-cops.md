@@ -174,6 +174,26 @@ More traps found while porting:
 - Parser wraps a `rescue A, B` exception list in an `array`.
 - `a[...]` has no `loc.begin` in parser although Prism has `opening_loc` `[`.
 - A label pair `key: v` has no `operator_loc` in Prism; treat the missing operator as `:`.
+- Parser makes a heredoc a `str` only when its body has at most one line and no interpolation;
+  otherwise it is a `dstr` (matters for `str_type? && heredoc?`).
+- `loc.heredoc_end` spans the whole terminator line including indentation, excluding the newline;
+  Prism's `closing_loc` includes the newline. For `<<~` heredocs Prism's `content_loc`/first part
+  start after the stripped indentation, parser's `heredoc_body` at the start of that line.
+- `#{ ;}` has no statements in Prism but a `tSEMI` token in parser.
+- RuboCop crashes inside corrector blocks lose the offense entirely (e.g. `loc.dot` on a call without
+  a dot); report nothing on those paths.
+- When one corrector fixes two offenses and then `ignore_node`s, the second offense is not
+  `[Correctable]`; a captured flag in the `add_fix` closure reproduces this.
+- Some cops behave differently only while autocorrecting (e.g. IndentationWidth's
+  `other_offense_in_same_range?`): check `cx.fixes.autocorrect`.
+- RuboCop visits a `kwbegin`, then its `ensure`, then its `rescue`; Prism has one BeginNode for all
+  three, so order-dependent checks must run in that order there.
+- A ternary's `:` is not `loc.else`; an `elsif` if-node has no `loc.end`; parser `unless` keeps its
+  body as `node.body` (not swapped like `if`).
+- An offense that depends on ancestors seen later can be stored in `cx.state` keyed by the node's
+  span and emitted when the node itself is visited.
+- macOS paths: RuboCop and rbcop print physical paths (`/private/tmp`, `/private/var`); scratch
+  comparisons must normalise with `pwd -P`.
 
 ### Prism tokens vs parser-gem tokens
 
