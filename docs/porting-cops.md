@@ -279,6 +279,24 @@ More traps found while porting:
 - A Prism `'a' \ 'b'` concatenation is a flat InterpolatedStringNode without opening (parser's flat
   dstr). A backslash-newline inside an interpolating literal is a continuation: still a `str`.
 - Always pass `--cache false` to RuboCop on reused scratch dirs.
+- A cop's second offense on an identical range is dropped by `Cx` (Base#add_offense
+  `current_offense_locations`), whatever its message; don't add your own same-range filter.
+- A panicking cop is contained by `runner::guarded` (RuboCop-style "An error occurred while ..."),
+  but a panic is still a bug: guard slices against reversed ranges the way RuboCop's logic does.
+- Block-range offenses: subscribe to the block's owner (CallNode/SuperNode/ForwardingSuperNode/
+  LambdaNode), not BlockNode; parser visits outer blocks of a chain first.
+- Parser `str` children: a regexp literal's and an xstring's content are `str` nodes that `on_str`
+  sees; Prism has no StringNode there.
+- `node.parent&.any_block_type?` is also true for a call that is a block's single body statement.
+- `DstrNode#value` concatenates child values (source for children without one); `DsymNode#value`
+  raises, dropping the offense.
+- Parser heredoc `dstr` text children start at column 0 and split at every newline and
+  interpolation.
+- Helpers: `regexp_parser::tree` (expression tree), `allowed_receivers`, `value_used`,
+  `file_open_patterns`, `comment_config`, `add_parentheses::ParenFix::Params`,
+  `ruby_string::{regexp_escape, float_to_s}`.
+- Prism `CallNode#message_loc` of an index call (`foo[x]`, `foo[x] = y`) spans the brackets and
+  arguments; use `name()` when you mean parser's method name.
 - Helpers: `if_node::{normal_keyword, parts, is_elsif}`, `ruby_string::symbol_inspect`.
 - Binary-encoded files: Ruby `String#inspect` escapes every non-ASCII byte (`"\xE3\x81\x82"`), so
   use `ruby_string::inspect_binary` when `cx.src.binary`.

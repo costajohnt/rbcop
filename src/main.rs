@@ -511,6 +511,15 @@ fn ruby_seconds(x: f64) -> String {
 
 fn main() -> ExitCode {
     let t0 = Instant::now();
+    // A panic inside a cop is reported RuboCop-style by runner::guarded, so Rust's own panic text is
+    // kept for every other panic (and for cop panics under RBCOP_DEBUG).
+    let default_hook = std::panic::take_hook();
+    let debug = std::env::var_os("RBCOP_DEBUG").is_some();
+    std::panic::set_hook(Box::new(move |info| {
+        if debug || !runner::in_cop() {
+            default_hook(info);
+        }
+    }));
     let parsed = all_args().and_then(parse_args);
     let (display_time, color_opt) = match &parsed {
         Ok(cli) => (cli.display_time, cli.color),

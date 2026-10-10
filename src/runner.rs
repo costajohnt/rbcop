@@ -202,7 +202,7 @@ fn analyze(
             state,
             fixes,
         };
-        a.cop.on_file(&mut cx);
+        guarded(a.name, &src, 0, || a.cop.on_file(&mut cx));
     }
 
     dedup(&mut out);
@@ -231,6 +231,28 @@ fn analyze(
         o.correctable &= autocorrect_allowed(c);
     }
     (out, corrector)
+}
+
+thread_local! {
+    static IN_COP: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+}
+
+/// Whether this thread is running a cop callback (its panics are reported by `guarded`).
+pub fn in_cop() -> bool {
+    IN_COP.with(|c| c.get())
+}
+
+/// Commissioner#with_cop_error_handling: a cop that fails on one node is reported and skipped
+/// there, and inspection goes on (other nodes, other cops, other files).
+fn guarded(cop: &str, src: &Source, at: usize, f: impl FnOnce()) {
+    IN_COP.with(|c| c.set(true));
+    let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(f));
+    IN_COP.with(|c| c.set(false));
+    if result.is_err() {
+        // Range#line and the 0-based Range#column.
+        let (line, col) = crate::formatter::line_col(src.text, at);
+        eprintln!("An error occurred while {cop} cop was inspecting {}:{line}:{}.", src.path, col - 1);
+    }
 }
 
 /// Cop::Base#use_corrector: an offense with a corrector is only `[Correctable]` when the cop's
@@ -303,7 +325,7 @@ impl<'pr> Walker<'_, 'pr, '_> {
                 state: &mut self.states[i],
                 fixes: &mut self.fixes[i],
             };
-            a.cop.on_node(&mut cx, node);
+            guarded(a.name, self.src, node.location().start_offset(), || a.cop.on_node(&mut cx, node));
         }
     }
 
