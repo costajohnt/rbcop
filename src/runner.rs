@@ -320,6 +320,7 @@ fn analyze(
     let data = result.data_loc().map(|d| d.start_offset());
     let mut src = Source::new(display, text, comments, data, version);
     src.raw_text = raw_text;
+    src.parser_gem = parser_gem;
 
     if !errors.is_empty() {
         // RuboCop runs only Lint/Syntax on a file that does not parse, one offense per diagnostic,
@@ -584,7 +585,7 @@ fn autocorrect_allowed(cfg: &CopConfig) -> bool {
 /// Prism reports some semantic errors the parser gem accepts (e.g. top-level `yield` in .builder
 /// templates, `retry` outside `rescue`).
 // ponytail: only verified ones are tolerated; add more as real code turns them up.
-const TOLERATED_ERRORS: &[&str] = &["invalid_yield", "invalid_retry_without_rescue"];
+pub const TOLERATED_ERRORS: &[&str] = &["invalid_yield", "invalid_retry_without_rescue"];
 
 /// Prism errors the parser gem accepts for the target. Up to Ruby 2.5, `begin..else..end` without
 /// `rescue` is only a `useless_else` warning (reported by Lint/UselessElseWithoutRescue); before
