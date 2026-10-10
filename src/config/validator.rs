@@ -10,7 +10,7 @@ use crate::helpers::did_you_mean;
 use crate::helpers::ruby_string::{float_to_s, inspect as inspect_str};
 use regex::Regex;
 use std::path::Path;
-use std::sync::LazyLock;
+use std::sync::{Arc, LazyLock};
 
 const COMMON_PARAMS: &[&str] = &[
     "Exclude",
@@ -44,7 +44,7 @@ const SEVERITIES: [&str; 6] = ["info", "refactor", "convention", "warning", "err
 
 /// config/obsoletion.yml of the gem (ConfigObsoletion::DEFAULT_RULES_FILE).
 static OBSOLETION: LazyLock<Map> = LazyLock::new(|| match parse_yaml(include_str!("../../config/obsoletion.yml")) {
-    Ok(Value::Map(m)) => m,
+    Ok(Value::Map(m)) => Arc::unwrap_or_clone(m),
     _ => Map::default(),
 });
 
@@ -347,7 +347,7 @@ impl Validator<'_> {
                 continue;
             }
             let (new, meta) = match &v {
-                Value::Map(m) => (m.str("new_name").unwrap_or_default().to_string(), m),
+                Value::Map(m) => (m.str("new_name").unwrap_or_default().to_string(), &**m),
                 v => (v.as_string().unwrap_or_default(), &empty),
             };
             let (od, nd) = (department(&old), department(&new));
@@ -398,7 +398,7 @@ impl Validator<'_> {
         let mut target = None;
         for kind in ["changed_parameters", "changed_enforced_styles"] {
             let Some(Value::Seq(entries)) = OBSOLETION.get(kind) else { continue };
-            for entry in entries {
+            for entry in entries.iter() {
                 let Value::Map(meta) = entry else { continue };
                 for cop in strings(meta.get("cops")) {
                     for parameter in strings(meta.get("parameters")) {
@@ -587,12 +587,12 @@ mod tests {
 
     #[test]
     fn ruby_inspect_and_sentence() {
-        let v = Value::Seq(vec![Value::Str("a".into()), Value::Int(1), Value::Null, Value::Sym(":s".into())]);
+        let v = Value::Seq(vec![Value::Str("a".into()), Value::Int(1), Value::Null, Value::Sym(":s".into())].into());
         assert_eq!(inspect(&v), r#"["a", 1, nil, :s]"#);
         assert_eq!(to_s(&Value::Sym(":s".into())), "s");
         let mut m = Map::default();
         m.insert("k", Value::Bool(true));
-        assert_eq!(inspect(&Value::Map(m)), r#"{"k" => true}"#);
+        assert_eq!(inspect(&Value::Map(m.into())), r#"{"k" => true}"#);
         let items: Vec<String> = ["`A`", "`B`", "`C`"].iter().map(|s| s.to_string()).collect();
         assert_eq!(to_sentence(&items, "and/or"), "`A`, `B` and/or `C`");
         assert!(OBSOLETION.map("renamed").is_some_and(|m| m.contains("Layout/AlignHash")));

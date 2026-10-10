@@ -138,7 +138,7 @@ pub fn target<'pr>(cx: &Cx, node: &Node<'pr>) -> Option<(String, Node<'pr>, (usi
     if allowed_method(cx.cfg, &name) || matches_allowed_pattern(cx.cfg, &name) {
         return None;
     }
-    Some((name, body?, range))
+    Some((name, body?, crate::helpers::lsp::location(node, range)))
 }
 
 /// CyclomaticComplexity (`perceived: false`) or PerceivedComplexity score of a method body.

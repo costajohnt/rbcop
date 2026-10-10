@@ -1,0 +1,10 @@
+format_percent.rb:2:10: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
+format_percent.rb:3:10: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
+format_percent.rb:4:10: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
+format_percent.rb:5:10: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
+format_percent.rb:6:10: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
+format_percent.rb:7:10: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
+format_percent.rb:8:10: C: [Corrected] Style/FormatString: Favor `String#%` over `sprintf`.
+format_percent.rb:9:10: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
+format_percent.rb:10:10: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
+long.rb:3:81: C: Layout/LineLength: Line is too long. [101/80]

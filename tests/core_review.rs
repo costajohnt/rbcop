@@ -356,6 +356,27 @@ fn stdin_autocorrect_echoes_original_bytes() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// --editor-mode (RuboCop::LSP.enabled?): the Metrics cops report a definition's head, Lint/Syntax
+/// has no parser line, and `AutoCorrect: contextual` cops do not correct. The clang output (ranges
+/// as carets) was recorded with RuboCop 1.91 in tests/scenarios/editor_mode.
+#[test]
+fn editor_mode_ranges_and_contextual_autocorrect() {
+    let project = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/scenarios/editor_mode/project");
+    let out = rbcop(&project, &["--editor-mode", "-f", "c", "metrics.rb", "a.rb"]);
+    let want = fs::read_to_string(project.join("../clang.txt")).unwrap();
+    assert_eq!(text(&out.stdout), want);
+    assert_eq!(out.status.code(), Some(1));
+
+    let dir = scratch("editor-mode");
+    let src = "# frozen_string_literal: true\n\ndef foo(unused)\n  1\nend\nfoo(1)  \nputs 1\n\n\n";
+    fs::write(dir.join("a.rb"), src).unwrap();
+    let out = rbcop(&dir, &["--editor-mode", "-f", "s", "-a", "a.rb"]);
+    assert!(text(&out.stdout).ends_with("1 file inspected, 3 offenses detected, 2 offenses corrected\n"));
+    assert_eq!(out.status.code(), Some(1));
+    assert!(fs::read_to_string(dir.join("a.rb")).unwrap().contains("def foo(unused)"));
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// Config load errors: the first stderr line as RuboCop 1.91 prints it (Ruby's backtrace, which
 /// RuboCop prints after it for most of these, is not reproduced), exit 2.
 #[test]
@@ -395,5 +416,73 @@ fn config_load_errors_worded_like_rubocop() {
         assert_eq!(stderr.lines().next(), Some(want.replace("{D}", &dir.display().to_string()).as_str()), "{config:?}");
         assert_eq!(out.status.code(), Some(2), "{config:?}");
     }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// inherit_gem: the rubocop gem is refused (ConfigLoaderResolver's ArgumentError), and a gem that
+/// is not installed gets gem_config_path's `Unable to find gem ...` with RubyGems' message.
+#[test]
+fn inherit_gem_errors_worded_like_rubocop() {
+    let dir = scratch("inherit-gem");
+    fs::write(dir.join("a.rb"), "x = 1\n").unwrap();
+    fs::write(dir.join(".rubocop.yml"), "inherit_gem:\n  rubocop: config/default.yml\n").unwrap();
+    let out = rbcop(&dir, &["-f", "s", "a.rb"]);
+    assert_eq!(text(&out.stderr), "can't inherit configuration from the rubocop gem\n");
+    assert_eq!(out.status.code(), Some(2));
+    fs::write(dir.join(".rubocop.yml"), "inherit_gem:\n  nonexistent_gem_xyz: x.yml\n").unwrap();
+    let out = rbcop(&dir, &["-f", "s", "a.rb"]);
+    let stderr = text(&out.stderr);
+    // Without a ruby on PATH there is no RubyGems message to compare.
+    if !stderr.contains("cannot run ruby") {
+        assert!(
+            stderr.starts_with(
+                "Unable to find gem nonexistent_gem_xyz; is the gem installed? Could not find 'nonexistent_gem_xyz' (>= 0)"
+            ),
+            "{stderr}"
+        );
+    }
+    assert_eq!(out.status.code(), Some(2));
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// --init (InitDotfile), recorded with RuboCop 1.91: writes the commented template and says where;
+/// a second run finds the file and fails (exit 2).
+#[test]
+fn init_writes_rubocop_yml_once() {
+    let dir = scratch("init");
+    fs::remove_file(dir.join(".rubocop.yml")).unwrap();
+    let out = rbcop(&dir, &["--init"]);
+    let path = dir.join(".rubocop.yml").display().to_string();
+    assert_eq!(text(&out.stdout), format!("Writing new .rubocop.yml to {path}\n"));
+    assert_eq!(out.status.code(), Some(0));
+    let written = fs::read_to_string(dir.join(".rubocop.yml")).unwrap();
+    assert!(written.starts_with("# The behavior of RuboCop can be controlled via the .rubocop.yml\n"));
+    assert!(written.ends_with("#\n# See https://docs.rubocop.org/rubocop/configuration\n"));
+    assert_eq!(written.lines().count(), 10);
+    let out = rbcop(&dir, &["--init"]);
+    assert_eq!(text(&out.stderr), format!(".rubocop.yml already exists at {path}\n"));
+    assert_eq!(out.status.code(), Some(2));
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// -h under colour (CLICOLOR_FORCE=1 rubocop -h): the banner and section headings are bright,
+/// unless --no-color is on the command line.
+#[test]
+fn help_headings_are_bright_when_coloured() {
+    let dir = scratch("help");
+    let run = |args: &[&str]| {
+        common::command(env!("CARGO_BIN_EXE_rbcop"))
+            .args(args)
+            .env("CLICOLOR_FORCE", "1")
+            .current_dir(&dir)
+            .output()
+            .unwrap()
+    };
+    let out = text(&run(&["-h"]).stdout);
+    assert!(
+        out.starts_with("\x1b[1mUsage: rubocop [options] [file1, file2, ...]\x1b[0m\n\n\x1b[1mBasic Options\x1b[0m:\n")
+    );
+    assert_eq!(out.matches("\x1b[").count(), 24);
+    assert!(!text(&run(&["-h", "--no-color"]).stdout).contains('\x1b'));
     let _ = fs::remove_dir_all(&dir);
 }

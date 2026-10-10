@@ -1,0 +1,15 @@
+AllCops:
+  NewCops: disable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Style/EndlessMethod:
+  EnforcedStyle: require_always
+Layout/LineLength:
+  Max: 100
+Layout/SpaceInsideParens:
+  EnforcedStyle: space
+Style/NilComparison:
+  Enabled: pending
+  EnforcedStyle: comparison
+Style/NonNilCheck:
+  IncludeSemanticChanges: true

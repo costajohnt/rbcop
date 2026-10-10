@@ -1,0 +1,8 @@
+AllCops:
+  NewCops: disable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Layout/EmptyLinesAroundModuleBody:
+  EnforcedStyle: empty_lines_special
+Layout/EmptyLinesAroundClassBody:
+  EnforcedStyle: empty_lines_special

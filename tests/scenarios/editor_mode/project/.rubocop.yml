@@ -1,0 +1,17 @@
+AllCops:
+  NewCops: disable
+  TargetRubyVersion: 2.7
+Metrics/MethodLength:
+  Max: 1
+Metrics/ClassLength:
+  Max: 1
+Metrics/ModuleLength:
+  Max: 1
+Metrics/BlockLength:
+  Max: 1
+Metrics/AbcSize:
+  Max: 1
+Metrics/CyclomaticComplexity:
+  Max: 1
+Metrics/PerceivedComplexity:
+  Max: 1

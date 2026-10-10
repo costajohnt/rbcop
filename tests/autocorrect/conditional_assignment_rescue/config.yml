@@ -1,0 +1,8 @@
+Layout/LineLength:
+  Max: 80
+AllCops:
+  NewCops: disable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Style/ConditionalAssignment:
+  EnforcedStyle: assign_inside_condition
