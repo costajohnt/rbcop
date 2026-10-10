@@ -1,6 +1,13 @@
 [package]
 name = "rbcop"
 version = "0.1.0"
+description = "RuboCop reimplemented in Rust, aiming for byte-identical output"
+repository = "https://github.com/costajohnt/rbcop"
+readme = "README.md"
+# let chains (`if let ... && let ...`) need 1.88.
+rust-version = "1.88"
+# Not publishable: the [patch] below points at vendor/ruby-prism, which `cargo package` drops.
+publish = false
 edition = "2024"
 license = "MIT"
 
