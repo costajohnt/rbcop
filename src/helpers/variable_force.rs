@@ -4,10 +4,6 @@
 //! this module first converts the Prism tree into a small parser-shaped tree (`Tree`), keeping only
 //! what the force looks at: scopes, local variable nodes, control flow, and everything else as
 //! `Other` nodes whose interesting descendants are hoisted as their children.
-//!
-//! ponytail: `mark_assignments_as_referenced_in_loop` (loop nodes as assignment references) is not
-//! ported; port it with the first cop that reads `Assignment::references` for loop nodes
-//! (e.g. Lint/UselessAssignment).
 
 use crate::node_kind as kind;
 use ruby_prism::{Node, Visit};
@@ -98,6 +94,10 @@ pub struct PNode {
     pub nargs: usize,
     /// `if` / `while` / `until` in modifier form.
     pub modifier: bool,
+    /// Prism kind of an `Other` node (0 otherwise).
+    pub kind: usize,
+    /// `send` with `&.` (parser `csend`).
+    pub csend: bool,
     pub children: Vec<Option<usize>>,
     pub parent: Option<usize>,
 }
@@ -182,6 +182,13 @@ impl<'pr> Visit<'pr> for Interesting<'pr> {
         visit_singleton_class_node: SingletonClassNode,
         visit_embedded_statements_node: EmbeddedStatementsNode,
         visit_implicit_node: ImplicitNode,
+        // Kept (as `Other` with `kind`) for cops that look for them.
+        visit_retry_node: RetryNode,
+        visit_instance_variable_write_node: InstanceVariableWriteNode,
+        visit_class_variable_write_node: ClassVariableWriteNode,
+        visit_global_variable_write_node: GlobalVariableWriteNode,
+        visit_constant_write_node: ConstantWriteNode,
+        visit_constant_path_write_node: ConstantPathWriteNode,
     );
 }
 
@@ -257,6 +264,8 @@ impl Tree {
             names: Vec::new(),
             nargs: 0,
             modifier: false,
+            kind: 0,
+            csend: false,
             children: Vec::new(),
             parent: None,
         });
@@ -320,7 +329,7 @@ impl Tree {
             kind::MULTI_TARGET_NODE => {
                 let m = node.as_multi_target_node().unwrap();
                 let i = self.mk(T::Mlhs, range);
-                self.targets(i, m.lefts().iter(), m.rest(), m.rights().iter());
+                self.targets(i, m.lefts().iter(), crate::ast::parser_rest(m.rest()), m.rights().iter());
                 Some(i)
             }
             kind::SPLAT_NODE => {
@@ -331,7 +340,6 @@ impl Tree {
                 }
                 Some(i)
             }
-            kind::IMPLICIT_REST_NODE => None,
             _ => self.conv(node),
         }
     }
@@ -384,7 +392,7 @@ impl Tree {
             kind::MULTI_TARGET_NODE => {
                 let m = node.as_multi_target_node().unwrap();
                 let i = self.mk(T::Mlhs, range);
-                for n in m.lefts().iter().chain(m.rest()).chain(m.rights().iter()) {
+                for n in m.lefts().iter().chain(crate::ast::parser_rest(m.rest())).chain(m.rights().iter()) {
                     let c = match n.as_splat_node() {
                         Some(s) => {
                             let name = s
@@ -401,7 +409,6 @@ impl Tree {
                 }
                 i
             }
-            kind::IMPLICIT_REST_NODE => return None,
             _ => self.mk(T::Other, range),
         })
     }
@@ -412,7 +419,7 @@ impl Tree {
         if let Some(p) = params {
             all.extend(p.requireds().iter());
             all.extend(p.optionals().iter());
-            all.extend(p.rest());
+            all.extend(crate::ast::parser_rest(p.rest()));
             all.extend(p.posts().iter());
             all.extend(p.keywords().iter());
             all.extend(p.keyword_rest());
@@ -727,13 +734,13 @@ impl Tree {
             kind::MULTI_WRITE_NODE => {
                 let m = node.as_multi_write_node().unwrap();
                 let i = self.mk(T::Masgn, range);
-                let first = m.lefts().iter().chain(m.rest()).chain(m.rights().iter()).map(|n| loc(&n)).collect::<Vec<_>>();
+                let first = m.lefts().iter().chain(crate::ast::parser_rest(m.rest())).chain(m.rights().iter()).map(|n| loc(&n)).collect::<Vec<_>>();
                 let mlhs_range = match (m.lparen_loc(), m.rparen_loc()) {
                     (Some(l), Some(r)) => (l.start_offset(), r.end_offset()),
                     _ => (first.first().map_or(range.0, |r| r.0), first.last().map_or(range.0, |r| r.1)),
                 };
                 let mlhs = self.mk(T::Mlhs, mlhs_range);
-                self.targets(mlhs, m.lefts().iter(), m.rest(), m.rights().iter());
+                self.targets(mlhs, m.lefts().iter(), crate::ast::parser_rest(m.rest()), m.rights().iter());
                 self.kid(i, Some(mlhs));
                 self.conv_kid(i, Some(m.value()));
                 i
@@ -773,6 +780,7 @@ impl Tree {
             kind::CALL_NODE => {
                 let c = node.as_call_node().unwrap();
                 let s = self.named(T::Send, crate::ast::send_range(&c), name_of(&c.name()));
+                self.nodes[s].csend = crate::ast::is_csend(&c);
                 self.conv_kid(s, c.receiver());
                 let mut n = 0;
                 if let Some(args) = c.arguments() {
@@ -857,8 +865,24 @@ impl Tree {
             }
             _ => {
                 let i = self.mk(T::Other, range);
+                self.nodes[i].kind = kind::of(node);
                 let mut kids = Interesting(Vec::new());
-                kids.visit(node);
+                // Variable / constant writes are kept as nodes; collect what is inside them.
+                macro_rules! inside {
+                    ($($k:ident => $as:ident, $f:ident;)*) => {
+                        match kind::of(node) {
+                            $(kind::$k => ruby_prism::$f(&mut kids, &node.$as().unwrap()),)*
+                            _ => kids.visit(node),
+                        }
+                    };
+                }
+                inside! {
+                    INSTANCE_VARIABLE_WRITE_NODE => as_instance_variable_write_node, visit_instance_variable_write_node;
+                    CLASS_VARIABLE_WRITE_NODE => as_class_variable_write_node, visit_class_variable_write_node;
+                    GLOBAL_VARIABLE_WRITE_NODE => as_global_variable_write_node, visit_global_variable_write_node;
+                    CONSTANT_WRITE_NODE => as_constant_write_node, visit_constant_write_node;
+                    CONSTANT_PATH_WRITE_NODE => as_constant_path_write_node, visit_constant_path_write_node;
+                }
                 for k in &kids.0 {
                     // ponytail: a kind listed in `Interesting` but not handled above would
                     // collect itself; treat it as a leaf.
@@ -1234,6 +1258,43 @@ impl<F: FnMut(&Tree, &Scope, &[Variable])> Force<'_, F> {
         self.variables[v].reference(self.tree, node);
     }
 
+    /// Marks the last assignments referenced in the same loop as referenced (by the loop node),
+    /// since the next iteration reads them.
+    fn mark_assignments_as_referenced_in_loop(&mut self, n: usize) {
+        let tree = self.tree;
+        let (mut names, mut assignments) = (Vec::new(), Vec::new());
+        tree.each_node(n, &mut |d| {
+            if d == n {
+                return;
+            }
+            match tree.t(d) {
+                T::Lvar => names.push(d),
+                T::Lvasgn => assignments.push(d),
+                t if t.is_shorthand_asgn() => {
+                    if let Some(l) = tree.child(d, 0).filter(|&l| tree.t(l) == T::Lvasgn) {
+                        names.push(l);
+                    }
+                }
+                _ => {}
+            }
+        });
+        for name in names {
+            let Some(v) = self.find_variable(&tree.nodes[name].name) else { continue };
+            let mut in_loop: Vec<&mut Assignment> =
+                self.variables[v].assignments.iter_mut().filter(|a| assignments.contains(&a.node)).collect();
+            for a in in_loop.iter_mut() {
+                if tree.ancestors(a.node).any(|x| matches!(tree.t(x), T::If | T::Case | T::CaseMatch | T::Rescue)) {
+                    a.references.push(n);
+                    a.referenced = true;
+                }
+            }
+            if let Some(last) = in_loop.last_mut() {
+                last.references.push(n);
+                last.referenced = true;
+            }
+        }
+    }
+
     fn process_children(&mut self, n: usize) {
         for c in self.tree.nodes[n].children.clone().into_iter().flatten() {
             if !self.scanned.contains(&c) {
@@ -1314,14 +1375,33 @@ impl<F: FnMut(&Tree, &Scope, &[Variable])> Force<'_, F> {
                 self.process(tree.last_child(n));
                 self.assign(name, lhs);
             }
+            T::While | T::Until => {
+                self.process_children(n);
+                self.mark_assignments_as_referenced_in_loop(n);
+            }
             T::WhilePost | T::UntilPost => {
                 self.process(tree.child(n, 1));
                 self.process(tree.child(n, 0));
+                self.mark_assignments_as_referenced_in_loop(n);
             }
             T::For => {
                 self.process(tree.child(n, 1));
                 self.process(tree.child(n, 0));
                 self.process(tree.child(n, 2));
+                self.mark_assignments_as_referenced_in_loop(n);
+            }
+            T::Rescue => {
+                // `begin..rescue..end` with `retry` is a loop.
+                self.process_children(n);
+                let mut retry = false;
+                for &c in tree.nodes[n].children.iter().flatten() {
+                    if tree.t(c) == T::Resbody {
+                        tree.each_node(c, &mut |d| retry |= d != c && tree.nodes[d].kind == kind::RETRY_NODE);
+                    }
+                }
+                if retry {
+                    self.mark_assignments_as_referenced_in_loop(n);
+                }
             }
             t if t.is_scope() => {
                 if !matches!(t, T::Def) {

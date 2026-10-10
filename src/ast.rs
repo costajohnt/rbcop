@@ -202,10 +202,16 @@ pub fn body_range(body: &Node) -> (usize, usize) {
     (start, end)
 }
 
+/// `.rest()` of a MultiWriteNode / MultiTargetNode / ParametersNode as parser sees it: Prism's
+/// ImplicitRestNode (trailing comma: `a, = x`, `|a, b,|`) has no parser node.
+pub fn parser_rest<'pr>(rest: Option<Node<'pr>>) -> Option<Node<'pr>> {
+    rest.filter(|r| r.as_implicit_rest_node().is_none())
+}
+
 /// Parser-gem `args` children of a parameter list, in source order.
 pub fn parameter_nodes<'pr>(params: &ruby_prism::ParametersNode<'pr>) -> Vec<Node<'pr>> {
     let mut out: Vec<Node> = params.requireds().iter().chain(params.optionals().iter()).collect();
-    out.extend(params.rest());
+    out.extend(parser_rest(params.rest()));
     out.extend(params.posts().iter());
     out.extend(params.keywords().iter());
     out.extend(params.keyword_rest());

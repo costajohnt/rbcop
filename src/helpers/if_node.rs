@@ -100,3 +100,20 @@ pub fn parts<'pr>(node: &Node<'pr>) -> (Node<'pr>, Option<Body<'pr>>, Option<Els
 pub fn is_elsif(node: &Node) -> bool {
     node.as_if_node().is_some_and(|n| n.if_keyword_loc().is_some_and(|k| k.as_slice() == b"elsif"))
 }
+
+/// End of parser's `loc.begin` of an if/unless: `then`, or a `;` right after the condition
+/// (blanks and newlines between them allowed: `if a\n; b end` has `;` as loc.begin).
+pub fn parser_begin_end(node: &Node) -> Option<usize> {
+    let (then, pred) = match (node.as_if_node(), node.as_unless_node()) {
+        (Some(n), _) => (n.then_keyword_loc(), n.predicate()),
+        (_, Some(n)) => (n.then_keyword_loc(), n.predicate()),
+        _ => return None,
+    };
+    if let Some(t) = then {
+        return Some(t.end_offset());
+    }
+    let end = pred.location().end_offset();
+    let rest = &node.location().as_slice()[end - node.location().start_offset()..];
+    let blanks = rest.iter().take_while(|&&b| matches!(b, b' ' | b'\t' | b'\n')).count();
+    (rest.get(blanks) == Some(&b';')).then_some(end + blanks + 1)
+}

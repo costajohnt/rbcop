@@ -4,7 +4,7 @@ use crate::prelude::*;
 use ruby_prism::CallNode;
 
 /// `Gem::Specification.new` / `::Gem::Specification.new` without arguments.
-fn is_spec_new(call: &CallNode) -> bool {
+pub fn is_spec_new(call: &CallNode) -> bool {
     if is_csend(call) || method_name(call) != "new" || call.arguments().is_some() {
         return false;
     }
@@ -34,7 +34,7 @@ pub fn spec_block_var<'pr>(call: &CallNode<'pr>) -> Option<&'pr [u8]> {
     }
     let p = params.parameters()?;
     let only_required = p.optionals().iter().next().is_none()
-        && p.rest().is_none()
+        && crate::ast::parser_rest(p.rest()).is_none()
         && p.posts().iter().next().is_none()
         && p.keywords().iter().next().is_none()
         && p.keyword_rest().is_none()

@@ -152,7 +152,8 @@ fn kwbegin_body(body: Option<Node<'_>>) -> Option<BeginNode<'_>> {
 /// inspect_branches: a kwbegin branch without rescue/ensure.
 fn inspect_branch(cx: &mut Cx, branch: Option<Node>) {
     let Some(b) = kwbegin_body(branch) else { return };
-    if b.rescue_clause().is_none() && b.ensure_clause().is_none() {
+    // A lonely `else` (accepted up to Ruby 2.5) keeps the begin, like rescue/ensure.
+    if b.rescue_clause().is_none() && b.ensure_clause().is_none() && b.else_clause().is_none() {
         register_simple(cx, &b);
     }
 }
@@ -203,7 +204,7 @@ fn children<'pr>(b: &BeginNode<'pr>) -> Vec<Node<'pr>> {
 /// allowable_kwbegin?
 fn allowable(b: &BeginNode, parent: Option<&Node>) -> bool {
     let n = children(b).len();
-    if b.rescue_clause().is_some() || b.ensure_clause().is_some() {
+    if b.rescue_clause().is_some() || b.ensure_clause().is_some() || b.else_clause().is_some() {
         return true;
     }
     if n == 0 || (parent.is_some() && n >= 2) {

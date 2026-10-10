@@ -44,3 +44,29 @@ pub fn inspect(bytes: &[u8]) -> String {
     out.push('"');
     out
 }
+
+/// Symbol#inspect (`:a`, `:"a-b"`, `:[]=`, `:@x`).
+pub fn symbol_inspect(name: &[u8]) -> String {
+    let Ok(s) = std::str::from_utf8(name) else { return format!(":{}", inspect(name)) };
+    let ident_start = |c: char| c.is_alphabetic() || c == '_' || !c.is_ascii();
+    let ident_char = |c: char| c.is_alphanumeric() || c == '_' || !c.is_ascii();
+    let ident = |t: &str| t.chars().next().is_some_and(ident_start) && t.chars().all(ident_char);
+    const OPS: [&str; 30] = [
+        "[]", "[]=", "!", "!=", "!~", "=~", "==", "===", "<=>", "<", "<=", ">", ">=", "<<", ">>", "+", "-", "*", "/",
+        "%", "**", "~", "+@", "-@", "!@", "~@", "&", "|", "^", "`",
+    ];
+    let simple = OPS.contains(&s)
+        || s.strip_prefix("@@").is_some_and(ident)
+        || s.strip_prefix('@').is_some_and(ident)
+        || s.strip_prefix('$').is_some_and(|g| {
+            ident(g)
+                || (!g.is_empty() && g.bytes().all(|b| b.is_ascii_digit()))
+                || (g.len() == 1 && "~*$?!@/\\;,.=:<>\"&`'+0".contains(g))
+                || (g.len() == 2 && g.starts_with('-') && g[1..].chars().all(ident_char))
+        })
+        || {
+            let base = s.strip_suffix(['?', '!', '=']).unwrap_or(s);
+            ident(base)
+        };
+    if simple { format!(":{s}") } else { format!(":{}", inspect(name)) }
+}

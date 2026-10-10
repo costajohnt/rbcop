@@ -22,6 +22,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - Deliberate: Style/WordArray correcting a `%W[...]` whose value is invalid UTF-8 (`%W[\xff]`)
   writes the escaped form (`["\xFF"]`); RuboCop writes the raw bytes and then crashes re-parsing
   its own output. The offense message matches RuboCop.
+- Review-loop coverage to add: every corpus targets Ruby 3.x, so behaviour at TargetRubyVersion
+  2.x (parser-gem grammar differences, min/max ruby cops) is only covered by scenarios. Record a
+  specs-corpus oracle at 2.5 and 2.7 and compare.
 - `AllCops/UseProjectIndex` (Rubydex, off by default) is not supported: Lint/DuplicateMethods
   cross-file checks and Naming/AccessorMethodName / PredicatePrefix `overrides_inherited_method?`
   are skipped. Naming/PredicatePrefix `validate_config` is not ported.
@@ -33,6 +36,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   lint/ambiguous_operator, lint/constant_definition_in_block, lint/redundant_splat_expansion,
   layout/first_argument_indentation, style/access_modifier_declarations, style/double_negation and
   style/nil_comparison should move to `helpers::parser_parent` (check each copy's semantics first).
+  ENUMERATOR_METHODS is duplicated in lint/unreachable_loop and style/next. Parser-ancestor
+  builders now exist in `parser_parent`, `parser_path`, `variable_force` and `nil_receiver_checker`;
+  converge them on one.
 - One spec snippet (`naming/method_name/050.rb`, a `%{}` template) gets a duplicated
   "unexpected write target" syntax error location.
 - Lint/RedundantCopDisableDirective, Lint/RedundantCopEnableDirective, Lint/MissingCopEnableDirective

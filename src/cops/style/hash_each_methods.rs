@@ -90,7 +90,7 @@ impl<'pr> Visit<'pr> for Lvars {
 /// Sources of the `arg`/`restarg` descendants of an mlhs block parameter (`*` stripped).
 fn mlhs_names(node: &Node, out: &mut Vec<String>) {
     if let Some(m) = node.as_multi_target_node() {
-        for n in m.lefts().iter().chain(m.rest()).chain(m.rights().iter()) {
+        for n in m.lefts().iter().chain(crate::ast::parser_rest(m.rest())).chain(m.rights().iter()) {
             mlhs_names(&n, out);
         }
     } else if let Some(s) = node.as_splat_node() {
@@ -179,12 +179,8 @@ impl Cop for HashEachMethods {
             return;
         }
         let Some(p) = params.parameters() else { return };
-        let args: Vec<Node> =
-            parameter_nodes(&p).into_iter().filter(|n| n.as_implicit_rest_node().is_none()).collect();
+        let args = parameter_nodes(&p);
         let [key, value] = args.as_slice() else { return };
-        if p.rest().is_some_and(|r| r.as_implicit_rest_node().is_some()) {
-            return;
-        }
         let Some(body) = block.body() else { return };
         let mut lvars = Lvars::default();
         match body.as_statements_node() {

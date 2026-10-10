@@ -61,7 +61,7 @@ fn lhs_range(node: &Node) -> Option<(usize, usize)> {
             let n = node.as_multi_write_node()?;
             let targets: Vec<Node> =
                 // `a, = x`: Prism's ImplicitRestNode is the trailing comma; parser's mlhs ends at `a`.
-                n.lefts().iter().chain(n.rest().filter(|r| r.as_implicit_rest_node().is_none())).chain(n.rights().iter()).collect();
+                n.lefts().iter().chain(crate::ast::parser_rest(n.rest())).chain(n.rights().iter()).collect();
             let start = n.lparen_loc().map(|l| l.start_offset()).or(targets.first().map(|t| span(t).0))?;
             let end = n.rparen_loc().map(|l| l.end_offset()).or(targets.last().map(|t| span(t).1))?;
             (start, end)

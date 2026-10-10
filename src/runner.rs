@@ -81,7 +81,7 @@ fn analyze(
     let parser_gem = cfg.target_ruby < 3.3;
     let errors: Vec<(usize, usize, String)> = result
         .errors()
-        .filter(|e| !(parser_gem && TOLERATED_ERRORS.contains(&e.type_name())))
+        .filter(|e| !tolerated(e.type_name(), parser_gem, cfg.target_ruby))
         .map(|e| {
             let loc = e.location();
             crate::syntax::translate(e.type_name(), e.message(), loc.start_offset(), loc.end_offset(), text)
@@ -247,6 +247,12 @@ fn autocorrect_allowed(cfg: &CopConfig) -> bool {
 /// Prism reports some semantic errors the parser gem accepts (e.g. top-level `yield` in .builder templates).
 // ponytail: only verified ones are tolerated; add more as real code turns them up.
 const TOLERATED_ERRORS: &[&str] = &["invalid_yield"];
+
+/// Prism errors the parser gem accepts for the target. Up to Ruby 2.5, `begin..else..end` without
+/// `rescue` is only a `useless_else` warning (reported by Lint/UselessElseWithoutRescue).
+fn tolerated(kind: &str, parser_gem: bool, target_ruby: f64) -> bool {
+    (parser_gem && TOLERATED_ERRORS.contains(&kind)) || (kind == "begin_lonely_else" && target_ruby <= 2.5)
+}
 
 /// Cop::Base#default_severity.
 pub fn default_severity(cop: &str) -> Severity {

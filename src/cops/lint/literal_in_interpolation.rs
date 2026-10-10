@@ -138,32 +138,6 @@ fn float_to_s(f: f64) -> String {
     format!("{sign}{body}")
 }
 
-/// Symbol#inspect.
-fn symbol_inspect(name: &[u8]) -> String {
-    let Ok(s) = std::str::from_utf8(name) else { return format!(":{}", ruby_string::inspect(name)) };
-    let ident_start = |c: char| c.is_alphabetic() || c == '_' || !c.is_ascii();
-    let ident_char = |c: char| c.is_alphanumeric() || c == '_' || !c.is_ascii();
-    let ident = |t: &str| t.chars().next().is_some_and(ident_start) && t.chars().all(ident_char);
-    const OPS: [&str; 30] = [
-        "[]", "[]=", "!", "!=", "!~", "=~", "==", "===", "<=>", "<", "<=", ">", ">=", "<<", ">>", "+", "-", "*", "/",
-        "%", "**", "~", "+@", "-@", "!@", "~@", "&", "|", "^", "`",
-    ];
-    let simple = OPS.contains(&s)
-        || s.strip_prefix("@@").is_some_and(ident)
-        || s.strip_prefix('@').is_some_and(ident)
-        || s.strip_prefix('$').is_some_and(|g| {
-            ident(g)
-                || (!g.is_empty() && g.bytes().all(|b| b.is_ascii_digit()))
-                || (g.len() == 1 && "~*$?!@/\\;,.=:<>\"&`'+0".contains(g))
-                || (g.len() == 2 && g.starts_with('-') && g[1..].chars().all(ident_char))
-        })
-        || {
-            let base = s.strip_suffix(['?', '!', '=']).unwrap_or(s);
-            ident(base)
-        };
-    if simple { format!(":{s}") } else { format!(":{}", ruby_string::inspect(name)) }
-}
-
 struct Values<'a> {
     text: &'a str,
 }
@@ -189,7 +163,7 @@ impl Values<'_> {
             kind::SYMBOL_NODE => {
                 let sym = node.as_symbol_node().unwrap();
                 if in_hash {
-                    return escape_string_content(&symbol_inspect(sym.unescaped()));
+                    return escape_string_content(&ruby_string::symbol_inspect(sym.unescaped()));
                 }
                 let l = node.location();
                 let start = sym.opening_loc().map_or(l.start_offset(), |o| o.end_offset());

@@ -62,7 +62,7 @@ fn assignment_name_end(n: &Node) -> Option<Option<usize>> {
         // masgn: `node.lhs.source_range`
         let end = m.rparen_loc().map(|l| l.end_offset()).or_else(|| {
             let mut ends: Vec<usize> = m.lefts().iter().chain(m.rights().iter()).map(|t| span(&t).1).collect();
-            ends.extend(m.rest().map(|r| span(&r).1));
+            ends.extend(crate::ast::parser_rest(m.rest()).map(|r| span(&r).1));
             ends.into_iter().max()
         });
         return Some(end);

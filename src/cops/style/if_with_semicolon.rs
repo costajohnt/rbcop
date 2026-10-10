@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use crate::source::Source;
-use helpers::if_node::{is_elsif, normal_keyword, parts, Body, Else};
+use helpers::if_node::{is_elsif, normal_keyword, parser_begin_end, parts, Body, Else};
 use helpers::parser_parent::parser_parent;
 
 pub const NAME: &str = "Style/IfWithSemicolon";
@@ -136,22 +136,12 @@ impl Cop for IfWithSemicolon {
         if cx.state::<Vec<(usize, usize)>>().iter().any(|&(a, b)| a <= start && end <= b) {
             return;
         }
-        let then = match node.as_if_node() {
-            Some(n) => n.then_keyword_loc(),
-            None => node.as_unless_node().unwrap().then_keyword_loc(),
-        };
-        if then.is_some() {
-            return; // loc.begin is `then`
-        }
-        // Parser's loc.begin is a `;` following the condition (across blanks and newlines).
-        let (cond, _, els) = parts(node);
         let src = cx.src;
-        let cond_end = cond.location().end_offset();
-        let blanks = src.text.as_bytes()[cond_end..].iter().take_while(|b| matches!(b, b' ' | b'\t' | b'\n')).count();
-        let semi = cond_end + blanks;
-        if src.text.as_bytes().get(semi) != Some(&b';') {
+        // loc.begin must be a `;`, not `then`.
+        let Some(semi) = parser_begin_end(node).map(|e| e - 1).filter(|&s| src.text.as_bytes()[s] == b';') else {
             return;
-        }
+        };
+        let (cond, _, els) = parts(node);
         let newline = require_newline(node);
         let masgn = masgn_or_block(node);
         let else_begin_or_if =

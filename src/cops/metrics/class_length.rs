@@ -32,7 +32,7 @@ fn casgn_value<'pr>(node: &Node<'pr>) -> Option<Node<'pr>> {
     let casgn = m
         .lefts()
         .iter()
-        .chain(m.rest())
+        .chain(crate::ast::parser_rest(m.rest()))
         .chain(m.rights().iter())
         .any(|t| matches!(kind::of(&t), kind::CONSTANT_TARGET_NODE | kind::CONSTANT_PATH_TARGET_NODE));
     casgn.then(|| m.value())

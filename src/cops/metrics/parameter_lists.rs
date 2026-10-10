@@ -13,7 +13,7 @@ fn args_count(cx: &Cx, params: Option<&ruby_prism::ParametersNode>, locals: usiz
         parameter_nodes(p)
             .iter()
             .filter(|a| match kind::of(a) {
-                kind::BLOCK_PARAMETER_NODE | kind::IMPLICIT_REST_NODE => false,
+                kind::BLOCK_PARAMETER_NODE => false,
                 kind::REQUIRED_KEYWORD_PARAMETER_NODE | kind::OPTIONAL_KEYWORD_PARAMETER_NODE => count_keywords,
                 _ => true,
             })
