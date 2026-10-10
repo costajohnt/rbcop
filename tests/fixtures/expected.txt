@@ -2,13 +2,21 @@ basic.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen 
 basic.rb:1:10: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
 basic.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
 basic.rb:5:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+basic.rb:6:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
 basic.rb:6:10: C: [Correctable] Style/NilComparison: Prefer the use of the `nil?` predicate.
 basic.rb:7:7: W: Lint/Debugger: Remove debugger entry point `binding.pry`.
+basic.rb:9:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
 basic.rb:9:5: W: Lint/Debugger: Remove debugger entry point `byebug`.
+basic.rb:10:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
 basic.rb:10:5: W: Lint/Debugger: Remove debugger entry point `debugger`.
+basic.rb:11:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
 basic.rb:11:5: W: Lint/Debugger: Remove debugger entry point `Kernel.binding.irb`.
+basic.rb:12:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
 basic.rb:12:121: C: Layout/LineLength: Line is too long. [140/120]
+basic.rb:13:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
 basic.rb:14:19: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+basic.rb:19:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+basic.rb:20:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
 basic.rb:23:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
 no_newline.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 no_newline.rb:1:7: C: [Correctable] Layout/TrailingEmptyLines: Final newline missing.

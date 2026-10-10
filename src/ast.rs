@@ -168,3 +168,102 @@ pub fn send_args<'pr>(call: &CallNode<'pr>) -> Vec<Node<'pr>> {
     }
     args
 }
+
+/// Parser-gem `args` children of a parameter list, in source order.
+pub fn parameter_nodes<'pr>(params: &ruby_prism::ParametersNode<'pr>) -> Vec<Node<'pr>> {
+    let mut out: Vec<Node> = params.requireds().iter().chain(params.optionals().iter()).collect();
+    out.extend(params.rest());
+    out.extend(params.posts().iter());
+    out.extend(params.keywords().iter());
+    out.extend(params.keyword_rest());
+    out.extend(params.block().map(|b| b.as_node()));
+    out.sort_by_key(|n| n.location().start_offset());
+    out
+}
+
+/// rubocop-ast `assignment?` (lvasgn ivasgn cvasgn gvasgn casgn masgn op_asgn or_asgn and_asgn):
+/// the operator location and the assigned value. Setter sends (`a.b = c`) are not included.
+pub fn assignment_parts<'pr>(node: &Node<'pr>) -> Option<(Location<'pr>, Node<'pr>)> {
+    macro_rules! parts {
+        ($($as:ident . $op:ident),* $(,)?) => {
+            $(if let Some(n) = node.$as() {
+                return Some((n.$op(), n.value()));
+            })*
+        };
+    }
+    parts!(
+        as_local_variable_write_node.operator_loc,
+        as_instance_variable_write_node.operator_loc,
+        as_class_variable_write_node.operator_loc,
+        as_global_variable_write_node.operator_loc,
+        as_constant_write_node.operator_loc,
+        as_constant_path_write_node.operator_loc,
+        as_multi_write_node.operator_loc,
+        as_local_variable_operator_write_node.binary_operator_loc,
+        as_instance_variable_operator_write_node.binary_operator_loc,
+        as_class_variable_operator_write_node.binary_operator_loc,
+        as_global_variable_operator_write_node.binary_operator_loc,
+        as_constant_operator_write_node.binary_operator_loc,
+        as_constant_path_operator_write_node.binary_operator_loc,
+        as_call_operator_write_node.binary_operator_loc,
+        as_index_operator_write_node.binary_operator_loc,
+        as_local_variable_or_write_node.operator_loc,
+        as_instance_variable_or_write_node.operator_loc,
+        as_class_variable_or_write_node.operator_loc,
+        as_global_variable_or_write_node.operator_loc,
+        as_constant_or_write_node.operator_loc,
+        as_constant_path_or_write_node.operator_loc,
+        as_call_or_write_node.operator_loc,
+        as_index_or_write_node.operator_loc,
+        as_local_variable_and_write_node.operator_loc,
+        as_instance_variable_and_write_node.operator_loc,
+        as_class_variable_and_write_node.operator_loc,
+        as_global_variable_and_write_node.operator_loc,
+        as_constant_and_write_node.operator_loc,
+        as_constant_path_and_write_node.operator_loc,
+        as_call_and_write_node.operator_loc,
+        as_index_and_write_node.operator_loc,
+    );
+    None
+}
+
+/// Node kinds `assignment_parts` recognises.
+pub const ASSIGNMENT_KINDS: &[usize] = &[
+    kind::LOCAL_VARIABLE_WRITE_NODE,
+    kind::INSTANCE_VARIABLE_WRITE_NODE,
+    kind::CLASS_VARIABLE_WRITE_NODE,
+    kind::GLOBAL_VARIABLE_WRITE_NODE,
+    kind::CONSTANT_WRITE_NODE,
+    kind::CONSTANT_PATH_WRITE_NODE,
+    kind::MULTI_WRITE_NODE,
+    kind::LOCAL_VARIABLE_OPERATOR_WRITE_NODE,
+    kind::INSTANCE_VARIABLE_OPERATOR_WRITE_NODE,
+    kind::CLASS_VARIABLE_OPERATOR_WRITE_NODE,
+    kind::GLOBAL_VARIABLE_OPERATOR_WRITE_NODE,
+    kind::CONSTANT_OPERATOR_WRITE_NODE,
+    kind::CONSTANT_PATH_OPERATOR_WRITE_NODE,
+    kind::CALL_OPERATOR_WRITE_NODE,
+    kind::INDEX_OPERATOR_WRITE_NODE,
+    kind::LOCAL_VARIABLE_OR_WRITE_NODE,
+    kind::INSTANCE_VARIABLE_OR_WRITE_NODE,
+    kind::CLASS_VARIABLE_OR_WRITE_NODE,
+    kind::GLOBAL_VARIABLE_OR_WRITE_NODE,
+    kind::CONSTANT_OR_WRITE_NODE,
+    kind::CONSTANT_PATH_OR_WRITE_NODE,
+    kind::CALL_OR_WRITE_NODE,
+    kind::INDEX_OR_WRITE_NODE,
+    kind::LOCAL_VARIABLE_AND_WRITE_NODE,
+    kind::INSTANCE_VARIABLE_AND_WRITE_NODE,
+    kind::CLASS_VARIABLE_AND_WRITE_NODE,
+    kind::GLOBAL_VARIABLE_AND_WRITE_NODE,
+    kind::CONSTANT_AND_WRITE_NODE,
+    kind::CONSTANT_PATH_AND_WRITE_NODE,
+    kind::CALL_AND_WRITE_NODE,
+    kind::INDEX_AND_WRITE_NODE,
+];
+
+/// rubocop-ast `assignment?` on any node: the assignment types, plus setter sends (on send and
+/// csend nodes `assignment?` is an alias of `setter_method?`).
+pub fn is_assignment(node: &Node) -> bool {
+    node.as_call_node().map_or_else(|| assignment_parts(node).is_some(), |c| c.equal_loc().is_some())
+}
