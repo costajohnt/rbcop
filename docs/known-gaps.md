@@ -27,7 +27,11 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   specs-corpus oracle at 2.5 and 2.7 and compare.
 - `AllCops/UseProjectIndex` (Rubydex, off by default) is not supported: Lint/DuplicateMethods
   cross-file checks and Naming/AccessorMethodName / PredicatePrefix `overrides_inherited_method?`
-  are skipped. Naming/PredicatePrefix `validate_config` is not ported.
+  are skipped; Lint/ArgumentMismatch, DeprecatedReference, NameTypo and SuperArgumentMismatch
+  (index-only) never report, and Lint/ConstantReassignment's cross-file message is skipped. This
+  matches RuboCop with the default config.
+- Metrics/CollectionLiteralLength does not count `rescue A, B` exception lists (parser `array`).
+  Lint/SymbolConversion does not treat a backslash-newline inside `:"..."` as a continuation. Naming/PredicatePrefix `validate_config` is not ported.
 - LineLength `SplitStrings: true` break points (string splitting) are not modelled.
 - Cleanup pending: deprecated shims `helpers/alignment_mixin.rs`, `alignment_check.rs`,
   `macro_scope_nodes.rs`, `range_help::with_surrounding_space` (no callers; delete once all batches
