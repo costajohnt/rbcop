@@ -189,7 +189,7 @@ impl Cx<'_, '_> {
         let mut corrector = Corrector::new(self.facts.text.clone());
         fix(&mut corrector);
         if corrector.clobbered() {
-            return self.cop_error(start);
+            return self.cop_error();
         }
         if corrector.is_empty() {
             return self.push(start, end, message.into(), false, false);
@@ -200,14 +200,15 @@ impl Cx<'_, '_> {
         // Base#apply_correction: merged into the cop's corrector; clobbering there raises too.
         let merged = self.fixes.corrector.get_or_insert_with(|| Corrector::new(self.facts.text.clone()));
         if merged.merge(&corrector).is_err() {
-            return self.cop_error(start);
+            return self.cop_error();
         }
         self.push(start, end, message.into(), true, true);
     }
 
-    /// A corrector raised ClobberingError: RuboCop reports the cop error and loses the offense.
-    fn cop_error(&self, start: usize) {
-        crate::runner::cop_error(self.cop, self.src, start);
+    /// A corrector raised ClobberingError: RuboCop reports the cop error (at the node the cop was
+    /// visiting, not the offense) and loses the offense.
+    fn cop_error(&self) {
+        crate::runner::cop_error_at(self.cop, self.src, crate::runner::visiting());
     }
 
     fn push(&mut self, start: usize, end: usize, message: String, correctable: bool, corrected: bool) {
