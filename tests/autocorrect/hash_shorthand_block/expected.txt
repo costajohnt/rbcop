@@ -1,0 +1,5 @@
+h.rb:2:39: C: [Corrected] Style/HashSyntax: Omit the hash value.
+hash_shorthand_block.rb:2:39: C: [Corrected] Style/HashSyntax: Omit the hash value.
+hash_shorthand_block.rb:12:15: C: [Corrected] Style/HashSyntax: Omit the hash value.
+hash_shorthand_block.rb:16:17: C: [Corrected] Style/HashSyntax: Omit the hash value.
+long.rb:3:81: C: Layout/LineLength: Line is too long. [101/80]
