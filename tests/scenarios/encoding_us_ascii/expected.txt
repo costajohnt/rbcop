@@ -1,0 +1,13 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+ascii_only.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+ascii_only.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+ascii_only.rb:2:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+invalid_utf8.rb:1:1: F: Lint/Syntax: "\xff" on us-ascii.
+old/ascii_only.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+old/ascii_only.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+old/ascii_only.rb:2:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+old/invalid_utf8.rb:1:1: F: Lint/Syntax: "\xff" on us-ascii.
+old/shebang.rb:1:1: F: Lint/Syntax: "\xc3" on us-ascii.
+old/utf8_bytes.rb:1:1: F: Lint/Syntax: "\xc3" on us-ascii.
+shebang.rb:1:1: F: Lint/Syntax: "\xc3" on us-ascii.
+utf8_bytes.rb:1:1: F: Lint/Syntax: "\xc3" on us-ascii.

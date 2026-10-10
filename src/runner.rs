@@ -52,8 +52,8 @@ pub fn inspect(
 }
 
 /// Inspect a file's bytes as read. A source that must be UTF-8 (`source::must_be_utf8`) but is not
-/// gets only RuboCop's Lint/Syntax `Invalid byte sequence in utf-8.`; other non-UTF-8 sources are
-/// inspected lossily.
+/// gets only RuboCop's Lint/Syntax `Invalid byte sequence in utf-8.`, as does one Ruby cannot
+/// transcode (`source::encoding_error`); other non-UTF-8 sources are inspected lossily.
 pub fn inspect_bytes(
     path: &Path,
     display: &str,
@@ -61,28 +61,29 @@ pub fn inspect_bytes(
     cfg: &Resolved,
     selected: &dyn Fn(&str) -> bool,
 ) -> FileReport {
-    match String::from_utf8(bytes) {
-        Ok(text) => inspect(path, display, text, cfg, selected),
+    let encoding_error = crate::source::encoding_error(&bytes);
+    let (text, message) = match String::from_utf8(bytes) {
+        Ok(text) => (text, encoding_error),
         Err(e) => {
             let text = String::from_utf8_lossy(e.as_bytes()).into_owned();
-            if !crate::source::must_be_utf8(&text) {
-                return inspect(path, display, text, cfg, selected);
-            }
-            // Lint/Syntax#add_offense_from_error: a global offense, beautified message, no version note.
-            let offense = Offense {
-                start: 0,
-                end: 0,
-                cop: "Lint/Syntax",
-                message: "Invalid byte sequence in utf-8.".into(),
-                severity: Severity::Fatal,
-                correctable: false,
-                global: true,
-                corrected: false,
-                source: None,
-            };
-            FileReport { offenses: vec![offense], text }
+            let utf8 = crate::source::must_be_utf8(&text).then(|| "Invalid byte sequence in utf-8.".to_string());
+            (text, encoding_error.or(utf8))
         }
-    }
+    };
+    let Some(message) = message else { return inspect(path, display, text, cfg, selected) };
+    // Lint/Syntax#add_offense_from_error: a global offense, beautified message, no version note.
+    let offense = Offense {
+        start: 0,
+        end: 0,
+        cop: "Lint/Syntax",
+        message,
+        severity: Severity::Fatal,
+        correctable: false,
+        global: true,
+        corrected: false,
+        source: None,
+    };
+    FileReport { offenses: vec![offense], text }
 }
 
 /// How Ruby words a failed `File.read`/`File.open` of `path` (RuboCop raises its own error for a
@@ -189,7 +190,7 @@ fn analyze(
         // `@`, `@@` or `$` without a name: the lexer's fatal "unexpected `@'" ends the parse there.
         let fatal = |e: &ruby_prism::Diagnostic| {
             let s = e.location().start_offset();
-            let after = text[s..].trim_start_matches(['@', '$']).chars().next();
+            let after = text.get(s..).unwrap_or("").trim_start_matches(['@', '$']).chars().next();
             match e.type_name().trim_end_matches("_3_3") {
                 "incomplete_variable_instance" | "incomplete_variable_class" => {
                     !after.is_some_and(|c| c.is_ascii_digit())
@@ -275,7 +276,7 @@ fn analyze(
             .collect();
         if let Some(f) = fatal_at.filter(|&f| open_string.is_none_or(|s| f < s)) {
             errors.retain(|e| e.0 < f);
-            errors.push((f, f + 1, format!("unexpected `{}'", &text[f..f + 1])));
+            errors.push((f, f + 1, format!("unexpected `{}'", text.get(f..f + 1).unwrap_or(""))));
         } else if let Some(s) = open_string {
             errors.retain(|e| e.0 < s);
             errors.push((s, s + 1, "unterminated string meets end of file".to_string()));

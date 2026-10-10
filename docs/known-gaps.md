@@ -91,6 +91,8 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   also counts as 3 bytes in later columns of its line (RuboCop: 1 per byte), e.g. the end of
   Lint/PercentSymbolArray's range on `%i[\xC0 :foo]` (`scripts/cold-skip.txt`).
   Sources that must be UTF-8 and are not get RuboCop's `Lint/Syntax: Invalid byte sequence in utf-8.`
+  A US-ASCII source with a non-ASCII byte gets RuboCop's transcoding error (`"\xc3" on us-ascii.`);
+  bytes other encodings cannot transcode to UTF-8 (Shift_JIS, Windows-1252) are not reported.
 - Deliberate: Style/WordArray correcting a `%W[...]` whose value is invalid UTF-8 (`%W[\xff]`)
   writes the escaped form (`["\xFF"]`); RuboCop writes the raw bytes and then crashes re-parsing
   its own output. The offense message matches RuboCop.

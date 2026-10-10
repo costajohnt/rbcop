@@ -1,0 +1,2 @@
+# encoding: us-ascii
+fó

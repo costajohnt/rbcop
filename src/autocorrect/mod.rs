@@ -195,9 +195,14 @@ pub fn correct_bytes(
     selected: &dyn Fn(&str) -> bool,
     mode: Mode,
 ) -> Corrected {
+    // ponytail: never rewrite a source that is not valid UTF-8, or that Ruby cannot transcode
+    // (only Lint/Syntax); it is only inspected.
+    if crate::source::encoding_error(&bytes).is_some() {
+        let report = runner::inspect_bytes(path, display, bytes, cfg, selected);
+        return Corrected { report, source: None, error: None };
+    }
     match String::from_utf8(bytes) {
         Ok(text) => correct(path, display, text, cfg, selected, mode),
-        // ponytail: never rewrite a source that is not valid UTF-8; it is only inspected.
         Err(e) => {
             let report = runner::inspect_bytes(path, display, e.into_bytes(), cfg, selected);
             Corrected { report, source: None, error: None }

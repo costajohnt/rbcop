@@ -193,3 +193,18 @@ pub fn must_be_utf8(text: &str) -> bool {
     text.starts_with('\u{feff}')
         || magic_encoding(text).is_none_or(|n| n.eq_ignore_ascii_case("utf-8") || n.eq_ignore_ascii_case("utf8"))
 }
+
+/// Parser::Source::Buffer#source= transcodes a source whose magic comment names US-ASCII to UTF-8,
+/// so its first non-ASCII byte raises Encoding::InvalidByteSequenceError, which Lint/Syntax
+/// reports capitalized: `"\xc3" on us-ascii.`
+// ponytail: only US-ASCII; bytes other encodings cannot transcode (Shift_JIS, Windows-1252) are a
+// known gap.
+pub fn encoding_error(bytes: &[u8]) -> Option<String> {
+    let byte = *bytes.iter().find(|b| !b.is_ascii())?;
+    let text = String::from_utf8_lossy(bytes);
+    let name = magic_encoding(&text).filter(|_| !text.starts_with('\u{feff}'))?;
+    ["us-ascii", "ascii", "ansi_x3.4-1968", "646"]
+        .iter()
+        .any(|a| name.eq_ignore_ascii_case(a))
+        .then(|| format!("\"\\x{byte:02x}\" on us-ascii."))
+}
