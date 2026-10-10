@@ -13,5 +13,4 @@ Lint_PercentSymbolArray/r2.7/011.rb
 Layout_LineLength/r2.7-c16
 #
 # rbcop bugs found by this corpus, filed as issues:
-Style_RedundantParentheses/r3.2/000.rb  # #62 reparse rejects `retry` outside rescue
 Style_RescueModifier/r2.6/000.rb  # #64 masgn rescue-modifier precedence below 2.7

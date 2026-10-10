@@ -31,6 +31,9 @@ pub struct Source<'a> {
     pub comments: Vec<Comment>,
     /// Prism grammar version the file was parsed with (see config::target_ruby::prism_version).
     pub version: &'static str,
+    /// Target below Ruby 3.3: RuboCop parses with the parser gem, which accepts a few things Prism
+    /// rejects (`runner::TOLERATED_ERRORS`).
+    pub parser_gem: bool,
     /// Magic comment says binary/ASCII-8BIT: Ruby counts columns in bytes (see `binary_encoding`).
     pub binary: bool,
     tokens: OnceCell<Vec<Token>>,
@@ -56,6 +59,7 @@ impl<'a> Source<'a> {
             lines: Vec::new(),
             comments,
             version,
+            parser_gem: false,
             binary: binary_encoding(text),
             tokens: OnceCell::new(),
             lex_tokens: OnceCell::new(),
