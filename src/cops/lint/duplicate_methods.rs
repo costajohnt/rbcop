@@ -45,6 +45,24 @@ struct PA {
     i: usize,
 }
 
+/// PathUtil.smart_path of the buffer name: the display path is relative to the working directory, and
+/// a file outside it (`../x.rb`) prints as RuboCop's expanded absolute path instead.
+fn smart_path(display: &str) -> String {
+    if !display.starts_with("../") {
+        return display.to_string();
+    }
+    let mut abs = std::env::current_dir().unwrap_or_default();
+    for part in std::path::Path::new(display).components() {
+        match part {
+            std::path::Component::ParentDir => {
+                abs.pop();
+            }
+            other => abs.push(other),
+        }
+    }
+    abs.display().to_string()
+}
+
 fn numbered(block: &ruby_prism::BlockNode) -> bool {
     block.parameters().is_some_and(|p| p.as_numbered_parameters_node().is_some() || p.as_it_parameters_node().is_some())
 }
@@ -640,7 +658,7 @@ impl Cop for DuplicateMethods {
             }
         }
         let line_of = |off: usize| src.line_of(off);
-        let path = cx.src.path;
+        let path = smart_path(cx.src.path);
         for f in found {
             let st = cx.state::<State>();
             let Some(&prev) = st.definitions.get(&f.key) else {
