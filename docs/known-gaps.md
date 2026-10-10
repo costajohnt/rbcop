@@ -72,7 +72,6 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     template junk in the specs corpus at 2.5 (`def %{x}`, `case ... in` below 2.7).
   - Below 2.3 nothing lexer-level is checked (`&.`, `<<~`, `"a": 1`, `1r`, required keyword
     arguments are accepted); no oracle below 2.5 was recorded.
-- `--stdin` together with `-a/-A` (RuboCop prints the corrected source) is refused.
   - A `{` that opens a hash whose contents are invalid (`x == { |i| i }`, `{{#if x ~}}` where `#`
     starts a comment) gets its first error at the `{` instead of the token after it.
   - The chef corpus (target 2.7) has five syntax-error files with such differences (a missed
