@@ -68,18 +68,21 @@ impl Cop for WordArray {
             if percent_style && !brackets_required {
                 return;
             }
-            let words: Vec<String> = els
-                .iter()
-                .map(|w| match str_content(w) {
-                    Some(v) => pa::to_string_literal(&v),
-                    None => pa::trim_string_interpolation_escape_character(&pa::to_string_literal(
-                        node_text(w).as_bytes(),
-                    )),
-                })
-                .collect();
-            let code =
-                if words.is_empty() { "[]".to_string() } else { pa::bracketed_with_whitespace(cx.src, &array, &words) };
-            let msg = pa::bracketed_message(&code, "words");
+            // The message mirrors RuboCop exactly; the written code never loses invalid-UTF-8 bytes.
+            let build = |literal: fn(&[u8]) -> String| -> String {
+                let words: Vec<String> = els
+                    .iter()
+                    .map(|w| match str_content(w) {
+                        Some(v) => literal(&v),
+                        None => pa::trim_string_interpolation_escape_character(&pa::to_string_literal(
+                            node_text(w).as_bytes(),
+                        )),
+                    })
+                    .collect();
+                if words.is_empty() { "[]".to_string() } else { pa::bracketed_with_whitespace(cx.src, &array, &words) }
+            };
+            let msg = pa::bracketed_message(&build(pa::to_string_literal), "words");
+            let code = build(pa::safe_string_literal);
             cx.add_fix(start, end, msg, |c| c.replace(start, end, &code));
         }
     }

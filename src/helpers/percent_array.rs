@@ -47,12 +47,22 @@ pub fn needs_escaping(s: &[u8]) -> bool {
 
 /// Util#to_string_literal.
 pub fn to_string_literal(s: &[u8]) -> String {
+    // Invalid UTF-8 falls to the single-quoted branch like Ruby (compatible_external_encoding_for?
+    // is false); RuboCop's message then shows the raw bytes as U+FFFD. Code written to a file must
+    // use `safe_string_literal` instead.
     if needs_escaping(s) && std::str::from_utf8(s).is_ok() {
         inspect(s)
     } else {
         let s = String::from_utf8_lossy(s);
         format!("'{}'", s.replace('\\', "\\\\").replace("\\\"", "\""))
     }
+}
+
+/// `to_string_literal` for code written back to a file. For an invalid-UTF-8 value RuboCop writes
+/// the raw bytes and then crashes re-parsing its own output; the escaped `inspect` form keeps the
+/// same value in a valid file instead of a lossy U+FFFD. Deliberate difference (docs/known-gaps.md).
+pub fn safe_string_literal(s: &[u8]) -> String {
+    if std::str::from_utf8(s).is_err() { inspect(s) } else { to_string_literal(s) }
 }
 
 /// Util#trim_string_interpolation_escape_character: `\#{x}` -> `#{x}` (lazy up to the first `}`).
@@ -139,7 +149,8 @@ fn delimiters(cx: &Cx, ty: &str) -> (String, String) {
 /// PercentLiteralCorrector#correct as a precomputed replacement for the array node:
 /// `values` holds each element's value (`children[0]`).
 pub fn percent_literal_replacement(cx: &Cx, node: &Node, values: &[Vec<u8>], char: char) -> String {
-    let escape = values.iter().any(|v| needs_escaping(v));
+    // Invalid UTF-8 values are escaped too, never written lossily (see to_string_literal).
+    let escape = values.iter().any(|v| std::str::from_utf8(v).is_err() || needs_escaping(v));
     let char = if escape { char.to_ascii_uppercase() } else { char };
     let (d0, d1) = delimiters(cx, &format!("%{char}"));
     let fix = |v: &[u8]| -> String {
