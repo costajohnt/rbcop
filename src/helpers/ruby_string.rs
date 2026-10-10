@@ -92,7 +92,20 @@ pub fn symbol_inspect(name: &[u8]) -> String {
             let base = s.strip_suffix(['?', '!', '=']).unwrap_or(s);
             ident(base)
         };
-    if simple { format!(":{s}") } else { format!(":{}", inspect(name)) }
+    // sym_printable: Onigmo's Print class (approximated like `inspect`; it keeps U+0085).
+    let printable = |c: char| {
+        !((c.is_control() && c != '\u{85}')
+            || matches!(c, '\u{2028}' | '\u{2029}' | '\u{fdd0}'..='\u{fdef}')
+            || (c as u32 & 0xfffe) == 0xfffe)
+    };
+    if simple && s.chars().all(printable) {
+        format!(":{s}")
+    } else if s.is_ascii() {
+        // An all-ASCII symbol is US-ASCII: its inspect escapes other controls as `\xNN`.
+        format!(":{}", inspect_binary(name))
+    } else {
+        format!(":{}", inspect(name))
+    }
 }
 
 /// Ruby's `Regexp.escape`.

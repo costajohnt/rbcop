@@ -324,6 +324,20 @@ More traps found while porting:
 - `before_declaring_variable` cops use `variable_force::investigate_with`.
 - rubocop-ast `receiver`: `(send $_ ...)`, or `(any_block (call $_ ...))` for blocks; a `defs`
   uses its own receiver.
+- `right_sibling` is non-nil beyond statement lists: an `if`'s then-branch when there is a
+  non-empty else, an `unless`'s else branch when it has a body, a `begin` body with rescue/ensure.
+- The `-> {}` literal has a parser `lambda` send that `on_send` sees.
+- Helpers: `element_line_breaks` (FirstElementLineBreak/MultilineElementLineBreaks),
+  `reparsed_equivalence::*_folding` (fold_string_concatenation).
+- Symbol#inspect quotes non-printable names; an all-ASCII symbol prints controls as `\xNN`
+  (`ruby_string::symbol_inspect`).
+- Hash value omission `{ id: }`: parser's lvar covers `id` only; Prism's node inside the
+  ImplicitNode includes the colon.
+- `on_investigation_end` cops: queue items in `cx.state` from `on_node` and finish in `on_file`
+  (it runs after the walk).
+- build.rs registers every `.rs` in a department directory as a cop: keep a cop's sub-modules
+  inline.
+- Helpers: `visibility_help`, `method_preference`, `documentation_comment`.
 - Prism `CallNode#message_loc` of an index call (`foo[x]`, `foo[x] = y`) spans the brackets and
   arguments; use `name()` when you mean parser's method name.
 - Helpers: `if_node::{normal_keyword, parts, is_elsif}`, `ruby_string::symbol_inspect`.
@@ -427,6 +441,12 @@ More traps found while porting:
 - `helpers::regexp_captures` counts named/numbered groups like `RegexpNode#each_capture`.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.
+
+- Directive cops read `cx.facts.comment_config` (CommentConfig#analyze: ranges with their opening
+  directive, Ruby hash key order, detached `-next` directives), `facts.code_lines` and
+  `facts.config_disabled` (Registry#disabled_names after --only/--except). Lint/RedundantCopDisableDirective
+  is run by the runner after all cops (and once more after an `-A` loop); RuboCop forbids it with
+  `--only`, so the gates run lists containing it without `--only`.
 
 ### Prism tokens vs parser-gem tokens
 
