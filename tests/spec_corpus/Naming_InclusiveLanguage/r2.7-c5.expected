@@ -1,0 +1,6 @@
+==> offenses exit=1 103 <==
+000.rb:1:3: C: Naming/InclusiveLanguage: Consider replacing 'white-list' with 'allowlist' or 'permit'.
+
+==> autocorrect exit=1 103 <==
+000.rb:1:3: C: Naming/InclusiveLanguage: Consider replacing 'white-list' with 'allowlist' or 'permit'.
+

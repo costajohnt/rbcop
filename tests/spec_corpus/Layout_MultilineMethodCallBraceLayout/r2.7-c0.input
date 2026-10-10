@@ -1,0 +1,69 @@
+==> .rubocop.yml 176 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/MultilineMethodCallBraceLayout:
+  EnforcedStyle: symmetrical
+
+==> 000.rb 9 <==
+foo 1,
+2
+
+==> 001.rb 8 <==
+foo(1,2)
+==> 002.rb 4 <==
+puts
+==> 003.rb 6 <==
+puts()
+==> 004.rb 8 <==
+puts(
+)
+
+==> 005.rb 42 <==
+foo(<<~EOS, arg
+  text
+EOS
+).do_something
+
+==> 006.rb 43 <==
+foo(<<~EOS, arg
+  text
+EOS
+)&.do_something
+
+==> 007.rb 12 <==
+foo(a,
+b
+)
+
+
+==> 008.rb 20 <==
+foo(a, # a
+b # b
+)
+
+
+==> 009.rb 11 <==
+foo(
+a,
+b)
+
+==> 010.rb 20 <==
+foo(a, # a
+b, # b
+)
+
+==> 011.rb 34 <==
+super(bar(baz,
+  ham # comment
+))
+
+==> 012.rb 13 <==
+foo&.bar(1,2)
+==> 013.rb 17 <==
+foo&.bar(
+  baz)
+

@@ -1,0 +1,26 @@
+==> offenses exit=1 748 <==
+000.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [3/2]
+003.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [3/2]
+008.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [3/2]
+009.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [6/2]
+009.rb:2:3: R: Metrics/BlockLength: Block has too many lines. [4/2]
+015.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [5/2]
+016.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [3/2]
+017.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [3/2]
+018.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [3/2]
+019.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [3/2]
+020.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [3/2]
+
+==> autocorrect exit=1 748 <==
+000.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [3/2]
+003.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [3/2]
+008.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [3/2]
+009.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [6/2]
+009.rb:2:3: R: Metrics/BlockLength: Block has too many lines. [4/2]
+015.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [5/2]
+016.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [3/2]
+017.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [3/2]
+018.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [3/2]
+019.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [3/2]
+020.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [3/2]
+

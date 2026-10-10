@@ -1,0 +1,8 @@
+==> offenses exit=1 137 <==
+000.rb:1:5: C: Naming/PredicatePrefix: Rename `is_attr` to `attr?`.
+001.rb:1:5: C: Naming/PredicatePrefix: Rename `has_attr` to `attr?`.
+
+==> autocorrect exit=1 137 <==
+000.rb:1:5: C: Naming/PredicatePrefix: Rename `is_attr` to `attr?`.
+001.rb:1:5: C: Naming/PredicatePrefix: Rename `has_attr` to `attr?`.
+

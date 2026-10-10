@@ -1,0 +1,6 @@
+==> offenses exit=1 87 <==
+000.rb:1:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+
+==> autocorrect exit=1 87 <==
+000.rb:1:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+

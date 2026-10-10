@@ -1,0 +1,17 @@
+==> .rubocop.yml 157 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/EmptyComment:
+  AllowMarginComment: false
+
+==> 000.rb 51 <==
+#
+# Description of `hello` method.
+#
+def hello
+end
+

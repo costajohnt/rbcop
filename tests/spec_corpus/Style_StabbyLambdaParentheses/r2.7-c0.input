@@ -1,0 +1,21 @@
+==> .rubocop.yml 176 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/StabbyLambdaParentheses:
+  EnforcedStyle: require_parentheses
+
+==> 000.rb 14 <==
+lambda(&:nil?)
+==> 001.rb 11 <==
+-> { true }
+==> 002.rb 8 <==
+o.lambda
+==> 003.rb 22 <==
+->a,b,c { a + b + c }
+
+==> 004.rb 23 <==
+->(a,b,c) { a + b + c }

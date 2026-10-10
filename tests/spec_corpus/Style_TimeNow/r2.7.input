@@ -1,0 +1,41 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 9 <==
+Time.new
+
+==> 001.rb 11 <==
+Time.new()
+
+==> 002.rb 11 <==
+::Time.new
+
+==> 003.rb 10 <==
+Time&.new
+
+==> 004.rb 14 <==
+Time.new.year
+
+==> 005.rb 9 <==
+Time.now
+
+==> 006.rb 22 <==
+Time.new(2026, 8, 19)
+
+==> 007.rb 23 <==
+Time.new(in: '+09:00')
+
+==> 008.rb 14 <==
+Foo::Time.new
+
+==> 009.rb 9 <==
+Date.new
+
+==> 010.rb 4 <==
+new
+

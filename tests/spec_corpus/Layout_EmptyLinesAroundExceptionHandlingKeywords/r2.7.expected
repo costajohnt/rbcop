@@ -1,0 +1,151 @@
+==> offenses exit=1 3390 <==
+000.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `rescue`.
+001.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `rescue`.
+002.rb:5:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `else`.
+003.rb:5:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `else`.
+004.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `rescue`.
+005.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `rescue`.
+006.rb:5:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `else`.
+019.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `rescue`.
+019.rb:6:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `rescue`.
+019.rb:8:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `rescue`.
+019.rb:10:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `rescue`.
+019.rb:12:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `rescue`.
+019.rb:14:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `rescue`.
+019.rb:16:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `else`.
+019.rb:18:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `else`.
+019.rb:20:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `ensure`.
+019.rb:22:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `ensure`.
+020.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `rescue`.
+020.rb:6:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `rescue`.
+020.rb:8:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `rescue`.
+020.rb:10:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `rescue`.
+020.rb:12:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `rescue`.
+020.rb:14:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `rescue`.
+020.rb:16:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `else`.
+020.rb:18:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `else`.
+020.rb:20:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `ensure`.
+020.rb:22:1: C: [Correctable] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `ensure`.
+
+==> autocorrect exit=0 3336 <==
+000.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `rescue`.
+001.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `rescue`.
+002.rb:5:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `else`.
+003.rb:5:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `else`.
+004.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `rescue`.
+005.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `rescue`.
+006.rb:5:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `else`.
+019.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `rescue`.
+019.rb:6:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `rescue`.
+019.rb:8:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `rescue`.
+019.rb:10:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `rescue`.
+019.rb:12:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `rescue`.
+019.rb:14:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `rescue`.
+019.rb:16:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `else`.
+019.rb:18:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `else`.
+019.rb:20:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `ensure`.
+019.rb:22:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `ensure`.
+020.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `rescue`.
+020.rb:6:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `rescue`.
+020.rb:8:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `rescue`.
+020.rb:10:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `rescue`.
+020.rb:12:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `rescue`.
+020.rb:14:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `rescue`.
+020.rb:16:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `else`.
+020.rb:18:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `else`.
+020.rb:20:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected before the `ensure`.
+020.rb:22:1: C: [Corrected] Layout/EmptyLinesAroundExceptionHandlingKeywords: Extra empty line detected after the `ensure`.
+
+==> corrected/000.rb 27 <==
+begin
+  f1
+rescue
+  f2
+end
+
+==> corrected/001.rb 27 <==
+begin
+  f1
+rescue
+  f2
+end
+
+==> corrected/002.rb 37 <==
+begin
+  f1
+rescue
+  f2
+else
+  f3
+end
+
+==> corrected/003.rb 39 <==
+def foo
+  f1
+rescue
+  f2
+else
+  f3
+end
+
+==> corrected/004.rb 42 <==
+foo do
+  f1(_1)
+rescue
+  f2
+else
+  f3
+end
+
+==> corrected/005.rb 42 <==
+foo do
+  f1(_1)
+rescue
+  f2
+else
+  f3
+end
+
+==> corrected/006.rb 42 <==
+foo do
+  f1(_1)
+rescue
+  f2
+else
+  f3
+end
+
+==> corrected/019.rb 174 <==
+begin
+
+  do_something1
+rescue RuntimeError
+  do_something2
+rescue ArgumentError => ex
+  do_something3
+rescue
+  do_something3
+else
+  do_something4
+ensure
+  do_something4
+
+end
+
+==> corrected/020.rb 176 <==
+def foo
+
+  do_something1
+rescue RuntimeError
+  do_something2
+rescue ArgumentError => ex
+  do_something3
+rescue
+  do_something3
+else
+  do_something4
+ensure
+  do_something4
+
+end
+

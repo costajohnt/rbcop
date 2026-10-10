@@ -1,0 +1,191 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 41 <==
+dest = []
+src.each { |e| dest << e * 2 }
+
+==> 001.rb 44 <==
+dest = []
+src.each { |e| dest.push(e * 2) }
+
+==> 002.rb 43 <==
+dest = []
+src.each { |e| dest.push(e: 2) }
+
+==> 003.rb 47 <==
+dest = []
+src.each { |e| dest.push({ e: 2 }) }
+
+==> 004.rb 46 <==
+dest = []
+src.each { |e| dest.append(e * 2) }
+
+==> 005.rb 45 <==
+dest = []
+src.each { |e| dest.append(e: 2) }
+
+==> 006.rb 49 <==
+dest = []
+src.each { |e| dest.append({ e: 2 }) }
+
+==> 007.rb 54 <==
+dest = []
+do_something
+src.each { |e| dest << e * 2 }
+
+==> 008.rb 54 <==
+dest = []
+src.each { |e| dest << e * 2 }
+do_something
+
+==> 009.rb 78 <==
+dest = []
+src.each do |e|
+  dest << if cond?
+    e
+  else
+    e * 2
+  end
+end
+
+==> 010.rb 87 <==
+dest = []
+src.each do |e|
+  dest << case foo
+  when 1
+    e
+  else
+    e * 2
+  end
+end
+
+==> 011.rb 70 <==
+dest = []
+src.each do |e|
+  dest << begin
+    foo
+    e * 2
+  end
+end
+
+==> 012.rb 42 <==
+dest = []
+src.each { |e| dest << [1, e] }
+
+==> 013.rb 40 <==
+dest = []
+src.each { |e| dest << true }
+
+==> 014.rb 38 <==
+dest = []
+src.each { dest << _1 * 2 }
+
+==> 015.rb 70 <==
+dest = []
+do_something(dest)
+dest = []
+src.each { |e| dest << e * 2 }
+
+==> 016.rb 46 <==
+dest = []
+src.each { |e| dest << e * 2 }
+dest
+
+==> 017.rb 116 <==
+dest = []
+src.each do |e|
+  dest << (
+    dest2 = []
+    src.each do |e|
+      dest2 << e
+    end
+    dest2
+  )
+end
+
+==> 018.rb 54 <==
+[].tap do |dest|
+  src.each { |e| dest << e * 2 }
+end
+
+==> 019.rb 75 <==
+[].tap do |dest|
+  do_something(dest)
+  src.each { |e| dest << e * 2 }
+end
+
+==> 020.rb 61 <==
+[1, 2, 3].tap do |dest|
+  src.each { |e| dest << e * 2 }
+end
+
+==> 021.rb 54 <==
+{}.tap do |dest|
+  src.each { |e| dest << e * 2 }
+end
+
+==> 022.rb 39 <==
+@dest = []
+src.each { |e| @dest << e }
+
+==> 023.rb 62 <==
+dest = []
+StringIO.new('foo:bar').each(':') { |e| dest << e }
+
+==> 024.rb 37 <==
+dest = []
+each { |e| dest << e * 2 }
+
+==> 025.rb 42 <==
+dest = []
+self.each { |e| dest << e * 2 }
+
+==> 026.rb 51 <==
+[
+  dest = [],
+  src.each { |e| dest << e * 2 },
+]
+
+==> 027.rb 55 <==
+dest = []
+if cond
+  src.each { |e| dest << e * 2 }
+end
+
+==> 028.rb 51 <==
+dest = []
+dest << 0
+src.each { |e| dest << e * 2 }
+
+==> 029.rb 49 <==
+dest = []
+(dest << 1).each { |e| dest << e * 2 }
+
+==> 030.rb 40 <==
+dest = []
+src.each { |dest| dest << 1 }
+
+==> 031.rb 45 <==
+dest = []
+src.each { |e| dest << dest.size }
+
+==> 032.rb 41 <==
+dest = []
+src.each { |e| dest.push(*e) }
+
+==> 033.rb 52 <==
+dest = []
+src.each { |e| dest.push(&method(:foo)) }
+
+==> 034.rb 63 <==
+def foo(...)
+  dest = []
+  src.each { |e| dest.push(...) }
+end
+

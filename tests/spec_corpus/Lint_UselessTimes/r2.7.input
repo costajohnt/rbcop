@@ -1,0 +1,144 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 22 <==
+0.times { something }
+
+==> 001.rb 29 <==
+0.times { |i| something(i) }
+
+==> 002.rb 23 <==
+-1.times { something }
+
+==> 003.rb 30 <==
+-1.times { |i| something(i) }
+
+==> 004.rb 22 <==
+1.times { something }
+
+==> 005.rb 29 <==
+1.times { |i| something(i) }
+
+==> 006.rb 34 <==
+1.times.reverse_each do
+  foo
+end
+
+==> 007.rb 31 <==
+def foo
+  1.times do
+  end
+end
+
+==> 008.rb 48 <==
+def foo
+  1.times do
+    bar
+
+    baz
+  end
+end
+
+==> 009.rb 23 <==
+2.times { |i| puts i }
+
+==> 010.rb 21 <==
+0.times(&:something)
+
+==> 011.rb 22 <==
+-1.times(&:something)
+
+==> 012.rb 21 <==
+1.times(&:something)
+
+==> 013.rb 21 <==
+2.times(&:something)
+
+==> 014.rb 48 <==
+precondition
+0.times(&:something)
+postcondition
+
+==> 015.rb 60 <==
+1.times do |i|
+  do_something(i)
+  do_something_else(i)
+end
+
+==> 016.rb 69 <==
+1.times do |i|
+  do_something(i)
+  i += 1
+  do_something_else(i)
+end
+
+==> 017.rb 82 <==
+1.times do |i|
+  do_something(i)
+  i, j = i * 2, i * 3
+  do_something_else(i)
+end
+
+==> 018.rb 68 <==
+1.times do |i|
+  do_something(i)
+  j = 1
+  do_something_else(j)
+end
+
+==> 019.rb 45 <==
+def my_method
+  0.times { do_something }
+end
+
+==> 020.rb 76 <==
+def my_method
+  0.times do
+    do_something
+    do_something_else
+  end
+end
+
+==> 021.rb 76 <==
+def my_method
+  1.times do
+    do_something
+    do_something_else
+  end
+end
+
+==> 022.rb 30 <==
+foo(0.times { do_something })
+
+==> 023.rb 30 <==
+foo(1.times { do_something })
+
+==> 024.rb 8 <==
+1.times
+
+==> 025.rb 20 <==
+1.times { next 42 }
+
+==> 026.rb 18 <==
+1.times { break }
+
+==> 027.rb 17 <==
+1.times { redo }
+
+==> 028.rb 38 <==
+1.times { |i, j| do_something(i, j) }
+
+==> 029.rb 40 <==
+1.times { |(a, b)| do_something(a, b) }
+
+==> 030.rb 33 <==
+1.times { |*a| do_something(a) }
+
+==> 031.rb 33 <==
+1.times { [1, 2].each { next } }
+

@@ -1,0 +1,64 @@
+==> .rubocop.yml 277 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/IndentationWidth:
+  Width: 4
+  EnforcedStyleAlignWith: start_of_line
+  SupportedStylesAlignWith:
+  - start_of_line
+  - relative_to_receiver
+  AllowedPatterns: []
+
+==> 000.rb 41 <==
+﻿class Test
+    def method
+    end
+end
+
+==> 001.rb 18 <==
+if cond
+ func
+end
+
+==> 002.rb 52 <==
+  class A
+  	def test
+  		puts 'hello'
+  	end
+  end
+
+==> 003.rb 24 <==
+  if cond
+  	func
+  end
+
+==> 004.rb 19 <==
+if cond
+		func
+end
+
+==> 005.rb 25 <==
+class A
+def test
+end
+end
+
+==> 006.rb 29 <==
+def test
+			puts 'hello'
+end
+
+==> 007.rb 46 <==
+if a1
+   b1
+   b1
+elsif a2
+ b2
+else
+    c
+end
+

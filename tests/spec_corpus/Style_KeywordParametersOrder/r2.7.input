@@ -1,0 +1,59 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 39 <==
+def m(arg, optional: 1, required:)
+end
+
+==> 001.rb 53 <==
+def m arg, optional: 1, required:
+  do_something
+end
+
+==> 002.rb 68 <==
+def m arg, optional1: 1, optional2: 2, required:
+  do_something
+end
+
+==> 003.rb 67 <==
+def m optional: 1, required:, other_optional: 2
+  do_something
+end
+
+==> 004.rb 83 <==
+def m(arg, optional1: 1, required1:, optional2: 2, required2:, **rest, &block)
+end
+
+==> 005.rb 89 <==
+def m arg, optional1: 1, required1:, optional2: 2, required2:, **rest
+  do_something
+end
+
+==> 006.rb 97 <==
+def m arg, optional1: 1, required1:, optional2: 2, required2:, **rest, &block
+  do_something
+end
+
+==> 007.rb 65 <==
+def foo(optional: 123,
+    # Some explanation
+    required:)
+end
+
+==> 008.rb 39 <==
+def m(arg, required:, optional: 1)
+end
+
+==> 009.rb 50 <==
+m(arg) do |block_arg, optional: 1, required:|
+end
+
+==> 010.rb 50 <==
+m(arg) do |block_arg, required:, optional: 1|
+end
+

@@ -1,0 +1,110 @@
+==> .rubocop.yml 176 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/EmptyLinesAroundAccessModifier:
+  EnforcedStyle: only_before
+
+==> 000.rb 54 <==
+class Test
+  something
+
+  private
+  def test; end
+end
+
+==> 001.rb 55 <==
+class Test
+  something
+
+  private
+
+  def test; end
+end
+
+==> 002.rb 25 <==
+class Test
+  private
+end
+
+==> 003.rb 56 <==
+class Test
+  something
+
+  protected
+  def test; end
+end
+
+==> 004.rb 57 <==
+class Test
+  something
+
+  protected
+
+  def test; end
+end
+
+==> 005.rb 27 <==
+class Test
+  protected
+end
+
+==> 006.rb 53 <==
+module Kernel
+  public
+
+  def do_something
+  end
+end
+
+==> 007.rb 62 <==
+module Kernel
+  module_function
+
+  def do_something
+  end
+end
+
+==> 008.rb 53 <==
+class Test
+  something
+  private
+  def test; end
+end
+
+==> 009.rb 8 <==
+private
+
+==> 010.rb 55 <==
+class Test
+  something
+  protected
+  def test; end
+end
+
+==> 011.rb 10 <==
+protected
+
+==> 012.rb 52 <==
+class Test
+  something
+  public
+  def test; end
+end
+
+==> 013.rb 7 <==
+public
+
+==> 014.rb 61 <==
+class Test
+  something
+  module_function
+  def test; end
+end
+
+==> 015.rb 16 <==
+module_function
+

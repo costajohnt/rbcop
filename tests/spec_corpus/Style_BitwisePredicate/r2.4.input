@@ -1,0 +1,17 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.4
+
+==> 000.rb 29 <==
+(variable & flags).positive?
+
+==> 001.rb 28 <==
+(variable & flags) == flags
+
+==> 002.rb 25 <==
+(variable & flags).zero?
+

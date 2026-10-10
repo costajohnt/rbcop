@@ -1,0 +1,45 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 18 <==
+"this is the #{}"
+
+==> 001.rb 19 <==
+"this is the #{ }"
+
+==> 002.rb 20 <==
+"this is the #{''}"
+
+==> 003.rb 20 <==
+"this is the #{""}"
+
+==> 004.rb 21 <==
+"this is the #{nil}"
+
+==> 005.rb 43 <==
+/regexp #{}/
+`backticks #{}`
+:"symbol #{}"
+
+==> 006.rb 22 <==
+"this is #{top} silly"
+==> 007.rb 19 <==
+"this is the #{1}"
+
+==> 008.rb 22 <==
+"this is the #{true}"
+
+==> 009.rb 18 <==
+%W[#{''} one two]
+
+==> 010.rb 18 <==
+%I[#{''} one two]
+
+==> 011.rb 20 <==
+["#{''}", one, two]
+

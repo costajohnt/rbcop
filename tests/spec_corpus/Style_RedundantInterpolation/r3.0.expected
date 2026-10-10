@@ -1,0 +1,9 @@
+==> offenses exit=1 100 <==
+000.rb:1:1: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+
+==> autocorrect exit=0 98 <==
+000.rb:1:1: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+
+==> corrected/000.rb 17 <==
+(42 in var).to_s
+

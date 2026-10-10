@@ -1,0 +1,66 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 70 <==
+unless !a_condition
+  some_method
+end
+some_method unless !a_condition
+
+==> 001.rb 76 <==
+unless not a_condition
+  some_method
+end
+some_method unless not a_condition
+
+==> 002.rb 60 <==
+unless !a_condition
+  some_method
+else
+  something_else
+end
+
+==> 003.rb 171 <==
+unless !condition && another_condition
+  some_method
+end
+unless not condition or another_condition
+  some_method
+end
+some_method unless not condition or another_condition
+
+==> 004.rb 68 <==
+unless !!condition
+  some_method
+end
+some_method unless !!condition
+
+==> 005.rb 28 <==
+something unless (!x.even?)
+
+==> 006.rb 16 <==
+unless !foo
+end
+
+==> 007.rb 15 <==
+foo unless !bar
+==> 008.rb 16 <==
+foo unless !bar
+
+==> 009.rb 9 <==
+a ? b : c
+==> 010.rb 25 <==
+!foo.empty? ? :bar : :baz
+==> 011.rb 10 <==
+if ()
+end
+
+==> 012.rb 14 <==
+unless ()
+end
+

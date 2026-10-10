@@ -1,0 +1,189 @@
+==> .rubocop.yml 249 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/CollectionMethods:
+  PreferredMethods:
+    collect: map
+    inject: reduce
+    detect: find
+    find_all: select
+    member?: include?
+
+==> 000.rb 32 <==
+[1, 2, 3].collect { |e| e + 1 }
+
+==> 001.rb 33 <==
+[1, 2, 3]&.collect { |e| e + 1 }
+
+==> 002.rb 29 <==
+[1, 2, 3].collect { _1 + 1 }
+
+==> 003.rb 30 <==
+[1, 2, 3]&.collect { _1 + 1 }
+
+==> 004.rb 26 <==
+[1, 2, 3].collect(&:test)
+
+==> 005.rb 27 <==
+[1, 2, 3]&.collect(&:test)
+
+==> 006.rb 29 <==
+[1, 2, 3].collect(0, &:test)
+
+==> 007.rb 30 <==
+[1, 2, 3]&.collect(0, &:test)
+
+==> 008.rb 18 <==
+[1, 2, 3].collect
+
+==> 009.rb 19 <==
+[1, 2, 3]&.collect
+
+==> 010.rb 31 <==
+[1, 2, 3].inject { |e| e + 1 }
+
+==> 011.rb 32 <==
+[1, 2, 3]&.inject { |e| e + 1 }
+
+==> 012.rb 28 <==
+[1, 2, 3].inject { _1 + 1 }
+
+==> 013.rb 29 <==
+[1, 2, 3]&.inject { _1 + 1 }
+
+==> 014.rb 25 <==
+[1, 2, 3].inject(&:test)
+
+==> 015.rb 26 <==
+[1, 2, 3]&.inject(&:test)
+
+==> 016.rb 28 <==
+[1, 2, 3].inject(0, &:test)
+
+==> 017.rb 29 <==
+[1, 2, 3]&.inject(0, &:test)
+
+==> 018.rb 17 <==
+[1, 2, 3].inject
+
+==> 019.rb 18 <==
+[1, 2, 3]&.inject
+
+==> 020.rb 31 <==
+[1, 2, 3].detect { |e| e + 1 }
+
+==> 021.rb 32 <==
+[1, 2, 3]&.detect { |e| e + 1 }
+
+==> 022.rb 28 <==
+[1, 2, 3].detect { _1 + 1 }
+
+==> 023.rb 29 <==
+[1, 2, 3]&.detect { _1 + 1 }
+
+==> 024.rb 25 <==
+[1, 2, 3].detect(&:test)
+
+==> 025.rb 26 <==
+[1, 2, 3]&.detect(&:test)
+
+==> 026.rb 28 <==
+[1, 2, 3].detect(0, &:test)
+
+==> 027.rb 29 <==
+[1, 2, 3]&.detect(0, &:test)
+
+==> 028.rb 17 <==
+[1, 2, 3].detect
+
+==> 029.rb 18 <==
+[1, 2, 3]&.detect
+
+==> 030.rb 33 <==
+[1, 2, 3].find_all { |e| e + 1 }
+
+==> 031.rb 34 <==
+[1, 2, 3]&.find_all { |e| e + 1 }
+
+==> 032.rb 30 <==
+[1, 2, 3].find_all { _1 + 1 }
+
+==> 033.rb 31 <==
+[1, 2, 3]&.find_all { _1 + 1 }
+
+==> 034.rb 27 <==
+[1, 2, 3].find_all(&:test)
+
+==> 035.rb 28 <==
+[1, 2, 3]&.find_all(&:test)
+
+==> 036.rb 30 <==
+[1, 2, 3].find_all(0, &:test)
+
+==> 037.rb 31 <==
+[1, 2, 3]&.find_all(0, &:test)
+
+==> 038.rb 19 <==
+[1, 2, 3].find_all
+
+==> 039.rb 20 <==
+[1, 2, 3]&.find_all
+
+==> 040.rb 32 <==
+[1, 2, 3].member? { |e| e + 1 }
+
+==> 041.rb 33 <==
+[1, 2, 3]&.member? { |e| e + 1 }
+
+==> 042.rb 29 <==
+[1, 2, 3].member? { _1 + 1 }
+
+==> 043.rb 30 <==
+[1, 2, 3]&.member? { _1 + 1 }
+
+==> 044.rb 26 <==
+[1, 2, 3].member?(&:test)
+
+==> 045.rb 27 <==
+[1, 2, 3]&.member?(&:test)
+
+==> 046.rb 29 <==
+[1, 2, 3].member?(0, &:test)
+
+==> 047.rb 30 <==
+[1, 2, 3]&.member?(0, &:test)
+
+==> 048.rb 18 <==
+[1, 2, 3].member?
+
+==> 049.rb 19 <==
+[1, 2, 3]&.member?
+
+==> 050.rb 21 <==
+[1, 2, 3].inject(:+)
+
+==> 051.rb 22 <==
+[1, 2, 3]&.inject(:+)
+
+==> 052.rb 24 <==
+[1, 2, 3].inject(0, :+)
+
+==> 053.rb 25 <==
+[1, 2, 3]&.inject(0, :+)
+
+==> 054.rb 22 <==
+[1, 2, 3].collect(:+)
+
+==> 055.rb 23 <==
+[1, 2, 3]&.collect(:+)
+
+==> 056.rb 25 <==
+[1, 2, 3].collect(0, :+)
+
+==> 057.rb 26 <==
+[1, 2, 3]&.collect(0, :+)
+

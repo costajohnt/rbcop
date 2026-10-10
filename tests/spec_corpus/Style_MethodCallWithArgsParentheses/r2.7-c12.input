@@ -1,0 +1,31 @@
+==> .rubocop.yml 221 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/MethodCallWithArgsParentheses:
+  IgnoreMacros: 'true'
+  IncludedMacroPatterns:
+  - "^assert"
+  - "^refute"
+
+==> 000.rb 67 <==
+class Foo
+  assert_equal 'expected', actual
+  refute_nil value
+end
+
+==> 001.rb 66 <==
+class Foo
+  test "description" do
+    assert_equal 1, 1
+  end
+end
+
+==> 002.rb 32 <==
+class Foo
+  has_many :posts
+end
+

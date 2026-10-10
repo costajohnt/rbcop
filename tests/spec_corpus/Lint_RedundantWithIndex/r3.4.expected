@@ -1,0 +1,19 @@
+==> offenses exit=1 276 <==
+000.rb:1:5: W: [Correctable] Lint/RedundantWithIndex: Use `each` instead of `each_with_index`.
+001.rb:1:6: W: [Correctable] Lint/RedundantWithIndex: Use `each` instead of `each_with_index`.
+002.rb:1:10: W: [Correctable] Lint/RedundantWithIndex: Remove redundant `with_index`.
+
+==> autocorrect exit=0 270 <==
+000.rb:1:5: W: [Corrected] Lint/RedundantWithIndex: Use `each` instead of `each_with_index`.
+001.rb:1:6: W: [Corrected] Lint/RedundantWithIndex: Use `each` instead of `each_with_index`.
+002.rb:1:10: W: [Corrected] Lint/RedundantWithIndex: Remove redundant `with_index`.
+
+==> corrected/000.rb 16 <==
+ary.each { it }
+
+==> corrected/001.rb 17 <==
+ary&.each { it }
+
+==> corrected/002.rb 16 <==
+ary.each { it }
+

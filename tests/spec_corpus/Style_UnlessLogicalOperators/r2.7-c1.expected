@@ -1,0 +1,14 @@
+==> offenses exit=1 465 <==
+000.rb:1:1: C: Style/UnlessLogicalOperators: Do not use any logical operator in an `unless`.
+001.rb:1:1: C: Style/UnlessLogicalOperators: Do not use any logical operator in an `unless`.
+002.rb:1:1: C: Style/UnlessLogicalOperators: Do not use any logical operator in an `unless`.
+003.rb:1:1: C: Style/UnlessLogicalOperators: Do not use any logical operator in an `unless`.
+004.rb:1:1: C: Style/UnlessLogicalOperators: Do not use any logical operator in an `unless`.
+
+==> autocorrect exit=1 465 <==
+000.rb:1:1: C: Style/UnlessLogicalOperators: Do not use any logical operator in an `unless`.
+001.rb:1:1: C: Style/UnlessLogicalOperators: Do not use any logical operator in an `unless`.
+002.rb:1:1: C: Style/UnlessLogicalOperators: Do not use any logical operator in an `unless`.
+003.rb:1:1: C: Style/UnlessLogicalOperators: Do not use any logical operator in an `unless`.
+004.rb:1:1: C: Style/UnlessLogicalOperators: Do not use any logical operator in an `unless`.
+

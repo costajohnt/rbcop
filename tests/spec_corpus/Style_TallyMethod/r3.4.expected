@@ -1,0 +1,14 @@
+==> offenses exit=1 212 <==
+000.rb:1:7: C: [Correctable] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+001.rb:1:7: C: [Correctable] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+
+==> autocorrect exit=0 208 <==
+000.rb:1:7: C: [Corrected] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+001.rb:1:7: C: [Corrected] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+
+==> corrected/000.rb 12 <==
+array.tally
+
+==> corrected/001.rb 12 <==
+array.tally
+

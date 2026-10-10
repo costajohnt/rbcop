@@ -1,0 +1,28 @@
+==> offenses exit=1 880 <==
+000.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+001.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+001.rb:5:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+002.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+003.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+
+==> autocorrect exit=0 870 <==
+000.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+001.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+001.rb:5:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+002.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+003.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+
+==> corrected/000.rb 34 <==
+obj[:key] = { foo: } if condition
+
+==> corrected/001.rb 74 <==
+obj.do_something(foo:) if condition
+
+obj&.do_something(foo:) if condition
+
+==> corrected/002.rb 25 <==
+obj.(attr:) if condition
+
+==> corrected/003.rb 26 <==
+obj&.(attr:) if condition
+

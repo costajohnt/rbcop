@@ -1,0 +1,28 @@
+==> .rubocop.yml 179 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Bundler/GemVersion:
+  EnforcedStyle: required
+  AllowedGems:
+  - rspec
+
+==> 000.gemfile 44 <==
+gem 'rubocop'
+gem 'rubocop', require: false
+
+==> 001.gemfile 267 <==
+gem 'rubocop', '>=1.10.0'
+gem 'rubocop', '~> 1'
+gem 'rubocop', '~> 1.12', require: false
+gem 'rubocop', '>= 1.5.0', '< 1.10.0', git: 'https://github.com/rubocop/rubocop'
+gem 'rubocop', branch: 'feature-branch'
+gem 'rubocop', ref: 'b3f37bc7f'
+gem 'rubocop', tag: 'v1'
+
+==> 002.gemfile 12 <==
+gem 'rspec'
+

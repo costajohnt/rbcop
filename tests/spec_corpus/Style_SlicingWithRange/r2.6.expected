@@ -1,0 +1,54 @@
+==> offenses exit=1 887 <==
+000.rb:1:4: C: [Correctable] Style/SlicingWithRange: Remove the useless `[0..-1]`.
+002.rb:1:4: C: [Correctable] Style/SlicingWithRange: Remove the useless `[0..nil]`.
+003.rb:1:4: C: [Correctable] Style/SlicingWithRange: Remove the useless `[0...nil]`.
+004.rb:1:4: C: [Correctable] Style/SlicingWithRange: Prefer `[1..]` over `[1..-1]`.
+005.rb:1:4: C: [Correctable] Style/SlicingWithRange: Prefer `[1..]` over `[1..nil]`.
+006.rb:1:4: C: [Correctable] Style/SlicingWithRange: Prefer `[1...]` over `[1...nil]`.
+007.rb:1:4: C: [Correctable] Style/SlicingWithRange: Prefer `[fetch_start(true).first..]` over `[fetch_start(true).first..-1]`.
+012.rb:1:4: C: [Correctable] Style/SlicingWithRange: Remove the useless `.[](0..-1)`.
+013.rb:1:4: C: [Correctable] Style/SlicingWithRange: Remove the useless `.[] 0..-1`.
+014.rb:1:4: C: [Correctable] Style/SlicingWithRange: Prefer `1..` over `1..-1`.
+
+==> autocorrect exit=0 867 <==
+000.rb:1:4: C: [Corrected] Style/SlicingWithRange: Remove the useless `[0..-1]`.
+002.rb:1:4: C: [Corrected] Style/SlicingWithRange: Remove the useless `[0..nil]`.
+003.rb:1:4: C: [Corrected] Style/SlicingWithRange: Remove the useless `[0...nil]`.
+004.rb:1:4: C: [Corrected] Style/SlicingWithRange: Prefer `[1..]` over `[1..-1]`.
+005.rb:1:4: C: [Corrected] Style/SlicingWithRange: Prefer `[1..]` over `[1..nil]`.
+006.rb:1:4: C: [Corrected] Style/SlicingWithRange: Prefer `[1...]` over `[1...nil]`.
+007.rb:1:4: C: [Corrected] Style/SlicingWithRange: Prefer `[fetch_start(true).first..]` over `[fetch_start(true).first..-1]`.
+012.rb:1:4: C: [Corrected] Style/SlicingWithRange: Remove the useless `.[](0..-1)`.
+013.rb:1:4: C: [Corrected] Style/SlicingWithRange: Remove the useless `.[] 0..-1`.
+014.rb:1:4: C: [Corrected] Style/SlicingWithRange: Prefer `1..` over `1..-1`.
+
+==> corrected/000.rb 4 <==
+ary
+
+==> corrected/002.rb 4 <==
+ary
+
+==> corrected/003.rb 4 <==
+ary
+
+==> corrected/004.rb 9 <==
+ary[1..]
+
+==> corrected/005.rb 9 <==
+ary[1..]
+
+==> corrected/006.rb 10 <==
+ary[1...]
+
+==> corrected/007.rb 31 <==
+ary[fetch_start(true).first..]
+
+==> corrected/012.rb 4 <==
+ary
+
+==> corrected/013.rb 4 <==
+ary
+
+==> corrected/014.rb 12 <==
+ary.[](1..)
+

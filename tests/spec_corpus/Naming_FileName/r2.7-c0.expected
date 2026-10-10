@@ -1,0 +1,6 @@
+==> offenses exit=1 109 <==
+000/testCase.rb:1:1: C: Naming/FileName: The name of this source file (`testCase.rb`) should use snake_case.
+
+==> autocorrect exit=1 109 <==
+000/testCase.rb:1:1: C: Naming/FileName: The name of this source file (`testCase.rb`) should use snake_case.
+

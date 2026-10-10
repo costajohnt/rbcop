@@ -1,0 +1,31 @@
+==> offenses exit=1 357 <==
+000.rb:1:31: C: [Correctable] Style/HashAsLastArrayItem: Omit the braces around the hash.
+001.rb:1:8: C: [Correctable] Style/HashAsLastArrayItem: Omit the braces around the hash.
+002.rb:1:2: C: [Correctable] Style/HashAsLastArrayItem: Omit the braces around the hash.
+003.rb:4:3: C: [Correctable] Style/HashAsLastArrayItem: Omit the braces around the hash.
+
+==> autocorrect exit=0 349 <==
+000.rb:1:31: C: [Corrected] Style/HashAsLastArrayItem: Omit the braces around the hash.
+001.rb:1:8: C: [Corrected] Style/HashAsLastArrayItem: Omit the braces around the hash.
+002.rb:1:2: C: [Corrected] Style/HashAsLastArrayItem: Omit the braces around the hash.
+003.rb:4:3: C: [Corrected] Style/HashAsLastArrayItem: Omit the braces around the hash.
+
+==> corrected/000.rb 42 <==
+[{ one: 1 }, { three: 3 }, 2,  three: 3 ]
+
+==> corrected/001.rb 26 <==
+[1, 2,  one: 1, two: 2, ]
+
+==> corrected/002.rb 17 <==
+[one: 1, two: 2]
+
+==> corrected/003.rb 44 <==
+[
+  1,
+  2,
+  
+    one: 1,
+    two: 2,
+  
+]
+

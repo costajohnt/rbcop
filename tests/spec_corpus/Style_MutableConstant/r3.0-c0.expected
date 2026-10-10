@@ -1,0 +1,40 @@
+==> offenses exit=1 490 <==
+005.rb:1:5: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+005.rb:2:5: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+006.rb:4:5: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+007.rb:3:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+009.rb:3:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+
+==> autocorrect exit=0 480 <==
+005.rb:1:5: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+005.rb:2:5: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+006.rb:4:5: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+007.rb:3:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+009.rb:3:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+
+==> corrected/005.rb 78 <==
+X = [1, 2, 3].freeze # shareable_constant_value: literal
+Y = [4, 5, 6].freeze
+
+==> corrected/006.rb 170 <==
+# shareable_constant_value: literal
+X = [1, 2, 3]
+# shareable_constant_value: none
+Y = [4, 5, 6].freeze
+# shareable_constant_value: experimental_everything
+Z = [7, 8, 9]
+
+==> corrected/007.rb 92 <==
+# frozen_string_literal: true
+
+CONST = <<~HERE.freeze
+  foo #{use_interpolation}
+  bar
+HERE
+
+==> corrected/009.rb 71 <==
+# frozen_string_literal: true
+
+CONST = "#{foo}" \
+        'bar'.freeze
+

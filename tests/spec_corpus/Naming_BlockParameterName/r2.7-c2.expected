@@ -1,0 +1,6 @@
+==> offenses exit=1 91 <==
+000.rb:1:14: C: Naming/BlockParameterName: Do not use arg as a name for a block parameter.
+
+==> autocorrect exit=1 91 <==
+000.rb:1:14: C: Naming/BlockParameterName: Do not use arg as a name for a block parameter.
+

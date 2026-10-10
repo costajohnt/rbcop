@@ -1,0 +1,156 @@
+==> .rubocop.yml 167 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/EmptyClassDefinition:
+  EnforcedStyle: class_keyword
+
+==> 000.rb 36 <==
+FooError = Class.new(StandardError)
+
+==> 001.rb 41 <==
+Foo::BarError = Class.new(StandardError)
+
+==> 002.rb 20 <==
+MyClass = Class.new
+
+==> 003.rb 53 <==
+module Foo
+  BarError = Class.new(StandardError)
+end
+
+==> 004.rb 48 <==
+MyClass = Class.new(Alchemy::Admin::PreviewUrl)
+
+==> 005.rb 38 <==
+MyClass = Class.new(::Safemode::Jail)
+
+==> 006.rb 36 <==
+class FooError < StandardError; end
+
+==> 007.rb 19 <==
+class MyClass; end
+
+==> 008.rb 38 <==
+module Foo
+  class Bar < Baz; end
+end
+
+==> 009.rb 77 <==
+class FooError < StandardError
+  def initialize(message)
+    super
+  end
+end
+
+==> 010.rb 57 <==
+class FooError < StandardError; def initialize; end; end
+
+==> 011.rb 35 <==
+class FooError < StandardError
+end
+
+==> 012.rb 18 <==
+class MyClass
+end
+
+==> 013.rb 65 <==
+Class.new(Settings::Base) do
+  def repositories(*_args); end
+end
+
+==> 014.rb 43 <==
+Class.new(Settings::Base) { setting :var }
+
+==> 015.rb 39 <==
+MyClass = Class.new(StandardError) { }
+
+==> 016.rb 42 <==
+MyClass = Class.new(StandardError) do end
+
+==> 017.rb 36 <==
+Class.new do
+  def method
+  end
+end
+
+==> 018.rb 120 <==
+local_var = Class.new(Base)
+@instance_var = Class.new(Base)
+@@class_var = Class.new(Base)
+$global_var = Class.new(Base)
+
+==> 019.rb 128 <==
+local_var ||= Class.new(Base)
+@instance_var ||= Class.new(Base)
+@@class_var ||= Class.new(Base)
+$global_var ||= Class.new(Base)
+
+==> 020.rb 31 <==
+raise Class.new(StandardError)
+
+==> 021.rb 21 <==
+foo(Class.new(Base))
+
+==> 022.rb 24 <==
+return Class.new(Error)
+
+==> 023.rb 92 <==
+Class.new(Resolvers::BaseResolver).tap do |c|
+  c.const_set('MODEL_CLASS', model_class)
+end
+
+==> 024.rb 335 <==
+stub_const('FakeService', Class.new)
+
+stub_const("MicrosoftSync::TestErrorNotPublic", Class.new(StandardError))
+
+stub_const("MicrosoftSync::TestError",
+           Class.new(MicrosoftSync::Errors::PublicError) do
+             def self.public_message
+               I18n.t "oops, this is a public error"
+             end
+           end)
+
+==> 025.rb 92 <==
+Class.new(local_var)
+Class.new(@instance_var)
+Class.new(@@class_var)
+Class.new($global_var)
+
+==> 026.rb 26 <==
+MyClass = Class.new(self)
+
+==> 027.rb 37 <==
+CONST ||= %i{user port proxy}.freeze
+
+==> 028.rb 42 <==
+BOOLEAN = ActiveRecord::Type::Boolean.new
+
+==> 029.rb 42 <==
+CONST = condition
+private_constant :CONST
+
+==> 030.rb 257 <==
+MyClass = Class.new(Foreman::Renderer).send(:new)
+MyClass = Class.new(Foreman::Renderer).public_send(:new)
+MyClass = Class.new(StandardError).any_method
+MyClass = Class.new(StandardError).tap { }
+MyClass = Class.new(StandardError).send(:new).another_method
+
+==> 031.rb 293 <==
+let(:application_mailer) { Class.new(ActionMailer::Base) }
+let(:my_class) { Class.new }
+let(:view_component) do
+  Class.new(ViewComponent::Base)
+end
+let_it_be(:custom_config_class) { Class.new }
+subject { Class.new(ViewComponent::Base) }
+let(:my_class) { Class.new do
+  def method
+  end
+end }
+

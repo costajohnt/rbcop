@@ -1,0 +1,324 @@
+==> .rubocop.yml 328 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/FormatStringToken:
+  EnforcedStyle: :annotated
+  SupportedStyles:
+  - :annotated
+  - :template
+  - :unannotated
+  MaxUnannotatedPlaceholdersAllowed: 0
+  AllowedMethods: []
+  AllowedPatterns: []
+  Mode: :aggressive
+
+==> 000.rb 44 <==
+format('%<hit_rate>6.2f%%', hit_rate: 12.34)
+==> 001.rb 37 <==
+`echo "%s %<annotated>s %{template}"`
+==> 002.rb 12 <==
+/foo bar %u/
+==> 003.rb 14 <==
+%r{foo bar %u}
+==> 004.rb 40 <==
+Time.strptime('2017-12-13', '%Y-%m-%d')
+
+==> 005.rb 40 <==
+Time.strftime('2017-12-13', '%Y-%m-%d')
+
+==> 006.rb 66 <==
+time_format = '%Y-%m-%d'
+Time.strftime('2017-12-13', time_format)
+
+==> 007.rb 46 <==
+Time.now.strftime('%Y-%m-%d-%H-%M-%S')
+format
+
+==> 008.rb 19 <==
+"c#{b}%{template}"
+
+==> 009.rb 27 <==
+format("c#{b}%{template}")
+
+==> 010.rb 30 <==
+sprintf('%{foo}', foo: 'bar')
+
+==> 011.rb 29 <==
+printf('%{foo}', foo: 'bar')
+
+==> 012.rb 26 <==
+'%{foo}' % { foo: 'bar' }
+
+==> 013.rb 31 <==
+"c#{b}%{foo}" % { foo: 'bar' }
+
+==> 014.rb 14 <==
+foo('%{bar}')
+
+==> 015.rb 67 <==
+'https://gitlab.com/%{project_path}/-/blob/%{default_branch}/file'
+
+==> 016.rb 78 <==
+validates :colour, format: { message: '%{colour} is not a valid hex colour' }
+
+==> 017.rb 36 <==
+<<-MSG
+  %{colour} is not valid
+MSG
+
+==> 018.rb 36 <==
+Kernel.format('%{foo}', foo: 'bar')
+
+==> 019.rb 37 <==
+Kernel.sprintf('%{foo}', foo: 'bar')
+
+==> 020.rb 100 <==
+'https://ru.wikipedia.org/wiki/%D0%90_'  '(%D0%BA%D0%B8%D1%80%D0%B8%D0%BB%D0%BB%D0%B8%D1%86%D0%B0)'
+
+==> 021.rb 181 <==
+format(
+  '%<day>s %<start>s-%<end>s',
+  day: open_house.starts_at.strftime('%a'),
+  start: open_house.starts_at.strftime('%l'),
+  end: open_house.ends_at.strftime('%l %p').strip
+)
+
+==> 022.rb 38 <==
+{ bar: format('%{foo}', foo: 'foo') }
+
+==> 023.rb 36 <==
+format('%-20s %-30s', 'foo', 'bar')
+
+==> 024.rb 8 <==
+__FILE__
+==> 025.rb 69 <==
+format(<<-HEREDOC, foo: bar)
+foo %<named>A + bar %{template}
+HEREDOC
+
+==> 026.rb 48 <==
+format("a#{b}%<named>A c#{d}%{template} e#{f}")
+
+==> 027.rb 23 <==
+format("%<a>s", a: foo)
+==> 028.rb 23 <==
+format("%{a}", a: foo)
+
+==> 029.rb 17 <==
+format('%A', foo)
+==> 030.rb 25 <==
+format('%A %s', foo, bar)
+==> 031.rb 69 <==
+format(<<-HEREDOC, foo: bar)
+foo %<named>B + bar %{template}
+HEREDOC
+
+==> 032.rb 48 <==
+format("a#{b}%<named>B c#{d}%{template} e#{f}")
+
+==> 033.rb 17 <==
+format('%B', foo)
+==> 034.rb 25 <==
+format('%B %s', foo, bar)
+==> 035.rb 69 <==
+format(<<-HEREDOC, foo: bar)
+foo %<named>E + bar %{template}
+HEREDOC
+
+==> 036.rb 48 <==
+format("a#{b}%<named>E c#{d}%{template} e#{f}")
+
+==> 037.rb 17 <==
+format('%E', foo)
+==> 038.rb 25 <==
+format('%E %s', foo, bar)
+==> 039.rb 69 <==
+format(<<-HEREDOC, foo: bar)
+foo %<named>G + bar %{template}
+HEREDOC
+
+==> 040.rb 48 <==
+format("a#{b}%<named>G c#{d}%{template} e#{f}")
+
+==> 041.rb 17 <==
+format('%G', foo)
+==> 042.rb 25 <==
+format('%G %s', foo, bar)
+==> 043.rb 69 <==
+format(<<-HEREDOC, foo: bar)
+foo %<named>X + bar %{template}
+HEREDOC
+
+==> 044.rb 48 <==
+format("a#{b}%<named>X c#{d}%{template} e#{f}")
+
+==> 045.rb 17 <==
+format('%X', foo)
+==> 046.rb 25 <==
+format('%X %s', foo, bar)
+==> 047.rb 69 <==
+format(<<-HEREDOC, foo: bar)
+foo %<named>a + bar %{template}
+HEREDOC
+
+==> 048.rb 48 <==
+format("a#{b}%<named>a c#{d}%{template} e#{f}")
+
+==> 049.rb 17 <==
+format('%a', foo)
+==> 050.rb 25 <==
+format('%a %s', foo, bar)
+==> 051.rb 69 <==
+format(<<-HEREDOC, foo: bar)
+foo %<named>b + bar %{template}
+HEREDOC
+
+==> 052.rb 48 <==
+format("a#{b}%<named>b c#{d}%{template} e#{f}")
+
+==> 053.rb 17 <==
+format('%b', foo)
+==> 054.rb 25 <==
+format('%b %s', foo, bar)
+==> 055.rb 69 <==
+format(<<-HEREDOC, foo: bar)
+foo %<named>c + bar %{template}
+HEREDOC
+
+==> 056.rb 48 <==
+format("a#{b}%<named>c c#{d}%{template} e#{f}")
+
+==> 057.rb 17 <==
+format('%c', foo)
+==> 058.rb 25 <==
+format('%c %s', foo, bar)
+==> 059.rb 69 <==
+format(<<-HEREDOC, foo: bar)
+foo %<named>d + bar %{template}
+HEREDOC
+
+==> 060.rb 48 <==
+format("a#{b}%<named>d c#{d}%{template} e#{f}")
+
+==> 061.rb 17 <==
+format('%d', foo)
+==> 062.rb 25 <==
+format('%d %s', foo, bar)
+==> 063.rb 69 <==
+format(<<-HEREDOC, foo: bar)
+foo %<named>e + bar %{template}
+HEREDOC
+
+==> 064.rb 48 <==
+format("a#{b}%<named>e c#{d}%{template} e#{f}")
+
+==> 065.rb 17 <==
+format('%e', foo)
+==> 066.rb 25 <==
+format('%e %s', foo, bar)
+==> 067.rb 69 <==
+format(<<-HEREDOC, foo: bar)
+foo %<named>f + bar %{template}
+HEREDOC
+
+==> 068.rb 48 <==
+format("a#{b}%<named>f c#{d}%{template} e#{f}")
+
+==> 069.rb 17 <==
+format('%f', foo)
+==> 070.rb 25 <==
+format('%f %s', foo, bar)
+==> 071.rb 69 <==
+format(<<-HEREDOC, foo: bar)
+foo %<named>g + bar %{template}
+HEREDOC
+
+==> 072.rb 48 <==
+format("a#{b}%<named>g c#{d}%{template} e#{f}")
+
+==> 073.rb 17 <==
+format('%g', foo)
+==> 074.rb 25 <==
+format('%g %s', foo, bar)
+==> 075.rb 69 <==
+format(<<-HEREDOC, foo: bar)
+foo %<named>i + bar %{template}
+HEREDOC
+
+==> 076.rb 48 <==
+format("a#{b}%<named>i c#{d}%{template} e#{f}")
+
+==> 077.rb 17 <==
+format('%i', foo)
+==> 078.rb 25 <==
+format('%i %s', foo, bar)
+==> 079.rb 69 <==
+format(<<-HEREDOC, foo: bar)
+foo %<named>o + bar %{template}
+HEREDOC
+
+==> 080.rb 48 <==
+format("a#{b}%<named>o c#{d}%{template} e#{f}")
+
+==> 081.rb 17 <==
+format('%o', foo)
+==> 082.rb 25 <==
+format('%o %s', foo, bar)
+==> 083.rb 69 <==
+format(<<-HEREDOC, foo: bar)
+foo %<named>p + bar %{template}
+HEREDOC
+
+==> 084.rb 48 <==
+format("a#{b}%<named>p c#{d}%{template} e#{f}")
+
+==> 085.rb 17 <==
+format('%p', foo)
+==> 086.rb 25 <==
+format('%p %s', foo, bar)
+==> 087.rb 69 <==
+format(<<-HEREDOC, foo: bar)
+foo %<named>s + bar %{template}
+HEREDOC
+
+==> 088.rb 48 <==
+format("a#{b}%<named>s c#{d}%{template} e#{f}")
+
+==> 089.rb 17 <==
+format('%s', foo)
+==> 090.rb 25 <==
+format('%s %s', foo, bar)
+==> 091.rb 69 <==
+format(<<-HEREDOC, foo: bar)
+foo %<named>u + bar %{template}
+HEREDOC
+
+==> 092.rb 48 <==
+format("a#{b}%<named>u c#{d}%{template} e#{f}")
+
+==> 093.rb 17 <==
+format('%u', foo)
+==> 094.rb 25 <==
+format('%u %s', foo, bar)
+==> 095.rb 69 <==
+format(<<-HEREDOC, foo: bar)
+foo %<named>x + bar %{template}
+HEREDOC
+
+==> 096.rb 48 <==
+format("a#{b}%<named>x c#{d}%{template} e#{f}")
+
+==> 097.rb 17 <==
+format('%x', foo)
+==> 098.rb 25 <==
+format('%x %s', foo, bar)
+==> 099.rb 9 <==
+"%{foo}"
+
+==> 100.rb 19 <==
+redirect("%{foo}")
+

@@ -1,0 +1,26 @@
+==> offenses exit=1 803 <==
+005/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+006/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+007/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+008/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+009/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+010/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+011/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+012/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+013/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+014/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+015/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+
+==> autocorrect exit=1 803 <==
+005/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+006/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+007/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+008/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+009/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+010/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+011/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+012/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+013/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+014/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+015/Gemfile:1:1: C: Bundler/GemComment: Missing gem description comment.
+

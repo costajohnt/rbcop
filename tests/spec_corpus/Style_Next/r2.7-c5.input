@@ -1,0 +1,22 @@
+==> .rubocop.yml 176 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/Next:
+  AllowConsecutiveConditionals: true
+  MinBodyLength: 1
+
+==> 000.rb 66 <==
+[].each do
+  if foo?
+    work
+  end
+
+  if bar?
+    work
+  end
+end
+

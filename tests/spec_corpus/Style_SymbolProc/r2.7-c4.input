@@ -1,0 +1,16 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SymbolProc:
+  AllowMethodsWithArguments: false
+
+==> 000.rb 38 <==
+do_something(one, two) { |x| x.test }
+
+==> 001.rb 31 <==
+super(one, two) { |x| x.test }
+

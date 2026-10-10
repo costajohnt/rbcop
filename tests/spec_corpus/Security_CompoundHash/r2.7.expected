@@ -1,0 +1,44 @@
+==> offenses exit=1 1980 <==
+000.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+001.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+002.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+003.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+004.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+005.rb:2:3: W: Security/CompoundHash: Delegate hash directly without wrapping in an array when only using a single value.
+006.rb:1:5: W: Security/CompoundHash: Calling .hash on elements of a hashed array is redundant.
+007.rb:2:4: W: Security/CompoundHash: Calling .hash on elements of a hashed array is redundant.
+007.rb:2:15: W: Security/CompoundHash: Calling .hash on elements of a hashed array is redundant.
+010.rb:2:11: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+011.rb:5:5: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+012.rb:5:5: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+013.rb:5:5: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+014.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+015.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+016.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+017.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+018.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+019.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+020.rb:5:8: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+
+==> autocorrect exit=1 1980 <==
+000.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+001.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+002.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+003.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+004.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+005.rb:2:3: W: Security/CompoundHash: Delegate hash directly without wrapping in an array when only using a single value.
+006.rb:1:5: W: Security/CompoundHash: Calling .hash on elements of a hashed array is redundant.
+007.rb:2:4: W: Security/CompoundHash: Calling .hash on elements of a hashed array is redundant.
+007.rb:2:15: W: Security/CompoundHash: Calling .hash on elements of a hashed array is redundant.
+010.rb:2:11: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+011.rb:5:5: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+012.rb:5:5: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+013.rb:5:5: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+014.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+015.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+016.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+017.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+018.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+019.rb:2:3: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+020.rb:5:8: W: Security/CompoundHash: Use `[...].hash` instead of combining hash values manually.
+

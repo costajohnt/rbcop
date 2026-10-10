@@ -1,0 +1,55 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/UnusedMethodArgument:
+  IgnoreNotImplementedMethods: true
+
+==> 000.rb 48 <==
+def method(arg)
+  raise NotImplementedError
+end
+
+==> 001.rb 57 <==
+def method(arg)
+  raise NotImplementedError, message
+end
+
+==> 002.rb 50 <==
+def method(arg)
+  raise ::NotImplementedError
+end
+
+==> 003.rb 34 <==
+def method(arg)
+  fail "TODO"
+end
+
+==> 004.rb 27 <==
+def method(arg)
+  fail
+end
+
+==> 005.rb 56 <==
+def self.method(unused)
+  raise NotImplementedError
+end
+
+==> 006.rb 24 <==
+def method(arg)
+  1
+end
+
+==> 007.rb 58 <==
+def method(a, b, *others)
+  raise NotImplementedError
+end
+
+==> 008.rb 34 <==
+def method(a, b, *others)
+  1
+end
+

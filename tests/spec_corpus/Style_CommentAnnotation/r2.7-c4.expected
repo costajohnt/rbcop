@@ -1,0 +1,35 @@
+==> offenses exit=1 948 <==
+000.rb:1:3: C: [Correctable] Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a space, then a note describing the problem.
+001.rb:1:3: C: [Correctable] Style/CommentAnnotation: Annotation keywords like `fixme` should be all upper case, followed by a space, then a note describing the problem.
+002.rb:1:3: C: Style/CommentAnnotation: Annotation comment, with keyword `HACK`, is missing a note.
+008.rb:3:11: C: [Correctable] Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a space, then a note describing the problem.
+008.rb:4:11: C: [Correctable] Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a space, then a note describing the problem.
+009.rb:1:3: C: [Correctable] Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a space, then a note describing the problem.
+
+==> autocorrect exit=1 938 <==
+000.rb:1:3: C: [Corrected] Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a space, then a note describing the problem.
+001.rb:1:3: C: [Corrected] Style/CommentAnnotation: Annotation keywords like `fixme` should be all upper case, followed by a space, then a note describing the problem.
+002.rb:1:3: C: Style/CommentAnnotation: Annotation comment, with keyword `HACK`, is missing a note.
+008.rb:3:11: C: [Corrected] Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a space, then a note describing the problem.
+008.rb:4:11: C: [Corrected] Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a space, then a note describing the problem.
+009.rb:1:3: C: [Corrected] Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a space, then a note describing the problem.
+
+==> corrected/000.rb 19 <==
+# TODO make better
+
+==> corrected/001.rb 22 <==
+# FIXME does not work
+
+==> corrected/008.rb 86 <==
+class ToBeDone
+  ITEMS = [
+    '', # TODO Item 1
+    '', # TODO Item 2
+  ].freeze
+end
+
+==> corrected/009.rb 44 <==
+# TODO line 1
+# TODO: line 2
+# TODO: line 3
+

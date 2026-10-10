@@ -1,0 +1,16 @@
+==> offenses exit=1 198 <==
+000.rb:1:7: C: [Correctable] Layout/SpaceBeforeComment: Put a space before an end-of-line comment.
+004.rb:1:7: C: [Correctable] Layout/SpaceBeforeComment: Put a space before an end-of-line comment.
+
+==> autocorrect exit=0 194 <==
+000.rb:1:7: C: [Corrected] Layout/SpaceBeforeComment: Put a space before an end-of-line comment.
+004.rb:1:7: C: [Corrected] Layout/SpaceBeforeComment: Put a space before an end-of-line comment.
+
+==> corrected/000.rb 19 <==
+a += 1 # increment
+
+==> corrected/004.rb 30 <==
+<<~STR # my string
+  text
+STR
+

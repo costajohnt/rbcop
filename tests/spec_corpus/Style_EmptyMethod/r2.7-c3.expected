@@ -1,0 +1,24 @@
+==> offenses exit=1 324 <==
+002.rb:1:1: C: [Correctable] Style/EmptyMethod: Put the `end` of empty method definitions on the next line.
+008.rb:1:1: C: [Correctable] Style/EmptyMethod: Put the `end` of empty method definitions on the next line.
+012.rb:2:3: C: [Correctable] Style/EmptyMethod: Put the `end` of empty method definitions on the next line.
+
+==> autocorrect exit=0 318 <==
+002.rb:1:1: C: [Corrected] Style/EmptyMethod: Put the `end` of empty method definitions on the next line.
+008.rb:1:1: C: [Corrected] Style/EmptyMethod: Put the `end` of empty method definitions on the next line.
+012.rb:2:3: C: [Corrected] Style/EmptyMethod: Put the `end` of empty method definitions on the next line.
+
+==> corrected/002.rb 12 <==
+def foo
+end
+
+==> corrected/008.rb 17 <==
+def self.foo
+end
+
+==> corrected/012.rb 30 <==
+class Foo
+  def bar
+  end
+end
+

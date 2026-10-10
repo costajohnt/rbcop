@@ -1,0 +1,12 @@
+==> offenses exit=1 440 <==
+002/Gemfile:3:1: W: Bundler/DuplicatedGem: Gem `rubocop` requirements already given on line 2 of the Gemfile.
+003/Gemfile:3:3: W: Bundler/DuplicatedGem: Gem `rubocop` requirements already given on line 1 of the Gemfile.
+004/Gemfile:3:3: W: Bundler/DuplicatedGem: Gem `rubocop` requirements already given on line 1 of the Gemfile.
+004/Gemfile:5:3: W: Bundler/DuplicatedGem: Gem `rubocop` requirements already given on line 1 of the Gemfile.
+
+==> autocorrect exit=1 440 <==
+002/Gemfile:3:1: W: Bundler/DuplicatedGem: Gem `rubocop` requirements already given on line 2 of the Gemfile.
+003/Gemfile:3:3: W: Bundler/DuplicatedGem: Gem `rubocop` requirements already given on line 1 of the Gemfile.
+004/Gemfile:3:3: W: Bundler/DuplicatedGem: Gem `rubocop` requirements already given on line 1 of the Gemfile.
+004/Gemfile:5:3: W: Bundler/DuplicatedGem: Gem `rubocop` requirements already given on line 1 of the Gemfile.
+

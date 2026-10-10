@@ -1,0 +1,65 @@
+==> offenses exit=1 828 <==
+001.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 4 (not 1) spaces for indentation.
+002.rb:2:3: C: [Correctable] Layout/IndentationWidth: Use 4 (not 1) spaces for indentation.
+002.rb:3:4: C: [Correctable] Layout/IndentationWidth: Use 4 (not 1) spaces for indentation.
+003.rb:2:3: C: [Correctable] Layout/IndentationWidth: Use 4 (not 1) spaces for indentation.
+004.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 4 (not 2) spaces for indentation.
+005.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 4 (not 0) spaces for indentation.
+006.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 4 (not 3) spaces for indentation.
+007.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 4 (not 3) spaces for indentation.
+007.rb:5:1: C: [Correctable] Layout/IndentationWidth: Use 4 (not 1) spaces for indentation.
+
+==> autocorrect exit=0 810 <==
+001.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 4 (not 1) spaces for indentation.
+002.rb:2:3: C: [Corrected] Layout/IndentationWidth: Use 4 (not 1) spaces for indentation.
+002.rb:3:7: C: [Corrected] Layout/IndentationWidth: Use 4 (not 1) spaces for indentation.
+003.rb:2:3: C: [Corrected] Layout/IndentationWidth: Use 4 (not 1) spaces for indentation.
+004.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 4 (not 2) spaces for indentation.
+005.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 4 (not 0) spaces for indentation.
+006.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 4 (not 3) spaces for indentation.
+007.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 4 (not 3) spaces for indentation.
+007.rb:5:1: C: [Corrected] Layout/IndentationWidth: Use 4 (not 1) spaces for indentation.
+
+==> corrected/001.rb 21 <==
+if cond
+    func
+end
+
+==> corrected/002.rb 64 <==
+  class A
+  	   def test
+     		   puts 'hello'
+     	end
+  end
+
+==> corrected/003.rb 27 <==
+  if cond
+  	   func
+  end
+
+==> corrected/004.rb 21 <==
+if cond
+		  func
+end
+
+==> corrected/005.rb 33 <==
+class A
+    def test
+    end
+end
+
+==> corrected/006.rb 30 <==
+def test
+			 puts 'hello'
+end
+
+==> corrected/007.rb 50 <==
+if a1
+    b1
+   b1
+elsif a2
+    b2
+else
+    c
+end
+

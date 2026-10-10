@@ -1,0 +1,26 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 22 <==
+File.open("filename")
+
+==> 001.rb 26 <==
+Tempfile.open("filename")
+
+==> 002.rb 24 <==
+::File.open("filename")
+
+==> 003.rb 28 <==
+::Tempfile.open("filename")
+
+==> 004.rb 35 <==
+File.open("file") { |f| something }
+==> 005.rb 25 <==
+File.open("file", &:read)
+==> 006.rb 35 <==
+File.open("file", "w", 0o777).close

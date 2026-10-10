@@ -1,0 +1,39 @@
+==> offenses exit=1 1192 <==
+000.rb:1:5: W: [Correctable] Lint/UriRegexp: `URI.regexp('http://example.com')` is obsolete and should not be used. Instead, use `URI::DEFAULT_PARSER.make_regexp('http://example.com')`.
+001.rb:1:7: W: [Correctable] Lint/UriRegexp: `::URI.regexp('http://example.com')` is obsolete and should not be used. Instead, use `::URI::DEFAULT_PARSER.make_regexp('http://example.com')`.
+002.rb:1:5: W: [Correctable] Lint/UriRegexp: `URI.regexp` is obsolete and should not be used. Instead, use `URI::DEFAULT_PARSER.make_regexp`.
+003.rb:1:7: W: [Correctable] Lint/UriRegexp: `::URI.regexp` is obsolete and should not be used. Instead, use `::URI::DEFAULT_PARSER.make_regexp`.
+004.rb:1:5: W: [Correctable] Lint/UriRegexp: `URI.regexp(['http', 'https'])` is obsolete and should not be used. Instead, use `URI::DEFAULT_PARSER.make_regexp(['http', 'https'])`.
+005.rb:1:5: W: [Correctable] Lint/UriRegexp: `URI.regexp(%w[http https])` is obsolete and should not be used. Instead, use `URI::DEFAULT_PARSER.make_regexp(%w[http https])`.
+006.rb:1:5: W: [Correctable] Lint/UriRegexp: `URI.regexp(%i[http https])` is obsolete and should not be used. Instead, use `URI::DEFAULT_PARSER.make_regexp(%i[http https])`.
+
+==> autocorrect exit=0 1178 <==
+000.rb:1:5: W: [Corrected] Lint/UriRegexp: `URI.regexp('http://example.com')` is obsolete and should not be used. Instead, use `URI::DEFAULT_PARSER.make_regexp('http://example.com')`.
+001.rb:1:7: W: [Corrected] Lint/UriRegexp: `::URI.regexp('http://example.com')` is obsolete and should not be used. Instead, use `::URI::DEFAULT_PARSER.make_regexp('http://example.com')`.
+002.rb:1:5: W: [Corrected] Lint/UriRegexp: `URI.regexp` is obsolete and should not be used. Instead, use `URI::DEFAULT_PARSER.make_regexp`.
+003.rb:1:7: W: [Corrected] Lint/UriRegexp: `::URI.regexp` is obsolete and should not be used. Instead, use `::URI::DEFAULT_PARSER.make_regexp`.
+004.rb:1:5: W: [Corrected] Lint/UriRegexp: `URI.regexp(['http', 'https'])` is obsolete and should not be used. Instead, use `URI::DEFAULT_PARSER.make_regexp(['http', 'https'])`.
+005.rb:1:5: W: [Corrected] Lint/UriRegexp: `URI.regexp(%w[http https])` is obsolete and should not be used. Instead, use `URI::DEFAULT_PARSER.make_regexp(%w[http https])`.
+006.rb:1:5: W: [Corrected] Lint/UriRegexp: `URI.regexp(%i[http https])` is obsolete and should not be used. Instead, use `URI::DEFAULT_PARSER.make_regexp(%i[http https])`.
+
+==> corrected/000.rb 54 <==
+URI::DEFAULT_PARSER.make_regexp('http://example.com')
+
+==> corrected/001.rb 56 <==
+::URI::DEFAULT_PARSER.make_regexp('http://example.com')
+
+==> corrected/002.rb 32 <==
+URI::DEFAULT_PARSER.make_regexp
+
+==> corrected/003.rb 34 <==
+::URI::DEFAULT_PARSER.make_regexp
+
+==> corrected/004.rb 51 <==
+URI::DEFAULT_PARSER.make_regexp(['http', 'https'])
+
+==> corrected/005.rb 48 <==
+URI::DEFAULT_PARSER.make_regexp(%w[http https])
+
+==> corrected/006.rb 48 <==
+URI::DEFAULT_PARSER.make_regexp(%i[http https])
+

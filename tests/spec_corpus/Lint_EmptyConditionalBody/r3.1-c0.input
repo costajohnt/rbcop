@@ -1,0 +1,17 @@
+==> .rubocop.yml 157 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+Lint/EmptyConditionalBody:
+  AllowComments: true
+
+==> 000.rb 165 <==
+var =
+  # This is the value of `other:`, like so: `other: condition || other_condition`
+  unless object.action value:, other:
+    condition || other_condition
+  end
+

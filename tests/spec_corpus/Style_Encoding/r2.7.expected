@@ -1,0 +1,49 @@
+==> offenses exit=1 729 <==
+003.rb:1:1: C: [Correctable] Style/Encoding: Unnecessary utf-8 encoding comment.
+004.rb:1:1: C: [Correctable] Style/Encoding: Unnecessary utf-8 encoding comment.
+005.rb:2:1: C: [Correctable] Style/Encoding: Unnecessary utf-8 encoding comment.
+006.rb:1:1: C: [Correctable] Style/Encoding: Unnecessary utf-8 encoding comment.
+006.rb:2:1: C: [Correctable] Style/Encoding: Unnecessary utf-8 encoding comment.
+007.rb:2:1: C: [Correctable] Style/Encoding: Unnecessary utf-8 encoding comment.
+010.rb:1:1: C: [Correctable] Style/Encoding: Unnecessary utf-8 encoding comment.
+011.rb:1:1: C: [Correctable] Style/Encoding: Unnecessary utf-8 encoding comment.
+012.rb:1:1: C: [Correctable] Style/Encoding: Unnecessary utf-8 encoding comment.
+
+==> autocorrect exit=0 711 <==
+003.rb:1:1: C: [Corrected] Style/Encoding: Unnecessary utf-8 encoding comment.
+004.rb:1:1: C: [Corrected] Style/Encoding: Unnecessary utf-8 encoding comment.
+005.rb:2:1: C: [Corrected] Style/Encoding: Unnecessary utf-8 encoding comment.
+006.rb:1:1: C: [Corrected] Style/Encoding: Unnecessary utf-8 encoding comment.
+006.rb:2:1: C: [Corrected] Style/Encoding: Unnecessary utf-8 encoding comment.
+007.rb:2:1: C: [Corrected] Style/Encoding: Unnecessary utf-8 encoding comment.
+010.rb:1:1: C: [Corrected] Style/Encoding: Unnecessary utf-8 encoding comment.
+011.rb:1:1: C: [Corrected] Style/Encoding: Unnecessary utf-8 encoding comment.
+012.rb:1:1: C: [Corrected] Style/Encoding: Unnecessary utf-8 encoding comment.
+
+==> corrected/003.rb 14 <==
+def foo() end
+
+==> corrected/004.rb 0 <==
+
+==> corrected/005.rb 34 <==
+#!/usr/bin/env ruby
+def foo() end
+
+==> corrected/006.rb 14 <==
+def foo() end
+
+==> corrected/007.rb 44 <==
+# frozen_string_literal: true
+def foo() end
+
+==> corrected/010.rb 35 <==
+# vim: filetype=ruby
+def foo() end
+
+==> corrected/011.rb 19 <==
+def foo() 'ä' end
+
+==> corrected/012.rb 44 <==
+# -*- mode: enh-ruby -*-
+def foo() 'ä' end
+

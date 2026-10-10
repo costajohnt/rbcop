@@ -1,0 +1,57 @@
+==> offenses exit=1 503 <==
+000.rb:1:1: C: [Correctable] Style/StaticClass: Prefer modules to classes with only class methods.
+001.rb:1:1: C: [Correctable] Style/StaticClass: Prefer modules to classes with only class methods.
+003.rb:1:1: C: [Correctable] Style/StaticClass: Prefer modules to classes with only class methods.
+009.rb:1:1: C: [Correctable] Style/StaticClass: Prefer modules to classes with only class methods.
+011/current.rb:1:1: C: [Correctable] Style/StaticClass: Prefer modules to classes with only class methods.
+
+==> autocorrect exit=0 493 <==
+000.rb:1:1: C: [Corrected] Style/StaticClass: Prefer modules to classes with only class methods.
+001.rb:1:1: C: [Corrected] Style/StaticClass: Prefer modules to classes with only class methods.
+003.rb:1:1: C: [Corrected] Style/StaticClass: Prefer modules to classes with only class methods.
+009.rb:1:1: C: [Corrected] Style/StaticClass: Prefer modules to classes with only class methods.
+011/current.rb:1:1: C: [Corrected] Style/StaticClass: Prefer modules to classes with only class methods.
+
+==> corrected/000.rb 54 <==
+module C
+module_function
+
+  def class_method; end
+end
+
+==> corrected/001.rb 93 <==
+module C
+module_function
+
+  def class_method; end
+
+  
+    def other_class_method; end
+  
+end
+
+==> corrected/003.rb 67 <==
+module C
+module_function
+
+  CONST = 1
+
+  def class_method; end
+end
+
+==> corrected/009.rb 65 <==
+module C
+module_function
+
+  extend M
+  def class_method; end
+end
+
+==> corrected/011/current.rb 53 <==
+module Tools
+module_function
+
+  def hammer
+  end
+end
+

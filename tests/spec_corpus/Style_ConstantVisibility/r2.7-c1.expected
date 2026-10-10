@@ -1,0 +1,6 @@
+==> offenses exit=1 137 <==
+001.rb:2:3: C: Style/ConstantVisibility: Explicitly make `BAR` public or private using either `#public_constant` or `#private_constant`.
+
+==> autocorrect exit=1 137 <==
+001.rb:2:3: C: Style/ConstantVisibility: Explicitly make `BAR` public or private using either `#public_constant` or `#private_constant`.
+

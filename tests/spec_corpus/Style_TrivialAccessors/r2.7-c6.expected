@@ -1,0 +1,6 @@
+==> offenses exit=1 91 <==
+000.rb:2:3: C: Style/TrivialAccessors: Use `attr_writer` to define trivial writer methods.
+
+==> autocorrect exit=1 91 <==
+000.rb:2:3: C: Style/TrivialAccessors: Use `attr_writer` to define trivial writer methods.
+

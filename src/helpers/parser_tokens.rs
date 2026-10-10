@@ -5,14 +5,17 @@ use ruby_prism_sys as sys;
 
 /// Prism tokens minus those the parser gem has no counterpart for: newlines the grammar ignores
 /// (parser emits `tNL` only for significant ones) and the body/end of `=begin` blocks (parser
-/// emits one `tCOMMENT` for the whole block; `EMBDOC_BEGIN` stands in for it).
+/// emits one `tCOMMENT` for the whole block; `EMBDOC_BEGIN` stands in for it), and `__END__`.
 /// Not modelled: parser's `tNL` after every comment and zero-width `tSPACE` closing `%w()`;
 /// Prism's `COMMENT` includes the newline (parser's comment ends before it).
 pub fn sorted_tokens(src: &Source) -> Vec<Token> {
     src.tokens()
         .iter()
         .filter(|t| {
-            !matches!(t.kind, sys::PM_TOKEN_IGNORED_NEWLINE | sys::PM_TOKEN_EMBDOC_LINE | sys::PM_TOKEN_EMBDOC_END)
+            !matches!(
+                t.kind,
+                sys::PM_TOKEN_IGNORED_NEWLINE | sys::PM_TOKEN_EMBDOC_LINE | sys::PM_TOKEN_EMBDOC_END | sys::PM_TOKEN___END__
+            )
         })
         .copied()
         .collect()

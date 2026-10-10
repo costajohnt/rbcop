@@ -1,0 +1,44 @@
+==> offenses exit=1 824 <==
+000.rb:1:1: C: [Correctable] Style/NumericPredicate: Use `number.positive?` instead of `number > 0`.
+001.rb:1:1: C: [Correctable] Style/NumericPredicate: Use `number.positive?` instead of `0 < number`.
+002.rb:1:1: C: [Correctable] Style/NumericPredicate: Use `(foo - 1).positive?` instead of `foo - 1 > 0`.
+003.rb:1:1: C: [Correctable] Style/NumericPredicate: Use `(foo - 1).positive?` instead of `0 < foo - 1`.
+004.rb:1:1: C: [Correctable] Style/NumericPredicate: Use `number.negative?` instead of `number < 0`.
+005.rb:1:1: C: [Correctable] Style/NumericPredicate: Use `number.negative?` instead of `0 > number`.
+006.rb:1:1: C: [Correctable] Style/NumericPredicate: Use `(foo - 1).negative?` instead of `foo - 1 < 0`.
+007.rb:1:1: C: [Correctable] Style/NumericPredicate: Use `(foo - 1).negative?` instead of `0 > foo - 1`.
+
+==> autocorrect exit=0 808 <==
+000.rb:1:1: C: [Corrected] Style/NumericPredicate: Use `number.positive?` instead of `number > 0`.
+001.rb:1:1: C: [Corrected] Style/NumericPredicate: Use `number.positive?` instead of `0 < number`.
+002.rb:1:1: C: [Corrected] Style/NumericPredicate: Use `(foo - 1).positive?` instead of `foo - 1 > 0`.
+003.rb:1:1: C: [Corrected] Style/NumericPredicate: Use `(foo - 1).positive?` instead of `0 < foo - 1`.
+004.rb:1:1: C: [Corrected] Style/NumericPredicate: Use `number.negative?` instead of `number < 0`.
+005.rb:1:1: C: [Corrected] Style/NumericPredicate: Use `number.negative?` instead of `0 > number`.
+006.rb:1:1: C: [Corrected] Style/NumericPredicate: Use `(foo - 1).negative?` instead of `foo - 1 < 0`.
+007.rb:1:1: C: [Corrected] Style/NumericPredicate: Use `(foo - 1).negative?` instead of `0 > foo - 1`.
+
+==> corrected/000.rb 17 <==
+number.positive?
+
+==> corrected/001.rb 17 <==
+number.positive?
+
+==> corrected/002.rb 20 <==
+(foo - 1).positive?
+
+==> corrected/003.rb 20 <==
+(foo - 1).positive?
+
+==> corrected/004.rb 17 <==
+number.negative?
+
+==> corrected/005.rb 17 <==
+number.negative?
+
+==> corrected/006.rb 20 <==
+(foo - 1).negative?
+
+==> corrected/007.rb 20 <==
+(foo - 1).negative?
+

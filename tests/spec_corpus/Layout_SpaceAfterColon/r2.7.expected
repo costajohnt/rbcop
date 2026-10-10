@@ -1,0 +1,15 @@
+==> offenses exit=1 161 <==
+000.rb:1:3: C: [Correctable] Layout/SpaceAfterColon: Space missing after colon.
+009.rb:1:10: C: [Correctable] Layout/SpaceAfterColon: Space missing after colon.
+
+==> autocorrect exit=0 157 <==
+000.rb:1:3: C: [Corrected] Layout/SpaceAfterColon: Space missing after colon.
+009.rb:1:10: C: [Corrected] Layout/SpaceAfterColon: Space missing after colon.
+
+==> corrected/000.rb 7 <==
+{a: 3}
+
+==> corrected/009.rb 32 <==
+def m(var: 1, other_var: 2)
+end
+

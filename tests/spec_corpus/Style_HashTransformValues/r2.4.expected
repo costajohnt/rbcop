@@ -1,0 +1,70 @@
+==> offenses exit=1 1276 <==
+000.rb:1:1: C: [Correctable] Style/HashTransformValues: Prefer `transform_values` over `each_with_object`.
+001.rb:1:1: C: [Correctable] Style/HashTransformValues: Prefer `transform_values` over `each_with_object`.
+002.rb:1:1: C: [Correctable] Style/HashTransformValues: Prefer `transform_values` over `each_with_object`.
+012.rb:1:1: C: [Correctable] Style/HashTransformValues: Prefer `transform_values` over `each_with_object`.
+013.rb:1:1: C: [Correctable] Style/HashTransformValues: Prefer `transform_values` over `each_with_object`.
+014.rb:1:1: C: [Correctable] Style/HashTransformValues: Prefer `transform_values` over `map {...}.to_h`.
+015.rb:1:1: C: [Correctable] Style/HashTransformValues: Prefer `transform_values` over `map {...}.to_h`.
+016.rb:2:3: C: [Correctable] Style/HashTransformValues: Prefer `transform_values` over `map {...}.to_h`.
+018.rb:1:1: C: [Correctable] Style/HashTransformValues: Prefer `transform_values` over `Hash[_.map {...}]`.
+026.rb:1:1: C: [Correctable] Style/HashTransformValues: Prefer `transform_values` over `map {...}.to_h`.
+027.rb:1:1: C: [Correctable] Style/HashTransformValues: Prefer `transform_values` over `Hash[_.map {...}]`.
+028.rb:1:1: C: [Correctable] Style/HashTransformValues: Prefer `transform_values` over `map {...}.to_h`.
+
+==> autocorrect exit=0 1252 <==
+000.rb:1:1: C: [Corrected] Style/HashTransformValues: Prefer `transform_values` over `each_with_object`.
+001.rb:1:1: C: [Corrected] Style/HashTransformValues: Prefer `transform_values` over `each_with_object`.
+002.rb:1:1: C: [Corrected] Style/HashTransformValues: Prefer `transform_values` over `each_with_object`.
+012.rb:1:1: C: [Corrected] Style/HashTransformValues: Prefer `transform_values` over `each_with_object`.
+013.rb:1:1: C: [Corrected] Style/HashTransformValues: Prefer `transform_values` over `each_with_object`.
+014.rb:1:1: C: [Corrected] Style/HashTransformValues: Prefer `transform_values` over `map {...}.to_h`.
+015.rb:1:1: C: [Corrected] Style/HashTransformValues: Prefer `transform_values` over `map {...}.to_h`.
+016.rb:2:3: C: [Corrected] Style/HashTransformValues: Prefer `transform_values` over `map {...}.to_h`.
+018.rb:1:1: C: [Corrected] Style/HashTransformValues: Prefer `transform_values` over `Hash[_.map {...}]`.
+026.rb:1:1: C: [Corrected] Style/HashTransformValues: Prefer `transform_values` over `map {...}.to_h`.
+027.rb:1:1: C: [Corrected] Style/HashTransformValues: Prefer `transform_values` over `Hash[_.map {...}]`.
+028.rb:1:1: C: [Corrected] Style/HashTransformValues: Prefer `transform_values` over `map {...}.to_h`.
+
+==> corrected/000.rb 43 <==
+{a: 1, b: 2}.transform_values {|v| foo(v)}
+
+==> corrected/001.rb 57 <==
+some_hash.to_h.transform_values do |val|
+  val * val
+end
+
+==> corrected/002.rb 38 <==
+x.to_h&.transform_values {|v| foo(v)}
+
+==> corrected/012.rb 37 <==
+x.to_h.transform_values {|v| foo(v)}
+
+==> corrected/013.rb 56 <==
+x.group_by { |e| e.type }.transform_values {|v| foo(v)}
+
+==> corrected/014.rb 43 <==
+{a: 1, b: 2}.transform_values {|v| foo(v)}
+
+==> corrected/015.rb 43 <==
+{a: 1, b: 2}.transform_values {|v| foo(v)}
+
+==> corrected/016.rb 72 <==
+wrapping do
+  {a: 1, b: 2}.transform_values do |v|
+    v.to_s
+  end
+end
+
+==> corrected/018.rb 43 <==
+{a: 1, b: 2}.transform_values {|v| foo(v)}
+
+==> corrected/026.rb 37 <==
+x.to_h.transform_values {|v| foo(v)}
+
+==> corrected/027.rb 41 <==
+x.merge(y).transform_values {|v| foo(v)}
+
+==> corrected/028.rb 64 <==
+{a: 1, b: 2}.transform_values {|v| foo(v)}.to_h {|k, v| [v, k]}
+

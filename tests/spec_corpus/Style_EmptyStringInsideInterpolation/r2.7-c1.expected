@@ -1,0 +1,14 @@
+==> offenses exit=1 250 <==
+000.rb:1:2: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+001.rb:1:2: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+
+==> autocorrect exit=0 246 <==
+000.rb:1:2: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+001.rb:1:2: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+
+==> corrected/000.rb 28 <==
+"#{condition ? 'foo' : ''}"
+
+==> corrected/001.rb 28 <==
+"#{condition ? '' : 'foo'}"
+

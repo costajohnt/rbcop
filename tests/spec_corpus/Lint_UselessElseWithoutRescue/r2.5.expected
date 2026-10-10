@@ -1,0 +1,6 @@
+==> offenses exit=1 82 <==
+000.rb:3:1: W: Lint/UselessElseWithoutRescue: `else` without `rescue` is useless.
+
+==> autocorrect exit=1 82 <==
+000.rb:3:1: W: Lint/UselessElseWithoutRescue: `else` without `rescue` is useless.
+

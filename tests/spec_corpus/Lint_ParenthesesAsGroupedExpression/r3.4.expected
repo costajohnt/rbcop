@@ -1,0 +1,9 @@
+==> offenses exit=1 128 <==
+000.rb:1:9: W: [Correctable] Lint/ParenthesesAsGroupedExpression: `((1..1).map { it * 10 })` interpreted as grouped expression.
+
+==> autocorrect exit=0 126 <==
+000.rb:1:9: W: [Corrected] Lint/ParenthesesAsGroupedExpression: `((1..1).map { it * 10 })` interpreted as grouped expression.
+
+==> corrected/000.rb 33 <==
+a.concat((1..1).map { it * 10 })
+

@@ -1,0 +1,20 @@
+==> .rubocop.yml 243 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/WordArray:
+  MinSize: 0
+  WordRegex: !ruby/regexp /\S+/
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: "()"
+
+==> 000.rb 22 <==
+["\x1f\x1e", "hello"]
+
+==> 001.rb 25 <==
+['hi\tthere', 'again\n']
+

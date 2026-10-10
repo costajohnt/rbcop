@@ -1,0 +1,30 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+
+==> 000.rb 26 <==
+def foo = begin
+  bar
+end
+
+==> 001.rb 32 <==
+def foo = begin
+  bar
+  baz
+end
+
+==> 002.rb 20 <==
+def foo = begin
+end
+
+==> 003.rb 40 <==
+def func = begin
+  foo
+rescue
+  bar
+end
+

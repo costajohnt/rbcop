@@ -1,0 +1,22 @@
+==> offenses exit=1 196 <==
+000.rb:3:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+002.rb:3:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+
+==> autocorrect exit=0 192 <==
+000.rb:3:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+002.rb:3:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+
+==> corrected/000.rb 92 <==
+# frozen_string_literal: true
+
+CONST = <<~HERE.freeze
+  foo #{use_interpolation}
+  bar
+HERE
+
+==> corrected/002.rb 71 <==
+# frozen_string_literal: true
+
+CONST = "#{foo}" \
+        'bar'.freeze
+

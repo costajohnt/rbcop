@@ -1,0 +1,16 @@
+==> .rubocop.yml 209 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Lint/RedundantSafeNavigation:
+  AllowedMethods:
+  - respond_to?
+  AdditionalNilMethods:
+  - present?
+
+==> 000.rb 23 <==
+foo&.to_h { it } || {}
+

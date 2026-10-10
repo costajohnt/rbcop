@@ -1,0 +1,19 @@
+==> offenses exit=1 258 <==
+002.rb:1:2: C: [Correctable] Layout/FirstArrayElementLineBreak: Add a line break before the first element of a multi-line array.
+003.rb:1:2: C: [Correctable] Layout/FirstArrayElementLineBreak: Add a line break before the first element of a multi-line array.
+
+==> autocorrect exit=0 254 <==
+002.rb:1:2: C: [Corrected] Layout/FirstArrayElementLineBreak: Add a line break before the first element of a multi-line array.
+003.rb:1:2: C: [Corrected] Layout/FirstArrayElementLineBreak: Add a line break before the first element of a multi-line array.
+
+==> corrected/002.rb 20 <==
+[
+a, {
+  b: c
+}, d]
+
+==> corrected/003.rb 11 <==
+[
+a, b,
+c]
+

@@ -1,0 +1,2999 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 19 <==
+bar = foo? ? 1 : 2
+
+==> 001.rb 86 <==
+bar = if foo
+                1
+              else
+                2
+              end
+
+==> 002.rb 128 <==
+bar = if foo
+                1
+              elsif baz
+                2
+              else
+                3
+              end
+
+==> 003.rb 112 <==
+bar, bar = if foo
+                something
+              else
+                something_else
+              end
+
+==> 004.rb 49 <==
+bar = if foo
+                1
+              end
+
+==> 005.rb 90 <==
+bar = unless foo
+                1
+              else
+                2
+              end
+
+==> 006.rb 152 <==
+bar = case foo
+              when "a"
+                1
+              when "b"
+                2
+              else
+                3
+              end
+
+==> 007.rb 45 <==
+bar = case foo; when "a" then 1; else 2; end
+
+==> 008.rb 148 <==
+bar = case foo
+              in "a"
+                1
+              in "b"
+                2
+              else
+                3
+              end
+
+==> 009.rb 43 <==
+bar = case foo; in "a" then 1; else 2; end
+
+==> 010.rb 36 <==
+begin
+  foo
+rescue => bar
+  bar
+end
+
+==> 011.rb 19 <==
+BAR = foo? ? 1 : 2
+
+==> 012.rb 86 <==
+BAR = if foo
+                1
+              else
+                2
+              end
+
+==> 013.rb 128 <==
+BAR = if foo
+                1
+              elsif baz
+                2
+              else
+                3
+              end
+
+==> 014.rb 112 <==
+BAR, BAR = if foo
+                something
+              else
+                something_else
+              end
+
+==> 015.rb 49 <==
+BAR = if foo
+                1
+              end
+
+==> 016.rb 90 <==
+BAR = unless foo
+                1
+              else
+                2
+              end
+
+==> 017.rb 152 <==
+BAR = case foo
+              when "a"
+                1
+              when "b"
+                2
+              else
+                3
+              end
+
+==> 018.rb 45 <==
+BAR = case foo; when "a" then 1; else 2; end
+
+==> 019.rb 148 <==
+BAR = case foo
+              in "a"
+                1
+              in "b"
+                2
+              else
+                3
+              end
+
+==> 020.rb 43 <==
+BAR = case foo; in "a" then 1; else 2; end
+
+==> 021.rb 36 <==
+begin
+  foo
+rescue => BAR
+  bar
+end
+
+==> 022.rb 24 <==
+FOO::BAR = foo? ? 1 : 2
+
+==> 023.rb 91 <==
+FOO::BAR = if foo
+                1
+              else
+                2
+              end
+
+==> 024.rb 133 <==
+FOO::BAR = if foo
+                1
+              elsif baz
+                2
+              else
+                3
+              end
+
+==> 025.rb 122 <==
+FOO::BAR, FOO::BAR = if foo
+                something
+              else
+                something_else
+              end
+
+==> 026.rb 54 <==
+FOO::BAR = if foo
+                1
+              end
+
+==> 027.rb 95 <==
+FOO::BAR = unless foo
+                1
+              else
+                2
+              end
+
+==> 028.rb 157 <==
+FOO::BAR = case foo
+              when "a"
+                1
+              when "b"
+                2
+              else
+                3
+              end
+
+==> 029.rb 50 <==
+FOO::BAR = case foo; when "a" then 1; else 2; end
+
+==> 030.rb 153 <==
+FOO::BAR = case foo
+              in "a"
+                1
+              in "b"
+                2
+              else
+                3
+              end
+
+==> 031.rb 48 <==
+FOO::BAR = case foo; in "a" then 1; else 2; end
+
+==> 032.rb 41 <==
+begin
+  foo
+rescue => FOO::BAR
+  bar
+end
+
+==> 033.rb 20 <==
+@bar = foo? ? 1 : 2
+
+==> 034.rb 87 <==
+@bar = if foo
+                1
+              else
+                2
+              end
+
+==> 035.rb 129 <==
+@bar = if foo
+                1
+              elsif baz
+                2
+              else
+                3
+              end
+
+==> 036.rb 114 <==
+@bar, @bar = if foo
+                something
+              else
+                something_else
+              end
+
+==> 037.rb 50 <==
+@bar = if foo
+                1
+              end
+
+==> 038.rb 91 <==
+@bar = unless foo
+                1
+              else
+                2
+              end
+
+==> 039.rb 153 <==
+@bar = case foo
+              when "a"
+                1
+              when "b"
+                2
+              else
+                3
+              end
+
+==> 040.rb 46 <==
+@bar = case foo; when "a" then 1; else 2; end
+
+==> 041.rb 149 <==
+@bar = case foo
+              in "a"
+                1
+              in "b"
+                2
+              else
+                3
+              end
+
+==> 042.rb 44 <==
+@bar = case foo; in "a" then 1; else 2; end
+
+==> 043.rb 37 <==
+begin
+  foo
+rescue => @bar
+  bar
+end
+
+==> 044.rb 21 <==
+@@bar = foo? ? 1 : 2
+
+==> 045.rb 88 <==
+@@bar = if foo
+                1
+              else
+                2
+              end
+
+==> 046.rb 130 <==
+@@bar = if foo
+                1
+              elsif baz
+                2
+              else
+                3
+              end
+
+==> 047.rb 116 <==
+@@bar, @@bar = if foo
+                something
+              else
+                something_else
+              end
+
+==> 048.rb 51 <==
+@@bar = if foo
+                1
+              end
+
+==> 049.rb 92 <==
+@@bar = unless foo
+                1
+              else
+                2
+              end
+
+==> 050.rb 154 <==
+@@bar = case foo
+              when "a"
+                1
+              when "b"
+                2
+              else
+                3
+              end
+
+==> 051.rb 47 <==
+@@bar = case foo; when "a" then 1; else 2; end
+
+==> 052.rb 150 <==
+@@bar = case foo
+              in "a"
+                1
+              in "b"
+                2
+              else
+                3
+              end
+
+==> 053.rb 45 <==
+@@bar = case foo; in "a" then 1; else 2; end
+
+==> 054.rb 38 <==
+begin
+  foo
+rescue => @@bar
+  bar
+end
+
+==> 055.rb 20 <==
+$BAR = foo? ? 1 : 2
+
+==> 056.rb 87 <==
+$BAR = if foo
+                1
+              else
+                2
+              end
+
+==> 057.rb 129 <==
+$BAR = if foo
+                1
+              elsif baz
+                2
+              else
+                3
+              end
+
+==> 058.rb 114 <==
+$BAR, $BAR = if foo
+                something
+              else
+                something_else
+              end
+
+==> 059.rb 50 <==
+$BAR = if foo
+                1
+              end
+
+==> 060.rb 91 <==
+$BAR = unless foo
+                1
+              else
+                2
+              end
+
+==> 061.rb 153 <==
+$BAR = case foo
+              when "a"
+                1
+              when "b"
+                2
+              else
+                3
+              end
+
+==> 062.rb 46 <==
+$BAR = case foo; when "a" then 1; else 2; end
+
+==> 063.rb 149 <==
+$BAR = case foo
+              in "a"
+                1
+              in "b"
+                2
+              else
+                3
+              end
+
+==> 064.rb 44 <==
+$BAR = case foo; in "a" then 1; else 2; end
+
+==> 065.rb 37 <==
+begin
+  foo
+rescue => $BAR
+  bar
+end
+
+==> 066.rb 23 <==
+foo.bar = foo? ? 1 : 2
+
+==> 067.rb 90 <==
+foo.bar = if foo
+                1
+              else
+                2
+              end
+
+==> 068.rb 132 <==
+foo.bar = if foo
+                1
+              elsif baz
+                2
+              else
+                3
+              end
+
+==> 069.rb 120 <==
+foo.bar, foo.bar = if foo
+                something
+              else
+                something_else
+              end
+
+==> 070.rb 53 <==
+foo.bar = if foo
+                1
+              end
+
+==> 071.rb 94 <==
+foo.bar = unless foo
+                1
+              else
+                2
+              end
+
+==> 072.rb 156 <==
+foo.bar = case foo
+              when "a"
+                1
+              when "b"
+                2
+              else
+                3
+              end
+
+==> 073.rb 49 <==
+foo.bar = case foo; when "a" then 1; else 2; end
+
+==> 074.rb 152 <==
+foo.bar = case foo
+              in "a"
+                1
+              in "b"
+                2
+              else
+                3
+              end
+
+==> 075.rb 47 <==
+foo.bar = case foo; in "a" then 1; else 2; end
+
+==> 076.rb 40 <==
+begin
+  foo
+rescue => foo.bar
+  bar
+end
+
+==> 077.rb 143 <==
+bar = if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 078.rb 117 <==
+bar = if foo
+                1
+              else
+                something_else
+                2
+              end
+
+==> 079.rb 289 <==
+bar = if foo
+                something
+                1
+              elsif
+                something_other
+                2
+              elsif
+                something_other_again
+                3
+              else
+                something_else
+                4
+              end
+
+==> 080.rb 147 <==
+bar = unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 081.rb 168 <==
+bar = case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 082.rb 143 <==
+BAR = if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 083.rb 117 <==
+BAR = if foo
+                1
+              else
+                something_else
+                2
+              end
+
+==> 084.rb 289 <==
+BAR = if foo
+                something
+                1
+              elsif
+                something_other
+                2
+              elsif
+                something_other_again
+                3
+              else
+                something_else
+                4
+              end
+
+==> 085.rb 147 <==
+BAR = unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 086.rb 168 <==
+BAR = case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 087.rb 148 <==
+FOO::BAR = if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 088.rb 122 <==
+FOO::BAR = if foo
+                1
+              else
+                something_else
+                2
+              end
+
+==> 089.rb 294 <==
+FOO::BAR = if foo
+                something
+                1
+              elsif
+                something_other
+                2
+              elsif
+                something_other_again
+                3
+              else
+                something_else
+                4
+              end
+
+==> 090.rb 152 <==
+FOO::BAR = unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 091.rb 173 <==
+FOO::BAR = case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 092.rb 144 <==
+@bar = if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 093.rb 118 <==
+@bar = if foo
+                1
+              else
+                something_else
+                2
+              end
+
+==> 094.rb 290 <==
+@bar = if foo
+                something
+                1
+              elsif
+                something_other
+                2
+              elsif
+                something_other_again
+                3
+              else
+                something_else
+                4
+              end
+
+==> 095.rb 148 <==
+@bar = unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 096.rb 169 <==
+@bar = case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 097.rb 145 <==
+@@bar = if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 098.rb 119 <==
+@@bar = if foo
+                1
+              else
+                something_else
+                2
+              end
+
+==> 099.rb 291 <==
+@@bar = if foo
+                something
+                1
+              elsif
+                something_other
+                2
+              elsif
+                something_other_again
+                3
+              else
+                something_else
+                4
+              end
+
+==> 100.rb 149 <==
+@@bar = unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 101.rb 170 <==
+@@bar = case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 102.rb 144 <==
+$BAR = if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 103.rb 118 <==
+$BAR = if foo
+                1
+              else
+                something_else
+                2
+              end
+
+==> 104.rb 290 <==
+$BAR = if foo
+                something
+                1
+              elsif
+                something_other
+                2
+              elsif
+                something_other_again
+                3
+              else
+                something_else
+                4
+              end
+
+==> 105.rb 148 <==
+$BAR = unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 106.rb 169 <==
+$BAR = case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 107.rb 147 <==
+foo.bar = if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 108.rb 121 <==
+foo.bar = if foo
+                1
+              else
+                something_else
+                2
+              end
+
+==> 109.rb 293 <==
+foo.bar = if foo
+                something
+                1
+              elsif
+                something_other
+                2
+              elsif
+                something_other_again
+                3
+              else
+                something_else
+                4
+              end
+
+==> 110.rb 151 <==
+foo.bar = unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 111.rb 172 <==
+foo.bar = case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 112.rb 21 <==
+bar = (foo? ? 1 : 2)
+
+==> 113.rb 111 <==
+bar = case foo
+              when "a"
+                1
+              else
+                2
+              end
+
+==> 114.rb 37 <==
+begin
+  bar = 2
+rescue
+  bar = 1
+end
+
+==> 115.rb 22 <==
+bar == (foo? ? 1 : 2)
+
+==> 116.rb 87 <==
+bar == if foo
+                1
+              else
+                2
+              end
+
+==> 117.rb 50 <==
+bar == if foo
+                1
+              end
+
+==> 118.rb 91 <==
+bar == unless foo
+                1
+              else
+                2
+              end
+
+==> 119.rb 112 <==
+bar == case foo
+              when "a"
+                1
+              else
+                2
+              end
+
+==> 120.rb 39 <==
+begin
+  bar == 2
+rescue
+  bar == 1
+end
+
+==> 121.rb 23 <==
+bar === (foo? ? 1 : 2)
+
+==> 122.rb 88 <==
+bar === if foo
+                1
+              else
+                2
+              end
+
+==> 123.rb 51 <==
+bar === if foo
+                1
+              end
+
+==> 124.rb 92 <==
+bar === unless foo
+                1
+              else
+                2
+              end
+
+==> 125.rb 113 <==
+bar === case foo
+              when "a"
+                1
+              else
+                2
+              end
+
+==> 126.rb 41 <==
+begin
+  bar === 2
+rescue
+  bar === 1
+end
+
+==> 127.rb 22 <==
+bar += (foo? ? 1 : 2)
+
+==> 128.rb 87 <==
+bar += if foo
+                1
+              else
+                2
+              end
+
+==> 129.rb 50 <==
+bar += if foo
+                1
+              end
+
+==> 130.rb 91 <==
+bar += unless foo
+                1
+              else
+                2
+              end
+
+==> 131.rb 112 <==
+bar += case foo
+              when "a"
+                1
+              else
+                2
+              end
+
+==> 132.rb 39 <==
+begin
+  bar += 2
+rescue
+  bar += 1
+end
+
+==> 133.rb 22 <==
+bar -= (foo? ? 1 : 2)
+
+==> 134.rb 87 <==
+bar -= if foo
+                1
+              else
+                2
+              end
+
+==> 135.rb 50 <==
+bar -= if foo
+                1
+              end
+
+==> 136.rb 91 <==
+bar -= unless foo
+                1
+              else
+                2
+              end
+
+==> 137.rb 112 <==
+bar -= case foo
+              when "a"
+                1
+              else
+                2
+              end
+
+==> 138.rb 39 <==
+begin
+  bar -= 2
+rescue
+  bar -= 1
+end
+
+==> 139.rb 22 <==
+bar *= (foo? ? 1 : 2)
+
+==> 140.rb 87 <==
+bar *= if foo
+                1
+              else
+                2
+              end
+
+==> 141.rb 50 <==
+bar *= if foo
+                1
+              end
+
+==> 142.rb 91 <==
+bar *= unless foo
+                1
+              else
+                2
+              end
+
+==> 143.rb 112 <==
+bar *= case foo
+              when "a"
+                1
+              else
+                2
+              end
+
+==> 144.rb 39 <==
+begin
+  bar *= 2
+rescue
+  bar *= 1
+end
+
+==> 145.rb 23 <==
+bar **= (foo? ? 1 : 2)
+
+==> 146.rb 88 <==
+bar **= if foo
+                1
+              else
+                2
+              end
+
+==> 147.rb 51 <==
+bar **= if foo
+                1
+              end
+
+==> 148.rb 92 <==
+bar **= unless foo
+                1
+              else
+                2
+              end
+
+==> 149.rb 113 <==
+bar **= case foo
+              when "a"
+                1
+              else
+                2
+              end
+
+==> 150.rb 41 <==
+begin
+  bar **= 2
+rescue
+  bar **= 1
+end
+
+==> 151.rb 22 <==
+bar /= (foo? ? 1 : 2)
+
+==> 152.rb 87 <==
+bar /= if foo
+                1
+              else
+                2
+              end
+
+==> 153.rb 50 <==
+bar /= if foo
+                1
+              end
+
+==> 154.rb 91 <==
+bar /= unless foo
+                1
+              else
+                2
+              end
+
+==> 155.rb 112 <==
+bar /= case foo
+              when "a"
+                1
+              else
+                2
+              end
+
+==> 156.rb 39 <==
+begin
+  bar /= 2
+rescue
+  bar /= 1
+end
+
+==> 157.rb 22 <==
+bar %= (foo? ? 1 : 2)
+
+==> 158.rb 87 <==
+bar %= if foo
+                1
+              else
+                2
+              end
+
+==> 159.rb 50 <==
+bar %= if foo
+                1
+              end
+
+==> 160.rb 91 <==
+bar %= unless foo
+                1
+              else
+                2
+              end
+
+==> 161.rb 112 <==
+bar %= case foo
+              when "a"
+                1
+              else
+                2
+              end
+
+==> 162.rb 39 <==
+begin
+  bar %= 2
+rescue
+  bar %= 1
+end
+
+==> 163.rb 22 <==
+bar ^= (foo? ? 1 : 2)
+
+==> 164.rb 87 <==
+bar ^= if foo
+                1
+              else
+                2
+              end
+
+==> 165.rb 50 <==
+bar ^= if foo
+                1
+              end
+
+==> 166.rb 91 <==
+bar ^= unless foo
+                1
+              else
+                2
+              end
+
+==> 167.rb 112 <==
+bar ^= case foo
+              when "a"
+                1
+              else
+                2
+              end
+
+==> 168.rb 39 <==
+begin
+  bar ^= 2
+rescue
+  bar ^= 1
+end
+
+==> 169.rb 22 <==
+bar &= (foo? ? 1 : 2)
+
+==> 170.rb 87 <==
+bar &= if foo
+                1
+              else
+                2
+              end
+
+==> 171.rb 50 <==
+bar &= if foo
+                1
+              end
+
+==> 172.rb 91 <==
+bar &= unless foo
+                1
+              else
+                2
+              end
+
+==> 173.rb 112 <==
+bar &= case foo
+              when "a"
+                1
+              else
+                2
+              end
+
+==> 174.rb 39 <==
+begin
+  bar &= 2
+rescue
+  bar &= 1
+end
+
+==> 175.rb 22 <==
+bar |= (foo? ? 1 : 2)
+
+==> 176.rb 87 <==
+bar |= if foo
+                1
+              else
+                2
+              end
+
+==> 177.rb 50 <==
+bar |= if foo
+                1
+              end
+
+==> 178.rb 91 <==
+bar |= unless foo
+                1
+              else
+                2
+              end
+
+==> 179.rb 112 <==
+bar |= case foo
+              when "a"
+                1
+              else
+                2
+              end
+
+==> 180.rb 39 <==
+begin
+  bar |= 2
+rescue
+  bar |= 1
+end
+
+==> 181.rb 22 <==
+bar <= (foo? ? 1 : 2)
+
+==> 182.rb 87 <==
+bar <= if foo
+                1
+              else
+                2
+              end
+
+==> 183.rb 50 <==
+bar <= if foo
+                1
+              end
+
+==> 184.rb 91 <==
+bar <= unless foo
+                1
+              else
+                2
+              end
+
+==> 185.rb 112 <==
+bar <= case foo
+              when "a"
+                1
+              else
+                2
+              end
+
+==> 186.rb 39 <==
+begin
+  bar <= 2
+rescue
+  bar <= 1
+end
+
+==> 187.rb 22 <==
+bar >= (foo? ? 1 : 2)
+
+==> 188.rb 87 <==
+bar >= if foo
+                1
+              else
+                2
+              end
+
+==> 189.rb 50 <==
+bar >= if foo
+                1
+              end
+
+==> 190.rb 91 <==
+bar >= unless foo
+                1
+              else
+                2
+              end
+
+==> 191.rb 112 <==
+bar >= case foo
+              when "a"
+                1
+              else
+                2
+              end
+
+==> 192.rb 39 <==
+begin
+  bar >= 2
+rescue
+  bar >= 1
+end
+
+==> 193.rb 23 <==
+bar <<= (foo? ? 1 : 2)
+
+==> 194.rb 88 <==
+bar <<= if foo
+                1
+              else
+                2
+              end
+
+==> 195.rb 51 <==
+bar <<= if foo
+                1
+              end
+
+==> 196.rb 92 <==
+bar <<= unless foo
+                1
+              else
+                2
+              end
+
+==> 197.rb 113 <==
+bar <<= case foo
+              when "a"
+                1
+              else
+                2
+              end
+
+==> 198.rb 41 <==
+begin
+  bar <<= 2
+rescue
+  bar <<= 1
+end
+
+==> 199.rb 23 <==
+bar >>= (foo? ? 1 : 2)
+
+==> 200.rb 88 <==
+bar >>= if foo
+                1
+              else
+                2
+              end
+
+==> 201.rb 51 <==
+bar >>= if foo
+                1
+              end
+
+==> 202.rb 92 <==
+bar >>= unless foo
+                1
+              else
+                2
+              end
+
+==> 203.rb 113 <==
+bar >>= case foo
+              when "a"
+                1
+              else
+                2
+              end
+
+==> 204.rb 41 <==
+begin
+  bar >>= 2
+rescue
+  bar >>= 1
+end
+
+==> 205.rb 23 <==
+bar ||= (foo? ? 1 : 2)
+
+==> 206.rb 88 <==
+bar ||= if foo
+                1
+              else
+                2
+              end
+
+==> 207.rb 51 <==
+bar ||= if foo
+                1
+              end
+
+==> 208.rb 92 <==
+bar ||= unless foo
+                1
+              else
+                2
+              end
+
+==> 209.rb 113 <==
+bar ||= case foo
+              when "a"
+                1
+              else
+                2
+              end
+
+==> 210.rb 41 <==
+begin
+  bar ||= 2
+rescue
+  bar ||= 1
+end
+
+==> 211.rb 23 <==
+bar &&= (foo? ? 1 : 2)
+
+==> 212.rb 88 <==
+bar &&= if foo
+                1
+              else
+                2
+              end
+
+==> 213.rb 51 <==
+bar &&= if foo
+                1
+              end
+
+==> 214.rb 92 <==
+bar &&= unless foo
+                1
+              else
+                2
+              end
+
+==> 215.rb 113 <==
+bar &&= case foo
+              when "a"
+                1
+              else
+                2
+              end
+
+==> 216.rb 41 <==
+begin
+  bar &&= 2
+rescue
+  bar &&= 1
+end
+
+==> 217.rb 22 <==
+bar << (foo? ? 1 : 2)
+
+==> 218.rb 87 <==
+bar << if foo
+                1
+              else
+                2
+              end
+
+==> 219.rb 50 <==
+bar << if foo
+                1
+              end
+
+==> 220.rb 91 <==
+bar << unless foo
+                1
+              else
+                2
+              end
+
+==> 221.rb 112 <==
+bar << case foo
+              when "a"
+                1
+              else
+                2
+              end
+
+==> 222.rb 39 <==
+begin
+  bar << 2
+rescue
+  bar << 1
+end
+
+==> 223.rb 144 <==
+bar == if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 224.rb 148 <==
+bar == unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 225.rb 169 <==
+bar == case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 226.rb 145 <==
+bar === if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 227.rb 149 <==
+bar === unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 228.rb 170 <==
+bar === case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 229.rb 144 <==
+bar += if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 230.rb 148 <==
+bar += unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 231.rb 169 <==
+bar += case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 232.rb 144 <==
+bar -= if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 233.rb 148 <==
+bar -= unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 234.rb 169 <==
+bar -= case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 235.rb 144 <==
+bar *= if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 236.rb 148 <==
+bar *= unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 237.rb 169 <==
+bar *= case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 238.rb 145 <==
+bar **= if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 239.rb 149 <==
+bar **= unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 240.rb 170 <==
+bar **= case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 241.rb 144 <==
+bar /= if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 242.rb 148 <==
+bar /= unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 243.rb 169 <==
+bar /= case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 244.rb 144 <==
+bar %= if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 245.rb 148 <==
+bar %= unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 246.rb 169 <==
+bar %= case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 247.rb 144 <==
+bar ^= if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 248.rb 148 <==
+bar ^= unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 249.rb 169 <==
+bar ^= case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 250.rb 144 <==
+bar &= if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 251.rb 148 <==
+bar &= unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 252.rb 169 <==
+bar &= case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 253.rb 144 <==
+bar |= if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 254.rb 148 <==
+bar |= unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 255.rb 169 <==
+bar |= case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 256.rb 144 <==
+bar <= if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 257.rb 148 <==
+bar <= unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 258.rb 169 <==
+bar <= case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 259.rb 144 <==
+bar >= if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 260.rb 148 <==
+bar >= unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 261.rb 169 <==
+bar >= case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 262.rb 145 <==
+bar <<= if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 263.rb 149 <==
+bar <<= unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 264.rb 170 <==
+bar <<= case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 265.rb 145 <==
+bar >>= if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 266.rb 149 <==
+bar >>= unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 267.rb 170 <==
+bar >>= case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 268.rb 145 <==
+bar ||= if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 269.rb 149 <==
+bar ||= unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 270.rb 170 <==
+bar ||= case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 271.rb 145 <==
+bar &&= if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 272.rb 149 <==
+bar &&= unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 273.rb 170 <==
+bar &&= case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 274.rb 144 <==
+bar << if foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 275.rb 148 <==
+bar << unless foo
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 276.rb 169 <==
+bar << case foo
+              when "a"
+                something
+                1
+              else
+                something_else
+                2
+              end
+
+==> 277.rb 84 <==
+value = if a
+  239
+else
+  raise(ArgumentError, <<~ANSWER)
+    4
+
+    2
+  ANSWER
+end
+
+==> 278.rb 57 <==
+value = if a
+  239
+else
+  "#{foo} \
+    #{bar} \
+  "
+end
+
+==> 279.rb 56 <==
+x = if condition
+  %r{a
+    b}x
+else
+  %r{c
+    d}x
+end
+
+==> 280.rb 66 <==
+x = if condition
+  %r{#{foo}
+    b}x
+else
+  %r{#{bar}
+    d}x
+end
+
+==> 281.rb 10 <==
+foo.[]=()
+
+==> 282.rb 19 <==
+bar << foo? ? 1 : 2
+==> 283.rb 31 <==
+self.attributes = foo? ? 1 : 2
+
+==> 284.rb 75 <==
+foo[:a] = if bar?
+            1
+          else
+            2
+          end
+
+==> 285.rb 43 <==
+bar = if foo then 1
+      else 2
+      end
+
+==> 286.rb 31 <==
+bar = if foo then 1 else 2 end
+
+==> 287.rb 44 <==
+bar = if foo
+            1
+      else 2 end
+
+==> 288.rb 70 <==
+bar = if foo
+            1
+      elsif baz
+        2
+      else 3 end
+
+==> 289.rb 61 <==
+result = if condition
+  foo do
+  end
+else
+  bar do
+  end
+end
+
+==> 290.rb 60 <==
+baz = case foo
+      when bar then 1
+      else 2
+      end
+
+==> 291.rb 41 <==
+var = case
+when foo
+  bar
+else
+  baz
+end
+
+==> 292.rb 31 <==
+for i in [1, 2, 3]; puts i; end
+==> 293.rb 54 <==
+bar = if foo
+        1
+      else
+        2
+      end
+
+==> 294.rb 83 <==
+bar = if foo
+        1
+      elsif foobar
+        2
+      else
+        3
+      end
+
+==> 295.rb 109 <==
+bar = if foo
+        1
+      elsif foobar
+        2
+      elsif baz
+        3
+      else
+        4
+      end
+
+==> 296.rb 49 <==
+value = unless condition
+          1
+        end
+
+==> 297.rb 58 <==
+bar = unless foo
+        1
+      else
+        2
+      end
+
+==> 298.rb 74 <==
+bar = case foo
+      when foobar
+        1
+      else
+        2
+      end
+
+==> 299.rb 99 <==
+bar = case foo
+      when foobar
+        1
+      when baz
+        2
+      else
+        3
+      end
+
+==> 300.rb 84 <==
+FOO::BAR = if baz?
+              1
+            else
+              2
+            end
+
+==> 301.rb 39 <==
+var = if foo
+  bar
+elsif baz
+  qux
+end
+
+==> 302.rb 297 <==
+bar = if foo
+                something
+                1
+              elsif bar
+                something_other
+                2
+              elsif baz
+                something_other_again
+                3
+              else
+                something_else
+                4
+              end
+
+==> 303.rb 297 <==
+BAR = if foo
+                something
+                1
+              elsif bar
+                something_other
+                2
+              elsif baz
+                something_other_again
+                3
+              else
+                something_else
+                4
+              end
+
+==> 304.rb 302 <==
+FOO::BAR = if foo
+                something
+                1
+              elsif bar
+                something_other
+                2
+              elsif baz
+                something_other_again
+                3
+              else
+                something_else
+                4
+              end
+
+==> 305.rb 298 <==
+@bar = if foo
+                something
+                1
+              elsif bar
+                something_other
+                2
+              elsif baz
+                something_other_again
+                3
+              else
+                something_else
+                4
+              end
+
+==> 306.rb 299 <==
+@@bar = if foo
+                something
+                1
+              elsif bar
+                something_other
+                2
+              elsif baz
+                something_other_again
+                3
+              else
+                something_else
+                4
+              end
+
+==> 307.rb 298 <==
+$BAR = if foo
+                something
+                1
+              elsif bar
+                something_other
+                2
+              elsif baz
+                something_other_again
+                3
+              else
+                something_else
+                4
+              end
+
+==> 308.rb 301 <==
+foo.bar = if foo
+                something
+                1
+              elsif bar
+                something_other
+                2
+              elsif baz
+                something_other_again
+                3
+              else
+                something_else
+                4
+              end
+
+==> 309.rb 95 <==
+bar = if foo
+        something
+        1
+      else
+        something_else
+        2
+      end
+
+==> 310.rb 148 <==
+bar = if foo
+        something
+        1
+      elsif foobar
+        something_elsif
+        2
+      else
+        something_else
+        3
+      end
+
+==> 311.rb 200 <==
+bar = if foo
+        something
+        1
+      elsif foobar
+        something_elsif1
+        2
+      elsif baz
+        something_elsif2
+        3
+      else
+        something_else
+        4
+      end
+
+==> 312.rb 99 <==
+bar = unless foo
+        something
+        1
+      else
+        something_else
+        2
+      end
+
+==> 313.rb 115 <==
+bar = case foo
+      when foobar
+        something
+        1
+      else
+        something_else
+        2
+      end
+
+==> 314.rb 164 <==
+bar = case foo
+      when foobar
+        something
+        1
+      when baz
+        something_other
+        2
+      else
+        something_else
+        3
+      end
+
+==> 315.rb 18 <==
+bar = foo? ? 1 : 2
+==> 316.rb 172 <==
+if var.any?(:prob_a_check)
+  @errors << 'Problem A'
+elsif var.any?(:prob_a_check)
+  @errors << 'Problem B'
+else
+  if var.all?(:save)
+    @errors << 'Save failed'
+  end
+end
+
+==> 317.rb 176 <==
+if var.any?(:prob_a_check)
+  @errors << 'Problem A'
+elsif var.any?(:prob_a_check)
+  @errors << 'Problem B'
+else
+  unless var.all?(:save)
+    @errors << 'Save failed'
+  end
+end
+
+==> 318.rb 202 <==
+if var.any?(:prob_a_check)
+  @errors << 'Problem A'
+elsif var.any?(:prob_a_check)
+  @errors << 'Problem B'
+else
+  if var.all?(:save)
+    @errors << 'Save failed'
+  else
+    @errors << 'Other'
+  end
+end
+
+==> 319.rb 62 <==
+if foo
+  array[1] = 1
+  a = 1
+else
+  array[1] = 2
+  a = 2
+end
+
+==> 320.rb 100 <==
+if line.is_a?(String)
+  expect(actual[ix]).to eq(line)
+else
+  expect(actual[ix]).to match(line)
+end
+
+==> 321.rb 24 <==
+if foo
+  1
+else
+  2
+end
+
+==> 322.rb 22 <==
+bar = foo? ? "a" : "b"
+==> 323.rb 29 <==
+foo? ? bar = "a" : bar = "b"
+
+==> 324.rb 16 <==
+return if a == 1
+==> 325.rb 42 <==
+if foo
+  a unless b
+else
+  c unless d
+end
+
+==> 326.rb 86 <==
+if condition
+  default['key-with-dash'] << a
+else
+  default['key-with-dash'] << b
+end
+
+==> 327.rb 32 <==
+if condition
+  ()
+else
+  ()
+end
+
+==> 328.rb 27 <==
+foo? ? bar == 1 : bar == 2
+
+==> 329.rb 53 <==
+if foo
+  a == b
+elsif bar
+  a == c
+else
+  a == d
+end
+
+==> 330.rb 38 <==
+unless foo
+  a == b
+else
+  a == d
+end
+
+==> 331.rb 45 <==
+case foo
+when bar
+  a == b
+else
+  a == d
+end
+
+==> 332.rb 43 <==
+case foo
+in bar
+  a == b
+else
+  a == d
+end
+
+==> 333.rb 27 <==
+foo? ? bar != 1 : bar != 2
+
+==> 334.rb 53 <==
+if foo
+  a != b
+elsif bar
+  a != c
+else
+  a != d
+end
+
+==> 335.rb 38 <==
+unless foo
+  a != b
+else
+  a != d
+end
+
+==> 336.rb 45 <==
+case foo
+when bar
+  a != b
+else
+  a != d
+end
+
+==> 337.rb 43 <==
+case foo
+in bar
+  a != b
+else
+  a != d
+end
+
+==> 338.rb 27 <==
+foo? ? bar =~ 1 : bar =~ 2
+
+==> 339.rb 53 <==
+if foo
+  a =~ b
+elsif bar
+  a =~ c
+else
+  a =~ d
+end
+
+==> 340.rb 38 <==
+unless foo
+  a =~ b
+else
+  a =~ d
+end
+
+==> 341.rb 45 <==
+case foo
+when bar
+  a =~ b
+else
+  a =~ d
+end
+
+==> 342.rb 43 <==
+case foo
+in bar
+  a =~ b
+else
+  a =~ d
+end
+
+==> 343.rb 27 <==
+foo? ? bar !~ 1 : bar !~ 2
+
+==> 344.rb 53 <==
+if foo
+  a !~ b
+elsif bar
+  a !~ c
+else
+  a !~ d
+end
+
+==> 345.rb 38 <==
+unless foo
+  a !~ b
+else
+  a !~ d
+end
+
+==> 346.rb 45 <==
+case foo
+when bar
+  a !~ b
+else
+  a !~ d
+end
+
+==> 347.rb 43 <==
+case foo
+in bar
+  a !~ b
+else
+  a !~ d
+end
+
+==> 348.rb 29 <==
+foo? ? bar <=> 1 : bar <=> 2
+
+==> 349.rb 56 <==
+if foo
+  a <=> b
+elsif bar
+  a <=> c
+else
+  a <=> d
+end
+
+==> 350.rb 40 <==
+unless foo
+  a <=> b
+else
+  a <=> d
+end
+
+==> 351.rb 47 <==
+case foo
+when bar
+  a <=> b
+else
+  a <=> d
+end
+
+==> 352.rb 45 <==
+case foo
+in bar
+  a <=> b
+else
+  a <=> d
+end
+
+==> 353.rb 29 <==
+foo? ? bar === 1 : bar === 2
+
+==> 354.rb 56 <==
+if foo
+  a === b
+elsif bar
+  a === c
+else
+  a === d
+end
+
+==> 355.rb 40 <==
+unless foo
+  a === b
+else
+  a === d
+end
+
+==> 356.rb 47 <==
+case foo
+when bar
+  a === b
+else
+  a === d
+end
+
+==> 357.rb 45 <==
+case foo
+in bar
+  a === b
+else
+  a === d
+end
+
+==> 358.rb 27 <==
+foo? ? bar <= 1 : bar <= 2
+
+==> 359.rb 53 <==
+if foo
+  a <= b
+elsif bar
+  a <= c
+else
+  a <= d
+end
+
+==> 360.rb 38 <==
+unless foo
+  a <= b
+else
+  a <= d
+end
+
+==> 361.rb 45 <==
+case foo
+when bar
+  a <= b
+else
+  a <= d
+end
+
+==> 362.rb 43 <==
+case foo
+in bar
+  a <= b
+else
+  a <= d
+end
+
+==> 363.rb 27 <==
+foo? ? bar >= 1 : bar >= 2
+
+==> 364.rb 53 <==
+if foo
+  a >= b
+elsif bar
+  a >= c
+else
+  a >= d
+end
+
+==> 365.rb 38 <==
+unless foo
+  a >= b
+else
+  a >= d
+end
+
+==> 366.rb 45 <==
+case foo
+when bar
+  a >= b
+else
+  a >= d
+end
+
+==> 367.rb 43 <==
+case foo
+in bar
+  a >= b
+else
+  a >= d
+end
+
+==> 368.rb 25 <==
+foo? ? bar < 1 : bar < 2
+
+==> 369.rb 50 <==
+if foo
+  a < b
+elsif bar
+  a < c
+else
+  a < d
+end
+
+==> 370.rb 36 <==
+unless foo
+  a < b
+else
+  a < d
+end
+
+==> 371.rb 43 <==
+case foo
+when bar
+  a < b
+else
+  a < d
+end
+
+==> 372.rb 41 <==
+case foo
+in bar
+  a < b
+else
+  a < d
+end
+
+==> 373.rb 25 <==
+foo? ? bar > 1 : bar > 2
+
+==> 374.rb 50 <==
+if foo
+  a > b
+elsif bar
+  a > c
+else
+  a > d
+end
+
+==> 375.rb 36 <==
+unless foo
+  a > b
+else
+  a > d
+end
+
+==> 376.rb 43 <==
+case foo
+when bar
+  a > b
+else
+  a > d
+end
+
+==> 377.rb 41 <==
+case foo
+in bar
+  a > b
+else
+  a > d
+end
+
+==> 378.rb 43 <==
+if foo
+  # comment
+else
+  do_something
+end
+
+==> 379.rb 56 <==
+if foo
+  bar = 1
+elsif baz
+  # empty
+else
+  bar = 2
+end
+
+==> 380.rb 68 <==
+if foo
+  bar = 'some string'
+elsif bar
+  bar = 'another string'
+end
+
+==> 381.rb 21 <==
+if foo
+  bar = 1
+end
+
+==> 382.rb 25 <==
+unless foo
+  bar = 1
+end
+
+==> 383.rb 51 <==
+case foo
+when "a"
+  bar = 1
+when "b"
+  bar = 2
+end
+
+==> 384.rb 66 <==
+case foo
+when "a"
+  # empty
+when "b"
+  bar = 2
+else
+  bar = 3
+end
+
+==> 385.rb 47 <==
+case foo
+when "b"
+  bar = 2
+else
+  # empty
+end
+
+==> 386.rb 36 <==
+if foo
+  bar = 1
+else
+  baz = 1
+end
+
+==> 387.rb 28 <==
+if foo
+  bar
+else
+  baz
+end
+
+==> 388.rb 59 <==
+if foo
+  bar = 1
+elsif foobar
+  baz = 2
+else
+  bar = 1
+end
+
+==> 389.rb 59 <==
+if foo
+  bar = 1
+elsif foobar
+  bar = 2
+else
+  baz = 1
+end
+
+==> 390.rb 59 <==
+if foo
+  bar = 1
+elsif foobar
+  baz = 2
+else
+  baz = 1
+end
+
+==> 391.rb 37 <==
+if foo
+  bar = 1
+else
+  bar << 2
+end
+
+==> 392.rb 44 <==
+if foo
+  bar[index] = 1
+else
+  bar << 2
+end
+
+==> 393.rb 42 <==
+if foo
+  bar[1] = 1
+else
+  bar[2] = 2
+end
+
+==> 394.rb 61 <==
+if foo
+  bar = 1
+elsif foobar
+  bar += 2
+else
+  bar << 3
+end
+
+==> 395.rb 47 <==
+case foo
+when "a"
+  bar = 1
+else
+  baz = 2
+end
+
+==> 396.rb 178 <==
+if foo
+  bar = aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+else
+  bar = bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+end
+
+==> 397.rb 117 <==
+if foo
+  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  bar = 1
+else
+  bar = 2
+end
+
+==> 398.rb 111 <==
+if aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  bar = 1
+else
+  bar = 2
+end
+
+==> 399.rb 131 <==
+case foo
+when foobar
+  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  bar = 1
+else
+  bar = 2
+end
+

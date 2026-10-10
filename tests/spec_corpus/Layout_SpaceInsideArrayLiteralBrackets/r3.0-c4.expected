@@ -1,0 +1,10 @@
+==> offenses exit=1 191 <==
+000.rb:1:8: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+000.rb:1:17: C: Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+
+==> autocorrect exit=0 100 <==
+000.rb:1:8: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+
+==> corrected/000.rb 20 <==
+foo => [ bar, baz ]
+

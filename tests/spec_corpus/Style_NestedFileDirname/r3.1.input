@@ -1,0 +1,20 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+
+==> 000.rb 33 <==
+File.dirname(File.dirname(path))
+
+==> 001.rb 47 <==
+File.dirname(File.dirname(File.dirname(path)))
+
+==> 002.rb 19 <==
+File.dirname(path)
+
+==> 003.rb 22 <==
+File.dirname(path, 2)
+

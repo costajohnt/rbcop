@@ -1,0 +1,6 @@
+==> offenses exit=1 98 <==
+000.rb:1:1: C: Style/SafeNavigationChainLength: Avoid safe navigation chains longer than 3 calls.
+
+==> autocorrect exit=1 98 <==
+000.rb:1:1: C: Style/SafeNavigationChainLength: Avoid safe navigation chains longer than 3 calls.
+

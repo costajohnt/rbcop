@@ -1,0 +1,18 @@
+==> offenses exit=1 300 <==
+000.rb:2:4: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+001.rb:2:1: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+
+==> autocorrect exit=0 296 <==
+000.rb:2:4: C: [Corrected] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+001.rb:2:1: C: [Corrected] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+
+==> corrected/000.rb 83 <==
+col = loc.column
+if [before.column, after.column].include?(col)
+  do_something
+end
+
+==> corrected/001.rb 53 <==
+var = do_something
+[foo, 'bar', 'baz'].include?(var)
+

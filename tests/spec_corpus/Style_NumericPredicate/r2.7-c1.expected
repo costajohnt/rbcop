@@ -1,0 +1,24 @@
+==> offenses exit=1 400 <==
+000.rb:1:1: C: [Correctable] Style/NumericPredicate: Use `number == 0` instead of `number.zero?`.
+001.rb:1:2: C: [Correctable] Style/NumericPredicate: Use `(number == 0)` instead of `number.zero?`.
+003.rb:1:1: C: [Correctable] Style/NumericPredicate: Use `number > 0` instead of `number.positive?`.
+004.rb:1:1: C: [Correctable] Style/NumericPredicate: Use `number < 0` instead of `number.negative?`.
+
+==> autocorrect exit=0 392 <==
+000.rb:1:1: C: [Corrected] Style/NumericPredicate: Use `number == 0` instead of `number.zero?`.
+001.rb:1:2: C: [Corrected] Style/NumericPredicate: Use `(number == 0)` instead of `number.zero?`.
+003.rb:1:1: C: [Corrected] Style/NumericPredicate: Use `number > 0` instead of `number.positive?`.
+004.rb:1:1: C: [Corrected] Style/NumericPredicate: Use `number < 0` instead of `number.negative?`.
+
+==> corrected/000.rb 12 <==
+number == 0
+
+==> corrected/001.rb 15 <==
+!(number == 0)
+
+==> corrected/003.rb 11 <==
+number > 0
+
+==> corrected/004.rb 11 <==
+number < 0
+

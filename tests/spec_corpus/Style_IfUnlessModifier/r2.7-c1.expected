@@ -1,0 +1,14 @@
+==> offenses exit=1 356 <==
+000.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+001.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+
+==> autocorrect exit=0 352 <==
+000.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+001.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+
+==> corrected/000.rb 103 <==
+"This string would make the line longer than eighty characters if combined with the statement." if foo
+
+==> corrected/001.rb 107 <==
+"This string would make the line longer than eighty characters if combined with the statement." unless foo
+

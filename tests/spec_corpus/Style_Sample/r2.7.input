@@ -1,0 +1,209 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 24 <==
+[1, 2, 3].shuffle.first
+
+==> 001.rb 25 <==
+[1, 2, 3]&.shuffle.first
+
+==> 002.rb 23 <==
+[1, 2, 3].shuffle.last
+
+==> 003.rb 24 <==
+[1, 2, 3]&.shuffle.last
+
+==> 004.rb 25 <==
+[1, 2, 3].shuffle&.first
+
+==> 005.rb 26 <==
+[1, 2, 3]&.shuffle&.first
+
+==> 006.rb 24 <==
+[1, 2, 3].shuffle&.last
+
+==> 007.rb 25 <==
+[1, 2, 3]&.shuffle&.last
+
+==> 008.rb 21 <==
+[1, 2, 3].shuffle[0]
+
+==> 009.rb 22 <==
+[1, 2, 3]&.shuffle[0]
+
+==> 010.rb 22 <==
+[1, 2, 3].shuffle[-1]
+
+==> 011.rb 23 <==
+[1, 2, 3]&.shuffle[-1]
+
+==> 012.rb 24 <==
+[1, 2, 3].shuffle[...3]
+
+==> 013.rb 25 <==
+[1, 2, 3]&.shuffle[...3]
+
+==> 014.rb 24 <==
+[1, 2, 3].shuffle[0, 3]
+
+==> 015.rb 25 <==
+[1, 2, 3]&.shuffle[0, 3]
+
+==> 016.rb 24 <==
+[1, 2, 3].shuffle[0..3]
+
+==> 017.rb 25 <==
+[1, 2, 3]&.shuffle[0..3]
+
+==> 018.rb 25 <==
+[1, 2, 3].shuffle[0...3]
+
+==> 019.rb 26 <==
+[1, 2, 3]&.shuffle[0...3]
+
+==> 020.rb 27 <==
+[1, 2, 3].shuffle.first(2)
+
+==> 021.rb 28 <==
+[1, 2, 3]&.shuffle.first(2)
+
+==> 022.rb 26 <==
+[1, 2, 3].shuffle.last(3)
+
+==> 023.rb 27 <==
+[1, 2, 3]&.shuffle.last(3)
+
+==> 024.rb 29 <==
+[1, 2, 3].shuffle.first(foo)
+
+==> 025.rb 30 <==
+[1, 2, 3]&.shuffle.first(foo)
+
+==> 026.rb 28 <==
+[1, 2, 3].shuffle.last(bar)
+
+==> 027.rb 29 <==
+[1, 2, 3]&.shuffle.last(bar)
+
+==> 028.rb 24 <==
+[1, 2, 3].shuffle.at(0)
+
+==> 029.rb 25 <==
+[1, 2, 3]&.shuffle.at(0)
+
+==> 030.rb 25 <==
+[1, 2, 3].shuffle.at(-1)
+
+==> 031.rb 26 <==
+[1, 2, 3]&.shuffle.at(-1)
+
+==> 032.rb 27 <==
+[1, 2, 3].shuffle.slice(0)
+
+==> 033.rb 28 <==
+[1, 2, 3]&.shuffle.slice(0)
+
+==> 034.rb 28 <==
+[1, 2, 3].shuffle.slice(-1)
+
+==> 035.rb 29 <==
+[1, 2, 3]&.shuffle.slice(-1)
+
+==> 036.rb 30 <==
+[1, 2, 3].shuffle.slice(0, 3)
+
+==> 037.rb 31 <==
+[1, 2, 3]&.shuffle.slice(0, 3)
+
+==> 038.rb 30 <==
+[1, 2, 3].shuffle.slice(0..3)
+
+==> 039.rb 31 <==
+[1, 2, 3]&.shuffle.slice(0..3)
+
+==> 040.rb 31 <==
+[1, 2, 3].shuffle.slice(0...3)
+
+==> 041.rb 32 <==
+[1, 2, 3]&.shuffle.slice(0...3)
+
+==> 042.rb 44 <==
+[1, 2, 3].shuffle(random: Random.new).first
+
+==> 043.rb 47 <==
+[1, 2, 3].shuffle(random: Random.new).first(2)
+
+==> 044.rb 41 <==
+[1, 2, 3].shuffle(random: foo).last(bar)
+
+==> 045.rb 44 <==
+[1, 2, 3].shuffle(random: Random.new)[0..3]
+
+==> 046.rb 52 <==
+[1, 2, 3].shuffle(random: Random.new(123)).first(5)
+
+==> 047.rb 16 <==
+[1, 2, 3].sample
+==> 048.rb 17 <==
+[1, 2, 3].shuffle
+==> 049.rb 23 <==
+[1, 2, 3].shuffle.at(2)
+==> 050.rb 25 <==
+[1, 2, 3].shuffle.at(foo)
+==> 051.rb 26 <==
+[1, 2, 3].shuffle.slice(2)
+==> 052.rb 29 <==
+[1, 2, 3].shuffle.slice(3, 3)
+==> 053.rb 29 <==
+[1, 2, 3].shuffle.slice(2..3)
+==> 054.rb 30 <==
+[1, 2, 3].shuffle.slice(2..-3)
+==> 055.rb 31 <==
+[1, 2, 3].shuffle.slice(foo..3)
+==> 056.rb 31 <==
+[1, 2, 3].shuffle.slice(-4..-3)
+==> 057.rb 28 <==
+[1, 2, 3].shuffle.slice(foo)
+==> 058.rb 31 <==
+[1, 2, 3].shuffle.slice(foo, 3)
+==> 059.rb 33 <==
+[1, 2, 3].shuffle.slice(foo..bar)
+==> 060.rb 33 <==
+[1, 2, 3].shuffle.slice(foo, bar)
+==> 061.rb 20 <==
+[1, 2, 3].shuffle[2]
+==> 062.rb 23 <==
+[1, 2, 3].shuffle[3, 3]
+==> 063.rb 23 <==
+[1, 2, 3].shuffle[2..3]
+==> 064.rb 24 <==
+[1, 2, 3].shuffle[2..-3]
+==> 065.rb 25 <==
+[1, 2, 3].shuffle[foo..3]
+==> 066.rb 25 <==
+[1, 2, 3].shuffle[-4..-3]
+==> 067.rb 22 <==
+[1, 2, 3].shuffle[foo]
+==> 068.rb 25 <==
+[1, 2, 3].shuffle[foo, 3]
+==> 069.rb 27 <==
+[1, 2, 3].shuffle[foo..bar]
+==> 070.rb 27 <==
+[1, 2, 3].shuffle[foo, bar]
+==> 071.rb 37 <==
+[1, 2, 3].shuffle(random: Random.new)
+==> 072.rb 33 <==
+[1, 2, 3].shuffle.join([5, 6, 7])
+==> 073.rb 31 <==
+[1, 2, 3].shuffle.map { |e| e }
+==> 074.rb 40 <==
+[1, 2, 3].shuffle(random: Random.new)[2]
+==> 075.rb 43 <==
+[1, 2, 3].shuffle(random: Random.new)[2, 3]
+==> 076.rb 50 <==
+[1, 2, 3].shuffle(random: Random.new).find(&:odd?)

@@ -1,0 +1,52 @@
+==> offenses exit=1 1176 <==
+000.rb:1:5: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+000.rb:1:16: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+000.rb:2:5: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+000.rb:2:12: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+001.rb:1:11: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+002.rb:1:5: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+002.rb:1:12: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+003.rb:2:4: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+003.rb:2:17: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+005.rb:1:8: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+005.rb:1:21: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+012.rb:2:1: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+012.rb:2:8: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+
+==> autocorrect exit=0 1150 <==
+000.rb:1:5: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+000.rb:1:16: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+000.rb:2:5: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+000.rb:2:12: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+001.rb:1:11: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+002.rb:1:5: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+002.rb:1:12: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+003.rb:2:4: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+003.rb:2:17: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+005.rb:1:8: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+005.rb:1:21: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+012.rb:2:1: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+012.rb:2:8: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+
+==> corrected/000.rb 34 <==
+h = { a: 1, b: 2 }
+h = { a => 1 }
+
+==> corrected/001.rb 13 <==
+h = { a: 1 }
+
+==> corrected/002.rb 15 <==
+h = { a: '{' }
+
+==> corrected/003.rb 33 <==
+case foo
+in { k1: 0, k2: 1 }
+end
+
+==> corrected/005.rb 24 <==
+foo in { k1: 0, k2: 1 }
+
+==> corrected/012.rb 14 <==
+{}
+{ key: 1 }
+

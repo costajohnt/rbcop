@@ -1,0 +1,46 @@
+==> .rubocop.yml 230 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Layout/LineLength:
+  Enabled: true
+  Max: 80
+  AllowURI: true
+  AllowCopDirectives: true
+  URISchemes:
+  - http
+  - https
+
+==> 000.rb 23 <==
+if [42] in [x]
+  x
+end
+
+==> 001.rb 45 <==
+if { x: 1, y: 2 } in { x:, y: }
+  a && y
+end
+
+==> 002.rb 23 <==
+if [42] in [x]
+  y
+end
+
+==> 003.rb 45 <==
+if { x: 1, y: 2 } in { x:, y: }
+  a && b
+end
+
+==> 004.rb 42 <==
+if condition
+  def method_name = body
+end
+
+==> 005.rb 47 <==
+if condition
+  def self.method_name = body
+end
+

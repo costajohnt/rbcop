@@ -1,0 +1,8 @@
+==> offenses exit=1 160 <==
+000.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+001.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+
+==> autocorrect exit=1 160 <==
+000.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+001.rb:3:5: R: Metrics/BlockNesting: Avoid more than 2 levels of block nesting.
+

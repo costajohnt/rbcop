@@ -8,7 +8,8 @@ static BRACED_LINE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\{[\s\S]*\}$
 /// URI::RFC2396_PARSER.make_regexp(schemes) (ABS_URI_REF), with its lookarounds dropped: the
 /// scheme lookahead equals matching the scheme itself, and `(?!//)` only guards a branch tried
 /// after `//...` failed. Both engines are leftmost-first, so `http://').x` stops after `//`
-/// (the server part is optional and a host cannot start with `'`).
+/// (the server part is optional and a host cannot start with `'`). The scheme is matched in
+/// the exact case given (LineLengthHelp#uri_regexp adds a case-sensitive `(?=scheme:)`).
 pub fn uri_regex(schemes: &[String]) -> Option<Regex> {
     if schemes.is_empty() {
         return None;
@@ -26,7 +27,7 @@ pub fn uri_regex(schemes: &[String]) -> Option<Regex> {
     let pchar = format!(r"(?:[\-_.!~*'()a-zA-Z0-9:@&=+$,]|{esc})");
     let segment = format!("{pchar}*(?:;{pchar}*)*");
     Regex::new(&format!(
-        r"(?i:{}):(?:{opaque}|(?://(?:(?:{userinfo}{host}(?::[0-9]*)?)?|{registry})|)(?:/{segment}(?:/{segment})*)?(?:\?{uric}*)?)(?:#{uric}*)?",
+        r"(?:{}):(?:{opaque}|(?://(?:(?:{userinfo}{host}(?::[0-9]*)?)?|{registry})|)(?:/{segment}(?:/{segment})*)?(?:\?{uric}*)?)(?:#{uric}*)?",
         alts.join("|")
     ))
     .ok()

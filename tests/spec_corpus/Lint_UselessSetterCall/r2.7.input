@@ -1,0 +1,140 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 44 <==
+def test
+  top = Top.new
+  top.attr = 5
+end
+
+==> 001.rb 48 <==
+def Top.test
+  top = Top.new
+  top.attr = 5
+end
+
+==> 002.rb 46 <==
+def test
+  top = Top.new
+  top[:attr] = 5
+end
+
+==> 003.rb 36 <==
+def test
+  something
+  @top = 5
+end
+
+==> 004.rb 41 <==
+def test
+  something
+  @top.attr = 5
+end
+
+==> 005.rb 37 <==
+def test
+  something
+  @@top = 5
+end
+
+==> 006.rb 42 <==
+def test
+  something
+  @@top.attr = 5
+end
+
+==> 007.rb 36 <==
+def test
+  something
+  $top = 5
+end
+
+==> 008.rb 41 <==
+def test
+  something
+  $top.attr = 5
+end
+
+==> 009.rb 80 <==
+def test(some_arg)
+  unrelated_local_variable = Top.new
+  some_arg.attr = 5
+end
+
+==> 010.rb 71 <==
+def test(arg, other_arg)
+  (a, b), c = arg, other_arg
+  c.attr = 5
+end
+
+==> 011.rb 144 <==
+def test(some_arg)
+  @some_ivar = some_arg
+  @some_ivar.do_something
+  some_lvar = @some_ivar
+  some_lvar.do_something
+  some_lvar.attr = 5
+end
+
+==> 012.rb 90 <==
+def test(some_arg)
+  _first, some_lvar, _third  = 1, some_arg, 3
+  some_lvar.attr = 5
+end
+
+==> 013.rb 88 <==
+def test(some_arg)
+  _first, some_lvar, _third  = do_something
+  some_lvar.attr = 5
+end
+
+==> 014.rb 87 <==
+def test(some_arg)
+  some_lvar = nil
+  some_lvar ||= some_arg
+  some_lvar.attr = 5
+end
+
+==> 015.rb 91 <==
+def test(some_arg)
+  some_lvar = some_arg
+  some_lvar += some_arg
+  some_lvar.attr = 5
+end
+
+==> 016.rb 64 <==
+def test(some_arg)
+  some_arg = Top.new
+  some_arg.attr = 5
+end
+
+==> 017.rb 51 <==
+def test
+  some_arg = {}
+  some_arg[:attr] = 1
+end
+
+==> 018.rb 68 <==
+def test
+  some_lvar = Foo.shared_object
+  some_lvar[:attr] = 1
+end
+
+==> 019.rb 29 <==
+def test
+  top.attr == 5
+end
+
+==> 020.rb 78 <==
+def foo(bar)
+  begin
+  rescue StandardError => _
+  end
+  bar[:baz] = true
+end
+

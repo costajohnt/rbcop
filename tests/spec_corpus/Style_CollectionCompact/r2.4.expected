@@ -1,0 +1,92 @@
+==> offenses exit=1 2059 <==
+000.rb:1:7: C: [Correctable] Style/CollectionCompact: Use `compact` instead of `reject { |e| e.nil? }`.
+000.rb:2:7: C: [Correctable] Style/CollectionCompact: Use `compact!` instead of `reject! { |e| e.nil? }`.
+001.rb:1:8: C: [Correctable] Style/CollectionCompact: Use `compact` instead of `reject { |e| e&.nil? }`.
+001.rb:2:8: C: [Correctable] Style/CollectionCompact: Use `compact!` instead of `reject! { |e| e&.nil? }`.
+002.rb:1:7: C: [Correctable] Style/CollectionCompact: Use `compact` instead of `reject(&:nil?)`.
+002.rb:2:7: C: [Correctable] Style/CollectionCompact: Use `compact!` instead of `reject!(&:nil?)`.
+003.rb:1:8: C: [Correctable] Style/CollectionCompact: Use `compact` instead of `reject(&:nil?)`.
+003.rb:2:8: C: [Correctable] Style/CollectionCompact: Use `compact!` instead of `reject!(&:nil?)`.
+004.rb:1:7: C: [Correctable] Style/CollectionCompact: Use `compact` instead of `reject &:nil?`.
+005.rb:1:6: C: [Correctable] Style/CollectionCompact: Use `compact` instead of `reject { |k, v| v.nil? }`.
+005.rb:2:6: C: [Correctable] Style/CollectionCompact: Use `compact!` instead of `reject! { |k, v| v.nil? }`.
+006.rb:1:7: C: [Correctable] Style/CollectionCompact: Use `compact` instead of `select { |e| !e.nil? }`.
+006.rb:2:6: C: [Correctable] Style/CollectionCompact: Use `compact!` instead of `select! { |k, v| !v.nil? }`.
+007.rb:1:8: C: [Correctable] Style/CollectionCompact: Use `compact` instead of `select { |e| e&.nil?&.! }`.
+007.rb:2:7: C: [Correctable] Style/CollectionCompact: Use `compact!` instead of `select! { |k, v| v&.nil?&.! }`.
+008.rb:2:10: C: [Correctable] Style/CollectionCompact: Use `compact` instead of `reject { |_k, v| v.nil? }`.
+009.rb:1:7: C: [Correctable] Style/CollectionCompact: Use `compact` instead of `grep_v(nil)`.
+010.rb:1:7: C: [Correctable] Style/CollectionCompact: Use `compact` instead of `grep_v(NilClass)`.
+011.rb:1:8: C: [Correctable] Style/CollectionCompact: Use `compact` instead of `grep_v(nil)`.
+012.rb:1:7: C: [Correctable] Style/CollectionCompact: Use `compact` instead of `grep_v(::NilClass)`.
+
+==> autocorrect exit=0 2019 <==
+000.rb:1:7: C: [Corrected] Style/CollectionCompact: Use `compact` instead of `reject { |e| e.nil? }`.
+000.rb:2:7: C: [Corrected] Style/CollectionCompact: Use `compact!` instead of `reject! { |e| e.nil? }`.
+001.rb:1:8: C: [Corrected] Style/CollectionCompact: Use `compact` instead of `reject { |e| e&.nil? }`.
+001.rb:2:8: C: [Corrected] Style/CollectionCompact: Use `compact!` instead of `reject! { |e| e&.nil? }`.
+002.rb:1:7: C: [Corrected] Style/CollectionCompact: Use `compact` instead of `reject(&:nil?)`.
+002.rb:2:7: C: [Corrected] Style/CollectionCompact: Use `compact!` instead of `reject!(&:nil?)`.
+003.rb:1:8: C: [Corrected] Style/CollectionCompact: Use `compact` instead of `reject(&:nil?)`.
+003.rb:2:8: C: [Corrected] Style/CollectionCompact: Use `compact!` instead of `reject!(&:nil?)`.
+004.rb:1:7: C: [Corrected] Style/CollectionCompact: Use `compact` instead of `reject &:nil?`.
+005.rb:1:6: C: [Corrected] Style/CollectionCompact: Use `compact` instead of `reject { |k, v| v.nil? }`.
+005.rb:2:6: C: [Corrected] Style/CollectionCompact: Use `compact!` instead of `reject! { |k, v| v.nil? }`.
+006.rb:1:7: C: [Corrected] Style/CollectionCompact: Use `compact` instead of `select { |e| !e.nil? }`.
+006.rb:2:6: C: [Corrected] Style/CollectionCompact: Use `compact!` instead of `select! { |k, v| !v.nil? }`.
+007.rb:1:8: C: [Corrected] Style/CollectionCompact: Use `compact` instead of `select { |e| e&.nil?&.! }`.
+007.rb:2:7: C: [Corrected] Style/CollectionCompact: Use `compact!` instead of `select! { |k, v| v&.nil?&.! }`.
+008.rb:2:10: C: [Corrected] Style/CollectionCompact: Use `compact` instead of `reject { |_k, v| v.nil? }`.
+009.rb:1:7: C: [Corrected] Style/CollectionCompact: Use `compact` instead of `grep_v(nil)`.
+010.rb:1:7: C: [Corrected] Style/CollectionCompact: Use `compact` instead of `grep_v(NilClass)`.
+011.rb:1:8: C: [Corrected] Style/CollectionCompact: Use `compact` instead of `grep_v(nil)`.
+012.rb:1:7: C: [Corrected] Style/CollectionCompact: Use `compact` instead of `grep_v(::NilClass)`.
+
+==> corrected/000.rb 29 <==
+array.compact
+array.compact!
+
+==> corrected/001.rb 31 <==
+array&.compact
+array&.compact!
+
+==> corrected/002.rb 29 <==
+array.compact
+array.compact!
+
+==> corrected/003.rb 31 <==
+array&.compact
+array&.compact!
+
+==> corrected/004.rb 14 <==
+array.compact
+
+==> corrected/005.rb 27 <==
+hash.compact
+hash.compact!
+
+==> corrected/006.rb 28 <==
+array.compact
+hash.compact!
+
+==> corrected/007.rb 30 <==
+array&.compact
+hash&.compact!
+
+==> corrected/008.rb 37 <==
+def foo(params)
+  params.compact
+end
+
+==> corrected/009.rb 14 <==
+array.compact
+
+==> corrected/010.rb 14 <==
+array.compact
+
+==> corrected/011.rb 15 <==
+array&.compact
+
+==> corrected/012.rb 14 <==
+array.compact
+

@@ -1,0 +1,17 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/MissingSuper:
+  AllowedParentClasses:
+  - Array
+
+==> 000.rb 47 <==
+class Child < Array
+  def initialize
+  end
+end
+

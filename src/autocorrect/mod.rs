@@ -93,9 +93,10 @@ pub fn correct(
     mode: Mode,
 ) -> Corrected {
     // parser's Source::Buffer normalises CRLF; corrections are applied to (and written from) that.
-    let text = if text.contains("\r\n") { text.replace("\r\n", "\n") } else { text };
+    // The first iteration's raw source is the file as read (Layout/EndOfLine), later ones the rewrite.
+    let (text, raw) = if text.contains("\r\n") { (text.replace("\r\n", "\n"), Some(text)) } else { (text, None) };
     let (mut offenses, mut current, changed, error, disabled) =
-        inspection_loop(path, display, Arc::from(text), cfg, selected, mode);
+        inspection_loop(path, display, Arc::from(text), raw.as_deref(), cfg, selected, mode);
     let mut changed = changed;
     // Runner#add_redundant_disables (skipped when the loop raised): Lint/RedundantCopDisableDirective
     // judges the final source against every offense found, and when it removed directives the
@@ -112,12 +113,12 @@ pub fn correct(
         }
         offenses.extend(found);
         if let Some(c) = corrector {
-            let (again, text, _, err, _) = inspection_loop(path, display, Arc::from(c.rewrite()), cfg, selected, mode);
+            let (again, text, _, err, _) = inspection_loop(path, display, Arc::from(c.rewrite()), None, cfg, selected, mode);
             offenses.extend(again);
             current = text;
             changed = true;
             if let Some(e) = err {
-                eprintln!("{e}");
+                runner::file_error(e);
             }
         }
     }
@@ -131,6 +132,7 @@ fn inspection_loop(
     path: &Path,
     display: &str,
     mut current: Arc<str>,
+    raw: Option<&str>,
     cfg: &Resolved,
     selected: &dyn Fn(&str) -> bool,
     mode: Mode,
@@ -155,7 +157,7 @@ fn inspection_loop(
             last.retain(|o| o.corrected);
         }
         let (mut offenses, corrector, off) =
-            runner::analyze_for_correction(path, display, &current, cfg, selected, mode);
+            runner::analyze_for_correction(path, display, &current, raw.filter(|_| seen.len() == 1), cfg, selected, mode);
         disabled = off;
         for o in &mut offenses {
             o.source = Some(current.clone());

@@ -1,0 +1,31 @@
+==> .rubocop.yml 162 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Metrics/ModuleLength:
+  Max: 5
+  CountComments: false
+
+==> 000.rb 72 <==
+Foo = Module.new do
+  a(it)
+  b(it)
+  c(it)
+  d(it)
+  e(it)
+  f(it)
+end
+
+==> 001.rb 74 <==
+Foo = ::Module.new do
+  a(it)
+  b(it)
+  c(it)
+  d(it)
+  e(it)
+  f(it)
+end
+

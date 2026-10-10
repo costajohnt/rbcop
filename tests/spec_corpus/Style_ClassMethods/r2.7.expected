@@ -1,0 +1,22 @@
+==> offenses exit=1 206 <==
+000.rb:2:7: C: [Correctable] Style/ClassMethods: Use `self.some_method` instead of `Test.some_method`.
+001.rb:2:7: C: [Correctable] Style/ClassMethods: Use `self.some_method` instead of `Test.some_method`.
+
+==> autocorrect exit=0 202 <==
+000.rb:2:7: C: [Corrected] Style/ClassMethods: Use `self.some_method` instead of `Test.some_method`.
+001.rb:2:7: C: [Corrected] Style/ClassMethods: Use `self.some_method` instead of `Test.some_method`.
+
+==> corrected/000.rb 61 <==
+class Test
+  def self.some_method
+    do_something
+  end
+end
+
+==> corrected/001.rb 62 <==
+module Test
+  def self.some_method
+    do_something
+  end
+end
+

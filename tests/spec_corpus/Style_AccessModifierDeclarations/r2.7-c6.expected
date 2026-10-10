@@ -1,0 +1,40 @@
+==> offenses exit=1 481 <==
+000.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+001.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+002.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+003.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+
+==> autocorrect exit=0 473 <==
+000.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `private` should not be inlined in method definitions.
+001.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+002.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `public` should not be inlined in method definitions.
+003.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `module_function` should not be inlined in method definitions.
+
+==> corrected/000.rb 47 <==
+class Foo
+private
+
+alias_method :bar, :foo
+end
+
+==> corrected/001.rb 49 <==
+class Foo
+protected
+
+alias_method :bar, :foo
+end
+
+==> corrected/002.rb 46 <==
+class Foo
+public
+
+alias_method :bar, :foo
+end
+
+==> corrected/003.rb 55 <==
+class Foo
+module_function
+
+alias_method :bar, :foo
+end
+

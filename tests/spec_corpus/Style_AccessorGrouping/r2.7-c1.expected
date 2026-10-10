@@ -1,0 +1,110 @@
+==> offenses exit=1 901 <==
+000.rb:2:3: C: [Correctable] Style/AccessorGrouping: Use one attribute per `attr_reader`.
+001.rb:2:3: C: [Correctable] Style/AccessorGrouping: Use one attribute per `attr_reader`.
+001.rb:8:3: C: [Correctable] Style/AccessorGrouping: Use one attribute per `attr_reader`.
+002.rb:5:5: C: [Correctable] Style/AccessorGrouping: Use one attribute per `attr_reader`.
+002.rb:10:5: C: [Correctable] Style/AccessorGrouping: Use one attribute per `attr_reader`.
+006.rb:2:3: C: [Correctable] Style/AccessorGrouping: Use one attribute per `attr_reader`.
+007.rb:4:3: C: [Correctable] Style/AccessorGrouping: Use one attribute per `attr_reader`.
+008.rb:2:3: C: [Correctable] Style/AccessorGrouping: Use one attribute per `attr_reader`.
+009.rb:2:3: C: [Correctable] Style/AccessorGrouping: Use one attribute per `attr_reader`.
+010.rb:2:3: C: [Correctable] Style/AccessorGrouping: Use one attribute per `attr_reader`.
+
+==> autocorrect exit=0 881 <==
+000.rb:2:3: C: [Corrected] Style/AccessorGrouping: Use one attribute per `attr_reader`.
+001.rb:2:3: C: [Corrected] Style/AccessorGrouping: Use one attribute per `attr_reader`.
+001.rb:8:3: C: [Corrected] Style/AccessorGrouping: Use one attribute per `attr_reader`.
+002.rb:5:5: C: [Corrected] Style/AccessorGrouping: Use one attribute per `attr_reader`.
+002.rb:10:5: C: [Corrected] Style/AccessorGrouping: Use one attribute per `attr_reader`.
+006.rb:2:3: C: [Corrected] Style/AccessorGrouping: Use one attribute per `attr_reader`.
+007.rb:4:3: C: [Corrected] Style/AccessorGrouping: Use one attribute per `attr_reader`.
+008.rb:2:3: C: [Corrected] Style/AccessorGrouping: Use one attribute per `attr_reader`.
+009.rb:2:3: C: [Corrected] Style/AccessorGrouping: Use one attribute per `attr_reader`.
+010.rb:2:3: C: [Corrected] Style/AccessorGrouping: Use one attribute per `attr_reader`.
+
+==> corrected/000.rb 99 <==
+class Foo
+  attr_reader :bar
+  attr_reader :baz
+  attr_accessor :quux
+  other_macro :zoo, :woo
+end
+
+==> corrected/001.rb 229 <==
+class Foo
+  attr_reader :bar1
+  attr_reader :bar2
+
+  protected
+  attr_accessor :quux
+
+  private
+  attr_reader :baz1
+  attr_reader :baz2
+  attr_writer :baz3
+  attr_reader :baz4
+
+  public
+  attr_reader :bar3
+  other_macro :zoo
+end
+
+==> corrected/002.rb 182 <==
+class Foo
+  attr_reader :bar
+
+  class << self
+    attr_reader :baz1
+    attr_reader :baz2
+    attr_reader :baz3
+
+    private
+
+    attr_reader :quux1
+    attr_reader :quux2
+  end
+end
+
+==> corrected/006.rb 69 <==
+class Foo
+  attr_reader :one
+  attr_reader :two
+attr_reader :one
+end
+
+==> corrected/007.rb 78 <==
+class Foo
+  other_macro :zoo, :woo
+
+  attr_reader :foo
+  attr_reader :bar
+end
+
+==> corrected/008.rb 141 <==
+class Foo
+  # comment one
+attr_reader :one
+  # comment two A
+  # comment two B
+  attr_reader :two
+  # comment three
+  attr_reader :three
+end
+
+==> corrected/009.rb 105 <==
+class Foo
+  # comment a
+attr_reader :a
+  # comment b
+  attr_reader :b
+  # comment c
+  attr_reader :c
+end
+
+==> corrected/010.rb 71 <==
+class Foo
+  # trailing comment
+attr_reader :bar
+  attr_reader :baz
+end
+

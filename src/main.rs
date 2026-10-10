@@ -1124,8 +1124,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                 stopped = true;
                 break;
             }
+            // Runner#process_file: `errors << e`, so the summary lists it and the run fails.
             if let Some(e) = loop_error {
-                eprintln!("{e}");
+                runner::file_error(e);
             }
             let offs = formatter::offenses(&report.text, &report.offenses, |o| {
                 formatter::annotate(cfg, o.cop, &o.message, annotate)

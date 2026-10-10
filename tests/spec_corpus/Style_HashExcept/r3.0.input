@@ -1,0 +1,230 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+
+==> 000.rb 53 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| k == :bar }
+
+==> 001.rb 54 <==
+{foo: 1, bar: 2, baz: 3}&.reject { |k, v| k == :bar }
+
+==> 002.rb 53 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| :bar == k }
+
+==> 003.rb 53 <==
+{foo: 1, bar: 2, baz: 3}.select { |k, v| k != :bar }
+
+==> 004.rb 53 <==
+{foo: 1, bar: 2, baz: 3}.select { |k, v| :bar != k }
+
+==> 005.rb 34 <==
+hash.reject { |k, v| k == 'str' }
+
+==> 006.rb 35 <==
+hash.reject { |k, v| k.eql?(0.0) }
+
+==> 007.rb 53 <==
+{foo: 1, bar: 2, baz: 3}.filter { |k, v| k != :bar }
+
+==> 008.rb 68 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| !%i[foo bar].include?(k) }
+
+==> 009.rb 68 <==
+{foo: 1, bar: 2, baz: 3}.select { |k, v| !%i[foo bar].include?(k) }
+
+==> 010.rb 69 <==
+{foo: 1, bar: 2, baz: 3}.filter { |k, v| ![:foo, :bar].include?(k) }
+
+==> 011.rb 70 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| %I[#{foo} bar].include?(k) }
+
+==> 012.rb 70 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| %W[#{foo} bar].include?(k) }
+
+==> 013.rb 82 <==
+array = %i[foo bar]
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| !array.include?(k) }
+
+==> 014.rb 62 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| !array.include?(k) }
+
+==> 015.rb 62 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| [:bar].include?(k) }
+
+==> 016.rb 63 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| ![1, 2].include?(v) }
+
+==> 017.rb 60 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| k.include?('oo') }
+
+==> 018.rb 61 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| !k.include?('oo') }
+
+==> 019.rb 70 <==
+{ foo: 1, bar: 2, baz: 3 }.reject { |k, v| (:baa..:bbb).include?(k) }
+
+==> 020.rb 71 <==
+{ foo: 1, bar: 2, baz: 3 }.reject { |k, v| (:baa...:bbb).include?(k) }
+
+==> 021.rb 42 <==
+hash.reject { |k, v| !k.include?('foo') }
+
+==> 022.rb 38 <==
+hash.reject { |k, v| !v.include?(k) }
+
+==> 023.rb 62 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| k.in?(%i[foo bar]) }
+
+==> 024.rb 63 <==
+{foo: 1, bar: 2, baz: 3}&.reject { |k, v| k.in?(%i[foo bar]) }
+
+==> 025.rb 62 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| %i[foo bar].in?(k) }
+
+==> 026.rb 68 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| !%i[foo bar].exclude?(k) }
+
+==> 027.rb 69 <==
+{foo: 1, bar: 2, baz: 3}&.reject { |k, v| !%i[foo bar].exclude?(k) }
+
+==> 028.rb 60 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| k.exclude?('oo') }
+
+==> 029.rb 61 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| !k.exclude?('oo') }
+
+==> 030.rb 32 <==
+hash.reject { |k, v| k == 0.0 }
+
+==> 031.rb 32 <==
+hash.select { |k, v| k != 0.0 }
+
+==> 032.rb 35 <==
+hash.select { |k, v| !(k == 0.0) }
+
+==> 033.rb 35 <==
+hash.reject { |k, v| !(k != 0.0) }
+
+==> 034.rb 56 <==
+{foo: 1, bar: 2, baz: 3}.delete_if { |k, v| k == :bar }
+
+==> 035.rb 54 <==
+{foo: 1, bar: 2, baz: 3}.keep_if { |k, v| k != :bar }
+
+==> 036.rb 55 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| v.eql? :bar }
+
+==> 037.rb 56 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v, o| k == :bar }
+
+==> 038.rb 64 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| %i[foo bar].include? }
+
+==> 039.rb 63 <==
+{foo: 1, bar: 2, baz: 3}.select { |k, v| !k.in?(%i[foo bar]) }
+
+==> 040.rb 63 <==
+{foo: 1, bar: 2, baz: 3}.filter { |k, v| !k.in?(%i[foo bar]) }
+
+==> 041.rb 65 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| k.in?(%I[#{foo} bar]) }
+
+==> 042.rb 65 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| k.in?(%W[#{foo} bar]) }
+
+==> 043.rb 76 <==
+array = %i[foo bar]
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| k.in?(array) }
+
+==> 044.rb 56 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| k.in?(array) }
+
+==> 045.rb 63 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| !k.in?(%i[foo bar]) }
+
+==> 046.rb 57 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| v.in?([1, 2]) }
+
+==> 047.rb 62 <==
+{ foo: 1, bar: 2, baz: 3 }.reject{ |k, v| k.in?(:baa..:bbb) }
+
+==> 048.rb 63 <==
+{ foo: 1, bar: 2, baz: 3 }.reject{ |k, v| k.in?(:baa...:bbb) }
+
+==> 049.rb 36 <==
+hash.reject { |k, v| 'foo'.in?(k) }
+
+==> 050.rb 32 <==
+hash.reject { |k, v| k.in?(v) }
+
+==> 051.rb 37 <==
+hash.select { |k, v| !'foo'.in?(k) }
+
+==> 052.rb 33 <==
+hash.select { |k, v| !k.in?(v) }
+
+==> 053.rb 67 <==
+{foo: 1, bar: 2, baz: 3}.select { |k, v| %i[foo bar].exclude?(k) }
+
+==> 054.rb 68 <==
+{foo: 1, bar: 2, baz: 3}.select { |k, v| !%i[foo bar].exclude?(k) }
+
+==> 055.rb 68 <==
+{foo: 1, bar: 2, baz: 3}.filter { |k, v| [:foo, :bar].exclude?(k) }
+
+==> 056.rb 71 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| !%I[#{foo} bar].exclude?(k) }
+
+==> 057.rb 71 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| !%W[#{foo} bar].exclude?(k) }
+
+==> 058.rb 82 <==
+array = %i[foo bar]
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| !array.exclude?(k) }
+
+==> 059.rb 62 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| !array.exclude?(k) }
+
+==> 060.rb 63 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| ![1, 2].exclude?(v) }
+
+==> 061.rb 41 <==
+hash.select { |k, v| k.exclude?('foo') }
+
+==> 062.rb 37 <==
+hash.select { |k, v| v.exclude?(k) }
+
+==> 063.rb 42 <==
+hash.reject { |k, v| !k.exclude?('foo') }
+
+==> 064.rb 38 <==
+hash.reject { |k, v| !v.exclude?(k) }
+
+==> 065.rb 56 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v, z| k == :bar }
+
+==> 066.rb 53 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| k != :bar }
+
+==> 067.rb 55 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| :bar != key }
+
+==> 068.rb 53 <==
+{foo: 1, bar: 2, baz: 3}.select { |k, v| k == :bar }
+
+==> 069.rb 55 <==
+{foo: 1, bar: 2, baz: 3}.select { |k, v| :bar == key }
+
+==> 070.rb 64 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| do_something != :bar }
+
+==> 071.rb 32 <==
+{foo: 1, bar: 2, baz: 3}.reject
+
+==> 072.rb 38 <==
+{foo: 1, bar: 2, baz: 3}.except(:bar)
+

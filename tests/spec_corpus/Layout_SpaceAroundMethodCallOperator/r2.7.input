@@ -1,0 +1,172 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 9 <==
+foo. bar
+
+==> 001.rb 9 <==
+foo .bar
+
+==> 002.rb 10 <==
+foo  .bar
+
+==> 003.rb 10 <==
+foo.  bar
+
+==> 004.rb 10 <==
+foo . bar
+
+==> 005.rb 8 <==
+foo. ()
+
+==> 006.rb 12 <==
+foo
+  . bar
+
+==> 007.rb 12 <==
+foo .
+  bar
+
+==> 008.rb 11 <==
+foo
+  .bar
+
+==> 009.rb 10 <==
+'foo'.bar
+
+==> 010.rb 14 <==
+foo.bar. buzz
+
+==> 011.rb 14 <==
+foo. bar.buzz
+
+==> 012.rb 14 <==
+foo .bar.buzz
+
+==> 013.rb 14 <==
+foo.bar .buzz
+
+==> 014.rb 18 <==
+foo.bar .buzz.bat
+
+==> 015.rb 19 <==
+foo. bar. buzz.bat
+
+==> 016.rb 13 <==
+foo.bar.buzz
+
+==> 017.rb 25 <==
+foo. # comment
+  bar.baz
+
+==> 018.rb 26 <==
+foo . # comment
+  bar.baz
+
+==> 019.rb 10 <==
+foo&. bar
+
+==> 020.rb 10 <==
+foo &.bar
+
+==> 021.rb 11 <==
+foo  &.bar
+
+==> 022.rb 11 <==
+foo&.  bar
+
+==> 023.rb 11 <==
+foo &. bar
+
+==> 024.rb 13 <==
+foo
+  &. bar
+
+==> 025.rb 13 <==
+foo &.
+  bar
+
+==> 026.rb 12 <==
+foo
+  &.bar
+
+==> 027.rb 9 <==
+foo&.bar
+
+==> 028.rb 16 <==
+foo&.bar&. buzz
+
+==> 029.rb 16 <==
+foo&. bar&.buzz
+
+==> 030.rb 16 <==
+foo &.bar&.buzz
+
+==> 031.rb 16 <==
+foo&.bar &.buzz
+
+==> 032.rb 21 <==
+foo&.bar &.buzz&.bat
+
+==> 033.rb 22 <==
+foo&. bar&. buzz&.bat
+
+==> 034.rb 15 <==
+foo&.bar&.buzz
+
+==> 035.rb 14 <==
+RuboCop:: Cop
+
+==> 036.rb 15 <==
+RuboCop::  Cop
+
+==> 037.rb 17 <==
+RuboCop
+  :: Cop
+
+==> 038.rb 16 <==
+RuboCop
+  ::Cop
+
+==> 039.rb 13 <==
+RuboCop::Cop
+
+==> 040.rb 19 <==
+RuboCop::Cop:: Cop
+
+==> 041.rb 24 <==
+RuboCop::Cop:: Cop::Cop
+
+==> 042.rb 28 <==
+:: RuboCop:: Cop:: Cop::Cop
+
+==> 043.rb 24 <==
+klass = :: RuboCop::Cop
+
+==> 044.rb 18 <==
+RuboCop::Cop::Cop
+
+==> 045.rb 23 <==
+klass = ::RuboCop::Cop
+
+==> 046.rb 33 <==
+class Test <  ::RuboCop::Cop
+end
+
+==> 047.rb 28 <==
+::RuboCop::Cop || ::RuboCop
+
+==> 048.rb 31 <==
+:: RuboCop:: Cop || :: RuboCop
+
+==> 049.rb 14 <==
+'foo' + 'bar'
+
+==> 050.rb 13 <==
+__ENCODING__
+

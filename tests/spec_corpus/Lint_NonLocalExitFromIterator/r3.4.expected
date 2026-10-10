@@ -1,0 +1,6 @@
+==> offenses exit=1 162 <==
+000.rb:2:3: W: Lint/NonLocalExitFromIterator: Non-local exit from iterator, without return value. `next`, `break`, `Array#find`, `Array#any?`, etc. is preferred.
+
+==> autocorrect exit=1 162 <==
+000.rb:2:3: W: Lint/NonLocalExitFromIterator: Non-local exit from iterator, without return value. `next`, `break`, `Array#find`, `Array#any?`, etc. is preferred.
+

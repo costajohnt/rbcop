@@ -1,0 +1,40 @@
+==> .rubocop.yml 230 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+Layout/LineLength:
+  Enabled: true
+  Max: 80
+  AllowURI: true
+  AllowCopDirectives: true
+  URISchemes:
+  - http
+  - https
+
+==> 000.rb 40 <==
+if condition
+  obj[:key] = { foo: }
+end
+
+==> 001.rb 84 <==
+if condition
+  obj.do_something foo:
+end
+
+if condition
+  obj&.do_something foo:
+end
+
+==> 002.rb 31 <==
+if condition
+  obj.(attr:)
+end
+
+==> 003.rb 32 <==
+if condition
+  obj&.(attr:)
+end
+

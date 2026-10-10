@@ -1,0 +1,277 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 45 <==
+if foo.do_something?
+  true
+else
+  false
+end
+
+==> 001.rb 49 <==
+unless foo.do_something?
+  false
+else
+  true
+end
+
+==> 002.rb 45 <==
+if foo.do_something?
+  false
+else
+  true
+end
+
+==> 003.rb 49 <==
+unless foo.do_something?
+  true
+else
+  false
+end
+
+==> 004.rb 75 <==
+if condition
+  bar
+  false
+elsif foo.do_something?
+  true
+else
+  false
+end
+
+==> 005.rb 75 <==
+if condition
+  bar
+  false
+elsif foo.do_something?
+  false
+else
+  true
+end
+
+==> 006.rb 39 <==
+if !!condition
+  true
+else
+  false
+end
+
+==> 007.rb 39 <==
+if !!condition
+  false
+else
+  true
+end
+
+==> 008.rb 37 <==
+if condition
+  true
+else
+  false
+end
+
+==> 009.rb 41 <==
+unless condition
+  false
+else
+  true
+end
+
+==> 010.rb 37 <==
+if condition
+  false
+else
+  true
+end
+
+==> 011.rb 41 <==
+unless condition
+  true
+else
+  false
+end
+
+==> 012.rb 38 <==
+if foo && bar
+  true
+else
+  false
+end
+
+==> 013.rb 38 <==
+if foo || bar
+  true
+else
+  false
+end
+
+==> 014.rb 42 <==
+unless foo && bar
+  false
+else
+  true
+end
+
+==> 015.rb 42 <==
+unless foo || bar
+  false
+else
+  true
+end
+
+==> 016.rb 38 <==
+if foo && bar
+  false
+else
+  true
+end
+
+==> 017.rb 38 <==
+if foo || bar
+  false
+else
+  true
+end
+
+==> 018.rb 42 <==
+unless foo && bar
+  true
+else
+  false
+end
+
+==> 019.rb 42 <==
+unless foo || bar
+  true
+else
+  false
+end
+
+==> 020.rb 47 <==
+if foo? && bar && baz?
+  true
+else
+  false
+end
+
+==> 021.rb 47 <==
+if foo? || bar || baz?
+  true
+else
+  false
+end
+
+==> 022.rb 47 <==
+if foo? || bar && baz?
+  true
+else
+  false
+end
+
+==> 023.rb 49 <==
+if foo? || (bar && baz?)
+  true
+else
+  false
+end
+
+==> 024.rb 49 <==
+if (foo? || bar) && baz?
+  true
+else
+  false
+end
+
+==> 025.rb 47 <==
+if foo? && bar || baz?
+  true
+else
+  false
+end
+
+==> 026.rb 49 <==
+if foo? && (bar || baz?)
+  true
+else
+  false
+end
+
+==> 027.rb 49 <==
+if (foo? && bar) || baz?
+  true
+else
+  false
+end
+
+==> 028.rb 40 <==
+if foo? && bar?
+  true
+else
+  false
+end
+
+==> 029.rb 40 <==
+if foo? && bar?
+  false
+else
+  true
+end
+
+==> 030.rb 44 <==
+unless foo? || bar?
+  false
+else
+  true
+end
+
+==> 031.rb 44 <==
+unless foo? || bar?
+  true
+else
+  false
+end
+
+==> 032.rb 48 <==
+if foo? && bar? && baz?
+  true
+else
+  false
+end
+
+==> 033.rb 48 <==
+if foo? && bar? || baz?
+  true
+else
+  false
+end
+
+==> 034.rb 54 <==
+if foo
+  true
+elsif bar > baz
+  true
+else
+  false
+end
+
+==> 035.rb 78 <==
+if foo
+  true
+elsif bar > baz
+  true
+elsif qux > quux
+  true
+else
+  false
+end
+
+==> 036.rb 15 <==
+if ()
+else
+end
+

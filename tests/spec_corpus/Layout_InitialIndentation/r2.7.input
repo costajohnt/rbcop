@@ -1,0 +1,25 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 10 <==
+def f
+end
+
+==> 001.rb 9 <==
+﻿puts 1
+==> 002.rb 12 <==
+﻿  puts 1
+
+==> 003.rb 22 <==
+﻿# comment
+  puts 1
+
+==> 004.rb 16 <==
+# comment
+x = 1
+

@@ -1,0 +1,17 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 27 <==
+BigDecimal.new(123.456, 3)
+
+==> 001.rb 29 <==
+::BigDecimal.new(123.456, 3)
+
+==> 002.rb 23 <==
+BigDecimal(123.456, 3)
+

@@ -1,0 +1,14 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+
+==> 000.rb 37 <==
+YAML.load("--- !ruby/object:Foo {}")
+
+==> 001.rb 23 <==
+::YAML.load("--- foo")
+

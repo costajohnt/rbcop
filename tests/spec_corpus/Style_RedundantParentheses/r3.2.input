@@ -1,0 +1,27 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+
+==> 000.rb 8 <==
+(retry)
+
+==> 001.rb 14 <==
+next (
+  42
+)
+
+==> 002.rb 10 <==
+next (42)
+
+==> 003.rb 15 <==
+break (
+  42
+)
+
+==> 004.rb 11 <==
+break (42)
+

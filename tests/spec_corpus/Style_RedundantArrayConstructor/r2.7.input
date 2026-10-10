@@ -1,0 +1,47 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 14 <==
+Array.new([])
+
+==> 001.rb 16 <==
+::Array.new([])
+
+==> 002.rb 8 <==
+Array[]
+
+==> 003.rb 10 <==
+::Array[]
+
+==> 004.rb 10 <==
+Array([])
+
+==> 005.rb 33 <==
+Array.new(['foo', 'bar', 'baz'])
+
+==> 006.rb 27 <==
+Array['foo', 'bar', 'baz']
+
+==> 007.rb 29 <==
+Array(['foo', 'bar', 'baz'])
+
+==> 008.rb 3 <==
+[]
+
+==> 009.rb 17 <==
+Array.new(array)
+
+==> 010.rb 13 <==
+Array(array)
+
+==> 011.rb 20 <==
+Array.new(3, 'foo')
+
+==> 012.rb 23 <==
+Array.new(3) { 'foo' }
+

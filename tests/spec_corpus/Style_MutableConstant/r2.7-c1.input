@@ -1,0 +1,102 @@
+==> .rubocop.yml 155 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/MutableConstant:
+  EnforcedStyle: strict
+
+==> 000.rb 19 <==
+CONST = [1].freeze
+
+==> 001.rb 13 <==
+FOO = *1..10
+
+==> 002.rb 15 <==
+FOO = *(1..10)
+
+==> 003.rb 18 <==
+CONST = FOO + BAR
+
+==> 004.rb 18 <==
+CONST = FOO - BAR
+
+==> 005.rb 18 <==
+CONST = FOO * BAR
+
+==> 006.rb 18 <==
+CONST = FOO / BAR
+
+==> 007.rb 18 <==
+CONST = FOO % BAR
+
+==> 008.rb 19 <==
+CONST = FOO ** BAR
+
+==> 009.rb 75 <==
+FOO = [1].freeze
+BAR = [2].freeze
+BAZ = [3].freeze
+CONST = FOO + BAR + BAZ
+
+==> 010.rb 28 <==
+CONST = ENV['foo'] || 'foo'
+
+==> 011.rb 30 <==
+CONST = ::ENV['foo'] || 'foo'
+
+==> 012.rb 16 <==
+CONST = FOO + 2
+
+==> 013.rb 14 <==
+CONST = 1 + 2
+
+==> 014.rb 18 <==
+CONST = FOO + 2.1
+
+==> 015.rb 18 <==
+CONST = 1.2 + 2.1
+
+==> 016.rb 19 <==
+CONST = FOO == BAR
+
+==> 017.rb 164 <==
+CONST = 'foo'.count
+CONST = 'foo'.count('f')
+CONST = [1, 2, 3].count { |n| n > 2 }
+CONST = [1, 2, 3].count(2) { |n| n > 2 }
+CONST = 'foo'.length
+CONST = 'foo'.size
+
+==> 018.rb 20 <==
+CONST = FOO + 'bar'
+
+==> 019.rb 30 <==
+CONST = 'foo' + 'bar' + 'baz'
+
+==> 020.rb 15 <==
+XXX = YYY, ZZZ
+
+==> 021.rb 18 <==
+XXX = %w(YYY ZZZ)
+
+==> 022.rb 31 <==
+FOO = <<-HERE
+  SOMETHING
+HERE
+
+==> 023.rb 85 <==
+# frozen_string_literal: true
+
+CONST = <<~HERE
+  foo #{use_interpolation}
+  bar
+HERE
+
+==> 024.rb 59 <==
+# frozen_string_literal: true
+
+CONST = 'foo'         'bar'
+

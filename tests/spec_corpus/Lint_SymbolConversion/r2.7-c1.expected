@@ -1,0 +1,32 @@
+==> offenses exit=1 467 <==
+001.rb:3:3: W: [Correctable] Lint/SymbolConversion: Unnecessary symbol conversion; use `b:` instead.
+002.rb:2:3: W: [Correctable] Lint/SymbolConversion: Symbol hash key should be quoted for consistency; use `"a":` instead.
+002.rb:3:3: W: [Correctable] Lint/SymbolConversion: Symbol hash key should be quoted for consistency; use `"b":` instead.
+003.rb:3:3: W: [Correctable] Lint/SymbolConversion: Symbol hash key should be quoted for consistency; use `"b":` instead.
+
+==> autocorrect exit=0 459 <==
+001.rb:3:3: W: [Corrected] Lint/SymbolConversion: Unnecessary symbol conversion; use `b:` instead.
+002.rb:2:3: W: [Corrected] Lint/SymbolConversion: Symbol hash key should be quoted for consistency; use `"a":` instead.
+002.rb:3:3: W: [Corrected] Lint/SymbolConversion: Symbol hash key should be quoted for consistency; use `"b":` instead.
+003.rb:3:3: W: [Corrected] Lint/SymbolConversion: Symbol hash key should be quoted for consistency; use `"b":` instead.
+
+==> corrected/001.rb 19 <==
+{
+  a: 1,
+  b: 2
+}
+
+==> corrected/002.rb 45 <==
+{
+  "a": 1,
+  "b": 2,
+  'c': 3,
+  'd-e': 4
+}
+
+==> corrected/003.rb 24 <==
+{
+  'a=': 1,
+  "b": 2
+}
+

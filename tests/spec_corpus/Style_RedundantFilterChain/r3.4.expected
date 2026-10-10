@@ -1,0 +1,19 @@
+==> offenses exit=1 284 <==
+000.rb:1:5: C: [Correctable] Style/RedundantFilterChain: Use `any?` instead of `select.any?`.
+001.rb:1:5: C: [Correctable] Style/RedundantFilterChain: Use `any?` instead of `filter.any?`.
+002.rb:1:5: C: [Correctable] Style/RedundantFilterChain: Use `any?` instead of `find_all.any?`.
+
+==> autocorrect exit=0 278 <==
+000.rb:1:5: C: [Corrected] Style/RedundantFilterChain: Use `any?` instead of `select.any?`.
+001.rb:1:5: C: [Corrected] Style/RedundantFilterChain: Use `any?` instead of `filter.any?`.
+002.rb:1:5: C: [Corrected] Style/RedundantFilterChain: Use `any?` instead of `find_all.any?`.
+
+==> corrected/000.rb 20 <==
+arr.any? { it > 1 }
+
+==> corrected/001.rb 20 <==
+arr.any? { it > 1 }
+
+==> corrected/002.rb 20 <==
+arr.any? { it > 1 }
+

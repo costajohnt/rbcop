@@ -1,0 +1,19 @@
+==> .rubocop.yml 204 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/BlockParameterName:
+  AllowedNames:
+  - foo1
+  - foo2
+  AllowNamesEndingInNumbers: false
+
+==> 000.rb 37 <==
+something { |foo1, foo2| do_things }
+
+==> 001.rb 36 <==
+something { |bar, bar1| do_things }
+

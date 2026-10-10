@@ -1,0 +1,70 @@
+==> offenses exit=1 1446 <==
+004.rb:2:8: C: [Correctable] Layout/MultilineMethodArgumentLineBreaks: Each argument in a multi-line method call must start on a separate line.
+005.rb:2:8: C: [Correctable] Layout/MultilineMethodArgumentLineBreaks: Each argument in a multi-line method call must start on a separate line.
+005.rb:2:15: C: [Correctable] Layout/MultilineMethodArgumentLineBreaks: Each argument in a multi-line method call must start on a separate line.
+006.rb:2:8: C: [Correctable] Layout/MultilineMethodArgumentLineBreaks: Each argument in a multi-line method call must start on a separate line.
+006.rb:2:15: C: [Correctable] Layout/MultilineMethodArgumentLineBreaks: Each argument in a multi-line method call must start on a separate line.
+007.rb:1:12: C: [Correctable] Layout/MultilineMethodArgumentLineBreaks: Each argument in a multi-line method call must start on a separate line.
+008.rb:3:4: C: [Correctable] Layout/MultilineMethodArgumentLineBreaks: Each argument in a multi-line method call must start on a separate line.
+009.rb:1:19: C: [Correctable] Layout/MultilineMethodArgumentLineBreaks: Each argument in a multi-line method call must start on a separate line.
+009.rb:1:24: C: [Correctable] Layout/MultilineMethodArgumentLineBreaks: Each argument in a multi-line method call must start on a separate line.
+012.rb:1:15: C: [Correctable] Layout/MultilineMethodArgumentLineBreaks: Each argument in a multi-line method call must start on a separate line.
+
+==> autocorrect exit=0 1426 <==
+004.rb:2:8: C: [Corrected] Layout/MultilineMethodArgumentLineBreaks: Each argument in a multi-line method call must start on a separate line.
+005.rb:2:8: C: [Corrected] Layout/MultilineMethodArgumentLineBreaks: Each argument in a multi-line method call must start on a separate line.
+005.rb:2:15: C: [Corrected] Layout/MultilineMethodArgumentLineBreaks: Each argument in a multi-line method call must start on a separate line.
+006.rb:2:8: C: [Corrected] Layout/MultilineMethodArgumentLineBreaks: Each argument in a multi-line method call must start on a separate line.
+006.rb:2:15: C: [Corrected] Layout/MultilineMethodArgumentLineBreaks: Each argument in a multi-line method call must start on a separate line.
+007.rb:1:12: C: [Corrected] Layout/MultilineMethodArgumentLineBreaks: Each argument in a multi-line method call must start on a separate line.
+008.rb:3:4: C: [Corrected] Layout/MultilineMethodArgumentLineBreaks: Each argument in a multi-line method call must start on a separate line.
+009.rb:1:19: C: [Corrected] Layout/MultilineMethodArgumentLineBreaks: Each argument in a multi-line method call must start on a separate line.
+009.rb:1:24: C: [Corrected] Layout/MultilineMethodArgumentLineBreaks: Each argument in a multi-line method call must start on a separate line.
+012.rb:1:15: C: [Corrected] Layout/MultilineMethodArgumentLineBreaks: Each argument in a multi-line method call must start on a separate line.
+
+==> corrected/004.rb 34 <==
+taz("abc",
+"foo", 
+"bar",
+"baz"
+)
+
+==> corrected/005.rb 43 <==
+taz("abc",
+"foo", 
+"bar", 
+"barz",
+"baz"
+)
+
+==> corrected/006.rb 49 <==
+taz("abc",
+"foo", 
+"bar", 
+z: "barz",
+x: "baz"
+)
+
+==> corrected/007.rb 31 <==
+taz("abc", 
+{
+  foo: "edf",
+})
+
+==> corrected/008.rb 31 <==
+taz({
+  foo: "edf",
+}, 
+"abc")
+
+==> corrected/009.rb 38 <==
+do_something(foo, 
+bar, 
+baz,
+  quux)
+
+==> corrected/012.rb 30 <==
+foo&.bar(baz, 
+quux,
+  corge)
+

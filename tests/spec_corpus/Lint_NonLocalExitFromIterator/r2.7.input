@@ -1,0 +1,122 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 82 <==
+items.each do |item|
+  return if item.stock == 0
+  item.update!(foobar: true)
+end
+
+==> 001.rb 83 <==
+items&.each do |item|
+  return if item.stock == 0
+  item.update!(foobar: true)
+end
+
+==> 002.rb 66 <==
+items.each do
+  return if baz?(_1)
+  _1.update!(foobar: true)
+end
+
+==> 003.rb 96 <==
+items.each_with_index do |item, i|
+  return if item.stock == 0
+  item.update!(foobar: true)
+end
+
+==> 004.rb 79 <==
+item.with_lock do
+  return if item.stock == 0
+  item.update!(foobar: true)
+end
+
+==> 005.rb 162 <==
+transaction do
+  return unless update_necessary?
+  find_each do |item|
+    return if item.stock == 0 # false-negative...
+    item.update!(foobar: true)
+  end
+end
+
+==> 006.rb 172 <==
+items.each(lambda do |item|
+  return if item.stock == 0
+  item.update!(foobar: true)
+end)
+items.each -> (item) {
+  return if item.stock == 0
+  item.update!(foobar: true)
+}
+
+==> 007.rb 443 <==
+RSpec.configure do |config|
+  # some configuration
+
+  if Gem.loaded_specs["paper_trail"].version < Gem::Version.new("4.0.0")
+    current_behavior = ActiveSupport::Deprecation.behavior
+    ActiveSupport::Deprecation.behavior = lambda do |message, callstack|
+      return if message =~ /foobar/
+      Array.wrap(current_behavior).each do |behavior|
+        behavior.call(message, callstack)
+      end
+    end
+
+    # more configuration
+  end
+end
+
+==> 008.rb 214 <==
+transaction do
+  return unless update_necessary?
+  items.each do |item|
+    return if item.nil?
+    item.with_lock do
+      return if item.stock == 0
+      item.very_complicated_update_operation!
+    end
+  end
+end
+
+==> 009.rb 121 <==
+def find_first_sold_out_item(items)
+  items.each do |item|
+    return item if item.stock == 0
+    item.foobar!
+  end
+end
+
+==> 010.rb 116 <==
+[:method_one, :method_two].each do |method_name|
+  define_method(method_name) do
+    return if predicate?
+  end
+end
+
+==> 011.rb 92 <==
+str = 'foo'
+str.define_singleton_method :bar do |baz|
+  return unless baz
+  replace baz
+end
+
+==> 012.rb 60 <==
+Foo.configure do |c|
+  def bar
+    return if baz?
+  end
+end
+
+==> 013.rb 65 <==
+Foo.configure do |c|
+  def self.bar
+    return if baz?
+  end
+end
+

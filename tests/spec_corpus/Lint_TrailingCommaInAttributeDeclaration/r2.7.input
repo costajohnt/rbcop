@@ -1,0 +1,45 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 66 <==
+class Foo
+  attr_reader :bar,
+
+  def baz
+    puts "Qux"
+  end
+end
+
+==> 001.rb 55 <==
+class Foo
+  attr_reader :bar,
+
+  def self.baz; end
+end
+
+==> 002.rb 52 <==
+class Foo
+  attr_accessor :bar,
+
+  def baz; end
+end
+
+==> 003.rb 65 <==
+class Foo
+  attr_reader :bar
+
+  def baz
+    puts "Qux"
+  end
+end
+
+==> 004.rb 41 <==
+class Foo
+  attr_reader def bar; end
+end
+

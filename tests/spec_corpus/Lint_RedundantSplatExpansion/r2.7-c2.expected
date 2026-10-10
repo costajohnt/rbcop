@@ -1,0 +1,64 @@
+==> offenses exit=1 1272 <==
+000.rb:1:12: W: [Correctable] Lint/RedundantSplatExpansion: Pass array contents as separate arguments.
+001.rb:1:5: W: [Correctable] Lint/RedundantSplatExpansion: Replace splat expansion with comma separated values.
+002.rb:1:12: W: [Correctable] Lint/RedundantSplatExpansion: Pass array contents as separate arguments.
+003.rb:1:5: W: [Correctable] Lint/RedundantSplatExpansion: Replace splat expansion with comma separated values.
+004.rb:1:14: W: [Correctable] Lint/RedundantSplatExpansion: Pass array contents as separate arguments.
+005.rb:1:25: W: [Correctable] Lint/RedundantSplatExpansion: Pass array contents as separate arguments.
+006.rb:1:12: W: [Correctable] Lint/RedundantSplatExpansion: Pass array contents as separate arguments.
+007.rb:1:5: W: [Correctable] Lint/RedundantSplatExpansion: Replace splat expansion with comma separated values.
+008.rb:1:12: W: [Correctable] Lint/RedundantSplatExpansion: Pass array contents as separate arguments.
+009.rb:1:5: W: [Correctable] Lint/RedundantSplatExpansion: Replace splat expansion with comma separated values.
+010.rb:1:14: W: [Correctable] Lint/RedundantSplatExpansion: Pass array contents as separate arguments.
+011.rb:1:12: W: [Correctable] Lint/RedundantSplatExpansion: Pass array contents as separate arguments.
+
+==> autocorrect exit=0 1248 <==
+000.rb:1:12: W: [Corrected] Lint/RedundantSplatExpansion: Pass array contents as separate arguments.
+001.rb:1:5: W: [Corrected] Lint/RedundantSplatExpansion: Replace splat expansion with comma separated values.
+002.rb:1:12: W: [Corrected] Lint/RedundantSplatExpansion: Pass array contents as separate arguments.
+003.rb:1:5: W: [Corrected] Lint/RedundantSplatExpansion: Replace splat expansion with comma separated values.
+004.rb:1:14: W: [Corrected] Lint/RedundantSplatExpansion: Pass array contents as separate arguments.
+005.rb:1:25: W: [Corrected] Lint/RedundantSplatExpansion: Pass array contents as separate arguments.
+006.rb:1:12: W: [Corrected] Lint/RedundantSplatExpansion: Pass array contents as separate arguments.
+007.rb:1:5: W: [Corrected] Lint/RedundantSplatExpansion: Replace splat expansion with comma separated values.
+008.rb:1:12: W: [Corrected] Lint/RedundantSplatExpansion: Pass array contents as separate arguments.
+009.rb:1:5: W: [Corrected] Lint/RedundantSplatExpansion: Replace splat expansion with comma separated values.
+010.rb:1:14: W: [Corrected] Lint/RedundantSplatExpansion: Pass array contents as separate arguments.
+011.rb:1:12: W: [Corrected] Lint/RedundantSplatExpansion: Pass array contents as separate arguments.
+
+==> corrected/000.rb 34 <==
+array.push('one', 'two', 'three')
+
+==> corrected/001.rb 22 <==
+a = %w(one two three)
+
+==> corrected/002.rb 37 <==
+array.push("one", "#{two}", "three")
+
+==> corrected/003.rb 25 <==
+a = %W(one #{two} three)
+
+==> corrected/004.rb 34 <==
+do_something('foo', 'bar', 'baz')
+
+==> corrected/005.rb 45 <==
+maybe_nil&.do_something('foo', 'bar', 'baz')
+
+==> corrected/006.rb 28 <==
+array.push(:first, :second)
+
+==> corrected/007.rb 21 <==
+a = %i(first second)
+
+==> corrected/008.rb 45 <==
+array.push(:"first", :"second", :"#{third}")
+
+==> corrected/009.rb 30 <==
+a = %I(first second #{third})
+
+==> corrected/010.rb 31 <==
+do_something(:foo, :bar, :baz)
+
+==> corrected/011.rb 35 <==
+array.push(:"#{first}", :"second")
+

@@ -1,0 +1,25 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 18 <==
+a = [:a,
+     :b]
+
+==> 001.rb 15 <==
+%w(a b
+   c d)
+
+==> 002.rb 29 <==
+method([:foo,
+        :bar])
+
+==> 003.rb 18 <==
+b = [
+  :a,
+  :b]
+

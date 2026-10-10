@@ -1,0 +1,14 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 36 <==
+[1,2,3].map do
+  it.to_s
+end
+"done"
+

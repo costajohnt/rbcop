@@ -1,0 +1,12 @@
+==> offenses exit=1 449 <==
+000.rb:1:1: C: Style/DocumentDynamicEvalDefinition: Add a comment block showing its appearance if interpolated.
+003.rb:1:10: C: Style/DocumentDynamicEvalDefinition: Add a comment block showing its appearance if interpolated.
+010.rb:1:1: C: Style/DocumentDynamicEvalDefinition: Add a comment block showing its appearance if interpolated.
+017.rb:1:1: C: Style/DocumentDynamicEvalDefinition: Add a comment block showing its appearance if interpolated.
+
+==> autocorrect exit=1 449 <==
+000.rb:1:1: C: Style/DocumentDynamicEvalDefinition: Add a comment block showing its appearance if interpolated.
+003.rb:1:10: C: Style/DocumentDynamicEvalDefinition: Add a comment block showing its appearance if interpolated.
+010.rb:1:1: C: Style/DocumentDynamicEvalDefinition: Add a comment block showing its appearance if interpolated.
+017.rb:1:1: C: Style/DocumentDynamicEvalDefinition: Add a comment block showing its appearance if interpolated.
+

@@ -1,0 +1,84 @@
+==> offenses exit=1 1112 <==
+000.gemspec:3:3: W: [Correctable] Gemspec/DeprecatedAttributeAssignment: Do not set `date` in gemspec.
+001.gemspec:3:3: W: [Correctable] Gemspec/DeprecatedAttributeAssignment: Do not set `date` in gemspec.
+004.gemspec:3:3: W: [Correctable] Gemspec/DeprecatedAttributeAssignment: Do not set `rubygems_version` in gemspec.
+005.gemspec:3:3: W: [Correctable] Gemspec/DeprecatedAttributeAssignment: Do not set `rubygems_version` in gemspec.
+008.gemspec:3:3: W: [Correctable] Gemspec/DeprecatedAttributeAssignment: Do not set `specification_version` in gemspec.
+009.gemspec:3:3: W: [Correctable] Gemspec/DeprecatedAttributeAssignment: Do not set `specification_version` in gemspec.
+012.gemspec:3:3: W: [Correctable] Gemspec/DeprecatedAttributeAssignment: Do not set `test_files` in gemspec.
+013.gemspec:3:3: W: [Correctable] Gemspec/DeprecatedAttributeAssignment: Do not set `test_files` in gemspec.
+016.gemspec:3:3: W: [Correctable] Gemspec/DeprecatedAttributeAssignment: Do not set `test_files` in gemspec.
+017.gemspec:3:3: W: [Correctable] Gemspec/DeprecatedAttributeAssignment: Do not set `test_files` in gemspec.
+
+==> autocorrect exit=0 1092 <==
+000.gemspec:3:3: W: [Corrected] Gemspec/DeprecatedAttributeAssignment: Do not set `date` in gemspec.
+001.gemspec:3:3: W: [Corrected] Gemspec/DeprecatedAttributeAssignment: Do not set `date` in gemspec.
+004.gemspec:3:3: W: [Corrected] Gemspec/DeprecatedAttributeAssignment: Do not set `rubygems_version` in gemspec.
+005.gemspec:3:3: W: [Corrected] Gemspec/DeprecatedAttributeAssignment: Do not set `rubygems_version` in gemspec.
+008.gemspec:3:3: W: [Corrected] Gemspec/DeprecatedAttributeAssignment: Do not set `specification_version` in gemspec.
+009.gemspec:3:3: W: [Corrected] Gemspec/DeprecatedAttributeAssignment: Do not set `specification_version` in gemspec.
+012.gemspec:3:3: W: [Corrected] Gemspec/DeprecatedAttributeAssignment: Do not set `test_files` in gemspec.
+013.gemspec:3:3: W: [Corrected] Gemspec/DeprecatedAttributeAssignment: Do not set `test_files` in gemspec.
+016.gemspec:3:3: W: [Corrected] Gemspec/DeprecatedAttributeAssignment: Do not set `test_files` in gemspec.
+017.gemspec:3:3: W: [Corrected] Gemspec/DeprecatedAttributeAssignment: Do not set `test_files` in gemspec.
+
+==> corrected/000.gemspec 85 <==
+Gem::Specification.new do |s|
+  s.name = 'your_cool_gem_name'
+  s.bindir = 'exe'
+end
+
+==> corrected/001.gemspec 94 <==
+Gem::Specification.new do |spec|
+  spec.name = 'your_cool_gem_name'
+  spec.bindir = 'exe'
+end
+
+==> corrected/004.gemspec 85 <==
+Gem::Specification.new do |s|
+  s.name = 'your_cool_gem_name'
+  s.bindir = 'exe'
+end
+
+==> corrected/005.gemspec 94 <==
+Gem::Specification.new do |spec|
+  spec.name = 'your_cool_gem_name'
+  spec.bindir = 'exe'
+end
+
+==> corrected/008.gemspec 85 <==
+Gem::Specification.new do |s|
+  s.name = 'your_cool_gem_name'
+  s.bindir = 'exe'
+end
+
+==> corrected/009.gemspec 94 <==
+Gem::Specification.new do |spec|
+  spec.name = 'your_cool_gem_name'
+  spec.bindir = 'exe'
+end
+
+==> corrected/012.gemspec 85 <==
+Gem::Specification.new do |s|
+  s.name = 'your_cool_gem_name'
+  s.bindir = 'exe'
+end
+
+==> corrected/013.gemspec 94 <==
+Gem::Specification.new do |spec|
+  spec.name = 'your_cool_gem_name'
+  spec.bindir = 'exe'
+end
+
+==> corrected/016.gemspec 85 <==
+Gem::Specification.new do |s|
+  s.name = 'your_cool_gem_name'
+  s.bindir = 'exe'
+end
+
+==> corrected/017.gemspec 94 <==
+Gem::Specification.new do |spec|
+  spec.name = 'your_cool_gem_name'
+  spec.bindir = 'exe'
+end
+

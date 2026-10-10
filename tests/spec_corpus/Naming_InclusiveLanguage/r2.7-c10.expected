@@ -1,0 +1,9 @@
+==> offenses exit=1 104 <==
+000.rb:1:1: C: [Correctable] Naming/InclusiveLanguage: Consider replacing 'whitelist' with 'allowlist'.
+
+==> autocorrect exit=0 102 <==
+000.rb:1:1: C: [Corrected] Naming/InclusiveLanguage: Consider replacing 'whitelist' with 'allowlist'.
+
+==> corrected/000.rb 28 <==
+allowlist = %w(user1 user2)
+

@@ -1,0 +1,92 @@
+==> offenses exit=1 2024 <==
+013.rb:1:2: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+014.rb:1:9: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+015.rb:1:14: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+016.rb:3:12: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+017.rb:2:6: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+018.rb:1:12: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+019.rb:1:63: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+021.rb:2:5: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+021.rb:2:14: C: Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+023.rb:1:9: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+023.rb:1:18: C: Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+025.rb:2:7: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside empty array brackets.
+026.rb:2:18: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside empty array brackets.
+027.rb:2:8: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+027.rb:2:20: C: Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+028.rb:2:8: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+028.rb:2:20: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+028.rb:2:36: C: Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+028.rb:2:38: C: Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+
+==> autocorrect exit=0 1516 <==
+013.rb:1:2: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+014.rb:1:9: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+015.rb:1:14: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+016.rb:3:12: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+017.rb:2:6: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+018.rb:1:12: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+019.rb:1:63: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+021.rb:2:5: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+023.rb:1:9: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+025.rb:2:7: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside empty array brackets.
+026.rb:2:18: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside empty array brackets.
+027.rb:2:8: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+028.rb:2:8: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+028.rb:2:20: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
+
+==> corrected/013.rb 10 <==
+[2, 3, 4]
+
+==> corrected/014.rb 10 <==
+[b, c, d]
+
+==> corrected/015.rb 25 <==
+['qux', 'baz'] - ['baz']
+
+==> corrected/016.rb 35 <==
+['ok',
+ 'still good',
+ 'not good']
+
+==> corrected/017.rb 23 <==
+[:good,
+ :bad].compact
+
+==> corrected/018.rb 16 <==
+[2,3,4] - [3,4]
+
+==> corrected/019.rb 149 <==
+ActiveRecord::Base.connection.execute(<<-SQL, [self.class.to_s]).first["count"]
+  SELECT COUNT(widgets.id) FROM widgets
+  WHERE widget_type = $1
+SQL
+
+==> corrected/021.rb 27 <==
+case foo
+in [bar, baz]
+end
+
+==> corrected/023.rb 18 <==
+foo in [bar, baz]
+
+==> corrected/025.rb 24 <==
+case value
+in ADT[]
+end
+
+==> corrected/026.rb 36 <==
+case value
+in ADT[*head, ADT[]]
+end
+
+==> corrected/027.rb 35 <==
+case value
+in ADT[*head, tail]
+end
+
+==> corrected/028.rb 51 <==
+case value
+in ADT[*head, ADT[*headhead, tail]]
+end
+

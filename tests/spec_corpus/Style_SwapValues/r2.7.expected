@@ -1,0 +1,44 @@
+==> offenses exit=1 938 <==
+000.rb:1:1: C: [Correctable] Style/SwapValues: Replace this and assignments at lines 2 and 3 with `x, y = y, x`.
+001.rb:1:1: C: [Correctable] Style/SwapValues: Replace this and assignments at lines 2 and 3 with `$x, $y = $y, $x`.
+002.rb:1:1: C: [Correctable] Style/SwapValues: Replace this and assignments at lines 2 and 3 with `@x, @y = @y, @x`.
+003.rb:1:1: C: [Correctable] Style/SwapValues: Replace this and assignments at lines 2 and 3 with `@@x, @@y = @@y, @@x`.
+004.rb:1:1: C: [Correctable] Style/SwapValues: Replace this and assignments at lines 2 and 3 with `X, Y = Y, X`.
+005.rb:1:1: C: [Correctable] Style/SwapValues: Replace this and assignments at lines 2 and 3 with `::X, Foo::Y = Foo::Y, ::X`.
+006.rb:1:1: C: [Correctable] Style/SwapValues: Replace this and assignments at lines 2 and 3 with `@x, $y = $y, @x`.
+007.rb:1:1: C: [Correctable] Style/SwapValues: Replace this and assignments at lines 3 and 4 with `x, y = y, x`.
+
+==> autocorrect exit=0 922 <==
+000.rb:1:1: C: [Corrected] Style/SwapValues: Replace this and assignments at lines 2 and 3 with `x, y = y, x`.
+001.rb:1:1: C: [Corrected] Style/SwapValues: Replace this and assignments at lines 2 and 3 with `$x, $y = $y, $x`.
+002.rb:1:1: C: [Corrected] Style/SwapValues: Replace this and assignments at lines 2 and 3 with `@x, @y = @y, @x`.
+003.rb:1:1: C: [Corrected] Style/SwapValues: Replace this and assignments at lines 2 and 3 with `@@x, @@y = @@y, @@x`.
+004.rb:1:1: C: [Corrected] Style/SwapValues: Replace this and assignments at lines 2 and 3 with `X, Y = Y, X`.
+005.rb:1:1: C: [Corrected] Style/SwapValues: Replace this and assignments at lines 2 and 3 with `::X, Foo::Y = Foo::Y, ::X`.
+006.rb:1:1: C: [Corrected] Style/SwapValues: Replace this and assignments at lines 2 and 3 with `@x, $y = $y, @x`.
+007.rb:1:1: C: [Corrected] Style/SwapValues: Replace this and assignments at lines 3 and 4 with `x, y = y, x`.
+
+==> corrected/000.rb 12 <==
+x, y = y, x
+
+==> corrected/001.rb 16 <==
+$x, $y = $y, $x
+
+==> corrected/002.rb 16 <==
+@x, @y = @y, @x
+
+==> corrected/003.rb 20 <==
+@@x, @@y = @@y, @@x
+
+==> corrected/004.rb 12 <==
+X, Y = Y, X
+
+==> corrected/005.rb 26 <==
+::X, Foo::Y = Foo::Y, ::X
+
+==> corrected/006.rb 16 <==
+@x, $y = $y, @x
+
+==> corrected/007.rb 12 <==
+x, y = y, x
+

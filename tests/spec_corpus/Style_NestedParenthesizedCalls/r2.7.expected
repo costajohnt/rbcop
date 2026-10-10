@@ -1,0 +1,24 @@
+==> offenses exit=1 491 <==
+003.rb:1:6: C: [Correctable] Style/NestedParenthesizedCalls: Add parentheses to nested method call `compute something`.
+004.rb:1:6: C: [Correctable] Style/NestedParenthesizedCalls: Add parentheses to nested method call `receiver&.compute something`.
+005.rb:1:6: C: [Correctable] Style/NestedParenthesizedCalls: Add parentheses to nested method call `compute first, second`.
+011.rb:1:6: C: [Correctable] Style/NestedParenthesizedCalls: Add parentheses to nested method call `nex \        5`.
+
+==> autocorrect exit=0 483 <==
+003.rb:1:6: C: [Corrected] Style/NestedParenthesizedCalls: Add parentheses to nested method call `compute something`.
+004.rb:1:6: C: [Corrected] Style/NestedParenthesizedCalls: Add parentheses to nested method call `receiver&.compute something`.
+005.rb:1:6: C: [Corrected] Style/NestedParenthesizedCalls: Add parentheses to nested method call `compute first, second`.
+011.rb:1:6: C: [Corrected] Style/NestedParenthesizedCalls: Add parentheses to nested method call `nex \        5`.
+
+==> corrected/003.rb 25 <==
+puts(compute(something))
+
+==> corrected/004.rb 35 <==
+puts(receiver&.compute(something))
+
+==> corrected/005.rb 29 <==
+puts(compute(first, second))
+
+==> corrected/011.rb 13 <==
+puts(nex(5))
+

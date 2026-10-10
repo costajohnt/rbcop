@@ -1,0 +1,15 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+
+==> 000.rb 14 <==
+def foo = bar
+
+==> 001.rb 24 <==
+def foo =
+          bar
+

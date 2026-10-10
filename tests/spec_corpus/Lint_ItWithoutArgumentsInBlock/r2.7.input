@@ -1,0 +1,91 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 15 <==
+0.times { it }
+
+==> 001.rb 34 <==
+0.times do
+  it
+  it = 1
+  it
+end
+
+==> 002.rb 19 <==
+0.times { it(42) }
+
+==> 003.rb 32 <==
+0.times { it { do_something } }
+
+==> 004.rb 17 <==
+0.times { it() }
+
+==> 005.rb 20 <==
+0.times { self.it }
+
+==> 006.rb 38 <==
+0.times do
+  it(42)
+  it = 1
+  it
+end
+
+==> 007.rb 51 <==
+0.times do
+  it { do_something }
+  it = 1
+  it
+end
+
+==> 008.rb 36 <==
+0.times do
+  it()
+  it = 1
+  it
+end
+
+==> 009.rb 39 <==
+0.times do
+  self.it
+  it = 1
+  it
+end
+
+==> 010.rb 18 <==
+if false
+  it
+end
+
+==> 011.rb 17 <==
+def foo
+  it
+end
+
+==> 012.rb 20 <==
+0.times { ||
+  it
+}
+
+==> 013.rb 22 <==
+0.times { |_n|
+  it
+}
+
+==> 014.rb 29 <==
+0.times do
+  it = 1
+  it
+end
+
+==> 015.rb 22 <==
+it = 1
+0.times { it }
+
+==> 016.rb 11 <==
+0.times {}
+

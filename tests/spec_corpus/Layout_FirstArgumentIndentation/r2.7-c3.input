@@ -1,0 +1,232 @@
+==> .rubocop.yml 239 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/FirstArgumentIndentation:
+  EnforcedStyle: special_for_inner_method_call_in_parentheses
+Layout/IndentationWidth:
+  Width: 2
+
+==> 000.rb 28 <==
+run(
+    :foo,
+    bar: 3
+)
+
+==> 001.rb 30 <==
+super(
+    :foo,
+    bar: 3
+)
+
+==> 002.rb 33 <==
+self.run(
+    :foo,
+    bar: 3
+)
+
+==> 003.rb 31 <==
+self.|(
+    :foo,
+    bar: 3
+)
+
+==> 004.rb 31 <==
+self.+(
+    :foo,
+    bar: 3
+)
+
+==> 005.rb 25 <==
+run(
+ :foo,
+    bar: 3
+)
+
+==> 006.rb 19 <==
+foo(
+ bar(
+  7
+)
+)
+
+==> 007.rb 39 <==
+foo
+  .bar(
+  baz(
+      qux
+    )
+  )
+
+==> 008.rb 46 <==
+foo
+  .bar(
+  bar(
+      key: value
+    )
+  )
+
+==> 009.rb 35 <==
+receiver&.run(
+ :foo,
+    bar: 3
+)
+
+==> 010.rb 14 <==
+foo.baz =
+bar
+
+==> 011.rb 30 <==
+x = run(
+  :foo,
+    bar: 3
+)
+
+==> 012.rb 21 <==
+x =
+  run(
+    :foo)
+
+==> 013.rb 20 <==
+@x =
+  run(
+  :foo)
+
+==> 014.rb 21 <==
+run :foo,
+    bar: 3
+
+==> 015.rb 30 <==
+puts x.
+  merge(
+    b: 2
+  )
+
+==> 016.rb 32 <==
+puts x.
+  merge(
+      b: 2
+  )
+
+==> 017.rb 31 <==
+puts x.
+  merge(
+
+    b: 2
+  )
+
+==> 018.rb 58 <==
+puts x.
+  merge( # EOL comment
+    # comment
+    b: 2
+  )
+
+==> 019.rb 40 <==
+puts x.
+  merge(
+  # comment
+  b: 2
+  )
+
+==> 020.rb 16 <==
+run()
+run_again
+
+==> 021.rb 64 <==
+params = default_cfg.keys - %w(Description) -
+         cfg.keys
+
+==> 022.rb 131 <==
+@subject_results[subject] = original.update(
+  mutation_results: (dup << mutation_result),
+  tests:            test_result.tests
+)
+
+==> 023.rb 104 <==
+A = Regexp.union(
+  /[A-Za-z_][A-Za-z\d_]*[!?=]?/,
+  *AST::Types::OPERATOR_METHODS.map(&:to_s)
+).freeze
+
+==> 024.rb 59 <==
+run(:foo, defaults.merge(
+                        bar: 3))
+
+==> 025.rb 48 <==
+run(:foo, defaults.
+          merge(
+  bar: 3))
+
+==> 026.rb 52 <==
+puts %(
+  <p>
+    #{Array(
+      42
+    )}
+  </p>
+)
+
+==> 027.rb 47 <==
+puts('Ｒｕｂｙ', f(
+                   a))
+
+==> 028.rb 122 <==
+instance_variable_set(
+  "@diagnostics",
+  Diagnostic.where(
+              'limit >= 10 and limit < 100',
+            )
+)
+
+==> 029.rb 161 <==
+instance_variable_set(
+  "@diagnostics",
+  Diagnostic.where(
+        'limit >= ? and limit < ?',
+        LIMITS[:lowest_value], LIMITS[:highest_value]
+      )
+)
+
+==> 030.rb 196 <==
+instance_variable_set(
+  "@diagnostic_ids",
+  Diagnostic.where(
+        'limit >= ? and limit < ?',
+        LIMITS[:lowest_value], LIMITS[:highest_value]
+      )
+      .where(id: 1)
+      .ids,
+)
+
+==> 031.rb 36 <==
+run :foo, defaults.merge(
+  bar: 3)
+
+==> 032.rb 88 <==
+run :foo, Diagnostic.where(
+              'limit >= 10',
+            )
+            .ids
+
+==> 033.rb 145 <==
+sequences = CourseSequence
+  .includes(
+      course_sequence_memberships: {
+        course: :course_components
+      }
+    )
+  .joins(:courses)
+
+==> 034.rb 137 <==
+sequences = CourseSequence
+  .includes(
+    course_sequence_memberships: {
+      course: :course_components
+    }
+  )
+  .joins(:courses)
+

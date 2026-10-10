@@ -1,0 +1,65 @@
+==> offenses exit=1 932 <==
+000.rb:2:1: C: [Correctable] Layout/ConditionPosition: Place the condition on the same line as `if`.
+001.rb:2:3: C: [Correctable] Layout/ConditionPosition: Place the condition on the same line as `if`.
+004.rb:2:1: C: [Correctable] Layout/ConditionPosition: Place the condition on the same line as `unless`.
+005.rb:2:3: C: [Correctable] Layout/ConditionPosition: Place the condition on the same line as `unless`.
+008.rb:2:1: C: [Correctable] Layout/ConditionPosition: Place the condition on the same line as `while`.
+009.rb:2:3: C: [Correctable] Layout/ConditionPosition: Place the condition on the same line as `while`.
+012.rb:2:1: C: [Correctable] Layout/ConditionPosition: Place the condition on the same line as `until`.
+013.rb:2:3: C: [Correctable] Layout/ConditionPosition: Place the condition on the same line as `until`.
+016.rb:4:3: C: [Correctable] Layout/ConditionPosition: Place the condition on the same line as `elsif`.
+
+==> autocorrect exit=0 914 <==
+000.rb:2:1: C: [Corrected] Layout/ConditionPosition: Place the condition on the same line as `if`.
+001.rb:2:3: C: [Corrected] Layout/ConditionPosition: Place the condition on the same line as `if`.
+004.rb:2:1: C: [Corrected] Layout/ConditionPosition: Place the condition on the same line as `unless`.
+005.rb:2:3: C: [Corrected] Layout/ConditionPosition: Place the condition on the same line as `unless`.
+008.rb:2:1: C: [Corrected] Layout/ConditionPosition: Place the condition on the same line as `while`.
+009.rb:2:3: C: [Corrected] Layout/ConditionPosition: Place the condition on the same line as `while`.
+012.rb:2:1: C: [Corrected] Layout/ConditionPosition: Place the condition on the same line as `until`.
+013.rb:2:3: C: [Corrected] Layout/ConditionPosition: Place the condition on the same line as `until`.
+016.rb:4:3: C: [Corrected] Layout/ConditionPosition: Place the condition on the same line as `elsif`.
+
+==> corrected/000.rb 15 <==
+if x == 10
+end
+
+==> corrected/001.rb 30 <==
+if x == 10
+  do_something
+end
+
+==> corrected/004.rb 19 <==
+unless x == 10
+end
+
+==> corrected/005.rb 34 <==
+unless x == 10
+  do_something
+end
+
+==> corrected/008.rb 18 <==
+while x == 10
+end
+
+==> corrected/009.rb 33 <==
+while x == 10
+  do_something
+end
+
+==> corrected/012.rb 18 <==
+until x == 10
+end
+
+==> corrected/013.rb 33 <==
+until x == 10
+  do_something
+end
+
+==> corrected/016.rb 47 <==
+if something
+  test
+elsif something
+  test
+end
+

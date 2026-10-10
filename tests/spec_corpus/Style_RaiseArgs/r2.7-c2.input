@@ -1,0 +1,18 @@
+==> .rubocop.yml 182 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/RaiseArgs:
+  EnforcedStyle: exploded
+  AllowedCompactTypes:
+  - Ex1
+
+==> 000.rb 13 <==
+raise Ex1.new
+==> 001.rb 18 <==
+raise Ex1.new(msg)
+==> 002.rb 25 <==
+raise Ex1.new(arg1, arg2)

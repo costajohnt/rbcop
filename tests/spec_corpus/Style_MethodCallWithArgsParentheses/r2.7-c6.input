@@ -1,0 +1,51 @@
+==> .rubocop.yml 219 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/MethodCallWithArgsParentheses:
+  EnforcedStyle: omit_parentheses
+  AllowParenthesesInMultilineCall: true
+
+==> 000.rb 19 <==
+test(
+  foo: bar
+)
+
+==> 001.rb 41 <==
+foo(
+  bar.new(quux) do
+    pass
+  end
+)
+
+==> 002.rb 44 <==
+foo(
+  bar.new(quux) do
+    pass _1
+  end
+)
+
+==> 003.rb 42 <==
+foo(
+  bar&.new(quux) do
+    pass
+  end
+)
+
+==> 004.rb 43 <==
+super(
+  bar.new(quux) do
+    pass
+  end
+)
+
+==> 005.rb 43 <==
+yield(
+  bar.new(quux) do
+    pass
+  end
+)
+

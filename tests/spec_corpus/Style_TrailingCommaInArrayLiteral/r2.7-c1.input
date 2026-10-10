@@ -1,0 +1,65 @@
+==> .rubocop.yml 178 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+==> 000.rb 30 <==
+VALUES = [1001, 2020, 3333, ]
+
+==> 001.rb 27 <==
+VALUES = [1001, 2020, 3333]
+==> 002.rb 15 <==
+VALUES = [1001]
+==> 003.rb 11 <==
+VALUES = []
+==> 004.rb 45 <==
+begin
+  do_something
+rescue RuntimeError
+end
+
+==> 005.rb 62 <==
+VALUES = [
+           1001,
+           2020,
+           3333]
+
+==> 006.rb 61 <==
+VALUES = [
+           1001, 2020,
+           3333
+         ]
+
+==> 007.rb 62 <==
+VALUES = [
+           1001, 2020,
+           3333,
+         ]
+
+==> 008.rb 59 <==
+VALUES = [1001,
+          2020,
+          3333,
+         ]
+
+==> 009.rb 51 <==
+ingredients = %w(
+  sausage
+  anchovies
+  olives
+)
+
+==> 010.rb 22 <==
+Foo.new([
+         ])
+
+==> 011.rb 15 <==
+foo = [
+  1,
+]
+

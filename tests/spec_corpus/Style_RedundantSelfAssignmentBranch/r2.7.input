@@ -1,0 +1,126 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 28 <==
+foo = condition ? bar : foo
+
+==> 001.rb 33 <==
+foo = condition ? bar(arg) : foo
+
+==> 002.rb 35 <==
+foo = condition ? bar.
+  baz : foo
+
+==> 003.rb 30 <==
+foo = condition ? (
+  ) : foo
+
+==> 004.rb 28 <==
+foo = condition ? foo : bar
+
+==> 005.rb 64 <==
+foo = if condition
+        bar
+      else
+        foo
+      end
+
+==> 006.rb 64 <==
+foo = if condition
+        foo
+      else
+        bar
+      end
+
+==> 007.rb 95 <==
+foo = if condition
+        foo
+      else
+        <<~TEXT
+          bar
+        TEXT
+      end
+
+==> 008.rb 76 <==
+foo = if condition
+        bar
+        baz
+      else
+        foo
+      end
+
+==> 009.rb 76 <==
+foo = if condition
+        foo
+      else
+        bar
+        baz
+      end
+
+==> 010.rb 52 <==
+foo = if condition
+      else
+        foo
+      end
+
+==> 011.rb 52 <==
+foo = if condition
+        foo
+      else
+      end
+
+==> 012.rb 31 <==
+@foo = condition ? @bar : @foo
+
+==> 013.rb 34 <==
+@@foo = condition ? @@bar : @@foo
+
+==> 014.rb 31 <==
+$foo = condition ? $bar : $foo
+
+==> 015.rb 28 <==
+foo = condition ? bar : baz
+
+==> 016.rb 41 <==
+foo = if condition
+        bar
+      end
+
+==> 017.rb 15 <==
+foo, bar = baz
+
+==> 018.rb 67 <==
+foo.do_something = condition ? foo.do_something : bar.do_something
+
+==> 019.rb 70 <==
+foo = if condition
+  foo
+elsif another_condition
+  bar
+else
+  baz
+end
+
+==> 020.rb 106 <==
+foo = if condition
+        bar
+      elsif another_condition
+        foo
+      else
+        baz
+      end
+
+==> 021.rb 106 <==
+foo = if condition
+        bar
+      elsif another_condition
+        baz
+      else
+        foo
+      end
+

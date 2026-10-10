@@ -1,0 +1,32 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 16 <==
+raise 'message'
+
+==> 001.rb 15 <==
+fail 'message'
+
+==> 002.rb 35 <==
+raise 'message' \
+      '2nd line'
+
+==> 003.rb 34 <==
+fail 'message' \
+      '2nd line'
+
+==> 004.rb 31 <==
+raise StandardError, 'message'
+
+==> 005.rb 30 <==
+fail StandardError, 'message'
+
+==> 006.rb 5 <==
+raise
+==> 007.rb 4 <==
+fail

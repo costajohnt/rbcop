@@ -1,0 +1,38 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/OptionalBooleanParameter:
+  AllowedMethods: []
+
+==> 000.rb 33 <==
+def some_method(bar = false)
+end
+
+==> 001.rb 31 <==
+def some_method(bar=false)
+end
+
+==> 002.rb 38 <==
+def self.some_method(bar = false)
+end
+
+==> 003.rb 66 <==
+def some_method(foo = true, bar = 1, baz = false, quux: true)
+end
+
+==> 004.rb 32 <==
+def some_method(bar: false)
+end
+
+==> 005.rb 20 <==
+def some_method
+end
+
+==> 006.rb 33 <==
+def some_method(bar = 'foo')
+end
+

@@ -1,0 +1,29 @@
+==> offenses exit=1 612 <==
+001.rb:1:14: C: [Correctable] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+001.rb:1:19: C: [Correctable] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+002.rb:1:14: C: [Correctable] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+002.rb:1:19: C: [Correctable] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+
+==> autocorrect exit=0 754 <==
+001.rb:1:14: C: [Corrected] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+001.rb:1:19: C: [Corrected] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+001.rb:5:4: C: [Corrected] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+002.rb:1:14: C: [Corrected] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+002.rb:1:19: C: [Corrected] Layout/MultilineMethodParameterLineBreaks: Each parameter in a multi-line method definition must start on a separate line.
+
+==> corrected/001.rb 49 <==
+def foo(abc, 
+foo, 
+bar = {
+  a: 1,
+}, 
+buz)
+end
+
+==> corrected/002.rb 34 <==
+def foo(abc, 
+foo, 
+ghi,
+jkl)
+end
+

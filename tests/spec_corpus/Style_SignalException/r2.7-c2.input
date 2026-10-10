@@ -1,0 +1,36 @@
+==> .rubocop.yml 158 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SignalException:
+  EnforcedStyle: only_fail
+
+==> 000.rb 49 <==
+begin
+  raise
+rescue Exception
+  #do nothing
+end
+
+==> 001.rb 52 <==
+def test
+  raise
+rescue Exception
+  #do nothing
+end
+
+==> 002.rb 42 <==
+begin
+  fail
+rescue Exception
+  raise
+end
+
+==> 003.rb 10 <==
+test.raise
+==> 004.rb 13 <==
+Kernel.raise
+

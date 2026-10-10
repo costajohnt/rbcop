@@ -1,0 +1,22 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+Style/Semicolon:
+  AllowAsExpressionSeparator: false
+
+==> 000.rb 29 <==
+m key1:, key2:;
+do_something
+
+==> 001.rb 22 <==
+m(key:);
+do_something
+
+==> 002.rb 26 <==
+obj&.m key:;
+do_something
+

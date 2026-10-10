@@ -1,0 +1,9 @@
+==> offenses exit=1 600 <==
+003.rb:1:1: C: Style/Copyright: Include a copyright notice matching /Copyright (\(c\) )?2015 Acme Inc/ before any code.
+004.rb:1:1: C: Style/Copyright: Include a copyright notice matching /Copyright (\(c\) )?2015 Acme Inc/ before any code.
+005.rb:1:1: C: Style/Copyright: Include a copyright notice matching /Copyright (\(c\) )?2015 Acme Inc/ before any code.
+006.rb:1:1: C: Style/Copyright: Include a copyright notice matching /Copyright (\(c\) )?2015 Acme Inc/ before any code.
+007.rb:1:1: C: Style/Copyright: Include a copyright notice matching /Copyright (\(c\) )?2015 Acme Inc/ before any code.
+
+==> autocorrect exit=0 0 <==
+

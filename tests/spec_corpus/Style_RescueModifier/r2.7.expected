@@ -1,0 +1,166 @@
+==> offenses exit=1 1414 <==
+000.rb:1:1: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+001.rb:1:1: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+002.rb:1:1: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+003.rb:1:1: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+004.rb:1:1: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+005.rb:1:8: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+006.rb:1:1: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+007.rb:2:3: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+008.rb:2:3: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+009.rb:1:2: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+014.rb:2:3: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+016.rb:2:3: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+017.rb:1:1: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+018.rb:1:1: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+019/foo.rb:1:1: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+
+==> autocorrect exit=0 1384 <==
+000.rb:1:1: C: [Corrected] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+001.rb:1:1: C: [Corrected] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+002.rb:1:1: C: [Corrected] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+003.rb:1:1: C: [Corrected] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+004.rb:1:1: C: [Corrected] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+005.rb:1:8: C: [Corrected] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+006.rb:1:1: C: [Corrected] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+007.rb:2:3: C: [Corrected] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+008.rb:2:3: C: [Corrected] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+009.rb:1:2: C: [Corrected] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+014.rb:2:3: C: [Corrected] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+016.rb:2:3: C: [Corrected] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+017.rb:1:1: C: [Corrected] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+018.rb:1:1: C: [Corrected] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+019/foo.rb:1:1: C: [Corrected] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+
+==> corrected/000.rb 35 <==
+begin
+  method
+rescue
+  handle
+end
+
+==> corrected/001.rb 53 <==
+begin
+  method(<<~EOS)
+  str
+EOS
+rescue
+  handle
+end
+
+==> corrected/002.rb 58 <==
+begin
+  obj&.method(<<~EOS)
+  str
+EOS
+rescue
+  handle
+end
+
+==> corrected/003.rb 58 <==
+begin
+  method(<<~EOS, var)
+  str
+EOS
+rescue
+  handle
+end
+
+==> corrected/004.rb 77 <==
+begin
+  method(<<~EOS1, <<~EOS2)
+  str1
+EOS1
+  str2
+EOS2
+rescue
+  handle
+end
+
+==> corrected/005.rb 67 <==
+a, b = begin
+         [1, 2]
+       rescue
+         nil
+       end
+
+==> corrected/006.rb 47 <==
+begin
+  method1 or method2
+rescue
+  handle
+end
+
+==> corrected/007.rb 85 <==
+begin
+  begin
+    test
+  rescue
+    modifier_handle
+  end
+rescue
+  normal_handle
+end
+
+==> corrected/008.rb 57 <==
+def a_method
+  begin
+    test
+  rescue
+    nil
+  end
+end
+
+==> corrected/009.rb 29 <==
+begin
+  foo
+rescue
+  nil
+end
+
+==> corrected/014.rb 95 <==
+def some_method
+  begin
+    test
+  rescue
+    modifier_handle
+  end
+rescue
+  normal_handle
+end
+
+==> corrected/016.rb 100 <==
+def self.some_method
+  begin
+    test
+  rescue
+    modifier_handle
+  end
+rescue
+  normal_handle
+end
+
+==> corrected/017.rb 36 <==
+begin
+  foo || bar
+rescue
+  bar
+end
+
+==> corrected/018.rb 51 <==
+begin
+  begin
+  blah
+rescue
+  1
+end
+rescue
+  2
+end
+
+==> corrected/019/foo.rb 28 <==
+begin
+  foo
+rescue
+  bar
+end

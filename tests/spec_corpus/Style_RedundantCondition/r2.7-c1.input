@@ -1,0 +1,18 @@
+==> .rubocop.yml 165 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/RedundantCondition:
+  AllowedMethods:
+  - nonzero?
+
+==> 000.rb 38 <==
+if a.nonzero?
+  true
+else
+  false
+end
+

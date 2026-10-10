@@ -1,0 +1,148 @@
+==> offenses exit=1 2650 <==
+000.rb:2:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+000.rb:3:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+000.rb:5:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+001.rb:2:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+001.rb:3:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+001.rb:9:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+001.rb:11:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+001.rb:14:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+002.rb:5:5: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+002.rb:6:5: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+002.rb:10:5: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+002.rb:11:5: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+007.rb:7:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+007.rb:9:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+008.rb:4:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+008.rb:8:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+009.rb:8:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+009.rb:9:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+010.rb:2:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+010.rb:3:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+010.rb:4:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+013.rb:2:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+013.rb:3:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+014.rb:2:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+014.rb:5:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+015.rb:2:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+015.rb:3:3: C: [Correctable] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+
+==> autocorrect exit=0 2596 <==
+000.rb:2:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+000.rb:3:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+000.rb:5:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+001.rb:2:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+001.rb:3:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+001.rb:9:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+001.rb:11:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+001.rb:14:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+002.rb:5:5: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+002.rb:6:5: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+002.rb:10:5: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+002.rb:11:5: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+007.rb:7:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+007.rb:9:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+008.rb:4:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+008.rb:8:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+009.rb:8:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+009.rb:9:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+010.rb:2:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+010.rb:3:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+010.rb:4:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+013.rb:2:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+013.rb:3:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+014.rb:2:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+014.rb:5:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+015.rb:2:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+015.rb:3:3: C: [Corrected] Style/AccessorGrouping: Group together all `attr_reader` attributes.
+
+==> corrected/000.rb 96 <==
+class Foo
+  attr_reader :bar1, :bar2, :bar3, :bar4
+  attr_accessor :quux
+  other_macro :zoo
+end
+
+==> corrected/001.rb 177 <==
+class Foo
+  attr_reader :bar1, :bar2, :bar3
+
+  protected
+  attr_accessor :quux
+
+  private
+  attr_reader :baz1, :baz2, :baz4
+  attr_writer :baz3
+
+  public
+  other_macro :zoo
+end
+
+==> corrected/002.rb 137 <==
+class Foo
+  attr_reader :bar
+
+  class << self
+    attr_reader :baz1, :baz2, :baz3
+
+    private
+
+    attr_reader :quux1, :quux2
+  end
+end
+
+==> corrected/007.rb 112 <==
+class Foo
+  extend T::Sig
+
+  sig { returns(Integer) }
+  attr_reader :one
+
+  attr_reader :two, :three, :four
+end
+
+==> corrected/008.rb 72 <==
+class Foo
+  def foo
+  end
+  attr_reader :one, :two
+
+  def bar
+  end
+end
+
+==> corrected/009.rb 158 <==
+class Foo
+  # @return [String] value of foo
+  attr_reader :one, :two
+
+  # [String] Some bar value return
+  attr_reader :three
+
+  attr_reader :four, :five
+end
+
+==> corrected/010.rb 39 <==
+class Foo
+  attr_reader :one, :two
+end
+
+==> corrected/013.rb 67 <==
+class Foo
+  attr_reader :one, :two, :three # comment #: String
+end
+
+==> corrected/014.rb 85 <==
+class Foo
+  OTHER_ATTRS = %i[two three].freeze
+
+  attr_reader :one, *OTHER_ATTRS
+end
+
+==> corrected/015.rb 77 <==
+class Foo
+  attr_reader :one, :bar
+
+  OTHER_ATTRS = %i[two three].freeze
+end
+

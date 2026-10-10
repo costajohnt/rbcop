@@ -1,0 +1,53 @@
+==> offenses exit=1 1873 <==
+000.rb:1:4: C: [Correctable] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+000.rb:2:7: C: [Correctable] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+000.rb:3:4: C: [Correctable] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+000.rb:3:10: C: Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+000.rb:4:7: C: [Correctable] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+000.rb:5:4: C: [Correctable] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+000.rb:5:8: C: Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+000.rb:6:4: C: [Correctable] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+000.rb:7:4: C: [Correctable] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+000.rb:7:10: C: Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+001.rb:1:11: C: [Correctable] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+001.rb:2:14: C: [Correctable] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+001.rb:3:12: C: [Correctable] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+002.rb:1:4: C: [Correctable] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+002.rb:1:8: C: Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+003.rb:1:4: C: [Correctable] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+003.rb:1:9: C: Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+
+==> autocorrect exit=0 1347 <==
+000.rb:1:4: C: [Corrected] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+000.rb:2:7: C: [Corrected] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+000.rb:3:4: C: [Corrected] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+000.rb:4:7: C: [Corrected] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+000.rb:5:4: C: [Corrected] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+000.rb:6:4: C: [Corrected] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+000.rb:7:4: C: [Corrected] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+001.rb:1:11: C: [Corrected] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+001.rb:2:14: C: [Corrected] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+001.rb:3:12: C: [Corrected] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+002.rb:1:4: C: [Corrected] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+003.rb:1:4: C: [Corrected] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+
+==> corrected/000.rb 63 <==
+"#{var}"
+"#{var}"
+"#{var}"
+"#{var}"
+"#{var}"
+"#{var}"
+"#{var}"
+
+==> corrected/001.rb 52 <==
+/regexp #{var}/
+`backticks #{var}`
+:"symbol #{var}"
+
+==> corrected/002.rb 9 <==
+"#{var}"
+
+==> corrected/003.rb 10 <==
+"#{a; b}"
+

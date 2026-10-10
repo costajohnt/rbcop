@@ -1,0 +1,58 @@
+==> offenses exit=1 1389 <==
+000.rb:1:5: C: [Correctable] Style/ConcatArrayLiterals: Use `push(item)` instead of `concat([item])`.
+001.rb:1:6: C: [Correctable] Style/ConcatArrayLiterals: Use `push(item)` instead of `concat([item])`.
+002.rb:1:5: C: [Correctable] Style/ConcatArrayLiterals: Use `push(foo, bar)` instead of `concat([foo, bar])`.
+003.rb:1:5: C: [Correctable] Style/ConcatArrayLiterals: Use `push(foo, bar)` instead of `concat([   foo,   bar ])`.
+004.rb:1:5: C: [Correctable] Style/ConcatArrayLiterals: Use `push(foo, bar, baz)` instead of `concat([foo, bar], [baz])`.
+005.rb:1:5: C: [Correctable] Style/ConcatArrayLiterals: Use `push(:item)` instead of `concat(%i[item])`.
+006.rb:1:5: C: Style/ConcatArrayLiterals: Use `push` with elements as arguments without array brackets instead of `concat(%I[item #{foo}])`.
+007.rb:1:5: C: Style/ConcatArrayLiterals: Use `push` with elements as arguments without array brackets instead of `concat(%W[item #{foo}])`.
+008.rb:1:5: C: [Correctable] Style/ConcatArrayLiterals: Use `push("item")` instead of `concat(%w[item])`.
+009.rb:1:5: C: Style/ConcatArrayLiterals: Use `push` with elements as arguments without array brackets instead of `concat(%W[#{foo}])`.
+015.rb:1:5: C: [Correctable] Style/ConcatArrayLiterals: Use `push(b)` instead of `concat([], [b])`.
+016.rb:1:5: C: [Correctable] Style/ConcatArrayLiterals: Use `push(a, b)` instead of `concat([a], [], [b])`.
+
+==> autocorrect exit=1 1371 <==
+000.rb:1:5: C: [Corrected] Style/ConcatArrayLiterals: Use `push(item)` instead of `concat([item])`.
+001.rb:1:6: C: [Corrected] Style/ConcatArrayLiterals: Use `push(item)` instead of `concat([item])`.
+002.rb:1:5: C: [Corrected] Style/ConcatArrayLiterals: Use `push(foo, bar)` instead of `concat([foo, bar])`.
+003.rb:1:5: C: [Corrected] Style/ConcatArrayLiterals: Use `push(foo, bar)` instead of `concat([   foo,   bar ])`.
+004.rb:1:5: C: [Corrected] Style/ConcatArrayLiterals: Use `push(foo, bar, baz)` instead of `concat([foo, bar], [baz])`.
+005.rb:1:5: C: [Corrected] Style/ConcatArrayLiterals: Use `push(:item)` instead of `concat(%i[item])`.
+006.rb:1:5: C: Style/ConcatArrayLiterals: Use `push` with elements as arguments without array brackets instead of `concat(%I[item #{foo}])`.
+007.rb:1:5: C: Style/ConcatArrayLiterals: Use `push` with elements as arguments without array brackets instead of `concat(%W[item #{foo}])`.
+008.rb:1:5: C: [Corrected] Style/ConcatArrayLiterals: Use `push("item")` instead of `concat(%w[item])`.
+009.rb:1:5: C: Style/ConcatArrayLiterals: Use `push` with elements as arguments without array brackets instead of `concat(%W[#{foo}])`.
+015.rb:1:5: C: [Corrected] Style/ConcatArrayLiterals: Use `push(b)` instead of `concat([], [b])`.
+016.rb:1:5: C: [Corrected] Style/ConcatArrayLiterals: Use `push(a, b)` instead of `concat([a], [], [b])`.
+
+==> corrected/000.rb 15 <==
+arr.push(item)
+
+==> corrected/001.rb 16 <==
+arr&.push(item)
+
+==> corrected/002.rb 19 <==
+arr.push(foo, bar)
+
+==> corrected/003.rb 25 <==
+arr.push(
+  foo,
+  bar
+)
+
+==> corrected/004.rb 24 <==
+arr.push(foo, bar, baz)
+
+==> corrected/005.rb 16 <==
+arr.push(:item)
+
+==> corrected/008.rb 17 <==
+arr.push("item")
+
+==> corrected/015.rb 12 <==
+arr.push(b)
+
+==> corrected/016.rb 15 <==
+arr.push(a, b)
+

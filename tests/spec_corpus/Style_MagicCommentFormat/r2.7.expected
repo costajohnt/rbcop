@@ -1,0 +1,59 @@
+==> offenses exit=1 892 <==
+002.rb:1:3: C: [Correctable] Style/MagicCommentFormat: Prefer lower snake case for magic comments.
+002.rb:3:3: C: [Correctable] Style/MagicCommentFormat: Prefer lower snake case for magic comments.
+003.rb:1:3: C: [Correctable] Style/MagicCommentFormat: Prefer lower snake case for magic comments.
+004.rb:1:29: C: [Correctable] Style/MagicCommentFormat: Prefer lower snake case for magic comments.
+005.rb:1:3: C: [Correctable] Style/MagicCommentFormat: Prefer lower snake case for magic comments.
+008.rb:1:3: C: [Correctable] Style/MagicCommentFormat: Prefer lower snake case for magic comments.
+008.rb:3:3: C: [Correctable] Style/MagicCommentFormat: Prefer lower snake case for magic comments.
+011.rb:1:3: C: [Correctable] Style/MagicCommentFormat: Prefer lower snake case for magic comments.
+013.rb:1:3: C: [Correctable] Style/MagicCommentFormat: Prefer lower snake case for magic comments.
+
+==> autocorrect exit=0 874 <==
+002.rb:1:3: C: [Corrected] Style/MagicCommentFormat: Prefer lower snake case for magic comments.
+002.rb:3:3: C: [Corrected] Style/MagicCommentFormat: Prefer lower snake case for magic comments.
+003.rb:1:3: C: [Corrected] Style/MagicCommentFormat: Prefer lower snake case for magic comments.
+004.rb:1:29: C: [Corrected] Style/MagicCommentFormat: Prefer lower snake case for magic comments.
+005.rb:1:3: C: [Corrected] Style/MagicCommentFormat: Prefer lower snake case for magic comments.
+008.rb:1:3: C: [Corrected] Style/MagicCommentFormat: Prefer lower snake case for magic comments.
+008.rb:3:3: C: [Corrected] Style/MagicCommentFormat: Prefer lower snake case for magic comments.
+011.rb:1:3: C: [Corrected] Style/MagicCommentFormat: Prefer lower snake case for magic comments.
+013.rb:1:3: C: [Corrected] Style/MagicCommentFormat: Prefer lower snake case for magic comments.
+
+==> corrected/002.rb 108 <==
+# frozen_string_literal: true
+# encoding: utf-8
+# shareable_constant_value: literal
+# typed: ignore
+
+puts 1
+
+==> corrected/003.rb 28 <==
+# warn_indent: true
+
+puts 1
+
+==> corrected/004.rb 67 <==
+# -*- encoding: ASCII-8BIT; frozen_string_literal: true -*-
+puts 1
+
+==> corrected/005.rb 38 <==
+# frozen_string_literal: true
+
+puts 1
+
+==> corrected/008.rb 107 <==
+# frozen_string_literal: true
+# encoding: utf-8
+# shareable_constant_value: literal
+# typed: ignore
+puts 1
+
+==> corrected/011.rb 25 <==
+# encoding: utf-8
+puts 1
+
+==> corrected/013.rb 37 <==
+# frozen_string_literal: TRUE
+puts 1
+

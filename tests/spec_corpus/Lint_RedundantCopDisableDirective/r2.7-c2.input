@@ -1,0 +1,11 @@
+==> .rubocop.yml 72 <==
+---
+AllCops:
+  NewCops: enable
+Metrics/MethodLength:
+  Enabled: pending
+
+==> 000.rb 43 <==
+# rubocop:disable Metrics/MethodLength
+foo
+

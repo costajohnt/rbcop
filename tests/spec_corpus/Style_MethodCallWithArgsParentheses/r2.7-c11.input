@@ -1,0 +1,19 @@
+==> .rubocop.yml 220 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/MethodCallWithArgsParentheses:
+  IgnoreMacros: 'true'
+  IncludedMacros:
+  - bar
+  AllowedMethods:
+  - bar
+
+==> 000.rb 26 <==
+module Foo
+  bar :abc
+end
+

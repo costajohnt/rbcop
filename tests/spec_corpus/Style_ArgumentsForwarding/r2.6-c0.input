@@ -1,0 +1,25 @@
+==> .rubocop.yml 315 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.6
+Style/ArgumentsForwarding:
+  RedundantRestArgumentNames:
+  - args
+  - arguments
+  RedundantKeywordRestArgumentNames:
+  - kwargs
+  - options
+  - opts
+  RedundantBlockArgumentNames:
+  - blk
+  - block
+  - proc
+
+==> 000.rb 48 <==
+def foo(*args, &block)
+  bar(*args, &block)
+end
+

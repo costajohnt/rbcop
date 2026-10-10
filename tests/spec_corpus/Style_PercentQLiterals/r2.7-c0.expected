@@ -1,0 +1,9 @@
+==> offenses exit=1 111 <==
+001.rb:1:1: C: [Correctable] Style/PercentQLiterals: Do not use `%Q` unless interpolation is needed. Use `%q`.
+
+==> autocorrect exit=0 109 <==
+001.rb:1:1: C: [Corrected] Style/PercentQLiterals: Do not use `%Q` unless interpolation is needed. Use `%q`.
+
+==> corrected/001.rb 7 <==
+%q(hi)
+

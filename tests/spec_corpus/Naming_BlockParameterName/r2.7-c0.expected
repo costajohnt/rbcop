@@ -1,0 +1,24 @@
+==> offenses exit=1 928 <==
+003.rb:1:14: C: Naming/BlockParameterName: Do not end block parameter with a number.
+004.rb:1:15: C: Naming/BlockParameterName: Block parameter must be at least 2 characters long.
+005.rb:1:15: C: Naming/BlockParameterName: Block parameter must be at least 2 characters long.
+005.rb:1:19: C: Naming/BlockParameterName: Block parameter must be at least 2 characters long.
+005.rb:1:24: C: Naming/BlockParameterName: Block parameter must be at least 2 characters long.
+005.rb:1:28: C: Naming/BlockParameterName: Block parameter must be at least 2 characters long.
+006.rb:1:14: C: Naming/BlockParameterName: Only use lowercase characters for block parameter.
+007.rb:1:15: C: Naming/BlockParameterName: Block parameter must be at least 2 characters long.
+007.rb:1:18: C: Naming/BlockParameterName: Do not end block parameter with a number.
+007.rb:1:24: C: Naming/BlockParameterName: Only use lowercase characters for block parameter.
+
+==> autocorrect exit=1 928 <==
+003.rb:1:14: C: Naming/BlockParameterName: Do not end block parameter with a number.
+004.rb:1:15: C: Naming/BlockParameterName: Block parameter must be at least 2 characters long.
+005.rb:1:15: C: Naming/BlockParameterName: Block parameter must be at least 2 characters long.
+005.rb:1:19: C: Naming/BlockParameterName: Block parameter must be at least 2 characters long.
+005.rb:1:24: C: Naming/BlockParameterName: Block parameter must be at least 2 characters long.
+005.rb:1:28: C: Naming/BlockParameterName: Block parameter must be at least 2 characters long.
+006.rb:1:14: C: Naming/BlockParameterName: Only use lowercase characters for block parameter.
+007.rb:1:15: C: Naming/BlockParameterName: Block parameter must be at least 2 characters long.
+007.rb:1:18: C: Naming/BlockParameterName: Do not end block parameter with a number.
+007.rb:1:24: C: Naming/BlockParameterName: Only use lowercase characters for block parameter.
+

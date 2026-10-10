@@ -1,0 +1,9 @@
+==> offenses exit=1 96 <==
+003.rb:1:19: C: [Correctable] Style/HashEachMethods: Use `each_value` instead of `values.each`.
+
+==> autocorrect exit=0 94 <==
+003.rb:1:19: C: [Corrected] Style/HashEachMethods: Use `each_value` instead of `values.each`.
+
+==> corrected/003.rb 41 <==
+do_something(arg).each_value { |v| p v }
+

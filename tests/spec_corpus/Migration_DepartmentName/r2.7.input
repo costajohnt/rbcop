@@ -1,0 +1,32 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/file.rb 95 <==
+# rubocop:disable SingleSpaceBeforeFirstArg, Layout/LineLength
+name             "apache_kafka"
+
+==> 001.rb 69 <==
+alias :ala :bala # rubocop:disable all
+# rubocop:disable Style/Alias
+
+==> 002.rb 68 <==
+# rubocop:disable Style/Alias # Plain code comment
+alias :ala :bala
+
+==> 003.rb 94 <==
+# rubocop:disable Style/Alias -- because something, something, and something
+alias :ala :bala
+
+==> 004.rb 47 <==
+# rubocop:disable Style:Alias
+alias :ala :bala
+
+==> 005.rb 41 <==
+# rubocop:disable Style
+alias :ala :bala
+

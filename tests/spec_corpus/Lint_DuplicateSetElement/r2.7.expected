@@ -1,0 +1,114 @@
+==> offenses exit=1 2106 <==
+000.rb:1:17: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+001.rb:1:19: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+002.rb:1:17: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+002.rb:1:29: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+003.rb:4:15: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+004.rb:1:17: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+005.rb:1:15: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+009.rb:1:22: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+010.rb:1:20: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+011.rb:1:24: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+016.rb:1:23: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in SortedSet.
+017.rb:1:25: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in SortedSet.
+018.rb:1:23: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in SortedSet.
+018.rb:1:35: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in SortedSet.
+019.rb:4:21: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in SortedSet.
+020.rb:1:23: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in SortedSet.
+021.rb:1:21: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in SortedSet.
+025.rb:1:28: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in SortedSet.
+026.rb:1:26: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in SortedSet.
+027.rb:1:30: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in SortedSet.
+032.rb:1:14: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+033.rb:1:14: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+
+==> autocorrect exit=0 2062 <==
+000.rb:1:17: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+001.rb:1:19: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+002.rb:1:17: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+002.rb:1:29: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+003.rb:4:15: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+004.rb:1:17: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+005.rb:1:15: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+009.rb:1:22: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+010.rb:1:20: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+011.rb:1:24: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+016.rb:1:23: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in SortedSet.
+017.rb:1:25: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in SortedSet.
+018.rb:1:23: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in SortedSet.
+018.rb:1:35: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in SortedSet.
+019.rb:4:21: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in SortedSet.
+020.rb:1:23: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in SortedSet.
+021.rb:1:21: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in SortedSet.
+025.rb:1:28: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in SortedSet.
+026.rb:1:26: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in SortedSet.
+027.rb:1:30: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in SortedSet.
+032.rb:1:14: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+033.rb:1:14: W: [Corrected] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+
+==> corrected/000.rb 16 <==
+Set[:foo, :bar]
+
+==> corrected/001.rb 18 <==
+::Set[:foo, :bar]
+
+==> corrected/002.rb 22 <==
+Set[:foo, :bar, :baz]
+
+==> corrected/003.rb 41 <==
+foo = do_foo
+bar = do_bar
+
+Set[foo, bar]
+
+==> corrected/004.rb 16 <==
+Set[@foo, @bar]
+
+==> corrected/005.rb 14 <==
+Set[Foo, Bar]
+
+==> corrected/009.rb 22 <==
+Set.new([:foo, :bar])
+
+==> corrected/010.rb 21 <==
+Set.new(%i[foo bar])
+
+==> corrected/011.rb 24 <==
+::Set.new([:foo, :bar])
+
+==> corrected/016.rb 22 <==
+SortedSet[:foo, :bar]
+
+==> corrected/017.rb 24 <==
+::SortedSet[:foo, :bar]
+
+==> corrected/018.rb 28 <==
+SortedSet[:foo, :bar, :baz]
+
+==> corrected/019.rb 47 <==
+foo = do_foo
+bar = do_bar
+
+SortedSet[foo, bar]
+
+==> corrected/020.rb 22 <==
+SortedSet[@foo, @bar]
+
+==> corrected/021.rb 20 <==
+SortedSet[Foo, Bar]
+
+==> corrected/025.rb 28 <==
+SortedSet.new([:foo, :bar])
+
+==> corrected/026.rb 27 <==
+SortedSet.new(%i[foo bar])
+
+==> corrected/027.rb 30 <==
+::SortedSet.new([:foo, :bar])
+
+==> corrected/032.rb 20 <==
+[:foo, :bar].to_set
+
+==> corrected/033.rb 21 <==
+[:foo, :bar]&.to_set
+

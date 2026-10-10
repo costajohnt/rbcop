@@ -1,0 +1,24 @@
+==> offenses exit=1 1579 <==
+000/foo.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.4, which may be specified in .rubocop.yml) should be equal.
+001/foo.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.4, which may be specified in .rubocop.yml) should be equal.
+002/foo.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.4, which may be specified in .rubocop.yml) should be equal.
+003/foo.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.4, which may be specified in .rubocop.yml) should be equal.
+004.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.4, which may be specified in .rubocop.yml) should be equal.
+013/bar.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.4, which may be specified in .rubocop.yml) should be equal.
+014/bar.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.4, which may be specified in .rubocop.yml) should be equal.
+015/foo.gemspec:1:1: W: Gemspec/RequiredRubyVersion: `required_ruby_version` should be specified.
+016/bar.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.4, which may be specified in .rubocop.yml) should be equal.
+017/bar.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.4, which may be specified in .rubocop.yml) should be equal.
+
+==> autocorrect exit=1 1579 <==
+000/foo.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.4, which may be specified in .rubocop.yml) should be equal.
+001/foo.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.4, which may be specified in .rubocop.yml) should be equal.
+002/foo.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.4, which may be specified in .rubocop.yml) should be equal.
+003/foo.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.4, which may be specified in .rubocop.yml) should be equal.
+004.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.4, which may be specified in .rubocop.yml) should be equal.
+013/bar.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.4, which may be specified in .rubocop.yml) should be equal.
+014/bar.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.4, which may be specified in .rubocop.yml) should be equal.
+015/foo.gemspec:1:1: W: Gemspec/RequiredRubyVersion: `required_ruby_version` should be specified.
+016/bar.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.4, which may be specified in .rubocop.yml) should be equal.
+017/bar.gemspec:2:32: W: Gemspec/RequiredRubyVersion: `required_ruby_version` and `TargetRubyVersion` (3.4, which may be specified in .rubocop.yml) should be equal.
+

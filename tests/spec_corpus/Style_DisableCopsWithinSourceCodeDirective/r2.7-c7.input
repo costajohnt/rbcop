@@ -1,0 +1,21 @@
+==> .rubocop.yml 203 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/DisableCopsWithinSourceCodeDirective:
+  AllowWithReason: true
+  AllowedCops:
+  - Metrics
+
+==> 000.rb 79 <==
+# rubocop:disable Metrics/AbcSize
+def foo
+end
+# rubocop:enable Metrics/AbcSize
+
+==> 001.rb 52 <==
+x = 0 # rubocop:disable Layout/SpaceAroundOperators
+

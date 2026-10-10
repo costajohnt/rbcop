@@ -1,0 +1,17 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 36 <==
+x = { :"test" => 0, :"other" => 1 }
+
+==> 001.rb 19 <==
+x = { :"t o" => 0 }
+==> 002.rb 20 <==
+x = { :"\tab" => 1 }
+==> 003.rb 17 <==
+x = { :"1" => 1 }

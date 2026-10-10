@@ -1,0 +1,23 @@
+==> offenses exit=1 378 <==
+001.rb:1:7: C: Style/CommandLiteral: Use `%x` around command string.
+002.rb:1:7: C: Style/CommandLiteral: Use `%x` around command string.
+003.rb:1:7: C: [Correctable] Style/CommandLiteral: Use `%x` around command string.
+004.rb:1:7: C: Style/CommandLiteral: Use `%x` around command string.
+005.rb:1:7: C: [Correctable] Style/CommandLiteral: Use backticks around command string.
+
+==> autocorrect exit=1 374 <==
+001.rb:1:7: C: Style/CommandLiteral: Use `%x` around command string.
+002.rb:1:7: C: Style/CommandLiteral: Use `%x` around command string.
+003.rb:1:7: C: [Corrected] Style/CommandLiteral: Use `%x` around command string.
+004.rb:1:7: C: Style/CommandLiteral: Use `%x` around command string.
+005.rb:1:7: C: [Corrected] Style/CommandLiteral: Use backticks around command string.
+
+==> corrected/003.rb 25 <==
+foo = %x(
+  ls
+  ls -l
+)
+
+==> corrected/005.rb 11 <==
+foo = `ls`
+

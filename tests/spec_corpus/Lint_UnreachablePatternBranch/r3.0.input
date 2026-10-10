@@ -1,0 +1,16 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+
+==> 000.rb 78 <==
+case value
+in [*, 1, *]
+  handle_contains_one
+in Integer
+  handle_integer
+end
+

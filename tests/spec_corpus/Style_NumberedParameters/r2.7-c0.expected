@@ -1,0 +1,6 @@
+==> offenses exit=1 96 <==
+000.rb:1:1: C: Style/NumberedParameters: Avoid using numbered parameters for multi-line blocks.
+
+==> autocorrect exit=1 96 <==
+000.rb:1:1: C: Style/NumberedParameters: Avoid using numbered parameters for multi-line blocks.
+

@@ -1,0 +1,32 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 33 <==
+array.any? { it.is_a?(Integer) }
+
+==> 001.rb 35 <==
+array.any? { it.kind_of?(String) }
+
+==> 002.rb 33 <==
+array.all? { it.is_a?(Integer) }
+
+==> 003.rb 35 <==
+array.all? { it.kind_of?(String) }
+
+==> 004.rb 34 <==
+array.none? { it.is_a?(Integer) }
+
+==> 005.rb 36 <==
+array.none? { it.kind_of?(String) }
+
+==> 006.rb 33 <==
+array.one? { it.is_a?(Integer) }
+
+==> 007.rb 35 <==
+array.one? { it.kind_of?(String) }
+

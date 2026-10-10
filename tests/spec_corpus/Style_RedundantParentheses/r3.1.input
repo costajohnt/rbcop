@@ -1,0 +1,68 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+
+==> 000.rb 31 <==
+var = 0
+foo in { bar: ^(var) }
+
+==> 001.rb 32 <==
+var = 0
+foo in { bar: ^(@var) }
+
+==> 002.rb 33 <==
+var = 0
+foo in { bar: ^(@@var) }
+
+==> 003.rb 32 <==
+var = 0
+foo in { bar: ^($var) }
+
+==> 004.rb 32 <==
+var = 0
+foo in { bar: ^(meth) }
+
+==> 005.rb 38 <==
+var = 0
+foo in { bar: ^(meth(true)) }
+
+==> 006.rb 36 <==
+var = 0
+foo in { bar: ^(var.to_i) }
+
+==> 007.rb 37 <==
+var = 0
+foo in { bar: ^(@var.to_i) }
+
+==> 008.rb 38 <==
+var = 0
+foo in { bar: ^(@@var.to_i) }
+
+==> 009.rb 37 <==
+var = 0
+foo in { bar: ^($var.to_i) }
+
+==> 010.rb 35 <==
+var = 0
+foo in { bar: ^(var + 1) }
+
+==> 011.rb 34 <==
+var = 0
+foo in { bar: ^([1, 2]) }
+
+==> 012.rb 38 <==
+var = 0
+foo in { bar: ^({ baz: 2 }) }
+
+==> 013.rb 32 <==
+var = 0
+foo in { bar: ^(1..2) }
+
+==> 014.rb 29 <==
+var = 0
+foo in { bar: ^(1) }
+

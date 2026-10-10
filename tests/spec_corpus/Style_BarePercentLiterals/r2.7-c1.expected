@@ -1,0 +1,14 @@
+==> offenses exit=1 162 <==
+000.rb:1:1: C: [Correctable] Style/BarePercentLiterals: Use `%` instead of `%Q`.
+009.rb:1:1: C: [Correctable] Style/BarePercentLiterals: Use `%` instead of `%Q`.
+
+==> autocorrect exit=0 158 <==
+000.rb:1:1: C: [Corrected] Style/BarePercentLiterals: Use `%` instead of `%Q`.
+009.rb:1:1: C: [Corrected] Style/BarePercentLiterals: Use `%` instead of `%Q`.
+
+==> corrected/000.rb 6 <==
+%(hi)
+
+==> corrected/009.rb 8 <==
+%(#{x})
+

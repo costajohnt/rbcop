@@ -1,0 +1,14 @@
+==> .rubocop.yml 160 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/Semicolon:
+  AllowAsExpressionSeparator: true
+
+==> 000.rb 40 <==
+puts "this is a test"; puts "So is this"
+==> 001.rb 32 <==
+def foo(a) x(1); y(2); z(3); end

@@ -1,0 +1,291 @@
+==> .rubocop.yml 179 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/MethodCallWithArgsParentheses:
+  EnforcedStyle: omit_parentheses
+
+==> 000.rb 47 <==
+def delegated_call(...)
+  @proxy.call(...)
+end
+
+==> 001.rb 27 <==
+numblock.call(:arg) { _1 }
+
+==> 002.rb 11 <==
+top.test()
+
+==> 003.rb 19 <==
+test(
+  foo: bar
+)
+
+==> 004.rb 23 <==
+def foo
+  super(a)
+end
+
+==> 005.rb 23 <==
+def foo
+  yield(a)
+end
+
+==> 006.rb 21 <==
+foo().bar(3).wait(4)
+
+==> 007.rb 23 <==
+foo(:arg) do
+  bar
+end
+
+==> 008.rb 31 <==
+method_call(hash: {foo: :bar})
+
+==> 009.rb 21 <==
+method_call(%r{foo})
+
+==> 010.rb 20 <==
+"#{t('no.parens')}"
+
+==> 011.rb 202 <==
+def foo
+  if cond.present? && verify?(:something)
+    h.do_with(kw: value)
+  elsif cond.present? || verify?(:something_else)
+    h.do_with(kw: value)
+  elsif whatevs?
+    h.do_with(kw: value)
+  end
+end
+
+==> 012.rb 138 <==
+foo = A::B.new(c)
+bar.foo = A::B.new(c)
+bar.foo(42).quux = A::B.new(c)
+
+bar.foo(42).quux &&= A::B.new(c)
+
+bar.foo(42).quux += A::B.new(c)
+
+==> 013.rb 12 <==
+Array(:arg)
+
+==> 014.rb 37 <==
+class Point < Struct.new(:x, :y)
+end
+
+==> 015.rb 61 <==
+client.images(page: page) { |resource| Image.new(resource) }
+
+==> 016.rb 44 <==
+client.images(page: page) { Image.new(_1) }
+
+==> 017.rb 25 <==
+do_something(arg)::CONST
+
+==> 018.rb 46 <==
+        class Point < Struct.new(:x, :y); end
+
+==> 019.rb 8 <==
+top.test
+==> 020.rb 23 <==
+top.test 1, 2, foo: bar
+==> 021.rb 87 <==
+def regular(arg = default(42))
+  nil
+end
+
+def seatle_style arg = default(42)
+  nil
+end
+
+==> 022.rb 85 <==
+def regular(arg: default(42))
+  nil
+end
+
+def seatle_style arg: default(42)
+  nil
+end
+
+==> 023.rb 26 <==
+top.test 1, 2, foo: bar(3)
+==> 024.rb 28 <==
+top.test 1, 2, foo: [bar(3)]
+==> 025.rb 21 <==
+top.test({foo: :bar})
+==> 026.rb 38 <==
+top.test({foo: :bar}.merge(baz: :maz))
+==> 027.rb 46 <==
+top.test(:first, {foo: :bar}.merge(baz: :maz))
+==> 028.rb 8 <==
+thing.()
+==> 029.rb 23 <==
+foo().bar(3).wait(4).it
+==> 030.rb 24 <==
+foo().bar(3).wait(4) + 4
+==> 031.rb 12 <==
+foo(1) { 2 }
+==> 032.rb 58 <==
+Foo::Bar.find(pending.things.map { |t| t['code'] }.first)
+
+==> 033.rb 49 <==
+Foo::Bar.find(pending.things.map { _1['code'] })
+
+==> 034.rb 45 <==
+[
+  foo.bar.quux(:args) do
+    pass
+  end,
+]
+
+==> 035.rb 48 <==
+[
+  foo.bar.quux(:args) do
+    pass _1
+  end,
+]
+
+==> 036.rb 16 <==
+foo(a) && bar(b)
+==> 037.rb 16 <==
+foo(a) || bar(b)
+==> 038.rb 31 <==
+foo(a) || bar(b) do
+  pass
+end
+
+==> 039.rb 34 <==
+foo(a) || bar(b) do
+  pass _1
+end
+
+==> 040.rb 14 <==
+foo(a, b || c)
+==> 041.rb 13 <==
+foo a, b || c
+==> 042.rb 25 <==
+foo a, b(1) || c(2, d(3))
+==> 043.rb 7 <==
+foo(-1)
+==> 044.rb 7 <==
+foo(+1)
+==> 045.rb 8 <==
+foo(+"")
+==> 046.rb 8 <==
+foo(-"")
+==> 047.rb 12 <==
+foo(-1 + 3i)
+==> 048.rb 12 <==
+foo(+1 + 3i)
+==> 049.rb 8 <==
+foo(-3i)
+==> 050.rb 8 <==
+foo(+3i)
+==> 051.rb 10 <==
+foo(-1.3i)
+==> 052.rb 10 <==
+foo(+1.3i)
+==> 053.rb 10 <==
+foo(*args)
+==> 054.rb 9 <==
+foo *args
+==> 055.rb 13 <==
+foo(**kwargs)
+==> 056.rb 12 <==
+foo **kwargs
+==> 057.rb 13 <==
+foo(/regexp/)
+==> 058.rb 21 <==
+foo(bar(:arg) { 42 })
+==> 059.rb 11 <==
+foo(&block)
+==> 060.rb 10 <==
+foo &block
+==> 061.rb 25 <==
+yield File.basepath(path)
+==> 062.rb 31 <==
+yield path, File.basepath(path)
+==> 063.rb 25 <==
+super(foo(bar)) { yield }
+==> 064.rb 7 <==
+super()
+==> 065.rb 14 <==
+super foo(bar)
+==> 066.rb 7 <==
+Array()
+==> 067.rb 39 <==
+        foo.include?(bar) ? bar : quux
+
+==> 068.rb 39 <==
+        foo.include?(bar ? baz : quux)
+
+==> 069.rb 50 <==
+        foo(*bar(args))
+        foo(**quux(args))
+
+==> 070.rb 28 <==
+        foo(&method(:args))
+
+==> 071.rb 41 <==
+        1..limit(n)
+        1...limit(n)
+
+==> 072.rb 22 <==
+foo(2..)
+foo(1, 2...)
+
+==> 073.rb 12 <==
+foo(2.., 1)
+
+==> 074.rb 22 <==
+foo(..2, 1)
+foo(...2)
+
+==> 075.rb 12 <==
+foo(1, ..2)
+
+==> 076.rb 232 <==
+        case response = get("server/list")
+        when server = response.take(1)
+          if @size ||= server.take(:size)
+            pass
+          elsif @@image &&= server.take(:image)
+            pass
+          end
+        end
+
+==> 077.rb 68 <==
+        case condition
+          when do_something(arg)
+        end
+
+==> 078.rb 28 <==
+top.test(1, 2, foo: bar(3))
+
+==> 079.rb 17 <==
+foo( 
+  bar: 3
+)
+
+==> 080.rb 26 <==
+foo(arg,
+  option: true
+)
+
+==> 081.rb 38 <==
+Something.find(criteria: given)&.field
+==> 082.rb 91 <==
+data.[](value)
+data&.[](value)
+string.<<(even_more_string)
+ruby.==(good)
+ruby&.===(better)
+
+==> 083.rb 41 <==
+execute(query) in {elapsed:, sql_count:}
+

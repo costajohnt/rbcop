@@ -1,0 +1,25 @@
+==> offenses exit=1 386 <==
+000.rb:1:9: C: [Correctable] Layout/SpaceAfterMethodName: Do not put a space between a method name and the opening parenthesis.
+001.rb:1:14: C: [Correctable] Layout/SpaceAfterMethodName: Do not put a space between a method name and the opening parenthesis.
+002.rb:1:10: C: [Correctable] Layout/SpaceAfterMethodName: Do not put a space between a method name and the opening parenthesis.
+
+==> autocorrect exit=0 380 <==
+000.rb:1:9: C: [Corrected] Layout/SpaceAfterMethodName: Do not put a space between a method name and the opening parenthesis.
+001.rb:1:14: C: [Corrected] Layout/SpaceAfterMethodName: Do not put a space between a method name and the opening parenthesis.
+002.rb:1:10: C: [Corrected] Layout/SpaceAfterMethodName: Do not put a space between a method name and the opening parenthesis.
+
+==> corrected/000.rb 20 <==
+def func(x)
+  a
+end
+
+==> corrected/001.rb 25 <==
+def self.func(x)
+  a
+end
+
+==> corrected/002.rb 21 <==
+def func=(x)
+  a
+end
+

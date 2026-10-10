@@ -1,0 +1,60 @@
+==> .rubocop.yml 152 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/FormatString:
+  EnforcedStyle: format
+
+==> 000.rb 15 <==
+puts "%d" % 10
+
+==> 001.rb 18 <==
+puts x % [10, 11]
+
+==> 002.rb 26 <==
+puts x % { a: 10, b: 11 }
+
+==> 003.rb 19 <==
+puts "%s" % a.to_s
+
+==> 004.rb 19 <==
+puts "%s" % a.to_h
+
+==> 005.rb 19 <==
+puts "%s" % a.to_i
+
+==> 006.rb 19 <==
+puts "%s" % a.to_f
+
+==> 007.rb 19 <==
+puts "%s" % a.to_r
+
+==> 008.rb 19 <==
+puts "%s" % a.to_d
+
+==> 009.rb 21 <==
+puts "%s" % a.to_sym
+
+==> 010.rb 14 <==
+puts "%f" % a
+
+==> 011.rb 11 <==
+puts 10 % 4
+==> 012.rb 10 <==
+puts x % Y
+==> 013.rb 33 <==
+puts "#{x * 5} %d #{@test}" % 10
+
+==> 014.rb 25 <==
+sprintf(something, a, b)
+
+==> 015.rb 22 <==
+sprintf('%020d', 123)
+
+==> 016.rb 30 <==
+a = something()
+puts "%d" % a
+

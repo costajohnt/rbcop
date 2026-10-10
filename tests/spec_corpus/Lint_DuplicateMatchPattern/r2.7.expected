@@ -1,0 +1,24 @@
+==> offenses exit=1 760 <==
+000.rb:6:4: W: Lint/DuplicateMatchPattern: Duplicate `in` pattern detected.
+001.rb:4:4: W: Lint/DuplicateMatchPattern: Duplicate `in` pattern detected.
+002.rb:6:4: W: Lint/DuplicateMatchPattern: Duplicate `in` pattern detected.
+002.rb:8:4: W: Lint/DuplicateMatchPattern: Duplicate `in` pattern detected.
+003.rb:4:4: W: Lint/DuplicateMatchPattern: Duplicate `in` pattern detected.
+005.rb:4:4: W: Lint/DuplicateMatchPattern: Duplicate `in` pattern detected.
+008.rb:4:4: W: Lint/DuplicateMatchPattern: Duplicate `in` pattern detected.
+009.rb:4:4: W: Lint/DuplicateMatchPattern: Duplicate `in` pattern detected.
+014.rb:4:4: W: Lint/DuplicateMatchPattern: Duplicate `in` pattern detected.
+015.rb:4:4: W: Lint/DuplicateMatchPattern: Duplicate `in` pattern detected.
+
+==> autocorrect exit=1 760 <==
+000.rb:6:4: W: Lint/DuplicateMatchPattern: Duplicate `in` pattern detected.
+001.rb:4:4: W: Lint/DuplicateMatchPattern: Duplicate `in` pattern detected.
+002.rb:6:4: W: Lint/DuplicateMatchPattern: Duplicate `in` pattern detected.
+002.rb:8:4: W: Lint/DuplicateMatchPattern: Duplicate `in` pattern detected.
+003.rb:4:4: W: Lint/DuplicateMatchPattern: Duplicate `in` pattern detected.
+005.rb:4:4: W: Lint/DuplicateMatchPattern: Duplicate `in` pattern detected.
+008.rb:4:4: W: Lint/DuplicateMatchPattern: Duplicate `in` pattern detected.
+009.rb:4:4: W: Lint/DuplicateMatchPattern: Duplicate `in` pattern detected.
+014.rb:4:4: W: Lint/DuplicateMatchPattern: Duplicate `in` pattern detected.
+015.rb:4:4: W: Lint/DuplicateMatchPattern: Duplicate `in` pattern detected.
+

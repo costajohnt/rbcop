@@ -1,0 +1,8 @@
+==> offenses exit=1 182 <==
+000.rb:2:3: C: Style/TrivialAccessors: Use `attr_reader` to define trivial reader methods.
+001.rb:2:3: C: Style/TrivialAccessors: Use `attr_reader` to define trivial reader methods.
+
+==> autocorrect exit=1 182 <==
+000.rb:2:3: C: Style/TrivialAccessors: Use `attr_reader` to define trivial reader methods.
+001.rb:2:3: C: Style/TrivialAccessors: Use `attr_reader` to define trivial reader methods.
+

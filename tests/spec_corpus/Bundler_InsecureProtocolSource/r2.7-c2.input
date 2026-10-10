@@ -1,0 +1,13 @@
+==> .rubocop.yml 167 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Bundler/InsecureProtocolSource:
+  AllowHttpProtocol: false
+
+==> 000.gemfile 29 <==
+source 'http://rubygems.org'
+

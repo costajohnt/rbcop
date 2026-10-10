@@ -1,0 +1,60 @@
+==> offenses exit=1 1449 <==
+000.rb:1:1: C: [Correctable] Style/InvertibleUnlessCondition: Prefer `if x` over `unless !x`.
+000.rb:2:1: C: [Correctable] Style/InvertibleUnlessCondition: Prefer `if !x` over `unless !!x`.
+001.rb:1:1: C: [Correctable] Style/InvertibleUnlessCondition: Prefer `if x == y` over `unless x != y`.
+002.rb:1:1: C: [Correctable] Style/InvertibleUnlessCondition: Prefer `if x.even?` over `unless x.odd?`.
+003.rb:1:1: C: [Correctable] Style/InvertibleUnlessCondition: Prefer `if array.exclude?(value)` over `unless array.include?(value)`.
+003.rb:2:1: C: [Correctable] Style/InvertibleUnlessCondition: Prefer `if array.include? value` over `unless array.exclude? value`.
+004.rb:1:1: C: [Correctable] Style/InvertibleUnlessCondition: Prefer `if ((x == y))` over `unless ((x != y))`.
+005.rb:1:1: C: [Correctable] Style/InvertibleUnlessCondition: Prefer `if x == y || (((x.even?) && (((y < 5)))) && z.nonzero?)` over `unless x != y && (((x.odd?) || (((y >= 5)))) || z.zero?)`.
+006.rb:1:1: C: [Correctable] Style/InvertibleUnlessCondition: Prefer `if (x == y || y < 5) && x.even?` over `unless x != y && y >= 5 || x.odd?`.
+007.rb:1:1: C: [Correctable] Style/InvertibleUnlessCondition: Prefer `if even?` over `unless odd?`.
+008.rb:1:1: C: [Correctable] Style/InvertibleUnlessCondition: Prefer `if exclude?(value)` over `unless include?(value)`.
+009.rb:1:1: C: [Correctable] Style/InvertibleUnlessCondition: Prefer `if exclude? value` over `unless include? value`.
+
+==> autocorrect exit=0 1425 <==
+000.rb:1:1: C: [Corrected] Style/InvertibleUnlessCondition: Prefer `if x` over `unless !x`.
+000.rb:2:1: C: [Corrected] Style/InvertibleUnlessCondition: Prefer `if !x` over `unless !!x`.
+001.rb:1:1: C: [Corrected] Style/InvertibleUnlessCondition: Prefer `if x == y` over `unless x != y`.
+002.rb:1:1: C: [Corrected] Style/InvertibleUnlessCondition: Prefer `if x.even?` over `unless x.odd?`.
+003.rb:1:1: C: [Corrected] Style/InvertibleUnlessCondition: Prefer `if array.exclude?(value)` over `unless array.include?(value)`.
+003.rb:2:1: C: [Corrected] Style/InvertibleUnlessCondition: Prefer `if array.include? value` over `unless array.exclude? value`.
+004.rb:1:1: C: [Corrected] Style/InvertibleUnlessCondition: Prefer `if ((x == y))` over `unless ((x != y))`.
+005.rb:1:1: C: [Corrected] Style/InvertibleUnlessCondition: Prefer `if x == y || (((x.even?) && (((y < 5)))) && z.nonzero?)` over `unless x != y && (((x.odd?) || (((y >= 5)))) || z.zero?)`.
+006.rb:1:1: C: [Corrected] Style/InvertibleUnlessCondition: Prefer `if (x == y || y < 5) && x.even?` over `unless x != y && y >= 5 || x.odd?`.
+007.rb:1:1: C: [Corrected] Style/InvertibleUnlessCondition: Prefer `if even?` over `unless odd?`.
+008.rb:1:1: C: [Corrected] Style/InvertibleUnlessCondition: Prefer `if exclude?(value)` over `unless include?(value)`.
+009.rb:1:1: C: [Corrected] Style/InvertibleUnlessCondition: Prefer `if exclude? value` over `unless include? value`.
+
+==> corrected/000.rb 19 <==
+foo if x
+foo if !x
+
+==> corrected/001.rb 14 <==
+foo if x == y
+
+==> corrected/002.rb 15 <==
+foo if x.even?
+
+==> corrected/003.rb 74 <==
+foo if array.exclude?(value)
+foo if array.include? value # no parentheses
+
+==> corrected/004.rb 18 <==
+foo if ((x == y))
+
+==> corrected/005.rb 60 <==
+foo if x == y || (((x.even?) && (((y < 5)))) && z.nonzero?)
+
+==> corrected/006.rb 36 <==
+foo if (x == y || y < 5) && x.even?
+
+==> corrected/007.rb 13 <==
+foo if even?
+
+==> corrected/008.rb 23 <==
+foo if exclude?(value)
+
+==> corrected/009.rb 22 <==
+foo if exclude? value
+

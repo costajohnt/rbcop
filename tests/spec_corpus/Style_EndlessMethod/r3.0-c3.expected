@@ -1,0 +1,60 @@
+==> offenses exit=1 840 <==
+003.rb:1:1: C: [Correctable] Style/EndlessMethod: Avoid endless method definitions with multiple lines.
+004.rb:1:1: C: [Correctable] Style/EndlessMethod: Avoid endless method definitions with multiple lines.
+005.rb:1:1: C: [Correctable] Style/EndlessMethod: Avoid endless method definitions with multiple lines.
+013.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions for single line methods.
+014.rb:1:9: C: [Correctable] Style/EndlessMethod: Use endless method definitions for single line methods.
+018.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions for single line methods.
+020.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions for single line methods.
+021.rb:1:1: C: [Correctable] Style/EndlessMethod: Avoid endless method definitions with multiple lines.
+
+==> autocorrect exit=0 824 <==
+003.rb:1:1: C: [Corrected] Style/EndlessMethod: Avoid endless method definitions with multiple lines.
+004.rb:1:1: C: [Corrected] Style/EndlessMethod: Avoid endless method definitions with multiple lines.
+005.rb:1:1: C: [Corrected] Style/EndlessMethod: Avoid endless method definitions with multiple lines.
+013.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions for single line methods.
+014.rb:1:9: C: [Corrected] Style/EndlessMethod: Use endless method definitions for single line methods.
+018.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions for single line methods.
+020.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions for single line methods.
+021.rb:1:1: C: [Corrected] Style/EndlessMethod: Avoid endless method definitions with multiple lines.
+
+==> corrected/003.rb 74 <==
+def my_method
+  x.foo
+                   .bar
+                   .baz
+end
+
+==> corrected/004.rb 89 <==
+def self.my_method
+  x.foo
+                        .bar
+                        .baz
+end
+
+==> corrected/005.rb 94 <==
+def self::my_method
+  x.foo
+                          .bar
+                          .baz
+end
+
+==> corrected/013.rb 18 <==
+def my_method = x
+
+==> corrected/014.rb 26 <==
+private def my_method = x
+
+==> corrected/018.rb 78 <==
+def my_method = 'this_string_puts_the_endless_form_just_over_the_limit______'
+
+==> corrected/020.rb 24 <==
+def my_method(a, b) = x
+
+==> corrected/021.rb 88 <==
+def my_method(a, b)
+  x.foo
+                       .bar
+                       .baz
+end
+

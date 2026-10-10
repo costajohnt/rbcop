@@ -1,0 +1,439 @@
+==> .rubocop.yml 197 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LineLength:
+  Max: 40
+  AllowedPatterns:
+  AutoCorrect: true
+  SplitStrings: true
+
+==> 000.rb 22 <==
+'aaaaaaaaaaaaaaaaaaa'
+
+==> 001.rb 41 <==
+'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#{bbbbb}'
+
+==> 002.rb 44 <==
+'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbb'
+
+==> 003.rb 54 <==
+foo(
+  'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbbb'
+)
+
+==> 004.rb 48 <==
+foo
+                                     'aaaa'
+
+==> 005.rb 51 <==
+foo
+                                        'aaaa'
+
+==> 006.rb 55 <==
+foo("aaaaaaaaaaaaaaaaaaaaaaaaa#{b} cc dd " \
+    "ee")
+
+==> 007.rb 92 <==
+'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' \
+'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcccccccccccc'
+
+==> 008.rb 44 <==
+x = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbb'
+
+==> 009.rb 45 <==
+x = 'aaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbb'
+
+==> 010.rb 50 <==
+x = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\nbbbbbbbbbb'
+
+==> 011.rb 97 <==
+{ x: 'aaaa', y: 'bbbbbbbbbbbbbbbbbbbbbbbbbbb', z: 'cccccccccccccccccccccccccccccccccccccccccc' }
+
+==> 012.rb 63 <==
+'aaaaaaaaaaaaaaaaaaaaa' # this comment makes the line too long
+
+==> 013.rb 47 <==
+'aaaaaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbb'
+
+==> 014.rb 80 <==
+'aaaaaaaaaaaaaaaaaaaaaaaaa bbbbb ccccccccc dddddddddddddddddddddd eeeeeeeeeeee'
+
+==> 015.rb 44 <==
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\nbbbb"
+
+==> 016.rb 47 <==
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\u0061bbbb"
+
+==> 017.rb 43 <==
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\x61bbbb"
+
+==> 018.rb 47 <==
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaあbbbbb"
+
+==> 019.rb 45 <==
+%{aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}
+
+==> 020.rb 46 <==
+%q[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]
+
+==> 021.rb 46 <==
+%Q[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]
+
+==> 022.rb 46 <==
+%i[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]
+
+==> 023.rb 46 <==
+%I[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]
+
+==> 024.rb 46 <==
+%w[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]
+
+==> 025.rb 46 <==
+%W[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]
+
+==> 026.rb 55 <==
+<<~STR
+  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+STR
+
+==> 027.rb 45 <==
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#{bbbb}"
+
+==> 028.rb 55 <==
+"#{bbbb}aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+==> 029.rb 55 <==
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#{bbbb}"
+
+==> 030.rb 76 <==
+a_long_named_method_call
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#{bbbbbbbbb}"
+
+==> 031.rb 55 <==
+"#{aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}"
+
+==> 032.rb 63 <==
+"#{aaaaa}bbbbbbb#{cccccc}ddddddddddddddddddddd#{eeeeeeeeeeee}"
+
+==> 033.rb 48 <==
+"aaaaaaaaaaaaa#{"#{bbbbbbbbbbbbbbbbbbbbbbbb}"}"
+
+==> 034.rb 19 <==
+{foo: 1, bar: "2"}
+
+==> 035.rb 108 <==
+{ # supersupersupersupersupersupersupersupersupersupersupersuperlongcomment
+  baz: "10000",
+  bar: "10000"}
+
+==> 036.rb 107 <==
+{supersupersupersupersupersupersupersupersupersupersupersuperfirstarg: 10,
+  baz: "10000",
+  bar: "10000"}
+
+==> 037.rb 114 <==
+{
+  baz0: "10000",
+  baz1: "10000",
+  baz2: "10000", baz2: "10000", baz3: "10000", baz4: "10000",
+  bar: "10000"}
+
+==> 038.rb 76 <==
+{abc: "100000", def: "100000", ghi: "100000", jkl: "100000", mno: "100000"}
+
+==> 039.rb 79 <==
+{"abc" => "100000", "def" => "100000", "casd" => "100000", "asdf" => "100000"}
+
+==> 040.rb 73 <==
+{:abc => "100000", :asd => "100000", :asd => "100000", :fds => "100000"}
+
+==> 041.rb 83 <==
+{abc: "100000", def: "100000", ghi: {abc: "100000"}, jkl: "100000", mno: "100000"}
+
+==> 042.rb 138 <==
+get(
+  :index,
+  params: {driver_id: driver.id, from_date: "2017-08-18T15:09:04.000Z", to_date: "2017-09-19T15:09:04.000Z"},
+  xhr: true)
+
+==> 043.rb 31 <==
+def foo(foo: 1, bar: "2"); end
+
+==> 044.rb 87 <==
+def foo(abc: "100000", def: "100000", ghi: "100000", jkl: "100000", mno: "100000")
+end
+
+==> 045.rb 36 <==
+def self.foo(foo: 1, bar: "2"); end
+
+==> 046.rb 92 <==
+def self.foo(abc: "100000", def: "100000", ghi: "100000", jkl: "100000", mno: "100000")
+end
+
+==> 047.rb 22 <==
+foo(foo: 1, bar: "2")
+
+==> 048.rb 96 <==
+def baz(bar)
+  foo(shipment, actionable_delivery) &&
+    bar(shipment, actionable_delivery)
+end
+
+==> 049.rb 79 <==
+foo(abc: "100000", def: "100000", ghi: "100000", jkl: "100000", mno: "100000")
+
+==> 050.rb 43 <==
+method_call xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+==> 051.rb 46 <==
+method_call xxxxxxxxxxxxxxxxxxxxxxxxxxxx, abc
+
+==> 052.rb 86 <==
+foo(abc: "100000", def: "100000", ghi: {abc: "100000"}, jkl: "100000", mno: "100000")
+
+==> 053.rb 79 <==
+foo(abc: '10000000000000000000000000000000000000000000000000000', def: '1000')
+
+==> 054.rb 83 <==
+foo({ abc: '10000000000000000000000000000000000000000000000000000', def: '1000' })
+
+==> 055.rb 65 <==
+foo abc: '10000000000000000000000000000000000000000000000000000'
+
+==> 056.rb 78 <==
+foo abc: '10000000000000000000000000000000000000000000000000000', ghi: '1000'
+
+==> 057.rb 82 <==
+foo abc: '10000000000000000000000000000000000000000000000000000',
+    ghi: '1000'
+
+==> 058.rb 65 <==
+get(1000000, 30000, foo(44440000, 30000, 39999, 19929120312093))
+
+==> 059.rb 84 <==
+get(1000000,
+foo(44440000, 30000, 39999, 1992), foo(44440000, 30000, 39999, 12093))
+
+==> 060.rb 94 <==
+attr_reader :first_name, :last_name, :email, :username, :country, :state, :city, :postal_code
+
+==> 061.rb 52 <==
+foo(<<~STRING, xxxxxxxxxxxxxxxxxxxxxxxxxxxx)
+STRING
+
+==> 062.rb 51 <==
+foo <<~STRING, xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+STRING
+
+==> 063.rb 51 <==
+[<<~STRING, { key1: value1, key2: value2 }]
+STRING
+
+==> 064.rb 52 <==
+foo(abc, <<~STRING, xxxxxxxxxxxxxxxxxxxxxxx)
+STRING
+
+==> 065.rb 58 <==
+foo(xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx, <<~STRING)
+STRING
+
+==> 066.rb 27 <==
+foo&.bar(foo: 1, bar: "2")
+
+==> 067.rb 83 <==
+def baz(bar)
+  foo&.bar(shipment, actionable) &&
+    bar(shipment, actionable)
+end
+
+==> 068.rb 84 <==
+foo&.bar(abc: "100000", def: "100000", ghi: "100000", jkl: "100000", mno: "100000")
+
+==> 069.rb 43 <==
+foo&.bar xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+==> 070.rb 43 <==
+foo&.bar xxxxxxxxxxxxxxxxxxxxxxxxxxxx, abc
+
+==> 071.rb 91 <==
+foo&.bar(abc: "100000", def: "100000", ghi: {abc: "100000"}, jkl: "100000", mno: "100000")
+
+==> 072.rb 84 <==
+foo&.bar(abc: '10000000000000000000000000000000000000000000000000000', def: '1000')
+
+==> 073.rb 88 <==
+foo&.bar({ abc: '10000000000000000000000000000000000000000000000000000', def: '1000' })
+
+==> 074.rb 70 <==
+foo&.bar abc: '10000000000000000000000000000000000000000000000000000'
+
+==> 075.rb 83 <==
+foo&.bar abc: '10000000000000000000000000000000000000000000000000000', ghi: '1000'
+
+==> 076.rb 87 <==
+foo&.bar abc: '10000000000000000000000000000000000000000000000000000',
+    ghi: '1000'
+
+==> 077.rb 70 <==
+get(1000000, 30000, foo&.bar(44440000, 30000, 39999, 19929120312093))
+
+==> 078.rb 70 <==
+get&.bar(1000000, 30000, foo(44440000, 30000, 39999, 19929120312093))
+
+==> 079.rb 75 <==
+get&.bar(1000000, 30000, foo&.baz(44440000, 30000, 39999, 19929120312093))
+
+==> 080.rb 94 <==
+get(1000000,
+foo&.bar(44440000, 30000, 39999, 1992), foo&.baz(44440000, 30000, 39999, 12093))
+
+==> 081.rb 99 <==
+get&.foo(1000000,
+foo&.bar(44440000, 30000, 39999, 1992), foo&.baz(44440000, 30000, 39999, 12093))
+
+==> 082.rb 91 <==
+foo&.bar :first_name, :last_name, :email, :username, :country, :state, :city, :postal_code
+
+==> 083.rb 52 <==
+foo&.bar(<<~STRING, xxxxxxxxxxxxxxxxxxxxxxx)
+STRING
+
+==> 084.rb 51 <==
+foo&.bar <<~STRING, xxxxxxxxxxxxxxxxxxxxxxx
+STRING
+
+==> 085.rb 52 <==
+foo&.bar(abc, <<~STRING, xxxxxxxxxxxxxxxxxx)
+STRING
+
+==> 086.rb 58 <==
+foo&.bar(xxxxxxxxxxxxxxxxxxxxxxxxxxxxx, <<~STRING)
+STRING
+
+==> 087.rb 9 <==
+[1, "2"]
+
+==> 088.rb 15 <==
+[1, "2",
+ "3"]
+
+==> 089.rb 59 <==
+["1111", "100000", "100000", "100000", "100000", "100000"]
+
+==> 090.rb 84 <==
+["1111", "100000", "100000", "100000", {abc: "100000", b: "2"}, "100000", "100000"]
+
+==> 091.rb 106 <==
+[1000000, 3912312312999,
+  [44440000, 3912312312999, 3912312312999, 1992912031231232131312093],
+100, 100]
+
+==> 092.rb 47 <==
+{ foo: 1234567890, bar: method_call(x, y, z) }
+
+==> 093.rb 44 <==
+{ foo: 1234567890, bar: foo&.bar(x, y, z) }
+
+==> 094.rb 96 <==
+10000003912312312999
+  # 444400003912312312999391231231299919929120312312321313120933333333
+456
+
+==> 095.rb 71 <==
+foo.select { |bar| 4444000039123123129993912312312999199291203123123 }
+
+==> 096.rb 71 <==
+foo.select do |bar| 4444000039123123129993912312312999199291203123 end
+
+==> 097.rb 65 <==
+foo.select do 4444000039123123129993912312312999199291203123 end
+
+==> 098.rb 71 <==
+foo.select do _1 + 44440000391231231299939123123129991992912031234 end
+
+==> 099.rb 71 <==
+let(:foobar) { BazBazBaz::BazBazBaz::BazBazBaz::BazBazBaz.baz(baz12) }
+
+==> 100.rb 71 <==
+let(:foobar){BazBazBaz::BazBazBaz::BazBazBaz::BazBazBaz.baz(baz12345)}
+
+==> 101.rb 71 <==
+->(x) { fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo }
+
+==> 102.rb 71 <==
+-> x { foooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo }
+
+==> 103.rb 85 <==
+<<~FOO.select { |bar| 4444000039123123129993912312312999199291203123123 }
+  text
+FOO
+
+==> 104.rb 87 <==
+[<<~FOO].select { |bar| 4444000039123123129993912312312999199291203123123 }
+  text
+FOO
+
+==> 105.rb 108 <==
+[<<~FOO, <<~BAR].select { |bar| 4444000039123123129993912312312999199291203123123 }
+  text
+FOO
+  text 2
+BAR
+
+==> 106.rb 93 <==
+<<~FOO.bar.baz.select { |qux| 4444000039123123129993912312312999199291203123123 }
+  text
+FOO
+
+==> 107.rb 94 <==
+bar.baz(<<~FOO).select { |qux| 4444000039123123129993912312312999199291203123123 }
+  text
+FOO
+
+==> 108.rb 88 <==
+<<~FOO.select { |bar| 4444000039123123129993912312312999199291203123123 }
+  #{text}
+FOO
+
+==> 109.rb 87 <==
+<<~`FOO`.select { |bar| 4444000039123123129993912312312999199291203123123 }
+  text
+FOO
+
+==> 110.rb 30 <==
+{foo: 1, bar: "2"}; a = 4 + 5
+
+==> 111.rb 55 <==
+{foo: 1, bar: "2"}; a = 400000000000 + 500000000000000
+
+==> 112.rb 56 <==
+{foo: 1, bar: "2"}; a = 400000000000 + 500000000000000;
+
+==> 113.rb 59 <==
+{foo: 1, bar: "2"}  ;   a = 400000000000 + 500000000000000
+
+==> 114.rb 59 <==
+{foo: 1, bar: "2"}  ;;; a = 400000000000 + 500000000000000
+
+==> 115.rb 42 <==
+a = 400000000000 + 500000000000000000000;
+
+==> 116.rb 48 <==
+a = 400000000000 + 500000000000000000000;;;;;;;
+
+==> 117.rb 68 <==
+FooBar.new(baz: 30, bat: 'publisher_group:123;publisher:456;s:123')
+
+==> 118.rb 67 <==
+"00000000000000000;0000000000000000000'000000;00000'0000;0000;000"
+
+==> 119.rb 54 <==
+# a b c d a b c d a b c d ; a b c d a b c d a b c d a
+
+==> 120.rb 46 <==
+a = fooooooooooooooooooooooooooooooooooooo, b
+

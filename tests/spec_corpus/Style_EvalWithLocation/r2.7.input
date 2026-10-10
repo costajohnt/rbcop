@@ -1,0 +1,138 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 33 <==
+eval <<-CODE
+  do_something
+CODE
+
+==> 001.rb 40 <==
+Kernel.eval <<-CODE
+  do_something
+CODE
+
+==> 002.rb 42 <==
+::Kernel.eval <<-CODE
+  do_something
+CODE
+
+==> 003.rb 16 <==
+foo.eval "CODE"
+
+==> 004.rb 42 <==
+eval <<-CODE, binding
+  do_something
+CODE
+
+==> 005.rb 52 <==
+eval <<-CODE, binding, __FILE__
+  do_something
+CODE
+
+==> 006.rb 53 <==
+eval(<<-CODE, binding, __FILE__)
+  do_something
+CODE
+
+==> 007.rb 53 <==
+eval 'do_something', binding, __FILE__, __LINE__ + 1
+
+==> 008.rb 66 <==
+eval <<-CODE, binding, __FILE__, __LINE__ + 2
+  do_something
+CODE
+
+==> 009.rb 60 <==
+eval('puts 42',
+     binding,
+     __FILE__,
+     __LINE__)
+
+==> 010.rb 41 <==
+C.class_eval <<-CODE
+  do_something
+CODE
+
+==> 011.rb 42 <==
+M.module_eval <<-CODE
+  do_something
+CODE
+
+==> 012.rb 46 <==
+foo.instance_eval <<-CODE
+  do_something
+CODE
+
+==> 013.rb 28 <==
+instance_eval('@foo = foo')
+
+==> 014.rb 61 <==
+C.class_eval <<-CODE, __FILE__, __LINE__
+  do_something
+CODE
+
+==> 015.rb 66 <==
+eval <<-CODE, binding, __FILE__, __LINE__ + 1
+  do_something
+CODE
+
+==> 016.rb 27 <==
+code = something
+eval code
+
+==> 017.rb 49 <==
+eval 'do_something', binding, __FILE__, __LINE__
+
+==> 018.rb 58 <==
+eval 'do_something', binding, __FILE__,
+     __LINE__ - 1
+
+==> 019.rb 56 <==
+eval <<-CODE, binding, 'foo', 'bar'
+  do_something
+CODE
+
+==> 020.rb 56 <==
+instance_eval <<-CODE, 'foo', 'bar'
+  do_something
+CODE
+
+==> 021.rb 53 <==
+class_eval <<-CODE, 'foo', 'bar'
+  do_something
+CODE
+
+==> 022.rb 54 <==
+module_eval <<-CODE, 'foo', 'bar'
+  do_something
+CODE
+
+==> 023.rb 57 <==
+module_eval <<-CODE, __FILE__, 'bar'
+  do_something
+CODE
+
+==> 024.rb 79 <==
+def self.included(base)
+  base.class_eval do
+    include OtherModule
+  end
+end
+
+==> 025.rb 59 <==
+module_eval(<<~CODE, __FILE__, lineno)
+  do_something
+CODE
+
+==> 026.rb 74 <==
+lineno = calc
+
+module_eval(<<~CODE, __FILE__, lineno)
+  do_something
+CODE
+

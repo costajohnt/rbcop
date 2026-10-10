@@ -1,0 +1,27 @@
+==> offenses exit=1 452 <==
+000.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body beginning.
+001.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body end.
+002.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body beginning.
+002.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body end.
+
+==> autocorrect exit=0 444 <==
+000.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body beginning.
+001.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body end.
+002.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body beginning.
+002.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Extra empty line detected at module body end.
+
+==> corrected/000.rb 37 <==
+module SomeModule
+  do_something
+end
+
+==> corrected/001.rb 37 <==
+module SomeModule
+  do_something
+end
+
+==> corrected/002.rb 37 <==
+module SomeModule
+  do_something
+end
+

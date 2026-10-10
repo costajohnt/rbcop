@@ -1,0 +1,20 @@
+==> offenses exit=1 258 <==
+001.rb:3:8: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than `execute_request(`.
+002.rb:2:3: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than `described_class.new(`.
+
+==> autocorrect exit=0 254 <==
+001.rb:3:8: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than `execute_request(`.
+002.rb:2:3: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than `described_class.new(`.
+
+==> corrected/001.rb 95 <==
+expect(
+  execute_request(
+    "some_url",
+    :request_method => "PATCH"
+  )).to be_throttled
+
+==> corrected/002.rb 45 <==
+run(described_class.new(
+      attributes
+))
+

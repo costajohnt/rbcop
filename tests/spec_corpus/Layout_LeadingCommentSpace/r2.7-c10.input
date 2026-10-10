@@ -1,0 +1,39 @@
+==> .rubocop.yml 175 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LeadingCommentSpace:
+  AllowYARDCommentBlockSeparator: true
+
+==> 000.rb 32 <==
+# Some comment
+#-
+class Foo
+end
+
+==> 001.rb 54 <==
+# Some comment
+#-
+
+# Another comment
+#-
+class Foo
+end
+
+==> 002.rb 52 <==
+class Foo
+  # Some comment
+  #-
+  def bar
+  end
+end
+
+==> 003.rb 6 <==
+#-foo
+
+==> 004.rb 3 <==
+#+
+

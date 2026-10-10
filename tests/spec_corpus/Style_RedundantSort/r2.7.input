@@ -1,0 +1,157 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 21 <==
+[1, 2, 3].sort.first
+
+==> 001.rb 22 <==
+[1, 2, 3]&.sort.first
+
+==> 002.rb 23 <==
+[1, 2, 3]&.sort&.first
+
+==> 003.rb 17 <==
+[1, 2].sort.last
+
+==> 004.rb 18 <==
+[1, 2]&.sort.last
+
+==> 005.rb 19 <==
+[1, 2]&.sort&.last
+
+==> 006.rb 33 <==
+foo.sort { |a, b| b <=> a }.last
+
+==> 007.rb 34 <==
+foo&.sort { |a, b| b <=> a }.last
+
+==> 008.rb 35 <==
+foo&.sort { |a, b| b <=> a }&.last
+
+==> 009.rb 41 <==
+[1, 2, 3].sort_by { |x| x.length }.first
+
+==> 010.rb 42 <==
+[1, 2, 3]&.sort_by { |x| x.length }.first
+
+==> 011.rb 43 <==
+[1, 2, 3]&.sort_by { |x| x.length }&.first
+
+==> 012.rb 37 <==
+foo.sort_by { |x| x.something }.last
+
+==> 013.rb 47 <==
+[1, 2, 3]
+  .sort_by { |x| x.length }
+  .first
+
+==> 014.rb 53 <==
+[1, 2, 3]
+  .sort_by { |x| x.length }
+  .first || []
+
+==> 015.rb 53 <==
+[1, 2, 3]
+  .sort_by { |x| x.length }
+  .first && []
+
+==> 016.rb 53 <==
+[1, 2, 3]
+  .sort_by { |x| x.length }
+  .first or []
+
+==> 017.rb 54 <==
+[1, 2, 3]
+  .sort_by { |x| x.length }
+  .first and []
+
+==> 018.rb 34 <==
+[1, 2].sort_by(&:something).first
+
+==> 019.rb 33 <==
+[1, 2, 3].sort_by(&:length).last
+
+==> 020.rb 19 <==
+[1, 2].sort.at(-1)
+
+==> 021.rb 20 <==
+[1, 2]&.sort.at(-1)
+
+==> 022.rb 21 <==
+[1, 2]&.sort&.at(-1)
+
+==> 023.rb 24 <==
+[1, 2, 3].sort.slice(0)
+
+==> 024.rb 18 <==
+[1, 2, 3].sort[0]
+
+==> 025.rb 21 <==
+[1, 2, 3].sort.[](0)
+
+==> 026.rb 33 <==
+foo.sort_by { |x| x.foo }.[](-1)
+
+==> 027.rb 31 <==
+[1, 2, 3].sort_by(&:foo).at(0)
+
+==> 028.rb 31 <==
+[1, 2].sort_by(&:foo).slice(0)
+
+==> 029.rb 35 <==
+[1, 2, 3].sort_by(&:foo).slice(-1)
+
+==> 030.rb 19 <==
+[1, 2, 3].sort[-1]
+
+==> 031.rb 25 <==
+[1, 2].sort_by(&:foo)[0]
+
+==> 032.rb 30 <==
+foo.sort_by { |x| x.foo }[-1]
+
+==> 033.rb 23 <==
+[1, 2, 3].sort.first(1)
+==> 034.rb 45 <==
+mongo_client["users"].find.sort(_id: 1).first
+==> 035.rb 21 <==
+[1, 2, 3].sort!.first
+==> 036.rb 36 <==
+[1, 2, 3].sort_by!(&:something).last
+==> 037.rb 28 <==
+[1, 2, 3].sort_by { |x| -x }
+==> 038.rb 15 <==
+[1, 2, 3].first
+==> 039.rb 27 <==
+[[1, 2], [3, 4]].first.sort
+==> 040.rb 23 <==
+[2, 1, 3].sort_by.first
+==> 041.rb 36 <==
+x.sort_by { |y| y.foo || bar }.last
+
+==> 042.rb 17 <==
+[1, 2, 3].sort[1]
+==> 043.rb 31 <==
+[1, 2, 3].sort_by(&:foo).at(-2)
+==> 044.rb 43 <==
+mongo_client["users"].find.sort(_id: 1)[-1]
+==> 045.rb 28 <==
+foo.sort { _2 <=> _1 }.last
+
+==> 046.rb 38 <==
+[1, 2, 3].sort_by { _1.length }.first
+
+==> 047.rb 35 <==
+[1, 2, 3].sort_by { _1.foo }.at(0)
+
+==> 048.rb 36 <==
+[1, 2, 3]&.sort_by { _1.foo }.at(0)
+
+==> 049.rb 37 <==
+[1, 2, 3]&.sort_by { _1.foo }&.at(0)
+

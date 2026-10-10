@@ -1,0 +1,21 @@
+==> .rubocop.yml 174 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/SuppressedException:
+  AllowComments: false
+  AllowNil: true
+
+==> 000.rb 38 <==
+begin
+  do_something
+rescue
+  nil
+end
+
+==> 001.rb 21 <==
+something rescue nil
+

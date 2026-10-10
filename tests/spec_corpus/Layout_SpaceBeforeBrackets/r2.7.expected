@@ -1,0 +1,40 @@
+==> offenses exit=1 728 <==
+000.rb:2:11: C: [Correctable] Layout/SpaceBeforeBrackets: Remove the space before the opening brackets.
+001.rb:1:12: C: [Correctable] Layout/SpaceBeforeBrackets: Remove the space before the opening brackets.
+002.rb:1:13: C: [Correctable] Layout/SpaceBeforeBrackets: Remove the space before the opening brackets.
+003.rb:1:12: C: [Correctable] Layout/SpaceBeforeBrackets: Remove the space before the opening brackets.
+004.rb:1:21: C: [Correctable] Layout/SpaceBeforeBrackets: Remove the space before the opening brackets.
+020.rb:1:12: C: [Correctable] Layout/SpaceBeforeBrackets: Remove the space before the opening brackets.
+021.rb:1:12: C: [Correctable] Layout/SpaceBeforeBrackets: Remove the space before the opening brackets.
+
+==> autocorrect exit=0 714 <==
+000.rb:2:11: C: [Corrected] Layout/SpaceBeforeBrackets: Remove the space before the opening brackets.
+001.rb:1:12: C: [Corrected] Layout/SpaceBeforeBrackets: Remove the space before the opening brackets.
+002.rb:1:13: C: [Corrected] Layout/SpaceBeforeBrackets: Remove the space before the opening brackets.
+003.rb:1:12: C: [Corrected] Layout/SpaceBeforeBrackets: Remove the space before the opening brackets.
+004.rb:1:21: C: [Corrected] Layout/SpaceBeforeBrackets: Remove the space before the opening brackets.
+020.rb:1:12: C: [Corrected] Layout/SpaceBeforeBrackets: Remove the space before the opening brackets.
+021.rb:1:12: C: [Corrected] Layout/SpaceBeforeBrackets: Remove the space before the opening brackets.
+
+==> corrected/000.rb 51 <==
+collection = do_something
+collection[index_or_key]
+
+==> corrected/001.rb 26 <==
+@collection[index_or_key]
+
+==> corrected/002.rb 27 <==
+@@collection[index_or_key]
+
+==> corrected/003.rb 26 <==
+$collection[index_or_key]
+
+==> corrected/004.rb 35 <==
+collection.call(arg)[index_or_key]
+
+==> corrected/020.rb 35 <==
+@correction[index_or_key] = :value
+
+==> corrected/021.rb 36 <==
+@correction[ index_or_key] = :value
+

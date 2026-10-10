@@ -1,0 +1,158 @@
+==> .rubocop.yml 137 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LineLength:
+  Max: 80
+
+==> 000.rb 88 <==
+if aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+end
+
+==> 001.rb 57 <==
+if some_condition
+  do_something
+  do_something_else
+end
+
+==> 002.rb 32 <==
+if condition
+  do_something
+end
+
+==> 003.rb 12 <==
+if cond
+end
+
+==> 004.rb 36 <==
+if (var = something)
+  puts var
+end
+
+==> 005.rb 20 <==
+if true
+  x = 0
+end
+
+==> 006.rb 17 <==
+a = if b
+  1
+end
+
+==> 007.rb 18 <==
+@a = if b
+  1
+end
+
+==> 008.rb 19 <==
+@@a = if b
+  1
+end
+
+==> 009.rb 17 <==
+A = if b
+  1
+end
+
+==> 010.rb 17 <==
+a + if b
+  1
+end
+
+==> 011.rb 53 <==
+if bar # important comment not to be nuked
+  baz
+end
+
+==> 012.rb 17 <==
+if foo; bar; end
+
+==> 013.rb 33 <==
+foo if bar ||
+               baz
+
+==> 014.rb 45 <==
+[
+  1, if foo # bar
+       baz
+     end, 3
+]
+
+==> 015.rb 88 <==
+unless aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+end
+
+==> 016.rb 61 <==
+unless some_condition
+  do_something
+  do_something_else
+end
+
+==> 017.rb 36 <==
+unless condition
+  do_something
+end
+
+==> 018.rb 16 <==
+unless cond
+end
+
+==> 019.rb 40 <==
+unless (var = something)
+  puts var
+end
+
+==> 020.rb 24 <==
+unless true
+  x = 0
+end
+
+==> 021.rb 21 <==
+a = unless b
+  1
+end
+
+==> 022.rb 22 <==
+@a = unless b
+  1
+end
+
+==> 023.rb 23 <==
+@@a = unless b
+  1
+end
+
+==> 024.rb 21 <==
+A = unless b
+  1
+end
+
+==> 025.rb 21 <==
+a + unless b
+  1
+end
+
+==> 026.rb 57 <==
+unless bar # important comment not to be nuked
+  baz
+end
+
+==> 027.rb 21 <==
+unless foo; bar; end
+
+==> 028.rb 37 <==
+foo unless bar ||
+               baz
+
+==> 029.rb 49 <==
+[
+  1, unless foo # bar
+       baz
+     end, 3
+]
+

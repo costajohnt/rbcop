@@ -1,0 +1,83 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 16 <==
+File.exists?(o)
+
+==> 001.rb 18 <==
+::File.exists?(o)
+
+==> 002.rb 14 <==
+File.exist?(o)
+==> 003.rb 15 <==
+Dir.exists?(o)
+
+==> 004.rb 17 <==
+::Dir.exists?(o)
+
+==> 005.rb 13 <==
+Dir.exist?(o)
+==> 006.rb 14 <==
+Foo.exists?(o)
+==> 007.rb 10 <==
+iterator?
+
+==> 008.rb 12 <==
+block_given?
+==> 009.rb 13 <==
+Foo.iterator?
+==> 010.rb 17 <==
+attr :name, true
+
+==> 011.rb 18 <==
+attr 'name', true
+
+==> 012.rb 10 <==
+attr :name
+==> 013.rb 21 <==
+attr :name, attribute
+==> 014.rb 19 <==
+attr_accessor :name
+==> 015.rb 18 <==
+attr :name, false
+
+==> 016.rb 19 <==
+attr 'name', false
+
+==> 017.rb 17 <==
+attr_reader :name
+==> 018.rb 11 <==
+ENV.freeze
+
+==> 019.rb 10 <==
+ENV.values
+==> 020.rb 10 <==
+ENV.clone
+
+==> 021.rb 8 <==
+ENV.dup
+
+==> 022.rb 52 <==
+Socket.gethostbyaddr([221,186,184,68].pack("CCCC"))
+
+==> 023.rb 54 <==
+::Socket.gethostbyaddr([221,186,184,68].pack("CCCC"))
+
+==> 024.rb 69 <==
+Socket.gethostbyaddr([221,186,184,68].pack("CCCC"), Socket::AF_INET)
+
+==> 025.rb 17 <==
+Foo.gethostbyaddr
+==> 026.rb 28 <==
+Socket.gethostbyname("hal")
+
+==> 027.rb 30 <==
+::Socket.gethostbyname("hal")
+
+==> 028.rb 17 <==
+Foo.gethostbyname

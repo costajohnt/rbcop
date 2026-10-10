@@ -1,0 +1,14 @@
+==> .rubocop.yml 159 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.3
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+==> 000.rb 48 <==
+# frozen_string_literal: true
+test = String.new
+

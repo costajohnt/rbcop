@@ -1,0 +1,199 @@
+==> .rubocop.yml 177 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/CaseIndentation:
+  EnforcedStyle: case
+  IndentOneStep: false
+
+==> 000.rb 39 <==
+case foo; when :bar then 1; else 0; end
+==> 001.rb 115 <==
+output = case variable
+         when 'value1'
+           'output1'
+         else
+           'output2'
+         end
+
+==> 002.rb 70 <==
+output = case variable
+when 'value1'
+  'output1'
+else
+  'output2'
+end
+
+==> 003.rb 78 <==
+output = case variable
+  when 'value1'
+    'output1'
+  else
+    'output2'
+end
+
+==> 004.rb 185 <==
+output = case variable
+         when 'value1'
+           'output1'
+         else
+           'output2'
+         end
+output = case variable
+when 'value1'
+  'output1'
+else
+  'output2'
+end
+
+==> 005.rb 98 <==
+case a
+    when 0 then return
+    else
+        case b
+         when 1 then return
+        end
+end
+
+==> 006.rb 193 <==
+y = case a
+    when 0 then raise
+    when 0 then return
+    else
+      z = case b
+          when 1 then return
+          when 1 then raise
+          end
+    end
+case c
+when 2 then encoding
+end
+
+==> 007.rb 29 <==
+a = "case"
+case x
+when 0
+end
+
+==> 008.rb 105 <==
+KEYWORDS = { :case => true, :when => true }
+case type
+when 0
+  ParameterNode
+when 1
+  MethodCallNode
+end
+
+==> 009.rb 159 <==
+each {
+  case state
+  when 0
+    case name
+    when :a
+    end
+  when 1
+    loop {
+      case name
+      when :b
+      end
+    }
+  end
+}
+case s
+when Array
+end
+
+==> 010.rb 40 <==
+case foo; in pattern then 1; else 0; end
+==> 011.rb 112 <==
+output = case variable
+         in pattern
+           'output1'
+         else
+           'output2'
+         end
+
+==> 012.rb 67 <==
+output = case variable
+in pattern
+  'output1'
+else
+  'output2'
+end
+
+==> 013.rb 75 <==
+output = case variable
+  in pattern
+    'output1'
+  else
+    'output2'
+end
+
+==> 014.rb 179 <==
+output = case variable
+         in pattern
+           'output1'
+         else
+           'output2'
+         end
+output = case variable
+in pattern
+  'output1'
+else
+  'output2'
+end
+
+==> 015.rb 94 <==
+case a
+    in 0 then return
+    else
+        case b
+         in 1 then return
+        end
+end
+
+==> 016.rb 183 <==
+y = case a
+    in 0 then raise
+    in 0 then return
+    else
+      z = case b
+          in 1 then return
+          in 1 then raise
+          end
+    end
+case c
+in 2 then encoding
+end
+
+==> 017.rb 99 <==
+KEYWORDS = { :case => true, :in => true }
+case type
+in 0
+  ParameterNode
+in 1
+  MethodCallNode
+end
+
+==> 018.rb 149 <==
+each {
+  case state
+  in 0
+    case name
+    in :a
+    end
+  in 1
+    loop {
+      case name
+      in :b
+      end
+    }
+  end
+}
+case s
+in Array
+end
+

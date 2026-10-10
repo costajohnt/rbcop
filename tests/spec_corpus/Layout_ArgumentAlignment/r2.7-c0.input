@@ -1,0 +1,180 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_first_argument
+
+==> 000.rb 38 <==
+function(a,
+  if b then c else d end)
+
+==> 001.rb 21 <==
+func(a,
+       b,
+c)
+
+==> 002.rb 40 <==
+function(a,
+    if b then c else d end)
+
+==> 003.rb 33 <==
+Test.config["something"] =
+ true
+
+==> 004.rb 34 <==
+Test&.config["something"] =
+ true
+
+==> 005.rb 78 <==
+function(a,
+         0, 1,
+         (x + y),
+         if b then c else d end)
+
+==> 006.rb 42 <==
+f 'Ｒｕｂｙ', g(a,
+                b)
+
+==> 007.rb 32 <==
+find(path, s, @special[sexp[0]])
+==> 008.rb 43 <==
+add_offense(index,
+            MSG % kind)
+
+==> 009.rb 108 <==
+func1(foo: 'foo',
+  bar: 'bar',
+  baz: 'baz')
+func2(do_something,
+  foo: 'foo',
+  bar: 'bar',
+  baz: 'baz')
+
+==> 010.rb 66 <==
+func1(*a,
+      *b,
+      c)
+func2(a,
+     *b,
+      c)
+func3(*a)
+
+==> 011.rb 18 <==
+func1(a,
+     b,)
+
+==> 012.rb 30 <==
+add_offense(x,
+            a)
+
+==> 013.rb 32 <==
+add_offense(
+            "", a)
+
+==> 014.rb 68 <==
+read(path, { headers:    true,
+             converters: :numeric })
+
+==> 015.rb 30 <==
+send(:"#{name}_comments_path")
+==> 016.rb 12 <==
+a(/#{name}/)
+==> 017.rb 80 <==
+run(collection, :entry_name => label,
+                :paginator  => paginator)
+
+==> 018.rb 18 <==
+match(
+  a,
+  b
+)
+
+==> 019.rb 167 <==
+class_eval(<<-EOS, __FILE__, __LINE__ + 1)
+            def run_#{name}_callbacks(*args)
+              a = 1
+              return value
+            end
+            EOS
+
+==> 020.rb 29 <==
+a(a1,
+  b(b1,
+    b2),
+  a2)
+
+==> 021.rb 30 <==
+model("#{index(name)}", child)
+==> 022.rb 41 <==
+run(lambda do |e|
+  w = e['warden']
+end)
+
+==> 023.rb 94 <==
+new(table_name,
+    exec_query("info('#{row['name']}')").map { |col|
+      col['name']
+    })
+
+==> 024.rb 19 <==
+cond ? a : func(&b)
+==> 025.rb 6 <==
+func()
+==> 026.rb 35 <==
+tag(:input, {
+  :value => value
+})
+
+==> 027.rb 9 <==
+a(b c, d)
+==> 028.rb 57 <==
+chars(Unicode.apply_mapping @wrapped_string, :uppercase)
+
+==> 029.rb 40 <==
+assigned_value = match(
+  a,
+  b,
+  c
+)
+
+==> 030.rb 96 <==
+assigned_value = match(a,
+                       b,
+                       c
+                 )
+
+==> 031.rb 122 <==
+create :transaction, :closed,
+      account:          account,
+      open_price:       1.29,
+      close_price:      1.30
+
+==> 032.rb 131 <==
+create :transaction, :closed,
+         account:          account,
+         open_price:       1.29,
+         close_price:      1.30
+
+==> 033.rb 151 <==
+class MyModel < ActiveRecord::Base
+  has_many :other_models,
+    class_name: "legacy_name",
+    order: "#{legacy_name.table_name}.published DESC"
+
+end
+
+==> 034.rb 47 <==
+callable[
+      foo,
+    bar,
+           baz
+]
+
+==> 035.rb 48 <==
+receiver&.function(a,
+  if b then c else d end)
+

@@ -1,0 +1,27 @@
+==> offenses exit=1 433 <==
+001.rb:1:7: C: [Correctable] Layout/SpaceInsideBlockBraces: Space inside { detected.
+002.rb:1:11: C: [Correctable] Layout/SpaceInsideBlockBraces: Space inside } detected.
+003.rb:2:7: C: [Correctable] Layout/SpaceInsideBlockBraces: Space inside { detected.
+003.rb:2:12: C: [Correctable] Layout/SpaceInsideBlockBraces: Space inside } detected.
+007.rb:1:6: C: [Correctable] Layout/SpaceInsideBlockBraces: Space between { and | missing.
+
+==> autocorrect exit=0 423 <==
+001.rb:1:7: C: [Corrected] Layout/SpaceInsideBlockBraces: Space inside { detected.
+002.rb:1:11: C: [Corrected] Layout/SpaceInsideBlockBraces: Space inside } detected.
+003.rb:2:7: C: [Corrected] Layout/SpaceInsideBlockBraces: Space inside { detected.
+003.rb:2:12: C: [Corrected] Layout/SpaceInsideBlockBraces: Space inside } detected.
+007.rb:1:6: C: [Corrected] Layout/SpaceInsideBlockBraces: Space between { and | missing.
+
+==> corrected/001.rb 12 <==
+each {puts}
+
+==> corrected/002.rb 12 <==
+each {puts}
+
+==> corrected/003.rb 24 <==
+each {puts}
+each {puts}
+
+==> corrected/007.rb 17 <==
+each { |x| puts}
+

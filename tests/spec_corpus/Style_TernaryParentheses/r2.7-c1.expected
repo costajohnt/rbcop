@@ -1,0 +1,139 @@
+==> offenses exit=1 2661 <==
+000.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+001.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+002.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+003.rb:1:1: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+005.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+006.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+007.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+008.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+010.rb:1:7: C: Style/TernaryParentheses: Omit parentheses for ternary conditions.
+011.rb:1:7: C: Style/TernaryParentheses: Omit parentheses for ternary conditions.
+014.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+015.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+016.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+017.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+021.rb:1:13: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+023.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+024.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+025.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+026.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+027.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+028.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+029.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+030.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+031.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+032.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+033.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+034.rb:1:7: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+036.rb:1:1: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+
+==> autocorrect exit=1 2609 <==
+000.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+001.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+002.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+003.rb:1:1: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+005.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+006.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+007.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+008.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+010.rb:1:7: C: Style/TernaryParentheses: Omit parentheses for ternary conditions.
+011.rb:1:7: C: Style/TernaryParentheses: Omit parentheses for ternary conditions.
+014.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+015.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+016.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+017.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+021.rb:1:13: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+023.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+024.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+025.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+026.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+027.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+028.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+029.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+030.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+031.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+032.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+033.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+034.rb:1:7: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+036.rb:1:1: C: [Corrected] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+
+==> corrected/000.rb 19 <==
+foo = bar? ? a : b
+
+==> corrected/001.rb 20 <==
+foo = yield ? a : b
+
+==> corrected/002.rb 24 <==
+foo = bar[:baz] ? a : b
+
+==> corrected/003.rb 21 <==
+foo ||
+  bar ? a : b
+
+==> corrected/005.rb 25 <==
+foo = 1 + 1 == 2 ? a : b
+
+==> corrected/006.rb 27 <==
+foo = foo1 == foo2 ? a : b
+
+==> corrected/007.rb 25 <==
+foo = bar && baz ? a : b
+
+==> corrected/008.rb 23 <==
+foo = bar.baz? ? a : b
+
+==> corrected/014.rb 28 <==
+foo = defined?(bar) ? a : b
+
+==> corrected/015.rb 32 <==
+foo = defined?(bar.baz) ? a : b
+
+==> corrected/016.rb 32 <==
+foo = defined?(Bar.baz) ? a : b
+
+==> corrected/017.rb 33 <==
+foo = defined?(Bar::BAZ) ? a : b
+
+==> corrected/021.rb 29 <==
+foo = bar = baz == 1 ? a : b
+
+==> corrected/023.rb 28 <==
+foo = defined?(bar) ? a : b
+
+==> corrected/024.rb 24 <==
+foo = baz?(bar) ? a : b
+
+==> corrected/025.rb 30 <==
+foo = bar.<(10) ? 1000 : 2000
+
+==> corrected/026.rb 31 <==
+foo = bar&.<(10) ? 1000 : 2000
+
+==> corrected/027.rb 24 <==
+foo = baz?(bar) ? a : b
+
+==> corrected/028.rb 33 <==
+foo = bar&.foo(10) ? 1000 : 2000
+
+==> corrected/029.rb 28 <==
+foo = baz.foo?(bar) ? a : b
+
+==> corrected/030.rb 30 <==
+foo = "bar".foo?(bar) ? a : b
+
+==> corrected/031.rb 28 <==
+foo = Bar.foo?(bar) ? a : b
+
+==> corrected/032.rb 33 <==
+foo = baz.foo?(bar, baz) ? a : b
+
+==> corrected/033.rb 30 <==
+foo = bar.<(10) ? 1000 : 2000
+
+==> corrected/034.rb 31 <==
+foo = bar&.<(10) ? 1000 : 2000
+
+==> corrected/036.rb 12 <==
+foo ? a : b
+

@@ -1,0 +1,215 @@
+==> .rubocop.yml 153 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/IfInsideElse:
+  AllowIfModifier: false
+
+==> 000.rb 42 <==
+if a
+  blah
+else
+  if b
+    foo
+  end
+end
+
+==> 001.rb 126 <==
+if a
+  blah
+else
+  if b
+    foo
+  else # This is expected to be autocorrected by `Layout/IndentationWidth`.
+    bar
+  end
+end
+
+==> 002.rb 69 <==
+if a
+  foo
+else
+  if b
+    # TODO: comment.
+  else
+    bar
+  end
+end
+
+==> 003.rb 125 <==
+if a
+  foo
+else
+  if b
+    # this is very important
+    bar # this too
+  else
+    # this three
+    baz # this four
+  end
+end
+
+==> 004.rb 164 <==
+if a
+  blah
+else
+  if b
+    foo
+  elsif c # This is expected to be autocorrected by `Layout/IndentationWidth`.
+      bar
+  elsif d
+    baz
+  else
+    qux
+  end
+end
+
+==> 005.rb 82 <==
+if a
+  blah
+elsif b
+  foo
+else
+  # important info
+  bar if condition # blabla
+end
+
+==> 006.rb 40 <==
+if x
+  'x'
+else
+  if y then 'y' end
+end
+
+==> 007.rb 49 <==
+if x
+  'x'
+else
+  if y then 'y' else 'z' end
+end
+
+==> 008.rb 57 <==
+if x
+  'x'
+else
+  if y then 'y' elsif z then 'z' end
+end
+
+==> 009.rb 66 <==
+if x
+  'x'
+else
+  if y then 'y' elsif z then 'z' else 'a' end
+end
+
+==> 010.rb 70 <==
+if x
+  'x'
+else
+  if y then 'y'
+  elsif z then 'z'
+  else 'a' end
+end
+
+==> 011.rb 120 <==
+if cond
+else
+  if nested_one
+  else
+    if c
+      if d
+      else
+        if e
+        end
+      end
+    end
+  end
+end
+
+==> 012.rb 32 <==
+if a
+  blah
+else
+  foo if b
+end
+
+==> 013.rb 48 <==
+if a
+  blah
+else
+  if b
+    foo
+  end
+  bar
+end
+
+==> 014.rb 48 <==
+if a
+  blah
+else
+  bar
+  if b
+    foo
+  end
+end
+
+==> 015.rb 69 <==
+if a
+  blah
+else
+  # Not A!
+
+  if b
+    foo
+  else
+    bar
+  end
+end
+
+==> 016.rb 54 <==
+if a
+  blah
+else
+  # comment
+  if b
+    foo
+  end
+end
+
+==> 017.rb 43 <==
+if a
+  blah
+elsif b
+  blah
+else
+  blah
+end
+
+==> 018.rb 46 <==
+if a
+  blah
+else
+  unless b
+    foo
+  end
+end
+
+==> 019.rb 34 <==
+unless a
+  if b
+    foo
+  end
+end
+
+==> 020.rb 17 <==
+a ? b : c ? d : e
+==> 021.rb 33 <==
+if a
+  blah
+else
+  a ? b : c
+end
+

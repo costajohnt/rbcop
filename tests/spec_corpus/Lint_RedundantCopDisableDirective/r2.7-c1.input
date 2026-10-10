@@ -1,0 +1,14 @@
+==> .rubocop.yml 149 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Metrics/MethodLength:
+  Enabled: pending
+
+==> 000.rb 43 <==
+# rubocop:disable Metrics/MethodLength
+foo
+

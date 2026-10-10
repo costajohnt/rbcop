@@ -1,0 +1,13 @@
+==> offenses exit=1 119 <==
+002.rb:3:7: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 6 is not aligned with `x ||= begin` at 1, 0.
+
+==> autocorrect exit=0 117 <==
+002.rb:3:7: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 6 is not aligned with `x ||= begin` at 1, 0.
+
+==> corrected/002.rb 49 <==
+x ||= begin
+        1
+rescue
+        2
+      end
+

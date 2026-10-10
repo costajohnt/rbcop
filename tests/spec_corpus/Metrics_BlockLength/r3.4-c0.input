@@ -1,0 +1,32 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Metrics/BlockLength:
+  Max: 2
+  CountComments: false
+
+==> 000.rb 44 <==
+something do
+  a = it
+  a = it
+  a = it
+end
+
+==> 001.rb 35 <==
+something do
+  a = it
+  a = it
+end
+
+==> 002.rb 37 <==
+something do
+  a = it
+
+
+  a = it
+end
+

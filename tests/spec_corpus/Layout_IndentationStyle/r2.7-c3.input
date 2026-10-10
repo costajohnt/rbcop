@@ -1,0 +1,14 @@
+==> .rubocop.yml 177 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/IndentationStyle:
+  IndentationWidth: 3
+  EnforcedStyle: tabs
+
+==> 000.rb 12 <==
+      x = 0
+

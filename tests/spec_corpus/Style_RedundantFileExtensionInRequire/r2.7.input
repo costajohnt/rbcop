@@ -1,0 +1,28 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 46 <==
+require 'foo.rb'
+require_relative '../foo.rb'
+
+==> 001.rb 37 <==
+require 'foo\.rb'
+require 'foo\\.rb'
+
+==> 002.rb 46 <==
+require 'foo.so'
+require_relative '../foo.so'
+
+==> 003.rb 40 <==
+require 'foo'
+require_relative '../foo'
+
+==> 004.rb 35 <==
+require name
+require_relative name
+

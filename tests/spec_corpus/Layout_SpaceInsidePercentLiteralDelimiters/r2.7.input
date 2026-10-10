@@ -1,0 +1,115 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 18 <==
+%i(
+  a
+  b
+  c
+)
+
+==> 001.rb 40 <==
+def foo
+  %i(
+    a
+    b
+    c
+  )
+end
+
+==> 002.rb 13 <==
+%i(a b
+   c)
+
+==> 003.rb 18 <==
+%I(
+  a
+  b
+  c
+)
+
+==> 004.rb 40 <==
+def foo
+  %I(
+    a
+    b
+    c
+  )
+end
+
+==> 005.rb 13 <==
+%I(a b
+   c)
+
+==> 006.rb 18 <==
+%w(
+  a
+  b
+  c
+)
+
+==> 007.rb 40 <==
+def foo
+  %w(
+    a
+    b
+    c
+  )
+end
+
+==> 008.rb 13 <==
+%w(a b
+   c)
+
+==> 009.rb 18 <==
+%W(
+  a
+  b
+  c
+)
+
+==> 010.rb 40 <==
+def foo
+  %W(
+    a
+    b
+    c
+  )
+end
+
+==> 011.rb 13 <==
+%W(a b
+   c)
+
+==> 012.rb 18 <==
+%x(
+  a
+  b
+  c
+)
+
+==> 013.rb 40 <==
+def foo
+  %x(
+    a
+    b
+    c
+  )
+end
+
+==> 014.rb 13 <==
+%x(a b
+   c)
+
+==> 015.rb 39 <==
+%q( a  b c )
+%r( a  b c )
+%s( a  b c )
+
+==> 016.rb 8 <==
+` curl `

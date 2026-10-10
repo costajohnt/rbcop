@@ -1,0 +1,464 @@
+==> offenses exit=1 8126 <==
+000.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+001.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+002.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+003.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+004.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+005.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+006.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+007.rb:3:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+008.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+009.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+010.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+011.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+012.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+013.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+014.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+015.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+016.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+018.rb:2:16: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+019.rb:2:16: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+020.rb:4:20: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+021.rb:2:16: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+022.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+023.rb:2:16: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+024.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+025.rb:2:16: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+026.rb:2:16: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+027.rb:2:16: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+028.rb:2:16: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+029.rb:2:16: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+030.rb:2:16: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+031.rb:2:16: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+032.rb:2:16: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+033.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+033.rb:3:5: C: Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+034.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+034.rb:3:18: C: Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+035.rb:3:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+036.rb:3:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+036.rb:5:5: C: Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+037.rb:4:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+038.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+039.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+040.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+041.rb:1:9: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+042.rb:3:16: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+043.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+044.rb:1:1: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+045.rb:1:1: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+046.rb:1:1: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+047.rb:1:1: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+048.rb:1:1: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+049.rb:1:1: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+050.rb:1:1: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+051.rb:1:1: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+052.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+053.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+054.rb:2:16: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+062.rb:2:16: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+063.rb:2:16: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+064.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+065.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+066.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+067.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+068.rb:2:16: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+069.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+070.rb:2:3: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+070.rb:3:5: C: Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+
+==> autocorrect exit=0 8044 <==
+000.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+001.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+002.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+003.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+004.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+005.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+006.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+007.rb:3:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+008.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+009.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+010.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+011.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+012.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+013.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+014.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+015.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+016.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+018.rb:2:16: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+019.rb:2:16: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+020.rb:4:20: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+021.rb:2:16: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+022.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+023.rb:2:16: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+024.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+025.rb:2:16: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+026.rb:2:16: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+027.rb:2:16: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+028.rb:2:16: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+029.rb:2:16: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+030.rb:2:16: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+031.rb:2:16: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+032.rb:2:16: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+033.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+033.rb:2:5: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+034.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+034.rb:2:18: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+035.rb:3:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+036.rb:3:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+036.rb:4:5: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+037.rb:4:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+038.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+039.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+040.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+041.rb:1:9: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+042.rb:3:16: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+043.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+044.rb:1:1: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+045.rb:1:1: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+046.rb:1:1: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+047.rb:1:1: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+048.rb:1:1: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+049.rb:1:1: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+050.rb:1:1: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+051.rb:1:1: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+052.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+053.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+054.rb:2:16: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+062.rb:2:16: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+063.rb:2:16: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+064.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+065.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+066.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+067.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+068.rb:2:16: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+069.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+070.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+070.rb:2:5: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+
+==> corrected/000.rb 37 <==
+if foo && bar
+    do_something
+  end
+
+==> corrected/001.rb 38 <==
+if foo && !bar
+    do_something
+  end
+
+==> corrected/002.rb 38 <==
+if !foo && bar
+    do_something
+  end
+
+==> corrected/003.rb 47 <==
+if !(foo == bar) && baz
+    do_something
+  end
+
+==> corrected/004.rb 45 <==
+if (foo = bar) && baz
+    do_something
+  end
+
+==> corrected/005.rb 52 <==
+if foo = bar and baz && quux
+    do_something
+  end
+
+==> corrected/006.rb 53 <==
+if baz && (foo = bar) && quux
+    do_something
+  end
+
+==> corrected/007.rb 56 <==
+if baz &&
+   (foo = bar) && quux
+    do_something
+  end
+
+==> corrected/008.rb 72 <==
+if baz && foo = bar and (fred = garply) && corge
+    do_something
+  end
+
+==> corrected/009.rb 53 <==
+if baz && (foo = bar) && quux
+    do_something
+  end
+
+==> corrected/010.rb 45 <==
+if foo && (bar = baz)
+    do_something
+  end
+
+==> corrected/011.rb 53 <==
+if foo && quux && (bar = baz)
+    do_something
+  end
+
+==> corrected/012.rb 53 <==
+if (foo = bar or baz) && quux
+    do_something
+  end
+
+==> corrected/013.rb 53 <==
+if (baz || foo = bar) && quux
+    do_something
+  end
+
+==> corrected/014.rb 46 <==
+if !(foo & bar) && baz
+    do_something
+  end
+
+==> corrected/015.rb 45 <==
+if (foo & bar) && baz
+    do_something
+  end
+
+==> corrected/016.rb 39 <==
+if !foo && !bar
+    do_something
+  end
+
+==> corrected/018.rb 33 <==
+if foo && bar
+  do_something
+end
+
+==> corrected/019.rb 34 <==
+if foo && !bar
+  do_something
+end
+
+==> corrected/020.rb 89 <==
+class A
+  def foo
+    if (h[:a]) && !h.has_key?(:b)
+      h[:b] = true
+    end
+  end
+end
+
+==> corrected/021.rb 43 <==
+if foo && !(bar && baz)
+  do_something
+end
+
+==> corrected/022.rb 46 <==
+if foo && (bar || baz)
+    do_something
+  end
+
+==> corrected/023.rb 42 <==
+if foo && (bar || baz)
+  do_something
+end
+
+==> corrected/024.rb 55 <==
+if (foo || bar) && (baz || qux)
+    do_something
+  end
+
+==> corrected/025.rb 51 <==
+if (foo || bar) && (baz || qux)
+  do_something
+end
+
+==> corrected/026.rb 43 <==
+if !(foo || bar) && baz
+  do_something
+end
+
+==> corrected/027.rb 43 <==
+if !(foo || bar) && baz
+  do_something
+end
+
+==> corrected/028.rb 47 <==
+if result && !(foo === bar)
+  do_something
+end
+
+==> corrected/029.rb 51 <==
+if !(foo && bar && baz) && !qux
+  do_something
+end
+
+==> corrected/030.rb 45 <==
+if !foo.is_a?(Foo) && bar
+  do_something
+end
+
+==> corrected/031.rb 45 <==
+if !foo.is_a?(Foo) && bar
+  do_something
+end
+
+==> corrected/032.rb 50 <==
+if !foo.bar(arg1, arg2) && baz
+  do_something
+end
+
+==> corrected/033.rb 48 <==
+if foo && bar && baz
+      do_something
+    end
+
+==> corrected/034.rb 63 <==
+if foo.is_a?(Foo) && bar && baz && quux
+    do_something
+  end
+
+==> corrected/035.rb 48 <==
+# Comment.
+if foo && bar
+    do_something
+  end
+
+==> corrected/036.rb 77 <==
+# Comments.
+# More comments.
+if foo && bar && baz
+      do_something
+    end
+
+==> corrected/037.rb 84 <==
+# Outer comment.
+# Comment.
+if foo && bar # nested condition
+    do_something
+  end
+
+==> corrected/038.rb 43 <==
+if foo && (not bar)
+    do_something
+  end
+
+==> corrected/039.rb 43 <==
+if (not foo) && bar
+    do_something
+  end
+
+==> corrected/040.rb 38 <==
+if foo && !bar
+    do_something
+  end
+
+==> corrected/041.rb 21 <==
+if foo && bar; end; 
+
+==> corrected/042.rb 44 <==
+# Comment.
+if foo && bar
+  do_something
+end
+
+==> corrected/043.rb 36 <==
+if foo && bar
+    # Comments.
+  end
+
+==> corrected/044.rb 33 <==
+if bar && foo
+  do_something
+end
+
+==> corrected/045.rb 34 <==
+if !bar && foo
+  do_something
+end
+
+==> corrected/046.rb 34 <==
+if bar && !foo
+  do_something
+end
+
+==> corrected/047.rb 40 <==
+if bar && baz && foo
+  do_something
+end
+
+==> corrected/048.rb 40 <==
+if baz && foo && bar
+  do_something
+end
+
+==> corrected/049.rb 43 <==
+if !(bar && baz) && foo
+  do_something
+end
+
+==> corrected/050.rb 41 <==
+if !baz && foo && bar
+  do_something
+end
+
+==> corrected/051.rb 43 <==
+if baz && !(foo && bar)
+  do_something
+end
+
+==> corrected/052.rb 46 <==
+if foo && !(bar & baz)
+    do_something
+  end
+
+==> corrected/053.rb 47 <==
+if foo && !(bar || baz)
+    do_something
+  end
+
+==> corrected/054.rb 42 <==
+if foo && !(bar & baz)
+  do_something
+end
+
+==> corrected/062.rb 38 <==
+if foo && ok?(bar)
+  do_something
+end
+
+==> corrected/063.rb 43 <==
+if foo && obj&.ok?(bar)
+  do_something
+end
+
+==> corrected/064.rb 42 <==
+if foo && ok?(bar)
+    do_something
+  end
+
+==> corrected/065.rb 48 <==
+if foo && bar&.baz(quux)
+    do_something
+  end
+
+==> corrected/066.rb 56 <==
+if foo && (ok? bar do
+      do_something
+    end)
+  end
+
+==> corrected/067.rb 46 <==
+if foo && (ok? bar do
+      _1
+    end)
+  end
+
+==> corrected/068.rb 38 <==
+if foo && ok?(bar)
+  do_something
+end
+
+==> corrected/069.rb 42 <==
+if foo && ok?(bar)
+    do_something
+  end
+
+==> corrected/070.rb 49 <==
+if foo && !bar && baz
+      do_something
+    end
+

@@ -1,0 +1,25 @@
+==> .rubocop.yml 151 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/EmptyInPattern:
+  AllowComments: true
+
+==> 000.rb 51 <==
+case condition
+in [a]
+in [a, b]
+  # do nothing
+end
+
+==> 001.rb 66 <==
+case condition
+in [a]
+  do_something
+in [a, b]
+  # do nothing
+end
+

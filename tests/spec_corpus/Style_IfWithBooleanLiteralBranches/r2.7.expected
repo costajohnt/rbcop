@@ -1,0 +1,113 @@
+==> offenses exit=1 2312 <==
+000.rb:1:1: C: [Correctable] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+001.rb:1:1: C: [Correctable] Style/IfWithBooleanLiteralBranches: Remove redundant `unless` with boolean literal branches.
+002.rb:1:1: C: [Correctable] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+003.rb:1:1: C: [Correctable] Style/IfWithBooleanLiteralBranches: Remove redundant `unless` with boolean literal branches.
+004.rb:4:1: C: [Correctable] Style/IfWithBooleanLiteralBranches: Use `else` instead of redundant `elsif` with boolean literal branches.
+005.rb:4:1: C: [Correctable] Style/IfWithBooleanLiteralBranches: Use `else` instead of redundant `elsif` with boolean literal branches.
+006.rb:1:1: C: [Correctable] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+007.rb:1:1: C: [Correctable] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+020.rb:1:1: C: [Correctable] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+022.rb:1:1: C: [Correctable] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+023.rb:1:1: C: [Correctable] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+024.rb:1:1: C: [Correctable] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+028.rb:1:1: C: [Correctable] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+029.rb:1:1: C: [Correctable] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+030.rb:1:1: C: [Correctable] Style/IfWithBooleanLiteralBranches: Remove redundant `unless` with boolean literal branches.
+031.rb:1:1: C: [Correctable] Style/IfWithBooleanLiteralBranches: Remove redundant `unless` with boolean literal branches.
+032.rb:1:1: C: [Correctable] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+033.rb:1:1: C: [Correctable] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+034.rb:3:1: C: [Correctable] Style/IfWithBooleanLiteralBranches: Use `else` instead of redundant `elsif` with boolean literal branches.
+
+==> autocorrect exit=0 2274 <==
+000.rb:1:1: C: [Corrected] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+001.rb:1:1: C: [Corrected] Style/IfWithBooleanLiteralBranches: Remove redundant `unless` with boolean literal branches.
+002.rb:1:1: C: [Corrected] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+003.rb:1:1: C: [Corrected] Style/IfWithBooleanLiteralBranches: Remove redundant `unless` with boolean literal branches.
+004.rb:4:1: C: [Corrected] Style/IfWithBooleanLiteralBranches: Use `else` instead of redundant `elsif` with boolean literal branches.
+005.rb:4:1: C: [Corrected] Style/IfWithBooleanLiteralBranches: Use `else` instead of redundant `elsif` with boolean literal branches.
+006.rb:1:1: C: [Corrected] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+007.rb:1:1: C: [Corrected] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+020.rb:1:1: C: [Corrected] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+022.rb:1:1: C: [Corrected] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+023.rb:1:1: C: [Corrected] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+024.rb:1:1: C: [Corrected] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+028.rb:1:1: C: [Corrected] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+029.rb:1:1: C: [Corrected] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+030.rb:1:1: C: [Corrected] Style/IfWithBooleanLiteralBranches: Remove redundant `unless` with boolean literal branches.
+031.rb:1:1: C: [Corrected] Style/IfWithBooleanLiteralBranches: Remove redundant `unless` with boolean literal branches.
+032.rb:1:1: C: [Corrected] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+033.rb:1:1: C: [Corrected] Style/IfWithBooleanLiteralBranches: Remove redundant `if` with boolean literal branches.
+034.rb:3:1: C: [Corrected] Style/IfWithBooleanLiteralBranches: Use `else` instead of redundant `elsif` with boolean literal branches.
+
+==> corrected/000.rb 18 <==
+foo.do_something?
+
+==> corrected/001.rb 18 <==
+foo.do_something?
+
+==> corrected/002.rb 19 <==
+!foo.do_something?
+
+==> corrected/003.rb 19 <==
+!foo.do_something?
+
+==> corrected/004.rb 56 <==
+if condition
+  bar
+  false
+else
+  foo.do_something?
+end
+
+==> corrected/005.rb 57 <==
+if condition
+  bar
+  false
+else
+  !foo.do_something?
+end
+
+==> corrected/006.rb 12 <==
+!!condition
+
+==> corrected/007.rb 13 <==
+!!!condition
+
+==> corrected/020.rb 20 <==
+foo? && bar && baz?
+
+==> corrected/022.rb 20 <==
+foo? || bar && baz?
+
+==> corrected/023.rb 22 <==
+foo? || (bar && baz?)
+
+==> corrected/024.rb 22 <==
+(foo? || bar) && baz?
+
+==> corrected/028.rb 13 <==
+foo? && bar?
+
+==> corrected/029.rb 16 <==
+!(foo? && bar?)
+
+==> corrected/030.rb 13 <==
+foo? || bar?
+
+==> corrected/031.rb 16 <==
+!(foo? || bar?)
+
+==> corrected/032.rb 21 <==
+foo? && bar? && baz?
+
+==> corrected/033.rb 21 <==
+foo? && bar? || baz?
+
+==> corrected/034.rb 35 <==
+if foo
+  true
+else
+  bar > baz
+end
+

@@ -1,0 +1,94 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 15 <==
+if
+x == 10
+end
+
+==> 001.rb 31 <==
+if
+  x == 10; do_something
+end
+
+==> 002.rb 21 <==
+if x == 10
+ bala
+end
+
+==> 003.rb 46 <==
+do_something if
+  something && something_else
+
+==> 004.rb 19 <==
+unless
+x == 10
+end
+
+==> 005.rb 35 <==
+unless
+  x == 10; do_something
+end
+
+==> 006.rb 25 <==
+unless x == 10
+ bala
+end
+
+==> 007.rb 50 <==
+do_something unless
+  something && something_else
+
+==> 008.rb 18 <==
+while
+x == 10
+end
+
+==> 009.rb 34 <==
+while
+  x == 10; do_something
+end
+
+==> 010.rb 24 <==
+while x == 10
+ bala
+end
+
+==> 011.rb 49 <==
+do_something while
+  something && something_else
+
+==> 012.rb 18 <==
+until
+x == 10
+end
+
+==> 013.rb 34 <==
+until
+  x == 10; do_something
+end
+
+==> 014.rb 24 <==
+until x == 10
+ bala
+end
+
+==> 015.rb 49 <==
+do_something until
+  something && something_else
+
+==> 016.rb 49 <==
+if something
+  test
+elsif
+  something
+  test
+end
+
+==> 017.rb 9 <==
+x ? a : b

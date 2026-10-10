@@ -1,0 +1,77 @@
+==> .rubocop.yml 164 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/DuplicateBranch:
+  IgnoreDuplicateElseBranch: true
+
+==> 000.rb 40 <==
+if x
+  foo
+elsif y
+  bar
+else
+  bar
+end
+
+==> 001.rb 26 <==
+if x
+  foo
+else
+  foo
+end
+
+==> 002.rb 61 <==
+case x
+when foo
+  do_foo
+when bar
+  do_bar
+else
+  do_bar
+end
+
+==> 003.rb 43 <==
+case x
+when foo
+  do_foo
+else
+  do_foo
+end
+
+==> 004.rb 61 <==
+case x
+in foo then do_foo
+in bar then do_bar
+else do_bar
+end
+
+==> 005.rb 42 <==
+case x
+in foo then do_foo
+else do_foo
+end
+
+==> 006.rb 69 <==
+begin
+  x
+rescue FooError
+  foo
+rescue BarError
+  bar
+else
+  bar
+end
+
+==> 007.rb 47 <==
+begin
+  x
+rescue FooError
+  foo
+else
+  foo
+end
+

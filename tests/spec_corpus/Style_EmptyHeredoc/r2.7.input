@@ -1,0 +1,37 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 11 <==
+<<~EOS
+EOS
+
+==> 001.rb 11 <==
+<<-EOS
+EOS
+
+==> 002.rb 10 <==
+<<EOS
+EOS
+
+==> 003.rb 25 <==
+do_something(<<~EOS)
+EOS
+
+==> 004.rb 30 <==
+do_something(<<~EOS, arg)
+EOS
+
+==> 005.rb 20 <==
+<<~EOS
+  Hello.
+EOS
+
+==> 006.rb 16 <==
+foo(<<~`SH`)
+SH
+

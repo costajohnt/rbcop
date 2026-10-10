@@ -1,0 +1,8 @@
+==> offenses exit=1 172 <==
+000.rb:1:1: C: Style/HashLikeCase: Consider replacing `case-when` with a hash lookup.
+001.rb:1:1: C: Style/HashLikeCase: Consider replacing `case-when` with a hash lookup.
+
+==> autocorrect exit=1 172 <==
+000.rb:1:1: C: Style/HashLikeCase: Consider replacing `case-when` with a hash lookup.
+001.rb:1:1: C: Style/HashLikeCase: Consider replacing `case-when` with a hash lookup.
+

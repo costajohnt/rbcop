@@ -1,0 +1,36 @@
+==> offenses exit=1 1392 <==
+000.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+001.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+002.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+004.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+005.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+006.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+007.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+008.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+009.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+010.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+011.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+012.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+013.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+014.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+017.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+021.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+
+==> autocorrect exit=1 1392 <==
+000.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+001.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+002.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+004.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+005.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+006.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+007.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+008.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+009.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+010.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+011.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+012.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+013.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+014.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+017.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+021.rb:2:10: W: Lint/ToEnumArguments: Ensure you correctly provided all the arguments.
+

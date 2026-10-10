@@ -1,0 +1,123 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 27 <==
+if cond; run else dont end
+
+==> 001.rb 28 <==
+if a = b; run else dont end
+
+==> 002.rb 23 <==
+if cond; else dont end
+
+==> 003.rb 17 <==
+if cond; run end
+
+==> 004.rb 30 <==
+if cond;do_something(arg) end
+
+==> 005.rb 15 <==
+if cond;[] end
+
+==> 006.rb 29 <==
+if cond;do_something arg end
+
+==> 007.rb 34 <==
+if cond;obj&.do_something arg end
+
+==> 008.rb 41 <==
+if cond;foo foo_arg else bar bar_arg end
+
+==> 009.rb 51 <==
+if cond;foo obj&.foo_arg else bar obj&.bar_arg end
+
+==> 010.rb 31 <==
+if cond;do_something - arg end
+
+==> 011.rb 31 <==
+if cond; foo[key] else bar end
+
+==> 012.rb 39 <==
+if cond; foo[key] = value else bar end
+
+==> 013.rb 36 <==
+if cond; foo else bar'arg'; baz end
+
+==> 014.rb 41 <==
+class Hash
+end if RUBY_VERSION < "1.8.7"
+
+==> 015.rb 26 <==
+if cond; elsif cond2; end
+
+==> 016.rb 35 <==
+if cond; run elsif cond2; run2 end
+
+==> 017.rb 63 <==
+if cond; run elsif cond2; run2 elsif cond3; run3 else dont end
+
+==> 018.rb 45 <==
+if cond; run elsif cond2; run2 else dont end
+
+==> 019.rb 38 <==
+if cond; run
+  if cond; run
+  end
+end
+
+==> 020.rb 44 <==
+if foo?; bar { if qux?; quux else end } end
+
+==> 021.rb 53 <==
+if foo?; bar else baz { if qux?; quux else end } end
+
+==> 022.rb 42 <==
+if foo?; bar { if _1; quux else end } end
+
+==> 023.rb 51 <==
+if foo?; bar else baz { if _1; quux else end } end
+
+==> 024.rb 37 <==
+if foo; bar, baz = qux else quux end
+
+==> 025.rb 37 <==
+if foo; bar else baz, qux = quux end
+
+==> 026.rb 26 <==
+if cond; return value end
+
+==> 027.rb 35 <==
+if cond; run else return value end
+
+==> 028.rb 39 <==
+unless cond; run else return value end
+
+==> 029.rb 20 <==
+if cond; return end
+
+==> 030.rb 47 <==
+if cond1; foo + if cond2; bar
+  else
+  end
+end
+
+==> 031.rb 21 <==
+unless cond; run end
+
+==> 032.rb 31 <==
+unless cond; run else dont end
+
+==> 033.rb 27 <==
+unless cond; else dont end
+
+==> 034.rb 34 <==
+unless cond; do_something arg end
+
+==> 035.rb 40 <==
+unless cond; foo else bar'arg'; baz end
+

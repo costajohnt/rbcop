@@ -1,0 +1,37 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+
+==> 000.rb 15 <==
+def foo = quux
+
+==> 001.rb 27 <==
+def foo(bar,
+  baz) = quux
+
+==> 002.rb 27 <==
+def foo(bar, baz) =
+  quux
+
+==> 003.rb 39 <==
+def foo(bar, baz) =
+  # comment
+  quux
+
+==> 004.rb 30 <==
+def foo(bar,
+  baz) =
+
+  quux
+
+==> 005.rb 42 <==
+def foo(bar,
+  baz) =
+
+  # comment
+  quux
+

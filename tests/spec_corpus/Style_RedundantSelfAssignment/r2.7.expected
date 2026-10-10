@@ -1,0 +1,49 @@
+==> offenses exit=1 1302 <==
+000.rb:1:5: C: [Correctable] Style/RedundantSelfAssignment: Redundant self assignment detected. Method `concat` modifies its receiver in place.
+001.rb:1:6: C: [Correctable] Style/RedundantSelfAssignment: Redundant self assignment detected. Method `concat` modifies its receiver in place.
+002.rb:1:7: C: [Correctable] Style/RedundantSelfAssignment: Redundant self assignment detected. Method `concat` modifies its receiver in place.
+003.rb:1:6: C: [Correctable] Style/RedundantSelfAssignment: Redundant self assignment detected. Method `concat` modifies its receiver in place.
+004.rb:1:5: C: [Correctable] Style/RedundantSelfAssignment: Redundant self assignment detected. Method `concat` modifies its receiver in place.
+005.rb:1:5: C: [Correctable] Style/RedundantSelfAssignment: Redundant self assignment detected. Method `delete_if` modifies its receiver in place.
+010.rb:1:11: C: [Correctable] Style/RedundantSelfAssignment: Redundant self assignment detected. Method `concat` modifies its receiver in place.
+011.rb:1:11: C: [Correctable] Style/RedundantSelfAssignment: Redundant self assignment detected. Method `concat` modifies its receiver in place.
+012.rb:1:12: C: [Correctable] Style/RedundantSelfAssignment: Redundant self assignment detected. Method `concat` modifies its receiver in place.
+
+==> autocorrect exit=0 1284 <==
+000.rb:1:5: C: [Corrected] Style/RedundantSelfAssignment: Redundant self assignment detected. Method `concat` modifies its receiver in place.
+001.rb:1:6: C: [Corrected] Style/RedundantSelfAssignment: Redundant self assignment detected. Method `concat` modifies its receiver in place.
+002.rb:1:7: C: [Corrected] Style/RedundantSelfAssignment: Redundant self assignment detected. Method `concat` modifies its receiver in place.
+003.rb:1:6: C: [Corrected] Style/RedundantSelfAssignment: Redundant self assignment detected. Method `concat` modifies its receiver in place.
+004.rb:1:5: C: [Corrected] Style/RedundantSelfAssignment: Redundant self assignment detected. Method `concat` modifies its receiver in place.
+005.rb:1:5: C: [Corrected] Style/RedundantSelfAssignment: Redundant self assignment detected. Method `delete_if` modifies its receiver in place.
+010.rb:1:11: C: [Corrected] Style/RedundantSelfAssignment: Redundant self assignment detected. Method `concat` modifies its receiver in place.
+011.rb:1:11: C: [Corrected] Style/RedundantSelfAssignment: Redundant self assignment detected. Method `concat` modifies its receiver in place.
+012.rb:1:12: C: [Corrected] Style/RedundantSelfAssignment: Redundant self assignment detected. Method `concat` modifies its receiver in place.
+
+==> corrected/000.rb 16 <==
+foo.concat(ary)
+
+==> corrected/001.rb 17 <==
+@foo.concat(ary)
+
+==> corrected/002.rb 18 <==
+@@foo.concat(ary)
+
+==> corrected/003.rb 17 <==
+$foo.concat(ary)
+
+==> corrected/004.rb 17 <==
+foo&.concat(ary)
+
+==> corrected/005.rb 23 <==
+foo.delete_if { true }
+
+==> corrected/010.rb 22 <==
+other.foo.concat(ary)
+
+==> corrected/011.rb 23 <==
+other.foo&.concat(ary)
+
+==> corrected/012.rb 24 <==
+other&.foo&.concat(ary)
+

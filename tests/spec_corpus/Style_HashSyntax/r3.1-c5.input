@@ -1,0 +1,13 @@
+==> .rubocop.yml 157 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+Style/HashSyntax:
+  EnforcedStyle: no_mixed_keys
+
+==> 000.rb 18 <==
+{:"t o" => 0, b:}
+

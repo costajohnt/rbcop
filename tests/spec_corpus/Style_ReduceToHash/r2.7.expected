@@ -1,0 +1,14 @@
+==> offenses exit=1 188 <==
+000.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+002.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `inject`.
+
+==> autocorrect exit=0 184 <==
+000.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+002.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `inject`.
+
+==> corrected/000.rb 32 <==
+array.to_h { [_1.id, _1.name] }
+
+==> corrected/002.rb 32 <==
+array.to_h { [_1.id, _1.name] }
+

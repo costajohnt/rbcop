@@ -1,0 +1,12 @@
+==> offenses exit=1 396 <==
+000.rb:2:3: W: Lint/NextWithoutAccumulator: Use `next` with an accumulator argument in a `reduce`.
+001.rb:2:3: W: Lint/NextWithoutAccumulator: Use `next` with an accumulator argument in a `reduce`.
+002.rb:2:3: W: Lint/NextWithoutAccumulator: Use `next` with an accumulator argument in a `reduce`.
+003.rb:2:3: W: Lint/NextWithoutAccumulator: Use `next` with an accumulator argument in a `reduce`.
+
+==> autocorrect exit=1 396 <==
+000.rb:2:3: W: Lint/NextWithoutAccumulator: Use `next` with an accumulator argument in a `reduce`.
+001.rb:2:3: W: Lint/NextWithoutAccumulator: Use `next` with an accumulator argument in a `reduce`.
+002.rb:2:3: W: Lint/NextWithoutAccumulator: Use `next` with an accumulator argument in a `reduce`.
+003.rb:2:3: W: Lint/NextWithoutAccumulator: Use `next` with an accumulator argument in a `reduce`.
+

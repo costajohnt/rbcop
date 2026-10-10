@@ -1,0 +1,85 @@
+==> .rubocop.yml 163 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LineContinuationSpacing:
+  EnforcedStyle: space
+
+==> 000.rb 27 <==
+if 2 + 2\
+  == 4
+  foo
+end
+
+==> 001.rb 29 <==
+if 2 + 2  \
+  == 4
+  foo
+end
+
+==> 002.rb 43 <==
+foo
+bar
+baz
+if 2 + 2    \
+  == 4
+  foo
+end
+
+==> 003.rb 14 <==
+[
+  :foo  \
+]
+
+==> 004.rb 28 <==
+if 2 + 2 \
+  == 4
+  foo
+end
+
+==> 005.rb 26 <==
+# this\
+<<-X
+  is\
+  ok
+X
+
+==> 006.rb 15 <==
+%i[
+  foo  \
+]
+
+==> 007.rb 29 <==
+foo
+bar
+__END__
+baz    \
+qux
+
+==> 008.rb 11 <==
+'foo\
+bar'
+
+==> 009.rb 13 <==
+%q{foo\
+bar}
+
+==> 010.rb 11 <==
+/foo\
+bar/
+
+==> 011.rb 13 <==
+%r{foo\
+bar}
+
+==> 012.rb 11 <==
+`foo\
+bar`
+
+==> 013.rb 13 <==
+%x{foo\
+bar}
+

@@ -1,0 +1,89 @@
+==> .rubocop.yml 190 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/MethodParameterName:
+  MinNameLength: 3
+  AllowNamesEndingInNumbers: false
+
+==> 000.rb 18 <==
+def foo(...); end
+
+==> 001.rb 29 <==
+def something
+  do_stuff
+end
+
+==> 002.rb 39 <==
+def something(foo, bar)
+  do_stuff
+end
+
+==> 003.rb 44 <==
+def self.something(foo, bar)
+  do_stuff
+end
+
+==> 004.rb 58 <==
+def self.something(foo = Pwd.dir, bar = 1)
+  do_stuff
+end
+
+==> 005.rb 56 <==
+def self.something(foo: Pwd.dir, bar: 1)
+  do_stuff
+end
+
+==> 006.rb 24 <==
+def qux(*)
+  stuff!
+end
+
+==> 007.rb 25 <==
+def qux(**)
+  stuff!
+end
+
+==> 008.rb 41 <==
+def something(foo1, bar)
+  do_stuff
+ end
+
+==> 009.rb 46 <==
+def self.something(foo, bar1)
+  do_stuff
+ end
+
+==> 010.rb 33 <==
+def something(ab)
+  do_stuff
+end
+
+==> 011.rb 49 <==
+def something(_a, __b, *c, **__d)
+  do_stuff
+end
+
+==> 012.rb 41 <==
+def something(number_One)
+  do_stuff
+end
+
+==> 013.rb 50 <==
+def self.something(foo1 = Pwd.dir)
+  do_stuff
+end
+
+==> 014.rb 38 <==
+def something(fooBar:)
+  do_stuff
+end
+
+==> 015.rb 48 <==
+def self.something(y, num1, oFo)
+  do_stuff
+end
+

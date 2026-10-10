@@ -1,0 +1,33 @@
+==> .rubocop.yml 205 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/MethodParameterName:
+  AllowedNames:
+  - foo1
+  - foo2
+  AllowNamesEndingInNumbers: false
+
+==> 000.rb 36 <==
+def quux(foo1, foo2)
+  do_stuff
+end
+
+==> 001.rb 38 <==
+def quux(_foo1, _foo2)
+  do_stuff
+end
+
+==> 002.rb 27 <==
+def quux(_)
+  do_stuff
+end
+
+==> 003.rb 35 <==
+def quux(bar, bar1)
+  do_stuff
+end
+

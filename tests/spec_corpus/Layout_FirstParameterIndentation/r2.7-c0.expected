@@ -1,0 +1,45 @@
+==> offenses exit=1 647 <==
+001.rb:2:1: C: [Correctable] Layout/FirstParameterIndentation: Use 2 spaces for indentation in method args, relative to the position of the opening parenthesis.
+008.rb:2:13: C: [Correctable] Layout/FirstParameterIndentation: Use 2 spaces for indentation in method args, relative to the position of the opening parenthesis.
+009.rb:2:11: C: [Correctable] Layout/FirstParameterIndentation: Use 2 spaces for indentation in method args, relative to the position of the opening parenthesis.
+010.rb:2:11: C: [Correctable] Layout/FirstParameterIndentation: Use 2 spaces for indentation in method args, relative to the position of the opening parenthesis.
+
+==> autocorrect exit=0 639 <==
+001.rb:2:1: C: [Corrected] Layout/FirstParameterIndentation: Use 2 spaces for indentation in method args, relative to the position of the opening parenthesis.
+008.rb:2:13: C: [Corrected] Layout/FirstParameterIndentation: Use 2 spaces for indentation in method args, relative to the position of the opening parenthesis.
+009.rb:2:11: C: [Corrected] Layout/FirstParameterIndentation: Use 2 spaces for indentation in method args, relative to the position of the opening parenthesis.
+010.rb:2:11: C: [Corrected] Layout/FirstParameterIndentation: Use 2 spaces for indentation in method args, relative to the position of the opening parenthesis.
+
+==> corrected/001.rb 26 <==
+def foo(
+         a
+)
+end
+
+==> corrected/008.rb 68 <==
+def abc(
+         foo,
+            bar,
+            baz
+)
+  foo
+end
+
+==> corrected/009.rb 73 <==
+def abc(
+         foo: 1,
+          bar: 3,
+          baz: 3
+)
+  foo
+end
+
+==> corrected/010.rb 83 <==
+def self.abc(
+              foo: 1,
+          bar: 3,
+          baz: 3
+)
+  foo
+end
+

@@ -1,0 +1,39 @@
+==> offenses exit=1 824 <==
+000.rb:1:6: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside { detected.
+000.rb:1:17: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } detected.
+001.rb:1:10: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } detected.
+002.rb:1:6: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside { detected.
+002.rb:1:13: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } detected.
+007.rb:2:5: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside { detected.
+007.rb:2:18: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } detected.
+009.rb:1:9: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside { detected.
+009.rb:1:22: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } detected.
+
+==> autocorrect exit=0 806 <==
+000.rb:1:6: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside { detected.
+000.rb:1:17: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside } detected.
+001.rb:1:10: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside } detected.
+002.rb:1:6: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside { detected.
+002.rb:1:13: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside } detected.
+007.rb:2:5: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside { detected.
+007.rb:2:18: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside } detected.
+009.rb:1:9: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside { detected.
+009.rb:1:22: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside } detected.
+
+==> corrected/000.rb 17 <==
+h = {a: 1, b: 2}
+
+==> corrected/001.rb 11 <==
+h = {a: 1}
+
+==> corrected/002.rb 13 <==
+h = {a: '{'}
+
+==> corrected/007.rb 31 <==
+case foo
+in {k1: 0, k2: 1}
+end
+
+==> corrected/009.rb 22 <==
+foo in {k1: 0, k2: 1}
+

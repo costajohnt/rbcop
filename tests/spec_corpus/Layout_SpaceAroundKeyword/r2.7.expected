@@ -1,0 +1,334 @@
+==> offenses exit=1 6306 <==
+000.rb:1:1: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `BEGIN` is missing.
+001.rb:1:1: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `END` is missing.
+002.rb:1:2: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `and` is missing.
+003.rb:1:3: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `and` is missing.
+004.rb:1:1: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `begin` is missing.
+005.rb:1:1: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `break` is missing.
+007.rb:1:1: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `case` is missing.
+008.rb:1:1: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `case` is missing.
+009.rb:1:6: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `do` is missing.
+010.rb:1:3: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `do` is missing.
+011.rb:1:6: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `do` is missing.
+012.rb:1:11: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `end` is missing.
+013.rb:1:8: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `do` is missing.
+014.rb:1:9: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `do` is missing.
+015.rb:1:8: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `do` is missing.
+016.rb:1:9: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `do` is missing.
+017.rb:1:12: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `do` is missing.
+018.rb:1:13: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `do` is missing.
+019.rb:1:10: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `end` is missing.
+020.rb:1:10: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `end` is missing.
+021.rb:1:9: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `end` is missing.
+022.rb:1:15: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `end` is missing.
+023.rb:1:15: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `end` is missing.
+024.rb:1:19: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `end` is missing.
+026.rb:1:9: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `else` is missing.
+027.rb:1:7: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `else` is missing.
+028.rb:1:17: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `else` is missing.
+029.rb:1:15: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `else` is missing.
+030.rb:1:19: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `else` is missing.
+031.rb:1:17: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `else` is missing.
+032.rb:1:17: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `else` is missing.
+033.rb:1:15: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `else` is missing.
+034.rb:1:21: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `if` is missing.
+035.rb:1:22: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `if` is missing.
+036.rb:1:21: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `unless` is missing.
+037.rb:1:22: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `unless` is missing.
+038.rb:1:9: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `elsif` is missing.
+039.rb:1:7: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `elsif` is missing.
+040.rb:1:9: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `ensure` is missing.
+041.rb:1:7: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `ensure` is missing.
+042.rb:1:1: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `if` is missing.
+043.rb:1:1: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `next` is missing.
+045.rb:1:1: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `not` is missing.
+047.rb:1:2: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `or` is missing.
+048.rb:1:3: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `or` is missing.
+049.rb:1:3: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `rescue` is missing.
+050.rb:1:3: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `rescue` is missing.
+052.rb:1:1: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `return` is missing.
+053.rb:1:1: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `return` is missing.
+054.rb:1:1: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `super` is missing.
+056.rb:1:1: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `super` is missing.
+058.rb:1:1: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `defined?` is missing.
+059.rb:1:6: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `then` is missing.
+060.rb:1:6: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `then` is missing.
+061.rb:1:1: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `unless` is missing.
+062.rb:1:2: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `until` is missing.
+063.rb:1:3: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `until` is missing.
+064.rb:1:8: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `when` is missing.
+065.rb:1:8: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `when` is missing.
+066.rb:1:9: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `in` is missing.
+067.rb:1:3: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `in` is missing.
+068.rb:1:3: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `in` is missing.
+069.rb:1:2: C: [Correctable] Layout/SpaceAroundKeyword: Space before keyword `while` is missing.
+070.rb:1:3: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `while` is missing.
+071.rb:1:1: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `yield` is missing.
+074.rb:1:1: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `begin` is missing.
+
+==> autocorrect exit=0 6174 <==
+000.rb:1:1: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `BEGIN` is missing.
+001.rb:1:1: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `END` is missing.
+002.rb:1:2: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `and` is missing.
+003.rb:1:3: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `and` is missing.
+004.rb:1:1: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `begin` is missing.
+005.rb:1:1: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `break` is missing.
+007.rb:1:1: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `case` is missing.
+008.rb:1:1: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `case` is missing.
+009.rb:1:6: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `do` is missing.
+010.rb:1:3: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `do` is missing.
+011.rb:1:6: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `do` is missing.
+012.rb:1:11: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `end` is missing.
+013.rb:1:8: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `do` is missing.
+014.rb:1:9: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `do` is missing.
+015.rb:1:8: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `do` is missing.
+016.rb:1:9: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `do` is missing.
+017.rb:1:12: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `do` is missing.
+018.rb:1:13: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `do` is missing.
+019.rb:1:10: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `end` is missing.
+020.rb:1:10: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `end` is missing.
+021.rb:1:9: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `end` is missing.
+022.rb:1:15: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `end` is missing.
+023.rb:1:15: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `end` is missing.
+024.rb:1:19: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `end` is missing.
+026.rb:1:9: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `else` is missing.
+027.rb:1:7: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `else` is missing.
+028.rb:1:17: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `else` is missing.
+029.rb:1:15: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `else` is missing.
+030.rb:1:19: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `else` is missing.
+031.rb:1:17: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `else` is missing.
+032.rb:1:17: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `else` is missing.
+033.rb:1:15: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `else` is missing.
+034.rb:1:21: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `if` is missing.
+035.rb:1:22: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `if` is missing.
+036.rb:1:21: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `unless` is missing.
+037.rb:1:22: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `unless` is missing.
+038.rb:1:9: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `elsif` is missing.
+039.rb:1:7: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `elsif` is missing.
+040.rb:1:9: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `ensure` is missing.
+041.rb:1:7: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `ensure` is missing.
+042.rb:1:1: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `if` is missing.
+043.rb:1:1: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `next` is missing.
+045.rb:1:1: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `not` is missing.
+047.rb:1:2: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `or` is missing.
+048.rb:1:3: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `or` is missing.
+049.rb:1:3: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `rescue` is missing.
+050.rb:1:3: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `rescue` is missing.
+052.rb:1:1: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `return` is missing.
+053.rb:1:1: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `return` is missing.
+054.rb:1:1: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `super` is missing.
+056.rb:1:1: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `super` is missing.
+058.rb:1:1: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `defined?` is missing.
+059.rb:1:6: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `then` is missing.
+060.rb:1:6: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `then` is missing.
+061.rb:1:1: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `unless` is missing.
+062.rb:1:2: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `until` is missing.
+063.rb:1:3: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `until` is missing.
+064.rb:1:8: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `when` is missing.
+065.rb:1:8: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `when` is missing.
+066.rb:1:9: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `in` is missing.
+067.rb:1:3: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `in` is missing.
+068.rb:1:3: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `in` is missing.
+069.rb:1:2: C: [Corrected] Layout/SpaceAroundKeyword: Space before keyword `while` is missing.
+070.rb:1:3: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `while` is missing.
+071.rb:1:1: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `yield` is missing.
+074.rb:1:1: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `begin` is missing.
+
+==> corrected/000.rb 9 <==
+BEGIN {}
+
+==> corrected/001.rb 7 <==
+END {}
+
+==> corrected/002.rb 8 <==
+1 and 2
+
+==> corrected/003.rb 10 <==
+1 and (2)
+
+==> corrected/004.rb 13 <==
+begin "" end
+
+==> corrected/005.rb 9 <==
+break ""
+
+==> corrected/007.rb 20 <==
+case "" when 1; end
+
+==> corrected/008.rb 19 <==
+case ""; in 1; end
+
+==> corrected/009.rb 13 <==
+a "b" do end
+
+==> corrected/010.rb 13 <==
+a do |x| end
+
+==> corrected/011.rb 16 <==
+a "b" do _1 end
+
+==> corrected/012.rb 15 <==
+a do _1"a" end
+
+==> corrected/013.rb 15 <==
+while 1 do end
+
+==> corrected/014.rb 19 <==
+while 1 do "x" end
+
+==> corrected/015.rb 15 <==
+until 1 do end
+
+==> corrected/016.rb 19 <==
+until 1 do "x" end
+
+==> corrected/017.rb 19 <==
+for x in [] do end
+
+==> corrected/018.rb 23 <==
+for x in [] do "x" end
+
+==> corrected/019.rb 14 <==
+begin "a" end
+
+==> corrected/020.rb 14 <==
+if a; "b" end
+
+==> corrected/021.rb 13 <==
+a do "a" end
+
+==> corrected/022.rb 19 <==
+while 1 do "x" end
+
+==> corrected/023.rb 19 <==
+until 1 do "x" end
+
+==> corrected/024.rb 23 <==
+for x in [] do "x" end
+
+==> corrected/026.rb 18 <==
+if a; "" else end
+
+==> corrected/027.rb 18 <==
+if a; else "" end
+
+==> corrected/028.rb 26 <==
+begin rescue; "" else end
+
+==> corrected/029.rb 26 <==
+begin rescue; else "" end
+
+==> corrected/030.rb 28 <==
+case a; when b; "" else end
+
+==> corrected/031.rb 28 <==
+case a; when b; else "" end
+
+==> corrected/032.rb 26 <==
+case a; in b; "" else end
+
+==> corrected/033.rb 26 <==
+case a; in b; else "" end
+
+==> corrected/034.rb 49 <==
+case a; in "pattern" if "condition"; else "" end
+
+==> corrected/035.rb 49 <==
+case a; in "pattern" if "condition"; else "" end
+
+==> corrected/036.rb 53 <==
+case a; in "pattern" unless "condition"; else "" end
+
+==> corrected/037.rb 53 <==
+case a; in "pattern" unless "condition"; else "" end
+
+==> corrected/038.rb 22 <==
+if a; "" elsif b; end
+
+==> corrected/039.rb 20 <==
+if a; elsif ""; end
+
+==> corrected/040.rb 20 <==
+begin "" ensure end
+
+==> corrected/041.rb 20 <==
+begin ensure "" end
+
+==> corrected/042.rb 11 <==
+if ""; end
+
+==> corrected/043.rb 8 <==
+next ""
+
+==> corrected/045.rb 7 <==
+not ""
+
+==> corrected/047.rb 7 <==
+1 or 2
+
+==> corrected/048.rb 9 <==
+1 or (2)
+
+==> corrected/049.rb 12 <==
+"" rescue a
+
+==> corrected/050.rb 12 <==
+a rescue ""
+
+==> corrected/052.rb 10 <==
+return ""
+
+==> corrected/053.rb 11 <==
+return (1)
+
+==> corrected/054.rb 9 <==
+super ""
+
+==> corrected/056.rb 9 <==
+super {}
+
+==> corrected/058.rb 11 <==
+defined? 1
+
+==> corrected/059.rb 17 <==
+if "" then a end
+
+==> corrected/060.rb 17 <==
+if a then "" end
+
+==> corrected/061.rb 15 <==
+unless ""; end
+
+==> corrected/062.rb 11 <==
+1 until ""
+
+==> corrected/063.rb 11 <==
+1 until ""
+
+==> corrected/064.rb 20 <==
+case "" when a; end
+
+==> corrected/065.rb 20 <==
+case a when ""; end
+
+==> corrected/066.rb 19 <==
+case a; in ""; end
+
+==> corrected/067.rb 8 <==
+"" in a
+
+==> corrected/068.rb 8 <==
+a in ""
+
+==> corrected/069.rb 11 <==
+1 while ""
+
+==> corrected/070.rb 11 <==
+1 while ""
+
+==> corrected/071.rb 9 <==
+yield ""
+
+==> corrected/074.rb 13 <==
+begin +1 end
+

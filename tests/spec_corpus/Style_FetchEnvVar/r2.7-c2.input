@@ -1,0 +1,19 @@
+==> .rubocop.yml 149 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/FetchEnvVar:
+  DefaultToNil: false
+
+==> 000.rb 9 <==
+ENV['X']
+
+==> 001.rb 13 <==
+x = ENV['X']
+
+==> 002.rb 22 <==
+some_method(ENV['X'])
+

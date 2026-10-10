@@ -1,0 +1,20 @@
+==> offenses exit=1 1136 <==
+003.rb:1:1: W: Lint/SharedMutableDefault: Do not create a Hash with a mutable default value as the default value can accidentally be changed.
+003.rb:2:1: W: Lint/SharedMutableDefault: Do not create a Hash with a mutable default value as the default value can accidentally be changed.
+003.rb:3:1: W: Lint/SharedMutableDefault: Do not create a Hash with a mutable default value as the default value can accidentally be changed.
+005.rb:1:1: W: Lint/SharedMutableDefault: Do not create a Hash with a mutable default value as the default value can accidentally be changed.
+005.rb:2:1: W: Lint/SharedMutableDefault: Do not create a Hash with a mutable default value as the default value can accidentally be changed.
+006.rb:1:1: W: Lint/SharedMutableDefault: Do not create a Hash with a mutable default value as the default value can accidentally be changed.
+006.rb:2:1: W: Lint/SharedMutableDefault: Do not create a Hash with a mutable default value as the default value can accidentally be changed.
+007.rb:1:1: W: Lint/SharedMutableDefault: Do not create a Hash with a mutable default value as the default value can accidentally be changed.
+
+==> autocorrect exit=1 1136 <==
+003.rb:1:1: W: Lint/SharedMutableDefault: Do not create a Hash with a mutable default value as the default value can accidentally be changed.
+003.rb:2:1: W: Lint/SharedMutableDefault: Do not create a Hash with a mutable default value as the default value can accidentally be changed.
+003.rb:3:1: W: Lint/SharedMutableDefault: Do not create a Hash with a mutable default value as the default value can accidentally be changed.
+005.rb:1:1: W: Lint/SharedMutableDefault: Do not create a Hash with a mutable default value as the default value can accidentally be changed.
+005.rb:2:1: W: Lint/SharedMutableDefault: Do not create a Hash with a mutable default value as the default value can accidentally be changed.
+006.rb:1:1: W: Lint/SharedMutableDefault: Do not create a Hash with a mutable default value as the default value can accidentally be changed.
+006.rb:2:1: W: Lint/SharedMutableDefault: Do not create a Hash with a mutable default value as the default value can accidentally be changed.
+007.rb:1:1: W: Lint/SharedMutableDefault: Do not create a Hash with a mutable default value as the default value can accidentally be changed.
+

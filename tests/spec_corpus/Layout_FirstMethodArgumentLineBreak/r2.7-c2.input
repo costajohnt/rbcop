@@ -1,0 +1,15 @@
+==> .rubocop.yml 177 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/FirstMethodArgumentLineBreak:
+  AllowedMethods:
+  - something
+
+==> 000.rb 29 <==
+something(3, bar: 1,
+baz: 2)
+

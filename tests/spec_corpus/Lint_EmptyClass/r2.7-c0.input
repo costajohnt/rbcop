@@ -1,0 +1,47 @@
+==> .rubocop.yml 148 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/EmptyClass:
+  AllowComments: false
+
+==> 000.rb 14 <==
+class Foo
+end
+
+==> 001.rb 36 <==
+class Foo
+  class << self
+  end
+end
+
+==> 002.rb 17 <==
+class << obj
+end
+
+==> 003.rb 51 <==
+class Foo
+  class << self
+    # Comment.
+  end
+end
+
+==> 004.rb 33 <==
+class Foo
+  attr_reader :bar
+end
+
+==> 005.rb 25 <==
+class Child < Parent
+end
+
+==> 006.rb 57 <==
+class Foo
+  class << self
+    attr_reader :bar
+  end
+end
+

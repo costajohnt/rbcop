@@ -1,0 +1,58 @@
+==> offenses exit=1 708 <==
+004.rb:3:1: C: [Correctable] Style/RescueStandardError: Omit the error class when rescuing `StandardError` by itself.
+005.rb:3:1: C: [Correctable] Style/RescueStandardError: Omit the error class when rescuing `StandardError` by itself.
+006.rb:3:1: C: [Correctable] Style/RescueStandardError: Omit the error class when rescuing `StandardError` by itself.
+007.rb:3:1: C: [Correctable] Style/RescueStandardError: Omit the error class when rescuing `StandardError` by itself.
+015.rb:3:1: C: [Correctable] Style/RescueStandardError: Omit the error class when rescuing `StandardError` by itself.
+016.rb:3:1: C: [Correctable] Style/RescueStandardError: Omit the error class when rescuing `StandardError` by itself.
+
+==> autocorrect exit=0 696 <==
+004.rb:3:1: C: [Corrected] Style/RescueStandardError: Omit the error class when rescuing `StandardError` by itself.
+005.rb:3:1: C: [Corrected] Style/RescueStandardError: Omit the error class when rescuing `StandardError` by itself.
+006.rb:3:1: C: [Corrected] Style/RescueStandardError: Omit the error class when rescuing `StandardError` by itself.
+007.rb:3:1: C: [Corrected] Style/RescueStandardError: Omit the error class when rescuing `StandardError` by itself.
+015.rb:3:1: C: [Corrected] Style/RescueStandardError: Omit the error class when rescuing `StandardError` by itself.
+016.rb:3:1: C: [Corrected] Style/RescueStandardError: Omit the error class when rescuing `StandardError` by itself.
+
+==> corrected/004.rb 29 <==
+begin
+  foo
+rescue
+  bar
+end
+
+==> corrected/005.rb 29 <==
+begin
+  foo
+rescue
+  bar
+end
+
+==> corrected/006.rb 34 <==
+begin
+  foo
+rescue => e
+  bar
+end
+
+==> corrected/007.rb 34 <==
+begin
+  foo
+rescue => e
+  bar
+end
+
+==> corrected/015.rb 34 <==
+def foobar
+  foo
+rescue
+  bar
+end
+
+==> corrected/016.rb 39 <==
+def foobar
+  foo
+rescue => e
+  bar
+end
+

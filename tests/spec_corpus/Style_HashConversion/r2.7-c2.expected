@@ -1,0 +1,6 @@
+==> offenses exit=1 85 <==
+000.rb:1:1: C: Style/HashConversion: Prefer `array_of_pairs.to_h` to `Hash[*array]`.
+
+==> autocorrect exit=1 85 <==
+000.rb:1:1: C: Style/HashConversion: Prefer `array_of_pairs.to_h` to `Hash[*array]`.
+

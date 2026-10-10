@@ -1,0 +1,59 @@
+==> offenses exit=1 1296 <==
+000.rb:1:16: C: [Correctable] Style/DataInheritance: Don't extend an instance initialized by `Data.define`. Use a block to customize the class.
+001.rb:1:16: C: [Correctable] Style/DataInheritance: Don't extend an instance initialized by `Data.define`. Use a block to customize the class.
+002.rb:1:16: C: [Correctable] Style/DataInheritance: Don't extend an instance initialized by `Data.define`. Use a block to customize the class.
+003.rb:1:16: C: [Correctable] Style/DataInheritance: Don't extend an instance initialized by `Data.define`. Use a block to customize the class.
+004.rb:1:16: C: [Correctable] Style/DataInheritance: Don't extend an instance initialized by `Data.define`. Use a block to customize the class.
+005.rb:1:16: C: [Correctable] Style/DataInheritance: Don't extend an instance initialized by `Data.define`. Use a block to customize the class.
+006.rb:1:16: C: [Correctable] Style/DataInheritance: Don't extend an instance initialized by `Data.define`. Use a block to customize the class.
+007.rb:1:16: C: [Correctable] Style/DataInheritance: Don't extend an instance initialized by `Data.define`. Use a block to customize the class.
+008.rb:2:16: C: [Correctable] Style/DataInheritance: Don't extend an instance initialized by `Data.define`. Use a block to customize the class.
+
+==> autocorrect exit=0 1278 <==
+000.rb:1:16: C: [Corrected] Style/DataInheritance: Don't extend an instance initialized by `Data.define`. Use a block to customize the class.
+001.rb:1:16: C: [Corrected] Style/DataInheritance: Don't extend an instance initialized by `Data.define`. Use a block to customize the class.
+002.rb:1:16: C: [Corrected] Style/DataInheritance: Don't extend an instance initialized by `Data.define`. Use a block to customize the class.
+003.rb:1:16: C: [Corrected] Style/DataInheritance: Don't extend an instance initialized by `Data.define`. Use a block to customize the class.
+004.rb:1:16: C: [Corrected] Style/DataInheritance: Don't extend an instance initialized by `Data.define`. Use a block to customize the class.
+005.rb:1:16: C: [Corrected] Style/DataInheritance: Don't extend an instance initialized by `Data.define`. Use a block to customize the class.
+006.rb:1:16: C: [Corrected] Style/DataInheritance: Don't extend an instance initialized by `Data.define`. Use a block to customize the class.
+007.rb:1:16: C: [Corrected] Style/DataInheritance: Don't extend an instance initialized by `Data.define`. Use a block to customize the class.
+008.rb:2:16: C: [Corrected] Style/DataInheritance: Don't extend an instance initialized by `Data.define`. Use a block to customize the class.
+
+==> corrected/000.rb 68 <==
+Person = Data.define(:first_name, :last_name) do
+  def foo; end
+end
+
+==> corrected/001.rb 70 <==
+Person = ::Data.define(:first_name, :last_name) do
+  def foo; end
+end
+
+==> corrected/002.rb 53 <==
+Person = Data.define(:first_name, :last_name) do
+end
+
+==> corrected/003.rb 53 <==
+Person = Data.define(:first_name, :last_name) do
+end
+
+==> corrected/004.rb 66 <==
+Person = Data.define(:first_name, :last_name) do def age = 42
+end
+
+==> corrected/005.rb 46 <==
+Person = Data.define(:first_name, :last_name)
+
+==> corrected/006.rb 46 <==
+Person = Data.define(:first_name, :last_name)
+
+==> corrected/007.rb 55 <==
+Person = ::Data.define(:first_name, :last_name) do
+end
+
+==> corrected/008.rb 63 <==
+# comment
+Person = Data.define(:first_name, :last_name) do
+end
+

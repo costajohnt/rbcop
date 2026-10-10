@@ -105,11 +105,12 @@ pub fn analyze_for_correction(
     path: &Path,
     display: &str,
     text: &Arc<str>,
+    raw_text: Option<&str>,
     cfg: &Resolved,
     selected: &dyn Fn(&str) -> bool,
     mode: Mode,
 ) -> (Vec<Offense>, Option<Corrector>, Vec<Span>) {
-    analyze(path, display, text, None, cfg, selected, Some(mode), Redundant::Skip)
+    analyze(path, display, text, raw_text, cfg, selected, Some(mode), Redundant::Skip)
 }
 
 /// Runner#add_redundant_disables after an autocorrect loop: Lint/RedundantCopDisableDirective
@@ -508,7 +509,7 @@ pub fn cop_error(cop: &str, src: &Source, at: usize) {
 }
 
 /// Print an error now and keep it for the summary (it makes the run fail).
-fn file_error(msg: String) {
+pub fn file_error(msg: String) {
     eprintln!("{msg}");
     ERRORS.lock().unwrap_or_else(|e| e.into_inner()).push(msg);
 }
@@ -553,9 +554,10 @@ fn autocorrect_allowed(cfg: &CopConfig) -> bool {
     }
 }
 
-/// Prism reports some semantic errors the parser gem accepts (e.g. top-level `yield` in .builder templates).
+/// Prism reports some semantic errors the parser gem accepts (e.g. top-level `yield` in .builder
+/// templates, `retry` outside `rescue`).
 // ponytail: only verified ones are tolerated; add more as real code turns them up.
-const TOLERATED_ERRORS: &[&str] = &["invalid_yield"];
+const TOLERATED_ERRORS: &[&str] = &["invalid_yield", "invalid_retry_without_rescue"];
 
 /// Prism errors the parser gem accepts for the target. Up to Ruby 2.5, `begin..else..end` without
 /// `rescue` is only a `useless_else` warning (reported by Lint/UselessElseWithoutRescue); before

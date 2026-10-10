@@ -1,0 +1,74 @@
+==> .rubocop.yml 261 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/RedundantArgument:
+  Methods:
+    join: ''
+    sum: 0
+    exit: true
+    exit!: false
+    to_i: 10
+    split: " "
+    chomp: "\n"
+    chomp!: "\n"
+
+==> 000.rb 109 <==
+foo.join('')
+foo.sum(0)
+exit(true)
+exit!(false)
+foo.to_i(10)
+foo.split(' ')
+foo.chomp("\n")
+foo.chomp!("\n")
+
+==> 001.rb 77 <==
+foo&.join('')
+foo&.sum(0)
+foo&.split(' ')
+foo&.chomp("\n")
+foo&.chomp!("\n")
+
+==> 002.rb 26 <==
+foo.join ''
+foo.split ' '
+
+==> 003.rb 45 <==
+[1, 2, 3].join('')
+"first second".split(' ')
+
+==> 004.rb 18 <==
+[1, 2, 3].join ''
+
+==> 005.rb 39 <==
+foo.join("")
+"first second".split(" ")
+
+==> 006.rb 33 <==
+foo.chomp('\n')
+foo.chomp!('\n')
+
+==> 007.rb 18 <==
+foo.chomp("\x82")
+
+==> 008.rb 30 <==
+foo.join
+"first second".split
+
+==> 009.rb 47 <==
+foo.join('', 2)
+[1, 2, 3].split(" ", true, {})
+
+==> 010.rb 41 <==
+foo.join(',')
+foo.sum(42)
+foo.split(',')
+
+==> 011.rb 20 <==
+join('')
+split(' ')
+

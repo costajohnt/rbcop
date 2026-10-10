@@ -1,0 +1,74 @@
+==> .rubocop.yml 172 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/AccessModifierDeclarations:
+  AllowModifiersOnAttrs: true
+
+==> 000.rb 117 <==
+class Foo
+  private attr_reader :foo
+  private attr_writer :bar
+  private attr_accessor :baz
+  private attr :qux
+end
+
+==> 001.rb 173 <==
+class Foo
+  private attr_reader :reader1, :reader2
+  private attr_writer :writer1, :writer2
+  private attr_accessor :accessor1, :accessor2
+  private attr :attr1, :attr2
+end
+
+==> 002.rb 125 <==
+class Foo
+  protected attr_reader :foo
+  protected attr_writer :bar
+  protected attr_accessor :baz
+  protected attr :qux
+end
+
+==> 003.rb 181 <==
+class Foo
+  protected attr_reader :reader1, :reader2
+  protected attr_writer :writer1, :writer2
+  protected attr_accessor :accessor1, :accessor2
+  protected attr :attr1, :attr2
+end
+
+==> 004.rb 113 <==
+class Foo
+  public attr_reader :foo
+  public attr_writer :bar
+  public attr_accessor :baz
+  public attr :qux
+end
+
+==> 005.rb 169 <==
+class Foo
+  public attr_reader :reader1, :reader2
+  public attr_writer :writer1, :writer2
+  public attr_accessor :accessor1, :accessor2
+  public attr :attr1, :attr2
+end
+
+==> 006.rb 149 <==
+class Foo
+  module_function attr_reader :foo
+  module_function attr_writer :bar
+  module_function attr_accessor :baz
+  module_function attr :qux
+end
+
+==> 007.rb 205 <==
+class Foo
+  module_function attr_reader :reader1, :reader2
+  module_function attr_writer :writer1, :writer2
+  module_function attr_accessor :accessor1, :accessor2
+  module_function attr :attr1, :attr2
+end
+

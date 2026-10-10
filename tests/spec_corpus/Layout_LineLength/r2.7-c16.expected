@@ -1,0 +1,530 @@
+==> offenses exit=1 7391 <==
+002.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [43/40]
+003.rb:2:41: C: [Correctable] Layout/LineLength: Line is too long. [46/40]
+004.rb:2:41: C: Layout/LineLength: Line is too long. [43/40]
+005.rb:2:41: C: Layout/LineLength: Line is too long. [46/40]
+006.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [44/40]
+007.rb:2:41: C: [Correctable] Layout/LineLength: Line is too long. [50/40]
+008.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [43/40]
+009.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [44/40]
+010.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [49/40]
+011.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [96/40]
+012.rb:1:41: C: Layout/LineLength: Line is too long. [62/40]
+013.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [46/40]
+014.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [79/40]
+015.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [43/40]
+016.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [46/40]
+017.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [42/40]
+018.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [44/40]
+019.rb:1:41: C: Layout/LineLength: Line is too long. [44/40]
+020.rb:1:41: C: Layout/LineLength: Line is too long. [45/40]
+021.rb:1:41: C: Layout/LineLength: Line is too long. [45/40]
+022.rb:1:41: C: Layout/LineLength: Line is too long. [45/40]
+023.rb:1:41: C: Layout/LineLength: Line is too long. [45/40]
+024.rb:1:41: C: Layout/LineLength: Line is too long. [45/40]
+025.rb:1:41: C: Layout/LineLength: Line is too long. [45/40]
+027.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [44/40]
+028.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [54/40]
+029.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [54/40]
+030.rb:2:41: C: [Correctable] Layout/LineLength: Line is too long. [50/40]
+031.rb:1:41: C: Layout/LineLength: Line is too long. [54/40]
+032.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [62/40]
+033.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [47/40]
+035.rb:1:41: C: Layout/LineLength: Line is too long. [75/40]
+036.rb:1:41: C: Layout/LineLength: Line is too long. [74/40]
+037.rb:4:41: C: Layout/LineLength: Line is too long. [61/40]
+038.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [75/40]
+039.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [78/40]
+040.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [72/40]
+041.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [82/40]
+042.rb:3:41: C: [Correctable] Layout/LineLength: Line is too long. [109/40]
+044.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [82/40]
+046.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [87/40]
+049.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [78/40]
+050.rb:1:41: C: Layout/LineLength: Line is too long. [42/40]
+051.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [45/40]
+052.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [85/40]
+053.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [78/40]
+054.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [82/40]
+055.rb:1:41: C: Layout/LineLength: Line is too long. [64/40]
+056.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [77/40]
+057.rb:1:41: C: Layout/LineLength: Line is too long. [65/40]
+058.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [64/40]
+059.rb:2:41: C: Layout/LineLength: Line is too long. [70/40]
+060.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [93/40]
+061.rb:1:41: C: Layout/LineLength: Line is too long. [44/40]
+062.rb:1:41: C: Layout/LineLength: Line is too long. [43/40]
+063.rb:1:41: C: Layout/LineLength: Line is too long. [43/40]
+064.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [44/40]
+065.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [50/40]
+068.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [83/40]
+069.rb:1:41: C: Layout/LineLength: Line is too long. [42/40]
+070.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [42/40]
+071.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [90/40]
+072.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [83/40]
+073.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [87/40]
+074.rb:1:41: C: Layout/LineLength: Line is too long. [69/40]
+075.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [82/40]
+076.rb:1:41: C: Layout/LineLength: Line is too long. [70/40]
+077.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [69/40]
+078.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [69/40]
+079.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [74/40]
+080.rb:2:41: C: Layout/LineLength: Line is too long. [80/40]
+081.rb:2:41: C: Layout/LineLength: Line is too long. [80/40]
+082.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [90/40]
+083.rb:1:41: C: Layout/LineLength: Line is too long. [44/40]
+084.rb:1:41: C: Layout/LineLength: Line is too long. [43/40]
+085.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [44/40]
+086.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [50/40]
+089.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [58/40]
+090.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [83/40]
+091.rb:2:41: C: Layout/LineLength: Line is too long. [70/40]
+092.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [46/40]
+093.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [43/40]
+094.rb:2:41: C: Layout/LineLength: Line is too long. [70/40]
+095.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [70/40]
+096.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [70/40]
+097.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [64/40]
+098.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [70/40]
+101.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [70/40]
+102.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [70/40]
+103.rb:1:41: C: Layout/LineLength: Line is too long. [73/40]
+104.rb:1:41: C: Layout/LineLength: Line is too long. [75/40]
+105.rb:1:41: C: Layout/LineLength: Line is too long. [83/40]
+106.rb:1:41: C: Layout/LineLength: Line is too long. [81/40]
+107.rb:1:41: C: Layout/LineLength: Line is too long. [82/40]
+108.rb:1:41: C: Layout/LineLength: Line is too long. [73/40]
+109.rb:1:41: C: Layout/LineLength: Line is too long. [75/40]
+111.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [54/40]
+112.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [55/40]
+113.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [58/40]
+114.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [58/40]
+115.rb:1:41: C: Layout/LineLength: Line is too long. [41/40]
+116.rb:1:41: C: Layout/LineLength: Line is too long. [47/40]
+117.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [67/40]
+118.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [66/40]
+119.rb:1:41: C: Layout/LineLength: Line is too long. [53/40]
+120.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [45/40]
+
+==> autocorrect exit=1 9357 <==
+002.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [43/40]
+003.rb:2:41: C: [Corrected] Layout/LineLength: Line is too long. [46/40]
+004.rb:2:41: C: Layout/LineLength: Line is too long. [43/40]
+005.rb:2:41: C: Layout/LineLength: Line is too long. [46/40]
+006.rb:1:41: C: Layout/LineLength: Line is too long. [41/40]
+006.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [44/40]
+007.rb:2:41: C: [Corrected] Layout/LineLength: Line is too long. [50/40]
+008.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [43/40]
+009.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [44/40]
+010.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [49/40]
+011.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [96/40]
+011.rb:2:41: C: Layout/LineLength: Line is too long. [83/40]
+012.rb:1:41: C: Layout/LineLength: Line is too long. [62/40]
+013.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [46/40]
+014.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [79/40]
+014.rb:2:41: C: [Corrected] Layout/LineLength: Line is too long. [47/40]
+015.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [43/40]
+016.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [46/40]
+017.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [42/40]
+018.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [44/40]
+019.rb:1:41: C: Layout/LineLength: Line is too long. [44/40]
+020.rb:1:41: C: Layout/LineLength: Line is too long. [45/40]
+021.rb:1:41: C: Layout/LineLength: Line is too long. [45/40]
+022.rb:1:41: C: Layout/LineLength: Line is too long. [45/40]
+023.rb:1:41: C: Layout/LineLength: Line is too long. [45/40]
+024.rb:1:41: C: Layout/LineLength: Line is too long. [45/40]
+025.rb:1:41: C: Layout/LineLength: Line is too long. [45/40]
+027.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [44/40]
+028.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [54/40]
+029.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [54/40]
+030.rb:2:41: C: [Corrected] Layout/LineLength: Line is too long. [50/40]
+031.rb:1:41: C: Layout/LineLength: Line is too long. [54/40]
+032.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [62/40]
+033.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [47/40]
+035.rb:1:41: C: Layout/LineLength: Line is too long. [75/40]
+036.rb:1:41: C: Layout/LineLength: Line is too long. [74/40]
+037.rb:4:41: C: Layout/LineLength: Line is too long. [61/40]
+038.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [75/40]
+038.rb:2:41: C: Layout/LineLength: Line is too long. [44/40]
+039.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [78/40]
+040.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [72/40]
+041.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [82/40]
+041.rb:2:41: C: Layout/LineLength: Line is too long. [51/40]
+042.rb:3:41: C: [Corrected] Layout/LineLength: Line is too long. [109/40]
+042.rb:4:41: C: Layout/LineLength: Line is too long. [76/40]
+044.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [82/40]
+044.rb:2:41: C: Layout/LineLength: Line is too long. [44/40]
+046.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [87/40]
+046.rb:2:41: C: Layout/LineLength: Line is too long. [59/40]
+049.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [78/40]
+049.rb:2:41: C: Layout/LineLength: Line is too long. [44/40]
+050.rb:1:41: C: Layout/LineLength: Line is too long. [42/40]
+051.rb:1:41: C: Layout/LineLength: Line is too long. [42/40]
+051.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [45/40]
+052.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [85/40]
+052.rb:2:41: C: Layout/LineLength: Line is too long. [51/40]
+053.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [78/40]
+053.rb:2:41: C: Layout/LineLength: Line is too long. [74/40]
+054.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [82/40]
+054.rb:2:41: C: Layout/LineLength: Line is too long. [76/40]
+055.rb:1:41: C: Layout/LineLength: Line is too long. [64/40]
+056.rb:1:41: C: Layout/LineLength: Line is too long. [66/40]
+056.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [77/40]
+057.rb:1:41: C: Layout/LineLength: Line is too long. [65/40]
+058.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [64/40]
+058.rb:2:41: C: Layout/LineLength: Line is too long. [44/40]
+059.rb:2:41: C: Layout/LineLength: Line is too long. [70/40]
+060.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [93/40]
+060.rb:2:41: C: Layout/LineLength: Line is too long. [56/40]
+061.rb:1:41: C: Layout/LineLength: Line is too long. [44/40]
+062.rb:1:41: C: Layout/LineLength: Line is too long. [43/40]
+063.rb:1:41: C: Layout/LineLength: Line is too long. [43/40]
+064.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [44/40]
+065.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [50/40]
+068.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [83/40]
+068.rb:2:41: C: Layout/LineLength: Line is too long. [44/40]
+069.rb:1:41: C: Layout/LineLength: Line is too long. [42/40]
+070.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [42/40]
+071.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [90/40]
+071.rb:2:41: C: Layout/LineLength: Line is too long. [51/40]
+072.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [83/40]
+072.rb:2:41: C: Layout/LineLength: Line is too long. [74/40]
+073.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [87/40]
+073.rb:2:41: C: Layout/LineLength: Line is too long. [76/40]
+074.rb:1:41: C: Layout/LineLength: Line is too long. [69/40]
+075.rb:1:41: C: Layout/LineLength: Line is too long. [71/40]
+075.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [82/40]
+076.rb:1:41: C: Layout/LineLength: Line is too long. [70/40]
+077.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [69/40]
+077.rb:2:41: C: Layout/LineLength: Line is too long. [49/40]
+078.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [69/40]
+078.rb:2:41: C: Layout/LineLength: Line is too long. [44/40]
+079.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [74/40]
+079.rb:2:41: C: Layout/LineLength: Line is too long. [49/40]
+080.rb:2:41: C: Layout/LineLength: Line is too long. [80/40]
+081.rb:2:41: C: Layout/LineLength: Line is too long. [80/40]
+082.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [90/40]
+082.rb:2:41: C: Layout/LineLength: Line is too long. [56/40]
+083.rb:1:41: C: Layout/LineLength: Line is too long. [44/40]
+084.rb:1:41: C: Layout/LineLength: Line is too long. [43/40]
+085.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [44/40]
+086.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [50/40]
+089.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [58/40]
+090.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [83/40]
+090.rb:2:41: C: Layout/LineLength: Line is too long. [44/40]
+091.rb:2:41: C: Layout/LineLength: Line is too long. [70/40]
+092.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [46/40]
+093.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [43/40]
+094.rb:2:41: C: Layout/LineLength: Line is too long. [70/40]
+095.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [70/40]
+095.rb:2:41: C: Layout/LineLength: Line is too long. [52/40]
+096.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [70/40]
+096.rb:2:41: C: Layout/LineLength: Line is too long. [51/40]
+097.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [64/40]
+097.rb:2:41: C: Layout/LineLength: Line is too long. [51/40]
+098.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [70/40]
+098.rb:2:41: C: Layout/LineLength: Line is too long. [57/40]
+101.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [70/40]
+101.rb:2:41: C: Layout/LineLength: Line is too long. [63/40]
+102.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [70/40]
+102.rb:2:41: C: Layout/LineLength: Line is too long. [64/40]
+103.rb:1:41: C: Layout/LineLength: Line is too long. [73/40]
+104.rb:1:41: C: Layout/LineLength: Line is too long. [75/40]
+105.rb:1:41: C: Layout/LineLength: Line is too long. [83/40]
+106.rb:1:41: C: Layout/LineLength: Line is too long. [81/40]
+107.rb:1:41: C: Layout/LineLength: Line is too long. [82/40]
+108.rb:1:41: C: Layout/LineLength: Line is too long. [73/40]
+109.rb:1:41: C: Layout/LineLength: Line is too long. [75/40]
+111.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [54/40]
+112.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [55/40]
+113.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [58/40]
+114.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [58/40]
+115.rb:1:41: C: Layout/LineLength: Line is too long. [41/40]
+116.rb:1:41: C: Layout/LineLength: Line is too long. [47/40]
+117.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [67/40]
+117.rb:2:41: C: Layout/LineLength: Line is too long. [47/40]
+118.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [66/40]
+119.rb:1:41: C: Layout/LineLength: Line is too long. [53/40]
+120.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [45/40]
+120.rb:2:41: C: [Corrected] Layout/LineLength: Line is too long. [41/40]
+
+==> corrected/002.rb 49 <==
+'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' \
+'bbbbb'
+
+==> corrected/003.rb 59 <==
+foo(
+  'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ' \
+'bbbbbbbbbbb'
+)
+
+==> corrected/006.rb 60 <==
+foo("aaaaaaaaaaaaaaaaaaaaaaaaa#{b} cc " \
+"dd " \
+    "ee")
+
+==> corrected/007.rb 97 <==
+'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' \
+'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb' \
+'cccccccccccc'
+
+==> corrected/008.rb 49 <==
+x = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' \
+'bbbbb'
+
+==> corrected/009.rb 50 <==
+x = 'aaaaaaaaaaaaaaaaaaaaaa ' \
+'bbbbbbbbbbbbbbb'
+
+==> corrected/010.rb 55 <==
+x = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' \
+'\nbbbbbbbbbb'
+
+==> corrected/011.rb 98 <==
+{ x: 'aaaa', 
+y: 'bbbbbbbbbbbbbbbbbbbbbbbbbbb', z: 'cccccccccccccccccccccccccccccccccccccccccc' }
+
+==> corrected/013.rb 52 <==
+'aaaaaaaaaaaaaaaaaaaaaaaaa ' \
+'bbbbbbbbbbbbbbbbbb'
+
+==> corrected/014.rb 90 <==
+'aaaaaaaaaaaaaaaaaaaaaaaaa bbbbb ' \
+'ccccccccc dddddddddddddddddddddd ' \
+'eeeeeeeeeeee'
+
+==> corrected/015.rb 49 <==
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+"\nbbbb"
+
+==> corrected/016.rb 52 <==
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+"\u0061bbbb"
+
+==> corrected/017.rb 48 <==
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+"\x61bbbb"
+
+==> corrected/018.rb 52 <==
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+"あbbbbb"
+
+==> corrected/027.rb 50 <==
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+"#{bbbb}"
+
+==> corrected/028.rb 60 <==
+"#{bbbb}aaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+"aaaaaaaaaaaaaaaa"
+
+==> corrected/029.rb 60 <==
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+"aaaaaaaaa#{bbbb}"
+
+==> corrected/030.rb 81 <==
+a_long_named_method_call
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+"#{bbbbbbbbb}"
+
+==> corrected/032.rb 68 <==
+"#{aaaaa}bbbbbbb#{cccccc}dddddddddddd" \
+"ddddddddd#{eeeeeeeeeeee}"
+
+==> corrected/033.rb 53 <==
+"aaaaaaaaaaaaa" \
+"#{"#{bbbbbbbbbbbbbbbbbbbbbbbb}"}"
+
+==> corrected/038.rb 77 <==
+{abc: "100000", def: "100000", 
+ghi: "100000", jkl: "100000", mno: "100000"}
+
+==> corrected/039.rb 80 <==
+{"abc" => "100000", "def" => "100000", 
+"casd" => "100000", "asdf" => "100000"}
+
+==> corrected/040.rb 74 <==
+{:abc => "100000", :asd => "100000", 
+:asd => "100000", :fds => "100000"}
+
+==> corrected/041.rb 84 <==
+{abc: "100000", def: "100000", 
+ghi: {abc: "100000"}, jkl: "100000", mno: "100000"}
+
+==> corrected/042.rb 139 <==
+get(
+  :index,
+  params: {driver_id: driver.id, 
+from_date: "2017-08-18T15:09:04.000Z", to_date: "2017-09-19T15:09:04.000Z"},
+  xhr: true)
+
+==> corrected/044.rb 88 <==
+def foo(abc: "100000", def: "100000", 
+ghi: "100000", jkl: "100000", mno: "100000")
+end
+
+==> corrected/046.rb 93 <==
+def self.foo(abc: "100000", 
+def: "100000", ghi: "100000", jkl: "100000", mno: "100000")
+end
+
+==> corrected/049.rb 80 <==
+foo(abc: "100000", def: "100000", 
+ghi: "100000", jkl: "100000", mno: "100000")
+
+==> corrected/051.rb 47 <==
+method_call xxxxxxxxxxxxxxxxxxxxxxxxxxxx, 
+abc
+
+==> corrected/052.rb 87 <==
+foo(abc: "100000", def: "100000", 
+ghi: {abc: "100000"}, jkl: "100000", mno: "100000")
+
+==> corrected/053.rb 80 <==
+foo(
+abc: '10000000000000000000000000000000000000000000000000000', def: '1000')
+
+==> corrected/054.rb 84 <==
+foo({ 
+abc: '10000000000000000000000000000000000000000000000000000', def: '1000' })
+
+==> corrected/056.rb 79 <==
+foo abc: '10000000000000000000000000000000000000000000000000000', 
+ghi: '1000'
+
+==> corrected/058.rb 66 <==
+get(1000000, 30000, 
+foo(44440000, 30000, 39999, 19929120312093))
+
+==> corrected/060.rb 95 <==
+attr_reader :first_name, :last_name, 
+:email, :username, :country, :state, :city, :postal_code
+
+==> corrected/064.rb 53 <==
+foo(abc, 
+<<~STRING, xxxxxxxxxxxxxxxxxxxxxxx)
+STRING
+
+==> corrected/065.rb 59 <==
+foo(xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx, 
+<<~STRING)
+STRING
+
+==> corrected/068.rb 85 <==
+foo&.bar(abc: "100000", def: "100000", 
+ghi: "100000", jkl: "100000", mno: "100000")
+
+==> corrected/070.rb 44 <==
+foo&.bar xxxxxxxxxxxxxxxxxxxxxxxxxxxx, 
+abc
+
+==> corrected/071.rb 92 <==
+foo&.bar(abc: "100000", def: "100000", 
+ghi: {abc: "100000"}, jkl: "100000", mno: "100000")
+
+==> corrected/072.rb 85 <==
+foo&.bar(
+abc: '10000000000000000000000000000000000000000000000000000', def: '1000')
+
+==> corrected/073.rb 89 <==
+foo&.bar({ 
+abc: '10000000000000000000000000000000000000000000000000000', def: '1000' })
+
+==> corrected/075.rb 84 <==
+foo&.bar abc: '10000000000000000000000000000000000000000000000000000', 
+ghi: '1000'
+
+==> corrected/077.rb 71 <==
+get(1000000, 30000, 
+foo&.bar(44440000, 30000, 39999, 19929120312093))
+
+==> corrected/078.rb 71 <==
+get&.bar(1000000, 30000, 
+foo(44440000, 30000, 39999, 19929120312093))
+
+==> corrected/079.rb 76 <==
+get&.bar(1000000, 30000, 
+foo&.baz(44440000, 30000, 39999, 19929120312093))
+
+==> corrected/082.rb 92 <==
+foo&.bar :first_name, :last_name, 
+:email, :username, :country, :state, :city, :postal_code
+
+==> corrected/085.rb 53 <==
+foo&.bar(abc, 
+<<~STRING, xxxxxxxxxxxxxxxxxx)
+STRING
+
+==> corrected/086.rb 59 <==
+foo&.bar(xxxxxxxxxxxxxxxxxxxxxxxxxxxxx, 
+<<~STRING)
+STRING
+
+==> corrected/089.rb 60 <==
+["1111", "100000", "100000", "100000", 
+"100000", "100000"]
+
+==> corrected/090.rb 85 <==
+["1111", "100000", "100000", "100000", 
+{abc: "100000", b: "2"}, "100000", "100000"]
+
+==> corrected/092.rb 48 <==
+{ foo: 1234567890, 
+bar: method_call(x, y, z) }
+
+==> corrected/093.rb 45 <==
+{ foo: 1234567890, 
+bar: foo&.bar(x, y, z) }
+
+==> corrected/095.rb 72 <==
+foo.select { |bar|
+ 4444000039123123129993912312312999199291203123123 }
+
+==> corrected/096.rb 72 <==
+foo.select do |bar|
+ 4444000039123123129993912312312999199291203123 end
+
+==> corrected/097.rb 66 <==
+foo.select do
+ 4444000039123123129993912312312999199291203123 end
+
+==> corrected/098.rb 72 <==
+foo.select do
+ _1 + 44440000391231231299939123123129991992912031234 end
+
+==> corrected/101.rb 72 <==
+->(x) {
+ fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo }
+
+==> corrected/102.rb 72 <==
+-> x {
+ foooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo }
+
+==> corrected/111.rb 56 <==
+{foo: 1, bar: "2"};
+ a = 400000000000 + 500000000000000
+
+==> corrected/112.rb 57 <==
+{foo: 1, bar: "2"};
+ a = 400000000000 + 500000000000000;
+
+==> corrected/113.rb 60 <==
+{foo: 1, bar: "2"}  ;
+   a = 400000000000 + 500000000000000
+
+==> corrected/114.rb 60 <==
+{foo: 1, bar: "2"}  ;;;
+ a = 400000000000 + 500000000000000
+
+==> corrected/117.rb 69 <==
+FooBar.new(baz: 30, 
+bat: 'publisher_group:123;publisher:456;s:123')
+
+==> corrected/118.rb 72 <==
+"00000000000000000;000000000000000000" \
+"0'000000;00000'0000;0000;000"
+
+==> corrected/120.rb 48 <==
+a = 
+fooooooooooooooooooooooooooooooooooooo, 
+b
+

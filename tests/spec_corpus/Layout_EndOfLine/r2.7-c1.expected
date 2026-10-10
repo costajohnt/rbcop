@@ -1,0 +1,10 @@
+==> offenses exit=1 207 <==
+000.rb:3:1: C: Layout/EndOfLine: Carriage return character detected.
+001.rb:1:1: C: Layout/EndOfLine: Carriage return character detected.
+003.rb:1:1: C: Layout/EndOfLine: Carriage return character detected.
+
+==> autocorrect exit=1 207 <==
+000.rb:3:1: C: Layout/EndOfLine: Carriage return character detected.
+001.rb:1:1: C: Layout/EndOfLine: Carriage return character detected.
+003.rb:1:1: C: Layout/EndOfLine: Carriage return character detected.
+

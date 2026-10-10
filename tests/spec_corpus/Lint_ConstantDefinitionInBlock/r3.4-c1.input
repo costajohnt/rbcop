@@ -1,0 +1,18 @@
+==> .rubocop.yml 168 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Lint/ConstantDefinitionInBlock:
+  AllowedMethods:
+  - enums
+
+==> 000.rb 37 <==
+enums do
+  module Foo
+  end
+  it
+end
+

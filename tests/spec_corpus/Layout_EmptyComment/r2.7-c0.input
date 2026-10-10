@@ -1,0 +1,79 @@
+==> .rubocop.yml 183 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/EmptyComment:
+  AllowBorderComment: true
+  AllowMarginComment: true
+
+==> 000.rb 2 <==
+#
+
+==> 001.rb 4 <==
+#
+#
+
+==> 002.rb 26 <==
+def foo #
+  something
+end
+
+==> 003.rb 33 <==
+x = <<~HEREDOC #
+  hello
+HEREDOC
+
+==> 004.rb 36 <==
+# comment
+def foo #
+  something
+end
+
+==> 005.rb 97 <==
+# Description of `Foo` class.
+class Foo
+  # Description of `hello` method.
+  def hello
+  end
+end
+
+==> 006.rb 109 <==
+#
+# Description of `Foo` class.
+#
+class Foo
+  #
+  # Description of `hello` method.
+  #
+  def hello
+  end
+end
+
+==> 007.rb 34 <==
+#################################
+
+==> 008.rb 51 <==
+#
+# Description of `hello` method.
+#
+def hello
+end
+
+==> 009.rb 25 <==
+def foo#
+  something
+end
+
+==> 010.rb 28 <==
+def foo #
+  something #
+end
+
+==> 011.rb 32 <==
+def foo     #
+  something #
+end
+

@@ -1,0 +1,10 @@
+==> offenses exit=1 235 <==
+000.rb:1:1: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+001.rb:1:4: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+004.rb:1:9: C: Naming/AsciiIdentifiers: Use only ascii symbols in constants.
+
+==> autocorrect exit=1 235 <==
+000.rb:1:1: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+001.rb:1:4: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+004.rb:1:9: C: Naming/AsciiIdentifiers: Use only ascii symbols in constants.
+

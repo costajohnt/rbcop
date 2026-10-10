@@ -1,0 +1,13 @@
+==> offenses exit=1 161 <==
+001.rb:1:10: C: [Correctable] Layout/SpaceAfterComma: Space missing after comma.
+002.rb:1:9: C: [Correctable] Layout/SpaceAfterComma: Space missing after comma.
+
+==> autocorrect exit=0 157 <==
+001.rb:1:10: C: [Corrected] Layout/SpaceAfterComma: Space missing after comma.
+002.rb:1:9: C: [Corrected] Layout/SpaceAfterComma: Space missing after comma.
+
+==> corrected/001.rb 13 <==
+{ foo:bar, }
+
+==> corrected/002.rb 11 <==
+{foo:bar, }

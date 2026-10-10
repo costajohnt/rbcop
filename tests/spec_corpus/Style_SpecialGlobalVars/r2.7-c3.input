@@ -1,0 +1,32 @@
+==> .rubocop.yml 176 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SpecialGlobalVars:
+  EnforcedStyle: use_builtin_english_names
+
+==> 000.rb 57 <==
+puts $LOAD_PATH
+puts $LOADED_FEATURES
+puts $PROGRAM_NAME
+
+==> 001.rb 24 <==
+puts $:
+puts $"
+puts $0
+
+==> 002.rb 16 <==
+puts $?
+puts $*
+
+==> 003.rb 7 <==
+puts $1
+==> 004.rb 3 <==
+$0
+
+==> 005.rb 18 <==
+$0; $PROGRAM_NAME
+

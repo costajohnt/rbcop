@@ -1,0 +1,30 @@
+==> .rubocop.yml 216 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/RedundantSafeNavigation:
+  AllowedMethods:
+  - instance_of?
+  - kind_of?
+  - is_a?
+  - eql?
+  - equal?
+
+==> 000.rb 39 <==
+do_something if foo&.instance_of?(bar)
+
+==> 001.rb 35 <==
+do_something if foo&.kind_of?(bar)
+
+==> 002.rb 32 <==
+do_something if foo&.is_a?(bar)
+
+==> 003.rb 31 <==
+do_something if foo&.eql?(bar)
+
+==> 004.rb 33 <==
+do_something if foo&.equal?(bar)
+

@@ -1,0 +1,109 @@
+==> offenses exit=1 2101 <==
+000.rb:1:1: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+001.rb:1:1: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+002.rb:1:1: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+003.rb:1:1: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+004.rb:1:1: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+005.rb:1:1: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+006.rb:1:1: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+007.rb:1:1: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+008.rb:1:1: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+009.rb:1:1: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+010.rb:1:1: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+011.rb:1:1: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+012.rb:1:1: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+013.rb:1:1: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+014.rb:1:1: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+015.rb:1:1: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+016.rb:1:1: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+017.rb:1:1: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+018.rb:1:10: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+019.rb:1:2: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+020.rb:1:1: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+
+==> autocorrect exit=0 2059 <==
+000.rb:1:1: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+001.rb:1:1: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+002.rb:1:1: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+003.rb:1:1: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+004.rb:1:1: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+005.rb:1:1: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+006.rb:1:1: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+007.rb:1:1: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+008.rb:1:1: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+009.rb:1:1: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+010.rb:1:1: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+011.rb:1:1: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+012.rb:1:1: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+013.rb:1:1: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+014.rb:1:1: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+015.rb:1:1: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+016.rb:1:1: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+017.rb:1:1: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+018.rb:1:10: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+019.rb:1:2: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+020.rb:1:1: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+
+==> corrected/000.rb 13 <==
+(1 + 1).to_s
+
+==> corrected/001.rb 13 <==
+(1 + 1).to_s
+
+==> corrected/002.rb 13 <==
+(1 + 1).to_s
+
+==> corrected/003.rb 20 <==
+(1 + 1; 2 + 2).to_s
+
+==> corrected/004.rb 10 <==
+@var.to_s
+
+==> corrected/005.rb 10 <==
+@var.to_s
+
+==> corrected/006.rb 11 <==
+@@var.to_s
+
+==> corrected/007.rb 11 <==
+@@var.to_s
+
+==> corrected/008.rb 10 <==
+$var.to_s
+
+==> corrected/009.rb 10 <==
+$var.to_s
+
+==> corrected/010.rb 8 <==
+$1.to_s
+
+==> corrected/011.rb 8 <==
+$1.to_s
+
+==> corrected/012.rb 8 <==
+$+.to_s
+
+==> corrected/013.rb 8 <==
+$+.to_s
+
+==> corrected/014.rb 12 <==
+number.to_s
+
+==> corrected/015.rb 22 <==
+do_something(42).to_s
+
+==> corrected/016.rb 22 <==
+do_something(42).to_s
+
+==> corrected/017.rb 26 <==
+foo.do_something(42).to_s
+
+==> corrected/018.rb 18 <==
+var = 1; var.to_s
+
+==> corrected/019.rb 19 <==
+[@var.to_s, 'foo']
+
+==> corrected/020.rb 17 <==
+(42 in var).to_s
+

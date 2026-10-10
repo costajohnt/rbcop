@@ -1,0 +1,153 @@
+==> .rubocop.yml 182 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: always
+
+==> 000.rb 37 <==
+# frozen_string_literal: true
+puts 1
+
+==> 001.rb 38 <==
+# frozen_string_literal: false
+puts 1
+
+==> 002.rb 38 <==
+# frozen_string_literal: token
+puts 1
+
+==> 003.rb 7 <==
+puts 1
+
+==> 004.rb 27 <==
+#!/usr/bin/env ruby
+puts 1
+
+==> 005.rb 20 <==
+#!/usr/bin/env ruby
+
+==> 006.rb 57 <==
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+puts 1
+
+==> 007.rb 58 <==
+#!/usr/bin/env ruby
+# frozen_string_literal: false
+puts 1
+
+==> 008.rb 25 <==
+# encoding: utf-8
+puts 1
+
+==> 009.rb 26 <==
+# encoding: utf-8
+
+puts 1
+
+==> 010.rb 55 <==
+# encoding: utf-8
+# frozen_string_literal: true
+puts 1
+
+==> 011.rb 56 <==
+# encoding: utf-8
+# frozen_string_literal: false
+puts 1
+
+==> 012.rb 45 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+puts 1
+
+==> 013.rb 46 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+puts 1
+
+==> 014.rb 75 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+# frozen_string_literal: true
+puts 1
+
+==> 015.rb 77 <==
+#!/usr/bin/env ruby
+
+# encoding: utf-8
+
+# frozen_string_literal: true
+puts 1
+
+==> 016.rb 76 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+# frozen_string_literal: false
+puts 1
+
+==> 017.rb 75 <==
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+# encoding: utf-8
+puts 1
+
+==> 018.rb 76 <==
+#!/usr/bin/env ruby
+# frozen_string_literal: false
+# encoding: utf-8
+puts 1
+
+==> 019.rb 100 <==
+#!/usr/bin/env ruby
+# -*- encoding: UTF-8; frozen_string_literal: true -*-
+# encoding: utf-8
+puts 1
+
+==> 020.rb 104 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+#
+# These are more comments
+# frozen_string_literal: false
+puts 1
+
+==> 021.rb 56 <==
+# encoding: utf-8
+
+puts 1
+# frozen_string_literal: true
+
+==> 022.rb 8 <==
+
+puts 1
+
+==> 023.rb 37 <==
+# frozen_string_literal: TRUE
+puts 1
+
+==> 024.rb 38 <==
+# frozen_string_literal: FALSE
+puts 1
+
+==> 025.rb 37 <==
+# frozen_string_literal: True
+puts 1
+
+==> 026.rb 38 <==
+# frozen_string_literal: False
+puts 1
+
+==> 027.rb 37 <==
+# frozen_string_literal: truE
+puts 1
+
+==> 028.rb 38 <==
+# frozen_string_literal: falsE
+puts 1
+

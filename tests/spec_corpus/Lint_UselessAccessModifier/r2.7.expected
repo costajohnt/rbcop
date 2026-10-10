@@ -1,0 +1,1272 @@
+==> offenses exit=1 13562 <==
+000.rb:5:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+001.rb:4:1: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+002.rb:5:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+004.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+005.rb:3:2: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+007.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+008.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+010.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+011.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+013.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private_class_method` access modifier.
+015.rb:14:5: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+016.rb:14:5: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+016.rb:17:5: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+018.rb:12:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+019.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+020.rb:4:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+022.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+023.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+024.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+024.rb:4:5: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+026.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+027.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+028.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+028.rb:4:5: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+030.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+031.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+032.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+032.rb:4:5: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+034.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+035.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+036.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+036.rb:4:5: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+038.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+040.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+042.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+044.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+046.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+048.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+050.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+052.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+054.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+056.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+058.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+060.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+061.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+064.rb:4:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+067.rb:5:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+068.rb:6:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+069.rb:6:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+070.rb:9:5: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+072.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+073.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+074.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+075.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+076.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+077.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+078.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+079.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+080.rb:3:5: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+081.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+081.rb:6:5: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+082.rb:3:5: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+083.rb:5:5: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+084.rb:5:5: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+085.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+086.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+087.rb:4:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+088.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+088.rb:8:5: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+089.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+089.rb:4:5: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+090.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+091.rb:3:5: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+092.rb:6:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+093.rb:6:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+094.rb:9:5: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+106.rb:3:5: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+107.rb:5:5: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+108.rb:5:5: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+110.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+111.rb:4:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+113.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+113.rb:4:5: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+114.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+115.rb:3:5: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+116.rb:6:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+117.rb:6:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+118.rb:9:5: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+130.rb:3:5: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+131.rb:5:5: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+132.rb:5:5: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+134.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+135.rb:4:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+137.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+137.rb:4:5: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+138.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+139.rb:3:5: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+140.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+143.rb:4:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+146.rb:5:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+147.rb:6:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+148.rb:6:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+149.rb:9:5: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+151.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+152.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+153.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+154.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+155.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+156.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+157.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+158.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+159.rb:3:5: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+160.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+160.rb:6:5: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+161.rb:3:5: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+162.rb:5:5: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+163.rb:5:5: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+164.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+164.rb:8:5: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+165.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+165.rb:4:5: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+166.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+167.rb:3:5: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+168.rb:6:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+169.rb:6:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+170.rb:9:5: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+182.rb:3:5: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+183.rb:5:5: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+184.rb:5:5: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+186.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+186.rb:4:5: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+187.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+188.rb:3:5: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+189.rb:6:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+190.rb:6:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+191.rb:9:5: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+203.rb:3:5: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+204.rb:5:5: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+205.rb:5:5: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+207.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+207.rb:4:5: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+208.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+209.rb:3:5: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+210.rb:6:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+211.rb:4:5: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+211.rb:7:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+211.rb:8:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+
+==> autocorrect exit=0 13448 <==
+000.rb:5:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+001.rb:4:1: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+002.rb:5:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+004.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+005.rb:3:2: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+007.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+008.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+010.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+011.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+013.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private_class_method` access modifier.
+015.rb:14:5: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+016.rb:14:5: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+016.rb:17:5: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+018.rb:12:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+019.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+020.rb:4:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+022.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+023.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+024.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+024.rb:4:5: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+026.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+027.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+028.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+028.rb:4:5: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+030.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+031.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+032.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+032.rb:4:5: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+034.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+035.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+036.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+036.rb:4:5: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+038.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+040.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+042.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+044.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+046.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+048.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+050.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+052.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+054.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+056.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+058.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+060.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+061.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+064.rb:4:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+067.rb:5:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+067.rb:5:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+068.rb:6:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+069.rb:6:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+070.rb:9:5: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+072.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+073.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+074.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+075.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+076.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+077.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+078.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+079.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+080.rb:3:5: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+081.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+081.rb:6:5: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+082.rb:3:5: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+083.rb:5:5: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+084.rb:5:5: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+085.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+086.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+087.rb:4:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+088.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+088.rb:8:5: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+089.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+089.rb:4:5: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+090.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+091.rb:3:5: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+092.rb:6:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+093.rb:6:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+094.rb:9:5: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+106.rb:3:5: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+107.rb:5:5: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+108.rb:5:5: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+110.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+111.rb:4:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+113.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+113.rb:4:5: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+114.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+115.rb:3:5: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+116.rb:6:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+117.rb:6:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+118.rb:9:5: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+130.rb:3:5: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+131.rb:5:5: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+132.rb:5:5: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+134.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+135.rb:4:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+137.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+137.rb:4:5: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+138.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+139.rb:3:5: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+140.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+143.rb:4:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+146.rb:5:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+146.rb:5:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+147.rb:6:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+148.rb:6:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+149.rb:9:5: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+151.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+152.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+153.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+154.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+155.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+156.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+157.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+158.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+159.rb:3:5: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+160.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+160.rb:6:5: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+161.rb:3:5: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+162.rb:5:5: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+163.rb:5:5: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+164.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+164.rb:8:5: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+165.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+165.rb:4:5: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+166.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+167.rb:3:5: W: [Corrected] Lint/UselessAccessModifier: Useless `public` access modifier.
+168.rb:6:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+169.rb:6:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+170.rb:9:5: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+182.rb:3:5: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+183.rb:5:5: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+184.rb:5:5: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+186.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+186.rb:4:5: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+187.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+188.rb:3:5: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+189.rb:6:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+190.rb:6:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+191.rb:9:5: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+203.rb:3:5: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+204.rb:5:5: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+205.rb:5:5: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+207.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+207.rb:4:5: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+208.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+209.rb:3:5: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+210.rb:6:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+211.rb:4:5: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+211.rb:7:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+211.rb:8:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+
+==> corrected/000.rb 97 <==
+class SomeClass
+  def some_method
+    puts 10
+  end
+  def self.some_method
+    puts 10
+  end
+end
+
+==> corrected/001.rb 61 <==
+def some_method
+  puts 10
+end
+def other_method
+  puts 10
+end
+
+==> corrected/002.rb 56 <==
+class SomeClass
+  def some_method
+    puts 10
+  end
+end
+
+==> corrected/004.rb 54 <==
+class SomeClass
+  def SomeClass.some_method
+  end
+end
+
+==> corrected/005.rb 107 <==
+class SomeClass
+ private
+  def some_method
+    puts 10
+  end
+  def some_other_method
+    puts 10
+  end
+end
+
+==> corrected/007.rb 20 <==
+class SomeClass
+end
+
+==> corrected/008.rb 45 <==
+class SomeClass
+end
+class SomeOtherClass
+end
+
+==> corrected/010.rb 35 <==
+class SomeClass
+  CONSTANT = 1
+end
+
+==> corrected/011.rb 35 <==
+class SomeClass
+  some_var = 1
+end
+
+==> corrected/013.rb 62 <==
+class SomeClass
+
+  def self.some_method
+    puts 10
+  end
+end
+
+==> corrected/015.rb 190 <==
+class SomeClass
+  concerning :FirstThing do
+    def foo
+    end
+    private
+
+    def method
+    end
+  end
+
+  concerning :SecondThing do
+    def omg
+    end
+    def method
+    end
+  end
+ end
+
+==> corrected/016.rb 221 <==
+class SomeClass
+  concerning :FirstThing do
+    def foo
+    end
+    private
+
+    def method
+    end
+  end
+
+  concerning :SecondThing do
+    def omg
+    end
+    def method
+    end
+    def another_method
+    end
+  end
+ end
+
+==> corrected/018.rb 255 <==
+module SomeModule
+  extend ActiveSupport::Concern
+  class_methods do
+    def some_public_class_method
+    end
+    private
+    def some_private_class_method
+    end
+  end
+  def some_public_instance_method
+  end
+  def some_private_instance_method
+  end
+end
+
+==> corrected/019.rb 47 <==
+class SomeClass
+
+  delegate :foo, to: :bar
+end
+
+==> corrected/020.rb 47 <==
+class SomeClass
+  delegate :foo, to: :bar
+
+end
+
+==> corrected/022.rb 20 <==
+A.class_eval do
+end
+
+==> corrected/023.rb 60 <==
+class A
+  A.class_eval do
+    def method1
+    end
+  end
+end
+
+==> corrected/024.rb 36 <==
+class A
+  A.class_eval do
+  end
+end
+
+==> corrected/026.rb 23 <==
+A.instance_eval do
+end
+
+==> corrected/027.rb 66 <==
+class A
+  self.instance_eval do
+    def method1
+    end
+  end
+end
+
+==> corrected/028.rb 42 <==
+class A
+  self.instance_eval do
+  end
+end
+
+==> corrected/030.rb 20 <==
+A.class_eval do
+end
+
+==> corrected/031.rb 60 <==
+class A
+  A.class_eval do
+    def method1
+    end
+  end
+end
+
+==> corrected/032.rb 36 <==
+class A
+  A.class_eval do
+  end
+end
+
+==> corrected/034.rb 23 <==
+A.instance_eval do
+end
+
+==> corrected/035.rb 66 <==
+class A
+  self.instance_eval do
+    def method1
+    end
+  end
+end
+
+==> corrected/036.rb 42 <==
+class A
+  self.instance_eval do
+  end
+end
+
+==> corrected/038.rb 17 <==
+Class.new do
+end
+
+==> corrected/040.rb 17 <==
+Class.new do
+end
+
+==> corrected/042.rb 19 <==
+::Class.new do
+end
+
+==> corrected/044.rb 19 <==
+::Class.new do
+end
+
+==> corrected/046.rb 18 <==
+Module.new do
+end
+
+==> corrected/048.rb 18 <==
+Module.new do
+end
+
+==> corrected/050.rb 20 <==
+::Module.new do
+end
+
+==> corrected/052.rb 20 <==
+::Module.new do
+end
+
+==> corrected/054.rb 18 <==
+Struct.new do
+end
+
+==> corrected/056.rb 18 <==
+Struct.new do
+end
+
+==> corrected/058.rb 20 <==
+::Struct.new do
+end
+
+==> corrected/060.rb 20 <==
+::Struct.new do
+end
+
+==> corrected/061.rb 32 <==
+module A
+  def method
+  end
+end
+
+==> corrected/064.rb 53 <==
+module A
+  def method1
+  end
+  def method2
+  end
+end
+
+==> corrected/067.rb 63 <==
+module A
+  private
+  def method1
+  end
+  def method2
+  end
+end
+
+==> corrected/068.rb 72 <==
+module A
+  private
+  def method1
+  end
+  public
+  def method2
+  end
+end
+
+==> corrected/069.rb 53 <==
+module A
+  def method1
+  end
+  def method2
+  end
+end
+
+==> corrected/070.rb 113 <==
+module A
+  private
+  def blah
+  end
+  begin
+    def method1
+    end
+    public
+    def method2
+    end
+  end
+end
+
+==> corrected/072.rb 50 <==
+module A
+  if x
+    def method1
+    end
+  end
+end
+
+==> corrected/073.rb 54 <==
+module A
+  unless x
+    def method1
+    end
+  end
+end
+
+==> corrected/074.rb 91 <==
+module A
+  [1, 2].each do |i|
+    define_method("method#{i}") do
+      i
+    end
+  end
+end
+
+==> corrected/075.rb 90 <==
+module A
+  [1, 2].map do |i|
+    define_method("method#{i}") do
+      i
+    end
+  end
+end
+
+==> corrected/076.rb 48 <==
+module A
+  define_method(:method1) do
+  end
+end
+
+==> corrected/077.rb 51 <==
+module A
+  define_method(:method1, lambda { })
+end
+
+==> corrected/078.rb 49 <==
+module A
+  define_method(:method1, proc { })
+end
+
+==> corrected/079.rb 47 <==
+module A
+  define_method(:method1, -> { })
+end
+
+==> corrected/080.rb 74 <==
+module A
+  class << self
+    define_method(:method1) do
+    end
+  end
+end
+
+==> corrected/081.rb 79 <==
+module A
+  def method1
+  end
+  class << self
+    def method2
+    end
+  end
+end
+
+==> corrected/082.rb 35 <==
+module A
+  class << self
+  end
+end
+
+==> corrected/083.rb 59 <==
+module A
+  class << self
+    def method1
+    end
+  end
+end
+
+==> corrected/084.rb 55 <==
+module A
+  def method1
+  end
+  class << self
+  end
+end
+
+==> corrected/085.rb 50 <==
+class << A
+  define_method(:method1) do
+  end
+end
+
+==> corrected/086.rb 15 <==
+class << A
+end
+
+==> corrected/087.rb 35 <==
+class << A
+  def method1
+  end
+end
+
+==> corrected/088.rb 98 <==
+module A
+  def method1
+  end
+  module B
+    def method2
+    end
+    def method3
+    end
+  end
+end
+
+==> corrected/089.rb 30 <==
+module A
+  module B
+  end
+end
+
+==> corrected/090.rb 54 <==
+module A
+  module B
+    def method1
+    end
+  end
+end
+
+==> corrected/091.rb 30 <==
+module A
+  module B
+  end
+end
+
+==> corrected/092.rb 75 <==
+module A
+  private
+  def method1
+  end
+  protected
+  def method2
+  end
+end
+
+==> corrected/093.rb 53 <==
+module A
+  def method1
+  end
+  def method2
+  end
+end
+
+==> corrected/094.rb 116 <==
+module A
+  private
+  def blah
+  end
+  begin
+    def method1
+    end
+    protected
+    def method2
+    end
+  end
+end
+
+==> corrected/106.rb 35 <==
+module A
+  class << self
+  end
+end
+
+==> corrected/107.rb 59 <==
+module A
+  class << self
+    def method1
+    end
+  end
+end
+
+==> corrected/108.rb 55 <==
+module A
+  def method1
+  end
+  class << self
+  end
+end
+
+==> corrected/110.rb 15 <==
+class << A
+end
+
+==> corrected/111.rb 35 <==
+class << A
+  def method1
+  end
+end
+
+==> corrected/113.rb 30 <==
+module A
+  module B
+  end
+end
+
+==> corrected/114.rb 54 <==
+module A
+  module B
+    def method1
+    end
+  end
+end
+
+==> corrected/115.rb 30 <==
+module A
+  module B
+  end
+end
+
+==> corrected/116.rb 75 <==
+module A
+  protected
+  def method1
+  end
+  private
+  def method2
+  end
+end
+
+==> corrected/117.rb 53 <==
+module A
+  def method1
+  end
+  def method2
+  end
+end
+
+==> corrected/118.rb 116 <==
+module A
+  protected
+  def blah
+  end
+  begin
+    def method1
+    end
+    private
+    def method2
+    end
+  end
+end
+
+==> corrected/130.rb 35 <==
+module A
+  class << self
+  end
+end
+
+==> corrected/131.rb 59 <==
+module A
+  class << self
+    def method1
+    end
+  end
+end
+
+==> corrected/132.rb 55 <==
+module A
+  def method1
+  end
+  class << self
+  end
+end
+
+==> corrected/134.rb 15 <==
+class << A
+end
+
+==> corrected/135.rb 35 <==
+class << A
+  def method1
+  end
+end
+
+==> corrected/137.rb 30 <==
+module A
+  module B
+  end
+end
+
+==> corrected/138.rb 54 <==
+module A
+  module B
+    def method1
+    end
+  end
+end
+
+==> corrected/139.rb 30 <==
+module A
+  module B
+  end
+end
+
+==> corrected/140.rb 31 <==
+class A
+  def method
+  end
+end
+
+==> corrected/143.rb 52 <==
+class A
+  def method1
+  end
+  def method2
+  end
+end
+
+==> corrected/146.rb 62 <==
+class A
+  private
+  def method1
+  end
+  def method2
+  end
+end
+
+==> corrected/147.rb 71 <==
+class A
+  private
+  def method1
+  end
+  public
+  def method2
+  end
+end
+
+==> corrected/148.rb 52 <==
+class A
+  def method1
+  end
+  def method2
+  end
+end
+
+==> corrected/149.rb 112 <==
+class A
+  private
+  def blah
+  end
+  begin
+    def method1
+    end
+    public
+    def method2
+    end
+  end
+end
+
+==> corrected/151.rb 49 <==
+class A
+  if x
+    def method1
+    end
+  end
+end
+
+==> corrected/152.rb 53 <==
+class A
+  unless x
+    def method1
+    end
+  end
+end
+
+==> corrected/153.rb 90 <==
+class A
+  [1, 2].each do |i|
+    define_method("method#{i}") do
+      i
+    end
+  end
+end
+
+==> corrected/154.rb 89 <==
+class A
+  [1, 2].map do |i|
+    define_method("method#{i}") do
+      i
+    end
+  end
+end
+
+==> corrected/155.rb 47 <==
+class A
+  define_method(:method1) do
+  end
+end
+
+==> corrected/156.rb 50 <==
+class A
+  define_method(:method1, lambda { })
+end
+
+==> corrected/157.rb 48 <==
+class A
+  define_method(:method1, proc { })
+end
+
+==> corrected/158.rb 46 <==
+class A
+  define_method(:method1, -> { })
+end
+
+==> corrected/159.rb 73 <==
+class A
+  class << self
+    define_method(:method1) do
+    end
+  end
+end
+
+==> corrected/160.rb 78 <==
+class A
+  def method1
+  end
+  class << self
+    def method2
+    end
+  end
+end
+
+==> corrected/161.rb 34 <==
+class A
+  class << self
+  end
+end
+
+==> corrected/162.rb 58 <==
+class A
+  class << self
+    def method1
+    end
+  end
+end
+
+==> corrected/163.rb 54 <==
+class A
+  def method1
+  end
+  class << self
+  end
+end
+
+==> corrected/164.rb 96 <==
+class A
+  def method1
+  end
+  class B
+    def method2
+    end
+    def method3
+    end
+  end
+end
+
+==> corrected/165.rb 28 <==
+class A
+  class B
+  end
+end
+
+==> corrected/166.rb 52 <==
+class A
+  class B
+    def method1
+    end
+  end
+end
+
+==> corrected/167.rb 28 <==
+class A
+  class B
+  end
+end
+
+==> corrected/168.rb 74 <==
+class A
+  private
+  def method1
+  end
+  protected
+  def method2
+  end
+end
+
+==> corrected/169.rb 52 <==
+class A
+  def method1
+  end
+  def method2
+  end
+end
+
+==> corrected/170.rb 115 <==
+class A
+  private
+  def blah
+  end
+  begin
+    def method1
+    end
+    protected
+    def method2
+    end
+  end
+end
+
+==> corrected/182.rb 34 <==
+class A
+  class << self
+  end
+end
+
+==> corrected/183.rb 58 <==
+class A
+  class << self
+    def method1
+    end
+  end
+end
+
+==> corrected/184.rb 54 <==
+class A
+  def method1
+  end
+  class << self
+  end
+end
+
+==> corrected/186.rb 28 <==
+class A
+  class B
+  end
+end
+
+==> corrected/187.rb 52 <==
+class A
+  class B
+    def method1
+    end
+  end
+end
+
+==> corrected/188.rb 28 <==
+class A
+  class B
+  end
+end
+
+==> corrected/189.rb 74 <==
+class A
+  protected
+  def method1
+  end
+  private
+  def method2
+  end
+end
+
+==> corrected/190.rb 52 <==
+class A
+  def method1
+  end
+  def method2
+  end
+end
+
+==> corrected/191.rb 115 <==
+class A
+  protected
+  def blah
+  end
+  begin
+    def method1
+    end
+    private
+    def method2
+    end
+  end
+end
+
+==> corrected/203.rb 34 <==
+class A
+  class << self
+  end
+end
+
+==> corrected/204.rb 58 <==
+class A
+  class << self
+    def method1
+    end
+  end
+end
+
+==> corrected/205.rb 54 <==
+class A
+  def method1
+  end
+  class << self
+  end
+end
+
+==> corrected/207.rb 28 <==
+class A
+  class B
+  end
+end
+
+==> corrected/208.rb 52 <==
+class A
+  class B
+    def method1
+    end
+  end
+end
+
+==> corrected/209.rb 28 <==
+class A
+  class B
+  end
+end
+
+==> corrected/210.rb 84 <==
+class SomeClass
+  included do
+    private
+    def foo; end
+  end
+  def bar; end
+end
+
+==> corrected/211.rb 84 <==
+class SomeClass
+  included do
+    private
+    def foo; end
+  end
+  def bar; end
+end
+

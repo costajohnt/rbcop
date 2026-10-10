@@ -1,0 +1,15 @@
+==> .rubocop.yml 140 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.3
+Style/For:
+  EnforcedStyle: for
+
+==> 000.rb 46 <==
+def func
+  [1, 2, 3]&.each { |n| puts n }
+end
+

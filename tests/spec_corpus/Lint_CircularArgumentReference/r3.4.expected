@@ -1,0 +1,18 @@
+==> offenses exit=1 611 <==
+000.rb:1:19: W: Lint/CircularArgumentReference: Circular argument reference - `msg`.
+001.rb:1:25: W: Lint/CircularArgumentReference: Circular argument reference - `msg`.
+002.rb:1:25: W: Lint/CircularArgumentReference: Circular argument reference - `msg`.
+003.rb:1:32: W: Lint/CircularArgumentReference: Circular argument reference - `msg`.
+009.rb:1:27: W: Lint/CircularArgumentReference: Circular argument reference - `some_arg`.
+012.rb:1:27: W: Lint/CircularArgumentReference: Circular argument reference - `some_arg`.
+012.rb:1:48: W: Lint/CircularArgumentReference: Circular argument reference - `other_arg`.
+
+==> autocorrect exit=1 611 <==
+000.rb:1:19: W: Lint/CircularArgumentReference: Circular argument reference - `msg`.
+001.rb:1:25: W: Lint/CircularArgumentReference: Circular argument reference - `msg`.
+002.rb:1:25: W: Lint/CircularArgumentReference: Circular argument reference - `msg`.
+003.rb:1:32: W: Lint/CircularArgumentReference: Circular argument reference - `msg`.
+009.rb:1:27: W: Lint/CircularArgumentReference: Circular argument reference - `some_arg`.
+012.rb:1:27: W: Lint/CircularArgumentReference: Circular argument reference - `some_arg`.
+012.rb:1:48: W: Lint/CircularArgumentReference: Circular argument reference - `other_arg`.
+

@@ -1,0 +1,41 @@
+==> offenses exit=1 558 <==
+000.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+001.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body end.
+002.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+003.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body end.
+004.rb:5:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+
+==> autocorrect exit=0 548 <==
+000.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+001.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body end.
+002.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+003.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body end.
+004.rb:5:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+
+==> corrected/000.rb 35 <==
+class SomeClass
+  do_something
+end
+
+==> corrected/001.rb 35 <==
+class SomeClass
+  do_something
+end
+
+==> corrected/002.rb 18 <==
+class << self
+end
+
+==> corrected/003.rb 33 <==
+class << self
+  do_something
+end
+
+==> corrected/004.rb 81 <==
+class SomeClass < Struct.new(
+  :attr,
+  keyword_init: true
+)
+  do_something
+end
+

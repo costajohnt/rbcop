@@ -1,0 +1,11 @@
+==> offenses exit=1 115 <==
+000.rb:2:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between send definitions; found 0.
+
+==> autocorrect exit=0 113 <==
+000.rb:2:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between send definitions; found 0.
+
+==> corrected/000.rb 44 <==
+foo :first_attribute
+
+foo :second_attribute
+

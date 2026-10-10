@@ -133,7 +133,7 @@ fn first_error_after(
         .errors()
         .filter(|e| {
             let k = e.type_name();
-            !k.contains("term") && !crate::syntax::is_semantic(k) && !matches!(k, "invalid_yield" | "return_invalid")
+            !k.contains("term") && !crate::syntax::is_semantic(k) && !matches!(k, "invalid_yield" | "invalid_retry_without_rescue" | "return_invalid")
         })
         .map(|e| failure_offset(e.type_name(), e.location().start_offset(), e.location().end_offset(), &tokens))
         .filter(|&o| !src.get(o..).unwrap_or("").trim().is_empty())

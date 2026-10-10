@@ -1,0 +1,59 @@
+==> offenses exit=1 1080 <==
+017.rb:1:1: C: [Correctable] Style/YodaCondition: Reverse the order of the operands `bar == "foo"`.
+018.rb:1:1: C: [Correctable] Style/YodaCondition: Reverse the order of the operands `bar == nil`.
+019.rb:1:1: C: [Correctable] Style/YodaCondition: Reverse the order of the operands `active? == false`.
+020.rb:1:1: C: [Correctable] Style/YodaCondition: Reverse the order of the operands `@foo != 15`.
+021.rb:1:1: C: [Correctable] Style/YodaCondition: Reverse the order of the operands `bar > 42`.
+022.rb:1:4: C: [Correctable] Style/YodaCondition: Reverse the order of the operands `my_var == 10`.
+023.rb:1:4: C: [Correctable] Style/YodaCondition: Reverse the order of the operands `bar > 2`.
+024.rb:1:13: C: [Correctable] Style/YodaCondition: Reverse the order of the operands `bar < 42`.
+025.rb:1:1: C: [Correctable] Style/YodaCondition: Reverse the order of the operands `foo >= 42`.
+026.rb:1:1: C: [Correctable] Style/YodaCondition: Reverse the order of the operands `foo <= 42`.
+027.rb:1:1: C: [Correctable] Style/YodaCondition: Reverse the order of the operands `foo != nil`.
+
+==> autocorrect exit=0 1058 <==
+017.rb:1:1: C: [Corrected] Style/YodaCondition: Reverse the order of the operands `bar == "foo"`.
+018.rb:1:1: C: [Corrected] Style/YodaCondition: Reverse the order of the operands `bar == nil`.
+019.rb:1:1: C: [Corrected] Style/YodaCondition: Reverse the order of the operands `active? == false`.
+020.rb:1:1: C: [Corrected] Style/YodaCondition: Reverse the order of the operands `@foo != 15`.
+021.rb:1:1: C: [Corrected] Style/YodaCondition: Reverse the order of the operands `bar > 42`.
+022.rb:1:4: C: [Corrected] Style/YodaCondition: Reverse the order of the operands `my_var == 10`.
+023.rb:1:4: C: [Corrected] Style/YodaCondition: Reverse the order of the operands `bar > 2`.
+024.rb:1:13: C: [Corrected] Style/YodaCondition: Reverse the order of the operands `bar < 42`.
+025.rb:1:1: C: [Corrected] Style/YodaCondition: Reverse the order of the operands `foo >= 42`.
+026.rb:1:1: C: [Corrected] Style/YodaCondition: Reverse the order of the operands `foo <= 42`.
+027.rb:1:1: C: [Corrected] Style/YodaCondition: Reverse the order of the operands `foo != nil`.
+
+==> corrected/017.rb 13 <==
+"foo" == bar
+
+==> corrected/018.rb 11 <==
+nil == bar
+
+==> corrected/019.rb 17 <==
+false == active?
+
+==> corrected/020.rb 11 <==
+15 != @foo
+
+==> corrected/021.rb 9 <==
+42 < bar
+
+==> corrected/022.rb 21 <==
+if 10 == my_var; end
+
+==> corrected/023.rb 15 <==
+if 2 < bar;end
+
+==> corrected/024.rb 21 <==
+foo = 42 if 42 > bar
+
+==> corrected/025.rb 22 <==
+42 <= foo ? bar : baz
+
+==> corrected/026.rb 22 <==
+42 >= foo ? bar : baz
+
+==> corrected/027.rb 23 <==
+nil != foo ? bar : baz
+

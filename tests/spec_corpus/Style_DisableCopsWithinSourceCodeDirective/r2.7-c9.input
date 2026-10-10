@@ -1,0 +1,18 @@
+==> .rubocop.yml 203 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/DisableCopsWithinSourceCodeDirective:
+  AllowWithReason: true
+  DisallowedCops:
+  - Lint
+
+==> 000.rb 32 <==
+foo # rubocop:disable Lint/Void
+
+==> 001.rb 52 <==
+x = 0 # rubocop:disable Layout/SpaceAroundOperators
+

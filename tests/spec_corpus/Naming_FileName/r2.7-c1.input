@@ -1,0 +1,16 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/FileName:
+  Regex: !ruby/regexp /\A[aeiou]\z/
+
+==> 000/a.rb 8 <==
+print 1
+
+==> 001/z.rb 8 <==
+print 1
+

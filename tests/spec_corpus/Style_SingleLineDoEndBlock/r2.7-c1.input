@@ -1,0 +1,13 @@
+==> .rubocop.yml 144 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LineLength:
+  Enabled: false
+
+==> 000.rb 15 <==
+foo do bar end
+

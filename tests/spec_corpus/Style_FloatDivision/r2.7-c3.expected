@@ -1,0 +1,43 @@
+==> offenses exit=1 820 <==
+000.rb:1:1: C: [Correctable] Style/FloatDivision: Prefer using `fdiv` for float divisions.
+001.rb:1:1: C: [Correctable] Style/FloatDivision: Prefer using `fdiv` for float divisions.
+002.rb:1:1: C: [Correctable] Style/FloatDivision: Prefer using `fdiv` for float divisions.
+003.rb:1:1: C: [Correctable] Style/FloatDivision: Prefer using `fdiv` for float divisions.
+004.rb:1:1: C: [Correctable] Style/FloatDivision: Prefer using `fdiv` for float divisions.
+004.rb:1:11: C: [Correctable] Style/FloatDivision: Prefer using `fdiv` for float divisions.
+005.rb:1:1: C: [Correctable] Style/FloatDivision: Prefer using `fdiv` for float divisions.
+005.rb:1:2: C: [Correctable] Style/FloatDivision: Prefer using `fdiv` for float divisions.
+006.rb:1:1: C: [Correctable] Style/FloatDivision: Prefer using `fdiv` for float divisions.
+
+==> autocorrect exit=0 802 <==
+000.rb:1:1: C: [Corrected] Style/FloatDivision: Prefer using `fdiv` for float divisions.
+001.rb:1:1: C: [Corrected] Style/FloatDivision: Prefer using `fdiv` for float divisions.
+002.rb:1:1: C: [Corrected] Style/FloatDivision: Prefer using `fdiv` for float divisions.
+003.rb:1:1: C: [Corrected] Style/FloatDivision: Prefer using `fdiv` for float divisions.
+004.rb:1:1: C: [Corrected] Style/FloatDivision: Prefer using `fdiv` for float divisions.
+004.rb:1:11: C: [Corrected] Style/FloatDivision: Prefer using `fdiv` for float divisions.
+005.rb:1:1: C: [Corrected] Style/FloatDivision: Prefer using `fdiv` for float divisions.
+005.rb:1:2: C: [Corrected] Style/FloatDivision: Prefer using `fdiv` for float divisions.
+006.rb:1:1: C: [Corrected] Style/FloatDivision: Prefer using `fdiv` for float divisions.
+
+==> corrected/000.rb 10 <==
+a.fdiv(b)
+
+==> corrected/001.rb 10 <==
+a.fdiv(b)
+
+==> corrected/002.rb 10 <==
+a.fdiv(b)
+
+==> corrected/003.rb 28 <==
+(a - b).fdiv(c * 3 * d / 2)
+
+==> corrected/004.rb 18 <==
+a.fdiv(b.fdiv(2))
+
+==> corrected/005.rb 20 <==
+(a.fdiv(b)).fdiv(c)
+
+==> corrected/006.rb 15 <==
+a.fdiv(foo(1))
+

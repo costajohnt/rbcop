@@ -1,0 +1,43 @@
+==> offenses exit=1 916 <==
+001.rb:2:8: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+001.rb:3:6: C: [Correctable] Layout/FirstHashElementIndentation: Indent the right brace the same as the start of the line where the left brace is.
+003.rb:2:7: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+004.rb:2:8: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+005.rb:2:3: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the parent hash key.
+005.rb:4:1: C: [Correctable] Layout/FirstHashElementIndentation: Indent the right brace the same as the parent hash key.
+
+==> autocorrect exit=0 904 <==
+001.rb:2:8: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+001.rb:3:6: C: [Corrected] Layout/FirstHashElementIndentation: Indent the right brace the same as the start of the line where the left brace is.
+003.rb:2:7: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+004.rb:2:8: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+005.rb:2:3: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the parent hash key.
+005.rb:4:1: C: [Corrected] Layout/FirstHashElementIndentation: Indent the right brace the same as the parent hash key.
+
+==> corrected/001.rb 17 <==
+func({
+  a: 1
+})
+
+==> corrected/003.rb 26 <==
+func(x: {
+  a: 1, b: 2 })
+
+==> corrected/004.rb 32 <==
+func({
+  a:
+  {
+    b: 1
+  }
+})
+
+==> corrected/005.rb 86 <==
+func(x: {
+       a: 1,
+       b: 2
+     },
+     y: {
+       c: 1,
+       d: 2
+     })
+

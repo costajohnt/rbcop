@@ -1,0 +1,63 @@
+==> offenses exit=1 1253 <==
+000.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x.call(a, b)` over `x.(a, b)`.
+001.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x&.call(a, b)` over `x&.(a, b)`.
+002.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x.(a, b).call(c)` over `x.(a, b).(c)`.
+002.rb:1:1: C: Style/LambdaCall: Prefer the use of `x.call(a, b)` over `x.(a, b)`.
+003.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x&.(a, b)&.call(c)` over `x&.(a, b)&.(c)`.
+003.rb:1:1: C: Style/LambdaCall: Prefer the use of `x&.call(a, b)` over `x&.(a, b)`.
+004.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x.call` over `x.()`.
+005.rb:2:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x.call(a, b)` over `x.(a, b)`.
+006.rb:2:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x&.call(a, b)` over `x&.(a, b)`.
+007.rb:2:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x.call(a, b)` over `x.(a, b)`.
+007.rb:3:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x.call(a, b)` over `x.(a, b)`.
+008.rb:2:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x&.call(a, b)` over `x&.(a, b)`.
+008.rb:3:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x&.call(a, b)` over `x&.(a, b)`.
+
+==> autocorrect exit=0 1255 <==
+000.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x.call(a, b)` over `x.(a, b)`.
+001.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x&.call(a, b)` over `x&.(a, b)`.
+002.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x.(a, b).call(c)` over `x.(a, b).(c)`.
+002.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x.call(a, b)` over `x.(a, b)`.
+003.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x&.(a, b)&.call(c)` over `x&.(a, b)&.(c)`.
+003.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x&.call(a, b)` over `x&.(a, b)`.
+004.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x.call` over `x.()`.
+005.rb:2:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x.call(a, b)` over `x.(a, b)`.
+006.rb:2:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x&.call(a, b)` over `x&.(a, b)`.
+007.rb:2:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x.call(a, b)` over `x.(a, b)`.
+007.rb:3:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x.call(a, b)` over `x.(a, b)`.
+008.rb:2:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x&.call(a, b)` over `x&.(a, b)`.
+008.rb:3:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x&.call(a, b)` over `x&.(a, b)`.
+
+==> corrected/000.rb 13 <==
+x.call(a, b)
+
+==> corrected/001.rb 14 <==
+x&.call(a, b)
+
+==> corrected/002.rb 21 <==
+x.call(a, b).call(c)
+
+==> corrected/003.rb 23 <==
+x&.call(a, b)&.call(c)
+
+==> corrected/004.rb 7 <==
+x.call
+
+==> corrected/005.rb 26 <==
+x.call(a, b)
+x.call(a, b)
+
+==> corrected/006.rb 28 <==
+x&.call(a, b)
+x&.call(a, b)
+
+==> corrected/007.rb 39 <==
+x.call(a, b)
+x.call(a, b)
+x.call(a, b)
+
+==> corrected/008.rb 42 <==
+x&.call(a, b)
+x&.call(a, b)
+x&.call(a, b)
+

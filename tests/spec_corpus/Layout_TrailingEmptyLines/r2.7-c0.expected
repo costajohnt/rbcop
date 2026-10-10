@@ -1,0 +1,9 @@
+==> offenses exit=1 89 <==
+003.rb:2:1: C: [Correctable] Layout/TrailingEmptyLines: 3 trailing blank lines detected.
+
+==> autocorrect exit=0 87 <==
+003.rb:2:1: C: [Corrected] Layout/TrailingEmptyLines: 3 trailing blank lines detected.
+
+==> corrected/003.rb 6 <==
+x = 0
+

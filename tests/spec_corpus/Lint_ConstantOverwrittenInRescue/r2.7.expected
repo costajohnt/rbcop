@@ -1,0 +1,53 @@
+==> offenses exit=1 709 <==
+000.rb:3:8: W: [Correctable] Lint/ConstantOverwrittenInRescue: `StandardError` is overwritten by `rescue =>`.
+001.rb:3:8: W: [Correctable] Lint/ConstantOverwrittenInRescue: `::StandardError` is overwritten by `rescue =>`.
+002.rb:3:8: W: [Correctable] Lint/ConstantOverwrittenInRescue: `foo.class::RESCUABLE_EXCEPTIONS` is overwritten by `rescue =>`.
+003.rb:4:8: W: [Correctable] Lint/ConstantOverwrittenInRescue: `var::StandardError` is overwritten by `rescue =>`.
+004.rb:3:8: W: [Correctable] Lint/ConstantOverwrittenInRescue: `MyNamespace::MyException` is overwritten by `rescue =>`.
+005.rb:3:8: W: [Correctable] Lint/ConstantOverwrittenInRescue: `::MyNamespace::MyException` is overwritten by `rescue =>`.
+
+==> autocorrect exit=0 697 <==
+000.rb:3:8: W: [Corrected] Lint/ConstantOverwrittenInRescue: `StandardError` is overwritten by `rescue =>`.
+001.rb:3:8: W: [Corrected] Lint/ConstantOverwrittenInRescue: `::StandardError` is overwritten by `rescue =>`.
+002.rb:3:8: W: [Corrected] Lint/ConstantOverwrittenInRescue: `foo.class::RESCUABLE_EXCEPTIONS` is overwritten by `rescue =>`.
+003.rb:4:8: W: [Corrected] Lint/ConstantOverwrittenInRescue: `var::StandardError` is overwritten by `rescue =>`.
+004.rb:3:8: W: [Corrected] Lint/ConstantOverwrittenInRescue: `MyNamespace::MyException` is overwritten by `rescue =>`.
+005.rb:3:8: W: [Corrected] Lint/ConstantOverwrittenInRescue: `::MyNamespace::MyException` is overwritten by `rescue =>`.
+
+==> corrected/000.rb 43 <==
+begin
+  something
+rescue StandardError
+end
+
+==> corrected/001.rb 45 <==
+begin
+  something
+rescue ::StandardError
+end
+
+==> corrected/002.rb 61 <==
+begin
+  something
+rescue foo.class::RESCUABLE_EXCEPTIONS
+end
+
+==> corrected/003.rb 61 <==
+var = Object
+begin
+  something
+rescue var::StandardError
+end
+
+==> corrected/004.rb 54 <==
+begin
+  something
+rescue MyNamespace::MyException
+end
+
+==> corrected/005.rb 56 <==
+begin
+  something
+rescue ::MyNamespace::MyException
+end
+

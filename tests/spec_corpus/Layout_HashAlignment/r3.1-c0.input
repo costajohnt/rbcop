@@ -1,0 +1,18 @@
+==> .rubocop.yml 178 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+Layout/HashAlignment:
+  EnforcedLastArgumentHashStyle: always_inspect
+
+==> 000.rb 15 <==
+func(a:,
+  b:)
+
+==> 001.rb 17 <==
+func({a:,
+  b:})
+

@@ -1,0 +1,81 @@
+==> offenses exit=1 736 <==
+000.rb:3:3: C: [Correctable] Layout/AccessModifierIndentation: Outdent access modifiers like `private`.
+003.rb:3:3: C: [Correctable] Layout/AccessModifierIndentation: Outdent access modifiers like `private`.
+006.rb:3:3: C: [Correctable] Layout/AccessModifierIndentation: Outdent access modifiers like `module_function`.
+009.rb:3:3: C: [Correctable] Layout/AccessModifierIndentation: Outdent access modifiers like `private`.
+012.rb:3:3: C: [Correctable] Layout/AccessModifierIndentation: Outdent access modifiers like `private`.
+015.rb:3:3: C: [Correctable] Layout/AccessModifierIndentation: Outdent access modifiers like `private`.
+020.rb:5:5: C: [Correctable] Layout/AccessModifierIndentation: Outdent access modifiers like `private`.
+
+==> autocorrect exit=0 722 <==
+000.rb:3:3: C: [Corrected] Layout/AccessModifierIndentation: Outdent access modifiers like `private`.
+003.rb:3:3: C: [Corrected] Layout/AccessModifierIndentation: Outdent access modifiers like `private`.
+006.rb:3:3: C: [Corrected] Layout/AccessModifierIndentation: Outdent access modifiers like `module_function`.
+009.rb:3:3: C: [Corrected] Layout/AccessModifierIndentation: Outdent access modifiers like `private`.
+012.rb:3:3: C: [Corrected] Layout/AccessModifierIndentation: Outdent access modifiers like `private`.
+015.rb:3:3: C: [Corrected] Layout/AccessModifierIndentation: Outdent access modifiers like `private`.
+020.rb:5:5: C: [Corrected] Layout/AccessModifierIndentation: Outdent access modifiers like `private`.
+
+==> corrected/000.rb 41 <==
+class Test
+
+private
+
+  def test; end
+end
+
+==> corrected/003.rb 42 <==
+module Test
+
+private
+
+  def test; end
+end
+
+==> corrected/006.rb 50 <==
+module Test
+
+module_function
+
+  def test; end
+end
+
+==> corrected/009.rb 44 <==
+class << self
+
+private
+
+  def test; end
+end
+
+==> corrected/012.rb 50 <==
+Test = Class.new do
+
+private
+
+  def test; end
+end
+
+==> corrected/015.rb 51 <==
+Test = Module.new do
+
+private
+
+  def test; end
+end
+
+==> corrected/020.rb 92 <==
+class Test
+
+  class Nested
+
+  private
+
+    def a; end
+  end
+
+protected
+
+  def test; end
+end
+

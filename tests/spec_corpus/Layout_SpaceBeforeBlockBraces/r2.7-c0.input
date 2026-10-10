@@ -1,0 +1,33 @@
+==> .rubocop.yml 162 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/SpaceBeforeBlockBraces:
+  EnforcedStyle: space
+
+==> 000.rb 13 <==
+each { puts }
+==> 001.rb 13 <==
+each{ puts }
+
+==> 002.rb 27 <==
+each{ puts }
+each { puts }
+
+==> 003.rb 28 <==
+foo.map{ |a|
+  a.bar.to_s
+}
+
+==> 004.rb 23 <==
+each{ _1 }
+each { _1 }
+
+==> 005.rb 25 <==
+foo.map{
+  _1.bar.to_s
+}
+

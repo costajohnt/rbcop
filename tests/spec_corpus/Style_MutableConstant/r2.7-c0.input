@@ -1,0 +1,58 @@
+==> .rubocop.yml 157 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/MutableConstant:
+  EnforcedStyle: literals
+
+==> 000.rb 24 <==
+TOP_TEST = Something.new
+==> 001.rb 13 <==
+FOO = *1..10
+
+==> 002.rb 15 <==
+FOO = *(1..10)
+
+==> 003.rb 15 <==
+XXX = YYY, ZZZ
+
+==> 004.rb 18 <==
+XXX = %w(YYY ZZZ)
+
+==> 005.rb 15 <==
+XXX = /regexp/
+
+==> 006.rb 12 <==
+XXX = 1..99
+
+==> 007.rb 14 <==
+XXX = (1..99)
+
+==> 008.rb 13 <==
+XXX = 1...99
+
+==> 009.rb 15 <==
+XXX = (1...99)
+
+==> 010.rb 85 <==
+# frozen_string_literal: true
+
+CONST = <<~HERE
+  foo #{use_interpolation}
+  bar
+HERE
+
+==> 011.rb 59 <==
+# frozen_string_literal: true
+
+CONST = 'foo'         'bar'
+
+==> 012.rb 30 <==
+CONST = [{ a: [], b: 'foo' }]
+
+==> 013.rb 27 <==
+CONST = [{ a: [] }].freeze
+

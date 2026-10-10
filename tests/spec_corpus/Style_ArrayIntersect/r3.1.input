@@ -1,0 +1,123 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+
+==> 000.rb 23 <==
+(array1 & array2).any?
+
+==> 001.rb 54 <==
+(customer_country_codes & SUPPORTED_COUNTRIES).empty?
+
+==> 002.rb 14 <==
+(a & b).none?
+
+==> 003.rb 37 <==
+(array1 & array2).any? { |x| false }
+
+==> 004.rb 32 <==
+(array1 & array2).any?(&:block)
+
+==> 005.rb 44 <==
+(array1 & array2).any? { do_something(_1) }
+
+==> 006.rb 33 <==
+([1, 2, 3] & [4, 5, 6]).present?
+
+==> 007.rb 31 <==
+([1, 2, 3] & [4, 5, 6]).blank?
+
+==> 008.rb 23 <==
+a.intersection(b).any?
+
+==> 009.rb 24 <==
+a.intersection(b).none?
+
+==> 010.rb 25 <==
+a.intersection(b).empty?
+
+==> 011.rb 25 <==
+a&.intersection(b)&.any?
+
+==> 012.rb 25 <==
+array1.intersection.any?
+
+==> 013.rb 41 <==
+array1.intersection(array2, array3).any?
+
+==> 014.rb 25 <==
+intersection(other).any?
+
+==> 015.rb 53 <==
+a&.intersection(b)&.none?
+a&.intersection(b)&.empty?
+
+==> 016.rb 38 <==
+array1.any? { |e| array2.member?(e) }
+
+==> 017.rb 39 <==
+array1&.any? { |e| array2.member?(e) }
+
+==> 018.rb 39 <==
+array1.any? { |e| [1, 2].include?(e) }
+
+==> 019.rb 45 <==
+array1&.any? { |e| %w[foo bar].include?(e) }
+
+==> 020.rb 36 <==
+array1.any? { [1, 2].include?(_1) }
+
+==> 021.rb 39 <==
+array1.any? { |e| array2.include?(e) }
+
+==> 022.rb 38 <==
+array1.any? { |e| CONST.include?(e) }
+
+==> 023.rb 32 <==
+array1.any? { |e| include?(e) }
+
+==> 024.rb 31 <==
+array1.any? { |e| member?(e) }
+
+==> 025.rb 35 <==
+array1.any? { array2.member?(_1) }
+
+==> 026.rb 40 <==
+array1.none? { |e| [1, 2].include?(e) }
+
+==> 027.rb 60 <==
+substrings.none? { |substring| string.include?(substring) }
+
+==> 028.rb 39 <==
+array1.none? { |e| array2.member?(e) }
+
+==> 029.rb 40 <==
+array1&.none? { |e| array2.member?(e) }
+
+==> 030.rb 41 <==
+array1&.none? { |e| array2.include?(e) }
+
+==> 031.rb 38 <==
+array1&.none? { array2.include?(_1) }
+
+==> 032.rb 36 <==
+array1.none? { array2.member?(_1) }
+
+==> 033.rb 29 <==
+array1.none? { member?(_1) }
+
+==> 034.rb 68 <==
+(conditions.pluck("type") & %w[customer_country ip_country]).blank?
+
+==> 035.rb 27 <==
+a.intersection(b).present?
+
+==> 036.rb 25 <==
+a.intersection(b).blank?
+
+==> 037.rb 13 <==
+alpha & beta
+

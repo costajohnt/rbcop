@@ -1,0 +1,19 @@
+==> offenses exit=1 279 <==
+000.rb:1:1: C: [Correctable] Style/NonNilCheck: Prefer `!x.nil?` over `x != nil`.
+001.rb:1:1: C: [Correctable] Style/NonNilCheck: Prefer `!(a + b).nil?` over `a + b != nil`.
+010.rb:1:19: C: [Correctable] Style/NonNilCheck: Prefer `!(line =~ //).nil?` over `(line =~ //) != nil`.
+
+==> autocorrect exit=0 273 <==
+000.rb:1:1: C: [Corrected] Style/NonNilCheck: Prefer `!x.nil?` over `x != nil`.
+001.rb:1:1: C: [Corrected] Style/NonNilCheck: Prefer `!(a + b).nil?` over `a + b != nil`.
+010.rb:1:19: C: [Corrected] Style/NonNilCheck: Prefer `!(line =~ //).nil?` over `(line =~ //) != nil`.
+
+==> corrected/000.rb 8 <==
+!x.nil?
+
+==> corrected/001.rb 14 <==
+!(a + b).nil?
+
+==> corrected/010.rb 37 <==
+return nil unless !(line =~ //).nil?
+

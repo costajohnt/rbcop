@@ -1,0 +1,6 @@
+==> offenses exit=1 92 <==
+000.rb:2:3: C: Style/ClassMethodsDefinitions: Use `class << self` to define a class method.
+
+==> autocorrect exit=1 92 <==
+000.rb:2:3: C: Style/ClassMethodsDefinitions: Use `class << self` to define a class method.
+

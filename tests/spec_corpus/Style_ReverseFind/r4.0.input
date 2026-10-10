@@ -1,0 +1,38 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 4.0
+
+==> 000.rb 41 <==
+array.reverse.find { |item| item.even? }
+
+==> 001.rb 43 <==
+array&.reverse&.find { |item| item.even? }
+
+==> 002.rb 32 <==
+array.reverse.find { _1.even? }
+
+==> 003.rb 32 <==
+array.reverse.find { it.even? }
+
+==> 004.rb 43 <==
+array.reverse.detect { |item| item.even? }
+
+==> 005.rb 46 <==
+array.reverse_each.find { |item| item.even? }
+
+==> 006.rb 48 <==
+array.reverse_each.detect { |item| item.even? }
+
+==> 007.rb 28 <==
+array.reverse.find(&:even?)
+
+==> 008.rb 30 <==
+array.reverse.detect(&:even?)
+
+==> 009.rb 34 <==
+array.rfind { |item| item.even? }
+

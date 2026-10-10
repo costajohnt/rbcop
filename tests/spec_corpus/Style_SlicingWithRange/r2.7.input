@@ -1,0 +1,41 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 13 <==
+ary[nil..42]
+
+==> 001.rb 11 <==
+ary[0..42]
+
+==> 002.rb 10 <==
+ary[..-1]
+
+==> 003.rb 16 <==
+ary.[](nil..42)
+
+==> 004.rb 15 <==
+ary.[] nil..42
+
+==> 005.rb 15 <==
+ary&.[](0..-1)
+
+==> 006.rb 13 <==
+ary.[] 0..-1
+
+==> 007.rb 14 <==
+ary.[](1..-1)
+
+==> 008.rb 13 <==
+ary.[] 1..-1
+
+==> 009.rb 17 <==
+ary&.[](nil..42)
+
+==> 010.rb 16 <==
+ary&.[] nil..42
+

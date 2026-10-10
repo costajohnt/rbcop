@@ -1,0 +1,36 @@
+==> offenses exit=1 650 <==
+000.rb:1:1: C: [Correctable] Style/EmptyClassDefinition: Use the `class` keyword instead of `Class.new` to define an empty class.
+001.rb:1:1: C: [Correctable] Style/EmptyClassDefinition: Use the `class` keyword instead of `Class.new` to define an empty class.
+003.rb:2:3: C: [Correctable] Style/EmptyClassDefinition: Use the `class` keyword instead of `Class.new` to define an empty class.
+004.rb:1:1: C: [Correctable] Style/EmptyClassDefinition: Use the `class` keyword instead of `Class.new` to define an empty class.
+005.rb:1:1: C: [Correctable] Style/EmptyClassDefinition: Use the `class` keyword instead of `Class.new` to define an empty class.
+
+==> autocorrect exit=0 640 <==
+000.rb:1:1: C: [Corrected] Style/EmptyClassDefinition: Use the `class` keyword instead of `Class.new` to define an empty class.
+001.rb:1:1: C: [Corrected] Style/EmptyClassDefinition: Use the `class` keyword instead of `Class.new` to define an empty class.
+003.rb:2:3: C: [Corrected] Style/EmptyClassDefinition: Use the `class` keyword instead of `Class.new` to define an empty class.
+004.rb:1:1: C: [Corrected] Style/EmptyClassDefinition: Use the `class` keyword instead of `Class.new` to define an empty class.
+005.rb:1:1: C: [Corrected] Style/EmptyClassDefinition: Use the `class` keyword instead of `Class.new` to define an empty class.
+
+==> corrected/000.rb 35 <==
+class FooError < StandardError
+end
+
+==> corrected/001.rb 40 <==
+class Foo::BarError < StandardError
+end
+
+==> corrected/003.rb 54 <==
+module Foo
+  class BarError < StandardError
+  end
+end
+
+==> corrected/004.rb 47 <==
+class MyClass < Alchemy::Admin::PreviewUrl
+end
+
+==> corrected/005.rb 37 <==
+class MyClass < ::Safemode::Jail
+end
+

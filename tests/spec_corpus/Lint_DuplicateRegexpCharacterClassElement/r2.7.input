@@ -1,0 +1,57 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 14 <==
+foo = /[xyx]/
+
+==> 001.rb 15 <==
+foo = /[xyx]+/
+
+==> 002.rb 14 <==
+foo = /[xyz]/
+
+==> 003.rb 19 <==
+foo = /[xyz][xyz]/
+
+==> 004.rb 10 <==
+/[\0\07]/
+
+==> 005.rb 10 <==
+/[\0\08]/
+
+==> 006.rb 15 <==
+/[\07\01\078]/
+
+==> 007.rb 17 <==
+/[\177\01\1778]/
+
+==> 008.rb 16 <==
+foo = %r{[xyx]}
+
+==> 009.rb 16 <==
+foo = /([xyx])/
+
+==> 010.rb 32 <==
+foo = /([[:alnum:]y[:alnum:]])/
+
+==> 011.rb 28 <==
+foo = /([a#{foo}a#{bar}a])/
+
+==> 012.rb 18 <==
+foo = /[0-9x0-9]/
+
+==> 013.rb 17 <==
+foo = /[ab&&ab]/
+
+==> 014.rb 15 <==
+foo = /[a-cb]/
+
+==> 015.rb 81 <==
+a_field.gsub!(/[#{bad_chars}]/, '')
+some_other_field.gsub!(/[#{bad_chars}]/, '')
+

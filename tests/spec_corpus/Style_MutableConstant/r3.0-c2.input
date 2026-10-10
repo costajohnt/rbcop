@@ -1,0 +1,15 @@
+==> .rubocop.yml 175 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Style/MutableConstant:
+  EnforcedStyle: literals
+  Recursive: true
+
+==> 000.rb 66 <==
+# shareable_constant_value: literal
+CONST = [{ a: [], b: 'foo' }]
+

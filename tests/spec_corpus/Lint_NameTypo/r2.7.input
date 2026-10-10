@@ -1,0 +1,81 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 49 <==
+Services::UserCraetor.new
+Report.generate_sumary
+
+==> 001.rb 26 <==
+Services::UserCraetor.new
+
+==> 002.rb 34 <==
+Services::UserCraetor::Params.new
+
+==> 003.rb 26 <==
+Services::UserCreator.new
+
+==> 004.rb 25 <==
+Services::Middleware.new
+
+==> 005.rb 16 <==
+UserCraetor.new
+
+==> 006.rb 26 <==
+External::UserCraetor.new
+
+==> 007.rb 34 <==
+class Services::UserRestorer; end
+
+==> 008.rb 32 <==
+defined?(Services::UserCraetor)
+
+==> 009.rb 73 <==
+stub_const('Services::UserCraetor', Class.new)
+Services::UserCraetor.new
+
+==> 010.rb 46 <==
+DATA = "\xFF\xFE".b
+Services::UserCraetor.new
+
+==> 011.rb 23 <==
+Report.generate_sumary
+
+==> 012.rb 24 <==
+Report&.generate_sumary
+
+==> 013.rb 30 <==
+Formatting.indent_txet('foo')
+
+==> 014.rb 24 <==
+Report.generate_summary
+
+==> 015.rb 30 <==
+Formatting.indent_text('foo')
+
+==> 016.rb 16 <==
+Report.download
+
+==> 017.rb 25 <==
+External.generate_sumary
+
+==> 018.rb 23 <==
+report.generate_sumary
+
+==> 019.rb 33 <==
+defined?(Report.generate_sumary)
+
+==> 020.rb 80 <==
+Report.define_singleton_method(:generate_sumary) { nil }
+Report.generate_sumary
+
+==> 021.rb 25 <==
+Config.debug_mode = true
+
+==> 022.rb 25 <==
+Config.debug_mdoe = true
+

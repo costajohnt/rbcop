@@ -1,0 +1,1271 @@
+==> offenses exit=1 22016 <==
+018.rb:1:10: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+019.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+020.rb:1:13: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+021.rb:1:15: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+022.rb:1:10: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+023.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+024.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+025.rb:1:14: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+026.rb:1:10: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+027.rb:1:11: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+028.rb:1:10: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+029.rb:1:11: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+030.rb:1:10: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+031.rb:1:11: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+032.rb:1:10: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+033.rb:1:11: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+034.rb:1:11: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+035.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+036.rb:1:11: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+037.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+038.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+039.rb:1:13: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+040.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+041.rb:1:13: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+042.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+043.rb:1:13: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+044.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+045.rb:1:13: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+046.rb:1:22: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+047.rb:1:23: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+048.rb:1:22: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+049.rb:1:23: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+050.rb:1:24: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+051.rb:1:25: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+052.rb:1:24: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+053.rb:1:25: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+054.rb:1:18: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+055.rb:1:19: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+056.rb:1:18: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+057.rb:1:19: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+058.rb:1:26: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+059.rb:1:27: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+060.rb:1:26: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+061.rb:1:27: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+062.rb:1:28: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+063.rb:1:29: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+064.rb:1:28: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+065.rb:1:29: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+066.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+067.rb:1:13: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+068.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+069.rb:1:13: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+070.rb:1:14: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+071.rb:1:15: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+072.rb:1:14: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+073.rb:1:15: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+074.rb:1:10: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+075.rb:1:11: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+076.rb:1:9: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+077.rb:1:13: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+078.rb:1:9: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+079.rb:1:13: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+080.rb:1:8: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+098.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+099.rb:1:14: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+100.rb:1:15: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+101.rb:1:17: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+102.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+103.rb:1:14: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+104.rb:1:14: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+105.rb:1:16: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+106.rb:1:6: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+107.rb:1:7: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+108.rb:1:6: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+109.rb:1:7: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+110.rb:1:11: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+111.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+112.rb:1:11: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+113.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+131.rb:1:10: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+132.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+133.rb:1:13: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+134.rb:1:15: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+135.rb:1:10: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+136.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+137.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+138.rb:1:14: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+139.rb:1:4: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+140.rb:1:5: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+141.rb:1:4: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+142.rb:1:5: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+143.rb:1:13: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+144.rb:1:14: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+145.rb:1:13: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+146.rb:1:14: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+147.rb:1:18: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+148.rb:1:19: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+149.rb:1:18: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+150.rb:1:19: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+151.rb:1:21: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+152.rb:1:22: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+153.rb:1:21: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+154.rb:1:22: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+155.rb:1:23: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+156.rb:1:24: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+157.rb:1:23: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+158.rb:1:24: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+159.rb:1:36: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+160.rb:1:37: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+161.rb:1:36: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+162.rb:1:37: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+183.rb:1:10: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+184.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+185.rb:1:13: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+186.rb:1:15: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+187.rb:1:10: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+188.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+189.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+190.rb:1:14: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+191.rb:1:6: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+192.rb:1:7: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+193.rb:1:6: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+194.rb:1:7: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+195.rb:1:11: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+196.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+197.rb:1:11: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+198.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+199.rb:1:19: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+200.rb:1:20: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+201.rb:1:19: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+202.rb:1:20: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+203.rb:1:21: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+204.rb:1:22: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+205.rb:1:21: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+206.rb:1:22: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+207.rb:1:34: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+208.rb:1:35: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+209.rb:1:34: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+210.rb:1:35: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+229.rb:1:10: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+230.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+231.rb:1:13: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+232.rb:1:15: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+233.rb:1:10: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+234.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+235.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+236.rb:1:14: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+237.rb:1:16: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+238.rb:1:17: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+239.rb:1:16: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+240.rb:1:17: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+241.rb:1:24: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+242.rb:1:25: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+243.rb:1:24: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+244.rb:1:25: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+245.rb:1:26: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+246.rb:1:27: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+247.rb:1:26: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+248.rb:1:27: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+249.rb:1:39: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+250.rb:1:40: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+251.rb:1:39: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+252.rb:1:40: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+272.rb:1:10: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+273.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+274.rb:1:13: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+275.rb:1:15: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+276.rb:1:10: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+277.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+278.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+279.rb:1:14: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+280.rb:1:4: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+281.rb:1:5: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+282.rb:1:4: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+283.rb:1:5: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+284.rb:1:14: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+285.rb:1:15: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+286.rb:1:14: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+287.rb:1:15: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+288.rb:1:16: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+289.rb:1:17: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+290.rb:1:16: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+291.rb:1:17: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+292.rb:1:22: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+293.rb:1:23: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+294.rb:1:22: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+295.rb:1:23: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+296.rb:1:24: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+297.rb:1:25: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+298.rb:1:24: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+299.rb:1:25: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+300.rb:1:37: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+301.rb:1:38: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+302.rb:1:37: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+303.rb:1:38: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+323.rb:1:10: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+324.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+325.rb:1:13: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+326.rb:1:15: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+327.rb:1:10: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+328.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+329.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+330.rb:1:14: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+331.rb:1:4: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+332.rb:1:5: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+333.rb:1:4: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+334.rb:1:5: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+335.rb:1:5: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+336.rb:1:6: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+337.rb:1:5: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+338.rb:1:6: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+339.rb:1:13: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+340.rb:1:14: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+341.rb:1:13: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+342.rb:1:14: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+343.rb:1:15: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+344.rb:1:16: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+345.rb:1:15: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+346.rb:1:16: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+347.rb:1:21: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+348.rb:1:22: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+349.rb:1:21: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+350.rb:1:22: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+351.rb:1:23: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+352.rb:1:24: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+353.rb:1:23: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+354.rb:1:24: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+355.rb:1:36: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+356.rb:1:37: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+357.rb:1:36: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+358.rb:1:37: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+378.rb:1:10: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+379.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+380.rb:1:13: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+381.rb:1:15: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+382.rb:1:10: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+383.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+384.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+385.rb:1:14: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+386.rb:1:11: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+387.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+388.rb:1:11: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+389.rb:1:12: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+390.rb:1:22: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+391.rb:1:23: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+392.rb:1:22: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+393.rb:1:23: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+394.rb:1:24: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+395.rb:1:25: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+396.rb:1:24: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+397.rb:1:25: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+398.rb:1:18: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+399.rb:1:19: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+
+==> autocorrect exit=0 21510 <==
+018.rb:1:10: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+019.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+020.rb:1:13: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+021.rb:1:15: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+022.rb:1:10: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+023.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+024.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+025.rb:1:14: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+026.rb:1:10: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+027.rb:1:11: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+028.rb:1:10: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+029.rb:1:11: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+030.rb:1:10: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+031.rb:1:11: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+032.rb:1:10: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+033.rb:1:11: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+034.rb:1:11: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+035.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+036.rb:1:11: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+037.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+038.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+039.rb:1:13: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+040.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+041.rb:1:13: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+042.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+043.rb:1:13: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+044.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+045.rb:1:13: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+046.rb:1:22: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+047.rb:1:23: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+048.rb:1:22: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+049.rb:1:23: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+050.rb:1:24: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+051.rb:1:25: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+052.rb:1:24: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+053.rb:1:25: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+054.rb:1:18: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+055.rb:1:19: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+056.rb:1:18: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+057.rb:1:19: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+058.rb:1:26: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+059.rb:1:27: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+060.rb:1:26: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+061.rb:1:27: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+062.rb:1:28: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+063.rb:1:29: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+064.rb:1:28: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+065.rb:1:29: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+066.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+067.rb:1:13: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+068.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+069.rb:1:13: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+070.rb:1:14: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+071.rb:1:15: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+072.rb:1:14: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+073.rb:1:15: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+074.rb:1:10: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+075.rb:1:11: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+076.rb:1:9: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+077.rb:1:13: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+078.rb:1:9: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+079.rb:1:13: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+080.rb:1:8: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+098.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+099.rb:1:14: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+100.rb:1:15: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+101.rb:1:17: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+102.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+103.rb:1:14: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+104.rb:1:14: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+105.rb:1:16: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+106.rb:1:6: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+107.rb:1:7: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+108.rb:1:6: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+109.rb:1:7: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+110.rb:1:11: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+111.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+112.rb:1:11: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+113.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_sym` detected.
+131.rb:1:10: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+132.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+133.rb:1:13: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+134.rb:1:15: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+135.rb:1:10: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+136.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+137.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+138.rb:1:14: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+139.rb:1:4: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+140.rb:1:5: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+141.rb:1:4: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+142.rb:1:5: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+143.rb:1:13: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+144.rb:1:14: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+145.rb:1:13: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+146.rb:1:14: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+147.rb:1:18: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+148.rb:1:19: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+149.rb:1:18: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+150.rb:1:19: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+151.rb:1:21: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+152.rb:1:22: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+153.rb:1:21: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+154.rb:1:22: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+155.rb:1:23: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+156.rb:1:24: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+157.rb:1:23: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+158.rb:1:24: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+159.rb:1:36: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+160.rb:1:37: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+161.rb:1:36: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+162.rb:1:37: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_i` detected.
+183.rb:1:10: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+184.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+185.rb:1:13: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+186.rb:1:15: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+187.rb:1:10: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+188.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+189.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+190.rb:1:14: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+191.rb:1:6: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+192.rb:1:7: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+193.rb:1:6: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+194.rb:1:7: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+195.rb:1:11: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+196.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+197.rb:1:11: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+198.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+199.rb:1:19: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+200.rb:1:20: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+201.rb:1:19: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+202.rb:1:20: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+203.rb:1:21: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+204.rb:1:22: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+205.rb:1:21: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+206.rb:1:22: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+207.rb:1:34: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+208.rb:1:35: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+209.rb:1:34: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+210.rb:1:35: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_f` detected.
+229.rb:1:10: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+230.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+231.rb:1:13: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+232.rb:1:15: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+233.rb:1:10: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+234.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+235.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+236.rb:1:14: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+237.rb:1:16: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+238.rb:1:17: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+239.rb:1:16: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+240.rb:1:17: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+241.rb:1:24: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+242.rb:1:25: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+243.rb:1:24: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+244.rb:1:25: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+245.rb:1:26: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+246.rb:1:27: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+247.rb:1:26: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+248.rb:1:27: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+249.rb:1:39: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+250.rb:1:40: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+251.rb:1:39: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+252.rb:1:40: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_d` detected.
+272.rb:1:10: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+273.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+274.rb:1:13: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+275.rb:1:15: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+276.rb:1:10: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+277.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+278.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+279.rb:1:14: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+280.rb:1:4: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+281.rb:1:5: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+282.rb:1:4: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+283.rb:1:5: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+284.rb:1:14: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+285.rb:1:15: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+286.rb:1:14: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+287.rb:1:15: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+288.rb:1:16: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+289.rb:1:17: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+290.rb:1:16: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+291.rb:1:17: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+292.rb:1:22: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+293.rb:1:23: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+294.rb:1:22: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+295.rb:1:23: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+296.rb:1:24: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+297.rb:1:25: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+298.rb:1:24: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+299.rb:1:25: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+300.rb:1:37: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+301.rb:1:38: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+302.rb:1:37: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+303.rb:1:38: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_r` detected.
+323.rb:1:10: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+324.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+325.rb:1:13: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+326.rb:1:15: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+327.rb:1:10: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+328.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+329.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+330.rb:1:14: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+331.rb:1:4: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+332.rb:1:5: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+333.rb:1:4: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+334.rb:1:5: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+335.rb:1:5: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+336.rb:1:6: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+337.rb:1:5: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+338.rb:1:6: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+339.rb:1:13: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+340.rb:1:14: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+341.rb:1:13: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+342.rb:1:14: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+343.rb:1:15: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+344.rb:1:16: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+345.rb:1:15: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+346.rb:1:16: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+347.rb:1:21: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+348.rb:1:22: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+349.rb:1:21: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+350.rb:1:22: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+351.rb:1:23: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+352.rb:1:24: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+353.rb:1:23: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+354.rb:1:24: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+355.rb:1:36: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+356.rb:1:37: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+357.rb:1:36: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+358.rb:1:37: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_c` detected.
+378.rb:1:10: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+379.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+380.rb:1:13: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+381.rb:1:15: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+382.rb:1:10: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+383.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+384.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+385.rb:1:14: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+386.rb:1:11: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+387.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+388.rb:1:11: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+389.rb:1:12: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+390.rb:1:22: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+391.rb:1:23: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+392.rb:1:22: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+393.rb:1:23: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+394.rb:1:24: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+395.rb:1:25: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+396.rb:1:24: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+397.rb:1:25: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+398.rb:1:18: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+399.rb:1:19: W: [Corrected] Lint/RedundantTypeConversion: Redundant `to_a` detected.
+
+==> corrected/018.rb 9 <==
+foo.to_s
+
+==> corrected/019.rb 10 <==
+foo&.to_s
+
+==> corrected/020.rb 12 <==
+foo.to_s(2)
+
+==> corrected/021.rb 13 <==
+foo&.to_s(2)
+
+==> corrected/022.rb 13 <==
+foo.to_s.bar
+
+==> corrected/023.rb 15 <==
+foo&.to_s&.bar
+
+==> corrected/024.rb 11 <==
+(foo.to_s)
+
+==> corrected/025.rb 13 <==
+((foo.to_s))
+
+==> corrected/026.rb 9 <==
+'string'
+
+==> corrected/027.rb 9 <==
+'string'
+
+==> corrected/028.rb 9 <==
+'string'
+
+==> corrected/029.rb 9 <==
+'string'
+
+==> corrected/030.rb 9 <==
+"string"
+
+==> corrected/031.rb 9 <==
+"string"
+
+==> corrected/032.rb 9 <==
+"string"
+
+==> corrected/033.rb 9 <==
+"string"
+
+==> corrected/034.rb 10 <==
+%{string}
+
+==> corrected/035.rb 10 <==
+%{string}
+
+==> corrected/036.rb 10 <==
+%{string}
+
+==> corrected/037.rb 10 <==
+%{string}
+
+==> corrected/038.rb 11 <==
+%q{string}
+
+==> corrected/039.rb 11 <==
+%q{string}
+
+==> corrected/040.rb 11 <==
+%q{string}
+
+==> corrected/041.rb 11 <==
+%q{string}
+
+==> corrected/042.rb 11 <==
+%Q{string}
+
+==> corrected/043.rb 11 <==
+%Q{string}
+
+==> corrected/044.rb 11 <==
+%Q{string}
+
+==> corrected/045.rb 11 <==
+%Q{string}
+
+==> corrected/046.rb 21 <==
+String.new("string")
+
+==> corrected/047.rb 21 <==
+String.new("string")
+
+==> corrected/048.rb 21 <==
+String.new("string")
+
+==> corrected/049.rb 21 <==
+String.new("string")
+
+==> corrected/050.rb 23 <==
+::String.new("string")
+
+==> corrected/051.rb 23 <==
+::String.new("string")
+
+==> corrected/052.rb 23 <==
+::String.new("string")
+
+==> corrected/053.rb 23 <==
+::String.new("string")
+
+==> corrected/054.rb 17 <==
+String("string")
+
+==> corrected/055.rb 17 <==
+String("string")
+
+==> corrected/056.rb 17 <==
+String("string")
+
+==> corrected/057.rb 17 <==
+String("string")
+
+==> corrected/058.rb 25 <==
+Kernel::String("string")
+
+==> corrected/059.rb 25 <==
+Kernel::String("string")
+
+==> corrected/060.rb 25 <==
+Kernel::String("string")
+
+==> corrected/061.rb 25 <==
+Kernel::String("string")
+
+==> corrected/062.rb 27 <==
+::Kernel::String("string")
+
+==> corrected/063.rb 27 <==
+::Kernel::String("string")
+
+==> corrected/064.rb 27 <==
+::Kernel::String("string")
+
+==> corrected/065.rb 27 <==
+::Kernel::String("string")
+
+==> corrected/066.rb 11 <==
+('string')
+
+==> corrected/067.rb 11 <==
+('string')
+
+==> corrected/068.rb 11 <==
+('string')
+
+==> corrected/069.rb 11 <==
+('string')
+
+==> corrected/070.rb 13 <==
+(('string'))
+
+==> corrected/071.rb 13 <==
+(('string'))
+
+==> corrected/072.rb 13 <==
+(('string'))
+
+==> corrected/073.rb 13 <==
+(('string'))
+
+==> corrected/074.rb 13 <==
+'string'.bar
+
+==> corrected/075.rb 13 <==
+'string'.bar
+
+==> corrected/076.rb 8 <==
+inspect
+
+==> corrected/077.rb 12 <==
+foo.inspect
+
+==> corrected/078.rb 8 <==
+to_json
+
+==> corrected/079.rb 12 <==
+foo.to_json
+
+==> corrected/080.rb 20 <==
+<<~STR
+  string
+STR
+
+==> corrected/098.rb 11 <==
+foo.to_sym
+
+==> corrected/099.rb 12 <==
+foo&.to_sym
+
+==> corrected/100.rb 14 <==
+foo.to_sym(2)
+
+==> corrected/101.rb 15 <==
+foo&.to_sym(2)
+
+==> corrected/102.rb 15 <==
+foo.to_sym.bar
+
+==> corrected/103.rb 17 <==
+foo&.to_sym&.bar
+
+==> corrected/104.rb 13 <==
+(foo.to_sym)
+
+==> corrected/105.rb 15 <==
+((foo.to_sym))
+
+==> corrected/106.rb 5 <==
+:sym
+
+==> corrected/107.rb 5 <==
+:sym
+
+==> corrected/108.rb 5 <==
+:sym
+
+==> corrected/109.rb 5 <==
+:sym
+
+==> corrected/110.rb 10 <==
+:"#{sym}"
+
+==> corrected/111.rb 10 <==
+:"#{sym}"
+
+==> corrected/112.rb 10 <==
+:"#{sym}"
+
+==> corrected/113.rb 10 <==
+:"#{sym}"
+
+==> corrected/131.rb 9 <==
+foo.to_i
+
+==> corrected/132.rb 10 <==
+foo&.to_i
+
+==> corrected/133.rb 12 <==
+foo.to_i(2)
+
+==> corrected/134.rb 13 <==
+foo&.to_i(2)
+
+==> corrected/135.rb 13 <==
+foo.to_i.bar
+
+==> corrected/136.rb 15 <==
+foo&.to_i&.bar
+
+==> corrected/137.rb 11 <==
+(foo.to_i)
+
+==> corrected/138.rb 13 <==
+((foo.to_i))
+
+==> corrected/139.rb 3 <==
+42
+
+==> corrected/140.rb 3 <==
+42
+
+==> corrected/141.rb 3 <==
+42
+
+==> corrected/142.rb 3 <==
+42
+
+==> corrected/143.rb 12 <==
+Integer(42)
+
+==> corrected/144.rb 12 <==
+Integer(42)
+
+==> corrected/145.rb 12 <==
+Integer(42)
+
+==> corrected/146.rb 12 <==
+Integer(42)
+
+==> corrected/147.rb 17 <==
+Integer("42", 5)
+
+==> corrected/148.rb 17 <==
+Integer("42", 5)
+
+==> corrected/149.rb 17 <==
+Integer("42", 5)
+
+==> corrected/150.rb 17 <==
+Integer("42", 5)
+
+==> corrected/151.rb 20 <==
+Kernel::Integer(42)
+
+==> corrected/152.rb 20 <==
+Kernel::Integer(42)
+
+==> corrected/153.rb 20 <==
+Kernel::Integer(42)
+
+==> corrected/154.rb 20 <==
+Kernel::Integer(42)
+
+==> corrected/155.rb 22 <==
+::Kernel::Integer(42)
+
+==> corrected/156.rb 22 <==
+::Kernel::Integer(42)
+
+==> corrected/157.rb 22 <==
+::Kernel::Integer(42)
+
+==> corrected/158.rb 22 <==
+::Kernel::Integer(42)
+
+==> corrected/159.rb 35 <==
+Integer("number", exception: true)
+
+==> corrected/160.rb 35 <==
+Integer("number", exception: true)
+
+==> corrected/161.rb 35 <==
+Integer("number", exception: true)
+
+==> corrected/162.rb 35 <==
+Integer("number", exception: true)
+
+==> corrected/183.rb 9 <==
+foo.to_f
+
+==> corrected/184.rb 10 <==
+foo&.to_f
+
+==> corrected/185.rb 12 <==
+foo.to_f(2)
+
+==> corrected/186.rb 13 <==
+foo&.to_f(2)
+
+==> corrected/187.rb 13 <==
+foo.to_f.bar
+
+==> corrected/188.rb 15 <==
+foo&.to_f&.bar
+
+==> corrected/189.rb 11 <==
+(foo.to_f)
+
+==> corrected/190.rb 13 <==
+((foo.to_f))
+
+==> corrected/191.rb 5 <==
+42.0
+
+==> corrected/192.rb 5 <==
+42.0
+
+==> corrected/193.rb 5 <==
+42.0
+
+==> corrected/194.rb 5 <==
+42.0
+
+==> corrected/195.rb 10 <==
+Float(42)
+
+==> corrected/196.rb 10 <==
+Float(42)
+
+==> corrected/197.rb 10 <==
+Float(42)
+
+==> corrected/198.rb 10 <==
+Float(42)
+
+==> corrected/199.rb 18 <==
+Kernel::Float(42)
+
+==> corrected/200.rb 18 <==
+Kernel::Float(42)
+
+==> corrected/201.rb 18 <==
+Kernel::Float(42)
+
+==> corrected/202.rb 18 <==
+Kernel::Float(42)
+
+==> corrected/203.rb 20 <==
+::Kernel::Float(42)
+
+==> corrected/204.rb 20 <==
+::Kernel::Float(42)
+
+==> corrected/205.rb 20 <==
+::Kernel::Float(42)
+
+==> corrected/206.rb 20 <==
+::Kernel::Float(42)
+
+==> corrected/207.rb 33 <==
+Float("number", exception: true)
+
+==> corrected/208.rb 33 <==
+Float("number", exception: true)
+
+==> corrected/209.rb 33 <==
+Float("number", exception: true)
+
+==> corrected/210.rb 33 <==
+Float("number", exception: true)
+
+==> corrected/229.rb 9 <==
+foo.to_d
+
+==> corrected/230.rb 10 <==
+foo&.to_d
+
+==> corrected/231.rb 12 <==
+foo.to_d(2)
+
+==> corrected/232.rb 13 <==
+foo&.to_d(2)
+
+==> corrected/233.rb 13 <==
+foo.to_d.bar
+
+==> corrected/234.rb 15 <==
+foo&.to_d&.bar
+
+==> corrected/235.rb 11 <==
+(foo.to_d)
+
+==> corrected/236.rb 13 <==
+((foo.to_d))
+
+==> corrected/237.rb 15 <==
+BigDecimal(42)
+
+==> corrected/238.rb 15 <==
+BigDecimal(42)
+
+==> corrected/239.rb 15 <==
+BigDecimal(42)
+
+==> corrected/240.rb 15 <==
+BigDecimal(42)
+
+==> corrected/241.rb 23 <==
+Kernel::BigDecimal(42)
+
+==> corrected/242.rb 23 <==
+Kernel::BigDecimal(42)
+
+==> corrected/243.rb 23 <==
+Kernel::BigDecimal(42)
+
+==> corrected/244.rb 23 <==
+Kernel::BigDecimal(42)
+
+==> corrected/245.rb 25 <==
+::Kernel::BigDecimal(42)
+
+==> corrected/246.rb 25 <==
+::Kernel::BigDecimal(42)
+
+==> corrected/247.rb 25 <==
+::Kernel::BigDecimal(42)
+
+==> corrected/248.rb 25 <==
+::Kernel::BigDecimal(42)
+
+==> corrected/249.rb 38 <==
+BigDecimal("number", exception: true)
+
+==> corrected/250.rb 38 <==
+BigDecimal("number", exception: true)
+
+==> corrected/251.rb 38 <==
+BigDecimal("number", exception: true)
+
+==> corrected/252.rb 38 <==
+BigDecimal("number", exception: true)
+
+==> corrected/272.rb 9 <==
+foo.to_r
+
+==> corrected/273.rb 10 <==
+foo&.to_r
+
+==> corrected/274.rb 12 <==
+foo.to_r(2)
+
+==> corrected/275.rb 13 <==
+foo&.to_r(2)
+
+==> corrected/276.rb 13 <==
+foo.to_r.bar
+
+==> corrected/277.rb 15 <==
+foo&.to_r&.bar
+
+==> corrected/278.rb 11 <==
+(foo.to_r)
+
+==> corrected/279.rb 13 <==
+((foo.to_r))
+
+==> corrected/280.rb 3 <==
+5r
+
+==> corrected/281.rb 3 <==
+5r
+
+==> corrected/282.rb 3 <==
+5r
+
+==> corrected/283.rb 3 <==
+5r
+
+==> corrected/284.rb 13 <==
+Rational(42)
+
+==> corrected/285.rb 13 <==
+Rational(42)
+
+==> corrected/286.rb 13 <==
+Rational(42)
+
+==> corrected/287.rb 13 <==
+Rational(42)
+
+==> corrected/288.rb 15 <==
+Rational(3, 8)
+
+==> corrected/289.rb 15 <==
+Rational(3, 8)
+
+==> corrected/290.rb 15 <==
+Rational(3, 8)
+
+==> corrected/291.rb 15 <==
+Rational(3, 8)
+
+==> corrected/292.rb 21 <==
+Kernel::Rational(42)
+
+==> corrected/293.rb 21 <==
+Kernel::Rational(42)
+
+==> corrected/294.rb 21 <==
+Kernel::Rational(42)
+
+==> corrected/295.rb 21 <==
+Kernel::Rational(42)
+
+==> corrected/296.rb 23 <==
+::Kernel::Rational(42)
+
+==> corrected/297.rb 23 <==
+::Kernel::Rational(42)
+
+==> corrected/298.rb 23 <==
+::Kernel::Rational(42)
+
+==> corrected/299.rb 23 <==
+::Kernel::Rational(42)
+
+==> corrected/300.rb 36 <==
+Rational("number", exception: true)
+
+==> corrected/301.rb 36 <==
+Rational("number", exception: true)
+
+==> corrected/302.rb 36 <==
+Rational("number", exception: true)
+
+==> corrected/303.rb 36 <==
+Rational("number", exception: true)
+
+==> corrected/323.rb 9 <==
+foo.to_c
+
+==> corrected/324.rb 10 <==
+foo&.to_c
+
+==> corrected/325.rb 12 <==
+foo.to_c(2)
+
+==> corrected/326.rb 13 <==
+foo&.to_c(2)
+
+==> corrected/327.rb 13 <==
+foo.to_c.bar
+
+==> corrected/328.rb 15 <==
+foo&.to_c&.bar
+
+==> corrected/329.rb 11 <==
+(foo.to_c)
+
+==> corrected/330.rb 13 <==
+((foo.to_c))
+
+==> corrected/331.rb 3 <==
+5i
+
+==> corrected/332.rb 3 <==
+5i
+
+==> corrected/333.rb 3 <==
+5i
+
+==> corrected/334.rb 3 <==
+5i
+
+==> corrected/335.rb 4 <==
+5ri
+
+==> corrected/336.rb 4 <==
+5ri
+
+==> corrected/337.rb 4 <==
+5ri
+
+==> corrected/338.rb 4 <==
+5ri
+
+==> corrected/339.rb 12 <==
+Complex(42)
+
+==> corrected/340.rb 12 <==
+Complex(42)
+
+==> corrected/341.rb 12 <==
+Complex(42)
+
+==> corrected/342.rb 12 <==
+Complex(42)
+
+==> corrected/343.rb 14 <==
+Complex(5, 3)
+
+==> corrected/344.rb 14 <==
+Complex(5, 3)
+
+==> corrected/345.rb 14 <==
+Complex(5, 3)
+
+==> corrected/346.rb 14 <==
+Complex(5, 3)
+
+==> corrected/347.rb 20 <==
+Kernel::Complex(42)
+
+==> corrected/348.rb 20 <==
+Kernel::Complex(42)
+
+==> corrected/349.rb 20 <==
+Kernel::Complex(42)
+
+==> corrected/350.rb 20 <==
+Kernel::Complex(42)
+
+==> corrected/351.rb 22 <==
+::Kernel::Complex(42)
+
+==> corrected/352.rb 22 <==
+::Kernel::Complex(42)
+
+==> corrected/353.rb 22 <==
+::Kernel::Complex(42)
+
+==> corrected/354.rb 22 <==
+::Kernel::Complex(42)
+
+==> corrected/355.rb 35 <==
+Complex("number", exception: true)
+
+==> corrected/356.rb 35 <==
+Complex("number", exception: true)
+
+==> corrected/357.rb 35 <==
+Complex("number", exception: true)
+
+==> corrected/358.rb 35 <==
+Complex("number", exception: true)
+
+==> corrected/378.rb 9 <==
+foo.to_a
+
+==> corrected/379.rb 10 <==
+foo&.to_a
+
+==> corrected/380.rb 12 <==
+foo.to_a(2)
+
+==> corrected/381.rb 13 <==
+foo&.to_a(2)
+
+==> corrected/382.rb 13 <==
+foo.to_a.bar
+
+==> corrected/383.rb 15 <==
+foo&.to_a&.bar
+
+==> corrected/384.rb 11 <==
+(foo.to_a)
+
+==> corrected/385.rb 13 <==
+((foo.to_a))
+
+==> corrected/386.rb 10 <==
+[1, 2, 3]
+
+==> corrected/387.rb 10 <==
+[1, 2, 3]
+
+==> corrected/388.rb 10 <==
+[1, 2, 3]
+
+==> corrected/389.rb 10 <==
+[1, 2, 3]
+
+==> corrected/390.rb 21 <==
+Array.new([1, 2, 3])
+
+==> corrected/391.rb 21 <==
+Array.new([1, 2, 3])
+
+==> corrected/392.rb 21 <==
+Array.new([1, 2, 3])
+
+==> corrected/393.rb 21 <==
+Array.new([1, 2, 3])
+
+==> corrected/394.rb 23 <==
+::Array.new([1, 2, 3])
+
+==> corrected/395.rb 23 <==
+::Array.new([1, 2, 3])
+
+==> corrected/396.rb 23 <==
+::Array.new([1, 2, 3])
+
+==> corrected/397.rb 23 <==
+::Array.new([1, 2, 3])
+
+==> corrected/398.rb 17 <==
+Array([1, 2, 3])
+
+==> corrected/399.rb 17 <==
+Array([1, 2, 3])
+

@@ -1,0 +1,9 @@
+==> offenses exit=1 95 <==
+000.rb:1:1: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+
+==> autocorrect exit=0 93 <==
+000.rb:1:1: C: [Corrected] Style/EmptyMethod: Put empty method definitions on a single line.
+
+==> corrected/000.rb 55 <==
+def foo(abc: '10000', def: '20000', ghi: '30000'); end
+

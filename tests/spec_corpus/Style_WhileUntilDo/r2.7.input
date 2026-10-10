@@ -1,0 +1,46 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 18 <==
+while cond do
+end
+
+==> 001.rb 18 <==
+until cond do
+end
+
+==> 002.rb 28 <==
+while i < 3 do
+  i += 1
+end
+
+==> 003.rb 27 <==
+while cond do something end
+==> 004.rb 27 <==
+until cond do something end
+==> 005.rb 26 <==
+while i < 3 do i += 1
+end
+
+==> 006.rb 27 <==
+until i >= 3 do i += 1
+end
+
+==> 007.rb 41 <==
+while i < 3 ||
+      j < 3 do i += 1
+end
+
+==> 008.rb 15 <==
+while cond
+end
+
+==> 009.rb 15 <==
+until cond
+end
+

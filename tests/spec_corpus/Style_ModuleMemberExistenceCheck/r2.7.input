@@ -1,0 +1,176 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 35 <==
+x.class_variables.include?(method)
+
+==> 001.rb 34 <==
+x.class_variables.include? method
+
+==> 002.rb 34 <==
+x.class_variables.member?(method)
+
+==> 003.rb 37 <==
+x&.class_variables&.include?(method)
+
+==> 004.rb 33 <==
+class_variables.include?(method)
+
+==> 005.rb 48 <==
+x.class_variables(true, false).include?(method)
+
+==> 006.rb 37 <==
+x.class_variables.include?(foo, bar)
+
+==> 007.rb 33 <==
+x.class_variables.include?(*foo)
+
+==> 008.rb 34 <==
+x.class_variables.include?(**foo)
+
+==> 009.rb 33 <==
+x.class_variables.include?(&foo)
+
+==> 010.rb 41 <==
+x.class_variables(*foo).include?(method)
+
+==> 011.rb 30 <==
+x.constants.include?(:String)
+
+==> 012.rb 36 <==
+x.instance_methods.include?(method)
+
+==> 013.rb 35 <==
+x.instance_methods.include? method
+
+==> 014.rb 35 <==
+x.instance_methods.member?(method)
+
+==> 015.rb 38 <==
+x&.instance_methods&.include?(method)
+
+==> 016.rb 34 <==
+instance_methods.include?(method)
+
+==> 017.rb 49 <==
+x.instance_methods(true, false).include?(method)
+
+==> 018.rb 38 <==
+x.instance_methods.include?(foo, bar)
+
+==> 019.rb 34 <==
+x.instance_methods.include?(*foo)
+
+==> 020.rb 35 <==
+x.instance_methods.include?(**foo)
+
+==> 021.rb 34 <==
+x.instance_methods.include?(&foo)
+
+==> 022.rb 42 <==
+x.instance_methods(*foo).include?(method)
+
+==> 023.rb 44 <==
+x.private_instance_methods.include?(method)
+
+==> 024.rb 43 <==
+x.private_instance_methods.include? method
+
+==> 025.rb 43 <==
+x.private_instance_methods.member?(method)
+
+==> 026.rb 46 <==
+x&.private_instance_methods&.include?(method)
+
+==> 027.rb 42 <==
+private_instance_methods.include?(method)
+
+==> 028.rb 57 <==
+x.private_instance_methods(true, false).include?(method)
+
+==> 029.rb 46 <==
+x.private_instance_methods.include?(foo, bar)
+
+==> 030.rb 42 <==
+x.private_instance_methods.include?(*foo)
+
+==> 031.rb 43 <==
+x.private_instance_methods.include?(**foo)
+
+==> 032.rb 42 <==
+x.private_instance_methods.include?(&foo)
+
+==> 033.rb 50 <==
+x.private_instance_methods(*foo).include?(method)
+
+==> 034.rb 46 <==
+x.protected_instance_methods.include?(method)
+
+==> 035.rb 45 <==
+x.protected_instance_methods.include? method
+
+==> 036.rb 45 <==
+x.protected_instance_methods.member?(method)
+
+==> 037.rb 48 <==
+x&.protected_instance_methods&.include?(method)
+
+==> 038.rb 44 <==
+protected_instance_methods.include?(method)
+
+==> 039.rb 59 <==
+x.protected_instance_methods(true, false).include?(method)
+
+==> 040.rb 48 <==
+x.protected_instance_methods.include?(foo, bar)
+
+==> 041.rb 44 <==
+x.protected_instance_methods.include?(*foo)
+
+==> 042.rb 45 <==
+x.protected_instance_methods.include?(**foo)
+
+==> 043.rb 44 <==
+x.protected_instance_methods.include?(&foo)
+
+==> 044.rb 52 <==
+x.protected_instance_methods(*foo).include?(method)
+
+==> 045.rb 43 <==
+x.public_instance_methods.include?(method)
+
+==> 046.rb 42 <==
+x.public_instance_methods.include? method
+
+==> 047.rb 42 <==
+x.public_instance_methods.member?(method)
+
+==> 048.rb 45 <==
+x&.public_instance_methods&.include?(method)
+
+==> 049.rb 41 <==
+public_instance_methods.include?(method)
+
+==> 050.rb 56 <==
+x.public_instance_methods(true, false).include?(method)
+
+==> 051.rb 45 <==
+x.public_instance_methods.include?(foo, bar)
+
+==> 052.rb 41 <==
+x.public_instance_methods.include?(*foo)
+
+==> 053.rb 42 <==
+x.public_instance_methods.include?(**foo)
+
+==> 054.rb 41 <==
+x.public_instance_methods.include?(&foo)
+
+==> 055.rb 49 <==
+x.public_instance_methods(*foo).include?(method)
+

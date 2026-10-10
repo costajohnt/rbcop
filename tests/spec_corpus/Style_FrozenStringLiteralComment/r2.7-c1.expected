@@ -1,0 +1,127 @@
+==> offenses exit=1 2226 <==
+000.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+001.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+004.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+005.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+007.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+008.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+010.rb:3:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+011.rb:3:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+012.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+013.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+014.rb:5:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+016.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+017.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+018.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+019.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+020.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+021.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+022.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+023.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+024.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+025.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+
+==> autocorrect exit=0 2184 <==
+000.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+001.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+004.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+005.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+007.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+008.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+010.rb:3:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+011.rb:3:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+012.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+013.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+014.rb:5:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+016.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+017.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+018.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+019.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+020.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+021.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+022.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+023.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+024.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+025.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+
+==> corrected/000.rb 7 <==
+puts 1
+
+==> corrected/001.rb 7 <==
+puts 1
+
+==> corrected/004.rb 27 <==
+#!/usr/bin/env ruby
+puts 1
+
+==> corrected/005.rb 27 <==
+#!/usr/bin/env ruby
+puts 1
+
+==> corrected/007.rb 25 <==
+# encoding: utf-8
+puts 1
+
+==> corrected/008.rb 25 <==
+# encoding: utf-8
+puts 1
+
+==> corrected/010.rb 45 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+puts 1
+
+==> corrected/011.rb 45 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+puts 1
+
+==> corrected/012.rb 45 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+puts 1
+
+==> corrected/013.rb 45 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+puts 1
+
+==> corrected/014.rb 73 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+#
+# These are more comments
+puts 1
+
+==> corrected/016.rb 7 <==
+puts 1
+
+==> corrected/017.rb 7 <==
+puts 1
+
+==> corrected/018.rb 7 <==
+puts 1
+
+==> corrected/019.rb 7 <==
+puts 1
+
+==> corrected/020.rb 7 <==
+puts 1
+
+==> corrected/021.rb 7 <==
+puts 1
+
+==> corrected/022.rb 7 <==
+puts 1
+
+==> corrected/023.rb 7 <==
+puts 1
+
+==> corrected/024.rb 7 <==
+puts 1
+
+==> corrected/025.rb 61 <==
+# -*- encoding: utf-8 -*-
+# -*- warn_indent: true -*-
+puts 1
+

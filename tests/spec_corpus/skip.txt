@@ -1,0 +1,20 @@
+# Spec examples left out of tests/spec_corpus, one per line: <Dept_Cop>/<variant>[/<file>] # reason.
+# A variant or cop prefix drops everything under it. Re-record after editing.
+#
+# Binary (`# encoding: BINARY`) sources with bytes that are not valid UTF-8 (`%i[\xC0 :foo]`):
+# rbcop inspects them with those bytes replaced, which shifts later columns and is never
+# autocorrected (docs/known-gaps.md, same as scripts/cold-skip.txt).
+Lint_PercentStringArray/r2.7/019.rb
+Lint_PercentStringArray/r2.7/020.rb
+Lint_PercentSymbolArray/r2.7/010.rb
+Lint_PercentSymbolArray/r2.7/011.rb
+#
+# Layout/LineLength `SplitStrings: true` break points are not modelled (docs/known-gaps.md).
+Layout_LineLength/r2.7-c16
+#
+# rbcop bugs found by this corpus, filed as issues:
+Layout_MultilineMethodDefinitionBraceLayout/r2.7-c2/001.rb  # #60 Lint/Syntax first error position
+Style_RedundantRegexpEscape/r2.7/164.rb  # #61 parser gem's `empty char-class` diagnostic
+Style_RedundantParentheses/r3.2/000.rb  # #62 reparse rejects `retry` outside rescue
+Lint_SelfAssignment/r2.7-c2  # #63 AllowRBSInlineAnnotation not ported
+Style_RescueModifier/r2.6/000.rb  # #64 masgn rescue-modifier precedence below 2.7

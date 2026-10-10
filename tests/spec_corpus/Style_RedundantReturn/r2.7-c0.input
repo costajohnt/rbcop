@@ -1,0 +1,253 @@
+==> .rubocop.yml 166 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/RedundantReturn:
+  AllowMultipleReturnValues: false
+
+==> 000.rb 43 <==
+def func
+  return something
+ensure
+  2
+end
+
+==> 001.rb 37 <==
+def Test.func
+  return something
+end
+
+==> 002.rb 60 <==
+def func
+  some_preceding_statements
+  return something
+end
+
+==> 003.rb 46 <==
+define_method(:foo) do
+  return something
+end
+
+==> 004.rb 56 <==
+define_singleton_method(:foo) do
+  return something
+end
+
+==> 005.rb 74 <==
+define_method(:foo) do
+  some_preceding_statements
+  return something
+end
+
+==> 006.rb 84 <==
+define_singleton_method(:foo) do
+  some_preceding_statements
+  return something
+end
+
+==> 007.rb 61 <==
+lambda do
+  some_preceding_statements
+  return something
+end
+
+==> 008.rb 57 <==
+-> do
+  some_preceding_statements
+  return something
+end
+
+==> 009.rb 59 <==
+proc do
+  some_preceding_statements
+  return something
+end
+
+==> 010.rb 61 <==
+def func
+  some_preceding_statements
+  return *something
+end
+
+==> 011.rb 65 <==
+def self.func
+  some_preceding_statements
+  return something
+end
+
+==> 012.rb 50 <==
+def func
+  return something if something_else
+end
+
+==> 013.rb 43 <==
+def func
+  something if something_else
+end
+
+==> 014.rb 13 <==
+def func
+end
+
+==> 015.rb 43 <==
+def func
+  if x
+  elsif y
+  else
+  end
+end
+
+==> 016.rb 44 <==
+def func
+  one
+  two
+  return something
+end
+
+==> 017.rb 46 <==
+def func
+  one
+  two
+  return
+  # comment
+end
+
+==> 018.rb 48 <==
+def func
+  one
+  two
+  return()
+  # comment
+end
+
+==> 019.rb 38 <==
+def func
+  return something, test
+end
+
+==> 020.rb 43 <==
+def Test.func
+  return something, test
+end
+
+==> 021.rb 50 <==
+def func
+  one
+  two
+  return something, test
+end
+
+==> 022.rb 55 <==
+def self.func
+  one
+  two
+  return something, test
+end
+
+==> 023.rb 41 <==
+def func
+  return {:a => 1, :b => 2}
+end
+
+==> 024.rb 39 <==
+def func
+  return :a => 1, :b => 2
+end
+
+==> 025.rb 47 <==
+def do_something
+  return (foo && bar), 42
+end
+
+==> 026.rb 68 <==
+def func
+  some_preceding_statements
+  begin
+    return 1
+  end
+end
+
+==> 027.rb 121 <==
+def func
+  1
+  2
+  return 3
+rescue SomeException
+  4
+  return 5
+rescue AnotherException
+  return 6
+ensure
+  return 7
+end
+
+==> 028.rb 61 <==
+def func
+  return 3
+rescue SomeException
+else
+  return 4
+end
+
+==> 029.rb 110 <==
+def func
+  some_preceding_statements
+  if x
+    return 1
+  elsif y
+    return 2
+  else
+    return 3
+  end
+end
+
+==> 030.rb 131 <==
+def func
+  some_preceding_statements
+  case x
+  when y then return 1
+  when z then return 2
+  when q
+  else
+    return 3
+  end
+end
+
+==> 031.rb 79 <==
+def func
+  case x
+  when y then 1
+  when z # do nothing
+  else
+    3
+  end
+end
+
+==> 032.rb 125 <==
+def func
+  some_preceding_statements
+  case x
+  in y then return 1
+  in z then return 2
+  in q
+  else
+    return 3
+  end
+end
+
+==> 033.rb 75 <==
+def func
+  case x
+  in y then 1
+  in z # do nothing
+  else
+    3
+  end
+end
+
+==> 034.rb 19 <==
+lambda.call(block)
+

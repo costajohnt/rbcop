@@ -1,0 +1,40 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 60 <==
+# frozen_string_literal: true
+# frozen_string_literal: true
+
+==> 001.rb 60 <==
+# frozen_string_literal: true
+# frozen_string_literal: TRUE
+
+==> 002.rb 36 <==
+# encoding: ascii
+# encoding: ascii
+
+==> 003.rb 36 <==
+# encoding: ascii
+# encoding: utf-8
+
+==> 004.rb 96 <==
+# encoding: ascii
+# frozen_string_literal: true
+# encoding: ascii
+# frozen_string_literal: true
+
+==> 005.rb 30 <==
+# frozen_string_literal: true
+
+==> 006.rb 18 <==
+# encoding: ascii
+
+==> 007.rb 48 <==
+# encoding: ascii
+# frozen_string_literal: true
+

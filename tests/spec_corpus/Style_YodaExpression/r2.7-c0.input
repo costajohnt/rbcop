@@ -1,0 +1,42 @@
+==> .rubocop.yml 168 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/YodaExpression:
+  SupportedOperators:
+  - "*"
+  - "+"
+
+==> 000.rb 6 <==
+1 + x
+
+==> 001.rb 10 <==
+CONST + x
+
+==> 002.rb 12 <==
+2 + (1 + x)
+
+==> 003.rb 16 <==
+TWO + (ONE + x)
+
+==> 004.rb 7 <==
+x + 42
+
+==> 005.rb 14 <==
+x + FORTY_TWO
+
+==> 006.rb 6 <==
+x + y
+
+==> 007.rb 6 <==
+1 | x
+
+==> 008.rb 17 <==
+1 + CONST.+(ary)
+
+==> 009.rb 12 <==
+1 + CONST.*
+

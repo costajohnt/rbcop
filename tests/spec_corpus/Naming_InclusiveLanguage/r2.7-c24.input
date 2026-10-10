@@ -1,0 +1,15 @@
+==> .rubocop.yml 185 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/InclusiveLanguage:
+  CheckComments: false
+  FlaggedTerms:
+    foo: {}
+
+==> 000.rb 15 <==
+# is it a foo?
+

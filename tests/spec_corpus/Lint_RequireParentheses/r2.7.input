@@ -1,0 +1,63 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 47 <==
+if day.is? 'monday' && month == :jan
+  foo
+end
+
+==> 001.rb 26 <==
+day_is? 'tuesday' || true
+
+==> 002.rb 46 <==
+wd.include? 'tuesday' && true == true ? a : b
+
+==> 003.rb 19 <==
+foo a && b ? c : d
+
+==> 004.rb 48 <==
+if day&.is? 'monday' && month == :jan
+  foo
+end
+
+==> 005.rb 32 <==
+if day_is? 'tuesday' + rest
+end
+
+==> 006.rb 85 <==
+if day.is? 'tuesday' and month == :jan
+end
+if day.is? 'tuesday' or month == :jan
+end
+
+==> 007.rb 32 <==
+if current_level == max + 1
+end
+
+==> 008.rb 14 <==
+if @debug
+end
+
+==> 009.rb 42 <==
+if day.is?('tuesday' && true == true)
+end
+
+==> 010.rb 46 <==
+wd.include?('tuesday' && true == true) ? a : b
+==> 011.rb 38 <==
+weekdays.foo 'tuesday' && true == true
+==> 012.rb 22 <==
+foo && bar ? baz : qux
+==> 013.rb 36 <==
+do_something[foo && bar ? baz : qux]
+==> 014.rb 34 <==
+self.foo = bar && baz ? qux : quux
+==> 015.rb 34 <==
+s.version = @version || ">= 1.8.5"
+==> 016.rb 9 <==
+a[b || c]

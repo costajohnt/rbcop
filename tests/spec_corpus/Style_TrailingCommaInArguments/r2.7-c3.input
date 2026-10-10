@@ -1,0 +1,248 @@
+==> .rubocop.yml 186 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: consistent_comma
+
+==> 000.rb 23 <==
+some_method(a, b, c, )
+
+==> 001.rb 24 <==
+some_method(a, b, c , )
+
+==> 002.rb 32 <==
+some_method(a, b, c: 0, d: 1, )
+
+==> 003.rb 20 <==
+some_method(a, b, c)
+==> 004.rb 32 <==
+obj
+  .do_something(:foo, :bar)
+
+==> 005.rb 17 <==
+some_method(a: 1)
+==> 006.rb 11 <==
+some_method
+==> 007.rb 25 <==
+target
+  .some_method(a)
+
+==> 008.rb 33 <==
+receiver&.some_method(a, b, c, )
+
+==> 009.rb 42 <==
+receiver&.some_method(a, b, c: 0, d: 1, )
+
+==> 010.rb 23 <==
+some_method[a, b, c, ]
+
+==> 011.rb 24 <==
+some_method[a, b, c , ]
+
+==> 012.rb 32 <==
+some_method[a, b, c: 0, d: 1, ]
+
+==> 013.rb 20 <==
+some_method[a, b, c]
+==> 014.rb 32 <==
+obj
+  .do_something[:foo, :bar]
+
+==> 015.rb 17 <==
+some_method[a: 1]
+==> 016.rb 25 <==
+target
+  .some_method[a]
+
+==> 017.rb 33 <==
+receiver&.some_method[a, b, c, ]
+
+==> 018.rb 42 <==
+receiver&.some_method[a, b, c: 0, d: 1, ]
+
+==> 019.rb 33 <==
+route(1, <<-HELP.chomp)
+...
+HELP
+
+==> 020.rb 78 <==
+EmailWorker.perform_async({
+  subject: "hey there",
+  email: "foo@bar.com"
+})
+
+==> 021.rb 78 <==
+EmailWorker.perform_async[{
+  subject: "hey there",
+  email: "foo@bar.com"
+}]
+
+==> 022.rb 83 <==
+EmailWorker.perform_async(arg, {
+  subject: "hey there",
+  email: "foo@bar.com"
+})
+
+==> 023.rb 83 <==
+EmailWorker.perform_async[arg, {
+  subject: "hey there",
+  email: "foo@bar.com"
+}]
+
+==> 024.rb 36 <==
+func.(
+  'foo',
+  'bar',
+  'baz',
+)
+
+==> 025.rb 29 <==
+func.(foo: 1,
+      bar: 2,)
+
+==> 026.rb 40 <==
+some_method(a: "b",
+            c: "d")
+
+==> 027.rb 98 <==
+some_method(
+              a,
+              b,
+              c: 0,
+              d: 1
+          )
+
+==> 028.rb 29 <==
+some_method(a, b
+          )
+
+==> 029.rb 99 <==
+some_method(
+              a,
+              b,
+              c: 0,
+              d: 1,
+          )
+
+==> 030.rb 65 <==
+some_method(
+              a: 0,
+              b: 1,
+          )
+
+==> 031.rb 81 <==
+obj.some_method(
+                  a: 0,
+                  b: 1,
+              )
+
+==> 032.rb 47 <==
+some_method(
+{ a: 0, b: 1 },
+{ a: 1, b: 0 },
+)
+
+==> 033.rb 120 <==
+some_method(
+              a,
+              b,
+              c: 0,
+              d: 1,
+              &block
+          )
+
+==> 034.rb 34 <==
+route(1, <<-HELP.chomp
+...
+HELP
+)
+
+==> 035.rb 15 <==
+method(
+  1,
+)
+
+==> 036.rb 18 <==
+method(
+  1, 2,
+)
+
+==> 037.rb 27 <==
+method(a:
+          "foo")
+
+==> 038.rb 40 <==
+some_method[a: "b",
+            c: "d"]
+
+==> 039.rb 98 <==
+some_method[
+              a,
+              b,
+              c: 0,
+              d: 1
+          ]
+
+==> 040.rb 29 <==
+some_method[a, b
+          ]
+
+==> 041.rb 99 <==
+some_method[
+              a,
+              b,
+              c: 0,
+              d: 1,
+          ]
+
+==> 042.rb 65 <==
+some_method[
+              a: 0,
+              b: 1,
+          ]
+
+==> 043.rb 81 <==
+obj.some_method[
+                  a: 0,
+                  b: 1,
+              ]
+
+==> 044.rb 47 <==
+some_method[
+{ a: 0, b: 1 },
+{ a: 1, b: 0 },
+]
+
+==> 045.rb 120 <==
+some_method[
+              a,
+              b,
+              c: 0,
+              d: 1,
+              &block
+          ]
+
+==> 046.rb 34 <==
+route[1, <<-HELP.chomp
+...
+HELP
+]
+
+==> 047.rb 15 <==
+method[
+  1,
+]
+
+==> 048.rb 18 <==
+method[
+  1, 2,
+]
+
+==> 049.rb 27 <==
+method[a:
+          "foo"]
+

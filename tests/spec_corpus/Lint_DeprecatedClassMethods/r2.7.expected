@@ -1,0 +1,74 @@
+==> offenses exit=1 1985 <==
+000.rb:1:1: W: [Correctable] Lint/DeprecatedClassMethods: `File.exists?` is deprecated in favor of `File.exist?`.
+001.rb:1:1: W: [Correctable] Lint/DeprecatedClassMethods: `::File.exists?` is deprecated in favor of `::File.exist?`.
+003.rb:1:1: W: [Correctable] Lint/DeprecatedClassMethods: `Dir.exists?` is deprecated in favor of `Dir.exist?`.
+004.rb:1:1: W: [Correctable] Lint/DeprecatedClassMethods: `::Dir.exists?` is deprecated in favor of `::Dir.exist?`.
+007.rb:1:1: W: [Correctable] Lint/DeprecatedClassMethods: `iterator?` is deprecated in favor of `block_given?`.
+010.rb:1:1: W: [Correctable] Lint/DeprecatedClassMethods: `attr :name, true` is deprecated in favor of `attr_accessor :name`.
+011.rb:1:1: W: [Correctable] Lint/DeprecatedClassMethods: `attr 'name', true` is deprecated in favor of `attr_accessor 'name'`.
+015.rb:1:1: W: [Correctable] Lint/DeprecatedClassMethods: `attr :name, false` is deprecated in favor of `attr_reader :name`.
+016.rb:1:1: W: [Correctable] Lint/DeprecatedClassMethods: `attr 'name', false` is deprecated in favor of `attr_reader 'name'`.
+018.rb:1:1: W: [Correctable] Lint/DeprecatedClassMethods: `ENV.freeze` is deprecated in favor of `ENV`.
+020.rb:1:1: W: [Correctable] Lint/DeprecatedClassMethods: `ENV.clone` is deprecated in favor of `ENV.to_h`.
+021.rb:1:1: W: [Correctable] Lint/DeprecatedClassMethods: `ENV.dup` is deprecated in favor of `ENV.to_h`.
+022.rb:1:1: W: Lint/DeprecatedClassMethods: `Socket.gethostbyaddr` is deprecated in favor of `Addrinfo#getnameinfo`.
+023.rb:1:1: W: Lint/DeprecatedClassMethods: `::Socket.gethostbyaddr` is deprecated in favor of `Addrinfo#getnameinfo`.
+024.rb:1:1: W: Lint/DeprecatedClassMethods: `Socket.gethostbyaddr` is deprecated in favor of `Addrinfo#getnameinfo`.
+026.rb:1:1: W: Lint/DeprecatedClassMethods: `Socket.gethostbyname` is deprecated in favor of `Addrinfo.getaddrinfo`.
+027.rb:1:1: W: Lint/DeprecatedClassMethods: `::Socket.gethostbyname` is deprecated in favor of `Addrinfo.getaddrinfo`.
+
+==> autocorrect exit=1 1961 <==
+000.rb:1:1: W: [Corrected] Lint/DeprecatedClassMethods: `File.exists?` is deprecated in favor of `File.exist?`.
+001.rb:1:1: W: [Corrected] Lint/DeprecatedClassMethods: `::File.exists?` is deprecated in favor of `::File.exist?`.
+003.rb:1:1: W: [Corrected] Lint/DeprecatedClassMethods: `Dir.exists?` is deprecated in favor of `Dir.exist?`.
+004.rb:1:1: W: [Corrected] Lint/DeprecatedClassMethods: `::Dir.exists?` is deprecated in favor of `::Dir.exist?`.
+007.rb:1:1: W: [Corrected] Lint/DeprecatedClassMethods: `iterator?` is deprecated in favor of `block_given?`.
+010.rb:1:1: W: [Corrected] Lint/DeprecatedClassMethods: `attr :name, true` is deprecated in favor of `attr_accessor :name`.
+011.rb:1:1: W: [Corrected] Lint/DeprecatedClassMethods: `attr 'name', true` is deprecated in favor of `attr_accessor 'name'`.
+015.rb:1:1: W: [Corrected] Lint/DeprecatedClassMethods: `attr :name, false` is deprecated in favor of `attr_reader :name`.
+016.rb:1:1: W: [Corrected] Lint/DeprecatedClassMethods: `attr 'name', false` is deprecated in favor of `attr_reader 'name'`.
+018.rb:1:1: W: [Corrected] Lint/DeprecatedClassMethods: `ENV.freeze` is deprecated in favor of `ENV`.
+020.rb:1:1: W: [Corrected] Lint/DeprecatedClassMethods: `ENV.clone` is deprecated in favor of `ENV.to_h`.
+021.rb:1:1: W: [Corrected] Lint/DeprecatedClassMethods: `ENV.dup` is deprecated in favor of `ENV.to_h`.
+022.rb:1:1: W: Lint/DeprecatedClassMethods: `Socket.gethostbyaddr` is deprecated in favor of `Addrinfo#getnameinfo`.
+023.rb:1:1: W: Lint/DeprecatedClassMethods: `::Socket.gethostbyaddr` is deprecated in favor of `Addrinfo#getnameinfo`.
+024.rb:1:1: W: Lint/DeprecatedClassMethods: `Socket.gethostbyaddr` is deprecated in favor of `Addrinfo#getnameinfo`.
+026.rb:1:1: W: Lint/DeprecatedClassMethods: `Socket.gethostbyname` is deprecated in favor of `Addrinfo.getaddrinfo`.
+027.rb:1:1: W: Lint/DeprecatedClassMethods: `::Socket.gethostbyname` is deprecated in favor of `Addrinfo.getaddrinfo`.
+
+==> corrected/000.rb 15 <==
+File.exist?(o)
+
+==> corrected/001.rb 17 <==
+::File.exist?(o)
+
+==> corrected/003.rb 14 <==
+Dir.exist?(o)
+
+==> corrected/004.rb 16 <==
+::Dir.exist?(o)
+
+==> corrected/007.rb 13 <==
+block_given?
+
+==> corrected/010.rb 20 <==
+attr_accessor :name
+
+==> corrected/011.rb 21 <==
+attr_accessor 'name'
+
+==> corrected/015.rb 18 <==
+attr_reader :name
+
+==> corrected/016.rb 19 <==
+attr_reader 'name'
+
+==> corrected/018.rb 4 <==
+ENV
+
+==> corrected/020.rb 9 <==
+ENV.to_h
+
+==> corrected/021.rb 9 <==
+ENV.to_h
+

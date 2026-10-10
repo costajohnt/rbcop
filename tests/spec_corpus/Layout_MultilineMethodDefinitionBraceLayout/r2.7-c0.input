@@ -1,0 +1,40 @@
+==> .rubocop.yml 182 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/MultilineMethodDefinitionBraceLayout:
+  EnforcedStyle: symmetrical
+
+==> 000.rb 23 <==
+def foo a: 1,
+b: 2
+end
+
+==> 001.rb 17 <==
+def foo(a,b)
+end
+
+==> 002.rb 12 <==
+def foo
+end
+
+==> 003.rb 9 <==
+(a,
+b
+)
+
+
+==> 004.rb 17 <==
+(a, # a
+b # b
+)
+
+
+==> 005.rb 8 <==
+(
+a,
+b)
+

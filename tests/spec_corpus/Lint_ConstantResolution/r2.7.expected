@@ -1,0 +1,12 @@
+==> offenses exit=1 448 <==
+002.rb:1:1: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.
+003.rb:1:1: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.
+005/current.rb:3:5: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.
+006/current.rb:3:5: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.
+
+==> autocorrect exit=1 448 <==
+002.rb:1:1: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.
+003.rb:1:1: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.
+005/current.rb:3:5: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.
+006/current.rb:3:5: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.
+

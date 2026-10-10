@@ -1,0 +1,14 @@
+==> offenses exit=1 310 <==
+000.rb:3:1: W: Lint/UselessRescue: Useless `rescue` detected.
+001.rb:3:1: W: Lint/UselessRescue: Useless `rescue` detected.
+002.rb:3:1: W: Lint/UselessRescue: Useless `rescue` detected.
+003.rb:3:1: W: Lint/UselessRescue: Useless `rescue` detected.
+008.rb:5:1: W: Lint/UselessRescue: Useless `rescue` detected.
+
+==> autocorrect exit=1 310 <==
+000.rb:3:1: W: Lint/UselessRescue: Useless `rescue` detected.
+001.rb:3:1: W: Lint/UselessRescue: Useless `rescue` detected.
+002.rb:3:1: W: Lint/UselessRescue: Useless `rescue` detected.
+003.rb:3:1: W: Lint/UselessRescue: Useless `rescue` detected.
+008.rb:5:1: W: Lint/UselessRescue: Useless `rescue` detected.
+

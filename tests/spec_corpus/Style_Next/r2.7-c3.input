@@ -1,0 +1,17 @@
+==> .rubocop.yml 139 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/Next:
+  MinBodyLength: 3
+
+==> 000.rb 50 <==
+arr.each do |e|
+  if something
+    work
+  end
+end
+

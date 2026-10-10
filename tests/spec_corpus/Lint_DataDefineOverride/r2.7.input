@@ -1,0 +1,40 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 28 <==
+Bad = Data.define(:members)
+
+==> 001.rb 30 <==
+Bad = ::Data.define(:members)
+
+==> 002.rb 45 <==
+Bad = Data.define(:name, :members, :address)
+
+==> 003.rb 36 <==
+Bad = Data.define(:name, "members")
+
+==> 004.rb 70 <==
+Data.define(:members) do
+  def members?
+    !members.empty?
+  end
+end
+
+==> 005.rb 37 <==
+Data.define(:members, :clone, :to_s)
+
+==> 006.rb 31 <==
+Good = Data.define(:id, :name)
+
+==> 007.rb 108 <==
+Good = Data.define(:id, :name) do
+  def members
+    super.tap { |ret| pp "members: " + ret.to_s }
+  end
+end
+

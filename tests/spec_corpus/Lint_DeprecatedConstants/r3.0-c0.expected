@@ -1,0 +1,24 @@
+==> offenses exit=1 516 <==
+000.rb:1:1: W: [Correctable] Lint/DeprecatedConstants: Use `Random.new` instead of `Random::DEFAULT`, deprecated since Ruby 3.0.
+001.rb:1:1: W: [Correctable] Lint/DeprecatedConstants: Use `Random.new` instead of `::Random::DEFAULT`, deprecated since Ruby 3.0.
+002.rb:1:1: W: [Correctable] Lint/DeprecatedConstants: Use `Etc::Group` instead of `Struct::Group`, deprecated since Ruby 3.0.
+003.rb:1:1: W: [Correctable] Lint/DeprecatedConstants: Use `Etc::Passwd` instead of `Struct::Passwd`, deprecated since Ruby 3.0.
+
+==> autocorrect exit=0 508 <==
+000.rb:1:1: W: [Corrected] Lint/DeprecatedConstants: Use `Random.new` instead of `Random::DEFAULT`, deprecated since Ruby 3.0.
+001.rb:1:1: W: [Corrected] Lint/DeprecatedConstants: Use `Random.new` instead of `::Random::DEFAULT`, deprecated since Ruby 3.0.
+002.rb:1:1: W: [Corrected] Lint/DeprecatedConstants: Use `Etc::Group` instead of `Struct::Group`, deprecated since Ruby 3.0.
+003.rb:1:1: W: [Corrected] Lint/DeprecatedConstants: Use `Etc::Passwd` instead of `Struct::Passwd`, deprecated since Ruby 3.0.
+
+==> corrected/000.rb 11 <==
+Random.new
+
+==> corrected/001.rb 11 <==
+Random.new
+
+==> corrected/002.rb 11 <==
+Etc::Group
+
+==> corrected/003.rb 12 <==
+Etc::Passwd
+

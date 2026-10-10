@@ -1,0 +1,20 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 16 <==
+super name, age
+
+==> 001.rb 17 <==
+super(name, age)
+
+==> 002.rb 8 <==
+super()
+
+==> 003.rb 6 <==
+super
+

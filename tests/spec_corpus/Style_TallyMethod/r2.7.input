@@ -1,0 +1,97 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 73 <==
+array.each_with_object(Hash.new(0)) { |item, counts| counts[item] += 1 }
+
+==> 001.rb 74 <==
+array&.each_with_object(Hash.new(0)) { |item, counts| counts[item] += 1 }
+
+==> 002.rb 78 <==
+array.each_with_object(Hash.new(0)) do |item, counts|
+  counts[item] += 1
+end
+
+==> 003.rb 67 <==
+each_with_object(Hash.new(0)) { |item, counts| counts[item] += 1 }
+
+==> 004.rb 59 <==
+array.each_with_object(::Hash.new(0)) { |x, h| h[x] += 1 }
+
+==> 005.rb 52 <==
+array.each_with_object(Hash.new(0)) { _2[_1] += 1 }
+
+==> 006.rb 73 <==
+array.each_with_object(Hash.new(0)) { |item, counts| counts[item] += 2 }
+
+==> 007.rb 78 <==
+array.each_with_object(Hash.new(0)) { |item, counts| counts[item.to_s] += 1 }
+
+==> 008.rb 66 <==
+array.each_with_object({}) { |item, counts| counts[item] = true }
+
+==> 009.rb 90 <==
+array.each_with_object(Hash.new(0)) do |item, counts|
+  counts[item] += 1
+  puts item
+end
+
+==> 010.rb 57 <==
+array.each_with_object(Hash.new(0)) { _2[_1.to_s] += 1 }
+
+==> 011.rb 51 <==
+array.group_by(&:itself).transform_values(&:count)
+
+==> 012.rb 50 <==
+array.group_by(&:itself).transform_values(&:size)
+
+==> 013.rb 52 <==
+array.group_by(&:itself).transform_values(&:length)
+
+==> 014.rb 53 <==
+array&.group_by(&:itself)&.transform_values(&:count)
+
+==> 015.rb 45 <==
+group_by(&:itself).transform_values(&:count)
+
+==> 016.rb 49 <==
+array.group_by(&:name).transform_values(&:count)
+
+==> 017.rb 49 <==
+array.group_by(&:itself).transform_values(&:sum)
+
+==> 018.rb 51 <==
+array.group_by { |x| x }.transform_values(&:count)
+
+==> 019.rb 48 <==
+array.group_by { _1 }.transform_values(&:count)
+
+==> 020.rb 56 <==
+array.group_by { |x| x.name }.transform_values(&:count)
+
+==> 021.rb 58 <==
+array.group_by { |x| x }.transform_values { |v| v.count }
+
+==> 022.rb 57 <==
+array.group_by { |x| x }.transform_values { |v| v.size }
+
+==> 023.rb 59 <==
+array.group_by { |x| x }.transform_values { |v| v.length }
+
+==> 024.rb 58 <==
+array.group_by(&:itself).transform_values { |v| v.count }
+
+==> 025.rb 55 <==
+array.group_by(&:itself).transform_values { _1.count }
+
+==> 026.rb 56 <==
+array.group_by { |x| x }.transform_values { |v| v.sum }
+
+==> 027.rb 62 <==
+array.group_by { |x| x }.transform_values { |v| v.count * 2 }
+

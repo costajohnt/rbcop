@@ -1,0 +1,8 @@
+==> offenses exit=1 218 <==
+000.rb:1:1: C: Naming/InclusiveLanguage: Consider replacing 'master' with 'main', 'primary', or 'leader'.
+000.rb:1:9: C: Naming/InclusiveLanguage: Consider replacing 'slave' with 'replica', 'secondary', or 'follower'.
+
+==> autocorrect exit=1 218 <==
+000.rb:1:1: C: Naming/InclusiveLanguage: Consider replacing 'master' with 'main', 'primary', or 'leader'.
+000.rb:1:9: C: Naming/InclusiveLanguage: Consider replacing 'slave' with 'replica', 'secondary', or 'follower'.
+

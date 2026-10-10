@@ -1,0 +1,74 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 12 <==
+TopCase = 5
+
+==> 001.rb 24 <==
+TopCase = (1..5).freeze
+
+==> 002.rb 19 <==
+TopCase = 5.freeze
+
+==> 003.rb 11 <==
+Nö = 'no'
+
+==> 004.rb 33 <==
+TopCase, Test2, TEST_3 = 5, 6, 7
+
+==> 005.rb 13 <==
+TOP_test = 5
+
+==> 006.rb 14 <==
+Bar = Foo = 4
+
+==> 007.rb 12 <==
+TOP_TEST = 5
+==> 008.rb 23 <==
+TOP_TEST, TEST_2 = 5, 6
+==> 009.rb 13 <==
+TÖP_TEST = 5
+==> 010.rb 19 <==
+AnythingGoes = test
+==> 011.rb 21 <==
+AnythingGoes ||= test
+==> 012.rb 34 <==
+Invalid = Class.new(StandardError)
+==> 013.rb 36 <==
+Invalid ||= Class.new(StandardError)
+==> 014.rb 46 <==
+Investigation = Struct.new(:offenses, :errors)
+==> 015.rb 48 <==
+Investigation ||= Struct.new(:offenses, :errors)
+==> 016.rb 42 <==
+AnythingGoes = test do
+  do_something
+end
+
+==> 017.rb 36 <==
+Parser::CurrentRuby = Parser::Ruby21
+==> 018.rb 16 <==
+Bar = Foo = Qux
+
+==> 019.rb 36 <==
+::AnythingGoes = 30
+a::Bar_foo = 10
+
+==> 020.rb 36 <==
+CONST = if condition
+  foo
+else
+end
+
+==> 021.rb 45 <==
+Investigation = if true then Foo else Bar end
+==> 022.rb 47 <==
+Investigation = if true then "foo" else Bar end
+==> 023.rb 44 <==
+TopCase = if true then 'foo' else 'bar' end
+

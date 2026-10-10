@@ -1,0 +1,104 @@
+==> .rubocop.yml 154 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+==> 000.rb 25 <==
+something
+  .method_name
+
+==> 001.rb 25 <==
+something.
+  method_name
+
+==> 002.rb 14 <==
+puts something
+==> 003.rb 17 <==
+foo(
+  bar
+).baz
+
+==> 004.rb 7 <==
+l
+.(1)
+
+==> 005.rb 21 <==
+something.method_name
+==> 006.rb 54 <==
+File.new(something).
+readlines.map.
+compact.join("
+")
+
+==> 007.rb 26 <==
+something
+  &.method_name
+
+==> 008.rb 26 <==
+something&.
+  method_name
+
+==> 009.rb 70 <==
+my_method
+  .something(<<~HERE)
+    something
+  HERE
+  .somethingelse
+
+==> 010.rb 73 <==
+my_method
+  .something(<<~HERE)
+    #{something}
+  HERE
+  .somethingelse
+
+==> 011.rb 69 <==
+my_method
+  .something(<<~`HERE`)
+    ls -la
+  HERE
+  .somethingelse
+
+==> 012.rb 79 <==
+my_method
+  .something(<<~HERE, true)
+    #{something}
+  HERE
+  .somethingelse
+
+==> 013.rb 106 <==
+my_method
+  .something(<<~HERE, <<~THERE)
+    something
+  HERE
+    another thing
+  THERE
+  .somethingelse
+
+==> 014.rb 43 <==
+foo(<<~HEREDOC).squish
+  something
+HEREDOC
+
+==> 015.rb 46 <==
+<<~HEREDOC
+  something
+HEREDOC
+  .method_name
+
+==> 016.rb 45 <==
+<<~`HEREDOC`
+  ls -la
+HEREDOC
+  .method_name
+
+==> 017.rb 38 <==
+<<~HEREDOC.squish
+  something
+HEREDOC
+

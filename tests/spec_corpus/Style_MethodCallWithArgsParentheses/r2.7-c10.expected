@@ -1,0 +1,13 @@
+==> offenses exit=1 115 <==
+000.rb:3:5: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+
+==> autocorrect exit=0 113 <==
+000.rb:3:5: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+
+==> corrected/000.rb 67 <==
+class Foo
+  test "description" do
+    assert_equal(1, 1)
+  end
+end
+

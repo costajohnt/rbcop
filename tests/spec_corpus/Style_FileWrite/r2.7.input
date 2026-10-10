@@ -1,0 +1,57 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 63 <==
+File.open(filename, 'w') do |f|
+  something.write(content)
+end
+
+==> 001.rb 68 <==
+content = 'hello'
+File.open(filename, 'w') { |f| f.write(content) }
+
+==> 002.rb 56 <==
+File.open(filename, 'w') do |f|
+  f.write(*objects)
+end
+
+==> 003.rb 83 <==
+File.open(filename, 'w') do |f|
+  f.write('prefix' + <<~EOS)
+    content
+  EOS
+end
+
+==> 004.rb 81 <==
+File.open(filename, 'w') do |f|
+  f.write(process(<<~EOS))
+    content
+  EOS
+end
+
+==> 005.rb 97 <==
+File.open(filename, 'w') do |f|
+  f.write(<<~HEAD + <<~TAIL)
+    head
+  HEAD
+    tail
+  TAIL
+end
+
+==> 006.rb 63 <==
+File.open(filename, 'w') { |f| f.write(<<~EOS) }
+  content
+EOS
+
+==> 007.rb 80 <==
+File.open(<<~PATH.strip, 'w') do |f|
+  path/to/file
+PATH
+  f.write(content)
+end
+

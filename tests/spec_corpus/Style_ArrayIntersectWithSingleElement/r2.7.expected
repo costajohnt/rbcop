@@ -1,0 +1,14 @@
+==> offenses exit=1 256 <==
+001.rb:1:7: C: [Correctable] Style/ArrayIntersectWithSingleElement: Use `include?(element)` instead of `intersect?([element])`.
+002.rb:1:7: C: [Correctable] Style/ArrayIntersectWithSingleElement: Use `include?(element)` instead of `intersect?([element])`.
+
+==> autocorrect exit=0 252 <==
+001.rb:1:7: C: [Corrected] Style/ArrayIntersectWithSingleElement: Use `include?(element)` instead of `intersect?([element])`.
+002.rb:1:7: C: [Corrected] Style/ArrayIntersectWithSingleElement: Use `include?(element)` instead of `intersect?([element])`.
+
+==> corrected/001.rb 24 <==
+array.include?(element)
+
+==> corrected/002.rb 25 <==
+array.include?(:element)
+

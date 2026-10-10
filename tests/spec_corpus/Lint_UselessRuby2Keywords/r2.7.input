@@ -1,0 +1,119 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 27 <==
+ruby2_keywords def foo
+end
+
+==> 001.rb 32 <==
+ruby2_keywords def foo(arg)
+end
+
+==> 002.rb 37 <==
+ruby2_keywords def foo(**kwargs)
+end
+
+==> 003.rb 35 <==
+ruby2_keywords def foo(i:, j:)
+end
+
+==> 004.rb 42 <==
+ruby2_keywords def foo(*args, i:, j:)
+end
+
+==> 005.rb 40 <==
+ruby2_keywords def foo(*args, i: 1)
+end
+
+==> 006.rb 44 <==
+ruby2_keywords def foo(*args, **kwargs)
+end
+
+==> 007.rb 34 <==
+ruby2_keywords def foo(*args)
+end
+
+==> 008.rb 46 <==
+ruby2_keywords def foo(arg1, arg2, *rest)
+end
+
+==> 009.rb 44 <==
+ruby2_keywords def foo(arg1 = 5, *rest)
+end
+
+==> 010.rb 42 <==
+ruby2_keywords def foo(*rest, &block)
+end
+
+==> 011.rb 42 <==
+def foo(**kwargs)
+end
+ruby2_keywords :foo
+
+==> 012.rb 80 <==
+def foo(**kwargs)
+end
+ruby2_keywords :foo if respond_to?(:ruby2_keywords, true)
+
+==> 013.rb 39 <==
+def foo(*args)
+end
+ruby2_keywords :foo
+
+==> 014.rb 20 <==
+ruby2_keywords :foo
+
+==> 015.rb 42 <==
+do_something do
+  ruby2_keywords :foo
+end
+
+==> 016.rb 81 <==
+class C
+  class D
+    def foo(**kwargs)
+    end
+  end
+
+  ruby2_keywords :foo
+end
+
+==> 017.rb 87 <==
+class Outer
+  def foo(**kwargs)
+  end
+
+  class Inner
+    ruby2_keywords :foo
+  end
+end
+
+==> 018.rb 55 <==
+define_method(:foo) { |**kwargs| }
+ruby2_keywords :foo
+
+==> 019.rb 52 <==
+define_method(:foo) { |*args| }
+ruby2_keywords :foo
+
+==> 020.rb 51 <==
+define_method(:foo) { |x; y| }
+ruby2_keywords :foo
+
+==> 021.rb 55 <==
+define_method(:foo) { |*args; y| }
+ruby2_keywords :foo
+
+==> 022.rb 47 <==
+define_method(:foo) { _1 }
+ruby2_keywords :foo
+
+==> 023.rb 104 <==
+block = proc { |_, *args| klass.new(*args) }
+block.ruby2_keywords if block.respond_to?(:ruby2_keywords)
+

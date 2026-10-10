@@ -1,0 +1,90 @@
+==> offenses exit=1 3708 <==
+000.rb:1:17: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `foo`. If it's necessary, use `_` or `_foo` as an argument name to indicate that it won't be used. If it's unnecessary, remove it.
+001.rb:2:5: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `bar`. If it's necessary, use `_` or `_bar` as an argument name to indicate that it won't be used. If it's unnecessary, remove it.
+003.rb:1:9: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `a`. If it's necessary, use `_` or `_a` as an argument name to indicate that it won't be used. If it's unnecessary, remove it.
+004.rb:1:17: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `foo`. If it's necessary, use `_` or `_foo` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `some_method(*)` if you want the method to accept any arguments but don't care about them.
+004.rb:1:22: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `bar`. If it's necessary, use `_` or `_bar` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `some_method(*)` if you want the method to accept any arguments but don't care about them.
+005.rb:1:23: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `bar`. If it's necessary, use `_` or `_bar` as an argument name to indicate that it won't be used. If it's unnecessary, remove it.
+006.rb:1:22: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `bar`. If it's necessary, use `_` or `_bar` as an argument name to indicate that it won't be used. If it's unnecessary, remove it.
+007.rb:1:27: W: Lint/UnusedMethodArgument: Unused method argument - `bar`.
+008.rb:1:27: W: Lint/UnusedMethodArgument: Unused method argument - `bar`.
+009.rb:1:28: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `block`. If it's necessary, use `_` or `_block` as an argument name to indicate that it won't be used. If it's unnecessary, remove it.
+015.rb:1:22: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `foo`. If it's necessary, use `_` or `_foo` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `some_method(*)` if you want the method to accept any arguments but don't care about them.
+021.rb:1:17: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `foo`. If it's necessary, use `_` or `_foo` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `some_method(*)` if you want the method to accept any arguments but don't care about them.
+023.rb:1:17: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `foo`. If it's necessary, use `_` or `_foo` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `some_method(*)` if you want the method to accept any arguments but don't care about them.
+023.rb:1:22: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `bar`. If it's necessary, use `_` or `_bar` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `some_method(*)` if you want the method to accept any arguments but don't care about them.
+024.rb:1:17: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `foo`. If it's necessary, use `_` or `_foo` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `some_method(*)` if you want the method to accept any arguments but don't care about them.
+
+==> autocorrect exit=1 3682 <==
+000.rb:1:17: W: [Corrected] Lint/UnusedMethodArgument: Unused method argument - `foo`. If it's necessary, use `_` or `_foo` as an argument name to indicate that it won't be used. If it's unnecessary, remove it.
+001.rb:2:5: W: [Corrected] Lint/UnusedMethodArgument: Unused method argument - `bar`. If it's necessary, use `_` or `_bar` as an argument name to indicate that it won't be used. If it's unnecessary, remove it.
+003.rb:1:9: W: [Corrected] Lint/UnusedMethodArgument: Unused method argument - `a`. If it's necessary, use `_` or `_a` as an argument name to indicate that it won't be used. If it's unnecessary, remove it.
+004.rb:1:17: W: [Corrected] Lint/UnusedMethodArgument: Unused method argument - `foo`. If it's necessary, use `_` or `_foo` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `some_method(*)` if you want the method to accept any arguments but don't care about them.
+004.rb:1:22: W: [Corrected] Lint/UnusedMethodArgument: Unused method argument - `bar`. If it's necessary, use `_` or `_bar` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `some_method(*)` if you want the method to accept any arguments but don't care about them.
+005.rb:1:23: W: [Corrected] Lint/UnusedMethodArgument: Unused method argument - `bar`. If it's necessary, use `_` or `_bar` as an argument name to indicate that it won't be used. If it's unnecessary, remove it.
+006.rb:1:22: W: [Corrected] Lint/UnusedMethodArgument: Unused method argument - `bar`. If it's necessary, use `_` or `_bar` as an argument name to indicate that it won't be used. If it's unnecessary, remove it.
+007.rb:1:27: W: Lint/UnusedMethodArgument: Unused method argument - `bar`.
+008.rb:1:27: W: Lint/UnusedMethodArgument: Unused method argument - `bar`.
+009.rb:1:28: W: [Corrected] Lint/UnusedMethodArgument: Unused method argument - `block`. If it's necessary, use `_` or `_block` as an argument name to indicate that it won't be used. If it's unnecessary, remove it.
+015.rb:1:22: W: [Corrected] Lint/UnusedMethodArgument: Unused method argument - `foo`. If it's necessary, use `_` or `_foo` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `some_method(*)` if you want the method to accept any arguments but don't care about them.
+021.rb:1:17: W: [Corrected] Lint/UnusedMethodArgument: Unused method argument - `foo`. If it's necessary, use `_` or `_foo` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `some_method(*)` if you want the method to accept any arguments but don't care about them.
+023.rb:1:17: W: [Corrected] Lint/UnusedMethodArgument: Unused method argument - `foo`. If it's necessary, use `_` or `_foo` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `some_method(*)` if you want the method to accept any arguments but don't care about them.
+023.rb:1:22: W: [Corrected] Lint/UnusedMethodArgument: Unused method argument - `bar`. If it's necessary, use `_` or `_bar` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `some_method(*)` if you want the method to accept any arguments but don't care about them.
+024.rb:1:17: W: [Corrected] Lint/UnusedMethodArgument: Unused method argument - `foo`. If it's necessary, use `_` or `_foo` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `some_method(*)` if you want the method to accept any arguments but don't care about them.
+
+==> corrected/000.rb 42 <==
+def some_method(_foo, bar)
+  puts bar
+end
+
+==> corrected/001.rb 46 <==
+def some_method(foo,
+    _bar)
+  puts foo
+end
+
+==> corrected/003.rb 34 <==
+def foo(_a, b)
+  a, b = b, 42
+end
+
+==> corrected/004.rb 32 <==
+def some_method(_foo, _bar)
+end
+
+==> corrected/005.rb 43 <==
+def some_method(foo, *_bar)
+  puts foo
+end
+
+==> corrected/006.rb 46 <==
+def some_method(foo, _bar = 1)
+  puts foo
+end
+
+==> corrected/009.rb 42 <==
+def some_method(foo, bar)
+  foo + bar
+end
+
+==> corrected/015.rb 31 <==
+def self.some_method(_foo)
+end
+
+==> corrected/021.rb 46 <==
+def some_method(_foo)
+  super(:something)
+end
+
+==> corrected/023.rb 81 <==
+def some_method(_foo, _bar)
+  def other(a)
+    puts something(binding)
+  end
+end
+
+==> corrected/024.rb 48 <==
+def some_method(_foo)
+  binding(:something)
+end
+

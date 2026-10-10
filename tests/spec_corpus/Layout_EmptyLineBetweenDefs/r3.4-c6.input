@@ -1,0 +1,20 @@
+==> .rubocop.yml 195 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Layout/EmptyLineBetweenDefs:
+  DefLikeMacros:
+  - foo
+  AllowAdjacentOneLineDefs: true
+
+==> 000.rb 64 <==
+foo 'first foo' do
+  #foo body
+end
+foo 'second foo' do
+  it
+end
+

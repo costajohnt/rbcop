@@ -1,0 +1,9 @@
+==> offenses exit=1 186 <==
+000.rb:1:5: W: [Correctable] Lint/UriRegexp: `URI.regexp('http://example.com')` is obsolete and should not be used. Instead, use `URI::RFC2396_PARSER.make_regexp('http://example.com')`.
+
+==> autocorrect exit=0 184 <==
+000.rb:1:5: W: [Corrected] Lint/UriRegexp: `URI.regexp('http://example.com')` is obsolete and should not be used. Instead, use `URI::RFC2396_PARSER.make_regexp('http://example.com')`.
+
+==> corrected/000.rb 54 <==
+URI::RFC2396_PARSER.make_regexp('http://example.com')
+

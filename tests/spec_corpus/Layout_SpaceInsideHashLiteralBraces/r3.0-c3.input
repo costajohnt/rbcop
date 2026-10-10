@@ -1,0 +1,16 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+==> 000.rb 24 <==
+foo => { k1: 0, k2: 1 }
+
+==> 001.rb 22 <==
+foo => {k1: 0, k2: 1}
+

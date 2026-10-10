@@ -1,0 +1,50 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 20 <==
+something if a if b
+
+==> 001.rb 28 <==
+something unless a unless b
+
+==> 002.rb 24 <==
+something if a unless b
+
+==> 003.rb 31 <==
+something unless b > 1 if true
+
+==> 004.rb 24 <==
+something unless a if b
+
+==> 005.rb 29 <==
+something if a && b unless c
+
+==> 006.rb 30 <==
+something if a || b if c || d
+
+==> 007.rb 32 <==
+a unless [1, 2].include? a if a
+
+==> 008.rb 29 <==
+something if a unless c || d
+
+==> 009.rb 23 <==
+something if a while b
+
+==> 010.rb 23 <==
+something while a if b
+
+==> 011.rb 23 <==
+something if a until b
+
+==> 012.rb 23 <==
+something until a if b
+
+==> 013.rb 40 <==
+something until a while b unless c if d
+

@@ -1,0 +1,29 @@
+==> .rubocop.yml 155 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Style/MutableConstant:
+  EnforcedStyle: strict
+
+==> 000.rb 85 <==
+# frozen_string_literal: true
+
+CONST = <<~HERE
+  foo #{use_interpolation}
+  bar
+HERE
+
+==> 001.rb 59 <==
+# frozen_string_literal: true
+
+CONST = 'foo'         'bar'
+
+==> 002.rb 64 <==
+# frozen_string_literal: true
+
+CONST = "#{foo}" \
+        'bar'
+

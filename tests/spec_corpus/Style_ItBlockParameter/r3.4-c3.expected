@@ -1,0 +1,10 @@
+==> offenses exit=1 220 <==
+000.rb:1:22: C: Style/ItBlockParameter: Avoid using `it` block parameter.
+001.rb:2:7: C: Style/ItBlockParameter: Avoid using `it` block parameter.
+001.rb:3:7: C: Style/ItBlockParameter: Avoid using `it` block parameter.
+
+==> autocorrect exit=1 220 <==
+000.rb:1:22: C: Style/ItBlockParameter: Avoid using `it` block parameter.
+001.rb:2:7: C: Style/ItBlockParameter: Avoid using `it` block parameter.
+001.rb:3:7: C: Style/ItBlockParameter: Avoid using `it` block parameter.
+

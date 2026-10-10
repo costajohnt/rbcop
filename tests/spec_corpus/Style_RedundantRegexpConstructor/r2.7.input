@@ -1,0 +1,41 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 21 <==
+Regexp.new(/regexp/)
+
+==> 001.rb 23 <==
+::Regexp.new(/regexp/)
+
+==> 002.rb 22 <==
+Regexp.new(/regexp/i)
+
+==> 003.rb 30 <==
+Regexp.new(/\A#{regexp}\z/io)
+
+==> 004.rb 25 <==
+Regexp.compile(/regexp/)
+
+==> 005.rb 24 <==
+Regexp.new(%r{foo/bar})
+
+==> 006.rb 21 <==
+Regexp.new('regexp')
+
+==> 007.rb 41 <==
+Regexp.new('regexp', Regexp::IGNORECASE)
+
+==> 008.rb 62 <==
+Regexp.new('regexp', Regexp::IGNORECASE | Regexp::IGNORECASE)
+
+==> 009.rb 25 <==
+Regexp.compile('regexp')
+
+==> 010.rb 9 <==
+/regexp/
+

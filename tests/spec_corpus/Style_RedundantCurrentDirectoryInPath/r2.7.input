@@ -1,0 +1,47 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 37 <==
+require_relative './path/to/feature'
+
+==> 001.rb 40 <==
+require_relative './path/#{to}/feature'
+
+==> 002.rb 40 <==
+require_relative "./path/#{to}/feature"
+
+==> 003.rb 44 <==
+require_relative './//./../path/to/feature'
+
+==> 004.rb 39 <==
+require_relative %q(./path/to/feature)
+
+==> 005.rb 38 <==
+require_relative '../path/to/feature'
+
+==> 006.rb 25 <==
+require_relative '.path'
+
+==> 007.rb 31 <==
+require_relative 'p/t/feature'
+
+==> 008.rb 35 <==
+require_relative 'path/to/feature'
+
+==> 009.rb 38 <==
+require_relative "path/#{to}/feature"
+
+==> 010.rb 33 <==
+do_something './path/to/feature'
+
+==> 011.rb 13 <==
+do_something
+
+==> 012.rb 17 <==
+require_relative
+

@@ -1,0 +1,30 @@
+==> .rubocop.yml 165 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/UnusedPrivateMethod:
+  AllowedPatterns:
+  - _hook\z
+
+==> 000/current.rb 58 <==
+class Service
+  private
+
+  def before_save_hook
+  end
+end
+
+==> 001/current.rb 66 <==
+class Service
+  def call
+  end
+
+  private
+
+  def helper
+  end
+end
+

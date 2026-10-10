@@ -1,0 +1,54 @@
+==> .rubocop.yml 164 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/MultipleComparison:
+  AllowMethodComparison: true
+
+==> 000.rb 83 <==
+col = loc.column
+if col == before.column || col == after.column
+  do_something
+end
+
+==> 001.rb 85 <==
+col = loc.column
+if col == before&.column || col == after&.column
+  do_something
+end
+
+==> 002.rb 62 <==
+var = do_something
+var == foo || var == 'bar' || var == 'baz'
+
+==> 003.rb 62 <==
+var = do_something
+var == 'bar' || var == foo || var == 'baz'
+
+==> 004.rb 62 <==
+var = do_something
+var == 'bar' || var == 'baz' || var == foo
+
+==> 005.rb 50 <==
+if a[:key] == 'a' || a[:key] == 'b'
+  print a
+end
+
+==> 006.rb 50 <==
+if 'a' == a[:key] || 'b' == a[:key]
+  print a
+end
+
+==> 007.rb 66 <==
+if a&.do_something == 'a' || a&.do_something == 'b'
+  print a
+end
+
+==> 008.rb 66 <==
+if 'a' == a&.do_something || 'b' == a&.do_something
+  print a
+end
+

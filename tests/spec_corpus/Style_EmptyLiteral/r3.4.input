@@ -1,0 +1,12 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 23 <==
+test = Array.new { it }
+==> 001.rb 22 <==
+test = Hash.new { it }

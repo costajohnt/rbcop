@@ -1,0 +1,84 @@
+==> offenses exit=1 2081 <==
+000.rb:1:1: C: [Correctable] Style/ArrayIntersect: Use `array1.intersect?(array2)` instead of `(array1 & array2).any?`.
+001.rb:1:1: C: [Correctable] Style/ArrayIntersect: Use `!customer_country_codes.intersect?(SUPPORTED_COUNTRIES)` instead of `(customer_country_codes & SUPPORTED_COUNTRIES).empty?`.
+002.rb:1:1: C: [Correctable] Style/ArrayIntersect: Use `!a.intersect?(b)` instead of `(a & b).none?`.
+008.rb:1:1: C: [Correctable] Style/ArrayIntersect: Use `a.intersect?(b)` instead of `a.intersection(b).any?`.
+009.rb:1:1: C: [Correctable] Style/ArrayIntersect: Use `!a.intersect?(b)` instead of `a.intersection(b).none?`.
+010.rb:1:1: C: [Correctable] Style/ArrayIntersect: Use `!a.intersect?(b)` instead of `a.intersection(b).empty?`.
+011.rb:1:1: C: [Correctable] Style/ArrayIntersect: Use `a&.intersect?(b)` instead of `a&.intersection(b)&.any?`.
+016.rb:1:1: C: [Correctable] Style/ArrayIntersect: Use `array1.intersect?(array2)` instead of `array1.any? { |e| array2.member?(e) }`.
+017.rb:1:1: C: [Correctable] Style/ArrayIntersect: Use `array1&.intersect?(array2)` instead of `array1&.any? { |e| array2.member?(e) }`.
+018.rb:1:1: C: [Correctable] Style/ArrayIntersect: Use `array1.intersect?([1, 2])` instead of `array1.any? { |e| [1, 2].include?(e) }`.
+019.rb:1:1: C: [Correctable] Style/ArrayIntersect: Use `array1&.intersect?(%w[foo bar])` instead of `array1&.any? { |e| %w[foo bar].include?(e) }`.
+020.rb:1:1: C: [Correctable] Style/ArrayIntersect: Use `array1.intersect?([1, 2])` instead of `array1.any? { [1, 2].include?(_1) }`.
+025.rb:1:1: C: [Correctable] Style/ArrayIntersect: Use `array1.intersect?(array2)` instead of `array1.any? { array2.member?(_1) }`.
+026.rb:1:1: C: [Correctable] Style/ArrayIntersect: Use `!array1.intersect?([1, 2])` instead of `array1.none? { |e| [1, 2].include?(e) }`.
+028.rb:1:1: C: [Correctable] Style/ArrayIntersect: Use `!array1.intersect?(array2)` instead of `array1.none? { |e| array2.member?(e) }`.
+032.rb:1:1: C: [Correctable] Style/ArrayIntersect: Use `!array1.intersect?(array2)` instead of `array1.none? { array2.member?(_1) }`.
+
+==> autocorrect exit=0 2049 <==
+000.rb:1:1: C: [Corrected] Style/ArrayIntersect: Use `array1.intersect?(array2)` instead of `(array1 & array2).any?`.
+001.rb:1:1: C: [Corrected] Style/ArrayIntersect: Use `!customer_country_codes.intersect?(SUPPORTED_COUNTRIES)` instead of `(customer_country_codes & SUPPORTED_COUNTRIES).empty?`.
+002.rb:1:1: C: [Corrected] Style/ArrayIntersect: Use `!a.intersect?(b)` instead of `(a & b).none?`.
+008.rb:1:1: C: [Corrected] Style/ArrayIntersect: Use `a.intersect?(b)` instead of `a.intersection(b).any?`.
+009.rb:1:1: C: [Corrected] Style/ArrayIntersect: Use `!a.intersect?(b)` instead of `a.intersection(b).none?`.
+010.rb:1:1: C: [Corrected] Style/ArrayIntersect: Use `!a.intersect?(b)` instead of `a.intersection(b).empty?`.
+011.rb:1:1: C: [Corrected] Style/ArrayIntersect: Use `a&.intersect?(b)` instead of `a&.intersection(b)&.any?`.
+016.rb:1:1: C: [Corrected] Style/ArrayIntersect: Use `array1.intersect?(array2)` instead of `array1.any? { |e| array2.member?(e) }`.
+017.rb:1:1: C: [Corrected] Style/ArrayIntersect: Use `array1&.intersect?(array2)` instead of `array1&.any? { |e| array2.member?(e) }`.
+018.rb:1:1: C: [Corrected] Style/ArrayIntersect: Use `array1.intersect?([1, 2])` instead of `array1.any? { |e| [1, 2].include?(e) }`.
+019.rb:1:1: C: [Corrected] Style/ArrayIntersect: Use `array1&.intersect?(%w[foo bar])` instead of `array1&.any? { |e| %w[foo bar].include?(e) }`.
+020.rb:1:1: C: [Corrected] Style/ArrayIntersect: Use `array1.intersect?([1, 2])` instead of `array1.any? { [1, 2].include?(_1) }`.
+025.rb:1:1: C: [Corrected] Style/ArrayIntersect: Use `array1.intersect?(array2)` instead of `array1.any? { array2.member?(_1) }`.
+026.rb:1:1: C: [Corrected] Style/ArrayIntersect: Use `!array1.intersect?([1, 2])` instead of `array1.none? { |e| [1, 2].include?(e) }`.
+028.rb:1:1: C: [Corrected] Style/ArrayIntersect: Use `!array1.intersect?(array2)` instead of `array1.none? { |e| array2.member?(e) }`.
+032.rb:1:1: C: [Corrected] Style/ArrayIntersect: Use `!array1.intersect?(array2)` instead of `array1.none? { array2.member?(_1) }`.
+
+==> corrected/000.rb 26 <==
+array1.intersect?(array2)
+
+==> corrected/001.rb 56 <==
+!customer_country_codes.intersect?(SUPPORTED_COUNTRIES)
+
+==> corrected/002.rb 17 <==
+!a.intersect?(b)
+
+==> corrected/008.rb 16 <==
+a.intersect?(b)
+
+==> corrected/009.rb 17 <==
+!a.intersect?(b)
+
+==> corrected/010.rb 17 <==
+!a.intersect?(b)
+
+==> corrected/011.rb 17 <==
+a&.intersect?(b)
+
+==> corrected/016.rb 26 <==
+array1.intersect?(array2)
+
+==> corrected/017.rb 27 <==
+array1&.intersect?(array2)
+
+==> corrected/018.rb 26 <==
+array1.intersect?([1, 2])
+
+==> corrected/019.rb 32 <==
+array1&.intersect?(%w[foo bar])
+
+==> corrected/020.rb 26 <==
+array1.intersect?([1, 2])
+
+==> corrected/025.rb 26 <==
+array1.intersect?(array2)
+
+==> corrected/026.rb 27 <==
+!array1.intersect?([1, 2])
+
+==> corrected/028.rb 27 <==
+!array1.intersect?(array2)
+
+==> corrected/032.rb 27 <==
+!array1.intersect?(array2)
+

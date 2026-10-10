@@ -1,0 +1,14 @@
+==> offenses exit=1 224 <==
+000.rb:1:12: W: [Correctable] Lint/BigDecimalNew: `BigDecimal.new()` is deprecated. Use `BigDecimal()` instead.
+001.rb:1:14: W: [Correctable] Lint/BigDecimalNew: `BigDecimal.new()` is deprecated. Use `BigDecimal()` instead.
+
+==> autocorrect exit=0 220 <==
+000.rb:1:12: W: [Corrected] Lint/BigDecimalNew: `BigDecimal.new()` is deprecated. Use `BigDecimal()` instead.
+001.rb:1:14: W: [Corrected] Lint/BigDecimalNew: `BigDecimal.new()` is deprecated. Use `BigDecimal()` instead.
+
+==> corrected/000.rb 23 <==
+BigDecimal(123.456, 3)
+
+==> corrected/001.rb 23 <==
+BigDecimal(123.456, 3)
+

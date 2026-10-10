@@ -1,0 +1,46 @@
+==> offenses exit=1 725 <==
+004.rb:1:1: C: [Correctable] Style/AmbiguousEndlessMethodDefinition: Avoid using `and` statements with endless methods.
+008.rb:1:1: C: [Correctable] Style/AmbiguousEndlessMethodDefinition: Avoid using `or` statements with endless methods.
+012.rb:1:1: C: [Correctable] Style/AmbiguousEndlessMethodDefinition: Avoid using `if` statements with endless methods.
+016.rb:1:1: C: [Correctable] Style/AmbiguousEndlessMethodDefinition: Avoid using `unless` statements with endless methods.
+020.rb:1:1: C: [Correctable] Style/AmbiguousEndlessMethodDefinition: Avoid using `while` statements with endless methods.
+024.rb:1:1: C: [Correctable] Style/AmbiguousEndlessMethodDefinition: Avoid using `until` statements with endless methods.
+
+==> autocorrect exit=0 713 <==
+004.rb:1:1: C: [Corrected] Style/AmbiguousEndlessMethodDefinition: Avoid using `and` statements with endless methods.
+008.rb:1:1: C: [Corrected] Style/AmbiguousEndlessMethodDefinition: Avoid using `or` statements with endless methods.
+012.rb:1:1: C: [Corrected] Style/AmbiguousEndlessMethodDefinition: Avoid using `if` statements with endless methods.
+016.rb:1:1: C: [Corrected] Style/AmbiguousEndlessMethodDefinition: Avoid using `unless` statements with endless methods.
+020.rb:1:1: C: [Corrected] Style/AmbiguousEndlessMethodDefinition: Avoid using `while` statements with endless methods.
+024.rb:1:1: C: [Corrected] Style/AmbiguousEndlessMethodDefinition: Avoid using `until` statements with endless methods.
+
+==> corrected/004.rb 27 <==
+def foo
+  true
+end and bar
+
+==> corrected/008.rb 26 <==
+def foo
+  true
+end or bar
+
+==> corrected/012.rb 26 <==
+def foo
+  true
+end if bar
+
+==> corrected/016.rb 30 <==
+def foo
+  true
+end unless bar
+
+==> corrected/020.rb 29 <==
+def foo
+  true
+end while bar
+
+==> corrected/024.rb 29 <==
+def foo
+  true
+end until bar
+

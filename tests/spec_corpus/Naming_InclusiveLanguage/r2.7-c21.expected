@@ -1,0 +1,6 @@
+==> offenses exit=1 88 <==
+000.rb:1:9: C: Naming/InclusiveLanguage: Consider replacing 'master' with another term.
+
+==> autocorrect exit=1 88 <==
+000.rb:1:9: C: Naming/InclusiveLanguage: Consider replacing 'master' with another term.
+

@@ -1,0 +1,8 @@
+==> offenses exit=1 102 <==
+000.rb:1:1: C: [Correctable] Style/RedundantInitialize: Remove unnecessary empty `initialize` method.
+
+==> autocorrect exit=0 100 <==
+000.rb:1:1: C: [Corrected] Style/RedundantInitialize: Remove unnecessary empty `initialize` method.
+
+==> corrected/000.rb 0 <==
+

@@ -1,0 +1,94 @@
+==> offenses exit=1 2187 <==
+000.rb:1:1: W: [Correctable] Lint/SuppressedExceptionInNumberConversion: Use `Integer(arg, exception: false)` instead.
+001.rb:1:1: W: [Correctable] Lint/SuppressedExceptionInNumberConversion: Use `Integer(arg, base, exception: false)` instead.
+002.rb:1:1: W: [Correctable] Lint/SuppressedExceptionInNumberConversion: Use `Float(arg, exception: false)` instead.
+003.rb:1:1: W: [Correctable] Lint/SuppressedExceptionInNumberConversion: Use `BigDecimal(s, exception: false)` instead.
+004.rb:1:1: W: [Correctable] Lint/SuppressedExceptionInNumberConversion: Use `BigDecimal(s, n, exception: false)` instead.
+005.rb:1:1: W: [Correctable] Lint/SuppressedExceptionInNumberConversion: Use `Complex(s, exception: false)` instead.
+006.rb:1:1: W: [Correctable] Lint/SuppressedExceptionInNumberConversion: Use `Complex(r, i, exception: false)` instead.
+007.rb:1:1: W: [Correctable] Lint/SuppressedExceptionInNumberConversion: Use `Rational(x, exception: false)` instead.
+008.rb:1:1: W: [Correctable] Lint/SuppressedExceptionInNumberConversion: Use `Rational(x, y, exception: false)` instead.
+009.rb:1:1: W: [Correctable] Lint/SuppressedExceptionInNumberConversion: Use `Integer(arg, exception: false)` instead.
+010.rb:1:1: W: [Correctable] Lint/SuppressedExceptionInNumberConversion: Use `Integer(arg, exception: false)` instead.
+011.rb:1:1: W: [Correctable] Lint/SuppressedExceptionInNumberConversion: Use `Integer(arg, exception: false)` instead.
+012.rb:1:1: W: [Correctable] Lint/SuppressedExceptionInNumberConversion: Use `Integer(arg, exception: false)` instead.
+014.rb:1:1: W: [Correctable] Lint/SuppressedExceptionInNumberConversion: Use `Integer(arg, exception: false)` instead.
+015.rb:1:1: W: [Correctable] Lint/SuppressedExceptionInNumberConversion: Use `Kernel::Integer(arg, exception: false)` instead.
+016.rb:1:1: W: [Correctable] Lint/SuppressedExceptionInNumberConversion: Use `::Kernel::Integer(arg, exception: false)` instead.
+017.rb:1:1: W: [Correctable] Lint/SuppressedExceptionInNumberConversion: Use `::Kernel&.Integer(arg, exception: false)` instead.
+018.rb:1:1: W: [Correctable] Lint/SuppressedExceptionInNumberConversion: Use `::Kernel&.Float(arg, exception: false)` instead.
+
+==> autocorrect exit=0 2151 <==
+000.rb:1:1: W: [Corrected] Lint/SuppressedExceptionInNumberConversion: Use `Integer(arg, exception: false)` instead.
+001.rb:1:1: W: [Corrected] Lint/SuppressedExceptionInNumberConversion: Use `Integer(arg, base, exception: false)` instead.
+002.rb:1:1: W: [Corrected] Lint/SuppressedExceptionInNumberConversion: Use `Float(arg, exception: false)` instead.
+003.rb:1:1: W: [Corrected] Lint/SuppressedExceptionInNumberConversion: Use `BigDecimal(s, exception: false)` instead.
+004.rb:1:1: W: [Corrected] Lint/SuppressedExceptionInNumberConversion: Use `BigDecimal(s, n, exception: false)` instead.
+005.rb:1:1: W: [Corrected] Lint/SuppressedExceptionInNumberConversion: Use `Complex(s, exception: false)` instead.
+006.rb:1:1: W: [Corrected] Lint/SuppressedExceptionInNumberConversion: Use `Complex(r, i, exception: false)` instead.
+007.rb:1:1: W: [Corrected] Lint/SuppressedExceptionInNumberConversion: Use `Rational(x, exception: false)` instead.
+008.rb:1:1: W: [Corrected] Lint/SuppressedExceptionInNumberConversion: Use `Rational(x, y, exception: false)` instead.
+009.rb:1:1: W: [Corrected] Lint/SuppressedExceptionInNumberConversion: Use `Integer(arg, exception: false)` instead.
+010.rb:1:1: W: [Corrected] Lint/SuppressedExceptionInNumberConversion: Use `Integer(arg, exception: false)` instead.
+011.rb:1:1: W: [Corrected] Lint/SuppressedExceptionInNumberConversion: Use `Integer(arg, exception: false)` instead.
+012.rb:1:1: W: [Corrected] Lint/SuppressedExceptionInNumberConversion: Use `Integer(arg, exception: false)` instead.
+014.rb:1:1: W: [Corrected] Lint/SuppressedExceptionInNumberConversion: Use `Integer(arg, exception: false)` instead.
+015.rb:1:1: W: [Corrected] Lint/SuppressedExceptionInNumberConversion: Use `Kernel::Integer(arg, exception: false)` instead.
+016.rb:1:1: W: [Corrected] Lint/SuppressedExceptionInNumberConversion: Use `::Kernel::Integer(arg, exception: false)` instead.
+017.rb:1:1: W: [Corrected] Lint/SuppressedExceptionInNumberConversion: Use `::Kernel&.Integer(arg, exception: false)` instead.
+018.rb:1:1: W: [Corrected] Lint/SuppressedExceptionInNumberConversion: Use `::Kernel&.Float(arg, exception: false)` instead.
+
+==> corrected/000.rb 31 <==
+Integer(arg, exception: false)
+
+==> corrected/001.rb 37 <==
+Integer(arg, base, exception: false)
+
+==> corrected/002.rb 29 <==
+Float(arg, exception: false)
+
+==> corrected/003.rb 32 <==
+BigDecimal(s, exception: false)
+
+==> corrected/004.rb 35 <==
+BigDecimal(s, n, exception: false)
+
+==> corrected/005.rb 29 <==
+Complex(s, exception: false)
+
+==> corrected/006.rb 32 <==
+Complex(r, i, exception: false)
+
+==> corrected/007.rb 30 <==
+Rational(x, exception: false)
+
+==> corrected/008.rb 33 <==
+Rational(x, y, exception: false)
+
+==> corrected/009.rb 31 <==
+Integer(arg, exception: false)
+
+==> corrected/010.rb 31 <==
+Integer(arg, exception: false)
+
+==> corrected/011.rb 31 <==
+Integer(arg, exception: false)
+
+==> corrected/012.rb 31 <==
+Integer(arg, exception: false)
+
+==> corrected/014.rb 31 <==
+Integer(arg, exception: false)
+
+==> corrected/015.rb 39 <==
+Kernel::Integer(arg, exception: false)
+
+==> corrected/016.rb 41 <==
+::Kernel::Integer(arg, exception: false)
+
+==> corrected/017.rb 41 <==
+::Kernel&.Integer(arg, exception: false)
+
+==> corrected/018.rb 39 <==
+::Kernel&.Float(arg, exception: false)
+

@@ -1,0 +1,986 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 6 <==
+("x")
+
+==> 001.rb 9 <==
+("#{x}")
+
+==> 002.rb 5 <==
+(:x)
+
+==> 003.rb 10 <==
+(:"#{x}")
+
+==> 004.rb 4 <==
+(1)
+
+==> 005.rb 6 <==
+(1.2)
+
+==> 006.rb 5 <==
+({})
+
+==> 007.rb 5 <==
+([])
+
+==> 008.rb 6 <==
+(nil)
+
+==> 009.rb 7 <==
+(true)
+
+==> 010.rb 8 <==
+(false)
+
+==> 011.rb 11 <==
+(/regexp/)
+
+==> 012.rb 11 <==
+("x"; "y")
+
+==> 013.rb 7 <==
+(1; 2)
+
+==> 014.rb 5 <==
+(1i)
+
+==> 015.rb 5 <==
+(1r)
+
+==> 016.rb 10 <==
+((1..42))
+
+==> 017.rb 11 <==
+((1...42))
+
+==> 018.rb 8 <==
+((1..))
+
+==> 019.rb 9 <==
+((..42))
+
+==> 020.rb 11 <==
+(__FILE__)
+
+==> 021.rb 11 <==
+(__LINE__)
+
+==> 022.rb 15 <==
+(__ENCODING__)
+
+==> 023.rb 7 <==
+(redo)
+
+==> 024.rb 7 <==
+(self)
+
+==> 025.rb 8 <==
+(break)
+
+==> 026.rb 10 <==
+(break())
+
+==> 027.rb 11 <==
+(break(1))
+
+==> 028.rb 12 <==
+(break 1, 2)
+==> 029.rb 7 <==
+(next)
+
+==> 030.rb 9 <==
+(next())
+
+==> 031.rb 10 <==
+(next(1))
+
+==> 032.rb 11 <==
+(next 1, 2)
+==> 033.rb 8 <==
+(yield)
+
+==> 034.rb 10 <==
+(yield())
+
+==> 035.rb 14 <==
+(yield(1, 2))
+
+==> 036.rb 12 <==
+(yield 1, 2)
+==> 037.rb 9 <==
+(return)
+
+==> 038.rb 11 <==
+(return())
+
+==> 039.rb 12 <==
+(return(1))
+
+==> 040.rb 13 <==
+(return 1, 2)
+==> 041.rb 8 <==
+(super)
+
+==> 042.rb 10 <==
+(super())
+
+==> 043.rb 14 <==
+(super(1, 2))
+
+==> 044.rb 12 <==
+(super 1, 2)
+==> 045.rb 15 <==
+(defined?(:A))
+
+==> 046.rb 13 <==
+(defined? :A)
+==> 047.rb 11 <==
+(alias a b)
+==> 048.rb 7 <==
+(not 1)
+==> 049.rb 11 <==
+(a until b)
+==> 050.rb 11 <==
+(a while b)
+==> 051.rb 11 <==
+x = 1; (x)
+
+==> 052.rb 5 <==
+(@x)
+
+==> 053.rb 6 <==
+(@@x)
+
+==> 054.rb 5 <==
+($x)
+
+==> 055.rb 4 <==
+(X)
+
+==> 056.rb 11 <==
+(-> { x })
+
+==> 057.rb 15 <==
+(lambda { x })
+
+==> 058.rb 13 <==
+(proc { x })
+
+==> 059.rb 4 <==
+(x)
+
+==> 060.rb 6 <==
+(x y)
+
+==> 061.rb 10 <==
+(x(1, 2))
+
+==> 062.rb 13 <==
+("x".to_sym)
+
+==> 063.rb 14 <==
+("x"&.to_sym)
+
+==> 064.rb 8 <==
+(x[:y])
+
+==> 065.rb 9 <==
+(@x[:y])
+
+==> 066.rb 10 <==
+(@@x[:y])
+
+==> 067.rb 9 <==
+($x[:y])
+
+==> 068.rb 8 <==
+(X[:y])
+
+==> 069.rb 11 <==
+("foo"[0])
+
+==> 070.rb 12 <==
+(foo[0][0])
+
+==> 071.rb 13 <==
+(["foo"][0])
+
+==> 072.rb 15 <==
+({0 => :a}[0])
+
+==> 073.rb 7 <==
+(x; y)
+
+==> 074.rb 9 <==
+(x && y)
+
+==> 075.rb 9 <==
+(x || y)
+
+==> 076.rb 10 <==
+(x and y)
+
+==> 077.rb 9 <==
+(x or y)
+
+==> 078.rb 9 <==
+(x == y)
+
+==> 079.rb 10 <==
+(x === y)
+
+==> 080.rb 9 <==
+(x != y)
+
+==> 081.rb 8 <==
+(x > y)
+
+==> 082.rb 9 <==
+(x >= y)
+
+==> 083.rb 8 <==
+(x < y)
+
+==> 084.rb 9 <==
+(x <= y)
+
+==> 085.rb 11 <==
+(var = 42)
+
+==> 086.rb 12 <==
+(@var = 42)
+
+==> 087.rb 13 <==
+(@@var = 42)
+
+==> 088.rb 12 <==
+($var = 42)
+
+==> 089.rb 13 <==
+(CONST = 42)
+
+==> 090.rb 18 <==
+if (var = 42); end
+==> 091.rb 22 <==
+unless (var = 42); end
+==> 092.rb 21 <==
+while (var = 42); end
+==> 093.rb 21 <==
+until (var = 42); end
+==> 094.rb 25 <==
+(var + 42) > do_something
+==> 095.rb 21 <==
+foo((bar rescue baz))
+==> 096.rb 14 <==
+foo((x and y))
+==> 097.rb 13 <==
+foo((x or y))
+==> 098.rb 5 <==
+(!x)
+
+==> 099.rb 5 <==
+(~x)
+
+==> 100.rb 5 <==
+(-x)
+
+==> 101.rb 5 <==
+(+x)
+
+==> 102.rb 9 <==
+(!x arg)
+
+==> 103.rb 11 <==
+(!x.m arg)
+
+==> 104.rb 13 <==
+(!super arg)
+
+==> 105.rb 13 <==
+(!yield arg)
+
+==> 106.rb 16 <==
+(!defined? arg)
+
+==> 107.rb 15 <==
+(!x arg) && foo
+==> 108.rb 17 <==
+(!x.m arg) && foo
+==> 109.rb 19 <==
+(!super arg) && foo
+==> 110.rb 19 <==
+(!yield arg) && foo
+==> 111.rb 22 <==
+(!defined? arg) && foo
+==> 112.rb 15 <==
+foo && (!x arg)
+==> 113.rb 17 <==
+foo && (!x.m arg)
+==> 114.rb 19 <==
+foo && (!super arg)
+==> 115.rb 19 <==
+foo && (!yield arg)
+==> 116.rb 22 <==
+foo && (!defined? arg)
+==> 117.rb 6 <==
+(!x).y
+==> 118.rb 8 <==
+-(1.foo)
+==> 119.rb 8 <==
++(1.foo)
+==> 120.rb 12 <==
+-(1.foo.bar)
+==> 121.rb 12 <==
++(1.foo.bar)
+==> 122.rb 17 <==
+foo(*(bar & baz))
+==> 123.rb 17 <==
+foo(*(bar + baz))
+==> 124.rb 18 <==
+foo(**(bar + baz))
+==> 125.rb 15 <==
+foo + (bar baz)
+==> 126.rb 2 <==
+()
+==> 127.rb 9 <==
+(x).y(z)
+
+==> 128.rb 9 <==
+x.y((z))
+
+==> 129.rb 10 <==
+x&.y((z))
+
+==> 130.rb 12 <==
+x.y(z, (w))
+
+==> 131.rb 16 <==
+x(1, (2 if y?))
+
+==> 132.rb 20 <==
+x(1, (2 unless y?))
+
+==> 133.rb 19 <==
+x(1, (2 while y?))
+
+==> 134.rb 19 <==
+x(1, (2 until y?))
+
+==> 135.rb 14 <==
+x(1, (y arg))
+
+==> 136.rb 17 <==
+x(1, (y&.z arg))
+
+==> 137.rb 16 <==
+x(1, (y.+ arg))
+
+==> 138.rb 17 <==
+x(1, (y&.+ arg))
+
+==> 139.rb 13 <==
+x.y((z + w))
+
+==> 140.rb 12 <==
+x.y((a..b))
+
+==> 141.rb 21 <==
+x.y((foo &&
+  bar
+))
+
+==> 142.rb 43 <==
+(
+  ['a', 'b', 'c'].include?(foo)
+) && bar
+
+==> 143.rb 24 <==
+def foo((bar, baz)); end
+==> 144.rb 58 <==
+member_ids = (
+  [1, 2, 3].map { |i| i } # comment
+).uniq
+
+==> 145.rb 60 <==
+member_ids = (
+  [1, 2, 3].map { |i| i } # comment
+  ).uniq
+
+==> 146.rb 28 <==
+x = (
+  foo.bar # comment
+)
+
+==> 147.rb 20 <==
+if ((var = 42))
+end
+
+==> 148.rb 11 <==
+"#{(foo)}"
+
+==> 149.rb 6 <==
+[(1)]
+
+==> 150.rb 7 <==
+[(1
+)]
+
+==> 151.rb 14 <==
+[(foo + bar)]
+
+==> 152.rb 18 <==
+[
+  (
+    1
+  )
+]
+
+==> 153.rb 8 <==
+[(1
+),]
+
+==> 154.rb 23 <==
+[
+  (
+    1
+  ),
+  2
+]
+
+==> 155.rb 31 <==
+[
+  x = (
+    1
+  ),
+  y = 2
+]
+
+==> 156.rb 9 <==
+{a: (1)}
+
+==> 157.rb 10 <==
+{a: (1
+)}
+
+==> 158.rb 12 <==
+{ a: (1
+),}
+
+==> 159.rb 14 <==
+(0)**2
+(2)**2
+
+==> 160.rb 9 <==
+(2.1)**2
+
+==> 161.rb 8 <==
+2**(-2)
+
+==> 162.rb 7 <==
+2**(2)
+
+==> 163.rb 53 <==
+scope :my_scope, (-> do
+  where(column: :value)
+end)
+
+==> 164.rb 54 <==
+scope :my_scope, (lambda {
+  where(column: :value)
+})
+
+==> 165.rb 52 <==
+scope :my_scope, (proc {
+  where(column: :value)
+})
+
+==> 166.rb 57 <==
+scope :my_scope, (lambda do
+  where(column: :value)
+end)
+
+==> 167.rb 55 <==
+scope :my_scope, (proc do
+  where(column: :value)
+end)
+
+==> 168.rb 23 <==
+foo bar: (baz {
+}.qux)
+
+==> 169.rb 42 <==
+foo bar: (baz {
+  do_something(_1)
+}.qux)
+
+==> 170.rb 26 <==
+foo bar: (baz do
+end.qux)
+
+==> 171.rb 31 <==
+foo bar: (baz do
+end.qux.quux)
+
+==> 172.rb 45 <==
+foo bar: (baz do
+  do_something(_1)
+end.qux)
+
+==> 173.rb 31 <==
+obj&.foo bar: (baz do
+end.qux)
+
+==> 174.rb 50 <==
+obj&.foo bar: (baz do
+  do_something(_1)
+end.qux)
+
+==> 175.rb 33 <==
+foo (x.select { |item| item }).y
+
+==> 176.rb 36 <==
+foo (x.select do |item| item end).y
+
+==> 177.rb 46 <==
+(
+  x.select { |item| item.foo }
+).map(&:bar)
+
+==> 178.rb 27 <==
+(x.select { |item| item })
+
+==> 179.rb 18 <==
+(x.select { _1 })
+
+==> 180.rb 7 <==
+(-2)**2
+==> 181.rb 9 <==
+(-2.1)**2
+==> 182.rb 14 <==
+x = (foo; bar)
+==> 183.rb 15 <==
+x += (foo; bar)
+==> 184.rb 14 <==
+x + (foo; bar)
+==> 185.rb 13 <==
+x((foo; bar))
+==> 186.rb 25 <==
+(foo[key] & bar.baz).any?
+==> 187.rb 23 <==
+def x
+  (foo; bar)
+end
+
+==> 188.rb 28 <==
+def self.x
+  (foo; bar)
+end
+
+==> 189.rb 57 <==
+class A
+  ROOT = __FILE__
+  def same
+    (foo)
+  end
+end
+
+==> 190.rb 57 <==
+class A
+  def same
+    (foo)
+  end
+  LINE = __LINE__
+end
+
+==> 191.rb 78 <==
+class A
+  def same
+    (foo)
+  end
+end
+class B
+  def same
+    (foo)
+  end
+end
+
+==> 192.rb 29 <==
+def x
+  baz
+  (foo; bar)
+end
+
+==> 193.rb 22 <==
+x do
+  (foo; bar)
+end
+
+==> 194.rb 26 <==
+let(:foo) { (bar + baz) }
+
+==> 195.rb 21 <==
+x do
+  (_1; bar)
+end
+
+==> 196.rb 28 <==
+x do
+  baz
+  (foo; bar)
+end
+
+==> 197.rb 21 <==
+foo bar: (baz..)
+qux
+
+==> 198.rb 22 <==
+foo bar: (baz...)
+qux
+
+==> 199.rb 26 <==
+something do
+  (a..b)
+end
+
+==> 200.rb 27 <==
+something do
+  (a...b)
+end
+
+==> 201.rb 21 <==
+something { (a..b) }
+
+==> 202.rb 25 <==
+something do
+  (..b)
+end
+
+==> 203.rb 29 <==
+something do
+  (..b)
+  x
+end
+
+==> 204.rb 29 <==
+something do
+  x
+  (..b)
+end
+
+==> 205.rb 25 <==
+something do
+  (a..)
+end
+
+==> 206.rb 29 <==
+something do
+  x
+  (a..)
+end
+
+==> 207.rb 29 <==
+something do
+  (a..)
+  x
+end
+
+==> 208.rb 14 <==
+var = (a..)
+x
+
+==> 209.rb 16 <==
+(..1).cover?(0)
+
+==> 210.rb 17 <==
+(1..).cover?(42)
+
+==> 211.rb 19 <==
+var = (foo && bar)
+
+==> 212.rb 19 <==
+var = (foo || bar)
+
+==> 213.rb 18 <==
+var = (foo or bar)
+==> 214.rb 19 <==
+var = (foo and bar)
+==> 215.rb 19 <==
+(a 1, 2) && (1 + 1)
+==> 216.rb 8 <==
+(a)..(b)
+==> 217.rb 9 <==
+(a)...(b)
+==> 218.rb 6 <==
+(a..b)
+==> 219.rb 7 <==
+(a...b)
+==> 220.rb 20 <==
+do_something
+(a..b)
+
+==> 221.rb 21 <==
+do_something
+(a...b)
+
+==> 222.rb 11 <==
+(a || b)..c
+==> 223.rb 12 <==
+(a || b)...c
+==> 224.rb 11 <==
+a..(b || c)
+==> 225.rb 12 <==
+a...(b || c)
+==> 226.rb 20 <==
+/regexp/ =~ (b || c)
+==> 227.rb 18 <==
+regexp =~ (b || c)
+==> 228.rb 23 <==
+def foo
+  (x || y)
+end
+
+==> 229.rb 23 <==
+def foo
+  (x && y)
+end
+
+==> 230.rb 14 <==
+(x && y) && z
+
+==> 231.rb 14 <==
+x && (y && z)
+
+==> 232.rb 19 <==
+x && (y && z) && w
+
+==> 233.rb 19 <==
+x && (y && z) || w
+
+==> 234.rb 19 <==
+x || (y && z) && w
+
+==> 235.rb 14 <==
+(x && y) || z
+
+==> 236.rb 14 <==
+x || (y && z)
+
+==> 237.rb 19 <==
+x || (y && z) || w
+
+==> 238.rb 14 <==
+(x || y) && z
+
+==> 239.rb 14 <==
+x && (y || z)
+
+==> 240.rb 19 <==
+x && (y || z) && w
+
+==> 241.rb 12 <==
+x - (y || z)
+==> 242.rb 22 <==
+(1 and 2) and (3 or 4)
+==> 243.rb 21 <==
+(1 or 2) or (3 and 4)
+==> 244.rb 13 <==
+x && (y == z)
+==> 245.rb 13 <==
+x = *(y || z)
+==> 246.rb 41 <==
+x = *(case true when true then false end)
+==> 247.rb 38 <==
+x = *(case when rand > 0.5 then 1 end)
+==> 248.rb 13 <==
+x(**(y || z))
+==> 249.rb 19 <==
+cond ? x : (y || z)
+==> 250.rb 32 <==
+if cond
+  x
+else
+  (y || z)
+end
+
+==> 251.rb 10 <==
+(x || y).z
+==> 252.rb 14 <==
+(x == y).zero?
+==> 253.rb 21 <==
+x((prepare; perform))
+==> 254.rb 21 <==
+if x; y else (1) end
+
+==> 255.rb 36 <==
+begin
+  do_something
+end while(bar)
+
+==> 256.rb 36 <==
+begin
+  do_something
+end until(bar)
+
+==> 257.rb 19 <==
+if x; y else(1) end
+==> 258.rb 19 <==
+if x; y else (1)end
+==> 259.rb 10 <==
+x == (42)
+
+==> 260.rb 9 <==
+x > (42)
+
+==> 261.rb 10 <==
+x >= (42)
+
+==> 262.rb 9 <==
+x < (42)
+
+==> 263.rb 10 <==
+x <= (42)
+
+==> 264.rb 16 <==
+x =~ (/regexp/)
+
+==> 265.rb 24 <==
+(expression in pattern)
+
+==> 266.rb 18 <==
+foo((bar in baz))
+
+==> 267.rb 23 <==
+obj&.foo((bar in baz))
+
+==> 268.rb 15 <==
+x ({ y: 1 }), z
+==> 269.rb 31 <==
+x ({ y: 1 }).merge({ y: 2 }), z
+==> 270.rb 31 <==
+x ({ y: 1 }.merge({ y: 2 })), z
+==> 271.rb 47 <==
+x ({ y: 1 }.merge({ y: 2 }).merge({ y: 3 })), z
+==> 272.rb 18 <==
+x&.y ({ z: 1 }), w
+==> 273.rb 17 <==
+x(({ y: 1 }), z)
+
+==> 274.rb 25 <==
+x ({ y: 1 }), ({ y: 1 })
+
+==> 275.rb 22 <==
+method (:arg) { blah }
+==> 276.rb 12 <==
+method (arg)
+==> 277.rb 46 <==
+begin
+  some_method
+rescue(StandardError)
+end
+
+==> 278.rb 34 <==
+(foo rescue bar)
+(foo rescue bar)
+
+==> 279.rb 39 <==
+if (foo rescue bar)
+  do_something
+end
+
+==> 280.rb 42 <==
+while (foo rescue bar)
+  do_something
+end
+
+==> 281.rb 50 <==
+case (foo rescue bar)
+when foo
+  do_something
+end
+
+==> 282.rb 23 <==
+[
+  (foo rescue bar)
+]
+
+==> 283.rb 28 <==
+{
+  key: (foo rescue bar)
+}
+
+==> 284.rb 41 <==
+if cond
+  (foo rescue bar)
+else
+  42
+end
+
+==> 285.rb 29 <==
+cond ? (foo rescue bar) : 42
+
+==> 286.rb 31 <==
+case foo
+when(Const)
+  bar
+end
+
+==> 287.rb 24 <==
+super ({
+  foo: bar,
+})
+
+==> 288.rb 24 <==
+yield ({
+  foo: bar,
+})
+
+==> 289.rb 15 <==
+super (
+  42
+)
+
+==> 290.rb 15 <==
+yield (
+  42
+)
+
+==> 291.rb 16 <==
+return (
+  42
+)
+
+==> 292.rb 12 <==
+return (42)
+
+==> 293.rb 19 <==
+return (foo + bar)
+
+==> 294.rb 26 <==
+foo(
+  (
+    1
+  ),
+  2
+)
+
+==> 295.rb 80 <==
+[
+  (
+  <<-STRING
+    foo
+  STRING
+  ) ,
+  (
+  <<-STRING
+    bar
+  STRING
+  )
+]
+

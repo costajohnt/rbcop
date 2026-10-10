@@ -1,0 +1,45 @@
+==> offenses exit=1 1381 <==
+000.rb:1:3: C: [Correctable] Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a colon, and a space, then a note describing the problem.
+001.rb:1:3: C: [Correctable] Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a colon, and a space, then a note describing the problem.
+002.rb:1:3: C: [Correctable] Style/CommentAnnotation: Annotation keywords like `fixme` should be all upper case, followed by a colon, and a space, then a note describing the problem.
+003.rb:1:3: C: [Correctable] Style/CommentAnnotation: Annotation keywords like `Optimize` should be all upper case, followed by a colon, and a space, then a note describing the problem.
+004.rb:1:3: C: Style/CommentAnnotation: Annotation comment, with keyword `HACK`, is missing a note.
+010.rb:3:11: C: [Correctable] Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a colon, and a space, then a note describing the problem.
+010.rb:4:11: C: [Correctable] Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a colon, and a space, then a note describing the problem.
+011.rb:1:3: C: [Correctable] Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a colon, and a space, then a note describing the problem.
+
+==> autocorrect exit=1 1367 <==
+000.rb:1:3: C: [Corrected] Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a colon, and a space, then a note describing the problem.
+001.rb:1:3: C: [Corrected] Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a colon, and a space, then a note describing the problem.
+002.rb:1:3: C: [Corrected] Style/CommentAnnotation: Annotation keywords like `fixme` should be all upper case, followed by a colon, and a space, then a note describing the problem.
+003.rb:1:3: C: [Corrected] Style/CommentAnnotation: Annotation keywords like `Optimize` should be all upper case, followed by a colon, and a space, then a note describing the problem.
+004.rb:1:3: C: Style/CommentAnnotation: Annotation comment, with keyword `HACK`, is missing a note.
+010.rb:3:11: C: [Corrected] Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a colon, and a space, then a note describing the problem.
+010.rb:4:11: C: [Corrected] Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a colon, and a space, then a note describing the problem.
+011.rb:1:3: C: [Corrected] Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a colon, and a space, then a note describing the problem.
+
+==> corrected/000.rb 20 <==
+# TODO: make better
+
+==> corrected/001.rb 20 <==
+# TODO: make better
+
+==> corrected/002.rb 23 <==
+# FIXME: does not work
+
+==> corrected/003.rb 26 <==
+# OPTIMIZE: does not work
+
+==> corrected/010.rb 88 <==
+class ToBeDone
+  ITEMS = [
+    '', # TODO: Item 1
+    '', # TODO: Item 2
+  ].freeze
+end
+
+==> corrected/011.rb 43 <==
+# TODO: line 1
+# TODO line 2
+# TODO line 3
+

@@ -1,0 +1,49 @@
+==> offenses exit=1 2036 <==
+025.rb:1:1: W: [Correctable] Lint/AmbiguousBlockAssociation: Parenthesize the param `a { |el| puts el }` to make sure that the block will be associated with the `a` method call.
+026.rb:1:1: W: [Correctable] Lint/AmbiguousBlockAssociation: Parenthesize the param `a { puts _1 }` to make sure that the block will be associated with the `a` method call.
+027.rb:1:1: W: [Correctable] Lint/AmbiguousBlockAssociation: Parenthesize the param `a { |el| puts el }` to make sure that the block will be associated with the `a` method call.
+028.rb:1:1: W: [Correctable] Lint/AmbiguousBlockAssociation: Parenthesize the param `a { |el| puts el }` to make sure that the block will be associated with the `a` method call.
+029.rb:1:1: W: [Correctable] Lint/AmbiguousBlockAssociation: Parenthesize the param `change { order.events }` to make sure that the block will be associated with the `change` method call.
+030.rb:1:6: W: [Correctable] Lint/AmbiguousBlockAssociation: Parenthesize the param `a { |el| el }` to make sure that the block will be associated with the `a` method call.
+031.rb:1:7: W: [Correctable] Lint/AmbiguousBlockAssociation: Parenthesize the param `a { |el| puts el }` to make sure that the block will be associated with the `a` method call.
+032.rb:1:14: W: Lint/AmbiguousBlockAssociation: `map` is called without a block because the `do` block binds to `render`. Use braces or extract to a variable.
+033.rb:1:5: W: Lint/AmbiguousBlockAssociation: `select` is called without a block because the `do` block binds to `foo`. Use braces or extract to a variable.
+034.rb:1:5: W: Lint/AmbiguousBlockAssociation: `each` is called without a block because the `do` block binds to `foo`. Use braces or extract to a variable.
+035.rb:1:5: W: Lint/AmbiguousBlockAssociation: `filter_map` is called without a block because the `do` block binds to `foo`. Use braces or extract to a variable.
+036.rb:1:5: W: Lint/AmbiguousBlockAssociation: `map` is called without a block because the `do` block binds to `foo`. Use braces or extract to a variable.
+
+==> autocorrect exit=1 2022 <==
+025.rb:1:1: W: [Corrected] Lint/AmbiguousBlockAssociation: Parenthesize the param `a { |el| puts el }` to make sure that the block will be associated with the `a` method call.
+026.rb:1:1: W: [Corrected] Lint/AmbiguousBlockAssociation: Parenthesize the param `a { puts _1 }` to make sure that the block will be associated with the `a` method call.
+027.rb:1:1: W: [Corrected] Lint/AmbiguousBlockAssociation: Parenthesize the param `a { |el| puts el }` to make sure that the block will be associated with the `a` method call.
+028.rb:1:1: W: [Corrected] Lint/AmbiguousBlockAssociation: Parenthesize the param `a { |el| puts el }` to make sure that the block will be associated with the `a` method call.
+029.rb:1:1: W: [Corrected] Lint/AmbiguousBlockAssociation: Parenthesize the param `change { order.events }` to make sure that the block will be associated with the `change` method call.
+030.rb:1:6: W: [Corrected] Lint/AmbiguousBlockAssociation: Parenthesize the param `a { |el| el }` to make sure that the block will be associated with the `a` method call.
+031.rb:1:7: W: [Corrected] Lint/AmbiguousBlockAssociation: Parenthesize the param `a { |el| puts el }` to make sure that the block will be associated with the `a` method call.
+032.rb:1:14: W: Lint/AmbiguousBlockAssociation: `map` is called without a block because the `do` block binds to `render`. Use braces or extract to a variable.
+033.rb:1:5: W: Lint/AmbiguousBlockAssociation: `select` is called without a block because the `do` block binds to `foo`. Use braces or extract to a variable.
+034.rb:1:5: W: Lint/AmbiguousBlockAssociation: `each` is called without a block because the `do` block binds to `foo`. Use braces or extract to a variable.
+035.rb:1:5: W: Lint/AmbiguousBlockAssociation: `filter_map` is called without a block because the `do` block binds to `foo`. Use braces or extract to a variable.
+036.rb:1:5: W: Lint/AmbiguousBlockAssociation: `map` is called without a block because the `do` block binds to `foo`. Use braces or extract to a variable.
+
+==> corrected/025.rb 32 <==
+some_method(a { |el| puts el })
+
+==> corrected/026.rb 27 <==
+some_method(a { puts _1 })
+
+==> corrected/027.rb 36 <==
+Foo.some_method(a { |el| puts el })
+
+==> corrected/028.rb 37 <==
+Foo&.some_method(a { |el| puts el })
+
+==> corrected/029.rb 52 <==
+expect { order.expire }.to(change { order.events })
+
+==> corrected/030.rb 33 <==
+Hash[some_method(a { |el| el })]
+
+==> corrected/031.rb 38 <==
+foo = some_method(a { |el| puts el })
+

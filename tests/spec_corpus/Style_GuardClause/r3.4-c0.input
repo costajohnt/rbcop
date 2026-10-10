@@ -1,0 +1,50 @@
+==> .rubocop.yml 153 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Layout/LineLength:
+  Enabled: true
+  Max: 80
+
+==> 000.rb 107 <==
+define_method(:func) do
+  if it
+    work
+  end
+end
+
+define_method(:func) do
+  unless it
+    work
+  end
+end
+
+==> 001.rb 111 <==
+define_method(:func) do
+  if it
+    # TODO
+  end
+end
+
+define_method(:func) do
+  unless it
+    # TODO
+  end
+end
+
+==> 002.rb 133 <==
+define_method(:func) do
+  if it
+    do_something(foo)
+  end
+end
+
+define_method(:func) do
+  unless it
+    do_something(foo)
+  end
+end
+

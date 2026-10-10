@@ -1,0 +1,18 @@
+==> offenses exit=1 278 <==
+000.rb:2:3: W: [Correctable] Lint/RefinementImportMethods: Use `import_methods` instead of `include` because it is deprecated in Ruby 3.1.
+001.rb:2:3: W: [Correctable] Lint/RefinementImportMethods: Use `import_methods` instead of `prepend` because it is deprecated in Ruby 3.1.
+
+==> autocorrect exit=0 274 <==
+000.rb:2:3: W: [Corrected] Lint/RefinementImportMethods: Use `import_methods` instead of `include` because it is deprecated in Ruby 3.1.
+001.rb:2:3: W: [Corrected] Lint/RefinementImportMethods: Use `import_methods` instead of `prepend` because it is deprecated in Ruby 3.1.
+
+==> corrected/000.rb 39 <==
+refine Foo do
+  import_methods Bar
+end
+
+==> corrected/001.rb 39 <==
+refine Foo do
+  import_methods Bar
+end
+

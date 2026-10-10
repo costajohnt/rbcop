@@ -1,0 +1,189 @@
+==> .rubocop.yml 189 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: start_of_line
+  AutoCorrect: true
+
+==> 000.rb 22 <==
+puts 1; class Test
+end
+==> 001.rb 31 <==
+puts 1; class << self; Test
+end
+==> 002.rb 23 <==
+puts 1; module Test
+end
+==> 003.rb 19 <==
+puts 1; if test
+end
+==> 004.rb 23 <==
+puts 1; unless test
+end
+==> 005.rb 22 <==
+puts 1; while test
+end
+==> 006.rb 22 <==
+puts 1; until test
+end
+==> 007.rb 25 <==
+puts 1; case a when b
+end
+==> 008.rb 24 <==
+puts 1; case a; in b
+end
+==> 009.rb 25 <==
+puts 1; class Test
+  end
+
+==> 010.rb 17 <==
+class Test
+  end
+
+==> 011.rb 26 <==
+puts 1; module Test
+  end
+
+==> 012.rb 18 <==
+module Test
+  end
+
+==> 013.rb 22 <==
+puts 1; if test
+  end
+
+==> 014.rb 14 <==
+if test
+  end
+
+==> 015.rb 26 <==
+puts 1; unless test
+  end
+
+==> 016.rb 18 <==
+unless test
+  end
+
+==> 017.rb 25 <==
+puts 1; while test
+  end
+
+==> 018.rb 17 <==
+while test
+  end
+
+==> 019.rb 25 <==
+puts 1; until test
+  end
+
+==> 020.rb 17 <==
+until test
+  end
+
+==> 021.rb 28 <==
+puts 1; case a when b
+  end
+
+==> 022.rb 20 <==
+case a when b
+  end
+
+==> 023.rb 18 <==
+case a
+in b
+  end
+
+==> 024.rb 23 <==
+puts(if test
+     end)
+
+==> 025.rb 24 <==
+var = if test
+      end
+
+==> 026.rb 28 <==
+var = unless test
+      end
+
+==> 027.rb 27 <==
+var = while test
+      end
+
+==> 028.rb 27 <==
+var = until test
+      end
+
+==> 029.rb 30 <==
+var = case a when b
+      end
+
+==> 030.rb 26 <==
+var << if test
+       end
+
+==> 031.rb 30 <==
+var << unless test
+       end
+
+==> 032.rb 29 <==
+var << while test
+       end
+
+==> 033.rb 29 <==
+var << until test
+       end
+
+==> 034.rb 32 <==
+var << case a when b
+       end
+
+==> 035.rb 37 <==
+var << case a
+       in b
+       end
+
+==> 036.rb 20 <==
+var =
+  if test
+end
+
+==> 037.rb 17 <==
+var = if test
+end
+==> 038.rb 21 <==
+var = unless test
+end
+==> 039.rb 20 <==
+var = while test
+end
+==> 040.rb 21 <==
+var << while test
+end
+==> 041.rb 20 <==
+var = until test
+end
+==> 042.rb 23 <==
+var = case a when b
+end
+==> 043.rb 21 <==
+var =
+  if test
+  end
+==> 044.rb 23 <==
+test case a when b 
+end
+==> 045.rb 28 <==
+test case a when b
+     end
+
+==> 046.rb 22 <==
+test case a; in b 
+end
+==> 047.rb 27 <==
+test case a; in b
+     end
+

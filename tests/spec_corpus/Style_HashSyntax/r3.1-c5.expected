@@ -1,0 +1,9 @@
+==> offenses exit=1 83 <==
+000.rb:1:15: C: [Correctable] Style/HashSyntax: Don't mix styles in the same hash.
+
+==> autocorrect exit=0 81 <==
+000.rb:1:15: C: [Corrected] Style/HashSyntax: Don't mix styles in the same hash.
+
+==> corrected/000.rb 23 <==
+{:"t o" => 0, :b => b}
+

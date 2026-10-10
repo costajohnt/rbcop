@@ -1,0 +1,24 @@
+==> offenses exit=1 486 <==
+002.rb:1:1: C: [Correctable] Style/RedundantInitialize: Remove unnecessary empty `initialize` method.
+004.rb:1:1: C: [Correctable] Style/RedundantInitialize: Remove unnecessary `initialize` method.
+005.rb:1:1: C: [Correctable] Style/RedundantInitialize: Remove unnecessary `initialize` method.
+006.rb:1:1: C: [Correctable] Style/RedundantInitialize: Remove unnecessary `initialize` method.
+012.rb:1:1: C: [Correctable] Style/RedundantInitialize: Remove unnecessary `initialize` method.
+
+==> autocorrect exit=0 476 <==
+002.rb:1:1: C: [Corrected] Style/RedundantInitialize: Remove unnecessary empty `initialize` method.
+004.rb:1:1: C: [Corrected] Style/RedundantInitialize: Remove unnecessary `initialize` method.
+005.rb:1:1: C: [Corrected] Style/RedundantInitialize: Remove unnecessary `initialize` method.
+006.rb:1:1: C: [Corrected] Style/RedundantInitialize: Remove unnecessary `initialize` method.
+012.rb:1:1: C: [Corrected] Style/RedundantInitialize: Remove unnecessary `initialize` method.
+
+==> corrected/002.rb 0 <==
+
+==> corrected/004.rb 0 <==
+
+==> corrected/005.rb 0 <==
+
+==> corrected/006.rb 0 <==
+
+==> corrected/012.rb 0 <==
+

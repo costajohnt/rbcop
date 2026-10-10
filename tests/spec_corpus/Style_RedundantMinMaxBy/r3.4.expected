@@ -1,0 +1,34 @@
+==> offenses exit=1 564 <==
+000.rb:1:7: C: [Correctable] Style/RedundantMinMaxBy: Use `max` instead of `max_by { it }`.
+001.rb:1:8: C: [Correctable] Style/RedundantMinMaxBy: Use `max` instead of `max_by { it }`.
+002.rb:1:7: C: [Correctable] Style/RedundantMinMaxBy: Use `min` instead of `min_by { it }`.
+003.rb:1:8: C: [Correctable] Style/RedundantMinMaxBy: Use `min` instead of `min_by { it }`.
+004.rb:1:7: C: [Correctable] Style/RedundantMinMaxBy: Use `minmax` instead of `minmax_by { it }`.
+005.rb:1:8: C: [Correctable] Style/RedundantMinMaxBy: Use `minmax` instead of `minmax_by { it }`.
+
+==> autocorrect exit=0 552 <==
+000.rb:1:7: C: [Corrected] Style/RedundantMinMaxBy: Use `max` instead of `max_by { it }`.
+001.rb:1:8: C: [Corrected] Style/RedundantMinMaxBy: Use `max` instead of `max_by { it }`.
+002.rb:1:7: C: [Corrected] Style/RedundantMinMaxBy: Use `min` instead of `min_by { it }`.
+003.rb:1:8: C: [Corrected] Style/RedundantMinMaxBy: Use `min` instead of `min_by { it }`.
+004.rb:1:7: C: [Corrected] Style/RedundantMinMaxBy: Use `minmax` instead of `minmax_by { it }`.
+005.rb:1:8: C: [Corrected] Style/RedundantMinMaxBy: Use `minmax` instead of `minmax_by { it }`.
+
+==> corrected/000.rb 10 <==
+array.max
+
+==> corrected/001.rb 11 <==
+array&.max
+
+==> corrected/002.rb 10 <==
+array.min
+
+==> corrected/003.rb 11 <==
+array&.min
+
+==> corrected/004.rb 13 <==
+array.minmax
+
+==> corrected/005.rb 14 <==
+array&.minmax
+

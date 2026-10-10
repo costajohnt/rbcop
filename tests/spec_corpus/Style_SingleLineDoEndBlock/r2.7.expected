@@ -1,0 +1,75 @@
+==> offenses exit=1 846 <==
+000.rb:1:1: C: [Correctable] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+001.rb:1:1: C: [Correctable] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+002.rb:1:1: C: [Correctable] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+003.rb:1:1: C: [Correctable] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+004.rb:1:1: C: [Correctable] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+005.rb:1:1: C: [Correctable] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+006.rb:1:1: C: [Correctable] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+007.rb:1:1: C: [Correctable] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+008.rb:1:1: C: [Correctable] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+
+==> autocorrect exit=0 828 <==
+000.rb:1:1: C: [Corrected] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+001.rb:1:1: C: [Corrected] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+002.rb:1:1: C: [Corrected] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+003.rb:1:1: C: [Corrected] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+004.rb:1:1: C: [Corrected] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+005.rb:1:1: C: [Corrected] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+006.rb:1:1: C: [Corrected] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+007.rb:1:1: C: [Corrected] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+008.rb:1:1: C: [Corrected] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+
+==> corrected/000.rb 17 <==
+foo do
+ bar 
+end
+
+==> corrected/001.rb 13 <==
+foo do
+ 
+end
+
+==> corrected/002.rb 28 <==
+foo do |arg|
+ bar(arg) 
+end
+
+==> corrected/003.rb 21 <==
+foo do
+ bar(_1) 
+end
+
+==> corrected/004.rb 31 <==
+foo do
+ <<~EOS 
+  text
+EOS
+end
+
+==> corrected/005.rb 36 <==
+foo do
+ bar(<<~EOS) 
+  text
+EOS
+end
+
+==> corrected/006.rb 53 <==
+foo do
+ bar(<<~ONE, <<~TWO) 
+  one
+ONE
+  two
+TWO
+end
+
+==> corrected/007.rb 25 <==
+->(arg) do
+ foo arg 
+end
+
+==> corrected/008.rb 31 <==
+lambda do |arg|
+ foo(arg) 
+end
+

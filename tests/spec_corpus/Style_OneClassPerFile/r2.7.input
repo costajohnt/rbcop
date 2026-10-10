@@ -1,0 +1,123 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 29 <==
+class Foo
+end
+
+class Bar
+end
+
+==> 001.rb 31 <==
+module Foo
+end
+
+module Bar
+end
+
+==> 002.rb 30 <==
+class Foo
+end
+
+module Bar
+end
+
+==> 003.rb 30 <==
+module Foo
+end
+
+class Bar
+end
+
+==> 004.rb 44 <==
+class Foo
+end
+
+class Bar
+end
+
+class Baz
+end
+
+==> 005.rb 39 <==
+class Foo::Baz
+end
+
+class Bar::Qux
+end
+
+==> 006.rb 50 <==
+require 'something'
+
+class Foo
+end
+
+class Bar
+end
+
+==> 007.rb 75 <==
+class Foo
+  def method_one
+  end
+end
+
+class Bar
+  def method_two
+  end
+end
+
+==> 008.rb 37 <==
+class Foo
+  def method_one
+  end
+end
+
+==> 009.rb 38 <==
+module Foo
+  def method_one
+  end
+end
+
+==> 010.rb 14 <==
+class Foo
+end
+
+==> 011.rb 32 <==
+class Foo
+  class Bar
+  end
+end
+
+==> 012.rb 34 <==
+module Foo
+  module Bar
+  end
+end
+
+==> 013.rb 52 <==
+module Foo
+  class Bar
+  end
+
+  class Baz
+  end
+end
+
+==> 014.rb 28 <==
+require 'foo'
+require 'bar'
+
+==> 015.rb 55 <==
+class Foo
+end
+
+class << self
+  def something
+  end
+end
+

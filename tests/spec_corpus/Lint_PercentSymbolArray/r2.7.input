@@ -1,0 +1,34 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 15 <==
+%i(foo bar baz)
+==> 001.rb 6 <==
+%i{$,}
+==> 002.rb 21 <==
+%i(:foo, :bar, :baz)
+
+==> 003.rb 17 <==
+%i(:foo bar baz)
+
+==> 004.rb 17 <==
+%i(foo, bar baz)
+
+==> 005.rb 15 <==
+%I(foo bar baz)
+==> 006.rb 6 <==
+%I{$,}
+==> 007.rb 21 <==
+%I(:foo, :bar, :baz)
+
+==> 008.rb 17 <==
+%I(:foo bar baz)
+
+==> 009.rb 17 <==
+%I(foo, bar baz)
+

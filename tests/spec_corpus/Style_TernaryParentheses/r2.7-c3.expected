@@ -1,0 +1,144 @@
+==> offenses exit=1 3447 <==
+000.rb:1:7: C: [Correctable] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+001.rb:1:7: C: [Correctable] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+002.rb:1:7: C: [Correctable] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+003.rb:1:14: C: [Correctable] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+004.rb:1:7: C: [Correctable] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+005.rb:1:7: C: [Correctable] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+008.rb:1:7: C: [Correctable] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+009.rb:1:7: C: [Correctable] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+010.rb:1:7: C: [Correctable] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+011.rb:1:7: C: [Correctable] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+016.rb:1:1: C: [Correctable] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+017.rb:1:1: C: [Correctable] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+018.rb:1:1: C: [Correctable] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+019.rb:1:1: C: [Correctable] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+020.rb:1:1: C: [Correctable] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+021.rb:1:7: C: [Correctable] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+022.rb:1:7: C: [Correctable] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+024.rb:1:7: C: [Correctable] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+025.rb:1:7: C: [Correctable] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+026.rb:1:7: C: [Correctable] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+027.rb:1:7: C: [Correctable] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+028.rb:1:7: C: [Correctable] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+029.rb:1:7: C: [Correctable] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+030.rb:1:7: C: [Correctable] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+031.rb:1:7: C: [Correctable] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+032.rb:1:7: C: [Correctable] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+033.rb:1:7: C: [Correctable] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+034.rb:1:13: C: [Correctable] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+
+==> autocorrect exit=0 3391 <==
+000.rb:1:7: C: [Corrected] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+001.rb:1:7: C: [Corrected] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+002.rb:1:7: C: [Corrected] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+003.rb:1:14: C: [Corrected] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+004.rb:1:7: C: [Corrected] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+005.rb:1:7: C: [Corrected] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+008.rb:1:7: C: [Corrected] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+009.rb:1:7: C: [Corrected] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+010.rb:1:7: C: [Corrected] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+011.rb:1:7: C: [Corrected] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+016.rb:1:1: C: [Corrected] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+017.rb:1:1: C: [Corrected] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+018.rb:1:1: C: [Corrected] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+019.rb:1:1: C: [Corrected] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+020.rb:1:1: C: [Corrected] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+021.rb:1:7: C: [Corrected] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+022.rb:1:7: C: [Corrected] Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+024.rb:1:7: C: [Corrected] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+025.rb:1:7: C: [Corrected] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+026.rb:1:7: C: [Corrected] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+027.rb:1:7: C: [Corrected] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+028.rb:1:7: C: [Corrected] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+029.rb:1:7: C: [Corrected] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+030.rb:1:7: C: [Corrected] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+031.rb:1:7: C: [Corrected] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+032.rb:1:7: C: [Corrected] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+033.rb:1:7: C: [Corrected] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+034.rb:1:13: C: [Corrected] Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.
+
+==> corrected/000.rb 19 <==
+foo = bar? ? a : b
+
+==> corrected/001.rb 20 <==
+foo = yield ? a : b
+
+==> corrected/002.rb 24 <==
+foo = bar[:baz] ? a : b
+
+==> corrected/003.rb 25 <==
+foo = bar or baz ? a : b
+
+==> corrected/004.rb 23 <==
+foo = bar&.baz ? a : b
+
+==> corrected/005.rb 23 <==
+foo = bar.baz? ? a : b
+
+==> corrected/008.rb 28 <==
+foo = defined?(bar) ? a : b
+
+==> corrected/009.rb 32 <==
+foo = defined?(bar.baz) ? a : b
+
+==> corrected/010.rb 32 <==
+foo = defined?(Bar.baz) ? a : b
+
+==> corrected/011.rb 33 <==
+foo = defined?(Bar::BAZ) ? a : b
+
+==> corrected/016.rb 42 <==
+%w(a b).include?(params[:t]) ? "ab" : "c"
+
+==> corrected/017.rb 45 <==
+%w(a b).include?(params[:t], 3) ? "ab" : "c"
+
+==> corrected/018.rb 45 <==
+%w(a b).include?(params[:t], x) ? "ab" : "c"
+
+==> corrected/019.rb 35 <==
+%w(a b).include?("a") ? "ab" : "c"
+
+==> corrected/020.rb 35 <==
+%w(a b).include?("a") ? "ab" : "c"
+
+==> corrected/021.rb 24 <==
+foo = baz?(bar) ? a : b
+
+==> corrected/022.rb 28 <==
+foo = baz.foo?(bar) ? a : b
+
+==> corrected/024.rb 27 <==
+foo = (1 + 1 == 2) ? a : b
+
+==> corrected/025.rb 27 <==
+foo = (bar && baz) ? a : b
+
+==> corrected/026.rb 34 <==
+foo = (bar && baz || bar) ? a : b
+
+==> corrected/027.rb 36 <==
+foo = (bar && (baz != bar)) ? a : b
+
+==> corrected/028.rb 31 <==
+foo = (1 < (bar.baz?)) ? a : b
+
+==> corrected/029.rb 34 <==
+foo = (1 <= (bar ** baz)) ? a : b
+
+==> corrected/030.rb 31 <==
+foo = (1 >= bar * baz) ? a : b
+
+==> corrected/031.rb 26 <==
+foo = (bar + baz) ? a : b
+
+==> corrected/032.rb 26 <==
+foo = (bar - baz) ? a : b
+
+==> corrected/033.rb 26 <==
+foo = (bar < baz) ? a : b
+
+==> corrected/034.rb 31 <==
+foo = bar = (baz == 1) ? a : b
+

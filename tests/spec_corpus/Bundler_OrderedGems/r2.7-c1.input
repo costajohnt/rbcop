@@ -1,0 +1,17 @@
+==> .rubocop.yml 168 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Bundler/OrderedGems:
+  TreatCommentsAsGroupSeparators: true
+
+==> 000.gemfile 58 <==
+# For code quality
+gem 'rubocop'
+# For
+# test
+gem 'rspec'
+

@@ -1,0 +1,501 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 20 <==
+cond ? func1 : func2
+==> 001.rb 33 <==
+if cond
+  func1
+ else
+ func2
+end
+
+==> 002.rb 161 <==
+Rails.application.config.ideal_postcodes_key =
+  if Rails.env.production? || Rails.env.staging?
+    "AAAA-AAAA-AAAA-AAAA"
+  else
+    "BBBB-BBBB-BBBB-BBBB"
+  end
+
+==> 003.rb 33 <==
+if cond then func1 else func2 end
+==> 004.rb 38 <==
+if a1
+  b1
+elsif a2
+  b2
+else
+  c
+end
+
+==> 005.rb 41 <==
+﻿if a1
+  b1
+elsif a2
+  b2
+else
+  c
+end
+
+==> 006.rb 42 <==
+foo.bar = if baz
+  derp1
+else
+  derp2
+end
+
+==> 007.rb 60 <==
+foo.bar = if baz
+  derp1
+elsif meh
+  derp2
+else
+  derp3
+end
+
+==> 008.rb 29 <==
+foo[bar] = if baz
+  derp
+end
+
+==> 009.rb 28 <==
+var = if a
+  0
+else
+  1
+end
+
+==> 010.rb 41 <==
+var = if a
+  0
+else
+  1
+end.abc.join("")
+
+==> 011.rb 39 <==
+var = if a
+  0
+else
+  1
+end.abc.tap {}
+
+==> 012.rb 120 <==
+foo.bar = if baz
+            derp1
+          elsif meh
+            derp2
+          else
+            derp3
+          end
+
+==> 013.rb 87 <==
+foo[bar] = if baz
+             derp1
+           else
+             derp2
+           end
+
+==> 014.rb 52 <==
+var = if a
+        0
+      else
+        1
+      end
+
+==> 015.rb 30 <==
+var = if a
+  0
+else b
+  1
+end
+
+==> 016.rb 31 <==
+var = if a
+  0
+elsif b
+  1
+end
+
+==> 017.rb 57 <==
+var = case condition
+      when a
+        0
+else
+  1
+end
+
+==> 018.rb 50 <==
+var = case expr
+      in a
+        0
+else
+  1
+end
+
+==> 019.rb 31 <==
+var = if a
+        0
+      end
+
+==> 020.rb 38 <==
+var =
+  if a
+    0
+  else
+    1
+  end
+
+==> 021.rb 34 <==
+var = while a
+        b
+      end
+
+==> 022.rb 34 <==
+var = until a
+        b
+      end
+
+==> 023.rb 44 <==
+if a
+  a rescue nil
+else
+  a rescue nil
+end
+
+==> 024.rb 40 <==
+unless cond
+   func1
+ else
+   func2
+end
+
+==> 025.rb 18 <==
+unless a
+else
+end
+
+==> 026.rb 13 <==
+unless a
+end
+
+==> 027.rb 43 <==
+case a
+when b
+  c
+when d
+  e
+ else
+  f
+end
+
+==> 028.rb 42 <==
+case a
+when b
+  c
+  c
+when d
+else
+  f
+end
+
+==> 029.rb 92 <==
+case superclass
+when /\A(#{NAMESPACEMATCH})(?:\s|\Z)/
+  $1
+when "self"
+  namespace.path
+end
+
+==> 030.rb 66 <==
+case 0
+in 0
+  foo
+in -1..1
+  bar
+in Integer
+  baz
+ else
+  qux
+end
+
+==> 031.rb 65 <==
+case 0
+in 0
+  foo
+in -1..1
+  bar
+in Integer
+  baz
+else
+  qux
+end
+
+==> 032.rb 59 <==
+case 0
+in 0
+  foo
+in -1..1
+  bar
+in Integer
+  baz
+else
+end
+
+==> 033.rb 22 <==
+case 0
+in a
+  p a
+end
+
+==> 034.rb 149 <==
+case code_type
+  when 'ruby', 'sql', 'plain'
+    code_type
+  when 'erb'
+    'ruby; html-script: true'
+  when "html"
+    'xml'
+  else
+    'plain'
+end
+
+==> 035.rb 13 <==
+def test
+end
+
+==> 036.rb 18 <==
+def self.test
+end
+
+==> 037.rb 73 <==
+private def test
+  something
+rescue
+  handling
+else
+  something_else
+end
+
+==> 038.rb 121 <==
+private def test
+          something
+        rescue
+          handling
+        else
+          something_else
+        end
+
+==> 039.rb 343 <==
+def my_func
+  puts 'do something outside block'
+  begin
+    puts 'do something error prone'
+  rescue SomeException, SomeOther => e
+    puts 'wrongly intended error handling'
+  rescue
+    puts 'wrongly intended error handling'
+else
+    puts 'wrongly intended normal case handling'
+  ensure
+    puts 'wrongly intended common handling'
+  end
+end
+
+==> 040.rb 152 <==
+begin
+  raise StandardError.new('Fail') if rand(2).odd?
+rescue StandardError => error
+  $stderr.puts error.message
+else
+  $stdout.puts 'Lucky you!'
+end
+
+==> 041.rb 115 <==
+def my_func(string)
+  puts string
+rescue => e
+  puts e
+else
+  puts e
+ensure
+  puts 'I love methods that print'
+end
+
+==> 042.rb 117 <==
+def my_func(string)
+  puts string
+rescue => e
+  puts e
+  else
+  puts e
+ensure
+  puts 'I love methods that print'
+end
+
+==> 043.rb 156 <==
+def my_func
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+rescue
+  puts 'error handling'
+else
+  puts 'normal handling'
+end
+
+==> 044.rb 158 <==
+def my_func
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+rescue
+  puts 'error handling'
+  else
+  puts 'normal handling'
+end
+
+==> 045.rb 127 <==
+class MyClass
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+else
+  puts 'normal handling'
+end
+
+==> 046.rb 129 <==
+class MyClass
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+  else
+  puts 'normal handling'
+end
+
+==> 047.rb 129 <==
+module MyModule
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+else
+  puts 'normal handling'
+end
+
+==> 048.rb 131 <==
+module MyModule
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+  else
+  puts 'normal handling'
+end
+
+==> 049.rb 151 <==
+class << self
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+else
+  puts 'normal handling'
+ensure
+  puts 'cleanup'
+end
+
+==> 050.rb 153 <==
+class << self
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+  else
+  puts 'normal handling'
+ensure
+  puts 'cleanup'
+end
+
+==> 051.rb 167 <==
+array_like.each do |n|
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+rescue
+  puts 'error handling'
+else
+  puts 'normal handling'
+end
+
+==> 052.rb 168 <==
+array_like.each do
+  _1
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+rescue
+  puts 'error handling'
+else
+  puts 'normal handling'
+end
+
+==> 053.rb 176 <==
+result = array_like.each do |n|
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+rescue
+  puts 'error handling'
+else
+  puts 'normal handling'
+end
+
+==> 054.rb 142 <==
+foo << array_like.map do |n|
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+else
+  puts 'normal handling'
+end
+
+==> 055.rb 140 <==
+foo(array_like.map do |n|
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+else
+  puts 'normal handling'
+end)
+
+==> 056.rb 151 <==
+result = foo << array_like.map do |n|
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+else
+  puts 'normal handling'
+end
+
+==> 057.rb 144 <==
+foo << array_like.map do |n|
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+  else
+  puts 'normal handling'
+end
+
+==> 058.rb 169 <==
+array_like.each do |n|
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+rescue
+  puts 'error handling'
+  else
+  puts 'normal handling'
+end
+

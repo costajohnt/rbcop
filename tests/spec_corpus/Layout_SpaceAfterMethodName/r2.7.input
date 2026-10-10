@@ -1,0 +1,48 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 21 <==
+def func (x)
+  a
+end
+
+==> 001.rb 26 <==
+def self.func (x)
+  a
+end
+
+==> 002.rb 22 <==
+def func= (x)
+  a
+end
+
+==> 003.rb 17 <==
+def func
+  a
+end
+
+==> 004.rb 22 <==
+def self.func
+  a
+end
+
+==> 005.rb 19 <==
+def func x
+  a
+end
+
+==> 006.rb 24 <==
+def self.func x
+  a
+end
+
+==> 007.rb 20 <==
+def func= x
+  a
+end
+

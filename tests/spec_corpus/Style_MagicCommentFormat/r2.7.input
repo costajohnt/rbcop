@@ -1,0 +1,78 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 107 <==
+# frozen_string_literal: true
+# encoding: utf-8
+# shareable_constant_value: literal
+# typed: ignore
+puts 1
+
+==> 001.rb 67 <==
+# -*- encoding: ASCII-8BIT; frozen_string_literal: true -*-
+puts 1
+
+==> 002.rb 108 <==
+# frozen-string-literal: true
+# encoding: utf-8
+# shareable-constant-value: literal
+# typed: ignore
+
+puts 1
+
+==> 003.rb 28 <==
+# warn-indent: true
+
+puts 1
+
+==> 004.rb 67 <==
+# -*- encoding: ASCII-8BIT; frozen-string-literal: true -*-
+puts 1
+
+==> 005.rb 38 <==
+# frozen-string_literal: true
+
+puts 1
+
+==> 006.rb 14 <==
+# foo-bar-baz 
+==> 007.rb 37 <==
+puts 1
+# frozen-string-literal: true
+
+==> 008.rb 107 <==
+# frozen-string-literal: true
+# encoding: utf-8
+# shareable-constant-value: literal
+# typed: ignore
+puts 1
+
+==> 009.rb 108 <==
+# frozen_string_literal: true
+# encoding: utf-8
+# shareable_constant_value: literal
+# typed: ignore
+
+puts 1
+
+==> 010.rb 38 <==
+puts 1
+# frozen-_string_literal: true
+
+==> 011.rb 25 <==
+# eNcOdInG: utf-8
+puts 1
+
+==> 012.rb 25 <==
+# encoding: UtF-8
+puts 1
+
+==> 013.rb 37 <==
+# frozen-STRING-literal: TRUE
+puts 1
+

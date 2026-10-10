@@ -1,0 +1,84 @@
+==> offenses exit=1 2340 <==
+000.rb:1:23: W: [Correctable] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in interpolation.
+000.rb:2:18: W: [Correctable] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in interpolation.
+000.rb:3:19: W: [Correctable] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in interpolation.
+000.rb:4:21: W: [Correctable] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in interpolation.
+001.rb:1:24: W: [Correctable] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in interpolation.
+001.rb:2:19: W: [Correctable] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in interpolation.
+001.rb:3:20: W: [Correctable] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in interpolation.
+001.rb:4:22: W: [Correctable] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in interpolation.
+002.rb:1:28: W: [Correctable] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in interpolation.
+005.rb:1:4: W: [Correctable] Lint/RedundantStringCoercion: Use `self` instead of `Object#to_s` in interpolation.
+007.rb:1:13: W: [Correctable] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in `print`.
+007.rb:1:26: W: [Correctable] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in `print`.
+008.rb:1:7: W: [Correctable] Lint/RedundantStringCoercion: Use `self` instead of `Object#to_s` in `print`.
+008.rb:1:13: W: [Correctable] Lint/RedundantStringCoercion: Use `self` instead of `Object#to_s` in `print`.
+009.rb:1:12: W: [Correctable] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in `puts`.
+009.rb:1:25: W: [Correctable] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in `puts`.
+010.rb:1:13: W: [Correctable] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in `puts`.
+010.rb:1:27: W: [Correctable] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in `puts`.
+011.rb:1:12: W: [Correctable] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in `warn`.
+011.rb:1:25: W: [Correctable] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in `warn`.
+012.rb:1:6: W: [Correctable] Lint/RedundantStringCoercion: Use `self` instead of `Object#to_s` in `puts`.
+012.rb:1:12: W: [Correctable] Lint/RedundantStringCoercion: Use `self` instead of `Object#to_s` in `puts`.
+
+==> autocorrect exit=0 2296 <==
+000.rb:1:23: W: [Corrected] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in interpolation.
+000.rb:2:18: W: [Corrected] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in interpolation.
+000.rb:3:19: W: [Corrected] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in interpolation.
+000.rb:4:21: W: [Corrected] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in interpolation.
+001.rb:1:24: W: [Corrected] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in interpolation.
+001.rb:2:19: W: [Corrected] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in interpolation.
+001.rb:3:20: W: [Corrected] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in interpolation.
+001.rb:4:22: W: [Corrected] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in interpolation.
+002.rb:1:28: W: [Corrected] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in interpolation.
+005.rb:1:4: W: [Corrected] Lint/RedundantStringCoercion: Use `self` instead of `Object#to_s` in interpolation.
+007.rb:1:13: W: [Corrected] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in `print`.
+007.rb:1:26: W: [Corrected] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in `print`.
+008.rb:1:7: W: [Corrected] Lint/RedundantStringCoercion: Use `self` instead of `Object#to_s` in `print`.
+008.rb:1:13: W: [Corrected] Lint/RedundantStringCoercion: Use `self` instead of `Object#to_s` in `print`.
+009.rb:1:12: W: [Corrected] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in `puts`.
+009.rb:1:25: W: [Corrected] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in `puts`.
+010.rb:1:13: W: [Corrected] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in `puts`.
+010.rb:1:27: W: [Corrected] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in `puts`.
+011.rb:1:12: W: [Corrected] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in `warn`.
+011.rb:1:25: W: [Corrected] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in `warn`.
+012.rb:1:6: W: [Corrected] Lint/RedundantStringCoercion: Use `self` instead of `Object#to_s` in `puts`.
+012.rb:1:12: W: [Corrected] Lint/RedundantStringCoercion: Use `self` instead of `Object#to_s` in `puts`.
+
+==> corrected/000.rb 85 <==
+"this is the #{result}"
+/regexp #{result}/
+:"symbol #{result}"
+`backticks #{result}`
+
+==> corrected/001.rb 85 <==
+"this is the #{result}"
+/regexp #{result}/
+:"symbol #{result}"
+`backticks #{result}`
+
+==> corrected/002.rb 29 <==
+"this is the #{top; result}"
+
+==> corrected/005.rb 10 <==
+"#{self}"
+
+==> corrected/007.rb 20 <==
+print first, second
+
+==> corrected/008.rb 17 <==
+print self, self
+
+==> corrected/009.rb 19 <==
+puts first, second
+
+==> corrected/010.rb 19 <==
+puts first, second
+
+==> corrected/011.rb 19 <==
+warn first, second
+
+==> corrected/012.rb 16 <==
+puts self, self
+

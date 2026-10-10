@@ -1,0 +1,10 @@
+==> offenses exit=1 288 <==
+000.rb:3:5: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+001.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+002.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+
+==> autocorrect exit=1 288 <==
+000.rb:3:5: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+001.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+002.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+

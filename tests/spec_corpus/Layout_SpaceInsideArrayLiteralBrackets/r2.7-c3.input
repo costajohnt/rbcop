@@ -1,0 +1,149 @@
+==> .rubocop.yml 174 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/SpaceInsideArrayLiteralBrackets:
+  EnforcedStyle: no_space
+
+==> 000.rb 77 <==
+[1, 2, 3]
+[foo, bar]
+["qux", "baz"]
+[[1, 2], [3, 4]]
+[{ foo: 1 }, { bar: 2}]
+
+==> 001.rb 97 <==
+[1, 2, 3][0]
+[foo, bar][ 1]
+["qux", "baz"][ -1 ]
+[[1, 2], [3, 4]][1 ]
+[{ foo: 1 }, { bar: 2}][0]
+
+==> 002.rb 18 <==
+[2,3,4] + [5,6,7]
+
+==> 003.rb 21 <==
+stuff = [
+  a,
+  b
+]
+
+==> 004.rb 40 <==
+def do_stuff
+  a = [
+    1, 2
+    ]
+end
+
+==> 005.rb 32 <==
+a = [
+  1, 2, nil
+    ].compact
+
+==> 006.rb 29 <==
+a =
+	[
+	1, 2, nil
+	].compact
+
+==> 007.rb 35 <==
+['Encoding:',
+ '  Enabled: false']
+
+==> 008.rb 22 <==
+[1, [2,3,4], [5,6,7]]
+
+==> 009.rb 32 <==
+a = [ # Comment
+     1, 2
+    ]
+
+==> 010.rb 26 <==
+def Vector.[](*array)
+end
+
+==> 011.rb 149 <==
+ActiveRecord::Base.connection.execute(<<-SQL, [self.class.to_s]).first["count"]
+  SELECT COUNT(widgets.id) FROM widgets
+  WHERE widget_type = $1
+SQL
+
+==> 012.rb 13 <==
+subject.[](0)
+==> 013.rb 11 <==
+[ 2, 3, 4]
+
+==> 014.rb 13 <==
+[b, c, d   ]
+
+==> 015.rb 27 <==
+['qux', 'baz'  ] - ['baz']
+
+==> 016.rb 36 <==
+['ok',
+ 'still good',
+ 'not good' ]
+
+==> 017.rb 25 <==
+[:good,
+ :bad  ].compact
+
+==> 018.rb 17 <==
+[2,3,4] - [ 3,4]
+
+==> 019.rb 150 <==
+ActiveRecord::Base.connection.execute(<<-SQL, [self.class.to_s ]).first["count"]
+  SELECT COUNT(widgets.id) FROM widgets
+  WHERE widget_type = $1
+SQL
+
+==> 020.rb 24 <==
+stuff = [
+  a,
+  b
+   ]
+
+==> 021.rb 29 <==
+case foo
+in [ bar, baz ]
+end
+
+==> 022.rb 27 <==
+case foo
+in [bar, baz]
+end
+
+==> 023.rb 20 <==
+foo in [ bar, baz ]
+
+==> 024.rb 18 <==
+foo in [bar, baz]
+
+==> 025.rb 25 <==
+case value
+in ADT[ ]
+end
+
+==> 026.rb 37 <==
+case value
+in ADT[*head, ADT[ ]]
+end
+
+==> 027.rb 37 <==
+case value
+in ADT[ *head, tail ]
+end
+
+==> 028.rb 55 <==
+case value
+in ADT[ *head, ADT[ *headhead, tail ] ]
+end
+
+==> 029.rb 51 <==
+case value
+in ADT[*head, ADT[*headhead, tail]]
+end
+

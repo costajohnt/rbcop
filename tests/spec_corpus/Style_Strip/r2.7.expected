@@ -1,0 +1,34 @@
+==> offenses exit=1 494 <==
+000.rb:1:5: C: [Correctable] Style/Strip: Use `strip` instead of `lstrip.rstrip`.
+001.rb:1:6: C: [Correctable] Style/Strip: Use `strip` instead of `lstrip.rstrip`.
+002.rb:1:6: C: [Correctable] Style/Strip: Use `strip` instead of `lstrip&.rstrip`.
+003.rb:1:5: C: [Correctable] Style/Strip: Use `strip` instead of `rstrip.lstrip`.
+004.rb:1:6: C: [Correctable] Style/Strip: Use `strip` instead of `rstrip.lstrip`.
+005.rb:1:6: C: [Correctable] Style/Strip: Use `strip` instead of `rstrip&.lstrip`.
+
+==> autocorrect exit=0 482 <==
+000.rb:1:5: C: [Corrected] Style/Strip: Use `strip` instead of `lstrip.rstrip`.
+001.rb:1:6: C: [Corrected] Style/Strip: Use `strip` instead of `lstrip.rstrip`.
+002.rb:1:6: C: [Corrected] Style/Strip: Use `strip` instead of `lstrip&.rstrip`.
+003.rb:1:5: C: [Corrected] Style/Strip: Use `strip` instead of `rstrip.lstrip`.
+004.rb:1:6: C: [Corrected] Style/Strip: Use `strip` instead of `rstrip.lstrip`.
+005.rb:1:6: C: [Corrected] Style/Strip: Use `strip` instead of `rstrip&.lstrip`.
+
+==> corrected/000.rb 10 <==
+str.strip
+
+==> corrected/001.rb 11 <==
+str&.strip
+
+==> corrected/002.rb 11 <==
+str&.strip
+
+==> corrected/003.rb 10 <==
+str.strip
+
+==> corrected/004.rb 11 <==
+str&.strip
+
+==> corrected/005.rb 11 <==
+str&.strip
+

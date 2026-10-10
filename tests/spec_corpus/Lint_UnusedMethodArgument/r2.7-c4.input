@@ -1,0 +1,27 @@
+==> .rubocop.yml 223 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/UnusedMethodArgument:
+  IgnoreNotImplementedMethods: true
+  NotImplementedExceptions:
+  - AbstractMethodError
+
+==> 000.rb 48 <==
+def method(arg)
+  raise AbstractMethodError
+end
+
+==> 001.rb 57 <==
+def method(arg)
+  raise AbstractMethodError, message
+end
+
+==> 002.rb 50 <==
+def method(arg)
+  raise ::AbstractMethodError
+end
+

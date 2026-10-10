@@ -1,0 +1,14 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.6
+
+==> 000.rb 73 <==
+array.each_with_object(Hash.new(0)) { |item, counts| counts[item] += 1 }
+
+==> 001.rb 51 <==
+array.group_by(&:itself).transform_values(&:count)
+

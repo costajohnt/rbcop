@@ -1,0 +1,48 @@
+==> offenses exit=1 548 <==
+001.rb:4:1: C: [Correctable] Layout/BlockAlignment: `end` at 4, 0 is not aligned with `.each do` at 2, 2.
+003.rb:5:13: C: [Correctable] Layout/BlockAlignment: `end` at 5, 12 is not aligned with `.brackets(lft: foo,` at 2, 2.
+007.rb:5:7: C: [Correctable] Layout/BlockAlignment: `end` at 5, 6 is not aligned with `key: value do |x|` at 3, 2.
+009.rb:4:1: C: [Correctable] Layout/BlockAlignment: `end` at 4, 0 is not aligned with `bar do` at 2, 2.
+011.rb:4:1: C: [Correctable] Layout/BlockAlignment: `end` at 4, 0 is not aligned with `bar do` at 2, 2.
+
+==> autocorrect exit=0 538 <==
+001.rb:4:1: C: [Corrected] Layout/BlockAlignment: `end` at 4, 0 is not aligned with `.each do` at 2, 2.
+003.rb:5:13: C: [Corrected] Layout/BlockAlignment: `end` at 5, 12 is not aligned with `.brackets(lft: foo,` at 2, 2.
+007.rb:5:7: C: [Corrected] Layout/BlockAlignment: `end` at 5, 6 is not aligned with `key: value do |x|` at 3, 2.
+009.rb:4:1: C: [Corrected] Layout/BlockAlignment: `end` at 4, 0 is not aligned with `bar do` at 2, 2.
+011.rb:4:1: C: [Corrected] Layout/BlockAlignment: `end` at 4, 0 is not aligned with `bar do` at 2, 2.
+
+==> corrected/001.rb 33 <==
+foo.bar
+  .each do
+    baz
+  end
+
+==> corrected/003.rb 88 <==
+out
+  .brackets(lft: foo,
+            rgt: foo) do
+    process(scheme.constraint)
+  end
+
+==> corrected/007.rb 57 <==
+foo bar,
+  baz,
+  key: value do |x|
+    process(x)
+  end
+
+==> corrected/009.rb 35 <==
+def foo
+  bar do
+    baz
+  end
+end
+
+==> corrected/011.rb 40 <==
+def self.foo
+  bar do
+    baz
+  end
+end
+

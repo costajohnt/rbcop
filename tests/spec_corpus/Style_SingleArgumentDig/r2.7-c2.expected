@@ -1,0 +1,11 @@
+==> offenses exit=1 206 <==
+000.rb:1:1: C: [Correctable] Style/SingleArgumentDig: Use `data.dig(var1)[var2]` instead of `data.dig(var1).dig(var2)`.
+000.rb:1:1: C: Style/SingleArgumentDig: Use `data[var1]` instead of `data.dig(var1)`.
+
+==> autocorrect exit=0 216 <==
+000.rb:1:1: C: [Corrected] Style/SingleArgumentDig: Use `data.dig(var1)[var2]` instead of `data.dig(var1).dig(var2)`.
+000.rb:1:1: C: [Corrected] Style/SingleArgumentDig: Use `data[var1]` instead of `data.dig(var1)`.
+
+==> corrected/000.rb 17 <==
+data[var1][var2]
+

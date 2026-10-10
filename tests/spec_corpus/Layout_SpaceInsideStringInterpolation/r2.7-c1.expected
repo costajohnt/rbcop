@@ -1,0 +1,27 @@
+==> offenses exit=1 628 <==
+000.rb:1:8: C: [Correctable] Layout/SpaceInsideStringInterpolation: Use space inside string interpolation.
+000.rb:2:2: C: [Correctable] Layout/SpaceInsideStringInterpolation: Use space inside string interpolation.
+000.rb:4:2: C: [Correctable] Layout/SpaceInsideStringInterpolation: Use space inside string interpolation.
+000.rb:6:8: C: [Correctable] Layout/SpaceInsideStringInterpolation: Use space inside string interpolation.
+001.rb:1:2: C: [Correctable] Layout/SpaceInsideStringInterpolation: Use space inside string interpolation.
+001.rb:1:7: C: Layout/SpaceInsideStringInterpolation: Use space inside string interpolation.
+
+==> autocorrect exit=0 525 <==
+000.rb:1:8: C: [Corrected] Layout/SpaceInsideStringInterpolation: Use space inside string interpolation.
+000.rb:2:2: C: [Corrected] Layout/SpaceInsideStringInterpolation: Use space inside string interpolation.
+000.rb:4:2: C: [Corrected] Layout/SpaceInsideStringInterpolation: Use space inside string interpolation.
+000.rb:6:8: C: [Corrected] Layout/SpaceInsideStringInterpolation: Use space inside string interpolation.
+001.rb:1:2: C: [Corrected] Layout/SpaceInsideStringInterpolation: Use space inside string interpolation.
+
+==> corrected/000.rb 86 <==
+"#{ var }"
+"#{ var }"
+"#{   var   }"
+"#{ var	}"
+"#{	var	}"
+"#{	var }"
+"#{ 	 var 	 	}"
+
+==> corrected/001.rb 11 <==
+"#{ var }"
+

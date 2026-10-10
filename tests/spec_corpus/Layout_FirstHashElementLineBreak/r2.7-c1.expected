@@ -1,0 +1,19 @@
+==> offenses exit=1 254 <==
+002.rb:1:6: C: [Correctable] Layout/FirstHashElementLineBreak: Add a line break before the first element of a multi-line hash.
+003.rb:1:6: C: [Correctable] Layout/FirstHashElementLineBreak: Add a line break before the first element of a multi-line hash.
+
+==> autocorrect exit=0 250 <==
+002.rb:1:6: C: [Corrected] Layout/FirstHashElementLineBreak: Add a line break before the first element of a multi-line hash.
+003.rb:1:6: C: [Corrected] Layout/FirstHashElementLineBreak: Add a line break before the first element of a multi-line hash.
+
+==> corrected/002.rb 34 <==
+h = {
+a: b, c: {
+  d: e,
+}, f: g}
+
+==> corrected/003.rb 24 <==
+h = {
+a: b, c: d,
+e: f}
+

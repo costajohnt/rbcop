@@ -1,0 +1,14 @@
+==> offenses exit=1 202 <==
+000.rb:1:9: C: [Correctable] Style/NumericPredicate: Use `number.positive?` instead of `number > 0`.
+001.rb:1:9: C: [Correctable] Style/NumericPredicate: Use `number.negative?` instead of `number < 0`.
+
+==> autocorrect exit=0 198 <==
+000.rb:1:9: C: [Corrected] Style/NumericPredicate: Use `number.positive?` instead of `number > 0`.
+001.rb:1:9: C: [Corrected] Style/NumericPredicate: Use `number.negative?` instead of `number < 0`.
+
+==> corrected/000.rb 26 <==
+exclude(number.positive?)
+
+==> corrected/001.rb 26 <==
+exclude(number.negative?)
+

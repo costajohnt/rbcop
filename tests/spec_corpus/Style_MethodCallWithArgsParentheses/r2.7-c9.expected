@@ -1,0 +1,18 @@
+==> offenses exit=1 230 <==
+000.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+001.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+
+==> autocorrect exit=0 226 <==
+000.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+001.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+
+==> corrected/000.rb 26 <==
+class Foo
+  bar(:abc)
+end
+
+==> corrected/001.rb 27 <==
+module Foo
+  bar(:abc)
+end
+

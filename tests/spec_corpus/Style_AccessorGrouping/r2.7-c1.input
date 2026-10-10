@@ -1,0 +1,102 @@
+==> .rubocop.yml 159 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/AccessorGrouping:
+  EnforcedStyle: separated
+
+==> 000.rb 86 <==
+class Foo
+  attr_reader :bar, :baz
+  attr_accessor :quux
+  other_macro :zoo, :woo
+end
+
+==> 001.rb 203 <==
+class Foo
+  attr_reader :bar1, :bar2
+
+  protected
+  attr_accessor :quux
+
+  private
+  attr_reader :baz1, :baz2
+  attr_writer :baz3
+  attr_reader :baz4
+
+  public
+  attr_reader :bar3
+  other_macro :zoo
+end
+
+==> 002.rb 152 <==
+class Foo
+  attr_reader :bar
+
+  class << self
+    attr_reader :baz1, :baz2
+    attr_reader :baz3
+
+    private
+
+    attr_reader :quux1, :quux2
+  end
+end
+
+==> 003.rb 52 <==
+class Foo
+  attr_reader :bar
+  attr_reader :baz
+end
+
+==> 004.rb 56 <==
+class Foo
+  # Some comment
+  attr_reader :one, :two
+end
+
+==> 005.rb 71 <==
+class Foo
+  attr_reader :one
+  attr_reader :two
+  attr_reader :one
+end
+
+==> 006.rb 45 <==
+class Foo
+  attr_reader :one, :two, :one
+end
+
+==> 007.rb 65 <==
+class Foo
+  other_macro :zoo, :woo
+
+  attr_reader :foo, :bar
+end
+
+==> 008.rb 134 <==
+class Foo
+  attr_reader(
+    # comment one
+    :one,
+    # comment two A
+    :two, # comment two B
+    :three # comment three
+  )
+end
+
+==> 009.rb 83 <==
+class Foo
+  attr_reader :a, # comment a
+    :b, # comment b
+    :c # comment c
+end
+
+==> 010.rb 58 <==
+class Foo
+  attr_reader :bar, :baz # trailing comment
+end
+

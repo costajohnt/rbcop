@@ -1,0 +1,49 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 7 <==
+rand 1
+
+==> 001.rb 9 <==
+rand(-1)
+
+==> 002.rb 10 <==
+rand(1.0)
+
+==> 003.rb 11 <==
+rand(-1.0)
+
+==> 004.rb 4 <==
+rand
+==> 005.rb 7 <==
+rand(2)
+==> 006.rb 11 <==
+rand(-1..1)
+==> 007.rb 15 <==
+Kernel.rand(1)
+
+==> 008.rb 16 <==
+Kernel.rand(-1)
+
+==> 009.rb 16 <==
+Kernel.rand 1.0
+
+==> 010.rb 18 <==
+Kernel.rand(-1.0)
+
+==> 011.rb 11 <==
+Kernel.rand
+==> 012.rb 13 <==
+Kernel.rand 2
+==> 013.rb 18 <==
+Kernel.rand(-1..1)
+==> 014.rb 17 <==
+::Kernel.rand(1)
+
+==> 015.rb 13 <==
+::Kernel.rand

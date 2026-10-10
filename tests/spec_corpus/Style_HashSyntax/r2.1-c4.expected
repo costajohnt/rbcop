@@ -1,0 +1,19 @@
+==> offenses exit=1 249 <==
+001.rb:1:20: C: [Correctable] Style/HashSyntax: Don't mix styles in the same hash.
+003.rb:1:20: C: [Correctable] Style/HashSyntax: Don't mix styles in the same hash.
+005.rb:1:18: C: [Correctable] Style/HashSyntax: Don't mix styles in the same hash.
+
+==> autocorrect exit=0 243 <==
+001.rb:1:20: C: [Corrected] Style/HashSyntax: Don't mix styles in the same hash.
+003.rb:1:20: C: [Corrected] Style/HashSyntax: Don't mix styles in the same hash.
+005.rb:1:18: C: [Corrected] Style/HashSyntax: Don't mix styles in the same hash.
+
+==> corrected/001.rb 29 <==
+x = { :"t o" => 0, :b => 1 }
+
+==> corrected/003.rb 29 <==
+x = { :"	ab" => 1, :b => 1 }
+
+==> corrected/005.rb 27 <==
+x = { :"1" => 1, :b => 1 }
+

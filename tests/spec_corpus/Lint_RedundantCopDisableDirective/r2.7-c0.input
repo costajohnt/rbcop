@@ -1,0 +1,35 @@
+==> .rubocop.yml 147 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Metrics/MethodLength:
+  Enabled: false
+
+==> 000.rb 39 <==
+# rubocop:disable Metrics/MethodLength
+
+==> 001.rb 74 <==
+# rubocop:disable Metrics/MethodLength -- kept for documentation purposes
+
+==> 002.rb 81 <==
+# rubocop:enable Metrics/MethodLength
+foo
+# rubocop:disable Metrics/MethodLength
+
+==> 003.rb 44 <==
+# rubocop:push -Style/For
+foo
+# rubocop:pop
+
+==> 004.rb 89 <==
+# rubocop:push -Style/For
+foo
+# rubocop:pop
+
+# rubocop:push -Style/For
+bar
+# rubocop:pop
+

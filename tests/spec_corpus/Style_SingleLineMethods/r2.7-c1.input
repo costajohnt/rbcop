@@ -1,0 +1,15 @@
+==> .rubocop.yml 163 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SingleLineMethods:
+  AllowIfMethodIsEmpty: false
+
+==> 000.rb 76 <==
+def no_op; end
+def self.resource_class=(klass); end
+def @table.columns; end
+

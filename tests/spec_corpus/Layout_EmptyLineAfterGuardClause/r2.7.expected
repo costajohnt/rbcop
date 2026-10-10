@@ -1,0 +1,204 @@
+==> offenses exit=1 1862 <==
+001.rb:2:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+002.rb:2:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+003.rb:4:1: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+004.rb:4:1: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+005.rb:3:1: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+007.rb:2:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+008.rb:2:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+009.rb:2:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+010.rb:2:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+011.rb:3:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+014.rb:6:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+024.rb:3:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+026.rb:1:1: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+036.rb:2:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+050.rb:4:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+051.rb:2:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+052.rb:3:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+054.rb:5:1: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+056.rb:2:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+
+==> autocorrect exit=0 1824 <==
+001.rb:2:3: C: [Corrected] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+002.rb:2:3: C: [Corrected] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+003.rb:4:1: C: [Corrected] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+004.rb:4:1: C: [Corrected] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+005.rb:3:1: C: [Corrected] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+007.rb:2:3: C: [Corrected] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+008.rb:2:3: C: [Corrected] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+009.rb:2:3: C: [Corrected] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+010.rb:2:3: C: [Corrected] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+011.rb:3:3: C: [Corrected] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+014.rb:6:3: C: [Corrected] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+024.rb:3:3: C: [Corrected] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+026.rb:1:1: C: [Corrected] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+036.rb:2:3: C: [Corrected] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+050.rb:4:3: C: [Corrected] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+051.rb:2:3: C: [Corrected] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+052.rb:3:3: C: [Corrected] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+054.rb:5:1: C: [Corrected] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+056.rb:2:3: C: [Corrected] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+
+==> corrected/001.rb 47 <==
+def foo
+  return if need_return?
+
+  foobar
+end
+
+==> corrected/002.rb 114 <==
+def foo
+  return another_object if something_different?
+
+  begin
+    bar
+  rescue SomeException
+    baz
+  end
+end
+
+==> corrected/003.rb 103 <==
+def foo
+  raise ArgumentError, <<-MSG unless path
+    Must be called with mount point
+  MSG
+
+  bar
+end
+
+==> corrected/004.rb 99 <==
+def foo
+  raise ArgumentError, <<-MSG if path
+    Must be called with mount point
+  MSG
+
+  bar
+end
+
+==> corrected/005.rb 46 <==
+raise(<<-FAIL) unless true
+  #{1 + 1}
+FAIL
+
+1
+
+==> corrected/007.rb 148 <==
+def foo
+  raise SerializationError.new("Unsupported argument type: #{argument.class.name}") unless serializer
+
+  serializer.serialize(argument)
+end
+
+==> corrected/008.rb 66 <==
+def foo
+  render :foo and return if condition
+
+  do_something
+end
+
+==> corrected/009.rb 65 <==
+def foo
+  render :foo or return if condition
+
+  do_something
+end
+
+==> corrected/010.rb 110 <==
+def foo
+  return if condition
+
+  # rubocop:disable Department/Cop
+  bar
+  # rubocop:enable Department/Cop
+end
+
+==> corrected/011.rb 110 <==
+def foo
+  # rubocop:disable Department/Cop
+  return if condition
+  # rubocop:enable Department/Cop
+
+  bar
+end
+
+==> corrected/014.rb 91 <==
+def method
+  if truthy
+    raise <<-MSG
+      This is an error.
+    MSG
+  end
+
+  value
+end
+
+==> corrected/024.rb 84 <==
+def foo
+  # simplecov:disable
+  return if condition
+  # simplecov:enable
+
+  bar
+end
+
+==> corrected/026.rb 42 <==
+return if condition
+
+foo do
+  bar
+end
+baz
+
+==> corrected/036.rb 88 <==
+def foo
+  return if something?
+
+  if something_else?
+    bar(
+      baz
+    )
+  end
+end
+
+==> corrected/050.rb 101 <==
+def foo
+  puts 'some action happens here'
+rescue => e
+  a_check ? raise(e) : other_thing
+
+  true
+end
+
+==> corrected/051.rb 52 <==
+def foo
+  return unless need_next?
+
+  end_this!
+end
+
+==> corrected/052.rb 56 <==
+def foo
+  return if foo?
+  return if bar?
+
+  foobar
+end
+
+==> corrected/054.rb 86 <==
+def foo
+  puts(<<~MSG) and return if bar
+    A multiline
+    message
+  MSG
+
+  baz
+end
+
+==> corrected/056.rb 62 <==
+def foo(item)
+  return unless item.positive?;
+
+  item * 2
+end
+

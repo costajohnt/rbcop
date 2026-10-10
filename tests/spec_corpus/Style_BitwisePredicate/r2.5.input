@@ -1,0 +1,50 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.5
+
+==> 000.rb 29 <==
+(variable & flags).positive?
+
+==> 001.rb 23 <==
+(variable & flags) > 0
+
+==> 002.rb 24 <==
+(variable & flags) >= 1
+
+==> 003.rb 24 <==
+(variable & flags) != 0
+
+==> 004.rb 25 <==
+variable.anybits?(flags)
+
+==> 005.rb 23 <==
+(variable & flags) > 1
+
+==> 006.rb 11 <==
+foo == bar
+
+==> 007.rb 28 <==
+(variable & flags) == flags
+
+==> 008.rb 28 <==
+(flags & variable) == flags
+
+==> 009.rb 25 <==
+variable.allbits?(flags)
+
+==> 010.rb 32 <==
+(flags & variable) == flagments
+
+==> 011.rb 25 <==
+(variable & flags).zero?
+
+==> 012.rb 24 <==
+(variable & flags) == 0
+
+==> 013.rb 24 <==
+variable.nobits?(flags)
+

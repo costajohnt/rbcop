@@ -1,0 +1,850 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/EmptyLinesAroundAccessModifier:
+  EnforcedStyle: around
+
+==> 000.rb 54 <==
+class Test
+  something
+  private
+
+  def test; end
+end
+
+==> 001.rb 54 <==
+class Test
+  something
+
+  private
+  def test; end
+end
+
+==> 002.rb 80 <==
+class Test
+  something
+
+  # This comment is fine
+  private
+
+  def test; end
+end
+
+==> 003.rb 48 <==
+class Test
+  def private?
+    private
+  end
+end
+
+==> 004.rb 53 <==
+class Test
+  attr_reader private
+  def foo
+  end
+end
+
+==> 005.rb 70 <==
+class Test
+  def private?
+    if true
+      private
+    end
+  end
+end
+
+==> 006.rb 56 <==
+class Test
+  def private?
+    private if true
+  end
+end
+
+==> 007.rb 39 <==
+def foo
+  private { do_something }
+end
+
+==> 008.rb 78 <==
+class Test
+  something
+
+  private # let's modify the rest
+  def test; end
+end
+
+==> 009.rb 42 <==
+class Test
+  private
+
+  def test; end
+end
+
+==> 010.rb 43 <==
+module Test
+  private
+
+  def test; end
+end
+
+==> 011.rb 45 <==
+class << self
+  private
+
+  def test; end
+end
+
+==> 012.rb 62 <==
+class Foo <
+      Bar
+  private
+
+  def do_something
+  end
+end
+
+==> 013.rb 60 <==
+class <<
+      self
+  private
+
+  def do_something
+  end
+end
+
+==> 014.rb 30 <==
+private
+
+def do_something
+end
+
+==> 015.rb 42 <==
+class Test
+  private
+  def test
+  end
+end
+
+==> 016.rb 40 <==
+# comment
+private
+
+def do_something
+end
+
+==> 017.rb 43 <==
+included do
+  private
+
+  def test; end
+end
+
+==> 018.rb 49 <==
+included do |foo|
+  private
+
+  def test; end
+end
+
+==> 019.rb 43 <==
+included do
+  private
+  def test
+  end
+end
+
+==> 020.rb 40 <==
+included {
+  private
+
+  def test; end
+}
+
+==> 021.rb 46 <==
+included { |foo|
+  private
+
+  def test; end
+}
+
+==> 022.rb 42 <==
+class Test
+  def test; end
+
+  private
+end
+
+==> 023.rb 49 <==
+class Test < Base
+  def test; end
+
+  private
+end
+
+==> 024.rb 45 <==
+class << self
+  def test; end
+
+  private
+end
+
+==> 025.rb 37 <==
+class Test
+  private
+  end_this!
+end
+
+==> 026.rb 49 <==
+class Test
+
+  private
+
+  def test; end
+end
+
+==> 027.rb 8 <==
+private
+
+==> 028.rb 18 <==
+private; foo
+.bar
+
+==> 029.rb 16 <==
+foo
+private
+bar
+
+==> 030.rb 56 <==
+class Test
+  something
+  protected
+
+  def test; end
+end
+
+==> 031.rb 56 <==
+class Test
+  something
+
+  protected
+  def test; end
+end
+
+==> 032.rb 82 <==
+class Test
+  something
+
+  # This comment is fine
+  protected
+
+  def test; end
+end
+
+==> 033.rb 52 <==
+class Test
+  def protected?
+    protected
+  end
+end
+
+==> 034.rb 55 <==
+class Test
+  attr_reader protected
+  def foo
+  end
+end
+
+==> 035.rb 74 <==
+class Test
+  def protected?
+    if true
+      protected
+    end
+  end
+end
+
+==> 036.rb 60 <==
+class Test
+  def protected?
+    protected if true
+  end
+end
+
+==> 037.rb 41 <==
+def foo
+  protected { do_something }
+end
+
+==> 038.rb 80 <==
+class Test
+  something
+
+  protected # let's modify the rest
+  def test; end
+end
+
+==> 039.rb 44 <==
+class Test
+  protected
+
+  def test; end
+end
+
+==> 040.rb 45 <==
+module Test
+  protected
+
+  def test; end
+end
+
+==> 041.rb 47 <==
+class << self
+  protected
+
+  def test; end
+end
+
+==> 042.rb 64 <==
+class Foo <
+      Bar
+  protected
+
+  def do_something
+  end
+end
+
+==> 043.rb 62 <==
+class <<
+      self
+  protected
+
+  def do_something
+  end
+end
+
+==> 044.rb 32 <==
+protected
+
+def do_something
+end
+
+==> 045.rb 44 <==
+class Test
+  protected
+  def test
+  end
+end
+
+==> 046.rb 42 <==
+# comment
+protected
+
+def do_something
+end
+
+==> 047.rb 45 <==
+included do
+  protected
+
+  def test; end
+end
+
+==> 048.rb 51 <==
+included do |foo|
+  protected
+
+  def test; end
+end
+
+==> 049.rb 45 <==
+included do
+  protected
+  def test
+  end
+end
+
+==> 050.rb 42 <==
+included {
+  protected
+
+  def test; end
+}
+
+==> 051.rb 48 <==
+included { |foo|
+  protected
+
+  def test; end
+}
+
+==> 052.rb 44 <==
+class Test
+  def test; end
+
+  protected
+end
+
+==> 053.rb 51 <==
+class Test < Base
+  def test; end
+
+  protected
+end
+
+==> 054.rb 47 <==
+class << self
+  def test; end
+
+  protected
+end
+
+==> 055.rb 39 <==
+class Test
+  protected
+  end_this!
+end
+
+==> 056.rb 51 <==
+class Test
+
+  protected
+
+  def test; end
+end
+
+==> 057.rb 10 <==
+protected
+
+==> 058.rb 20 <==
+protected; foo
+.bar
+
+==> 059.rb 18 <==
+foo
+protected
+bar
+
+==> 060.rb 53 <==
+class Test
+  something
+  public
+
+  def test; end
+end
+
+==> 061.rb 53 <==
+class Test
+  something
+
+  public
+  def test; end
+end
+
+==> 062.rb 79 <==
+class Test
+  something
+
+  # This comment is fine
+  public
+
+  def test; end
+end
+
+==> 063.rb 46 <==
+class Test
+  def public?
+    public
+  end
+end
+
+==> 064.rb 52 <==
+class Test
+  attr_reader public
+  def foo
+  end
+end
+
+==> 065.rb 68 <==
+class Test
+  def public?
+    if true
+      public
+    end
+  end
+end
+
+==> 066.rb 54 <==
+class Test
+  def public?
+    public if true
+  end
+end
+
+==> 067.rb 38 <==
+def foo
+  public { do_something }
+end
+
+==> 068.rb 77 <==
+class Test
+  something
+
+  public # let's modify the rest
+  def test; end
+end
+
+==> 069.rb 41 <==
+class Test
+  public
+
+  def test; end
+end
+
+==> 070.rb 42 <==
+module Test
+  public
+
+  def test; end
+end
+
+==> 071.rb 44 <==
+class << self
+  public
+
+  def test; end
+end
+
+==> 072.rb 61 <==
+class Foo <
+      Bar
+  public
+
+  def do_something
+  end
+end
+
+==> 073.rb 59 <==
+class <<
+      self
+  public
+
+  def do_something
+  end
+end
+
+==> 074.rb 29 <==
+public
+
+def do_something
+end
+
+==> 075.rb 41 <==
+class Test
+  public
+  def test
+  end
+end
+
+==> 076.rb 39 <==
+# comment
+public
+
+def do_something
+end
+
+==> 077.rb 42 <==
+included do
+  public
+
+  def test; end
+end
+
+==> 078.rb 48 <==
+included do |foo|
+  public
+
+  def test; end
+end
+
+==> 079.rb 42 <==
+included do
+  public
+  def test
+  end
+end
+
+==> 080.rb 39 <==
+included {
+  public
+
+  def test; end
+}
+
+==> 081.rb 45 <==
+included { |foo|
+  public
+
+  def test; end
+}
+
+==> 082.rb 41 <==
+class Test
+  def test; end
+
+  public
+end
+
+==> 083.rb 48 <==
+class Test < Base
+  def test; end
+
+  public
+end
+
+==> 084.rb 44 <==
+class << self
+  def test; end
+
+  public
+end
+
+==> 085.rb 36 <==
+class Test
+  public
+  end_this!
+end
+
+==> 086.rb 48 <==
+class Test
+
+  public
+
+  def test; end
+end
+
+==> 087.rb 7 <==
+public
+
+==> 088.rb 17 <==
+public; foo
+.bar
+
+==> 089.rb 15 <==
+foo
+public
+bar
+
+==> 090.rb 62 <==
+class Test
+  something
+  module_function
+
+  def test; end
+end
+
+==> 091.rb 62 <==
+class Test
+  something
+
+  module_function
+  def test; end
+end
+
+==> 092.rb 88 <==
+class Test
+  something
+
+  # This comment is fine
+  module_function
+
+  def test; end
+end
+
+==> 093.rb 64 <==
+class Test
+  def module_function?
+    module_function
+  end
+end
+
+==> 094.rb 61 <==
+class Test
+  attr_reader module_function
+  def foo
+  end
+end
+
+==> 095.rb 86 <==
+class Test
+  def module_function?
+    if true
+      module_function
+    end
+  end
+end
+
+==> 096.rb 72 <==
+class Test
+  def module_function?
+    module_function if true
+  end
+end
+
+==> 097.rb 47 <==
+def foo
+  module_function { do_something }
+end
+
+==> 098.rb 86 <==
+class Test
+  something
+
+  module_function # let's modify the rest
+  def test; end
+end
+
+==> 099.rb 50 <==
+class Test
+  module_function
+
+  def test; end
+end
+
+==> 100.rb 51 <==
+module Test
+  module_function
+
+  def test; end
+end
+
+==> 101.rb 53 <==
+class << self
+  module_function
+
+  def test; end
+end
+
+==> 102.rb 70 <==
+class Foo <
+      Bar
+  module_function
+
+  def do_something
+  end
+end
+
+==> 103.rb 68 <==
+class <<
+      self
+  module_function
+
+  def do_something
+  end
+end
+
+==> 104.rb 38 <==
+module_function
+
+def do_something
+end
+
+==> 105.rb 50 <==
+class Test
+  module_function
+  def test
+  end
+end
+
+==> 106.rb 48 <==
+# comment
+module_function
+
+def do_something
+end
+
+==> 107.rb 51 <==
+included do
+  module_function
+
+  def test; end
+end
+
+==> 108.rb 57 <==
+included do |foo|
+  module_function
+
+  def test; end
+end
+
+==> 109.rb 51 <==
+included do
+  module_function
+  def test
+  end
+end
+
+==> 110.rb 48 <==
+included {
+  module_function
+
+  def test; end
+}
+
+==> 111.rb 54 <==
+included { |foo|
+  module_function
+
+  def test; end
+}
+
+==> 112.rb 50 <==
+class Test
+  def test; end
+
+  module_function
+end
+
+==> 113.rb 57 <==
+class Test < Base
+  def test; end
+
+  module_function
+end
+
+==> 114.rb 53 <==
+class << self
+  def test; end
+
+  module_function
+end
+
+==> 115.rb 45 <==
+class Test
+  module_function
+  end_this!
+end
+
+==> 116.rb 57 <==
+class Test
+
+  module_function
+
+  def test; end
+end
+
+==> 117.rb 16 <==
+module_function
+
+==> 118.rb 26 <==
+module_function; foo
+.bar
+
+==> 119.rb 24 <==
+foo
+module_function
+bar
+

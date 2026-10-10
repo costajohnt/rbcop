@@ -1,0 +1,23 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 27 <==
+do_something { foo += it }
+
+==> 001.rb 37 <==
+var = 42
+
+do_something { it == var }
+
+==> 002.rb 58 <==
+var = nil
+
+do_something { var = it }
+
+something_else(var)
+

@@ -1,0 +1,155 @@
+==> .rubocop.yml 180 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: diff_comma
+
+==> 000.rb 23 <==
+some_method(a, b, c, )
+
+==> 001.rb 24 <==
+some_method(a, b, c , )
+
+==> 002.rb 32 <==
+some_method(a, b, c: 0, d: 1, )
+
+==> 003.rb 20 <==
+some_method(a, b, c)
+==> 004.rb 32 <==
+obj
+  .do_something(:foo, :bar)
+
+==> 005.rb 17 <==
+some_method(a: 1)
+==> 006.rb 11 <==
+some_method
+==> 007.rb 25 <==
+target
+  .some_method(a)
+
+==> 008.rb 33 <==
+receiver&.some_method(a, b, c, )
+
+==> 009.rb 42 <==
+receiver&.some_method(a, b, c: 0, d: 1, )
+
+==> 010.rb 23 <==
+some_method[a, b, c, ]
+
+==> 011.rb 24 <==
+some_method[a, b, c , ]
+
+==> 012.rb 32 <==
+some_method[a, b, c: 0, d: 1, ]
+
+==> 013.rb 20 <==
+some_method[a, b, c]
+==> 014.rb 32 <==
+obj
+  .do_something[:foo, :bar]
+
+==> 015.rb 17 <==
+some_method[a: 1]
+==> 016.rb 25 <==
+target
+  .some_method[a]
+
+==> 017.rb 33 <==
+receiver&.some_method[a, b, c, ]
+
+==> 018.rb 42 <==
+receiver&.some_method[a, b, c: 0, d: 1, ]
+
+==> 019.rb 33 <==
+route(1, <<-HELP.chomp)
+...
+HELP
+
+==> 020.rb 95 <==
+some_method(
+             a,
+             b,
+             c: 0,
+             d: 1
+           )
+
+==> 021.rb 41 <==
+some_method(a: "b",
+            c: "d",)
+
+==> 022.rb 21 <==
+method(1, [
+  2,
+],)
+
+==> 023.rb 96 <==
+some_method(
+             a,
+             b,
+             c: 0,
+             d: 1,
+           )
+
+==> 024.rb 40 <==
+some_method(a: "b",
+            c: "d")
+
+==> 025.rb 20 <==
+method(1, [
+  2,
+])
+
+==> 026.rb 106 <==
+some_method(
+             a,
+             b,
+             c: 0,
+             d: 1, # comment
+           )
+
+==> 027.rb 95 <==
+some_method[
+             a,
+             b,
+             c: 0,
+             d: 1
+           ]
+
+==> 028.rb 41 <==
+some_method[a: "b",
+            c: "d",]
+
+==> 029.rb 21 <==
+method[1, [
+  2,
+],]
+
+==> 030.rb 96 <==
+some_method[
+             a,
+             b,
+             c: 0,
+             d: 1,
+           ]
+
+==> 031.rb 40 <==
+some_method[a: "b",
+            c: "d"]
+
+==> 032.rb 20 <==
+method[1, [
+  2,
+]]
+
+==> 033.rb 106 <==
+some_method[
+             a,
+             b,
+             c: 0,
+             d: 1, # comment
+           ]
+

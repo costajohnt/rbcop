@@ -1,0 +1,15 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/UnusedMethodArgument:
+  AllowUnusedKeywordArguments: true
+
+==> 000.rb 49 <==
+def self.some_method(foo, bar: 1)
+  puts foo
+end
+

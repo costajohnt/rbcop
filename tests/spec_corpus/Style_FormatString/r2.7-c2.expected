@@ -1,0 +1,49 @@
+==> offenses exit=1 731 <==
+000.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `format`.
+001.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `format`.
+002.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `format`.
+003.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `format`.
+004.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `format`.
+005.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `sprintf`.
+006.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `format`.
+007.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `format`.
+008.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `sprintf`.
+
+==> autocorrect exit=0 713 <==
+000.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
+001.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
+002.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
+003.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
+004.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
+005.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `sprintf`.
+006.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
+007.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
+008.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `sprintf`.
+
+==> corrected/000.rb 14 <==
+something % a
+
+==> corrected/001.rb 19 <==
+something % [a, b]
+
+==> corrected/002.rb 29 <==
+something % { a: 10, b: 11 }
+
+==> corrected/003.rb 19 <==
+'%s' % (a ? b : c)
+
+==> corrected/004.rb 15 <==
+'%s %s' % args
+
+==> corrected/005.rb 14 <==
+something % a
+
+==> corrected/006.rb 21 <==
+something % (a + 42)
+
+==> corrected/007.rb 23 <==
+"%d %04x" % [123, 123]
+
+==> corrected/008.rb 29 <==
+something % { a: 10, b: 11 }
+

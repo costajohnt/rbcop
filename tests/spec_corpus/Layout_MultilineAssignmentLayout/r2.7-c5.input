@@ -1,0 +1,59 @@
+==> .rubocop.yml 197 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/MultilineAssignmentLayout:
+  EnforcedStyle: same_line
+  SupportedTypes:
+  - block
+
+==> 000.rb 31 <==
+lambda = -> {
+  puts 'hello'
+}
+
+==> 001.rb 37 <==
+lambda =
+  -> {
+    puts 'hello'
+  }
+
+==> 002.rb 41 <==
+default_scope -> {
+  where(foo: "bar")
+}
+
+==> 003.rb 44 <==
+foo << items.map do |item|
+  "#{item}!"
+end
+
+==> 004.rb 48 <==
+foo = items
+  .map { |item| item.do_something }
+
+==> 005.rb 47 <==
+foo =
+  items.map { |item| item.do_something }
+
+==> 006.rb 57 <==
+foo = items
+  .map do |item|
+    item.do_something
+  end
+
+==> 007.rb 56 <==
+foo =
+  items.map do |item|
+    item.do_something
+  end
+
+==> 008.rb 34 <==
+bars =
+  foo.map {
+    _1.bar
+  }
+

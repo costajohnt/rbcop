@@ -1,0 +1,45 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.gemspec 111 <==
+Gem::Specification.new do |spec|
+  spec.metadata['key-0'] = 'value-0'
+  spec.metadata['key-1'] = 'value-1'
+end
+
+==> 001.gemspec 115 <==
+Gem::Specification.new do |spec|
+  spec.metadata = { 'key' => 'value' }
+  spec.metadata = { 'key' => 'value' }
+end
+
+==> 002.gemspec 99 <==
+Gem::Specification.new do |spec|
+  spec.authors[0] = 'author-0'
+  spec.authors[1] = 'author-1'
+end
+
+==> 003.gemspec 115 <==
+Gem::Specification.new do |spec|
+  spec.authors = %w[author-1 author-2]
+  spec.authors = %w[author-1 author-2]
+end
+
+==> 004.gemspec 154 <==
+Gem::Specification.new do |spec|
+  spec.metadata = { 'key-0' => 'value-0' }
+  spec.metadata['key-1'] = 'value-1'
+  spec.metadata['key-2'] = 'value-2'
+end
+
+==> 005.gemspec 107 <==
+Gem::Specification.new do |spec|
+  spec.authors = %w[author-0 author-1]
+  spec.authors[2] = 'author-2'
+end
+

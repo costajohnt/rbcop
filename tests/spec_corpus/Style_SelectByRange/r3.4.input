@@ -1,0 +1,68 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 36 <==
+array.select { it.between?(1, 10) }
+
+==> 001.rb 36 <==
+array.select { (1..10).cover?(it) }
+
+==> 002.rb 38 <==
+array.find_all { it.between?(1, 10) }
+
+==> 003.rb 38 <==
+array.find_all { (1..10).cover?(it) }
+
+==> 004.rb 36 <==
+array.filter { it.between?(1, 10) }
+
+==> 005.rb 36 <==
+array.filter { (1..10).cover?(it) }
+
+==> 006.rb 37 <==
+array.reject { !it.between?(1, 10) }
+
+==> 007.rb 37 <==
+array.reject { !(1..10).cover?(it) }
+
+==> 008.rb 37 <==
+array.select { !it.between?(1, 10) }
+
+==> 009.rb 37 <==
+array.select { !(1..10).cover?(it) }
+
+==> 010.rb 39 <==
+array.find_all { !it.between?(1, 10) }
+
+==> 011.rb 39 <==
+array.find_all { !(1..10).cover?(it) }
+
+==> 012.rb 37 <==
+array.filter { !it.between?(1, 10) }
+
+==> 013.rb 37 <==
+array.filter { !(1..10).cover?(it) }
+
+==> 014.rb 36 <==
+array.reject { it.between?(1, 10) }
+
+==> 015.rb 36 <==
+array.reject { (1..10).cover?(it) }
+
+==> 016.rb 34 <==
+array.find { it.between?(1, 10) }
+
+==> 017.rb 36 <==
+array.detect { it.between?(1, 10) }
+
+==> 018.rb 35 <==
+array.find { !it.between?(1, 10) }
+
+==> 019.rb 37 <==
+array.detect { !it.between?(1, 10) }
+

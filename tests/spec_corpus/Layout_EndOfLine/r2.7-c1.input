@@ -1,0 +1,33 @@
+==> .rubocop.yml 146 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/EndOfLine:
+  EnforcedStyle: lf
+
+==> 000.rb 10 <==
+x=0
+
+y=1
+
+==> 001.rb 5 <==
+x=0
+
+==> 002.rb 17 <==
+x=0
+__END__
+x=0
+
+==> 003.rb 11 <==
+x=0
+
+y=1
+
+==> 004.rb 90 <==
+class Epd::ReportsController < EpdAreaController
+  'terecht bij uw ROM-coördinator.'
+end
+

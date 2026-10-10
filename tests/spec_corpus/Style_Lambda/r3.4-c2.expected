@@ -1,0 +1,16 @@
+==> offenses exit=1 201 <==
+000.rb:1:5: C: [Correctable] Style/Lambda: Use the `-> { ... }` lambda literal syntax for single line lambdas.
+001.rb:1:1: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+
+==> autocorrect exit=0 197 <==
+000.rb:1:5: C: [Corrected] Style/Lambda: Use the `-> { ... }` lambda literal syntax for single line lambdas.
+001.rb:1:1: C: [Corrected] Style/Lambda: Use the `lambda` method for multiline lambdas.
+
+==> corrected/000.rb 14 <==
+f = -> { it }
+
+==> corrected/001.rb 29 <==
+lambda {
+  it.do_something
+}
+

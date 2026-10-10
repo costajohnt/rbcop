@@ -1,0 +1,18 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 22 <==
+test {
+  it }.bar.baz
+
+==> 001.rb 51 <==
+test {
+  it.push(<<~EOS) }
+    Heredoc text.
+  EOS
+

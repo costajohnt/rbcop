@@ -1,0 +1,27 @@
+==> .rubocop.yml 162 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/PercentQLiterals:
+  EnforcedStyle: lower_case_q
+
+==> 000.rb 6 <==
+%q(hi)
+==> 001.rb 7 <==
+%Q(hi)
+
+==> 002.rb 4 <==
+'hi'
+==> 003.rb 4 <==
+"hi"
+==> 004.rb 6 <==
+%q(\t)
+==> 005.rb 6 <==
+%Q(\t)
+==> 006.rb 12 <==
+%Q(#{1 + 2})
+==> 007.rb 12 <==
+%q(#{1 + 2})

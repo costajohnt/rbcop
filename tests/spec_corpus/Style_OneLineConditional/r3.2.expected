@@ -1,0 +1,9 @@
+==> offenses exit=1 137 <==
+000.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+
+==> autocorrect exit=0 135 <==
+000.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+
+==> corrected/000.rb 17 <==
+true ? retry : 7
+

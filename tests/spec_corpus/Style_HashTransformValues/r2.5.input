@@ -1,0 +1,11 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.5
+
+==> 000.rb 39 <==
+{a: 1, b: 2}.to_h {|k, v| [k, foo(v)]}
+

@@ -1,0 +1,57 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 46 <==
+begin
+  something
+rescue => StandardError
+end
+
+==> 001.rb 48 <==
+begin
+  something
+rescue => ::StandardError
+end
+
+==> 002.rb 64 <==
+begin
+  something
+rescue => foo.class::RESCUABLE_EXCEPTIONS
+end
+
+==> 003.rb 64 <==
+var = Object
+begin
+  something
+rescue => var::StandardError
+end
+
+==> 004.rb 57 <==
+begin
+  something
+rescue => MyNamespace::MyException
+end
+
+==> 005.rb 59 <==
+begin
+  something
+rescue => ::MyNamespace::MyException
+end
+
+==> 006.rb 43 <==
+begin
+  something
+rescue StandardError
+end
+
+==> 007.rb 48 <==
+begin
+  something
+rescue StandardError => e
+end
+

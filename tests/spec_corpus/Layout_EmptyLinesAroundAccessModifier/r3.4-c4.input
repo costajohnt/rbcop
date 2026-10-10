@@ -1,0 +1,56 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 47 <==
+included do
+  it
+  private
+  def test; end
+end
+
+==> 001.rb 29 <==
+def foo
+  private { it }
+end
+
+==> 002.rb 49 <==
+included do
+  it
+  protected
+  def test; end
+end
+
+==> 003.rb 31 <==
+def foo
+  protected { it }
+end
+
+==> 004.rb 46 <==
+included do
+  it
+  public
+  def test; end
+end
+
+==> 005.rb 28 <==
+def foo
+  public { it }
+end
+
+==> 006.rb 55 <==
+included do
+  it
+  module_function
+  def test; end
+end
+
+==> 007.rb 37 <==
+def foo
+  module_function { it }
+end
+

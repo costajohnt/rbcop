@@ -1,0 +1,83 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 60 <==
+# Documentation comment
+# encoding: ascii-8bit
+puts 'hello'
+
+==> 001.rb 37 <==
+
+# encoding: ascii-8bit
+puts 'hello'
+
+==> 002.rb 80 <==
+#!/usr/bin/env ruby
+# Documentation comment
+# encoding: ascii-8bit
+puts 'hello'
+
+==> 003.rb 44 <==
+require 'foo'
+# frozen_string_literal: true
+
+==> 004.rb 44 <==
+require 'foo' # frozen_string_literal: true
+
+==> 005.rb 63 <==
+# frozen_string_literal: true
+#!/usr/bin/env ruby
+puts 'hello'
+
+==> 006.rb 111 <==
+case enc
+when Encoding, false, nil
+  # Encoding: force given encoding
+  # false/nil: do not force encoding
+end
+
+==> 007.rb 36 <==
+# encoding: ascii-8bit
+puts 'hello'
+
+==> 008.rb 56 <==
+#!/usr/bin/env ruby
+# encoding: ascii-8bit
+puts 'hello'
+
+==> 009.rb 66 <==
+# frozen_string_literal: true
+# encoding: ascii-8bit
+puts 'hello'
+
+==> 010.rb 66 <==
+# Copyright Acme Corp.
+# frozen_string_literal: true
+puts 'hello'
+
+==> 011.rb 44 <==
+
+# frozen_string_literal: true
+puts 'hello'
+
+==> 012.rb 60 <==
+=begin
+docs
+=end
+# frozen_string_literal: true
+puts 'hello'
+
+==> 013.rb 56 <==
+A = ['a']
+# shareable_constant_value: literal
+X = ['a']
+
+==> 014.rb 51 <==
+# frozen_string_literal: true
+# just comments here
+

@@ -1,0 +1,12 @@
+==> offenses exit=1 123 <==
+001.rb:3:3: C: [Correctable] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
+
+==> autocorrect exit=0 121 <==
+001.rb:3:3: C: [Corrected] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
+
+==> corrected/001.rb 24 <==
+f(
+  aaa: nil,
+   bb:
+)
+

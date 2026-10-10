@@ -1,0 +1,18 @@
+==> .rubocop.yml 174 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Lint/UnexpectedBlockArity:
+  Methods:
+    reduce: 2
+    inject: 2
+
+==> 000.rb 21 <==
+values.reduce { it }
+
+==> 001.rb 14 <==
+reduce { it }
+

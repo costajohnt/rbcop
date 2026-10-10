@@ -1,0 +1,79 @@
+==> .rubocop.yml 159 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/VariableNumber:
+  EnforcedStyle: snake_case
+
+==> 000.rb 11 <==
+local1 = 1
+
+==> 001.rb 12 <==
+@local1 = 1
+
+==> 002.rb 13 <==
+@@local1 = 1
+
+==> 003.rb 15 <==
+camelCase1 = 1
+
+==> 004.rb 16 <==
+@camelCase1 = 1
+
+==> 005.rb 13 <==
+_unused1 = 1
+
+==> 006.rb 8 <==
+aB1 = 1
+
+==> 007.rb 11 <==
+local_1 = 1
+==> 008.rb 12 <==
+local_12 = 1
+==> 009.rb 13 <==
+local_123 = 1
+==> 010.rb 10 <==
+local_ = 1
+==> 011.rb 8 <==
+aB_1 = 1
+==> 012.rb 9 <==
+a_1_b = 1
+==> 013.rb 11 <==
+a_1_b_1 = 1
+==> 014.rb 5 <==
+_ = 1
+==> 015.rb 8 <==
+_foo = 1
+==> 016.rb 8 <==
+@foo = 1
+==> 017.rb 12 <==
+@__foo__ = 1
+==> 018.rb 13 <==
+emparejó = 1
+==> 019.rb 6 <==
+_1 = 1
+==> 020.rb 5 <==
+:"42"
+==> 021.rb 9 <==
+%i[1 2 3]
+==> 022.rb 6 <==
+:sym1
+
+==> 023.rb 7 <==
+:sym_1
+
+==> 024.rb 22 <==
+def method(arg1); end
+
+==> 025.rb 27 <==
+def method(funnyArg1); end
+
+==> 026.rb 17 <==
+def method1; end
+
+==> 027.rb 13 <==
+$arg1 = :foo
+

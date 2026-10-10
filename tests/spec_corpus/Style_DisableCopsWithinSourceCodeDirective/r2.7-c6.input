@@ -1,0 +1,23 @@
+==> .rubocop.yml 220 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/DisableCopsWithinSourceCodeDirective:
+  AllowWithReason: true
+  AllowedDirectives:
+  - todo
+  - todo-next
+
+==> 000.rb 49 <==
+x = 0 # rubocop:todo Layout/SpaceAroundOperators
+
+==> 001.rb 54 <==
+# rubocop:todo-next Layout/SpaceAroundOperators
+x = 0
+
+==> 002.rb 52 <==
+x = 0 # rubocop:disable Layout/SpaceAroundOperators
+

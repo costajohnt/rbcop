@@ -1,0 +1,18 @@
+==> offenses exit=1 195 <==
+000.rb:2:7: C: [Correctable] Style/WhenThen: Do not use `when b;`. Use `when b then` instead.
+001.rb:2:10: C: [Correctable] Style/WhenThen: Do not use `when b, c;`. Use `when b, c then` instead.
+
+==> autocorrect exit=0 191 <==
+000.rb:2:7: C: [Corrected] Style/WhenThen: Do not use `when b;`. Use `when b then` instead.
+001.rb:2:10: C: [Corrected] Style/WhenThen: Do not use `when b, c;`. Use `when b, c then` instead.
+
+==> corrected/000.rb 25 <==
+case a
+when b then c
+end
+
+==> corrected/001.rb 28 <==
+case a
+when b, c then d
+end
+

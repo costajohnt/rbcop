@@ -1,0 +1,15 @@
+==> offenses exit=1 166 <==
+000.rb:1:45: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+000.rb:5:20: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+
+==> autocorrect exit=0 162 <==
+000.rb:1:45: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+000.rb:5:20: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+
+==> corrected/000.rb 110 <==
+[1, 2, 3].each_with_object([]) do |n, list| # $ Array[Integer]
+  list << n
+end
+
+name = 'John'      # : String
+

@@ -1,0 +1,39 @@
+==> offenses exit=1 807 <==
+000.rb:1:7: W: [Correctable] Lint/ParenthesesAsGroupedExpression: `(x)` interpreted as grouped expression.
+001.rb:1:4: W: [Correctable] Lint/ParenthesesAsGroupedExpression: `(x)` interpreted as grouped expression.
+002.rb:1:9: W: [Correctable] Lint/ParenthesesAsGroupedExpression: `((1..1).map { |i| i * 10 })` interpreted as grouped expression.
+004.rb:1:9: W: [Correctable] Lint/ParenthesesAsGroupedExpression: `((1..1).map { _1 * 10 })` interpreted as grouped expression.
+023.rb:1:5: W: [Correctable] Lint/ParenthesesAsGroupedExpression: `(1..10)` interpreted as grouped expression.
+026.rb:1:8: W: [Correctable] Lint/ParenthesesAsGroupedExpression: `(x)` interpreted as grouped expression.
+032.rb:1:7: W: [Correctable] Lint/ParenthesesAsGroupedExpression: `(foo && bar)` interpreted as grouped expression.
+
+==> autocorrect exit=0 793 <==
+000.rb:1:7: W: [Corrected] Lint/ParenthesesAsGroupedExpression: `(x)` interpreted as grouped expression.
+001.rb:1:4: W: [Corrected] Lint/ParenthesesAsGroupedExpression: `(x)` interpreted as grouped expression.
+002.rb:1:9: W: [Corrected] Lint/ParenthesesAsGroupedExpression: `((1..1).map { |i| i * 10 })` interpreted as grouped expression.
+004.rb:1:9: W: [Corrected] Lint/ParenthesesAsGroupedExpression: `((1..1).map { _1 * 10 })` interpreted as grouped expression.
+023.rb:1:5: W: [Corrected] Lint/ParenthesesAsGroupedExpression: `(1..10)` interpreted as grouped expression.
+026.rb:1:8: W: [Corrected] Lint/ParenthesesAsGroupedExpression: `(x)` interpreted as grouped expression.
+032.rb:1:7: W: [Corrected] Lint/ParenthesesAsGroupedExpression: `(foo && bar)` interpreted as grouped expression.
+
+==> corrected/000.rb 10 <==
+a.func(x)
+
+==> corrected/001.rb 7 <==
+is?(x)
+
+==> corrected/002.rb 36 <==
+a.concat((1..1).map { |i| i * 10 })
+
+==> corrected/004.rb 33 <==
+a.concat((1..1).map { _1 * 10 })
+
+==> corrected/023.rb 12 <==
+rand(1..10)
+
+==> corrected/026.rb 11 <==
+a&.func(x)
+
+==> corrected/032.rb 19 <==
+false?(foo && bar)
+

@@ -1,0 +1,18 @@
+==> .rubocop.yml 211 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/PredicatePrefix:
+  NamePrefix:
+  - is_
+  ForbiddenPrefixes:
+  - is_
+  AllowedMethods:
+  - is_a?
+
+==> 000.rb 15 <==
+def is_a?; end
+

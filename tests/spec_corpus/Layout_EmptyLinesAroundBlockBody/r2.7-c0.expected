@@ -1,0 +1,62 @@
+==> offenses exit=1 888 <==
+000.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body beginning.
+001.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body end.
+002.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body end.
+003.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body beginning.
+005.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body beginning.
+006.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body end.
+007.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body end.
+008.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body beginning.
+
+==> autocorrect exit=0 872 <==
+000.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body beginning.
+001.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body end.
+002.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body end.
+003.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body beginning.
+005.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body beginning.
+006.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body end.
+007.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body end.
+008.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body beginning.
+
+==> corrected/000.rb 31 <==
+some_method {
+  do_something
+}
+
+==> corrected/001.rb 33 <==
+some_method {
+  do_something
+  }
+
+==> corrected/002.rb 23 <==
+some_method {
+  _1
+  }
+
+==> corrected/003.rb 50 <==
+some_method arg,
+  another_arg {
+  do_something
+}
+
+==> corrected/005.rb 34 <==
+some_method do
+  do_something
+end
+
+==> corrected/006.rb 36 <==
+some_method do
+  do_something
+  end
+
+==> corrected/007.rb 26 <==
+some_method do
+  _1
+  end
+
+==> corrected/008.rb 53 <==
+some_method arg,
+  another_arg do
+  do_something
+end
+

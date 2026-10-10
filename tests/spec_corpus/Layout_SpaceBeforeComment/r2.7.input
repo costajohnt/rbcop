@@ -1,0 +1,25 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 18 <==
+a += 1# increment
+
+==> 001.rb 18 <==
+a += 1 # increment
+==> 002.rb 9 <==
+# comment
+==> 003.rb 24 <==
+=begin
+Doc comment
+=end
+
+==> 004.rb 29 <==
+<<~STR# my string
+  text
+STR
+

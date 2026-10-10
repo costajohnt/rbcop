@@ -1,0 +1,367 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 33 <==
+include Foo
+def do_something
+end
+
+==> 001.rb 46 <==
+include Foo # my comment
+def do_something
+end
+
+==> 002.rb 46 <==
+include Foo
+# my comment
+def do_something
+end
+
+==> 003.rb 98 <==
+# rubocop:disable Department/Cop
+include Foo
+# rubocop:enable Department/Cop
+def do_something
+end
+
+==> 004.rb 108 <==
+# rubocop:disable Department/Cop
+include Foo
+# rubocop:enable Department/Cop
+# comment
+def do_something
+end
+
+==> 005.rb 58 <==
+class Foo
+  include Bar, Baz
+  def do_something
+  end
+end
+
+==> 006.rb 53 <==
+class Bar
+  include Foo
+  def do_something
+  end
+end
+
+==> 007.rb 56 <==
+Class.new do
+  include Foo
+  def do_something
+  end
+end
+
+==> 008.rb 99 <==
+# rubocop:disable Department/Cop
+include Foo
+# rubocop:enable Department/Cop
+
+def do_something
+end
+
+==> 009.rb 34 <==
+include Foo
+
+def do_something
+end
+
+==> 010.rb 46 <==
+include Foo
+include Foo
+
+def do_something
+end
+
+==> 011.rb 49 <==
+module Baz
+  class Bar
+    include Foo
+  end
+end
+
+==> 012.rb 31 <==
+Class.new do
+  include Foo
+end
+
+==> 013.rb 52 <==
+include Module.new do |arg|
+  do_something(arg)
+end
+
+==> 014.rb 45 <==
+include Module.new do
+  do_something(_1)
+end
+
+==> 015.rb 51 <==
+if condition
+  include Foo
+else
+  do_something
+end
+
+==> 016.rb 11 <==
+include Foo
+==> 017.rb 32 <==
+extend Foo
+def do_something
+end
+
+==> 018.rb 45 <==
+extend Foo # my comment
+def do_something
+end
+
+==> 019.rb 45 <==
+extend Foo
+# my comment
+def do_something
+end
+
+==> 020.rb 97 <==
+# rubocop:disable Department/Cop
+extend Foo
+# rubocop:enable Department/Cop
+def do_something
+end
+
+==> 021.rb 107 <==
+# rubocop:disable Department/Cop
+extend Foo
+# rubocop:enable Department/Cop
+# comment
+def do_something
+end
+
+==> 022.rb 57 <==
+class Foo
+  extend Bar, Baz
+  def do_something
+  end
+end
+
+==> 023.rb 52 <==
+class Bar
+  extend Foo
+  def do_something
+  end
+end
+
+==> 024.rb 55 <==
+Class.new do
+  extend Foo
+  def do_something
+  end
+end
+
+==> 025.rb 98 <==
+# rubocop:disable Department/Cop
+extend Foo
+# rubocop:enable Department/Cop
+
+def do_something
+end
+
+==> 026.rb 33 <==
+extend Foo
+
+def do_something
+end
+
+==> 027.rb 44 <==
+extend Foo
+extend Foo
+
+def do_something
+end
+
+==> 028.rb 48 <==
+module Baz
+  class Bar
+    extend Foo
+  end
+end
+
+==> 029.rb 30 <==
+Class.new do
+  extend Foo
+end
+
+==> 030.rb 51 <==
+extend Module.new do |arg|
+  do_something(arg)
+end
+
+==> 031.rb 44 <==
+extend Module.new do
+  do_something(_1)
+end
+
+==> 032.rb 50 <==
+if condition
+  extend Foo
+else
+  do_something
+end
+
+==> 033.rb 10 <==
+extend Foo
+==> 034.rb 33 <==
+prepend Foo
+def do_something
+end
+
+==> 035.rb 46 <==
+prepend Foo # my comment
+def do_something
+end
+
+==> 036.rb 46 <==
+prepend Foo
+# my comment
+def do_something
+end
+
+==> 037.rb 98 <==
+# rubocop:disable Department/Cop
+prepend Foo
+# rubocop:enable Department/Cop
+def do_something
+end
+
+==> 038.rb 108 <==
+# rubocop:disable Department/Cop
+prepend Foo
+# rubocop:enable Department/Cop
+# comment
+def do_something
+end
+
+==> 039.rb 58 <==
+class Foo
+  prepend Bar, Baz
+  def do_something
+  end
+end
+
+==> 040.rb 53 <==
+class Bar
+  prepend Foo
+  def do_something
+  end
+end
+
+==> 041.rb 56 <==
+Class.new do
+  prepend Foo
+  def do_something
+  end
+end
+
+==> 042.rb 99 <==
+# rubocop:disable Department/Cop
+prepend Foo
+# rubocop:enable Department/Cop
+
+def do_something
+end
+
+==> 043.rb 34 <==
+prepend Foo
+
+def do_something
+end
+
+==> 044.rb 46 <==
+prepend Foo
+prepend Foo
+
+def do_something
+end
+
+==> 045.rb 49 <==
+module Baz
+  class Bar
+    prepend Foo
+  end
+end
+
+==> 046.rb 31 <==
+Class.new do
+  prepend Foo
+end
+
+==> 047.rb 52 <==
+prepend Module.new do |arg|
+  do_something(arg)
+end
+
+==> 048.rb 45 <==
+prepend Module.new do
+  do_something(_1)
+end
+
+==> 049.rb 51 <==
+if condition
+  prepend Foo
+else
+  do_something
+end
+
+==> 050.rb 11 <==
+prepend Foo
+==> 051.rb 81 <==
+module Foo
+  module Bar
+    extend Baz
+    prepend Baz
+    include Baz
+  end
+end
+
+==> 052.rb 59 <==
+it 'something' do
+  expect(foo).to include(bar), "baz"
+end
+
+==> 053.rb 56 <==
+it 'something' do
+  match([include(foo), anything])
+end
+
+==> 054.rb 104 <==
+class Foo
+  includes = [include, sdk_include].compact.map do |inc|
+    inc + "blah"
+  end.join(' ')
+end
+
+==> 055.rb 69 <==
+class Foo
+  include Bar
+  include Baz if condition
+  include Qux
+end
+
+==> 056.rb 55 <==
+begin
+  include Foo
+rescue NameError
+  include Bar
+end
+
+==> 057.rb 46 <==
+begin
+  include Foo
+ensure
+  do_something
+end
+

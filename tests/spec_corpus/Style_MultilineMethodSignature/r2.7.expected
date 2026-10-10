@@ -1,0 +1,74 @@
+==> offenses exit=1 1164 <==
+000.rb:1:1: C: [Correctable] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+001.rb:2:3: C: [Correctable] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+002.rb:1:1: C: [Correctable] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+003.rb:1:1: C: [Correctable] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+004.rb:1:1: C: [Correctable] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+008.rb:1:1: C: [Correctable] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+011.rb:1:1: C: [Correctable] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+012.rb:1:1: C: [Correctable] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+013.rb:1:1: C: [Correctable] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+014.rb:1:1: C: [Correctable] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+015.rb:1:1: C: [Correctable] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+016.rb:1:1: C: [Correctable] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+
+==> autocorrect exit=0 1140 <==
+000.rb:1:1: C: [Corrected] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+001.rb:2:3: C: [Corrected] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+002.rb:1:1: C: [Corrected] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+003.rb:1:1: C: [Corrected] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+004.rb:1:1: C: [Corrected] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+008.rb:1:1: C: [Corrected] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+011.rb:1:1: C: [Corrected] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+012.rb:1:1: C: [Corrected] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+013.rb:1:1: C: [Corrected] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+014.rb:1:1: C: [Corrected] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+015.rb:1:1: C: [Corrected] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+016.rb:1:1: C: [Corrected] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+
+==> corrected/000.rb 17 <==
+def foo(bar)
+end
+
+==> corrected/001.rb 35 <==
+class Foo
+  def foo(arg)
+  end
+end
+
+==> corrected/002.rb 17 <==
+def foo(bar)
+end
+
+==> corrected/003.rb 17 <==
+def foo(bar)
+end
+
+==> corrected/004.rb 22 <==
+def foo(bar, baz)
+end
+
+==> corrected/008.rb 22 <==
+def self.foo(bar)
+end
+
+==> corrected/011.rb 22 <==
+def foo(bar, baz)
+end
+
+==> corrected/012.rb 23 <==
+def foo(bar, baz); end
+
+==> corrected/013.rb 23 <==
+def foo(bar, baz); end
+
+==> corrected/014.rb 27 <==
+def self.foo(bar, baz)
+end
+
+==> corrected/015.rb 28 <==
+def self.foo(bar, baz); end
+
+==> corrected/016.rb 28 <==
+def self.foo(bar, baz); end
+

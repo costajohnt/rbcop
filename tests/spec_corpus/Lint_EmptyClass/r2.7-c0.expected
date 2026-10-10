@@ -1,0 +1,12 @@
+==> offenses exit=1 228 <==
+000.rb:1:1: W: Lint/EmptyClass: Empty class detected.
+001.rb:2:3: W: Lint/EmptyClass: Empty metaclass detected.
+002.rb:1:1: W: Lint/EmptyClass: Empty metaclass detected.
+003.rb:2:3: W: Lint/EmptyClass: Empty metaclass detected.
+
+==> autocorrect exit=1 228 <==
+000.rb:1:1: W: Lint/EmptyClass: Empty class detected.
+001.rb:2:3: W: Lint/EmptyClass: Empty metaclass detected.
+002.rb:1:1: W: Lint/EmptyClass: Empty metaclass detected.
+003.rb:2:3: W: Lint/EmptyClass: Empty metaclass detected.
+

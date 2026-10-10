@@ -1,0 +1,14 @@
+==> .rubocop.yml 173 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Lint/SuppressedException:
+  AllowComments: true
+  AllowNil: true
+
+==> 000.rb 46 <==
+def some_method = other_method(42) rescue nil
+

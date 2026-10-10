@@ -1,0 +1,21 @@
+==> .rubocop.yml 187 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Layout/ExtraSpacing:
+  AllowForAlignment: true
+  ForceEqualSignAlignment: true
+
+==> 000.rb 79 <==
+def deleted = do_something
+def updated = do_something
+def added = do_something
+
+==> 001.rb 118 <==
+def deleted(x = true) = do_something(x)
+def updated(x = true) = do_something(x)
+def added(x = true) = do_something(x)
+

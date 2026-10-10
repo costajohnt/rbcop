@@ -1,0 +1,45 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 35 <==
+ary.each_with_object([]) { |v| v }
+
+==> 001.rb 36 <==
+ary&.each_with_object([]) { |v| v }
+
+==> 002.rb 35 <==
+ary.each.with_object([]) { |v| v }
+
+==> 003.rb 40 <==
+ary.each_with_object([]) do |v|
+  v
+end
+
+==> 004.rb 39 <==
+ary.each_with_object [] do |v|
+  v
+end
+
+==> 005.rb 40 <==
+ary.each_with_object([]) { |v, o| v; o }
+==> 006.rb 36 <==
+ary.each_with_object { |v, o| v; o }
+==> 007.rb 30 <==
+ary.each_with_object { |v| v }
+==> 008.rb 38 <==
+ary.each_with_object([]) { _1 << _2 }
+
+==> 009.rb 32 <==
+ary.each_with_object([]) { _1 }
+
+==> 010.rb 33 <==
+ary&.each_with_object([]) { _1 }
+
+==> 011.rb 32 <==
+ary.each.with_object([]) { _1 }
+

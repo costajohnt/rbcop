@@ -1,0 +1,38 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 22 <==
+Hash.new(key: :value)
+
+==> 001.rb 36 <==
+Hash.new(capacity: 42, key: :value)
+
+==> 002.rb 24 <==
+::Hash.new(key: :value)
+
+==> 003.rb 25 <==
+Hash.new(:key => :value)
+
+==> 004.rb 25 <==
+Hash.new(key => 'value')
+
+==> 005.rb 24 <==
+Hash.new({key: :value})
+
+==> 006.rb 23 <==
+Hash.new(capacity: 42)
+
+==> 007.rb 9 <==
+Hash.new
+
+==> 008.rb 21 <==
+Foo.new(key: :value)
+
+==> 009.rb 13 <==
+Hash.new(42)
+

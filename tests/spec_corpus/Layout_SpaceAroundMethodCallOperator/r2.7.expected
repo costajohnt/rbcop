@@ -1,0 +1,206 @@
+==> offenses exit=1 5160 <==
+000.rb:1:5: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+001.rb:1:4: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+002.rb:1:4: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+003.rb:1:5: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+004.rb:1:4: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+004.rb:1:6: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+005.rb:1:5: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+006.rb:2:4: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+007.rb:1:4: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+010.rb:1:9: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+011.rb:1:5: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+012.rb:1:4: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+013.rb:1:8: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+014.rb:1:8: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+015.rb:1:5: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+015.rb:1:10: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+018.rb:1:4: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+019.rb:1:6: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+020.rb:1:4: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+021.rb:1:4: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+022.rb:1:6: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+023.rb:1:4: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+023.rb:1:7: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+024.rb:2:5: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+025.rb:1:4: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+028.rb:1:11: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+029.rb:1:6: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+030.rb:1:4: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+031.rb:1:9: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+032.rb:1:9: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+033.rb:1:6: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+033.rb:1:12: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+035.rb:1:10: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+036.rb:1:10: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+037.rb:2:5: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+040.rb:1:15: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+041.rb:1:15: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+042.rb:1:3: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+042.rb:1:13: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+042.rb:1:19: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+043.rb:1:11: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+048.rb:1:3: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+048.rb:1:13: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+048.rb:1:23: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+
+==> autocorrect exit=0 5072 <==
+000.rb:1:5: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+001.rb:1:4: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+002.rb:1:4: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+003.rb:1:5: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+004.rb:1:4: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+004.rb:1:6: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+005.rb:1:5: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+006.rb:2:4: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+007.rb:1:4: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+010.rb:1:9: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+011.rb:1:5: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+012.rb:1:4: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+013.rb:1:8: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+014.rb:1:8: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+015.rb:1:5: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+015.rb:1:10: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+018.rb:1:4: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+019.rb:1:6: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+020.rb:1:4: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+021.rb:1:4: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+022.rb:1:6: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+023.rb:1:4: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+023.rb:1:7: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+024.rb:2:5: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+025.rb:1:4: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+028.rb:1:11: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+029.rb:1:6: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+030.rb:1:4: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+031.rb:1:9: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+032.rb:1:9: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+033.rb:1:6: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+033.rb:1:12: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+035.rb:1:10: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+036.rb:1:10: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+037.rb:2:5: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+040.rb:1:15: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+041.rb:1:15: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+042.rb:1:3: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+042.rb:1:13: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+042.rb:1:19: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+043.rb:1:11: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+048.rb:1:3: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+048.rb:1:13: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+048.rb:1:23: C: [Corrected] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+
+==> corrected/000.rb 8 <==
+foo.bar
+
+==> corrected/001.rb 8 <==
+foo.bar
+
+==> corrected/002.rb 8 <==
+foo.bar
+
+==> corrected/003.rb 8 <==
+foo.bar
+
+==> corrected/004.rb 8 <==
+foo.bar
+
+==> corrected/005.rb 7 <==
+foo.()
+
+==> corrected/006.rb 11 <==
+foo
+  .bar
+
+==> corrected/007.rb 11 <==
+foo.
+  bar
+
+==> corrected/010.rb 13 <==
+foo.bar.buzz
+
+==> corrected/011.rb 13 <==
+foo.bar.buzz
+
+==> corrected/012.rb 13 <==
+foo.bar.buzz
+
+==> corrected/013.rb 13 <==
+foo.bar.buzz
+
+==> corrected/014.rb 17 <==
+foo.bar.buzz.bat
+
+==> corrected/015.rb 17 <==
+foo.bar.buzz.bat
+
+==> corrected/018.rb 25 <==
+foo. # comment
+  bar.baz
+
+==> corrected/019.rb 9 <==
+foo&.bar
+
+==> corrected/020.rb 9 <==
+foo&.bar
+
+==> corrected/021.rb 9 <==
+foo&.bar
+
+==> corrected/022.rb 9 <==
+foo&.bar
+
+==> corrected/023.rb 9 <==
+foo&.bar
+
+==> corrected/024.rb 12 <==
+foo
+  &.bar
+
+==> corrected/025.rb 12 <==
+foo&.
+  bar
+
+==> corrected/028.rb 15 <==
+foo&.bar&.buzz
+
+==> corrected/029.rb 15 <==
+foo&.bar&.buzz
+
+==> corrected/030.rb 15 <==
+foo&.bar&.buzz
+
+==> corrected/031.rb 15 <==
+foo&.bar&.buzz
+
+==> corrected/032.rb 20 <==
+foo&.bar&.buzz&.bat
+
+==> corrected/033.rb 20 <==
+foo&.bar&.buzz&.bat
+
+==> corrected/035.rb 13 <==
+RuboCop::Cop
+
+==> corrected/036.rb 13 <==
+RuboCop::Cop
+
+==> corrected/037.rb 16 <==
+RuboCop
+  ::Cop
+
+==> corrected/040.rb 18 <==
+RuboCop::Cop::Cop
+
+==> corrected/041.rb 23 <==
+RuboCop::Cop::Cop::Cop
+
+==> corrected/042.rb 25 <==
+::RuboCop::Cop::Cop::Cop
+
+==> corrected/043.rb 23 <==
+klass = ::RuboCop::Cop
+
+==> corrected/048.rb 28 <==
+::RuboCop::Cop || ::RuboCop
+

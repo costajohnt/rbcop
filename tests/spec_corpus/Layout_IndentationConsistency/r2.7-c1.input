@@ -1,0 +1,76 @@
+==> .rubocop.yml 182 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/IndentationConsistency:
+  EnforcedStyle: indented_internal_methods
+
+==> 000.rb 656 <==
+class Cat
+  def meow
+    puts('Meow!')
+  end
+
+  protected
+
+    def can_we_be_friends?(another_cat)
+      # some logic
+    end
+
+    def related_to?(another_cat)
+      # some logic
+    end
+
+  private
+
+              # Here we go back an indentation level again. This is a
+              # violation of the indented_internal_methods style,
+              # but it's not for this cop to report.
+              # Layout/IndentationWidth will handle it.
+  def meow_at_3am?
+    rand < 0.8
+  end
+
+              # As long as the indentation of this method is
+              # consistent with that of the last one, we're fine.
+  def meow_at_4am?
+    rand < 0.8
+  end
+end
+
+==> 001.rb 672 <==
+Foo = Struct.new(:foo) do
+  def meow
+    puts('Meow!')
+  end
+
+  protected
+
+    def can_we_be_friends?(another_cat)
+      # some logic
+    end
+
+    def related_to?(another_cat)
+      # some logic
+    end
+
+  private
+
+              # Here we go back an indentation level again. This is a
+              # violation of the indented_internal_methods style,
+              # but it's not for this cop to report.
+              # Layout/IndentationWidth will handle it.
+  def meow_at_3am?
+    rand < 0.8
+  end
+
+              # As long as the indentation of this method is
+              # consistent with that of the last one, we're fine.
+  def meow_at_4am?
+    rand < 0.8
+  end
+end
+

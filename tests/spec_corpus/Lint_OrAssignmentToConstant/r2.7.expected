@@ -1,0 +1,20 @@
+==> offenses exit=1 375 <==
+000.rb:1:7: W: [Correctable] Lint/OrAssignmentToConstant: Avoid using or-assignment with constants.
+001.rb:2:12: W: Lint/OrAssignmentToConstant: Avoid using or-assignment with constants.
+002.rb:2:12: W: Lint/OrAssignmentToConstant: Avoid using or-assignment with constants.
+003.rb:2:12: W: [Correctable] Lint/OrAssignmentToConstant: Avoid using or-assignment with constants.
+
+==> autocorrect exit=1 371 <==
+000.rb:1:7: W: [Corrected] Lint/OrAssignmentToConstant: Avoid using or-assignment with constants.
+001.rb:2:12: W: Lint/OrAssignmentToConstant: Avoid using or-assignment with constants.
+002.rb:2:12: W: Lint/OrAssignmentToConstant: Avoid using or-assignment with constants.
+003.rb:2:12: W: [Corrected] Lint/OrAssignmentToConstant: Avoid using or-assignment with constants.
+
+==> corrected/000.rb 10 <==
+CONST = 1
+
+==> corrected/003.rb 41 <==
+define_method :foo do
+  M::CONST = 1
+end
+

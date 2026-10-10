@@ -1,0 +1,12 @@
+==> offenses exit=1 118 <==
+000.rb:1:4: C: [Correctable] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `if`.
+
+==> autocorrect exit=0 116 <==
+000.rb:1:4: C: [Corrected] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `if`.
+
+==> corrected/000.rb 39 <==
+if x > 3 &&
+  x < 10
+  return true
+end
+

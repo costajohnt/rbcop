@@ -1,0 +1,18 @@
+==> .rubocop.yml 208 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/NumericPredicate:
+  EnforcedStyle: predicate
+  AllowedMethods:
+  - "=="
+  AllowedPatterns: []
+
+==> 000.rb 34 <==
+if number == 0
+  puts 'hello'
+end
+

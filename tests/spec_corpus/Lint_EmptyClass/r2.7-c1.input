@@ -1,0 +1,22 @@
+==> .rubocop.yml 147 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/EmptyClass:
+  AllowComments: true
+
+==> 000.rb 27 <==
+class Foo
+  # Comment.
+end
+
+==> 001.rb 51 <==
+class Foo
+  class << self
+    # Comment.
+  end
+end
+

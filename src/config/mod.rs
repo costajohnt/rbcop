@@ -108,11 +108,21 @@ pub struct CopConfig {
 }
 
 impl CopConfig {
+    /// `cop_config[key].to_s` of a String or Symbol (`Mode: :conservative` reads as `conservative`).
     pub fn str(&self, key: &str) -> Option<&str> {
-        self.params.str(key)
+        match self.params.get(key)? {
+            Value::Sym(s) => Some(s.strip_prefix(':').unwrap_or(s)),
+            _ => self.params.str(key),
+        }
     }
+    /// `cop_config[key]` as Ruby truthiness: a non-boolean value (`IgnoreMacros: 'true'`) is true;
+    /// None when absent or null.
     pub fn bool(&self, key: &str) -> Option<bool> {
-        self.params.bool(key)
+        match self.params.get(key)? {
+            Value::Null => None,
+            Value::Bool(b) => Some(*b),
+            _ => Some(true),
+        }
     }
     pub fn int(&self, key: &str) -> Option<i64> {
         self.params.int(key)

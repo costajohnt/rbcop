@@ -1,0 +1,19 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 27 <==
+ary.each_with_index { it }
+
+==> 001.rb 28 <==
+ary&.each_with_index { it }
+
+==> 002.rb 27 <==
+ary.each.with_index { it }
+
+==> 003.rb 17 <==
+with_index { it }

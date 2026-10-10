@@ -1,0 +1,9 @@
+==> offenses exit=1 134 <==
+000.rb:1:1: C: [Correctable] Style/FileTouch: Use `FileUtils.touch(filename)` instead of `File.open` in append mode with empty block.
+
+==> autocorrect exit=0 132 <==
+000.rb:1:1: C: [Corrected] Style/FileTouch: Use `FileUtils.touch(filename)` instead of `File.open` in append mode with empty block.
+
+==> corrected/000.rb 26 <==
+FileUtils.touch(filename)
+

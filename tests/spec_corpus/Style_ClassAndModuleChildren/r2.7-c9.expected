@@ -1,0 +1,18 @@
+==> offenses exit=1 241 <==
+000.rb:1:8: C: [Correctable] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
+001.rb:1:7: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+
+==> autocorrect exit=0 237 <==
+000.rb:1:8: C: [Corrected] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
+001.rb:1:7: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+
+==> corrected/000.rb 46 <==
+module FooModule
+  module BarModule
+  end
+end
+
+==> corrected/001.rb 29 <==
+class FooClass::BarClass
+end
+

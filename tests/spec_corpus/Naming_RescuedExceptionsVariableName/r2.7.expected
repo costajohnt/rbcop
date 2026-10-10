@@ -1,0 +1,173 @@
+==> offenses exit=1 1806 <==
+000.rb:3:23: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `e` instead of `exc`.
+001.rb:3:23: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `_e` instead of `_exc`.
+002.rb:3:23: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `e` instead of `exc`.
+003.rb:3:24: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `e` instead of `foo`.
+003.rb:5:24: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `e` instead of `bar`.
+004.rb:2:11: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `e` instead of `error`.
+013.rb:3:41: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `e` instead of `exc`.
+016.rb:3:20: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `e` instead of `exc`.
+017.rb:3:11: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `e` instead of `exc`.
+018.rb:3:11: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `_e` instead of `_exc`.
+022.rb:3:39: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `e` instead of `redirection`.
+023.rb:3:25: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `e` instead of `error`.
+024.rb:3:25: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `e` instead of `error`.
+025.rb:3:25: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `e` instead of `error`.
+026.rb:3:25: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `e` instead of `error`.
+027.rb:3:23: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `e` instead of `exc`.
+027.rb:5:26: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `e` instead of `exc`.
+028.rb:2:25: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `e` instead of `e1`.
+029.rb:3:25: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `e` instead of `e1`.
+
+==> autocorrect exit=0 1768 <==
+000.rb:3:23: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `e` instead of `exc`.
+001.rb:3:23: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `_e` instead of `_exc`.
+002.rb:3:23: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `e` instead of `exc`.
+003.rb:3:24: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `e` instead of `foo`.
+003.rb:5:24: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `e` instead of `bar`.
+004.rb:2:11: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `e` instead of `error`.
+013.rb:3:41: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `e` instead of `exc`.
+016.rb:3:20: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `e` instead of `exc`.
+017.rb:3:11: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `e` instead of `exc`.
+018.rb:3:11: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `_e` instead of `_exc`.
+022.rb:3:39: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `e` instead of `redirection`.
+023.rb:3:25: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `e` instead of `error`.
+024.rb:3:25: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `e` instead of `error`.
+025.rb:3:25: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `e` instead of `error`.
+026.rb:3:25: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `e` instead of `error`.
+027.rb:3:23: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `e` instead of `exc`.
+027.rb:5:26: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `e` instead of `exc`.
+028.rb:2:25: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `e` instead of `e1`.
+029.rb:3:25: C: [Corrected] Naming/RescuedExceptionsVariableName: Use `e` instead of `e1`.
+
+==> corrected/000.rb 63 <==
+begin
+  something
+rescue MyException => e
+  # do something
+end
+
+==> corrected/001.rb 64 <==
+begin
+  something
+rescue MyException => _e
+  # do something
+end
+
+==> corrected/002.rb 50 <==
+begin
+  something
+rescue MyException => e
+  e
+end
+
+==> corrected/003.rb 106 <==
+begin
+  something
+rescue FooException => e
+  # do something
+rescue BarException => e
+  # do something
+end
+
+==> corrected/004.rb 47 <==
+begin
+rescue => e
+  do_something(error: e)
+end
+
+==> corrected/013.rb 81 <==
+begin
+  something
+rescue ActiveSupport::JSON.my_method => e
+  # do something
+end
+
+==> corrected/016.rb 60 <==
+begin
+  something
+rescue *handled => e
+  # do something
+end
+
+==> corrected/017.rb 51 <==
+begin
+  something
+rescue => e
+  # do something
+end
+
+==> corrected/018.rb 52 <==
+begin
+  something
+rescue => _e
+  # do something
+end
+
+==> corrected/022.rb 103 <==
+begin
+  get something
+rescue ActiveResource::Redirection => e
+  redirect_to e.response['Location']
+end
+
+==> corrected/023.rb 105 <==
+def main
+  raise
+rescue StandardError => e
+  error = {
+    error_message: e.message
+  }
+  puts error
+end
+
+==> corrected/024.rb 84 <==
+def main
+  raise
+rescue StandardError => e
+  message = e.message
+  puts message
+end
+
+==> corrected/025.rb 89 <==
+begin
+  do_something
+rescue StandardError => e
+  error = build_message(e)
+end
+puts error
+
+==> corrected/026.rb 80 <==
+def main
+  raise
+rescue StandardError => e
+  error, foo = 1, e
+  puts error
+end
+
+==> corrected/027.rb 112 <==
+begin
+  something
+rescue MyException => e
+  # do something
+rescue OtherException => e
+  # do something else
+end
+
+==> corrected/028.rb 105 <==
+begin
+rescue StandardError => e
+  begin
+    log(e)
+  rescue StandardError => e2
+    log(e, e2)
+  end
+end
+
+==> corrected/029.rb 55 <==
+begin
+  something
+rescue StandardError => e
+end
+foo(e)
+

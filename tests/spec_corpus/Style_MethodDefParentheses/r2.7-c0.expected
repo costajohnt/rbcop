@@ -1,0 +1,65 @@
+==> offenses exit=1 1097 <==
+000.rb:1:10: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+001.rb:3:10: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+002.rb:1:9: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+003.rb:1:9: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+004.rb:1:9: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+005.rb:1:15: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+007.rb:1:15: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+008.rb:3:15: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+008.rb:5:16: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+009.rb:1:10: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+
+==> autocorrect exit=0 1077 <==
+000.rb:1:10: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+001.rb:3:10: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+002.rb:1:9: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+003.rb:1:9: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+004.rb:1:9: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+005.rb:1:15: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+007.rb:1:15: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+008.rb:3:15: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+008.rb:5:16: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+009.rb:1:10: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+
+==> corrected/000.rb 19 <==
+def func(a, b)
+end
+
+==> corrected/001.rb 38 <==
+def func(a, b)
+end
+def func(a, b)
+end
+
+==> corrected/002.rb 19 <==
+def foo(*args)
+end
+
+==> corrected/003.rb 20 <==
+def foo(**opts)
+end
+
+==> corrected/004.rb 20 <==
+def foo(&block)
+end
+
+==> corrected/005.rb 24 <==
+def Test.func(a, b)
+end
+
+==> corrected/007.rb 26 <==
+def self.test(param); end
+
+==> corrected/008.rb 74 <==
+def self.fine; end
+
+def self.test(param); end
+
+def self.test2(param); end
+
+==> corrected/009.rb 23 <==
+def test(one,
+two)
+end
+

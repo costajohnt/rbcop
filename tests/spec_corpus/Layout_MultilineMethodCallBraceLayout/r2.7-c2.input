@@ -1,0 +1,43 @@
+==> .rubocop.yml 173 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/MultilineMethodCallBraceLayout:
+  EnforcedStyle: new_line
+
+==> 000.rb 22 <==
+foo(a,
+{
+foo: bar
+})
+
+
+==> 001.rb 19 <==
+foo(a, # a
+b) # b
+
+
+==> 002.rb 12 <==
+foo(
+a,
+b)
+
+
+==> 003.rb 20 <==
+puts("Hello world!")
+==> 004.rb 14 <==
+[
+].join(" ")
+
+==> 005.rb 15 <==
+[
+]
+.join(" ")
+
+==> 006.rb 17 <==
+foo&.bar(
+  baz)
+

@@ -1,0 +1,15 @@
+==> .rubocop.yml 182 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+Style/YodaCondition:
+  EnforcedStyle: forbid_for_all_comparison_operators
+
+==> 000.rb 41 <==
+def foo(*)
+  [*] == [*].do_something
+end
+

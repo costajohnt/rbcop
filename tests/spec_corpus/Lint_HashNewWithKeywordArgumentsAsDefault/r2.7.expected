@@ -1,0 +1,29 @@
+==> offenses exit=1 610 <==
+000.rb:1:10: W: [Correctable] Lint/HashNewWithKeywordArgumentsAsDefault: Use a hash literal instead of keyword arguments.
+001.rb:1:10: W: [Correctable] Lint/HashNewWithKeywordArgumentsAsDefault: Use a hash literal instead of keyword arguments.
+002.rb:1:12: W: [Correctable] Lint/HashNewWithKeywordArgumentsAsDefault: Use a hash literal instead of keyword arguments.
+003.rb:1:10: W: [Correctable] Lint/HashNewWithKeywordArgumentsAsDefault: Use a hash literal instead of keyword arguments.
+004.rb:1:10: W: [Correctable] Lint/HashNewWithKeywordArgumentsAsDefault: Use a hash literal instead of keyword arguments.
+
+==> autocorrect exit=0 600 <==
+000.rb:1:10: W: [Corrected] Lint/HashNewWithKeywordArgumentsAsDefault: Use a hash literal instead of keyword arguments.
+001.rb:1:10: W: [Corrected] Lint/HashNewWithKeywordArgumentsAsDefault: Use a hash literal instead of keyword arguments.
+002.rb:1:12: W: [Corrected] Lint/HashNewWithKeywordArgumentsAsDefault: Use a hash literal instead of keyword arguments.
+003.rb:1:10: W: [Corrected] Lint/HashNewWithKeywordArgumentsAsDefault: Use a hash literal instead of keyword arguments.
+004.rb:1:10: W: [Corrected] Lint/HashNewWithKeywordArgumentsAsDefault: Use a hash literal instead of keyword arguments.
+
+==> corrected/000.rb 24 <==
+Hash.new({key: :value})
+
+==> corrected/001.rb 38 <==
+Hash.new({capacity: 42, key: :value})
+
+==> corrected/002.rb 26 <==
+::Hash.new({key: :value})
+
+==> corrected/003.rb 27 <==
+Hash.new({:key => :value})
+
+==> corrected/004.rb 27 <==
+Hash.new({key => 'value'})
+

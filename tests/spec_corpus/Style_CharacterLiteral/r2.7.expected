@@ -1,0 +1,19 @@
+==> offenses exit=1 348 <==
+000.rb:1:5: C: [Correctable] Style/CharacterLiteral: Do not use the character literal - use string literal instead.
+001.rb:1:5: C: [Correctable] Style/CharacterLiteral: Do not use the character literal - use string literal instead.
+004.rb:1:5: C: [Correctable] Style/CharacterLiteral: Do not use the character literal - use string literal instead.
+
+==> autocorrect exit=0 342 <==
+000.rb:1:5: C: [Corrected] Style/CharacterLiteral: Do not use the character literal - use string literal instead.
+001.rb:1:5: C: [Corrected] Style/CharacterLiteral: Do not use the character literal - use string literal instead.
+004.rb:1:5: C: [Corrected] Style/CharacterLiteral: Do not use the character literal - use string literal instead.
+
+==> corrected/000.rb 8 <==
+x = 'x'
+
+==> corrected/001.rb 9 <==
+x = "\n"
+
+==> corrected/004.rb 8 <==
+x = "'"
+

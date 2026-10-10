@@ -1,0 +1,34 @@
+==> .rubocop.yml 241 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/RescueEnsureAlignment:
+  EnforcedStyle: require_parentheses
+Layout/BeginEndAlignment:
+  EnforcedStyleAlignWith: start_of_line
+
+==> 000.rb 31 <==
+x ||= begin
+  1
+rescue
+  2
+end
+
+==> 001.rb 41 <==
+x ||=
+  begin
+    1
+  rescue
+    2
+  end
+
+==> 002.rb 55 <==
+x ||= begin
+        1
+      rescue
+        2
+      end
+

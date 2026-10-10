@@ -1,0 +1,40 @@
+==> .rubocop.yml 182 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/DefEndAlignment:
+  EnforcedStyleAlignWith: def
+  AutoCorrect: true
+
+==> 000.rb 15 <==
+def test
+  end
+
+==> 001.rb 20 <==
+def Test.test
+  end
+
+==> 002.rb 12 <==
+def test
+end
+==> 003.rb 17 <==
+def Test.test
+end
+==> 004.rb 20 <==
+foo def test
+    end
+==> 005.rb 17 <==
+foo def test
+end
+
+==> 006.rb 46 <==
+foo def a
+  a1
+end
+foo def b
+      b1
+    end
+

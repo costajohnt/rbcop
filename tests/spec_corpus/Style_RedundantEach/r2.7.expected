@@ -1,0 +1,88 @@
+==> offenses exit=1 1290 <==
+000.rb:1:7: C: [Correctable] Style/RedundantEach: Remove redundant `each`.
+001.rb:1:7: C: [Correctable] Style/RedundantEach: Remove redundant `each`.
+002.rb:1:8: C: [Correctable] Style/RedundantEach: Remove redundant `each`.
+003.rb:1:8: C: [Correctable] Style/RedundantEach: Remove redundant `each`.
+004.rb:1:7: C: [Correctable] Style/RedundantEach: Remove redundant `each`.
+005.rb:1:7: C: [Correctable] Style/RedundantEach: Remove redundant `each`.
+006.rb:1:7: C: [Correctable] Style/RedundantEach: Remove redundant `each`.
+007.rb:1:25: C: [Correctable] Style/RedundantEach: Use `with_index` to remove redundant `each`.
+008.rb:1:25: C: [Correctable] Style/RedundantEach: Use `with_object` to remove redundant `each`.
+009.rb:1:21: C: [Correctable] Style/RedundantEach: Remove redundant `each`.
+010.rb:1:21: C: [Correctable] Style/RedundantEach: Remove redundant `each`.
+011.rb:1:21: C: [Correctable] Style/RedundantEach: Remove redundant `each`.
+012.rb:1:22: C: [Correctable] Style/RedundantEach: Remove redundant `each`.
+013.rb:1:9: C: [Correctable] Style/RedundantEach: Remove redundant `each`.
+014.rb:1:22: C: [Correctable] Style/RedundantEach: Use `with_index` to remove redundant `each`.
+015.rb:1:26: C: [Correctable] Style/RedundantEach: Use `with_object` to remove redundant `each`.
+
+==> autocorrect exit=0 1258 <==
+000.rb:1:7: C: [Corrected] Style/RedundantEach: Remove redundant `each`.
+001.rb:1:7: C: [Corrected] Style/RedundantEach: Remove redundant `each`.
+002.rb:1:8: C: [Corrected] Style/RedundantEach: Remove redundant `each`.
+003.rb:1:8: C: [Corrected] Style/RedundantEach: Remove redundant `each`.
+004.rb:1:7: C: [Corrected] Style/RedundantEach: Remove redundant `each`.
+005.rb:1:7: C: [Corrected] Style/RedundantEach: Remove redundant `each`.
+006.rb:1:7: C: [Corrected] Style/RedundantEach: Remove redundant `each`.
+007.rb:1:25: C: [Corrected] Style/RedundantEach: Use `with_index` to remove redundant `each`.
+008.rb:1:25: C: [Corrected] Style/RedundantEach: Use `with_object` to remove redundant `each`.
+009.rb:1:21: C: [Corrected] Style/RedundantEach: Remove redundant `each`.
+010.rb:1:21: C: [Corrected] Style/RedundantEach: Remove redundant `each`.
+011.rb:1:21: C: [Corrected] Style/RedundantEach: Remove redundant `each`.
+012.rb:1:22: C: [Corrected] Style/RedundantEach: Remove redundant `each`.
+013.rb:1:9: C: [Corrected] Style/RedundantEach: Remove redundant `each`.
+014.rb:1:22: C: [Corrected] Style/RedundantEach: Use `with_index` to remove redundant `each`.
+015.rb:1:26: C: [Corrected] Style/RedundantEach: Use `with_object` to remove redundant `each`.
+
+==> corrected/000.rb 35 <==
+array.each { |v| do_something(v) }
+
+==> corrected/001.rb 35 <==
+array.each { |v| do_something(v) }
+
+==> corrected/002.rb 36 <==
+array&.each { |v| do_something(v) }
+
+==> corrected/003.rb 36 <==
+array&.each { |v| do_something(v) }
+
+==> corrected/004.rb 18 <==
+array.each(&:foo)
+
+==> corrected/005.rb 46 <==
+array.each.with_index { |v| do_something(v) }
+
+==> corrected/006.rb 57 <==
+array.each.with_object([]) { |v, o| do_something(v, o) }
+
+==> corrected/007.rb 61 <==
+context.each_child_node.with_index.any? do |node, index|
+end
+
+==> corrected/008.rb 62 <==
+context.each_child_node.with_object([]) do |node, object|
+end
+
+==> corrected/009.rb 45 <==
+context.reverse_each { |i| do_something(i) }
+
+==> corrected/010.rb 21 <==
+context.reverse_each
+
+==> corrected/011.rb 45 <==
+context.reverse_each { |i| do_something(i) }
+
+==> corrected/012.rb 46 <==
+context&.reverse_each { |i| do_something(i) }
+
+==> corrected/013.rb 45 <==
+context.reverse_each { |i| do_something(i) }
+
+==> corrected/014.rb 58 <==
+context.reverse_each.with_index.any? do |node, index|
+end
+
+==> corrected/015.rb 67 <==
+scope_stack.reverse_each.with_object([]) do |scope, variables|
+end
+

@@ -1,0 +1,13 @@
+==> .rubocop.yml 169 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/BlockParameterName:
+  AllowNamesEndingInNumbers: true
+
+==> 000.rb 47 <==
+something { |foo1, bar2, qux3| do_that_stuff }
+

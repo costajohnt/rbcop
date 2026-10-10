@@ -1,0 +1,56 @@
+==> .rubocop.yml 157 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Style/MutableConstant:
+  EnforcedStyle: literals
+
+==> 000.rb 15 <==
+XXX = /regexp/
+
+==> 001.rb 12 <==
+XXX = 1..99
+
+==> 002.rb 14 <==
+XXX = (1..99)
+
+==> 003.rb 13 <==
+XXX = 1...99
+
+==> 004.rb 15 <==
+XXX = (1...99)
+
+==> 005.rb 64 <==
+X = [1, 2, 3] # shareable_constant_value: literal
+Y = [4, 5, 6]
+
+==> 006.rb 163 <==
+# shareable_constant_value: literal
+X = [1, 2, 3]
+# shareable_constant_value: none
+Y = [4, 5, 6]
+# shareable_constant_value: experimental_everything
+Z = [7, 8, 9]
+
+==> 007.rb 85 <==
+# frozen_string_literal: true
+
+CONST = <<~HERE
+  foo #{use_interpolation}
+  bar
+HERE
+
+==> 008.rb 59 <==
+# frozen_string_literal: true
+
+CONST = 'foo'         'bar'
+
+==> 009.rb 64 <==
+# frozen_string_literal: true
+
+CONST = "#{foo}" \
+        'bar'
+

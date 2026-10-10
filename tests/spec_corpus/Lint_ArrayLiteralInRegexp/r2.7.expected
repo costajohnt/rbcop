@@ -1,0 +1,111 @@
+==> offenses exit=1 3457 <==
+000.rb:1:2: W: [Correctable] Lint/ArrayLiteralInRegexp: Use a character class instead of interpolating an array in a regexp.
+001.rb:1:2: W: [Correctable] Lint/ArrayLiteralInRegexp: Use a character class instead of interpolating an array in a regexp.
+002.rb:1:2: W: [Correctable] Lint/ArrayLiteralInRegexp: Use a character class instead of interpolating an array in a regexp.
+003.rb:1:2: W: [Correctable] Lint/ArrayLiteralInRegexp: Use a character class instead of interpolating an array in a regexp.
+004.rb:1:2: W: [Correctable] Lint/ArrayLiteralInRegexp: Use a character class instead of interpolating an array in a regexp.
+005.rb:1:2: W: [Correctable] Lint/ArrayLiteralInRegexp: Use a character class instead of interpolating an array in a regexp.
+006.rb:1:2: W: [Correctable] Lint/ArrayLiteralInRegexp: Use a character class instead of interpolating an array in a regexp.
+007.rb:1:2: W: [Correctable] Lint/ArrayLiteralInRegexp: Use a character class instead of interpolating an array in a regexp.
+008.rb:1:2: W: [Correctable] Lint/ArrayLiteralInRegexp: Use alternation instead of interpolating an array in a regexp.
+009.rb:1:2: W: [Correctable] Lint/ArrayLiteralInRegexp: Use alternation instead of interpolating an array in a regexp.
+010.rb:1:2: W: [Correctable] Lint/ArrayLiteralInRegexp: Use alternation instead of interpolating an array in a regexp.
+011.rb:1:2: W: [Correctable] Lint/ArrayLiteralInRegexp: Use alternation instead of interpolating an array in a regexp.
+012.rb:1:2: W: [Correctable] Lint/ArrayLiteralInRegexp: Use alternation instead of interpolating an array in a regexp.
+013.rb:1:2: W: [Correctable] Lint/ArrayLiteralInRegexp: Use alternation instead of interpolating an array in a regexp.
+014.rb:1:2: W: [Correctable] Lint/ArrayLiteralInRegexp: Use alternation instead of interpolating an array in a regexp.
+015.rb:1:2: W: [Correctable] Lint/ArrayLiteralInRegexp: Use alternation instead of interpolating an array in a regexp.
+016.rb:1:2: W: [Correctable] Lint/ArrayLiteralInRegexp: Use alternation instead of interpolating an array in a regexp.
+017.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+018.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+019.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+020.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+021.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+022.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+023.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+024.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+025.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+026.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+027.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+
+==> autocorrect exit=1 3423 <==
+000.rb:1:2: W: [Corrected] Lint/ArrayLiteralInRegexp: Use a character class instead of interpolating an array in a regexp.
+001.rb:1:2: W: [Corrected] Lint/ArrayLiteralInRegexp: Use a character class instead of interpolating an array in a regexp.
+002.rb:1:2: W: [Corrected] Lint/ArrayLiteralInRegexp: Use a character class instead of interpolating an array in a regexp.
+003.rb:1:2: W: [Corrected] Lint/ArrayLiteralInRegexp: Use a character class instead of interpolating an array in a regexp.
+004.rb:1:2: W: [Corrected] Lint/ArrayLiteralInRegexp: Use a character class instead of interpolating an array in a regexp.
+005.rb:1:2: W: [Corrected] Lint/ArrayLiteralInRegexp: Use a character class instead of interpolating an array in a regexp.
+006.rb:1:2: W: [Corrected] Lint/ArrayLiteralInRegexp: Use a character class instead of interpolating an array in a regexp.
+007.rb:1:2: W: [Corrected] Lint/ArrayLiteralInRegexp: Use a character class instead of interpolating an array in a regexp.
+008.rb:1:2: W: [Corrected] Lint/ArrayLiteralInRegexp: Use alternation instead of interpolating an array in a regexp.
+009.rb:1:2: W: [Corrected] Lint/ArrayLiteralInRegexp: Use alternation instead of interpolating an array in a regexp.
+010.rb:1:2: W: [Corrected] Lint/ArrayLiteralInRegexp: Use alternation instead of interpolating an array in a regexp.
+011.rb:1:2: W: [Corrected] Lint/ArrayLiteralInRegexp: Use alternation instead of interpolating an array in a regexp.
+012.rb:1:2: W: [Corrected] Lint/ArrayLiteralInRegexp: Use alternation instead of interpolating an array in a regexp.
+013.rb:1:2: W: [Corrected] Lint/ArrayLiteralInRegexp: Use alternation instead of interpolating an array in a regexp.
+014.rb:1:2: W: [Corrected] Lint/ArrayLiteralInRegexp: Use alternation instead of interpolating an array in a regexp.
+015.rb:1:2: W: [Corrected] Lint/ArrayLiteralInRegexp: Use alternation instead of interpolating an array in a regexp.
+016.rb:1:2: W: [Corrected] Lint/ArrayLiteralInRegexp: Use alternation instead of interpolating an array in a regexp.
+017.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+018.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+019.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+020.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+021.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+022.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+023.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+024.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+025.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+026.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+027.rb:1:2: W: Lint/ArrayLiteralInRegexp: Use alternation or a character class instead of interpolating an array in a regexp.
+
+==> corrected/000.rb 6 <==
+/[a]/
+
+==> corrected/001.rb 8 <==
+/[abc]/
+
+==> corrected/002.rb 8 <==
+/[abc]/
+
+==> corrected/003.rb 8 <==
+/[abc]/
+
+==> corrected/004.rb 8 <==
+/[abc]/
+
+==> corrected/005.rb 8 <==
+/[123]/
+
+==> corrected/006.rb 13 <==
+/[\^\-\$\|]/
+
+==> corrected/007.rb 15 <==
+/[あい🐧]/
+
+==> corrected/008.rb 10 <==
+/(?:foo)/
+
+==> corrected/009.rb 18 <==
+/(?:foo|bar|baz)/
+
+==> corrected/010.rb 14 <==
+/(?:a|b|cat)/
+
+==> corrected/011.rb 21 <==
+/(?:1\.0|2\.5|4\.7)/
+
+==> corrected/012.rb 16 <==
+/(?:a|5|18\.9)/
+
+==> corrected/013.rb 36 <==
+/(?:\^\^|\-\-|\$\$|\|\||\+\+|\*\*)/
+
+==> corrected/014.rb 21 <==
+/(?:true|false|nil)/
+
+==> corrected/015.rb 21 <==
+/(?:true|false|nil)/
+
+==> corrected/016.rb 23 <==
+/(?:❤️|💚|💙)/
+

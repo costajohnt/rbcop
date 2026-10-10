@@ -1,0 +1,19 @@
+==> .rubocop.yml 156 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/StringConcatenation:
+  Mode: conservative
+
+==> 000.rb 70 <==
+user.name + "!!"
+user.name + "<"
+user.name + "<" + "user.email" + ">"
+
+==> 001.rb 49 <==
+"Hello " + user.name
+"Hello " + user.name + "!!"
+

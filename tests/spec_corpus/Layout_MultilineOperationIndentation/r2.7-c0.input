@@ -1,0 +1,242 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: aligned
+
+==> 000.rb 16 <==
+call a,
+     !b
+
+==> 001.rb 26 <==
+begin
+rescue =>
+  A[]
+end
+
+==> 002.rb 8 <==
+a +
+  b
+
+==> 003.rb 72 <==
+a = b.map do |c|
+  c +
+    b +
+    d do
+      x +
+        y
+    end
+end
+
+==> 004.rb 6 <==
+a +
+b
+
+==> 005.rb 7 <==
+a +
+ b
+
+==> 006.rb 135 <==
+a
+ .(args)
+
+Foo
+.a
+  .b
+
+Foo
+.a
+  .b(c)
+
+Foo.&(
+    foo,
+    bar
+)
+
+expect { Foo.new }.
+  to change { Bar.count }.
+      from(1).to(2)
+
+==> 007.rb 21 <==
+a ||
+   b
+c and
+   d
+
+==> 008.rb 18 <==
+a ||
+  b ||
+    c
+
+==> 009.rb 12 <==
+[
+ a +
+ b
+]
+
+==> 010.rb 115 <==
+dm[i][j] = [
+  dm[i-1][j-1] +
+    (this[j-1] == that[i-1] ? 0 : sub),
+  dm[i][j-1] + ins,
+  dm[i-1][j] + del
+].min
+
+==> 011.rb 22 <==
+a =
+  'foo' +
+  'bar'
+
+==> 012.rb 30 <==
+a['test'] =
+  'foo' +
+  'bar'
+
+==> 013.rb 9 <==
+a ||
+  b
+
+==> 014.rb 16 <==
+a &&
+  b &&
+  c
+
+==> 015.rb 49 <==
+for x in a
+  something &&
+    something_else
+end
+
+==> 016.rb 9 <==
+(a +
+ b)
+
+==> 017.rb 80 <==
+subject.each do |item|
+  result = resolve(locale) and return result
+end and nil
+
+==> 018.rb 115 <==
+payment = Models::IncomingPayments[
+        id:      input['incoming-payment-id'],
+           user_id: @user[:id]]
+
+==> 019.rb 10 <==
+a +
+b < 3
+
+==> 020.rb 28 <==
+if a +
+   b
+  something
+end
+
+==> 021.rb 29 <==
+if a +
+    b
+  something
+end
+
+==> 022.rb 48 <==
+def config_to_allow_offenses
+  a +
+  b == c
+end
+
+==> 023.rb 56 <==
+private def config_to_allow_offenses
+  a +
+  b == c
+end
+
+==> 024.rb 50 <==
+def config_to_allow_offenses
+  a +
+    b == c
+end
+
+==> 025.rb 146 <==
+a = b.map do |c|
+  c +
+    d
+end
+
+requires_interpolation = node.children.any? do |s|
+  s.type == :dstr ||
+    s.source_range.source =~ REGEXP
+end
+
+==> 026.rb 21 <==
+one ||
+  two ? 3 : 5
+
+==> 027.rb 48 <==
+it "should convert " +
+  "a to " +
+  "b" do
+end
+
+==> 028.rb 16 <==
+puts a, 1 +
+  2
+
+==> 029.rb 107 <==
+def f
+  flash[:error] = 'Here is a string ' \
+                  'That spans' <<
+      'multiple lines'
+end
+
+==> 030.rb 73 <==
+Error = 'Here is a string ' +
+        'That spans' <<
+  'multiple lines'
+
+==> 031.rb 31 <==
+unless a +
+  b
+  something
+end
+
+==> 032.rb 30 <==
+if a or
+    b
+  something
+end
+
+==> 033.rb 34 <==
+unless a or
+    b
+  something
+end
+
+==> 034.rb 33 <==
+while a or
+    b
+  something
+end
+
+==> 035.rb 33 <==
+until a or
+    b
+  something
+end
+
+==> 036.rb 22 <==
+a = b +
+    c +
+    d
+
+==> 037.rb 90 <==
+tmp_dir = ENV['TMPDIR'] || ENV['TMP'] || ENV['TEMP'] ||
+          Etc.systmpdir || '/tmp'
+
+==> 038.rb 31 <==
+bar *= Foo +
+  a +
+       b(c)
+

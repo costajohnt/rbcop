@@ -1,0 +1,83 @@
+==> offenses exit=1 829 <==
+000.rb:3:3: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+001.rb:1:1: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+004.rb:3:3: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+005.rb:2:10: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+005.rb:4:3: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+006.rb:3:3: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+007.rb:3:3: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+008.rb:3:3: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+009.rb:3:3: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+
+==> autocorrect exit=0 811 <==
+000.rb:3:3: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+001.rb:1:1: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+004.rb:3:3: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+005.rb:2:10: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+005.rb:4:3: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+006.rb:3:3: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+007.rb:3:3: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+008.rb:3:3: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+009.rb:3:3: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+
+==> corrected/000.rb 48 <==
+def foo?
+  foo
+  !test.something.nil?
+  bar
+end
+
+==> corrected/001.rb 21 <==
+!test.something.nil?
+
+==> corrected/004.rb 44 <==
+def foo?
+  bar
+  !baz.do_something.nil?
+end
+
+==> corrected/005.rb 76 <==
+def foo?
+  return !bar.do_something.nil? if condition
+  baz
+  !bar.nil?
+end
+
+==> corrected/006.rb 57 <==
+def foo?
+  bar
+  !baz.do_something.nil?
+rescue
+  qux
+end
+
+==> corrected/007.rb 57 <==
+def foo?
+  bar
+  !baz.do_something.nil?
+ensure
+  qux
+end
+
+==> corrected/008.rb 70 <==
+def foo?
+  bar
+  !baz.do_something.nil?
+rescue
+  baz
+ensure
+  qux
+end
+
+==> corrected/009.rb 84 <==
+def foo?
+  bar
+  !baz.do_something.nil?
+rescue
+  qux
+else
+  quux
+ensure
+  corge
+end
+

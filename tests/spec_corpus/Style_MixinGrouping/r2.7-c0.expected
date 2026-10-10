@@ -1,0 +1,46 @@
+==> offenses exit=1 474 <==
+000.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in separate statements.
+002.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in separate statements.
+004.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `extend` mixins in separate statements.
+006.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `prepend` mixins in separate statements.
+008.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in separate statements.
+
+==> autocorrect exit=0 464 <==
+000.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `include` mixins in separate statements.
+002.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `include` mixins in separate statements.
+004.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `extend` mixins in separate statements.
+006.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `prepend` mixins in separate statements.
+008.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `include` mixins in separate statements.
+
+==> corrected/000.rb 42 <==
+class Foo
+  include Qux
+  include Bar
+end
+
+==> corrected/002.rb 56 <==
+class Foo
+  include Baz
+  include Bar
+  include Qux
+end
+
+==> corrected/004.rb 40 <==
+class Foo
+  extend Qux
+  extend Bar
+end
+
+==> corrected/006.rb 42 <==
+class Foo
+  prepend Qux
+  prepend Bar
+end
+
+==> corrected/008.rb 55 <==
+class Foo
+  include Baz
+  include Bar
+  extend Qux
+end
+

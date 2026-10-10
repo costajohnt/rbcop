@@ -1,0 +1,24 @@
+==> offenses exit=1 801 <==
+000.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+001.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+004.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+007.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+014.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+015.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+017.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+017.rb:14:3: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+021.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+022.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+
+==> autocorrect exit=1 801 <==
+000.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+001.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+004.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+007.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+014.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+015.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+017.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+017.rb:14:3: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+021.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+022.rb:1:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+

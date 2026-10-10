@@ -1,0 +1,547 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 10 <==
+foo.| bar
+
+==> 001.rb 9 <==
+foo.|bar
+
+==> 002.rb 10 <==
+foo | bar
+
+==> 003.rb 9 <==
+foo.| 42
+
+==> 004.rb 14 <==
+foo bar.| baz
+
+==> 005.rb 23 <==
+foo.bar.|(baz).quux(2)
+
+==> 006.rb 16 <==
+foo.|(bar, baz)
+
+==> 007.rb 10 <==
+foo.^ bar
+
+==> 008.rb 9 <==
+foo.^bar
+
+==> 009.rb 10 <==
+foo ^ bar
+
+==> 010.rb 9 <==
+foo.^ 42
+
+==> 011.rb 14 <==
+foo bar.^ baz
+
+==> 012.rb 23 <==
+foo.bar.^(baz).quux(2)
+
+==> 013.rb 16 <==
+foo.^(bar, baz)
+
+==> 014.rb 10 <==
+foo.& bar
+
+==> 015.rb 9 <==
+foo.&bar
+
+==> 016.rb 10 <==
+foo & bar
+
+==> 017.rb 9 <==
+foo.& 42
+
+==> 018.rb 14 <==
+foo bar.& baz
+
+==> 019.rb 23 <==
+foo.bar.&(baz).quux(2)
+
+==> 020.rb 16 <==
+foo.&(bar, baz)
+
+==> 021.rb 12 <==
+foo.<=> bar
+
+==> 022.rb 11 <==
+foo.<=>bar
+
+==> 023.rb 12 <==
+foo <=> bar
+
+==> 024.rb 11 <==
+foo.<=> 42
+
+==> 025.rb 16 <==
+foo bar.<=> baz
+
+==> 026.rb 25 <==
+foo.bar.<=>(baz).quux(2)
+
+==> 027.rb 18 <==
+foo.<=>(bar, baz)
+
+==> 028.rb 11 <==
+foo.== bar
+
+==> 029.rb 10 <==
+foo.==bar
+
+==> 030.rb 11 <==
+foo == bar
+
+==> 031.rb 10 <==
+foo.== 42
+
+==> 032.rb 15 <==
+foo bar.== baz
+
+==> 033.rb 24 <==
+foo.bar.==(baz).quux(2)
+
+==> 034.rb 17 <==
+foo.==(bar, baz)
+
+==> 035.rb 12 <==
+foo.=== bar
+
+==> 036.rb 11 <==
+foo.===bar
+
+==> 037.rb 12 <==
+foo === bar
+
+==> 038.rb 11 <==
+foo.=== 42
+
+==> 039.rb 16 <==
+foo bar.=== baz
+
+==> 040.rb 25 <==
+foo.bar.===(baz).quux(2)
+
+==> 041.rb 18 <==
+foo.===(bar, baz)
+
+==> 042.rb 11 <==
+foo.=~ bar
+
+==> 043.rb 10 <==
+foo.=~bar
+
+==> 044.rb 11 <==
+foo =~ bar
+
+==> 045.rb 10 <==
+foo.=~ 42
+
+==> 046.rb 15 <==
+foo bar.=~ baz
+
+==> 047.rb 24 <==
+foo.bar.=~(baz).quux(2)
+
+==> 048.rb 17 <==
+foo.=~(bar, baz)
+
+==> 049.rb 10 <==
+foo.> bar
+
+==> 050.rb 9 <==
+foo.>bar
+
+==> 051.rb 10 <==
+foo > bar
+
+==> 052.rb 9 <==
+foo.> 42
+
+==> 053.rb 14 <==
+foo bar.> baz
+
+==> 054.rb 23 <==
+foo.bar.>(baz).quux(2)
+
+==> 055.rb 16 <==
+foo.>(bar, baz)
+
+==> 056.rb 11 <==
+foo.>= bar
+
+==> 057.rb 10 <==
+foo.>=bar
+
+==> 058.rb 11 <==
+foo >= bar
+
+==> 059.rb 10 <==
+foo.>= 42
+
+==> 060.rb 15 <==
+foo bar.>= baz
+
+==> 061.rb 24 <==
+foo.bar.>=(baz).quux(2)
+
+==> 062.rb 17 <==
+foo.>=(bar, baz)
+
+==> 063.rb 10 <==
+foo.< bar
+
+==> 064.rb 9 <==
+foo.<bar
+
+==> 065.rb 10 <==
+foo < bar
+
+==> 066.rb 9 <==
+foo.< 42
+
+==> 067.rb 14 <==
+foo bar.< baz
+
+==> 068.rb 23 <==
+foo.bar.<(baz).quux(2)
+
+==> 069.rb 16 <==
+foo.<(bar, baz)
+
+==> 070.rb 11 <==
+foo.<= bar
+
+==> 071.rb 10 <==
+foo.<=bar
+
+==> 072.rb 11 <==
+foo <= bar
+
+==> 073.rb 10 <==
+foo.<= 42
+
+==> 074.rb 15 <==
+foo bar.<= baz
+
+==> 075.rb 24 <==
+foo.bar.<=(baz).quux(2)
+
+==> 076.rb 17 <==
+foo.<=(bar, baz)
+
+==> 077.rb 11 <==
+foo.<< bar
+
+==> 078.rb 10 <==
+foo.<<bar
+
+==> 079.rb 11 <==
+foo << bar
+
+==> 080.rb 10 <==
+foo.<< 42
+
+==> 081.rb 15 <==
+foo bar.<< baz
+
+==> 082.rb 24 <==
+foo.bar.<<(baz).quux(2)
+
+==> 083.rb 17 <==
+foo.<<(bar, baz)
+
+==> 084.rb 11 <==
+foo.>> bar
+
+==> 085.rb 10 <==
+foo.>>bar
+
+==> 086.rb 11 <==
+foo >> bar
+
+==> 087.rb 10 <==
+foo.>> 42
+
+==> 088.rb 15 <==
+foo bar.>> baz
+
+==> 089.rb 24 <==
+foo.bar.>>(baz).quux(2)
+
+==> 090.rb 17 <==
+foo.>>(bar, baz)
+
+==> 091.rb 10 <==
+foo.+ bar
+
+==> 092.rb 9 <==
+foo.+bar
+
+==> 093.rb 10 <==
+foo + bar
+
+==> 094.rb 9 <==
+foo.+ 42
+
+==> 095.rb 14 <==
+foo bar.+ baz
+
+==> 096.rb 23 <==
+foo.bar.+(baz).quux(2)
+
+==> 097.rb 16 <==
+foo.+(bar, baz)
+
+==> 098.rb 10 <==
+foo.- bar
+
+==> 099.rb 9 <==
+foo.-bar
+
+==> 100.rb 10 <==
+foo - bar
+
+==> 101.rb 9 <==
+foo.- 42
+
+==> 102.rb 14 <==
+foo bar.- baz
+
+==> 103.rb 23 <==
+foo.bar.-(baz).quux(2)
+
+==> 104.rb 16 <==
+foo.-(bar, baz)
+
+==> 105.rb 10 <==
+foo.* bar
+
+==> 106.rb 9 <==
+foo.*bar
+
+==> 107.rb 10 <==
+foo * bar
+
+==> 108.rb 9 <==
+foo.* 42
+
+==> 109.rb 14 <==
+foo bar.* baz
+
+==> 110.rb 23 <==
+foo.bar.*(baz).quux(2)
+
+==> 111.rb 16 <==
+foo.*(bar, baz)
+
+==> 112.rb 10 <==
+foo./ bar
+
+==> 113.rb 9 <==
+foo./bar
+
+==> 114.rb 10 <==
+foo / bar
+
+==> 115.rb 9 <==
+foo./ 42
+
+==> 116.rb 14 <==
+foo bar./ baz
+
+==> 117.rb 23 <==
+foo.bar./(baz).quux(2)
+
+==> 118.rb 16 <==
+foo./(bar, baz)
+
+==> 119.rb 10 <==
+foo.% bar
+
+==> 120.rb 9 <==
+foo.%bar
+
+==> 121.rb 10 <==
+foo % bar
+
+==> 122.rb 9 <==
+foo.% 42
+
+==> 123.rb 14 <==
+foo bar.% baz
+
+==> 124.rb 23 <==
+foo.bar.%(baz).quux(2)
+
+==> 125.rb 16 <==
+foo.%(bar, baz)
+
+==> 126.rb 11 <==
+foo.** bar
+
+==> 127.rb 10 <==
+foo.**bar
+
+==> 128.rb 11 <==
+foo ** bar
+
+==> 129.rb 10 <==
+foo.** 42
+
+==> 130.rb 15 <==
+foo bar.** baz
+
+==> 131.rb 24 <==
+foo.bar.**(baz).quux(2)
+
+==> 132.rb 17 <==
+foo.**(bar, baz)
+
+==> 133.rb 10 <==
+foo.~ bar
+
+==> 134.rb 9 <==
+foo.~bar
+
+==> 135.rb 10 <==
+foo ~ bar
+
+==> 136.rb 9 <==
+foo.~ 42
+
+==> 137.rb 14 <==
+foo bar.~ baz
+
+==> 138.rb 23 <==
+foo.bar.~(baz).quux(2)
+
+==> 139.rb 16 <==
+foo.~(bar, baz)
+
+==> 140.rb 10 <==
+foo.! bar
+
+==> 141.rb 9 <==
+foo.!bar
+
+==> 142.rb 10 <==
+foo ! bar
+
+==> 143.rb 9 <==
+foo.! 42
+
+==> 144.rb 14 <==
+foo bar.! baz
+
+==> 145.rb 23 <==
+foo.bar.!(baz).quux(2)
+
+==> 146.rb 16 <==
+foo.!(bar, baz)
+
+==> 147.rb 11 <==
+foo.!= bar
+
+==> 148.rb 10 <==
+foo.!=bar
+
+==> 149.rb 11 <==
+foo != bar
+
+==> 150.rb 10 <==
+foo.!= 42
+
+==> 151.rb 15 <==
+foo bar.!= baz
+
+==> 152.rb 24 <==
+foo.bar.!=(baz).quux(2)
+
+==> 153.rb 17 <==
+foo.!=(bar, baz)
+
+==> 154.rb 11 <==
+foo.!~ bar
+
+==> 155.rb 10 <==
+foo.!~bar
+
+==> 156.rb 11 <==
+foo !~ bar
+
+==> 157.rb 10 <==
+foo.!~ 42
+
+==> 158.rb 15 <==
+foo bar.!~ baz
+
+==> 159.rb 24 <==
+foo.bar.!~(baz).quux(2)
+
+==> 160.rb 17 <==
+foo.!~(bar, baz)
+
+==> 161.rb 11 <==
+foo.==({})
+
+==> 162.rb 16 <==
+foo.+ @bar.to_s
+
+==> 163.rb 11 <==
+foo./(bar)
+
+==> 164.rb 12 <==
+foo./ (bar)
+
+==> 165.rb 17 <==
+foo.+(@bar).to_s
+
+==> 166.rb 11 <==
+foo.+@ bar
+
+==> 167.rb 11 <==
+foo.-@ bar
+
+==> 168.rb 11 <==
+foo.!@ bar
+
+==> 169.rb 11 <==
+foo.~@ bar
+
+==> 170.rb 10 <==
+foo.` bar
+
+==> 171.rb 11 <==
+Foo.+(bar)
+
+==> 172.rb 6 <==
+obj.!
+
+==> 173.rb 31 <==
+def foo(...)
+  bar.==(...)
+end
+
+==> 174.rb 33 <==
+def foo(&blk)
+  bar.==(&blk)
+end
+
+==> 175.rb 35 <==
+def foo(*args)
+  bar.==(*args)
+end
+
+==> 176.rb 41 <==
+def foo(**kwargs)
+  bar.==(**kwargs)
+end
+

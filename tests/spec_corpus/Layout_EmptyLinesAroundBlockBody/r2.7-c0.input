@@ -1,0 +1,70 @@
+==> .rubocop.yml 174 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/EmptyLinesAroundBlockBody:
+  EnforcedStyle: no_empty_lines
+
+==> 000.rb 32 <==
+some_method {
+
+  do_something
+}
+
+==> 001.rb 34 <==
+some_method {
+  do_something
+
+  }
+
+==> 002.rb 24 <==
+some_method {
+  _1
+
+  }
+
+==> 003.rb 51 <==
+some_method arg,
+  another_arg {
+
+  do_something
+}
+
+==> 004.rb 45 <==
+some_method { do_something }
+
+something_else
+
+==> 005.rb 35 <==
+some_method do
+
+  do_something
+end
+
+==> 006.rb 37 <==
+some_method do
+  do_something
+
+  end
+
+==> 007.rb 27 <==
+some_method do
+  _1
+
+  end
+
+==> 008.rb 54 <==
+some_method arg,
+  another_arg do
+
+  do_something
+end
+
+==> 009.rb 48 <==
+some_method do do_something end
+
+something_else
+

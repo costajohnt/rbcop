@@ -1,0 +1,52 @@
+==> offenses exit=1 936 <==
+000.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+001.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+002.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+003.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+004.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+005.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+006.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+007.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+
+==> autocorrect exit=0 920 <==
+000.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+001.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+002.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+003.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+004.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+005.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+006.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+007.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+
+==> corrected/000.rb 22 <==
+func(a: 0,
+     b: 1)
+
+==> corrected/001.rb 25 <==
+func({a: 0,
+      b: 1})
+
+==> corrected/002.rb 24 <==
+super(a: 0,
+      b: 1)
+
+==> corrected/003.rb 27 <==
+super({a: 0,
+       b: 1})
+
+==> corrected/004.rb 24 <==
+yield(a: 0,
+      b: 1)
+
+==> corrected/005.rb 27 <==
+yield({a: 0,
+       b: 1})
+
+==> corrected/006.rb 30 <==
+foo&.bar(a: 0,
+         b: 1)
+
+==> corrected/007.rb 33 <==
+foo&.bar({a: 0,
+          b: 1})
+

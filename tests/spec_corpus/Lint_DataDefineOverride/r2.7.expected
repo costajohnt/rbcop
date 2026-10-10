@@ -1,0 +1,20 @@
+==> offenses exit=1 871 <==
+000.rb:1:19: W: Lint/DataDefineOverride: `:members` member overrides `Data#members` and it may be unexpected.
+001.rb:1:21: W: Lint/DataDefineOverride: `:members` member overrides `Data#members` and it may be unexpected.
+002.rb:1:26: W: Lint/DataDefineOverride: `:members` member overrides `Data#members` and it may be unexpected.
+003.rb:1:26: W: Lint/DataDefineOverride: `"members"` member overrides `Data#members` and it may be unexpected.
+004.rb:1:13: W: Lint/DataDefineOverride: `:members` member overrides `Data#members` and it may be unexpected.
+005.rb:1:13: W: Lint/DataDefineOverride: `:members` member overrides `Data#members` and it may be unexpected.
+005.rb:1:23: W: Lint/DataDefineOverride: `:clone` member overrides `Data#clone` and it may be unexpected.
+005.rb:1:31: W: Lint/DataDefineOverride: `:to_s` member overrides `Data#to_s` and it may be unexpected.
+
+==> autocorrect exit=1 871 <==
+000.rb:1:19: W: Lint/DataDefineOverride: `:members` member overrides `Data#members` and it may be unexpected.
+001.rb:1:21: W: Lint/DataDefineOverride: `:members` member overrides `Data#members` and it may be unexpected.
+002.rb:1:26: W: Lint/DataDefineOverride: `:members` member overrides `Data#members` and it may be unexpected.
+003.rb:1:26: W: Lint/DataDefineOverride: `"members"` member overrides `Data#members` and it may be unexpected.
+004.rb:1:13: W: Lint/DataDefineOverride: `:members` member overrides `Data#members` and it may be unexpected.
+005.rb:1:13: W: Lint/DataDefineOverride: `:members` member overrides `Data#members` and it may be unexpected.
+005.rb:1:23: W: Lint/DataDefineOverride: `:clone` member overrides `Data#clone` and it may be unexpected.
+005.rb:1:31: W: Lint/DataDefineOverride: `:to_s` member overrides `Data#to_s` and it may be unexpected.
+

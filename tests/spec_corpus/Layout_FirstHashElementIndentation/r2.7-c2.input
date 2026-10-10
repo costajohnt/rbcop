@@ -1,0 +1,67 @@
+==> .rubocop.yml 174 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: align_braces
+
+==> 000.rb 23 <==
+a = {
+      a: 1
+    }
+
+==> 001.rb 29 <==
+a = {
+      a: 1, b: 2
+    }
+
+==> 002.rb 33 <==
+a = { "a" => 1,
+      "b" => 2 }
+
+==> 003.rb 18 <==
+a = { a: 1, b: 2 }
+==> 004.rb 6 <==
+a = {}
+==> 005.rb 17 <==
+func({
+  a: 1
+})
+
+==> 006.rb 66 <==
+var = {
+          a:
+        {
+          b: 1
+        }
+        }
+
+==> 007.rb 44 <==
+var = {
+  a: 1
+}
+func({
+       a: 1
+     })
+
+==> 008.rb 11 <==
+a << {
+  }
+
+==> 009.rb 31 <==
+func x: {
+        a: 1, b: 2 }
+
+==> 010.rb 87 <==
+func x: {
+  a: 1,
+          b: 2
+},
+     y: {
+          c: 1,
+          d: 2
+        }
+

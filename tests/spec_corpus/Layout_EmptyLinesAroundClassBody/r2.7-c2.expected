@@ -1,0 +1,105 @@
+==> offenses exit=1 1498 <==
+001.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+002.rb:7:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body end.
+003.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body beginning.
+004.rb:5:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+005.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+005.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body beginning.
+005.rb:5:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+005.rb:6:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body end.
+007.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+008.rb:5:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body end.
+010.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body beginning.
+010.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body beginning.
+010.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+010.rb:8:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+
+==> autocorrect exit=0 1470 <==
+001.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+002.rb:7:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body end.
+003.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body beginning.
+004.rb:5:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+005.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+005.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body beginning.
+005.rb:5:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+005.rb:6:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body end.
+007.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.
+008.rb:5:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body end.
+010.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body beginning.
+010.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body beginning.
+010.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+010.rb:8:1: C: [Corrected] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+
+==> corrected/001.rb 56 <==
+class Parent
+  class Child
+
+    do_something
+
+  end
+end
+
+==> corrected/002.rb 56 <==
+class Parent
+  class Child
+
+    do_something
+
+  end
+end
+
+==> corrected/003.rb 56 <==
+class Parent
+  class Child
+
+    do_something
+
+  end
+end
+
+==> corrected/004.rb 56 <==
+class Parent
+  class Child
+
+    do_something
+
+  end
+end
+
+==> corrected/005.rb 63 <==
+class Parent < Base
+  class Child
+
+    do_something
+
+  end
+end
+
+==> corrected/007.rb 55 <==
+class Parent
+  module Child
+    do_something
+  end
+end
+
+==> corrected/008.rb 55 <==
+class Parent
+  module Child
+    do_something
+  end
+end
+
+==> corrected/010.rb 75 <==
+class Parent
+
+  class Mom
+
+    do_something
+
+  end
+  class Dad
+
+  end
+
+end
+

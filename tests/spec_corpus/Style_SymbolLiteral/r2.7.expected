@@ -1,0 +1,11 @@
+==> offenses exit=1 201 <==
+000.rb:1:7: C: [Correctable] Style/SymbolLiteral: Do not use strings for word-like symbol literals.
+000.rb:1:21: C: [Correctable] Style/SymbolLiteral: Do not use strings for word-like symbol literals.
+
+==> autocorrect exit=0 197 <==
+000.rb:1:7: C: [Corrected] Style/SymbolLiteral: Do not use strings for word-like symbol literals.
+000.rb:1:21: C: [Corrected] Style/SymbolLiteral: Do not use strings for word-like symbol literals.
+
+==> corrected/000.rb 32 <==
+x = { :test => 0, :other => 1 }
+

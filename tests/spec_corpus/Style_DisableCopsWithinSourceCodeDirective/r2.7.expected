@@ -1,0 +1,56 @@
+==> offenses exit=1 1260 <==
+000.rb:1:9: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+001.rb:1:9: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+002.rb:1:9: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+003.rb:1:1: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+003.rb:2:9: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+004.rb:1:1: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+004.rb:2:9: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+005.rb:1:1: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+005.rb:2:9: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+006.rb:1:1: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+
+==> autocorrect exit=0 1240 <==
+000.rb:1:9: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+001.rb:1:9: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+002.rb:1:9: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+003.rb:1:1: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+003.rb:2:9: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+004.rb:1:1: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+004.rb:2:9: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+005.rb:1:1: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+005.rb:2:9: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+006.rb:1:1: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+
+==> corrected/000.rb 13 <==
+def foo 
+end
+
+==> corrected/001.rb 13 <==
+def foo 
+end
+
+==> corrected/002.rb 13 <==
+def foo 
+end
+
+==> corrected/003.rb 14 <==
+
+def foo 
+end
+
+==> corrected/004.rb 14 <==
+
+def foo 
+end
+
+==> corrected/005.rb 14 <==
+
+def foo 
+end
+
+==> corrected/006.rb 13 <==
+
+def foo
+end
+

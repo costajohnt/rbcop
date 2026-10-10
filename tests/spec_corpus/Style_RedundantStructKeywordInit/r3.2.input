@@ -1,0 +1,44 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+
+==> 000.rb 36 <==
+Struct.new(:foo, keyword_init: nil)
+
+==> 001.rb 37 <==
+Struct.new(:foo, keyword_init: true)
+
+==> 002.rb 42 <==
+Struct.new(a: 1, keyword_init: nil, b: 2)
+
+==> 003.rb 37 <==
+Struct.new(keyword_init: true, a: 1)
+
+==> 004.rb 31 <==
+Struct.new(keyword_init: true)
+
+==> 005.rb 38 <==
+Struct&.new(:foo, keyword_init: true)
+
+==> 006.rb 39 <==
+::Struct.new(:foo, keyword_init: true)
+
+==> 007.rb 57 <==
+Struct.new(:foo, keyword_init: true, keyword_init: true)
+
+==> 008.rb 56 <==
+Struct.new(:foo, keyword_init: nil, keyword_init: true)
+
+==> 009.rb 38 <==
+Struct.new(:foo, keyword_init: false)
+
+==> 010.rb 17 <==
+Struct.new(:foo)
+
+==> 011.rb 58 <==
+Struct.new(:foo, keyword_init: false, keyword_init: true)
+

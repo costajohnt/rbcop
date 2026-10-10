@@ -1,0 +1,9 @@
+==> offenses exit=1 108 <==
+002.rb:1:10: C: [Correctable] Style/SymbolProc: Pass `&:upcase` as an argument to `map` instead of a block.
+
+==> autocorrect exit=0 106 <==
+002.rb:1:10: C: [Corrected] Style/SymbolProc: Pass `&:upcase` as an argument to `map` instead of a block.
+
+==> corrected/002.rb 19 <==
+coll.map(&:upcase)
+

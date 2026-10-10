@@ -1,0 +1,105 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/my.gemspec 37 <==
+Gem::Specification.new do |spec|
+end
+
+==> 001/my.gemspec 61 <==
+Gem::Specification.new do |spec|
+  spec.metadata = {
+  }
+end
+
+==> 002/my.gemspec 68 <==
+Gem::Specification.new do |spec|
+  spec.metadata = Metadata.new
+end
+
+==> 003/my.gemspec 140 <==
+Gem::Specification.new do |spec|
+  spec.metadata = {
+    'foo' => 'bar',
+    'rubygems_mfa_required' => 'true',
+    'baz' => 'quux'
+  }
+end
+
+==> 004/my.gemspec 128 <==
+Gem::Specification.new do |spec|
+  spec.metadata = {
+    foo: 'bar',
+    rubygems_mfa_required: 'true',
+    baz: 'quux'
+  }
+end
+
+==> 005/my.gemspec 101 <==
+Gem::Specification.new do |spec|
+  spec.metadata = {
+    'foo' => 'bar',
+    'baz' => 'quux'
+  }
+end
+
+==> 006/my.gemspec 118 <==
+Gem::Specification.new do |spec|
+  spec.metadata['foo'] = 'bar'
+  spec.metadata['rubygems_mfa_required'] = 'true'
+end
+
+==> 007/my.gemspec 116 <==
+Gem::Specification.new do |spec|
+  spec.metadata[:foo] = 'bar'
+  spec.metadata[:rubygems_mfa_required] = 'true'
+end
+
+==> 008/my.gemspec 68 <==
+Gem::Specification.new do |spec|
+  spec.metadata['foo'] = 'bar'
+end
+
+==> 009/my.gemspec 98 <==
+Gem::Specification.new do |spec|
+  spec.metadata['foo'] = 'bar'
+  spec.author = 'viralpraxis'
+end
+
+==> 010/my.gemspec 99 <==
+Gem::Specification.new do |spec|
+  spec.metadata = {
+    'rubygems_mfa_required' => 'true'
+  }
+end
+
+==> 011/my.gemspec 95 <==
+Gem::Specification.new do |spec|
+  spec.metadata = {
+    rubygems_mfa_required: 'true'
+  }
+end
+
+==> 012/my.gemspec 100 <==
+Gem::Specification.new do |spec|
+  spec.metadata = {
+    'rubygems_mfa_required' => 'false'
+  }
+end
+
+==> 013/my.gemspec 88 <==
+Gem::Specification.new do |spec|
+  spec.metadata['rubygems_mfa_required'] = 'false'
+end
+
+==> 014/my.gemspec 130 <==
+Gem::Specification.new do |spec|
+  spec.metadata = { 'rubygems_mfa_required' => 'true' }
+end
+Gem::Specification.new do |spec|
+end
+

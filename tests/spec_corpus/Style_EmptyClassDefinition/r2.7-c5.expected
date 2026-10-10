@@ -1,0 +1,10 @@
+==> offenses exit=1 130 <==
+000.rb:1:1: C: [Correctable] Style/EmptyClassDefinition: Use the `class` keyword instead of `Class.new` to define an empty class.
+
+==> autocorrect exit=0 128 <==
+000.rb:1:1: C: [Corrected] Style/EmptyClassDefinition: Use the `class` keyword instead of `Class.new` to define an empty class.
+
+==> corrected/000.rb 35 <==
+class FooError < StandardError
+end
+

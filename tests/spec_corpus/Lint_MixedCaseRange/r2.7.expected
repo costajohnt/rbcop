@@ -1,0 +1,62 @@
+==> offenses exit=1 3706 <==
+000.rb:1:7: W: Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+001.rb:1:7: W: Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+007.rb:1:9: W: [Correctable] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+008.rb:1:15: W: [Correctable] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+009.rb:1:10: W: [Correctable] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+009.rb:1:14: W: [Correctable] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+010.rb:1:11: W: [Correctable] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+010.rb:1:18: W: [Correctable] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+010.rb:1:42: W: [Correctable] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+011.rb:3:4: W: [Correctable] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+012.rb:1:10: W: [Correctable] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+013.rb:1:10: W: [Correctable] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+014.rb:1:13: W: [Correctable] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+015.rb:1:11: W: [Correctable] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+
+==> autocorrect exit=1 3682 <==
+000.rb:1:7: W: Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+001.rb:1:7: W: Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+007.rb:1:9: W: [Corrected] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+008.rb:1:15: W: [Corrected] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+009.rb:1:10: W: [Corrected] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+009.rb:1:14: W: [Corrected] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+010.rb:1:11: W: [Corrected] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+010.rb:1:18: W: [Corrected] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+010.rb:1:42: W: [Corrected] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+011.rb:3:4: W: [Corrected] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+012.rb:1:10: W: [Corrected] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+013.rb:1:10: W: [Corrected] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+014.rb:1:13: W: [Corrected] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+015.rb:1:11: W: [Corrected] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+
+==> corrected/007.rb 17 <==
+foo = /[A-Za-z]/
+
+==> corrected/008.rb 27 <==
+foo = /[#{A-z}A-Za-z#{y}]/
+
+==> corrected/009.rb 22 <==
+foo = /[_A-Za-b;Za!]/
+
+==> corrected/010.rb 56 <==
+foo = %r{[A-Za-z]+/[A-Za-z]+|all}.freeze || /_[A-Za-z]/
+
+==> corrected/011.rb 57 <==
+foo = /
+  A-z # not a character class
+  [A-Za-z]_..._
+/x
+
+==> corrected/012.rb 18 <==
+foo = /[^G-Za-f]/
+
+==> corrected/013.rb 21 <==
+foo = /[_A-Za-z123]/
+
+==> corrected/014.rb 24 <==
+foo = /[\001A-Za-z123]/
+
+==> corrected/015.rb 22 <==
+foo = /[\1A-Za-z123]/
+

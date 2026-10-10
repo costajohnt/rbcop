@@ -1,0 +1,221 @@
+==> offenses exit=1 3660 <==
+000.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+001.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if a = b;` - use a ternary operator instead.
+002.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+003.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+004.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+005.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+006.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+007.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+008.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+009.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+010.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+011.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+012.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+013.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use a newline instead.
+015.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use `if/else` instead.
+016.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use `if/else` instead.
+017.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use `if/else` instead.
+018.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use `if/else` instead.
+019.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use a newline instead.
+020.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if foo?;` - use `if/else` instead.
+021.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if foo?;` - use `if/else` instead.
+022.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if foo?;` - use `if/else` instead.
+023.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if foo?;` - use `if/else` instead.
+024.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if foo;` - use `if/else` instead.
+025.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if foo;` - use `if/else` instead.
+026.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use a newline instead.
+027.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use a newline instead.
+028.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `unless cond;` - use a newline instead.
+029.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+030.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if cond1;` - use a ternary operator instead.
+031.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `unless cond;` - use a ternary operator instead.
+032.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `unless cond;` - use a ternary operator instead.
+033.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `unless cond;` - use a ternary operator instead.
+034.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `unless cond;` - use a ternary operator instead.
+035.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `unless cond;` - use a newline instead.
+
+==> autocorrect exit=0 4226 <==
+000.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+001.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if a = b;` - use a ternary operator instead.
+002.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+003.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+004.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+005.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+006.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+007.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+008.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+009.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+010.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+011.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+012.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+013.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use a newline instead.
+015.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use `if/else` instead.
+016.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use `if/else` instead.
+017.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use `if/else` instead.
+018.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use `if/else` instead.
+019.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use a newline instead.
+019.rb:3:3: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+020.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if foo?;` - use `if/else` instead.
+020.rb:2:8: C: [Corrected] Style/IfWithSemicolon: Do not use `if qux?;` - use a ternary operator instead.
+021.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if foo?;` - use `if/else` instead.
+021.rb:2:17: C: [Corrected] Style/IfWithSemicolon: Do not use `if qux?;` - use a ternary operator instead.
+022.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if foo?;` - use `if/else` instead.
+022.rb:2:8: C: [Corrected] Style/IfWithSemicolon: Do not use `if _1;` - use a ternary operator instead.
+023.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if foo?;` - use `if/else` instead.
+023.rb:2:17: C: [Corrected] Style/IfWithSemicolon: Do not use `if _1;` - use a ternary operator instead.
+024.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if foo;` - use `if/else` instead.
+025.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if foo;` - use `if/else` instead.
+026.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use a newline instead.
+027.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use a newline instead.
+028.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `unless cond;` - use a newline instead.
+029.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond;` - use a ternary operator instead.
+030.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond1;` - use a ternary operator instead.
+030.rb:1:15: C: [Corrected] Style/IfWithSemicolon: Do not use `if cond2;` - use a ternary operator instead.
+031.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `unless cond;` - use a ternary operator instead.
+032.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `unless cond;` - use a ternary operator instead.
+033.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `unless cond;` - use a ternary operator instead.
+034.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `unless cond;` - use a ternary operator instead.
+035.rb:1:1: C: [Corrected] Style/IfWithSemicolon: Do not use `unless cond;` - use a newline instead.
+
+==> corrected/000.rb 18 <==
+cond ? run : dont
+
+==> corrected/001.rb 21 <==
+(a = b) ? run : dont
+
+==> corrected/002.rb 18 <==
+cond ? nil : dont
+
+==> corrected/003.rb 17 <==
+cond ? run : nil
+
+==> corrected/004.rb 31 <==
+cond ? do_something(arg) : nil
+
+==> corrected/005.rb 16 <==
+cond ? [] : nil
+
+==> corrected/006.rb 31 <==
+cond ? do_something(arg) : nil
+
+==> corrected/007.rb 36 <==
+cond ? obj&.do_something(arg) : nil
+
+==> corrected/008.rb 35 <==
+cond ? foo(foo_arg) : bar(bar_arg)
+
+==> corrected/009.rb 45 <==
+cond ? foo(obj&.foo_arg) : bar(obj&.bar_arg)
+
+==> corrected/010.rb 32 <==
+cond ? do_something - arg : nil
+
+==> corrected/011.rb 22 <==
+cond ? foo[key] : bar
+
+==> corrected/012.rb 30 <==
+cond ? foo[key] = value : bar
+
+==> corrected/013.rb 36 <==
+if cond
+ foo else bar'arg'; baz end
+
+==> corrected/015.rb 30 <==
+if cond
+  
+elsif cond2
+  
+end
+
+==> corrected/016.rb 37 <==
+if cond
+  run
+elsif cond2
+  run2
+end
+
+==> corrected/017.rb 68 <==
+if cond
+  run
+elsif cond2
+  run2
+elsif cond3
+  run3
+else
+  dont
+end
+
+==> corrected/018.rb 49 <==
+if cond
+  run
+elsif cond2
+  run2
+else
+  dont
+end
+
+==> corrected/019.rb 36 <==
+if cond
+ run
+  cond ? run : nil
+end
+
+==> corrected/020.rb 39 <==
+if foo?
+ bar { qux? ? quux : nil } end
+
+==> corrected/021.rb 48 <==
+if foo?
+ bar else baz { qux? ? quux : nil } end
+
+==> corrected/022.rb 37 <==
+if foo?
+ bar { _1 ? quux : nil } end
+
+==> corrected/023.rb 46 <==
+if foo?
+ bar else baz { _1 ? quux : nil } end
+
+==> corrected/024.rb 37 <==
+if foo
+ bar, baz = qux else quux end
+
+==> corrected/025.rb 37 <==
+if foo
+ bar else baz, qux = quux end
+
+==> corrected/026.rb 26 <==
+if cond
+ return value end
+
+==> corrected/027.rb 35 <==
+if cond
+ run else return value end
+
+==> corrected/028.rb 39 <==
+unless cond
+ run else return value end
+
+==> corrected/029.rb 20 <==
+cond ? return : nil
+
+==> corrected/030.rb 38 <==
+cond1 ? foo + cond2 ? bar : nil : nil
+
+==> corrected/031.rb 17 <==
+cond ? nil : run
+
+==> corrected/032.rb 18 <==
+cond ? dont : run
+
+==> corrected/033.rb 18 <==
+cond ? dont : nil
+
+==> corrected/034.rb 31 <==
+cond ? nil : do_something(arg)
+
+==> corrected/035.rb 40 <==
+unless cond
+ foo else bar'arg'; baz end
+

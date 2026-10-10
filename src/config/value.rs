@@ -297,6 +297,14 @@ fn convert(y: Yaml) -> Value {
     }
 }
 
+/// Regexp#to_s of a `/src/flags` literal: `(?mi-x:src)`.
+pub fn regexp_to_s(literal: &str) -> String {
+    let (source, flags) = literal.strip_prefix('/').and_then(|r| r.rsplit_once('/')).unwrap_or((literal, ""));
+    let on: String = "mix".chars().filter(|f| flags.contains(*f)).collect();
+    let off: String = "mix".chars().filter(|f| !flags.contains(*f)).collect();
+    format!("(?{on}{}{off}:{source})", if off.is_empty() { "" } else { "-" })
+}
+
 /// Compile a Ruby regexp literal (`/src/flags`) or bare source into a Rust regex.
 // ponytail: Ruby-only syntax (lookbehind, \h, possessive) fails to compile and the pattern is skipped.
 pub fn ruby_regex(literal: &str) -> Option<Regex> {

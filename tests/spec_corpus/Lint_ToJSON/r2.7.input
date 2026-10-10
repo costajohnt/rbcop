@@ -1,0 +1,28 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 16 <==
+def to_json
+end
+
+==> 001.rb 18 <==
+def to_json()
+end
+
+==> 002.rb 21 <==
+def self.to_json
+end
+
+==> 003.rb 24 <==
+def to_json(*_args)
+end
+
+==> 004.rb 29 <==
+def self.to_json(*_args)
+end
+

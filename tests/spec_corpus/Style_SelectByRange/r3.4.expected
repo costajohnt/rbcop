@@ -1,0 +1,104 @@
+==> offenses exit=1 1988 <==
+000.rb:1:1: C: [Correctable] Style/SelectByRange: Prefer `grep` to `select` with a range check.
+001.rb:1:1: C: [Correctable] Style/SelectByRange: Prefer `grep` to `select` with a range check.
+002.rb:1:1: C: [Correctable] Style/SelectByRange: Prefer `grep` to `find_all` with a range check.
+003.rb:1:1: C: [Correctable] Style/SelectByRange: Prefer `grep` to `find_all` with a range check.
+004.rb:1:1: C: [Correctable] Style/SelectByRange: Prefer `grep` to `filter` with a range check.
+005.rb:1:1: C: [Correctable] Style/SelectByRange: Prefer `grep` to `filter` with a range check.
+006.rb:1:1: C: [Correctable] Style/SelectByRange: Prefer `grep` to `reject` with a range check.
+007.rb:1:1: C: [Correctable] Style/SelectByRange: Prefer `grep` to `reject` with a range check.
+008.rb:1:1: C: [Correctable] Style/SelectByRange: Prefer `grep_v` to `select` with a range check.
+009.rb:1:1: C: [Correctable] Style/SelectByRange: Prefer `grep_v` to `select` with a range check.
+010.rb:1:1: C: [Correctable] Style/SelectByRange: Prefer `grep_v` to `find_all` with a range check.
+011.rb:1:1: C: [Correctable] Style/SelectByRange: Prefer `grep_v` to `find_all` with a range check.
+012.rb:1:1: C: [Correctable] Style/SelectByRange: Prefer `grep_v` to `filter` with a range check.
+013.rb:1:1: C: [Correctable] Style/SelectByRange: Prefer `grep_v` to `filter` with a range check.
+014.rb:1:1: C: [Correctable] Style/SelectByRange: Prefer `grep_v` to `reject` with a range check.
+015.rb:1:1: C: [Correctable] Style/SelectByRange: Prefer `grep_v` to `reject` with a range check.
+016.rb:1:1: C: [Correctable] Style/SelectByRange: Prefer `grep(...).first` to `find` with a range check.
+017.rb:1:1: C: [Correctable] Style/SelectByRange: Prefer `grep(...).first` to `detect` with a range check.
+018.rb:1:1: C: [Correctable] Style/SelectByRange: Prefer `grep_v(...).first` to `find` with a range check.
+019.rb:1:1: C: [Correctable] Style/SelectByRange: Prefer `grep_v(...).first` to `detect` with a range check.
+
+==> autocorrect exit=0 1948 <==
+000.rb:1:1: C: [Corrected] Style/SelectByRange: Prefer `grep` to `select` with a range check.
+001.rb:1:1: C: [Corrected] Style/SelectByRange: Prefer `grep` to `select` with a range check.
+002.rb:1:1: C: [Corrected] Style/SelectByRange: Prefer `grep` to `find_all` with a range check.
+003.rb:1:1: C: [Corrected] Style/SelectByRange: Prefer `grep` to `find_all` with a range check.
+004.rb:1:1: C: [Corrected] Style/SelectByRange: Prefer `grep` to `filter` with a range check.
+005.rb:1:1: C: [Corrected] Style/SelectByRange: Prefer `grep` to `filter` with a range check.
+006.rb:1:1: C: [Corrected] Style/SelectByRange: Prefer `grep` to `reject` with a range check.
+007.rb:1:1: C: [Corrected] Style/SelectByRange: Prefer `grep` to `reject` with a range check.
+008.rb:1:1: C: [Corrected] Style/SelectByRange: Prefer `grep_v` to `select` with a range check.
+009.rb:1:1: C: [Corrected] Style/SelectByRange: Prefer `grep_v` to `select` with a range check.
+010.rb:1:1: C: [Corrected] Style/SelectByRange: Prefer `grep_v` to `find_all` with a range check.
+011.rb:1:1: C: [Corrected] Style/SelectByRange: Prefer `grep_v` to `find_all` with a range check.
+012.rb:1:1: C: [Corrected] Style/SelectByRange: Prefer `grep_v` to `filter` with a range check.
+013.rb:1:1: C: [Corrected] Style/SelectByRange: Prefer `grep_v` to `filter` with a range check.
+014.rb:1:1: C: [Corrected] Style/SelectByRange: Prefer `grep_v` to `reject` with a range check.
+015.rb:1:1: C: [Corrected] Style/SelectByRange: Prefer `grep_v` to `reject` with a range check.
+016.rb:1:1: C: [Corrected] Style/SelectByRange: Prefer `grep(...).first` to `find` with a range check.
+017.rb:1:1: C: [Corrected] Style/SelectByRange: Prefer `grep(...).first` to `detect` with a range check.
+018.rb:1:1: C: [Corrected] Style/SelectByRange: Prefer `grep_v(...).first` to `find` with a range check.
+019.rb:1:1: C: [Corrected] Style/SelectByRange: Prefer `grep_v(...).first` to `detect` with a range check.
+
+==> corrected/000.rb 18 <==
+array.grep(1..10)
+
+==> corrected/001.rb 18 <==
+array.grep(1..10)
+
+==> corrected/002.rb 18 <==
+array.grep(1..10)
+
+==> corrected/003.rb 18 <==
+array.grep(1..10)
+
+==> corrected/004.rb 18 <==
+array.grep(1..10)
+
+==> corrected/005.rb 18 <==
+array.grep(1..10)
+
+==> corrected/006.rb 18 <==
+array.grep(1..10)
+
+==> corrected/007.rb 18 <==
+array.grep(1..10)
+
+==> corrected/008.rb 20 <==
+array.grep_v(1..10)
+
+==> corrected/009.rb 20 <==
+array.grep_v(1..10)
+
+==> corrected/010.rb 20 <==
+array.grep_v(1..10)
+
+==> corrected/011.rb 20 <==
+array.grep_v(1..10)
+
+==> corrected/012.rb 20 <==
+array.grep_v(1..10)
+
+==> corrected/013.rb 20 <==
+array.grep_v(1..10)
+
+==> corrected/014.rb 20 <==
+array.grep_v(1..10)
+
+==> corrected/015.rb 20 <==
+array.grep_v(1..10)
+
+==> corrected/016.rb 24 <==
+array.grep(1..10).first
+
+==> corrected/017.rb 24 <==
+array.grep(1..10).first
+
+==> corrected/018.rb 26 <==
+array.grep_v(1..10).first
+
+==> corrected/019.rb 26 <==
+array.grep_v(1..10).first
+

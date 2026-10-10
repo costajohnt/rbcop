@@ -1,0 +1,30 @@
+==> .rubocop.yml 166 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Lint/RedundantSafeNavigation:
+  InferNonNilReceiver: true
+
+==> 000.rb 31 <==
+foo.map { it.map { it&.bar } }
+
+==> 001.rb 50 <==
+foo.each do
+  if it
+    bar { it&.baz }
+  end
+end
+
+==> 002.rb 35 <==
+foo.each do
+  it.bar
+  it&.baz
+end
+
+==> 003.rb 41 <==
+foo.each { it.bar }
+baz.each { it&.qux }
+

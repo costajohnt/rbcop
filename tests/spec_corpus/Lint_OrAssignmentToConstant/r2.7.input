@@ -1,0 +1,44 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 12 <==
+CONST ||= 1
+
+==> 001.rb 29 <==
+def foo
+  M::CONST ||= 1
+end
+
+==> 002.rb 34 <==
+def self.foo
+  M::CONST ||= 1
+end
+
+==> 003.rb 43 <==
+define_method :foo do
+  M::CONST ||= 1
+end
+
+==> 004.rb 10 <==
+CONST = 1
+
+==> 005.rb 10 <==
+var ||= 1
+
+==> 006.rb 11 <==
+@var ||= 1
+
+==> 007.rb 12 <==
+@@var ||= 1
+
+==> 008.rb 11 <==
+$var ||= 1
+
+==> 009.rb 15 <==
+self.var ||= 1
+

@@ -1,0 +1,23 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 45 <==
+include Module.new do
+  do_something(it)
+end
+
+==> 001.rb 44 <==
+extend Module.new do
+  do_something(it)
+end
+
+==> 002.rb 45 <==
+prepend Module.new do
+  do_something(it)
+end
+

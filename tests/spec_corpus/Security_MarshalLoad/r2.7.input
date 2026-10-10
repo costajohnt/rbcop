@@ -1,0 +1,39 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 40 <==
+Marshal.load('{}')
+::Marshal.load('{}')
+
+==> 001.rb 46 <==
+Marshal.restore('{}')
+::Marshal.restore('{}')
+
+==> 002.rb 36 <==
+Marshal.dump({})
+::Marshal.dump({})
+
+==> 003.rb 204 <==
+SomeNamespace::Marshal.load('')
+SomeNamespace::Marshal.restore('')
+SomeNamespace::Marshal.dump('')
+::SomeNamespace::Marshal.load('')
+::SomeNamespace::Marshal.restore('')
+::SomeNamespace::Marshal.dump('')
+
+==> 004.rb 65 <==
+Marshal.load(Marshal.dump({}))
+Marshal.restore(Marshal.dump({}))
+
+==> 005.rb 53 <==
+Marshal.load(data, proc)
+Marshal.restore(data, proc)
+
+==> 006.rb 37 <==
+Marshal.load(Marshal.dump({}), proc)
+

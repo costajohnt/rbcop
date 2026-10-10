@@ -1,0 +1,37 @@
+==> .rubocop.yml 176 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Gemspec/OrderedDependencies:
+  TreatCommentsAsGroupSeparators: true
+
+==> 000.gemspec 137 <==
+Gem::Specification.new do |spec|
+  # For code quality
+  spec.add_dependency 'rubocop'
+  # For
+  # test
+  spec.add_dependency 'rspec'
+end
+
+==> 001.gemspec 153 <==
+Gem::Specification.new do |spec|
+  # For code quality
+  spec.add_runtime_dependency 'rubocop'
+  # For
+  # test
+  spec.add_runtime_dependency 'rspec'
+end
+
+==> 002.gemspec 161 <==
+Gem::Specification.new do |spec|
+  # For code quality
+  spec.add_development_dependency 'rubocop'
+  # For
+  # test
+  spec.add_development_dependency 'rspec'
+end
+

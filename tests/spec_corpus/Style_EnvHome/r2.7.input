@@ -1,0 +1,32 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 12 <==
+ENV['HOME']
+
+==> 001.rb 18 <==
+ENV.fetch('HOME')
+
+==> 002.rb 23 <==
+ENV.fetch('HOME', nil)
+
+==> 003.rb 14 <==
+::ENV['HOME']
+
+==> 004.rb 9 <==
+Dir.home
+
+==> 005.rb 26 <==
+ENV['HOME'] = '/home/foo'
+
+==> 006.rb 27 <==
+ENV.fetch('HOME', default)
+
+==> 007.rb 30 <==
+ENV.fetch('HOME') { default }
+

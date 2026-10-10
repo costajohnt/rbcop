@@ -1,0 +1,36 @@
+==> offenses exit=1 368 <==
+000.rb:2:3: C: [Correctable] Style/SignalException: Always use `fail` to signal exceptions.
+001.rb:2:3: C: [Correctable] Style/SignalException: Always use `fail` to signal exceptions.
+002.rb:4:3: C: [Correctable] Style/SignalException: Always use `fail` to signal exceptions.
+004.rb:1:8: C: [Correctable] Style/SignalException: Always use `fail` to signal exceptions.
+
+==> autocorrect exit=0 360 <==
+000.rb:2:3: C: [Corrected] Style/SignalException: Always use `fail` to signal exceptions.
+001.rb:2:3: C: [Corrected] Style/SignalException: Always use `fail` to signal exceptions.
+002.rb:4:3: C: [Corrected] Style/SignalException: Always use `fail` to signal exceptions.
+004.rb:1:8: C: [Corrected] Style/SignalException: Always use `fail` to signal exceptions.
+
+==> corrected/000.rb 48 <==
+begin
+  fail
+rescue Exception
+  #do nothing
+end
+
+==> corrected/001.rb 51 <==
+def test
+  fail
+rescue Exception
+  #do nothing
+end
+
+==> corrected/002.rb 41 <==
+begin
+  fail
+rescue Exception
+  fail
+end
+
+==> corrected/004.rb 12 <==
+Kernel.fail
+

@@ -1,0 +1,31 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+
+==> 000.rb 32 <==
+refine Foo do
+  include Bar
+end
+
+==> 001.rb 32 <==
+refine Foo do
+  prepend Bar
+end
+
+==> 002.rb 39 <==
+refine Foo do
+  import_methods Bar
+end
+
+==> 003.rb 36 <==
+refine Foo do
+  Bar.include Baz
+end
+
+==> 004.rb 12 <==
+include Foo
+

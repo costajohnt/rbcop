@@ -1,0 +1,16 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 66 <==
+def x(array)
+  array.each {
+    bar = it
+  }.each { |bar|
+  }
+end
+
