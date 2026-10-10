@@ -18,3 +18,8 @@ const NIL_METHODS: &[&str] = &[
 pub fn nil_method(cfg: &CopConfig, name: &str) -> bool {
     NIL_METHODS.contains(&name) || name == "to_d" || crate::helpers::allowed::allowed_method(cfg, name)
 }
+
+/// `nil.methods.include?(name)` alone (no `to_d`, no AllowedMethods).
+pub fn nil_object_method(name: &str) -> bool {
+    NIL_METHODS.contains(&name)
+}
