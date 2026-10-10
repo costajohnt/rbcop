@@ -196,13 +196,19 @@ fn on_block(cx: &mut Cx, b: &Block) {
         .flatten()
         .map(|(cs, ce)| {
             let anchor = if chained { end_of_chain(ancestors, b.range) } else { close };
-            let mut pre_end = cs;
-            let between = &text[anchor.1..cs];
-            pre_end -= between.len() - between.trim_end_matches(|c: char| c.is_ascii_whitespace() || c == '\x0b').len();
+            // parser's Range#join takes the min begin and max end, so a chain ending after the
+            // comment (`}.to( # c\n  x\n)`) gives the range from the comment to the chain end.
+            let join = |a: usize, b: usize| (a.min(b), a.max(b));
+            let is_ws = |c: char| c.is_ascii_whitespace() || c == '\x0b';
+            // source_range_before_comment
+            let (pre_start, joined_end) = join(anchor.1, cs);
+            let pre_end = pre_start + text[pre_start..joined_end].trim_end_matches(is_ws).len();
             let removal = range_with_surrounding_space(text, cs, ce, Surrounding { side: Side::Right, ..Default::default() });
-            let trailing_ws = !text[pre_end..cs].is_empty()
-                && text[pre_end..cs].bytes().all(|c| matches!(c, b' ' | b'\t' | b'\n' | b'\r' | 0x0c | 0x0b));
-            (removal, (anchor.1, pre_end), trailing_ws.then_some(cs), format!("{}\n", &text[cs..ce]))
+            // remove_trailing_whitespace
+            let trailing = join(pre_end, cs);
+            let gap = &text[trailing.0..trailing.1];
+            let trailing_ws = (!gap.is_empty() && gap.chars().all(is_ws)).then_some(trailing);
+            (removal, (pre_start, pre_end), trailing_ws, format!("{}\n", &text[cs..ce]))
         });
     let begin_required = !braces
         && multiline
@@ -231,8 +237,8 @@ fn on_block(cx: &mut Cx, b: &Block) {
             c.replace(open.0, open.1, "do");
             if let Some((removal, pre, trailing_ws, comment)) = &comment_move {
                 c.remove(removal.0, removal.1);
-                if let Some(cs) = trailing_ws {
-                    c.remove(pre.1, *cs);
+                if let Some((s, e)) = trailing_ws {
+                    c.remove(*s, *e);
                 }
                 c.insert_after(pre.0, pre.1, "\n");
                 c.insert_before(block_range.0, block_range.1, comment);
