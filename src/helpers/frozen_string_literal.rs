@@ -34,6 +34,11 @@ pub fn disabled(cx: &Cx) -> bool {
     leading(cx).iter().any(|l| frozen_value(l).as_deref() == Some("false"))
 }
 
+/// `leading_comment_lines` (the lines before the first non-comment token).
+pub fn leading_comment_lines<'a>(cx: &Cx<'a, '_>) -> &'a [&'a str] {
+    leading(cx)
+}
+
 /// FrozenStringLiteral#uninterpolated_string? (from Ruby 3.0; any str/dstr before): a str, or a
 /// dstr without begin/ivar/cvar/gvar descendants.
 fn frozen_string_type(cx: &Cx, node: &ruby_prism::Node) -> bool {

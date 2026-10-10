@@ -60,6 +60,8 @@ pub struct Parsed {
     pub escapes: Vec<Escape>,
     /// Every character set (nested ones included), in `each_expression` order (outer first).
     pub sets: Vec<Set>,
+    /// Offsets of `]` characters that are part of a `:literal` expression (outside any set).
+    pub literal_brackets: Vec<usize>,
 }
 
 struct Scanner<'a> {
@@ -148,6 +150,10 @@ impl<'a> Scanner<'a> {
                 }
                 b')' => {
                     return if depth > 0 { Some(()) } else { None };
+                }
+                b']' => {
+                    self.out.literal_brackets.push(self.i);
+                    self.i += 1;
                 }
                 b'#' if extended => {
                     while let Some(c) = self.peek(0) {

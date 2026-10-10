@@ -94,3 +94,57 @@ pub fn symbol_inspect(name: &[u8]) -> String {
         };
     if simple { format!(":{s}") } else { format!(":{}", inspect(name)) }
 }
+
+/// Ruby's `Regexp.escape`.
+pub fn regexp_escape(s: &str) -> String {
+    let mut out = String::with_capacity(s.len());
+    for c in s.chars() {
+        match c {
+            '\n' => out.push_str("\\n"),
+            '\t' => out.push_str("\\t"),
+            '\r' => out.push_str("\\r"),
+            '\x0c' => out.push_str("\\f"),
+            '\x0b' => out.push_str("\\v"),
+            ' ' => out.push_str("\\ "),
+            '.' | '-' | '#' | '[' | ']' | '{' | '}' | '(' | ')' | '|' | '*' | '?' | '+' | '^' | '$' | '\\' => {
+                out.push('\\');
+                out.push(c);
+            }
+            _ => out.push(c),
+        }
+    }
+    out
+}
+
+/// Ruby's `Float#to_s` (shortest round-trip digits; fixed notation for exponents in -4..16).
+pub fn float_to_s(f: f64) -> String {
+    if f.is_nan() {
+        return "NaN".into();
+    }
+    if f.is_infinite() {
+        return if f > 0.0 { "Infinity".into() } else { "-Infinity".into() };
+    }
+    let sign = if f.is_sign_negative() { "-" } else { "" };
+    if f == 0.0 {
+        return format!("{sign}0.0");
+    }
+    let e = format!("{:e}", f.abs());
+    let (mantissa, exp) = e.split_once('e').unwrap();
+    let digits: String = mantissa.chars().filter(|&c| c != '.').collect();
+    let decpt = exp.parse::<i64>().unwrap() + 1;
+    let body = if decpt > 0 && decpt < 16 {
+        let d = decpt as usize;
+        if digits.len() <= d {
+            format!("{digits}{}.0", "0".repeat(d - digits.len()))
+        } else {
+            format!("{}.{}", &digits[..d], &digits[d..])
+        }
+    } else if decpt <= 0 && decpt > -4 {
+        format!("0.{}{digits}", "0".repeat((-decpt) as usize))
+    } else {
+        let rest = if digits.len() > 1 { &digits[1..] } else { "0" };
+        let x = decpt - 1;
+        format!("{}.{rest}e{}{:02}", &digits[..1], if x < 0 { '-' } else { '+' }, x.abs())
+    };
+    format!("{sign}{body}")
+}
