@@ -25,7 +25,13 @@ pub fn valid_syntax(text: &str, version: &'static str) -> bool {
 
 /// The normalized structure of `node` (whose source is `text`).
 pub fn serialize(text: &str, node: &Node) -> String {
-    let mut s = Ser { text, out: String::new(), frames: vec![] };
+    serialize_folding(text, node, false)
+}
+
+/// `serialize`, with RedundantLineBreak#fold_string_concatenation when `fold` is set: string
+/// literals compare by value, adjacent literal parts merge, and `str + str` folds into one string.
+pub fn serialize_folding(text: &str, node: &Node, fold: bool) -> String {
+    let mut s = Ser { text, out: String::new(), frames: vec![], fold, suppress: 0, budget: FOLD_BUDGET };
     s.visit(node);
     s.out
 }
@@ -33,17 +39,28 @@ pub fn serialize(text: &str, node: &Node) -> String {
 /// `parses_equivalently?`: `fragment` parses without errors to a single statement (or, with
 /// `whole_file`, a program) whose structure is `original`.
 pub fn parses_equivalently(original: &str, fragment: &str, whole_file: bool, version: &'static str) -> bool {
+    parses_equivalently_folding(original, fragment, whole_file, version, false)
+}
+
+/// `parses_equivalently` with `serialize_folding`.
+pub fn parses_equivalently_folding(
+    original: &str,
+    fragment: &str,
+    whole_file: bool,
+    version: &'static str,
+    fold: bool,
+) -> bool {
     let result = ruby_prism::parse_with_version(fragment.as_bytes(), version);
     if result.errors().next().is_some() {
         return false;
     }
     let root = result.node();
     if whole_file {
-        return serialize(fragment, &root) == original;
+        return serialize_folding(fragment, &root, fold) == original;
     }
     let stmts: Vec<Node> = root.as_program_node().unwrap().statements().body().iter().collect();
     match stmts.as_slice() {
-        [one] => serialize(fragment, one) == original,
+        [one] => serialize_folding(fragment, one, fold) == original,
         _ => false,
     }
 }
@@ -58,15 +75,105 @@ enum Frame {
     Stmts,
     /// The generic enter of a StatementsNode (a parentheses body): no output of its own.
     Pass,
+    /// A string emitted folded: no output for anything below it.
+    Folded,
 }
+
+/// A part of a folded string: literal bytes, or a serialized interpolation.
+enum Part {
+    Str(Vec<u8>),
+    Other(String),
+}
+
+/// Fold steps per serialization: past this, strings stop folding (pathological `+` chains).
+const FOLD_BUDGET: usize = 1_000_000;
 
 struct Ser<'t> {
     text: &'t str,
     out: String,
     frames: Vec<Frame>,
+    fold: bool,
+    /// Nodes below a Folded frame produce no output.
+    suppress: usize,
+    budget: usize,
 }
 
 impl Ser<'_> {
+    /// RedundantLineBreak#fold_string_concatenation of a node, when it folds to a str/dstr.
+    fn folded(&mut self, node: &Node) -> Option<Vec<Part>> {
+        let candidate = match node {
+            Node::StringNode { .. } | Node::InterpolatedStringNode { .. } => true,
+            Node::CallNode { .. } => node.as_call_node().unwrap().name().as_slice() == b"+",
+            _ => false,
+        };
+        if !candidate {
+            return None;
+        }
+        self.budget = self.budget.checked_sub(1)?;
+        let parts: Vec<Part> = match node {
+            Node::StringNode { .. } => return Some(vec![Part::Str(node.as_string_node().unwrap().unescaped().to_vec())]),
+            Node::InterpolatedStringNode { .. } => {
+                let mut out = vec![];
+                for p in node.as_interpolated_string_node().unwrap().parts().iter() {
+                    match self.folded(&p) {
+                        Some(ps) => out.extend(ps),
+                        None => {
+                            let mut sub = Ser {
+                                text: self.text,
+                                out: String::new(),
+                                frames: vec![],
+                                fold: true,
+                                suppress: 0,
+                                budget: self.budget,
+                            };
+                            sub.visit(&p);
+                            self.budget = sub.budget;
+                            out.push(Part::Other(sub.out));
+                        }
+                    }
+                }
+                out
+            }
+            Node::CallNode { .. } => {
+                let c = node.as_call_node().unwrap();
+                if c.name().as_slice() != b"+" || crate::ast::is_csend(&c) || c.block().is_some() {
+                    return None;
+                }
+                let mut out = self.folded(&c.receiver()?)?;
+                for a in crate::ast::call_args(&c) {
+                    out.extend(self.folded(&a)?);
+                }
+                out
+            }
+            _ => return None,
+        };
+        // merge_string_parts: adjacent literal parts join.
+        let mut merged: Vec<Part> = vec![];
+        for p in parts {
+            match (merged.last_mut(), p) {
+                (Some(Part::Str(a)), Part::Str(b)) => a.extend(b),
+                (_, p) => merged.push(p),
+            }
+        }
+        Some(merged)
+    }
+
+    fn emit_folded(&mut self, parts: &[Part]) {
+        let str_of = |b: &[u8]| format!("[str {:?}]", String::from_utf8_lossy(b));
+        if let [Part::Str(b)] = parts {
+            self.out.push_str(&str_of(b));
+            return;
+        }
+        self.out.push_str("(dstr");
+        for p in parts {
+            match p {
+                Part::Str(b) => self.out.push_str(&str_of(b)),
+                Part::Other(s) => self.out.push_str(s),
+            }
+        }
+        self.out.push(')');
+    }
+
     fn last(&self) -> Option<Frame> {
         self.frames.iter().rev().find(|f| **f != Frame::Pass).copied()
     }
@@ -82,6 +189,17 @@ impl Ser<'_> {
 
 impl<'pr> Visit<'pr> for Ser<'_> {
     fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
+        if self.suppress > 0 {
+            return self.frames.push(Frame::Pass);
+        }
+        if self.fold
+            && matches!(node, Node::InterpolatedStringNode { .. } | Node::CallNode { .. })
+            && let Some(parts) = self.folded(&node)
+        {
+            self.emit_folded(&parts);
+            self.suppress += 1;
+            return self.frames.push(Frame::Folded);
+        }
         let k = kind::of(&node);
         let frame = match &node {
             Node::StatementsNode { .. } => Frame::Pass,
@@ -123,12 +241,22 @@ impl<'pr> Visit<'pr> for Ser<'_> {
     }
 
     fn visit_branch_node_leave(&mut self) {
-        if let Some(Frame::Open(_)) = self.frames.pop() {
-            self.out.push(')');
+        match self.frames.pop() {
+            Some(Frame::Open(_)) => self.out.push(')'),
+            Some(Frame::Folded) => self.suppress -= 1,
+            _ => {}
         }
     }
 
     fn visit_leaf_node_enter(&mut self, node: Node<'pr>) {
+        if self.suppress > 0 {
+            return;
+        }
+        if self.fold
+            && let Some(parts) = self.folded(&node)
+        {
+            return self.emit_folded(&parts);
+        }
         let loc = node.location();
         let k = match &node {
             Node::SourceLineNode { .. } => "__LINE__",
@@ -144,7 +272,7 @@ impl<'pr> Visit<'pr> for Ser<'_> {
     }
 
     fn visit_statements_node(&mut self, node: &ruby_prism::StatementsNode<'pr>) {
-        let inline = self.last() == Some(Frame::Inline);
+        let inline = self.suppress > 0 || self.last() == Some(Frame::Inline);
         if !inline {
             self.out.push('{');
         }
@@ -190,6 +318,20 @@ pub fn verified_by_reparse<T: Copy>(
     range: impl Fn(T) -> (usize, usize),
     apply: impl Fn(&mut Corrector, T),
 ) -> Vec<T> {
+    verified_by_reparse_folding(text, version, program, items, range, apply, false)
+}
+
+/// `verified_by_reparse` comparing with `serialize_folding(.., fold)` (RedundantLineBreak's
+/// `normalize_reparsed_ast`).
+pub fn verified_by_reparse_folding<T: Copy>(
+    text: &str,
+    version: &'static str,
+    program: &Node,
+    items: &[T],
+    range: impl Fn(T) -> (usize, usize),
+    apply: impl Fn(&mut Corrector, T),
+    fold: bool,
+) -> Vec<T> {
     let source: Arc<str> = Arc::from(text);
     // (scope range, normalized original, items) in order of first appearance.
     let mut groups: Vec<Group<T>> = vec![];
@@ -200,7 +342,7 @@ pub fn verified_by_reparse<T: Copy>(
         match groups.iter_mut().find(|g| g.0 == scope) {
             Some(g) => g.2.push(item),
             None => {
-                let original = serialize(text, f.found.as_ref().unwrap_or(program));
+                let original = serialize_folding(text, f.found.as_ref().unwrap_or(program), fold);
                 groups.push((scope, original, vec![item]));
             }
         }
@@ -217,9 +359,9 @@ pub fn verified_by_reparse<T: Copy>(
         match scope {
             Some((s, e)) => {
                 let end = (e as isize + corrected.len() as isize - text.len() as isize) as usize;
-                corrected.get(s..end).is_some_and(|fragment| parses_equivalently(original, fragment, false, version))
+                corrected.get(s..end).is_some_and(|fragment| parses_equivalently_folding(original, fragment, false, version, fold))
             }
-            None => parses_equivalently(original, &corrected, true, version),
+            None => parses_equivalently_folding(original, &corrected, true, version, fold),
         }
     };
     let mut out = vec![];
