@@ -34,6 +34,11 @@ pub struct Options {
     pub ignore_unrecognized_cops: bool,
     /// Rainbow.enabled while configs load (config validation warnings are painted).
     pub color: bool,
+    /// `--safe`: only cops whose `Safe` is truthy are enabled (Registry#enabled_cop_name?).
+    pub safe: bool,
+    /// `--enable-all-cops` (true) / `--disable-all-cops` (false): ConfigLoader.enabled_by_default /
+    /// disabled_by_default, which win over `AllCops: EnabledByDefault / DisabledByDefault`.
+    pub all_cops: Option<bool>,
 }
 
 /// One include/exclude entry (FilePatterns / PathUtil.match_path?).
@@ -310,12 +315,14 @@ impl Resolved {
                 cop.insert(k, v);
             }
         }
+        let safe = || !matches!(cop.get("Safe"), Some(Value::Null | Value::Bool(false)));
         let enabled = opts.only.iter().any(|o| o == name)
-            || effective == Value::Bool(true)
-            || (!opts.disable_pending_cops
-                && effective == Value::Str("pending".into())
-                && (opts.enable_pending_cops || self.new_cops(name, false)))
-            || (effective == Value::Str("preview".into()) && self.preview(opts));
+            || ((effective == Value::Bool(true)
+                || (!opts.disable_pending_cops
+                    && effective == Value::Str("pending".into())
+                    && (opts.enable_pending_cops || self.new_cops(name, false)))
+                || (effective == Value::Str("preview".into()) && self.preview(opts)))
+                && (!opts.safe || safe()));
         let mut params = dept_map;
         for (k, v) in cop.0 {
             params.insert(k, v);
@@ -457,7 +464,7 @@ impl Store {
         };
         if store.opts.force_default_config {
             let r = Resolved::new(
-                apply_preview_defaults(&store.default, store.opts.preview == Some(true)),
+                apply_default_overrides(&store.default, &store.opts),
                 None,
                 &store.opts,
                 &store.cop_names,
@@ -518,7 +525,7 @@ impl Store {
         }
         let hash = match &file {
             // ConfigLoader.apply_default_overrides: only the command line can turn preview on here.
-            None => apply_preview_defaults(&self.default, self.opts.preview == Some(true)),
+            None => apply_default_overrides(&self.default, &self.opts),
             Some(path) => {
                 let mut user = self.load_file(path, true)?;
                 validator::check_target_ruby(&user, path, &self.cwd)?;
@@ -823,7 +830,7 @@ impl Store {
                 }
                 plugin.insert("AllCops", Value::Map(all.into()));
             }
-            combined = merge_with_default(&combined, plugin, false, self.opts.preview);
+            combined = merge_with_default(&combined, plugin, false, &self.opts);
         }
         if let (Some(all), Some(Value::Map(new_all))) =
             (self.default.map_mut("AllCops"), combined.get("AllCops").cloned())
@@ -847,7 +854,7 @@ impl Store {
 
     /// ConfigLoaderResolver#merge_with_default (§4) against the current defaults.
     fn merge_with_default(&self, config: Map) -> Map {
-        merge_with_default(&self.default, config, true, self.opts.preview)
+        merge_with_default(&self.default, config, true, &self.opts)
     }
 
     /// Gem dir for inherit_gem and plugins, as `Gem::Specification.find_by_name(name).gem_dir` reports it.
@@ -922,11 +929,29 @@ fn with_preview_exclude_merge(mut mode: Map, config: &Map, cli: Option<bool>) ->
     mode
 }
 
+/// ConfigLoader.apply_default_overrides: the default configuration used as is (no config file, or
+/// --force-default-config), with --preview and --enable-all-cops / --disable-all-cops applied.
+fn apply_default_overrides(default: &Map, opts: &Options) -> Map {
+    let mut hash = apply_preview_defaults(default, opts.preview == Some(true));
+    if let Some(enable) = opts.all_cops {
+        for (_, v) in hash.0.iter_mut() {
+            if let Value::Map(m) = v {
+                Arc::make_mut(m).insert("Enabled", Value::Bool(enable));
+            }
+        }
+    }
+    hash
+}
+
 /// ConfigLoaderResolver#merge_with_default (§4).
-fn merge_with_default(base_default: &Map, mut config: Map, unset_nil: bool, cli_preview: Option<bool>) -> Map {
+fn merge_with_default(base_default: &Map, mut config: Map, unset_nil: bool, opts: &Options) -> Map {
+    let cli_preview = opts.preview;
     let all = config.map("AllCops").cloned().unwrap_or_default();
-    let dbd = all.truthy("DisabledByDefault");
-    let ebd = all.truthy("EnabledByDefault");
+    // resolve_default_overrides: --enable-all-cops / --disable-all-cops win over the config.
+    let (dbd, ebd) = match opts.all_cops {
+        Some(enable) => (!enable, enable),
+        None => (all.truthy("DisabledByDefault"), all.truthy("EnabledByDefault")),
+    };
     let base_default = &apply_preview_defaults(base_default, preview_on(&config, cli_preview));
     let mut default = base_default.clone();
     if dbd || ebd {

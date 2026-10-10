@@ -635,11 +635,7 @@ fn sarif_rule(f: &FileOut, cop: &str) -> String {
     let cfg = f.config.hash.map(cop).cloned().unwrap_or_default();
     let desc = cfg.str("Description").unwrap_or(cop).to_string();
     let dept = cop.rsplit_once('/').map_or("", |(d, _)| d);
-    let dept_cfg = f.config.hash.map(dept).cloned().unwrap_or_default();
-    let base = dept_cfg.str("DocumentationBaseURL").unwrap_or("https://docs.rubocop.org/rubocop");
-    let ext = dept_cfg.str("DocumentationExtension").unwrap_or(".html");
-    let fragment: String = cop.to_lowercase().chars().filter(char::is_ascii_lowercase).collect();
-    let uri = format!("{base}/cops_{}{ext}#{fragment}", dept.to_lowercase().replace('/', "_"));
+    let uri = super::docs_url(f.config, cop);
     let default_sev = if dept == "Lint" { "warning" } else { "convention" };
     let level = sarif_level(cfg.str("Severity").unwrap_or(default_sev));
     let tag = cop.split('/').next().unwrap_or(cop);

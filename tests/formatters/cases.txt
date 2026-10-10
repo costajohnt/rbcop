@@ -129,3 +129,10 @@ fix-all-progress|tests/formatters/fix|-f p --autocorrect-all --color
 fix-none-simple|tests/formatters/fix|-f s
 fix-safe-and-all|tests/formatters/fix|-f s -a -A
 fix-safe-only-correctable|tests/formatters/fix|-f s -a --display-only-correctable
+# Option modes and filters (issue #17).
+help|tests/formatters/project|-h
+list-enabled-cops-for|tests/formatters/project|--list-enabled-cops-for lib
+show-docs-url|tests/formatters/project|--show-docs-url Style/StringLiterals,Nope,Layout/LineLength
+show-docs-url-default|tests/formatters/project|--show-docs-url
+fix-layout|tests/formatters/fix|-f s -x
+fix-layout-safe|tests/formatters/fix|-f s -x -a

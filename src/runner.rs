@@ -483,7 +483,7 @@ fn analyze(
     let mut disabled: Vec<Span> = Vec::new();
     out.retain(|o| {
         let s = span(o);
-        let off = directives::is_disabled(&facts.disabled, s.0, s.1, s.2);
+        let off = directives::suppressed(&facts.disabled, s.0, s.1, s.2);
         if off {
             disabled.push(s);
         }
@@ -524,7 +524,7 @@ fn analyze(
         });
         found.retain(|o| {
             let s = span(o);
-            !directives::is_disabled(&facts.disabled, s.0, s.1, s.2)
+            !directives::suppressed(&facts.disabled, s.0, s.1, s.2)
         });
         out.extend(found);
         redundant_fix = fixes.corrector;

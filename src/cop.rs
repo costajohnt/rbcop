@@ -182,7 +182,7 @@ impl Cx<'_, '_> {
             return;
         }
         let (first, last) = (self.src.line_of(start), self.src.line_of(end));
-        if crate::directives::is_disabled(&self.facts.disabled, self.cop, first, last) {
+        if crate::directives::suppressed(&self.facts.disabled, self.cop, first, last) {
             // Reported as :disabled (the runner drops it); the block never runs.
             return self.push(start, end, message.into(), false, false);
         }

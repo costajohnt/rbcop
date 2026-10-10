@@ -12,21 +12,8 @@ use std::process::ExitCode;
 use std::time::Instant;
 use std::{env, fs, thread};
 
-const USAGE: &str = "Usage: rbcop [options] [file1, file2, ...]
-
-Accepts RuboCop's command-line options. Supported:
-  -c, --config FILE, --force-default-config, --only/--except COPS, --force-exclusion,
-  --ignore-parent-exclusion, --enable-pending-cops, --disable-pending-cops, --[no-]preview,
-  -s/--stdin FILE, -a/--autocorrect, -A/--autocorrect-all (and their deprecated spellings),
-  -F/--fail-fast, --fail-level SEVERITY, -f/--format FORMATTER, -o/--out FILE,
-  -D/--[no-]display-cop-names, -E/--extra-details, -S/--display-style-guide, --display-time,
-  --display-only-fail-level-offenses, --display-only-correctable, --display-only-safe-correctable,
-  --display-only-failed, --stderr, --[no-]color, -L/--list-target-files, --show-cops [COPS],
-  --editor-mode, -v/--version, -V/--verbose-version.
-Ignored: -C/--cache, --cache-root, -P/--[no-]parallel, --no-server, --raise-cop-error.
-
-Formatters: [p]rogress (default), [s]imple, [c]lang, [e]macs, [fi]les, [fu]ubar, [g]ithub, [h]tml,
-  [j]son, [ju]nit, [m]arkdown, [o]ffenses, [pa]cman, [q]uiet, [sa]rif, [t]ap, [w]orst.";
+/// `rubocop -h` (OptionParser#help for RuboCop 1.91.0's options), recorded verbatim.
+const HELP: &str = include_str!("help.txt");
 
 /// RuboCop's exit statuses.
 const OFFENSES: u8 = 1;
@@ -49,21 +36,21 @@ enum Use {
 }
 
 const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
-    ("lint", Some('l'), Arg::None, Use::Unsupported),
-    ("fix-layout", Some('x'), Arg::None, Use::Unsupported),
-    ("safe", None, Arg::None, Use::Unsupported),
+    ("lint", Some('l'), Arg::None, Use::Handle),
+    ("fix-layout", Some('x'), Arg::None, Use::Handle),
+    ("safe", None, Arg::None, Use::Handle),
     ("except", None, Arg::Optional, Use::Handle),
     ("only", None, Arg::Optional, Use::Handle),
-    ("only-guide-cops", None, Arg::None, Use::Unsupported),
+    ("only-guide-cops", None, Arg::None, Use::Handle),
     ("fail-fast", Some('F'), Arg::None, Use::Handle),
     ("disable-pending-cops", None, Arg::None, Use::Handle),
     ("enable-pending-cops", None, Arg::None, Use::Handle),
-    ("disable-all-cops", None, Arg::None, Use::Unsupported),
-    ("enable-all-cops", None, Arg::None, Use::Unsupported),
+    ("disable-all-cops", None, Arg::None, Use::Handle),
+    ("enable-all-cops", None, Arg::None, Use::Handle),
     ("[no-]preview", None, Arg::None, Use::Handle),
-    ("ignore-disable-comments", None, Arg::None, Use::Unsupported),
+    ("ignore-disable-comments", None, Arg::None, Use::Handle),
     ("force-exclusion", None, Arg::None, Use::Handle),
-    ("only-recognized-file-types", None, Arg::None, Use::Unsupported),
+    ("only-recognized-file-types", None, Arg::None, Use::Handle),
     ("ignore-parent-exclusion", None, Arg::None, Use::Handle),
     ("ignore-unrecognized-cops", None, Arg::None, Use::Handle),
     ("force-default-config", None, Arg::None, Use::Handle),
@@ -105,17 +92,17 @@ const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
     ("auto-gen-config", None, Arg::None, Use::Unsupported),
     ("regenerate-todo", None, Arg::None, Use::Unsupported),
     ("report-unused-todo-entries", None, Arg::None, Use::Unsupported),
-    ("exclude-limit", None, Arg::Required, Use::Unsupported),
-    ("no-exclude-limit", None, Arg::None, Use::Unsupported),
-    ("[no-]offense-counts", None, Arg::None, Use::Unsupported),
-    ("[no-]auto-gen-only-exclude", None, Arg::None, Use::Unsupported),
-    ("[no-]auto-gen-timestamp", None, Arg::None, Use::Unsupported),
-    ("[no-]auto-gen-enforced-style", None, Arg::None, Use::Unsupported),
+    ("exclude-limit", None, Arg::Required, Use::Handle),
+    ("no-exclude-limit", None, Arg::None, Use::Handle),
+    ("[no-]offense-counts", None, Arg::None, Use::Handle),
+    ("[no-]auto-gen-only-exclude", None, Arg::None, Use::Handle),
+    ("[no-]auto-gen-timestamp", None, Arg::None, Use::Handle),
+    ("[no-]auto-gen-enforced-style", None, Arg::None, Use::Handle),
     ("list-target-files", Some('L'), Arg::None, Use::Handle),
-    ("list-enabled-cops-for", None, Arg::Required, Use::Unsupported),
+    ("list-enabled-cops-for", None, Arg::Required, Use::Handle),
     ("show-cops", None, Arg::Optional, Use::Handle),
-    ("show-docs-url", None, Arg::Optional, Use::Unsupported),
-    ("init", None, Arg::None, Use::Unsupported),
+    ("show-docs-url", None, Arg::Optional, Use::Handle),
+    ("init", None, Arg::None, Use::Handle),
     ("config", Some('c'), Arg::Required, Use::Handle),
     ("debug", Some('d'), Arg::None, Use::Unsupported),
     ("plugin", None, Arg::Required, Use::Unsupported),
@@ -136,6 +123,8 @@ enum Fail {
     Arg(String),
     /// Something rbcop does not implement yet.
     Unsupported(String),
+    /// `-h`: OptionParser prints the help and exits as soon as it reaches the option.
+    Help,
 }
 
 #[derive(Default)]
@@ -171,9 +160,24 @@ struct Cli {
     parallel: Option<bool>,
     cache: Option<String>,
     show_cops: Option<Vec<String>>,
+    /// `--list-enabled-cops-for PATH`
+    list_enabled_for: Option<String>,
+    /// `--show-docs-url [COPS]`
+    show_docs_url: Option<Vec<String>>,
+    /// `--only-recognized-file-types`
+    only_recognized: bool,
+    /// `--only-guide-cops`
+    only_guide: bool,
+    /// `--init`
+    init: bool,
+    /// `--enable-all-cops` / `--disable-all-cops` were given.
+    enable_all: bool,
+    disable_all: bool,
+    /// Given without `--auto-gen-config` (validate_auto_gen_config, in its order): --exclude-limit,
+    /// --[no-]offense-counts, --[no-]auto-gen-timestamp, --[no-]auto-gen-only-exclude.
+    auto_gen: [bool; 4],
     version: bool,
     verbose_version: bool,
-    help: bool,
     /// EXITING_OPTIONS seen, in order (for "Incompatible cli options").
     exiting: Vec<&'static str>,
 }
@@ -320,6 +324,7 @@ fn parse_args(args: Vec<String>) -> Result<Cli, Fail> {
         }
         for (i, neg, inline, written) in pending {
             let (long, _, kind, usage) = SPECS[i];
+            let inline_given = inline.is_some();
             let value = match kind {
                 Arg::None => {
                     if inline.is_some() {
@@ -334,6 +339,16 @@ fn parse_args(args: Vec<String>) -> Result<Cli, Fail> {
                 Arg::Optional => inline.or_else(|| it.next_if(|n| !n.starts_with('-'))),
             };
             let name = long.trim_start_matches("[no-]");
+            // validate_exclude_limit_option raises OptionParser::MissingArgument, which OptionParser
+            // words with the option as written (and `=VALUE` when given inline).
+            if name == "exclude-limit"
+                && !value
+                    .as_deref()
+                    .is_some_and(|v| v.split('\n').any(|l| !l.is_empty() && l.bytes().all(|b| b.is_ascii_digit())))
+            {
+                let shown = if inline_given { format!("{written}={}", value.unwrap_or_default()) } else { written };
+                return Err(Fail::Parse(format!("missing argument: {shown}")));
+            }
             if usage == Use::Unsupported {
                 let shown = if neg { format!("--no-{name}") } else { format!("--{name}") };
                 return Err(Fail::Unsupported(format!("{shown} is not supported by rbcop yet")));
@@ -381,8 +396,44 @@ fn fail_level(v: &str) -> Result<FailLevel, Fail> {
     })
 }
 
+/// `@options[:only] ||= []; @options[:only] << dept` (-l, -x): no Lint/Syntax is added.
+fn push_only(cli: &mut Cli, dept: &str) {
+    let only = cli.only.get_or_insert_with(Vec::new);
+    only.push(dept.to_string());
+    cli.opts.only = only.clone();
+}
+
 fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<(), Fail> {
     match name {
+        "lint" => push_only(cli, "Lint"),
+        "fix-layout" => {
+            // `@options[:autocorrect] = true` without `:safe_autocorrect`: all corrections, unless
+            // -a asks for safe ones.
+            push_only(cli, "Layout");
+            cli.autocorrect.get_or_insert(rbcop::autocorrect::Mode::All);
+        }
+        "safe" => cli.opts.safe = true,
+        "enable-all-cops" => cli.enable_all = true,
+        "disable-all-cops" => cli.disable_all = true,
+        "ignore-disable-comments" => rbcop::directives::ignore_disable_comments(),
+        "only-recognized-file-types" => cli.only_recognized = true,
+        "only-guide-cops" => cli.only_guide = true,
+        "init" => cli.init = true,
+        "exclude-limit" => cli.auto_gen[0] = true,
+        "offense-counts" => cli.auto_gen[1] = true,
+        "auto-gen-timestamp" => cli.auto_gen[2] = true,
+        "auto-gen-only-exclude" => cli.auto_gen[3] = true,
+        "list-enabled-cops-for" => {
+            cli.list_enabled_for = value;
+            cli.exiting.push("list_enabled_cops_for");
+        }
+        "show-docs-url" => {
+            // Ruby's split(',') drops trailing empty fields; only emptiness matters here.
+            cli.show_docs_url = Some(
+                value.map(|v| v.split(',').filter(|c| !c.is_empty()).map(String::from).collect()).unwrap_or_default(),
+            );
+            cli.exiting.push("show_docs_url");
+        }
         "only" => {
             let mut list = cop_list(name, value)?;
             if !list.iter().any(|c| c == "Lint/Syntax") {
@@ -467,7 +518,7 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
             cli.verbose_version = true;
             cli.exiting.push("verbose_version");
         }
-        "help" => cli.help = true,
+        "help" => return Err(Fail::Help),
         _ => {} // ignored options
     }
     Ok(())
@@ -486,6 +537,10 @@ fn validate(cli: &mut Cli, global: bool) -> Result<(), Fail> {
     if cli.cache.as_ref().is_some_and(|c| c != "true" && c != "false") {
         return Err(Fail::Arg("-C/--cache argument must be true or false".into()));
     }
+    const AUTO_GEN: [&str; 4] = ["exclude-limit", "offense-counts", "auto-gen-timestamp", "auto-gen-only-exclude"];
+    if let Some(i) = cli.auto_gen.iter().position(|&given| given) {
+        return Err(Fail::Arg(format!("--{} can only be used together with --auto-gen-config.", AUTO_GEN[i])));
+    }
     if cli.safe_autocorrect && cli.autocorrect_all {
         // Rainbow(<<~MESSAGE).red, then warned red again: the trailing newline is part of the message.
         let m = "Error: Both safe and unsafe autocorrect options are specified, use only one.\n";
@@ -499,6 +554,12 @@ fn validate(cli: &mut Cli, global: bool) -> Result<(), Fail> {
     }
     if cli.autocorrect.is_some() && (cli.only_correctable || cli.only_safe_correctable) {
         return Err(Fail::Arg("--autocorrect cannot be used with --display-only-[safe-]correctable.".into()));
+    }
+    if cli.enable_all && cli.disable_all {
+        return Err(Fail::Arg("--enable-all-cops cannot be used together with --disable-all-cops.".into()));
+    }
+    if cli.enable_all || cli.disable_all {
+        cli.opts.all_cops = Some(cli.enable_all);
     }
     if cli.parallel.is_some() {
         let invalid: Vec<&str> = [
@@ -597,6 +658,12 @@ fn main() -> ExitCode {
             eprintln!("rbcop: {m}");
             ERROR
         }
+        Err(Fail::Help) => {
+            print_help(parse_color && !env::args().any(|a| a == "--no-color"));
+            0
+        }
+        // CLI#run: --init runs before the configuration is loaded.
+        Ok(cli) if cli.init => init_dotfile(parse_color),
         Ok(cli) => match run(cli, global, parse_color) {
             Ok(code) => code,
             Err(e) => {
@@ -609,6 +676,84 @@ fn main() -> ExitCode {
         println!("Finished in {} seconds", ruby_seconds(t0.elapsed().as_secs_f64()));
     }
     ExitCode::from(status)
+}
+
+/// `--init`: CLI::Command::InitDotfile.
+fn init_dotfile(color: bool) -> u8 {
+    const DOTFILE: &str = ".rubocop.yml";
+    const TEMPLATE: &str = "# The behavior of RuboCop can be controlled via the .rubocop.yml
+# configuration file. It makes it possible to enable/disable
+# certain cops (checks) and to alter their behavior if they accept
+# any parameters. The file can be placed either in your home
+# directory or in some project directory.
+#
+# RuboCop will start looking for the configuration file in the directory
+# where the inspected file is and continue its way up to the root directory.
+#
+# See https://docs.rubocop.org/rubocop/configuration
+";
+    // File.expand_path: Dir.pwd, the real working directory.
+    let path = env::current_dir().map(|d| d.join(DOTFILE).display().to_string()).unwrap_or(DOTFILE.into());
+    if Path::new(DOTFILE).exists() {
+        warn_red(color, &format!("{DOTFILE} already exists at {path}"));
+        return ERROR;
+    }
+    if let Err(e) = fs::write(DOTFILE, TEMPLATE) {
+        warn_red(color, &runner::io_error(&e, Path::new(DOTFILE)));
+        return ERROR;
+    }
+    println!("Writing new {DOTFILE} to {path}");
+    0
+}
+
+/// `puts opts`: the banner and section headings are bright when Options#rainbow is on.
+fn print_help(color: bool) {
+    let p = formatter::Paint(color);
+    let mut out = String::new();
+    for (i, line) in HELP.lines().enumerate() {
+        match line.strip_suffix(':') {
+            _ if i == 0 => out.push_str(&p.wrap(line, "1")),
+            Some(heading) if !line.starts_with(' ') => {
+                out.push_str(&p.wrap(heading, "1"));
+                out.push(':');
+            }
+            _ => out.push_str(line),
+        }
+        out.push('\n');
+    }
+    print!("{out}");
+}
+
+/// `--list-enabled-cops-for PATH`: CLI::Command::ListEnabledCopsFor, every registered cop whose
+/// `for_cop(name)['Enabled']` is truthy in PATH's config, by department then name.
+fn list_enabled_cops_for(cfg: &Resolved) {
+    use rbcop::config::value::Value;
+    let mut names: Vec<&str> = rbcop::helpers::cop_registry::REGISTRY.to_vec();
+    names.sort_unstable();
+    let mut out = String::new();
+    for name in names {
+        if !matches!(cfg.enable_cop(name), Value::Null | Value::Bool(false)) {
+            out.push_str(name);
+            out.push('\n');
+        }
+    }
+    print!("{out}");
+}
+
+/// `--show-docs-url [COPS]`: CLI::Command::ShowDocsUrl.
+fn show_docs_url(cops: &[String], cfg: &Resolved) {
+    let mut out = String::new();
+    if cops.is_empty() {
+        out.push_str("https://docs.rubocop.org/rubocop\n");
+    }
+    for cop in cops {
+        if let Some(name) = rbcop::helpers::cop_registry::REGISTRY.iter().find(|c| **c == cop.as_str()) {
+            out.push_str(&formatter::docs_url(cfg, name));
+            out.push('\n');
+        }
+    }
+    out.push('\n');
+    print!("{out}");
 }
 
 fn ruby_version_string(v: f64) -> String {
@@ -815,10 +960,6 @@ fn same_file_twice(jobs: &[(PathBuf, std::sync::Arc<Resolved>)]) -> bool {
 
 /// Returns the exit status.
 fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
-    if cli.help {
-        println!("{USAGE}");
-        return Ok(0);
-    }
     let (cop_warnings, cop_error) = qualify_cop_options(&mut cli);
     // Lint/Syntax lives in the runner but is a registered cop with its own config in RuboCop.
     let names: Vec<&'static str> = cops::ALL.iter().map(|c| c.name).chain(["Lint/Syntax"]).collect();
@@ -857,6 +998,17 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     }
     if let Some(patterns) = &cli.show_cops {
         show_cops(patterns, &pwd_config, &pwd);
+        return Ok(0);
+    }
+    if let Some(path) = &cli.list_enabled_for {
+        // ConfigStore#for: a directory's own config, else the file's directory's.
+        let abs = expand_path(Path::new(path), &cwd);
+        let dir = if abs.is_dir() { abs } else { abs.parent().map_or(cwd.clone(), Path::to_path_buf) };
+        list_enabled_cops_for(&*store.for_dir(&dir)?);
+        return Ok(0);
+    }
+    if let Some(cops) = &cli.show_docs_url {
+        show_docs_url(cops, &pwd_config);
         return Ok(0);
     }
     if !cli.opts.disable_pending_cops && !cli.opts.enable_pending_cops {
@@ -902,7 +1054,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                     continue;
                 }
                 let one = if arg.as_os_str().is_empty() { vec![] } else { vec![arg] };
-                let mut found = targets::find(&mut store, &one, cli.force_exclusion)?;
+                let mut found = targets::find(&mut store, &one, cli.force_exclusion, cli.only_recognized)?;
                 if cli.fail_fast && abs.is_dir() {
                     // TargetFinder#order under --fail-fast: most recently modified (whole seconds) first.
                     // ponytail: ties keep path order; Ruby's unstable sort_by may order them differently.
@@ -1001,6 +1153,11 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     // corrected). The file is written in the reporting loop below, in file order, as RuboCop does.
     let lint = |path: &PathBuf, cfg: &Resolved| -> Linted {
         let display = rbcop::config::relative_path(path, &cwd);
+        // Runner#mobilize_cop_badge?: without --only, --only-guide-cops or `AllCops:
+        // StyleGuideCopsOnly` keeps only cops whose own config has a StyleGuide.
+        let guide_only = only.is_empty() && (cli.only_guide || cfg.all_cops().truthy("StyleGuideCopsOnly"));
+        let has_guide = |cop: &str| cfg.hash.map(cop).is_some_and(|c| c.truthy("StyleGuide"));
+        let selected = |cop: &str| selected(cop) && (!guide_only || has_guide(cop));
         if let Some(bytes) = stdin_text {
             // --stdin with -a/-A: the corrected source is printed after the report (@options[:stdin]).
             if let Some(mode) = cli.autocorrect {

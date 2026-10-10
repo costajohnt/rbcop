@@ -1,0 +1,1 @@
+-l --only Style/StringLiterals a.rb
