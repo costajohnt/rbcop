@@ -145,12 +145,13 @@ fn dependency(src: &Source, lhs: &Lhs, rhs: &Rhs) -> bool {
     }
 }
 
-/// AssignmentSorter#tsort: indices in assignment order, None on a cycle.
-fn tsort(src: &Source, lhs: &[Lhs], rhs: &[Rhs]) -> Option<Vec<usize>> {
+/// AssignmentSorter#tsort over the `keep` indices: indices in assignment order, None on a cycle.
+fn tsort(src: &Source, keep: &[usize], lhs: &[Lhs], rhs: &[Rhs]) -> Option<Vec<usize>> {
     let n = lhs.len();
-    let mut deps: Vec<Vec<usize>> =
-        (0..n).map(|i| (0..n).filter(|&j| j != i && dependency(src, &lhs[i], &rhs[j])).collect()).collect();
-    let mut remaining: Vec<usize> = (0..n).collect();
+    let mut deps: Vec<Vec<usize>> = (0..n)
+        .map(|i| keep.iter().copied().filter(|&j| j != i && dependency(src, &lhs[i], &rhs[j])).collect())
+        .collect();
+    let mut remaining: Vec<usize> = keep.to_vec();
     let mut result = vec![];
     while let Some(pos) = remaining.iter().position(|&i| deps[i].is_empty()) {
         let m = remaining.remove(pos);
@@ -224,6 +225,15 @@ impl Cop for ParallelAssignment {
         }
         let src = cx.src;
         let lhs: Vec<Lhs> = targets.iter().map(lhs_of).collect();
+        // AssignmentSorter keys a Hash by `[lhs, rhs]` pairs, which compare structurally: repeated
+        // pairs (`_, _ = X, X`) collapse into their first occurrence.
+        let keep: Vec<usize> = (0..targets.len())
+            .filter(|&i| {
+                !(0..i).any(|j| {
+                    same(src, span(&targets[i]), span(&targets[j])) && same(src, span(&elements[i]), span(&elements[j]))
+                })
+            })
+            .collect();
         // add_self_to_getters: `(send nil? $_)` (no receiver, no arguments).
         let with_self: Vec<Rhs> = elements
             .iter()
@@ -234,7 +244,7 @@ impl Cop for ParallelAssignment {
                 _ => Rhs::Real(e),
             })
             .collect();
-        if tsort(src, &lhs, &with_self).is_none() {
+        if tsort(src, &keep, &lhs, &with_self).is_none() {
             return;
         }
         let mut h = Heredoc(false);
@@ -249,7 +259,7 @@ impl Cop for ParallelAssignment {
 
         // Corrector.
         let plain: Vec<Rhs> = elements.iter().map(Rhs::Real).collect();
-        let order = tsort(src, &lhs, &plain).unwrap();
+        let order = tsort(src, &keep, &lhs, &plain).unwrap();
         let assignment: Vec<String> = order
             .iter()
             .map(|&i| format!("{} = {}", node_text(&targets[i]), rhs_source(&elements[i])))
