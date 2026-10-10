@@ -297,6 +297,14 @@ More traps found while porting:
 - `def (expr).foo`: use `strip_parens` to get parser's receiver source.
 - `ruby_prism::Integer` has no `TryFrom<i64>`: use `try_into::<i32>()` or `to_u32_digits()`.
 - Helpers: `annotation_comment` (AnnotationComment), `magic_comment::{encoding, without_encoding}`.
+- `node_equality::same` includes heredoc bodies (they lie outside the node range); don't add a
+  second body comparison in the cop.
+- Flags that RuboCop keeps per method call (`inserted_expression` in IdenticalConditionalBranches)
+  must not become one shared `Cell`.
+- Keep RuboCop's evaluation order before code that crashes in Ruby: if RuboCop raises first, there
+  is no offense.
+- Always pass your own `OUT=` (or rely on the per-worktree default) to check-autocorrect.sh; the
+  gate scripts rebuild the release binary first.
 - `helpers::regexp_captures` counts named/numbered groups like `RegexpNode#each_capture`.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.
