@@ -1189,7 +1189,11 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         } else {
             println!("{separator}");
         }
-        print!("{}", stdin_corrected.as_deref().unwrap_or(&String::from_utf8_lossy(original)));
+        // Uncorrected: the original bytes as given (a non-UTF-8 source is never corrected).
+        match stdin_corrected.as_deref() {
+            Some(corrected) => print!("{corrected}"),
+            None => std::io::Write::write_all(&mut std::io::stdout(), original).map_err(|e| e.to_string())?,
+        }
     }
     Ok(if all_passed && cop_errors.is_empty() { 0 } else { OFFENSES })
 }
