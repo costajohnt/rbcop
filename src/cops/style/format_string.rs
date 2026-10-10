@@ -35,7 +35,10 @@ fn format_single_parameter(arg: &Node) -> String {
             Node::IfNode { .. } | Node::UnlessNode { .. } | Node::AndNode { .. } | Node::OrNode { .. } | Node::RangeNode { .. }
         )
         || arg.as_call_node().is_some_and(|c| {
-            is_send(arg) && helpers::node_types::is_operator_method(method_name(&c)) && c.opening_loc().is_none()
+            // `parenthesized?` is `loc.end == ')'`: `x[:k]` (Prism opening `[`) is not.
+            is_send(arg)
+                && helpers::node_types::is_operator_method(method_name(&c))
+                && c.closing_loc().is_none_or(|l| l.as_slice() != b")")
         });
     if parens { format!("({source})") } else { source.to_string() }
 }

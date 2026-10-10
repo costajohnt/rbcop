@@ -1,0 +1,8 @@
+AllCops:
+  NewCops: disable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Style/FormatString:
+  EnforcedStyle: percent
+Layout/LineLength:
+  Max: 80
