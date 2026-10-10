@@ -4,7 +4,7 @@ use crate::config::value::{parse_yaml, Map, Value};
 use crate::prelude::*;
 
 static DEFAULTS: LazyLock<Map> = LazyLock::new(|| match parse_yaml(crate::config::DEFAULT_YML) {
-    Ok(Value::Map(m)) => m,
+    Ok(Value::Map(m)) => std::sync::Arc::unwrap_or_clone(m),
     _ => Map::default(),
 });
 

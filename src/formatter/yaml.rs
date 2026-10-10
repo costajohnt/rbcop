@@ -261,7 +261,7 @@ mod tests {
             ("h", s("trail ")),
             ("i", s("")),
             ("j", s("~")),
-            ("l", Value::Seq(vec![])),
+            ("l", Value::Seq(vec![].into())),
             ("n", s(&format!("{} {}", "x".repeat(30), "y".repeat(60)))),
             ("r", s("- a")),
             ("s", s("a,b")),
