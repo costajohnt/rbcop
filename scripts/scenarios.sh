@@ -2,8 +2,9 @@
 # Record RuboCop's output for every config scenario under tests/scenarios/<name>/ into expected.txt.
 # Each scenario is a self-contained project (its own Gemfile bounds the config search).
 # The recorded output covers ALL RuboCop cops; tests/scenarios.rs filters it to the cops rbcop implements.
-# usage: scripts/scenarios.sh [name...]   (needs `rubocop` on PATH; with rbenv set RBENV_VERSION)
+# usage: scripts/scenarios.sh [name...]   (RuboCop from $RUBOCOP, see scripts/rubocop.sh)
 set -eu
+. "$(dirname "$0")/rubocop.sh"
 root=$(cd "$(dirname "$0")/.." && pwd)/tests/scenarios
 names=${*:-$(ls "$root")}
 for name in $names; do

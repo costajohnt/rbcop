@@ -4,8 +4,9 @@
 # A case line is `name|directory (from the repo root)|arguments[|stdin file (from the repo root)]`.
 # RuboCop runs with --cache false --force-default-config --only <tests/formatters/cops.txt>, so the
 # goldens do not move when rbcop gains cops. Machine-specific text is normalised (see normalise()).
-# usage: scripts/formatters.sh [name...]   (needs `rubocop` on PATH; with rbenv set RBENV_VERSION)
+# usage: scripts/formatters.sh [name...]   (RuboCop from $RUBOCOP, see scripts/rubocop.sh)
 set -eu
+. "$(dirname "$0")/rubocop.sh"
 root=$(cd "$(dirname "$0")/.." && pwd -P)
 dir=$root/tests/formatters
 cops=$(paste -sd, "$dir/cops.txt")
