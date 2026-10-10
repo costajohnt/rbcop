@@ -18,10 +18,8 @@ fn variable_name(n: &Node) -> Option<Vec<u8>> {
         v.name()
     } else if let Some(v) = n.as_class_variable_read_node() {
         v.name()
-    } else if let Some(v) = n.as_global_variable_read_node() {
-        v.name()
     } else {
-        return None;
+        n.as_global_variable_read_node()?.name()
     };
     Some(name.as_slice().to_vec())
 }
@@ -34,10 +32,8 @@ fn target_name(n: &Node) -> Option<Vec<u8>> {
         v.name()
     } else if let Some(v) = n.as_class_variable_target_node() {
         v.name()
-    } else if let Some(v) = n.as_global_variable_target_node() {
-        v.name()
     } else {
-        return None;
+        n.as_global_variable_target_node()?.name()
     };
     Some(name.as_slice().to_vec())
 }
@@ -74,7 +70,7 @@ impl Tracker {
             MULTI_WRITE_NODE => {
                 let m = n.as_multi_write_node().unwrap();
                 let mut lhs: Vec<Node> = m.lefts().iter().collect();
-                lhs.extend(m.rest().filter(|r| kind::of(r) != IMPLICIT_REST_NODE));
+                lhs.extend(parser_rest(m.rest()));
                 lhs.extend(m.rights().iter());
                 let value = m.value();
                 let elements: Option<Vec<Node>> = value.as_array_node().map(|a| a.elements().iter().collect());
