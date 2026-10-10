@@ -112,6 +112,24 @@ pub fn without_encoding(comment: &str) -> String {
     if SIMPLE_ENCODING_START.is_match(comment) { String::new() } else { comment.to_string() }
 }
 
+static EMACS_SHAREABLE: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(&format!(r"\Ashareable[_-]constant[_-]value{S}*:{S}*{TOKEN}\z")).unwrap());
+static SIMPLE_SHAREABLE: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(&format!(r"(?i)\A{S}*#{S}*shareable[_-]constant[_-]value:{S}*{TOKEN}{S}*\z")).unwrap()
+});
+
+/// `MagicComment.parse(comment).shareable_constant_value` (vim comments never set it).
+pub fn shareable_constant_value(comment: &str) -> Option<String> {
+    if let Some(c) = EMACS.captures(comment) {
+        let tokens = editor_tokens(c.get(1).unwrap().as_str(), ";");
+        return tokens.iter().find_map(|t| EMACS_SHAREABLE.captures(t).map(|m| m[1].to_lowercase()));
+    }
+    if VIM.is_match(comment) {
+        return None;
+    }
+    SIMPLE_SHAREABLE.captures(comment).map(|m| m[1].to_string())
+}
+
 #[cfg(test)]
 mod tests {
     use super::any;

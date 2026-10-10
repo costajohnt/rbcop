@@ -33,3 +33,32 @@ pub fn enabled(cx: &Cx) -> bool {
 pub fn disabled(cx: &Cx) -> bool {
     leading(cx).iter().any(|l| frozen_value(l).as_deref() == Some("false"))
 }
+
+/// FrozenStringLiteral#uninterpolated_string? (from Ruby 3.0; any str/dstr before): a str, or a
+/// dstr without begin/ivar/cvar/gvar descendants.
+fn frozen_string_type(cx: &Cx, node: &ruby_prism::Node) -> bool {
+    use ruby_prism::Node;
+    fn uninterpolated(parts: ruby_prism::NodeList) -> bool {
+        parts.iter().all(|p| match &p {
+            Node::EmbeddedStatementsNode { .. } => false,
+            Node::EmbeddedVariableNode { .. } => !matches!(
+                p.as_embedded_variable_node().unwrap().variable(),
+                Node::InstanceVariableReadNode { .. } | Node::ClassVariableReadNode { .. } | Node::GlobalVariableReadNode { .. }
+            ),
+            Node::InterpolatedStringNode { .. } => uninterpolated(p.as_interpolated_string_node().unwrap().parts()),
+            _ => true,
+        })
+    }
+    match node {
+        Node::StringNode { .. } | Node::SourceFileNode { .. } => true,
+        Node::InterpolatedStringNode { .. } => {
+            cx.config.target_ruby < 3.0 || uninterpolated(node.as_interpolated_string_node().unwrap().parts())
+        }
+        _ => false,
+    }
+}
+
+/// FrozenStringLiteral#frozen_string_literal?
+pub fn frozen_string_literal(cx: &Cx, node: &ruby_prism::Node) -> bool {
+    frozen_string_type(cx, node) && enabled(cx)
+}

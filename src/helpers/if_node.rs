@@ -117,3 +117,57 @@ pub fn parser_begin_end(node: &Node) -> Option<usize> {
     let blanks = rest.iter().take_while(|&&b| matches!(b, b' ' | b'\t' | b'\n')).count();
     (rest.get(blanks) == Some(&b';')).then_some(end + blanks + 1)
 }
+
+/// rubocop-ast IfNode view of a Prism `IfNode` / `UnlessNode`.
+pub struct Cond<'pr> {
+    /// `if`, `unless`, `elsif`, or `""` for a ternary.
+    pub keyword: &'pr str,
+    /// `loc.keyword` (None for a ternary).
+    pub keyword_loc: Option<(usize, usize)>,
+    pub condition: Node<'pr>,
+    /// rubocop-ast `body` / `if_branch`: the single statement, or the StatementsNode (parser
+    /// `begin`) when there are several; None when empty.
+    pub body: Option<Node<'pr>>,
+    /// `loc.end` is present.
+    pub has_end: bool,
+    /// `loc.else` is present (an `else` or `elsif` follows).
+    pub has_else: bool,
+}
+
+impl Cond<'_> {
+    /// `modifier_form?`
+    pub fn modifier(&self) -> bool {
+        matches!(self.keyword, "if" | "unless") && !self.has_end
+    }
+    pub fn ternary(&self) -> bool {
+        self.keyword.is_empty()
+    }
+}
+
+/// `parts` plus the keyword facts of an if/unless (any form).
+pub fn cond<'pr>(node: &Node<'pr>) -> Option<Cond<'pr>> {
+    let (keyword, keyword_loc, end) = match node {
+        Node::IfNode { .. } => {
+            let n = node.as_if_node().unwrap();
+            let kw = n.if_keyword_loc();
+            let keyword = kw.as_ref().map_or("", |k| std::str::from_utf8(k.as_slice()).unwrap_or(""));
+            (keyword, kw.map(|k| (k.start_offset(), k.end_offset())), n.end_keyword_loc().is_some())
+        }
+        Node::UnlessNode { .. } => {
+            let n = node.as_unless_node().unwrap();
+            let kw = n.keyword_loc();
+            ("unless", Some((kw.start_offset(), kw.end_offset())), n.end_keyword_loc().is_some())
+        }
+        _ => return None,
+    };
+    let (condition, body, els) = parts(node);
+    Some(Cond {
+        keyword,
+        keyword_loc,
+        condition,
+        body: body.map(|b| b.single().unwrap_or_else(|| b.stmts.as_node())),
+        // An `elsif` has no `loc.end` in parser although Prism gives it the outer `end`.
+        has_end: end && keyword != "elsif",
+        has_else: els.is_some(),
+    })
+}
