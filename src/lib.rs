@@ -1,6 +1,7 @@
 //! rbcop: a RuboCop-compatible Ruby linter on Prism.
 
 pub mod ast;
+pub mod autocorrect;
 pub mod config;
 pub mod cop;
 pub mod cops;

@@ -70,10 +70,10 @@ impl Settings {
 #[derive(Default)]
 struct Breakable {
     init: bool,
-    /// 0-based line index to the byte offset of the break point.
-    by_line: std::collections::HashMap<usize, usize>,
-    /// 0-based line index of an endless method definition to whether its offense is correctable.
-    endless: std::collections::HashMap<usize, bool>,
+    /// 0-based line index to the break range (the line break is inserted before it).
+    by_line: std::collections::HashMap<usize, (usize, usize)>,
+    /// 0-based line index of an endless method definition to its multiline rewrite (range, replacement), if correctable.
+    endless: std::collections::HashMap<usize, Option<(usize, usize, String)>>,
 }
 
 fn max_of(cx: &Cx) -> usize {
@@ -92,7 +92,7 @@ fn init(cx: &mut Cx) {
             // breakable_range_after_semicolon: the next character, if it is on the same line and
             // neither a line break nor another semicolon.
             match src.text[t.end..].chars().next() {
-                Some(c) if c != '\n' && c != '\r' && c != ';' => found.push((src.line_of(t.end) - 1, t.end)),
+                Some(c) if c != '\n' && c != '\r' && c != ';' => found.push((src.line_of(t.end) - 1, (t.end, t.end + c.len_utf8()))),
                 _ => {}
             }
         }
@@ -167,7 +167,7 @@ fn breakable_element(
     call: Option<(bool, bool)>,
     def_last_line: Option<usize>,
     is_array: bool,
-) -> Option<usize> {
+) -> Option<(usize, usize)> {
     let max = max_of(cx);
     let src = cx.src;
     let first_line = src.line_of(range.0);
@@ -230,32 +230,69 @@ fn breakable_element(
             }
         }
     let chosen = if i == 0 { elements.first()? } else { elements[i - 1] };
-    Some(chosen.start)
+    Some((chosen.start, chosen.end))
 }
 
-/// LineLength endless-method offenses: always correctable (rewritten to multiline), except under
-/// Style/EndlessMethod `require_always`, where only a single-line braces block body is.
-fn endless_correctable(cx: &Cx, def: &ruby_prism::DefNode) -> bool {
+/// LineLength endless-method corrections, as (range, replacement): EndlessMethodRewriter#correct_to_multiline,
+/// or under Style/EndlessMethod `require_always` correct_endless_method_block_to_multiline, which
+/// only applies to a single-line braces block body.
+fn endless_rewrite(cx: &Cx, def: &ruby_prism::DefNode) -> Option<(usize, usize, String)> {
     let style = cx.config.for_cop("Style/EndlessMethod");
     let require_always =
         style.get("Enabled") == Some(&Value::Bool(true)) && style.str("EnforcedStyle") == Some("require_always");
+    let src = cx.src;
+    let loc = def.location();
+    let column = src.column(loc.start_offset());
+    let indent = |offset: usize| " ".repeat(column + offset);
+    let body = def.body()?;
     if !require_always {
-        return true;
+        let receiver = match (def.receiver(), def.operator_loc()) {
+            (Some(r), Some(op)) => format!("{}{}", node_text(&r), text(&op)),
+            _ => String::new(),
+        };
+        let args = match (def.parameters(), def.lparen_loc(), def.rparen_loc()) {
+            (Some(_), Some(l), Some(r)) => src.slice(l.start_offset(), r.end_offset()),
+            _ => "",
+        };
+        // configured_indentation_width
+        let width = cx.cfg.int("IndentationWidth").or_else(|| cx.config.for_cop("Layout/IndentationWidth").int("Width"));
+        let width = width.unwrap_or(2).max(0) as usize;
+        let name = String::from_utf8_lossy(def.name().as_slice());
+        let replacement =
+            format!("def {receiver}{name}{args}\n{}{}\n{}end", indent(width), node_text(&body), indent(0));
+        return Some((loc.start_offset(), loc.end_offset(), replacement));
     }
     // correctable_endless_method_block?: body is a single-line `{ }` block with a body.
-    let Some(body) = def.body() else { return false };
     let body = body.as_statements_node().and_then(|s| s.body().iter().next()).unwrap_or(body);
-    let Some(call) = body.as_call_node() else { return false };
-    let Some(block) = call.block().and_then(|b| b.as_block_node()) else { return false };
-    let loc = call.location();
-    block.opening_loc().as_slice() == b"{"
-        && cx.src.line_of(loc.start_offset()) == cx.src.line_of(loc.end_offset().saturating_sub(1))
+    let call = body.as_call_node()?;
+    let block = call.block().and_then(|b| b.as_block_node())?;
+    let cloc = call.location();
+    let ok = block.opening_loc().as_slice() == b"{"
+        && src.line_of(cloc.start_offset()) == src.line_of(cloc.end_offset().saturating_sub(1))
         && block.body().is_some()
-        && !call.receiver().is_some_and(|r| contains_heredoc(&r))
+        && !call.receiver().is_some_and(|r| contains_heredoc(&r));
+    if !ok {
+        return None;
+    }
+    let (send_start, send_end) = send_range(&call);
+    let args = block
+        .parameters()
+        .and_then(|p| p.as_block_parameters_node())
+        .filter(|p| p.parameters().is_some() || p.locals().iter().next().is_some())
+        .map(|p| format!(" {}", node_text(&p.as_node())))
+        .unwrap_or_default();
+    let replacement = format!(
+        "{} do{args}\n{}{}\n{}end",
+        src.slice(send_start, send_end),
+        indent(2),
+        node_text(&block.body()?),
+        indent(0)
+    );
+    Some((cloc.start_offset(), cloc.end_offset(), replacement))
 }
 
-fn record_node_break(cx: &mut Cx, pos: usize) {
-    let line = cx.src.line_of(pos) - 1;
+fn record_node_break(cx: &mut Cx, pos: (usize, usize)) {
+    let line = cx.src.line_of(pos.0) - 1;
     cx.state::<Breakable>().by_line.entry(line).or_insert(pos);
 }
 
@@ -289,7 +326,7 @@ fn check_block(cx: &mut Cx, start: usize, end: usize, block: &Node, receiver: Op
     };
     let pos = range_begin + 1;
     let line = src.line_of(start) - 1;
-    cx.state::<Breakable>().by_line.insert(line, pos);
+    cx.state::<Breakable>().by_line.insert(line, (pos, pos + src.text[pos..].chars().next().map_or(0, char::len_utf8)));
 }
 
 fn contains_heredoc(n: &Node) -> bool {
@@ -379,8 +416,8 @@ impl Cop for LineLength {
                 if def.equal_loc().is_some() && def.end_keyword_loc().is_none() {
                     // Endless method: tracked per line, last one wins.
                     let line = cx.src.line_of(node.location().start_offset()) - 1;
-                    let correctable = endless_correctable(cx, &def);
-                    cx.state::<Breakable>().endless.insert(line, correctable);
+                    let rewrite = endless_rewrite(cx, &def);
+                    cx.state::<Breakable>().endless.insert(line, rewrite);
                     return;
                 }
                 let params = def_params(&def);
@@ -446,9 +483,19 @@ impl Cop for LineLength {
             }
             let start = src.line_start(lineno);
             let at = |col: usize| start + line.char_indices().nth(col).map_or(line.len(), |(b, _)| b);
-            if let Some(&correctable) = endless.get(&i) {
+            // register_offense: insert a line break before the breakable range, if any.
+            let break_line = |c: &mut Corrector| {
+                if let Some(&(b, e)) = breaks.get(&i) {
+                    c.insert_before(b, e, "\n");
+                }
+            };
+            if let Some(rewrite) = endless.get(&i) {
                 let from = max.saturating_sub(s.indentation_difference(line));
-                cx.add_with(at(from), at(line.chars().count()), format!("Line is too long. [{len}/{max}]"), correctable);
+                cx.add_fix(at(from), at(line.chars().count()), format!("Line is too long. [{len}/{max}]"), |c| {
+                    if let Some((b, e, r)) = rewrite {
+                        c.replace(*b, *e, r);
+                    }
+                });
                 continue;
             }
             let comment = src.comment_on_line(lineno).map(|c| src.slice(c.start, c.end));
@@ -460,7 +507,7 @@ impl Cop for LineLength {
             if allow_directives && comment.is_some_and(|c| crate::directives::parse(c).is_some()) {
                 let before = DIRECTIVE.split(line).next().unwrap_or("").trim_end().chars().count();
                 if before > max {
-                    cx.add_with(at(max), at(before), format!("Line is too long. [{before}/{max}]"), breaks.contains_key(&i));
+                    cx.add_fix(at(max), at(before), format!("Line is too long. [{before}/{max}]"), break_line);
                 }
                 continue;
             }
@@ -484,7 +531,7 @@ impl Cop for LineLength {
                 _ => max.saturating_sub(s.indentation_difference(line)),
             };
             // ponytail: SplitStrings break points (strings split with a backslash) are not modelled yet.
-            cx.add_with(at(from), at(line.chars().count()), format!("Line is too long. [{len}/{max}]"), breaks.contains_key(&i));
+            cx.add_fix(at(from), at(line.chars().count()), format!("Line is too long. [{len}/{max}]"), break_line);
         }
     }
 }

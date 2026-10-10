@@ -47,6 +47,7 @@ impl Cop for Example {
   The range must be exactly the range RuboCop passes to `add_offense` (node, `loc.selector`, etc.);
   only the start shows in emacs output, but other formatters print the range, and RuboCop drops a
   second offense on an identical range (the runner does the same).
+- A cop with a corrector block reports with `cx.add_fix` instead (see Autocorrect below).
 - Config: `cx.cfg.str("EnforcedStyle")`, `cx.cfg.int("Max")`, `cx.cfg.bool(..)`, `cx.cfg.strings(..)`,
   `cx.cfg.regexes(..)`, `cx.cfg.get(..)` for raw values. Another cop's config:
   `cx.config.for_cop("Layout/IndentationWidth")`. Target Ruby: `cx.config.target_ruby`.
@@ -56,6 +57,33 @@ impl Cop for Example {
   `helpers::<file>::fn`). Check what exists there first. Add new files freely; in an existing helper
   file only append functions. Do not edit runner, config, cop.rs, other cops, or build.rs; if you need
   infrastructure, put it in your cop or a helper and say so in your report.
+
+## Autocorrect
+
+Port the cop's `add_offense(range) { |corrector| ... }` block as `cx.add_fix`:
+
+```rust
+// add_offense(node.loc.selector) { |corrector| corrector.replace(range, '.nil?') }
+cx.add_fix(sel_start, sel_end, msg, |c| c.replace(recv_end, end, ".nil?"));
+```
+
+- `c: &mut Corrector` mirrors RuboCop's Corrector (`src/autocorrect/corrector.rs`): `replace`, `remove`,
+  `wrap`, `insert_before`, `insert_after` take a byte range `(start, end)` like `cx.add`;
+  `remove_preceding` / `remove_leading` / `remove_trailing` take a byte size; `swap((a, b), (c, d))`.
+  Pass the same range RuboCop passes, not just the insertion point: `insert_before(node)` uses the whole
+  node range to decide how edits nest and clobber (`src/autocorrect/tree_rewriter.rs` is parser's
+  TreeRewriter). RuboCop ranges are character offsets; convert column arithmetic to bytes.
+- Compute what the block needs before calling `add_fix` (the closure cannot use `cx`); `cx.src` can
+  be copied into a local first (`let src = cx.src;`).
+- `[Correctable]` follows from the edits: an offense is correctable only if the block made one (and
+  the cop's `AutoCorrect` allows it), so keep RuboCop's conditions inside the block. A cop using
+  `add_fix` still returns `true` from `correctable()` (RuboCop's `extend AutoCorrector`).
+- The block does not run for an offense on a range already reported or disabled by a comment.
+- Range helpers: `helpers::range_help::range_with_surrounding_space`.
+- Check with `scripts/check-autocorrect.sh Cop/Name[,...] [corpus...]` (same env as check-cops.sh,
+  plus `MODE=-a` for safe mode, `LIMIT=n`, `OUT=dir`): it runs `rubocop -A` and `rbcop -A` on
+  copies of the corpus files that have offenses and diffs the rewritten files and the reports.
+  Include the cops that interact with yours (e.g. Layout cops whose edits touch the same lines).
 
 ## Parser gem AST vs Prism AST
 

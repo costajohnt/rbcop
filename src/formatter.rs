@@ -90,29 +90,55 @@ impl Off {
     }
 }
 
+/// 1-based (line, character column) of a byte offset, as RuboCop prints positions.
+pub fn line_col(text: &str, off: usize) -> (usize, usize) {
+    let off = off.min(text.len());
+    let line_start = text[..off].rfind('\n').map_or(0, |i| i + 1);
+    (text[..off].matches('\n').count() + 1, text[line_start..off].chars().count() + 1)
+}
+
 /// Turn runner offenses into formatter offenses; `message` annotates each one.
 pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> String) -> Vec<Off> {
-    let mut starts = vec![0];
-    starts.extend(text.match_indices('\n').map(|(i, _)| i + 1));
-    let pos = |off: usize| {
-        // Parser keeps counting columns past the end of the source (Layout/EndOfLine ranges reach
-        // beyond the CRLF-normalised text), so an overflow carries into the column.
-        let overflow = off.saturating_sub(text.len());
-        let mut off = off.min(text.len());
-        while !text.is_char_boundary(off) {
-            off -= 1;
-        }
-        let line = starts.partition_point(|&s| s <= off);
-        let ls = starts[line - 1];
-        (line, text[ls..off].chars().count() + overflow, ls, off)
+    let line_starts = |t: &str| {
+        let mut starts = vec![0];
+        starts.extend(t.match_indices('\n').map(|(i, _)| i + 1));
+        starts
     };
+    let starts = line_starts(text);
     let mut out: Vec<Off> = list
         .iter()
         .map(|o| {
+            // Under autocorrect an offense may refer to the source of an earlier iteration.
+            let own;
+            let (text, starts): (&str, &[usize]) = match &o.source {
+                Some(s) => {
+                    own = line_starts(s);
+                    (s, &own)
+                }
+                None => (text, &starts),
+            };
+            let pos = |off: usize| {
+                // Parser keeps counting columns past the end of the source (Layout/EndOfLine ranges
+                // reach beyond the CRLF-normalised text), so an overflow carries into the column.
+                let overflow = off.saturating_sub(text.len());
+                let mut off = off.min(text.len());
+                while !text.is_char_boundary(off) {
+                    off -= 1;
+                }
+                let line = starts.partition_point(|&s| s <= off);
+                let ls = starts[line - 1];
+                (line, text[ls..off].chars().count() + overflow, ls, off)
+            };
             let (line, column, ls, start) = pos(o.start);
             let (last_line, last_column, _, end) = pos(o.end.max(o.start));
             let le = text[ls..].find('\n').map_or(text.len(), |i| ls + i);
-            let status = if o.correctable { Status::Uncorrected } else { Status::Unsupported };
+            let status = if o.corrected {
+                Status::Corrected
+            } else if o.correctable {
+                Status::Uncorrected
+            } else {
+                Status::Unsupported
+            };
             if o.global {
                 // Offense::NO_LOCATION: line 1, column 0, empty source line.
                 let (line, column, length, source_line) = (1, 0, 0, String::new());
@@ -592,6 +618,8 @@ mod tests {
             severity: Severity::Convention,
             correctable: false,
             global: true,
+            corrected: false,
+            source: None,
         };
         let v = &offenses("source 'x'\n", &[o], |o| o.message.clone())[0];
         assert_eq!((v.line, v.real_column(), v.last_line, v.real_last_column(), v.length), (1, 1, 1, 1, 0));
