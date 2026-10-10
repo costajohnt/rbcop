@@ -845,9 +845,23 @@ fn run(cli: Cli, global: bool) -> Result<u8, String> {
         }
     }
     set.finished(&cx, &inspected);
+    // ExecuteRunner#display_error_summary; any cop error makes the run fail (runner_status).
+    let cop_errors = runner::take_errors();
+    if !cop_errors.is_empty() {
+        let n = cop_errors.len();
+        eprintln!("{}", red(global, &format!("\n{n} error{} occurred:", if n == 1 { "" } else { "s" })));
+        for e in &cop_errors {
+            eprintln!("{}", red(global, e));
+        }
+        eprintln!(
+            "Errors are usually caused by rbcop bugs.\nPlease report a bug with the file and configuration that \
+             triggered it.\nMention the following information in the issue report:\nrbcop {}",
+            env!("CARGO_PKG_VERSION")
+        );
+    }
     if let Some(e) = error {
         eprintln!("{}", red(global, e.trim_end()));
         return Ok(ERROR);
     }
-    Ok(if all_passed { 0 } else { OFFENSES })
+    Ok(if all_passed && cop_errors.is_empty() { 0 } else { OFFENSES })
 }

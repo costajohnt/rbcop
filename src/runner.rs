@@ -237,6 +237,26 @@ thread_local! {
     static IN_COP: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
 }
 
+/// Runner#errors: every cop error of the run, for the end-of-run summary and the exit status.
+static ERRORS: std::sync::Mutex<Vec<String>> = std::sync::Mutex::new(Vec::new());
+
+/// Print a cop error now (Commissioner) and keep it for the summary.
+pub fn cop_error(cop: &str, src: &Source, at: usize) {
+    // Range#line and the 0-based Range#column.
+    let (line, col) = crate::formatter::line_col(src.text, at);
+    let msg = format!("An error occurred while {cop} cop was inspecting {}:{line}:{}.", src.path, col - 1);
+    eprintln!("{msg}");
+    ERRORS.lock().unwrap_or_else(|e| e.into_inner()).push(msg);
+}
+
+/// The run's cop errors, in file order.
+pub fn take_errors() -> Vec<String> {
+    let mut errors = std::mem::take(&mut *ERRORS.lock().unwrap_or_else(|e| e.into_inner()));
+    errors.sort();
+    errors.dedup();
+    errors
+}
+
 /// Whether this thread is running a cop callback (its panics are reported by `guarded`).
 pub fn in_cop() -> bool {
     IN_COP.with(|c| c.get())
@@ -249,9 +269,7 @@ fn guarded(cop: &str, src: &Source, at: usize, f: impl FnOnce()) {
     let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(f));
     IN_COP.with(|c| c.set(false));
     if result.is_err() {
-        // Range#line and the 0-based Range#column.
-        let (line, col) = crate::formatter::line_col(src.text, at);
-        eprintln!("An error occurred while {cop} cop was inspecting {}:{line}:{}.", src.path, col - 1);
+        cop_error(cop, src, at);
     }
 }
 
