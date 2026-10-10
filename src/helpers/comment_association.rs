@@ -35,9 +35,13 @@ fn skipped_directives(src: &Source) -> usize {
 /// last line decorate that sibling).
 pub fn leading<'a>(src: &'a Source, start: usize, after: usize, after_line: Option<usize>) -> Vec<&'a Comment> {
     let skip = skipped_directives(src);
+    // Comments are sorted and disjoint: binary-search the window instead of scanning them all.
+    let lo = src.comments.partition_point(|c| c.start < after).max(skip);
+    let hi = src.comments.partition_point(|c| c.end <= start);
     src.comments
+        .get(lo..hi)
+        .unwrap_or_default()
         .iter()
-        .skip(skip)
-        .filter(|c| c.end <= start && c.start >= after && after_line.is_none_or(|l| src.line_of(c.start) > l))
+        .filter(|c| after_line.is_none_or(|l| src.line_of(c.start) > l))
         .collect()
 }
