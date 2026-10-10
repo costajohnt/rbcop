@@ -1,0 +1,12 @@
+AllCops:
+  NewCops: disable
+Style/StringLiterals:
+  Enabled: off
+Style/FrozenStringLiteralComment:
+  Enabled: no
+Layout/LineLength:
+  Max: 0100
+Metrics/MethodLength:
+  Max: 1_0
+Naming/VariableNumber:
+  Enabled: On
