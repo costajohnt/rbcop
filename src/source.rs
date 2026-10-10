@@ -173,11 +173,23 @@ static ENCODING_RE: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new
 /// after a shebang) names the source encoding. For binary (ASCII-8BIT) sources Ruby's String#length
 /// counts bytes, so every column RuboCop reports is a byte offset.
 pub fn binary_encoding(text: &str) -> bool {
+    magic_encoding(text)
+        .is_some_and(|name| name.eq_ignore_ascii_case("binary") || name.eq_ignore_ascii_case("ascii-8bit"))
+}
+
+/// The encoding named by the magic comment, if any.
+fn magic_encoding(text: &str) -> Option<&str> {
     let mut lines = text.lines();
     let first = lines.next().unwrap_or("");
     let line = if first.starts_with("#!") { lines.next().unwrap_or("") } else { first };
-    ENCODING_RE.captures(line).is_some_and(|c| {
-        let name = c[1].trim_end_matches("-unix").trim_end_matches("-dos").trim_end_matches("-mac");
-        name.eq_ignore_ascii_case("binary") || name.eq_ignore_ascii_case("ascii-8bit")
-    })
+    let c = ENCODING_RE.captures(line)?;
+    Some(c.get(1)?.as_str().trim_end_matches("-unix").trim_end_matches("-dos").trim_end_matches("-mac"))
+}
+
+/// Parser::Source::Buffer#source=: a source without a BOM or a magic comment naming another
+/// encoding is UTF-8 (ProcessedSource forces it), and one that is not valid UTF-8 raises
+/// EncodingError, which RuboCop reports as Lint/Syntax.
+pub fn must_be_utf8(text: &str) -> bool {
+    text.starts_with('\u{feff}')
+        || magic_encoding(text).is_none_or(|n| n.eq_ignore_ascii_case("utf-8") || n.eq_ignore_ascii_case("utf8"))
 }

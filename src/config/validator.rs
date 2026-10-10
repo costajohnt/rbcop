@@ -144,7 +144,6 @@ pub struct Validator<'a> {
     /// ConfigLoader.default_configuration as it stands (plugins integrated so far).
     pub default: &'a Map,
     pub pwd: &'a Path,
-    pub project_root: Option<&'a Path>,
     /// Plugin and required gem names (ConfigLoader.loaded_plugins / loaded_features).
     pub loaded_plugins: &'a [String],
     /// `--ignore-unrecognized-cops`
@@ -415,7 +414,7 @@ impl Validator<'_> {
                             };
                             let version = *target.get_or_insert_with(|| {
                                 let all = hash.map("AllCops").cloned().unwrap_or_default();
-                                target_ruby::detect(&all, &base_dir_for(Some(path)), self.project_root)
+                                target_ruby::detect(&all, &base_dir_for(Some(path)))
                             });
                             if version < min {
                                 continue;
@@ -554,10 +553,9 @@ impl Validator<'_> {
 }
 
 /// ConfigValidator#check_target_ruby (validate_after_resolution) for a loaded config file.
-pub fn check_target_ruby(hash: &Map, path: &Path, pwd: &Path, project_root: Option<&Path>) -> Result<(), String> {
+pub fn check_target_ruby(hash: &Map, path: &Path, pwd: &Path) -> Result<(), String> {
     let all = hash.map("AllCops").cloned().unwrap_or_default();
-    let (version, source) =
-        target_ruby::detect_source(&all, &base_dir_for(Some(path)), project_root, &smart_path(path, pwd));
+    let (version, source) = target_ruby::detect_source(&all, &base_dir_for(Some(path)), &smart_path(path, pwd));
     if target_ruby::KNOWN_RUBIES.contains(&version) {
         return Ok(());
     }

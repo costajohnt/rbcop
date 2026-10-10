@@ -579,12 +579,14 @@ fn build(name: &str, color: bool, cx: &Ctx, tty: bool) -> Box<dyn Formatter> {
 enum Sink {
     Stdout,
     Stderr,
-    File(File),
+    File(File, PathBuf),
 }
 
 /// FormatterSet: every `-f`/`-o` pair, in command-line order.
 pub struct Set {
     items: Vec<(Box<dyn Formatter>, Sink)>,
+    /// The first failed write, worded as Ruby's.
+    error: Option<String>,
 }
 
 impl Set {
@@ -599,7 +601,7 @@ impl Set {
                     }
                     let f = File::create(p).map_err(|e| format!("{}: {e}", p.display()))?;
                     let tty = f.is_terminal();
-                    (Sink::File(f), tty)
+                    (Sink::File(f, p.clone()), tty)
                 }
                 None if stderr => (Sink::Stderr, std::io::stderr().is_terminal()),
                 None => (Sink::Stdout, cx.stdout_tty),
@@ -611,7 +613,7 @@ impl Set {
             };
             items.push((build(name, color, cx, tty), sink));
         }
-        Ok(Set { items })
+        Ok(Set { items, error: None })
     }
 
     fn each(&mut self, mut f: impl FnMut(&mut dyn Formatter, &mut String)) {
@@ -619,12 +621,21 @@ impl Set {
         for (fmt, sink) in &mut self.items {
             f(fmt.as_mut(), &mut buf);
             if !buf.is_empty() {
-                // ponytail: write errors (closed pipe, full disk) are ignored, as `puts` to a closed pipe would end RuboCop anyway.
-                let _ = match sink {
-                    Sink::Stdout => std::io::stdout().write_all(buf.as_bytes()),
-                    Sink::Stderr => std::io::stderr().write_all(buf.as_bytes()),
-                    Sink::File(file) => file.write_all(buf.as_bytes()),
+                let (written, name) = match sink {
+                    Sink::Stdout => (std::io::stdout().write_all(buf.as_bytes()), "<STDOUT>".to_string()),
+                    Sink::Stderr => (std::io::stderr().write_all(buf.as_bytes()), "<STDERR>".to_string()),
+                    Sink::File(file, path) => (file.write_all(buf.as_bytes()), path.display().to_string()),
                 };
+                // A closed pipe is ignored (output is going nowhere anyway); any other failure (a full
+                // disk, a file size limit) is an error that fails the run, as RuboCop's raise does.
+                if let Err(e) = written
+                    && e.kind() != std::io::ErrorKind::BrokenPipe
+                    && self.error.is_none()
+                {
+                    let msg = e.to_string();
+                    let msg = msg.split(" (os error").next().unwrap_or(&msg).to_string();
+                    self.error = Some(format!("{msg} @ rb_sys_fail_on_write - {name}"));
+                }
                 buf.clear();
             }
         }
@@ -645,6 +656,10 @@ impl Set {
     }
     pub fn file_finished(&mut self, cx: &Ctx, file: &FileOut) {
         self.each(|f, out| f.file_finished(out, cx, file));
+    }
+    /// The first output write that failed since the last call.
+    pub fn take_error(&mut self) -> Option<String> {
+        self.error.take()
     }
     pub fn finished(&mut self, cx: &Ctx, inspected: &[PathBuf]) {
         self.each(|f, out| f.finished(out, cx, inspected));

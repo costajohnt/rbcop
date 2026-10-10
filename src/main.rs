@@ -178,34 +178,51 @@ struct Cli {
     exiting: Vec<&'static str>,
 }
 
-/// Shellwords.split
-fn shellsplit(s: &str) -> Vec<String> {
+/// Shellwords.split; Err is its ArgumentError for an unterminated quote.
+fn shellsplit(s: &str) -> Result<Vec<String>, String> {
+    let unmatched = || format!("Unmatched quote: {s:?}");
     let mut out = Vec::new();
     let mut cur: Option<String> = None;
     let mut chars = s.chars();
     while let Some(c) = chars.next() {
         match c {
-            c if c.is_whitespace() => out.extend(cur.take()),
+            // Ruby's \s
+            ' ' | '\t' | '\n' | '\x0B' | '\x0C' | '\r' => out.extend(cur.take()),
             '\'' => {
                 let w = cur.get_or_insert_with(String::new);
-                w.extend(chars.by_ref().take_while(|&c| c != '\''));
-            }
-            '"' => {
-                let w = cur.get_or_insert_with(String::new);
-                while let Some(c) = chars.next() {
-                    match c {
-                        '"' => break,
-                        '\\' => w.extend(chars.next()),
+                loop {
+                    match chars.next().ok_or_else(unmatched)? {
+                        '\'' => break,
                         c => w.push(c),
                     }
                 }
             }
-            '\\' => cur.get_or_insert_with(String::new).extend(chars.next()),
+            '"' => {
+                let w = cur.get_or_insert_with(String::new);
+                loop {
+                    match chars.next().ok_or_else(unmatched)? {
+                        '"' => break,
+                        // Only $ ` " \ and newline are escaped inside double quotes.
+                        '\\' => match chars.next().ok_or_else(unmatched)? {
+                            c @ ('$' | '`' | '"' | '\\' | '\n') => w.push(c),
+                            c => {
+                                w.push('\\');
+                                w.push(c);
+                            }
+                        },
+                        c => w.push(c),
+                    }
+                }
+            }
+            '\\' => {
+                let w = cur.get_or_insert_with(String::new);
+                w.push(chars.next().unwrap_or('\\'));
+            }
             c => cur.get_or_insert_with(String::new).push(c),
         }
     }
     out.extend(cur);
-    out
+    Ok(out)
 }
 
 /// ArgumentsFile (`.rubocop` in the working directory) + ArgumentsEnv (`RUBOCOP_OPTS`) + argv.
@@ -215,7 +232,8 @@ fn shellsplit(s: &str) -> Vec<String> {
 fn all_args() -> Result<Vec<String>, Fail> {
     let mut args = Vec::new();
     if Path::new(".rubocop").is_file() {
-        let from_file = shellsplit(&fs::read_to_string(".rubocop").unwrap_or_default());
+        let text = fs::read_to_string(".rubocop").map_err(|e| Fail::Arg(format!(".rubocop: {e}")))?;
+        let from_file = shellsplit(&text).map_err(Fail::Arg)?;
         // Checked token by token rather than by parsing the file alone: a trailing `-o` would fail
         // to parse there yet, combined with argv, take the user's first path as the output file.
         // `--o`, `--ou`, `--out[=...]` and any short-option cluster containing `o` are refused
@@ -232,8 +250,9 @@ fn all_args() -> Result<Vec<String>, Fail> {
         }
         args.extend(from_file);
     }
-    args.extend(shellsplit(&env::var("RUBOCOP_OPTS").unwrap_or_default()));
-    args.extend(env::args().skip(1));
+    args.extend(shellsplit(&env::var("RUBOCOP_OPTS").unwrap_or_default()).map_err(Fail::Arg)?);
+    // env::args panics on an argument that is not UTF-8 (a file name on Linux, say).
+    args.extend(env::args_os().skip(1).map(|a| a.to_string_lossy().into_owned()));
     Ok(args)
 }
 
@@ -783,6 +802,16 @@ fn qualify_cop_options(cli: &mut Cli) -> (Vec<String>, Option<String>) {
     (warnings, None)
 }
 
+/// One linted file: (report, corrected source to write back, infinite-loop error), or a read error.
+type Linted = Result<(FileReport, Option<String>, Option<String>), String>;
+
+/// Whether two targets are the same file on disk (one of them through a symlink, say).
+fn same_file_twice(jobs: &[(PathBuf, std::sync::Arc<Resolved>)]) -> bool {
+    use std::os::unix::fs::MetadataExt;
+    let mut seen = std::collections::HashSet::new();
+    jobs.iter().filter_map(|(p, _)| fs::metadata(p).ok()).any(|m| !seen.insert((m.dev(), m.ino())))
+}
+
 /// Returns the exit status.
 fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     if cli.help {
@@ -861,7 +890,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             if !excluded {
                 files.push(abs);
             }
-            Some(String::from_utf8_lossy(&buf).into_owned())
+            Some(buf)
         }
         None => {
             let args = if cli.paths.is_empty() { vec![PathBuf::new()] } else { cli.paths.clone() };
@@ -919,6 +948,19 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         return Ok(0);
     }
 
+    // Deliberate difference: RuboCop truncates an -o file before inspecting, so `rubocop -o a.rb a.rb`
+    // empties a.rb. rbcop refuses to write output over a file it inspects (checked before -a changes
+    // any file).
+    for (_, out) in &resolved {
+        if let Some(p) = out {
+            let abs = expand_path(p, &cwd);
+            let canon = abs.canonicalize().ok();
+            if files.iter().any(|f| *f == abs || (canon.is_some() && f.canonicalize().ok() == canon)) {
+                return Err(format!("rbcop: refusing to write --out {}: it is a file being inspected", p.display()));
+            }
+        }
+    }
+
     // Resolve configs up front (single-threaded), then lint in parallel.
     let mut jobs = Vec::with_capacity(files.len());
     // RuboCop loads a file's config when the file's turn comes, so an invalid config stops the run
@@ -950,56 +992,55 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         }
         (only.is_empty() || match_name(only, cop)) && !match_name(except, cop)
     };
-    let workers = thread::available_parallelism().map_or(4, |n| n.get());
-    let chunk = jobs.len().div_ceil(workers).max(1);
     let stdin_text = &stdin_text;
-    // --stdin with -a/-A: the corrected source, printed after the report (@options[:stdin]).
-    let stdin_corrected: std::sync::Mutex<Option<String>> = std::sync::Mutex::new(None);
+    // --stdin with -a/-A: the corrected source, printed after the report.
+    let mut stdin_corrected: Option<String> = None;
+    // One file: (report, corrected source to write back, infinite-loop error), or a read error.
+    // -a/-A: read, correct until stable; offenses from every iteration come back (fixed ones marked
+    // corrected). The file is written in the reporting loop below, in file order, as RuboCop does.
+    let lint = |path: &PathBuf, cfg: &Resolved| -> Linted {
+        let display = rbcop::config::relative_path(path, &cwd);
+        if let Some(bytes) = stdin_text {
+            // --stdin with -a/-A: the corrected source is printed after the report (@options[:stdin]).
+            if let Some(mode) = cli.autocorrect {
+                let c = rbcop::autocorrect::correct_bytes(path, &display, bytes.clone(), cfg, &selected, mode);
+                return Ok((c.report, c.source, c.error));
+            }
+            return Ok((runner::inspect_bytes(path, &display, bytes.clone(), cfg, &selected), None, None));
+        }
+        if let Some(mode) = cli.autocorrect {
+            let c = rbcop::autocorrect::correct_file(path, &display, cfg, &selected, mode)?;
+            return Ok((c.report, c.source, c.error));
+        }
+        let bytes = fs::read(path).map_err(|e| runner::io_error(&e, path))?;
+        Ok((runner::inspect_bytes(path, &display, bytes, cfg, &selected), None, None))
+    };
+    // A panic outside a cop (cop panics are reported by runner::guarded) ends the run at that file,
+    // like any error, instead of taking down every worker's results with it.
+    let lint_one = |path: &PathBuf, cfg: &Resolved| -> Linted {
+        std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| lint(path, cfg)))
+            .unwrap_or_else(|_| Err(format!("rbcop: internal error while inspecting {}", path.display())))
+    };
+    // Cops recurse over the AST; runner::MAX_AST_DEPTH (1000) needs under 2 MiB, the rest is
+    // headroom. Only touched pages are committed.
+    let big_stack = || thread::Builder::new().stack_size(64 << 20);
+    // Files are linted in parallel up front, unless RuboCop's sequential order is observable:
+    // --fail-fast stops at the first failing file (later files are neither inspected nor corrected),
+    // and under -a a file reached through two paths (a symlink) must see the first correction.
     // An invalid --only/--except list fails before any file is inspected (or corrected).
-    let reports: Vec<Option<FileReport>> = if cop_error.is_some() {
+    let lazy = cop_error.is_some() || cli.fail_fast || (cli.autocorrect.is_some() && same_file_twice(&jobs));
+    let mut reports: Vec<Option<Linted>> = if lazy {
         jobs.iter().map(|_| None).collect()
     } else {
+        let workers = thread::available_parallelism().map_or(4, |n| n.get());
+        let chunk = jobs.len().div_ceil(workers).max(1);
         thread::scope(|s| {
             let handles: Vec<_> = jobs
                 .chunks(chunk)
                 .map(|part| {
-                    // Cops recurse over the AST; runner::MAX_AST_DEPTH (1000) needs under 2 MiB, the
-                    // rest is headroom. Only touched pages are committed.
-                    thread::Builder::new()
-                        .stack_size(64 << 20)
+                    big_stack()
                         .spawn_scoped(s, || {
-                            part.iter()
-                                .map(|(path, cfg)| {
-                                    // -a/-A: read, correct until stable, rewrite the file; offenses from every
-                                    // iteration come back (fixed ones marked corrected).
-                                    if let (Some(mode), None) = (cli.autocorrect, stdin_text) {
-                                        if !path.is_file() {
-                                            return None;
-                                        }
-                                        let display = rbcop::config::relative_path(path, &cwd);
-                                        return Some(rbcop::autocorrect::correct_file(
-                                            path, &display, cfg, &selected, mode,
-                                        ));
-                                    }
-                                    let text = match stdin_text {
-                                        Some(t) => t.clone(),
-                                        None => match fs::read(path) {
-                                            Ok(b) => String::from_utf8_lossy(&b).into_owned(),
-                                            Err(_) => return None,
-                                        },
-                                    };
-                                    let display = rbcop::config::relative_path(path, &cwd);
-                                    if let Some(mode) = cli.autocorrect {
-                                        let c = rbcop::autocorrect::correct(path, &display, text, cfg, &selected, mode);
-                                        if let Some(e) = &c.error {
-                                            eprintln!("{e}");
-                                        }
-                                        *stdin_corrected.lock().unwrap() = c.source;
-                                        return Some(c.report);
-                                    }
-                                    Some(runner::inspect(path, &display, text, cfg, &selected))
-                                })
-                                .collect::<Vec<_>>()
+                            part.iter().map(|(path, cfg)| Some(lint_one(path, cfg))).collect::<Vec<_>>()
                         })
                         .expect("spawn worker thread")
                 })
@@ -1007,18 +1048,6 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             handles.into_iter().flat_map(|h| h.join().unwrap()).collect()
         })
     };
-
-    // Deliberate difference: RuboCop truncates an -o file before inspecting, so `rubocop -o a.rb a.rb`
-    // empties a.rb. rbcop refuses to write output over a file it inspects.
-    for (_, out) in &resolved {
-        if let Some(p) = out {
-            let abs = expand_path(p, &cwd);
-            let canon = abs.canonicalize().ok();
-            if files.iter().any(|f| *f == abs || (canon.is_some() && f.canonicalize().ok() == canon)) {
-                return Err(format!("rbcop: refusing to write --out {}: it is a file being inspected", p.display()));
-            }
-        }
-    }
 
     // Runner#inspect_files
     let mut set = formatter::Set::new(&resolved, &cx, cli.stderr)?;
@@ -1049,7 +1078,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         let mut cop_notes = Some((cop_warnings, cop_error));
         let mut stopped = false;
         let mut warned_configs = std::collections::HashSet::new();
-        for ((path, cfg), report) in jobs.iter().zip(&reports) {
+        for ((path, cfg), linted) in jobs.iter().zip(reports.iter_mut()) {
             set.file_started(&cx, path);
             // Runner#mobilized_cop_classes runs once the first file has been read.
             if let Some((warnings, err)) = cop_notes.take_if(|_| stdin_text.is_some() || path.is_file()) {
@@ -1072,11 +1101,32 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                     }
                 }
             }
-            let Some(report) = report else {
-                error = Some(format!("Error: No such file or directory: {}", path.display()));
+            let linted = match linted.take() {
+                Some(l) => l,
+                None => thread::scope(|s| big_stack().spawn_scoped(s, || lint_one(path, cfg)).unwrap().join().unwrap()),
+            };
+            let (report, corrected, loop_error) = match linted {
+                Ok(l) => l,
+                Err(e) => {
+                    error = Some(e);
+                    stopped = true;
+                    break;
+                }
+            };
+            // Team#autocorrect writes the file before it is reported (with --stdin, keeps the source
+            // for printing); a failed write ends the run.
+            if stdin_text.is_some() {
+                stdin_corrected = corrected;
+            } else if let Some(new) = &corrected
+                && let Err(e) = rbcop::autocorrect::write_source(path, new)
+            {
+                error = Some(runner::io_error(&e, path));
                 stopped = true;
                 break;
-            };
+            }
+            if let Some(e) = loop_error {
+                eprintln!("{e}");
+            }
             let offs = formatter::offenses(&report.text, &report.offenses, |o| {
                 formatter::annotate(cfg, o.cop, &o.message, annotate)
             });
@@ -1089,6 +1139,12 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                 stopped = true;
                 break;
             }
+            // A formatter's output could not be written: RuboCop raises there and stops.
+            if let Some(e) = set.take_error() {
+                error = Some(e);
+                stopped = true;
+                break;
+            }
         }
         if !stopped && let Some((path, e)) = config_error {
             set.file_started(&cx, &path);
@@ -1096,6 +1152,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         }
     }
     set.finished(&cx, &inspected);
+    if let Some(e) = set.take_error() {
+        error.get_or_insert(e);
+    }
     // The ValidationError reaches the CLI before ExecuteRunner's error summary.
     if let Some(e) = config_failure {
         warn_red(global, &e);
@@ -1130,7 +1189,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         } else {
             println!("{separator}");
         }
-        print!("{}", stdin_corrected.into_inner().unwrap().as_deref().unwrap_or(original));
+        print!("{}", stdin_corrected.as_deref().unwrap_or(&String::from_utf8_lossy(original)));
     }
     Ok(if all_passed && cop_errors.is_empty() { 0 } else { OFFENSES })
 }

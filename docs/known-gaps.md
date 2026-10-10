@@ -32,6 +32,25 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   hex digits took 2.6 s).
 - Lint/UselessTimes leaves the offense uncorrected when the block argument's name is too long for
   the regex size limit (about 100k characters) instead of failing the cop.
+- `-a/-A` writes a corrected file through a temporary file in the same directory renamed over it
+  (`autocorrect::write_source`), so a crash or a full disk never leaves it truncated; RuboCop
+  truncates and writes in place. Mode, group, symlinks (the target is written) and hard links (written
+  in place) are kept, as are files owned by another user or in an unwritable directory (in place);
+  extended attributes and ACLs are not copied to the renamed file. Files are written in the reporting
+  loop, in target order, so an error or `--fail-fast` stops before later files change.
+- Directory walks follow symlinked directories and keep symlinked files, as TargetFinder does, so
+  `-a/-A` corrects files a project links to outside itself, exactly as RuboCop does (checked on a
+  scratch project). A symlinked directory that is already an ancestor of the walked directory
+  (same device and inode) is not entered: RuboCop's realpath prefix test misses two-link cycles
+  (`d1/to2 -> ../d2`, `d2/to1 -> ../d1`) and lists the same files under ever longer paths until the
+  OS returns ELOOP. The walk is iterative.
+- An `inherit_from` cycle is an error (`... inherit_from cycle through ...`, exit 2); RuboCop recurses
+  until SystemStackError.
+- A panic outside a cop (cop panics are reported as cop errors) ends the run at that file with
+  `rbcop: internal error while inspecting <file>` (exit 2).
+- Error wording for I/O failures follows Ruby's (`Permission denied @ rb_sysopen - <file>`,
+  `... @ rb_sys_fail_on_write - <out file>`) but without the backtrace; a failed `-o` directory or
+  file creation is worded `<path>: <reason>`.
 
 ## Open gaps
 
@@ -59,6 +78,12 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - `--disable-uncorrectable`, `--auto-gen-config`, `--server`, `--lsp`, `--cache` behaviour (accepted
   and ignored where harmless), custom formatter classes, `require:` of local Ruby files (custom cops).
 - ERB in `.rubocop.yml` is not evaluated; remote `inherit_from` URLs are skipped with a warning.
+- A duplicated YAML key: the last value wins in the first key's place, as in Psych, but the
+  `... is concealed by line N` warning is not printed. Wrong value types (`Enabled: "true"`) and
+  invalid `Severity` values are not reported (see ConfigValidator below).
+- Sources whose magic comment names another encoding (`# encoding: iso-8859-1`) are inspected with
+  invalid UTF-8 bytes replaced; RuboCop transcodes them to UTF-8. They are never autocorrected.
+  Sources that must be UTF-8 and are not get RuboCop's `Lint/Syntax: Invalid byte sequence in utf-8.`
 - Deliberate: Style/WordArray correcting a `%W[...]` whose value is invalid UTF-8 (`%W[\xff]`)
   writes the escaped form (`["\xFF"]`); RuboCop writes the raw bytes and then crashes re-parsing
   its own output. The offense message matches RuboCop.

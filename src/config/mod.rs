@@ -154,16 +154,10 @@ pub struct Resolved {
 }
 
 impl Resolved {
-    fn new(
-        hash: Map,
-        loaded_path: Option<&Path>,
-        opts: &Options,
-        cop_names: &[&'static str],
-        project_root: Option<&Path>,
-    ) -> Self {
+    fn new(hash: Map, loaded_path: Option<&Path>, opts: &Options, cop_names: &[&'static str]) -> Self {
         let base_dir = base_dir_for(loaded_path);
         let all_cops = hash.map("AllCops").cloned().unwrap_or_default();
-        let target_ruby = target_ruby::detect(&all_cops, &base_dir, project_root);
+        let target_ruby = target_ruby::detect(&all_cops, &base_dir);
         let mut r = Resolved {
             hash,
             base_dir,
@@ -412,6 +406,8 @@ pub struct Store {
     /// Class and module names in loaded plugins' lib/ (see ruby_constants).
     plugin_constants: std::collections::HashSet<String>,
     dir_to_file: HashMap<PathBuf, Option<PathBuf>>,
+    /// inherit_from files being loaded (outermost first), to detect cycles.
+    loading: Vec<PathBuf>,
     resolved: HashMap<Option<PathBuf>, Arc<Resolved>>,
     forced: Option<Arc<Resolved>>,
     pub warnings: Vec<String>,
@@ -440,6 +436,7 @@ impl Store {
             custom_cops: false,
             plugin_constants: Default::default(),
             dir_to_file: HashMap::new(),
+            loading: Vec::new(),
             resolved: HashMap::new(),
             forced: None,
             warnings: Vec::new(),
@@ -450,15 +447,13 @@ impl Store {
                 None,
                 &store.opts,
                 &store.cop_names,
-                store.project_root.as_deref(),
             );
             store.forced = Some(Arc::new(r));
         } else if let Some(path) = store.opts.config_file.clone() {
             let path = expand_path(&path, &store.cwd);
             let user = store.load_file(&path, true)?;
             let merged = store.merge_with_default(user);
-            let mut r =
-                Resolved::new(merged, Some(&path), &store.opts, &store.cop_names, store.project_root.as_deref());
+            let mut r = Resolved::new(merged, Some(&path), &store.opts, &store.cop_names);
             r.unregistered = store.unregistered(&r.hash);
             store.forced = Some(Arc::new(r));
         }
@@ -512,14 +507,14 @@ impl Store {
             None => apply_preview_defaults(&self.default, self.opts.preview == Some(true)),
             Some(path) => {
                 let mut user = self.load_file(path, true)?;
-                validator::check_target_ruby(&user, path, &self.cwd, self.project_root.as_deref())?;
+                validator::check_target_ruby(&user, path, &self.cwd)?;
                 if !self.opts.ignore_parent_exclusion {
                     self.add_excludes_from_files(&mut user, path)?;
                 }
                 self.merge_with_default(user)
             }
         };
-        let mut r = Resolved::new(hash, file.as_deref(), &self.opts, &self.cop_names, self.project_root.as_deref());
+        let mut r = Resolved::new(hash, file.as_deref(), &self.opts, &self.cop_names);
         r.unregistered = self.unregistered(&r.hash);
         let r = Arc::new(r);
         self.resolved.insert(file, r.clone());
@@ -607,7 +602,6 @@ impl Store {
             let checked = validator::Validator {
                 default: &self.default,
                 pwd: &self.cwd,
-                project_root: self.project_root.as_deref(),
                 loaded_plugins: &self.loaded_plugins,
                 ignore_unrecognized_cops: self.opts.ignore_unrecognized_cops,
                 custom_cops: self.custom_cops,
@@ -643,8 +637,14 @@ impl Store {
     fn resolve_inheritance(&mut self, path: &Path, hash: &mut Map) -> Result<(), String> {
         let dir = path.parent().unwrap_or(Path::new("/"));
         let mut bases = Vec::new();
-        for entry in seq(hash.get("inherit_from").cloned()) {
-            let Some(entry) = entry.as_string() else { continue };
+        // ConfigLoaderResolver#base_configs: a glob entry is expanded with Dir.glob (from the
+        // working directory) and each match is then taken relative to this file's directory.
+        let entries: Vec<String> = seq(hash.get("inherit_from").cloned())
+            .iter()
+            .filter_map(Value::as_string)
+            .flat_map(|e| if glob::is_glob(&e) { glob::dir_glob(&e, &self.cwd) } else { vec![e] })
+            .collect();
+        for entry in entries {
             if entry.starts_with("http://") || entry.starts_with("https://") {
                 self.warnings.push(format!("{}: remote inherit_from {entry} is not supported", path.display()));
                 continue;
@@ -653,8 +653,14 @@ impl Store {
             if base_path == path {
                 continue;
             }
-            let base = self.load_file(&base_path, true)?;
-            bases.push((base_path, base));
+            // RuboCop recurses until its stack overflows; report the cycle instead.
+            if self.loading.contains(&base_path) {
+                return Err(format!("{}: inherit_from cycle through {}", path.display(), base_path.display()));
+            }
+            self.loading.push(base_path.clone());
+            let base = self.load_file(&base_path, true);
+            self.loading.pop();
+            bases.push((base_path, base?));
         }
         for (base_path, base) in bases.into_iter().rev() {
             override_department_setting_for_cops(&base, hash);

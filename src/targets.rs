@@ -74,26 +74,51 @@ impl RubyFile {
     }
 }
 
-/// Every file under `dir` (dotfiles included), not following symlinked directories,
-/// pruning directories excluded by `.../**/*` patterns.
-fn walk(dir: &Path, cfg: &Resolved, out: &mut Vec<PathBuf>) {
-    let Ok(entries) = fs::read_dir(dir) else { return };
+/// Every file under `dir` (dotfiles included), pruning directories excluded by `.../**/*`
+/// patterns. Like TargetFinder#find_files, symlinked files are kept and symlinked directories are
+/// followed, unless the link's target is excluded or contains the directory being walked (a loop).
+///
+/// Deliberate difference: iterative, and a symlinked directory that is already one of the walked
+/// directory's ancestors (by device and inode) is not entered. RuboCop's prefix test misses cycles
+/// through two links (`a/l -> ../b`, `b/l -> ../a`) and expands them until the OS refuses (ELOOP),
+/// listing the same files under ever longer paths.
+fn walk(root: &Path, cfg: &Resolved, out: &mut Vec<PathBuf>) {
+    use std::os::unix::fs::MetadataExt;
     let prune: Vec<String> = cfg
         .all_cops()
         .strings("Exclude")
         .into_iter()
         .filter_map(|p| p.strip_suffix("/**/*").map(String::from))
         .collect();
-    for entry in entries.flatten() {
-        let path = entry.path();
-        let Ok(kind) = entry.file_type() else { continue };
-        if kind.is_dir() {
-            let s = path.display().to_string();
-            if !prune.iter().any(|p| glob::fnmatch(p, &s, true)) {
-                walk(&path, cfg, out);
+    let pruned = |p: &Path| prune.iter().any(|x| glob::fnmatch(x, &p.display().to_string(), true));
+    let id = |m: &fs::Metadata| (m.dev(), m.ino());
+    let Ok(root_meta) = fs::metadata(root) else { return };
+    // (directory, (dev, ino) of it and every directory above it in this walk)
+    let mut stack = vec![(root.to_path_buf(), vec![id(&root_meta)])];
+    while let Some((dir, chain)) = stack.pop() {
+        let Ok(entries) = fs::read_dir(&dir) else { continue };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            let Ok(kind) = entry.file_type() else { continue };
+            let link = kind.is_symlink();
+            let Ok(meta) = (if link { fs::metadata(&path) } else { entry.metadata() }) else { continue };
+            if meta.is_dir() {
+                if pruned(&path) || chain.contains(&id(&meta)) {
+                    continue;
+                }
+                // symlink_excluded_or_infinite_loop? (a string prefix test, as RuboCop's start_with?).
+                if link {
+                    let (Ok(real), Ok(here)) = (fs::canonicalize(&path), fs::canonicalize(&dir)) else { continue };
+                    if pruned(&real) || here.display().to_string().starts_with(&real.display().to_string()) {
+                        continue;
+                    }
+                }
+                let mut below = chain.clone();
+                below.push(id(&meta));
+                stack.push((path, below));
+            } else if meta.is_file() {
+                out.push(path);
             }
-        } else if kind.is_file() {
-            out.push(path);
         }
     }
 }
