@@ -38,12 +38,23 @@ impl Directive {
     pub fn signed(&self) -> bool {
         self.mode == "push" || self.mode == "next"
     }
-    /// DirectiveComment#raw_cop_names.
-    fn raw_names(&self) -> Vec<&str> {
-        self.cops
-            .as_deref()
-            .map(|c| c.split(',').map(str::trim).filter(|s| !s.is_empty()).collect())
-            .unwrap_or_default()
+    /// DirectiveComment#raw_cop_names: `(cops || '').split(/,\s*/)`, untrimmed (Ruby's split drops
+    /// trailing empty fields).
+    pub fn raw_names(&self) -> Vec<&str> {
+        static COMMA: LazyLock<Regex> = LazyLock::new(|| Regex::new(r",[ \t\n\x0B\x0C\r]*").unwrap());
+        let mut names: Vec<&str> = COMMA.split(self.cops.as_deref().unwrap_or("")).collect();
+        while names.last() == Some(&"") {
+            names.pop();
+        }
+        names
+    }
+    /// DirectiveComment#directive_count.
+    pub fn count(&self) -> usize {
+        if self.signed() { self.signed_args().len() } else { self.raw_names().len() }
+    }
+    /// DirectiveComment#disabled_all?
+    pub fn disabled_all(&self) -> bool {
+        self.disabled() && self.cops.as_deref() == Some("all")
     }
     /// DirectiveComment#signed_args: (op, name) pairs.
     pub fn signed_args(&self) -> Vec<(char, &str)> {
@@ -74,9 +85,9 @@ pub fn parse(comment: &str) -> Option<Directive> {
     Some(Directive { mode: m[1].to_string(), cops, start: whole.start(), end: whole.end() })
 }
 
-/// Cop names RuboCop's registry would know (rbcop's cops plus Lint/Syntax).
+/// Cop names RuboCop's registry knows (every cop in default.yml, ported or not).
 fn known() -> impl Iterator<Item = &'static str> {
-    crate::cops::ALL.iter().map(|r| r.name).chain(std::iter::once(LINT_SYNTAX))
+    crate::helpers::cop_registry::REGISTRY.iter().copied()
 }
 
 fn is_department(name: &str) -> bool {
@@ -207,29 +218,67 @@ pub fn needs_statement_bounds(src: &Source) -> bool {
 
 /// CommentConfig#cop_disabled_line_ranges: cop name to inclusive line ranges where it is disabled.
 /// `config_disabled` are cops off in config (they start disabled from before line 1).
-pub fn disabled_ranges(
-    src: &Source,
-    config_disabled: &[&'static str],
-    lines: &LineInfo,
-) -> HashMap<String, Vec<(i64, i64)>> {
-    analyze(src, config_disabled, lines)
-        .into_iter()
-        .map(|(cop, ranges)| (cop, ranges.into_iter().map(|(a, b, _)| (a, b)).collect()))
-        .collect()
+pub fn disabled_ranges(cc: &CommentConfig) -> HashMap<String, Vec<(i64, i64)>> {
+    cc.ranges.iter().map(|(cop, ranges)| (cop.clone(), ranges.iter().map(|&(a, b, _)| (a, b)).collect())).collect()
 }
 
-/// `disabled_ranges` keeping each range's opening directive.
-pub fn analyze(
-    src: &Source,
-    config_disabled: &[&'static str],
-    lines: &LineInfo,
-) -> HashMap<String, Vec<DirectiveRange>> {
+/// CommentConfig#prevent_directive_disabling?: `config.dig(cop, 'Enabled') == true`.
+pub fn prevent_style(config: &crate::config::Resolved) -> bool {
+    matches!(config.for_cop(STYLE_DISABLE_COPS).get("Enabled"), Some(crate::config::value::Value::Bool(true)))
+}
+
+/// Registry#enabled? for a cop name in config (cops rbcop has not ported fall back to a literal
+/// `Enabled: true`, or `pending` with `NewCops: enable`).
+pub fn config_enabled(config: &crate::config::Resolved, cop: &str) -> bool {
+    use crate::config::value::Value;
+    static PORTED: LazyLock<std::collections::HashSet<&'static str>> =
+        LazyLock::new(|| crate::cops::ALL.iter().map(|r| r.name).collect());
+    if PORTED.contains(cop) {
+        return config.cop(cop).enabled;
+    }
+    match config.for_cop(cop).get("Enabled") {
+        Some(Value::Bool(b)) => *b,
+        Some(Value::Str(s)) => s == "pending" && config.all_cops().str("NewCops") == Some("enable"),
+        _ => false,
+    }
+}
+
+/// The result of CommentConfig#analyze.
+#[derive(Default)]
+pub struct CommentConfig {
+    /// cop_disabled_line_ranges, each range keeping its opening directive.
+    pub ranges: HashMap<String, Vec<DirectiveRange>>,
+    /// The keys of `ranges` in Ruby hash (first access) order.
+    pub order: Vec<String>,
+    /// DisableNext#detached_next_directives: comment indexes of next-statement directives that
+    /// attach to no statement.
+    pub detached: Vec<usize>,
+}
+
+/// CommentConfig#analyze. `config_disabled` are cops off in config (they start disabled from
+/// before line 1); `prevent_style` is `prevent_directive_disabling?` (Style/DisableCopsWithinSourceCodeDirective
+/// is `Enabled: true` in config, so no directive disables it).
+pub fn analyze(src: &Source, config_disabled: &[&'static str], lines: &LineInfo, prevent_style: bool) -> CommentConfig {
     if !src.text.contains("rubocop") {
-        return HashMap::new();
+        return CommentConfig::default();
     }
     let mut analyses: HashMap<String, Analysis> = HashMap::new();
+    let mut order: Vec<String> = Vec::new();
+    let mut detached = Vec::new();
     for cop in config_disabled {
+        order.push(cop.to_string());
         analyses.insert(cop.to_string(), Analysis { start: Some(i64::MIN), ..Analysis::default() });
+    }
+    // `analyses[cop]` on Ruby's default-block hash: creates the entry, remembering the order.
+    fn entry<'a>(
+        analyses: &'a mut HashMap<String, Analysis>,
+        order: &mut Vec<String>,
+        cop: String,
+    ) -> &'a mut Analysis {
+        if !analyses.contains_key(&cop) {
+            order.push(cop.clone());
+        }
+        analyses.entry(cop).or_default()
     }
     let mut stack: Vec<HashMap<String, Analysis>> = Vec::new();
     for (index, c) in src.comments.iter().enumerate() {
@@ -239,7 +288,7 @@ pub fn analyze(
             "push" => {
                 stack.push(analyses.clone());
                 for (op, cop) in resolve_signed(&d) {
-                    let a = analyses.entry(cop).or_default();
+                    let a = entry(&mut analyses, &mut order, cop);
                     if op == '-' && a.start.is_none() {
                         a.start = Some(line);
                         a.start_directive = Some(index);
@@ -262,7 +311,10 @@ pub fn analyze(
                 }
             }
             "disable-next" | "todo-next" | "next" | "enable-next" => {
-                let Some((first, last)) = statement_scope_after(lines, src, line) else { continue };
+                let Some((first, last)) = statement_scope_after(lines, src, line) else {
+                    detached.push(index);
+                    continue;
+                };
                 let (first, last) = (first as i64, last as i64);
                 let ops: Vec<(char, String)> = match d.mode.as_str() {
                     "next" => resolve_signed(&d),
@@ -270,7 +322,7 @@ pub fn analyze(
                     _ => cop_names(&d).into_iter().map(|c| ('-', c)).collect(),
                 };
                 for (op, cop) in ops {
-                    let a = analyses.entry(cop).or_default();
+                    let a = entry(&mut analyses, &mut order, cop);
                     if op == '-' {
                         a.ranges.push((first, last, Some(index)));
                     } else if a.start.is_some() {
@@ -282,7 +334,7 @@ pub fn analyze(
             _ => {
                 let single_line = d.start != 0;
                 for cop in cop_names(&d) {
-                    let a = analyses.entry(cop).or_default();
+                    let a = entry(&mut analyses, &mut order, cop);
                     if !lines.comment_only(line) || single_line {
                         if d.disabled() {
                             a.ranges.push((line, line, Some(index)));
@@ -296,15 +348,10 @@ pub fn analyze(
             }
         }
     }
-    analyses
-        .into_iter()
-        // prevent_directive_disabling? applies when that cop is enabled; rbcop does not implement it yet.
-        .filter(|(cop, _)| cop != STYLE_DISABLE_COPS)
-        .map(|(cop, a)| {
-            let ranges = a.close(i64::MAX);
-            (cop, ranges)
-        })
-        .collect()
+    let keep = |cop: &String| !(prevent_style && cop == STYLE_DISABLE_COPS);
+    order.retain(keep);
+    let ranges = analyses.into_iter().filter(|(cop, _)| keep(cop)).map(|(cop, a)| (cop, a.close(i64::MAX))).collect();
+    CommentConfig { ranges, order, detached }
 }
 
 /// DisableNext#statement_scope_after: the statement right below a comment-only directive line.

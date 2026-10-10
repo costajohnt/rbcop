@@ -1,0 +1,1305 @@
+Lint/AmbiguousAssignment:
+  Description: Checks for mistyped shorthand assignments.
+  Enabled: false
+  VersionAdded: '1.7'
+
+# Supports --autocorrect
+Lint/AmbiguousBlockAssociation:
+  Description: Checks for ambiguous block association with method when param passed
+    without parentheses.
+  Enabled: false
+  VersionAdded: '0.48'
+  VersionChanged: '1.89'
+  AllowedMethods: []
+  AllowedPatterns: []
+
+# Supports --autocorrect
+Lint/AmbiguousOperator:
+  Description: Checks for ambiguous operators in the first argument of a method invocation
+    without parentheses.
+  StyleGuide: "#method-invocation-parens"
+  Enabled: false
+  VersionAdded: '0.17'
+  VersionChanged: '0.83'
+
+# Supports --autocorrect
+Lint/AmbiguousOperatorPrecedence:
+  Description: Checks for expressions containing multiple binary operations with ambiguous
+    precedence.
+  Enabled: false
+  VersionAdded: '1.21'
+
+# Supports --autocorrect
+Lint/AmbiguousRange:
+  Description: Checks for ranges with ambiguous boundaries.
+  Enabled: false
+  VersionAdded: '1.19'
+  SafeAutoCorrect: false
+  RequireParenthesesForMethodChains: false
+
+# Supports --autocorrect
+Lint/AmbiguousRegexpLiteral:
+  Description: Checks for ambiguous regexp literals in the first argument of a method
+    invocation without parentheses.
+  Enabled: false
+  VersionAdded: '0.17'
+  VersionChanged: '0.83'
+
+Lint/ArgumentMismatch:
+  Description: Checks for calls that pass the wrong number of positional arguments to
+    a method, using the project index.
+  Enabled: false
+  VersionAdded: '1.90'
+
+# Supports --autocorrect
+Lint/ArrayLiteralInRegexp:
+  Description: Checks for an array literal interpolated inside a regexp.
+  Enabled: false
+  VersionAdded: '1.71'
+  SafeAutoCorrect: false
+
+# Supports --autocorrect
+Lint/AssignmentInCondition:
+  Description: Don't use assignment in conditions.
+  StyleGuide: "#safe-assignment-in-condition"
+  Enabled: false
+  SafeAutoCorrect: false
+  VersionAdded: '0.9'
+  VersionChanged: '1.45'
+  AllowSafeAssignment: true
+
+# Supports --autocorrect
+Lint/BigDecimalNew:
+  Description: "`BigDecimal.new()` is deprecated. Use `BigDecimal()` instead."
+  Enabled: false
+  VersionAdded: '0.53'
+
+Lint/BinaryOperatorWithIdenticalOperands:
+  Description: Checks for places where binary operator has identical operands.
+  Enabled: false
+  Safe: false
+  VersionAdded: '0.89'
+  VersionChanged: '1.69'
+
+# Supports --autocorrect
+Lint/BooleanSymbol:
+  Description: Checks for `:true` and `:false` symbols.
+  Enabled: false
+  SafeAutoCorrect: false
+  VersionAdded: '0.50'
+  VersionChanged: '1.22'
+
+Lint/CircularArgumentReference:
+  Description: Default values in optional keyword arguments and optional ordinal arguments
+    should not refer back to the name of the argument.
+  Enabled: false
+  VersionAdded: '0.33'
+
+Lint/ConstantDefinitionInBlock:
+  Description: Do not define constants within a block.
+  StyleGuide: "#no-constant-definition-in-block"
+  Enabled: false
+  VersionAdded: '0.91'
+  VersionChanged: '1.3'
+  AllowedMethods:
+  - enums
+
+# Supports --autocorrect
+Lint/ConstantOverwrittenInRescue:
+  Description: Checks for overwriting an exception with an exception result by use `rescue
+    =>`.
+  Enabled: false
+  VersionAdded: '1.31'
+
+Lint/ConstantReassignment:
+  Description: Checks for constant reassignments.
+  Enabled: false
+  VersionAdded: '1.70'
+  VersionChanged: '1.87'
+
+Lint/ConstantResolution:
+  Description: Checks that constants are fully qualified with `::`.
+  VersionChanged: '1.89'
+  Enabled: false
+  VersionAdded: '0.86'
+  Only: []
+  Ignore: []
+
+# Supports --autocorrect
+Lint/CopDirectiveSyntax:
+  Description: Checks that `# rubocop:` directives are strictly formatted.
+  Enabled: false
+  VersionAdded: '1.72'
+  VersionChanged: '1.91'
+
+Lint/DataDefineOverride:
+  Description: Disallow overriding the `Data` built-in methods via `Data.define`.
+  Enabled: false
+  VersionAdded: '1.85'
+
+Lint/Debugger:
+  Description: Checks for debugger calls.
+  Enabled: true
+  VersionAdded: '0.14'
+  VersionChanged: '1.63'
+  DebuggerMethods:
+    Kernel:
+    - binding.irb
+    - Kernel.binding.irb
+    Byebug:
+    - byebug
+    - remote_byebug
+    - Kernel.byebug
+    - Kernel.remote_byebug
+    Capybara:
+    - page.save_and_open_page
+    - page.save_and_open_screenshot
+    - page.save_page
+    - page.save_screenshot
+    - save_and_open_page
+    - save_and_open_screenshot
+    - save_page
+    - save_screenshot
+    debug.rb:
+    - binding.b
+    - binding.break
+    - Kernel.binding.b
+    - Kernel.binding.break
+    Pry:
+    - binding.pry
+    - binding.remote_pry
+    - binding.pry_remote
+    - Kernel.binding.pry
+    - Kernel.binding.remote_pry
+    - Kernel.binding.pry_remote
+    - Pry.rescue
+    - pry
+    Rails:
+    - debugger
+    - Kernel.debugger
+    RubyJard:
+    - jard
+    WebConsole:
+    - binding.console
+  DebuggerRequires:
+    debug.rb:
+    - debug/open
+    - debug/start
+
+# Supports --autocorrect
+Lint/DeprecatedClassMethods:
+  Description: Checks for deprecated class method calls.
+  Enabled: false
+  VersionAdded: '0.19'
+
+# Supports --autocorrect
+Lint/DeprecatedConstants:
+  Description: Checks for deprecated constants.
+  Enabled: false
+  VersionAdded: '1.8'
+  VersionChanged: '1.40'
+  DeprecatedConstants:
+    NIL:
+      Alternative: nil
+      DeprecatedVersion: '2.4'
+    'TRUE':
+      Alternative: 'true'
+      DeprecatedVersion: '2.4'
+    'FALSE':
+      Alternative: 'false'
+      DeprecatedVersion: '2.4'
+    Net::HTTPServerException:
+      Alternative: Net::HTTPClientException
+      DeprecatedVersion: '2.6'
+    Random::DEFAULT:
+      Alternative: Random.new
+      DeprecatedVersion: '3.0'
+    Struct::Group:
+      Alternative: Etc::Group
+      DeprecatedVersion: '3.0'
+    Struct::Passwd:
+      Alternative: Etc::Passwd
+      DeprecatedVersion: '3.0'
+
+# Supports --autocorrect
+Lint/DeprecatedOpenSSLConstant:
+  Description: Don't use algorithm constants for `OpenSSL::Cipher` and `OpenSSL::Digest`.
+  Enabled: false
+  VersionAdded: '0.84'
+
+Lint/DeprecatedReference:
+  Description: Checks for references to methods and constants documented as deprecated
+    with a YARD `@deprecated` tag. Requires `AllCops/UseProjectIndex` to be enabled.
+  Enabled: false
+  VersionAdded: '1.89'
+
+# Supports --autocorrect
+Lint/DisjunctiveAssignmentInConstructor:
+  Description: In constructor, plain assignment is preferred over disjunctive.
+  StyleGuide: "#disjunctive-assignment-in-constructor"
+  Enabled: false
+  Safe: false
+  VersionAdded: '0.62'
+  VersionChanged: '0.88'
+
+Lint/DuplicateBranch:
+  Description: Checks that there are no repeated bodies within `if/unless`, `case-when`
+    and `rescue` constructs.
+  Enabled: false
+  VersionAdded: '1.3'
+  VersionChanged: '1.7'
+  IgnoreLiteralBranches: false
+  IgnoreConstantBranches: false
+  IgnoreDuplicateElseBranch: false
+
+Lint/DuplicateCaseCondition:
+  Description: Do not repeat values in case conditionals.
+  Enabled: false
+  VersionAdded: '0.45'
+
+Lint/DuplicateElsifCondition:
+  Description: Do not repeat conditions used in if `elsif`.
+  Enabled: false
+  VersionAdded: '0.88'
+
+Lint/DuplicateHashKey:
+  Description: Checks for duplicate keys in hash literals.
+  Enabled: false
+  VersionAdded: '0.34'
+  VersionChanged: '0.77'
+
+# Supports --autocorrect
+Lint/DuplicateMagicComment:
+  Description: Checks for duplicated magic comments.
+  Enabled: false
+  VersionAdded: '1.37'
+
+Lint/DuplicateMatchPattern:
+  Description: Do not repeat patterns in `in` keywords.
+  Enabled: false
+  VersionAdded: '1.50'
+
+Lint/DuplicateMethods:
+  Description: Checks for duplicate method definitions.
+  Enabled: false
+  VersionAdded: '0.29'
+  VersionChanged: '1.90'
+  DelegatingMethods:
+  - delegate
+  AllowedCrossFilePaths: []
+
+# Supports --autocorrect
+Lint/DuplicateRegexpCharacterClassElement:
+  Description: Checks for duplicate elements in Regexp character classes.
+  Enabled: false
+  VersionAdded: '1.1'
+
+# Supports --autocorrect
+Lint/DuplicateRequire:
+  Description: Checks for duplicate `require`s and `require_relative`s.
+  Enabled: false
+  SafeAutoCorrect: false
+  VersionAdded: '0.90'
+  VersionChanged: '1.28'
+
+Lint/DuplicateRescueException:
+  Description: Checks that there are no repeated exceptions used in `rescue` expressions.
+  Enabled: false
+  VersionAdded: '0.89'
+
+# Supports --autocorrect
+Lint/DuplicateSetElement:
+  Description: Checks for duplicate elements in Set.
+  Enabled: false
+  VersionAdded: '1.67'
+
+Lint/EachWithObjectArgument:
+  Description: Checks for immutable argument given to each_with_object.
+  Enabled: false
+  VersionAdded: '0.31'
+
+# Supports --autocorrect
+Lint/ElseLayout:
+  Description: Checks for odd code arrangement in an else block.
+  Enabled: false
+  VersionAdded: '0.17'
+  VersionChanged: '1.2'
+
+Lint/EmptyBlock:
+  Description: Checks for blocks without a body.
+  Enabled: false
+  VersionAdded: '1.1'
+  VersionChanged: '1.15'
+  AllowComments: true
+  AllowEmptyLambdas: true
+
+Lint/EmptyClass:
+  Description: Checks for classes and metaclasses without a body.
+  Enabled: false
+  VersionAdded: '1.3'
+  AllowComments: false
+
+# Supports --autocorrect
+Lint/EmptyConditionalBody:
+  Description: Checks for the presence of `if`, `elsif` and `unless` branches without
+    a body.
+  Enabled: false
+  AutoCorrect: contextual
+  VersionAdded: '0.89'
+  VersionChanged: '1.73'
+  AllowComments: true
+
+# Supports --autocorrect
+Lint/EmptyEnsure:
+  Description: Checks for empty ensure block.
+  Enabled: false
+  AutoCorrect: contextual
+  VersionAdded: '0.10'
+  VersionChanged: '1.61'
+
+Lint/EmptyExpression:
+  Description: Checks for empty expressions.
+  Enabled: false
+  VersionAdded: '0.45'
+
+Lint/EmptyFile:
+  Description: Enforces that Ruby source files are not empty.
+  Enabled: false
+  AllowComments: true
+  VersionAdded: '0.90'
+
+Lint/EmptyInPattern:
+  Description: Checks for the presence of `in` pattern branches without a body.
+  Enabled: false
+  AllowComments: true
+  VersionAdded: '1.16'
+
+# Supports --autocorrect
+Lint/EmptyInterpolation:
+  Description: Checks for empty string interpolation.
+  Enabled: false
+  AutoCorrect: contextual
+  VersionAdded: '0.20'
+  VersionChanged: '1.76'
+
+Lint/EmptyWhen:
+  Description: Checks for `when` branches with empty bodies.
+  Enabled: false
+  VersionAdded: '0.45'
+  VersionChanged: '0.83'
+  AllowComments: true
+
+Lint/EnsureReturn:
+  Description: Do not use return in an ensure block.
+  StyleGuide: "#no-return-ensure"
+  Enabled: false
+  VersionAdded: '0.9'
+  VersionChanged: '0.83'
+
+# Supports --autocorrect
+Lint/ErbNewArguments:
+  Description: Use `:trim_mode` and `:eoutvar` keyword arguments to `ERB.new`.
+  Enabled: false
+  VersionAdded: '0.56'
+
+Lint/FlipFlop:
+  Description: Checks for flip-flops.
+  StyleGuide: "#no-flip-flops"
+  Enabled: false
+  VersionAdded: '0.16'
+
+Lint/FloatComparison:
+  Description: Checks for the presence of precise comparison of floating point numbers.
+  StyleGuide: "#float-comparison"
+  Enabled: false
+  VersionAdded: '0.89'
+
+Lint/FloatOutOfRange:
+  Description: Catches floating-point literals too large or small for Ruby to represent.
+  Enabled: false
+  VersionAdded: '0.36'
+
+Lint/FormatParameterMismatch:
+  Description: Checks for a mismatch between the format fields and the arguments to
+    `format`/`sprintf`/`%`.
+  Enabled: false
+  VersionAdded: '0.33'
+
+Lint/HashCompareByIdentity:
+  Description: Prefer using `Hash#compare_by_identity` than using `object_id` for keys.
+  StyleGuide: "#identity-comparison"
+  Enabled: false
+  Safe: false
+  VersionAdded: '0.93'
+
+# Supports --autocorrect
+Lint/HashNewWithKeywordArgumentsAsDefault:
+  Description: Checks for the deprecated use of keyword arguments for hash default in
+    `Hash.new`.
+  Enabled: false
+  VersionAdded: '1.69'
+
+# Supports --autocorrect
+Lint/HeredocMethodCallPosition:
+  Description: Checks for the ordering of a method call where the receiver of the call
+    is a HEREDOC.
+  StyleGuide: "#heredoc-method-calls"
+  Enabled: false
+  VersionAdded: '0.68'
+
+# Supports --autocorrect
+Lint/IdentityComparison:
+  Description: Prefer `equal?` over `==` when comparing `object_id`.
+  StyleGuide: "#identity-comparison"
+  Enabled: false
+  VersionAdded: '0.91'
+
+# Supports --autocorrect
+Lint/ImplicitStringConcatenation:
+  Description: Checks for adjacent string literals on the same line, which could better
+    be represented as a single string literal.
+  Enabled: false
+  VersionAdded: '0.36'
+
+# Supports --autocorrect
+Lint/IncompatibleIoSelectWithFiberScheduler:
+  Description: Checks for `IO.select` that is incompatible with Fiber Scheduler.
+  Enabled: false
+  SafeAutoCorrect: false
+  VersionAdded: '1.21'
+  VersionChanged: '1.24'
+
+Lint/IneffectiveAccessModifier:
+  Description: Checks for attempts to use `private` or `protected` to set the visibility
+    of a class method, which does not work.
+  Enabled: false
+  VersionAdded: '0.36'
+
+# Supports --autocorrect
+Lint/InheritException:
+  Description: Avoid inheriting from the `Exception` class.
+  Enabled: false
+  SafeAutoCorrect: false
+  VersionAdded: '0.41'
+  VersionChanged: '1.89'
+  EnforcedStyle: standard_error
+  SupportedStyles:
+  - standard_error
+  - runtime_error
+
+# Supports --autocorrect
+Lint/InterpolationCheck:
+  Description: Checks for interpolation in a single quoted string.
+  Enabled: false
+  SafeAutoCorrect: false
+  VersionAdded: '0.50'
+  VersionChanged: '1.40'
+
+Lint/ItWithoutArgumentsInBlock:
+  Description: Checks uses of `it` calls without arguments in block.
+  References:
+  - https://bugs.ruby-lang.org/issues/18980
+  Enabled: false
+  VersionAdded: '1.59'
+
+# Supports --autocorrect
+Lint/LambdaWithoutLiteralBlock:
+  Description: Checks uses of lambda without a literal block.
+  Enabled: false
+  VersionAdded: '1.8'
+
+# Supports --autocorrect
+Lint/LiteralAsCondition:
+  Description: Checks of literals used in conditions.
+  Enabled: false
+  AutoCorrect: contextual
+  VersionAdded: '0.51'
+
+Lint/LiteralAssignmentInCondition:
+  Description: Checks for literal assignments in the conditions.
+  Enabled: false
+  VersionAdded: '1.58'
+
+# Supports --autocorrect
+Lint/LiteralInInterpolation:
+  Description: Checks for literals used in interpolation.
+  Enabled: false
+  VersionAdded: '0.19'
+  VersionChanged: '0.32'
+
+# Supports --autocorrect
+Lint/Loop:
+  Description: Use Kernel#loop with break rather than begin/end/until or begin/end/while
+    for post-loop tests.
+  StyleGuide: "#loop-with-break"
+  Enabled: false
+  VersionAdded: '0.9'
+  VersionChanged: '1.3'
+  Safe: false
+
+# Supports --autocorrect
+Lint/MisplacedMagicComment:
+  Description: Checks for magic comments placed where Ruby silently ignores them.
+  StyleGuide: "#magic-comments-first"
+  Enabled: false
+  SafeAutoCorrect: false
+  VersionAdded: '1.91'
+
+Lint/MissingCopEnableDirective:
+  Description: Checks for a `# rubocop:enable` after `# rubocop:disable`.
+  Enabled: false
+  VersionAdded: '0.52'
+  VersionChanged: '1.90'
+  MaxRangeSize: .inf
+
+Lint/MissingSuper:
+  Description: Checks for the presence of constructors and lifecycle callbacks without
+    calls to `super`.
+  Enabled: false
+  VersionAdded: '0.89'
+  VersionChanged: '1.89'
+  AllowedParentClasses: []
+
+# Supports --autocorrect
+Lint/MixedCaseRange:
+  Description: Checks for mixed-case character ranges since they include likely unintended
+    characters.
+  Enabled: false
+  SafeAutoCorrect: false
+  VersionAdded: '1.53'
+
+Lint/MixedRegexpCaptureTypes:
+  Description: Do not mix named captures and numbered captures in a Regexp literal.
+  StyleGuide: "#do-not-mix-named-and-numbered-captures"
+  Enabled: false
+  VersionAdded: '0.85'
+
+# Supports --autocorrect
+Lint/MultipleComparison:
+  Description: Use `&&` operator to compare multiple values.
+  Enabled: false
+  VersionAdded: '0.47'
+  VersionChanged: '1.1'
+
+Lint/NameTypo:
+  Description: Checks for probable typos in constant and method names, using the project
+    index.
+  Enabled: false
+  CheckConstants: true
+  CheckMethods: true
+  AllowedNames: []
+  VersionAdded: '1.89'
+
+Lint/NestedMethodDefinition:
+  Description: Do not use nested method definitions.
+  StyleGuide: "#no-nested-methods"
+  Enabled: false
+  AllowedMethods: []
+  AllowedPatterns: []
+  VersionAdded: '0.32'
+
+Lint/NestedPercentLiteral:
+  Description: Checks for nested percent literals.
+  Enabled: false
+  VersionAdded: '0.52'
+
+Lint/NextWithoutAccumulator:
+  Description: Do not omit the accumulator when calling `next` in a `reduce`/`inject`
+    block.
+  Enabled: false
+  VersionAdded: '0.36'
+
+Lint/NoReturnInBeginEndBlocks:
+  Description: Do not `return` inside `begin..end` blocks in assignment contexts.
+  Enabled: false
+  VersionAdded: '1.2'
+
+# Supports --autocorrect
+Lint/NonAtomicFileOperation:
+  Description: Checks for non-atomic file operations.
+  StyleGuide: "#atomic-file-operations"
+  Enabled: false
+  VersionAdded: '1.31'
+  SafeAutoCorrect: false
+
+# Supports --autocorrect
+Lint/NonDeterministicRequireOrder:
+  Description: Always sort arrays returned by Dir.glob when requiring files.
+  Enabled: false
+  VersionAdded: '0.78'
+  Safe: false
+
+Lint/NonLocalExitFromIterator:
+  Description: Do not use return in iterator to cause non-local exit.
+  Enabled: false
+  VersionAdded: '0.30'
+
+# Supports --autocorrect
+Lint/NumberConversion:
+  Description: Checks unsafe usage of number conversion methods.
+  Enabled: false
+  VersionAdded: '0.53'
+  VersionChanged: '1.88'
+  SafeAutoCorrect: false
+  AllowedMethods: []
+  AllowedPatterns: []
+  AllowedClasses:
+  - Time
+  - DateTime
+
+Lint/NumberedParameterAssignment:
+  Description: Checks for uses of numbered parameter assignment.
+  Enabled: false
+  VersionAdded: '1.9'
+
+# Supports --autocorrect
+Lint/NumericOperationWithConstantResult:
+  Description: Checks for numeric operations with constant results.
+  Enabled: false
+  SafeAutoCorrect: false
+  VersionAdded: '1.69'
+  VersionChanged: '1.88'
+
+# Supports --autocorrect
+Lint/OrAssignmentToConstant:
+  Description: Checks unintended or-assignment to constant.
+  Enabled: false
+  Safe: false
+  VersionAdded: '1.9'
+
+# Supports --autocorrect
+Lint/OrderedMagicComments:
+  Description: Checks the proper ordering of magic comments and whether a magic comment
+    is not placed before a shebang.
+  Enabled: false
+  SafeAutoCorrect: false
+  VersionAdded: '0.53'
+  VersionChanged: '1.91'
+
+Lint/OutOfRangeRegexpRef:
+  Description: Checks for out of range reference for Regexp because it always returns
+    nil.
+  Enabled: false
+  Safe: false
+  VersionAdded: '0.89'
+
+# Supports --autocorrect
+Lint/ParenthesesAsGroupedExpression:
+  Description: Checks for method calls with a space before the opening parenthesis.
+  StyleGuide: "#parens-no-spaces"
+  Enabled: false
+  VersionAdded: '0.12'
+  VersionChanged: '0.83'
+
+# Supports --autocorrect
+Lint/PercentStringArray:
+  Description: Checks for unwanted commas and quotes in %w/%W literals.
+  Enabled: false
+  Safe: false
+  VersionAdded: '0.41'
+
+# Supports --autocorrect
+Lint/PercentSymbolArray:
+  Description: Checks for unwanted commas and colons in %i/%I literals.
+  Enabled: false
+  VersionAdded: '0.41'
+
+# Supports --autocorrect
+Lint/RaiseException:
+  Description: Checks for `raise` or `fail` statements which are raising `Exception`
+    class.
+  StyleGuide: "#raise-exception"
+  Enabled: false
+  Safe: false
+  VersionAdded: '0.81'
+  VersionChanged: '0.86'
+  AllowedImplicitNamespaces:
+  - Gem
+
+Lint/RandOne:
+  Description: Checks for `rand(1)` calls. Such calls always return `0` and most likely
+    a mistake.
+  Enabled: false
+  VersionAdded: '0.36'
+
+# Supports --autocorrect
+Lint/RedundantCopDisableDirective:
+  Description: 'Checks for rubocop:disable comments that can be removed. Note: this
+    cop is not disabled when disabling all cops. It must be explicitly disabled.'
+  Enabled: false
+  VersionAdded: '0.76'
+
+# Supports --autocorrect
+Lint/RedundantCopEnableDirective:
+  Description: Checks for rubocop:enable comments that can be removed.
+  Enabled: false
+  VersionAdded: '0.76'
+  VersionChanged: '1.90'
+
+# Supports --autocorrect
+Lint/RedundantDirGlobSort:
+  Description: Checks for redundant `sort` method to `Dir.glob` and `Dir[]`.
+  Enabled: false
+  VersionAdded: '1.8'
+  VersionChanged: '1.26'
+  SafeAutoCorrect: false
+
+# Supports --autocorrect
+Lint/RedundantRegexpQuantifiers:
+  Description: Checks for redundant quantifiers in Regexps.
+  Enabled: false
+  VersionAdded: '1.53'
+
+# Supports --autocorrect
+Lint/RedundantRequireStatement:
+  Description: Checks for unnecessary `require` statement.
+  Enabled: false
+  VersionAdded: '0.76'
+  VersionChanged: '1.73'
+
+# Supports --autocorrect
+Lint/RedundantSafeNavigation:
+  Description: Checks for redundant safe navigation calls.
+  Enabled: false
+  VersionAdded: '0.93'
+  VersionChanged: '1.79'
+  AllowedMethods:
+  - instance_of?
+  - kind_of?
+  - is_a?
+  - eql?
+  - respond_to?
+  - equal?
+  InferNonNilReceiver: false
+  AdditionalNilMethods:
+  - present?
+  - blank?
+  - try
+  - try!
+  Safe: false
+
+# Supports --autocorrect
+Lint/RedundantSplatExpansion:
+  Description: Checks for splat unnecessarily being called on literals.
+  Enabled: false
+  VersionAdded: '0.76'
+  VersionChanged: '1.7'
+  AllowPercentLiteralArrayArgument: true
+
+# Supports --autocorrect
+Lint/RedundantStringCoercion:
+  Description: Checks for Object#to_s usage in string interpolation.
+  StyleGuide: "#no-to-s"
+  Enabled: false
+  VersionAdded: '0.19'
+  VersionChanged: '0.77'
+
+# Supports --autocorrect
+Lint/RedundantTypeConversion:
+  Description: Checks for redundantly converting a literal to the same type.
+  Enabled: false
+  VersionAdded: '1.72'
+
+# Supports --autocorrect
+Lint/RedundantWithIndex:
+  Description: Checks for redundant `with_index`.
+  Enabled: false
+  VersionAdded: '0.50'
+
+# Supports --autocorrect
+Lint/RedundantWithObject:
+  Description: Checks for redundant `with_object`.
+  Enabled: false
+  SafeAutoCorrect: false
+  VersionAdded: '0.51'
+  VersionChanged: '1.88'
+
+# Supports --autocorrect
+Lint/RefinementImportMethods:
+  Description: Use `Refinement#import_methods` when using `include` or `prepend` in
+    `refine` block.
+  Enabled: false
+  SafeAutoCorrect: false
+  VersionAdded: '1.27'
+  VersionChanged: '1.88'
+
+# Supports --autocorrect
+Lint/RegexpAsCondition:
+  Description: Do not use regexp literal as a condition. The regexp literal matches
+    `$_` implicitly.
+  Enabled: false
+  VersionAdded: '0.51'
+  VersionChanged: '0.86'
+
+Lint/RequireParentheses:
+  Description: Use parentheses in the method call to avoid confusion about precedence.
+  Enabled: false
+  VersionAdded: '0.18'
+
+Lint/RequireRangeParentheses:
+  Description: Checks that a range literal is enclosed in parentheses when the end of
+    the range is at a line break.
+  Enabled: false
+  VersionAdded: '1.32'
+
+# Supports --autocorrect
+Lint/RequireRelativeSelfPath:
+  Description: Checks for uses a file requiring itself with `require_relative`.
+  Enabled: false
+  VersionAdded: '1.22'
+
+Lint/RescueException:
+  Description: Avoid rescuing the Exception class.
+  StyleGuide: "#no-blind-rescues"
+  Enabled: false
+  VersionAdded: '0.9'
+  VersionChanged: '0.27'
+
+# Supports --autocorrect
+Lint/RescueType:
+  Description: Avoid rescuing from non constants that could result in a `TypeError`.
+  Enabled: false
+  VersionAdded: '0.49'
+
+Lint/ReturnInVoidContext:
+  Description: Checks for return in void context.
+  Enabled: false
+  VersionAdded: '0.50'
+
+# Supports --autocorrect
+Lint/SafeNavigationChain:
+  Description: Do not chain ordinary method call after safe navigation operator.
+  Enabled: false
+  SafeAutoCorrect: false
+  VersionAdded: '0.47'
+  VersionChanged: '1.89'
+  AllowedMethods:
+  - present?
+  - blank?
+  - presence
+  - try
+  - try!
+  - in?
+
+# Supports --autocorrect
+Lint/SafeNavigationConsistency:
+  Description: Check to make sure that if safe navigation is used in an `&&` or `||`
+    condition, consistent and appropriate safe navigation, without excess or deficiency,
+    is used for all method calls on the same object.
+  Enabled: false
+  SafeAutoCorrect: false
+  VersionAdded: '0.55'
+  VersionChanged: '1.85'
+  AllowedMethods:
+  - present?
+  - blank?
+  - presence
+  - try
+  - try!
+
+# Supports --autocorrect
+Lint/SafeNavigationWithEmpty:
+  Description: Avoid `foo&.empty?` in conditionals.
+  Enabled: false
+  VersionAdded: '0.62'
+  VersionChanged: '0.87'
+
+# Supports --autocorrect
+Lint/ScriptPermission:
+  Description: Grant script file execute permission.
+  Enabled: false
+  VersionAdded: '0.49'
+  VersionChanged: '0.50'
+
+Lint/SelfAssignment:
+  Description: Checks for self-assignments.
+  Enabled: false
+  VersionAdded: '0.89'
+  AllowRBSInlineAnnotation: false
+
+# Supports --autocorrect
+Lint/SendWithMixinArgument:
+  Description: Checks for `send` method when using mixin.
+  Enabled: false
+  VersionAdded: '0.75'
+
+Lint/ShadowedArgument:
+  Description: Avoid reassigning arguments before they were used.
+  Enabled: false
+  VersionAdded: '0.52'
+  IgnoreImplicitReferences: false
+
+Lint/ShadowedException:
+  Description: Avoid rescuing a higher level exception before a lower level exception.
+  StyleGuide: "#exception-ordering"
+  Enabled: false
+  VersionAdded: '0.41'
+
+Lint/ShadowingOuterLocalVariable:
+  Description: Do not use the same name as outer local variable for block arguments
+    or block local variables.
+  Enabled: false
+  VersionAdded: '0.9'
+  VersionChanged: '1.76'
+
+Lint/SharedMutableDefault:
+  Description: Checks for mutable literals used as default arguments during Hash initialization.
+  StyleGuide: "#no-mutable-defaults"
+  Enabled: false
+  VersionAdded: '1.70'
+
+Lint/StructNewOverride:
+  Description: Disallow overriding the `Struct` built-in methods via `Struct.new`.
+  Enabled: false
+  VersionAdded: '0.81'
+
+Lint/SuperArgumentMismatch:
+  Description: Checks for `super` calls that pass the wrong number of positional arguments
+    to the overridden implementation, using the project index.
+  Enabled: false
+  VersionAdded: '1.90'
+
+Lint/SuppressedException:
+  Description: Don't suppress exceptions.
+  StyleGuide: "#dont-hide-exceptions"
+  Enabled: false
+  VersionAdded: '0.9'
+  VersionChanged: '1.12'
+  AllowComments: true
+  AllowNil: true
+
+# Supports --autocorrect
+Lint/SuppressedExceptionInNumberConversion:
+  Description: Checks for cases where exceptions unrelated to the numeric constructors
+    may be unintentionally swallowed.
+  Enabled: false
+  SafeAutoCorrect: false
+  VersionAdded: '1.72'
+
+# Supports --autocorrect
+Lint/SymbolConversion:
+  Description: Checks for unnecessary symbol conversions.
+  Enabled: false
+  VersionAdded: '1.9'
+  VersionChanged: '1.16'
+  EnforcedStyle: strict
+  SupportedStyles:
+  - strict
+  - consistent
+
+Lint/Syntax:
+  Description: Checks for syntax errors.
+  Enabled: true
+  VersionAdded: '0.9'
+
+Lint/ToEnumArguments:
+  Description: Ensures that `to_enum`/`enum_for`, called for the current method, has
+    correct arguments.
+  Enabled: false
+  VersionAdded: '1.1'
+
+# Supports --autocorrect
+Lint/ToJSON:
+  Description: 'Ensure #to_json includes an optional argument.'
+  Enabled: false
+  VersionAdded: '0.66'
+
+# Supports --autocorrect
+Lint/TopLevelReturnWithArgument:
+  Description: Detects top level return statements with argument.
+  Enabled: false
+  VersionAdded: '0.89'
+  Exclude:
+  - "<project>/**/*.jb"
+
+# Supports --autocorrect
+Lint/TrailingCommaInAttributeDeclaration:
+  Description: Checks for trailing commas in attribute declarations.
+  Enabled: false
+  AutoCorrect: contextual
+  VersionAdded: '0.90'
+  VersionChanged: '1.61'
+
+# Supports --autocorrect
+Lint/TripleQuotes:
+  Description: Checks for useless triple quote constructs.
+  Enabled: false
+  VersionAdded: '1.9'
+
+Lint/UnderscorePrefixedVariableName:
+  Description: Do not use prefix `_` for a variable that is used.
+  Enabled: false
+  VersionAdded: '0.21'
+  AllowKeywordBlockArguments: false
+
+# Supports --autocorrect
+Lint/UnescapedBracketInRegexp:
+  Description: Checks for unescaped literal `]` in Regexp.
+  Enabled: false
+  VersionAdded: '1.68'
+
+Lint/UnexpectedBlockArity:
+  Description: Looks for blocks that have fewer arguments that the calling method expects.
+  Enabled: false
+  Safe: false
+  VersionAdded: '1.5'
+  Methods:
+    chunk_while: 2
+    each_with_index: 2
+    each_with_object: 2
+    inject: 2
+    max: 2
+    min: 2
+    minmax: 2
+    reduce: 2
+    slice_when: 2
+    sort: 2
+
+# Supports --autocorrect
+Lint/UnifiedInteger:
+  Description: Use Integer instead of Fixnum or Bignum.
+  StyleGuide: "#integer-type-checking"
+  Enabled: false
+  VersionAdded: '0.43'
+
+Lint/UnmodifiedReduceAccumulator:
+  Description: Checks for `reduce` or `inject` blocks that do not update the accumulator
+    each iteration.
+  Enabled: false
+  VersionAdded: '1.1'
+  VersionChanged: '1.5'
+
+Lint/UnreachableCode:
+  Description: Checks for unreachable code.
+  Enabled: false
+  VersionAdded: '0.9'
+
+Lint/UnreachableLoop:
+  Description: Checks for loops that will have at most one iteration.
+  Enabled: false
+  VersionAdded: '0.89'
+  VersionChanged: '1.7'
+  AllowedPatterns:
+  - !ruby/regexp /(exactly|at_least|at_most)\(\d+\)\.times/
+
+Lint/UnreachablePatternBranch:
+  Description: Checks for unreachable `in` pattern branches after an unconditional catch-all
+    pattern.
+  Enabled: false
+  VersionAdded: '1.85'
+
+# Supports --autocorrect
+Lint/UnusedBlockArgument:
+  Description: Checks for unused block arguments.
+  StyleGuide: "#underscore-unused-vars"
+  Enabled: false
+  AutoCorrect: contextual
+  VersionAdded: '0.21'
+  VersionChanged: '1.61'
+  IgnoreEmptyBlocks: true
+  AllowUnusedKeywordArguments: false
+
+# Supports --autocorrect
+Lint/UnusedMethodArgument:
+  Description: Checks for unused method arguments.
+  StyleGuide: "#underscore-unused-vars"
+  Enabled: false
+  AutoCorrect: contextual
+  VersionAdded: '0.21'
+  VersionChanged: '1.69'
+  AllowUnusedKeywordArguments: false
+  IgnoreEmptyMethods: true
+  IgnoreNotImplementedMethods: true
+  NotImplementedExceptions:
+  - NotImplementedError
+
+Lint/UnusedPrivateMethod:
+  Description: Checks for private instance methods that are not referenced anywhere
+    in the project. Requires `AllCops/UseProjectIndex` to be enabled.
+  Enabled: false
+  AllowedNames: []
+  AllowedPatterns: []
+  VersionAdded: '1.89'
+  VersionChanged: '1.90'
+
+Lint/UriEscapeUnescape:
+  Description: "`URI.escape` method is obsolete and should not be used. Instead, use
+    `CGI.escape`, `URI.encode_www_form` or `URI.encode_www_form_component` depending
+    on your specific use case. Also `URI.unescape` method is obsolete and should not
+    be used. Instead, use `CGI.unescape`, `URI.decode_www_form` or `URI.decode_www_form_component`
+    depending on your specific use case."
+  Enabled: false
+  VersionAdded: '0.50'
+
+# Supports --autocorrect
+Lint/UriRegexp:
+  Description: Use `URI::DEFAULT_PARSER.make_regexp` instead of `URI.regexp`.
+  Enabled: false
+  VersionAdded: '0.50'
+
+# Supports --autocorrect
+Lint/UselessAccessModifier:
+  Description: Checks for useless access modifiers.
+  Enabled: false
+  AutoCorrect: contextual
+  VersionAdded: '0.20'
+  VersionChanged: '1.61'
+  ContextCreatingMethods: []
+  MethodCreatingMethods: []
+
+# Supports --autocorrect
+Lint/UselessAssignment:
+  Description: Checks for useless assignment to a local variable.
+  StyleGuide: "#underscore-unused-vars"
+  Enabled: false
+  AutoCorrect: contextual
+  VersionAdded: '0.11'
+  VersionChanged: '1.66'
+
+Lint/UselessConstantScoping:
+  Description: Checks for useless constant scoping.
+  Enabled: false
+  VersionAdded: '1.72'
+  VersionChanged: '1.90'
+
+# Supports --autocorrect
+Lint/UselessDefaultValueArgument:
+  Description: Checks for usage of `fetch` or `Array.new` with default value argument
+    and block.
+  Enabled: false
+  VersionAdded: '1.76'
+  Safe: false
+  AllowedReceivers: []
+
+Lint/UselessDefined:
+  Description: Checks for calls to `defined?` with strings and symbols. The result of
+    such a call will always be truthy.
+  Enabled: false
+  VersionAdded: '1.69'
+
+Lint/UselessElseWithoutRescue:
+  Description: Checks for useless `else` in `begin..end` without `rescue`.
+  Enabled: false
+  VersionAdded: '0.17'
+  VersionChanged: '1.31'
+
+# Supports --autocorrect
+Lint/UselessMethodDefinition:
+  Description: Checks for useless method definitions.
+  Enabled: false
+  AutoCorrect: contextual
+  VersionAdded: '0.90'
+  VersionChanged: '1.61'
+  Safe: false
+
+# Supports --autocorrect
+Lint/UselessNumericOperation:
+  Description: Checks for useless numeric operations.
+  Enabled: false
+  VersionAdded: '1.66'
+
+# Supports --autocorrect
+Lint/UselessOr:
+  Description: Checks for useless OR expressions.
+  Enabled: false
+  SafeAutoCorrect: false
+  AutoCorrect: contextual
+  VersionAdded: '1.76'
+  VersionChanged: '1.82'
+
+Lint/UselessRescue:
+  Description: Checks for useless `rescue`s.
+  Enabled: false
+  VersionAdded: '1.43'
+
+Lint/UselessRuby2Keywords:
+  Description: Finds unnecessary uses of `ruby2_keywords`.
+  Enabled: false
+  VersionAdded: '1.23'
+
+# Supports --autocorrect
+Lint/UselessSetterCall:
+  Description: Checks for useless setter call to a local variable.
+  Enabled: false
+  Safe: false
+  VersionAdded: '0.13'
+  VersionChanged: '1.2'
+
+# Supports --autocorrect
+Lint/UselessTimes:
+  Description: Checks for useless `Integer#times` calls.
+  Enabled: false
+  Safe: false
+  AutoCorrect: contextual
+  VersionAdded: '0.91'
+  VersionChanged: '1.61'
+
+# Supports --autocorrect
+Lint/Void:
+  Description: Checks for operators, literals, lambdas, and procs used in void context.
+  Enabled: false
+  AutoCorrect: contextual
+  VersionAdded: '0.9'
+  VersionChanged: '1.61'
+  CheckForMethodsWithNoSideEffects: false
+
+Metrics/MethodLength:
+  Description: Avoid methods longer than 10 lines of code.
+  StyleGuide: "#short-methods"
+  Enabled: pending
+  VersionAdded: '0.25'
+  VersionChanged: '1.5'
+  CountComments: false
+  Max: 10
+  CountAsOne: []
+  AllowedMethods: []
+  AllowedPatterns: []
+
+Naming/MethodName:
+  Description: Use the configured style when naming methods.
+  StyleGuide: "#snake-case-symbols-methods-vars"
+  Enabled: preview
+  VersionAdded: '0.50'
+  VersionChanged: '1.75'
+  EnforcedStyle: snake_case
+  SupportedStyles:
+  - snake_case
+  - camelCase
+  AllowedPatterns: []
+  ForbiddenIdentifiers:
+  - __id__
+  - __send__
+  ForbiddenPatterns: []
+
+# Supports --autocorrect
+Style/InverseMethods:
+  Description: Use the inverse method instead of `!.method` if an inverse method is
+    defined.
+  Enabled: true
+  Safe: false
+  VersionAdded: '0.48'
+  InverseMethods:
+    :any?: :none?
+    :even?: :odd?
+    :==: :!=
+    :=~: :!~
+    :<: :>=
+    :>: :<=
+    :foo?: :bar?
+  InverseBlocks:
+    :select: :reject
+    :select!: :reject!
+
+# Supports --autocorrect
+Style/StringLiterals:
+  Description: Checks if uses of quotes match the configured preference.
+  StyleGuide: "#consistent-string-literals"
+  Enabled: true
+  VersionAdded: '0.9'
+  VersionChanged: '0.36'
+  EnforcedStyle: double_quotes
+  SupportedStyles:
+  - single_quotes
+  - double_quotes
+  ConsistentQuotesInMultiline: false
+

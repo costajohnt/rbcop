@@ -19,6 +19,12 @@ oracle_root=${RBCOP_ORACLE:?set RBCOP_ORACLE to the oracle directory}
 mode=${MODE:--A}
 out=${OUT:-${TMPDIR:-/tmp}/rbcop-autocorrect-$(basename "$root")}
 pattern=": [CWEFRI]: (\[Correctable\] )?($(echo "$cops" | tr , '|')): "
+# RuboCop rejects --only with Lint/RedundantCopDisableDirective (options.rb validate_compatibility)
+# and never runs it under --only (runner.rb check_for_redundant_disables?), so a list containing it
+# runs both tools without --only: every cop corrects, as in a real -A run, and the report then
+# contains every cop's offenses.
+only="--only $cops"
+case ",$cops," in *,Lint/RedundantCopDisableDirective,*) only= ;; esac
 
 status=0
 for c in $corpora; do
@@ -51,9 +57,9 @@ for c in $corpora; do
       cp "$f" "$dir/$side/$f"
     done
   done) < "$dir/files"
-  (cd "$dir/rubocop" && RBENV_VERSION=4.0.6 rbenv exec rubocop "$mode" --only "$cops" --force-default-config \
+  (cd "$dir/rubocop" && RBENV_VERSION=4.0.6 rbenv exec rubocop "$mode" $only --force-default-config \
     --cache false --format emacs . > ../rubocop.out 2> ../rubocop.err) || true
-  (cd "$dir/rbcop" && "$bin" "$mode" --only "$cops" --force-default-config --format emacs . > ../rbcop.out 2> ../rbcop.err) || true
+  (cd "$dir/rbcop" && "$bin" "$mode" $only --force-default-config --format emacs . > ../rbcop.out 2> ../rbcop.err) || true
   # Both tools print physical paths (getcwd), e.g. /private/var on macOS.
   phys=$(cd "$dir" && pwd -P)
   sed "s|^$phys/rubocop/||; s|^$dir/rubocop/||" "$dir/rubocop.out" | LC_ALL=C sort > "$dir/rubocop.norm"

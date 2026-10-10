@@ -16,7 +16,8 @@ const USAGE: &str = "Usage: rbcop [options] [file1, file2, ...]
 
 Accepts RuboCop's command-line options. Supported:
   -c, --config FILE, --force-default-config, --only/--except COPS, --force-exclusion,
-  --ignore-parent-exclusion, --enable-pending-cops, --disable-pending-cops, -s/--stdin FILE,
+  --ignore-parent-exclusion, --enable-pending-cops, --disable-pending-cops, --[no-]preview,
+  -s/--stdin FILE,
   -F/--fail-fast, --fail-level SEVERITY, -f/--format FORMATTER, -o/--out FILE,
   -D/--[no-]display-cop-names, -E/--extra-details, -S/--display-style-guide, --display-time,
   --display-only-fail-level-offenses, --display-only-correctable, --display-only-safe-correctable,
@@ -59,7 +60,7 @@ const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
     ("enable-pending-cops", None, Arg::None, Use::Handle),
     ("disable-all-cops", None, Arg::None, Use::Unsupported),
     ("enable-all-cops", None, Arg::None, Use::Unsupported),
-    ("[no-]preview", None, Arg::None, Use::Unsupported),
+    ("[no-]preview", None, Arg::None, Use::Handle),
     ("ignore-disable-comments", None, Arg::None, Use::Unsupported),
     ("force-exclusion", None, Arg::None, Use::Handle),
     ("only-recognized-file-types", None, Arg::None, Use::Unsupported),
@@ -375,6 +376,7 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
         "ignore-parent-exclusion" => cli.opts.ignore_parent_exclusion = true,
         "enable-pending-cops" => cli.opts.enable_pending_cops = true,
         "disable-pending-cops" => cli.opts.disable_pending_cops = true,
+        "preview" => cli.opts.preview = Some(!neg),
         "fail-fast" => cli.fail_fast = true,
         "stdin" => cli.stdin = value,
         "parallel" => cli.parallel = Some(!neg),
@@ -561,6 +563,8 @@ fn ruby_version_string(v: f64) -> String {
 /// `--show-cops`: CLI::Command::ShowCops for the cops rbcop implements.
 fn show_cops(patterns: &[String], cfg: &Resolved, pwd: &str) {
     let mut names: Vec<&'static str> = cops::ALL.iter().map(|r| r.name).collect();
+    // Lint/Syntax lives in the runner, not in cops::ALL, but RuboCop's registry lists it.
+    names.push("Lint/Syntax");
     names.sort_unstable();
     let show_all = patterns.is_empty();
     let selected = |name: &str| {
@@ -587,9 +591,9 @@ fn show_cops(patterns: &[String], cfg: &Resolved, pwd: &str) {
                 out.push_str("# Supports --autocorrect\n");
             }
             out.push_str(&format!("{name}:\n"));
-            // Config#for_cop: the cop's own hash with Enabled resolved to true/false.
+            // Config#for_cop: the cop's own hash with Enabled from Config#enable_cop? (raw `pending` stays).
             let mut map = cfg.hash.map(name).cloned().unwrap_or_default();
-            let enabled = rbcop::config::value::Value::Bool(cfg.cop(name).enabled);
+            let enabled = cfg.enable_cop(name);
             match map.get_mut("Enabled") {
                 Some(v) => *v = enabled,
                 None => map.insert("Enabled", enabled),
@@ -619,8 +623,110 @@ fn verbose_version(cfg: &Resolved) -> String {
     )
 }
 
+/// Badge.camel_case
+fn badge_camel_case(part: &str) -> String {
+    if part == "rspec" {
+        return "RSpec".into();
+    }
+    // gsub(/^[a-z]|_[a-z]/) { |m| m[-1].upcase }
+    let chars: Vec<char> = part.chars().collect();
+    let mut out = String::new();
+    let mut i = 0;
+    while i < chars.len() {
+        let c = chars[i];
+        if i == 0 && c.is_ascii_lowercase() {
+            out.push(c.to_ascii_uppercase());
+        } else if c == '_' && chars.get(i + 1).is_some_and(|n| n.is_ascii_lowercase()) {
+            out.push(chars[i + 1].to_ascii_uppercase());
+            i += 1;
+        } else {
+            out.push(c);
+        }
+        i += 1;
+    }
+    out
+}
+
+/// Registry#qualified_cop_name(name, origin) with its warnings; Err is AmbiguousCopName.
+fn qualify_option_name(name: &str, origin: &str, warnings: &mut Vec<String>) -> Result<String, String> {
+    use rbcop::helpers::cop_registry::REGISTRY;
+    // Badge.parse: Ruby's split drops trailing empty fields.
+    let mut parts: Vec<String> = name.split('/').map(badge_camel_case).collect();
+    while parts.len() > 1 && parts.last().is_some_and(|p| p.is_empty()) {
+        parts.pop();
+    }
+    let cop = parts.pop().unwrap_or_default();
+    let dept = parts.join("/");
+    let qualified = !parts.is_empty();
+    let basename = |c: &str| c.rsplit('/').next().unwrap_or(c).to_string();
+    if !qualified && REGISTRY.iter().any(|c| basename(c) == name) {
+        warnings.push(format!("{origin}: Warning: no department given for {name}."));
+    }
+    if qualified && REGISTRY.contains(&format!("{dept}/{cop}").as_str()) {
+        return Ok(name.to_string());
+    }
+    let mut depts: Vec<&str> = REGISTRY.iter().filter_map(|c| c.rsplit_once('/').map(|(d, _)| d)).collect();
+    depts.dedup();
+    let hits: Vec<String> =
+        depts.into_iter().map(|d| format!("{d}/{cop}")).filter(|q| REGISTRY.contains(&q.as_str())).collect();
+    let given = if qualified { format!("{dept}/{cop}") } else { cop.clone() };
+    match hits.as_slice() {
+        [] => Ok(name.to_string()),
+        [real] => {
+            if qualified && *real != given {
+                warnings.push(format!("{origin}: Warning: {given} has the wrong namespace - replace it with {real}"));
+            }
+            Ok(real.clone())
+        }
+        many => Err(format!(
+            "Error: Ambiguous cop name `{given}` used in {origin} needs department qualifier. Did you mean {}?",
+            many.join(" or ")
+        )),
+    }
+}
+
+/// Runner#qualify_option_cop_names, then OptionsValidator.validate_cop_list. RuboCop does this when
+/// it mobilizes the first team, so the warnings and the error surface at the first inspected file.
+fn qualify_cop_options(cli: &mut Cli) -> (Vec<String>, Option<String>) {
+    use rbcop::helpers::{cop_registry, did_you_mean};
+    let mut warnings = Vec::new();
+    for (opt, list) in [("only", cli.only.as_mut()), ("except", Some(&mut cli.except))] {
+        let Some(list) = list else { continue };
+        if opt == "except" && list.is_empty() {
+            continue;
+        }
+        for n in list.iter_mut() {
+            match qualify_option_name(n, &format!("--{opt} option"), &mut warnings) {
+                Ok(q) => *n = q,
+                Err(e) => return (warnings, Some(e)),
+            }
+        }
+    }
+    cli.opts.only = cli.only.clone().unwrap_or_default();
+    for list in [cli.only.as_deref().unwrap_or_default(), &cli.except] {
+        for n in list {
+            let n = n.as_str();
+            if cop_registry::REGISTRY.contains(&n)
+                || cop_registry::is_department(n)
+                || n == "Syntax"
+                || n == "Lint/Syntax"
+            {
+                continue;
+            }
+            let names: Vec<&str> = cop_registry::REGISTRY.iter().copied().filter(|c| *c != n).collect();
+            let similar = did_you_mean::correct(n, &names);
+            let mut msg = format!("Unrecognized cop or department: {n}.");
+            if !similar.is_empty() {
+                msg.push_str(&format!("\nDid you mean? {}", similar.join(", ")));
+            }
+            return (warnings, Some(msg));
+        }
+    }
+    (warnings, None)
+}
+
 /// Returns the exit status.
-fn run(cli: Cli, global: bool) -> Result<u8, String> {
+fn run(mut cli: Cli, global: bool) -> Result<u8, String> {
     if cli.help {
         println!("{USAGE}");
         return Ok(0);
@@ -629,7 +735,9 @@ fn run(cli: Cli, global: bool) -> Result<u8, String> {
         // ponytail: RuboCop prints the corrected source after a separator line; not ported yet.
         return Err("rbcop: --stdin with -a/-A is not supported yet".into());
     }
-    let names: Vec<&'static str> = cops::ALL.iter().map(|c| c.name).collect();
+    let (cop_warnings, cop_error) = qualify_cop_options(&mut cli);
+    // Lint/Syntax lives in the runner but is a registered cop with its own config in RuboCop.
+    let names: Vec<&'static str> = cops::ALL.iter().map(|c| c.name).chain(["Lint/Syntax"]).collect();
     // ConfigLoader: a missing -c file is an error, even with --force-default-config.
     if let Some(c) = &cli.opts.config_file {
         let abs = expand_path(c, &rbcop::config::cwd());
@@ -751,42 +859,60 @@ fn run(cli: Cli, global: bool) -> Result<u8, String> {
     }
     let only = &cli.opts.only;
     let except = &cli.except;
-    let selected = |cop: &str| (only.is_empty() || only.iter().any(|o| o == cop)) && !except.iter().any(|e| e == cop);
+    // Runner#mobilize_cop_badge?: Badge#match_name? takes cop names and department names.
+    let match_name =
+        |list: &[String], cop: &str| list.iter().any(|n| n == cop || cop.rsplit_once('/').is_some_and(|(d, _)| d == n));
+    let selected = |cop: &str| {
+        // Runner#check_for_redundant_disables? never runs the directive cop under --only.
+        // ponytail: so it also drops out of Registry#disabled_names there; matters only when the
+        // config disables Lint/RedundantCopDisableDirective and --only names its department.
+        if cop == "Lint/RedundantCopDisableDirective" && !only.is_empty() {
+            return false;
+        }
+        (only.is_empty() || match_name(only, cop)) && !match_name(except, cop)
+    };
     let workers = thread::available_parallelism().map_or(4, |n| n.get());
     let chunk = jobs.len().div_ceil(workers).max(1);
     let stdin_text = &stdin_text;
-    let reports: Vec<Option<FileReport>> = thread::scope(|s| {
-        let handles: Vec<_> = jobs
-            .chunks(chunk)
-            .map(|part| {
-                s.spawn(|| {
-                    part.iter()
-                        .map(|(path, cfg)| {
-                            // -a/-A: read, correct until stable, rewrite the file; offenses from every
-                            // iteration come back (fixed ones marked corrected).
-                            if let (Some(mode), None) = (cli.autocorrect, stdin_text) {
-                                if !path.is_file() {
-                                    return None;
+    // An invalid --only/--except list fails before any file is inspected (or corrected).
+    let reports: Vec<Option<FileReport>> = if cop_error.is_some() {
+        jobs.iter().map(|_| None).collect()
+    } else {
+        thread::scope(|s| {
+            let handles: Vec<_> = jobs
+                .chunks(chunk)
+                .map(|part| {
+                    s.spawn(|| {
+                        part.iter()
+                            .map(|(path, cfg)| {
+                                // -a/-A: read, correct until stable, rewrite the file; offenses from every
+                                // iteration come back (fixed ones marked corrected).
+                                if let (Some(mode), None) = (cli.autocorrect, stdin_text) {
+                                    if !path.is_file() {
+                                        return None;
+                                    }
+                                    let display = rbcop::config::relative_path(path, &cwd);
+                                    return Some(rbcop::autocorrect::correct_file(
+                                        path, &display, cfg, &selected, mode,
+                                    ));
                                 }
+                                let text = match stdin_text {
+                                    Some(t) => t.clone(),
+                                    None => match fs::read(path) {
+                                        Ok(b) => String::from_utf8_lossy(&b).into_owned(),
+                                        Err(_) => return None,
+                                    },
+                                };
                                 let display = rbcop::config::relative_path(path, &cwd);
-                                return Some(rbcop::autocorrect::correct_file(path, &display, cfg, &selected, mode));
-                            }
-                            let text = match stdin_text {
-                                Some(t) => t.clone(),
-                                None => match fs::read(path) {
-                                    Ok(b) => String::from_utf8_lossy(&b).into_owned(),
-                                    Err(_) => return None,
-                                },
-                            };
-                            let display = rbcop::config::relative_path(path, &cwd);
-                            Some(runner::inspect(path, &display, text, cfg, &selected))
-                        })
-                        .collect::<Vec<_>>()
+                                Some(runner::inspect(path, &display, text, cfg, &selected))
+                            })
+                            .collect::<Vec<_>>()
+                    })
                 })
-            })
-            .collect();
-        handles.into_iter().flat_map(|h| h.join().unwrap()).collect()
-    });
+                .collect();
+            handles.into_iter().flat_map(|h| h.join().unwrap()).collect()
+        })
+    };
 
     // Deliberate difference: RuboCop truncates an -o file before inspecting, so `rubocop -o a.rb a.rb`
     // empties a.rb. rbcop refuses to write output over a file it inspects.
@@ -825,8 +951,19 @@ fn run(cli: Cli, global: bool) -> Result<u8, String> {
     let mut all_passed = true;
     let mut inspected: Vec<PathBuf> = Vec::new();
     if error.is_none() {
+        let mut cop_notes = Some((cop_warnings, cop_error));
         for ((path, cfg), report) in jobs.iter().zip(&reports) {
             set.file_started(&cx, path);
+            // Runner#mobilized_cop_classes runs once the first file has been read.
+            if let Some((warnings, err)) = cop_notes.take_if(|_| stdin_text.is_some() || path.is_file()) {
+                for w in warnings {
+                    eprintln!("{w}");
+                }
+                if let Some(e) = err {
+                    error = Some(e);
+                    break;
+                }
+            }
             let Some(report) = report else {
                 error = Some(format!("Error: No such file or directory: {}", path.display()));
                 break;

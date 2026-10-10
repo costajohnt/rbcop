@@ -6,12 +6,6 @@ pub const NAME: &str = "Style/Next";
 pub static COP: Next = Next;
 pub struct Next;
 
-/// rubocop-ast ENUMERATOR_METHODS (plus any `each_*`).
-const ENUMERATOR_METHODS: &[&str] = &[
-    "collect", "collect_concat", "detect", "downto", "each", "find", "find_all", "find_index", "inject", "loop", "map!",
-    "map", "reduce", "reject", "reject!", "reverse_each", "select", "select!", "times", "upto",
-];
-
 /// The parts of a parser `if` (an IfNode or UnlessNode).
 struct If<'pr> {
     pred: Node<'pr>,
@@ -65,7 +59,7 @@ fn statements_of<'pr>(node: &Node<'pr>) -> Option<Vec<Node<'pr>>> {
         Node::CallNode { .. } => {
             let call = node.as_call_node().unwrap();
             let name = method_name(&call);
-            if !(ENUMERATOR_METHODS.contains(&name) || name.starts_with("each_")) {
+            if !is_enumerator_method(name) {
                 return None;
             }
             // a body with rescue/ensure is a parser `rescue`/`ensure` node, never an `if`

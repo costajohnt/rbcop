@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use crate::source::Source;
 
 pub const NAME: &str = "Layout/EmptyLinesAroundAttributeAccessor";
 pub static COP: EmptyLinesAroundAttributeAccessor = EmptyLinesAroundAttributeAccessor;
@@ -34,18 +35,8 @@ impl Cop for EmptyLinesAroundAttributeAccessor {
         if !attribute_accessor(&call) {
             return;
         }
-        let src = cx.src;
         let (start, end) = send_range(&call);
-        let last_line = src.line_of(end);
-        let blank = |line: usize| src.lines.get(line).is_none_or(|l| l.trim_start_matches([' ', '\t', '\n', '\x0b', '\x0c', '\r', '\0']).is_empty());
-        let enable_directive = |line: usize| {
-            src.comment_on_line(line).is_some_and(|c| {
-                crate::directives::parse(src.slice(c.start, c.end))
-                    .is_some_and(|d| d.mode == "enable" || d.mode == "enable-next")
-            })
-        };
-        // processed_source[line] is the line after `line` (1-based).
-        if blank(last_line) || (enable_directive(last_line + 1) && blank(last_line + 1)) {
+        if next_line_empty_or_enable_directive(cx.src, end) {
             return;
         }
         let require = match self.right_sibling(cx, node) {
@@ -61,15 +52,37 @@ impl Cop for EmptyLinesAroundAttributeAccessor {
             }
         };
         if require {
-            // Insert after the node's whole lines, or after an enable directive on the next line.
-            let lines = helpers::whole_lines::range_by_whole_lines(src.text, start, end, false);
-            let next_line = src.line_of(end) + 1;
-            let at = match src.comment_on_line(next_line) {
-                Some(c) if enable_directive(next_line) => (c.start, c.end),
-                _ => lines,
-            };
+            let at = empty_line_insertion(cx.src, start, end);
             cx.add_fix(start, end, "Add an empty line after attribute accessor.", |c| c.insert_after(at.0, at.1, "\n"));
         }
+    }
+}
+
+/// An `enable` / `enable-next` directive comment on `line`.
+fn enable_directive(src: &Source, line: usize) -> bool {
+    src.comment_on_line(line).is_some_and(|c| {
+        crate::directives::parse(src.slice(c.start, c.end)).is_some_and(|d| d.mode == "enable" || d.mode == "enable-next")
+    })
+}
+
+/// `next_line_empty_or_enable_directive_comment?` for a node ending at `end` (shared with
+/// Layout/EmptyLinesAfterModuleInclusion).
+pub fn next_line_empty_or_enable_directive(src: &Source, end: usize) -> bool {
+    let last_line = src.line_of(end);
+    let blank = |line: usize| {
+        src.lines.get(line).is_none_or(|l| l.trim_start_matches([' ', '\t', '\n', '\x0b', '\x0c', '\r', '\0']).is_empty())
+    };
+    // processed_source[line] is the line after `line` (1-based).
+    blank(last_line) || (enable_directive(src, last_line + 1) && blank(last_line + 1))
+}
+
+/// Where the autocorrection inserts the empty line: after the node's whole lines, or after an
+/// enable directive on the next line.
+pub fn empty_line_insertion(src: &Source, start: usize, end: usize) -> (usize, usize) {
+    let next_line = src.line_of(end) + 1;
+    match src.comment_on_line(next_line) {
+        Some(c) if enable_directive(src, next_line) => (c.start, c.end),
+        _ => helpers::whole_lines::range_by_whole_lines(src.text, start, end, false),
     }
 }
 

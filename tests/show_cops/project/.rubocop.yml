@@ -1,0 +1,24 @@
+AllCops:
+  TargetRubyVersion: 3.2
+  NewCops: enable
+  Exclude:
+    - 'tmp/**/*'
+Layout/LineLength:
+  Max: 100
+  Exclude:
+    - 'db/**/*'
+Lint:
+  Enabled: false
+Lint/Debugger:
+  Enabled: true
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+Style/Documentation:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: pending
+Naming/MethodName:
+  Enabled: preview
+Style/InverseMethods:
+  InverseMethods:
+    :foo?: :bar?

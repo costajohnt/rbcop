@@ -3,6 +3,7 @@
 
 use crate::directives::DIRECTIVE;
 use crate::helpers::alignment::{configured_indentation_width, cop_enabled};
+use crate::helpers::line_length_help::{find_excessive_range, uri_regex};
 use crate::helpers::node_types::is_assignment;
 use crate::helpers::parser_parent::parser_parent;
 use crate::prelude::*;
@@ -265,42 +266,10 @@ pub fn parenthesize(ancestors: &[Node]) -> bool {
     parent.as_call_node().is_some_and(|c| !is_csend(&c) && c.block().is_none_or(|b| b.as_block_node().is_none()))
 }
 
-static BRACED_LINE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\{[\s\S]*\}$").unwrap());
-
-/// URI::RFC2396_PARSER.make_regexp(schemes), approximated as in Layout/LineLength.
-fn uri_regex(schemes: &[String]) -> Option<Regex> {
-    if schemes.is_empty() {
-        return None;
-    }
-    let alts: Vec<String> = schemes.iter().map(|s| regex::escape(s)).collect();
-    let uric = r"[\-_.!~*'()a-zA-Z\d;/?:@&=+$,\[\]%]";
-    let path = r"[\-_.!~*'()a-zA-Z\d:@&=+$,;/%]*";
-    Regex::new(&format!(r"(?i)(?:{}):{path}(?:\?{uric}*)?(?:#{uric}*)?", alts.join("|"))).ok()
-}
-
-// ponytail: same URI.parse approximation as Layout/LineLength.
-fn valid_uri(s: &str) -> bool {
-    let b = s.as_bytes();
-    !s.contains(['[', ']'])
-        && s.matches('#').count() <= 1
-        && b.iter().enumerate().all(|(i, &c)| c != b'%' || b.get(i + 1..i + 3).is_some_and(|h| h.iter().all(u8::is_ascii_hexdigit)))
-}
-
 /// LineLengthHelp#find_excessive_range for URIs, in character columns.
 fn uri_range(cx: &Cx, line: &str, max: usize) -> Option<(usize, usize)> {
     let re = uri_regex(&cx.config.for_cop("Layout/LineLength").strings("URISchemes"))?;
-    let m = re.find_iter(line).filter(|m| valid_uri(m.as_str())).last()?;
-    let mut end = m.end();
-    if BRACED_LINE.is_match(line)
-        && let Some(close) = line[end..].rfind('}')
-    {
-        end += close + 1;
-    }
-    end += line[end..].find(char::is_whitespace).unwrap_or(line.len() - end);
-    let diff = indentation_difference(cx, line);
-    let col = |b: usize| line[..b].chars().count() + diff;
-    let (b, e) = (col(m.start()), col(end));
-    (b >= max || e >= max).then_some((b, e))
+    find_excessive_range(line, &re, true, max, indentation_difference(cx, line))
 }
 
 /// StatementModifier#acceptable_line_length? for an existing source line (1-based `line_number`).

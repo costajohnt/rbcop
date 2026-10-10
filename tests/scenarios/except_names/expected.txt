@@ -1,0 +1,4 @@
+t.rb:1:10: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Style/StringLiterals`.
+t.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+t.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `z`.
+t.rb:4:7: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Layout/LineLength`.

@@ -18,34 +18,9 @@ fn parser_receiver<'pr>(node: &Node<'pr>) -> Option<Node<'pr>> {
     node.as_call_node()?.receiver()
 }
 
-fn is_const(node: &Node) -> bool {
-    matches!(kind::of(node), kind::CONSTANT_READ_NODE | kind::CONSTANT_PATH_NODE)
-}
-
 /// A call without an attached `{}`/`do` block (a parser `send`/`csend`, not a `block`).
 fn plain_call<'pr>(node: &Node<'pr>) -> Option<CallNode<'pr>> {
     node.as_call_node().filter(|c| c.block().is_none_or(|b| b.as_block_node().is_none()))
-}
-
-/// AllowedReceivers#receiver_name.
-fn receiver_name(node: &Node) -> String {
-    if let Some(r) = parser_receiver(node)
-        && !is_const(&r)
-    {
-        return receiver_name(&r);
-    }
-    if let Some(call) = plain_call(node).filter(|c| !is_csend(c)) {
-        return match call.receiver() {
-            Some(r) => format!("{}.{}", receiver_name(&r), method_name(&call)),
-            None => method_name(&call).to_string(),
-        };
-    }
-    node_text(node).to_string()
-}
-
-fn allowed_receiver(cx: &Cx, node: &Node) -> bool {
-    let name = receiver_name(node);
-    cx.cfg.strings("AllowedReceivers").contains(&name)
 }
 
 /// `(call _ ${:keys :values})` with no arguments: the method name.
@@ -152,7 +127,7 @@ impl Cop for HashEachMethods {
             && call.arguments().is_none()
             && let Some((target_recv, kv)) = call.receiver().as_ref().and_then(keys_or_values)
             && let Some(parent_receiver) = target_recv.receiver()
-            && !allowed_receiver(cx, &parent_receiver)
+            && !helpers::allowed_receivers::allowed_receiver(cx, &parent_receiver)
         {
             let sel = target_recv.message_loc().unwrap();
             let (_, target_end) = send_range(&call);
@@ -226,7 +201,7 @@ impl HashEachMethods {
         }
         let Some((target, kv)) = call.receiver().as_ref().and_then(keys_or_values) else { return };
         let Some(parent_receiver) = target.receiver() else { return };
-        if allowed_receiver(cx, &parent_receiver) {
+        if helpers::allowed_receivers::allowed_receiver(cx, &parent_receiver) {
             return;
         }
         let (start, end) = (target.message_loc().unwrap().start_offset(), call.message_loc().unwrap().end_offset());

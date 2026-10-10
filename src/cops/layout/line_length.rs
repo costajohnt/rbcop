@@ -1,5 +1,6 @@
 use crate::directives::DIRECTIVE;
 use crate::prelude::*;
+use helpers::line_length_help::{find_excessive_range, uri_regex};
 
 pub const NAME: &str = "Layout/LineLength";
 pub static COP: LineLength = LineLength;
@@ -7,30 +8,7 @@ pub struct LineLength;
 
 static QUALIFIED_NAME: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"\b(?:[A-Z][A-Za-z0-9_]*::)+[A-Za-z_][A-Za-z0-9_]*\b").unwrap());
-static BRACED_LINE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\{[\s\S]*\}$").unwrap());
 static RBS_ANNOTATION: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^(?:#:|#\[.+\]|#\|)").unwrap());
-
-/// URI::RFC2396_PARSER.make_regexp(schemes), approximated: a bare `scheme:` matches, and
-/// brackets are allowed in the query and fragment but end the path.
-fn uri_regex(schemes: &[String]) -> Option<Regex> {
-    if schemes.is_empty() {
-        return None;
-    }
-    let alts: Vec<String> = schemes.iter().map(|s| regex::escape(s)).collect();
-    let uric = r"[\-_.!~*'()a-zA-Z\d;/?:@&=+$,\[\]%]";
-    let path = r"[\-_.!~*'()a-zA-Z\d:@&=+$,;/%]*";
-    Regex::new(&format!(r"(?i)(?:{}):{path}(?:\?{uric}*)?(?:#{uric}*)?", alts.join("|"))).ok()
-}
-
-/// Would `URI.parse` (RFC 3986) accept this? Brackets are only legal around an IPv6 host,
-/// `#` may appear once and `%` must start an escape.
-// ponytail: covers the failures seen in real code, not the whole RFC 3986 grammar.
-fn valid_uri(s: &str) -> bool {
-    let b = s.as_bytes();
-    !s.contains(['[', ']'])
-        && s.matches('#').count() <= 1
-        && b.iter().enumerate().all(|(i, &c)| c != b'%' || b.get(i + 1..i + 3).is_some_and(|h| h.iter().all(u8::is_ascii_hexdigit)))
-}
 
 struct Settings {
     max: usize,
@@ -51,18 +29,7 @@ impl Settings {
 
     /// LineLengthHelp#find_excessive_range, in character columns.
     fn excessive_range(&self, line: &str, pattern: &Regex, check_uri: bool) -> Option<(usize, usize)> {
-        let m = pattern.find_iter(line).filter(|m| !check_uri || valid_uri(m.as_str())).last()?;
-        let mut end = m.end();
-        if BRACED_LINE.is_match(line)
-            && let Some(close) = line[end..].rfind('}')
-        {
-            end += close + 1;
-        }
-        end += line[end..].find(char::is_whitespace).unwrap_or(line.len() - end);
-        let diff = self.indentation_difference(line);
-        let col = |b: usize| line[..b].chars().count() + diff;
-        let (b, e) = (col(m.start()), col(end));
-        (b >= self.max || e >= self.max).then_some((b, e))
+        find_excessive_range(line, pattern, check_uri, self.max, self.indentation_difference(line))
     }
 }
 

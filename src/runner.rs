@@ -4,6 +4,7 @@ use crate::autocorrect::{self, Mode, corrector::Corrector};
 use crate::config::{CopConfig, Resolved, target_ruby};
 use crate::cop::{Cop, Cx, Facts, Fixes, Heredoc, Offense, Severity};
 use crate::directives;
+use crate::helpers::comment_config::{StatementBounds, code_lines};
 use crate::node_kind;
 use crate::source::{Comment, Source};
 use ruby_prism::{
@@ -46,13 +47,15 @@ pub fn inspect(
     // available (ProcessedSource#raw_source) for cops such as Layout/EndOfLine.
     let (text, raw) = if text.contains("\r\n") { (text.replace("\r\n", "\n"), Some(text)) } else { (text, None) };
     let shared: Arc<str> = Arc::from(text.as_str());
-    let (offenses, _) = analyze(path, display, &shared, raw.as_deref(), cfg, selected, None);
+    let (offenses, _, _) = analyze(path, display, &shared, raw.as_deref(), cfg, selected, None, Redundant::Own);
     FileReport { offenses, text }
 }
 
 /// One autocorrect iteration (see `crate::autocorrect::correct`): the offenses and, unless nothing
 /// was corrected, the collated corrector. Like Team#investigate_with_corrector, offenses of cops
-/// that do not autocorrect are only reported when no correction was made.
+/// that do not autocorrect are only reported when no correction was made. Also returns the
+/// (cop, first line, last line) of the offenses disabled by comments, which RuboCop keeps for
+/// Lint/RedundantCopDisableDirective.
 pub fn analyze_for_correction(
     path: &Path,
     display: &str,
@@ -60,10 +63,43 @@ pub fn analyze_for_correction(
     cfg: &Resolved,
     selected: &dyn Fn(&str) -> bool,
     mode: Mode,
-) -> (Vec<Offense>, Option<Corrector>) {
-    analyze(path, display, text, None, cfg, selected, Some(mode))
+) -> (Vec<Offense>, Option<Corrector>, Vec<Span>) {
+    analyze(path, display, text, None, cfg, selected, Some(mode), Redundant::Skip)
 }
 
+/// Runner#add_redundant_disables after an autocorrect loop: Lint/RedundantCopDisableDirective
+/// alone, judging the directives of `text` against `checked` (every offense the loop found).
+pub fn redundant_disables(
+    path: &Path,
+    display: &str,
+    text: &Arc<str>,
+    cfg: &Resolved,
+    selected: &dyn Fn(&str) -> bool,
+    mode: Mode,
+    checked: &[Span],
+) -> (Vec<Offense>, Option<Corrector>) {
+    let (offenses, corrector, _) =
+        analyze(path, display, text, None, cfg, selected, Some(mode), Redundant::Only(checked));
+    (offenses, corrector)
+}
+
+/// An offense as Lint/RedundantCopDisableDirective sees it: cop, first line, last line.
+pub type Span = (&'static str, usize, usize);
+
+/// When Lint/RedundantCopDisableDirective runs (it needs every other cop's offenses).
+#[derive(Clone, Copy)]
+enum Redundant<'a> {
+    /// After this file's cops (plain inspection).
+    Own,
+    /// Not in this pass (autocorrect iterations).
+    Skip,
+    /// Only it, against offenses found earlier.
+    Only(&'a [Span]),
+}
+
+const REDUNDANT_DISABLE: &str = "Lint/RedundantCopDisableDirective";
+
+#[allow(clippy::too_many_arguments)]
 fn analyze(
     path: &Path,
     display: &str,
@@ -72,7 +108,8 @@ fn analyze(
     cfg: &Resolved,
     selected: &dyn Fn(&str) -> bool,
     mode: Option<Mode>,
-) -> (Vec<Offense>, Option<Corrector>) {
+    redundant: Redundant,
+) -> (Vec<Offense>, Option<Corrector>, Vec<Span>) {
     let text: &str = shared;
     let raw_text = raw_text.unwrap_or(text);
     let version = target_ruby::prism_version(cfg.target_ruby);
@@ -168,13 +205,16 @@ fn analyze(
         // (`unexpected '+'` and `expected a receiver for unary +`), and only the first survives.
         let mut seen = std::collections::HashSet::new();
         out.retain(|o| seen.insert((o.start, o.end)));
-        return (out, None);
+        // Then Runner's uniq (same position and message, any range), as for every cop.
+        dedup(&mut out);
+        return (out, None, Vec::new());
     }
 
     let opted_in = directives::opted_in(&src);
+    let only_redundant = matches!(redundant, Redundant::Only(_));
     let active: Vec<Active> = crate::cops::ALL
         .iter()
-        .filter(|r| selected(r.name))
+        .filter(|r| selected(r.name) && !only_redundant)
         .filter_map(|r| {
             let c = cfg.cop(r.name);
             let on = c.enabled || opted_in.contains(&r.name);
@@ -192,15 +232,24 @@ fn analyze(
     let pn = program.as_program_node().unwrap();
     let first_code = pn.statements().body().iter().next().map(|n| n.location().start_offset());
     facts.first_code = first_code;
-    let config_disabled: Vec<&'static str> = opted_in.iter().copied().filter(|c| !cfg.cop(c).enabled).collect();
+    // Registry#disabled_names of the --only/--except filtered registry.
+    let config_disabled: Vec<&'static str> = crate::helpers::cop_registry::REGISTRY
+        .iter()
+        .copied()
+        .filter(|&c| selected(c) && !directives::config_enabled(cfg, c))
+        .collect();
     if src.text.contains("rubocop") {
-        let bounds =
-            directives::needs_statement_bounds(&src).then(|| statement_bounds_prepass(&src, &facts, cfg, &program));
+        // DisableNext needs statement bounds before the cops run (disabled ranges gate `add_fix`).
+        let bounds = directives::needs_statement_bounds(&src).then(|| StatementBounds::build(&src, &program));
         let bounds = bounds.unwrap_or_default();
         let code = code_lines(&src, &facts);
         let statement_bounds = |line: usize| bounds.at(line);
         let info = directives::LineInfo { code: &code, statement_bounds: &statement_bounds };
-        facts.disabled = directives::disabled_ranges(&src, &config_disabled, &info);
+        let cc = directives::analyze(&src, &config_disabled, &info, directives::prevent_style(cfg));
+        facts.disabled = directives::disabled_ranges(&cc);
+        facts.comment_config = cc;
+        facts.code_lines = code;
+        facts.config_disabled = config_disabled;
     }
     facts.text = shared.clone();
     let mut fixes: Vec<Fixes> = active
@@ -229,7 +278,6 @@ fn analyze(
         leaf: None,
         out: &mut out,
         states: &mut states,
-        bounds: None,
         fixes: &mut fixes,
     };
     walker.visit(&program);
@@ -252,15 +300,64 @@ fn analyze(
 
     dedup(&mut out);
     // Parser's Range#last_line is the line of end_pos.
+    let span = |o: &Offense| (o.cop, src.line_of(o.start), src.line_of(o.end.max(o.start)));
+    let mut disabled: Vec<Span> = Vec::new();
     out.retain(|o| {
-        !directives::is_disabled(&facts.disabled, o.cop, src.line_of(o.start), src.line_of(o.end.max(o.start)))
+        let s = span(o);
+        let off = directives::is_disabled(&facts.disabled, s.0, s.1, s.2);
+        if off {
+            disabled.push(s);
+        }
+        !off
     });
+
+    // Runner#add_redundant_disables: offenses_to_check are all offenses, the disabled ones included.
+    let checked: Option<Vec<Span>> = match redundant {
+        Redundant::Own if mode.is_none() => Some(out.iter().map(span).chain(disabled.iter().copied()).collect()),
+        Redundant::Only(c) => Some(c.to_vec()),
+        _ => None,
+    };
+    let mut redundant_fix = None;
+    let rcfg = cfg.cop(REDUNDANT_DISABLE);
+    if let Some(checked) = checked
+        && selected(REDUNDANT_DISABLE)
+        && (rcfg.enabled || opted_in.contains(&REDUNDANT_DISABLE))
+        && cfg.relevant(rcfg, path)
+        && (!facts.disabled.is_empty() || !facts.comment_config.detached.is_empty())
+    {
+        let mut fixes =
+            Fixes { autocorrect: mode.is_some_and(|m| autocorrect::cop_autocorrects(rcfg, m)), ..Fixes::default() };
+        let (mut found, mut state) = (Vec::new(), None);
+        let mut cx = Cx {
+            src: &src,
+            facts: &facts,
+            ancestors: &[],
+            cfg: rcfg,
+            config: cfg,
+            cop: REDUNDANT_DISABLE,
+            correctable: true,
+            out: &mut found,
+            state: &mut state,
+            fixes: &mut fixes,
+        };
+        guarded(REDUNDANT_DISABLE, &src, 0, || {
+            crate::cops::lint_redundant_cop_disable_directive::check(&mut cx, &checked)
+        });
+        found.retain(|o| {
+            let s = span(o);
+            !directives::is_disabled(&facts.disabled, s.0, s.1, s.2)
+        });
+        out.extend(found);
+        redundant_fix = fixes.corrector;
+    }
+
     let mut corrector = None;
     if mode.is_some() {
-        let by_cop: Vec<(&'static str, Corrector)> =
+        let mut by_cop: Vec<(&'static str, Corrector)> =
             active.iter().zip(fixes).filter_map(|(a, f)| Some((a.name, f.corrector?))).collect();
+        by_cop.extend(redundant_fix.map(|c| (REDUNDANT_DISABLE, c)));
         corrector = autocorrect::collate(by_cop, shared.clone());
-        if corrector.is_some() {
+        if corrector.is_some() && !only_redundant {
             // Team#investigate_with_corrector: the other cops do not run in a correcting iteration.
             let correcting: Vec<&str> = active
                 .iter()
@@ -275,7 +372,7 @@ fn analyze(
         o.severity = c.severity.unwrap_or_else(|| default_severity(o.cop));
         o.correctable &= autocorrect_allowed(c);
     }
-    (out, corrector)
+    (out, corrector, disabled)
 }
 
 thread_local! {
@@ -371,7 +468,6 @@ struct Walker<'s, 'pr, 'c> {
     leaf: Option<Node<'pr>>,
     out: &'s mut Vec<Offense>,
     states: &'s mut [Option<Box<dyn std::any::Any>>],
-    bounds: Option<&'s mut StatementBounds>,
     fixes: &'s mut [Fixes],
 }
 
@@ -409,14 +505,6 @@ impl<'pr> Walker<'_, 'pr, '_> {
     fn leaf(&mut self, node: Node<'pr>) {
         if !self.leaf.as_ref().is_some_and(|l| same(l, &node)) {
             self.dispatch(&node);
-            self.leaf_bounds(&node);
-        }
-    }
-
-    fn leaf_bounds(&mut self, node: &Node<'pr>) {
-        if let Some(b) = self.bounds.as_deref_mut() {
-            b.enter(self.src, node);
-            b.leave();
         }
     }
 }
@@ -424,22 +512,15 @@ impl<'pr> Walker<'_, 'pr, '_> {
 impl<'pr> Visit<'pr> for Walker<'_, 'pr, '_> {
     fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
         self.dispatch(&node);
-        if let Some(b) = self.bounds.as_deref_mut() {
-            b.enter(self.src, &node);
-        }
         self.stack.push(node);
     }
 
     fn visit_branch_node_leave(&mut self) {
-        if let Some(b) = self.bounds.as_deref_mut() {
-            b.leave();
-        }
         self.stack.pop();
     }
 
     fn visit_leaf_node_enter(&mut self, node: Node<'pr>) {
         self.dispatch(&node);
-        self.leaf_bounds(&node);
         self.leaf = Some(node);
     }
 
@@ -571,118 +652,4 @@ fn format_ruby_version(v: f64) -> String {
 fn dedup(out: &mut Vec<Offense>) {
     let mut seen = std::collections::HashSet::new();
     out.retain(|o| seen.insert((o.cop, o.start, o.message.clone())));
-}
-
-/// CommentConfig#non_comment_token_line_numbers: lines where a non-comment token starts. Parser
-/// emits a token per line of string/heredoc content, so those lines count too.
-fn code_lines(src: &Source, facts: &Facts) -> Vec<bool> {
-    use ruby_prism_sys as sys;
-    let mut code = facts.string_lines.clone();
-    code.resize(src.line_count() + 2, false);
-    for t in src.tokens() {
-        let skip = matches!(
-            t.kind,
-            sys::PM_TOKEN_COMMENT
-                | sys::PM_TOKEN_EMBDOC_BEGIN
-                | sys::PM_TOKEN_EMBDOC_LINE
-                | sys::PM_TOKEN_EMBDOC_END
-                | sys::PM_TOKEN_NEWLINE
-                | sys::PM_TOKEN_IGNORED_NEWLINE
-                | sys::PM_TOKEN_EOF
-                | sys::PM_TOKEN___END__
-        );
-        if !skip && t.end > t.start {
-            code[src.line_of(t.start)] = true;
-        }
-    }
-    code
-}
-
-/// DisableNext#statement_bounds_at, collected during the walk: for each line, the statement that
-/// starts there with the greatest last line (first in pre-order on ties) and the last line of its
-/// subtree, where heredocs count up to their terminator.
-#[derive(Default)]
-struct StatementBounds {
-    open: Vec<(usize, usize, usize, usize, bool)>, // (preorder, first line, last line, subtree end, statement-like)
-    best: std::collections::HashMap<usize, (usize, usize, usize)>, // first line -> (last line, preorder, subtree end)
-    counter: usize,
-}
-
-impl StatementBounds {
-    fn enter(&mut self, src: &Source, node: &Node) {
-        let loc = node.location();
-        let first = src.line_of(loc.start_offset());
-        let last = src.line_of(loc.end_offset().max(loc.start_offset()));
-        let end = heredoc_end_line(src, node).unwrap_or(last);
-        // Parser `begin` nodes (multi-statement bodies, parens) and Prism-only wrappers are skipped.
-        let k = node_kind::of(node);
-        let statement_like = !matches!(
-            k,
-            node_kind::STATEMENTS_NODE
-                | node_kind::PARENTHESES_NODE
-                | node_kind::PROGRAM_NODE
-                | node_kind::ARGUMENTS_NODE
-                | node_kind::ELSE_NODE
-                | node_kind::EMBEDDED_STATEMENTS_NODE
-        );
-        self.counter += 1;
-        self.open.push((self.counter, first, last, end, statement_like));
-    }
-
-    fn leave(&mut self) {
-        let Some((order, first, last, end, statement_like)) = self.open.pop() else { return };
-        if let Some(parent) = self.open.last_mut() {
-            parent.3 = parent.3.max(end);
-        }
-        if statement_like {
-            let better = match self.best.get(&first) {
-                None => true,
-                Some(&(l, o, _)) => last > l || (last == l && order < o),
-            };
-            if better {
-                self.best.insert(first, (last, order, end));
-            }
-        }
-    }
-
-    fn at(&self, line: usize) -> (usize, usize) {
-        self.best.get(&line).map_or((line, line), |&(_, _, end)| (line, end.max(line)))
-    }
-}
-
-/// Terminator line of a heredoc node (parser's `loc.heredoc_end`).
-fn heredoc_end_line(src: &Source, node: &Node) -> Option<usize> {
-    if !crate::ast::is_heredoc(node) {
-        return None;
-    }
-    let closing = match node_kind::of(node) {
-        node_kind::STRING_NODE => node.as_string_node()?.closing_loc(),
-        node_kind::INTERPOLATED_STRING_NODE => node.as_interpolated_string_node()?.closing_loc(),
-        node_kind::X_STRING_NODE => Some(node.as_x_string_node()?.closing_loc()),
-        node_kind::INTERPOLATED_X_STRING_NODE => Some(node.as_interpolated_x_string_node()?.closing_loc()),
-        _ => None,
-    }?;
-    Some(src.line_of(closing.start_offset()))
-}
-
-/// DisableNext needs statement bounds before the cops run (disabled ranges gate `add_fix`), so files
-/// using `-next` directives get a bounds-only walk first.
-fn statement_bounds_prepass<'pr>(src: &Source, facts: &Facts, cfg: &Resolved, program: &Node<'pr>) -> StatementBounds {
-    let mut bounds = StatementBounds::default();
-    let mut out = Vec::new();
-    let mut walker = Walker {
-        src,
-        facts,
-        config: cfg,
-        active: &[],
-        dispatch: &vec![Vec::new(); node_kind::COUNT],
-        stack: Vec::new(),
-        leaf: None,
-        out: &mut out,
-        states: &mut [],
-        bounds: Some(&mut bounds),
-        fixes: &mut [],
-    };
-    walker.visit(program);
-    bounds
 }

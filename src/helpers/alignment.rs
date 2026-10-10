@@ -1,5 +1,4 @@
-//! RuboCop's Alignment mixin (lib/rubocop/cop/mixin/alignment.rb): the one port. The earlier
-//! duplicates `alignment_mixin` and `alignment_check` only re-export from here; AlignmentCorrector
+//! RuboCop's Alignment mixin (lib/rubocop/cop/mixin/alignment.rb): the one port. AlignmentCorrector
 //! lives in `alignment_corrector`.
 
 use crate::cop::Cx;

@@ -27,6 +27,8 @@ pub struct Options {
     pub enable_pending_cops: bool,
     pub disable_pending_cops: bool,
     pub ignore_parent_exclusion: bool,
+    /// `--preview` / `--no-preview` (ConfigLoader.preview); wins over `AllCops: Preview`.
+    pub preview: Option<bool>,
 }
 
 /// One include/exclude entry (FilePatterns / PathUtil.match_path?).
@@ -177,27 +179,43 @@ impl Resolved {
         params
     }
 
+    /// Config#enable_cop?: the `Enabled` value Config#for_cop reports (true, false, `pending`, ...).
+    pub fn enable_cop(&self, name: &str) -> Value {
+        let cop = self.hash.map(name);
+        let enabled_value = cop.and_then(|c| c.get("Enabled")).cloned();
+        if enabled_value == Some(Value::Bool(true)) || name == "Lint/Syntax" {
+            return Value::Bool(true);
+        }
+        let dbd = self.all_cops().truthy("DisabledByDefault");
+        let enabled_value = enabled_value.unwrap_or(Value::Bool(!dbd));
+        let dept = name.rsplit_once('/').and_then(|(d, _)| self.hash.map(d));
+        if enabled_value == Value::Str("override_department".into()) {
+            Value::Bool(true)
+        } else if dept.is_some_and(|d| d.get("Enabled") == Some(&Value::Bool(false))) {
+            Value::Bool(false)
+        } else {
+            enabled_value
+        }
+    }
+
+    /// Config#preview?(options).
+    pub fn preview(&self, opts: &Options) -> bool {
+        opts.preview.unwrap_or_else(|| self.all_cops().get("Preview") == Some(&Value::Bool(true)))
+    }
+
     /// Config#enable_cop? + Registry#enabled?, then Config#for_badge (§4).
     fn build_cop(&self, name: &str, opts: &Options) -> CopConfig {
         let cop = self.hash.map(name).cloned().unwrap_or_default();
         let department = name.rsplit_once('/').map(|(d, _)| d);
         let dept_map = department.and_then(|d| self.hash.map(d)).cloned().unwrap_or_default();
-        let dbd = self.all_cops().truthy("DisabledByDefault");
-        let enabled_value = cop.get("Enabled").cloned().unwrap_or(Value::Bool(!dbd));
-        let effective =
-            if enabled_value == Value::Bool(true) || enabled_value == Value::Str("override_department".into()) {
-                Value::Bool(true)
-            } else if dept_map.get("Enabled") == Some(&Value::Bool(false)) {
-                Value::Bool(false)
-            } else {
-                enabled_value
-            };
+        let effective = self.enable_cop(name);
         let new_cops = self.all_cops().str("NewCops") == Some("enable");
         let enabled = opts.only.iter().any(|o| o == name)
             || effective == Value::Bool(true)
             || (!opts.disable_pending_cops
                 && effective == Value::Str("pending".into())
-                && (opts.enable_pending_cops || new_cops));
+                && (opts.enable_pending_cops || new_cops))
+            || (effective == Value::Str("preview".into()) && self.preview(opts));
         let mut params = dept_map;
         for (k, v) in cop.0 {
             params.insert(k, v);
@@ -323,7 +341,7 @@ impl Store {
         };
         if store.opts.force_default_config {
             let r = Resolved::new(
-                store.default.clone(),
+                apply_preview_defaults(&store.default, store.opts.preview == Some(true)),
                 None,
                 &store.opts,
                 &store.cop_names,
@@ -366,7 +384,8 @@ impl Store {
             return Ok(r.clone());
         }
         let hash = match &file {
-            None => self.default.clone(),
+            // ConfigLoader.apply_default_overrides: only the command line can turn preview on here.
+            None => apply_preview_defaults(&self.default, self.opts.preview == Some(true)),
             Some(path) => {
                 let mut user = self.load_file(path)?;
                 if !self.opts.ignore_parent_exclusion {
@@ -480,7 +499,7 @@ impl Store {
                 let only_base_has_include = v.contains("Include") && !hash.map(&k).is_some_and(|m| m.truthy("Include"));
                 let merged = match hash.map(&k) {
                     Some(derived) => {
-                        let mode = determine_inherit_mode(hash, &k);
+                        let mode = determine_inherit_mode(hash, &k, self.opts.preview);
                         merge(&v, derived, &mode, false)
                     }
                     None => v,
@@ -605,7 +624,7 @@ impl Store {
                 }
                 plugin.insert("AllCops", Value::Map(all));
             }
-            combined = merge_with_default(&combined, plugin, false);
+            combined = merge_with_default(&combined, plugin, false, self.opts.preview);
         }
         if let (Some(all), Some(Value::Map(new_all))) =
             (self.default.map_mut("AllCops"), combined.get("AllCops").cloned())
@@ -629,7 +648,7 @@ impl Store {
 
     /// ConfigLoaderResolver#merge_with_default (§4) against the current defaults.
     fn merge_with_default(&self, config: Map) -> Map {
-        merge_with_default(&self.default, config, true)
+        merge_with_default(&self.default, config, true, self.opts.preview)
     }
 
     /// Gem dir for inherit_gem and plugins, as `Gem::Specification.find_by_name(name).gem_dir` reports it.
@@ -658,11 +677,49 @@ impl Store {
     }
 }
 
+/// ConfigLoaderResolver#preview?: the command line, else the hash's own `AllCops: Preview: true`.
+fn preview_on(config: &Map, cli: Option<bool>) -> bool {
+    cli.unwrap_or_else(|| config.map("AllCops").and_then(|a| a.get("Preview")) == Some(&Value::Bool(true)))
+}
+
+/// ConfigLoaderResolver#apply_preview_defaults: a cop's `Preview` hash replaces its defaults under
+/// preview; the `Preview` key is dropped either way.
+pub fn apply_preview_defaults(default: &Map, preview: bool) -> Map {
+    let mut out = default.clone();
+    for (_, v) in out.0.iter_mut() {
+        let Value::Map(params) = v else { continue };
+        if !matches!(params.get("Preview"), Some(Value::Map(_))) {
+            continue;
+        }
+        let Some(Value::Map(preview_params)) = params.remove("Preview") else { continue };
+        if preview {
+            for (k, x) in preview_params.0 {
+                params.insert(k, x);
+            }
+        }
+    }
+    out
+}
+
+/// ConfigLoaderResolver#with_preview_exclude_merge: under preview `Exclude` is merged, unless
+/// inherit_mode names it either way.
+fn with_preview_exclude_merge(mut mode: Map, config: &Map, cli: Option<bool>) -> Map {
+    let lists = |m: &Map, which: &str| m.strings(which).iter().any(|k| k == "Exclude");
+    if !preview_on(config, cli) || lists(&mode, "override") || lists(&mode, "merge") {
+        return mode;
+    }
+    let mut merge = seq(mode.get("merge").cloned());
+    merge.push(Value::Str("Exclude".into()));
+    mode.insert("merge", Value::Seq(merge));
+    mode
+}
+
 /// ConfigLoaderResolver#merge_with_default (§4).
-fn merge_with_default(base_default: &Map, mut config: Map, unset_nil: bool) -> Map {
+fn merge_with_default(base_default: &Map, mut config: Map, unset_nil: bool, cli_preview: Option<bool>) -> Map {
     let all = config.map("AllCops").cloned().unwrap_or_default();
     let dbd = all.truthy("DisabledByDefault");
     let ebd = all.truthy("EnabledByDefault");
+    let base_default = &apply_preview_defaults(base_default, preview_on(&config, cli_preview));
     let mut default = base_default.clone();
     if dbd || ebd {
         for (_, v) in default.0.iter_mut() {
@@ -698,7 +755,8 @@ fn merge_with_default(base_default: &Map, mut config: Map, unset_nil: bool) -> M
         }
     }
     override_enabled_for_disabled_departments(&default, &mut config);
-    let mode = config.map("inherit_mode").cloned().unwrap_or_default();
+    let mode =
+        with_preview_exclude_merge(config.map("inherit_mode").cloned().unwrap_or_default(), &config, cli_preview);
     merge(&default, &config, &mode, unset_nil)
 }
 
@@ -757,8 +815,14 @@ fn override_enabled_for_disabled_departments(base: &Map, derived: &mut Map) {
     }
 }
 
-fn determine_inherit_mode(hash: &Map, key: &str) -> Map {
-    hash.map(key).and_then(|m| m.map("inherit_mode")).or_else(|| hash.map("inherit_mode")).cloned().unwrap_or_default()
+fn determine_inherit_mode(hash: &Map, key: &str, cli_preview: Option<bool>) -> Map {
+    let mode = hash
+        .map(key)
+        .and_then(|m| m.map("inherit_mode"))
+        .or_else(|| hash.map("inherit_mode"))
+        .cloned()
+        .unwrap_or_default();
+    with_preview_exclude_merge(mode, hash, cli_preview)
 }
 
 fn mode_lists(mode: Option<&Map>, which: &str, key: &str) -> bool {

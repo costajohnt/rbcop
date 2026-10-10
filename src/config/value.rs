@@ -156,7 +156,12 @@ fn convert(y: Yaml) -> Value {
         Yaml::Null | Yaml::BadValue | Yaml::Alias(_) => Value::Null,
         Yaml::Boolean(b) => Value::Bool(b),
         Yaml::Integer(i) => Value::Int(i),
-        Yaml::Real(r) => r.parse().map_or(Value::Str(r), Value::Float),
+        Yaml::Real(r) => match r.as_str() {
+            ".inf" | ".Inf" | ".INF" | "+.inf" | "+.Inf" | "+.INF" => Value::Float(f64::INFINITY),
+            "-.inf" | "-.Inf" | "-.INF" => Value::Float(f64::NEG_INFINITY),
+            ".nan" | ".NaN" | ".NAN" => Value::Float(f64::NAN),
+            _ => r.parse().map_or(Value::Str(r), Value::Float),
+        },
         Yaml::String(s) => match s.strip_prefix(REGEX_MARK) {
             Some(re) => Value::Regex(re.to_string()),
             None => Value::Str(s),

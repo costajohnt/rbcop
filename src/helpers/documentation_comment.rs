@@ -1,0 +1,57 @@
+//! RuboCop's DocumentationComment mixin (`documentation_comment?`), with the node-range
+//! approximation of `ast_with_comments` that Style/Documentation uses.
+
+use crate::helpers::annotation_comment::{Annotation, regex as annotation_regex};
+use crate::helpers::comment_association::leading;
+use crate::prelude::*;
+use ruby_prism::Visit;
+
+static INTERPRETER: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)^#\s*(frozen_string_literal|encoding):").unwrap());
+static COMMENT_LINE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)^\s*#").unwrap());
+
+#[derive(Default)]
+struct Ends(Vec<usize>);
+
+impl<'pr> Visit<'pr> for Ends {
+    fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
+        self.0.push(node.location().end_offset());
+    }
+    fn visit_leaf_node_enter(&mut self, node: Node<'pr>) {
+        self.0.push(node.location().end_offset());
+    }
+}
+
+/// Every Prism node's end offset under `root`, sorted (the input `documentation_comment` expects).
+pub fn node_ends(root: &Node) -> Vec<usize> {
+    let mut v = Ends::default();
+    v.visit(root);
+    v.0.sort_unstable();
+    v.0
+}
+
+/// `documentation_comment?(node)` for the node at `start`: its leading comments (those
+/// `ast_with_comments` gives it on earlier lines) end on the line above it, and one of them is
+/// not an annotation, interpreter directive or rubocop directive. `ends` are all node ends
+/// (`node_ends`), `enclosing` the start of its nearest ancestor starting before it (0 for none).
+pub fn documentation_comment(cx: &Cx, ends: &[usize], start: usize, enclosing: usize) -> bool {
+    let src = cx.src;
+    // Frontier: the latest end of a node finished before this one starts.
+    let idx = ends.partition_point(|&e| e <= start);
+    let prev = idx.checked_sub(1).map(|i| ends[i]).filter(|&e| e > 0);
+    let after = prev.unwrap_or(0).max(enclosing);
+    let line = src.line_of(start);
+    let preceding: Vec<&Comment> = leading(src, start, after, prev.map(|e| src.line_of(e - 1)))
+        .into_iter()
+        .filter(|c| src.line_of(c.start) < line)
+        .collect();
+    let Some(last) = preceding.last() else { return false };
+    if line - src.line_of(last.start) != 1 || !COMMENT_LINE.is_match(src.slice(last.start, last.end)) {
+        return false;
+    }
+    let keywords = cx.config.for_cop("Style/CommentAnnotation").strings("Keywords");
+    let re = annotation_regex(&keywords);
+    preceding.iter().any(|c| {
+        let text = src.slice(c.start, c.end);
+        !Annotation::new(text, &re).annotation() && !INTERPRETER.is_match(text) && crate::directives::parse(text).is_none()
+    })
+}

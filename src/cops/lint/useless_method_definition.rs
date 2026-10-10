@@ -24,7 +24,7 @@ impl Cop for UselessMethodDefinition {
         if let Some(call) = &parent_send {
             let non_bare_modifier = call.receiver().is_none()
                 && matches!(method_name(call), "public" | "protected" | "private" | "module_function")
-                && helpers::macro_scope_nodes::in_macro_scope(&cx.ancestors[..n - 2]);
+                && helpers::macro_scope::in_macro_scope_of_child(&cx.ancestors[..n - 2]);
             if !non_bare_modifier {
                 return;
             }

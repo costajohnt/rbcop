@@ -13,10 +13,7 @@ struct State {
     sends: Vec<(usize, String, Option<ParenFix>)>,
 }
 
-/// Index of the nearest parser-gem ancestor at or before `from` (Prism-only wrappers skipped).
-fn parser_parent(ancestors: &[Node], from: usize) -> Option<usize> {
-    (0..from).rev().find(|&i| frame(&ancestors[i]) != Frame::Transparent)
-}
+use helpers::parser_parent::parser_parent_index as parser_parent;
 
 impl Cop for AmbiguousOperator {
     fn correctable(&self) -> bool {
