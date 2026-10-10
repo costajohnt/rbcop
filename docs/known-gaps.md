@@ -19,6 +19,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - `--disable-uncorrectable`, `--auto-gen-config`, `--server`, `--lsp`, `--cache` behaviour (accepted
   and ignored where harmless), custom formatter classes, `require:` of local Ruby files (custom cops).
 - ERB in `.rubocop.yml` is not evaluated; remote `inherit_from` URLs are skipped with a warning.
+- Deliberate: Style/WordArray correcting a `%W[...]` whose value is invalid UTF-8 (`%W[\xff]`)
+  writes the escaped form (`["\xFF"]`); RuboCop writes the raw bytes and then crashes re-parsing
+  its own output. The offense message matches RuboCop.
 - `AllCops/UseProjectIndex` (Rubydex, off by default) is not supported: Lint/DuplicateMethods
   cross-file checks and Naming/AccessorMethodName / PredicatePrefix `overrides_inherited_method?`
   are skipped. Naming/PredicatePrefix `validate_config` is not ported.
