@@ -23,7 +23,7 @@ rbcop -A [paths...]    # all autocorrections
 rbcop -f json -o report.json
 ```
 
-All builtin formatters except `autogenconf` are supported, as are the display options, `--fail-level`, `--stdin`, `-L`, `--show-cops`, `-v` and `-V`.
+All builtin formatters except `autogenconf` are supported, as are the display options, `--fail-level`, `--stdin` (with `-a`/`-A` it prints the corrected source after the report), `-L`, `--show-cops`, `-v` and `-V`.
 
 Not supported: `--auto-gen-config`, `--regenerate-todo`, `--disable-uncorrectable`, `--report-unused-todo-entries`, `--display-suppressed`, `--diff`, `--changed`, the server, LSP and MCP modes, `-r`/`--plugin`, `-d`, `--profile`, `--memory`, custom formatter classes, `require:` of local Ruby files, ERB in `.rubocop.yml` and remote `inherit_from` URLs. `--cache` is accepted and has no effect. [docs/known-gaps.md](docs/known-gaps.md) lists these and every other known difference, including a few deliberate ones (for example, `-o` pointing at a file being inspected is refused).
 

@@ -56,7 +56,7 @@ const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
     ("force-default-config", None, Arg::None, Use::Handle),
     ("changed", None, Arg::Optional, Use::Unsupported),
     ("stdin", Some('s'), Arg::Required, Use::Handle),
-    ("editor-mode", None, Arg::None, Use::Ignore),
+    ("editor-mode", None, Arg::None, Use::Handle),
     ("[no-]parallel", Some('P'), Arg::None, Use::Handle),
     ("raise-cop-error", None, Arg::None, Use::Ignore),
     ("fail-level", None, Arg::Required, Use::Handle),
@@ -482,6 +482,7 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
         "extra-details" => cli.annotate.extra_details = true,
         "display-style-guide" => cli.annotate.display_style_guide = true,
         "stderr" => cli.stderr = true,
+        "editor-mode" => rbcop::helpers::lsp::enable(),
         "display-time" => cli.display_time = true,
         "auto-correct" | "safe-auto-correct" | "auto-correct-all" => {
             // Options#handle_deprecated_option, warned while parsing (only a literal --no-color

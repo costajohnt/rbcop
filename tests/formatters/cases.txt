@@ -65,6 +65,8 @@ fail-level-only-clean|tests/formatters/project|-f s --fail-level E --display-onl
 only-correctable|tests/formatters/project|-f s --display-only-correctable
 only-safe-correctable|tests/formatters/project|-f s --display-only-safe-correctable
 junit-only-failed|tests/formatters/project|-f junit --display-only-failed
+# A global offense (Gemspec/RequiredRubyVersion): the failure body is the PseudoSourceRange inspect.
+junit-global-offense|tests/formatters/gemspec|-f junit --display-only-failed x.gemspec
 junit-only-failed-abbrev|tests/formatters/project|-f ju --display-only-failed
 # --only again replaces the list: cops whose registry (load) order differs from name order.
 junit-registry-order|tests/formatters/project|-f ju --only Style/DocumentationMethod,Style/DocumentDynamicEvalDefinition,Lint/SharedMutableDefault,Lint/SafeNavigationConsistency,Layout/EmptyLines,Layout/EmptyLineBetweenDefs,Naming/BinaryOperatorParameterName lib/clean.rb
@@ -88,6 +90,7 @@ stdin-emacs-outside|tests/formatters/project|-f e --stdin ../foo.rb|tests/format
 stdin-json|tests/formatters/project|-f j --stdin lib/foo.rb|tests/formatters/stdin.rb
 stdin-autocorrect|tests/formatters/project|-f s -a --stdin lib/foo.rb|tests/formatters/stdin.rb
 stdin-autocorrect-all-json|tests/formatters/project|-f j -A --stdin lib/foo.rb|tests/formatters/stdin.rb
+stdin-autocorrect-all-stderr|tests/formatters/project|-f s -A --stderr --stdin lib/foo.rb|tests/formatters/stdin.rb
 # Other modes and errors.
 list-target-files|tests/formatters/project|-L
 version|tests/formatters/project|-v

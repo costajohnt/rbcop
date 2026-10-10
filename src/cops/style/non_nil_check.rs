@@ -40,7 +40,7 @@ impl Cop for NonNilCheck {
         }
         if !semantic {
             let nc = cx.config.for_cop("Style/NilComparison");
-            if nc.bool("Enabled") == Some(true) && nc.str("EnforcedStyle") == Some("comparison") {
+            if nc.truthy("Enabled") && nc.str("EnforcedStyle") == Some("comparison") {
                 return;
             }
         }

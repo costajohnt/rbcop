@@ -28,8 +28,11 @@ fn required_type(node: &Node) -> Option<&'static str> {
         kind::CALL_NODE => {
             let c = node.as_call_node().unwrap();
             let name = c.name().as_slice();
+            // No arguments: `private :a` (and a `&blk` pass, a parser argument) is no match; with a
+            // `{}`/`do` block the statement is a parser `block`.
             (c.receiver().is_none()
-                && !c.block().is_some_and(|b| b.as_block_node().is_some())
+                && c.arguments().is_none()
+                && c.block().is_none()
                 && matches!(name, b"private" | b"protected" | b"public"))
             .then_some("send")
         }

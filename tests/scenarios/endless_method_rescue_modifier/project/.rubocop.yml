@@ -1,0 +1,7 @@
+AllCops:
+  NewCops: disable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Style/EndlessMethod:
+  Enabled: true
+  EnforcedStyle: require_always

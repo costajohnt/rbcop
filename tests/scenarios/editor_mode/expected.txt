@@ -1,0 +1,21 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:3:9: W: Lint/UnusedMethodArgument: Unused method argument - `unused`. If it's necessary, use `_` or `_unused` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `foo(*)` if you want the method to accept any arguments but don't care about them.
+a.rb:6:7: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+a.rb:8:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+bad.rb:1:6: F: Lint/Syntax: unexpected token $end
+metrics.rb:12:3: R: Metrics/AbcSize: Assignment Branch Condition size for `baz` is too high. [<1, 1, 0> 1.41/1]
+metrics.rb:12:3: R: Metrics/MethodLength: Method has too many lines. [2/1]
+metrics.rb:19:1: R: Metrics/ModuleLength: Module has too many lines. [2/1]
+metrics.rb:25:1: R: Metrics/BlockLength: Block has too many lines. [2/1]
+metrics.rb:29:11: R: Metrics/BlockLength: Block has too many lines. [2/1]
+metrics.rb:34:1: R: Metrics/AbcSize: Assignment Branch Condition size for `qux` is too high. [<0, 0, 2> 2/1]
+metrics.rb:34:1: R: Metrics/BlockLength: Block has too many lines. [2/1]
+metrics.rb:34:1: R: Metrics/CyclomaticComplexity: Cyclomatic complexity for `qux` is too high. [3/1]
+metrics.rb:34:1: R: Metrics/MethodLength: Method has too many lines. [2/1]
+metrics.rb:34:1: R: Metrics/PerceivedComplexity: Perceived complexity for `qux` is too high. [3/1]
+metrics.rb:35:9: W: Lint/Void: Literal `1` used in void context.
+metrics.rb:4:1: R: Metrics/ClassLength: Class has too many lines. [9/1]
+metrics.rb:5:3: R: Metrics/AbcSize: Assignment Branch Condition size for `bar` is too high. [<1, 1, 2> 2.45/1]
+metrics.rb:5:3: R: Metrics/CyclomaticComplexity: Cyclomatic complexity for `bar` is too high. [3/1]
+metrics.rb:5:3: R: Metrics/MethodLength: Method has too many lines. [3/1]
+metrics.rb:5:3: R: Metrics/PerceivedComplexity: Perceived complexity for `bar` is too high. [3/1]

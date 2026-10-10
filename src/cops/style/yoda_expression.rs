@@ -7,7 +7,8 @@ pub struct YodaExpression;
 
 /// `node.type?(:numeric, :const)`
 fn constant_portion(node: &Node) -> bool {
-    matches!(
+    helpers::literal_node::folded_numeric(node).is_some()
+        || matches!(
         kind::of(node),
         kind::INTEGER_NODE
             | kind::FLOAT_NODE

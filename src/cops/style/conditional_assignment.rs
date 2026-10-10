@@ -276,6 +276,12 @@ impl<'pr> Visit<'pr> for Starts {
         self.in_dstr = false;
         ruby_prism::visit_statements_node(self, node);
     }
+    // A BeginNode's `rescue_clause` is a typed field: the generic enter hook does not see it. Its
+    // start (`rescue`) is the parser `resbody`'s.
+    fn visit_rescue_node(&mut self, node: &ruby_prism::RescueNode<'pr>) {
+        self.record(&node.as_node());
+        ruby_prism::visit_rescue_node(self, node);
+    }
 }
 
 impl Starts {

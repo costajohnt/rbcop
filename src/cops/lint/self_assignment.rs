@@ -1,11 +1,81 @@
 use crate::prelude::*;
+use crate::helpers::comment_association;
 use crate::source::Source;
+use ruby_prism::Visit;
 
 pub const NAME: &str = "Lint/SelfAssignment";
 pub static COP: SelfAssignment = SelfAssignment;
 pub struct SelfAssignment;
 
-// ponytail: AllowRBSInlineAnnotation (default false) is not ported; it needs comment association.
+/// The whole-file comment walk with the parser `lvasgn`/`casgn` left side of `stmt` (an or/and
+/// assignment to a variable or constant, `lhs` = its name) added: parser visits it first, so it
+/// takes a comment decorating its line.
+struct Walk<'a> {
+    a: comment_association::Associator<'a>,
+    stmt: (usize, usize),
+    lhs: Option<(usize, usize)>,
+}
+
+impl<'pr> Visit<'pr> for Walk<'_> {
+    fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
+        self.a.enter(&node);
+        if let Some((s, e)) = self.lhs.filter(|_| range(&node) == self.stmt && kind::of(&node) != kind::STATEMENTS_NODE) {
+            self.a.enter_range(s, e, true);
+            self.a.leave();
+        }
+    }
+    fn visit_branch_node_leave(&mut self) {
+        self.a.leave();
+    }
+    fn visit_leaf_node_enter(&mut self, node: Node<'pr>) {
+        self.a.enter(&node);
+    }
+    fn visit_leaf_node_leave(&mut self) {
+        self.a.leave();
+    }
+}
+
+/// `allow_rbs_inline_annotation? && rbs_inline_annotation?(target)`: a `#:` comment among those
+/// parser's Comment::Associator gives the target node (`processed_source.ast_with_comments`).
+fn rbs_annotated(cx: &Cx, stmt: &Node, target: Option<(usize, usize)>, lhs: bool) -> bool {
+    let Some((s, e)) = target.filter(|_| cx.cfg.params.truthy("AllowRBSInlineAnnotation")) else { return false };
+    let Some(program) = cx.ancestors.first() else { return false };
+    let src = cx.src;
+    let mut w = Walk {
+        a: comment_association::Associator::new(src, comment_association::skipped_directives(src)),
+        stmt: range(stmt),
+        lhs: lhs.then_some((s, e)),
+    };
+    w.visit(program);
+    w.a.comments_of(s, e).any(|c| src.slice(c.start, c.end).starts_with("#:"))
+}
+
+/// The node `rbs_inline_annotation?` looks at: the value of a plain assignment, the first target
+/// of a multiple assignment, the left side of an or/and assignment (true when parser has a node
+/// for it that Prism lacks: a variable or constant name).
+// ponytail: the `send` left side of `a.b ||= c` / `a[i] ||= c` is None: its receiver ends on its
+// line first and takes the decorating comment, so only multi-line receivers could differ.
+fn annotation_target(node: &Node) -> (Option<(usize, usize)>, bool) {
+    let loc = |l: ruby_prism::Location| Some((l.start_offset(), l.end_offset()));
+    match node {
+        Node::CallNode { .. } => (node.as_call_node().unwrap().receiver().map(|r| range(&r)), false),
+        Node::MultiWriteNode { .. } => (node.as_multi_write_node().unwrap().lefts().iter().next().map(|n| range(&n)), false),
+        Node::LocalVariableOrWriteNode { .. } => (loc(node.as_local_variable_or_write_node().unwrap().name_loc()), true),
+        Node::LocalVariableAndWriteNode { .. } => (loc(node.as_local_variable_and_write_node().unwrap().name_loc()), true),
+        Node::InstanceVariableOrWriteNode { .. } => (loc(node.as_instance_variable_or_write_node().unwrap().name_loc()), true),
+        Node::InstanceVariableAndWriteNode { .. } => (loc(node.as_instance_variable_and_write_node().unwrap().name_loc()), true),
+        Node::ClassVariableOrWriteNode { .. } => (loc(node.as_class_variable_or_write_node().unwrap().name_loc()), true),
+        Node::ClassVariableAndWriteNode { .. } => (loc(node.as_class_variable_and_write_node().unwrap().name_loc()), true),
+        Node::GlobalVariableOrWriteNode { .. } => (loc(node.as_global_variable_or_write_node().unwrap().name_loc()), true),
+        Node::GlobalVariableAndWriteNode { .. } => (loc(node.as_global_variable_and_write_node().unwrap().name_loc()), true),
+        Node::ConstantOrWriteNode { .. } => (loc(node.as_constant_or_write_node().unwrap().name_loc()), true),
+        Node::ConstantAndWriteNode { .. } => (loc(node.as_constant_and_write_node().unwrap().name_loc()), true),
+        Node::ConstantPathOrWriteNode { .. } => (Some(range(&node.as_constant_path_or_write_node().unwrap().target().as_node())), false),
+        Node::ConstantPathAndWriteNode { .. } => (Some(range(&node.as_constant_path_and_write_node().unwrap().target().as_node())), false),
+        Node::CallOrWriteNode { .. } | Node::CallAndWriteNode { .. } | Node::IndexOrWriteNode { .. } | Node::IndexAndWriteNode { .. } => (None, false),
+        _ => (assignment_parts(node).map(|(_, v)| range(&v)), false),
+    }
+}
 
 fn range(node: &Node) -> (usize, usize) {
     let l = node.location();
@@ -121,7 +191,7 @@ impl SelfAssignment {
         } else {
             return;
         };
-        if offense {
+        if offense && !rbs_annotated(cx, node, call.receiver().map(|r| range(&r)), false) {
             let (s, e) = send_range(&call);
             cx.add(s, e, "Self-assignment detected.");
         }
@@ -275,7 +345,8 @@ impl Cop for SelfAssignment {
             }
             _ => false,
         };
-        if offense {
+        let (target, lhs) = annotation_target(node);
+        if offense && !rbs_annotated(cx, node, target, lhs) {
             let (s, e) = range(node);
             cx.add(s, e, "Self-assignment detected.");
         }
