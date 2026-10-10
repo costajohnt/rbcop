@@ -2,6 +2,7 @@
 
 use crate::ast::{send_args, send_range};
 use crate::cop::Corrector;
+use crate::helpers::range_help::{Side, Surrounding, range_with_surrounding_space};
 use crate::node_kind as kind;
 use ruby_prism::Node;
 
@@ -12,6 +13,8 @@ pub enum ParenFix {
     Empty { start: usize, end: usize },
     /// `wrap(node, '(', ')')`
     Wrap { start: usize, end: usize },
+    /// `args` node: replace the space before the arguments with `(`, `)` after them.
+    Params { lead: usize, start: usize, end: usize },
 }
 
 /// None where RuboCop would raise (a call without a selector, such as `foo.()`).
@@ -31,6 +34,13 @@ pub fn plan(node: &Node, text: &str) -> Option<ParenFix> {
             let y = node.as_yield_node().unwrap();
             let l = node.location();
             (Some(y.keyword_loc().end_offset()), y.arguments().is_some(), (l.start_offset(), l.end_offset()))
+        }
+        kind::PARAMETERS_NODE => {
+            let l = node.location();
+            let (start, end) = (l.start_offset(), l.end_offset());
+            let opts = Surrounding { side: Side::Left, ..Default::default() };
+            let (lead, _) = range_with_surrounding_space(text, start, end, opts);
+            return Some(ParenFix::Params { lead, start, end });
         }
         _ => {
             let l = node.location();
@@ -54,5 +64,9 @@ pub fn apply(c: &mut Corrector, fix: &ParenFix) {
         }
         ParenFix::Empty { start, end } => c.insert_after(start, end, "()"),
         ParenFix::Wrap { start, end } => c.wrap(start, end, "(", ")"),
+        ParenFix::Params { lead, start, end } => {
+            c.replace(lead, start, "(");
+            c.insert_after(start, end, ")");
+        }
     }
 }
