@@ -69,6 +69,49 @@ pub fn valid(comment: &str) -> bool {
     comment.starts_with('#') && any(comment)
 }
 
+/// Ruby's `split(sep)` minus trailing empty fields, each field stripped (EditorComment#tokens).
+fn editor_tokens<'a>(body: &'a str, sep: &str) -> Vec<&'a str> {
+    let mut parts: Vec<&str> = body.split(sep).collect();
+    while parts.last() == Some(&"") {
+        parts.pop();
+    }
+    parts.into_iter().map(ruby_strip).collect()
+}
+
+/// `MagicComment.parse(comment).encoding`: the encoding value (editor comments downcase it).
+pub fn encoding(comment: &str) -> Option<String> {
+    if let Some(c) = EMACS.captures(comment) {
+        let tokens = editor_tokens(c.get(1).unwrap().as_str(), ";");
+        return tokens.iter().find_map(|t| EMACS_ENCODING.captures(t).map(|m| m[1].to_lowercase()));
+    }
+    if let Some(c) = VIM.captures(comment) {
+        let tokens = editor_tokens(c.get(1).unwrap().as_str(), ", ");
+        if tokens.len() <= 1 {
+            return None;
+        }
+        return tokens.iter().find_map(|t| VIM_ENCODING.captures(t).map(|m| m[1].to_lowercase()));
+    }
+    SIMPLE_ENCODING.captures(comment).map(|m| m[1].to_string())
+}
+
+static SIMPLE_ENCODING_START: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(&format!(r"(?i)\A#{S}*(?:en)?coding")).unwrap());
+
+/// `MagicComment.parse(comment).without(:encoding)`.
+pub fn without_encoding(comment: &str) -> String {
+    if let Some(c) = EMACS.captures(comment) {
+        let tokens = editor_tokens(c.get(1).unwrap().as_str(), ";");
+        let rest: Vec<&str> = tokens.into_iter().filter(|t| !t.starts_with("coding") && !t.starts_with("encoding")).collect();
+        return if rest.is_empty() { String::new() } else { format!("# -*- {} -*-", rest.join(";")) };
+    }
+    if let Some(c) = VIM.captures(comment) {
+        let tokens = editor_tokens(c.get(1).unwrap().as_str(), ", ");
+        let rest: Vec<&str> = tokens.into_iter().filter(|t| !t.starts_with("fileencoding")).collect();
+        return if rest.is_empty() { String::new() } else { format!("# vim: {}", rest.join(", ")) };
+    }
+    if SIMPLE_ENCODING_START.is_match(comment) { String::new() } else { comment.to_string() }
+}
+
 #[cfg(test)]
 mod tests {
     use super::any;
