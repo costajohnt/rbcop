@@ -30,3 +30,11 @@ pub fn is_operator_keyword(node: &Node) -> bool {
 pub fn is_ternary(node: &Node) -> bool {
     node.as_if_node().is_some_and(|i| i.if_keyword_loc().is_none())
 }
+
+/// Index of the parser-gem parent of `ancestors[i]` (of the visited node itself when
+/// `i == ancestors.len()`). A BlockNode's parser parent is its owning call's parent.
+pub fn parser_parent_index(ancestors: &[Node], i: usize) -> Option<usize> {
+    let end = if i < ancestors.len() && i > 0 && kind::of(&ancestors[i]) == kind::BLOCK_NODE { i - 1 } else { i };
+    let p = parser_parent(&ancestors[..end])?;
+    (0..end).rev().find(|&k| std::ptr::eq(&ancestors[k], p))
+}
