@@ -16,7 +16,7 @@ fn copy_dir(from: &Path, to: &Path) {
 #[test]
 fn autocorrect_matches_rubocop() {
     let root = Path::new(concat!(env!("CARGO_MANIFEST_DIR"), "/tests/autocorrect"));
-    for case in ["comparison", "default", "fuzz"] {
+    for case in ["comparison", "default", "fuzz", "pending_enabled"] {
         let dir = root.join(case);
         // A case may list its own cops (`<case>/cops.txt`).
         let cops =

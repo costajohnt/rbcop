@@ -206,7 +206,7 @@ fn breakable_element(
 fn endless_rewrite(cx: &Cx, def: &ruby_prism::DefNode) -> Option<(usize, usize, String)> {
     let style = cx.config.for_cop("Style/EndlessMethod");
     let require_always =
-        style.get("Enabled") == Some(&Value::Bool(true)) && style.str("EnforcedStyle") == Some("require_always");
+        style.truthy("Enabled") && style.str("EnforcedStyle") == Some("require_always");
     let src = cx.src;
     let loc = def.location();
     let column = src.column(loc.start_offset());
