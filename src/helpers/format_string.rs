@@ -147,4 +147,14 @@ mod tests {
         assert_eq!(max_digit_dollar_num("%1$s %2$s"), Some(Some(2)));
         assert!(max_digit_dollar_num("%1$s %%").is_none());
     }
+
+    #[test]
+    fn parts() {
+        let p = sequence_parts("%-10.2<a>f");
+        assert_eq!((p.flags.as_str(), p.width, p.precision, p.name, p.ty), ("-", Some("10"), Some("2"), Some("a"), Some("f")));
+        let p = sequence_parts("%<b>+05d");
+        assert_eq!((p.flags.as_str(), p.width, p.name, p.ty), ("+0", Some("5"), Some("b"), Some("d")));
+        let p = sequence_parts("%+5{c}");
+        assert_eq!((p.flags.as_str(), p.width, p.name, p.ty), ("+", Some("5"), Some("c"), None));
+    }
 }

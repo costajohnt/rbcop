@@ -128,7 +128,7 @@ fn on_block(cx: &mut Cx, b: &Block) {
     let braces = src.slice(b.closing.0, b.closing.1) == "}";
     let multiline = src.line_of(b.opening.0) != src.line_of(b.closing.0);
     let style = cx.cfg.str("EnforcedStyle").unwrap_or("line_count_based");
-    let braces_required = cx.cfg.strings("BracesRequiredMethods").iter().any(|m| *m == b.method);
+    let braces_required = cx.cfg.strings("BracesRequiredMethods").contains(&b.method);
 
     // proper_block_style?
     if require_do_end(b, braces, multiline) {
@@ -145,12 +145,12 @@ fn on_block(cx: &mut Cx, b: &Block) {
         match style {
             "semantic" => {
                 if braces {
-                    cx.cfg.strings("FunctionalMethods").iter().any(|m| *m == b.method)
+                    cx.cfg.strings("FunctionalMethods").contains(&b.method)
                         || return_value_used(ancestors)
                         || return_value_of_scope(src, ancestors, b.range)
                         || (cx.cfg.bool("AllowBracesOnProceduralOneLiners") == Some(true) && !multiline)
                 } else {
-                    cx.cfg.strings("ProceduralMethods").iter().any(|m| *m == b.method) || !return_value_used(ancestors)
+                    cx.cfg.strings("ProceduralMethods").contains(&b.method) || !return_value_used(ancestors)
                 }
             }
             "braces_for_chaining" => {
