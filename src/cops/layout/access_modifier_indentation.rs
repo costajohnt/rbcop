@@ -68,10 +68,10 @@ impl Cop for AccessModifierIndentation {
         // Blocks: the modifier is a macro only if the block itself is in a macro scope.
         let block_scope = match kind::of(node) {
             kind::BLOCK_NODE => {
-                cx.parent().is_some_and(helpers::macro_scope_nodes::class_constructor)
-                    || helpers::macro_scope_nodes::in_macro_scope(&cx.ancestors[..cx.ancestors.len().saturating_sub(1)])
+                cx.parent().is_some_and(|p| p.as_call_node().is_some_and(|c| helpers::macro_scope::class_constructor(&c)))
+                    || helpers::macro_scope::in_macro_scope_of_child(&cx.ancestors[..cx.ancestors.len().saturating_sub(1)])
             }
-            kind::LAMBDA_NODE => helpers::macro_scope_nodes::in_macro_scope(cx.ancestors),
+            kind::LAMBDA_NODE => helpers::macro_scope::in_macro_scope_of_child(cx.ancestors),
             _ => true,
         };
         if !block_scope {
@@ -83,6 +83,7 @@ impl Cop for AccessModifierIndentation {
         let end_col = effective_column(src, end_loc.start_offset());
         let node_line = src.line_of(start);
         let label = if style == "outdent" { "Outdent" } else { "Indent" };
+        let set = helpers::alignment_corrector::Settings::of(cx);
         for m in stmts.body().iter().filter(bare_modifier) {
             let loc = m.location();
             if src.line_of(loc.start_offset()) == node_line {
@@ -90,13 +91,9 @@ impl Cop for AccessModifierIndentation {
             }
             let delta = expected - (effective_column(src, loc.start_offset()) - end_col);
             if delta != 0 {
-                let correctable = helpers::alignment::corrects(cx, loc.start_offset(), loc.end_offset(), delta);
-                cx.add_with(
-                    loc.start_offset(),
-                    loc.end_offset(),
-                    format!("{label} access modifiers like `{}`.", node_text(&m)),
-                    correctable,
-                );
+                let (s, e) = (loc.start_offset(), loc.end_offset());
+                let msg = format!("{label} access modifiers like `{}`.", node_text(&m));
+                cx.add_fix(s, e, msg, |c| helpers::alignment_corrector::correct(c, src, set, s, e, Some(&m), delta, false));
             }
         }
     }

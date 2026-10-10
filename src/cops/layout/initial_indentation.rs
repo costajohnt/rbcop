@@ -16,7 +16,14 @@ impl Cop for InitialIndentation {
         // Only spaces/tabs to the left count (a BOM gives a non-zero column but no space).
         if matches!(src.text.as_bytes()[..t.start].last(), Some(b' ' | b'\t')) {
             // ponytail: Prism token range; parser makes e.g. `'str'` one tSTRING token (emacs shows the start only).
-            cx.add(t.start, t.end, "Indentation of first line in file detected.");
+            let o = helpers::range_help::Surrounding {
+                side: helpers::range_help::Side::Left,
+                newlines: false,
+                ..Default::default()
+            };
+            let (space, _) = helpers::range_help::range_with_surrounding_space(src.text, t.start, t.end, o);
+            let first = t.start;
+            cx.add_fix(t.start, t.end, "Indentation of first line in file detected.", |c| c.remove(space, first));
         }
     }
 }

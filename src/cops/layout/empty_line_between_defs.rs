@@ -89,10 +89,13 @@ impl Cop for EmptyLineBetweenDefs {
             if let (Some((p, pnode)), Some(c)) = (&prev, &cur) {
                 // def_end: the node's last line, or a trailing heredoc's terminator line
                 let mut end = p.range.1;
+                // end_loc(prev).end_pos: heredoc_end excludes the terminator's newline.
+                let mut end_pos = end;
                 if let Some((hs, he)) = helpers::heredoc::last_heredoc_end(pnode)
                     && he > end
                 {
                     end = hs;
+                    end_pos = he - usize::from(src.text[..he].ends_with('\n'));
                 }
                 let from = src.line_of(end); // 0-based index of the line after def_end
                 let to = c.start_line as isize - 2;
@@ -112,7 +115,18 @@ impl Cop for EmptyLineBetweenDefs {
                         format!("{max} empty line{}", if max == 1 { "" } else { "s" })
                     };
                     let msg = format!("Expected {expected} between {} definitions; found {count}.", c.kind);
-                    cx.add(c.loc.0, c.loc.1, msg);
+                    // RuboCop crashes (nil > Integer) without a newline after the previous def.
+                    if let Some(nl) = src.text[end_pos..].find('\n').map(|i| end_pos + i) {
+                        let begin = c.range.0;
+                        let nl = if nl > begin { begin - 1 } else { nl };
+                        cx.add_fix(c.loc.0, c.loc.1, msg, |cr| {
+                            if count > max {
+                                cr.remove(nl, nl + (count - max) as usize);
+                            } else {
+                                cr.insert_after(nl, nl + 1, &"\n".repeat((min - count) as usize));
+                            }
+                        });
+                    }
                 }
             }
             prev = cur.map(|c| (c, stmt));

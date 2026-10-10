@@ -1,4 +1,4 @@
-use crate::helpers::alignment_check as alignment;
+use crate::helpers::alignment as alignment;
 use crate::helpers::multiline_expression_indentation::{Ctx, indentation};
 use crate::prelude::*;
 
@@ -84,8 +84,8 @@ impl Cop for MultilineOperationIndentation {
                 ctx.correct_indentation(cx, width)
             )
         };
-        let correctable = alignment::corrects(cx, rhs.0, rhs.1, None, delta);
-        cx.add_with(rhs.0, rhs.1, msg, correctable);
+        let set = helpers::alignment_corrector::Settings::of(cx);
+        cx.add_fix(rhs.0, rhs.1, msg, |c| helpers::alignment_corrector::correct(c, src, set, rhs.0, rhs.1, None, delta, false));
     }
 }
 

@@ -299,10 +299,17 @@ impl BlockAlignment {
             format!(" or {}", fmt(do_src))
         };
         let msg = format!("{} is not aligned with {}{alt}.", fmt(current), fmt(prefer));
-        // The corrector moves `end` to start_for_line_node's column (start_of_block: the anchor
-        // line's indentation); nothing to do when it is already there.
-        let correctable = style == "start_of_block" || src.column(line_start.0) != end_col;
-        cx.add_with(end_loc.0, end_loc.1, msg, correctable);
+        // autocorrect: move `end` to start_for_line_node's column (start_of_block: the anchor
+        // line's indentation).
+        let start_col = if style == "start_of_block" { indent } else { src.column(line_start.0) };
+        let delta = start_col as i64 - end_col as i64;
+        cx.add_fix(end_loc.0, end_loc.1, msg, |c| {
+            if delta > 0 {
+                c.insert_before(end_loc.0, end_loc.1, &" ".repeat(delta as usize));
+            } else if delta < 0 {
+                c.remove(end_loc.0 - delta.unsigned_abs() as usize, end_loc.0);
+            }
+        });
     }
 
     /// inside_parentheses?: more `(`/`[` than `)`/`]` tokens between the block start and `pos`

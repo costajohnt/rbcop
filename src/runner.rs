@@ -119,7 +119,10 @@ fn analyze(
                 source: None,
             })
             .collect();
-        dedup(&mut out);
+        // The parser translation layer reports one diagnostic per range; Prism can stack two
+        // (`unexpected '+'` and `expected a receiver for unary +`), and only the first survives.
+        let mut seen = std::collections::HashSet::new();
+        out.retain(|o| seen.insert((o.start, o.end)));
         return (out, None);
     }
 
@@ -466,9 +469,11 @@ fn format_ruby_version(v: f64) -> String {
 }
 
 /// Cop::Base#add_offense ignores a second offense on a range the cop already reported.
+/// Runner's `offenses_by_iteration.flatten.uniq`: Offense equality is line, column, cop, message and
+/// severity (fixed per cop), not the range, so two ranges starting at one position collapse.
 fn dedup(out: &mut Vec<Offense>) {
     let mut seen = std::collections::HashSet::new();
-    out.retain(|o| seen.insert((o.cop, o.start, o.end)));
+    out.retain(|o| seen.insert((o.cop, o.start, o.message.clone())));
 }
 
 /// CommentConfig#non_comment_token_line_numbers: lines where a non-comment token starts. Parser

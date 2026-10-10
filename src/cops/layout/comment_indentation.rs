@@ -1,5 +1,6 @@
 use crate::prelude::*;
-use helpers::alignment_mixin::{blank, corrector_edits, first_non_space, indentation_width};
+use helpers::alignment::{blank, configured_indentation_width, first_non_space};
+use helpers::alignment_corrector::{self as ac, Settings};
 
 pub const NAME: &str = "Layout/CommentIndentation";
 pub static COP: CommentIndentation = CommentIndentation;
@@ -19,7 +20,7 @@ impl Cop for CommentIndentation {
 
     fn on_file(&self, cx: &mut Cx) {
         let src = cx.src;
-        let width = indentation_width(cx);
+        let width = configured_indentation_width(cx);
         let outdent = cx.config.for_cop("Layout/AccessModifierIndentation").str("EnforcedStyle") == Some("outdent");
         let allow_alignment = cx.cfg.bool("AllowForAlignment").unwrap_or(false);
         let own_line = |c: &Comment| src.lines.get(src.line_of(c.start) - 1).is_some_and(|l| OWN_LINE.is_match(l));
@@ -54,8 +55,25 @@ impl Cop for CommentIndentation {
                 continue;
             }
             let msg = format!("Incorrect indentation detected (column {column} instead of {correct}).");
-            let fixable = corrector_edits(src, comment.start, comment.end, delta, None);
-            cx.add_with(comment.start, comment.end, msg, fixable);
+            // autocorrect_preceding_comments: earlier own-line comments in the same column,
+            // separated from this one by blank lines only, move by the same delta.
+            let mut targets = vec![(comment.start, comment.end)];
+            let mut below = comment;
+            for above in src.comments[..ix].iter().rev() {
+                let blank_between =
+                    (src.line_of(above.start) + 1..src.line_of(below.start)).all(|l| blank(src.lines[l - 1]));
+                if src.column(above.start) != src.column(below.start) || !own_line(above) || !blank_between {
+                    break;
+                }
+                targets.push((above.start, above.end));
+                below = above;
+            }
+            let set = Settings::of(cx);
+            cx.add_fix(comment.start, comment.end, msg, |c| {
+                for &(s, e) in targets[1..].iter().chain(&targets[..1]) {
+                    ac::correct(c, src, set, s, e, None, delta, false);
+                }
+            });
         }
     }
 }

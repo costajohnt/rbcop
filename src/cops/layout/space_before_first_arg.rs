@@ -1,5 +1,5 @@
 use crate::helpers::preceding_following_alignment::{Alignment, Data, Range};
-use crate::helpers::range_help::with_surrounding_space;
+use crate::helpers::range_help::{Side, Surrounding, range_with_surrounding_space};
 use crate::prelude::*;
 
 pub const NAME: &str = "Layout/SpaceBeforeFirstArg";
@@ -29,7 +29,7 @@ impl Cop for SpaceBeforeFirstArg {
         let Some(selector) = call.message_loc() else { return };
         let src = cx.src;
         let (arg_s, arg_e) = (first.location().start_offset(), first.location().end_offset());
-        let (space_s, _) = with_surrounding_space(src, arg_s, arg_e, true, false, true);
+        let (space_s, _) = range_with_surrounding_space(src.text, arg_s, arg_e, Surrounding { side: Side::Left, ..Default::default() });
         if src.slice(space_s, arg_s).chars().count() == 1 {
             return;
         }

@@ -71,7 +71,23 @@ impl Cop for DotPosition {
         } else {
             format!("Place the {} on the previous line, together with the method call receiver.", text(&dot))
         };
-        cx.add(dot.start_offset(), dot.end_offset(), msg);
+        let (ds, de) = (dot.start_offset(), dot.end_offset());
+        let dot_range = if helpers::ruby_string::strip(src.lines[dot_line - 1]) == "." {
+            helpers::whole_lines::range_by_whole_lines(src.text, ds, de, true)
+        } else {
+            (ds, de)
+        };
+        let dot_src = text(&dot).to_string();
+        let (sel, recv) = ((selector.start_offset(), selector.end_offset()), receiver.location());
+        let recv = (recv.start_offset(), recv.end_offset());
+        cx.add_fix(ds, de, msg, |c| {
+            c.remove(dot_range.0, dot_range.1);
+            if leading {
+                c.insert_before(sel.0, sel.1, &dot_src);
+            } else {
+                c.insert_after(recv.0, recv.1, &dot_src);
+            }
+        });
     }
 }
 

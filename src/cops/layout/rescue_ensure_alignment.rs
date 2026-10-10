@@ -1,4 +1,4 @@
-use crate::helpers::macro_scope_nodes::in_macro_scope;
+use crate::helpers::macro_scope::in_macro_scope_of_child as in_macro_scope;
 use crate::prelude::*;
 use crate::source::Source;
 

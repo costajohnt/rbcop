@@ -1,8 +1,8 @@
 use crate::prelude::*;
 use crate::source::Source;
-use helpers::alignment_mixin::{
-    begins_its_line, blank, cop_enabled, corrector_edits, display_column, enabled_cop_str, first_non_space,
-    indentation_width,
+use helpers::alignment::{
+    begins_its_line, blank, cop_enabled, display_column, enabled_cop_str, first_non_space,
+    configured_indentation_width,
 };
 
 pub const NAME: &str = "Layout/FirstArgumentIndentation";
@@ -148,7 +148,7 @@ impl Cop for FirstArgumentIndentation {
         let comment_lines =
             src.comments.iter().filter(|c| begins_its_line(src, c.start)).map(|c| src.line_of(c.start)).collect();
         let c = Ctx { src, style, comment_lines, node, parent: parser_parent(node, cx.ancestors), first };
-        let width = indentation_width(cx);
+        let width = configured_indentation_width(cx);
 
         if enabled_cop_str(cx, "Layout/ArgumentAlignment", "EnforcedStyle").as_deref() == Some("with_fixed_indentation")
             && (!cop_enabled(cx, "Layout/FirstMethodArgumentLineBreak") || conflicts_with_fixed(&c, node, &args))
@@ -183,8 +183,10 @@ impl Cop for FirstArgumentIndentation {
             Some(usize::MAX) => node,
             Some(i) => &cx.ancestors[i],
         };
-        let fixable = corrector_edits(src, cs, ce, delta, Some(corr_node));
-        cx.add_with(start, end, format!("Indent the first argument one step more than {base}."), fixable);
+        let set = helpers::alignment_corrector::Settings::of(cx);
+        cx.add_fix(start, end, format!("Indent the first argument one step more than {base}."), |c| {
+            helpers::alignment_corrector::correct(c, src, set, cs, ce, Some(corr_node), delta, false)
+        });
     }
 }
 

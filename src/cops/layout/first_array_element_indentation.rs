@@ -1,5 +1,6 @@
 use crate::prelude::*;
-use helpers::alignment_mixin::{corrector_edits, enabled_cop_str, indentation_width};
+use helpers::alignment::{configured_indentation_width, enabled_cop_str};
+use helpers::alignment_corrector::{Settings, correct};
 use helpers::multiline_element_indentation::{IndentBase, Words, check_right, claiming_paren, first_message, indent_base};
 
 pub const NAME: &str = "Layout/FirstArrayElementIndentation";
@@ -49,11 +50,13 @@ impl Cop for FirstArrayElementIndentation {
                 return;
             }
             let (b, t) = base(cx);
-            let delta = b + indentation_width(cx) - src.column(start) as i64;
+            let delta = b + configured_indentation_width(cx) - src.column(start) as i64;
             if delta != 0 {
                 let end = first.location().end_offset();
-                let fixable = corrector_edits(src, start, end, delta, Some(first));
-                cx.add_with(start, end, first_message(cx, &WORDS, &t), fixable);
+                let set = Settings::of(cx);
+                cx.add_fix(start, end, first_message(cx, &WORDS, &t), |c| {
+                    correct(c, src, set, start, end, Some(first), delta, false)
+                });
             }
         }
         check_right(cx, &WORDS, (close.start_offset(), close.end_offset()), base(cx));

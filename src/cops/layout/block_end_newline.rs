@@ -31,6 +31,29 @@ fn body_end(body: &Node) -> usize {
     stmts_end(b.statements()).unwrap_or(body.location().start_offset())
 }
 
+/// `last_heredoc_argument(node.body)`: the terminator range (`loc.heredoc_end`, without the
+/// newline) of the last single-line `str` heredoc argument of a send, searching receivers too.
+fn last_heredoc_end(body: Option<&Node>) -> Option<(usize, usize)> {
+    let mut node = match body.and_then(|b| b.as_statements_node()) {
+        Some(s) if s.body().len() == 1 => s.body().iter().next(),
+        _ => None,
+    };
+    while let Some(call) = node.as_ref().and_then(|n| n.as_call_node()) {
+        // A call with a literal block is a parser `block`, not `send`.
+        if call.block().is_some_and(|b| b.as_block_node().is_some()) {
+            return None;
+        }
+        let heredoc = send_args(&call).into_iter().rev().find(|a| is_heredoc(a) && a.as_string_node().is_some() && !is_parser_dstr(a));
+        if let Some(h) = heredoc {
+            let close = h.as_string_node().unwrap().closing_loc().unwrap();
+            let end = close.end_offset() - usize::from(close.as_slice().ends_with(b"\n"));
+            return Some((close.start_offset(), end));
+        }
+        node = call.receiver();
+    }
+    None
+}
+
 impl Cop for BlockEndNewline {
     fn correctable(&self) -> bool {
         true
@@ -51,7 +74,7 @@ impl Cop for BlockEndNewline {
         // BlockNode#single_line?: `{`/`do` and `}`/`end` on one line.
         let start = opening.start_offset();
         let end = closing.start_offset();
-        if src.line_of(start) == src.line_of(end) || helpers::alignment_mixin::begins_its_line(src, end) {
+        if src.line_of(start) == src.line_of(end) || helpers::alignment::begins_its_line(src, end) {
             return;
         }
         let last_end = match (&body, &params) {
@@ -65,6 +88,16 @@ impl Cop for BlockEndNewline {
         }
         let line = src.line_of(end);
         let column = src.column(end) + 1;
-        cx.add(end, closing.end_offset(), format!("Expression at {line}, {column} should be on its own line."));
+        let close_end = closing.end_offset();
+        let replacement = format!("\n{}", src.slice(last_end, close_end).trim_start());
+        let heredoc = last_heredoc_end(body.as_ref());
+        let msg = format!("Expression at {line}, {column} should be on its own line.");
+        cx.add_fix(end, close_end, msg, |c| match heredoc {
+            Some((hs, he)) => {
+                c.remove(last_end, close_end);
+                c.insert_after(hs, he, &replacement);
+            }
+            None => c.replace(last_end, close_end, &replacement),
+        });
     }
 }

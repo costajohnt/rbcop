@@ -1,4 +1,4 @@
-use crate::helpers::alignment_check as alignment;
+use crate::helpers::alignment as alignment;
 use crate::prelude::*;
 
 pub const NAME: &str = "Layout/FirstParameterIndentation";
@@ -35,7 +35,7 @@ impl Cop for FirstParameterIndentation {
         let base = if align_parens {
             src.column(paren)
         } else {
-            alignment::first_non_space(src.lines[src.line_of(paren) - 1])
+            alignment::first_non_space(src.lines[src.line_of(paren) - 1]).unwrap_or(0)
         };
         let width = alignment::configured_indentation_width(cx);
         let delta = base as i64 + width - src.column(start) as i64;
@@ -49,7 +49,7 @@ impl Cop for FirstParameterIndentation {
         };
         let msg = format!("Use {width} spaces for indentation in method args, relative to {desc}.");
         let end = first.location().end_offset();
-        let correctable = alignment::corrects(cx, start, end, Some(first), delta);
-        cx.add_with(start, end, msg, correctable);
+        let set = helpers::alignment_corrector::Settings::of(cx);
+        cx.add_fix(start, end, msg, |c| helpers::alignment_corrector::correct(c, src, set, start, end, Some(first), delta, false));
     }
 }

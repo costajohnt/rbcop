@@ -301,7 +301,7 @@ fn if_in_macro_scope(ancestors: &[Node], node: &Node) -> bool {
         n -= 1;
         cur = span(&ancestors[n]);
     }
-    helpers::macro_scope_nodes::in_macro_scope(&ancestors[..n])
+    helpers::macro_scope::in_macro_scope_of_child(&ancestors[..n])
 }
 
 /// `on_if(node, base)` / `check_if`.
@@ -508,8 +508,8 @@ impl Cop for IndentationWidth {
             kind::CALL_NODE => {
                 let c = node.as_call_node().unwrap();
                 if let Some(b) = c.block().and_then(|b| b.as_block_node()) {
-                    let m = helpers::macro_scope_nodes::class_constructor(node)
-                        || helpers::macro_scope_nodes::in_macro_scope(cx.ancestors);
+                    let m = helpers::macro_scope::class_constructor(&c)
+                        || helpers::macro_scope::in_macro_scope_of_child(cx.ancestors);
                     on_block(cx, Some(&c), b.body(), b.closing_loc(), m);
                 }
                 check_assignment(cx, node);
@@ -535,12 +535,12 @@ impl Cop for IndentationWidth {
                     None => node.as_forwarding_super_node().unwrap().block(),
                 };
                 let Some(b) = block else { return };
-                let m = helpers::macro_scope_nodes::in_macro_scope(cx.ancestors);
+                let m = helpers::macro_scope::in_macro_scope_of_child(cx.ancestors);
                 on_block(cx, None, b.body(), b.closing_loc(), m);
             }
             kind::LAMBDA_NODE => {
                 let l = node.as_lambda_node().unwrap();
-                let m = helpers::macro_scope_nodes::in_macro_scope(cx.ancestors);
+                let m = helpers::macro_scope::in_macro_scope_of_child(cx.ancestors);
                 on_block(cx, None, l.body(), l.closing_loc(), m);
             }
             kind::CLASS_NODE | kind::SINGLETON_CLASS_NODE | kind::MODULE_NODE => {

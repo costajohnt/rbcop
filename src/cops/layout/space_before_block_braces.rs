@@ -1,3 +1,4 @@
+use crate::helpers::range_help::{Surrounding, range_with_surrounding_space};
 use crate::prelude::*;
 
 pub const NAME: &str = "Layout/SpaceBeforeBlockBraces";
@@ -37,7 +38,7 @@ impl Cop for SpaceBeforeBlockBraces {
             }
         }
         let (brace_s, brace_e) = (open.start_offset(), open.end_offset());
-        let (space_s, _) = helpers::range_help::with_surrounding_space(cx.src, brace_s, brace_e, true, true, true);
+        let (space_s, _) = range_with_surrounding_space(cx.src.text, brace_s, brace_e, Surrounding::default());
         let used = if space_s == brace_s { "no_space" } else { "space" };
 
         if brace_e == close.start_offset() {

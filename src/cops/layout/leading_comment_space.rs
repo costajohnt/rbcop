@@ -66,7 +66,8 @@ impl Cop for LeadingCommentSpace {
                 continue;
             }
             offended.push(c.start);
-            cx.add(c.start, c.end, "Missing space after `#`.");
+            let hash = c.start;
+            cx.add_fix(c.start, c.end, "Missing space after `#`.", |c| c.insert_after(hash, hash + 1, " "));
         }
     }
 }

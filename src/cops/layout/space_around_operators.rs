@@ -1,5 +1,5 @@
 use crate::helpers::preceding_following_alignment::{Alignment, Data, Range};
-use crate::helpers::range_help::with_surrounding_space;
+use crate::helpers::range_help::{Surrounding, range_with_surrounding_space};
 use crate::prelude::*;
 use ruby_prism::Location;
 
@@ -39,7 +39,7 @@ impl SpaceAroundOperators {
     /// check_operator(type, operator, right_operand); `rational` = right_operand.rational_type?.
     fn check(&self, cx: &mut Cx, ty: Type, op: (usize, usize), right: (usize, usize), rational: bool) {
         let src = cx.src;
-        let (ws, we) = with_surrounding_space(src, op.0, op.1, true, true, true);
+        let (ws, we) = range_with_surrounding_space(src.text, op.0, op.1, Surrounding::default());
         let with_space = src.slice(ws, we);
         if with_space.starts_with('\n') {
             return;

@@ -35,7 +35,15 @@ impl Cop for EmptyComment {
             if comments[i..j].iter().all(empty) {
                 for c in &comments[i..j] {
                     let end = if src.text[..c.end].ends_with('\n') { c.end - 1 } else { c.end };
-                    cx.add(c.start, end, "Source code comment is empty.");
+                    // inline_comment?: code before the comment on its line.
+                    let line_start = src.line_start(src.line_of(c.start));
+                    let range = if helpers::ruby_string::strip(&src.text[line_start..c.start]).is_empty() {
+                        helpers::whole_lines::range_by_whole_lines(src.text, c.start, end, true)
+                    } else {
+                        let o = helpers::range_help::Surrounding { newlines: false, ..Default::default() };
+                        helpers::range_help::range_with_surrounding_space(src.text, c.start, end, o)
+                    };
+                    cx.add_fix(c.start, end, "Source code comment is empty.", |c| c.remove(range.0, range.1));
                 }
             }
             i = j;

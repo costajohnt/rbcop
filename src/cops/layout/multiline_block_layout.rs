@@ -53,6 +53,49 @@ impl Cop for MultilineBlockLayout {
             return;
         }
         let params = params.and_then(|p| p.as_block_parameters_node()).filter(helpers::block_args::any);
+        // autocorrect(corrector, node): the same full correction for either offense.
+        let open_end = open.end_offset();
+        let mut args_fix = None;
+        let mut expr_before_body = open.start_offset();
+        if let Some(p) = params.as_ref().filter(|p| begin_line != src.line_of(p.location().end_offset())) {
+            let loc = p.location();
+            let o = helpers::range_help::Surrounding {
+                side: helpers::range_help::Side::Right,
+                newlines: false,
+                ..Default::default()
+            };
+            let (_, end_pos) =
+                helpers::range_help::range_with_surrounding_space(src.text, loc.start_offset(), loc.end_offset(), o);
+            // ponytail: range_between(begin.end, end_pos) raises when the args precede `{` (lambda): no offense.
+            if end_pos < open_end {
+                return;
+            }
+            args_fix = Some((open_end, end_pos, format!(" |{}|", block_arg_string(p))));
+            expr_before_body = loc.end_offset();
+        }
+        let body_fix = body.as_ref().and_then(|b| {
+            let (s, e) = body_range(b);
+            if src.line_of(s) != src.line_of(expr_before_body) {
+                return None;
+            }
+            // first_node: the first statement of a parser `begin` body not starting with `(`.
+            let first = match b.as_statements_node() {
+                Some(st) if st.body().len() > 1 => {
+                    let f = st.body().iter().next().unwrap();
+                    (f.location().start_offset(), f.location().end_offset())
+                }
+                _ => (s, e),
+            };
+            Some((first, format!("\n  {}", " ".repeat(src.column(start)))))
+        });
+        let fix = |c: &mut Corrector| {
+            if let Some((a, b, s)) = &args_fix {
+                c.replace(*a, *b, s);
+            }
+            if let Some(((a, b), s)) = &body_fix {
+                c.insert_before(*a, *b, s);
+            }
+        };
         if let Some(params) = &params {
             let loc = params.location();
             if begin_line != src.line_of(loc.end_offset()) {
@@ -67,18 +110,15 @@ impl Cop for MultilineBlockLayout {
                     needed > max
                 };
                 if !necessary {
-                    cx.add(
-                        loc.start_offset(),
-                        loc.end_offset(),
-                        "Block argument expression is not on the same line as the block start.",
-                    );
+                    let msg = "Block argument expression is not on the same line as the block start.";
+                    cx.add_fix(loc.start_offset(), loc.end_offset(), msg, fix);
                 }
             }
         }
         if let Some(body) = body {
             let (s, e) = body_range(&body);
             if src.line_of(s) == begin_line {
-                cx.add(s, e,"Block body expression is on the same line as the block start.");
+                cx.add_fix(s, e, "Block body expression is on the same line as the block start.", fix);
             }
         }
     }
