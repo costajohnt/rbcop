@@ -1,0 +1,1 @@
+Style/EndlessMethod,Layout/LineLength,Layout/SpaceInsideParens,Style/NonNilCheck
