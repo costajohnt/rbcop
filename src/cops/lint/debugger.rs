@@ -68,8 +68,8 @@ impl Cop for Debugger {
                 return;
             }
         }
-        let loc = call.location();
-        let msg = format!("Remove debugger entry point `{}`.", text(&loc));
-        cx.add(loc.start_offset(), loc.end_offset(), msg);
+        let (start, end) = send_range(&call);
+        let msg = format!("Remove debugger entry point `{}`.", cx.src.slice(start, end));
+        cx.add(start, end, msg);
     }
 }

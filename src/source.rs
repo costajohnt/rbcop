@@ -26,15 +26,23 @@ pub struct Source<'a> {
     /// Lines without newlines, stopping before a trailing `__END__` section (ProcessedSource#lines).
     pub lines: Vec<&'a str>,
     pub comments: Vec<Comment>,
+    /// Prism grammar version the file was parsed with (see config::target_ruby::prism_version).
+    pub version: &'static str,
     tokens: OnceCell<Vec<Token>>,
 }
 
 impl<'a> Source<'a> {
-    pub fn new(path: &'a str, text: &'a str, comments: Vec<Comment>, data_start: Option<usize>) -> Self {
+    pub fn new(
+        path: &'a str,
+        text: &'a str,
+        comments: Vec<Comment>,
+        data_start: Option<usize>,
+        version: &'static str,
+    ) -> Self {
         let mut line_starts = vec![0];
         line_starts.extend(text.match_indices('\n').map(|(i, _)| i + 1));
         let mut lines: Vec<&str> = text.split('\n').collect();
-        let mut src = Source { path, text, line_starts, lines: Vec::new(), comments, tokens: OnceCell::new() };
+        let mut src = Source { path, text, line_starts, lines: Vec::new(), comments, version, tokens: OnceCell::new() };
         if let Some(off) = data_start {
             lines.truncate(src.line_of(off) - 1);
         }
@@ -68,7 +76,7 @@ impl<'a> Source<'a> {
 
     /// Prism lexer tokens, computed on first use (only cops that need tokens pay for the second parse).
     pub fn tokens(&self) -> &[Token] {
-        self.tokens.get_or_init(|| lex(self.text.as_bytes()))
+        self.tokens.get_or_init(|| lex(self.text.as_bytes(), self.version))
     }
 
     /// Comment that starts on `line`, if any.
@@ -105,21 +113,32 @@ unsafe extern "C" fn on_token(
     }
 }
 
+unsafe extern "C" {
+    // Exported by libprism but missing from ruby-prism-sys's generated bindings.
+    fn pm_options_version_set(options: *mut ruby_prism_sys::pm_options_t, version: *const u8, length: usize) -> bool;
+    fn pm_options_free(options: *mut ruby_prism_sys::pm_options_t);
+    fn pm_options_partial_script_set(options: *mut ruby_prism_sys::pm_options_t, partial_script: bool);
+}
+
 /// Tokens in source order, as Prism's own `Prism.lex` produces them (via the parser's lex callback).
-fn lex(source: &[u8]) -> Vec<Token> {
+fn lex(source: &[u8], version: &str) -> Vec<Token> {
     use ruby_prism_sys::*;
     let mut state = LexState { base: source.as_ptr(), tokens: Vec::new() };
-    // SAFETY: mirrors ruby_prism::parse: the parser is initialised, used and freed here, and the
-    // callback struct and state outlive the parse.
+    // SAFETY: mirrors ruby_prism::parse_with_version: the parser is initialised, used and freed
+    // here, and the options, callback struct and state outlive the parse.
     unsafe {
+        let mut options = std::mem::MaybeUninit::<pm_options_t>::zeroed().assume_init();
+        pm_options_version_set(&mut options, version.as_ptr(), version.len());
+        pm_options_partial_script_set(&mut options, true);
         let parser = Box::into_raw(Box::new(std::mem::MaybeUninit::<pm_parser_t>::uninit())) as *mut pm_parser_t;
-        pm_parser_init(parser, source.as_ptr(), source.len(), std::ptr::null());
+        pm_parser_init(parser, source.as_ptr(), source.len(), &options);
         let mut callback =
             pm_lex_callback_t { data: &mut state as *mut LexState as *mut c_void, callback: Some(on_token) };
         (*parser).lex_callback = &mut callback;
         let node = pm_parse(parser);
         pm_node_destroy(parser, node);
         pm_parser_free(parser);
+        pm_options_free(&mut options);
         drop(Box::from_raw(parser as *mut std::mem::MaybeUninit<pm_parser_t>));
     }
     let mut tokens = state.tokens;

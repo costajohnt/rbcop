@@ -30,6 +30,27 @@ pub fn call_args<'pr>(call: &CallNode<'pr>) -> Vec<Node<'pr>> {
     call.arguments().map(|a| a.arguments().iter().collect()).unwrap_or_default()
 }
 
+/// Byte range of the parser-gem `send` node for a call: like the CallNode's location, but without
+/// an attached `{ }`/`do end` block (which parser wraps around the send). `&blk` stays included.
+pub fn send_range(call: &CallNode) -> (usize, usize) {
+    let loc = call.location();
+    let Some(block) = call.block().filter(|b| b.as_block_node().is_some()) else {
+        return (loc.start_offset(), loc.end_offset());
+    };
+    let end = [
+        call.closing_loc().map(|l| l.end_offset()),
+        call.arguments().map(|a| a.location().end_offset()),
+        call.message_loc().map(|l| l.end_offset()),
+        call.receiver().map(|r| r.location().end_offset()),
+    ]
+    .into_iter()
+    .flatten()
+    .filter(|&e| e <= block.location().start_offset())
+    .max()
+    .unwrap_or(loc.end_offset());
+    (loc.start_offset(), end)
+}
+
 /// `foo&.bar` (parser `csend`).
 pub fn is_csend(call: &CallNode) -> bool {
     call.call_operator_loc().is_some_and(|l| l.as_slice() == b"&.")

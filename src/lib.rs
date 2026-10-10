@@ -10,4 +10,5 @@ pub mod node_kind;
 pub mod prelude;
 pub mod runner;
 pub mod source;
+pub mod syntax;
 pub mod targets;

@@ -13,7 +13,7 @@ if [ "${1:-}" = "--project-config" ]; then
 fi
 dir=$(cd "$1" && pwd)
 bin=$(cd "$(dirname "$0")/.." && pwd)/target/release/rbcop
-out=${TMPDIR:-/tmp}/rbcop-compare
+out=${TMPDIR:-/tmp}/rbcop-compare/$(basename "$dir")${mode:+-default}
 mkdir -p "$out"
 cops=${2:-$("$bin" --show-cops | paste -sd, -)}
 
@@ -27,7 +27,7 @@ if [ -n "$mode" ]; then
   "$bin" $mode --format emacs --only "$cops" . 2>"$out/rbcop.err" | norm > "$out/rbcop.txt" || true
 else
   # --only would force-enable the cops, so run everything the config enables and keep rbcop's cops.
-  pattern=": [CWEFRI]: (\[Correctable\] )?($(echo "$cops" | tr , '|')): "
+  pattern=": [CWEFRI]: (\[Correctable\] )?(Lint/Syntax|$(echo "$cops" | tr , '|')): "
   rubocop --cache false --format emacs . 2>"$out/rubocop.err" | grep -E "$pattern" | norm > "$out/rubocop.txt" || true
   "$bin" --format emacs . 2>"$out/rbcop.err" | grep -E "$pattern" | norm > "$out/rbcop.txt" || true
 fi

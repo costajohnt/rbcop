@@ -1,6 +1,6 @@
 //! Run the enabled cops over one file: parse once, walk once, dispatch nodes by kind.
 
-use crate::config::{CopConfig, Resolved};
+use crate::config::{CopConfig, Resolved, target_ruby};
 use crate::cop::{Cop, Cx, Facts, Heredoc, Offense, Severity};
 use crate::directives;
 use crate::node_kind;
@@ -40,11 +40,17 @@ pub fn inspect(
 }
 
 fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dyn Fn(&str) -> bool) -> Vec<Offense> {
-    let result = ruby_prism::parse(text.as_bytes());
-    let errors: Vec<(usize, String)> = result
+    let version = target_ruby::prism_version(cfg.target_ruby);
+    let result = ruby_prism::parse_with_version(text.as_bytes(), version);
+    // Below 3.3 RuboCop parses with the parser gem, which accepts some things Prism rejects.
+    let parser_gem = cfg.target_ruby < 3.3;
+    let errors: Vec<(usize, usize, String)> = result
         .errors()
-        .filter(|e| !TOLERATED_ERRORS.contains(&e.message()))
-        .map(|e| (e.location().start_offset(), e.message().to_string()))
+        .filter(|e| !(parser_gem && TOLERATED_ERRORS.contains(&e.type_name())))
+        .map(|e| {
+            let loc = e.location();
+            crate::syntax::translate(e.type_name(), e.message(), loc.start_offset(), loc.end_offset(), text)
+        })
         .collect();
     let comments: Vec<Comment> = result
         .comments()
@@ -55,19 +61,27 @@ fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dy
         })
         .collect();
     let data = result.data_loc().map(|d| d.start_offset());
-    let src = Source::new(display, text, comments, data);
+    let src = Source::new(display, text, comments, data, version);
 
-    if let Some((off, msg)) = errors.first() {
-        // RuboCop runs only Lint/Syntax on a file that does not parse.
-        let offense = Offense {
-            start: *off,
-            end: *off,
-            cop: "Lint/Syntax",
-            message: msg.clone(),
-            severity: Severity::Fatal,
-            correctable: false,
-        };
-        return if selected("Lint/Syntax") { vec![offense] } else { Vec::new() };
+    if !errors.is_empty() {
+        // RuboCop runs only Lint/Syntax on a file that does not parse, one offense per diagnostic,
+        // and does so even under --only.
+        let ruby = format_ruby_version(cfg.target_ruby);
+        let mut out: Vec<Offense> = errors
+            .into_iter()
+            .map(|(start, end, msg)| Offense {
+                start,
+                end,
+                cop: "Lint/Syntax",
+                message: format!(
+                    "{msg}\n(Using Ruby {ruby} parser; configure using `TargetRubyVersion` parameter, under `AllCops`)"
+                ),
+                severity: Severity::Fatal,
+                correctable: false,
+            })
+            .collect();
+        dedup(&mut out);
+        return out;
     }
 
     let opted_in = directives::opted_in(&src);
@@ -124,6 +138,7 @@ fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dy
     }
 
     let disabled = directives::disabled_spans(&src);
+    dedup(&mut out);
     out.retain(|o| !directives::is_disabled(&disabled, o.cop, src.line_of(o.start)));
     for o in out.iter_mut() {
         o.severity = cfg.cop(o.cop).severity.unwrap_or_else(|| default_severity(o.cop));
@@ -133,7 +148,7 @@ fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dy
 
 /// Prism reports some semantic errors the parser gem accepts (e.g. top-level `yield` in .builder templates).
 // ponytail: only verified ones are tolerated; add more as real code turns them up.
-const TOLERATED_ERRORS: &[&str] = &["Invalid yield"];
+const TOLERATED_ERRORS: &[&str] = &["invalid_yield"];
 
 /// Cop::Base#default_severity.
 pub fn default_severity(cop: &str) -> Severity {
@@ -326,4 +341,16 @@ impl<'pr> Visit<'pr> for FactCollector<'_, '_> {
         let c = node.content_loc();
         self.cover(c.start_offset(), c.end_offset());
     }
+}
+
+/// Ruby's Float#to_s for a version (3.4, 2.7, 4.0).
+fn format_ruby_version(v: f64) -> String {
+    let s = format!("{v}");
+    if s.contains('.') { s } else { format!("{s}.0") }
+}
+
+/// Cop::Base#add_offense ignores a second offense on a range the cop already reported.
+fn dedup(out: &mut Vec<Offense>) {
+    let mut seen = std::collections::HashSet::new();
+    out.retain(|o| seen.insert((o.cop, o.start, o.end)));
 }

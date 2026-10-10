@@ -1,6 +1,7 @@
 //! `.rubocop.yml` loading and resolution. Section numbers refer to docs/rubocop-config-semantics.md.
 
 pub mod glob;
+pub mod target_ruby;
 pub mod value;
 
 use crate::cop::Severity;
@@ -135,13 +136,23 @@ pub struct Resolved {
     pub hash: Map,
     /// Base for relative Include patterns (base_dir_for_path_parameters of the loaded file).
     pub base_dir: PathBuf,
+    /// TargetRuby#version (e.g. 3.4).
+    pub target_ruby: f64,
     cops: HashMap<String, CopConfig>,
 }
 
 impl Resolved {
-    fn new(hash: Map, loaded_path: Option<&Path>, opts: &Options, cop_names: &[&'static str]) -> Self {
+    fn new(
+        hash: Map,
+        loaded_path: Option<&Path>,
+        opts: &Options,
+        cop_names: &[&'static str],
+        project_root: Option<&Path>,
+    ) -> Self {
         let base_dir = base_dir_for(loaded_path);
-        let mut r = Resolved { hash, base_dir, cops: HashMap::new() };
+        let all_cops = hash.map("AllCops").cloned().unwrap_or_default();
+        let target_ruby = target_ruby::detect(&all_cops, &base_dir, loaded_path.is_some(), project_root);
+        let mut r = Resolved { hash, base_dir, target_ruby, cops: HashMap::new() };
         for &name in cop_names {
             let cfg = r.build_cop(name, opts);
             r.cops.insert(name.to_string(), cfg);
@@ -311,13 +322,25 @@ impl Store {
             warnings: Vec::new(),
         };
         if store.opts.force_default_config {
-            let r = Resolved::new(store.default.clone(), None, &store.opts, &store.cop_names);
+            let r = Resolved::new(
+                store.default.clone(),
+                None,
+                &store.opts,
+                &store.cop_names,
+                store.project_root.as_deref(),
+            );
             store.forced = Some(Arc::new(r));
         } else if let Some(path) = store.opts.config_file.clone() {
             let path = expand_path(&path, &store.cwd);
             let user = store.load_file(&path)?;
             let merged = store.merge_with_default(user);
-            store.forced = Some(Arc::new(Resolved::new(merged, Some(&path), &store.opts, &store.cop_names)));
+            store.forced = Some(Arc::new(Resolved::new(
+                merged,
+                Some(&path),
+                &store.opts,
+                &store.cop_names,
+                store.project_root.as_deref(),
+            )));
         }
         Ok(store)
     }
@@ -352,7 +375,8 @@ impl Store {
                 self.merge_with_default(user)
             }
         };
-        let r = Arc::new(Resolved::new(hash, file.as_deref(), &self.opts, &self.cop_names));
+        let r =
+            Arc::new(Resolved::new(hash, file.as_deref(), &self.opts, &self.cop_names, self.project_root.as_deref()));
         self.resolved.insert(file, r.clone());
         Ok(r)
     }
@@ -613,8 +637,15 @@ impl Store {
         if let Some(d) = self.gem_dirs.get(gem) {
             return Ok(d.clone());
         }
+        // Gem names come from config files; anything else must never reach the ruby command line.
+        if gem.is_empty()
+            || gem.starts_with('-')
+            || !gem.chars().all(|c| c.is_ascii_alphanumeric() || "_-.".contains(c))
+        {
+            return Err(format!("invalid gem name {gem:?} in config"));
+        }
         let out = std::process::Command::new("ruby")
-            .args(["-e", "print Gem::Specification.find_by_name(ARGV[0]).gem_dir", gem])
+            .args(["-e", "print Gem::Specification.find_by_name(ARGV[0]).gem_dir", "--", gem])
             .current_dir(&self.cwd)
             .output()
             .map_err(|e| format!("inherit_gem {gem}: cannot run ruby: {e}"))?;

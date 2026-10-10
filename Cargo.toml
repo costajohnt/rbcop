@@ -8,3 +8,7 @@ regex = "1.13.1"
 ruby-prism = "1.9.0"
 ruby-prism-sys = "1.9.0"
 yaml-rust2 = "0.13.0"
+
+# Vendored with an added parse_with_version (see vendor/ruby-prism/src/lib.rs, "rbcop patch").
+[patch.crates-io]
+ruby-prism = { path = "vendor/ruby-prism" }
