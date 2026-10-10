@@ -331,9 +331,14 @@ fn analyze(
                 start,
                 end,
                 cop: "Lint/Syntax",
-                message: format!(
-                    "{msg}\n(Using Ruby {ruby} parser; configure using `TargetRubyVersion` parameter, under `AllCops`)"
-                ),
+                // Lint/Syntax#add_offense_from_diagnostic: no parser line under LSP (--editor-mode).
+                message: if crate::helpers::lsp::enabled() {
+                    msg
+                } else {
+                    format!(
+                        "{msg}\n(Using Ruby {ruby} parser; configure using `TargetRubyVersion` parameter, under `AllCops`)"
+                    )
+                },
                 severity: Severity::Fatal,
                 correctable: false,
                 global: false,
@@ -571,12 +576,13 @@ fn guarded(cop: &str, src: &Source, at: usize, f: impl FnOnce()) {
 }
 
 /// Cop::Base#use_corrector: an offense with a corrector is only `[Correctable]` when the cop's
-/// `AutoCorrect` is `always`/`true` (the default) or `contextual`; `false`/`disabled` turn it off.
+/// `AutoCorrect` is `always`/`true` (the default) or `contextual` (not under `--editor-mode`);
+/// `false`/`disabled` turn it off.
 fn autocorrect_allowed(cfg: &CopConfig) -> bool {
     use crate::config::value::Value;
     match cfg.get("AutoCorrect") {
         None | Some(Value::Bool(true)) => true,
-        Some(Value::Str(s)) => s == "always" || s == "contextual",
+        Some(Value::Str(s)) => s == "always" || (s == "contextual" && !crate::helpers::lsp::enabled()),
         _ => false,
     }
 }

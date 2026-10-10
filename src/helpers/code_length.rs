@@ -48,6 +48,7 @@ pub fn check(cx: &mut Cx, m: Measured, span: (usize, usize), offense: (usize, us
     if length <= max {
         return;
     }
+    let offense = crate::helpers::lsp::location(root, offense);
     cx.add(offense.0, offense.1, msg(length as usize, max));
 }
 
