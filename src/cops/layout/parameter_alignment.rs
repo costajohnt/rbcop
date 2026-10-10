@@ -1,4 +1,4 @@
-use crate::helpers::alignment_check::{self as alignment, Item};
+use crate::helpers::alignment::{self as alignment, Item};
 use crate::prelude::*;
 
 pub const NAME: &str = "Layout/ParameterAlignment";
@@ -24,7 +24,7 @@ impl Cop for ParameterAlignment {
         let fixed = cx.cfg.str("EnforcedStyle") == Some("with_fixed_indentation");
         let base = if fixed {
             let line = cx.src.lines[cx.src.line_of(def.def_keyword_loc().start_offset()) - 1];
-            alignment::first_non_space(line) as i64 + alignment::configured_indentation_width(cx)
+            alignment::first_non_space(line).unwrap_or(0) as i64 + alignment::configured_indentation_width(cx)
         } else {
             alignment::display_column(cx.src, args[0].location().start_offset()) as i64
         };

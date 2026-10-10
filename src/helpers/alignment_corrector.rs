@@ -3,7 +3,7 @@
 use crate::autocorrect::corrector::Corrector;
 use crate::cop::Cx;
 use crate::source::Source;
-use ruby_prism::Node;
+use ruby_prism::{Location, Node, Visit};
 
 /// Settings AlignmentCorrector reads from the config, gathered before `add_fix`.
 #[derive(Clone, Copy)]
@@ -40,7 +40,7 @@ pub fn correct(
     if src.comments.iter().any(|cm| cm.embdoc && cm.start >= start && cm.end <= end) {
         return;
     }
-    let taboo = node.map_or_else(Vec::new, |n| super::alignment_check::taboo_ranges(src, n));
+    let taboo = node.map_or_else(Vec::new, |n| taboo_ranges(src, n));
     let within = |r: (usize, usize)| taboo.iter().any(|&(s, e)| r.0 >= s && r.1 <= e);
     let text = src.text.as_bytes();
     let mut line_begin = start;
@@ -100,6 +100,69 @@ pub fn correct(
         {
             c.remove(range.0, range.1);
         }
+    }
+}
+
+/// Whether `correct` (spaces path, `tab_indentation: false`) would edit anything. Only for the
+/// deprecated `corrects`/`corrector_edits` shims; cops report with `cx.add_fix` + `correct`.
+pub fn edits(cx: &Cx, start: usize, end: usize, node: Option<&Node>, delta: i64) -> bool {
+    let mut c = Corrector::new(cx.facts.text.clone());
+    correct(&mut c, cx.src, Settings::of(cx), start, end, node, delta, false);
+    !c.is_empty()
+}
+
+/// AlignmentCorrector#inside_string_ranges: string contents and heredoc bodies within `node`.
+pub fn taboo_ranges(src: &Source, node: &Node) -> Vec<(usize, usize)> {
+    let mut v = Taboo { ranges: Vec::new(), src: src.text };
+    v.visit(node);
+    v.ranges
+}
+
+struct Taboo<'a> {
+    ranges: Vec<(usize, usize)>,
+    src: &'a str,
+}
+
+impl Taboo<'_> {
+    /// `loc.heredoc_body.join(loc.heredoc_end)` for a heredoc, `loc.begin.end.join(loc.end.begin)`
+    /// for a string with both delimiters (not `?a`, `%w` elements or adjacent-literal `dstr`s).
+    /// `content`: where Prism's heredoc body starts (after `<<~` indentation), if not empty.
+    fn add(&mut self, opening: Option<Location>, content: Option<usize>, closing: Option<Location>) {
+        let (Some(o), Some(c)) = (opening, closing) else { return };
+        if o.as_slice().starts_with(b"<<") {
+            // heredoc_body starts at the beginning of the body's first line (which follows the
+            // previous heredoc's terminator when several open on one line); heredoc_end
+            // excludes its newline.
+            let mut end = c.end_offset();
+            if self.src.as_bytes().get(end.wrapping_sub(1)) == Some(&b'\n') {
+                end -= 1;
+            }
+            let first = content.unwrap_or(c.start_offset()).min(c.start_offset());
+            let body = self.src[..first].rfind('\n').map_or(0, |i| i + 1);
+            self.ranges.push((body, end));
+        } else {
+            self.ranges.push((o.end_offset(), c.start_offset()));
+        }
+    }
+}
+
+impl<'pr> Visit<'pr> for Taboo<'_> {
+    fn visit_string_node(&mut self, n: &ruby_prism::StringNode<'pr>) {
+        let content = (!n.content_loc().as_slice().is_empty()).then(|| n.content_loc().start_offset());
+        self.add(n.opening_loc(), content, n.closing_loc());
+    }
+    fn visit_interpolated_string_node(&mut self, n: &ruby_prism::InterpolatedStringNode<'pr>) {
+        self.add(n.opening_loc(), n.parts().iter().next().map(|p| p.location().start_offset()), n.closing_loc());
+        ruby_prism::visit_interpolated_string_node(self, n);
+    }
+    fn visit_x_string_node(&mut self, n: &ruby_prism::XStringNode<'pr>) {
+        let content = (!n.content_loc().as_slice().is_empty()).then(|| n.content_loc().start_offset());
+        self.add(Some(n.opening_loc()), content, Some(n.closing_loc()));
+    }
+    fn visit_interpolated_x_string_node(&mut self, n: &ruby_prism::InterpolatedXStringNode<'pr>) {
+        let first = n.parts().iter().next().map(|p| p.location().start_offset());
+        self.add(Some(n.opening_loc()), first, Some(n.closing_loc()));
+        ruby_prism::visit_interpolated_x_string_node(self, n);
     }
 }
 

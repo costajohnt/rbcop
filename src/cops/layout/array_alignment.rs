@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use helpers::alignment_mixin::{begins_its_line, corrector_edits, display_column, first_non_space, indentation_width};
+use helpers::alignment::{Item, check_alignment, configured_indentation_width, display_column, first_non_space};
 
 pub const NAME: &str = "Layout/ArrayAlignment";
 pub static COP: ArrayAlignment = ArrayAlignment;
@@ -37,7 +37,7 @@ impl Cop for ArrayAlignment {
         let fixed = cx.cfg.str("EnforcedStyle") == Some("with_fixed_indentation");
         let base = if fixed {
             let line = src.lines.get(lineno - 1).copied().unwrap_or("");
-            line[..first_non_space(line).unwrap_or(0)].chars().count() as i64 + indentation_width(cx)
+            line[..first_non_space(line).unwrap_or(0)].chars().count() as i64 + configured_indentation_width(cx)
         } else {
             display_column(src, items[0].location().start_offset()) as i64
         };
@@ -46,21 +46,8 @@ impl Cop for ArrayAlignment {
         } else {
             "Align the elements of an array literal if they span more than one line."
         };
-        let mut prev_line = 0;
-        for item in &items {
-            let loc = item.location();
-            let (start, end) = (loc.start_offset(), loc.end_offset());
-            let line = src.line_of(start);
-            if line > prev_line && begins_its_line(src, start) {
-                let delta = base - display_column(src, start) as i64;
-                if delta != 0 {
-                    let nested = cx.out.iter().any(|o| o.cop == NAME && start >= o.start && end <= o.end);
-                    let fixable = !nested && corrector_edits(src, start, end, delta, Some(item));
-                    cx.add_with(start, end, msg, fixable);
-                }
-            }
-            prev_line = line;
-        }
+        let items: Vec<Item> = items.into_iter().map(Item::of).collect();
+        check_alignment(cx, &items, Some(base), msg);
     }
 }
 

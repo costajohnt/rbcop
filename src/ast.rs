@@ -300,3 +300,16 @@ pub const ASSIGNMENT_KINDS: &[usize] = &[
 pub fn is_assignment(node: &Node) -> bool {
     node.as_call_node().map_or_else(|| assignment_parts(node).is_some(), |c| c.equal_loc().is_some())
 }
+
+/// Parser `dstr`: an interpolated string, or a string literal spanning several lines (parser splits
+/// it into one `str` per line; a heredoc with more than one body line).
+pub fn is_parser_dstr(node: &Node) -> bool {
+    if node.as_interpolated_string_node().is_some() {
+        return true;
+    }
+    let Some(s) = node.as_string_node() else { return false };
+    if is_heredoc(node) {
+        return text(&s.content_loc()).trim_end_matches('\n').contains('\n');
+    }
+    node_text(node).contains('\n')
+}

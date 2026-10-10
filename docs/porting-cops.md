@@ -194,6 +194,33 @@ More traps found while porting:
   span and emitted when the node itself is visited.
 - macOS paths: RuboCop and rbcop print physical paths (`/private/tmp`, `/private/var`); scratch
   comparisons must normalise with `pwd -P`.
+- Parser makes `/re/ =~ x` a `match_with_lvasgn` even without named captures; Prism gives a plain
+  `=~` CallNode (wrapped in MatchWriteNode only when there are captures).
+- Parser makes every multi-line string literal a `dstr`, not only heredocs: use `ast::is_parser_dstr`
+  for `dstr_type?`, `basic_literal?` and `on_dstr` logic.
+- An `elsif` node's parser range stops at its last branch body; Prism's includes `end`.
+- `match_var` is Prism `LocalVariableTargetNode` only inside patterns; masgn/rescue/for targets are
+  parser `lvasgn`.
+- A Prism `StatementsNode` with 2+ statements is parser's `begin` for `right_sibling` purposes.
+- `heredoc_body.last_line` is the terminator line; for an empty body the first body line is too.
+- A `return` inside an `add_offense` corrector block skips the offense entirely (IdentityComparison).
+- Diagnostics-driven cops: `helpers::parse_warnings` maps Prism warnings (`type_name()`) to
+  parser's reasons.
+- Directive cop names are `cops.split(/,\s*/)` untrimmed, and the registry compare uses the original
+  string, not the camel-cased badge.
+- The regex crate has no lookbehind: rewrite `(?<!x)` patterns by hand.
+- Ruby crashes count: when RuboCop raises (e.g. `[nil, 1].max` in FormatString), the oracle has no
+  offense there, so neither should rbcop.
+- Alignment corrections: build the edit list first, then call `alignment_corrector::correct` inside
+  the `add_fix` closure (node when RuboCop passes a node, `None` for a range). Never compute
+  `[Correctable]` from a would-it-edit helper. Display width comes from `helpers::alignment`
+  (table generated from unicode-display_width 3.2.0, emoji as plain characters).
+- MultilineMethodCallIndentation with a block corrects the selector line, the body (`ast::body_range`;
+  Prism's implicit begin starts at `do`) and the `end` line. CommentIndentation also shifts preceding
+  same-column comments separated only by blank lines.
+- Ruby's `^` does not match after the final newline.
+- Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
+  `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.
 
 ### Prism tokens vs parser-gem tokens
 
@@ -208,6 +235,7 @@ Use `helpers::parser_tokens::sorted_tokens` when porting token-based cops; it sm
 | `{` | `BRACE_LEFT` for hash and block alike | `tLBRACE` (hash) vs `tLCURLY` (block): check the AST |
 | interpolation | `EMBEXPR_BEGIN` / `EMBEXPR_END` | `tSTRING_DBEG` / `tSTRING_DEND` |
 | labels `a:` | one `LABEL` token | one `tLABEL`, same end |
+| `g ((1))` paren | `PARENTHESIS_LEFT_PARENTHESES` | `tLPAREN_ARG`, not `left_parens?` |
 
 ## Correctable flags
 

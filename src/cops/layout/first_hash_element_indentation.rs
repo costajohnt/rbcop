@@ -1,5 +1,6 @@
 use crate::prelude::*;
-use helpers::alignment_mixin::{corrector_edits, enabled_cop_str, indentation_width};
+use helpers::alignment::{configured_indentation_width, enabled_cop_str};
+use helpers::alignment_corrector::{Settings, correct};
 use helpers::multiline_element_indentation::{Words, check_right, claiming_paren, first_message, indent_base};
 
 pub const NAME: &str = "Layout/FirstHashElementIndentation";
@@ -69,17 +70,20 @@ impl Cop for FirstHashElementIndentation {
                 0
             };
             let (b, t) = base(cx);
-            let delta = b + indentation_width(cx) + offset - src.column(start) as i64;
+            let delta = b + configured_indentation_width(cx) + offset - src.column(start) as i64;
             if delta != 0 {
                 let key_line = src.line_of(first.key().location().start_offset());
-                let fixable = if src.line_of(first.value().location().start_offset()) <= key_line {
-                    corrector_edits(src, start, end, delta, Some(&first.as_node()))
+                let pair = first.as_node();
+                let (range, node) = if src.line_of(first.value().location().start_offset()) <= key_line {
+                    ((start, end), Some(&pair))
                 } else {
                     let ls = src.line_start(key_line);
-                    let le = ls + src.lines.get(key_line - 1).map_or(0, |l| l.len());
-                    corrector_edits(src, ls, le, delta, None)
+                    ((ls, ls + src.lines.get(key_line - 1).map_or(0, |l| l.len())), None)
                 };
-                cx.add_with(start, end, first_message(cx, &WORDS, &t), fixable);
+                let set = Settings::of(cx);
+                cx.add_fix(start, end, first_message(cx, &WORDS, &t), |c| {
+                    correct(c, src, set, range.0, range.1, node, delta, false)
+                });
             }
         }
         check_right(cx, &WORDS, (close.start_offset(), close.end_offset()), base(cx));
