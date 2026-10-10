@@ -147,10 +147,8 @@ impl Cop for EndlessMethod {
                     to_endless(cx, MSG_REQUIRE_SINGLE);
                 }
             }
-            "require_always" => {
-                if !endless && can_be_endless && !too_long() {
-                    to_endless(cx, MSG_REQUIRE_ALWAYS);
-                }
+            "require_always" if !endless && can_be_endless && !too_long() => {
+                to_endless(cx, MSG_REQUIRE_ALWAYS);
             }
             _ => {}
         }

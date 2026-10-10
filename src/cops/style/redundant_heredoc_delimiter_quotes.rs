@@ -30,7 +30,7 @@ impl Cop for RedundantHeredocDelimiterQuotes {
             return;
         }
         if delimiter.starts_with('\'') {
-            let body = src[body_start..body_end].as_bytes();
+            let body = &src.as_bytes()[body_start..body_end];
             let special = body
                 .iter()
                 .enumerate()

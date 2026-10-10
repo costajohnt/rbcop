@@ -176,6 +176,9 @@ impl<'pr> Visit<'pr> for ScopeFinder<'pr> {
     }
 }
 
+/// (scope range, normalized original, items).
+type Group<T> = (Option<(usize, usize)>, String, Vec<T>);
+
 /// `verified_by_reparse(items, oversized: :verify)` with `apply_reparse_correction` as `apply`:
 /// items grouped by reparse scope, a group kept whole when all its corrections together parse
 /// equivalently, else item by item. `range` gives an item's range; returns the verified items.
@@ -189,7 +192,7 @@ pub fn verified_by_reparse<T: Copy>(
 ) -> Vec<T> {
     let source: Arc<str> = Arc::from(text);
     // (scope range, normalized original, items) in order of first appearance.
-    let mut groups: Vec<(Option<(usize, usize)>, String, Vec<T>)> = vec![];
+    let mut groups: Vec<Group<T>> = vec![];
     for &item in items {
         let mut f = ScopeFinder { range: range(item), found: None };
         f.visit(program);
