@@ -1,0 +1,24 @@
+==> offenses exit=1 198 <==
+007.rb:5:1: C: [Correctable] Layout/ClosingHeredocIndentation: `SQL` is not aligned with `<<-SQL`.
+008.rb:4:1: C: [Correctable] Layout/ClosingHeredocIndentation: `NIL` is not aligned with `<<-NIL`.
+
+==> autocorrect exit=0 194 <==
+007.rb:5:1: C: [Corrected] Layout/ClosingHeredocIndentation: `SQL` is not aligned with `<<-SQL`.
+008.rb:4:1: C: [Corrected] Layout/ClosingHeredocIndentation: `NIL` is not aligned with `<<-NIL`.
+
+==> corrected/007.rb 60 <==
+class Test
+  def foo
+    <<-SQL
+      bar
+    SQL
+  end
+end
+
+==> corrected/008.rb 28 <==
+def foo
+  <<-NIL
+
+  NIL
+end
+

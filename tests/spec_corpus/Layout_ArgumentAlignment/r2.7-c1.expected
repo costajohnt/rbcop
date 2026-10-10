@@ -1,0 +1,121 @@
+==> offenses exit=1 4108 <==
+000.rb:2:8: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+000.rb:3:8: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+000.rb:4:8: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+001.rb:2:1: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+001.rb:3:1: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+001.rb:4:1: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+002.rb:2:11: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+002.rb:3:8: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+003.rb:2:6: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+004.rb:2:7: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+004.rb:3:7: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+004.rb:5:7: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+004.rb:6:7: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+004.rb:7:7: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+005.rb:2:20: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+005.rb:3:20: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+007.rb:3:7: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+007.rb:4:7: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+007.rb:5:7: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+009.rb:2:7: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+009.rb:3:5: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+009.rb:4:12: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+010.rb:2:5: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+010.rb:3:5: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+010.rb:4:5: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+011.rb:2:5: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+011.rb:3:5: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+
+==> autocorrect exit=0 4054 <==
+000.rb:2:8: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+000.rb:3:8: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+000.rb:4:8: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+001.rb:2:1: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+001.rb:3:1: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+001.rb:4:1: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+002.rb:2:11: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+002.rb:3:8: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+003.rb:2:6: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+004.rb:2:7: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+004.rb:3:7: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+004.rb:5:7: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+004.rb:6:7: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+004.rb:7:7: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+005.rb:2:20: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+005.rb:3:20: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+007.rb:3:7: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+007.rb:4:7: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+007.rb:5:7: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+009.rb:2:7: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+009.rb:3:5: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+009.rb:4:12: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+010.rb:2:5: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+010.rb:3:5: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+010.rb:4:5: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+011.rb:2:5: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+011.rb:3:5: C: [Corrected] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+
+==> corrected/000.rb 95 <==
+create :transaction, :closed,
+  account:     account,
+  open_price:  1.29,
+  close_price: 1.30
+
+==> corrected/001.rb 95 <==
+create :transaction, :closed,
+  account:     account,
+  open_price:  1.29,
+  close_price: 1.30
+
+==> corrected/002.rb 38 <==
+validates :foo,
+  bar: 1,
+  bazqux: 2
+
+==> corrected/003.rb 19 <==
+func(:foo,
+  :bar)
+
+==> corrected/004.rb 108 <==
+func1(foo: 'foo',
+  bar: 'bar',
+  baz: 'baz')
+func2(do_something,
+  foo: 'foo',
+  bar: 'bar',
+  baz: 'baz')
+
+==> corrected/005.rb 59 <==
+func(do_something, foo: 'foo',
+  bar: 'bar',
+  baz: 'baz')
+
+==> corrected/007.rb 50 <==
+something
+  .method_name(
+    a,
+    b,
+    c
+  )
+
+==> corrected/009.rb 32 <==
+callable[
+  foo,
+  bar,
+  baz
+]
+
+==> corrected/010.rb 40 <==
+assigned_value = match(
+  a,
+  b,
+  c
+)
+
+==> corrected/011.rb 37 <==
+assigned_value = match(a,
+  b,
+  c
+)
+

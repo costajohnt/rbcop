@@ -1,0 +1,13 @@
+==> .rubocop.yml 221 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/MethodCallWithArgsParentheses:
+  EnforcedStyle: omit_parentheses
+  AllowParenthesesInCamelCaseMethod: true
+
+==> 000.rb 10 <==
+Array(nil)

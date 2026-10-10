@@ -1,0 +1,73 @@
+==> offenses exit=1 1305 <==
+000.rb:1:18: C: [Correctable] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+001.rb:2:9: C: [Correctable] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+002.rb:1:29: C: [Correctable] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+003.rb:1:18: C: [Correctable] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+003.rb:2:6: C: [Correctable] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+004.rb:2:18: C: [Correctable] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+005.rb:2:9: C: [Correctable] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+006.rb:2:20: C: [Correctable] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+010.rb:1:5: C: [Correctable] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+011.rb:1:16: C: [Correctable] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+014.rb:1:12: C: [Correctable] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+
+==> autocorrect exit=0 1283 <==
+000.rb:1:18: C: [Corrected] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+001.rb:2:9: C: [Corrected] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+002.rb:1:29: C: [Corrected] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+003.rb:1:18: C: [Corrected] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+003.rb:2:6: C: [Corrected] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+004.rb:2:18: C: [Corrected] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+005.rb:2:9: C: [Corrected] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+006.rb:2:20: C: [Corrected] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+010.rb:1:5: C: [Corrected] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+011.rb:1:16: C: [Corrected] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+014.rb:1:12: C: [Corrected] Layout/LineContinuationLeadingSpace: Move trailing spaces to the start of the next line.
+
+==> corrected/000.rb 29 <==
+'this text is too' \
+' long'
+
+==> corrected/001.rb 43 <==
+'this text is too' \
+  ' very' \
+  ' long'
+
+==> corrected/002.rb 56 <==
+'this text contains a lot of' \
+'               spaces'
+
+==> corrected/003.rb 45 <==
+'this text is too' \
+' long' \
+'  long long'
+
+==> corrected/004.rb 80 <==
+something_unrelated_to_the_line_continuation_below
+'this text is too' \
+' long'
+
+==> corrected/005.rb 67 <==
+long_method_name 'this text is too' \
+  ' very' \
+  ' long' do
+end
+
+==> corrected/006.rb 53 <==
+long_method_name(
+  'this text is too' \
+  ' long'
+)
+
+==> corrected/010.rb 23 <==
+'foo' \
+" #{bar} long"
+
+==> corrected/011.rb 27 <==
+"this #{foo} is" \
+' long'
+
+==> corrected/014.rb 26 <==
+"foo #{'bar' \
+  ' baz'}"
+

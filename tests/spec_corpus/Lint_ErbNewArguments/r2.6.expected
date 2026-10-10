@@ -1,0 +1,55 @@
+==> offenses exit=1 2817 <==
+000.rb:1:14: W: [Correctable] Lint/ErbNewArguments: Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.
+001.rb:1:14: W: [Correctable] Lint/ErbNewArguments: Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.
+001.rb:1:19: W: [Correctable] Lint/ErbNewArguments: Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: '-')` instead.
+002.rb:1:14: W: [Correctable] Lint/ErbNewArguments: Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.
+002.rb:1:19: W: [Correctable] Lint/ErbNewArguments: Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: '-')` instead.
+002.rb:1:24: W: [Correctable] Lint/ErbNewArguments: Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: '@output_buffer')` instead.
+003.rb:1:14: W: [Correctable] Lint/ErbNewArguments: Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.
+003.rb:1:19: W: [Correctable] Lint/ErbNewArguments: Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: '-')` instead.
+003.rb:1:24: W: [Correctable] Lint/ErbNewArguments: Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: '@output_buffer')` instead.
+004.rb:1:14: W: [Correctable] Lint/ErbNewArguments: Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.
+004.rb:1:19: W: [Correctable] Lint/ErbNewArguments: Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: '-')` instead.
+005.rb:1:16: W: [Correctable] Lint/ErbNewArguments: Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.
+005.rb:1:21: W: [Correctable] Lint/ErbNewArguments: Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: '-')` instead.
+005.rb:1:26: W: [Correctable] Lint/ErbNewArguments: Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: '@output_buffer')` instead.
+008.rb:1:14: W: [Correctable] Lint/ErbNewArguments: Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.
+
+==> autocorrect exit=0 2787 <==
+000.rb:1:14: W: [Corrected] Lint/ErbNewArguments: Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.
+001.rb:1:14: W: [Corrected] Lint/ErbNewArguments: Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.
+001.rb:1:19: W: [Corrected] Lint/ErbNewArguments: Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: '-')` instead.
+002.rb:1:14: W: [Corrected] Lint/ErbNewArguments: Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.
+002.rb:1:19: W: [Corrected] Lint/ErbNewArguments: Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: '-')` instead.
+002.rb:1:24: W: [Corrected] Lint/ErbNewArguments: Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: '@output_buffer')` instead.
+003.rb:1:14: W: [Corrected] Lint/ErbNewArguments: Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.
+003.rb:1:19: W: [Corrected] Lint/ErbNewArguments: Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: '-')` instead.
+003.rb:1:24: W: [Corrected] Lint/ErbNewArguments: Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: '@output_buffer')` instead.
+004.rb:1:14: W: [Corrected] Lint/ErbNewArguments: Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.
+004.rb:1:19: W: [Corrected] Lint/ErbNewArguments: Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: '-')` instead.
+005.rb:1:16: W: [Corrected] Lint/ErbNewArguments: Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.
+005.rb:1:21: W: [Corrected] Lint/ErbNewArguments: Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: '-')` instead.
+005.rb:1:26: W: [Corrected] Lint/ErbNewArguments: Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: '@output_buffer')` instead.
+008.rb:1:14: W: [Corrected] Lint/ErbNewArguments: Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.
+
+==> corrected/000.rb 13 <==
+ERB.new(str)
+
+==> corrected/001.rb 29 <==
+ERB.new(str, trim_mode: '-')
+
+==> corrected/002.rb 56 <==
+ERB.new(str, trim_mode: '-', eoutvar: '@output_buffer')
+
+==> corrected/003.rb 56 <==
+ERB.new(str, trim_mode: '-', eoutvar: '@output_buffer')
+
+==> corrected/004.rb 56 <==
+ERB.new(str, trim_mode: '-', eoutvar: '@output_buffer')
+
+==> corrected/005.rb 58 <==
+::ERB.new(str, trim_mode: '-', eoutvar: '@output_buffer')
+
+==> corrected/008.rb 29 <==
+ERB.new(str, trim_mode: '-')
+

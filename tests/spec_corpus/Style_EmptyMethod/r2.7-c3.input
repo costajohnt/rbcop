@@ -1,0 +1,63 @@
+==> .rubocop.yml 153 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+==> 000.rb 12 <==
+def foo
+end
+
+==> 001.rb 13 <==
+def foo
+
+end
+
+==> 002.rb 13 <==
+def foo; end
+
+==> 003.rb 18 <==
+def foo
+  bar
+end
+
+==> 004.rb 17 <==
+def foo; bar; end
+==> 005.rb 20 <==
+def foo
+  # bar
+end
+
+==> 006.rb 17 <==
+def self.foo
+end
+
+==> 007.rb 18 <==
+def self.foo
+
+end
+
+==> 008.rb 18 <==
+def self.foo; end
+
+==> 009.rb 23 <==
+def self.foo
+  bar
+end
+
+==> 010.rb 22 <==
+def self.foo; bar; end
+==> 011.rb 25 <==
+def self.foo
+  # bar
+end
+
+==> 012.rb 29 <==
+class Foo
+  def bar; end
+end
+

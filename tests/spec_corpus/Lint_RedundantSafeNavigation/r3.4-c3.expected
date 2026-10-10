@@ -1,0 +1,12 @@
+==> offenses exit=1 163 <==
+002.rb:3:5: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+
+==> autocorrect exit=0 161 <==
+002.rb:3:5: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation on non-nil receiver (detected by analyzing previous code/method invocations).
+
+==> corrected/002.rb 34 <==
+foo.each do
+  it.bar
+  it.baz
+end
+

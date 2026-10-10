@@ -1,0 +1,9 @@
+==> offenses exit=1 90 <==
+000.rb:1:7: C: [Correctable] Style/MapJoin: Remove redundant `map(&:to_s)` before `join`.
+
+==> autocorrect exit=0 88 <==
+000.rb:1:7: C: [Corrected] Style/MapJoin: Remove redundant `map(&:to_s)` before `join`.
+
+==> corrected/000.rb 17 <==
+array.join(', ')
+

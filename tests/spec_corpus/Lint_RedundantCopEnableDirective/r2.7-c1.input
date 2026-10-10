@@ -1,0 +1,148 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 39 <==
+foo
+# rubocop:enable Layout/LineLength
+
+==> 001.rb 59 <==
+foo
+# rubocop:enable Layout/LineLength -- no longer needed
+
+==> 002.rb 92 <==
+# rubocop:disable Layout/LineLength
+foo
+# rubocop:enable Metrics/AbcSize, Layout/LineLength
+
+==> 003.rb 63 <==
+foo
+# rubocop:enable Metrics/ModuleLength, Metrics/AbcSize
+bar
+
+==> 004.rb 184 <==
+# rubocop:disable Layout/LineLength
+fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo = barrrrrrrrrrrrrrrrrrrrrrrrrr
+# rubocop:enable Metrics/AbcSize, Layout/LineLength
+bar
+
+==> 005.rb 183 <==
+# rubocop:disable Layout/LineLength
+fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo = barrrrrrrrrrrrrrrrrrrrrrrrrr
+# rubocop:enable Metrics/AbcSize,Layout/LineLength
+bar
+
+==> 006.rb 208 <==
+# rubocop:disable Layout/LineLength
+fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo = barrrrrrrrrrrrrrrrrrrrrrrrrr
+# rubocop:enable Layout/LineLength
+
+bar
+
+# rubocop:enable Layout/LineLength
+bar
+
+==> 007.rb 25 <==
+foo
+# rubocop:enable all
+
+==> 008.rb 145 <==
+# rubocop:disable Layout/LineLength
+foooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+# rubocop:enable all
+
+==> 009.rb 92 <==
+# rubocop:disable Layout/LineLength
+foo
+# rubocop:enable Layout/LineLength, Metrics/AbcSize
+
+==> 010.rb 91 <==
+# rubocop:disable Layout/LineLength
+foo
+# rubocop:enable Layout/LineLength,Metrics/AbcSize
+
+==> 011.rb 124 <==
+# rubocop:disable Layout/EmptyLinesAroundClassBody
+foo
+# rubocop:enable Layout/EmptyLinesAroundClassBody, Layout/EmptyLines
+
+==> 012.rb 122 <==
+# rubocop:disable Layout/LineLength, Lint/Debugger
+foo
+# rubocop:enable Layout/LineLength, Metrics/AbcSize, Lint/Debugger
+
+==> 013.rb 125 <==
+# rubocop:disable Layout/LineLength,  Lint/Debugger
+foo
+# rubocop:enable Layout/LineLength,  Metrics/AbcSize,  Lint/Debugger
+
+==> 014.rb 71 <==
+foo
+# rubocop:enable Layout/LineLength, Metrics/AbcSize, Lint/Debugger
+
+==> 015.rb 142 <==
+foo
+# rubocop:enable Metrics/ModuleSize
+# rubocop:enable Layout/LineLength, Metrics/ClassSize
+# rubocop:enable Metrics/AbcSize, Lint/Debugger
+
+==> 016.rb 28 <==
+foo
+# rubocop:enable Layout
+
+==> 017.rb 84 <==
+# rubocop:disable Layout/LineLength
+foo
+# rubocop:enable Metrics, Layout/LineLength
+
+==> 018.rb 41 <==
+foo
+# rubocop:enable Metrics, Layout
+bar
+
+==> 019.rb 176 <==
+# rubocop:disable Layout/LineLength
+fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo = barrrrrrrrrrrrrrrrrrrrrrrrrr
+# rubocop:enable Metrics, Layout/LineLength
+bar
+
+==> 020.rb 175 <==
+# rubocop:disable Layout
+fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo = barrrrrrrrrrrrrrrrrrrrrrrrrr
+# rubocop:enable Layout
+
+bar
+
+# rubocop:enable Layout
+bar
+
+==> 021.rb 160 <==
+# rubocop:disable Layout
+fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo = barrrrrrrrrrrrrrrrrrrrrrrrrr
+# rubocop:enable Layout, Layout/LineLength
+
+==> 022.rb 162 <==
+# rubocop:disable Layout/LineLength
+fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo = barrrrrrrrrrrrrrrrrrrrrrrrrr
+# rubocop:enable Layout
+some_code
+
+==> 023.rb 22 <==
+foo = 1
+# rubocop:pop
+
+==> 024.rb 75 <==
+# rubocop:push -Style/StringLiterals
+foo = "1"
+# rubocop:pop
+# rubocop:pop
+
+==> 025.rb 61 <==
+# rubocop:push -Style/StringLiterals
+foo = "1"
+# rubocop:pop
+

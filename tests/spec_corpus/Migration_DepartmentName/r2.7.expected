@@ -1,0 +1,10 @@
+==> offenses exit=1 89 <==
+000/file.rb:1:19: C: [Correctable] Migration/DepartmentName: Department name is missing.
+
+==> autocorrect exit=0 87 <==
+000/file.rb:1:19: C: [Corrected] Migration/DepartmentName: Department name is missing.
+
+==> corrected/000/file.rb 101 <==
+# rubocop:disable Style/SingleSpaceBeforeFirstArg, Layout/LineLength
+name             "apache_kafka"
+

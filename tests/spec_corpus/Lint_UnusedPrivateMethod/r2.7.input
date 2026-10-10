@@ -1,0 +1,197 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 48 <==
+class Service
+  private
+
+  def helper
+  end
+end
+
+==> 001/current.rb 66 <==
+class Service
+  def call
+  end
+
+  private
+
+  def helper
+  end
+end
+
+==> 002/current.rb 35 <==
+class Service
+  def call
+  end
+end
+
+==> 003/current.rb 77 <==
+class Service
+  def call
+    helper
+  end
+
+  private
+
+  def helper
+  end
+end
+
+==> 004/current.rb 73 <==
+class Service
+  before_action :helper
+
+  private
+
+  def helper
+  end
+end
+
+==> 005/current.rb 78 <==
+class Service
+  alias_method :run, :helper
+
+  private
+
+  def helper
+  end
+end
+
+==> 006/current.rb 116 <==
+class Service
+  private
+
+  def initialize
+  end
+
+  def respond_to_missing?(name, include_private = false)
+  end
+end
+
+==> 007/current.rb 199 <==
+class Service
+  private
+
+  def inherited(subclass)
+  end
+
+  def const_missing(name)
+  end
+
+  def method_added(name)
+  end
+
+  def singleton_method_undefined(name)
+  end
+
+  def coerce(other)
+  end
+end
+
+==> 008/current.rb 76 <==
+class Service
+  class << self
+    private
+
+    def helper
+    end
+  end
+end
+
+==> 009/current.rb 51 <==
+class Child < Base
+  private
+
+  def hook
+  end
+end
+
+==> 010/current.rb 71 <==
+class Service
+  DATA = "\xFF\xFE".b
+
+  private
+
+  def helper
+  end
+end
+
+==> 011/current.rb 92 <==
+class Service
+  PATTERN = '(send nil? :require #helper)'
+
+  private
+
+  def helper
+  end
+end
+
+==> 012/current.rb 130 <==
+class Service
+  def call(type)
+    send(:"format_#{type}")
+  end
+
+  private
+
+  def format_octal
+  end
+
+  def format_hex
+  end
+end
+
+==> 013/current.rb 101 <==
+class Service
+  def call(action)
+    send("do_#{action}")
+  end
+
+  private
+
+  def do_start
+  end
+end
+
+==> 014/current.rb 105 <==
+class Service
+  def call(type)
+    send(:"format_#{type}")
+  end
+
+  private
+
+  def render_html
+  end
+end
+
+==> 015/current.rb 106 <==
+class Service
+  def call(type)
+    send(:"#{type}_format")
+  end
+
+  private
+
+  def octal_format
+  end
+end
+
+==> 016/current.rb 123 <==
+class Service
+  def call(type, suffix)
+    send(:"#{type}format_#{suffix}")
+  end
+
+  private
+
+  def format_octal
+  end
+end
+

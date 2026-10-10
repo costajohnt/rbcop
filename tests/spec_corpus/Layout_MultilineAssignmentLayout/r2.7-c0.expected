@@ -1,0 +1,33 @@
+==> offenses exit=1 624 <==
+000.rb:1:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+001.rb:1:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+002.rb:1:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+005.rb:1:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+
+==> autocorrect exit=0 616 <==
+000.rb:1:1: C: [Corrected] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+001.rb:1:1: C: [Corrected] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+002.rb:1:1: C: [Corrected] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+005.rb:1:1: C: [Corrected] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+
+==> corrected/000.rb 21 <==
+blarg =
+ if true
+end
+
+==> corrected/001.rb 26 <==
+hash[:foo] =
+ if true
+end
+
+==> corrected/002.rb 23 <==
+foo.bar =
+ if true
+end
+
+==> corrected/005.rb 19 <==
+a,
+b =
+ if foo
+end
+

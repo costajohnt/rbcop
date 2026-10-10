@@ -1,0 +1,14 @@
+==> offenses exit=1 200 <==
+003.rb:1:1: C: [Correctable] Style/YodaCondition: Reverse the order of the operands `42 != answer`.
+004.rb:1:1: C: [Correctable] Style/YodaCondition: Reverse the order of the operands `false == foo`.
+
+==> autocorrect exit=0 196 <==
+003.rb:1:1: C: [Corrected] Style/YodaCondition: Reverse the order of the operands `42 != answer`.
+004.rb:1:1: C: [Corrected] Style/YodaCondition: Reverse the order of the operands `false == foo`.
+
+==> corrected/003.rb 13 <==
+answer != 42
+
+==> corrected/004.rb 13 <==
+foo == false
+

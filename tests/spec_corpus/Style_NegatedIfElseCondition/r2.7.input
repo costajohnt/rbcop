@@ -1,0 +1,228 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 50 <==
+if !x
+  do_something
+else
+  do_something_else
+end
+
+==> 001.rb 53 <==
+if not x
+  do_something
+else
+  do_something_else
+end
+
+==> 002.rb 38 <==
+!x ? do_something : do_something_else
+
+==> 003.rb 52 <==
+!x ?
+  do_something :
+  do_something_else # comment
+
+==> 004.rb 54 <==
+if x != y
+  do_something
+else
+  do_something_else
+end
+
+==> 005.rb 42 <==
+x != y ? do_something : do_something_else
+
+==> 006.rb 56 <==
+if (x != y)
+  do_something
+else
+  do_something_else
+end
+
+==> 007.rb 44 <==
+(x != y) ? do_something : do_something_else
+
+==> 008.rb 66 <==
+if begin
+  x != y
+end
+  do_something
+else
+  do_something_else
+end
+
+==> 009.rb 54 <==
+begin
+  x != y
+end ? do_something : do_something_else
+
+==> 010.rb 54 <==
+if x !~ y
+  do_something
+else
+  do_something_else
+end
+
+==> 011.rb 42 <==
+x !~ y ? do_something : do_something_else
+
+==> 012.rb 56 <==
+if (x !~ y)
+  do_something
+else
+  do_something_else
+end
+
+==> 013.rb 44 <==
+(x !~ y) ? do_something : do_something_else
+
+==> 014.rb 66 <==
+if begin
+  x !~ y
+end
+  do_something
+else
+  do_something_else
+end
+
+==> 015.rb 54 <==
+begin
+  x !~ y
+end ? do_something : do_something_else
+
+==> 016.rb 99 <==
+if !x
+  do_something
+else
+  if !y
+    do_something_else_1
+  else
+    do_something_else_2
+  end
+end
+
+==> 017.rb 39 <==
+if !condition.nil?
+else
+  foo = 42
+end
+
+==> 018.rb 39 <==
+if !condition.nil?
+  foo = 42
+else
+end
+
+==> 019.rb 28 <==
+if !condition.nil?
+else
+end
+
+==> 020.rb 27 <==
+if ()
+  foo
+else
+  bar
+end
+
+==> 021.rb 108 <==
+if !condition.nil?
+  # part B
+  # and foo is 39
+  foo = 39
+else
+  # part A
+  # and foo is 42
+  foo = 42
+end
+
+==> 022.rb 150 <==
+if !condition.nil?
+  # part A
+  # and foo is 1 and bar is 2
+  foo = 1
+  bar = 2
+else
+  # part B
+  # and foo is 3 and bar is 4
+  foo = 3
+  bar = 4
+end
+
+==> 023.rb 56 <==
+if !condition
+  # comment
+  do_a
+  do_b
+else
+  do_c
+end
+
+==> 024.rb 49 <==
+if !condition
+  # comment
+  do_b
+else
+  do_c
+end
+
+==> 025.rb 71 <==
+# outer comment
+do_a
+
+if !condition
+  # comment
+  do_a
+else
+  do_c
+end
+
+==> 026.rb 49 <==
+if !condition
+  do_a
+  # comment
+else
+  do_c
+end
+
+==> 027.rb 78 <==
+if !x
+  do_something
+elsif !y
+  do_something_else
+else
+  do_another_thing
+end
+
+==> 028.rb 54 <==
+if !x && y
+  do_something
+else
+  do_another_thing
+end
+
+==> 029.rb 50 <==
+if !!x
+  do_something
+else
+  do_another_thing
+end
+
+==> 030.rb 25 <==
+if !x
+  do_something
+end
+
+==> 031.rb 43 <==
+if foo.!=(bar, baz)
+  do_a
+else
+  do_c
+end
+

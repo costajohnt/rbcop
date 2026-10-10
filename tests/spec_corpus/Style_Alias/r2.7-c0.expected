@@ -1,0 +1,19 @@
+==> offenses exit=1 243 <==
+000.rb:1:1: C: [Correctable] Style/Alias: Use `alias_method` instead of `alias`.
+001.rb:1:1: C: [Correctable] Style/Alias: Use `alias_method` instead of `alias`.
+002.rb:1:1: C: [Correctable] Style/Alias: Use `alias_method` instead of `alias`.
+
+==> autocorrect exit=0 237 <==
+000.rb:1:1: C: [Corrected] Style/Alias: Use `alias_method` instead of `alias`.
+001.rb:1:1: C: [Corrected] Style/Alias: Use `alias_method` instead of `alias`.
+002.rb:1:1: C: [Corrected] Style/Alias: Use `alias_method` instead of `alias`.
+
+==> corrected/000.rb 25 <==
+alias_method :ala, :bala
+
+==> corrected/001.rb 25 <==
+alias_method :ala, :bala
+
+==> corrected/002.rb 48 <==
+alias_method :"string#{interpolation}", :symbol
+

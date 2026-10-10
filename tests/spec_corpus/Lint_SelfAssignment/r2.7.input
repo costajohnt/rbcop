@@ -1,0 +1,206 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 10 <==
+foo = foo
+
+==> 001.rb 10 <==
+foo = bar
+
+==> 002.rb 12 <==
+@foo = @foo
+
+==> 003.rb 12 <==
+@foo = @bar
+
+==> 004.rb 14 <==
+@@foo = @@foo
+
+==> 005.rb 14 <==
+@@foo = @@bar
+
+==> 006.rb 12 <==
+$foo = $foo
+
+==> 007.rb 12 <==
+$foo = $bar
+
+==> 008.rb 10 <==
+Foo = Foo
+
+==> 009.rb 12 <==
+Foo = ::Foo
+
+==> 010.rb 14 <==
+Foo ||= ::Foo
+
+==> 011.rb 20 <==
+foo, bar = foo, bar
+
+==> 012.rb 22 <==
+foo, bar = [foo, bar]
+
+==> 013.rb 20 <==
+foo, bar = bar, foo
+
+==> 014.rb 22 <==
+foo, bar = *something
+
+==> 015.rb 21 <==
+foo, bar = something
+
+==> 016.rb 12 <==
+foo ||= foo
+
+==> 017.rb 12 <==
+foo ||= bar
+
+==> 018.rb 12 <==
+foo &&= foo
+
+==> 019.rb 12 <==
+foo &&= bar
+
+==> 020.rb 12 <==
+Foo ||= Foo
+
+==> 021.rb 12 <==
+Foo &&= Foo
+
+==> 022.rb 20 <==
+foo.bar ||= foo.bar
+
+==> 023.rb 20 <==
+foo.bar &&= foo.bar
+
+==> 024.rb 28 <==
+hash['foo'] ||= hash['foo']
+
+==> 025.rb 20 <==
+foo.bar ||= foo.baz
+
+==> 026.rb 28 <==
+hash['foo'] ||= hash['bar']
+
+==> 027.rb 24 <==
+hash[foo] ||= hash[foo]
+
+==> 028.rb 14 <==
+@foo ||= @foo
+
+==> 029.rb 16 <==
+@@foo ||= @@foo
+
+==> 030.rb 14 <==
+$foo &&= $foo
+
+==> 031.rb 18 <==
+foo.bar = foo.bar
+
+==> 032.rb 20 <==
+foo&.bar = foo&.bar
+
+==> 033.rb 18 <==
+foo.bar = foo.baz
+
+==> 034.rb 18 <==
+bar.foo = baz.foo
+
+==> 035.rb 22 <==
+foo.bar = foo.bar + 1
+
+==> 036.rb 23 <==
+foo.bar = foo.bar(arg)
+
+==> 037.rb 15 <==
+foo.bar = true
+
+==> 038.rb 24 <==
+foo["bar"] = foo["bar"]
+
+==> 039.rb 24 <==
+foo["bar"] = foo["baz"]
+
+==> 040.rb 16 <==
+foo[1] = foo[1]
+
+==> 041.rb 16 <==
+foo[1] = foo[2]
+
+==> 042.rb 20 <==
+foo[1.2] = foo[1.2]
+
+==> 043.rb 20 <==
+foo[1.2] = foo[2.2]
+
+==> 044.rb 20 <==
+foo[Foo] = foo[Foo]
+
+==> 045.rb 20 <==
+foo[Foo] = foo[Bar]
+
+==> 046.rb 22 <==
+foo[:bar] = foo[:bar]
+
+==> 047.rb 22 <==
+foo[:foo] = foo[:bar]
+
+==> 048.rb 28 <==
+var = 1
+foo[var] = foo[var]
+
+==> 049.rb 40 <==
+var1 = 1
+var2 = 2
+foo[var1] = foo[var2]
+
+==> 050.rb 22 <==
+foo[@var] = foo[@var]
+
+==> 051.rb 24 <==
+foo[@var1] = foo[@var2]
+
+==> 052.rb 24 <==
+foo[@@var] = foo[@@var]
+
+==> 053.rb 26 <==
+foo[@@var1] = foo[@@var2]
+
+==> 054.rb 22 <==
+foo[$var] = foo[$var]
+
+==> 055.rb 24 <==
+foo[$var1] = foo[$var2]
+
+==> 056.rb 20 <==
+foo[bar] = foo[bar]
+
+==> 057.rb 24 <==
+bar["foo"] = baz["foo"]
+
+==> 058.rb 28 <==
+foo["bar"] = foo["bar"] + 1
+
+==> 059.rb 28 <==
+foo&.[]=("bar", foo["bar"])
+
+==> 060.rb 28 <==
+matrix[1, 2] = matrix[1, 2]
+
+==> 061.rb 28 <==
+matrix[1, 2] = matrix[1, 3]
+
+==> 062.rb 32 <==
+matrix[1, foo] = matrix[1, foo]
+
+==> 063.rb 26 <==
+singleton[] = singleton[]
+
+==> 064.rb 8 <==
+foo.[]=
+

@@ -1,0 +1,73 @@
+==> offenses exit=1 1209 <==
+000.rb:1:11: C: [Correctable] Style/FormatString: Favor `sprintf` over `String#%`.
+001.rb:1:8: C: [Correctable] Style/FormatString: Favor `sprintf` over `String#%`.
+002.rb:1:8: C: [Correctable] Style/FormatString: Favor `sprintf` over `String#%`.
+003.rb:1:11: C: [Correctable] Style/FormatString: Favor `sprintf` over `String#%`.
+004.rb:1:11: C: [Correctable] Style/FormatString: Favor `sprintf` over `String#%`.
+005.rb:1:11: C: [Correctable] Style/FormatString: Favor `sprintf` over `String#%`.
+006.rb:1:11: C: [Correctable] Style/FormatString: Favor `sprintf` over `String#%`.
+007.rb:1:11: C: [Correctable] Style/FormatString: Favor `sprintf` over `String#%`.
+008.rb:1:11: C: [Correctable] Style/FormatString: Favor `sprintf` over `String#%`.
+009.rb:1:11: C: [Correctable] Style/FormatString: Favor `sprintf` over `String#%`.
+010.rb:1:11: C: Style/FormatString: Favor `sprintf` over `String#%`.
+011.rb:2:11: C: Style/FormatString: Favor `sprintf` over `String#%`.
+014.rb:1:29: C: [Correctable] Style/FormatString: Favor `sprintf` over `String#%`.
+015.rb:1:1: C: [Correctable] Style/FormatString: Favor `sprintf` over `format`.
+016.rb:1:1: C: [Correctable] Style/FormatString: Favor `sprintf` over `format`.
+
+==> autocorrect exit=1 1183 <==
+000.rb:1:11: C: [Corrected] Style/FormatString: Favor `sprintf` over `String#%`.
+001.rb:1:8: C: [Corrected] Style/FormatString: Favor `sprintf` over `String#%`.
+002.rb:1:8: C: [Corrected] Style/FormatString: Favor `sprintf` over `String#%`.
+003.rb:1:11: C: [Corrected] Style/FormatString: Favor `sprintf` over `String#%`.
+004.rb:1:11: C: [Corrected] Style/FormatString: Favor `sprintf` over `String#%`.
+005.rb:1:11: C: [Corrected] Style/FormatString: Favor `sprintf` over `String#%`.
+006.rb:1:11: C: [Corrected] Style/FormatString: Favor `sprintf` over `String#%`.
+007.rb:1:11: C: [Corrected] Style/FormatString: Favor `sprintf` over `String#%`.
+008.rb:1:11: C: [Corrected] Style/FormatString: Favor `sprintf` over `String#%`.
+009.rb:1:11: C: [Corrected] Style/FormatString: Favor `sprintf` over `String#%`.
+010.rb:1:11: C: Style/FormatString: Favor `sprintf` over `String#%`.
+011.rb:2:11: C: Style/FormatString: Favor `sprintf` over `String#%`.
+014.rb:1:29: C: [Corrected] Style/FormatString: Favor `sprintf` over `String#%`.
+015.rb:1:1: C: [Corrected] Style/FormatString: Favor `sprintf` over `format`.
+016.rb:1:1: C: [Corrected] Style/FormatString: Favor `sprintf` over `format`.
+
+==> corrected/000.rb 23 <==
+puts sprintf("%d", 10)
+
+==> corrected/001.rb 24 <==
+puts sprintf(x, 10, 11)
+
+==> corrected/002.rb 30 <==
+puts sprintf(x, a: 10, b: 11)
+
+==> corrected/003.rb 27 <==
+puts sprintf("%s", a.to_s)
+
+==> corrected/004.rb 27 <==
+puts sprintf("%s", a.to_h)
+
+==> corrected/005.rb 27 <==
+puts sprintf("%s", a.to_i)
+
+==> corrected/006.rb 27 <==
+puts sprintf("%s", a.to_f)
+
+==> corrected/007.rb 27 <==
+puts sprintf("%s", a.to_r)
+
+==> corrected/008.rb 27 <==
+puts sprintf("%s", a.to_d)
+
+==> corrected/009.rb 29 <==
+puts sprintf("%s", a.to_sym)
+
+==> corrected/014.rb 41 <==
+puts sprintf("#{x * 5} %d #{@test}", 10)
+
+==> corrected/015.rb 25 <==
+sprintf(something, a, b)
+
+==> corrected/016.rb 19 <==
+sprintf("%X", 123)
+

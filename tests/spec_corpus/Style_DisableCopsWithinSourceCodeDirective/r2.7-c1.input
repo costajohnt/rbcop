@@ -1,0 +1,30 @@
+==> .rubocop.yml 220 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/DisableCopsWithinSourceCodeDirective:
+  AllowedCops:
+  - Metrics/CyclomaticComplexity
+  - Metrics/AbcSize
+
+==> 000.rb 59 <==
+def foo # rubocop:disable Metrics/CyclomaticComplexity
+end
+
+==> 001.rb 48 <==
+def foo # rubocop:disable Layout/LineLength
+end
+
+==> 002.rb 108 <==
+def foo # rubocop:disable Metrics/AbcSize, Layout/LineLength, Metrics/CyclomaticComplexity, Style/AndOr
+end
+
+==> 003.rb 25 <==
+# comment
+
+class Foo
+end
+

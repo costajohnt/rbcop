@@ -1,0 +1,37 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 23 <==
+a ? (b ? b1 : b2) : a2
+
+==> 001.rb 69 <==
+cond ? foo : bar(foo.a ? foo.b : foo) { |e, k| e.nil? ? nil : e[k] }
+
+==> 002.rb 26 <==
+x ? y + (z ? 1 : 0) : nil
+
+==> 003.rb 39 <==
+a ? (
+  if b
+    c ? 1 : 2
+  end
+) : 3
+
+==> 004.rb 37 <==
+a = if x
+  cond ? b : c
+else
+  d
+end
+
+==> 005.rb 26 <==
+a ? b : c ? d : e ? f : g
+
+==> 006.rb 40 <==
+foo ? (bar && baz) ? qux : quux : corge
+

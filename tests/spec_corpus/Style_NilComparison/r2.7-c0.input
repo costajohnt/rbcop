@@ -1,0 +1,28 @@
+==> .rubocop.yml 156 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/NilComparison:
+  EnforcedStyle: predicate
+
+==> 000.rb 9 <==
+x == nil
+
+==> 001.rb 10 <==
+x === nil
+
+==> 002.rb 16 <==
+bar if x == nil
+
+==> 003.rb 10 <==
+x.==(nil)
+
+==> 004.rb 11 <==
+x.===(nil)
+
+==> 005.rb 10 <==
+!x == nil
+

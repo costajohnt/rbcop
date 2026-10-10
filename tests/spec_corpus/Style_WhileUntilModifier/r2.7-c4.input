@@ -1,0 +1,17 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LineLength:
+  Enabled: true
+  Max: 40
+  AllowURI: false
+
+==> 000.rb 76 <==
+while url == 'https://example.com/a/rather/long/path?with=query'
+  step
+end
+

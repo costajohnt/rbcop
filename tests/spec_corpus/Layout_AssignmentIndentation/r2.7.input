@@ -1,0 +1,47 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 15 <==
+a =
+if b ; end
+
+==> 001.rb 27 <==
+a = if b
+      foo
+    end
+
+==> 002.rb 17 <==
+a =
+  if b ; end
+
+==> 003.rb 40 <==
+f 'Ｒｕｂｙ', a =
+                b
+
+==> 004.rb 18 <==
+a,
+b =
+if b ; end
+
+==> 005.rb 17 <==
+a ===
+if b ; end
+
+==> 006.rb 22 <==
+a =
+       if b ; end
+
+==> 007.rb 21 <==
+foo = bar =
+baz = ''
+
+==> 008.rb 25 <==
+foo =
+  bar =
+  baz = 42
+

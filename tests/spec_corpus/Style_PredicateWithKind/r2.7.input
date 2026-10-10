@@ -1,0 +1,196 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 33 <==
+array.any? { _1.is_a?(Integer) }
+
+==> 001.rb 35 <==
+array.any? { _1.kind_of?(String) }
+
+==> 002.rb 33 <==
+array.all? { _1.is_a?(Integer) }
+
+==> 003.rb 35 <==
+array.all? { _1.kind_of?(String) }
+
+==> 004.rb 34 <==
+array.none? { _1.is_a?(Integer) }
+
+==> 005.rb 36 <==
+array.none? { _1.kind_of?(String) }
+
+==> 006.rb 33 <==
+array.one? { _1.is_a?(Integer) }
+
+==> 007.rb 35 <==
+array.one? { _1.kind_of?(String) }
+
+==> 008.rb 36 <==
+array.any? { |x| x.is_a?(Integer) }
+
+==> 009.rb 38 <==
+array.any? { |x| x.kind_of?(String) }
+
+==> 010.rb 41 <==
+array.any? { |x| x.instance_of?(Float) }
+
+==> 011.rb 41 <==
+array.any? do |x|
+  x.is_a?(Integer)
+end
+
+==> 012.rb 30 <==
+any? { |x| x.is_a?(Integer) }
+
+==> 013.rb 47 <==
+array.any? { |x| x.is_a?(ActiveRecord::Base) }
+
+==> 014.rb 11 <==
+array.any?
+
+==> 015.rb 27 <==
+array.any? { |x| x.even? }
+
+==> 016.rb 58 <==
+array.any? do |x|
+  next if x.nil?
+  x.is_a?(Integer)
+end
+
+==> 017.rb 36 <==
+array.any? { |x| y.is_a?(Integer) }
+
+==> 018.rb 20 <==
+array.any?(Integer)
+
+==> 019.rb 37 <==
+array&.any? { |x| x.is_a?(Integer) }
+
+==> 020.rb 36 <==
+array.all? { |x| x.is_a?(Integer) }
+
+==> 021.rb 38 <==
+array.all? { |x| x.kind_of?(String) }
+
+==> 022.rb 41 <==
+array.all? { |x| x.instance_of?(Float) }
+
+==> 023.rb 41 <==
+array.all? do |x|
+  x.is_a?(Integer)
+end
+
+==> 024.rb 30 <==
+all? { |x| x.is_a?(Integer) }
+
+==> 025.rb 47 <==
+array.all? { |x| x.is_a?(ActiveRecord::Base) }
+
+==> 026.rb 11 <==
+array.all?
+
+==> 027.rb 27 <==
+array.all? { |x| x.even? }
+
+==> 028.rb 58 <==
+array.all? do |x|
+  next if x.nil?
+  x.is_a?(Integer)
+end
+
+==> 029.rb 36 <==
+array.all? { |x| y.is_a?(Integer) }
+
+==> 030.rb 20 <==
+array.all?(Integer)
+
+==> 031.rb 37 <==
+array&.all? { |x| x.is_a?(Integer) }
+
+==> 032.rb 37 <==
+array.none? { |x| x.is_a?(Integer) }
+
+==> 033.rb 39 <==
+array.none? { |x| x.kind_of?(String) }
+
+==> 034.rb 42 <==
+array.none? { |x| x.instance_of?(Float) }
+
+==> 035.rb 42 <==
+array.none? do |x|
+  x.is_a?(Integer)
+end
+
+==> 036.rb 31 <==
+none? { |x| x.is_a?(Integer) }
+
+==> 037.rb 48 <==
+array.none? { |x| x.is_a?(ActiveRecord::Base) }
+
+==> 038.rb 12 <==
+array.none?
+
+==> 039.rb 28 <==
+array.none? { |x| x.even? }
+
+==> 040.rb 59 <==
+array.none? do |x|
+  next if x.nil?
+  x.is_a?(Integer)
+end
+
+==> 041.rb 37 <==
+array.none? { |x| y.is_a?(Integer) }
+
+==> 042.rb 21 <==
+array.none?(Integer)
+
+==> 043.rb 38 <==
+array&.none? { |x| x.is_a?(Integer) }
+
+==> 044.rb 36 <==
+array.one? { |x| x.is_a?(Integer) }
+
+==> 045.rb 38 <==
+array.one? { |x| x.kind_of?(String) }
+
+==> 046.rb 41 <==
+array.one? { |x| x.instance_of?(Float) }
+
+==> 047.rb 41 <==
+array.one? do |x|
+  x.is_a?(Integer)
+end
+
+==> 048.rb 30 <==
+one? { |x| x.is_a?(Integer) }
+
+==> 049.rb 47 <==
+array.one? { |x| x.is_a?(ActiveRecord::Base) }
+
+==> 050.rb 11 <==
+array.one?
+
+==> 051.rb 27 <==
+array.one? { |x| x.even? }
+
+==> 052.rb 58 <==
+array.one? do |x|
+  next if x.nil?
+  x.is_a?(Integer)
+end
+
+==> 053.rb 36 <==
+array.one? { |x| y.is_a?(Integer) }
+
+==> 054.rb 20 <==
+array.one?(Integer)
+
+==> 055.rb 37 <==
+array&.one? { |x| x.is_a?(Integer) }
+

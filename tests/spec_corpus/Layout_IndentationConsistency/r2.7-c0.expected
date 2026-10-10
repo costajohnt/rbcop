@@ -1,0 +1,214 @@
+==> offenses exit=1 2077 <==
+002.rb:3:3: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+003.rb:3:3: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+004.rb:5:3: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+005.rb:5:1: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+020.rb:3:3: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+022.rb:4:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+023.rb:8:3: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+028.rb:3:3: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+029.rb:3:4: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+030.rb:3:3: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+032.rb:3:1: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+034.rb:3:6: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+035.rb:3:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+038.rb:4:3: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+041.rb:14:2: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+042.rb:4:6: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+044.rb:5:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+045.rb:3:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+046.rb:3:3: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+047.rb:3:3: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+050.rb:4:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+050.rb:7:9: C: Layout/IndentationConsistency: Inconsistent indentation detected.
+
+==> autocorrect exit=0 2047 <==
+002.rb:3:3: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+003.rb:3:3: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+004.rb:5:3: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+005.rb:5:1: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+020.rb:3:3: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+022.rb:4:5: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+023.rb:8:3: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+028.rb:3:3: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+029.rb:3:4: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+030.rb:3:3: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+032.rb:3:1: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+034.rb:3:6: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+035.rb:3:5: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+038.rb:4:3: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+041.rb:14:2: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+042.rb:4:6: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+044.rb:5:5: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+045.rb:3:5: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+046.rb:3:3: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+047.rb:3:3: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+050.rb:4:5: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+050.rb:7:7: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+
+==> corrected/002.rb 20 <==
+public
+
+def foo
+end
+
+==> corrected/003.rb 24 <==
+if cond
+ func
+ func
+end
+
+==> corrected/004.rb 39 <==
+if cond
+  func1
+else
+ func2
+ func2
+end
+
+==> corrected/005.rb 41 <==
+if a1
+  b1
+elsif a2
+ b2
+ b3
+else
+  c
+end
+
+==> corrected/020.rb 28 <==
+unless cond
+ func
+ func
+end
+
+==> corrected/022.rb 24 <==
+case a
+when b
+ c
+ d
+end
+
+==> corrected/023.rb 48 <==
+case a
+when b
+  c
+when d
+  e
+else
+   f
+   g
+end
+
+==> corrected/028.rb 27 <==
+while cond
+ func
+ func
+end
+
+==> corrected/029.rb 47 <==
+something = begin
+ func1
+ func2
+end while cond
+
+==> corrected/030.rb 27 <==
+until cond
+ func
+ func
+end
+
+==> corrected/032.rb 33 <==
+for var in 1..10
+ func
+ func
+end
+
+==> corrected/034.rb 33 <==
+def test
+    func1
+    func2
+end
+
+==> corrected/035.rb 34 <==
+def self.test
+   func
+   func
+end
+
+==> corrected/038.rb 59 <==
+class Test
+    def func1
+    end
+    def func2
+    end
+end
+
+==> corrected/041.rb 87 <==
+class Test
+public
+
+  def e
+  end
+
+protected
+
+  def f
+  end
+
+private
+
+  def g
+  end
+end
+
+==> corrected/042.rb 60 <==
+module Test
+    def func1
+    end
+    def func2
+    end
+end
+
+==> corrected/044.rb 59 <==
+module Test
+  def pub
+  end
+  private
+  def priv
+  end
+end
+
+==> corrected/045.rb 43 <==
+module Test
+  private
+  def priv
+  end
+end
+
+==> corrected/046.rb 22 <==
+a = func do
+ b
+ c
+end
+
+==> corrected/047.rb 19 <==
+func {
+   b
+   c
+}
+
+==> corrected/050.rb 253 <==
+require 'spec_helper'
+describe ArticlesController do
+  render_views
+  describe "GET 'index'" do
+          it "returns success" do
+          end
+          describe "admin user" do
+               before(:each) do
+              end
+          end
+  end
+end
+

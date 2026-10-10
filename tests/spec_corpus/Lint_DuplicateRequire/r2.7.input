@@ -1,0 +1,55 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 28 <==
+require 'foo'
+require 'foo'
+
+==> 001.rb 52 <==
+require_relative '../bar'
+require_relative '../bar'
+
+==> 002.rb 35 <==
+require 'foo'
+Kernel.require 'foo'
+
+==> 003.rb 120 <==
+require 'foo'
+require_relative '../bar'
+require 'foo/baz'
+require_relative '../bar'
+Kernel.require 'foo'
+require 'quux'
+
+==> 004.rb 38 <==
+require 'foo'
+def m
+end
+require 'foo'
+
+==> 005.rb 42 <==
+def m
+  require 'foo'
+  require 'foo'
+end
+
+==> 006.rb 28 <==
+require 'foo'
+require 'bar'
+
+==> 007.rb 14 <==
+require 'foo'
+
+==> 008.rb 45 <==
+require 'feature'
+require_relative 'feature'
+
+==> 009.rb 44 <==
+params.require(:user)
+params.require(:user)
+

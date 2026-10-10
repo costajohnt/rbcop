@@ -1,0 +1,26 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 96 <==
+def foo
+  [1, 2, 3].each do
+    it.to_s
+  rescue StandardError => _exception
+    next
+  end
+end
+
+==> 001.rb 94 <==
+def foo
+  [1, 2, 3].each do
+    it.to_s
+rescue StandardError => _exception
+    next
+  end
+end
+

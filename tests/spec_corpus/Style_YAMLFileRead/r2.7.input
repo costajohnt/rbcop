@@ -1,0 +1,17 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 27 <==
+YAML.load(File.read(path))
+
+==> 001.rb 32 <==
+YAML.safe_load(File.read(path))
+
+==> 002.rb 28 <==
+YAML.parse(File.read(path))
+

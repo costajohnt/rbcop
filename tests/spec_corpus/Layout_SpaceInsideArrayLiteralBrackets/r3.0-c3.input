@@ -1,0 +1,16 @@
+==> .rubocop.yml 174 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Layout/SpaceInsideArrayLiteralBrackets:
+  EnforcedStyle: no_space
+
+==> 000.rb 20 <==
+foo => [ bar, baz ]
+
+==> 001.rb 18 <==
+foo => [bar, baz]
+

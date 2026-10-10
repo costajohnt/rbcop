@@ -1,0 +1,44 @@
+==> offenses exit=1 912 <==
+000.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `any?(Integer)` to `any? { ... }` with a kind check.
+001.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `any?(String)` to `any? { ... }` with a kind check.
+002.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `all?(Integer)` to `all? { ... }` with a kind check.
+003.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `all?(String)` to `all? { ... }` with a kind check.
+004.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `none?(Integer)` to `none? { ... }` with a kind check.
+005.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `none?(String)` to `none? { ... }` with a kind check.
+006.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `one?(Integer)` to `one? { ... }` with a kind check.
+007.rb:1:1: C: [Correctable] Style/PredicateWithKind: Prefer `one?(String)` to `one? { ... }` with a kind check.
+
+==> autocorrect exit=0 896 <==
+000.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `any?(Integer)` to `any? { ... }` with a kind check.
+001.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `any?(String)` to `any? { ... }` with a kind check.
+002.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `all?(Integer)` to `all? { ... }` with a kind check.
+003.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `all?(String)` to `all? { ... }` with a kind check.
+004.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `none?(Integer)` to `none? { ... }` with a kind check.
+005.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `none?(String)` to `none? { ... }` with a kind check.
+006.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `one?(Integer)` to `one? { ... }` with a kind check.
+007.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `one?(String)` to `one? { ... }` with a kind check.
+
+==> corrected/000.rb 20 <==
+array.any?(Integer)
+
+==> corrected/001.rb 19 <==
+array.any?(String)
+
+==> corrected/002.rb 20 <==
+array.all?(Integer)
+
+==> corrected/003.rb 19 <==
+array.all?(String)
+
+==> corrected/004.rb 21 <==
+array.none?(Integer)
+
+==> corrected/005.rb 20 <==
+array.none?(String)
+
+==> corrected/006.rb 20 <==
+array.one?(Integer)
+
+==> corrected/007.rb 19 <==
+array.one?(String)
+

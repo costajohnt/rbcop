@@ -1,0 +1,16 @@
+==> .rubocop.yml 238 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SymbolArray:
+  MinSize: 2
+  EnforcedStyle: percent
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: "()"
+
+==> 000.rb 6 <==
+[:one]

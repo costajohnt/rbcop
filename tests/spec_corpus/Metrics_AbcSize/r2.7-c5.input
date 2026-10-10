@@ -1,0 +1,16 @@
+==> .rubocop.yml 134 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Metrics/AbcSize:
+  Max: 2
+
+==> 000.rb 36 <==
+def method_name
+  x = 1
+  y = 2
+end
+

@@ -1,0 +1,59 @@
+==> offenses exit=1 1156 <==
+000.rb:1:5: C: [Correctable] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+001.rb:1:6: C: [Correctable] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+002.rb:1:5: C: [Correctable] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+003.rb:1:6: C: [Correctable] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+004.rb:1:5: C: [Correctable] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+005.rb:1:6: C: [Correctable] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+006.rb:1:1: C: [Correctable] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+007.rb:1:5: C: [Correctable] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+008.rb:1:6: C: [Correctable] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+009.rb:1:5: C: [Correctable] Style/SendWithLiteralMethodName: Use `name_with_underscore` method call directly instead.
+010.rb:1:6: C: [Correctable] Style/SendWithLiteralMethodName: Use `name_with_underscore` method call directly instead.
+
+==> autocorrect exit=0 1134 <==
+000.rb:1:5: C: [Corrected] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+001.rb:1:6: C: [Corrected] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+002.rb:1:5: C: [Corrected] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+003.rb:1:6: C: [Corrected] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+004.rb:1:5: C: [Corrected] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+005.rb:1:6: C: [Corrected] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+006.rb:1:1: C: [Corrected] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+007.rb:1:5: C: [Corrected] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+008.rb:1:6: C: [Corrected] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+009.rb:1:5: C: [Corrected] Style/SendWithLiteralMethodName: Use `name_with_underscore` method call directly instead.
+010.rb:1:6: C: [Corrected] Style/SendWithLiteralMethodName: Use `name_with_underscore` method call directly instead.
+
+==> corrected/000.rb 8 <==
+obj.foo
+
+==> corrected/001.rb 9 <==
+obj&.foo
+
+==> corrected/002.rb 17 <==
+obj.foo(bar, 42)
+
+==> corrected/003.rb 18 <==
+obj&.foo(bar, 42)
+
+==> corrected/004.rb 16 <==
+obj.foo bar, 42
+
+==> corrected/005.rb 17 <==
+obj&.foo bar, 42
+
+==> corrected/006.rb 4 <==
+foo
+
+==> corrected/007.rb 8 <==
+obj.foo
+
+==> corrected/008.rb 9 <==
+obj&.foo
+
+==> corrected/009.rb 25 <==
+obj.name_with_underscore
+
+==> corrected/010.rb 26 <==
+obj&.name_with_underscore
+

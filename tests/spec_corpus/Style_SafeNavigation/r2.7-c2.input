@@ -1,0 +1,346 @@
+==> .rubocop.yml 173 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SafeNavigation:
+  ConvertCodeThatCanStartToReturnNil: true
+
+==> 000.rb 21 <==
+!foo.nil? && foo.bar
+
+==> 001.rb 26 <==
+!foo.nil? && foo.bar(baz)
+
+==> 002.rb 35 <==
+!foo.nil? && foo.bar { |e| e.qux }
+
+==> 003.rb 40 <==
+!foo.nil? && foo.bar(baz) { |e| e.qux }
+
+==> 004.rb 15 <==
+foo && foo.bar
+
+==> 005.rb 23 <==
+foo.bar && foo.bar.baz
+
+==> 006.rb 20 <==
+foo && foo.bar(baz)
+
+==> 007.rb 29 <==
+foo && foo.bar { |e| e.qux }
+
+==> 008.rb 34 <==
+foo && foo.bar(baz) { |e| e.qux }
+
+==> 009.rb 34 <==
+if foo && foo.bar
+  something
+end
+
+==> 010.rb 28 <==
+foo && foo.bar && something
+
+==> 011.rb 22 <==
+foo && foo.bar && bar
+
+==> 012.rb 23 <==
+foo && foo.bar && bar?
+
+==> 013.rb 22 <==
+bar && foo && foo.bar
+
+==> 014.rb 23 <==
+bar? && foo && foo.bar
+
+==> 015.rb 47 <==
+foo && foo.one { |a| b}.two(baz) { |e| e.qux }
+
+==> 016.rb 44 <==
+foo && foo.one.two.three(baz) { |e| e.qux }
+
+==> 017.rb 48 <==
+foo && foo.one { |a| b }.two(baz) { |e| e.qux }
+
+==> 018.rb 21 <==
+!FOO.nil? && FOO.bar
+
+==> 019.rb 26 <==
+!FOO.nil? && FOO.bar(baz)
+
+==> 020.rb 35 <==
+!FOO.nil? && FOO.bar { |e| e.qux }
+
+==> 021.rb 40 <==
+!FOO.nil? && FOO.bar(baz) { |e| e.qux }
+
+==> 022.rb 15 <==
+FOO && FOO.bar
+
+==> 023.rb 23 <==
+FOO.bar && FOO.bar.baz
+
+==> 024.rb 20 <==
+FOO && FOO.bar(baz)
+
+==> 025.rb 29 <==
+FOO && FOO.bar { |e| e.qux }
+
+==> 026.rb 34 <==
+FOO && FOO.bar(baz) { |e| e.qux }
+
+==> 027.rb 34 <==
+if FOO && FOO.bar
+  something
+end
+
+==> 028.rb 28 <==
+FOO && FOO.bar && something
+
+==> 029.rb 22 <==
+FOO && FOO.bar && bar
+
+==> 030.rb 23 <==
+FOO && FOO.bar && bar?
+
+==> 031.rb 22 <==
+bar && FOO && FOO.bar
+
+==> 032.rb 23 <==
+bar? && FOO && FOO.bar
+
+==> 033.rb 47 <==
+FOO && FOO.one { |a| b}.two(baz) { |e| e.qux }
+
+==> 034.rb 44 <==
+FOO && FOO.one.two.three(baz) { |e| e.qux }
+
+==> 035.rb 48 <==
+FOO && FOO.one { |a| b }.two(baz) { |e| e.qux }
+
+==> 036.rb 31 <==
+!FOO::BAR.nil? && FOO::BAR.bar
+
+==> 037.rb 36 <==
+!FOO::BAR.nil? && FOO::BAR.bar(baz)
+
+==> 038.rb 45 <==
+!FOO::BAR.nil? && FOO::BAR.bar { |e| e.qux }
+
+==> 039.rb 50 <==
+!FOO::BAR.nil? && FOO::BAR.bar(baz) { |e| e.qux }
+
+==> 040.rb 25 <==
+FOO::BAR && FOO::BAR.bar
+
+==> 041.rb 33 <==
+FOO::BAR.bar && FOO::BAR.bar.baz
+
+==> 042.rb 30 <==
+FOO::BAR && FOO::BAR.bar(baz)
+
+==> 043.rb 39 <==
+FOO::BAR && FOO::BAR.bar { |e| e.qux }
+
+==> 044.rb 44 <==
+FOO::BAR && FOO::BAR.bar(baz) { |e| e.qux }
+
+==> 045.rb 44 <==
+if FOO::BAR && FOO::BAR.bar
+  something
+end
+
+==> 046.rb 38 <==
+FOO::BAR && FOO::BAR.bar && something
+
+==> 047.rb 32 <==
+FOO::BAR && FOO::BAR.bar && bar
+
+==> 048.rb 33 <==
+FOO::BAR && FOO::BAR.bar && bar?
+
+==> 049.rb 32 <==
+bar && FOO::BAR && FOO::BAR.bar
+
+==> 050.rb 33 <==
+bar? && FOO::BAR && FOO::BAR.bar
+
+==> 051.rb 57 <==
+FOO::BAR && FOO::BAR.one { |a| b}.two(baz) { |e| e.qux }
+
+==> 052.rb 54 <==
+FOO::BAR && FOO::BAR.one.two.three(baz) { |e| e.qux }
+
+==> 053.rb 58 <==
+FOO::BAR && FOO::BAR.one { |a| b }.two(baz) { |e| e.qux }
+
+==> 054.rb 23 <==
+!@foo.nil? && @foo.bar
+
+==> 055.rb 28 <==
+!@foo.nil? && @foo.bar(baz)
+
+==> 056.rb 37 <==
+!@foo.nil? && @foo.bar { |e| e.qux }
+
+==> 057.rb 42 <==
+!@foo.nil? && @foo.bar(baz) { |e| e.qux }
+
+==> 058.rb 17 <==
+@foo && @foo.bar
+
+==> 059.rb 25 <==
+@foo.bar && @foo.bar.baz
+
+==> 060.rb 22 <==
+@foo && @foo.bar(baz)
+
+==> 061.rb 31 <==
+@foo && @foo.bar { |e| e.qux }
+
+==> 062.rb 36 <==
+@foo && @foo.bar(baz) { |e| e.qux }
+
+==> 063.rb 36 <==
+if @foo && @foo.bar
+  something
+end
+
+==> 064.rb 30 <==
+@foo && @foo.bar && something
+
+==> 065.rb 24 <==
+@foo && @foo.bar && bar
+
+==> 066.rb 25 <==
+@foo && @foo.bar && bar?
+
+==> 067.rb 24 <==
+bar && @foo && @foo.bar
+
+==> 068.rb 25 <==
+bar? && @foo && @foo.bar
+
+==> 069.rb 49 <==
+@foo && @foo.one { |a| b}.two(baz) { |e| e.qux }
+
+==> 070.rb 46 <==
+@foo && @foo.one.two.three(baz) { |e| e.qux }
+
+==> 071.rb 50 <==
+@foo && @foo.one { |a| b }.two(baz) { |e| e.qux }
+
+==> 072.rb 25 <==
+!@@foo.nil? && @@foo.bar
+
+==> 073.rb 30 <==
+!@@foo.nil? && @@foo.bar(baz)
+
+==> 074.rb 39 <==
+!@@foo.nil? && @@foo.bar { |e| e.qux }
+
+==> 075.rb 44 <==
+!@@foo.nil? && @@foo.bar(baz) { |e| e.qux }
+
+==> 076.rb 19 <==
+@@foo && @@foo.bar
+
+==> 077.rb 27 <==
+@@foo.bar && @@foo.bar.baz
+
+==> 078.rb 24 <==
+@@foo && @@foo.bar(baz)
+
+==> 079.rb 33 <==
+@@foo && @@foo.bar { |e| e.qux }
+
+==> 080.rb 38 <==
+@@foo && @@foo.bar(baz) { |e| e.qux }
+
+==> 081.rb 38 <==
+if @@foo && @@foo.bar
+  something
+end
+
+==> 082.rb 32 <==
+@@foo && @@foo.bar && something
+
+==> 083.rb 26 <==
+@@foo && @@foo.bar && bar
+
+==> 084.rb 27 <==
+@@foo && @@foo.bar && bar?
+
+==> 085.rb 26 <==
+bar && @@foo && @@foo.bar
+
+==> 086.rb 27 <==
+bar? && @@foo && @@foo.bar
+
+==> 087.rb 51 <==
+@@foo && @@foo.one { |a| b}.two(baz) { |e| e.qux }
+
+==> 088.rb 48 <==
+@@foo && @@foo.one.two.three(baz) { |e| e.qux }
+
+==> 089.rb 52 <==
+@@foo && @@foo.one { |a| b }.two(baz) { |e| e.qux }
+
+==> 090.rb 23 <==
+!$FOO.nil? && $FOO.bar
+
+==> 091.rb 28 <==
+!$FOO.nil? && $FOO.bar(baz)
+
+==> 092.rb 37 <==
+!$FOO.nil? && $FOO.bar { |e| e.qux }
+
+==> 093.rb 42 <==
+!$FOO.nil? && $FOO.bar(baz) { |e| e.qux }
+
+==> 094.rb 17 <==
+$FOO && $FOO.bar
+
+==> 095.rb 25 <==
+$FOO.bar && $FOO.bar.baz
+
+==> 096.rb 22 <==
+$FOO && $FOO.bar(baz)
+
+==> 097.rb 31 <==
+$FOO && $FOO.bar { |e| e.qux }
+
+==> 098.rb 36 <==
+$FOO && $FOO.bar(baz) { |e| e.qux }
+
+==> 099.rb 36 <==
+if $FOO && $FOO.bar
+  something
+end
+
+==> 100.rb 30 <==
+$FOO && $FOO.bar && something
+
+==> 101.rb 24 <==
+$FOO && $FOO.bar && bar
+
+==> 102.rb 25 <==
+$FOO && $FOO.bar && bar?
+
+==> 103.rb 24 <==
+bar && $FOO && $FOO.bar
+
+==> 104.rb 25 <==
+bar? && $FOO && $FOO.bar
+
+==> 105.rb 49 <==
+$FOO && $FOO.one { |a| b}.two(baz) { |e| e.qux }
+
+==> 106.rb 46 <==
+$FOO && $FOO.one.two.three(baz) { |e| e.qux }
+
+==> 107.rb 50 <==
+$FOO && $FOO.one { |a| b }.two(baz) { |e| e.qux }
+

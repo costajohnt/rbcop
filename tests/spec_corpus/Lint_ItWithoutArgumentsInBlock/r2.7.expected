@@ -1,0 +1,8 @@
+==> offenses exit=1 301 <==
+000.rb:1:11: W: Lint/ItWithoutArgumentsInBlock: `it` calls without arguments will refer to the first block param in Ruby 3.4; use `it()` or `self.it`.
+001.rb:2:3: W: Lint/ItWithoutArgumentsInBlock: `it` calls without arguments will refer to the first block param in Ruby 3.4; use `it()` or `self.it`.
+
+==> autocorrect exit=1 301 <==
+000.rb:1:11: W: Lint/ItWithoutArgumentsInBlock: `it` calls without arguments will refer to the first block param in Ruby 3.4; use `it()` or `self.it`.
+001.rb:2:3: W: Lint/ItWithoutArgumentsInBlock: `it` calls without arguments will refer to the first block param in Ruby 3.4; use `it()` or `self.it`.
+

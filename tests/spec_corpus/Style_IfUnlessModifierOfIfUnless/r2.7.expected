@@ -1,0 +1,42 @@
+==> offenses exit=1 557 <==
+000.rb:1:35: C: [Correctable] Style/IfUnlessModifierOfIfUnless: Avoid modifier `unless` after another conditional.
+001.rb:1:35: C: [Correctable] Style/IfUnlessModifierOfIfUnless: Avoid modifier `if` after another conditional.
+001.rb:1:54: C: [Correctable] Style/IfUnlessModifierOfIfUnless: Avoid modifier `if` after another conditional.
+002.rb:3:5: C: [Correctable] Style/IfUnlessModifierOfIfUnless: Avoid modifier `if` after another conditional.
+003.rb:5:5: C: [Correctable] Style/IfUnlessModifierOfIfUnless: Avoid modifier `if` after another conditional.
+
+==> autocorrect exit=0 547 <==
+000.rb:1:35: C: [Corrected] Style/IfUnlessModifierOfIfUnless: Avoid modifier `unless` after another conditional.
+001.rb:1:35: C: [Corrected] Style/IfUnlessModifierOfIfUnless: Avoid modifier `if` after another conditional.
+001.rb:1:54: C: [Corrected] Style/IfUnlessModifierOfIfUnless: Avoid modifier `if` after another conditional.
+002.rb:3:5: C: [Corrected] Style/IfUnlessModifierOfIfUnless: Avoid modifier `if` after another conditional.
+003.rb:5:5: C: [Corrected] Style/IfUnlessModifierOfIfUnless: Avoid modifier `if` after another conditional.
+
+==> corrected/000.rb 64 <==
+unless external_condition
+condition ? then_part : else_part
+end
+
+==> corrected/001.rb 80 <==
+if outer_condition
+if inner_condition
+condition ? then_part : else_part
+end
+end
+
+==> corrected/002.rb 59 <==
+if external_condition
+unless condition
+  then_part
+end
+end
+
+==> corrected/003.rb 76 <==
+if external_condition
+unless condition
+  then_part
+else
+  else_part
+end
+end
+

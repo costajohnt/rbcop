@@ -1,0 +1,13 @@
+==> .rubocop.yml 123 <==
+---
+AllCops:
+  NewCops: enable
+Metrics/MethodLength:
+  Enabled: pending
+Lint/RedundantCopDisableDirective:
+  Enabled: true
+
+==> 000.rb 43 <==
+# rubocop:disable Metrics/MethodLength
+foo
+

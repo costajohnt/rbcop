@@ -1,0 +1,14 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+
+==> 000.rb 63 <==
+YAML.load("--- !ruby/object:Foo {}", permitted_classes: [Foo])
+
+==> 001.rb 65 <==
+::YAML.load("--- !ruby/object:Foo {}", permitted_classes: [Foo])
+

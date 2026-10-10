@@ -1,0 +1,76 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 143 <==
+foo do
+  it
+  Class.new do
+    def custom_validation
+    end
+  end
+end
+
+bar do
+  it
+  Class.new do
+    def custom_validation
+    end
+  end
+end
+
+==> 001.rb 151 <==
+foo do
+  it
+  Class.new do
+    def self.name
+      'Foo'
+    end
+  end
+end
+
+bar do
+  it
+  Class.new do
+    def self.name
+      'Bar'
+    end
+  end
+end
+
+==> 002.rb 81 <==
+foo { Class.new(it) { def name; end } }
+
+bar { Class.new(it) { def name; end } }
+
+==> 003.rb 105 <==
+foo { Class.new(it) { def self.name; 'Foo'; end } }
+
+bar { Class.new(it) { def self.name; 'Bar'; end } }
+
+==> 004.rb 87 <==
+foo { Class.new(it) do
+    def foo
+      1
+    end
+    def foo
+      2
+    end
+  end
+}
+
+==> 005.rb 97 <==
+foo { Class.new(it) do
+    def self.foo
+      1
+    end
+    def self.foo
+      2
+    end
+  end
+}
+

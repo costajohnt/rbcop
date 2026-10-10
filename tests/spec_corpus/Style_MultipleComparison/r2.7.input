@@ -1,0 +1,105 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 34 <==
+a = "a"
+if a == "a"
+  print a
+end
+
+==> 001.rb 46 <==
+a = "a"
+if a == "a" || a == "b"
+  print a
+end
+
+==> 002.rb 58 <==
+a = "a"
+if a == "a" || a == "b" || a == "c"
+  print a
+end
+
+==> 003.rb 58 <==
+a = "a"
+if "a" == a || "b" == a || "c" == a
+  print a
+end
+
+==> 004.rb 58 <==
+a = "a"
+if a == "a" || "b" == a || a == "c"
+  print a
+end
+
+==> 005.rb 44 <==
+def foo(x)
+  x == 1 || x == 2 || x == 3
+end
+
+==> 006.rb 104 <==
+def foo(a)
+  if a == 'foo' || a == 'bar'
+  elsif a == 'baz' || a == 'qux'
+  elsif a == 'quux'
+  end
+end
+
+==> 007.rb 50 <==
+a = 1
+a == 1 || a == 2 || a == 3
+a == 1 || a == 2
+
+==> 008.rb 44 <==
+if "a" == "a" || "a" == "c"
+  print "a"
+end
+
+==> 009.rb 34 <==
+if 1 == 1 || 1 == 2
+  print 1
+end
+
+==> 010.rb 54 <==
+a = "a"
+b = "b"
+if a == "a" || b == "b"
+  print a
+end
+
+==> 011.rb 54 <==
+a = "a"
+b = "b"
+if a == "a" || "b" == b
+  print a
+end
+
+==> 012.rb 50 <==
+a = "a"
+b = "b"
+if a == b || b == a
+  print a
+end
+
+==> 013.rb 50 <==
+a = "a"
+b = "b"
+if a == b || a == b
+  print a
+end
+
+==> 014.rb 52 <==
+a = "a"
+if ["a", "b", "c"].include? a
+  print a
+end
+
+==> 015.rb 72 <==
+def do_something(foo, bar)
+  bar.do_something == bar || foo == :sym
+end
+

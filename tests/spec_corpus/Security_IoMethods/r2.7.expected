@@ -1,0 +1,74 @@
+==> offenses exit=1 1264 <==
+000.rb:1:1: W: [Correctable] Security/IoMethods: `File.read` is safer than `IO.read`.
+001.rb:1:1: W: [Correctable] Security/IoMethods: `File.write` is safer than `IO.write`.
+002.rb:1:1: W: [Correctable] Security/IoMethods: `File.binread` is safer than `IO.binread`.
+003.rb:1:1: W: [Correctable] Security/IoMethods: `File.binwrite` is safer than `IO.binwrite`.
+004.rb:1:1: W: [Correctable] Security/IoMethods: `File.readlines` is safer than `IO.readlines`.
+005.rb:1:1: W: [Correctable] Security/IoMethods: `File.foreach` is safer than `IO.foreach`.
+006.rb:1:1: W: [Correctable] Security/IoMethods: `File.read` is safer than `IO.read`.
+007.rb:1:1: W: [Correctable] Security/IoMethods: `File.write` is safer than `IO.write`.
+008.rb:1:1: W: [Correctable] Security/IoMethods: `File.binwrite` is safer than `IO.binwrite`.
+009.rb:1:1: W: [Correctable] Security/IoMethods: `File.readlines` is safer than `IO.readlines`.
+010.rb:1:1: W: [Correctable] Security/IoMethods: `File.foreach` is safer than `IO.foreach`.
+011.rb:1:1: W: [Correctable] Security/IoMethods: `File.read` is safer than `IO.read`.
+012.rb:1:1: W: [Correctable] Security/IoMethods: `File.read` is safer than `IO.read`.
+013.rb:1:1: W: [Correctable] Security/IoMethods: `File.write` is safer than `IO.write`.
+
+==> autocorrect exit=0 1236 <==
+000.rb:1:1: W: [Corrected] Security/IoMethods: `File.read` is safer than `IO.read`.
+001.rb:1:1: W: [Corrected] Security/IoMethods: `File.write` is safer than `IO.write`.
+002.rb:1:1: W: [Corrected] Security/IoMethods: `File.binread` is safer than `IO.binread`.
+003.rb:1:1: W: [Corrected] Security/IoMethods: `File.binwrite` is safer than `IO.binwrite`.
+004.rb:1:1: W: [Corrected] Security/IoMethods: `File.readlines` is safer than `IO.readlines`.
+005.rb:1:1: W: [Corrected] Security/IoMethods: `File.foreach` is safer than `IO.foreach`.
+006.rb:1:1: W: [Corrected] Security/IoMethods: `File.read` is safer than `IO.read`.
+007.rb:1:1: W: [Corrected] Security/IoMethods: `File.write` is safer than `IO.write`.
+008.rb:1:1: W: [Corrected] Security/IoMethods: `File.binwrite` is safer than `IO.binwrite`.
+009.rb:1:1: W: [Corrected] Security/IoMethods: `File.readlines` is safer than `IO.readlines`.
+010.rb:1:1: W: [Corrected] Security/IoMethods: `File.foreach` is safer than `IO.foreach`.
+011.rb:1:1: W: [Corrected] Security/IoMethods: `File.read` is safer than `IO.read`.
+012.rb:1:1: W: [Corrected] Security/IoMethods: `File.read` is safer than `IO.read`.
+013.rb:1:1: W: [Corrected] Security/IoMethods: `File.write` is safer than `IO.write`.
+
+==> corrected/000.rb 16 <==
+File.read(path)
+
+==> corrected/001.rb 23 <==
+File.write(path, "hi")
+
+==> corrected/002.rb 19 <==
+File.binread(path)
+
+==> corrected/003.rb 26 <==
+File.binwrite(path, "hi")
+
+==> corrected/004.rb 21 <==
+File.readlines(path)
+
+==> corrected/005.rb 34 <==
+File.foreach(path) { |x| puts x }
+
+==> corrected/006.rb 21 <==
+File.read("command")
+
+==> corrected/007.rb 28 <==
+File.write("command", "hi")
+
+==> corrected/008.rb 31 <==
+File.binwrite("command", "hi")
+
+==> corrected/009.rb 26 <==
+File.readlines("command")
+
+==> corrected/010.rb 39 <==
+File.foreach("command") { |x| puts x }
+
+==> corrected/011.rb 22 <==
+File.read(:some_path)
+
+==> corrected/012.rb 15 <==
+File.read(123)
+
+==> corrected/013.rb 22 <==
+File.write(123, "hi")
+

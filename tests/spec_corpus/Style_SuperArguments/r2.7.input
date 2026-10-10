@@ -1,0 +1,431 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 27 <==
+def method()
+  super()
+end
+
+==> 001.rb 32 <==
+def self.method()
+  super()
+end
+
+==> 002.rb 29 <==
+def method(a)
+  super(a)
+end
+
+==> 003.rb 34 <==
+def self.method(a)
+  super(a)
+end
+
+==> 004.rb 35 <==
+def method(a, b)
+  super(a, b)
+end
+
+==> 005.rb 40 <==
+def self.method(a, b)
+  super(a, b)
+end
+
+==> 006.rb 45 <==
+def method(a, b, c = 1)
+  super(a, b, c)
+end
+
+==> 007.rb 50 <==
+def self.method(a, b, c = 1)
+  super(a, b, c)
+end
+
+==> 008.rb 39 <==
+def method(a, b:)
+  super(a, b: b)
+end
+
+==> 009.rb 44 <==
+def self.method(a, b:)
+  super(a, b: b)
+end
+
+==> 010.rb 41 <==
+def method(a, b: 1)
+  super(a, b: b)
+end
+
+==> 011.rb 46 <==
+def self.method(a, b: 1)
+  super(a, b: b)
+end
+
+==> 012.rb 45 <==
+def method(a = 1, b: 2)
+  super(a, b: b)
+end
+
+==> 013.rb 50 <==
+def self.method(a = 1, b: 2)
+  super(a, b: b)
+end
+
+==> 014.rb 35 <==
+def method(&blk)
+  super(&blk)
+end
+
+==> 015.rb 40 <==
+def self.method(&blk)
+  super(&blk)
+end
+
+==> 016.rb 37 <==
+def method(*args)
+  super(*args)
+end
+
+==> 017.rb 42 <==
+def self.method(*args)
+  super(*args)
+end
+
+==> 018.rb 43 <==
+def method(**kwargs)
+  super(**kwargs)
+end
+
+==> 019.rb 48 <==
+def self.method(**kwargs)
+  super(**kwargs)
+end
+
+==> 020.rb 57 <==
+def method(*args, **kwargs)
+  super(*args, **kwargs)
+end
+
+==> 021.rb 62 <==
+def self.method(*args, **kwargs)
+  super(*args, **kwargs)
+end
+
+==> 022.rb 69 <==
+def method(*args, **kwargs, &blk)
+  super(*args, **kwargs, &blk)
+end
+
+==> 023.rb 74 <==
+def self.method(*args, **kwargs, &blk)
+  super(*args, **kwargs, &blk)
+end
+
+==> 024.rb 53 <==
+def method(a:, **kwargs)
+  super(a: a, **kwargs)
+end
+
+==> 025.rb 58 <==
+def self.method(a:, **kwargs)
+  super(a: a, **kwargs)
+end
+
+==> 026.rb 33 <==
+def method(...)
+  super(...)
+end
+
+==> 027.rb 38 <==
+def self.method(...)
+  super(...)
+end
+
+==> 028.rb 39 <==
+def method(a, ...)
+  super(a, ...)
+end
+
+==> 029.rb 44 <==
+def self.method(a, ...)
+  super(a, ...)
+end
+
+==> 030.rb 32 <==
+def method(a, b)
+  super(a)
+end
+
+==> 031.rb 37 <==
+def self.method(a, b)
+  super(a)
+end
+
+==> 032.rb 35 <==
+def method(a, b)
+  super(b, a)
+end
+
+==> 033.rb 40 <==
+def self.method(a, b)
+  super(b, a)
+end
+
+==> 034.rb 43 <==
+def method(a:, b:)
+  super(b: b, a: a)
+end
+
+==> 035.rb 48 <==
+def self.method(a:, b:)
+  super(b: b, a: a)
+end
+
+==> 036.rb 38 <==
+def method(a, b)
+  super(a, b: b)
+end
+
+==> 037.rb 43 <==
+def self.method(a, b)
+  super(a, b: b)
+end
+
+==> 038.rb 36 <==
+def method(a, b:)
+  super(a, b)
+end
+
+==> 039.rb 41 <==
+def self.method(a, b:)
+  super(a, b)
+end
+
+==> 040.rb 41 <==
+def method(&blk)
+  super(&other_blk)
+end
+
+==> 041.rb 46 <==
+def self.method(&blk)
+  super(&other_blk)
+end
+
+==> 042.rb 37 <==
+def method(a:)
+  super({ a: a })
+end
+
+==> 043.rb 42 <==
+def self.method(a:)
+  super({ a: a })
+end
+
+==> 044.rb 43 <==
+def method(a:, b:)
+  super(a: a, b: c)
+end
+
+==> 045.rb 48 <==
+def self.method(a:, b:)
+  super(a: a, b: c)
+end
+
+==> 046.rb 36 <==
+def method(...)
+  super(a, ...)
+end
+
+==> 047.rb 41 <==
+def self.method(...)
+  super(a, ...)
+end
+
+==> 048.rb 39 <==
+def method(a, ...)
+  super(b, ...)
+end
+
+==> 049.rb 44 <==
+def self.method(a, ...)
+  super(b, ...)
+end
+
+==> 050.rb 52 <==
+def method(a, **kwargs)
+  super(a: a, **kwargs)
+end
+
+==> 051.rb 57 <==
+def self.method(a, **kwargs)
+  super(a: a, **kwargs)
+end
+
+==> 052.rb 25 <==
+def foo(a)
+  super()
+end
+
+==> 053.rb 22 <==
+def foo
+  super()
+end
+
+==> 054.rb 62 <==
+def foo(a)
+  def bar(b:)
+    super(b: b)
+  end
+  super(a)
+end
+
+==> 055.rb 83 <==
+def foo(options, &block)
+  options[:key] ||= default
+
+  super(options, &block)
+end
+
+==> 056.rb 48 <==
+describe 'example' do
+  subject { super() }
+end
+
+==> 057.rb 38 <==
+def bar(a, b, &blk)
+  super(a, b)
+end
+
+==> 058.rb 27 <==
+def test
+  super { x }
+end
+
+==> 059.rb 30 <==
+def test(a)
+  super { x }
+end
+
+==> 060.rb 39 <==
+def test(a, b)
+  super(a, b) { x }
+end
+
+==> 061.rb 39 <==
+def test(a, &blk)
+  super(a) { x }
+end
+
+==> 062.rb 36 <==
+def test(a, b)
+  super(a) { x }
+end
+
+==> 063.rb 28 <==
+def test
+  super { _1 }
+end
+
+==> 064.rb 31 <==
+def test(a)
+  super { _1 }
+end
+
+==> 065.rb 40 <==
+def test(a, b)
+  super(a, b) { _1 }
+end
+
+==> 066.rb 40 <==
+def test(a, &blk)
+  super(a) { _1 }
+end
+
+==> 067.rb 37 <==
+def test(a, b)
+  super(a) { _1 }
+end
+
+==> 068.rb 30 <==
+def foo(a)
+  super(a).foo
+end
+
+==> 069.rb 36 <==
+def foo(a)
+  super(a).foo { x }
+end
+
+==> 070.rb 37 <==
+def foo(a)
+  super(a).foo { _1 }
+end
+
+==> 071.rb 77 <==
+def foo(a)
+  Class.new do
+    def foo(a, b)
+      super(a)
+    end
+  end
+end
+
+==> 072.rb 65 <==
+def foo(a)
+  delegate_to_define_method do
+    super(a)
+  end
+end
+
+==> 073.rb 77 <==
+def foo(a)
+  delegate_to_define_method do
+    bar(_1)
+    super(a)
+  end
+end
+
+==> 074.rb 75 <==
+def foo(a)
+  class << self
+    def foo(b)
+      super(a)
+    end
+  end
+end
+
+==> 075.rb 138 <==
+def test(a)
+  define_singleton_method(:test2) do |a|
+    super(a)
+  end
+  b.define_singleton_method(:test2) do |a|
+    super(a)
+  end
+end
+
+==> 076.rb 49 <==
+def test(&blk)
+  blk = proc {}
+  super(&blk)
+end
+
+==> 077.rb 73 <==
+def test(&blk)
+  if foo
+    blk = proc {} if bar
+  end
+  super(&blk)
+end
+
+==> 078.rb 51 <==
+def test(&blk)
+  blk ||= proc {}
+  super(&blk)
+end
+

@@ -1,0 +1,38 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 60 <==
+condition ? then_part : else_part unless external_condition
+
+==> 001.rb 72 <==
+condition ? then_part : else_part if inner_condition if outer_condition
+
+==> 002.rb 55 <==
+unless condition
+  then_part
+end if external_condition
+
+==> 003.rb 72 <==
+unless condition
+  then_part
+else
+  else_part
+end if external_condition
+
+==> 004.rb 39 <==
+if condition
+  then_part if maybe?
+end
+
+==> 005.rb 61 <==
+if external_condition
+  if condition
+    then_part
+  end
+end
+

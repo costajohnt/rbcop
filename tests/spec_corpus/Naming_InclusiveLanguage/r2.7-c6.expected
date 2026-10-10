@@ -1,0 +1,10 @@
+==> offenses exit=1 341 <==
+000.rb:13:1: C: Naming/InclusiveLanguage: Consider replacing 'Slave' with 'replica', 'secondary', or 'follower'.
+000.rb:14:11: C: Naming/InclusiveLanguage: Consider replacing 'slave' with 'replica', 'secondary', or 'follower'.
+000.rb:15:11: C: Naming/InclusiveLanguage: Consider replacing 'slave' with 'replica', 'secondary', or 'follower'.
+
+==> autocorrect exit=1 341 <==
+000.rb:13:1: C: Naming/InclusiveLanguage: Consider replacing 'Slave' with 'replica', 'secondary', or 'follower'.
+000.rb:14:11: C: Naming/InclusiveLanguage: Consider replacing 'slave' with 'replica', 'secondary', or 'follower'.
+000.rb:15:11: C: Naming/InclusiveLanguage: Consider replacing 'slave' with 'replica', 'secondary', or 'follower'.
+

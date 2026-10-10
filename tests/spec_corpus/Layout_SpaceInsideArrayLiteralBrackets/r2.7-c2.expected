@@ -1,0 +1,14 @@
+==> offenses exit=1 224 <==
+001.rb:1:5: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Use one space inside empty array brackets.
+002.rb:1:5: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Use one space inside empty array brackets.
+
+==> autocorrect exit=0 220 <==
+001.rb:1:5: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Use one space inside empty array brackets.
+002.rb:1:5: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Use one space inside empty array brackets.
+
+==> corrected/001.rb 8 <==
+a = [ ]
+
+==> corrected/002.rb 8 <==
+a = [ ]
+

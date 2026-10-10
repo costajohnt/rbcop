@@ -1,0 +1,84 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+==> 000.rb 63 <==
+s = "abc"
+x = "a\\b"
+y ="\\b"
+z = "a\\"
+t = "{\"[\\\"*\\\"]\""
+
+==> 001.rb 20 <==
+s = "abc"
+x = 'abc'
+
+==> 002.rb 7 <==
+a = 'x'
+==> 003.rb 23 <==
+"hello#{hash['there']}"
+==> 004.rb 17 <==
+a = %q(x) + %Q[x]
+==> 005.rb 8 <==
+a = %(x)
+==> 006.rb 44 <==
+execute <<-SQL
+  SELECT name from users
+SQL
+
+==> 007.rb 4 <==
+"\n"
+==> 008.rb 58 <==
+"#{encode_severity}:#{sprintf('%3d', line_number)}: #{m}"
+
+==> 009.rb 3 <==
+"'"
+==> 010.rb 8 <==
+"#@test"
+==> 011.rb 8 <==
+"#$test"
+==> 012.rb 9 <==
+"#@@test"
+==> 013.rb 4 <==
+"\e"
+==> 014.rb 13 <==
+"Espa\u00f1a"
+==> 015.rb 23 <==
+s = /"((?:[^\"]|\.)*)"/
+==> 016.rb 32 <==
+g = "\xf9"
+copyright = "\u00A9"
+
+==> 017.rb 5 <==
+%w(")
+==> 018.rb 14 <==
+"foo \\\n bar"
+==> 019.rb 8 <==
+"#{"A"}"
+==> 020.rb 13 <==
+"#{x}" \
+"y"
+
+==> 021.rb 33 <==
+if __FILE__ == $PROGRAM_NAME
+end
+
+==> 022.rb 6 <==
+a = ?/
+==> 023.rb 5 <==
+"\""
+
+==> 024.rb 5 <==
+"\\"
+
+==> 025.rb 10 <==
+"España"
+
+==> 026.rb 11 <==
+"España\n"

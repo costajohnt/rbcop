@@ -1,0 +1,39 @@
+==> .rubocop.yml 191 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SpecialGlobalVars:
+  EnforcedStyle: use_english_names
+  RequireEnglish: true
+
+==> 000.rb 8 <==
+puts $$
+
+==> 001.rb 59 <==
+# frozen_string_literal: true
+
+x = true
+if x
+  puts $$
+end
+
+==> 002.rb 53 <==
+# frozen_string_literal: true
+
+puts $*[0]
+puts $*[1]
+
+==> 003.rb 8 <==
+puts $0
+
+==> 004.rb 26 <==
+require 'English'
+puts $$
+
+==> 005.rb 26 <==
+puts $$
+require 'English'
+

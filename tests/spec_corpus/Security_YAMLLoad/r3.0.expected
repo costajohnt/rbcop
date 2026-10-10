@@ -1,0 +1,14 @@
+==> offenses exit=1 192 <==
+000.rb:1:6: W: [Correctable] Security/YAMLLoad: Prefer using `YAML.safe_load` over `YAML.load`.
+001.rb:1:8: W: [Correctable] Security/YAMLLoad: Prefer using `YAML.safe_load` over `YAML.load`.
+
+==> autocorrect exit=0 188 <==
+000.rb:1:6: W: [Corrected] Security/YAMLLoad: Prefer using `YAML.safe_load` over `YAML.load`.
+001.rb:1:8: W: [Corrected] Security/YAMLLoad: Prefer using `YAML.safe_load` over `YAML.load`.
+
+==> corrected/000.rb 42 <==
+YAML.safe_load("--- !ruby/object:Foo {}")
+
+==> corrected/001.rb 28 <==
+::YAML.safe_load("--- foo")
+

@@ -1,0 +1,6 @@
+==> offenses exit=1 68 <==
+000.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [3/2]
+
+==> autocorrect exit=1 68 <==
+000.rb:1:1: R: Metrics/BlockLength: Block has too many lines. [3/2]
+

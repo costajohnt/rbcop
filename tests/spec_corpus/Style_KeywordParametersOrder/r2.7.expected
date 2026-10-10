@@ -1,0 +1,63 @@
+==> offenses exit=1 1605 <==
+000.rb:1:12: C: [Correctable] Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+001.rb:1:12: C: [Correctable] Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+002.rb:1:12: C: [Correctable] Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+002.rb:1:26: C: Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+003.rb:1:7: C: [Correctable] Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+004.rb:1:12: C: [Correctable] Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+004.rb:1:38: C: Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+005.rb:1:12: C: [Correctable] Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+005.rb:1:38: C: Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+006.rb:1:12: C: [Correctable] Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+006.rb:1:38: C: Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+007.rb:1:9: C: Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+009.rb:1:23: C: [Correctable] Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+
+==> autocorrect exit=1 1129 <==
+000.rb:1:12: C: [Corrected] Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+001.rb:1:12: C: [Corrected] Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+002.rb:1:12: C: [Corrected] Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+003.rb:1:7: C: [Corrected] Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+004.rb:1:12: C: [Corrected] Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+005.rb:1:12: C: [Corrected] Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+006.rb:1:12: C: [Corrected] Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+007.rb:1:9: C: Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+009.rb:1:23: C: [Corrected] Style/KeywordParametersOrder: Place optional keyword parameters at the end of the parameters list.
+
+==> corrected/000.rb 39 <==
+def m(arg, required:, optional: 1)
+end
+
+==> corrected/001.rb 53 <==
+def m arg, required:, optional: 1
+  do_something
+end
+
+==> corrected/002.rb 68 <==
+def m arg, required:, optional1: 1, optional2: 2
+  do_something
+end
+
+==> corrected/003.rb 67 <==
+def m required:, optional: 1, other_optional: 2
+  do_something
+end
+
+==> corrected/004.rb 83 <==
+def m(arg, required1:, required2:, optional1: 1, optional2: 2, **rest, &block)
+end
+
+==> corrected/005.rb 89 <==
+def m arg, required1:, required2:, optional1: 1, optional2: 2, **rest
+  do_something
+end
+
+==> corrected/006.rb 97 <==
+def m arg, required1:, required2:, optional1: 1, optional2: 2, **rest, &block
+  do_something
+end
+
+==> corrected/009.rb 50 <==
+m(arg) do |block_arg, required:, optional: 1|
+end
+

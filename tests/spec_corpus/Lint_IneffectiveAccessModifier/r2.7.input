@@ -1,0 +1,92 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 61 <==
+class C
+  private
+
+  def self.method
+    puts "hi"
+  end
+end
+
+==> 001.rb 63 <==
+class C
+  protected
+
+  def self.method
+    puts "hi"
+  end
+end
+
+==> 002.rb 93 <==
+class C
+  private
+
+  def self.method
+    puts "hi"
+  end
+
+  private_class_method :method
+end
+
+==> 003.rb 94 <==
+class C
+  private
+
+  def self.method2
+    puts "hi"
+  end
+
+  private_class_method :method
+end
+
+==> 004.rb 90 <==
+class C
+  def self.method
+    puts "hi"
+  end
+
+  def self.method2
+    puts "hi"
+  end
+end
+
+==> 005.rb 89 <==
+class C
+  private
+
+  class << self
+    def self.method
+      puts "hi"
+    end
+  end
+end
+
+==> 006.rb 91 <==
+class C
+
+  private
+
+  def instance_method
+  end
+
+  def self.method
+    puts "hi"
+  end
+end
+
+==> 007.rb 52 <==
+class C
+  begin
+  end
+
+  def do_something
+  end
+end
+

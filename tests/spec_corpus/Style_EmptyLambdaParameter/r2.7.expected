@@ -1,0 +1,9 @@
+==> offenses exit=1 107 <==
+000.rb:1:4: C: [Correctable] Style/EmptyLambdaParameter: Omit parentheses for the empty lambda parameters.
+
+==> autocorrect exit=0 105 <==
+000.rb:1:4: C: [Corrected] Style/EmptyLambdaParameter: Omit parentheses for the empty lambda parameters.
+
+==> corrected/000.rb 20 <==
+-> { do_something }
+

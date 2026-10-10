@@ -1,0 +1,385 @@
+==> .rubocop.yml 172 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+==> 000.rb 16 <==
+call a,
+     !b
+
+==> 001.rb 26 <==
+begin
+rescue =>
+  A[]
+end
+
+==> 002.rb 8 <==
+a +
+  b
+
+==> 003.rb 72 <==
+a = b.map do |c|
+  c +
+    b +
+    d do
+      x +
+        y
+    end
+end
+
+==> 004.rb 6 <==
+a +
+b
+
+==> 005.rb 7 <==
+a +
+ b
+
+==> 006.rb 135 <==
+a
+ .(args)
+
+Foo
+.a
+  .b
+
+Foo
+.a
+  .b(c)
+
+Foo.&(
+    foo,
+    bar
+)
+
+expect { Foo.new }.
+  to change { Bar.count }.
+      from(1).to(2)
+
+==> 007.rb 21 <==
+a ||
+   b
+c and
+   d
+
+==> 008.rb 18 <==
+a ||
+  b ||
+    c
+
+==> 009.rb 12 <==
+[
+ a +
+ b
+]
+
+==> 010.rb 115 <==
+dm[i][j] = [
+  dm[i-1][j-1] +
+    (this[j-1] == that[i-1] ? 0 : sub),
+  dm[i][j-1] + ins,
+  dm[i-1][j] + del
+].min
+
+==> 011.rb 22 <==
+a =
+  'foo' +
+  'bar'
+
+==> 012.rb 30 <==
+a['test'] =
+  'foo' +
+  'bar'
+
+==> 013.rb 9 <==
+a ||
+  b
+
+==> 014.rb 16 <==
+a &&
+  b &&
+  c
+
+==> 015.rb 49 <==
+for x in a
+  something &&
+    something_else
+end
+
+==> 016.rb 9 <==
+(a +
+ b)
+
+==> 017.rb 80 <==
+subject.each do |item|
+  result = resolve(locale) and return result
+end and nil
+
+==> 018.rb 115 <==
+payment = Models::IncomingPayments[
+        id:      input['incoming-payment-id'],
+           user_id: @user[:id]]
+
+==> 019.rb 10 <==
+a +
+b < 3
+
+==> 020.rb 29 <==
+if a +
+    b
+  something
+end
+
+==> 021.rb 28 <==
+if a +
+   b
+  something
+end
+
+==> 022.rb 70 <==
+MSG = 'Use 2 (not %d) spaces for indenting a ' \
+      'broken line.'
+
+==> 023.rb 134 <==
+Parser::Source::Range.new(expr.source_buffer,
+                          begin_pos,
+                          begin_pos + line.length)
+
+==> 024.rb 17 <==
+a(b +
+    c +
+d)
+
+==> 025.rb 101 <==
+arg_array.size == a.size && (
+  arg_array == a ||
+  arg_array.map(&:children) == a.map(&:children)
+)
+
+==> 026.rb 48 <==
+def config_to_allow_offenses
+  a +
+  b == c
+end
+
+==> 027.rb 114 <==
+if receiver.nil? &&
+    !args.empty? &&
+    FORBIDDEN_METHODS.include?(method_name)
+end
+if receiver.
+    nil?
+end
+
+==> 028.rb 84 <==
+if receiver.nil? &&
+  !args.empty? &&
+  FORBIDDEN_METHODS.include?(method_name)
+end
+
+==> 029.rb 43 <==
+if a
+  something &&
+    something_else
+end
+
+==> 030.rb 122 <==
+unless receiver.nil? &&
+    !args.empty? &&
+    FORBIDDEN_METHODS.include?(method_name)
+end
+unless receiver.
+    nil?
+end
+
+==> 031.rb 88 <==
+unless receiver.nil? &&
+  !args.empty? &&
+  FORBIDDEN_METHODS.include?(method_name)
+end
+
+==> 032.rb 47 <==
+unless a
+  something &&
+    something_else
+end
+
+==> 033.rb 120 <==
+while receiver.nil? &&
+    !args.empty? &&
+    FORBIDDEN_METHODS.include?(method_name)
+end
+while receiver.
+    nil?
+end
+
+==> 034.rb 87 <==
+while receiver.nil? &&
+  !args.empty? &&
+  FORBIDDEN_METHODS.include?(method_name)
+end
+
+==> 035.rb 46 <==
+while a
+  something &&
+    something_else
+end
+
+==> 036.rb 120 <==
+until receiver.nil? &&
+    !args.empty? &&
+    FORBIDDEN_METHODS.include?(method_name)
+end
+until receiver.
+    nil?
+end
+
+==> 037.rb 87 <==
+until receiver.nil? &&
+  !args.empty? &&
+  FORBIDDEN_METHODS.include?(method_name)
+end
+
+==> 038.rb 46 <==
+until a
+  something &&
+    something_else
+end
+
+==> 039.rb 91 <==
+return unless receiver.nil? &&
+  !args.empty? &&
+  FORBIDDEN_METHODS.include?(method_name)
+
+==> 040.rb 87 <==
+return if receiver.nil? &&
+  !args.empty? &&
+  FORBIDDEN_METHODS.include?(method_name)
+
+==> 041.rb 21 <==
+for n in a +
+  b
+end
+
+==> 042.rb 23 <==
+for n in a +
+    b
+end
+
+==> 043.rb 18 <==
+a = b +
+  c +
+  d
+
+==> 044.rb 21 <==
+a ||
+  b
+c and
+    d
+
+==> 045.rb 22 <==
+a = b +
+    c +
+    d
+
+==> 046.rb 33 <==
+if a +
+        b
+  something
+end
+
+==> 047.rb 126 <==
+if receiver.nil? &&
+        !args.empty? &&
+        FORBIDDEN_METHODS.include?(method_name)
+end
+if receiver.
+        nil?
+end
+
+==> 048.rb 88 <==
+if receiver.nil? &&
+    !args.empty? &&
+    FORBIDDEN_METHODS.include?(method_name)
+end
+
+==> 049.rb 47 <==
+if a
+  something &&
+        something_else
+end
+
+==> 050.rb 134 <==
+unless receiver.nil? &&
+        !args.empty? &&
+        FORBIDDEN_METHODS.include?(method_name)
+end
+unless receiver.
+        nil?
+end
+
+==> 051.rb 92 <==
+unless receiver.nil? &&
+    !args.empty? &&
+    FORBIDDEN_METHODS.include?(method_name)
+end
+
+==> 052.rb 51 <==
+unless a
+  something &&
+        something_else
+end
+
+==> 053.rb 132 <==
+while receiver.nil? &&
+        !args.empty? &&
+        FORBIDDEN_METHODS.include?(method_name)
+end
+while receiver.
+        nil?
+end
+
+==> 054.rb 91 <==
+while receiver.nil? &&
+    !args.empty? &&
+    FORBIDDEN_METHODS.include?(method_name)
+end
+
+==> 055.rb 50 <==
+while a
+  something &&
+        something_else
+end
+
+==> 056.rb 132 <==
+until receiver.nil? &&
+        !args.empty? &&
+        FORBIDDEN_METHODS.include?(method_name)
+end
+until receiver.
+        nil?
+end
+
+==> 057.rb 91 <==
+until receiver.nil? &&
+    !args.empty? &&
+    FORBIDDEN_METHODS.include?(method_name)
+end
+
+==> 058.rb 50 <==
+until a
+  something &&
+        something_else
+end
+
+==> 059.rb 34 <==
+until a +
+      b
+  something
+end
+

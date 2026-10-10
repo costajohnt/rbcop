@@ -1,0 +1,29 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.3
+
+==> 000.rb 33 <==
+URI.regexp('http://example.com')
+
+==> 001.rb 35 <==
+::URI.regexp('http://example.com')
+
+==> 002.rb 11 <==
+URI.regexp
+
+==> 003.rb 13 <==
+::URI.regexp
+
+==> 004.rb 30 <==
+URI.regexp(['http', 'https'])
+
+==> 005.rb 27 <==
+URI.regexp(%w[http https])
+
+==> 006.rb 27 <==
+URI.regexp(%i[http https])
+

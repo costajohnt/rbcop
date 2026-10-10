@@ -1,0 +1,28 @@
+==> .rubocop.yml 231 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+Style/HashSyntax:
+  EnforcedStyle: ruby19
+  SupportedStyles:
+  - ruby19
+  - hash_rockets
+  EnforcedShorthandSyntax: always
+
+==> 000.rb 26 <==
+yield(:foo, bar: bar).baz
+
+==> 001.rb 31 <==
+yield(value: value) unless foo
+
+==> 002.rb 46 <==
+yield value: value, other: other
+@ivar = ivar
+
+==> 003.rb 41 <==
+yield value: value, other: other
+foo baz
+

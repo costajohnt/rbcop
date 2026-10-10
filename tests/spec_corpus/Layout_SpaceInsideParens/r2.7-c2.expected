@@ -1,0 +1,71 @@
+==> offenses exit=1 1843 <==
+000.rb:1:5: C: [Correctable] Layout/SpaceInsideParens: No space inside parentheses detected.
+000.rb:2:6: C: [Correctable] Layout/SpaceInsideParens: No space inside parentheses detected.
+000.rb:3:7: C: [Correctable] Layout/SpaceInsideParens: No space inside parentheses detected.
+000.rb:3:11: C: [Correctable] Layout/SpaceInsideParens: No space inside parentheses detected.
+001.rb:1:3: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+002.rb:1:33: C: [Correctable] Layout/SpaceInsideParens: No space inside parentheses detected.
+002.rb:1:44: C: [Correctable] Layout/SpaceInsideParens: No space inside parentheses detected.
+003.rb:1:3: C: [Correctable] Layout/SpaceInsideParens: No space inside parentheses detected.
+003.rb:1:13: C: [Correctable] Layout/SpaceInsideParens: No space inside parentheses detected.
+012.rb:1:3: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+012.rb:2:3: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+012.rb:2:5: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+012.rb:3:10: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+012.rb:4:13: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+013.rb:1:3: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+013.rb:1:18: C: [Correctable] Layout/SpaceInsideParens: No space inside parentheses detected.
+013.rb:1:27: C: [Correctable] Layout/SpaceInsideParens: No space inside parentheses detected.
+013.rb:2:2: C: [Correctable] Layout/SpaceInsideParens: No space inside parentheses detected.
+013.rb:2:14: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+013.rb:2:21: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+
+==> autocorrect exit=0 1803 <==
+000.rb:1:5: C: [Corrected] Layout/SpaceInsideParens: No space inside parentheses detected.
+000.rb:2:6: C: [Corrected] Layout/SpaceInsideParens: No space inside parentheses detected.
+000.rb:3:7: C: [Corrected] Layout/SpaceInsideParens: No space inside parentheses detected.
+000.rb:3:11: C: [Corrected] Layout/SpaceInsideParens: No space inside parentheses detected.
+001.rb:1:3: C: [Corrected] Layout/SpaceInsideParens: Space inside parentheses detected.
+002.rb:1:33: C: [Corrected] Layout/SpaceInsideParens: No space inside parentheses detected.
+002.rb:1:44: C: [Corrected] Layout/SpaceInsideParens: No space inside parentheses detected.
+003.rb:1:3: C: [Corrected] Layout/SpaceInsideParens: No space inside parentheses detected.
+003.rb:1:13: C: [Corrected] Layout/SpaceInsideParens: No space inside parentheses detected.
+012.rb:1:3: C: [Corrected] Layout/SpaceInsideParens: Space inside parentheses detected.
+012.rb:2:3: C: [Corrected] Layout/SpaceInsideParens: Space inside parentheses detected.
+012.rb:2:5: C: [Corrected] Layout/SpaceInsideParens: Space inside parentheses detected.
+012.rb:3:10: C: [Corrected] Layout/SpaceInsideParens: Space inside parentheses detected.
+012.rb:4:13: C: [Corrected] Layout/SpaceInsideParens: Space inside parentheses detected.
+013.rb:1:3: C: [Corrected] Layout/SpaceInsideParens: Space inside parentheses detected.
+013.rb:1:18: C: [Corrected] Layout/SpaceInsideParens: No space inside parentheses detected.
+013.rb:1:27: C: [Corrected] Layout/SpaceInsideParens: No space inside parentheses detected.
+013.rb:2:2: C: [Corrected] Layout/SpaceInsideParens: No space inside parentheses detected.
+013.rb:2:14: C: [Corrected] Layout/SpaceInsideParens: Space inside parentheses detected.
+013.rb:2:21: C: [Corrected] Layout/SpaceInsideParens: Space inside parentheses detected.
+
+==> corrected/000.rb 35 <==
+f( 3 )
+g = ( a + 3 )
+split( "\n" )
+
+==> corrected/001.rb 4 <==
+f()
+
+==> corrected/002.rb 50 <==
+list.inject( Tms.new ) { |sum, ( label, item )|
+}
+
+==> corrected/003.rb 42 <==
+f( <<~HEREDOC )
+  This is my text
+HEREDOC
+
+==> corrected/012.rb 77 <==
+f(( 3 + 5 ) * x )
+g((( 3 + 5 ) * f ) ** x, 5 )
+f( x( 3 ))
+g( f( x( 3 )), 5 )
+
+==> corrected/013.rb 51 <==
+g((( 3 + 5 ) * f ) ** x, 5 )
+( g( f( x( 3 )), 5 ))
+

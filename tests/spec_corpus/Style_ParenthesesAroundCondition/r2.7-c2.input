@@ -1,0 +1,23 @@
+==> .rubocop.yml 177 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/ParenthesesAroundCondition:
+  AllowInMultilineConditions: true
+
+==> 000.rb 45 <==
+if (
+  x > 3 &&
+  x < 10
+)
+  return true
+end
+
+==> 001.rb 39 <==
+if (x > 3 && x < 10)
+  return true
+end
+

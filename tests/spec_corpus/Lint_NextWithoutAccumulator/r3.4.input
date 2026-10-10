@@ -1,0 +1,32 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 51 <==
+(1..4).reduce(0) do
+  next if it.odd?
+  it + 1
+end
+
+==> 001.rb 52 <==
+(1..4)&.reduce(0) do
+  next if it.odd?
+  it + 1
+end
+
+==> 002.rb 51 <==
+(1..4).inject(0) do
+  next if it.odd?
+  it + 1
+end
+
+==> 003.rb 52 <==
+(1..4)&.inject(0) do
+  next if it.odd?
+  it + 1
+end
+

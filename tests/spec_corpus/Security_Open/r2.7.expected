@@ -1,0 +1,22 @@
+==> offenses exit=1 742 <==
+000.rb:1:1: W: Security/Open: The use of `Kernel#open` is a serious security risk.
+001.rb:1:1: W: Security/Open: The use of `Kernel#open` is a serious security risk.
+002.rb:1:1: W: Security/Open: The use of `Kernel#open` is a serious security risk.
+003.rb:1:1: W: Security/Open: The use of `Kernel#open` is a serious security risk.
+004.rb:1:1: W: Security/Open: The use of `Kernel#open` is a serious security risk.
+005.rb:1:1: W: Security/Open: The use of `Kernel#open` is a serious security risk.
+006.rb:1:5: W: Security/Open: The use of `URI.open` is a serious security risk.
+007.rb:1:7: W: Security/Open: The use of `::URI.open` is a serious security risk.
+008.rb:1:7: W: Security/Open: The use of `::URI.open` is a serious security risk.
+
+==> autocorrect exit=1 742 <==
+000.rb:1:1: W: Security/Open: The use of `Kernel#open` is a serious security risk.
+001.rb:1:1: W: Security/Open: The use of `Kernel#open` is a serious security risk.
+002.rb:1:1: W: Security/Open: The use of `Kernel#open` is a serious security risk.
+003.rb:1:1: W: Security/Open: The use of `Kernel#open` is a serious security risk.
+004.rb:1:1: W: Security/Open: The use of `Kernel#open` is a serious security risk.
+005.rb:1:1: W: Security/Open: The use of `Kernel#open` is a serious security risk.
+006.rb:1:5: W: Security/Open: The use of `URI.open` is a serious security risk.
+007.rb:1:7: W: Security/Open: The use of `::URI.open` is a serious security risk.
+008.rb:1:7: W: Security/Open: The use of `::URI.open` is a serious security risk.
+

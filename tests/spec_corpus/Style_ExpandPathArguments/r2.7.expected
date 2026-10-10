@@ -1,0 +1,54 @@
+==> offenses exit=1 1386 <==
+000.rb:1:6: C: [Correctable] Style/ExpandPathArguments: Use `expand_path(__dir__)` instead of `expand_path('..', __FILE__)`.
+001.rb:1:6: C: [Correctable] Style/ExpandPathArguments: Use `expand_path('..', __dir__)` instead of `expand_path('../..', __FILE__)`.
+002.rb:1:6: C: [Correctable] Style/ExpandPathArguments: Use `expand_path('../..', __dir__)` instead of `expand_path('../../..', __FILE__)`.
+003.rb:1:6: C: [Correctable] Style/ExpandPathArguments: Use `expand_path(__FILE__)` instead of `expand_path('.', __FILE__)`.
+004.rb:1:6: C: [Correctable] Style/ExpandPathArguments: Use `expand_path('../lib', __dir__)` instead of `expand_path('../../lib', __FILE__)`.
+005.rb:1:6: C: [Correctable] Style/ExpandPathArguments: Use `expand_path('..', __dir__)` instead of `expand_path('./../..', __FILE__)`.
+006.rb:1:8: C: [Correctable] Style/ExpandPathArguments: Use `expand_path('..', __dir__)` instead of `expand_path('./../..', __FILE__)`.
+007.rb:1:1: C: [Correctable] Style/ExpandPathArguments: Use `Pathname(__dir__).expand_path` instead of `Pathname(__FILE__).parent.expand_path`.
+008.rb:1:1: C: [Correctable] Style/ExpandPathArguments: Use `Pathname.new(__dir__).expand_path` instead of `Pathname.new(__FILE__).parent.expand_path`.
+009.rb:1:1: C: [Correctable] Style/ExpandPathArguments: Use `Pathname.new(__dir__).expand_path` instead of `Pathname.new(__FILE__).parent.expand_path`.
+
+==> autocorrect exit=0 1366 <==
+000.rb:1:6: C: [Corrected] Style/ExpandPathArguments: Use `expand_path(__dir__)` instead of `expand_path('..', __FILE__)`.
+001.rb:1:6: C: [Corrected] Style/ExpandPathArguments: Use `expand_path('..', __dir__)` instead of `expand_path('../..', __FILE__)`.
+002.rb:1:6: C: [Corrected] Style/ExpandPathArguments: Use `expand_path('../..', __dir__)` instead of `expand_path('../../..', __FILE__)`.
+003.rb:1:6: C: [Corrected] Style/ExpandPathArguments: Use `expand_path(__FILE__)` instead of `expand_path('.', __FILE__)`.
+004.rb:1:6: C: [Corrected] Style/ExpandPathArguments: Use `expand_path('../lib', __dir__)` instead of `expand_path('../../lib', __FILE__)`.
+005.rb:1:6: C: [Corrected] Style/ExpandPathArguments: Use `expand_path('..', __dir__)` instead of `expand_path('./../..', __FILE__)`.
+006.rb:1:8: C: [Corrected] Style/ExpandPathArguments: Use `expand_path('..', __dir__)` instead of `expand_path('./../..', __FILE__)`.
+007.rb:1:1: C: [Corrected] Style/ExpandPathArguments: Use `Pathname(__dir__).expand_path` instead of `Pathname(__FILE__).parent.expand_path`.
+008.rb:1:1: C: [Corrected] Style/ExpandPathArguments: Use `Pathname.new(__dir__).expand_path` instead of `Pathname.new(__FILE__).parent.expand_path`.
+009.rb:1:1: C: [Corrected] Style/ExpandPathArguments: Use `Pathname.new(__dir__).expand_path` instead of `Pathname.new(__FILE__).parent.expand_path`.
+
+==> corrected/000.rb 26 <==
+File.expand_path(__dir__)
+
+==> corrected/001.rb 32 <==
+File.expand_path('..', __dir__)
+
+==> corrected/002.rb 35 <==
+File.expand_path('../..', __dir__)
+
+==> corrected/003.rb 27 <==
+File.expand_path(__FILE__)
+
+==> corrected/004.rb 36 <==
+File.expand_path('../lib', __dir__)
+
+==> corrected/005.rb 32 <==
+File.expand_path('..', __dir__)
+
+==> corrected/006.rb 34 <==
+::File.expand_path('..', __dir__)
+
+==> corrected/007.rb 30 <==
+Pathname(__dir__).expand_path
+
+==> corrected/008.rb 34 <==
+Pathname.new(__dir__).expand_path
+
+==> corrected/009.rb 36 <==
+::Pathname.new(__dir__).expand_path
+

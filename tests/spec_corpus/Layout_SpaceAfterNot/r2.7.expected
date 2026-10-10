@@ -1,0 +1,24 @@
+==> offenses exit=1 400 <==
+000.rb:1:1: C: [Correctable] Layout/SpaceAfterNot: Do not leave space between `!` and its argument.
+001.rb:1:1: C: [Correctable] Layout/SpaceAfterNot: Do not leave space between `!` and its argument.
+002.rb:1:1: C: [Correctable] Layout/SpaceAfterNot: Do not leave space between `!` and its argument.
+005.rb:1:1: C: [Correctable] Layout/SpaceAfterNot: Do not leave space between `!` and its argument.
+
+==> autocorrect exit=0 392 <==
+000.rb:1:1: C: [Corrected] Layout/SpaceAfterNot: Do not leave space between `!` and its argument.
+001.rb:1:1: C: [Corrected] Layout/SpaceAfterNot: Do not leave space between `!` and its argument.
+002.rb:1:1: C: [Corrected] Layout/SpaceAfterNot: Do not leave space between `!` and its argument.
+005.rb:1:1: C: [Corrected] Layout/SpaceAfterNot: Do not leave space between `!` and its argument.
+
+==> corrected/000.rb 11 <==
+!something
+
+==> corrected/001.rb 11 <==
+!something
+
+==> corrected/002.rb 11 <==
+!something
+
+==> corrected/005.rb 9 <==
+!(model)
+

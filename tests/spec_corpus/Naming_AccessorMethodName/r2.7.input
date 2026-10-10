@@ -1,0 +1,124 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 30 <==
+def get_something
+  # ...
+end
+
+==> 001.rb 35 <==
+def self.get_something
+  # ...
+end
+
+==> 002.rb 35 <==
+def get_something(arg)
+  # ...
+end
+
+==> 003.rb 40 <==
+def self.get_something(arg)
+  # ...
+end
+
+==> 004.rb 35 <==
+def set_something(arg)
+  # ...
+end
+
+==> 005.rb 46 <==
+def set_something(arg = :default)
+  # ...
+end
+
+==> 006.rb 37 <==
+def set_something(*args)
+  # ...
+end
+
+==> 007.rb 36 <==
+def set_something(k: v)
+  # ...
+end
+
+==> 008.rb 34 <==
+def set_something(k:)
+  # ...
+end
+
+==> 009.rb 41 <==
+def set_something(**options)
+  # ...
+end
+
+==> 010.rb 38 <==
+def set_something(&block)
+  # ...
+end
+
+==> 011.rb 35 <==
+def set_something(...)
+  # ...
+end
+
+==> 012.rb 40 <==
+def self.set_something(arg)
+  # ...
+end
+
+==> 013.rb 30 <==
+def set_something
+  # ...
+end
+
+==> 014.rb 35 <==
+def self.set_something
+  # ...
+end
+
+==> 015.rb 42 <==
+def set_something(arg1, arg2)
+  # ...
+end
+
+==> 016.rb 47 <==
+def self.get_something(arg1, arg2)
+  # ...
+end
+
+==> 017.rb 23 <==
+def get_attribute!
+end
+
+==> 018.rb 23 <==
+def get_attribute?
+end
+
+==> 019.rb 23 <==
+def get_attribute=
+end
+
+==> 020.rb 34 <==
+def set_attribute!(attribute)
+end
+
+==> 021.rb 34 <==
+def set_attribute?(attribute)
+end
+
+==> 022.rb 34 <==
+def set_attribute=(attribute)
+end
+
+==> 023/current.rb 56 <==
+class Child < Base
+  def get_value
+    @value
+  end
+end
+

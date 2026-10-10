@@ -1,0 +1,53 @@
+==> .rubocop.yml 150 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/RaiseArgs:
+  EnforcedStyle: compact
+
+==> 000.rb 24 <==
+raise RuntimeError, msg
+
+==> 001.rb 23 <==
+raise error_class, msg
+
+==> 002.rb 28 <==
+raise FooError.new, message
+
+==> 003.rb 31 <==
+foo ? raise(Ex, 'error') : bar
+
+==> 004.rb 26 <==
+bar && raise(Ex, 'error')
+
+==> 005.rb 26 <==
+bar || raise(Ex, 'error')
+
+==> 006.rb 60 <==
+if a
+  raise RuntimeError, msg
+else
+  raise Ex.new(msg)
+end
+
+==> 007.rb 95 <==
+if a
+  raise RuntimeError, msg
+elsif b
+  raise Ex.new(msg)
+else
+  raise ArgumentError, msg
+end
+
+==> 008.rb 32 <==
+raise RuntimeError, msg, caller
+
+==> 009.rb 9 <==
+raise msg
+==> 010.rb 17 <==
+raise Ex.new(msg)
+==> 011.rb 43 <==
+raise MyKwArgError.new(a: 1, b: 2), message

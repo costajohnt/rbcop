@@ -1,0 +1,13 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+
+==> 000.rb 41 <==
+def foo(&)
+  { key: 'value' }.dig(&)
+end
+

@@ -1,0 +1,24 @@
+==> offenses exit=1 468 <==
+004.rb:1:4: W: [Correctable] Lint/AmbiguousRange: Wrap complex range boundaries with parentheses to avoid ambiguity.
+005.rb:1:1: W: [Correctable] Lint/AmbiguousRange: Wrap complex range boundaries with parentheses to avoid ambiguity.
+011.rb:1:5: W: [Correctable] Lint/AmbiguousRange: Wrap complex range boundaries with parentheses to avoid ambiguity.
+012.rb:1:1: W: [Correctable] Lint/AmbiguousRange: Wrap complex range boundaries with parentheses to avoid ambiguity.
+
+==> autocorrect exit=0 460 <==
+004.rb:1:4: W: [Corrected] Lint/AmbiguousRange: Wrap complex range boundaries with parentheses to avoid ambiguity.
+005.rb:1:1: W: [Corrected] Lint/AmbiguousRange: Wrap complex range boundaries with parentheses to avoid ambiguity.
+011.rb:1:5: W: [Corrected] Lint/AmbiguousRange: Wrap complex range boundaries with parentheses to avoid ambiguity.
+012.rb:1:1: W: [Corrected] Lint/AmbiguousRange: Wrap complex range boundaries with parentheses to avoid ambiguity.
+
+==> corrected/004.rb 12 <==
+1..(2.to_a)
+
+==> corrected/005.rb 14 <==
+(foo.bar)..10
+
+==> corrected/011.rb 13 <==
+1...(2.to_a)
+
+==> corrected/012.rb 15 <==
+(foo.bar)...10
+

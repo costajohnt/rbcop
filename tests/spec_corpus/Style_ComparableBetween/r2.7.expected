@@ -1,0 +1,59 @@
+==> offenses exit=1 1193 <==
+000.rb:1:1: C: [Correctable] Style/ComparableBetween: Prefer `x.between?(min, max)` over logical comparison.
+001.rb:1:1: C: [Correctable] Style/ComparableBetween: Prefer `x.between?(min, max)` over logical comparison.
+002.rb:1:1: C: [Correctable] Style/ComparableBetween: Prefer `x.between?(min, max)` over logical comparison.
+003.rb:1:1: C: [Correctable] Style/ComparableBetween: Prefer `x.between?(min, max)` over logical comparison.
+004.rb:1:1: C: [Correctable] Style/ComparableBetween: Prefer `x.between?(min, max)` over logical comparison.
+005.rb:1:1: C: [Correctable] Style/ComparableBetween: Prefer `x.between?(min, max)` over logical comparison.
+006.rb:1:1: C: [Correctable] Style/ComparableBetween: Prefer `x.between?(min, max)` over logical comparison.
+007.rb:1:1: C: [Correctable] Style/ComparableBetween: Prefer `x.between?(min, max)` over logical comparison.
+008.rb:1:1: C: [Correctable] Style/ComparableBetween: Prefer `x.between?(min, max)` over logical comparison.
+009.rb:1:1: C: [Correctable] Style/ComparableBetween: Prefer `x.between?(x, max)` over logical comparison.
+010.rb:1:1: C: [Correctable] Style/ComparableBetween: Prefer `x.between?(x, x)` over logical comparison.
+
+==> autocorrect exit=0 1171 <==
+000.rb:1:1: C: [Corrected] Style/ComparableBetween: Prefer `x.between?(min, max)` over logical comparison.
+001.rb:1:1: C: [Corrected] Style/ComparableBetween: Prefer `x.between?(min, max)` over logical comparison.
+002.rb:1:1: C: [Corrected] Style/ComparableBetween: Prefer `x.between?(min, max)` over logical comparison.
+003.rb:1:1: C: [Corrected] Style/ComparableBetween: Prefer `x.between?(min, max)` over logical comparison.
+004.rb:1:1: C: [Corrected] Style/ComparableBetween: Prefer `x.between?(min, max)` over logical comparison.
+005.rb:1:1: C: [Corrected] Style/ComparableBetween: Prefer `x.between?(min, max)` over logical comparison.
+006.rb:1:1: C: [Corrected] Style/ComparableBetween: Prefer `x.between?(min, max)` over logical comparison.
+007.rb:1:1: C: [Corrected] Style/ComparableBetween: Prefer `x.between?(min, max)` over logical comparison.
+008.rb:1:1: C: [Corrected] Style/ComparableBetween: Prefer `x.between?(min, max)` over logical comparison.
+009.rb:1:1: C: [Corrected] Style/ComparableBetween: Prefer `x.between?(x, max)` over logical comparison.
+010.rb:1:1: C: [Corrected] Style/ComparableBetween: Prefer `x.between?(x, x)` over logical comparison.
+
+==> corrected/000.rb 21 <==
+x.between?(min, max)
+
+==> corrected/001.rb 21 <==
+x.between?(min, max)
+
+==> corrected/002.rb 21 <==
+x.between?(min, max)
+
+==> corrected/003.rb 21 <==
+x.between?(min, max)
+
+==> corrected/004.rb 21 <==
+x.between?(min, max)
+
+==> corrected/005.rb 21 <==
+x.between?(min, max)
+
+==> corrected/006.rb 21 <==
+x.between?(min, max)
+
+==> corrected/007.rb 21 <==
+x.between?(min, max)
+
+==> corrected/008.rb 21 <==
+x.between?(min, max)
+
+==> corrected/009.rb 19 <==
+x.between?(x, max)
+
+==> corrected/010.rb 17 <==
+x.between?(x, x)
+

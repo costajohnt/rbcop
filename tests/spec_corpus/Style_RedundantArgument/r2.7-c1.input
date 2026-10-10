@@ -1,0 +1,17 @@
+==> .rubocop.yml 155 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/RedundantArgument:
+  Methods:
+    foo: 2
+
+==> 000.rb 9 <==
+A.foo(2)
+
+==> 001.rb 9 <==
+A.foo(5)
+

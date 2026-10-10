@@ -1,0 +1,51 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 86 <==
+unless x # negative 1
+  a = 1 # negative 2
+else # positive 1
+  a = 0 # positive 2
+end
+
+==> 001.rb 62 <==
+unless abc
+  a
+else
+  unless cde
+    b
+  else
+    c
+  end
+end
+
+==> 002.rb 99 <==
+unless(x)
+  if(y == 0)
+    a = 0
+  elsif(z == 0)
+    a = 1
+  else
+    a = 2
+  end
+else
+  a = 3
+end
+
+==> 003.rb 39 <==
+unless x then
+  a = 1
+else
+  a = 0
+end
+
+==> 004.rb 21 <==
+unless x
+  a = 1
+end
+

@@ -1,0 +1,10 @@
+==> offenses exit=1 318 <==
+000/example.gemspec:3:3: C: Gemspec/DevelopmentDependencies: Specify development dependencies in gems.rb.
+001/example.gemspec:3:3: C: Gemspec/DevelopmentDependencies: Specify development dependencies in gems.rb.
+002/example.gemspec:3:3: C: Gemspec/DevelopmentDependencies: Specify development dependencies in gems.rb.
+
+==> autocorrect exit=1 318 <==
+000/example.gemspec:3:3: C: Gemspec/DevelopmentDependencies: Specify development dependencies in gems.rb.
+001/example.gemspec:3:3: C: Gemspec/DevelopmentDependencies: Specify development dependencies in gems.rb.
+002/example.gemspec:3:3: C: Gemspec/DevelopmentDependencies: Specify development dependencies in gems.rb.
+

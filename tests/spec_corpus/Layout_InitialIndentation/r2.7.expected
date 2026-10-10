@@ -1,0 +1,15 @@
+==> offenses exit=1 200 <==
+002.rb:1:4: C: [Correctable] Layout/InitialIndentation: Indentation of first line in file detected.
+003.rb:2:3: C: [Correctable] Layout/InitialIndentation: Indentation of first line in file detected.
+
+==> autocorrect exit=0 196 <==
+002.rb:1:4: C: [Corrected] Layout/InitialIndentation: Indentation of first line in file detected.
+003.rb:2:3: C: [Corrected] Layout/InitialIndentation: Indentation of first line in file detected.
+
+==> corrected/002.rb 10 <==
+﻿puts 1
+
+==> corrected/003.rb 20 <==
+﻿# comment
+puts 1
+

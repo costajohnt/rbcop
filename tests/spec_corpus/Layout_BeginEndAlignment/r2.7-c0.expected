@@ -1,0 +1,10 @@
+==> offenses exit=1 106 <==
+001.rb:2:3: W: [Correctable] Layout/BeginEndAlignment: `end` at 2, 2 is not aligned with `begin` at 1, 0.
+
+==> autocorrect exit=0 104 <==
+001.rb:2:3: W: [Corrected] Layout/BeginEndAlignment: `end` at 2, 2 is not aligned with `begin` at 1, 0.
+
+==> corrected/001.rb 10 <==
+begin
+end
+

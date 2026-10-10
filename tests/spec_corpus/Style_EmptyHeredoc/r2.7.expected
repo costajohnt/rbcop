@@ -1,0 +1,29 @@
+==> offenses exit=1 487 <==
+000.rb:1:1: C: [Correctable] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+001.rb:1:1: C: [Correctable] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+002.rb:1:1: C: [Correctable] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+003.rb:1:14: C: [Correctable] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+004.rb:1:14: C: [Correctable] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+
+==> autocorrect exit=0 477 <==
+000.rb:1:1: C: [Corrected] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+001.rb:1:1: C: [Corrected] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+002.rb:1:1: C: [Corrected] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+003.rb:1:14: C: [Corrected] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+004.rb:1:14: C: [Corrected] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+
+==> corrected/000.rb 3 <==
+''
+
+==> corrected/001.rb 3 <==
+''
+
+==> corrected/002.rb 3 <==
+''
+
+==> corrected/003.rb 17 <==
+do_something('')
+
+==> corrected/004.rb 22 <==
+do_something('', arg)
+

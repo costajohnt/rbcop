@@ -1,0 +1,179 @@
+==> .rubocop.yml 200 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/RescueEnsureAlignment:
+  Style/AccessModifierDeclarations:
+    EnforcedStyle: inline
+
+==> 000.rb 46 <==
+private def test
+  'foo'
+  rescue
+  'baz'
+end
+
+==> 001.rb 44 <==
+private def test
+  'foo'
+rescue
+  'baz'
+end
+
+==> 002.rb 51 <==
+private def Test.test
+  'foo'
+  rescue
+  'baz'
+end
+
+==> 003.rb 49 <==
+private def Test.test
+  'foo'
+rescue
+  'baz'
+end
+
+==> 004.rb 46 <==
+private def test
+  'foo'
+  ensure
+  'baz'
+end
+
+==> 005.rb 44 <==
+private def test
+  'foo'
+ensure
+  'baz'
+end
+
+==> 006.rb 51 <==
+private def Test.test
+  'foo'
+  ensure
+  'baz'
+end
+
+==> 007.rb 49 <==
+private def Test.test
+  'foo'
+ensure
+  'baz'
+end
+
+==> 008.rb 59 <==
+private_class_method def test
+  'foo'
+  rescue
+  'baz'
+end
+
+==> 009.rb 57 <==
+private_class_method def test
+  'foo'
+rescue
+  'baz'
+end
+
+==> 010.rb 64 <==
+private_class_method def Test.test
+  'foo'
+  rescue
+  'baz'
+end
+
+==> 011.rb 62 <==
+private_class_method def Test.test
+  'foo'
+rescue
+  'baz'
+end
+
+==> 012.rb 59 <==
+private_class_method def test
+  'foo'
+  ensure
+  'baz'
+end
+
+==> 013.rb 57 <==
+private_class_method def test
+  'foo'
+ensure
+  'baz'
+end
+
+==> 014.rb 64 <==
+private_class_method def Test.test
+  'foo'
+  ensure
+  'baz'
+end
+
+==> 015.rb 62 <==
+private_class_method def Test.test
+  'foo'
+ensure
+  'baz'
+end
+
+==> 016.rb 58 <==
+public_class_method def test
+  'foo'
+  rescue
+  'baz'
+end
+
+==> 017.rb 56 <==
+public_class_method def test
+  'foo'
+rescue
+  'baz'
+end
+
+==> 018.rb 63 <==
+public_class_method def Test.test
+  'foo'
+  rescue
+  'baz'
+end
+
+==> 019.rb 61 <==
+public_class_method def Test.test
+  'foo'
+rescue
+  'baz'
+end
+
+==> 020.rb 58 <==
+public_class_method def test
+  'foo'
+  ensure
+  'baz'
+end
+
+==> 021.rb 56 <==
+public_class_method def test
+  'foo'
+ensure
+  'baz'
+end
+
+==> 022.rb 63 <==
+public_class_method def Test.test
+  'foo'
+  ensure
+  'baz'
+end
+
+==> 023.rb 61 <==
+public_class_method def Test.test
+  'foo'
+ensure
+  'baz'
+end
+

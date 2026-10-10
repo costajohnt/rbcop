@@ -16,7 +16,10 @@ impl Cop for BlockComments {
             let text = &src.text[start..end];
             // eq_begin: "=begin\n".length characters (bytes: `=begin` is ASCII, then one newline).
             let begin_end = start + 7;
-            let eq_end = if text.ends_with('\n') { (end - 5, end) } else { (end - 6, end - 2) };
+            // eq_end_part: END_LENGTH ("\n=end".length) and the offsets are characters, so text
+            // after `=end` (`=end 日本`) moves them by characters, not bytes.
+            let back = |n: usize| text.char_indices().rev().nth(n - 1).map_or(start, |(i, _)| start + i);
+            let eq_end = if text.ends_with('\n') { (back(5), end) } else { (back(6), back(2)) };
             cx.add_fix(start, end, "Do not use block comments.", |k| {
                 k.remove(start, begin_end);
                 if begin_end < eq_end.0 {

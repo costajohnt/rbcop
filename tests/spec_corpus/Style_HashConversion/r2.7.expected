@@ -1,0 +1,104 @@
+==> offenses exit=1 1815 <==
+000.rb:1:1: C: [Correctable] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+001.rb:1:1: C: [Correctable] Style/HashConversion: Prefer literal hash to `Hash[arg1, arg2, ...]`.
+003.rb:1:1: C: [Correctable] Style/HashConversion: Prefer literal hash to `Hash[key: value, ...]`.
+004.rb:1:14: C: [Correctable] Style/HashConversion: Prefer literal hash to `Hash[key: value, ...]`.
+005.rb:1:14: C: [Correctable] Style/HashConversion: Prefer literal hash to `Hash[key: value, ...]`.
+006.rb:1:1: C: [Correctable] Style/HashConversion: Prefer literal hash to `Hash[arg1, arg2, ...]`.
+007.rb:1:14: C: [Correctable] Style/HashConversion: Prefer literal hash to `Hash[arg1, arg2, ...]`.
+008.rb:1:1: C: Style/HashConversion: Prefer literal hash to `Hash[arg1, arg2, ...]`.
+009.rb:1:1: C: [Correctable] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+010.rb:1:1: C: [Correctable] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+011.rb:1:1: C: [Correctable] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+012.rb:1:1: C: [Correctable] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+013.rb:1:1: C: [Correctable] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+014.rb:1:1: C: [Correctable] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+015.rb:1:1: C: [Correctable] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+016.rb:1:1: C: [Correctable] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+017.rb:1:1: C: [Correctable] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+018.rb:1:1: C: [Correctable] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+019.rb:1:1: C: [Correctable] Style/HashConversion: Prefer literal hash to `Hash[arg1, arg2, ...]`.
+020.rb:1:1: C: [Correctable] Style/HashConversion: Prefer literal hash to `Hash[arg1, arg2, ...]`.
+
+==> autocorrect exit=1 2068 <==
+000.rb:1:1: C: [Corrected] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+001.rb:1:1: C: [Corrected] Style/HashConversion: Prefer literal hash to `Hash[arg1, arg2, ...]`.
+003.rb:1:1: C: [Corrected] Style/HashConversion: Prefer literal hash to `Hash[key: value, ...]`.
+004.rb:1:14: C: [Corrected] Style/HashConversion: Prefer literal hash to `Hash[key: value, ...]`.
+005.rb:1:14: C: [Corrected] Style/HashConversion: Prefer literal hash to `Hash[key: value, ...]`.
+006.rb:1:1: C: [Corrected] Style/HashConversion: Prefer literal hash to `Hash[arg1, arg2, ...]`.
+007.rb:1:14: C: [Corrected] Style/HashConversion: Prefer literal hash to `Hash[arg1, arg2, ...]`.
+008.rb:1:1: C: Style/HashConversion: Prefer literal hash to `Hash[arg1, arg2, ...]`.
+009.rb:1:1: C: [Corrected] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+010.rb:1:1: C: [Corrected] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+011.rb:1:1: C: [Corrected] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+012.rb:1:1: C: [Corrected] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+013.rb:1:1: C: [Corrected] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+014.rb:1:1: C: [Corrected] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+015.rb:1:1: C: [Corrected] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+016.rb:1:1: C: [Corrected] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+017.rb:1:1: C: [Corrected] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+017.rb:1:1: C: [Corrected] Style/HashConversion: Prefer literal hash to `Hash[arg1, arg2, ...]`.
+018.rb:1:1: C: [Corrected] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+018.rb:1:1: C: [Corrected] Style/HashConversion: Prefer literal hash to `Hash[arg1, arg2, ...]`.
+019.rb:1:1: C: [Corrected] Style/HashConversion: Prefer literal hash to `Hash[arg1, arg2, ...]`.
+019.rb:1:7: C: [Corrected] Style/HashConversion: Prefer literal hash to `Hash[arg1, arg2, ...]`.
+020.rb:1:1: C: [Corrected] Style/HashConversion: Prefer literal hash to `Hash[arg1, arg2, ...]`.
+
+==> corrected/000.rb 9 <==
+ary.to_h
+
+==> corrected/001.rb 17 <==
+{a => b, c => d}
+
+==> corrected/003.rb 13 <==
+{a: b, c: d}
+
+==> corrected/004.rb 31 <==
+do_something({a: b, c: d}, 42)
+
+==> corrected/005.rb 31 <==
+do_something({a: b, c: d}, 42)
+
+==> corrected/006.rb 3 <==
+{}
+
+==> corrected/007.rb 36 <==
+do_something({a => b, c => d}, arg)
+
+==> corrected/009.rb 18 <==
+(a.foo :bar).to_h
+
+==> corrected/010.rb 19 <==
+array.zip([]).to_h
+
+==> corrected/011.rb 19 <==
+array.zip([]).to_h
+
+==> corrected/012.rb 14 <==
+(a || b).to_h
+
+==> corrected/013.rb 14 <==
+(a || b).to_h
+
+==> corrected/014.rb 14 <==
+(a && b).to_h
+
+==> corrected/015.rb 14 <==
+(a && b).to_h
+
+==> corrected/016.rb 26 <==
+array.zip([1, 2, 3]).to_h
+
+==> corrected/017.rb 8 <==
+{}.to_h
+
+==> corrected/018.rb 14 <==
+{k => v}.to_h
+
+==> corrected/019.rb 16 <==
+{1 => {k => v}}
+
+==> corrected/020.rb 8 <==
+{}.to_h
+

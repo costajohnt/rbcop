@@ -1,0 +1,34 @@
+==> .rubocop.yml 164 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/ShadowedArgument:
+  IgnoreImplicitReferences: true
+
+==> 000.rb 45 <==
+def do_something(foo)
+  foo = 42
+  super
+end
+
+==> 001.rb 79 <==
+def select_fields(query, current_time)
+  query = super
+  query.select('*')
+end
+
+==> 002.rb 47 <==
+def do_something(foo)
+  foo = 42
+  binding
+end
+
+==> 003.rb 47 <==
+do_something do |foo|
+  foo = 42
+  binding
+end
+

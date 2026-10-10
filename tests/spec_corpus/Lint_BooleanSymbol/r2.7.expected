@@ -1,0 +1,36 @@
+==> offenses exit=1 790 <==
+000.rb:1:1: W: [Correctable] Lint/BooleanSymbol: Symbol with a boolean name - you probably meant to use `true`.
+001.rb:1:1: W: [Correctable] Lint/BooleanSymbol: Symbol with a boolean name - you probably meant to use `false`.
+002.rb:1:3: W: [Correctable] Lint/BooleanSymbol: Symbol with a boolean name - you probably meant to use `false`.
+003.rb:1:3: W: [Correctable] Lint/BooleanSymbol: Symbol with a boolean name - you probably meant to use `true`.
+004.rb:1:3: W: [Correctable] Lint/BooleanSymbol: Symbol with a boolean name - you probably meant to use `false`.
+005.rb:1:3: W: [Correctable] Lint/BooleanSymbol: Symbol with a boolean name - you probably meant to use `false`.
+005.rb:1:10: W: [Correctable] Lint/BooleanSymbol: Symbol with a boolean name - you probably meant to use `false`.
+
+==> autocorrect exit=0 776 <==
+000.rb:1:1: W: [Corrected] Lint/BooleanSymbol: Symbol with a boolean name - you probably meant to use `true`.
+001.rb:1:1: W: [Corrected] Lint/BooleanSymbol: Symbol with a boolean name - you probably meant to use `false`.
+002.rb:1:3: W: [Corrected] Lint/BooleanSymbol: Symbol with a boolean name - you probably meant to use `false`.
+003.rb:1:3: W: [Corrected] Lint/BooleanSymbol: Symbol with a boolean name - you probably meant to use `true`.
+004.rb:1:3: W: [Corrected] Lint/BooleanSymbol: Symbol with a boolean name - you probably meant to use `false`.
+005.rb:1:3: W: [Corrected] Lint/BooleanSymbol: Symbol with a boolean name - you probably meant to use `false`.
+005.rb:1:10: W: [Corrected] Lint/BooleanSymbol: Symbol with a boolean name - you probably meant to use `false`.
+
+==> corrected/000.rb 5 <==
+true
+
+==> corrected/001.rb 6 <==
+false
+
+==> corrected/002.rb 16 <==
+{ false => 42 }
+
+==> corrected/003.rb 18 <==
+{ true => 'Foo' }
+
+==> corrected/004.rb 18 <==
+{ false => :bar }
+
+==> corrected/005.rb 19 <==
+{ false => false }
+

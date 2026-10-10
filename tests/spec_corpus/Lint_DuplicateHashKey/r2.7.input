@@ -1,0 +1,104 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 66 <==
+hash = { 'otherkey' => 'value', 'key' => 'value', 'key' => 'hi' }
+
+==> 001.rb 62 <==
+hash = { 'otherkey' => 'value', KEY => 'value', KEY => 'hi' }
+
+==> 002.rb 69 <==
+hash = { fruit: 'apple', veg: 'kale', veg: 'cuke', fruit: 'orange' }
+
+==> 003.rb 34 <==
+hash = { 1 => 2, 1 => 3, 1 => 4 }
+
+==> 004.rb 68 <==
+hash = { ['one', 'two'] => ['hello, bye'], ['two'] => ['yes, no'] }
+
+==> 005.rb 33 <==
+hash = { !true => 1, !true => 4}
+
+==> 006.rb 35 <==
+hash = { "#{2}" => 1, "#{2}" => 4}
+
+==> 007.rb 29 <==
+hash = { (1) => 1, (1) => 4}
+
+==> 008.rb 53 <==
+hash = { (false && true) => 1, (false && true) => 4}
+
+==> 009.rb 55 <==
+hash = { (false <=> true) => 1, (false <=> true) => 4}
+
+==> 010.rb 53 <==
+hash = { (false or true) => 1, (false or true) => 4}
+
+==> 011.rb 41 <==
+hash = { [1, 2, 3] => 1, [1, 2, 3] => 4}
+
+==> 012.rb 63 <==
+hash = { { :a => 1, :b => 2 } => 1, { :a => 1, :b => 2 } => 4}
+
+==> 013.rb 51 <==
+hash = { { a: 1, b: 2 } => 1, { a: 1, b: 2 } => 4}
+
+==> 014.rb 29 <==
+hash = { /./ => 1, /./ => 4}
+
+==> 015.rb 43 <==
+hash = { %r{abx}ixo => 1, %r{abx}ixo => 4}
+
+==> 016.rb 29 <==
+hash = { 1.0 => 1, 1.0 => 4}
+
+==> 017.rb 25 <==
+hash = { 1 => 1, 1 => 4}
+
+==> 018.rb 33 <==
+hash = { false => 1, false => 4}
+
+==> 019.rb 29 <==
+hash = { nil => 1, nil => 4}
+
+==> 020.rb 33 <==
+hash = { 'str' => 1, 'str' => 4}
+
+==> 021.rb 65 <==
+hash = { "#{some_method_call}" => 1, "#{some_method_call}" => 4}
+
+==> 022.rb 47 <==
+hash = { (x && false) => 1, (x && false) => 4}
+
+==> 023.rb 47 <==
+hash = { (x == false) => 1, (x == false) => 4}
+
+==> 024.rb 47 <==
+hash = { (x or false) => 1, (x or false) => 4}
+
+==> 025.rb 59 <==
+hash = { [some_method_call] => 1, [some_method_call] => 4}
+
+==> 026.rb 79 <==
+hash = { { :sym => some_method_call } => 1, { :sym => some_method_call } => 4}
+
+==> 027.rb 79 <==
+hash = { { some_method_call => :sym } => 1, { some_method_call => :sym } => 4}
+
+==> 028.rb 67 <==
+hash = { /.#{some_method_call}/ => 1, /.#{some_method_call}/ => 4}
+
+==> 029.rb 55 <==
+hash = { %r{abx#{foo}}ixo => 1, %r{abx#{foo}}ixo => 4}
+
+==> 030.rb 55 <==
+hash = { some_method_call => 1, some_method_call => 4}
+
+==> 031.rb 67 <==
+hash = { some_method_call(x, y) => 1, some_method_call(x, y) => 4}
+

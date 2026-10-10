@@ -1,0 +1,20 @@
+==> offenses exit=1 142 <==
+000.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+001.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+
+==> autocorrect exit=0 138 <==
+000.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+001.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+
+==> corrected/000.rb 51 <==
+3.downto(1) do
+  next unless it == 1
+  puts it
+end
+
+==> corrected/001.rb 47 <==
+3.downto(1) do
+  next if it == 1
+  puts it
+end
+

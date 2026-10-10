@@ -1,0 +1,100 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000/foo.gemspec 79 <==
+Gem::Specification.new do |spec|
+  spec.required_ruby_version = '>= 3.3.0'
+end
+
+==> 001/foo.gemspec 79 <==
+Gem::Specification.new do |spec|
+  spec.required_ruby_version = '~> 3.3.0'
+end
+
+==> 002/foo.gemspec 92 <==
+Gem::Specification.new do |spec|
+  spec.required_ruby_version = ['>= 3.3.0', '< 4.0.0']
+end
+
+==> 003/foo.gemspec 101 <==
+Gem::Specification.new do |spec|
+  spec.required_ruby_version = Gem::Requirement.new(">= 3.3.0")
+end
+
+==> 004.gemspec 98 <==
+Gem::Specification.new do |spec|
+  spec.required_ruby_version = Gem::Requirement.new('< 3.4')
+end
+
+==> 005.gemspec 111 <==
+Gem::Specification.new do |spec|
+  spec.required_ruby_version = Gem::Requirement.new(">= 3.4.0", "<= 3.8")
+end
+
+==> 006.gemspec 99 <==
+Gem::Specification.new do |spec|
+  version = '>= 3.3.0'
+  spec.required_ruby_version = version
+end
+
+==> 007.gemspec 162 <==
+Gem::Specification.new do |spec|
+  lowest_version = '>= 3.3.0'
+  highest_version = '< 3.8.0'
+  spec.required_ruby_version = [lowest_version, highest_version]
+end
+
+==> 008.gemspec 79 <==
+Gem::Specification.new do |spec|
+  spec.required_ruby_version = '>= 3.4.0'
+end
+
+==> 009.gemspec 79 <==
+Gem::Specification.new do |spec|
+  spec.required_ruby_version = '~> 3.4.0'
+end
+
+==> 010.gemspec 77 <==
+Gem::Specification.new do |spec|
+  spec.required_ruby_version = '>= 3.4'
+end
+
+==> 011.gemspec 77 <==
+Gem::Specification.new do |spec|
+  spec.required_ruby_version = '~> 3.4'
+end
+
+==> 012.gemspec 92 <==
+Gem::Specification.new do |spec|
+  spec.required_ruby_version = ['>= 3.4.0', '< 4.1.0']
+end
+
+==> 013/bar.gemspec 75 <==
+Gem::Specification.new do |spec|
+  spec.required_ruby_version = '>= 3'
+end
+
+==> 014/bar.gemspec 75 <==
+Gem::Specification.new do |spec|
+  spec.required_ruby_version = '~> 3'
+end
+
+==> 015/foo.gemspec 37 <==
+Gem::Specification.new do |spec|
+end
+
+==> 016/bar.gemspec 71 <==
+Gem::Specification.new do |spec|
+  spec.required_ruby_version = ''
+end
+
+==> 017/bar.gemspec 71 <==
+Gem::Specification.new do |spec|
+  spec.required_ruby_version = []
+end
+

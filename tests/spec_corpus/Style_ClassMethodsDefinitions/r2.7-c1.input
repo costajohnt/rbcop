@@ -1,0 +1,29 @@
+==> .rubocop.yml 167 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/ClassMethodsDefinitions:
+  EnforcedStyle: self_class
+
+==> 000.rb 33 <==
+class A
+  def self.one
+  end
+end
+
+==> 001.rb 54 <==
+class A
+  class << self
+    def one
+    end
+  end
+end
+
+==> 002.rb 42 <==
+object = Object.new
+def object.method
+end
+

@@ -1,0 +1,67 @@
+==> offenses exit=1 1504 <==
+000.rb:1:19: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+000.rb:2:12: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+001.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+001.rb:2:7: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+003.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+003.rb:2:7: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+004.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+004.rb:2:7: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+005.rb:1:20: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+005.rb:2:18: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+006.rb:1:20: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+006.rb:2:13: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+008.rb:1:37: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+008.rb:2:97: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+
+==> autocorrect exit=0 1476 <==
+000.rb:1:19: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+000.rb:2:12: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+001.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+001.rb:2:7: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+003.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+003.rb:2:7: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+004.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+004.rb:2:7: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+005.rb:1:20: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+005.rb:2:18: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+006.rb:1:20: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+006.rb:2:13: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+008.rb:1:37: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+008.rb:2:97: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+
+==> corrected/000.rb 43 <==
+def foo(arg = {}, ...)
+  bar(arg, ...)
+end
+
+==> corrected/001.rb 24 <==
+def foo(&)
+  bar(&)
+end
+
+==> corrected/003.rb 28 <==
+def foo(...)
+  bar(...)
+end
+
+==> corrected/004.rb 28 <==
+def foo(...)
+  bar(...)
+end
+
+==> corrected/005.rb 46 <==
+def baz(qux, quuz, &)
+  bar(qux, quuz, &)
+end
+
+==> corrected/006.rb 45 <==
+def foo(x, y = 42, ...)
+  bar(x, y, ...)
+end
+
+==> corrected/008.rb 142 <==
+def before_transition(options = {}, &)
+  add_callback(type: :before, callback_class: Callback, from: options[:from], to: options[:to], &)
+end
+

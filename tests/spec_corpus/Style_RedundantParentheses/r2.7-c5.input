@@ -1,0 +1,39 @@
+==> .rubocop.yml 193 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/ParenthesesAroundCondition:
+  Enabled: true
+  AllowInMultilineConditions: true
+
+==> 000.rb 9 <==
+(x && y)
+
+==> 001.rb 9 <==
+(x || y)
+
+==> 002.rb 10 <==
+(x and y)
+
+==> 003.rb 9 <==
+(x or y)
+
+==> 004.rb 10 <==
+(x &&
+ y)
+
+==> 005.rb 10 <==
+(x ||
+ y)
+
+==> 006.rb 11 <==
+(x and
+ y)
+
+==> 007.rb 10 <==
+(x or
+ y)
+

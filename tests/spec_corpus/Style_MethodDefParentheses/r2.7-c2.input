@@ -1,0 +1,69 @@
+==> .rubocop.yml 193 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/MethodDefParentheses:
+  EnforcedStyle: require_no_parentheses_except_multiline
+
+==> 000.rb 19 <==
+def func(a, b)
+end
+
+==> 001.rb 18 <==
+def func a, b
+end
+
+==> 002.rb 37 <==
+def func(a, b)
+end
+def func a, b
+end
+
+==> 003.rb 24 <==
+def Test.func(a, b)
+end
+
+==> 004.rb 23 <==
+def Test.func a, b
+end
+
+==> 005.rb 15 <==
+def func()
+end
+
+==> 006.rb 13 <==
+def func
+end
+
+==> 007.rb 26 <==
+def self.test(param); end
+
+==> 008.rb 28 <==
+def foo(...)
+  bar(...)
+end
+
+==> 009.rb 19 <==
+def foo(*rest)
+end
+
+==> 010.rb 20 <==
+def foo(**opts)
+end
+
+==> 011.rb 22 <==
+def test one,
+two
+end
+
+==> 012.rb 55 <==
+def func(a,
+         b)
+end
+def func a,
+         b
+end
+

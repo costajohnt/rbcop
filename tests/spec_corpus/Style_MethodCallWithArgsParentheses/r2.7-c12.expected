@@ -1,0 +1,23 @@
+==> offenses exit=1 345 <==
+000.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+000.rb:3:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+001.rb:3:5: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+
+==> autocorrect exit=0 339 <==
+000.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+000.rb:3:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+001.rb:3:5: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+
+==> corrected/000.rb 69 <==
+class Foo
+  assert_equal('expected', actual)
+  refute_nil(value)
+end
+
+==> corrected/001.rb 67 <==
+class Foo
+  test "description" do
+    assert_equal(1, 1)
+  end
+end
+

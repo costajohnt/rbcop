@@ -1,0 +1,14 @@
+==> .rubocop.yml 173 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/NumericLiterals:
+  AllowedPatterns:
+  - "\\d{4}(_\\d{4})+"
+
+==> 000.rb 20 <==
+1234_5678_9012_3456
+

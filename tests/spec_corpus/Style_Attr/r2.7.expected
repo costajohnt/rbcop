@@ -1,0 +1,55 @@
+==> offenses exit=1 698 <==
+000.rb:2:3: C: [Correctable] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
+001.rb:2:3: C: [Correctable] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
+002.rb:2:3: C: [Correctable] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
+003.rb:2:3: C: [Correctable] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
+007.rb:1:1: C: [Correctable] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
+008.rb:1:1: C: [Correctable] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
+009.rb:1:1: C: [Correctable] Style/Attr: Do not use `attr`. Use `attr_accessor` instead.
+010.rb:1:1: C: [Correctable] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
+
+==> autocorrect exit=0 682 <==
+000.rb:2:3: C: [Corrected] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
+001.rb:2:3: C: [Corrected] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
+002.rb:2:3: C: [Corrected] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
+003.rb:2:3: C: [Corrected] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
+007.rb:1:1: C: [Corrected] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
+008.rb:1:1: C: [Corrected] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
+009.rb:1:1: C: [Corrected] Style/Attr: Do not use `attr`. Use `attr_accessor` instead.
+010.rb:1:1: C: [Corrected] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
+
+==> corrected/000.rb 40 <==
+class SomeClass
+  attr_reader :name
+end
+
+==> corrected/001.rb 48 <==
+SomeClass.class_eval do
+  attr_reader :name
+end
+
+==> corrected/002.rb 49 <==
+SomeClass.module_eval do
+  attr_reader :name
+end
+
+==> corrected/003.rb 57 <==
+class SomeClass
+  attr_reader :name
+
+  def foo
+  end
+end
+
+==> corrected/007.rb 18 <==
+attr_reader :name
+
+==> corrected/008.rb 18 <==
+attr_reader :name
+
+==> corrected/009.rb 20 <==
+attr_accessor :name
+
+==> corrected/010.rb 23 <==
+attr_reader :foo, :bar
+

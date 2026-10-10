@@ -1,0 +1,57 @@
+==> .rubocop.yml 179 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/ReturnNilInPredicateMethodDefinition:
+  AllowedMethods:
+  - foo?
+
+==> 000.rb 43 <==
+def foo?
+  return if condition
+
+  bar?
+end
+
+==> 001.rb 47 <==
+def foo?
+  return nil if condition
+
+  bar?
+end
+
+==> 002.rb 52 <==
+def foo?
+  if bar
+    nil
+  else
+    true
+  end
+end
+
+==> 003.rb 48 <==
+def self.foo?
+  return if condition
+
+  bar?
+end
+
+==> 004.rb 52 <==
+def self.foo?
+  return nil if condition
+
+  bar?
+end
+
+==> 005.rb 57 <==
+def self.foo?
+  if bar
+    nil
+  else
+    true
+  end
+end
+

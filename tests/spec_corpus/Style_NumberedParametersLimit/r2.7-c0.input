@@ -1,0 +1,27 @@
+==> .rubocop.yml 148 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/NumberedParametersLimit:
+  Max: 2
+
+==> 000.rb 58 <==
+foo { |a, b, c, d, e, f, g| do_something(a,b,c,d,e,f,g) }
+
+==> 001.rb 25 <==
+foo { do_something(_1) }
+
+==> 002.rb 29 <==
+foo { do_something(_1, _2) }
+
+==> 003.rb 41 <==
+foo { do_something(_1, _2, _3, _4, _5) }
+
+==> 004.rb 46 <==
+foo do
+  do_something(_1, _2, _3, _4, _5)
+end
+

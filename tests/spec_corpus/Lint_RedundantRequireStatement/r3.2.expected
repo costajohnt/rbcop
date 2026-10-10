@@ -1,0 +1,9 @@
+==> offenses exit=1 101 <==
+000.rb:1:1: W: [Correctable] Lint/RedundantRequireStatement: Remove unnecessary `require` statement.
+
+==> autocorrect exit=0 99 <==
+000.rb:1:1: W: [Corrected] Lint/RedundantRequireStatement: Remove unnecessary `require` statement.
+
+==> corrected/000.rb 14 <==
+require 'uri'
+

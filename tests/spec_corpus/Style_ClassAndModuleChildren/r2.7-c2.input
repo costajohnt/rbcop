@@ -1,0 +1,21 @@
+==> .rubocop.yml 210 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+Layout/IndentationStyle:
+  EnforcedStyle: tabs
+
+==> 000.rb 53 <==
+module A
+	module B
+		module C
+			body
+		end
+	end
+end
+

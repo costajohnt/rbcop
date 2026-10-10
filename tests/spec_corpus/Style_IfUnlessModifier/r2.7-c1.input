@@ -1,0 +1,20 @@
+==> .rubocop.yml 144 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LineLength:
+  Enabled: false
+
+==> 000.rb 109 <==
+if foo
+  "This string would make the line longer than eighty characters if combined with the statement."
+end
+
+==> 001.rb 113 <==
+unless foo
+  "This string would make the line longer than eighty characters if combined with the statement."
+end
+

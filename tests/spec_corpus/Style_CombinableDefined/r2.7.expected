@@ -1,0 +1,114 @@
+==> offenses exit=1 1914 <==
+004.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+005.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+006.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+007.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+008.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+009.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+014.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+015.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+016.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+017.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+022.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+023.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+024.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+025.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+026.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+027.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+032.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+033.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+034.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+035.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+037.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+038.rb:1:1: C: [Correctable] Style/CombinableDefined: Combine nested `defined?` calls.
+
+==> autocorrect exit=0 1870 <==
+004.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+005.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+006.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+007.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+008.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+009.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+014.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+015.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+016.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+017.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+022.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+023.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+024.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+025.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+026.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+027.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+032.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+033.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+034.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+035.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+037.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+038.rb:1:1: C: [Corrected] Style/CombinableDefined: Combine nested `defined?` calls.
+
+==> corrected/004.rb 19 <==
+defined?(Foo::Bar)
+
+==> corrected/005.rb 19 <==
+defined?(Foo::Bar)
+
+==> corrected/006.rb 21 <==
+defined?(::Foo::Bar)
+
+==> corrected/007.rb 24 <==
+defined?(Foo::Bar::Baz)
+
+==> corrected/008.rb 24 <==
+defined?(Foo::Bar::Baz)
+
+==> corrected/009.rb 41 <==
+defined?(Foo::Bar) && defined?(Foo::Baz)
+
+==> corrected/014.rb 19 <==
+defined?(foo::Bar)
+
+==> corrected/015.rb 18 <==
+defined?(foo.bar)
+
+==> corrected/016.rb 19 <==
+defined?(foo::bar)
+
+==> corrected/017.rb 23 <==
+defined?(foo.bar::BAZ)
+
+==> corrected/022.rb 19 <==
+defined?(Foo::Bar)
+
+==> corrected/023.rb 19 <==
+defined?(Foo::Bar)
+
+==> corrected/024.rb 21 <==
+defined?(::Foo::Bar)
+
+==> corrected/025.rb 24 <==
+defined?(Foo::Bar::Baz)
+
+==> corrected/026.rb 24 <==
+defined?(Foo::Bar::Baz)
+
+==> corrected/027.rb 42 <==
+defined?(Foo::Bar) and defined?(Foo::Baz)
+
+==> corrected/032.rb 19 <==
+defined?(foo::Bar)
+
+==> corrected/033.rb 18 <==
+defined?(foo.bar)
+
+==> corrected/034.rb 19 <==
+defined?(foo::bar)
+
+==> corrected/035.rb 23 <==
+defined?(foo.bar::BAZ)
+
+==> corrected/037.rb 24 <==
+defined?(Foo::Bar::Baz)
+
+==> corrected/038.rb 42 <==
+defined?(Foo::Bar) and defined?(Foo::Baz)
+

@@ -1,0 +1,17 @@
+==> .rubocop.yml 306 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/WordArray:
+  MinSize: 2
+  WordRegex: !ruby/regexp /\A(?:\p{Word}|\p{Word}-\p{Word}|\n|\t)+\z/
+  EnforcedStyle: percent
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: "()"
+
+==> 000.rb 7 <==
+["one"]

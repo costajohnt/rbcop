@@ -1,0 +1,190 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 28 <==
+begin
+  f1
+
+rescue
+  f2
+end
+
+==> 001.rb 28 <==
+begin
+  f1
+rescue
+
+  f2
+end
+
+==> 002.rb 38 <==
+begin
+  f1
+rescue
+  f2
+
+else
+  f3
+end
+
+==> 003.rb 40 <==
+def foo
+  f1
+rescue
+  f2
+
+else
+  f3
+end
+
+==> 004.rb 43 <==
+foo do
+  f1(_1)
+
+rescue
+  f2
+else
+  f3
+end
+
+==> 005.rb 43 <==
+foo do
+  f1(_1)
+rescue
+
+  f2
+else
+  f3
+end
+
+==> 006.rb 43 <==
+foo do
+  f1(_1)
+rescue
+  f2
+
+else
+  f3
+end
+
+==> 007.rb 49 <==
+begin
+  f1
+rescue
+  f2
+else
+  f3
+ensure
+  f4
+end
+
+==> 008.rb 17 <==
+begin
+
+  f1
+
+end
+
+==> 009.rb 10 <==
+begin
+end
+
+==> 010.rb 12 <==
+def foo
+end
+
+==> 011.rb 29 <==
+begin; foo; rescue => e; end
+
+==> 012.rb 29 <==
+begin
+  foo
+rescue => e; end
+
+==> 013.rb 41 <==
+begin
+  foo
+rescue => x
+rescue => y; end
+
+==> 014.rb 40 <==
+def do_something; foo; rescue => e; end
+
+==> 015.rb 28 <==
+def do_something
+ensure end
+
+==> 016.rb 33 <==
+def do_something
+rescue
+else end
+
+==> 017.rb 36 <==
+def do_something
+foo
+ensure bar end
+
+==> 018.rb 37 <==
+def do_something
+rescue
+else foo end
+
+==> 019.rb 184 <==
+begin
+
+  do_something1
+
+rescue RuntimeError
+
+  do_something2
+
+rescue ArgumentError => ex
+
+  do_something3
+
+rescue
+
+  do_something3
+
+else
+
+  do_something4
+
+ensure
+
+  do_something4
+
+end
+
+==> 020.rb 186 <==
+def foo
+
+  do_something1
+
+rescue RuntimeError
+
+  do_something2
+
+rescue ArgumentError => ex
+
+  do_something3
+
+rescue
+
+  do_something3
+
+else
+
+  do_something4
+
+ensure
+
+  do_something4
+
+end
+

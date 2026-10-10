@@ -1,0 +1,195 @@
+==> .rubocop.yml 189 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: special_inside_parentheses
+
+==> 000.rb 13 <==
+a << [
+  1
+]
+
+==> 001.rb 12 <==
+a << [
+ 1
+]
+
+==> 002.rb 11 <==
+a << [
+  ]
+
+==> 003.rb 15 <==
+a << [
+    1
+]
+
+==> 004.rb 58 <==
+config.rack_cache = [
+  "rails:/",
+  "rails:/",
+  false
+]
+
+==> 005.rb 52 <==
+config.rack_cache = [
+"rails:/",
+"rails:/",
+false
+]
+
+==> 006.rb 23 <==
+a = [
+    1,
+  2,
+ 3
+]
+
+==> 007.rb 12 <==
+a = [
+  1
+]
+
+==> 008.rb 15 <==
+a = [
+  1, 2
+]
+
+==> 009.rb 16 <==
+a = [1,
+     2]
+
+==> 010.rb 10 <==
+a = [1, 2]
+==> 011.rb 6 <==
+a = []
+==> 012.rb 13 <==
+a, b = [b, a]
+==> 013.rb 11 <==
+a, b = b, a
+==> 014.rb 107 <==
+h = [
+  1
+]
+func([
+       1
+     ])
+func(x, [
+       1
+     ])
+h = [1
+]
+func([1
+     ])
+func(x, [1
+     ])
+
+==> 015.rb 14 <==
+func([
+  1
+])
+
+==> 016.rb 24 <==
+receiver&.func([
+  1
+])
+
+==> 017.rb 26 <==
+var = [
+        1
+      ]
+
+==> 018.rb 63 <==
+body.should have_tag("input", [
+                       :name])
+
+==> 019.rb 27 <==
+puts(
+  [
+    [1, 2]
+  ]
+)
+
+==> 020.rb 25 <==
+func(x: [
+      :a, :b])
+
+==> 021.rb 68 <==
+func(x: [
+  :a,
+       :b
+],
+     y: [
+       :c,
+       :d
+     ])
+
+==> 022.rb 77 <==
+func(:x, y: [
+       :a,
+       :b
+     ], z: [
+       :c,
+       :d
+     ])
+
+==> 023.rb 91 <==
+func(x:
+       [
+         :a,
+         :b
+       ],
+     y: [
+       :a,
+       :b
+     ])
+
+==> 024.rb 9 <==
+func 1, 2
+==> 025.rb 14 <==
+func x, [1, 2]
+==> 026.rb 18 <==
+func x, [
+  1, 2]
+
+==> 027.rb 23 <==
+func x, [
+       1, 2]
+
+==> 028.rb 25 <==
+func x: [
+       :a, :b]
+
+==> 029.rb 67 <==
+func x: [
+  :a,
+       :b
+],
+     y: [
+       :c,
+       :d
+     ]
+
+==> 030.rb 46 <==
+func :x, y: [
+  :a,
+  :b
+], z: [
+  :c,
+  :d
+]
+
+==> 031.rb 98 <==
+func x:
+        [
+          :a,
+          :b
+        ],
+      y: [
+        :a,
+        :b
+      ]
+

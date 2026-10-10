@@ -1,0 +1,26 @@
+==> .rubocop.yml 178 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/SpaceAroundEqualsInParameterDefault:
+  EnforcedStyle: no_space
+
+==> 000.rb 32 <==
+def f(x, y = 0, z =1, w= 2)
+end
+
+==> 001.rb 21 <==
+def f(x, y = "")
+end
+
+==> 002.rb 21 <==
+def f(x, y = [])
+end
+
+==> 003.rb 24 <==
+def f(x, y=0, z={})
+end
+

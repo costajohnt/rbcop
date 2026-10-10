@@ -1,0 +1,59 @@
+==> .rubocop.yml 163 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/EmptyClassDefinition:
+  EnforcedStyle: class_new
+
+==> 000.rb 35 <==
+class FooError < StandardError
+end
+
+==> 001.rb 36 <==
+class FooError < StandardError; end
+
+==> 002.rb 18 <==
+class MyClass
+end
+
+==> 003.rb 19 <==
+class MyClass; end
+
+==> 004.rb 54 <==
+module Foo
+  class BarError < StandardError
+  end
+end
+
+==> 005.rb 47 <==
+class MyClass < Alchemy::Admin::PreviewUrl
+end
+
+==> 006.rb 37 <==
+class MyClass < ::Safemode::Jail
+end
+
+==> 007.rb 36 <==
+FooError = Class.new(StandardError)
+
+==> 008.rb 20 <==
+MyClass = Class.new
+
+==> 009.rb 38 <==
+module Foo
+  class Bar < Baz; end
+end
+
+==> 010.rb 77 <==
+class FooError < StandardError
+  def initialize(message)
+    super
+  end
+end
+
+==> 011.rb 57 <==
+class FooError < StandardError; def initialize; end; end
+

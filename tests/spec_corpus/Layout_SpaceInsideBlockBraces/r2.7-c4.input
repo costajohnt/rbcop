@@ -1,0 +1,40 @@
+==> .rubocop.yml 242 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/SpaceInsideBlockBraces:
+  EnforcedStyle: no_space
+  SupportedStyles:
+  - space
+  - no_space
+  SpaceBeforeBlockParameters: true
+
+==> 000.rb 11 <==
+each {puts}
+==> 001.rb 13 <==
+each { puts}
+
+==> 002.rb 13 <==
+each {puts }
+
+==> 003.rb 26 <==
+each {puts}
+each { puts }
+
+==> 004.rb 10 <==
+each{puts}
+==> 005.rb 29 <==
+foo bar { |arg|
+  baz(arg)
+}
+
+==> 006.rb 16 <==
+each { |x| puts}
+==> 007.rb 16 <==
+each {|x| puts}
+
+==> 008.rb 9 <==
+->(x) {x}

@@ -1,0 +1,78 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.4
+
+==> 000.rb 57 <==
+array.reject { |e| e.nil? }
+array.reject! { |e| e.nil? }
+
+==> 001.rb 61 <==
+array&.reject { |e| e&.nil? }
+array&.reject! { |e| e&.nil? }
+
+==> 002.rb 43 <==
+array.reject(&:nil?)
+array.reject!(&:nil?)
+
+==> 003.rb 45 <==
+array&.reject(&:nil?)
+array&.reject!(&:nil?)
+
+==> 004.rb 20 <==
+array.reject &:nil?
+
+==> 005.rb 61 <==
+hash.reject { |k, v| v.nil? }
+hash.reject! { |k, v| v.nil? }
+
+==> 006.rb 61 <==
+array.select { |e| !e.nil? }
+hash.select! { |k, v| !v.nil? }
+
+==> 007.rb 69 <==
+array&.select { |e| e&.nil?&.! }
+hash&.select! { |k, v| v&.nil?&.! }
+
+==> 008.rb 55 <==
+def foo(params)
+  params.reject { |_k, v| v.nil? }
+end
+
+==> 009.rb 18 <==
+array.grep_v(nil)
+
+==> 010.rb 23 <==
+array.grep_v(NilClass)
+
+==> 011.rb 19 <==
+array&.grep_v(nil)
+
+==> 012.rb 25 <==
+array.grep_v(::NilClass)
+
+==> 013.rb 22 <==
+array.grep_v(pattern)
+
+==> 014.rb 28 <==
+array.reject { |e| e.odd? }
+
+==> 015.rb 29 <==
+array.compact
+array.compact!
+
+==> 016.rb 55 <==
+array.delete_if(&:nil?)
+array.delete_if { |e| e.nil? }
+
+==> 017.rb 45 <==
+reject { |e| e.nil? }
+reject! { |e| e.nil? }
+
+==> 018.rb 50 <==
+select { |e| !e.nil? }
+select! { |k, v| !v.nil? }
+

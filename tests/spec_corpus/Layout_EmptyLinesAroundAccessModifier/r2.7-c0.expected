@@ -1,0 +1,288 @@
+==> offenses exit=1 3123 <==
+000.rb:3:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `private`.
+001.rb:4:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `private`.
+008.rb:4:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `private`.
+015.rb:2:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `private`.
+019.rb:2:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `private`.
+025.rb:2:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `private`.
+029.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `private`.
+030.rb:3:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `protected`.
+031.rb:4:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `protected`.
+038.rb:4:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `protected`.
+045.rb:2:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `protected`.
+049.rb:2:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `protected`.
+055.rb:2:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `protected`.
+059.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `protected`.
+060.rb:3:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `public`.
+061.rb:4:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `public`.
+068.rb:4:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `public`.
+075.rb:2:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `public`.
+079.rb:2:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `public`.
+085.rb:2:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `public`.
+089.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `public`.
+090.rb:3:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `module_function`.
+091.rb:4:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `module_function`.
+098.rb:4:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `module_function`.
+105.rb:2:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `module_function`.
+109.rb:2:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `module_function`.
+115.rb:2:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `module_function`.
+119.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `module_function`.
+
+==> autocorrect exit=0 3067 <==
+000.rb:3:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `private`.
+001.rb:4:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `private`.
+008.rb:4:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `private`.
+015.rb:2:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `private`.
+019.rb:2:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `private`.
+025.rb:2:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `private`.
+029.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `private`.
+030.rb:3:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `protected`.
+031.rb:4:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `protected`.
+038.rb:4:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `protected`.
+045.rb:2:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `protected`.
+049.rb:2:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `protected`.
+055.rb:2:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `protected`.
+059.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `protected`.
+060.rb:3:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `public`.
+061.rb:4:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `public`.
+068.rb:4:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `public`.
+075.rb:2:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `public`.
+079.rb:2:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `public`.
+085.rb:2:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `public`.
+089.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `public`.
+090.rb:3:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `module_function`.
+091.rb:4:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `module_function`.
+098.rb:4:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `module_function`.
+105.rb:2:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `module_function`.
+109.rb:2:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `module_function`.
+115.rb:2:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line after `module_function`.
+119.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `module_function`.
+
+==> corrected/000.rb 55 <==
+class Test
+  something
+
+  private
+
+  def test; end
+end
+
+==> corrected/001.rb 55 <==
+class Test
+  something
+
+  private
+
+  def test; end
+end
+
+==> corrected/008.rb 79 <==
+class Test
+  something
+
+  private # let's modify the rest
+
+  def test; end
+end
+
+==> corrected/015.rb 43 <==
+class Test
+  private
+
+  def test
+  end
+end
+
+==> corrected/019.rb 44 <==
+included do
+  private
+
+  def test
+  end
+end
+
+==> corrected/025.rb 38 <==
+class Test
+  private
+
+  end_this!
+end
+
+==> corrected/029.rb 18 <==
+foo
+
+private
+
+bar
+
+==> corrected/030.rb 57 <==
+class Test
+  something
+
+  protected
+
+  def test; end
+end
+
+==> corrected/031.rb 57 <==
+class Test
+  something
+
+  protected
+
+  def test; end
+end
+
+==> corrected/038.rb 81 <==
+class Test
+  something
+
+  protected # let's modify the rest
+
+  def test; end
+end
+
+==> corrected/045.rb 45 <==
+class Test
+  protected
+
+  def test
+  end
+end
+
+==> corrected/049.rb 46 <==
+included do
+  protected
+
+  def test
+  end
+end
+
+==> corrected/055.rb 40 <==
+class Test
+  protected
+
+  end_this!
+end
+
+==> corrected/059.rb 20 <==
+foo
+
+protected
+
+bar
+
+==> corrected/060.rb 54 <==
+class Test
+  something
+
+  public
+
+  def test; end
+end
+
+==> corrected/061.rb 54 <==
+class Test
+  something
+
+  public
+
+  def test; end
+end
+
+==> corrected/068.rb 78 <==
+class Test
+  something
+
+  public # let's modify the rest
+
+  def test; end
+end
+
+==> corrected/075.rb 42 <==
+class Test
+  public
+
+  def test
+  end
+end
+
+==> corrected/079.rb 43 <==
+included do
+  public
+
+  def test
+  end
+end
+
+==> corrected/085.rb 37 <==
+class Test
+  public
+
+  end_this!
+end
+
+==> corrected/089.rb 17 <==
+foo
+
+public
+
+bar
+
+==> corrected/090.rb 63 <==
+class Test
+  something
+
+  module_function
+
+  def test; end
+end
+
+==> corrected/091.rb 63 <==
+class Test
+  something
+
+  module_function
+
+  def test; end
+end
+
+==> corrected/098.rb 87 <==
+class Test
+  something
+
+  module_function # let's modify the rest
+
+  def test; end
+end
+
+==> corrected/105.rb 51 <==
+class Test
+  module_function
+
+  def test
+  end
+end
+
+==> corrected/109.rb 52 <==
+included do
+  module_function
+
+  def test
+  end
+end
+
+==> corrected/115.rb 46 <==
+class Test
+  module_function
+
+  end_this!
+end
+
+==> corrected/119.rb 26 <==
+foo
+
+module_function
+
+bar
+

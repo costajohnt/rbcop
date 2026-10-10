@@ -1,0 +1,34 @@
+==> offenses exit=1 505 <==
+000.rb:1:4: C: [Correctable] Style/SlicingWithRange: Prefer `[..42]` over `[nil..42]`.
+003.rb:1:4: C: [Correctable] Style/SlicingWithRange: Prefer `..42` over `nil..42`.
+005.rb:1:4: C: [Correctable] Style/SlicingWithRange: Remove the useless `&.[](0..-1)`.
+006.rb:1:4: C: [Correctable] Style/SlicingWithRange: Remove the useless `.[] 0..-1`.
+007.rb:1:4: C: [Correctable] Style/SlicingWithRange: Prefer `1..` over `1..-1`.
+009.rb:1:4: C: [Correctable] Style/SlicingWithRange: Prefer `..42` over `nil..42`.
+
+==> autocorrect exit=0 493 <==
+000.rb:1:4: C: [Corrected] Style/SlicingWithRange: Prefer `[..42]` over `[nil..42]`.
+003.rb:1:4: C: [Corrected] Style/SlicingWithRange: Prefer `..42` over `nil..42`.
+005.rb:1:4: C: [Corrected] Style/SlicingWithRange: Remove the useless `&.[](0..-1)`.
+006.rb:1:4: C: [Corrected] Style/SlicingWithRange: Remove the useless `.[] 0..-1`.
+007.rb:1:4: C: [Corrected] Style/SlicingWithRange: Prefer `1..` over `1..-1`.
+009.rb:1:4: C: [Corrected] Style/SlicingWithRange: Prefer `..42` over `nil..42`.
+
+==> corrected/000.rb 10 <==
+ary[..42]
+
+==> corrected/003.rb 13 <==
+ary.[](..42)
+
+==> corrected/005.rb 4 <==
+ary
+
+==> corrected/006.rb 4 <==
+ary
+
+==> corrected/007.rb 12 <==
+ary.[](1..)
+
+==> corrected/009.rb 14 <==
+ary&.[](..42)
+

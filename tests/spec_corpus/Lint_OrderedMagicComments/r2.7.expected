@@ -1,0 +1,41 @@
+==> offenses exit=1 744 <==
+000.rb:2:1: W: [Correctable] Lint/OrderedMagicComments: The encoding magic comment should precede all other magic comments.
+001.rb:2:1: W: [Correctable] Lint/OrderedMagicComments: The encoding magic comment should precede all other magic comments.
+002.rb:2:1: W: [Correctable] Lint/OrderedMagicComments: The encoding magic comment should precede all other magic comments.
+003.rb:3:1: W: [Correctable] Lint/OrderedMagicComments: The encoding magic comment should precede all other magic comments.
+004.rb:2:1: W: [Correctable] Lint/OrderedMagicComments: The encoding magic comment should precede all other magic comments.
+005.rb:2:1: W: [Correctable] Lint/OrderedMagicComments: The encoding magic comment should precede all other magic comments.
+
+==> autocorrect exit=0 732 <==
+000.rb:2:1: W: [Corrected] Lint/OrderedMagicComments: The encoding magic comment should precede all other magic comments.
+001.rb:2:1: W: [Corrected] Lint/OrderedMagicComments: The encoding magic comment should precede all other magic comments.
+002.rb:2:1: W: [Corrected] Lint/OrderedMagicComments: The encoding magic comment should precede all other magic comments.
+003.rb:3:1: W: [Corrected] Lint/OrderedMagicComments: The encoding magic comment should precede all other magic comments.
+004.rb:2:1: W: [Corrected] Lint/OrderedMagicComments: The encoding magic comment should precede all other magic comments.
+005.rb:2:1: W: [Corrected] Lint/OrderedMagicComments: The encoding magic comment should precede all other magic comments.
+
+==> corrected/000.rb 48 <==
+# encoding: ascii
+# frozen_string_literal: true
+
+==> corrected/001.rb 46 <==
+# coding: ascii
+# frozen_string_literal: true
+
+==> corrected/002.rb 62 <==
+# -*- encoding : ascii-8bit -*-
+# frozen_string_literal: true
+
+==> corrected/003.rb 68 <==
+#!/usr/bin/env ruby
+# encoding: ascii
+# frozen_string_literal: true
+
+==> corrected/004.rb 38 <==
+# encoding: ascii
+# warn_indent: true
+
+==> corrected/005.rb 54 <==
+# encoding: ascii
+# shareable_constant_value: literal
+

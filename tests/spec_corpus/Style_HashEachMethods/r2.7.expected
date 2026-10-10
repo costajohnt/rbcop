@@ -1,0 +1,123 @@
+==> offenses exit=1 2445 <==
+000.rb:1:5: C: [Correctable] Style/HashEachMethods: Use `each_key` instead of `keys.each`.
+001.rb:1:6: C: [Correctable] Style/HashEachMethods: Use `each_key` instead of `keys&.each`.
+002.rb:1:5: C: [Correctable] Style/HashEachMethods: Use `each_value` instead of `values.each`.
+003.rb:1:6: C: [Correctable] Style/HashEachMethods: Use `each_value` instead of `values&.each`.
+004.rb:1:5: C: [Correctable] Style/HashEachMethods: Use `each_key` instead of `keys.each`.
+005.rb:1:5: C: [Correctable] Style/HashEachMethods: Use `each_value` instead of `values.each`.
+017.rb:1:1: C: [Correctable] Style/HashEachMethods: Use `each_value` instead of `each` and remove the unused `k` block argument.
+018.rb:1:1: C: [Correctable] Style/HashEachMethods: Use `each_key` instead of `each` and remove the unused `v` block argument.
+019.rb:1:1: C: [Correctable] Style/HashEachMethods: Use `each_key` instead of `each` and remove the unused `unused_value` block argument.
+020.rb:1:1: C: [Correctable] Style/HashEachMethods: Use `each_key` instead of `each` and remove the unused `unused_value` block argument.
+021.rb:1:1: C: [Correctable] Style/HashEachMethods: Use `each_key` instead of `each` and remove the unused `(_, unused_value)` block argument.
+022.rb:1:1: C: [Correctable] Style/HashEachMethods: Use `each_value` instead of `each` and remove the unused `unused_key` block argument.
+032.rb:1:1: C: [Correctable] Style/HashEachMethods: Use `each_value` instead of `each` and remove the unused `(_, unused_key)` block argument.
+033.rb:1:18: C: [Correctable] Style/HashEachMethods: Use `each_key` instead of `keys.each`.
+039.rb:1:5: C: [Correctable] Style/HashEachMethods: Use `each_key` instead of `keys.each`.
+040.rb:1:5: C: [Correctable] Style/HashEachMethods: Use `each_value` instead of `values.each`.
+041.rb:1:5: C: [Correctable] Style/HashEachMethods: Use `each_key` instead of `keys.each`.
+042.rb:1:4: C: [Correctable] Style/HashEachMethods: Use `each_key` instead of `keys.each`.
+043.rb:1:4: C: [Correctable] Style/HashEachMethods: Use `each_value` instead of `values.each`.
+044.rb:1:4: C: [Correctable] Style/HashEachMethods: Use `each_key` instead of `keys.each`.
+045.rb:1:5: C: [Correctable] Style/HashEachMethods: Use `each_key` instead of `keys&.each`.
+046.rb:1:4: C: [Correctable] Style/HashEachMethods: Use `each_value` instead of `values.each`.
+047.rb:1:5: C: [Correctable] Style/HashEachMethods: Use `each_value` instead of `values&.each`.
+
+==> autocorrect exit=0 2399 <==
+000.rb:1:5: C: [Corrected] Style/HashEachMethods: Use `each_key` instead of `keys.each`.
+001.rb:1:6: C: [Corrected] Style/HashEachMethods: Use `each_key` instead of `keys&.each`.
+002.rb:1:5: C: [Corrected] Style/HashEachMethods: Use `each_value` instead of `values.each`.
+003.rb:1:6: C: [Corrected] Style/HashEachMethods: Use `each_value` instead of `values&.each`.
+004.rb:1:5: C: [Corrected] Style/HashEachMethods: Use `each_key` instead of `keys.each`.
+005.rb:1:5: C: [Corrected] Style/HashEachMethods: Use `each_value` instead of `values.each`.
+017.rb:1:1: C: [Corrected] Style/HashEachMethods: Use `each_value` instead of `each` and remove the unused `k` block argument.
+018.rb:1:1: C: [Corrected] Style/HashEachMethods: Use `each_key` instead of `each` and remove the unused `v` block argument.
+019.rb:1:1: C: [Corrected] Style/HashEachMethods: Use `each_key` instead of `each` and remove the unused `unused_value` block argument.
+020.rb:1:1: C: [Corrected] Style/HashEachMethods: Use `each_key` instead of `each` and remove the unused `unused_value` block argument.
+021.rb:1:1: C: [Corrected] Style/HashEachMethods: Use `each_key` instead of `each` and remove the unused `(_, unused_value)` block argument.
+022.rb:1:1: C: [Corrected] Style/HashEachMethods: Use `each_value` instead of `each` and remove the unused `unused_key` block argument.
+032.rb:1:1: C: [Corrected] Style/HashEachMethods: Use `each_value` instead of `each` and remove the unused `(_, unused_key)` block argument.
+033.rb:1:18: C: [Corrected] Style/HashEachMethods: Use `each_key` instead of `keys.each`.
+039.rb:1:5: C: [Corrected] Style/HashEachMethods: Use `each_key` instead of `keys.each`.
+040.rb:1:5: C: [Corrected] Style/HashEachMethods: Use `each_value` instead of `values.each`.
+041.rb:1:5: C: [Corrected] Style/HashEachMethods: Use `each_key` instead of `keys.each`.
+042.rb:1:4: C: [Corrected] Style/HashEachMethods: Use `each_key` instead of `keys.each`.
+043.rb:1:4: C: [Corrected] Style/HashEachMethods: Use `each_value` instead of `values.each`.
+044.rb:1:4: C: [Corrected] Style/HashEachMethods: Use `each_key` instead of `keys.each`.
+045.rb:1:5: C: [Corrected] Style/HashEachMethods: Use `each_key` instead of `keys&.each`.
+046.rb:1:4: C: [Corrected] Style/HashEachMethods: Use `each_value` instead of `values.each`.
+047.rb:1:5: C: [Corrected] Style/HashEachMethods: Use `each_value` instead of `values&.each`.
+
+==> corrected/000.rb 25 <==
+foo.each_key { |k| p k }
+
+==> corrected/001.rb 26 <==
+foo&.each_key { |k| p k }
+
+==> corrected/002.rb 27 <==
+foo.each_value { |v| p v }
+
+==> corrected/003.rb 28 <==
+foo&.each_value { |v| p v }
+
+==> corrected/004.rb 20 <==
+foo.each_key(&:bar)
+
+==> corrected/005.rb 22 <==
+foo.each_value(&:bar)
+
+==> corrected/017.rb 41 <==
+foo.each_value { |*v| do_something(*v) }
+
+==> corrected/018.rb 39 <==
+foo.each_key { |*k| do_something(*k) }
+
+==> corrected/019.rb 37 <==
+foo.each_key { |k| do_something(k) }
+
+==> corrected/020.rb 38 <==
+foo&.each_key { |k| do_something(k) }
+
+==> corrected/021.rb 37 <==
+foo.each_key { |k| do_something(k) }
+
+==> corrected/022.rb 39 <==
+foo.each_value { |v| do_something(v) }
+
+==> corrected/032.rb 39 <==
+foo.each_value { |v| do_something(v) }
+
+==> corrected/033.rb 38 <==
+{hash: :literal}.each_key { |k| p k }
+
+==> corrected/039.rb 55 <==
+foo.each_key do |key|
+  bar["#{key}_copy"] = value
+end
+
+==> corrected/040.rb 61 <==
+foo.each_value do |value|
+  bar["#{value}_copy"] = value
+end
+
+==> corrected/041.rb 22 <==
+foo.each_key { p _1 }
+
+==> corrected/042.rb 24 <==
+{}.each_key { |k| p k }
+
+==> corrected/043.rb 26 <==
+{}.each_value { |k| p k }
+
+==> corrected/044.rb 19 <==
+{}.each_key(&:bar)
+
+==> corrected/045.rb 20 <==
+{}&.each_key(&:bar)
+
+==> corrected/046.rb 21 <==
+{}.each_value(&:bar)
+
+==> corrected/047.rb 22 <==
+{}&.each_value(&:bar)
+

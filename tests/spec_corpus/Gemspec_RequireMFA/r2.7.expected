@@ -1,0 +1,75 @@
+==> offenses exit=1 1050 <==
+001/my.gemspec:1:1: W: [Correctable] Gemspec/RequireMFA: `metadata['rubygems_mfa_required']` must be set to `'true'`.
+002/my.gemspec:1:1: W: [Correctable] Gemspec/RequireMFA: `metadata['rubygems_mfa_required']` must be set to `'true'`.
+003/my.gemspec:1:1: W: Gemspec/RequireMFA: `metadata['rubygems_mfa_required']` must be set to `'true'`.
+006/my.gemspec:1:1: W: [Correctable] Gemspec/RequireMFA: `metadata['rubygems_mfa_required']` must be set to `'true'`.
+009/my.gemspec:1:1: W: [Correctable] Gemspec/RequireMFA: `metadata['rubygems_mfa_required']` must be set to `'true'`.
+010/my.gemspec:1:1: W: [Correctable] Gemspec/RequireMFA: `metadata['rubygems_mfa_required']` must be set to `'true'`.
+013/my.gemspec:3:32: W: [Correctable] Gemspec/RequireMFA: `metadata['rubygems_mfa_required']` must be set to `'true'`.
+014/my.gemspec:2:44: W: [Correctable] Gemspec/RequireMFA: `metadata['rubygems_mfa_required']` must be set to `'true'`.
+015/my.gemspec:4:1: W: [Correctable] Gemspec/RequireMFA: `metadata['rubygems_mfa_required']` must be set to `'true'`.
+
+==> autocorrect exit=1 1034 <==
+001/my.gemspec:1:1: W: [Corrected] Gemspec/RequireMFA: `metadata['rubygems_mfa_required']` must be set to `'true'`.
+002/my.gemspec:1:1: W: [Corrected] Gemspec/RequireMFA: `metadata['rubygems_mfa_required']` must be set to `'true'`.
+003/my.gemspec:1:1: W: Gemspec/RequireMFA: `metadata['rubygems_mfa_required']` must be set to `'true'`.
+006/my.gemspec:1:1: W: [Corrected] Gemspec/RequireMFA: `metadata['rubygems_mfa_required']` must be set to `'true'`.
+009/my.gemspec:1:1: W: [Corrected] Gemspec/RequireMFA: `metadata['rubygems_mfa_required']` must be set to `'true'`.
+010/my.gemspec:1:1: W: [Corrected] Gemspec/RequireMFA: `metadata['rubygems_mfa_required']` must be set to `'true'`.
+013/my.gemspec:3:32: W: [Corrected] Gemspec/RequireMFA: `metadata['rubygems_mfa_required']` must be set to `'true'`.
+014/my.gemspec:2:44: W: [Corrected] Gemspec/RequireMFA: `metadata['rubygems_mfa_required']` must be set to `'true'`.
+015/my.gemspec:4:1: W: [Corrected] Gemspec/RequireMFA: `metadata['rubygems_mfa_required']` must be set to `'true'`.
+
+==> corrected/001/my.gemspec 85 <==
+Gem::Specification.new do |spec|
+spec.metadata['rubygems_mfa_required'] = 'true'
+end
+
+==> corrected/002/my.gemspec 94 <==
+Gem::Specification.new do |spec|
+  spec.metadata = {
+  'rubygems_mfa_required' => 'true'}
+end
+
+==> corrected/006/my.gemspec 136 <==
+Gem::Specification.new do |spec|
+  spec.metadata = {
+    'foo' => 'bar',
+    'baz' => 'quux',
+'rubygems_mfa_required' => 'true'
+  }
+end
+
+==> corrected/009/my.gemspec 116 <==
+Gem::Specification.new do |spec|
+  spec.metadata['foo'] = 'bar'
+spec.metadata['rubygems_mfa_required'] = 'true'
+end
+
+==> corrected/010/my.gemspec 146 <==
+Gem::Specification.new do |spec|
+  spec.metadata['foo'] = 'bar'
+spec.metadata['rubygems_mfa_required'] = 'true'
+  spec.author = 'viralpraxis'
+end
+
+==> corrected/013/my.gemspec 99 <==
+Gem::Specification.new do |spec|
+  spec.metadata = {
+    'rubygems_mfa_required' => 'true'
+  }
+end
+
+==> corrected/014/my.gemspec 87 <==
+Gem::Specification.new do |spec|
+  spec.metadata['rubygems_mfa_required'] = 'true'
+end
+
+==> corrected/015/my.gemspec 178 <==
+Gem::Specification.new do |spec|
+  spec.metadata = { 'rubygems_mfa_required' => 'true' }
+end
+Gem::Specification.new do |spec|
+spec.metadata['rubygems_mfa_required'] = 'true'
+end
+

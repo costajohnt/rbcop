@@ -1,0 +1,514 @@
+==> offenses exit=1 10764 <==
+000.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+001.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+002.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+003.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+004.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+005.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+006.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+006.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+006.rb:3:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+007.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+016.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+017.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+017.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+018.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+019.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+019.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+025.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+027.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+031.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+032.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+033.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+034.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+035.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+036.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+037.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+037.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+037.rb:3:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+038.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+047.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+048.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+048.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+049.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+050.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+050.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+056.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+058.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+062.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+063.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+064.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+065.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+066.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+066.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+066.rb:3:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+067.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+068.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+069.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+070.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+071.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+071.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+071.rb:3:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+072.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+073.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+074.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+075.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+076.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+077.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+078.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+079.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+080.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+081.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+082.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+083.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+084.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+085.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+086.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+087.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+088.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+089.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+090.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+090.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+090.rb:3:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+091.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+100.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+101.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+101.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+102.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+103.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+103.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+109.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+111.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+115.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+116.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+117.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+118.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+119.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+119.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+119.rb:3:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+120.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+121.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+122.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+123.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+124.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+124.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+124.rb:3:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+125.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+126.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+127.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+128.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+129.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+129.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+129.rb:3:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+130.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+131.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+132.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+133.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+134.rb:1:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+134.rb:2:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+134.rb:3:1: C: [Correctable] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+
+==> autocorrect exit=0 10548 <==
+000.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+001.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+002.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+003.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+004.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+005.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+006.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+006.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+006.rb:3:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+007.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+016.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+017.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+017.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+018.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+019.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+019.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+025.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+027.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+031.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+032.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+033.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+034.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+035.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+036.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+037.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+037.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+037.rb:3:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+038.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+047.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+048.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+048.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+049.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+050.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+050.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+056.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+058.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `find_all` with a regexp match.
+062.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+063.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+064.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+065.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+066.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+066.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+066.rb:3:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+067.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+068.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+069.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+070.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+071.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+071.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+071.rb:3:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+072.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+073.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+074.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+075.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+076.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+077.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+078.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+079.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+080.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+081.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+082.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+083.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep` to `reject` with a regexp match.
+084.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+085.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+086.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+087.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+088.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+089.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+090.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+090.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+090.rb:3:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+091.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+100.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+101.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+101.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+102.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+103.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+103.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+109.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+111.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `reject` with a regexp match.
+115.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+116.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+117.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+118.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+119.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+119.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+119.rb:3:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+120.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+121.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+122.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+123.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+124.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+124.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+124.rb:3:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `select` with a regexp match.
+125.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+126.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+127.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+128.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+129.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+129.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+129.rb:3:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+130.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+131.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+132.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+133.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+134.rb:1:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+134.rb:2:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+134.rb:3:1: C: [Corrected] Style/SelectByRegexp: Prefer `grep_v` to `find_all` with a regexp match.
+
+==> corrected/000.rb 21 <==
+array.grep(/regexp/)
+
+==> corrected/001.rb 21 <==
+array.grep(/regexp/)
+
+==> corrected/002.rb 21 <==
+array.grep(/regexp/)
+
+==> corrected/003.rb 33 <==
+lvar = /regexp/
+array.grep(lvar)
+
+==> corrected/004.rb 21 <==
+array.grep(/regexp/)
+
+==> corrected/005.rb 33 <==
+lvar = /regexp/
+array.grep(lvar)
+
+==> corrected/006.rb 63 <==
+array.grep(y)
+array.grep(REGEXP)
+array.grep(foo.bar.baz(quux))
+
+==> corrected/007.rb 21 <==
+array.grep(/regexp/)
+
+==> corrected/016.rb 15 <==
+grep(/regexp/)
+
+==> corrected/017.rb 42 <==
+[].grep(/regexp/)
+foo.to_a.grep(/regexp/)
+
+==> corrected/018.rb 27 <==
+('aaa'...'abc').grep(/ab/)
+
+==> corrected/019.rb 48 <==
+Set.new.grep(/regexp/)
+[].to_set.grep(/regexp/)
+
+==> corrected/025.rb 28 <==
+foo.to_h.bar.grep(/regexp/)
+
+==> corrected/027.rb 22 <==
+array&.grep(/regexp/)
+
+==> corrected/031.rb 21 <==
+array.grep(/regexp/)
+
+==> corrected/032.rb 21 <==
+array.grep(/regexp/)
+
+==> corrected/033.rb 21 <==
+array.grep(/regexp/)
+
+==> corrected/034.rb 33 <==
+lvar = /regexp/
+array.grep(lvar)
+
+==> corrected/035.rb 21 <==
+array.grep(/regexp/)
+
+==> corrected/036.rb 33 <==
+lvar = /regexp/
+array.grep(lvar)
+
+==> corrected/037.rb 63 <==
+array.grep(y)
+array.grep(REGEXP)
+array.grep(foo.bar.baz(quux))
+
+==> corrected/038.rb 21 <==
+array.grep(/regexp/)
+
+==> corrected/047.rb 15 <==
+grep(/regexp/)
+
+==> corrected/048.rb 42 <==
+[].grep(/regexp/)
+foo.to_a.grep(/regexp/)
+
+==> corrected/049.rb 27 <==
+('aaa'...'abc').grep(/ab/)
+
+==> corrected/050.rb 48 <==
+Set.new.grep(/regexp/)
+[].to_set.grep(/regexp/)
+
+==> corrected/056.rb 28 <==
+foo.to_h.bar.grep(/regexp/)
+
+==> corrected/058.rb 22 <==
+array&.grep(/regexp/)
+
+==> corrected/062.rb 21 <==
+array.grep(/regexp/)
+
+==> corrected/063.rb 33 <==
+lvar = /regexp/
+array.grep(lvar)
+
+==> corrected/064.rb 21 <==
+array.grep(/regexp/)
+
+==> corrected/065.rb 33 <==
+lvar = /regexp/
+array.grep(lvar)
+
+==> corrected/066.rb 63 <==
+array.grep(y)
+array.grep(REGEXP)
+array.grep(foo.bar.baz(quux))
+
+==> corrected/067.rb 22 <==
+array&.grep(/regexp/)
+
+==> corrected/068.rb 34 <==
+lvar = /regexp/
+array&.grep(lvar)
+
+==> corrected/069.rb 22 <==
+array&.grep(/regexp/)
+
+==> corrected/070.rb 34 <==
+lvar = /regexp/
+array&.grep(lvar)
+
+==> corrected/071.rb 66 <==
+array&.grep(y)
+array&.grep(REGEXP)
+array&.grep(foo.bar.baz(quux))
+
+==> corrected/072.rb 23 <==
+array.grep_v(/regexp/)
+
+==> corrected/073.rb 23 <==
+array.grep_v(/regexp/)
+
+==> corrected/074.rb 23 <==
+array.grep_v(/regexp/)
+
+==> corrected/075.rb 23 <==
+array.grep_v(/regexp/)
+
+==> corrected/076.rb 23 <==
+array.grep_v(/regexp/)
+
+==> corrected/077.rb 23 <==
+array.grep_v(/regexp/)
+
+==> corrected/078.rb 23 <==
+array.grep_v(/regexp/)
+
+==> corrected/079.rb 23 <==
+array.grep_v(/regexp/)
+
+==> corrected/080.rb 21 <==
+array.grep(/regexp/)
+
+==> corrected/081.rb 21 <==
+array.grep(/regexp/)
+
+==> corrected/082.rb 21 <==
+array.grep(/regexp/)
+
+==> corrected/083.rb 21 <==
+array.grep(/regexp/)
+
+==> corrected/084.rb 23 <==
+array.grep_v(/regexp/)
+
+==> corrected/085.rb 23 <==
+array.grep_v(/regexp/)
+
+==> corrected/086.rb 23 <==
+array.grep_v(/regexp/)
+
+==> corrected/087.rb 35 <==
+lvar = /regexp/
+array.grep_v(lvar)
+
+==> corrected/088.rb 23 <==
+array.grep_v(/regexp/)
+
+==> corrected/089.rb 35 <==
+lvar = /regexp/
+array.grep_v(lvar)
+
+==> corrected/090.rb 69 <==
+array.grep_v(y)
+array.grep_v(REGEXP)
+array.grep_v(foo.bar.baz(quux))
+
+==> corrected/091.rb 23 <==
+array.grep_v(/regexp/)
+
+==> corrected/100.rb 17 <==
+grep_v(/regexp/)
+
+==> corrected/101.rb 46 <==
+[].grep_v(/regexp/)
+foo.to_a.grep_v(/regexp/)
+
+==> corrected/102.rb 29 <==
+('aaa'...'abc').grep_v(/ab/)
+
+==> corrected/103.rb 52 <==
+Set.new.grep_v(/regexp/)
+[].to_set.grep_v(/regexp/)
+
+==> corrected/109.rb 30 <==
+foo.to_h.bar.grep_v(/regexp/)
+
+==> corrected/111.rb 24 <==
+array&.grep_v(/regexp/)
+
+==> corrected/115.rb 23 <==
+array.grep_v(/regexp/)
+
+==> corrected/116.rb 35 <==
+lvar = /regexp/
+array.grep_v(lvar)
+
+==> corrected/117.rb 23 <==
+array.grep_v(/regexp/)
+
+==> corrected/118.rb 35 <==
+lvar = /regexp/
+array.grep_v(lvar)
+
+==> corrected/119.rb 69 <==
+array.grep_v(y)
+array.grep_v(REGEXP)
+array.grep_v(foo.bar.baz(quux))
+
+==> corrected/120.rb 24 <==
+array&.grep_v(/regexp/)
+
+==> corrected/121.rb 36 <==
+lvar = /regexp/
+array&.grep_v(lvar)
+
+==> corrected/122.rb 24 <==
+array&.grep_v(/regexp/)
+
+==> corrected/123.rb 36 <==
+lvar = /regexp/
+array&.grep_v(lvar)
+
+==> corrected/124.rb 72 <==
+array&.grep_v(y)
+array&.grep_v(REGEXP)
+array&.grep_v(foo.bar.baz(quux))
+
+==> corrected/125.rb 23 <==
+array.grep_v(/regexp/)
+
+==> corrected/126.rb 35 <==
+lvar = /regexp/
+array.grep_v(lvar)
+
+==> corrected/127.rb 23 <==
+array.grep_v(/regexp/)
+
+==> corrected/128.rb 35 <==
+lvar = /regexp/
+array.grep_v(lvar)
+
+==> corrected/129.rb 69 <==
+array.grep_v(y)
+array.grep_v(REGEXP)
+array.grep_v(foo.bar.baz(quux))
+
+==> corrected/130.rb 24 <==
+array&.grep_v(/regexp/)
+
+==> corrected/131.rb 36 <==
+lvar = /regexp/
+array&.grep_v(lvar)
+
+==> corrected/132.rb 24 <==
+array&.grep_v(/regexp/)
+
+==> corrected/133.rb 36 <==
+lvar = /regexp/
+array&.grep_v(lvar)
+
+==> corrected/134.rb 72 <==
+array&.grep_v(y)
+array&.grep_v(REGEXP)
+array&.grep_v(foo.bar.baz(quux))
+

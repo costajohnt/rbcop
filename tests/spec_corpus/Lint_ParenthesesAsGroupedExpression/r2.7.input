@@ -1,0 +1,107 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 11 <==
+a.func (x)
+
+==> 001.rb 8 <==
+is? (x)
+
+==> 002.rb 37 <==
+a.concat ((1..1).map { |i| i * 10 })
+
+==> 003.rb 35 <==
+a.concat (1..1).map { |i| i * 10 }
+
+==> 004.rb 34 <==
+a.concat ((1..1).map { _1 * 10 })
+
+==> 005.rb 32 <==
+a.concat (1..1).map { _1 * 10 }
+
+==> 006.rb 14 <==
+func (x) || y
+
+==> 007.rb 34 <==
+func (x).func.func.func.func.func
+
+==> 008.rb 35 <==
+func (x).func.func.func.func&.func
+
+==> 009.rb 17 <==
+puts (2 + 3) * 4
+
+==> 010.rb 33 <==
+do_something.eq (foo * bar).to_i
+
+==> 011.rb 32 <==
+transition (foo - bar) => value
+
+==> 012.rb 19 <==
+foo (cond) ? 1 : 2
+
+==> 013.rb 4 <==
+func
+==> 014.rb 6 <==
+puts x
+==> 015.rb 17 <==
+a.b
+a.b 1
+a.b(1)
+
+==> 016.rb 6 <==
+a b(c)
+==> 017.rb 10 <==
+a yield(c)
+==> 018.rb 10 <==
+a super(c)
+==> 019.rb 13 <==
+a defined?(c)
+==> 020.rb 27 <==
+a % (b + c)
+a.b = (c == d)
+
+==> 021.rb 8 <==
+a( (b) )
+==> 022.rb 28 <==
+      rand (a - b)..(c - d)
+
+==> 023.rb 13 <==
+rand (1..10)
+
+==> 024.rb 42 <==
+assert_equal (0..1.9), acceleration.domain
+==> 025.rb 38 <==
+foo(
+  <<~EOS
+    foo (
+    )
+  EOS
+)
+
+==> 026.rb 12 <==
+a&.func (x)
+
+==> 027.rb 21 <==
+false? (foo and bar)
+
+==> 028.rb 20 <==
+false? (foo or bar)
+
+==> 029.rb 17 <==
+false? (not foo)
+
+==> 030.rb 24 <==
+false? (foo rescue bar)
+
+==> 031.rb 20 <==
+false? (foo if bar)
+
+==> 032.rb 20 <==
+false? (foo && bar)
+

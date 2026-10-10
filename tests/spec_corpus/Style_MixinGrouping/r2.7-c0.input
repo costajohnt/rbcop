@@ -1,0 +1,54 @@
+==> .rubocop.yml 156 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/MixinGrouping:
+  EnforcedStyle: separated
+
+==> 000.rb 33 <==
+class Foo
+  include Bar, Qux
+end
+
+==> 001.rb 39 <==
+expect(foo).to include { { bar: baz } }
+==> 002.rb 47 <==
+class Foo
+  include Bar, Baz
+  include Qux
+end
+
+==> 003.rb 24 <==
+class Foo
+  include
+end
+
+==> 004.rb 32 <==
+class Foo
+  extend Bar, Qux
+end
+
+==> 005.rb 23 <==
+class Foo
+  extend
+end
+
+==> 006.rb 33 <==
+class Foo
+  prepend Bar, Qux
+end
+
+==> 007.rb 24 <==
+class Foo
+  prepend
+end
+
+==> 008.rb 46 <==
+class Foo
+  include Bar, Baz
+  extend Qux
+end
+

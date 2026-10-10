@@ -1,0 +1,76 @@
+==> offenses exit=1 2190 <==
+000.rb:1:14: C: [Correctable] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+001.rb:1:14: C: [Correctable] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+001.rb:1:27: C: [Correctable] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+002.rb:1:14: C: [Correctable] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+003.rb:1:14: C: [Correctable] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+004.rb:1:14: C: [Correctable] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+005.rb:1:14: C: [Correctable] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+006.rb:1:14: C: [Correctable] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+007.rb:1:14: C: [Correctable] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+008.rb:1:14: C: [Correctable] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+008.rb:2:14: C: [Correctable] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+009.rb:1:14: C: [Correctable] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+010.rb:1:14: C: [Correctable] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+011.rb:1:14: C: [Correctable] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+012.rb:2:16: C: [Correctable] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+
+==> autocorrect exit=0 2160 <==
+000.rb:1:14: C: [Corrected] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+001.rb:1:14: C: [Corrected] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+001.rb:1:27: C: [Corrected] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+002.rb:1:14: C: [Corrected] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+003.rb:1:14: C: [Corrected] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+004.rb:1:14: C: [Corrected] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+005.rb:1:14: C: [Corrected] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+006.rb:1:14: C: [Corrected] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+007.rb:1:14: C: [Corrected] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+008.rb:1:14: C: [Corrected] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+008.rb:2:14: C: [Corrected] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+009.rb:1:14: C: [Corrected] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+010.rb:1:14: C: [Corrected] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+011.rb:1:14: C: [Corrected] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+012.rb:2:16: C: [Corrected] Style/RedundantDoubleSplatHashBraces: Remove the redundant double splat and braces, use keyword arguments directly.
+
+==> corrected/000.rb 33 <==
+do_something(foo: bar, baz: qux)
+
+==> corrected/001.rb 33 <==
+do_something(foo: bar, baz: qux)
+
+==> corrected/002.rb 34 <==
+do_something(foo: bar, **options)
+
+==> corrected/003.rb 44 <==
+do_something(foo: bar, baz: qux, **options)
+
+==> corrected/004.rb 44 <==
+do_something(foo: bar, baz: qux, **options)
+
+==> corrected/005.rb 39 <==
+do_something(foo: bar, baz: qux, x: y)
+
+==> corrected/006.rb 33 <==
+do_something(foo: bar, baz: qux)
+
+==> corrected/007.rb 44 <==
+do_something(foo: bar, baz: qux, **options)
+
+==> corrected/008.rb 68 <==
+do_something(foo: bar, **options)
+do_something(baz: qux, **options)
+
+==> corrected/009.rb 57 <==
+do_something(foo: bar, baz: qux, **options1, **options2)
+
+==> corrected/010.rb 69 <==
+do_something(foo: bar, baz: qux, **options1, **options2, **options3)
+
+==> corrected/011.rb 69 <==
+do_something(foo: bar, baz: qux, **options1, **options2, **options3)
+
+==> corrected/012.rb 48 <==
+block do
+  do_something(foo: bar, baz: qux)
+end
+

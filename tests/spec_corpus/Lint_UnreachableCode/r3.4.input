@@ -1,0 +1,129 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 86 <==
+class Dummy
+  def return; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  return
+  it
+end
+
+==> 001.rb 82 <==
+class Dummy
+  def next; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  next
+  it
+end
+
+==> 002.rb 84 <==
+class Dummy
+  def break; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  break
+  it
+end
+
+==> 003.rb 84 <==
+class Dummy
+  def retry; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  retry
+  it
+end
+
+==> 004.rb 82 <==
+class Dummy
+  def redo; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  redo
+  it
+end
+
+==> 005.rb 84 <==
+class Dummy
+  def throw; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  throw
+  it
+end
+
+==> 006.rb 84 <==
+class Dummy
+  def raise; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  raise
+  it
+end
+
+==> 007.rb 82 <==
+class Dummy
+  def fail; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  fail
+  it
+end
+
+==> 008.rb 82 <==
+class Dummy
+  def exit; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  exit
+  it
+end
+
+==> 009.rb 84 <==
+class Dummy
+  def exit!; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  exit!
+  it
+end
+
+==> 010.rb 84 <==
+class Dummy
+  def abort; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  abort
+  it
+end
+

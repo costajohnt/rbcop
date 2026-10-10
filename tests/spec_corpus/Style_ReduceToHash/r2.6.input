@@ -1,0 +1,89 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.6
+
+==> 000.rb 70 <==
+array.each_with_object({}) { |elem, hash| hash[elem.id] = elem.name }
+
+==> 001.rb 142 <==
+tables.each_with_object({}) { |table, h|
+  h[table.node] = table.columns.each_with_object({}) { |column, i| i[column.name] = column.alias }
+}
+
+==> 002.rb 75 <==
+array.each_with_object({}) do |elem, hash|
+  hash[elem.id] = elem.name
+end
+
+==> 003.rb 71 <==
+array&.each_with_object({}) { |elem, hash| hash[elem.id] = elem.name }
+
+==> 004.rb 61 <==
+each_with_object({}) { |elem, hash| hash[elem] = elem.to_s }
+
+==> 005.rb 50 <==
+array.each_with_object({}) { |x, h| h[x] = true }
+
+==> 006.rb 87 <==
+array.each_with_object({}) do |elem, hash|
+  hash[elem.id] = elem.name
+  puts elem
+end
+
+==> 007.rb 56 <==
+hash.each_with_object({}) { |(k, v), h| h[k.to_s] = v }
+
+==> 008.rb 69 <==
+array.each_with_object(Hash.new(0)) { |elem, hash| hash[elem] += 1 }
+
+==> 009.rb 70 <==
+array.each_with_object({}) { |elem, hash| hash.merge!(elem => true) }
+
+==> 010.rb 63 <==
+array.each_with_object({}) { |elem, hash| other[elem] = true }
+
+==> 011.rb 88 <==
+array.each_with_object({}) do |elem, hash|
+  hash[elem.id] = hash[elem.id].to_i + 1
+end
+
+==> 012.rb 72 <==
+array.each_with_object({}) do |elem, hash|
+  hash[hash.size] = elem
+end
+
+==> 013.rb 66 <==
+array.inject({}) { |hash, elem| hash[elem.id] = elem.name; hash }
+
+==> 014.rb 72 <==
+array.inject({}) do |hash, elem|
+  hash[elem.id] = elem.name
+  hash
+end
+
+==> 015.rb 67 <==
+array&.inject({}) { |hash, elem| hash[elem.id] = elem.name; hash }
+
+==> 016.rb 59 <==
+array.inject({}) { |hash, elem| hash[elem] = true; other }
+
+==> 017.rb 76 <==
+array.inject({}) do |hash, elem|
+  puts elem
+  hash[elem] = true
+  hash
+end
+
+==> 018.rb 85 <==
+array.inject({}) do |hash, elem|
+  hash[elem.id] = hash[elem.id].to_i + 1
+  hash
+end
+
+==> 019.rb 66 <==
+array.reduce({}) { |hash, elem| hash[elem.id] = elem.name; hash }
+

@@ -1,0 +1,20 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.6
+
+==> 000.rb 61 <==
+array.filter { |e| !e.nil? }
+hash.filter! { |k, v| !v.nil? }
+
+==> 001.rb 69 <==
+array&.filter { |e| e&.nil?&.! }
+hash&.filter! { |k, v| v&.nil?&.! }
+
+==> 002.rb 50 <==
+filter { |e| !e.nil? }
+filter! { |k, v| !v.nil? }
+

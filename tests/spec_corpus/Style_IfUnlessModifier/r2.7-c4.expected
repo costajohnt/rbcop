@@ -1,0 +1,12 @@
+==> offenses exit=1 101 <==
+000.rb:2:68: C: [Correctable] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+
+==> autocorrect exit=0 99 <==
+000.rb:2:68: C: [Corrected] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+
+==> corrected/000.rb 120 <==
+def f
+  # rubocop:disable Style/For
+  puts '                                                         ' if condition
+end
+

@@ -1,0 +1,341 @@
+==> .rubocop.yml 164 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/BlockAlignment:
+  EnforcedStyleAlignWith: either
+
+==> 000.rb 14 <==
+test do
+  end
+
+==> 001.rb 20 <==
+test do |ala|
+  end
+
+==> 002.rb 66 <==
+scope :bar, lambda { joins(:baz)
+                     .distinct }
+
+==> 003.rb 107 <==
+(value.is_a? Array) && value.all? do |subvalue|
+  type_check_value(subvalue, array_type)
+end
+a || b do
+end
+
+==> 004.rb 29 <==
+variable = test do |ala|
+end
+
+==> 005.rb 34 <==
+a = b = c = test do |ala|
+    end
+
+==> 006.rb 30 <==
+a = b = c = test do |ala|
+end
+
+==> 007.rb 83 <==
+b = 1 + preceding_line.reduce(0) do |a, e|
+  a + e.length + newline_length
+end + 1
+
+==> 008.rb 31 <==
+variable = test do |ala|
+  end
+
+==> 009.rb 76 <==
+variable =
+  a_long_method_that_dont_fit_on_the_line do |v|
+    v.foo
+  end
+
+==> 010.rb 74 <==
+variable =
+  a_long_method_that_dont_fit_on_the_line do |v|
+    v.foo
+end
+
+==> 011.rb 335 <==
+def foo(bar)
+  bar.get_stuffs
+      .reject do |stuff|
+        stuff.with_a_very_long_expression_that_doesnt_fit_the_line
+      end.select do |stuff|
+        stuff.another_very_long_expression_that_doesnt_fit_the_line
+      end
+      .select do |stuff|
+        stuff.another_very_long_expression_that_doesnt_fit_the_line
+      end
+end
+
+==> 012.rb 337 <==
+def foo(bar)
+  bar.get_stuffs
+      .reject do |stuff|
+        stuff.with_a_very_long_expression_that_doesnt_fit_the_line
+        end.select do |stuff|
+        stuff.another_very_long_expression_that_doesnt_fit_the_line
+    end
+      .select do |stuff|
+        stuff.another_very_long_expression_that_doesnt_fit_the_line
+        end
+end
+
+==> 013.rb 287 <==
+       my_object.chaining_this_very_long_method(with_a_parameter)
+           .and_one_with_a_block do
+         do_something
+       end
+# Other variant:
+       my_object.chaining_this_very_long_method(
+           with_a_parameter).and_one_with_a_block do
+         do_something
+       end
+
+==> 014.rb 448 <==
+# Aligned with start of line where do is:
+params = default_options.merge(options)
+          .delete_if { |k, v| v.nil? }
+          .each_with_object({}) do |(k, v), new_hash|
+            new_hash[k.to_s] = v.to_s
+          end
+# Aligned with start of the whole expression:
+params = default_options.merge(options)
+          .delete_if { |k, v| v.nil? }
+          .each_with_object({}) do |(k, v), new_hash|
+            new_hash[k.to_s] = v.to_s
+end
+
+==> 015.rb 85 <==
+out
+  .brackets(lft: foo,
+            rgt: foo) {
+    process(scheme.constraint)
+  }
+
+==> 016.rb 88 <==
+out
+  .brackets(lft: foo,
+            rgt: foo) do
+    process(scheme.constraint)
+  end
+
+==> 017.rb 90 <==
+out
+  .brackets(lft: foo,
+            rgt: foo) {
+    process(scheme.constraint)
+  }.to_s
+
+==> 018.rb 95 <==
+out
+  .brackets(lft: foo,
+            rgt: foo) {
+    process(scheme.constraint)
+            }
+
+==> 019.rb 89 <==
+out
+  .brackets(lft: foo,
+            rgt: foo) {
+    process(scheme.constraint)
+      }
+
+==> 020.rb 37 <==
+e,
+f = [5, 6].map do |i|
+  i - 5
+end
+
+==> 021.rb 41 <==
+e,
+f = [5, 6].map do |i|
+  i - 5
+    end
+
+==> 022.rb 30 <==
+@variable = test do |ala|
+end
+
+==> 023.rb 32 <==
+@variable = test do |ala|
+  end
+
+==> 024.rb 31 <==
+@@variable = test do |ala|
+end
+
+==> 025.rb 33 <==
+@@variable = test do |ala|
+  end
+
+==> 026.rb 30 <==
+$variable = test do |ala|
+end
+
+==> 027.rb 32 <==
+$variable = test do |ala|
+  end
+
+==> 028.rb 29 <==
+CONSTANT = test do |ala|
+end
+
+==> 029.rb 39 <==
+Module::CONSTANT = test do |ala|
+  end
+
+==> 030.rb 54 <==
+parser.children << lambda do |token|
+  token << 1
+end
+
+==> 031.rb 56 <==
+parser.children << lambda do |token|
+  token << 1
+  end
+
+==> 032.rb 47 <==
+@h[:f] = f.each_pair.map do |f, v|
+  v = 1
+end
+
+==> 033.rb 49 <==
+@h[:f] = f.each_pair.map do |f, v|
+  v = 1
+  end
+
+==> 034.rb 33 <==
+expect(arr.all? { |o| o.valid? })
+==> 035.rb 53 <==
+expect(arr.all? do |o|
+         o.valid?
+       end)
+
+==> 036.rb 41 <==
+expect(arr.all? do |o|
+  o.valid?
+  end)
+
+==> 037.rb 53 <==
+rb += files.select do |file|
+  file << something
+end
+
+==> 038.rb 55 <==
+rb += files.select do |file|
+  file << something
+  end
+
+==> 039.rb 31 <==
+variable &&= test do |ala|
+end
+
+==> 040.rb 33 <==
+variable &&= test do |ala|
+  end
+
+==> 041.rb 31 <==
+variable ||= test do |ala|
+end
+
+==> 042.rb 33 <==
+variable ||= test do |ala|
+  end
+
+==> 043.rb 43 <==
+var1, var2 = lambda do |test|
+  [1, 2]
+end
+
+==> 044.rb 85 <==
+parser.diagnostics.consumer = lambda do |diagnostic|
+  diagnostics << diagnostic
+end
+
+==> 045.rb 45 <==
+var1, var2 = lambda do |test|
+  [1, 2]
+  end
+
+==> 046.rb 34 <==
+a = test do
+ end
+b = test do
+ end
+
+==> 047.rb 154 <==
+def get_gems_by_name
+  @gems ||= Hash[*get_latest_gems.map { |gem|
+                   [gem.name, gem, gem.full_name, gem]
+                 }.flatten]
+end
+
+==> 048.rb 151 <==
+def get_gems_by_name
+  @gems ||= Hash[*get_latest_gems.map { |gem|
+                   [gem.name, gem, gem.full_name, gem]
+              }.flatten]
+end
+
+==> 049.rb 77 <==
+def abc
+  @abc ||= A[~xyz { |x|
+               x
+             }.flatten]
+end
+
+==> 050.rb 88 <==
+def abc
+  @abc ||= A[~xyz { |x|
+               x
+                        }.flatten]
+end
+
+==> 051.rb 77 <==
+def abc
+  @abc ||= A[!xyz { |x|
+               x
+             }.flatten]
+end
+
+==> 052.rb 64 <==
+def abc
+  @abc ||= A[!xyz { |x|
+               x
+}.flatten]
+end
+
+==> 053.rb 77 <==
+def abc
+  @abc ||= A[-xyz { |x|
+               x
+             }.flatten]
+end
+
+==> 054.rb 82 <==
+def abc
+  @abc ||= A[-xyz { |x|
+               x
+                  }.flatten]
+end
+
+==> 055.rb 11 <==
+test {
+  }
+
+==> 056.rb 63 <==
+parser.diagnostics.consumer = lambda do
+  _1 << diagnostic
+end
+
+==> 057.rb 40 <==
+var1, var2 = lambda do
+  [_1, _2]
+  end
+

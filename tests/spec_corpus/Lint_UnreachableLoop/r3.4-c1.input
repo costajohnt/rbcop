@@ -1,0 +1,14 @@
+==> .rubocop.yml 190 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Lint/UnreachableLoop:
+  AllowedPatterns:
+  - !ruby/regexp /exactly\(\d+\)\.times/
+
+==> 000.rb 21 <==
+2.times { raise it }
+

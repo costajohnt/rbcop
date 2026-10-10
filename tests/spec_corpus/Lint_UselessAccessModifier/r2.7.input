@@ -1,0 +1,1828 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 107 <==
+class SomeClass
+  def some_method
+    puts 10
+  end
+  private
+  def self.some_method
+    puts 10
+  end
+end
+
+==> 001.rb 69 <==
+def some_method
+  puts 10
+end
+private
+def other_method
+  puts 10
+end
+
+==> 002.rb 68 <==
+class SomeClass
+  def some_method
+    puts 10
+  end
+  protected
+end
+
+==> 003.rb 182 <==
+class SomeClass
+  protected
+  attr_accessor :some_property
+  public
+  attr_reader :another_one
+  private
+  attr :yet_again, true
+  protected
+  attr_writer :just_for_good_measure
+end
+
+==> 004.rb 66 <==
+class SomeClass
+  protected
+  def SomeClass.some_method
+  end
+end
+
+==> 005.rb 116 <==
+class SomeClass
+ private
+ private
+  def some_method
+    puts 10
+  end
+  def some_other_method
+    puts 10
+  end
+end
+
+==> 006.rb 79 <==
+class SomeClass
+  def some_method
+    puts 10
+  end
+  private :some_method
+end
+
+==> 007.rb 30 <==
+class SomeClass
+  private
+end
+
+==> 008.rb 55 <==
+class SomeClass
+  private
+end
+class SomeOtherClass
+end
+
+==> 009.rb 64 <==
+class SomeClass
+  private def some_method
+    puts 10
+  end
+end
+
+==> 010.rb 45 <==
+class SomeClass
+  private
+  CONSTANT = 1
+end
+
+==> 011.rb 45 <==
+class SomeClass
+  private
+  some_var = 1
+end
+
+==> 012.rb 80 <==
+class SomeClass
+  private
+  helper_method def some_method
+    puts 10
+  end
+end
+
+==> 013.rb 85 <==
+class SomeClass
+  private_class_method
+
+  def self.some_method
+    puts 10
+  end
+end
+
+==> 014.rb 82 <==
+class SomeClass
+  private_class_method def self.some_method
+    puts 10
+  end
+end
+
+==> 015.rb 202 <==
+class SomeClass
+  concerning :FirstThing do
+    def foo
+    end
+    private
+
+    def method
+    end
+  end
+
+  concerning :SecondThing do
+    def omg
+    end
+    private
+    def method
+    end
+  end
+ end
+
+==> 016.rb 245 <==
+class SomeClass
+  concerning :FirstThing do
+    def foo
+    end
+    private
+
+    def method
+    end
+  end
+
+  concerning :SecondThing do
+    def omg
+    end
+    private
+    def method
+    end
+    private
+    def another_method
+    end
+  end
+ end
+
+==> 017.rb 163 <==
+class SomeClass
+  concerning :SecondThing do
+    p _1
+    def omg
+    end
+    private
+    def method
+    end
+    private
+    def another_method
+    end
+  end
+ end
+
+==> 018.rb 265 <==
+module SomeModule
+  extend ActiveSupport::Concern
+  class_methods do
+    def some_public_class_method
+    end
+    private
+    def some_private_class_method
+    end
+  end
+  def some_public_instance_method
+  end
+  private
+  def some_private_instance_method
+  end
+end
+
+==> 019.rb 57 <==
+class SomeClass
+  private
+
+  delegate :foo, to: :bar
+end
+
+==> 020.rb 57 <==
+class SomeClass
+  delegate :foo, to: :bar
+
+  private
+end
+
+==> 021.rb 67 <==
+A.class_eval do
+  protected
+  define_method(:method1) do
+  end
+end
+
+==> 022.rb 32 <==
+A.class_eval do
+  protected
+end
+
+==> 023.rb 72 <==
+class A
+  protected
+  A.class_eval do
+    def method1
+    end
+  end
+end
+
+==> 024.rb 62 <==
+class A
+  protected
+  A.class_eval do
+    protected
+  end
+end
+
+==> 025.rb 70 <==
+A.instance_eval do
+  protected
+  define_method(:method1) do
+  end
+end
+
+==> 026.rb 35 <==
+A.instance_eval do
+  protected
+end
+
+==> 027.rb 78 <==
+class A
+  protected
+  self.instance_eval do
+    def method1
+    end
+  end
+end
+
+==> 028.rb 68 <==
+class A
+  protected
+  self.instance_eval do
+    protected
+  end
+end
+
+==> 029.rb 65 <==
+A.class_eval do
+  private
+  define_method(:method1) do
+  end
+end
+
+==> 030.rb 30 <==
+A.class_eval do
+  private
+end
+
+==> 031.rb 70 <==
+class A
+  private
+  A.class_eval do
+    def method1
+    end
+  end
+end
+
+==> 032.rb 58 <==
+class A
+  private
+  A.class_eval do
+    private
+  end
+end
+
+==> 033.rb 68 <==
+A.instance_eval do
+  private
+  define_method(:method1) do
+  end
+end
+
+==> 034.rb 33 <==
+A.instance_eval do
+  private
+end
+
+==> 035.rb 76 <==
+class A
+  private
+  self.instance_eval do
+    def method1
+    end
+  end
+end
+
+==> 036.rb 64 <==
+class A
+  private
+  self.instance_eval do
+    private
+  end
+end
+
+==> 037.rb 45 <==
+Class.new do
+  protected
+  def foo
+  end
+end
+
+==> 038.rb 29 <==
+Class.new do
+  protected
+end
+
+==> 039.rb 43 <==
+Class.new do
+  private
+  def foo
+  end
+end
+
+==> 040.rb 27 <==
+Class.new do
+  private
+end
+
+==> 041.rb 47 <==
+::Class.new do
+  protected
+  def foo
+  end
+end
+
+==> 042.rb 31 <==
+::Class.new do
+  protected
+end
+
+==> 043.rb 45 <==
+::Class.new do
+  private
+  def foo
+  end
+end
+
+==> 044.rb 29 <==
+::Class.new do
+  private
+end
+
+==> 045.rb 46 <==
+Module.new do
+  protected
+  def foo
+  end
+end
+
+==> 046.rb 30 <==
+Module.new do
+  protected
+end
+
+==> 047.rb 44 <==
+Module.new do
+  private
+  def foo
+  end
+end
+
+==> 048.rb 28 <==
+Module.new do
+  private
+end
+
+==> 049.rb 48 <==
+::Module.new do
+  protected
+  def foo
+  end
+end
+
+==> 050.rb 32 <==
+::Module.new do
+  protected
+end
+
+==> 051.rb 46 <==
+::Module.new do
+  private
+  def foo
+  end
+end
+
+==> 052.rb 30 <==
+::Module.new do
+  private
+end
+
+==> 053.rb 46 <==
+Struct.new do
+  protected
+  def foo
+  end
+end
+
+==> 054.rb 30 <==
+Struct.new do
+  protected
+end
+
+==> 055.rb 44 <==
+Struct.new do
+  private
+  def foo
+  end
+end
+
+==> 056.rb 28 <==
+Struct.new do
+  private
+end
+
+==> 057.rb 48 <==
+::Struct.new do
+  protected
+  def foo
+  end
+end
+
+==> 058.rb 32 <==
+::Struct.new do
+  protected
+end
+
+==> 059.rb 46 <==
+::Struct.new do
+  private
+  def foo
+  end
+end
+
+==> 060.rb 30 <==
+::Struct.new do
+  private
+end
+
+==> 061.rb 41 <==
+module A
+  public
+  def method
+  end
+end
+
+==> 062.rb 44 <==
+module A
+  protected
+  def method
+  end
+end
+
+==> 063.rb 42 <==
+module A
+  private
+  def method
+  end
+end
+
+==> 064.rb 62 <==
+module A
+  def method1
+  end
+  public
+  def method2
+  end
+end
+
+==> 065.rb 65 <==
+module A
+  def method1
+  end
+  protected
+  def method2
+  end
+end
+
+==> 066.rb 63 <==
+module A
+  def method1
+  end
+  private
+  def method2
+  end
+end
+
+==> 067.rb 82 <==
+module A
+  private
+  def method1
+  end
+  public
+  private
+  def method2
+  end
+end
+
+==> 068.rb 81 <==
+module A
+  private
+  def method1
+  end
+  public
+  public
+  def method2
+  end
+end
+
+==> 069.rb 62 <==
+module A
+  def method1
+  end
+  def method2
+  end
+  public
+end
+
+==> 070.rb 124 <==
+module A
+  private
+  def blah
+  end
+  begin
+    def method1
+    end
+    public
+    public
+    def method2
+    end
+  end
+end
+
+==> 071.rb 77 <==
+module A
+  def foo
+  end
+
+  do_something do
+    { public: public }
+  end
+end
+
+==> 072.rb 59 <==
+module A
+  public
+  if x
+    def method1
+    end
+  end
+end
+
+==> 073.rb 63 <==
+module A
+  public
+  unless x
+    def method1
+    end
+  end
+end
+
+==> 074.rb 100 <==
+module A
+  public
+  [1, 2].each do |i|
+    define_method("method#{i}") do
+      i
+    end
+  end
+end
+
+==> 075.rb 99 <==
+module A
+  public
+  [1, 2].map do |i|
+    define_method("method#{i}") do
+      i
+    end
+  end
+end
+
+==> 076.rb 57 <==
+module A
+  public
+  define_method(:method1) do
+  end
+end
+
+==> 077.rb 60 <==
+module A
+  public
+  define_method(:method1, lambda { })
+end
+
+==> 078.rb 58 <==
+module A
+  public
+  define_method(:method1, proc { })
+end
+
+==> 079.rb 56 <==
+module A
+  public
+  define_method(:method1, -> { })
+end
+
+==> 080.rb 85 <==
+module A
+  class << self
+    public
+    define_method(:method1) do
+    end
+  end
+end
+
+==> 081.rb 99 <==
+module A
+  public
+  def method1
+  end
+  class << self
+    public
+    def method2
+    end
+  end
+end
+
+==> 082.rb 46 <==
+module A
+  class << self
+    public
+  end
+end
+
+==> 083.rb 70 <==
+module A
+  class << self
+    def method1
+    end
+    public
+  end
+end
+
+==> 084.rb 66 <==
+module A
+  def method1
+  end
+  class << self
+    public
+  end
+end
+
+==> 085.rb 59 <==
+class << A
+  public
+  define_method(:method1) do
+  end
+end
+
+==> 086.rb 24 <==
+class << A
+  public
+end
+
+==> 087.rb 44 <==
+class << A
+  def method1
+  end
+  public
+end
+
+==> 088.rb 118 <==
+module A
+  public
+  def method1
+  end
+  module B
+    def method2
+    end
+    public
+    def method3
+    end
+  end
+end
+
+==> 089.rb 50 <==
+module A
+  public
+  module B
+    public
+  end
+end
+
+==> 090.rb 63 <==
+module A
+  public
+  module B
+    def method1
+    end
+  end
+end
+
+==> 091.rb 41 <==
+module A
+  module B
+    public
+  end
+end
+
+==> 092.rb 87 <==
+module A
+  private
+  def method1
+  end
+  protected
+  protected
+  def method2
+  end
+end
+
+==> 093.rb 65 <==
+module A
+  def method1
+  end
+  def method2
+  end
+  protected
+end
+
+==> 094.rb 130 <==
+module A
+  private
+  def blah
+  end
+  begin
+    def method1
+    end
+    protected
+    protected
+    def method2
+    end
+  end
+end
+
+==> 095.rb 83 <==
+module A
+  def foo
+  end
+
+  do_something do
+    { protected: protected }
+  end
+end
+
+==> 096.rb 62 <==
+module A
+  protected
+  if x
+    def method1
+    end
+  end
+end
+
+==> 097.rb 66 <==
+module A
+  protected
+  unless x
+    def method1
+    end
+  end
+end
+
+==> 098.rb 103 <==
+module A
+  protected
+  [1, 2].each do |i|
+    define_method("method#{i}") do
+      i
+    end
+  end
+end
+
+==> 099.rb 102 <==
+module A
+  protected
+  [1, 2].map do |i|
+    define_method("method#{i}") do
+      i
+    end
+  end
+end
+
+==> 100.rb 60 <==
+module A
+  protected
+  define_method(:method1) do
+  end
+end
+
+==> 101.rb 63 <==
+module A
+  protected
+  define_method(:method1, lambda { })
+end
+
+==> 102.rb 61 <==
+module A
+  protected
+  define_method(:method1, proc { })
+end
+
+==> 103.rb 59 <==
+module A
+  protected
+  define_method(:method1, -> { })
+end
+
+==> 104.rb 88 <==
+module A
+  class << self
+    protected
+    define_method(:method1) do
+    end
+  end
+end
+
+==> 105.rb 105 <==
+module A
+  protected
+  def method1
+  end
+  class << self
+    protected
+    def method2
+    end
+  end
+end
+
+==> 106.rb 49 <==
+module A
+  class << self
+    protected
+  end
+end
+
+==> 107.rb 73 <==
+module A
+  class << self
+    def method1
+    end
+    protected
+  end
+end
+
+==> 108.rb 69 <==
+module A
+  def method1
+  end
+  class << self
+    protected
+  end
+end
+
+==> 109.rb 62 <==
+class << A
+  protected
+  define_method(:method1) do
+  end
+end
+
+==> 110.rb 27 <==
+class << A
+  protected
+end
+
+==> 111.rb 47 <==
+class << A
+  def method1
+  end
+  protected
+end
+
+==> 112.rb 124 <==
+module A
+  protected
+  def method1
+  end
+  module B
+    def method2
+    end
+    protected
+    def method3
+    end
+  end
+end
+
+==> 113.rb 56 <==
+module A
+  protected
+  module B
+    protected
+  end
+end
+
+==> 114.rb 66 <==
+module A
+  protected
+  module B
+    def method1
+    end
+  end
+end
+
+==> 115.rb 44 <==
+module A
+  module B
+    protected
+  end
+end
+
+==> 116.rb 85 <==
+module A
+  protected
+  def method1
+  end
+  private
+  private
+  def method2
+  end
+end
+
+==> 117.rb 63 <==
+module A
+  def method1
+  end
+  def method2
+  end
+  private
+end
+
+==> 118.rb 128 <==
+module A
+  protected
+  def blah
+  end
+  begin
+    def method1
+    end
+    private
+    private
+    def method2
+    end
+  end
+end
+
+==> 119.rb 79 <==
+module A
+  def foo
+  end
+
+  do_something do
+    { private: private }
+  end
+end
+
+==> 120.rb 60 <==
+module A
+  private
+  if x
+    def method1
+    end
+  end
+end
+
+==> 121.rb 64 <==
+module A
+  private
+  unless x
+    def method1
+    end
+  end
+end
+
+==> 122.rb 101 <==
+module A
+  private
+  [1, 2].each do |i|
+    define_method("method#{i}") do
+      i
+    end
+  end
+end
+
+==> 123.rb 100 <==
+module A
+  private
+  [1, 2].map do |i|
+    define_method("method#{i}") do
+      i
+    end
+  end
+end
+
+==> 124.rb 58 <==
+module A
+  private
+  define_method(:method1) do
+  end
+end
+
+==> 125.rb 61 <==
+module A
+  private
+  define_method(:method1, lambda { })
+end
+
+==> 126.rb 59 <==
+module A
+  private
+  define_method(:method1, proc { })
+end
+
+==> 127.rb 57 <==
+module A
+  private
+  define_method(:method1, -> { })
+end
+
+==> 128.rb 86 <==
+module A
+  class << self
+    private
+    define_method(:method1) do
+    end
+  end
+end
+
+==> 129.rb 101 <==
+module A
+  private
+  def method1
+  end
+  class << self
+    private
+    def method2
+    end
+  end
+end
+
+==> 130.rb 47 <==
+module A
+  class << self
+    private
+  end
+end
+
+==> 131.rb 71 <==
+module A
+  class << self
+    def method1
+    end
+    private
+  end
+end
+
+==> 132.rb 67 <==
+module A
+  def method1
+  end
+  class << self
+    private
+  end
+end
+
+==> 133.rb 60 <==
+class << A
+  private
+  define_method(:method1) do
+  end
+end
+
+==> 134.rb 25 <==
+class << A
+  private
+end
+
+==> 135.rb 45 <==
+class << A
+  def method1
+  end
+  private
+end
+
+==> 136.rb 120 <==
+module A
+  private
+  def method1
+  end
+  module B
+    def method2
+    end
+    private
+    def method3
+    end
+  end
+end
+
+==> 137.rb 52 <==
+module A
+  private
+  module B
+    private
+  end
+end
+
+==> 138.rb 64 <==
+module A
+  private
+  module B
+    def method1
+    end
+  end
+end
+
+==> 139.rb 42 <==
+module A
+  module B
+    private
+  end
+end
+
+==> 140.rb 40 <==
+class A
+  public
+  def method
+  end
+end
+
+==> 141.rb 43 <==
+class A
+  protected
+  def method
+  end
+end
+
+==> 142.rb 41 <==
+class A
+  private
+  def method
+  end
+end
+
+==> 143.rb 61 <==
+class A
+  def method1
+  end
+  public
+  def method2
+  end
+end
+
+==> 144.rb 64 <==
+class A
+  def method1
+  end
+  protected
+  def method2
+  end
+end
+
+==> 145.rb 62 <==
+class A
+  def method1
+  end
+  private
+  def method2
+  end
+end
+
+==> 146.rb 81 <==
+class A
+  private
+  def method1
+  end
+  public
+  private
+  def method2
+  end
+end
+
+==> 147.rb 80 <==
+class A
+  private
+  def method1
+  end
+  public
+  public
+  def method2
+  end
+end
+
+==> 148.rb 61 <==
+class A
+  def method1
+  end
+  def method2
+  end
+  public
+end
+
+==> 149.rb 123 <==
+class A
+  private
+  def blah
+  end
+  begin
+    def method1
+    end
+    public
+    public
+    def method2
+    end
+  end
+end
+
+==> 150.rb 76 <==
+class A
+  def foo
+  end
+
+  do_something do
+    { public: public }
+  end
+end
+
+==> 151.rb 58 <==
+class A
+  public
+  if x
+    def method1
+    end
+  end
+end
+
+==> 152.rb 62 <==
+class A
+  public
+  unless x
+    def method1
+    end
+  end
+end
+
+==> 153.rb 99 <==
+class A
+  public
+  [1, 2].each do |i|
+    define_method("method#{i}") do
+      i
+    end
+  end
+end
+
+==> 154.rb 98 <==
+class A
+  public
+  [1, 2].map do |i|
+    define_method("method#{i}") do
+      i
+    end
+  end
+end
+
+==> 155.rb 56 <==
+class A
+  public
+  define_method(:method1) do
+  end
+end
+
+==> 156.rb 59 <==
+class A
+  public
+  define_method(:method1, lambda { })
+end
+
+==> 157.rb 57 <==
+class A
+  public
+  define_method(:method1, proc { })
+end
+
+==> 158.rb 55 <==
+class A
+  public
+  define_method(:method1, -> { })
+end
+
+==> 159.rb 84 <==
+class A
+  class << self
+    public
+    define_method(:method1) do
+    end
+  end
+end
+
+==> 160.rb 98 <==
+class A
+  public
+  def method1
+  end
+  class << self
+    public
+    def method2
+    end
+  end
+end
+
+==> 161.rb 45 <==
+class A
+  class << self
+    public
+  end
+end
+
+==> 162.rb 69 <==
+class A
+  class << self
+    def method1
+    end
+    public
+  end
+end
+
+==> 163.rb 65 <==
+class A
+  def method1
+  end
+  class << self
+    public
+  end
+end
+
+==> 164.rb 116 <==
+class A
+  public
+  def method1
+  end
+  class B
+    def method2
+    end
+    public
+    def method3
+    end
+  end
+end
+
+==> 165.rb 48 <==
+class A
+  public
+  class B
+    public
+  end
+end
+
+==> 166.rb 61 <==
+class A
+  public
+  class B
+    def method1
+    end
+  end
+end
+
+==> 167.rb 39 <==
+class A
+  class B
+    public
+  end
+end
+
+==> 168.rb 86 <==
+class A
+  private
+  def method1
+  end
+  protected
+  protected
+  def method2
+  end
+end
+
+==> 169.rb 64 <==
+class A
+  def method1
+  end
+  def method2
+  end
+  protected
+end
+
+==> 170.rb 129 <==
+class A
+  private
+  def blah
+  end
+  begin
+    def method1
+    end
+    protected
+    protected
+    def method2
+    end
+  end
+end
+
+==> 171.rb 82 <==
+class A
+  def foo
+  end
+
+  do_something do
+    { protected: protected }
+  end
+end
+
+==> 172.rb 61 <==
+class A
+  protected
+  if x
+    def method1
+    end
+  end
+end
+
+==> 173.rb 65 <==
+class A
+  protected
+  unless x
+    def method1
+    end
+  end
+end
+
+==> 174.rb 102 <==
+class A
+  protected
+  [1, 2].each do |i|
+    define_method("method#{i}") do
+      i
+    end
+  end
+end
+
+==> 175.rb 101 <==
+class A
+  protected
+  [1, 2].map do |i|
+    define_method("method#{i}") do
+      i
+    end
+  end
+end
+
+==> 176.rb 59 <==
+class A
+  protected
+  define_method(:method1) do
+  end
+end
+
+==> 177.rb 62 <==
+class A
+  protected
+  define_method(:method1, lambda { })
+end
+
+==> 178.rb 60 <==
+class A
+  protected
+  define_method(:method1, proc { })
+end
+
+==> 179.rb 58 <==
+class A
+  protected
+  define_method(:method1, -> { })
+end
+
+==> 180.rb 87 <==
+class A
+  class << self
+    protected
+    define_method(:method1) do
+    end
+  end
+end
+
+==> 181.rb 104 <==
+class A
+  protected
+  def method1
+  end
+  class << self
+    protected
+    def method2
+    end
+  end
+end
+
+==> 182.rb 48 <==
+class A
+  class << self
+    protected
+  end
+end
+
+==> 183.rb 72 <==
+class A
+  class << self
+    def method1
+    end
+    protected
+  end
+end
+
+==> 184.rb 68 <==
+class A
+  def method1
+  end
+  class << self
+    protected
+  end
+end
+
+==> 185.rb 122 <==
+class A
+  protected
+  def method1
+  end
+  class B
+    def method2
+    end
+    protected
+    def method3
+    end
+  end
+end
+
+==> 186.rb 54 <==
+class A
+  protected
+  class B
+    protected
+  end
+end
+
+==> 187.rb 64 <==
+class A
+  protected
+  class B
+    def method1
+    end
+  end
+end
+
+==> 188.rb 42 <==
+class A
+  class B
+    protected
+  end
+end
+
+==> 189.rb 84 <==
+class A
+  protected
+  def method1
+  end
+  private
+  private
+  def method2
+  end
+end
+
+==> 190.rb 62 <==
+class A
+  def method1
+  end
+  def method2
+  end
+  private
+end
+
+==> 191.rb 127 <==
+class A
+  protected
+  def blah
+  end
+  begin
+    def method1
+    end
+    private
+    private
+    def method2
+    end
+  end
+end
+
+==> 192.rb 78 <==
+class A
+  def foo
+  end
+
+  do_something do
+    { private: private }
+  end
+end
+
+==> 193.rb 59 <==
+class A
+  private
+  if x
+    def method1
+    end
+  end
+end
+
+==> 194.rb 63 <==
+class A
+  private
+  unless x
+    def method1
+    end
+  end
+end
+
+==> 195.rb 100 <==
+class A
+  private
+  [1, 2].each do |i|
+    define_method("method#{i}") do
+      i
+    end
+  end
+end
+
+==> 196.rb 99 <==
+class A
+  private
+  [1, 2].map do |i|
+    define_method("method#{i}") do
+      i
+    end
+  end
+end
+
+==> 197.rb 57 <==
+class A
+  private
+  define_method(:method1) do
+  end
+end
+
+==> 198.rb 60 <==
+class A
+  private
+  define_method(:method1, lambda { })
+end
+
+==> 199.rb 58 <==
+class A
+  private
+  define_method(:method1, proc { })
+end
+
+==> 200.rb 56 <==
+class A
+  private
+  define_method(:method1, -> { })
+end
+
+==> 201.rb 85 <==
+class A
+  class << self
+    private
+    define_method(:method1) do
+    end
+  end
+end
+
+==> 202.rb 100 <==
+class A
+  private
+  def method1
+  end
+  class << self
+    private
+    def method2
+    end
+  end
+end
+
+==> 203.rb 46 <==
+class A
+  class << self
+    private
+  end
+end
+
+==> 204.rb 70 <==
+class A
+  class << self
+    def method1
+    end
+    private
+  end
+end
+
+==> 205.rb 66 <==
+class A
+  def method1
+  end
+  class << self
+    private
+  end
+end
+
+==> 206.rb 118 <==
+class A
+  private
+  def method1
+  end
+  class B
+    def method2
+    end
+    private
+    def method3
+    end
+  end
+end
+
+==> 207.rb 50 <==
+class A
+  private
+  class B
+    private
+  end
+end
+
+==> 208.rb 62 <==
+class A
+  private
+  class B
+    def method1
+    end
+  end
+end
+
+==> 209.rb 40 <==
+class A
+  class B
+    private
+  end
+end
+
+==> 210.rb 94 <==
+class SomeClass
+  included do
+    private
+    def foo; end
+  end
+  private
+  def bar; end
+end
+
+==> 211.rb 116 <==
+class SomeClass
+  included do
+    private
+    private
+    def foo; end
+  end
+  private
+  private
+  def bar; end
+end
+

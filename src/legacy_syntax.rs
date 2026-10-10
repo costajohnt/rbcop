@@ -71,6 +71,28 @@ pub fn semantic_location(kind: &str, start: usize, end: usize, tokens: &[Token],
 /// The offset of the token an LALR parser fails on for a Prism syntax error: a write target
 /// without `=` fails at the token after it, an unwritable expression at its `=`.
 pub fn failure_offset(kind: &str, start: usize, end: usize, tokens: &[Token]) -> usize {
+    // Input that ends inside a construct (`if`, `[1,`, `def (`): the token the parser cannot shift
+    // is `$end`, for an error about what is missing there and for one located at the EOF token.
+    let eof = tokens.last().map_or(start, |t| t.end);
+    let only_trivia_from = |from: usize| {
+        !tokens.iter().any(|t| {
+            t.start >= from
+                && !matches!(
+                    t.kind,
+                    "NEWLINE" | "IGNORED_NEWLINE" | "COMMENT" | "EOF" | "EMBDOC_BEGIN" | "EMBDOC_LINE" | "EMBDOC_END"
+                )
+        })
+    };
+    // Most errors sit on the construct missing something; these sit on the token that failed.
+    let at_failing_token = kind.contains("unexpected")
+        || kind.contains("_term")
+        || kind.starts_with("expect_eol")
+        || kind == "expect_expression_after_operator";
+    let truncated =
+        if at_failing_token { only_trivia_from(start) } else { !kind.starts_with("invalid_") && only_trivia_from(end) };
+    if truncated {
+        return eof;
+    }
     match kind {
         // Located at the `=`, `,`, ... (but `_after_operator` at the failing token); the parser
         // fails on what follows.
@@ -84,6 +106,8 @@ pub fn failure_offset(kind: &str, start: usize, end: usize, tokens: &[Token]) ->
         {
             tokens.last().map_or(start, |t| t.end)
         }
+        // Reported at the `{` whatever is wrong inside: at the latest the parser fails at `$end`.
+        "hash_term" => eof,
         "expression_not_writable" => tokens
             .iter()
             .find(|t| t.start >= start && matches!(parser_type(t.kind), Some("tEQL" | "tOP_ASGN")))
@@ -134,7 +158,9 @@ fn first_error_after(
         .errors()
         .filter(|e| {
             let k = e.type_name();
-            !k.contains("term") && !crate::syntax::is_semantic(k) && !matches!(k, "invalid_yield" | "return_invalid")
+            !k.contains("term")
+                && !crate::syntax::is_semantic(k)
+                && !matches!(k, "invalid_yield" | "invalid_retry_without_rescue" | "return_invalid")
         })
         .map(|e| failure_offset(e.type_name(), e.location().start_offset(), e.location().end_offset(), &tokens))
         .filter(|&o| !src.get(o..).unwrap_or("").trim().is_empty())

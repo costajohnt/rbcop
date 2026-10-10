@@ -1,0 +1,62 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 40 <==
+class Banana
+  def initialize
+  end
+end
+
+==> 001.rb 62 <==
+class Banana
+  def initialize
+    @delicious = true
+  end
+end
+
+==> 002.rb 63 <==
+class Banana
+  def initialize
+    delicious ||= true
+  end
+end
+
+==> 003.rb 64 <==
+class Banana
+  def initialize
+    @delicious ||= true
+  end
+end
+
+==> 004.rb 74 <==
+class Banana
+  def initialize
+    @delicious ||= true
+    super
+  end
+end
+
+==> 005.rb 74 <==
+class Banana
+  def initialize
+    super
+    @delicious ||= true
+  end
+end
+
+==> 006.rb 263 <==
+class Banana
+  def initialize
+    # With the limitations of static analysis, it's very difficult
+    # to determine, after this method call, whether the disjunctive
+    # assignment is necessary or not.
+    absolutely_any_method
+    @delicious ||= true
+  end
+end
+

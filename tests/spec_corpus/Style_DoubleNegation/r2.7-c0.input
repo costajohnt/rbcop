@@ -1,0 +1,453 @@
+==> .rubocop.yml 166 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/DoubleNegation:
+  EnforcedStyle: allowed_in_returns
+
+==> 000.rb 44 <==
+def foo?
+  foo
+  !!test.something
+  bar
+end
+
+==> 001.rb 17 <==
+!!test.something
+
+==> 002.rb 15 <==
+!test.something
+==> 003.rb 22 <==
+not not test.something
+==> 004.rb 70 <==
+def foo?
+  unless condition_foo?
+    !!foo
+    do_something
+  end
+end
+
+==> 005.rb 150 <==
+def foo?
+  if condition_foo?
+    !!foo
+    do_something
+  elsif condition_bar?
+    !!bar
+    do_something
+  else
+    !!baz
+    do_something
+  end
+end
+
+==> 006.rb 246 <==
+def foo?
+  if condition_foo?
+    { foo: !!foo0, bar: bar0, baz: baz0 }
+    do_something
+  elsif condition_bar?
+    { foo: !!foo1, bar: bar1, baz: baz1 }
+    do_something
+  else
+    { foo: !!foo2, bar: bar2, baz: baz2 }
+    do_something
+  end
+end
+
+==> 007.rb 195 <==
+def foo?
+  if condition_foo?
+    [!!foo0, bar0, baz0]
+    do_something
+  elsif condition_bar?
+    [!!foo1, bar1, baz1]
+    do_something
+  else
+    [!!foo2, bar2, baz2]
+    do_something
+  end
+end
+
+==> 008.rb 146 <==
+def foo?
+  case condition
+  when foo
+    !!foo
+    do_something
+  when bar
+    !!bar
+    do_something
+  else
+    !!baz
+    do_something
+  end
+end
+
+==> 009.rb 242 <==
+def foo?
+  case condition
+  when foo
+    { foo: !!foo0, bar: bar0, baz: baz0 }
+    do_something
+  when bar
+    { foo: !!foo1, bar: bar1, baz: baz1 }
+    do_something
+  else
+    { foo: !!foo2, bar: bar2, baz: baz2 }
+    do_something
+  end
+end
+
+==> 010.rb 191 <==
+def foo?
+  case condition
+  when foo
+    [!!foo0, bar0, baz0]
+    do_something
+  when bar
+    [!!foo1, bar1, baz1]
+    do_something
+  else
+    [!!foo2, bar2, baz2]
+    do_something
+  end
+end
+
+==> 011.rb 53 <==
+def foo
+  [
+    foo1,
+    !!bar1,
+    !!baz1
+  ]
+end
+
+==> 012.rb 35 <==
+def foo
+  [foo1, !!bar1, baz1]
+end
+
+==> 013.rb 68 <==
+def foo
+  {
+    foo: foo1,
+    bar: !!bar1,
+    baz: !!baz1
+  }
+end
+
+==> 014.rb 52 <==
+def foo
+  { foo: foo1, bar: !!bar1, baz: baz1 }
+end
+
+==> 015.rb 60 <==
+def foo
+  {
+    foo: foo1,
+    bar: { baz: !!quux }
+  }
+end
+
+==> 016.rb 48 <==
+def foo
+  [
+    foo1,
+    [baz, !!quux]
+  ]
+end
+
+==> 017.rb 50 <==
+def foo
+  [
+    foo1,
+    { baz: !!quux }
+  ]
+end
+
+==> 018.rb 140 <==
+def foo?
+  case pattern
+  in foo
+    !!foo
+    do_something
+  in bar
+    !!bar
+    do_something
+  else
+    !!baz
+    do_something
+  end
+end
+
+==> 019.rb 40 <==
+def foo?
+  bar
+  !!baz.do_something
+end
+
+==> 020.rb 68 <==
+def foo?
+  return !!bar.do_something if condition
+  baz
+  !!qux
+end
+
+==> 021.rb 80 <==
+def foo?
+  return !!bar.do_something if condition
+  baz
+  !!qux &&
+    quux
+end
+
+==> 022.rb 41 <==
+define_method :foo? do
+  bar
+  !!qux
+end
+
+==> 023.rb 54 <==
+define_method :foo? do
+  do_something(_1)
+  !!qux
+end
+
+==> 024.rb 51 <==
+define_singleton_method :foo? do
+  bar
+  !!qux
+end
+
+==> 025.rb 53 <==
+def foo?
+  bar
+  !!baz.do_something
+rescue
+  qux
+end
+
+==> 026.rb 53 <==
+def foo?
+  bar
+  !!baz.do_something
+ensure
+  qux
+end
+
+==> 027.rb 68 <==
+def foo?
+  bar
+  !!baz.do_something
+rescue
+  qux
+ensure
+  corge
+end
+
+==> 028.rb 80 <==
+def foo?
+  bar
+  !!baz.do_something
+rescue
+  qux
+else
+  quux
+ensure
+  corge
+end
+
+==> 029.rb 124 <==
+def foo?
+  unless condition_foo?
+    !!foo
+  end
+end
+
+def bar?
+  unless condition_bar?
+    do_something
+    !!bar
+  end
+end
+
+==> 030.rb 250 <==
+def foo?
+  if condition_foo?
+    !!foo
+  elsif condition_bar?
+    !!bar
+  else
+    !!baz
+  end
+end
+
+def bar?
+  if condition_foo?
+    do_something
+    !!foo
+  elsif condition_bar?
+    do_something
+    !!bar
+  else
+    do_something
+    !!baz
+  end
+end
+
+==> 031.rb 442 <==
+def foo?
+  if condition_foo?
+    { foo: !!foo0, bar: bar0, baz: baz0 }
+  elsif condition_bar?
+    { foo: !!foo1, bar: bar1, baz: baz1 }
+  else
+    { foo: !!foo2, bar: bar2, baz: baz2 }
+  end
+end
+
+def bar?
+  if condition_foo?
+    do_something
+    { foo: !!foo0, bar: bar0, baz: baz0 }
+  elsif condition_bar?
+    do_something
+    { foo: !!foo1, bar: bar1, baz: baz1 }
+  else
+    do_something
+    { foo: !!foo2, bar: bar2, baz: baz2 }
+  end
+end
+
+==> 032.rb 340 <==
+def foo?
+  if condition_foo?
+    [!!foo0, bar0, baz0]
+  elsif condition_bar?
+    [!!foo1, bar1, baz1]
+  else
+    [!!foo2, bar2, baz2]
+  end
+end
+
+def bar?
+  if condition_foo?
+    do_something
+    [!!foo0, bar0, baz0]
+  elsif condition_bar?
+    do_something
+    [!!foo1, bar1, baz1]
+  else
+    do_something
+    [!!foo2, bar2, baz2]
+  end
+end
+
+==> 033.rb 242 <==
+def foo?
+  case condition
+  when foo
+    !!foo
+  when bar
+    !!bar
+  else
+    !!baz
+  end
+end
+
+def bar?
+  case condition
+  when foo
+    do_something
+    !!foo
+  when bar
+    do_something
+    !!bar
+  else
+    do_something
+    !!baz
+  end
+end
+
+==> 034.rb 434 <==
+def foo?
+  case condition
+  when foo
+    { foo: !!foo0, bar: bar0, baz: baz0 }
+  when bar
+    { foo: !!foo1, bar: bar1, baz: baz1 }
+  else
+    { foo: !!foo2, bar: bar2, baz: baz2 }
+  end
+end
+
+def bar?
+  case condition
+  when foo
+    do_something
+    { foo: !!foo0, bar: bar0, baz: baz0 }
+  when bar
+    do_something
+    { foo: !!foo1, bar: bar1, baz: baz1 }
+  else
+    do_something
+    { foo: !!foo2, bar: bar2, baz: baz2 }
+  end
+end
+
+==> 035.rb 332 <==
+def foo?
+  case condition
+  when foo
+    [!!foo0, bar0, baz0]
+  when bar
+    [!!foo1, bar1, baz1]
+  else
+    [!!foo2, bar2, baz2]
+  end
+end
+
+def foo?
+  case condition
+  when foo
+    do_something
+    [!!foo0, bar0, baz0]
+  when bar
+    do_something
+    [!!foo1, bar1, baz1]
+  else
+    do_something
+    [!!foo2, bar2, baz2]
+  end
+end
+
+==> 036.rb 234 <==
+def foo?
+  case condition
+  in foo
+    !!foo
+  in bar
+    !!bar
+  else
+    !!baz
+  end
+end
+
+def bar?
+  case condition
+  in foo
+    do_something
+    !!foo
+  in bar
+    do_something
+    !!bar
+  else
+    do_something
+    !!baz
+  end
+end
+

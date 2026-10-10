@@ -1,0 +1,172 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 43 <==
+THINGS = {
+  oh: :io,
+    hi: 'neat'
+    }
+
+==> 001.rb 201 <==
+config.fog_credentials_as_kwargs(
+  provider:              'AWS',
+  aws_access_key_id:     ENV['S3_ACCESS_KEY'],
+  aws_secret_access_key: ENV['S3_SECRET'],
+  region:                ENV['S3_REGION'],
+)
+
+==> 002.rb 28 <==
+{
+  oh: :io,
+  hi: 'neat'
+}
+
+==> 003.rb 8 <==
+foo({})
+
+==> 004.rb 18 <==
+proc.(key: value)
+
+==> 005.rb 48 <==
+do_something(
+  foo, baz: true,
+  quux: false
+)
+
+==> 006.rb 61 <==
+do_something(
+  foo(
+    bar
+  ), baz: true,
+  quux: false
+)
+
+==> 007.rb 49 <==
+do_something.(foo: bar, baz: qux,
+  quux: corge)
+
+==> 008.rb 70 <==
+hash1 = {
+  a: 0,
+   bb: 1
+}
+hash2 = {
+  'ccc' => 2,
+ 'dddd'  =>  2
+}
+
+==> 009.rb 36 <==
+hash = { a: 1, b: 2,
+        c: 3 }
+
+==> 010.rb 99 <==
+hash1 = {
+  aa: 0,
+  b: 1,
+}
+hash2 = {
+  :a => 0,
+  :bb => 1
+}
+hash3 = {
+  'a' => 0,
+  'bb' => 1
+}
+
+==> 011.rb 70 <==
+hash1 = {
+  a:   0,
+  bb:1,
+}
+hash2 = {
+  'ccc'=> 2,
+  'dddd' =>  3
+}
+
+==> 012.rb 38 <==
+hash = {
+    'a' => 0,
+  'bbb' => 1
+}
+
+==> 013.rb 38 <==
+hash = {
+  'a'   => 0,
+  'bbb' => 1
+}
+
+==> 014.rb 43 <==
+hash = {
+  'a' =>  (
+    ),
+  'bbb' => 1
+}
+
+==> 015.rb 40 <==
+hash = {
+  'a' =>
+    0,
+  'bbb' => 1
+}
+
+==> 016.rb 19 <==
+func(a: 0,
+  b: 1)
+
+==> 017.rb 22 <==
+func(a: 0,
+   bbb: 1)
+
+==> 018.rb 22 <==
+func(a: 0,
+     b: 1)
+
+==> 019.rb 6 <==
+h = {}
+==> 020.rb 174 <==
+hash1 = { a: 0,
+     bb: 1,
+           ccc: 2 }
+hash2 = { :a   => 0,
+  :bb  => 1,
+            :ccc  =>2 }
+hash3 = { 'a'   =>   0,
+               'bb'  => 1,
+    'ccc'  =>2 }
+
+==> 021.rb 41 <==
+Hash(foo: 'bar',
+       **extra_params
+)
+
+==> 022.rb 37 <==
+{foo: 'bar',
+       **extra_params
+}
+
+==> 023.rb 17 <==
+func(a: 0, bb: 1)
+==> 024.rb 40 <==
+func(a: 1, bb: 2,
+     ccc: 3, dddd: 4)
+
+==> 025.rb 146 <==
+render :json => {:a => messages,
+                 :b => :json}, :status => 404
+def example
+  a(
+    b: :c,
+    d: e(
+      f: g
+    ), h: :i)
+end
+
+==> 026.rb 5 <==
+super
+==> 027.rb 5 <==
+yield

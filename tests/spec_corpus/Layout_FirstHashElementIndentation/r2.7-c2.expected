@@ -1,0 +1,63 @@
+==> offenses exit=1 1341 <==
+005.rb:2:3: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the position of the opening brace.
+005.rb:3:1: C: [Correctable] Layout/FirstHashElementIndentation: Indent the right brace the same as the left brace.
+006.rb:2:11: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the position of the opening brace.
+006.rb:6:9: C: [Correctable] Layout/FirstHashElementIndentation: Indent the right brace the same as the left brace.
+007.rb:2:3: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the position of the opening brace.
+007.rb:3:1: C: [Correctable] Layout/FirstHashElementIndentation: Indent the right brace the same as the left brace.
+008.rb:2:3: C: [Correctable] Layout/FirstHashElementIndentation: Indent the right brace the same as the left brace.
+009.rb:2:9: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the position of the opening brace.
+010.rb:2:3: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the position of the opening brace.
+010.rb:4:1: C: [Correctable] Layout/FirstHashElementIndentation: Indent the right brace the same as the left brace.
+
+==> autocorrect exit=0 1321 <==
+005.rb:2:3: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the position of the opening brace.
+005.rb:3:1: C: [Corrected] Layout/FirstHashElementIndentation: Indent the right brace the same as the left brace.
+006.rb:2:11: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the position of the opening brace.
+006.rb:6:9: C: [Corrected] Layout/FirstHashElementIndentation: Indent the right brace the same as the left brace.
+007.rb:2:3: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the position of the opening brace.
+007.rb:3:1: C: [Corrected] Layout/FirstHashElementIndentation: Indent the right brace the same as the left brace.
+008.rb:2:3: C: [Corrected] Layout/FirstHashElementIndentation: Indent the right brace the same as the left brace.
+009.rb:2:9: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the position of the opening brace.
+010.rb:2:3: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the position of the opening brace.
+010.rb:4:1: C: [Corrected] Layout/FirstHashElementIndentation: Indent the right brace the same as the left brace.
+
+==> corrected/005.rb 27 <==
+func({
+       a: 1
+     })
+
+==> corrected/006.rb 62 <==
+var = {
+        a:
+        {
+          b: 1
+        }
+      }
+
+==> corrected/007.rb 56 <==
+var = {
+        a: 1
+      }
+func({
+       a: 1
+     })
+
+==> corrected/008.rb 14 <==
+a << {
+     }
+
+==> corrected/009.rb 33 <==
+func x: {
+          a: 1, b: 2 }
+
+==> corrected/010.rb 103 <==
+func x: {
+          a: 1,
+          b: 2
+        },
+     y: {
+          c: 1,
+          d: 2
+        }
+

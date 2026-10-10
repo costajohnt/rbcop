@@ -1,0 +1,66 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+==> 000.rb 10 <==
+s = 'abc'
+
+==> 001.rb 20 <==
+s = "abc"
+x = 'abc'
+
+==> 002.rb 10 <==
+'\''
+'\\'
+
+==> 003.rb 50 <==
+'This \'string\' has \'multiple\' escaped quotes'
+
+==> 004.rb 7 <==
+a = "x"
+==> 005.rb 23 <==
+"hello#{hash['there']}"
+==> 006.rb 17 <==
+a = %q(x) + %Q[x]
+==> 007.rb 8 <==
+a = %(x)
+==> 008.rb 19 <==
+'\,'
+'100\%'
+'(\)'
+
+==> 009.rb 44 <==
+execute <<-SQL
+  SELECT name from users
+SQL
+
+==> 010.rb 4 <==
+'\n'
+==> 011.rb 6 <==
+'\'\n'
+==> 012.rb 66 <==
+a = '\n'
+b = '"'
+c = '#{x}'
+d = '#@x'
+e = '#$x'
+f = '\s'
+g = '\z'
+
+==> 013.rb 13 <==
+a = 'blah #'
+
+==> 014.rb 23 <==
+s = /'((?:[^\']|\.)*)'/
+==> 015.rb 5 <==
+%w(')
+==> 016.rb 33 <==
+if __FILE__ == $PROGRAM_NAME
+end
+

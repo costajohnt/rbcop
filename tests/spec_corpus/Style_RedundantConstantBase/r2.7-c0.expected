@@ -1,0 +1,34 @@
+==> offenses exit=1 407 <==
+002.rb:1:1: C: [Correctable] Style/RedundantConstantBase: Remove redundant `::`.
+003.rb:1:1: C: [Correctable] Style/RedundantConstantBase: Remove redundant `::`.
+004.rb:2:3: C: [Correctable] Style/RedundantConstantBase: Remove redundant `::`.
+005.rb:1:13: C: [Correctable] Style/RedundantConstantBase: Remove redundant `::`.
+006.rb:1:13: C: [Correctable] Style/RedundantConstantBase: Remove redundant `::`.
+
+==> autocorrect exit=0 397 <==
+002.rb:1:1: C: [Corrected] Style/RedundantConstantBase: Remove redundant `::`.
+003.rb:1:1: C: [Corrected] Style/RedundantConstantBase: Remove redundant `::`.
+004.rb:2:3: C: [Corrected] Style/RedundantConstantBase: Remove redundant `::`.
+005.rb:1:13: C: [Corrected] Style/RedundantConstantBase: Remove redundant `::`.
+006.rb:1:13: C: [Corrected] Style/RedundantConstantBase: Remove redundant `::`.
+
+==> corrected/002.rb 4 <==
+Bar
+
+==> corrected/003.rb 9 <==
+Bar::Baz
+
+==> corrected/004.rb 24 <==
+class << self
+  Bar
+end
+
+==> corrected/005.rb 20 <==
+class Foo < Bar
+end
+
+==> corrected/006.rb 26 <==
+class Foo < Bar
+  ::A
+end
+

@@ -1,0 +1,74 @@
+==> offenses exit=1 1076 <==
+000.rb:1:26: C: [Correctable] Style/HashSlice: Use `slice(:bar)` instead.
+001.rb:1:27: C: [Correctable] Style/HashSlice: Use `slice(:bar)` instead.
+002.rb:1:26: C: [Correctable] Style/HashSlice: Use `slice(:bar)` instead.
+003.rb:1:26: C: [Correctable] Style/HashSlice: Use `slice(:bar)` instead.
+004.rb:1:26: C: [Correctable] Style/HashSlice: Use `slice(:bar)` instead.
+005.rb:1:6: C: [Correctable] Style/HashSlice: Use `slice('str')` instead.
+006.rb:1:6: C: [Correctable] Style/HashSlice: Use `slice(0.0)` instead.
+007.rb:1:26: C: [Correctable] Style/HashSlice: Use `slice(:bar)` instead.
+009.rb:1:26: C: [Correctable] Style/HashSlice: Use `slice(:foo, :bar)` instead.
+010.rb:1:26: C: [Correctable] Style/HashSlice: Use `slice(:foo, :bar)` instead.
+011.rb:1:26: C: [Correctable] Style/HashSlice: Use `slice(:"#{foo}", :bar)` instead.
+012.rb:1:26: C: [Correctable] Style/HashSlice: Use `slice("#{foo}", 'bar')` instead.
+013.rb:1:12: C: [Correctable] Style/HashSlice: Use `slice('a\'b', 'cd')` instead.
+016.rb:1:26: C: [Correctable] Style/HashSlice: Use `slice(:bar)` instead.
+
+==> autocorrect exit=0 1048 <==
+000.rb:1:26: C: [Corrected] Style/HashSlice: Use `slice(:bar)` instead.
+001.rb:1:27: C: [Corrected] Style/HashSlice: Use `slice(:bar)` instead.
+002.rb:1:26: C: [Corrected] Style/HashSlice: Use `slice(:bar)` instead.
+003.rb:1:26: C: [Corrected] Style/HashSlice: Use `slice(:bar)` instead.
+004.rb:1:26: C: [Corrected] Style/HashSlice: Use `slice(:bar)` instead.
+005.rb:1:6: C: [Corrected] Style/HashSlice: Use `slice('str')` instead.
+006.rb:1:6: C: [Corrected] Style/HashSlice: Use `slice(0.0)` instead.
+007.rb:1:26: C: [Corrected] Style/HashSlice: Use `slice(:bar)` instead.
+009.rb:1:26: C: [Corrected] Style/HashSlice: Use `slice(:foo, :bar)` instead.
+010.rb:1:26: C: [Corrected] Style/HashSlice: Use `slice(:foo, :bar)` instead.
+011.rb:1:26: C: [Corrected] Style/HashSlice: Use `slice(:"#{foo}", :bar)` instead.
+012.rb:1:26: C: [Corrected] Style/HashSlice: Use `slice("#{foo}", 'bar')` instead.
+013.rb:1:12: C: [Corrected] Style/HashSlice: Use `slice('a\'b', 'cd')` instead.
+016.rb:1:26: C: [Corrected] Style/HashSlice: Use `slice(:bar)` instead.
+
+==> corrected/000.rb 37 <==
+{foo: 1, bar: 2, baz: 3}.slice(:bar)
+
+==> corrected/001.rb 38 <==
+{foo: 1, bar: 2, baz: 3}&.slice(:bar)
+
+==> corrected/002.rb 37 <==
+{foo: 1, bar: 2, baz: 3}.slice(:bar)
+
+==> corrected/003.rb 37 <==
+{foo: 1, bar: 2, baz: 3}.slice(:bar)
+
+==> corrected/004.rb 37 <==
+{foo: 1, bar: 2, baz: 3}.slice(:bar)
+
+==> corrected/005.rb 18 <==
+hash.slice('str')
+
+==> corrected/006.rb 16 <==
+hash.slice(0.0)
+
+==> corrected/007.rb 37 <==
+{foo: 1, bar: 2, baz: 3}.slice(:bar)
+
+==> corrected/009.rb 43 <==
+{foo: 1, bar: 2, baz: 3}.slice(:foo, :bar)
+
+==> corrected/010.rb 43 <==
+{foo: 1, bar: 2, baz: 3}.slice(:foo, :bar)
+
+==> corrected/011.rb 48 <==
+{foo: 1, bar: 2, baz: 3}.slice(:"#{foo}", :bar)
+
+==> corrected/012.rb 48 <==
+{foo: 1, bar: 2, baz: 3}.slice("#{foo}", 'bar')
+
+==> corrected/013.rb 31 <==
+{'a' => 1}.slice('a\'b', 'cd')
+
+==> corrected/016.rb 37 <==
+{foo: 1, bar: 2, baz: 3}.slice(:bar)
+

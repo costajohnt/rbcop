@@ -1,0 +1,41 @@
+==> .rubocop.yml 911 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.6
+Lint/DeprecatedConstants:
+  DeprecatedConstants:
+    NIL:
+      Alternative: nil
+      DeprecatedVersion: '2.4'
+    'TRUE':
+      Alternative: 'true'
+      DeprecatedVersion: '2.4'
+    'FALSE':
+      Alternative: 'false'
+      DeprecatedVersion: '2.4'
+    Net::HTTPServerException:
+      Alternative: Net::HTTPClientException
+      DeprecatedVersion: '2.6'
+    Random::DEFAULT:
+      Alternative: Random.new
+      DeprecatedVersion: '3.0'
+    Struct::Group:
+      Alternative: Etc::Group
+      DeprecatedVersion: '3.0'
+    Struct::Passwd:
+      Alternative: Etc::Passwd
+      DeprecatedVersion: '3.0'
+    Triple::Nested::Constant:
+      Alternative: Value
+      DeprecatedVersion: '2.4'
+    Have::No::Alternative:
+      DeprecatedVersion: '2.4'
+    Have::No::DeprecatedVersion:
+      Alternative: Value
+
+==> 000.rb 25 <==
+Net::HTTPServerException
+

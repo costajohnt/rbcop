@@ -1,0 +1,44 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/foo.rb 46 <==
+require_relative 'foo'
+require_relative 'bar'
+
+==> 001/foo.rb 49 <==
+require_relative 'foo.rb'
+require_relative 'bar'
+
+==> 002/foo.rb 23 <==
+require_relative 'bar'
+
+==> 003/foo.rb 17 <==
+require_relative
+
+==> 004/foo.rb 28 <==
+require_relative 'foo.racc'
+
+==> 005/foo.rb 57 <==
+Dir['test/**/test_*.rb'].each { |f| require_relative f }
+
+==> 006/foo.rake 23 <==
+require_relative 'foo'
+
+==> 007/Rakefile 28 <==
+require_relative 'Rakefile'
+
+==> 008/foo.rb 49 <==
+require_relative 'foo.rb'
+require_relative 'bar'
+
+==> 009/foo.rb 23 <==
+require_relative 'foo'
+
+==> 010/foo.rb 27 <==
+require_relative 'sub/foo'
+

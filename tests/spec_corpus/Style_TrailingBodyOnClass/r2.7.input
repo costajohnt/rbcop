@@ -1,0 +1,44 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 94 <==
+class Foo; body
+end
+class Foo body
+end
+class Bar; def bar; end
+end
+class Bar def bar; end
+end
+
+==> 001.rb 56 <==
+class << self; body
+end
+class << self; def bar; end
+end
+
+==> 002.rb 44 <==
+class Foo; body
+  def bar
+    qux
+  end
+end
+
+==> 003.rb 31 <==
+class Foo
+  def no_op; end
+end
+
+==> 004.rb 20 <==
+class Foo < Bar
+end
+
+==> 005.rb 32 <==
+class BarQux; foo # comment
+end
+

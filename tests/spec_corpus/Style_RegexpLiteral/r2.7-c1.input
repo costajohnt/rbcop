@@ -1,0 +1,50 @@
+==> .rubocop.yml 156 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/RegexpLiteral:
+  EnforcedStyle: percent_r
+
+==> 000.rb 4 <==
+/a/
+
+==> 001.rb 5 <==
+/\//
+
+==> 002.rb 10 <==
+foo = /a/
+
+==> 003.rb 15 <==
+foo = /home\//
+
+==> 004.rb 23 <==
+foo = /
+  foo
+  bar
+/x
+
+==> 005.rb 40 <==
+foo = /
+  https?:\/\/
+  example\.com
+/x
+
+==> 006.rb 11 <==
+foo = %r{a}
+==> 007.rb 15 <==
+foo = %r{home/}
+==> 008.rb 25 <==
+foo = %r{
+  foo
+  bar
+}x
+
+==> 009.rb 40 <==
+foo = %r{
+  https?://
+  example\.com
+}x
+

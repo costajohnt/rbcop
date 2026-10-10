@@ -1,0 +1,16 @@
+==> offenses exit=1 514 <==
+000.rb:4:21: W: Lint/DuplicateRescueException: Duplicate `rescue` exception detected.
+001.rb:4:21: W: Lint/DuplicateRescueException: Duplicate `rescue` exception detected.
+002.rb:5:8: W: Lint/DuplicateRescueException: Duplicate `rescue` exception detected.
+002.rb:6:8: W: Lint/DuplicateRescueException: Duplicate `rescue` exception detected.
+003.rb:4:21: W: Lint/DuplicateRescueException: Duplicate `rescue` exception detected.
+004.rb:4:21: W: Lint/DuplicateRescueException: Duplicate `rescue` exception detected.
+
+==> autocorrect exit=1 514 <==
+000.rb:4:21: W: Lint/DuplicateRescueException: Duplicate `rescue` exception detected.
+001.rb:4:21: W: Lint/DuplicateRescueException: Duplicate `rescue` exception detected.
+002.rb:5:8: W: Lint/DuplicateRescueException: Duplicate `rescue` exception detected.
+002.rb:6:8: W: Lint/DuplicateRescueException: Duplicate `rescue` exception detected.
+003.rb:4:21: W: Lint/DuplicateRescueException: Duplicate `rescue` exception detected.
+004.rb:4:21: W: Lint/DuplicateRescueException: Duplicate `rescue` exception detected.
+

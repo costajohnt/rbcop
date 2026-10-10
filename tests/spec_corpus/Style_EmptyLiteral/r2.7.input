@@ -1,0 +1,67 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 19 <==
+test = Array.new(3)
+==> 001.rb 19 <==
+puts { Array.new }
+
+==> 002.rb 22 <==
+test = Array.new { 1 }
+==> 003.rb 24 <==
+test = ::Array.new { 1 }
+==> 004.rb 24 <==
+puts { Array.new { 1 } }
+==> 005.rb 8 <==
+Array[3]
+==> 006.rb 9 <==
+Array [3]
+==> 007.rb 9 <==
+Hash[3,4]
+==> 008.rb 10 <==
+Hash [3,4]
+==> 009.rb 18 <==
+test = Hash.new(3)
+==> 010.rb 20 <==
+test = ::Hash.new(3)
+==> 011.rb 25 <==
+test = Hash.new { block }
+==> 012.rb 27 <==
+test = ::Hash.new { block }
+==> 013.rb 12 <==
+Hash.new([])
+==> 014.rb 31 <==
+test = Hash.new { _1[_2] = [] }
+==> 015.rb 33 <==
+test = ::Hash.new { _1[_2] = [] }
+==> 016.rb 23 <==
+test = Array.new { _1 }
+==> 017.rb 18 <==
+puts { Hash.new }
+
+==> 018.rb 85 <==
+test = Hash.new
+Hash.new.merge("a" => 3)
+yadayada.map { a }.reduce(Hash.new, :merge)
+
+==> 019.rb 35 <==
+yadayada.map { a }.reduce Hash.new
+
+==> 020.rb 43 <==
+yadayada.map { a }.reduce Hash.new, :merge
+
+==> 021.rb 29 <==
+def foo
+  super Hash.new
+end
+
+==> 022.rb 40 <==
+def foo
+  super Hash.new, something
+end
+

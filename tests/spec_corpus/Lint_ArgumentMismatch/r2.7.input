@@ -1,0 +1,67 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 24 <==
+Report.generate(source)
+
+==> 001/call.rb 24 <==
+Report.generate(source)
+
+==> 002/call.rb 38 <==
+Report.generate(source, :pdf, :extra)
+
+==> 003/call.rb 29 <==
+Report.generate(source, :pdf)
+==> 004/call.rb 22 <==
+Report.generate(*args)
+==> 005/call.rb 22 <==
+Other.generate(source)
+==> 006/call.rb 27 <==
+Calc.add(1)
+Calc.add(1, 2)
+
+==> 007/call.rb 18 <==
+Calc.add(1, 2, 3)
+
+==> 008/call.rb 30 <==
+Calc.sum
+Calc.sum(1, 2, 3, 4)
+
+==> 009/call.rb 10 <==
+Calc.join
+
+==> 010/call.rb 18 <==
+M.opts(a: 1, b: 2)
+==> 011/call.rb 13 <==
+M.opts(a: 1)
+
+==> 012/call.rb 22 <==
+M.build(name, size: 1)
+==> 013/call.rb 21 <==
+M.build(name, **opts)
+==> 014/call.rb 17 <==
+Helper.call(1, 2)
+==> 015/call.rb 19 <==
+Widget.render(1, 2)
+==> 016/call.rb 12 <==
+Thing.run(1)
+==> 017/call.rb 15 <==
+Child.build(1)
+
+==> 018/call.rb 24 <==
+Report.new(source, :pdf)
+==> 019/call.rb 28 <==
+Flipper.enable(:flag, actor)
+==> 020/call.rb 16 <==
+Report.build(1)
+
+==> 021/call.rb 18 <==
+Report.new(source)
+==> 022/call.rb 25 <==
+Report&.generate(source)
+

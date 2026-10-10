@@ -1,0 +1,54 @@
+==> .rubocop.yml 162 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/HashAsLastArrayItem:
+  EnforcedStyle: no_braces
+
+==> 000.rb 44 <==
+[{ one: 1 }, { three: 3 }, 2, { three: 3 }]
+
+==> 001.rb 29 <==
+[1, 2, { one: 1, two: 2, },]
+
+==> 002.rb 19 <==
+[{one: 1, two: 2}]
+
+==> 003.rb 47 <==
+[
+  1,
+  2,
+  {
+    one: 1,
+    two: 2,
+  },
+]
+
+==> 004.rb 43 <==
+[
+  1,
+  2,
+  {
+    one: 1
+  },
+  two: 2
+]
+
+==> 005.rb 23 <==
+[1, 2, one: 1, two: 2]
+
+==> 006.rb 24 <==
+foo({ one: 1, two: 2 })
+
+==> 007.rb 25 <==
+[{ one: 1 }, { two: 2 }]
+
+==> 008.rb 8 <==
+[1, {}]
+
+==> 009.rb 60 <==
+cache_store = :redis_cache_store, { url: ENV['REDIS_URL'] }
+

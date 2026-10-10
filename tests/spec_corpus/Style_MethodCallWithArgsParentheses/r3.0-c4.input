@@ -1,0 +1,33 @@
+==> .rubocop.yml 179 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Style/MethodCallWithArgsParentheses:
+  EnforcedStyle: omit_parentheses
+
+==> 000.rb 21 <==
+def x() = foo("bar")
+
+==> 001.rb 14 <==
+def x() = foo
+
+==> 002.rb 17 <==
+def x() = foo(y)
+
+==> 003.rb 22 <==
+def self.x() = foo(y)
+
+==> 004.rb 59 <==
+def method_missing(name, ...)
+  @proxy.call(name, ...)
+end
+
+==> 005.rb 41 <==
+execute(query) in {elapsed:, sql_count:}
+
+==> 006.rb 41 <==
+execute(query) => {elapsed:, sql_count:}
+

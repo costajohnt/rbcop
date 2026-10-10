@@ -1,0 +1,14 @@
+==> offenses exit=1 355 <==
+000.rb:2:5: C: Naming/PredicatePrefix: Rename `is_attr` to `is_attr?`.
+001.rb:3:5: C: Naming/PredicatePrefix: Rename `is_attr` to `is_attr?`.
+002.rb:4:5: C: Naming/PredicatePrefix: Rename `is_attr` to `is_attr?`.
+003.rb:4:5: C: Naming/PredicatePrefix: Rename `is_attr` to `is_attr?`.
+006.rb:2:5: C: Naming/PredicatePrefix: Rename `is_even` to `is_even?`.
+
+==> autocorrect exit=1 355 <==
+000.rb:2:5: C: Naming/PredicatePrefix: Rename `is_attr` to `is_attr?`.
+001.rb:3:5: C: Naming/PredicatePrefix: Rename `is_attr` to `is_attr?`.
+002.rb:4:5: C: Naming/PredicatePrefix: Rename `is_attr` to `is_attr?`.
+003.rb:4:5: C: Naming/PredicatePrefix: Rename `is_attr` to `is_attr?`.
+006.rb:2:5: C: Naming/PredicatePrefix: Rename `is_even` to `is_even?`.
+

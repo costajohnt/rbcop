@@ -1,0 +1,68 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 31 <==
+array.select { it.is_a?(Foo) }
+
+==> 001.rb 32 <==
+array&.select { it.is_a?(Foo) }
+
+==> 002.rb 34 <==
+array.select { it.kind_of?(Foo) }
+
+==> 003.rb 33 <==
+array.find_all { it.is_a?(Foo) }
+
+==> 004.rb 34 <==
+array&.find_all { it.is_a?(Foo) }
+
+==> 005.rb 36 <==
+array.find_all { it.kind_of?(Foo) }
+
+==> 006.rb 31 <==
+array.filter { it.is_a?(Foo) }
+
+==> 007.rb 32 <==
+array&.filter { it.is_a?(Foo) }
+
+==> 008.rb 34 <==
+array.filter { it.kind_of?(Foo) }
+
+==> 009.rb 32 <==
+array.reject { !it.is_a?(Foo) }
+
+==> 010.rb 35 <==
+array.reject { !it.kind_of?(Foo) }
+
+==> 011.rb 32 <==
+array.select { !it.is_a?(Foo) }
+
+==> 012.rb 35 <==
+array.select { !it.kind_of?(Foo) }
+
+==> 013.rb 34 <==
+array.find_all { !it.is_a?(Foo) }
+
+==> 014.rb 37 <==
+array.find_all { !it.kind_of?(Foo) }
+
+==> 015.rb 32 <==
+array.filter { !it.is_a?(Foo) }
+
+==> 016.rb 35 <==
+array.filter { !it.kind_of?(Foo) }
+
+==> 017.rb 31 <==
+array.reject { it.is_a?(Foo) }
+
+==> 018.rb 32 <==
+array&.reject { it.is_a?(Foo) }
+
+==> 019.rb 34 <==
+array.reject { it.kind_of?(Foo) }
+

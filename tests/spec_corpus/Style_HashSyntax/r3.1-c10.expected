@@ -1,0 +1,16 @@
+==> offenses exit=1 213 <==
+000.rb:1:2: C: [Correctable] Style/HashSyntax: Include the hash value.
+000.rb:1:8: C: [Correctable] Style/HashSyntax: Include the hash value.
+001.rb:1:2: C: [Correctable] Style/HashSyntax: Include the hash value.
+
+==> autocorrect exit=0 207 <==
+000.rb:1:2: C: [Corrected] Style/HashSyntax: Include the hash value.
+000.rb:1:8: C: [Corrected] Style/HashSyntax: Include the hash value.
+001.rb:1:2: C: [Corrected] Style/HashSyntax: Include the hash value.
+
+==> corrected/000.rb 21 <==
+{foo: foo, bar: bar}
+
+==> corrected/001.rb 31 <==
+{foo: foo, bar: bar, baz: qux}
+

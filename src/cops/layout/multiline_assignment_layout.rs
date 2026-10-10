@@ -9,8 +9,16 @@ const NEW_LINE_OFFENSE: &str = "Right hand side of multi-line assignment is on t
 const SAME_LINE_OFFENSE: &str =
     "Right hand side of multi-line assignment is not on the same line as the assignment operator `=`.";
 
-/// The parser type of `rhs` among SupportedTypes candidates, and its block `loc.begin`/`loc.end`.
+/// The parser type of `rhs` (SupportedTypes may name any type), and its block `loc.begin`/`loc.end`.
 fn rhs_type(n: &Node) -> Option<(&'static str, Option<(usize, usize)>)> {
+    let ty = block_or_keyword_type(n);
+    if ty.is_some() {
+        return ty;
+    }
+    Some((helpers::literal_node::parser_type(n), None)).filter(|(t, _)| *t != "other")
+}
+
+fn block_or_keyword_type(n: &Node) -> Option<(&'static str, Option<(usize, usize)>)> {
     let block = |b: Option<Node>| -> Option<(&'static str, Option<(usize, usize)>)> {
         let b = b?.as_block_node()?;
         let t = match b.parameters() {

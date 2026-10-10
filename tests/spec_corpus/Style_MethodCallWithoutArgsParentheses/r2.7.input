@@ -1,0 +1,136 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 11 <==
+top.test()
+
+==> 001.rb 20 <==
+obj.do_something(
+)
+
+==> 002.rb 27 <==
+obj.do_something(
+) do
+end
+
+==> 003.rb 32 <==
+obj.do_something(
+  # comment
+)
+
+==> 004.rb 39 <==
+obj.do_something(
+  # comment
+) do
+end
+
+==> 005.rb 6 <==
+Test()
+==> 006.rb 11 <==
+top.test(a)
+==> 007.rb 8 <==
+thing.()
+==> 008.rb 14 <==
+not(something)
+==> 009.rb 17 <==
+0.times { it() }
+
+==> 010.rb 22 <==
+0.times { _1 + it() }
+
+==> 011.rb 21 <==
+0.times { foo.it() }
+
+==> 012.rb 22 <==
+0.times { foo&.it() }
+
+==> 013.rb 36 <==
+0.times do
+  it()
+  it = 1
+  it
+end
+
+==> 014.rb 19 <==
+def foo
+  it()
+end
+
+==> 015.rb 22 <==
+0.times { ||
+  it()
+}
+
+==> 016.rb 24 <==
+0.times { |_n|
+  it()
+}
+
+==> 017.rb 13 <==
+test = test()
+==> 018.rb 16 <==
+test = x.test()
+
+==> 019.rb 17 <==
+test = x&.test()
+
+==> 020.rb 27 <==
+def foo(test = test())
+end
+
+==> 021.rb 15 <==
+test ||= test()
+==> 022.rb 21 <==
+one, test = 1, test()
+==> 023.rb 61 <==
+test = begin
+  case a
+  when b
+    c = test() if d
+  end
+end
+
+==> 024.rb 40 <==
+A = [1, 2]
+def c; A; end
+
+c[2], x = c()
+
+==> 025.rb 22 <==
+obj.method ||= func()
+
+==> 026.rb 22 <==
+obj.method &&= func()
+
+==> 027.rb 21 <==
+obj.method += func()
+
+==> 028.rb 36 <==
+Hash.new()
+Array.new()
+String.new()
+
+==> 029.rb 11 <==
+_a = c(d.e)
+==> 030.rb 12 <==
+_a = c(d())
+
+==> 031.rb 20 <==
+_a, _b, _c = d(e())
+
+==> 032.rb 20 <==
+_a, _b, _c = d&.e()
+
+==> 033.rb 26 <==
+h = {}
+h[:a], h[:b] = c()
+
+==> 034.rb 25 <==
+a = []
+a[0], a[10] = c()
+

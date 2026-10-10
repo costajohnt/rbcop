@@ -1,0 +1,6 @@
+==> offenses exit=1 101 <==
+000.rb:1:38: C: Naming/InclusiveLanguage: Consider replacing 'blacklist' with 'denylist' or 'block'.
+
+==> autocorrect exit=1 101 <==
+000.rb:1:38: C: Naming/InclusiveLanguage: Consider replacing 'blacklist' with 'denylist' or 'block'.
+

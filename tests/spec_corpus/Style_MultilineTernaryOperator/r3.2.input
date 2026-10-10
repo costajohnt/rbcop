@@ -1,0 +1,18 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+
+==> 000.rb 35 <==
+break cond ?
+      foo :
+      bar
+
+==> 001.rb 32 <==
+next cond ?
+     foo :
+     bar
+

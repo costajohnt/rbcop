@@ -1,0 +1,41 @@
+==> .rubocop.yml 162 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Metrics/MethodLength:
+  Max: 5
+  CountComments: false
+
+==> 000.rb 79 <==
+define_method(:m) do
+  a = it
+  a = it
+  a = it
+  a = it
+  a = it
+  a = it
+end
+
+==> 001.rb 81 <==
+define_method(:foo) do
+  a = it
+  a = it
+  a = it
+  a = it
+  a = it
+  a = it
+end
+
+==> 002.rb 87 <==
+define_method(:user_name) do
+  a = it
+  a = it
+  a = it
+  a = it
+  a = it
+  a = it
+end
+

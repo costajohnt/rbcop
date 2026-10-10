@@ -1,0 +1,6 @@
+==> offenses exit=1 148 <==
+004/scripts/import.rb:5:3: W: Lint/DuplicateMethods: Method `A#some_method` is defined at both 004/scripts/import.rb:2 and 004/scripts/import.rb:5.
+
+==> autocorrect exit=1 148 <==
+004/scripts/import.rb:5:3: W: Lint/DuplicateMethods: Method `A#some_method` is defined at both 004/scripts/import.rb:2 and 004/scripts/import.rb:5.
+

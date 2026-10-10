@@ -1,0 +1,117 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 21 <==
+method rescue handle
+
+==> 001.rb 39 <==
+method(<<~EOS) rescue handle
+  str
+EOS
+
+==> 002.rb 44 <==
+obj&.method(<<~EOS) rescue handle
+  str
+EOS
+
+==> 003.rb 44 <==
+method(<<~EOS, var) rescue handle
+  str
+EOS
+
+==> 004.rb 63 <==
+method(<<~EOS1, <<~EOS2) rescue handle
+  str1
+EOS1
+  str2
+EOS2
+
+==> 005.rb 23 <==
+a, b = 1, 2 rescue nil
+
+==> 006.rb 33 <==
+method1 or method2 rescue handle
+
+==> 007.rb 63 <==
+begin
+  test rescue modifier_handle
+rescue
+  normal_handle
+end
+
+==> 008.rb 35 <==
+def a_method
+  test rescue nil
+end
+
+==> 009.rb 17 <==
+(foo rescue nil)
+
+==> 010.rb 33 <==
+begin
+  test
+rescue
+  handle
+end
+
+==> 011.rb 50 <==
+begin
+  test
+rescue
+  handle
+ensure
+  cleanup
+end
+
+==> 012.rb 81 <==
+begin
+  begin
+    test
+  rescue
+    handle_inner
+  end
+rescue
+  handle_outer
+end
+
+==> 013.rb 43 <==
+def some_method
+  test
+rescue
+  handle
+end
+
+==> 014.rb 73 <==
+def some_method
+  test rescue modifier_handle
+rescue
+  normal_handle
+end
+
+==> 015.rb 48 <==
+def self.some_method
+  test
+rescue
+  handle
+end
+
+==> 016.rb 78 <==
+def self.some_method
+  test rescue modifier_handle
+rescue
+  normal_handle
+end
+
+==> 017.rb 22 <==
+foo || bar rescue bar
+
+==> 018.rb 23 <==
+blah rescue 1 rescue 2
+
+==> 019/foo.rb 14 <==
+foo rescue bar

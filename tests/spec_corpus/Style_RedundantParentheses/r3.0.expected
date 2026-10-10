@@ -1,0 +1,42 @@
+==> offenses exit=1 690 <==
+000.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a one-line pattern matching.
+001.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a one-line pattern matching.
+012.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a one-line pattern matching.
+013.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a one-line pattern matching.
+014.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a one-line pattern matching.
+015.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a one-line pattern matching.
+
+==> autocorrect exit=0 678 <==
+000.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a one-line pattern matching.
+001.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a one-line pattern matching.
+012.rb:2:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a one-line pattern matching.
+013.rb:2:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a one-line pattern matching.
+014.rb:2:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a one-line pattern matching.
+015.rb:2:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a one-line pattern matching.
+
+==> corrected/000.rb 22 <==
+expression in pattern
+
+==> corrected/001.rb 22 <==
+expression => pattern
+
+==> corrected/012.rb 27 <==
+def foo
+  bar in 0 | 1
+end
+
+==> corrected/013.rb 27 <==
+def foo
+  bar => 0 | 1
+end
+
+==> corrected/014.rb 32 <==
+def self.foo
+  bar in 0 | 1
+end
+
+==> corrected/015.rb 32 <==
+def self.foo
+  bar => 0 | 1
+end
+

@@ -1,0 +1,70 @@
+==> .rubocop.yml 371 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/HashSyntax:
+  EnforcedStyle: ruby19
+  SupportedStyles:
+  - ruby19
+  - hash_rockets
+  EnforcedShorthandSyntax: always
+  SupportedShorthandSyntax:
+  - always
+  - never
+  UseHashRocketsWithSymbolValues: false
+  PreferHashRocketsForNonAlnumEndingSymbols: false
+
+==> 000.rb 27 <==
+x = { :a => 0, :b   =>  2}
+
+==> 001.rb 22 <==
+x = { :a => 0, b: 1 }
+
+==> 002.rb 17 <==
+func(3, :a => 0)
+
+==> 003.rb 25 <==
+x = { :a => 0, "b" => 1 }
+==> 004.rb 2 <==
+{}
+==> 005.rb 17 <==
+{ :'&&' => foo }
+
+==> 006.rb 17 <==
+x = { :a? => 0 }
+
+==> 007.rb 17 <==
+x = { :a! => 0 }
+
+==> 008.rb 16 <==
+x = { :a= => 0 }
+==> 009.rb 16 <==
+x = { :[] => 0 }
+==> 010.rb 16 <==
+x = { :A => 0 }
+
+==> 011.rb 18 <==
+x = { a: 0, b: 1 }
+==> 012.rb 13 <==
+func(3, a: 0)
+==> 013.rb 17 <==
+{ :a=>1, :b=>2 }
+
+==> 014.rb 13 <==
+foo:bar => 1
+
+==> 015.rb 21 <==
+return :key => value
+
+==> 016.rb 23 <==
+return {:key => value}
+
+==> 017.rb 24 <==
+return :a => 1, :b => 2
+
+==> 018.rb 30 <==
+method(:puts).(:key => value)
+

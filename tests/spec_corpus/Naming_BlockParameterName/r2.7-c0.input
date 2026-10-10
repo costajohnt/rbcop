@@ -1,0 +1,43 @@
+==> .rubocop.yml 189 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/BlockParameterName:
+  MinNameLength: 2
+  AllowNamesEndingInNumbers: false
+
+==> 000.rb 28 <==
+something do
+  do_stuff
+end
+
+==> 001.rb 23 <==
+something { do_stuff }
+
+==> 002.rb 34 <==
+something { |foo, bar| do_stuff }
+
+==> 003.rb 35 <==
+something { |foo1, bar| do_stuff }
+
+==> 004.rb 32 <==
+something do |x|
+  do_stuff
+end
+
+==> 005.rb 49 <==
+something do |_a, __b, *c, **__d|
+  do_stuff
+end
+
+==> 006.rb 36 <==
+something { |number_One| do_stuff }
+
+==> 007.rb 43 <==
+something do |y, num1, oFo|
+  do_stuff
+end
+

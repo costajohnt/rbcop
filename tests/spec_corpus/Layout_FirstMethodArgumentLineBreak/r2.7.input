@@ -1,0 +1,38 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 16 <==
+foo(bar,
+  baz)
+
+==> 001.rb 18 <==
+super(bar,
+  baz)
+
+==> 002.rb 26 <==
+receiver&.foo(bar,
+  baz)
+
+==> 003.rb 29 <==
+something(3, bar: 1,
+baz: 2)
+
+==> 004.rb 26 <==
+something(bar: 1,
+baz: 2)
+
+==> 005.rb 19 <==
+foo(bar, baz, bing)
+==> 006.rb 21 <==
+super(foo: 1, bar: 2)
+==> 007.rb 15 <==
+foo bar,
+  baz
+
+==> 008.rb 3 <==
+foo

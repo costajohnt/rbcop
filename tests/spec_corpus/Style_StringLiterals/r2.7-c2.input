@@ -1,0 +1,51 @@
+==> .rubocop.yml 197 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/StringLiterals:
+  ConsistentQuotesInMultiline: true
+  EnforcedStyle: single_quotes
+
+==> 000.rb 47 <==
+"--
+SELECT *
+  LEFT JOIN X on Y
+  FROM Models"
+
+==> 001.rb 14 <==
+'abc' \
+'def'
+
+==> 002.rb 14 <==
+'abc' \
+"def"
+
+==> 003.rb 14 <==
+"abc" \
+"def"
+
+==> 004.rb 18 <==
+"abc" \
+"def#{1}"
+
+==> 005.rb 15 <==
+"abc'" \
+"def"
+
+==> 006.rb 16 <==
+"abc\t" \
+"def"
+
+==> 007.rb 16 <==
+"abc\!" \
+"def"
+
+==> 008.rb 47 <==
+<<-QUERY_STRING
+  DEFINE
+    BLAH
+QUERY_STRING
+

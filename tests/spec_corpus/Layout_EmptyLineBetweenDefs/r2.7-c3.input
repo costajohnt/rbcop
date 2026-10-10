@@ -1,0 +1,27 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/EmptyLineBetweenDefs:
+  NumberOfEmptyLines: 2
+
+==> 000.rb 21 <==
+def n
+end
+
+def o
+end
+
+==> 001.rb 24 <==
+def n
+end
+
+
+
+
+def o
+end
+

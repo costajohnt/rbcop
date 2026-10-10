@@ -1,0 +1,29 @@
+==> .rubocop.yml 148 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Style/SymbolProc:
+  AllowComments: true
+
+==> 000.rb 41 <==
+something do
+  # comment
+  _1.upcase
+end
+
+==> 001.rb 39 <==
+something do
+  _1.upcase # comment
+end
+
+==> 002.rb 52 <==
+something
+
+something do
+  # comment
+  _1.upcase
+end
+

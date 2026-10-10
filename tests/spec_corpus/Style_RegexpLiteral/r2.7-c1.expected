@@ -1,0 +1,40 @@
+==> offenses exit=1 516 <==
+000.rb:1:1: C: [Correctable] Style/RegexpLiteral: Use `%r` around regular expression.
+001.rb:1:1: C: [Correctable] Style/RegexpLiteral: Use `%r` around regular expression.
+002.rb:1:7: C: [Correctable] Style/RegexpLiteral: Use `%r` around regular expression.
+003.rb:1:7: C: [Correctable] Style/RegexpLiteral: Use `%r` around regular expression.
+004.rb:1:7: C: [Correctable] Style/RegexpLiteral: Use `%r` around regular expression.
+005.rb:1:7: C: [Correctable] Style/RegexpLiteral: Use `%r` around regular expression.
+
+==> autocorrect exit=0 504 <==
+000.rb:1:1: C: [Corrected] Style/RegexpLiteral: Use `%r` around regular expression.
+001.rb:1:1: C: [Corrected] Style/RegexpLiteral: Use `%r` around regular expression.
+002.rb:1:7: C: [Corrected] Style/RegexpLiteral: Use `%r` around regular expression.
+003.rb:1:7: C: [Corrected] Style/RegexpLiteral: Use `%r` around regular expression.
+004.rb:1:7: C: [Corrected] Style/RegexpLiteral: Use `%r` around regular expression.
+005.rb:1:7: C: [Corrected] Style/RegexpLiteral: Use `%r` around regular expression.
+
+==> corrected/000.rb 6 <==
+%r{a}
+
+==> corrected/001.rb 6 <==
+%r{/}
+
+==> corrected/002.rb 12 <==
+foo = %r{a}
+
+==> corrected/003.rb 16 <==
+foo = %r{home/}
+
+==> corrected/004.rb 25 <==
+foo = %r{
+  foo
+  bar
+}x
+
+==> corrected/005.rb 40 <==
+foo = %r{
+  https?://
+  example\.com
+}x
+

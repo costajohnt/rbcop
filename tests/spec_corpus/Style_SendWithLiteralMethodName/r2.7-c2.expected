@@ -1,0 +1,24 @@
+==> offenses exit=1 408 <==
+000.rb:1:5: C: [Correctable] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+001.rb:1:6: C: [Correctable] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+002.rb:1:5: C: [Correctable] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+003.rb:1:6: C: [Correctable] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+
+==> autocorrect exit=0 400 <==
+000.rb:1:5: C: [Corrected] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+001.rb:1:6: C: [Corrected] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+002.rb:1:5: C: [Corrected] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+003.rb:1:6: C: [Corrected] Style/SendWithLiteralMethodName: Use `foo` method call directly instead.
+
+==> corrected/000.rb 8 <==
+obj.foo
+
+==> corrected/001.rb 9 <==
+obj&.foo
+
+==> corrected/002.rb 8 <==
+obj.foo
+
+==> corrected/003.rb 9 <==
+obj&.foo
+

@@ -1,0 +1,12 @@
+==> offenses exit=1 332 <==
+000.rb:1:1: C: Style/AutoResourceCleanup: Use the block version of `File.open`.
+001.rb:1:1: C: Style/AutoResourceCleanup: Use the block version of `Tempfile.open`.
+002.rb:1:1: C: Style/AutoResourceCleanup: Use the block version of `::File.open`.
+003.rb:1:1: C: Style/AutoResourceCleanup: Use the block version of `::Tempfile.open`.
+
+==> autocorrect exit=1 332 <==
+000.rb:1:1: C: Style/AutoResourceCleanup: Use the block version of `File.open`.
+001.rb:1:1: C: Style/AutoResourceCleanup: Use the block version of `Tempfile.open`.
+002.rb:1:1: C: Style/AutoResourceCleanup: Use the block version of `::File.open`.
+003.rb:1:1: C: Style/AutoResourceCleanup: Use the block version of `::Tempfile.open`.
+

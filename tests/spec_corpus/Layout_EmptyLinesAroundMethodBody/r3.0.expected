@@ -1,0 +1,19 @@
+==> offenses exit=1 232 <==
+004.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundMethodBody: Extra empty line detected at method body beginning.
+005.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundMethodBody: Extra empty line detected at method body beginning.
+
+==> autocorrect exit=0 228 <==
+004.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundMethodBody: Extra empty line detected at method body beginning.
+005.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundMethodBody: Extra empty line detected at method body beginning.
+
+==> corrected/004.rb 29 <==
+def foo(bar,
+  baz) =
+  quux
+
+==> corrected/005.rb 41 <==
+def foo(bar,
+  baz) =
+  # comment
+  quux
+

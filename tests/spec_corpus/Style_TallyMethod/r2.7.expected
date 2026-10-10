@@ -1,0 +1,94 @@
+==> offenses exit=1 1818 <==
+000.rb:1:7: C: [Correctable] Style/TallyMethod: Use `tally` instead of `each_with_object`.
+001.rb:1:8: C: [Correctable] Style/TallyMethod: Use `tally` instead of `each_with_object`.
+002.rb:1:7: C: [Correctable] Style/TallyMethod: Use `tally` instead of `each_with_object`.
+003.rb:1:1: C: [Correctable] Style/TallyMethod: Use `tally` instead of `each_with_object`.
+004.rb:1:7: C: [Correctable] Style/TallyMethod: Use `tally` instead of `each_with_object`.
+005.rb:1:7: C: [Correctable] Style/TallyMethod: Use `tally` instead of `each_with_object`.
+011.rb:1:7: C: [Correctable] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+012.rb:1:7: C: [Correctable] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+013.rb:1:7: C: [Correctable] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+014.rb:1:8: C: [Correctable] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+015.rb:1:1: C: [Correctable] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+018.rb:1:7: C: [Correctable] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+019.rb:1:7: C: [Correctable] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+021.rb:1:7: C: [Correctable] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+022.rb:1:7: C: [Correctable] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+023.rb:1:7: C: [Correctable] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+024.rb:1:7: C: [Correctable] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+025.rb:1:7: C: [Correctable] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+
+==> autocorrect exit=0 1782 <==
+000.rb:1:7: C: [Corrected] Style/TallyMethod: Use `tally` instead of `each_with_object`.
+001.rb:1:8: C: [Corrected] Style/TallyMethod: Use `tally` instead of `each_with_object`.
+002.rb:1:7: C: [Corrected] Style/TallyMethod: Use `tally` instead of `each_with_object`.
+003.rb:1:1: C: [Corrected] Style/TallyMethod: Use `tally` instead of `each_with_object`.
+004.rb:1:7: C: [Corrected] Style/TallyMethod: Use `tally` instead of `each_with_object`.
+005.rb:1:7: C: [Corrected] Style/TallyMethod: Use `tally` instead of `each_with_object`.
+011.rb:1:7: C: [Corrected] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+012.rb:1:7: C: [Corrected] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+013.rb:1:7: C: [Corrected] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+014.rb:1:8: C: [Corrected] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+015.rb:1:1: C: [Corrected] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+018.rb:1:7: C: [Corrected] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+019.rb:1:7: C: [Corrected] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+021.rb:1:7: C: [Corrected] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+022.rb:1:7: C: [Corrected] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+023.rb:1:7: C: [Corrected] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+024.rb:1:7: C: [Corrected] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+025.rb:1:7: C: [Corrected] Style/TallyMethod: Use `tally` instead of `group_by` and `transform_values`.
+
+==> corrected/000.rb 12 <==
+array.tally
+
+==> corrected/001.rb 13 <==
+array&.tally
+
+==> corrected/002.rb 12 <==
+array.tally
+
+==> corrected/003.rb 6 <==
+tally
+
+==> corrected/004.rb 12 <==
+array.tally
+
+==> corrected/005.rb 12 <==
+array.tally
+
+==> corrected/011.rb 12 <==
+array.tally
+
+==> corrected/012.rb 12 <==
+array.tally
+
+==> corrected/013.rb 12 <==
+array.tally
+
+==> corrected/014.rb 13 <==
+array&.tally
+
+==> corrected/015.rb 6 <==
+tally
+
+==> corrected/018.rb 12 <==
+array.tally
+
+==> corrected/019.rb 12 <==
+array.tally
+
+==> corrected/021.rb 12 <==
+array.tally
+
+==> corrected/022.rb 12 <==
+array.tally
+
+==> corrected/023.rb 12 <==
+array.tally
+
+==> corrected/024.rb 12 <==
+array.tally
+
+==> corrected/025.rb 12 <==
+array.tally
+

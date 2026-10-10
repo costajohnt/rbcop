@@ -1,0 +1,127 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.6
+
+==> 000.rb 24 <==
+Integer(arg) rescue nil
+
+==> 001.rb 30 <==
+Integer(arg, base) rescue nil
+
+==> 002.rb 22 <==
+Float(arg) rescue nil
+
+==> 003.rb 25 <==
+BigDecimal(s) rescue nil
+
+==> 004.rb 28 <==
+BigDecimal(s, n) rescue nil
+
+==> 005.rb 22 <==
+Complex(s) rescue nil
+
+==> 006.rb 25 <==
+Complex(r, i) rescue nil
+
+==> 007.rb 23 <==
+Rational(x) rescue nil
+
+==> 008.rb 26 <==
+Rational(x, y) rescue nil
+
+==> 009.rb 38 <==
+begin
+  Integer(arg)
+rescue
+  nil
+end
+
+==> 010.rb 52 <==
+begin
+  Integer(arg)
+rescue ArgumentError
+  nil
+end
+
+==> 011.rb 63 <==
+begin
+  Integer(arg)
+rescue ArgumentError, TypeError
+  nil
+end
+
+==> 012.rb 67 <==
+begin
+  Integer(arg)
+rescue ::ArgumentError, ::TypeError
+  nil
+end
+
+==> 013.rb 50 <==
+begin
+  Integer(arg)
+rescue CustomError
+  nil
+end
+
+==> 014.rb 32 <==
+begin
+  Integer(arg)
+rescue
+end
+
+==> 015.rb 32 <==
+Kernel::Integer(arg) rescue nil
+
+==> 016.rb 34 <==
+::Kernel::Integer(arg) rescue nil
+
+==> 017.rb 34 <==
+::Kernel&.Integer(arg) rescue nil
+
+==> 018.rb 32 <==
+::Kernel&.Float(arg) rescue nil
+
+==> 019.rb 30 <==
+Integer(42, exception: false)
+
+==> 020.rb 42 <==
+Integer(arg, exception: false) rescue nil
+
+==> 021.rb 45 <==
+BigDecimal(arg, exception: false) rescue nil
+
+==> 022.rb 23 <==
+Integer(arg) rescue 42
+
+==> 023.rb 37 <==
+begin
+  Integer(arg)
+rescue
+  42
+end
+
+==> 024.rb 48 <==
+begin
+  Integer(arg)
+rescue
+  nil
+else
+  42
+end
+
+==> 025.rb 52 <==
+begin
+  Integer(arg)
+  do_something
+rescue
+  42
+end
+
+==> 026.rb 38 <==
+Float(arg, unexpected_arg) rescue nil
+

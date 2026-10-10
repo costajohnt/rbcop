@@ -1,0 +1,145 @@
+==> .rubocop.yml 203 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/SafeNavigationConsistency:
+  AllowedMethods:
+  - present?
+  - blank?
+  - try
+  - presence
+
+==> 000.rb 11 <==
+foo && bar
+
+==> 001.rb 19 <==
+foo.bar && foo.baz
+
+==> 002.rb 19 <==
+foo.bar || foo.baz
+
+==> 003.rb 25 <==
+foo == bar || foo == baz
+
+==> 004.rb 23 <==
+foo&.bar || foobar.baz
+
+==> 005.rb 21 <==
+foo&.bar || foo.nil?
+
+==> 006.rb 21 <==
+foo.nil? && foo&.bar
+
+==> 007.rb 38 <==
+return true if a.nil? || a&.whatever?
+
+==> 008.rb 20 <==
+foo&.bar && foo.baz
+
+==> 009.rb 20 <==
+foo.bar && foo&.baz
+
+==> 010.rb 24 <==
+x.foo.bar && y.foo&.baz
+
+==> 011.rb 21 <==
+foo&.bar && foo&.baz
+
+==> 012.rb 20 <==
+foo&.bar || foo.baz
+
+==> 013.rb 20 <==
+foo.bar || foo&.baz
+
+==> 014.rb 40 <==
+foo = nil
+foo&.bar || foo.baz
+something
+
+==> 015.rb 22 <==
+foo > 5 && foo&.zero?
+
+==> 016.rb 22 <==
+foo&.zero? || foo > 5
+
+==> 017.rb 21 <==
+foo&.bar && foo == 1
+
+==> 018.rb 21 <==
+foo&.bar && foo != 1
+
+==> 019.rb 22 <==
+foo&.bar && foo === 1
+
+==> 020.rb 21 <==
+foo&.bar || foo == 1
+
+==> 021.rb 21 <==
+foo&.bar || foo != 1
+
+==> 022.rb 22 <==
+foo&.bar || foo === 1
+
+==> 023.rb 20 <==
+foo&.bar && foo + 1
+
+==> 024.rb 20 <==
+foo&.bar || foo + 1
+
+==> 025.rb 20 <==
+foo&.bar && foo - 1
+
+==> 026.rb 20 <==
+foo&.bar || foo - 1
+
+==> 027.rb 21 <==
+foo&.bar && foo << 1
+
+==> 028.rb 21 <==
+foo&.bar || foo << 1
+
+==> 029.rb 24 <==
+foo&.bar && foo.baz = 1
+
+==> 030.rb 24 <==
+foo.bar && foo&.baz = 1
+
+==> 031.rb 25 <==
+foo&.bar && foo&.baz = 1
+
+==> 032.rb 34 <==
+foo&.bar && foobar.baz && foo.qux
+
+==> 033.rb 34 <==
+foo.bar && foobar.baz && foo&.qux
+
+==> 034.rb 34 <==
+foo.bar || foobar.baz || foo&.qux
+
+==> 035.rb 34 <==
+foobar.baz && foo&.bar && foo.qux
+
+==> 036.rb 48 <==
+foobar.baz && foo&.bar && foo.qux && foo.foobar
+
+==> 037.rb 33 <==
+foo&.bar && foo&.baz || foo&.qux
+
+==> 038.rb 33 <==
+foo&.bar && (foo.baz || foo.qux)
+
+==> 039.rb 31 <==
+foo.bar && foo.baz || foo&.qux
+
+==> 040.rb 32 <==
+foo&.bar || foo&.baz && foo.qux
+
+==> 041.rb 33 <==
+(foo&.bar && foo.baz) || foo.qux
+
+==> 042.rb 32 <==
+foo&.bar && foo&.baz || foo.qux
+

@@ -1,0 +1,66 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 24 <==
+Foo.send(:include, Bar)
+
+==> 001.rb 36 <==
+class Foo
+  send(:include, Bar)
+end
+
+==> 002.rb 41 <==
+class Foo
+  self.send(:include, Bar)
+end
+
+==> 003.rb 24 <==
+Foo.send(:prepend, Bar)
+
+==> 004.rb 23 <==
+Foo.send(:extend, Bar)
+
+==> 005.rb 25 <==
+Foo.send('include', Bar)
+
+==> 006.rb 25 <==
+Foo.send('prepend', Bar)
+
+==> 007.rb 24 <==
+Foo.send('extend', Bar)
+
+==> 008.rb 31 <==
+Foo.public_send(:include, Bar)
+
+==> 009.rb 31 <==
+Foo.public_send(:prepend, Bar)
+
+==> 010.rb 27 <==
+Foo.__send__(:extend, Bar)
+
+==> 011.rb 28 <==
+Foo.__send__(:include, Bar)
+
+==> 012.rb 29 <==
+Foo.send(:do_something, Bar)
+
+==> 013.rb 16 <==
+Foo.include Bar
+
+==> 014.rb 16 <==
+Foo.prepend Bar
+
+==> 015.rb 15 <==
+Foo.extend Bar
+
+==> 016.rb 30 <==
+A::Foo.send(:include, B::Bar)
+
+==> 017.rb 29 <==
+Foo.send(:include, Bar, Baz)
+

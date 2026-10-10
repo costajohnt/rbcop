@@ -1,0 +1,26 @@
+==> offenses exit=1 837 <==
+000.rb:1:1: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+001.rb:1:1: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+002.rb:1:1: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+003.rb:1:1: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+004.rb:1:1: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+004.rb:1:10: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+005.rb:1:1: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+006.rb:1:7: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+019.rb:1:3: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+019.rb:2:4: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+023.rb:1:1: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+
+==> autocorrect exit=1 837 <==
+000.rb:1:1: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+001.rb:1:1: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+002.rb:1:1: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+003.rb:1:1: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+004.rb:1:1: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+004.rb:1:10: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+005.rb:1:1: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+006.rb:1:7: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+019.rb:1:3: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+019.rb:2:4: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+023.rb:1:1: C: Naming/ConstantName: Use SCREAMING_SNAKE_CASE for constants.
+

@@ -1,0 +1,20 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.4
+
+==> 000.rb 53 <==
+{foo: 1, bar: 2, baz: 3}.select { |k, v| k == :bar }
+
+==> 001.rb 53 <==
+{foo: 1, bar: 2, baz: 3}.select { |k, v| :bar == k }
+
+==> 002.rb 53 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| k != :bar }
+
+==> 003.rb 53 <==
+{foo: 1, bar: 2, baz: 3}.reject { |k, v| :bar != k }
+

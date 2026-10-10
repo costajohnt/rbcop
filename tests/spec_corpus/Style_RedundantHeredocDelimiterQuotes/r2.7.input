@@ -1,0 +1,101 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 64 <==
+do_something(<<~'EOS')
+  no string interpolation style text
+EOS
+
+==> 001.rb 64 <==
+do_something(<<-'EOS')
+  no string interpolation style text
+EOS
+
+==> 002.rb 63 <==
+do_something(<<'EOS')
+  no string interpolation style text
+EOS
+
+==> 003.rb 64 <==
+do_something(<<~"EOS")
+  no string interpolation style text
+EOS
+
+==> 004.rb 56 <==
+do_something(<<~"EOS")
+  #{string} #{interpolation}
+EOS
+
+==> 005.rb 37 <==
+do_something(<<~`EOS`)
+  command
+EOS
+
+==> 006.rb 62 <==
+do_something(<<~EOS)
+  no string interpolation style text
+EOS
+
+==> 007.rb 56 <==
+do_something(<<~'EOS')
+  #{string} #{interpolation}
+EOS
+
+==> 008.rb 72 <==
+do_something(<<~'EOS')
+  #{
+    string
+  } #{
+    interpolation
+  }
+EOS
+
+==> 009.rb 35 <==
+do_something(<<~'EOS')
+  #@foo
+EOS
+
+==> 010.rb 36 <==
+do_something(<<~'EOS')
+  #@@foo
+EOS
+
+==> 011.rb 35 <==
+do_something(<<~'EOS')
+  #$foo
+EOS
+
+==> 012.rb 76 <==
+do_something(<<~'EDGE"CASE')
+  no string interpolation style text
+EDGE"CASE
+
+==> 013.rb 76 <==
+do_something(<<~"EDGE'CASE")
+  no string interpolation style text
+EDGE'CASE
+
+==> 014.rb 76 <==
+do_something(<<~'EDGE CASE')
+  no string interpolation style text
+EDGE CASE
+
+==> 015.rb 80 <==
+do_something(<<~'EDGE　CASE')
+  no string interpolation style text
+EDGE　CASE
+
+==> 016.rb 51 <==
+do_something(<<~'EOS')
+  Preserve \
+  newlines
+EOS
+
+==> 017.rb 5 <==
+<<''
+

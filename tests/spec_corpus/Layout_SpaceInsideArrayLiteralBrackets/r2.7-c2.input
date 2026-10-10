@@ -1,0 +1,18 @@
+==> .rubocop.yml 187 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/SpaceInsideArrayLiteralBrackets:
+  EnforcedStyleForEmptyBrackets: space
+
+==> 000.rb 7 <==
+a = [ ]
+==> 001.rb 7 <==
+a = []
+
+==> 002.rb 13 <==
+a = [      ]
+

@@ -1,0 +1,8 @@
+==> offenses exit=1 158 <==
+000.gemfile:1:1: C: Bundler/GemVersion: Gem version specification is required.
+000.gemfile:2:1: C: Bundler/GemVersion: Gem version specification is required.
+
+==> autocorrect exit=1 158 <==
+000.gemfile:1:1: C: Bundler/GemVersion: Gem version specification is required.
+000.gemfile:2:1: C: Bundler/GemVersion: Gem version specification is required.
+

@@ -1,0 +1,24 @@
+==> .rubocop.yml 159 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/TrivialAccessors:
+  IgnoreClassMethods: true
+
+==> 000.rb 44 <==
+class Foo
+  def self.foo
+    @foo
+  end
+end
+
+==> 001.rb 55 <==
+class Foo
+  def self.foo(val)
+    @foo = val
+  end
+end
+

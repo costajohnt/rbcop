@@ -1,0 +1,53 @@
+==> offenses exit=1 1010 <==
+000.rb:1:1: C: [Correctable] Style/NegatedWhile: Favor `until` over `while` for negative conditions.
+000.rb:4:1: C: [Correctable] Style/NegatedWhile: Favor `until` over `while` for negative conditions.
+001.rb:1:1: C: [Correctable] Style/NegatedWhile: Favor `while` over `until` for negative conditions.
+001.rb:4:1: C: [Correctable] Style/NegatedWhile: Favor `while` over `until` for negative conditions.
+002.rb:1:1: C: [Correctable] Style/NegatedWhile: Favor `until` over `while` for negative conditions.
+002.rb:4:1: C: [Correctable] Style/NegatedWhile: Favor `until` over `while` for negative conditions.
+003.rb:1:1: C: [Correctable] Style/NegatedWhile: Favor `while` over `until` for negative conditions.
+006.rb:1:1: C: [Correctable] Style/NegatedWhile: Favor `until` over `while` for negative conditions.
+006.rb:2:1: C: [Correctable] Style/NegatedWhile: Favor `until` over `while` for negative conditions.
+007.rb:1:1: C: [Correctable] Style/NegatedWhile: Favor `while` over `until` for negative conditions.
+
+==> autocorrect exit=0 990 <==
+000.rb:1:1: C: [Corrected] Style/NegatedWhile: Favor `until` over `while` for negative conditions.
+000.rb:4:1: C: [Corrected] Style/NegatedWhile: Favor `until` over `while` for negative conditions.
+001.rb:1:1: C: [Corrected] Style/NegatedWhile: Favor `while` over `until` for negative conditions.
+001.rb:4:1: C: [Corrected] Style/NegatedWhile: Favor `while` over `until` for negative conditions.
+002.rb:1:1: C: [Corrected] Style/NegatedWhile: Favor `until` over `while` for negative conditions.
+002.rb:4:1: C: [Corrected] Style/NegatedWhile: Favor `until` over `while` for negative conditions.
+003.rb:1:1: C: [Corrected] Style/NegatedWhile: Favor `while` over `until` for negative conditions.
+006.rb:1:1: C: [Corrected] Style/NegatedWhile: Favor `until` over `while` for negative conditions.
+006.rb:2:1: C: [Corrected] Style/NegatedWhile: Favor `until` over `while` for negative conditions.
+007.rb:1:1: C: [Corrected] Style/NegatedWhile: Favor `while` over `until` for negative conditions.
+
+==> corrected/000.rb 66 <==
+until a_condition
+  some_method
+end
+some_method until a_condition
+
+==> corrected/001.rb 66 <==
+while a_condition
+  some_method
+end
+some_method while a_condition
+
+==> corrected/002.rb 68 <==
+until (a_condition)
+  some_method
+end
+some_method until a_condition
+
+==> corrected/003.rb 27 <==
+while (var = foo; bar)
+end
+
+==> corrected/006.rb 49 <==
+something until x.even?
+something until(x.even?)
+
+==> corrected/007.rb 24 <==
+something while x.even?
+

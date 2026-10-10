@@ -1,0 +1,199 @@
+==> .rubocop.yml 181 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: "[]"
+
+==> 000.rb 9 <==
+%[string]
+==> 001.rb 10 <==
+%(string)
+
+==> 002.rb 4 <==
+%()
+
+==> 003.rb 12 <==
+%([string])
+
+==> 004.rb 16 <==
+%(#{[1].first})
+
+==> 005.rb 8 <==
+%{\x80}
+
+==> 006.rb 10 <==
+%q[string]
+==> 007.rb 11 <==
+%q(string)
+
+==> 008.rb 13 <==
+%q([string])
+
+==> 009.rb 10 <==
+%Q[string]
+==> 010.rb 11 <==
+%Q(string)
+
+==> 011.rb 13 <==
+%Q([string])
+
+==> 012.rb 17 <==
+%Q(#{[1].first})
+
+==> 013.rb 14 <==
+%w[some words]
+==> 014.rb 18 <==
+%w(\(some words\))
+==> 015.rb 38 <==
+%w(only closing delimiter character\))
+==> 016.rb 27 <==
+%w|\|not pairing delimiter|
+==> 017.rb 15 <==
+%w(some words)
+
+==> 018.rb 18 <==
+%w([some] [words])
+==> 019.rb 14 <==
+%W[some words]
+==> 020.rb 15 <==
+%W(some words)
+
+==> 021.rb 18 <==
+%W([some] [words])
+==> 022.rb 17 <==
+%W(#{[1].first})
+
+==> 023.rb 10 <==
+%r[regexp]
+==> 024.rb 11 <==
+%r(regexp)
+
+==> 025.rb 12 <==
+%r([regexp])
+==> 026.rb 17 <==
+%r(#{[1].first})
+
+==> 027.rb 8 <==
+%r(.*)i
+
+==> 028.rb 16 <==
+%i[some symbols]
+==> 029.rb 13 <==
+%i(\(\) each)
+==> 030.rb 17 <==
+%i(some symbols)
+
+==> 031.rb 14 <==
+%I[some words]
+==> 032.rb 15 <==
+%I(some words)
+
+==> 033.rb 17 <==
+%I(#{[1].first})
+
+==> 034.rb 10 <==
+%s[symbol]
+==> 035.rb 11 <==
+%s(symbol)
+
+==> 036.rb 5 <==
+%s([)
+==> 037.rb 11 <==
+%x[command]
+==> 038.rb 12 <==
+%x(command)
+
+==> 039.rb 13 <==
+%x([command])
+==> 040.rb 17 <==
+%x(#{[1].first})
+
+==> 041.rb 76 <==
+module Foo
+   class Bar
+     def baz
+       %(one two)
+     end
+   end
+ end
+
+==> 042.rb 17 <==
+%w(
+some
+words
+)
+
+==> 043.rb 35 <==
+  array = %w(
+    first
+  second
+)
+
+==> 044.rb 5 <==
+%{
+}
+
+==> 045.rb 5 <==
+%{	}
+
+==> 046.rb 6 <==
+%q{
+}
+
+==> 047.rb 6 <==
+%q{	}
+
+==> 048.rb 6 <==
+%Q{
+}
+
+==> 049.rb 6 <==
+%Q{	}
+
+==> 050.rb 6 <==
+%s{
+}
+
+==> 051.rb 6 <==
+%s{	}
+
+==> 052.rb 6 <==
+%w{
+}
+
+==> 053.rb 6 <==
+%w{	}
+
+==> 054.rb 6 <==
+%W{
+}
+
+==> 055.rb 6 <==
+%W{	}
+
+==> 056.rb 6 <==
+%x{
+}
+
+==> 057.rb 6 <==
+%x{	}
+
+==> 058.rb 6 <==
+%r{
+}
+
+==> 059.rb 6 <==
+%r{	}
+
+==> 060.rb 6 <==
+%i{
+}
+
+==> 061.rb 6 <==
+%i{	}
+

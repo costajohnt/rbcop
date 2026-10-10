@@ -1,0 +1,35 @@
+==> offenses exit=1 485 <==
+001.rb:1:4: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+001.rb:2:4: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+002.rb:2:17: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+002.rb:5:14: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+002.rb:8:16: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+002.rb:11:18: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+
+==> autocorrect exit=0 473 <==
+001.rb:1:4: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+001.rb:2:4: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+002.rb:2:17: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+002.rb:5:14: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+002.rb:8:16: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+002.rb:11:18: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+
+==> corrected/001.rb 36 <==
+one # comment one
+two # comment two
+
+==> corrected/002.rb 286 <==
+class Foo
+  def require(p) # rubocop:disable Naming/MethodParameterName
+  end
+
+  def load(p) # rubocop:disable Naming/MethodParameterName
+  end
+
+  def join(*ps) # rubocop:disable Naming/MethodParameterName
+  end
+
+  def exist?(*ps) # rubocop:disable Naming/MethodParameterName
+  end
+end
+

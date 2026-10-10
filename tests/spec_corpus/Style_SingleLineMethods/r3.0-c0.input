@@ -1,0 +1,15 @@
+==> .rubocop.yml 162 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Style/SingleLineMethods:
+  AllowIfMethodIsEmpty: true
+
+==> 000.rb 22 <==
+def some_method() = x
+
+==> 001.rb 20 <==
+def some_method; end

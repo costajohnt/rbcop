@@ -1,0 +1,32 @@
+==> .rubocop.yml 162 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/UnusedMethodArgument:
+  IgnoreEmptyMethods: true
+
+==> 000.rb 20 <==
+def method(arg)
+end
+
+==> 001.rb 28 <==
+def self.method(unused)
+end
+
+==> 002.rb 24 <==
+def method(arg)
+  1
+end
+
+==> 003.rb 30 <==
+def method(a, b, *others)
+end
+
+==> 004.rb 34 <==
+def method(a, b, *others)
+  1
+end
+

@@ -1,0 +1,13 @@
+==> offenses exit=1 78 <==
+000.rb:3:1: W: [Correctable] Lint/EmptyEnsure: Empty `ensure` block detected.
+
+==> autocorrect exit=0 76 <==
+000.rb:3:1: W: [Corrected] Lint/EmptyEnsure: Empty `ensure` block detected.
+
+==> corrected/000.rb 41 <==
+begin
+  something
+ # hello
+  # world
+end
+

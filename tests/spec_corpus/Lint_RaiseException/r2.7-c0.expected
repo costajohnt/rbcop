@@ -1,0 +1,74 @@
+==> offenses exit=1 1058 <==
+000.rb:1:7: W: [Correctable] Lint/RaiseException: Use `StandardError` over `Exception`.
+001.rb:1:7: W: [Correctable] Lint/RaiseException: Use `StandardError` over `Exception`.
+002.rb:1:7: W: [Correctable] Lint/RaiseException: Use `StandardError` over `Exception`.
+003.rb:1:7: W: [Correctable] Lint/RaiseException: Use `StandardError` over `Exception`.
+004.rb:1:7: W: [Correctable] Lint/RaiseException: Use `StandardError` over `Exception`.
+005.rb:1:7: W: [Correctable] Lint/RaiseException: Use `StandardError` over `Exception`.
+006.rb:1:7: W: [Correctable] Lint/RaiseException: Use `StandardError` over `Exception`.
+007.rb:1:6: W: [Correctable] Lint/RaiseException: Use `StandardError` over `Exception`.
+008.rb:1:6: W: [Correctable] Lint/RaiseException: Use `StandardError` over `Exception`.
+009.rb:1:6: W: [Correctable] Lint/RaiseException: Use `StandardError` over `Exception`.
+015.rb:4:13: W: [Correctable] Lint/RaiseException: Use `StandardError` over `Exception`.
+016.rb:3:11: W: [Correctable] Lint/RaiseException: Use `StandardError` over `Exception`.
+
+==> autocorrect exit=0 1034 <==
+000.rb:1:7: W: [Corrected] Lint/RaiseException: Use `StandardError` over `Exception`.
+001.rb:1:7: W: [Corrected] Lint/RaiseException: Use `StandardError` over `Exception`.
+002.rb:1:7: W: [Corrected] Lint/RaiseException: Use `StandardError` over `Exception`.
+003.rb:1:7: W: [Corrected] Lint/RaiseException: Use `StandardError` over `Exception`.
+004.rb:1:7: W: [Corrected] Lint/RaiseException: Use `StandardError` over `Exception`.
+005.rb:1:7: W: [Corrected] Lint/RaiseException: Use `StandardError` over `Exception`.
+006.rb:1:7: W: [Corrected] Lint/RaiseException: Use `StandardError` over `Exception`.
+007.rb:1:6: W: [Corrected] Lint/RaiseException: Use `StandardError` over `Exception`.
+008.rb:1:6: W: [Corrected] Lint/RaiseException: Use `StandardError` over `Exception`.
+009.rb:1:6: W: [Corrected] Lint/RaiseException: Use `StandardError` over `Exception`.
+015.rb:4:13: W: [Corrected] Lint/RaiseException: Use `StandardError` over `Exception`.
+016.rb:3:11: W: [Corrected] Lint/RaiseException: Use `StandardError` over `Exception`.
+
+==> corrected/000.rb 22 <==
+raise ::StandardError
+
+==> corrected/001.rb 49 <==
+raise ::StandardError.new 'Error with exception'
+
+==> corrected/002.rb 46 <==
+raise ::StandardError, 'Error with exception'
+
+==> corrected/003.rb 20 <==
+raise StandardError
+
+==> corrected/004.rb 44 <==
+raise StandardError, 'Error with exception'
+
+==> corrected/005.rb 47 <==
+raise StandardError.new 'Error with exception'
+
+==> corrected/006.rb 40 <==
+raise StandardError.new('arg1', 'arg2')
+
+==> corrected/007.rb 19 <==
+fail StandardError
+
+==> corrected/008.rb 43 <==
+fail StandardError, 'Error with exception'
+
+==> corrected/009.rb 46 <==
+fail StandardError.new 'Error with exception'
+
+==> corrected/015.rb 85 <==
+module Foo
+  module Bar
+    def self.foo
+      raise StandardError
+    end
+  end
+end
+
+==> corrected/016.rb 62 <==
+module Gem
+  def self.foo
+    raise ::StandardError
+  end
+end
+

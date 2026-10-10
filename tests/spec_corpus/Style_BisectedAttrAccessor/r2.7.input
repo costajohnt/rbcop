@@ -1,0 +1,122 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 77 <==
+class Foo
+  attr_reader :bar
+  attr_writer :bar
+  other_macro :something
+end
+
+==> 001.rb 70 <==
+class Foo
+  attr :bar
+  attr_writer :bar
+  other_macro :something
+end
+
+==> 002.rb 118 <==
+class Foo
+  ATTRIBUTES = %i[foo bar]
+  attr_reader *ATTRIBUTES
+  attr_writer *ATTRIBUTES
+  other_macro :something
+end
+
+==> 003.rb 96 <==
+class Foo
+  attr_reader :baz, :bar, :quux
+  attr_writer :bar, :zoo
+  other_macro :something
+end
+
+==> 004.rb 77 <==
+class Foo
+  attr_writer :foo
+  attr_reader :foo
+  other_macro :something
+end
+
+==> 005.rb 102 <==
+class Foo
+  attr_reader :bar
+  attr_writer :bar
+
+  private
+
+  attr_writer :baz
+  attr_reader :baz
+end
+
+==> 006.rb 134 <==
+class Foo
+  attr_reader :bar
+
+  class << self
+    attr_reader :baz
+    attr_writer :baz
+
+    private
+
+    attr_reader :quux
+  end
+end
+
+==> 007.rb 76 <==
+class Foo
+  attr_reader :foo, :bar, :baz
+  attr_writer :foo, :bar, :baz
+end
+
+==> 008.rb 70 <==
+class Foo
+  attr_reader :foo, :bar, :baz
+  attr_writer :foo, :baz
+end
+
+==> 009.rb 52 <==
+class Foo
+  attr_reader :bar
+  attr_writer :baz
+end
+
+==> 010.rb 63 <==
+class Foo
+  attr_reader :bar
+
+  private
+  attr_writer :bar
+end
+
+==> 011.rb 92 <==
+class Foo
+  attr_reader :foo
+
+  private
+  attr_writer :bar
+
+  public
+  attr_writer :foo
+end
+
+==> 012.rb 115 <==
+module Foo
+  attr_reader :foo
+  attr_writer :foo, :bar
+
+  private
+
+  attr_reader :bar, :baz
+  attr_writer :baz
+end
+
+==> 013.rb 35 <==
+class Foo
+  attr_accessor :bar
+end
+

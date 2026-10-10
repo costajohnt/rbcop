@@ -1,0 +1,8 @@
+==> offenses exit=1 200 <==
+001.rb:1:1: C: Style/StringLiterals: Inconsistent quote style.
+002.rb:1:1: C: Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
+
+==> autocorrect exit=1 200 <==
+001.rb:1:1: C: Style/StringLiterals: Inconsistent quote style.
+002.rb:1:1: C: Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
+

@@ -1,0 +1,35 @@
+==> offenses exit=1 804 <==
+000.rb:2:12: C: [Correctable] Layout/ParameterAlignment: Use one level of indentation for parameters following the first line of a multi-line method definition.
+001.rb:2:5: C: [Correctable] Layout/ParameterAlignment: Use one level of indentation for parameters following the first line of a multi-line method definition.
+006.rb:2:10: C: [Correctable] Layout/ParameterAlignment: Use one level of indentation for parameters following the first line of a multi-line method definition.
+006.rb:3:11: C: [Correctable] Layout/ParameterAlignment: Use one level of indentation for parameters following the first line of a multi-line method definition.
+007.rb:2:17: C: [Correctable] Layout/ParameterAlignment: Use one level of indentation for parameters following the first line of a multi-line method definition.
+
+==> autocorrect exit=0 794 <==
+000.rb:2:12: C: [Corrected] Layout/ParameterAlignment: Use one level of indentation for parameters following the first line of a multi-line method definition.
+001.rb:2:5: C: [Corrected] Layout/ParameterAlignment: Use one level of indentation for parameters following the first line of a multi-line method definition.
+006.rb:2:10: C: [Corrected] Layout/ParameterAlignment: Use one level of indentation for parameters following the first line of a multi-line method definition.
+006.rb:3:11: C: [Corrected] Layout/ParameterAlignment: Use one level of indentation for parameters following the first line of a multi-line method definition.
+007.rb:2:17: C: [Corrected] Layout/ParameterAlignment: Use one level of indentation for parameters following the first line of a multi-line method definition.
+
+==> corrected/000.rb 23 <==
+def method(a,
+  b)
+end
+
+==> corrected/001.rb 23 <==
+def method(a,
+  b)
+end
+
+==> corrected/006.rb 28 <==
+def func2(a,
+  *b,
+  c)
+end
+
+==> corrected/007.rb 28 <==
+def self.method(a,
+  b)
+end
+

@@ -1,0 +1,306 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 11 <==
+a = self.b
+
+==> 001.rb 10 <==
+a = self.a
+==> 002.rb 16 <==
+foo ||= self.foo
+==> 003.rb 16 <==
+foo &&= self.foo
+==> 004.rb 20 <==
+a = self.a || b || c
+==> 005.rb 13 <==
+a, b = self.a
+==> 006.rb 20 <==
+a = self.a if self.a
+==> 007.rb 23 <==
+a, b = self.a if self.a
+==> 008.rb 37 <==
+if self.a
+  a = self.a
+end if self.a
+
+==> 009.rb 40 <==
+if self.a
+  a, b = self.a
+end if self.a
+
+==> 010.rb 24 <==
+a = self.a unless self.a
+==> 011.rb 27 <==
+a, b = self.a unless self.a
+==> 012.rb 23 <==
+a = self.a while self.a
+==> 013.rb 26 <==
+a, b = self.a while self.a
+==> 014.rb 23 <==
+a = self.a until self.a
+==> 015.rb 26 <==
+a, b = self.a until self.a
+==> 016.rb 25 <==
+a = self.a if foo(self.a)
+==> 017.rb 16 <==
+a = x if self.b
+
+==> 018.rb 22 <==
+a, b, c = x if self.d
+
+==> 019.rb 24 <==
+a = do_something(self.a)
+==> 020.rb 27 <==
+a, b = do_something(self.a)
+==> 021.rb 10 <==
+self.a = b
+==> 022.rb 16 <==
+a, self.b = c, d
+==> 023.rb 28 <==
+self.logger ||= Rails.logger
+==> 024.rb 21 <==
+self.x ||= 42
+self.x
+
+==> 025.rb 19 <==
+self.flag &&= value
+==> 026.rb 14 <==
+self.sum += 10
+==> 027.rb 7 <==
+self[a]
+==> 028.rb 9 <==
+self << a
+==> 029.rb 452 <==
+a = self.class
+self.for(deps, [], true)
+self.and(other)
+self.or(other)
+self.alias
+self.begin
+self.break
+self.case
+self.def
+self.defined?
+self.do
+self.else
+self.elsif
+self.end
+self.ensure
+self.false
+self.if
+self.in
+self.module
+self.next
+self.nil
+self.not
+self.redo
+self.rescue
+self.retry
+self.return
+self.self
+self.super
+self.then
+self.true
+self.undef
+self.unless
+self.until
+self.when
+self.while
+self.yield
+self.__FILE__
+self.__LINE__
+self.__ENCODING__
+
+==> 030.rb 150 <==
+%w[draft preview moderation approved rejected].each do |state|
+  self.state == state
+  define_method "#{state}?" do
+    self.state == state
+  end
+end
+
+==> 031.rb 42 <==
+%w[x y z].select do
+  self.axis == _1
+end
+
+==> 032.rb 60 <==
+def requested_specs(&groups)
+  some_method(self.groups)
+end
+
+==> 033.rb 59 <==
+def requested_specs(groups)
+  some_method(self.groups)
+end
+
+==> 034.rb 73 <==
+def requested_specs(final = true)
+  something if self.final != final
+end
+
+==> 035.rb 166 <==
+def requested_specs
+  @requested_specs ||= begin
+    groups = self.groups - Bundler.settings.without
+    groups.map! { |g| g.to_sym }
+    specs_for(groups)
+  end
+end
+
+==> 036.rb 48 <==
+def foo
+  do_something
+rescue => e
+  self.e
+end
+
+==> 037.rb 46 <==
+begin
+  do_something
+rescue => e
+  self.e
+end
+
+==> 038.rb 38 <==
+def foo(bar)
+  puts bar, self.bar
+end
+
+==> 039.rb 64 <==
+def foo(bar)
+  def inner_method(); end
+  puts bar, self.bar
+end
+
+==> 040.rb 66 <==
+def requested_specs(groups, **nil)
+  some_method(self.groups)
+end
+
+==> 041.rb 65 <==
+def self.requested_specs(&groups)
+  some_method(self.groups)
+end
+
+==> 042.rb 64 <==
+def self.requested_specs(groups)
+  some_method(self.groups)
+end
+
+==> 043.rb 78 <==
+def self.requested_specs(final = true)
+  something if self.final != final
+end
+
+==> 044.rb 171 <==
+def self.requested_specs
+  @requested_specs ||= begin
+    groups = self.groups - Bundler.settings.without
+    groups.map! { |g| g.to_sym }
+    specs_for(groups)
+  end
+end
+
+==> 045.rb 8 <==
+self.Foo
+==> 046.rb 7 <==
+self.()
+==> 047.rb 10 <==
+self.call
+
+==> 048.rb 9 <==
+self.open
+==> 049.rb 131 <==
+def do_something((a, b)) # This method expects Array that has 2 elements as argument.
+  self.a = a
+  self.b.some_method_call b
+end
+
+==> 050.rb 20 <==
+0.times { self.it }
+
+==> 051.rb 39 <==
+0.times do
+  self.it
+  it = 1
+  it
+end
+
+==> 052.rb 22 <==
+def foo
+  self.it
+end
+
+==> 053.rb 25 <==
+0.times { ||
+  self.it
+}
+
+==> 054.rb 27 <==
+0.times { |_n|
+  self.it
+}
+
+==> 055.rb 52 <==
+case foo
+  in Integer => bar
+    self.bar + bar
+end
+
+==> 056.rb 50 <==
+case pattern
+  in {x: foo}
+    self.foo + foo
+end
+
+==> 057.rb 52 <==
+case pattern
+  in [foo, bar]
+    self.foo + foo
+end
+
+==> 058.rb 74 <==
+case pattern
+  in _foo | _bar
+    self._foo + self._bar + _foo + _bar
+end
+
+==> 059.rb 66 <==
+case pattern
+  in { foo: [bar, baz] }
+    self.bar + self.baz
+end
+
+==> 060.rb 56 <==
+case pattern
+  in a, b if b == a * 2
+    self.a + b
+end
+
+==> 061.rb 56 <==
+case pattern
+  in a, b if b == self.a * 2
+    a + b
+end
+
+==> 062.rb 78 <==
+foo = 17
+case pattern
+  in ^foo, *bar
+    self.foo + self.bar + foo + bar
+end
+
+==> 063.rb 89 <==
+case foo
+  in Integer => bar
+    self.bar + bar
+  in Float => baz
+    self.bar + baz
+end
+

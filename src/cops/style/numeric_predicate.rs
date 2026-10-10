@@ -45,6 +45,9 @@ impl Cop for NumericPredicate {
             } else {
                 return;
             };
+            if !replacement_supported(cx, op) {
+                return;
+            }
             let pred = REPLACEMENTS.iter().find(|(_, o)| *o == op).unwrap().0;
             let src = node_text(&numeric);
             let parens = numeric.as_call_node().is_some_and(|c| {
@@ -58,6 +61,9 @@ impl Cop for NumericPredicate {
                 return;
             }
             let Some(&(_, op)) = REPLACEMENTS.iter().find(|(p, _)| *p == name) else { return };
+            if !replacement_supported(cx, op) {
+                return;
+            }
             let negated = helpers::parser_parent::parser_parent(cx.ancestors)
                 .and_then(|p| p.as_call_node())
                 .is_some_and(|p| !is_csend(&p) && method_name(&p) == "!");
@@ -72,6 +78,11 @@ impl Cop for NumericPredicate {
         let msg = format!("Use `{replacement}` instead of `{}`.", &cx.src.text[start..end]);
         cx.add_fix(start, end, &msg, |c| c.replace(start, end, &replacement));
     }
+}
+
+/// `positive?` / `negative?` need Ruby 2.3.
+fn replacement_supported(cx: &Cx, op: &str) -> bool {
+    !matches!(op, ">" | "<") || cx.config.target_ruby >= 2.3
 }
 
 fn invert(op: &str) -> &str {

@@ -1,0 +1,88 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 16 <==
+def +(foo); end
+
+==> 001.rb 19 <==
+def eql?(foo); end
+
+==> 002.rb 21 <==
+def equal?(foo); end
+
+==> 003.rb 28 <==
+def + another
+  another
+end
+
+==> 004.rb 57 <==
+def +(arg)
+  lvar = 'lvar'
+  do_something(arg, lvar)
+end
+
+==> 005.rb 89 <==
+def +(foo)
+  result = foo
+  [1, 2, 3].each do |foo|
+    result += foo
+  end
+  result
+end
+
+==> 006.rb 36 <==
+def +(arg)
+  arg = do_something
+end
+
+==> 007.rb 25 <==
+def +(other)
+  other
+end
+
+==> 008.rb 24 <==
+def <=>(_other)
+  0
+end
+
+==> 009.rb 26 <==
+def [](index)
+  other
+end
+
+==> 010.rb 34 <==
+def []=(index, value)
+  other
+end
+
+==> 011.rb 24 <==
+def <<(cop)
+  other
+end
+
+==> 012.rb 29 <==
+def ===(string)
+  string
+end
+
+==> 013.rb 62 <==
+def ｄｏ＿ｓｏｍｅｔｈｉｎｇ(string)
+  string
+end
+
+==> 014.rb 194 <==
+def -@; end
+              # This + is not a unary operator. It can only be
+              # called with dot notation.
+def +; end
+def *(a, b); end # Quite strange, but legal ruby.
+def `(cmd); end
+
+==> 015.rb 20 <==
+def =~(regexp); end
+

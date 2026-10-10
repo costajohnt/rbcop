@@ -1,0 +1,138 @@
+==> .rubocop.yml 237 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/UnusedMethodArgument:
+  AllowUnusedKeywordArguments: false
+  IgnoreEmptyMethods: false
+  IgnoreNotImplementedMethods: false
+
+==> 000.rb 41 <==
+def some_method(foo, bar)
+  puts bar
+end
+
+==> 001.rb 45 <==
+def some_method(foo,
+    bar)
+  puts foo
+end
+
+==> 002.rb 32 <==
+def foo(a, b)
+  a, b = b, a
+end
+
+==> 003.rb 33 <==
+def foo(a, b)
+  a, b = b, 42
+end
+
+==> 004.rb 30 <==
+def some_method(foo, bar)
+end
+
+==> 005.rb 42 <==
+def some_method(foo, *bar)
+  puts foo
+end
+
+==> 006.rb 45 <==
+def some_method(foo, bar = 1)
+  puts foo
+end
+
+==> 007.rb 47 <==
+def self.some_method(foo, bar:)
+  puts foo
+end
+
+==> 008.rb 49 <==
+def self.some_method(foo, bar: 1)
+  puts foo
+end
+
+==> 009.rb 50 <==
+def some_method(foo, bar, &block)
+  foo + bar
+end
+
+==> 010.rb 36 <==
+def some_method(&block)
+  yield
+end
+
+==> 011.rb 72 <==
+def some_method(&block)
+  items.each do |item|
+    yield item
+  end
+end
+
+==> 012.rb 49 <==
+def some_method(&block)
+  yield if condition
+end
+
+==> 013.rb 44 <==
+def some_method(&block)
+  yield 1, 2, 3
+end
+
+==> 014.rb 41 <==
+def some_method(&block)
+  block.call
+end
+
+==> 015.rb 30 <==
+def self.some_method(foo)
+end
+
+==> 016.rb 26 <==
+def some_method(_foo)
+end
+
+==> 017.rb 36 <==
+def some_method(foo)
+  puts foo
+end
+
+==> 018.rb 30 <==
+def some_method
+  foo = 1
+end
+
+==> 019.rb 21 <==
+1.times do |foo|
+end
+
+==> 020.rb 33 <==
+def some_method(foo)
+  super
+end
+
+==> 021.rb 45 <==
+def some_method(foo)
+  super(:something)
+end
+
+==> 022.rb 53 <==
+def some_method(foo, bar)
+  do_something binding
+end
+
+==> 023.rb 79 <==
+def some_method(foo, bar)
+  def other(a)
+    puts something(binding)
+  end
+end
+
+==> 024.rb 47 <==
+def some_method(foo)
+  binding(:something)
+end
+

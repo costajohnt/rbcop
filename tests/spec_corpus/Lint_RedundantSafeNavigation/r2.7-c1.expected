@@ -1,0 +1,29 @@
+==> offenses exit=1 565 <==
+000.rb:1:20: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+001.rb:1:20: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+002.rb:1:20: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+003.rb:1:20: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+004.rb:1:20: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+
+==> autocorrect exit=0 555 <==
+000.rb:1:20: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+001.rb:1:20: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+002.rb:1:20: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+003.rb:1:20: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+004.rb:1:20: W: [Corrected] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+
+==> corrected/000.rb 38 <==
+do_something if foo.instance_of?(bar)
+
+==> corrected/001.rb 34 <==
+do_something if foo.kind_of?(bar)
+
+==> corrected/002.rb 31 <==
+do_something if foo.is_a?(bar)
+
+==> corrected/003.rb 30 <==
+do_something if foo.eql?(bar)
+
+==> corrected/004.rb 32 <==
+do_something if foo.equal?(bar)
+

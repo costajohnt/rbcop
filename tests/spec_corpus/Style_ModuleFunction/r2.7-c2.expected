@@ -1,0 +1,12 @@
+==> offenses exit=1 336 <==
+000.rb:2:3: C: Style/ModuleFunction: Do not use `module_function` or `extend self`.
+001.rb:2:3: C: Style/ModuleFunction: Do not use `module_function` or `extend self`.
+002.rb:2:3: C: Style/ModuleFunction: Do not use `module_function` or `extend self`.
+004.rb:2:3: C: Style/ModuleFunction: Do not use `module_function` or `extend self`.
+
+==> autocorrect exit=1 336 <==
+000.rb:2:3: C: Style/ModuleFunction: Do not use `module_function` or `extend self`.
+001.rb:2:3: C: Style/ModuleFunction: Do not use `module_function` or `extend self`.
+002.rb:2:3: C: Style/ModuleFunction: Do not use `module_function` or `extend self`.
+004.rb:2:3: C: Style/ModuleFunction: Do not use `module_function` or `extend self`.
+

@@ -1,0 +1,22 @@
+==> offenses exit=1 206 <==
+001.rb:2:11: C: [Correctable] Style/ColonMethodDefinition: Do not use `::` for defining class methods.
+002.rb:2:10: C: [Correctable] Style/ColonMethodDefinition: Do not use `::` for defining class methods.
+
+==> autocorrect exit=0 202 <==
+001.rb:2:11: C: [Corrected] Style/ColonMethodDefinition: Do not use `::` for defining class methods.
+002.rb:2:10: C: [Corrected] Style/ColonMethodDefinition: Do not use `::` for defining class methods.
+
+==> corrected/001.rb 49 <==
+class Foo
+  def self.bar
+    something
+  end
+end
+
+==> corrected/002.rb 48 <==
+class Foo
+  def Foo.bar
+    something
+  end
+end
+

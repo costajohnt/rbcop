@@ -1,0 +1,40 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 9 <==
+not test
+
+==> 001.rb 5 <==
+!test
+==> 002.rb 16 <==
+x = 10 if not y
+
+==> 003.rb 10 <==
+not(test)
+
+==> 004.rb 10 <==
+not x < y
+
+==> 005.rb 11 <==
+not a >> b
+
+==> 006.rb 14 <==
+not a ? b : c
+
+==> 007.rb 11 <==
+not a && b
+
+==> 008.rb 14 <==
+x if not 1..5
+
+==> 009.rb 15 <==
+x if not a = 5
+
+==> 010.rb 11 <==
+not a || b
+

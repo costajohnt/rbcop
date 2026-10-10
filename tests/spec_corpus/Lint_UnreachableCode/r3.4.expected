@@ -1,0 +1,14 @@
+==> offenses exit=1 401 <==
+000.rb:8:3: W: Lint/UnreachableCode: Unreachable code detected.
+001.rb:8:3: W: Lint/UnreachableCode: Unreachable code detected.
+002.rb:8:3: W: Lint/UnreachableCode: Unreachable code detected.
+003.rb:7:3: F: Lint/Syntax: Invalid retry without rescue (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+004.rb:8:3: W: Lint/UnreachableCode: Unreachable code detected.
+
+==> autocorrect exit=1 401 <==
+000.rb:8:3: W: Lint/UnreachableCode: Unreachable code detected.
+001.rb:8:3: W: Lint/UnreachableCode: Unreachable code detected.
+002.rb:8:3: W: Lint/UnreachableCode: Unreachable code detected.
+003.rb:7:3: F: Lint/Syntax: Invalid retry without rescue (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+004.rb:8:3: W: Lint/UnreachableCode: Unreachable code detected.
+

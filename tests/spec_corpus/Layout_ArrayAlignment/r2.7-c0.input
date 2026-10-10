@@ -1,0 +1,80 @@
+==> .rubocop.yml 167 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/ArrayAlignment:
+  EnforcedStyle: with_first_element
+
+==> 000.rb 29 <==
+array = [a,
+   b,
+  c,
+   d]
+
+==> 001.rb 48 <==
+array = [a,
+         b,
+         c,
+         d]
+
+==> 002.rb 16 <==
+array = [ a, b ]
+==> 003.rb 33 <==
+array = [ a, b,
+          c, d ]
+
+==> 004.rb 49 <==
+puts 'Ｒｕｂｙ', [ a,
+                   b ]
+
+==> 005.rb 38 <==
+[:l1,
+  [:l2,
+    [:l3,
+     [:l4]]]]
+
+==> 006.rb 32 <==
+[:l1,
+[:l2,
+  [:l3,
+   [:l4]]]]
+
+==> 007.rb 200 <==
+var = [
+       { :type => 'something',
+         :sql => <<EOF
+Select something
+from atable
+EOF
+       },
+      { :type => 'something',
+        :sql => <<EOF
+Select something
+from atable
+EOF
+      }
+]
+
+==> 008.rb 31 <==
+array = [
+  a,
+  b,
+  c,
+  d
+]
+
+==> 009.rb 33 <==
+array = [
+  a,
+   b,
+  c,
+   d
+]
+
+==> 010.rb 20 <==
+thing, foo =
+  1, 2
+

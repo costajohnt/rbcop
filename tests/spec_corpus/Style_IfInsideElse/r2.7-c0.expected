@@ -1,0 +1,156 @@
+==> offenses exit=1 1397 <==
+000.rb:4:3: C: [Correctable] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+001.rb:4:3: C: [Correctable] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+002.rb:4:3: C: [Correctable] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+003.rb:4:3: C: [Correctable] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+004.rb:4:3: C: [Correctable] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+005.rb:7:7: C: [Correctable] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+006.rb:4:3: C: [Correctable] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+007.rb:4:3: C: [Correctable] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+008.rb:4:3: C: [Correctable] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+009.rb:4:3: C: [Correctable] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+010.rb:4:3: C: [Correctable] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+011.rb:3:3: C: [Correctable] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+011.rb:5:5: C: Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+011.rb:8:9: C: Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+012.rb:4:7: C: [Correctable] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+
+==> autocorrect exit=0 1395 <==
+000.rb:4:3: C: [Corrected] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+001.rb:4:3: C: [Corrected] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+002.rb:4:3: C: [Corrected] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+003.rb:4:3: C: [Corrected] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+004.rb:4:3: C: [Corrected] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+005.rb:7:7: C: [Corrected] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+006.rb:4:3: C: [Corrected] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+007.rb:4:3: C: [Corrected] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+008.rb:4:3: C: [Corrected] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+009.rb:4:3: C: [Corrected] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+010.rb:4:3: C: [Corrected] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+011.rb:3:3: C: [Corrected] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+011.rb:4:5: C: [Corrected] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+011.rb:6:9: C: [Corrected] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+012.rb:4:7: C: [Corrected] Style/IfInsideElse: Convert `if` nested inside `else` to `elsif`.
+
+==> corrected/000.rb 30 <==
+if a
+  blah
+elsif b
+  foo
+end
+
+==> corrected/001.rb 114 <==
+if a
+  blah
+elsif b
+  foo
+  else # This is expected to be autocorrected by `Layout/IndentationWidth`.
+    bar
+end
+
+==> corrected/002.rb 59 <==
+if a
+  foo
+elsif b
+    # TODO: comment.
+  else
+    bar
+end
+
+==> corrected/003.rb 113 <==
+if a
+  foo
+elsif b
+  # this is very important
+    bar # this too
+  else
+    # this three
+    baz # this four
+end
+
+==> corrected/004.rb 152 <==
+if a
+  blah
+elsif b
+  foo
+  elsif c # This is expected to be autocorrected by `Layout/IndentationWidth`.
+      bar
+  elsif d
+    baz
+  else
+    qux
+end
+
+==> corrected/005.rb 80 <==
+if a
+  blah
+elsif b
+  foo
+elsif condition
+  # important info
+  bar # blabla
+end
+
+==> corrected/006.rb 29 <==
+if x
+  'x'
+elsif y
+  'y'
+end
+
+==> corrected/007.rb 42 <==
+if x
+  'x'
+elsif y
+  'y'
+  else
+  'z'
+end
+
+==> corrected/008.rb 45 <==
+if x
+  'x'
+elsif y
+  'y'
+  elsif z
+  'z'
+end
+
+==> corrected/009.rb 58 <==
+if x
+  'x'
+elsif y
+  'y'
+  elsif z
+  'z'
+  else
+  'a'
+end
+
+==> corrected/010.rb 58 <==
+if x
+  'x'
+elsif y
+  'y'
+  elsif z
+  'z'
+  else
+  'a'
+end
+
+==> corrected/011.rb 72 <==
+if cond
+elsif nested_one
+  elsif c
+    if d
+      elsif e
+      end
+end
+
+==> corrected/012.rb 30 <==
+if a
+  blah
+elsif b
+  foo
+end
+

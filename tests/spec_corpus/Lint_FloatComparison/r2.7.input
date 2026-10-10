@@ -1,0 +1,99 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 60 <==
+x == 0.1
+0.1 == x
+x != 0.1
+0.1 != x
+x.eql?(0.1)
+0.1.eql?(x)
+
+==> 001.rb 45 <==
+x == Float(1)
+x == '0.1'.to_f
+x == 1.fdiv(2)
+
+==> 002.rb 72 <==
+x == 0.1 + y
+x == y + Float('0.1')
+x == y + z * (foo(arg) + '0.1'.to_f)
+
+==> 003.rb 13 <==
+x == 0.1.abs
+
+==> 004.rb 14 <==
+x == 1.1.ceil
+
+==> 005.rb 17 <==
+x == 1.1.ceil(1)
+
+==> 006.rb 20 <==
+(x - 0.1) < epsilon
+
+==> 007.rb 14 <==
+value == 0.2r
+
+==> 008.rb 89 <==
+x == 0.0
+x.to_f == 0
+x.to_f.abs == 0.0
+x != 0.0
+x.to_f != 0
+x.to_f.zero?
+x.to_f.nonzero?
+
+==> 009.rb 92 <==
+Float('not_a_float', exception: false) == nil
+nil != Float('not_a_float', exception: false)
+
+==> 010.rb 70 <==
+x == (0.0)
+x == ((0))
+Float('not_a_float', exception: false) == (nil)
+
+==> 011.rb 66 <==
+x.==(0.1, 0.2)
+x.!=(0.1, 0.2)
+x.eql?(0.1, 0.2)
+x.equal?(0.1, 0.2)
+
+==> 012.rb 13 <==
+x&.eql?(0.1)
+
+==> 013.rb 15 <==
+x&.equal?(0.1)
+
+==> 014.rb 45 <==
+case value
+when 1.0
+  foo
+when 2.0
+  bar
+end
+
+==> 015.rb 35 <==
+case value
+when 1.0, 2.0
+  foo
+end
+
+==> 016.rb 30 <==
+case value
+when 0.0
+  foo
+end
+
+==> 017.rb 48 <==
+case value
+when 1
+  foo
+when 'string'
+  bar
+end
+

@@ -1,0 +1,16 @@
+==> .rubocop.yml 192 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/AmbiguousBlockAssociation:
+  AllowedPatterns:
+  - !ruby/regexp /^queries\.map/
+
+==> 000.rb 45 <==
+render json: queries.map do |q|
+  q.to_h
+end
+

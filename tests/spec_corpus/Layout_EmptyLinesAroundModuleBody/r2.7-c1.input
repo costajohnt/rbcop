@@ -1,0 +1,25 @@
+==> .rubocop.yml 172 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/EmptyLinesAroundModuleBody:
+  EnforcedStyle: empty_lines
+
+==> 000.rb 37 <==
+module SomeModule
+  do_something
+end
+
+==> 001.rb 38 <==
+module SomeModule
+
+  do_something
+end
+
+==> 002.rb 13 <==
+module A
+end
+

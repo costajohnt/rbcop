@@ -1,0 +1,61 @@
+==> offenses exit=1 884 <==
+000.rb:1:1: C: [Correctable] Layout/EmptyComment: Source code comment is empty.
+001.rb:1:1: C: [Correctable] Layout/EmptyComment: Source code comment is empty.
+001.rb:2:1: C: [Correctable] Layout/EmptyComment: Source code comment is empty.
+002.rb:1:9: C: [Correctable] Layout/EmptyComment: Source code comment is empty.
+003.rb:1:16: C: [Correctable] Layout/EmptyComment: Source code comment is empty.
+004.rb:2:9: C: [Correctable] Layout/EmptyComment: Source code comment is empty.
+009.rb:1:8: C: [Correctable] Layout/EmptyComment: Source code comment is empty.
+010.rb:1:9: C: [Correctable] Layout/EmptyComment: Source code comment is empty.
+010.rb:2:13: C: [Correctable] Layout/EmptyComment: Source code comment is empty.
+011.rb:1:13: C: [Correctable] Layout/EmptyComment: Source code comment is empty.
+011.rb:2:13: C: [Correctable] Layout/EmptyComment: Source code comment is empty.
+
+==> autocorrect exit=0 862 <==
+000.rb:1:1: C: [Corrected] Layout/EmptyComment: Source code comment is empty.
+001.rb:1:1: C: [Corrected] Layout/EmptyComment: Source code comment is empty.
+001.rb:2:1: C: [Corrected] Layout/EmptyComment: Source code comment is empty.
+002.rb:1:9: C: [Corrected] Layout/EmptyComment: Source code comment is empty.
+003.rb:1:16: C: [Corrected] Layout/EmptyComment: Source code comment is empty.
+004.rb:2:9: C: [Corrected] Layout/EmptyComment: Source code comment is empty.
+009.rb:1:8: C: [Corrected] Layout/EmptyComment: Source code comment is empty.
+010.rb:1:9: C: [Corrected] Layout/EmptyComment: Source code comment is empty.
+010.rb:2:13: C: [Corrected] Layout/EmptyComment: Source code comment is empty.
+011.rb:1:13: C: [Corrected] Layout/EmptyComment: Source code comment is empty.
+011.rb:2:13: C: [Corrected] Layout/EmptyComment: Source code comment is empty.
+
+==> corrected/000.rb 0 <==
+
+==> corrected/001.rb 0 <==
+
+==> corrected/002.rb 24 <==
+def foo
+  something
+end
+
+==> corrected/003.rb 31 <==
+x = <<~HEREDOC
+  hello
+HEREDOC
+
+==> corrected/004.rb 34 <==
+# comment
+def foo
+  something
+end
+
+==> corrected/009.rb 24 <==
+def foo
+  something
+end
+
+==> corrected/010.rb 24 <==
+def foo
+  something
+end
+
+==> corrected/011.rb 24 <==
+def foo
+  something
+end
+

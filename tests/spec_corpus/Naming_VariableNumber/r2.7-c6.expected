@@ -1,0 +1,16 @@
+==> offenses exit=1 451 <==
+000.rb:1:1: C: Naming/VariableNumber: Use snake_case for variable numbers.
+002.rb:1:1: C: Naming/VariableNumber: Use snake_case for variable numbers.
+004.rb:1:1: C: Naming/VariableNumber: Use snake_case for variable numbers.
+006.rb:1:1: C: Naming/VariableNumber: Use snake_case for variable numbers.
+008.rb:1:5: C: Naming/VariableNumber: Use snake_case for method name numbers.
+010.rb:1:1: C: Naming/VariableNumber: Use snake_case for symbol numbers.
+
+==> autocorrect exit=1 451 <==
+000.rb:1:1: C: Naming/VariableNumber: Use snake_case for variable numbers.
+002.rb:1:1: C: Naming/VariableNumber: Use snake_case for variable numbers.
+004.rb:1:1: C: Naming/VariableNumber: Use snake_case for variable numbers.
+006.rb:1:1: C: Naming/VariableNumber: Use snake_case for variable numbers.
+008.rb:1:5: C: Naming/VariableNumber: Use snake_case for method name numbers.
+010.rb:1:1: C: Naming/VariableNumber: Use snake_case for symbol numbers.
+

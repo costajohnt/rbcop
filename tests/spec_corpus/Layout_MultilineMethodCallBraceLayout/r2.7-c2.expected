@@ -1,0 +1,38 @@
+==> offenses exit=1 556 <==
+000.rb:4:2: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the line after the last argument.
+001.rb:2:2: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the line after the last argument.
+002.rb:3:2: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the line after the last argument.
+006.rb:2:6: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the line after the last argument.
+
+==> autocorrect exit=0 548 <==
+000.rb:4:2: C: [Corrected] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the line after the last argument.
+001.rb:2:2: C: [Corrected] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the line after the last argument.
+002.rb:3:2: C: [Corrected] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the line after the last argument.
+006.rb:2:6: C: [Corrected] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the line after the last argument.
+
+==> corrected/000.rb 23 <==
+foo(a,
+{
+foo: bar
+}
+)
+
+
+==> corrected/001.rb 20 <==
+foo(a, # a
+b
+) # b
+
+
+==> corrected/002.rb 13 <==
+foo(
+a,
+b
+)
+
+
+==> corrected/006.rb 18 <==
+foo&.bar(
+  baz
+)
+

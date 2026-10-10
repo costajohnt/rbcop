@@ -1,0 +1,19 @@
+==> offenses exit=1 268 <==
+000.rb:1:3: C: [Correctable] Style/NilComparison: Prefer the use of the `==` comparison.
+001.rb:1:4: C: [Correctable] Style/NilComparison: Prefer the use of the `==` comparison.
+002.rb:1:10: C: [Correctable] Style/NilComparison: Prefer the use of the `==` comparison.
+
+==> autocorrect exit=0 262 <==
+000.rb:1:3: C: [Corrected] Style/NilComparison: Prefer the use of the `==` comparison.
+001.rb:1:4: C: [Corrected] Style/NilComparison: Prefer the use of the `==` comparison.
+002.rb:1:10: C: [Corrected] Style/NilComparison: Prefer the use of the `==` comparison.
+
+==> corrected/000.rb 9 <==
+x == nil
+
+==> corrected/001.rb 12 <==
+!(x == nil)
+
+==> corrected/002.rb 18 <==
+ary << (x == nil)
+

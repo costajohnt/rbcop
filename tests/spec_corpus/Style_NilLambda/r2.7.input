@@ -1,0 +1,145 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 20 <==
+lambda do
+  nil
+end
+
+==> 001.rb 27 <==
+lambda do
+  return nil
+end
+
+==> 002.rb 26 <==
+lambda do
+  break nil
+end
+
+==> 003.rb 25 <==
+lambda do
+  next nil
+end
+
+==> 004.rb 18 <==
+lambda do
+  6
+end
+
+==> 005.rb 39 <==
+lambda do |x|
+  x ? x.method : nil
+end
+
+==> 006.rb 39 <==
+fn = lambda do |x|
+       nil
+     end
+
+==> 007.rb 15 <==
+lambda { nil }
+
+==> 008.rb 11 <==
+-> { nil }
+
+==> 009.rb 18 <==
+-> { return nil }
+
+==> 010.rb 17 <==
+-> { break nil }
+
+==> 011.rb 16 <==
+-> { next nil }
+
+==> 012.rb 9 <==
+-> { 6 }
+
+==> 013.rb 29 <==
+->(x) { x ? x.method : nil }
+
+==> 014.rb 16 <==
+-> do
+  nil
+end
+
+==> 015.rb 18 <==
+proc do
+  nil
+end
+
+==> 016.rb 25 <==
+proc do
+  return nil
+end
+
+==> 017.rb 24 <==
+proc do
+  break nil
+end
+
+==> 018.rb 23 <==
+proc do
+  next nil
+end
+
+==> 019.rb 16 <==
+proc do
+  6
+end
+
+==> 020.rb 37 <==
+proc do |x|
+  x ? x.method : nil
+end
+
+==> 021.rb 37 <==
+fn = proc do |x|
+       nil
+     end
+
+==> 022.rb 13 <==
+proc { nil }
+
+==> 023.rb 22 <==
+Proc.new do
+  nil
+end
+
+==> 024.rb 29 <==
+Proc.new do
+  return nil
+end
+
+==> 025.rb 28 <==
+Proc.new do
+  break nil
+end
+
+==> 026.rb 27 <==
+Proc.new do
+  next nil
+end
+
+==> 027.rb 20 <==
+Proc.new do
+  6
+end
+
+==> 028.rb 41 <==
+Proc.new do |x|
+  x ? x.method : nil
+end
+
+==> 029.rb 41 <==
+fn = Proc.new do |x|
+       nil
+     end
+
+==> 030.rb 17 <==
+Proc.new { nil }
+

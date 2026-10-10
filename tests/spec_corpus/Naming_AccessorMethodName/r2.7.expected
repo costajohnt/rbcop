@@ -1,0 +1,14 @@
+==> offenses exit=1 455 <==
+000.rb:1:5: C: Naming/AccessorMethodName: Do not prefix reader method names with `get_`.
+001.rb:1:10: C: Naming/AccessorMethodName: Do not prefix reader method names with `get_`.
+004.rb:1:5: C: Naming/AccessorMethodName: Do not prefix writer method names with `set_`.
+012.rb:1:10: C: Naming/AccessorMethodName: Do not prefix writer method names with `set_`.
+023/current.rb:2:7: C: Naming/AccessorMethodName: Do not prefix reader method names with `get_`.
+
+==> autocorrect exit=1 455 <==
+000.rb:1:5: C: Naming/AccessorMethodName: Do not prefix reader method names with `get_`.
+001.rb:1:10: C: Naming/AccessorMethodName: Do not prefix reader method names with `get_`.
+004.rb:1:5: C: Naming/AccessorMethodName: Do not prefix writer method names with `set_`.
+012.rb:1:10: C: Naming/AccessorMethodName: Do not prefix writer method names with `set_`.
+023/current.rb:2:7: C: Naming/AccessorMethodName: Do not prefix reader method names with `get_`.
+

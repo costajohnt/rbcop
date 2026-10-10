@@ -1,0 +1,249 @@
+==> offenses exit=1 1769 <==
+001.rb:3:2: C: [Correctable] Layout/ElseAlignment: Align `else` with `if`.
+006.rb:3:1: C: [Correctable] Layout/ElseAlignment: Align `else` with `if`.
+007.rb:3:1: C: [Correctable] Layout/ElseAlignment: Align `elsif` with `if`.
+007.rb:5:1: C: [Correctable] Layout/ElseAlignment: Align `else` with `if`.
+009.rb:3:1: C: [Correctable] Layout/ElseAlignment: Align `else` with `if`.
+010.rb:3:1: C: [Correctable] Layout/ElseAlignment: Align `else` with `if`.
+011.rb:3:1: C: [Correctable] Layout/ElseAlignment: Align `else` with `if`.
+015.rb:3:1: C: [Correctable] Layout/ElseAlignment: Align `else` with `if`.
+016.rb:3:1: C: [Correctable] Layout/ElseAlignment: Align `elsif` with `if`.
+017.rb:4:1: C: [Correctable] Layout/ElseAlignment: Align `else` with `when`.
+018.rb:4:1: C: [Correctable] Layout/ElseAlignment: Align `else` with `in`.
+024.rb:3:2: C: [Correctable] Layout/ElseAlignment: Align `else` with `unless`.
+027.rb:6:2: C: [Correctable] Layout/ElseAlignment: Align `else` with `when`.
+030.rb:8:2: C: [Correctable] Layout/ElseAlignment: Align `else` with `in`.
+038.rb:5:9: C: [Correctable] Layout/ElseAlignment: Align `else` with `private`.
+039.rb:9:1: C: [Correctable] Layout/ElseAlignment: Align `else` with `begin`.
+042.rb:5:3: C: [Correctable] Layout/ElseAlignment: Align `else` with `def`.
+044.rb:7:3: C: [Correctable] Layout/ElseAlignment: Align `else` with `def`.
+046.rb:5:3: C: [Correctable] Layout/ElseAlignment: Align `else` with `class`.
+048.rb:5:3: C: [Correctable] Layout/ElseAlignment: Align `else` with `module`.
+050.rb:5:3: C: [Correctable] Layout/ElseAlignment: Align `else` with `class`.
+057.rb:5:3: C: [Correctable] Layout/ElseAlignment: Align `else` with `foo`.
+058.rb:7:3: C: [Correctable] Layout/ElseAlignment: Align `else` with `array_like.each`.
+
+==> autocorrect exit=0 1723 <==
+001.rb:3:2: C: [Corrected] Layout/ElseAlignment: Align `else` with `if`.
+006.rb:3:1: C: [Corrected] Layout/ElseAlignment: Align `else` with `if`.
+007.rb:3:1: C: [Corrected] Layout/ElseAlignment: Align `elsif` with `if`.
+007.rb:5:1: C: [Corrected] Layout/ElseAlignment: Align `else` with `if`.
+009.rb:3:1: C: [Corrected] Layout/ElseAlignment: Align `else` with `if`.
+010.rb:3:1: C: [Corrected] Layout/ElseAlignment: Align `else` with `if`.
+011.rb:3:1: C: [Corrected] Layout/ElseAlignment: Align `else` with `if`.
+015.rb:3:1: C: [Corrected] Layout/ElseAlignment: Align `else` with `if`.
+016.rb:3:1: C: [Corrected] Layout/ElseAlignment: Align `elsif` with `if`.
+017.rb:4:1: C: [Corrected] Layout/ElseAlignment: Align `else` with `when`.
+018.rb:4:1: C: [Corrected] Layout/ElseAlignment: Align `else` with `in`.
+024.rb:3:2: C: [Corrected] Layout/ElseAlignment: Align `else` with `unless`.
+027.rb:6:2: C: [Corrected] Layout/ElseAlignment: Align `else` with `when`.
+030.rb:8:2: C: [Corrected] Layout/ElseAlignment: Align `else` with `in`.
+038.rb:5:9: C: [Corrected] Layout/ElseAlignment: Align `else` with `private`.
+039.rb:9:1: C: [Corrected] Layout/ElseAlignment: Align `else` with `begin`.
+042.rb:5:3: C: [Corrected] Layout/ElseAlignment: Align `else` with `def`.
+044.rb:7:3: C: [Corrected] Layout/ElseAlignment: Align `else` with `def`.
+046.rb:5:3: C: [Corrected] Layout/ElseAlignment: Align `else` with `class`.
+048.rb:5:3: C: [Corrected] Layout/ElseAlignment: Align `else` with `module`.
+050.rb:5:3: C: [Corrected] Layout/ElseAlignment: Align `else` with `class`.
+057.rb:5:3: C: [Corrected] Layout/ElseAlignment: Align `else` with `foo`.
+058.rb:7:3: C: [Corrected] Layout/ElseAlignment: Align `else` with `array_like.each`.
+
+==> corrected/001.rb 32 <==
+if cond
+  func1
+else
+ func2
+end
+
+==> corrected/006.rb 52 <==
+foo.bar = if baz
+  derp1
+          else
+  derp2
+end
+
+==> corrected/007.rb 80 <==
+foo.bar = if baz
+  derp1
+          elsif meh
+  derp2
+          else
+  derp3
+end
+
+==> corrected/009.rb 34 <==
+var = if a
+  0
+      else
+  1
+end
+
+==> corrected/010.rb 47 <==
+var = if a
+  0
+      else
+  1
+end.abc.join("")
+
+==> corrected/011.rb 45 <==
+var = if a
+  0
+      else
+  1
+end.abc.tap {}
+
+==> corrected/015.rb 36 <==
+var = if a
+  0
+      else b
+  1
+end
+
+==> corrected/016.rb 37 <==
+var = if a
+  0
+      elsif b
+  1
+end
+
+==> corrected/017.rb 63 <==
+var = case condition
+      when a
+        0
+      else
+  1
+end
+
+==> corrected/018.rb 56 <==
+var = case expr
+      in a
+        0
+      else
+  1
+end
+
+==> corrected/024.rb 39 <==
+unless cond
+   func1
+else
+   func2
+end
+
+==> corrected/027.rb 42 <==
+case a
+when b
+  c
+when d
+  e
+else
+  f
+end
+
+==> corrected/030.rb 65 <==
+case 0
+in 0
+  foo
+in -1..1
+  bar
+in Integer
+  baz
+else
+  qux
+end
+
+==> corrected/038.rb 113 <==
+private def test
+          something
+        rescue
+          handling
+else
+          something_else
+        end
+
+==> corrected/039.rb 345 <==
+def my_func
+  puts 'do something outside block'
+  begin
+    puts 'do something error prone'
+  rescue SomeException, SomeOther => e
+    puts 'wrongly intended error handling'
+  rescue
+    puts 'wrongly intended error handling'
+  else
+    puts 'wrongly intended normal case handling'
+  ensure
+    puts 'wrongly intended common handling'
+  end
+end
+
+==> corrected/042.rb 115 <==
+def my_func(string)
+  puts string
+rescue => e
+  puts e
+else
+  puts e
+ensure
+  puts 'I love methods that print'
+end
+
+==> corrected/044.rb 156 <==
+def my_func
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+rescue
+  puts 'error handling'
+else
+  puts 'normal handling'
+end
+
+==> corrected/046.rb 127 <==
+class MyClass
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+else
+  puts 'normal handling'
+end
+
+==> corrected/048.rb 129 <==
+module MyModule
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+else
+  puts 'normal handling'
+end
+
+==> corrected/050.rb 151 <==
+class << self
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+else
+  puts 'normal handling'
+ensure
+  puts 'cleanup'
+end
+
+==> corrected/057.rb 142 <==
+foo << array_like.map do |n|
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+else
+  puts 'normal handling'
+end
+
+==> corrected/058.rb 167 <==
+array_like.each do |n|
+  puts 'do something error prone'
+rescue SomeException
+  puts 'error handling'
+rescue
+  puts 'error handling'
+else
+  puts 'normal handling'
+end
+

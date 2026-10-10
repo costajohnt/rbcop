@@ -1,0 +1,199 @@
+==> .rubocop.yml 205 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/FirstArgumentIndentation:
+  EnforcedStyle: consistent
+Layout/IndentationWidth:
+  Width: 2
+
+==> 000.rb 28 <==
+run(
+    :foo,
+    bar: 3
+)
+
+==> 001.rb 30 <==
+super(
+    :foo,
+    bar: 3
+)
+
+==> 002.rb 33 <==
+self.run(
+    :foo,
+    bar: 3
+)
+
+==> 003.rb 31 <==
+self.|(
+    :foo,
+    bar: 3
+)
+
+==> 004.rb 31 <==
+self.+(
+    :foo,
+    bar: 3
+)
+
+==> 005.rb 25 <==
+run(
+ :foo,
+    bar: 3
+)
+
+==> 006.rb 19 <==
+foo(
+ bar(
+  7
+)
+)
+
+==> 007.rb 39 <==
+foo
+  .bar(
+  baz(
+      qux
+    )
+  )
+
+==> 008.rb 46 <==
+foo
+  .bar(
+  bar(
+      key: value
+    )
+  )
+
+==> 009.rb 35 <==
+receiver&.run(
+ :foo,
+    bar: 3
+)
+
+==> 010.rb 14 <==
+foo.baz =
+bar
+
+==> 011.rb 30 <==
+x = run(
+  :foo,
+    bar: 3
+)
+
+==> 012.rb 21 <==
+x =
+  run(
+    :foo)
+
+==> 013.rb 20 <==
+@x =
+  run(
+  :foo)
+
+==> 014.rb 21 <==
+run :foo,
+    bar: 3
+
+==> 015.rb 30 <==
+puts x.
+  merge(
+    b: 2
+  )
+
+==> 016.rb 32 <==
+puts x.
+  merge(
+      b: 2
+  )
+
+==> 017.rb 31 <==
+puts x.
+  merge(
+
+    b: 2
+  )
+
+==> 018.rb 58 <==
+puts x.
+  merge( # EOL comment
+    # comment
+    b: 2
+  )
+
+==> 019.rb 40 <==
+puts x.
+  merge(
+  # comment
+  b: 2
+  )
+
+==> 020.rb 16 <==
+run()
+run_again
+
+==> 021.rb 64 <==
+params = default_cfg.keys - %w(Description) -
+         cfg.keys
+
+==> 022.rb 131 <==
+@subject_results[subject] = original.update(
+  mutation_results: (dup << mutation_result),
+  tests:            test_result.tests
+)
+
+==> 023.rb 104 <==
+A = Regexp.union(
+  /[A-Za-z_][A-Za-z\d_]*[!?=]?/,
+  *AST::Types::OPERATOR_METHODS.map(&:to_s)
+).freeze
+
+==> 024.rb 47 <==
+run(:foo, defaults.merge(
+            bar: 3))
+
+==> 025.rb 86 <==
+@diagnostics.process(Diagnostic.new(
+  :error, :token, { :token => name }, location))
+
+==> 026.rb 89 <==
+run(:foo, Diagnostic.where(
+              'limit >= 10',
+            )
+            .ids)
+
+==> 027.rb 88 <==
+run :foo, Diagnostic.where(
+              'limit >= 10',
+            )
+            .ids
+
+==> 028.rb 145 <==
+sequences = CourseSequence
+  .includes(
+      course_sequence_memberships: {
+        course: :course_components
+      }
+    )
+  .joins(:courses)
+
+==> 029.rb 37 <==
+result = Foo
+  .bar(
+x: 1
+  )
+  .baz
+
+==> 030.rb 137 <==
+sequences = CourseSequence
+  .includes(
+    course_sequence_memberships: {
+      course: :course_components
+    }
+  )
+  .joins(:courses)
+

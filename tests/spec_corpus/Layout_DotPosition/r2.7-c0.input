@@ -1,0 +1,132 @@
+==> .rubocop.yml 153 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/DotPosition:
+  EnforcedStyle: leading
+
+==> 000.rb 25 <==
+something.
+  method_name
+
+==> 001.rb 50 <==
+something
+  .method_name
+something.
+  method_name
+
+==> 002.rb 21 <==
+foo
+  .bar
+  .
+  baz
+
+==> 003.rb 25 <==
+something
+  .method_name
+
+==> 004.rb 14 <==
+puts something
+==> 005.rb 7 <==
+l.
+(1)
+
+==> 006.rb 21 <==
+something.method_name
+==> 007.rb 42 <==
+something.
+# a comment here
+  method_name
+
+==> 008.rb 26 <==
+something.
+
+  method_name
+
+==> 009.rb 39 <==
+something(
+  foo, bar
+).
+  method_name
+
+==> 010.rb 52 <==
+something
+  &.method_name
+something&.
+  method_name
+
+==> 011.rb 26 <==
+something
+  &.method_name
+
+==> 012.rb 86 <==
+@objects = @objects.where(type: :a)
+
+@objects = @objects.
+  with_relation.
+  paginate
+
+==> 013.rb 70 <==
+my_method.
+  something(<<~HERE).
+    something
+  HERE
+  somethingelse
+
+==> 014.rb 73 <==
+my_method.
+  something(<<~HERE).
+    #{something}
+  HERE
+  somethingelse
+
+==> 015.rb 69 <==
+my_method.
+  something(<<~`HERE`).
+    ls -la
+  HERE
+  somethingelse
+
+==> 016.rb 79 <==
+my_method.
+  something(<<~HERE, true).
+    #{something}
+  HERE
+  somethingelse
+
+==> 017.rb 106 <==
+my_method.
+  something(<<~HERE, <<~THERE).
+    something
+  HERE
+    another thing
+  THERE
+  somethingelse
+
+==> 018.rb 43 <==
+foo(<<~HEREDOC).squish
+  something
+HEREDOC
+
+==> 019.rb 72 <==
+my_method&.
+  something(<<~HERE)&.
+    something
+  HERE
+  somethingelse
+
+==> 020.rb 46 <==
+<<~HEREDOC.
+  something
+HEREDOC
+  method_name
+
+==> 021.rb 45 <==
+<<~`HEREDOC`.
+  ls -la
+HEREDOC
+  method_name
+

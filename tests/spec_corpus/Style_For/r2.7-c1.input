@@ -1,0 +1,97 @@
+==> .rubocop.yml 140 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/For:
+  EnforcedStyle: for
+
+==> 000.rb 65 <==
+[1, 2, 3].each do |n|
+  puts n
+rescue StandardError
+  handle
+end
+
+==> 001.rb 52 <==
+[1, 2, 3].each do |n|
+  puts n
+ensure
+  cleanup
+end
+
+==> 002.rb 54 <==
+def func
+  for n in [1, 2, 3] do
+    puts n
+  end
+end
+
+==> 003.rb 54 <==
+def func
+  [1, 2, 3].each do |n|
+    puts n
+  end
+end
+
+==> 004.rb 53 <==
+def func
+  [1, 2, 3].each do
+    something
+  end
+end
+
+==> 005.rb 60 <==
+def func
+  [[1, 2]].each do |a, b|
+    puts a + b
+  end
+end
+
+==> 006.rb 51 <==
+def func
+  [1, 2, 3].each do
+    puts _1
+  end
+end
+
+==> 007.rb 95 <==
+def func
+  for n in [1, 2, 3] do
+    puts n
+  end
+  [1, 2, 3].each do |n|
+    puts n
+  end
+end
+
+==> 008.rb 25 <==
+each do |n|
+  puts n
+end
+
+==> 009.rb 105 <==
+for n in [1, 2, 3] do
+  puts n
+end
+[1, 2, 3].each do |n|
+  puts n
+end
+[1, 2, 3].each do |n|
+  puts n
+end
+
+==> 010.rb 71 <==
+def func
+  {a: 1, b: 2, c: 3}.each do |(a, b)|
+    puts a, b
+  end
+end
+
+==> 011.rb 45 <==
+def func
+  [1, 2, 3].each { |n| puts n }
+end
+

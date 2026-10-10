@@ -1,0 +1,98 @@
+==> offenses exit=1 3419 <==
+000.rb:1:1: W: [Correctable] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `"10".to_i`, use stricter `Integer("10", 10)`.
+001.rb:1:1: W: Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `foo&.to_i`, use stricter `Integer(foo, 10)`.
+002.rb:1:1: W: Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `foo&.bar.to_i`, use stricter `Integer(foo&.bar, 10)`.
+003.rb:1:1: W: [Correctable] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `"10.2".to_f`, use stricter `Float("10.2")`.
+004.rb:1:1: W: [Correctable] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `"10".to_c`, use stricter `Complex("10")`.
+005.rb:1:1: W: [Correctable] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `"1/3".to_r`, use stricter `Rational("1/3")`.
+010.rb:2:1: W: [Correctable] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `string_value.to_i`, use stricter `Integer(string_value, 10)`.
+011.rb:2:1: W: [Correctable] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `params[:id].to_i`, use stricter `Integer(params[:id], 10)`.
+012.rb:2:1: W: [Correctable] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `args[0].to_i`, use stricter `Integer(args[0], 10)`.
+013.rb:1:1: W: [Correctable] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `params[:field].to_i`, use stricter `Integer(params[:field], 10)`.
+019.rb:1:1: W: [Correctable] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `&:to_i`, use stricter `{ |i| Integer(i, 10) }`.
+020.rb:1:1: W: [Correctable] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `&:to_i`, use stricter `{ |i| Integer(i, 10) }`.
+021.rb:1:1: W: [Correctable] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `&:to_i`, use stricter `{ |i| Integer(i, 10) }`.
+022.rb:1:1: W: [Correctable] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `:to_f`, use stricter `{ |i| Float(i) }`.
+023.rb:1:1: W: [Correctable] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `:to_f`, use stricter `{ |i| Float(i) }`.
+024.rb:1:1: W: [Correctable] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `var.to_i`, use stricter `Integer(var, 10)`.
+025.rb:1:1: W: [Correctable] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `case foo.to_f when 0.0   bar else   baz end.to_i`, use stricter `Integer(case foo.to_f when 0.0   bar else   baz end, 10)`.
+025.rb:1:6: W: Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `foo.to_f`, use stricter `Float(foo)`.
+029.rb:1:1: W: [Correctable] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `:to_c`, use stricter `{ |i| Complex(i) }`.
+
+==> autocorrect exit=1 3400 <==
+000.rb:1:1: W: [Corrected] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `"10".to_i`, use stricter `Integer("10", 10)`.
+001.rb:1:1: W: Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `foo&.to_i`, use stricter `Integer(foo, 10)`.
+002.rb:1:1: W: Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `foo&.bar.to_i`, use stricter `Integer(foo&.bar, 10)`.
+003.rb:1:1: W: [Corrected] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `"10.2".to_f`, use stricter `Float("10.2")`.
+004.rb:1:1: W: [Corrected] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `"10".to_c`, use stricter `Complex("10")`.
+005.rb:1:1: W: [Corrected] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `"1/3".to_r`, use stricter `Rational("1/3")`.
+010.rb:2:1: W: [Corrected] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `string_value.to_i`, use stricter `Integer(string_value, 10)`.
+011.rb:2:1: W: [Corrected] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `params[:id].to_i`, use stricter `Integer(params[:id], 10)`.
+012.rb:2:1: W: [Corrected] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `args[0].to_i`, use stricter `Integer(args[0], 10)`.
+013.rb:1:1: W: [Corrected] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `params[:field].to_i`, use stricter `Integer(params[:field], 10)`.
+019.rb:1:1: W: [Corrected] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `&:to_i`, use stricter `{ |i| Integer(i, 10) }`.
+020.rb:1:1: W: [Corrected] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `&:to_i`, use stricter `{ |i| Integer(i, 10) }`.
+021.rb:1:1: W: [Corrected] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `&:to_i`, use stricter `{ |i| Integer(i, 10) }`.
+022.rb:1:1: W: [Corrected] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `:to_f`, use stricter `{ |i| Float(i) }`.
+023.rb:1:1: W: [Corrected] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `:to_f`, use stricter `{ |i| Float(i) }`.
+024.rb:1:1: W: [Corrected] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `var.to_i`, use stricter `Integer(var, 10)`.
+025.rb:1:1: W: [Corrected] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `case foo.to_f when 0.0   bar else   baz end.to_i`, use stricter `Integer(case foo.to_f when 0.0   bar else   baz end, 10)`.
+025.rb:1:14: W: [Corrected] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `foo.to_f`, use stricter `Float(foo)`.
+029.rb:1:1: W: [Corrected] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `:to_c`, use stricter `{ |i| Complex(i) }`.
+
+==> corrected/000.rb 18 <==
+Integer("10", 10)
+
+==> corrected/003.rb 14 <==
+Float("10.2")
+
+==> corrected/004.rb 14 <==
+Complex("10")
+
+==> corrected/005.rb 16 <==
+Rational("1/3")
+
+==> corrected/010.rb 46 <==
+string_value = '10'
+Integer(string_value, 10)
+
+==> corrected/011.rb 45 <==
+params = { id: 10 }
+Integer(params[:id], 10)
+
+==> corrected/012.rb 36 <==
+args = [1,2,3]
+Integer(args[0], 10)
+
+==> corrected/013.rb 28 <==
+Integer(params[:field], 10)
+
+==> corrected/019.rb 58 <==
+"1,2,3,foo,5,6,7,8".split(',').map { |i| Integer(i, 10) }
+
+==> corrected/020.rb 59 <==
+"1,2,3,foo,5,6,7,8".split(',')&.map { |i| Integer(i, 10) }
+
+==> corrected/021.rb 58 <==
+"1,2,3,foo,5,6,7,8".split(',').map { |i| Integer(i, 10) }
+
+==> corrected/022.rb 27 <==
+"foo".try { |i| Float(i) }
+
+==> corrected/023.rb 28 <==
+"foo"&.try { |i| Float(i) }
+
+==> corrected/024.rb 22 <==
+Integer(var, 10).to_f
+
+==> corrected/025.rb 59 <==
+Integer(case Float(foo)
+when 0.0
+  bar
+else
+  baz
+end, 10)
+
+==> corrected/029.rb 30 <==
+"foo".send { |i| Complex(i) }
+

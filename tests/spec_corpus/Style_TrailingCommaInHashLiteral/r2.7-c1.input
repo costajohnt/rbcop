@@ -1,0 +1,56 @@
+==> .rubocop.yml 177 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+==> 000.rb 37 <==
+MAP = { a: 1001, b: 2020, c: 3333, }
+
+==> 001.rb 35 <==
+MAP = { a: 1001, b: 2020, c: 3333 }
+==> 002.rb 18 <==
+MAP = { a: 10001 }
+==> 003.rb 8 <==
+MAP = {}
+==> 004.rb 68 <==
+VALUES = {
+           a: "b",
+           c: "d",
+           e: "f"}
+
+==> 005.rb 52 <==
+MAP = { a: 1001,
+        b: 2020,
+        c: 3333
+}
+
+==> 006.rb 65 <==
+MAP = { a: 1001,
+        b: 2020,
+        c: 3333 # a comment,
+}
+
+==> 007.rb 67 <==
+MAP = {
+        a: 1001,
+        b: 2020,
+        c: 3333,
+      }
+
+==> 008.rb 53 <==
+route(help: {
+  'auth' => <<-HELP.chomp,
+...
+HELP
+})
+
+==> 009.rb 20 <==
+bar = {
+  a: 123,
+}
+

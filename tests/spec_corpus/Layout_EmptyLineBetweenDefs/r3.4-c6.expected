@@ -1,0 +1,15 @@
+==> offenses exit=1 116 <==
+000.rb:4:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between block definitions; found 0.
+
+==> autocorrect exit=0 114 <==
+000.rb:4:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between block definitions; found 0.
+
+==> corrected/000.rb 65 <==
+foo 'first foo' do
+  #foo body
+end
+
+foo 'second foo' do
+  it
+end
+

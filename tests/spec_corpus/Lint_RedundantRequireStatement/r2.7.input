@@ -1,0 +1,30 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 35 <==
+require 'enumerator'
+require 'uri'
+
+==> 001.rb 48 <==
+require 'enumerator' if condition
+require 'uri'
+
+==> 002.rb 54 <==
+if condition
+  require 'enumerator'
+end
+require 'uri'
+
+==> 003.rb 114 <==
+require 'enumerator'
+require 'rational'
+require 'complex'
+require 'thread'
+require 'ruby2_keywords'
+require 'uri'
+

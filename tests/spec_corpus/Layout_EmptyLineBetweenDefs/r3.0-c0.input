@@ -1,0 +1,46 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Layout/EmptyLineBetweenDefs:
+  AllowAdjacentOneLineDefs: false
+
+==> 000.rb 30 <==
+def foo() = x
+def bar
+  y
+end
+
+==> 001.rb 47 <==
+def foo = <<~TEXT
+  hello
+TEXT
+def bar
+  y
+end
+
+==> 002.rb 30 <==
+def foo
+  x
+end
+def bar() = y
+
+==> 003.rb 33 <==
+def self.foo = x
+def bar
+  y
+end
+
+==> 004.rb 38 <==
+def self.foo = x
+def self.bar
+  y
+end
+
+==> 005.rb 28 <==
+def foo() = x
+def bar() = y
+

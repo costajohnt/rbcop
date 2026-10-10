@@ -1,0 +1,9 @@
+==> offenses exit=1 86 <==
+000.rb:1:1: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+
+==> autocorrect exit=0 84 <==
+000.rb:1:1: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+
+==> corrected/000.rb 32 <==
+%w[a@example.com b@example.com]
+

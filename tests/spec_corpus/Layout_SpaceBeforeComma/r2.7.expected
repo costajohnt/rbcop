@@ -1,0 +1,35 @@
+==> offenses exit=1 565 <==
+000.rb:1:10: C: [Correctable] Layout/SpaceBeforeComma: Space found before comma.
+001.rb:1:10: C: [Correctable] Layout/SpaceBeforeComma: Space found before comma.
+002.rb:1:4: C: [Correctable] Layout/SpaceBeforeComma: Space found before comma.
+004.rb:1:10: C: [Correctable] Layout/SpaceBeforeComma: Space found before comma.
+004.rb:1:20: C: [Correctable] Layout/SpaceBeforeComma: Space found before comma.
+004.rb:1:33: C: [Correctable] Layout/SpaceBeforeComma: Space found before comma.
+005.rb:1:9: C: [Correctable] Layout/SpaceBeforeComma: Space found before comma.
+
+==> autocorrect exit=0 551 <==
+000.rb:1:10: C: [Corrected] Layout/SpaceBeforeComma: Space found before comma.
+001.rb:1:10: C: [Corrected] Layout/SpaceBeforeComma: Space found before comma.
+002.rb:1:4: C: [Corrected] Layout/SpaceBeforeComma: Space found before comma.
+004.rb:1:10: C: [Corrected] Layout/SpaceBeforeComma: Space found before comma.
+004.rb:1:20: C: [Corrected] Layout/SpaceBeforeComma: Space found before comma.
+004.rb:1:33: C: [Corrected] Layout/SpaceBeforeComma: Space found before comma.
+005.rb:1:9: C: [Corrected] Layout/SpaceBeforeComma: Space found before comma.
+
+==> corrected/000.rb 16 <==
+each { |s, t| }
+
+==> corrected/001.rb 14 <==
+formats[0, 1]
+
+==> corrected/002.rb 8 <==
+a(1, 2)
+
+==> corrected/004.rb 35 <==
+each { |s, t| a(1, formats[0, 1])}
+
+==> corrected/005.rb 24 <==
+a(<<~STR, 2)
+  text
+STR
+

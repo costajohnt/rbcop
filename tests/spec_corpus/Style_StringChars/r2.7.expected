@@ -1,0 +1,29 @@
+==> offenses exit=1 420 <==
+000.rb:1:8: C: [Correctable] Style/StringChars: Use `chars` instead of `split(//)`.
+001.rb:1:8: C: [Correctable] Style/StringChars: Use `chars` instead of `split('')`.
+002.rb:1:8: C: [Correctable] Style/StringChars: Use `chars` instead of `split("")`.
+003.rb:1:26: C: [Correctable] Style/StringChars: Use `chars` instead of `split ''`.
+004.rb:1:9: C: [Correctable] Style/StringChars: Use `chars` instead of `split(//)`.
+
+==> autocorrect exit=0 410 <==
+000.rb:1:8: C: [Corrected] Style/StringChars: Use `chars` instead of `split(//)`.
+001.rb:1:8: C: [Corrected] Style/StringChars: Use `chars` instead of `split('')`.
+002.rb:1:8: C: [Corrected] Style/StringChars: Use `chars` instead of `split("")`.
+003.rb:1:26: C: [Corrected] Style/StringChars: Use `chars` instead of `split ''`.
+004.rb:1:9: C: [Corrected] Style/StringChars: Use `chars` instead of `split(//)`.
+
+==> corrected/000.rb 13 <==
+string.chars
+
+==> corrected/001.rb 13 <==
+string.chars
+
+==> corrected/002.rb 13 <==
+string.chars
+
+==> corrected/003.rb 33 <==
+do_something { |foo| foo.chars }
+
+==> corrected/004.rb 14 <==
+string&.chars
+

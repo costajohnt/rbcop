@@ -1,0 +1,11 @@
+==> offenses exit=1 170 <==
+000.rb:1:17: C: [Correctable] Layout/SpaceInsideBlockBraces: Space missing inside {.
+000.rb:1:23: C: [Correctable] Layout/SpaceInsideBlockBraces: Space missing inside }.
+
+==> autocorrect exit=0 166 <==
+000.rb:1:17: C: [Corrected] Layout/SpaceInsideBlockBraces: Space missing inside {.
+000.rb:1:23: C: [Corrected] Layout/SpaceInsideBlockBraces: Space missing inside }.
+
+==> corrected/000.rb 26 <==
+[1, 2, 3].each { it * 2 }
+

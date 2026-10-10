@@ -1,0 +1,39 @@
+==> offenses exit=1 882 <==
+000.rb:1:10: C: [Correctable] Style/KeywordArgumentsMerging: Provide additional arguments directly rather than using `merge`.
+001.rb:1:10: C: [Correctable] Style/KeywordArgumentsMerging: Provide additional arguments directly rather than using `merge`.
+002.rb:1:10: C: [Correctable] Style/KeywordArgumentsMerging: Provide additional arguments directly rather than using `merge`.
+003.rb:1:10: C: [Correctable] Style/KeywordArgumentsMerging: Provide additional arguments directly rather than using `merge`.
+004.rb:1:10: C: [Correctable] Style/KeywordArgumentsMerging: Provide additional arguments directly rather than using `merge`.
+005.rb:1:10: C: [Correctable] Style/KeywordArgumentsMerging: Provide additional arguments directly rather than using `merge`.
+006.rb:1:10: C: [Correctable] Style/KeywordArgumentsMerging: Provide additional arguments directly rather than using `merge`.
+
+==> autocorrect exit=0 868 <==
+000.rb:1:10: C: [Corrected] Style/KeywordArgumentsMerging: Provide additional arguments directly rather than using `merge`.
+001.rb:1:10: C: [Corrected] Style/KeywordArgumentsMerging: Provide additional arguments directly rather than using `merge`.
+002.rb:1:10: C: [Corrected] Style/KeywordArgumentsMerging: Provide additional arguments directly rather than using `merge`.
+003.rb:1:10: C: [Corrected] Style/KeywordArgumentsMerging: Provide additional arguments directly rather than using `merge`.
+004.rb:1:10: C: [Corrected] Style/KeywordArgumentsMerging: Provide additional arguments directly rather than using `merge`.
+005.rb:1:10: C: [Corrected] Style/KeywordArgumentsMerging: Provide additional arguments directly rather than using `merge`.
+006.rb:1:10: C: [Corrected] Style/KeywordArgumentsMerging: Provide additional arguments directly rather than using `merge`.
+
+==> corrected/000.rb 24 <==
+foo(x, **options, y: 1)
+
+==> corrected/001.rb 35 <==
+foo(x, **options, **other_options)
+
+==> corrected/002.rb 47 <==
+foo(x, **options, y: 1, **other_options, z: 2)
+
+==> corrected/003.rb 26 <==
+foo(x, **options,  y: 1 )
+
+==> corrected/004.rb 64 <==
+foo(x, **options, **other_options, y: 1, **yet_another_options)
+
+==> corrected/005.rb 58 <==
+foo(x, **options, **other_options, **yet_another_options)
+
+==> corrected/006.rb 51 <==
+foo(x, **options, **other_options, **more_options)
+

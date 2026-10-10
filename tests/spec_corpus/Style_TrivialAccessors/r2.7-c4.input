@@ -1,0 +1,26 @@
+==> .rubocop.yml 170 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/TrivialAccessors:
+  AllowedMethods:
+  - to_foo
+  - bar=
+
+==> 000.rb 42 <==
+class Foo
+  def to_foo
+    @foo
+  end
+end
+
+==> 001.rb 51 <==
+class Foo
+  def bar=(bar)
+    @bar = bar
+  end
+end
+

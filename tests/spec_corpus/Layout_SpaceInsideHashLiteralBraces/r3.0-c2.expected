@@ -1,0 +1,11 @@
+==> offenses exit=1 181 <==
+000.rb:1:8: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+000.rb:1:21: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+
+==> autocorrect exit=0 177 <==
+000.rb:1:8: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+000.rb:1:21: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+
+==> corrected/000.rb 24 <==
+foo => { k1: 0, k2: 1 }
+

@@ -1,0 +1,18 @@
+==> offenses exit=1 264 <==
+000.rb:1:6: C: [Correctable] Layout/SpaceAfterSemicolon: Space missing after semicolon.
+005.rb:1:8: C: [Correctable] Layout/SpaceAfterSemicolon: Space missing after semicolon.
+006.rb:1:8: C: [Correctable] Layout/SpaceAfterSemicolon: Space missing after semicolon.
+
+==> autocorrect exit=0 258 <==
+000.rb:1:6: C: [Corrected] Layout/SpaceAfterSemicolon: Space missing after semicolon.
+005.rb:1:8: C: [Corrected] Layout/SpaceAfterSemicolon: Space missing after semicolon.
+006.rb:1:8: C: [Corrected] Layout/SpaceAfterSemicolon: Space missing after semicolon.
+
+==> corrected/000.rb 13 <==
+x = 1; y = 2
+
+==> corrected/005.rb 11 <==
+test { ; }
+
+==> corrected/006.rb 10 <==
+test { ; }

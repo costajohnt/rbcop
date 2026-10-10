@@ -1,0 +1,77 @@
+==> offenses exit=1 1106 <==
+000.rb:1:1: C: [Correctable] Style/MinMaxComparison: Use `[a, b].max` instead.
+001.rb:1:1: C: [Correctable] Style/MinMaxComparison: Use `[a, b].max` instead.
+002.rb:1:1: C: [Correctable] Style/MinMaxComparison: Use `[a, b].max` instead.
+003.rb:1:1: C: [Correctable] Style/MinMaxComparison: Use `[a, b].max` instead.
+004.rb:1:1: C: [Correctable] Style/MinMaxComparison: Use `[a, b].min` instead.
+005.rb:1:1: C: [Correctable] Style/MinMaxComparison: Use `[a, b].min` instead.
+006.rb:1:1: C: [Correctable] Style/MinMaxComparison: Use `[a, b].min` instead.
+007.rb:1:1: C: [Correctable] Style/MinMaxComparison: Use `[a, b].min` instead.
+008.rb:1:1: C: [Correctable] Style/MinMaxComparison: Use `[a, b].min` instead.
+009.rb:1:1: C: [Correctable] Style/MinMaxComparison: Use `[a, b].max` instead.
+010.rb:1:1: C: [Correctable] Style/MinMaxComparison: Use `[a, b].min` instead.
+011.rb:1:1: C: [Correctable] Style/MinMaxComparison: Use `[a, b].min` instead.
+012.rb:1:1: C: [Correctable] Style/MinMaxComparison: Use `[a, b].max` instead.
+013.rb:2:1: C: [Correctable] Style/MinMaxComparison: Use `[a, b].min` instead.
+
+==> autocorrect exit=0 1078 <==
+000.rb:1:1: C: [Corrected] Style/MinMaxComparison: Use `[a, b].max` instead.
+001.rb:1:1: C: [Corrected] Style/MinMaxComparison: Use `[a, b].max` instead.
+002.rb:1:1: C: [Corrected] Style/MinMaxComparison: Use `[a, b].max` instead.
+003.rb:1:1: C: [Corrected] Style/MinMaxComparison: Use `[a, b].max` instead.
+004.rb:1:1: C: [Corrected] Style/MinMaxComparison: Use `[a, b].min` instead.
+005.rb:1:1: C: [Corrected] Style/MinMaxComparison: Use `[a, b].min` instead.
+006.rb:1:1: C: [Corrected] Style/MinMaxComparison: Use `[a, b].min` instead.
+007.rb:1:1: C: [Corrected] Style/MinMaxComparison: Use `[a, b].min` instead.
+008.rb:1:1: C: [Corrected] Style/MinMaxComparison: Use `[a, b].min` instead.
+009.rb:1:1: C: [Corrected] Style/MinMaxComparison: Use `[a, b].max` instead.
+010.rb:1:1: C: [Corrected] Style/MinMaxComparison: Use `[a, b].min` instead.
+011.rb:1:1: C: [Corrected] Style/MinMaxComparison: Use `[a, b].min` instead.
+012.rb:1:1: C: [Corrected] Style/MinMaxComparison: Use `[a, b].max` instead.
+013.rb:2:1: C: [Corrected] Style/MinMaxComparison: Use `[a, b].min` instead.
+
+==> corrected/000.rb 11 <==
+[a, b].max
+
+==> corrected/001.rb 11 <==
+[a, b].max
+
+==> corrected/002.rb 11 <==
+[a, b].max
+
+==> corrected/003.rb 11 <==
+[a, b].max
+
+==> corrected/004.rb 11 <==
+[a, b].min
+
+==> corrected/005.rb 11 <==
+[a, b].min
+
+==> corrected/006.rb 11 <==
+[a, b].min
+
+==> corrected/007.rb 11 <==
+[a, b].min
+
+==> corrected/008.rb 11 <==
+[a, b].min
+
+==> corrected/009.rb 11 <==
+[a, b].max
+
+==> corrected/010.rb 11 <==
+[a, b].min
+
+==> corrected/011.rb 11 <==
+[a, b].min
+
+==> corrected/012.rb 11 <==
+[a, b].max
+
+==> corrected/013.rb 27 <==
+if x
+else
+  [a, b].min
+end
+

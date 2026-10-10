@@ -1,0 +1,76 @@
+==> offenses exit=1 528 <==
+003.rb:2:3: C: [Correctable] Style/For: Prefer `for` over `each`.
+004.rb:2:3: C: [Correctable] Style/For: Prefer `for` over `each`.
+005.rb:2:3: C: [Correctable] Style/For: Prefer `for` over `each`.
+006.rb:2:3: C: [Correctable] Style/For: Prefer `for` over `each`.
+007.rb:5:3: C: [Correctable] Style/For: Prefer `for` over `each`.
+009.rb:4:1: C: [Correctable] Style/For: Prefer `for` over `each`.
+009.rb:7:1: C: [Correctable] Style/For: Prefer `for` over `each`.
+010.rb:2:3: C: [Correctable] Style/For: Prefer `for` over `each`.
+
+==> autocorrect exit=0 512 <==
+003.rb:2:3: C: [Corrected] Style/For: Prefer `for` over `each`.
+004.rb:2:3: C: [Corrected] Style/For: Prefer `for` over `each`.
+005.rb:2:3: C: [Corrected] Style/For: Prefer `for` over `each`.
+006.rb:2:3: C: [Corrected] Style/For: Prefer `for` over `each`.
+007.rb:5:3: C: [Corrected] Style/For: Prefer `for` over `each`.
+009.rb:4:1: C: [Corrected] Style/For: Prefer `for` over `each`.
+009.rb:7:1: C: [Corrected] Style/For: Prefer `for` over `each`.
+010.rb:2:3: C: [Corrected] Style/For: Prefer `for` over `each`.
+
+==> corrected/003.rb 54 <==
+def func
+  for n in [1, 2, 3] do
+    puts n
+  end
+end
+
+==> corrected/004.rb 57 <==
+def func
+  for _ in [1, 2, 3] do
+    something
+  end
+end
+
+==> corrected/005.rb 60 <==
+def func
+  for a, b in [[1, 2]] do
+    puts a + b
+  end
+end
+
+==> corrected/006.rb 55 <==
+def func
+  for _ in [1, 2, 3] do
+    puts _1
+  end
+end
+
+==> corrected/007.rb 95 <==
+def func
+  for n in [1, 2, 3] do
+    puts n
+  end
+  for n in [1, 2, 3] do
+    puts n
+  end
+end
+
+==> corrected/009.rb 105 <==
+for n in [1, 2, 3] do
+  puts n
+end
+for n in [1, 2, 3] do
+  puts n
+end
+for n in [1, 2, 3] do
+  puts n
+end
+
+==> corrected/010.rb 71 <==
+def func
+  for (a, b) in {a: 1, b: 2, c: 3} do
+    puts a, b
+  end
+end
+

@@ -1,0 +1,6 @@
+==> offenses exit=1 87 <==
+003.rb:1:15: C: Naming/MethodParameterName: Do not end method parameter with a number.
+
+==> autocorrect exit=1 87 <==
+003.rb:1:15: C: Naming/MethodParameterName: Do not end method parameter with a number.
+

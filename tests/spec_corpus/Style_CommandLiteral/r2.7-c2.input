@@ -1,0 +1,49 @@
+==> .rubocop.yml 153 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/CommandLiteral:
+  EnforcedStyle: mixed
+
+==> 000.rb 10 <==
+foo = `ls`
+==> 001.rb 20 <==
+foo = `echo \`ls\``
+
+==> 002.rb 19 <==
+foo = `echo \`ls\``
+==> 003.rb 23 <==
+foo = `
+  ls
+  ls -l
+`
+
+==> 004.rb 41 <==
+foo = `
+  echo \`ls\`
+  echo \`ls -l\`
+`
+
+==> 005.rb 13 <==
+foo = %x(ls)
+
+==> 006.rb 19 <==
+foo = %x(echo `ls`)
+==> 007.rb 20 <==
+foo = %x(echo `ls`)
+
+==> 008.rb 25 <==
+foo = %x(
+  ls
+  ls -l
+)
+
+==> 009.rb 39 <==
+foo = %x(
+  echo `ls`
+  echo `ls -l`
+)
+

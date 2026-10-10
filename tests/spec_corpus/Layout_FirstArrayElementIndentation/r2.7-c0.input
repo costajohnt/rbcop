@@ -1,0 +1,87 @@
+==> .rubocop.yml 173 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+==> 000.rb 50 <==
+foo bar: [
+      'foo',
+      'bar'
+],
+baz: 'baz'
+
+==> 001.rb 23 <==
+foo bar: [
+1
+],
+baz: 3
+
+==> 002.rb 13 <==
+x = 1,
+    2
+
+==> 003.rb 77 <==
+h = [
+  1
+]
+func([
+  1
+])
+func(x, [
+  1
+])
+h = [1
+]
+func([1
+])
+func(x, [1
+])
+
+==> 004.rb 24 <==
+func([
+       1
+     ])
+
+==> 005.rb 42 <==
+body.should have_tag("input", [
+  :name])
+
+==> 006.rb 25 <==
+func(x: [
+      :a, :b])
+
+==> 007.rb 68 <==
+func(x: [
+  :a,
+       :b
+],
+     y: [
+       :c,
+       :d
+     ])
+
+==> 008.rb 47 <==
+func(:x, y: [
+  :a,
+  :b
+], z: [
+  :c,
+  :d
+])
+
+==> 009.rb 91 <==
+func(x:
+       [
+         :a,
+         :b
+       ],
+     y: [
+       :a,
+       :b
+     ])
+

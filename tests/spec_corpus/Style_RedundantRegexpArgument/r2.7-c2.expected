@@ -1,0 +1,9 @@
+==> offenses exit=1 115 <==
+000.rb:1:13: C: [Correctable] Style/RedundantRegexpArgument: Use string `"f"` as argument instead of regexp `/f/`.
+
+==> autocorrect exit=0 113 <==
+000.rb:1:13: C: [Corrected] Style/RedundantRegexpArgument: Use string `"f"` as argument instead of regexp `/f/`.
+
+==> corrected/000.rb 17 <==
+'foo'.split("f")
+

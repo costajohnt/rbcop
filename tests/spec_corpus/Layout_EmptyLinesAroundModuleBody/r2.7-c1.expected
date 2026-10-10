@@ -1,0 +1,24 @@
+==> offenses exit=1 315 <==
+000.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body beginning.
+000.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+001.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+
+==> autocorrect exit=0 309 <==
+000.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body beginning.
+000.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+001.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+
+==> corrected/000.rb 39 <==
+module SomeModule
+
+  do_something
+
+end
+
+==> corrected/001.rb 39 <==
+module SomeModule
+
+  do_something
+
+end
+

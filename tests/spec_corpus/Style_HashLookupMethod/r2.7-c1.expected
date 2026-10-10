@@ -1,0 +1,35 @@
+==> offenses exit=1 552 <==
+000.rb:1:1: C: [Correctable] Style/HashLookupMethod: Use `Hash#fetch` instead of `Hash#[]`.
+001.rb:1:1: C: [Correctable] Style/HashLookupMethod: Use `Hash#fetch` instead of `Hash#[]`.
+006.rb:1:1: C: [Correctable] Style/HashLookupMethod: Use `Hash#fetch` instead of `Hash#[]`.
+007.rb:1:1: C: [Correctable] Style/HashLookupMethod: Use `Hash#fetch` instead of `Hash#[]`.
+008.rb:1:1: C: [Correctable] Style/HashLookupMethod: Use `Hash#fetch` instead of `Hash#[]`.
+009.rb:1:1: C: [Correctable] Style/HashLookupMethod: Use `Hash#fetch` instead of `Hash#[]`.
+
+==> autocorrect exit=0 630 <==
+000.rb:1:1: C: [Corrected] Style/HashLookupMethod: Use `Hash#fetch` instead of `Hash#[]`.
+001.rb:1:1: C: [Corrected] Style/HashLookupMethod: Use `Hash#fetch` instead of `Hash#[]`.
+006.rb:1:1: C: [Corrected] Style/HashLookupMethod: Use `Hash#fetch` instead of `Hash#[]`.
+007.rb:1:1: C: [Corrected] Style/HashLookupMethod: Use `Hash#fetch` instead of `Hash#[]`.
+008.rb:1:1: C: [Corrected] Style/HashLookupMethod: Use `Hash#fetch` instead of `Hash#[]`.
+008.rb:1:9: C: [Corrected] Style/HashLookupMethod: Use `Hash#fetch` instead of `Hash#[]`.
+009.rb:1:1: C: [Corrected] Style/HashLookupMethod: Use `Hash#fetch` instead of `Hash#[]`.
+
+==> corrected/000.rb 16 <==
+hash.fetch(key)
+
+==> corrected/001.rb 28 <==
+some_method.hash.fetch(key)
+
+==> corrected/006.rb 31 <==
+result.fetch(:foo).fetch(:bar)
+
+==> corrected/007.rb 17 <==
+hash&.fetch(key)
+
+==> corrected/008.rb 21 <==
+a.fetch(b.fetch(:y))
+
+==> corrected/009.rb 22 <==
+a.fetch(:x).fetch(:y)
+

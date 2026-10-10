@@ -1,0 +1,1198 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 20 <==
+"this is #{a} silly"
+==> 001.rb 22 <==
+"this is #{`a`} silly"
+==> 002.rb 34 <==
+"this is an irange: #{var1..var2}"
+==> 003.rb 35 <==
+"this is an erange: #{var1...var2}"
+==> 004.rb 19 <==
+"this is the #{1}"
+
+==> 005.rb 29 <==
+"this is the #{1} literally"
+
+==> 006.rb 26 <==
+"some #{1} with #{1} too"
+
+==> 007.rb 29 <==
+"this is #{1} with #{a} now"
+
+==> 008.rb 29 <==
+"this is #{a} with #{1} now"
+
+==> 009.rb 21 <==
+"this is the #{1;1}"
+
+==> 010.rb 20 <==
+"this is the #{-1}"
+
+==> 011.rb 30 <==
+"this is the #{-1} literally"
+
+==> 012.rb 28 <==
+"some #{-1} with #{-1} too"
+
+==> 013.rb 30 <==
+"this is #{-1} with #{a} now"
+
+==> 014.rb 30 <==
+"this is #{a} with #{-1} now"
+
+==> 015.rb 23 <==
+"this is the #{-1;-1}"
+
+==> 016.rb 23 <==
+"this is the #{1_123}"
+
+==> 017.rb 33 <==
+"this is the #{1_123} literally"
+
+==> 018.rb 34 <==
+"some #{1_123} with #{1_123} too"
+
+==> 019.rb 33 <==
+"this is #{1_123} with #{a} now"
+
+==> 020.rb 33 <==
+"this is #{a} with #{1_123} now"
+
+==> 021.rb 29 <==
+"this is the #{1_123;1_123}"
+
+==> 022.rb 41 <==
+"this is the #{123_456_789_123_456_789}"
+
+==> 023.rb 51 <==
+"this is the #{123_456_789_123_456_789} literally"
+
+==> 024.rb 70 <==
+"some #{123_456_789_123_456_789} with #{123_456_789_123_456_789} too"
+
+==> 025.rb 51 <==
+"this is #{123_456_789_123_456_789} with #{a} now"
+
+==> 026.rb 51 <==
+"this is #{a} with #{123_456_789_123_456_789} now"
+
+==> 027.rb 65 <==
+"this is the #{123_456_789_123_456_789;123_456_789_123_456_789}"
+
+==> 028.rb 24 <==
+"this is the #{0xaabb}"
+
+==> 029.rb 34 <==
+"this is the #{0xaabb} literally"
+
+==> 030.rb 36 <==
+"some #{0xaabb} with #{0xaabb} too"
+
+==> 031.rb 34 <==
+"this is #{0xaabb} with #{a} now"
+
+==> 032.rb 34 <==
+"this is #{a} with #{0xaabb} now"
+
+==> 033.rb 31 <==
+"this is the #{0xaabb;0xaabb}"
+
+==> 034.rb 23 <==
+"this is the #{0o377}"
+
+==> 035.rb 33 <==
+"this is the #{0o377} literally"
+
+==> 036.rb 34 <==
+"some #{0o377} with #{0o377} too"
+
+==> 037.rb 33 <==
+"this is #{0o377} with #{a} now"
+
+==> 038.rb 33 <==
+"this is #{a} with #{0o377} now"
+
+==> 039.rb 29 <==
+"this is the #{0o377;0o377}"
+
+==> 040.rb 24 <==
+"this is the #{1.2e-3}"
+
+==> 041.rb 34 <==
+"this is the #{1.2e-3} literally"
+
+==> 042.rb 36 <==
+"some #{1.2e-3} with #{1.2e-3} too"
+
+==> 043.rb 34 <==
+"this is #{1.2e-3} with #{a} now"
+
+==> 044.rb 34 <==
+"this is #{a} with #{1.2e-3} now"
+
+==> 045.rb 31 <==
+"this is the #{1.2e-3;1.2e-3}"
+
+==> 046.rb 21 <==
+"this is the #{2.0}"
+
+==> 047.rb 31 <==
+"this is the #{2.0} literally"
+
+==> 048.rb 30 <==
+"some #{2.0} with #{2.0} too"
+
+==> 049.rb 31 <==
+"this is #{2.0} with #{a} now"
+
+==> 050.rb 31 <==
+"this is #{a} with #{2.0} now"
+
+==> 051.rb 25 <==
+"this is the #{2.0;2.0}"
+
+==> 052.rb 38 <==
+"this is the #{"double_quot_string"}"
+
+==> 053.rb 48 <==
+"this is the #{"double_quot_string"} literally"
+
+==> 054.rb 64 <==
+"some #{"double_quot_string"} with #{"double_quot_string"} too"
+
+==> 055.rb 48 <==
+"this is #{"double_quot_string"} with #{a} now"
+
+==> 056.rb 48 <==
+"this is #{a} with #{"double_quot_string"} now"
+
+==> 057.rb 59 <==
+"this is the #{"double_quot_string";"double_quot_string"}"
+
+==> 058.rb 38 <==
+"this is the #{'single_quot_string'}"
+
+==> 059.rb 48 <==
+"this is the #{'single_quot_string'} literally"
+
+==> 060.rb 64 <==
+"some #{'single_quot_string'} with #{'single_quot_string'} too"
+
+==> 061.rb 48 <==
+"this is #{'single_quot_string'} with #{a} now"
+
+==> 062.rb 48 <==
+"this is #{a} with #{'single_quot_string'} now"
+
+==> 063.rb 59 <==
+"this is the #{'single_quot_string';'single_quot_string'}"
+
+==> 064.rb 41 <==
+"this is the #{"double_quot_string: '"}"
+
+==> 065.rb 51 <==
+"this is the #{"double_quot_string: '"} literally"
+
+==> 066.rb 70 <==
+"some #{"double_quot_string: '"} with #{"double_quot_string: '"} too"
+
+==> 067.rb 51 <==
+"this is #{"double_quot_string: '"} with #{a} now"
+
+==> 068.rb 51 <==
+"this is #{a} with #{"double_quot_string: '"} now"
+
+==> 069.rb 65 <==
+"this is the #{"double_quot_string: '";"double_quot_string: '"}"
+
+==> 070.rb 41 <==
+"this is the #{'single_quot_string: "'}"
+
+==> 071.rb 51 <==
+"this is the #{'single_quot_string: "'} literally"
+
+==> 072.rb 70 <==
+"some #{'single_quot_string: "'} with #{'single_quot_string: "'} too"
+
+==> 073.rb 51 <==
+"this is #{'single_quot_string: "'} with #{a} now"
+
+==> 074.rb 51 <==
+"this is #{a} with #{'single_quot_string: "'} now"
+
+==> 075.rb 65 <==
+"this is the #{'single_quot_string: "';'single_quot_string: "'}"
+
+==> 076.rb 25 <==
+"this is the #{:symbol}"
+
+==> 077.rb 35 <==
+"this is the #{:symbol} literally"
+
+==> 078.rb 38 <==
+"some #{:symbol} with #{:symbol} too"
+
+==> 079.rb 35 <==
+"this is #{:symbol} with #{a} now"
+
+==> 080.rb 35 <==
+"this is #{a} with #{:symbol} now"
+
+==> 081.rb 33 <==
+"this is the #{:symbol;:symbol}"
+
+==> 082.rb 27 <==
+"this is the #{:"symbol"}"
+
+==> 083.rb 37 <==
+"this is the #{:"symbol"} literally"
+
+==> 084.rb 42 <==
+"some #{:"symbol"} with #{:"symbol"} too"
+
+==> 085.rb 37 <==
+"this is #{:"symbol"} with #{a} now"
+
+==> 086.rb 37 <==
+"this is #{a} with #{:"symbol"} now"
+
+==> 087.rb 37 <==
+"this is the #{:"symbol";:"symbol"}"
+
+==> 088.rb 45 <==
+"this is the #{:"single quot in symbol: '"}"
+
+==> 089.rb 55 <==
+"this is the #{:"single quot in symbol: '"} literally"
+
+==> 090.rb 78 <==
+"some #{:"single quot in symbol: '"} with #{:"single quot in symbol: '"} too"
+
+==> 091.rb 55 <==
+"this is #{:"single quot in symbol: '"} with #{a} now"
+
+==> 092.rb 55 <==
+"this is #{a} with #{:"single quot in symbol: '"} now"
+
+==> 093.rb 73 <==
+"this is the #{:"single quot in symbol: '";:"single quot in symbol: '"}"
+
+==> 094.rb 45 <==
+"this is the #{:'double quot in symbol: "'}"
+
+==> 095.rb 55 <==
+"this is the #{:'double quot in symbol: "'} literally"
+
+==> 096.rb 78 <==
+"some #{:'double quot in symbol: "'} with #{:'double quot in symbol: "'} too"
+
+==> 097.rb 55 <==
+"this is #{:'double quot in symbol: "'} with #{a} now"
+
+==> 098.rb 55 <==
+"this is #{a} with #{:'double quot in symbol: "'} now"
+
+==> 099.rb 73 <==
+"this is the #{:'double quot in symbol: "';:'double quot in symbol: "'}"
+
+==> 100.rb 20 <==
+"this is the #{[]}"
+
+==> 101.rb 30 <==
+"this is the #{[]} literally"
+
+==> 102.rb 28 <==
+"some #{[]} with #{[]} too"
+
+==> 103.rb 30 <==
+"this is #{[]} with #{a} now"
+
+==> 104.rb 30 <==
+"this is #{a} with #{[]} now"
+
+==> 105.rb 23 <==
+"this is the #{[];[]}"
+
+==> 106.rb 28 <==
+"this is the #{["a", "b"]}"
+
+==> 107.rb 38 <==
+"this is the #{["a", "b"]} literally"
+
+==> 108.rb 44 <==
+"some #{["a", "b"]} with #{["a", "b"]} too"
+
+==> 109.rb 38 <==
+"this is #{["a", "b"]} with #{a} now"
+
+==> 110.rb 38 <==
+"this is #{a} with #{["a", "b"]} now"
+
+==> 111.rb 39 <==
+"this is the #{["a", "b"];["a", "b"]}"
+
+==> 112.rb 22 <==
+"this is the #{%w[]}"
+
+==> 113.rb 32 <==
+"this is the #{%w[]} literally"
+
+==> 114.rb 32 <==
+"some #{%w[]} with #{%w[]} too"
+
+==> 115.rb 32 <==
+"this is #{%w[]} with #{a} now"
+
+==> 116.rb 32 <==
+"this is #{a} with #{%w[]} now"
+
+==> 117.rb 27 <==
+"this is the #{%w[];%w[]}"
+
+==> 118.rb 24 <==
+"this is the #{%w[v1]}"
+
+==> 119.rb 34 <==
+"this is the #{%w[v1]} literally"
+
+==> 120.rb 36 <==
+"some #{%w[v1]} with #{%w[v1]} too"
+
+==> 121.rb 34 <==
+"this is #{%w[v1]} with #{a} now"
+
+==> 122.rb 34 <==
+"this is #{a} with #{%w[v1]} now"
+
+==> 123.rb 31 <==
+"this is the #{%w[v1];%w[v1]}"
+
+==> 124.rb 27 <==
+"this is the #{%w[v1 v2]}"
+
+==> 125.rb 37 <==
+"this is the #{%w[v1 v2]} literally"
+
+==> 126.rb 42 <==
+"some #{%w[v1 v2]} with #{%w[v1 v2]} too"
+
+==> 127.rb 37 <==
+"this is #{%w[v1 v2]} with #{a} now"
+
+==> 128.rb 37 <==
+"this is #{a} with #{%w[v1 v2]} now"
+
+==> 129.rb 37 <==
+"this is the #{%w[v1 v2];%w[v1 v2]}"
+
+==> 130.rb 27 <==
+"this is the #{%i[s1 s2]}"
+
+==> 131.rb 37 <==
+"this is the #{%i[s1 s2]} literally"
+
+==> 132.rb 42 <==
+"some #{%i[s1 s2]} with #{%i[s1 s2]} too"
+
+==> 133.rb 37 <==
+"this is #{%i[s1 s2]} with #{a} now"
+
+==> 134.rb 37 <==
+"this is #{a} with #{%i[s1 s2]} now"
+
+==> 135.rb 37 <==
+"this is the #{%i[s1 s2];%i[s1 s2]}"
+
+==> 136.rb 27 <==
+"this is the #{%I[s1 s2]}"
+
+==> 137.rb 37 <==
+"this is the #{%I[s1 s2]} literally"
+
+==> 138.rb 42 <==
+"some #{%I[s1 s2]} with #{%I[s1 s2]} too"
+
+==> 139.rb 37 <==
+"this is #{%I[s1 s2]} with #{a} now"
+
+==> 140.rb 37 <==
+"this is #{a} with #{%I[s1 s2]} now"
+
+==> 141.rb 37 <==
+"this is the #{%I[s1 s2];%I[s1 s2]}"
+
+==> 142.rb 31 <==
+"this is the #{%i[s1     s2]}"
+
+==> 143.rb 41 <==
+"this is the #{%i[s1     s2]} literally"
+
+==> 144.rb 50 <==
+"some #{%i[s1     s2]} with #{%i[s1     s2]} too"
+
+==> 145.rb 41 <==
+"this is #{%i[s1     s2]} with #{a} now"
+
+==> 146.rb 41 <==
+"this is #{a} with #{%i[s1     s2]} now"
+
+==> 147.rb 45 <==
+"this is the #{%i[s1     s2];%i[s1     s2]}"
+
+==> 148.rb 31 <==
+"this is the #{%i[ s1   s2 ]}"
+
+==> 149.rb 41 <==
+"this is the #{%i[ s1   s2 ]} literally"
+
+==> 150.rb 50 <==
+"some #{%i[ s1   s2 ]} with #{%i[ s1   s2 ]} too"
+
+==> 151.rb 41 <==
+"this is #{%i[ s1   s2 ]} with #{a} now"
+
+==> 152.rb 41 <==
+"this is #{a} with #{%i[ s1   s2 ]} now"
+
+==> 153.rb 45 <==
+"this is the #{%i[ s1   s2 ];%i[ s1   s2 ]}"
+
+==> 154.rb 30 <==
+"this is the #{{"a" => "b"}}"
+
+==> 155.rb 40 <==
+"this is the #{{"a" => "b"}} literally"
+
+==> 156.rb 48 <==
+"some #{{"a" => "b"}} with #{{"a" => "b"}} too"
+
+==> 157.rb 40 <==
+"this is #{{"a" => "b"}} with #{a} now"
+
+==> 158.rb 40 <==
+"this is #{a} with #{{"a" => "b"}} now"
+
+==> 159.rb 43 <==
+"this is the #{{"a" => "b"};{"a" => "b"}}"
+
+==> 160.rb 48 <==
+"this is the #{{ foo: 'bar', :fiz => "buzz" }}"
+
+==> 161.rb 58 <==
+"this is the #{{ foo: 'bar', :fiz => "buzz" }} literally"
+
+==> 162.rb 84 <==
+"some #{{ foo: 'bar', :fiz => "buzz" }} with #{{ foo: 'bar', :fiz => "buzz" }} too"
+
+==> 163.rb 58 <==
+"this is #{{ foo: 'bar', :fiz => "buzz" }} with #{a} now"
+
+==> 164.rb 58 <==
+"this is #{a} with #{{ foo: 'bar', :fiz => "buzz" }} now"
+
+==> 165.rb 79 <==
+"this is the #{{ foo: 'bar', :fiz => "buzz" };{ foo: 'bar', :fiz => "buzz" }}"
+
+==> 166.rb 42 <==
+"this is the #{{ foo: { fiz: 'buzz' } }}"
+
+==> 167.rb 52 <==
+"this is the #{{ foo: { fiz: 'buzz' } }} literally"
+
+==> 168.rb 72 <==
+"some #{{ foo: { fiz: 'buzz' } }} with #{{ foo: { fiz: 'buzz' } }} too"
+
+==> 169.rb 52 <==
+"this is #{{ foo: { fiz: 'buzz' } }} with #{a} now"
+
+==> 170.rb 52 <==
+"this is #{a} with #{{ foo: { fiz: 'buzz' } }} now"
+
+==> 171.rb 67 <==
+"this is the #{{ foo: { fiz: 'buzz' } };{ foo: { fiz: 'buzz' } }}"
+
+==> 172.rb 104 <==
+"this is the #{{ num: { separate: 1_123, long_separate: 123_456_789_123_456_789, exponent: 1.2e-3 } }}"
+
+==> 173.rb 114 <==
+"this is the #{{ num: { separate: 1_123, long_separate: 123_456_789_123_456_789, exponent: 1.2e-3 } }} literally"
+
+==> 174.rb 196 <==
+"some #{{ num: { separate: 1_123, long_separate: 123_456_789_123_456_789, exponent: 1.2e-3 } }} with #{{ num: { separate: 1_123, long_separate: 123_456_789_123_456_789, exponent: 1.2e-3 } }} too"
+
+==> 175.rb 114 <==
+"this is #{{ num: { separate: 1_123, long_separate: 123_456_789_123_456_789, exponent: 1.2e-3 } }} with #{a} now"
+
+==> 176.rb 114 <==
+"this is #{a} with #{{ num: { separate: 1_123, long_separate: 123_456_789_123_456_789, exponent: 1.2e-3 } }} now"
+
+==> 177.rb 191 <==
+"this is the #{{ num: { separate: 1_123, long_separate: 123_456_789_123_456_789, exponent: 1.2e-3 } };{ num: { separate: 1_123, long_separate: 123_456_789_123_456_789, exponent: 1.2e-3 } }}"
+
+==> 178.rb 61 <==
+"this is the #{{ n_adic_num: { hex: 0xaabb, oct: 0o377 } }}"
+
+==> 179.rb 71 <==
+"this is the #{{ n_adic_num: { hex: 0xaabb, oct: 0o377 } }} literally"
+
+==> 180.rb 110 <==
+"some #{{ n_adic_num: { hex: 0xaabb, oct: 0o377 } }} with #{{ n_adic_num: { hex: 0xaabb, oct: 0o377 } }} too"
+
+==> 181.rb 71 <==
+"this is #{{ n_adic_num: { hex: 0xaabb, oct: 0o377 } }} with #{a} now"
+
+==> 182.rb 71 <==
+"this is #{a} with #{{ n_adic_num: { hex: 0xaabb, oct: 0o377 } }} now"
+
+==> 183.rb 105 <==
+"this is the #{{ n_adic_num: { hex: 0xaabb, oct: 0o377 } };{ n_adic_num: { hex: 0xaabb, oct: 0o377 } }}"
+
+==> 184.rb 96 <==
+"this is the #{{ double_quot: { simple: "double_quot", single_in_double: "double_quot: '" } }}"
+
+==> 185.rb 106 <==
+"this is the #{{ double_quot: { simple: "double_quot", single_in_double: "double_quot: '" } }} literally"
+
+==> 186.rb 180 <==
+"some #{{ double_quot: { simple: "double_quot", single_in_double: "double_quot: '" } }} with #{{ double_quot: { simple: "double_quot", single_in_double: "double_quot: '" } }} too"
+
+==> 187.rb 106 <==
+"this is #{{ double_quot: { simple: "double_quot", single_in_double: "double_quot: '" } }} with #{a} now"
+
+==> 188.rb 106 <==
+"this is #{a} with #{{ double_quot: { simple: "double_quot", single_in_double: "double_quot: '" } }} now"
+
+==> 189.rb 175 <==
+"this is the #{{ double_quot: { simple: "double_quot", single_in_double: "double_quot: '" } };{ double_quot: { simple: "double_quot", single_in_double: "double_quot: '" } }}"
+
+==> 190.rb 96 <==
+"this is the #{{ single_quot: { simple: 'single_quot', double_in_single: 'single_quot: "' } }}"
+
+==> 191.rb 106 <==
+"this is the #{{ single_quot: { simple: 'single_quot', double_in_single: 'single_quot: "' } }} literally"
+
+==> 192.rb 180 <==
+"some #{{ single_quot: { simple: 'single_quot', double_in_single: 'single_quot: "' } }} with #{{ single_quot: { simple: 'single_quot', double_in_single: 'single_quot: "' } }} too"
+
+==> 193.rb 106 <==
+"this is #{{ single_quot: { simple: 'single_quot', double_in_single: 'single_quot: "' } }} with #{a} now"
+
+==> 194.rb 106 <==
+"this is #{a} with #{{ single_quot: { simple: 'single_quot', double_in_single: 'single_quot: "' } }} now"
+
+==> 195.rb 175 <==
+"this is the #{{ single_quot: { simple: 'single_quot', double_in_single: 'single_quot: "' } };{ single_quot: { simple: 'single_quot', double_in_single: 'single_quot: "' } }}"
+
+==> 196.rb 41 <==
+"this is the #{{ bool: { key: true } }}"
+
+==> 197.rb 51 <==
+"this is the #{{ bool: { key: true } }} literally"
+
+==> 198.rb 70 <==
+"some #{{ bool: { key: true } }} with #{{ bool: { key: true } }} too"
+
+==> 199.rb 51 <==
+"this is #{{ bool: { key: true } }} with #{a} now"
+
+==> 200.rb 51 <==
+"this is #{a} with #{{ bool: { key: true } }} now"
+
+==> 201.rb 65 <==
+"this is the #{{ bool: { key: true } };{ bool: { key: true } }}"
+
+==> 202.rb 42 <==
+"this is the #{{ bool: { key: false } }}"
+
+==> 203.rb 52 <==
+"this is the #{{ bool: { key: false } }} literally"
+
+==> 204.rb 72 <==
+"some #{{ bool: { key: false } }} with #{{ bool: { key: false } }} too"
+
+==> 205.rb 52 <==
+"this is #{{ bool: { key: false } }} with #{a} now"
+
+==> 206.rb 52 <==
+"this is #{a} with #{{ bool: { key: false } }} now"
+
+==> 207.rb 67 <==
+"this is the #{{ bool: { key: false } };{ bool: { key: false } }}"
+
+==> 208.rb 39 <==
+"this is the #{{ nil: { key: nil } }}"
+
+==> 209.rb 49 <==
+"this is the #{{ nil: { key: nil } }} literally"
+
+==> 210.rb 66 <==
+"some #{{ nil: { key: nil } }} with #{{ nil: { key: nil } }} too"
+
+==> 211.rb 49 <==
+"this is #{{ nil: { key: nil } }} with #{a} now"
+
+==> 212.rb 49 <==
+"this is #{a} with #{{ nil: { key: nil } }} now"
+
+==> 213.rb 61 <==
+"this is the #{{ nil: { key: nil } };{ nil: { key: nil } }}"
+
+==> 214.rb 46 <==
+"this is the #{{ symbol: { key: :symbol } }}"
+
+==> 215.rb 56 <==
+"this is the #{{ symbol: { key: :symbol } }} literally"
+
+==> 216.rb 80 <==
+"some #{{ symbol: { key: :symbol } }} with #{{ symbol: { key: :symbol } }} too"
+
+==> 217.rb 56 <==
+"this is #{{ symbol: { key: :symbol } }} with #{a} now"
+
+==> 218.rb 56 <==
+"this is #{a} with #{{ symbol: { key: :symbol } }} now"
+
+==> 219.rb 75 <==
+"this is the #{{ symbol: { key: :symbol } };{ symbol: { key: :symbol } }}"
+
+==> 220.rb 48 <==
+"this is the #{{ symbol: { key: :"symbol" } }}"
+
+==> 221.rb 58 <==
+"this is the #{{ symbol: { key: :"symbol" } }} literally"
+
+==> 222.rb 84 <==
+"some #{{ symbol: { key: :"symbol" } }} with #{{ symbol: { key: :"symbol" } }} too"
+
+==> 223.rb 58 <==
+"this is #{{ symbol: { key: :"symbol" } }} with #{a} now"
+
+==> 224.rb 58 <==
+"this is #{a} with #{{ symbol: { key: :"symbol" } }} now"
+
+==> 225.rb 79 <==
+"this is the #{{ symbol: { key: :"symbol" } };{ symbol: { key: :"symbol" } }}"
+
+==> 226.rb 37 <==
+"this is the #{{ :'foo-bar' => 1 }}"
+
+==> 227.rb 47 <==
+"this is the #{{ :'foo-bar' => 1 }} literally"
+
+==> 228.rb 62 <==
+"some #{{ :'foo-bar' => 1 }} with #{{ :'foo-bar' => 1 }} too"
+
+==> 229.rb 47 <==
+"this is #{{ :'foo-bar' => 1 }} with #{a} now"
+
+==> 230.rb 47 <==
+"this is #{a} with #{{ :'foo-bar' => 1 }} now"
+
+==> 231.rb 57 <==
+"this is the #{{ :'foo-bar' => 1 };{ :'foo-bar' => 1 }}"
+
+==> 232.rb 49 <==
+"this is the #{{ symbol: { key: :"foo-bar" } }}"
+
+==> 233.rb 59 <==
+"this is the #{{ symbol: { key: :"foo-bar" } }} literally"
+
+==> 234.rb 86 <==
+"some #{{ symbol: { key: :"foo-bar" } }} with #{{ symbol: { key: :"foo-bar" } }} too"
+
+==> 235.rb 59 <==
+"this is #{{ symbol: { key: :"foo-bar" } }} with #{a} now"
+
+==> 236.rb 59 <==
+"this is #{a} with #{{ symbol: { key: :"foo-bar" } }} now"
+
+==> 237.rb 81 <==
+"this is the #{{ symbol: { key: :"foo-bar" } };{ symbol: { key: :"foo-bar" } }}"
+
+==> 238.rb 78 <==
+"this is the #{{ single_quot_symbol: { key: :"single_quot_in_symbol: '" } }}"
+
+==> 239.rb 88 <==
+"this is the #{{ single_quot_symbol: { key: :"single_quot_in_symbol: '" } }} literally"
+
+==> 240.rb 144 <==
+"some #{{ single_quot_symbol: { key: :"single_quot_in_symbol: '" } }} with #{{ single_quot_symbol: { key: :"single_quot_in_symbol: '" } }} too"
+
+==> 241.rb 88 <==
+"this is #{{ single_quot_symbol: { key: :"single_quot_in_symbol: '" } }} with #{a} now"
+
+==> 242.rb 88 <==
+"this is #{a} with #{{ single_quot_symbol: { key: :"single_quot_in_symbol: '" } }} now"
+
+==> 243.rb 139 <==
+"this is the #{{ single_quot_symbol: { key: :"single_quot_in_symbol: '" } };{ single_quot_symbol: { key: :"single_quot_in_symbol: '" } }}"
+
+==> 244.rb 78 <==
+"this is the #{{ double_quot_symbol: { key: :'double_quot_in_symbol: "' } }}"
+
+==> 245.rb 88 <==
+"this is the #{{ double_quot_symbol: { key: :'double_quot_in_symbol: "' } }} literally"
+
+==> 246.rb 144 <==
+"some #{{ double_quot_symbol: { key: :'double_quot_in_symbol: "' } }} with #{{ double_quot_symbol: { key: :'double_quot_in_symbol: "' } }} too"
+
+==> 247.rb 88 <==
+"this is #{{ double_quot_symbol: { key: :'double_quot_in_symbol: "' } }} with #{a} now"
+
+==> 248.rb 88 <==
+"this is #{a} with #{{ double_quot_symbol: { key: :'double_quot_in_symbol: "' } }} now"
+
+==> 249.rb 139 <==
+"this is the #{{ double_quot_symbol: { key: :'double_quot_in_symbol: "' } };{ double_quot_symbol: { key: :'double_quot_in_symbol: "' } }}"
+
+==> 250.rb 90 <==
+"this is the #{{ single_quot_symbol_not_in_space: { key: :"single_quot_in_symbol:'" } }}"
+
+==> 251.rb 100 <==
+"this is the #{{ single_quot_symbol_not_in_space: { key: :"single_quot_in_symbol:'" } }} literally"
+
+==> 252.rb 168 <==
+"some #{{ single_quot_symbol_not_in_space: { key: :"single_quot_in_symbol:'" } }} with #{{ single_quot_symbol_not_in_space: { key: :"single_quot_in_symbol:'" } }} too"
+
+==> 253.rb 100 <==
+"this is #{{ single_quot_symbol_not_in_space: { key: :"single_quot_in_symbol:'" } }} with #{a} now"
+
+==> 254.rb 100 <==
+"this is #{a} with #{{ single_quot_symbol_not_in_space: { key: :"single_quot_in_symbol:'" } }} now"
+
+==> 255.rb 163 <==
+"this is the #{{ single_quot_symbol_not_in_space: { key: :"single_quot_in_symbol:'" } };{ single_quot_symbol_not_in_space: { key: :"single_quot_in_symbol:'" } }}"
+
+==> 256.rb 86 <==
+"this is the #{{ single_quot_symbol_in_space: { key: :"single_quot_in_symbol: " } }}"
+
+==> 257.rb 96 <==
+"this is the #{{ single_quot_symbol_in_space: { key: :"single_quot_in_symbol: " } }} literally"
+
+==> 258.rb 160 <==
+"some #{{ single_quot_symbol_in_space: { key: :"single_quot_in_symbol: " } }} with #{{ single_quot_symbol_in_space: { key: :"single_quot_in_symbol: " } }} too"
+
+==> 259.rb 96 <==
+"this is #{{ single_quot_symbol_in_space: { key: :"single_quot_in_symbol: " } }} with #{a} now"
+
+==> 260.rb 96 <==
+"this is #{a} with #{{ single_quot_symbol_in_space: { key: :"single_quot_in_symbol: " } }} now"
+
+==> 261.rb 155 <==
+"this is the #{{ single_quot_symbol_in_space: { key: :"single_quot_in_symbol: " } };{ single_quot_symbol_in_space: { key: :"single_quot_in_symbol: " } }}"
+
+==> 262.rb 42 <==
+"this is the #{{ range: { key: 1..2 } }}"
+
+==> 263.rb 52 <==
+"this is the #{{ range: { key: 1..2 } }} literally"
+
+==> 264.rb 72 <==
+"some #{{ range: { key: 1..2 } }} with #{{ range: { key: 1..2 } }} too"
+
+==> 265.rb 52 <==
+"this is #{{ range: { key: 1..2 } }} with #{a} now"
+
+==> 266.rb 52 <==
+"this is #{a} with #{{ range: { key: 1..2 } }} now"
+
+==> 267.rb 67 <==
+"this is the #{{ range: { key: 1..2 } };{ range: { key: 1..2 } }}"
+
+==> 268.rb 43 <==
+"this is the #{{ range: { key: 1...2 } }}"
+
+==> 269.rb 53 <==
+"this is the #{{ range: { key: 1...2 } }} literally"
+
+==> 270.rb 74 <==
+"some #{{ range: { key: 1...2 } }} with #{{ range: { key: 1...2 } }} too"
+
+==> 271.rb 53 <==
+"this is #{{ range: { key: 1...2 } }} with #{a} now"
+
+==> 272.rb 53 <==
+"this is #{a} with #{{ range: { key: 1...2 } }} now"
+
+==> 273.rb 69 <==
+"this is the #{{ range: { key: 1...2 } };{ range: { key: 1...2 } }}"
+
+==> 274.rb 42 <==
+"this is the #{{ array: { key: %w[] } }}"
+
+==> 275.rb 52 <==
+"this is the #{{ array: { key: %w[] } }} literally"
+
+==> 276.rb 72 <==
+"some #{{ array: { key: %w[] } }} with #{{ array: { key: %w[] } }} too"
+
+==> 277.rb 52 <==
+"this is #{{ array: { key: %w[] } }} with #{a} now"
+
+==> 278.rb 52 <==
+"this is #{a} with #{{ array: { key: %w[] } }} now"
+
+==> 279.rb 67 <==
+"this is the #{{ array: { key: %w[] } };{ array: { key: %w[] } }}"
+
+==> 280.rb 44 <==
+"this is the #{{ array: { key: %w[v1] } }}"
+
+==> 281.rb 54 <==
+"this is the #{{ array: { key: %w[v1] } }} literally"
+
+==> 282.rb 76 <==
+"some #{{ array: { key: %w[v1] } }} with #{{ array: { key: %w[v1] } }} too"
+
+==> 283.rb 54 <==
+"this is #{{ array: { key: %w[v1] } }} with #{a} now"
+
+==> 284.rb 54 <==
+"this is #{a} with #{{ array: { key: %w[v1] } }} now"
+
+==> 285.rb 71 <==
+"this is the #{{ array: { key: %w[v1] } };{ array: { key: %w[v1] } }}"
+
+==> 286.rb 47 <==
+"this is the #{{ array: { key: %w[v1 v2] } }}"
+
+==> 287.rb 57 <==
+"this is the #{{ array: { key: %w[v1 v2] } }} literally"
+
+==> 288.rb 82 <==
+"some #{{ array: { key: %w[v1 v2] } }} with #{{ array: { key: %w[v1 v2] } }} too"
+
+==> 289.rb 57 <==
+"this is #{{ array: { key: %w[v1 v2] } }} with #{a} now"
+
+==> 290.rb 57 <==
+"this is #{a} with #{{ array: { key: %w[v1 v2] } }} now"
+
+==> 291.rb 77 <==
+"this is the #{{ array: { key: %w[v1 v2] } };{ array: { key: %w[v1 v2] } }}"
+
+==> 292.rb 47 <==
+"this is the #{{ array: { key: %i[s1 s2] } }}"
+
+==> 293.rb 57 <==
+"this is the #{{ array: { key: %i[s1 s2] } }} literally"
+
+==> 294.rb 82 <==
+"some #{{ array: { key: %i[s1 s2] } }} with #{{ array: { key: %i[s1 s2] } }} too"
+
+==> 295.rb 57 <==
+"this is #{{ array: { key: %i[s1 s2] } }} with #{a} now"
+
+==> 296.rb 57 <==
+"this is #{a} with #{{ array: { key: %i[s1 s2] } }} now"
+
+==> 297.rb 77 <==
+"this is the #{{ array: { key: %i[s1 s2] } };{ array: { key: %i[s1 s2] } }}"
+
+==> 298.rb 47 <==
+"this is the #{{ array: { key: %I[s1 s2] } }}"
+
+==> 299.rb 57 <==
+"this is the #{{ array: { key: %I[s1 s2] } }} literally"
+
+==> 300.rb 82 <==
+"some #{{ array: { key: %I[s1 s2] } }} with #{{ array: { key: %I[s1 s2] } }} too"
+
+==> 301.rb 57 <==
+"this is #{{ array: { key: %I[s1 s2] } }} with #{a} now"
+
+==> 302.rb 57 <==
+"this is #{a} with #{{ array: { key: %I[s1 s2] } }} now"
+
+==> 303.rb 77 <==
+"this is the #{{ array: { key: %I[s1 s2] } };{ array: { key: %I[s1 s2] } }}"
+
+==> 304.rb 51 <==
+"this is the #{{ array: { key: %i[s1     s2] } }}"
+
+==> 305.rb 61 <==
+"this is the #{{ array: { key: %i[s1     s2] } }} literally"
+
+==> 306.rb 90 <==
+"some #{{ array: { key: %i[s1     s2] } }} with #{{ array: { key: %i[s1     s2] } }} too"
+
+==> 307.rb 61 <==
+"this is #{{ array: { key: %i[s1     s2] } }} with #{a} now"
+
+==> 308.rb 61 <==
+"this is #{a} with #{{ array: { key: %i[s1     s2] } }} now"
+
+==> 309.rb 85 <==
+"this is the #{{ array: { key: %i[s1     s2] } };{ array: { key: %i[s1     s2] } }}"
+
+==> 310.rb 51 <==
+"this is the #{{ array: { key: %i[ s1   s2 ] } }}"
+
+==> 311.rb 61 <==
+"this is the #{{ array: { key: %i[ s1   s2 ] } }} literally"
+
+==> 312.rb 90 <==
+"some #{{ array: { key: %i[ s1   s2 ] } }} with #{{ array: { key: %i[ s1   s2 ] } }} too"
+
+==> 313.rb 61 <==
+"this is #{{ array: { key: %i[ s1   s2 ] } }} with #{a} now"
+
+==> 314.rb 61 <==
+"this is #{a} with #{{ array: { key: %i[ s1   s2 ] } }} now"
+
+==> 315.rb 85 <==
+"this is the #{{ array: { key: %i[ s1   s2 ] } };{ array: { key: %i[ s1   s2 ] } }}"
+
+==> 316.rb 30 <==
+x = "#{ { foo: "\#{bar}" } }"
+
+==> 317.rb 30 <==
+x = "#{ { "\#{bar}" => 1 } }"
+
+==> 318.rb 28 <==
+x = "#{ { foo: "\\bar" } }"
+
+==> 319.rb 29 <==
+x = "#{ { foo: "\#@bar" } }"
+
+==> 320.rb 21 <==
+"this is the #{nil}"
+
+==> 321.rb 31 <==
+"this is the #{nil} literally"
+
+==> 322.rb 30 <==
+"some #{nil} with #{nil} too"
+
+==> 323.rb 31 <==
+"this is #{nil} with #{a} now"
+
+==> 324.rb 31 <==
+"this is #{a} with #{nil} now"
+
+==> 325.rb 25 <==
+"this is the #{nil;nil}"
+
+==> 326.rb 22 <==
+"this is the #{1..2}"
+
+==> 327.rb 32 <==
+"this is the #{1..2} literally"
+
+==> 328.rb 32 <==
+"some #{1..2} with #{1..2} too"
+
+==> 329.rb 32 <==
+"this is #{1..2} with #{a} now"
+
+==> 330.rb 32 <==
+"this is #{a} with #{1..2} now"
+
+==> 331.rb 27 <==
+"this is the #{1..2;1..2}"
+
+==> 332.rb 23 <==
+"this is the #{1...2}"
+
+==> 333.rb 33 <==
+"this is the #{1...2} literally"
+
+==> 334.rb 34 <==
+"some #{1...2} with #{1...2} too"
+
+==> 335.rb 33 <==
+"this is #{1...2} with #{a} now"
+
+==> 336.rb 33 <==
+"this is #{a} with #{1...2} now"
+
+==> 337.rb 29 <==
+"this is the #{1...2;1...2}"
+
+==> 338.rb 22 <==
+"this is the #{true}"
+
+==> 339.rb 32 <==
+"this is the #{true} literally"
+
+==> 340.rb 32 <==
+"some #{true} with #{true} too"
+
+==> 341.rb 32 <==
+"this is #{true} with #{a} now"
+
+==> 342.rb 32 <==
+"this is #{a} with #{true} now"
+
+==> 343.rb 27 <==
+"this is the #{true;true}"
+
+==> 344.rb 23 <==
+"this is the #{false}"
+
+==> 345.rb 33 <==
+"this is the #{false} literally"
+
+==> 346.rb 34 <==
+"some #{false} with #{false} too"
+
+==> 347.rb 33 <==
+"this is #{false} with #{a} now"
+
+==> 348.rb 33 <==
+"this is #{a} with #{false} now"
+
+==> 349.rb 29 <==
+"this is the #{false;false}"
+
+==> 350.rb 43 <==
+%W[#{"this interpolation"} is significant]
+
+==> 351.rb 25 <==
+%W[#{""} is significant]
+
+==> 352.rb 44 <==
+%W[#{:"this interpolation"} is significant]
+
+==> 353.rb 45 <==
+%W[#{["this interpolation"]} is significant]
+
+==> 354.rb 46 <==
+%W[#{[:"this interpolation"]} is significant]
+
+==> 355.rb 47 <==
+%W[this #{"interpolation"} is not significant]
+
+==> 356.rb 46 <==
+%W[this #{:interpolation} is not significant]
+
+==> 357.rb 49 <==
+%W[this #{["interpolation"]} is not significant]
+
+==> 358.rb 48 <==
+%W[this #{[:interpolation]} is not significant]
+
+==> 359.rb 43 <==
+%I[#{"this interpolation"} is significant]
+
+==> 360.rb 25 <==
+%I[#{""} is significant]
+
+==> 361.rb 44 <==
+%I[#{:"this interpolation"} is significant]
+
+==> 362.rb 45 <==
+%I[#{["this interpolation"]} is significant]
+
+==> 363.rb 46 <==
+%I[#{[:"this interpolation"]} is significant]
+
+==> 364.rb 47 <==
+%I[this #{"interpolation"} is not significant]
+
+==> 365.rb 46 <==
+%I[this #{:interpolation} is not significant]
+
+==> 366.rb 49 <==
+%I[this #{["interpolation"]} is not significant]
+
+==> 367.rb 48 <==
+%I[this #{[:interpolation]} is not significant]
+
+==> 368.rb 26 <==
+"this is #{"#{1}"} silly"
+
+==> 369.rb 31 <==
+%("this is #{__FILE__} silly")
+
+==> 370.rb 31 <==
+"this is the #{__FILE__} #{1}"
+
+==> 371.rb 31 <==
+%("this is #{__LINE__} silly")
+
+==> 372.rb 31 <==
+"this is the #{__LINE__} #{1}"
+
+==> 373.rb 30 <==
+%("this is #{__END__} silly")
+
+==> 374.rb 30 <==
+"this is the #{__END__} #{1}"
+
+==> 375.rb 35 <==
+%("this is #{__ENCODING__} silly")
+
+==> 376.rb 35 <==
+"this is the #{__ENCODING__} #{1}"
+
+==> 377.rb 23 <==
+"this is the #{'foo'}"
+
+==> 378.rb 23 <==
+"this is the #{"foo"}"
+
+==> 379.rb 23 <==
+"this is #{'"'} silly"
+
+==> 380.rb 24 <==
+"this is #{"\""} silly"
+
+==> 381.rb 27 <==
+"this is #{"\#{1}"} silly"
+
+==> 382.rb 91 <==
+x = "ABC".gsub(/(A)(B)(C)/, "D#{'\2'}F")
+"this is #{'\n'} silly"
+"this is #{%q(\n)} silly"
+
+==> 383.rb 75 <==
+"this is #{"\n"} silly"
+"this is #{%(\n)} silly"
+"this is #{%Q(\n)} silly"
+
+==> 384.rb 68 <==
+<<~HERE
+  Line with explicit space literal at the end. #{'  '}
+HERE
+
+==> 385.rb 21 <==
+:"this is the #{42}"
+
+==> 386.rb 20 <==
+`this is the #{42}`
+
+==> 387.rb 20 <==
+/this is the #{42}/
+
+==> 388.rb 17 <==
+/test#{'/'}test/
+
+==> 389.rb 23 <==
+/test#{'/a/b/c/'}test/
+
+==> 390.rb 19 <==
+/test#{'\\/'}test/
+
+==> 391.rb 21 <==
+/test#{'\\\\/'}test/
+
+==> 392.rb 19 <==
+%r{test#{'/'}test}
+
+==> 393.rb 17 <==
+"test#{'/'}test"
+
+==> 394.rb 16 <==
+"#{"\201\203"}"
+
+==> 395.rb 15 <==
+/#{%w[a b c]}/
+

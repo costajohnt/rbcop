@@ -1,0 +1,80 @@
+==> offenses exit=1 2128 <==
+000.rb:1:5: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+001.rb:1:5: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+003.rb:1:5: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+003.rb:2:5: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+009.rb:4:5: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+010.rb:1:5: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+011.rb:1:5: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+012.rb:1:5: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+013.rb:1:5: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+014.rb:1:5: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+015.rb:1:1: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+015.rb:2:1: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+015.rb:3:1: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+016.rb:1:1: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+016.rb:3:1: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+017.rb:1:1: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+
+==> autocorrect exit=0 2096 <==
+000.rb:1:5: C: [Corrected] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+001.rb:1:5: C: [Corrected] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+003.rb:1:5: C: [Corrected] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+003.rb:2:5: C: [Corrected] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+009.rb:4:5: C: [Corrected] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+010.rb:1:5: C: [Corrected] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+011.rb:1:5: C: [Corrected] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+012.rb:1:5: C: [Corrected] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+013.rb:1:5: C: [Corrected] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+014.rb:1:5: C: [Corrected] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+015.rb:1:1: C: [Corrected] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+015.rb:2:1: C: [Corrected] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+015.rb:3:1: C: [Corrected] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+016.rb:1:1: C: [Corrected] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+016.rb:3:1: C: [Corrected] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+017.rb:1:1: C: [Corrected] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+
+==> corrected/000.rb 11 <==
+a = 12_345
+
+==> corrected/001.rb 16 <==
+a = 123_456.789
+
+==> corrected/003.rb 31 <==
+a = 123_456_789_000
+b = 18_192
+
+==> corrected/009.rb 48 <==
+a = 10e10
+b = 3e12345
+c = 12.345e3
+d = 12_345e3
+
+==> corrected/010.rb 13 <==
+a = -123_456
+
+==> corrected/011.rb 16 <==
+a = -123_456.78
+
+==> corrected/012.rb 12 <==
+a = -12_345
+
+==> corrected/013.rb 15 <==
+a = 12_345.6e3
+
+==> corrected/014.rb 15 <==
+a = 12_345.6E3
+
+==> corrected/015.rb 57 <==
+1_234_567_890
+12_345_678_901_234_567_890
+123_456_789_012
+
+==> corrected/016.rb 92 <==
+1_234_567_890
+12345678901234567890  # rubocop:disable Style/NumericLiterals
+123_456_789_012
+
+==> corrected/017.rb 14 <==
+1_234_567_890
+

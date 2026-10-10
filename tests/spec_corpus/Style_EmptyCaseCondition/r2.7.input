@@ -1,0 +1,272 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 56 <==
+case
+when 1 == 2
+  foo
+when 1 == 1
+  bar
+else
+  baz
+end
+
+==> 001.rb 59 <==
+case :a
+when 1 == 2
+  foo
+when 1 == 1
+  bar
+else
+  baz
+end
+
+==> 002.rb 215 <==
+def example
+  # Comment before everything
+  case # first comment
+  # condition a
+  # This is a multi-line comment
+  when 1 == 2
+    foo
+  # condition b
+  when 1 == 1
+    bar
+  # condition c
+  else
+    baz
+  end
+end
+
+==> 003.rb 218 <==
+def example
+  # Comment before everything
+  case :a # first comment
+  # condition a
+  # This is a multi-line comment
+  when 1 == 2
+    foo
+  # condition b
+  when 1 == 1
+    bar
+  # condition c
+  else
+    baz
+  end
+end
+
+==> 004.rb 45 <==
+case
+when 1 == 2
+  foo
+when 1 == 1
+  bar
+end
+
+==> 005.rb 48 <==
+case :a
+when 1 == 2
+  foo
+when 1 == 1
+  bar
+end
+
+==> 006.rb 38 <==
+case
+when 1 == 2
+  foo
+else
+  bar
+end
+
+==> 007.rb 41 <==
+case :a
+when 1 == 2
+  foo
+else
+  bar
+end
+
+==> 008.rb 27 <==
+case
+when 1 == 2
+  foo
+end
+
+==> 009.rb 30 <==
+case :a
+when 1 == 2
+  foo
+end
+
+==> 010.rb 71 <==
+case
+when false
+  foo
+when nil, false, 1
+  bar
+when false, 1
+  baz
+end
+
+==> 011.rb 74 <==
+case :a
+when false
+  foo
+when nil, false, 1
+  bar
+when false, 1
+  baz
+end
+
+==> 012.rb 80 <==
+case
+when false then foo
+when nil, false, 1 then bar
+when false, 1 then baz
+end
+
+==> 013.rb 83 <==
+case :a
+when false then foo
+when nil, false, 1 then bar
+when false, 1 then baz
+end
+
+==> 014.rb 73 <==
+case
+when my.foo?, my.bar?
+  something
+when my.baz?
+  something_else
+end
+
+==> 015.rb 76 <==
+case :a
+when my.foo?, my.bar?
+  something
+when my.baz?
+  something_else
+end
+
+==> 016.rb 39 <==
+case
+when x ? a : b, c
+  something
+end
+
+==> 017.rb 53 <==
+case
+when object.nil?
+  Object.new
+else
+  object
+end
+
+==> 018.rb 56 <==
+case :a
+when object.nil?
+  Object.new
+else
+  object
+end
+
+==> 019.rb 66 <==
+# example.rb
+case
+when object.nil?
+  Object.new
+else
+  object
+end
+
+==> 020.rb 69 <==
+# example.rb
+case :a
+when object.nil?
+  Object.new
+else
+  object
+end
+
+==> 021.rb 92 <==
+def foo
+  yield case
+        when true
+          1
+        else
+          2
+        end
+end
+
+==> 022.rb 92 <==
+def foo
+  super case
+        when true
+          1
+        else
+          2
+        end
+end
+
+==> 023.rb 66 <==
+v = case
+    when x.a
+      1
+    when x.b
+      return 2
+    end
+
+==> 024.rb 73 <==
+v = case
+    when x.a
+      1
+    when x.b
+      return 2 if foo
+    end
+
+==> 025.rb 62 <==
+v = case
+    when x.a
+      1
+    else
+      return 2
+    end
+
+==> 026.rb 69 <==
+v = case
+    when x.a
+      1
+    else
+      return 2 if foo
+    end
+
+==> 027.rb 73 <==
+return case
+       when foo
+         1
+       else
+         2
+       end
+
+==> 028.rb 109 <==
+do_something case
+             when foo
+               1
+             else
+               2
+             end
+
+==> 029.rb 139 <==
+obj&.do_something case
+                  when foo
+                    1
+                  else
+                    2
+                  end
+

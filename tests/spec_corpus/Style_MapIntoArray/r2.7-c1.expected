@@ -1,0 +1,9 @@
+==> offenses exit=1 112 <==
+000.rb:2:1: C: [Correctable] Style/MapIntoArray: Use `collect` instead of `each` to map elements into an array.
+
+==> autocorrect exit=0 110 <==
+000.rb:2:1: C: [Corrected] Style/MapIntoArray: Use `collect` instead of `each` to map elements into an array.
+
+==> corrected/000.rb 33 <==
+dest = src.collect { |e| e * 2 }
+

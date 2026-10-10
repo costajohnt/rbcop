@@ -1,0 +1,142 @@
+==> offenses exit=1 2442 <==
+000.rb:1:10: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+001.rb:3:10: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+002.rb:3:3: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+005.rb:1:2: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+009.rb:3:2: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+010.rb:3:10: C: [Correctable] Layout/DotPosition: Place the &. on the next line, together with the method name.
+012.rb:3:20: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+012.rb:4:16: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+013.rb:1:10: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+013.rb:2:21: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+014.rb:1:10: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+014.rb:2:21: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+015.rb:1:10: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+015.rb:2:23: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+016.rb:1:10: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+016.rb:2:27: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+017.rb:1:10: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+017.rb:2:31: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+019.rb:1:10: C: [Correctable] Layout/DotPosition: Place the &. on the next line, together with the method name.
+019.rb:2:21: C: [Correctable] Layout/DotPosition: Place the &. on the next line, together with the method name.
+020.rb:1:11: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+021.rb:1:13: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+
+==> autocorrect exit=0 2398 <==
+000.rb:1:10: C: [Corrected] Layout/DotPosition: Place the . on the next line, together with the method name.
+001.rb:3:10: C: [Corrected] Layout/DotPosition: Place the . on the next line, together with the method name.
+002.rb:3:3: C: [Corrected] Layout/DotPosition: Place the . on the next line, together with the method name.
+005.rb:1:2: C: [Corrected] Layout/DotPosition: Place the . on the next line, together with the method name.
+009.rb:3:2: C: [Corrected] Layout/DotPosition: Place the . on the next line, together with the method name.
+010.rb:3:10: C: [Corrected] Layout/DotPosition: Place the &. on the next line, together with the method name.
+012.rb:3:20: C: [Corrected] Layout/DotPosition: Place the . on the next line, together with the method name.
+012.rb:4:16: C: [Corrected] Layout/DotPosition: Place the . on the next line, together with the method name.
+013.rb:1:10: C: [Corrected] Layout/DotPosition: Place the . on the next line, together with the method name.
+013.rb:2:21: C: [Corrected] Layout/DotPosition: Place the . on the next line, together with the method name.
+014.rb:1:10: C: [Corrected] Layout/DotPosition: Place the . on the next line, together with the method name.
+014.rb:2:21: C: [Corrected] Layout/DotPosition: Place the . on the next line, together with the method name.
+015.rb:1:10: C: [Corrected] Layout/DotPosition: Place the . on the next line, together with the method name.
+015.rb:2:23: C: [Corrected] Layout/DotPosition: Place the . on the next line, together with the method name.
+016.rb:1:10: C: [Corrected] Layout/DotPosition: Place the . on the next line, together with the method name.
+016.rb:2:27: C: [Corrected] Layout/DotPosition: Place the . on the next line, together with the method name.
+017.rb:1:10: C: [Corrected] Layout/DotPosition: Place the . on the next line, together with the method name.
+017.rb:2:31: C: [Corrected] Layout/DotPosition: Place the . on the next line, together with the method name.
+019.rb:1:10: C: [Corrected] Layout/DotPosition: Place the &. on the next line, together with the method name.
+019.rb:2:21: C: [Corrected] Layout/DotPosition: Place the &. on the next line, together with the method name.
+020.rb:1:11: C: [Corrected] Layout/DotPosition: Place the . on the next line, together with the method name.
+021.rb:1:13: C: [Corrected] Layout/DotPosition: Place the . on the next line, together with the method name.
+
+==> corrected/000.rb 25 <==
+something
+  .method_name
+
+==> corrected/001.rb 50 <==
+something
+  .method_name
+something
+  .method_name
+
+==> corrected/002.rb 18 <==
+foo
+  .bar
+  .baz
+
+==> corrected/005.rb 7 <==
+l
+.(1)
+
+==> corrected/009.rb 39 <==
+something(
+  foo, bar
+)
+  .method_name
+
+==> corrected/010.rb 52 <==
+something
+  &.method_name
+something
+  &.method_name
+
+==> corrected/012.rb 86 <==
+@objects = @objects.where(type: :a)
+
+@objects = @objects
+  .with_relation
+  .paginate
+
+==> corrected/013.rb 70 <==
+my_method
+  .something(<<~HERE)
+    something
+  HERE
+  .somethingelse
+
+==> corrected/014.rb 73 <==
+my_method
+  .something(<<~HERE)
+    #{something}
+  HERE
+  .somethingelse
+
+==> corrected/015.rb 69 <==
+my_method
+  .something(<<~`HERE`)
+    ls -la
+  HERE
+  .somethingelse
+
+==> corrected/016.rb 79 <==
+my_method
+  .something(<<~HERE, true)
+    #{something}
+  HERE
+  .somethingelse
+
+==> corrected/017.rb 106 <==
+my_method
+  .something(<<~HERE, <<~THERE)
+    something
+  HERE
+    another thing
+  THERE
+  .somethingelse
+
+==> corrected/019.rb 72 <==
+my_method
+  &.something(<<~HERE)
+    something
+  HERE
+  &.somethingelse
+
+==> corrected/020.rb 46 <==
+<<~HEREDOC
+  something
+HEREDOC
+  .method_name
+
+==> corrected/021.rb 45 <==
+<<~`HEREDOC`
+  ls -la
+HEREDOC
+  .method_name
+

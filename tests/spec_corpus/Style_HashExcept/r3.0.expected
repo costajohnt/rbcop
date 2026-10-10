@@ -1,0 +1,69 @@
+==> offenses exit=1 1020 <==
+000.rb:1:26: C: [Correctable] Style/HashExcept: Use `except(:bar)` instead.
+001.rb:1:27: C: [Correctable] Style/HashExcept: Use `except(:bar)` instead.
+002.rb:1:26: C: [Correctable] Style/HashExcept: Use `except(:bar)` instead.
+003.rb:1:26: C: [Correctable] Style/HashExcept: Use `except(:bar)` instead.
+004.rb:1:26: C: [Correctable] Style/HashExcept: Use `except(:bar)` instead.
+005.rb:1:6: C: [Correctable] Style/HashExcept: Use `except('str')` instead.
+006.rb:1:6: C: [Correctable] Style/HashExcept: Use `except(0.0)` instead.
+007.rb:1:26: C: [Correctable] Style/HashExcept: Use `except(:bar)` instead.
+009.rb:1:26: C: [Correctable] Style/HashExcept: Use `except(:foo, :bar)` instead.
+010.rb:1:26: C: [Correctable] Style/HashExcept: Use `except(:foo, :bar)` instead.
+011.rb:1:26: C: [Correctable] Style/HashExcept: Use `except(:"#{foo}", :bar)` instead.
+012.rb:1:26: C: [Correctable] Style/HashExcept: Use `except("#{foo}", 'bar')` instead.
+015.rb:1:26: C: [Correctable] Style/HashExcept: Use `except(:bar)` instead.
+
+==> autocorrect exit=0 994 <==
+000.rb:1:26: C: [Corrected] Style/HashExcept: Use `except(:bar)` instead.
+001.rb:1:27: C: [Corrected] Style/HashExcept: Use `except(:bar)` instead.
+002.rb:1:26: C: [Corrected] Style/HashExcept: Use `except(:bar)` instead.
+003.rb:1:26: C: [Corrected] Style/HashExcept: Use `except(:bar)` instead.
+004.rb:1:26: C: [Corrected] Style/HashExcept: Use `except(:bar)` instead.
+005.rb:1:6: C: [Corrected] Style/HashExcept: Use `except('str')` instead.
+006.rb:1:6: C: [Corrected] Style/HashExcept: Use `except(0.0)` instead.
+007.rb:1:26: C: [Corrected] Style/HashExcept: Use `except(:bar)` instead.
+009.rb:1:26: C: [Corrected] Style/HashExcept: Use `except(:foo, :bar)` instead.
+010.rb:1:26: C: [Corrected] Style/HashExcept: Use `except(:foo, :bar)` instead.
+011.rb:1:26: C: [Corrected] Style/HashExcept: Use `except(:"#{foo}", :bar)` instead.
+012.rb:1:26: C: [Corrected] Style/HashExcept: Use `except("#{foo}", 'bar')` instead.
+015.rb:1:26: C: [Corrected] Style/HashExcept: Use `except(:bar)` instead.
+
+==> corrected/000.rb 38 <==
+{foo: 1, bar: 2, baz: 3}.except(:bar)
+
+==> corrected/001.rb 39 <==
+{foo: 1, bar: 2, baz: 3}&.except(:bar)
+
+==> corrected/002.rb 38 <==
+{foo: 1, bar: 2, baz: 3}.except(:bar)
+
+==> corrected/003.rb 38 <==
+{foo: 1, bar: 2, baz: 3}.except(:bar)
+
+==> corrected/004.rb 38 <==
+{foo: 1, bar: 2, baz: 3}.except(:bar)
+
+==> corrected/005.rb 19 <==
+hash.except('str')
+
+==> corrected/006.rb 17 <==
+hash.except(0.0)
+
+==> corrected/007.rb 38 <==
+{foo: 1, bar: 2, baz: 3}.except(:bar)
+
+==> corrected/009.rb 44 <==
+{foo: 1, bar: 2, baz: 3}.except(:foo, :bar)
+
+==> corrected/010.rb 44 <==
+{foo: 1, bar: 2, baz: 3}.except(:foo, :bar)
+
+==> corrected/011.rb 49 <==
+{foo: 1, bar: 2, baz: 3}.except(:"#{foo}", :bar)
+
+==> corrected/012.rb 49 <==
+{foo: 1, bar: 2, baz: 3}.except("#{foo}", 'bar')
+
+==> corrected/015.rb 38 <==
+{foo: 1, bar: 2, baz: 3}.except(:bar)
+

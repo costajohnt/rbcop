@@ -1,0 +1,64 @@
+==> offenses exit=1 1350 <==
+001.rb:2:4: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+002.rb:2:4: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+003.rb:2:4: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+004.rb:2:4: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+005.rb:2:3: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+006.rb:2:6: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+006.rb:3:9: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+007.rb:2:1: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+007.rb:3:1: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+
+==> autocorrect exit=0 1332 <==
+001.rb:2:4: C: [Corrected] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+002.rb:2:4: C: [Corrected] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+003.rb:2:4: C: [Corrected] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+004.rb:2:4: C: [Corrected] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+005.rb:2:3: C: [Corrected] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+006.rb:2:6: C: [Corrected] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+006.rb:3:9: C: [Corrected] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+007.rb:2:1: C: [Corrected] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+007.rb:3:1: C: [Corrected] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+
+==> corrected/001.rb 48 <==
+a = "a"
+if ["a", "b"].include?(a)
+  print a
+end
+
+==> corrected/002.rb 53 <==
+a = "a"
+if ["a", "b", "c"].include?(a)
+  print a
+end
+
+==> corrected/003.rb 53 <==
+a = "a"
+if ["a", "b", "c"].include?(a)
+  print a
+end
+
+==> corrected/004.rb 53 <==
+a = "a"
+if ["a", "b", "c"].include?(a)
+  print a
+end
+
+==> corrected/005.rb 39 <==
+def foo(x)
+  [1, 2, 3].include?(x)
+end
+
+==> corrected/006.rb 108 <==
+def foo(a)
+  if ['foo', 'bar'].include?(a)
+  elsif ['baz', 'qux'].include?(a)
+  elsif a == 'quux'
+  end
+end
+
+==> corrected/007.rb 47 <==
+a = 1
+[1, 2, 3].include?(a)
+[1, 2].include?(a)
+

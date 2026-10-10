@@ -1,0 +1,65 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 105 <==
+"this is the #{result.to_s}"
+/regexp #{result.to_s}/
+:"symbol #{result.to_s}"
+`backticks #{result.to_s}`
+
+==> 001.rb 109 <==
+"this is the #{result&.to_s}"
+/regexp #{result&.to_s}/
+:"symbol #{result&.to_s}"
+`backticks #{result&.to_s}`
+
+==> 002.rb 34 <==
+"this is the #{top; result.to_s}"
+
+==> 003.rb 29 <==
+"this is a #{result.to_s(8)}"
+==> 004.rb 23 <==
+"this is the #{result}"
+==> 005.rb 10 <==
+"#{to_s}"
+
+==> 006.rb 19 <==
+"this is #{} silly"
+==> 007.rb 30 <==
+print first.to_s, second.to_s
+
+==> 008.rb 17 <==
+print to_s, to_s
+
+==> 009.rb 29 <==
+puts first.to_s, second.to_s
+
+==> 010.rb 31 <==
+puts first&.to_s, second&.to_s
+
+==> 011.rb 29 <==
+warn first.to_s, second.to_s
+
+==> 012.rb 16 <==
+puts to_s, to_s
+
+==> 013.rb 23 <==
+print obj.do_something
+
+==> 014.rb 22 <==
+puts obj.do_something
+
+==> 015.rb 26 <==
+p first.to_s, second.to_s
+
+==> 016.rb 34 <==
+obj.print first.to_s, second.to_s
+
+==> 017.rb 24 <==
+puts obj.to_s(argument)
+

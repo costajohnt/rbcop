@@ -1,0 +1,26 @@
+==> .rubocop.yml 204 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.1
+Style/HashSyntax:
+  EnforcedStyle: ruby19_no_mixed_keys
+  UseHashRocketsWithSymbolValues: false
+
+==> 000.rb 28 <==
+x = { :"t o" => 0, :b => 1 }
+==> 001.rb 26 <==
+x = { :"t o" => 0, b: 1 }
+
+==> 002.rb 29 <==
+x = { :"\tab" => 1, :b => 1 }
+==> 003.rb 26 <==
+x = { :"	ab" => 1, b: 1 }
+
+==> 004.rb 26 <==
+x = { :"1" => 1, :b => 1 }
+==> 005.rb 24 <==
+x = { :"1" => 1, b: 1 }
+

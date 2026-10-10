@@ -1,0 +1,11 @@
+==> offenses exit=1 122 <==
+000.gemspec:2:8: C: [Correctable] Gemspec/AddRuntimeDependency: Use `add_dependency` instead of `add_runtime_dependency`.
+
+==> autocorrect exit=0 120 <==
+000.gemspec:2:8: C: [Corrected] Gemspec/AddRuntimeDependency: Use `add_dependency` instead of `add_runtime_dependency`.
+
+==> corrected/000.gemspec 70 <==
+Gem::Specification.new do |spec|
+  spec.add_dependency('rubocop')
+end
+

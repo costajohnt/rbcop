@@ -1,0 +1,13 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.3
+
+==> 000.rb 26 <==
+foo&.bar do |_|
+  baz
+end
+

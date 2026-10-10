@@ -1,0 +1,6 @@
+==> offenses exit=1 122 <==
+000/master-slave.rb:1:1: C: Naming/InclusiveLanguage: Consider replacing 'master', 'slave' in file path with other terms.
+
+==> autocorrect exit=1 122 <==
+000/master-slave.rb:1:1: C: Naming/InclusiveLanguage: Consider replacing 'master', 'slave' in file path with other terms.
+

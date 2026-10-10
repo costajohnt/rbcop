@@ -1,0 +1,14 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 16 <==
+1.is_a?(Integer)
+==> 001.rb 18 <==
+1.is_a?(::Integer)
+==> 002.rb 29 <==
+1.is_a?(MyNamespace::Integer)

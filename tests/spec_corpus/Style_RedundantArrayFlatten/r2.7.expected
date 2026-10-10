@@ -1,0 +1,24 @@
+==> offenses exit=1 360 <==
+000.rb:1:2: C: [Correctable] Style/RedundantArrayFlatten: Remove the redundant `flatten`.
+001.rb:1:2: C: [Correctable] Style/RedundantArrayFlatten: Remove the redundant `flatten`.
+002.rb:1:2: C: [Correctable] Style/RedundantArrayFlatten: Remove the redundant `flatten`.
+003.rb:1:2: C: [Correctable] Style/RedundantArrayFlatten: Remove the redundant `flatten`.
+
+==> autocorrect exit=0 352 <==
+000.rb:1:2: C: [Corrected] Style/RedundantArrayFlatten: Remove the redundant `flatten`.
+001.rb:1:2: C: [Corrected] Style/RedundantArrayFlatten: Remove the redundant `flatten`.
+002.rb:1:2: C: [Corrected] Style/RedundantArrayFlatten: Remove the redundant `flatten`.
+003.rb:1:2: C: [Corrected] Style/RedundantArrayFlatten: Remove the redundant `flatten`.
+
+==> corrected/000.rb 7 <==
+x.join
+
+==> corrected/001.rb 12 <==
+x.join(nil)
+
+==> corrected/002.rb 7 <==
+x.join
+
+==> corrected/003.rb 8 <==
+x&.join
+

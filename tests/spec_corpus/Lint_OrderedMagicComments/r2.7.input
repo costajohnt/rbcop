@@ -1,0 +1,63 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 48 <==
+# frozen_string_literal: true
+# encoding: ascii
+
+==> 001.rb 46 <==
+# frozen_string_literal: true
+# coding: ascii
+
+==> 002.rb 62 <==
+# frozen_string_literal: true
+# -*- encoding : ascii-8bit -*-
+
+==> 003.rb 68 <==
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+# encoding: ascii
+
+==> 004.rb 38 <==
+# warn_indent: true
+# encoding: ascii
+
+==> 005.rb 54 <==
+# shareable_constant_value: literal
+# encoding: ascii
+
+==> 006.rb 54 <==
+# encoding: ascii
+# shareable_constant_value: literal
+
+==> 007.rb 48 <==
+# encoding: ascii
+# frozen_string_literal: true
+
+==> 008.rb 68 <==
+#!/usr/bin/env ruby
+# encoding: ascii
+# frozen_string_literal: true
+
+==> 009.rb 18 <==
+# encoding: ascii
+
+==> 010.rb 30 <==
+# frozen_string_literal: true
+
+==> 011.rb 71 <==
+# frozen_string_literal: true
+
+x = { encoding: Encoding::SJIS }
+puts x
+
+==> 012.rb 64 <==
+# frozen_string_literal: true
+
+# eval('# encoding: ISO-8859-1')
+

@@ -1,0 +1,58 @@
+==> offenses exit=1 888 <==
+000.rb:1:12: C: [Correctable] Style/TrailingBodyOnModule: Place the first line of module body on its own line.
+000.rb:3:12: C: [Correctable] Style/TrailingBodyOnModule: Place the first line of module body on its own line.
+000.rb:5:13: C: [Correctable] Style/TrailingBodyOnModule: Place the first line of module body on its own line.
+000.rb:7:12: C: [Correctable] Style/TrailingBodyOnModule: Place the first line of module body on its own line.
+001.rb:1:12: C: [Correctable] Style/TrailingBodyOnModule: Place the first line of module body on its own line.
+002.rb:1:13: C: [Correctable] Style/TrailingBodyOnModule: Place the first line of module body on its own line.
+004.rb:1:16: C: [Correctable] Style/TrailingBodyOnModule: Place the first line of module body on its own line.
+005.rb:1:13: C: [Correctable] Style/TrailingBodyOnModule: Place the first line of module body on its own line.
+
+==> autocorrect exit=0 872 <==
+000.rb:1:12: C: [Corrected] Style/TrailingBodyOnModule: Place the first line of module body on its own line.
+000.rb:3:12: C: [Corrected] Style/TrailingBodyOnModule: Place the first line of module body on its own line.
+000.rb:5:13: C: [Corrected] Style/TrailingBodyOnModule: Place the first line of module body on its own line.
+000.rb:7:12: C: [Corrected] Style/TrailingBodyOnModule: Place the first line of module body on its own line.
+001.rb:1:12: C: [Corrected] Style/TrailingBodyOnModule: Place the first line of module body on its own line.
+002.rb:1:13: C: [Corrected] Style/TrailingBodyOnModule: Place the first line of module body on its own line.
+004.rb:1:16: C: [Corrected] Style/TrailingBodyOnModule: Place the first line of module body on its own line.
+005.rb:1:13: C: [Corrected] Style/TrailingBodyOnModule: Place the first line of module body on its own line.
+
+==> corrected/000.rb 115 <==
+module Foo 
+  body
+end
+module Bar 
+  extend self
+end
+module Bar 
+  def bar; end
+end
+module Bar 
+  def bar; end
+end
+
+==> corrected/001.rb 47 <==
+module Foo 
+  body
+  def bar
+    qux
+  end
+end
+
+==> corrected/002.rb 27 <==
+module Foo 
+  do_stuff
+end
+
+==> corrected/004.rb 36 <==
+# comment
+module BarQux 
+  foo 
+end
+
+==> corrected/005.rb 31 <==
+module Bar 
+  def bar; end
+end
+

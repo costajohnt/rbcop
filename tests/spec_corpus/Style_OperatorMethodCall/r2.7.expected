@@ -1,0 +1,599 @@
+==> offenses exit=1 9401 <==
+000.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+001.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+003.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+004.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+005.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+007.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+008.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+010.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+011.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+012.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+014.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+015.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+017.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+018.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+019.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+021.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+022.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+024.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+025.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+026.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+028.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+029.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+031.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+032.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+033.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+035.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+036.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+038.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+039.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+040.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+042.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+043.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+045.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+046.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+047.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+049.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+050.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+052.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+053.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+054.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+056.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+057.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+059.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+060.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+061.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+063.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+064.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+066.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+067.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+068.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+070.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+071.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+073.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+074.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+075.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+077.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+078.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+080.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+081.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+082.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+084.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+085.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+087.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+088.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+089.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+091.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+092.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+094.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+095.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+096.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+098.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+099.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+101.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+102.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+103.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+105.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+106.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+108.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+109.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+110.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+112.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+113.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+115.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+116.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+117.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+119.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+120.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+122.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+123.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+124.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+126.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+127.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+129.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+130.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+131.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+133.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+134.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+136.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+137.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+138.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+140.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+141.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+143.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+144.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+145.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+147.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+148.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+150.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+151.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+152.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+154.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+155.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+157.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+158.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+159.rb:1:8: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+161.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+162.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+163.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+164.rb:1:4: C: [Correctable] Style/OperatorMethodCall: Redundant dot detected.
+
+==> autocorrect exit=0 9163 <==
+000.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+001.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+003.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+004.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+005.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+007.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+008.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+010.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+011.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+012.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+014.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+015.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+017.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+018.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+019.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+021.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+022.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+024.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+025.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+026.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+028.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+029.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+031.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+032.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+033.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+035.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+036.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+038.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+039.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+040.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+042.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+043.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+045.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+046.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+047.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+049.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+050.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+052.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+053.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+054.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+056.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+057.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+059.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+060.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+061.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+063.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+064.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+066.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+067.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+068.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+070.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+071.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+073.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+074.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+075.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+077.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+078.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+080.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+081.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+082.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+084.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+085.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+087.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+088.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+089.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+091.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+092.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+094.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+095.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+096.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+098.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+099.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+101.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+102.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+103.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+105.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+106.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+108.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+109.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+110.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+112.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+113.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+115.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+116.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+117.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+119.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+120.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+122.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+123.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+124.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+126.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+127.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+129.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+130.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+131.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+133.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+134.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+136.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+137.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+138.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+140.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+141.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+143.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+144.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+145.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+147.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+148.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+150.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+151.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+152.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+154.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+155.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+157.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+158.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+159.rb:1:8: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+161.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+162.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+163.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+164.rb:1:4: C: [Corrected] Style/OperatorMethodCall: Redundant dot detected.
+
+==> corrected/000.rb 10 <==
+foo | bar
+
+==> corrected/001.rb 10 <==
+foo | bar
+
+==> corrected/003.rb 9 <==
+foo | 42
+
+==> corrected/004.rb 14 <==
+foo bar | baz
+
+==> corrected/005.rb 24 <==
+(foo.bar | baz).quux(2)
+
+==> corrected/007.rb 10 <==
+foo ^ bar
+
+==> corrected/008.rb 10 <==
+foo ^ bar
+
+==> corrected/010.rb 9 <==
+foo ^ 42
+
+==> corrected/011.rb 14 <==
+foo bar ^ baz
+
+==> corrected/012.rb 24 <==
+(foo.bar ^ baz).quux(2)
+
+==> corrected/014.rb 10 <==
+foo & bar
+
+==> corrected/015.rb 10 <==
+foo & bar
+
+==> corrected/017.rb 9 <==
+foo & 42
+
+==> corrected/018.rb 14 <==
+foo bar & baz
+
+==> corrected/019.rb 24 <==
+(foo.bar & baz).quux(2)
+
+==> corrected/021.rb 12 <==
+foo <=> bar
+
+==> corrected/022.rb 12 <==
+foo <=> bar
+
+==> corrected/024.rb 11 <==
+foo <=> 42
+
+==> corrected/025.rb 16 <==
+foo bar <=> baz
+
+==> corrected/026.rb 26 <==
+(foo.bar <=> baz).quux(2)
+
+==> corrected/028.rb 11 <==
+foo == bar
+
+==> corrected/029.rb 11 <==
+foo == bar
+
+==> corrected/031.rb 10 <==
+foo == 42
+
+==> corrected/032.rb 15 <==
+foo bar == baz
+
+==> corrected/033.rb 25 <==
+(foo.bar == baz).quux(2)
+
+==> corrected/035.rb 12 <==
+foo === bar
+
+==> corrected/036.rb 12 <==
+foo === bar
+
+==> corrected/038.rb 11 <==
+foo === 42
+
+==> corrected/039.rb 16 <==
+foo bar === baz
+
+==> corrected/040.rb 26 <==
+(foo.bar === baz).quux(2)
+
+==> corrected/042.rb 11 <==
+foo =~ bar
+
+==> corrected/043.rb 11 <==
+foo =~ bar
+
+==> corrected/045.rb 10 <==
+foo =~ 42
+
+==> corrected/046.rb 15 <==
+foo bar =~ baz
+
+==> corrected/047.rb 25 <==
+(foo.bar =~ baz).quux(2)
+
+==> corrected/049.rb 10 <==
+foo > bar
+
+==> corrected/050.rb 10 <==
+foo > bar
+
+==> corrected/052.rb 9 <==
+foo > 42
+
+==> corrected/053.rb 14 <==
+foo bar > baz
+
+==> corrected/054.rb 24 <==
+(foo.bar > baz).quux(2)
+
+==> corrected/056.rb 11 <==
+foo >= bar
+
+==> corrected/057.rb 11 <==
+foo >= bar
+
+==> corrected/059.rb 10 <==
+foo >= 42
+
+==> corrected/060.rb 15 <==
+foo bar >= baz
+
+==> corrected/061.rb 25 <==
+(foo.bar >= baz).quux(2)
+
+==> corrected/063.rb 10 <==
+foo < bar
+
+==> corrected/064.rb 10 <==
+foo < bar
+
+==> corrected/066.rb 9 <==
+foo < 42
+
+==> corrected/067.rb 14 <==
+foo bar < baz
+
+==> corrected/068.rb 24 <==
+(foo.bar < baz).quux(2)
+
+==> corrected/070.rb 11 <==
+foo <= bar
+
+==> corrected/071.rb 11 <==
+foo <= bar
+
+==> corrected/073.rb 10 <==
+foo <= 42
+
+==> corrected/074.rb 15 <==
+foo bar <= baz
+
+==> corrected/075.rb 25 <==
+(foo.bar <= baz).quux(2)
+
+==> corrected/077.rb 11 <==
+foo << bar
+
+==> corrected/078.rb 11 <==
+foo << bar
+
+==> corrected/080.rb 10 <==
+foo << 42
+
+==> corrected/081.rb 15 <==
+foo bar << baz
+
+==> corrected/082.rb 25 <==
+(foo.bar << baz).quux(2)
+
+==> corrected/084.rb 11 <==
+foo >> bar
+
+==> corrected/085.rb 11 <==
+foo >> bar
+
+==> corrected/087.rb 10 <==
+foo >> 42
+
+==> corrected/088.rb 15 <==
+foo bar >> baz
+
+==> corrected/089.rb 25 <==
+(foo.bar >> baz).quux(2)
+
+==> corrected/091.rb 10 <==
+foo + bar
+
+==> corrected/092.rb 10 <==
+foo + bar
+
+==> corrected/094.rb 9 <==
+foo + 42
+
+==> corrected/095.rb 14 <==
+foo bar + baz
+
+==> corrected/096.rb 24 <==
+(foo.bar + baz).quux(2)
+
+==> corrected/098.rb 10 <==
+foo - bar
+
+==> corrected/099.rb 10 <==
+foo - bar
+
+==> corrected/101.rb 9 <==
+foo - 42
+
+==> corrected/102.rb 14 <==
+foo bar - baz
+
+==> corrected/103.rb 24 <==
+(foo.bar - baz).quux(2)
+
+==> corrected/105.rb 10 <==
+foo * bar
+
+==> corrected/106.rb 10 <==
+foo * bar
+
+==> corrected/108.rb 9 <==
+foo * 42
+
+==> corrected/109.rb 14 <==
+foo bar * baz
+
+==> corrected/110.rb 24 <==
+(foo.bar * baz).quux(2)
+
+==> corrected/112.rb 10 <==
+foo / bar
+
+==> corrected/113.rb 10 <==
+foo / bar
+
+==> corrected/115.rb 9 <==
+foo / 42
+
+==> corrected/116.rb 14 <==
+foo bar / baz
+
+==> corrected/117.rb 24 <==
+(foo.bar / baz).quux(2)
+
+==> corrected/119.rb 10 <==
+foo % bar
+
+==> corrected/120.rb 10 <==
+foo % bar
+
+==> corrected/122.rb 9 <==
+foo % 42
+
+==> corrected/123.rb 14 <==
+foo bar % baz
+
+==> corrected/124.rb 24 <==
+(foo.bar % baz).quux(2)
+
+==> corrected/126.rb 11 <==
+foo ** bar
+
+==> corrected/127.rb 11 <==
+foo ** bar
+
+==> corrected/129.rb 10 <==
+foo ** 42
+
+==> corrected/130.rb 15 <==
+foo bar ** baz
+
+==> corrected/131.rb 25 <==
+(foo.bar ** baz).quux(2)
+
+==> corrected/133.rb 10 <==
+foo ~ bar
+
+==> corrected/134.rb 10 <==
+foo ~ bar
+
+==> corrected/136.rb 9 <==
+foo ~ 42
+
+==> corrected/137.rb 14 <==
+foo bar ~ baz
+
+==> corrected/138.rb 24 <==
+(foo.bar ~ baz).quux(2)
+
+==> corrected/140.rb 10 <==
+foo ! bar
+
+==> corrected/141.rb 10 <==
+foo ! bar
+
+==> corrected/143.rb 9 <==
+foo ! 42
+
+==> corrected/144.rb 14 <==
+foo bar ! baz
+
+==> corrected/145.rb 24 <==
+(foo.bar ! baz).quux(2)
+
+==> corrected/147.rb 11 <==
+foo != bar
+
+==> corrected/148.rb 11 <==
+foo != bar
+
+==> corrected/150.rb 10 <==
+foo != 42
+
+==> corrected/151.rb 15 <==
+foo bar != baz
+
+==> corrected/152.rb 25 <==
+(foo.bar != baz).quux(2)
+
+==> corrected/154.rb 11 <==
+foo !~ bar
+
+==> corrected/155.rb 11 <==
+foo !~ bar
+
+==> corrected/157.rb 10 <==
+foo !~ 42
+
+==> corrected/158.rb 15 <==
+foo bar !~ baz
+
+==> corrected/159.rb 25 <==
+(foo.bar !~ baz).quux(2)
+
+==> corrected/161.rb 11 <==
+foo ==({})
+
+==> corrected/162.rb 16 <==
+foo + @bar.to_s
+
+==> corrected/163.rb 12 <==
+foo / (bar)
+
+==> corrected/164.rb 12 <==
+foo / (bar)
+

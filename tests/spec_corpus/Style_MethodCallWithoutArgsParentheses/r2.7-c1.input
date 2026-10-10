@@ -1,0 +1,15 @@
+==> .rubocop.yml 172 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/MethodCallWithoutArgsParentheses:
+  AllowedMethods:
+  - s
+
+==> 000.rb 3 <==
+s()
+==> 001.rb 8 <==
+foo&.s()

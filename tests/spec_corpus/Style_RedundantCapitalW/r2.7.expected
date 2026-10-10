@@ -1,0 +1,14 @@
+==> offenses exit=1 240 <==
+002.rb:1:1: C: [Correctable] Style/RedundantCapitalW: Do not use `%W` unless interpolation is needed. If not, use `%w`.
+003.rb:1:1: C: [Correctable] Style/RedundantCapitalW: Do not use `%W` unless interpolation is needed. If not, use `%w`.
+
+==> autocorrect exit=0 236 <==
+002.rb:1:1: C: [Corrected] Style/RedundantCapitalW: Do not use `%W` unless interpolation is needed. If not, use `%w`.
+003.rb:1:1: C: [Corrected] Style/RedundantCapitalW: Do not use `%W` unless interpolation is needed. If not, use `%w`.
+
+==> corrected/002.rb 12 <==
+%w(cat dog)
+
+==> corrected/003.rb 12 <==
+%w[cat dog]
+

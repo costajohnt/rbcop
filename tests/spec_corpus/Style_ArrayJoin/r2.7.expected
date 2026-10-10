@@ -1,0 +1,19 @@
+==> offenses exit=1 246 <==
+000.rb:1:19: C: [Correctable] Style/ArrayJoin: Favor `Array#join` over `Array#*`.
+001.rb:1:18: C: [Correctable] Style/ArrayJoin: Favor `Array#join` over `Array#*`.
+002.rb:1:24: C: [Correctable] Style/ArrayJoin: Favor `Array#join` over `Array#*`.
+
+==> autocorrect exit=0 240 <==
+000.rb:1:19: C: [Corrected] Style/ArrayJoin: Favor `Array#join` over `Array#*`.
+001.rb:1:18: C: [Corrected] Style/ArrayJoin: Favor `Array#join` over `Array#*`.
+002.rb:1:24: C: [Corrected] Style/ArrayJoin: Favor `Array#join` over `Array#*`.
+
+==> corrected/000.rb 29 <==
+%w(one two three).join(", ")
+
+==> corrected/001.rb 29 <==
+%w(one two three).join(", ")
+
+==> corrected/002.rb 35 <==
+foo = %w(one two three).join(", ")
+

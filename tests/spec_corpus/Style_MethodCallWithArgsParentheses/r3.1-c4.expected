@@ -1,0 +1,38 @@
+==> offenses exit=1 697 <==
+000.rb:1:4: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+002.rb:1:13: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+004.rb:2:4: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+005.rb:2:4: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+007.rb:3:6: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+007.rb:5:6: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+
+==> autocorrect exit=0 685 <==
+000.rb:1:4: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+002.rb:1:13: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+004.rb:2:4: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+005.rb:2:4: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+007.rb:3:6: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+007.rb:5:6: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+
+==> corrected/000.rb 15 <==
+foo bar:, baz:
+
+==> corrected/002.rb 39 <==
+do_something value: value if condition
+
+==> corrected/004.rb 20 <==
+foo(value:)
+foo arg
+
+==> corrected/005.rb 26 <==
+var = foo(value:)
+foo arg
+
+==> corrected/007.rb 67 <==
+case match
+in :pattern1
+  foo value:
+in :pattern2
+  bar value:
+end
+

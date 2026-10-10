@@ -1,0 +1,10 @@
+==> offenses exit=1 334 <==
+000.rb:1:7: C: Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+001.rb:1:13: C: Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+002.rb:1:7: C: Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+
+==> autocorrect exit=1 334 <==
+000.rb:1:7: C: Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+001.rb:1:13: C: Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+002.rb:1:7: C: Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.
+

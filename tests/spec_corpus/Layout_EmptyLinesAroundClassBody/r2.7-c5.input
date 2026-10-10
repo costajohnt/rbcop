@@ -1,0 +1,180 @@
+==> .rubocop.yml 179 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/EmptyLinesAroundClassBody:
+  EnforcedStyle: empty_lines_special
+
+==> 000.rb 47 <==
+class SomeObject
+
+  def do_something; end
+
+end
+
+==> 001.rb 45 <==
+class SomeObject
+  def do_something; end
+end
+
+==> 002.rb 73 <==
+class Parent
+  class SomeObject
+
+    def do_something
+    end
+
+  end
+end
+
+==> 003.rb 71 <==
+class Parent
+  class SomeObject
+    def do_something
+    end
+  end
+end
+
+==> 004.rb 75 <==
+class Parent
+
+  class SomeObject
+
+    def do_something
+    end
+
+  end
+
+end
+
+==> 005.rb 57 <==
+class SomeObject
+
+  private
+  def do_something; end
+
+end
+
+==> 006.rb 55 <==
+class SomeObject
+  private
+  def do_something; end
+end
+
+==> 007.rb 67 <==
+class SomeObject
+  include Something
+
+  def do_something; end
+
+end
+
+==> 008.rb 65 <==
+class SomeObject
+  include Something
+  def do_something; end
+end
+
+==> 009.rb 67 <==
+class SomeObject
+
+  include Something
+  def do_something; end
+
+end
+
+==> 010.rb 79 <==
+class SomeObject
+
+  include Something
+  # Comment
+  def do_something; end
+
+end
+
+==> 011.rb 95 <==
+class Parent
+  class SomeObject
+    include Something
+
+    def do_something
+    end
+
+  end
+end
+
+==> 012.rb 93 <==
+class Parent
+  class SomeObject
+    include Something
+    def do_something
+    end
+  end
+end
+
+==> 013.rb 98 <==
+class Parent
+
+  class SomeObject
+
+    include Something
+
+    def do_something
+    end
+
+  end
+
+end
+
+==> 014.rb 104 <==
+class Parent
+  class SomeObject
+    URL = %q(http://example.com)
+    def do_something
+    end
+  end
+end
+
+==> 015.rb 87 <==
+class Parent
+
+  class Mom
+
+    def do_something
+    end
+
+  end
+  class Dad
+
+  end
+
+end
+
+==> 016.rb 114 <==
+class Parent
+  class SomeObject
+    URL = %q(http://example.com)
+    WSDL = %q(http://example.com/wsdl)
+  end
+end
+
+==> 017.rb 99 <==
+class Parent
+  URL = %q(http://example.com)
+  class SomeObject
+    def do_something; end
+  end
+end
+
+==> 018.rb 22 <==
+class SomeObject
+
+end
+
+==> 019.rb 21 <==
+class SomeObject
+end
+

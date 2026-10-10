@@ -1,0 +1,101 @@
+==> offenses exit=1 1132 <==
+000.rb:3:3: C: [Correctable] Style/RedundantAssignment: Redundant assignment before returning detected.
+001.rb:4:5: C: [Correctable] Style/RedundantAssignment: Redundant assignment before returning detected.
+002.rb:3:3: C: [Correctable] Style/RedundantAssignment: Redundant assignment before returning detected.
+002.rb:7:3: C: [Correctable] Style/RedundantAssignment: Redundant assignment before returning detected.
+004.rb:4:5: C: [Correctable] Style/RedundantAssignment: Redundant assignment before returning detected.
+004.rb:9:5: C: [Correctable] Style/RedundantAssignment: Redundant assignment before returning detected.
+005.rb:5:5: C: [Correctable] Style/RedundantAssignment: Redundant assignment before returning detected.
+005.rb:11:5: C: [Correctable] Style/RedundantAssignment: Redundant assignment before returning detected.
+007.rb:5:5: C: [Correctable] Style/RedundantAssignment: Redundant assignment before returning detected.
+007.rb:11:5: C: [Correctable] Style/RedundantAssignment: Redundant assignment before returning detected.
+011.rb:3:3: C: Style/RedundantAssignment: Redundant assignment before returning detected.
+
+==> autocorrect exit=1 1112 <==
+000.rb:3:3: C: [Corrected] Style/RedundantAssignment: Redundant assignment before returning detected.
+001.rb:4:5: C: [Corrected] Style/RedundantAssignment: Redundant assignment before returning detected.
+002.rb:3:3: C: [Corrected] Style/RedundantAssignment: Redundant assignment before returning detected.
+002.rb:7:3: C: [Corrected] Style/RedundantAssignment: Redundant assignment before returning detected.
+004.rb:4:5: C: [Corrected] Style/RedundantAssignment: Redundant assignment before returning detected.
+004.rb:9:5: C: [Corrected] Style/RedundantAssignment: Redundant assignment before returning detected.
+005.rb:5:5: C: [Corrected] Style/RedundantAssignment: Redundant assignment before returning detected.
+005.rb:11:5: C: [Corrected] Style/RedundantAssignment: Redundant assignment before returning detected.
+007.rb:5:5: C: [Corrected] Style/RedundantAssignment: Redundant assignment before returning detected.
+007.rb:11:5: C: [Corrected] Style/RedundantAssignment: Redundant assignment before returning detected.
+011.rb:3:3: C: Style/RedundantAssignment: Redundant assignment before returning detected.
+
+==> corrected/000.rb 56 <==
+def func
+  some_preceding_statements
+  something
+  
+end
+
+==> corrected/001.rb 74 <==
+def func
+  some_preceding_statements
+  begin
+    something
+    
+  end
+end
+
+==> corrected/002.rb 84 <==
+def func
+  1
+  2
+  
+rescue SomeException
+  3
+  4
+  
+rescue AnotherException
+  5
+end
+
+==> corrected/004.rb 99 <==
+def func
+  some_preceding_statements
+  if x
+    1
+    
+  elsif y
+    2
+  else
+    3
+    
+  end
+end
+
+==> corrected/005.rb 118 <==
+def func
+  some_preceding_statements
+  case x
+  when y
+    1
+    
+  when z
+    2
+  when q
+  else
+    3
+    
+  end
+end
+
+==> corrected/007.rb 112 <==
+def func
+  some_preceding_statements
+  case x
+  in y
+    1
+    
+  in z
+    2
+  in q
+  else
+    3
+    
+  end
+end
+

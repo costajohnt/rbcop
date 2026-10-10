@@ -1,0 +1,41 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.4
+
+==> 000.rb 21 <==
+x.unpack('h*').first
+
+==> 001.rb 22 <==
+x&.unpack('h*').first
+
+==> 002.rb 23 <==
+x&.unpack('h*')&.first
+
+==> 003.rb 16 <==
+''.unpack(y)[0]
+
+==> 004.rb 19 <==
+''.unpack(y).[](0)
+
+==> 005.rb 22 <==
+''.unpack(y).slice(0)
+
+==> 006.rb 23 <==
+''&.unpack(y).slice(0)
+
+==> 007.rb 24 <==
+''&.unpack(y)&.slice(0)
+
+==> 008.rb 19 <==
+''.unpack(y).at(0)
+
+==> 009.rb 13 <==
+x.unpack1(y)
+
+==> 010.rb 19 <==
+''.unpack('h*')[1]
+

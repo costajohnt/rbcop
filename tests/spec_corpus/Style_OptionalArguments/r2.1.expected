@@ -1,0 +1,6 @@
+==> offenses exit=1 106 <==
+000.rb:1:9: C: Style/OptionalArguments: Optional arguments should appear at the end of the argument list.
+
+==> autocorrect exit=1 106 <==
+000.rb:1:9: C: Style/OptionalArguments: Optional arguments should appear at the end of the argument list.
+

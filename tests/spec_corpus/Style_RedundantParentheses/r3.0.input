@@ -1,0 +1,64 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+
+==> 000.rb 24 <==
+(expression in pattern)
+
+==> 001.rb 24 <==
+(expression => pattern)
+
+==> 002.rb 18 <==
+foo((bar in baz))
+
+==> 003.rb 23 <==
+obj&.foo((bar in baz))
+
+==> 004.rb 29 <==
+(foo in bar) && (baz in qux)
+
+==> 005.rb 29 <==
+(foo in bar) || (baz in qux)
+
+==> 006.rb 19 <==
+foo = (bar in baz)
+
+==> 007.rb 21 <==
+foo ||= (bar in baz)
+
+==> 008.rb 25 <==
+def foo = (bar in 0 | 1)
+
+==> 009.rb 25 <==
+def foo = (bar => 0 | 1)
+
+==> 010.rb 30 <==
+def self.foo = (bar in 0 | 1)
+
+==> 011.rb 30 <==
+def self.foo = (bar => 0 | 1)
+
+==> 012.rb 29 <==
+def foo
+  (bar in 0 | 1)
+end
+
+==> 013.rb 29 <==
+def foo
+  (bar => 0 | 1)
+end
+
+==> 014.rb 34 <==
+def self.foo
+  (bar in 0 | 1)
+end
+
+==> 015.rb 34 <==
+def self.foo
+  (bar => 0 | 1)
+end
+

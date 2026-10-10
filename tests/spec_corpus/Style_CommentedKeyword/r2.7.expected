@@ -1,0 +1,223 @@
+==> offenses exit=1 4065 <==
+000.rb:3:5: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `end` keyword.
+001.rb:1:7: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `begin` keyword.
+002.rb:1:9: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+003.rb:1:10: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `module` keyword.
+004.rb:1:7: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `def` keyword.
+005.rb:2:11: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+006.rb:1:13: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `def` keyword.
+007.rb:1:12: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `def` keyword.
+029.rb:1:9: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+029.rb:3:13: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+029.rb:5:13: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+029.rb:7:13: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+029.rb:9:13: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+029.rb:11:16: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+029.rb:13:19: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+029.rb:15:16: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+029.rb:17:19: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+031.rb:1:9: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+031.rb:3:10: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `module` keyword.
+031.rb:5:7: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `begin` keyword.
+042.rb:1:7: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `def` keyword.
+042.rb:4:7: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `def` keyword.
+042.rb:7:7: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `def` keyword.
+043.rb:2:5: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `end` keyword.
+043.rb:5:5: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `end` keyword.
+043.rb:8:5: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `end` keyword.
+044.rb:1:7: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `begin` keyword.
+044.rb:4:7: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `begin` keyword.
+044.rb:7:7: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `begin` keyword.
+045.rb:1:9: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+045.rb:4:9: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+045.rb:7:9: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+046.rb:1:10: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `module` keyword.
+046.rb:4:10: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `module` keyword.
+046.rb:7:10: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `module` keyword.
+
+==> autocorrect exit=0 3995 <==
+000.rb:3:5: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `end` keyword.
+001.rb:1:7: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `begin` keyword.
+002.rb:1:9: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+003.rb:1:10: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `module` keyword.
+004.rb:1:7: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `def` keyword.
+005.rb:2:11: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+006.rb:1:13: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `def` keyword.
+007.rb:1:12: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `def` keyword.
+029.rb:1:9: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+029.rb:3:13: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+029.rb:5:13: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+029.rb:7:13: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+029.rb:9:13: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+029.rb:11:16: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+029.rb:13:19: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+029.rb:15:16: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+029.rb:17:19: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+031.rb:1:9: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+031.rb:3:10: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `module` keyword.
+031.rb:5:7: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `begin` keyword.
+042.rb:1:7: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `def` keyword.
+042.rb:4:7: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `def` keyword.
+042.rb:7:7: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `def` keyword.
+043.rb:2:5: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `end` keyword.
+043.rb:5:5: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `end` keyword.
+043.rb:8:5: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `end` keyword.
+044.rb:1:7: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `begin` keyword.
+044.rb:4:7: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `begin` keyword.
+044.rb:7:7: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `begin` keyword.
+045.rb:1:9: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+045.rb:4:9: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+045.rb:7:9: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `class` keyword.
+046.rb:1:10: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `module` keyword.
+046.rb:4:10: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `module` keyword.
+046.rb:7:10: C: [Corrected] Style/CommentedKeyword: Do not place comments on the same line as the `module` keyword.
+
+==> corrected/000.rb 13 <==
+if x
+  y
+end
+
+==> corrected/001.rb 24 <==
+# comment
+begin
+  y
+end
+
+==> corrected/002.rb 26 <==
+# comment
+class X
+  y
+end
+
+==> corrected/003.rb 27 <==
+# comment
+module X
+  y
+end
+
+==> corrected/004.rb 24 <==
+# comment
+def x
+  y
+end
+
+==> corrected/005.rb 45 <==
+module X
+# comment
+  class Y
+    z
+  end
+end
+
+==> corrected/006.rb 30 <==
+# comment
+def x(a, b)
+  y
+end
+
+==> corrected/007.rb 21 <==
+# comment
+def x; end
+
+==> corrected/029.rb 242 <==
+#[String]
+class X
+end
+#[String
+class X < Y
+end
+#String]
+class X < Y
+end
+# String]
+class X < Y
+end
+#String ]
+class X < Y
+end
+#String]
+class A < B::C
+end
+#String]
+class A < B::C::D
+end
+#String]
+class A::B < C
+end
+#String]
+class A::B::C < D
+end
+
+==> corrected/031.rb 65 <==
+#: String
+class X
+end
+#: String
+module Y
+end
+#: String
+begin
+end
+
+==> corrected/042.rb 91 <==
+# steep
+def x
+end
+
+#steep:ignore
+def x
+end
+
+# steep:ignoreMethodBodyTypeMismatch
+def x
+end
+
+==> corrected/043.rb 32 <==
+def x
+end
+
+def x
+end
+
+def x
+end
+
+==> corrected/044.rb 84 <==
+# steep
+begin
+end
+
+#steep:ignore
+begin
+end
+
+# steep:ignoreUnknownConstant
+begin
+end
+
+==> corrected/045.rb 90 <==
+# steep
+class X
+end
+
+#steep:ignore
+class X
+end
+
+# steep:ignoreUnknownConstant
+class X
+end
+
+==> corrected/046.rb 93 <==
+# steep
+module X
+end
+
+#steep:ignore
+module X
+end
+
+# steep:ignoreUnknownConstant
+module X
+end
+

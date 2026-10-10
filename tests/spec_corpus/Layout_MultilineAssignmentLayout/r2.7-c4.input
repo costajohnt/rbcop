@@ -1,0 +1,17 @@
+==> .rubocop.yml 197 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/MultilineAssignmentLayout:
+  EnforcedStyle: same_line
+  SupportedTypes:
+  - array
+
+==> 000.rb 12 <==
+a, b =
+4,
+5
+

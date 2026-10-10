@@ -1,0 +1,18 @@
+==> offenses exit=1 150 <==
+000.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [69/40]
+001.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [69/40]
+
+==> autocorrect exit=1 268 <==
+000.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [69/40]
+000.rb:2:41: C: Layout/LineLength: Line is too long. [57/40]
+001.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [69/40]
+001.rb:2:41: C: Layout/LineLength: Line is too long. [56/40]
+
+==> corrected/000.rb 71 <==
+foo.select {
+ it + 4444000039123123129993912312312999199291203123123 }
+
+==> corrected/001.rb 71 <==
+foo.select do
+ it + 4444000039123123129993912312312999199291203123 end
+

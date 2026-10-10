@@ -1,0 +1,20 @@
+==> offenses exit=1 200 <==
+000.rb:2:6: C: [Correctable] Layout/BlockEndNewline: Expression at 2, 6 should be on its own line.
+001.rb:2:19: C: [Correctable] Layout/BlockEndNewline: Expression at 2, 19 should be on its own line.
+
+==> autocorrect exit=0 196 <==
+000.rb:2:6: C: [Corrected] Layout/BlockEndNewline: Expression at 2, 6 should be on its own line.
+001.rb:2:19: C: [Corrected] Layout/BlockEndNewline: Expression at 2, 19 should be on its own line.
+
+==> corrected/000.rb 22 <==
+test {
+  it
+}.bar.baz
+
+==> corrected/001.rb 51 <==
+test {
+  it.push(<<~EOS)
+    Heredoc text.
+  EOS
+}
+

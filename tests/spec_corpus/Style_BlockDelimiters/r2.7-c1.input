@@ -1,0 +1,23 @@
+==> .rubocop.yml 313 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/BlockDelimiters:
+  EnforcedStyle: semantic
+  ProceduralMethods:
+  - tap
+  FunctionalMethods:
+  - let
+  AllowedMethods:
+  - lambda
+  AllowedPatterns:
+  - test
+  AllowBracesOnProceduralOneLiners: true
+
+==> 000.rb 19 <==
+each { |x| puts x }
+==> 001.rb 23 <==
+each do |x| puts x; end

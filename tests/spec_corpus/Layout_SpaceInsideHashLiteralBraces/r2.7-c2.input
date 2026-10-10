@@ -1,0 +1,52 @@
+==> .rubocop.yml 168 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: space
+
+==> 000.rb 30 <==
+h = {a: 1, b: 2}
+h = {a => 1}
+
+==> 001.rb 12 <==
+h = { a: 1}
+
+==> 002.rb 13 <==
+h = {a: '{'}
+
+==> 003.rb 31 <==
+case foo
+in {k1: 0, k2: 1}
+end
+
+==> 004.rb 33 <==
+case foo
+in { k1: 0, k2: 1 }
+end
+
+==> 005.rb 22 <==
+foo in {k1: 0, k2: 1}
+
+==> 006.rb 24 <==
+foo in { k1: 0, k2: 1 }
+
+==> 007.rb 34 <==
+h = { a: 1, b: 2 }
+h = { a => 1 }
+
+==> 008.rb 9 <==
+x(a: b.c)
+==> 009.rb 14 <==
+f(get: "#{x}")
+==> 010.rb 21 <==
+Hash[{ x: 1 } => [1]]
+==> 011.rb 12 <==
+{ key: "{" }
+==> 012.rb 12 <==
+{}
+{key: 1}
+

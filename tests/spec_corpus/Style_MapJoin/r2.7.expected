@@ -1,0 +1,75 @@
+==> offenses exit=1 1284 <==
+000.rb:1:7: C: [Correctable] Style/MapJoin: Remove redundant `map(&:to_s)` before `join`.
+001.rb:1:7: C: [Correctable] Style/MapJoin: Remove redundant `map(&:to_s)` before `join`.
+002.rb:1:7: C: [Correctable] Style/MapJoin: Remove redundant `map(&:to_s)` before `join`.
+003.rb:1:8: C: [Correctable] Style/MapJoin: Remove redundant `map(&:to_s)` before `join`.
+004.rb:1:1: C: [Correctable] Style/MapJoin: Remove redundant `map(&:to_s)` before `join`.
+005.rb:1:1: C: [Correctable] Style/MapJoin: Remove redundant `map(&:to_s)` before `join`.
+009.rb:1:7: C: [Correctable] Style/MapJoin: Remove redundant `collect(&:to_s)` before `join`.
+010.rb:1:7: C: [Correctable] Style/MapJoin: Remove redundant `collect(&:to_s)` before `join`.
+011.rb:1:7: C: [Correctable] Style/MapJoin: Remove redundant `collect(&:to_s)` before `join`.
+012.rb:1:8: C: [Correctable] Style/MapJoin: Remove redundant `collect(&:to_s)` before `join`.
+013.rb:1:1: C: [Correctable] Style/MapJoin: Remove redundant `collect(&:to_s)` before `join`.
+014.rb:1:1: C: [Correctable] Style/MapJoin: Remove redundant `collect(&:to_s)` before `join`.
+018.rb:1:7: C: [Correctable] Style/MapJoin: Remove redundant `map(&:to_s)` before `join`.
+019.rb:2:4: C: [Correctable] Style/MapJoin: Remove redundant `map(&:to_s)` before `join`.
+
+==> autocorrect exit=0 1256 <==
+000.rb:1:7: C: [Corrected] Style/MapJoin: Remove redundant `map(&:to_s)` before `join`.
+001.rb:1:7: C: [Corrected] Style/MapJoin: Remove redundant `map(&:to_s)` before `join`.
+002.rb:1:7: C: [Corrected] Style/MapJoin: Remove redundant `map(&:to_s)` before `join`.
+003.rb:1:8: C: [Corrected] Style/MapJoin: Remove redundant `map(&:to_s)` before `join`.
+004.rb:1:1: C: [Corrected] Style/MapJoin: Remove redundant `map(&:to_s)` before `join`.
+005.rb:1:1: C: [Corrected] Style/MapJoin: Remove redundant `map(&:to_s)` before `join`.
+009.rb:1:7: C: [Corrected] Style/MapJoin: Remove redundant `collect(&:to_s)` before `join`.
+010.rb:1:7: C: [Corrected] Style/MapJoin: Remove redundant `collect(&:to_s)` before `join`.
+011.rb:1:7: C: [Corrected] Style/MapJoin: Remove redundant `collect(&:to_s)` before `join`.
+012.rb:1:8: C: [Corrected] Style/MapJoin: Remove redundant `collect(&:to_s)` before `join`.
+013.rb:1:1: C: [Corrected] Style/MapJoin: Remove redundant `collect(&:to_s)` before `join`.
+014.rb:1:1: C: [Corrected] Style/MapJoin: Remove redundant `collect(&:to_s)` before `join`.
+018.rb:1:7: C: [Corrected] Style/MapJoin: Remove redundant `map(&:to_s)` before `join`.
+019.rb:2:4: C: [Corrected] Style/MapJoin: Remove redundant `map(&:to_s)` before `join`.
+
+==> corrected/000.rb 17 <==
+array.join(', ')
+
+==> corrected/001.rb 11 <==
+array.join
+
+==> corrected/002.rb 17 <==
+array.join(', ')
+
+==> corrected/003.rb 18 <==
+array&.join(', ')
+
+==> corrected/004.rb 11 <==
+join(', ')
+
+==> corrected/005.rb 11 <==
+join(', ')
+
+==> corrected/009.rb 17 <==
+array.join(', ')
+
+==> corrected/010.rb 11 <==
+array.join
+
+==> corrected/011.rb 17 <==
+array.join(', ')
+
+==> corrected/012.rb 18 <==
+array&.join(', ')
+
+==> corrected/013.rb 11 <==
+join(', ')
+
+==> corrected/014.rb 11 <==
+join(', ')
+
+==> corrected/018.rb 17 <==
+array.join(', ')
+
+==> corrected/019.rb 20 <==
+array
+  .join(', ')
+

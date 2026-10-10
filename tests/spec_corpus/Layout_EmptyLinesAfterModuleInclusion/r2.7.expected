@@ -1,0 +1,232 @@
+==> offenses exit=1 2640 <==
+000.rb:1:1: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+001.rb:1:1: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+002.rb:1:1: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+003.rb:2:1: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+004.rb:2:1: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+005.rb:2:3: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+006.rb:2:3: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+007.rb:2:3: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+017.rb:1:1: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+018.rb:1:1: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+019.rb:1:1: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+020.rb:2:1: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+021.rb:2:1: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+022.rb:2:3: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+023.rb:2:3: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+024.rb:2:3: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+034.rb:1:1: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+035.rb:1:1: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+036.rb:1:1: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+037.rb:2:1: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+038.rb:2:1: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+039.rb:2:3: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+040.rb:2:3: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+041.rb:2:3: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+
+==> autocorrect exit=0 2592 <==
+000.rb:1:1: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+001.rb:1:1: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+002.rb:1:1: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+003.rb:2:1: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+004.rb:2:1: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+005.rb:2:3: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+006.rb:2:3: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+007.rb:2:3: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+017.rb:1:1: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+018.rb:1:1: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+019.rb:1:1: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+020.rb:2:1: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+021.rb:2:1: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+022.rb:2:3: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+023.rb:2:3: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+024.rb:2:3: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+034.rb:1:1: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+035.rb:1:1: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+036.rb:1:1: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+037.rb:2:1: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+038.rb:2:1: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+039.rb:2:3: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+040.rb:2:3: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+041.rb:2:3: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+
+==> corrected/000.rb 34 <==
+include Foo
+
+def do_something
+end
+
+==> corrected/001.rb 47 <==
+include Foo # my comment
+
+def do_something
+end
+
+==> corrected/002.rb 47 <==
+include Foo
+
+# my comment
+def do_something
+end
+
+==> corrected/003.rb 99 <==
+# rubocop:disable Department/Cop
+include Foo
+# rubocop:enable Department/Cop
+
+def do_something
+end
+
+==> corrected/004.rb 109 <==
+# rubocop:disable Department/Cop
+include Foo
+# rubocop:enable Department/Cop
+
+# comment
+def do_something
+end
+
+==> corrected/005.rb 59 <==
+class Foo
+  include Bar, Baz
+
+  def do_something
+  end
+end
+
+==> corrected/006.rb 54 <==
+class Bar
+  include Foo
+
+  def do_something
+  end
+end
+
+==> corrected/007.rb 57 <==
+Class.new do
+  include Foo
+
+  def do_something
+  end
+end
+
+==> corrected/017.rb 33 <==
+extend Foo
+
+def do_something
+end
+
+==> corrected/018.rb 46 <==
+extend Foo # my comment
+
+def do_something
+end
+
+==> corrected/019.rb 46 <==
+extend Foo
+
+# my comment
+def do_something
+end
+
+==> corrected/020.rb 98 <==
+# rubocop:disable Department/Cop
+extend Foo
+# rubocop:enable Department/Cop
+
+def do_something
+end
+
+==> corrected/021.rb 108 <==
+# rubocop:disable Department/Cop
+extend Foo
+# rubocop:enable Department/Cop
+
+# comment
+def do_something
+end
+
+==> corrected/022.rb 58 <==
+class Foo
+  extend Bar, Baz
+
+  def do_something
+  end
+end
+
+==> corrected/023.rb 53 <==
+class Bar
+  extend Foo
+
+  def do_something
+  end
+end
+
+==> corrected/024.rb 56 <==
+Class.new do
+  extend Foo
+
+  def do_something
+  end
+end
+
+==> corrected/034.rb 34 <==
+prepend Foo
+
+def do_something
+end
+
+==> corrected/035.rb 47 <==
+prepend Foo # my comment
+
+def do_something
+end
+
+==> corrected/036.rb 47 <==
+prepend Foo
+
+# my comment
+def do_something
+end
+
+==> corrected/037.rb 99 <==
+# rubocop:disable Department/Cop
+prepend Foo
+# rubocop:enable Department/Cop
+
+def do_something
+end
+
+==> corrected/038.rb 109 <==
+# rubocop:disable Department/Cop
+prepend Foo
+# rubocop:enable Department/Cop
+
+# comment
+def do_something
+end
+
+==> corrected/039.rb 59 <==
+class Foo
+  prepend Bar, Baz
+
+  def do_something
+  end
+end
+
+==> corrected/040.rb 54 <==
+class Bar
+  prepend Foo
+
+  def do_something
+  end
+end
+
+==> corrected/041.rb 57 <==
+Class.new do
+  prepend Foo
+
+  def do_something
+  end
+end
+

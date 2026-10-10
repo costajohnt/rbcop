@@ -1,0 +1,15 @@
+==> .rubocop.yml 172 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/CollectionMethods:
+  PreferredMethods:
+    reject: filter
+
+==> 000.rb 41 <==
+dest = []
+src.each { |e| dest << e * 2 }
+

@@ -1,0 +1,101 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 37 <==
+do_something(**{foo: bar, baz: qux})
+
+==> 001.rb 41 <==
+do_something(**{foo: bar, **{baz: qux}})
+
+==> 002.rb 38 <==
+do_something(**{foo: bar, **options})
+
+==> 003.rb 52 <==
+do_something(**{foo: bar, baz: qux}.merge(options))
+
+==> 004.rb 53 <==
+do_something(**{foo: bar, baz: qux}.merge!(options))
+
+==> 005.rb 49 <==
+do_something(**{foo: bar, baz: qux}.merge(x: y))
+
+==> 006.rb 45 <==
+do_something(**{foo: bar}.merge({baz: qux}))
+
+==> 007.rb 53 <==
+do_something(**{foo: bar, baz: qux}&.merge(options))
+
+==> 008.rb 88 <==
+do_something(**{ foo: bar }.merge(options))
+do_something(**{ baz: qux }.merge(options))
+
+==> 009.rb 63 <==
+do_something(**{foo: bar, baz: qux}.merge(options1, options2))
+
+==> 010.rb 79 <==
+do_something(**{foo: bar, baz: qux}.merge(options1, options2).merge(options3))
+
+==> 011.rb 81 <==
+do_something(**{foo: bar, baz: qux}.merge(options1, options2)&.merge!(options3))
+
+==> 012.rb 52 <==
+block do
+  do_something(**{foo: bar, baz: qux})
+end
+
+==> 013.rb 33 <==
+do_something(foo: bar, baz: qux)
+
+==> 014.rb 50 <==
+do_something(**options.merge(foo: bar, baz: qux))
+
+==> 015.rb 42 <==
+do_something(**options.merge({foo: bar}))
+
+==> 016.rb 43 <==
+do_something(**options&.merge({foo: bar}))
+
+==> 017.rb 42 <==
+do_something(**(options.merge(foo: bar)))
+
+==> 018.rb 19 <==
+do_something(**{})
+
+==> 019.rb 17 <==
+do_something({})
+
+==> 020.rb 29 <==
+do_something(**{foo => bar})
+
+==> 021.rb 34 <==
+do_something(**{foo: bar}.invert)
+
+==> 022.rb 66 <==
+do_something(**{foo: bar, baz: qux}.merge(options).compact_blank)
+
+==> 023.rb 35 <==
+do_something({foo: bar, baz: qux})
+
+==> 024.rb 18 <==
+do_something(**h)
+
+==> 025.rb 9 <==
+{ a: a }
+
+==> 026.rb 46 <==
+do_something(**x.do_something { [foo: bar] })
+
+==> 027.rb 53 <==
+do_something(**x.do_something { {foo: {bar: baz}} })
+
+==> 028.rb 52 <==
+do_something(**x.do_something { {foo: {bar: _1}} })
+
+==> 029.rb 41 <==
+do_something(**(foo ? {bar: bar} : baz))
+

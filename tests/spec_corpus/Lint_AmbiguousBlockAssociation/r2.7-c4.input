@@ -1,0 +1,21 @@
+==> .rubocop.yml 226 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/AmbiguousBlockAssociation:
+  AllowedPatterns:
+  - !ruby/regexp /change/
+  - !ruby/regexp /receive\(.*?\)\.twice/
+
+==> 000.rb 55 <==
+expect { order.expire }.to not_change { order.events }
+
+==> 001.rb 65 <==
+expect(order).to receive(:complete).twice { OrderCount.update! }
+
+==> 002.rb 51 <==
+expect { order.expire }.to update { order.events }
+

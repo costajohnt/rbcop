@@ -1,0 +1,77 @@
+==> offenses exit=1 4325 <==
+006.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. Cop names must be separated by commas. Comment in the directive must start with `--`.
+007.rb:1:1: W: [Correctable] Lint/CopDirectiveSyntax: Malformed directive comment detected. Only the first directive on a line takes effect. List the cop names in a single directive instead.
+008.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. The cop name is missing.
+009.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. The mode name must be one of `enable`, `disable`, `disable-next`, `enable-next`, `todo`, `todo-next`, `next`, `push`, or `pop`.
+010.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. The mode name is missing.
+017.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. Cop names must be separated by commas. Comment in the directive must start with `--`.
+020.rb:1:5: W: Lint/CopDirectiveSyntax: A `-next` directive must be on its own line, above the statement it applies to.
+021.rb:1:1: W: Lint/CopDirectiveSyntax: Unknown cop name `Layout/LineLenght` (did you mean `Layout/LineLength`?).
+023.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. `push` and `next` arguments must be `+`- or `-`-prefixed cop names, and `pop` takes no arguments.
+024.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. The cop name is missing.
+025.rb:1:5: W: Lint/CopDirectiveSyntax: A `-next` directive must be on its own line, above the statement it applies to.
+026.rb:1:1: W: Lint/CopDirectiveSyntax: Unknown cop name `Layout/LineLenght` (did you mean `Layout/LineLength`?).
+028.rb:1:5: W: Lint/CopDirectiveSyntax: A `-next` directive must be on its own line, above the statement it applies to.
+029.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. The cop name is missing.
+030.rb:1:1: W: Lint/CopDirectiveSyntax: Unknown cop name `Layout/LineLenght` (did you mean `Layout/LineLength`?).
+031.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. `push` and `next` arguments must be `+`- or `-`-prefixed cop names, and `pop` takes no arguments.
+032.rb:1:1: W: Lint/CopDirectiveSyntax: Unknown cop name `Layout/LineLenght` (did you mean `Layout/LineLength`?).
+033.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. `push` and `next` arguments must be `+`- or `-`-prefixed cop names, and `pop` takes no arguments.
+035.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. The directive keyword must be `rubocop`, not `rucocop`.
+036.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. The directive keyword must be `rubocop`, not `RuboCop`.
+037.rb:1:7: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. The directive keyword must be `rubocop`, not `robocop`.
+040.rb:1:1: W: Lint/CopDirectiveSyntax: Unknown cop name `Layout/LineLenght` (did you mean `Layout/LineLength`?).
+041.rb:1:1: W: Lint/CopDirectiveSyntax: Unknown cop name `Style/Encodingg` (did you mean `Style/Encoding`?).
+042.rb:1:1: W: Lint/CopDirectiveSyntax: Unknown cop name `Layout/LineLenght` (did you mean `Layout/LineLength`?).
+044.rb:1:7: W: [Correctable] Lint/CopDirectiveSyntax: Malformed directive comment detected. Only the first directive on a line takes effect. List the cop names in a single directive instead.
+045.rb:1:1: W: [Correctable] Lint/CopDirectiveSyntax: Malformed directive comment detected. Only the first directive on a line takes effect. List the cop names in a single directive instead.
+046.rb:1:7: W: [Correctable] Lint/CopDirectiveSyntax: Malformed directive comment detected. Only the first directive on a line takes effect. List the cop names in a single directive instead.
+047.rb:1:7: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. Only the first directive on a line takes effect. List the cop names in a single directive instead.
+048.rb:1:7: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. Only the first directive on a line takes effect. List the cop names in a single directive instead.
+049.rb:1:7: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. Only the first directive on a line takes effect. List the cop names in a single directive instead.
+
+==> autocorrect exit=1 4317 <==
+006.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. Cop names must be separated by commas. Comment in the directive must start with `--`.
+007.rb:1:1: W: [Corrected] Lint/CopDirectiveSyntax: Malformed directive comment detected. Only the first directive on a line takes effect. List the cop names in a single directive instead.
+008.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. The cop name is missing.
+009.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. The mode name must be one of `enable`, `disable`, `disable-next`, `enable-next`, `todo`, `todo-next`, `next`, `push`, or `pop`.
+010.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. The mode name is missing.
+017.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. Cop names must be separated by commas. Comment in the directive must start with `--`.
+020.rb:1:5: W: Lint/CopDirectiveSyntax: A `-next` directive must be on its own line, above the statement it applies to.
+021.rb:1:1: W: Lint/CopDirectiveSyntax: Unknown cop name `Layout/LineLenght` (did you mean `Layout/LineLength`?).
+023.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. `push` and `next` arguments must be `+`- or `-`-prefixed cop names, and `pop` takes no arguments.
+024.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. The cop name is missing.
+025.rb:1:5: W: Lint/CopDirectiveSyntax: A `-next` directive must be on its own line, above the statement it applies to.
+026.rb:1:1: W: Lint/CopDirectiveSyntax: Unknown cop name `Layout/LineLenght` (did you mean `Layout/LineLength`?).
+028.rb:1:5: W: Lint/CopDirectiveSyntax: A `-next` directive must be on its own line, above the statement it applies to.
+029.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. The cop name is missing.
+030.rb:1:1: W: Lint/CopDirectiveSyntax: Unknown cop name `Layout/LineLenght` (did you mean `Layout/LineLength`?).
+031.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. `push` and `next` arguments must be `+`- or `-`-prefixed cop names, and `pop` takes no arguments.
+032.rb:1:1: W: Lint/CopDirectiveSyntax: Unknown cop name `Layout/LineLenght` (did you mean `Layout/LineLength`?).
+033.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. `push` and `next` arguments must be `+`- or `-`-prefixed cop names, and `pop` takes no arguments.
+035.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. The directive keyword must be `rubocop`, not `rucocop`.
+036.rb:1:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. The directive keyword must be `rubocop`, not `RuboCop`.
+037.rb:1:7: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. The directive keyword must be `rubocop`, not `robocop`.
+040.rb:1:1: W: Lint/CopDirectiveSyntax: Unknown cop name `Layout/LineLenght` (did you mean `Layout/LineLength`?).
+041.rb:1:1: W: Lint/CopDirectiveSyntax: Unknown cop name `Style/Encodingg` (did you mean `Style/Encoding`?).
+042.rb:1:1: W: Lint/CopDirectiveSyntax: Unknown cop name `Layout/LineLenght` (did you mean `Layout/LineLength`?).
+044.rb:1:7: W: [Corrected] Lint/CopDirectiveSyntax: Malformed directive comment detected. Only the first directive on a line takes effect. List the cop names in a single directive instead.
+045.rb:1:1: W: [Corrected] Lint/CopDirectiveSyntax: Malformed directive comment detected. Only the first directive on a line takes effect. List the cop names in a single directive instead.
+046.rb:1:7: W: [Corrected] Lint/CopDirectiveSyntax: Malformed directive comment detected. Only the first directive on a line takes effect. List the cop names in a single directive instead.
+047.rb:1:7: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. Only the first directive on a line takes effect. List the cop names in a single directive instead.
+048.rb:1:7: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. Only the first directive on a line takes effect. List the cop names in a single directive instead.
+049.rb:1:7: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. Only the first directive on a line takes effect. List the cop names in a single directive instead.
+
+==> corrected/007.rb 52 <==
+# rubocop:disable Layout/LineLength, Style/Encoding
+
+==> corrected/044.rb 51 <==
+x = 1 # rubocop:disable Style/For, Metrics/AbcSize
+
+==> corrected/045.rb 56 <==
+# rubocop:disable-next Style/For, Metrics/AbcSize
+x = 1
+
+==> corrected/046.rb 48 <==
+x = 1 # rubocop:todo Style/For, Metrics/AbcSize
+

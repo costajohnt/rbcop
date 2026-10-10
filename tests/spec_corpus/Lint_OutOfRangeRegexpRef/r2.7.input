@@ -1,0 +1,564 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 8 <==
+puts $3
+
+==> 001.rb 45 <==
+/(?<foo>FOO)(?<bar>BAR)/ =~ "FOOBAR"
+puts $3
+
+==> 002.rb 33 <==
+/(foo)(bar)/ =~ "foobar"
+puts $3
+
+==> 003.rb 39 <==
+/(?<foo>FOO)(BAR)/ =~ "FOOBAR"
+puts $2
+
+==> 004.rb 23 <==
+/bar/ =~ 'foo'
+puts $1
+
+==> 005.rb 53 <==
+/(?<foo>FOO)(?<bar>BAR)/ =~ "FOOBAR"
+puts $1
+puts $2
+
+==> 006.rb 41 <==
+/(foo)(bar)/ =~ "foobar"
+puts $1
+puts $2
+
+==> 007.rb 39 <==
+/(?<foo>FOO)(BAR)/ =~ "FOOBAR"
+puts $1
+
+==> 008.rb 42 <==
+/(foo)(bar)/u =~ "foobar"
+puts $1
+puts $2
+
+==> 009.rb 56 <==
+var = '(\d+)'
+/(?<foo>#{var}*)/ =~ "12"
+puts $1
+puts $2
+
+==> 010.rb 33 <==
+"foobar" =~ /(foo)(bar)/
+puts $3
+
+==> 011.rb 34 <==
+/(foo)(bar)/ === "foobar"
+puts $3
+
+==> 012.rb 37 <==
+/(foo)(bar)/.match("foobar")
+puts $3
+
+==> 013.rb 75 <==
+/(foo)(bar)/.match("foobar")
+/(foo)(bar)(baz)/.match?("foobarbaz")
+puts $3
+
+==> 014.rb 10 <==
+foo.match
+
+==> 015.rb 11 <==
+match(bar)
+
+==> 016.rb 87 <==
+foo_bar_regexp = /(foo)(bar)/
+foo_regexp = /(foo)/
+
+foo_bar_regexp =~ 'foobar'
+puts $2
+
+==> 017.rb 32 <==
+foo[:bar].match?(/(baz)/) && $1
+
+==> 018.rb 33 <==
+/(foo)/ =~ bar
+baz[:qux]
+puts $2
+
+==> 019.rb 30 <==
+/(foo)/ =~ bar
+baz[0]
+puts $2
+
+==> 020.rb 32 <==
+/(foo)/ =~ bar
+baz[qux]
+puts $2
+
+==> 021.rb 34 <==
+/(foo)/ =~ bar
+baz['qux']
+puts $2
+
+==> 022.rb 41 <==
+case "foobar"
+when /(foo)(bar)/
+  $2
+end
+
+==> 023.rb 41 <==
+case "foobar"
+when /(foo)(bar)/
+  $3
+end
+
+==> 024.rb 56 <==
+case "foobarbaz"
+when /(foo)(bar)/, /(bar)baz/
+  $2
+end
+
+==> 025.rb 56 <==
+case "foobarbaz"
+when /(foo)(bar)/, /(bar)baz/
+  $3
+end
+
+==> 026.rb 43 <==
+case some_string
+when some_regexp
+  $2
+end
+
+==> 027.rb 54 <==
+case "foobarbaz"
+when /(foo)(bar)/, /#{var}/
+  $3
+end
+
+==> 028.rb 39 <==
+case "foobar"
+in /(foo)(bar)/
+  $2
+end
+
+==> 029.rb 39 <==
+case "foobar"
+in /(foo)(bar)/
+  $3
+end
+
+==> 030.rb 50 <==
+case array
+in [/(foo)(bar)/, /(bar)baz/]
+  $2
+end
+
+==> 031.rb 50 <==
+case array
+in [/(foo)(bar)/, /(bar)baz/]
+  $3
+end
+
+==> 032.rb 38 <==
+case hash
+in a: /(foo)(bar)/
+  $2
+end
+
+==> 033.rb 53 <==
+case hash
+in a: /(foo)(bar)/, b: /(bar)baz/
+  $3
+end
+
+==> 034.rb 48 <==
+a = 1
+case array
+in [^a, /(foo)(bar)/]
+  $2
+end
+
+==> 035.rb 60 <==
+a = 1
+case array
+in [^a, /(foo)(bar)/, /(foo)bar/]
+  $3
+end
+
+==> 036.rb 44 <==
+case "foobar"
+in /(foo)(bar)/ => x
+  $2
+end
+
+==> 037.rb 44 <==
+case "foobar"
+in /(foo)(bar)/ => x
+  $3
+end
+
+==> 038.rb 55 <==
+case array
+in [/(foo)(bar)/, /(bar)baz/] => x
+  $2
+end
+
+==> 039.rb 55 <==
+case array
+in [/(foo)(bar)/, /(bar)baz/] => x
+  $3
+end
+
+==> 040.rb 47 <==
+case "foobar"
+in /(foo)(bar)/ | "foo"
+  $2
+end
+
+==> 041.rb 52 <==
+case "foobar"
+in /(foo)(bar)/ | "foo" => x
+  $2
+end
+
+==> 042.rb 47 <==
+case "foobar"
+in /(foo)(bar)/ | "foo"
+  $3
+end
+
+==> 043.rb 52 <==
+case "foobar"
+in /(foo)baz/ | /(foo)(bar)/
+  $2
+end
+
+==> 044.rb 52 <==
+case "foobar"
+in /(foo)baz/ | /(foo)(bar)/
+  $3
+end
+
+==> 045.rb 41 <==
+case some_string
+in some_regexp
+  $2
+end
+
+==> 046.rb 48 <==
+case array
+in [/(foo)(bar)/, /#{var}/]
+  $3
+end
+
+==> 047.rb 36 <==
+%w[foo foobar].grep(/(foo)/) { $1 }
+
+==> 048.rb 36 <==
+%w[foo foobar].grep(/(foo)/) { $2 }
+
+==> 049.rb 40 <==
+%w[foo foobar].grep(some_regexp) { $2 }
+
+==> 050.rb 31 <==
+"foobar"[/(foo)(bar)/]
+puts $2
+
+==> 051.rb 31 <==
+"foobar"[/(foo)(bar)/]
+puts $3
+
+==> 052.rb 30 <==
+"foobar"[some_regexp]
+puts $3
+
+==> 053.rb 53 <==
+if "foo bar".gsub(/ +/, "") =~ /foo(bar)/
+  p $1
+end
+
+==> 054.rb 53 <==
+if "foo bar".gsub(/( +)/, "") =~ /foobar/
+  p $1
+end
+
+==> 055.rb 58 <==
+if "some : line " =~ / : (.+)/
+  $1.gsub(/ {2}/, " ")
+end
+
+==> 056.rb 58 <==
+if "some : line " =~ / : (.+)/
+  $2.gsub(/ {2}/, " ")
+end
+
+==> 057.rb 57 <==
+"some : line " =~ / : (.+)/
+$1.gsub(/ {2}/, " ")
+puts $1
+
+==> 058.rb 35 <==
+"foobar".gsub(/(foo)(bar)/) { $2 }
+
+==> 059.rb 35 <==
+"foobar".gsub(/(foo)(bar)/) { $3 }
+
+==> 060.rb 37 <==
+some_string.gsub(some_regexp) { $3 }
+
+==> 061.rb 36 <==
+"foobar".gsub!(/(foo)(bar)/) { $2 }
+
+==> 062.rb 36 <==
+"foobar".gsub!(/(foo)(bar)/) { $3 }
+
+==> 063.rb 38 <==
+some_string.gsub!(some_regexp) { $3 }
+
+==> 064.rb 34 <==
+"foobar".sub(/(foo)(bar)/) { $2 }
+
+==> 065.rb 34 <==
+"foobar".sub(/(foo)(bar)/) { $3 }
+
+==> 066.rb 36 <==
+some_string.sub(some_regexp) { $3 }
+
+==> 067.rb 35 <==
+"foobar".sub!(/(foo)(bar)/) { $2 }
+
+==> 068.rb 35 <==
+"foobar".sub!(/(foo)(bar)/) { $3 }
+
+==> 069.rb 37 <==
+some_string.sub!(some_regexp) { $3 }
+
+==> 070.rb 35 <==
+"foobar".scan(/(foo)(bar)/) { $2 }
+
+==> 071.rb 35 <==
+"foobar".scan(/(foo)(bar)/) { $3 }
+
+==> 072.rb 37 <==
+some_string.scan(some_regexp) { $3 }
+
+==> 073.rb 37 <==
+"foobar".match(/(foo)(bar)/)
+puts $2
+
+==> 074.rb 37 <==
+"foobar".match(/(foo)(bar)/)
+puts $3
+
+==> 075.rb 36 <==
+"foobar".match(some_regexp)
+puts $3
+
+==> 076.rb 38 <==
+"foobar"&.match(/(foo)(bar)/)
+puts $2
+
+==> 077.rb 38 <==
+"foobar"&.match(/(foo)(bar)/)
+puts $3
+
+==> 078.rb 37 <==
+"foobar"&.match(some_regexp)
+puts $3
+
+==> 079.rb 37 <==
+"foobar".slice(/(foo)(bar)/)
+puts $2
+
+==> 080.rb 37 <==
+"foobar".slice(/(foo)(bar)/)
+puts $3
+
+==> 081.rb 36 <==
+"foobar".slice(some_regexp)
+puts $3
+
+==> 082.rb 38 <==
+"foobar"&.slice(/(foo)(bar)/)
+puts $2
+
+==> 083.rb 38 <==
+"foobar"&.slice(/(foo)(bar)/)
+puts $3
+
+==> 084.rb 37 <==
+"foobar"&.slice(some_regexp)
+puts $3
+
+==> 085.rb 38 <==
+"foobar".slice!(/(foo)(bar)/)
+puts $2
+
+==> 086.rb 38 <==
+"foobar".slice!(/(foo)(bar)/)
+puts $3
+
+==> 087.rb 37 <==
+"foobar".slice!(some_regexp)
+puts $3
+
+==> 088.rb 39 <==
+"foobar"&.slice!(/(foo)(bar)/)
+puts $2
+
+==> 089.rb 39 <==
+"foobar"&.slice!(/(foo)(bar)/)
+puts $3
+
+==> 090.rb 38 <==
+"foobar"&.slice!(some_regexp)
+puts $3
+
+==> 091.rb 37 <==
+"foobar".index(/(foo)(bar)/)
+puts $2
+
+==> 092.rb 37 <==
+"foobar".index(/(foo)(bar)/)
+puts $3
+
+==> 093.rb 36 <==
+"foobar".index(some_regexp)
+puts $3
+
+==> 094.rb 38 <==
+"foobar"&.index(/(foo)(bar)/)
+puts $2
+
+==> 095.rb 38 <==
+"foobar"&.index(/(foo)(bar)/)
+puts $3
+
+==> 096.rb 37 <==
+"foobar"&.index(some_regexp)
+puts $3
+
+==> 097.rb 38 <==
+"foobar".rindex(/(foo)(bar)/)
+puts $2
+
+==> 098.rb 38 <==
+"foobar".rindex(/(foo)(bar)/)
+puts $3
+
+==> 099.rb 37 <==
+"foobar".rindex(some_regexp)
+puts $3
+
+==> 100.rb 39 <==
+"foobar"&.rindex(/(foo)(bar)/)
+puts $2
+
+==> 101.rb 39 <==
+"foobar"&.rindex(/(foo)(bar)/)
+puts $3
+
+==> 102.rb 38 <==
+"foobar"&.rindex(some_regexp)
+puts $3
+
+==> 103.rb 41 <==
+"foobar".partition(/(foo)(bar)/)
+puts $2
+
+==> 104.rb 41 <==
+"foobar".partition(/(foo)(bar)/)
+puts $3
+
+==> 105.rb 40 <==
+"foobar".partition(some_regexp)
+puts $3
+
+==> 106.rb 42 <==
+"foobar"&.partition(/(foo)(bar)/)
+puts $2
+
+==> 107.rb 42 <==
+"foobar"&.partition(/(foo)(bar)/)
+puts $3
+
+==> 108.rb 41 <==
+"foobar"&.partition(some_regexp)
+puts $3
+
+==> 109.rb 42 <==
+"foobar".rpartition(/(foo)(bar)/)
+puts $2
+
+==> 110.rb 42 <==
+"foobar".rpartition(/(foo)(bar)/)
+puts $3
+
+==> 111.rb 41 <==
+"foobar".rpartition(some_regexp)
+puts $3
+
+==> 112.rb 43 <==
+"foobar"&.rpartition(/(foo)(bar)/)
+puts $2
+
+==> 113.rb 43 <==
+"foobar"&.rpartition(/(foo)(bar)/)
+puts $3
+
+==> 114.rb 42 <==
+"foobar"&.rpartition(some_regexp)
+puts $3
+
+==> 115.rb 43 <==
+"foobar".start_with?(/(foo)(bar)/)
+puts $2
+
+==> 116.rb 43 <==
+"foobar".start_with?(/(foo)(bar)/)
+puts $3
+
+==> 117.rb 42 <==
+"foobar".start_with?(some_regexp)
+puts $3
+
+==> 118.rb 44 <==
+"foobar"&.start_with?(/(foo)(bar)/)
+puts $2
+
+==> 119.rb 44 <==
+"foobar"&.start_with?(/(foo)(bar)/)
+puts $3
+
+==> 120.rb 43 <==
+"foobar"&.start_with?(some_regexp)
+puts $3
+
+==> 121.rb 41 <==
+"foobar".end_with?(/(foo)(bar)/)
+puts $2
+
+==> 122.rb 41 <==
+"foobar".end_with?(/(foo)(bar)/)
+puts $3
+
+==> 123.rb 40 <==
+"foobar".end_with?(some_regexp)
+puts $3
+
+==> 124.rb 42 <==
+"foobar"&.end_with?(/(foo)(bar)/)
+puts $2
+
+==> 125.rb 42 <==
+"foobar"&.end_with?(/(foo)(bar)/)
+puts $3
+
+==> 126.rb 41 <==
+"foobar"&.end_with?(some_regexp)
+puts $3
+

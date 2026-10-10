@@ -1,0 +1,90 @@
+==> .rubocop.yml 172 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/BlockAlignment:
+  EnforcedStyleAlignWith: start_of_block
+
+==> 000.rb 33 <==
+foo.bar
+  .each do
+    baz
+  end
+
+==> 001.rb 31 <==
+foo.bar
+  .each do
+    baz
+end
+
+==> 002.rb 88 <==
+out
+  .brackets(lft: foo,
+            rgt: foo) do
+    process(scheme.constraint)
+  end
+
+==> 003.rb 98 <==
+out
+  .brackets(lft: foo,
+            rgt: foo) do
+    process(scheme.constraint)
+            end
+
+==> 004.rb 43 <==
+x = super(foo,
+          bar) do
+  baz
+end
+
+==> 005.rb 30 <==
+x = ->(a,
+       b) {
+  baz
+}
+
+==> 006.rb 57 <==
+foo bar,
+  baz,
+  key: value do |x|
+    process(x)
+  end
+
+==> 007.rb 61 <==
+foo bar,
+  baz,
+  key: value do |x|
+    process(x)
+      end
+
+==> 008.rb 35 <==
+def foo
+  bar do
+    baz
+  end
+end
+
+==> 009.rb 33 <==
+def foo
+  bar do
+    baz
+end
+end
+
+==> 010.rb 40 <==
+def self.foo
+  bar do
+    baz
+  end
+end
+
+==> 011.rb 38 <==
+def self.foo
+  bar do
+    baz
+end
+end
+

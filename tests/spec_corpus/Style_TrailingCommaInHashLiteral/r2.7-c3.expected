@@ -1,0 +1,32 @@
+==> offenses exit=1 500 <==
+000.rb:1:34: C: [Correctable] Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash, unless items are split onto multiple lines.
+004.rb:4:12: C: [Correctable] Style/TrailingCommaInHashLiteral: Put a comma after the last item of a multiline hash.
+005.rb:3:9: C: [Correctable] Style/TrailingCommaInHashLiteral: Put a comma after the last item of a multiline hash.
+007.rb:3:9: C: [Correctable] Style/TrailingCommaInHashLiteral: Put a comma after the last item of a multiline hash.
+
+==> autocorrect exit=0 492 <==
+000.rb:1:34: C: [Corrected] Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash, unless items are split onto multiple lines.
+004.rb:4:12: C: [Corrected] Style/TrailingCommaInHashLiteral: Put a comma after the last item of a multiline hash.
+005.rb:3:9: C: [Corrected] Style/TrailingCommaInHashLiteral: Put a comma after the last item of a multiline hash.
+007.rb:3:9: C: [Corrected] Style/TrailingCommaInHashLiteral: Put a comma after the last item of a multiline hash.
+
+==> corrected/000.rb 36 <==
+MAP = { a: 1001, b: 2020, c: 3333 }
+
+==> corrected/004.rb 69 <==
+VALUES = {
+           a: "b",
+           b: "c",
+           d: "e",}
+
+==> corrected/005.rb 53 <==
+MAP = { a: 1001,
+        b: 2020,
+        c: 3333,
+}
+
+==> corrected/007.rb 53 <==
+MAP = { a: 1001,
+        b: 2020,
+        c: 3333, }
+

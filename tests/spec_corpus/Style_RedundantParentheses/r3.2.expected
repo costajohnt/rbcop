@@ -1,0 +1,14 @@
+==> offenses exit=1 194 <==
+002.rb:1:6: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+004.rb:1:7: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+
+==> autocorrect exit=0 190 <==
+002.rb:1:6: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+004.rb:1:7: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+
+==> corrected/002.rb 8 <==
+next 42
+
+==> corrected/004.rb 9 <==
+break 42
+

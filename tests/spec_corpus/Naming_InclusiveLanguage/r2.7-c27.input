@@ -1,0 +1,13 @@
+==> .rubocop.yml 165 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/InclusiveLanguage:
+  FlaggedTerms:
+    master: {}
+
+==> 000/config.yml 0 <==
+

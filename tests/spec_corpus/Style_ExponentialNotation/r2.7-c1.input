@@ -1,0 +1,37 @@
+==> .rubocop.yml 164 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/ExponentialNotation:
+  EnforcedStyle: engineering
+
+==> 000.rb 5 <==
+10e4
+
+==> 001.rb 8 <==
+12.3e-2
+
+==> 002.rb 7 <==
+0.09e9
+
+==> 003.rb 8 <==
+-0.09e3
+
+==> 004.rb 11 <==
+-1012.34e6
+
+==> 005.rb 3 <==
+1e6
+==> 006.rb 6 <==
+120.03
+==> 007.rb 7 <==
+0.07390
+==> 008.rb 10 <==
+3.1415e-12
+==> 009.rb 8 <==
+-999.9e3
+==> 010.rb 12 <==
+968.64982e12

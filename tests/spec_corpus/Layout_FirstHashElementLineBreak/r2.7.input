@@ -1,0 +1,39 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 25 <==
+a = { a: 1,
+      b: 2 }
+
+==> 001.rb 36 <==
+method({ foo: 1,
+         bar: 2 })
+
+==> 002.rb 23 <==
+{ foo: {
+  bar: 2,
+} }
+
+==> 003.rb 28 <==
+method(
+  foo: 1,
+  bar: 2)
+
+==> 004.rb 23 <==
+method foo: 1,
+ bar: 2
+
+==> 005.rb 25 <==
+method(foo: 1,
+  bar: 2)
+
+==> 006.rb 23 <==
+b = {
+  a: 1,
+  b: 2 }
+

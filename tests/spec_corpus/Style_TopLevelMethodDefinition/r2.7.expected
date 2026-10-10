@@ -1,0 +1,18 @@
+==> offenses exit=1 609 <==
+000.rb:1:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+001.rb:1:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+002.rb:1:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+003.rb:1:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+004.rb:1:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+005.rb:1:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+006.rb:4:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+
+==> autocorrect exit=1 609 <==
+000.rb:1:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+001.rb:1:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+002.rb:1:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+003.rb:1:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+004.rb:1:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+005.rb:1:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+006.rb:4:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+

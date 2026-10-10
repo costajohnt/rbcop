@@ -1,0 +1,48 @@
+==> offenses exit=1 1410 <==
+000.rb:1:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+000.rb:2:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+000.rb:3:4: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+000.rb:4:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+000.rb:5:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+001.rb:1:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+020.rb:2:1: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+023.rb:1:1: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+024.rb:1:1: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+025.rb:1:1: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+
+==> autocorrect exit=0 1390 <==
+000.rb:1:5: C: [Corrected] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+000.rb:2:5: C: [Corrected] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+000.rb:3:4: C: [Corrected] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+000.rb:4:5: C: [Corrected] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+000.rb:5:5: C: [Corrected] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+001.rb:1:5: C: [Corrected] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+020.rb:2:1: C: [Corrected] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+023.rb:1:1: C: [Corrected] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+024.rb:1:1: C: [Corrected] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+025.rb:1:1: C: [Corrected] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+
+==> corrected/000.rb 57 <==
+s = 'abc'
+x = 'a\\b'
+y ='\\b'
+z = 'a\\'
+t = '{"[\"*\"]"'
+
+==> corrected/001.rb 20 <==
+s = 'abc'
+x = 'abc'
+
+==> corrected/020.rb 13 <==
+"#{x}" \
+'y'
+
+==> corrected/023.rb 4 <==
+'"'
+
+==> corrected/024.rb 5 <==
+'\\'
+
+==> corrected/025.rb 10 <==
+'España'
+

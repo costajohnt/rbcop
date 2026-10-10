@@ -1,0 +1,100 @@
+==> offenses exit=1 1401 <==
+000.rb:1:1: C: [Correctable] Style/EvenOdd: Replace with `Integer#even?`.
+001.rb:1:1: C: [Correctable] Style/EvenOdd: Replace with `Integer#odd?`.
+002.rb:1:1: C: [Correctable] Style/EvenOdd: Replace with `Integer#even?`.
+003.rb:1:1: C: [Correctable] Style/EvenOdd: Replace with `Integer#odd?`.
+004.rb:1:1: C: [Correctable] Style/EvenOdd: Replace with `Integer#odd?`.
+005.rb:1:1: C: [Correctable] Style/EvenOdd: Replace with `Integer#even?`.
+006.rb:1:1: C: [Correctable] Style/EvenOdd: Replace with `Integer#odd?`.
+007.rb:1:1: C: [Correctable] Style/EvenOdd: Replace with `Integer#even?`.
+008.rb:1:1: C: [Correctable] Style/EvenOdd: Replace with `Integer#even?`.
+009.rb:1:1: C: [Correctable] Style/EvenOdd: Replace with `Integer#even?`.
+010.rb:1:1: C: [Correctable] Style/EvenOdd: Replace with `Integer#even?`.
+011.rb:1:1: C: [Correctable] Style/EvenOdd: Replace with `Integer#even?`.
+012.rb:1:1: C: [Correctable] Style/EvenOdd: Replace with `Integer#even?`.
+016.rb:1:1: C: [Correctable] Style/EvenOdd: Replace with `Integer#even?`.
+017.rb:1:1: C: [Correctable] Style/EvenOdd: Replace with `Integer#even?`.
+018.rb:1:1: C: [Correctable] Style/EvenOdd: Replace with `Integer#even?`.
+019.rb:1:1: C: [Correctable] Style/EvenOdd: Replace with `Integer#even?`.
+020.rb:1:4: C: [Correctable] Style/EvenOdd: Replace with `Integer#even?`.
+020.rb:3:7: C: [Correctable] Style/EvenOdd: Replace with `Integer#odd?`.
+
+==> autocorrect exit=0 1363 <==
+000.rb:1:1: C: [Corrected] Style/EvenOdd: Replace with `Integer#even?`.
+001.rb:1:1: C: [Corrected] Style/EvenOdd: Replace with `Integer#odd?`.
+002.rb:1:1: C: [Corrected] Style/EvenOdd: Replace with `Integer#even?`.
+003.rb:1:1: C: [Corrected] Style/EvenOdd: Replace with `Integer#odd?`.
+004.rb:1:1: C: [Corrected] Style/EvenOdd: Replace with `Integer#odd?`.
+005.rb:1:1: C: [Corrected] Style/EvenOdd: Replace with `Integer#even?`.
+006.rb:1:1: C: [Corrected] Style/EvenOdd: Replace with `Integer#odd?`.
+007.rb:1:1: C: [Corrected] Style/EvenOdd: Replace with `Integer#even?`.
+008.rb:1:1: C: [Corrected] Style/EvenOdd: Replace with `Integer#even?`.
+009.rb:1:1: C: [Corrected] Style/EvenOdd: Replace with `Integer#even?`.
+010.rb:1:1: C: [Corrected] Style/EvenOdd: Replace with `Integer#even?`.
+011.rb:1:1: C: [Corrected] Style/EvenOdd: Replace with `Integer#even?`.
+012.rb:1:1: C: [Corrected] Style/EvenOdd: Replace with `Integer#even?`.
+016.rb:1:1: C: [Corrected] Style/EvenOdd: Replace with `Integer#even?`.
+017.rb:1:1: C: [Corrected] Style/EvenOdd: Replace with `Integer#even?`.
+018.rb:1:1: C: [Corrected] Style/EvenOdd: Replace with `Integer#even?`.
+019.rb:1:1: C: [Corrected] Style/EvenOdd: Replace with `Integer#even?`.
+020.rb:1:4: C: [Corrected] Style/EvenOdd: Replace with `Integer#even?`.
+020.rb:3:7: C: [Corrected] Style/EvenOdd: Replace with `Integer#odd?`.
+
+==> corrected/000.rb 8 <==
+x.even?
+
+==> corrected/001.rb 7 <==
+x.odd?
+
+==> corrected/002.rb 8 <==
+x.even?
+
+==> corrected/003.rb 7 <==
+x.odd?
+
+==> corrected/004.rb 7 <==
+x.odd?
+
+==> corrected/005.rb 8 <==
+x.even?
+
+==> corrected/006.rb 7 <==
+x.odd?
+
+==> corrected/007.rb 8 <==
+y.even?
+
+==> corrected/008.rb 10 <==
+x.y.even?
+
+==> corrected/009.rb 11 <==
+x(y).even?
+
+==> corrected/010.rb 14 <==
+(a * b).even?
+
+==> corrected/011.rb 11 <==
+(-a).even?
+
+==> corrected/012.rb 11 <==
+a[0].even?
+
+==> corrected/016.rb 13 <==
+x._(y).even?
+
+==> corrected/017.rb 15 <==
+(x._(y)).even?
+
+==> corrected/018.rb 13 <==
+x._(y).even?
+
+==> corrected/019.rb 8 <==
+1.even?
+
+==> corrected/020.rb 90 <==
+if y.even?
+  method == :== ? :even : :odd
+elsif x.odd?
+  method == :== ? :odd : :even
+end
+

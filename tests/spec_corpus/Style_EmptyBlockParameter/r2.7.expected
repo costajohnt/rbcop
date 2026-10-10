@@ -1,0 +1,27 @@
+==> offenses exit=1 398 <==
+000.rb:1:6: C: [Correctable] Style/EmptyBlockParameter: Omit pipes for the empty block parameters.
+001.rb:1:5: C: [Correctable] Style/EmptyBlockParameter: Omit pipes for the empty block parameters.
+002.rb:2:11: C: [Correctable] Style/EmptyBlockParameter: Omit pipes for the empty block parameters.
+003.rb:1:10: C: [Correctable] Style/EmptyBlockParameter: Omit pipes for the empty block parameters.
+
+==> autocorrect exit=0 390 <==
+000.rb:1:6: C: [Corrected] Style/EmptyBlockParameter: Omit pipes for the empty block parameters.
+001.rb:1:5: C: [Corrected] Style/EmptyBlockParameter: Omit pipes for the empty block parameters.
+002.rb:2:11: C: [Corrected] Style/EmptyBlockParameter: Omit pipes for the empty block parameters.
+003.rb:1:10: C: [Corrected] Style/EmptyBlockParameter: Omit pipes for the empty block parameters.
+
+==> corrected/000.rb 9 <==
+a do
+end
+
+==> corrected/001.rb 19 <==
+a { do_something }
+
+==> corrected/002.rb 37 <==
+def foo
+  super { do_something }
+end
+
+==> corrected/003.rb 24 <==
+lambda { do_something }
+

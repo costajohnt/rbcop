@@ -1,0 +1,94 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 42 <==
+def foo
+  do_something
+rescue
+  raise
+end
+
+==> 001.rb 49 <==
+def foo
+  do_something
+rescue => e
+  raise e
+end
+
+==> 002.rb 45 <==
+def foo
+  do_something
+rescue
+  raise $!
+end
+
+==> 003.rb 54 <==
+def foo
+  do_something
+rescue
+  raise $ERROR_INFO
+end
+
+==> 004.rb 57 <==
+def foo
+  do_something
+rescue
+  do_cleanup
+  raise e
+end
+
+==> 005.rb 49 <==
+def foo
+  do_something
+rescue => e
+  raise x
+end
+
+==> 006.rb 31 <==
+def foo
+rescue => e
+ensure
+end
+
+==> 007.rb 72 <==
+def foo
+  do_something
+rescue => e
+  raise
+ensure
+  do_something(e)
+end
+
+==> 008.rb 72 <==
+def foo
+  do_something
+rescue ArgumentError
+  # noop
+rescue
+  raise
+end
+
+==> 009.rb 72 <==
+def foo
+  do_something
+rescue ArgumentError
+  raise
+rescue
+  # noop
+end
+
+==> 010.rb 57 <==
+def foo
+  do_something
+rescue
+  Thread.current.raise
+end
+
+==> 011.rb 24 <==
+do_something rescue nil
+

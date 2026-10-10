@@ -1,0 +1,46 @@
+==> offenses exit=1 552 <==
+001.rb:3:1: C: [Correctable] Naming/HeredocDelimiterCase: Use lowercase heredoc delimiters.
+002.rb:3:1: C: [Correctable] Naming/HeredocDelimiterCase: Use lowercase heredoc delimiters.
+004.rb:3:1: C: [Correctable] Naming/HeredocDelimiterCase: Use lowercase heredoc delimiters.
+005.rb:3:1: C: [Correctable] Naming/HeredocDelimiterCase: Use lowercase heredoc delimiters.
+007.rb:3:1: C: [Correctable] Naming/HeredocDelimiterCase: Use lowercase heredoc delimiters.
+008.rb:3:1: C: [Correctable] Naming/HeredocDelimiterCase: Use lowercase heredoc delimiters.
+
+==> autocorrect exit=0 540 <==
+001.rb:3:1: C: [Corrected] Naming/HeredocDelimiterCase: Use lowercase heredoc delimiters.
+002.rb:3:1: C: [Corrected] Naming/HeredocDelimiterCase: Use lowercase heredoc delimiters.
+004.rb:3:1: C: [Corrected] Naming/HeredocDelimiterCase: Use lowercase heredoc delimiters.
+005.rb:3:1: C: [Corrected] Naming/HeredocDelimiterCase: Use lowercase heredoc delimiters.
+007.rb:3:1: C: [Corrected] Naming/HeredocDelimiterCase: Use lowercase heredoc delimiters.
+008.rb:3:1: C: [Corrected] Naming/HeredocDelimiterCase: Use lowercase heredoc delimiters.
+
+==> corrected/001.rb 17 <==
+<<-sql
+  foo
+sql
+
+==> corrected/002.rb 17 <==
+<<-sql
+  foo
+sql
+
+==> corrected/004.rb 19 <==
+<<-'sql'
+  foo
+sql
+
+==> corrected/005.rb 19 <==
+<<-'sql'
+  foo
+sql
+
+==> corrected/007.rb 17 <==
+<<~sql
+  foo
+sql
+
+==> corrected/008.rb 17 <==
+<<~sql
+  foo
+sql
+

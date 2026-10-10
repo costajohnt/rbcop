@@ -1,0 +1,56 @@
+==> .rubocop.yml 158 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/MissingCopEnableDirective:
+  MaxRangeSize: 2
+
+==> 000.rb 123 <==
+# rubocop:disable Layout/SpaceAroundOperators
+x =   0
+y = 1
+# Some other code
+# rubocop:enable Layout/SpaceAroundOperators
+
+==> 001.rb 72 <==
+# rubocop:disable Layout/SpaceAroundOperators
+x =   0
+# Some other code
+
+==> 002.rb 123 <==
+# rubocop:disable Layout/SpaceAroundOperators
+x =   0
+y = 1
+# rubocop:enable Layout/SpaceAroundOperators
+# Some other code
+
+==> 003.rb 81 <==
+# rubocop:disable Layout
+x =   0
+y = 1
+# Some other code
+# rubocop:enable Layout
+
+==> 004.rb 51 <==
+# rubocop:disable Layout
+x =   0
+# Some other code
+
+==> 005.rb 81 <==
+# rubocop:disable Layout
+x =   0
+y = 1
+# rubocop:enable Layout
+# Some other code
+
+==> 006.rb 107 <==
+# rubocop:disable-next Layout/SpaceAroundOperators
+x =   0 +
+      1 +
+      2 +
+      3
+# Some other code
+

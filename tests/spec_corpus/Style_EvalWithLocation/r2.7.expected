@@ -1,0 +1,127 @@
+==> offenses exit=1 2690 <==
+000.rb:1:1: C: Style/EvalWithLocation: Pass a binding, `__FILE__`, and `__LINE__` to `eval`.
+001.rb:1:1: C: Style/EvalWithLocation: Pass a binding, `__FILE__`, and `__LINE__` to `eval`.
+002.rb:1:1: C: Style/EvalWithLocation: Pass a binding, `__FILE__`, and `__LINE__` to `eval`.
+004.rb:1:1: C: [Correctable] Style/EvalWithLocation: Pass a binding, `__FILE__`, and `__LINE__` to `eval`.
+005.rb:1:1: C: [Correctable] Style/EvalWithLocation: Pass a binding, `__FILE__`, and `__LINE__` to `eval`.
+006.rb:1:1: C: [Correctable] Style/EvalWithLocation: Pass a binding, `__FILE__`, and `__LINE__` to `eval`.
+007.rb:1:41: C: [Correctable] Style/EvalWithLocation: Incorrect line number for `eval`; use `__LINE__` instead of `__LINE__ + 1`.
+008.rb:1:34: C: [Correctable] Style/EvalWithLocation: Incorrect line number for `eval`; use `__LINE__ + 1` instead of `__LINE__ + 2`.
+009.rb:4:6: C: [Correctable] Style/EvalWithLocation: Incorrect line number for `eval`; use `__LINE__ - 3` instead of `__LINE__`.
+010.rb:1:1: C: [Correctable] Style/EvalWithLocation: Pass `__FILE__` and `__LINE__` to `class_eval`.
+011.rb:1:1: C: [Correctable] Style/EvalWithLocation: Pass `__FILE__` and `__LINE__` to `module_eval`.
+012.rb:1:1: C: [Correctable] Style/EvalWithLocation: Pass `__FILE__` and `__LINE__` to `instance_eval`.
+013.rb:1:1: C: [Correctable] Style/EvalWithLocation: Pass `__FILE__` and `__LINE__` to `instance_eval`.
+014.rb:1:33: C: [Correctable] Style/EvalWithLocation: Incorrect line number for `class_eval`; use `__LINE__ + 1` instead of `__LINE__`.
+019.rb:1:24: C: [Correctable] Style/EvalWithLocation: Incorrect file for `eval`; use `__FILE__` instead of `'foo'`.
+019.rb:1:31: C: [Correctable] Style/EvalWithLocation: Incorrect line number for `eval`; use `__LINE__ + 1` instead of `'bar'`.
+020.rb:1:24: C: [Correctable] Style/EvalWithLocation: Incorrect file for `instance_eval`; use `__FILE__` instead of `'foo'`.
+020.rb:1:31: C: [Correctable] Style/EvalWithLocation: Incorrect line number for `instance_eval`; use `__LINE__ + 1` instead of `'bar'`.
+021.rb:1:21: C: [Correctable] Style/EvalWithLocation: Incorrect file for `class_eval`; use `__FILE__` instead of `'foo'`.
+021.rb:1:28: C: [Correctable] Style/EvalWithLocation: Incorrect line number for `class_eval`; use `__LINE__ + 1` instead of `'bar'`.
+022.rb:1:22: C: [Correctable] Style/EvalWithLocation: Incorrect file for `module_eval`; use `__FILE__` instead of `'foo'`.
+022.rb:1:29: C: [Correctable] Style/EvalWithLocation: Incorrect line number for `module_eval`; use `__LINE__ + 1` instead of `'bar'`.
+023.rb:1:32: C: [Correctable] Style/EvalWithLocation: Incorrect line number for `module_eval`; use `__LINE__ + 1` instead of `'bar'`.
+
+==> autocorrect exit=1 2650 <==
+000.rb:1:1: C: Style/EvalWithLocation: Pass a binding, `__FILE__`, and `__LINE__` to `eval`.
+001.rb:1:1: C: Style/EvalWithLocation: Pass a binding, `__FILE__`, and `__LINE__` to `eval`.
+002.rb:1:1: C: Style/EvalWithLocation: Pass a binding, `__FILE__`, and `__LINE__` to `eval`.
+004.rb:1:1: C: [Corrected] Style/EvalWithLocation: Pass a binding, `__FILE__`, and `__LINE__` to `eval`.
+005.rb:1:1: C: [Corrected] Style/EvalWithLocation: Pass a binding, `__FILE__`, and `__LINE__` to `eval`.
+006.rb:1:1: C: [Corrected] Style/EvalWithLocation: Pass a binding, `__FILE__`, and `__LINE__` to `eval`.
+007.rb:1:41: C: [Corrected] Style/EvalWithLocation: Incorrect line number for `eval`; use `__LINE__` instead of `__LINE__ + 1`.
+008.rb:1:34: C: [Corrected] Style/EvalWithLocation: Incorrect line number for `eval`; use `__LINE__ + 1` instead of `__LINE__ + 2`.
+009.rb:4:6: C: [Corrected] Style/EvalWithLocation: Incorrect line number for `eval`; use `__LINE__ - 3` instead of `__LINE__`.
+010.rb:1:1: C: [Corrected] Style/EvalWithLocation: Pass `__FILE__` and `__LINE__` to `class_eval`.
+011.rb:1:1: C: [Corrected] Style/EvalWithLocation: Pass `__FILE__` and `__LINE__` to `module_eval`.
+012.rb:1:1: C: [Corrected] Style/EvalWithLocation: Pass `__FILE__` and `__LINE__` to `instance_eval`.
+013.rb:1:1: C: [Corrected] Style/EvalWithLocation: Pass `__FILE__` and `__LINE__` to `instance_eval`.
+014.rb:1:33: C: [Corrected] Style/EvalWithLocation: Incorrect line number for `class_eval`; use `__LINE__ + 1` instead of `__LINE__`.
+019.rb:1:24: C: [Corrected] Style/EvalWithLocation: Incorrect file for `eval`; use `__FILE__` instead of `'foo'`.
+019.rb:1:31: C: [Corrected] Style/EvalWithLocation: Incorrect line number for `eval`; use `__LINE__ + 1` instead of `'bar'`.
+020.rb:1:24: C: [Corrected] Style/EvalWithLocation: Incorrect file for `instance_eval`; use `__FILE__` instead of `'foo'`.
+020.rb:1:31: C: [Corrected] Style/EvalWithLocation: Incorrect line number for `instance_eval`; use `__LINE__ + 1` instead of `'bar'`.
+021.rb:1:21: C: [Corrected] Style/EvalWithLocation: Incorrect file for `class_eval`; use `__FILE__` instead of `'foo'`.
+021.rb:1:28: C: [Corrected] Style/EvalWithLocation: Incorrect line number for `class_eval`; use `__LINE__ + 1` instead of `'bar'`.
+022.rb:1:22: C: [Corrected] Style/EvalWithLocation: Incorrect file for `module_eval`; use `__FILE__` instead of `'foo'`.
+022.rb:1:29: C: [Corrected] Style/EvalWithLocation: Incorrect line number for `module_eval`; use `__LINE__ + 1` instead of `'bar'`.
+023.rb:1:32: C: [Corrected] Style/EvalWithLocation: Incorrect line number for `module_eval`; use `__LINE__ + 1` instead of `'bar'`.
+
+==> corrected/004.rb 66 <==
+eval <<-CODE, binding, __FILE__, __LINE__ + 1
+  do_something
+CODE
+
+==> corrected/005.rb 66 <==
+eval <<-CODE, binding, __FILE__, __LINE__ + 1
+  do_something
+CODE
+
+==> corrected/006.rb 67 <==
+eval(<<-CODE, binding, __FILE__, __LINE__ + 1)
+  do_something
+CODE
+
+==> corrected/007.rb 49 <==
+eval 'do_something', binding, __FILE__, __LINE__
+
+==> corrected/008.rb 66 <==
+eval <<-CODE, binding, __FILE__, __LINE__ + 1
+  do_something
+CODE
+
+==> corrected/009.rb 64 <==
+eval('puts 42',
+     binding,
+     __FILE__,
+     __LINE__ - 3)
+
+==> corrected/010.rb 65 <==
+C.class_eval <<-CODE, __FILE__, __LINE__ + 1
+  do_something
+CODE
+
+==> corrected/011.rb 66 <==
+M.module_eval <<-CODE, __FILE__, __LINE__ + 1
+  do_something
+CODE
+
+==> corrected/012.rb 70 <==
+foo.instance_eval <<-CODE, __FILE__, __LINE__ + 1
+  do_something
+CODE
+
+==> corrected/013.rb 48 <==
+instance_eval('@foo = foo', __FILE__, __LINE__)
+
+==> corrected/014.rb 65 <==
+C.class_eval <<-CODE, __FILE__, __LINE__ + 1
+  do_something
+CODE
+
+==> corrected/019.rb 66 <==
+eval <<-CODE, binding, __FILE__, __LINE__ + 1
+  do_something
+CODE
+
+==> corrected/020.rb 66 <==
+instance_eval <<-CODE, __FILE__, __LINE__ + 1
+  do_something
+CODE
+
+==> corrected/021.rb 63 <==
+class_eval <<-CODE, __FILE__, __LINE__ + 1
+  do_something
+CODE
+
+==> corrected/022.rb 64 <==
+module_eval <<-CODE, __FILE__, __LINE__ + 1
+  do_something
+CODE
+
+==> corrected/023.rb 64 <==
+module_eval <<-CODE, __FILE__, __LINE__ + 1
+  do_something
+CODE
+

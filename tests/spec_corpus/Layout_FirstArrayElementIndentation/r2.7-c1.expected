@@ -1,0 +1,115 @@
+==> offenses exit=1 2917 <==
+001.rb:2:2: C: [Correctable] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the start of the line where the left square bracket is.
+002.rb:2:3: C: [Correctable] Layout/FirstArrayElementIndentation: Indent the right bracket the same as the start of the line where the left bracket is.
+003.rb:2:5: C: [Correctable] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the start of the line where the left square bracket is.
+005.rb:2:1: C: [Correctable] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the start of the line where the left square bracket is.
+006.rb:2:5: C: [Correctable] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the start of the line where the left square bracket is.
+015.rb:2:3: C: [Correctable] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the first position after the preceding left parenthesis.
+015.rb:3:1: C: [Correctable] Layout/FirstArrayElementIndentation: Indent the right bracket the same as the first position after the preceding left parenthesis.
+016.rb:2:3: C: [Correctable] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the first position after the preceding left parenthesis.
+016.rb:3:1: C: [Correctable] Layout/FirstArrayElementIndentation: Indent the right bracket the same as the first position after the preceding left parenthesis.
+017.rb:2:9: C: [Correctable] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the start of the line where the left square bracket is.
+017.rb:3:7: C: [Correctable] Layout/FirstArrayElementIndentation: Indent the right bracket the same as the start of the line where the left bracket is.
+020.rb:2:7: C: [Correctable] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the first position after the preceding left parenthesis.
+021.rb:2:3: C: [Correctable] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the parent hash key.
+021.rb:4:1: C: [Correctable] Layout/FirstArrayElementIndentation: Indent the right bracket the same as the parent hash key.
+027.rb:2:8: C: [Correctable] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the start of the line where the left square bracket is.
+028.rb:2:8: C: [Correctable] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the start of the line where the left square bracket is.
+029.rb:2:3: C: [Correctable] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the parent hash key.
+029.rb:4:1: C: [Correctable] Layout/FirstArrayElementIndentation: Indent the right bracket the same as the parent hash key.
+
+==> autocorrect exit=0 2881 <==
+001.rb:2:2: C: [Corrected] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the start of the line where the left square bracket is.
+002.rb:2:3: C: [Corrected] Layout/FirstArrayElementIndentation: Indent the right bracket the same as the start of the line where the left bracket is.
+003.rb:2:5: C: [Corrected] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the start of the line where the left square bracket is.
+005.rb:2:1: C: [Corrected] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the start of the line where the left square bracket is.
+006.rb:2:5: C: [Corrected] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the start of the line where the left square bracket is.
+015.rb:2:3: C: [Corrected] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the first position after the preceding left parenthesis.
+015.rb:3:1: C: [Corrected] Layout/FirstArrayElementIndentation: Indent the right bracket the same as the first position after the preceding left parenthesis.
+016.rb:2:3: C: [Corrected] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the first position after the preceding left parenthesis.
+016.rb:3:1: C: [Corrected] Layout/FirstArrayElementIndentation: Indent the right bracket the same as the first position after the preceding left parenthesis.
+017.rb:2:9: C: [Corrected] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the start of the line where the left square bracket is.
+017.rb:3:7: C: [Corrected] Layout/FirstArrayElementIndentation: Indent the right bracket the same as the start of the line where the left bracket is.
+020.rb:2:7: C: [Corrected] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the first position after the preceding left parenthesis.
+021.rb:2:3: C: [Corrected] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the parent hash key.
+021.rb:4:1: C: [Corrected] Layout/FirstArrayElementIndentation: Indent the right bracket the same as the parent hash key.
+027.rb:2:8: C: [Corrected] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the start of the line where the left square bracket is.
+028.rb:2:8: C: [Corrected] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the start of the line where the left square bracket is.
+029.rb:2:3: C: [Corrected] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the parent hash key.
+029.rb:4:1: C: [Corrected] Layout/FirstArrayElementIndentation: Indent the right bracket the same as the parent hash key.
+
+==> corrected/001.rb 13 <==
+a << [
+  1
+]
+
+==> corrected/002.rb 9 <==
+a << [
+]
+
+==> corrected/003.rb 13 <==
+a << [
+  1
+]
+
+==> corrected/005.rb 54 <==
+config.rack_cache = [
+  "rails:/",
+"rails:/",
+false
+]
+
+==> corrected/006.rb 21 <==
+a = [
+  1,
+  2,
+ 3
+]
+
+==> corrected/015.rb 24 <==
+func([
+       1
+     ])
+
+==> corrected/016.rb 54 <==
+receiver&.func([
+                 1
+               ])
+
+==> corrected/017.rb 14 <==
+var = [
+  1
+]
+
+==> corrected/020.rb 26 <==
+func(x: [
+       :a, :b])
+
+==> corrected/021.rb 78 <==
+func(x: [
+       :a,
+       :b
+     ],
+     y: [
+       :c,
+       :d
+     ])
+
+==> corrected/027.rb 18 <==
+func x, [
+  1, 2]
+
+==> corrected/028.rb 20 <==
+func x: [
+  :a, :b]
+
+==> corrected/029.rb 77 <==
+func x: [
+       :a,
+       :b
+     ],
+     y: [
+       :c,
+       :d
+     ]
+

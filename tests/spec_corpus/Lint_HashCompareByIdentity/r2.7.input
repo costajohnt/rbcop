@@ -1,0 +1,24 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 130 <==
+hash.key?(foo.object_id)
+hash.has_key?(foo.object_id)
+hash[foo.object_id] = bar
+hash[foo.object_id]
+hash.fetch(foo.object_id, 42)
+
+==> 001.rb 21 <==
+hash.key?(object_id)
+
+==> 002.rb 22 <==
+hash&.key?(object_id)
+
+==> 003.rb 15 <==
+hash.key?(foo)
+

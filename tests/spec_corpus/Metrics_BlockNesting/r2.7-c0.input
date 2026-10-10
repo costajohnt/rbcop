@@ -1,0 +1,134 @@
+==> .rubocop.yml 139 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Metrics/BlockNesting:
+  Max: 2
+
+==> 000.rb 33 <==
+if a
+  if b
+    puts b
+  end
+end
+
+==> 001.rb 52 <==
+if a
+  if b
+    if c
+      puts c
+    end
+  end
+end
+
+==> 002.rb 75 <==
+if a
+  if b
+    if c
+      if d
+        puts d
+      end
+    end
+  end
+end
+
+==> 003.rb 95 <==
+if a
+  if b
+    if c
+      puts c
+    end
+  end
+  if d
+    if e
+      puts e
+    end
+  end
+end
+
+==> 004.rb 69 <==
+if a
+  if b
+    case c
+      when C
+        puts C
+    end
+  end
+end
+
+==> 005.rb 67 <==
+if a
+  if b
+    case c
+      in C
+        puts C
+    end
+  end
+end
+
+==> 006.rb 55 <==
+if a
+  if b
+    while c
+      puts c
+    end
+  end
+end
+
+==> 007.rb 61 <==
+if a
+  if b
+    begin
+      puts c
+    end while c
+  end
+end
+
+==> 008.rb 55 <==
+if a
+  if b
+    until c
+      puts c
+    end
+  end
+end
+
+==> 009.rb 61 <==
+if a
+  if b
+    begin
+      puts c
+    end until c
+  end
+end
+
+==> 010.rb 65 <==
+if a
+  if b
+    for c in [1,2] do
+      puts c
+    end
+  end
+end
+
+==> 011.rb 77 <==
+if a
+  if b
+    begin
+      puts c
+    rescue
+      puts x
+    end
+  end
+end
+
+==> 012.rb 33 <==
+if a
+elsif b
+elsif c
+elsif d
+end
+

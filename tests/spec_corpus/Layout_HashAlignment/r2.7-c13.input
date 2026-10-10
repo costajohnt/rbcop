@@ -1,0 +1,29 @@
+==> .rubocop.yml 158 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/HashAlignment:
+  EnforcedColonStyle: table
+
+==> 000.rb 20 <==
+foo ab: 1,
+    c: 2
+
+==> 001.rb 14 <==
+foo({**rest})
+
+==> 002.rb 28 <==
+foo ab: 1,
+    c: 2, **rest
+
+==> 003.rb 27 <==
+foo a: 1,
+    b: 2, **rest
+
+==> 004.rb 23 <==
+foo a: 1,
+      **rest
+

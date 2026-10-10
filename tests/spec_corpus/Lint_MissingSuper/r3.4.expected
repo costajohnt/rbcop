@@ -1,0 +1,6 @@
+==> offenses exit=1 88 <==
+000.rb:2:3: W: Lint/MissingSuper: Call `super` to initialize state of the parent class.
+
+==> autocorrect exit=1 88 <==
+000.rb:2:3: W: Lint/MissingSuper: Call `super` to initialize state of the parent class.
+

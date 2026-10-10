@@ -1,0 +1,18 @@
+==> .rubocop.yml 166 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Metrics/AbcSize:
+  Max: 0
+  CountRepeatedAttributes: true
+
+==> 000.rb 35 <==
+def foo
+  bar
+  self.bar
+  bar
+end
+

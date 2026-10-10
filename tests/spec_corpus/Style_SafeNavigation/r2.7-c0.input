@@ -1,0 +1,1458 @@
+==> .rubocop.yml 174 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SafeNavigation:
+  ConvertCodeThatCanStartToReturnNil: false
+
+==> 000.rb 7 <==
+foo.bar
+==> 001.rb 8 <==
+foo&.bar
+==> 002.rb 8 <==
+nil&.bar
+==> 003.rb 16 <==
+x.foo? && x.bar?
+==> 004.rb 18 <==
+x&.foo? && x&.bar?
+==> 005.rb 16 <==
+foo && foo[:bar]
+==> 006.rb 39 <==
+return if foo[:bar] && foo[:baz].blank?
+==> 007.rb 16 <==
+foo && !foo.bar?
+==> 008.rb 23 <==
+user && user.thing.nil?
+==> 009.rb 26 <==
+user && user.one.two.three
+==> 010.rb 52 <==
+user && user.thing.plus.another { |a| a}.other_thing
+==> 011.rb 45 <==
+user && user.thing.plus.some.other_thing.nil?
+==> 012.rb 25 <==
+user && user.thing.blank?
+==> 013.rb 20 <==
+foo && !foo.bar.baz?
+==> 014.rb 18 <==
+foo.bar > 2 if foo
+==> 015.rb 23 <==
+foo.bar =~ /baz/ if foo
+==> 016.rb 23 <==
+foo.bar !~ /baz/ if foo
+==> 017.rb 22 <==
+foo.bar <=> baz if foo
+==> 018.rb 18 <==
+foo && foo.bar > 2
+==> 019.rb 23 <==
+foo && foo.bar =~ /baz/
+==> 020.rb 23 <==
+foo && foo.bar !~ /baz/
+==> 021.rb 17 <==
+foo && foo.empty?
+==> 022.rb 22 <==
+foo && foo.bar <=> baz
+==> 023.rb 22 <==
+foo && foo.bar.baz > 2
+==> 024.rb 22 <==
+foo.bar.baz > 2 if foo
+==> 025.rb 27 <==
+obj.do_something unless obj
+==> 026.rb 24 <==
+obj.do_something if !obj
+==> 027.rb 16 <==
+foo + bar if foo
+==> 028.rb 20 <==
+foo.baz + bar if foo
+==> 029.rb 20 <==
+foo.baz = bar if foo
+==> 030.rb 25 <==
+obj && !obj&.do_something
+==> 031.rb 43 <==
+if foo
+  something
+elsif bar
+  bar.baz
+end
+
+==> 032.rb 64 <==
+if foo
+  # a random comment
+  # TODO: Implement this before
+end
+
+==> 033.rb 19 <==
+foo(bar.baz) if bar
+==> 034.rb 16 <==
+foo unless nil?
+
+==> 035.rb 36 <==
+foo? && !((x.bar? || y.baz?) && z?)
+
+==> 036.rb 39 <==
+x? && y? do |b|
+  b.foo? && b.bar?
+end
+
+==> 037.rb 25 <==
+(x? + (y? && z?)) && !w?
+
+==> 038.rb 23 <==
+x? && (y? || z? && w?)
+
+==> 039.rb 99 <==
+# Comment 1
+if x
+  # Comment 2
+  x.each do
+    # Comment 3
+    # Comment 4
+  end
+  # Comment 5
+end
+
+==> 040.rb 45 <==
+something.each do
+  break foo.bar if foo
+end
+
+==> 041.rb 44 <==
+something.each do
+  fail foo.bar if foo
+end
+
+==> 042.rb 44 <==
+something.each do
+  next foo.bar if foo
+end
+
+==> 043.rb 45 <==
+something.each do
+  raise foo.bar if foo
+end
+
+==> 044.rb 46 <==
+something.each do
+  return foo.bar if foo
+end
+
+==> 045.rb 45 <==
+something.each do
+  throw foo.bar if foo
+end
+
+==> 046.rb 45 <==
+something.each do
+  yield foo.bar if foo
+end
+
+==> 047.rb 16 <==
+foo.to_i if foo
+
+==> 048.rb 25 <==
+foo && foo&.do_something
+
+==> 049.rb 21 <==
+foo[1].bar if foo[1]
+
+==> 050.rb 15 <==
+foo.bar if foo
+
+==> 051.rb 20 <==
+foo.bar(baz) if foo
+
+==> 052.rb 29 <==
+foo.bar { |e| e.qux } if foo
+
+==> 053.rb 34 <==
+foo.bar(baz) { |e| e.qux } if foo
+
+==> 054.rb 38 <==
+foo.one.two(baz) { |e| e.qux } if foo
+
+==> 055.rb 35 <==
+foo.one.two(baz) { _1.qux } if foo
+
+==> 056.rb 20 <==
+foo.bar unless !foo
+
+==> 057.rb 25 <==
+foo.bar(baz) unless !foo
+
+==> 058.rb 34 <==
+foo.bar { |e| e.qux } unless !foo
+
+==> 059.rb 39 <==
+foo.bar(baz) { |e| e.qux } unless !foo
+
+==> 060.rb 24 <==
+foo.bar unless foo.nil?
+
+==> 061.rb 29 <==
+foo.bar(baz) unless foo.nil?
+
+==> 062.rb 38 <==
+foo.bar { |e| e.qux } unless foo.nil?
+
+==> 063.rb 43 <==
+foo.bar(baz) { |e| e.qux } unless foo.nil?
+
+==> 064.rb 47 <==
+foo.one.two(baz) { |e| e.qux } unless foo.nil?
+
+==> 065.rb 21 <==
+foo.bar if !foo.nil?
+
+==> 066.rb 26 <==
+foo.bar(baz) if !foo.nil?
+
+==> 067.rb 35 <==
+foo.bar { |e| e.qux } if !foo.nil?
+
+==> 068.rb 40 <==
+foo.bar(baz) { |e| e.qux } if !foo.nil?
+
+==> 069.rb 44 <==
+foo.one.two(baz) { |e| e.qux } if !foo.nil?
+
+==> 070.rb 32 <==
+foo if foo && foo.bar # comment
+
+==> 071.rb 21 <==
+if foo
+  foo.bar
+end
+
+==> 072.rb 26 <==
+if foo
+  foo.bar(baz)
+end
+
+==> 073.rb 35 <==
+if foo
+  foo.bar { |e| e.qux }
+end
+
+==> 074.rb 40 <==
+if foo
+  foo.bar(baz) { |e| e.qux }
+end
+
+==> 075.rb 27 <==
+if !foo.nil?
+  foo.bar
+end
+
+==> 076.rb 32 <==
+if !foo.nil?
+  foo.bar(baz)
+end
+
+==> 077.rb 41 <==
+if !foo.nil?
+  foo.bar { |e| e.qux }
+end
+
+==> 078.rb 46 <==
+if !foo.nil?
+  foo.bar(baz) { |e| e.qux }
+end
+
+==> 079.rb 30 <==
+unless foo.nil?
+  foo.bar
+end
+
+==> 080.rb 35 <==
+unless foo.nil?
+  foo.bar(baz)
+end
+
+==> 081.rb 44 <==
+unless foo.nil?
+  foo.bar { |e| e.qux }
+end
+
+==> 082.rb 49 <==
+unless foo.nil?
+  foo.bar(baz) { |e| e.qux }
+end
+
+==> 083.rb 26 <==
+unless !foo
+  foo.bar
+end
+
+==> 084.rb 31 <==
+unless !foo
+  foo.bar(baz)
+end
+
+==> 085.rb 40 <==
+unless !foo
+  foo.bar { |e| e.qux }
+end
+
+==> 086.rb 45 <==
+unless !foo
+  foo.bar(baz) { |e| e.qux }
+end
+
+==> 087.rb 78 <==
+if foo # hello
+  # this is a comment
+  # another comment
+  foo.bar
+end # bye!
+
+==> 088.rb 72 <==
+# comment one
+def foobar
+  if foo
+    # comment 2
+    foo.bar
+  end
+end
+
+==> 089.rb 38 <==
+if foo
+  foo.bar
+else
+  something
+end
+
+==> 090.rb 32 <==
+!foo.nil? ? foo.bar : something
+
+==> 091.rb 23 <==
+foo ? foo[index] : nil
+
+==> 092.rb 36 <==
+foo ? foo[index].do_something : nil
+
+==> 093.rb 27 <==
+foo ? foo[index] = 1 : nil
+
+==> 094.rb 32 <==
+foo.nil? ? nil : foo.foo[index]
+
+==> 095.rb 21 <==
+foo ? foo::foo : nil
+
+==> 096.rb 26 <==
+foo.nil? ? nil : foo * 42
+
+==> 097.rb 46 <==
+%{variable}.nil? ? nil : %{variable}.foo * 42
+
+==> 098.rb 60 <==
+puts(foo ? foo.bar : nil)
+
+results << (foo ? foo.bar : nil)
+
+==> 099.rb 27 <==
+foo ? foo&.[](index) : nil
+
+==> 100.rb 28 <==
+foo ? foo&.[]=(index) : nil
+
+==> 101.rb 27 <==
+foo.nil? ? nil : foo.*(42)
+
+==> 102.rb 33 <==
+results[0] = foo ? foo.bar : nil
+
+==> 103.rb 95 <==
+foo ? foo.bar : nil
+
+foo.nil? ? nil : foo.bar
+
+!foo.nil? ? foo.bar : nil
+
+!foo ? nil : foo.bar
+
+==> 104.rb 20 <==
+!foo.nil? && foo.bar
+==> 105.rb 25 <==
+!foo.nil? && foo.bar(baz)
+==> 106.rb 35 <==
+!foo.nil? && foo.bar { |e| e.qux }
+
+==> 107.rb 40 <==
+!foo.nil? && foo.bar(baz) { |e| e.qux }
+
+==> 108.rb 16 <==
+foo && foo.to_i
+
+==> 109.rb 15 <==
+foo && foo.bar
+
+==> 110.rb 24 <==
+foo&.bar && foo.bar.baz
+
+==> 111.rb 33 <==
+foo.bar&.baz && foo.bar.baz.quux
+
+==> 112.rb 30 <==
+foo && foo.bar && foo.bar.baz
+
+==> 113.rb 20 <==
+foo && foo.bar(baz)
+
+==> 114.rb 29 <==
+foo && foo.bar { |e| e.qux }
+
+==> 115.rb 34 <==
+foo && foo.bar(baz) { |e| e.qux }
+
+==> 116.rb 34 <==
+if foo && foo.bar
+  something
+end
+
+==> 117.rb 22 <==
+foo && foo.bar && bar
+
+==> 118.rb 23 <==
+foo && foo.bar && bar?
+
+==> 119.rb 22 <==
+bar && foo && foo.bar
+
+==> 120.rb 23 <==
+bar? && foo && foo.bar
+
+==> 121.rb 19 <==
+foo && foo.one.two
+
+==> 122.rb 24 <==
+foo && foo.one.two(baz)
+
+==> 123.rb 26 <==
+foo && foo.one.two(&:baz)
+
+==> 124.rb 38 <==
+foo && foo.one.two(baz) { |e| e.qux }
+
+==> 125.rb 29 <==
+foo&.bar ? foo.bar.baz : nil
+
+==> 126.rb 30 <==
+if foo&.bar
+  foo.bar.baz
+end
+
+==> 127.rb 19 <==
+foo.nil? || foo.bar
+==> 128.rb 24 <==
+foo.nil? || foo.bar(baz)
+==> 129.rb 34 <==
+foo.nil? || foo.bar { |e| e.qux }
+
+==> 130.rb 39 <==
+foo.nil? || foo.bar(baz) { |e| e.qux }
+
+==> 131.rb 15 <==
+!foo || foo.bar
+==> 132.rb 20 <==
+!foo || foo.bar(baz)
+==> 133.rb 29 <==
+!foo || foo.bar { |e| e.qux }
+==> 134.rb 35 <==
+!foo || foo.bar(baz) { |e| e.qux }
+
+==> 135.rb 45 <==
+something.each do
+  break FOO.bar if FOO
+end
+
+==> 136.rb 44 <==
+something.each do
+  fail FOO.bar if FOO
+end
+
+==> 137.rb 44 <==
+something.each do
+  next FOO.bar if FOO
+end
+
+==> 138.rb 45 <==
+something.each do
+  raise FOO.bar if FOO
+end
+
+==> 139.rb 46 <==
+something.each do
+  return FOO.bar if FOO
+end
+
+==> 140.rb 45 <==
+something.each do
+  throw FOO.bar if FOO
+end
+
+==> 141.rb 45 <==
+something.each do
+  yield FOO.bar if FOO
+end
+
+==> 142.rb 16 <==
+FOO.to_i if FOO
+
+==> 143.rb 25 <==
+FOO && FOO&.do_something
+
+==> 144.rb 21 <==
+FOO[1].bar if FOO[1]
+
+==> 145.rb 15 <==
+FOO.bar if FOO
+
+==> 146.rb 20 <==
+FOO.bar(baz) if FOO
+
+==> 147.rb 29 <==
+FOO.bar { |e| e.qux } if FOO
+
+==> 148.rb 34 <==
+FOO.bar(baz) { |e| e.qux } if FOO
+
+==> 149.rb 38 <==
+FOO.one.two(baz) { |e| e.qux } if FOO
+
+==> 150.rb 35 <==
+FOO.one.two(baz) { _1.qux } if FOO
+
+==> 151.rb 20 <==
+FOO.bar unless !FOO
+
+==> 152.rb 25 <==
+FOO.bar(baz) unless !FOO
+
+==> 153.rb 34 <==
+FOO.bar { |e| e.qux } unless !FOO
+
+==> 154.rb 39 <==
+FOO.bar(baz) { |e| e.qux } unless !FOO
+
+==> 155.rb 24 <==
+FOO.bar unless FOO.nil?
+
+==> 156.rb 29 <==
+FOO.bar(baz) unless FOO.nil?
+
+==> 157.rb 38 <==
+FOO.bar { |e| e.qux } unless FOO.nil?
+
+==> 158.rb 43 <==
+FOO.bar(baz) { |e| e.qux } unless FOO.nil?
+
+==> 159.rb 47 <==
+FOO.one.two(baz) { |e| e.qux } unless FOO.nil?
+
+==> 160.rb 21 <==
+FOO.bar if !FOO.nil?
+
+==> 161.rb 26 <==
+FOO.bar(baz) if !FOO.nil?
+
+==> 162.rb 35 <==
+FOO.bar { |e| e.qux } if !FOO.nil?
+
+==> 163.rb 40 <==
+FOO.bar(baz) { |e| e.qux } if !FOO.nil?
+
+==> 164.rb 44 <==
+FOO.one.two(baz) { |e| e.qux } if !FOO.nil?
+
+==> 165.rb 32 <==
+foo if FOO && FOO.bar # comment
+
+==> 166.rb 21 <==
+if FOO
+  FOO.bar
+end
+
+==> 167.rb 26 <==
+if FOO
+  FOO.bar(baz)
+end
+
+==> 168.rb 35 <==
+if FOO
+  FOO.bar { |e| e.qux }
+end
+
+==> 169.rb 40 <==
+if FOO
+  FOO.bar(baz) { |e| e.qux }
+end
+
+==> 170.rb 27 <==
+if !FOO.nil?
+  FOO.bar
+end
+
+==> 171.rb 32 <==
+if !FOO.nil?
+  FOO.bar(baz)
+end
+
+==> 172.rb 41 <==
+if !FOO.nil?
+  FOO.bar { |e| e.qux }
+end
+
+==> 173.rb 46 <==
+if !FOO.nil?
+  FOO.bar(baz) { |e| e.qux }
+end
+
+==> 174.rb 30 <==
+unless FOO.nil?
+  FOO.bar
+end
+
+==> 175.rb 35 <==
+unless FOO.nil?
+  FOO.bar(baz)
+end
+
+==> 176.rb 44 <==
+unless FOO.nil?
+  FOO.bar { |e| e.qux }
+end
+
+==> 177.rb 49 <==
+unless FOO.nil?
+  FOO.bar(baz) { |e| e.qux }
+end
+
+==> 178.rb 26 <==
+unless !FOO
+  FOO.bar
+end
+
+==> 179.rb 31 <==
+unless !FOO
+  FOO.bar(baz)
+end
+
+==> 180.rb 40 <==
+unless !FOO
+  FOO.bar { |e| e.qux }
+end
+
+==> 181.rb 45 <==
+unless !FOO
+  FOO.bar(baz) { |e| e.qux }
+end
+
+==> 182.rb 78 <==
+if FOO # hello
+  # this is a comment
+  # another comment
+  FOO.bar
+end # bye!
+
+==> 183.rb 72 <==
+# comment one
+def foobar
+  if FOO
+    # comment 2
+    FOO.bar
+  end
+end
+
+==> 184.rb 38 <==
+if FOO
+  FOO.bar
+else
+  something
+end
+
+==> 185.rb 32 <==
+!FOO.nil? ? FOO.bar : something
+
+==> 186.rb 23 <==
+FOO ? FOO[index] : nil
+
+==> 187.rb 36 <==
+FOO ? FOO[index].do_something : nil
+
+==> 188.rb 27 <==
+FOO ? FOO[index] = 1 : nil
+
+==> 189.rb 32 <==
+FOO.nil? ? nil : FOO.foo[index]
+
+==> 190.rb 21 <==
+FOO ? FOO::foo : nil
+
+==> 191.rb 26 <==
+FOO.nil? ? nil : FOO * 42
+
+==> 192.rb 60 <==
+puts(FOO ? FOO.bar : nil)
+
+results << (FOO ? FOO.bar : nil)
+
+==> 193.rb 27 <==
+FOO ? FOO&.[](index) : nil
+
+==> 194.rb 28 <==
+FOO ? FOO&.[]=(index) : nil
+
+==> 195.rb 27 <==
+FOO.nil? ? nil : FOO.*(42)
+
+==> 196.rb 33 <==
+results[0] = FOO ? FOO.bar : nil
+
+==> 197.rb 95 <==
+FOO ? FOO.bar : nil
+
+FOO.nil? ? nil : FOO.bar
+
+!FOO.nil? ? FOO.bar : nil
+
+!FOO ? nil : FOO.bar
+
+==> 198.rb 20 <==
+!FOO.nil? && FOO.bar
+==> 199.rb 25 <==
+!FOO.nil? && FOO.bar(baz)
+==> 200.rb 35 <==
+!FOO.nil? && FOO.bar { |e| e.qux }
+
+==> 201.rb 40 <==
+!FOO.nil? && FOO.bar(baz) { |e| e.qux }
+
+==> 202.rb 16 <==
+FOO && FOO.to_i
+
+==> 203.rb 15 <==
+FOO && FOO.bar
+
+==> 204.rb 24 <==
+FOO&.bar && FOO.bar.baz
+
+==> 205.rb 33 <==
+FOO.bar&.baz && FOO.bar.baz.quux
+
+==> 206.rb 30 <==
+FOO && FOO.bar && FOO.bar.baz
+
+==> 207.rb 20 <==
+FOO && FOO.bar(baz)
+
+==> 208.rb 29 <==
+FOO && FOO.bar { |e| e.qux }
+
+==> 209.rb 34 <==
+FOO && FOO.bar(baz) { |e| e.qux }
+
+==> 210.rb 34 <==
+if FOO && FOO.bar
+  something
+end
+
+==> 211.rb 22 <==
+FOO && FOO.bar && bar
+
+==> 212.rb 23 <==
+FOO && FOO.bar && bar?
+
+==> 213.rb 22 <==
+bar && FOO && FOO.bar
+
+==> 214.rb 23 <==
+bar? && FOO && FOO.bar
+
+==> 215.rb 19 <==
+FOO && FOO.one.two
+
+==> 216.rb 24 <==
+FOO && FOO.one.two(baz)
+
+==> 217.rb 26 <==
+FOO && FOO.one.two(&:baz)
+
+==> 218.rb 38 <==
+FOO && FOO.one.two(baz) { |e| e.qux }
+
+==> 219.rb 29 <==
+FOO&.bar ? FOO.bar.baz : nil
+
+==> 220.rb 30 <==
+if FOO&.bar
+  FOO.bar.baz
+end
+
+==> 221.rb 19 <==
+FOO.nil? || FOO.bar
+==> 222.rb 24 <==
+FOO.nil? || FOO.bar(baz)
+==> 223.rb 34 <==
+FOO.nil? || FOO.bar { |e| e.qux }
+
+==> 224.rb 39 <==
+FOO.nil? || FOO.bar(baz) { |e| e.qux }
+
+==> 225.rb 15 <==
+!FOO || FOO.bar
+==> 226.rb 20 <==
+!FOO || FOO.bar(baz)
+==> 227.rb 29 <==
+!FOO || FOO.bar { |e| e.qux }
+==> 228.rb 35 <==
+!FOO || FOO.bar(baz) { |e| e.qux }
+
+==> 229.rb 55 <==
+something.each do
+  break FOO::BAR.bar if FOO::BAR
+end
+
+==> 230.rb 54 <==
+something.each do
+  fail FOO::BAR.bar if FOO::BAR
+end
+
+==> 231.rb 54 <==
+something.each do
+  next FOO::BAR.bar if FOO::BAR
+end
+
+==> 232.rb 55 <==
+something.each do
+  raise FOO::BAR.bar if FOO::BAR
+end
+
+==> 233.rb 56 <==
+something.each do
+  return FOO::BAR.bar if FOO::BAR
+end
+
+==> 234.rb 55 <==
+something.each do
+  throw FOO::BAR.bar if FOO::BAR
+end
+
+==> 235.rb 55 <==
+something.each do
+  yield FOO::BAR.bar if FOO::BAR
+end
+
+==> 236.rb 26 <==
+FOO::BAR.to_i if FOO::BAR
+
+==> 237.rb 35 <==
+FOO::BAR && FOO::BAR&.do_something
+
+==> 238.rb 31 <==
+FOO::BAR[1].bar if FOO::BAR[1]
+
+==> 239.rb 25 <==
+FOO::BAR.bar if FOO::BAR
+
+==> 240.rb 30 <==
+FOO::BAR.bar(baz) if FOO::BAR
+
+==> 241.rb 39 <==
+FOO::BAR.bar { |e| e.qux } if FOO::BAR
+
+==> 242.rb 44 <==
+FOO::BAR.bar(baz) { |e| e.qux } if FOO::BAR
+
+==> 243.rb 48 <==
+FOO::BAR.one.two(baz) { |e| e.qux } if FOO::BAR
+
+==> 244.rb 45 <==
+FOO::BAR.one.two(baz) { _1.qux } if FOO::BAR
+
+==> 245.rb 30 <==
+FOO::BAR.bar unless !FOO::BAR
+
+==> 246.rb 35 <==
+FOO::BAR.bar(baz) unless !FOO::BAR
+
+==> 247.rb 44 <==
+FOO::BAR.bar { |e| e.qux } unless !FOO::BAR
+
+==> 248.rb 49 <==
+FOO::BAR.bar(baz) { |e| e.qux } unless !FOO::BAR
+
+==> 249.rb 34 <==
+FOO::BAR.bar unless FOO::BAR.nil?
+
+==> 250.rb 39 <==
+FOO::BAR.bar(baz) unless FOO::BAR.nil?
+
+==> 251.rb 48 <==
+FOO::BAR.bar { |e| e.qux } unless FOO::BAR.nil?
+
+==> 252.rb 53 <==
+FOO::BAR.bar(baz) { |e| e.qux } unless FOO::BAR.nil?
+
+==> 253.rb 57 <==
+FOO::BAR.one.two(baz) { |e| e.qux } unless FOO::BAR.nil?
+
+==> 254.rb 31 <==
+FOO::BAR.bar if !FOO::BAR.nil?
+
+==> 255.rb 36 <==
+FOO::BAR.bar(baz) if !FOO::BAR.nil?
+
+==> 256.rb 45 <==
+FOO::BAR.bar { |e| e.qux } if !FOO::BAR.nil?
+
+==> 257.rb 50 <==
+FOO::BAR.bar(baz) { |e| e.qux } if !FOO::BAR.nil?
+
+==> 258.rb 54 <==
+FOO::BAR.one.two(baz) { |e| e.qux } if !FOO::BAR.nil?
+
+==> 259.rb 42 <==
+foo if FOO::BAR && FOO::BAR.bar # comment
+
+==> 260.rb 31 <==
+if FOO::BAR
+  FOO::BAR.bar
+end
+
+==> 261.rb 36 <==
+if FOO::BAR
+  FOO::BAR.bar(baz)
+end
+
+==> 262.rb 45 <==
+if FOO::BAR
+  FOO::BAR.bar { |e| e.qux }
+end
+
+==> 263.rb 50 <==
+if FOO::BAR
+  FOO::BAR.bar(baz) { |e| e.qux }
+end
+
+==> 264.rb 37 <==
+if !FOO::BAR.nil?
+  FOO::BAR.bar
+end
+
+==> 265.rb 42 <==
+if !FOO::BAR.nil?
+  FOO::BAR.bar(baz)
+end
+
+==> 266.rb 51 <==
+if !FOO::BAR.nil?
+  FOO::BAR.bar { |e| e.qux }
+end
+
+==> 267.rb 56 <==
+if !FOO::BAR.nil?
+  FOO::BAR.bar(baz) { |e| e.qux }
+end
+
+==> 268.rb 40 <==
+unless FOO::BAR.nil?
+  FOO::BAR.bar
+end
+
+==> 269.rb 45 <==
+unless FOO::BAR.nil?
+  FOO::BAR.bar(baz)
+end
+
+==> 270.rb 54 <==
+unless FOO::BAR.nil?
+  FOO::BAR.bar { |e| e.qux }
+end
+
+==> 271.rb 59 <==
+unless FOO::BAR.nil?
+  FOO::BAR.bar(baz) { |e| e.qux }
+end
+
+==> 272.rb 36 <==
+unless !FOO::BAR
+  FOO::BAR.bar
+end
+
+==> 273.rb 41 <==
+unless !FOO::BAR
+  FOO::BAR.bar(baz)
+end
+
+==> 274.rb 50 <==
+unless !FOO::BAR
+  FOO::BAR.bar { |e| e.qux }
+end
+
+==> 275.rb 55 <==
+unless !FOO::BAR
+  FOO::BAR.bar(baz) { |e| e.qux }
+end
+
+==> 276.rb 88 <==
+if FOO::BAR # hello
+  # this is a comment
+  # another comment
+  FOO::BAR.bar
+end # bye!
+
+==> 277.rb 82 <==
+# comment one
+def foobar
+  if FOO::BAR
+    # comment 2
+    FOO::BAR.bar
+  end
+end
+
+==> 278.rb 48 <==
+if FOO::BAR
+  FOO::BAR.bar
+else
+  something
+end
+
+==> 279.rb 42 <==
+!FOO::BAR.nil? ? FOO::BAR.bar : something
+
+==> 280.rb 33 <==
+FOO::BAR ? FOO::BAR[index] : nil
+
+==> 281.rb 46 <==
+FOO::BAR ? FOO::BAR[index].do_something : nil
+
+==> 282.rb 37 <==
+FOO::BAR ? FOO::BAR[index] = 1 : nil
+
+==> 283.rb 42 <==
+FOO::BAR.nil? ? nil : FOO::BAR.foo[index]
+
+==> 284.rb 31 <==
+FOO::BAR ? FOO::BAR::foo : nil
+
+==> 285.rb 36 <==
+FOO::BAR.nil? ? nil : FOO::BAR * 42
+
+==> 286.rb 80 <==
+puts(FOO::BAR ? FOO::BAR.bar : nil)
+
+results << (FOO::BAR ? FOO::BAR.bar : nil)
+
+==> 287.rb 37 <==
+FOO::BAR ? FOO::BAR&.[](index) : nil
+
+==> 288.rb 38 <==
+FOO::BAR ? FOO::BAR&.[]=(index) : nil
+
+==> 289.rb 37 <==
+FOO::BAR.nil? ? nil : FOO::BAR.*(42)
+
+==> 290.rb 43 <==
+results[0] = FOO::BAR ? FOO::BAR.bar : nil
+
+==> 291.rb 135 <==
+FOO::BAR ? FOO::BAR.bar : nil
+
+FOO::BAR.nil? ? nil : FOO::BAR.bar
+
+!FOO::BAR.nil? ? FOO::BAR.bar : nil
+
+!FOO::BAR ? nil : FOO::BAR.bar
+
+==> 292.rb 30 <==
+!FOO::BAR.nil? && FOO::BAR.bar
+==> 293.rb 35 <==
+!FOO::BAR.nil? && FOO::BAR.bar(baz)
+==> 294.rb 45 <==
+!FOO::BAR.nil? && FOO::BAR.bar { |e| e.qux }
+
+==> 295.rb 50 <==
+!FOO::BAR.nil? && FOO::BAR.bar(baz) { |e| e.qux }
+
+==> 296.rb 26 <==
+FOO::BAR && FOO::BAR.to_i
+
+==> 297.rb 25 <==
+FOO::BAR && FOO::BAR.bar
+
+==> 298.rb 34 <==
+FOO::BAR&.bar && FOO::BAR.bar.baz
+
+==> 299.rb 43 <==
+FOO::BAR.bar&.baz && FOO::BAR.bar.baz.quux
+
+==> 300.rb 45 <==
+FOO::BAR && FOO::BAR.bar && FOO::BAR.bar.baz
+
+==> 301.rb 30 <==
+FOO::BAR && FOO::BAR.bar(baz)
+
+==> 302.rb 39 <==
+FOO::BAR && FOO::BAR.bar { |e| e.qux }
+
+==> 303.rb 44 <==
+FOO::BAR && FOO::BAR.bar(baz) { |e| e.qux }
+
+==> 304.rb 44 <==
+if FOO::BAR && FOO::BAR.bar
+  something
+end
+
+==> 305.rb 32 <==
+FOO::BAR && FOO::BAR.bar && bar
+
+==> 306.rb 33 <==
+FOO::BAR && FOO::BAR.bar && bar?
+
+==> 307.rb 32 <==
+bar && FOO::BAR && FOO::BAR.bar
+
+==> 308.rb 33 <==
+bar? && FOO::BAR && FOO::BAR.bar
+
+==> 309.rb 29 <==
+FOO::BAR && FOO::BAR.one.two
+
+==> 310.rb 34 <==
+FOO::BAR && FOO::BAR.one.two(baz)
+
+==> 311.rb 36 <==
+FOO::BAR && FOO::BAR.one.two(&:baz)
+
+==> 312.rb 48 <==
+FOO::BAR && FOO::BAR.one.two(baz) { |e| e.qux }
+
+==> 313.rb 39 <==
+FOO::BAR&.bar ? FOO::BAR.bar.baz : nil
+
+==> 314.rb 40 <==
+if FOO::BAR&.bar
+  FOO::BAR.bar.baz
+end
+
+==> 315.rb 29 <==
+FOO::BAR.nil? || FOO::BAR.bar
+==> 316.rb 34 <==
+FOO::BAR.nil? || FOO::BAR.bar(baz)
+==> 317.rb 44 <==
+FOO::BAR.nil? || FOO::BAR.bar { |e| e.qux }
+
+==> 318.rb 49 <==
+FOO::BAR.nil? || FOO::BAR.bar(baz) { |e| e.qux }
+
+==> 319.rb 25 <==
+!FOO::BAR || FOO::BAR.bar
+==> 320.rb 30 <==
+!FOO::BAR || FOO::BAR.bar(baz)
+==> 321.rb 39 <==
+!FOO::BAR || FOO::BAR.bar { |e| e.qux }
+==> 322.rb 45 <==
+!FOO::BAR || FOO::BAR.bar(baz) { |e| e.qux }
+
+==> 323.rb 47 <==
+something.each do
+  break @foo.bar if @foo
+end
+
+==> 324.rb 46 <==
+something.each do
+  fail @foo.bar if @foo
+end
+
+==> 325.rb 46 <==
+something.each do
+  next @foo.bar if @foo
+end
+
+==> 326.rb 47 <==
+something.each do
+  raise @foo.bar if @foo
+end
+
+==> 327.rb 48 <==
+something.each do
+  return @foo.bar if @foo
+end
+
+==> 328.rb 47 <==
+something.each do
+  throw @foo.bar if @foo
+end
+
+==> 329.rb 47 <==
+something.each do
+  yield @foo.bar if @foo
+end
+
+==> 330.rb 18 <==
+@foo.to_i if @foo
+
+==> 331.rb 27 <==
+@foo && @foo&.do_something
+
+==> 332.rb 23 <==
+@foo[1].bar if @foo[1]
+
+==> 333.rb 17 <==
+@foo.bar if @foo
+
+==> 334.rb 22 <==
+@foo.bar(baz) if @foo
+
+==> 335.rb 31 <==
+@foo.bar { |e| e.qux } if @foo
+
+==> 336.rb 36 <==
+@foo.bar(baz) { |e| e.qux } if @foo
+
+==> 337.rb 40 <==
+@foo.one.two(baz) { |e| e.qux } if @foo
+
+==> 338.rb 37 <==
+@foo.one.two(baz) { _1.qux } if @foo
+
+==> 339.rb 22 <==
+@foo.bar unless !@foo
+
+==> 340.rb 27 <==
+@foo.bar(baz) unless !@foo
+
+==> 341.rb 36 <==
+@foo.bar { |e| e.qux } unless !@foo
+
+==> 342.rb 41 <==
+@foo.bar(baz) { |e| e.qux } unless !@foo
+
+==> 343.rb 26 <==
+@foo.bar unless @foo.nil?
+
+==> 344.rb 31 <==
+@foo.bar(baz) unless @foo.nil?
+
+==> 345.rb 40 <==
+@foo.bar { |e| e.qux } unless @foo.nil?
+
+==> 346.rb 45 <==
+@foo.bar(baz) { |e| e.qux } unless @foo.nil?
+
+==> 347.rb 49 <==
+@foo.one.two(baz) { |e| e.qux } unless @foo.nil?
+
+==> 348.rb 23 <==
+@foo.bar if !@foo.nil?
+
+==> 349.rb 28 <==
+@foo.bar(baz) if !@foo.nil?
+
+==> 350.rb 37 <==
+@foo.bar { |e| e.qux } if !@foo.nil?
+
+==> 351.rb 42 <==
+@foo.bar(baz) { |e| e.qux } if !@foo.nil?
+
+==> 352.rb 46 <==
+@foo.one.two(baz) { |e| e.qux } if !@foo.nil?
+
+==> 353.rb 34 <==
+foo if @foo && @foo.bar # comment
+
+==> 354.rb 23 <==
+if @foo
+  @foo.bar
+end
+
+==> 355.rb 28 <==
+if @foo
+  @foo.bar(baz)
+end
+
+==> 356.rb 37 <==
+if @foo
+  @foo.bar { |e| e.qux }
+end
+
+==> 357.rb 42 <==
+if @foo
+  @foo.bar(baz) { |e| e.qux }
+end
+
+==> 358.rb 29 <==
+if !@foo.nil?
+  @foo.bar
+end
+
+==> 359.rb 34 <==
+if !@foo.nil?
+  @foo.bar(baz)
+end
+
+==> 360.rb 43 <==
+if !@foo.nil?
+  @foo.bar { |e| e.qux }
+end
+
+==> 361.rb 48 <==
+if !@foo.nil?
+  @foo.bar(baz) { |e| e.qux }
+end
+
+==> 362.rb 32 <==
+unless @foo.nil?
+  @foo.bar
+end
+
+==> 363.rb 37 <==
+unless @foo.nil?
+  @foo.bar(baz)
+end
+
+==> 364.rb 46 <==
+unless @foo.nil?
+  @foo.bar { |e| e.qux }
+end
+
+==> 365.rb 51 <==
+unless @foo.nil?
+  @foo.bar(baz) { |e| e.qux }
+end
+
+==> 366.rb 28 <==
+unless !@foo
+  @foo.bar
+end
+
+==> 367.rb 33 <==
+unless !@foo
+  @foo.bar(baz)
+end
+
+==> 368.rb 42 <==
+unless !@foo
+  @foo.bar { |e| e.qux }
+end
+
+==> 369.rb 47 <==
+unless !@foo
+  @foo.bar(baz) { |e| e.qux }
+end
+
+==> 370.rb 80 <==
+if @foo # hello
+  # this is a comment
+  # another comment
+  @foo.bar
+end # bye!
+
+==> 371.rb 74 <==
+# comment one
+def foobar
+  if @foo
+    # comment 2
+    @foo.bar
+  end
+end
+
+==> 372.rb 40 <==
+if @foo
+  @foo.bar
+else
+  something
+end
+
+==> 373.rb 34 <==
+!@foo.nil? ? @foo.bar : something
+
+==> 374.rb 25 <==
+@foo ? @foo[index] : nil
+
+==> 375.rb 38 <==
+@foo ? @foo[index].do_something : nil
+
+==> 376.rb 29 <==
+@foo ? @foo[index] = 1 : nil
+
+==> 377.rb 34 <==
+@foo.nil? ? nil : @foo.foo[index]
+
+==> 378.rb 23 <==
+@foo ? @foo::foo : nil
+
+==> 379.rb 28 <==
+@foo.nil? ? nil : @foo * 42
+
+==> 380.rb 64 <==
+puts(@foo ? @foo.bar : nil)
+
+results << (@foo ? @foo.bar : nil)
+
+==> 381.rb 29 <==
+@foo ? @foo&.[](index) : nil
+
+==> 382.rb 30 <==
+@foo ? @foo&.[]=(index) : nil
+
+==> 383.rb 29 <==
+@foo.nil? ? nil : @foo.*(42)
+
+==> 384.rb 35 <==
+results[0] = @foo ? @foo.bar : nil
+
+==> 385.rb 103 <==
+@foo ? @foo.bar : nil
+
+@foo.nil? ? nil : @foo.bar
+
+!@foo.nil? ? @foo.bar : nil
+
+!@foo ? nil : @foo.bar
+
+==> 386.rb 22 <==
+!@foo.nil? && @foo.bar
+==> 387.rb 27 <==
+!@foo.nil? && @foo.bar(baz)
+==> 388.rb 37 <==
+!@foo.nil? && @foo.bar { |e| e.qux }
+
+==> 389.rb 42 <==
+!@foo.nil? && @foo.bar(baz) { |e| e.qux }
+
+==> 390.rb 18 <==
+@foo && @foo.to_i
+
+==> 391.rb 17 <==
+@foo && @foo.bar
+
+==> 392.rb 26 <==
+@foo&.bar && @foo.bar.baz
+
+==> 393.rb 35 <==
+@foo.bar&.baz && @foo.bar.baz.quux
+
+==> 394.rb 33 <==
+@foo && @foo.bar && @foo.bar.baz
+
+==> 395.rb 22 <==
+@foo && @foo.bar(baz)
+
+==> 396.rb 31 <==
+@foo && @foo.bar { |e| e.qux }
+
+==> 397.rb 36 <==
+@foo && @foo.bar(baz) { |e| e.qux }
+
+==> 398.rb 36 <==
+if @foo && @foo.bar
+  something
+end
+
+==> 399.rb 24 <==
+@foo && @foo.bar && bar
+

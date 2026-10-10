@@ -1,0 +1,73 @@
+==> offenses exit=1 1196 <==
+000.rb:1:11: C: [Correctable] Style/FormatString: Favor `format` over `String#%`.
+001.rb:1:8: C: [Correctable] Style/FormatString: Favor `format` over `String#%`.
+002.rb:1:8: C: [Correctable] Style/FormatString: Favor `format` over `String#%`.
+003.rb:1:11: C: [Correctable] Style/FormatString: Favor `format` over `String#%`.
+004.rb:1:11: C: [Correctable] Style/FormatString: Favor `format` over `String#%`.
+005.rb:1:11: C: [Correctable] Style/FormatString: Favor `format` over `String#%`.
+006.rb:1:11: C: [Correctable] Style/FormatString: Favor `format` over `String#%`.
+007.rb:1:11: C: [Correctable] Style/FormatString: Favor `format` over `String#%`.
+008.rb:1:11: C: [Correctable] Style/FormatString: Favor `format` over `String#%`.
+009.rb:1:11: C: [Correctable] Style/FormatString: Favor `format` over `String#%`.
+010.rb:1:11: C: Style/FormatString: Favor `format` over `String#%`.
+013.rb:1:29: C: [Correctable] Style/FormatString: Favor `format` over `String#%`.
+014.rb:1:1: C: [Correctable] Style/FormatString: Favor `format` over `sprintf`.
+015.rb:1:1: C: [Correctable] Style/FormatString: Favor `format` over `sprintf`.
+016.rb:2:11: C: Style/FormatString: Favor `format` over `String#%`.
+
+==> autocorrect exit=1 1170 <==
+000.rb:1:11: C: [Corrected] Style/FormatString: Favor `format` over `String#%`.
+001.rb:1:8: C: [Corrected] Style/FormatString: Favor `format` over `String#%`.
+002.rb:1:8: C: [Corrected] Style/FormatString: Favor `format` over `String#%`.
+003.rb:1:11: C: [Corrected] Style/FormatString: Favor `format` over `String#%`.
+004.rb:1:11: C: [Corrected] Style/FormatString: Favor `format` over `String#%`.
+005.rb:1:11: C: [Corrected] Style/FormatString: Favor `format` over `String#%`.
+006.rb:1:11: C: [Corrected] Style/FormatString: Favor `format` over `String#%`.
+007.rb:1:11: C: [Corrected] Style/FormatString: Favor `format` over `String#%`.
+008.rb:1:11: C: [Corrected] Style/FormatString: Favor `format` over `String#%`.
+009.rb:1:11: C: [Corrected] Style/FormatString: Favor `format` over `String#%`.
+010.rb:1:11: C: Style/FormatString: Favor `format` over `String#%`.
+013.rb:1:29: C: [Corrected] Style/FormatString: Favor `format` over `String#%`.
+014.rb:1:1: C: [Corrected] Style/FormatString: Favor `format` over `sprintf`.
+015.rb:1:1: C: [Corrected] Style/FormatString: Favor `format` over `sprintf`.
+016.rb:2:11: C: Style/FormatString: Favor `format` over `String#%`.
+
+==> corrected/000.rb 22 <==
+puts format("%d", 10)
+
+==> corrected/001.rb 23 <==
+puts format(x, 10, 11)
+
+==> corrected/002.rb 29 <==
+puts format(x, a: 10, b: 11)
+
+==> corrected/003.rb 26 <==
+puts format("%s", a.to_s)
+
+==> corrected/004.rb 26 <==
+puts format("%s", a.to_h)
+
+==> corrected/005.rb 26 <==
+puts format("%s", a.to_i)
+
+==> corrected/006.rb 26 <==
+puts format("%s", a.to_f)
+
+==> corrected/007.rb 26 <==
+puts format("%s", a.to_r)
+
+==> corrected/008.rb 26 <==
+puts format("%s", a.to_d)
+
+==> corrected/009.rb 28 <==
+puts format("%s", a.to_sym)
+
+==> corrected/013.rb 40 <==
+puts format("#{x * 5} %d #{@test}", 10)
+
+==> corrected/014.rb 24 <==
+format(something, a, b)
+
+==> corrected/015.rb 21 <==
+format('%020d', 123)
+

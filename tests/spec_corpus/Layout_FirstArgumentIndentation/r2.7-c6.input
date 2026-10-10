@@ -1,0 +1,34 @@
+==> .rubocop.yml 358 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/FirstArgumentIndentation:
+  EnforcedStyle: special_for_inner_method_call_in_parentheses
+Layout/IndentationWidth:
+  Width: 2
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+Layout/FirstMethodArgumentLineBreak:
+  Enabled: true
+
+==> 000.rb 86 <==
+expect(execute_request(
+  "some_url",
+  :request_method => "PATCH"
+)).to be_throttled
+
+==> 001.rb 101 <==
+expect(
+  execute_request(
+       "some_url",
+       :request_method => "PATCH"
+  )).to be_throttled
+
+==> 002.rb 41 <==
+run(described_class.new(
+  attributes
+))
+

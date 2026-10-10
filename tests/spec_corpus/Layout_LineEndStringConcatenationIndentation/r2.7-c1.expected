@@ -1,0 +1,93 @@
+==> offenses exit=1 2063 <==
+005.rb:3:3: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+005.rb:6:3: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+005.rb:9:3: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+015.rb:2:6: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+017.rb:2:7: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+019.rb:2:7: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+021.rb:2:6: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+023.rb:2:7: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+025.rb:2:8: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+026.rb:2:30: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+026.rb:4:36: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+026.rb:6:32: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+027.rb:2:6: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+028.rb:3:6: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
+029.rb:2:2: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+
+==> autocorrect exit=0 2159 <==
+005.rb:3:3: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+005.rb:6:3: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+005.rb:9:3: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+015.rb:2:6: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+017.rb:2:7: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+019.rb:2:7: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+021.rb:2:6: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+023.rb:2:7: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+025.rb:2:8: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+026.rb:2:30: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+026.rb:4:36: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+026.rb:6:32: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+027.rb:2:6: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+027.rb:3:6: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
+028.rb:3:6: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
+029.rb:2:2: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
+
+==> corrected/005.rb 78 <==
+if cond1
+  'a' \
+    'b'
+elsif cond2
+  'c' \
+    'd'
+else
+  'e' \
+    'f'
+end
+
+==> corrected/015.rb 16 <==
+X = "a" \
+  'b'
+
+==> corrected/017.rb 17 <==
+$x = "a" \
+  'b'
+
+==> corrected/019.rb 17 <==
+@x = "a" \
+  'b'
+
+==> corrected/021.rb 16 <==
+x = "a" \
+  'b'
+
+==> corrected/023.rb 17 <==
+x += "a" \
+  'b'
+
+==> corrected/025.rb 18 <==
+x ||= "a" \
+  'b'
+
+==> corrected/026.rb 387 <==
+MESSAGES = { KeyAlignment => 'Align the keys of a hash literal if ' \
+               'they span more than one line.',
+             SeparatorAlignment => 'Align the separators of a hash ' \
+               'literal if they span more than one line.',
+             TableAlignment => 'Align the keys and values of a hash ' \
+               'literal if they span more than one line.' }.freeze
+
+==> corrected/027.rb 27 <==
+puts %Q(a) \
+  'b' \
+  'c'
+
+==> corrected/028.rb 31 <==
+puts 'a' \
+  "#{b}" \
+  "#{c}"
+
+==> corrected/029.rb 17 <==
+puts 'a' \
+  'b'
+

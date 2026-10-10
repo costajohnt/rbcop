@@ -1,0 +1,69 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 15 <==
+#missing space
+
+==> 001.rb 1 <==
+#
+==> 002.rb 20 <==
+#   heavily indented
+==> 003.rb 23 <==
+###### heavily indented
+==> 004.rb 6 <==
+######
+==> 005.rb 21 <==
+#!/usr/bin/ruby
+test
+
+==> 006.rb 86 <==
+#!/usr/bin/env nix-shell
+#! nix-shell -i ruby --pure
+#! nix-shell -p ruby gh git
+test
+
+==> 007.rb 21 <==
+test
+#!/usr/bin/ruby
+
+==> 008.rb 86 <==
+test
+#!/usr/bin/env nix-shell
+#! nix-shell -i ruby --pure
+#! nix-shell -p ruby gh git
+
+==> 009/config.ru 19 <==
+#\ -w -p 8765
+test
+
+==> 010.rb 19 <==
+test
+#\ -w -p 8765
+
+==> 011.rb 19 <==
+#\ -w -p 8765
+test
+
+==> 012.rb 8 <==
+#++
+#--
+
+==> 013.rb 6 <==
+#+
+#-
+
+==> 014.rb 9 <==
+#:nodoc:
+
+==> 015.rb 17 <==
+#= require_tree .
+==> 016.rb 22 <==
+=begin
+#blahblah
+=end
+

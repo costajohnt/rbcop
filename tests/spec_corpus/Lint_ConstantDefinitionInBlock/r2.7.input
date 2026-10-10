@@ -1,0 +1,96 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 8 <==
+FOO = 1
+
+==> 001.rb 12 <==
+FOO = 1
+bar
+
+==> 002.rb 26 <==
+describe do
+  FOO = 1
+end
+
+==> 003.rb 32 <==
+describe do
+  FOO = 1
+  bar
+end
+
+==> 004.rb 15 <==
+class Foo; end
+
+==> 005.rb 19 <==
+class Foo; end
+bar
+
+==> 006.rb 33 <==
+describe do
+  class Foo; end
+end
+
+==> 007.rb 39 <==
+describe do
+  class Foo; end
+  bar
+end
+
+==> 008.rb 38 <==
+describe do
+  class Foo; end
+  _1
+end
+
+==> 009.rb 16 <==
+module Foo; end
+
+==> 010.rb 20 <==
+module Foo; end
+bar
+
+==> 011.rb 34 <==
+describe do
+  module Foo; end
+end
+
+==> 012.rb 40 <==
+describe do
+  module Foo; end
+  bar
+end
+
+==> 013.rb 39 <==
+describe do
+  module Foo; end
+  _1
+end
+
+==> 014.rb 32 <==
+describe do
+  self::FOO = 1
+end
+
+==> 015.rb 38 <==
+describe do
+  self::FOO = 1
+  bar
+end
+
+==> 016.rb 28 <==
+describe do
+  ::FOO = 1
+end
+
+==> 017.rb 34 <==
+describe do
+  ::FOO = 1
+  bar
+end
+

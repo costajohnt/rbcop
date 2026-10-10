@@ -1,0 +1,40 @@
+==> offenses exit=1 525 <==
+000.rb:1:11: W: [Correctable] Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.
+001.rb:1:11: W: [Correctable] Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.
+002.rb:2:13: W: [Correctable] Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.
+003.rb:4:13: W: [Correctable] Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.
+004.rb:3:13: W: [Correctable] Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.
+
+==> autocorrect exit=0 515 <==
+000.rb:1:11: W: [Corrected] Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.
+001.rb:1:11: W: [Corrected] Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.
+002.rb:2:13: W: [Corrected] Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.
+003.rb:4:13: W: [Corrected] Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.
+004.rb:3:13: W: [Corrected] Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.
+
+==> corrected/000.rb 28 <==
+class C < RuntimeError; end
+
+==> corrected/001.rb 24 <==
+Class.new(RuntimeError)
+
+==> corrected/002.rb 132 <==
+module Foo
+  class C < RuntimeError; end # This `Exception` is the same as `::Exception`.
+  class Exception < RuntimeError; end
+end
+
+==> corrected/003.rb 147 <==
+module Foo
+  include Bar
+
+  class C < RuntimeError; end # This `Exception` is the same as `::Exception`.
+  class Exception < RuntimeError; end
+end
+
+==> corrected/004.rb 83 <==
+module Foo
+  class Exception < RuntimeError; end
+  class C < RuntimeError; end
+end
+

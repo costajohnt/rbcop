@@ -1,0 +1,24 @@
+==> offenses exit=1 701 <==
+000.rb:1:1: R: Metrics/ModuleLength: Module has too many lines. [6/5]
+006.rb:1:1: R: Metrics/ModuleLength: Module has too many lines. [6/5]
+008.rb:1:1: R: Metrics/ModuleLength: Module has too many lines. [8/5]
+009.rb:1:1: R: Metrics/ModuleLength: Module has too many lines. [13/5]
+010.rb:1:1: R: Metrics/ModuleLength: Module has too many lines. [6/5]
+012.rb:1:1: R: Metrics/ModuleLength: Module has too many lines. [7/5]
+013.rb:1:1: R: Metrics/ModuleLength: Module has too many lines. [6/5]
+014.rb:1:1: R: Metrics/ModuleLength: Module has too many lines. [6/5]
+015.rb:1:1: R: Metrics/ModuleLength: Module has too many lines. [6/5]
+016.rb:1:1: R: Metrics/ModuleLength: Module has too many lines. [6/5]
+
+==> autocorrect exit=1 701 <==
+000.rb:1:1: R: Metrics/ModuleLength: Module has too many lines. [6/5]
+006.rb:1:1: R: Metrics/ModuleLength: Module has too many lines. [6/5]
+008.rb:1:1: R: Metrics/ModuleLength: Module has too many lines. [8/5]
+009.rb:1:1: R: Metrics/ModuleLength: Module has too many lines. [13/5]
+010.rb:1:1: R: Metrics/ModuleLength: Module has too many lines. [6/5]
+012.rb:1:1: R: Metrics/ModuleLength: Module has too many lines. [7/5]
+013.rb:1:1: R: Metrics/ModuleLength: Module has too many lines. [6/5]
+014.rb:1:1: R: Metrics/ModuleLength: Module has too many lines. [6/5]
+015.rb:1:1: R: Metrics/ModuleLength: Module has too many lines. [6/5]
+016.rb:1:1: R: Metrics/ModuleLength: Module has too many lines. [6/5]
+

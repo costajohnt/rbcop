@@ -1,0 +1,13 @@
+==> offenses exit=1 121 <==
+002.rb:5:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 0..1 empty lines between method definitions; found 2.
+
+==> autocorrect exit=0 119 <==
+002.rb:5:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 0..1 empty lines between method definitions; found 2.
+
+==> corrected/002.rb 21 <==
+def n
+end
+
+def o
+end
+

@@ -1,0 +1,27 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 17 <==
+each { |s , t| }
+
+==> 001.rb 15 <==
+formats[0 , 1]
+
+==> 002.rb 9 <==
+a(1 , 2)
+
+==> 003.rb 7 <==
+a(1, 2)
+==> 004.rb 41 <==
+each { |s  , t| a(1  , formats[0  , 1])}
+
+==> 005.rb 25 <==
+a(<<~STR , 2)
+  text
+STR
+

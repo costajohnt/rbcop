@@ -209,3 +209,10 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - YAML: a plain `:name` value loads as a Symbol (`Value::Sym`) and a quoted `':name'` as a String,
   so `--show-cops` dumps them apart; mapping keys do not keep the distinction (a quoted `':q':` key
   is dumped as the symbol `:q:`).
+- YAML aliases share their anchored node (`Arc`), so nested aliases load in linear time as in Psych,
+  but `--show-cops` prints an aliased value expanded where Psych's dump writes `&1` / `*1`; on an alias
+  bomb that dump is exponential (RuboCop's is not).
+- YAML syntax errors are worded as Psych's (`(<file>): <problem> <context> at line L column C`) from
+  yaml-rust2's errors; a few differ from libyaml's: an unknown `%` directive, content after a `...`
+  document end, and an alias to an unknown anchor followed by more on the line (`a: *x y`) report a
+  different problem. The Ruby backtrace RuboCop prints after the message is not reproduced.

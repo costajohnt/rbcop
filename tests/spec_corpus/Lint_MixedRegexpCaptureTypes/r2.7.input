@@ -1,0 +1,45 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 19 <==
+/(?<foo>bar)(baz)/
+
+==> 001.rb 23 <==
+/(?<foo>foo?<bar>bar)/
+
+==> 002.rb 21 <==
+/(?<=>)(<br>)(?=><)/
+
+==> 003.rb 13 <==
+/(foo)(bar)/
+
+==> 004.rb 21 <==
+/(?<foo>bar)(?:bar)/
+
+==> 005.rb 33 <==
+/data = ({"words":.+}}}[^}]*})/m
+
+==> 006.rb 32 <==
+var = '(\d+)'
+/(?<foo>#{var}*)/
+
+==> 007.rb 19 <==
+/(?<foo>#{@var}*)/
+
+==> 008.rb 20 <==
+/(?<foo>#{@@var}*)/
+
+==> 009.rb 19 <==
+/(?<foo>#{$var}*)/
+
+==> 010.rb 27 <==
+/(?<foo>#{do_something}*)/
+
+==> 011.rb 20 <==
+/(?<foo>#{CONST}*)/
+

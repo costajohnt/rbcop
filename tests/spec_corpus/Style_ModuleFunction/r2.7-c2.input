@@ -1,0 +1,42 @@
+==> .rubocop.yml 157 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/ModuleFunction:
+  EnforcedStyle: forbidden
+
+==> 000.rb 46 <==
+module Test
+  extend self
+  def test; end
+end
+
+==> 001.rb 79 <==
+module Test
+  extend self
+  def test; end
+  private
+  def test_private;end
+end
+
+==> 002.rb 62 <==
+module Test
+  extend self
+  def test; end
+  private :test
+end
+
+==> 003.rb 29 <==
+class Test
+  extend self
+end
+
+==> 004.rb 50 <==
+module Test
+  module_function
+  def test; end
+end
+

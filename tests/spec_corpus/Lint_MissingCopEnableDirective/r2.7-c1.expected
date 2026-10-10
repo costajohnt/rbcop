@@ -1,0 +1,12 @@
+==> offenses exit=1 468 <==
+000.rb:1:1: W: Lint/MissingCopEnableDirective: Re-enable Layout/SpaceAroundOperators cop within 2 lines after disabling it.
+001.rb:1:1: W: Lint/MissingCopEnableDirective: Re-enable Layout/SpaceAroundOperators cop within 2 lines after disabling it.
+003.rb:1:1: W: Lint/MissingCopEnableDirective: Re-enable Layout department within 2 lines after disabling it.
+004.rb:1:1: W: Lint/MissingCopEnableDirective: Re-enable Layout department within 2 lines after disabling it.
+
+==> autocorrect exit=1 468 <==
+000.rb:1:1: W: Lint/MissingCopEnableDirective: Re-enable Layout/SpaceAroundOperators cop within 2 lines after disabling it.
+001.rb:1:1: W: Lint/MissingCopEnableDirective: Re-enable Layout/SpaceAroundOperators cop within 2 lines after disabling it.
+003.rb:1:1: W: Lint/MissingCopEnableDirective: Re-enable Layout department within 2 lines after disabling it.
+004.rb:1:1: W: Lint/MissingCopEnableDirective: Re-enable Layout department within 2 lines after disabling it.
+

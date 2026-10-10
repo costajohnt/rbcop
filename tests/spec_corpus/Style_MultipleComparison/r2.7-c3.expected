@@ -1,0 +1,10 @@
+==> offenses exit=1 150 <==
+000.rb:2:8: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+
+==> autocorrect exit=0 148 <==
+000.rb:2:8: C: [Corrected] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+
+==> corrected/000.rb 38 <==
+a = "a"
+foo if ["a", "b"].include?(a)
+

@@ -1,0 +1,915 @@
+==> offenses exit=1 16503 <==
+000.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+001.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+004.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+006.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+006.rb:3:7: W: Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+007.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+008.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+009.rb:1:8: W: [Correctable] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+010.rb:1:1: W: [Correctable] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+011.rb:1:8: W: [Correctable] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+013.rb:1:12: W: [Correctable] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+014.rb:1:7: W: [Correctable] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+015.rb:3:11: W: [Correctable] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+016.rb:1:7: W: [Correctable] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+017.rb:3:11: W: [Correctable] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+018.rb:1:6: W: Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+019.rb:2:6: W: Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+022.rb:1:6: W: Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+024.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+025.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+027.rb:1:11: W: [Correctable] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+028.rb:1:5: W: Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+032.rb:1:2: W: Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+033.rb:1:5: W: Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+034.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+035.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+038.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+040.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+040.rb:3:7: W: Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+041.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+042.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+043.rb:1:8: W: [Correctable] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+044.rb:1:1: W: [Correctable] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+045.rb:1:8: W: [Correctable] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+047.rb:1:12: W: [Correctable] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+048.rb:1:7: W: [Correctable] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+049.rb:3:11: W: [Correctable] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+050.rb:1:7: W: [Correctable] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+051.rb:3:11: W: [Correctable] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+052.rb:1:6: W: Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+053.rb:2:6: W: Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+055.rb:1:6: W: Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+057.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+058.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+059.rb:1:11: W: [Correctable] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+060.rb:1:5: W: Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+064.rb:1:2: W: Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+065.rb:1:5: W: Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+066.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+067.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+070.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+072.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+072.rb:3:7: W: Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+073.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+074.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+075.rb:1:8: W: [Correctable] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+076.rb:1:1: W: [Correctable] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+077.rb:1:8: W: [Correctable] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+079.rb:1:12: W: [Correctable] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+080.rb:1:7: W: [Correctable] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+081.rb:3:11: W: [Correctable] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+082.rb:1:7: W: [Correctable] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+083.rb:3:11: W: [Correctable] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+084.rb:1:6: W: Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+085.rb:2:6: W: Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+087.rb:1:6: W: Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+089.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+090.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+091.rb:1:11: W: [Correctable] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+092.rb:1:5: W: Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+096.rb:1:2: W: Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+097.rb:1:5: W: Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+098.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+099.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+102.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+104.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+104.rb:3:7: W: Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+105.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+106.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+107.rb:1:8: W: [Correctable] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+108.rb:1:1: W: [Correctable] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+109.rb:1:8: W: [Correctable] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+111.rb:1:12: W: [Correctable] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+112.rb:1:7: W: [Correctable] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+113.rb:3:11: W: [Correctable] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+114.rb:1:7: W: [Correctable] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+115.rb:3:11: W: [Correctable] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+116.rb:1:6: W: Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+117.rb:2:6: W: Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+119.rb:1:6: W: Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+121.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+122.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+123.rb:1:11: W: [Correctable] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+124.rb:1:5: W: Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+128.rb:1:2: W: Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+129.rb:1:5: W: Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+130.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+131.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+134.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+136.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+136.rb:3:7: W: Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+137.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+138.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+139.rb:1:8: W: [Correctable] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+140.rb:1:1: W: [Correctable] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+141.rb:1:8: W: [Correctable] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+143.rb:1:12: W: [Correctable] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+144.rb:1:7: W: [Correctable] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+145.rb:3:11: W: [Correctable] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+146.rb:1:7: W: [Correctable] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+147.rb:3:11: W: [Correctable] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+148.rb:1:6: W: Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+149.rb:2:6: W: Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+151.rb:1:6: W: Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+153.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+154.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+155.rb:1:11: W: [Correctable] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+156.rb:1:5: W: Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+160.rb:1:2: W: Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+161.rb:1:5: W: Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+162.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+163.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+166.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+168.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+168.rb:3:7: W: Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+169.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+170.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+171.rb:1:8: W: [Correctable] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+172.rb:1:1: W: [Correctable] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+173.rb:1:8: W: [Correctable] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+175.rb:1:12: W: [Correctable] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+176.rb:1:7: W: [Correctable] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+177.rb:3:11: W: [Correctable] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+178.rb:1:7: W: [Correctable] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+179.rb:3:11: W: [Correctable] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+180.rb:1:6: W: Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+181.rb:2:6: W: Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+183.rb:1:6: W: Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+185.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+186.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+187.rb:1:11: W: [Correctable] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+188.rb:1:5: W: Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+192.rb:1:2: W: Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+193.rb:1:5: W: Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+196.rb:1:6: W: Lint/LiteralAsCondition: Literal `[1, 2, [3, 4]]` appeared as a condition.
+200.rb:1:6: W: Lint/LiteralAsCondition: Literal `[1, 2, [3, 4]]` appeared as a condition.
+207.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+208.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+211.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+212.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+213.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+214.rb:1:8: W: [Correctable] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+215.rb:1:1: W: [Correctable] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+216.rb:1:8: W: [Correctable] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+218.rb:1:12: W: [Correctable] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+219.rb:1:7: W: [Correctable] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+220.rb:3:11: W: [Correctable] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+221.rb:4:11: W: [Correctable] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+222.rb:1:6: W: Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+223.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+224.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+225.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+228.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+229.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+230.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+231.rb:1:8: W: [Correctable] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+232.rb:1:1: W: [Correctable] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+233.rb:1:8: W: [Correctable] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+235.rb:1:12: W: [Correctable] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+236.rb:1:7: W: [Correctable] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+237.rb:3:11: W: [Correctable] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+238.rb:4:11: W: [Correctable] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+239.rb:1:6: W: Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+240.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+241.rb:1:7: W: [Correctable] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+242.rb:3:11: W: [Correctable] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+243.rb:2:8: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
+244.rb:2:8: W: Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+245.rb:1:18: W: Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+246.rb:1:16: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
+247.rb:2:11: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
+248.rb:3:10: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
+249.rb:3:10: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
+250.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `42` appeared as a condition.
+
+==> autocorrect exit=1 16317 <==
+000.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+001.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+004.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+006.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+007.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+008.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+009.rb:1:8: W: [Corrected] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+010.rb:1:1: W: [Corrected] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+011.rb:1:8: W: [Corrected] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+013.rb:1:12: W: [Corrected] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+014.rb:1:7: W: [Corrected] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+015.rb:3:11: W: [Corrected] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+016.rb:1:7: W: [Corrected] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+017.rb:3:11: W: [Corrected] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+018.rb:1:6: W: Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+019.rb:2:6: W: Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+022.rb:1:6: W: Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+024.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+025.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+025.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `true` appeared as a condition.
+027.rb:1:11: W: [Corrected] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+028.rb:1:5: W: Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+032.rb:1:2: W: Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+033.rb:1:5: W: Lint/LiteralAsCondition: Literal `1` appeared as a condition.
+034.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+035.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+038.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+040.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+041.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+042.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+043.rb:1:8: W: [Corrected] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+044.rb:1:1: W: [Corrected] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+045.rb:1:8: W: [Corrected] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+047.rb:1:12: W: [Corrected] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+048.rb:1:7: W: [Corrected] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+049.rb:3:11: W: [Corrected] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+050.rb:1:7: W: [Corrected] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+051.rb:3:11: W: [Corrected] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+052.rb:1:6: W: Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+053.rb:2:6: W: Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+055.rb:1:6: W: Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+057.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+058.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+058.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `true` appeared as a condition.
+059.rb:1:11: W: [Corrected] Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+060.rb:1:5: W: Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+064.rb:1:2: W: Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+065.rb:1:5: W: Lint/LiteralAsCondition: Literal `2.0` appeared as a condition.
+066.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+067.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+070.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+072.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+073.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+074.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+075.rb:1:8: W: [Corrected] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+076.rb:1:1: W: [Corrected] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+077.rb:1:8: W: [Corrected] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+079.rb:1:12: W: [Corrected] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+080.rb:1:7: W: [Corrected] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+081.rb:3:11: W: [Corrected] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+082.rb:1:7: W: [Corrected] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+083.rb:3:11: W: [Corrected] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+084.rb:1:6: W: Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+085.rb:2:6: W: Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+087.rb:1:6: W: Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+089.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+090.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+090.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `true` appeared as a condition.
+091.rb:1:11: W: [Corrected] Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+092.rb:1:5: W: Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+096.rb:1:2: W: Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+097.rb:1:5: W: Lint/LiteralAsCondition: Literal `[1]` appeared as a condition.
+098.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+099.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+102.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+104.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+105.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+106.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+107.rb:1:8: W: [Corrected] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+108.rb:1:1: W: [Corrected] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+109.rb:1:8: W: [Corrected] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+111.rb:1:12: W: [Corrected] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+112.rb:1:7: W: [Corrected] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+113.rb:3:11: W: [Corrected] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+114.rb:1:7: W: [Corrected] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+115.rb:3:11: W: [Corrected] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+116.rb:1:6: W: Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+117.rb:2:6: W: Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+119.rb:1:6: W: Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+121.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+122.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `true` appeared as a condition.
+122.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+123.rb:1:11: W: [Corrected] Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+124.rb:1:5: W: Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+128.rb:1:2: W: Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+129.rb:1:5: W: Lint/LiteralAsCondition: Literal `{}` appeared as a condition.
+130.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+131.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+134.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+136.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+137.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+138.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+139.rb:1:8: W: [Corrected] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+140.rb:1:1: W: [Corrected] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+141.rb:1:8: W: [Corrected] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+143.rb:1:12: W: [Corrected] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+144.rb:1:7: W: [Corrected] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+145.rb:3:11: W: [Corrected] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+146.rb:1:7: W: [Corrected] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+147.rb:3:11: W: [Corrected] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+148.rb:1:6: W: Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+149.rb:2:6: W: Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+151.rb:1:6: W: Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+153.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+154.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+154.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `true` appeared as a condition.
+155.rb:1:11: W: [Corrected] Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+156.rb:1:5: W: Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+160.rb:1:2: W: Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+161.rb:1:5: W: Lint/LiteralAsCondition: Literal `:sym` appeared as a condition.
+162.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+163.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+166.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+168.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+169.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+170.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+171.rb:1:8: W: [Corrected] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+172.rb:1:1: W: [Corrected] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+173.rb:1:8: W: [Corrected] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+175.rb:1:12: W: [Corrected] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+176.rb:1:7: W: [Corrected] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+177.rb:3:11: W: [Corrected] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+178.rb:1:7: W: [Corrected] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+179.rb:3:11: W: [Corrected] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+180.rb:1:6: W: Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+181.rb:2:6: W: Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+183.rb:1:6: W: Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+185.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+186.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+186.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `true` appeared as a condition.
+187.rb:1:11: W: [Corrected] Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+188.rb:1:5: W: Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+192.rb:1:2: W: Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+193.rb:1:5: W: Lint/LiteralAsCondition: Literal `:"#{a}"` appeared as a condition.
+196.rb:1:6: W: Lint/LiteralAsCondition: Literal `[1, 2, [3, 4]]` appeared as a condition.
+200.rb:1:6: W: Lint/LiteralAsCondition: Literal `[1, 2, [3, 4]]` appeared as a condition.
+207.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+208.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+211.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+212.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+213.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+214.rb:1:8: W: [Corrected] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+215.rb:1:1: W: [Corrected] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+216.rb:1:8: W: [Corrected] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+218.rb:1:12: W: [Corrected] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+219.rb:1:7: W: [Corrected] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+220.rb:3:11: W: [Corrected] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+221.rb:4:11: W: [Corrected] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+222.rb:1:6: W: Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+223.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+224.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+225.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+228.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+229.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+230.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+231.rb:1:8: W: [Corrected] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+232.rb:1:1: W: [Corrected] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+233.rb:1:8: W: [Corrected] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+235.rb:1:12: W: [Corrected] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+236.rb:1:7: W: [Corrected] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+237.rb:3:11: W: [Corrected] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+238.rb:4:11: W: [Corrected] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+239.rb:1:6: W: Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+240.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+241.rb:1:7: W: [Corrected] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+242.rb:3:11: W: [Corrected] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+243.rb:2:8: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
+244.rb:2:8: W: Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+245.rb:1:18: W: Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+246.rb:1:16: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
+247.rb:2:11: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
+248.rb:3:10: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
+249.rb:3:10: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
+250.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `42` appeared as a condition.
+
+==> corrected/000.rb 4 <==
+top
+
+==> corrected/001.rb 4 <==
+top
+
+==> corrected/004.rb 34 <==
+if condition
+  top
+else
+  foo
+end
+
+==> corrected/006.rb 6 <==
+x = 1
+
+==> corrected/007.rb 34 <==
+if condition
+  top
+else
+  foo
+end
+
+==> corrected/008.rb 58 <==
+if condition
+  top # comment 1
+else
+  foo # comment 2
+end
+
+==> corrected/009.rb 4 <==
+top
+
+==> corrected/010.rb 4 <==
+top
+
+==> corrected/011.rb 1 <==
+
+
+==> corrected/013.rb 1 <==
+
+
+==> corrected/014.rb 21 <==
+while true
+  top
+end
+
+==> corrected/015.rb 27 <==
+begin
+  top
+end while true
+
+==> corrected/016.rb 1 <==
+
+
+==> corrected/017.rb 4 <==
+top
+
+==> corrected/024.rb 15 <==
+if x
+  top
+end
+
+==> corrected/025.rb 4 <==
+top
+
+==> corrected/027.rb 33 <==
+if x && !(a) && y && z
+  top
+end
+
+==> corrected/034.rb 4 <==
+top
+
+==> corrected/035.rb 4 <==
+top
+
+==> corrected/038.rb 34 <==
+if condition
+  top
+else
+  foo
+end
+
+==> corrected/040.rb 6 <==
+x = 1
+
+==> corrected/041.rb 34 <==
+if condition
+  top
+else
+  foo
+end
+
+==> corrected/042.rb 58 <==
+if condition
+  top # comment 1
+else
+  foo # comment 2
+end
+
+==> corrected/043.rb 4 <==
+top
+
+==> corrected/044.rb 4 <==
+top
+
+==> corrected/045.rb 1 <==
+
+
+==> corrected/047.rb 1 <==
+
+
+==> corrected/048.rb 21 <==
+while true
+  top
+end
+
+==> corrected/049.rb 27 <==
+begin
+  top
+end while true
+
+==> corrected/050.rb 1 <==
+
+
+==> corrected/051.rb 4 <==
+top
+
+==> corrected/057.rb 15 <==
+if x
+  top
+end
+
+==> corrected/058.rb 4 <==
+top
+
+==> corrected/059.rb 33 <==
+if x && !(a) && y && z
+  top
+end
+
+==> corrected/066.rb 4 <==
+top
+
+==> corrected/067.rb 4 <==
+top
+
+==> corrected/070.rb 34 <==
+if condition
+  top
+else
+  foo
+end
+
+==> corrected/072.rb 6 <==
+x = 1
+
+==> corrected/073.rb 34 <==
+if condition
+  top
+else
+  foo
+end
+
+==> corrected/074.rb 58 <==
+if condition
+  top # comment 1
+else
+  foo # comment 2
+end
+
+==> corrected/075.rb 4 <==
+top
+
+==> corrected/076.rb 4 <==
+top
+
+==> corrected/077.rb 1 <==
+
+
+==> corrected/079.rb 1 <==
+
+
+==> corrected/080.rb 21 <==
+while true
+  top
+end
+
+==> corrected/081.rb 27 <==
+begin
+  top
+end while true
+
+==> corrected/082.rb 1 <==
+
+
+==> corrected/083.rb 4 <==
+top
+
+==> corrected/089.rb 15 <==
+if x
+  top
+end
+
+==> corrected/090.rb 4 <==
+top
+
+==> corrected/091.rb 33 <==
+if x && !(a) && y && z
+  top
+end
+
+==> corrected/098.rb 4 <==
+top
+
+==> corrected/099.rb 4 <==
+top
+
+==> corrected/102.rb 34 <==
+if condition
+  top
+else
+  foo
+end
+
+==> corrected/104.rb 6 <==
+x = 1
+
+==> corrected/105.rb 34 <==
+if condition
+  top
+else
+  foo
+end
+
+==> corrected/106.rb 58 <==
+if condition
+  top # comment 1
+else
+  foo # comment 2
+end
+
+==> corrected/107.rb 4 <==
+top
+
+==> corrected/108.rb 4 <==
+top
+
+==> corrected/109.rb 1 <==
+
+
+==> corrected/111.rb 1 <==
+
+
+==> corrected/112.rb 21 <==
+while true
+  top
+end
+
+==> corrected/113.rb 27 <==
+begin
+  top
+end while true
+
+==> corrected/114.rb 1 <==
+
+
+==> corrected/115.rb 4 <==
+top
+
+==> corrected/121.rb 15 <==
+if x
+  top
+end
+
+==> corrected/122.rb 4 <==
+top
+
+==> corrected/123.rb 33 <==
+if x && !(a) && y && z
+  top
+end
+
+==> corrected/130.rb 4 <==
+top
+
+==> corrected/131.rb 4 <==
+top
+
+==> corrected/134.rb 34 <==
+if condition
+  top
+else
+  foo
+end
+
+==> corrected/136.rb 6 <==
+x = 1
+
+==> corrected/137.rb 34 <==
+if condition
+  top
+else
+  foo
+end
+
+==> corrected/138.rb 58 <==
+if condition
+  top # comment 1
+else
+  foo # comment 2
+end
+
+==> corrected/139.rb 4 <==
+top
+
+==> corrected/140.rb 4 <==
+top
+
+==> corrected/141.rb 1 <==
+
+
+==> corrected/143.rb 1 <==
+
+
+==> corrected/144.rb 21 <==
+while true
+  top
+end
+
+==> corrected/145.rb 27 <==
+begin
+  top
+end while true
+
+==> corrected/146.rb 1 <==
+
+
+==> corrected/147.rb 4 <==
+top
+
+==> corrected/153.rb 15 <==
+if x
+  top
+end
+
+==> corrected/154.rb 4 <==
+top
+
+==> corrected/155.rb 33 <==
+if x && !(a) && y && z
+  top
+end
+
+==> corrected/162.rb 4 <==
+top
+
+==> corrected/163.rb 4 <==
+top
+
+==> corrected/166.rb 34 <==
+if condition
+  top
+else
+  foo
+end
+
+==> corrected/168.rb 6 <==
+x = 1
+
+==> corrected/169.rb 34 <==
+if condition
+  top
+else
+  foo
+end
+
+==> corrected/170.rb 58 <==
+if condition
+  top # comment 1
+else
+  foo # comment 2
+end
+
+==> corrected/171.rb 4 <==
+top
+
+==> corrected/172.rb 4 <==
+top
+
+==> corrected/173.rb 1 <==
+
+
+==> corrected/175.rb 1 <==
+
+
+==> corrected/176.rb 21 <==
+while true
+  top
+end
+
+==> corrected/177.rb 27 <==
+begin
+  top
+end while true
+
+==> corrected/178.rb 1 <==
+
+
+==> corrected/179.rb 4 <==
+top
+
+==> corrected/185.rb 15 <==
+if x
+  top
+end
+
+==> corrected/186.rb 4 <==
+top
+
+==> corrected/187.rb 33 <==
+if x && !(a) && y && z
+  top
+end
+
+==> corrected/207.rb 1 <==
+
+
+==> corrected/208.rb 4 <==
+foo
+
+==> corrected/211.rb 23 <==
+if condition
+  foo
+end
+
+==> corrected/212.rb 34 <==
+if condition
+  top
+else
+  bar
+end
+
+==> corrected/213.rb 58 <==
+if condition
+  top # comment 1
+else
+  bar # comment 3
+end
+
+==> corrected/214.rb 1 <==
+
+
+==> corrected/215.rb 4 <==
+bar
+
+==> corrected/216.rb 4 <==
+top
+
+==> corrected/218.rb 4 <==
+top
+
+==> corrected/219.rb 1 <==
+
+
+==> corrected/220.rb 4 <==
+top
+
+==> corrected/221.rb 8 <==
+top
+foo
+
+==> corrected/223.rb 15 <==
+if x
+  top
+end
+
+==> corrected/224.rb 1 <==
+
+
+==> corrected/225.rb 4 <==
+foo
+
+==> corrected/228.rb 23 <==
+if condition
+  foo
+end
+
+==> corrected/229.rb 34 <==
+if condition
+  top
+else
+  bar
+end
+
+==> corrected/230.rb 58 <==
+if condition
+  top # comment 1
+else
+  bar # comment 3
+end
+
+==> corrected/231.rb 1 <==
+
+
+==> corrected/232.rb 4 <==
+bar
+
+==> corrected/233.rb 4 <==
+top
+
+==> corrected/235.rb 4 <==
+top
+
+==> corrected/236.rb 1 <==
+
+
+==> corrected/237.rb 4 <==
+top
+
+==> corrected/238.rb 8 <==
+top
+foo
+
+==> corrected/240.rb 15 <==
+if x
+  top
+end
+
+==> corrected/241.rb 22 <==
+until false
+  top
+end
+
+==> corrected/242.rb 28 <==
+begin
+  top
+end until false
+
+==> corrected/250.rb 1 <==
+
+

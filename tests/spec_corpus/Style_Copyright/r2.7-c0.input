@@ -1,0 +1,60 @@
+==> .rubocop.yml 168 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/Copyright:
+  Notice: Copyright (\(c\) )?2015 Acme Inc
+
+==> 000.rb 70 <==
+# Copyright 2015 Acme Inc.
+# test2
+names = Array.new
+names << 'James'
+
+==> 001.rb 70 <==
+# test2
+# Copyright 2015 Acme Inc.
+names = Array.new
+names << 'James'
+
+==> 002.rb 89 <==
+=begin
+blah, blah, blah
+Copyright 2015 Acme Inc.
+=end
+names = Array.new
+names << 'James'
+
+==> 003.rb 50 <==
+# test
+# test2
+names = Array.new
+names << 'James'
+
+==> 004.rb 74 <==
+# test2
+names = Array.new
+# Copyright (c) 2015 Acme Inc.
+names << 'James'
+
+==> 005.rb 0 <==
+
+==> 006.rb 55 <==
+#!/usr/bin/env ruby
+names = Array.new
+names << 'James'
+
+==> 007.rb 53 <==
+# encoding: utf-8
+names = Array.new
+names << 'James'
+
+==> 008.rb 73 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+names = Array.new
+names << 'James'
+

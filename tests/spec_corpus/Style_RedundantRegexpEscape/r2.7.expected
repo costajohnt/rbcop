@@ -1,0 +1,182 @@
+==> offenses exit=1 3707 <==
+108.rb:1:9: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+110.rb:1:9: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+112.rb:1:9: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+114.rb:1:9: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+116.rb:1:9: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+118.rb:1:9: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+120.rb:1:9: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+122.rb:1:9: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+124.rb:1:9: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+126.rb:1:9: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+127.rb:1:10: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+128.rb:1:10: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+129.rb:1:14: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+130.rb:1:12: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+131.rb:1:11: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+132.rb:1:11: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+133.rb:1:9: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+140.rb:1:22: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+142.rb:1:18: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+144.rb:1:12: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+157.rb:2:10: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+158.rb:1:6: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+159.rb:1:34: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+159.rb:1:36: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+160.rb:1:11: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+160.rb:1:13: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+160.rb:1:15: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+160.rb:1:21: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+160.rb:1:23: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+175.rb:1:9: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+176.rb:1:10: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+180.rb:1:10: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+180.rb:1:13: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+185.rb:2:3: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+185.rb:3:4: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+186.rb:3:3: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+189.rb:1:13: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+190.rb:1:7: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+
+==> autocorrect exit=0 3631 <==
+108.rb:1:9: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+110.rb:1:9: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+112.rb:1:9: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+114.rb:1:9: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+116.rb:1:9: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+118.rb:1:9: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+120.rb:1:9: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+122.rb:1:9: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+124.rb:1:9: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+126.rb:1:9: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+127.rb:1:10: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+128.rb:1:10: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+129.rb:1:14: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+130.rb:1:12: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+131.rb:1:11: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+132.rb:1:11: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+133.rb:1:9: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+140.rb:1:22: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+142.rb:1:18: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+144.rb:1:12: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+157.rb:2:10: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+158.rb:1:6: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+159.rb:1:34: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+159.rb:1:36: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+160.rb:1:11: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+160.rb:1:13: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+160.rb:1:15: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+160.rb:1:21: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+160.rb:1:23: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+175.rb:1:9: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+176.rb:1:10: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+180.rb:1:10: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+180.rb:1:13: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+185.rb:2:3: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+185.rb:3:4: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+186.rb:3:3: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+189.rb:1:13: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+190.rb:1:7: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+
+==> corrected/108.rb 12 <==
+foo = /[.]/
+
+==> corrected/110.rb 12 <==
+foo = /[*]/
+
+==> corrected/112.rb 12 <==
+foo = /[+]/
+
+==> corrected/114.rb 12 <==
+foo = /[?]/
+
+==> corrected/116.rb 12 <==
+foo = /[{]/
+
+==> corrected/118.rb 12 <==
+foo = /[}]/
+
+==> corrected/120.rb 12 <==
+foo = /[(]/
+
+==> corrected/122.rb 12 <==
+foo = /[)]/
+
+==> corrected/124.rb 12 <==
+foo = /[|]/
+
+==> corrected/126.rb 12 <==
+foo = /[$]/
+
+==> corrected/127.rb 14 <==
+foo = /([+])/
+
+==> corrected/128.rb 13 <==
+foo = /[:.]/
+
+==> corrected/129.rb 17 <==
+foo = %r{[0-9-]}
+
+==> corrected/130.rb 15 <==
+foo = /[0-9-]/
+
+==> corrected/131.rb 14 <==
+foo = /[\[-]/
+
+==> corrected/132.rb 17 <==
+foo = %r{[-0-9]}
+
+==> corrected/133.rb 15 <==
+foo = /[-0-9]/
+
+==> corrected/140.rb 26 <==
+foo = /[[:punct:]&&[^.]]/
+
+==> corrected/142.rb 21 <==
+foo = /[[:alnum:].]/
+
+==> corrected/144.rb 17 <==
+foo = /a#{/-/}c/
+
+==> corrected/157.rb 20 <==
+r = /
+  foo \# -
+/x
+
+==> corrected/158.rb 9 <==
+r = /-/i
+
+==> corrected/159.rb 49 <==
+METHOD_NAME  = /\#?#{IDENTIFIER}[!?]?\(?/.freeze
+
+==> corrected/160.rb 22 <==
+foo = /[\s(|{\[;,*=]/
+
+==> corrected/175.rb 12 <==
+foo = /a-b/
+
+==> corrected/176.rb 14 <==
+foo = /a[-]b/
+
+==> corrected/180.rb 14 <==
+foo = %r{/a/}
+
+==> corrected/185.rb 23 <==
+foo = %r{
+  /a
+  b/
+}x
+
+==> corrected/186.rb 81 <==
+foo = %r{
+  foo # this should not affect the position of the escape below
+  -
+}x
+
+==> corrected/189.rb 30 <==
+x = s[/[一二三四.]+/]
+p x
+
+==> corrected/190.rb 11 <==
+r = /[§]/
+

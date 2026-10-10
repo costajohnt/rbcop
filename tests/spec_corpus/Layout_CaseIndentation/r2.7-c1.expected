@@ -1,0 +1,70 @@
+==> offenses exit=1 1124 <==
+002.rb:2:10: C: [Correctable] Layout/CaseIndentation: Indent `when` one step more than `case`.
+004.rb:2:5: C: [Correctable] Layout/CaseIndentation: Indent `when` one step more than `case`.
+004.rb:3:5: C: [Correctable] Layout/CaseIndentation: Indent `when` one step more than `case`.
+004.rb:5:11: C: [Correctable] Layout/CaseIndentation: Indent `when` one step more than `case`.
+004.rb:6:11: C: [Correctable] Layout/CaseIndentation: Indent `when` one step more than `case`.
+004.rb:10:1: C: [Correctable] Layout/CaseIndentation: Indent `when` one step more than `case`.
+007.rb:2:10: C: [Correctable] Layout/CaseIndentation: Indent `in` one step more than `case`.
+009.rb:2:5: C: [Correctable] Layout/CaseIndentation: Indent `in` one step more than `case`.
+009.rb:3:5: C: [Correctable] Layout/CaseIndentation: Indent `in` one step more than `case`.
+009.rb:5:11: C: [Correctable] Layout/CaseIndentation: Indent `in` one step more than `case`.
+009.rb:6:11: C: [Correctable] Layout/CaseIndentation: Indent `in` one step more than `case`.
+009.rb:10:1: C: [Correctable] Layout/CaseIndentation: Indent `in` one step more than `case`.
+
+==> autocorrect exit=0 1100 <==
+002.rb:2:10: C: [Corrected] Layout/CaseIndentation: Indent `when` one step more than `case`.
+004.rb:2:5: C: [Corrected] Layout/CaseIndentation: Indent `when` one step more than `case`.
+004.rb:3:5: C: [Corrected] Layout/CaseIndentation: Indent `when` one step more than `case`.
+004.rb:5:11: C: [Corrected] Layout/CaseIndentation: Indent `when` one step more than `case`.
+004.rb:6:11: C: [Corrected] Layout/CaseIndentation: Indent `when` one step more than `case`.
+004.rb:10:1: C: [Corrected] Layout/CaseIndentation: Indent `when` one step more than `case`.
+007.rb:2:10: C: [Corrected] Layout/CaseIndentation: Indent `in` one step more than `case`.
+009.rb:2:5: C: [Corrected] Layout/CaseIndentation: Indent `in` one step more than `case`.
+009.rb:3:5: C: [Corrected] Layout/CaseIndentation: Indent `in` one step more than `case`.
+009.rb:5:11: C: [Corrected] Layout/CaseIndentation: Indent `in` one step more than `case`.
+009.rb:6:11: C: [Corrected] Layout/CaseIndentation: Indent `in` one step more than `case`.
+009.rb:10:1: C: [Corrected] Layout/CaseIndentation: Indent `in` one step more than `case`.
+
+==> corrected/002.rb 117 <==
+output = case variable
+           when 'value1'
+           'output1'
+         else
+           'output2'
+         end
+
+==> corrected/004.rb 194 <==
+y = case a
+      when 0 then raise
+      when 0 then return
+      z = case b
+            when 1 then return
+            when 1 then raise
+          end
+    end
+case c
+  when 2 then encoding
+end
+
+==> corrected/007.rb 114 <==
+output = case variable
+           in pattern
+           'output1'
+         else
+           'output2'
+         end
+
+==> corrected/009.rb 184 <==
+y = case a
+      in 0 then raise
+      in 0 then return
+      z = case b
+            in 1 then return
+            in 1 then raise
+          end
+    end
+case c
+  in 2 then encoding
+end
+

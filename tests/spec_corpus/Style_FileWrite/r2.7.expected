@@ -1,0 +1,47 @@
+==> offenses exit=1 384 <==
+001.rb:2:1: C: [Correctable] Style/FileWrite: Use `File.write`.
+003.rb:1:1: C: [Correctable] Style/FileWrite: Use `File.write`.
+004.rb:1:1: C: [Correctable] Style/FileWrite: Use `File.write`.
+005.rb:1:1: C: [Correctable] Style/FileWrite: Use `File.write`.
+006.rb:1:1: C: [Correctable] Style/FileWrite: Use `File.write`.
+007.rb:1:1: C: [Correctable] Style/FileWrite: Use `File.write`.
+
+==> autocorrect exit=0 372 <==
+001.rb:2:1: C: [Corrected] Style/FileWrite: Use `File.write`.
+003.rb:1:1: C: [Corrected] Style/FileWrite: Use `File.write`.
+004.rb:1:1: C: [Corrected] Style/FileWrite: Use `File.write`.
+005.rb:1:1: C: [Corrected] Style/FileWrite: Use `File.write`.
+006.rb:1:1: C: [Corrected] Style/FileWrite: Use `File.write`.
+007.rb:1:1: C: [Corrected] Style/FileWrite: Use `File.write`.
+
+==> corrected/001.rb 48 <==
+content = 'hello'
+File.write(filename, content)
+
+==> corrected/003.rb 58 <==
+File.write(filename, 'prefix' + <<~EOS)
+    content
+  EOS
+
+==> corrected/004.rb 56 <==
+File.write(filename, process(<<~EOS))
+    content
+  EOS
+
+==> corrected/005.rb 72 <==
+File.write(filename, <<~HEAD + <<~TAIL)
+    head
+  HEAD
+    tail
+  TAIL
+
+==> corrected/006.rb 43 <==
+File.write(filename, <<~EOS)
+  content
+EOS
+
+==> corrected/007.rb 55 <==
+File.write(<<~PATH.strip, content)
+  path/to/file
+PATH
+

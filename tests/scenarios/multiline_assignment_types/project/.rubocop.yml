@@ -1,0 +1,8 @@
+AllCops:
+  NewCops: disable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Layout/MultilineAssignmentLayout:
+  Enabled: true
+  EnforcedStyle: new_line
+  SupportedTypes: [array, hash, send, csend, str, dstr, xstr, sym, dsym, regexp, begin, and, or, irange, erange, int, block, numblock, lambda, case, if, kwbegin, while, defined?, splat, until, while_post, for, yield, super, zsuper, def]

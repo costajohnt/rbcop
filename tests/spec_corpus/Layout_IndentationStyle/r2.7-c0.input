@@ -1,0 +1,47 @@
+==> .rubocop.yml 157 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/IndentationStyle:
+  EnforcedStyle: spaces
+
+==> 000.rb 7 <==
+	x = 0
+
+==> 001.rb 9 <==
+			x = 0
+
+==> 002.rb 8 <==
+ 	x = 0
+
+==> 003.rb 22 <==
+	x = 0
+__END__
+	x = 0
+
+==> 004.rb 9 <==
+foo 	 bar
+==> 005.rb 11 <==
+'foo'	'bar'
+==> 006.rb 9 <==
+(x = "	")
+==> 007.rb 13 <==
+x = '
+	hello'
+==> 008.rb 24 <==
+x = <<HELLO
+	hello
+HELLO
+==> 009.rb 35 <==
+x = <<HELLO
+	hello
+	
+		
+hello
+HELLO
+==> 010.rb 11 <==
+	(x = "	")
+

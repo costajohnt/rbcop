@@ -1,0 +1,9 @@
+==> offenses exit=1 146 <==
+000.rb:1:5: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives for `Security/Eval` are not permitted.
+
+==> autocorrect exit=0 144 <==
+000.rb:1:5: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives for `Security/Eval` are not permitted.
+
+==> corrected/000.rb 32 <==
+foo # rubocop:disable Lint/Void
+

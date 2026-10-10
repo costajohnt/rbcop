@@ -1,0 +1,17 @@
+==> .rubocop.yml 197 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/EmptyMethod:
+  EnforcedStyle: compact
+Layout/LineLength:
+  Enabled: true
+  Max: 20
+
+==> 000.rb 54 <==
+def foo(abc: '10000', def: '20000', ghi: '30000')
+end
+

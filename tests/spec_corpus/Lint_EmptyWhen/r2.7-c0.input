@@ -1,0 +1,113 @@
+==> .rubocop.yml 147 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/EmptyWhen:
+  AllowComments: false
+
+==> 000.rb 50 <==
+case foo
+when :bar then 1
+when :baz # nothing
+end
+
+==> 001.rb 57 <==
+case foo
+when :bar then 1
+when :baz # nothing
+else 3
+end
+
+==> 002.rb 55 <==
+case foo
+when :bar then 1
+when :baz then # nothing
+end
+
+==> 003.rb 62 <==
+case foo
+when :bar then 1
+when :baz then # nothing
+else 3
+end
+
+==> 004.rb 49 <==
+case foo
+when :bar
+  1
+when :baz
+  # nothing
+end
+
+==> 005.rb 58 <==
+case foo
+when :bar
+  1
+when :baz
+  # nothing
+else
+  3
+end
+
+==> 006.rb 54 <==
+case
+when :bar
+  1
+when :baz
+  # nothing
+else
+  3
+end
+
+==> 007.rb 47 <==
+case foo
+when :bar then 1
+when :baz then 2
+end
+
+==> 008.rb 54 <==
+case foo
+when :bar then 1
+when :baz then 2
+else 3
+end
+
+==> 009.rb 41 <==
+case foo
+when :bar
+  1
+when :baz
+  2
+end
+
+==> 010.rb 50 <==
+case foo
+when :bar
+  1
+when :baz
+  2
+else
+  3
+end
+
+==> 011.rb 46 <==
+case
+when :bar
+  1
+when :baz
+  2
+else
+  3
+end
+
+==> 012.rb 67 <==
+case condition
+when foo
+  do_something
+when bar
+  # do nothing
+end
+

@@ -1,0 +1,93 @@
+==> .rubocop.yml 170 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/FirstParameterIndentation:
+  EnforcedStyle: consistent
+
+==> 000.rb 32 <==
+def abc foo, bar, baz
+  foo
+end
+
+==> 001.rb 41 <==
+def abc foo: 1, bar: 3, baz: 3
+  foo
+end
+
+==> 002.rb 33 <==
+def abc(foo, bar, baz)
+  foo
+end
+
+==> 003.rb 42 <==
+def abc(foo: 1, bar: 3, baz: 3)
+  foo
+end
+
+==> 004.rb 41 <==
+def abc(
+  foo,
+  bar,
+  baz
+)
+  foo
+end
+
+==> 005.rb 50 <==
+def abc(
+  foo: 1,
+  bar: 3,
+  baz: 3
+)
+  foo
+end
+
+==> 006.rb 46 <==
+def self.abc(
+  foo,
+  bar,
+  baz
+)
+  foo
+end
+
+==> 007.rb 55 <==
+def self.abc(
+  foo: 1,
+  bar: 3,
+  baz: 3
+)
+  foo
+end
+
+==> 008.rb 71 <==
+def abc(
+            foo,
+            bar,
+            baz
+)
+  foo
+end
+
+==> 009.rb 74 <==
+def abc(
+          foo: 1,
+          bar: 3,
+          baz: 3
+)
+  foo
+end
+
+==> 010.rb 79 <==
+def self.abc(
+          foo: 1,
+          bar: 3,
+          baz: 3
+)
+  foo
+end
+

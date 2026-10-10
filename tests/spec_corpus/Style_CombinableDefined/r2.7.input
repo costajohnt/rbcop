@@ -1,0 +1,125 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 14 <==
+defined?(Foo)
+
+==> 001.rb 31 <==
+defined?(Foo) && defined?(Bar)
+
+==> 002.rb 31 <==
+defined?(Foo) && defined?(Foo)
+
+==> 003.rb 33 <==
+defined?(Foo) && defined?(::Foo)
+
+==> 004.rb 36 <==
+defined?(Foo) && defined?(Foo::Bar)
+
+==> 005.rb 36 <==
+defined?(Foo::Bar) && defined?(Foo)
+
+==> 006.rb 40 <==
+defined?(::Foo) && defined?(::Foo::Bar)
+
+==> 007.rb 46 <==
+defined?(Foo::Bar) && defined?(Foo::Bar::Baz)
+
+==> 008.rb 63 <==
+defined?(Foo) && defined?(Foo::Bar) && defined?(Foo::Bar::Baz)
+
+==> 009.rb 58 <==
+defined?(Foo) && defined?(Foo::Bar) && defined?(Foo::Baz)
+
+==> 010.rb 41 <==
+defined?(Foo::Bar) && defined?(Foo::Baz)
+
+==> 011.rb 37 <==
+defined?(Foo) && !defined?(Foo::Bar)
+
+==> 012.rb 38 <==
+defined?(::Foo) && defined?(Foo::Bar)
+
+==> 013.rb 41 <==
+defined?(Foo) && defined?(Foo::Bar::Baz)
+
+==> 014.rb 36 <==
+defined?(foo) && defined?(foo::Bar)
+
+==> 015.rb 35 <==
+defined?(foo) && defined?(foo.bar)
+
+==> 016.rb 36 <==
+defined?(foo) && defined?(foo::bar)
+
+==> 017.rb 61 <==
+defined?(foo) && defined?(foo.bar) && defined?(foo.bar::BAZ)
+
+==> 018.rb 50 <==
+foo && defined?(Foo) && bar && defined?(Foo::Bar)
+
+==> 019.rb 32 <==
+defined?(Foo) and defined?(Bar)
+
+==> 020.rb 32 <==
+defined?(Foo) and defined?(Foo)
+
+==> 021.rb 34 <==
+defined?(Foo) and defined?(::Foo)
+
+==> 022.rb 37 <==
+defined?(Foo) and defined?(Foo::Bar)
+
+==> 023.rb 37 <==
+defined?(Foo::Bar) and defined?(Foo)
+
+==> 024.rb 41 <==
+defined?(::Foo) and defined?(::Foo::Bar)
+
+==> 025.rb 47 <==
+defined?(Foo::Bar) and defined?(Foo::Bar::Baz)
+
+==> 026.rb 65 <==
+defined?(Foo) and defined?(Foo::Bar) and defined?(Foo::Bar::Baz)
+
+==> 027.rb 60 <==
+defined?(Foo) and defined?(Foo::Bar) and defined?(Foo::Baz)
+
+==> 028.rb 42 <==
+defined?(Foo::Bar) and defined?(Foo::Baz)
+
+==> 029.rb 38 <==
+defined?(Foo) and !defined?(Foo::Bar)
+
+==> 030.rb 39 <==
+defined?(::Foo) and defined?(Foo::Bar)
+
+==> 031.rb 42 <==
+defined?(Foo) and defined?(Foo::Bar::Baz)
+
+==> 032.rb 37 <==
+defined?(foo) and defined?(foo::Bar)
+
+==> 033.rb 36 <==
+defined?(foo) and defined?(foo.bar)
+
+==> 034.rb 37 <==
+defined?(foo) and defined?(foo::bar)
+
+==> 035.rb 63 <==
+defined?(foo) and defined?(foo.bar) and defined?(foo.bar::BAZ)
+
+==> 036.rb 53 <==
+foo and defined?(Foo) and bar and defined?(Foo::Bar)
+
+==> 037.rb 64 <==
+defined?(Foo) && defined?(Foo::Bar) and defined?(Foo::Bar::Baz)
+
+==> 038.rb 59 <==
+defined?(Foo) && defined?(Foo::Bar) and defined?(Foo::Baz)
+

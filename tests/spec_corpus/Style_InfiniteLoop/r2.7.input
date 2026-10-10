@@ -1,0 +1,166 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 18 <==
+while 1
+  top
+end
+
+==> 001.rb 20 <==
+while 2.0
+  top
+end
+
+==> 002.rb 20 <==
+while [1]
+  top
+end
+
+==> 003.rb 19 <==
+while {}
+  top
+end
+
+==> 004.rb 22 <==
+until false
+  top
+end
+
+==> 005.rb 20 <==
+until nil
+  top
+end
+
+==> 006.rb 27 <==
+loop { break if something }
+==> 007.rb 281 <==
+def f1
+  a = nil # This `a` is local to `f1` and should not affect `f2`.
+  puts a
+end
+
+def f2
+  b = 17
+  while true
+    # `a` springs into existence here, while `b` already existed. Because
+    # of `a` we can't introduce a block.
+    a, b = 42, 42
+    break
+  end
+  puts a, b
+end
+
+==> 008.rb 39 <==
+a = next_value or break while true
+p a
+
+==> 009.rb 48 <==
+a = nil
+a = next_value or break until false
+p a
+
+==> 010.rb 221 <==
+while true
+  a = 42
+  break
+end
+until false
+  # The variable `a` already exists here, having been introduced in the
+  # above `while` loop. We can therefore safely change it too `Kernel#loop`.
+  a = 43
+  break
+end
+puts a
+
+==> 011.rb 33 <==
+until false
+  a = 43
+  break
+end
+
+==> 012.rb 160 <==
+a = 0
+while true
+  a = 42 # `a` is in scope outside of the `while`
+  break
+end
+until false
+  a = 43 # `a` is in scope outside of the `until`
+  break
+end
+puts a
+
+==> 013.rb 41 <==
+while true
+  @a = 42
+  break
+end
+puts @a
+
+==> 014.rb 36 <==
+something += 1 while true # comment
+
+==> 015.rb 68 <==
+# comment
+something 1, # comment 1
+    # comment 2
+    2 while true
+
+==> 016.rb 74 <==
+begin # comment 1
+  something += 1 # comment 2
+end while true # comment 3
+
+==> 017.rb 60 <==
+begin
+  something += 1
+  something_else += 1
+end while true
+
+==> 018.rb 40 <==
+something and something_else while true
+
+==> 019.rb 18 <==
+while true do
+end
+
+==> 020.rb 15 <==
+while true
+end
+
+==> 021.rb 37 <==
+something += 1 until false # comment
+
+==> 022.rb 69 <==
+# comment
+something 1, # comment 1
+    # comment 2
+    2 until false
+
+==> 023.rb 75 <==
+begin # comment 1
+  something += 1 # comment 2
+end until false # comment 3
+
+==> 024.rb 61 <==
+begin
+  something += 1
+  something_else += 1
+end until false
+
+==> 025.rb 41 <==
+something and something_else until false
+
+==> 026.rb 19 <==
+until false do
+end
+
+==> 027.rb 16 <==
+until false
+end
+

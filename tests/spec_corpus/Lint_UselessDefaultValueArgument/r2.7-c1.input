@@ -1,0 +1,14 @@
+==> .rubocop.yml 178 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/UselessDefaultValueArgument:
+  AllowedReceivers:
+  - Rails.cache
+
+==> 000.rb 43 <==
+Rails.cache.fetch(name, options) { block }
+

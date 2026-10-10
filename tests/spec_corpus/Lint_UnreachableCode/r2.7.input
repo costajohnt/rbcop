@@ -1,0 +1,1108 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 99 <==
+class Dummy
+  def return; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  return
+  bar
+end
+
+return
+bar
+
+==> 001.rb 42 <==
+def foo
+  def return; end
+end
+
+return
+bar
+
+==> 002.rb 47 <==
+def foo
+  def self.return; end
+end
+
+return
+bar
+
+==> 003.rb 87 <==
+class Dummy
+  def return; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  return
+  bar
+end
+
+==> 004.rb 86 <==
+class Dummy
+  def return; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  return
+  _1
+end
+
+==> 005.rb 136 <==
+class Dummy
+  def return; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  d2 = Dummy.new
+  d2.instance_eval do
+    return
+    bar
+  end
+end
+
+==> 006.rb 35 <==
+def return; end
+
+Kernel.return
+foo
+
+==> 007.rb 34 <==
+def return; end
+
+Dummy.return
+foo
+
+==> 008.rb 94 <==
+class Dummy
+  def return; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Kernel.return
+  foo
+end
+
+==> 009.rb 93 <==
+class Dummy
+  def return; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Dummy.return
+  foo
+end
+
+==> 010.rb 93 <==
+class Dummy
+  def next; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  next
+  bar
+end
+
+next
+bar
+
+==> 011.rb 38 <==
+def foo
+  def next; end
+end
+
+next
+bar
+
+==> 012.rb 43 <==
+def foo
+  def self.next; end
+end
+
+next
+bar
+
+==> 013.rb 83 <==
+class Dummy
+  def next; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  next
+  bar
+end
+
+==> 014.rb 82 <==
+class Dummy
+  def next; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  next
+  _1
+end
+
+==> 015.rb 132 <==
+class Dummy
+  def next; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  d2 = Dummy.new
+  d2.instance_eval do
+    next
+    bar
+  end
+end
+
+==> 016.rb 31 <==
+def next; end
+
+Kernel.next
+foo
+
+==> 017.rb 30 <==
+def next; end
+
+Dummy.next
+foo
+
+==> 018.rb 90 <==
+class Dummy
+  def next; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Kernel.next
+  foo
+end
+
+==> 019.rb 89 <==
+class Dummy
+  def next; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Dummy.next
+  foo
+end
+
+==> 020.rb 96 <==
+class Dummy
+  def break; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  break
+  bar
+end
+
+break
+bar
+
+==> 021.rb 40 <==
+def foo
+  def break; end
+end
+
+break
+bar
+
+==> 022.rb 45 <==
+def foo
+  def self.break; end
+end
+
+break
+bar
+
+==> 023.rb 85 <==
+class Dummy
+  def break; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  break
+  bar
+end
+
+==> 024.rb 84 <==
+class Dummy
+  def break; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  break
+  _1
+end
+
+==> 025.rb 134 <==
+class Dummy
+  def break; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  d2 = Dummy.new
+  d2.instance_eval do
+    break
+    bar
+  end
+end
+
+==> 026.rb 33 <==
+def break; end
+
+Kernel.break
+foo
+
+==> 027.rb 32 <==
+def break; end
+
+Dummy.break
+foo
+
+==> 028.rb 92 <==
+class Dummy
+  def break; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Kernel.break
+  foo
+end
+
+==> 029.rb 91 <==
+class Dummy
+  def break; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Dummy.break
+  foo
+end
+
+==> 030.rb 96 <==
+class Dummy
+  def retry; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  retry
+  bar
+end
+
+retry
+bar
+
+==> 031.rb 40 <==
+def foo
+  def retry; end
+end
+
+retry
+bar
+
+==> 032.rb 45 <==
+def foo
+  def self.retry; end
+end
+
+retry
+bar
+
+==> 033.rb 85 <==
+class Dummy
+  def retry; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  retry
+  bar
+end
+
+==> 034.rb 84 <==
+class Dummy
+  def retry; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  retry
+  _1
+end
+
+==> 035.rb 134 <==
+class Dummy
+  def retry; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  d2 = Dummy.new
+  d2.instance_eval do
+    retry
+    bar
+  end
+end
+
+==> 036.rb 33 <==
+def retry; end
+
+Kernel.retry
+foo
+
+==> 037.rb 32 <==
+def retry; end
+
+Dummy.retry
+foo
+
+==> 038.rb 92 <==
+class Dummy
+  def retry; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Kernel.retry
+  foo
+end
+
+==> 039.rb 91 <==
+class Dummy
+  def retry; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Dummy.retry
+  foo
+end
+
+==> 040.rb 93 <==
+class Dummy
+  def redo; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  redo
+  bar
+end
+
+redo
+bar
+
+==> 041.rb 38 <==
+def foo
+  def redo; end
+end
+
+redo
+bar
+
+==> 042.rb 43 <==
+def foo
+  def self.redo; end
+end
+
+redo
+bar
+
+==> 043.rb 83 <==
+class Dummy
+  def redo; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  redo
+  bar
+end
+
+==> 044.rb 82 <==
+class Dummy
+  def redo; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  redo
+  _1
+end
+
+==> 045.rb 132 <==
+class Dummy
+  def redo; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  d2 = Dummy.new
+  d2.instance_eval do
+    redo
+    bar
+  end
+end
+
+==> 046.rb 31 <==
+def redo; end
+
+Kernel.redo
+foo
+
+==> 047.rb 30 <==
+def redo; end
+
+Dummy.redo
+foo
+
+==> 048.rb 90 <==
+class Dummy
+  def redo; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Kernel.redo
+  foo
+end
+
+==> 049.rb 89 <==
+class Dummy
+  def redo; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Dummy.redo
+  foo
+end
+
+==> 050.rb 96 <==
+class Dummy
+  def throw; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  throw
+  bar
+end
+
+throw
+bar
+
+==> 051.rb 40 <==
+def foo
+  def throw; end
+end
+
+throw
+bar
+
+==> 052.rb 45 <==
+def foo
+  def self.throw; end
+end
+
+throw
+bar
+
+==> 053.rb 85 <==
+class Dummy
+  def throw; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  throw
+  bar
+end
+
+==> 054.rb 84 <==
+class Dummy
+  def throw; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  throw
+  _1
+end
+
+==> 055.rb 134 <==
+class Dummy
+  def throw; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  d2 = Dummy.new
+  d2.instance_eval do
+    throw
+    bar
+  end
+end
+
+==> 056.rb 33 <==
+def throw; end
+
+Kernel.throw
+foo
+
+==> 057.rb 32 <==
+def throw; end
+
+Dummy.throw
+foo
+
+==> 058.rb 92 <==
+class Dummy
+  def throw; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Kernel.throw
+  foo
+end
+
+==> 059.rb 91 <==
+class Dummy
+  def throw; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Dummy.throw
+  foo
+end
+
+==> 060.rb 96 <==
+class Dummy
+  def raise; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  raise
+  bar
+end
+
+raise
+bar
+
+==> 061.rb 40 <==
+def foo
+  def raise; end
+end
+
+raise
+bar
+
+==> 062.rb 45 <==
+def foo
+  def self.raise; end
+end
+
+raise
+bar
+
+==> 063.rb 85 <==
+class Dummy
+  def raise; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  raise
+  bar
+end
+
+==> 064.rb 84 <==
+class Dummy
+  def raise; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  raise
+  _1
+end
+
+==> 065.rb 134 <==
+class Dummy
+  def raise; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  d2 = Dummy.new
+  d2.instance_eval do
+    raise
+    bar
+  end
+end
+
+==> 066.rb 33 <==
+def raise; end
+
+Kernel.raise
+foo
+
+==> 067.rb 32 <==
+def raise; end
+
+Dummy.raise
+foo
+
+==> 068.rb 92 <==
+class Dummy
+  def raise; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Kernel.raise
+  foo
+end
+
+==> 069.rb 91 <==
+class Dummy
+  def raise; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Dummy.raise
+  foo
+end
+
+==> 070.rb 93 <==
+class Dummy
+  def fail; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  fail
+  bar
+end
+
+fail
+bar
+
+==> 071.rb 38 <==
+def foo
+  def fail; end
+end
+
+fail
+bar
+
+==> 072.rb 43 <==
+def foo
+  def self.fail; end
+end
+
+fail
+bar
+
+==> 073.rb 83 <==
+class Dummy
+  def fail; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  fail
+  bar
+end
+
+==> 074.rb 82 <==
+class Dummy
+  def fail; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  fail
+  _1
+end
+
+==> 075.rb 132 <==
+class Dummy
+  def fail; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  d2 = Dummy.new
+  d2.instance_eval do
+    fail
+    bar
+  end
+end
+
+==> 076.rb 31 <==
+def fail; end
+
+Kernel.fail
+foo
+
+==> 077.rb 30 <==
+def fail; end
+
+Dummy.fail
+foo
+
+==> 078.rb 90 <==
+class Dummy
+  def fail; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Kernel.fail
+  foo
+end
+
+==> 079.rb 89 <==
+class Dummy
+  def fail; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Dummy.fail
+  foo
+end
+
+==> 080.rb 93 <==
+class Dummy
+  def exit; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  exit
+  bar
+end
+
+exit
+bar
+
+==> 081.rb 38 <==
+def foo
+  def exit; end
+end
+
+exit
+bar
+
+==> 082.rb 43 <==
+def foo
+  def self.exit; end
+end
+
+exit
+bar
+
+==> 083.rb 83 <==
+class Dummy
+  def exit; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  exit
+  bar
+end
+
+==> 084.rb 82 <==
+class Dummy
+  def exit; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  exit
+  _1
+end
+
+==> 085.rb 132 <==
+class Dummy
+  def exit; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  d2 = Dummy.new
+  d2.instance_eval do
+    exit
+    bar
+  end
+end
+
+==> 086.rb 31 <==
+def exit; end
+
+Kernel.exit
+foo
+
+==> 087.rb 30 <==
+def exit; end
+
+Dummy.exit
+foo
+
+==> 088.rb 90 <==
+class Dummy
+  def exit; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Kernel.exit
+  foo
+end
+
+==> 089.rb 89 <==
+class Dummy
+  def exit; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Dummy.exit
+  foo
+end
+
+==> 090.rb 96 <==
+class Dummy
+  def exit!; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  exit!
+  bar
+end
+
+exit!
+bar
+
+==> 091.rb 40 <==
+def foo
+  def exit!; end
+end
+
+exit!
+bar
+
+==> 092.rb 45 <==
+def foo
+  def self.exit!; end
+end
+
+exit!
+bar
+
+==> 093.rb 85 <==
+class Dummy
+  def exit!; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  exit!
+  bar
+end
+
+==> 094.rb 84 <==
+class Dummy
+  def exit!; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  exit!
+  _1
+end
+
+==> 095.rb 134 <==
+class Dummy
+  def exit!; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  d2 = Dummy.new
+  d2.instance_eval do
+    exit!
+    bar
+  end
+end
+
+==> 096.rb 33 <==
+def exit!; end
+
+Kernel.exit!
+foo
+
+==> 097.rb 32 <==
+def exit!; end
+
+Dummy.exit!
+foo
+
+==> 098.rb 92 <==
+class Dummy
+  def exit!; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Kernel.exit!
+  foo
+end
+
+==> 099.rb 91 <==
+class Dummy
+  def exit!; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Dummy.exit!
+  foo
+end
+
+==> 100.rb 96 <==
+class Dummy
+  def abort; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  abort
+  bar
+end
+
+abort
+bar
+
+==> 101.rb 40 <==
+def foo
+  def abort; end
+end
+
+abort
+bar
+
+==> 102.rb 45 <==
+def foo
+  def self.abort; end
+end
+
+abort
+bar
+
+==> 103.rb 85 <==
+class Dummy
+  def abort; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  abort
+  bar
+end
+
+==> 104.rb 84 <==
+class Dummy
+  def abort; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  abort
+  _1
+end
+
+==> 105.rb 134 <==
+class Dummy
+  def abort; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  d2 = Dummy.new
+  d2.instance_eval do
+    abort
+    bar
+  end
+end
+
+==> 106.rb 33 <==
+def abort; end
+
+Kernel.abort
+foo
+
+==> 107.rb 32 <==
+def abort; end
+
+Dummy.abort
+foo
+
+==> 108.rb 92 <==
+class Dummy
+  def abort; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Kernel.abort
+  foo
+end
+
+==> 109.rb 91 <==
+class Dummy
+  def abort; end
+end
+
+d = Dummy.new
+d.instance_eval do
+  Dummy.abort
+  foo
+end
+

@@ -1,0 +1,115 @@
+==> offenses exit=1 1497 <==
+000.rb:3:3: C: [Correctable] Layout/ClosingParenthesisIndentation: Indent `)` to column 0 (not 2)
+002.rb:2:1: C: [Correctable] Layout/ClosingParenthesisIndentation: Align `)` with `(`.
+008.rb:4:13: C: [Correctable] Layout/ClosingParenthesisIndentation: Indent `)` to column 0 (not 12)
+008.rb:7:15: C: [Correctable] Layout/ClosingParenthesisIndentation: Align `)` with `(`.
+015.rb:3:3: C: [Correctable] Layout/ClosingParenthesisIndentation: Align `)` with `(`.
+017.rb:2:1: C: [Correctable] Layout/ClosingParenthesisIndentation: Align `)` with `(`.
+017.rb:6:13: C: [Correctable] Layout/ClosingParenthesisIndentation: Align `)` with `(`.
+028.rb:2:3: C: [Correctable] Layout/ClosingParenthesisIndentation: Indent `)` to column 0 (not 2)
+030.rb:5:6: C: [Correctable] Layout/ClosingParenthesisIndentation: Indent `)` to column 9 (not 5)
+030.rb:12:5: C: [Correctable] Layout/ClosingParenthesisIndentation: Indent `)` to column 9 (not 4)
+030.rb:16:8: C: [Correctable] Layout/ClosingParenthesisIndentation: Indent `)` to column 9 (not 7)
+031.rb:3:3: C: [Correctable] Layout/ClosingParenthesisIndentation: Indent `)` to column 0 (not 2)
+032.rb:3:3: C: [Correctable] Layout/ClosingParenthesisIndentation: Indent `)` to column 0 (not 2)
+034.rb:2:1: C: [Correctable] Layout/ClosingParenthesisIndentation: Align `)` with `(`.
+037.rb:3:3: C: [Correctable] Layout/ClosingParenthesisIndentation: Indent `)` to column 0 (not 2)
+039.rb:2:1: C: [Correctable] Layout/ClosingParenthesisIndentation: Align `)` with `(`.
+
+==> autocorrect exit=0 1465 <==
+000.rb:3:3: C: [Corrected] Layout/ClosingParenthesisIndentation: Indent `)` to column 0 (not 2)
+002.rb:2:1: C: [Corrected] Layout/ClosingParenthesisIndentation: Align `)` with `(`.
+008.rb:4:13: C: [Corrected] Layout/ClosingParenthesisIndentation: Indent `)` to column 0 (not 12)
+008.rb:7:15: C: [Corrected] Layout/ClosingParenthesisIndentation: Align `)` with `(`.
+015.rb:3:3: C: [Corrected] Layout/ClosingParenthesisIndentation: Align `)` with `(`.
+017.rb:2:1: C: [Corrected] Layout/ClosingParenthesisIndentation: Align `)` with `(`.
+017.rb:6:13: C: [Corrected] Layout/ClosingParenthesisIndentation: Align `)` with `(`.
+028.rb:2:3: C: [Corrected] Layout/ClosingParenthesisIndentation: Indent `)` to column 0 (not 2)
+030.rb:5:6: C: [Corrected] Layout/ClosingParenthesisIndentation: Indent `)` to column 9 (not 5)
+030.rb:12:5: C: [Corrected] Layout/ClosingParenthesisIndentation: Indent `)` to column 9 (not 4)
+030.rb:16:8: C: [Corrected] Layout/ClosingParenthesisIndentation: Indent `)` to column 9 (not 7)
+031.rb:3:3: C: [Corrected] Layout/ClosingParenthesisIndentation: Indent `)` to column 0 (not 2)
+032.rb:3:3: C: [Corrected] Layout/ClosingParenthesisIndentation: Indent `)` to column 0 (not 2)
+034.rb:2:1: C: [Corrected] Layout/ClosingParenthesisIndentation: Align `)` with `(`.
+037.rb:3:3: C: [Corrected] Layout/ClosingParenthesisIndentation: Indent `)` to column 0 (not 2)
+039.rb:2:1: C: [Corrected] Layout/ClosingParenthesisIndentation: Align `)` with `(`.
+
+==> corrected/000.rb 19 <==
+some_method(
+  a
+)
+
+==> corrected/002.rb 27 <==
+some_method(a
+           )
+
+==> corrected/008.rb 68 <==
+some_method(a,
+  x: 1,
+  y: 2
+)
+b =
+  some_method(a,
+             )
+
+==> corrected/015.rb 59 <==
+foo = some_method(
+                   a
+                 )
+
+==> corrected/017.rb 102 <==
+foo = some_method(a
+                 )
+some_method(a,
+            x: 1,
+            y: 2
+           )
+
+==> corrected/028.rb 21 <==
+foo = some_method(
+)
+
+==> corrected/030.rb 300 <==
+good = foo.methA(:arg1, :arg2, options: :hash)
+         .methB(
+           :arg1,
+           :arg2,
+         )
+         .methC
+
+good = foo.methA(
+           :arg1,
+           :arg2,
+           options: :hash,
+         )
+         .methB(
+           :arg1,
+           :arg2,
+         )
+         .methC
+
+==> corrected/031.rb 29 <==
+receiver&.some_method(
+  a
+)
+
+==> corrected/032.rb 27 <==
+def some_method(
+  a
+)
+end
+
+==> corrected/034.rb 39 <==
+def some_method(a
+               )
+end
+
+==> corrected/037.rb 20 <==
+w = x * (
+  y + z
+)
+
+==> corrected/039.rb 25 <==
+w = x * (y + z
+        )
+

@@ -1,0 +1,43 @@
+==> .rubocop.yml 175 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/MutableConstant:
+  EnforcedStyle: literals
+  Recursive: true
+
+==> 000.rb 30 <==
+CONST = [{ a: [], b: 'foo' }]
+
+==> 001.rb 36 <==
+CONST = { a: [1, [2, { b: 'x' }]] }
+
+==> 002.rb 27 <==
+CONST = [{ a: [] }].freeze
+
+==> 003.rb 34 <==
+CONST = [{ a: [] }.freeze].freeze
+
+==> 004.rb 34 <==
+CONST = [[1, 2], { a: 1 }].freeze
+
+==> 005.rb 21 <==
+CONST = { a: 1..10 }
+
+==> 006.rb 20 <==
+CONST = [%w(a b c)]
+
+==> 007.rb 19 <==
+CONST = [foo, bar]
+
+==> 008.rb 37 <==
+CONST = [{ a: 'foo'.freeze, b: [] }]
+
+==> 009.rb 61 <==
+# frozen_string_literal: true
+
+CONST = [{ a: [], b: 'foo' }]
+

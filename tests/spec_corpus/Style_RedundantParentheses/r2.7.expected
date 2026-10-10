@@ -1,0 +1,944 @@
+==> offenses exit=1 17333 <==
+000.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+001.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+002.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+003.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+004.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+005.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+006.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+007.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+008.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+009.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+010.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+011.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+012.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+013.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+014.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+015.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+016.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+017.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+018.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+019.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+020.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+021.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+022.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+023.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+024.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+025.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+026.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+027.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+029.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+030.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+031.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+033.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+034.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+035.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+037.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+038.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+039.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+041.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+042.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+043.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+045.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+051.rb:1:8: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a variable.
+052.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a variable.
+053.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a variable.
+054.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a variable.
+055.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a constant.
+056.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around an expression.
+057.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around an expression.
+058.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around an expression.
+059.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+060.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+061.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+062.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+063.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+064.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+065.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+066.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+067.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+068.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+069.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+070.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+071.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+072.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+073.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+074.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+075.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+076.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+077.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+078.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a comparison expression.
+079.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a comparison expression.
+080.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a comparison expression.
+081.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a comparison expression.
+082.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a comparison expression.
+083.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a comparison expression.
+084.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a comparison expression.
+085.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around an assignment.
+086.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around an assignment.
+087.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around an assignment.
+088.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around an assignment.
+089.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around an assignment.
+098.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a unary operation.
+099.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a unary operation.
+100.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a unary operation.
+101.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a unary operation.
+102.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a unary operation.
+103.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a unary operation.
+104.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a unary operation.
+105.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a unary operation.
+106.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a unary operation.
+127.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+128.rb:1:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method argument.
+129.rb:1:6: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method argument.
+130.rb:1:8: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method argument.
+139.rb:1:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method argument.
+140.rb:1:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method argument.
+141.rb:1:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method argument.
+142.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+144.rb:1:14: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+145.rb:1:14: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+146.rb:1:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+147.rb:1:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around an assignment.
+148.rb:1:4: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around an interpolated expression.
+149.rb:1:2: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+150.rb:1:2: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+151.rb:1:2: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+152.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+153.rb:1:2: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+154.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+155.rb:2:7: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+156.rb:1:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+157.rb:1:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+158.rb:1:6: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+159.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+159.rb:2:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+160.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+161.rb:1:4: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+162.rb:1:4: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+163.rb:1:18: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around an expression.
+164.rb:1:18: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around an expression.
+165.rb:1:18: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around an expression.
+168.rb:1:10: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+169.rb:1:10: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+175.rb:1:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+177.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+178.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+179.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+187.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+188.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+189.rb:4:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+190.rb:3:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+191.rb:3:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+191.rb:8:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+192.rb:3:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+193.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around block body.
+194.rb:1:13: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around block body.
+195.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a variable.
+196.rb:3:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+199.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around block body.
+200.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around block body.
+201.rb:1:13: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around block body.
+202.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around block body.
+203.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around block body.
+205.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around block body.
+206.rb:3:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around block body.
+211.rb:1:7: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+212.rb:1:7: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+228.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+229.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+230.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+231.rb:1:6: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+232.rb:1:6: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+233.rb:1:6: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+234.rb:1:6: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+250.rb:4:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+254.rb:1:14: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+259.rb:1:6: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+260.rb:1:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+261.rb:1:6: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+262.rb:1:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+263.rb:1:6: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+264.rb:1:6: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+265.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a one-line pattern matching.
+273.rb:1:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+274.rb:1:15: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+278.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a one-line rescue.
+278.rb:2:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a one-line rescue.
+284.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a one-line rescue.
+292.rb:1:8: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+293.rb:1:8: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+294.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+295.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+295.rb:7:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+
+==> autocorrect exit=0 16989 <==
+000.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+001.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+002.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+003.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+004.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+005.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+006.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+007.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+008.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+009.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+010.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+011.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+012.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+013.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+014.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+015.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+016.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+017.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+018.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+019.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+020.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+021.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+022.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+023.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+024.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+025.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+026.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+027.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+029.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+030.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+031.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+033.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+034.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+035.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+037.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+038.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+039.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+041.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+042.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+043.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+045.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a keyword.
+051.rb:1:8: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a variable.
+052.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a variable.
+053.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a variable.
+054.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a variable.
+055.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a constant.
+056.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around an expression.
+057.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around an expression.
+058.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around an expression.
+059.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+060.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+061.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+062.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+063.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+064.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+065.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+066.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+067.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+068.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+069.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+070.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+071.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+072.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+073.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+074.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+075.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+076.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+077.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+078.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a comparison expression.
+079.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a comparison expression.
+080.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a comparison expression.
+081.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a comparison expression.
+082.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a comparison expression.
+083.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a comparison expression.
+084.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a comparison expression.
+085.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around an assignment.
+086.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around an assignment.
+087.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around an assignment.
+088.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around an assignment.
+089.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around an assignment.
+098.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a unary operation.
+099.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a unary operation.
+100.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a unary operation.
+101.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a unary operation.
+102.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a unary operation.
+103.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a unary operation.
+104.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a unary operation.
+105.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a unary operation.
+106.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a unary operation.
+127.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+128.rb:1:5: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method argument.
+129.rb:1:6: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method argument.
+130.rb:1:8: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method argument.
+139.rb:1:5: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method argument.
+140.rb:1:5: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method argument.
+141.rb:1:5: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method argument.
+142.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+144.rb:1:14: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+145.rb:1:14: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+146.rb:1:5: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+147.rb:1:5: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around an assignment.
+148.rb:1:4: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around an interpolated expression.
+149.rb:1:2: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+150.rb:1:2: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+151.rb:1:2: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+152.rb:2:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+153.rb:1:2: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+154.rb:2:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+155.rb:2:7: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+156.rb:1:5: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+157.rb:1:5: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+158.rb:1:6: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+159.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+159.rb:2:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+160.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+161.rb:1:4: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+162.rb:1:4: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+163.rb:1:18: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around an expression.
+164.rb:1:18: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around an expression.
+165.rb:1:18: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around an expression.
+168.rb:1:10: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+169.rb:1:10: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+175.rb:1:5: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+177.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+178.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+179.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+187.rb:2:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+188.rb:2:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+189.rb:4:5: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+190.rb:3:5: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+191.rb:3:5: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+191.rb:8:5: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+192.rb:3:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+193.rb:2:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around block body.
+194.rb:1:13: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around block body.
+195.rb:2:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a variable.
+196.rb:3:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+199.rb:2:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around block body.
+200.rb:2:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around block body.
+201.rb:1:13: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around block body.
+202.rb:2:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around block body.
+203.rb:2:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around block body.
+205.rb:2:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around block body.
+206.rb:3:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around block body.
+211.rb:1:7: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+212.rb:1:7: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+228.rb:2:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+229.rb:2:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+230.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+231.rb:1:6: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+232.rb:1:6: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+233.rb:1:6: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+234.rb:1:6: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+250.rb:4:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+254.rb:1:14: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+259.rb:1:6: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+260.rb:1:5: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+261.rb:1:6: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+262.rb:1:5: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+263.rb:1:6: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+264.rb:1:6: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+265.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a one-line pattern matching.
+273.rb:1:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+274.rb:1:15: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+278.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a one-line rescue.
+278.rb:2:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a one-line rescue.
+284.rb:2:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a one-line rescue.
+292.rb:1:8: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+293.rb:1:8: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+294.rb:2:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+295.rb:2:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+295.rb:7:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a literal.
+
+==> corrected/000.rb 4 <==
+"x"
+
+==> corrected/001.rb 7 <==
+"#{x}"
+
+==> corrected/002.rb 3 <==
+:x
+
+==> corrected/003.rb 8 <==
+:"#{x}"
+
+==> corrected/004.rb 2 <==
+1
+
+==> corrected/005.rb 4 <==
+1.2
+
+==> corrected/006.rb 3 <==
+{}
+
+==> corrected/007.rb 3 <==
+[]
+
+==> corrected/008.rb 4 <==
+nil
+
+==> corrected/009.rb 5 <==
+true
+
+==> corrected/010.rb 6 <==
+false
+
+==> corrected/011.rb 9 <==
+/regexp/
+
+==> corrected/012.rb 9 <==
+"x"; "y"
+
+==> corrected/013.rb 5 <==
+1; 2
+
+==> corrected/014.rb 3 <==
+1i
+
+==> corrected/015.rb 3 <==
+1r
+
+==> corrected/016.rb 8 <==
+(1..42)
+
+==> corrected/017.rb 9 <==
+(1...42)
+
+==> corrected/018.rb 6 <==
+(1..)
+
+==> corrected/019.rb 7 <==
+(..42)
+
+==> corrected/020.rb 9 <==
+__FILE__
+
+==> corrected/021.rb 9 <==
+__LINE__
+
+==> corrected/022.rb 13 <==
+__ENCODING__
+
+==> corrected/023.rb 5 <==
+redo
+
+==> corrected/024.rb 5 <==
+self
+
+==> corrected/025.rb 6 <==
+break
+
+==> corrected/026.rb 8 <==
+break()
+
+==> corrected/027.rb 9 <==
+break(1)
+
+==> corrected/029.rb 5 <==
+next
+
+==> corrected/030.rb 7 <==
+next()
+
+==> corrected/031.rb 8 <==
+next(1)
+
+==> corrected/033.rb 6 <==
+yield
+
+==> corrected/034.rb 8 <==
+yield()
+
+==> corrected/035.rb 12 <==
+yield(1, 2)
+
+==> corrected/037.rb 7 <==
+return
+
+==> corrected/038.rb 9 <==
+return()
+
+==> corrected/039.rb 10 <==
+return(1)
+
+==> corrected/041.rb 6 <==
+super
+
+==> corrected/042.rb 8 <==
+super()
+
+==> corrected/043.rb 12 <==
+super(1, 2)
+
+==> corrected/045.rb 13 <==
+defined?(:A)
+
+==> corrected/051.rb 9 <==
+x = 1; x
+
+==> corrected/052.rb 3 <==
+@x
+
+==> corrected/053.rb 4 <==
+@@x
+
+==> corrected/054.rb 3 <==
+$x
+
+==> corrected/055.rb 2 <==
+X
+
+==> corrected/056.rb 9 <==
+-> { x }
+
+==> corrected/057.rb 13 <==
+lambda { x }
+
+==> corrected/058.rb 11 <==
+proc { x }
+
+==> corrected/059.rb 2 <==
+x
+
+==> corrected/060.rb 4 <==
+x y
+
+==> corrected/061.rb 8 <==
+x(1, 2)
+
+==> corrected/062.rb 11 <==
+"x".to_sym
+
+==> corrected/063.rb 12 <==
+"x"&.to_sym
+
+==> corrected/064.rb 6 <==
+x[:y]
+
+==> corrected/065.rb 7 <==
+@x[:y]
+
+==> corrected/066.rb 8 <==
+@@x[:y]
+
+==> corrected/067.rb 7 <==
+$x[:y]
+
+==> corrected/068.rb 6 <==
+X[:y]
+
+==> corrected/069.rb 9 <==
+"foo"[0]
+
+==> corrected/070.rb 10 <==
+foo[0][0]
+
+==> corrected/071.rb 11 <==
+["foo"][0]
+
+==> corrected/072.rb 13 <==
+{0 => :a}[0]
+
+==> corrected/073.rb 5 <==
+x; y
+
+==> corrected/074.rb 7 <==
+x && y
+
+==> corrected/075.rb 7 <==
+x || y
+
+==> corrected/076.rb 8 <==
+x and y
+
+==> corrected/077.rb 7 <==
+x or y
+
+==> corrected/078.rb 7 <==
+x == y
+
+==> corrected/079.rb 8 <==
+x === y
+
+==> corrected/080.rb 7 <==
+x != y
+
+==> corrected/081.rb 6 <==
+x > y
+
+==> corrected/082.rb 7 <==
+x >= y
+
+==> corrected/083.rb 6 <==
+x < y
+
+==> corrected/084.rb 7 <==
+x <= y
+
+==> corrected/085.rb 9 <==
+var = 42
+
+==> corrected/086.rb 10 <==
+@var = 42
+
+==> corrected/087.rb 11 <==
+@@var = 42
+
+==> corrected/088.rb 10 <==
+$var = 42
+
+==> corrected/089.rb 11 <==
+CONST = 42
+
+==> corrected/098.rb 3 <==
+!x
+
+==> corrected/099.rb 3 <==
+~x
+
+==> corrected/100.rb 3 <==
+-x
+
+==> corrected/101.rb 3 <==
++x
+
+==> corrected/102.rb 7 <==
+!x arg
+
+==> corrected/103.rb 9 <==
+!x.m arg
+
+==> corrected/104.rb 11 <==
+!super arg
+
+==> corrected/105.rb 11 <==
+!yield arg
+
+==> corrected/106.rb 14 <==
+!defined? arg
+
+==> corrected/127.rb 7 <==
+x.y(z)
+
+==> corrected/128.rb 7 <==
+x.y(z)
+
+==> corrected/129.rb 8 <==
+x&.y(z)
+
+==> corrected/130.rb 10 <==
+x.y(z, w)
+
+==> corrected/139.rb 11 <==
+x.y(z + w)
+
+==> corrected/140.rb 10 <==
+x.y(a..b)
+
+==> corrected/141.rb 18 <==
+x.y(foo &&
+  bar)
+
+==> corrected/142.rb 37 <==
+['a', 'b', 'c'].include?(foo) && bar
+
+==> corrected/144.rb 53 <==
+member_ids = [1, 2, 3].map { |i| i } # comment
+.uniq
+
+==> corrected/145.rb 53 <==
+member_ids = [1, 2, 3].map { |i| i } # comment
+.uniq
+
+==> corrected/146.rb 22 <==
+x = foo.bar # comment
+
+==> corrected/147.rb 18 <==
+if (var = 42)
+end
+
+==> corrected/148.rb 9 <==
+"#{foo}"
+
+==> corrected/149.rb 4 <==
+[1]
+
+==> corrected/150.rb 4 <==
+[1]
+
+==> corrected/151.rb 12 <==
+[foo + bar]
+
+==> corrected/152.rb 8 <==
+[
+  1
+]
+
+==> corrected/153.rb 5 <==
+[1,]
+
+==> corrected/154.rb 13 <==
+[
+  1,
+  2
+]
+
+==> corrected/155.rb 21 <==
+[
+  x = 1,
+  y = 2
+]
+
+==> corrected/156.rb 7 <==
+{a: 1}
+
+==> corrected/157.rb 7 <==
+{a: 1}
+
+==> corrected/158.rb 9 <==
+{ a: 1,}
+
+==> corrected/159.rb 10 <==
+0**2
+2**2
+
+==> corrected/160.rb 7 <==
+2.1**2
+
+==> corrected/161.rb 6 <==
+2**-2
+
+==> corrected/162.rb 5 <==
+2**2
+
+==> corrected/163.rb 51 <==
+scope :my_scope, -> do
+  where(column: :value)
+end
+
+==> corrected/164.rb 52 <==
+scope :my_scope, lambda {
+  where(column: :value)
+}
+
+==> corrected/165.rb 50 <==
+scope :my_scope, proc {
+  where(column: :value)
+}
+
+==> corrected/168.rb 21 <==
+foo bar: baz {
+}.qux
+
+==> corrected/169.rb 40 <==
+foo bar: baz {
+  do_something(_1)
+}.qux
+
+==> corrected/175.rb 31 <==
+foo x.select { |item| item }.y
+
+==> corrected/177.rb 40 <==
+x.select { |item| item.foo }.map(&:bar)
+
+==> corrected/178.rb 25 <==
+x.select { |item| item }
+
+==> corrected/179.rb 16 <==
+x.select { _1 }
+
+==> corrected/187.rb 21 <==
+def x
+  foo; bar
+end
+
+==> corrected/188.rb 26 <==
+def self.x
+  foo; bar
+end
+
+==> corrected/189.rb 55 <==
+class A
+  ROOT = __FILE__
+  def same
+    foo
+  end
+end
+
+==> corrected/190.rb 55 <==
+class A
+  def same
+    foo
+  end
+  LINE = __LINE__
+end
+
+==> corrected/191.rb 74 <==
+class A
+  def same
+    foo
+  end
+end
+class B
+  def same
+    foo
+  end
+end
+
+==> corrected/192.rb 27 <==
+def x
+  baz
+  foo; bar
+end
+
+==> corrected/193.rb 20 <==
+x do
+  foo; bar
+end
+
+==> corrected/194.rb 24 <==
+let(:foo) { bar + baz }
+
+==> corrected/195.rb 19 <==
+x do
+  _1; bar
+end
+
+==> corrected/196.rb 26 <==
+x do
+  baz
+  foo; bar
+end
+
+==> corrected/199.rb 24 <==
+something do
+  a..b
+end
+
+==> corrected/200.rb 25 <==
+something do
+  a...b
+end
+
+==> corrected/201.rb 19 <==
+something { a..b }
+
+==> corrected/202.rb 23 <==
+something do
+  ..b
+end
+
+==> corrected/203.rb 27 <==
+something do
+  ..b
+  x
+end
+
+==> corrected/205.rb 23 <==
+something do
+  a..
+end
+
+==> corrected/206.rb 27 <==
+something do
+  x
+  a..
+end
+
+==> corrected/211.rb 17 <==
+var = foo && bar
+
+==> corrected/212.rb 17 <==
+var = foo || bar
+
+==> corrected/228.rb 21 <==
+def foo
+  x || y
+end
+
+==> corrected/229.rb 21 <==
+def foo
+  x && y
+end
+
+==> corrected/230.rb 12 <==
+x && y && z
+
+==> corrected/231.rb 12 <==
+x && y && z
+
+==> corrected/232.rb 17 <==
+x && y && z && w
+
+==> corrected/233.rb 17 <==
+x && y && z || w
+
+==> corrected/234.rb 17 <==
+x || y && z && w
+
+==> corrected/250.rb 30 <==
+if cond
+  x
+else
+  y || z
+end
+
+==> corrected/254.rb 19 <==
+if x; y else 1 end
+
+==> corrected/259.rb 8 <==
+x == 42
+
+==> corrected/260.rb 7 <==
+x > 42
+
+==> corrected/261.rb 8 <==
+x >= 42
+
+==> corrected/262.rb 7 <==
+x < 42
+
+==> corrected/263.rb 8 <==
+x <= 42
+
+==> corrected/264.rb 14 <==
+x =~ /regexp/
+
+==> corrected/265.rb 22 <==
+expression in pattern
+
+==> corrected/273.rb 15 <==
+x({ y: 1 }, z)
+
+==> corrected/274.rb 23 <==
+x ({ y: 1 }), { y: 1 }
+
+==> corrected/278.rb 30 <==
+foo rescue bar
+foo rescue bar
+
+==> corrected/284.rb 39 <==
+if cond
+  foo rescue bar
+else
+  42
+end
+
+==> corrected/292.rb 10 <==
+return 42
+
+==> corrected/293.rb 17 <==
+return foo + bar
+
+==> corrected/294.rb 16 <==
+foo(
+  1,
+  2
+)
+
+==> corrected/295.rb 63 <==
+[
+  <<-STRING,
+    foo
+  STRING
+  <<-STRING
+    bar
+  STRING
+]
+

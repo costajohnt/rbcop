@@ -1,0 +1,176 @@
+==> .rubocop.yml 166 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/AccessModifierIndentation:
+  EnforcedStyle: indent
+
+==> 000.rb 41 <==
+class Test
+
+private
+
+  def test; end
+end
+
+==> 001.rb 43 <==
+module Test
+
+ private
+
+  def test; end
+end
+
+==> 002.rb 51 <==
+module Test
+
+ module_function
+
+  def test; end
+end
+
+==> 003.rb 52 <==
+module Test
+
+  public
+
+private
+
+  def test; end
+end
+
+==> 004.rb 52 <==
+module Test
+
+public
+
+  private
+
+  def test; end
+end
+
+==> 005.rb 44 <==
+class << self
+
+private
+
+  def test; end
+end
+
+==> 006.rb 50 <==
+Test = Class.new do
+
+private
+
+  def test; end
+end
+
+==> 007.rb 38 <==
+func do
+
+private
+
+  def test; end
+end
+
+==> 008.rb 51 <==
+Test = Module.new do
+
+private
+
+  def test; end
+end
+
+==> 009.rb 43 <==
+class Test
+
+protected
+
+  def test; end
+end
+
+==> 010.rb 43 <==
+class Test
+
+  private
+
+  def test; end
+end
+
+==> 011.rb 45 <==
+class Test
+
+  protected
+
+  def test; end
+end
+
+==> 012.rb 53 <==
+Test = Module.new do
+
+  private
+
+  def test; end
+end
+
+==> 013.rb 15 <==
+class Test
+end
+
+==> 014.rb 41 <==
+module Test
+  def test
+    foo
+  end
+end
+
+==> 015.rb 94 <==
+class Test
+
+  class Nested
+
+  private
+
+    def a; end
+  end
+
+  protected
+
+  def test; end
+end
+
+==> 016.rb 50 <==
+class A
+  module Test
+    private :test
+  end
+end
+
+==> 017.rb 49 <==
+class A
+  class Test
+    private :test
+  end
+end
+
+==> 018.rb 52 <==
+class A
+  class << self
+    private :test
+  end
+end
+
+==> 019.rb 36 <==
+class A; private; def foo; end; end
+
+==> 020.rb 47 <==
+class Test
+
+    private
+
+    def test; end
+end
+

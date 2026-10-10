@@ -1,0 +1,86 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 89 <==
+case x
+when false
+  first_method
+when true
+  second_method
+when false
+  third_method
+end
+
+==> 001.rb 64 <==
+case x
+when false
+  first_method
+when false
+  second_method
+end
+
+==> 002.rb 115 <==
+case x
+when false
+  first_method
+when true
+  second_method
+when false
+  third_method
+when true
+  fourth_method
+end
+
+==> 003.rb 62 <==
+case x
+when a, b
+  first_method
+when b, a
+  second_method
+end
+
+==> 004.rb 66 <==
+case x
+when a && b
+  first_method
+when a && b
+  second_method
+end
+
+==> 005.rb 37 <==
+case x
+when false
+  first_method
+end
+
+==> 006.rb 63 <==
+case x
+when false
+  first_method
+when true
+  second_method
+end
+
+==> 007.rb 82 <==
+case x
+when false
+  method_name
+when true
+  second_method
+else
+  third_method
+end
+
+==> 008.rb 103 <==
+case x
+when something && another && other
+  first_method
+when something && another
+  second_method
+end
+

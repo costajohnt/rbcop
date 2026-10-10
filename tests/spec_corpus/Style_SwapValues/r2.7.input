@@ -1,0 +1,61 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 22 <==
+tmp = x
+x = y
+y = tmp
+
+==> 001.rb 26 <==
+tmp = $x
+$x = $y
+$y = tmp
+
+==> 002.rb 26 <==
+tmp = @x
+@x = @y
+@y = tmp
+
+==> 003.rb 30 <==
+tmp = @@x
+@@x = @@y
+@@y = tmp
+
+==> 004.rb 22 <==
+tmp = X
+X = Y
+Y = tmp
+
+==> 005.rb 36 <==
+tmp = ::X
+::X = Foo::Y
+Foo::Y = tmp
+
+==> 006.rb 26 <==
+tmp = @x
+@x = $y
+$y = tmp
+
+==> 007.rb 58 <==
+tmp = x # comment 1
+# comment 2
+x = y
+y = tmp # comment 3
+
+==> 008.rb 12 <==
+x, y = y, x
+
+==> 009.rb 28 <==
+tmp = x
+x = y
+y = not_a_tmp
+
+==> 010.rb 40 <==
+def (foo = Object.new).do_something
+end
+

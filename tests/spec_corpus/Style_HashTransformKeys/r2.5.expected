@@ -1,0 +1,84 @@
+==> offenses exit=1 1433 <==
+000.rb:1:1: C: [Correctable] Style/HashTransformKeys: Prefer `transform_keys` over `each_with_object`.
+001.rb:1:1: C: [Correctable] Style/HashTransformKeys: Prefer `transform_keys` over `each_with_object`.
+002.rb:1:1: C: [Correctable] Style/HashTransformKeys: Prefer `transform_keys` over `each_with_object`.
+012.rb:1:1: C: [Correctable] Style/HashTransformKeys: Prefer `transform_keys` over `each_with_object`.
+013.rb:1:1: C: [Correctable] Style/HashTransformKeys: Prefer `transform_keys` over `each_with_object`.
+014.rb:1:1: C: [Correctable] Style/HashTransformKeys: Prefer `transform_keys` over `map {...}.to_h`.
+015.rb:1:1: C: [Correctable] Style/HashTransformKeys: Prefer `transform_keys` over `map {...}.to_h`.
+016.rb:2:3: C: [Correctable] Style/HashTransformKeys: Prefer `transform_keys` over `map {...}.to_h`.
+018.rb:1:1: C: [Correctable] Style/HashTransformKeys: Prefer `transform_keys` over `Hash[_.map {...}]`.
+026.rb:1:1: C: [Correctable] Style/HashTransformKeys: Prefer `transform_keys` over `map {...}.to_h`.
+027.rb:1:1: C: [Correctable] Style/HashTransformKeys: Prefer `transform_keys` over `Hash[_.map {...}]`.
+028.rb:1:1: C: [Correctable] Style/HashTransformKeys: Prefer `transform_keys` over `map {...}.to_h`.
+029.rb:1:1: C: [Correctable] Style/HashTransformKeys: Prefer `transform_keys` over `map {...}.to_h`.
+030.rb:1:1: C: [Correctable] Style/HashTransformKeys: Prefer `transform_keys` over `Hash[_.map {...}]`.
+
+==> autocorrect exit=0 1405 <==
+000.rb:1:1: C: [Corrected] Style/HashTransformKeys: Prefer `transform_keys` over `each_with_object`.
+001.rb:1:1: C: [Corrected] Style/HashTransformKeys: Prefer `transform_keys` over `each_with_object`.
+002.rb:1:1: C: [Corrected] Style/HashTransformKeys: Prefer `transform_keys` over `each_with_object`.
+012.rb:1:1: C: [Corrected] Style/HashTransformKeys: Prefer `transform_keys` over `each_with_object`.
+013.rb:1:1: C: [Corrected] Style/HashTransformKeys: Prefer `transform_keys` over `each_with_object`.
+014.rb:1:1: C: [Corrected] Style/HashTransformKeys: Prefer `transform_keys` over `map {...}.to_h`.
+015.rb:1:1: C: [Corrected] Style/HashTransformKeys: Prefer `transform_keys` over `map {...}.to_h`.
+016.rb:2:3: C: [Corrected] Style/HashTransformKeys: Prefer `transform_keys` over `map {...}.to_h`.
+018.rb:1:1: C: [Corrected] Style/HashTransformKeys: Prefer `transform_keys` over `Hash[_.map {...}]`.
+026.rb:1:1: C: [Corrected] Style/HashTransformKeys: Prefer `transform_keys` over `map {...}.to_h`.
+027.rb:1:1: C: [Corrected] Style/HashTransformKeys: Prefer `transform_keys` over `Hash[_.map {...}]`.
+028.rb:1:1: C: [Corrected] Style/HashTransformKeys: Prefer `transform_keys` over `map {...}.to_h`.
+029.rb:1:1: C: [Corrected] Style/HashTransformKeys: Prefer `transform_keys` over `map {...}.to_h`.
+030.rb:1:1: C: [Corrected] Style/HashTransformKeys: Prefer `transform_keys` over `Hash[_.map {...}]`.
+
+==> corrected/000.rb 41 <==
+{a: 1, b: 2}.transform_keys {|k| foo(k)}
+
+==> corrected/001.rb 56 <==
+some_hash.to_h.transform_keys do |key|
+  key.to_sym
+end
+
+==> corrected/002.rb 36 <==
+x.to_h&.transform_keys {|k| foo(k)}
+
+==> corrected/012.rb 35 <==
+x.to_h.transform_keys {|k| foo(k)}
+
+==> corrected/013.rb 54 <==
+x.group_by { |e| e.type }.transform_keys {|k| foo(k)}
+
+==> corrected/014.rb 43 <==
+{a: 1, b: 2}.transform_keys {|k| k.to_sym}
+
+==> corrected/015.rb 43 <==
+{a: 1, b: 2}.transform_keys {|k| k.to_sym}
+
+==> corrected/016.rb 72 <==
+wrapping do
+  {a: 1, b: 2}.transform_keys do |k|
+    k.to_sym
+  end
+end
+
+==> corrected/018.rb 43 <==
+{a: 1, b: 2}.transform_keys {|k| k.to_sym}
+
+==> corrected/026.rb 37 <==
+x.to_h.transform_keys {|k| k.to_sym}
+
+==> corrected/027.rb 41 <==
+x.merge(y).transform_keys {|k| k.to_sym}
+
+==> corrected/028.rb 48 <==
+{a: 1, b: 2}.transform_keys do |k|
+  k.to_s
+end
+
+==> corrected/029.rb 62 <==
+{a: 1, b: 2}.transform_keys {|k| k.to_s}.to_h {|k, v| [v, k]}
+
+==> corrected/030.rb 48 <==
+{a: 1, b: 2}.transform_keys do |k|
+  k.to_s
+end
+

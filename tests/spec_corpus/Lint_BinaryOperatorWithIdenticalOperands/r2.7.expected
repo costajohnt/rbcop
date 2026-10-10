@@ -1,0 +1,30 @@
+==> offenses exit=1 1324 <==
+000.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+001.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `!=` has identical operands.
+002.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `===` has identical operands.
+003.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `<=>` has identical operands.
+004.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `=~` has identical operands.
+005.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `&&` has identical operands.
+006.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `||` has identical operands.
+007.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `>` has identical operands.
+008.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `>=` has identical operands.
+009.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `<` has identical operands.
+010.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `<=` has identical operands.
+011.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `|` has identical operands.
+012.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `^` has identical operands.
+
+==> autocorrect exit=1 1324 <==
+000.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+001.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `!=` has identical operands.
+002.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `===` has identical operands.
+003.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `<=>` has identical operands.
+004.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `=~` has identical operands.
+005.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `&&` has identical operands.
+006.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `||` has identical operands.
+007.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `>` has identical operands.
+008.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `>=` has identical operands.
+009.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `<` has identical operands.
+010.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `<=` has identical operands.
+011.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `|` has identical operands.
+012.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `^` has identical operands.
+

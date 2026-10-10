@@ -1,0 +1,13 @@
+==> offenses exit=1 160 <==
+000.rb:1:1: C: [Correctable] Layout/EmptyComment: Source code comment is empty.
+000.rb:3:1: C: [Correctable] Layout/EmptyComment: Source code comment is empty.
+
+==> autocorrect exit=0 156 <==
+000.rb:1:1: C: [Corrected] Layout/EmptyComment: Source code comment is empty.
+000.rb:3:1: C: [Corrected] Layout/EmptyComment: Source code comment is empty.
+
+==> corrected/000.rb 47 <==
+# Description of `hello` method.
+def hello
+end
+

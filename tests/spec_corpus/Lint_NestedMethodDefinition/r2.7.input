@@ -1,0 +1,307 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 23 <==
+def x; def y; end; end
+
+==> 001.rb 60 <==
+class Foo
+end
+foo = Foo.new
+def foo.bar
+  def baz
+  end
+end
+
+==> 002.rb 46 <==
+def foo
+  bar = -> { def baz; puts; end }
+end
+
+==> 003.rb 56 <==
+class Foo
+  def self.x
+    def self.y
+    end
+  end
+end
+
+==> 004.rb 44 <==
+def foo
+  bar = -> { puts  }
+  bar.call
+end
+
+==> 005.rb 88 <==
+class Foo
+  def x(obj)
+    obj.instance_eval do
+      def y
+      end
+    end
+  end
+end
+
+==> 006.rb 88 <==
+class Foo
+  def x(obj)
+    obj.instance_exec do
+      def y
+      end
+    end
+  end
+end
+
+==> 007.rb 55 <==
+class Foo
+  def x(obj)
+    def obj.y
+    end
+  end
+end
+
+==> 008.rb 51 <==
+class Foo
+  def x
+    def @obj.y
+    end
+  end
+end
+
+==> 009.rb 52 <==
+class Foo
+  def x
+    def @@obj.y
+    end
+  end
+end
+
+==> 010.rb 51 <==
+class Foo
+  def x
+    def $obj.y
+    end
+  end
+end
+
+==> 011.rb 52 <==
+class Foo
+  def x
+    def Const.y
+    end
+  end
+end
+
+==> 012.rb 59 <==
+class Foo
+  def x
+    def do_something.y
+    end
+  end
+end
+
+==> 013.rb 64 <==
+class Foo
+  def x
+    def (do_something&.y).z
+    end
+  end
+end
+
+==> 014.rb 89 <==
+class Foo
+  def x(klass)
+    klass.class_eval do
+      def y
+      end
+    end
+  end
+end
+
+==> 015.rb 89 <==
+class Foo
+  def x(klass)
+    klass.class_exec do
+      def y
+      end
+    end
+  end
+end
+
+==> 016.rb 96 <==
+class Foo
+  def self.define(mod)
+    mod.module_eval do
+      def y
+      end
+    end
+  end
+end
+
+==> 017.rb 96 <==
+class Foo
+  def self.define(mod)
+    mod.module_exec do
+      def y
+      end
+    end
+  end
+end
+
+==> 018.rb 80 <==
+class Foo
+  def bar
+    class << self
+      def baz
+      end
+    end
+  end
+end
+
+==> 019.rb 174 <==
+class Foo
+  def self.define
+    Class.new(S) do
+      def y
+      end
+    end
+  end
+end
+
+class Foo
+  def self.define
+    Class.new do
+      def y
+      end
+    end
+  end
+end
+
+==> 020.rb 178 <==
+class Foo
+  def self.define
+    ::Class.new(S) do
+      def y
+      end
+    end
+  end
+end
+
+class Foo
+  def self.define
+    ::Class.new do
+      def y
+      end
+    end
+  end
+end
+
+==> 021.rb 86 <==
+class Foo
+  def self.define
+    Module.new do
+      def y
+      end
+    end
+  end
+end
+
+==> 022.rb 88 <==
+class Foo
+  def self.define
+    ::Module.new do
+      def y
+      end
+    end
+  end
+end
+
+==> 023.rb 180 <==
+class Foo
+  def self.define
+    Struct.new(:name) do
+      def y
+      end
+    end
+  end
+end
+
+class Foo
+  def self.define
+    Struct.new do
+      def y
+      end
+    end
+  end
+end
+
+==> 024.rb 184 <==
+class Foo
+  def self.define
+    ::Struct.new(:name) do
+      def y
+      end
+    end
+  end
+end
+
+class Foo
+  def self.define
+    ::Struct.new do
+      def y
+      end
+    end
+  end
+end
+
+==> 025.rb 113 <==
+class Foo
+  def self.define
+    Module.new do |m|
+      def y
+      end
+
+      do_something(m)
+    end
+  end
+end
+
+==> 026.rb 110 <==
+class Foo
+  def self.define
+    Module.new do
+      def y
+      end
+
+      do_something(_1)
+    end
+  end
+end
+
+==> 027.rb 104 <==
+class Foo
+  def x(obj)
+    obj.instance_eval do
+      @bar = _1
+      def y
+      end
+    end
+  end
+end
+
+==> 028.rb 107 <==
+class Foo
+  def x(obj)
+    obj.instance_exec(3) do
+      @bar = _1
+      def y
+      end
+    end
+  end
+end
+

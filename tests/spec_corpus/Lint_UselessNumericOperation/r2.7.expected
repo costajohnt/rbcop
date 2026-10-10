@@ -1,0 +1,105 @@
+==> offenses exit=1 2420 <==
+000.rb:1:1: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+001.rb:1:1: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+002.rb:1:1: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+003.rb:1:1: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+004.rb:1:1: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+005.rb:1:1: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+006.rb:1:1: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+007.rb:1:1: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+008.rb:1:1: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+009.rb:1:1: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+010.rb:1:1: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+011.rb:1:1: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+012.rb:1:1: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+013.rb:2:1: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+014.rb:1:1: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+015.rb:1:1: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+016.rb:1:1: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+017.rb:1:1: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+018.rb:1:1: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+019.rb:1:1: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+
+==> autocorrect exit=0 2380 <==
+000.rb:1:1: W: [Corrected] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+001.rb:1:1: W: [Corrected] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+002.rb:1:1: W: [Corrected] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+003.rb:1:1: W: [Corrected] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+004.rb:1:1: W: [Corrected] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+005.rb:1:1: W: [Corrected] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+006.rb:1:1: W: [Corrected] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+007.rb:1:1: W: [Corrected] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+008.rb:1:1: W: [Corrected] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+009.rb:1:1: W: [Corrected] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+010.rb:1:1: W: [Corrected] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+011.rb:1:1: W: [Corrected] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+012.rb:1:1: W: [Corrected] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+013.rb:2:1: W: [Corrected] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+014.rb:1:1: W: [Corrected] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+015.rb:1:1: W: [Corrected] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+016.rb:1:1: W: [Corrected] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+017.rb:1:1: W: [Corrected] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+018.rb:1:1: W: [Corrected] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+019.rb:1:1: W: [Corrected] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+
+==> corrected/000.rb 2 <==
+x
+
+==> corrected/001.rb 2 <==
+x
+
+==> corrected/002.rb 2 <==
+x
+
+==> corrected/003.rb 2 <==
+x
+
+==> corrected/004.rb 2 <==
+x
+
+==> corrected/005.rb 6 <==
+x = x
+
+==> corrected/006.rb 6 <==
+x = x
+
+==> corrected/007.rb 6 <==
+x = x
+
+==> corrected/008.rb 6 <==
+x = x
+
+==> corrected/009.rb 6 <==
+x = x
+
+==> corrected/010.rb 2 <==
+x
+
+==> corrected/011.rb 2 <==
+x
+
+==> corrected/012.rb 6 <==
+x.bar
+
+==> corrected/013.rb 8 <==
+x = 1
+x
+
+==> corrected/014.rb 3 <==
+@x
+
+==> corrected/015.rb 4 <==
+@@x
+
+==> corrected/016.rb 3 <==
+$x
+
+==> corrected/017.rb 6 <==
+CONST
+
+==> corrected/018.rb 8 <==
+@x = @x
+
+==> corrected/019.rb 14 <==
+CONST = CONST
+

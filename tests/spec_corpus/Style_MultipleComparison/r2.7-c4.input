@@ -1,0 +1,32 @@
+==> .rubocop.yml 160 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/MultipleComparison:
+  ComparisonsThreshold: 3
+
+==> 000.rb 48 <==
+a = "a"
+foo if a == "a" || a == "b" || a == "c"
+
+==> 001.rb 36 <==
+a = "a"
+foo if a == "a" || a == "b"
+
+==> 002.rb 64 <==
+a = "a"
+foo if a == "a" || a == "b"
+bar if a == "a" || a == "b"
+
+==> 003.rb 77 <==
+def foo(a)
+  a == "a" || a == "b"
+end
+
+def bar(a)
+  a == "a" || a == "b"
+end
+

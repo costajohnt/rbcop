@@ -1,0 +1,41 @@
+==> .rubocop.yml 159 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Naming/BlockForwarding:
+  EnforcedStyle: anonymous
+
+==> 000.rb 60 <==
+def foo(&block)
+  block_method do
+    bar(&block)
+  end
+end
+
+==> 001.rb 72 <==
+def foo(&block)
+  block_method do
+    bar(&block)
+    baz(_1)
+  end
+end
+
+==> 002.rb 74 <==
+def foo(&block)
+  block_method do
+    bar(&block)
+  end
+  baz(&block)
+end
+
+==> 003.rb 74 <==
+def foo(&block)
+  bar(&block)
+  block_method do
+    baz(&block)
+  end
+end
+

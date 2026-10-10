@@ -1,0 +1,11 @@
+==> offenses exit=1 160 <==
+000.rb:1:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is not on the same line as the assignment operator `=`.
+
+==> autocorrect exit=0 158 <==
+000.rb:1:1: C: [Corrected] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is not on the same line as the assignment operator `=`.
+
+==> corrected/000.rb 32 <==
+bars = foo.map {
+    it.bar
+  }
+

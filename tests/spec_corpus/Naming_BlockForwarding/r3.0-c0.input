@@ -1,0 +1,15 @@
+==> .rubocop.yml 159 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Naming/BlockForwarding:
+  EnforcedStyle: anonymous
+
+==> 000.rb 34 <==
+def foo(&block)
+  bar(&block)
+end
+

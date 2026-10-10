@@ -1,0 +1,131 @@
+==> offenses exit=1 1993 <==
+000.rb:1:1: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+001.rb:1:1: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+002.rb:1:1: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+003.rb:1:1: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+004.rb:1:1: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+005.rb:1:1: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+006.rb:1:1: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+014.rb:1:5: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+015.rb:1:1: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+017.rb:1:1: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+018.rb:1:1: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+019.rb:1:1: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+020.rb:1:1: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+021.rb:1:1: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+022.rb:1:1: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+023.rb:1:1: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+024.rb:1:1: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+025.rb:1:1: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+026.rb:1:1: C: [Correctable] Style/WordArray: Use `['one two', 'three four']` for an array of words.
+028.rb:1:5: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+029.rb:2:3: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+029.rb:3:3: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+031.rb:1:2: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+
+==> autocorrect exit=0 1947 <==
+000.rb:1:1: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+001.rb:1:1: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+002.rb:1:1: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+003.rb:1:1: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+004.rb:1:1: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+005.rb:1:1: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+006.rb:1:1: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+014.rb:1:5: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+015.rb:1:1: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+017.rb:1:1: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+018.rb:1:1: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+019.rb:1:1: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+020.rb:1:1: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+021.rb:1:1: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+022.rb:1:1: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+023.rb:1:1: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+024.rb:1:1: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+025.rb:1:1: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+026.rb:1:1: C: [Corrected] Style/WordArray: Use `['one two', 'three four']` for an array of words.
+028.rb:1:5: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+029.rb:2:3: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+029.rb:3:3: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+031.rb:1:2: C: [Corrected] Style/WordArray: Use `%w` or `%W` for an array of words.
+
+==> corrected/000.rb 18 <==
+%w[one two three]
+
+==> corrected/001.rb 18 <==
+%w[one two three]
+
+==> corrected/002.rb 20 <==
+%w[foo bar foo-bar]
+
+==> corrected/003.rb 28 <==
+%w[ВУЗ вуз 中文网]
+
+==> corrected/004.rb 11 <==
+%W[one \n]
+
+==> corrected/005.rb 20 <==
+%W[one\n hi\tthere]
+
+==> corrected/006.rb 20 <==
+%W[one\n hi\tthere]
+
+==> corrected/014.rb 25 <==
+foo(%w[bar baz]) { qux }
+
+==> corrected/015.rb 17 <==
+%w[one two three]
+==> corrected/017.rb 25 <==
+%w[
+foo
+bar
+baz
+] # test
+
+==> corrected/018.rb 18 <==
+%w[one two three]
+
+==> corrected/019.rb 8 <==
+%w[one]
+
+==> corrected/020.rb 18 <==
+%W[one two \n \t]
+
+==> corrected/021.rb 18 <==
+%w[one
+two three]
+
+==> corrected/022.rb 18 <==
+%w[
+foo
+bar
+baz
+]
+
+==> corrected/023.rb 28 <==
+%w[foo bar baz
+boz buz
+biz]
+
+==> corrected/024.rb 30 <==
+%w[one two three]
+%w(a b c d)
+
+==> corrected/025.rb 26 <==
+%w[one two three]
+%w(a b)
+
+==> corrected/026.rb 26 <==
+['one two', 'three four']
+
+==> corrected/028.rb 16 <==
+A = %w[one two]
+
+==> corrected/029.rb 33 <==
+[
+  %w[one One],
+  %w[two Two]
+]
+
+==> corrected/031.rb 20 <==
+[%w[one One], 2, 3]
+

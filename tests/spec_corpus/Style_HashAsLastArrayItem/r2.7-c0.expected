@@ -1,0 +1,30 @@
+==> offenses exit=1 328 <==
+000.rb:1:8: C: [Correctable] Style/HashAsLastArrayItem: Wrap hash in `{` and `}`.
+001.rb:1:2: C: [Correctable] Style/HashAsLastArrayItem: Wrap hash in `{` and `}`.
+002.rb:2:3: C: [Correctable] Style/HashAsLastArrayItem: Wrap hash in `{` and `}`.
+003.rb:1:2: C: [Correctable] Style/HashAsLastArrayItem: Wrap hash in `{` and `}`.
+
+==> autocorrect exit=0 320 <==
+000.rb:1:8: C: [Corrected] Style/HashAsLastArrayItem: Wrap hash in `{` and `}`.
+001.rb:1:2: C: [Corrected] Style/HashAsLastArrayItem: Wrap hash in `{` and `}`.
+002.rb:2:3: C: [Corrected] Style/HashAsLastArrayItem: Wrap hash in `{` and `}`.
+003.rb:1:2: C: [Corrected] Style/HashAsLastArrayItem: Wrap hash in `{` and `}`.
+
+==> corrected/000.rb 25 <==
+[1, 2, {one: 1, two: 2}]
+
+==> corrected/001.rb 19 <==
+[{one: 1, two: 2}]
+
+==> corrected/002.rb 31 <==
+[
+  {
+  one: 1,
+  two: 2
+  }
+]
+
+==> corrected/003.rb 20 <==
+[{one: 1,
+ two: 2}]
+
