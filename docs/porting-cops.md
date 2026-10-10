@@ -275,6 +275,15 @@ More traps found while porting:
   `rescue A, B` lists in an `array`.
 - Metrics helpers: `code_length` (CodeLength + CountAsOne), `method_complexity`,
   `abc_size_calculator`.
+- Prism `name_loc` on a keyword parameter `a:` includes the colon; parser's `kwarg` name does not.
+- "Inside a resbody" checks must test the parser resbody range (`helpers::resbody::range`), since
+  Prism nests later rescue clauses.
+- Resolve unqualified cop names against all of default.yml (`helpers::cop_registry`), never
+  `crate::cops::ALL`.
+- `body.children.last` means the else branch of an if/case and a block/loop body.
+- A whole-file check that needs the AST subscribes to `PROGRAM_NODE` (the file hook has no
+  ancestors).
+- Naming helpers: `configurable_naming` (formats, numbering, Allowed/Forbidden identifiers).
 - `helpers::regexp_captures` counts named/numbered groups like `RegexpNode#each_capture`.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.
