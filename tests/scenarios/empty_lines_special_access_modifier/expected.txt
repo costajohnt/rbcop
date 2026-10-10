@@ -1,0 +1,20 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+modifiers.rb:10:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+modifiers.rb:12:1: C: Style/Documentation: Missing top-level documentation comment for `class C`.
+modifiers.rb:14:3: C: [Correctable] Style/AccessModifierDeclarations: `protected` should not be inlined in method definitions.
+modifiers.rb:15:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+modifiers.rb:17:1: C: Style/Documentation: Missing top-level documentation comment for `class D`.
+modifiers.rb:19:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing before first send definition
+modifiers.rb:19:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `public`.
+modifiers.rb:19:3: W: [Correctable] Lint/UselessAccessModifier: Useless `public` access modifier.
+modifiers.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for `module M`.
+modifiers.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+modifiers.rb:20:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+modifiers.rb:22:1: C: Style/Documentation: Missing top-level documentation comment for `class F`.
+modifiers.rb:25:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+modifiers.rb:27:1: C: Style/Documentation: Missing top-level documentation comment for `class G`.
+modifiers.rb:31:1: C: [Correctable] Layout/EmptyLinesAroundClassBody: Empty line missing at class body end.
+modifiers.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing at module body end.
+modifiers.rb:6:1: C: Style/Documentation: Missing top-level documentation comment for `module N`.
+modifiers.rb:8:1: C: [Correctable] Layout/EmptyLinesAroundModuleBody: Empty line missing before first send definition
+modifiers.rb:8:3: C: [Correctable] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `private`.
