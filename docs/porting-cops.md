@@ -305,6 +305,15 @@ More traps found while porting:
   is no offense.
 - Always pass your own `OUT=` (or rely on the per-worktree default) to check-autocorrect.sh; the
   gate scripts rebuild the release binary first.
+- rubocop-ast `IfNode#else_branch` on an `unless` is the `else` clause (node_parts swap), while
+  raw-children node patterns see the opposite branch. `IfNode#branches`: ternary gives both, plain
+  if without else gives one, elsif chains flatten.
+- `def_node_search(...).to_a.last` is the last match in pre-order (largest start offset).
+- `EnsureNode#branch` is the ensure body, not the main body.
+- `helpers::parser_parent` (parser_parent, is_top_const, is_operator_keyword, is_ternary).
+- Comment association: a `begin` (2+ statements) never gets leading comments (its first statement
+  does); a statement gets a same-line trailing comment only if no descendant ends on that line.
+- `|a, b,|` gives a Prism `ImplicitRestNode` parameter that parser has no argument for.
 - `helpers::regexp_captures` counts named/numbered groups like `RegexpNode#each_capture`.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.
