@@ -569,9 +569,268 @@ pub fn advance_chars(src: &str, from: usize, k: usize) -> usize {
     src[from..].char_indices().nth(k).map_or(src.len(), |(i, _)| from + i)
 }
 
+/// Expression types of a `parsed_tree`, as far as the cops care.
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+pub enum ExprKind {
+    /// A run of literal characters (`:literal`).
+    Literal,
+    /// Whitespace or a `#` comment in free-spacing mode (`:free_space`).
+    FreeSpace,
+    /// Any other terminal: escape, character type, `.`, anchor, backreference, property.
+    Terminal,
+    /// A character set (`[...]`, type `:set`, token `:character`); its members are not modelled.
+    Set,
+    /// `(?:...)`, or the implicit passive group regexp_parser wraps around a chained quantifier
+    /// (`a+*`).
+    PassiveGroup,
+    /// Any other group: capture, named, atomic, lookaround, absence, options, comment, conditional.
+    Group,
+    /// `a|b`: children are the alternatives (`Sequence`).
+    Alternation,
+    Sequence,
+}
+
+/// A quantifier: byte range in the pattern, quantity (`max` None = unbounded) and mode.
+#[derive(Clone, Copy, Debug)]
+pub struct Quantifier {
+    pub start: usize,
+    pub end: usize,
+    pub min: u64,
+    pub max: Option<u64>,
+    pub greedy: bool,
+}
+
+/// A regexp_parser expression (subset): byte range of its body (quantifier excluded), its
+/// quantifier and its children.
+#[derive(Debug)]
+pub struct Expr {
+    pub kind: ExprKind,
+    pub start: usize,
+    pub end: usize,
+    pub quantifier: Option<Quantifier>,
+    pub children: Vec<Expr>,
+}
+
+impl Expr {
+    /// `terminal?`
+    pub fn terminal(&self) -> bool {
+        matches!(self.kind, ExprKind::Literal | ExprKind::FreeSpace | ExprKind::Terminal)
+    }
+
+    /// `each_expression` (pre-order, self excluded).
+    pub fn each_expression<'a>(&'a self, out: &mut Vec<&'a Expr>) {
+        for c in &self.children {
+            out.push(c);
+            c.each_expression(out);
+        }
+    }
+}
+
+/// `Regexp::Parser.parse(pattern)`: the root's children, or None where the gem raises.
+pub fn tree(pattern: &str, extended: bool) -> Option<Vec<Expr>> {
+    parse(pattern, extended)?;
+    let mut sc = Scanner {
+        s: pattern.as_bytes(),
+        i: 0,
+        out: Parsed::default(),
+        captures: 0,
+        names: Vec::new(),
+        num_refs: Vec::new(),
+        name_refs: Vec::new(),
+    };
+    let mut x = extended;
+    Some(sc.alternatives(&mut x))
+}
+
+impl Scanner<'_> {
+    /// A group body: a sequence, or an alternation of sequences when it contains `|`.
+    fn alternatives(&mut self, extended: &mut bool) -> Vec<Expr> {
+        let start = self.i;
+        let first = self.items(extended);
+        if self.peek(0) != Some(b'|') {
+            return first;
+        }
+        let mut seqs = vec![Expr { kind: ExprKind::Sequence, start, end: self.i, quantifier: None, children: first }];
+        while self.peek(0) == Some(b'|') {
+            self.i += 1;
+            let s = self.i;
+            let children = self.items(extended);
+            seqs.push(Expr { kind: ExprKind::Sequence, start: s, end: self.i, quantifier: None, children });
+        }
+        vec![Expr { kind: ExprKind::Alternation, start, end: self.i, quantifier: None, children: seqs }]
+    }
+
+    /// Expressions up to `)`, `|` or the end (not consumed).
+    fn items(&mut self, extended: &mut bool) -> Vec<Expr> {
+        let mut out: Vec<Expr> = Vec::new();
+        while let Some(c) = self.peek(0) {
+            let start = self.i;
+            let leaf = |kind, end| Expr { kind, start, end, quantifier: None, children: Vec::new() };
+            match c {
+                b')' | b'|' => break,
+                b'*' | b'+' | b'?' | b'{'
+                    if out.iter().any(|e| e.kind != ExprKind::FreeSpace) && self.quantifier().is_some() =>
+                {
+                    let q = self.quantifier().unwrap();
+                    self.i = q.end;
+                    let k = out.iter().rposition(|e| e.kind != ExprKind::FreeSpace).unwrap();
+                    if k + 1 < out.len() {
+                        // Free space before the quantifier (`a ?` in /x): the target is quantified
+                        // whole; a chained one wraps the target and the free space.
+                        if out[k].quantifier.is_some() {
+                            let children: Vec<Expr> = out.drain(k..).collect();
+                            let start = children[0].start;
+                            out.push(Expr { kind: ExprKind::PassiveGroup, start, end: q.start, quantifier: Some(q), children });
+                        } else {
+                            out[k].quantifier = Some(q);
+                        }
+                        continue;
+                    }
+                    let mut last = out.pop().unwrap();
+                    if last.quantifier.is_some() {
+                        // A chained quantifier wraps the quantified expression in a passive group.
+                        last = Expr {
+                            kind: ExprKind::PassiveGroup,
+                            start: last.start,
+                            end: q.start,
+                            quantifier: None,
+                            children: vec![last],
+                        };
+                    } else if last.kind == ExprKind::Literal && self.s[last.start..last.end].len() > 1 {
+                        // `ab+`: the quantifier takes the last character only.
+                        let mut cut = last.end - 1;
+                        while cut > last.start && (self.s[cut] & 0xc0) == 0x80 {
+                            cut -= 1;
+                        }
+                        if cut > last.start {
+                            out.push(Expr { end: cut, ..last });
+                            last = Expr { kind: ExprKind::Literal, start: cut, end: q.start, quantifier: None, children: Vec::new() };
+                        }
+                    }
+                    last.quantifier = Some(q);
+                    out.push(last);
+                }
+                b'\\' => {
+                    if self.escape(false).is_none() {
+                        self.i = self.s.len();
+                    }
+                    out.push(leaf(ExprKind::Terminal, self.i));
+                }
+                b'[' => {
+                    if self.set().is_none() {
+                        self.i = self.s.len();
+                    }
+                    out.push(leaf(ExprKind::Set, self.i));
+                }
+                b'(' => {
+                    let passive = self.s[start..].starts_with(b"(?:");
+                    match self.group_open(*extended) {
+                        Some(Some(Group::Switch(x))) => {
+                            // `(?i)`: the rest of the sequence is its body.
+                            *extended = x;
+                            let children = self.items(extended);
+                            out.push(Expr { kind: ExprKind::Group, start, end: self.i, quantifier: None, children });
+                        }
+                        Some(Some(Group::Comment)) => out.push(leaf(ExprKind::Group, self.i)),
+                        Some(Some(Group::Open(x))) => {
+                            let mut inner = x;
+                            let children = self.alternatives(&mut inner);
+                            if self.peek(0) == Some(b')') {
+                                self.i += 1;
+                            }
+                            let kind = if passive { ExprKind::PassiveGroup } else { ExprKind::Group };
+                            out.push(Expr { kind, start, end: self.i, quantifier: None, children });
+                        }
+                        _ => self.i = self.s.len(),
+                    }
+                }
+                b'.' | b'^' | b'$' => {
+                    self.i += 1;
+                    out.push(leaf(ExprKind::Terminal, self.i));
+                }
+                b'#' if *extended => {
+                    while let Some(c) = self.peek(0) {
+                        self.i += 1;
+                        if c == b'\n' {
+                            break;
+                        }
+                    }
+                    out.push(leaf(ExprKind::FreeSpace, self.i));
+                }
+                b' ' | b'\t' | b'\n' | b'\r' | b'\x0b' | b'\x0c' if *extended => {
+                    while matches!(self.peek(0), Some(b' ' | b'\t' | b'\n' | b'\r' | b'\x0b' | b'\x0c')) {
+                        self.i += 1;
+                    }
+                    out.push(leaf(ExprKind::FreeSpace, self.i));
+                }
+                _ => {
+                    self.bump();
+                    match out.last_mut() {
+                        Some(l) if l.kind == ExprKind::Literal && l.quantifier.is_none() && l.end == start => l.end = self.i,
+                        _ => out.push(leaf(ExprKind::Literal, self.i)),
+                    }
+                }
+            }
+        }
+        out
+    }
+
+    /// A quantifier at self.i: `*` `+` `?` (with a `?` reluctant or `+` possessive suffix) or an
+    /// interval `{n}`, `{n,}`, `{,m}`, `{n,m}` (no suffix: a following quantifier chains).
+    fn quantifier(&self) -> Option<Quantifier> {
+        let start = self.i;
+        let (min, max) = match self.peek(0)? {
+            b'*' => (0, None),
+            b'+' => (1, None),
+            b'?' => (0, Some(1)),
+            b'{' => {
+                let rest = &self.s[start + 1..];
+                let close = rest.iter().position(|&c| c == b'}')?;
+                let body = std::str::from_utf8(&rest[..close]).ok()?;
+                let (lo, hi) = match body.split_once(',') {
+                    Some((lo, hi)) => (lo, Some(hi)),
+                    None => (body, None),
+                };
+                let digits = |s: &str| s.bytes().all(|b| b.is_ascii_digit());
+                if !digits(lo) || !hi.is_none_or(digits) || (lo.is_empty() && hi.is_none_or(str::is_empty)) {
+                    return None;
+                }
+                let min = lo.parse().unwrap_or(0);
+                let max = match hi {
+                    None => Some(min),
+                    Some("") => None,
+                    Some(h) => Some(h.parse().unwrap_or(u64::MAX)),
+                };
+                return Some(Quantifier { start, end: start + close + 2, min, max, greedy: true });
+            }
+            _ => return None,
+        };
+        let (end, greedy) = match self.peek(1) {
+            Some(b'?' | b'+') => (start + 2, false),
+            _ => (start + 1, true),
+        };
+        Some(Quantifier { start, end, min, max, greedy })
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn tree_shapes() {
+        let t = tree("(?:ab+)+a+*", false).unwrap();
+        assert_eq!(t.len(), 2);
+        assert_eq!(t[0].kind, ExprKind::PassiveGroup);
+        assert_eq!(t[0].children.len(), 2);
+        assert_eq!(t[1].kind, ExprKind::PassiveGroup);
+        assert_eq!(t[1].quantifier.unwrap().start, 10);
+        assert!(!tree("a*+", false).unwrap()[0].quantifier.unwrap().greedy);
+        assert_eq!(tree("(?:a|b+)+", false).unwrap()[0].children[0].kind, ExprKind::Alternation);
+        assert!(tree("a{,}", false).unwrap()[0].quantifier.is_none());
+        let q = tree("a{,1}", false).unwrap()[0].quantifier.unwrap();
+        assert_eq!((q.min, q.max), (0, Some(1)));
+    }
 
     #[test]
     fn escapes_and_sets() {
