@@ -61,6 +61,8 @@ pub struct Off {
     pub length: usize,
     /// The first line of the range, without its newline.
     pub source_line: Arc<str>,
+    /// `add_global_offense`: the location is Offense::NO_LOCATION, a PseudoSourceRange.
+    pub global: bool,
 }
 
 impl Off {
@@ -196,6 +198,7 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
                     last_column,
                     length,
                     source_line,
+                    global: true,
                 };
             }
             Off {
@@ -209,6 +212,7 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
                 last_column,
                 length: p.count(start, end),
                 source_line: p.line(ls),
+                global: false,
             }
         })
         .collect();
@@ -665,6 +669,16 @@ impl Set {
         self.each(|f, out| f.finished(out, cx, inspected));
         let _ = std::io::stdout().flush();
     }
+}
+
+/// Cop::Documentation.url_for with the department's DocumentationBaseURL / DocumentationExtension.
+pub fn docs_url(config: &crate::config::Resolved, cop: &str) -> String {
+    let dept = cop.rsplit_once('/').map_or("", |(d, _)| d);
+    let dept_cfg = config.hash.map(dept).cloned().unwrap_or_default();
+    let base = dept_cfg.str("DocumentationBaseURL").unwrap_or("https://docs.rubocop.org/rubocop");
+    let ext = dept_cfg.str("DocumentationExtension").unwrap_or(".html");
+    let fragment: String = cop.to_lowercase().chars().filter(char::is_ascii_lowercase).collect();
+    format!("{base}/cops_{}{ext}#{fragment}", dept.to_lowercase().replace('/', "_"))
 }
 
 #[cfg(test)]

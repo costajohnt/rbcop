@@ -1,4 +1,4 @@
-==> offenses exit=1 3707 <==
+==> offenses exit=1 3846 <==
 108.rb:1:9: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
 110.rb:1:9: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
 112.rb:1:9: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
@@ -28,6 +28,7 @@
 160.rb:1:15: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
 160.rb:1:21: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
 160.rb:1:23: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+164.rb:1:7: F: Lint/Syntax: empty char-class: /[]/ (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 175.rb:1:9: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
 176.rb:1:10: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
 180.rb:1:10: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
@@ -38,7 +39,7 @@
 189.rb:1:13: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
 190.rb:1:7: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
 
-==> autocorrect exit=0 3631 <==
+==> autocorrect exit=1 3770 <==
 108.rb:1:9: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
 110.rb:1:9: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
 112.rb:1:9: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
@@ -68,6 +69,7 @@
 160.rb:1:15: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
 160.rb:1:21: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
 160.rb:1:23: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+164.rb:1:7: F: Lint/Syntax: empty char-class: /[]/ (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 175.rb:1:9: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
 176.rb:1:10: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
 180.rb:1:10: C: [Corrected] Style/RedundantRegexpEscape: Redundant escape inside regexp literal

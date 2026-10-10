@@ -72,15 +72,34 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     template junk in the specs corpus at 2.5 (`def %{x}`, `case ... in` below 2.7).
   - Below 2.3 nothing lexer-level is checked (`&.`, `<<~`, `"a": 1`, `1r`, required keyword
     arguments are accepted); no oracle below 2.5 was recorded.
-- `--stdin` together with `-a/-A` (RuboCop prints the corrected source) is refused.
   - A `{` that opens a hash whose contents are invalid (`x == { |i| i }`, `{{#if x ~}}` where `#`
     starts a comment) gets its first error at the `{` instead of the token after it.
   - The chef corpus (target 2.7) has five syntax-error files with such differences (a missed
     follow-up `unterminated string meets end of file`; the `{{` template above):
     `scripts/check-skip.txt` leaves them out of check-cops.sh, and they and two RuboCop -A outputs
     with the same differences are in `scripts/autocorrect-skip.txt`.
-- `--disable-uncorrectable`, `--auto-gen-config`, `--server`, `--lsp`, `--cache` behaviour (accepted
-  and ignored where harmless), custom formatter classes, `require:` of local Ruby files (custom cops).
+- Command-line options rbcop refuses (`rbcop: --NAME is not supported by rbcop yet`, exit 2):
+  - `--auto-gen-config`, `--regenerate-todo`, `-f autogenconf`: generating `.rubocop_todo.yml`
+    (AutoGenerateConfig and the autogenconf formatter's Exclude/Max output) is not ported. Its
+    companion options (`--exclude-limit`, `--[no-]offense-counts`, `--[no-]auto-gen-timestamp`,
+    `--[no-]auto-gen-only-exclude`) are parsed and give RuboCop's `can only be used together with
+    --auto-gen-config` error; `--no-exclude-limit` and `--[no-]auto-gen-enforced-style` are inert.
+  - `--report-unused-todo-entries`, `--disable-uncorrectable`: need the todo file and
+    `# rubocop:todo` comment insertion, not ported.
+  - `--display-suppressed`: the runner drops offenses disabled by comments instead of reporting
+    them with a disabled status.
+  - `--diff`: the unified-diff dry run of autocorrection is not ported.
+  - `--changed [REVISION]`: needs RuboCop's git diff of changed files.
+  - `--server`, `--start-server`, `--stop-server`, `--restart-server`, `--server-status`,
+    `--no-detach`, `--lsp`, `--mcp`: long-running server modes (`--no-server` is accepted).
+  - `-r/--require`, `--plugin`: load Ruby code (`plugins:` in a config file only merges the gem's
+    default configuration).
+  - `-d/--debug`, `--profile`, `--memory`: Ruby-level diagnostics (backtraces, stackprof).
+  - `-C/--cache`, `--cache-root`, `-P/--[no-]parallel`, `--raise-cop-error` are accepted and have
+    no effect (rbcop keeps no result cache and always lints in parallel).
+- `--list-enabled-cops-for` and `--show-docs-url` know RuboCop's own cops only: cops of plugins
+  (`plugins:` / `require:` gems) are not listed and get no URL.
+- Custom formatter classes and `require:` of local Ruby files (custom cops) are not supported.
 - ERB in `.rubocop.yml` is not evaluated; remote `inherit_from` URLs are skipped with a warning.
 - A duplicated YAML key: the last value wins in the first key's place, as in Psych, but the
   `... is concealed by line N` warning is not printed. Wrong value types (`Enabled: "true"`) and

@@ -1,0 +1,51 @@
+==> .rubocop.yml 162 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/SelfAssignment:
+  AllowRBSInlineAnnotation: true
+
+==> 000.rb 324 <==
+foo = foo #: Integer
+@foo = @foo #: Integer
+@@foo = @@foo #: Integer
+$foo = $foo #: Integer
+Foo = Foo #: Integer
+foo, bar = foo, bar #: Integer
+foo ||= foo #: Integer
+foo &&= foo #: Integer
+foo.bar = foo.bar #: Integer
+foo&.bar = foo&.bar #: Integer
+foo["bar"] = foo["bar"] #: Integer
+foo&.[]=("bar", foo["bar"]) #: Integer
+
+==> 001.rb 505 <==
+foo = foo
+@foo = @foo
+@@foo = @@foo
+$foo = $foo
+Foo = Foo
+foo, bar = foo, bar
+foo ||= foo
+foo &&= foo
+foo.bar = foo.bar
+foo&.bar = foo&.bar
+foo["bar"] = foo["bar"]
+foo&.[]=("bar", foo["bar"])
+
+foo = foo # comment
+@foo = @foo # comment
+@@foo = @@foo # comment
+$foo = $foo # comment
+Foo = Foo # comment
+foo, bar = foo, bar # comment
+foo ||= foo # comment
+foo &&= foo # comment
+foo.bar = foo.bar # comment
+foo&.bar = foo&.bar # comment
+foo["bar"] = foo["bar"] # comment
+foo&.[]=("bar", foo["bar"]) # comment
+

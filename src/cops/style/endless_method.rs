@@ -21,15 +21,18 @@ impl<'pr> Visit<'pr> for StrHeredoc {
     }
 }
 
-/// The parser body of a def: one statement, else the StatementsNode / BeginNode (begin, kwbegin,
-/// rescue, ensure).
+/// The parser body of a def: one statement, else the StatementsNode / BeginNode, and whether it
+/// is a `begin`, `kwbegin`, `rescue` or `ensure` (`can_be_made_endless?` rejects those).
 fn parser_body<'pr>(def: &ruby_prism::DefNode<'pr>) -> Option<(Node<'pr>, bool)> {
     let body = def.body()?;
     if let Some(s) = body.as_statements_node() {
         let mut it = s.body().iter();
         let first = it.next()?;
         if it.next().is_none() {
-            let begin = first.as_parentheses_node().is_some() || first.as_begin_node().is_some();
+            // `x rescue y` alone is a parser `rescue` body.
+            let begin = first.as_parentheses_node().is_some()
+                || first.as_begin_node().is_some()
+                || first.as_rescue_modifier_node().is_some();
             return Some((first, begin));
         }
     }

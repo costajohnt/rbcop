@@ -1,0 +1,1 @@
+--exclude-limit can only be used together with --auto-gen-config.

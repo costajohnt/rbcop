@@ -22,6 +22,7 @@ pub fn is_semantic(kind: &str) -> bool {
                 | "parameter_circular"
                 | "parameter_name_repeat"
                 | "parameter_numbered_reserved"
+                | "regexp_parse_error"
                 | "regexp_unknown_options"
                 | "singleton_for_literals"
                 | "string_literal_eof"
