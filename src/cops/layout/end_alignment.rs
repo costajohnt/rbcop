@@ -134,18 +134,6 @@ fn emit(cx: &mut Cx, node: &Node, end: (usize, usize), msg: String) {
     cx.add_fix(end.0, end.1, msg, |c| helpers::alignment_corrector::align_end(c, src, tabs, end.0, column));
 }
 
-fn is_setter_or_assignment(n: &Node) -> bool {
-    match n.as_call_node() {
-        Some(c) => c.equal_loc().is_some(),
-        None => KINDS.contains(&kind::of(n)),
-    }
-}
-
-const OPERATORS: &[&str] = &[
-    "|", "^", "&", "<=>", "==", "===", "=~", ">", ">=", "<", "<=", "<<", ">>", "+", "-", "*", "/", "%", "**", "~",
-    "+@", "-@", "!@", "~@", "[]", "[]=", "!", "!=", "!~", "`",
-];
-
 /// Column of `alignment_node(node)` in variable style (the node's ancestors are `cx.ancestors`).
 fn variable_alignment_column(cx: &Cx, node: &Node) -> usize {
     let src = cx.src;
@@ -162,8 +150,8 @@ fn variable_alignment_column(cx: &Cx, node: &Node) -> usize {
     } else {
         let found = anc.iter().position(|&(i, _, _)| {
             let a = &cx.ancestors[i];
-            is_setter_or_assignment(a)
-                || a.as_call_node().is_some_and(|c| !is_csend(&c) && OPERATORS.contains(&method_name(&c)))
+            helpers::node_types::is_assignment(a)
+                || a.as_call_node().is_some_and(|c| !is_csend(&c) && helpers::node_types::is_operator_method(method_name(&c)))
         });
         if let Some(p) = found.filter(|&p| line(span(node).0) <= line(anc[p].1)) {
             align = (Some(p), anc[p].1);
