@@ -252,8 +252,11 @@ const TOLERATED_ERRORS: &[&str] = &["invalid_yield"];
 pub fn default_severity(cop: &str) -> Severity {
     if cop == "Lint/Syntax" {
         Severity::Fatal
-    } else if cop.starts_with("Lint/") {
+    } else if cop.starts_with("Lint/") || cop.starts_with("Security/") {
+        // Cop::Base::DEPARTMENT_SEVERITIES
         Severity::Warning
+    } else if cop.starts_with("Metrics/") {
+        Severity::Refactor
     } else {
         Severity::Convention
     }
