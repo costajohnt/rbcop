@@ -54,3 +54,22 @@ pub fn count_required(params: &BlockParametersNode) -> usize {
     }
     walk(children(params))
 }
+
+/// Block params match `(args (arg _))`, or `(args)` when `allow_empty`; a numblock only with `_1`,
+/// an itblock always (Lint/RedundantWithIndex, Lint/RedundantWithObject).
+pub fn single_arg_or_numbered(block: &ruby_prism::BlockNode, allow_empty: bool) -> bool {
+    let Some(params) = block.parameters() else { return allow_empty };
+    if let Some(n) = params.as_numbered_parameters_node() {
+        return n.maximum() == 1;
+    }
+    if params.as_it_parameters_node().is_some() {
+        return true;
+    }
+    let Some(bp) = params.as_block_parameters_node() else { return false };
+    let children = children(&bp);
+    match children.as_slice() {
+        [] => allow_empty,
+        [one] => kind::of(one) == kind::REQUIRED_PARAMETER_NODE,
+        _ => false,
+    }
+}
