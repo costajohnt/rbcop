@@ -3,6 +3,7 @@
 use crate::config::{Resolved, Store, expand_path, glob};
 use std::fs;
 use std::io::{BufRead, BufReader};
+use std::os::unix::ffi::OsStrExt;
 use std::path::{Path, PathBuf};
 
 pub fn find(store: &mut Store, args: &[PathBuf], force_exclusion: bool) -> Result<Vec<PathBuf>, String> {
@@ -18,7 +19,9 @@ pub fn find(store: &mut Store, args: &[PathBuf], force_exclusion: bool) -> Resul
             let cfg = store.for_dir(&abs)?;
             let mut all = Vec::new();
             walk(&abs, &cfg, &mut all);
-            all.sort();
+            // Ruby String#sort: byte order of the whole path (`foo-baz.rb` < `foo.rb` < `foo/bar.rb`),
+            // not PathBuf's per-component order.
+            all.sort_by(|a, b| a.as_os_str().as_bytes().cmp(b.as_os_str().as_bytes()));
             let hidden_base = is_hidden_dir(&abs);
             for f in all {
                 let keep = if hidden_base {

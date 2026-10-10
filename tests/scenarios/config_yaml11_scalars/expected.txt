@@ -1,0 +1,16 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+sample.rb:10:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a7`.
+sample.rb:11:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a8`.
+sample.rb:12:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a9`.
+sample.rb:13:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a10`. Did you mean `a1`?
+sample.rb:14:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a11`. Did you mean `a1`?
+sample.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+sample.rb:2:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+sample.rb:2:65: C: Layout/LineLength: Line is too long. [116/64]
+sample.rb:3:1: R: Metrics/MethodLength: Method has too many lines. [11/10]
+sample.rb:4:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a1`. Did you mean `a11`?
+sample.rb:5:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a2`.
+sample.rb:6:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a3`.
+sample.rb:7:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a4`.
+sample.rb:8:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a5`.
+sample.rb:9:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a6`.
