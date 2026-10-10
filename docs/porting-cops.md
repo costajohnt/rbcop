@@ -513,7 +513,7 @@ gates still default to specs, rails and discourse; a cross-cop pass over the oth
 `LIMIT=1500 OUT=<dir> scripts/check-autocorrect-all.sh rubocop-src jekyll chef fastlane brew mastodon`.
 
 The oracles were recorded with every cop enabled (`config/all-cops.yml`), so pending and
-disabled-by-default cops are covered too. Diffs land in `$TMPDIR/rbcop-check/<corpus>.diff`
+disabled-by-default cops are covered too. Diffs land in `$TMPDIR/rbcop-check/<pid>/<corpus>.diff`
 (`<` only RuboCop, `>` only rbcop); look at the source line and RuboCop's code until you understand
 the difference. A cop is done when the full gate prints `all corpora match`. Also run
 `cargo test --release` and `cargo clippy --release --all-targets` (no warnings) before committing.
