@@ -319,6 +319,23 @@ More traps found while porting:
   `#@ivar` part loses its `#`, shifting later positions left by one (RuboCop reports them shifted).
 - Prism regexp `closing_loc` includes the options (`/i`); parser `loc.end` is the delimiter only.
 - RuboCop's RESTRICT_ON_SEND lists matter: RedundantReturn includes `lambda`, so `-> {}` is checked.
+- `nil` in a NodePattern matches a `(nil)` literal node; a missing child is `nil?`.
+- `__FILE__` is a parser `str` (Prism `SourceFileNode`).
+- Prism `BRACE_LEFT` is both `tLCURLY` (block) and `tLBRACE` (hash): tell them apart via the AST.
+- Chained modifier rescue `a rescue b rescue c`: parser visits the inner rescue first.
+- An `elsif` IfNode has an `end_keyword_loc()` in Prism; test that the keyword is `if`.
+- Helpers: `line_break_corrector` (TrailingBody, LineBreakCorrector), `parentheses_corrector`.
+- Cross-cop autocorrect interactions: `scripts/check-autocorrect-all.sh` runs -A with every ported
+  cop together (per-batch gates only cover their own cops).
+- Block visit order like parser (block, then its send, then args): subscribe to the block's owner
+  (CallNode, SuperNode, ForwardingSuperNode, LambdaNode), run `on_block` logic, then `on_send`.
+- `ignore_node` inside a corrector block runs only when the corrector runs (not for
+  comment-disabled offenses): set a flag inside the `add_fix` closure.
+- `on_str` cops see one parser `str` per source line of a multi-line string or heredoc.
+- `contains_comment?(range)` is line-based: any comment starting on a spanned line counts.
+- `loc.name` on `or_asgn`/`op_asgn` is the variable name with sigil; on a constant path, the last
+  segment.
+- `helpers::format_string::sequence_parts` splits one format sequence.
 - `helpers::regexp_captures` counts named/numbered groups like `RegexpNode#each_capture`.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.

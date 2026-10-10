@@ -89,6 +89,50 @@ pub fn max_digit_dollar_num(s: &str) -> Option<Option<u64>> {
     Some(nums.into_iter().flatten().max())
 }
 
+/// The named parts of one format sequence (`FormatSequence#flags`, `width`, `precision`, `name`,
+/// `type`), for a `source` that `format_sequences` returned.
+pub struct SequenceParts<'a> {
+    pub flags: String,
+    pub width: Option<&'a str>,
+    pub precision: Option<&'a str>,
+    pub name: Option<&'a str>,
+    pub ty: Option<&'a str>,
+}
+
+static PARTS: LazyLock<Regex> = LazyLock::new(|| {
+    let digit_dollar = r"[0-9]+\$";
+    let flag = format!(r"(?:[ #0+\-]|{digit_dollar})");
+    let number = format!(r"(?:[0-9]+|\*(?:{digit_dollar})?|\#\{{.*?\}})");
+    let w = |i: u8| format!(r"(?P<w{i}>{number})");
+    let p = |i: u8| format!(r"\.(?P<p{i}>{number}?)");
+    let typed = format!(
+        r"(?:{w1}?(?:{p1})?(?:<(?P<n1>[A-Za-z0-9_]+)>)?|{w2}?<(?P<n2>[A-Za-z0-9_]+)>(?:{p2})?|<(?P<n3>[A-Za-z0-9_]+)>(?P<more>{flag}*){w3}?(?:{p3})?)(?P<ty>[bBdiouxXeEfgGaAcps])",
+        w1 = w(1),
+        p1 = p(1),
+        w2 = w(2),
+        p2 = p(2),
+        w3 = w(3),
+        p3 = p(3),
+    );
+    let template = format!(r"{w4}?(?:{p4})?\{{(?P<tn>[A-Za-z0-9_]+)\}}", w4 = w(4), p4 = p(4));
+    Regex::new(&format!(r"\A%(?P<flags>{flag}*)(?:{typed}|{template})\z")).unwrap()
+});
+
+/// Splits a (non-`%%`) format sequence into its parts like Ruby's named captures.
+pub fn sequence_parts(source: &str) -> SequenceParts<'_> {
+    let empty = SequenceParts { flags: String::new(), width: None, precision: None, name: None, ty: None };
+    let Some(c) = PARTS.captures(source) else { return empty };
+    let first = |names: &[&str]| names.iter().find_map(|g| c.name(g)).map(|m| m.as_str());
+    let flags = format!("{}{}", first(&["flags"]).unwrap_or(""), first(&["more"]).unwrap_or(""));
+    SequenceParts {
+        flags,
+        width: first(&["w1", "w2", "w3", "w4"]),
+        precision: first(&["p1", "p2", "p3", "p4"]),
+        name: first(&["n1", "n2", "n3", "tn"]),
+        ty: first(&["ty"]),
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -102,5 +146,15 @@ mod tests {
         assert!(is_valid("%s %% %d"));
         assert_eq!(max_digit_dollar_num("%1$s %2$s"), Some(Some(2)));
         assert!(max_digit_dollar_num("%1$s %%").is_none());
+    }
+
+    #[test]
+    fn parts() {
+        let p = sequence_parts("%-10.2<a>f");
+        assert_eq!((p.flags.as_str(), p.width, p.precision, p.name, p.ty), ("-", Some("10"), Some("2"), Some("a"), Some("f")));
+        let p = sequence_parts("%<b>+05d");
+        assert_eq!((p.flags.as_str(), p.width, p.name, p.ty), ("+0", Some("5"), Some("b"), Some("d")));
+        let p = sequence_parts("%+5{c}");
+        assert_eq!((p.flags.as_str(), p.width, p.name, p.ty), ("+", Some("5"), Some("c"), None));
     }
 }
