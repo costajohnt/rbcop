@@ -74,8 +74,9 @@ impl RubyFile {
     }
 }
 
-/// Every file under `dir` (dotfiles included), not following symlinked directories,
-/// pruning directories excluded by `.../**/*` patterns.
+/// Every file under `dir` (dotfiles included), pruning directories excluded by `.../**/*`
+/// patterns. Like TargetFinder#find_files, symlinked files are kept and symlinked directories are
+/// followed, unless the link's target is excluded or contains the directory being walked (a loop).
 fn walk(dir: &Path, cfg: &Resolved, out: &mut Vec<PathBuf>) {
     let Ok(entries) = fs::read_dir(dir) else { return };
     let prune: Vec<String> = cfg
@@ -84,14 +85,27 @@ fn walk(dir: &Path, cfg: &Resolved, out: &mut Vec<PathBuf>) {
         .into_iter()
         .filter_map(|p| p.strip_suffix("/**/*").map(String::from))
         .collect();
+    let pruned = |p: &Path| prune.iter().any(|x| glob::fnmatch(x, &p.display().to_string(), true));
     for entry in entries.flatten() {
         let path = entry.path();
-        let Ok(kind) = entry.file_type() else { continue };
+        let Ok(mut kind) = entry.file_type() else { continue };
+        let link = kind.is_symlink();
+        if link {
+            let Ok(meta) = fs::metadata(&path) else { continue };
+            kind = meta.file_type();
+        }
         if kind.is_dir() {
-            let s = path.display().to_string();
-            if !prune.iter().any(|p| glob::fnmatch(p, &s, true)) {
-                walk(&path, cfg, out);
+            if pruned(&path) {
+                continue;
             }
+            // symlink_excluded_or_infinite_loop? (a string prefix test, as RuboCop's start_with?).
+            if link {
+                let (Ok(real), Ok(here)) = (fs::canonicalize(&path), fs::canonicalize(dir)) else { continue };
+                if pruned(&real) || here.display().to_string().starts_with(&real.display().to_string()) {
+                    continue;
+                }
+            }
+            walk(&path, cfg, out);
         } else if kind.is_file() {
             out.push(path);
         }

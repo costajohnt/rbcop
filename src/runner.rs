@@ -51,6 +51,51 @@ pub fn inspect(
     FileReport { offenses, text }
 }
 
+/// Inspect a file's bytes as read. A source that must be UTF-8 (`source::must_be_utf8`) but is not
+/// gets only RuboCop's Lint/Syntax `Invalid byte sequence in utf-8.`; other non-UTF-8 sources are
+/// inspected lossily.
+pub fn inspect_bytes(
+    path: &Path,
+    display: &str,
+    bytes: Vec<u8>,
+    cfg: &Resolved,
+    selected: &dyn Fn(&str) -> bool,
+) -> FileReport {
+    match String::from_utf8(bytes) {
+        Ok(text) => inspect(path, display, text, cfg, selected),
+        Err(e) => {
+            let text = String::from_utf8_lossy(e.as_bytes()).into_owned();
+            if !crate::source::must_be_utf8(&text) {
+                return inspect(path, display, text, cfg, selected);
+            }
+            // Lint/Syntax#add_offense_from_error: a global offense, beautified message, no version note.
+            let offense = Offense {
+                start: 0,
+                end: 0,
+                cop: "Lint/Syntax",
+                message: "Invalid byte sequence in utf-8.".into(),
+                severity: Severity::Fatal,
+                correctable: false,
+                global: true,
+                corrected: false,
+                source: None,
+            };
+            FileReport { offenses: vec![offense], text }
+        }
+    }
+}
+
+/// How Ruby words a failed `File.read`/`File.open` of `path` (RuboCop raises its own error for a
+/// missing file).
+pub fn io_error(e: &std::io::Error, path: &Path) -> String {
+    if e.kind() == std::io::ErrorKind::NotFound {
+        return format!("Error: No such file or directory: {}", path.display());
+    }
+    let msg = e.to_string();
+    let msg = msg.split(" (os error").next().unwrap_or(&msg);
+    format!("{msg} @ rb_sysopen - {}", path.display())
+}
+
 /// One autocorrect iteration (see `crate::autocorrect::correct`): the offenses and, unless nothing
 /// was corrected, the collated corrector. Like Team#investigate_with_corrector, offenses of cops
 /// that do not autocorrect are only reported when no correction was made. Also returns the

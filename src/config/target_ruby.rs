@@ -14,7 +14,7 @@ fn to_f(s: &str) -> Option<f64> {
 }
 
 /// The version and, for messages, which source supplied it.
-pub fn detect(all_cops: &Map, base_dir: &Path, project_root: Option<&Path>) -> f64 {
+pub fn detect(all_cops: &Map, base_dir: &Path) -> f64 {
     if let Some(v) = std::env::var("RUBOCOP_TARGET_RUBY_VERSION").ok().and_then(|s| to_f(&s)) {
         return v;
     }
@@ -28,7 +28,7 @@ pub fn detect(all_cops: &Map, base_dir: &Path, project_root: Option<&Path>) -> f
         }
         _ => {}
     }
-    if let Some(v) = gemspec_version(base_dir, project_root) {
+    if let Some(v) = gemspec_version(base_dir) {
         return v;
     }
     let file_sources: [(&str, &str); 3] = [
@@ -37,7 +37,7 @@ pub fn detect(all_cops: &Map, base_dir: &Path, project_root: Option<&Path>) -> f
         (".tool-versions", r"(?m)^(?:ruby )(\d+\.\d+)"),
     ];
     for (name, pattern) in file_sources {
-        if let Some(file) = find_file_upwards(name, base_dir, project_root) {
+        if let Some(file) = find_file_upwards(name, base_dir) {
             let text = std::fs::read_to_string(file).unwrap_or_default();
             // A file that exists but does not match yields no version, so the next source is tried.
             if let Some(v) = Regex::new(pattern).unwrap().captures(&text).and_then(|c| c[1].parse().ok()) {
@@ -48,7 +48,7 @@ pub fn detect(all_cops: &Map, base_dir: &Path, project_root: Option<&Path>) -> f
     // Config#bundler_lock_file_path needs a loaded_path, which RuboCop always has: the default
     // configuration is loaded from default.yml (base dir = pwd).
     for name in ["Gemfile.lock", "gems.locked"] {
-        if let Some(file) = find_file_upwards(name, base_dir, project_root) {
+        if let Some(file) = find_file_upwards(name, base_dir) {
             if let Some(v) = lockfile_version(&std::fs::read_to_string(file).unwrap_or_default()) {
                 return v;
             }
@@ -58,18 +58,9 @@ pub fn detect(all_cops: &Map, base_dir: &Path, project_root: Option<&Path>) -> f
     DEFAULT_VERSION
 }
 
-/// FileFinder#find_file_upwards with stop_dir = project root (inclusive).
-fn find_file_upwards(name: &str, start: &Path, stop: Option<&Path>) -> Option<PathBuf> {
-    for dir in start.ancestors() {
-        let candidate = dir.join(name);
-        if candidate.is_file() {
-            return Some(candidate);
-        }
-        if Some(dir) == stop {
-            break;
-        }
-    }
-    None
+/// FileFinder#find_file_upwards as Config calls it: no stop dir, so up to `/`.
+fn find_file_upwards(name: &str, start: &Path) -> Option<PathBuf> {
+    start.ancestors().map(|dir| dir.join(name)).find(|candidate| candidate.is_file())
 }
 
 fn lockfile_version(text: &str) -> Option<f64> {
@@ -85,21 +76,20 @@ fn lockfile_version(text: &str) -> Option<f64> {
     None
 }
 
-/// TargetRuby::GemspecFile: the only *.gemspec in the nearest directory that has exactly one.
-fn gemspec_version(base_dir: &Path, project_root: Option<&Path>) -> Option<f64> {
+/// TargetRuby::GemspecFile: the only *.gemspec in the nearest directory that has exactly one, up to
+/// `/` (Config#traverse_directories_upwards has no stop dir; an unreadable directory has none).
+fn gemspec_version(base_dir: &Path) -> Option<f64> {
     let mut file = None;
     for dir in base_dir.ancestors() {
         let specs: Vec<PathBuf> = std::fs::read_dir(dir)
-            .ok()?
+            .into_iter()
+            .flatten()
             .flatten()
             .map(|e| e.path())
             .filter(|p| p.extension().is_some_and(|e| e == "gemspec") && p.is_file())
             .collect();
         if specs.len() == 1 {
             file = specs.into_iter().next();
-            break;
-        }
-        if Some(dir) == project_root {
             break;
         }
     }

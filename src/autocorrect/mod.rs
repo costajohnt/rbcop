@@ -167,30 +167,66 @@ fn inspection_loop(
     (by_iteration.concat(), current, changed, error, disabled)
 }
 
-/// Autocorrect one file on disk: inspect, correct, write the result back, report.
+/// Autocorrect one file on disk: read, inspect and correct. The caller writes `source` back with
+/// `write_source` (in file order, so a failure stops the run before later files change). Err is a
+/// read failure, worded as RuboCop's.
 pub fn correct_file(
     path: &Path,
     display: &str,
     cfg: &Resolved,
     selected: &dyn Fn(&str) -> bool,
     mode: Mode,
-) -> FileReport {
-    let bytes = std::fs::read(path).unwrap_or_default();
-    let Ok(text) = String::from_utf8(bytes) else {
+) -> Result<Corrected, String> {
+    let bytes = std::fs::read(path).map_err(|e| runner::io_error(&e, path))?;
+    match String::from_utf8(bytes) {
+        Ok(text) => Ok(correct(path, display, text, cfg, selected, mode)),
         // ponytail: never rewrite a file that is not valid UTF-8; it is only inspected.
-        let text = String::from_utf8_lossy(&std::fs::read(path).unwrap_or_default()).into_owned();
-        return runner::inspect(path, display, text, cfg, selected);
-    };
-    let c = correct(path, display, text, cfg, selected, mode);
-    if let Some(new) = &c.source
-        && let Err(e) = std::fs::write(path, new)
-    {
-        eprintln!("rbcop: cannot write {}: {e}", path.display());
+        Err(e) => {
+            let report = runner::inspect_bytes(path, display, e.into_bytes(), cfg, selected);
+            Ok(Corrected { report, source: None, error: None })
+        }
     }
-    if let Some(e) = &c.error {
-        eprintln!("{e}");
+}
+
+/// RuboCop's `File.open(path, 'w') { |f| f.write(new) }` (symlinks followed, the file's mode kept,
+/// a file it may not write refused), except that a crash or a full disk never leaves the file
+/// truncated: the content goes to a temporary file in the same directory, which is renamed over
+/// the target. A rename would change more than the content of a hard-linked file or of one owned
+/// by someone else, and cannot be done in a directory rbcop may not write; those are written in place.
+// ponytail: extended attributes and ACLs are not copied to the renamed file.
+pub fn write_source(path: &Path, new: &str) -> std::io::Result<()> {
+    use std::fs;
+    use std::io::Write;
+    use std::os::unix::fs::MetadataExt;
+    static COUNTER: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+    let target = fs::canonicalize(path)?;
+    // File.open(path, 'w') fails on a file that is not writable; the rename must not get round that.
+    drop(fs::OpenOptions::new().write(true).open(&target)?);
+    let meta = fs::metadata(&target)?;
+    // SAFETY: geteuid has no preconditions.
+    if meta.nlink() == 1 && meta.uid() == unsafe { libc::geteuid() } {
+        let n = COUNTER.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+        let name = target.file_name().unwrap_or_default().to_string_lossy();
+        let tmp = target.with_file_name(format!(".{name}.rbcop-{}-{n}.tmp", std::process::id()));
+        if let Ok(mut f) = fs::OpenOptions::new().write(true).create_new(true).open(&tmp) {
+            // The file's group, too (a group rbcop's user is not in cannot be given: write in place).
+            if std::os::unix::fs::fchown(&f, None, Some(meta.gid())).is_ok() {
+                let written = (|| {
+                    f.write_all(new.as_bytes())?;
+                    f.set_permissions(meta.permissions())?;
+                    f.sync_all()?;
+                    fs::rename(&tmp, &target)
+                })();
+                if written.is_err() {
+                    let _ = fs::remove_file(&tmp);
+                }
+                return written;
+            }
+            drop(f);
+            let _ = fs::remove_file(&tmp);
+        }
     }
-    c.report
+    fs::write(&target, new)
 }
 
 fn infinite_loop(path: &Path, iterations: &[Vec<Offense>]) -> String {
