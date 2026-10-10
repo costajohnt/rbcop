@@ -2,7 +2,8 @@
 
 use crate::ast::{is_csend, send_args};
 use crate::cop::Cx;
-use crate::helpers::alignment_mixin::{corrector_edits, first_non_space, indentation_width};
+use crate::helpers::alignment::{configured_indentation_width, first_non_space};
+use crate::helpers::alignment_corrector::{Settings, correct};
 use crate::node_kind as kind;
 use crate::source::Source;
 use ruby_prism::Node;
@@ -111,7 +112,7 @@ pub fn first_message(cx: &Cx, w: &Words, base: &IndentBase) -> String {
         IndentBase::ParentHashKey => "the parent hash key".to_string(),
         IndentBase::StartOfLine => format!("the start of the line where the {} is", w.left_name),
     };
-    format!("Use {} spaces for indentation in an {}, relative to {desc}.", indentation_width(cx), w.what)
+    format!("Use {} spaces for indentation in an {}, relative to {desc}.", configured_indentation_width(cx), w.what)
         .replace("an hash", "a hash")
 }
 
@@ -132,13 +133,13 @@ pub fn right_message(w: &Words, base: &IndentBase) -> String {
 /// `check_right_bracket` / `check_right_brace`.
 pub fn check_right(cx: &mut Cx, w: &Words, right: (usize, usize), base: (i64, IndentBase)) {
     let src = cx.src;
-    if !crate::helpers::alignment_mixin::begins_its_line(src, right.0) {
+    if !crate::helpers::alignment::begins_its_line(src, right.0) {
         return;
     }
     let delta = base.0 - src.column(right.0) as i64;
     if delta == 0 {
         return;
     }
-    let fixable = corrector_edits(src, right.0, right.1, delta, None);
-    cx.add_with(right.0, right.1, right_message(w, &base.1), fixable);
+    let set = Settings::of(cx);
+    cx.add_fix(right.0, right.1, right_message(w, &base.1), |c| correct(c, src, set, right.0, right.1, None, delta, false));
 }

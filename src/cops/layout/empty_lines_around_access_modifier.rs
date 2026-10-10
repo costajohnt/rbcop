@@ -77,8 +77,7 @@ impl EmptyLinesAroundAccessModifier {
         {
             return;
         }
-        let parents: Vec<&Node> = cx.ancestors.iter().collect();
-        if !helpers::macro_scope::is_macro(&call, &parents) {
+        if !helpers::macro_scope::is_macro(&call, cx.ancestors) {
             return;
         }
         let src = cx.src;

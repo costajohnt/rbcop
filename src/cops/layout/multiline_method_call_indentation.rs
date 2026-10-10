@@ -1,4 +1,4 @@
-use crate::helpers::alignment_check as alignment;
+use crate::helpers::alignment as alignment;
 use crate::helpers::multiline_expression_indentation::{Ctx, PK, PAnc, block_of, indentation, within};
 use crate::prelude::*;
 use ruby_prism::{CallNode, Visit};
@@ -310,25 +310,25 @@ impl<'a, 'b, 'pr> Check<'a, 'b, 'pr> {
         Some(span(&first.receiver()?))
     }
 
-    fn block_corrects(&self, rhs: Range, delta: i64) -> bool {
-        let cx = self.cx;
-        let Some(block) = block_of(&self.call) else {
-            return alignment::corrects(cx, rhs.0, rhs.1, None, delta);
-        };
-        let src = cx.src;
+    /// What `autocorrect(corrector, rhs)` hands AlignmentCorrector.correct: the rhs range, or
+    /// with a block the selector's line, the block body and the `end` line.
+    fn correction_targets(&self, rhs: Range) -> Vec<(usize, usize, Option<Node<'pr>>)> {
+        let Some(block) = block_of(&self.call) else { return vec![(rhs.0, rhs.1, None)] };
+        let src = self.cx.src;
         let line_range = |off: usize| {
             let line = src.line_of(off);
             let start = src.line_start(line);
             (start, start + src.lines.get(line - 1).map_or(0, |l| l.len()))
         };
         let (ls, le) = line_range(rhs.0);
-        let mut any = alignment::corrects(cx, ls, le, None, delta);
+        let mut v = vec![(ls, le, None)];
         if let Some(body) = block.body() {
-            let (s, e) = span(&body);
-            any |= alignment::corrects(cx, s, e, Some(&body), delta);
+            let (s, e) = crate::ast::body_range(&body);
+            v.push((s, e, Some(body)));
         }
         let (es, ee) = line_range(block.closing_loc().start_offset());
-        any | alignment::corrects(cx, es, ee, None, delta)
+        v.push((es, ee, None));
+        v
     }
 }
 
@@ -531,11 +531,16 @@ impl Cop for MultilineMethodCallIndentation {
                 format!("Use {expected} (not {used}) spaces for indenting {what} spanning multiple lines.")
             }
         };
-        let correctable = check.block_corrects(rhs, delta);
+        let targets = check.correction_targets(rhs);
         drop(check);
         if let Some(h) = new_hpbc {
             cx.state::<State>().hash_pair_base_column = Some(h);
         }
-        cx.add_with(rhs.0, rhs.1, msg, correctable);
+        let (src, set) = (cx.src, helpers::alignment_corrector::Settings::of(cx));
+        cx.add_fix(rhs.0, rhs.1, msg, |c| {
+            for (s, e, node) in &targets {
+                helpers::alignment_corrector::correct(c, src, set, *s, *e, node.as_ref(), delta, false);
+            }
+        });
     }
 }

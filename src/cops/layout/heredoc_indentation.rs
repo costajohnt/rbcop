@@ -1,4 +1,4 @@
-use crate::helpers::alignment_check as alignment;
+use crate::helpers::alignment as alignment;
 use crate::prelude::*;
 
 pub const NAME: &str = "Layout/HeredocIndentation";
@@ -19,8 +19,8 @@ fn indent_level(s: &str) -> usize {
         .unwrap_or(0)
 }
 
-/// (opening, body start, terminator start) of a heredoc node.
-fn heredoc_parts(node: &Node) -> Option<(usize, usize, usize)> {
+/// (opening, body start, terminator start, opening range) of a heredoc node.
+fn heredoc_parts(node: &Node) -> Option<(usize, usize, usize, (usize, usize))> {
     let (opening, body, closing) = match kind::of(node) {
         kind::STRING_NODE => {
             let n = node.as_string_node().unwrap();
@@ -45,7 +45,7 @@ fn heredoc_parts(node: &Node) -> Option<(usize, usize, usize)> {
         _ => return None,
     };
     let body = body.min(closing.start_offset());
-    opening.as_slice().starts_with(b"<<").then_some((opening.start_offset(), body, closing.start_offset()))
+    opening.as_slice().starts_with(b"<<").then_some((opening.start_offset(), body, closing.start_offset(), (opening.start_offset(), opening.end_offset())))
 }
 
 impl Cop for HeredocIndentation {
@@ -62,7 +62,7 @@ impl Cop for HeredocIndentation {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let Some((opening, body_start, body_end)) = heredoc_parts(node) else { return };
+        let Some((opening, body_start, body_end, open_range)) = heredoc_parts(node) else { return };
         let src = cx.src;
         // Prism's `<<~` content starts after the dedented whitespace: take its whole line.
         let body_start = src.line_start(src.line_of(body_start));
@@ -93,8 +93,48 @@ impl Cop for HeredocIndentation {
         } else {
             format!("Use {width} spaces for indentation in a heredoc by using `<<~` instead of `{indent_type}`.")
         };
-        cx.add(body_start, body_end, msg);
+        let squish = indent_type != "<<~" && self.squish(cx, node);
+        // adjust_squiggly: re-indent the body and (if less indented than the opening line) the end.
+        let correct_level = (base_indent + width).max(0) as usize;
+        let body_new = reindent(body, body_indent, correct_level, |c| matches!(c, ' ' | '\t' | '\x0b' | '\x0c'));
+        let end_line = src.line_of(body_end);
+        let end_range = (body_end, src.line_start(end_line) + src.lines.get(end_line - 1).map_or(0, |l| l.len()));
+        let end_text = src.slice(end_range.0, end_range.1);
+        let end_level = indent_level(end_text);
+        let end_new = if (end_level as i64) < base_indent {
+            reindent(end_text, end_level, base_indent as usize, ruby_space)
+        } else {
+            end_text.to_string()
+        };
+        // adjust_minus: `<<-X` / `<<X` becomes `<<~X`.
+        let open_text = src.slice(open_range.0, open_range.1);
+        let open_new = format!("<<~{}", open_text.strip_prefix("<<-").or(open_text.strip_prefix("<<")).unwrap_or(open_text));
+        cx.add_fix(body_start, body_end, msg, |c| {
+            if indent_type == "<<~" || squish {
+                c.replace(body_start, body_end, &body_new);
+                c.replace(end_range.0, end_range.1, &end_new);
+            }
+            if indent_type != "<<~" {
+                c.replace(open_range.0, open_range.1, &open_new);
+            }
+        });
     }
+}
+
+/// `str.gsub(/^#{ws}{n}/, ' ' * level)`: on each line, `n` leading `ws` characters become
+/// `level` spaces (lines with fewer are left alone).
+fn reindent(s: &str, n: usize, level: usize, ws: fn(char) -> bool) -> String {
+    let pad = " ".repeat(level);
+    s.split_inclusive('\n')
+        .map(|line| {
+            let lead: usize = line.chars().take(n).take_while(|&c| ws(c)).map(char::len_utf8).sum();
+            if line.chars().take(n).take_while(|&c| ws(c)).count() == n {
+                format!("{pad}{}", &line[lead..])
+            } else {
+                line.to_string()
+            }
+        })
+        .collect()
 }
 
 impl HeredocIndentation {

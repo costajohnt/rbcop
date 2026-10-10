@@ -51,7 +51,7 @@ impl Cop for BlockEndNewline {
         // BlockNode#single_line?: `{`/`do` and `}`/`end` on one line.
         let start = opening.start_offset();
         let end = closing.start_offset();
-        if src.line_of(start) == src.line_of(end) || helpers::alignment_mixin::begins_its_line(src, end) {
+        if src.line_of(start) == src.line_of(end) || helpers::alignment::begins_its_line(src, end) {
             return;
         }
         let last_end = match (&body, &params) {

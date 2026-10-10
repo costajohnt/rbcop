@@ -51,7 +51,7 @@ impl Cop for CaseIndentation {
             }
         }
         let one_step = cx.cfg.bool("IndentOneStep").unwrap_or(false);
-        let width = if one_step { helpers::alignment_mixin::indentation_width(cx) } else { 0 };
+        let width = if one_step { helpers::alignment::configured_indentation_width(cx) } else { 0 };
         let base = if end_style { src.column(end_kw.start_offset()) } else { src.column(case_kw.start_offset()) } as i64;
         let depth = if one_step { "one step more than" } else { "as deep as" };
         let style = if end_style { "end" } else { "case" };
@@ -60,8 +60,14 @@ impl Cop for CaseIndentation {
                 continue;
             }
             let start = kw.start_offset();
-            let fixable = src.begins_its_line(start);
-            cx.add_with(start, kw.end_offset(), format!("Indent `{branch_type}` {depth} `{style}`."), fixable);
+            let ls = src.line_start(src.line_of(start));
+            let blank = src.text[ls..start].trim_matches(|c: char| c.is_ascii_whitespace() || c == '\0' || c == '\x0b').is_empty();
+            let replacement = " ".repeat((base + width).max(0) as usize);
+            cx.add_fix(start, kw.end_offset(), format!("Indent `{branch_type}` {depth} `{style}`."), |c| {
+                if blank {
+                    c.replace(ls, start, &replacement);
+                }
+            });
         }
     }
 }
