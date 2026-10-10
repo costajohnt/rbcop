@@ -54,3 +54,10 @@ Every builtin RuboCop formatter except autogenconf (`-f progress|simple|clang|em
 ## Not yet
 
 - Autocorrect for cops that have no corrector yet (`-a`/`-A` reports them but does not fix them)
+
+## License and credits
+
+rbcop is released under the MIT license (see `LICENSE`).
+
+- [RuboCop](https://github.com/rubocop/rubocop) (MIT, Copyright (c) 2012-26 Bozhidar Batsov): rbcop's cop logic, messages and behaviour are ported from RuboCop's source, and `config/default.yml` and `config/obsoletion.yml` are RuboCop's files, compiled into the binary. RuboCop's license is in `config/LICENSE`.
+- [Prism](https://github.com/ruby/prism) (MIT, Copyright 2022-present Shopify Inc.): the Ruby parser, through the `ruby-prism` crate. A patched copy lives in `vendor/ruby-prism` with its license in `vendor/ruby-prism/LICENSE.md`.
