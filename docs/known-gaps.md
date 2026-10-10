@@ -20,12 +20,12 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   and ignored where harmless), custom formatter classes, `require:` of local Ruby files (custom cops).
 - ERB in `.rubocop.yml` is not evaluated; remote `inherit_from` URLs are skipped with a warning.
 - LineLength `SplitStrings: true` break points (string splitting) are not modelled.
-- Duplicate helper ports to consolidate: `helpers/alignment.rs`, `alignment_mixin.rs`,
-  `alignment_check.rs`; `helpers/macro_scope.rs` and `macro_scope_nodes.rs`;
-  `range_help::with_surrounding_space` and `range_help::range_with_surrounding_space`.
+- Cleanup pending: deprecated shims `helpers/alignment_mixin.rs`, `alignment_check.rs`,
+  `macro_scope_nodes.rs`, `range_help::with_surrounding_space` (no callers; delete once all batches
+  that branched before R2a are merged). `helpers/variable_force.rs` and `nil_receiver_checker.rs`
+  each build a parser-shaped tree from Prism; share one builder.
 - One spec snippet (`naming/method_name/050.rb`, a `%{}` template) gets a duplicated
   "unexpected write target" syntax error location.
-- Cops reported `[Correctable]` without a corrector are not fixed by `-a/-A` until retrofitted.
 - Lint/RedundantCopDisableDirective, Lint/RedundantCopEnableDirective, Lint/MissingCopEnableDirective
   and Style/DisableCopsWithinSourceCodeDirective need every other cop's offenses (suppressed ones
   included), so they are ported last, once all cops exist.

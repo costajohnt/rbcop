@@ -252,6 +252,14 @@ More traps found while porting:
 - `children.first.to_s` on dstr/dsym prints an s-expression, so string-matching cops only ever match
   plain str/sym elements.
 - `helpers::nil_methods` is `nil.methods` from a live RuboCop (includes `to_json`, `to_yaml`).
+- Parser `when` without a body ends at its last condition (Prism includes `then`). Label symbol
+  ranges (`a:`) exclude the colon. Parser `if` `loc.begin` can be `;`. `def (expr).foo` drops the
+  parens. `"#{a}"` is a parser `begin` (on_begin fires). Plain `begin..end` is `(kwbegin a b)`
+  with no inner `begin`. `a rescue b` is `(rescue a (resbody nil nil b) nil)`.
+- `each_descendant` excludes the node itself.
+- Compare invalid-UTF-8 string keys as raw bytes, never via `from_utf8_lossy`.
+- Helpers: `comments_help` (CommentsHelp), `literal_node` (literal predicates + structural key),
+  `if_node::parser_end`, `nil_receiver_checker`.
 - `helpers::regexp_captures` counts named/numbered groups like `RegexpNode#each_capture`.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.
