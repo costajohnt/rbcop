@@ -219,6 +219,16 @@ More traps found while porting:
   Prism's implicit begin starts at `do`) and the `end` line. CommentIndentation also shifts preceding
   same-column comments separated only by blank lines.
 - Ruby's `^` does not match after the final newline.
+- The runner dedups offenses on (cop, start, message) like RuboCop's `Offense#==`; two offenses of one
+  cop starting at the same column with the same message print once (fixes still both apply).
+- `after_send` hooks: there is no post-order dispatch, so subscribe to `PROGRAM_NODE` and run your own
+  visitor (fire after receiver, args and block-pass, before an attached block). `MatchWriteNode` gets
+  none; `Index{Operator,Or,And}WriteNode` contain a parser `send :[]` and do.
+- `in pat if guard`: Prism nests the pattern inside the IfNode; don't let descendant walks reach the guard.
+- `rescue *X`: Prism puts the splat directly under RescueNode; parser wraps it in an unbracketed `array`.
+- A parser `(block ...)` pattern never matches numblock/itblock: exclude BlockNodes with numbered or
+  `it` parameters.
+- `helpers::regexp_captures` counts named/numbered groups like `RegexpNode#each_capture`.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.
 
