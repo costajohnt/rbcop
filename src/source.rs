@@ -34,6 +34,7 @@ pub struct Source<'a> {
     /// Magic comment says binary/ASCII-8BIT: Ruby counts columns in bytes (see `binary_encoding`).
     pub binary: bool,
     tokens: OnceCell<Vec<Token>>,
+    lex_tokens: OnceCell<Vec<Token>>,
 }
 
 impl<'a> Source<'a> {
@@ -57,8 +58,13 @@ impl<'a> Source<'a> {
             version,
             binary: binary_encoding(text),
             tokens: OnceCell::new(),
+            lex_tokens: OnceCell::new(),
         };
-        if let Some(off) = data_start {
+        // ProcessedSource#lines stops at `__END__` only after the last token; with no tokens at
+        // all (nothing but whitespace before it) it keeps every line.
+        if let Some(off) = data_start
+            && !text[..off].bytes().all(|b| b" \t\r\n\x0b\x0c".contains(&b))
+        {
             lines.truncate(src.line_of(off) - 1);
         }
         src.lines = lines;
@@ -90,9 +96,20 @@ impl<'a> Source<'a> {
         &self.text[start..end]
     }
 
-    /// Prism lexer tokens, computed on first use (only cops that need tokens pay for the second parse).
+    /// Prism lexer tokens in source order (rubocop-ast's `sorted_tokens`), computed on first use
+    /// (only cops that need tokens pay for the second parse).
     pub fn tokens(&self) -> &[Token] {
-        self.tokens.get_or_init(|| lex(self.text.as_bytes(), self.version))
+        self.tokens.get_or_init(|| {
+            let mut tokens = self.lex_tokens().to_vec();
+            tokens.sort_by_key(|t| (t.start, t.end));
+            tokens
+        })
+    }
+
+    /// The same tokens in lexer order (`processed_source.tokens`): a heredoc's body follows its
+    /// opening token, before the rest of the opening line.
+    pub fn lex_tokens(&self) -> &[Token] {
+        self.lex_tokens.get_or_init(|| lex(self.text.as_bytes(), self.version, !self.binary))
     }
 
     /// Comment that starts on `line`, if any.
@@ -100,9 +117,9 @@ impl<'a> Source<'a> {
         self.comments.iter().find(|c| self.line_of(c.start) == line)
     }
 
-    /// True if the text before `off` on its line is only whitespace.
+    /// True if the text before `off` on its line is only (Ruby, ASCII) whitespace.
     pub fn begins_its_line(&self, off: usize) -> bool {
-        self.text[self.line_start(self.line_of(off))..off].chars().all(char::is_whitespace)
+        self.text[self.line_start(self.line_of(off))..off].bytes().all(crate::helpers::parser_tokens::is_ruby_space)
     }
 }
 
@@ -137,7 +154,7 @@ unsafe extern "C" {
 }
 
 /// Tokens in source order, as Prism's own `Prism.lex` produces them (via the parser's lex callback).
-fn lex(source: &[u8], version: &str) -> Vec<Token> {
+fn lex(source: &[u8], version: &str, encoding_locked: bool) -> Vec<Token> {
     use ruby_prism_sys::*;
     let mut state = LexState { base: source.as_ptr(), tokens: Vec::new() };
     // SAFETY: mirrors ruby_prism::parse_with_version: the parser is initialised, used and freed
@@ -145,6 +162,7 @@ fn lex(source: &[u8], version: &str) -> Vec<Token> {
     unsafe {
         let mut options = std::mem::MaybeUninit::<pm_options_t>::zeroed().assume_init();
         pm_options_version_set(&mut options, version.as_ptr(), version.len());
+        options.encoding_locked = encoding_locked;
         pm_options_partial_script_set(&mut options, true);
         let parser = Box::into_raw(Box::new(std::mem::MaybeUninit::<pm_parser_t>::uninit())) as *mut pm_parser_t;
         pm_parser_init(parser, source.as_ptr(), source.len(), &options);
@@ -158,14 +176,13 @@ fn lex(source: &[u8], version: &str) -> Vec<Token> {
         drop(Box::from_raw(parser as *mut std::mem::MaybeUninit<pm_parser_t>));
     }
     let mut tokens = state.tokens;
-    // Heredoc bodies are lexed after the rest of their opening line; RuboCop's tokens are position-sorted.
-    tokens.sort_by_key(|t| (t.start, t.end));
     tokens.retain(|t| t.kind != ruby_prism_sys::PM_TOKEN_EOF);
     tokens
 }
 
 static ENCODING_RE: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
-    regex::Regex::new(r"[\s#](?:en)?coding\s*[:=]\s*(utf8-mac|[A-Za-z0-9_-]+?(?:-unix|-dos|-mac)|[A-Za-z0-9_-]+)")
+    // Ruby `\s` is ASCII.
+    regex::Regex::new(r"[\t\n\x0B\x0C\r #](?:en)?coding[\t\n\x0B\x0C\r ]*[:=][\t\n\x0B\x0C\r ]*(utf8-mac|[A-Za-z0-9_-]+?(?:-unix|-dos|-mac)|[A-Za-z0-9_-]+)")
         .unwrap()
 });
 
@@ -179,11 +196,26 @@ pub fn binary_encoding(text: &str) -> bool {
 
 /// The encoding named by the magic comment, if any.
 fn magic_encoding(text: &str) -> Option<&str> {
+    // recognize_encoding: a BOM means UTF-8 whatever the comment says.
+    if text.starts_with('\u{feff}') {
+        return None;
+    }
     let mut lines = text.lines();
     let first = lines.next().unwrap_or("");
     let line = if first.starts_with("#!") { lines.next().unwrap_or("") } else { first };
     let c = ENCODING_RE.captures(line)?;
     Some(c.get(1)?.as_str().trim_end_matches("-unix").trim_end_matches("-dos").trim_end_matches("-mac"))
+}
+
+/// Parser::Source::Buffer.reencode_string failing on a source whose magic comment says US-ASCII
+/// but which has a byte above 0x7f: RuboCop's beautified `"\xe3" on us-ascii.` (other encodings
+/// are not checked; see docs/known-gaps.md).
+pub fn encoding_error(bytes: &[u8]) -> Option<String> {
+    let head = String::from_utf8_lossy(&bytes[..bytes.len().min(1024)]);
+    let name = magic_encoding(&head)?;
+    let ascii = ["us-ascii", "ascii", "ansi_x3.4-1968", "646"].iter().any(|n| name.eq_ignore_ascii_case(n));
+    let b = bytes.iter().find(|&&b| b > 0x7f).filter(|_| ascii)?;
+    Some(format!("\"\\x{b:02x}\" on us-ascii."))
 }
 
 /// Parser::Source::Buffer#source=: a source without a BOM or a magic comment naming another
@@ -192,4 +224,27 @@ fn magic_encoding(text: &str) -> Option<&str> {
 pub fn must_be_utf8(text: &str) -> bool {
     text.starts_with('\u{feff}')
         || magic_encoding(text).is_none_or(|n| n.eq_ignore_ascii_case("utf-8") || n.eq_ignore_ascii_case("utf8"))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn lexer_order_puts_heredoc_bodies_after_their_opener() {
+        use ruby_prism_sys::*;
+        let src = Source::new("t.rb", "x <<-EOT, 1\n  a\nEOT\n", Vec::new(), None, "3.4");
+        let kinds: Vec<u32> = src.lex_tokens().iter().map(|t| t.kind).collect();
+        let want = [
+            PM_TOKEN_IDENTIFIER,
+            PM_TOKEN_HEREDOC_START,
+            PM_TOKEN_STRING_CONTENT,
+            PM_TOKEN_HEREDOC_END,
+            PM_TOKEN_COMMA,
+            PM_TOKEN_INTEGER,
+            PM_TOKEN_NEWLINE,
+        ];
+        assert_eq!(kinds, want);
+        assert!(src.tokens().windows(2).all(|w| w[0].start <= w[1].start));
+    }
 }

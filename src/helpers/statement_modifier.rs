@@ -3,7 +3,7 @@
 
 use crate::directives::DIRECTIVE;
 use crate::helpers::alignment::{configured_indentation_width, cop_enabled};
-use crate::helpers::line_length_help::{find_excessive_range, uri_regex};
+use crate::helpers::line_length_help::{find_excessive_range, last_uri, uri_regex};
 use crate::helpers::node_types::is_assignment;
 use crate::helpers::parser_parent::parser_parent;
 use crate::prelude::*;
@@ -270,7 +270,7 @@ pub fn parenthesize(ancestors: &[Node]) -> bool {
 /// LineLengthHelp#find_excessive_range for URIs, in character columns.
 fn uri_range(cx: &Cx, line: &str, max: usize) -> Option<(usize, usize)> {
     let re = uri_regex(&cx.config.for_cop("Layout/LineLength").strings("URISchemes"))?;
-    find_excessive_range(line, &re, true, max, indentation_difference(cx, line))
+    find_excessive_range(line, last_uri(&re, line), max, indentation_difference(cx, line))
 }
 
 /// StatementModifier#acceptable_line_length? for an existing source line (1-based `line_number`).

@@ -76,7 +76,9 @@ impl Cop for SymbolArray {
         let (start, end) = (node.location().start_offset(), node.location().end_offset());
         if open == "[" {
             let els: Vec<Node> = array.elements().iter().collect();
-            if els.is_empty() || !els.iter().all(|e| e.as_symbol_node().is_some()) || complex_content(&array) {
+            // `sym_type?`: a symbol spanning lines is a parser `dsym`.
+            let sym = |e: &Node| e.as_symbol_node().is_some() && !crate::ast::is_parser_dsym(e, cx.config.target_ruby);
+            if els.is_empty() || !els.iter().all(sym) || complex_content(&array) {
                 return;
             }
             if pa::allowed_bracket_array(cx, node) || !percent_style {

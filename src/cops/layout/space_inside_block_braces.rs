@@ -105,7 +105,8 @@ impl Cop for SpaceInsideBlockBraces {
                     check.offense(cx, lb as isize, de as isize, "Space between { and | missing.");
                 }
             } else {
-                check.no_space(cx, le, le + 1, "Space missing inside {.");
+                // One character after the brace (it may be multibyte: `{\u3000` is an identifier).
+                check.no_space(cx, le, le + inner.chars().next().map_or(1, char::len_utf8), "Space missing inside {.");
             }
         } else if let Some((ds, _)) = pipe {
             if !before_params {

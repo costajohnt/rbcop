@@ -1,6 +1,7 @@
 //! Config values as RuboCop sees them after Psych: insertion-ordered maps, plus Regexp.
 
 use regex::Regex;
+use std::sync::LazyLock;
 use yaml_rust2::Yaml;
 use yaml_rust2::parser::{Event, MarkedEventReceiver, Parser};
 use yaml_rust2::scanner::{Marker, TScalarStyle};
@@ -180,10 +181,10 @@ impl MarkedEventReceiver for Loader {
                     }
                     (TScalarStyle::Plain, Some(t)) if t.handle == "tag:yaml.org,2002:" => match t.suffix.as_str() {
                         "str" => Yaml::String(v),
-                        _ => Yaml::from_str(&v),
+                        _ => psych_scalar(&v),
                     },
                     (TScalarStyle::Plain, Some(_)) => Yaml::String(v),
-                    (TScalarStyle::Plain, None) => Yaml::from_str(&v),
+                    (TScalarStyle::Plain, None) => psych_scalar(&v),
                     _ => Yaml::String(v),
                 };
                 self.insert((node, aid));
@@ -222,6 +223,87 @@ impl Loader {
             Some(_) => unreachable!("only collections are open"),
         }
     }
+}
+
+/// Psych's `ScalarScanner#tokenize` (YAML 1.1, `strict_integer: false`) for a plain scalar:
+/// `yes`/`on`/`off`, `1_000`, `0100` (octal), `1:30` (base 60), `1.` and so on.
+// ponytail: timestamps and dates stay strings (RuboCop's safe_load refuses Time/Date anyway); an
+// integer beyond i64 stays a string.
+fn psych_scalar(s: &str) -> Yaml {
+    static WORDISH: LazyLock<Regex> =
+        LazyLock::new(|| Regex::new(r"^[^\d.:-]?[\p{Alphabetic}_ \t\r\n\x0B\x0C!@#$%^&*(){}<>|/\\~;=]+").unwrap());
+    static SEXA_INT: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^[-+]?[0-9][0-9_]*(:[0-5]?[0-9]){1,2}$").unwrap());
+    static SEXA_FLOAT: LazyLock<Regex> =
+        LazyLock::new(|| Regex::new(r"^[-+]?[0-9][0-9_]*(:[0-5]?[0-9]){1,2}\.[0-9_]*$").unwrap());
+    static FLOAT: LazyLock<Regex> =
+        LazyLock::new(|| Regex::new(r"^[-+]?([0-9][0-9_,]*)?\.[0-9]*([eE][-+][0-9]+)?$").unwrap());
+    static INT: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(concat!(
+            r"^(?:[-+]?0b[_,]*[0-1][0-1_,]*|[-+]?0[_,]*[0-7][0-7_,]*",
+            r"|[-+]?(?:0|[1-9](?:[0-9]|,[0-9]|_[0-9])*)|[-+]?0x[_,]*[0-9a-fA-F][0-9a-fA-F_,]*)$"
+        ))
+        .unwrap()
+    });
+    let lower = s.to_ascii_lowercase();
+    if s.is_empty() {
+        return Yaml::Null;
+    }
+    if WORDISH.is_match(s) || s.contains('\n') {
+        return match lower.as_str() {
+            _ if s.chars().count() > 5 => Yaml::String(s.into()),
+            "~" | "null" => Yaml::Null,
+            "yes" | "true" | "on" => Yaml::Boolean(true),
+            "no" | "false" | "off" => Yaml::Boolean(false),
+            _ => Yaml::String(s.into()),
+        };
+    }
+    match lower.as_str() {
+        ".inf" | "+.inf" => return Yaml::Real(".inf".into()),
+        "-.inf" => return Yaml::Real("-.inf".into()),
+        ".nan" => return Yaml::Real(".nan".into()),
+        _ => {}
+    }
+    // `n.to_i * 60 ** (e - 2).abs` per part, as Psych writes it (so `1:30` is 5400).
+    let base60 = |to_num: &dyn Fn(&str) -> f64| -> f64 {
+        s.split(':').enumerate().map(|(e, n)| to_num(n) * 60f64.powi((e as i32 - 2).abs())).sum()
+    };
+    let digits = |n: &str| n.replace('_', "");
+    if SEXA_INT.is_match(s) {
+        return Yaml::Integer(base60(&|n| digits(n).parse::<i64>().unwrap_or(0) as f64) as i64);
+    }
+    if SEXA_FLOAT.is_match(s) {
+        return Yaml::Real(base60(&|n| digits(n).parse::<f64>().unwrap_or(0.0)).to_string());
+    }
+    if FLOAT.is_match(s) {
+        let t = s.replace([',', '_'], "");
+        let t = t.replacen(".e", "e", 1).replacen(".E", "E", 1);
+        let t = t.strip_suffix('.').unwrap_or(&t);
+        return match t.parse::<f64>() {
+            Ok(f) if !matches!(t, "" | "+" | "-") => Yaml::Real(f.to_string()),
+            _ => Yaml::String(s.into()),
+        };
+    }
+    if INT.is_match(s) {
+        let t = s.replace([',', '_'], "");
+        let (neg, t) = match t.as_bytes()[0] {
+            b'-' => (true, &t[1..]),
+            b'+' => (false, &t[1..]),
+            _ => (false, &t[..]),
+        };
+        let parsed = if let Some(b) = t.strip_prefix("0b") {
+            i64::from_str_radix(b, 2)
+        } else if let Some(h) = t.strip_prefix("0x") {
+            i64::from_str_radix(h, 16)
+        } else if t.len() > 1 && t.starts_with('0') {
+            i64::from_str_radix(&t[1..], 8)
+        } else {
+            t.parse()
+        };
+        if let Ok(i) = parsed {
+            return Yaml::Integer(if neg { -i } else { i });
+        }
+    }
+    Yaml::String(s.into())
 }
 
 /// yaml-rust2 drops tags, so turn `!ruby/regexp /x/i` into a marked string first.
@@ -346,5 +428,60 @@ mod tests {
         assert_eq!((d.int("Max"), d.int("X"), d.int("Y")), (Some(5), Some(1), Some(2)));
         let Value::Map(t) = parse_yaml("x: !!str 1\n'y': \"2\"\n").unwrap() else { panic!("not a map") };
         assert_eq!((t.get("x"), t.get("y")), (Some(&Value::Str("1".into())), Some(&Value::Str("2".into()))));
+    }
+
+    // Ruby 4.0 Psych (`YAML.safe_load("k: <s>")`): YAML 1.1 booleans, `_`/`,` in numbers, leading-0
+    // octal, base 60, and what stays a String.
+    #[test]
+    fn plain_scalars_resolve_like_psych() {
+        use Value::*;
+        let cases: &[(&str, Value)] = &[
+            ("yes", Bool(true)),
+            ("Yes", Bool(true)),
+            ("On", Bool(true)),
+            ("no", Bool(false)),
+            ("OFF", Bool(false)),
+            ("y", Str("y".into())),
+            ("N", Str("N".into())),
+            ("False", Bool(false)),
+            ("~", Null),
+            ("NULL", Null),
+            ("nil", Str("nil".into())),
+            ("yess", Str("yess".into())),
+            ("1_000", Int(1000)),
+            ("1__0", Str("1__0".into())),
+            ("0100", Int(64)),
+            ("08", Str("08".into())),
+            ("0o17", Str("0o17".into())),
+            ("0b101", Int(5)),
+            ("0x1F", Int(31)),
+            ("-0x1f", Int(-31)),
+            ("+12", Int(12)),
+            ("1,000", Int(1000)),
+            ("1:30", Int(5400)),
+            ("-1:30", Int(-1800)),
+            ("1:2:3", Int(3723)),
+            ("1:30.5", Float(5430.0)),
+            ("1.", Float(1.0)),
+            (".5", Float(0.5)),
+            ("+.5", Float(0.5)),
+            ("1_0.5", Float(10.5)),
+            ("1.0e+3", Float(1000.0)),
+            ("1.0e3", Str("1.0e3".into())),
+            ("1e3", Str("1e3".into())),
+            (".", Str(".".into())),
+            ("-.", Str("-.".into())),
+            ("-.Inf", Float(f64::NEG_INFINITY)),
+            ("00", Int(0)),
+            ("-0", Int(0)),
+            ("_1", Str("_1".into())),
+            ("12abc", Str("12abc".into())),
+            ("1.2.3", Str("1.2.3".into())),
+            ("9223372036854775807", Int(i64::MAX)),
+        ];
+        for (src, want) in cases {
+            let Value::Map(m) = parse_yaml(&format!("k: {src}\n")).unwrap() else { panic!("not a map") };
+            assert_eq!(m.get("k"), Some(want), "{src}");
+        }
     }
 }

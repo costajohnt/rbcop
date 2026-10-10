@@ -1,0 +1,326 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+ambiguous_regexp_block_receiver.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+ambiguous_regexp_block_receiver.rb:1:1: W: [Correctable] Lint/AmbiguousBlockAssociation: Parenthesize the param `/x/.foo { 1 }` to make sure that the block will be associated with the `/x/.foo` method call.
+ambiguous_regexp_block_receiver.rb:1:3: W: [Correctable] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+ambiguous_regexp_block_receiver.rb:2:3: W: Lint/EmptyBlock: Empty block detected.
+ambiguous_regexp_block_receiver.rb:4:10: W: [Correctable] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+ambiguous_regexp_block_receiver.rb:5:16: W: [Correctable] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+ambiguous_regexp_block_receiver.rb:5:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+ambiguous_regexp_block_receiver.rb:5:6: W: [Correctable] Lint/AmbiguousBlockAssociation: Parenthesize the param `/pattern/     .find_each { |t| t }` to make sure that the block will be associated with the `/pattern/     .find_each` method call.
+ambiguous_regexp_block_receiver.rb:6:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+ascii_identifiers_def.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+ascii_identifiers_def.rb:1:5: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+ascii_identifiers_def.rb:1:5: C: Naming/MethodName: Use snake_case for method names.
+ascii_identifiers_def.rb:3:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+ascii_identifiers_def.rb:3:1: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+ascii_identifiers_def.rb:3:5: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+ascii_identifiers_def.rb:5:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+ascii_identifiers_def.rb:5:8: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+binary_magic_after_bom.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+binary_magic_after_bom.rb:2:1: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+binary_magic_after_bom.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+binary_magic_after_bom.rb:2:2: C: [Correctable] Layout/SpaceBeforeComment: Put a space before an end-of-line comment.
+binary_magic_after_bom.rb:2:2: W: [Correctable] Lint/MisplacedMagicComment: The `encoding` magic comment is ignored unless placed on the first line (or below a shebang on the first line).
+binary_magic_after_bom.rb:3:1: C: Style/Documentation: Missing top-level documentation comment for `class MyClass`.
+binary_magic_after_bom.rb:4:3: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+block_alignment_unicode_space.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+block_alignment_unicode_space.rb:3:4: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+block_alignment_unicode_space.rb:3:4: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+block_alignment_unicode_space.rb:3:6: C: [Correctable] Layout/BlockEndNewline: Expression at 3, 6 should be on its own line.
+closing_parenthesis_interpolation.rb:11:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `w`.
+closing_parenthesis_interpolation.rb:11:5: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+closing_parenthesis_interpolation.rb:12:2: C: [Correctable] Layout/ClosingParenthesisIndentation: Align `)` with `(`.
+closing_parenthesis_interpolation.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+closing_parenthesis_interpolation.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+closing_parenthesis_interpolation.rb:3:5: C: [Correctable] Layout/ClosingParenthesisIndentation: Indent `)` to column 0 (not 4)
+closing_parenthesis_interpolation.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+closing_parenthesis_interpolation.rb:4:5: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+closing_parenthesis_interpolation.rb:4:6: W: Lint/EmptyExpression: Avoid empty expressions.
+closing_parenthesis_interpolation.rb:4:6: W: [Correctable] Lint/EmptyInterpolation: Empty interpolation detected.
+closing_parenthesis_interpolation.rb:6:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `z`.
+closing_parenthesis_interpolation.rb:9:7: C: [Correctable] Layout/ClosingParenthesisIndentation: Indent `)` to column 0 (not 6)
+closing_parenthesis_interpolation_tabs.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+closing_parenthesis_interpolation_tabs.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+closing_parenthesis_interpolation_tabs.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+closing_parenthesis_interpolation_tabs.rb:3:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.where` with `foo` on line 2.
+closing_parenthesis_interpolation_tabs.rb:4:5: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+closing_parenthesis_interpolation_tabs.rb:6:5: C: [Correctable] Layout/ClosingParenthesisIndentation: Indent `)` to column 3 (not 4)
+closing_parenthesis_interpolation_tabs.rb:6:7: C: [Correctable] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call.
+closing_parenthesis_interpolation_tabs.rb:7:7: C: [Correctable] Layout/ClosingParenthesisIndentation: Indent `)` to column 2 (not 6)
+cop_directive_bom.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+cop_directive_bom.rb:1:2: W: Lint/CopDirectiveSyntax: Unknown cop name `Layout/LineLenght` (did you mean `Layout/LineLength`?).
+directive_scope_begin.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+directive_scope_begin.rb:3:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+directive_scope_begin.rb:3:6: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+directive_scope_begin.rb:6:1: C: [Correctable] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+directive_scope_rescue.rb:11:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+directive_scope_rescue.rb:11:6: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+directive_scope_rescue.rb:12:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+directive_scope_rescue.rb:12:6: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+directive_scope_rescue.rb:14:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `z`.
+directive_scope_rescue.rb:14:6: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+directive_scope_rescue.rb:17:14: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `i`. You can omit the argument if you don't care about it.
+directive_scope_rescue.rb:19:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `i`.
+directive_scope_rescue.rb:19:6: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+directive_scope_rescue.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+directive_scope_rescue.rb:21:1: C: [Correctable] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+directive_scope_rescue.rb:21:1: W: Lint/SuppressedException: Do not suppress exceptions.
+directive_scope_rescue.rb:23:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `w`.
+directive_scope_rescue.rb:23:5: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+directive_scope_rescue.rb:23:6: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+directive_scope_rescue.rb:26:1: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+directive_scope_rescue.rb:27:3: C: [Correctable] Style/DirectiveScope: Use `disable-next` instead of a `disable`/`enable` pair around a single statement.
+directive_scope_rescue.rb:28:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `q`.
+directive_scope_rescue.rb:28:6: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+directive_scope_rescue.rb:3:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+directive_scope_rescue.rb:3:6: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+directive_scope_rescue.rb:6:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+directive_scope_rescue.rb:6:5: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+directive_scope_rescue.rb:6:6: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+documentation_childless_body.rb:10:1: C: Style/Documentation: Missing top-level documentation comment for `class Q`.
+documentation_childless_body.rb:10:1: C: Style/OneClassPerFile: Do not define multiple classes/modules at the top level in a single file.
+documentation_childless_body.rb:10:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between class definitions; found 0.
+documentation_childless_body.rb:13:1: C: Style/Documentation: Missing top-level documentation comment for `class R`.
+documentation_childless_body.rb:13:1: C: Style/OneClassPerFile: Do not define multiple classes/modules at the top level in a single file.
+documentation_childless_body.rb:13:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between class definitions; found 0.
+documentation_childless_body.rb:14:3: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+documentation_childless_body.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+documentation_childless_body.rb:4:1: C: Style/Documentation: Missing top-level documentation comment for `class Bar`.
+documentation_childless_body.rb:4:1: C: Style/OneClassPerFile: Do not define multiple classes/modules at the top level in a single file.
+documentation_childless_body.rb:4:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between class definitions; found 0.
+documentation_childless_body.rb:7:1: C: Style/OneClassPerFile: Do not define multiple classes/modules at the top level in a single file.
+documentation_childless_body.rb:7:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between class definitions; found 0.
+documentation_childless_body.rb:8:3: C: [Correctable] Style/BarePercentLiterals: Use `%` instead of `%Q`.
+documentation_childless_body.rb:8:3: C: [Correctable] Style/RedundantPercentQ: Use `%Q` only for strings that contain both single quotes and double quotes, or for dynamic strings that contain double quotes.
+documentation_decorating_comment.rb:1:13: C: Style/Documentation: Missing top-level documentation comment for `class B::C`.
+documentation_decorating_comment.rb:1:13: C: [Correctable] Style/TrailingBodyOnModule: Place the first line of module body on its own line.
+documentation_decorating_comment.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+documentation_decorating_comment.rb:1:9: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+documentation_decorating_comment.rb:2:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -10) spaces for indentation.
+documentation_decorating_comment.rb:2:3: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+documentation_decorating_comment.rb:4:1: W: [Correctable] Layout/EndAlignment: `end` at 4, 0 is not aligned with `class` at 1, 12.
+documentation_nodoc_all_tab.rb:1:10: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+documentation_nodoc_all_tab.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+documentation_nodoc_all_tab.rb:1:22: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+documentation_nodoc_all_tab.rb:2:3: C: Style/Documentation: Missing top-level documentation comment for `class A::W`.
+documentation_parens.rb:10:1: C: Style/OneClassPerFile: Do not define multiple classes/modules at the top level in a single file.
+documentation_parens.rb:10:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between class definitions; found 0.
+documentation_parens.rb:11:9: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+documentation_parens.rb:13:1: C: Style/Documentation: Missing top-level documentation comment for `class R`.
+documentation_parens.rb:13:1: C: Style/OneClassPerFile: Do not define multiple classes/modules at the top level in a single file.
+documentation_parens.rb:13:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between class definitions; found 0.
+documentation_parens.rb:14:5: W: Lint/EmptyClass: Empty class detected.
+documentation_parens.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+documentation_parens.rb:3:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+documentation_parens.rb:3:3: W: Lint/EmptyClass: Empty class detected.
+documentation_parens.rb:5:3: C: [Correctable] Layout/ClosingParenthesisIndentation: Indent `)` to column 0 (not 2)
+documentation_parens.rb:7:1: C: Style/OneClassPerFile: Do not define multiple classes/modules at the top level in a single file.
+documentation_parens.rb:7:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between class definitions; found 0.
+documentation_parens.rb:8:3: W: Lint/EmptyExpression: Avoid empty expressions.
+documentation_rescue_wrapper.rb:10:3: C: Style/Documentation: Missing top-level documentation comment for `class B`.
+documentation_rescue_wrapper.rb:14:1: C: [Correctable] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+documentation_rescue_wrapper.rb:14:1: W: Lint/SuppressedException: Do not suppress exceptions.
+documentation_rescue_wrapper.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+documentation_rescue_wrapper.rb:22:1: C: [Correctable] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+documentation_rescue_wrapper.rb:22:1: W: Lint/SuppressedException: Do not suppress exceptions.
+documentation_rescue_wrapper.rb:3:3: C: Style/Documentation: Missing top-level documentation comment for `class A`.
+documentation_rescue_wrapper.rb:6:1: W: [Correctable] Lint/EmptyEnsure: Empty `ensure` block detected.
+else_layout_parens.rb:10:6: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+else_layout_parens.rb:10:7: W: [Correctable] Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?
+else_layout_parens.rb:13:6: W: Lint/EmptyExpression: Avoid empty expressions.
+else_layout_parens.rb:15:1: W: [Correctable] Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+else_layout_parens.rb:16:6: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+else_layout_parens.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+else_layout_parens.rb:2:3: W: Lint/EmptyExpression: Avoid empty expressions.
+else_layout_parens.rb:3:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+else_layout_parens.rb:3:5: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+else_layout_parens.rb:3:7: W: Lint/EmptyExpression: Avoid empty expressions.
+else_layout_parens.rb:7:7: W: [Correctable] Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?
+else_layout_parens.rb:7:8: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+empty_line_between_defs_kwbegin.rb:11:1: W: [Correctable] Lint/EmptyEnsure: Empty `ensure` block detected.
+empty_line_between_defs_kwbegin.rb:14:3: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+empty_line_between_defs_kwbegin.rb:16:3: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+empty_line_between_defs_kwbegin.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+empty_line_between_defs_kwbegin.rb:20:3: W: Lint/EmptyClass: Empty class detected.
+empty_line_between_defs_kwbegin.rb:22:3: W: Lint/EmptyClass: Empty class detected.
+empty_line_between_defs_kwbegin.rb:2:3: W: Lint/EmptyClass: Empty class detected.
+empty_line_between_defs_kwbegin.rb:4:3: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between class definitions; found 0.
+empty_line_between_defs_kwbegin.rb:4:3: W: Lint/EmptyClass: Empty class detected.
+empty_line_between_defs_kwbegin.rb:6:1: C: [Correctable] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+empty_line_between_defs_kwbegin.rb:6:1: W: Lint/SuppressedException: Do not suppress exceptions.
+empty_lines_continuation.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+empty_lines_continuation.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+empty_lines_continuation.rb:1:20: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+empty_lines_continuation.rb:3:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+empty_lines_continuation.rb:4:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+empty_lines_continuation.rb:5:3: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+empty_lines_crlf.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+empty_lines_crlf.rb:3:1: C: Layout/EndOfLine: Carriage return character detected.
+empty_lines_second_line.rb:3:1: C: [Correctable] Layout/LeadingEmptyLines: Unnecessary blank line at the beginning of the source.
+empty_lines_second_line.rb:5:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+empty_lines_second_line.rb:6:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+empty_literals.rb:1:1: C: [Correctable] Style/BarePercentLiterals: Use `%` instead of `%Q`.
+empty_literals.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+empty_literals.rb:1:1: C: [Correctable] Style/RedundantPercentQ: Use `%Q` only for strings that contain both single quotes and double quotes, or for dynamic strings that contain double quotes.
+empty_literals.rb:1:1: W: [Correctable] Lint/Void: Literal `%Q()` used in void context.
+empty_literals.rb:2:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+empty_literals.rb:2:5: C: [Correctable] Style/RedundantPercentQ: Use `%q` only for strings that contain both single quotes and double quotes.
+empty_literals.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+empty_literals.rb:3:5: C: [Correctable] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+empty_literals.rb:5:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `z`.
+empty_literals.rb:6:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `w`.
+empty_literals.rb:7:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `v`.
+empty_literals.rb:7:7: C: [Correctable] Style/QuotedSymbols: Prefer single-quoted symbols when you don't need string interpolation or special symbols.
+empty_literals.rb:8:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `u`.
+end_marker_only.rb:2:1: C: Layout/EndOfLine: Carriage return character detected.
+end_marker_only.rb:2:22: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+end_of_line_comment_before_dot.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+end_of_line_comment_before_dot.rb:2:1: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 0 instead of 2).
+end_of_line_comment_before_dot.rb:3:1: C: Layout/EndOfLine: Carriage return character detected.
+end_of_line_trailing_comment.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+extra_spacing_heredoc.rb:1:10: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+extra_spacing_heredoc.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+frozen_string_literal_after_semicolon.rb:1:1: C: [Correctable] Style/Encoding: Unnecessary utf-8 encoding comment.
+frozen_string_literal_after_semicolon.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+frozen_string_literal_after_semicolon.rb:2:1: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+frozen_string_literal_after_semicolon.rb:4:1: W: [Correctable] Lint/MisplacedMagicComment: The `frozen_string_literal` magic comment is ignored after any code.
+heredoc_last_token_crlf.rb:1:1: C: Style/DocumentDynamicEvalDefinition: Add a comment block showing its appearance if interpolated.
+heredoc_last_token_crlf.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+heredoc_last_token_crlf.rb:7:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+indentation_width_nbsp.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+indentation_width_nbsp.rb:3:1: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+indentation_width_nbsp.rb:3:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not -2) spaces for indentation.
+indentation_width_nbsp.rb:3:2: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+indentation_width_nbsp.rb:3:2: C: [Correctable] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+indentation_width_nbsp.rb:5:1: C: [Correctable] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+indentation_width_parens.rb:11:9: W: Lint/EmptyBlock: Empty block detected.
+indentation_width_parens.rb:5:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+indentation_width_parens.rb:5:5: C: Style/Documentation: Missing top-level documentation comment for `class Foo::Bar`.
+indentation_width_parens.rb:7:9: W: Lint/EmptyBlock: Empty block detected.
+indentation_width_past_eof.rb:2:1: C: Style/Documentation: Missing top-level documentation comment for `class TrackAiSummaryOrigin`.
+indentation_width_past_eof.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+indentation_width_past_eof.rb:2:59: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+indentation_width_past_eof.rb:2:61: C: [Correctable] Style/TrailingBodyOnClass: Place the first line of class body on its own line.
+indentation_width_past_eof.rb:3:5: C: [Correctable] Layout/IndentationWidth: Use 2 (not -56) spaces for indentation.
+indentation_width_past_eof.rb:4:3: W: [Correctable] Layout/DefEndAlignment: `end` at 4, 2 is not aligned with `def` at 2, 60.
+initial_indentation_string.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+initial_indentation_string.rb:1:4: C: [Correctable] Layout/InitialIndentation: Indentation of first line in file detected.
+initial_indentation_string.rb:1:4: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+initial_indentation_string.rb:1:4: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+leading_empty_lines_string.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+leading_empty_lines_string.rb:3:1: C: [Correctable] Layout/LeadingEmptyLines: Unnecessary blank line at the beginning of the source.
+line_continuation_crlf.rb:1:1: C: Layout/EndOfLine: Carriage return character detected.
+line_continuation_crlf.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+line_continuation_crlf.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+line_continuation_crlf.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.
+line_continuation_crlf.rb:3:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+line_continuation_crlf.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `b`.
+line_continuation_crlf.rb:3:6: C: [Correctable] Layout/LineContinuationSpacing: Use one space in front of backslash.
+line_continuation_leading_space_crlf.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+line_continuation_leading_space_crlf.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+line_continuation_leading_space_crlf.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+line_continuation_leading_space_crlf.rb:2:1: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
+line_continuation_leading_space_crlf.rb:2:2: C: [Correctable] Layout/LineContinuationLeadingSpace: Move leading spaces to the end of the previous line.
+line_continuation_leading_space_crlf.rb:3:1: C: Layout/EndOfLine: Carriage return character detected.
+line_continuation_leading_space_crlf.rb:3:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+line_continuation_leading_space_crlf.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+line_continuation_leading_space_crlf.rb:4:1: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
+line_continuation_leading_space_crlf.rb:5:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+line_continuation_leading_space_crlf.rb:5:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `z`.
+line_continuation_leading_space_crlf.rb:6:1: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
+line_continuation_leading_space_crlf.rb:6:2: C: [Correctable] Layout/LineContinuationLeadingSpace: Move leading spaces to the end of the previous line.
+line_length_tabs.rb:1:117: C: Layout/LineLength: Line is too long. [124/120]
+line_length_tabs.rb:1:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+line_length_tabs.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+line_length_tabs.rb:1:5: C: [Correctable] Layout/InitialIndentation: Indentation of first line in file detected.
+line_length_tabs.rb:1:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+line_length_tabs.rb:2:1: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+line_length_uri.rb:14:121: C: Layout/LineLength: Line is too long. [127/120]
+line_length_uri.rb:17:125: C: Layout/LineLength: Line is too long. [126/120]
+line_length_uri.rb:1:114: C: Style/FormatStringToken: Prefer annotated tokens (like `%<foo>s`) over template tokens (like `%{foo}`).
+line_length_uri.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+line_length_uri.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+line_length_uri.rb:1:26: C: Style/FormatStringToken: Prefer annotated tokens (like `%<foo>s`) over template tokens (like `%{foo}`).
+line_length_uri.rb:1:49: C: Style/FormatStringToken: Prefer annotated tokens (like `%<foo>s`) over template tokens (like `%{foo}`).
+line_length_uri.rb:1:91: C: Style/FormatStringToken: Prefer annotated tokens (like `%<foo>s`) over template tokens (like `%{foo}`).
+line_length_uri.rb:25:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+line_length_uri.rb:2:121: C: Layout/LineLength: Line is too long. [127/120]
+line_length_uri.rb:3:121: C: Layout/LineLength: Line is too long. [128/120]
+macro_scope_class_constructor_args.rb:1:15: C: [Correctable] Style/NestedParenthesizedCalls: Add parentheses to nested method call `foo bar`.
+macro_scope_class_constructor_args.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+macro_scope_class_constructor_args.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+macro_scope_class_constructor_args.rb:2:16: C: [Correctable] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
+macro_scope_class_constructor_args.rb:2:16: C: [Correctable] Style/NestedParenthesizedCalls: Add parentheses to nested method call `attr :a`.
+macro_scope_class_constructor_args.rb:2:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+macro_scope_class_constructor_args.rb:3:17: C: [Correctable] Style/NestedParenthesizedCalls: Add parentheses to nested method call `baz 1`.
+macro_scope_class_constructor_args.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `z`.
+macro_scope_class_constructor_args.rb:6:13: C: [Correctable] Style/NestedParenthesizedCalls: Add parentheses to nested method call `foo bar`.
+macro_scope_class_constructor_args.rb:6:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `w`.
+magic_encoding_after_bom.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+magic_encoding_after_bom.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+magic_encoding_after_bom.rb:2:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+magic_encoding_after_bom.rb:2:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+magic_encoding_ignored.rb:1:1: W: Lint/ScriptPermission: Script file magic_encoding_ignored.rb doesn't have execute permission.
+magic_encoding_ignored.rb:4:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+memoized_ivar_assignment_value.rb:9:3: F: Lint/Syntax: dynamic constant assignment (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+pattern_variable_names.rb:2:4: F: Lint/Syntax: `变量' is not allowed as a local variable name (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+pattern_variable_names.rb:5:15: F: Lint/Syntax: `ⅰ　x' is not allowed as a local variable name (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+pattern_variable_names.rb:5:6: F: Lint/Syntax: `b　c' is not allowed as a local variable name (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+pattern_variable_names.rb:6:17: F: Lint/Syntax: `q　z' is not allowed as a local variable name (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+redundant_line_break_crlf.rb:1:1: C: Layout/EndOfLine: Carriage return character detected.
+redundant_line_break_crlf.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+redundant_line_break_crlf.rb:2:3: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+redundant_line_break_crlf.rb:4:10: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+redundant_parentheses_block_call_args.rb:1:10: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method argument.
+redundant_parentheses_block_call_args.rb:1:19: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `acc`. If it's necessary, use `_` or `_acc` as an argument name to indicate that it won't be used.
+redundant_parentheses_block_call_args.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+redundant_parentheses_block_call_args.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+redundant_parentheses_block_call_args.rb:4:16: C: [Correctable] Layout/SpaceInsideBlockBraces: Space inside empty braces detected.
+redundant_parentheses_block_call_args.rb:4:1: W: Lint/EmptyBlock: Empty block detected.
+redundant_parentheses_block_call_args.rb:5:16: C: [Correctable] Layout/SpaceInsideBlockBraces: Space inside empty braces detected.
+redundant_parentheses_block_call_args.rb:5:1: W: Lint/EmptyBlock: Empty block detected.
+redundant_parentheses_block_call_args.rb:6:12: C: [Correctable] Layout/SpaceInsideBlockBraces: Space inside empty braces detected.
+redundant_parentheses_block_call_args.rb:6:1: W: Lint/EmptyBlock: Empty block detected.
+redundant_parentheses_block_call_args.rb:6:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method argument.
+redundant_parentheses_block_call_args.rb:7:12: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+redundant_parentheses_block_call_args.rb:7:1: C: [Correctable] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+redundant_parentheses_block_call_args.rb:7:1: W: Lint/EmptyBlock: Empty block detected.
+redundant_parentheses_block_call_args.rb:7:6: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+rescue_semicolon.rb:10:1: C: [Correctable] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+rescue_semicolon.rb:10:1: W: Lint/SuppressedException: Do not suppress exceptions.
+rescue_semicolon.rb:11:1: C: [Correctable] Layout/SpaceAfterSemicolon: Space missing after semicolon.
+rescue_semicolon.rb:11:1: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+rescue_semicolon.rb:11:2: C: [Correctable] Layout/BlockEndNewline: Expression at 11, 2 should be on its own line.
+rescue_semicolon.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+rescue_semicolon.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.
+rescue_semicolon.rb:2:1: W: Lint/SuppressedException: Do not suppress exceptions.
+rescue_semicolon.rb:2:25: C: [Correctable] Naming/RescuedExceptionsVariableName: Use `_e` instead of `_`.
+rescue_semicolon.rb:2:26: C: [Correctable] Layout/SpaceBeforeSemicolon: Space found before semicolon.
+rescue_semicolon.rb:2:27: C: [Correctable] Layout/SpaceAfterSemicolon: Space missing after semicolon.
+rescue_semicolon.rb:2:28: C: [Correctable] Layout/BlockEndNewline: Expression at 2, 28 should be on its own line.
+rescue_semicolon.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `b`.
+rescue_semicolon.rb:4:15: C: [Correctable] Layout/BlockEndNewline: Expression at 4, 15 should be on its own line.
+rescue_semicolon.rb:4:1: W: Lint/SuppressedException: Do not suppress exceptions.
+rescue_semicolon.rb:5:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `c`.
+rescue_semicolon.rb:7:1: W: Lint/SuppressedException: Do not suppress exceptions.
+rescue_semicolon.rb:7:9: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+rescue_semicolon.rb:8:1: W: [Correctable] Lint/EmptyEnsure: Empty `ensure` block detected.
+rescue_semicolon.rb:9:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `d`.
+semicolon_only.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+space_inside_block_braces_multibyte.rb:1:13: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+space_inside_block_braces_multibyte.rb:1:13: C: [Correctable] Layout/SpaceInsideBlockBraces: Space missing inside {.
+space_inside_block_braces_multibyte.rb:1:15: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
+space_inside_block_braces_multibyte.rb:1:17: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
+space_inside_block_braces_multibyte.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+suppressed_exception_vt_comment.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+suppressed_exception_vt_comment.rb:3:1: W: Lint/RescueException: Avoid rescuing the `Exception` class. Perhaps you meant to rescue `StandardError`?
+suppressed_exception_vt_comment.rb:3:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
+suppressed_exception_vt_comment.rb:4:4: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 3 instead of 2).
+suppressed_exception_vt_comment.rb:4:4: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+symbol_array_multiline.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+symbol_array_multiline.rb:1:2: C: [Correctable] Style/QuotedSymbols: Prefer single-quoted symbols when you don't need string interpolation or special symbols.
+symbol_array_multiline.rb:1:2: C: [Correctable] Style/SymbolLiteral: Do not use strings for word-like symbol literals.
+symbol_array_multiline.rb:1:2: W: [Correctable] Lint/SymbolConversion: Unnecessary symbol conversion; use `:a` instead.
+syntax_anonymous_block.rb:1:11: F: Lint/Syntax: unexpected `&`; no anonymous block parameter (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+syntax_anonymous_block.rb:1:8: F: Lint/Syntax: no anonymous rest parameter (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+us_ascii_non_ascii.rb:1:1: F: Lint/Syntax: "\xe3" on us-ascii.

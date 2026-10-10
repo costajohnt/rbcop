@@ -224,7 +224,10 @@ impl Cop for ExtraSpacing {
         let assignment_starts: HashSet<usize> = data.assignment_tokens.iter().map(|t| t.start).collect();
         let corrected: RefCell<HashSet<usize>> = RefCell::default();
 
-        for w in data.tokens.windows(2) {
+        // `processed_source.tokens.each_cons(2)`: lexer order, so a heredoc opener and the rest of its
+        // line are not neighbours.
+        let lex_ordered = helpers::parser_tokens::in_lex_order(src, &data.tokens);
+        for w in lex_ordered.windows(2) {
             let (t1, t2) = (&w[0], &w[1]);
             if t2.kind == sys::PM_TOKEN_NEWLINE {
                 continue;

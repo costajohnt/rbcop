@@ -115,7 +115,8 @@ fn first_error_after(
     }
     let src = format!("{prefix}{rest}");
     let version = crate::config::target_ruby::prism_version(target);
-    let (result, tokens) = ruby_prism::parse_with_version_and_tokens(src.as_bytes(), version);
+    let (result, tokens) =
+        ruby_prism::parse_with_version_and_tokens(src.as_bytes(), version, !crate::source::binary_encoding(text));
     let sorted = by_start(&convert(&tokens, &src, target));
     let mut w = Walk { target, toks: &sorted, ..Walk::default() };
     w.visit(&result.node());

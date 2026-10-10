@@ -4,8 +4,9 @@ use crate::source::{Source, Token};
 use ruby_prism_sys as sys;
 
 /// Prism tokens minus those the parser gem has no counterpart for: newlines the grammar ignores
-/// (parser emits `tNL` only for significant ones) and the body/end of `=begin` blocks (parser
-/// emits one `tCOMMENT` for the whole block; `EMBDOC_BEGIN` stands in for it), and `__END__`.
+/// (parser emits `tNL` only for significant ones), `__END__` (the translation lexer always skips
+/// it) and the body/end of `=begin` blocks (parser emits one `tCOMMENT` for the whole block;
+/// `EMBDOC_BEGIN` stands in for it).
 /// Not modelled: parser's `tNL` after every comment and zero-width `tSPACE` closing `%w()`;
 /// Prism's `COMMENT` includes the newline (parser's comment ends before it).
 pub fn sorted_tokens(src: &Source) -> Vec<Token> {
@@ -14,11 +15,81 @@ pub fn sorted_tokens(src: &Source) -> Vec<Token> {
         .filter(|t| {
             !matches!(
                 t.kind,
-                sys::PM_TOKEN_IGNORED_NEWLINE | sys::PM_TOKEN_EMBDOC_LINE | sys::PM_TOKEN_EMBDOC_END | sys::PM_TOKEN___END__
+                sys::PM_TOKEN_IGNORED_NEWLINE | sys::PM_TOKEN___END__ | sys::PM_TOKEN_EMBDOC_LINE | sys::PM_TOKEN_EMBDOC_END
             )
         })
         .copied()
         .collect()
+}
+
+/// `processed_source.tokens.empty?` (`first_code`: `cx.facts.first_code`). Code or a comment means
+/// tokens without lexing; otherwise a lone `;` still counts, blank lines and `__END__` do not.
+pub fn tokens_empty(src: &Source, first_code: Option<usize>) -> bool {
+    first_code.is_none() && src.comments.is_empty() && sorted_tokens(src).is_empty()
+}
+
+/// Offset of `processed_source.tokens.find { |t| !t.comment? }` (`first_code`: `cx.facts.first_code`,
+/// the first statement). Only a `;` can come before the first statement, so the lexer runs just
+/// when the text before it has one.
+pub fn first_non_comment_token(src: &Source, first_code: Option<usize>) -> Option<usize> {
+    if !src.text[..first_code.unwrap_or(src.text.len())].contains(';') {
+        return first_code;
+    }
+    let comment = |k: u32| matches!(k, sys::PM_TOKEN_COMMENT | sys::PM_TOKEN_EMBDOC_BEGIN | sys::PM_TOKEN_NEWLINE);
+    sorted_tokens(src).iter().find(|t| !comment(t.kind)).map(|t| t.start).or(first_code)
+}
+
+/// Line of `processed_source.tokens.last`: the translation lexer's order is the lexer's, except
+/// that a newline followed by comments is emitted after them (`comment_newline_location`), so a
+/// file ending in comment lines ends with the last code line's `tNL`.
+pub fn last_token_line(src: &Source) -> Option<usize> {
+    use sys::*;
+    let raw = src.lex_tokens();
+    let skip = |k: u32| matches!(k, PM_TOKEN_IGNORED_NEWLINE | PM_TOKEN___END__ | PM_TOKEN_EMBDOC_LINE | PM_TOKEN_EMBDOC_END);
+    let continuation = |t: Option<&Token>| {
+        t.is_some_and(|t| matches!(t.kind, PM_TOKEN_COMMENT | PM_TOKEN_AMPERSAND_DOT | PM_TOKEN_DOT))
+    };
+    let (mut last, mut deferred) = (None, None);
+    for (i, t) in raw.iter().enumerate() {
+        if skip(t.kind) {
+            continue;
+        }
+        let line = src.line_of(t.start);
+        let next = raw.get(i + 1);
+        match t.kind {
+            PM_TOKEN_NEWLINE if next.is_some_and(|n| n.kind == PM_TOKEN_COMMENT) => deferred = Some(line),
+            PM_TOKEN_COMMENT => {
+                let at_eol = !src.text[t.start..t.end].ends_with('\n');
+                let inline = i > 0 && src.line_of(raw[i - 1].start) == line;
+                last = Some(line);
+                // An inline comment before code gets its own tNL right after it.
+                let own_newline = inline && !at_eol && !continuation(next);
+                if own_newline {
+                    continue;
+                }
+                if inline && next.is_some_and(|n| n.kind == PM_TOKEN_COMMENT) {
+                    deferred = Some(line);
+                } else if let Some(d) = deferred.filter(|_| !continuation(next)) {
+                    last = Some(d);
+                    deferred = None;
+                }
+            }
+            _ => last = Some(line),
+        }
+    }
+    last
+}
+
+/// Position-sorted `tokens` (e.g. `translated`) in lexer order, the order of
+/// `processed_source.tokens`: a heredoc's body follows its opening token. Each token takes the
+/// lexer position of the raw token it starts in.
+pub fn in_lex_order(src: &Source, tokens: &[Token]) -> Vec<Token> {
+    let mut rank: Vec<(usize, usize)> = src.lex_tokens().iter().enumerate().map(|(i, t)| (t.start, i)).collect();
+    rank.sort_unstable();
+    let rank_of = |t: &Token| rank.partition_point(|&(s, _)| s <= t.start).checked_sub(1).map_or(0, |i| rank[i].1);
+    let mut out = tokens.to_vec();
+    out.sort_by_key(|t| (rank_of(t), t.start, t.end));
+    out
 }
 
 /// Token#line equality (both tokens' begin lines).
@@ -66,6 +137,10 @@ pub fn translated(src: &Source) -> Vec<Token> {
         match t.kind {
             PM_TOKEN_IGNORED_NEWLINE | PM_TOKEN___END__ | PM_TOKEN_EOF | PM_TOKEN_EMBDOC_LINE | PM_TOKEN_EMBDOC_END
             | PM_TOKEN_MISSING | PM_TOKEN_NOT_PROVIDED => {}
+            // `def foo?`: the lexer's tFID right after `def` is a tIDENTIFIER.
+            PM_TOKEN_METHOD_NAME if out.last().is_some_and(|l| l.kind == PM_TOKEN_KEYWORD_DEF) => {
+                out.push(tok(PM_TOKEN_IDENTIFIER, t.start, t.end));
+            }
             PM_TOKEN_EMBDOC_BEGIN => {
                 let mut end = t.end;
                 while i < raw.len() {

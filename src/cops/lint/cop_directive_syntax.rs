@@ -129,7 +129,8 @@ fn check_directive(cx: &mut Cx, start: usize, end: usize, text: &str) -> Result<
         return Ok(());
     }
     let next_statement = matches!(mode, Some("disable-next" | "todo-next" | "enable-next" | "next"));
-    if next_statement && !cx.src.begins_its_line(start) {
+    // comment_only_line?: no code token on the line (a BOM or other non-token text before is fine).
+    if next_statement && helpers::comment_config::code_lines(cx.src, cx.facts)[cx.src.line_of(start)] {
         cx.add_with(start, end, NEXT_DIRECTIVE_AT_EOL_MSG, false);
         return Ok(());
     }

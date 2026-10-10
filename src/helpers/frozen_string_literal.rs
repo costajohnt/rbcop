@@ -4,10 +4,10 @@ use crate::config::value::Value;
 use crate::cop::Cx;
 use crate::cops::style_frozen_string_literal_comment::frozen_value;
 
-/// `leading_comment_lines`: the lines before the first code line.
-fn leading<'a>(cx: &Cx<'a, '_>) -> &'a [&'a str] {
+/// `leading_comment_lines`: the lines before the first non-comment token's line.
+pub fn leading<'a>(cx: &Cx<'a, '_>) -> &'a [&'a str] {
     let src = cx.src;
-    match cx.facts.first_code {
+    match crate::helpers::parser_tokens::first_non_comment_token(src, cx.facts.first_code) {
         Some(off) => &src.lines[..(src.line_of(off) - 1).min(src.lines.len())],
         None => &src.lines[..],
     }

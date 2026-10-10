@@ -24,14 +24,19 @@ impl Cop for LineContinuationSpacing {
             Some("space") => false,
             _ => return,
         };
-        let last_line = helpers::parser_tokens::translated(src).last().map_or(src.lines.len(), |t| src.line_of(t.start));
+        let last_line = helpers::parser_tokens::last_token_line(src).unwrap_or(src.lines.len());
         let mut ignored: Option<Vec<(usize, usize)>> = None;
         let mut line_start = 0;
+        // RuboCop matches `\\$` on the raw lines: a backslash before CRLF is never followed by `$`.
+        let mut raw = src.raw_text.split_inclusive('\n');
         for (index, line) in src.text.split_inclusive('\n').enumerate() {
             let start = line_start;
             line_start += line.len();
             if index >= last_line {
                 break;
+            }
+            if raw.next().is_some_and(|r| r.ends_with("\r\n")) {
+                continue;
             }
             let body = line.strip_suffix('\n').unwrap_or(line);
             let Some(before) = body.strip_suffix('\\') else { continue };

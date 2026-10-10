@@ -315,3 +315,43 @@ fn arguments_file_shellwords() {
     assert!(text(&out.stderr).contains("Unmatched quote"), "{}", text(&out.stderr));
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// Directory targets come out in Ruby String order (bytes of the whole path), as TargetFinder's
+/// `sort_by!(&:itself)`: `lib/foo-baz.rb` < `lib/foo.rb` < `lib/foo/bar.rb`.
+#[test]
+fn directory_targets_sort_as_strings() {
+    let dir = scratch("order");
+    fs::create_dir_all(dir.join("lib/foo")).unwrap();
+    for f in ["lib/foo.rb", "lib/foo/bar.rb", "lib/foo-baz.rb"] {
+        fs::write(dir.join(f), "x = 1\n").unwrap();
+    }
+    let out = rbcop(&dir, &["-L"]);
+    assert_eq!(text(&out.stdout), "Gemfile\nlib/foo-baz.rb\nlib/foo.rb\nlib/foo/bar.rb\n");
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// `--stdin -a/-A` with nothing corrected echoes the source bytes unchanged after the separator,
+/// as RuboCop does, even when they are not UTF-8 (an editor replaces its buffer with this output).
+#[test]
+fn stdin_autocorrect_echoes_original_bytes() {
+    use std::io::Write;
+    use std::process::Stdio;
+    let dir = scratch("stdin-bytes");
+    let src: &[u8] = b"x = \"\xff\"\nputs x\n";
+    for mode in ["-a", "-A"] {
+        let mut child = common::command(env!("CARGO_BIN_EXE_rbcop"))
+            .args(["-f", "s", mode, "--stdin", "invalid.rb"])
+            .current_dir(&dir)
+            .stdin(Stdio::piped())
+            .stdout(Stdio::piped())
+            .stderr(Stdio::null())
+            .spawn()
+            .unwrap();
+        child.stdin.take().unwrap().write_all(src).unwrap();
+        let out = child.wait_with_output().unwrap();
+        let sep = b"====================\n";
+        let at = out.stdout.windows(sep.len()).position(|w| w == sep).expect("separator");
+        assert_eq!(&out.stdout[at + sep.len()..], src, "{mode}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
