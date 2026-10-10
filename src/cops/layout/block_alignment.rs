@@ -232,16 +232,30 @@ impl Cop for BlockAlignment {
                 (c.block().map(|b| b.as_node()), Vec::new(), (0, 0))
             }
             _ => {
+                // The `->` send has no arguments; its selector is `->`.
                 let l = node.as_lambda_node().unwrap();
-                let (o, c) = (l.opening_loc(), l.closing_loc());
-                self.check(cx, node, (o.start_offset(), o.end_offset()), (c.start_offset(), c.end_offset()), &[], (0, 0));
+                let (o, c, op) = (l.opening_loc(), l.closing_loc(), l.operator_loc());
+                let params = block_params(l.parameters());
+                let sel = (op.start_offset(), op.end_offset());
+                self.check(cx, node, (o.start_offset(), o.end_offset()), (c.start_offset(), c.end_offset()), &params, sel);
                 return;
             }
         };
         let Some(b) = block.and_then(|b| b.as_block_node()) else { return };
         let (o, c) = (b.opening_loc(), b.closing_loc());
+        // do_line_begins_inside_argument? checks `send_node.arguments + node.arguments`.
+        let mut args = args;
+        args.extend(block_params(b.parameters()));
         self.check(cx, node, (o.start_offset(), o.end_offset()), (c.start_offset(), c.end_offset()), &args, selector);
     }
+}
+
+/// rubocop-ast `BlockNode#arguments` children: parameters and block-locals (shadowargs).
+fn block_params(params: Option<Node<'_>>) -> Vec<Node<'_>> {
+    let Some(bp) = params.and_then(|p| p.as_block_parameters_node()) else { return Vec::new() };
+    let mut out = bp.parameters().map(|p| parameter_nodes(&p)).unwrap_or_default();
+    out.extend(bp.locals().iter());
+    out
 }
 
 impl BlockAlignment {
