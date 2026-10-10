@@ -174,10 +174,10 @@ impl<'pr> Visit<'pr> for MatchVar {
 }
 
 /// Parser's source range of an `elsif` if-node: it stops at its last branch, not at `end`.
-fn elsif_end(cx: &Cx, n: &IfNode) -> usize {
+fn elsif_end(n: &IfNode) -> usize {
     match n.subsequent() {
         Some(sub) => match sub.as_if_node() {
-            Some(i) => elsif_end(cx, &i),
+            Some(i) => elsif_end(&i),
             None => {
                 let e = sub.as_else_node().unwrap();
                 e.statements().map_or(e.else_keyword_loc().end_offset(), |s| s.location().end_offset())
@@ -192,10 +192,10 @@ fn elsif_end(cx: &Cx, n: &IfNode) -> usize {
 }
 
 /// Parser source range of an if-like node.
-fn if_range(cx: &Cx, n: &Node) -> (usize, usize) {
+fn if_range(n: &Node) -> (usize, usize) {
     match n.as_if_node() {
         Some(i) if i.if_keyword_loc().is_some_and(|k| k.as_slice() == b"elsif") => {
-            (n.location().start_offset(), elsif_end(cx, &i))
+            (n.location().start_offset(), elsif_end(&i))
         }
         _ => range(n),
     }
@@ -222,7 +222,7 @@ impl LiteralAsCondition {
             let ternary = kw.is_none();
             let (else_branch, else_is_elsif) = match i.subsequent() {
                 Some(sub) => match sub.as_if_node() {
-                    Some(e) => (Some((sub.location().start_offset(), elsif_end(cx, &e))), true),
+                    Some(e) => (Some((sub.location().start_offset(), elsif_end(&e))), true),
                     None => (sub.as_else_node().unwrap().statements().map(|s| range(&s.as_node())), false),
                 },
                 None => (None, false),
@@ -286,7 +286,7 @@ impl LiteralAsCondition {
         } else {
             String::new()
         };
-        let (ns, ne) = if_range(cx, node);
+        let (ns, ne) = if_range(node);
         let ignored = cx.state::<Ignored>().0.iter().any(|&(s, e)| s <= ns && e >= ne);
         let (cs, ce) = range(cond);
         let mut ran = false;

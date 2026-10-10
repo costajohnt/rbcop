@@ -77,16 +77,16 @@ pub fn named_interpolation(s: &str) -> bool {
 }
 
 /// `max_digit_dollar_num`: Ruby's `[nil, 1].max` raises, so a mix of sequences with and without
-/// `N$` is `Err` (the cop crashes there and reports nothing).
-pub fn max_digit_dollar_num(s: &str) -> Result<Option<u64>, ()> {
+/// `N$` is `None` (the cop crashes there and reports nothing).
+pub fn max_digit_dollar_num(s: &str) -> Option<Option<u64>> {
     let nums: Vec<Option<u64>> = format_sequences(s).iter().map(FormatSequence::max_digit_dollar_num).collect();
     if nums.iter().all(Option::is_none) {
-        return Ok(None);
+        return Some(None);
     }
     if nums.iter().any(Option::is_none) {
-        return Err(());
+        return None;
     }
-    Ok(nums.into_iter().flatten().max())
+    Some(nums.into_iter().flatten().max())
 }
 
 #[cfg(test)]
@@ -100,7 +100,7 @@ mod tests {
         assert_eq!(src, ["%s", "%-5d", "%<a>s", "%{b}", "%%", "%#{x}s", "%1$*2$d"]);
         assert!(!is_valid("%s %<a>s"));
         assert!(is_valid("%s %% %d"));
-        assert_eq!(max_digit_dollar_num("%1$s %2$s"), Ok(Some(2)));
-        assert!(max_digit_dollar_num("%1$s %%").is_err());
+        assert_eq!(max_digit_dollar_num("%1$s %2$s"), Some(Some(2)));
+        assert!(max_digit_dollar_num("%1$s %%").is_none());
     }
 }

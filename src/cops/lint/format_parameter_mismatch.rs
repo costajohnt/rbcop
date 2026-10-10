@@ -33,18 +33,18 @@ fn heredoc_first_arg(args: &[Node]) -> bool {
     args.first().is_some_and(|a| node_text(a).starts_with("<<"))
 }
 
-/// `expected_fields_count`; Err where RuboCop crashes.
-fn expected_fields(n: &Node) -> Result<u64, ()> {
+/// `expected_fields_count`; None where RuboCop crashes.
+fn expected_fields(n: &Node) -> Option<u64> {
     let src = node_text(n);
     if fs::named_interpolation(src) {
-        return Ok(1);
+        return Some(1);
     }
     if let Some(m) = fs::max_digit_dollar_num(src)?
         && m != 0
     {
-        return Ok(m);
+        return Some(m);
     }
-    Ok(fs::format_sequences(src).iter().filter(|q| !q.percent).map(|q| q.arity() as u64).sum())
+    Some(fs::format_sequences(src).iter().filter(|q| !q.percent).map(|q| q.arity() as u64).sum())
 }
 
 impl Cop for FormatParameterMismatch {
@@ -101,7 +101,7 @@ impl Cop for FormatParameterMismatch {
         } else {
             return;
         };
-        let (passed, Ok(expected)) = counts else { return };
+        let (passed, Some(expected)) = counts else { return };
         if expected == 0 && (is_parser_dstr(&args[0]) || args[0].as_array_node().is_some()) {
             return;
         }
