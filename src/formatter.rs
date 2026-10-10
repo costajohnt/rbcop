@@ -277,6 +277,8 @@ pub struct Opts {
     /// `--only` (with Lint/Syntax added, as RuboCop does).
     pub only: Option<Vec<String>>,
     pub except: Vec<String>,
+    /// `@options[:safe_autocorrect]` (-a): the summary points at `rubocop -A`.
+    pub safe_autocorrect: bool,
 }
 
 /// Shared, read-only context for one run.
@@ -354,8 +356,22 @@ pub trait Formatter {
 pub struct Paint(pub bool);
 
 impl Paint {
+    /// Rainbow::StringUtils.wrap_with_sgr: the code goes after any SGR codes the string starts
+    /// with, and no reset is added to a string that already ends with one.
     pub fn wrap(self, s: &str, code: &str) -> String {
-        if self.0 { format!("\x1b[{code}m{s}\x1b[0m") } else { s.to_string() }
+        if !self.0 {
+            return s.to_string();
+        }
+        let mut lead = 0;
+        while let Some(rest) = s[lead..].strip_prefix("\x1b[") {
+            let digits = rest.bytes().take_while(|b| b.is_ascii_digit() || *b == b';').count();
+            if digits == 0 || rest.as_bytes().get(digits) != Some(&b'm') {
+                break;
+            }
+            lead += 2 + digits + 1;
+        }
+        let reset = if s.ends_with("\x1b[0m") { "" } else { "\x1b[0m" };
+        format!("{}\x1b[{code}m{}{reset}", &s[..lead], &s[lead..])
     }
     pub fn red(self, s: &str) -> String {
         self.wrap(s, "31")

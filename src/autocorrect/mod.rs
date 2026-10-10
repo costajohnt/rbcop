@@ -39,6 +39,11 @@ static REGISTRY: LazyLock<Registry> = LazyLock::new(|| {
     r
 });
 
+/// A cop's position in RuboCop's registry (load) order; unknown names sort last.
+pub fn registry_index(name: &str) -> usize {
+    REGISTRY.order.get(name).copied().unwrap_or(usize::MAX)
+}
+
 /// Cop::AutocorrectLogic#autocorrect? for a cop that supports autocorrection (`Cop::correctable`).
 pub fn cop_autocorrects(cfg: &CopConfig, mode: Mode) -> bool {
     // autocorrect_enabled?
@@ -51,7 +56,7 @@ pub fn cop_autocorrects(cfg: &CopConfig, mode: Mode) -> bool {
 /// Team#collate_corrections: merge each cop's corrector in registry order, skipping a cop whose
 /// corrections clobber what is already merged or that an earlier merged cop is incompatible with.
 pub fn collate(mut by_cop: Vec<(&'static str, Corrector)>, source: Arc<str>) -> Option<Corrector> {
-    by_cop.sort_by_key(|(name, _)| REGISTRY.order.get(name).copied().unwrap_or(usize::MAX));
+    by_cop.sort_by_key(|(name, _)| registry_index(name));
     let mut merged = Corrector::new(source);
     let mut skips: HashSet<&str> = HashSet::new();
     for (name, c) in &by_cop {

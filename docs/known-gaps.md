@@ -25,7 +25,6 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - Target Ruby below 3.3: RuboCop parses with the parser gem for that version and reports syntax newer
   than the target (e.g. `def x(&)` under 2.7) as Lint/Syntax; rbcop parses with Prism's 3.3 grammar and
   does not. Messages for genuine syntax errors also come from Prism, not the parser gem.
-- `--stdin` together with `-a/-A` (RuboCop prints the corrected source) is refused.
 - `--disable-uncorrectable`, `--auto-gen-config`, `--server`, `--lsp`, `--cache` behaviour (accepted
   and ignored where harmless), custom formatter classes, `require:` of local Ruby files (custom cops).
 - ERB in `.rubocop.yml` is not evaluated; remote `inherit_from` URLs are skipped with a warning.
@@ -90,8 +89,12 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - Lint/RedundantCopDisableDirective judges directives against rbcop's own offenses, so a directive
   for a cop rbcop has not ported yet (e.g. `# rubocop:disable Style/Send`) is reported as
   redundant.
-- Department-level `NewCops` (a department's `NewCops: enable` or a version) is not read; only
-  `AllCops: NewCops: enable` enables pending cops. The pending-cops notice RuboCop prints is not ported.
-- JUnit lists testcases in sorted cop order; RuboCop uses its registry (load) order. The `-a` summary
-  says "N offenses autocorrectable" where RuboCop says "N more offenses can be corrected with
-  `rubocop -A`".
+- ConfigValidator is ported only for `NewCops` (AllCops and department values). Its other checks
+  (unrecognized cops or parameters, obsolete config, EnforcedStyle values, Lint/Syntax config) and
+  their warnings and errors are not; with `-f` of a bogus formatter RuboCop also prints a Ruby
+  backtrace rbcop does not.
+- The pending-cops notice treats any `Enabled: pending` key with a department as a registered cop;
+  RuboCop would have rejected an unknown cop name earlier, which rbcop does not validate.
+- YAML: a plain `:name` value loads as a Symbol (`Value::Sym`) and a quoted `':name'` as a String,
+  so `--show-cops` dumps them apart; mapping keys do not keep the distinction (a quoted `':q':` key
+  is dumped as the symbol `:q:`).

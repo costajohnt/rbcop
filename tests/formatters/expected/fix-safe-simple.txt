@@ -1,0 +1,9 @@
+== a.rb ==
+C:  1:  1: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+C:  1:  7: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+C:  2:  1: [Corrected] Style/NegatedIf: Favor unless over if for negative conditions.
+C:  3:  1: [Corrected] Style/NegatedIf: Favor unless over if for negative conditions.
+== b.rb ==
+C:  1:  1: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+
+2 files inspected, 5 offenses detected, 3 offenses corrected, 2 more offenses can be corrected with `rubocop -A`

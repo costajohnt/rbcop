@@ -11,7 +11,10 @@ for name in $names; do
   [ -d "$dir" ] || continue
   args=$(cat "$dir/args" 2>/dev/null || true)
   # emacs prints absolute paths; store them relative to the scenario root.
-  (cd "$dir/project" && rubocop --cache false --format emacs $args 2>/dev/null) \
+  # A scenario with a stderr.txt also records stderr there (e.g. the pending-cops notice), verbatim.
+  err=/dev/null
+  [ -f "$dir/stderr.txt" ] && err=$dir/stderr.txt
+  (cd "$dir/project" && rubocop --cache false --format emacs $args 2>"$err") \
     | sed "s|^$dir/project/||" | LC_ALL=C sort > "$dir/expected.txt" || true
   echo "$name: $(wc -l < "$dir/expected.txt" | tr -d ' ') offenses recorded"
 done

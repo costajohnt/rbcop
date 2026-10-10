@@ -23,8 +23,15 @@ while IFS='|' read -r name cwd args input; do
   [ "$only" = "  " ] || case "$only" in *" $name "*) ;; *) continue ;; esac
   stdin=/dev/null
   [ -n "${input:-}" ] && stdin=$root/$input
+  # fix-* cases autocorrect, so they run on a fresh copy of their directory.
+  run_dir=$root/$cwd
+  case "$name" in fix-*)
+    run_dir=${TMPDIR:-/tmp}/rbcop-formatters-fix
+    rm -rf "$run_dir" && mkdir -p "$run_dir" && cp -R "$root/$cwd/." "$run_dir"
+    run_dir=$(cd "$run_dir" && pwd -P) ;;
+  esac
   set +e
-  (cd "$root/$cwd" && eval "RUBY_PROGRESS_BAR_LENGTH=80 rubocop --cache false --force-default-config --only $cops $args" \
+  (cd "$run_dir" && eval "RUBY_PROGRESS_BAR_LENGTH=80 rubocop --cache false --force-default-config --only $cops $args" \
     < "$stdin" 2>/dev/null) > "$dir/expected/$name.raw"
   echo $? > "$dir/expected/$name.status"
   set -e

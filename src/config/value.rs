@@ -1,7 +1,9 @@
 //! Config values as RuboCop sees them after Psych: insertion-ordered maps, plus Regexp.
 
 use regex::Regex;
-use yaml_rust2::{Yaml, YamlLoader};
+use yaml_rust2::parser::{MarkedEventReceiver, Parser};
+use yaml_rust2::scanner::{Marker, TScalarStyle};
+use yaml_rust2::{Event, Yaml, YamlLoader};
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum Value {
@@ -10,6 +12,9 @@ pub enum Value {
     Int(i64),
     Float(f64),
     Str(String),
+    /// A plain `:name` scalar, which Psych loads as a Symbol, kept as written (colon included). Readers
+    /// see it as the string it always was; only `--show-cops` dumps it differently from a quoted one.
+    Sym(String),
     /// `!ruby/regexp /source/flags`, kept as written.
     Regex(String),
     Seq(Vec<Value>),
@@ -72,7 +77,7 @@ impl Map {
 
     pub fn str(&self, key: &str) -> Option<&str> {
         match self.get(key) {
-            Some(Value::Str(s)) => Some(s),
+            Some(Value::Str(s) | Value::Sym(s)) => Some(s),
             _ => None,
         }
     }
@@ -105,7 +110,7 @@ impl Map {
 impl Value {
     pub fn as_string(&self) -> Option<String> {
         match self {
-            Value::Str(s) => Some(s.clone()),
+            Value::Str(s) | Value::Sym(s) => Some(s.clone()),
             Value::Int(i) => Some(i.to_string()),
             Value::Float(f) => Some(f.to_string()),
             Value::Bool(b) => Some(b.to_string()),
@@ -124,11 +129,38 @@ impl Value {
 
 const REGEX_MARK: &str = "\u{1}rbcop-regexp:";
 
+const SYM_MARK: &str = "\u{1}rbcop-symbol:";
+
+/// YamlLoader, except that a plain `:name` scalar (a Symbol to Psych's ScalarScanner) is marked, so
+/// it can be told apart from a quoted ':name' String.
+struct Loader(YamlLoader);
+
+impl MarkedEventReceiver for Loader {
+    fn on_event(&mut self, ev: Event, mark: Marker) {
+        let ev = match ev {
+            Event::Scalar(v, TScalarStyle::Plain, aid, None) if v.chars().count() > 1 && v.starts_with(':') => {
+                Event::Scalar(format!("{SYM_MARK}{v}"), TScalarStyle::SingleQuoted, aid, None)
+            }
+            ev => ev,
+        };
+        self.0.on_event(ev, mark);
+    }
+}
+
 /// Parse a YAML document the way Psych + RuboCop's restricted loader would.
 pub fn parse_yaml(text: &str) -> Result<Value, String> {
     let text = mark_regexps(text);
-    let docs = YamlLoader::load_from_str(&text).map_err(|e| e.to_string())?;
-    Ok(docs.into_iter().next().map_or(Value::Map(Map::default()), convert))
+    let mut loader = Loader(YamlLoader::default());
+    Parser::new_from_str(&text).load(&mut loader, true).map_err(|e| e.to_string())?;
+    match loader.0.documents().first() {
+        Some(doc) => Ok(convert(doc.clone())),
+        // No document: an empty file, or an error YamlLoader keeps to itself (a duplicate key);
+        // loading again the plain way reports it.
+        None => {
+            YamlLoader::load_from_str(&text).map_err(|e| e.to_string())?;
+            Ok(Value::Map(Map::default()))
+        }
+    }
 }
 
 /// yaml-rust2 drops tags, so turn `!ruby/regexp /x/i` into a marked string first.
@@ -162,16 +194,18 @@ fn convert(y: Yaml) -> Value {
             ".nan" | ".NaN" | ".NAN" => Value::Float(f64::NAN),
             _ => r.parse().map_or(Value::Str(r), Value::Float),
         },
-        Yaml::String(s) => match s.strip_prefix(REGEX_MARK) {
-            Some(re) => Value::Regex(re.to_string()),
-            None => Value::Str(s),
+        Yaml::String(s) => match (s.strip_prefix(REGEX_MARK), s.strip_prefix(SYM_MARK)) {
+            (Some(re), _) => Value::Regex(re.to_string()),
+            (_, Some(sym)) => Value::Sym(sym.to_string()),
+            _ => Value::Str(s),
         },
         Yaml::Array(items) => Value::Seq(items.into_iter().map(convert).collect()),
         Yaml::Hash(h) => {
             let mut map = Map::default();
             for (k, v) in h {
                 let key = match k {
-                    Yaml::String(s) => s,
+                    // ponytail: a Symbol key and a quoted ':name' key both become the String key.
+                    Yaml::String(s) => s.strip_prefix(SYM_MARK).map_or(s.clone(), String::from),
                     Yaml::Integer(i) => i.to_string(),
                     Yaml::Boolean(b) => b.to_string(),
                     Yaml::Real(r) => r,
