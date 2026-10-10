@@ -61,6 +61,8 @@ pub struct Off {
     pub length: usize,
     /// The first line of the range, without its newline.
     pub source_line: Arc<str>,
+    /// `add_global_offense`: the location is Offense::NO_LOCATION, a PseudoSourceRange.
+    pub global: bool,
 }
 
 impl Off {
@@ -196,6 +198,7 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
                     last_column,
                     length,
                     source_line,
+                    global: true,
                 };
             }
             Off {
@@ -209,6 +212,7 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
                 last_column,
                 length: p.count(start, end),
                 source_line: p.line(ls),
+                global: false,
             }
         })
         .collect();

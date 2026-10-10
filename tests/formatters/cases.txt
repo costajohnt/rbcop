@@ -65,6 +65,8 @@ fail-level-only-clean|tests/formatters/project|-f s --fail-level E --display-onl
 only-correctable|tests/formatters/project|-f s --display-only-correctable
 only-safe-correctable|tests/formatters/project|-f s --display-only-safe-correctable
 junit-only-failed|tests/formatters/project|-f junit --display-only-failed
+# A global offense (Gemspec/RequiredRubyVersion): the failure body is the PseudoSourceRange inspect.
+junit-global-offense|tests/formatters/gemspec|-f junit --display-only-failed x.gemspec
 junit-only-failed-abbrev|tests/formatters/project|-f ju --display-only-failed
 # --only again replaces the list: cops whose registry (load) order differs from name order.
 junit-registry-order|tests/formatters/project|-f ju --only Style/DocumentationMethod,Style/DocumentDynamicEvalDefinition,Lint/SharedMutableDefault,Lint/SafeNavigationConsistency,Layout/EmptyLines,Layout/EmptyLineBetweenDefs,Naming/BinaryOperatorParameterName lib/clean.rb
