@@ -42,3 +42,53 @@ pub fn last_heredoc_end(node: &Node) -> Option<(usize, usize)> {
     v.visit(node);
     v.max
 }
+
+/// Byte range `(start, end)`.
+pub type Span = (usize, usize);
+
+/// A heredoc literal as parser sees it: `(opening, heredoc_end, children_empty)` where `opening` is
+/// `loc.expression` (`<<~X`), `heredoc_end` spans the terminator line (indentation included,
+/// newline excluded) and `children_empty` is parser's `node.children.empty?` (empty body).
+pub fn parts(node: &Node) -> Option<(Span, Span, bool)> {
+    if !crate::ast::is_heredoc(node) {
+        return None;
+    }
+    let (opening, closing, empty) = match node {
+        Node::StringNode { .. } => {
+            let n = node.as_string_node()?;
+            (n.opening_loc()?, n.closing_loc()?, n.content_loc().as_slice().is_empty())
+        }
+        Node::InterpolatedStringNode { .. } => {
+            let n = node.as_interpolated_string_node()?;
+            (n.opening_loc()?, n.closing_loc()?, n.parts().is_empty())
+        }
+        Node::XStringNode { .. } => {
+            let n = node.as_x_string_node()?;
+            (n.opening_loc(), n.closing_loc(), n.content_loc().as_slice().is_empty())
+        }
+        _ => {
+            let n = node.as_interpolated_x_string_node()?;
+            (n.opening_loc(), n.closing_loc(), n.parts().is_empty())
+        }
+    };
+    let close = closing.as_slice();
+    let trim = close.iter().rev().take_while(|&&b| b == b'\n' || b == b'\r').count();
+    let end = (closing.start_offset(), closing.end_offset() - trim);
+    Some(((opening.start_offset(), opening.end_offset()), end, empty))
+}
+
+static OPENING_DELIMITER: std::sync::LazyLock<regex::Regex> =
+    std::sync::LazyLock::new(|| regex::Regex::new(r#"(<<[~-]?)['"`]?([^'"`]+)['"`]?"#).unwrap());
+
+/// Heredoc#delimiter_string over the opening source (`<<~'EOS'` -> `EOS`).
+pub fn delimiter_string(opening: &str) -> &str {
+    OPENING_DELIMITER.captures(opening).and_then(|c| c.get(2)).map_or("", |m| m.as_str())
+}
+
+/// Prism kinds that can be heredocs (parser `on_str` / `on_dstr` / `on_xstr`).
+pub const KINDS: &[usize] = &[
+    crate::node_kind::STRING_NODE,
+    crate::node_kind::INTERPOLATED_STRING_NODE,
+    crate::node_kind::X_STRING_NODE,
+    crate::node_kind::INTERPOLATED_X_STRING_NODE,
+];
