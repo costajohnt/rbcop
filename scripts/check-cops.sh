@@ -13,13 +13,22 @@ corpus_root=${RBCOP_CORPUS:?set RBCOP_CORPUS to the corpus directory}
 oracle_root=${RBCOP_ORACLE:?set RBCOP_ORACLE to the oracle directory}
 out=${TMPDIR:-/tmp}/rbcop-check
 mkdir -p "$out"
+[ "$cops" = all ] && cops=$("$bin" --show-cops | paste -sd, -)
 pattern=": [CWEFRI]: (\[Correctable\] )?($(echo "$cops" | tr , '|')): "
 # LineLength's [Correctable] tag depends on CheckLineBreakable, which rbcop does not model yet.
 norm() { grep -E "$pattern" | sed -E 's/\[Correctable\] (Layout\/LineLength)/\1/' | LC_ALL=C sort; }
 
 status=0
 for c in $corpora; do
-  (cd "$corpus_root/$c" && "$bin" -c "$root/config/all-cops.yml" --format emacs --only "$cops" . 2>"$out/$c.err") | norm > "$out/$c.rbcop" || true
+  # Where a RuboCop cop crashed it reported nothing, so drop rbcop's offenses for that (cop, file).
+  crashes="$oracle_root/$c.txt.crashes"
+  [ -f "$crashes" ] || : > "$crashes"
+  (cd "$corpus_root/$c" && "$bin" -c "$root/config/all-cops.yml" --format emacs --only "$cops" . 2>"$out/$c.err") \
+    | awk -F'\t' 'NR == FNR { skip[$1 "\t" $2] = 1; next }
+        { path = $0; sub(/:[0-9]+:[0-9]+: .*/, "", path)
+          cop = $0; sub(/^.*: [CWEFRI]: (\[Correctable\] )?/, "", cop); sub(/: .*/, "", cop)
+          if (!((cop "\t" path) in skip)) print }' "$crashes" - \
+    | norm > "$out/$c.rbcop" || true
   norm < "$oracle_root/$c.txt" > "$out/$c.rubocop" || true
   LC_ALL=C comm -23 "$out/$c.rubocop" "$out/$c.rbcop" | sed 's/^/< /' > "$out/$c.diff"
   LC_ALL=C comm -13 "$out/$c.rubocop" "$out/$c.rbcop" | sed 's/^/> /' >> "$out/$c.diff"
