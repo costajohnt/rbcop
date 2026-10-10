@@ -66,10 +66,352 @@ impl Settings {
     }
 }
 
+/// Per-file state: where each line could be broken (CheckLineBreakable), and endless methods.
+#[derive(Default)]
+struct Breakable {
+    init: bool,
+    /// 0-based line index to the byte offset of the break point.
+    by_line: std::collections::HashMap<usize, usize>,
+    /// 0-based line index of an endless method definition to whether its offense is correctable.
+    endless: std::collections::HashMap<usize, bool>,
+}
+
+fn max_of(cx: &Cx) -> usize {
+    cx.cfg.int("Max").unwrap_or(120).max(0) as usize
+}
+
+/// LineLength#on_new_investigation: break points after semicolons, earliest per line wins.
+fn init(cx: &mut Cx) {
+    if cx.state::<Breakable>().init {
+        return;
+    }
+    let src = cx.src;
+    let mut found = Vec::new();
+    if src.text.contains(';') {
+        for t in src.tokens().iter().rev().filter(|t| t.kind == sys::PM_TOKEN_SEMICOLON) {
+            // breakable_range_after_semicolon: the next character, if it is on the same line and
+            // neither a line break nor another semicolon.
+            match src.text[t.end..].chars().next() {
+                Some(c) if c != '\n' && c != '\r' && c != ';' => found.push((src.line_of(t.end) - 1, t.end)),
+                _ => {}
+            }
+        }
+    }
+    let st = cx.state::<Breakable>();
+    st.init = true;
+    for (line, pos) in found {
+        st.by_line.insert(line, pos);
+    }
+}
+
+struct Element {
+    start: usize,
+    end: usize,
+    heredoc: bool,
+}
+
+fn element(n: &Node) -> Element {
+    let loc = n.location();
+    Element { start: loc.start_offset(), end: loc.end_offset(), heredoc: is_heredoc(n) }
+}
+
+/// CheckLineBreakable#process_args: an unbraced trailing hash contributes its pairs.
+fn call_elements(call: &ruby_prism::CallNode) -> Vec<Element> {
+    let args = send_args(call);
+    let mut out: Vec<Element> = args.iter().map(element).collect();
+    if let Some(last) = args.last().filter(|n| kind::of(n) == kind::KEYWORD_HASH_NODE) {
+        out.pop();
+        out.extend(last.as_keyword_hash_node().unwrap().elements().iter().map(|e| element(&e)));
+    }
+    out
+}
+
+/// Elements of a parser-shaped ancestor if it is a hash/array/call: Some((elements, starts_with_bracket)).
+fn collection_elements(n: &Node) -> Option<(Vec<Element>, bool)> {
+    match kind::of(n) {
+        kind::ARRAY_NODE => Some((n.as_array_node().unwrap().elements().iter().map(|e| element(&e)).collect(), true)),
+        kind::HASH_NODE => Some((n.as_hash_node().unwrap().elements().iter().map(|e| element(&e)).collect(), true)),
+        kind::KEYWORD_HASH_NODE => {
+            Some((n.as_keyword_hash_node().unwrap().elements().iter().map(|e| element(&e)).collect(), false))
+        }
+        kind::CALL_NODE => Some((call_elements(&n.as_call_node().unwrap()), true)),
+        _ => None,
+    }
+}
+
+fn breakable_collection(elements: &[Element], starts_with_bracket: bool) -> bool {
+    starts_with_bracket && elements.len() >= 2
+}
+
+/// CheckLineBreakable#children_could_be_broken_up?
+fn children_could_be_broken_up(cx: &Cx, children: &[Element]) -> bool {
+    let line = |o: usize| cx.src.line_of(o);
+    if children.is_empty() || line(children[0].start) == line(children.last().unwrap().end) {
+        return false;
+    }
+    let mut last_seen = 0usize;
+    for (i, c) in children.iter().enumerate() {
+        if i > 0 && last_seen >= line(c.start) {
+            return true;
+        }
+        last_seen = line(c.end);
+    }
+    false
+}
+
+/// CheckLineBreakable#extract_breakable_node_from_elements; `range` is the node's parser range.
+fn breakable_element(
+    cx: &Cx,
+    range: (usize, usize),
+    elements: &[Element],
+    call: Option<(bool, bool)>,
+    def_last_line: Option<usize>,
+    is_array: bool,
+) -> Option<usize> {
+    let max = max_of(cx);
+    let src = cx.src;
+    let first_line = src.line_of(range.0);
+    if src.lines.get(first_line - 1).is_none_or(|l| l.chars().count() <= max) {
+        return None;
+    }
+    if src.comments.iter().any(|c| src.line_of(c.start) == first_line) {
+        return None;
+    }
+    // safe_to_ignore?
+    let multiline = match def_last_line {
+        Some(last) => first_line != last,
+        None => first_line != src.line_of(range.1.saturating_sub(1).max(range.0)),
+    };
+    if multiline {
+        return None;
+    }
+    let anc = parser_ancestor_ranges(cx.ancestors);
+    for &(i, start, _) in &anc {
+        if src.line_of(start) != first_line {
+            break;
+        }
+        if let Some((els, bracket)) = collection_elements(&cx.ancestors[i])
+            && breakable_collection(&els, bracket)
+        {
+            return None;
+        }
+    }
+    for &(i, _, _) in &anc {
+        if let Some((els, bracket)) = collection_elements(&cx.ancestors[i])
+            && breakable_collection(&els, bracket)
+        {
+            if children_could_be_broken_up(cx, &els) {
+                return None;
+            }
+            break;
+        }
+    }
+    // extract_first_element_over_column_limit
+    let mut elements: Vec<&Element> = elements.iter().collect();
+    if let Some((parenthesized, first_is_heredoc)) = call
+        && !parenthesized
+        && !first_is_heredoc
+    {
+        elements.remove(0);
+    }
+    let within = |e: &&Element| src.column(e.start) <= max && src.line_of(e.start) == first_line;
+    let mut i = 0;
+    while elements.get(i).is_some_and(within) {
+        i += 1;
+    }
+    // shift_elements_for_heredoc_arg: only calls and arrays.
+    if (call.is_some() || is_array)
+        && let Some(h) = elements.iter().position(|e| e.heredoc) {
+            if h == 0 {
+                return None;
+            }
+            if h < i {
+                i = h + 1;
+            }
+        }
+    let chosen = if i == 0 { elements.first()? } else { elements[i - 1] };
+    Some(chosen.start)
+}
+
+/// LineLength endless-method offenses: always correctable (rewritten to multiline), except under
+/// Style/EndlessMethod `require_always`, where only a single-line braces block body is.
+fn endless_correctable(cx: &Cx, def: &ruby_prism::DefNode) -> bool {
+    let style = cx.config.for_cop("Style/EndlessMethod");
+    let require_always =
+        style.get("Enabled") == Some(&Value::Bool(true)) && style.str("EnforcedStyle") == Some("require_always");
+    if !require_always {
+        return true;
+    }
+    // correctable_endless_method_block?: body is a single-line `{ }` block with a body.
+    let Some(body) = def.body() else { return false };
+    let body = body.as_statements_node().and_then(|s| s.body().iter().next()).unwrap_or(body);
+    let Some(call) = body.as_call_node() else { return false };
+    let Some(block) = call.block().and_then(|b| b.as_block_node()) else { return false };
+    let loc = call.location();
+    block.opening_loc().as_slice() == b"{"
+        && cx.src.line_of(loc.start_offset()) == cx.src.line_of(loc.end_offset().saturating_sub(1))
+        && block.body().is_some()
+        && !call.receiver().is_some_and(|r| contains_heredoc(&r))
+}
+
+fn record_node_break(cx: &mut Cx, pos: usize) {
+    let line = cx.src.line_of(pos) - 1;
+    cx.state::<Breakable>().by_line.entry(line).or_insert(pos);
+}
+
+/// LineLength#check_for_breakable_block (on_block): overwrites any earlier break point on the line.
+fn check_block(cx: &mut Cx, start: usize, end: usize, block: &Node, receiver: Option<Node>, lambda: bool) {
+    let src = cx.src;
+    if src.line_of(start) != src.line_of(end.saturating_sub(1).max(start)) {
+        return;
+    }
+    if receiver.as_ref().is_some_and(|r| contains_heredoc(r)) {
+        return;
+    }
+    let (opening, params) = match kind::of(block) {
+        kind::BLOCK_NODE => {
+            let b = block.as_block_node().unwrap();
+            (b.opening_loc(), b.parameters())
+        }
+        _ => {
+            let l = block.as_lambda_node().unwrap();
+            (l.opening_loc(), l.parameters())
+        }
+    };
+    let arguments_end = params.as_ref().and_then(|p| p.as_block_parameters_node()).and_then(|p| {
+        let has_args = p.parameters().is_some() || p.locals().iter().next().is_some();
+        if has_args { p.closing_loc().map(|c| c.start_offset()) } else { None }
+    });
+    let range_begin = match arguments_end {
+        Some(pipe) if !lambda => pipe,
+        _ if opening.as_slice() == b"{" => opening.start_offset(),
+        _ => opening.start_offset() + 1,
+    };
+    let pos = range_begin + 1;
+    let line = src.line_of(start) - 1;
+    cx.state::<Breakable>().by_line.insert(line, pos);
+}
+
+fn contains_heredoc(n: &Node) -> bool {
+    struct Find(bool);
+    impl<'pr> ruby_prism::Visit<'pr> for Find {
+        fn visit_string_node(&mut self, node: &ruby_prism::StringNode<'pr>) {
+            self.0 |= node.opening_loc().is_some_and(|o| o.as_slice().starts_with(b"<<"));
+        }
+        fn visit_interpolated_string_node(&mut self, node: &ruby_prism::InterpolatedStringNode<'pr>) {
+            self.0 |= node.opening_loc().is_some_and(|o| o.as_slice().starts_with(b"<<"));
+            ruby_prism::visit_interpolated_string_node(self, node);
+        }
+        fn visit_x_string_node(&mut self, node: &ruby_prism::XStringNode<'pr>) {
+            self.0 |= node.opening_loc().as_slice().starts_with(b"<<");
+        }
+        fn visit_interpolated_x_string_node(&mut self, node: &ruby_prism::InterpolatedXStringNode<'pr>) {
+            self.0 |= node.opening_loc().as_slice().starts_with(b"<<");
+            ruby_prism::visit_interpolated_x_string_node(self, node);
+        }
+    }
+    let mut f = Find(false);
+    ruby_prism::Visit::visit(&mut f, n);
+    f.0
+}
+
+/// Parameters of a def in source order (parser `args` children).
+fn def_params(def: &ruby_prism::DefNode) -> Vec<Element> {
+    let Some(p) = def.parameters() else { return Vec::new() };
+    let mut nodes: Vec<Node> = Vec::new();
+    nodes.extend(p.requireds().iter());
+    nodes.extend(p.optionals().iter());
+    nodes.extend(p.rest());
+    nodes.extend(p.posts().iter());
+    nodes.extend(p.keywords().iter());
+    nodes.extend(p.keyword_rest());
+    if let Some(b) = p.block() {
+        nodes.push(b.as_node());
+    }
+    let mut els: Vec<Element> = nodes.iter().map(element).collect();
+    els.sort_by_key(|e| e.start);
+    els
+}
+
 impl Cop for LineLength {
+    fn correctable(&self) -> bool {
+        true
+    }
+
+    fn kinds(&self) -> &'static [usize] {
+        &[kind::CALL_NODE, kind::DEF_NODE, kind::ARRAY_NODE, kind::HASH_NODE, kind::LAMBDA_NODE]
+    }
+
+    fn on_node(&self, cx: &mut Cx, node: &Node) {
+        init(cx);
+        match kind::of(node) {
+            kind::CALL_NODE => {
+                let call = node.as_call_node().unwrap();
+                // on_block runs before on_send for the block's own call.
+                if let Some(block) = call.block().filter(|b| kind::of(b) == kind::BLOCK_NODE) {
+                    let loc = node.location();
+                    let lambda = method_name(&call) == "lambda";
+                    check_block(cx, loc.start_offset(), loc.end_offset(), &block, call.receiver(), lambda);
+                }
+                let mut recv = call.receiver();
+                while let Some(r) = recv {
+                    if is_heredoc(&r) {
+                        return;
+                    }
+                    recv = r.as_call_node().and_then(|c| c.receiver());
+                }
+                let elements = call_elements(&call);
+                if !breakable_collection(&elements, true) {
+                    return;
+                }
+                let first_is_heredoc = call_args(&call).first().is_some_and(is_heredoc);
+                let range = send_range(&call);
+                if let Some(pos) = breakable_element(cx, range, &elements, Some((call.opening_loc().is_some(), first_is_heredoc)), None, false) {
+                    record_node_break(cx, pos);
+                }
+            }
+            kind::LAMBDA_NODE => {
+                let loc = node.location();
+                check_block(cx, loc.start_offset(), loc.end_offset(), node, None, true);
+            }
+            kind::DEF_NODE => {
+                let def = node.as_def_node().unwrap();
+                if def.equal_loc().is_some() && def.end_keyword_loc().is_none() {
+                    // Endless method: tracked per line, last one wins.
+                    let line = cx.src.line_of(node.location().start_offset()) - 1;
+                    let correctable = endless_correctable(cx, &def);
+                    cx.state::<Breakable>().endless.insert(line, correctable);
+                    return;
+                }
+                let params = def_params(&def);
+                if params.len() < 2 {
+                    return;
+                }
+                let last_line = cx.src.line_of(params.last().unwrap().end.saturating_sub(1));
+                let loc = node.location();
+                if let Some(pos) = breakable_element(cx, (loc.start_offset(), loc.end_offset()), &params, None, Some(last_line), false) {
+                    record_node_break(cx, pos);
+                }
+            }
+            _ => {
+                let (elements, bracket) = collection_elements(node).unwrap();
+                if !breakable_collection(&elements, bracket) {
+                    return;
+                }
+                let loc = node.location();
+                if let Some(pos) = breakable_element(cx, (loc.start_offset(), loc.end_offset()), &elements, None, None, kind::of(node) == kind::ARRAY_NODE) {
+                    record_node_break(cx, pos);
+                }
+            }
+        }
+    }
+
     fn on_file(&self, cx: &mut Cx) {
+        init(cx);
+        let breaks = std::mem::take(&mut cx.state::<Breakable>().by_line);
+        let endless = std::mem::take(&mut cx.state::<Breakable>().endless);
         let cfg = cx.cfg;
-        let max = cfg.int("Max").unwrap_or(120).max(0) as usize;
+        let max = max_of(cx);
         let indentation_width = cx.config.for_cop("Layout/IndentationStyle").int("IndentationWidth");
         let width = indentation_width.or_else(|| cx.config.for_cop("Layout/IndentationWidth").int("Width")).unwrap_or(2);
         let s = Settings { max, tab_width: width.max(0) as usize };
@@ -102,18 +444,23 @@ impl Cop for LineLength {
             {
                 continue;
             }
+            let start = src.line_start(lineno);
+            let at = |col: usize| start + line.char_indices().nth(col).map_or(line.len(), |(b, _)| b);
+            if let Some(&correctable) = endless.get(&i) {
+                let from = max.saturating_sub(s.indentation_difference(line));
+                cx.add_with(at(from), at(line.chars().count()), format!("Line is too long. [{len}/{max}]"), correctable);
+                continue;
+            }
             let comment = src.comment_on_line(lineno).map(|c| src.slice(c.start, c.end));
             if allow_rbs
                 && comment.is_some_and(|c| RBS_ANNOTATION.is_match(c))
             {
                 continue;
             }
-            let start = src.line_start(lineno);
-            let at = |col: usize| start + line.char_indices().nth(col).map_or(line.len(), |(b, _)| b);
             if allow_directives && comment.is_some_and(|c| crate::directives::parse(c).is_some()) {
                 let before = DIRECTIVE.split(line).next().unwrap_or("").trim_end().chars().count();
                 if before > max {
-                    cx.add_with(at(max), at(before), format!("Line is too long. [{before}/{max}]"), false);
+                    cx.add_with(at(max), at(before), format!("Line is too long. [{before}/{max}]"), breaks.contains_key(&i));
                 }
                 continue;
             }
@@ -136,8 +483,8 @@ impl Cop for LineLength {
                 Some((b, e)) if b < max => e,
                 _ => max.saturating_sub(s.indentation_difference(line)),
             };
-            // ponytail: RuboCop marks the offense [Correctable] when CheckLineBreakable finds a break point; not modelled yet.
-            cx.add_with(at(from), at(line.chars().count()), format!("Line is too long. [{len}/{max}]"), false);
+            // ponytail: SplitStrings break points (strings split with a backslash) are not modelled yet.
+            cx.add_with(at(from), at(line.chars().count()), format!("Line is too long. [{len}/{max}]"), breaks.contains_key(&i));
         }
     }
 }
