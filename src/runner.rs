@@ -287,18 +287,40 @@ fn analyze(
         let stopped = diags.iter().find(|d| d.2.is_empty()).map(|d| d.0);
         let lexed = |o: &usize| stopped.is_none_or(|s| *o <= s);
         let (fatal_at, open_string) = (fatal_at.filter(lexed), open_string.filter(lexed));
+        // A tolerated `<<''` (ended by the end of the file) counts only on a last line without a
+        // newline, where the parser gem never starts the heredoc.
+        let heredoc_term: Vec<usize> = result
+            .errors()
+            .filter(|e| e.type_name() == "heredoc_term")
+            .filter(|e| kept(e) || !text[e.location().end_offset()..].contains('\n'))
+            .map(|e| e.location().start_offset())
+            .collect();
+        let heredoc = crate::legacy_syntax::unterminated_heredoc(&tokens, text, &heredoc_term).filter(|h| lexed(&h.0));
         errors = diags
             .into_iter()
             .filter(|d| !d.2.is_empty())
             .map(|(s, e, msg)| crate::syntax::translate("", &msg, s, e, text))
             .chain(semantic)
             .collect();
-        if let Some(f) = fatal_at.filter(|&f| open_string.is_none_or(|s| f < s)) {
-            errors.retain(|e| e.0 < f);
-            errors.push((f, f + 1, format!("unexpected `{}'", &text[f..f + 1])));
-        } else if let Some(s) = open_string {
-            errors.retain(|e| e.0 < s);
-            errors.push((s, s + 1, "unterminated string meets end of file".to_string()));
+        // Whichever stops the parser gem's lexer first (an open string before an `@` on its offset).
+        let first = [open_string.map(|s| (s, 0)), fatal_at.map(|f| (f, 1)), heredoc.as_ref().map(|h| (h.0, 2))]
+            .into_iter()
+            .flatten()
+            .min();
+        match first {
+            Some((f, 1)) => {
+                errors.retain(|e| e.0 < f);
+                errors.push((f, f + 1, format!("unexpected `{}'", text.get(f..f + 1).unwrap_or(""))));
+            }
+            Some((s, 0)) => {
+                errors.retain(|e| e.0 < s);
+                errors.push((s, s + 1, "unterminated string meets end of file".to_string()));
+            }
+            Some((s, _)) => {
+                errors.retain(|e| e.0 < s);
+                errors.extend(heredoc.into_iter().flat_map(|h| h.1));
+            }
+            None => {}
         }
     }
     // Pattern variable names the parser gem's builder rejects, only reached when Prism found no

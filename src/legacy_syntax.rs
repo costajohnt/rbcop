@@ -518,6 +518,45 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
     out
 }
 
+/// (start, end, message) of a diagnostic.
+pub type Diagnostic = (usize, usize, String);
+
+/// The parser gem's lexer on the first heredoc Prism reports unterminated (`heredoc_term`; `open`
+/// holds the error offsets): (offset from which Prism-based diagnostics are dropped, the
+/// diagnostics the lexer gives instead). Its heredoc rule needs a newline after the identifier, so
+/// on a last line without one `<<'EOS'` is "unterminated heredoc id", after which the closing quote
+/// opens a string that meets the end of the file; `<<'EOS` stops lexing (`$end` is unexpected
+/// where a value is); a bare `<<EOS` is tLSHFT, unexpected where a value is. With a newline the
+/// body runs to the end of the file: the fatal string_eof at the opener.
+// ponytail: a bare `<<EOS` after a value (`foo <<EOS` at the end of a file) is a valid shift in
+// the parser gem, which builds another AST; that case is left to the Prism-based diagnostics.
+pub fn unterminated_heredoc(tokens: &[Token], text: &str, open: &[usize]) -> Option<(usize, Vec<Diagnostic>)> {
+    let i =
+        tokens.iter().position(|t| t.kind == "HEREDOC_START" && open.iter().any(|&o| o >= t.start && o <= t.end))?;
+    let (s, e) = (tokens[i].start, tokens[i].end);
+    let eof = |msg: &str, at: usize| (at, at + 1, msg.to_string());
+    if text[e..].contains('\n') {
+        return Some((s, vec![eof("unterminated string meets end of file", s)]));
+    }
+    let wants_value = tokens[..i]
+        .iter()
+        .rev()
+        .find(|t| !matches!(t.kind, "COMMENT" | "IGNORED_NEWLINE" | "EMBDOC_BEGIN" | "EMBDOC_LINE" | "EMBDOC_END"))
+        .is_none_or(|t| t.state & EXPR_BEG_ANY != 0);
+    let opener = text.get(s..e).unwrap_or("");
+    let id = opener.trim_start_matches('<').trim_start_matches(['-', '~']);
+    let Some(quote) = id.chars().next().filter(|c| matches!(c, '\'' | '"' | '`')) else {
+        return wants_value.then(|| (s, vec![(s, s + 2, "unexpected token tLSHFT".to_string())]));
+    };
+    let mut out = vec![eof("unterminated heredoc id", s)];
+    if id.len() > 1 && id.ends_with(quote) {
+        out.push(eof("unterminated string meets end of file", e - 1));
+    } else if wants_value {
+        out.push((text.len().saturating_sub(1), text.len(), "unexpected token $end".to_string()));
+    }
+    Some((s, out))
+}
+
 /// Tokens a statement can start with (FIRST(stmt) in the parser gem's grammars): where racc resumes
 /// after discarding tokens.
 fn starts_stmt(name: &str) -> bool {
