@@ -1,0 +1,4 @@
+# Cold-corpus files (scripts/check-cold.sh) that hit a documented gap in docs/known-gaps.md.
+# Binary-encoded source with a byte that is not valid UTF-8 (`%i[\xC0 :foo]`).
+Lint_PercentSymbolArray/r2.7/012.rb
+Lint_PercentSymbolArray/r3.4/012.rb

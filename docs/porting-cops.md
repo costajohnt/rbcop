@@ -498,3 +498,22 @@ disabled-by-default cops are covered too. Diffs land in `$TMPDIR/rbcop-check/<co
 (`<` only RuboCop, `>` only rbcop); look at the source line and RuboCop's code until you understand
 the difference. A cop is done when the full gate prints `all corpora match`. Also run
 `cargo test --release` and `cargo clippy --release --all-targets` (no warnings) before committing.
+
+### Cold cops
+
+Cops with almost no offenses on the corpora (Gemfile/gemspec-only cops, low-target cops, specs whose
+snippets are interpolated) are gated on `$RBCOP_CORPUS/cold`: every example of their RuboCop spec,
+with `#{}`/`%{}` templates, `.each` loops, shared examples and `let`s resolved statically, in one
+directory per cop and variant (`r<TargetRubyVersion>[-c<n>]`, each with its own `.rubocop.yml`;
+untagged examples run at both 2.7 and 3.4).
+
+```sh
+RBENV_VERSION=4.0.6 rbenv exec ruby scripts/extract_cold_corpus.rb \
+  $RBCOP_CORPUS/rubocop-src/spec/rubocop/cop $RBCOP_CORPUS/cold cops.txt config/default.yml  # rebuild corpus
+scripts/check-cold.sh oracle        # record $RBCOP_ORACLE/cold.txt (+ .crashes), every cop on
+scripts/check-cold.sh [Dept_Cop...] # offenses vs the oracle, plus `-A --only <cop>` per variant vs live RuboCop
+```
+
+`cops.txt` lists one `Dept/Cop` per line. The extractor prints snippets it cannot resolve on stderr
+(extend its evaluator rather than hand-writing files). Files hitting a documented gap are listed in
+`scripts/cold-skip.txt`. Diffs land in `$OUT` (default `$TMPDIR/rbcop-cold-<worktree>`).

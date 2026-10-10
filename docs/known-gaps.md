@@ -83,6 +83,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   invalid `Severity` values are not reported (see ConfigValidator below).
 - Sources whose magic comment names another encoding (`# encoding: iso-8859-1`) are inspected with
   invalid UTF-8 bytes replaced; RuboCop transcodes them to UTF-8. They are never autocorrected.
+  The same holds for binary (`# encoding: BINARY`) sources with such bytes, where each replacement
+  also counts as 3 bytes in later columns of its line (RuboCop: 1 per byte), e.g. the end of
+  Lint/PercentSymbolArray's range on `%i[\xC0 :foo]` (`scripts/cold-skip.txt`).
   Sources that must be UTF-8 and are not get RuboCop's `Lint/Syntax: Invalid byte sequence in utf-8.`
 - Deliberate: Style/WordArray correcting a `%W[...]` whose value is invalid UTF-8 (`%W[\xff]`)
   writes the escaped form (`["\xFF"]`); RuboCop writes the raw bytes and then crashes re-parsing

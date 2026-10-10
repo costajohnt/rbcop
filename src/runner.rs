@@ -492,11 +492,13 @@ const TOLERATED_ERRORS: &[&str] = &["invalid_yield"];
 
 /// Prism errors the parser gem accepts for the target. Up to Ruby 2.5, `begin..else..end` without
 /// `rescue` is only a `useless_else` warning (reported by Lint/UselessElseWithoutRescue); before
-/// 2.7 `def m(x = x)` is only a warning (Lint/CircularArgumentReference).
+/// 2.7 `def m(x = x)` is only a warning (Lint/CircularArgumentReference); before 3.0 `_1 = x` is
+/// accepted (Builders::Default#check_reserved_for_numparam; Lint/NumberedParameterAssignment).
 fn tolerated(kind: &str, parser_gem: bool, target_ruby: f64) -> bool {
     (parser_gem && TOLERATED_ERRORS.contains(&kind))
         || (kind == "begin_lonely_else" && target_ruby <= 2.5)
         || (kind == "parameter_circular" && target_ruby < 2.7)
+        || (kind == "parameter_numbered_reserved" && target_ruby < 3.0)
 }
 
 /// Cop::Base#default_severity.
