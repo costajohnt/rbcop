@@ -12,7 +12,7 @@ fn constant_portion(node: &Node) -> bool {
 }
 
 fn interpolation(node: &Node) -> bool {
-    is_parser_dstr_exact(node) || node.as_interpolated_regular_expression_node().is_some()
+    is_parser_dstr(node) || node.as_interpolated_regular_expression_node().is_some()
 }
 
 impl Cop for YodaCondition {

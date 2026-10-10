@@ -15,7 +15,7 @@ static LINE_END_PLUS: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\+[ \t\n\x
 
 /// Parser `str` (`__FILE__` is a `str` too).
 fn is_str(node: &Node) -> bool {
-    (node.as_string_node().is_some() && !is_parser_dstr_exact(node)) || node.as_source_file_node().is_some()
+    (node.as_string_node().is_some() && !is_parser_dstr(node)) || node.as_source_file_node().is_some()
 }
 
 /// A parser `send` of `+` (not csend, not wrapped in a block).
