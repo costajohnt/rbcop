@@ -313,3 +313,17 @@ fn arguments_file_shellwords() {
     assert!(text(&out.stderr).contains("Unmatched quote"), "{}", text(&out.stderr));
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// Directory targets come out in Ruby String order (bytes of the whole path), as TargetFinder's
+/// `sort_by!(&:itself)`: `lib/foo-baz.rb` < `lib/foo.rb` < `lib/foo/bar.rb`.
+#[test]
+fn directory_targets_sort_as_strings() {
+    let dir = scratch("order");
+    fs::create_dir_all(dir.join("lib/foo")).unwrap();
+    for f in ["lib/foo.rb", "lib/foo/bar.rb", "lib/foo-baz.rb"] {
+        fs::write(dir.join(f), "x = 1\n").unwrap();
+    }
+    let out = rbcop(&dir, &["-L"]);
+    assert_eq!(text(&out.stdout), "Gemfile\nlib/foo-baz.rb\nlib/foo.rb\nlib/foo/bar.rb\n");
+    let _ = fs::remove_dir_all(&dir);
+}
