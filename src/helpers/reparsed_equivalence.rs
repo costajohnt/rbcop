@@ -285,21 +285,17 @@ impl<'pr> Visit<'pr> for Ser<'_> {
     }
 }
 
-/// `reparse_scope`: the innermost def/class/module/sclass containing a range.
-struct ScopeFinder<'pr> {
-    range: (usize, usize),
-    found: Option<Node<'pr>>,
-}
+/// Every def/class/module/sclass, in pre-order (`reparse_scope` candidates).
+#[derive(Default)]
+struct Scopes<'pr>(Vec<Node<'pr>>);
 
-impl<'pr> Visit<'pr> for ScopeFinder<'pr> {
+impl<'pr> Visit<'pr> for Scopes<'pr> {
     fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
-        let loc = node.location();
-        let scope = matches!(
+        if matches!(
             node,
             Node::DefNode { .. } | Node::ClassNode { .. } | Node::ModuleNode { .. } | Node::SingletonClassNode { .. }
-        );
-        if scope && loc.start_offset() <= self.range.0 && self.range.1 <= loc.end_offset() {
-            self.found = Some(node);
+        ) {
+            self.0.push(node);
         }
     }
 }
@@ -332,17 +328,64 @@ pub fn verified_by_reparse_folding<T: Copy>(
     apply: impl Fn(&mut Corrector, T),
     fold: bool,
 ) -> Vec<T> {
+    verified_by_reparse_opts(text, version, program, items, range, apply, ReparseOpts { fold, report_oversized: false })
+}
+
+/// `verified_by_reparse(items, oversized:)`: with `report_oversized` (`oversized: :report`, the
+/// default), a group whose scope (or file) exceeds 64 KiB is kept without reparsing.
+pub fn verified_by_reparse_with<T: Copy>(
+    text: &str,
+    version: &'static str,
+    program: &Node,
+    items: &[T],
+    range: impl Fn(T) -> (usize, usize),
+    apply: impl Fn(&mut Corrector, T),
+    report_oversized: bool,
+) -> Vec<T> {
+    verified_by_reparse_opts(text, version, program, items, range, apply, ReparseOpts { fold: false, report_oversized })
+}
+
+/// MAX_VERIFICATION_FRAGMENT_SIZE (characters of the reparse scope).
+const MAX_VERIFICATION_FRAGMENT_SIZE: usize = 64 * 1024;
+
+/// Bound on item-by-item re-verification of a failed group: items x file bytes rewritten.
+const MAX_ITEM_BY_ITEM_WORK: usize = 1 << 30;
+
+#[derive(Clone, Copy)]
+struct ReparseOpts {
+    fold: bool,
+    report_oversized: bool,
+}
+
+fn verified_by_reparse_opts<T: Copy>(
+    text: &str,
+    version: &'static str,
+    program: &Node,
+    items: &[T],
+    range: impl Fn(T) -> (usize, usize),
+    apply: impl Fn(&mut Corrector, T),
+    opts: ReparseOpts,
+) -> Vec<T> {
+    let ReparseOpts { fold, report_oversized } = opts;
     let source: Arc<str> = Arc::from(text);
     // (scope range, normalized original, items) in order of first appearance.
     let mut groups: Vec<Group<T>> = vec![];
+    let mut scopes = Scopes::default();
+    if !items.is_empty() {
+        scopes.visit(program);
+    }
     for &item in items {
-        let mut f = ScopeFinder { range: range(item), found: None };
-        f.visit(program);
-        let scope = f.found.as_ref().map(|n| (n.location().start_offset(), n.location().end_offset()));
+        // `reparse_scope`: the innermost (last in pre-order) scope containing the range.
+        let r = range(item);
+        let found = scopes.0.iter().rev().find(|n| {
+            let loc = n.location();
+            loc.start_offset() <= r.0 && r.1 <= loc.end_offset()
+        });
+        let scope = found.map(|n| (n.location().start_offset(), n.location().end_offset()));
         match groups.iter_mut().find(|g| g.0 == scope) {
             Some(g) => g.2.push(item),
             None => {
-                let original = serialize_folding(text, f.found.as_ref().unwrap_or(program), fold);
+                let original = serialize_folding(text, found.unwrap_or(program), fold);
                 groups.push((scope, original, vec![item]));
             }
         }
@@ -366,11 +409,17 @@ pub fn verified_by_reparse_folding<T: Copy>(
     };
     let mut out = vec![];
     for (scope, original, group) in &groups {
-        if group.len() > 1 && verify(group, *scope, original) {
+        let too_large = || {
+            let (s, e) = scope.unwrap_or((0, text.len()));
+            text[s..e].chars().count() > MAX_VERIFICATION_FRAGMENT_SIZE
+        };
+        if (report_oversized && too_large()) || (group.len() > 1 && verify(group, *scope, original)) {
             out.extend(group.iter().copied());
-        } else {
+        } else if group.len().saturating_mul(text.len()) <= MAX_ITEM_BY_ITEM_WORK {
             out.extend(group.iter().copied().filter(|&i| verify(&[i], *scope, original)));
         }
+        // ponytail: past MAX_ITEM_BY_ITEM_WORK a failed group reports nothing (RuboCop would
+        // rewrite and reparse once per item); deliberate bound for untrusted input.
     }
     out
 }
