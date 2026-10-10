@@ -265,7 +265,7 @@ impl Cop for SelfAssignment {
             kind::MULTI_WRITE_NODE => {
                 let n = node.as_multi_write_node().unwrap();
                 let mut lhs: Vec<Node> = n.lefts().iter().collect();
-                lhs.extend(n.rest().filter(|r| kind::of(r) != kind::IMPLICIT_REST_NODE));
+                lhs.extend(crate::ast::parser_rest(n.rest()));
                 lhs.extend(n.rights().iter());
                 n.value().as_array_node().is_some_and(|a| {
                     let rhs: Vec<Node> = a.elements().iter().collect();

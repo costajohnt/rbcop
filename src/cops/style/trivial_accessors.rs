@@ -90,7 +90,7 @@ impl Cop for TrivialAccessors {
             p.requireds().iter().count() == 1
                 && p.requireds().iter().all(|r| r.as_required_parameter_node().is_some())
                 && p.optionals().iter().count() == 0
-                && p.rest().is_none()
+                && crate::ast::parser_rest(p.rest()).is_none()
                 && p.posts().iter().count() == 0
                 && p.keywords().iter().count() == 0
                 && p.keyword_rest().is_none()

@@ -15,7 +15,7 @@ fn line_indentation(src: &Source, line: usize) -> usize {
 
 fn def_params<'pr>(p: &ruby_prism::ParametersNode<'pr>) -> Vec<Node<'pr>> {
     let mut v: Vec<Node> = p.requireds().iter().chain(p.optionals().iter()).collect();
-    v.extend(p.rest());
+    v.extend(crate::ast::parser_rest(p.rest()));
     v.extend(p.posts().iter());
     v.extend(p.keywords().iter());
     v.extend(p.keyword_rest());

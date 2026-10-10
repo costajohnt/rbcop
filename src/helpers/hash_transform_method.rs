@@ -12,12 +12,12 @@ fn range(n: &Node) -> (usize, usize) {
 }
 
 /// The parameters node of a block when it has only required parameters (and no block locals).
-fn requireds<'pr>(block: &BlockNode<'pr>, implicit_rest_ok: bool) -> Option<Vec<Node<'pr>>> {
+fn requireds<'pr>(block: &BlockNode<'pr>) -> Option<Vec<Node<'pr>>> {
     let bp = block.parameters()?.as_block_parameters_node()?;
     let p = bp.parameters()?;
     let ok = bp.locals().iter().next().is_none()
         && p.optionals().iter().next().is_none()
-        && p.rest().is_none_or(|r| implicit_rest_ok && r.as_implicit_rest_node().is_some())
+        && crate::ast::parser_rest(p.rest()).is_none()
         && p.posts().iter().next().is_none()
         && p.keywords().iter().next().is_none()
         && p.keyword_rest().is_none()
@@ -31,7 +31,7 @@ fn req_name(n: &Node) -> Option<String> {
 
 /// `(args (arg a) (arg b))`.
 fn two_args(block: &BlockNode) -> Option<(String, String)> {
-    match requireds(block, true)?.as_slice() {
+    match requireds(block)?.as_slice() {
         [a, b] => Some((req_name(a)?, req_name(b)?)),
         _ => None,
     }
@@ -39,10 +39,10 @@ fn two_args(block: &BlockNode) -> Option<(String, String)> {
 
 /// `(args (mlhs (arg a) (arg b)) (arg memo))`.
 fn mlhs_args(block: &BlockNode) -> Option<(String, String, String)> {
-    let reqs = requireds(block, false)?;
+    let reqs = requireds(block)?;
     let [m, memo] = reqs.as_slice() else { return None };
     let m = m.as_multi_target_node()?;
-    if m.rest().is_some() || m.rights().iter().next().is_some() {
+    if crate::ast::parser_rest(m.rest()).is_some() || m.rights().iter().next().is_some() {
         return None;
     }
     let lefts: Vec<Node> = m.lefts().iter().collect();
