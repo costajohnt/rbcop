@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use helpers::documentation_comment::{documentation_comment, node_ends};
+use helpers::documentation_comment::{comments_taken_by_ancestor, documentation_comment, node_ends};
 use helpers::parser_parent::{parser_parent, parser_parent_index};
 use helpers::visibility_help::{node_visibility, non_public_modifier, siblings};
 
@@ -57,7 +57,8 @@ impl Cop for DocumentationMethod {
         };
         let enclosing =
             target_anc.iter().rev().map(|a| a.location().start_offset()).find(|&s| s < r.0).unwrap_or(0);
-        let documented = documentation_comment(cx, &ends, r.0, enclosing);
+        let documented =
+            !comments_taken_by_ancestor(target_anc, r.0) && documentation_comment(cx, &ends, r.0, enclosing);
         cx.state::<State>().ends = Some(ends);
         if !documented {
             cx.add(r.0, r.1, "Missing method documentation comment.");

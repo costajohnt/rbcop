@@ -1,4 +1,4 @@
-use crate::helpers::documentation_comment::documentation_comment;
+use crate::helpers::documentation_comment::{comments_taken_by_ancestor, documentation_comment};
 use crate::helpers::comment_association::leading;
 use crate::helpers::parser_parent::parser_parent_index;
 use crate::prelude::*;
@@ -188,6 +188,11 @@ fn include_statement_only(node: &Node) -> bool {
             let o = node.as_or_node().unwrap();
             include_statement_only(&o.left()) && include_statement_only(&o.right())
         }
+        // (sclass expr body): a missing body is nil, which fails.
+        Node::SingletonClassNode { .. } => {
+            let c = node.as_singleton_class_node().unwrap();
+            include_statement_only(&c.expression()) && c.body().is_some_and(|b| include_statement_only(&b))
+        }
         _ => false,
     }
 }
@@ -300,7 +305,7 @@ impl Documentation {
         let wrapped = matches!(anc, [.., b, s]
             if s.as_statements_node().and_then(|s| s.body().iter().next()).is_some_and(|f| range(&f) == r)
                 && b.as_begin_node().is_some_and(|b| b.rescue_clause().is_some() || b.ensure_clause().is_some()));
-        if !wrapped && documentation_comment(cx, ends, start, enclosing) {
+        if !wrapped && !comments_taken_by_ancestor(anc, start) && documentation_comment(cx, ends, start, enclosing) {
             return None;
         }
         // constant_allowed?

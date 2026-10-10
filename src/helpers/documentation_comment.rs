@@ -55,3 +55,13 @@ pub fn documentation_comment(cx: &Cx, ends: &[usize], start: usize, enclosing: u
         !Annotation::new(text, &re).annotation() && !INTERPRETER.is_match(text) && crate::directives::parse(text).is_none()
     })
 }
+
+/// Whether an ancestor starting where the node does (a modifier: `end if x`, `end while y`) takes
+/// the preceding comments: the Comment::Associator gives leading comments to the outermost node
+/// starting there, skipping only `begin` bodies. `anc` are the node's Prism ancestors.
+pub fn comments_taken_by_ancestor(anc: &[Node], start: usize) -> bool {
+    anc.iter()
+        .rev()
+        .take_while(|a| a.location().start_offset() == start)
+        .any(|a| !matches!(a, Node::StatementsNode { .. } | Node::ProgramNode { .. }))
+}
