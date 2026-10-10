@@ -561,6 +561,8 @@ fn ruby_version_string(v: f64) -> String {
 /// `--show-cops`: CLI::Command::ShowCops for the cops rbcop implements.
 fn show_cops(patterns: &[String], cfg: &Resolved, pwd: &str) {
     let mut names: Vec<&'static str> = cops::ALL.iter().map(|r| r.name).collect();
+    // Lint/Syntax lives in the runner, not in cops::ALL, but RuboCop's registry lists it.
+    names.push("Lint/Syntax");
     names.sort_unstable();
     let show_all = patterns.is_empty();
     let selected = |name: &str| {
@@ -629,7 +631,8 @@ fn run(cli: Cli, global: bool) -> Result<u8, String> {
         // ponytail: RuboCop prints the corrected source after a separator line; not ported yet.
         return Err("rbcop: --stdin with -a/-A is not supported yet".into());
     }
-    let names: Vec<&'static str> = cops::ALL.iter().map(|c| c.name).collect();
+    // Lint/Syntax lives in the runner but is a registered cop with its own config in RuboCop.
+    let names: Vec<&'static str> = cops::ALL.iter().map(|c| c.name).chain(["Lint/Syntax"]).collect();
     // ConfigLoader: a missing -c file is an error, even with --force-default-config.
     if let Some(c) = &cli.opts.config_file {
         let abs = expand_path(c, &rbcop::config::cwd());

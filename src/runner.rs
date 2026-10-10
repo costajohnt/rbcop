@@ -123,6 +123,8 @@ fn analyze(
         // (`unexpected '+'` and `expected a receiver for unary +`), and only the first survives.
         let mut seen = std::collections::HashSet::new();
         out.retain(|o| seen.insert((o.start, o.end)));
+        // Then Runner's uniq (same position and message, any range), as for every cop.
+        dedup(&mut out);
         return (out, None);
     }
 

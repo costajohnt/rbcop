@@ -324,6 +324,11 @@ More traps found while porting:
 - `before_declaring_variable` cops use `variable_force::investigate_with`.
 - rubocop-ast `receiver`: `(send $_ ...)`, or `(any_block (call $_ ...))` for blocks; a `defs`
   uses its own receiver.
+- `right_sibling` is non-nil beyond statement lists: an `if`'s then-branch when there is a
+  non-empty else, an `unless`'s else branch when it has a body, a `begin` body with rescue/ensure.
+- The `-> {}` literal has a parser `lambda` send that `on_send` sees.
+- Helpers: `element_line_breaks` (FirstElementLineBreak/MultilineElementLineBreaks),
+  `reparsed_equivalence::*_folding` (fold_string_concatenation).
 - Prism `CallNode#message_loc` of an index call (`foo[x]`, `foo[x] = y`) spans the brackets and
   arguments; use `name()` when you mean parser's method name.
 - Helpers: `if_node::{normal_keyword, parts, is_elsif}`, `ruby_string::symbol_inspect`.

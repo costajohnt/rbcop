@@ -76,8 +76,6 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   association privately (switch to `helpers::comment_association`).
 - Style/DirectiveScope treats only ported cops as disabled by default config; an `enable X` ...
   `disable X` pair for an unported, default-disabled cop can differ (not hit by the gates).
-- One spec snippet (`naming/method_name/050.rb`, a `%{}` template) gets a duplicated
-  "unexpected write target" syntax error location.
 - Lint/RedundantCopDisableDirective, Lint/RedundantCopEnableDirective, Lint/MissingCopEnableDirective
   and Style/DisableCopsWithinSourceCodeDirective need every other cop's offenses (suppressed ones
   included), so they are ported last, once all cops exist.
