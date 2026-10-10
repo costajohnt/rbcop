@@ -10,7 +10,7 @@ use regex::Regex;
 use std::collections::HashMap;
 use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
-use value::{Map, Value, parse_yaml, ruby_regex};
+use value::{Map, Value, parse_yaml, parse_yaml_file, ruby_regex};
 
 /// RuboCop's own default.yml, vendored from the release rbcop targets (MIT, see config/LICENSE).
 pub const DEFAULT_YML: &str = include_str!("../../config/default.yml");
@@ -431,7 +431,8 @@ impl Store {
     pub fn new(opts: Options, cop_names: Vec<&'static str>) -> Result<Store, String> {
         let cwd = cwd();
         let default_text = DEFAULT_YML;
-        let Value::Map(mut default) = parse_yaml(default_text)? else { return Err("bad default.yml".into()) };
+        let Value::Map(default) = parse_yaml(default_text)? else { return Err("bad default.yml".into()) };
+        let mut default = Arc::unwrap_or_clone(default);
         make_excludes_absolute(&mut default, &cwd);
         let known_cops = default.keys().filter(|k| k.contains('/')).map(String::from).collect();
         let project_root = find_last_upwards(&["Gemfile"], &cwd).or_else(|| find_last_upwards(&["gems.rb"], &cwd));
@@ -572,14 +573,19 @@ impl Store {
             return Ok(m);
         }
         let start = self.emitted.len();
-        let text = std::fs::read_to_string(path).map_err(|e| format!("{}: {e}", path.display()))?;
+        let text = std::fs::read_to_string(path).map_err(|e| match e.kind() {
+            // ConfigLoader.read_file's ConfigNotFoundError.
+            std::io::ErrorKind::NotFound => format!("Configuration file not found: {}", path.display()),
+            _ => format!("{}: {e}", path.display()),
+        })?;
         if text.contains("<%") {
             self.warnings.push(format!("{}: ERB in config is not supported; parsed as plain YAML", path.display()));
         }
-        let mut hash = match parse_yaml(&text).map_err(|e| format!("{}: {e}", path.display()))? {
-            Value::Map(m) => m,
+        let mut hash = match parse_yaml_file(&text, &path.display().to_string())? {
+            Value::Map(m) => Arc::unwrap_or_clone(m),
             Value::Null => Map::default(),
-            _ => return Err(format!("Malformed configuration in {}", path.display())),
+            // A ValidationError, which the CLI prints as `Error: ...`.
+            _ => return Err(format!("Error: Malformed configuration in {}", path.display())),
         };
         // Plugins (and plugin-capable `require:` gems) only matter here for their default configs.
         let mut plugins = Vec::new();
@@ -597,7 +603,11 @@ impl Store {
         self.integrate_plugins(plugins)?;
         if let Some(Value::Map(gems)) = hash.remove("inherit_gem") {
             let mut inherit = seq(hash.remove("inherit_from"));
-            for (gem, paths) in gems.0 {
+            for (gem, paths) in Arc::unwrap_or_clone(gems).0 {
+                // ConfigLoaderResolver#resolve_inheritance_from_gems's ArgumentError.
+                if gem == "rubocop" {
+                    return Err("can't inherit configuration from the rubocop gem".into());
+                }
                 let dir = self.gem_dir(&gem)?;
                 for p in seq(Some(paths)).into_iter().rev() {
                     if let Some(p) = p.as_string() {
@@ -605,7 +615,7 @@ impl Store {
                     }
                 }
             }
-            hash.insert("inherit_from", Value::Seq(inherit));
+            hash.insert("inherit_from", Value::Seq(inherit.into()));
         }
         self.resolve_inheritance(path, &mut hash)?;
         hash.remove("inherit_from");
@@ -686,9 +696,9 @@ impl Store {
                         let mode = determine_inherit_mode(hash, &k, self.opts.preview);
                         merge(&v, derived, &mode, false)
                     }
-                    None => v,
+                    None => Arc::unwrap_or_clone(v),
                 };
-                hash.insert(k.clone(), Value::Map(merged));
+                hash.insert(k.clone(), Value::Map(merged.into()));
                 if only_base_has_include
                     && base_path.file_name().is_some_and(|n| n.to_string_lossy().starts_with(".rubocop"))
                 {
@@ -703,7 +713,7 @@ impl Store {
                                 _ => inc,
                             })
                             .collect();
-                        m.insert("Include", Value::Seq(rebased));
+                        m.insert("Include", Value::Seq(rebased.into()));
                     }
                 }
             }
@@ -756,7 +766,7 @@ impl Store {
                 excludes.push(e);
             }
         }
-        all.insert("Exclude", Value::Seq(excludes));
+        all.insert("Exclude", Value::Seq(excludes.into()));
         Ok(())
     }
 
@@ -794,12 +804,12 @@ impl Store {
             let mut plugin = self.load_file(&path, false)?;
             if let Some(Value::Map(new_all)) = plugin.get("AllCops").cloned() {
                 let mut all = combined.map("AllCops").cloned().unwrap_or_default();
-                for (key, value) in new_all.0 {
+                for (key, value) in Arc::unwrap_or_clone(new_all).0 {
                     match (all.get(&key), &value) {
                         (Some(Value::Seq(existing)), Value::Seq(added)) => {
-                            let mut union = existing.clone();
+                            let mut union = Vec::clone(existing);
                             union.extend(added.iter().filter(|v| !existing.contains(v)).cloned());
-                            all.insert(key.clone(), Value::Seq(union));
+                            all.insert(key.clone(), Value::Seq(union.into()));
                             if !configured.contains(&key) {
                                 configured.push(key);
                             }
@@ -811,14 +821,14 @@ impl Store {
                         _ => {}
                     }
                 }
-                plugin.insert("AllCops", Value::Map(all));
+                plugin.insert("AllCops", Value::Map(all.into()));
             }
             combined = merge_with_default(&combined, plugin, false, self.opts.preview);
         }
         if let (Some(all), Some(Value::Map(new_all))) =
             (self.default.map_mut("AllCops"), combined.get("AllCops").cloned())
         {
-            for (k, v) in new_all.0 {
+            for (k, v) in Arc::unwrap_or_clone(new_all).0 {
                 all.insert(k, v);
             }
         }
@@ -827,7 +837,7 @@ impl Store {
                 continue;
             }
             let merged = match (self.default.get(&k), &v) {
-                (Some(Value::Map(d)), Value::Map(p)) => Value::Map(merge(d, p, &Map::default(), false)),
+                (Some(Value::Map(d)), Value::Map(p)) => Value::Map(merge(d, p, &Map::default(), false).into()),
                 _ => v,
             };
             self.default.insert(k, merged);
@@ -853,12 +863,20 @@ impl Store {
             return Err(format!("invalid gem name {gem:?} in config"));
         }
         let out = std::process::Command::new("ruby")
-            .args(["-e", "print Gem::Specification.find_by_name(ARGV[0]).gem_dir", "--", gem])
+            .args([
+                "-e",
+                "begin; print Gem::Specification.find_by_name(ARGV[0]).gem_dir; \
+                 rescue Gem::LoadError => e; $stderr.print e.message; exit 1; end",
+                "--",
+                gem,
+            ])
             .current_dir(&self.cwd)
             .output()
             .map_err(|e| format!("inherit_gem {gem}: cannot run ruby: {e}"))?;
         if !out.status.success() {
-            return Err(format!("inherit_gem {gem}: gem not found ({})", String::from_utf8_lossy(&out.stderr).trim()));
+            // gem_config_path's Gem::LoadError.
+            let message = String::from_utf8_lossy(&out.stderr);
+            return Err(format!("Unable to find gem {gem}; is the gem installed? {}", message.trim_end()));
         }
         let dir = PathBuf::from(String::from_utf8_lossy(&out.stdout).into_owned());
         self.gem_dirs.insert(gem.to_string(), dir.clone());
@@ -877,12 +895,13 @@ pub fn apply_preview_defaults(default: &Map, preview: bool) -> Map {
     let mut out = default.clone();
     for (_, v) in out.0.iter_mut() {
         let Value::Map(params) = v else { continue };
+        let params = Arc::make_mut(params);
         if !matches!(params.get("Preview"), Some(Value::Map(_))) {
             continue;
         }
         let Some(Value::Map(preview_params)) = params.remove("Preview") else { continue };
         if preview {
-            for (k, x) in preview_params.0 {
+            for (k, x) in Arc::unwrap_or_clone(preview_params).0 {
                 params.insert(k, x);
             }
         }
@@ -899,7 +918,7 @@ fn with_preview_exclude_merge(mut mode: Map, config: &Map, cli: Option<bool>) ->
     }
     let mut merge = seq(mode.get("merge").cloned());
     merge.push(Value::Str("Exclude".into()));
-    mode.insert("merge", Value::Seq(merge));
+    mode.insert("merge", Value::Seq(merge.into()));
     mode
 }
 
@@ -913,7 +932,7 @@ fn merge_with_default(base_default: &Map, mut config: Map, unset_nil: bool, cli_
     if dbd || ebd {
         for (_, v) in default.0.iter_mut() {
             if let Value::Map(m) = v {
-                m.insert("Enabled", Value::Bool(!dbd));
+                Arc::make_mut(m).insert("Enabled", Value::Bool(!dbd));
             }
         }
     }
@@ -931,7 +950,7 @@ fn merge_with_default(base_default: &Map, mut config: Map, unset_nil: bool, cli_
                 if cop.starts_with(&prefix)
                     && let (Value::Map(p), Some(orig)) = (params, base_default.map(cop).and_then(|m| m.get("Enabled")))
                 {
-                    p.insert("Enabled", orig.clone());
+                    Arc::make_mut(p).insert("Enabled", orig.clone());
                 }
             }
         }
@@ -939,7 +958,7 @@ fn merge_with_default(base_default: &Map, mut config: Map, unset_nil: bool, cli_
             if let Value::Map(m) = v
                 && !m.contains("Enabled")
             {
-                m.0.insert(0, ("Enabled".into(), Value::Bool(true)));
+                Arc::make_mut(m).0.insert(0, ("Enabled".into(), Value::Bool(true)));
             }
         }
     }
@@ -971,7 +990,7 @@ fn ruby_constants(dir: &Path, out: &mut std::collections::HashSet<String>) {
 fn seq(v: Option<Value>) -> Vec<Value> {
     match v {
         None | Some(Value::Null) => Vec::new(),
-        Some(Value::Seq(items)) => items,
+        Some(Value::Seq(items)) => Arc::unwrap_or_clone(items),
         Some(v) => vec![v],
     }
 }
@@ -1016,7 +1035,7 @@ fn override_enabled_for_disabled_departments(base: &Map, derived: &mut Map) {
             None => {
                 let mut m = Map::default();
                 m.insert("Enabled", Value::Bool(false));
-                derived.0.insert(0, (cop, Value::Map(m)));
+                derived.0.insert(0, (cop, Value::Map(m.into())));
             }
         }
     }
@@ -1062,7 +1081,7 @@ fn merge(base: &Map, derived: &Map, root_mode: &Map, unset_nil: bool) -> Map {
         if unset_nil && *dv == Value::Null {
             result.remove(key);
         } else if let (Value::Map(b), Value::Map(d)) = (bv, dv) {
-            result.insert(key.clone(), Value::Map(merge(b, d, root_mode, unset_nil)));
+            result.insert(key.clone(), Value::Map(merge(b, d, root_mode, unset_nil).into()));
         } else if should_union(derived, base, root_mode, key) {
             let mut union = seq(Some(bv.clone()));
             for v in seq(Some(dv.clone())) {
@@ -1070,7 +1089,7 @@ fn merge(base: &Map, derived: &Map, root_mode: &Map, unset_nil: bool) -> Map {
                     union.push(v);
                 }
             }
-            result.insert(key.clone(), Value::Seq(union));
+            result.insert(key.clone(), Value::Seq(union.into()));
         } else {
             result.insert(key.clone(), dv.clone());
         }
@@ -1082,8 +1101,8 @@ fn merge(base: &Map, derived: &Map, root_mode: &Map, unset_nil: bool) -> Map {
 fn make_excludes_absolute(hash: &mut Map, base: &Path) {
     for (_, v) in hash.0.iter_mut() {
         let Value::Map(m) = v else { continue };
-        let Some(Value::Seq(items)) = m.get_mut("Exclude") else { continue };
-        for item in items.iter_mut() {
+        let Some(Value::Seq(items)) = Arc::make_mut(m).get_mut("Exclude") else { continue };
+        for item in Arc::make_mut(items).iter_mut() {
             if let Value::Str(s) = item
                 && !s.starts_with('/')
             {

@@ -376,3 +376,71 @@ fn editor_mode_ranges_and_contextual_autocorrect() {
     assert!(fs::read_to_string(dir.join("a.rb")).unwrap().contains("def foo(unused)"));
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// Config load errors: the first stderr line as RuboCop 1.91 prints it (Ruby's backtrace, which
+/// RuboCop prints after it for most of these, is not reproduced), exit 2.
+#[test]
+fn config_load_errors_worded_like_rubocop() {
+    let cases: &[(&str, &str)] = &[
+        ("- a\n- b\n", "Error: Malformed configuration in {D}/.rubocop.yml"),
+        ("inherit_from: nope.yml\n", "Configuration file not found: {D}/nope.yml"),
+        (
+            "Style/StringLiterals: [\n",
+            "({D}/.rubocop.yml): did not find expected node content while parsing a flow node at line 2 column 1",
+        ),
+        ("\"x", "({D}/.rubocop.yml): found unexpected end of stream while scanning a quoted scalar at line 1 column 1"),
+        ("a: b: c\n", "({D}/.rubocop.yml): mapping values are not allowed in this context at line 1 column 5"),
+        (
+            "Foo:\n  Bar: 1\n Baz: 2\n",
+            "({D}/.rubocop.yml): did not find expected key while parsing a block mapping at line 1 column 1",
+        ),
+        (
+            "a:\n\t- b\n",
+            "({D}/.rubocop.yml): found character that cannot start any token while scanning for the next token at line 2 column 1",
+        ),
+        (
+            "a: &\n",
+            "({D}/.rubocop.yml): did not find expected alphabetic or numeric character while scanning an anchor at line 1 column 4",
+        ),
+        ("a: *x\n", "An alias referenced an unknown anchor: x"),
+        ("b: 2020-01-01\n", "Tried to load unspecified class: Date"),
+        ("b: 2020-01-01 10:00:00\n", "Tried to load unspecified class: Time"),
+        ("a: !ruby/object:Foo {}\n", "Tried to load unspecified class: Foo"),
+    ];
+    let dir = scratch("config-errors");
+    fs::write(dir.join("a.rb"), "x = 1\n").unwrap();
+    for (config, want) in cases {
+        fs::write(dir.join(".rubocop.yml"), config).unwrap();
+        let out = rbcop(&dir, &["-f", "s", "a.rb"]);
+        let stderr = text(&out.stderr);
+        assert_eq!(stderr.lines().next(), Some(want.replace("{D}", &dir.display().to_string()).as_str()), "{config:?}");
+        assert_eq!(out.status.code(), Some(2), "{config:?}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// inherit_gem: the rubocop gem is refused (ConfigLoaderResolver's ArgumentError), and a gem that
+/// is not installed gets gem_config_path's `Unable to find gem ...` with RubyGems' message.
+#[test]
+fn inherit_gem_errors_worded_like_rubocop() {
+    let dir = scratch("inherit-gem");
+    fs::write(dir.join("a.rb"), "x = 1\n").unwrap();
+    fs::write(dir.join(".rubocop.yml"), "inherit_gem:\n  rubocop: config/default.yml\n").unwrap();
+    let out = rbcop(&dir, &["-f", "s", "a.rb"]);
+    assert_eq!(text(&out.stderr), "can't inherit configuration from the rubocop gem\n");
+    assert_eq!(out.status.code(), Some(2));
+    fs::write(dir.join(".rubocop.yml"), "inherit_gem:\n  nonexistent_gem_xyz: x.yml\n").unwrap();
+    let out = rbcop(&dir, &["-f", "s", "a.rb"]);
+    let stderr = text(&out.stderr);
+    // Without a ruby on PATH there is no RubyGems message to compare.
+    if !stderr.contains("cannot run ruby") {
+        assert!(
+            stderr.starts_with(
+                "Unable to find gem nonexistent_gem_xyz; is the gem installed? Could not find 'nonexistent_gem_xyz' (>= 0)"
+            ),
+            "{stderr}"
+        );
+    }
+    assert_eq!(out.status.code(), Some(2));
+    let _ = fs::remove_dir_all(&dir);
+}

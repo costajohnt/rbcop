@@ -1,7 +1,7 @@
 //! Config values as RuboCop sees them after Psych: insertion-ordered maps, plus Regexp.
 
 use regex::Regex;
-use std::sync::LazyLock;
+use std::sync::{Arc, LazyLock};
 use yaml_rust2::Yaml;
 use yaml_rust2::parser::{Event, MarkedEventReceiver, Parser};
 use yaml_rust2::scanner::{Marker, TScalarStyle};
@@ -18,8 +18,9 @@ pub enum Value {
     Sym(String),
     /// `!ruby/regexp /source/flags`, kept as written.
     Regex(String),
-    Seq(Vec<Value>),
-    Map(Map),
+    /// Shared, as Psych shares an aliased node (copy on write: `Arc::make_mut`).
+    Seq(Arc<Vec<Value>>),
+    Map(Arc<Map>),
 }
 
 /// Insertion-ordered map with unique keys (Ruby Hash).
@@ -62,7 +63,7 @@ impl Map {
 
     pub fn map_mut(&mut self, key: &str) -> Option<&mut Map> {
         match self.get_mut(key) {
-            Some(Value::Map(m)) => Some(m),
+            Some(Value::Map(m)) => Some(Arc::make_mut(m)),
             _ => None,
         }
     }
@@ -134,43 +135,196 @@ const SYM_MARK: &str = "\u{1}rbcop-symbol:";
 
 /// Parse a YAML document the way Psych + RuboCop's restricted loader would.
 pub fn parse_yaml(text: &str) -> Result<Value, String> {
-    let text = mark_regexps(text);
-    let mut loader = Loader::default();
-    Parser::new(text.chars()).load(&mut loader, true).map_err(|e| e.to_string())?;
-    Ok(loader.docs.into_iter().next().map_or(Value::Map(Map::default()), convert))
+    parse_yaml_file(text, "<unknown>")
 }
 
-/// yaml-rust2's YamlLoader, except that a duplicated key replaces the earlier value in place, as
-/// Psych does (YamlLoader rejects the document), and a plain `:name` scalar (a Symbol to Psych's
-/// ScalarScanner) is marked, so it can be told apart from a quoted ':name' String.
+/// `parse_yaml`, with errors worded as RuboCop prints them for the config file `path`: Psych's
+/// `(path): <problem> <context> at line L column C`, `An alias referenced an unknown anchor: x`,
+/// `Tried to load unspecified class: Date`.
+pub fn parse_yaml_file(text: &str, path: &str) -> Result<Value, String> {
+    let text = mark_regexps(text);
+    let mut checks = Checks { chars: text.chars().collect(), ..Checks::default() };
+    if let Err(e) = Parser::new(text.chars()).load(&mut checks, true) {
+        return Err(checks.syntax_error(&e, path));
+    }
+    if let Some(e) = checks.error {
+        return Err(e);
+    }
+    Ok(checks.loader.docs.into_iter().next().unwrap_or_else(|| Value::Map(Default::default())))
+}
+
+/// Feeds the loader, keeping what Psych's error messages need: the open collections (where
+/// libyaml's context mark is, flow or block) and the first class the restricted loader refuses.
+#[derive(Default)]
+struct Checks {
+    loader: Loader,
+    chars: Vec<char>,
+    /// Start mark of each open collection, and whether it is a flow collection.
+    opens: Vec<(Marker, bool)>,
+    /// A block mapping just opened: yaml-rust2 marks it at the first `:`, libyaml at its first key,
+    /// the next event.
+    key_mark_pending: bool,
+    error: Option<String>,
+}
+
+impl MarkedEventReceiver for Checks {
+    fn on_event(&mut self, ev: Event, mark: Marker) {
+        if std::mem::take(&mut self.key_mark_pending)
+            && let Some(open) = self.opens.last_mut()
+        {
+            open.0 = mark;
+        }
+        let refused = match &ev {
+            Event::SequenceStart(_, tag) | Event::MappingStart(_, tag) => {
+                let flow = matches!(self.chars.get(mark.index()), Some('[' | '{'));
+                self.opens.push((mark, flow));
+                self.key_mark_pending = !flow && matches!(ev, Event::MappingStart(..));
+                tag.as_ref().and_then(refused_tag)
+            }
+            Event::SequenceEnd | Event::MappingEnd => {
+                self.opens.pop();
+                None
+            }
+            Event::Scalar(v, style, _, tag) => match tag {
+                Some(t) => refused_tag(t),
+                None if *style == TScalarStyle::Plain => refused_scalar(v),
+                None => None,
+            },
+            _ => None,
+        };
+        if self.error.is_none()
+            && let Some(class) = refused
+        {
+            self.error = Some(format!("Tried to load unspecified class: {class}"));
+        }
+        self.loader.on_event(ev, mark);
+    }
+}
+
+impl Checks {
+    /// Psych::SyntaxError#message (libyaml's problem, then its context, at the context mark), or
+    /// Psych's AnchorNotDefined for an alias yaml-rust2 rejects.
+    fn syntax_error(&self, e: &yaml_rust2::ScanError, path: &str) -> String {
+        let info = e.info();
+        if info == "while parsing node, found unknown anchor" {
+            let name: String = self.chars[(e.marker().index() + 1).min(self.chars.len())..]
+                .iter()
+                .take_while(|c| !c.is_whitespace() && !matches!(c, ',' | '[' | ']' | '{' | '}'))
+                .collect();
+            return format!("An alias referenced an unknown anchor: {name}");
+        }
+        let (problem, context) = match info.split_once(", ") {
+            Some((c, p)) if c.starts_with("while ") => (p, Some(c)),
+            _ => (info, None),
+        };
+        let at = self.chars.get(e.marker().index()).copied();
+        let (problem, context) = match (problem, context) {
+            ("expected ',' or ']'", c) => ("did not find expected ',' or ']'", c),
+            (p, Some("while scanning an anchor or alias")) => {
+                (p, Some(if at == Some('*') { "while scanning an alias" } else { "while scanning an anchor" }))
+            }
+            (p, None) if p.starts_with("unexpected character: ") || p.starts_with("tabs disallowed") => {
+                ("found character that cannot start any token", Some("while scanning for the next token"))
+            }
+            pc => pc,
+        };
+        let in_flow = self.opens.last().is_some_and(|o| o.1);
+        let context = match context {
+            Some("while parsing a node") if in_flow => Some("while parsing a flow node"),
+            Some("while parsing a node") => Some("while parsing a block node"),
+            c => c,
+        };
+        // libyaml marks a collection error at the collection's start.
+        let mark = match context {
+            Some(
+                "while parsing a block mapping"
+                | "while parsing a flow mapping"
+                | "while parsing a flow sequence"
+                | "while parsing a block collection",
+            ) => self.opens.last().map_or(*e.marker(), |o| o.0),
+            _ => *e.marker(),
+        };
+        let what = context.map_or(problem.to_string(), |c| format!("{problem} {c}"));
+        // yaml-rust2 marks a disallowed tab after it, libyaml at it.
+        let col = if info.starts_with("tabs disallowed") { mark.col() } else { mark.col() + 1 };
+        format!("({path}): {what} at line {} column {col}", mark.line())
+    }
+}
+
+/// The class Psych's restricted loader (RuboCop permits Regexp and Symbol) refuses for a tag.
+fn refused_tag(tag: &yaml_rust2::parser::Tag) -> Option<String> {
+    let suffix = tag.suffix.strip_prefix("ruby/")?;
+    ["object:", "struct:", "hash:", "array:", "exception:"]
+        .iter()
+        .find_map(|p| suffix.strip_prefix(p))
+        .map(String::from)
+}
+
+/// ScalarScanner turns a plain timestamp into a Time and a date into a Date, which RuboCop's
+/// restricted loader refuses.
+fn refused_scalar(s: &str) -> Option<String> {
+    static TIME: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(
+            r"^-?\d{4}-\d{1,2}-\d{1,2}(?:[Tt]|[ \t\r\n\x0B\x0C]+)\d{1,2}:\d\d:\d\d(?:\.\d*)?(?:[ \t\r\n\x0B\x0C]*(?:Z|[-+]\d{1,2}:?(?:\d\d)?))?$",
+        )
+        .unwrap()
+    });
+    static DATE: LazyLock<Regex> =
+        LazyLock::new(|| Regex::new(r"^\d{4}-(?:1[012]|0\d|\d)-(?:[12]\d|3[01]|0\d|\d)$").unwrap());
+    if TIME.is_match(s) {
+        Some("Time".into())
+    } else if DATE.is_match(s) {
+        Some("Date".into())
+    } else {
+        None
+    }
+}
+
+/// A mapping key: the scalar as yaml-rust2 resolved it (keys compare as YAML nodes), or `None` for a
+/// collection key, which the converted Hash leaves out.
+type Key = Option<Yaml>;
+
+/// An open collection.
+enum Open {
+    Seq(Vec<Value>),
+    /// Entries so far (a duplicated key replaces the earlier value in place, as Psych does), and the
+    /// key waiting for its value (`None`: the next node is a key).
+    Map(Vec<(Key, Value)>, Option<Key>),
+}
+
+/// yaml-rust2's YamlLoader, except that it builds `Value`s directly, a duplicated key replaces the
+/// earlier value in place, as Psych does (YamlLoader rejects the document), a plain `:name` scalar
+/// (a Symbol to Psych's ScalarScanner) is marked, so it can be told apart from a quoted ':name'
+/// String, and an alias shares its anchor's collection (`Arc`) instead of copying it, as Psych's
+/// aliases are the same object: copying makes a few lines of nested aliases exponential.
 #[derive(Default)]
 struct Loader {
-    docs: Vec<Yaml>,
+    docs: Vec<Value>,
     /// Open collections with their anchor ids.
-    stack: Vec<(Yaml, usize)>,
-    /// The pending key of each open mapping (BadValue: the next node is a key).
-    keys: Vec<Yaml>,
-    anchors: std::collections::HashMap<usize, Yaml>,
+    stack: Vec<(Open, usize)>,
+    anchors: std::collections::HashMap<usize, (Key, Value)>,
+    docs_ended: usize,
 }
 
 impl MarkedEventReceiver for Loader {
     fn on_event(&mut self, ev: Event, _: Marker) {
         match ev {
             Event::DocumentEnd => {
-                let doc = self.stack.pop().map_or(Yaml::BadValue, |n| n.0);
-                self.docs.push(doc);
-            }
-            Event::SequenceStart(aid, _) => self.stack.push((Yaml::Array(Vec::new()), aid)),
-            Event::MappingStart(aid, _) => {
-                self.stack.push((Yaml::Hash(Default::default()), aid));
-                self.keys.push(Yaml::BadValue);
-            }
-            Event::SequenceEnd | Event::MappingEnd => {
-                if matches!(ev, Event::MappingEnd) {
-                    self.keys.pop();
+                // `insert` pushes a finished root node; an empty document is nil.
+                self.docs_ended += 1;
+                if self.docs.len() < self.docs_ended {
+                    self.docs.push(Value::Null);
                 }
-                if let Some(node) = self.stack.pop() {
-                    self.insert(node);
+            }
+            Event::SequenceStart(aid, _) => self.stack.push((Open::Seq(Vec::new()), aid)),
+            Event::MappingStart(aid, _) => self.stack.push((Open::Map(Vec::new(), None), aid)),
+            Event::SequenceEnd | Event::MappingEnd => {
+                if let Some((open, aid)) = self.stack.pop() {
+                    let value = match open {
+                        Open::Seq(items) => Value::Seq(Arc::new(items)),
+                        Open::Map(entries, _) => Value::Map(Arc::new(to_map(entries))),
+                    };
+                    self.insert(None, value, aid);
                 }
             }
             Event::Scalar(v, style, aid, tag) => {
@@ -187,11 +341,12 @@ impl MarkedEventReceiver for Loader {
                     (TScalarStyle::Plain, None) => psych_scalar(&v),
                     _ => Yaml::String(v),
                 };
-                self.insert((node, aid));
+                let value = scalar(node.clone());
+                self.insert(Some(node), value, aid);
             }
             Event::Alias(id) => {
-                let node = self.anchors.get(&id).cloned().unwrap_or(Yaml::BadValue);
-                self.insert((node, 0));
+                let (key, value) = self.anchors.get(&id).cloned().unwrap_or((Some(Yaml::BadValue), Value::Null));
+                self.insert(key, value, 0);
             }
             _ => {}
         }
@@ -199,28 +354,20 @@ impl MarkedEventReceiver for Loader {
 }
 
 impl Loader {
-    fn insert(&mut self, (node, aid): (Yaml, usize)) {
+    fn insert(&mut self, key: Key, value: Value, aid: usize) {
         if aid > 0 {
-            self.anchors.insert(aid, node.clone());
+            self.anchors.insert(aid, (key.clone(), value.clone()));
         }
         match self.stack.last_mut() {
-            None => self.stack.push((node, aid)),
-            Some((Yaml::Array(items), _)) => items.push(node),
-            Some((Yaml::Hash(h), _)) => {
-                let key = self.keys.last_mut().expect("a mapping has a key slot");
-                if key.is_badvalue() {
-                    *key = node;
-                } else {
-                    let key = std::mem::replace(key, Yaml::BadValue);
-                    match h.get_mut(&key) {
-                        Some(v) => *v = node,
-                        None => {
-                            h.insert(key, node);
-                        }
-                    }
-                }
-            }
-            Some(_) => unreachable!("only collections are open"),
+            None => self.docs.push(value),
+            Some((Open::Seq(items), _)) => items.push(value),
+            Some((Open::Map(entries, pending), _)) => match pending.take() {
+                None => *pending = Some(key),
+                Some(k) => match entries.iter_mut().find(|(e, _)| k.is_some() && *e == k) {
+                    Some((_, v)) => *v = value,
+                    None => entries.push((k, value)),
+                },
+            },
         }
     }
 }
@@ -326,9 +473,9 @@ fn mark_regexps(text: &str) -> String {
     .into_owned()
 }
 
-fn convert(y: Yaml) -> Value {
+/// A scalar node as Psych loads it.
+fn scalar(y: Yaml) -> Value {
     match y {
-        Yaml::Null | Yaml::BadValue | Yaml::Alias(_) => Value::Null,
         Yaml::Boolean(b) => Value::Bool(b),
         Yaml::Integer(i) => Value::Int(i),
         Yaml::Real(r) => match r.as_str() {
@@ -342,41 +489,47 @@ fn convert(y: Yaml) -> Value {
             (_, Some(sym)) => Value::Sym(sym.to_string()),
             _ => Value::Str(s),
         },
-        Yaml::Array(items) => Value::Seq(items.into_iter().map(convert).collect()),
-        Yaml::Hash(h) => {
-            let mut map = Map::default();
-            for (k, v) in h {
-                // Psych's merge key: `<<: *anchor` (or a list of them, earlier ones winning) merges
-                // the mapping in, overriding keys before it; keys after it override the merged ones.
-                if k.as_str() == Some("<<") && matches!(v, Yaml::Hash(_) | Yaml::Array(_)) {
-                    let sources = if let Yaml::Array(list) = v { list } else { vec![v] };
-                    let mut merged = Map::default();
-                    for source in sources.into_iter().rev() {
-                        if let Value::Map(m) = convert(source) {
-                            for (k, v) in m.0 {
-                                merged.insert(k, v);
-                            }
-                        }
-                    }
-                    for (k, v) in merged.0 {
-                        map.insert(k, v);
-                    }
-                    continue;
-                }
-                let key = match k {
-                    // ponytail: a Symbol key and a quoted ':name' key both become the String key.
-                    Yaml::String(s) => s.strip_prefix(SYM_MARK).map_or(s.clone(), String::from),
-                    Yaml::Integer(i) => i.to_string(),
-                    Yaml::Boolean(b) => b.to_string(),
-                    Yaml::Real(r) => r,
-                    _ => continue,
-                };
-                // Psych keeps the last of duplicate keys.
-                map.insert(key, convert(v));
-            }
-            Value::Map(map)
-        }
+        _ => Value::Null,
     }
+}
+
+/// A finished mapping as a Hash: string keys, merge keys applied.
+fn to_map(entries: Vec<(Key, Value)>) -> Map {
+    let mut map = Map::default();
+    for (k, v) in entries {
+        let Some(k) = k else { continue };
+        // Psych's merge key: `<<: *anchor` (or a list of them, earlier ones winning) merges
+        // the mapping in, overriding keys before it; keys after it override the merged ones.
+        if k.as_str() == Some("<<") && matches!(v, Value::Map(_) | Value::Seq(_)) {
+            let sources = match &v {
+                Value::Seq(list) => list.iter().collect(),
+                _ => vec![&v],
+            };
+            let mut merged = Map::default();
+            for source in sources.into_iter().rev() {
+                if let Value::Map(m) = source {
+                    for (k, v) in &m.0 {
+                        merged.insert(k.clone(), v.clone());
+                    }
+                }
+            }
+            for (k, v) in merged.0 {
+                map.insert(k, v);
+            }
+            continue;
+        }
+        let key = match k {
+            // ponytail: a Symbol key and a quoted ':name' key both become the String key.
+            Yaml::String(s) => s.strip_prefix(SYM_MARK).map_or(s.clone(), String::from),
+            Yaml::Integer(i) => i.to_string(),
+            Yaml::Boolean(b) => b.to_string(),
+            Yaml::Real(r) => r,
+            _ => continue,
+        };
+        // Psych keeps the last of duplicate keys.
+        map.insert(key, v);
+    }
+    map
 }
 
 /// Regexp#to_s of a `/src/flags` literal: `(?mi-x:src)`.
@@ -428,6 +581,27 @@ mod tests {
         assert_eq!((d.int("Max"), d.int("X"), d.int("Y")), (Some(5), Some(1), Some(2)));
         let Value::Map(t) = parse_yaml("x: !!str 1\n'y': \"2\"\n").unwrap() else { panic!("not a map") };
         assert_eq!((t.get("x"), t.get("y")), (Some(&Value::Str("1".into())), Some(&Value::Str("2".into()))));
+    }
+
+    // Psych shares an aliased node, so nested aliases cost what the text costs: 30 lines that
+    // expand to 10^31 leaves load at once (copying made 8 lines take minutes). A merge key and
+    // a later override on the sharing mapping leave the anchored mapping as it was.
+    #[test]
+    fn alias_bomb_is_shared_not_copied() {
+        let mut y = String::from("a0: &a0 [1,2,3,4,5,6,7,8,9,10]\n");
+        for i in 1..=30 {
+            let p = format!("*a{}", i - 1);
+            y.push_str(&format!("a{i}: &a{i} [{}]\n", [p.as_str(); 10].join(",")));
+        }
+        y.push_str("base: &b {k: *a30, Max: 3}\nderived:\n  <<: *b\n  Max: 1\n");
+        let start = std::time::Instant::now();
+        let Value::Map(m) = parse_yaml(&y).unwrap() else { panic!("not a map") };
+        assert!(start.elapsed() < std::time::Duration::from_secs(2), "{:?}", start.elapsed());
+        let (base, derived) = (m.map("base").unwrap(), m.map("derived").unwrap());
+        assert_eq!((base.int("Max"), derived.int("Max")), (Some(3), Some(1)));
+        let (Some(Value::Seq(a)), Some(Value::Seq(b))) = (base.get("k"), derived.get("k")) else { panic!("k") };
+        assert!(Arc::ptr_eq(a, b));
+        assert_eq!(a.len(), 10);
     }
 
     // Ruby 4.0 Psych (`YAML.safe_load("k: <s>")`): YAML 1.1 booleans, `_`/`,` in numbers, leading-0
