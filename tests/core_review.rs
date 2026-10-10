@@ -355,3 +355,24 @@ fn stdin_autocorrect_echoes_original_bytes() {
     }
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// --editor-mode (RuboCop::LSP.enabled?): the Metrics cops report a definition's head, Lint/Syntax
+/// has no parser line, and `AutoCorrect: contextual` cops do not correct. The clang output (ranges
+/// as carets) was recorded with RuboCop 1.91 in tests/scenarios/editor_mode.
+#[test]
+fn editor_mode_ranges_and_contextual_autocorrect() {
+    let project = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/scenarios/editor_mode/project");
+    let out = rbcop(&project, &["--editor-mode", "-f", "c", "metrics.rb", "a.rb"]);
+    let want = fs::read_to_string(project.join("../clang.txt")).unwrap();
+    assert_eq!(text(&out.stdout), want);
+    assert_eq!(out.status.code(), Some(1));
+
+    let dir = scratch("editor-mode");
+    let src = "# frozen_string_literal: true\n\ndef foo(unused)\n  1\nend\nfoo(1)  \nputs 1\n\n\n";
+    fs::write(dir.join("a.rb"), src).unwrap();
+    let out = rbcop(&dir, &["--editor-mode", "-f", "s", "-a", "a.rb"]);
+    assert!(text(&out.stdout).ends_with("1 file inspected, 3 offenses detected, 2 offenses corrected\n"));
+    assert_eq!(out.status.code(), Some(1));
+    assert!(fs::read_to_string(dir.join("a.rb")).unwrap().contains("def foo(unused)"));
+    let _ = fs::remove_dir_all(&dir);
+}

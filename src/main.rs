@@ -22,8 +22,8 @@ Accepts RuboCop's command-line options. Supported:
   -D/--[no-]display-cop-names, -E/--extra-details, -S/--display-style-guide, --display-time,
   --display-only-fail-level-offenses, --display-only-correctable, --display-only-safe-correctable,
   --display-only-failed, --stderr, --[no-]color, -L/--list-target-files, --show-cops [COPS],
-  -v/--version, -V/--verbose-version.
-Ignored: -C/--cache, --cache-root, -P/--[no-]parallel, --no-server, --editor-mode, --raise-cop-error.
+  --editor-mode, -v/--version, -V/--verbose-version.
+Ignored: -C/--cache, --cache-root, -P/--[no-]parallel, --no-server, --raise-cop-error.
 
 Formatters: [p]rogress (default), [s]imple, [c]lang, [e]macs, [fi]les, [fu]ubar, [g]ithub, [h]tml,
   [j]son, [ju]nit, [m]arkdown, [o]ffenses, [pa]cman, [q]uiet, [sa]rif, [t]ap, [w]orst.";
@@ -69,7 +69,7 @@ const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
     ("force-default-config", None, Arg::None, Use::Handle),
     ("changed", None, Arg::Optional, Use::Unsupported),
     ("stdin", Some('s'), Arg::Required, Use::Handle),
-    ("editor-mode", None, Arg::None, Use::Ignore),
+    ("editor-mode", None, Arg::None, Use::Handle),
     ("[no-]parallel", Some('P'), Arg::None, Use::Handle),
     ("raise-cop-error", None, Arg::None, Use::Ignore),
     ("fail-level", None, Arg::Required, Use::Handle),
@@ -431,6 +431,7 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
         "extra-details" => cli.annotate.extra_details = true,
         "display-style-guide" => cli.annotate.display_style_guide = true,
         "stderr" => cli.stderr = true,
+        "editor-mode" => rbcop::helpers::lsp::enable(),
         "display-time" => cli.display_time = true,
         "auto-correct" | "safe-auto-correct" | "auto-correct-all" => {
             // Options#handle_deprecated_option, warned while parsing (only a literal --no-color

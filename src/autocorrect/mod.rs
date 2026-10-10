@@ -47,7 +47,10 @@ pub fn registry_index(name: &str) -> usize {
 /// Cop::AutocorrectLogic#autocorrect? for a cop that supports autocorrection (`Cop::correctable`).
 pub fn cop_autocorrects(cfg: &CopConfig, mode: Mode) -> bool {
     // autocorrect_enabled?
-    if matches!(cfg.get("AutoCorrect"), Some(Value::Bool(false))) || cfg.str("AutoCorrect") == Some("disabled") {
+    if matches!(cfg.get("AutoCorrect"), Some(Value::Bool(false)))
+        || cfg.str("AutoCorrect") == Some("disabled")
+        || (cfg.str("AutoCorrect") == Some("contextual") && crate::helpers::lsp::enabled())
+    {
         return false;
     }
     mode == Mode::All || (cfg.bool("Safe").unwrap_or(true) && cfg.bool("SafeAutoCorrect").unwrap_or(true))
