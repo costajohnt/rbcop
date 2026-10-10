@@ -838,14 +838,8 @@ fn base_dir_for(loaded: Option<&Path>) -> PathBuf {
 
 /// Dir.pwd (no symlink resolution, like Ruby).
 pub fn cwd() -> PathBuf {
-    std::env::var_os("PWD")
-        .map(PathBuf::from)
-        .filter(|p| p.is_absolute() && same_dir(p, &std::env::current_dir().unwrap_or_default()))
-        .unwrap_or_else(|| std::env::current_dir().unwrap_or_default())
-}
-
-fn same_dir(a: &Path, b: &Path) -> bool {
-    a.canonicalize().ok() == b.canonicalize().ok()
+    // Ruby's Dir.pwd is getcwd(3), the physical path (/private/tmp, not /tmp); so is current_dir.
+    std::env::current_dir().unwrap_or_default()
 }
 
 /// File.expand_path(path, base): absolute, with `.` and `..` folded, symlinks untouched.

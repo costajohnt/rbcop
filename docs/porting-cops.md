@@ -106,6 +106,13 @@ More traps found while porting:
 - rubocop-ast defines `receiver` on every node (nil for most); `ast::strip_parens` mirrors the common
   "unwrap `begin`" loop.
 - To walk a subtree (`each_node` / `each_descendant`), implement `ruby_prism::Visit` on a small struct.
+- rubocop-ast nodes compare structurally (type + children): `==`, `include?`, `group_by`, `uniq` treat
+  two textually identical nodes as equal. Compare by source/structure, not by offset, when porting those.
+- `def_node_search` without a block on a name not ending in `?` returns an Enumerator, which is always
+  truthy: `return unless some_search(node)` never returns early. Port the behaviour, not the intent.
+- `add_global_offense` (no location): report at `cx.add(0, 0, ..)` for now; the formatter work adds a
+  proper global flag.
+- The worktree sandbox reads a bare `-c` argument as `sh -c`; pass rbcop/RuboCop config with `--config`.
 
 ### Prism tokens vs parser-gem tokens
 
