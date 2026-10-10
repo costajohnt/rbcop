@@ -1,0 +1,8 @@
+AllCops:
+  NewCops: disable
+  SuggestExtensions: false
+Layout/LineLength:
+  Max: 20
+  URISchemes:
+    - my_scheme
+    - http

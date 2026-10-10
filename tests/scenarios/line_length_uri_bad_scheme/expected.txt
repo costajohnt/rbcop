@@ -1,0 +1,3 @@
+Gemfile:1:21: C: Layout/LineLength: Line is too long. [29/20]
+a.rb:2:21: C: Layout/LineLength: Line is too long. [72/20]
+a.rb:3:21: C: Layout/LineLength: Line is too long. [57/20]
