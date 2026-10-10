@@ -1,4 +1,4 @@
-use crate::helpers::annotation_comment::{Annotation, regex as annotation_regex};
+use crate::helpers::documentation_comment::documentation_comment;
 use crate::helpers::comment_association::leading;
 use crate::helpers::parser_parent::parser_parent_index;
 use crate::prelude::*;
@@ -9,10 +9,8 @@ pub const NAME: &str = "Style/Documentation";
 pub static COP: Documentation = Documentation;
 pub struct Documentation;
 
-static INTERPRETER: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)^#\s*(frozen_string_literal|encoding):").unwrap());
 static NODOC: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)^#\s*:nodoc:").unwrap());
 static NODOC_ALL: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)^#\s*:nodoc:\s+all\s*$").unwrap());
-static COMMENT_LINE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)^\s*#").unwrap());
 
 /// Every Prism node range in the file, sorted by end (for comment-association frontiers).
 #[derive(Default)]
@@ -29,7 +27,8 @@ impl<'pr> Visit<'pr> for Ranges {
 
 #[derive(Default)]
 struct State {
-    ranges: Option<Vec<(usize, usize)>>,
+    /// The node ends and the node ranges, both sorted by end.
+    ranges: Option<(Vec<usize>, Vec<(usize, usize)>)>,
 }
 
 fn range(n: &Node) -> (usize, usize) {
@@ -253,11 +252,11 @@ impl Cop for Documentation {
                 v.visit(root);
             }
             v.0.sort_by_key(|&(_, e)| e);
-            cx.state::<State>().ranges = Some(v.0);
+            cx.state::<State>().ranges = Some((v.0.iter().map(|&(_, e)| e).collect(), v.0));
         }
-        let ranges = cx.state::<State>().ranges.take().unwrap();
-        let offense = self.offense(cx, node, &name, body, &ranges);
-        cx.state::<State>().ranges = Some(ranges);
+        let (ends, ranges) = cx.state::<State>().ranges.take().unwrap();
+        let offense = self.offense(cx, node, &name, body, &ranges, &ends);
+        cx.state::<State>().ranges = Some((ends, ranges));
         let Some(msg) = offense else { return };
         let start = node.location().start_offset();
         cx.add(start, name.location().end_offset(), msg);
@@ -265,30 +264,15 @@ impl Cop for Documentation {
 }
 
 impl Documentation {
-    fn offense(&self, cx: &Cx, node: &Node, name: &Node, body: Option<Node>, ranges: &[(usize, usize)]) -> Option<String> {
+    fn offense(&self, cx: &Cx, node: &Node, name: &Node, body: Option<Node>, ranges: &[(usize, usize)], ends: &[usize]) -> Option<String> {
         let src = cx.src;
         let anc = cx.ancestors;
         let start = node.location().start_offset();
-        // documentation_comment?
-        let preceding: Vec<&Comment> = associated(src, ranges, range(node))
-            .into_iter()
-            .filter(|c| src.line_of(c.start) < src.line_of(start))
-            .collect();
-        if let Some(last) = preceding.last()
-            && src.line_of(start) - src.line_of(last.start) == 1
-            && COMMENT_LINE.is_match(src.slice(last.start, last.end))
-        {
-            let keywords = cx.config.for_cop("Style/CommentAnnotation").strings("Keywords");
-            let re = annotation_regex(&keywords);
-            let documented = preceding.iter().any(|c| {
-                let text = src.slice(c.start, c.end);
-                !Annotation::new(text, &re).annotation()
-                    && !INTERPRETER.is_match(text)
-                    && crate::directives::parse(text).is_none()
-            });
-            if documented {
-                return None;
-            }
+        // documentation_comment? (`ends` are the sorted node ends, as in `ranges`)
+        let r = range(node);
+        let enclosing = ranges.iter().filter(|&&(s, e)| s < r.0 && e >= r.1).map(|&(s, _)| s).max().unwrap_or(0);
+        if documentation_comment(cx, ends, start, enclosing) {
+            return None;
         }
         // constant_allowed?
         let short = match name {
