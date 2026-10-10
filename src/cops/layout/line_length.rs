@@ -264,24 +264,26 @@ fn record_node_break(cx: &mut Cx, pos: (usize, usize)) {
 }
 
 /// LineLength#check_for_breakable_block (on_block): overwrites any earlier break point on the line.
-fn check_block(cx: &mut Cx, start: usize, end: usize, block: &Node, receiver: Option<Node>, lambda: bool) {
+fn check_block(cx: &mut Cx, start: usize, block: &Node, receiver: Option<Node>, lambda: bool) {
     let src = cx.src;
-    if src.line_of(start) != src.line_of(end.saturating_sub(1).max(start)) {
+    let (opening, closing, params) = match kind::of(block) {
+        kind::BLOCK_NODE => {
+            let b = block.as_block_node().unwrap();
+            (b.opening_loc(), b.closing_loc(), b.parameters())
+        }
+        _ => {
+            let l = block.as_lambda_node().unwrap();
+            (l.opening_loc(), l.closing_loc(), l.parameters())
+        }
+    };
+    // BlockNode#single_line? compares the `{`/`do` line with the `}`/`end` line; the break is
+    // recorded on the line where the block expression (receiver included) starts.
+    if src.line_of(opening.start_offset()) != src.line_of(closing.start_offset()) {
         return;
     }
     if receiver.as_ref().is_some_and(|r| contains_heredoc(r)) {
         return;
     }
-    let (opening, params) = match kind::of(block) {
-        kind::BLOCK_NODE => {
-            let b = block.as_block_node().unwrap();
-            (b.opening_loc(), b.parameters())
-        }
-        _ => {
-            let l = block.as_lambda_node().unwrap();
-            (l.opening_loc(), l.parameters())
-        }
-    };
     let arguments_end = params.as_ref().and_then(|p| p.as_block_parameters_node()).and_then(|p| {
         let has_args = p.parameters().is_some() || p.locals().iter().next().is_some();
         if has_args { p.closing_loc().map(|c| c.start_offset()) } else { None }
@@ -343,7 +345,7 @@ impl Cop for LineLength {
     }
 
     fn kinds(&self) -> &'static [usize] {
-        &[kind::CALL_NODE, kind::DEF_NODE, kind::ARRAY_NODE, kind::HASH_NODE, kind::LAMBDA_NODE]
+        &[kind::CALL_NODE, kind::DEF_NODE, kind::ARRAY_NODE, kind::HASH_NODE, kind::LAMBDA_NODE, kind::RESCUE_NODE]
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
@@ -355,7 +357,7 @@ impl Cop for LineLength {
                 if let Some(block) = call.block().filter(|b| kind::of(b) == kind::BLOCK_NODE) {
                     let loc = node.location();
                     let lambda = method_name(&call) == "lambda";
-                    check_block(cx, loc.start_offset(), loc.end_offset(), &block, call.receiver(), lambda);
+                    check_block(cx, loc.start_offset(), &block, call.receiver(), lambda);
                 }
                 let mut recv = call.receiver();
                 while let Some(r) = recv {
@@ -370,13 +372,27 @@ impl Cop for LineLength {
                 }
                 let first_is_heredoc = call_args(&call).first().is_some_and(is_heredoc);
                 let range = send_range(&call);
-                if let Some(pos) = breakable_element(cx, range, &elements, Some((call.opening_loc().is_some(), first_is_heredoc)), None, false) {
+                // `parenthesized?`: parser gives `a[x, y]` no `loc.begin`.
+                let parenthesized = call.opening_loc().is_some_and(|l| l.as_slice() == b"(");
+                if let Some(pos) = breakable_element(cx, range, &elements, Some((parenthesized, first_is_heredoc)), None, false) {
+                    record_node_break(cx, pos);
+                }
+            }
+            kind::RESCUE_NODE => {
+                // Parser wraps `rescue A, B` in an unbracketed `array`, which on_array checks.
+                // ponytail: that array is not a parser ancestor of calls inside the list.
+                let elements: Vec<Element> = helpers::resbody::exceptions(node).iter().map(element).collect();
+                if !breakable_collection(&elements, true) {
+                    return;
+                }
+                let range = (elements[0].start, elements.last().unwrap().end);
+                if let Some(pos) = breakable_element(cx, range, &elements, None, None, true) {
                     record_node_break(cx, pos);
                 }
             }
             kind::LAMBDA_NODE => {
                 let loc = node.location();
-                check_block(cx, loc.start_offset(), loc.end_offset(), node, None, true);
+                check_block(cx, loc.start_offset(), node, None, true);
             }
             kind::DEF_NODE => {
                 let def = node.as_def_node().unwrap();

@@ -51,6 +51,51 @@ pub fn inspect(
     FileReport { offenses, text }
 }
 
+/// Inspect a file's bytes as read. A source that must be UTF-8 (`source::must_be_utf8`) but is not
+/// gets only RuboCop's Lint/Syntax `Invalid byte sequence in utf-8.`; other non-UTF-8 sources are
+/// inspected lossily.
+pub fn inspect_bytes(
+    path: &Path,
+    display: &str,
+    bytes: Vec<u8>,
+    cfg: &Resolved,
+    selected: &dyn Fn(&str) -> bool,
+) -> FileReport {
+    match String::from_utf8(bytes) {
+        Ok(text) => inspect(path, display, text, cfg, selected),
+        Err(e) => {
+            let text = String::from_utf8_lossy(e.as_bytes()).into_owned();
+            if !crate::source::must_be_utf8(&text) {
+                return inspect(path, display, text, cfg, selected);
+            }
+            // Lint/Syntax#add_offense_from_error: a global offense, beautified message, no version note.
+            let offense = Offense {
+                start: 0,
+                end: 0,
+                cop: "Lint/Syntax",
+                message: "Invalid byte sequence in utf-8.".into(),
+                severity: Severity::Fatal,
+                correctable: false,
+                global: true,
+                corrected: false,
+                source: None,
+            };
+            FileReport { offenses: vec![offense], text }
+        }
+    }
+}
+
+/// How Ruby words a failed `File.read`/`File.open` of `path` (RuboCop raises its own error for a
+/// missing file).
+pub fn io_error(e: &std::io::Error, path: &Path) -> String {
+    if e.kind() == std::io::ErrorKind::NotFound {
+        return format!("Error: No such file or directory: {}", path.display());
+    }
+    let msg = e.to_string();
+    let msg = msg.split(" (os error").next().unwrap_or(&msg);
+    format!("{msg} @ rb_sysopen - {}", path.display())
+}
+
 /// One autocorrect iteration (see `crate::autocorrect::correct`): the offenses and, unless nothing
 /// was corrected, the collated corrector. Like Team#investigate_with_corrector, offenses of cops
 /// that do not autocorrect are only reported when no correction was made. Also returns the
@@ -514,7 +559,8 @@ const TOLERATED_ERRORS: &[&str] = &["invalid_yield"];
 
 /// Prism errors the parser gem accepts for the target. Up to Ruby 2.5, `begin..else..end` without
 /// `rescue` is only a `useless_else` warning (reported by Lint/UselessElseWithoutRescue); before
-/// 2.7 `def m(x = x)` is only a warning (Lint/CircularArgumentReference).
+/// 2.7 `def m(x = x)` is only a warning (Lint/CircularArgumentReference); before 3.0 `_1 = x` is
+/// accepted (Builders::Default#check_reserved_for_numparam; Lint/NumberedParameterAssignment).
 /// The parser gem also ends a `<<''` heredoc (empty delimiter) at the end of the file, where Prism
 /// finds it unterminated.
 fn tolerated(e: &ruby_prism::Diagnostic, parser_gem: bool, target_ruby: f64, text: &str) -> bool {
@@ -522,6 +568,7 @@ fn tolerated(e: &ruby_prism::Diagnostic, parser_gem: bool, target_ruby: f64, tex
     (parser_gem && TOLERATED_ERRORS.contains(&kind))
         || (kind == "begin_lonely_else" && target_ruby <= 2.5)
         || (kind == "parameter_circular" && target_ruby < 2.7)
+        || (kind == "parameter_numbered_reserved" && target_ruby < 3.0)
         || (parser_gem && e.message().starts_with("unterminated heredoc; can't find string \"\"") && {
             // No blank line (which ends the parser gem's heredoc) before the end of the file.
             let body = text[e.location().end_offset()..].split_once('\n').map_or("", |(_, b)| b);

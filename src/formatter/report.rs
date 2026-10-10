@@ -260,11 +260,12 @@ fn xml(s: &str) -> String {
     out
 }
 
-/// The cops RuboCop's registry knows that rbcop can report: its own plus Lint/Syntax.
+/// The cops RuboCop's registry knows that rbcop can report (its own plus Lint/Syntax), in registry
+/// (load) order as Registry#enabled lists them.
 fn known_cops() -> Vec<&'static str> {
     let mut v: Vec<&'static str> = crate::cops::ALL.iter().map(|r| r.name).collect();
     v.push("Lint/Syntax");
-    v.sort_unstable();
+    v.sort_by_key(|c| crate::autocorrect::registry_index(c));
     v
 }
 

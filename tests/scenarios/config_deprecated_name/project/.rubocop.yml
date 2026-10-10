@@ -1,0 +1,4 @@
+Naming/PredicateName:
+  Enabled: false
+Style/PredicateName:
+  ForbiddenPrefixes: [is_]

@@ -11,6 +11,38 @@ pub fn is_glob(s: &str) -> bool {
     s.contains(['*', '{', '[', '?'])
 }
 
+/// `Dir.glob(pattern)` for files, sorted: relative patterns are matched below `cwd` and come back
+/// relative to it.
+// ponytail: walks below the pattern's literal directory prefix and filters with `fnmatch`; does not
+// follow symlinked directories.
+pub fn dir_glob(pattern: &str, cwd: &std::path::Path) -> Vec<String> {
+    let segments: Vec<&str> = pattern.split('/').collect();
+    let literal = segments.iter().take_while(|s| !is_glob(s)).count().min(segments.len() - 1);
+    let prefix = segments[..literal].join("/");
+    let depth = if pattern.contains("**") { usize::MAX } else { segments.len() - literal };
+    let root =
+        if pattern.starts_with('/') { std::path::PathBuf::from(format!("/{prefix}")) } else { cwd.join(&prefix) };
+    let mut out = Vec::new();
+    let mut stack = vec![(root, prefix, 0)];
+    while let Some((dir, shown, level)) = stack.pop() {
+        let Ok(entries) = std::fs::read_dir(&dir) else { continue };
+        for entry in entries.flatten() {
+            let name = entry.file_name().to_string_lossy().into_owned();
+            let rel = if shown.is_empty() && !pattern.starts_with('/') { name } else { format!("{shown}/{name}") };
+            let Ok(kind) = entry.file_type() else { continue };
+            if kind.is_dir() {
+                if level + 1 < depth {
+                    stack.push((entry.path(), rel, level + 1));
+                }
+            } else if entry.path().is_file() && fnmatch(pattern, &rel, false) {
+                out.push(rel);
+            }
+        }
+    }
+    out.sort();
+    out
+}
+
 /// dir.c `fnmatch` with FNM_PATHNAME: segment by segment, `**/` matching any number of segments.
 fn fnmatch_path(p: &[u8], s: &[u8], dotmatch: bool) -> bool {
     let (mut pi, mut si) = (0, 0);

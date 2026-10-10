@@ -1,0 +1,13 @@
+# Corpus files (corpus/relative/path) that scripts/check-cops.sh leaves out on both sides because
+# their differences are documented gaps (docs/known-gaps.md). Keep this list minimal and explain each.
+#
+# Genuine syntax errors under target Ruby 2.7 (chef.gemspec), where src/legacy_syntax.rs
+# approximates the parser gem's error recovery: the "cat walked on the keyboard" fixtures miss the
+# follow-up `unterminated string meets end of file`, and in the Habitat template
+# (`{{#if cfg.x ~}}`, where `#` starts a comment for the parser gem) the first error is reported at
+# the `{{` instead of the next line's string.
+chef/habitat/config/client.rb
+chef/spec/data/cookbooks/borken/recipes/default.rb
+chef/spec/data/cookbooks/ignorken/files/default/not_me.rb
+chef/spec/data/cookbooks/ignorken/recipes/ignoreme.rb
+chef/spec/data/cookbooks/ignorken/templates/ubuntu-12.10/not_me.rb

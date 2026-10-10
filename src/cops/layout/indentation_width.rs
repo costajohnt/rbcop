@@ -203,7 +203,21 @@ fn check_indentation(cx: &mut Cx, base: usize, body: Option<&Body>, style: &str,
     };
     let tabs = using_tabs(cx);
     let begin = range.0 as i64;
-    let ind = if tabs { begin - line_indentation(src, range.0).chars().count() as i64 } else { begin - indentation };
+    // `begin_pos - indentation` counts characters: a negative indentation reaches forward over
+    // the body text, which may be multibyte (or past the line end).
+    let ind = if tabs {
+        begin - line_indentation(src, range.0).chars().count() as i64
+    } else if indentation < 0 {
+        let n = (-indentation) as usize;
+        let rest = &src.text[range.0..];
+        match rest.char_indices().nth(n) {
+            Some((i, _)) => (range.0 + i) as i64,
+            // Past the end of the file, as RuboCop's range does: one byte per missing character.
+            None => (src.text.len() + n - rest.chars().count()) as i64,
+        }
+    } else {
+        begin - indentation
+    };
     let (s, e) = if ind <= begin { (ind, begin) } else { (begin, ind) };
     let name = if style == "normal" { String::new() } else { format!(" {style}") };
     let msg = if tabs {

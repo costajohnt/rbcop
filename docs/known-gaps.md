@@ -32,6 +32,25 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   hex digits took 2.6 s).
 - Lint/UselessTimes leaves the offense uncorrected when the block argument's name is too long for
   the regex size limit (about 100k characters) instead of failing the cop.
+- `-a/-A` writes a corrected file through a temporary file in the same directory renamed over it
+  (`autocorrect::write_source`), so a crash or a full disk never leaves it truncated; RuboCop
+  truncates and writes in place. Mode, group, symlinks (the target is written) and hard links (written
+  in place) are kept, as are files owned by another user or in an unwritable directory (in place);
+  extended attributes and ACLs are not copied to the renamed file. Files are written in the reporting
+  loop, in target order, so an error or `--fail-fast` stops before later files change.
+- Directory walks follow symlinked directories and keep symlinked files, as TargetFinder does, so
+  `-a/-A` corrects files a project links to outside itself, exactly as RuboCop does (checked on a
+  scratch project). A symlinked directory that is already an ancestor of the walked directory
+  (same device and inode) is not entered: RuboCop's realpath prefix test misses two-link cycles
+  (`d1/to2 -> ../d2`, `d2/to1 -> ../d1`) and lists the same files under ever longer paths until the
+  OS returns ELOOP. The walk is iterative.
+- An `inherit_from` cycle is an error (`... inherit_from cycle through ...`, exit 2); RuboCop recurses
+  until SystemStackError.
+- A panic outside a cop (cop panics are reported as cop errors) ends the run at that file with
+  `rbcop: internal error while inspecting <file>` (exit 2).
+- Error wording for I/O failures follows Ruby's (`Permission denied @ rb_sysopen - <file>`,
+  `... @ rb_sys_fail_on_write - <out file>`) but without the backtrace; a failed `-o` directory or
+  file creation is worded `<path>: <reason>`.
 
 ## Open gaps
 
@@ -54,9 +73,24 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   - Below 2.3 nothing lexer-level is checked (`&.`, `<<~`, `"a": 1`, `1r`, required keyword
     arguments are accepted); no oracle below 2.5 was recorded.
 - `--stdin` together with `-a/-A` (RuboCop prints the corrected source) is refused.
+  - A `{` that opens a hash whose contents are invalid (`x == { |i| i }`, `{{#if x ~}}` where `#`
+    starts a comment) gets its first error at the `{` instead of the token after it.
+  - The chef corpus (target 2.7) has five syntax-error files with such differences (a missed
+    follow-up `unterminated string meets end of file`; the `{{` template above):
+    `scripts/check-skip.txt` leaves them out of check-cops.sh, and they and two RuboCop -A outputs
+    with the same differences are in `scripts/autocorrect-skip.txt`.
 - `--disable-uncorrectable`, `--auto-gen-config`, `--server`, `--lsp`, `--cache` behaviour (accepted
   and ignored where harmless), custom formatter classes, `require:` of local Ruby files (custom cops).
 - ERB in `.rubocop.yml` is not evaluated; remote `inherit_from` URLs are skipped with a warning.
+- A duplicated YAML key: the last value wins in the first key's place, as in Psych, but the
+  `... is concealed by line N` warning is not printed. Wrong value types (`Enabled: "true"`) and
+  invalid `Severity` values are not reported (see ConfigValidator below).
+- Sources whose magic comment names another encoding (`# encoding: iso-8859-1`) are inspected with
+  invalid UTF-8 bytes replaced; RuboCop transcodes them to UTF-8. They are never autocorrected.
+  The same holds for binary (`# encoding: BINARY`) sources with such bytes, where each replacement
+  also counts as 3 bytes in later columns of its line (RuboCop: 1 per byte), e.g. the end of
+  Lint/PercentSymbolArray's range on `%i[\xC0 :foo]` (`scripts/cold-skip.txt`).
+  Sources that must be UTF-8 and are not get RuboCop's `Lint/Syntax: Invalid byte sequence in utf-8.`
 - Deliberate: Style/WordArray correcting a `%W[...]` whose value is invalid UTF-8 (`%W[\xff]`)
   writes the escaped form (`["\xFF"]`); RuboCop writes the raw bytes and then crashes re-parsing
   its own output. The offense message matches RuboCop.
@@ -85,7 +119,11 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   matches RuboCop with the default config.
 - Metrics/CollectionLiteralLength does not count `rescue A, B` exception lists (parser `array`).
   Lint/SymbolConversion does not treat a backslash-newline inside `:"..."` as a continuation. Naming/PredicatePrefix `validate_config` is not ported.
-- LineLength `SplitStrings: true` break points (string splitting) are not modelled.
+- LineLength `SplitStrings: true` break points (string splitting) are not modelled. The unbracketed
+  `rescue A, B` array is checked as a breakable collection, but is not an ancestor of calls inside
+  the exception list (`contained_by_breakable_collection_on_same_line?`).
+- `helpers::node_equality` compares tokens: plain `'a'` and `"a"` are equal, but `foo()` vs `foo` or
+  escaped vs unescaped spellings of one string (`"\x41"` vs `"A"`) are not, unlike parser nodes.
 - Cleanup pending: Style/SoleNestedConditional has an inline `correction_parses?` that parses with
   Prism's default (latest) grammar; `reparsed_equivalence::correction_parses` parses at the target
   version like RuboCop, so switching is a behaviour change to gate on its own, not a pure dedupe.
@@ -124,8 +162,34 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - Lint/RedundantCopDisableDirective judges directives against rbcop's own offenses, so a directive
   for a cop rbcop has not ported yet (e.g. `# rubocop:disable Style/Send`) is reported as
   redundant.
-- Department-level `NewCops` (a department's `NewCops: enable` or a version) is not read; only
-  `AllCops: NewCops: enable` enables pending cops. The pending-cops notice RuboCop prints is not ported.
-- JUnit lists testcases in sorted cop order; RuboCop uses its registry (load) order. The `-a` summary
-  says "N offenses autocorrectable" where RuboCop says "N more offenses can be corrected with
-  `rubocop -A`".
+- Config validation (`src/config/validator.rs`: ConfigValidator, ConfigObsoletion,
+  Config#deprecation_check, check_target_ruby; scenarios `tests/scenarios/config_*`) matches
+  RuboCop's stderr and exit status, with these differences:
+  - Cops RuboCop knows from its registry rather than from default configs: a plugin's cops count
+    as known when every part of the name is a class or module defined in the plugin gem's `lib/`
+    (cops registered without a `config/default.yml` entry, e.g. rubocop-discourse's). A local
+    `require:` file, a required gem without `config/default.yml`, or a plugin gem rbcop cannot
+    find (RuboCop fails to load those) turns unrecognized-cop errors off for the run. Did-you-mean
+    suggestions use the default config's cop names, so a plugin cop missing from its
+    `default.yml` is never suggested.
+  - Suggestions with equal Jaro-Winkler scores can come out in a different order: Ruby's
+    `sort_by` is not stable (`Minitest/AssertEqualz` lists `AssertTruthy` before `AssertOutput`;
+    RuboCop the other way round).
+  - A file loaded again (an inherited or parent config) repeats the warnings of its first load;
+    RuboCop validates it again, with the plugins loaded since.
+  - Configs are resolved before inspection starts, so a subdirectory config's warnings come before
+    the `--only`/`--except` name warnings, where RuboCop prints them when it reaches that
+    directory's first file. An invalid subdirectory config still stops the run at its first file,
+    after the files before it are reported.
+  - RuboCop crashes with a backtrace on a non-Array `Exclude` (NoMethodError in
+    `make_excludes_absolute`); rbcop prints the same first line and exits 2. A non-Array
+    `Include` crashes RuboCop later (per cop or in `FilePatterns`); rbcop treats it as one pattern.
+    Other values RuboCop crashes on (a non-String `FailLevel`, `TargetRubyVersion: true`, a
+    non-Hash section under an unknown name) are not reproduced.
+  - The `extension supports plugin, specify plugins:` warning for `require:` of a plugin gem and
+    RuboCop's backtrace for a bogus `-f` formatter are not printed.
+  - `-c FILE`: the `Using ... configuration` warning for a deprecated cop name shows the expanded
+    path; RuboCop shows the argument as given.
+- YAML: a plain `:name` value loads as a Symbol (`Value::Sym`) and a quoted `':name'` as a String,
+  so `--show-cops` dumps them apart; mapping keys do not keep the distinction (a quoted `':q':` key
+  is dumped as the symbol `:q:`).

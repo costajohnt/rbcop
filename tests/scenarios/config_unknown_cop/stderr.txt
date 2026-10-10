@@ -1,0 +1,6 @@
+Error: unrecognized cop or department Style/StringLiteralz found in .rubocop.yml
+Did you mean `Style/StringLiterals`?
+unrecognized cop or department Layoutt found in .rubocop.yml
+Did you mean `Layout`?
+unrecognized cop or department Zzz/Qqq found in .rubocop.yml
+unrecognized cop or department RSpec found in .rubocop.yml

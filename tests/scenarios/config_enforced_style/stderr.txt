@@ -1,0 +1,2 @@
+Error: invalid EnforcedStyle 'singel' for Style/StringLiterals found in .rubocop.yml
+Valid choices are: single_quotes, double_quotes

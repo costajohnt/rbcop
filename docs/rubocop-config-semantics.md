@@ -79,6 +79,8 @@ Config.new(merge(default, config, inherit_mode: config['inherit_mode'] || {}, un
 - `ruby_file?`: extension from cwd config Include patterns that start with `**/*.`; filename from other Include patterns (`**/` stripped); or extensionless non-empty file whose first line matches `/#!.*(ruby|rake|jruby)/` (RubyInterpreters from the file's config).
 - Explicit file args are **not** Exclude-filtered unless `--force-exclusion` (cwd config, or the file's config with `--ignore-parent-exclusion`).
 - Dir pruning by `.../**/*` Excludes is only an optimisation.
+- Symlinked files are kept; symlinked directories are followed unless their realpath matches a
+  `.../**/*` Exclude or the walked directory's realpath starts with theirs (a loop).
 
 ## 7. Does a cop run on a file
 

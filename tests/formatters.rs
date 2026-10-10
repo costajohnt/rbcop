@@ -33,7 +33,17 @@ fn formatters_match_rubocop() {
             Some(f) => Stdio::from(std::fs::File::open(root.join(f)).unwrap()),
             None => Stdio::null(),
         };
-        let cwd = root.join(cwd);
+        let mut cwd = root.join(cwd);
+        // fix-* cases autocorrect, so they run on a fresh copy of their directory.
+        if name.starts_with("fix-") {
+            let work = std::env::temp_dir().join(format!("rbcop-formatters-{name}-{}", std::process::id()));
+            let _ = std::fs::remove_dir_all(&work);
+            std::fs::create_dir_all(&work).unwrap();
+            for e in std::fs::read_dir(&cwd).unwrap().flatten() {
+                std::fs::copy(e.path(), work.join(e.file_name())).unwrap();
+            }
+            cwd = work.canonicalize().unwrap();
+        }
         // `sh -c` so the arguments split and quote exactly as in the recording script.
         let out = Command::new("sh")
             .arg("-c")
@@ -48,6 +58,9 @@ fn formatters_match_rubocop() {
             .output()
             .unwrap();
         count += 1;
+        if name.starts_with("fix-") {
+            let _ = std::fs::remove_dir_all(&cwd);
+        }
         let expected = std::fs::read_to_string(dir.join(format!("expected/{name}.txt"))).unwrap();
         let status: i32 =
             std::fs::read_to_string(dir.join(format!("expected/{name}.status"))).unwrap().trim().parse().unwrap();

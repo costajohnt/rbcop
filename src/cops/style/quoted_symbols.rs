@@ -34,10 +34,16 @@ fn needs_double(src: &str) -> bool {
     })
 }
 
-/// Parser makes a symbol literal spanning lines a `dsym` (same split rule as strings).
-fn parser_dsym(sym: &ruby_prism::SymbolNode) -> bool {
-    let Some(v) = sym.value_loc() else { return false };
-    let content = text(&v);
+/// Parser makes a symbol literal spanning lines a `dsym` (same split rule as strings), and an
+/// empty quoted one (`:""`, `%s()`) an empty `dsym`; an empty quoted label (`"": 1`) is a `dsym`
+/// for the parser gem (target below 3.3) but a `sym` for the Prism translation.
+fn parser_dsym(sym: &ruby_prism::SymbolNode, target_ruby: f64) -> bool {
+    let quoted = sym.opening_loc().is_some_and(|o| o.as_slice() != b":");
+    let content = sym.value_loc().map(|v| text(&v)).unwrap_or("");
+    if quoted && content.is_empty() {
+        let label = sym.closing_loc().is_some_and(|c| c.as_slice().ends_with(b":"));
+        return !label || target_ruby < 3.3;
+    }
     let body = content.strip_suffix('\n').unwrap_or(content).as_bytes();
     let opening = sym.opening_loc().map(|o| text(&o)).unwrap_or("");
     let interpolating = !(opening.contains('\'') || opening.starts_with("%s"));
@@ -62,10 +68,7 @@ impl Cop for QuotedSymbols {
         let label = sym.closing_loc().is_some_and(|c| c.as_slice().len() == 2 && c.as_slice().ends_with(b":"));
         let (start, end) = (loc.start_offset(), loc.end_offset() - usize::from(label));
         let src = &cx.src.text[start..end];
-        // An empty quoted symbol is a parser `dsym` (no on_sym): `:""` always, and a `"":` label
-        // too under the parser gem (target Ruby below 3.3; Prism's translation makes it a `sym`).
-        let empty = sym.value_loc().is_none_or(|v| v.as_slice().is_empty());
-        if !quoted(src) || parser_dsym(&sym) || (empty && (!label || cx.config.target_ruby < 3.3)) {
+        if !quoted(src) || parser_dsym(&sym, cx.config.target_ruby) {
             return;
         }
         let mut style = cx.cfg.str("EnforcedStyle").unwrap_or("same_as_string_literals").to_string();
@@ -85,7 +88,7 @@ impl Cop for QuotedSymbols {
             Some(pair) => {
                 let key = pair.key();
                 let is_key = key.location().start_offset() == start
-                    || key.as_symbol_node().is_some_and(|k| !parser_dsym(&k) && k.unescaped() == sym.unescaped());
+                    || key.as_symbol_node().is_some_and(|k| !parser_dsym(&k, cx.config.target_ruby) && k.unescaped() == sym.unescaped());
                 (is_key, pair.operator_loc().is_none())
             }
             None => (false, false),

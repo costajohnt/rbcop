@@ -1,12 +1,12 @@
 #!/bin/sh
 # Gate for porting cops: compare rbcop with recorded RuboCop oracles (scripts/oracle.sh) for the given cops.
 # usage: scripts/check-cops.sh Cop1/Name[,Cop2/Name...] [corpus...]
-#   corpora default to specs rails discourse; each needs $RBCOP_CORPUS/<name> and $RBCOP_ORACLE/<name>.txt
+#   corpora default to specs rails discourse rubocop-src jekyll chef fastlane brew mastodon; each needs $RBCOP_CORPUS/<name> and $RBCOP_ORACLE/<name>.txt
 # Exit 0 only if every corpus matches exactly. Diffs: $TMPDIR/rbcop-check/<pid>/<corpus>.diff (printed on failure)
 set -eu
 cops=$1
 shift
-corpora=${*:-specs rails discourse}
+corpora=${*:-specs rails discourse rubocop-src jekyll chef fastlane brew mastodon}
 root=$(cd "$(dirname "$0")/.." && pwd)
 bin=$root/target/release/rbcop
 # A stale binary reports phantom diffs (e.g. right after a merge).
@@ -23,20 +23,23 @@ pattern=": [CWEFRI]: (\[Correctable\] )?($(echo "$cops" | tr , '|')): "
 only="--only $cops"
 case ",$cops," in *,Lint/RedundantCopDisableDirective,*) only= ;; esac
 norm() { grep -E "$pattern" | LC_ALL=C sort; }
+# Files whose differences are documented gaps (scripts/check-skip.txt) are left out on both sides.
+unskipped() { if [ -s "$1" ]; then grep -vF -f "$1"; else cat; fi; }
 
 status=0
 for c in $corpora; do
   # Where a RuboCop cop crashed it reported nothing, so drop rbcop's offenses for that (cop, file).
   crashes="$oracle_root/$c.txt.crashes"
   [ -f "$crashes" ] || crashes=/dev/null
+  sed -n "s|^$c/\(.*\)|$corpus_root/$c/\1:|p" "$root/scripts/check-skip.txt" > "$out/$c.skip"
   # rbcop-oracle = emacs plus range end (path:line:col:last_line:last_col), like scripts/oracle_formatter.rb.
   (cd "$corpus_root/$c" && "$bin" --config "$root/config/all-cops.yml" --format rbcop-oracle $only . 2>"$out/$c.err") \
     | awk -F'\t' 'FILENAME == ARGV[1] { skip[$1 "\t" $2] = 1; next }
         { path = $0; sub(/:[0-9]+:[0-9]+:[0-9]+:[0-9]+: .*/, "", path)
           cop = $0; sub(/^.*: [CWEFRI]: (\[Correctable\] )?/, "", cop); sub(/: .*/, "", cop)
           if (!((cop "\t" path) in skip)) print }' "$crashes" - \
-    | norm > "$out/$c.rbcop" || true
-  norm < "$oracle_root/$c.txt" > "$out/$c.rubocop" || true
+    | unskipped "$out/$c.skip" | norm > "$out/$c.rbcop" || true
+  unskipped "$out/$c.skip" < "$oracle_root/$c.txt" | norm > "$out/$c.rubocop" || true
   LC_ALL=C comm -23 "$out/$c.rubocop" "$out/$c.rbcop" | sed 's/^/< /' > "$out/$c.diff"
   LC_ALL=C comm -13 "$out/$c.rubocop" "$out/$c.rbcop" | sed 's/^/> /' >> "$out/$c.diff"
   n=$(wc -l < "$out/$c.diff" | tr -d ' ')

@@ -1,0 +1,1 @@
+Error: Property Enabled of Style/StringLiterals cop is supposed to be a boolean and yes is not.

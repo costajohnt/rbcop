@@ -2,6 +2,7 @@
 
 pub mod glob;
 pub mod target_ruby;
+pub mod validator;
 pub mod value;
 
 use crate::cop::Severity;
@@ -29,6 +30,10 @@ pub struct Options {
     pub ignore_parent_exclusion: bool,
     /// `--preview` / `--no-preview` (ConfigLoader.preview); wins over `AllCops: Preview`.
     pub preview: Option<bool>,
+    /// `--ignore-unrecognized-cops`: unknown cop names in config are a warning, not an error.
+    pub ignore_unrecognized_cops: bool,
+    /// Rainbow.enabled while configs load (config validation warnings are painted).
+    pub color: bool,
 }
 
 /// One include/exclude entry (FilePatterns / PathUtil.match_path?).
@@ -141,23 +146,36 @@ pub struct Resolved {
     /// TargetRuby#version (e.g. 3.4).
     pub target_ruby: f64,
     cops: HashMap<String, CopConfig>,
+    /// (cop, warning) for configuration under a cop's deprecated name, which Config#for_cop warns
+    /// about the first time the cop's config is asked for.
+    pub deprecated_warnings: Vec<(&'static str, String)>,
+    /// Cop-like keys no registered cop has (see Store::unregistered).
+    unregistered: Vec<String>,
 }
 
 impl Resolved {
-    fn new(
-        hash: Map,
-        loaded_path: Option<&Path>,
-        opts: &Options,
-        cop_names: &[&'static str],
-        project_root: Option<&Path>,
-    ) -> Self {
+    fn new(hash: Map, loaded_path: Option<&Path>, opts: &Options, cop_names: &[&'static str]) -> Self {
         let base_dir = base_dir_for(loaded_path);
         let all_cops = hash.map("AllCops").cloned().unwrap_or_default();
-        let target_ruby = target_ruby::detect(&all_cops, &base_dir, project_root);
-        let mut r = Resolved { hash, base_dir, target_ruby, cops: HashMap::new() };
+        let target_ruby = target_ruby::detect(&all_cops, &base_dir);
+        let mut r = Resolved {
+            hash,
+            base_dir,
+            target_ruby,
+            cops: HashMap::new(),
+            deprecated_warnings: Vec::new(),
+            unregistered: Vec::new(),
+        };
         for &name in cop_names {
             let cfg = r.build_cop(name, opts);
             r.cops.insert(name.to_string(), cfg);
+            for old in validator::deprecated_names_for(name) {
+                if r.hash.map(&old).is_some_and(|m| !m.0.is_empty()) {
+                    let path = loaded_path.map(|p| p.display().to_string()).unwrap_or_default();
+                    let msg = format!("Warning: Using `{old}` configuration in {path} for `{name}`.\n");
+                    r.deprecated_warnings.push((name, msg));
+                }
+            }
         }
         r
     }
@@ -198,6 +216,67 @@ impl Resolved {
         }
     }
 
+    /// Config#new_cops_setting_for: the department's `NewCops`, else `AllCops: NewCops`, as `to_s`.
+    fn new_cops_setting(&self, name: &str) -> String {
+        let set = |v: Option<&Value>| v.filter(|v| !matches!(v, Value::Null | Value::Bool(false))).cloned();
+        let dept = name.rsplit_once('/').and_then(|(d, _)| self.hash.map(d));
+        set(dept.and_then(|d| d.get("NewCops")))
+            .or_else(|| set(self.hash.map("AllCops").and_then(|a| a.get("NewCops"))))
+            .and_then(|v| v.as_string())
+            .unwrap_or_default()
+    }
+
+    /// Config#enabled_new_cop? (`covered` false) and #new_cops_covered? (`covered` true, where
+    /// `disable` also settles the cop): `enable`, `disable`, or a version covering VersionAdded.
+    fn new_cops(&self, name: &str, covered: bool) -> bool {
+        match self.new_cops_setting(name).as_str() {
+            "enable" => true,
+            "disable" => covered,
+            "" | "pending" => false,
+            pinned => {
+                let added = self.hash.map(name).and_then(|m| m.get("VersionAdded")).and_then(Value::as_string);
+                match (added.as_deref().and_then(gem_version), gem_version(pinned)) {
+                    (Some(added), Some(pinned)) => added <= pinned,
+                    _ => false,
+                }
+            }
+        }
+    }
+
+    /// Config#enabled_new_cop?
+    pub fn enabled_new_cop(&self, name: &str) -> bool {
+        self.new_cops(name, false)
+    }
+
+    /// Config#pending_cops (only registered cops, as PendingCopsReporter keeps them): every
+    /// `Enabled: pending` cop no `NewCops` setting settles, outside a disabled department, in config
+    /// order, with its VersionAdded.
+    // ponytail: "registered" is "a key with a department"; RuboCop rejects unknown cop names in
+    // config before this runs, which rbcop does not validate.
+    pub fn pending_cops(&self) -> Vec<(&str, String)> {
+        let mut out = Vec::new();
+        for (name, v) in &self.hash.0 {
+            let Some((dept, _)) = name.rsplit_once('/') else { continue };
+            // PendingCopsReporter#pending_cops_only_qualified
+            if self.unregistered.contains(name) {
+                continue;
+            }
+            if self.hash.map(dept).is_some_and(|d| d.get("Enabled") == Some(&Value::Bool(false))) {
+                continue;
+            }
+            let Value::Map(meta) = v else { continue };
+            if meta.str("Enabled") != Some("pending") || self.new_cops(name, true) {
+                continue;
+            }
+            let version = match meta.get("VersionAdded") {
+                None | Some(Value::Null | Value::Bool(false)) => "N/A".to_string(),
+                Some(v) => v.as_string().unwrap_or_default(),
+            };
+            out.push((name.as_str(), version));
+        }
+        out
+    }
+
     /// Config#preview?(options).
     pub fn preview(&self, opts: &Options) -> bool {
         opts.preview.unwrap_or_else(|| self.all_cops().get("Preview") == Some(&Value::Bool(true)))
@@ -205,16 +284,25 @@ impl Resolved {
 
     /// Config#enable_cop? + Registry#enabled?, then Config#for_badge (§4).
     fn build_cop(&self, name: &str, opts: &Options) -> CopConfig {
-        let cop = self.hash.map(name).cloned().unwrap_or_default();
+        let mut cop = self.hash.map(name).cloned().unwrap_or_default();
         let department = name.rsplit_once('/').map(|(d, _)| d);
         let dept_map = department.and_then(|d| self.hash.map(d)).cloned().unwrap_or_default();
-        let effective = self.enable_cop(name);
-        let new_cops = self.all_cops().str("NewCops") == Some("enable");
+        let mut effective = self.enable_cop(name);
+        // Config#for_cop: configuration under a deprecated name (a rename that only warns) is
+        // merged over the cop's, Enabled included.
+        for old in validator::deprecated_names_for(name) {
+            for (k, v) in self.hash.map(&old).cloned().unwrap_or_default().0 {
+                if k == "Enabled" {
+                    effective = v.clone();
+                }
+                cop.insert(k, v);
+            }
+        }
         let enabled = opts.only.iter().any(|o| o == name)
             || effective == Value::Bool(true)
             || (!opts.disable_pending_cops
                 && effective == Value::Str("pending".into())
-                && (opts.enable_pending_cops || new_cops))
+                && (opts.enable_pending_cops || self.new_cops(name, false)))
             || (effective == Value::Str("preview".into()) && self.preview(opts));
         let mut params = dept_map;
         for (k, v) in cop.0 {
@@ -306,10 +394,20 @@ pub struct Store {
     cop_names: Vec<&'static str>,
     default: Map,
     known_cops: Vec<String>,
-    files: HashMap<PathBuf, Map>,
+    /// Each loaded file with what loading it wrote to stderr: ConfigLoader.load_file is not
+    /// cached, so every later load of the file repeats its validation warnings.
+    files: HashMap<PathBuf, (Map, validator::Output)>,
+    /// Everything config loading has written to stderr so far.
+    emitted: validator::Output,
     gem_dirs: HashMap<String, PathBuf>,
     loaded_plugins: Vec<String>,
+    /// A `require:` rbcop cannot load (see validator::Validator::custom_cops).
+    custom_cops: bool,
+    /// Class and module names in loaded plugins' lib/ (see ruby_constants).
+    plugin_constants: std::collections::HashSet<String>,
     dir_to_file: HashMap<PathBuf, Option<PathBuf>>,
+    /// inherit_from files being loaded (outermost first), to detect cycles.
+    loading: Vec<PathBuf>,
     resolved: HashMap<Option<PathBuf>, Arc<Resolved>>,
     forced: Option<Arc<Resolved>>,
     pub warnings: Vec<String>,
@@ -332,9 +430,13 @@ impl Store {
             default,
             known_cops,
             files: HashMap::new(),
+            emitted: Vec::new(),
             gem_dirs: HashMap::new(),
             loaded_plugins: Vec::new(),
+            custom_cops: false,
+            plugin_constants: Default::default(),
             dir_to_file: HashMap::new(),
+            loading: Vec::new(),
             resolved: HashMap::new(),
             forced: None,
             warnings: Vec::new(),
@@ -345,26 +447,43 @@ impl Store {
                 None,
                 &store.opts,
                 &store.cop_names,
-                store.project_root.as_deref(),
             );
             store.forced = Some(Arc::new(r));
         } else if let Some(path) = store.opts.config_file.clone() {
             let path = expand_path(&path, &store.cwd);
-            let user = store.load_file(&path)?;
+            let user = store.load_file(&path, true)?;
             let merged = store.merge_with_default(user);
-            store.forced = Some(Arc::new(Resolved::new(
-                merged,
-                Some(&path),
-                &store.opts,
-                &store.cop_names,
-                store.project_root.as_deref(),
-            )));
+            let mut r = Resolved::new(merged, Some(&path), &store.opts, &store.cop_names);
+            r.unregistered = store.unregistered(&r.hash);
+            store.forced = Some(Arc::new(r));
         }
         Ok(store)
     }
 
+    /// Keys of a merged config that name no registered cop (kept when unrecognized cops are
+    /// ignored); Registry.qualified_cop? is false for them.
+    fn unregistered(&self, hash: &Map) -> Vec<String> {
+        hash.keys()
+            .filter(|k| {
+                k.contains('/') && !self.default.contains(k) && !k.split('/').all(|p| self.plugin_constants.contains(p))
+            })
+            .map(String::from)
+            .collect()
+    }
+
     pub fn cwd(&self) -> &Path {
         &self.cwd
+    }
+
+    /// The CLI applies `--color`/`--no-color` once the pwd config has loaded.
+    pub fn set_color(&mut self, on: bool) {
+        self.opts.color = on;
+    }
+
+    /// Config-loading output goes to stderr as it happens, as RuboCop's `warn` does.
+    fn emit(&mut self, out: &[(bool, String)]) {
+        eprint!("{}", validator::render(out, self.opts.color));
+        self.emitted.extend_from_slice(out);
     }
 
     /// ConfigStore#for_dir.
@@ -387,15 +506,17 @@ impl Store {
             // ConfigLoader.apply_default_overrides: only the command line can turn preview on here.
             None => apply_preview_defaults(&self.default, self.opts.preview == Some(true)),
             Some(path) => {
-                let mut user = self.load_file(path)?;
+                let mut user = self.load_file(path, true)?;
+                validator::check_target_ruby(&user, path, &self.cwd)?;
                 if !self.opts.ignore_parent_exclusion {
                     self.add_excludes_from_files(&mut user, path)?;
                 }
                 self.merge_with_default(user)
             }
         };
-        let r =
-            Arc::new(Resolved::new(hash, file.as_deref(), &self.opts, &self.cop_names, self.project_root.as_deref()));
+        let mut r = Resolved::new(hash, file.as_deref(), &self.opts, &self.cop_names);
+        r.unregistered = self.unregistered(&r.hash);
+        let r = Arc::new(r);
         self.resolved.insert(file, r.clone());
         Ok(r)
     }
@@ -429,11 +550,15 @@ impl Store {
         fallbacks.into_iter().find(|p| p.is_file())
     }
 
-    /// ConfigLoader.load_file (§2).
-    fn load_file(&mut self, path: &Path) -> Result<Map, String> {
-        if let Some(m) = self.files.get(path) {
-            return Ok(m.clone());
+    /// ConfigLoader.load_file (§2); `check` runs Config#check (validation).
+    // ponytail: a cached load replays the first load's warnings; a later load in RuboCop sees the
+    // plugins loaded since, which can only make fewer cop names unrecognized.
+    fn load_file(&mut self, path: &Path, check: bool) -> Result<Map, String> {
+        if let Some((m, out)) = self.files.get(path).cloned() {
+            self.emit(&out);
+            return Ok(m);
         }
+        let start = self.emitted.len();
         let text = std::fs::read_to_string(path).map_err(|e| format!("{}: {e}", path.display()))?;
         if text.contains("<%") {
             self.warnings.push(format!("{}: ERB in config is not supported; parsed as plain YAML", path.display()));
@@ -454,6 +579,8 @@ impl Store {
                 }
             }
         }
+        // Local files are custom cops rbcop cannot load.
+        self.custom_cops |= plugins.iter().any(|n| n.starts_with('.') || n.starts_with('/'));
         self.integrate_plugins(plugins)?;
         if let Some(Value::Map(gems)) = hash.remove("inherit_gem") {
             let mut inherit = seq(hash.remove("inherit_from"));
@@ -470,16 +597,54 @@ impl Store {
         self.resolve_inheritance(path, &mut hash)?;
         hash.remove("inherit_from");
         self.add_missing_namespaces(&mut hash);
+        if check {
+            let mut out = Vec::new();
+            let checked = validator::Validator {
+                default: &self.default,
+                pwd: &self.cwd,
+                loaded_plugins: &self.loaded_plugins,
+                ignore_unrecognized_cops: self.opts.ignore_unrecognized_cops,
+                custom_cops: self.custom_cops,
+                plugin_constants: &self.plugin_constants,
+                color: self.opts.color,
+            }
+            .check(&mut hash, path, &mut out);
+            self.emit(&out);
+            checked?;
+            // Config#make_excludes_absolute calls `map!` on every Exclude: RuboCop dies with a
+            // NoMethodError (and a backtrace rbcop does not print) on anything but an Array.
+            for (_, section) in &hash.0 {
+                let Some(exclude) = section.as_map().and_then(|m| m.get("Exclude")) else { continue };
+                let receiver = match exclude {
+                    Value::Seq(_) | Value::Null => continue,
+                    Value::Bool(b) => b.to_string(),
+                    Value::Str(_) => "an instance of String".into(),
+                    Value::Sym(_) => "an instance of Symbol".into(),
+                    Value::Int(_) => "an instance of Integer".into(),
+                    Value::Float(_) => "an instance of Float".into(),
+                    Value::Regex(_) => "an instance of Regexp".into(),
+                    Value::Map(_) => "an instance of Hash".into(),
+                };
+                return Err(format!("undefined method 'map!' for {receiver}"));
+            }
+        }
         make_excludes_absolute(&mut hash, &base_dir_for(Some(path)));
-        self.files.insert(path.to_path_buf(), hash.clone());
+        let out = self.emitted[start..].to_vec();
+        self.files.insert(path.to_path_buf(), (hash.clone(), out));
         Ok(hash)
     }
 
     fn resolve_inheritance(&mut self, path: &Path, hash: &mut Map) -> Result<(), String> {
         let dir = path.parent().unwrap_or(Path::new("/"));
         let mut bases = Vec::new();
-        for entry in seq(hash.get("inherit_from").cloned()) {
-            let Some(entry) = entry.as_string() else { continue };
+        // ConfigLoaderResolver#base_configs: a glob entry is expanded with Dir.glob (from the
+        // working directory) and each match is then taken relative to this file's directory.
+        let entries: Vec<String> = seq(hash.get("inherit_from").cloned())
+            .iter()
+            .filter_map(Value::as_string)
+            .flat_map(|e| if glob::is_glob(&e) { glob::dir_glob(&e, &self.cwd) } else { vec![e] })
+            .collect();
+        for entry in entries {
             if entry.starts_with("http://") || entry.starts_with("https://") {
                 self.warnings.push(format!("{}: remote inherit_from {entry} is not supported", path.display()));
                 continue;
@@ -488,8 +653,14 @@ impl Store {
             if base_path == path {
                 continue;
             }
-            let base = self.load_file(&base_path)?;
-            bases.push((base_path, base));
+            // RuboCop recurses until its stack overflows; report the cycle instead.
+            if self.loading.contains(&base_path) {
+                return Err(format!("{}: inherit_from cycle through {}", path.display(), base_path.display()));
+            }
+            self.loading.push(base_path.clone());
+            let base = self.load_file(&base_path, true);
+            self.loading.pop();
+            bases.push((base_path, base?));
         }
         for (base_path, base) in bases.into_iter().rev() {
             override_department_setting_for_cops(&base, hash);
@@ -558,7 +729,7 @@ impl Store {
         if top == config_file {
             return Ok(());
         }
-        let highest = self.load_file(&top)?;
+        let highest = self.load_file(&top, true)?;
         let Some(high_excludes) = highest.map("AllCops").and_then(|a| a.get("Exclude")).cloned() else { return Ok(()) };
         let Some(all) = config.map_mut("AllCops") else { return Ok(()) };
         let mut excludes = seq(all.get("Exclude").cloned());
@@ -595,14 +766,19 @@ impl Store {
                 Ok(d) => d,
                 Err(e) => {
                     self.warnings.push(e);
+                    // Its cops are unknown here.
+                    self.custom_cops = true;
                     continue;
                 }
             };
+            ruby_constants(&dir.join("lib"), &mut self.plugin_constants);
             let path = dir.join("config/default.yml");
             if !path.is_file() {
+                // An extension without config/default.yml may still register cops.
+                self.custom_cops = true;
                 continue;
             }
-            let mut plugin = self.load_file(&path)?;
+            let mut plugin = self.load_file(&path, false)?;
             if let Some(Value::Map(new_all)) = plugin.get("AllCops").cloned() {
                 let mut all = combined.map("AllCops").cloned().unwrap_or_default();
                 for (key, value) in new_all.0 {
@@ -760,6 +936,24 @@ fn merge_with_default(base_default: &Map, mut config: Map, unset_nil: bool, cli_
     merge(&default, &config, &mode, unset_nil)
 }
 
+/// Class and module names defined in a gem's lib/: a plugin registers cops its config/default.yml
+/// need not list, and RuboCop's registry knows them.
+// ponytail: a name match, not a registry; `Dept/Cop` counts as known when both are defined.
+fn ruby_constants(dir: &Path, out: &mut std::collections::HashSet<String>) {
+    static RE: std::sync::LazyLock<Regex> =
+        std::sync::LazyLock::new(|| Regex::new(r"(?m)^\s*(?:class|module)\s+([A-Z]\w*)").unwrap());
+    let Ok(entries) = std::fs::read_dir(dir) else { return };
+    for path in entries.flatten().map(|e| e.path()) {
+        if path.is_dir() {
+            ruby_constants(&path, out);
+        } else if path.extension().is_some_and(|e| e == "rb")
+            && let Ok(text) = std::fs::read_to_string(&path)
+        {
+            out.extend(RE.captures_iter(&text).map(|c| c[1].to_string()));
+        }
+    }
+}
+
 /// `Array(value)` for YAML values.
 fn seq(v: Option<Value>) -> Vec<Value> {
     match v {
@@ -898,6 +1092,31 @@ fn base_dir_for(loaded: Option<&Path>) -> PathBuf {
         }
         _ => cwd(),
     }
+}
+
+/// Config#comparable_version: a dotted numeric version, trailing zero segments dropped so the
+/// comparison is Gem::Version's (`1.5.0 == 1.5`, `1.65 > 1.7`).
+// ponytail: prerelease versions (`1.2.a`) give None; NewCops versions are validated numeric and
+// VersionAdded values in default.yml are numeric.
+fn gem_version(s: &str) -> Option<Vec<u64>> {
+    let mut out: Vec<u64> = s
+        .split('.')
+        .map(|p| p.parse().ok().filter(|_| p.bytes().all(|b| b.is_ascii_digit())))
+        .collect::<Option<_>>()?;
+    while out.len() > 1 && out.last() == Some(&0) {
+        out.pop();
+    }
+    Some(out)
+}
+
+#[test]
+fn gem_versions_compare_like_rubygems() {
+    assert!(gem_version("1.65") > gem_version("1.7"));
+    assert_eq!(gem_version("1.5.0"), gem_version("1.5"));
+    assert!(gem_version("1.5") < gem_version("1.5.1"));
+    assert_eq!(gem_version("N/A"), None);
+    assert_eq!(gem_version("<<next>>"), None);
+    assert_eq!(gem_version("1.x"), None);
 }
 
 /// Dir.pwd (no symlink resolution, like Ruby).

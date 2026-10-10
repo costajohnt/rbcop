@@ -1,0 +1,12 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a.rb:3:1: W: Lint/EmptyBlock: Empty block detected.
+a.rb:6:5: C: [Correctable] Style/NilLambda: Use an empty lambda instead of always returning nil.
+a.rb:7:16: C: [Correctable] Style/RedundantPercentQ: Use `%q` only for strings that contain both single quotes and double quotes.
+a.rb:8:18: C: [Correctable] Style/FileNull: Use `File::NULL` instead of `/dev/null`.
+a.rb:8:18: C: [Correctable] Style/RedundantPercentQ: Use `%q` only for strings that contain both single quotes and double quotes.
+sub/b.rb:6:5: C: [Correctable] Style/NilLambda: Use an empty lambda instead of always returning nil.
+sub/b.rb:7:16: C: [Correctable] Style/RedundantPercentQ: Use `%q` only for strings that contain both single quotes and double quotes.
+sub/b.rb:7:6: C: Style/FileOpen: `File.open` without a block may leak a file descriptor; use the block form.
+sub/b.rb:7:6: C: [Correctable] Style/FileRead: Use `File.read`.
+sub/b.rb:8:18: C: [Correctable] Style/FileNull: Use `File::NULL` instead of `/dev/null`.
+sub/b.rb:8:18: C: [Correctable] Style/RedundantPercentQ: Use `%q` only for strings that contain both single quotes and double quotes.

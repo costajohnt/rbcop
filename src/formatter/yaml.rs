@@ -13,7 +13,9 @@ pub fn dump(map: &Map) -> String {
 
 fn map_body(out: &mut String, map: &Map, indent: usize) {
     for (k, v) in &map.0 {
-        let key = scalar(&Value::Str(k.clone()), indent, indent + 2);
+        // Keys do not keep the Symbol/String distinction; a `:name` key is taken as a Symbol.
+        let k = if k.chars().count() > 1 && k.starts_with(':') { Value::Sym(k.clone()) } else { Value::Str(k.clone()) };
+        let key = scalar(&k, indent, indent + 2);
         out.push_str(&" ".repeat(indent));
         out.push_str(&key);
         out.push(':');
@@ -83,9 +85,9 @@ fn scalar(v: &Value, col: usize, cont: usize) -> String {
         Value::Float(f) if f.fract() == 0.0 && f.abs() < 1e16 => format!("{f:.1}"),
         Value::Float(f) => f.to_string(),
         Value::Regex(r) => format!("!ruby/regexp {r}"),
-        // Psych loads a plain `:name` as a Symbol and dumps it plain again.
-        // ponytail: a quoted ':name' String in a user config also dumps as a symbol here.
-        Value::Str(s) if s.len() > 1 && s.starts_with(':') && plain_allowed(s) => fold(s, col, cont),
+        // Psych#visit_Symbol: plain when libyaml allows it, else libyaml's single-quoted fallback.
+        Value::Sym(s) if plain_allowed(s) => fold(s, col, cont),
+        Value::Sym(s) => format!("'{}'", fold(&s.replace('\'', "''"), col + 1, cont)),
         Value::Str(s) => string(s, col, cont),
         Value::Seq(_) | Value::Map(_) => String::new(),
     }
@@ -273,5 +275,14 @@ mod tests {
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\nr: \"- a\"\ns: a,b\n\
             w: 0o17\nx: '1_000'\n\"y\": \"y\"\naa: '2024-01-01'\nad: 1e3\n";
         assert_eq!(dump(&map), expected);
+    }
+
+    #[test]
+    fn quoted_colon_string_is_not_a_symbol() {
+        let Value::Map(m) = crate::config::value::parse_yaml("a: ':x'\nb: :x\nc:\n- \":y\"\n- :y\n").unwrap() else {
+            panic!()
+        };
+        assert_eq!(dump(&m), "a: \":x\"\nb: :x\nc:\n- \":y\"\n- :y\n");
+        assert_eq!(m.str("b"), Some(":x"));
     }
 }
