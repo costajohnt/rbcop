@@ -75,6 +75,9 @@ impl Cop for StringLiterals {
             return;
         }
         let Some(s) = string_help::delimited_str(node) else { return };
+        if !string_help::legacy_gvar_interpolations(cx, node).is_empty() {
+            return; // a parser `dstr`
+        }
         if string_help::in_regexp(cx.ancestors) || cx.state::<Ignored>().0.iter().any(|&(a, b)| a <= start && end <= b) {
             return;
         }

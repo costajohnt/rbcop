@@ -34,8 +34,8 @@ fn needs_double(src: &str) -> bool {
     })
 }
 
-fn parser_dsym(sym: &ruby_prism::SymbolNode) -> bool {
-    crate::ast::is_parser_dsym(&sym.as_node())
+fn parser_dsym(sym: &ruby_prism::SymbolNode, target_ruby: f64) -> bool {
+    crate::ast::is_parser_dsym(&sym.as_node(), target_ruby)
 }
 
 impl Cop for QuotedSymbols {
@@ -54,10 +54,7 @@ impl Cop for QuotedSymbols {
         let label = sym.closing_loc().is_some_and(|c| c.as_slice().len() == 2 && c.as_slice().ends_with(b":"));
         let (start, end) = (loc.start_offset(), loc.end_offset() - usize::from(label));
         let src = &cx.src.text[start..end];
-        // An empty quoted symbol is a parser `dsym` (no on_sym): `:""` always, and a `"":` label
-        // too under the parser gem (target Ruby below 3.3; Prism's translation makes it a `sym`).
-        let empty = sym.value_loc().is_none_or(|v| v.as_slice().is_empty());
-        if !quoted(src) || parser_dsym(&sym) || (empty && (!label || cx.config.target_ruby < 3.3)) {
+        if !quoted(src) || parser_dsym(&sym, cx.config.target_ruby) {
             return;
         }
         let mut style = cx.cfg.str("EnforcedStyle").unwrap_or("same_as_string_literals").to_string();
@@ -77,7 +74,7 @@ impl Cop for QuotedSymbols {
             Some(pair) => {
                 let key = pair.key();
                 let is_key = key.location().start_offset() == start
-                    || key.as_symbol_node().is_some_and(|k| !parser_dsym(&k) && k.unescaped() == sym.unescaped());
+                    || key.as_symbol_node().is_some_and(|k| !parser_dsym(&k, cx.config.target_ruby) && k.unescaped() == sym.unescaped());
                 (is_key, pair.operator_loc().is_none())
             }
             None => (false, false),

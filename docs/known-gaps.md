@@ -57,24 +57,28 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - Target Ruby below 3.3 (RuboCop parses with the parser gem's grammar for the target):
   `src/legacy_syntax.rs` reports the parser gem's Lint/Syntax for syntax newer than the target and
   for genuine syntax errors, approximating racc's error recovery for the diagnostics after the first
-  (module doc). Oracles with `config/all-cops.yml` + TargetRubyVersion, diff lines left (specs: all
-  low targets; rails/discourse: 2.7 and 3.1): specs 2.5 207, 2.7 60, 3.0 59, 3.1 58, 3.2 58; rails
-  2.7 14 (8 files), 3.1 3; discourse 2.7 271 (76 of 12609 files), 3.1 5. What remains:
-  - Follow-up diagnostics after the first error in a file: recovery is modelled, not the LALR
-    tables, so cascades can differ, mostly after a def popped by recovery (`class/module definition
-    in method body`, `dynamic constant assignment`), after `yyerror`s from semantic actions, and in
-    `case/in` bodies below 2.7 (pattern syntax parsed as statements).
-  - Parser-gem lexer errors (`bare backslash only allowed before newline`, `` unexpected `@' ``,
-    `` `$%' is not allowed ``, ...) where Prism reports a parse error instead; `circular argument
-    reference` is reported at the default value's read but not again at reads in the method body.
+  (module doc). Below 2.7 the runner drops Prism's NumberedParametersNodes, so `foo { _1 }` is a
+  block without arguments for every cop (`_1` reads stay LocalVariableReadNodes:
+  `node_types::is_legacy_numbered_read` for cops that tell variables from sends). Oracles with
+  `config/all-cops.yml` + TargetRubyVersion, diff lines left (specs: all low targets;
+  rails/discourse: 2.7 and 3.1): specs 2.5 7, 2.7 1, 3.0 1, 3.1 1, 3.2 1; rails 2.7 0, 3.1 0;
+  discourse 2.7 32 (11 of 12609 files), 3.1 1. What remains:
+  - Follow-up diagnostics after the first error in a file: recovery is modelled (including the
+    lexer's cmdarg stack and in_kwarg flag left set by abandoned constructs, and racc's C core
+    popping one state too many after a semantic action's yyerror), not the LALR tables, so some
+    cascades still differ: whether racc gives up after an error at the top level (it does not when
+    the failing token follows a bare name, as in `a ^ B c`, but does in other bare-name cases),
+    `case/in` and `when` bodies after recovery, an `else` left by a popped `if` in a block, and
+    template junk in the specs corpus at 2.5 (`def %{x}`, `case ... in` below 2.7).
   - Below 2.3 nothing lexer-level is checked (`&.`, `<<~`, `"a": 1`, `1r`, required keyword
     arguments are accepted); no oracle below 2.5 was recorded.
-  - Not syntax: numbered parameters below 2.7 are method calls for the parser gem (`_1` cops such as
-    Style/SymbolProc, Lint/UnexpectedBlockArity, Lint/Void differ: most of the 156 non-Lint/Syntax
-    lines in specs at 2.5, every sampled one `_1`-related);
-    `a, b = 1, 2 rescue x` and Style/RescueModifier below 2.6; Lint/AmbiguousOperator's parser-gem
-    warning for `foo &:sym` (5 lines per target in specs); `#$-1` interpolation (rails 3.1); an empty
-    heredoc delimiter `<<''` at end of file is a Prism error but valid for the parser gem.
+- `--stdin` together with `-a/-A` (RuboCop prints the corrected source) is refused.
+  - A `{` that opens a hash whose contents are invalid (`x == { |i| i }`, `{{#if x ~}}` where `#`
+    starts a comment) gets its first error at the `{` instead of the token after it.
+  - The chef corpus (target 2.7) has five syntax-error files with such differences (a missed
+    follow-up `unterminated string meets end of file`; the `{{` template above):
+    `scripts/check-skip.txt` leaves them out of check-cops.sh, and they and two RuboCop -A outputs
+    with the same differences are in `scripts/autocorrect-skip.txt`.
 - `--disable-uncorrectable`, `--auto-gen-config`, `--server`, `--lsp`, `--cache` behaviour (accepted
   and ignored where harmless), custom formatter classes, `require:` of local Ruby files (custom cops).
 - ERB in `.rubocop.yml` is not evaluated; remote `inherit_from` URLs are skipped with a warning.
@@ -131,7 +135,11 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   matches RuboCop with the default config.
 - Metrics/CollectionLiteralLength does not count `rescue A, B` exception lists (parser `array`).
   Lint/SymbolConversion does not treat a backslash-newline inside `:"..."` as a continuation. Naming/PredicatePrefix `validate_config` is not ported.
-- LineLength `SplitStrings: true` break points (string splitting) are not modelled.
+- LineLength `SplitStrings: true` break points (string splitting) are not modelled. The unbracketed
+  `rescue A, B` array is checked as a breakable collection, but is not an ancestor of calls inside
+  the exception list (`contained_by_breakable_collection_on_same_line?`).
+- `helpers::node_equality` compares tokens: plain `'a'` and `"a"` are equal, but `foo()` vs `foo` or
+  escaped vs unescaped spellings of one string (`"\x41"` vs `"A"`) are not, unlike parser nodes.
 - Cleanup pending: Style/SoleNestedConditional has an inline `correction_parses?` that parses with
   Prism's default (latest) grammar; `reparsed_equivalence::correction_parses` parses at the target
   version like RuboCop, so switching is a behaviour change to gate on its own, not a pure dedupe.

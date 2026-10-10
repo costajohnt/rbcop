@@ -13,6 +13,32 @@ pub fn delimited_str<'pr>(node: &Node<'pr>) -> Option<ruby_prism::StringNode<'pr
     (s.opening_loc().is_some() && !is_heredoc(node) && !is_parser_dstr(node)).then_some(s)
 }
 
+/// `$-x` ranges the parser gem (targets below 3.3) interpolates in a string Prism keeps plain:
+/// it reads `#$-` plus any word character as `#$-x`, Ruby only `#$-` plus a letter or `_`.
+/// Such a string is a parser `dstr`.
+pub fn legacy_gvar_interpolations(cx: &Cx, node: &Node) -> Vec<(usize, usize)> {
+    let Some(s) = node.as_string_node().filter(|_| cx.config.target_ruby < 3.3) else { return Vec::new() };
+    let Some(open) = s.opening_loc() else { return Vec::new() };
+    let open = open.as_slice();
+    let interpolating = open == b"\""
+        || open.starts_with(b"%Q")
+        || (open.len() == 2 && open[0] == b'%' && !open[1].is_ascii_alphanumeric())
+        || (open.starts_with(b"<<") && !open.contains(&b'\''));
+    if !interpolating {
+        return Vec::new();
+    }
+    let base = s.content_loc().start_offset();
+    let content = s.content_loc().as_slice();
+    let mut out = Vec::new();
+    for i in 0..content.len().saturating_sub(3) {
+        let escapes = content[..i].iter().rev().take_while(|&&b| b == b'\\').count();
+        if content[i..].starts_with(b"#$-") && content[i + 3].is_ascii_digit() && escapes % 2 == 0 {
+            out.push((base + i + 1, base + i + 4));
+        }
+    }
+    out
+}
+
 /// StringHelp#on_regexp ignores the node: a str anywhere inside a regexp is skipped.
 pub fn in_regexp(ancestors: &[Node]) -> bool {
     ancestors.iter().any(|a| {

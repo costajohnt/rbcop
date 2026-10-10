@@ -690,6 +690,32 @@ impl<'pr> ParseResult<'pr> {
     pub fn node(&self) -> Node<'_> {
         Node::new(self.parser, self.node.as_ptr())
     }
+
+    /// rbcop patch: drop the NumberedParametersNode of every block and lambda, so they read as
+    /// blocks without parameters (the parser gem below Ruby 2.7, where `_1` is an identifier).
+    /// The `_1` reads in their bodies stay LocalVariableReadNodes.
+    pub fn drop_numbered_parameters(&mut self) {
+        use ruby_prism_sys::{pm_block_node_t, pm_lambda_node_t, pm_node_type};
+        extern "C" {
+            fn pm_visit_node(node: *const pm_node_t, visitor: unsafe extern "C" fn(*const pm_node_t, *mut std::ffi::c_void) -> bool, data: *mut std::ffi::c_void);
+        }
+        unsafe extern "C" fn visit(node: *const pm_node_t, data: *mut std::ffi::c_void) -> bool {
+            unsafe {
+                let params = match u32::from((*node).type_) {
+                    t if t == pm_node_type::PM_BLOCK_NODE as u32 => &mut (*node.cast_mut().cast::<pm_block_node_t>()).parameters,
+                    t if t == pm_node_type::PM_LAMBDA_NODE as u32 => &mut (*node.cast_mut().cast::<pm_lambda_node_t>()).parameters,
+                    _ => return true,
+                };
+                if !params.is_null() && u32::from((**params).type_) == pm_node_type::PM_NUMBERED_PARAMETERS_NODE as u32 {
+                    pm_node_destroy(data.cast::<pm_parser_t>(), *params);
+                    *params = std::ptr::null_mut();
+                }
+            }
+            true
+        }
+        // SAFETY: no Node views exist while `&mut self` is held; the detached node is freed once.
+        unsafe { pm_visit_node(self.node.as_ptr(), visit, self.parser.as_ptr().cast()) }
+    }
 }
 
 impl Drop for ParseResult<'_> {

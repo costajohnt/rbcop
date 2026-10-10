@@ -86,18 +86,25 @@ impl Cop for RescueModifier {
             let i = cx.ancestors.iter().rposition(|a| span(a) == s && kind::of(a) == kind::of(p)).unwrap();
             paren_fix(cx, i)
         });
+        // Below 2.6 the parser gem reads `a, b = 1, 2 rescue x` as `(a, b = 1, 2) rescue x`.
+        let masgn = (cx.config.target_ruby < 2.6)
+            .then(|| cx.ancestors.last().and_then(|a| a.as_multi_write_node()))
+            .flatten()
+            .filter(|m| span(&m.value()) == me)
+            .map(|m| m.location().start_offset());
         let mut outer_fix = Some(outer_fix);
         for (i, n) in chain.iter().enumerate().rev() {
-            let fix = if i == 0 { outer_fix.take().flatten() } else { None };
-            report(cx, n, fix);
+            let (fix, masgn) = if i == 0 { (outer_fix.take().flatten(), masgn) } else { (None, None) };
+            report(cx, n, fix, masgn);
         }
     }
 }
 
-fn report(cx: &mut Cx, n: &ruby_prism::RescueModifierNode, fix: Option<ParenFix>) {
+fn report(cx: &mut Cx, n: &ruby_prism::RescueModifierNode, fix: Option<ParenFix>, masgn: Option<usize>) {
     {
         let src = cx.src;
         let (start, end) = span(&n.as_node());
+        let start = masgn.unwrap_or(start);
         let parenthesized = fix.is_some();
         let width = helpers::alignment::configured_indentation_width(cx) as usize;
         let col = src.column(start);
@@ -107,8 +114,8 @@ fn report(cx: &mut Cx, n: &ruby_prism::RescueModifierNode, fix: Option<ParenFix>
             off.pop();
         }
         let op = n.expression();
-        let op_span = span(&op);
-        let wrap_array = op.as_array_node().is_some_and(|a| a.opening_loc().is_none());
+        let op_span = (start, op.location().end_offset());
+        let wrap_array = masgn.is_none() && op.as_array_node().is_some_and(|a| a.opening_loc().is_none());
         let heredoc_end = op.as_call_node().and_then(|c| {
             call_args(&c).iter().rev().find_map(|a| helpers::heredoc::parts(a).map(|(_, e, _)| e))
         });

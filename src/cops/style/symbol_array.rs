@@ -77,7 +77,7 @@ impl Cop for SymbolArray {
         if open == "[" {
             let els: Vec<Node> = array.elements().iter().collect();
             // `sym_type?`: a symbol spanning lines is a parser `dsym`.
-            let sym = |e: &Node| e.as_symbol_node().is_some() && !crate::ast::is_parser_dsym(e);
+            let sym = |e: &Node| e.as_symbol_node().is_some() && !crate::ast::is_parser_dsym(e, cx.config.target_ruby);
             if els.is_empty() || !els.iter().all(sym) || complex_content(&array) {
                 return;
             }

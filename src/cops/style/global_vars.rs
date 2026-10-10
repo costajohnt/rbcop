@@ -24,10 +24,21 @@ impl Cop for GlobalVars {
             kind::GLOBAL_VARIABLE_OR_WRITE_NODE,
             kind::GLOBAL_VARIABLE_AND_WRITE_NODE,
             kind::GLOBAL_VARIABLE_TARGET_NODE,
+            kind::STRING_NODE,
         ]
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
+        if node.as_string_node().is_some() {
+            // `#$-1` below 3.3 (see legacy_gvar_interpolations).
+            for (start, end) in helpers::string_help::legacy_gvar_interpolations(cx, node) {
+                let name = cx.src.slice(start, end);
+                if !BUILT_IN_VARS.contains(&name) && !cx.cfg.strings("AllowedVariables").iter().any(|v| v == name) {
+                    cx.add(start, end, "Do not introduce global variables.");
+                }
+            }
+            return;
+        }
         // gvar / gvasgn (also inside op_asgn, or_asgn, and_asgn, masgn): `loc.name`.
         let loc = match node {
             Node::GlobalVariableWriteNode { .. } => node.as_global_variable_write_node().unwrap().name_loc(),

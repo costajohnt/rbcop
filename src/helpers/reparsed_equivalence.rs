@@ -258,11 +258,15 @@ impl<'pr> Visit<'pr> for Ser<'_> {
         {
             return self.emit_folded(&parts);
         }
+        // Implied by the `_1` reads; below 2.7 the parsed file has none (runner drops them).
+        if matches!(node, Node::NumberedParametersNode { .. }) {
+            return;
+        }
         let loc = node.location();
         let k = match &node {
             Node::SourceLineNode { .. } => "__LINE__",
-            // These span the whole block.
-            Node::NumberedParametersNode { .. } | Node::ItParametersNode { .. } => "",
+            // It spans the whole block.
+            Node::ItParametersNode { .. } => "",
             _ => &self.text[loc.start_offset()..loc.end_offset()],
         };
         self.out.push('[');

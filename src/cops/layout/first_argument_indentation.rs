@@ -206,12 +206,16 @@ fn correct_target(c: &Ctx, ancestors: &[Node], delta: i64) -> (usize, usize, Opt
         let a = &ancestors[i - 1];
         let Some(p) = a.as_call_node() else { break };
         let is_recv = p.receiver().is_some_and(|r| span(&r) == top_span);
-        if !is_recv || is_csend(&p) || p.call_operator_loc().is_none() || own_block(a) {
+        if !is_recv || is_csend(&p) || p.call_operator_loc().is_none() {
             break;
         }
         top_span = span(a);
         top = Some(i - 1);
         i -= 1;
+        // A call with a block is parser's `send` inside a `block`: the climb stops there.
+        if own_block(a) {
+            break;
+        }
     }
     let top_node = top.map_or(c.node, |t| &ancestors[t]);
     // inner_call?: top's parent is a parenthesized send

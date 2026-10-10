@@ -11,6 +11,8 @@ pub struct AmbiguousOperator;
 struct State {
     splats: Vec<(usize, Option<ParenFix>)>,
     sends: Vec<(usize, String, Option<ParenFix>)>,
+    /// `&:sym` block arguments the parser gem warns about (targets below 3.3).
+    amp_syms: Vec<usize>,
 }
 
 use helpers::parser_parent::parser_parent_index as parser_parent;
@@ -45,13 +47,28 @@ impl Cop for AmbiguousOperator {
             p = gp;
         }
         let fix = parens::plan(&ancestors[p], text);
-        cx.state::<State>().splats.push((start, fix));
+        // Prism does not warn for `foo &:sym`; the parser gem (below 3.3) does, as for any
+        // `&` lexed as an argument prefix after a space: the first argument of a call without `(`.
+        let amp_sym = cx.config.target_ruby < 3.3
+            && node.as_block_argument_node().and_then(|b| b.expression()).is_some_and(|e| e.as_symbol_node().is_some())
+            && text[..start].ends_with([' ', '\t'])
+            && ancestors[p].as_call_node().is_some_and(|c| c.opening_loc().is_none() && c.arguments().is_none());
+        let state = cx.state::<State>();
+        state.splats.push((start, fix));
+        if amp_sym {
+            state.amp_syms.push(start);
+        }
     }
 
     fn on_file(&self, cx: &mut Cx) {
-        let warnings = helpers::parse_warnings::warnings(cx.src);
+        let mut warnings = helpers::parse_warnings::warnings(cx.src);
         let state = cx.state::<State>();
         let state = std::mem::take(state);
+        for &s in &state.amp_syms {
+            if !warnings.iter().any(|w| w.start == s) {
+                warnings.push(helpers::parse_warnings::Warning { kind: "ambiguous_prefix_ampersand", start: s, end: s + 1 });
+            }
+        }
         for w in warnings {
             let Some(prefix) = helpers::parse_warnings::ambiguous_prefix(w.kind) else { continue };
             let found = match state.splats.iter().find(|(s, _)| *s == w.start) {

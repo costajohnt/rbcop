@@ -442,6 +442,15 @@ More traps found while porting:
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.
 
+- Parser `rescue` / `ensure` nodes start at the first body statement (else the keyword) and end at
+  the else branch / last resbody / ensure body; Prism folds them into BeginNode. A parser block
+  range starts at its receiver, so `tokens_within(block_node)` sees the receiver's tokens too.
+- `begin_pos + n` in RuboCop is n characters: convert, don't add bytes.
+- Empty quoted symbols (`:""`, `%s()`) are parser `dsym`; an empty quoted label (`"": 1`) is a
+  `dsym` under the parser gem (target < 3.3) and a `sym` under the Prism translation (3.3+).
+- `find_top_level_send` climbs into a call that owns a block (parser's inner `send`) and stops
+  there, since that send's parent is the `block`.
+
 - Directive cops read `cx.facts.comment_config` (CommentConfig#analyze: ranges with their opening
   directive, Ruby hash key order, detached `-next` directives), `facts.code_lines` and
   `facts.config_disabled` (Registry#disabled_names after --only/--except). Lint/RedundantCopDisableDirective
@@ -488,10 +497,20 @@ command per call (the gate accepts a comma-separated cop list, so one call cover
 
 ```sh
 cargo build --release
-export RBCOP_CORPUS=/Users/johncosta/.claude/jobs/89c7fab2/tmp/corpus RBCOP_ORACLE=/Users/johncosta/.claude/jobs/89c7fab2/tmp/oracle2
+export RBCOP_CORPUS=/path/to/corpus RBCOP_ORACLE=/path/to/oracle
 scripts/check-cops.sh Style/Example,Style/Other specs          # fast loop (RuboCop's own spec snippets)
-scripts/check-cops.sh Style/Example,Style/Other                # full gate: specs, rails, discourse
+scripts/check-cops.sh Style/Example,Style/Other                # full gate: every corpus below
 ```
+
+Corpora (shallow clones in `$RBCOP_CORPUS`, oracles in `$RBCOP_ORACLE/<name>.txt` from
+`scripts/oracle.sh`): `specs` (RuboCop's spec snippets), `rails`, `discourse`, `rubocop-src`
+(RuboCop's own source), `jekyll` (jekyll/jekyll 541d8b2e), `chef` (chef/chef bf7c6ede, target 2.7),
+`fastlane` (fastlane/fastlane 511c0726), `brew` (Library/Homebrew of Homebrew/brew 16f166d3),
+`mastodon` (mastodon/mastodon 9e3fab27). Each of the last six adds under a minute to `check-cops.sh all`. Files
+whose differences are documented gaps are listed in `scripts/check-skip.txt`. The autocorrect
+gates still default to specs, rails and discourse; a cross-cop pass over the other corpora takes
+5-25 minutes each:
+`LIMIT=1500 OUT=<dir> scripts/check-autocorrect-all.sh rubocop-src jekyll chef fastlane brew mastodon`.
 
 The oracles were recorded with every cop enabled (`config/all-cops.yml`), so pending and
 disabled-by-default cops are covered too. Diffs land in `$TMPDIR/rbcop-check/<corpus>.diff`

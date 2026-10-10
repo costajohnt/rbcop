@@ -361,18 +361,19 @@ pub fn is_parser_dstr(node: &Node) -> bool {
 }
 
 /// Parser `dsym`: an interpolated symbol, or a symbol literal spanning several lines (split like
-/// `is_parser_dstr`).
-pub fn is_parser_dsym(node: &Node) -> bool {
+/// `is_parser_dstr`). An empty quoted one (`:""`, `%s()`) is an empty `dsym`; an empty quoted
+/// label (`"": 1`) is a `dsym` for the parser gem (target below 3.3) but a `sym` for the Prism
+/// translation.
+pub fn is_parser_dsym(node: &Node, target_ruby: f64) -> bool {
     if node.as_interpolated_symbol_node().is_some() {
         return true;
     }
     let Some(sym) = node.as_symbol_node() else { return false };
     let content = sym.value_loc().map_or("", |v| text(&v));
-    // `:""`, `:''` and `%s()` are empty `dsym`s (an empty label `"":` stays a `sym`).
-    if content.is_empty()
-        && sym.opening_loc().is_some_and(|o| o.as_slice().starts_with(b":") || o.as_slice().starts_with(b"%s"))
-    {
-        return true;
+    let quoted = sym.opening_loc().is_some_and(|o| o.as_slice() != b":");
+    if quoted && content.is_empty() {
+        let label = sym.closing_loc().is_some_and(|c| c.as_slice().ends_with(b":"));
+        return !label || target_ruby < 3.3;
     }
     let body = content.strip_suffix('\n').unwrap_or(content).as_bytes();
     let opening = sym.opening_loc().map(|o| text(&o)).unwrap_or("");

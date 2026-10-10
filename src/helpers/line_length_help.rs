@@ -141,3 +141,18 @@ pub fn find_excessive_range(line: &str, last: Option<(usize, usize)>, max: usize
     let (b, e) = (col(start), col(end));
     (b >= max || e >= max).then_some((b, e))
 }
+
+#[cfg(test)]
+mod tests {
+    /// Matches `line.scan(uri_regexp)` with RuboCop's exact-case lookahead on
+    /// `URI::RFC2396_PARSER.make_regexp(%w[http https])` (Ruby 4.0).
+    #[test]
+    fn uri_regex_is_leftmost_first() {
+        let re = super::uri_regex(&["http".into(), "https".into()]).unwrap();
+        let all = |s: &str| re.scan(s).into_iter().map(|(a, b)| s[a..b].to_string()).collect::<Vec<_>>();
+        assert_eq!(all("x('http://').y('https://a.b/c?d=[1]#e')"), ["http://", "https://a.b/c?d=[1]#e')"]);
+        assert_eq!(all("%r{https://.*github.+/x}"), ["https://."]);
+        assert!(all("HTTP:foo;bar").is_empty());
+        assert!(all("httpS://x").is_empty());
+    }
+}
