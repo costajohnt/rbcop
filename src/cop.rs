@@ -88,6 +88,14 @@ pub struct Facts {
     pub first_code: Option<usize>,
     /// (cop, first line, last line) spans switched off by `# rubocop:disable` comments.
     pub disabled: std::collections::HashMap<String, Vec<(i64, i64)>>,
+    /// The full directive analysis behind `disabled` (empty unless the file mentions `rubocop`).
+    pub comment_config: crate::directives::CommentConfig,
+    /// `code_lines[line]`: a non-comment token starts on that line (only computed when the file
+    /// mentions `rubocop`).
+    pub code_lines: Vec<bool>,
+    /// Registry#disabled_names of the --only/--except filtered registry (only computed when the
+    /// file mentions `rubocop`).
+    pub config_disabled: Vec<&'static str>,
     /// The file text shared by correctors.
     pub text: Arc<str>,
 }

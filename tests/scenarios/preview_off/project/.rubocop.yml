@@ -1,0 +1,19 @@
+inherit_from: .rubocop_base.yml
+AllCops:
+  TargetRubyVersion: 3.4
+  Exclude:
+    - 'skip/**/*'
+Layout/TrailingWhitespace:
+  Exclude:
+    - 'b.rb'
+Layout/EmptyLines:
+  inherit_mode:
+    override:
+      - Exclude
+  Exclude:
+    - 'b.rb'
+Naming/FileName:
+  Exclude:
+    - 'lib/BadName.rb'
+Style/Send:
+  Enabled: preview

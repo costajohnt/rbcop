@@ -17,10 +17,6 @@ const ENUMERABLE_METHODS: &[&str] = &[
     "slice_before", "slice_when", "sort", "sort_by", "sum", "take", "take_while", "tally", "to_a", "to_h", "to_set",
     "uniq", "zip",
 ];
-const ENUMERATOR_METHODS: &[&str] = &[
-    "collect", "collect_concat", "detect", "downto", "each", "find", "find_all", "find_index", "inject", "loop", "map!",
-    "map", "reduce", "reject", "reject!", "reverse_each", "select", "select!", "times", "upto",
-];
 
 impl Cop for UnreachableLoop {
     fn kinds(&self) -> &'static [usize] {
@@ -206,8 +202,7 @@ fn loop_method(cx: &Cx, node: &Node) -> bool {
     }
     let name = method_name(&call);
     let loopable = ENUMERABLE_METHODS.contains(&name)
-        || ENUMERATOR_METHODS.contains(&name)
-        || name.starts_with("each_")
+        || is_enumerator_method(name)
         || name == "loop";
     let (s, e) = send_range(&call);
     loopable && !helpers::allowed::matches_allowed_pattern(cx.cfg, &cx.src.text[s..e])

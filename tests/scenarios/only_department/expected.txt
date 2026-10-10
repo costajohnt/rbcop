@@ -1,0 +1,2 @@
+t.rb:1:8: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+t.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `z`.

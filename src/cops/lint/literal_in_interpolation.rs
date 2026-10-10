@@ -1,4 +1,4 @@
-use crate::helpers::ruby_string;
+use crate::helpers::ruby_string::{self, float_to_s};
 use crate::prelude::*;
 
 pub const NAME: &str = "Lint/LiteralInInterpolation";
@@ -108,39 +108,6 @@ fn integer_to_s(node: &ruby_prism::IntegerNode) -> String {
         }
     }
     out
-}
-
-/// Float#to_s.
-fn float_to_s(f: f64) -> String {
-    if f.is_nan() {
-        return "NaN".into();
-    }
-    if f.is_infinite() {
-        return if f > 0.0 { "Infinity".into() } else { "-Infinity".into() };
-    }
-    let sign = if f.is_sign_negative() { "-" } else { "" };
-    if f == 0.0 {
-        return format!("{sign}0.0");
-    }
-    let e = format!("{:e}", f.abs());
-    let (mantissa, exp) = e.split_once('e').unwrap();
-    let digits: String = mantissa.chars().filter(|&c| c != '.').collect();
-    let decpt = exp.parse::<i64>().unwrap() + 1;
-    let body = if decpt > 0 && decpt < 16 {
-        let d = decpt as usize;
-        if digits.len() <= d {
-            format!("{digits}{}.0", "0".repeat(d - digits.len()))
-        } else {
-            format!("{}.{}", &digits[..d], &digits[d..])
-        }
-    } else if decpt <= 0 && decpt > -4 {
-        format!("0.{}{digits}", "0".repeat((-decpt) as usize))
-    } else {
-        let rest = if digits.len() > 1 { &digits[1..] } else { "0" };
-        let x = decpt - 1;
-        format!("{}.{rest}e{}{:02}", &digits[..1], if x < 0 { '-' } else { '+' }, x.abs())
-    };
-    format!("{sign}{body}")
 }
 
 struct Values<'a> {

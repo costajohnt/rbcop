@@ -10,7 +10,7 @@ pub struct StructInheritance;
 
 /// `class_body.each_node(:casgn, :class, :module).any?`
 #[derive(Default)]
-struct DefinesConstants(bool);
+pub struct DefinesConstants(pub bool);
 
 impl<'pr> Visit<'pr> for DefinesConstants {
     fn visit_branch_node_enter(&mut self, node: Node<'pr>) {

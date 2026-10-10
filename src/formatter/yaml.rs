@@ -78,9 +78,14 @@ fn scalar(v: &Value, col: usize, cont: usize) -> String {
         Value::Null => String::new(),
         Value::Bool(b) => b.to_string(),
         Value::Int(i) => i.to_string(),
+        Value::Float(f) if f.is_nan() => ".nan".into(),
+        Value::Float(f) if f.is_infinite() => (if *f > 0.0 { ".inf" } else { "-.inf" }).into(),
         Value::Float(f) if f.fract() == 0.0 && f.abs() < 1e16 => format!("{f:.1}"),
         Value::Float(f) => f.to_string(),
         Value::Regex(r) => format!("!ruby/regexp {r}"),
+        // Psych loads a plain `:name` as a Symbol and dumps it plain again.
+        // ponytail: a quoted ':name' String in a user config also dumps as a symbol here.
+        Value::Str(s) if s.len() > 1 && s.starts_with(':') && plain_allowed(s) => fold(s, col, cont),
         Value::Str(s) => string(s, col, cont),
         Value::Seq(_) | Value::Map(_) => String::new(),
     }
@@ -104,23 +109,53 @@ fn string(s: &str, col: usize, cont: usize) -> String {
     match style {
         Style::Plain => fold(s, col, cont),
         Style::Single => format!("'{}'", fold(&s.replace('\'', "''"), col + 1, cont)),
-        Style::Double => {
-            let mut out = String::from("\"");
-            for c in s.chars() {
-                match c {
-                    '"' => out.push_str("\\\""),
-                    '\\' => out.push_str("\\\\"),
-                    '\n' => out.push_str("\\n"),
-                    '\t' => out.push_str("\\t"),
-                    '\r' => out.push_str("\\r"),
-                    c if c.is_control() => out.push_str(&format!("\\x{:02X}", c as u32)),
-                    c => out.push(c),
+        Style::Double => double(s, col, cont),
+    }
+}
+
+/// libyaml's yaml_emitter_write_double_quoted: escapes, and a break at a space past column 80
+/// (a following space is kept by an escaping backslash).
+fn double(s: &str, col: usize, cont: usize) -> String {
+    let chars: Vec<char> = s.chars().collect();
+    let mut out = String::from("\"");
+    let mut column = col + 1;
+    let mut spaces = false;
+    for (i, &c) in chars.iter().enumerate() {
+        let escaped = match c {
+            '"' => Some("\\\"".to_string()),
+            '\\' => Some("\\\\".to_string()),
+            '\n' => Some("\\n".to_string()),
+            '\t' => Some("\\t".to_string()),
+            '\r' => Some("\\r".to_string()),
+            c if c.is_control() => Some(format!("\\x{:02X}", c as u32)),
+            _ => None,
+        };
+        if let Some(e) = escaped {
+            column += e.len();
+            out.push_str(&e);
+            spaces = false;
+        } else if c == ' ' {
+            if !spaces && column > 80 && i != 0 && i + 1 != chars.len() {
+                out.push('\n');
+                out.push_str(&" ".repeat(cont));
+                column = cont;
+                if chars.get(i + 1) == Some(&' ') {
+                    out.push('\\');
+                    column += 1;
                 }
+            } else {
+                out.push(c);
+                column += 1;
             }
-            out.push('"');
-            out
+            spaces = true;
+        } else {
+            out.push(c);
+            column += 1;
+            spaces = false;
         }
     }
+    out.push('"');
+    out
 }
 
 /// libyaml breaks a plain or single-quoted scalar at a space once the line is past 80 columns.

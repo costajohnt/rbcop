@@ -42,14 +42,7 @@ enum Parent {
     Other,
 }
 
-/// Parser parent of `ancestors[..below]`'s last node, as an index (None: the root).
-fn parser_parent(ancestors: &[Node], below: usize) -> Option<usize> {
-    (0..below).rev().find(|&i| {
-        let f = frame(&ancestors[i]);
-        let owns_block = f == Frame::Call && ancestors.get(i + 1).is_some_and(|n| frame(n) == Frame::Block);
-        f != Frame::Transparent && !owns_block
-    })
-}
+use helpers::parser_parent::parser_parent_index as parser_parent;
 
 /// Grandparent type classes RuboCop checks.
 #[derive(PartialEq)]

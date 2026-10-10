@@ -13,24 +13,6 @@ pub fn first_line_to_last_column(src: &Source, start: usize, end: usize) -> (usi
     (start, stop.max(start))
 }
 
-/// Deprecated: use `range_with_surrounding_space`. Kept so other branches still compile.
-pub fn with_surrounding_space(
-    src: &Source,
-    start: usize,
-    end: usize,
-    left: bool,
-    right: bool,
-    newlines: bool,
-) -> (usize, usize) {
-    let side = match (left, right) {
-        (true, false) => Side::Left,
-        (false, true) => Side::Right,
-        (true, true) => Side::Both,
-        (false, false) => return (start, end),
-    };
-    range_with_surrounding_space(src.text, start, end, Surrounding { side, newlines, ..Default::default() })
-}
-
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub enum Side {
     Both,

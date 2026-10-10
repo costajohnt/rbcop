@@ -1,0 +1,30 @@
+Gemfile:3:8: C: [Correctable] Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
+Gemfile:5:5: C: [Correctable] Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
+Gemfile:6:5: C: [Correctable] Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
+Rakefile.rb:15:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+Rakefile.rb:17:5: C: Style/Send: Prefer `Object#__send__` or `Object#public_send` to `send`.
+Rakefile.rb:3:15: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+Rakefile.rb:5:7: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+Rakefile.rb:6:7: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+Rakefile.rb:8:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+a.rb:15:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+a.rb:17:5: C: Style/Send: Prefer `Object#__send__` or `Object#public_send` to `send`.
+a.rb:5:7: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+a.rb:6:7: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+a.rb:8:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+b.rb:15:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+b.rb:17:5: C: Style/Send: Prefer `Object#__send__` or `Object#public_send` to `send`.
+b.rb:5:7: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+b.rb:6:7: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+c.rb:15:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+c.rb:17:5: C: Style/Send: Prefer `Object#__send__` or `Object#public_send` to `send`.
+c.rb:3:15: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+c.rb:5:7: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+c.rb:6:7: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+c.rb:8:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+lib/BadName.rb:15:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+lib/BadName.rb:17:5: C: Style/Send: Prefer `Object#__send__` or `Object#public_send` to `send`.
+lib/BadName.rb:3:15: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+lib/BadName.rb:5:7: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+lib/BadName.rb:6:7: C: [Correctable] Layout/ArgumentAlignment: Use one level of indentation for arguments following the first line of a multi-line method call.
+lib/BadName.rb:8:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.

@@ -35,7 +35,7 @@ fn parser_parent<'a, 'pr>(node: &Node<'pr>, ancestors: &'a [Node<'pr>]) -> Optio
     if own_block.is_some_and(|b| kind::of(&b) == kind::BLOCK_NODE) {
         return None;
     }
-    ancestors.iter().rev().find(|a| frame(a) != Frame::Transparent)
+    helpers::parser_parent::parser_parent(ancestors)
 }
 
 fn span(n: &Node) -> (usize, usize) {

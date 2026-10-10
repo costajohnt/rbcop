@@ -89,8 +89,49 @@ pub fn correct(
 ) -> Corrected {
     // parser's Source::Buffer normalises CRLF; corrections are applied to (and written from) that.
     let text = if text.contains("\r\n") { text.replace("\r\n", "\n") } else { text };
-    let mut current: Arc<str> = Arc::from(text);
+    let (mut offenses, mut current, changed, error, disabled) =
+        inspection_loop(path, display, Arc::from(text), cfg, selected, mode);
+    let mut changed = changed;
+    // Runner#add_redundant_disables (skipped when the loop raised): Lint/RedundantCopDisableDirective
+    // judges the final source against every offense found, and when it removed directives the
+    // whole loop runs once more; both offense lists are kept (`offenses |= new_offenses`).
+    if error.is_none() {
+        let span = |o: &Offense| {
+            let text = o.source.as_deref().unwrap_or("");
+            (o.cop, line_col(text, o.start).0, line_col(text, o.end.max(o.start)).0)
+        };
+        let checked: Vec<runner::Span> = offenses.iter().map(span).chain(disabled).collect();
+        let (mut found, corrector) = runner::redundant_disables(path, display, &current, cfg, selected, mode, &checked);
+        for o in &mut found {
+            o.source = Some(current.clone());
+        }
+        offenses.extend(found);
+        if let Some(c) = corrector {
+            let (again, text, _, err, _) = inspection_loop(path, display, Arc::from(c.rewrite()), cfg, selected, mode);
+            offenses.extend(again);
+            current = text;
+            changed = true;
+            if let Some(e) = err {
+                eprintln!("{e}");
+            }
+        }
+    }
+    let report = FileReport { offenses: uniq_sorted(offenses), text: current.to_string() };
+    Corrected { source: changed.then(|| current.to_string()), report, error }
+}
+
+/// Runner#do_inspection_loop: the offenses (unsorted, may repeat), the final source, whether it
+/// changed, the infinite-loop error if any, and the last iteration's comment-disabled offenses.
+fn inspection_loop(
+    path: &Path,
+    display: &str,
+    mut current: Arc<str>,
+    cfg: &Resolved,
+    selected: &dyn Fn(&str) -> bool,
+    mode: Mode,
+) -> (Vec<Offense>, Arc<str>, bool, Option<String>, Vec<runner::Span>) {
     let mut seen: Vec<Arc<str>> = Vec::new();
+    let mut disabled = Vec::new();
     let mut by_iteration: Vec<Vec<Offense>> = Vec::new();
     let mut changed = false;
     let mut error = None;
@@ -108,7 +149,9 @@ pub fn correct(
         if let Some(last) = by_iteration.last_mut() {
             last.retain(|o| o.corrected);
         }
-        let (mut offenses, corrector) = runner::analyze_for_correction(path, display, &current, cfg, selected, mode);
+        let (mut offenses, corrector, off) =
+            runner::analyze_for_correction(path, display, &current, cfg, selected, mode);
+        disabled = off;
         for o in &mut offenses {
             o.source = Some(current.clone());
         }
@@ -121,8 +164,7 @@ pub fn correct(
             None => break,
         }
     }
-    let report = FileReport { offenses: uniq_sorted(by_iteration.concat()), text: current.to_string() };
-    Corrected { source: changed.then(|| current.to_string()), report, error }
+    (by_iteration.concat(), current, changed, error, disabled)
 }
 
 /// Autocorrect one file on disk: inspect, correct, write the result back, report.
