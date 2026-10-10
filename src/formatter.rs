@@ -117,6 +117,9 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
                 }
                 None => (text, &starts),
             };
+            // Binary-encoded sources (magic comment) count columns in bytes, as Ruby does.
+            let binary = crate::source::binary_encoding(text);
+            let count = |s: &str| if binary { s.len() } else { s.chars().count() };
             let pos = |off: usize| {
                 // Parser keeps counting columns past the end of the source (Layout/EndOfLine ranges
                 // reach beyond the CRLF-normalised text), so an overflow carries into the column.
@@ -127,7 +130,7 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
                 }
                 let line = starts.partition_point(|&s| s <= off);
                 let ls = starts[line - 1];
-                (line, text[ls..off].chars().count() + overflow, ls, off)
+                (line, count(&text[ls..off]) + overflow, ls, off)
             };
             let (line, column, ls, start) = pos(o.start);
             let (last_line, last_column, _, end) = pos(o.end.max(o.start));
@@ -166,7 +169,7 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
                 column,
                 last_line,
                 last_column,
-                length: text[start..end].chars().count(),
+                length: count(&text[start..end]),
                 source_line: text[ls..le].to_string(),
             }
         })

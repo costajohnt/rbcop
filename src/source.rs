@@ -31,6 +31,8 @@ pub struct Source<'a> {
     pub comments: Vec<Comment>,
     /// Prism grammar version the file was parsed with (see config::target_ruby::prism_version).
     pub version: &'static str,
+    /// Magic comment says binary/ASCII-8BIT: Ruby counts columns in bytes (see `binary_encoding`).
+    pub binary: bool,
     tokens: OnceCell<Vec<Token>>,
 }
 
@@ -53,6 +55,7 @@ impl<'a> Source<'a> {
             lines: Vec::new(),
             comments,
             version,
+            binary: binary_encoding(text),
             tokens: OnceCell::new(),
         };
         if let Some(off) = data_start {
@@ -74,7 +77,8 @@ impl<'a> Source<'a> {
 
     /// 0-based character column of byte offset (RuboCop's `column`).
     pub fn column(&self, off: usize) -> usize {
-        self.text[self.line_start(self.line_of(off))..off].chars().count()
+        let segment = &self.text[self.line_start(self.line_of(off))..off];
+        if self.binary { segment.len() } else { segment.chars().count() }
     }
 
     /// Number of physical lines (a trailing newline starts one more, empty line).
@@ -158,4 +162,22 @@ fn lex(source: &[u8], version: &str) -> Vec<Token> {
     tokens.sort_by_key(|t| (t.start, t.end));
     tokens.retain(|t| t.kind != ruby_prism_sys::PM_TOKEN_EOF);
     tokens
+}
+
+static ENCODING_RE: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
+    regex::Regex::new(r"[\s#](?:en)?coding\s*[:=]\s*(utf8-mac|[A-Za-z0-9_-]+?(?:-unix|-dos|-mac)|[A-Za-z0-9_-]+)")
+        .unwrap()
+});
+
+/// Parser::Source::Buffer.recognize_encoding: the magic comment on the first line (the second
+/// after a shebang) names the source encoding. For binary (ASCII-8BIT) sources Ruby's String#length
+/// counts bytes, so every column RuboCop reports is a byte offset.
+pub fn binary_encoding(text: &str) -> bool {
+    let mut lines = text.lines();
+    let first = lines.next().unwrap_or("");
+    let line = if first.starts_with("#!") { lines.next().unwrap_or("") } else { first };
+    ENCODING_RE.captures(line).is_some_and(|c| {
+        let name = c[1].trim_end_matches("-unix").trim_end_matches("-dos").trim_end_matches("-mac");
+        name.eq_ignore_ascii_case("binary") || name.eq_ignore_ascii_case("ascii-8bit")
+    })
 }
