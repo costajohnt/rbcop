@@ -1,0 +1,52 @@
+==> .rubocop.yml 164 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LineLength:
+  Max: 80
+  AllowQualifiedName: true
+
+==> 000.rb 135 <==
+          # invoke the normal migration method
+          # Should call ActiveRecord::Oracle::SchemaStatements::create_table in the end
+
+==> 001.rb 162 <==
+          # invoke the normal migration method
+          # should end up calling ActiveRecord::ConnectionAdapters::OracleEnhanced::SchemaStatements::create_table
+
+==> 002.rb 119 <==
+            # should end up calling 'ActiveRecord::ConnectionAdapters::OracleEnhanced::SchemaStatements::create_table'
+
+==> 003.rb 119 <==
+            # should end up calling "ActiveRecord::ConnectionAdapters::OracleEnhanced::SchemaStatements::create_table"
+
+==> 004.rb 119 <==
+            # should end up calling {ActiveRecord::ConnectionAdapters::OracleEnhanced::SchemaStatements::create_table}
+
+==> 005.rb 120 <==
+          # Invoke the normal migration method, in oracle envs should end up calling ActiveRecord::Oracle::create_table
+
+==> 006.rb 116 <==
+          # Refer ActiveRecord::Migrations, in oracle envs should end up calling ActiveRecord::Oracle::create_table
+
+==> 007.rb 145 <==
+          # Should call ActiveRecord::ConnectionAdapters::OracleEnhanced::SchemaStatements::create_table and
+          #   ActiveRecord::Example
+
+==> 008.rb 149 <==
+          # Should call "ActiveRecord::ConnectionAdapters::OracleEnhanced::SchemaStatements::create_table" and
+          #   "ActiveRecord::Example"
+
+==> 009.rb 149 <==
+          # Should call {ActiveRecord::ConnectionAdapters::OracleEnhanced::SchemaStatements::create_table} and
+          #   {ActiveRecord::Example}
+
+==> 010.rb 386 <==
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx("ActiveRecord::Oracle::SchemaStatements::create_table")
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx "ActiveRecord::Oracle::SchemaStatements::create_table"
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx('ActiveRecord::Oracle::SchemaStatements::create_table')
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 'ActiveRecord::Oracle::SchemaStatements::create_table'
+

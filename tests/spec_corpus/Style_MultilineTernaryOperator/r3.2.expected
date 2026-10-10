@@ -1,0 +1,14 @@
+==> offenses exit=1 244 <==
+000.rb:1:7: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use single-line instead.
+001.rb:1:6: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use single-line instead.
+
+==> autocorrect exit=0 240 <==
+000.rb:1:7: C: [Corrected] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use single-line instead.
+001.rb:1:6: C: [Corrected] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use single-line instead.
+
+==> corrected/000.rb 23 <==
+break cond ? foo : bar
+
+==> corrected/001.rb 22 <==
+next cond ? foo : bar
+

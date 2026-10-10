@@ -1,0 +1,48 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 115 <==
+def some_method; body
+end
+def extra_large; { size: 15 };
+end
+def seven_times(stuff) 7.times { do_this(stuff) }
+end
+
+==> 001.rb 47 <==
+def some_method; foo = {}
+  more_body(foo)
+end
+
+==> 002.rb 82 <==
+def do_stuff(thing) process(thing)
+  8.times { thing + 9 }
+  even_more(thing)
+end
+
+==> 003.rb 30 <==
+foo;def some_method; body
+end
+
+==> 004.rb 27 <==
+def some_method
+  body
+end
+
+==> 005.rb 71 <==
+def stuff_method
+  stuff
+  9.times { process(stuff) }
+  more_stuff
+end
+
+==> 006.rb 32 <==
+def some_method
+  body
+foo; end
+

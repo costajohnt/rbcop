@@ -1,0 +1,16 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+==> 000.rb 17 <==
+'foo'.split(/f/)
+
+==> 001.rb 18 <==
+'foo'.split(/\n/)
+

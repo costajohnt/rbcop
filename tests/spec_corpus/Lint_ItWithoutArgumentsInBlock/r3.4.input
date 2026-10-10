@@ -1,0 +1,18 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 15 <==
+0.times { it }
+
+==> 001.rb 34 <==
+0.times do
+  it
+  it = 1
+  it
+end
+

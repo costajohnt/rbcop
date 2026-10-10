@@ -1,0 +1,153 @@
+==> offenses exit=1 1915 <==
+002.rb:5:2: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 1 instead of 0).
+003.rb:1:1: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 0 instead of 2).
+003.rb:2:3: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 4).
+003.rb:3:5: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 4 instead of 0).
+004.rb:7:1: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 0 instead of 2).
+005.rb:1:2: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 1 instead of 0).
+010.rb:3:2: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 1 instead of 0).
+010.rb:5:6: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 5 instead of 10).
+010.rb:9:3: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 4).
+010.rb:15:1: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 0 instead of 4).
+010.rb:17:4: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 3 instead of 4).
+010.rb:24:6: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 5 instead of 4).
+010.rb:34:3: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 4).
+011.rb:14:39: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 38 instead of 4).
+011.rb:16:39: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 38 instead of 4).
+012.rb:5:3: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 0).
+016.rb:2:2: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 1 instead of 2).
+
+==> autocorrect exit=0 2211 <==
+002.rb:5:2: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 1 instead of 0).
+003.rb:1:1: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 0 instead of 2).
+003.rb:1:3: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 4).
+003.rb:1:5: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 4 instead of 0).
+003.rb:2:3: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 4).
+003.rb:2:5: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 4 instead of 0).
+003.rb:3:5: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 4 instead of 0).
+004.rb:7:1: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 0 instead of 2).
+005.rb:1:2: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 1 instead of 0).
+010.rb:3:2: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 1 instead of 0).
+010.rb:5:6: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 5 instead of 10).
+010.rb:9:3: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 4).
+010.rb:15:1: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 0 instead of 4).
+010.rb:17:4: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 3 instead of 4).
+010.rb:24:6: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 5 instead of 4).
+010.rb:34:3: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 4).
+011.rb:14:39: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 38 instead of 4).
+011.rb:16:39: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 38 instead of 4).
+012.rb:5:3: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 0).
+016.rb:2:2: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 1 instead of 2).
+
+==> corrected/002.rb 37 <==
+=begin
+Doc comment
+=end
+  hello
+#
+hi
+
+==> corrected/003.rb 30 <==
+# a
+# b
+# c
+# d
+def test; end
+
+==> corrected/004.rb 55 <==
+class Foo
+  # a
+  # b
+
+  # c
+
+  # d
+  def bar; end
+end
+
+==> corrected/005.rb 14 <==
+#
+__END__
+  #
+
+==> corrected/010.rb 446 <==
+# comment 1
+# comment 2
+# comment 3
+hash1 = { a: 0,
+          # comment 4
+          bb: 1,
+          ccc: 2 }
+  if a
+    #
+    b
+  # this is accepted
+  elsif aa
+    # so is this
+  elsif bb
+  #
+  else
+    #
+  end
+  case a
+  # this is accepted
+  when 0
+    # so is this
+  when 1
+    #
+    b
+  when 2
+    # this is also accepted
+  end
+  case a
+  # this is accepted
+  in 0
+    # so is this
+  in 1
+    #
+    b
+  in 2
+    # this is also accepted
+  end
+
+==> corrected/011.rb 1120 <==
+def compile_sequence(seq, seq_var)
+  @seq_var = seq_var # Holds the name of the variable holding the AST::Node we are matching
+
+  context.with_temp_variables do |cur_child, cur_index, previous_index|
+    @cur_child_var = cur_child        # To hold the current child node
+    @cur_index_var = cur_index        # To hold the current child index (always >= 0)
+    @prev_index_var = previous_index  # To hold the child index before we enter the looping nodes
+    @cur_index = :seq_head            # Can be any of:
+    #   :seq_head : when the current child is actually the sequence head
+    #   :variadic_mode : child index held by @cur_index_var
+    #   >= 0 : when the current child index is known (from the beginning)
+    #   < 0 : when the index is known from the end, where -1 is *past the end*,
+    #         -2 is the last child, etc...
+    #         This shift of 1 from standard Ruby indices is stored in DELTA
+    @in_sync = false                  # `true` iff `@cur_child_var` and `@cur_index_var` correspond to `@cur_index`
+    # Must be true if `@cur_index` is `:variadic_mode`
+    compile_terms(seq)
+  end
+end
+
+==> corrected/012.rb 91 <==
+class A
+  # rubocop:disable
+  def foo
+  end
+# rubocop:enable
+
+private
+
+  def bar
+  end
+end
+
+==> corrected/016.rb 85 <==
+if foo
+# comment indented by 1 to align with the keyword `else` below
+else
+  bar
+end
+

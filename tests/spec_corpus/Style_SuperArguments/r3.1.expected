@@ -1,0 +1,32 @@
+==> offenses exit=1 524 <==
+000.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+001.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+002.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+003.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+
+==> autocorrect exit=0 516 <==
+000.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+001.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+002.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+003.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+
+==> corrected/000.rb 27 <==
+def method(a:)
+  super
+end
+
+==> corrected/001.rb 32 <==
+def self.method(a:)
+  super
+end
+
+==> corrected/002.rb 26 <==
+def method(&)
+  super
+end
+
+==> corrected/003.rb 31 <==
+def self.method(&)
+  super
+end
+

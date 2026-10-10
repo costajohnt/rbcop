@@ -1,0 +1,17 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 51 <==
+array.each_with_object({}) { _2[_1.id] = _1.name }
+
+==> 001.rb 62 <==
+array.each_with_object({}) { _2[_1.id] = _2[_1.id].to_i + 1 }
+
+==> 002.rb 45 <==
+array.inject({}) { _1[_2.id] = _2.name; _1 }
+

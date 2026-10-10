@@ -1,0 +1,67 @@
+==> .rubocop.yml 173 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/SuppressedException:
+  AllowComments: true
+  AllowNil: true
+
+==> 000.rb 53 <==
+begin
+  something
+  return
+rescue
+  # do nothing
+end
+
+==> 001.rb 34 <==
+def foo
+  do_something
+rescue
+end
+
+==> 002.rb 49 <==
+def foo
+  do_something
+rescue
+  # do nothing
+end
+
+==> 003.rb 39 <==
+def self.foo
+  do_something
+rescue
+end
+
+==> 004.rb 54 <==
+def self.foo
+  do_something
+rescue
+  # do nothing
+end
+
+==> 005.rb 23 <==
+foo do
+  _1
+rescue
+end
+
+==> 006.rb 38 <==
+foo do
+  _1
+rescue
+  # do nothing
+end
+
+==> 007.rb 242 <==
+RSpec.describe Dummy do
+  it 'dummy spec' do
+    # This rescue is here to ensure the test does not fail because of the `raise`
+    expect { begin subject; rescue ActiveRecord::Rollback; end }.not_to(change(Post, :count))
+    # Done
+  end
+end
+

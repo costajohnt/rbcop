@@ -1,0 +1,54 @@
+==> offenses exit=1 2000 <==
+000.rb:1:1: C: Style/DocumentationMethod: Missing method documentation comment.
+001.rb:1:1: C: Style/DocumentationMethod: Missing method documentation comment.
+002.rb:9:5: C: Style/DocumentationMethod: Missing method documentation comment.
+014.rb:1:1: C: Style/DocumentationMethod: Missing method documentation comment.
+016.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+017.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+024.rb:3:3: C: Style/DocumentationMethod: Missing method documentation comment.
+025.rb:3:3: C: Style/DocumentationMethod: Missing method documentation comment.
+026.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+028.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+029.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+034.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+035.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+036.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+042.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+044.rb:5:1: C: Style/DocumentationMethod: Missing method documentation comment.
+045.rb:5:1: C: Style/DocumentationMethod: Missing method documentation comment.
+052.rb:5:1: C: Style/DocumentationMethod: Missing method documentation comment.
+054.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+055.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+056.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+057.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+058.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+059.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+060.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+
+==> autocorrect exit=1 2000 <==
+000.rb:1:1: C: Style/DocumentationMethod: Missing method documentation comment.
+001.rb:1:1: C: Style/DocumentationMethod: Missing method documentation comment.
+002.rb:9:5: C: Style/DocumentationMethod: Missing method documentation comment.
+014.rb:1:1: C: Style/DocumentationMethod: Missing method documentation comment.
+016.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+017.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+024.rb:3:3: C: Style/DocumentationMethod: Missing method documentation comment.
+025.rb:3:3: C: Style/DocumentationMethod: Missing method documentation comment.
+026.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+028.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+029.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+034.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+035.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+036.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+042.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+044.rb:5:1: C: Style/DocumentationMethod: Missing method documentation comment.
+045.rb:5:1: C: Style/DocumentationMethod: Missing method documentation comment.
+052.rb:5:1: C: Style/DocumentationMethod: Missing method documentation comment.
+054.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+055.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+056.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+057.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+058.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+059.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+060.rb:2:3: C: Style/DocumentationMethod: Missing method documentation comment.
+

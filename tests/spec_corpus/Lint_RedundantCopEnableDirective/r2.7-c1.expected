@@ -1,0 +1,184 @@
+==> offenses exit=1 3351 <==
+000.rb:2:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout/LineLength.
+001.rb:2:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout/LineLength.
+002.rb:3:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/AbcSize.
+003.rb:2:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/ModuleLength.
+003.rb:2:40: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/AbcSize.
+004.rb:3:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/AbcSize.
+005.rb:3:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/AbcSize.
+006.rb:7:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout/LineLength.
+007.rb:2:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of all cops.
+009.rb:3:37: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/AbcSize.
+010.rb:3:36: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/AbcSize.
+011.rb:3:52: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout/EmptyLines.
+012.rb:3:37: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/AbcSize.
+013.rb:3:38: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/AbcSize.
+014.rb:2:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout/LineLength.
+014.rb:2:37: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/AbcSize.
+014.rb:2:54: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Lint/Debugger.
+015.rb:2:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/ModuleSize.
+015.rb:3:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout/LineLength.
+015.rb:3:37: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/ClassSize.
+015.rb:4:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/AbcSize.
+015.rb:4:35: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Lint/Debugger.
+016.rb:2:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout.
+017.rb:3:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics.
+018.rb:2:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics.
+018.rb:2:27: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout.
+019.rb:3:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics.
+020.rb:7:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout.
+021.rb:3:26: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout/LineLength.
+022.rb:3:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout.
+023.rb:2:1: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary `rubocop:pop` without a matching `rubocop:push`.
+024.rb:4:1: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary `rubocop:pop` without a matching `rubocop:push`.
+
+==> autocorrect exit=0 3287 <==
+000.rb:2:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout/LineLength.
+001.rb:2:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout/LineLength.
+002.rb:3:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/AbcSize.
+003.rb:2:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/ModuleLength.
+003.rb:2:40: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/AbcSize.
+004.rb:3:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/AbcSize.
+005.rb:3:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/AbcSize.
+006.rb:7:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout/LineLength.
+007.rb:2:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of all cops.
+009.rb:3:37: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/AbcSize.
+010.rb:3:36: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/AbcSize.
+011.rb:3:52: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout/EmptyLines.
+012.rb:3:37: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/AbcSize.
+013.rb:3:38: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/AbcSize.
+014.rb:2:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout/LineLength.
+014.rb:2:37: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/AbcSize.
+014.rb:2:54: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Lint/Debugger.
+015.rb:2:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/ModuleSize.
+015.rb:3:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout/LineLength.
+015.rb:3:37: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/ClassSize.
+015.rb:4:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics/AbcSize.
+015.rb:4:35: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Lint/Debugger.
+016.rb:2:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout.
+017.rb:3:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics.
+018.rb:2:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics.
+018.rb:2:27: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout.
+019.rb:3:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Metrics.
+020.rb:7:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout.
+021.rb:3:26: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout/LineLength.
+022.rb:3:18: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary enabling of Layout.
+023.rb:2:1: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary `rubocop:pop` without a matching `rubocop:push`.
+024.rb:4:1: W: [Corrected] Lint/RedundantCopEnableDirective: Unnecessary `rubocop:pop` without a matching `rubocop:push`.
+
+==> corrected/000.rb 4 <==
+foo
+
+==> corrected/001.rb 4 <==
+foo
+
+==> corrected/002.rb 75 <==
+# rubocop:disable Layout/LineLength
+foo
+# rubocop:enable Layout/LineLength
+
+==> corrected/003.rb 8 <==
+foo
+bar
+
+==> corrected/004.rb 167 <==
+# rubocop:disable Layout/LineLength
+fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo = barrrrrrrrrrrrrrrrrrrrrrrrrr
+# rubocop:enable Layout/LineLength
+bar
+
+==> corrected/005.rb 167 <==
+# rubocop:disable Layout/LineLength
+fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo = barrrrrrrrrrrrrrrrrrrrrrrrrr
+# rubocop:enable Layout/LineLength
+bar
+
+==> corrected/006.rb 173 <==
+# rubocop:disable Layout/LineLength
+fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo = barrrrrrrrrrrrrrrrrrrrrrrrrr
+# rubocop:enable Layout/LineLength
+
+bar
+
+bar
+
+==> corrected/007.rb 4 <==
+foo
+
+==> corrected/009.rb 75 <==
+# rubocop:disable Layout/LineLength
+foo
+# rubocop:enable Layout/LineLength
+
+==> corrected/010.rb 75 <==
+# rubocop:disable Layout/LineLength
+foo
+# rubocop:enable Layout/LineLength
+
+==> corrected/011.rb 105 <==
+# rubocop:disable Layout/EmptyLinesAroundClassBody
+foo
+# rubocop:enable Layout/EmptyLinesAroundClassBody
+
+==> corrected/012.rb 105 <==
+# rubocop:disable Layout/LineLength, Lint/Debugger
+foo
+# rubocop:enable Layout/LineLength, Lint/Debugger
+
+==> corrected/013.rb 107 <==
+# rubocop:disable Layout/LineLength,  Lint/Debugger
+foo
+# rubocop:enable Layout/LineLength,  Lint/Debugger
+
+==> corrected/014.rb 4 <==
+foo
+
+==> corrected/015.rb 4 <==
+foo
+
+==> corrected/016.rb 4 <==
+foo
+
+==> corrected/017.rb 75 <==
+# rubocop:disable Layout/LineLength
+foo
+# rubocop:enable Layout/LineLength
+
+==> corrected/018.rb 8 <==
+foo
+bar
+
+==> corrected/019.rb 167 <==
+# rubocop:disable Layout/LineLength
+fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo = barrrrrrrrrrrrrrrrrrrrrrrrrr
+# rubocop:enable Layout/LineLength
+bar
+
+==> corrected/020.rb 151 <==
+# rubocop:disable Layout
+fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo = barrrrrrrrrrrrrrrrrrrrrrrrrr
+# rubocop:enable Layout
+
+bar
+
+bar
+
+==> corrected/021.rb 141 <==
+# rubocop:disable Layout
+fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo = barrrrrrrrrrrrrrrrrrrrrrrrrr
+# rubocop:enable Layout
+
+==> corrected/022.rb 139 <==
+# rubocop:disable Layout/LineLength
+fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo = barrrrrrrrrrrrrrrrrrrrrrrrrr
+
+some_code
+
+==> corrected/023.rb 8 <==
+foo = 1
+
+==> corrected/024.rb 61 <==
+# rubocop:push -Style/StringLiterals
+foo = "1"
+# rubocop:pop
+

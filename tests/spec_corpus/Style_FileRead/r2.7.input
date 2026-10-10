@@ -1,0 +1,30 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 53 <==
+File.open(filename) do |f|
+  something_else.read
+end
+
+==> 001.rb 25 <==
+File.open(filename).read
+
+==> 002.rb 27 <==
+::File.open(filename).read
+
+==> 003.rb 28 <==
+File.open(filename, &:read)
+
+==> 004.rb 35 <==
+File.open(filename) { |f| f.read }
+
+==> 005.rb 40 <==
+File.open(filename) do |f|
+  f.read
+end
+

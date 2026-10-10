@@ -1,0 +1,26 @@
+==> offenses exit=1 1240 <==
+000.rb:1:1: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+001.rb:1:1: W: Lint/NumberedParameterAssignment: `_2` is reserved for numbered parameter; consider another name.
+002.rb:1:1: W: Lint/NumberedParameterAssignment: `_3` is reserved for numbered parameter; consider another name.
+003.rb:1:1: W: Lint/NumberedParameterAssignment: `_4` is reserved for numbered parameter; consider another name.
+004.rb:1:1: W: Lint/NumberedParameterAssignment: `_5` is reserved for numbered parameter; consider another name.
+005.rb:1:1: W: Lint/NumberedParameterAssignment: `_6` is reserved for numbered parameter; consider another name.
+006.rb:1:1: W: Lint/NumberedParameterAssignment: `_7` is reserved for numbered parameter; consider another name.
+007.rb:1:1: W: Lint/NumberedParameterAssignment: `_8` is reserved for numbered parameter; consider another name.
+008.rb:1:1: W: Lint/NumberedParameterAssignment: `_9` is reserved for numbered parameter; consider another name.
+009.rb:1:1: W: Lint/NumberedParameterAssignment: `_0` is similar to numbered parameter; consider another name.
+010.rb:1:1: W: Lint/NumberedParameterAssignment: `_10` is similar to numbered parameter; consider another name.
+
+==> autocorrect exit=1 1240 <==
+000.rb:1:1: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+001.rb:1:1: W: Lint/NumberedParameterAssignment: `_2` is reserved for numbered parameter; consider another name.
+002.rb:1:1: W: Lint/NumberedParameterAssignment: `_3` is reserved for numbered parameter; consider another name.
+003.rb:1:1: W: Lint/NumberedParameterAssignment: `_4` is reserved for numbered parameter; consider another name.
+004.rb:1:1: W: Lint/NumberedParameterAssignment: `_5` is reserved for numbered parameter; consider another name.
+005.rb:1:1: W: Lint/NumberedParameterAssignment: `_6` is reserved for numbered parameter; consider another name.
+006.rb:1:1: W: Lint/NumberedParameterAssignment: `_7` is reserved for numbered parameter; consider another name.
+007.rb:1:1: W: Lint/NumberedParameterAssignment: `_8` is reserved for numbered parameter; consider another name.
+008.rb:1:1: W: Lint/NumberedParameterAssignment: `_9` is reserved for numbered parameter; consider another name.
+009.rb:1:1: W: Lint/NumberedParameterAssignment: `_0` is similar to numbered parameter; consider another name.
+010.rb:1:1: W: Lint/NumberedParameterAssignment: `_10` is similar to numbered parameter; consider another name.
+

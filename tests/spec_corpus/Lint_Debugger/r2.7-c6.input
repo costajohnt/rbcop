@@ -1,0 +1,14 @@
+==> .rubocop.yml 163 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/Debugger:
+  DebuggerRequires:
+  - start_debugging
+
+==> 000.rb 26 <==
+require 'start_debugging'
+

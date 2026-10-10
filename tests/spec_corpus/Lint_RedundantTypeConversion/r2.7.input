@@ -1,0 +1,1081 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 14 <==
+foo.to_i.to_s
+
+==> 001.rb 4 <==
+to_s
+==> 002.rb 9 <==
+self.to_s
+==> 003.rb 8 <==
+foo.to_s
+==> 004.rb 11 <==
+foo.to_s(2)
+==> 005.rb 10 <==
+(foo).to_s
+==> 006.rb 14 <==
+(foo.to_s).bar
+==> 007.rb 18 <==
+(foo + 'bar').to_s
+==> 008.rb 18 <==
+'string'.to_s(arg)
+==> 009.rb 14 <==
+:sym.to_s(arg)
+==> 010.rb 11 <==
+1.to_s(arg)
+==> 011.rb 13 <==
+1.0.to_s(arg)
+==> 012.rb 12 <==
+1r.to_s(arg)
+==> 013.rb 12 <==
+1i.to_s(arg)
+==> 014.rb 12 <==
+[].to_s(arg)
+==> 015.rb 12 <==
+{}.to_s(arg)
+==> 016.rb 17 <==
+Set.new.to_s(arg)
+==> 017.rb 21 <==
+to_s = foo
+to_s.to_s
+
+==> 018.rb 14 <==
+foo.to_s.to_s
+
+==> 019.rb 16 <==
+foo&.to_s&.to_s
+
+==> 020.rb 17 <==
+foo.to_s(2).to_s
+
+==> 021.rb 19 <==
+foo&.to_s(2)&.to_s
+
+==> 022.rb 18 <==
+foo.to_s.to_s.bar
+
+==> 023.rb 21 <==
+foo&.to_s&.to_s&.bar
+
+==> 024.rb 16 <==
+(foo.to_s).to_s
+
+==> 025.rb 18 <==
+((foo.to_s)).to_s
+
+==> 026.rb 14 <==
+'string'.to_s
+
+==> 027.rb 15 <==
+'string'&.to_s
+
+==> 028.rb 16 <==
+'string'.to_s()
+
+==> 029.rb 17 <==
+'string'&.to_s()
+
+==> 030.rb 14 <==
+"string".to_s
+
+==> 031.rb 15 <==
+"string"&.to_s
+
+==> 032.rb 16 <==
+"string".to_s()
+
+==> 033.rb 17 <==
+"string"&.to_s()
+
+==> 034.rb 15 <==
+%{string}.to_s
+
+==> 035.rb 16 <==
+%{string}&.to_s
+
+==> 036.rb 17 <==
+%{string}.to_s()
+
+==> 037.rb 18 <==
+%{string}&.to_s()
+
+==> 038.rb 16 <==
+%q{string}.to_s
+
+==> 039.rb 17 <==
+%q{string}&.to_s
+
+==> 040.rb 18 <==
+%q{string}.to_s()
+
+==> 041.rb 19 <==
+%q{string}&.to_s()
+
+==> 042.rb 16 <==
+%Q{string}.to_s
+
+==> 043.rb 17 <==
+%Q{string}&.to_s
+
+==> 044.rb 18 <==
+%Q{string}.to_s()
+
+==> 045.rb 19 <==
+%Q{string}&.to_s()
+
+==> 046.rb 26 <==
+String.new("string").to_s
+
+==> 047.rb 27 <==
+String.new("string")&.to_s
+
+==> 048.rb 28 <==
+String.new("string").to_s()
+
+==> 049.rb 29 <==
+String.new("string")&.to_s()
+
+==> 050.rb 28 <==
+::String.new("string").to_s
+
+==> 051.rb 29 <==
+::String.new("string")&.to_s
+
+==> 052.rb 30 <==
+::String.new("string").to_s()
+
+==> 053.rb 31 <==
+::String.new("string")&.to_s()
+
+==> 054.rb 22 <==
+String("string").to_s
+
+==> 055.rb 23 <==
+String("string")&.to_s
+
+==> 056.rb 24 <==
+String("string").to_s()
+
+==> 057.rb 25 <==
+String("string")&.to_s()
+
+==> 058.rb 30 <==
+Kernel::String("string").to_s
+
+==> 059.rb 31 <==
+Kernel::String("string")&.to_s
+
+==> 060.rb 32 <==
+Kernel::String("string").to_s()
+
+==> 061.rb 33 <==
+Kernel::String("string")&.to_s()
+
+==> 062.rb 32 <==
+::Kernel::String("string").to_s
+
+==> 063.rb 33 <==
+::Kernel::String("string")&.to_s
+
+==> 064.rb 34 <==
+::Kernel::String("string").to_s()
+
+==> 065.rb 35 <==
+::Kernel::String("string")&.to_s()
+
+==> 066.rb 16 <==
+('string').to_s
+
+==> 067.rb 17 <==
+('string')&.to_s
+
+==> 068.rb 18 <==
+('string').to_s()
+
+==> 069.rb 19 <==
+('string')&.to_s()
+
+==> 070.rb 18 <==
+(('string')).to_s
+
+==> 071.rb 19 <==
+(('string'))&.to_s
+
+==> 072.rb 20 <==
+(('string')).to_s()
+
+==> 073.rb 21 <==
+(('string'))&.to_s()
+
+==> 074.rb 18 <==
+'string'.to_s.bar
+
+==> 075.rb 19 <==
+'string'&.to_s.bar
+
+==> 076.rb 13 <==
+inspect.to_s
+
+==> 077.rb 17 <==
+foo.inspect.to_s
+
+==> 078.rb 13 <==
+to_json.to_s
+
+==> 079.rb 17 <==
+foo.to_json.to_s
+
+==> 080.rb 25 <==
+<<~STR.to_s
+  string
+STR
+
+==> 081.rb 6 <==
+to_sym
+==> 082.rb 11 <==
+self.to_sym
+==> 083.rb 10 <==
+foo.to_sym
+==> 084.rb 13 <==
+foo.to_sym(2)
+==> 085.rb 12 <==
+(foo).to_sym
+==> 086.rb 16 <==
+(foo.to_sym).bar
+==> 087.rb 20 <==
+(foo + 'bar').to_sym
+==> 088.rb 20 <==
+'string'.to_sym(arg)
+==> 089.rb 16 <==
+:sym.to_sym(arg)
+==> 090.rb 13 <==
+1.to_sym(arg)
+==> 091.rb 15 <==
+1.0.to_sym(arg)
+==> 092.rb 14 <==
+1r.to_sym(arg)
+==> 093.rb 14 <==
+1i.to_sym(arg)
+==> 094.rb 14 <==
+[].to_sym(arg)
+==> 095.rb 14 <==
+{}.to_sym(arg)
+==> 096.rb 19 <==
+Set.new.to_sym(arg)
+==> 097.rb 27 <==
+to_sym = foo
+to_sym.to_sym
+
+==> 098.rb 18 <==
+foo.to_sym.to_sym
+
+==> 099.rb 20 <==
+foo&.to_sym&.to_sym
+
+==> 100.rb 21 <==
+foo.to_sym(2).to_sym
+
+==> 101.rb 23 <==
+foo&.to_sym(2)&.to_sym
+
+==> 102.rb 22 <==
+foo.to_sym.to_sym.bar
+
+==> 103.rb 25 <==
+foo&.to_sym&.to_sym&.bar
+
+==> 104.rb 20 <==
+(foo.to_sym).to_sym
+
+==> 105.rb 22 <==
+((foo.to_sym)).to_sym
+
+==> 106.rb 12 <==
+:sym.to_sym
+
+==> 107.rb 13 <==
+:sym&.to_sym
+
+==> 108.rb 14 <==
+:sym.to_sym()
+
+==> 109.rb 15 <==
+:sym&.to_sym()
+
+==> 110.rb 17 <==
+:"#{sym}".to_sym
+
+==> 111.rb 18 <==
+:"#{sym}"&.to_sym
+
+==> 112.rb 19 <==
+:"#{sym}".to_sym()
+
+==> 113.rb 20 <==
+:"#{sym}"&.to_sym()
+
+==> 114.rb 4 <==
+to_i
+==> 115.rb 9 <==
+self.to_i
+==> 116.rb 8 <==
+foo.to_i
+==> 117.rb 11 <==
+foo.to_i(2)
+==> 118.rb 10 <==
+(foo).to_i
+==> 119.rb 14 <==
+(foo.to_i).bar
+==> 120.rb 18 <==
+(foo + 'bar').to_i
+==> 121.rb 18 <==
+'string'.to_i(arg)
+==> 122.rb 14 <==
+:sym.to_i(arg)
+==> 123.rb 11 <==
+1.to_i(arg)
+==> 124.rb 13 <==
+1.0.to_i(arg)
+==> 125.rb 12 <==
+1r.to_i(arg)
+==> 126.rb 12 <==
+1i.to_i(arg)
+==> 127.rb 12 <==
+[].to_i(arg)
+==> 128.rb 12 <==
+{}.to_i(arg)
+==> 129.rb 17 <==
+Set.new.to_i(arg)
+==> 130.rb 21 <==
+to_i = foo
+to_i.to_i
+
+==> 131.rb 14 <==
+foo.to_i.to_i
+
+==> 132.rb 16 <==
+foo&.to_i&.to_i
+
+==> 133.rb 17 <==
+foo.to_i(2).to_i
+
+==> 134.rb 19 <==
+foo&.to_i(2)&.to_i
+
+==> 135.rb 18 <==
+foo.to_i.to_i.bar
+
+==> 136.rb 21 <==
+foo&.to_i&.to_i&.bar
+
+==> 137.rb 16 <==
+(foo.to_i).to_i
+
+==> 138.rb 18 <==
+((foo.to_i)).to_i
+
+==> 139.rb 8 <==
+42.to_i
+
+==> 140.rb 9 <==
+42&.to_i
+
+==> 141.rb 10 <==
+42.to_i()
+
+==> 142.rb 11 <==
+42&.to_i()
+
+==> 143.rb 17 <==
+Integer(42).to_i
+
+==> 144.rb 18 <==
+Integer(42)&.to_i
+
+==> 145.rb 19 <==
+Integer(42).to_i()
+
+==> 146.rb 20 <==
+Integer(42)&.to_i()
+
+==> 147.rb 22 <==
+Integer("42", 5).to_i
+
+==> 148.rb 23 <==
+Integer("42", 5)&.to_i
+
+==> 149.rb 24 <==
+Integer("42", 5).to_i()
+
+==> 150.rb 25 <==
+Integer("42", 5)&.to_i()
+
+==> 151.rb 25 <==
+Kernel::Integer(42).to_i
+
+==> 152.rb 26 <==
+Kernel::Integer(42)&.to_i
+
+==> 153.rb 27 <==
+Kernel::Integer(42).to_i()
+
+==> 154.rb 28 <==
+Kernel::Integer(42)&.to_i()
+
+==> 155.rb 27 <==
+::Kernel::Integer(42).to_i
+
+==> 156.rb 28 <==
+::Kernel::Integer(42)&.to_i
+
+==> 157.rb 29 <==
+::Kernel::Integer(42).to_i()
+
+==> 158.rb 30 <==
+::Kernel::Integer(42)&.to_i()
+
+==> 159.rb 40 <==
+Integer("number", exception: true).to_i
+
+==> 160.rb 41 <==
+Integer("number", exception: true)&.to_i
+
+==> 161.rb 42 <==
+Integer("number", exception: true).to_i()
+
+==> 162.rb 43 <==
+Integer("number", exception: true)&.to_i()
+
+==> 163.rb 40 <==
+Integer("number", exception: false).to_i
+==> 164.rb 41 <==
+Integer(obj, base, exception: false).to_i
+==> 165.rb 13 <==
+inspect.to_i
+
+==> 166.rb 4 <==
+to_f
+==> 167.rb 9 <==
+self.to_f
+==> 168.rb 8 <==
+foo.to_f
+==> 169.rb 11 <==
+foo.to_f(2)
+==> 170.rb 10 <==
+(foo).to_f
+==> 171.rb 14 <==
+(foo.to_f).bar
+==> 172.rb 18 <==
+(foo + 'bar').to_f
+==> 173.rb 18 <==
+'string'.to_f(arg)
+==> 174.rb 14 <==
+:sym.to_f(arg)
+==> 175.rb 11 <==
+1.to_f(arg)
+==> 176.rb 13 <==
+1.0.to_f(arg)
+==> 177.rb 12 <==
+1r.to_f(arg)
+==> 178.rb 12 <==
+1i.to_f(arg)
+==> 179.rb 12 <==
+[].to_f(arg)
+==> 180.rb 12 <==
+{}.to_f(arg)
+==> 181.rb 17 <==
+Set.new.to_f(arg)
+==> 182.rb 21 <==
+to_f = foo
+to_f.to_f
+
+==> 183.rb 14 <==
+foo.to_f.to_f
+
+==> 184.rb 16 <==
+foo&.to_f&.to_f
+
+==> 185.rb 17 <==
+foo.to_f(2).to_f
+
+==> 186.rb 19 <==
+foo&.to_f(2)&.to_f
+
+==> 187.rb 18 <==
+foo.to_f.to_f.bar
+
+==> 188.rb 21 <==
+foo&.to_f&.to_f&.bar
+
+==> 189.rb 16 <==
+(foo.to_f).to_f
+
+==> 190.rb 18 <==
+((foo.to_f)).to_f
+
+==> 191.rb 10 <==
+42.0.to_f
+
+==> 192.rb 11 <==
+42.0&.to_f
+
+==> 193.rb 12 <==
+42.0.to_f()
+
+==> 194.rb 13 <==
+42.0&.to_f()
+
+==> 195.rb 15 <==
+Float(42).to_f
+
+==> 196.rb 16 <==
+Float(42)&.to_f
+
+==> 197.rb 17 <==
+Float(42).to_f()
+
+==> 198.rb 18 <==
+Float(42)&.to_f()
+
+==> 199.rb 23 <==
+Kernel::Float(42).to_f
+
+==> 200.rb 24 <==
+Kernel::Float(42)&.to_f
+
+==> 201.rb 25 <==
+Kernel::Float(42).to_f()
+
+==> 202.rb 26 <==
+Kernel::Float(42)&.to_f()
+
+==> 203.rb 25 <==
+::Kernel::Float(42).to_f
+
+==> 204.rb 26 <==
+::Kernel::Float(42)&.to_f
+
+==> 205.rb 27 <==
+::Kernel::Float(42).to_f()
+
+==> 206.rb 28 <==
+::Kernel::Float(42)&.to_f()
+
+==> 207.rb 38 <==
+Float("number", exception: true).to_f
+
+==> 208.rb 39 <==
+Float("number", exception: true)&.to_f
+
+==> 209.rb 40 <==
+Float("number", exception: true).to_f()
+
+==> 210.rb 41 <==
+Float("number", exception: true)&.to_f()
+
+==> 211.rb 38 <==
+Float("number", exception: false).to_f
+==> 212.rb 4 <==
+to_d
+==> 213.rb 9 <==
+self.to_d
+==> 214.rb 8 <==
+foo.to_d
+==> 215.rb 11 <==
+foo.to_d(2)
+==> 216.rb 10 <==
+(foo).to_d
+==> 217.rb 14 <==
+(foo.to_d).bar
+==> 218.rb 18 <==
+(foo + 'bar').to_d
+==> 219.rb 18 <==
+'string'.to_d(arg)
+==> 220.rb 14 <==
+:sym.to_d(arg)
+==> 221.rb 11 <==
+1.to_d(arg)
+==> 222.rb 13 <==
+1.0.to_d(arg)
+==> 223.rb 12 <==
+1r.to_d(arg)
+==> 224.rb 12 <==
+1i.to_d(arg)
+==> 225.rb 12 <==
+[].to_d(arg)
+==> 226.rb 12 <==
+{}.to_d(arg)
+==> 227.rb 17 <==
+Set.new.to_d(arg)
+==> 228.rb 21 <==
+to_d = foo
+to_d.to_d
+
+==> 229.rb 14 <==
+foo.to_d.to_d
+
+==> 230.rb 16 <==
+foo&.to_d&.to_d
+
+==> 231.rb 17 <==
+foo.to_d(2).to_d
+
+==> 232.rb 19 <==
+foo&.to_d(2)&.to_d
+
+==> 233.rb 18 <==
+foo.to_d.to_d.bar
+
+==> 234.rb 21 <==
+foo&.to_d&.to_d&.bar
+
+==> 235.rb 16 <==
+(foo.to_d).to_d
+
+==> 236.rb 18 <==
+((foo.to_d)).to_d
+
+==> 237.rb 20 <==
+BigDecimal(42).to_d
+
+==> 238.rb 21 <==
+BigDecimal(42)&.to_d
+
+==> 239.rb 22 <==
+BigDecimal(42).to_d()
+
+==> 240.rb 23 <==
+BigDecimal(42)&.to_d()
+
+==> 241.rb 28 <==
+Kernel::BigDecimal(42).to_d
+
+==> 242.rb 29 <==
+Kernel::BigDecimal(42)&.to_d
+
+==> 243.rb 30 <==
+Kernel::BigDecimal(42).to_d()
+
+==> 244.rb 31 <==
+Kernel::BigDecimal(42)&.to_d()
+
+==> 245.rb 30 <==
+::Kernel::BigDecimal(42).to_d
+
+==> 246.rb 31 <==
+::Kernel::BigDecimal(42)&.to_d
+
+==> 247.rb 32 <==
+::Kernel::BigDecimal(42).to_d()
+
+==> 248.rb 33 <==
+::Kernel::BigDecimal(42)&.to_d()
+
+==> 249.rb 43 <==
+BigDecimal("number", exception: true).to_d
+
+==> 250.rb 44 <==
+BigDecimal("number", exception: true)&.to_d
+
+==> 251.rb 45 <==
+BigDecimal("number", exception: true).to_d()
+
+==> 252.rb 46 <==
+BigDecimal("number", exception: true)&.to_d()
+
+==> 253.rb 43 <==
+BigDecimal("number", exception: false).to_d
+==> 254.rb 41 <==
+BigDecimal(obj, n, exception: false).to_d
+==> 255.rb 4 <==
+to_r
+==> 256.rb 9 <==
+self.to_r
+==> 257.rb 8 <==
+foo.to_r
+==> 258.rb 11 <==
+foo.to_r(2)
+==> 259.rb 10 <==
+(foo).to_r
+==> 260.rb 14 <==
+(foo.to_r).bar
+==> 261.rb 18 <==
+(foo + 'bar').to_r
+==> 262.rb 18 <==
+'string'.to_r(arg)
+==> 263.rb 14 <==
+:sym.to_r(arg)
+==> 264.rb 11 <==
+1.to_r(arg)
+==> 265.rb 13 <==
+1.0.to_r(arg)
+==> 266.rb 12 <==
+1r.to_r(arg)
+==> 267.rb 12 <==
+1i.to_r(arg)
+==> 268.rb 12 <==
+[].to_r(arg)
+==> 269.rb 12 <==
+{}.to_r(arg)
+==> 270.rb 17 <==
+Set.new.to_r(arg)
+==> 271.rb 21 <==
+to_r = foo
+to_r.to_r
+
+==> 272.rb 14 <==
+foo.to_r.to_r
+
+==> 273.rb 16 <==
+foo&.to_r&.to_r
+
+==> 274.rb 17 <==
+foo.to_r(2).to_r
+
+==> 275.rb 19 <==
+foo&.to_r(2)&.to_r
+
+==> 276.rb 18 <==
+foo.to_r.to_r.bar
+
+==> 277.rb 21 <==
+foo&.to_r&.to_r&.bar
+
+==> 278.rb 16 <==
+(foo.to_r).to_r
+
+==> 279.rb 18 <==
+((foo.to_r)).to_r
+
+==> 280.rb 8 <==
+5r.to_r
+
+==> 281.rb 9 <==
+5r&.to_r
+
+==> 282.rb 10 <==
+5r.to_r()
+
+==> 283.rb 11 <==
+5r&.to_r()
+
+==> 284.rb 18 <==
+Rational(42).to_r
+
+==> 285.rb 19 <==
+Rational(42)&.to_r
+
+==> 286.rb 20 <==
+Rational(42).to_r()
+
+==> 287.rb 21 <==
+Rational(42)&.to_r()
+
+==> 288.rb 20 <==
+Rational(3, 8).to_r
+
+==> 289.rb 21 <==
+Rational(3, 8)&.to_r
+
+==> 290.rb 22 <==
+Rational(3, 8).to_r()
+
+==> 291.rb 23 <==
+Rational(3, 8)&.to_r()
+
+==> 292.rb 26 <==
+Kernel::Rational(42).to_r
+
+==> 293.rb 27 <==
+Kernel::Rational(42)&.to_r
+
+==> 294.rb 28 <==
+Kernel::Rational(42).to_r()
+
+==> 295.rb 29 <==
+Kernel::Rational(42)&.to_r()
+
+==> 296.rb 28 <==
+::Kernel::Rational(42).to_r
+
+==> 297.rb 29 <==
+::Kernel::Rational(42)&.to_r
+
+==> 298.rb 30 <==
+::Kernel::Rational(42).to_r()
+
+==> 299.rb 31 <==
+::Kernel::Rational(42)&.to_r()
+
+==> 300.rb 41 <==
+Rational("number", exception: true).to_r
+
+==> 301.rb 42 <==
+Rational("number", exception: true)&.to_r
+
+==> 302.rb 43 <==
+Rational("number", exception: true).to_r()
+
+==> 303.rb 44 <==
+Rational("number", exception: true)&.to_r()
+
+==> 304.rb 41 <==
+Rational("number", exception: false).to_r
+==> 305.rb 37 <==
+Rational(x, y, exception: false).to_r
+==> 306.rb 4 <==
+to_c
+==> 307.rb 9 <==
+self.to_c
+==> 308.rb 8 <==
+foo.to_c
+==> 309.rb 11 <==
+foo.to_c(2)
+==> 310.rb 10 <==
+(foo).to_c
+==> 311.rb 14 <==
+(foo.to_c).bar
+==> 312.rb 18 <==
+(foo + 'bar').to_c
+==> 313.rb 18 <==
+'string'.to_c(arg)
+==> 314.rb 14 <==
+:sym.to_c(arg)
+==> 315.rb 11 <==
+1.to_c(arg)
+==> 316.rb 13 <==
+1.0.to_c(arg)
+==> 317.rb 12 <==
+1r.to_c(arg)
+==> 318.rb 12 <==
+1i.to_c(arg)
+==> 319.rb 12 <==
+[].to_c(arg)
+==> 320.rb 12 <==
+{}.to_c(arg)
+==> 321.rb 17 <==
+Set.new.to_c(arg)
+==> 322.rb 21 <==
+to_c = foo
+to_c.to_c
+
+==> 323.rb 14 <==
+foo.to_c.to_c
+
+==> 324.rb 16 <==
+foo&.to_c&.to_c
+
+==> 325.rb 17 <==
+foo.to_c(2).to_c
+
+==> 326.rb 19 <==
+foo&.to_c(2)&.to_c
+
+==> 327.rb 18 <==
+foo.to_c.to_c.bar
+
+==> 328.rb 21 <==
+foo&.to_c&.to_c&.bar
+
+==> 329.rb 16 <==
+(foo.to_c).to_c
+
+==> 330.rb 18 <==
+((foo.to_c)).to_c
+
+==> 331.rb 8 <==
+5i.to_c
+
+==> 332.rb 9 <==
+5i&.to_c
+
+==> 333.rb 10 <==
+5i.to_c()
+
+==> 334.rb 11 <==
+5i&.to_c()
+
+==> 335.rb 9 <==
+5ri.to_c
+
+==> 336.rb 10 <==
+5ri&.to_c
+
+==> 337.rb 11 <==
+5ri.to_c()
+
+==> 338.rb 12 <==
+5ri&.to_c()
+
+==> 339.rb 17 <==
+Complex(42).to_c
+
+==> 340.rb 18 <==
+Complex(42)&.to_c
+
+==> 341.rb 19 <==
+Complex(42).to_c()
+
+==> 342.rb 20 <==
+Complex(42)&.to_c()
+
+==> 343.rb 19 <==
+Complex(5, 3).to_c
+
+==> 344.rb 20 <==
+Complex(5, 3)&.to_c
+
+==> 345.rb 21 <==
+Complex(5, 3).to_c()
+
+==> 346.rb 22 <==
+Complex(5, 3)&.to_c()
+
+==> 347.rb 25 <==
+Kernel::Complex(42).to_c
+
+==> 348.rb 26 <==
+Kernel::Complex(42)&.to_c
+
+==> 349.rb 27 <==
+Kernel::Complex(42).to_c()
+
+==> 350.rb 28 <==
+Kernel::Complex(42)&.to_c()
+
+==> 351.rb 27 <==
+::Kernel::Complex(42).to_c
+
+==> 352.rb 28 <==
+::Kernel::Complex(42)&.to_c
+
+==> 353.rb 29 <==
+::Kernel::Complex(42).to_c()
+
+==> 354.rb 30 <==
+::Kernel::Complex(42)&.to_c()
+
+==> 355.rb 40 <==
+Complex("number", exception: true).to_c
+
+==> 356.rb 41 <==
+Complex("number", exception: true)&.to_c
+
+==> 357.rb 42 <==
+Complex("number", exception: true).to_c()
+
+==> 358.rb 43 <==
+Complex("number", exception: true)&.to_c()
+
+==> 359.rb 40 <==
+Complex("number", exception: false).to_c
+==> 360.rb 42 <==
+Complex(real, imag, exception: false).to_c
+==> 361.rb 4 <==
+to_a
+==> 362.rb 9 <==
+self.to_a
+==> 363.rb 8 <==
+foo.to_a
+==> 364.rb 11 <==
+foo.to_a(2)
+==> 365.rb 10 <==
+(foo).to_a
+==> 366.rb 14 <==
+(foo.to_a).bar
+==> 367.rb 18 <==
+(foo + 'bar').to_a
+==> 368.rb 18 <==
+'string'.to_a(arg)
+==> 369.rb 14 <==
+:sym.to_a(arg)
+==> 370.rb 11 <==
+1.to_a(arg)
+==> 371.rb 13 <==
+1.0.to_a(arg)
+==> 372.rb 12 <==
+1r.to_a(arg)
+==> 373.rb 12 <==
+1i.to_a(arg)
+==> 374.rb 12 <==
+[].to_a(arg)
+==> 375.rb 12 <==
+{}.to_a(arg)
+==> 376.rb 17 <==
+Set.new.to_a(arg)
+==> 377.rb 21 <==
+to_a = foo
+to_a.to_a
+
+==> 378.rb 14 <==
+foo.to_a.to_a
+
+==> 379.rb 16 <==
+foo&.to_a&.to_a
+
+==> 380.rb 17 <==
+foo.to_a(2).to_a
+
+==> 381.rb 19 <==
+foo&.to_a(2)&.to_a
+
+==> 382.rb 18 <==
+foo.to_a.to_a.bar
+
+==> 383.rb 21 <==
+foo&.to_a&.to_a&.bar
+
+==> 384.rb 16 <==
+(foo.to_a).to_a
+
+==> 385.rb 18 <==
+((foo.to_a)).to_a
+
+==> 386.rb 15 <==
+[1, 2, 3].to_a
+
+==> 387.rb 16 <==
+[1, 2, 3]&.to_a
+
+==> 388.rb 17 <==
+[1, 2, 3].to_a()
+
+==> 389.rb 18 <==
+[1, 2, 3]&.to_a()
+
+==> 390.rb 26 <==
+Array.new([1, 2, 3]).to_a
+
+==> 391.rb 27 <==
+Array.new([1, 2, 3])&.to_a
+
+==> 392.rb 28 <==
+Array.new([1, 2, 3]).to_a()
+
+==> 393.rb 29 <==
+Array.new([1, 2, 3])&.to_a()
+
+==> 394.rb 28 <==
+::Array.new([1, 2, 3]).to_a
+
+==> 395.rb 29 <==
+::Array.new([1, 2, 3])&.to_a
+
+==> 396.rb 30 <==
+::Array.new([1, 2, 3]).to_a()
+
+==> 397.rb 31 <==
+::Array.new([1, 2, 3])&.to_a()
+
+==> 398.rb 22 <==
+Array([1, 2, 3]).to_a
+
+==> 399.rb 23 <==
+Array([1, 2, 3])&.to_a
+

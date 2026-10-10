@@ -1,0 +1,66 @@
+==> offenses exit=1 1212 <==
+000.rb:2:4: C: [Correctable] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+000.rb:3:3: C: [Correctable] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+000.rb:4:4: C: [Correctable] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+005.rb:2:3: C: [Correctable] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+005.rb:3:5: C: Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+006.rb:2:1: C: [Correctable] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+006.rb:3:3: C: Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+007.rb:8:7: C: [Correctable] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+009.rb:3:4: C: [Correctable] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+009.rb:5:4: C: [Correctable] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+
+==> autocorrect exit=0 1220 <==
+000.rb:2:4: C: [Corrected] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+000.rb:3:3: C: [Corrected] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+000.rb:4:4: C: [Corrected] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+005.rb:2:3: C: [Corrected] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+005.rb:3:4: C: [Corrected] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+006.rb:2:1: C: [Corrected] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+006.rb:3:4: C: [Corrected] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+007.rb:8:7: C: [Corrected] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+009.rb:3:4: C: [Corrected] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+009.rb:5:4: C: [Corrected] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+
+==> corrected/000.rb 48 <==
+array = [a,
+         b,
+         c,
+         d]
+
+==> corrected/005.rb 33 <==
+[:l1,
+ [:l2,
+  [:l3,
+   [:l4]]]]
+
+==> corrected/006.rb 33 <==
+[:l1,
+ [:l2,
+  [:l3,
+   [:l4]]]]
+
+==> corrected/007.rb 203 <==
+var = [
+       { :type => 'something',
+         :sql => <<EOF
+Select something
+from atable
+EOF
+       },
+       { :type => 'something',
+         :sql => <<EOF
+Select something
+from atable
+EOF
+       }
+]
+
+==> corrected/009.rb 31 <==
+array = [
+  a,
+  b,
+  c,
+  d
+]
+

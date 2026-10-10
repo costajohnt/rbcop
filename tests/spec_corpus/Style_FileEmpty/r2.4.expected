@@ -1,0 +1,79 @@
+==> offenses exit=1 1339 <==
+000.rb:1:1: C: [Correctable] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+001.rb:1:2: C: [Correctable] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+002.rb:1:1: C: [Correctable] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+003.rb:1:1: C: [Correctable] Style/FileEmpty: Use `FileTest.empty?('path/to/file')` instead.
+004.rb:1:1: C: [Correctable] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+005.rb:1:1: C: [Correctable] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+006.rb:1:1: C: [Correctable] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+007.rb:1:1: C: [Correctable] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+008.rb:1:1: C: [Correctable] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+009.rb:1:1: C: [Correctable] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+010.rb:1:1: C: [Correctable] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+011.rb:1:1: C: [Correctable] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+012.rb:1:1: C: [Correctable] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+013.rb:1:1: C: [Correctable] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+014.rb:1:1: C: [Correctable] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+
+==> autocorrect exit=0 1309 <==
+000.rb:1:1: C: [Corrected] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+001.rb:1:2: C: [Corrected] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+002.rb:1:1: C: [Corrected] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+003.rb:1:1: C: [Corrected] Style/FileEmpty: Use `FileTest.empty?('path/to/file')` instead.
+004.rb:1:1: C: [Corrected] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+005.rb:1:1: C: [Corrected] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+006.rb:1:1: C: [Corrected] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+007.rb:1:1: C: [Corrected] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+008.rb:1:1: C: [Corrected] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+009.rb:1:1: C: [Corrected] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+010.rb:1:1: C: [Corrected] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+011.rb:1:1: C: [Corrected] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+012.rb:1:1: C: [Corrected] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+013.rb:1:1: C: [Corrected] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+014.rb:1:1: C: [Corrected] Style/FileEmpty: Use `File.empty?('path/to/file')` instead.
+
+==> corrected/000.rb 28 <==
+File.empty?('path/to/file')
+
+==> corrected/001.rb 29 <==
+!File.empty?('path/to/file')
+
+==> corrected/002.rb 28 <==
+File.empty?('path/to/file')
+
+==> corrected/003.rb 32 <==
+FileTest.empty?('path/to/file')
+
+==> corrected/004.rb 28 <==
+File.empty?('path/to/file')
+
+==> corrected/005.rb 29 <==
+!File.empty?('path/to/file')
+
+==> corrected/006.rb 29 <==
+!File.empty?('path/to/file')
+
+==> corrected/007.rb 28 <==
+File.empty?('path/to/file')
+
+==> corrected/008.rb 28 <==
+File.empty?('path/to/file')
+
+==> corrected/009.rb 28 <==
+File.empty?('path/to/file')
+
+==> corrected/010.rb 28 <==
+File.empty?('path/to/file')
+
+==> corrected/011.rb 28 <==
+File.empty?('path/to/file')
+
+==> corrected/012.rb 28 <==
+File.empty?('path/to/file')
+
+==> corrected/013.rb 29 <==
+!File.empty?('path/to/file')
+
+==> corrected/014.rb 29 <==
+!File.empty?('path/to/file')
+

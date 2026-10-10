@@ -1,0 +1,41 @@
+==> offenses exit=1 647 <==
+001.rb:1:9: C: [Correctable] Style/MultilineIfThen: Do not use `then` for multi-line `if`.
+001.rb:3:9: C: [Correctable] Style/MultilineIfThen: Do not use `then` for multi-line `if`.
+001.rb:5:9: C: [Correctable] Style/MultilineIfThen: Do not use `then` for multi-line `if`.
+001.rb:8:1: C: [Correctable] Style/MultilineIfThen: Do not use `then` for multi-line `if`.
+001.rb:10:9: C: [Correctable] Style/MultilineIfThen: Do not use `then` for multi-line `if`.
+002.rb:3:13: C: [Correctable] Style/MultilineIfThen: Do not use `then` for multi-line `elsif`.
+007.rb:1:13: C: [Correctable] Style/MultilineIfThen: Do not use `then` for multi-line `unless`.
+
+==> autocorrect exit=0 633 <==
+001.rb:1:9: C: [Corrected] Style/MultilineIfThen: Do not use `then` for multi-line `if`.
+001.rb:3:9: C: [Corrected] Style/MultilineIfThen: Do not use `then` for multi-line `if`.
+001.rb:5:9: C: [Corrected] Style/MultilineIfThen: Do not use `then` for multi-line `if`.
+001.rb:8:1: C: [Corrected] Style/MultilineIfThen: Do not use `then` for multi-line `if`.
+001.rb:10:9: C: [Corrected] Style/MultilineIfThen: Do not use `then` for multi-line `if`.
+002.rb:3:13: C: [Corrected] Style/MultilineIfThen: Do not use `then` for multi-line `elsif`.
+007.rb:1:13: C: [Corrected] Style/MultilineIfThen: Do not use `then` for multi-line `unless`.
+
+==> corrected/001.rb 67 <==
+if cond
+end
+if cond	
+end
+if cond
+end
+if cond
+end
+if cond # bad
+end
+
+==> corrected/002.rb 33 <==
+if cond1
+  a
+elsif cond2
+  b
+end
+
+==> corrected/007.rb 16 <==
+unless cond
+end
+

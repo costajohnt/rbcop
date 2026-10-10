@@ -1,0 +1,34 @@
+==> .rubocop.yml 167 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/EmptyLineAfterMagicComment:
+  NumberOfEmptyLines: 2
+
+==> 000.rb 45 <==
+# frozen_string_literal: true
+class Foo; end
+
+==> 001.rb 46 <==
+# frozen_string_literal: true
+
+class Foo; end
+
+==> 002.rb 47 <==
+# frozen_string_literal: true
+
+
+class Foo; end
+
+==> 003.rb 48 <==
+# frozen_string_literal: true
+
+
+
+class Foo; end
+
+==> 004.rb 29 <==
+# frozen_string_literal: true

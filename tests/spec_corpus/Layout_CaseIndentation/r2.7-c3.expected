@@ -1,0 +1,24 @@
+==> offenses exit=1 168 <==
+004.rb:2:3: C: [Correctable] Layout/CaseIndentation: Indent `when` as deep as `end`.
+008.rb:2:3: C: [Correctable] Layout/CaseIndentation: Indent `in` as deep as `end`.
+
+==> autocorrect exit=0 164 <==
+004.rb:2:3: C: [Corrected] Layout/CaseIndentation: Indent `when` as deep as `end`.
+008.rb:2:3: C: [Corrected] Layout/CaseIndentation: Indent `in` as deep as `end`.
+
+==> corrected/004.rb 76 <==
+output = case variable
+when 'value1'
+    'output1'
+  else
+    'output2'
+end
+
+==> corrected/008.rb 73 <==
+output = case variable
+in pattern
+    'output1'
+  else
+    'output2'
+end
+

@@ -1,0 +1,155 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 59 <==
+class A
+  def initialize
+    return :qux if bar?
+  end
+end
+
+==> 001.rb 50 <==
+class A
+  def initialize
+    return nil
+  end
+end
+
+==> 002.rb 72 <==
+class A
+  def initialize
+    foo do
+      return :qux
+    end
+  end
+end
+
+==> 003.rb 81 <==
+class A
+  def initialize
+    foo do
+      _1
+      return :qux
+    end
+  end
+end
+
+==> 004.rb 87 <==
+class A
+  def initialize
+    define_method(:foo) do
+      return bar
+    end
+  end
+end
+
+==> 005.rb 92 <==
+class A
+  def initialize
+    self.define_method(:foo) do
+      return bar
+    end
+  end
+end
+
+==> 006.rb 97 <==
+class A
+  def initialize
+    define_singleton_method(:foo) do
+      return bar
+    end
+  end
+end
+
+==> 007.rb 72 <==
+class A
+  def initialize
+    def foo
+      return bar
+    end
+  end
+end
+
+==> 008.rb 77 <==
+class A
+  def initialize
+    def self.foo
+      return bar
+    end
+  end
+end
+
+==> 009.rb 73 <==
+class A
+  def initialize
+    proc do
+      return :qux
+    end
+  end
+end
+
+==> 010.rb 75 <==
+class A
+  def initialize
+    lambda do
+      return :qux
+    end
+  end
+end
+
+==> 011.rb 54 <==
+class A
+  def initialize
+    return if bar?
+  end
+end
+
+==> 012.rb 75 <==
+class A
+  def initialize
+    foo do
+      return if bar?
+    end
+  end
+end
+
+==> 013.rb 48 <==
+class A
+  def foo=(bar)
+    return 42
+  end
+end
+
+==> 014.rb 45 <==
+class A
+  def foo=(bar)
+    return
+  end
+end
+
+==> 015.rb 68 <==
+class A
+  def bar
+    foo
+    return :qux if bar?
+    foo
+  end
+end
+
+==> 016.rb 80 <==
+class A
+  def self.initialize
+    foo
+    return :qux if bar?
+    foo
+  end
+end
+
+==> 017.rb 15 <==
+return if true
+

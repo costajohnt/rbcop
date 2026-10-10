@@ -1,0 +1,233 @@
+==> .rubocop.yml 187 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: always_true
+
+==> 000.rb 0 <==
+
+==> 001.rb 1 <==
+ 
+==> 002.rb 37 <==
+# frozen_string_literal: true
+puts 1
+
+==> 003.rb 38 <==
+# frozen_string_literal: false
+puts 1
+
+==> 004.rb 38 <==
+# frozen_string_literal: token
+puts 1
+
+==> 005.rb 7 <==
+puts 1
+
+==> 006.rb 8 <==
+
+puts 1
+
+==> 007.rb 39 <==
+# frozen_string_literal: false
+
+puts 1
+
+==> 008.rb 39 <==
+# frozen_string_literal: token
+
+puts 1
+
+==> 009.rb 27 <==
+#!/usr/bin/env ruby
+puts 1
+
+==> 010.rb 57 <==
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+puts 1
+
+==> 011.rb 58 <==
+#!/usr/bin/env ruby
+# frozen_string_literal: false
+puts 1
+
+==> 012.rb 58 <==
+#!/usr/bin/env ruby
+# frozen_string_literal: token
+puts 1
+
+==> 013.rb 25 <==
+# encoding: utf-8
+puts 1
+
+==> 014.rb 55 <==
+# encoding: utf-8
+# frozen_string_literal: true
+puts 1
+
+==> 015.rb 56 <==
+# encoding: utf-8
+# frozen_string_literal: false
+puts 1
+
+==> 016.rb 56 <==
+# encoding: utf-8
+# frozen_string_literal: token
+puts 1
+
+==> 017.rb 45 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+puts 1
+
+==> 018.rb 75 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+# frozen_string_literal: true
+puts 1
+
+==> 019.rb 76 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+# frozen_string_literal: false
+puts 1
+
+==> 020.rb 77 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+# frozen_string_literal: tokens
+puts 1
+
+==> 021.rb 75 <==
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+# encoding: utf-8
+puts 1
+
+==> 022.rb 76 <==
+#!/usr/bin/env ruby
+# frozen_string_literal: false
+# encoding: utf-8
+puts 1
+
+==> 023.rb 77 <==
+#!/usr/bin/env ruby
+# frozen_string_literal: tokens
+# encoding: utf-8
+puts 1
+
+==> 024.rb 100 <==
+#!/usr/bin/env ruby
+# -*- encoding: UTF-8; frozen_string_literal: true -*-
+# encoding: utf-8
+puts 1
+
+==> 025.rb 39 <==
+# -*- frozen_string_literal: false -*-
+
+==> 026.rb 100 <==
+# -*- encoding: utf-8 -*-
+# -*- frozen_string_literal: false -*-
+# -*- warn_indent: true -*-
+puts 1
+
+==> 027.rb 46 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+puts 1
+
+==> 028.rb 76 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+# frozen_string_literal: true
+
+puts 1
+
+==> 029.rb 77 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+# frozen_string_literal: false
+
+puts 1
+
+==> 030.rb 78 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+# frozen_string_literal: tokens
+
+puts 1
+
+==> 031.rb 26 <==
+# encoding: utf-8
+
+puts 1
+
+==> 032.rb 56 <==
+# encoding: utf-8
+# frozen_string_literal: true
+
+puts 1
+
+==> 033.rb 57 <==
+# encoding: utf-8
+# frozen_string_literal: false
+
+puts 1
+
+==> 034.rb 58 <==
+# encoding: utf-8
+# frozen_string_literal: tokens
+
+puts 1
+
+==> 035.rb 20 <==
+#!/usr/bin/env ruby
+
+==> 036.rb 50 <==
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+==> 037.rb 103 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+#
+# These are more comments
+# frozen_string_literal: true
+puts 1
+
+==> 038.rb 104 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+#
+# These are more comments
+# frozen_string_literal: false
+puts 1
+
+==> 039.rb 56 <==
+# encoding: utf-8
+
+puts 1
+# frozen_string_literal: true
+
+==> 040.rb 51 <==
+#!/usr/bin/env ruby
+# frozen_string_literal: false
+
+==> 041.rb 52 <==
+#!/usr/bin/env ruby
+# frozen_string_literal: tokens
+
+==> 042.rb 38 <==
+# frozen_string_literal: FALSE
+puts 1
+
+==> 043.rb 38 <==
+# frozen_string_literal: falsE
+puts 1
+

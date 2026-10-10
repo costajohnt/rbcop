@@ -1,0 +1,80 @@
+==> .rubocop.yml 186 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/UnlessLogicalOperators:
+  EnforcedStyle: forbid_mixed_logical_operators
+
+==> 000.rb 26 <==
+return unless a && b || c
+
+==> 001.rb 26 <==
+return unless a || b && c
+
+==> 002.rb 27 <==
+return unless a && b and c
+
+==> 003.rb 27 <==
+return unless a and b && c
+
+==> 004.rb 26 <==
+return unless a && b or c
+
+==> 005.rb 26 <==
+return unless a or b && c
+
+==> 006.rb 26 <==
+return unless a || b or c
+
+==> 007.rb 26 <==
+return unless a or b || c
+
+==> 008.rb 27 <==
+return unless a || b and c
+
+==> 009.rb 27 <==
+return unless a and b || c
+
+==> 010.rb 33 <==
+return unless a || (b && c) || d
+
+==> 011.rb 26 <==
+return unless a && b && c
+
+==> 012.rb 26 <==
+return unless a || b || c
+
+==> 013.rb 28 <==
+return unless a and b and c
+
+==> 014.rb 26 <==
+return unless a or b or c
+
+==> 015.rb 27 <==
+return if a || b && c || d
+
+==> 016.rb 38 <==
+def condition?
+  a or b && c || d
+end
+
+==> 017.rb 17 <==
+return unless a?
+
+==> 018.rb 61 <==
+unless condition
+  includes_or_in_the_name
+
+  foo || bar
+end
+
+==> 019.rb 62 <==
+unless condition
+  includes_and_in_the_name
+
+  foo && bar
+end
+

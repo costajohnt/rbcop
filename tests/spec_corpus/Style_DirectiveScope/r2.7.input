@@ -1,0 +1,130 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 85 <==
+# rubocop:disable Metrics/AbcSize
+def foo
+  bar
+end
+# rubocop:enable Metrics/AbcSize
+
+==> 001.rb 143 <==
+# rubocop:todo Metrics/AbcSize, Metrics/MethodLength -- legacy method
+def foo
+  bar
+end
+# rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+
+==> 002.rb 80 <==
+# rubocop:push -Metrics/AbcSize -- special case
+def foo
+  bar
+end
+# rubocop:pop
+
+==> 003.rb 92 <==
+# rubocop:disable Metrics/AbcSize
+def foo
+end
+
+def bar
+end
+# rubocop:enable Metrics/AbcSize
+
+==> 004.rb 139 <==
+# rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+def foo
+end
+# rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/MethodLength
+
+==> 005.rb 38 <==
+foo # rubocop:disable Metrics/AbcSize
+
+==> 006.rb 46 <==
+# rubocop:disable Metrics/AbcSize
+def foo
+end
+
+==> 007.rb 124 <==
+# rubocop:disable Style/For
+# rubocop:push -Metrics/AbcSize +Style/For
+def foo
+end
+# rubocop:pop
+# rubocop:enable Style/For
+
+==> 008.rb 137 <==
+# rubocop:disable Metrics/AbcSize
+# rubocop:push +Metrics/AbcSize -- reviewed
+def foo
+end
+# rubocop:pop
+# rubocop:enable Metrics/AbcSize
+
+==> 009.rb 146 <==
+# rubocop:disable Metrics/AbcSize
+# rubocop:enable Metrics/AbcSize
+def foo
+end
+# rubocop:disable Metrics/AbcSize
+# rubocop:enable Metrics/AbcSize
+
+==> 010.rb 137 <==
+# rubocop:enable Metrics/AbcSize
+def foo
+end
+# rubocop:disable Metrics/AbcSize
+def bar
+end
+
+def baz
+end
+# rubocop:enable Metrics/AbcSize
+
+==> 011.rb 124 <==
+# rubocop:push -Metrics/AbcSize
+# rubocop:push -Style/For
+def foo
+end
+
+def quux
+end
+# rubocop:pop
+def bar
+end
+# rubocop:pop
+
+==> 012.rb 75 <==
+# rubocop:push
+# rubocop:disable Metrics/AbcSize
+def foo
+end
+# rubocop:pop
+
+==> 013.rb 51 <==
+# rubocop:disable-next Metrics/AbcSize
+def foo
+end
+
+==> 014.rb 86 <==
+# rubocop:disable Metrics/AbcSize
+def foo
+  bar
+end
+
+# rubocop:enable Metrics/AbcSize
+
+==> 015.rb 131 <==
+# rubocop:disable Layout/LineLength
+# some comment the pair may be protecting
+def foo
+  bar
+end
+# rubocop:enable Layout/LineLength
+

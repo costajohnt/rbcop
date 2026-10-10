@@ -1,0 +1,122 @@
+==> offenses exit=1 2148 <==
+000.rb:1:22: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+001.rb:1:22: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+002.rb:1:14: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+003.rb:1:10: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+004.rb:1:12: C: Style/Semicolon: Do not use semicolons to terminate expressions.
+005.rb:1:11: C: Style/Semicolon: Do not use semicolons to terminate expressions.
+006.rb:1:6: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+007.rb:1:12: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+008.rb:1:16: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+008.rb:1:22: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+008.rb:1:28: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+009.rb:2:7: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+016.rb:1:16: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+018.rb:1:1: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+019.rb:1:6: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+020.rb:1:9: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+021.rb:1:10: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+022.rb:1:10: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+024.rb:1:7: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+025.rb:1:4: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+026.rb:1:6: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+027.rb:1:7: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+028.rb:1:13: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+
+==> autocorrect exit=1 2106 <==
+000.rb:1:22: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+001.rb:1:22: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+002.rb:1:14: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+003.rb:1:10: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+004.rb:1:12: C: Style/Semicolon: Do not use semicolons to terminate expressions.
+005.rb:1:11: C: Style/Semicolon: Do not use semicolons to terminate expressions.
+006.rb:1:6: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+007.rb:1:12: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+008.rb:1:16: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+008.rb:1:22: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+008.rb:1:28: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+009.rb:2:7: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+016.rb:1:16: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+018.rb:1:1: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+019.rb:1:6: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+020.rb:1:9: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+021.rb:1:10: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+022.rb:1:10: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+024.rb:1:7: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+025.rb:1:4: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+026.rb:1:6: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+027.rb:1:7: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+028.rb:1:13: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+
+==> corrected/000.rb 22 <==
+puts "this is a test"
+
+==> corrected/001.rb 41 <==
+puts "this is a test"
+ puts "So is this"
+
+==> corrected/002.rb 21 <==
+x = "foo;bar"
+ y = 2
+
+==> corrected/003.rb 17 <==
+x = /a;b/
+ y = 2
+
+==> corrected/006.rb 31 <==
+x = 1
+ y = <<~TEXT
+  text
+TEXT
+
+==> corrected/007.rb 24 <==
+x = <<~TEXT
+  text
+TEXT
+
+==> corrected/008.rb 33 <==
+def foo(a) x(1)
+ y(2)
+ z(3)
+ end
+
+==> corrected/009.rb 17 <==
+foo(
+  bar)
+ baz
+
+==> corrected/016.rb 16 <==
+module Foo; end
+
+==> corrected/018.rb 8 <==
+ puts 1
+
+==> corrected/019.rb 12 <==
+foo { bar }
+
+==> corrected/020.rb 15 <==
+foo -> { bar }
+
+==> corrected/021.rb 12 <==
+foo { bar }
+
+==> corrected/022.rb 17 <==
+foo { bar
+ baz }
+
+==> corrected/024.rb 9 <==
+"#{foo}"
+
+==> corrected/025.rb 9 <==
+"#{foo}"
+
+==> corrected/026.rb 6 <==
+1..42
+
+==> corrected/027.rb 7 <==
+1...42
+
+==> corrected/028.rb 26 <==
+m key: value
+do_something
+

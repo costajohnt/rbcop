@@ -1,0 +1,214 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 9 <==
+# comment
+==> 001.rb 15 <==
+hello # comment
+==> 002.rb 38 <==
+=begin
+Doc comment
+=end
+  hello
+ #
+hi
+
+==> 003.rb 36 <==
+# a
+  # b
+    # c
+# d
+def test; end
+
+==> 004.rb 47 <==
+class Foo
+# a
+# b
+
+# c
+
+# d
+  def bar; end
+end
+
+==> 005.rb 15 <==
+ #
+__END__
+  #
+
+==> 006.rb 306 <==
+#
+def m
+  #
+  if a
+    #
+    b
+  # this is accepted
+  elsif aa
+    # this is accepted
+  else
+    #
+  end
+  #
+  case a
+  # this is accepted
+  when 0
+    #
+    b
+  end
+  # this is accepted
+  case a
+  # this is accepted
+  in 0
+    #
+    b
+  end
+  # this is accepted
+rescue
+# this is accepted
+ensure
+  #
+end
+#
+
+==> 007.rb 23 <==
+def m
+  # comment
+
+end
+
+==> 008.rb 75 <==
+#
+a = {
+  #
+  x: [
+    1
+    #
+  ],
+  #
+  y: func(
+    1
+    #
+  )
+  #
+}
+#
+
+==> 009.rb 14 <==
+#
+result = []
+
+==> 010.rb 438 <==
+ # comment 1
+ # comment 2
+ # comment 3
+hash1 = { a: 0,
+     # comment 4
+          bb: 1,
+          ccc: 2 }
+  if a
+  #
+    b
+  # this is accepted
+  elsif aa
+    # so is this
+  elsif bb
+#
+  else
+   #
+  end
+  case a
+  # this is accepted
+  when 0
+    # so is this
+  when 1
+     #
+    b
+  when 2
+    # this is also accepted
+  end
+  case a
+  # this is accepted
+  in 0
+    # so is this
+  in 1
+  #
+    b
+  in 2
+    # this is also accepted
+  end
+
+==> 011.rb 1358 <==
+def compile_sequence(seq, seq_var)
+  @seq_var = seq_var # Holds the name of the variable holding the AST::Node we are matching
+
+  context.with_temp_variables do |cur_child, cur_index, previous_index|
+    @cur_child_var = cur_child        # To hold the current child node
+    @cur_index_var = cur_index        # To hold the current child index (always >= 0)
+    @prev_index_var = previous_index  # To hold the child index before we enter the looping nodes
+    @cur_index = :seq_head            # Can be any of:
+                                      #   :seq_head : when the current child is actually the sequence head
+                                      #   :variadic_mode : child index held by @cur_index_var
+                                      #   >= 0 : when the current child index is known (from the beginning)
+                                      #   < 0 : when the index is known from the end, where -1 is *past the end*,
+                                      #         -2 is the last child, etc...
+                                      #         This shift of 1 from standard Ruby indices is stored in DELTA
+    @in_sync = false                  # `true` iff `@cur_child_var` and `@cur_index_var` correspond to `@cur_index`
+                                      # Must be true if `@cur_index` is `:variadic_mode`
+    compile_terms(seq)
+  end
+end
+
+==> 012.rb 93 <==
+class A
+  # rubocop:disable
+  def foo
+  end
+  # rubocop:enable
+
+private
+
+  def bar
+  end
+end
+
+==> 013.rb 90 <==
+class A
+  # rubocop:disable
+  def foo
+  end
+# rubocop:enable
+private
+
+  def bar
+  end
+end
+
+==> 014.rb 64 <==
+class A
+  # Explains what bar does.
+  private def bar
+  end
+end
+
+==> 015.rb 63 <==
+class A
+# Explains what bar does.
+private
+
+  def bar
+  end
+end
+
+==> 016.rb 86 <==
+if foo
+ # comment indented by 1 to align with the keyword `else` below
+else
+  bar
+end
+

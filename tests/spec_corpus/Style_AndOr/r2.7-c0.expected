@@ -1,0 +1,74 @@
+==> offenses exit=1 689 <==
+001.rb:1:6: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+003.rb:1:9: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+005.rb:1:9: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+007.rb:3:13: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+009.rb:3:13: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+012.rb:1:6: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+014.rb:1:9: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+016.rb:1:9: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+018.rb:3:13: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+020.rb:3:13: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+
+==> autocorrect exit=0 669 <==
+001.rb:1:6: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+003.rb:1:9: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+005.rb:1:9: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+007.rb:3:13: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+009.rb:3:13: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+012.rb:1:6: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+014.rb:1:9: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+016.rb:1:9: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+018.rb:3:13: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+020.rb:3:13: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+
+==> corrected/001.rb 29 <==
+if a && b
+  do_something
+end
+
+==> corrected/003.rb 32 <==
+while a && b
+  do_something
+end
+
+==> corrected/005.rb 32 <==
+until a && b
+  do_something
+end
+
+==> corrected/007.rb 38 <==
+begin
+  do_something
+end while a && b
+
+==> corrected/009.rb 38 <==
+begin
+  do_something
+end until a && b
+
+==> corrected/012.rb 29 <==
+if a || b
+  do_something
+end
+
+==> corrected/014.rb 32 <==
+while a || b
+  do_something
+end
+
+==> corrected/016.rb 32 <==
+until a || b
+  do_something
+end
+
+==> corrected/018.rb 38 <==
+begin
+  do_something
+end while a || b
+
+==> corrected/020.rb 38 <==
+begin
+  do_something
+end until a || b
+

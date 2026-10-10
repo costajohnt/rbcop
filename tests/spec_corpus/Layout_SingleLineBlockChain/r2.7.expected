@@ -1,0 +1,28 @@
+==> offenses exit=1 516 <==
+000.rb:1:37: C: [Correctable] Layout/SingleLineBlockChain: Put method call on a separate line if chained to a single line block.
+001.rb:1:28: C: [Correctable] Layout/SingleLineBlockChain: Put method call on a separate line if chained to a single line block.
+002.rb:1:37: C: [Correctable] Layout/SingleLineBlockChain: Put method call on a separate line if chained to a single line block.
+003.rb:1:37: C: [Correctable] Layout/SingleLineBlockChain: Put method call on a separate line if chained to a single line block.
+
+==> autocorrect exit=0 508 <==
+000.rb:1:37: C: [Corrected] Layout/SingleLineBlockChain: Put method call on a separate line if chained to a single line block.
+001.rb:1:28: C: [Corrected] Layout/SingleLineBlockChain: Put method call on a separate line if chained to a single line block.
+002.rb:1:37: C: [Corrected] Layout/SingleLineBlockChain: Put method call on a separate line if chained to a single line block.
+003.rb:1:37: C: [Corrected] Layout/SingleLineBlockChain: Put method call on a separate line if chained to a single line block.
+
+==> corrected/000.rb 48 <==
+example.select { |item| item.cond? }
+.join('-')
+
+==> corrected/001.rb 39 <==
+example.select { _1.cond? }
+.join('-')
+
+==> corrected/002.rb 49 <==
+example.select { |item| item.cond? }
+&.join('-')
+
+==> corrected/003.rb 43 <==
+example.select { |item| item.cond? }
+.(42)
+

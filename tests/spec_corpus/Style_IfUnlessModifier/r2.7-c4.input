@@ -1,0 +1,21 @@
+==> .rubocop.yml 231 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LineLength:
+  Enabled: true
+  Max: 80
+  AllowURI: true
+  AllowCopDirectives: false
+  URISchemes:
+  - http
+  - https
+
+==> 000.rb 118 <==
+def f
+  puts '                                                         ' if condition # rubocop:disable Style/For
+end
+

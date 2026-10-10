@@ -1,0 +1,123 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/Semicolon:
+  AllowAsExpressionSeparator: false
+
+==> 000.rb 23 <==
+puts "this is a test";
+
+==> 001.rb 41 <==
+puts "this is a test"; puts "So is this"
+
+==> 002.rb 21 <==
+x = "foo;bar"; y = 2
+
+==> 003.rb 17 <==
+x = /a;b/; y = 2
+
+==> 004.rb 31 <==
+x = <<~TEXT; y = 2
+  text
+TEXT
+
+==> 005.rb 43 <==
+x = <<~ONE; y = <<~TWO
+  one
+ONE
+  two
+TWO
+
+==> 006.rb 31 <==
+x = 1; y = <<~TEXT
+  text
+TEXT
+
+==> 007.rb 25 <==
+x = <<~TEXT;
+  text
+TEXT
+
+==> 008.rb 33 <==
+def foo(a) x(1); y(2); z(3); end
+
+==> 009.rb 17 <==
+foo(
+  bar); baz
+
+==> 010.rb 20 <==
+def foo(a) z(3); end
+==> 011.rb 20 <==
+def foo(a); z(3) end
+==> 012.rb 84 <==
+def foo1; x(3) end
+def initialize(*_); end
+def foo2() x(3); end
+def foo3; x(3); end
+
+==> 013.rb 87 <==
+# Prefer a single-line format for class ...
+class Foo < Exception; end
+
+class Bar; end
+
+==> 014.rb 80 <==
+# One exception to the rule are empty-body methods
+def no_op; end
+
+def foo; end
+
+==> 015.rb 15 <==
+module Foo; end
+==> 016.rb 17 <==
+module Foo; end;
+
+==> 017.rb 31 <==
+string = ";
+multi-line string"
+
+==> 018.rb 9 <==
+; puts 1
+
+==> 019.rb 13 <==
+foo {; bar }
+
+==> 020.rb 16 <==
+foo -> {; bar }
+
+==> 021.rb 13 <==
+foo { bar; }
+
+==> 022.rb 17 <==
+foo { bar; baz }
+
+==> 023.rb 12 <==
+# ;
+foo {
+}
+
+==> 024.rb 10 <==
+"#{foo;}"
+
+==> 025.rb 10 <==
+"#{;foo}"
+
+==> 026.rb 7 <==
+1..42;
+
+==> 027.rb 8 <==
+1...42;
+
+==> 028.rb 27 <==
+m key: value;
+do_something
+
+==> 029.rb 43 <==
+def foo
+  bar = baz if qux rescue quux
+end
+

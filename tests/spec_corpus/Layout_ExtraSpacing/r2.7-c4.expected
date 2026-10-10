@@ -1,0 +1,9 @@
+==> offenses exit=1 81 <==
+000.rb:1:24: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+
+==> autocorrect exit=0 79 <==
+000.rb:1:24: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+
+==> corrected/000.rb 44 <==
+object.method(argument) # this is a comment
+

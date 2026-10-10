@@ -1,0 +1,38 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.6
+
+==> 000.rb 18 <==
+ERB.new(str, nil)
+
+==> 001.rb 23 <==
+ERB.new(str, nil, '-')
+
+==> 002.rb 41 <==
+ERB.new(str, nil, '-', '@output_buffer')
+
+==> 003.rb 84 <==
+ERB.new(str, nil, '-', '@output_buffer', trim_mode: '-', eoutvar: '@output_buffer')
+
+==> 004.rb 66 <==
+ERB.new(str, nil, '-', trim_mode: '-', eoutvar: '@output_buffer')
+
+==> 005.rb 43 <==
+::ERB.new(str, nil, '-', '@output_buffer')
+
+==> 006.rb 56 <==
+ERB.new(str, trim_mode: '-', eoutvar: '@output_buffer')
+
+==> 007.rb 13 <==
+ERB.new(str)
+
+==> 008.rb 34 <==
+ERB.new(str, nil, trim_mode: '-')
+
+==> 009.rb 8 <==
+ERB.new
+

@@ -1,0 +1,75 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 23 <==
+if cond
+elsif cond
+end
+
+==> 001.rb 92 <==
+if cond then
+end
+if cond then	
+end
+if cond then
+end
+if cond
+then
+end
+if cond then # bad
+end
+
+==> 002.rb 38 <==
+if cond1
+  a
+elsif cond2 then
+  b
+end
+
+==> 003.rb 36 <==
+if cond1 then a
+elsif cond2
+  b
+end
+
+==> 004.rb 180 <==
+if    @io == $stdout then str << "$stdout"
+elsif @io == $stdin  then str << "$stdin"
+elsif @io == $stderr then str << "$stderr"
+else                      str << @io.class.to_s
+end
+
+==> 005.rb 38 <==
+if a
+  case b
+  when c then
+  end
+end
+
+==> 006.rb 36 <==
+if a # then
+  b
+end
+if c # then
+end
+
+==> 007.rb 21 <==
+unless cond then
+end
+
+==> 008.rb 14 <==
+two unless one
+==> 009.rb 31 <==
+if two
+  puts 1
+end unless two
+
+==> 010.rb 16 <==
+if cond then end
+==> 011.rb 20 <==
+unless cond then end

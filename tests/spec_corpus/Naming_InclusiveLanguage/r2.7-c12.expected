@@ -1,0 +1,6 @@
+==> offenses exit=1 107 <==
+000.rb:1:19: C: Naming/InclusiveLanguage: Consider replacing 'master' with 'main', 'primary', or 'leader'.
+
+==> autocorrect exit=1 107 <==
+000.rb:1:19: C: Naming/InclusiveLanguage: Consider replacing 'master' with 'main', 'primary', or 'leader'.
+

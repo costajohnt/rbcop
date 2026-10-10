@@ -1,0 +1,6 @@
+==> offenses exit=1 69 <==
+000.rb:1:13: C: Style/InlineComment: Avoid trailing inline comments.
+
+==> autocorrect exit=1 69 <==
+000.rb:1:13: C: Style/InlineComment: Avoid trailing inline comments.
+

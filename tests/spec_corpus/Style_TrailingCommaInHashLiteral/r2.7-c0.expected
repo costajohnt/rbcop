@@ -1,0 +1,17 @@
+==> offenses exit=1 214 <==
+000.rb:1:34: C: [Correctable] Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
+004.rb:3:16: C: [Correctable] Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
+
+==> autocorrect exit=0 210 <==
+000.rb:1:34: C: [Corrected] Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
+004.rb:3:16: C: [Corrected] Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
+
+==> corrected/000.rb 36 <==
+MAP = { a: 1001, b: 2020, c: 3333 }
+
+==> corrected/004.rb 58 <==
+MAP = { a: 1001,
+        b: 2020,
+        c: 3333
+      }
+

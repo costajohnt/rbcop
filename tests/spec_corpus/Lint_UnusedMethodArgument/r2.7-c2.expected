@@ -1,0 +1,22 @@
+==> offenses exit=1 1282 <==
+002.rb:1:12: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `arg`. If it's necessary, use `_` or `_arg` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `method(*)` if you want the method to accept any arguments but don't care about them.
+004.rb:1:12: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `a`. If it's necessary, use `_` or `_a` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `method(*)` if you want the method to accept any arguments but don't care about them.
+004.rb:1:15: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `b`. If it's necessary, use `_` or `_b` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `method(*)` if you want the method to accept any arguments but don't care about them.
+004.rb:1:19: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `others`. If it's necessary, use `_` or `_others` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `method(*)` if you want the method to accept any arguments but don't care about them.
+
+==> autocorrect exit=0 1274 <==
+002.rb:1:12: W: [Corrected] Lint/UnusedMethodArgument: Unused method argument - `arg`. If it's necessary, use `_` or `_arg` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `method(*)` if you want the method to accept any arguments but don't care about them.
+004.rb:1:12: W: [Corrected] Lint/UnusedMethodArgument: Unused method argument - `a`. If it's necessary, use `_` or `_a` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `method(*)` if you want the method to accept any arguments but don't care about them.
+004.rb:1:15: W: [Corrected] Lint/UnusedMethodArgument: Unused method argument - `b`. If it's necessary, use `_` or `_b` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `method(*)` if you want the method to accept any arguments but don't care about them.
+004.rb:1:19: W: [Corrected] Lint/UnusedMethodArgument: Unused method argument - `others`. If it's necessary, use `_` or `_others` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `method(*)` if you want the method to accept any arguments but don't care about them.
+
+==> corrected/002.rb 25 <==
+def method(_arg)
+  1
+end
+
+==> corrected/004.rb 37 <==
+def method(_a, _b, *_others)
+  1
+end
+

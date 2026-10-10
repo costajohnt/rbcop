@@ -1,0 +1,110 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 14 <==
+IO.read(path)
+
+==> 001.rb 21 <==
+IO.write(path, "hi")
+
+==> 002.rb 17 <==
+IO.binread(path)
+
+==> 003.rb 24 <==
+IO.binwrite(path, "hi")
+
+==> 004.rb 19 <==
+IO.readlines(path)
+
+==> 005.rb 32 <==
+IO.foreach(path) { |x| puts x }
+
+==> 006.rb 19 <==
+IO.read("command")
+
+==> 007.rb 26 <==
+IO.write("command", "hi")
+
+==> 008.rb 29 <==
+IO.binwrite("command", "hi")
+
+==> 009.rb 24 <==
+IO.readlines("command")
+
+==> 010.rb 37 <==
+IO.foreach("command") { |x| puts x }
+
+==> 011.rb 20 <==
+IO.read(:some_path)
+
+==> 012.rb 13 <==
+IO.read(123)
+
+==> 013.rb 20 <==
+IO.write(123, "hi")
+
+==> 014.rb 16 <==
+File.read(path)
+
+==> 015.rb 19 <==
+File.binread(path)
+
+==> 016.rb 26 <==
+File.binwrite(path, "hi")
+
+==> 017.rb 21 <==
+File.readlines(path)
+
+==> 018.rb 34 <==
+File.foreach(path) { |x| puts x }
+
+==> 019.rb 16 <==
+read("command")
+
+==> 020.rb 23 <==
+write("command", "hi")
+
+==> 021.rb 26 <==
+binwrite("command", "hi")
+
+==> 022.rb 21 <==
+readlines("command")
+
+==> 023.rb 34 <==
+foreach("command") { |x| puts x }
+
+==> 024.rb 21 <==
+IO.read("| command")
+
+==> 025.rb 28 <==
+IO.write("| command", "hi")
+
+==> 026.rb 31 <==
+IO.binwrite("| command", "hi")
+
+==> 027.rb 26 <==
+IO.readlines("| command")
+
+==> 028.rb 39 <==
+IO.foreach("| command") { |x| puts x }
+
+==> 029.rb 22 <==
+IO.read(" | command")
+
+==> 030.rb 29 <==
+IO.write(" | command", "hi")
+
+==> 031.rb 32 <==
+IO.binwrite(" | command", "hi")
+
+==> 032.rb 27 <==
+IO.readlines(" | command")
+
+==> 033.rb 40 <==
+IO.foreach(" | command") { |x| puts x }
+

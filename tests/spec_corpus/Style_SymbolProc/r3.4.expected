@@ -1,0 +1,60 @@
+==> offenses exit=1 1300 <==
+000.rb:1:18: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `reject` instead of a block.
+001.rb:1:21: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `reject` instead of a block.
+003.rb:1:18: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `select` instead of a block.
+004.rb:1:21: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `select` instead of a block.
+006.rb:1:4: C: [Correctable] Style/SymbolProc: Pass `&:method` as an argument to `lambda` instead of a block.
+007.rb:1:6: C: [Correctable] Style/SymbolProc: Pass `&:method` as an argument to `proc` instead of a block.
+009.rb:1:10: C: [Correctable] Style/SymbolProc: Pass `&:method` as an argument to `new` instead of a block.
+010.rb:1:12: C: [Correctable] Style/SymbolProc: Pass `&:method` as an argument to `new` instead of a block.
+011.rb:1:4: C: [Correctable] Style/SymbolProc: Pass `&:method` as an argument to `lambda` instead of a block.
+012.rb:1:6: C: [Correctable] Style/SymbolProc: Pass `&:method` as an argument to `proc` instead of a block.
+014.rb:1:10: C: [Correctable] Style/SymbolProc: Pass `&:method` as an argument to `new` instead of a block.
+015.rb:1:12: C: [Correctable] Style/SymbolProc: Pass `&:method` as an argument to `new` instead of a block.
+
+==> autocorrect exit=0 1276 <==
+000.rb:1:18: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `reject` instead of a block.
+001.rb:1:21: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `reject` instead of a block.
+003.rb:1:18: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `select` instead of a block.
+004.rb:1:21: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `select` instead of a block.
+006.rb:1:4: C: [Corrected] Style/SymbolProc: Pass `&:method` as an argument to `lambda` instead of a block.
+007.rb:1:6: C: [Corrected] Style/SymbolProc: Pass `&:method` as an argument to `proc` instead of a block.
+009.rb:1:10: C: [Corrected] Style/SymbolProc: Pass `&:method` as an argument to `new` instead of a block.
+010.rb:1:12: C: [Corrected] Style/SymbolProc: Pass `&:method` as an argument to `new` instead of a block.
+011.rb:1:4: C: [Corrected] Style/SymbolProc: Pass `&:method` as an argument to `lambda` instead of a block.
+012.rb:1:6: C: [Corrected] Style/SymbolProc: Pass `&:method` as an argument to `proc` instead of a block.
+014.rb:1:10: C: [Corrected] Style/SymbolProc: Pass `&:method` as an argument to `new` instead of a block.
+015.rb:1:12: C: [Corrected] Style/SymbolProc: Pass `&:method` as an argument to `new` instead of a block.
+
+==> corrected/000.rb 24 <==
+[1, 2, 3].reject(&:foo)
+
+==> corrected/001.rb 27 <==
+do_something.reject(&:foo)
+
+==> corrected/003.rb 24 <==
+[1, 2, 3].select(&:foo)
+
+==> corrected/004.rb 27 <==
+do_something.select(&:foo)
+
+==> corrected/006.rb 16 <==
+lambda(&:method)
+==> corrected/007.rb 14 <==
+proc(&:method)
+==> corrected/009.rb 18 <==
+Proc.new(&:method)
+==> corrected/010.rb 20 <==
+::Proc.new(&:method)
+==> corrected/011.rb 17 <==
+lambda(&:method)
+
+==> corrected/012.rb 15 <==
+proc(&:method)
+
+==> corrected/014.rb 19 <==
+Proc.new(&:method)
+
+==> corrected/015.rb 21 <==
+::Proc.new(&:method)
+

@@ -1,0 +1,11 @@
+==> offenses exit=1 82 <==
+000.rb:2:5: C: [Correctable] Style/DigChain: Use `dig(*, *)` instead of chaining.
+
+==> autocorrect exit=0 80 <==
+000.rb:2:5: C: [Corrected] Style/DigChain: Use `dig(*, *)` instead of chaining.
+
+==> corrected/000.rb 29 <==
+def foo(*)
+  x.dig(*, *)
+end
+

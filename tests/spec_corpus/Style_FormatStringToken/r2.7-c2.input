@@ -1,0 +1,28 @@
+==> .rubocop.yml 338 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/FormatStringToken:
+  EnforcedStyle: :annotated
+  SupportedStyles:
+  - :annotated
+  - :template
+  - :unannotated
+  MaxUnannotatedPlaceholdersAllowed: 0
+  AllowedMethods:
+  - redirect
+  AllowedPatterns: []
+  Mode: :aggressive
+
+==> 000.rb 19 <==
+redirect("%{foo}")
+
+==> 001.rb 34 <==
+redirect("%{foo}", bye: "%{foo}")
+
+==> 002.rb 39 <==
+redirect("%{foo}", bye: foo("%{foo}"))
+

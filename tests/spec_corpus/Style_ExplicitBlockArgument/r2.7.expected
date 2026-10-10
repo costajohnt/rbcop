@@ -1,0 +1,129 @@
+==> offenses exit=1 2682 <==
+000.rb:2:3: C: [Correctable] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+001.rb:2:3: C: [Correctable] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+003.rb:2:3: C: [Correctable] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+004.rb:2:3: C: [Correctable] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+005.rb:2:3: C: [Correctable] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+006.rb:2:3: C: [Correctable] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+006.rb:7:5: C: [Correctable] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+006.rb:9:5: C: [Correctable] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+008.rb:2:3: C: [Correctable] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+009.rb:2:3: C: [Correctable] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+014.rb:2:3: C: [Correctable] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+015.rb:2:3: C: [Correctable] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+016.rb:2:3: C: [Correctable] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+017.rb:2:3: C: [Correctable] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+018.rb:2:3: C: [Correctable] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+019.rb:2:3: C: [Correctable] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+019.rb:6:3: C: [Correctable] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+020.rb:3:5: C: [Correctable] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+
+==> autocorrect exit=0 2646 <==
+000.rb:2:3: C: [Corrected] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+001.rb:2:3: C: [Corrected] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+003.rb:2:3: C: [Corrected] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+004.rb:2:3: C: [Corrected] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+005.rb:2:3: C: [Corrected] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+006.rb:2:3: C: [Corrected] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+006.rb:7:5: C: [Corrected] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+006.rb:9:5: C: [Corrected] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+008.rb:2:3: C: [Corrected] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+009.rb:2:3: C: [Corrected] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+014.rb:2:3: C: [Corrected] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+015.rb:2:3: C: [Corrected] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+016.rb:2:3: C: [Corrected] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+017.rb:2:3: C: [Corrected] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+018.rb:2:3: C: [Corrected] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+019.rb:2:3: C: [Corrected] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+019.rb:6:3: C: [Corrected] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+020.rb:3:5: C: [Corrected] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+
+==> corrected/000.rb 55 <==
+def m(&block)
+  items.something(first_arg, &block)
+end
+
+==> corrected/001.rb 55 <==
+def m(&block)
+  items.something(first_arg, &block)
+end
+
+==> corrected/003.rb 40 <==
+def m(&blk)
+  items.something(&blk)
+end
+
+==> corrected/004.rb 50 <==
+def m(&block)
+  items.something(a, b, &block)
+end
+
+==> corrected/005.rb 51 <==
+def do_something(&block)
+  array&.each(&block)
+end
+
+==> corrected/006.rb 163 <==
+def m(&block)
+  items.something(&block)
+
+  if condition
+    yield 2
+  elsif other_condition
+    3.times(&block)
+  else
+    other_items.something(&block)
+  end
+end
+
+==> corrected/008.rb 36 <==
+def m(&block)
+  3.times(&block)
+end
+
+==> corrected/009.rb 45 <==
+def do_something(&block)
+  super(&block)
+end
+
+==> corrected/014.rb 40 <==
+def my_method(&block)
+  foo(&block)
+end
+
+==> corrected/015.rb 42 <==
+def my_method(&block)
+  super(&block)
+end
+
+==> corrected/016.rb 46 <==
+def my_method(x, &block)
+  foo(x, &block)
+end
+
+==> corrected/017.rb 95 <==
+def my_method(x, y = 42, *args, **options, &block)
+  super(x, y, *args, **options, &block)
+end
+
+==> corrected/018.rb 100 <==
+def self.my_method(x, y = 42, *args, **options, &block)
+  super(x, y, *args, **options, &block)
+end
+
+==> corrected/019.rb 69 <==
+def foo(&block)
+  bar(&block)
+end
+
+def foo(&block)
+  bar(&block)
+end
+
+==> corrected/020.rb 56 <==
+def foo
+  def bar.baz(&block)
+    qux(&block)
+  end
+end
+

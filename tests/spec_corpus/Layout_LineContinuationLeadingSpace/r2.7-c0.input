@@ -1,0 +1,83 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LineContinuationLeadingSpace:
+  EnforcedStyle: trailing
+
+==> 000.rb 29 <==
+'this text is too' \
+' long'
+
+==> 001.rb 31 <==
+'this text is too' \
+  ' long'
+
+==> 002.rb 56 <==
+'this text contains a lot of' \
+'               spaces'
+
+==> 003.rb 45 <==
+'this text is too' \
+' long' \
+'  long long'
+
+==> 004.rb 80 <==
+something_unrelated_to_the_line_continuation_below
+'this text is too' \
+' long'
+
+==> 005.rb 55 <==
+long_method_name 'this text is too' \
+  ' long' do
+end
+
+==> 006.rb 53 <==
+long_method_name(
+  'this text is too' \
+  ' long'
+)
+
+==> 007.rb 31 <==
+'"this text is too" \
+" long"'
+
+==> 008.rb 15 <==
+"" "foo
+bar\
+"
+
+==> 009.rb 19 <==
+"foo
+bar" \
+" baz"
+
+==> 010.rb 13 <==
+"foo #{bar}"
+
+==> 011.rb 24 <==
+"foo #{bar} baz #{qux}"
+
+==> 012.rb 23 <==
+"foo #{bar}" \
+' long'
+
+==> 013.rb 27 <==
+'this line is' \
+" #{foo}"
+
+==> 014.rb 23 <==
+"five is #{2 + \
+  3}"
+
+==> 015.rb 26 <==
+"foo #{'bar ' \
+  'baz'}"
+
+==> 016.rb 26 <==
+"foo #{'bar' \
+  ' baz'}"
+

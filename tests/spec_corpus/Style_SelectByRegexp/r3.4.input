@@ -1,0 +1,116 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 36 <==
+array.select { it.match? /regexp/ }
+
+==> 001.rb 37 <==
+array&.select { it.match? /regexp/ }
+
+==> 002.rb 37 <==
+array.select { /regexp/.match?(it) }
+
+==> 003.rb 32 <==
+array.select { it =~ /regexp/ }
+
+==> 004.rb 32 <==
+array.select { /regexp/ =~ it }
+
+==> 005.rb 42 <==
+array.select { /regexp/.match?(foo(it)) }
+
+==> 006.rb 37 <==
+array.select { |item| match?(item) }
+
+==> 007.rb 38 <==
+array.find_all { it.match? /regexp/ }
+
+==> 008.rb 39 <==
+array&.find_all { it.match? /regexp/ }
+
+==> 009.rb 39 <==
+array.find_all { /regexp/.match?(it) }
+
+==> 010.rb 34 <==
+array.find_all { it =~ /regexp/ }
+
+==> 011.rb 34 <==
+array.find_all { /regexp/ =~ it }
+
+==> 012.rb 44 <==
+array.find_all { /regexp/.match?(foo(it)) }
+
+==> 013.rb 39 <==
+array.find_all { |item| match?(item) }
+
+==> 014.rb 36 <==
+array.filter { it.match? /regexp/ }
+
+==> 015.rb 37 <==
+array&.filter { it.match? /regexp/ }
+
+==> 016.rb 37 <==
+array.filter { /regexp/.match?(it) }
+
+==> 017.rb 32 <==
+array.filter { it =~ /regexp/ }
+
+==> 018.rb 32 <==
+array.filter { /regexp/ =~ it }
+
+==> 019.rb 42 <==
+array.filter { /regexp/.match?(foo(it)) }
+
+==> 020.rb 37 <==
+array.filter { |item| match?(item) }
+
+==> 021.rb 32 <==
+array.reject { it !~ /regexp/ }
+
+==> 022.rb 32 <==
+array.reject { /regexp/ !~ it }
+
+==> 023.rb 36 <==
+array.reject { it.match? /regexp/ }
+
+==> 024.rb 37 <==
+array&.reject { it.match? /regexp/ }
+
+==> 025.rb 37 <==
+array.reject { /regexp/.match?(it) }
+
+==> 026.rb 32 <==
+array.reject { it =~ /regexp/ }
+
+==> 027.rb 32 <==
+array.reject { /regexp/ =~ it }
+
+==> 028.rb 42 <==
+array.reject { /regexp/.match?(foo(it)) }
+
+==> 029.rb 37 <==
+array.reject { |item| match?(item) }
+
+==> 030.rb 32 <==
+array.select { it !~ /regexp/ }
+
+==> 031.rb 32 <==
+array.select { /regexp/ !~ it }
+
+==> 032.rb 34 <==
+array.find_all { it !~ /regexp/ }
+
+==> 033.rb 34 <==
+array.find_all { /regexp/ !~ it }
+
+==> 034.rb 32 <==
+array.filter { it !~ /regexp/ }
+
+==> 035.rb 32 <==
+array.filter { /regexp/ !~ it }
+

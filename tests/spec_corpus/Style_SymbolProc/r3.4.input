@@ -1,0 +1,51 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 28 <==
+[1, 2, 3].reject { it.foo }
+
+==> 001.rb 31 <==
+do_something.reject { it.foo }
+
+==> 002.rb 28 <==
+{foo: 42}.reject { it.foo }
+
+==> 003.rb 28 <==
+[1, 2, 3].select { it.foo }
+
+==> 004.rb 31 <==
+do_something.select { it.foo }
+
+==> 005.rb 28 <==
+{foo: 42}.select { it.foo }
+
+==> 006.rb 16 <==
+-> { _1.method }
+==> 007.rb 18 <==
+proc { _1.method }
+==> 008.rb 22 <==
+something { _2.first }
+==> 009.rb 22 <==
+Proc.new { _1.method }
+==> 010.rb 24 <==
+::Proc.new { _1.method }
+==> 011.rb 17 <==
+-> { _1.method }
+
+==> 012.rb 19 <==
+proc { _1.method }
+
+==> 013.rb 23 <==
+something { _2.first }
+
+==> 014.rb 23 <==
+Proc.new { _1.method }
+
+==> 015.rb 25 <==
+::Proc.new { _1.method }
+

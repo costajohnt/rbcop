@@ -1,0 +1,8 @@
+==> offenses exit=1 186 <==
+000.gemspec:5:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+001.gemspec:5:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+
+==> autocorrect exit=1 186 <==
+000.gemspec:5:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+001.gemspec:5:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+

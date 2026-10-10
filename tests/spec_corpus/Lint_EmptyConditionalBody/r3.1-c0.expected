@@ -1,0 +1,6 @@
+==> offenses exit=1 82 <==
+000.rb:3:3: W: Lint/EmptyConditionalBody: Avoid `unless` branches without a body.
+
+==> autocorrect exit=1 82 <==
+000.rb:3:3: W: Lint/EmptyConditionalBody: Avoid `unless` branches without a body.
+

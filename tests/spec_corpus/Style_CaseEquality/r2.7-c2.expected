@@ -1,0 +1,16 @@
+==> offenses exit=1 287 <==
+000.rb:1:12: C: [Correctable] Style/CaseEquality: Avoid the use of the case equality operator `===`.
+004.rb:1:9: C: [Correctable] Style/CaseEquality: Avoid the use of the case equality operator `===`.
+005.rb:1:5: C: Style/CaseEquality: Avoid the use of the case equality operator `===`.
+
+==> autocorrect exit=1 283 <==
+000.rb:1:12: C: [Corrected] Style/CaseEquality: Avoid the use of the case equality operator `===`.
+004.rb:1:9: C: [Corrected] Style/CaseEquality: Avoid the use of the case equality operator `===`.
+005.rb:1:5: C: Style/CaseEquality: Avoid the use of the case equality operator `===`.
+
+==> corrected/000.rb 22 <==
+var.is_a?(self.class)
+
+==> corrected/004.rb 22 <==
+(1..10).include?(var)
+

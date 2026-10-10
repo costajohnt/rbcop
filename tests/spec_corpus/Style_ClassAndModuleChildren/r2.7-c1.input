@@ -1,0 +1,205 @@
+==> .rubocop.yml 163 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+
+==> 000.rb 42 <==
+class FooClass
+  class BarClass
+  end
+end
+
+==> 001.rb 77 <==
+module FooModule
+  module BarModule
+    def method_example
+    end
+  end
+end
+
+==> 002.rb 166 <==
+module FooModule
+  module BarModule
+    module BazModule
+      module QuxModule
+        CONST = 1
+
+        def method_example
+        end
+      end
+    end
+  end
+end
+
+==> 003.rb 75 <==
+class Foo::Bar
+  class Baz
+  end
+end
+
+class Foo
+  class Bar::Baz
+  end
+end
+
+==> 004.rb 54 <==
+class Foo
+  class Bar
+    class Baz
+    end
+  end
+end
+
+==> 005.rb 79 <==
+module Foo::Bar
+  module Baz
+  end
+end
+
+module Foo
+  module Bar::Baz
+  end
+end
+
+==> 006.rb 88 <==
+# describe Foo
+# more Foo
+class Foo
+  # describe Bar
+  # more Bar
+  class Bar
+  end
+end
+
+==> 007.rb 61 <==
+class FooClass::BarClass
+end
+
+module FooClass::BarModule
+end
+
+==> 008.rb 136 <==
+class FooClass
+  class BarClass
+  end
+  class BazClass
+  end
+end
+
+module FooModule
+  module BarModule
+  end
+  class BazModule
+  end
+end
+
+==> 009.rb 42 <==
+class FooClass
+  def bar_method
+  end
+end
+
+==> 010.rb 50 <==
+class FooClass < Super
+  class BarClass
+  end
+end
+
+==> 011.rb 53 <==
+module A
+	module B
+		module C
+			body
+		end
+	end
+end
+
+==> 012.rb 25 <==
+module M
+class C
+end
+end
+
+==> 013.rb 41 <==
+module M
+class C
+def foo; 1; end
+end
+end
+
+==> 014.rb 47 <==
+module M
+  class C
+  def foo; 1; end
+  end
+end
+
+==> 015.rb 52 <==
+module A
+	module B
+		module C
+		body
+		end
+	end
+end
+
+==> 016.rb 49 <==
+module A
+	module B
+	module C
+	body
+	end
+	end
+end
+
+==> 017.rb 50 <==
+module A
+	module B
+	module C
+		body
+	end
+	end
+end
+
+==> 018.rb 41 <==
+class FooClass
+  class BarClass; end
+end
+
+==> 019.rb 66 <==
+class A < B
+  class C
+    class D; end
+  end
+
+  class E
+  end
+end
+
+==> 020.rb 92 <==
+class A < B
+  class F
+    class C
+      class D; end
+    end
+
+    class E
+    end
+  end
+end
+
+==> 021.rb 69 <==
+class A < B
+  class C
+    class D;    end
+  end
+
+  class E
+  end
+end
+

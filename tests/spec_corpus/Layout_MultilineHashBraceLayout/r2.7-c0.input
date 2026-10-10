@@ -1,0 +1,52 @@
+==> .rubocop.yml 170 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/MultilineHashBraceLayout:
+  EnforcedStyle: symmetrical
+
+==> 000.rb 16 <==
+foo(a: 1,
+b: 2)
+
+==> 001.rb 12 <==
+{a: 1, b: 2}
+==> 002.rb 2 <==
+{}
+==> 003.rb 9 <==
+{a,
+b
+}
+
+
+==> 004.rb 17 <==
+{a, # a
+b # b
+}
+
+
+==> 005.rb 8 <==
+{
+a,
+b}
+
+==> 006.rb 32 <==
+bar({a: 1,
+b: 2 # comment b
+}
+)
+
+==> 007.rb 20 <==
+bar({a: 1,
+b: 2
+}
+)
+
+==> 008.rb 17 <==
+{a, # a
+b, # b
+}
+

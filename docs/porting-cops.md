@@ -522,6 +522,15 @@ disabled-by-default cops are covered too. Diffs land in `$TMPDIR/rbcop-check/<pi
 the difference. A cop is done when the full gate prints `all corpora match`. Also run
 `cargo test --release` and `cargo clippy --release --all-targets` (no warnings) before committing.
 
+### Spec corpus (cargo test)
+
+`tests/spec_corpus` holds every cop's RuboCop spec examples (extracted like the cold corpus below,
+with `SPEC=1`: untagged examples at 2.7 only, no `expect_correction` sources) and RuboCop's
+recorded `--only <cop>` offenses and `-A --only <cop>` output, one `.input`/`.expected` pair per
+cop and config variant. `tests/spec_corpus.rs` checks rbcop against it, no Ruby needed.
+`scripts/record-spec-corpus.sh <rubocop-src>` re-records it; examples left out are listed with
+their reason (known gap or issue number) in `tests/spec_corpus/skip.txt`.
+
 ### Cold cops
 
 Cops with almost no offenses on the corpora (Gemfile/gemspec-only cops, low-target cops, specs whose

@@ -1,0 +1,12 @@
+==> offenses exit=1 514 <==
+000.rb:1:1: C: Style/ImplicitRuntimeError: Use `raise` with an explicit exception class and message, rather than just a message.
+001.rb:1:1: C: Style/ImplicitRuntimeError: Use `fail` with an explicit exception class and message, rather than just a message.
+002.rb:1:1: C: Style/ImplicitRuntimeError: Use `raise` with an explicit exception class and message, rather than just a message.
+003.rb:1:1: C: Style/ImplicitRuntimeError: Use `fail` with an explicit exception class and message, rather than just a message.
+
+==> autocorrect exit=1 514 <==
+000.rb:1:1: C: Style/ImplicitRuntimeError: Use `raise` with an explicit exception class and message, rather than just a message.
+001.rb:1:1: C: Style/ImplicitRuntimeError: Use `fail` with an explicit exception class and message, rather than just a message.
+002.rb:1:1: C: Style/ImplicitRuntimeError: Use `raise` with an explicit exception class and message, rather than just a message.
+003.rb:1:1: C: Style/ImplicitRuntimeError: Use `fail` with an explicit exception class and message, rather than just a message.
+

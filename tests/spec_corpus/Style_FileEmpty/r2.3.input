@@ -1,0 +1,28 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.3
+
+==> 000.rb 26 <==
+File.zero?('path/to/file')
+==> 001.rb 30 <==
+FileTest.zero?('path/to/file')
+==> 002.rb 30 <==
+File.size('path/to/file') == 0
+==> 003.rb 31 <==
+File.size('path/to/file').zero?
+==> 004.rb 32 <==
+File.read('path/to/file').empty?
+==> 005.rb 35 <==
+File.binread('path/to/file').empty?
+==> 006.rb 31 <==
+File.read('path/to/file') == ''
+==> 007.rb 34 <==
+File.binread('path/to/file') == ''
+==> 008.rb 27 <==
+File.empty?("path/to/file")
+==> 009.rb 27 <==
+File.exist?("path/to/file")

@@ -1,0 +1,18 @@
+==> offenses exit=1 186 <==
+000.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `protected` access modifier.
+001.rb:2:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.
+
+==> autocorrect exit=0 182 <==
+000.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+001.rb:2:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+
+==> corrected/000.rb 38 <==
+Data.define do
+  do_something(it)
+end
+
+==> corrected/001.rb 38 <==
+Data.define do
+  do_something(it)
+end
+

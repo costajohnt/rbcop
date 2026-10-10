@@ -1,0 +1,70 @@
+==> offenses exit=1 1148 <==
+008.rb:1:3: C: [Correctable] Style/DigChain: Use `dig(:foo, :bar, :baz)` instead of chaining.
+009.rb:1:7: C: [Correctable] Style/DigChain: Use `dig(:foo, :bar, :baz)` instead of chaining.
+010.rb:1:3: C: [Correctable] Style/DigChain: Use `dig(:foo, :bar, :baz, :quux)` instead of chaining.
+011.rb:1:3: C: [Correctable] Style/DigChain: Use `dig(:foo, :bar, :baz, :quux)` instead of chaining.
+012.rb:1:4: C: [Correctable] Style/DigChain: Use `dig(:foo, :bar, :baz, :quux)` instead of chaining.
+013.rb:1:1: C: [Correctable] Style/DigChain: Use `dig(:foo, :bar, :baz, :quux)` instead of chaining.
+014.rb:1:3: C: [Correctable] Style/DigChain: Use `dig(:foo, :bar, :baz, :quux)` instead of chaining.
+015.rb:1:3: C: [Correctable] Style/DigChain: Use `dig(:foo, *names, :bar)` instead of chaining.
+016.rb:1:3: C: [Correctable] Style/DigChain: Use `dig(:foo, :bar, :baz)` instead of chaining.
+017.rb:1:3: C: [Correctable] Style/DigChain: Use `dig(:foo, :bar, :baz)` instead of chaining.
+018.rb:2:7: C: [Correctable] Style/DigChain: Use `dig(:a, :b)` instead of chaining.
+019.rb:2:5: C: [Correctable] Style/DigChain: Use `dig(:foo, ...)` instead of chaining.
+
+==> autocorrect exit=0 1124 <==
+008.rb:1:3: C: [Corrected] Style/DigChain: Use `dig(:foo, :bar, :baz)` instead of chaining.
+009.rb:1:7: C: [Corrected] Style/DigChain: Use `dig(:foo, :bar, :baz)` instead of chaining.
+010.rb:1:3: C: [Corrected] Style/DigChain: Use `dig(:foo, :bar, :baz, :quux)` instead of chaining.
+011.rb:1:3: C: [Corrected] Style/DigChain: Use `dig(:foo, :bar, :baz, :quux)` instead of chaining.
+012.rb:1:4: C: [Corrected] Style/DigChain: Use `dig(:foo, :bar, :baz, :quux)` instead of chaining.
+013.rb:1:1: C: [Corrected] Style/DigChain: Use `dig(:foo, :bar, :baz, :quux)` instead of chaining.
+014.rb:1:3: C: [Corrected] Style/DigChain: Use `dig(:foo, :bar, :baz, :quux)` instead of chaining.
+015.rb:1:3: C: [Corrected] Style/DigChain: Use `dig(:foo, *names, :bar)` instead of chaining.
+016.rb:1:3: C: [Corrected] Style/DigChain: Use `dig(:foo, :bar, :baz)` instead of chaining.
+017.rb:1:3: C: [Corrected] Style/DigChain: Use `dig(:foo, :bar, :baz)` instead of chaining.
+018.rb:2:7: C: [Corrected] Style/DigChain: Use `dig(:a, :b)` instead of chaining.
+019.rb:2:5: C: [Corrected] Style/DigChain: Use `dig(:foo, ...)` instead of chaining.
+
+==> corrected/008.rb 24 <==
+x.dig(:foo, :bar, :baz)
+
+==> corrected/009.rb 28 <==
+x.y.z.dig(:foo, :bar, :baz)
+
+==> corrected/010.rb 31 <==
+x.dig(:foo, :bar, :baz, :quux)
+
+==> corrected/011.rb 31 <==
+x.dig(:foo, :bar, :baz, :quux)
+
+==> corrected/012.rb 32 <==
+x&.dig(:foo, :bar, :baz, :quux)
+
+==> corrected/013.rb 29 <==
+dig(:foo, :bar, :baz, :quux)
+
+==> corrected/014.rb 31 <==
+x.dig(:foo, :bar, :baz, :quux)
+
+==> corrected/015.rb 26 <==
+x.dig(:foo, *names, :bar)
+
+==> corrected/016.rb 24 <==
+x.dig(:foo, :bar, :baz)
+
+==> corrected/017.rb 60 <==
+# comment 1
+# comment 2
+x.dig(:foo, :bar, :baz) # comment 3
+
+==> corrected/018.rb 32 <==
+def m
+  foo.dig(:a, :b) # c
+end
+
+==> corrected/019.rb 36 <==
+def foo(...)
+  x.dig(:foo, ...)
+end
+

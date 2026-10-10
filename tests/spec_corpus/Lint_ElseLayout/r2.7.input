@@ -1,0 +1,83 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 52 <==
+if something
+  test
+else ala
+  something
+  test
+end
+
+==> 001.rb 44 <==
+if something
+  test
+else something_else
+end
+
+==> 002.rb 55 <==
+if something then test
+else something_else
+  other
+end
+
+==> 003.rb 47 <==
+if something then test
+else something_else
+end
+
+==> 004.rb 48 <==
+if something
+  test
+else
+  something
+  test
+end
+
+==> 005.rb 75 <==
+if something
+  test
+elsif something
+  bala
+else ala
+  something
+  test
+end
+
+==> 006.rb 103 <==
+if condition_foo
+  foo
+elsif condition_bar
+  bar
+elsif condition_baz
+  baz
+else qux
+  quux
+  corge
+end
+
+==> 007.rb 9 <==
+x ? a : b
+==> 008.rb 14 <==
+x if something
+==> 009.rb 32 <==
+if something
+  ()
+else
+  ()
+end
+
+==> 010.rb 44 <==
+if something
+  foo
+elsif something_else
+end
+
+==> 011.rb 23 <==
+if a then b else c end
+

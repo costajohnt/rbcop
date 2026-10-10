@@ -1,0 +1,227 @@
+==> offenses exit=1 5389 <==
+004.rb:2:1: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+005.rb:2:2: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+007.rb:2:4: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+007.rb:4:4: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+008.rb:3:5: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+009.rb:3:2: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+019.rb:2:1: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+021.rb:2:4: C: [Correctable] Layout/MultilineOperationIndentation: Use 4 (not 3) spaces for indenting a condition in an `if` statement spanning multiple lines.
+026.rb:3:3: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+028.rb:2:3: C: [Correctable] Layout/MultilineOperationIndentation: Use 4 (not 2) spaces for indenting a condition in an `if` statement spanning multiple lines.
+028.rb:3:3: C: [Correctable] Layout/MultilineOperationIndentation: Use 4 (not 2) spaces for indenting a condition in an `if` statement spanning multiple lines.
+031.rb:2:3: C: [Correctable] Layout/MultilineOperationIndentation: Use 4 (not 2) spaces for indenting a condition in an `unless` statement spanning multiple lines.
+031.rb:3:3: C: [Correctable] Layout/MultilineOperationIndentation: Use 4 (not 2) spaces for indenting a condition in an `unless` statement spanning multiple lines.
+034.rb:2:3: C: [Correctable] Layout/MultilineOperationIndentation: Use 4 (not 2) spaces for indenting a condition in a `while` statement spanning multiple lines.
+034.rb:3:3: C: [Correctable] Layout/MultilineOperationIndentation: Use 4 (not 2) spaces for indenting a condition in a `while` statement spanning multiple lines.
+037.rb:2:3: C: [Correctable] Layout/MultilineOperationIndentation: Use 4 (not 2) spaces for indenting a condition in an `until` statement spanning multiple lines.
+037.rb:3:3: C: [Correctable] Layout/MultilineOperationIndentation: Use 4 (not 2) spaces for indenting a condition in an `until` statement spanning multiple lines.
+041.rb:2:3: C: [Correctable] Layout/MultilineOperationIndentation: Use 4 (not 2) spaces for indenting a collection in a `for` statement spanning multiple lines.
+044.rb:4:5: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+045.rb:2:5: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 4) spaces for indenting an expression in an assignment spanning multiple lines.
+045.rb:3:5: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 4) spaces for indenting an expression in an assignment spanning multiple lines.
+046.rb:2:9: C: [Correctable] Layout/MultilineOperationIndentation: Use 4 (not 8) spaces for indenting a condition in an `if` statement spanning multiple lines.
+047.rb:2:9: C: [Correctable] Layout/MultilineOperationIndentation: Use 4 (not 8) spaces for indenting a condition in an `if` statement spanning multiple lines.
+047.rb:3:9: C: [Correctable] Layout/MultilineOperationIndentation: Use 4 (not 8) spaces for indenting a condition in an `if` statement spanning multiple lines.
+049.rb:3:9: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
+050.rb:2:9: C: [Correctable] Layout/MultilineOperationIndentation: Use 4 (not 8) spaces for indenting a condition in an `unless` statement spanning multiple lines.
+050.rb:3:9: C: [Correctable] Layout/MultilineOperationIndentation: Use 4 (not 8) spaces for indenting a condition in an `unless` statement spanning multiple lines.
+052.rb:3:9: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
+053.rb:2:9: C: [Correctable] Layout/MultilineOperationIndentation: Use 4 (not 8) spaces for indenting a condition in a `while` statement spanning multiple lines.
+053.rb:3:9: C: [Correctable] Layout/MultilineOperationIndentation: Use 4 (not 8) spaces for indenting a condition in a `while` statement spanning multiple lines.
+055.rb:3:9: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
+056.rb:2:9: C: [Correctable] Layout/MultilineOperationIndentation: Use 4 (not 8) spaces for indenting a condition in an `until` statement spanning multiple lines.
+056.rb:3:9: C: [Correctable] Layout/MultilineOperationIndentation: Use 4 (not 8) spaces for indenting a condition in an `until` statement spanning multiple lines.
+058.rb:3:9: C: [Correctable] Layout/MultilineOperationIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
+059.rb:2:7: C: [Correctable] Layout/MultilineOperationIndentation: Use 4 (not 6) spaces for indenting a condition in an `until` statement spanning multiple lines.
+
+==> autocorrect exit=0 5319 <==
+004.rb:2:1: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+005.rb:2:2: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+007.rb:2:4: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+007.rb:4:4: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+008.rb:3:5: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+009.rb:3:2: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+019.rb:2:1: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+021.rb:2:4: C: [Corrected] Layout/MultilineOperationIndentation: Use 4 (not 3) spaces for indenting a condition in an `if` statement spanning multiple lines.
+026.rb:3:3: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+028.rb:2:3: C: [Corrected] Layout/MultilineOperationIndentation: Use 4 (not 2) spaces for indenting a condition in an `if` statement spanning multiple lines.
+028.rb:3:3: C: [Corrected] Layout/MultilineOperationIndentation: Use 4 (not 2) spaces for indenting a condition in an `if` statement spanning multiple lines.
+031.rb:2:3: C: [Corrected] Layout/MultilineOperationIndentation: Use 4 (not 2) spaces for indenting a condition in an `unless` statement spanning multiple lines.
+031.rb:3:3: C: [Corrected] Layout/MultilineOperationIndentation: Use 4 (not 2) spaces for indenting a condition in an `unless` statement spanning multiple lines.
+034.rb:2:3: C: [Corrected] Layout/MultilineOperationIndentation: Use 4 (not 2) spaces for indenting a condition in a `while` statement spanning multiple lines.
+034.rb:3:3: C: [Corrected] Layout/MultilineOperationIndentation: Use 4 (not 2) spaces for indenting a condition in a `while` statement spanning multiple lines.
+037.rb:2:3: C: [Corrected] Layout/MultilineOperationIndentation: Use 4 (not 2) spaces for indenting a condition in an `until` statement spanning multiple lines.
+037.rb:3:3: C: [Corrected] Layout/MultilineOperationIndentation: Use 4 (not 2) spaces for indenting a condition in an `until` statement spanning multiple lines.
+041.rb:2:3: C: [Corrected] Layout/MultilineOperationIndentation: Use 4 (not 2) spaces for indenting a collection in a `for` statement spanning multiple lines.
+044.rb:4:5: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+045.rb:2:5: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 4) spaces for indenting an expression in an assignment spanning multiple lines.
+045.rb:3:5: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 4) spaces for indenting an expression in an assignment spanning multiple lines.
+046.rb:2:9: C: [Corrected] Layout/MultilineOperationIndentation: Use 4 (not 8) spaces for indenting a condition in an `if` statement spanning multiple lines.
+047.rb:2:9: C: [Corrected] Layout/MultilineOperationIndentation: Use 4 (not 8) spaces for indenting a condition in an `if` statement spanning multiple lines.
+047.rb:3:9: C: [Corrected] Layout/MultilineOperationIndentation: Use 4 (not 8) spaces for indenting a condition in an `if` statement spanning multiple lines.
+049.rb:3:9: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
+050.rb:2:9: C: [Corrected] Layout/MultilineOperationIndentation: Use 4 (not 8) spaces for indenting a condition in an `unless` statement spanning multiple lines.
+050.rb:3:9: C: [Corrected] Layout/MultilineOperationIndentation: Use 4 (not 8) spaces for indenting a condition in an `unless` statement spanning multiple lines.
+052.rb:3:9: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
+053.rb:2:9: C: [Corrected] Layout/MultilineOperationIndentation: Use 4 (not 8) spaces for indenting a condition in a `while` statement spanning multiple lines.
+053.rb:3:9: C: [Corrected] Layout/MultilineOperationIndentation: Use 4 (not 8) spaces for indenting a condition in a `while` statement spanning multiple lines.
+055.rb:3:9: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
+056.rb:2:9: C: [Corrected] Layout/MultilineOperationIndentation: Use 4 (not 8) spaces for indenting a condition in an `until` statement spanning multiple lines.
+056.rb:3:9: C: [Corrected] Layout/MultilineOperationIndentation: Use 4 (not 8) spaces for indenting a condition in an `until` statement spanning multiple lines.
+058.rb:3:9: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
+059.rb:2:7: C: [Corrected] Layout/MultilineOperationIndentation: Use 4 (not 6) spaces for indenting a condition in an `until` statement spanning multiple lines.
+
+==> corrected/004.rb 8 <==
+a +
+  b
+
+==> corrected/005.rb 8 <==
+a +
+  b
+
+==> corrected/007.rb 19 <==
+a ||
+  b
+c and
+  d
+
+==> corrected/008.rb 16 <==
+a ||
+  b ||
+  c
+
+==> corrected/009.rb 14 <==
+[
+ a +
+   b
+]
+
+==> corrected/019.rb 12 <==
+a +
+  b < 3
+
+==> corrected/021.rb 29 <==
+if a +
+    b
+  something
+end
+
+==> corrected/026.rb 50 <==
+def config_to_allow_offenses
+  a +
+    b == c
+end
+
+==> corrected/028.rb 88 <==
+if receiver.nil? &&
+    !args.empty? &&
+    FORBIDDEN_METHODS.include?(method_name)
+end
+
+==> corrected/031.rb 92 <==
+unless receiver.nil? &&
+    !args.empty? &&
+    FORBIDDEN_METHODS.include?(method_name)
+end
+
+==> corrected/034.rb 91 <==
+while receiver.nil? &&
+    !args.empty? &&
+    FORBIDDEN_METHODS.include?(method_name)
+end
+
+==> corrected/037.rb 91 <==
+until receiver.nil? &&
+    !args.empty? &&
+    FORBIDDEN_METHODS.include?(method_name)
+end
+
+==> corrected/041.rb 23 <==
+for n in a +
+    b
+end
+
+==> corrected/044.rb 19 <==
+a ||
+  b
+c and
+  d
+
+==> corrected/045.rb 18 <==
+a = b +
+  c +
+  d
+
+==> corrected/046.rb 29 <==
+if a +
+    b
+  something
+end
+
+==> corrected/047.rb 118 <==
+if receiver.nil? &&
+    !args.empty? &&
+    FORBIDDEN_METHODS.include?(method_name)
+end
+if receiver.
+        nil?
+end
+
+==> corrected/049.rb 43 <==
+if a
+  something &&
+    something_else
+end
+
+==> corrected/050.rb 126 <==
+unless receiver.nil? &&
+    !args.empty? &&
+    FORBIDDEN_METHODS.include?(method_name)
+end
+unless receiver.
+        nil?
+end
+
+==> corrected/052.rb 47 <==
+unless a
+  something &&
+    something_else
+end
+
+==> corrected/053.rb 124 <==
+while receiver.nil? &&
+    !args.empty? &&
+    FORBIDDEN_METHODS.include?(method_name)
+end
+while receiver.
+        nil?
+end
+
+==> corrected/055.rb 46 <==
+while a
+  something &&
+    something_else
+end
+
+==> corrected/056.rb 124 <==
+until receiver.nil? &&
+    !args.empty? &&
+    FORBIDDEN_METHODS.include?(method_name)
+end
+until receiver.
+        nil?
+end
+
+==> corrected/058.rb 46 <==
+until a
+  something &&
+    something_else
+end
+
+==> corrected/059.rb 32 <==
+until a +
+    b
+  something
+end
+

@@ -1,0 +1,43 @@
+==> offenses exit=1 490 <==
+000.rb:1:1: C: [Correctable] Style/EndlessMethod: Avoid endless method definitions.
+000.rb:1:9: C: Style/EndlessMethod: Avoid endless method definitions.
+001.rb:1:1: C: [Correctable] Style/EndlessMethod: Avoid endless method definitions.
+002.rb:1:1: C: [Correctable] Style/EndlessMethod: Avoid endless method definitions.
+003.rb:1:1: C: [Correctable] Style/EndlessMethod: Avoid endless method definitions.
+004.rb:1:1: C: [Correctable] Style/EndlessMethod: Avoid endless method definitions.
+
+==> autocorrect exit=0 492 <==
+000.rb:1:1: C: [Corrected] Style/EndlessMethod: Avoid endless method definitions.
+000.rb:2:3: C: [Corrected] Style/EndlessMethod: Avoid endless method definitions.
+001.rb:1:1: C: [Corrected] Style/EndlessMethod: Avoid endless method definitions.
+002.rb:1:1: C: [Corrected] Style/EndlessMethod: Avoid endless method definitions.
+003.rb:1:1: C: [Corrected] Style/EndlessMethod: Avoid endless method definitions.
+004.rb:1:1: C: [Corrected] Style/EndlessMethod: Avoid endless method definitions.
+
+==> corrected/000.rb 30 <==
+def a
+  def b
+    1
+  end
+end
+
+==> corrected/001.rb 22 <==
+def my_method
+  x
+end
+
+==> corrected/002.rb 27 <==
+def self.my_method
+  x
+end
+
+==> corrected/003.rb 28 <==
+def self::my_method
+  x
+end
+
+==> corrected/004.rb 28 <==
+def my_method(a, b)
+  x
+end
+

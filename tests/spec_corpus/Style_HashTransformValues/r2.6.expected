@@ -1,0 +1,29 @@
+==> offenses exit=1 505 <==
+001.rb:1:1: C: [Correctable] Style/HashTransformValues: Prefer `transform_values` over `to_h {...}`.
+002.rb:1:1: C: [Correctable] Style/HashTransformValues: Prefer `transform_values` over `to_h {...}`.
+003.rb:1:1: C: [Correctable] Style/HashTransformValues: Prefer `transform_values` over `to_h {...}`.
+004.rb:1:1: C: [Correctable] Style/HashTransformValues: Prefer `transform_values` over `to_h {...}`.
+005.rb:1:1: C: [Correctable] Style/HashTransformValues: Prefer `transform_values` over `to_h {...}`.
+
+==> autocorrect exit=0 495 <==
+001.rb:1:1: C: [Corrected] Style/HashTransformValues: Prefer `transform_values` over `to_h {...}`.
+002.rb:1:1: C: [Corrected] Style/HashTransformValues: Prefer `transform_values` over `to_h {...}`.
+003.rb:1:1: C: [Corrected] Style/HashTransformValues: Prefer `transform_values` over `to_h {...}`.
+004.rb:1:1: C: [Corrected] Style/HashTransformValues: Prefer `transform_values` over `to_h {...}`.
+005.rb:1:1: C: [Corrected] Style/HashTransformValues: Prefer `transform_values` over `to_h {...}`.
+
+==> corrected/001.rb 43 <==
+{a: 1, b: 2}.transform_values {|v| foo(v)}
+
+==> corrected/002.rb 41 <==
+x.merge(y).transform_values {|v| foo(v)}
+
+==> corrected/003.rb 38 <==
+x.tally.transform_values {|v| foo(v)}
+
+==> corrected/004.rb 55 <==
+{a: 1, b: 2}.transform_values { |val| { value: val } }
+
+==> corrected/005.rb 55 <==
+{a: 1, b: 2}.transform_values { |val| { value: val } }
+

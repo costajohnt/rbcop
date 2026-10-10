@@ -1,0 +1,74 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 17 <==
+<<~SQL
+  foo
+SQL
+
+==> 001.rb 21 <==
+<<~SQL.bar
+  foo
+SQL
+
+==> 002.rb 17 <==
+<<-SQL
+  foo
+SQL
+
+==> 003.rb 31 <==
+<<-SQL
+  foo
+SQL
+.strip_indent
+
+==> 004.rb 31 <==
+<<-SQL
+  foo
+SQL
+.foo(bar_baz)
+
+==> 005.rb 35 <==
+<<-SQL
+  foo
+SQL
+.strip_indent.foo
+
+==> 006.rb 35 <==
+<<-SQL
+  foo
+SQL
+.abc(1, 2, 3).foo
+
+==> 007.rb 29 <==
+bar(<<-SQL
+  foo
+SQL
+.abc,
+)
+
+==> 008.rb 35 <==
+<<-SQL
+  foo
+SQL
+.abc(1, 2,
+3).foo
+
+==> 009.rb 27 <==
+<<-SQL
+  foo
+SQL
+.abc
+.foo
+
+==> 010.rb 32 <==
+<<-SQL
+  foo
+SQL
+&.strip_indent
+

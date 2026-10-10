@@ -1,0 +1,23 @@
+==> offenses exit=1 258 <==
+003.rb:3:16: W: [Correctable] Lint/DisjunctiveAssignmentInConstructor: Unnecessary disjunctive assignment. Use plain assignment.
+004.rb:3:16: W: [Correctable] Lint/DisjunctiveAssignmentInConstructor: Unnecessary disjunctive assignment. Use plain assignment.
+
+==> autocorrect exit=0 254 <==
+003.rb:3:16: W: [Corrected] Lint/DisjunctiveAssignmentInConstructor: Unnecessary disjunctive assignment. Use plain assignment.
+004.rb:3:16: W: [Corrected] Lint/DisjunctiveAssignmentInConstructor: Unnecessary disjunctive assignment. Use plain assignment.
+
+==> corrected/003.rb 62 <==
+class Banana
+  def initialize
+    @delicious = true
+  end
+end
+
+==> corrected/004.rb 72 <==
+class Banana
+  def initialize
+    @delicious = true
+    super
+  end
+end
+

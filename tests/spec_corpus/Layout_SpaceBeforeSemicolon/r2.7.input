@@ -1,0 +1,30 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 14 <==
+x = 1 ; y = 2
+
+==> 001.rb 12 <==
+x = 1; y = 2
+==> 002.rb 15 <==
+x = 1  ; y = 2
+
+==> 003.rb 9 <==
+test {; }
+==> 004.rb 10 <==
+test { ; }
+==> 005.rb 8 <==
+-> { ; }
+==> 006.rb 11 <==
+test { ; }
+
+==> 007.rb 26 <==
+<<~STR ; x = 1
+  text
+STR
+

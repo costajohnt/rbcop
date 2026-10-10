@@ -1,0 +1,42 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 110 <==
+class Foo
+  def self.define
+    Module.new do
+      def y
+      end
+
+      do_something(it)
+    end
+  end
+end
+
+==> 001.rb 104 <==
+class Foo
+  def x(obj)
+    obj.instance_eval do
+      @bar = it
+      def y
+      end
+    end
+  end
+end
+
+==> 002.rb 107 <==
+class Foo
+  def x(obj)
+    obj.instance_exec(3) do
+      @bar = it
+      def y
+      end
+    end
+  end
+end
+

@@ -1,0 +1,10 @@
+==> offenses exit=1 247 <==
+000.rb:1:7: C: Style/TernaryParentheses: Omit parentheses for ternary conditions.
+001.rb:1:13: C: Style/TernaryParentheses: Omit parentheses for ternary conditions.
+002.rb:1:7: C: Style/TernaryParentheses: Omit parentheses for ternary conditions.
+
+==> autocorrect exit=1 247 <==
+000.rb:1:7: C: Style/TernaryParentheses: Omit parentheses for ternary conditions.
+001.rb:1:13: C: Style/TernaryParentheses: Omit parentheses for ternary conditions.
+002.rb:1:7: C: Style/TernaryParentheses: Omit parentheses for ternary conditions.
+

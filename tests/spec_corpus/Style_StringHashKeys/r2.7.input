@@ -1,0 +1,45 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 15 <==
+{ 'one' => 1 }
+
+==> 001.rb 31 <==
+{ 'one' => 1, two: 2, 3 => 3 }
+
+==> 002.rb 21 <==
+{ 'one two :' => 1 }
+
+==> 003.rb 11 <==
+{ one: 1 }
+
+==> 004.rb 66 <==
+{ "Test with malformed utf8 \251" => 'test-with-malformed-utf8' }
+
+==> 005.rb 48 <==
+IO.popen({"RUBYOPT" => '-w'}, 'ruby', 'foo.rb')
+
+==> 006.rb 54 <==
+Open3.capture3({"RUBYOPT" => '-w'}, 'ruby', 'foo.rb')
+
+==> 007.rb 70 <==
+Open3.pipeline([{"RUBYOPT" => '-w'}, 'ruby', 'foo.rb'], ['wc', '-l'])
+
+==> 008.rb 53 <==
+"The sky is green.".gsub(/green/, "green" => "blue")
+
+==> 009.rb 54 <==
+"The sky is green.".gsub!(/green/, "green" => "blue")
+
+==> 010.rb 33 <==
+{
+  <<~KEY => 1
+    text
+  KEY
+}
+

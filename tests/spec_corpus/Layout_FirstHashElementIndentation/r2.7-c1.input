@@ -1,0 +1,78 @@
+==> .rubocop.yml 172 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+==> 000.rb 98 <==
+h = {
+  a: 1
+}
+func({
+  a: 1
+})
+func(x, {
+  a: 1
+})
+h = { a: 1
+}
+func({ a: 1
+})
+func(x, { a: 1
+})
+
+==> 001.rb 27 <==
+func({
+       a: 1
+     })
+
+==> 002.rb 76 <==
+body.should have_tag("input", :attributes => {
+  :name => /q\[(id_eq)\]/ })
+
+==> 003.rb 30 <==
+func(x: {
+      a: 1, b: 2 })
+
+==> 004.rb 37 <==
+func({
+       a:
+  {
+    b: 1
+  }
+})
+
+==> 005.rb 76 <==
+func(x: {
+  a: 1,
+       b: 2
+},
+     y: {
+       c: 1,
+       d: 2
+     })
+
+==> 006.rb 55 <==
+func(:x, y: {
+  a: 1,
+  b: 2
+}, z: {
+  c: 1,
+  d: 2
+})
+
+==> 007.rb 99 <==
+func(x:
+       {
+         a: 1,
+         b: 2
+       },
+     y: {
+       c: 1,
+       d: 2
+     })
+

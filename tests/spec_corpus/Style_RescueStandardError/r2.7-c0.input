@@ -1,0 +1,159 @@
+==> .rubocop.yml 206 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/RescueStandardError:
+  EnforcedStyle: implicit
+  SupportedStyles:
+  - implicit
+  - explicit
+
+==> 000.rb 29 <==
+begin
+  foo
+rescue
+  bar
+end
+
+==> 001.rb 34 <==
+begin
+  foo
+rescue => e
+  bar
+end
+
+==> 002.rb 38 <==
+begin
+  foo
+rescue BarError
+  bar
+end
+
+==> 003.rb 43 <==
+begin
+  foo
+rescue BarError => e
+  bar
+end
+
+==> 004.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> 005.rb 45 <==
+begin
+  foo
+rescue ::StandardError
+  bar
+end
+
+==> 006.rb 48 <==
+begin
+  foo
+rescue StandardError => e
+  bar
+end
+
+==> 007.rb 50 <==
+begin
+  foo
+rescue ::StandardError => e
+  bar
+end
+
+==> 008.rb 90 <==
+begin
+  foo
+rescue StandardError, BarError
+  bar
+rescue BazError, StandardError
+  baz
+end
+
+==> 009.rb 96 <==
+begin
+  foo
+rescue ::StandardError, BarError
+  bar
+rescue ::BazError, ::StandardError
+  baz
+end
+
+==> 010.rb 100 <==
+begin
+  foo
+rescue StandardError, BarError => e
+  bar
+rescue BazError, StandardError => e
+  baz
+end
+
+==> 011.rb 31 <==
+def baz
+  foo
+rescue
+  bar
+end
+
+==> 012.rb 36 <==
+def baz
+  foo
+rescue => e
+  bar
+end
+
+==> 013.rb 40 <==
+def baz
+  foo
+rescue BarError
+  bar
+end
+
+==> 014.rb 45 <==
+def baz
+  foo
+rescue BarError => e
+  bar
+end
+
+==> 015.rb 48 <==
+def foobar
+  foo
+rescue StandardError
+  bar
+end
+
+==> 016.rb 53 <==
+def foobar
+  foo
+rescue StandardError => e
+  bar
+end
+
+==> 017.rb 95 <==
+def foobar
+  foo
+rescue StandardError, BarError
+  bar
+rescue BazError, StandardError
+  baz
+end
+
+==> 018.rb 105 <==
+def foobar
+  foo
+rescue StandardError, BarError => e
+  bar
+rescue BazError, StandardError => e
+  baz
+end
+
+==> 019.rb 14 <==
+foo rescue 42
+

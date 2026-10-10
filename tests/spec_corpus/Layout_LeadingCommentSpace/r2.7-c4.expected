@@ -1,0 +1,14 @@
+==> offenses exit=1 194 <==
+000/test/test_case.rb:2:1: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+000/test/test_case.rb:3:1: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+
+==> autocorrect exit=0 190 <==
+000/test/test_case.rb:2:1: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+000/test/test_case.rb:3:1: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+
+==> corrected/000/test/test_case.rb 102 <==
+# Specific version (comment) will be used by RVM
+# ruby=2.7.0
+# ruby-gemset=myproject
+ruby '~> 2.7.0'
+

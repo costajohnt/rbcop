@@ -1,0 +1,73 @@
+==> .rubocop.yml 184 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/EmptyStringInsideInterpolation:
+  EnforcedStyle: trailing_conditional
+
+==> 000.rb 35 <==
+"#{condition ? send_node : 'foo'}"
+
+==> 001.rb 35 <==
+"#{condition ? 'foo' : send_node}"
+
+==> 002.rb 47 <==
+"#{condition ? send_node : another_send_node}"
+
+==> 003.rb 28 <==
+"#{condition ? 'foo' : ''}"
+
+==> 004.rb 25 <==
+"#{condition ? 42 : ''}"
+
+==> 005.rb 37 <==
+"#{if condition; 'foo' else '' end}"
+
+==> 006.rb 28 <==
+"#{condition ? '' : 'foo'}"
+
+==> 007.rb 37 <==
+"#{if condition; '' else 'foo' end}"
+
+==> 008.rb 24 <==
+"#{'foo' if condition}"
+
+==> 009.rb 21 <==
+"#{'' if condition}"
+
+==> 010.rb 25 <==
+"#{'' unless condition}"
+
+==> 011.rb 28 <==
+"#{condition ? 'foo' : ""}"
+
+==> 012.rb 25 <==
+"#{condition ? 42 : ""}"
+
+==> 013.rb 37 <==
+"#{if condition; 'foo' else "" end}"
+
+==> 014.rb 28 <==
+"#{condition ? "" : 'foo'}"
+
+==> 015.rb 37 <==
+"#{if condition; "" else 'foo' end}"
+
+==> 016.rb 29 <==
+"#{condition ? 'foo' : nil}"
+
+==> 017.rb 26 <==
+"#{condition ? 42 : nil}"
+
+==> 018.rb 38 <==
+"#{if condition; 'foo' else nil end}"
+
+==> 019.rb 29 <==
+"#{condition ? nil : 'foo'}"
+
+==> 020.rb 38 <==
+"#{if condition; nil else 'foo' end}"
+

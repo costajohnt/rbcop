@@ -1,0 +1,40 @@
+==> .rubocop.yml 148 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/ObjectThen:
+  EnforcedStyle: then
+
+==> 000.rb 22 <==
+obj.map { |x| x.foo }
+
+==> 001.rb 27 <==
+obj.yield_self { _1.test }
+
+==> 002.rb 28 <==
+obj&.yield_self { _1.test }
+
+==> 003.rb 30 <==
+yield_self { |obj| obj.test }
+
+==> 004.rb 23 <==
+obj.yield_self(&:test)
+
+==> 005.rb 24 <==
+obj&.yield_self(&:test)
+
+==> 006.rb 30 <==
+obj.yield_self(other, &:test)
+
+==> 007.rb 31 <==
+obj&.yield_self(other, &:test)
+
+==> 008.rb 15 <==
+obj.yield_self
+
+==> 009.rb 16 <==
+obj&.yield_self
+

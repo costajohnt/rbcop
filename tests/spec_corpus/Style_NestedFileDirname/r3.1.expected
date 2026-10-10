@@ -1,0 +1,14 @@
+==> offenses exit=1 172 <==
+000.rb:1:6: C: [Correctable] Style/NestedFileDirname: Use `dirname(path, 2)` instead.
+001.rb:1:6: C: [Correctable] Style/NestedFileDirname: Use `dirname(path, 3)` instead.
+
+==> autocorrect exit=0 168 <==
+000.rb:1:6: C: [Corrected] Style/NestedFileDirname: Use `dirname(path, 2)` instead.
+001.rb:1:6: C: [Corrected] Style/NestedFileDirname: Use `dirname(path, 3)` instead.
+
+==> corrected/000.rb 22 <==
+File.dirname(path, 2)
+
+==> corrected/001.rb 22 <==
+File.dirname(path, 3)
+

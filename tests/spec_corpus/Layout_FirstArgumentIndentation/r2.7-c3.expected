@@ -1,0 +1,185 @@
+==> offenses exit=1 3036 <==
+000.rb:2:5: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+001.rb:2:5: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+002.rb:2:5: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+003.rb:2:5: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+004.rb:2:5: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+005.rb:2:2: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+006.rb:2:2: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+006.rb:3:3: C: Layout/FirstArgumentIndentation: Bad indentation of the first argument.
+007.rb:3:3: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+007.rb:4:7: C: Layout/FirstArgumentIndentation: Bad indentation of the first argument.
+008.rb:3:3: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+008.rb:4:7: C: Layout/FirstArgumentIndentation: Bad indentation of the first argument.
+009.rb:2:2: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+013.rb:3:3: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+016.rb:3:7: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+019.rb:4:3: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line (not counting the comment).
+024.rb:2:25: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than `defaults.merge(`.
+025.rb:3:3: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+028.rb:4:15: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than `Diagnostic.where(`.
+029.rb:4:9: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than `Diagnostic.where(`.
+030.rb:4:9: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+032.rb:2:15: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+033.rb:3:7: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+
+==> autocorrect exit=0 3074 <==
+000.rb:2:5: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+001.rb:2:5: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+002.rb:2:5: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+003.rb:2:5: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+004.rb:2:5: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+005.rb:2:2: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+006.rb:2:2: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+006.rb:3:4: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than `bar(`.
+007.rb:3:3: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+007.rb:4:9: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than `baz(`.
+008.rb:3:3: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+008.rb:4:9: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than `bar(`.
+009.rb:2:2: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+013.rb:3:3: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+016.rb:3:7: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+019.rb:4:3: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line (not counting the comment).
+024.rb:2:25: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than `defaults.merge(`.
+025.rb:3:3: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+028.rb:4:15: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than `Diagnostic.where(`.
+029.rb:4:9: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than `Diagnostic.where(`.
+030.rb:4:9: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+032.rb:2:15: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+033.rb:3:7: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+
+==> corrected/000.rb 26 <==
+run(
+  :foo,
+    bar: 3
+)
+
+==> corrected/001.rb 28 <==
+super(
+  :foo,
+    bar: 3
+)
+
+==> corrected/002.rb 31 <==
+self.run(
+  :foo,
+    bar: 3
+)
+
+==> corrected/003.rb 29 <==
+self.|(
+  :foo,
+    bar: 3
+)
+
+==> corrected/004.rb 29 <==
+self.+(
+  :foo,
+    bar: 3
+)
+
+==> corrected/005.rb 26 <==
+run(
+  :foo,
+    bar: 3
+)
+
+==> corrected/006.rb 23 <==
+foo(
+  bar(
+    7
+ )
+)
+
+==> corrected/007.rb 43 <==
+foo
+  .bar(
+    baz(
+      qux
+      )
+  )
+
+==> corrected/008.rb 50 <==
+foo
+  .bar(
+    bar(
+      key: value
+      )
+  )
+
+==> corrected/009.rb 36 <==
+receiver&.run(
+  :foo,
+    bar: 3
+)
+
+==> corrected/013.rb 22 <==
+@x =
+  run(
+    :foo)
+
+==> corrected/016.rb 30 <==
+puts x.
+  merge(
+    b: 2
+  )
+
+==> corrected/019.rb 42 <==
+puts x.
+  merge(
+  # comment
+    b: 2
+  )
+
+==> corrected/024.rb 47 <==
+run(:foo, defaults.merge(
+            bar: 3))
+
+==> corrected/025.rb 58 <==
+run(:foo, defaults.
+          merge(
+            bar: 3))
+
+==> corrected/028.rb 102 <==
+instance_variable_set(
+  "@diagnostics",
+  Diagnostic.where(
+    'limit >= 10 and limit < 100',
+  )
+)
+
+==> corrected/029.rb 149 <==
+instance_variable_set(
+  "@diagnostics",
+  Diagnostic.where(
+    'limit >= ? and limit < ?',
+    LIMITS[:lowest_value], LIMITS[:highest_value]
+  )
+)
+
+==> corrected/030.rb 176 <==
+instance_variable_set(
+  "@diagnostic_ids",
+  Diagnostic.where(
+    'limit >= ? and limit < ?',
+    LIMITS[:lowest_value], LIMITS[:highest_value]
+  )
+  .where(id: 1)
+  .ids,
+)
+
+==> corrected/032.rb 76 <==
+run :foo, Diagnostic.where(
+  'limit >= 10',
+            )
+            .ids
+
+==> corrected/033.rb 139 <==
+sequences = CourseSequence
+  .includes(
+    course_sequence_memberships: {
+      course: :course_components
+    }
+    )
+  .joins(:courses)
+

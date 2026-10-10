@@ -1,0 +1,32 @@
+==> .rubocop.yml 156 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/ConstantResolution:
+  Ignore:
+  - MY_CONST
+
+==> 000.rb 10 <==
+::MyConst
+
+==> 001.rb 20 <==
+::MyConst::MY_CONST
+
+==> 002.rb 8 <==
+MyConst
+
+==> 003.rb 18 <==
+MyConst::MY_CONST
+
+==> 004.rb 9 <==
+MY_CONST
+
+==> 005.rb 12 <==
+MY_CONST::B
+
+==> 006.rb 13 <==
+__ENCODING__
+

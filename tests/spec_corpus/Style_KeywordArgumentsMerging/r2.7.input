@@ -1,0 +1,38 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 30 <==
+foo(x, **options.merge(y: 1))
+
+==> 001.rb 39 <==
+foo(x, **options.merge(other_options))
+
+==> 002.rb 53 <==
+foo(x, **options.merge(y: 1, **other_options, z: 2))
+
+==> 003.rb 34 <==
+foo(x, **options.merge({ y: 1 }))
+
+==> 004.rb 68 <==
+foo(x, **options.merge(other_options, y: 1, **yet_another_options))
+
+==> 005.rb 60 <==
+foo(x, **options.merge(other_options, yet_another_options))
+
+==> 006.rb 59 <==
+foo(x, **options.merge(other_options).merge(more_options))
+
+==> 007.rb 18 <==
+foo(x, **options)
+
+==> 008.rb 40 <==
+foo(x, **options.merge!(other_options))
+
+==> 009.rb 35 <==
+foo(**opts.merge(other, &my_proc))
+

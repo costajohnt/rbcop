@@ -1,0 +1,19 @@
+==> .rubocop.yml 203 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/MethodCallWithArgsParentheses:
+  IgnoreMacros: 'true'
+  IncludedMacros:
+  - assert_equal
+
+==> 000.rb 66 <==
+class Foo
+  test "description" do
+    assert_equal 1, 1
+  end
+end
+

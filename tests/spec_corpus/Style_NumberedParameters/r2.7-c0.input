@@ -1,0 +1,22 @@
+==> .rubocop.yml 169 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/NumberedParameters:
+  EnforcedStyle: allow_single_line
+
+==> 000.rb 33 <==
+collection.each do
+  puts _1
+end
+
+==> 001.rb 43 <==
+collection.each
+          .foo { puts _1 }
+
+==> 002.rb 28 <==
+collection.each { puts _1 }
+

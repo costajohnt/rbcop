@@ -1,0 +1,107 @@
+==> .rubocop.yml 215 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/HashAlignment:
+  EnforcedHashRocketStyle:
+  - key
+  - table
+  EnforcedColonStyle:
+  - key
+  - table
+
+==> 000.rb 66 <==
+hash1 = {
+  a: 0,
+  bbb: 1
+}
+hash2 = {
+  'a' => 0,
+  'bbb' => 1
+}
+
+==> 001.rb 70 <==
+hash1 = {
+  a:   0,
+  bbb: 1
+}
+hash2 = {
+  'a'   => 0,
+  'bbb' => 1
+}
+
+==> 002.rb 137 <==
+hash1 = {
+  a:   0,
+  bbb: 1
+}
+hash2 = {
+  a: 0,
+  bbb: 1
+}
+
+hash3 = {
+  'a'   => 0,
+  'bbb' => 1
+}
+hash4 = {
+  'a' => 0,
+  'bbb' => 1
+}
+
+==> 003.rb 56 <==
+headers = {
+  "Content-Type" => 0,
+  Authorization: 1
+}
+
+==> 004.rb 6 <==
+h = {}
+==> 005.rb 39 <==
+hash = {
+    'a' =>  0,
+  'bbb' => 1
+}
+
+==> 006.rb 112 <==
+hash = {
+  'abcdefg' => 0,
+  'abcdef'  => 0,
+  'gijk'    => 0,
+  'a'       => 0,
+  'b' => 1,
+        'c' => 1
+}
+
+==> 007.rb 103 <==
+hash = {
+  'abcdefg' => 0,
+  'abcdef'  => 0,
+  'gijk' => 0,
+  'a' => 0,
+  'b' => 1,
+        'c' => 1
+}
+
+==> 008.rb 57 <==
+headers = {
+  "Content-Type" => 0,
+   Authorization: 1
+}
+
+==> 009.rb 128 <==
+hash = {
+  'abcdefg' => 0,
+  'abcdef'  => 0,
+  'gijk' => 0
+}
+
+hash = {
+  'abcdefg' => 0,
+  'abcdef'       => 0,
+  'gijk' => 0
+}
+

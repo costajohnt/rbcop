@@ -1,0 +1,20 @@
+==> offenses exit=1 142 <==
+000.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+001.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+
+==> autocorrect exit=0 138 <==
+000.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+001.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+
+==> corrected/000.rb 59 <==
+[].each do |o|
+  next unless o == 1
+  puts o # comment
+end
+
+==> corrected/001.rb 55 <==
+[].each do |o|
+  next if o == 1
+  puts o # comment
+end
+

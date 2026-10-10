@@ -1,0 +1,133 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 45 <==
+# frozen_string_literal: true
+class Foo; end
+
+==> 001.rb 37 <==
+# rbs_inline: enabled
+class Foo; end
+
+==> 002.rb 38 <==
+# rbs_inline: disabled
+class Foo; end
+
+==> 003.rb 43 <==
+# rbs_inline: invalid_value
+class Foo; end
+
+==> 004.rb 29 <==
+# typed: true
+class Foo; end
+
+==> 005.rb 35 <==
+# warn_indent: true
+class Foo; end
+
+==> 006.rb 69 <==
+# frozen_string_literal: true
+# Documentation for Foo
+class Foo; end
+
+==> 007.rb 63 <==
+# encoding: utf-8
+# frozen_string_literal: true
+class Foo; end
+
+==> 008.rb 64 <==
+# frozen_string_literal: true
+# encoding: utf-8
+
+class Foo; end
+
+==> 009.rb 102 <==
+# frozen_string_literal: true
+# shareable_constant_value: literal
+# warn_indent: true
+
+class Foo; end
+
+==> 010.rb 82 <==
+# frozen_string_literal: true
+# shareable_constant_value: literal
+
+class Foo; end
+
+==> 011.rb 98 <==
+# shareable_constant_value: experimental_everything
+# frozen_string_literal: true
+
+class Foo; end
+
+==> 012.rb 68 <==
+# frozen_string_literal: true
+# rbs_inline: enabled
+
+class Foo; end
+
+==> 013.rb 68 <==
+# rbs_inline: enabled
+# frozen_string_literal: true
+
+class Foo; end
+
+==> 014.rb 69 <==
+# frozen_string_literal: true
+# rbs_inline: disabled
+
+class Foo; end
+
+==> 015.rb 69 <==
+# rbs_inline: disabled
+# frozen_string_literal: true
+
+class Foo; end
+
+==> 016.rb 60 <==
+# frozen_string_literal: true
+# typed: true
+
+class Foo; end
+
+==> 017.rb 60 <==
+# typed: true
+# frozen_string_literal: true
+
+class Foo; end
+
+==> 018.rb 78 <==
+# frozen_string_literal: true
+# shareable_constant_value: none
+class Foo; end
+
+==> 019.rb 39 <==
+# frozen_string_literal: true
+# Hello!
+
+==> 020.rb 46 <==
+# frozen_string_literal: true
+
+class Foo; end
+
+==> 021.rb 0 <==
+
+==> 022.rb 29 <==
+# frozen_string_literal: true
+==> 023.rb 35 <==
+# frozen_string_literal: true
+
+  
+
+
+==> 024.rb 47 <==
+# frozen_string_literal: true
+
+
+class Foo; end
+

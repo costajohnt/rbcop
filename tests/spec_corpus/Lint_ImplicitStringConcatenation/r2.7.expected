@@ -1,0 +1,56 @@
+==> offenses exit=1 2084 <==
+001.rb:1:10: W: [Correctable] Lint/ImplicitStringConcatenation: Combine "abc" and "def" into a single string literal, rather than using implicit string concatenation.
+001.rb:2:10: W: [Correctable] Lint/ImplicitStringConcatenation: Combine 'ghi' and 'jkl' into a single string literal, rather than using implicit string concatenation.
+002.rb:1:1: W: [Correctable] Lint/ImplicitStringConcatenation: Combine "string#{interpolation}" and "def" into a single string literal, rather than using implicit string concatenation.
+003.rb:1:1: W: [Correctable] Lint/ImplicitStringConcatenation: Combine "foo" and "string#{interpolation}" into a single string literal, rather than using implicit string concatenation.
+003.rb:1:6: W: [Correctable] Lint/ImplicitStringConcatenation: Combine "string#{interpolation}" and "bar" into a single string literal, rather than using implicit string concatenation.
+004.rb:1:1: W: [Correctable] Lint/ImplicitStringConcatenation: Combine "" and "string" into a single string literal, rather than using implicit string concatenation.
+004.rb:1:3: W: [Correctable] Lint/ImplicitStringConcatenation: Combine "string" and "" into a single string literal, rather than using implicit string concatenation.
+006.rb:1:1: W: [Correctable] Lint/ImplicitStringConcatenation: Combine 'single-quoted string' and "string\n" into a single string literal, rather than using implicit string concatenation.
+007.rb:2:3: W: [Correctable] Lint/ImplicitStringConcatenation: Combine "ab\nc" and "de\nf" into a single string literal, rather than using implicit string concatenation.
+010.rb:1:10: W: [Correctable] Lint/ImplicitStringConcatenation: Combine "abc" and "def" into a single string literal, rather than using implicit string concatenation. Or, if they were intended to be separate array elements, separate them with a comma.
+011.rb:1:8: W: [Correctable] Lint/ImplicitStringConcatenation: Combine "abc" and "def" into a single string literal, rather than using implicit string concatenation. Or, if they were intended to be separate method arguments, separate them with a comma.
+
+==> autocorrect exit=0 2062 <==
+001.rb:1:10: W: [Corrected] Lint/ImplicitStringConcatenation: Combine "abc" and "def" into a single string literal, rather than using implicit string concatenation.
+001.rb:2:10: W: [Corrected] Lint/ImplicitStringConcatenation: Combine 'ghi' and 'jkl' into a single string literal, rather than using implicit string concatenation.
+002.rb:1:1: W: [Corrected] Lint/ImplicitStringConcatenation: Combine "string#{interpolation}" and "def" into a single string literal, rather than using implicit string concatenation.
+003.rb:1:1: W: [Corrected] Lint/ImplicitStringConcatenation: Combine "foo" and "string#{interpolation}" into a single string literal, rather than using implicit string concatenation.
+003.rb:1:6: W: [Corrected] Lint/ImplicitStringConcatenation: Combine "string#{interpolation}" and "bar" into a single string literal, rather than using implicit string concatenation.
+004.rb:1:1: W: [Corrected] Lint/ImplicitStringConcatenation: Combine "" and "string" into a single string literal, rather than using implicit string concatenation.
+004.rb:1:3: W: [Corrected] Lint/ImplicitStringConcatenation: Combine "string" and "" into a single string literal, rather than using implicit string concatenation.
+006.rb:1:1: W: [Corrected] Lint/ImplicitStringConcatenation: Combine 'single-quoted string' and "string\n" into a single string literal, rather than using implicit string concatenation.
+007.rb:2:3: W: [Corrected] Lint/ImplicitStringConcatenation: Combine "ab\nc" and "de\nf" into a single string literal, rather than using implicit string concatenation.
+010.rb:1:10: W: [Corrected] Lint/ImplicitStringConcatenation: Combine "abc" and "def" into a single string literal, rather than using implicit string concatenation. Or, if they were intended to be separate array elements, separate them with a comma.
+011.rb:1:8: W: [Corrected] Lint/ImplicitStringConcatenation: Combine "abc" and "def" into a single string literal, rather than using implicit string concatenation. Or, if they were intended to be separate method arguments, separate them with a comma.
+
+==> corrected/001.rb 56 <==
+class A; "abc" + "def"; end
+class B; 'ghi' + 'jkl'; end
+
+==> corrected/002.rb 33 <==
+"string#{interpolation}" + "def"
+
+==> corrected/003.rb 41 <==
+"foo" + "string#{interpolation}" + "bar"
+
+==> corrected/004.rb 9 <==
+"string"
+
+==> corrected/006.rb 51 <==
+'single-quoted string' + "string
+#{interpolation}"
+
+==> corrected/007.rb 33 <==
+def method
+  "ab
+c" + "de
+f"
+end
+
+==> corrected/010.rb 24 <==
+array = ["abc" + "def"]
+
+==> corrected/011.rb 22 <==
+method("abc" + "def")
+

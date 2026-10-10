@@ -1,0 +1,77 @@
+==> offenses exit=1 849 <==
+000.rb:1:5: C: [Correctable] Style/RedundantSelf: Redundant `self` detected.
+017.rb:1:10: C: [Correctable] Style/RedundantSelf: Redundant `self` detected.
+018.rb:1:16: C: [Correctable] Style/RedundantSelf: Redundant `self` detected.
+024.rb:2:1: C: [Correctable] Style/RedundantSelf: Redundant `self` detected.
+031.rb:2:3: C: [Correctable] Style/RedundantSelf: Redundant `self` detected.
+047.rb:1:1: C: [Correctable] Style/RedundantSelf: Redundant `self` detected.
+052.rb:2:3: C: [Correctable] Style/RedundantSelf: Redundant `self` detected.
+053.rb:2:3: C: [Correctable] Style/RedundantSelf: Redundant `self` detected.
+054.rb:2:3: C: [Correctable] Style/RedundantSelf: Redundant `self` detected.
+062.rb:4:5: C: [Correctable] Style/RedundantSelf: Redundant `self` detected.
+063.rb:5:5: C: [Correctable] Style/RedundantSelf: Redundant `self` detected.
+
+==> autocorrect exit=0 827 <==
+000.rb:1:5: C: [Corrected] Style/RedundantSelf: Redundant `self` detected.
+017.rb:1:10: C: [Corrected] Style/RedundantSelf: Redundant `self` detected.
+018.rb:1:16: C: [Corrected] Style/RedundantSelf: Redundant `self` detected.
+024.rb:2:1: C: [Corrected] Style/RedundantSelf: Redundant `self` detected.
+031.rb:2:3: C: [Corrected] Style/RedundantSelf: Redundant `self` detected.
+047.rb:1:1: C: [Corrected] Style/RedundantSelf: Redundant `self` detected.
+052.rb:2:3: C: [Corrected] Style/RedundantSelf: Redundant `self` detected.
+053.rb:2:3: C: [Corrected] Style/RedundantSelf: Redundant `self` detected.
+054.rb:2:3: C: [Corrected] Style/RedundantSelf: Redundant `self` detected.
+062.rb:4:5: C: [Corrected] Style/RedundantSelf: Redundant `self` detected.
+063.rb:5:5: C: [Corrected] Style/RedundantSelf: Redundant `self` detected.
+
+==> corrected/000.rb 6 <==
+a = b
+
+==> corrected/017.rb 11 <==
+a = x if b
+
+==> corrected/018.rb 17 <==
+a, b, c = x if d
+
+==> corrected/024.rb 16 <==
+self.x ||= 42
+x
+
+==> corrected/031.rb 37 <==
+%w[x y z].select do
+  axis == _1
+end
+
+==> corrected/047.rb 5 <==
+call
+
+==> corrected/052.rb 17 <==
+def foo
+  it
+end
+
+==> corrected/053.rb 20 <==
+0.times { ||
+  it
+}
+
+==> corrected/054.rb 22 <==
+0.times { |_n|
+  it
+}
+
+==> corrected/062.rb 73 <==
+foo = 17
+case pattern
+  in ^foo, *bar
+    foo + self.bar + foo + bar
+end
+
+==> corrected/063.rb 84 <==
+case foo
+  in Integer => bar
+    self.bar + bar
+  in Float => baz
+    bar + baz
+end
+

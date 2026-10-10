@@ -1,0 +1,37 @@
+==> .rubocop.yml 162 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/BarePercentLiterals:
+  EnforcedStyle: percent_q
+
+==> 000.rb 6 <==
+%(hi)
+
+==> 001.rb 6 <==
+%Q(hi)
+==> 002.rb 8 <==
+__FILE__
+==> 003.rb 5 <==
+/%Q?/
+==> 004.rb 2 <==
+""
+==> 005.rb 11 <==
+"#{file}hi"
+==> 006.rb 4 <==
+'hi'
+==> 007.rb 6 <==
+%q(hi)
+==> 008.rb 26 <==
+func <<HEREDOC
+hi
+HEREDOC
+
+==> 009.rb 8 <==
+%(#{x})
+
+==> 010.rb 8 <==
+%Q(#{x})

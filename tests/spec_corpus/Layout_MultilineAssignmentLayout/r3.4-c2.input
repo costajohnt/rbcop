@@ -1,0 +1,17 @@
+==> .rubocop.yml 196 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Layout/MultilineAssignmentLayout:
+  EnforcedStyle: new_line
+  SupportedTypes:
+  - block
+
+==> 000.rb 28 <==
+bars = foo.map {
+  it.bar
+}
+

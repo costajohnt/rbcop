@@ -1,0 +1,74 @@
+==> offenses exit=1 1616 <==
+000.rb:1:1: C: [Correctable] Style/ComparableClamp: Use `x.clamp(low, high)` instead of `if/elsif/else`.
+001.rb:1:1: C: [Correctable] Style/ComparableClamp: Use `x.clamp(low, high)` instead of `if/elsif/else`.
+002.rb:1:1: C: [Correctable] Style/ComparableClamp: Use `x.clamp(low, high)` instead of `if/elsif/else`.
+003.rb:1:1: C: [Correctable] Style/ComparableClamp: Use `x.clamp(low, high)` instead of `if/elsif/else`.
+004.rb:1:1: C: [Correctable] Style/ComparableClamp: Use `x.clamp(low, high)` instead of `if/elsif/else`.
+005.rb:1:1: C: [Correctable] Style/ComparableClamp: Use `x.clamp(low, high)` instead of `if/elsif/else`.
+006.rb:1:1: C: [Correctable] Style/ComparableClamp: Use `x.clamp(low, high)` instead of `if/elsif/else`.
+007.rb:1:1: C: [Correctable] Style/ComparableClamp: Use `x.clamp(low, high)` instead of `if/elsif/else`.
+008.rb:3:1: C: [Correctable] Style/ComparableClamp: Use `x.clamp(low, high)` instead of `if/elsif/else`.
+010.rb:1:1: C: Style/ComparableClamp: Use `Comparable#clamp` instead.
+011.rb:1:1: C: Style/ComparableClamp: Use `Comparable#clamp` instead.
+012.rb:1:1: C: Style/ComparableClamp: Use `Comparable#clamp` instead.
+013.rb:1:1: C: Style/ComparableClamp: Use `Comparable#clamp` instead.
+014.rb:1:1: C: Style/ComparableClamp: Use `Comparable#clamp` instead.
+015.rb:1:1: C: Style/ComparableClamp: Use `Comparable#clamp` instead.
+016.rb:1:1: C: Style/ComparableClamp: Use `Comparable#clamp` instead.
+017.rb:1:1: C: Style/ComparableClamp: Use `Comparable#clamp` instead.
+018.rb:1:1: C: [Correctable] Style/ComparableClamp: Use `(a + b).clamp(low, high)` instead of `if/elsif/else`.
+
+==> autocorrect exit=1 1596 <==
+000.rb:1:1: C: [Corrected] Style/ComparableClamp: Use `x.clamp(low, high)` instead of `if/elsif/else`.
+001.rb:1:1: C: [Corrected] Style/ComparableClamp: Use `x.clamp(low, high)` instead of `if/elsif/else`.
+002.rb:1:1: C: [Corrected] Style/ComparableClamp: Use `x.clamp(low, high)` instead of `if/elsif/else`.
+003.rb:1:1: C: [Corrected] Style/ComparableClamp: Use `x.clamp(low, high)` instead of `if/elsif/else`.
+004.rb:1:1: C: [Corrected] Style/ComparableClamp: Use `x.clamp(low, high)` instead of `if/elsif/else`.
+005.rb:1:1: C: [Corrected] Style/ComparableClamp: Use `x.clamp(low, high)` instead of `if/elsif/else`.
+006.rb:1:1: C: [Corrected] Style/ComparableClamp: Use `x.clamp(low, high)` instead of `if/elsif/else`.
+007.rb:1:1: C: [Corrected] Style/ComparableClamp: Use `x.clamp(low, high)` instead of `if/elsif/else`.
+008.rb:3:1: C: [Corrected] Style/ComparableClamp: Use `x.clamp(low, high)` instead of `if/elsif/else`.
+010.rb:1:1: C: Style/ComparableClamp: Use `Comparable#clamp` instead.
+011.rb:1:1: C: Style/ComparableClamp: Use `Comparable#clamp` instead.
+012.rb:1:1: C: Style/ComparableClamp: Use `Comparable#clamp` instead.
+013.rb:1:1: C: Style/ComparableClamp: Use `Comparable#clamp` instead.
+014.rb:1:1: C: Style/ComparableClamp: Use `Comparable#clamp` instead.
+015.rb:1:1: C: Style/ComparableClamp: Use `Comparable#clamp` instead.
+016.rb:1:1: C: Style/ComparableClamp: Use `Comparable#clamp` instead.
+017.rb:1:1: C: Style/ComparableClamp: Use `Comparable#clamp` instead.
+018.rb:1:1: C: [Corrected] Style/ComparableClamp: Use `(a + b).clamp(low, high)` instead of `if/elsif/else`.
+
+==> corrected/000.rb 19 <==
+x.clamp(low, high)
+
+==> corrected/001.rb 19 <==
+x.clamp(low, high)
+
+==> corrected/002.rb 19 <==
+x.clamp(low, high)
+
+==> corrected/003.rb 19 <==
+x.clamp(low, high)
+
+==> corrected/004.rb 19 <==
+x.clamp(low, high)
+
+==> corrected/005.rb 19 <==
+x.clamp(low, high)
+
+==> corrected/006.rb 19 <==
+x.clamp(low, high)
+
+==> corrected/007.rb 19 <==
+x.clamp(low, high)
+
+==> corrected/008.rb 58 <==
+if condition
+  do_something
+else
+  x.clamp(low, high)
+end
+
+==> corrected/018.rb 25 <==
+(a + b).clamp(low, high)
+

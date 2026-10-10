@@ -1,0 +1,21 @@
+==> offenses exit=1 214 <==
+006.rb:1:1: C: [Correctable] Style/MultilineMemoization: Wrap multiline memoization blocks in `(` and `)`.
+007.rb:1:1: C: [Correctable] Style/MultilineMemoization: Wrap multiline memoization blocks in `(` and `)`.
+
+==> autocorrect exit=0 210 <==
+006.rb:1:1: C: [Corrected] Style/MultilineMemoization: Wrap multiline memoization blocks in `(` and `)`.
+007.rb:1:1: C: [Corrected] Style/MultilineMemoization: Wrap multiline memoization blocks in `(` and `)`.
+
+==> corrected/006.rb 24 <==
+foo ||= (
+  bar
+  baz
+)
+
+==> corrected/007.rb 32 <==
+foo ||=
+  (
+    bar
+    baz
+  )
+

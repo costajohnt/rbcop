@@ -1,0 +1,32 @@
+==> offenses exit=1 1053 <==
+000.rb:1:1: C: Naming/VariableNumber: Use normalcase for variable numbers.
+001.rb:1:1: C: Naming/VariableNumber: Use normalcase for variable numbers.
+002.rb:1:1: C: Naming/VariableNumber: Use normalcase for variable numbers.
+003.rb:1:1: C: Naming/VariableNumber: Use normalcase for variable numbers.
+004.rb:1:1: C: Naming/VariableNumber: Use normalcase for variable numbers.
+005.rb:1:1: C: Naming/VariableNumber: Use normalcase for variable numbers.
+006.rb:1:1: C: Naming/VariableNumber: Use normalcase for variable numbers.
+007.rb:1:1: C: Naming/VariableNumber: Use normalcase for variable numbers.
+008.rb:1:1: C: Naming/VariableNumber: Use normalcase for variable numbers.
+026.rb:1:1: C: Naming/VariableNumber: Use normalcase for symbol numbers.
+028.rb:1:12: C: Naming/VariableNumber: Use normalcase for variable numbers.
+029.rb:1:12: C: Naming/VariableNumber: Use normalcase for variable numbers.
+030.rb:1:5: C: Naming/VariableNumber: Use normalcase for method name numbers.
+031.rb:1:1: C: Naming/VariableNumber: Use normalcase for variable numbers.
+
+==> autocorrect exit=1 1053 <==
+000.rb:1:1: C: Naming/VariableNumber: Use normalcase for variable numbers.
+001.rb:1:1: C: Naming/VariableNumber: Use normalcase for variable numbers.
+002.rb:1:1: C: Naming/VariableNumber: Use normalcase for variable numbers.
+003.rb:1:1: C: Naming/VariableNumber: Use normalcase for variable numbers.
+004.rb:1:1: C: Naming/VariableNumber: Use normalcase for variable numbers.
+005.rb:1:1: C: Naming/VariableNumber: Use normalcase for variable numbers.
+006.rb:1:1: C: Naming/VariableNumber: Use normalcase for variable numbers.
+007.rb:1:1: C: Naming/VariableNumber: Use normalcase for variable numbers.
+008.rb:1:1: C: Naming/VariableNumber: Use normalcase for variable numbers.
+026.rb:1:1: C: Naming/VariableNumber: Use normalcase for symbol numbers.
+028.rb:1:12: C: Naming/VariableNumber: Use normalcase for variable numbers.
+029.rb:1:12: C: Naming/VariableNumber: Use normalcase for variable numbers.
+030.rb:1:5: C: Naming/VariableNumber: Use normalcase for method name numbers.
+031.rb:1:1: C: Naming/VariableNumber: Use normalcase for variable numbers.
+

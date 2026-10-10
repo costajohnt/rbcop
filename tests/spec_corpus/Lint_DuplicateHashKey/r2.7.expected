@@ -1,0 +1,48 @@
+==> offenses exit=1 1562 <==
+000.rb:1:51: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+001.rb:1:49: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+002.rb:1:39: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+002.rb:1:52: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+003.rb:1:18: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+003.rb:1:26: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+005.rb:1:22: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+006.rb:1:23: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+007.rb:1:20: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+008.rb:1:32: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+009.rb:1:33: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+010.rb:1:32: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+011.rb:1:26: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+012.rb:1:37: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+013.rb:1:31: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+014.rb:1:20: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+015.rb:1:27: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+016.rb:1:20: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+017.rb:1:18: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+018.rb:1:22: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+019.rb:1:20: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+020.rb:1:22: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+
+==> autocorrect exit=1 1562 <==
+000.rb:1:51: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+001.rb:1:49: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+002.rb:1:39: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+002.rb:1:52: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+003.rb:1:18: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+003.rb:1:26: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+005.rb:1:22: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+006.rb:1:23: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+007.rb:1:20: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+008.rb:1:32: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+009.rb:1:33: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+010.rb:1:32: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+011.rb:1:26: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+012.rb:1:37: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+013.rb:1:31: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+014.rb:1:20: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+015.rb:1:27: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+016.rb:1:20: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+017.rb:1:18: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+018.rb:1:22: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+019.rb:1:20: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+020.rb:1:22: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+

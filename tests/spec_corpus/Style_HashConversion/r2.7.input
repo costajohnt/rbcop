@@ -1,0 +1,71 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 10 <==
+Hash[ary]
+
+==> 001.rb 17 <==
+Hash[a, b, c, d]
+
+==> 002.rb 14 <==
+Hash[*ary, x]
+
+==> 003.rb 17 <==
+Hash[a: b, c: d]
+
+==> 004.rb 35 <==
+do_something(Hash[a: b, c: d], 42)
+
+==> 005.rb 34 <==
+do_something Hash[a: b, c: d], 42
+
+==> 006.rb 7 <==
+Hash[]
+
+==> 007.rb 35 <==
+do_something Hash[a, b, c, d], arg
+
+==> 008.rb 14 <==
+Hash[a, b, c]
+
+==> 009.rb 17 <==
+Hash[a.foo :bar]
+
+==> 010.rb 16 <==
+Hash[array.zip]
+
+==> 011.rb 18 <==
+Hash[array.zip()]
+
+==> 012.rb 13 <==
+Hash[a || b]
+
+==> 013.rb 15 <==
+Hash[(a || b)]
+
+==> 014.rb 13 <==
+Hash[a && b]
+
+==> 015.rb 15 <==
+Hash[(a && b)]
+
+==> 016.rb 27 <==
+Hash[array.zip([1, 2, 3])]
+
+==> 017.rb 13 <==
+Hash[Hash[]]
+
+==> 018.rb 17 <==
+Hash[Hash[k, v]]
+
+==> 019.rb 20 <==
+Hash[1, Hash[k, v]]
+
+==> 020.rb 12 <==
+Hash[].to_h
+

@@ -1,0 +1,54 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 71 <==
+begin
+  something
+rescue FirstError
+rescue SecondError, FirstError
+end
+
+==> 001.rb 65 <==
+begin
+  something
+rescue *ERRORS
+rescue SecondError, *ERRORS
+end
+
+==> 002.rb 96 <==
+begin
+  something
+rescue FirstError
+rescue SecondError
+rescue FirstError
+rescue SecondError
+end
+
+==> 003.rb 76 <==
+begin
+  something
+rescue FirstError
+rescue SecondError, FirstError
+else
+end
+
+==> 004.rb 78 <==
+begin
+  something
+rescue FirstError
+rescue SecondError, FirstError
+rescue
+end
+
+==> 005.rb 59 <==
+begin
+  something
+rescue FirstError
+rescue SecondError
+end
+

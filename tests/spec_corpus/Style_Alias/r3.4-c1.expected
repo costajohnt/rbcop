@@ -1,0 +1,12 @@
+==> offenses exit=1 81 <==
+000.rb:3:3: C: [Correctable] Style/Alias: Use `alias_method` instead of `alias`.
+
+==> autocorrect exit=0 79 <==
+000.rb:3:3: C: [Corrected] Style/Alias: Use `alias_method` instead of `alias`.
+
+==> corrected/000.rb 62 <==
+included do
+  do_something(it)
+  alias_method :ala, :bala
+end
+

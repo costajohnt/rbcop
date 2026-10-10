@@ -1,0 +1,6 @@
+==> offenses exit=1 98 <==
+000/bar.gemspec:1:1: W: Gemspec/RequiredRubyVersion: `required_ruby_version` should be specified.
+
+==> autocorrect exit=1 98 <==
+000/bar.gemspec:1:1: W: Gemspec/RequiredRubyVersion: `required_ruby_version` should be specified.
+

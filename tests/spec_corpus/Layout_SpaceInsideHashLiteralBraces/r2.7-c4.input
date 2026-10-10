@@ -1,0 +1,35 @@
+==> .rubocop.yml 170 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: compact
+
+==> 000.rb 19 <==
+h = { a: 1, b: 2 }
+
+==> 001.rb 26 <==
+h = { a: { a: 1, b: 2 } }
+
+==> 002.rb 12 <==
+h = {a: 1 }
+
+==> 003.rb 30 <==
+h = {a: 1, b: 2}
+h = {a => 1}
+
+==> 004.rb 32 <==
+h = {
+      a: 1,
+      b: 2,
+}
+
+==> 005.rb 42 <==
+h = { # Comment
+      a: 1,
+      b: 2,
+}
+

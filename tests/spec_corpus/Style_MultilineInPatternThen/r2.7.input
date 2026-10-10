@@ -1,0 +1,85 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 25 <==
+case foo
+in bar then
+end
+
+==> 001.rb 38 <==
+case foo
+in bar then
+do_something
+end
+
+==> 002.rb 53 <==
+case foo
+in bar then
+do_something1
+do_something2
+end
+
+==> 003.rb 38 <==
+case foo
+in bar then do_something
+end
+
+==> 004.rb 76 <==
+case cond
+in foo then do_something(arg1,
+                         arg2)
+end
+
+==> 005.rb 67 <==
+case foo
+in bar then do_something
+            do_another_thing
+end
+
+==> 006.rb 20 <==
+case foo
+in bar
+end
+
+==> 007.rb 33 <==
+case foo
+in bar
+do_something
+end
+
+==> 008.rb 54 <==
+case condition
+in foo then {
+    key: 'value'
+  }
+end
+
+==> 009.rb 51 <==
+case condition
+in foo then [
+    'element'
+  ]
+end
+
+==> 010.rb 40 <==
+case foo
+in bar
+  then do_something
+end
+
+==> 011.rb 30 <==
+case foo
+in bar, baz then
+end
+
+==> 012.rb 46 <==
+case foo
+in bar,
+   baz then do_something
+end
+

@@ -1,0 +1,13 @@
+==> .rubocop.yml 158 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SymbolProc:
+  AllowedPatterns:
+  - respond_
+
+==> 000.rb 34 <==
+respond_to { |format| format.xml }

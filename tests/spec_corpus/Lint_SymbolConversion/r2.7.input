@@ -1,0 +1,133 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 12 <==
+:foo.to_sym
+
+==> 001.rb 13 <==
+"foo".to_sym
+
+==> 002.rb 17 <==
+"foo_bar".to_sym
+
+==> 003.rb 17 <==
+"foo-bar".to_sym
+
+==> 004.rb 20 <==
+"foo-#{bar}".to_sym
+
+==> 005.rb 24 <==
+"foo#{bar}\"qux".to_sym
+
+==> 006.rb 20 <==
+%{foo#{bar}}.to_sym
+
+==> 007.rb 21 <==
+%Q{foo#{bar}}.to_sym
+
+==> 008.rb 20 <==
+%(foo#{bar}).to_sym
+
+==> 009.rb 20 <==
+%<foo#{bar}>.to_sym
+
+==> 010.rb 19 <==
+"x" "y#{z}".to_sym
+
+==> 011.rb 12 <==
+:foo.intern
+
+==> 012.rb 13 <==
+"foo".intern
+
+==> 013.rb 17 <==
+"foo_bar".intern
+
+==> 014.rb 17 <==
+"foo-bar".intern
+
+==> 015.rb 20 <==
+"foo-#{bar}".intern
+
+==> 016.rb 7 <==
+:"foo"
+
+==> 017.rb 11 <==
+:"foo_bar"
+
+==> 018.rb 5 <==
+:foo
+
+==> 019.rb 32 <==
+<<~TEXT.to_sym
+  foo#{bar}
+TEXT
+
+==> 020.rb 11 <==
+:"foo-bar"
+
+==> 021.rb 11 <==
+:'foo-bar'
+
+==> 022.rb 13 <==
+:'foo-bar""'
+
+==> 023.rb 15 <==
+{ foo: 'bar' }
+
+==> 024.rb 21 <==
+{ 'foo-bar': 'bar' }
+
+==> 025.rb 21 <==
+{ 'foo:bar': 'bar' }
+
+==> 026.rb 18 <==
+{ 'foo=': 'bar' }
+
+==> 027.rb 17 <==
+{ 'foo': 'bar' }
+
+==> 028.rb 18 <==
+{ 'foo!': 'bar' }
+
+==> 029.rb 18 <==
+{ 'foo?': 'bar' }
+
+==> 030.rb 16 <==
+{ '==': 'bar' }
+
+==> 031.rb 26 <==
+{ "foo-#{'bar'}": 'baz' }
+
+==> 032.rb 14 <==
+{ foo: :bar }
+
+==> 033.rb 19 <==
+{ :'foo' => :bar }
+
+==> 034.rb 16 <==
+{ foo: :'bar' }
+
+==> 035.rb 31 <==
+{ foo: "bar-#{'baz'}".to_sym }
+
+==> 036.rb 42 <==
+alias foo bar
+alias == equal
+alias eq? ==
+
+==> 037.rb 40 <==
+%i(foo bar foo-bar)
+%I(foo bar foo-bar)
+
+==> 038.rb 15 <==
+:'Foo/Bar/Baz'
+
+==> 039.rb 16 <==
+to_sym == other
+

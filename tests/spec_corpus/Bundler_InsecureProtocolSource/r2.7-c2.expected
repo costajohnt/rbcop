@@ -1,0 +1,9 @@
+==> offenses exit=1 127 <==
+000.gemfile:1:8: W: [Correctable] Bundler/InsecureProtocolSource: Use `https://rubygems.org` instead of `http://rubygems.org`.
+
+==> autocorrect exit=0 125 <==
+000.gemfile:1:8: W: [Corrected] Bundler/InsecureProtocolSource: Use `https://rubygems.org` instead of `http://rubygems.org`.
+
+==> corrected/000.gemfile 30 <==
+source 'https://rubygems.org'
+

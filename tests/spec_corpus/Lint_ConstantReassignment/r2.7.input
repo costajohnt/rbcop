@@ -1,0 +1,454 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 22 <==
+FOO = :bar
+FOO = :baz
+
+==> 001.rb 34 <==
+self::FOO = :bar
+self::FOO = :baz
+
+==> 002.rb 38 <==
+class A
+  FOO = :bar
+  FOO = :baz
+end
+
+==> 003.rb 50 <==
+class A
+  self::FOO = :bar
+  self::FOO = :baz
+end
+
+==> 004.rb 39 <==
+module A
+  FOO = :bar
+  FOO = :baz
+end
+
+==> 005.rb 51 <==
+module A
+  self::FOO = :bar
+  self::FOO = :baz
+end
+
+==> 006.rb 40 <==
+class A
+  FOO = :bar
+end
+
+A::FOO = :baz
+
+==> 007.rb 42 <==
+class A
+  FOO = :bar
+end
+
+::A::FOO = :baz
+
+==> 008.rb 62 <==
+module A
+  class B
+    FOO = :bar
+  end
+end
+
+A::B::FOO = :baz
+
+==> 009.rb 64 <==
+module A
+  class B
+    FOO = :bar
+  end
+end
+
+::A::B::FOO = :baz
+
+==> 010.rb 39 <==
+class A
+  ::FOO = :bar
+end
+
+FOO = :baz
+
+==> 011.rb 61 <==
+module A
+  class B
+    FOO = :bar
+  end
+
+  B::FOO = :baz
+end
+
+==> 012.rb 76 <==
+module A
+  class B
+    FOO = :bar
+  end
+
+  class B
+    FOO = :baz
+  end
+end
+
+==> 013.rb 82 <==
+class A
+  ALL = [
+    FOO = :a,
+    BAR = :b,
+    BAZ = :c,
+    FOO = :d,
+  ]
+end
+
+==> 014.rb 89 <==
+class A
+  ALL = [
+    FOO = :a,
+    BAR = :b,
+    BAZ = :c,
+    FOO = :d,
+  ].freeze
+end
+
+==> 015.rb 57 <==
+class A
+  FOO = :bar
+  FOO = :baz
+end unless defined?(A)
+
+==> 016.rb 24 <==
+FOO = :bar
+FOO ||= :baz
+
+==> 017.rb 51 <==
+class A
+  FOO = :bar
+end
+
+class B
+  FOO = :baz
+end
+
+==> 018.rb 53 <==
+module A
+  FOO = :bar
+end
+
+module B
+  FOO = :baz
+end
+
+==> 019.rb 89 <==
+module A
+  class C
+    FOO = :bar
+  end
+end
+
+module B
+  class C
+    FOO = :baz
+  end
+end
+
+==> 020.rb 37 <==
+FOO = :bar
+
+class A
+  FOO = :baz
+end
+
+==> 021.rb 43 <==
+FOO = :bar
+
+class A
+  self::FOO = :baz
+end
+
+==> 022.rb 38 <==
+FOO = :bar
+
+module A
+  FOO = :baz
+end
+
+==> 023.rb 41 <==
+module A
+  FOO = :bar
+  ::FOO = :baz
+end
+
+==> 024.rb 64 <==
+module A
+  module B
+    FOO = :bar
+  end
+
+  ::B::FOO = :baz
+end
+
+==> 025.rb 73 <==
+FOO = :bar
+
+class A
+  FOO = :baz
+
+  remove_const :FOO
+
+  FOO = :quux
+end
+
+==> 026.rb 74 <==
+FOO = :bar
+
+class A
+  FOO = :baz
+
+  remove_const 'FOO'
+
+  FOO = :quux
+end
+
+==> 027.rb 78 <==
+FOO = :bar
+
+class A
+  FOO = :baz
+
+  self.remove_const :FOO
+
+  FOO = :quux
+end
+
+==> 028.rb 69 <==
+class A
+  FOO = :bar
+
+  silence_warnings do
+    FOO = :baz
+  end
+end
+
+==> 029.rb 85 <==
+class A
+  FOO = :bar
+
+  silence_warnings do
+    FOO = :baz
+    BAR = :quux
+  end
+end
+
+==> 030.rb 11 <==
+FOO = :bar
+
+==> 031.rb 39 <==
+FOO = :bar
+FOO = :baz unless something
+
+==> 032.rb 48 <==
+if something
+  FOO = :bar
+else
+  FOO = :baz
+end
+
+==> 033.rb 74 <==
+FOO = :bar
+
+if something
+  FOO = :baz
+  FOO = :quux
+else
+  FOO = :baz
+end
+
+==> 034.rb 80 <==
+class Foo
+  FOO = :bar
+
+  if something
+    FOO = :baz
+    FOO = :quux
+  end
+end
+
+==> 035.rb 50 <==
+class Foo
+  if something
+    FOO = :bar
+  end
+end
+
+==> 036.rb 42 <==
+FOO = :bar
+
+Class.new do
+  FOO = :baz
+end
+
+==> 037.rb 57 <==
+begin
+  FOO = File.read(filename)
+rescue
+  FOO = nil
+end
+
+==> 038.rb 28 <==
+lvar::FOO = 1
+lvar::FOO = 2
+
+==> 039.rb 38 <==
+lvar::FOO::BAR = 1
+lvar::FOO::BAR = 2
+
+==> 040.rb 71 <==
+class FooError < StandardError; end
+FooError = Class.new(RuntimeError)
+
+==> 041.rb 88 <==
+module A
+  class FooError < StandardError; end
+  FooError = Class.new(RuntimeError)
+end
+
+==> 042.rb 77 <==
+class A::FooError < StandardError; end
+A::FooError = Class.new(RuntimeError)
+
+==> 043.rb 80 <==
+module Matcher
+  FOO = :bar
+end
+
+module Documentation::Matcher
+  FOO = :baz
+end
+
+==> 044.rb 71 <==
+module A::Matcher
+  FOO = :bar
+end
+
+module B::Matcher
+  FOO = :baz
+end
+
+==> 045.rb 78 <==
+class Matcher
+  FOO = :bar
+end
+
+class Documentation::Matcher
+  FOO = :baz
+end
+
+==> 046.rb 42 <==
+module A::B
+  FOO = :bar
+  FOO = :baz
+end
+
+==> 047.rb 75 <==
+module A
+  module B
+    FOO = :bar
+  end
+end
+
+module A::B
+  FOO = :baz
+end
+
+==> 048.rb 93 <==
+module Outer
+  FOO = :bar
+end
+
+module Outer
+  module ::Other::Outer
+    FOO = :baz
+  end
+end
+
+==> 049.rb 72 <==
+FooError = Class.new(StandardError)
+class FooError < StandardError; end
+
+==> 050.rb 91 <==
+if condition
+  class FooError < StandardError; end
+end
+FooError = Class.new(StandardError)
+
+==> 051.rb 102 <==
+module A
+  class FooError < StandardError; end
+end
+module B
+  FooError = Class.new(StandardError)
+end
+
+==> 052.rb 79 <==
+class ::A::FooError < StandardError; end
+A::FooError = Class.new(RuntimeError)
+
+==> 053.rb 92 <==
+class Parent
+  class FooError < StandardError; end
+  FooError = Class.new(RuntimeError)
+end
+
+==> 054.rb 20 <==
+module M; end
+M = 1
+
+==> 055.rb 36 <==
+class A
+  module M; end
+  M = 1
+end
+
+==> 056.rb 64 <==
+class A
+  FOO = :bar
+  Other.remove_const :FOO
+  FOO = :baz
+end
+
+==> 057.rb 58 <==
+class A
+  FOO = :bar
+  remove_const :FOO
+  FOO = :baz
+end
+
+==> 058.rb 50 <==
+module A
+  module M; end
+end
+module B
+  M = 1
+end
+
+==> 059.rb 29 <==
+M = Module.new
+module M; end
+
+==> 060.rb 24 <==
+FOO = 1
+FOO, BAR = 2, 3
+
+==> 061.rb 39 <==
+if condition
+  module M; end
+end
+M = 1
+

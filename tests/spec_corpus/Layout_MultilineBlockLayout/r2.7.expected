@@ -1,0 +1,158 @@
+==> offenses exit=1 2610 <==
+000.rb:1:9: C: [Correctable] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+001.rb:1:8: C: [Correctable] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+002.rb:1:13: C: [Correctable] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+003.rb:1:12: C: [Correctable] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+008.rb:1:25: C: [Correctable] Layout/MultilineBlockLayout: Block argument expression is not on the same line as the block start.
+012.rb:1:11: C: [Correctable] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+013.rb:1:9: C: [Correctable] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+014.rb:2:3: C: [Correctable] Layout/MultilineBlockLayout: Block argument expression is not on the same line as the block start.
+015.rb:2:3: C: [Correctable] Layout/MultilineBlockLayout: Block argument expression is not on the same line as the block start.
+016.rb:1:9: C: [Correctable] Layout/MultilineBlockLayout: Block argument expression is not on the same line as the block start.
+017.rb:1:15: C: [Correctable] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+018.rb:1:14: C: [Correctable] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+019.rb:1:12: C: [Correctable] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+020.rb:1:9: C: [Correctable] Layout/MultilineBlockLayout: Block argument expression is not on the same line as the block start.
+021.rb:1:9: C: [Correctable] Layout/MultilineBlockLayout: Block argument expression is not on the same line as the block start.
+022.rb:2:12: C: [Correctable] Layout/MultilineBlockLayout: Block argument expression is not on the same line as the block start.
+023.rb:2:12: C: [Correctable] Layout/MultilineBlockLayout: Block argument expression is not on the same line as the block start.
+024.rb:2:12: C: [Correctable] Layout/MultilineBlockLayout: Block argument expression is not on the same line as the block start.
+025.rb:2:1: C: [Correctable] Layout/MultilineBlockLayout: Block argument expression is not on the same line as the block start.
+026.rb:1:8: C: [Correctable] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+027.rb:1:9: C: [Correctable] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+
+==> autocorrect exit=0 2568 <==
+000.rb:1:9: C: [Corrected] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+001.rb:1:8: C: [Corrected] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+002.rb:1:13: C: [Corrected] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+003.rb:1:12: C: [Corrected] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+008.rb:1:25: C: [Corrected] Layout/MultilineBlockLayout: Block argument expression is not on the same line as the block start.
+012.rb:1:11: C: [Corrected] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+013.rb:1:9: C: [Corrected] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+014.rb:2:3: C: [Corrected] Layout/MultilineBlockLayout: Block argument expression is not on the same line as the block start.
+015.rb:2:3: C: [Corrected] Layout/MultilineBlockLayout: Block argument expression is not on the same line as the block start.
+016.rb:1:9: C: [Corrected] Layout/MultilineBlockLayout: Block argument expression is not on the same line as the block start.
+017.rb:1:15: C: [Corrected] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+018.rb:1:14: C: [Corrected] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+019.rb:1:12: C: [Corrected] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+020.rb:1:9: C: [Corrected] Layout/MultilineBlockLayout: Block argument expression is not on the same line as the block start.
+021.rb:1:9: C: [Corrected] Layout/MultilineBlockLayout: Block argument expression is not on the same line as the block start.
+022.rb:2:12: C: [Corrected] Layout/MultilineBlockLayout: Block argument expression is not on the same line as the block start.
+023.rb:2:12: C: [Corrected] Layout/MultilineBlockLayout: Block argument expression is not on the same line as the block start.
+024.rb:2:12: C: [Corrected] Layout/MultilineBlockLayout: Block argument expression is not on the same line as the block start.
+025.rb:2:1: C: [Corrected] Layout/MultilineBlockLayout: Block argument expression is not on the same line as the block start.
+026.rb:1:8: C: [Corrected] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+027.rb:1:9: C: [Corrected] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+
+==> corrected/000.rb 19 <==
+test do 
+  foo
+end
+
+==> corrected/001.rb 16 <==
+test { 
+  foo
+}
+
+==> corrected/002.rb 23 <==
+test do |x| 
+  foo
+end
+
+==> corrected/003.rb 20 <==
+test { |x| 
+  foo
+}
+
+==> corrected/008.rb 140 <==
+some_result = lambda do |so_many, parameters, it_will, be_too_long, for_one_line, line_length, has_increased, add_3_mor|
+  do_something
+end
+
+==> corrected/012.rb 27 <==
+-> (x) do 
+  foo
+  bar
+end
+
+==> corrected/013.rb 25 <==
+-> x do 
+  foo
+  bar
+end
+
+==> corrected/014.rb 31 <==
+test do |x|
+  play_with(x)
+end
+
+==> corrected/015.rb 16 <==
+test do |x|
+end
+
+==> corrected/016.rb 19 <==
+test do |x, y|
+end
+
+==> corrected/017.rb 32 <==
+test do |foo| 
+  bar
+  test
+end
+
+==> corrected/018.rb 32 <==
+x = -> (y) { 
+      foo
+  bar
+}
+
+==> corrected/019.rb 32 <==
+foo do |o| 
+  (
+    bar
+  )
+end
+
+==> corrected/020.rb 37 <==
+test do |x, y|
+  play_with(x, y)
+end
+
+==> corrected/021.rb 39 <==
+test do |(x, y)|
+  play_with(x, y)
+end
+
+==> corrected/022.rb 36 <==
+def f
+  X.map do |(a, b)|
+  end
+end
+
+==> corrected/023.rb 32 <==
+def f
+  X.map do |a,|
+  end
+end
+
+==> corrected/024.rb 43 <==
+def f
+  X.map do |(((a), b), c)|
+  end
+end
+
+==> corrected/025.rb 39 <==
+test do |(x, y)|
+  play_with(x, y)
+end
+
+==> corrected/026.rb 15 <==
+test { 
+  _1
+}
+
+==> corrected/027.rb 18 <==
+test do 
+  _1
+end
+

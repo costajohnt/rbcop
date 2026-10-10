@@ -1,0 +1,252 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 19 <==
+if a; foo else end
+
+==> 001.rb 20 <==
+if a
+  foo
+else
+end
+
+==> 002.rb 35 <==
+if a; foo elsif b; bar else nil end
+==> 003.rb 30 <==
+if cond; foo else bar; nil end
+==> 004.rb 16 <==
+if cond; foo end
+==> 005.rb 50 <==
+if cond
+  if cond2
+    something
+  else
+  end
+end
+
+==> 006.rb 38 <==
+if cond
+  something
+else
+  # TODO
+end
+
+==> 007.rb 26 <==
+unless cond; foo else end
+
+==> 008.rb 29 <==
+unless cond; foo else nil end
+==> 009.rb 34 <==
+unless cond; foo else bar; nil end
+==> 010.rb 20 <==
+unless cond; foo end
+==> 011.rb 29 <==
+case v; when a; foo else end
+
+==> 012.rb 46 <==
+case v; when a; foo; when b; bar; else nil end
+==> 013.rb 36 <==
+case v; when a; foo; else b; nil end
+==> 014.rb 37 <==
+case v; when a; foo; when b; bar; end
+==> 015.rb 18 <==
+if a; foo else end
+==> 016.rb 40 <==
+if a
+  foo
+elsif b
+  bar
+else
+  nil
+end
+
+==> 017.rb 103 <==
+foobar = if a
+           foo
+         elsif b
+           bar
+         else
+           nil
+         end
+
+==> 018.rb 36 <==
+if a; foo elsif b; bar else nil end
+
+==> 019.rb 50 <==
+if a; foo elsif b; bar; elsif c; bar else nil end
+
+==> 020.rb 25 <==
+unless cond; foo else end
+==> 021.rb 30 <==
+unless cond; foo else nil end
+
+==> 022.rb 28 <==
+case v; when a; foo else end
+==> 023.rb 47 <==
+case v; when a; foo; when b; bar; else nil end
+
+==> 024.rb 120 <==
+foobar = case v
+         when a
+           foo
+         when b
+           bar
+         else
+           nil
+         end
+
+==> 025.rb 34 <==
+if condition
+  statement
+else
+end
+
+==> 026.rb 40 <==
+if condition
+  statement
+else
+  nil
+end
+
+==> 027.rb 51 <==
+if condition
+  statement
+else
+  # some comment
+end
+
+==> 028.rb 55 <==
+if condition
+  statement
+else
+  nil # some comment
+end
+
+==> 029.rb 51 <==
+if condition
+  foo
+elsif condition2
+  bar
+else
+end
+
+==> 030.rb 57 <==
+if condition
+  foo
+elsif condition2
+  bar
+else
+  nil
+end
+
+==> 031.rb 68 <==
+if condition
+  foo
+elsif condition2
+  bar
+else
+  # some comment
+end
+
+==> 032.rb 72 <==
+if condition
+  foo
+elsif condition2
+  bar
+else
+  nil # some comment
+end
+
+==> 033.rb 29 <==
+if condition
+  statement
+end
+
+==> 034.rb 38 <==
+unless condition
+  statement
+else
+end
+
+==> 035.rb 44 <==
+unless condition
+  statement
+else
+  nil
+end
+
+==> 036.rb 55 <==
+unless condition
+  statement
+else
+  # some comment
+end
+
+==> 037.rb 59 <==
+unless condition
+  statement
+else
+  nil # some comment
+end
+
+==> 038.rb 33 <==
+unless condition
+  statement
+end
+
+==> 039.rb 43 <==
+case a
+when condition
+  statement
+else
+end
+
+==> 040.rb 49 <==
+case a
+when condition
+  statement
+else
+  nil
+end
+
+==> 041.rb 60 <==
+case a
+when condition
+  statement
+else
+  # some comment
+end
+
+==> 042.rb 64 <==
+case a
+when condition
+  statement
+else
+  nil # some comment
+end
+
+==> 043.rb 38 <==
+case a
+when condition
+  statement
+end
+
+==> 044.rb 114 <==
+def foo
+  if @params
+    case @params[:x]
+    when :a
+      :b
+    else
+      nil
+    end
+  else
+    :c
+  end
+end
+

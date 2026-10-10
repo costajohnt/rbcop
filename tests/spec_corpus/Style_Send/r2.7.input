@@ -1,0 +1,37 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 17 <==
+Object.send(foo)
+
+==> 001.rb 18 <==
+Object&.send(foo)
+
+==> 002.rb 11 <==
+Object.send
+==> 003.rb 10 <==
+send(foo)
+
+==> 004.rb 4 <==
+send
+==> 005.rb 20 <==
+Object.__send__(foo)
+==> 006.rb 15 <==
+Object.__send__
+==> 007.rb 13 <==
+__send__(foo)
+==> 008.rb 8 <==
+__send__
+==> 009.rb 23 <==
+Object.public_send(foo)
+==> 010.rb 18 <==
+Object.public_send
+==> 011.rb 16 <==
+public_send(foo)
+==> 012.rb 11 <==
+public_send

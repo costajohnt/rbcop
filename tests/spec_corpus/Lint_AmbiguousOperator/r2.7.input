@@ -1,0 +1,68 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 35 <==
+do_something(+24)
+do_something +42
+
+==> 001.rb 30 <==
+do_something
+do_something +42
+
+==> 002.rb 18 <==
+do_something + 42
+
+==> 003.rb 18 <==
+do_something(+42)
+
+==> 004.rb 35 <==
+do_something(-24)
+do_something -42
+
+==> 005.rb 18 <==
+do_something - 42
+
+==> 006.rb 18 <==
+do_something(-42)
+
+==> 007.rb 30 <==
+array = [1, 2, 3]
+puts *array
+
+==> 008.rb 31 <==
+array = [1, 2, 3]
+puts * array
+
+==> 009.rb 31 <==
+array = [1, 2, 3]
+puts(*array)
+
+==> 010.rb 49 <==
+process = proc { do_something }
+2.times &process
+
+==> 011.rb 50 <==
+process = proc { do_something }
+2.times & process
+
+==> 012.rb 50 <==
+process = proc { do_something }
+2.times(&process)
+
+==> 013.rb 22 <==
+do_something **kwargs
+
+==> 014.rb 23 <==
+do_something ** kwargs
+
+==> 015.rb 23 <==
+do_something(**kwargs)
+
+==> 016.rb 19 <==
+do_something&.* -1
+

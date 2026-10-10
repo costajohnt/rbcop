@@ -1,0 +1,436 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 31 <==
+array.select { _1.is_a?(Foo) }
+
+==> 001.rb 32 <==
+array&.select { _1.is_a?(Foo) }
+
+==> 002.rb 34 <==
+array.select { _1.kind_of?(Foo) }
+
+==> 003.rb 30 <==
+array.select { _1.is_a?(_2) }
+
+==> 004.rb 33 <==
+array.find_all { _1.is_a?(Foo) }
+
+==> 005.rb 34 <==
+array&.find_all { _1.is_a?(Foo) }
+
+==> 006.rb 36 <==
+array.find_all { _1.kind_of?(Foo) }
+
+==> 007.rb 32 <==
+array.find_all { _1.is_a?(_2) }
+
+==> 008.rb 31 <==
+array.filter { _1.is_a?(Foo) }
+
+==> 009.rb 32 <==
+array&.filter { _1.is_a?(Foo) }
+
+==> 010.rb 34 <==
+array.filter { _1.kind_of?(Foo) }
+
+==> 011.rb 30 <==
+array.filter { _1.is_a?(_2) }
+
+==> 012.rb 32 <==
+array.reject { !_1.is_a?(Foo) }
+
+==> 013.rb 35 <==
+array.reject { !_1.kind_of?(Foo) }
+
+==> 014.rb 32 <==
+array.select { !_1.is_a?(Foo) }
+
+==> 015.rb 35 <==
+array.select { !_1.kind_of?(Foo) }
+
+==> 016.rb 34 <==
+array.find_all { !_1.is_a?(Foo) }
+
+==> 017.rb 37 <==
+array.find_all { !_1.kind_of?(Foo) }
+
+==> 018.rb 32 <==
+array.filter { !_1.is_a?(Foo) }
+
+==> 019.rb 35 <==
+array.filter { !_1.kind_of?(Foo) }
+
+==> 020.rb 31 <==
+array.reject { _1.is_a?(Foo) }
+
+==> 021.rb 32 <==
+array&.reject { _1.is_a?(Foo) }
+
+==> 022.rb 34 <==
+array.reject { _1.kind_of?(Foo) }
+
+==> 023.rb 30 <==
+array.reject { _1.is_a?(_2) }
+
+==> 024.rb 34 <==
+array.select { |x| x.is_a?(Foo) }
+
+==> 025.rb 37 <==
+array.select { |x| x.kind_of?(Foo) }
+
+==> 026.rb 39 <==
+array.select { |x| x.is_a?(Foo::Bar) }
+
+==> 027.rb 39 <==
+array.select do |x|
+  x.is_a?(Foo)
+end
+
+==> 028.rb 13 <==
+array.select
+
+==> 029.rb 22 <==
+array.select(&:even?)
+
+==> 030.rb 29 <==
+array.select { |x| x.even? }
+
+==> 031.rb 56 <==
+array.select do |x|
+  next if x.nil?
+  x.is_a?(Foo)
+end
+
+==> 032.rb 35 <==
+obj.select { |x, y| y.is_a?(Foo) }
+
+==> 033.rb 34 <==
+array.select { |x| y.is_a?(Foo) }
+
+==> 034.rb 28 <==
+select { |x| x.is_a?(Foo) }
+
+==> 035.rb 68 <==
+[].select { |x| x.is_a?(Foo) }
+foo.to_a.select { |x| x.is_a?(Foo) }
+
+==> 036.rb 73 <==
+{}.select { |x| x.is_a?(Foo) }
+{ foo: :bar }.select { |x| x.is_a?(Foo) }
+
+==> 037.rb 146 <==
+Hash.new.select { |x| x.is_a?(Foo) }
+Hash.new(:default).select { |x| x.is_a?(Foo) }
+Hash.new { |hash, key| :default }.select { |x| x.is_a?(Foo) }
+
+==> 038.rb 87 <==
+Hash[h].select { |x| x.is_a?(Foo) }
+Hash[:foo, 0, :bar, 1].select { |x| x.is_a?(Foo) }
+
+==> 039.rb 70 <==
+to_h.select { |x| x.is_a?(Foo) }
+foo.to_h.select { |x| x.is_a?(Foo) }
+
+==> 040.rb 76 <==
+to_hash.select { |x| x.is_a?(Foo) }
+foo.to_hash.select { |x| x.is_a?(Foo) }
+
+==> 041.rb 66 <==
+ENV.select { |x| x.is_a?(Foo) }
+::ENV.select { |x| x.is_a?(Foo) }
+
+==> 042.rb 35 <==
+array&.select { |x| x.is_a?(Foo) }
+
+==> 043.rb 101 <==
+Hash&.new.select { |x| x.is_a?(Foo) }
+Hash&.new { |hash, key| :default }.select { |x| x.is_a?(Foo) }
+
+==> 044.rb 38 <==
+foo&.to_h.select { |x| x.is_a?(Foo) }
+
+==> 045.rb 41 <==
+foo&.to_hash.select { |x| x.is_a?(Foo) }
+
+==> 046.rb 36 <==
+array.find_all { |x| x.is_a?(Foo) }
+
+==> 047.rb 39 <==
+array.find_all { |x| x.kind_of?(Foo) }
+
+==> 048.rb 41 <==
+array.find_all { |x| x.is_a?(Foo::Bar) }
+
+==> 049.rb 41 <==
+array.find_all do |x|
+  x.is_a?(Foo)
+end
+
+==> 050.rb 15 <==
+array.find_all
+
+==> 051.rb 24 <==
+array.find_all(&:even?)
+
+==> 052.rb 31 <==
+array.find_all { |x| x.even? }
+
+==> 053.rb 58 <==
+array.find_all do |x|
+  next if x.nil?
+  x.is_a?(Foo)
+end
+
+==> 054.rb 37 <==
+obj.find_all { |x, y| y.is_a?(Foo) }
+
+==> 055.rb 36 <==
+array.find_all { |x| y.is_a?(Foo) }
+
+==> 056.rb 30 <==
+find_all { |x| x.is_a?(Foo) }
+
+==> 057.rb 72 <==
+[].find_all { |x| x.is_a?(Foo) }
+foo.to_a.find_all { |x| x.is_a?(Foo) }
+
+==> 058.rb 77 <==
+{}.find_all { |x| x.is_a?(Foo) }
+{ foo: :bar }.find_all { |x| x.is_a?(Foo) }
+
+==> 059.rb 152 <==
+Hash.new.find_all { |x| x.is_a?(Foo) }
+Hash.new(:default).find_all { |x| x.is_a?(Foo) }
+Hash.new { |hash, key| :default }.find_all { |x| x.is_a?(Foo) }
+
+==> 060.rb 91 <==
+Hash[h].find_all { |x| x.is_a?(Foo) }
+Hash[:foo, 0, :bar, 1].find_all { |x| x.is_a?(Foo) }
+
+==> 061.rb 74 <==
+to_h.find_all { |x| x.is_a?(Foo) }
+foo.to_h.find_all { |x| x.is_a?(Foo) }
+
+==> 062.rb 80 <==
+to_hash.find_all { |x| x.is_a?(Foo) }
+foo.to_hash.find_all { |x| x.is_a?(Foo) }
+
+==> 063.rb 70 <==
+ENV.find_all { |x| x.is_a?(Foo) }
+::ENV.find_all { |x| x.is_a?(Foo) }
+
+==> 064.rb 37 <==
+array&.find_all { |x| x.is_a?(Foo) }
+
+==> 065.rb 105 <==
+Hash&.new.find_all { |x| x.is_a?(Foo) }
+Hash&.new { |hash, key| :default }.find_all { |x| x.is_a?(Foo) }
+
+==> 066.rb 40 <==
+foo&.to_h.find_all { |x| x.is_a?(Foo) }
+
+==> 067.rb 43 <==
+foo&.to_hash.find_all { |x| x.is_a?(Foo) }
+
+==> 068.rb 34 <==
+array.filter { |x| x.is_a?(Foo) }
+
+==> 069.rb 37 <==
+array.filter { |x| x.kind_of?(Foo) }
+
+==> 070.rb 39 <==
+array.filter { |x| x.is_a?(Foo::Bar) }
+
+==> 071.rb 39 <==
+array.filter do |x|
+  x.is_a?(Foo)
+end
+
+==> 072.rb 13 <==
+array.filter
+
+==> 073.rb 22 <==
+array.filter(&:even?)
+
+==> 074.rb 29 <==
+array.filter { |x| x.even? }
+
+==> 075.rb 56 <==
+array.filter do |x|
+  next if x.nil?
+  x.is_a?(Foo)
+end
+
+==> 076.rb 35 <==
+obj.filter { |x, y| y.is_a?(Foo) }
+
+==> 077.rb 34 <==
+array.filter { |x| y.is_a?(Foo) }
+
+==> 078.rb 28 <==
+filter { |x| x.is_a?(Foo) }
+
+==> 079.rb 68 <==
+[].filter { |x| x.is_a?(Foo) }
+foo.to_a.filter { |x| x.is_a?(Foo) }
+
+==> 080.rb 73 <==
+{}.filter { |x| x.is_a?(Foo) }
+{ foo: :bar }.filter { |x| x.is_a?(Foo) }
+
+==> 081.rb 146 <==
+Hash.new.filter { |x| x.is_a?(Foo) }
+Hash.new(:default).filter { |x| x.is_a?(Foo) }
+Hash.new { |hash, key| :default }.filter { |x| x.is_a?(Foo) }
+
+==> 082.rb 87 <==
+Hash[h].filter { |x| x.is_a?(Foo) }
+Hash[:foo, 0, :bar, 1].filter { |x| x.is_a?(Foo) }
+
+==> 083.rb 70 <==
+to_h.filter { |x| x.is_a?(Foo) }
+foo.to_h.filter { |x| x.is_a?(Foo) }
+
+==> 084.rb 76 <==
+to_hash.filter { |x| x.is_a?(Foo) }
+foo.to_hash.filter { |x| x.is_a?(Foo) }
+
+==> 085.rb 66 <==
+ENV.filter { |x| x.is_a?(Foo) }
+::ENV.filter { |x| x.is_a?(Foo) }
+
+==> 086.rb 35 <==
+array&.filter { |x| x.is_a?(Foo) }
+
+==> 087.rb 101 <==
+Hash&.new.filter { |x| x.is_a?(Foo) }
+Hash&.new { |hash, key| :default }.filter { |x| x.is_a?(Foo) }
+
+==> 088.rb 38 <==
+foo&.to_h.filter { |x| x.is_a?(Foo) }
+
+==> 089.rb 41 <==
+foo&.to_hash.filter { |x| x.is_a?(Foo) }
+
+==> 090.rb 35 <==
+array.reject { |x| !x.is_a?(Foo) }
+
+==> 091.rb 38 <==
+array.reject { |x| !x.kind_of?(Foo) }
+
+==> 092.rb 40 <==
+array.reject { |x| !x.is_a?(Foo::Bar) }
+
+==> 093.rb 35 <==
+array.select { |x| !x.is_a?(Foo) }
+
+==> 094.rb 38 <==
+array.select { |x| !x.kind_of?(Foo) }
+
+==> 095.rb 40 <==
+array.select { |x| !x.is_a?(Foo::Bar) }
+
+==> 096.rb 37 <==
+array.find_all { |x| !x.is_a?(Foo) }
+
+==> 097.rb 40 <==
+array.find_all { |x| !x.kind_of?(Foo) }
+
+==> 098.rb 42 <==
+array.find_all { |x| !x.is_a?(Foo::Bar) }
+
+==> 099.rb 35 <==
+array.filter { |x| !x.is_a?(Foo) }
+
+==> 100.rb 38 <==
+array.filter { |x| !x.kind_of?(Foo) }
+
+==> 101.rb 40 <==
+array.filter { |x| !x.is_a?(Foo::Bar) }
+
+==> 102.rb 34 <==
+array.reject { |x| x.is_a?(Foo) }
+
+==> 103.rb 37 <==
+array.reject { |x| x.kind_of?(Foo) }
+
+==> 104.rb 39 <==
+array.reject { |x| x.is_a?(Foo::Bar) }
+
+==> 105.rb 39 <==
+array.reject do |x|
+  x.is_a?(Foo)
+end
+
+==> 106.rb 13 <==
+array.reject
+
+==> 107.rb 22 <==
+array.reject(&:even?)
+
+==> 108.rb 29 <==
+array.reject { |x| x.even? }
+
+==> 109.rb 56 <==
+array.reject do |x|
+  next if x.nil?
+  x.is_a?(Foo)
+end
+
+==> 110.rb 35 <==
+obj.reject { |x, y| y.is_a?(Foo) }
+
+==> 111.rb 34 <==
+array.reject { |x| y.is_a?(Foo) }
+
+==> 112.rb 28 <==
+reject { |x| x.is_a?(Foo) }
+
+==> 113.rb 68 <==
+[].reject { |x| x.is_a?(Foo) }
+foo.to_a.reject { |x| x.is_a?(Foo) }
+
+==> 114.rb 73 <==
+{}.reject { |x| x.is_a?(Foo) }
+{ foo: :bar }.reject { |x| x.is_a?(Foo) }
+
+==> 115.rb 146 <==
+Hash.new.reject { |x| x.is_a?(Foo) }
+Hash.new(:default).reject { |x| x.is_a?(Foo) }
+Hash.new { |hash, key| :default }.reject { |x| x.is_a?(Foo) }
+
+==> 116.rb 87 <==
+Hash[h].reject { |x| x.is_a?(Foo) }
+Hash[:foo, 0, :bar, 1].reject { |x| x.is_a?(Foo) }
+
+==> 117.rb 70 <==
+to_h.reject { |x| x.is_a?(Foo) }
+foo.to_h.reject { |x| x.is_a?(Foo) }
+
+==> 118.rb 76 <==
+to_hash.reject { |x| x.is_a?(Foo) }
+foo.to_hash.reject { |x| x.is_a?(Foo) }
+
+==> 119.rb 66 <==
+ENV.reject { |x| x.is_a?(Foo) }
+::ENV.reject { |x| x.is_a?(Foo) }
+
+==> 120.rb 35 <==
+array&.reject { |x| x.is_a?(Foo) }
+
+==> 121.rb 101 <==
+Hash&.new.reject { |x| x.is_a?(Foo) }
+Hash&.new { |hash, key| :default }.reject { |x| x.is_a?(Foo) }
+
+==> 122.rb 38 <==
+foo&.to_h.reject { |x| x.is_a?(Foo) }
+
+==> 123.rb 41 <==
+foo&.to_hash.reject { |x| x.is_a?(Foo) }
+

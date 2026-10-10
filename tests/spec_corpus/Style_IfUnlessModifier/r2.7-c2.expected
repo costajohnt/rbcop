@@ -1,0 +1,315 @@
+==> offenses exit=1 8767 <==
+002.rb:3:70: C: [Correctable] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+006.rb:2:16: C: [Correctable] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+006.rb:2:63: C: Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+007.rb:1:70: C: [Correctable] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+008.rb:1:70: C: [Correctable] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+009.rb:1:16: C: [Correctable] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+013.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+015.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+017.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+019.rb:11:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+020.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+028.rb:3:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+029.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+030.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+036.rb:1:6: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+037.rb:1:6: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+038.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+040.rb:1:16: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+041.rb:1:16: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+045.rb:1:5: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+047.rb:2:3: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+049.rb:2:3: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+053.rb:1:3: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+054.rb:2:4: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+054.rb:5:4: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+055.rb:3:4: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+056.rb:2:5: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+056.rb:5:5: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+062.rb:2:6: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+067.rb:2:7: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+067.rb:5:7: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+068.rb:2:6: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+069.rb:2:14: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+070.rb:2:14: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+071.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+073.rb:2:6: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+075.rb:1:16: C: Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+075.rb:1:55: C: Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+076.rb:1:15: C: Style/IfUnlessModifier: Modifier form of `unless` makes the line too long.
+076.rb:1:56: C: Style/IfUnlessModifier: Modifier form of `unless` makes the line too long.
+077.rb:1:16: C: Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+077.rb:1:54: C: Style/IfUnlessModifier: Modifier form of `unless` makes the line too long.
+078.rb:1:18: C: Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+078.rb:1:62: C: Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+079.rb:1:17: C: Style/IfUnlessModifier: Modifier form of `unless` makes the line too long.
+079.rb:1:63: C: Style/IfUnlessModifier: Modifier form of `unless` makes the line too long.
+080.rb:1:18: C: Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+080.rb:1:62: C: Style/IfUnlessModifier: Modifier form of `unless` makes the line too long.
+081.rb:1:40: C: Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+081.rb:1:79: C: Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+082.rb:2:4: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+082.rb:5:4: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+083.rb:2:50: C: [Correctable] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+084.rb:2:50: C: [Correctable] Style/IfUnlessModifier: Modifier form of `unless` makes the line too long.
+085.rb:2:4: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+085.rb:5:50: C: [Correctable] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+086.rb:2:50: C: [Correctable] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+086.rb:3:50: C: [Correctable] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+087.rb:1:62: C: [Correctable] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+
+==> autocorrect exit=1 8592 <==
+002.rb:3:70: C: [Corrected] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+006.rb:2:16: C: [Corrected] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+007.rb:1:70: C: [Corrected] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+008.rb:1:70: C: [Corrected] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+009.rb:1:16: C: [Corrected] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+013.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+015.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+017.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+019.rb:11:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+020.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+028.rb:3:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+029.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+030.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+036.rb:1:6: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+037.rb:1:6: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+038.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+040.rb:1:16: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+041.rb:1:16: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+045.rb:1:5: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+047.rb:2:3: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+049.rb:2:3: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+053.rb:1:3: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+054.rb:2:4: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+054.rb:5:4: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+055.rb:3:4: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+056.rb:2:5: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+056.rb:5:5: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+062.rb:2:6: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+067.rb:2:7: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+067.rb:5:7: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+068.rb:2:6: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+069.rb:2:14: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+070.rb:2:14: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+071.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+073.rb:2:6: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+075.rb:1:16: C: Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+075.rb:1:55: C: Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+076.rb:1:15: C: Style/IfUnlessModifier: Modifier form of `unless` makes the line too long.
+076.rb:1:56: C: Style/IfUnlessModifier: Modifier form of `unless` makes the line too long.
+077.rb:1:16: C: Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+077.rb:1:54: C: Style/IfUnlessModifier: Modifier form of `unless` makes the line too long.
+078.rb:1:18: C: Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+078.rb:1:62: C: Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+079.rb:1:17: C: Style/IfUnlessModifier: Modifier form of `unless` makes the line too long.
+079.rb:1:63: C: Style/IfUnlessModifier: Modifier form of `unless` makes the line too long.
+080.rb:1:18: C: Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+080.rb:1:62: C: Style/IfUnlessModifier: Modifier form of `unless` makes the line too long.
+081.rb:1:40: C: Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+081.rb:1:79: C: Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+082.rb:2:4: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+082.rb:5:4: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+083.rb:2:50: C: [Corrected] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+084.rb:2:50: C: [Corrected] Style/IfUnlessModifier: Modifier form of `unless` makes the line too long.
+085.rb:2:4: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+085.rb:5:50: C: [Corrected] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+086.rb:2:50: C: [Corrected] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+086.rb:3:50: C: [Corrected] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+087.rb:1:62: C: [Corrected] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+
+==> corrected/002.rb 128 <==
+def f
+  # Comment 1
+  if condition
+    puts '                                                           '
+  end # Comment 2
+end
+
+==> corrected/006.rb 103 <==
+def f
+  if items.filter_map { |item| item.do_something if item.something? }
+    return value
+  end
+end
+
+==> corrected/007.rb 105 <==
+if condition
+  fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo(<<~EOS)
+    string
+  EOS
+end
+
+==> corrected/008.rb 88 <==
+if condition
+  variable = foooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+end
+
+==> corrected/009.rb 146 <==
+# The condition might have been long, but this comment is longer. In fact, it is too long for RuboCop
+some_statement if some_quite_long_condition
+
+==> corrected/013.rb 81 <==
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb if aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+==> corrected/015.rb 32 <==
+do_this(**options) if condition
+
+==> corrected/017.rb 17 <==
+b if a # comment
+
+==> corrected/019.rb 70 <==
+if x
+  y
+elsif x1
+  y1
+else
+  z
+end
+n = a ? 0 : 1
+m = 3 if m0
+
+b if a
+
+==> corrected/020.rb 11 <==
+b unless a
+
+==> corrected/028.rb 57 <==
+value = :custom
+
+value = :default unless defined?(value)
+
+==> corrected/029.rb 40 <==
+value = :default unless defined?(yield)
+
+==> corrected/030.rb 40 <==
+value = :default unless defined?(super)
+
+==> corrected/036.rb 14 <==
+a || (1 if b)
+
+==> corrected/037.rb 14 <==
+a && (1 if b)
+
+==> corrected/038.rb 14 <==
+(1 if b) || a
+
+==> corrected/040.rb 25 <==
+puts("string", (1 if a))
+
+==> corrected/041.rb 24 <==
+puts "string", (1 if a)
+
+==> corrected/045.rb 81 <==
+x = (bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb if a)
+
+==> corrected/047.rb 85 <==
+x =
+  (bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb if a)
+
+==> corrected/049.rb 85 <==
+[
+  (bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb if a)
+]
+
+==> corrected/053.rb 11 <==
+[(b if a)]
+
+==> corrected/054.rb 27 <==
+[
+  (b if a),
+  (d if c)
+]
+
+==> corrected/055.rb 26 <==
+[
+  (1 + 2),
+  (b if a)
+]
+
+==> corrected/056.rb 31 <==
+[
+  [(b if a)],
+  [(d if c)]
+]
+
+==> corrected/062.rb 85 <==
+{
+  x: (bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb if a)
+}
+
+==> corrected/067.rb 33 <==
+{
+  x: (b if a),
+  y: (d if c)
+}
+
+==> corrected/068.rb 18 <==
+{
+  x: (b if a)
+}
+
+==> corrected/069.rb 88 <==
+{
+  first_key: (first_expr if first_cond),
+  second_key: (second_expr if second_cond)
+}
+
+==> corrected/070.rb 99 <==
+{
+  first_key: (first_expr if first_cond),
+  second_key: second_cond ? second_then : second_else
+}
+
+==> corrected/071.rb 81 <==
+bar if foo # ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+
+==> corrected/073.rb 85 <==
+[
+  1, (bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb if foo), 300_000_000
+]
+
+==> corrected/082.rb 49 <==
+[
+  (foo if condition1),
+  (bar if condition2)
+]
+
+==> corrected/083.rb 99 <==
+[
+  (if condition_onnnnnnnnnnnnnnnnne
+     foooooooooooooooooooooooooooooooooooooooooooo
+   end)
+]
+
+==> corrected/084.rb 101 <==
+[
+  (unless condition_onnnnnnnnnnnnnnne
+     foooooooooooooooooooooooooooooooooooooooooooo
+   end)
+]
+
+==> corrected/085.rb 122 <==
+[
+  (foo if condition1),
+  (if condition_onnnnnnnnnnnnnnnnne
+     foooooooooooooooooooooooooooooooooooooooooooo
+   end)
+]
+
+==> corrected/086.rb 195 <==
+[
+  (if condition_onnnnnnnnnnnnnnnnne
+     foooooooooooooooooooooooooooooooooooooooooooo
+   end),
+  (if condition_twwwwwwwwwwwwwwwwwe
+     baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+   end)
+]
+
+==> corrected/087.rb 120 <==
+[(x ? y : z), (if condition_onnnnnn
+                 foooooooooooooooooooooooooooooooooooooooooooo
+               end)]
+

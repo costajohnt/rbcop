@@ -1,0 +1,82 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 9 <==
+%q('hi')
+
+==> 001.rb 9 <==
+%q("hi")
+
+==> 002.rb 7 <==
+%q(hi)
+
+==> 003.rb 10 <==
+%q('"hi"')
+==> 004.rb 16 <==
+%q(\\\\foo\\\\)
+
+==> 005.rb 11 <==
+%q(\'foo\')
+==> 006.rb 17 <==
+%q(\\ \'foo\' \\)
+==> 007.rb 5 <==
+/%q?/
+==> 008.rb 30 <==
+%q(foo bar baz) \
+  'boogers'
+
+==> 009.rb 11 <==
+%q(#{foo})
+
+==> 010.rb 16 <==
+%q(it's #{foo})
+
+==> 011.rb 7 <==
+%Q(hi)
+
+==> 012.rb 9 <==
+%Q("hi")
+
+==> 013.rb 11 <==
+%Q(hi#{4})
+
+==> 014.rb 10 <==
+%Q('"hi"')
+==> 015.rb 10 <==
+%Q("\thi")
+==> 016.rb 11 <==
+%Q("\!thi")
+==> 017.rb 12 <==
+%Q("hi#{4}")
+==> 018.rb 5 <==
+/%Q?/
+==> 019.rb 30 <==
+%Q(foo bar baz) \
+  'boogers'
+
+==> 020.rb 37 <==
+%Q(
+  Quoth the Raven "Nevermore."
+)
+
+==> 021.rb 45 <==
+  s = <<CODE
+%q('hi') # line 1
+%q("hi")
+CODE
+
+==> 022.rb 11 <==
+"%q(a)#{b}"
+==> 023.rb 11 <==
+"%Q(a)#{b}"
+==> 024.rb 12 <==
+"%#{b}%q(a)"
+==> 025.rb 12 <==
+"%#{b}%Q(a)"
+==> 026.rb 20 <==
+%q(foo #{'bar'} baz)

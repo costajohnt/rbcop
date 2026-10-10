@@ -1,0 +1,8 @@
+==> offenses exit=1 149 <==
+000.rb:1:15: C: Naming/PredicatePrefix: Rename `is_hello` to `hello?`.
+003/current.rb:2:7: C: Naming/PredicatePrefix: Rename `is_ready` to `ready?`.
+
+==> autocorrect exit=1 149 <==
+000.rb:1:15: C: Naming/PredicatePrefix: Rename `is_hello` to `hello?`.
+003/current.rb:2:7: C: Naming/PredicatePrefix: Rename `is_ready` to `ready?`.
+

@@ -1,0 +1,142 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 20 <==
+foo == bar { baz a }
+==> 001.rb 19 <==
+foo ->(a) { bar a }
+==> 002.rb 31 <==
+some_method(a) { |el| puts el }
+==> 003.rb 26 <==
+some_method(a) { puts _1 }
+==> 004.rb 28 <==
+some_method(a) do;puts a;end
+==> 005.rb 31 <==
+some_method a do;puts "dev";end
+==> 006.rb 31 <==
+some_method a do |e|;puts e;end
+==> 007.rb 27 <==
+Foo.bar(a) { |el| puts el }
+==> 008.rb 30 <==
+env ENV.fetch("ENV") { "dev" }
+==> 009.rb 31 <==
+env(ENV.fetch("ENV") { "dev" })
+==> 010.rb 37 <==
+{ f: "b"}.fetch(:a) do |e|;puts e;end
+==> 011.rb 32 <==
+Hash[some_method(a) { |el| el }]
+==> 012.rb 32 <==
+foo = lambda do |diagnostic|;end
+==> 013.rb 24 <==
+Proc.new { puts "proc" }
+==> 014.rb 48 <==
+expect { order.save }.to(change { orders.size })
+==> 015.rb 45 <==
+scope :active, -> { where(status: "active") }
+==> 016.rb 47 <==
+scope :active, proc { where(status: "active") }
+==> 017.rb 51 <==
+scope :active, Proc.new { where(status: "active") }
+==> 018.rb 63 <==
+assert_equal posts.find { |p| p.title == "Foo" }, results.first
+==> 019.rb 64 <==
+assert_equal(posts.find { |p| p.title == "Foo" }, results.first)
+==> 020.rb 18 <==
+foo[bar { |x| x }]
+==> 021.rb 24 <==
+obj.attr = bar { |x| x }
+==> 022.rb 64 <==
+assert_equal(results.first, posts.find { |p| p.title == "Foo" })
+==> 023.rb 53 <==
+allow(cop).to receive(:on_int) { raise RuntimeError }
+==> 024.rb 54 <==
+allow(cop).to(receive(:on_int) { raise RuntimeError })
+==> 025.rb 31 <==
+some_method a { |el| puts el }
+
+==> 026.rb 26 <==
+some_method a { puts _1 }
+
+==> 027.rb 35 <==
+Foo.some_method a { |el| puts el }
+
+==> 028.rb 36 <==
+Foo&.some_method a { |el| puts el }
+
+==> 029.rb 51 <==
+expect { order.expire }.to change { order.events }
+
+==> 030.rb 32 <==
+Hash[some_method a { |el| el }]
+
+==> 031.rb 37 <==
+foo = some_method a { |el| puts el }
+
+==> 032.rb 45 <==
+render json: queries.map do |q|
+  q.to_h
+end
+
+==> 033.rb 30 <==
+foo bar.select do |x|
+  x
+end
+
+==> 034.rb 28 <==
+foo bar.each do |x|
+  x
+end
+
+==> 035.rb 34 <==
+foo bar.filter_map do |x|
+  x
+end
+
+==> 036.rb 28 <==
+foo bar&.map do |x|
+  x
+end
+
+==> 037.rb 23 <==
+bar.map do |x|
+  x
+end
+
+==> 038.rb 41 <==
+render(json: queries.map) do |q|
+  q
+end
+
+==> 039.rb 48 <==
+render json: queries.map(&:to_s) do |q|
+  q
+end
+
+==> 040.rb 50 <==
+render json: queries.map { |q| q } do |q|
+  q
+end
+
+==> 041.rb 33 <==
+foo bar.something do |x|
+  x
+end
+
+==> 042.rb 32 <==
+foo bar.map.to_a do |x|
+  x
+end
+
+==> 043.rb 32 <==
+foo bar(baz.map) do |x|
+  x
+end
+
+==> 044.rb 23 <==
+foo(bar.map { |x| x })
+

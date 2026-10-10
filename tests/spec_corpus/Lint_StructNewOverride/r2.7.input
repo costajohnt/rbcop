@@ -1,0 +1,46 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 27 <==
+Bad = Struct.new(:members)
+
+==> 001.rb 29 <==
+Bad = ::Struct.new(:members)
+
+==> 002.rb 35 <==
+Struct.new('Bad', :members, :name)
+
+==> 003.rb 44 <==
+Bad = Struct.new(:name, :members, :address)
+
+==> 004.rb 35 <==
+Bad = Struct.new(:name, "members")
+
+==> 005.rb 69 <==
+Struct.new(:members) do
+  def members?
+    !members.empty?
+  end
+end
+
+==> 006.rb 35 <==
+Struct.new(:members, :clone, :zip)
+
+==> 007.rb 41 <==
+Struct.new(:members, keyword_init: true)
+
+==> 008.rb 30 <==
+Good = Struct.new(:id, :name)
+
+==> 009.rb 107 <==
+Good = Struct.new(:id, :name) do
+  def members
+    super.tap { |ret| pp "members: " + ret.to_s }
+  end
+end
+

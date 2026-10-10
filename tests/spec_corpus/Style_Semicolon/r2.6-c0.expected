@@ -1,0 +1,24 @@
+==> offenses exit=1 376 <==
+000.rb:1:5: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+001.rb:1:5: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+001.rb:2:6: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+002.rb:2:7: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+
+==> autocorrect exit=0 368 <==
+000.rb:1:5: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+001.rb:1:5: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+001.rb:2:6: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+002.rb:2:7: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+
+==> corrected/000.rb 7 <==
+(42..)
+
+==> corrected/001.rb 15 <==
+(42..)
+(42...)
+
+==> corrected/002.rb 21 <==
+def foo
+  (42..)
+end
+

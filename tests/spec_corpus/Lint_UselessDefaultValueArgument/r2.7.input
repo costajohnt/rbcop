@@ -1,0 +1,80 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 44 <==
+x.fetch(key, default_value) { block_value }
+
+==> 001.rb 42 <==
+x.fetch(key, default_value) { |arg| arg }
+
+==> 002.rb 45 <==
+x&.fetch(key, default_value) { block_value }
+
+==> 003.rb 43 <==
+x&.fetch(key, default_value) { |arg| arg }
+
+==> 004.rb 33 <==
+x.fetch(key, {}) { block_value }
+
+==> 005.rb 43 <==
+x.fetch(key, default_value) { fetch(arg) }
+
+==> 006.rb 35 <==
+x.fetch(key, default_value) { _1 }
+
+==> 007.rb 35 <==
+x.fetch(key, default_value) { it }
+
+==> 008.rb 45 <==
+x.fetch(key, default: value) { block_value }
+
+==> 009.rb 28 <==
+x.fetch(key, default_value)
+
+==> 010.rb 29 <==
+x.fetch(key) { block_value }
+
+==> 011.rb 42 <==
+x.fetch(key) { |arg1, arg2| block_value }
+
+==> 012.rb 60 <==
+x.fetch(key, default_value, third_argument) { block_value }
+
+==> 013.rb 38 <==
+x.fetch(key, **kwarg) { block_value }
+
+==> 014.rb 40 <==
+fetch(key, default_value) { |arg| arg }
+
+==> 015.rb 47 <==
+Array.new(size, default_value) { block_value }
+
+==> 016.rb 49 <==
+::Array.new(size, default_value) { block_value }
+
+==> 017.rb 38 <==
+Array.new(size, default_value) { _1 }
+
+==> 018.rb 38 <==
+Array.new(size, default_value) { it }
+
+==> 019.rb 31 <==
+Array.new(size, default_value)
+
+==> 020.rb 16 <==
+Array.new(size)
+
+==> 021.rb 32 <==
+Array.new(size) { block_value }
+
+==> 022.rb 45 <==
+Array.new(size) { |arg1, arg2| block_value }
+
+==> 023.rb 63 <==
+Array.new(size, default_value, third_argument) { block_value }
+

@@ -1,0 +1,45 @@
+==> .rubocop.yml 173 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/EmptyBlock:
+  AllowComments: true
+  AllowEmptyLambdas: true
+
+==> 000.rb 22 <==
+items.each { |item| }
+
+==> 001.rb 51 <==
+items.each do |item|
+  # TODO: implement later
+end
+
+==> 002.rb 46 <==
+items.each { |item| } # TODO: implement later
+
+==> 003.rb 32 <==
+items.each { |item| puts item }
+
+==> 004.rb 14 <==
+lambda do
+end
+
+==> 005.rb 6 <==
+-> {}
+
+==> 006.rb 12 <==
+proc do
+end
+
+==> 007.rb 12 <==
+Proc.new {}
+
+==> 008.rb 14 <==
+::Proc.new {}
+
+==> 009.rb 12 <==
+Foo.proc {}
+

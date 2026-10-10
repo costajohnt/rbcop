@@ -1,0 +1,189 @@
+==> offenses exit=1 3488 <==
+000.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `length == 0`.
+001.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `length == 0`.
+002.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `size == 0`.
+003.rb:1:11: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `length.zero?`.
+004.rb:1:12: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `length.zero?`.
+005.rb:1:12: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `length&.zero?`.
+006.rb:1:11: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `size.zero?`.
+007.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `0 == length`.
+008.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `0 == size`.
+009.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `length < 1`.
+010.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `length < 1`.
+011.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `size < 1`.
+012.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `1 > length`.
+013.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `1 > length`.
+014.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `1 > size`.
+015.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `!empty?` instead of `length > 0`.
+017.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `!empty?` instead of `size > 0`.
+018.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `!empty?` instead of `length != 0`.
+019.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `!empty?` instead of `size != 0`.
+020.rb:1:12: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `length.zero?`.
+021.rb:1:12: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `size.zero?`.
+022.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `!empty?` instead of `0 < length`.
+023.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `!empty?` instead of `0 < size`.
+024.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `!empty?` instead of `0 != length`.
+025.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `!empty?` instead of `0 != size`.
+026.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `size == 0`.
+027.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `0 == size`.
+028.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `!empty?` instead of `size != 0`.
+029.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `!empty?` instead of `0 != size`.
+030.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `size == 0`.
+031.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `0 == size`.
+032.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `!empty?` instead of `size != 0`.
+033.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `!empty?` instead of `0 != size`.
+034.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `size == 0`.
+035.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `0 == size`.
+036.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `!empty?` instead of `size != 0`.
+037.rb:1:1: C: [Correctable] Style/ZeroLengthPredicate: Use `!empty?` instead of `0 != size`.
+
+==> autocorrect exit=0 3414 <==
+000.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `length == 0`.
+001.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `length == 0`.
+002.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `size == 0`.
+003.rb:1:11: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `length.zero?`.
+004.rb:1:12: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `length.zero?`.
+005.rb:1:12: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `length&.zero?`.
+006.rb:1:11: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `size.zero?`.
+007.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `0 == length`.
+008.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `0 == size`.
+009.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `length < 1`.
+010.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `length < 1`.
+011.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `size < 1`.
+012.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `1 > length`.
+013.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `1 > length`.
+014.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `1 > size`.
+015.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `!empty?` instead of `length > 0`.
+017.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `!empty?` instead of `size > 0`.
+018.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `!empty?` instead of `length != 0`.
+019.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `!empty?` instead of `size != 0`.
+020.rb:1:12: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `length.zero?`.
+021.rb:1:12: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `size.zero?`.
+022.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `!empty?` instead of `0 < length`.
+023.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `!empty?` instead of `0 < size`.
+024.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `!empty?` instead of `0 != length`.
+025.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `!empty?` instead of `0 != size`.
+026.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `size == 0`.
+027.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `0 == size`.
+028.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `!empty?` instead of `size != 0`.
+029.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `!empty?` instead of `0 != size`.
+030.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `size == 0`.
+031.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `0 == size`.
+032.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `!empty?` instead of `size != 0`.
+033.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `!empty?` instead of `0 != size`.
+034.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `size == 0`.
+035.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `empty?` instead of `0 == size`.
+036.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `!empty?` instead of `size != 0`.
+037.rb:1:1: C: [Corrected] Style/ZeroLengthPredicate: Use `!empty?` instead of `0 != size`.
+
+==> corrected/000.rb 17 <==
+[1, 2, 3].empty?
+
+==> corrected/001.rb 18 <==
+[1, 2, 3]&.empty?
+
+==> corrected/002.rb 17 <==
+[1, 2, 3].empty?
+
+==> corrected/003.rb 17 <==
+[1, 2, 3].empty?
+
+==> corrected/004.rb 18 <==
+[1, 2, 3]&.empty?
+
+==> corrected/005.rb 18 <==
+[1, 2, 3]&.empty?
+
+==> corrected/006.rb 17 <==
+[1, 2, 3].empty?
+
+==> corrected/007.rb 17 <==
+[1, 2, 3].empty?
+
+==> corrected/008.rb 17 <==
+[1, 2, 3].empty?
+
+==> corrected/009.rb 17 <==
+[1, 2, 3].empty?
+
+==> corrected/010.rb 14 <==
+array&.empty?
+
+==> corrected/011.rb 17 <==
+[1, 2, 3].empty?
+
+==> corrected/012.rb 17 <==
+[1, 2, 3].empty?
+
+==> corrected/013.rb 14 <==
+array&.empty?
+
+==> corrected/014.rb 17 <==
+[1, 2, 3].empty?
+
+==> corrected/015.rb 18 <==
+![1, 2, 3].empty?
+
+==> corrected/017.rb 18 <==
+![1, 2, 3].empty?
+
+==> corrected/018.rb 18 <==
+![1, 2, 3].empty?
+
+==> corrected/019.rb 18 <==
+![1, 2, 3].empty?
+
+==> corrected/020.rb 18 <==
+![1, 2, 3].empty?
+
+==> corrected/021.rb 18 <==
+![1, 2, 3].empty?
+
+==> corrected/022.rb 18 <==
+![1, 2, 3].empty?
+
+==> corrected/023.rb 18 <==
+![1, 2, 3].empty?
+
+==> corrected/024.rb 18 <==
+![1, 2, 3].empty?
+
+==> corrected/025.rb 18 <==
+![1, 2, 3].empty?
+
+==> corrected/026.rb 22 <==
+{ a: 1, b: 2 }.empty?
+
+==> corrected/027.rb 22 <==
+{ a: 1, b: 2 }.empty?
+
+==> corrected/028.rb 23 <==
+!{ a: 1, b: 2 }.empty?
+
+==> corrected/029.rb 23 <==
+!{ a: 1, b: 2 }.empty?
+
+==> corrected/030.rb 16 <==
+"string".empty?
+
+==> corrected/031.rb 16 <==
+"string".empty?
+
+==> corrected/032.rb 17 <==
+!"string".empty?
+
+==> corrected/033.rb 17 <==
+!"string".empty?
+
+==> corrected/034.rb 18 <==
+collection.empty?
+
+==> corrected/035.rb 18 <==
+collection.empty?
+
+==> corrected/036.rb 19 <==
+!collection.empty?
+
+==> corrected/037.rb 19 <==
+!collection.empty?
+

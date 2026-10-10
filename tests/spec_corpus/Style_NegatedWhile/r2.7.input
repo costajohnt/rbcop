@@ -1,0 +1,60 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 68 <==
+while !a_condition
+  some_method
+end
+some_method while !a_condition
+
+==> 001.rb 68 <==
+until !a_condition
+  some_method
+end
+some_method until !a_condition
+
+==> 002.rb 76 <==
+while (not a_condition)
+  some_method
+end
+some_method while not a_condition
+
+==> 003.rb 28 <==
+until (var = foo; !bar)
+end
+
+==> 004.rb 167 <==
+while !a_condition && another_condition
+  some_method
+end
+while not a_condition or another_condition
+  some_method
+end
+some_method while not a_condition or other_cond
+
+==> 005.rb 70 <==
+while !!a_condition
+  some_method
+end
+some_method while !!a_condition
+
+==> 006.rb 51 <==
+something while !x.even?
+something while(!x.even?)
+
+==> 007.rb 25 <==
+something until !x.even?
+
+==> 008.rb 13 <==
+while ()
+end
+
+==> 009.rb 13 <==
+until ()
+end
+

@@ -1,0 +1,25 @@
+==> offenses exit=1 576 <==
+000.rb:1:1: W: [Correctable] Lint/LambdaWithoutLiteralBlock: lambda without a literal block is deprecated; use the proc without lambda instead.
+001.rb:1:1: W: [Correctable] Lint/LambdaWithoutLiteralBlock: lambda without a literal block is deprecated; use the proc without lambda instead.
+002.rb:2:1: W: [Correctable] Lint/LambdaWithoutLiteralBlock: lambda without a literal block is deprecated; use the proc without lambda instead.
+006.rb:1:1: W: [Correctable] Lint/LambdaWithoutLiteralBlock: lambda without a literal block is deprecated; use the proc without lambda instead.
+
+==> autocorrect exit=0 568 <==
+000.rb:1:1: W: [Corrected] Lint/LambdaWithoutLiteralBlock: lambda without a literal block is deprecated; use the proc without lambda instead.
+001.rb:1:1: W: [Corrected] Lint/LambdaWithoutLiteralBlock: lambda without a literal block is deprecated; use the proc without lambda instead.
+002.rb:2:1: W: [Corrected] Lint/LambdaWithoutLiteralBlock: lambda without a literal block is deprecated; use the proc without lambda instead.
+006.rb:1:1: W: [Corrected] Lint/LambdaWithoutLiteralBlock: lambda without a literal block is deprecated; use the proc without lambda instead.
+
+==> corrected/000.rb 22 <==
+proc { do_something }
+
+==> corrected/001.rb 26 <==
+Proc.new { do_something }
+
+==> corrected/002.rb 34 <==
+pr = Proc.new { do_something }
+pr
+
+==> corrected/006.rb 9 <==
+obj&.foo
+

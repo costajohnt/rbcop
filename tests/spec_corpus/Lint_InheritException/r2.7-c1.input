@@ -1,0 +1,49 @@
+==> .rubocop.yml 163 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/InheritException:
+  EnforcedStyle: standard_error
+
+==> 000.rb 25 <==
+class C < Exception; end
+
+==> 001.rb 21 <==
+Class.new(Exception)
+
+==> 002.rb 129 <==
+module Foo
+  class C < Exception; end # This `Exception` is the same as `::Exception`.
+  class Exception < RuntimeError; end
+end
+
+==> 003.rb 82 <==
+module Foo
+  class Exception < RuntimeError; end
+  class C < ::Exception; end
+end
+
+==> 004.rb 25 <==
+class C < Interrupt; end
+
+==> 005.rb 133 <==
+module Foo
+  class Exception < StandardError; end # This `Exception` is the same as `Foo::Exception`.
+  class C < Exception; end
+end
+
+==> 006/current.rb 30 <==
+class MyError < BaseError
+end
+
+==> 007/current.rb 29 <==
+class MyError < MidError
+end
+
+==> 008/current.rb 33 <==
+class MyError < SomeGemError
+end
+

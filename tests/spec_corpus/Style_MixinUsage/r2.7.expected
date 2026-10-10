@@ -1,0 +1,20 @@
+==> offenses exit=1 807 <==
+000.rb:1:1: C: Style/MixinUsage: `include` is used at the top level. Use inside `class` or `module`.
+001.rb:3:1: C: Style/MixinUsage: `include` is used at the top level. Use inside `class` or `module`.
+002.rb:1:1: C: Style/MixinUsage: `include` is used at the top level. Use inside `class` or `module`.
+003.rb:1:1: C: Style/MixinUsage: `include` is used at the top level. Use inside `class` or `module`.
+004.rb:2:3: C: Style/MixinUsage: `include` is used at the top level. Use inside `class` or `module`.
+013.rb:1:1: C: Style/MixinUsage: `include` is used at the top level. Use inside `class` or `module`.
+014.rb:1:1: C: Style/MixinUsage: `extend` is used at the top level. Use inside `class` or `module`.
+016.rb:1:1: C: Style/MixinUsage: `prepend` is used at the top level. Use inside `class` or `module`.
+
+==> autocorrect exit=1 807 <==
+000.rb:1:1: C: Style/MixinUsage: `include` is used at the top level. Use inside `class` or `module`.
+001.rb:3:1: C: Style/MixinUsage: `include` is used at the top level. Use inside `class` or `module`.
+002.rb:1:1: C: Style/MixinUsage: `include` is used at the top level. Use inside `class` or `module`.
+003.rb:1:1: C: Style/MixinUsage: `include` is used at the top level. Use inside `class` or `module`.
+004.rb:2:3: C: Style/MixinUsage: `include` is used at the top level. Use inside `class` or `module`.
+013.rb:1:1: C: Style/MixinUsage: `include` is used at the top level. Use inside `class` or `module`.
+014.rb:1:1: C: Style/MixinUsage: `extend` is used at the top level. Use inside `class` or `module`.
+016.rb:1:1: C: Style/MixinUsage: `prepend` is used at the top level. Use inside `class` or `module`.
+

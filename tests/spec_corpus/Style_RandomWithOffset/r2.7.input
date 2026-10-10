@@ -1,0 +1,93 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 12 <==
+rand(6) + 1
+
+==> 001.rb 12 <==
+1 + rand(6)
+
+==> 002.rb 13 <==
+rand(6).succ
+
+==> 003.rb 12 <==
+rand(6) - 1
+
+==> 004.rb 12 <==
+1 - rand(6)
+
+==> 005.rb 13 <==
+rand(6).pred
+
+==> 006.rb 13 <==
+rand(6).next
+
+==> 007.rb 19 <==
+Kernel.rand(6) + 1
+
+==> 008.rb 21 <==
+::Kernel.rand(6) + 1
+
+==> 009.rb 19 <==
+Random.rand(6) + 1
+
+==> 010.rb 21 <==
+::Random.rand(6) + 1
+
+==> 011.rb 15 <==
+rand(0..6) + 1
+
+==> 012.rb 16 <==
+rand(0...6) + 1
+
+==> 013.rb 19 <==
+1 + Random.rand(6)
+
+==> 014.rb 21 <==
+1 - ::Random.rand(6)
+
+==> 015.rb 20 <==
+Random.rand(6).succ
+
+==> 016.rb 22 <==
+::Random.rand(6).pred
+
+==> 017.rb 15 <==
+rand(0..6) - 1
+
+==> 018.rb 16 <==
+rand(0...6) - 1
+
+==> 019.rb 15 <==
+1 - rand(0..6)
+
+==> 020.rb 16 <==
+1 - rand(0...6)
+
+==> 021.rb 16 <==
+rand(0..6).succ
+
+==> 022.rb 17 <==
+rand(0...6).succ
+
+==> 023.rb 19 <==
+rand(0..limit) + 1
+
+==> 024.rb 20 <==
+1 - rand(0...limit)
+
+==> 025.rb 20 <==
+rand(0..limit).succ
+
+==> 026.rb 21 <==
+rand(0...limit).pred
+
+==> 027.rb 10 <==
+rand(1..6)
+==> 028.rb 11 <==
+rand(1...6)

@@ -1,0 +1,40 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 59 <==
+def foo # rubocop:disable Metrics/CyclomaticComplexity
+end
+
+==> 001.rb 58 <==
+def foo # rubocop:enable Metrics/CyclomaticComplexity
+end
+
+==> 002.rb 33 <==
+def foo # rubocop:enable all
+end
+
+==> 003.rb 120 <==
+# rubocop:disable Style/DisableCopsWithinSourceCodeDirective
+def foo # rubocop:disable Metrics/CyclomaticComplexity
+end
+
+==> 004.rb 81 <==
+# rubocop:disable all
+def foo # rubocop:disable Metrics/CyclomaticComplexity
+end
+
+==> 005.rb 83 <==
+# rubocop:disable Style
+def foo # rubocop:disable Metrics/CyclomaticComplexity
+end
+
+==> 006.rb 51 <==
+# rubocop:disable-next Metrics/AbcSize
+def foo
+end
+

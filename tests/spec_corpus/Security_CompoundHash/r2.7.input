@@ -1,0 +1,135 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 40 <==
+def hash
+  1.hash ^ 2.hash ^ 3.hash
+end
+
+==> 001.rb 25 <==
+def hash
+  1 ^ 2 ^ 3
+end
+
+==> 002.rb 47 <==
+def object.hash
+  1.hash ^ 2.hash ^ 3.hash
+end
+
+==> 003.rb 55 <==
+define_method(:hash) do
+  1.hash ^ 2.hash ^ 3.hash
+end
+
+==> 004.rb 65 <==
+define_singleton_method(:hash) do
+  1.hash ^ 2.hash ^ 3.hash
+end
+
+==> 005.rb 24 <==
+def hash
+  [1].hash
+end
+
+==> 006.rb 20 <==
+[1, 2.hash, 3].hash
+
+==> 007.rb 43 <==
+def hash
+  [foo&.hash, bar&.hash].hash
+end
+
+==> 008.rb 30 <==
+def hash
+  [1, 2, 3].hash
+end
+
+==> 009.rb 22 <==
+def hash
+  1.hash
+end
+
+==> 010.rb 56 <==
+def hash
+  value = 1.hash ^ 2.hash ^ 3.hash
+  value
+end
+
+==> 011.rb 78 <==
+def hash
+  h = 0
+
+  things.each do |thing|
+    h ^= thing.hash
+  end
+
+  h
+end
+
+==> 012.rb 78 <==
+def hash
+  h = 0
+
+  things.each do |thing|
+    h += thing.hash
+  end
+
+  h
+end
+
+==> 013.rb 78 <==
+def hash
+  h = 0
+
+  things.each do |thing|
+    h *= thing.hash
+  end
+
+  h
+end
+
+==> 014.rb 35 <==
+def hash
+  foo.hash + bar.hash
+end
+
+==> 015.rb 30 <==
+def hash
+  to_s.hash * -1
+end
+
+==> 016.rb 64 <==
+def hash
+  [red, blue, green, alpha].hash ^ self.class.hash
+end
+
+==> 017.rb 43 <==
+def hash
+  foo.hash ^ super ^ bar.hash
+end
+
+==> 018.rb 72 <==
+def hash
+  foo.hash ^ bar.hash << 1 ^ biz.hash << 2 ^ bar.hash << 3
+end
+
+==> 019.rb 75 <==
+def hash
+  ([@addr, @mask_addr, @zone_id].hash << 1) | (ipv4? ? 0 : 1)
+end
+
+==> 020.rb 187 <==
+def hash
+  @hash ||= begin
+    hash_ = [@factory, geometry_type].hash
+    (0...num_geometries).inject(hash_) do |h_, i_|
+      (1664525 * h_ + geometry_n(i_).hash).hash
+    end
+  end
+end
+

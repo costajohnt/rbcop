@@ -1,0 +1,28 @@
+==> offenses exit=1 522 <==
+000.rb:1:6: W: [Correctable] Security/JSONLoad: Prefer `JSON.parse` over `JSON.load`.
+000.rb:2:8: W: [Correctable] Security/JSONLoad: Prefer `JSON.parse` over `JSON.load`.
+002.rb:1:6: W: [Correctable] Security/JSONLoad: Prefer `JSON.parse` over `JSON.load`.
+002.rb:2:8: W: [Correctable] Security/JSONLoad: Prefer `JSON.parse` over `JSON.load`.
+003.rb:1:6: W: [Correctable] Security/JSONLoad: Prefer `JSON.parse` over `JSON.restore`.
+003.rb:2:8: W: [Correctable] Security/JSONLoad: Prefer `JSON.parse` over `JSON.restore`.
+
+==> autocorrect exit=0 510 <==
+000.rb:1:6: W: [Corrected] Security/JSONLoad: Prefer `JSON.parse` over `JSON.load`.
+000.rb:2:8: W: [Corrected] Security/JSONLoad: Prefer `JSON.parse` over `JSON.load`.
+002.rb:1:6: W: [Corrected] Security/JSONLoad: Prefer `JSON.parse` over `JSON.load`.
+002.rb:2:8: W: [Corrected] Security/JSONLoad: Prefer `JSON.parse` over `JSON.load`.
+003.rb:1:6: W: [Corrected] Security/JSONLoad: Prefer `JSON.parse` over `JSON.restore`.
+003.rb:2:8: W: [Corrected] Security/JSONLoad: Prefer `JSON.parse` over `JSON.restore`.
+
+==> corrected/000.rb 34 <==
+JSON.parse(arg)
+::JSON.parse(arg)
+
+==> corrected/002.rb 66 <==
+JSON.parse(arg, max_nesting: 1)
+::JSON.parse(arg, max_nesting: 1)
+
+==> corrected/003.rb 34 <==
+JSON.parse(arg)
+::JSON.parse(arg)
+

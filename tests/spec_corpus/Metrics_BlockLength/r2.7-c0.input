@@ -1,0 +1,180 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Metrics/BlockLength:
+  Max: 2
+  CountComments: false
+
+==> 000.rb 41 <==
+something do
+  a = 1
+  a = 2
+  a = 3
+end
+
+==> 001.rb 33 <==
+something do
+  a = 1
+  a = 2
+end
+
+==> 002.rb 35 <==
+something do
+  a = 1
+
+
+  a = 4
+end
+
+==> 003.rb 44 <==
+something do
+  a = _1
+  a = _2
+  a = _3
+end
+
+==> 004.rb 35 <==
+something do
+  a = _1
+  a = _2
+end
+
+==> 005.rb 37 <==
+something do
+  a = _1
+
+
+  a = _2
+end
+
+==> 006.rb 50 <==
+[
+  :a,
+  :b,
+  :c,
+].each do
+  a = 1
+  a = 2
+end
+
+==> 007.rb 17 <==
+something do
+end
+
+==> 008.rb 38 <==
+something {
+  a = 1
+  a = 2
+  a = 3
+}
+
+==> 009.rb 78 <==
+something do
+  something do
+    a = 2
+    a = 3
+    a = 4
+    a = 5
+  end
+end
+
+==> 010.rb 51 <==
+something do
+  a = 1
+  #a = 2
+  #a = 3
+  a = 4
+end
+
+==> 011.rb 65 <==
+Class.new do
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 012.rb 66 <==
+Module.new do
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 013.rb 184 <==
+Person = Struct.new(:first_name, :last_name) do
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
+  def foo
+    a = 1
+    a = 2
+    a = 3
+    a = 4
+    a = 5
+    a = 6
+  end
+end
+
+==> 014.rb 42 <==
+something do
+  a = 1
+  #a = 2
+  a = 3
+end
+
+==> 015.rb 50 <==
+something do
+  a = 1
+  a = [
+    2,
+    3
+  ]
+end
+
+==> 016.rb 35 <==
+foo do
+  a = 1
+  a = 2
+  a = 3
+end
+
+==> 017.rb 54 <==
+Gem::Specification.new do
+  a = 1
+  a = 2
+  a = 3
+end
+
+==> 018.rb 47 <==
+Foo::
+  Bar.baz do
+  a = 1
+  a = 2
+  a = 3
+end
+
+==> 019.rb 44 <==
+Foo::Bar.baz do
+  a = 1
+  a = 2
+  a = 3
+end
+
+==> 020.rb 44 <==
+Foo::Bar.bar do
+  a = 1
+  a = 2
+  a = 3
+end
+

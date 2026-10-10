@@ -1,0 +1,39 @@
+==> offenses exit=1 738 <==
+000.rb:1:5: C: [Correctable] Layout/FirstMethodArgumentLineBreak: Add a line break before the first argument of a multi-line method argument list.
+001.rb:1:7: C: [Correctable] Layout/FirstMethodArgumentLineBreak: Add a line break before the first argument of a multi-line method argument list.
+002.rb:1:15: C: [Correctable] Layout/FirstMethodArgumentLineBreak: Add a line break before the first argument of a multi-line method argument list.
+003.rb:1:11: C: [Correctable] Layout/FirstMethodArgumentLineBreak: Add a line break before the first argument of a multi-line method argument list.
+004.rb:1:11: C: [Correctable] Layout/FirstMethodArgumentLineBreak: Add a line break before the first argument of a multi-line method argument list.
+
+==> autocorrect exit=0 728 <==
+000.rb:1:5: C: [Corrected] Layout/FirstMethodArgumentLineBreak: Add a line break before the first argument of a multi-line method argument list.
+001.rb:1:7: C: [Corrected] Layout/FirstMethodArgumentLineBreak: Add a line break before the first argument of a multi-line method argument list.
+002.rb:1:15: C: [Corrected] Layout/FirstMethodArgumentLineBreak: Add a line break before the first argument of a multi-line method argument list.
+003.rb:1:11: C: [Corrected] Layout/FirstMethodArgumentLineBreak: Add a line break before the first argument of a multi-line method argument list.
+004.rb:1:11: C: [Corrected] Layout/FirstMethodArgumentLineBreak: Add a line break before the first argument of a multi-line method argument list.
+
+==> corrected/000.rb 17 <==
+foo(
+bar,
+  baz)
+
+==> corrected/001.rb 19 <==
+super(
+bar,
+  baz)
+
+==> corrected/002.rb 27 <==
+receiver&.foo(
+bar,
+  baz)
+
+==> corrected/003.rb 30 <==
+something(
+3, bar: 1,
+baz: 2)
+
+==> corrected/004.rb 27 <==
+something(
+bar: 1,
+baz: 2)
+

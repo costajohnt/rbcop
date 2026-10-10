@@ -1,0 +1,43 @@
+==> offenses exit=1 822 <==
+000.rb:1:5: C: [Correctable] Style/NumericLiteralPrefix: Use 0x for hexadecimal literals.
+000.rb:2:3: C: [Correctable] Style/NumericLiteralPrefix: Use 0x for hexadecimal literals.
+001.rb:1:5: C: [Correctable] Style/NumericLiteralPrefix: Use 0x for hexadecimal literals.
+003.rb:1:5: C: [Correctable] Style/NumericLiteralPrefix: Use 0b for binary literals.
+003.rb:2:3: C: [Correctable] Style/NumericLiteralPrefix: Use 0b for binary literals.
+004.rb:1:5: C: [Correctable] Style/NumericLiteralPrefix: Use 0b for binary literals.
+006.rb:1:5: C: [Correctable] Style/NumericLiteralPrefix: Do not use prefixes for decimal literals.
+006.rb:2:3: C: [Correctable] Style/NumericLiteralPrefix: Do not use prefixes for decimal literals.
+007.rb:1:5: C: [Correctable] Style/NumericLiteralPrefix: Do not use prefixes for decimal literals.
+
+==> autocorrect exit=0 804 <==
+000.rb:1:5: C: [Corrected] Style/NumericLiteralPrefix: Use 0x for hexadecimal literals.
+000.rb:2:3: C: [Corrected] Style/NumericLiteralPrefix: Use 0x for hexadecimal literals.
+001.rb:1:5: C: [Corrected] Style/NumericLiteralPrefix: Use 0x for hexadecimal literals.
+003.rb:1:5: C: [Corrected] Style/NumericLiteralPrefix: Use 0b for binary literals.
+003.rb:2:3: C: [Corrected] Style/NumericLiteralPrefix: Use 0b for binary literals.
+004.rb:1:5: C: [Corrected] Style/NumericLiteralPrefix: Use 0b for binary literals.
+006.rb:1:5: C: [Corrected] Style/NumericLiteralPrefix: Do not use prefixes for decimal literals.
+006.rb:2:3: C: [Corrected] Style/NumericLiteralPrefix: Do not use prefixes for decimal literals.
+007.rb:1:5: C: [Corrected] Style/NumericLiteralPrefix: Do not use prefixes for decimal literals.
+
+==> corrected/000.rb 19 <==
+a = 0x1AC
+b(0xABC)
+
+==> corrected/001.rb 11 <==
+a = -0x1AC
+
+==> corrected/003.rb 21 <==
+a = 0b10101
+b(0b111)
+
+==> corrected/004.rb 13 <==
+a = -0b10101
+
+==> corrected/006.rb 17 <==
+a = 1234
+b(1990)
+
+==> corrected/007.rb 10 <==
+a = -1234
+

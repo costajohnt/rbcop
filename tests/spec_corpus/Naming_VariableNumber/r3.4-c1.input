@@ -1,0 +1,13 @@
+==> .rubocop.yml 159 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Naming/VariableNumber:
+  EnforcedStyle: normalcase
+
+==> 000.rb 15 <==
+x = { "": [] }
+

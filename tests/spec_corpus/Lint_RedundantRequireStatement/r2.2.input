@@ -1,0 +1,15 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.2
+
+==> 000.rb 89 <==
+require 'enumerator'
+require 'rational'
+require 'complex'
+require 'thread'
+require 'uri'
+

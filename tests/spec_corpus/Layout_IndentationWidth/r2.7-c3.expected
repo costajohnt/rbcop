@@ -1,0 +1,21 @@
+==> offenses exit=1 185 <==
+000.rb:3:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not -2) spaces for indentation.
+004.rb:4:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+
+==> autocorrect exit=0 181 <==
+000.rb:3:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not -2) spaces for indentation.
+004.rb:4:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+
+==> corrected/000.rb 28 <==
+foo
+  .bar do |x|
+    x
+end
+
+==> corrected/004.rb 72 <==
+Foo.for_operation(arg).
+  pluck(:a, :b).
+  map do |a, b|
+    [b, a]
+end
+

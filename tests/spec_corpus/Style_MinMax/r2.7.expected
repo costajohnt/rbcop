@@ -1,0 +1,19 @@
+==> offenses exit=1 275 <==
+000.rb:1:1: C: [Correctable] Style/MinMax: Use `foo.minmax` instead of `[foo.min, foo.max]`.
+004.rb:1:7: C: [Correctable] Style/MinMax: Use `foo.minmax` instead of `foo.min, foo.max`.
+008.rb:1:8: C: [Correctable] Style/MinMax: Use `foo.minmax` instead of `foo.min, foo.max`.
+
+==> autocorrect exit=0 269 <==
+000.rb:1:1: C: [Corrected] Style/MinMax: Use `foo.minmax` instead of `[foo.min, foo.max]`.
+004.rb:1:7: C: [Corrected] Style/MinMax: Use `foo.minmax` instead of `foo.min, foo.max`.
+008.rb:1:8: C: [Corrected] Style/MinMax: Use `foo.minmax` instead of `foo.min, foo.max`.
+
+==> corrected/000.rb 11 <==
+foo.minmax
+
+==> corrected/004.rb 17 <==
+bar = foo.minmax
+
+==> corrected/008.rb 18 <==
+return foo.minmax
+

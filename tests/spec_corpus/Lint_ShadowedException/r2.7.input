@@ -1,0 +1,334 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 14 <==
+foo rescue nil
+==> 001.rb 48 <==
+begin
+  something
+rescue
+  handle_exception
+end
+
+==> 002.rb 58 <==
+begin
+  something
+rescue Exception
+  handle_exception
+end
+
+==> 003.rb 69 <==
+begin
+  something
+rescue NonStandardException
+  handle_exception
+end
+
+==> 004.rb 76 <==
+begin
+  something
+rescue Error, NonStandardException
+  handle_exception
+end
+
+==> 005.rb 82 <==
+begin
+  something
+rescue CustomError, NonStandardException
+  handle_exception
+end
+
+==> 006.rb 103 <==
+begin
+  something
+rescue Errno::EAGAIN, Errno::EWOULDBLOCK, Errno::ECONNABORTED
+  handle_exception
+end
+
+==> 007.rb 78 <==
+def foo
+  something
+rescue StandardError, RuntimeError
+  handle_exception
+end
+
+==> 008.rb 76 <==
+begin
+  something
+rescue NonStandardError, Exception
+  handle_exception
+end
+
+==> 009.rb 89 <==
+begin
+  something
+rescue Exception
+  handle_exception
+rescue
+  handle_standard_error
+end
+
+==> 010.rb 66 <==
+begin
+  something
+rescue Exception => e
+  handle_exception(e)
+end
+
+==> 011.rb 84 <==
+begin
+  something
+rescue Exception
+  handle_exception
+ensure
+  everything_is_ok
+end
+
+==> 012.rb 86 <==
+begin
+  something
+rescue Exception
+  handle_exception
+else
+  handle_non_exception
+end
+
+==> 013.rb 109 <==
+begin
+  something
+rescue NoMethodError, ZeroDivisionError
+  handle_exception
+else
+  handle_non_exception
+end
+
+==> 014.rb 60 <==
+begin
+  something
+rescue StandardError, NameError
+  foo
+end
+
+==> 015.rb 75 <==
+begin
+  something
+rescue StandardError, NameError, NoMethodError
+  foo
+end
+
+==> 016.rb 56 <==
+begin
+  something
+rescue NameError, NameError
+  foo
+end
+
+==> 017.rb 30 <==
+begin
+  a
+rescue *FOO
+  b
+end
+
+==> 018.rb 149 <==
+begin
+  something
+rescue NoMethodError
+  handle_no_method_error
+rescue Exception
+  handle_exception
+rescue StandardError
+  handle_standard_error
+end
+
+==> 019.rb 122 <==
+begin
+  something
+rescue Exception
+  handle_exception
+rescue NoMethodError, ZeroDivisionError
+  handle_standard_error
+end
+
+==> 020.rb 126 <==
+begin
+  something
+rescue ZeroDivisionError
+  handle_exception
+rescue NoMethodError, StandardError
+  handle_standard_error
+end
+
+==> 021.rb 129 <==
+begin
+  something
+rescue Exception
+  handle_exception
+rescue StandardError
+  handle_standard_error
+ensure
+  everything_is_ok
+end
+
+==> 022.rb 103 <==
+begin
+  something
+rescue StandardError
+  handle_standard_error
+rescue Exception
+  handle_exception
+end
+
+==> 023.rb 232 <==
+begin
+  something
+rescue StandardError
+  handle_error
+rescue ErrorA
+  handle_error
+rescue ErrorB
+  handle_error
+rescue ErrorC
+  handle_error
+rescue ErrorD
+  handle_error
+rescue ErrorE
+  handle_error
+rescue ErrorF
+  handle_error
+end
+
+==> 024.rb 122 <==
+begin
+  something
+rescue NoMethodError, ZeroDivisionError
+  handle_standard_error
+rescue Exception
+  handle_exception
+end
+
+==> 025.rb 121 <==
+begin
+  something
+rescue NonStandardError, NoMethodError
+  handle_standard_error
+rescue Exception
+  handle_exception
+end
+
+==> 026.rb 120 <==
+begin
+  something
+rescue NonStandardError, OtherError
+  handle_standard_error
+rescue CustomError
+  handle_exception
+end
+
+==> 027.rb 46 <==
+begin
+  a
+rescue *FOO
+  b
+rescue *BAR
+  c
+end
+
+==> 028.rb 55 <==
+begin
+  a
+rescue StandardError
+  b
+rescue *BAR
+  c
+end
+
+==> 029.rb 51 <==
+begin
+  a
+rescue Exception
+  b
+rescue *BAR
+  c
+end
+
+==> 030.rb 60 <==
+begin
+  a
+rescue ArgumentError
+  b
+rescue Interrupt
+  c
+end
+
+==> 031.rb 60 <==
+begin
+  a
+rescue Interrupt
+  b
+rescue ArgumentError
+  c
+end
+
+==> 032.rb 67 <==
+begin
+  a
+rescue UnknownException
+  b
+rescue StandardError
+  c
+end
+
+==> 033.rb 67 <==
+begin
+  a
+rescue StandardError
+  b
+rescue UnknownException
+  c
+end
+
+==> 034.rb 102 <==
+begin
+  a
+rescue UnknownException
+  b
+rescue StandardError
+  c
+rescue AnotherUnknownException
+  d
+end
+
+==> 035.rb 63 <==
+begin
+  a
+rescue Exception
+  b
+rescue UnknownException
+  c
+end
+
+==> 036.rb 46 <==
+begin
+  a
+rescue foo
+  b
+rescue [bar]
+  c
+end
+
+==> 037.rb 83 <==
+begin
+rescue A, B
+  do_something
+rescue C
+  do_something
+rescue
+  do_something
+end
+

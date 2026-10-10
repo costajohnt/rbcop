@@ -1,0 +1,12 @@
+==> offenses exit=1 218 <==
+001.rb:1:1: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+001.rb:2:1: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+
+==> autocorrect exit=0 214 <==
+001.rb:1:1: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+001.rb:2:1: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+
+==> corrected/001.rb 44 <==
+"Hello #{user.name}"
+"Hello #{user.name}!!"
+

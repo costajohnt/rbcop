@@ -1,0 +1,9 @@
+==> offenses exit=1 106 <==
+000.rb:1:1: C: [Correctable] Style/EndBlock: Avoid the use of `END` blocks. Use `Kernel#at_exit` instead.
+
+==> autocorrect exit=0 104 <==
+000.rb:1:1: C: [Corrected] Style/EndBlock: Avoid the use of `END` blocks. Use `Kernel#at_exit` instead.
+
+==> corrected/000.rb 17 <==
+at_exit { test }
+

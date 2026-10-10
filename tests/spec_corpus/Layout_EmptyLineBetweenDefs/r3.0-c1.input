@@ -1,0 +1,14 @@
+==> .rubocop.yml 170 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Layout/EmptyLineBetweenDefs:
+  AllowAdjacentOneLineDefs: true
+
+==> 000.rb 28 <==
+def foo() = x
+def bar() = y
+

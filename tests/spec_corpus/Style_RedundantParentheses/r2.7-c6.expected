@@ -1,0 +1,48 @@
+==> offenses exit=1 864 <==
+000.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+001.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+002.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+003.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+004.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+005.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+006.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+007.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+
+==> autocorrect exit=0 848 <==
+000.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+001.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+002.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+003.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+004.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+005.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+006.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+007.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a logical expression.
+
+==> corrected/000.rb 7 <==
+x && y
+
+==> corrected/001.rb 7 <==
+x || y
+
+==> corrected/002.rb 8 <==
+x and y
+
+==> corrected/003.rb 7 <==
+x or y
+
+==> corrected/004.rb 8 <==
+x &&
+ y
+
+==> corrected/005.rb 8 <==
+x ||
+ y
+
+==> corrected/006.rb 9 <==
+x and
+ y
+
+==> corrected/007.rb 8 <==
+x or
+ y
+

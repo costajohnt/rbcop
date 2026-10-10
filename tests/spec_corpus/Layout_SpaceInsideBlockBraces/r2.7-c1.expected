@@ -1,0 +1,9 @@
+==> offenses exit=1 95 <==
+001.rb:1:6: C: [Correctable] Layout/SpaceInsideBlockBraces: Space missing inside empty braces.
+
+==> autocorrect exit=0 93 <==
+001.rb:1:6: C: [Corrected] Layout/SpaceInsideBlockBraces: Space missing inside empty braces.
+
+==> corrected/001.rb 9 <==
+each { }
+

@@ -1,0 +1,39 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 13 <==
+if /foo/
+end
+
+==> 001.rb 14 <==
+if !/foo/
+end
+
+==> 002.rb 22 <==
+while /foo/
+  bar
+end
+
+==> 003.rb 22 <==
+until /foo/
+  bar
+end
+
+==> 004.rb 14 <==
+/foo/ ? a : b
+
+==> 005.rb 6 <==
+/foo/
+
+==> 006.rb 7 <==
+!/foo/
+
+==> 007.rb 20 <==
+if /foo/ =~ str
+end
+

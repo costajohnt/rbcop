@@ -1,0 +1,9 @@
+==> offenses exit=1 133 <==
+000.rb:1:5: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+
+==> autocorrect exit=0 131 <==
+000.rb:1:5: C: [Corrected] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+
+==> corrected/000.rb 20 <==
+a = 123_456_789_000
+

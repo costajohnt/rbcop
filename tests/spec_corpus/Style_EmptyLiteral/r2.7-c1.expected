@@ -1,0 +1,25 @@
+==> offenses exit=1 392 <==
+000.rb:1:8: C: [Correctable] Style/EmptyLiteral: Use string literal `''` instead of `String.new`.
+001.rb:1:8: C: [Correctable] Style/EmptyLiteral: Use string literal `''` instead of `String.new`.
+002.rb:1:8: C: [Correctable] Style/EmptyLiteral: Use string literal `''` instead of `String.new`.
+006.rb:2:8: C: [Correctable] Style/EmptyLiteral: Use string literal `''` instead of `String.new`.
+
+==> autocorrect exit=0 384 <==
+000.rb:1:8: C: [Corrected] Style/EmptyLiteral: Use string literal `''` instead of `String.new`.
+001.rb:1:8: C: [Corrected] Style/EmptyLiteral: Use string literal `''` instead of `String.new`.
+002.rb:1:8: C: [Corrected] Style/EmptyLiteral: Use string literal `''` instead of `String.new`.
+006.rb:2:8: C: [Corrected] Style/EmptyLiteral: Use string literal `''` instead of `String.new`.
+
+==> corrected/000.rb 10 <==
+test = ''
+
+==> corrected/001.rb 10 <==
+test = ''
+
+==> corrected/002.rb 10 <==
+test = ''
+
+==> corrected/006.rb 41 <==
+# frozen_string_literal: false
+test = ''
+

@@ -1,0 +1,29 @@
+==> .rubocop.yml 147 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/Lambda:
+  EnforcedStyle: literal
+
+==> 000.rb 21 <==
+f = lambda { |x| x }
+
+==> 001.rb 17 <==
+f = lambda { x }
+
+==> 002.rb 24 <==
+f = lambda { |x; y| x }
+
+==> 003.rb 26 <==
+f = lambda do |x|
+  x
+end
+
+==> 004.rb 22 <==
+f = lambda do
+  x
+end
+

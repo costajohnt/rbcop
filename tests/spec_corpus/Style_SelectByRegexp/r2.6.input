@@ -1,0 +1,158 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.6
+
+==> 000.rb 39 <==
+array.filter { |x| x.match? /regexp/ }
+
+==> 001.rb 39 <==
+array.filter { |x| /regexp/.match? x }
+
+==> 002.rb 35 <==
+array.filter { |x| x =~ /regexp/ }
+
+==> 003.rb 47 <==
+lvar = /regexp/
+array.filter { |x| x =~ lvar }
+
+==> 004.rb 35 <==
+array.filter { |x| /regexp/ =~ x }
+
+==> 005.rb 47 <==
+lvar = /regexp/
+array.filter { |x| lvar =~ x }
+
+==> 006.rb 105 <==
+array.filter { |x| x =~ y }
+array.filter { |x| x =~ REGEXP }
+array.filter { |x| x =~ foo.bar.baz(quux) }
+
+==> 007.rb 44 <==
+array.filter do |x|
+  x.match? /regexp/
+end
+
+==> 008.rb 13 <==
+array.filter
+
+==> 009.rb 22 <==
+array.filter(&:even?)
+
+==> 010.rb 29 <==
+array.filter { |x| x.even? }
+
+==> 011.rb 62 <==
+array.filter do |x|
+  next if x.even?
+  x.match? /regexp/
+end
+
+==> 012.rb 40 <==
+obj.filter { |x, y| y.match? /regexp/ }
+
+==> 013.rb 39 <==
+array.filter { |x| y.match? /regexp/ }
+
+==> 014.rb 45 <==
+array.filter { |x| /regexp/.match?(foo(x)) }
+
+==> 015.rb 17 <==
+array.filter { }
+
+==> 016.rb 34 <==
+filter { |x| x.match?(/regexp/) }
+
+==> 017.rb 80 <==
+[].filter { |x| x.match?(/regexp/) }
+foo.to_a.filter { |x| x.match?(/regexp/) }
+
+==> 018.rb 46 <==
+('aaa'...'abc').filter { |x| x.match?(/ab/) }
+
+==> 019.rb 86 <==
+Set.new.filter { |x| x.match?(/regexp/) }
+[].to_set.filter { |x| x.match?(/regexp/) }
+
+==> 020.rb 83 <==
+{}.filter { |x| x.match? /regexp/ }
+{ foo: :bar }.filter { |x| x.match? /regexp/ }
+
+==> 021.rb 161 <==
+Hash.new.filter { |x| x.match? /regexp/ }
+Hash.new(:default).filter { |x| x.match? /regexp/ }
+Hash.new { |hash, key| :default }.filter { |x| x.match? /regexp/ }
+
+==> 022.rb 97 <==
+Hash[h].filter { |x| x.match? /regexp/ }
+Hash[:foo, 0, :bar, 1].filter { |x| x.match? /regexp/ }
+
+==> 023.rb 80 <==
+to_h.filter { |x| x.match? /regexp/ }
+foo.to_h.filter { |x| x.match? /regexp/ }
+
+==> 024.rb 86 <==
+to_hash.filter { |x| x.match? /regexp/ }
+foo.to_hash.filter { |x| x.match? /regexp/ }
+
+==> 025.rb 46 <==
+foo.to_h.bar.filter { |x| x.match? /regexp/ }
+
+==> 026.rb 76 <==
+ENV.filter { |x| x.match? /regexp/ }
+::ENV.filter { |x| x.match? /regexp/ }
+
+==> 027.rb 40 <==
+array&.filter { |x| x.match? /regexp/ }
+
+==> 028.rb 111 <==
+Hash&.new.filter { |x| x.match? /regexp/ }
+Hash&.new { |hash, key| :default }.filter { |x| x.match? /regexp/ }
+
+==> 029.rb 43 <==
+foo&.to_h.filter { |x| x.match? /regexp/ }
+
+==> 030.rb 46 <==
+foo&.to_hash.filter { |x| x.match? /regexp/ }
+
+==> 031.rb 35 <==
+array.filter { |x| x !~ /regexp/ }
+
+==> 032.rb 47 <==
+lvar = /regexp/
+array.filter { |x| x !~ lvar }
+
+==> 033.rb 35 <==
+array.filter { |x| /regexp/ !~ x }
+
+==> 034.rb 47 <==
+lvar = /regexp/
+array.filter { |x| lvar !~ x }
+
+==> 035.rb 105 <==
+array.filter { |x| x !~ y }
+array.filter { |x| x !~ REGEXP }
+array.filter { |x| x !~ foo.bar.baz(quux) }
+
+==> 036.rb 36 <==
+array&.filter { |x| x !~ /regexp/ }
+
+==> 037.rb 48 <==
+lvar = /regexp/
+array&.filter { |x| x !~ lvar }
+
+==> 038.rb 36 <==
+array&.filter { |x| /regexp/ !~ x }
+
+==> 039.rb 48 <==
+lvar = /regexp/
+array&.filter { |x| lvar !~ x }
+
+==> 040.rb 108 <==
+array&.filter { |x| x !~ y }
+array&.filter { |x| x !~ REGEXP }
+array&.filter { |x| x !~ foo.bar.baz(quux) }
+

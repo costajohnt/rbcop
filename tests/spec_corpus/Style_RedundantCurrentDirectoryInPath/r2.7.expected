@@ -1,0 +1,29 @@
+==> offenses exit=1 570 <==
+000.rb:1:19: C: [Correctable] Style/RedundantCurrentDirectoryInPath: Remove the redundant current directory path.
+001.rb:1:19: C: [Correctable] Style/RedundantCurrentDirectoryInPath: Remove the redundant current directory path.
+002.rb:1:19: C: [Correctable] Style/RedundantCurrentDirectoryInPath: Remove the redundant current directory path.
+003.rb:1:19: C: [Correctable] Style/RedundantCurrentDirectoryInPath: Remove the redundant current directory path.
+004.rb:1:21: C: [Correctable] Style/RedundantCurrentDirectoryInPath: Remove the redundant current directory path.
+
+==> autocorrect exit=0 560 <==
+000.rb:1:19: C: [Corrected] Style/RedundantCurrentDirectoryInPath: Remove the redundant current directory path.
+001.rb:1:19: C: [Corrected] Style/RedundantCurrentDirectoryInPath: Remove the redundant current directory path.
+002.rb:1:19: C: [Corrected] Style/RedundantCurrentDirectoryInPath: Remove the redundant current directory path.
+003.rb:1:19: C: [Corrected] Style/RedundantCurrentDirectoryInPath: Remove the redundant current directory path.
+004.rb:1:21: C: [Corrected] Style/RedundantCurrentDirectoryInPath: Remove the redundant current directory path.
+
+==> corrected/000.rb 35 <==
+require_relative 'path/to/feature'
+
+==> corrected/001.rb 38 <==
+require_relative 'path/#{to}/feature'
+
+==> corrected/002.rb 38 <==
+require_relative "path/#{to}/feature"
+
+==> corrected/003.rb 38 <==
+require_relative '../path/to/feature'
+
+==> corrected/004.rb 37 <==
+require_relative %q(path/to/feature)
+

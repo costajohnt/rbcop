@@ -1,0 +1,22 @@
+==> offenses exit=1 1964 <==
+000.rb:1:1: W: Lint/UriEscapeUnescape: `URI.escape` method is obsolete and should not be used. Instead, use `CGI.escape`, `URI.encode_www_form` or `URI.encode_www_form_component` depending on your specific use case.
+001.rb:1:1: W: Lint/UriEscapeUnescape: `URI.escape` method is obsolete and should not be used. Instead, use `CGI.escape`, `URI.encode_www_form` or `URI.encode_www_form_component` depending on your specific use case.
+002.rb:1:1: W: Lint/UriEscapeUnescape: `::URI.escape` method is obsolete and should not be used. Instead, use `CGI.escape`, `URI.encode_www_form` or `URI.encode_www_form_component` depending on your specific use case.
+003.rb:1:1: W: Lint/UriEscapeUnescape: `URI.encode` method is obsolete and should not be used. Instead, use `CGI.escape`, `URI.encode_www_form` or `URI.encode_www_form_component` depending on your specific use case.
+004.rb:1:1: W: Lint/UriEscapeUnescape: `::URI.encode` method is obsolete and should not be used. Instead, use `CGI.escape`, `URI.encode_www_form` or `URI.encode_www_form_component` depending on your specific use case.
+005.rb:1:1: W: Lint/UriEscapeUnescape: `URI.unescape` method is obsolete and should not be used. Instead, use `CGI.unescape`, `URI.decode_www_form` or `URI.decode_www_form_component` depending on your specific use case.
+006.rb:1:1: W: Lint/UriEscapeUnescape: `::URI.unescape` method is obsolete and should not be used. Instead, use `CGI.unescape`, `URI.decode_www_form` or `URI.decode_www_form_component` depending on your specific use case.
+007.rb:1:1: W: Lint/UriEscapeUnescape: `URI.decode` method is obsolete and should not be used. Instead, use `CGI.unescape`, `URI.decode_www_form` or `URI.decode_www_form_component` depending on your specific use case.
+008.rb:1:1: W: Lint/UriEscapeUnescape: `::URI.decode` method is obsolete and should not be used. Instead, use `CGI.unescape`, `URI.decode_www_form` or `URI.decode_www_form_component` depending on your specific use case.
+
+==> autocorrect exit=1 1964 <==
+000.rb:1:1: W: Lint/UriEscapeUnescape: `URI.escape` method is obsolete and should not be used. Instead, use `CGI.escape`, `URI.encode_www_form` or `URI.encode_www_form_component` depending on your specific use case.
+001.rb:1:1: W: Lint/UriEscapeUnescape: `URI.escape` method is obsolete and should not be used. Instead, use `CGI.escape`, `URI.encode_www_form` or `URI.encode_www_form_component` depending on your specific use case.
+002.rb:1:1: W: Lint/UriEscapeUnescape: `::URI.escape` method is obsolete and should not be used. Instead, use `CGI.escape`, `URI.encode_www_form` or `URI.encode_www_form_component` depending on your specific use case.
+003.rb:1:1: W: Lint/UriEscapeUnescape: `URI.encode` method is obsolete and should not be used. Instead, use `CGI.escape`, `URI.encode_www_form` or `URI.encode_www_form_component` depending on your specific use case.
+004.rb:1:1: W: Lint/UriEscapeUnescape: `::URI.encode` method is obsolete and should not be used. Instead, use `CGI.escape`, `URI.encode_www_form` or `URI.encode_www_form_component` depending on your specific use case.
+005.rb:1:1: W: Lint/UriEscapeUnescape: `URI.unescape` method is obsolete and should not be used. Instead, use `CGI.unescape`, `URI.decode_www_form` or `URI.decode_www_form_component` depending on your specific use case.
+006.rb:1:1: W: Lint/UriEscapeUnescape: `::URI.unescape` method is obsolete and should not be used. Instead, use `CGI.unescape`, `URI.decode_www_form` or `URI.decode_www_form_component` depending on your specific use case.
+007.rb:1:1: W: Lint/UriEscapeUnescape: `URI.decode` method is obsolete and should not be used. Instead, use `CGI.unescape`, `URI.decode_www_form` or `URI.decode_www_form_component` depending on your specific use case.
+008.rb:1:1: W: Lint/UriEscapeUnescape: `::URI.decode` method is obsolete and should not be used. Instead, use `CGI.unescape`, `URI.decode_www_form` or `URI.decode_www_form_component` depending on your specific use case.
+

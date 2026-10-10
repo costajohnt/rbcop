@@ -1,0 +1,216 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 27 <==
+CONST = '%s'
+CONST % [foo]
+
+==> 001.rb 32 <==
+CONST = '%s'
+format(CONST, foo)
+
+==> 002.rb 33 <==
+CONST = '%s'
+sprintf(CONST, foo)
+
+==> 003.rb 23 <==
+var = '%s'
+var % [foo]
+
+==> 004.rb 28 <==
+var = '%s'
+format(var, foo)
+
+==> 005.rb 29 <==
+var = '%s'
+sprintf(var, foo)
+
+==> 006.rb 25 <==
+@var = '%s'
+@var % [foo]
+
+==> 007.rb 30 <==
+@var = '%s'
+format(@var, foo)
+
+==> 008.rb 31 <==
+@var = '%s'
+sprintf(@var, foo)
+
+==> 009.rb 27 <==
+@@var = '%s'
+@@var % [foo]
+
+==> 010.rb 32 <==
+@@var = '%s'
+format(@@var, foo)
+
+==> 011.rb 33 <==
+@@var = '%s'
+sprintf(@@var, foo)
+
+==> 012.rb 25 <==
+$var = '%s'
+$var % [foo]
+
+==> 013.rb 30 <==
+$var = '%s'
+format($var, foo)
+
+==> 014.rb 31 <==
+$var = '%s'
+sprintf($var, foo)
+
+==> 015.rb 26 <==
+Kernel.format("%s %s", 1)
+
+==> 016.rb 27 <==
+Kernel.sprintf("%s %s", 1)
+
+==> 017.rb 19 <==
+format("%s %s", 1)
+
+==> 018.rb 23 <==
+format("something", 1)
+
+==> 019.rb 25 <==
+format("%s %s", 1, 2, 3)
+
+==> 020.rb 27 <==
+format("%s %d %i", 1, 2, 3)
+==> 021.rb 47 <==
+format('%s %s %% %s %%%% %%%%%% %%5B', 1, 2, 3)
+==> 022.rb 24 <==
+format(A_CONST, 1, 2, 3)
+==> 023.rb 26 <==
+sprintf("%s %s", 1, 2, 3)
+
+==> 024.rb 54 <==
+sprintf("%020x%+g:% g %%%#20.8x %#.0e", 1, 2, 3, 4, 5)
+==> 025.rb 20 <==
+"%s %s" % [1, 2, 3]
+
+==> 026.rb 16 <==
+"%s %s" % [1, 2]
+==> 027.rb 22 <==
+puts "%s" % {"a" => 1}
+==> 028.rb 17 <==
+puts "%s" % CONST
+==> 029.rb 30 <==
+sprintf("%s, %s, %s", 1, *arr)
+==> 030.rb 39 <==
+puts "%s, %s, %s" % [1, 2, 3, 4, *arr]
+
+==> 031.rb 44 <==
+puts format("%s, %s, %s", 1, 2, 3, 4, *arr)
+
+==> 032.rb 45 <==
+puts sprintf("%s, %s, %s", 1, 2, 3, 4, *arr)
+
+==> 033.rb 18 <==
+puts "%s %s" % var
+==> 034.rb 27 <==
+puts "%s %s" % ("ab".chars)
+==> 035.rb 33 <==
+format('%1$s %2$s', 'foo', 'bar')
+==> 036.rb 26 <==
+format('%1$s %1$s', 'foo')
+==> 037.rb 41 <==
+format('%1$s %2$s', 'foo', 'bar', 'baz')
+
+==> 038.rb 17 <==
+puts str % [1, 2]
+==> 039.rb 32 <==
+format('%s %2$s', 'foo', 'bar')
+
+==> 040.rb 8 <==
+'%' % []
+==> 041.rb 24 <==
+format('%<t>s', t: '%d')
+==> 042.rb 31 <==
+format("%0.1f%% percent", 22.5)
+==> 043.rb 28 <==
+format("%*d", max_width, id)
+==> 044.rb 18 <==
+format("%*d", id)
+
+==> 045.rb 29 <==
+format("%0*x", max_width, id)
+==> 046.rb 36 <==
+format("%s", "a b c".gsub(" ", "_"))
+==> 047.rb 30 <==
+"foo %{bar} baz" % { bar: 42 }
+==> 048.rb 30 <==
+format("%%%<hex>02X", hex: 10)
+==> 049.rb 24 <==
+"duration: %10.fms" % 42
+==> 050.rb 27 <==
+format("<< %s bleh", 1, 2)
+
+==> 051.rb 22 <==
+sprintf("%d%d", *test)
+==> 052.rb 21 <==
+format("%d%d", *test)
+==> 053.rb 16 <==
+format("%.d", 0)
+==> 054.rb 79 <==
+params = { y: '2015', m: '01', d: '01' }
+puts format('%{y}-%{m}-%{d}', params)
+
+==> 055.rb 83 <==
+params = { y: '2015', m: '01', d: '01' }
+puts format('%{y}-%{m}-%{d}', 2015, 1, 1)
+
+==> 056.rb 82 <==
+params = { y: '2015', m: '01', d: '01' }
+puts format('%<y>d-%<m>d-%<d>d', params)
+
+==> 057.rb 86 <==
+params = { y: '2015', m: '01', d: '01' }
+puts format('%<y>d-%<m>d-%<d>d', 2015, 1, 1)
+
+==> 058.rb 20 <==
+format("%*d", 10, 3)
+==> 059.rb 24 <==
+format("%.*f", 2, 20.19)
+==> 060.rb 29 <==
+format("%*.*f", 10, 3, 20.19)
+==> 061.rb 48 <==
+format("%*.*f %*.*f", 10, 2, 20.19, 5, 1, 11.22)
+==> 062.rb 30 <==
+format("#{foo} %s %s", "bar")
+
+==> 063.rb 26 <==
+format("#{foo} %s", "bar")
+==> 064.rb 30 <==
+format("#{foo}", "bar", "baz")
+==> 065.rb 52 <==
+Kernel.format("%.#{number_of_decimal_places}f", num)
+==> 066.rb 27 <==
+"%s %s" % ["#{foo}", 1, 2]
+
+==> 067.rb 23 <==
+"%s %s" % ["#{foo}", 1]
+==> 068.rb 17 <==
+"#{foo}" % [1, 2]
+==> 069.rb 44 <==
+format("%#{padding}s: %s", prefix, message)
+
+==> 070.rb 63 <==
+sprintf("| %-#{key_offset}s | %-#{val_offset}s |", key, value)
+
+==> 071.rb 26 <==
+format("%s %s", "#{foo}")
+
+==> 072.rb 22 <==
+format("%s", "#{foo}")
+==> 073.rb 27 <==
+"#{foo} %s %s" % [1, 2, 3]
+
+==> 074.rb 23 <==
+"#{foo} %s %s" % [1, 2]

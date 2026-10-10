@@ -1,0 +1,47 @@
+==> offenses exit=1 1112 <==
+007.rb:2:3: C: [Correctable] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the position of the opening bracket.
+007.rb:3:1: C: [Correctable] Layout/FirstArrayElementIndentation: Indent the right bracket the same as the left bracket.
+008.rb:2:3: C: [Correctable] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the position of the opening bracket.
+008.rb:3:1: C: [Correctable] Layout/FirstArrayElementIndentation: Indent the right bracket the same as the left bracket.
+009.rb:2:3: C: [Correctable] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the position of the opening bracket.
+009.rb:3:1: C: [Correctable] Layout/FirstArrayElementIndentation: Indent the right bracket the same as the left bracket.
+010.rb:2:3: C: [Correctable] Layout/FirstArrayElementIndentation: Indent the right bracket the same as the left bracket.
+011.rb:2:9: C: [Correctable] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the position of the opening bracket.
+
+==> autocorrect exit=0 1096 <==
+007.rb:2:3: C: [Corrected] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the position of the opening bracket.
+007.rb:3:1: C: [Corrected] Layout/FirstArrayElementIndentation: Indent the right bracket the same as the left bracket.
+008.rb:2:3: C: [Corrected] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the position of the opening bracket.
+008.rb:3:1: C: [Corrected] Layout/FirstArrayElementIndentation: Indent the right bracket the same as the left bracket.
+009.rb:2:3: C: [Corrected] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the position of the opening bracket.
+009.rb:3:1: C: [Corrected] Layout/FirstArrayElementIndentation: Indent the right bracket the same as the left bracket.
+010.rb:2:3: C: [Corrected] Layout/FirstArrayElementIndentation: Indent the right bracket the same as the left bracket.
+011.rb:2:9: C: [Corrected] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the position of the opening bracket.
+
+==> corrected/007.rb 24 <==
+func([
+       1
+     ])
+
+==> corrected/008.rb 26 <==
+var = [
+        1
+      ]
+
+==> corrected/009.rb 50 <==
+var = [
+        1
+      ]
+func([
+       1
+     ])
+
+==> corrected/010.rb 14 <==
+a << [
+     ]
+
+==> corrected/011.rb 20 <==
+a = [
+      1
+    ]
+

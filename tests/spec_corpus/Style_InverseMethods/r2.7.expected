@@ -1,0 +1,499 @@
+==> offenses exit=1 8324 <==
+000.rb:1:1: C: [Correctable] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+002.rb:1:1: C: [Correctable] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+004.rb:1:1: C: [Correctable] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+005.rb:1:1: C: [Correctable] Style/InverseMethods: Use `none?` instead of inverting `any?`.
+011.rb:1:1: C: [Correctable] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+012.rb:1:1: C: [Correctable] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+013.rb:1:1: C: [Correctable] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+014.rb:1:1: C: [Correctable] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+015.rb:1:1: C: [Correctable] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+016.rb:1:1: C: [Correctable] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+017.rb:1:1: C: [Correctable] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+018.rb:1:1: C: [Correctable] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+019.rb:1:1: C: [Correctable] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+020.rb:1:1: C: [Correctable] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+021.rb:1:1: C: [Correctable] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+022.rb:1:1: C: [Correctable] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+023.rb:1:1: C: [Correctable] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+024.rb:1:1: C: [Correctable] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+025.rb:1:1: C: [Correctable] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+026.rb:1:1: C: [Correctable] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+027.rb:1:1: C: [Correctable] Style/InverseMethods: Use `none?` instead of inverting `any?`.
+028.rb:1:1: C: [Correctable] Style/InverseMethods: Use `odd?` instead of inverting `even?`.
+031.rb:1:1: C: [Correctable] Style/InverseMethods: Use `even?` instead of inverting `odd?`.
+034.rb:1:1: C: [Correctable] Style/InverseMethods: Use `!=` instead of inverting `==`.
+035.rb:1:1: C: [Correctable] Style/InverseMethods: Use `!=` instead of inverting `==`.
+036.rb:1:1: C: [Correctable] Style/InverseMethods: Use `==` instead of inverting `!=`.
+037.rb:1:1: C: [Correctable] Style/InverseMethods: Use `==` instead of inverting `!=`.
+038.rb:1:1: C: [Correctable] Style/InverseMethods: Use `!~` instead of inverting `=~`.
+039.rb:1:1: C: [Correctable] Style/InverseMethods: Use `!~` instead of inverting `=~`.
+040.rb:1:1: C: [Correctable] Style/InverseMethods: Use `=~` instead of inverting `!~`.
+041.rb:1:1: C: [Correctable] Style/InverseMethods: Use `=~` instead of inverting `!~`.
+042.rb:1:1: C: [Correctable] Style/InverseMethods: Use `>=` instead of inverting `<`.
+043.rb:1:1: C: [Correctable] Style/InverseMethods: Use `>=` instead of inverting `<`.
+044.rb:1:1: C: [Correctable] Style/InverseMethods: Use `<=` instead of inverting `>`.
+045.rb:1:1: C: [Correctable] Style/InverseMethods: Use `<=` instead of inverting `>`.
+054.rb:2:1: C: [Correctable] Style/InverseMethods: Use `>=` instead of inverting `<`.
+055.rb:2:1: C: [Correctable] Style/InverseMethods: Use `>=` instead of inverting `<`.
+056.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject` instead of inverting `select`.
+057.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject` instead of inverting `select`.
+058.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject` instead of inverting `select`.
+059.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject` instead of inverting `select`.
+060.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject` instead of inverting `select`.
+061.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject` instead of inverting `select`.
+062.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject` instead of inverting `select`.
+063.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject` instead of inverting `select`.
+064.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject` instead of inverting `select`.
+065.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject` instead of inverting `select`.
+066.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject` instead of inverting `select`.
+067.rb:1:12: C: [Correctable] Style/InverseMethods: Use `reject` instead of inverting `select`.
+068.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject` instead of inverting `select`.
+069.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select` instead of inverting `reject`.
+070.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select` instead of inverting `reject`.
+071.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select` instead of inverting `reject`.
+072.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select` instead of inverting `reject`.
+073.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select` instead of inverting `reject`.
+074.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select` instead of inverting `reject`.
+075.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select` instead of inverting `reject`.
+076.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select` instead of inverting `reject`.
+077.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select` instead of inverting `reject`.
+078.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select` instead of inverting `reject`.
+079.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select` instead of inverting `reject`.
+080.rb:1:12: C: [Correctable] Style/InverseMethods: Use `select` instead of inverting `reject`.
+081.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select` instead of inverting `reject`.
+082.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+083.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+084.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+085.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+086.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+087.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+088.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+089.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+090.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+091.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+092.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+093.rb:1:12: C: [Correctable] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+094.rb:1:1: C: [Correctable] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+095.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+096.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+097.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+098.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+099.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+100.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+101.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+102.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+103.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+104.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+105.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+106.rb:1:12: C: [Correctable] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+107.rb:1:1: C: [Correctable] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+
+==> autocorrect exit=0 8146 <==
+000.rb:1:1: C: [Corrected] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+002.rb:1:1: C: [Corrected] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+004.rb:1:1: C: [Corrected] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+005.rb:1:1: C: [Corrected] Style/InverseMethods: Use `none?` instead of inverting `any?`.
+011.rb:1:1: C: [Corrected] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+012.rb:1:1: C: [Corrected] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+013.rb:1:1: C: [Corrected] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+014.rb:1:1: C: [Corrected] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+015.rb:1:1: C: [Corrected] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+016.rb:1:1: C: [Corrected] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+017.rb:1:1: C: [Corrected] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+018.rb:1:1: C: [Corrected] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+019.rb:1:1: C: [Corrected] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+020.rb:1:1: C: [Corrected] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+021.rb:1:1: C: [Corrected] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+022.rb:1:1: C: [Corrected] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+023.rb:1:1: C: [Corrected] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+024.rb:1:1: C: [Corrected] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+025.rb:1:1: C: [Corrected] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+026.rb:1:1: C: [Corrected] Style/InverseMethods: Use `any?` instead of inverting `none?`.
+027.rb:1:1: C: [Corrected] Style/InverseMethods: Use `none?` instead of inverting `any?`.
+028.rb:1:1: C: [Corrected] Style/InverseMethods: Use `odd?` instead of inverting `even?`.
+031.rb:1:1: C: [Corrected] Style/InverseMethods: Use `even?` instead of inverting `odd?`.
+034.rb:1:1: C: [Corrected] Style/InverseMethods: Use `!=` instead of inverting `==`.
+035.rb:1:1: C: [Corrected] Style/InverseMethods: Use `!=` instead of inverting `==`.
+036.rb:1:1: C: [Corrected] Style/InverseMethods: Use `==` instead of inverting `!=`.
+037.rb:1:1: C: [Corrected] Style/InverseMethods: Use `==` instead of inverting `!=`.
+038.rb:1:1: C: [Corrected] Style/InverseMethods: Use `!~` instead of inverting `=~`.
+039.rb:1:1: C: [Corrected] Style/InverseMethods: Use `!~` instead of inverting `=~`.
+040.rb:1:1: C: [Corrected] Style/InverseMethods: Use `=~` instead of inverting `!~`.
+041.rb:1:1: C: [Corrected] Style/InverseMethods: Use `=~` instead of inverting `!~`.
+042.rb:1:1: C: [Corrected] Style/InverseMethods: Use `>=` instead of inverting `<`.
+043.rb:1:1: C: [Corrected] Style/InverseMethods: Use `>=` instead of inverting `<`.
+044.rb:1:1: C: [Corrected] Style/InverseMethods: Use `<=` instead of inverting `>`.
+045.rb:1:1: C: [Corrected] Style/InverseMethods: Use `<=` instead of inverting `>`.
+054.rb:2:1: C: [Corrected] Style/InverseMethods: Use `>=` instead of inverting `<`.
+055.rb:2:1: C: [Corrected] Style/InverseMethods: Use `>=` instead of inverting `<`.
+056.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject` instead of inverting `select`.
+057.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject` instead of inverting `select`.
+058.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject` instead of inverting `select`.
+059.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject` instead of inverting `select`.
+060.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject` instead of inverting `select`.
+061.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject` instead of inverting `select`.
+062.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject` instead of inverting `select`.
+063.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject` instead of inverting `select`.
+064.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject` instead of inverting `select`.
+065.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject` instead of inverting `select`.
+066.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject` instead of inverting `select`.
+067.rb:1:12: C: [Corrected] Style/InverseMethods: Use `reject` instead of inverting `select`.
+068.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject` instead of inverting `select`.
+069.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select` instead of inverting `reject`.
+070.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select` instead of inverting `reject`.
+071.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select` instead of inverting `reject`.
+072.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select` instead of inverting `reject`.
+073.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select` instead of inverting `reject`.
+074.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select` instead of inverting `reject`.
+075.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select` instead of inverting `reject`.
+076.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select` instead of inverting `reject`.
+077.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select` instead of inverting `reject`.
+078.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select` instead of inverting `reject`.
+079.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select` instead of inverting `reject`.
+080.rb:1:12: C: [Corrected] Style/InverseMethods: Use `select` instead of inverting `reject`.
+081.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select` instead of inverting `reject`.
+082.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+083.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+084.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+085.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+086.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+087.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+088.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+089.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+090.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+091.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+092.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+093.rb:1:12: C: [Corrected] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+094.rb:1:1: C: [Corrected] Style/InverseMethods: Use `reject!` instead of inverting `select!`.
+095.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+096.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+097.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+098.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+099.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+100.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+101.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+102.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+103.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+104.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+105.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+106.rb:1:12: C: [Corrected] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+107.rb:1:1: C: [Corrected] Style/InverseMethods: Use `select!` instead of inverting `reject!`.
+
+==> corrected/000.rb 18 <==
+foo.any?(&:even?)
+
+==> corrected/002.rb 25 <==
+foo.any? { |f| f.even? }
+
+==> corrected/004.rb 22 <==
+foo.any? { _1.even? }
+
+==> corrected/005.rb 21 <==
+foo.none? &:working?
+
+==> corrected/011.rb 9 <==
+foo.any?
+
+==> corrected/012.rb 9 <==
+foo.any?
+
+==> corrected/013.rb 10 <==
+$foo.any?
+
+==> corrected/014.rb 10 <==
+$foo.any?
+
+==> corrected/015.rb 10 <==
+@foo.any?
+
+==> corrected/016.rb 10 <==
+@foo.any?
+
+==> corrected/017.rb 11 <==
+@@foo.any?
+
+==> corrected/018.rb 11 <==
+@@foo.any?
+
+==> corrected/019.rb 9 <==
+FOO.any?
+
+==> corrected/020.rb 9 <==
+FOO.any?
+
+==> corrected/021.rb 14 <==
+FOO::BAR.any?
+
+==> corrected/022.rb 14 <==
+FOO::BAR.any?
+
+==> corrected/023.rb 16 <==
+foo["bar"].any?
+
+==> corrected/024.rb 16 <==
+foo["bar"].any?
+
+==> corrected/025.rb 13 <==
+foo.bar.any?
+
+==> corrected/026.rb 13 <==
+foo.bar.any?
+
+==> corrected/027.rb 10 <==
+foo.none?
+
+==> corrected/028.rb 9 <==
+foo.odd?
+
+==> corrected/031.rb 10 <==
+foo.even?
+
+==> corrected/034.rb 11 <==
+foo != bar
+
+==> corrected/035.rb 11 <==
+foo != bar
+
+==> corrected/036.rb 11 <==
+foo == bar
+
+==> corrected/037.rb 11 <==
+foo == bar
+
+==> corrected/038.rb 11 <==
+foo !~ bar
+
+==> corrected/039.rb 11 <==
+foo !~ bar
+
+==> corrected/040.rb 11 <==
+foo =~ bar
+
+==> corrected/041.rb 11 <==
+foo =~ bar
+
+==> corrected/042.rb 11 <==
+foo >= bar
+
+==> corrected/043.rb 11 <==
+foo >= bar
+
+==> corrected/044.rb 11 <==
+foo <= bar
+
+==> corrected/045.rb 11 <==
+foo <= bar
+
+==> corrected/054.rb 36 <==
+klass = self.class
+klass >= FOO_BAR
+
+==> corrected/055.rb 36 <==
+klass = self.class
+FOO_BAR >= klass
+
+==> corrected/056.rb 21 <==
+foo.reject { |e| e }
+
+==> corrected/057.rb 22 <==
+foo&.reject { |e| e }
+
+==> corrected/058.rb 42 <==
+foo.reject do |e|
+  something
+  e.bar
+end
+
+==> corrected/059.rb 44 <==
+foo&.reject do |e|
+  something
+  e&.bar
+end
+
+==> corrected/060.rb 26 <==
+foo.reject { |e| e == 2 }
+
+==> corrected/061.rb 60 <==
+foo.reject do |e|
+  something
+  something_else
+  e == 2
+end
+
+==> corrected/062.rb 42 <==
+y.reject { |key, _value| (key =~ /c\d/) }
+
+==> corrected/063.rb 26 <==
+foo.reject { |e| e.bar? }
+
+==> corrected/064.rb 26 <==
+foo.reject { |e| e.bar? }
+
+==> corrected/065.rb 28 <==
+foo&.reject { |e| e&.bar? }
+
+==> corrected/066.rb 26 <==
+foo.reject { |e| e.bar? }
+
+==> corrected/067.rb 37 <==
+puts 1 if !foo.reject { |e| e.bar? }
+
+==> corrected/068.rb 30 <==
+foo.reject do |e|
+  e.bar
+end
+
+==> corrected/069.rb 21 <==
+foo.select { |e| e }
+
+==> corrected/070.rb 22 <==
+foo&.select { |e| e }
+
+==> corrected/071.rb 42 <==
+foo.select do |e|
+  something
+  e.bar
+end
+
+==> corrected/072.rb 44 <==
+foo&.select do |e|
+  something
+  e&.bar
+end
+
+==> corrected/073.rb 26 <==
+foo.select { |e| e == 2 }
+
+==> corrected/074.rb 60 <==
+foo.select do |e|
+  something
+  something_else
+  e == 2
+end
+
+==> corrected/075.rb 42 <==
+y.select { |key, _value| (key =~ /c\d/) }
+
+==> corrected/076.rb 26 <==
+foo.select { |e| e.bar? }
+
+==> corrected/077.rb 26 <==
+foo.select { |e| e.bar? }
+
+==> corrected/078.rb 28 <==
+foo&.select { |e| e&.bar? }
+
+==> corrected/079.rb 26 <==
+foo.select { |e| e.bar? }
+
+==> corrected/080.rb 37 <==
+puts 1 if !foo.select { |e| e.bar? }
+
+==> corrected/081.rb 30 <==
+foo.select do |e|
+  e.bar
+end
+
+==> corrected/082.rb 22 <==
+foo.reject! { |e| e }
+
+==> corrected/083.rb 23 <==
+foo&.reject! { |e| e }
+
+==> corrected/084.rb 43 <==
+foo.reject! do |e|
+  something
+  e.bar
+end
+
+==> corrected/085.rb 45 <==
+foo&.reject! do |e|
+  something
+  e&.bar
+end
+
+==> corrected/086.rb 27 <==
+foo.reject! { |e| e == 2 }
+
+==> corrected/087.rb 61 <==
+foo.reject! do |e|
+  something
+  something_else
+  e == 2
+end
+
+==> corrected/088.rb 43 <==
+y.reject! { |key, _value| (key =~ /c\d/) }
+
+==> corrected/089.rb 27 <==
+foo.reject! { |e| e.bar? }
+
+==> corrected/090.rb 27 <==
+foo.reject! { |e| e.bar? }
+
+==> corrected/091.rb 29 <==
+foo&.reject! { |e| e&.bar? }
+
+==> corrected/092.rb 27 <==
+foo.reject! { |e| e.bar? }
+
+==> corrected/093.rb 38 <==
+puts 1 if !foo.reject! { |e| e.bar? }
+
+==> corrected/094.rb 31 <==
+foo.reject! do |e|
+  e.bar
+end
+
+==> corrected/095.rb 22 <==
+foo.select! { |e| e }
+
+==> corrected/096.rb 23 <==
+foo&.select! { |e| e }
+
+==> corrected/097.rb 43 <==
+foo.select! do |e|
+  something
+  e.bar
+end
+
+==> corrected/098.rb 45 <==
+foo&.select! do |e|
+  something
+  e&.bar
+end
+
+==> corrected/099.rb 27 <==
+foo.select! { |e| e == 2 }
+
+==> corrected/100.rb 61 <==
+foo.select! do |e|
+  something
+  something_else
+  e == 2
+end
+
+==> corrected/101.rb 43 <==
+y.select! { |key, _value| (key =~ /c\d/) }
+
+==> corrected/102.rb 27 <==
+foo.select! { |e| e.bar? }
+
+==> corrected/103.rb 27 <==
+foo.select! { |e| e.bar? }
+
+==> corrected/104.rb 29 <==
+foo&.select! { |e| e&.bar? }
+
+==> corrected/105.rb 27 <==
+foo.select! { |e| e.bar? }
+
+==> corrected/106.rb 38 <==
+puts 1 if !foo.select! { |e| e.bar? }
+
+==> corrected/107.rb 31 <==
+foo.select! do |e|
+  e.bar
+end
+

@@ -1,0 +1,44 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 31 <==
+foo.object_id == bar.object_id
+
+==> 001.rb 31 <==
+foo.object_id != bar.object_id
+
+==> 002.rb 34 <==
+foo.object_id == bar.do_something
+
+==> 003.rb 34 <==
+foo.object_id != bar.do_something
+
+==> 004.rb 34 <==
+foo.do_something == bar.object_id
+
+==> 005.rb 34 <==
+foo.do_something != bar.object_id
+
+==> 006.rb 16 <==
+foo.equal?(bar)
+
+==> 007.rb 17 <==
+!foo.equal?(bar)
+
+==> 008.rb 27 <==
+object_id == bar.object_id
+
+==> 009.rb 27 <==
+object_id != bar.object_id
+
+==> 010.rb 27 <==
+foo.object_id == object_id
+
+==> 011.rb 27 <==
+foo.object_id != object_id
+

@@ -1,0 +1,54 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+
+==> 000.rb 47 <==
+Data.define do
+  protected
+  def foo
+  end
+end
+
+==> 001.rb 31 <==
+Data.define do
+  protected
+end
+
+==> 002.rb 33 <==
+::Data.define do
+  protected
+end
+
+==> 003.rb 50 <==
+Data.define do
+  protected
+  do_something(_1)
+end
+
+==> 004.rb 45 <==
+Data.define do
+  private
+  def foo
+  end
+end
+
+==> 005.rb 29 <==
+Data.define do
+  private
+end
+
+==> 006.rb 31 <==
+::Data.define do
+  private
+end
+
+==> 007.rb 48 <==
+Data.define do
+  private
+  do_something(_1)
+end
+

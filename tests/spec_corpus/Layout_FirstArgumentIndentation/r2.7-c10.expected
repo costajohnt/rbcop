@@ -1,0 +1,105 @@
+==> offenses exit=1 1630 <==
+000.rb:2:5: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than `run(`.
+001.rb:2:2: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than `run(`.
+002.rb:2:2: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than `foo(`.
+002.rb:3:3: C: Layout/FirstArgumentIndentation: Bad indentation of the first argument.
+003.rb:2:3: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than `run(`.
+005.rb:3:3: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than `run(`.
+010.rb:3:7: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+013.rb:4:3: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line (not counting the comment).
+018.rb:3:7: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+019.rb:3:1: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+021.rb:2:25: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than `defaults.merge(`.
+025.rb:2:15: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than `Diagnostic.where(`.
+029.rb:2:15: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than `Diagnostic.where(`.
+
+==> autocorrect exit=0 1632 <==
+000.rb:2:5: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than `run(`.
+001.rb:2:2: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than `run(`.
+002.rb:2:2: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than `foo(`.
+002.rb:3:4: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than `bar(`.
+003.rb:2:3: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than `run(`.
+005.rb:3:3: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than `run(`.
+010.rb:3:7: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+013.rb:4:3: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line (not counting the comment).
+018.rb:3:7: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+019.rb:3:1: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+021.rb:2:25: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than `defaults.merge(`.
+025.rb:2:15: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than `Diagnostic.where(`.
+029.rb:2:15: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than `Diagnostic.where(`.
+
+==> corrected/000.rb 26 <==
+run(
+  :foo,
+    bar: 3
+)
+
+==> corrected/001.rb 26 <==
+run(
+  :foo,
+    bar: 3
+)
+
+==> corrected/002.rb 23 <==
+foo(
+  bar(
+    7
+ )
+)
+
+==> corrected/003.rb 34 <==
+x = run(
+      :foo,
+    bar: 3
+)
+
+==> corrected/005.rb 22 <==
+@x =
+  run(
+    :foo)
+
+==> corrected/010.rb 30 <==
+puts x.
+  merge(
+    b: 2
+  )
+
+==> corrected/013.rb 42 <==
+puts x.
+  merge(
+  # comment
+    b: 2
+  )
+
+==> corrected/018.rb 139 <==
+sequences = CourseSequence
+  .includes(
+    course_sequence_memberships: {
+      course: :course_components
+    }
+    )
+  .joins(:courses)
+
+==> corrected/019.rb 41 <==
+result = Foo
+  .bar(
+    x: 1
+  )
+  .baz
+
+==> corrected/021.rb 47 <==
+run(:foo, defaults.merge(
+            bar: 3))
+
+==> corrected/025.rb 87 <==
+run(:foo, Diagnostic.where(
+            'limit >= 10',
+            )
+            .ids)
+
+==> corrected/029.rb 86 <==
+run :foo, Diagnostic.where(
+            'limit >= 10',
+            )
+            .ids
+

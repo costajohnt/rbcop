@@ -1,0 +1,89 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 41 <==
+class C
+  def self.class_method; end
+end
+
+==> 001.rb 96 <==
+class C
+  def self.class_method; end
+
+  class << self
+    def other_class_method; end
+  end
+end
+
+==> 002.rb 81 <==
+class C
+  def self.class_method; end
+
+  class << self
+    macro_method
+  end
+end
+
+==> 003.rb 54 <==
+class C
+  CONST = 1
+
+  def self.class_method; end
+end
+
+==> 004.rb 69 <==
+class C
+  def self.class_method; end
+
+  def instance_method; end
+end
+
+==> 005.rb 57 <==
+class C
+  def self.class_method; end
+
+  macro_method
+end
+
+==> 006.rb 12 <==
+class C
+end
+
+==> 007.rb 45 <==
+class C < B
+  def self.class_method; end
+end
+
+==> 008.rb 107 <==
+class C
+  include M
+  def self.class_method; end
+end
+
+class C
+  prepend M
+  def self.class_method; end
+end
+
+==> 009.rb 52 <==
+class C
+  extend M
+  def self.class_method; end
+end
+
+==> 010.rb 42 <==
+module C
+  def self.class_method; end
+end
+
+==> 011/current.rb 40 <==
+class Tools
+  def self.hammer
+  end
+end
+

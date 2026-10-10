@@ -1,0 +1,382 @@
+==> .rubocop.yml 163 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/IndentationConsistency:
+  EnforcedStyle: normal
+
+==> 000.rb 6 <==
+"#{}"
+
+==> 001.rb 20 <==
+public
+
+def foo
+end
+
+==> 002.rb 24 <==
+public
+
+  def foo
+  end
+
+==> 003.rb 25 <==
+if cond
+ func
+  func
+end
+
+==> 004.rb 40 <==
+if cond
+  func1
+else
+ func2
+  func2
+end
+
+==> 005.rb 40 <==
+if a1
+  b1
+elsif a2
+ b2
+b3
+else
+  c
+end
+
+==> 006.rb 33 <==
+if cond then func1 else func2 end
+==> 007.rb 38 <==
+if a1
+  b1
+elsif a2
+  b2
+else
+  c
+end
+
+==> 008.rb 180 <==
+if    @io == $stdout then str << "$stdout"
+elsif @io == $stdin  then str << "$stdin"
+elsif @io == $stderr then str << "$stderr"
+else                      str << @io.class.to_s
+end
+
+==> 009.rb 77 <==
+if File.exist?('config.save')
+then ConfigTable.load
+else ConfigTable.new
+end
+
+==> 010.rb 74 <==
+p 'Ｒｕｂｙ', if a then b
+                        c
+              end
+
+==> 011.rb 14 <==
+if a
+else
+end
+
+==> 012.rb 140 <==
+var = if a
+  0
+end
+@var = if a
+  0
+end
+$var = if a
+  0
+end
+var ||= if a
+  0
+end
+var &&= if a
+  0
+end
+var -= if a
+  0
+end
+VAR = if a
+  0
+end
+
+==> 013.rb 28 <==
+var = if a
+  0
+else
+  1
+end
+
+==> 014.rb 41 <==
+var = if a
+  0
+else
+  1
+end.abc.join("")
+
+==> 015.rb 39 <==
+var = if a
+  0
+else
+  1
+end.abc.tap {}
+
+==> 016.rb 31 <==
+var = if a
+        0
+      end
+
+==> 017.rb 52 <==
+var = if a
+        0
+      else
+        1
+      end
+
+==> 018.rb 38 <==
+var =
+  if a
+    0
+  else
+    1
+  end
+
+==> 019.rb 44 <==
+if a
+  a rescue nil
+else
+  a rescue nil
+end
+
+==> 020.rb 29 <==
+unless cond
+ func
+  func
+end
+
+==> 021.rb 18 <==
+unless a
+else
+end
+
+==> 022.rb 27 <==
+case a
+when b
+ c
+    d
+end
+
+==> 023.rb 47 <==
+case a
+when b
+  c
+when d
+  e
+else
+   f
+  g
+end
+
+==> 024.rb 42 <==
+case a
+when b
+  c
+  c
+when d
+else
+  f
+end
+
+==> 025.rb 161 <==
+case sexp.loc.keyword.source
+when 'if'     then cond, body, _else = *sexp
+when 'unless' then cond, _else, body = *sexp
+else               cond, body = *sexp
+end
+
+==> 026.rb 74 <==
+case sexp.loc.keyword.source
+when 'if'
+then cond, body, _else = *sexp
+end
+
+==> 027.rb 149 <==
+case code_type
+  when 'ruby', 'sql', 'plain'
+    code_type
+  when 'erb'
+    'ruby; html-script: true'
+  when "html"
+    'xml'
+  else
+    'plain'
+end
+
+==> 028.rb 28 <==
+while cond
+ func
+  func
+end
+
+==> 029.rb 49 <==
+something = begin
+ func1
+   func2
+end while cond
+
+==> 030.rb 28 <==
+until cond
+ func
+  func
+end
+
+==> 031.rb 12 <==
+while a
+end
+
+==> 032.rb 32 <==
+for var in 1..10
+ func
+func
+end
+
+==> 033.rb 21 <==
+for var in 1..10
+end
+
+==> 034.rb 34 <==
+def test
+    func1
+     func2
+end
+
+==> 035.rb 35 <==
+def self.test
+   func
+    func
+end
+
+==> 036.rb 13 <==
+def test
+end
+
+==> 037.rb 18 <==
+def self.test
+end
+
+==> 038.rb 55 <==
+class Test
+    def func1
+    end
+  def func2
+  end
+end
+
+==> 039.rb 15 <==
+class Test
+end
+
+==> 040.rb 93 <==
+class Test
+  public
+
+  def e
+  end
+
+  protected
+
+  def f
+  end
+
+  private
+
+  def g
+  end
+end
+
+==> 041.rb 85 <==
+class Test
+public
+
+  def e
+  end
+
+protected
+
+  def f
+  end
+
+private
+
+ def g
+ end
+end
+
+==> 042.rb 62 <==
+module Test
+    def func1
+    end
+     def func2
+     end
+end
+
+==> 043.rb 16 <==
+module Test
+end
+
+==> 044.rb 63 <==
+module Test
+  def pub
+  end
+  private
+    def priv
+    end
+end
+
+==> 045.rb 47 <==
+module Test
+  private
+    def priv
+    end
+end
+
+==> 046.rb 23 <==
+a = func do
+ b
+  c
+end
+
+==> 047.rb 18 <==
+func {
+   b
+  c
+}
+
+==> 048.rb 24 <==
+a = func do
+  b
+  c
+end
+
+==> 049.rb 16 <==
+a = func do
+end
+
+==> 050.rb 253 <==
+require 'spec_helper'
+describe ArticlesController do
+  render_views
+    describe "GET 'index'" do
+            it "returns success" do
+            end
+        describe "admin user" do
+             before(:each) do
+            end
+        end
+    end
+end
+

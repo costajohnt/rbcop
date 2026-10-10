@@ -1,0 +1,35 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/MissingCopEnableDirective:
+  MaxRangeSize: .inf
+
+==> 000.rb 112 <==
+def test
+  # rubocop:push
+  # rubocop:disable Style/RescueStandardError
+rescue => e
+  print e
+end
+# rubocop:pop
+
+==> 001.rb 89 <==
+# rubocop:push
+# rubocop:disable Layout/SpaceAroundOperators
+x =   0
+# rubocop:pop
+y = 1
+
+==> 002.rb 69 <==
+# rubocop:push
+# rubocop:disable Layout/SpaceAroundOperators
+x =   0
+
+==> 003.rb 52 <==
+# rubocop:push -Layout/SpaceAroundOperators
+x =   0
+

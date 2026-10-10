@@ -1,0 +1,9 @@
+==> offenses exit=1 170 <==
+000.rb:1:3: C: [Correctable] Style/CommentAnnotation: Annotation keywords like `ISSUE` should be all upper case, followed by a space, then a note describing the problem.
+
+==> autocorrect exit=0 168 <==
+000.rb:1:3: C: [Corrected] Style/CommentAnnotation: Annotation keywords like `ISSUE` should be all upper case, followed by a space, then a note describing the problem.
+
+==> corrected/000.rb 20 <==
+# ISSUE wrong order
+

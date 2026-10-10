@@ -1,0 +1,27 @@
+==> .rubocop.yml 197 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/StringLiterals:
+  ConsistentQuotesInMultiline: true
+  EnforcedStyle: double_quotes
+
+==> 000.rb 14 <==
+"abc" \
+"def"
+
+==> 001.rb 14 <==
+'abc' \
+"def"
+
+==> 002.rb 14 <==
+'abs' \
+'def'
+
+==> 003.rb 15 <==
+'abc"' \
+'def'
+

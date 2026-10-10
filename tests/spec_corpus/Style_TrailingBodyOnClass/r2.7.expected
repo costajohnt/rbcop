@@ -1,0 +1,56 @@
+==> offenses exit=1 872 <==
+000.rb:1:12: C: [Correctable] Style/TrailingBodyOnClass: Place the first line of class body on its own line.
+000.rb:3:11: C: [Correctable] Style/TrailingBodyOnClass: Place the first line of class body on its own line.
+000.rb:5:12: C: [Correctable] Style/TrailingBodyOnClass: Place the first line of class body on its own line.
+000.rb:7:11: C: [Correctable] Style/TrailingBodyOnClass: Place the first line of class body on its own line.
+001.rb:1:16: C: [Correctable] Style/TrailingBodyOnClass: Place the first line of class body on its own line.
+001.rb:3:16: C: [Correctable] Style/TrailingBodyOnClass: Place the first line of class body on its own line.
+002.rb:1:12: C: [Correctable] Style/TrailingBodyOnClass: Place the first line of class body on its own line.
+005.rb:1:15: C: [Correctable] Style/TrailingBodyOnClass: Place the first line of class body on its own line.
+
+==> autocorrect exit=0 856 <==
+000.rb:1:12: C: [Corrected] Style/TrailingBodyOnClass: Place the first line of class body on its own line.
+000.rb:3:11: C: [Corrected] Style/TrailingBodyOnClass: Place the first line of class body on its own line.
+000.rb:5:12: C: [Corrected] Style/TrailingBodyOnClass: Place the first line of class body on its own line.
+000.rb:7:11: C: [Corrected] Style/TrailingBodyOnClass: Place the first line of class body on its own line.
+001.rb:1:16: C: [Corrected] Style/TrailingBodyOnClass: Place the first line of class body on its own line.
+001.rb:3:16: C: [Corrected] Style/TrailingBodyOnClass: Place the first line of class body on its own line.
+002.rb:1:12: C: [Corrected] Style/TrailingBodyOnClass: Place the first line of class body on its own line.
+005.rb:1:15: C: [Corrected] Style/TrailingBodyOnClass: Place the first line of class body on its own line.
+
+==> corrected/000.rb 104 <==
+class Foo 
+  body
+end
+class Foo 
+  body
+end
+class Bar 
+  def bar; end
+end
+class Bar 
+  def bar; end
+end
+
+==> corrected/001.rb 60 <==
+class << self 
+  body
+end
+class << self 
+  def bar; end
+end
+
+==> corrected/002.rb 46 <==
+class Foo 
+  body
+  def bar
+    qux
+  end
+end
+
+==> corrected/005.rb 35 <==
+# comment
+class BarQux 
+  foo 
+end
+

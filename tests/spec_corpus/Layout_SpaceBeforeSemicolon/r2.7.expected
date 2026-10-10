@@ -1,0 +1,21 @@
+==> offenses exit=1 264 <==
+000.rb:1:6: C: [Correctable] Layout/SpaceBeforeSemicolon: Space found before semicolon.
+002.rb:1:6: C: [Correctable] Layout/SpaceBeforeSemicolon: Space found before semicolon.
+007.rb:1:7: C: [Correctable] Layout/SpaceBeforeSemicolon: Space found before semicolon.
+
+==> autocorrect exit=0 258 <==
+000.rb:1:6: C: [Corrected] Layout/SpaceBeforeSemicolon: Space found before semicolon.
+002.rb:1:6: C: [Corrected] Layout/SpaceBeforeSemicolon: Space found before semicolon.
+007.rb:1:7: C: [Corrected] Layout/SpaceBeforeSemicolon: Space found before semicolon.
+
+==> corrected/000.rb 13 <==
+x = 1; y = 2
+
+==> corrected/002.rb 13 <==
+x = 1; y = 2
+
+==> corrected/007.rb 25 <==
+<<~STR; x = 1
+  text
+STR
+

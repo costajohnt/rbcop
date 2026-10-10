@@ -1,0 +1,24 @@
+==> .rubocop.yml 178 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/MultilineHashKeyLineBreaks:
+  AllowMultilineFinalElement: true
+
+==> 000.rb 26 <==
+{foo: 1, bar: {
+  a: 1
+}}
+
+==> 001.rb 35 <==
+{foo: 1, bar: {
+  a: 1,
+}, baz: 3}
+
+==> 002.rb 27 <==
+{foo: 1, bar: 2,
+  baz: 3}
+

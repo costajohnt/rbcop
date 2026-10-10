@@ -1,0 +1,44 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 19 <==
+[foo.min, foo.max]
+
+==> 001.rb 19 <==
+[foo.min, bar.max]
+
+==> 002.rb 28 <==
+[foo.min, foo.baz, foo.max]
+
+==> 003.rb 11 <==
+[min, max]
+
+==> 004.rb 23 <==
+bar = foo.min, foo.max
+
+==> 005.rb 23 <==
+baz = foo.min, bar.max
+
+==> 006.rb 32 <==
+bar = foo.min, foo.baz, foo.max
+
+==> 007.rb 15 <==
+bar = min, max
+
+==> 008.rb 24 <==
+return foo.min, foo.max
+
+==> 009.rb 24 <==
+return foo.min, bar.max
+
+==> 010.rb 33 <==
+return foo.min, foo.baz, foo.max
+
+==> 011.rb 16 <==
+return min, max
+

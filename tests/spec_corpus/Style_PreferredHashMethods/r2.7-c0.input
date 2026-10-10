@@ -1,0 +1,23 @@
+==> .rubocop.yml 159 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/PreferredHashMethods:
+  EnforcedStyle: short
+
+==> 000.rb 14 <==
+o.has_key?(o)
+
+==> 001.rb 10 <==
+o.has_key?
+==> 002.rb 16 <==
+o.has_value?(o)
+
+==> 003.rb 17 <==
+o&.has_value?(o)
+
+==> 004.rb 12 <==
+o.has_value?

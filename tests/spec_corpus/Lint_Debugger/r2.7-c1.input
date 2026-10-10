@@ -1,0 +1,15 @@
+==> .rubocop.yml 176 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/Debugger:
+  DebuggerMethods:
+    Custom:
+    - custom_debugger
+
+==> 000.rb 16 <==
+custom_debugger
+

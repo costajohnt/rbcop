@@ -1,0 +1,14 @@
+==> offenses exit=1 184 <==
+000.rb:1:7: C: [Correctable] Style/RedundantSortBy: Use `sort` instead of `sort_by { it }`.
+001.rb:1:8: C: [Correctable] Style/RedundantSortBy: Use `sort` instead of `sort_by { it }`.
+
+==> autocorrect exit=0 180 <==
+000.rb:1:7: C: [Corrected] Style/RedundantSortBy: Use `sort` instead of `sort_by { it }`.
+001.rb:1:8: C: [Corrected] Style/RedundantSortBy: Use `sort` instead of `sort_by { it }`.
+
+==> corrected/000.rb 11 <==
+array.sort
+
+==> corrected/001.rb 12 <==
+array&.sort
+

@@ -1,0 +1,65 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/BlockAlignment:
+  EnforcedStyleAlignWith: start_of_line
+
+==> 000.rb 31 <==
+foo.bar
+  .each do
+    baz
+end
+
+==> 001.rb 33 <==
+foo.bar
+  .each do
+    baz
+  end
+
+==> 002.rb 24 <==
+foo :x, ->(y) {
+  bar
+}
+
+==> 003.rb 22 <==
+foo :x, bar {
+  baz
+}
+
+==> 004.rb 26 <==
+foo :x, ->(y) {
+  bar
+  }
+
+==> 005.rb 35 <==
+def foo
+  bar do
+    baz
+  end
+end
+
+==> 006.rb 33 <==
+def foo
+  bar do
+    baz
+end
+end
+
+==> 007.rb 40 <==
+def self.foo
+  bar do
+    baz
+  end
+end
+
+==> 008.rb 38 <==
+def self.foo
+  bar do
+    baz
+end
+end
+

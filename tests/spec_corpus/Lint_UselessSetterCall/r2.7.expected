@@ -1,0 +1,68 @@
+==> offenses exit=1 708 <==
+000.rb:3:3: W: [Correctable] Lint/UselessSetterCall: Useless setter call to local variable `top`.
+001.rb:3:3: W: [Correctable] Lint/UselessSetterCall: Useless setter call to local variable `top`.
+002.rb:3:3: W: [Correctable] Lint/UselessSetterCall: Useless setter call to local variable `top`.
+013.rb:3:3: W: [Correctable] Lint/UselessSetterCall: Useless setter call to local variable `some_lvar`.
+015.rb:4:3: W: [Correctable] Lint/UselessSetterCall: Useless setter call to local variable `some_lvar`.
+016.rb:3:3: W: [Correctable] Lint/UselessSetterCall: Useless setter call to local variable `some_arg`.
+017.rb:3:3: W: [Correctable] Lint/UselessSetterCall: Useless setter call to local variable `some_arg`.
+
+==> autocorrect exit=0 694 <==
+000.rb:3:3: W: [Corrected] Lint/UselessSetterCall: Useless setter call to local variable `top`.
+001.rb:3:3: W: [Corrected] Lint/UselessSetterCall: Useless setter call to local variable `top`.
+002.rb:3:3: W: [Corrected] Lint/UselessSetterCall: Useless setter call to local variable `top`.
+013.rb:3:3: W: [Corrected] Lint/UselessSetterCall: Useless setter call to local variable `some_lvar`.
+015.rb:4:3: W: [Corrected] Lint/UselessSetterCall: Useless setter call to local variable `some_lvar`.
+016.rb:3:3: W: [Corrected] Lint/UselessSetterCall: Useless setter call to local variable `some_arg`.
+017.rb:3:3: W: [Corrected] Lint/UselessSetterCall: Useless setter call to local variable `some_arg`.
+
+==> corrected/000.rb 50 <==
+def test
+  top = Top.new
+  top.attr = 5
+  top
+end
+
+==> corrected/001.rb 54 <==
+def Top.test
+  top = Top.new
+  top.attr = 5
+  top
+end
+
+==> corrected/002.rb 52 <==
+def test
+  top = Top.new
+  top[:attr] = 5
+  top
+end
+
+==> corrected/013.rb 100 <==
+def test(some_arg)
+  _first, some_lvar, _third  = do_something
+  some_lvar.attr = 5
+  some_lvar
+end
+
+==> corrected/015.rb 103 <==
+def test(some_arg)
+  some_lvar = some_arg
+  some_lvar += some_arg
+  some_lvar.attr = 5
+  some_lvar
+end
+
+==> corrected/016.rb 75 <==
+def test(some_arg)
+  some_arg = Top.new
+  some_arg.attr = 5
+  some_arg
+end
+
+==> corrected/017.rb 62 <==
+def test
+  some_arg = {}
+  some_arg[:attr] = 1
+  some_arg
+end
+

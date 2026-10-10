@@ -1,0 +1,69 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 26 <==
+a do
+  b
+end.c do
+  d
+end
+
+==> 001.rb 27 <==
+a do
+  b
+end&.c do
+  d
+end
+
+==> 002.rb 30 <==
+a do
+  b
+end.c1.c2 do
+  d
+end
+
+==> 003.rb 32 <==
+a do
+  _1
+end.c1.c2 do
+  _1
+end
+
+==> 004.rb 39 <==
+a do
+  b
+end.c do
+  d
+end.e do
+  f
+end
+
+==> 005.rb 74 <==
+Thread.list.find_all { |t|
+  t.alive?
+}.map { |thread| thread.object_id }
+
+==> 006.rb 64 <==
+Thread.list.find_all { |t| t.alive? }.map { |t|
+  t.object_id
+}
+
+==> 007.rb 38 <==
+a { b }.c { d }
+w do x end.y do z end
+
+==> 008.rb 17 <==
+a do
+  b
+end.c.d
+
+==> 009.rb 20 <==
+a1.a2.a3 do
+  b
+end
+

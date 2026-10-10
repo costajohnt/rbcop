@@ -1,0 +1,33 @@
+==> offenses exit=1 525 <==
+001.rb:1:1: C: [Correctable] Style/SymbolArray: Use `[:one, :two, :three]` for an array of symbols.
+002.rb:1:1: C: [Correctable] Style/SymbolArray: Use `[]` for an array of symbols.
+003.rb:1:1: C: [Correctable] Style/SymbolArray: Use `[:one, :@two, :$three, :'four-five']` for an array of symbols.
+004.rb:1:1: C: [Correctable] Style/SymbolArray: Use an array literal `[...]` for an array of symbols.
+005.rb:1:1: C: [Correctable] Style/SymbolArray: Use `[:"#{foo}", :"#{foo}bar", :"foo#{bar}", :foo]` for an array of symbols.
+
+==> autocorrect exit=0 515 <==
+001.rb:1:1: C: [Corrected] Style/SymbolArray: Use `[:one, :two, :three]` for an array of symbols.
+002.rb:1:1: C: [Corrected] Style/SymbolArray: Use `[]` for an array of symbols.
+003.rb:1:1: C: [Corrected] Style/SymbolArray: Use `[:one, :@two, :$three, :'four-five']` for an array of symbols.
+004.rb:1:1: C: [Corrected] Style/SymbolArray: Use an array literal `[...]` for an array of symbols.
+005.rb:1:1: C: [Corrected] Style/SymbolArray: Use `[:"#{foo}", :"#{foo}bar", :"foo#{bar}", :foo]` for an array of symbols.
+
+==> corrected/001.rb 21 <==
+[:one, :two, :three]
+
+==> corrected/002.rb 3 <==
+[]
+
+==> corrected/003.rb 37 <==
+[:one, :@two, :$three, :'four-five']
+
+==> corrected/004.rb 29 <==
+[
+  :one,
+  :two,
+  :three
+]
+
+==> corrected/005.rb 46 <==
+[:"#{foo}", :"#{foo}bar", :"foo#{bar}", :foo]
+

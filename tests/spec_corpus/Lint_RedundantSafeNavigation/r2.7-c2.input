@@ -1,0 +1,14 @@
+==> .rubocop.yml 167 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/RedundantSafeNavigation:
+  InferNonNilReceiver: false
+
+==> 000.rb 17 <==
+foo.bar
+foo&.baz
+

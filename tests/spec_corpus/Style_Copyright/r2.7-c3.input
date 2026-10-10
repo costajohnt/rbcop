@@ -1,0 +1,18 @@
+==> .rubocop.yml 226 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/Copyright:
+  Notice: "^# Copyright (\\(c\\) )?2[0-9]{3} .+"
+  AutocorrectNotice: "# Copyright (c) 2026 My Name"
+
+==> 000.rb 48 <==
+# Copyright (c) 2026 My Name
+puts 'Hello world'
+
+==> 001.rb 19 <==
+puts 'Hello world'
+

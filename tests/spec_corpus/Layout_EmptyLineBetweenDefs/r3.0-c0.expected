@@ -1,0 +1,58 @@
+==> offenses exit=1 702 <==
+000.rb:2:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+001.rb:4:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+002.rb:4:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+003.rb:2:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+004.rb:2:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+005.rb:2:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+
+==> autocorrect exit=0 690 <==
+000.rb:2:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+001.rb:4:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+002.rb:4:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+003.rb:2:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+004.rb:2:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+005.rb:2:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+
+==> corrected/000.rb 31 <==
+def foo() = x
+
+def bar
+  y
+end
+
+==> corrected/001.rb 48 <==
+def foo = <<~TEXT
+  hello
+TEXT
+
+def bar
+  y
+end
+
+==> corrected/002.rb 31 <==
+def foo
+  x
+end
+
+def bar() = y
+
+==> corrected/003.rb 34 <==
+def self.foo = x
+
+def bar
+  y
+end
+
+==> corrected/004.rb 39 <==
+def self.foo = x
+
+def self.bar
+  y
+end
+
+==> corrected/005.rb 29 <==
+def foo() = x
+
+def bar() = y
+

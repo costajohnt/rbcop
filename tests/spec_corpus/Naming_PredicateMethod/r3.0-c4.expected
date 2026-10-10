@@ -1,0 +1,8 @@
+==> offenses exit=1 174 <==
+000.rb:1:5: C: Naming/PredicateMethod: Predicate method names should end with `?`.
+001.rb:1:5: C: Naming/PredicateMethod: Non-predicate method names should not end with `?`.
+
+==> autocorrect exit=1 174 <==
+000.rb:1:5: C: Naming/PredicateMethod: Predicate method names should end with `?`.
+001.rb:1:5: C: Naming/PredicateMethod: Non-predicate method names should not end with `?`.
+

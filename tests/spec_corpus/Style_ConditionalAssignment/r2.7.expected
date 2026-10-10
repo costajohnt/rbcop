@@ -1,0 +1,502 @@
+==> offenses exit=1 7260 <==
+318.rb:6:3: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+323.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+326.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+328.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+329.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+330.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+331.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+332.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+333.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+334.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+335.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+336.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+337.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+338.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+339.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+340.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+341.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+342.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+343.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+344.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+345.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+346.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+347.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+348.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+349.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+350.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+351.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+352.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+353.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+354.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+355.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+356.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+357.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+358.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+359.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+360.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+361.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+362.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+363.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+364.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+365.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+366.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+367.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+368.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+369.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+370.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+371.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+372.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+373.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+374.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+375.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+376.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+377.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+396.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+398.rb:1:1: C: [Correctable] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+
+==> autocorrect exit=0 7280 <==
+318.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+318.rb:6:3: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+323.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+326.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+328.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+329.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+330.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+331.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+332.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+333.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+334.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+335.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+336.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+337.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+338.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+339.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+340.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+341.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+342.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+343.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+344.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+345.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+346.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+347.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+348.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+349.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+350.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+351.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+352.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+353.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+354.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+355.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+356.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+357.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+358.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+359.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+360.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+361.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+362.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+363.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+364.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+365.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+366.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+367.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+368.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+369.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+370.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+371.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+372.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+373.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+374.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+375.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+376.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+377.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+396.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+398.rb:1:1: C: [Corrected] Style/ConditionalAssignment: Use the return of the conditional for variable assignment and comparison.
+
+==> corrected/318.rb 191 <==
+@errors << if var.any?(:prob_a_check)
+  'Problem A'
+elsif var.any?(:prob_a_check)
+  'Problem B'
+else
+  if var.all?(:save)
+    'Save failed'
+  else
+    'Other'
+             end
+           end
+
+==> corrected/323.rb 23 <==
+bar = foo? ? "a" : "b"
+
+==> corrected/326.rb 86 <==
+default['key-with-dash'] << if condition
+  a
+else
+  b
+                            end
+
+==> corrected/328.rb 22 <==
+bar == (foo? ? 1 : 2)
+
+==> corrected/329.rb 48 <==
+a == if foo
+  b
+elsif bar
+  c
+else
+  d
+     end
+
+==> corrected/330.rb 38 <==
+a == unless foo
+  b
+else
+  d
+     end
+
+==> corrected/331.rb 45 <==
+a == case foo
+when bar
+  b
+else
+  d
+     end
+
+==> corrected/332.rb 43 <==
+a == case foo
+in bar
+  b
+else
+  d
+     end
+
+==> corrected/333.rb 22 <==
+bar != (foo? ? 1 : 2)
+
+==> corrected/334.rb 48 <==
+a != if foo
+  b
+elsif bar
+  c
+else
+  d
+     end
+
+==> corrected/335.rb 38 <==
+a != unless foo
+  b
+else
+  d
+     end
+
+==> corrected/336.rb 45 <==
+a != case foo
+when bar
+  b
+else
+  d
+     end
+
+==> corrected/337.rb 43 <==
+a != case foo
+in bar
+  b
+else
+  d
+     end
+
+==> corrected/338.rb 22 <==
+bar =~ (foo? ? 1 : 2)
+
+==> corrected/339.rb 48 <==
+a =~ if foo
+  b
+elsif bar
+  c
+else
+  d
+     end
+
+==> corrected/340.rb 38 <==
+a =~ unless foo
+  b
+else
+  d
+     end
+
+==> corrected/341.rb 45 <==
+a =~ case foo
+when bar
+  b
+else
+  d
+     end
+
+==> corrected/342.rb 43 <==
+a =~ case foo
+in bar
+  b
+else
+  d
+     end
+
+==> corrected/343.rb 22 <==
+bar !~ (foo? ? 1 : 2)
+
+==> corrected/344.rb 48 <==
+a !~ if foo
+  b
+elsif bar
+  c
+else
+  d
+     end
+
+==> corrected/345.rb 38 <==
+a !~ unless foo
+  b
+else
+  d
+     end
+
+==> corrected/346.rb 45 <==
+a !~ case foo
+when bar
+  b
+else
+  d
+     end
+
+==> corrected/347.rb 43 <==
+a !~ case foo
+in bar
+  b
+else
+  d
+     end
+
+==> corrected/348.rb 23 <==
+bar <=> (foo? ? 1 : 2)
+
+==> corrected/349.rb 50 <==
+a <=> if foo
+  b
+elsif bar
+  c
+else
+  d
+      end
+
+==> corrected/350.rb 40 <==
+a <=> unless foo
+  b
+else
+  d
+      end
+
+==> corrected/351.rb 47 <==
+a <=> case foo
+when bar
+  b
+else
+  d
+      end
+
+==> corrected/352.rb 45 <==
+a <=> case foo
+in bar
+  b
+else
+  d
+      end
+
+==> corrected/353.rb 23 <==
+bar === (foo? ? 1 : 2)
+
+==> corrected/354.rb 50 <==
+a === if foo
+  b
+elsif bar
+  c
+else
+  d
+      end
+
+==> corrected/355.rb 40 <==
+a === unless foo
+  b
+else
+  d
+      end
+
+==> corrected/356.rb 47 <==
+a === case foo
+when bar
+  b
+else
+  d
+      end
+
+==> corrected/357.rb 45 <==
+a === case foo
+in bar
+  b
+else
+  d
+      end
+
+==> corrected/358.rb 22 <==
+bar <= (foo? ? 1 : 2)
+
+==> corrected/359.rb 48 <==
+a <= if foo
+  b
+elsif bar
+  c
+else
+  d
+     end
+
+==> corrected/360.rb 38 <==
+a <= unless foo
+  b
+else
+  d
+     end
+
+==> corrected/361.rb 45 <==
+a <= case foo
+when bar
+  b
+else
+  d
+     end
+
+==> corrected/362.rb 43 <==
+a <= case foo
+in bar
+  b
+else
+  d
+     end
+
+==> corrected/363.rb 22 <==
+bar >= (foo? ? 1 : 2)
+
+==> corrected/364.rb 48 <==
+a >= if foo
+  b
+elsif bar
+  c
+else
+  d
+     end
+
+==> corrected/365.rb 38 <==
+a >= unless foo
+  b
+else
+  d
+     end
+
+==> corrected/366.rb 45 <==
+a >= case foo
+when bar
+  b
+else
+  d
+     end
+
+==> corrected/367.rb 43 <==
+a >= case foo
+in bar
+  b
+else
+  d
+     end
+
+==> corrected/368.rb 21 <==
+bar < (foo? ? 1 : 2)
+
+==> corrected/369.rb 46 <==
+a < if foo
+  b
+elsif bar
+  c
+else
+  d
+    end
+
+==> corrected/370.rb 36 <==
+a < unless foo
+  b
+else
+  d
+    end
+
+==> corrected/371.rb 43 <==
+a < case foo
+when bar
+  b
+else
+  d
+    end
+
+==> corrected/372.rb 41 <==
+a < case foo
+in bar
+  b
+else
+  d
+    end
+
+==> corrected/373.rb 21 <==
+bar > (foo? ? 1 : 2)
+
+==> corrected/374.rb 46 <==
+a > if foo
+  b
+elsif bar
+  c
+else
+  d
+    end
+
+==> corrected/375.rb 36 <==
+a > unless foo
+  b
+else
+  d
+    end
+
+==> corrected/376.rb 43 <==
+a > case foo
+when bar
+  b
+else
+  d
+    end
+
+==> corrected/377.rb 41 <==
+a > case foo
+in bar
+  b
+else
+  d
+    end
+
+==> corrected/396.rb 178 <==
+bar = if foo
+  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+else
+  bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+      end
+
+==> corrected/398.rb 111 <==
+bar = if aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  1
+else
+  2
+      end
+

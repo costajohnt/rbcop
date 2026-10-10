@@ -1,0 +1,11 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.3
+
+==> 000.rb 16 <==
+foo { puts it }
+

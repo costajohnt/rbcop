@@ -1,0 +1,25 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.6
+Style/Semicolon:
+  AllowAsExpressionSeparator: false
+
+==> 000.rb 6 <==
+42..;
+
+==> 001.rb 13 <==
+42..;
+42...;
+
+==> 002.rb 20 <==
+def foo
+  42..;
+end
+
+==> 003.rb 5 <==
+42..
+

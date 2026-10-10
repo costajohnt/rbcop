@@ -1,0 +1,95 @@
+==> offenses exit=1 1846 <==
+000.rb:2:3: C: [Correctable] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+004.rb:2:1: C: [Correctable] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+007.rb:2:3: C: [Correctable] Layout/DotPosition: Place the &. on the previous line, together with the method call receiver.
+009.rb:2:3: C: [Correctable] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+009.rb:5:3: C: [Correctable] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+010.rb:2:3: C: [Correctable] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+010.rb:5:3: C: [Correctable] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+011.rb:2:3: C: [Correctable] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+011.rb:5:3: C: [Correctable] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+012.rb:2:3: C: [Correctable] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+012.rb:5:3: C: [Correctable] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+013.rb:2:3: C: [Correctable] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+013.rb:7:3: C: [Correctable] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+015.rb:4:3: C: [Correctable] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+016.rb:4:3: C: [Correctable] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+
+==> autocorrect exit=0 1816 <==
+000.rb:2:3: C: [Corrected] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+004.rb:2:1: C: [Corrected] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+007.rb:2:3: C: [Corrected] Layout/DotPosition: Place the &. on the previous line, together with the method call receiver.
+009.rb:2:3: C: [Corrected] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+009.rb:5:3: C: [Corrected] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+010.rb:2:3: C: [Corrected] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+010.rb:5:3: C: [Corrected] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+011.rb:2:3: C: [Corrected] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+011.rb:5:3: C: [Corrected] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+012.rb:2:3: C: [Corrected] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+012.rb:5:3: C: [Corrected] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+013.rb:2:3: C: [Corrected] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+013.rb:7:3: C: [Corrected] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+015.rb:4:3: C: [Corrected] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+016.rb:4:3: C: [Corrected] Layout/DotPosition: Place the . on the previous line, together with the method call receiver.
+
+==> corrected/000.rb 25 <==
+something.
+  method_name
+
+==> corrected/004.rb 7 <==
+l.
+(1)
+
+==> corrected/007.rb 26 <==
+something&.
+  method_name
+
+==> corrected/009.rb 70 <==
+my_method.
+  something(<<~HERE).
+    something
+  HERE
+  somethingelse
+
+==> corrected/010.rb 73 <==
+my_method.
+  something(<<~HERE).
+    #{something}
+  HERE
+  somethingelse
+
+==> corrected/011.rb 69 <==
+my_method.
+  something(<<~`HERE`).
+    ls -la
+  HERE
+  somethingelse
+
+==> corrected/012.rb 79 <==
+my_method.
+  something(<<~HERE, true).
+    #{something}
+  HERE
+  somethingelse
+
+==> corrected/013.rb 106 <==
+my_method.
+  something(<<~HERE, <<~THERE).
+    something
+  HERE
+    another thing
+  THERE
+  somethingelse
+
+==> corrected/015.rb 46 <==
+<<~HEREDOC.
+  something
+HEREDOC
+  method_name
+
+==> corrected/016.rb 45 <==
+<<~`HEREDOC`.
+  ls -la
+HEREDOC
+  method_name
+

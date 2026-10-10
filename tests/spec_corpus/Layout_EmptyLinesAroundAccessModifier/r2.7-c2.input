@@ -1,0 +1,80 @@
+==> .rubocop.yml 234 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/EmptyLinesAroundAccessModifier:
+  EnforcedStyle: around
+Layout/EmptyLinesAroundBlockBody:
+  EnforcedStyle: empty_lines
+
+==> 000.rb 28 <==
+Module.new do
+  private
+end
+
+==> 001.rb 34 <==
+Module.new do
+  private
+  foo
+end
+
+==> 002.rb 34 <==
+Module.new do
+  foo
+  private
+end
+
+==> 003.rb 30 <==
+Module.new do
+  protected
+end
+
+==> 004.rb 36 <==
+Module.new do
+  protected
+  foo
+end
+
+==> 005.rb 36 <==
+Module.new do
+  foo
+  protected
+end
+
+==> 006.rb 27 <==
+Module.new do
+  public
+end
+
+==> 007.rb 33 <==
+Module.new do
+  public
+  foo
+end
+
+==> 008.rb 33 <==
+Module.new do
+  foo
+  public
+end
+
+==> 009.rb 36 <==
+Module.new do
+  module_function
+end
+
+==> 010.rb 42 <==
+Module.new do
+  module_function
+  foo
+end
+
+==> 011.rb 42 <==
+Module.new do
+  foo
+  module_function
+end
+

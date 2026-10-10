@@ -1,0 +1,316 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 7 <==
+x =- y
+
+==> 001.rb 14 <==
+x -= y
+x = -y
+
+==> 002.rb 8 <==
+@x =- y
+
+==> 003.rb 16 <==
+@x -= y
+@x = -y
+
+==> 004.rb 9 <==
+@@x =- y
+
+==> 005.rb 18 <==
+@@x -= y
+@@x = -y
+
+==> 006.rb 8 <==
+$x =- y
+
+==> 007.rb 16 <==
+$x -= y
+$x = -y
+
+==> 008.rb 7 <==
+X =- y
+
+==> 009.rb 14 <==
+X -= y
+X = -y
+
+==> 010.rb 13 <==
+obj.foo =- y
+
+==> 011.rb 26 <==
+obj.foo -= y
+obj.foo = -y
+
+==> 012.rb 12 <==
+arr[0] =- y
+
+==> 013.rb 24 <==
+arr[0] -= y
+arr[0] = -y
+
+==> 014.rb 16 <==
+hash[:key] =- y
+
+==> 015.rb 32 <==
+hash[:key] -= y
+hash[:key] = -y
+
+==> 016.rb 14 <==
+self.foo =- y
+
+==> 017.rb 28 <==
+self.foo -= y
+self.foo = -y
+
+==> 018.rb 14 <==
+obj&.foo =- y
+
+==> 019.rb 28 <==
+obj&.foo -= y
+obj&.foo = -y
+
+==> 020.rb 10 <==
+h[k] =- y
+
+==> 021.rb 20 <==
+h[k] -= y
+h[k] = -y
+
+==> 022.rb 7 <==
+x =+ y
+
+==> 023.rb 14 <==
+x += y
+x = +y
+
+==> 024.rb 8 <==
+@x =+ y
+
+==> 025.rb 16 <==
+@x += y
+@x = +y
+
+==> 026.rb 9 <==
+@@x =+ y
+
+==> 027.rb 18 <==
+@@x += y
+@@x = +y
+
+==> 028.rb 8 <==
+$x =+ y
+
+==> 029.rb 16 <==
+$x += y
+$x = +y
+
+==> 030.rb 7 <==
+X =+ y
+
+==> 031.rb 14 <==
+X += y
+X = +y
+
+==> 032.rb 13 <==
+obj.foo =+ y
+
+==> 033.rb 26 <==
+obj.foo += y
+obj.foo = +y
+
+==> 034.rb 12 <==
+arr[0] =+ y
+
+==> 035.rb 24 <==
+arr[0] += y
+arr[0] = +y
+
+==> 036.rb 16 <==
+hash[:key] =+ y
+
+==> 037.rb 32 <==
+hash[:key] += y
+hash[:key] = +y
+
+==> 038.rb 14 <==
+self.foo =+ y
+
+==> 039.rb 28 <==
+self.foo += y
+self.foo = +y
+
+==> 040.rb 14 <==
+obj&.foo =+ y
+
+==> 041.rb 28 <==
+obj&.foo += y
+obj&.foo = +y
+
+==> 042.rb 10 <==
+h[k] =+ y
+
+==> 043.rb 20 <==
+h[k] += y
+h[k] = +y
+
+==> 044.rb 7 <==
+x =* y
+
+==> 045.rb 14 <==
+x *= y
+x = *y
+
+==> 046.rb 8 <==
+@x =* y
+
+==> 047.rb 16 <==
+@x *= y
+@x = *y
+
+==> 048.rb 9 <==
+@@x =* y
+
+==> 049.rb 18 <==
+@@x *= y
+@@x = *y
+
+==> 050.rb 8 <==
+$x =* y
+
+==> 051.rb 16 <==
+$x *= y
+$x = *y
+
+==> 052.rb 7 <==
+X =* y
+
+==> 053.rb 14 <==
+X *= y
+X = *y
+
+==> 054.rb 13 <==
+obj.foo =* y
+
+==> 055.rb 26 <==
+obj.foo *= y
+obj.foo = *y
+
+==> 056.rb 12 <==
+arr[0] =* y
+
+==> 057.rb 24 <==
+arr[0] *= y
+arr[0] = *y
+
+==> 058.rb 16 <==
+hash[:key] =* y
+
+==> 059.rb 32 <==
+hash[:key] *= y
+hash[:key] = *y
+
+==> 060.rb 14 <==
+self.foo =* y
+
+==> 061.rb 28 <==
+self.foo *= y
+self.foo = *y
+
+==> 062.rb 14 <==
+obj&.foo =* y
+
+==> 063.rb 28 <==
+obj&.foo *= y
+obj&.foo = *y
+
+==> 064.rb 10 <==
+h[k] =* y
+
+==> 065.rb 20 <==
+h[k] *= y
+h[k] = *y
+
+==> 066.rb 7 <==
+x =! y
+
+==> 067.rb 14 <==
+x != y
+x = !y
+
+==> 068.rb 8 <==
+@x =! y
+
+==> 069.rb 16 <==
+@x != y
+@x = !y
+
+==> 070.rb 9 <==
+@@x =! y
+
+==> 071.rb 18 <==
+@@x != y
+@@x = !y
+
+==> 072.rb 8 <==
+$x =! y
+
+==> 073.rb 16 <==
+$x != y
+$x = !y
+
+==> 074.rb 7 <==
+X =! y
+
+==> 075.rb 14 <==
+X != y
+X = !y
+
+==> 076.rb 13 <==
+obj.foo =! y
+
+==> 077.rb 26 <==
+obj.foo != y
+obj.foo = !y
+
+==> 078.rb 12 <==
+arr[0] =! y
+
+==> 079.rb 24 <==
+arr[0] != y
+arr[0] = !y
+
+==> 080.rb 16 <==
+hash[:key] =! y
+
+==> 081.rb 32 <==
+hash[:key] != y
+hash[:key] = !y
+
+==> 082.rb 14 <==
+self.foo =! y
+
+==> 083.rb 28 <==
+self.foo != y
+self.foo = !y
+
+==> 084.rb 14 <==
+obj&.foo =! y
+
+==> 085.rb 28 <==
+obj&.foo != y
+obj&.foo = !y
+
+==> 086.rb 10 <==
+h[k] =! y
+
+==> 087.rb 20 <==
+h[k] != y
+h[k] = !y
+

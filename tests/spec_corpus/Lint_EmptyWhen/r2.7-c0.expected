@@ -1,0 +1,20 @@
+==> offenses exit=1 552 <==
+000.rb:3:1: W: Lint/EmptyWhen: Avoid `when` branches without a body.
+001.rb:3:1: W: Lint/EmptyWhen: Avoid `when` branches without a body.
+002.rb:3:1: W: Lint/EmptyWhen: Avoid `when` branches without a body.
+003.rb:3:1: W: Lint/EmptyWhen: Avoid `when` branches without a body.
+004.rb:4:1: W: Lint/EmptyWhen: Avoid `when` branches without a body.
+005.rb:4:1: W: Lint/EmptyWhen: Avoid `when` branches without a body.
+006.rb:4:1: W: Lint/EmptyWhen: Avoid `when` branches without a body.
+012.rb:4:1: W: Lint/EmptyWhen: Avoid `when` branches without a body.
+
+==> autocorrect exit=1 552 <==
+000.rb:3:1: W: Lint/EmptyWhen: Avoid `when` branches without a body.
+001.rb:3:1: W: Lint/EmptyWhen: Avoid `when` branches without a body.
+002.rb:3:1: W: Lint/EmptyWhen: Avoid `when` branches without a body.
+003.rb:3:1: W: Lint/EmptyWhen: Avoid `when` branches without a body.
+004.rb:4:1: W: Lint/EmptyWhen: Avoid `when` branches without a body.
+005.rb:4:1: W: Lint/EmptyWhen: Avoid `when` branches without a body.
+006.rb:4:1: W: Lint/EmptyWhen: Avoid `when` branches without a body.
+012.rb:4:1: W: Lint/EmptyWhen: Avoid `when` branches without a body.
+

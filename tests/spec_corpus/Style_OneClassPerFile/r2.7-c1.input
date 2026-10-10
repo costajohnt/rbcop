@@ -1,0 +1,35 @@
+==> .rubocop.yml 167 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/OneClassPerFile:
+  AllowedClasses:
+  - SpecificError
+
+==> 000.rb 39 <==
+class Foo
+end
+
+class SpecificError
+end
+
+==> 001.rb 54 <==
+class Foo
+end
+
+class SpecificError
+end
+
+class Bar
+end
+
+==> 002.rb 40 <==
+class Foo
+end
+
+module SpecificError
+end
+

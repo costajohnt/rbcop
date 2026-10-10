@@ -1,0 +1,54 @@
+==> offenses exit=1 635 <==
+000.rb:1:4: C: [Correctable] Style/ArrayFirstLast: Use `first`.
+001.rb:1:4: C: [Correctable] Style/ArrayFirstLast: Use `last`.
+008.rb:1:5: C: [Correctable] Style/ArrayFirstLast: Use `first`.
+009.rb:1:6: C: [Correctable] Style/ArrayFirstLast: Use `first`.
+010.rb:1:5: C: [Correctable] Style/ArrayFirstLast: Use `first`.
+011.rb:1:6: C: [Correctable] Style/ArrayFirstLast: Use `first`.
+012.rb:1:5: C: [Correctable] Style/ArrayFirstLast: Use `last`.
+013.rb:1:6: C: [Correctable] Style/ArrayFirstLast: Use `last`.
+014.rb:1:5: C: [Correctable] Style/ArrayFirstLast: Use `last`.
+015.rb:1:6: C: [Correctable] Style/ArrayFirstLast: Use `last`.
+
+==> autocorrect exit=0 615 <==
+000.rb:1:4: C: [Corrected] Style/ArrayFirstLast: Use `first`.
+001.rb:1:4: C: [Corrected] Style/ArrayFirstLast: Use `last`.
+008.rb:1:5: C: [Corrected] Style/ArrayFirstLast: Use `first`.
+009.rb:1:6: C: [Corrected] Style/ArrayFirstLast: Use `first`.
+010.rb:1:5: C: [Corrected] Style/ArrayFirstLast: Use `first`.
+011.rb:1:6: C: [Corrected] Style/ArrayFirstLast: Use `first`.
+012.rb:1:5: C: [Corrected] Style/ArrayFirstLast: Use `last`.
+013.rb:1:6: C: [Corrected] Style/ArrayFirstLast: Use `last`.
+014.rb:1:5: C: [Corrected] Style/ArrayFirstLast: Use `last`.
+015.rb:1:6: C: [Corrected] Style/ArrayFirstLast: Use `last`.
+
+==> corrected/000.rb 10 <==
+arr.first
+
+==> corrected/001.rb 9 <==
+arr.last
+
+==> corrected/008.rb 10 <==
+arr.first
+
+==> corrected/009.rb 11 <==
+arr&.first
+
+==> corrected/010.rb 10 <==
+arr.first
+
+==> corrected/011.rb 11 <==
+arr&.first
+
+==> corrected/012.rb 9 <==
+arr.last
+
+==> corrected/013.rb 10 <==
+arr&.last
+
+==> corrected/014.rb 9 <==
+arr.last
+
+==> corrected/015.rb 10 <==
+arr&.last
+

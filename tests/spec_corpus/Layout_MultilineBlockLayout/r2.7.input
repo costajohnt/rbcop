@@ -1,0 +1,162 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 16 <==
+test do foo
+end
+
+==> 001.rb 13 <==
+test { foo
+}
+
+==> 002.rb 20 <==
+test do |x| foo
+end
+
+==> 003.rb 17 <==
+test { |x| foo
+}
+
+==> 004.rb 15 <==
+test do foo end
+==> 005.rb 12 <==
+test { foo }
+==> 006.rb 18 <==
+test do
+  foo
+end
+
+==> 007.rb 158 <==
+some_result = lambda do |
+  so_many,
+  parameters,
+  it_will,
+  be_too_long,
+  for_one_line,
+  line_length,
+  has_increased,
+  add_3_more|
+  do_something
+end
+
+==> 008.rb 157 <==
+some_result = lambda do |
+  so_many,
+  parameters,
+  it_will,
+  be_too_long,
+  for_one_line,
+  line_length,
+  has_increased,
+  add_3_mor|
+  do_something
+end
+
+==> 009.rb 143 <==
+some_result = lambda do
+  |so_many, parameters, it_will, be_too_long, for_one_line, line_length, has_increased, add_3_more|
+  do_something
+end
+
+==> 010.rb 16 <==
+test do |x|
+end
+
+==> 011.rb 15 <==
+test {
+  foo
+}
+
+==> 012.rb 24 <==
+-> (x) do foo
+  bar
+end
+
+==> 013.rb 22 <==
+-> x do foo
+  bar
+end
+
+==> 014.rb 31 <==
+test do
+  |x| play_with(x)
+end
+
+==> 015.rb 18 <==
+test do
+  |x|
+end
+
+==> 016.rb 21 <==
+test do |x,
+  y|
+end
+
+==> 017.rb 29 <==
+test do |foo| bar
+  test
+end
+
+==> 018.rb 25 <==
+x = -> (y) { foo
+  bar
+}
+
+==> 019.rb 29 <==
+foo do |o| (
+    bar
+  )
+end
+
+==> 020.rb 37 <==
+test do |x,
+  y| play_with(x, y)
+end
+
+==> 021.rb 39 <==
+test do |(x,
+  y)| play_with(x, y)
+end
+
+==> 022.rb 38 <==
+def f
+  X.map do |(a,
+  b)|
+  end
+end
+
+==> 023.rb 40 <==
+def f
+  X.map do |
+    a,
+  |
+  end
+end
+
+==> 024.rb 51 <==
+def f
+  X.map do |
+    (((a), b), c)
+  |
+  end
+end
+
+==> 025.rb 39 <==
+test do
+|(x, y)|
+  play_with(x, y)
+end
+
+==> 026.rb 12 <==
+test { _1
+}
+
+==> 027.rb 15 <==
+test do _1
+end
+

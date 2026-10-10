@@ -1,0 +1,329 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 22 <==
+obj.public_send(:foo)
+
+==> 001.rb 23 <==
+obj&.public_send(:foo)
+
+==> 002.rb 31 <==
+obj.public_send(:foo, bar, 42)
+
+==> 003.rb 32 <==
+obj&.public_send(:foo, bar, 42)
+
+==> 004.rb 30 <==
+obj.public_send :foo, bar, 42
+
+==> 005.rb 31 <==
+obj&.public_send :foo, bar, 42
+
+==> 006.rb 18 <==
+public_send(:foo)
+
+==> 007.rb 23 <==
+obj.public_send('foo')
+
+==> 008.rb 24 <==
+obj&.public_send('foo')
+
+==> 009.rb 40 <==
+obj.public_send("name_with_underscore")
+
+==> 010.rb 41 <==
+obj&.public_send("name_with_underscore")
+
+==> 011.rb 26 <==
+obj.public_send(variable)
+
+==> 012.rb 27 <==
+obj&.public_send(variable)
+
+==> 013.rb 41 <==
+obj.public_send("#{interpolated}string")
+
+==> 014.rb 42 <==
+obj&.public_send("#{interpolated}string")
+
+==> 015.rb 35 <==
+obj.public_send("name with space")
+
+==> 016.rb 36 <==
+obj&.public_send("name with space")
+
+==> 017.rb 36 <==
+obj.public_send("name-with-hyphen")
+
+==> 018.rb 37 <==
+obj&.public_send("name-with-hyphen")
+
+==> 019.rb 25 <==
+obj.public_send("name=")
+
+==> 020.rb 26 <==
+obj&.public_send("name=")
+
+==> 021.rb 30 <==
+obj.public_send("{brackets}")
+
+==> 022.rb 31 <==
+obj&.public_send("{brackets}")
+
+==> 023.rb 37 <==
+obj.public_send("[square_brackets]")
+
+==> 024.rb 38 <==
+obj&.public_send("[square_brackets]")
+
+==> 025.rb 24 <==
+obj.public_send(:BEGIN)
+
+==> 026.rb 22 <==
+obj.public_send(:END)
+
+==> 027.rb 24 <==
+obj.public_send(:alias)
+
+==> 028.rb 22 <==
+obj.public_send(:and)
+
+==> 029.rb 24 <==
+obj.public_send(:begin)
+
+==> 030.rb 24 <==
+obj.public_send(:break)
+
+==> 031.rb 23 <==
+obj.public_send(:case)
+
+==> 032.rb 24 <==
+obj.public_send(:class)
+
+==> 033.rb 22 <==
+obj.public_send(:def)
+
+==> 034.rb 27 <==
+obj.public_send(:defined?)
+
+==> 035.rb 21 <==
+obj.public_send(:do)
+
+==> 036.rb 23 <==
+obj.public_send(:else)
+
+==> 037.rb 24 <==
+obj.public_send(:elsif)
+
+==> 038.rb 22 <==
+obj.public_send(:end)
+
+==> 039.rb 25 <==
+obj.public_send(:ensure)
+
+==> 040.rb 24 <==
+obj.public_send(:false)
+
+==> 041.rb 22 <==
+obj.public_send(:for)
+
+==> 042.rb 21 <==
+obj.public_send(:if)
+
+==> 043.rb 21 <==
+obj.public_send(:in)
+
+==> 044.rb 25 <==
+obj.public_send(:module)
+
+==> 045.rb 23 <==
+obj.public_send(:next)
+
+==> 046.rb 22 <==
+obj.public_send(:nil)
+
+==> 047.rb 22 <==
+obj.public_send(:not)
+
+==> 048.rb 21 <==
+obj.public_send(:or)
+
+==> 049.rb 23 <==
+obj.public_send(:redo)
+
+==> 050.rb 25 <==
+obj.public_send(:rescue)
+
+==> 051.rb 24 <==
+obj.public_send(:retry)
+
+==> 052.rb 25 <==
+obj.public_send(:return)
+
+==> 053.rb 23 <==
+obj.public_send(:self)
+
+==> 054.rb 24 <==
+obj.public_send(:super)
+
+==> 055.rb 23 <==
+obj.public_send(:then)
+
+==> 056.rb 23 <==
+obj.public_send(:true)
+
+==> 057.rb 24 <==
+obj.public_send(:undef)
+
+==> 058.rb 25 <==
+obj.public_send(:unless)
+
+==> 059.rb 24 <==
+obj.public_send(:until)
+
+==> 060.rb 23 <==
+obj.public_send(:when)
+
+==> 061.rb 24 <==
+obj.public_send(:while)
+
+==> 062.rb 24 <==
+obj.public_send(:yield)
+
+==> 063.rb 25 <==
+obj&.public_send(:BEGIN)
+
+==> 064.rb 23 <==
+obj&.public_send(:END)
+
+==> 065.rb 25 <==
+obj&.public_send(:alias)
+
+==> 066.rb 23 <==
+obj&.public_send(:and)
+
+==> 067.rb 25 <==
+obj&.public_send(:begin)
+
+==> 068.rb 25 <==
+obj&.public_send(:break)
+
+==> 069.rb 24 <==
+obj&.public_send(:case)
+
+==> 070.rb 25 <==
+obj&.public_send(:class)
+
+==> 071.rb 23 <==
+obj&.public_send(:def)
+
+==> 072.rb 28 <==
+obj&.public_send(:defined?)
+
+==> 073.rb 22 <==
+obj&.public_send(:do)
+
+==> 074.rb 24 <==
+obj&.public_send(:else)
+
+==> 075.rb 25 <==
+obj&.public_send(:elsif)
+
+==> 076.rb 23 <==
+obj&.public_send(:end)
+
+==> 077.rb 26 <==
+obj&.public_send(:ensure)
+
+==> 078.rb 25 <==
+obj&.public_send(:false)
+
+==> 079.rb 23 <==
+obj&.public_send(:for)
+
+==> 080.rb 22 <==
+obj&.public_send(:if)
+
+==> 081.rb 22 <==
+obj&.public_send(:in)
+
+==> 082.rb 26 <==
+obj&.public_send(:module)
+
+==> 083.rb 24 <==
+obj&.public_send(:next)
+
+==> 084.rb 23 <==
+obj&.public_send(:nil)
+
+==> 085.rb 23 <==
+obj&.public_send(:not)
+
+==> 086.rb 22 <==
+obj&.public_send(:or)
+
+==> 087.rb 24 <==
+obj&.public_send(:redo)
+
+==> 088.rb 26 <==
+obj&.public_send(:rescue)
+
+==> 089.rb 25 <==
+obj&.public_send(:retry)
+
+==> 090.rb 26 <==
+obj&.public_send(:return)
+
+==> 091.rb 24 <==
+obj&.public_send(:self)
+
+==> 092.rb 25 <==
+obj&.public_send(:super)
+
+==> 093.rb 24 <==
+obj&.public_send(:then)
+
+==> 094.rb 24 <==
+obj&.public_send(:true)
+
+==> 095.rb 25 <==
+obj&.public_send(:undef)
+
+==> 096.rb 26 <==
+obj&.public_send(:unless)
+
+==> 097.rb 25 <==
+obj&.public_send(:until)
+
+==> 098.rb 24 <==
+obj&.public_send(:when)
+
+==> 099.rb 25 <==
+obj&.public_send(:while)
+
+==> 100.rb 25 <==
+obj&.public_send(:yield)
+
+==> 101.rb 20 <==
+obj.public_send(42)
+
+==> 102.rb 21 <==
+obj&.public_send(42)
+
+==> 103.rb 16 <==
+obj.public_send
+
+==> 104.rb 17 <==
+obj&.public_send
+
+==> 105.rb 8 <==
+obj.foo
+
+==> 106.rb 9 <==
+obj&.foo
+

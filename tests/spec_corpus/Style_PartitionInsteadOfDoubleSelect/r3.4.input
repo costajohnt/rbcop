@@ -1,0 +1,12 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 68 <==
+positives = arr.select { it > 0 }
+negatives = arr.reject { it > 0 }
+

@@ -1,0 +1,8 @@
+==> offenses exit=1 230 <==
+gems.rb:1:1: C: Bundler/GemFilename: `gems.rb` file was found but `Gemfile` is required (file path: gems.rb).
+spec/gems.rb:1:1: C: Bundler/GemFilename: `gems.rb` file was found but `Gemfile` is required (file path: spec/gems.rb).
+
+==> autocorrect exit=1 230 <==
+gems.rb:1:1: C: Bundler/GemFilename: `gems.rb` file was found but `Gemfile` is required (file path: gems.rb).
+spec/gems.rb:1:1: C: Bundler/GemFilename: `gems.rb` file was found but `Gemfile` is required (file path: spec/gems.rb).
+

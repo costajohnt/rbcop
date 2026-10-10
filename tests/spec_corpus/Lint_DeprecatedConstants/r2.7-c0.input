@@ -1,0 +1,80 @@
+==> .rubocop.yml 911 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/DeprecatedConstants:
+  DeprecatedConstants:
+    NIL:
+      Alternative: nil
+      DeprecatedVersion: '2.4'
+    'TRUE':
+      Alternative: 'true'
+      DeprecatedVersion: '2.4'
+    'FALSE':
+      Alternative: 'false'
+      DeprecatedVersion: '2.4'
+    Net::HTTPServerException:
+      Alternative: Net::HTTPClientException
+      DeprecatedVersion: '2.6'
+    Random::DEFAULT:
+      Alternative: Random.new
+      DeprecatedVersion: '3.0'
+    Struct::Group:
+      Alternative: Etc::Group
+      DeprecatedVersion: '3.0'
+    Struct::Passwd:
+      Alternative: Etc::Passwd
+      DeprecatedVersion: '3.0'
+    Triple::Nested::Constant:
+      Alternative: Value
+      DeprecatedVersion: '2.4'
+    Have::No::Alternative:
+      DeprecatedVersion: '2.4'
+    Have::No::DeprecatedVersion:
+      Alternative: Value
+
+==> 000.rb 4 <==
+NIL
+
+==> 001.rb 5 <==
+TRUE
+
+==> 002.rb 6 <==
+FALSE
+
+==> 003.rb 16 <==
+Random::DEFAULT
+
+==> 004.rb 14 <==
+Struct::Group
+
+==> 005.rb 15 <==
+Struct::Passwd
+
+==> 006.rb 6 <==
+::NIL
+
+==> 007.rb 7 <==
+::TRUE
+
+==> 008.rb 8 <==
+::FALSE
+
+==> 009.rb 27 <==
+::Triple::Nested::Constant
+
+==> 010.rb 22 <==
+Have::No::Alternative
+
+==> 011.rb 28 <==
+Have::No::DeprecatedVersion
+
+==> 012.rb 10 <==
+Foo::TRUE
+
+==> 013.rb 13 <==
+__ENCODING__
+

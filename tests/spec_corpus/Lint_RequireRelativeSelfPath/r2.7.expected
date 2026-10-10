@@ -1,0 +1,23 @@
+==> offenses exit=1 460 <==
+000/foo.rb:1:1: W: [Correctable] Lint/RequireRelativeSelfPath: Remove the `require_relative` that requires itself.
+001/foo.rb:1:1: W: [Correctable] Lint/RequireRelativeSelfPath: Remove the `require_relative` that requires itself.
+008/foo.rb:1:1: W: [Correctable] Lint/RequireRelativeSelfPath: Remove the `require_relative` that requires itself.
+009/foo.rb:1:1: W: [Correctable] Lint/RequireRelativeSelfPath: Remove the `require_relative` that requires itself.
+
+==> autocorrect exit=0 452 <==
+000/foo.rb:1:1: W: [Corrected] Lint/RequireRelativeSelfPath: Remove the `require_relative` that requires itself.
+001/foo.rb:1:1: W: [Corrected] Lint/RequireRelativeSelfPath: Remove the `require_relative` that requires itself.
+008/foo.rb:1:1: W: [Corrected] Lint/RequireRelativeSelfPath: Remove the `require_relative` that requires itself.
+009/foo.rb:1:1: W: [Corrected] Lint/RequireRelativeSelfPath: Remove the `require_relative` that requires itself.
+
+==> corrected/000/foo.rb 23 <==
+require_relative 'bar'
+
+==> corrected/001/foo.rb 23 <==
+require_relative 'bar'
+
+==> corrected/008/foo.rb 23 <==
+require_relative 'bar'
+
+==> corrected/009/foo.rb 0 <==
+

@@ -1,0 +1,5 @@
+AllCops:
+  NewCops: disable
+  Exclude:
+    - "[x].rb"
+    - "{y}.rb"

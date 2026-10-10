@@ -1,0 +1,21 @@
+==> offenses exit=1 434 <==
+000.rb:1:1: C: [Correctable] Style/SingleArgumentDig: Use `{ key: 'value' }[:key]` instead of `{ key: 'value' }.dig(:key)`.
+005.rb:1:1: C: [Correctable] Style/SingleArgumentDig: Use `data[var]` instead of `data.dig(var)`.
+007.rb:1:1: C: [Correctable] Style/SingleArgumentDig: Use `data.dig(var1)[0][var2]` instead of `data.dig(var1)[0].dig(var2)`.
+007.rb:1:1: C: Style/SingleArgumentDig: Use `data[var1]` instead of `data.dig(var1)`.
+
+==> autocorrect exit=0 440 <==
+000.rb:1:1: C: [Corrected] Style/SingleArgumentDig: Use `{ key: 'value' }[:key]` instead of `{ key: 'value' }.dig(:key)`.
+005.rb:1:1: C: [Corrected] Style/SingleArgumentDig: Use `data[var]` instead of `data.dig(var)`.
+007.rb:1:1: C: [Corrected] Style/SingleArgumentDig: Use `data.dig(var1)[0][var2]` instead of `data.dig(var1)[0].dig(var2)`.
+007.rb:1:1: C: [Corrected] Style/SingleArgumentDig: Use `data[var1]` instead of `data.dig(var1)`.
+
+==> corrected/000.rb 23 <==
+{ key: 'value' }[:key]
+
+==> corrected/005.rb 10 <==
+data[var]
+
+==> corrected/007.rb 20 <==
+data[var1][0][var2]
+

@@ -1,0 +1,62 @@
+==> .rubocop.yml 187 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+Naming/BlockForwarding:
+  EnforcedStyle: explicit
+  BlockForwardingName: block
+
+==> 000.rb 38 <==
+def foo(&)
+  bar(&)
+  baz(qux, &)
+end
+
+==> 001.rb 53 <==
+def self.foo(&)
+  self.bar(&)
+  self.baz(qux, &)
+end
+
+==> 002.rb 37 <==
+def foo(&)
+  bar(&:do_something)
+end
+
+==> 003.rb 23 <==
+def foo(&)
+  yield
+end
+
+==> 004.rb 15 <==
+def foo(&)
+end
+
+==> 005.rb 34 <==
+def foo(&block)
+  bar(&block)
+end
+
+==> 006.rb 20 <==
+def foo(&block)
+end
+
+==> 007.rb 24 <==
+def foo(arg1, arg2)
+end
+
+==> 008.rb 62 <==
+def example(&block)
+  block ||= -> { :foo }
+  bar(&block)
+end
+
+==> 009.rb 59 <==
+def foo(block, &)
+  bar(block, &)
+  baz(block, qux, &)
+end
+

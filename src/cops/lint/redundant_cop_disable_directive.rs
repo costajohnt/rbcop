@@ -70,6 +70,35 @@ fn known(cop: &str) -> bool {
     REGISTRY.contains(&cop)
 }
 
+/// Registry#find_by_cop_name: Badge.parse camel-cases each part (`lint/self_assignment` finds
+/// Lint/SelfAssignment).
+fn find_by_cop_name(cop: &str) -> Option<String> {
+    let camel = |part: &str| -> String {
+        if part == "rspec" {
+            return "RSpec".into();
+        }
+        // gsub(/^[a-z]|_[a-z]/) { |m| m[-1].upcase }
+        let chars: Vec<char> = part.chars().collect();
+        let mut out = String::new();
+        let mut i = 0;
+        while i < chars.len() {
+            let c = chars[i];
+            if i == 0 && c.is_ascii_lowercase() {
+                out.push(c.to_ascii_uppercase());
+            } else if c == '_' && chars.get(i + 1).is_some_and(char::is_ascii_lowercase) {
+                out.push(chars[i + 1].to_ascii_uppercase());
+                i += 1;
+            } else {
+                out.push(c);
+            }
+            i += 1;
+        }
+        out
+    };
+    let name = cop.split('/').map(camel).collect::<Vec<_>>().join("/");
+    known(&name).then_some(name)
+}
+
 /// Registry#enabled? (cop config, ignoring comment opt-ins).
 fn enabled(cx: &Cx, cop: &str) -> bool {
     directives::config_enabled(cx.config, cop)
@@ -179,7 +208,8 @@ pub fn check(cx: &mut Cx, checked: &[Span]) {
         }
         // each_line_range
         for (idx, r) in ranges.iter().enumerate() {
-            if ctx.ignore(r) || (known(cop) && !enabled(cx, cop) && r.1 == i64::MAX) {
+            // expected_final_disable?
+            if ctx.ignore(r) || (r.1 == i64::MAX && find_by_cop_name(cop).is_some_and(|c| !enabled(cx, &c))) {
                 continue;
             }
             let d = r.2.map(|i| ctx.directive(i));

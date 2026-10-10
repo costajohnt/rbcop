@@ -1,0 +1,55 @@
+==> .rubocop.yml 235 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+Style/HashSyntax:
+  EnforcedStyle: ruby19
+  SupportedStyles:
+  - ruby19
+  - hash_rockets
+  EnforcedShorthandSyntax: consistent
+
+==> 000.rb 13 <==
+{foo:, bar:}
+
+==> 001.rb 17 <==
+{foo:, bar: bar}
+
+==> 002.rb 17 <==
+{foo:, bar: baz}
+
+==> 003.rb 21 <==
+{foo: bar, bar: foo}
+
+==> 004.rb 21 <==
+{foo: baz, bar: bar}
+
+==> 005.rb 21 <==
+{foo: foo, bar: bar}
+
+==> 006.rb 26 <==
+if foo bar: bar
+  baz
+end
+
+==> 007.rb 30 <==
+unless foo bar: bar
+  baz
+end
+
+==> 008.rb 29 <==
+while foo bar: bar
+  baz
+end
+
+==> 009.rb 29 <==
+until foo bar: bar
+  baz
+end
+
+==> 010.rb 20 <==
+baz if foo bar: bar
+

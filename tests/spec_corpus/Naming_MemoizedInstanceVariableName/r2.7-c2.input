@@ -1,0 +1,125 @@
+==> .rubocop.yml 192 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/MemoizedInstanceVariableName:
+  EnforcedStyleForLeadingUnderscores: required
+
+==> 000.rb 28 <==
+def foo
+  @foo ||= :foo
+end
+
+==> 001.rb 32 <==
+def foo
+  @_my_var ||= :foo
+end
+
+==> 002.rb 30 <==
+def _foo
+  @_foo ||= :foo
+end
+
+==> 003.rb 58 <==
+define_method(:values) do
+  @_values ||= do_something
+end
+
+==> 004.rb 54 <==
+define_method(:values) do
+  @foo ||= do_something
+end
+
+==> 005.rb 100 <==
+def self.inherited(klass)
+  klass.define_method(:values) do
+    @_values ||= do_something
+  end
+end
+
+==> 006.rb 96 <==
+def self.inherited(klass)
+  klass.define_method(:values) do
+    @foo ||= do_something
+  end
+end
+
+==> 007.rb 110 <==
+def self.inherited(klass)
+  klass.define_singleton_method(:values) do
+    @_values ||= do_something
+  end
+end
+
+==> 008.rb 106 <==
+def self.inherited(klass)
+  klass.define_singleton_method(:values) do
+    @foo ||= do_something
+  end
+end
+
+==> 009.rb 59 <==
+def foo
+  return @foo if defined?(@foo)
+  @foo = false
+end
+
+==> 010.rb 71 <==
+def foo
+  return @_my_var if defined?(@_my_var)
+  @_my_var = false
+end
+
+==> 011.rb 63 <==
+def _foo
+  return @_foo if defined?(@_foo)
+  @_foo = false
+end
+
+==> 012.rb 96 <==
+define_method(:values) do
+  return @_values if defined?(@_values)
+  @_values = do_something
+end
+
+==> 013.rb 84 <==
+define_method(:values) do
+  return @foo if defined?(@foo)
+  @foo = do_something
+end
+
+==> 014.rb 140 <==
+def self.inherited(klass)
+  klass.define_method(:values) do
+    return @_values if defined?(@_values)
+    @_values = do_something
+  end
+end
+
+==> 015.rb 128 <==
+def self.inherited(klass)
+  klass.define_method(:values) do
+    return @foo if defined?(@foo)
+    @foo = do_something
+  end
+end
+
+==> 016.rb 150 <==
+def self.inherited(klass)
+  klass.define_singleton_method(:values) do
+    return @_values if defined?(@_values)
+    @_values = do_something
+  end
+end
+
+==> 017.rb 138 <==
+def self.inherited(klass)
+  klass.define_singleton_method(:values) do
+    return @foo if defined?(@foo)
+    @foo = do_something
+  end
+end
+

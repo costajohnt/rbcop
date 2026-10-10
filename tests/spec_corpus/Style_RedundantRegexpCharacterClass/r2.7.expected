@@ -1,0 +1,141 @@
+==> offenses exit=1 3994 <==
+000.rb:1:8: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+001.rb:1:8: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+001.rb:1:12: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[c]` can be replaced with `c`.
+002.rb:1:9: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+003.rb:1:8: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+004.rb:1:8: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+005.rb:1:10: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+006.rb:1:10: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+006.rb:1:14: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[c]` can be replaced with `c`.
+007.rb:1:11: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+008.rb:1:10: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+009.rb:1:10: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+014.rb:1:8: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+015.rb:1:8: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[\]]` can be replaced with `\]`.
+016.rb:1:8: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[\[]` can be replaced with `\[`.
+017.rb:1:8: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[\s]` can be replaced with `\s`.
+018.rb:1:8: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[\S]` can be replaced with `\S`.
+019.rb:1:8: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[\u{06F2}]` can be replaced with `\u{06F2}`.
+021.rb:1:8: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[\p{Digit}]` can be replaced with `\p{Digit}`.
+022.rb:1:8: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[\P{Digit}]` can be replaced with `\P{Digit}`.
+023.rb:1:8: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[\#]` can be replaced with `\#`.
+024.rb:1:8: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[#]` can be replaced with `\#`.
+026.rb:1:8: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[\032]` can be replaced with `\032`.
+031.rb:1:8: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[\+]` can be replaced with `\+`.
+032.rb:1:12: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[b]` can be replaced with `b`.
+041.rb:1:12: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+043.rb:1:8: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[ ]` can be replaced with ` `.
+044.rb:3:3: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[b]` can be replaced with `b`.
+
+==> autocorrect exit=0 3938 <==
+000.rb:1:8: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+001.rb:1:8: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+001.rb:1:12: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[c]` can be replaced with `c`.
+002.rb:1:9: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+003.rb:1:8: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+004.rb:1:8: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+005.rb:1:10: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+006.rb:1:10: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+006.rb:1:14: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[c]` can be replaced with `c`.
+007.rb:1:11: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+008.rb:1:10: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+009.rb:1:10: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+014.rb:1:8: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+015.rb:1:8: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[\]]` can be replaced with `\]`.
+016.rb:1:8: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[\[]` can be replaced with `\[`.
+017.rb:1:8: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[\s]` can be replaced with `\s`.
+018.rb:1:8: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[\S]` can be replaced with `\S`.
+019.rb:1:8: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[\u{06F2}]` can be replaced with `\u{06F2}`.
+021.rb:1:8: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[\p{Digit}]` can be replaced with `\p{Digit}`.
+022.rb:1:8: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[\P{Digit}]` can be replaced with `\P{Digit}`.
+023.rb:1:8: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[\#]` can be replaced with `\#`.
+024.rb:1:8: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[#]` can be replaced with `\#`.
+026.rb:1:8: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[\032]` can be replaced with `\032`.
+031.rb:1:8: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[\+]` can be replaced with `\+`.
+032.rb:1:12: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[b]` can be replaced with `b`.
+041.rb:1:12: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+043.rb:1:8: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[ ]` can be replaced with ` `.
+044.rb:3:3: C: [Corrected] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[b]` can be replaced with `b`.
+
+==> corrected/000.rb 10 <==
+foo = /a/
+
+==> corrected/001.rb 13 <==
+foo = /abcd/
+
+==> corrected/002.rb 12 <==
+foo = /(a)/
+
+==> corrected/003.rb 11 <==
+foo = /a+/
+
+==> corrected/004.rb 16 <==
+foo = /a{2,10}/
+
+==> corrected/005.rb 12 <==
+foo = %r{a}
+
+==> corrected/006.rb 15 <==
+foo = %r{abcd}
+
+==> corrected/007.rb 14 <==
+foo = %r{(a)}
+
+==> corrected/008.rb 13 <==
+foo = %r{a+}
+
+==> corrected/009.rb 18 <==
+foo = %r{a{2,10}}
+
+==> corrected/014.rb 12 <==
+foo = /a\g/
+
+==> corrected/015.rb 11 <==
+foo = /\]/
+
+==> corrected/016.rb 11 <==
+foo = /\[/
+
+==> corrected/017.rb 11 <==
+foo = /\s/
+
+==> corrected/018.rb 11 <==
+foo = /\S/
+
+==> corrected/019.rb 17 <==
+foo = /\u{06F2}/
+
+==> corrected/021.rb 18 <==
+foo = /\p{Digit}/
+
+==> corrected/022.rb 18 <==
+foo = /\P{Digit}/
+
+==> corrected/023.rb 11 <==
+foo = /\#/
+
+==> corrected/024.rb 14 <==
+foo = /\#{0}/
+
+==> corrected/026.rb 13 <==
+foo = /\032/
+
+==> corrected/031.rb 11 <==
+foo = /\+/
+
+==> corrected/032.rb 17 <==
+foo = /a#{/b/}c/
+
+==> corrected/041.rb 14 <==
+foo = /#{x}a/
+
+==> corrected/043.rb 10 <==
+foo = / /
+
+==> corrected/044.rb 79 <==
+foo = /
+  a # This comment shouldn't affect the position of the offense
+  b
+/x
+

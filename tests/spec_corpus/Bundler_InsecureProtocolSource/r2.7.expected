@@ -1,0 +1,19 @@
+==> offenses exit=1 713 <==
+000.gemfile:1:8: W: [Correctable] Bundler/InsecureProtocolSource: The source `:gemcutter` is deprecated because HTTP requests are insecure. Please change your source to 'https://rubygems.org' if possible, or 'http://rubygems.org' if not.
+001.gemfile:1:8: W: [Correctable] Bundler/InsecureProtocolSource: The source `:rubygems` is deprecated because HTTP requests are insecure. Please change your source to 'https://rubygems.org' if possible, or 'http://rubygems.org' if not.
+002.gemfile:1:8: W: [Correctable] Bundler/InsecureProtocolSource: The source `:rubyforge` is deprecated because HTTP requests are insecure. Please change your source to 'https://rubygems.org' if possible, or 'http://rubygems.org' if not.
+
+==> autocorrect exit=0 707 <==
+000.gemfile:1:8: W: [Corrected] Bundler/InsecureProtocolSource: The source `:gemcutter` is deprecated because HTTP requests are insecure. Please change your source to 'https://rubygems.org' if possible, or 'http://rubygems.org' if not.
+001.gemfile:1:8: W: [Corrected] Bundler/InsecureProtocolSource: The source `:rubygems` is deprecated because HTTP requests are insecure. Please change your source to 'https://rubygems.org' if possible, or 'http://rubygems.org' if not.
+002.gemfile:1:8: W: [Corrected] Bundler/InsecureProtocolSource: The source `:rubyforge` is deprecated because HTTP requests are insecure. Please change your source to 'https://rubygems.org' if possible, or 'http://rubygems.org' if not.
+
+==> corrected/000.gemfile 30 <==
+source 'https://rubygems.org'
+
+==> corrected/001.gemfile 30 <==
+source 'https://rubygems.org'
+
+==> corrected/002.gemfile 30 <==
+source 'https://rubygems.org'
+

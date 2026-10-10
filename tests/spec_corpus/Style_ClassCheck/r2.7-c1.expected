@@ -1,0 +1,14 @@
+==> offenses exit=1 186 <==
+000.rb:1:3: C: [Correctable] Style/ClassCheck: Prefer `Object#kind_of?` over `Object#is_a?`.
+001.rb:1:4: C: [Correctable] Style/ClassCheck: Prefer `Object#kind_of?` over `Object#is_a?`.
+
+==> autocorrect exit=0 182 <==
+000.rb:1:3: C: [Corrected] Style/ClassCheck: Prefer `Object#kind_of?` over `Object#is_a?`.
+001.rb:1:4: C: [Corrected] Style/ClassCheck: Prefer `Object#kind_of?` over `Object#is_a?`.
+
+==> corrected/000.rb 13 <==
+x.kind_of? y
+
+==> corrected/001.rb 14 <==
+x&.kind_of? y
+

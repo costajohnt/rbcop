@@ -1,0 +1,14 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.5
+
+==> 000.rb 70 <==
+array.each_with_object({}) { |elem, hash| hash[elem.id] = elem.name }
+
+==> 001.rb 66 <==
+array.inject({}) { |hash, elem| hash[elem.id] = elem.name; hash }
+

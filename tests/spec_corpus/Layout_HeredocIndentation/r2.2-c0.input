@@ -1,0 +1,16 @@
+==> .rubocop.yml 157 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.2
+Layout/LineLength:
+  Max: 5
+  AllowHeredoc: true
+
+==> 000.rb 19 <==
+<<-RUBY2
+foo
+RUBY2
+

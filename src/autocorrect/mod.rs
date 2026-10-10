@@ -117,7 +117,7 @@ pub fn correct(
             current = text;
             changed = true;
             if let Some(e) = err {
-                eprintln!("{e}");
+                runner::file_error(e);
             }
         }
     }

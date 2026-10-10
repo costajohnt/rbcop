@@ -1,0 +1,15 @@
+==> .rubocop.yml 166 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Style/ArgumentsForwarding:
+  AllowOnlyRestArgument: false
+
+==> 000.rb 32 <==
+def foo(*args)
+  bar(*args)
+end
+

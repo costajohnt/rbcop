@@ -1,0 +1,65 @@
+==> .rubocop.yml 155 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Style/MutableConstant:
+  EnforcedStyle: strict
+
+==> 000.rb 15 <==
+CONST = "#{a}"
+
+==> 001.rb 17 <==
+CONST ||= "#{a}"
+
+==> 002.rb 45 <==
+# frozen_string_literal: true
+CONST = "#{a}"
+
+==> 003.rb 47 <==
+# frozen_string_literal: true
+CONST ||= "#{a}"
+
+==> 004.rb 63 <==
+# frozen_string_literal: true
+CONST = <<~HERE
+  foo
+  bar
+HERE
+
+==> 005.rb 65 <==
+# frozen_string_literal: true
+CONST ||= <<~HERE
+  foo
+  bar
+HERE
+
+==> 006.rb 85 <==
+# frozen_string_literal: true
+
+CONST = <<~HERE
+  foo #{use_interpolation}
+  bar
+HERE
+
+==> 007.rb 59 <==
+# frozen_string_literal: true
+
+CONST = 'foo'         'bar'
+
+==> 008.rb 64 <==
+# frozen_string_literal: true
+
+CONST = "#{foo}" \
+        'bar'
+
+==> 009.rb 46 <==
+# frozen_string_literal: false
+CONST = "#{a}"
+
+==> 010.rb 48 <==
+# frozen_string_literal: false
+CONST ||= "#{a}"
+

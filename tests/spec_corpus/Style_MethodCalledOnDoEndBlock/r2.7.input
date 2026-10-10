@@ -1,0 +1,47 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 15 <==
+a do
+  b
+end.c
+
+==> 001.rb 16 <==
+a do
+  b
+end&.c
+
+==> 002.rb 13 <==
+a do
+  b
+end
+
+==> 003.rb 26 <==
+a do
+  b
+end.c do
+  d
+end
+
+==> 004.rb 13 <==
+a do b end.c
+
+==> 005.rb 21 <==
+a do b end.c do d end
+==> 006.rb 12 <==
+a {
+  b
+}.c
+
+==> 007.rb 9 <==
+a { b }.c
+==> 008.rb 16 <==
+a do
+  _1
+end.c
+

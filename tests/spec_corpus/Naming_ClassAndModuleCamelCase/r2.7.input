@@ -1,0 +1,33 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 41 <==
+class My_Class
+end
+
+module My_Module
+end
+
+==> 001.rb 51 <==
+class Top::My_Class
+end
+
+module My_Module::Ala
+end
+
+==> 002.rb 35 <==
+class MyClass
+end
+
+module Mine
+end
+
+==> 003.rb 33 <==
+class module_parent::MyClass
+end
+

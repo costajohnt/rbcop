@@ -1,0 +1,47 @@
+==> .rubocop.yml 167 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+Style/ArgumentsForwarding:
+  UseAnonymousForwarding: false
+
+==> 000.rb 32 <==
+def foo(*args)
+  bar(*args)
+end
+
+==> 001.rb 48 <==
+def foo(*args, &block)
+  bar(*args, &block)
+end
+
+==> 002.rb 38 <==
+def foo(**kwargs)
+  bar(**kwargs)
+end
+
+==> 003.rb 34 <==
+def foo(&block)
+  bar(&block)
+end
+
+==> 004.rb 54 <==
+def foo(**kwargs, &block)
+  bar(**kwargs, &block)
+end
+
+==> 005.rb 98 <==
+def foo(*args, **kwargs, &block)
+  args_nly(*args)
+  kwargs_nly(**kwargs)
+  block_nly(&block)
+end
+
+==> 006.rb 68 <==
+def foo(*args, **kwargs, &block)
+  bar(*args, **kwargs, &block)
+end
+

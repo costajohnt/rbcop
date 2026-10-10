@@ -1,0 +1,6 @@
+==> offenses exit=1 92 <==
+000.rb:2:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+
+==> autocorrect exit=1 92 <==
+000.rb:2:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+

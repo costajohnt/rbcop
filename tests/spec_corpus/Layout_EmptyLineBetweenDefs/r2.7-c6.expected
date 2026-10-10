@@ -1,0 +1,37 @@
+==> offenses exit=1 348 <==
+000.rb:4:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between block definitions; found 0.
+001.rb:4:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between block definitions; found 0.
+002.rb:4:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between block definitions; found 0.
+
+==> autocorrect exit=0 342 <==
+000.rb:4:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between block definitions; found 0.
+001.rb:4:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between block definitions; found 0.
+002.rb:4:1: C: [Corrected] Layout/EmptyLineBetweenDefs: Expected 1 empty line between block definitions; found 0.
+
+==> corrected/000.rb 72 <==
+foo 'first foo' do
+  #foo body
+end
+
+foo 'second foo' do
+  #foo body
+end
+
+==> corrected/001.rb 71 <==
+def foo_first_foo
+  #foo body
+end
+
+foo 'second foo' do
+  #foo body
+end
+
+==> corrected/002.rb 65 <==
+foo 'first foo' do
+  #foo body
+end
+
+foo 'second foo' do
+  _1
+end
+

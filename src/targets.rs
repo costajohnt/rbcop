@@ -62,7 +62,8 @@ impl RubyFile {
         let name = f.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default();
         let ext = f.extension().map(|e| format!(".{}", e.to_string_lossy()));
         ext.as_ref().is_some_and(|e| self.exts.contains(e))
-            || self.names.iter().any(|n| if glob::is_glob(n) { glob::fnmatch(n, &name, true) } else { *n == name })
+            // ruby_filename?: `ruby_filenames.include?(File.basename(file))`, a literal compare.
+            || self.names.contains(&name)
             || (ext.is_none() && self.executable(f))
     }
 

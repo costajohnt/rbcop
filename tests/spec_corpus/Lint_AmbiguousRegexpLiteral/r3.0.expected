@@ -1,0 +1,73 @@
+==> offenses exit=1 2903 <==
+000.rb:1:3: W: [Correctable] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+001.rb:1:3: W: [Correctable] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+002.rb:1:3: W: [Correctable] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+003.rb:1:3: W: [Correctable] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+004.rb:1:3: W: [Correctable] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+005.rb:3:18: W: [Correctable] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+006.rb:1:28: W: [Correctable] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+007.rb:1:28: W: [Correctable] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+008.rb:1:3: W: [Correctable] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+009.rb:1:3: W: [Correctable] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+009.rb:2:5: W: [Correctable] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+010.rb:1:16: W: [Correctable] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+014.rb:1:8: W: [Correctable] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+
+==> autocorrect exit=0 2877 <==
+000.rb:1:3: W: [Corrected] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+001.rb:1:3: W: [Corrected] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+002.rb:1:3: W: [Corrected] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+003.rb:1:3: W: [Corrected] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+004.rb:1:3: W: [Corrected] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+005.rb:3:18: W: [Corrected] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+006.rb:1:28: W: [Corrected] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+007.rb:1:28: W: [Corrected] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+008.rb:1:3: W: [Corrected] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+009.rb:1:3: W: [Corrected] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+009.rb:2:5: W: [Corrected] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+010.rb:1:16: W: [Corrected] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+014.rb:1:8: W: [Corrected] Lint/AmbiguousRegexpLiteral: Ambiguous regexp literal. Parenthesize the method arguments if it's surely a regexp literal, or add a whitespace to the right of the `/` if it should be a division.
+
+==> corrected/000.rb 13 <==
+p(/pattern/)
+
+==> corrected/001.rb 18 <==
+p(/pattern/, foo)
+
+==> corrected/002.rb 26 <==
+p(/pattern/.do_something)
+
+==> corrected/003.rb 30 <==
+p(/pattern/.do_something(42))
+
+==> corrected/004.rb 39 <==
+p(/pattern/.do_something.do_something)
+
+==> corrected/005.rb 77 <==
+class MyTest
+  test '#foo' do
+    assert_match(/expected/, actual)
+  end
+end
+
+==> corrected/006.rb 35 <==
+expect('RuboCop').to(match(/Cop/))
+
+==> corrected/007.rb 35 <==
+expect('RuboCop').to match(/Robo/)
+
+==> corrected/008.rb 31 <==
+p(/pattern/, foo) do |arg|
+end
+
+==> corrected/009.rb 35 <==
+p(/pattern/) do
+  p(/pattern/)
+end
+
+==> corrected/010.rb 26 <==
+puts line.grep(/pattern/)
+
+==> corrected/014.rb 39 <==
+assert (/some pattern/ =~ some_string)
+

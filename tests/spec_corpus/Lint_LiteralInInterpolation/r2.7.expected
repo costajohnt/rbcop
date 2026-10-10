@@ -1,0 +1,2014 @@
+==> offenses exit=1 39702 <==
+004.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+005.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+006.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+006.rb:1:19: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+007.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+008.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+009.rb:1:18: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+010.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+011.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+012.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+012.rb:1:20: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+013.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+014.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+015.rb:1:19: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+016.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+017.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+018.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+018.rb:1:23: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+019.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+020.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+021.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+022.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+023.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+024.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+024.rb:1:41: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+025.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+026.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+027.rb:1:40: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+028.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+029.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+030.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+030.rb:1:24: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+031.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+032.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+033.rb:1:23: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+034.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+035.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+036.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+036.rb:1:23: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+037.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+038.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+039.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+040.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+041.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+042.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+042.rb:1:24: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+043.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+044.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+045.rb:1:23: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+046.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+047.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+048.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+048.rb:1:21: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+049.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+050.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+051.rb:1:20: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+052.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+053.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+054.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+054.rb:1:38: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+055.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+056.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+057.rb:1:37: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+058.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+059.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+060.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+060.rb:1:38: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+061.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+062.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+063.rb:1:37: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+064.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+065.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+066.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+066.rb:1:41: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+067.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+068.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+069.rb:1:40: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+070.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+071.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+072.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+072.rb:1:41: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+073.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+074.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+075.rb:1:40: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+076.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+077.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+078.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+078.rb:1:25: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+079.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+080.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+081.rb:1:24: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+082.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+083.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+084.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+084.rb:1:27: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+085.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+086.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+087.rb:1:26: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+088.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+089.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+090.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+090.rb:1:45: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+091.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+092.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+093.rb:1:44: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+094.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+095.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+096.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+096.rb:1:45: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+097.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+098.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+099.rb:1:44: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+100.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+101.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+102.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+102.rb:1:20: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+103.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+104.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+105.rb:1:19: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+106.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+107.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+108.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+108.rb:1:28: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+109.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+110.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+111.rb:1:27: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+112.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+113.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+114.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+114.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+115.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+116.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+117.rb:1:21: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+118.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+119.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+120.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+120.rb:1:24: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+121.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+122.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+123.rb:1:23: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+124.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+125.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+126.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+126.rb:1:27: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+127.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+128.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+129.rb:1:26: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+130.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+131.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+132.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+132.rb:1:27: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+133.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+134.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+135.rb:1:26: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+136.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+137.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+138.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+138.rb:1:27: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+139.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+140.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+141.rb:1:26: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+142.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+143.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+144.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+144.rb:1:31: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+145.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+146.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+147.rb:1:30: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+148.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+149.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+150.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+150.rb:1:31: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+151.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+152.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+153.rb:1:30: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+154.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+155.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+156.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+156.rb:1:30: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+157.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+158.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+159.rb:1:29: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+160.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+161.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+162.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+162.rb:1:48: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+163.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+164.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+165.rb:1:47: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+166.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+167.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+168.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+168.rb:1:42: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+169.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+170.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+171.rb:1:41: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+172.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+173.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+174.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+174.rb:1:104: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+175.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+176.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+177.rb:1:103: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+178.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+179.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+180.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+180.rb:1:61: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+181.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+182.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+183.rb:1:60: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+184.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+185.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+186.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+186.rb:1:96: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+187.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+188.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+189.rb:1:95: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+190.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+191.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+192.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+192.rb:1:96: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+193.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+194.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+195.rb:1:95: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+196.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+197.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+198.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+198.rb:1:41: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+199.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+200.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+201.rb:1:40: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+202.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+203.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+204.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+204.rb:1:42: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+205.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+206.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+207.rb:1:41: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+208.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+209.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+210.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+210.rb:1:39: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+211.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+212.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+213.rb:1:38: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+214.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+215.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+216.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+216.rb:1:46: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+217.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+218.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+219.rb:1:45: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+220.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+221.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+222.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+222.rb:1:48: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+223.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+224.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+225.rb:1:47: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+226.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+227.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+228.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+228.rb:1:37: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+229.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+230.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+231.rb:1:36: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+232.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+233.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+234.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+234.rb:1:49: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+235.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+236.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+237.rb:1:48: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+238.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+239.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+240.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+240.rb:1:78: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+241.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+242.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+243.rb:1:77: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+244.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+245.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+246.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+246.rb:1:78: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+247.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+248.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+249.rb:1:77: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+250.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+251.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+252.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+252.rb:1:90: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+253.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+254.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+255.rb:1:89: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+256.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+257.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+258.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+258.rb:1:86: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+259.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+260.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+261.rb:1:85: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+262.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+263.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+264.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+264.rb:1:42: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+265.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+266.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+267.rb:1:41: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+268.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+269.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+270.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+270.rb:1:43: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+271.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+272.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+273.rb:1:42: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+274.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+275.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+276.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+276.rb:1:42: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+277.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+278.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+279.rb:1:41: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+280.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+281.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+282.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+282.rb:1:44: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+283.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+284.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+285.rb:1:43: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+286.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+287.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+288.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+288.rb:1:47: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+289.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+290.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+291.rb:1:46: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+292.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+293.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+294.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+294.rb:1:47: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+295.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+296.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+297.rb:1:46: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+298.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+299.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+300.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+300.rb:1:47: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+301.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+302.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+303.rb:1:46: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+304.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+305.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+306.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+306.rb:1:51: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+307.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+308.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+309.rb:1:50: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+310.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+311.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+312.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+312.rb:1:51: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+313.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+314.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+315.rb:1:50: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+316.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+317.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+318.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+319.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+320.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+321.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+322.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+322.rb:1:21: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+323.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+324.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+325.rb:1:20: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+326.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+327.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+328.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+328.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+329.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+330.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+331.rb:1:21: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+332.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+333.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+334.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+334.rb:1:23: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+335.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+336.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+337.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+338.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+339.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+340.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+340.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+341.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+342.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+343.rb:1:21: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+344.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+345.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+346.rb:1:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+346.rb:1:23: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+347.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+348.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+349.rb:1:22: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+355.rb:1:11: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+356.rb:1:11: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+357.rb:1:11: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+358.rb:1:11: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+364.rb:1:11: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+365.rb:1:11: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+366.rb:1:11: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+367.rb:1:11: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+368.rb:1:15: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+370.rb:1:28: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+372.rb:1:28: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+374.rb:1:27: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+376.rb:1:32: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+377.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+378.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+379.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+380.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+381.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+382.rb:1:33: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+382.rb:2:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+382.rb:3:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+383.rb:1:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+383.rb:2:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+383.rb:3:12: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+385.rb:1:17: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+386.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+387.rb:1:16: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+388.rb:1:8: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+389.rb:1:8: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+390.rb:1:8: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+391.rb:1:8: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+392.rb:1:10: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+393.rb:1:8: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+394.rb:1:4: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+
+==> autocorrect exit=0 38917 <==
+004.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+005.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+006.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+006.rb:1:19: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+007.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+008.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+009.rb:1:18: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+010.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+011.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+012.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+012.rb:1:20: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+013.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+014.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+015.rb:1:19: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+016.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+017.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+018.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+018.rb:1:23: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+019.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+020.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+021.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+022.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+023.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+024.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+024.rb:1:41: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+025.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+026.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+027.rb:1:40: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+028.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+029.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+030.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+030.rb:1:24: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+031.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+032.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+033.rb:1:23: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+034.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+035.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+036.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+036.rb:1:23: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+037.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+038.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+039.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+040.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+041.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+042.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+042.rb:1:24: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+043.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+044.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+045.rb:1:23: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+046.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+047.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+048.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+048.rb:1:21: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+049.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+050.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+051.rb:1:20: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+052.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+053.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+054.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+054.rb:1:38: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+055.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+056.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+057.rb:1:37: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+058.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+059.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+060.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+060.rb:1:38: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+061.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+062.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+063.rb:1:37: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+064.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+065.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+066.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+066.rb:1:41: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+067.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+068.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+069.rb:1:40: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+070.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+071.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+072.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+072.rb:1:41: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+073.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+074.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+075.rb:1:40: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+076.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+077.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+078.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+078.rb:1:25: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+079.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+080.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+081.rb:1:24: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+082.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+083.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+084.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+084.rb:1:27: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+085.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+086.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+087.rb:1:26: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+088.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+089.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+090.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+090.rb:1:45: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+091.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+092.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+093.rb:1:44: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+094.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+095.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+096.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+096.rb:1:45: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+097.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+098.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+099.rb:1:44: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+100.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+101.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+102.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+102.rb:1:20: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+103.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+104.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+105.rb:1:19: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+106.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+107.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+108.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+108.rb:1:28: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+109.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+110.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+111.rb:1:27: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+112.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+113.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+114.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+114.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+115.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+116.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+117.rb:1:21: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+118.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+119.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+120.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+120.rb:1:24: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+121.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+122.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+123.rb:1:23: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+124.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+125.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+126.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+126.rb:1:27: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+127.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+128.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+129.rb:1:26: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+130.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+131.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+132.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+132.rb:1:27: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+133.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+134.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+135.rb:1:26: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+136.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+137.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+138.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+138.rb:1:27: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+139.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+140.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+141.rb:1:26: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+142.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+143.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+144.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+144.rb:1:31: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+145.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+146.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+147.rb:1:30: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+148.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+149.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+150.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+150.rb:1:31: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+151.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+152.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+153.rb:1:30: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+154.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+155.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+156.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+156.rb:1:30: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+157.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+158.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+159.rb:1:29: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+160.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+161.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+162.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+162.rb:1:48: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+163.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+164.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+165.rb:1:47: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+166.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+167.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+168.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+168.rb:1:42: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+169.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+170.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+171.rb:1:41: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+172.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+173.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+174.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+174.rb:1:104: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+175.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+176.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+177.rb:1:103: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+178.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+179.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+180.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+180.rb:1:61: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+181.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+182.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+183.rb:1:60: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+184.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+185.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+186.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+186.rb:1:96: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+187.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+188.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+189.rb:1:95: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+190.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+191.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+192.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+192.rb:1:96: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+193.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+194.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+195.rb:1:95: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+196.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+197.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+198.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+198.rb:1:41: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+199.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+200.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+201.rb:1:40: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+202.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+203.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+204.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+204.rb:1:42: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+205.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+206.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+207.rb:1:41: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+208.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+209.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+210.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+210.rb:1:39: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+211.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+212.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+213.rb:1:38: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+214.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+215.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+216.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+216.rb:1:46: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+217.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+218.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+219.rb:1:45: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+220.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+221.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+222.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+222.rb:1:48: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+223.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+224.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+225.rb:1:47: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+226.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+227.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+228.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+228.rb:1:37: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+229.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+230.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+231.rb:1:36: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+232.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+233.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+234.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+234.rb:1:49: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+235.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+236.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+237.rb:1:48: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+238.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+239.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+240.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+240.rb:1:78: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+241.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+242.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+243.rb:1:77: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+244.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+245.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+246.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+246.rb:1:78: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+247.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+248.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+249.rb:1:77: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+250.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+251.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+252.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+252.rb:1:90: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+253.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+254.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+255.rb:1:89: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+256.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+257.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+258.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+258.rb:1:86: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+259.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+260.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+261.rb:1:85: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+262.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+263.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+264.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+264.rb:1:42: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+265.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+266.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+267.rb:1:41: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+268.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+269.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+270.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+270.rb:1:43: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+271.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+272.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+273.rb:1:42: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+274.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+275.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+276.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+276.rb:1:42: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+277.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+278.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+279.rb:1:41: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+280.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+281.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+282.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+282.rb:1:44: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+283.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+284.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+285.rb:1:43: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+286.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+287.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+288.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+288.rb:1:47: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+289.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+290.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+291.rb:1:46: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+292.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+293.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+294.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+294.rb:1:47: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+295.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+296.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+297.rb:1:46: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+298.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+299.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+300.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+300.rb:1:47: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+301.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+302.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+303.rb:1:46: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+304.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+305.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+306.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+306.rb:1:51: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+307.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+308.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+309.rb:1:50: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+310.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+311.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+312.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+312.rb:1:51: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+313.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+314.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+315.rb:1:50: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+316.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+317.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+318.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+319.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+320.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+321.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+322.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+322.rb:1:21: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+323.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+324.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+325.rb:1:20: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+326.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+327.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+328.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+328.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+329.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+330.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+331.rb:1:21: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+332.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+333.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+334.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+334.rb:1:23: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+335.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+336.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+337.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+338.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+339.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+340.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+340.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+341.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+342.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+343.rb:1:21: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+344.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+345.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+346.rb:1:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+346.rb:1:23: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+347.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+348.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+349.rb:1:22: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+355.rb:1:11: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+356.rb:1:11: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+357.rb:1:11: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+358.rb:1:11: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+364.rb:1:11: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+365.rb:1:11: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+366.rb:1:11: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+367.rb:1:11: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+368.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+368.rb:1:15: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+370.rb:1:28: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+372.rb:1:28: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+374.rb:1:27: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+376.rb:1:32: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+377.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+378.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+379.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+380.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+381.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+382.rb:1:33: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+382.rb:2:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+382.rb:3:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+383.rb:1:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+383.rb:2:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+383.rb:3:12: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+385.rb:1:17: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+386.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+387.rb:1:16: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+388.rb:1:8: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+389.rb:1:8: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+390.rb:1:8: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+391.rb:1:8: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+392.rb:1:10: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+393.rb:1:8: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+394.rb:1:4: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+
+==> corrected/004.rb 16 <==
+"this is the 1"
+
+==> corrected/005.rb 26 <==
+"this is the 1 literally"
+
+==> corrected/006.rb 20 <==
+"some 1 with 1 too"
+
+==> corrected/007.rb 26 <==
+"this is 1 with #{a} now"
+
+==> corrected/008.rb 26 <==
+"this is #{a} with 1 now"
+
+==> corrected/009.rb 16 <==
+"this is the 1"
+
+==> corrected/010.rb 17 <==
+"this is the -1"
+
+==> corrected/011.rb 27 <==
+"this is the -1 literally"
+
+==> corrected/012.rb 22 <==
+"some -1 with -1 too"
+
+==> corrected/013.rb 27 <==
+"this is -1 with #{a} now"
+
+==> corrected/014.rb 27 <==
+"this is #{a} with -1 now"
+
+==> corrected/015.rb 17 <==
+"this is the -1"
+
+==> corrected/016.rb 19 <==
+"this is the 1123"
+
+==> corrected/017.rb 29 <==
+"this is the 1123 literally"
+
+==> corrected/018.rb 26 <==
+"some 1123 with 1123 too"
+
+==> corrected/019.rb 29 <==
+"this is 1123 with #{a} now"
+
+==> corrected/020.rb 29 <==
+"this is #{a} with 1123 now"
+
+==> corrected/021.rb 19 <==
+"this is the 1123"
+
+==> corrected/022.rb 33 <==
+"this is the 123456789123456789"
+
+==> corrected/023.rb 43 <==
+"this is the 123456789123456789 literally"
+
+==> corrected/024.rb 54 <==
+"some 123456789123456789 with 123456789123456789 too"
+
+==> corrected/025.rb 43 <==
+"this is 123456789123456789 with #{a} now"
+
+==> corrected/026.rb 43 <==
+"this is #{a} with 123456789123456789 now"
+
+==> corrected/027.rb 33 <==
+"this is the 123456789123456789"
+
+==> corrected/028.rb 20 <==
+"this is the 43707"
+
+==> corrected/029.rb 30 <==
+"this is the 43707 literally"
+
+==> corrected/030.rb 28 <==
+"some 43707 with 43707 too"
+
+==> corrected/031.rb 30 <==
+"this is 43707 with #{a} now"
+
+==> corrected/032.rb 30 <==
+"this is #{a} with 43707 now"
+
+==> corrected/033.rb 20 <==
+"this is the 43707"
+
+==> corrected/034.rb 18 <==
+"this is the 255"
+
+==> corrected/035.rb 28 <==
+"this is the 255 literally"
+
+==> corrected/036.rb 24 <==
+"some 255 with 255 too"
+
+==> corrected/037.rb 28 <==
+"this is 255 with #{a} now"
+
+==> corrected/038.rb 28 <==
+"this is #{a} with 255 now"
+
+==> corrected/039.rb 18 <==
+"this is the 255"
+
+==> corrected/040.rb 21 <==
+"this is the 0.0012"
+
+==> corrected/041.rb 31 <==
+"this is the 0.0012 literally"
+
+==> corrected/042.rb 30 <==
+"some 0.0012 with 0.0012 too"
+
+==> corrected/043.rb 31 <==
+"this is 0.0012 with #{a} now"
+
+==> corrected/044.rb 31 <==
+"this is #{a} with 0.0012 now"
+
+==> corrected/045.rb 21 <==
+"this is the 0.0012"
+
+==> corrected/046.rb 18 <==
+"this is the 2.0"
+
+==> corrected/047.rb 28 <==
+"this is the 2.0 literally"
+
+==> corrected/048.rb 24 <==
+"some 2.0 with 2.0 too"
+
+==> corrected/049.rb 28 <==
+"this is 2.0 with #{a} now"
+
+==> corrected/050.rb 28 <==
+"this is #{a} with 2.0 now"
+
+==> corrected/051.rb 18 <==
+"this is the 2.0"
+
+==> corrected/052.rb 33 <==
+"this is the double_quot_string"
+
+==> corrected/053.rb 43 <==
+"this is the double_quot_string literally"
+
+==> corrected/054.rb 54 <==
+"some double_quot_string with double_quot_string too"
+
+==> corrected/055.rb 43 <==
+"this is double_quot_string with #{a} now"
+
+==> corrected/056.rb 43 <==
+"this is #{a} with double_quot_string now"
+
+==> corrected/057.rb 33 <==
+"this is the double_quot_string"
+
+==> corrected/058.rb 33 <==
+"this is the single_quot_string"
+
+==> corrected/059.rb 43 <==
+"this is the single_quot_string literally"
+
+==> corrected/060.rb 54 <==
+"some single_quot_string with single_quot_string too"
+
+==> corrected/061.rb 43 <==
+"this is single_quot_string with #{a} now"
+
+==> corrected/062.rb 43 <==
+"this is #{a} with single_quot_string now"
+
+==> corrected/063.rb 33 <==
+"this is the single_quot_string"
+
+==> corrected/064.rb 36 <==
+"this is the double_quot_string: '"
+
+==> corrected/065.rb 46 <==
+"this is the double_quot_string: ' literally"
+
+==> corrected/066.rb 60 <==
+"some double_quot_string: ' with double_quot_string: ' too"
+
+==> corrected/067.rb 46 <==
+"this is double_quot_string: ' with #{a} now"
+
+==> corrected/068.rb 46 <==
+"this is #{a} with double_quot_string: ' now"
+
+==> corrected/069.rb 36 <==
+"this is the double_quot_string: '"
+
+==> corrected/070.rb 37 <==
+"this is the single_quot_string: \""
+
+==> corrected/071.rb 47 <==
+"this is the single_quot_string: \" literally"
+
+==> corrected/072.rb 62 <==
+"some single_quot_string: \" with single_quot_string: \" too"
+
+==> corrected/073.rb 47 <==
+"this is single_quot_string: \" with #{a} now"
+
+==> corrected/074.rb 47 <==
+"this is #{a} with single_quot_string: \" now"
+
+==> corrected/075.rb 37 <==
+"this is the single_quot_string: \""
+
+==> corrected/076.rb 21 <==
+"this is the symbol"
+
+==> corrected/077.rb 31 <==
+"this is the symbol literally"
+
+==> corrected/078.rb 30 <==
+"some symbol with symbol too"
+
+==> corrected/079.rb 31 <==
+"this is symbol with #{a} now"
+
+==> corrected/080.rb 31 <==
+"this is #{a} with symbol now"
+
+==> corrected/081.rb 21 <==
+"this is the symbol"
+
+==> corrected/082.rb 21 <==
+"this is the symbol"
+
+==> corrected/083.rb 31 <==
+"this is the symbol literally"
+
+==> corrected/084.rb 30 <==
+"some symbol with symbol too"
+
+==> corrected/085.rb 31 <==
+"this is symbol with #{a} now"
+
+==> corrected/086.rb 31 <==
+"this is #{a} with symbol now"
+
+==> corrected/087.rb 21 <==
+"this is the symbol"
+
+==> corrected/088.rb 39 <==
+"this is the single quot in symbol: '"
+
+==> corrected/089.rb 49 <==
+"this is the single quot in symbol: ' literally"
+
+==> corrected/090.rb 66 <==
+"some single quot in symbol: ' with single quot in symbol: ' too"
+
+==> corrected/091.rb 49 <==
+"this is single quot in symbol: ' with #{a} now"
+
+==> corrected/092.rb 49 <==
+"this is #{a} with single quot in symbol: ' now"
+
+==> corrected/093.rb 39 <==
+"this is the single quot in symbol: '"
+
+==> corrected/094.rb 40 <==
+"this is the double quot in symbol: \""
+
+==> corrected/095.rb 50 <==
+"this is the double quot in symbol: \" literally"
+
+==> corrected/096.rb 68 <==
+"some double quot in symbol: \" with double quot in symbol: \" too"
+
+==> corrected/097.rb 50 <==
+"this is double quot in symbol: \" with #{a} now"
+
+==> corrected/098.rb 50 <==
+"this is #{a} with double quot in symbol: \" now"
+
+==> corrected/099.rb 40 <==
+"this is the double quot in symbol: \""
+
+==> corrected/100.rb 17 <==
+"this is the []"
+
+==> corrected/101.rb 27 <==
+"this is the [] literally"
+
+==> corrected/102.rb 22 <==
+"some [] with [] too"
+
+==> corrected/103.rb 27 <==
+"this is [] with #{a} now"
+
+==> corrected/104.rb 27 <==
+"this is #{a} with [] now"
+
+==> corrected/105.rb 17 <==
+"this is the []"
+
+==> corrected/106.rb 29 <==
+"this is the [\"a\", \"b\"]"
+
+==> corrected/107.rb 39 <==
+"this is the [\"a\", \"b\"] literally"
+
+==> corrected/108.rb 46 <==
+"some [\"a\", \"b\"] with [\"a\", \"b\"] too"
+
+==> corrected/109.rb 39 <==
+"this is [\"a\", \"b\"] with #{a} now"
+
+==> corrected/110.rb 39 <==
+"this is #{a} with [\"a\", \"b\"] now"
+
+==> corrected/111.rb 29 <==
+"this is the [\"a\", \"b\"]"
+
+==> corrected/112.rb 17 <==
+"this is the []"
+
+==> corrected/113.rb 27 <==
+"this is the [] literally"
+
+==> corrected/114.rb 22 <==
+"some [] with [] too"
+
+==> corrected/115.rb 27 <==
+"this is [] with #{a} now"
+
+==> corrected/116.rb 27 <==
+"this is #{a} with [] now"
+
+==> corrected/117.rb 17 <==
+"this is the []"
+
+==> corrected/118.rb 23 <==
+"this is the [\"v1\"]"
+
+==> corrected/119.rb 33 <==
+"this is the [\"v1\"] literally"
+
+==> corrected/120.rb 34 <==
+"some [\"v1\"] with [\"v1\"] too"
+
+==> corrected/121.rb 33 <==
+"this is [\"v1\"] with #{a} now"
+
+==> corrected/122.rb 33 <==
+"this is #{a} with [\"v1\"] now"
+
+==> corrected/123.rb 23 <==
+"this is the [\"v1\"]"
+
+==> corrected/124.rb 31 <==
+"this is the [\"v1\", \"v2\"]"
+
+==> corrected/125.rb 41 <==
+"this is the [\"v1\", \"v2\"] literally"
+
+==> corrected/126.rb 50 <==
+"some [\"v1\", \"v2\"] with [\"v1\", \"v2\"] too"
+
+==> corrected/127.rb 41 <==
+"this is [\"v1\", \"v2\"] with #{a} now"
+
+==> corrected/128.rb 41 <==
+"this is #{a} with [\"v1\", \"v2\"] now"
+
+==> corrected/129.rb 31 <==
+"this is the [\"v1\", \"v2\"]"
+
+==> corrected/130.rb 31 <==
+"this is the [\"s1\", \"s2\"]"
+
+==> corrected/131.rb 41 <==
+"this is the [\"s1\", \"s2\"] literally"
+
+==> corrected/132.rb 50 <==
+"some [\"s1\", \"s2\"] with [\"s1\", \"s2\"] too"
+
+==> corrected/133.rb 41 <==
+"this is [\"s1\", \"s2\"] with #{a} now"
+
+==> corrected/134.rb 41 <==
+"this is #{a} with [\"s1\", \"s2\"] now"
+
+==> corrected/135.rb 31 <==
+"this is the [\"s1\", \"s2\"]"
+
+==> corrected/136.rb 31 <==
+"this is the [\"s1\", \"s2\"]"
+
+==> corrected/137.rb 41 <==
+"this is the [\"s1\", \"s2\"] literally"
+
+==> corrected/138.rb 50 <==
+"some [\"s1\", \"s2\"] with [\"s1\", \"s2\"] too"
+
+==> corrected/139.rb 41 <==
+"this is [\"s1\", \"s2\"] with #{a} now"
+
+==> corrected/140.rb 41 <==
+"this is #{a} with [\"s1\", \"s2\"] now"
+
+==> corrected/141.rb 31 <==
+"this is the [\"s1\", \"s2\"]"
+
+==> corrected/142.rb 31 <==
+"this is the [\"s1\", \"s2\"]"
+
+==> corrected/143.rb 41 <==
+"this is the [\"s1\", \"s2\"] literally"
+
+==> corrected/144.rb 50 <==
+"some [\"s1\", \"s2\"] with [\"s1\", \"s2\"] too"
+
+==> corrected/145.rb 41 <==
+"this is [\"s1\", \"s2\"] with #{a} now"
+
+==> corrected/146.rb 41 <==
+"this is #{a} with [\"s1\", \"s2\"] now"
+
+==> corrected/147.rb 31 <==
+"this is the [\"s1\", \"s2\"]"
+
+==> corrected/148.rb 31 <==
+"this is the [\"s1\", \"s2\"]"
+
+==> corrected/149.rb 41 <==
+"this is the [\"s1\", \"s2\"] literally"
+
+==> corrected/150.rb 50 <==
+"some [\"s1\", \"s2\"] with [\"s1\", \"s2\"] too"
+
+==> corrected/151.rb 41 <==
+"this is [\"s1\", \"s2\"] with #{a} now"
+
+==> corrected/152.rb 41 <==
+"this is #{a} with [\"s1\", \"s2\"] now"
+
+==> corrected/153.rb 31 <==
+"this is the [\"s1\", \"s2\"]"
+
+==> corrected/154.rb 29 <==
+"this is the {\"a\"=>\"b\"}"
+
+==> corrected/155.rb 39 <==
+"this is the {\"a\"=>\"b\"} literally"
+
+==> corrected/156.rb 46 <==
+"some {\"a\"=>\"b\"} with {\"a\"=>\"b\"} too"
+
+==> corrected/157.rb 39 <==
+"this is {\"a\"=>\"b\"} with #{a} now"
+
+==> corrected/158.rb 39 <==
+"this is #{a} with {\"a\"=>\"b\"} now"
+
+==> corrected/159.rb 29 <==
+"this is the {\"a\"=>\"b\"}"
+
+==> corrected/160.rb 46 <==
+"this is the {:foo=>\"bar\", :fiz=>\"buzz\"}"
+
+==> corrected/161.rb 56 <==
+"this is the {:foo=>\"bar\", :fiz=>\"buzz\"} literally"
+
+==> corrected/162.rb 80 <==
+"some {:foo=>\"bar\", :fiz=>\"buzz\"} with {:foo=>\"bar\", :fiz=>\"buzz\"} too"
+
+==> corrected/163.rb 56 <==
+"this is {:foo=>\"bar\", :fiz=>\"buzz\"} with #{a} now"
+
+==> corrected/164.rb 56 <==
+"this is #{a} with {:foo=>\"bar\", :fiz=>\"buzz\"} now"
+
+==> corrected/165.rb 46 <==
+"this is the {:foo=>\"bar\", :fiz=>\"buzz\"}"
+
+==> corrected/166.rb 39 <==
+"this is the {:foo=>{:fiz=>\"buzz\"}}"
+
+==> corrected/167.rb 49 <==
+"this is the {:foo=>{:fiz=>\"buzz\"}} literally"
+
+==> corrected/168.rb 66 <==
+"some {:foo=>{:fiz=>\"buzz\"}} with {:foo=>{:fiz=>\"buzz\"}} too"
+
+==> corrected/169.rb 49 <==
+"this is {:foo=>{:fiz=>\"buzz\"}} with #{a} now"
+
+==> corrected/170.rb 49 <==
+"this is #{a} with {:foo=>{:fiz=>\"buzz\"}} now"
+
+==> corrected/171.rb 39 <==
+"this is the {:foo=>{:fiz=>\"buzz\"}}"
+
+==> corrected/172.rb 95 <==
+"this is the {:num=>{:separate=>1123, :long_separate=>123456789123456789, :exponent=>0.0012}}"
+
+==> corrected/173.rb 105 <==
+"this is the {:num=>{:separate=>1123, :long_separate=>123456789123456789, :exponent=>0.0012}} literally"
+
+==> corrected/174.rb 178 <==
+"some {:num=>{:separate=>1123, :long_separate=>123456789123456789, :exponent=>0.0012}} with {:num=>{:separate=>1123, :long_separate=>123456789123456789, :exponent=>0.0012}} too"
+
+==> corrected/175.rb 105 <==
+"this is {:num=>{:separate=>1123, :long_separate=>123456789123456789, :exponent=>0.0012}} with #{a} now"
+
+==> corrected/176.rb 105 <==
+"this is #{a} with {:num=>{:separate=>1123, :long_separate=>123456789123456789, :exponent=>0.0012}} now"
+
+==> corrected/177.rb 95 <==
+"this is the {:num=>{:separate=>1123, :long_separate=>123456789123456789, :exponent=>0.0012}}"
+
+==> corrected/178.rb 54 <==
+"this is the {:n_adic_num=>{:hex=>43707, :oct=>255}}"
+
+==> corrected/179.rb 64 <==
+"this is the {:n_adic_num=>{:hex=>43707, :oct=>255}} literally"
+
+==> corrected/180.rb 96 <==
+"some {:n_adic_num=>{:hex=>43707, :oct=>255}} with {:n_adic_num=>{:hex=>43707, :oct=>255}} too"
+
+==> corrected/181.rb 64 <==
+"this is {:n_adic_num=>{:hex=>43707, :oct=>255}} with #{a} now"
+
+==> corrected/182.rb 64 <==
+"this is #{a} with {:n_adic_num=>{:hex=>43707, :oct=>255}} now"
+
+==> corrected/183.rb 54 <==
+"this is the {:n_adic_num=>{:hex=>43707, :oct=>255}}"
+
+==> corrected/184.rb 96 <==
+"this is the {:double_quot=>{:simple=>\"double_quot\", :single_in_double=>\"double_quot: '\"}}"
+
+==> corrected/185.rb 106 <==
+"this is the {:double_quot=>{:simple=>\"double_quot\", :single_in_double=>\"double_quot: '\"}} literally"
+
+==> corrected/186.rb 180 <==
+"some {:double_quot=>{:simple=>\"double_quot\", :single_in_double=>\"double_quot: '\"}} with {:double_quot=>{:simple=>\"double_quot\", :single_in_double=>\"double_quot: '\"}} too"
+
+==> corrected/187.rb 106 <==
+"this is {:double_quot=>{:simple=>\"double_quot\", :single_in_double=>\"double_quot: '\"}} with #{a} now"
+
+==> corrected/188.rb 106 <==
+"this is #{a} with {:double_quot=>{:simple=>\"double_quot\", :single_in_double=>\"double_quot: '\"}} now"
+
+==> corrected/189.rb 96 <==
+"this is the {:double_quot=>{:simple=>\"double_quot\", :single_in_double=>\"double_quot: '\"}}"
+
+==> corrected/190.rb 99 <==
+"this is the {:single_quot=>{:simple=>\"single_quot\", :double_in_single=>\"single_quot: \\\"\"}}"
+
+==> corrected/191.rb 109 <==
+"this is the {:single_quot=>{:simple=>\"single_quot\", :double_in_single=>\"single_quot: \\\"\"}} literally"
+
+==> corrected/192.rb 186 <==
+"some {:single_quot=>{:simple=>\"single_quot\", :double_in_single=>\"single_quot: \\\"\"}} with {:single_quot=>{:simple=>\"single_quot\", :double_in_single=>\"single_quot: \\\"\"}} too"
+
+==> corrected/193.rb 109 <==
+"this is {:single_quot=>{:simple=>\"single_quot\", :double_in_single=>\"single_quot: \\\"\"}} with #{a} now"
+
+==> corrected/194.rb 109 <==
+"this is #{a} with {:single_quot=>{:simple=>\"single_quot\", :double_in_single=>\"single_quot: \\\"\"}} now"
+
+==> corrected/195.rb 99 <==
+"this is the {:single_quot=>{:simple=>\"single_quot\", :double_in_single=>\"single_quot: \\\"\"}}"
+
+==> corrected/196.rb 36 <==
+"this is the {:bool=>{:key=>true}}"
+
+==> corrected/197.rb 46 <==
+"this is the {:bool=>{:key=>true}} literally"
+
+==> corrected/198.rb 60 <==
+"some {:bool=>{:key=>true}} with {:bool=>{:key=>true}} too"
+
+==> corrected/199.rb 46 <==
+"this is {:bool=>{:key=>true}} with #{a} now"
+
+==> corrected/200.rb 46 <==
+"this is #{a} with {:bool=>{:key=>true}} now"
+
+==> corrected/201.rb 36 <==
+"this is the {:bool=>{:key=>true}}"
+
+==> corrected/202.rb 37 <==
+"this is the {:bool=>{:key=>false}}"
+
+==> corrected/203.rb 47 <==
+"this is the {:bool=>{:key=>false}} literally"
+
+==> corrected/204.rb 62 <==
+"some {:bool=>{:key=>false}} with {:bool=>{:key=>false}} too"
+
+==> corrected/205.rb 47 <==
+"this is {:bool=>{:key=>false}} with #{a} now"
+
+==> corrected/206.rb 47 <==
+"this is #{a} with {:bool=>{:key=>false}} now"
+
+==> corrected/207.rb 37 <==
+"this is the {:bool=>{:key=>false}}"
+
+==> corrected/208.rb 34 <==
+"this is the {:nil=>{:key=>nil}}"
+
+==> corrected/209.rb 44 <==
+"this is the {:nil=>{:key=>nil}} literally"
+
+==> corrected/210.rb 56 <==
+"some {:nil=>{:key=>nil}} with {:nil=>{:key=>nil}} too"
+
+==> corrected/211.rb 44 <==
+"this is {:nil=>{:key=>nil}} with #{a} now"
+
+==> corrected/212.rb 44 <==
+"this is #{a} with {:nil=>{:key=>nil}} now"
+
+==> corrected/213.rb 34 <==
+"this is the {:nil=>{:key=>nil}}"
+
+==> corrected/214.rb 41 <==
+"this is the {:symbol=>{:key=>:symbol}}"
+
+==> corrected/215.rb 51 <==
+"this is the {:symbol=>{:key=>:symbol}} literally"
+
+==> corrected/216.rb 70 <==
+"some {:symbol=>{:key=>:symbol}} with {:symbol=>{:key=>:symbol}} too"
+
+==> corrected/217.rb 51 <==
+"this is {:symbol=>{:key=>:symbol}} with #{a} now"
+
+==> corrected/218.rb 51 <==
+"this is #{a} with {:symbol=>{:key=>:symbol}} now"
+
+==> corrected/219.rb 41 <==
+"this is the {:symbol=>{:key=>:symbol}}"
+
+==> corrected/220.rb 41 <==
+"this is the {:symbol=>{:key=>:symbol}}"
+
+==> corrected/221.rb 51 <==
+"this is the {:symbol=>{:key=>:symbol}} literally"
+
+==> corrected/222.rb 70 <==
+"some {:symbol=>{:key=>:symbol}} with {:symbol=>{:key=>:symbol}} too"
+
+==> corrected/223.rb 51 <==
+"this is {:symbol=>{:key=>:symbol}} with #{a} now"
+
+==> corrected/224.rb 51 <==
+"this is #{a} with {:symbol=>{:key=>:symbol}} now"
+
+==> corrected/225.rb 41 <==
+"this is the {:symbol=>{:key=>:symbol}}"
+
+==> corrected/226.rb 32 <==
+"this is the {:\"foo-bar\"=>1}"
+
+==> corrected/227.rb 42 <==
+"this is the {:\"foo-bar\"=>1} literally"
+
+==> corrected/228.rb 52 <==
+"some {:\"foo-bar\"=>1} with {:\"foo-bar\"=>1} too"
+
+==> corrected/229.rb 42 <==
+"this is {:\"foo-bar\"=>1} with #{a} now"
+
+==> corrected/230.rb 42 <==
+"this is #{a} with {:\"foo-bar\"=>1} now"
+
+==> corrected/231.rb 32 <==
+"this is the {:\"foo-bar\"=>1}"
+
+==> corrected/232.rb 46 <==
+"this is the {:symbol=>{:key=>:\"foo-bar\"}}"
+
+==> corrected/233.rb 56 <==
+"this is the {:symbol=>{:key=>:\"foo-bar\"}} literally"
+
+==> corrected/234.rb 80 <==
+"some {:symbol=>{:key=>:\"foo-bar\"}} with {:symbol=>{:key=>:\"foo-bar\"}} too"
+
+==> corrected/235.rb 56 <==
+"this is {:symbol=>{:key=>:\"foo-bar\"}} with #{a} now"
+
+==> corrected/236.rb 56 <==
+"this is #{a} with {:symbol=>{:key=>:\"foo-bar\"}} now"
+
+==> corrected/237.rb 46 <==
+"this is the {:symbol=>{:key=>:\"foo-bar\"}}"
+
+==> corrected/238.rb 75 <==
+"this is the {:single_quot_symbol=>{:key=>:\"single_quot_in_symbol: '\"}}"
+
+==> corrected/239.rb 85 <==
+"this is the {:single_quot_symbol=>{:key=>:\"single_quot_in_symbol: '\"}} literally"
+
+==> corrected/240.rb 138 <==
+"some {:single_quot_symbol=>{:key=>:\"single_quot_in_symbol: '\"}} with {:single_quot_symbol=>{:key=>:\"single_quot_in_symbol: '\"}} too"
+
+==> corrected/241.rb 85 <==
+"this is {:single_quot_symbol=>{:key=>:\"single_quot_in_symbol: '\"}} with #{a} now"
+
+==> corrected/242.rb 85 <==
+"this is #{a} with {:single_quot_symbol=>{:key=>:\"single_quot_in_symbol: '\"}} now"
+
+==> corrected/243.rb 75 <==
+"this is the {:single_quot_symbol=>{:key=>:\"single_quot_in_symbol: '\"}}"
+
+==> corrected/244.rb 78 <==
+"this is the {:double_quot_symbol=>{:key=>:\"double_quot_in_symbol: \\\"\"}}"
+
+==> corrected/245.rb 88 <==
+"this is the {:double_quot_symbol=>{:key=>:\"double_quot_in_symbol: \\\"\"}} literally"
+
+==> corrected/246.rb 144 <==
+"some {:double_quot_symbol=>{:key=>:\"double_quot_in_symbol: \\\"\"}} with {:double_quot_symbol=>{:key=>:\"double_quot_in_symbol: \\\"\"}} too"
+
+==> corrected/247.rb 88 <==
+"this is {:double_quot_symbol=>{:key=>:\"double_quot_in_symbol: \\\"\"}} with #{a} now"
+
+==> corrected/248.rb 88 <==
+"this is #{a} with {:double_quot_symbol=>{:key=>:\"double_quot_in_symbol: \\\"\"}} now"
+
+==> corrected/249.rb 78 <==
+"this is the {:double_quot_symbol=>{:key=>:\"double_quot_in_symbol: \\\"\"}}"
+
+==> corrected/250.rb 87 <==
+"this is the {:single_quot_symbol_not_in_space=>{:key=>:\"single_quot_in_symbol:'\"}}"
+
+==> corrected/251.rb 97 <==
+"this is the {:single_quot_symbol_not_in_space=>{:key=>:\"single_quot_in_symbol:'\"}} literally"
+
+==> corrected/252.rb 162 <==
+"some {:single_quot_symbol_not_in_space=>{:key=>:\"single_quot_in_symbol:'\"}} with {:single_quot_symbol_not_in_space=>{:key=>:\"single_quot_in_symbol:'\"}} too"
+
+==> corrected/253.rb 97 <==
+"this is {:single_quot_symbol_not_in_space=>{:key=>:\"single_quot_in_symbol:'\"}} with #{a} now"
+
+==> corrected/254.rb 97 <==
+"this is #{a} with {:single_quot_symbol_not_in_space=>{:key=>:\"single_quot_in_symbol:'\"}} now"
+
+==> corrected/255.rb 87 <==
+"this is the {:single_quot_symbol_not_in_space=>{:key=>:\"single_quot_in_symbol:'\"}}"
+
+==> corrected/256.rb 83 <==
+"this is the {:single_quot_symbol_in_space=>{:key=>:\"single_quot_in_symbol: \"}}"
+
+==> corrected/257.rb 93 <==
+"this is the {:single_quot_symbol_in_space=>{:key=>:\"single_quot_in_symbol: \"}} literally"
+
+==> corrected/258.rb 154 <==
+"some {:single_quot_symbol_in_space=>{:key=>:\"single_quot_in_symbol: \"}} with {:single_quot_symbol_in_space=>{:key=>:\"single_quot_in_symbol: \"}} too"
+
+==> corrected/259.rb 93 <==
+"this is {:single_quot_symbol_in_space=>{:key=>:\"single_quot_in_symbol: \"}} with #{a} now"
+
+==> corrected/260.rb 93 <==
+"this is #{a} with {:single_quot_symbol_in_space=>{:key=>:\"single_quot_in_symbol: \"}} now"
+
+==> corrected/261.rb 83 <==
+"this is the {:single_quot_symbol_in_space=>{:key=>:\"single_quot_in_symbol: \"}}"
+
+==> corrected/262.rb 37 <==
+"this is the {:range=>{:key=>1..2}}"
+
+==> corrected/263.rb 47 <==
+"this is the {:range=>{:key=>1..2}} literally"
+
+==> corrected/264.rb 62 <==
+"some {:range=>{:key=>1..2}} with {:range=>{:key=>1..2}} too"
+
+==> corrected/265.rb 47 <==
+"this is {:range=>{:key=>1..2}} with #{a} now"
+
+==> corrected/266.rb 47 <==
+"this is #{a} with {:range=>{:key=>1..2}} now"
+
+==> corrected/267.rb 37 <==
+"this is the {:range=>{:key=>1..2}}"
+
+==> corrected/268.rb 38 <==
+"this is the {:range=>{:key=>1...2}}"
+
+==> corrected/269.rb 48 <==
+"this is the {:range=>{:key=>1...2}} literally"
+
+==> corrected/270.rb 64 <==
+"some {:range=>{:key=>1...2}} with {:range=>{:key=>1...2}} too"
+
+==> corrected/271.rb 48 <==
+"this is {:range=>{:key=>1...2}} with #{a} now"
+
+==> corrected/272.rb 48 <==
+"this is #{a} with {:range=>{:key=>1...2}} now"
+
+==> corrected/273.rb 38 <==
+"this is the {:range=>{:key=>1...2}}"
+
+==> corrected/274.rb 35 <==
+"this is the {:array=>{:key=>[]}}"
+
+==> corrected/275.rb 45 <==
+"this is the {:array=>{:key=>[]}} literally"
+
+==> corrected/276.rb 58 <==
+"some {:array=>{:key=>[]}} with {:array=>{:key=>[]}} too"
+
+==> corrected/277.rb 45 <==
+"this is {:array=>{:key=>[]}} with #{a} now"
+
+==> corrected/278.rb 45 <==
+"this is #{a} with {:array=>{:key=>[]}} now"
+
+==> corrected/279.rb 35 <==
+"this is the {:array=>{:key=>[]}}"
+
+==> corrected/280.rb 41 <==
+"this is the {:array=>{:key=>[\"v1\"]}}"
+
+==> corrected/281.rb 51 <==
+"this is the {:array=>{:key=>[\"v1\"]}} literally"
+
+==> corrected/282.rb 70 <==
+"some {:array=>{:key=>[\"v1\"]}} with {:array=>{:key=>[\"v1\"]}} too"
+
+==> corrected/283.rb 51 <==
+"this is {:array=>{:key=>[\"v1\"]}} with #{a} now"
+
+==> corrected/284.rb 51 <==
+"this is #{a} with {:array=>{:key=>[\"v1\"]}} now"
+
+==> corrected/285.rb 41 <==
+"this is the {:array=>{:key=>[\"v1\"]}}"
+
+==> corrected/286.rb 49 <==
+"this is the {:array=>{:key=>[\"v1\", \"v2\"]}}"
+
+==> corrected/287.rb 59 <==
+"this is the {:array=>{:key=>[\"v1\", \"v2\"]}} literally"
+
+==> corrected/288.rb 86 <==
+"some {:array=>{:key=>[\"v1\", \"v2\"]}} with {:array=>{:key=>[\"v1\", \"v2\"]}} too"
+
+==> corrected/289.rb 59 <==
+"this is {:array=>{:key=>[\"v1\", \"v2\"]}} with #{a} now"
+
+==> corrected/290.rb 59 <==
+"this is #{a} with {:array=>{:key=>[\"v1\", \"v2\"]}} now"
+
+==> corrected/291.rb 49 <==
+"this is the {:array=>{:key=>[\"v1\", \"v2\"]}}"
+
+==> corrected/292.rb 49 <==
+"this is the {:array=>{:key=>[\"s1\", \"s2\"]}}"
+
+==> corrected/293.rb 59 <==
+"this is the {:array=>{:key=>[\"s1\", \"s2\"]}} literally"
+
+==> corrected/294.rb 86 <==
+"some {:array=>{:key=>[\"s1\", \"s2\"]}} with {:array=>{:key=>[\"s1\", \"s2\"]}} too"
+
+==> corrected/295.rb 59 <==
+"this is {:array=>{:key=>[\"s1\", \"s2\"]}} with #{a} now"
+
+==> corrected/296.rb 59 <==
+"this is #{a} with {:array=>{:key=>[\"s1\", \"s2\"]}} now"
+
+==> corrected/297.rb 49 <==
+"this is the {:array=>{:key=>[\"s1\", \"s2\"]}}"
+
+==> corrected/298.rb 49 <==
+"this is the {:array=>{:key=>[\"s1\", \"s2\"]}}"
+
+==> corrected/299.rb 59 <==
+"this is the {:array=>{:key=>[\"s1\", \"s2\"]}} literally"
+
+==> corrected/300.rb 86 <==
+"some {:array=>{:key=>[\"s1\", \"s2\"]}} with {:array=>{:key=>[\"s1\", \"s2\"]}} too"
+
+==> corrected/301.rb 59 <==
+"this is {:array=>{:key=>[\"s1\", \"s2\"]}} with #{a} now"
+
+==> corrected/302.rb 59 <==
+"this is #{a} with {:array=>{:key=>[\"s1\", \"s2\"]}} now"
+
+==> corrected/303.rb 49 <==
+"this is the {:array=>{:key=>[\"s1\", \"s2\"]}}"
+
+==> corrected/304.rb 49 <==
+"this is the {:array=>{:key=>[\"s1\", \"s2\"]}}"
+
+==> corrected/305.rb 59 <==
+"this is the {:array=>{:key=>[\"s1\", \"s2\"]}} literally"
+
+==> corrected/306.rb 86 <==
+"some {:array=>{:key=>[\"s1\", \"s2\"]}} with {:array=>{:key=>[\"s1\", \"s2\"]}} too"
+
+==> corrected/307.rb 59 <==
+"this is {:array=>{:key=>[\"s1\", \"s2\"]}} with #{a} now"
+
+==> corrected/308.rb 59 <==
+"this is #{a} with {:array=>{:key=>[\"s1\", \"s2\"]}} now"
+
+==> corrected/309.rb 49 <==
+"this is the {:array=>{:key=>[\"s1\", \"s2\"]}}"
+
+==> corrected/310.rb 49 <==
+"this is the {:array=>{:key=>[\"s1\", \"s2\"]}}"
+
+==> corrected/311.rb 59 <==
+"this is the {:array=>{:key=>[\"s1\", \"s2\"]}} literally"
+
+==> corrected/312.rb 86 <==
+"some {:array=>{:key=>[\"s1\", \"s2\"]}} with {:array=>{:key=>[\"s1\", \"s2\"]}} too"
+
+==> corrected/313.rb 59 <==
+"this is {:array=>{:key=>[\"s1\", \"s2\"]}} with #{a} now"
+
+==> corrected/314.rb 59 <==
+"this is #{a} with {:array=>{:key=>[\"s1\", \"s2\"]}} now"
+
+==> corrected/315.rb 49 <==
+"this is the {:array=>{:key=>[\"s1\", \"s2\"]}}"
+
+==> corrected/316.rb 28 <==
+x = "{:foo=>\"\\\#{bar}\"}"
+
+==> corrected/317.rb 25 <==
+x = "{\"\\\#{bar}\"=>1}"
+
+==> corrected/318.rb 26 <==
+x = "{:foo=>\"\\\\bar\"}"
+
+==> corrected/319.rb 27 <==
+x = "{:foo=>\"\\\#@bar\"}"
+
+==> corrected/320.rb 15 <==
+"this is the "
+
+==> corrected/321.rb 25 <==
+"this is the  literally"
+
+==> corrected/322.rb 18 <==
+"some  with  too"
+
+==> corrected/323.rb 25 <==
+"this is  with #{a} now"
+
+==> corrected/324.rb 25 <==
+"this is #{a} with  now"
+
+==> corrected/325.rb 15 <==
+"this is the "
+
+==> corrected/326.rb 19 <==
+"this is the 1..2"
+
+==> corrected/327.rb 29 <==
+"this is the 1..2 literally"
+
+==> corrected/328.rb 26 <==
+"some 1..2 with 1..2 too"
+
+==> corrected/329.rb 29 <==
+"this is 1..2 with #{a} now"
+
+==> corrected/330.rb 29 <==
+"this is #{a} with 1..2 now"
+
+==> corrected/331.rb 19 <==
+"this is the 1..2"
+
+==> corrected/332.rb 20 <==
+"this is the 1...2"
+
+==> corrected/333.rb 30 <==
+"this is the 1...2 literally"
+
+==> corrected/334.rb 28 <==
+"some 1...2 with 1...2 too"
+
+==> corrected/335.rb 30 <==
+"this is 1...2 with #{a} now"
+
+==> corrected/336.rb 30 <==
+"this is #{a} with 1...2 now"
+
+==> corrected/337.rb 20 <==
+"this is the 1...2"
+
+==> corrected/338.rb 19 <==
+"this is the true"
+
+==> corrected/339.rb 29 <==
+"this is the true literally"
+
+==> corrected/340.rb 26 <==
+"some true with true too"
+
+==> corrected/341.rb 29 <==
+"this is true with #{a} now"
+
+==> corrected/342.rb 29 <==
+"this is #{a} with true now"
+
+==> corrected/343.rb 19 <==
+"this is the true"
+
+==> corrected/344.rb 20 <==
+"this is the false"
+
+==> corrected/345.rb 30 <==
+"this is the false literally"
+
+==> corrected/346.rb 28 <==
+"some false with false too"
+
+==> corrected/347.rb 30 <==
+"this is false with #{a} now"
+
+==> corrected/348.rb 30 <==
+"this is #{a} with false now"
+
+==> corrected/349.rb 20 <==
+"this is the false"
+
+==> corrected/355.rb 42 <==
+%W[this interpolation is not significant]
+
+==> corrected/356.rb 42 <==
+%W[this interpolation is not significant]
+
+==> corrected/357.rb 48 <==
+%W[this [\"interpolation\"] is not significant]
+
+==> corrected/358.rb 45 <==
+%W[this [:interpolation] is not significant]
+
+==> corrected/364.rb 42 <==
+%I[this interpolation is not significant]
+
+==> corrected/365.rb 42 <==
+%I[this interpolation is not significant]
+
+==> corrected/366.rb 48 <==
+%I[this [\"interpolation\"] is not significant]
+
+==> corrected/367.rb 45 <==
+%I[this [:interpolation] is not significant]
+
+==> corrected/368.rb 18 <==
+"this is 1 silly"
+
+==> corrected/370.rb 28 <==
+"this is the #{__FILE__} 1"
+
+==> corrected/372.rb 28 <==
+"this is the #{__LINE__} 1"
+
+==> corrected/374.rb 27 <==
+"this is the #{__END__} 1"
+
+==> corrected/376.rb 32 <==
+"this is the #{__ENCODING__} 1"
+
+==> corrected/377.rb 18 <==
+"this is the foo"
+
+==> corrected/378.rb 18 <==
+"this is the foo"
+
+==> corrected/379.rb 19 <==
+"this is \" silly"
+
+==> corrected/380.rb 19 <==
+"this is \" silly"
+
+==> corrected/381.rb 22 <==
+"this is \#{1} silly"
+
+==> corrected/382.rb 77 <==
+x = "ABC".gsub(/(A)(B)(C)/, "D\\2F")
+"this is \\n silly"
+"this is \\n silly"
+
+==> corrected/383.rb 54 <==
+"this is 
+ silly"
+"this is 
+ silly"
+"this is 
+ silly"
+
+==> corrected/385.rb 18 <==
+:"this is the 42"
+
+==> corrected/386.rb 17 <==
+`this is the 42`
+
+==> corrected/387.rb 17 <==
+/this is the 42/
+
+==> corrected/388.rb 13 <==
+/test\/test/
+
+==> corrected/389.rb 22 <==
+/test\/a\/b\/c\/test/
+
+==> corrected/390.rb 13 <==
+/test\/test/
+
+==> corrected/391.rb 15 <==
+/test\\\/test/
+
+==> corrected/392.rb 14 <==
+%r{test/test}
+
+==> corrected/393.rb 12 <==
+"test/test"
+
+==> corrected/394.rb 11 <==
+"\201\203"
+

@@ -1,0 +1,52 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 26 <==
+a = OpenStruct.new(a: 42)
+
+==> 001.rb 32 <==
+class SubClass < OpenStruct
+end
+
+==> 002.rb 33 <==
+SubClass = Class.new(OpenStruct)
+
+==> 003.rb 28 <==
+a = ::OpenStruct.new(a: 42)
+
+==> 004.rb 34 <==
+class SubClass < ::OpenStruct
+end
+
+==> 005.rb 35 <==
+SubClass = Class.new(::OpenStruct)
+
+==> 006.rb 40 <==
+class A < SomeNamespace::OpenStruct; end
+==> 007.rb 50 <==
+module SomeNamespace
+  class OpenStruct
+  end
+end
+
+==> 008.rb 51 <==
+module SomeNamespace
+  module OpenStruct
+  end
+end
+
+==> 009.rb 34 <==
+a = SomeNamespace::OpenStruct.new
+
+==> 010.rb 16 <==
+class A < B; end
+==> 011.rb 6 <==
+a = 42
+==> 012.rb 11 <==
+OpenStruct
+

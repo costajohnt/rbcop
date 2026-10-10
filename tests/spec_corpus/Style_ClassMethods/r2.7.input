@@ -1,0 +1,43 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 61 <==
+class Test
+  def Test.some_method
+    do_something
+  end
+end
+
+==> 001.rb 62 <==
+module Test
+  def Test.some_method
+    do_something
+  end
+end
+
+==> 002.rb 62 <==
+module Test
+  def self.some_method
+    do_something
+  end
+end
+
+==> 003.rb 79 <==
+class Test
+  X = Something.new
+
+  def X.some_method
+    do_something
+  end
+end
+
+==> 004.rb 40 <==
+def Test.some_method
+  do_something
+end
+

@@ -1,0 +1,31 @@
+==> offenses exit=1 704 <==
+000.rb:1:7: C: [Correctable] Layout/SpaceInLambdaLiteral: Do not use spaces between `->` and `(` in lambda literals.
+004.rb:1:7: C: [Correctable] Layout/SpaceInLambdaLiteral: Do not use spaces between `->` and `(` in lambda literals.
+005.rb:1:14: C: [Correctable] Layout/SpaceInLambdaLiteral: Do not use spaces between `->` and `(` in lambda literals.
+006.rb:1:7: C: [Correctable] Layout/SpaceInLambdaLiteral: Do not use spaces between `->` and `(` in lambda literals.
+007.rb:1:7: C: [Correctable] Layout/SpaceInLambdaLiteral: Do not use spaces between `->` and `(` in lambda literals.
+007.rb:1:15: C: [Correctable] Layout/SpaceInLambdaLiteral: Do not use spaces between `->` and `(` in lambda literals.
+
+==> autocorrect exit=0 692 <==
+000.rb:1:7: C: [Corrected] Layout/SpaceInLambdaLiteral: Do not use spaces between `->` and `(` in lambda literals.
+004.rb:1:7: C: [Corrected] Layout/SpaceInLambdaLiteral: Do not use spaces between `->` and `(` in lambda literals.
+005.rb:1:14: C: [Corrected] Layout/SpaceInLambdaLiteral: Do not use spaces between `->` and `(` in lambda literals.
+006.rb:1:7: C: [Corrected] Layout/SpaceInLambdaLiteral: Do not use spaces between `->` and `(` in lambda literals.
+007.rb:1:7: C: [Corrected] Layout/SpaceInLambdaLiteral: Do not use spaces between `->` and `(` in lambda literals.
+007.rb:1:15: C: [Corrected] Layout/SpaceInLambdaLiteral: Do not use spaces between `->` and `(` in lambda literals.
+
+==> corrected/000.rb 23 <==
+a = ->(b, c) { b + c }
+
+==> corrected/004.rb 23 <==
+a = ->(b, c) { b + c }
+
+==> corrected/005.rb 34 <==
+a = ->(b = ->(c) {}, d) { b + d }
+
+==> corrected/006.rb 34 <==
+a = ->(b = ->(c) {}, d) { b + d }
+
+==> corrected/007.rb 34 <==
+a = ->(b = ->(c) {}, d) { b + d }
+

@@ -1,0 +1,17 @@
+==> .rubocop.yml 173 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/MutableConstant:
+  EnforcedStyle: strict
+  Recursive: true
+
+==> 000.rb 20 <==
+CONST = [{ a: [] }]
+
+==> 001.rb 31 <==
+CONST = [Something.new].freeze
+

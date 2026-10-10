@@ -1,0 +1,25 @@
+==> offenses exit=1 440 <==
+001.rb:1:6: C: [Correctable] Style/SpecialGlobalVars: Prefer `$LOAD_PATH` over `$:`.
+001.rb:2:6: C: [Correctable] Style/SpecialGlobalVars: Prefer `$LOADED_FEATURES` over `$"`.
+001.rb:3:6: C: [Correctable] Style/SpecialGlobalVars: Prefer `$PROGRAM_NAME` over `$0`.
+004.rb:1:1: C: [Correctable] Style/SpecialGlobalVars: Prefer `$PROGRAM_NAME` over `$0`.
+005.rb:1:1: C: [Correctable] Style/SpecialGlobalVars: Prefer `$PROGRAM_NAME` over `$0`.
+
+==> autocorrect exit=0 430 <==
+001.rb:1:6: C: [Corrected] Style/SpecialGlobalVars: Prefer `$LOAD_PATH` over `$:`.
+001.rb:2:6: C: [Corrected] Style/SpecialGlobalVars: Prefer `$LOADED_FEATURES` over `$"`.
+001.rb:3:6: C: [Corrected] Style/SpecialGlobalVars: Prefer `$PROGRAM_NAME` over `$0`.
+004.rb:1:1: C: [Corrected] Style/SpecialGlobalVars: Prefer `$PROGRAM_NAME` over `$0`.
+005.rb:1:1: C: [Corrected] Style/SpecialGlobalVars: Prefer `$PROGRAM_NAME` over `$0`.
+
+==> corrected/001.rb 57 <==
+puts $LOAD_PATH
+puts $LOADED_FEATURES
+puts $PROGRAM_NAME
+
+==> corrected/004.rb 14 <==
+$PROGRAM_NAME
+
+==> corrected/005.rb 29 <==
+$PROGRAM_NAME; $PROGRAM_NAME
+

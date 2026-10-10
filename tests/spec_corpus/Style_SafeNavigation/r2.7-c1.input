@@ -1,0 +1,127 @@
+==> .rubocop.yml 150 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SafeNavigation:
+  MaxChainLength: 1
+
+==> 000.rb 15 <==
+foo.one if foo
+
+==> 001.rb 35 <==
+%{variable}.one.two if %{variable}
+
+==> 002.rb 21 <==
+if foo
+  foo.one
+end
+
+==> 003.rb 25 <==
+if foo
+  foo.one.two
+end
+
+==> 004.rb 15 <==
+foo && foo.one
+
+==> 005.rb 19 <==
+foo && foo.one.two
+
+==> 006.rb 15 <==
+FOO.one if FOO
+
+==> 007.rb 21 <==
+if FOO
+  FOO.one
+end
+
+==> 008.rb 25 <==
+if FOO
+  FOO.one.two
+end
+
+==> 009.rb 15 <==
+FOO && FOO.one
+
+==> 010.rb 19 <==
+FOO && FOO.one.two
+
+==> 011.rb 25 <==
+FOO::BAR.one if FOO::BAR
+
+==> 012.rb 31 <==
+if FOO::BAR
+  FOO::BAR.one
+end
+
+==> 013.rb 35 <==
+if FOO::BAR
+  FOO::BAR.one.two
+end
+
+==> 014.rb 25 <==
+FOO::BAR && FOO::BAR.one
+
+==> 015.rb 29 <==
+FOO::BAR && FOO::BAR.one.two
+
+==> 016.rb 17 <==
+@foo.one if @foo
+
+==> 017.rb 23 <==
+if @foo
+  @foo.one
+end
+
+==> 018.rb 27 <==
+if @foo
+  @foo.one.two
+end
+
+==> 019.rb 17 <==
+@foo && @foo.one
+
+==> 020.rb 21 <==
+@foo && @foo.one.two
+
+==> 021.rb 19 <==
+@@foo.one if @@foo
+
+==> 022.rb 25 <==
+if @@foo
+  @@foo.one
+end
+
+==> 023.rb 29 <==
+if @@foo
+  @@foo.one.two
+end
+
+==> 024.rb 19 <==
+@@foo && @@foo.one
+
+==> 025.rb 23 <==
+@@foo && @@foo.one.two
+
+==> 026.rb 17 <==
+$FOO.one if $FOO
+
+==> 027.rb 23 <==
+if $FOO
+  $FOO.one
+end
+
+==> 028.rb 27 <==
+if $FOO
+  $FOO.one.two
+end
+
+==> 029.rb 17 <==
+$FOO && $FOO.one
+
+==> 030.rb 21 <==
+$FOO && $FOO.one.two
+

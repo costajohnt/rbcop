@@ -1,0 +1,12 @@
+==> offenses exit=1 284 <==
+000.rb:1:9: W: Lint/UnifiedInteger: Use `Integer` instead of `Fixnum`.
+001.rb:1:9: W: Lint/UnifiedInteger: Use `Integer` instead of `Fixnum`.
+003.rb:1:9: W: Lint/UnifiedInteger: Use `Integer` instead of `Bignum`.
+004.rb:1:9: W: Lint/UnifiedInteger: Use `Integer` instead of `Bignum`.
+
+==> autocorrect exit=1 284 <==
+000.rb:1:9: W: Lint/UnifiedInteger: Use `Integer` instead of `Fixnum`.
+001.rb:1:9: W: Lint/UnifiedInteger: Use `Integer` instead of `Fixnum`.
+003.rb:1:9: W: Lint/UnifiedInteger: Use `Integer` instead of `Bignum`.
+004.rb:1:9: W: Lint/UnifiedInteger: Use `Integer` instead of `Bignum`.
+

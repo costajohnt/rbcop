@@ -1,0 +1,123 @@
+==> offenses exit=1 3021 <==
+000.rb:2:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :bar`.
+000.rb:3:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :bar`.
+001.rb:2:8: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :bar`.
+001.rb:3:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :bar`.
+002.rb:3:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor *ATTRIBUTES`.
+002.rb:4:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor *ATTRIBUTES`.
+003.rb:2:21: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :bar`.
+003.rb:3:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :bar`.
+004.rb:2:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :foo`.
+004.rb:3:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :foo`.
+005.rb:2:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :bar`.
+005.rb:3:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :bar`.
+005.rb:7:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :baz`.
+005.rb:8:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :baz`.
+006.rb:5:17: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :baz`.
+006.rb:6:17: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :baz`.
+007.rb:2:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :foo`.
+007.rb:2:21: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :bar`.
+007.rb:2:27: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :baz`.
+007.rb:3:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :foo`.
+007.rb:3:21: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :bar`.
+007.rb:3:27: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :baz`.
+008.rb:2:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :foo`.
+008.rb:2:27: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :baz`.
+008.rb:3:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :foo`.
+008.rb:3:21: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :baz`.
+011.rb:2:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :foo`.
+011.rb:8:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :foo`.
+012.rb:2:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :foo`.
+012.rb:3:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :foo`.
+012.rb:7:21: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :baz`.
+012.rb:8:15: C: Style/BisectedAttrAccessor: Combine both accessors into `attr_accessor :baz`.
+
+==> autocorrect exit=0 0 <==
+
+==> corrected/000.rb 60 <==
+class Foo
+  attr_accessor :bar
+  other_macro :something
+end
+
+==> corrected/001.rb 60 <==
+class Foo
+  attr_accessor :bar
+  other_macro :something
+end
+
+==> corrected/002.rb 94 <==
+class Foo
+  ATTRIBUTES = %i[foo bar]
+  attr_accessor *ATTRIBUTES
+  other_macro :something
+end
+
+==> corrected/003.rb 105 <==
+class Foo
+  attr_accessor :bar
+  attr_reader :baz, :quux
+  attr_writer :zoo
+  other_macro :something
+end
+
+==> corrected/004.rb 60 <==
+class Foo
+  attr_accessor :foo
+  other_macro :something
+end
+
+==> corrected/005.rb 68 <==
+class Foo
+  attr_accessor :bar
+
+  private
+
+  attr_accessor :baz
+end
+
+==> corrected/006.rb 115 <==
+class Foo
+  attr_reader :bar
+
+  class << self
+    attr_accessor :baz
+
+    private
+
+    attr_reader :quux
+  end
+end
+
+==> corrected/007.rb 47 <==
+class Foo
+  attr_accessor :foo, :bar, :baz
+end
+
+==> corrected/008.rb 60 <==
+class Foo
+  attr_accessor :foo, :baz
+  attr_reader :bar
+end
+
+==> corrected/011.rb 75 <==
+class Foo
+  attr_accessor :foo
+
+  private
+  attr_writer :bar
+
+  public
+end
+
+==> corrected/012.rb 107 <==
+module Foo
+  attr_accessor :foo
+  attr_writer :bar
+
+  private
+
+  attr_accessor :baz
+  attr_reader :bar
+end
+

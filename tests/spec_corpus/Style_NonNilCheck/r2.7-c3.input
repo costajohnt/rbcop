@@ -1,0 +1,15 @@
+==> .rubocop.yml 207 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/NonNilCheck:
+  IncludeSemanticChanges: true
+Style/NilComparison:
+  EnforcedStyle: comparison
+
+==> 000.rb 11 <==
+foo != nil
+

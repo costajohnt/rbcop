@@ -1,0 +1,20 @@
+==> .rubocop.yml 155 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/Next:
+  EnforcedStyle: skip_modifier_ifs
+
+==> 000.rb 38 <==
+[].each do |o|
+  puts o if o == 1
+end
+
+==> 001.rb 42 <==
+[].each do |o|
+  puts o unless o == 1
+end
+

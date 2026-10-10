@@ -1,0 +1,24 @@
+==> offenses exit=1 340 <==
+000.rb:1:9: W: [Correctable] Lint/UnifiedInteger: Use `Integer` instead of `Fixnum`.
+001.rb:1:9: W: [Correctable] Lint/UnifiedInteger: Use `Integer` instead of `Fixnum`.
+003.rb:1:9: W: [Correctable] Lint/UnifiedInteger: Use `Integer` instead of `Bignum`.
+004.rb:1:9: W: [Correctable] Lint/UnifiedInteger: Use `Integer` instead of `Bignum`.
+
+==> autocorrect exit=0 332 <==
+000.rb:1:9: W: [Corrected] Lint/UnifiedInteger: Use `Integer` instead of `Fixnum`.
+001.rb:1:9: W: [Corrected] Lint/UnifiedInteger: Use `Integer` instead of `Fixnum`.
+003.rb:1:9: W: [Corrected] Lint/UnifiedInteger: Use `Integer` instead of `Bignum`.
+004.rb:1:9: W: [Corrected] Lint/UnifiedInteger: Use `Integer` instead of `Bignum`.
+
+==> corrected/000.rb 17 <==
+1.is_a?(Integer)
+
+==> corrected/001.rb 19 <==
+1.is_a?(::Integer)
+
+==> corrected/003.rb 17 <==
+1.is_a?(Integer)
+
+==> corrected/004.rb 19 <==
+1.is_a?(::Integer)
+

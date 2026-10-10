@@ -1,0 +1,112 @@
+==> offenses exit=1 1618 <==
+000.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `private def test` at 1, 0.
+002.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `private def Test.test` at 1, 0.
+004.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `ensure` at 3, 2 is not aligned with `private def test` at 1, 0.
+006.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `ensure` at 3, 2 is not aligned with `private def Test.test` at 1, 0.
+008.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `private_class_method def test` at 1, 0.
+010.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `private_class_method def Test.test` at 1, 0.
+012.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `ensure` at 3, 2 is not aligned with `private_class_method def test` at 1, 0.
+014.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `ensure` at 3, 2 is not aligned with `private_class_method def Test.test` at 1, 0.
+016.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `public_class_method def test` at 1, 0.
+018.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `public_class_method def Test.test` at 1, 0.
+020.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `ensure` at 3, 2 is not aligned with `public_class_method def test` at 1, 0.
+022.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `ensure` at 3, 2 is not aligned with `public_class_method def Test.test` at 1, 0.
+
+==> autocorrect exit=0 1594 <==
+000.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `private def test` at 1, 0.
+002.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `private def Test.test` at 1, 0.
+004.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `ensure` at 3, 2 is not aligned with `private def test` at 1, 0.
+006.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `ensure` at 3, 2 is not aligned with `private def Test.test` at 1, 0.
+008.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `private_class_method def test` at 1, 0.
+010.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `private_class_method def Test.test` at 1, 0.
+012.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `ensure` at 3, 2 is not aligned with `private_class_method def test` at 1, 0.
+014.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `ensure` at 3, 2 is not aligned with `private_class_method def Test.test` at 1, 0.
+016.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `public_class_method def test` at 1, 0.
+018.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `public_class_method def Test.test` at 1, 0.
+020.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `ensure` at 3, 2 is not aligned with `public_class_method def test` at 1, 0.
+022.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `ensure` at 3, 2 is not aligned with `public_class_method def Test.test` at 1, 0.
+
+==> corrected/000.rb 44 <==
+private def test
+  'foo'
+rescue
+  'baz'
+end
+
+==> corrected/002.rb 49 <==
+private def Test.test
+  'foo'
+rescue
+  'baz'
+end
+
+==> corrected/004.rb 44 <==
+private def test
+  'foo'
+ensure
+  'baz'
+end
+
+==> corrected/006.rb 49 <==
+private def Test.test
+  'foo'
+ensure
+  'baz'
+end
+
+==> corrected/008.rb 57 <==
+private_class_method def test
+  'foo'
+rescue
+  'baz'
+end
+
+==> corrected/010.rb 62 <==
+private_class_method def Test.test
+  'foo'
+rescue
+  'baz'
+end
+
+==> corrected/012.rb 57 <==
+private_class_method def test
+  'foo'
+ensure
+  'baz'
+end
+
+==> corrected/014.rb 62 <==
+private_class_method def Test.test
+  'foo'
+ensure
+  'baz'
+end
+
+==> corrected/016.rb 56 <==
+public_class_method def test
+  'foo'
+rescue
+  'baz'
+end
+
+==> corrected/018.rb 61 <==
+public_class_method def Test.test
+  'foo'
+rescue
+  'baz'
+end
+
+==> corrected/020.rb 56 <==
+public_class_method def test
+  'foo'
+ensure
+  'baz'
+end
+
+==> corrected/022.rb 61 <==
+public_class_method def Test.test
+  'foo'
+ensure
+  'baz'
+end
+

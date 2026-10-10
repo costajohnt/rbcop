@@ -1,0 +1,17 @@
+==> .rubocop.yml 166 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LeadingCommentSpace:
+  AllowSteepAnnotation: false
+
+==> 000.rb 108 <==
+[1, 2, 3].each_with_object([]) do |n, list| #$ Array[Integer]
+  list << n
+end
+
+name = 'John'      #: String
+

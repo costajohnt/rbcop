@@ -1,0 +1,28 @@
+==> offenses exit=1 1104 <==
+000.rb:1:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+001.rb:1:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+002.rb:1:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+003.rb:1:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+004.rb:1:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+005.rb:1:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+006.rb:1:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+011.rb:3:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+012.rb:3:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+018.rb:2:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+020.rb:2:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+022.rb:2:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+
+==> autocorrect exit=1 1104 <==
+000.rb:1:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+001.rb:1:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+002.rb:1:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+003.rb:1:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+004.rb:1:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+005.rb:1:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+006.rb:1:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+011.rb:3:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+012.rb:3:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+018.rb:2:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+020.rb:2:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+022.rb:2:1: W: Lint/UselessRuby2Keywords: `ruby2_keywords` is unnecessary for method `foo`.
+

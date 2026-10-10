@@ -1,0 +1,166 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 31 <==
+if cond then run else dont end
+
+==> 001.rb 25 <==
+if cond then run else end
+==> 002.rb 27 <==
+if cond then else dont end
+
+==> 003.rb 20 <==
+if cond then run end
+==> 004.rb 29 <==
+if cond then x; y else z end
+
+==> 005.rb 35 <==
+unless cond then run else dont end
+
+==> 006.rb 54 <==
+if cond then foo else if cond2; bar else baz end; end
+
+==> 007.rb 33 <==
+if cond; foo; else bar; baz; end
+
+==> 008.rb 29 <==
+unless cond then run else end
+==> 009.rb 24 <==
+unless cond then run end
+==> 010.rb 35 <==
+a | if cond then run else dont end
+
+==> 011.rb 35 <==
+a ^ if cond then run else dont end
+
+==> 012.rb 35 <==
+a & if cond then run else dont end
+
+==> 013.rb 37 <==
+a <=> if cond then run else dont end
+
+==> 014.rb 36 <==
+a == if cond then run else dont end
+
+==> 015.rb 37 <==
+a === if cond then run else dont end
+
+==> 016.rb 36 <==
+a =~ if cond then run else dont end
+
+==> 017.rb 35 <==
+a > if cond then run else dont end
+
+==> 018.rb 36 <==
+a >= if cond then run else dont end
+
+==> 019.rb 35 <==
+a < if cond then run else dont end
+
+==> 020.rb 36 <==
+a <= if cond then run else dont end
+
+==> 021.rb 36 <==
+a << if cond then run else dont end
+
+==> 022.rb 36 <==
+a >> if cond then run else dont end
+
+==> 023.rb 35 <==
+a + if cond then run else dont end
+
+==> 024.rb 35 <==
+a - if cond then run else dont end
+
+==> 025.rb 35 <==
+a * if cond then run else dont end
+
+==> 026.rb 35 <==
+a / if cond then run else dont end
+
+==> 027.rb 35 <==
+a % if cond then run else dont end
+
+==> 028.rb 36 <==
+a ** if cond then run else dont end
+
+==> 029.rb 35 <==
+a ~ if cond then run else dont end
+
+==> 030.rb 35 <==
+a ! if cond then run else dont end
+
+==> 031.rb 36 <==
+a != if cond then run else dont end
+
+==> 032.rb 36 <==
+a !~ if cond then run else dont end
+
+==> 033.rb 36 <==
+a && if cond then run else dont end
+
+==> 034.rb 36 <==
+a || if cond then run else dont end
+
+==> 035.rb 38 <==
+if puts 1 then puts 1 else puts 1 end
+
+==> 036.rb 53 <==
+if defined? :A then defined? :A else defined? :A end
+
+==> 037.rb 41 <==
+if yield a then yield a else yield a end
+
+==> 038.rb 41 <==
+if super b then super b else super b end
+
+==> 039.rb 35 <==
+if not a then not a else not a end
+
+==> 040.rb 41 <==
+if a and b then a and b else a and b end
+
+==> 041.rb 38 <==
+if a or b then a or b else a or b end
+
+==> 042.rb 35 <==
+if a = b then a = b else a = b end
+
+==> 043.rb 47 <==
+if a ? b : c then a ? b : c else a ? b : c end
+
+==> 044.rb 42 <==
+if check 1 then run 2 else dont_run 3 end
+
+==> 045.rb 39 <==
+if a(0) then puts(1) else yield(2) end
+
+==> 046.rb 35 <==
+if 0 + 0 then 1 + 1 else 2 + 2 end
+
+==> 047.rb 30 <==
+if true then break else 7 end
+
+==> 048.rb 29 <==
+if true then self else 7 end
+
+==> 049.rb 30 <==
+if true then raise else 7 end
+
+==> 050.rb 82 <==
+map { |line| if line.match(/^ *#/) || line.strip.empty? then next else line end }
+
+==> 051.rb 45 <==
+if cond1 then run elsif cond2 then maybe end
+
+==> 052.rb 55 <==
+if cond1 then run elsif cond2 then maybe else dont end
+
+==> 053.rb 80 <==
+if cond1 then run elsif cond2 then maybe elsif cond3 then perhaps else dont end
+

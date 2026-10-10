@@ -1,0 +1,86 @@
+==> offenses exit=1 2298 <==
+000.rb:1:1: W: [Correctable] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('aes-128-gcm')` instead of `OpenSSL::Cipher::AES.new(128, :GCM)`.
+001.rb:1:1: W: [Correctable] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('aes-128-gcm')` instead of `OpenSSL::Cipher::AES.new('128-GCM')`.
+002.rb:1:1: W: [Correctable] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('aes-128-gcm')` instead of `OpenSSL::Cipher::AES128.new("GCM")`.
+003.rb:1:1: W: [Correctable] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('des-cbc')` instead of `OpenSSL::Cipher::DES.new('cbc')`.
+004.rb:1:1: W: [Correctable] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('AES-256-ECB')` instead of `OpenSSL::Cipher::Cipher.new('AES-256-ECB')`.
+005.rb:1:1: W: [Correctable] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('bf-ecb')` instead of `OpenSSL::Cipher::BF.new('ecb')`.
+006.rb:1:1: W: [Correctable] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('aes-128-gcm')` instead of `OpenSSL::Cipher::AES128.new(:GCM)`.
+007.rb:1:1: W: [Correctable] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('bf')` instead of `OpenSSL::Cipher::BF.new`.
+008.rb:1:1: W: [Correctable] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('des')` instead of `OpenSSL::Cipher::DES.new`.
+009.rb:1:1: W: [Correctable] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('idea')` instead of `OpenSSL::Cipher::IDEA.new`.
+010.rb:1:1: W: [Correctable] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('rc4')` instead of `OpenSSL::Cipher::RC4.new`.
+011.rb:1:1: W: [Correctable] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('aes-128-cbc')` instead of `OpenSSL::Cipher::AES128.new`.
+017.rb:1:1: W: [Correctable] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Digest.new('SHA256')` instead of `OpenSSL::Digest::SHA256.new`.
+018.rb:1:1: W: [Correctable] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Digest.digest('SHA256', 'foo')` instead of `OpenSSL::Digest::SHA256.digest('foo')`.
+019.rb:1:1: W: [Correctable] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Digest.new('SHA256')` instead of `OpenSSL::Digest::SHA256.new`.
+020.rb:2:3: W: [Correctable] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Digest.new('SHA1')` instead of `OpenSSL::Digest::SHA1.new`.
+
+==> autocorrect exit=0 2266 <==
+000.rb:1:1: W: [Corrected] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('aes-128-gcm')` instead of `OpenSSL::Cipher::AES.new(128, :GCM)`.
+001.rb:1:1: W: [Corrected] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('aes-128-gcm')` instead of `OpenSSL::Cipher::AES.new('128-GCM')`.
+002.rb:1:1: W: [Corrected] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('aes-128-gcm')` instead of `OpenSSL::Cipher::AES128.new("GCM")`.
+003.rb:1:1: W: [Corrected] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('des-cbc')` instead of `OpenSSL::Cipher::DES.new('cbc')`.
+004.rb:1:1: W: [Corrected] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('AES-256-ECB')` instead of `OpenSSL::Cipher::Cipher.new('AES-256-ECB')`.
+005.rb:1:1: W: [Corrected] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('bf-ecb')` instead of `OpenSSL::Cipher::BF.new('ecb')`.
+006.rb:1:1: W: [Corrected] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('aes-128-gcm')` instead of `OpenSSL::Cipher::AES128.new(:GCM)`.
+007.rb:1:1: W: [Corrected] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('bf')` instead of `OpenSSL::Cipher::BF.new`.
+008.rb:1:1: W: [Corrected] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('des')` instead of `OpenSSL::Cipher::DES.new`.
+009.rb:1:1: W: [Corrected] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('idea')` instead of `OpenSSL::Cipher::IDEA.new`.
+010.rb:1:1: W: [Corrected] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('rc4')` instead of `OpenSSL::Cipher::RC4.new`.
+011.rb:1:1: W: [Corrected] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Cipher.new('aes-128-cbc')` instead of `OpenSSL::Cipher::AES128.new`.
+017.rb:1:1: W: [Corrected] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Digest.new('SHA256')` instead of `OpenSSL::Digest::SHA256.new`.
+018.rb:1:1: W: [Corrected] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Digest.digest('SHA256', 'foo')` instead of `OpenSSL::Digest::SHA256.digest('foo')`.
+019.rb:1:1: W: [Corrected] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Digest.new('SHA256')` instead of `OpenSSL::Digest::SHA256.new`.
+020.rb:2:3: W: [Corrected] Lint/DeprecatedOpenSSLConstant: Use `OpenSSL::Digest.new('SHA1')` instead of `OpenSSL::Digest::SHA1.new`.
+
+==> corrected/000.rb 35 <==
+OpenSSL::Cipher.new('aes-128-gcm')
+
+==> corrected/001.rb 35 <==
+OpenSSL::Cipher.new('aes-128-gcm')
+
+==> corrected/002.rb 35 <==
+OpenSSL::Cipher.new('aes-128-gcm')
+
+==> corrected/003.rb 31 <==
+OpenSSL::Cipher.new('des-cbc')
+
+==> corrected/004.rb 35 <==
+OpenSSL::Cipher.new('AES-256-ECB')
+
+==> corrected/005.rb 30 <==
+OpenSSL::Cipher.new('bf-ecb')
+
+==> corrected/006.rb 35 <==
+OpenSSL::Cipher.new('aes-128-gcm')
+
+==> corrected/007.rb 26 <==
+OpenSSL::Cipher.new('bf')
+
+==> corrected/008.rb 27 <==
+OpenSSL::Cipher.new('des')
+
+==> corrected/009.rb 28 <==
+OpenSSL::Cipher.new('idea')
+
+==> corrected/010.rb 27 <==
+OpenSSL::Cipher.new('rc4')
+
+==> corrected/011.rb 35 <==
+OpenSSL::Cipher.new('aes-128-cbc')
+
+==> corrected/017.rb 30 <==
+OpenSSL::Digest.new('SHA256')
+
+==> corrected/018.rb 40 <==
+OpenSSL::Digest.digest('SHA256', 'foo')
+
+==> corrected/019.rb 44 <==
+OpenSSL::Digest.new('SHA256').digest('foo')
+
+==> corrected/020.rb 50 <==
+do_something do
+  OpenSSL::Digest.new('SHA1')
+end
+

@@ -1,0 +1,12 @@
+==> .rubocop.yml 174 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.2
+Style/SafeNavigation:
+  ConvertCodeThatCanStartToReturnNil: false
+
+==> 000.rb 14 <==
+foo.bar if foo

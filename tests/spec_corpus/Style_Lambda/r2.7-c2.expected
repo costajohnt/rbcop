@@ -1,0 +1,133 @@
+==> offenses exit=1 1776 <==
+000.rb:1:5: C: [Correctable] Style/Lambda: Use the `-> { ... }` lambda literal syntax for single line lambdas.
+001.rb:1:5: C: [Correctable] Style/Lambda: Use the `-> { ... }` lambda literal syntax for single line lambdas.
+004.rb:1:5: C: [Correctable] Style/Lambda: Use the `-> { ... }` lambda literal syntax for single line lambdas.
+005.rb:1:1: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+008.rb:1:5: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+009.rb:1:5: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+010.rb:1:1: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+011.rb:1:1: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+012.rb:1:1: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+013.rb:1:1: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+014.rb:1:1: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+015.rb:1:1: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+016.rb:1:1: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+017.rb:1:1: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+018.rb:1:1: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+020.rb:1:20: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+021.rb:1:15: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+022.rb:1:15: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+023.rb:2:8: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+
+==> autocorrect exit=0 1738 <==
+000.rb:1:5: C: [Corrected] Style/Lambda: Use the `-> { ... }` lambda literal syntax for single line lambdas.
+001.rb:1:5: C: [Corrected] Style/Lambda: Use the `-> { ... }` lambda literal syntax for single line lambdas.
+004.rb:1:5: C: [Corrected] Style/Lambda: Use the `-> { ... }` lambda literal syntax for single line lambdas.
+005.rb:1:1: C: [Corrected] Style/Lambda: Use the `lambda` method for multiline lambdas.
+008.rb:1:5: C: [Corrected] Style/Lambda: Use the `lambda` method for multiline lambdas.
+009.rb:1:5: C: [Corrected] Style/Lambda: Use the `lambda` method for multiline lambdas.
+010.rb:1:1: C: [Corrected] Style/Lambda: Use the `lambda` method for multiline lambdas.
+011.rb:1:1: C: [Corrected] Style/Lambda: Use the `lambda` method for multiline lambdas.
+012.rb:1:1: C: [Corrected] Style/Lambda: Use the `lambda` method for multiline lambdas.
+013.rb:1:1: C: [Corrected] Style/Lambda: Use the `lambda` method for multiline lambdas.
+014.rb:1:1: C: [Corrected] Style/Lambda: Use the `lambda` method for multiline lambdas.
+015.rb:1:1: C: [Corrected] Style/Lambda: Use the `lambda` method for multiline lambdas.
+016.rb:1:1: C: [Corrected] Style/Lambda: Use the `lambda` method for multiline lambdas.
+017.rb:1:1: C: [Corrected] Style/Lambda: Use the `lambda` method for multiline lambdas.
+018.rb:1:1: C: [Corrected] Style/Lambda: Use the `lambda` method for multiline lambdas.
+020.rb:1:20: C: [Corrected] Style/Lambda: Use the `lambda` method for multiline lambdas.
+021.rb:1:15: C: [Corrected] Style/Lambda: Use the `lambda` method for multiline lambdas.
+022.rb:1:15: C: [Corrected] Style/Lambda: Use the `lambda` method for multiline lambdas.
+023.rb:2:8: C: [Corrected] Style/Lambda: Use the `lambda` method for multiline lambdas.
+
+==> corrected/000.rb 16 <==
+f = ->(x) { x }
+
+==> corrected/001.rb 13 <==
+f = -> { x }
+
+==> corrected/004.rb 14 <==
+f = -> { _1 }
+
+==> corrected/005.rb 29 <==
+lambda {
+  _1.do_something
+}
+
+==> corrected/008.rb 26 <==
+f = lambda do |x|
+  x
+end
+
+==> corrected/009.rb 22 <==
+f = lambda do
+  x
+end
+
+==> corrected/010.rb 22 <==
+lambda do |x|
+  x
+end
+
+==> corrected/011.rb 22 <==
+lambda do |x|
+  x
+end
+
+==> corrected/012.rb 22 <==
+lambda do |x|
+  x
+end
+
+==> corrected/013.rb 18 <==
+lambda do
+  x
+end
+
+==> corrected/014.rb 18 <==
+lambda do
+  x
+end
+
+==> corrected/015.rb 18 <==
+lambda do
+  x
+end
+
+==> corrected/016.rb 35 <==
+lambda do |hello|
+  puts hello
+end
+
+==> corrected/017.rb 35 <==
+lambda do |hello|
+  puts hello
+end
+
+==> corrected/018.rb 41 <==
+lambda do |hello, user|
+  puts hello
+end
+
+==> corrected/020.rb 87 <==
+has_many :kittens, lambda {
+  where(cats: Cat.young.where_values_hash)
+}, source: cats
+
+==> corrected/021.rb 68 <==
+has_many opt: lambda {
+  where(cats: Cat.young.where_values_hash)
+}
+
+==> corrected/022.rb 68 <==
+has_many opt: lambda {
+  where(cats: Cat.young.where_values_hash)
+}
+
+==> corrected/023.rb 80 <==
+has_many(
+  opt: lambda do
+    where(cats: Cat.young.where_values_hash)
+  end
+)
+

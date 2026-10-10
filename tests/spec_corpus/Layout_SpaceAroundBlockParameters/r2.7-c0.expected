@@ -1,0 +1,75 @@
+==> offenses exit=1 2051 <==
+008.rb:1:12: C: [Correctable] Layout/SpaceAroundBlockParameters: Space before first block parameter detected.
+009.rb:1:16: C: [Correctable] Layout/SpaceAroundBlockParameters: Space after last block parameter detected.
+010.rb:1:16: C: [Correctable] Layout/SpaceAroundBlockParameters: Space after closing `|` missing.
+011.rb:1:4: C: [Correctable] Layout/SpaceAroundBlockParameters: Space before first block parameter detected.
+012.rb:1:8: C: [Correctable] Layout/SpaceAroundBlockParameters: Space after last block parameter detected.
+014.rb:1:14: C: [Correctable] Layout/SpaceAroundBlockParameters: Extra space before block parameter detected.
+015.rb:1:14: C: [Correctable] Layout/SpaceAroundBlockParameters: Extra space before block parameter detected.
+015.rb:1:19: C: [Correctable] Layout/SpaceAroundBlockParameters: Extra space before block parameter detected.
+015.rb:1:24: C: [Correctable] Layout/SpaceAroundBlockParameters: Extra space before block parameter detected.
+016.rb:1:14: C: [Correctable] Layout/SpaceAroundBlockParameters: Space after last block parameter detected.
+017.rb:1:15: C: [Correctable] Layout/SpaceAroundBlockParameters: Space after last block parameter detected.
+018.rb:1:12: C: [Correctable] Layout/SpaceAroundBlockParameters: Extra space before block parameter detected.
+018.rb:1:12: C: [Correctable] Layout/SpaceAroundBlockParameters: Space before first block parameter detected.
+018.rb:1:18: C: [Correctable] Layout/SpaceAroundBlockParameters: Extra space before block parameter detected.
+018.rb:1:26: C: [Correctable] Layout/SpaceAroundBlockParameters: Space after last block parameter detected.
+018.rb:1:27: C: [Correctable] Layout/SpaceAroundBlockParameters: Space after closing `|` missing.
+019.rb:1:4: C: [Correctable] Layout/SpaceAroundBlockParameters: Extra space before block parameter detected.
+019.rb:1:4: C: [Correctable] Layout/SpaceAroundBlockParameters: Space before first block parameter detected.
+019.rb:1:8: C: [Correctable] Layout/SpaceAroundBlockParameters: Extra space before block parameter detected.
+
+==> autocorrect exit=0 2013 <==
+008.rb:1:12: C: [Corrected] Layout/SpaceAroundBlockParameters: Space before first block parameter detected.
+009.rb:1:16: C: [Corrected] Layout/SpaceAroundBlockParameters: Space after last block parameter detected.
+010.rb:1:16: C: [Corrected] Layout/SpaceAroundBlockParameters: Space after closing `|` missing.
+011.rb:1:4: C: [Corrected] Layout/SpaceAroundBlockParameters: Space before first block parameter detected.
+012.rb:1:8: C: [Corrected] Layout/SpaceAroundBlockParameters: Space after last block parameter detected.
+014.rb:1:14: C: [Corrected] Layout/SpaceAroundBlockParameters: Extra space before block parameter detected.
+015.rb:1:14: C: [Corrected] Layout/SpaceAroundBlockParameters: Extra space before block parameter detected.
+015.rb:1:19: C: [Corrected] Layout/SpaceAroundBlockParameters: Extra space before block parameter detected.
+015.rb:1:24: C: [Corrected] Layout/SpaceAroundBlockParameters: Extra space before block parameter detected.
+016.rb:1:14: C: [Corrected] Layout/SpaceAroundBlockParameters: Space after last block parameter detected.
+017.rb:1:15: C: [Corrected] Layout/SpaceAroundBlockParameters: Space after last block parameter detected.
+018.rb:1:12: C: [Corrected] Layout/SpaceAroundBlockParameters: Extra space before block parameter detected.
+018.rb:1:12: C: [Corrected] Layout/SpaceAroundBlockParameters: Space before first block parameter detected.
+018.rb:1:18: C: [Corrected] Layout/SpaceAroundBlockParameters: Extra space before block parameter detected.
+018.rb:1:26: C: [Corrected] Layout/SpaceAroundBlockParameters: Space after last block parameter detected.
+018.rb:1:27: C: [Corrected] Layout/SpaceAroundBlockParameters: Space after closing `|` missing.
+019.rb:1:4: C: [Corrected] Layout/SpaceAroundBlockParameters: Extra space before block parameter detected.
+019.rb:1:4: C: [Corrected] Layout/SpaceAroundBlockParameters: Space before first block parameter detected.
+019.rb:1:8: C: [Corrected] Layout/SpaceAroundBlockParameters: Extra space before block parameter detected.
+
+==> corrected/008.rb 23 <==
+{}.each { |x| puts x }
+
+==> corrected/009.rb 26 <==
+{}.each { |x, y| puts x }
+
+==> corrected/010.rb 26 <==
+{}.each { |x, y| puts x }
+
+==> corrected/011.rb 20 <==
+->(x, y) { puts x }
+
+==> corrected/012.rb 20 <==
+->(x, y) { puts x }
+
+==> corrected/014.rb 26 <==
+{}.each { |x, y| puts x }
+
+==> corrected/015.rb 34 <==
+{}.each { |a, (x, y), z| puts x }
+
+==> corrected/016.rb 24 <==
+{}.each { |x,| puts x }
+
+==> corrected/017.rb 25 <==
+{}.each { |x ,| puts x }
+
+==> corrected/018.rb 33 <==
+{}.each { |x=5, (y,*z)| puts x }
+
+==> corrected/019.rb 23 <==
+->(a, b, c) { puts a }
+

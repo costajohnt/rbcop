@@ -1,0 +1,43 @@
+==> offenses exit=1 524 <==
+000.rb:2:10: C: [Correctable] Style/MultilineWhenThen: Do not use `then` for multiline `when` statement.
+001.rb:2:10: C: [Correctable] Style/MultilineWhenThen: Do not use `then` for multiline `when` statement.
+002.rb:2:10: C: [Correctable] Style/MultilineWhenThen: Do not use `then` for multiline `when` statement.
+010.rb:3:3: C: [Correctable] Style/MultilineWhenThen: Do not use `then` for multiline `when` statement.
+011.rb:2:15: C: [Correctable] Style/MultilineWhenThen: Do not use `then` for multiline `when` statement.
+
+==> autocorrect exit=0 514 <==
+000.rb:2:10: C: [Corrected] Style/MultilineWhenThen: Do not use `then` for multiline `when` statement.
+001.rb:2:10: C: [Corrected] Style/MultilineWhenThen: Do not use `then` for multiline `when` statement.
+002.rb:2:10: C: [Corrected] Style/MultilineWhenThen: Do not use `then` for multiline `when` statement.
+010.rb:3:3: C: [Corrected] Style/MultilineWhenThen: Do not use `then` for multiline `when` statement.
+011.rb:2:15: C: [Corrected] Style/MultilineWhenThen: Do not use `then` for multiline `when` statement.
+
+==> corrected/000.rb 22 <==
+case foo
+when bar
+end
+
+==> corrected/001.rb 35 <==
+case foo
+when bar
+do_something
+end
+
+==> corrected/002.rb 50 <==
+case foo
+when bar
+do_something1
+do_something2
+end
+
+==> corrected/010.rb 36 <==
+case foo
+when bar
+ do_something
+end
+
+==> corrected/011.rb 27 <==
+case foo
+when bar, baz
+end
+

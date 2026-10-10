@@ -1,0 +1,9 @@
+==> offenses exit=1 101 <==
+000.rb:1:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+
+==> autocorrect exit=0 99 <==
+000.rb:1:1: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+
+==> corrected/000.rb 16 <==
+x.select { it }
+

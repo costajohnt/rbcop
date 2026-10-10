@@ -1,0 +1,22 @@
+==> .rubocop.yml 174 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Layout/EmptyLinesAroundBlockBody:
+  EnforcedStyle: no_empty_lines
+
+==> 000.rb 24 <==
+some_method {
+  it
+
+  }
+
+==> 001.rb 27 <==
+some_method do
+  it
+
+  end
+

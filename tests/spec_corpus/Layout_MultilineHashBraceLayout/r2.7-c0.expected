@@ -1,0 +1,21 @@
+==> offenses exit=1 940 <==
+003.rb:1:3: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+004.rb:1:3: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+005.rb:2:2: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+006.rb:3:1: C: Layout/MultilineHashBraceLayout: Closing hash brace must be on the same line as the last hash element when opening brace is on the same line as the first hash element.
+007.rb:3:1: C: [Correctable] Layout/MultilineHashBraceLayout: Closing hash brace must be on the same line as the last hash element when opening brace is on the same line as the first hash element.
+008.rb:1:3: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+
+==> autocorrect exit=1 938 <==
+003.rb:1:3: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+004.rb:1:3: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+005.rb:2:2: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+006.rb:3:1: C: Layout/MultilineHashBraceLayout: Closing hash brace must be on the same line as the last hash element when opening brace is on the same line as the first hash element.
+007.rb:3:1: C: [Corrected] Layout/MultilineHashBraceLayout: Closing hash brace must be on the same line as the last hash element when opening brace is on the same line as the first hash element.
+008.rb:1:3: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+
+==> corrected/007.rb 19 <==
+bar({a: 1,
+b: 2}
+)
+

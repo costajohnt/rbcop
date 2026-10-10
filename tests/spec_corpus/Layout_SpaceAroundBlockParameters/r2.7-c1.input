@@ -1,0 +1,78 @@
+==> .rubocop.yml 177 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/SpaceAroundBlockParameters:
+  EnforcedStyleInsidePipes: space
+
+==> 000.rb 10 <==
+{}.each {}
+==> 001.rb 17 <==
+->() { puts "a" }
+==> 002.rb 14 <==
+->a { puts a }
+==> 003.rb 27 <==
+{}.each { | x, y | puts x }
+==> 004.rb 20 <==
+{}.each { | x, y | }
+==> 005.rb 26 <==
+{}.each { | x,y | puts x }
+==> 006.rb 21 <==
+->( x, y ) { puts x }
+==> 007.rb 24 <==
+{}.each { |x | puts x }
+
+==> 008.rb 27 <==
+{}.each { | x, y| puts x }
+
+==> 009.rb 26 <==
+{}.each { |  x | puts x }
+
+==> 010.rb 30 <==
+{}.each { | x, y   | puts x }
+
+==> 011.rb 27 <==
+{}.each { | x, y |puts x }
+
+==> 012.rb 18 <==
+->(x ) { puts x }
+
+==> 013.rb 21 <==
+->( x, y) { puts x }
+
+==> 014.rb 20 <==
+->(  x ) { puts x }
+
+==> 015.rb 24 <==
+->( x, y   ) { puts x }
+
+==> 016.rb 33 <==
+{}.each do | x, y |
+  puts x
+end
+
+==> 017.rb 30 <==
+{}.each { | x,   y | puts x }
+
+==> 018.rb 33 <==
+{}.each { |(x,  y),  z| puts x }
+
+==> 019.rb 25 <==
+{}.each { | x, | puts x }
+==> 020.rb 26 <==
+{}.each { | x , | puts x }
+==> 021.rb 25 <==
+{}.each { | x,| puts x }
+
+==> 022.rb 35 <==
+{}.each { |  x=5,  (y,*z)|puts x }
+
+==> 023.rb 26 <==
+{}.each { |x, z| puts x }
+
+==> 024.rb 23 <==
+->(  x,  y) { puts x }
+

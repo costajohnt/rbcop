@@ -1,0 +1,54 @@
+==> offenses exit=1 973 <==
+000.rb:1:9: C: [Correctable] Naming/BlockForwarding: Use explicit block forwarding.
+000.rb:2:7: C: [Correctable] Naming/BlockForwarding: Use explicit block forwarding.
+000.rb:3:12: C: [Correctable] Naming/BlockForwarding: Use explicit block forwarding.
+001.rb:1:14: C: [Correctable] Naming/BlockForwarding: Use explicit block forwarding.
+001.rb:2:12: C: [Correctable] Naming/BlockForwarding: Use explicit block forwarding.
+001.rb:3:17: C: [Correctable] Naming/BlockForwarding: Use explicit block forwarding.
+002.rb:1:9: C: [Correctable] Naming/BlockForwarding: Use explicit block forwarding.
+003.rb:1:9: C: [Correctable] Naming/BlockForwarding: Use explicit block forwarding.
+004.rb:1:9: C: [Correctable] Naming/BlockForwarding: Use explicit block forwarding.
+009.rb:1:16: C: Naming/BlockForwarding: Use explicit block forwarding.
+009.rb:2:14: C: Naming/BlockForwarding: Use explicit block forwarding.
+009.rb:3:19: C: Naming/BlockForwarding: Use explicit block forwarding.
+
+==> autocorrect exit=1 955 <==
+000.rb:1:9: C: [Corrected] Naming/BlockForwarding: Use explicit block forwarding.
+000.rb:2:7: C: [Corrected] Naming/BlockForwarding: Use explicit block forwarding.
+000.rb:3:12: C: [Corrected] Naming/BlockForwarding: Use explicit block forwarding.
+001.rb:1:14: C: [Corrected] Naming/BlockForwarding: Use explicit block forwarding.
+001.rb:2:12: C: [Corrected] Naming/BlockForwarding: Use explicit block forwarding.
+001.rb:3:17: C: [Corrected] Naming/BlockForwarding: Use explicit block forwarding.
+002.rb:1:9: C: [Corrected] Naming/BlockForwarding: Use explicit block forwarding.
+003.rb:1:9: C: [Corrected] Naming/BlockForwarding: Use explicit block forwarding.
+004.rb:1:9: C: [Corrected] Naming/BlockForwarding: Use explicit block forwarding.
+009.rb:1:16: C: Naming/BlockForwarding: Use explicit block forwarding.
+009.rb:2:14: C: Naming/BlockForwarding: Use explicit block forwarding.
+009.rb:3:19: C: Naming/BlockForwarding: Use explicit block forwarding.
+
+==> corrected/000.rb 53 <==
+def foo(&block)
+  bar(&block)
+  baz(qux, &block)
+end
+
+==> corrected/001.rb 68 <==
+def self.foo(&block)
+  self.bar(&block)
+  self.baz(qux, &block)
+end
+
+==> corrected/002.rb 42 <==
+def foo(&block)
+  bar(&:do_something)
+end
+
+==> corrected/003.rb 28 <==
+def foo(&block)
+  yield
+end
+
+==> corrected/004.rb 20 <==
+def foo(&block)
+end
+

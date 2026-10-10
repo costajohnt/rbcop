@@ -1,0 +1,53 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 21 <==
+x >= min && x <= max
+
+==> 001.rb 21 <==
+x >= min && max >= x
+
+==> 002.rb 21 <==
+min <= x && x <= max
+
+==> 003.rb 21 <==
+min <= x && max >= x
+
+==> 004.rb 21 <==
+x <= max && x >= min
+
+==> 005.rb 21 <==
+x <= max && min <= x
+
+==> 006.rb 21 <==
+max >= x && x >= min
+
+==> 007.rb 21 <==
+max >= x && min <= x
+
+==> 008.rb 22 <==
+x >= min and x <= max
+
+==> 009.rb 20 <==
+x >= x and x <= max
+
+==> 010.rb 18 <==
+x >= x and x <= x
+
+==> 011.rb 20 <==
+x >= min && x < max
+
+==> 012.rb 20 <==
+x > min && x <= max
+
+==> 013.rb 19 <==
+x > min && x < max
+
+==> 014.rb 21 <==
+x >= min && y <= max
+

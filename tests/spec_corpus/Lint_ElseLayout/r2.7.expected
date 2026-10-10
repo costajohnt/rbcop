@@ -1,0 +1,61 @@
+==> offenses exit=1 515 <==
+000.rb:3:6: W: [Correctable] Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?
+001.rb:3:6: W: [Correctable] Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?
+002.rb:2:6: W: [Correctable] Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?
+005.rb:5:6: W: [Correctable] Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?
+006.rb:7:6: W: [Correctable] Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?
+
+==> autocorrect exit=0 505 <==
+000.rb:3:6: W: [Corrected] Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?
+001.rb:3:6: W: [Corrected] Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?
+002.rb:2:6: W: [Corrected] Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?
+005.rb:5:6: W: [Corrected] Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?
+006.rb:7:6: W: [Corrected] Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?
+
+==> corrected/000.rb 54 <==
+if something
+  test
+else
+  ala
+  something
+  test
+end
+
+==> corrected/001.rb 46 <==
+if something
+  test
+else
+  something_else
+end
+
+==> corrected/002.rb 57 <==
+if something then test
+else
+  something_else
+  other
+end
+
+==> corrected/005.rb 77 <==
+if something
+  test
+elsif something
+  bala
+else
+  ala
+  something
+  test
+end
+
+==> corrected/006.rb 105 <==
+if condition_foo
+  foo
+elsif condition_bar
+  bar
+elsif condition_baz
+  baz
+else
+  qux
+  quux
+  corge
+end
+

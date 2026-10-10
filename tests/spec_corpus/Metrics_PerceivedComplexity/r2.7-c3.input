@@ -1,0 +1,24 @@
+==> .rubocop.yml 146 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Metrics/PerceivedComplexity:
+  Max: 2
+
+==> 000.rb 312 <==
+def method_name                   # 1
+  if first_condition then         # 2
+    call_foo
+  else                            # 3
+    if second_condition then      # 4
+      call_bar
+    else                          # 5
+      call_bam if third_condition # 6
+    end
+    call_baz if fourth_condition  # 7
+  end
+end
+

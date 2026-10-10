@@ -1,0 +1,128 @@
+==> offenses exit=1 2524 <==
+000.rb:1:5: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+001.rb:1:5: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+002.rb:1:5: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+003.rb:1:5: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+004.rb:1:5: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+005.rb:1:11: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+006.rb:1:15: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+007.rb:1:5: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+010.rb:2:4: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+011.rb:1:6: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+012.rb:1:5: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+013.rb:1:6: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+014.rb:1:5: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+015.rb:1:5: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+016.rb:1:5: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+017.rb:1:5: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+018.rb:1:5: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+019.rb:1:11: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+020.rb:1:15: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+021.rb:1:5: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+024.rb:2:4: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+025.rb:1:6: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+026.rb:1:5: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+027.rb:1:6: C: [Correctable] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+
+==> autocorrect exit=0 2476 <==
+000.rb:1:5: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+001.rb:1:5: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+002.rb:1:5: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+003.rb:1:5: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+004.rb:1:5: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+005.rb:1:11: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+006.rb:1:15: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+007.rb:1:5: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+010.rb:2:4: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+011.rb:1:6: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+012.rb:1:5: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+013.rb:1:6: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `map.to_set`.
+014.rb:1:5: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+015.rb:1:5: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+016.rb:1:5: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+017.rb:1:5: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+018.rb:1:5: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+019.rb:1:11: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+020.rb:1:15: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+021.rb:1:5: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+024.rb:2:4: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+025.rb:1:6: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+026.rb:1:5: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+027.rb:1:6: C: [Corrected] Style/MapToSet: Pass a block to `to_set` instead of calling `collect.to_set`.
+
+==> corrected/000.rb 30 <==
+foo.to_set { |x| [x, x * 2] }
+
+==> corrected/001.rb 39 <==
+foo.to_set { |x, y| [x.to_s, y.to_i] }
+
+==> corrected/002.rb 28 <==
+foo.to_set { [_1, _1 * 2] }
+
+==> corrected/003.rb 34 <==
+foo.to_set { [_1.to_s, _2.to_i] }
+
+==> corrected/004.rb 27 <==
+foo.to_set(&:do_something)
+
+==> corrected/005.rb 36 <==
+[1, 2, 3].to_set { |x| [x, x * 2] }
+
+==> corrected/006.rb 49 <==
+{ foo: :bar }.to_set { |x, y| [x.to_s, y.to_s] }
+
+==> corrected/007.rb 29 <==
+foo.to_set { |x| x * 2 }.bar
+
+==> corrected/010.rb 67 <==
+{foo: bar}
+  .to_set { |k, v| [k.to_s, v.do_something] }
+  .freeze
+
+==> corrected/011.rb 31 <==
+foo&.to_set { |x| [x, x * 2] }
+
+==> corrected/012.rb 30 <==
+foo.to_set { |x| [x, x * 2] }
+
+==> corrected/013.rb 31 <==
+foo&.to_set { |x| [x, x * 2] }
+
+==> corrected/014.rb 30 <==
+foo.to_set { |x| [x, x * 2] }
+
+==> corrected/015.rb 39 <==
+foo.to_set { |x, y| [x.to_s, y.to_i] }
+
+==> corrected/016.rb 28 <==
+foo.to_set { [_1, _1 * 2] }
+
+==> corrected/017.rb 34 <==
+foo.to_set { [_1.to_s, _2.to_i] }
+
+==> corrected/018.rb 27 <==
+foo.to_set(&:do_something)
+
+==> corrected/019.rb 36 <==
+[1, 2, 3].to_set { |x| [x, x * 2] }
+
+==> corrected/020.rb 49 <==
+{ foo: :bar }.to_set { |x, y| [x.to_s, y.to_s] }
+
+==> corrected/021.rb 29 <==
+foo.to_set { |x| x * 2 }.bar
+
+==> corrected/024.rb 67 <==
+{foo: bar}
+  .to_set { |k, v| [k.to_s, v.do_something] }
+  .freeze
+
+==> corrected/025.rb 31 <==
+foo&.to_set { |x| [x, x * 2] }
+
+==> corrected/026.rb 30 <==
+foo.to_set { |x| [x, x * 2] }
+
+==> corrected/027.rb 31 <==
+foo&.to_set { |x| [x, x * 2] }
+

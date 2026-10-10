@@ -1,0 +1,39 @@
+==> offenses exit=1 545 <==
+000.rb:2:5: C: [Correctable] Style/InPatternThen: Do not use `in b;`. Use `in b then` instead.
+001.rb:2:11: C: [Correctable] Style/InPatternThen: Do not use `in b, c, d;`. Use `in b, c, d then` instead.
+002.rb:2:13: C: [Correctable] Style/InPatternThen: Do not use `in 0 | 1 | 2;`. Use `in 0 | 1 | 2 then` instead.
+003.rb:2:17: C: [Correctable] Style/InPatternThen: Do not use `in 0 | 1 | 2 | 3;`. Use `in 0 | 1 | 2 | 3 then` instead.
+004.rb:2:12: C: [Correctable] Style/InPatternThen: Do not use `in 0, 1 | 2;`. Use `in 0, 1 | 2 then` instead.
+
+==> autocorrect exit=0 535 <==
+000.rb:2:5: C: [Corrected] Style/InPatternThen: Do not use `in b;`. Use `in b then` instead.
+001.rb:2:11: C: [Corrected] Style/InPatternThen: Do not use `in b, c, d;`. Use `in b, c, d then` instead.
+002.rb:2:13: C: [Corrected] Style/InPatternThen: Do not use `in 0 | 1 | 2;`. Use `in 0 | 1 | 2 then` instead.
+003.rb:2:17: C: [Corrected] Style/InPatternThen: Do not use `in 0 | 1 | 2 | 3;`. Use `in 0 | 1 | 2 | 3 then` instead.
+004.rb:2:12: C: [Corrected] Style/InPatternThen: Do not use `in 0, 1 | 2;`. Use `in 0, 1 | 2 then` instead.
+
+==> corrected/000.rb 23 <==
+case a
+in b then c
+end
+
+==> corrected/001.rb 29 <==
+case a
+in b, c, d then e
+end
+
+==> corrected/002.rb 31 <==
+case a
+in 0 | 1 | 2 then x
+end
+
+==> corrected/003.rb 35 <==
+case a
+in 0 | 1 | 2 | 3 then x
+end
+
+==> corrected/004.rb 30 <==
+case a
+in 0, 1 | 2 then x
+end
+

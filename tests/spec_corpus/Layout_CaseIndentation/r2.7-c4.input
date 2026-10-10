@@ -1,0 +1,63 @@
+==> .rubocop.yml 175 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/CaseIndentation:
+  EnforcedStyle: end
+  IndentOneStep: true
+
+==> 000.rb 39 <==
+case foo; when :bar then 1; else 0; end
+==> 001.rb 78 <==
+output = case variable
+  when 'value1'
+    'output1'
+  else
+    'output2'
+end
+
+==> 002.rb 115 <==
+output = case variable
+         when 'value1'
+           'output1'
+         else
+           'output2'
+         end
+
+==> 003.rb 105 <==
+output = case variable
+       when 'value1'
+         'output1'
+       else
+         'output2'
+       end
+
+==> 004.rb 40 <==
+case foo; in pattern then 1; else 0; end
+==> 005.rb 75 <==
+output = case variable
+  in pattern
+    'output1'
+  else
+    'output2'
+end
+
+==> 006.rb 112 <==
+output = case variable
+         in pattern
+           'output1'
+         else
+           'output2'
+         end
+
+==> 007.rb 102 <==
+output = case variable
+       in pattern
+         'output1'
+       else
+         'output2'
+       end
+

@@ -1,0 +1,36 @@
+==> offenses exit=1 503 <==
+002.rb:3:11: C: [Correctable] Layout/MultilineHashKeyLineBreaks: Each key in a multi-line hash must start on a separate line.
+003.rb:3:13: C: [Correctable] Layout/MultilineHashKeyLineBreaks: Each key in a multi-line hash must start on a separate line.
+005.rb:2:11: C: [Correctable] Layout/MultilineHashKeyLineBreaks: Each key in a multi-line hash must start on a separate line.
+006.rb:4:6: C: [Correctable] Layout/MultilineHashKeyLineBreaks: Each key in a multi-line hash must start on a separate line.
+
+==> autocorrect exit=0 495 <==
+002.rb:3:11: C: [Corrected] Layout/MultilineHashKeyLineBreaks: Each key in a multi-line hash must start on a separate line.
+003.rb:3:13: C: [Corrected] Layout/MultilineHashKeyLineBreaks: Each key in a multi-line hash must start on a separate line.
+005.rb:2:11: C: [Corrected] Layout/MultilineHashKeyLineBreaks: Each key in a multi-line hash must start on a separate line.
+006.rb:4:6: C: [Corrected] Layout/MultilineHashKeyLineBreaks: Each key in a multi-line hash must start on a separate line.
+
+==> corrected/002.rb 33 <==
+{
+  foo: 1,
+  baz: 3, 
+bar: "2"}
+
+==> corrected/003.rb 37 <==
+{
+  foo => 1,
+  baz => 3, 
+bar: "2"}
+
+==> corrected/005.rb 30 <==
+{foo: 1,
+  baz: 3, 
+bar: "2"}
+
+==> corrected/006.rb 46 <==
+{foo: 1,
+  baz: {
+    as: 12,
+  }, 
+bar: "2"}
+

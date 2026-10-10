@@ -1,0 +1,12 @@
+==> offenses exit=1 289 <==
+000.rb:5:3: W: Lint/EnsureReturn: Do not return from an `ensure` block.
+001.rb:4:3: W: Lint/EnsureReturn: Do not return from an `ensure` block.
+002.rb:5:3: W: Lint/EnsureReturn: Do not return from an `ensure` block.
+007.rb:4:17: W: Lint/EnsureReturn: Do not return from an `ensure` block.
+
+==> autocorrect exit=1 289 <==
+000.rb:5:3: W: Lint/EnsureReturn: Do not return from an `ensure` block.
+001.rb:4:3: W: Lint/EnsureReturn: Do not return from an `ensure` block.
+002.rb:5:3: W: Lint/EnsureReturn: Do not return from an `ensure` block.
+007.rb:4:17: W: Lint/EnsureReturn: Do not return from an `ensure` block.
+

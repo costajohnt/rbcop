@@ -1,0 +1,6 @@
+==> offenses exit=1 102 <==
+004.rb:1:1: C: Style/NumberedParametersLimit: Avoid using more than 1 numbered parameter; 5 detected.
+
+==> autocorrect exit=1 102 <==
+004.rb:1:1: C: Style/NumberedParametersLimit: Avoid using more than 1 numbered parameter; 5 detected.
+

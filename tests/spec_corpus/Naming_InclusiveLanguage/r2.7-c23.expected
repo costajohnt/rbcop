@@ -1,0 +1,10 @@
+==> offenses exit=1 257 <==
+000.rb:1:11: C: Naming/InclusiveLanguage: Consider replacing 'foo' with another term.
+000.rb:2:20: C: Naming/InclusiveLanguage: Consider replacing 'foo' with another term.
+001.rb:2:1: C: Naming/InclusiveLanguage: Consider replacing 'foo' with another term.
+
+==> autocorrect exit=1 257 <==
+000.rb:1:11: C: Naming/InclusiveLanguage: Consider replacing 'foo' with another term.
+000.rb:2:20: C: Naming/InclusiveLanguage: Consider replacing 'foo' with another term.
+001.rb:2:1: C: Naming/InclusiveLanguage: Consider replacing 'foo' with another term.
+

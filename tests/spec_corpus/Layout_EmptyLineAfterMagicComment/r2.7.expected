@@ -1,0 +1,70 @@
+==> offenses exit=1 1134 <==
+000.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+001.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+002.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+004.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+005.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+006.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+007.rb:3:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+018.rb:3:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+019.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+
+==> autocorrect exit=0 1116 <==
+000.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+001.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+002.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+004.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+005.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+006.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+007.rb:3:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+018.rb:3:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+019.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+
+==> corrected/000.rb 46 <==
+# frozen_string_literal: true
+
+class Foo; end
+
+==> corrected/001.rb 38 <==
+# rbs_inline: enabled
+
+class Foo; end
+
+==> corrected/002.rb 39 <==
+# rbs_inline: disabled
+
+class Foo; end
+
+==> corrected/004.rb 30 <==
+# typed: true
+
+class Foo; end
+
+==> corrected/005.rb 36 <==
+# warn_indent: true
+
+class Foo; end
+
+==> corrected/006.rb 70 <==
+# frozen_string_literal: true
+
+# Documentation for Foo
+class Foo; end
+
+==> corrected/007.rb 64 <==
+# encoding: utf-8
+# frozen_string_literal: true
+
+class Foo; end
+
+==> corrected/018.rb 79 <==
+# frozen_string_literal: true
+# shareable_constant_value: none
+
+class Foo; end
+
+==> corrected/019.rb 40 <==
+# frozen_string_literal: true
+
+# Hello!
+

@@ -1,0 +1,513 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 36 <==
+if something
+  do_x
+else
+  do_x
+end
+
+==> 001.rb 74 <==
+def foo
+  if something
+    bar
+    do_x
+  else
+    baz
+    do_x
+  end
+end
+
+==> 002.rb 76 <==
+if something
+  method_call_here(1, 2, 3)
+  do_x
+else
+  1 + 2 + 3
+  do_x
+end
+
+==> 003.rb 76 <==
+if something
+  do_x
+  method_call_here(1, 2, 3)
+else
+  do_x
+  1 + 2 + 3
+end
+
+==> 004.rb 66 <==
+if condition
+  h[:key] = foo
+  bar
+else
+  h[:key] = foo
+  baz
+end
+
+==> 005.rb 64 <==
+if h[:key]
+  h[:key] = foo
+  bar
+else
+  h[:key] = foo
+  baz
+end
+
+==> 006.rb 82 <==
+if something
+  self.foo ||= default
+  do_x
+else
+  self.foo ||= default
+  do_y
+end
+
+==> 007.rb 74 <==
+if x.condition
+  x = do_something
+  foo
+else
+  x = do_something
+  bar
+end
+
+==> 008.rb 75 <==
+if x&.condition
+  x = do_something
+  foo
+else
+  x = do_something
+  bar
+end
+
+==> 009.rb 64 <==
+if x
+  x = do_something
+  foo
+else
+  x = do_something
+  bar
+end
+
+==> 010.rb 72 <==
+x = 42
+
+if x
+  x = do_something
+  foo
+else
+  x = do_something
+  bar
+end
+
+==> 011.rb 67 <==
+if @x
+  @x = do_something
+  foo
+else
+  @x = do_something
+  bar
+end
+
+==> 012.rb 74 <==
+if x.condition
+  foo
+  x = do_something
+else
+  bar
+  x = do_something
+end
+
+==> 013.rb 189 <==
+def foo
+  if something
+    do_x
+  else
+    do_x
+    1 + 2 + 3
+  end
+end
+
+def bar
+  y = if something
+        do_x
+      else
+        do_x
+        1 + 2 + 3
+      end
+  do_something_else
+end
+
+==> 014.rb 52 <==
+if something
+  do_x
+elsif something_else
+  do_x
+end
+
+==> 015.rb 42 <==
+if something
+  do_x(1)
+else
+  do_x(2)
+end
+
+==> 016.rb 55 <==
+x = 0
+if x == 0
+  x += 1
+  foo
+else
+  x += 1
+  bar
+end
+
+==> 017.rb 61 <==
+case something
+when :a
+  do_x
+when :b
+  do_x
+else
+  do_x
+end
+
+==> 018.rb 55 <==
+case value
+when cond1
+else
+  if cond2
+  else
+  end
+end
+
+==> 019.rb 76 <==
+case something
+when :a
+  x1
+  do_x
+when :b
+  x2
+  do_x
+else
+  x3
+  do_x
+end
+
+==> 020.rb 76 <==
+case something
+when :a
+  do_x
+  x1
+when :b
+  do_x
+  x2
+else
+  do_x
+  x3
+end
+
+==> 021.rb 70 <==
+case something
+when :a
+  nil
+when :b
+  do_x
+  x1
+else
+  do_x
+  x2
+end
+
+==> 022.rb 69 <==
+case something
+when :a
+  ()
+when :b
+  do_x
+  x1
+else
+  do_x
+  x2
+end
+
+==> 023.rb 262 <==
+def foo
+  case something
+  when :a
+    do_x
+  when :b
+    do_x
+    x2
+  else
+    do_x
+    x3
+  end
+end
+
+def bar
+  x = case something
+      when :a
+        do_x
+      when :b
+        do_x
+        x2
+      else
+        do_x
+        x3
+      end
+  do_something
+end
+
+==> 024.rb 49 <==
+case something
+when :a
+  do_x
+when :b
+  do_x
+end
+
+==> 025.rb 68 <==
+case something
+when :a
+  do_x
+  do_y
+when :b
+else
+  do_x
+  do_z
+end
+
+==> 026.rb 62 <==
+x = 0
+case x
+when 1
+  x += 1
+  foo
+when 42
+  x += 1
+  bar
+end
+
+==> 027.rb 57 <==
+case something
+in :a
+  do_x
+in :b
+  do_x
+else
+  do_x
+end
+
+==> 028.rb 58 <==
+x = 0
+case x
+in 1
+  x += 1
+  foo
+in 42
+  x += 1
+  bar
+end
+
+==> 029.rb 53 <==
+case value
+in cond1
+else
+  if cond2
+  else
+  end
+end
+
+==> 030.rb 72 <==
+case something
+in :a
+  x1
+  do_x
+in :b
+  x2
+  do_x
+else
+  x3
+  do_x
+end
+
+==> 031.rb 72 <==
+case something
+in :a
+  do_x
+  x1
+in :b
+  do_x
+  x2
+else
+  do_x
+  x3
+end
+
+==> 032.rb 254 <==
+def foo
+  case something
+  in :a
+    do_x
+  in :b
+    do_x
+    x2
+  else
+    do_x
+    x3
+  end
+end
+
+def bar
+  y = case something
+      in :a
+        do_x
+      in :b
+        do_x
+        x2
+      else
+        do_x
+        x3
+      end
+  do_something
+end
+
+==> 033.rb 45 <==
+case something
+in :a
+  do_x
+in :b
+  do_x
+end
+
+==> 034.rb 64 <==
+case something
+in :a
+  do_x
+  do_y
+in :b
+else
+  do_x
+  do_z
+end
+
+==> 035.rb 32 <==
+if condition
+  ()
+else
+  ()
+end
+
+==> 036.rb 33 <==
+if condition
+  ()
+else
+  foo
+end
+
+==> 037.rb 33 <==
+if condition
+  foo
+else
+  ()
+end
+
+==> 038.rb 10 <==
+x ? y : y
+
+==> 039.rb 32 <==
+x = if foo
+  bar
+else
+  bar
+end
+
+==> 040.rb 20 <==
+x = foo ? bar : bar
+
+==> 041.rb 62 <==
+x = case something
+when :a
+  bar
+when :b
+  bar
+else
+  bar
+end
+
+==> 042.rb 58 <==
+x = case something
+in :a
+  bar
+in :b
+  bar
+else
+  bar
+end
+
+==> 043.rb 52 <==
+x = if foo
+  bar
+  do_x(1)
+else
+  bar
+  do_x(2)
+end
+
+==> 044.rb 92 <==
+x = case something
+when :a
+  bar
+  do_x(1)
+when :b
+  bar
+  do_x(2)
+else
+  bar
+  do_x(3)
+end
+
+==> 045.rb 88 <==
+x = case something
+in :a
+  bar
+  do_x(1)
+in :b
+  bar
+  do_x(2)
+else
+  bar
+  do_x(3)
+end
+
+==> 046.rb 68 <==
+def fixed_point(value)
+  if value then value
+  else value
+  end
+end
+
+==> 047.rb 72 <==
+def fixed_point(value)
+  if value then value
+  else
+    value
+  end
+end
+
+==> 048.rb 72 <==
+def fixed_point(value)
+  if value then
+    value
+  else value
+  end
+end
+

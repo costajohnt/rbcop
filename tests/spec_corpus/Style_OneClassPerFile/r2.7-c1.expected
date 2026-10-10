@@ -1,0 +1,6 @@
+==> offenses exit=1 112 <==
+001.rb:7:1: C: Style/OneClassPerFile: Do not define multiple classes/modules at the top level in a single file.
+
+==> autocorrect exit=1 112 <==
+001.rb:7:1: C: Style/OneClassPerFile: Do not define multiple classes/modules at the top level in a single file.
+

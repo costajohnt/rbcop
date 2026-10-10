@@ -1,0 +1,34 @@
+==> offenses exit=1 592 <==
+000.rb:1:1: C: [Correctable] Style/RedundantRegexpConstructor: Remove the redundant `Regexp.new`.
+001.rb:1:1: C: [Correctable] Style/RedundantRegexpConstructor: Remove the redundant `Regexp.new`.
+002.rb:1:1: C: [Correctable] Style/RedundantRegexpConstructor: Remove the redundant `Regexp.new`.
+003.rb:1:1: C: [Correctable] Style/RedundantRegexpConstructor: Remove the redundant `Regexp.new`.
+004.rb:1:1: C: [Correctable] Style/RedundantRegexpConstructor: Remove the redundant `Regexp.compile`.
+005.rb:1:1: C: [Correctable] Style/RedundantRegexpConstructor: Remove the redundant `Regexp.new`.
+
+==> autocorrect exit=0 580 <==
+000.rb:1:1: C: [Corrected] Style/RedundantRegexpConstructor: Remove the redundant `Regexp.new`.
+001.rb:1:1: C: [Corrected] Style/RedundantRegexpConstructor: Remove the redundant `Regexp.new`.
+002.rb:1:1: C: [Corrected] Style/RedundantRegexpConstructor: Remove the redundant `Regexp.new`.
+003.rb:1:1: C: [Corrected] Style/RedundantRegexpConstructor: Remove the redundant `Regexp.new`.
+004.rb:1:1: C: [Corrected] Style/RedundantRegexpConstructor: Remove the redundant `Regexp.compile`.
+005.rb:1:1: C: [Corrected] Style/RedundantRegexpConstructor: Remove the redundant `Regexp.new`.
+
+==> corrected/000.rb 9 <==
+/regexp/
+
+==> corrected/001.rb 9 <==
+/regexp/
+
+==> corrected/002.rb 10 <==
+/regexp/i
+
+==> corrected/003.rb 18 <==
+/\A#{regexp}\z/io
+
+==> corrected/004.rb 9 <==
+/regexp/
+
+==> corrected/005.rb 12 <==
+%r{foo/bar}
+

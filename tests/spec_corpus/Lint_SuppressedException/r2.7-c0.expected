@@ -1,0 +1,14 @@
+==> offenses exit=1 345 <==
+000.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+002.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+003.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+004.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+005.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+
+==> autocorrect exit=1 345 <==
+000.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+002.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+003.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+004.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+005.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+

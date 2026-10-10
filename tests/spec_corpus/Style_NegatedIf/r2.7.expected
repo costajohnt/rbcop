@@ -1,0 +1,44 @@
+==> offenses exit=1 768 <==
+000.rb:1:1: C: [Correctable] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+000.rb:4:1: C: [Correctable] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+001.rb:1:1: C: [Correctable] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+001.rb:4:1: C: [Correctable] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+006.rb:1:1: C: [Correctable] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+007.rb:1:1: C: [Correctable] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+008.rb:1:1: C: [Correctable] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+009.rb:1:1: C: [Correctable] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+
+==> autocorrect exit=0 752 <==
+000.rb:1:1: C: [Corrected] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+000.rb:4:1: C: [Corrected] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+001.rb:1:1: C: [Corrected] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+001.rb:4:1: C: [Corrected] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+006.rb:1:1: C: [Corrected] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+007.rb:1:1: C: [Corrected] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+008.rb:1:1: C: [Corrected] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+009.rb:1:1: C: [Corrected] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+
+==> corrected/000.rb 68 <==
+unless a_condition
+  some_method
+end
+some_method unless a_condition
+
+==> corrected/001.rb 68 <==
+unless a_condition
+  some_method
+end
+some_method unless a_condition
+
+==> corrected/006.rb 27 <==
+something unless (x.even?)
+
+==> corrected/007.rb 15 <==
+unless foo
+end
+
+==> corrected/008.rb 14 <==
+foo unless bar
+==> corrected/009.rb 15 <==
+foo unless bar
+

@@ -1,0 +1,137 @@
+==> .rubocop.yml 189 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/ExtraSpacing:
+  AllowForAlignment: false
+  ForceEqualSignAlignment: false
+
+==> 000.rb 39 <==
+website("example.org")
+name   = "Jill"
+
+==> 001.rb 158 <==
+register(street1:    '1 Market',
+         street2:    '#200',
+         :city =>    'Some Town',
+         state:      'CA',
+         postal_code:'99999-1111')
+
+==> 002.rb 505 <==
+ospf_h = {
+  'ospfTest'    => {
+    'foo'      => {
+      area: '0.0.0.0', cost: 10, hello: 30, pass: true },
+    'longname' => {
+      area: '1.1.1.38', pass: false },
+    'vlan101'  => {
+      area: '2.2.2.101', cost: 5, hello: 20, pass: true }
+  },
+  'TestOspfInt' => {
+    'x'               => {
+      area: '0.0.0.19' },
+    'vlan290'         => {
+      area: '2.2.2.29', cost: 200, hello: 30, pass: true },
+    'port-channel100' => {
+      area: '3.2.2.29', cost: 25, hello: 50, pass: false }
+  }
+}
+
+==> 003.rb 26 <==
+hash = {a:   1,  b:    2}
+
+==> 004.rb 56 <==
+let(:single_line_hash) {
+  {"a"   => "1", "b" => "2"}
+}
+
+==> 005.rb 32 <==
+{:a => "a",
+ :b => [nil,  2.5]}
+
+==> 006.rb 114 <==
+assert_difference(MyModel.count, +2,
+                  3,  +3, # Extra spacing only here.
+                  4,+4)
+
+==> 007.rb 15 <==
+m    = "hello"
+
+==> 008.rb 13 <==
+  m = "hello"
+==> 009.rb 18 <==
+m = "hello   this"
+==> 010.rb 50 <==
+      class Benchmarker < Performer     
+      end
+==> 011.rb 23 <==
+class A   < String
+end
+
+==> 012.rb 41 <==
+website = "example.org"
+name    = "Jill"
+
+==> 013.rb 48 <==
+a   += 1
+
+# Comment
+aa   = 2
+bb   = 3
+
+a  ||= 1
+
+==> 014.rb 91 <==
+y, m = (year * 12 + (mon - 1) + n).divmod(12)
+m,   = (m + 1)                    .divmod(1)
+
+==> 015.rb 191 <==
+type_name ||= value.class.name if value
+type_name   = type_name.to_s   if type_name
+
+type_name  = value.class.name if     value
+type_name += type_name.to_s   unless type_name
+a  += 1
+aa -= 2
+
+==> 016.rb 107 <==
+include_examples 'aligned',   'var = until',  'test'
+
+include_examples 'unaligned', "var = if",     'test'
+
+==> 017.rb 116 <==
+unless nochdir
+  Dir.chdir "/"    # Release old working directory.
+end
+
+File.umask 0000    # Ensure sensible umask.
+
+==> 018.rb 369 <==
+size_attribute_name    = FactoryGirl.create(:attribute,
+                                            name:   'Size',
+                                            values: %w{small large})
+carrier_attribute_name = FactoryGirl.create(:attribute,
+                                            name:   'Carrier',
+                                            values: %w{verizon})
+
+==> 019.rb 196 <==
+a_long_var_name = 100 # this is 100
+short_name1     = 2
+
+clear
+
+short_name2     = 2
+a_long_var_name = 100 # this is 100
+
+clear
+
+short_name3     = 2 # this is 2
+a_long_var_name = 100 # this is 100
+
+==> 020.rb 70 <==
+a_long_var_name = 2   # this is 2
+a_long_var_name = 100 # this is 100
+

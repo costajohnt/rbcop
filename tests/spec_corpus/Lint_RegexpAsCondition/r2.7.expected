@@ -1,0 +1,35 @@
+==> offenses exit=1 695 <==
+000.rb:1:4: W: [Correctable] Lint/RegexpAsCondition: Do not use regexp literal as a condition. The regexp literal matches `$_` implicitly.
+001.rb:1:5: W: [Correctable] Lint/RegexpAsCondition: Do not use regexp literal as a condition. The regexp literal matches `$_` implicitly.
+002.rb:1:7: W: [Correctable] Lint/RegexpAsCondition: Do not use regexp literal as a condition. The regexp literal matches `$_` implicitly.
+003.rb:1:7: W: [Correctable] Lint/RegexpAsCondition: Do not use regexp literal as a condition. The regexp literal matches `$_` implicitly.
+004.rb:1:1: W: [Correctable] Lint/RegexpAsCondition: Do not use regexp literal as a condition. The regexp literal matches `$_` implicitly.
+
+==> autocorrect exit=0 685 <==
+000.rb:1:4: W: [Corrected] Lint/RegexpAsCondition: Do not use regexp literal as a condition. The regexp literal matches `$_` implicitly.
+001.rb:1:5: W: [Corrected] Lint/RegexpAsCondition: Do not use regexp literal as a condition. The regexp literal matches `$_` implicitly.
+002.rb:1:7: W: [Corrected] Lint/RegexpAsCondition: Do not use regexp literal as a condition. The regexp literal matches `$_` implicitly.
+003.rb:1:7: W: [Corrected] Lint/RegexpAsCondition: Do not use regexp literal as a condition. The regexp literal matches `$_` implicitly.
+004.rb:1:1: W: [Corrected] Lint/RegexpAsCondition: Do not use regexp literal as a condition. The regexp literal matches `$_` implicitly.
+
+==> corrected/000.rb 19 <==
+if /foo/ =~ $_
+end
+
+==> corrected/001.rb 22 <==
+if !(/foo/ =~ $_)
+end
+
+==> corrected/002.rb 28 <==
+while /foo/ =~ $_
+  bar
+end
+
+==> corrected/003.rb 28 <==
+until /foo/ =~ $_
+  bar
+end
+
+==> corrected/004.rb 20 <==
+/foo/ =~ $_ ? a : b
+

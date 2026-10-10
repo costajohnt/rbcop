@@ -1,0 +1,340 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 36 <==
+array.select { _1.between?(1, 10) }
+
+==> 001.rb 36 <==
+array.select { (1..10).cover?(_1) }
+
+==> 002.rb 38 <==
+array.find_all { _1.between?(1, 10) }
+
+==> 003.rb 38 <==
+array.find_all { (1..10).cover?(_1) }
+
+==> 004.rb 36 <==
+array.filter { _1.between?(1, 10) }
+
+==> 005.rb 36 <==
+array.filter { (1..10).cover?(_1) }
+
+==> 006.rb 37 <==
+array.reject { !_1.between?(1, 10) }
+
+==> 007.rb 37 <==
+array.reject { !(1..10).cover?(_1) }
+
+==> 008.rb 37 <==
+array.select { !_1.between?(1, 10) }
+
+==> 009.rb 37 <==
+array.select { !(1..10).cover?(_1) }
+
+==> 010.rb 39 <==
+array.find_all { !_1.between?(1, 10) }
+
+==> 011.rb 39 <==
+array.find_all { !(1..10).cover?(_1) }
+
+==> 012.rb 37 <==
+array.filter { !_1.between?(1, 10) }
+
+==> 013.rb 37 <==
+array.filter { !(1..10).cover?(_1) }
+
+==> 014.rb 36 <==
+array.reject { _1.between?(1, 10) }
+
+==> 015.rb 36 <==
+array.reject { (1..10).cover?(_1) }
+
+==> 016.rb 34 <==
+array.find { _1.between?(1, 10) }
+
+==> 017.rb 36 <==
+array.detect { _1.between?(1, 10) }
+
+==> 018.rb 35 <==
+array.find { !_1.between?(1, 10) }
+
+==> 019.rb 37 <==
+array.detect { !_1.between?(1, 10) }
+
+==> 020.rb 39 <==
+array.select { |x| x.between?(1, 10) }
+
+==> 021.rb 39 <==
+array.select { |x| (1..10).cover?(x) }
+
+==> 022.rb 41 <==
+array.select { |x| (1..10).include?(x) }
+
+==> 023.rb 40 <==
+array.select { |x| (1...10).cover?(x) }
+
+==> 024.rb 44 <==
+array.select do |x|
+  x.between?(1, 10)
+end
+
+==> 025.rb 13 <==
+array.select
+
+==> 026.rb 29 <==
+array.select { |x| x.even? }
+
+==> 027.rb 62 <==
+array.select do |x|
+  next if x.even?
+  x.between?(1, 10)
+end
+
+==> 028.rb 39 <==
+array.select { |x| y.between?(1, 10) }
+
+==> 029.rb 33 <==
+select { |x| x.between?(1, 10) }
+
+==> 030.rb 83 <==
+{}.select { |x| x.between?(1, 10) }
+{ foo: :bar }.select { |x| x.between?(1, 10) }
+
+==> 031.rb 94 <==
+Hash.new.select { |x| x.between?(1, 10) }
+Hash.new(:default).select { |x| x.between?(1, 10) }
+
+==> 032.rb 80 <==
+to_h.select { |x| x.between?(1, 10) }
+foo.to_h.select { |x| x.between?(1, 10) }
+
+==> 033.rb 37 <==
+ENV.select { |x| x.between?(1, 10) }
+
+==> 034.rb 40 <==
+array&.select { |x| x.between?(1, 10) }
+
+==> 035.rb 41 <==
+array.find_all { |x| x.between?(1, 10) }
+
+==> 036.rb 41 <==
+array.find_all { |x| (1..10).cover?(x) }
+
+==> 037.rb 43 <==
+array.find_all { |x| (1..10).include?(x) }
+
+==> 038.rb 42 <==
+array.find_all { |x| (1...10).cover?(x) }
+
+==> 039.rb 46 <==
+array.find_all do |x|
+  x.between?(1, 10)
+end
+
+==> 040.rb 15 <==
+array.find_all
+
+==> 041.rb 31 <==
+array.find_all { |x| x.even? }
+
+==> 042.rb 64 <==
+array.find_all do |x|
+  next if x.even?
+  x.between?(1, 10)
+end
+
+==> 043.rb 41 <==
+array.find_all { |x| y.between?(1, 10) }
+
+==> 044.rb 35 <==
+find_all { |x| x.between?(1, 10) }
+
+==> 045.rb 87 <==
+{}.find_all { |x| x.between?(1, 10) }
+{ foo: :bar }.find_all { |x| x.between?(1, 10) }
+
+==> 046.rb 98 <==
+Hash.new.find_all { |x| x.between?(1, 10) }
+Hash.new(:default).find_all { |x| x.between?(1, 10) }
+
+==> 047.rb 84 <==
+to_h.find_all { |x| x.between?(1, 10) }
+foo.to_h.find_all { |x| x.between?(1, 10) }
+
+==> 048.rb 39 <==
+ENV.find_all { |x| x.between?(1, 10) }
+
+==> 049.rb 42 <==
+array&.find_all { |x| x.between?(1, 10) }
+
+==> 050.rb 39 <==
+array.filter { |x| x.between?(1, 10) }
+
+==> 051.rb 39 <==
+array.filter { |x| (1..10).cover?(x) }
+
+==> 052.rb 41 <==
+array.filter { |x| (1..10).include?(x) }
+
+==> 053.rb 40 <==
+array.filter { |x| (1...10).cover?(x) }
+
+==> 054.rb 44 <==
+array.filter do |x|
+  x.between?(1, 10)
+end
+
+==> 055.rb 13 <==
+array.filter
+
+==> 056.rb 29 <==
+array.filter { |x| x.even? }
+
+==> 057.rb 62 <==
+array.filter do |x|
+  next if x.even?
+  x.between?(1, 10)
+end
+
+==> 058.rb 39 <==
+array.filter { |x| y.between?(1, 10) }
+
+==> 059.rb 33 <==
+filter { |x| x.between?(1, 10) }
+
+==> 060.rb 83 <==
+{}.filter { |x| x.between?(1, 10) }
+{ foo: :bar }.filter { |x| x.between?(1, 10) }
+
+==> 061.rb 94 <==
+Hash.new.filter { |x| x.between?(1, 10) }
+Hash.new(:default).filter { |x| x.between?(1, 10) }
+
+==> 062.rb 80 <==
+to_h.filter { |x| x.between?(1, 10) }
+foo.to_h.filter { |x| x.between?(1, 10) }
+
+==> 063.rb 37 <==
+ENV.filter { |x| x.between?(1, 10) }
+
+==> 064.rb 40 <==
+array&.filter { |x| x.between?(1, 10) }
+
+==> 065.rb 40 <==
+array.reject { |x| !x.between?(1, 10) }
+
+==> 066.rb 40 <==
+array.reject { |x| !(1..10).cover?(x) }
+
+==> 067.rb 42 <==
+array.reject { |x| !(1..10).include?(x) }
+
+==> 068.rb 40 <==
+array.select { |x| !x.between?(1, 10) }
+
+==> 069.rb 40 <==
+array.select { |x| !(1..10).cover?(x) }
+
+==> 070.rb 42 <==
+array.select { |x| !(1..10).include?(x) }
+
+==> 071.rb 42 <==
+array.find_all { |x| !x.between?(1, 10) }
+
+==> 072.rb 42 <==
+array.find_all { |x| !(1..10).cover?(x) }
+
+==> 073.rb 44 <==
+array.find_all { |x| !(1..10).include?(x) }
+
+==> 074.rb 40 <==
+array.filter { |x| !x.between?(1, 10) }
+
+==> 075.rb 40 <==
+array.filter { |x| !(1..10).cover?(x) }
+
+==> 076.rb 42 <==
+array.filter { |x| !(1..10).include?(x) }
+
+==> 077.rb 39 <==
+array.reject { |x| x.between?(1, 10) }
+
+==> 078.rb 39 <==
+array.reject { |x| (1..10).cover?(x) }
+
+==> 079.rb 41 <==
+array.reject { |x| (1..10).include?(x) }
+
+==> 080.rb 40 <==
+array.reject { |x| (1...10).cover?(x) }
+
+==> 081.rb 44 <==
+array.reject do |x|
+  x.between?(1, 10)
+end
+
+==> 082.rb 13 <==
+array.reject
+
+==> 083.rb 29 <==
+array.reject { |x| x.even? }
+
+==> 084.rb 62 <==
+array.reject do |x|
+  next if x.even?
+  x.between?(1, 10)
+end
+
+==> 085.rb 39 <==
+array.reject { |x| y.between?(1, 10) }
+
+==> 086.rb 33 <==
+reject { |x| x.between?(1, 10) }
+
+==> 087.rb 83 <==
+{}.reject { |x| x.between?(1, 10) }
+{ foo: :bar }.reject { |x| x.between?(1, 10) }
+
+==> 088.rb 94 <==
+Hash.new.reject { |x| x.between?(1, 10) }
+Hash.new(:default).reject { |x| x.between?(1, 10) }
+
+==> 089.rb 80 <==
+to_h.reject { |x| x.between?(1, 10) }
+foo.to_h.reject { |x| x.between?(1, 10) }
+
+==> 090.rb 37 <==
+ENV.reject { |x| x.between?(1, 10) }
+
+==> 091.rb 40 <==
+array&.reject { |x| x.between?(1, 10) }
+
+==> 092.rb 37 <==
+array.find { |x| x.between?(1, 10) }
+
+==> 093.rb 37 <==
+array.find { |x| (1..10).cover?(x) }
+
+==> 094.rb 39 <==
+array.detect { |x| x.between?(1, 10) }
+
+==> 095.rb 39 <==
+array.detect { |x| (1..10).cover?(x) }
+
+==> 096.rb 38 <==
+array.find { |x| !x.between?(1, 10) }
+
+==> 097.rb 38 <==
+array.find { |x| !(1..10).cover?(x) }
+
+==> 098.rb 40 <==
+array.detect { |x| !x.between?(1, 10) }
+
+==> 099.rb 40 <==
+array.detect { |x| !(1..10).cover?(x) }
+

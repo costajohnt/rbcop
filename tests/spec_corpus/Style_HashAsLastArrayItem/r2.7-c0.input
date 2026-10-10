@@ -1,0 +1,41 @@
+==> .rubocop.yml 159 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/HashAsLastArrayItem:
+  EnforcedStyle: braces
+
+==> 000.rb 23 <==
+[1, 2, one: 1, two: 2]
+
+==> 001.rb 17 <==
+[one: 1, two: 2]
+
+==> 002.rb 23 <==
+[
+  one: 1,
+  two: 2
+]
+
+==> 003.rb 18 <==
+[one: 1,
+ two: 2]
+
+==> 004.rb 27 <==
+[1, 2, { one: 1, two: 2 }]
+
+==> 005.rb 20 <==
+foo(one: 1, two: 2)
+
+==> 006.rb 25 <==
+[{ one: 1 }, { two: 2 }]
+
+==> 007.rb 8 <==
+[1, {}]
+
+==> 008.rb 15 <==
+[1, **options]
+

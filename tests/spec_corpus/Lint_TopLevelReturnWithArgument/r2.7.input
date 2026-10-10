@@ -1,0 +1,85 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 7 <==
+return
+
+==> 001.rb 15 <==
+return 1, 2, 3
+
+==> 002.rb 47 <==
+return 1, 2, 3
+
+return 1, 2, 3
+
+return 1, 2, 3
+
+==> 003.rb 29 <==
+[1, 2, 3].each { return _1 }
+
+==> 004.rb 56 <==
+foo
+
+[1, 2, 3, 4, 5].each { |n| return n }
+
+return
+
+bar
+
+==> 005.rb 64 <==
+foo
+
+[1, 2, 3, 4, 5].each { |n| return n }
+
+return 1, 2, 3
+
+bar
+
+==> 006.rb 54 <==
+def method
+  return 'Hello World'
+end
+
+return 1, 2, 3
+
+==> 007.rb 76 <==
+foo
+
+return if 1 == 1
+
+bar
+
+def method
+  return "Hello World" if 1 == 1
+end
+
+==> 008.rb 100 <==
+foo
+return 1, 2, 3 if 1 == 1
+bar
+return 2
+return 3
+
+def method
+  return "Hello World" if 1 == 1
+end
+
+==> 009.rb 48 <==
+foo
+
+if a == b; warn 'hey'; return 42; end
+
+bar
+
+==> 010.rb 45 <==
+foo
+
+if a == b; warn 'hey'; return; end
+
+bar
+

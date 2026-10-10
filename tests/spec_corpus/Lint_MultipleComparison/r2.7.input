@@ -1,0 +1,64 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 10 <==
+x < y < z
+
+==> 001.rb 10 <==
+x < y > z
+
+==> 002.rb 11 <==
+x < y <= z
+
+==> 003.rb 11 <==
+x < y >= z
+
+==> 004.rb 10 <==
+x > y < z
+
+==> 005.rb 10 <==
+x > y > z
+
+==> 006.rb 11 <==
+x > y <= z
+
+==> 007.rb 11 <==
+x > y >= z
+
+==> 008.rb 11 <==
+x <= y < z
+
+==> 009.rb 11 <==
+x <= y > z
+
+==> 010.rb 12 <==
+x <= y <= z
+
+==> 011.rb 12 <==
+x <= y >= z
+
+==> 012.rb 11 <==
+x >= y < z
+
+==> 013.rb 11 <==
+x >= y > z
+
+==> 014.rb 12 <==
+x >= y <= z
+
+==> 015.rb 12 <==
+x >= y >= z
+
+==> 016.rb 5 <==
+x < 1
+==> 017.rb 14 <==
+x >= y & x < z
+==> 018.rb 14 <==
+x >= y | x < z
+==> 019.rb 14 <==
+x >= y ^ x < z

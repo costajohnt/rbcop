@@ -1,0 +1,16 @@
+==> offenses exit=1 384 <==
+001.rb:1:1: C: Style/IpAddresses: Do not hardcode IP addresses.
+004.rb:1:1: C: Style/IpAddresses: Do not hardcode IP addresses.
+005.rb:1:1: C: Style/IpAddresses: Do not hardcode IP addresses.
+006.rb:1:1: C: Style/IpAddresses: Do not hardcode IP addresses.
+007.rb:1:1: C: Style/IpAddresses: Do not hardcode IP addresses.
+008.rb:1:1: C: Style/IpAddresses: Do not hardcode IP addresses.
+
+==> autocorrect exit=1 384 <==
+001.rb:1:1: C: Style/IpAddresses: Do not hardcode IP addresses.
+004.rb:1:1: C: Style/IpAddresses: Do not hardcode IP addresses.
+005.rb:1:1: C: Style/IpAddresses: Do not hardcode IP addresses.
+006.rb:1:1: C: Style/IpAddresses: Do not hardcode IP addresses.
+007.rb:1:1: C: Style/IpAddresses: Do not hardcode IP addresses.
+008.rb:1:1: C: Style/IpAddresses: Do not hardcode IP addresses.
+

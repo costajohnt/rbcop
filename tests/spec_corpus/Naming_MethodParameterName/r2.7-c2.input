@@ -1,0 +1,21 @@
+==> .rubocop.yml 162 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/MethodParameterName:
+  ForbiddenNames:
+  - arg
+
+==> 000.rb 33 <==
+def baz(arg)
+  arg.do_things
+end
+
+==> 001.rb 53 <==
+def baz(foo_parameter)
+  foo_parameter.do_things
+end
+

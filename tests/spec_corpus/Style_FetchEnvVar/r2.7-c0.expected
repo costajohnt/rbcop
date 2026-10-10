@@ -1,0 +1,157 @@
+==> offenses exit=1 2821 <==
+000.rb:1:1: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+001.rb:1:1: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X' + 'Y', nil)` instead of `ENV['X' + 'Y']`.
+009.rb:1:7: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+010.rb:1:7: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+011.rb:1:13: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+012.rb:1:15: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+013.rb:3:15: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('C', nil)` instead of `ENV['C']`.
+013.rb:4:3: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+013.rb:5:3: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('Y', nil)` instead of `ENV['Y']`.
+014.rb:1:5: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+015.rb:1:8: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+015.rb:2:8: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('Y', nil)` instead of `ENV['Y']`.
+016.rb:2:3: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+016.rb:3:3: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('Y', nil)` instead of `ENV['Y']`.
+017.rb:2:3: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+017.rb:3:3: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('Y', nil)` instead of `ENV['Y']`.
+018.rb:2:6: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+018.rb:3:6: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('Y', nil)` instead of `ENV['Y']`.
+019.rb:1:4: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+025.rb:1:6: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+025.rb:2:6: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('Y', nil)` instead of `ENV['Y']`.
+030.rb:2:8: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('Y', nil)` instead of `ENV['Y']`.
+032.rb:2:8: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('Y', nil)` instead of `ENV['Y']`.
+033.rb:2:3: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch(x, nil)` instead of `ENV[x]`.
+034.rb:2:3: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch(x, nil)` instead of `ENV[x]`.
+035.rb:2:3: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+036.rb:2:8: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+037.rb:1:6: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+037.rb:3:11: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+
+==> autocorrect exit=0 2763 <==
+000.rb:1:1: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+001.rb:1:1: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X' + 'Y', nil)` instead of `ENV['X' + 'Y']`.
+009.rb:1:7: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+010.rb:1:7: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+011.rb:1:13: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+012.rb:1:15: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+013.rb:3:15: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('C', nil)` instead of `ENV['C']`.
+013.rb:4:3: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+013.rb:5:3: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('Y', nil)` instead of `ENV['Y']`.
+014.rb:1:5: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+015.rb:1:8: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+015.rb:2:8: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('Y', nil)` instead of `ENV['Y']`.
+016.rb:2:3: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+016.rb:3:3: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('Y', nil)` instead of `ENV['Y']`.
+017.rb:2:3: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+017.rb:3:3: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('Y', nil)` instead of `ENV['Y']`.
+018.rb:2:6: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+018.rb:3:6: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('Y', nil)` instead of `ENV['Y']`.
+019.rb:1:4: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+025.rb:1:6: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+025.rb:2:6: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('Y', nil)` instead of `ENV['Y']`.
+030.rb:2:8: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('Y', nil)` instead of `ENV['Y']`.
+032.rb:2:8: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('Y', nil)` instead of `ENV['Y']`.
+033.rb:2:3: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch(x, nil)` instead of `ENV[x]`.
+034.rb:2:3: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch(x, nil)` instead of `ENV[x]`.
+035.rb:2:3: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+036.rb:2:8: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+037.rb:1:6: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+037.rb:3:11: C: [Corrected] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+
+==> corrected/000.rb 20 <==
+ENV.fetch('X', nil)
+
+==> corrected/001.rb 26 <==
+ENV.fetch('X' + 'Y', nil)
+
+==> corrected/009.rb 26 <==
+y ||= ENV.fetch('X', nil)
+
+==> corrected/010.rb 26 <==
+y &&= ENV.fetch('X', nil)
+
+==> corrected/011.rb 33 <==
+some_method(ENV.fetch('X', nil))
+
+==> corrected/012.rb 35 <==
+x.some_method(ENV.fetch('X', nil))
+
+==> corrected/013.rb 119 <==
+some_method(
+  ENV['A'].some_method,
+  ENV['B'] || ENV.fetch('C', nil),
+  ENV.fetch('X', nil),
+  ENV.fetch('Y', nil)
+)
+
+==> corrected/014.rb 24 <==
+x = ENV.fetch('X', nil)
+
+==> corrected/015.rb 55 <==
+x, y = ENV.fetch('X', nil),
+       ENV.fetch('Y', nil)
+
+==> corrected/016.rb 49 <==
+[
+  ENV.fetch('X', nil),
+  ENV.fetch('Y', nil)
+]
+
+==> corrected/017.rb 61 <==
+{
+  ENV.fetch('X', nil) => :x,
+  ENV.fetch('Y', nil) => :y
+}
+
+==> corrected/018.rb 55 <==
+{
+  x: ENV.fetch('X', nil),
+  y: ENV.fetch('Y', nil)
+}
+
+==> corrected/019.rb 25 <==
+"#{ENV.fetch('X', nil)}"
+
+==> corrected/025.rb 63 <==
+case ENV.fetch('X', nil)
+when ENV.fetch('Y', nil)
+  puts x
+end
+
+==> corrected/030.rb 43 <==
+if ENV['X']
+  puts ENV.fetch('Y', nil)
+end
+
+==> corrected/032.rb 47 <==
+if ENV['X'] = x
+  puts ENV.fetch('Y', nil)
+end
+
+==> corrected/033.rb 36 <==
+if ENV && x
+  ENV.fetch(x, nil)
+end
+
+==> corrected/034.rb 36 <==
+if ENV || x
+  ENV.fetch(x, nil)
+end
+
+==> corrected/035.rb 36 <==
+if a == b
+  ENV.fetch('X', nil)
+end
+
+==> corrected/036.rb 46 <==
+if a || b && c
+  puts ENV.fetch('X', nil)
+end
+
+==> corrected/037.rb 56 <==
+y || ENV.fetch('X', nil)
+
+y || z || ENV.fetch('X', nil)
+

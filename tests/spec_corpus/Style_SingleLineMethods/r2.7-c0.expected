@@ -1,0 +1,28 @@
+==> offenses exit=1 368 <==
+000.rb:1:1: C: [Correctable] Style/SingleLineMethods: Avoid single-line method definitions.
+000.rb:2:1: C: [Correctable] Style/SingleLineMethods: Avoid single-line method definitions.
+000.rb:3:1: C: [Correctable] Style/SingleLineMethods: Avoid single-line method definitions.
+001.rb:1:1: C: [Correctable] Style/SingleLineMethods: Avoid single-line method definitions.
+
+==> autocorrect exit=0 360 <==
+000.rb:1:1: C: [Corrected] Style/SingleLineMethods: Avoid single-line method definitions.
+000.rb:2:1: C: [Corrected] Style/SingleLineMethods: Avoid single-line method definitions.
+000.rb:3:1: C: [Corrected] Style/SingleLineMethods: Avoid single-line method definitions.
+001.rb:1:1: C: [Corrected] Style/SingleLineMethods: Avoid single-line method definitions.
+
+==> corrected/000.rb 114 <==
+def some_method; 
+  body 
+end
+def link_to(name, url); 
+  {:name => name}; 
+end
+def @table.columns; 
+  super; 
+end
+
+==> corrected/001.rb 33 <==
+def foo() 
+  (do_something) 
+end
+

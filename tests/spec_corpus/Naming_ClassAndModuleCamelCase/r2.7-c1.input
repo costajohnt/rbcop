@@ -1,0 +1,19 @@
+==> .rubocop.yml 190 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/ClassAndModuleCamelCase:
+  AllowedNames:
+  - getter_class
+  - setter_class
+
+==> 000.rb 65 <==
+class getter_class::MyClass
+end
+
+class setter_class::MyClass
+end
+

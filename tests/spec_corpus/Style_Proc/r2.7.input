@@ -1,0 +1,21 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 28 <==
+f = Proc.new { |x| puts x }
+
+==> 001.rb 30 <==
+f = ::Proc.new { |x| puts x }
+
+==> 002.rb 12 <==
+p = Proc.new
+==> 003.rb 14 <==
+p = ::Proc.new
+==> 004.rb 25 <==
+f = Proc.new { puts _1 }
+

@@ -1,0 +1,30 @@
+==> offenses exit=1 1218 <==
+008.rb:1:15: C: Naming/MethodParameterName: Do not end method parameter with a number.
+009.rb:1:25: C: Naming/MethodParameterName: Do not end method parameter with a number.
+010.rb:1:15: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+011.rb:1:15: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+011.rb:1:19: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+011.rb:1:24: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+011.rb:1:28: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+012.rb:1:15: C: Naming/MethodParameterName: Only use lowercase characters for method parameter.
+013.rb:1:20: C: Naming/MethodParameterName: Do not end method parameter with a number.
+014.rb:1:15: C: Naming/MethodParameterName: Only use lowercase characters for method parameter.
+015.rb:1:20: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+015.rb:1:23: C: Naming/MethodParameterName: Do not end method parameter with a number.
+015.rb:1:29: C: Naming/MethodParameterName: Only use lowercase characters for method parameter.
+
+==> autocorrect exit=1 1218 <==
+008.rb:1:15: C: Naming/MethodParameterName: Do not end method parameter with a number.
+009.rb:1:25: C: Naming/MethodParameterName: Do not end method parameter with a number.
+010.rb:1:15: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+011.rb:1:15: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+011.rb:1:19: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+011.rb:1:24: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+011.rb:1:28: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+012.rb:1:15: C: Naming/MethodParameterName: Only use lowercase characters for method parameter.
+013.rb:1:20: C: Naming/MethodParameterName: Do not end method parameter with a number.
+014.rb:1:15: C: Naming/MethodParameterName: Only use lowercase characters for method parameter.
+015.rb:1:20: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+015.rb:1:23: C: Naming/MethodParameterName: Do not end method parameter with a number.
+015.rb:1:29: C: Naming/MethodParameterName: Only use lowercase characters for method parameter.
+

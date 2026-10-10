@@ -1,0 +1,20 @@
+==> offenses exit=1 552 <==
+001.rb:3:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+001.rb:5:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+003.rb:3:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+003.rb:4:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+005.rb:3:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+005.rb:4:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+007.rb:5:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+007.rb:7:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+
+==> autocorrect exit=1 552 <==
+001.rb:3:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+001.rb:5:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+003.rb:3:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+003.rb:4:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+005.rb:3:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+005.rb:4:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+007.rb:5:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+007.rb:7:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+

@@ -1,0 +1,35 @@
+==> .rubocop.yml 159 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/TrailingWhitespace:
+  AllowInHeredoc: false
+
+==> 000.rb 7 <==
+x = 0	
+
+==> 001.rb 10 <==
+x = :a　
+
+==> 002.rb 9 <==
+<<~X
+	
+X
+
+==> 003.rb 11 <==
+<<~X
+　
+X
+
+==> 004.rb 34 <==
+x = 0	
+=begin
+__END__
+=end
+x = 0	
+
+==> 005.rb 5 <==
+x = 0

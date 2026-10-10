@@ -1,0 +1,18 @@
+==> offenses exit=1 567 <==
+000.rb:6:6: W: Lint/DuplicateCaseCondition: Duplicate `when` condition detected.
+001.rb:4:6: W: Lint/DuplicateCaseCondition: Duplicate `when` condition detected.
+002.rb:6:6: W: Lint/DuplicateCaseCondition: Duplicate `when` condition detected.
+002.rb:8:6: W: Lint/DuplicateCaseCondition: Duplicate `when` condition detected.
+003.rb:4:6: W: Lint/DuplicateCaseCondition: Duplicate `when` condition detected.
+003.rb:4:9: W: Lint/DuplicateCaseCondition: Duplicate `when` condition detected.
+004.rb:4:6: W: Lint/DuplicateCaseCondition: Duplicate `when` condition detected.
+
+==> autocorrect exit=1 567 <==
+000.rb:6:6: W: Lint/DuplicateCaseCondition: Duplicate `when` condition detected.
+001.rb:4:6: W: Lint/DuplicateCaseCondition: Duplicate `when` condition detected.
+002.rb:6:6: W: Lint/DuplicateCaseCondition: Duplicate `when` condition detected.
+002.rb:8:6: W: Lint/DuplicateCaseCondition: Duplicate `when` condition detected.
+003.rb:4:6: W: Lint/DuplicateCaseCondition: Duplicate `when` condition detected.
+003.rb:4:9: W: Lint/DuplicateCaseCondition: Duplicate `when` condition detected.
+004.rb:4:6: W: Lint/DuplicateCaseCondition: Duplicate `when` condition detected.
+

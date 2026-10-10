@@ -1,0 +1,739 @@
+==> .rubocop.yml 160 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/DuplicateBranch:
+  IgnoreLiteralBranches: true
+
+==> 000.rb 34 <==
+if x
+  5
+elsif y
+  5
+else
+  5
+end
+
+==> 001.rb 40 <==
+if x
+  5.0
+elsif y
+  5.0
+else
+  5.0
+end
+
+==> 002.rb 37 <==
+if x
+  5r
+elsif y
+  5r
+else
+  5r
+end
+
+==> 003.rb 37 <==
+if x
+  5i
+elsif y
+  5i
+else
+  5i
+end
+
+==> 004.rb 55 <==
+if x
+  "string"
+elsif y
+  "string"
+else
+  "string"
+end
+
+==> 005.rb 52 <==
+if x
+  :symbol
+elsif y
+  :symbol
+else
+  :symbol
+end
+
+==> 006.rb 43 <==
+if x
+  true
+elsif y
+  true
+else
+  true
+end
+
+==> 007.rb 46 <==
+if x
+  false
+elsif y
+  false
+else
+  false
+end
+
+==> 008.rb 40 <==
+if x
+  nil
+elsif y
+  nil
+else
+  nil
+end
+
+==> 009.rb 46 <==
+if x
+  /foo/
+elsif y
+  /foo/
+else
+  /foo/
+end
+
+==> 010.rb 49 <==
+if x
+  /foo/i
+elsif y
+  /foo/i
+else
+  /foo/i
+end
+
+==> 011.rb 43 <==
+if x
+  1..5
+elsif y
+  1..5
+else
+  1..5
+end
+
+==> 012.rb 46 <==
+if x
+  1...5
+elsif y
+  1...5
+else
+  1...5
+end
+
+==> 013.rb 37 <==
+if x
+  []
+elsif y
+  []
+else
+  []
+end
+
+==> 014.rb 58 <==
+if x
+  [1, 2, 3]
+elsif y
+  [1, 2, 3]
+else
+  [1, 2, 3]
+end
+
+==> 015.rb 37 <==
+if x
+  {}
+elsif y
+  {}
+else
+  {}
+end
+
+==> 016.rb 85 <==
+if x
+  { foo: 1, bar: 2 }
+elsif y
+  { foo: 1, bar: 2 }
+else
+  { foo: 1, bar: 2 }
+end
+
+==> 017.rb 55 <==
+if x
+  "#{foo}"
+elsif y
+  "#{foo}"
+else
+  "#{foo}"
+end
+
+==> 018.rb 58 <==
+if x
+  :"#{foo}"
+elsif y
+  :"#{foo}"
+else
+  :"#{foo}"
+end
+
+==> 019.rb 58 <==
+if x
+  `foo bar`
+elsif y
+  `foo bar`
+else
+  `foo bar`
+end
+
+==> 020.rb 76 <==
+if x
+  [foo, bar, baz]
+elsif y
+  [foo, bar, baz]
+else
+  [foo, bar, baz]
+end
+
+==> 021.rb 97 <==
+if x
+  { foo: foo, bar: bar }
+elsif y
+  { foo: foo, bar: bar }
+else
+  { foo: foo, bar: bar }
+end
+
+==> 022.rb 49 <==
+if x
+  1..foo
+elsif y
+  1..foo
+else
+  1..foo
+end
+
+==> 023.rb 52 <==
+if x
+  1...foo
+elsif y
+  1...foo
+else
+  1...foo
+end
+
+==> 024.rb 58 <==
+if x
+  /#{foo}/i
+elsif y
+  /#{foo}/i
+else
+  /#{foo}/i
+end
+
+==> 025.rb 40 <==
+if x
+  foo
+elsif y
+  foo
+else
+  foo
+end
+
+==> 026.rb 55 <==
+if x
+  foo(bar)
+elsif y
+  foo(bar)
+else
+  foo(bar)
+end
+
+==> 027.rb 48 <==
+case foo
+when x then 5
+when y then 5
+else 5
+end
+
+==> 028.rb 54 <==
+case foo
+when x then 5.0
+when y then 5.0
+else 5.0
+end
+
+==> 029.rb 51 <==
+case foo
+when x then 5r
+when y then 5r
+else 5r
+end
+
+==> 030.rb 51 <==
+case foo
+when x then 5i
+when y then 5i
+else 5i
+end
+
+==> 031.rb 69 <==
+case foo
+when x then "string"
+when y then "string"
+else "string"
+end
+
+==> 032.rb 66 <==
+case foo
+when x then :symbol
+when y then :symbol
+else :symbol
+end
+
+==> 033.rb 57 <==
+case foo
+when x then true
+when y then true
+else true
+end
+
+==> 034.rb 60 <==
+case foo
+when x then false
+when y then false
+else false
+end
+
+==> 035.rb 54 <==
+case foo
+when x then nil
+when y then nil
+else nil
+end
+
+==> 036.rb 60 <==
+case foo
+when x then /foo/
+when y then /foo/
+else /foo/
+end
+
+==> 037.rb 63 <==
+case foo
+when x then /foo/i
+when y then /foo/i
+else /foo/i
+end
+
+==> 038.rb 57 <==
+case foo
+when x then 1..5
+when y then 1..5
+else 1..5
+end
+
+==> 039.rb 60 <==
+case foo
+when x then 1...5
+when y then 1...5
+else 1...5
+end
+
+==> 040.rb 51 <==
+case foo
+when x then []
+when y then []
+else []
+end
+
+==> 041.rb 72 <==
+case foo
+when x then [1, 2, 3]
+when y then [1, 2, 3]
+else [1, 2, 3]
+end
+
+==> 042.rb 51 <==
+case foo
+when x then {}
+when y then {}
+else {}
+end
+
+==> 043.rb 99 <==
+case foo
+when x then { foo: 1, bar: 2 }
+when y then { foo: 1, bar: 2 }
+else { foo: 1, bar: 2 }
+end
+
+==> 044.rb 69 <==
+case foo
+when x then "#{foo}"
+when y then "#{foo}"
+else "#{foo}"
+end
+
+==> 045.rb 72 <==
+case foo
+when x then :"#{foo}"
+when y then :"#{foo}"
+else :"#{foo}"
+end
+
+==> 046.rb 72 <==
+case foo
+when x then `foo bar`
+when y then `foo bar`
+else `foo bar`
+end
+
+==> 047.rb 90 <==
+case foo
+when x then [foo, bar, baz]
+when y then [foo, bar, baz]
+else [foo, bar, baz]
+end
+
+==> 048.rb 111 <==
+case foo
+when x then { foo: foo, bar: bar }
+when y then { foo: foo, bar: bar }
+else { foo: foo, bar: bar }
+end
+
+==> 049.rb 63 <==
+case foo
+when x then 1..foo
+when y then 1..foo
+else 1..foo
+end
+
+==> 050.rb 66 <==
+case foo
+when x then 1...foo
+when y then 1...foo
+else 1...foo
+end
+
+==> 051.rb 72 <==
+case foo
+when x then /#{foo}/i
+when y then /#{foo}/i
+else /#{foo}/i
+end
+
+==> 052.rb 54 <==
+case foo
+when x then foo
+when y then foo
+else foo
+end
+
+==> 053.rb 69 <==
+case foo
+when x then foo(bar)
+when y then foo(bar)
+else foo(bar)
+end
+
+==> 054.rb 65 <==
+begin
+  foo
+rescue FooError
+  5
+rescue BarError
+  5
+else
+  5
+end
+
+==> 055.rb 71 <==
+begin
+  foo
+rescue FooError
+  5.0
+rescue BarError
+  5.0
+else
+  5.0
+end
+
+==> 056.rb 68 <==
+begin
+  foo
+rescue FooError
+  5r
+rescue BarError
+  5r
+else
+  5r
+end
+
+==> 057.rb 68 <==
+begin
+  foo
+rescue FooError
+  5i
+rescue BarError
+  5i
+else
+  5i
+end
+
+==> 058.rb 86 <==
+begin
+  foo
+rescue FooError
+  "string"
+rescue BarError
+  "string"
+else
+  "string"
+end
+
+==> 059.rb 83 <==
+begin
+  foo
+rescue FooError
+  :symbol
+rescue BarError
+  :symbol
+else
+  :symbol
+end
+
+==> 060.rb 74 <==
+begin
+  foo
+rescue FooError
+  true
+rescue BarError
+  true
+else
+  true
+end
+
+==> 061.rb 77 <==
+begin
+  foo
+rescue FooError
+  false
+rescue BarError
+  false
+else
+  false
+end
+
+==> 062.rb 71 <==
+begin
+  foo
+rescue FooError
+  nil
+rescue BarError
+  nil
+else
+  nil
+end
+
+==> 063.rb 77 <==
+begin
+  foo
+rescue FooError
+  /foo/
+rescue BarError
+  /foo/
+else
+  /foo/
+end
+
+==> 064.rb 80 <==
+begin
+  foo
+rescue FooError
+  /foo/i
+rescue BarError
+  /foo/i
+else
+  /foo/i
+end
+
+==> 065.rb 74 <==
+begin
+  foo
+rescue FooError
+  1..5
+rescue BarError
+  1..5
+else
+  1..5
+end
+
+==> 066.rb 77 <==
+begin
+  foo
+rescue FooError
+  1...5
+rescue BarError
+  1...5
+else
+  1...5
+end
+
+==> 067.rb 68 <==
+begin
+  foo
+rescue FooError
+  []
+rescue BarError
+  []
+else
+  []
+end
+
+==> 068.rb 89 <==
+begin
+  foo
+rescue FooError
+  [1, 2, 3]
+rescue BarError
+  [1, 2, 3]
+else
+  [1, 2, 3]
+end
+
+==> 069.rb 68 <==
+begin
+  foo
+rescue FooError
+  {}
+rescue BarError
+  {}
+else
+  {}
+end
+
+==> 070.rb 116 <==
+begin
+  foo
+rescue FooError
+  { foo: 1, bar: 2 }
+rescue BarError
+  { foo: 1, bar: 2 }
+else
+  { foo: 1, bar: 2 }
+end
+
+==> 071.rb 86 <==
+begin
+  foo
+rescue FooError
+  "#{foo}"
+rescue BarError
+  "#{foo}"
+else
+  "#{foo}"
+end
+
+==> 072.rb 89 <==
+begin
+  foo
+rescue FooError
+  :"#{foo}"
+rescue BarError
+  :"#{foo}"
+else
+  :"#{foo}"
+end
+
+==> 073.rb 89 <==
+begin
+  foo
+rescue FooError
+  `foo bar`
+rescue BarError
+  `foo bar`
+else
+  `foo bar`
+end
+
+==> 074.rb 107 <==
+begin
+  foo
+rescue FooError
+  [foo, bar, baz]
+rescue BarError
+  [foo, bar, baz]
+else
+  [foo, bar, baz]
+end
+
+==> 075.rb 128 <==
+begin
+  foo
+rescue FooError
+  { foo: foo, bar: bar }
+rescue BarError
+  { foo: foo, bar: bar }
+else
+  { foo: foo, bar: bar }
+end
+
+==> 076.rb 80 <==
+begin
+  foo
+rescue FooError
+  1..foo
+rescue BarError
+  1..foo
+else
+  1..foo
+end
+
+==> 077.rb 83 <==
+begin
+  foo
+rescue FooError
+  1...foo
+rescue BarError
+  1...foo
+else
+  1...foo
+end
+
+==> 078.rb 89 <==
+begin
+  foo
+rescue FooError
+  /#{foo}/i
+rescue BarError
+  /#{foo}/i
+else
+  /#{foo}/i
+end
+
+==> 079.rb 71 <==
+begin
+  foo
+rescue FooError
+  foo
+rescue BarError
+  foo
+else
+  foo
+end
+
+==> 080.rb 86 <==
+begin
+  foo
+rescue FooError
+  foo(bar)
+rescue BarError
+  foo(bar)
+else
+  foo(bar)
+end
+

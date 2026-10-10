@@ -1,0 +1,243 @@
+==> .rubocop.yml 183 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: keyword
+  AutoCorrect: true
+
+==> 000.rb 17 <==
+﻿class Test
+end
+==> 001.rb 14 <==
+class Test
+end
+==> 002.rb 23 <==
+class << self; Test
+end
+==> 003.rb 15 <==
+module Test
+end
+==> 004.rb 11 <==
+if test
+end
+==> 005.rb 15 <==
+unless test
+end
+==> 006.rb 14 <==
+while test
+end
+==> 007.rb 14 <==
+until test
+end
+==> 008.rb 17 <==
+case a when b
+end
+==> 009.rb 16 <==
+case a; in b
+end
+==> 010.rb 25 <==
+puts 1; class Test
+  end
+
+==> 011.rb 17 <==
+class Test
+  end
+
+==> 012.rb 28 <==
+puts 1; class << self
+  end
+
+==> 013.rb 20 <==
+class << self
+  end
+
+==> 014.rb 26 <==
+puts 1; module Test
+  end
+
+==> 015.rb 18 <==
+module Test
+  end
+
+==> 016.rb 22 <==
+puts 1; if test
+  end
+
+==> 017.rb 14 <==
+if test
+  end
+
+==> 018.rb 26 <==
+puts 1; unless test
+  end
+
+==> 019.rb 18 <==
+unless test
+  end
+
+==> 020.rb 25 <==
+puts 1; while test
+  end
+
+==> 021.rb 17 <==
+while test
+  end
+
+==> 022.rb 25 <==
+puts 1; until test
+  end
+
+==> 023.rb 17 <==
+until test
+  end
+
+==> 024.rb 28 <==
+puts 1; case a when b
+  end
+
+==> 025.rb 20 <==
+case a when b
+  end
+
+==> 026.rb 27 <==
+puts 1; case a; in b
+  end
+
+==> 027.rb 19 <==
+case a; in b
+  end
+
+==> 028.rb 30 <==
+puts 1; class Test
+        end
+==> 029.rb 39 <==
+puts 1; class << self; Test
+        end
+==> 030.rb 31 <==
+puts 1; module Test
+        end
+==> 031.rb 27 <==
+puts 1; if Test
+        end
+==> 032.rb 31 <==
+puts 1; unless Test
+        end
+==> 033.rb 30 <==
+puts 1; while Test
+        end
+==> 034.rb 30 <==
+puts 1; until Test
+        end
+==> 035.rb 33 <==
+puts 1; case a when b
+        end
+==> 036.rb 32 <==
+puts 1; case a; in b
+        end
+==> 037.rb 16 <==
+a = cond ? x : y
+==> 038.rb 13 <==
+a = x if cond
+==> 039.rb 44 <==
+x = if a
+      a1
+    end
+y = if b
+  b1
+end
+
+==> 040.rb 20 <==
+module A
+puts a end
+
+==> 041.rb 29 <==
+if test
+  foo
+else
+  bar end
+
+==> 042.rb 27 <==
+test case a when b
+     end
+==> 043.rb 23 <==
+test case a when b
+end
+
+==> 044.rb 26 <==
+test case a; in b
+     end
+==> 045.rb 22 <==
+test case a; in b
+end
+
+==> 046.rb 18 <==
+var = if test
+end
+
+==> 047.rb 22 <==
+var = unless test
+end
+
+==> 048.rb 21 <==
+var = while test
+end
+
+==> 049.rb 21 <==
+var = until test
+end
+
+==> 050.rb 22 <==
+var << until test
+end
+
+==> 051.rb 23 <==
+var = if test
+      end
+==> 052.rb 27 <==
+var = unless test
+      end
+==> 053.rb 26 <==
+var = while test
+      end
+==> 054.rb 26 <==
+var = until test
+      end
+==> 055.rb 29 <==
+var = case a when b
+      end
+==> 056.rb 35 <==
+var[0] = case a when b
+         end
+==> 057.rb 28 <==
+var = case a; in b
+      end
+==> 058.rb 34 <==
+var[0] = case a; in b
+         end
+==> 059.rb 36 <==
+var = if test
+        foo
+end || ""
+
+==> 060.rb 42 <==
+var = if test
+        foo
+      end || ""
+
+==> 061.rb 36 <==
+var = if test
+        foo
+end && ""
+
+==> 062.rb 42 <==
+var = if test
+        foo
+      end && ""
+
+==> 063.rb 9 <==
+foo = ()
+

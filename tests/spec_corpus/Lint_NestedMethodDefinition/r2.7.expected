@@ -1,0 +1,12 @@
+==> offenses exit=1 421 <==
+000.rb:1:8: W: Lint/NestedMethodDefinition: Method definitions must not be nested. Use `lambda` instead.
+001.rb:5:3: W: Lint/NestedMethodDefinition: Method definitions must not be nested. Use `lambda` instead.
+002.rb:2:14: W: Lint/NestedMethodDefinition: Method definitions must not be nested. Use `lambda` instead.
+003.rb:3:5: W: Lint/NestedMethodDefinition: Method definitions must not be nested. Use `lambda` instead.
+
+==> autocorrect exit=1 421 <==
+000.rb:1:8: W: Lint/NestedMethodDefinition: Method definitions must not be nested. Use `lambda` instead.
+001.rb:5:3: W: Lint/NestedMethodDefinition: Method definitions must not be nested. Use `lambda` instead.
+002.rb:2:14: W: Lint/NestedMethodDefinition: Method definitions must not be nested. Use `lambda` instead.
+003.rb:3:5: W: Lint/NestedMethodDefinition: Method definitions must not be nested. Use `lambda` instead.
+

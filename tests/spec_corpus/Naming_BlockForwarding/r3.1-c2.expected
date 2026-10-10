@@ -1,0 +1,16 @@
+==> offenses exit=1 253 <==
+000.rb:1:9: C: [Correctable] Naming/BlockForwarding: Use explicit block forwarding.
+000.rb:2:7: C: [Correctable] Naming/BlockForwarding: Use explicit block forwarding.
+000.rb:3:12: C: [Correctable] Naming/BlockForwarding: Use explicit block forwarding.
+
+==> autocorrect exit=0 247 <==
+000.rb:1:9: C: [Corrected] Naming/BlockForwarding: Use explicit block forwarding.
+000.rb:2:7: C: [Corrected] Naming/BlockForwarding: Use explicit block forwarding.
+000.rb:3:12: C: [Corrected] Naming/BlockForwarding: Use explicit block forwarding.
+
+==> corrected/000.rb 50 <==
+def foo(&proc)
+  bar(&proc)
+  baz(qux, &proc)
+end
+

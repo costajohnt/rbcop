@@ -1,0 +1,10 @@
+==> offenses exit=1 129 <==
+000.rb:1:28: C: [Correctable] Layout/SingleLineBlockChain: Put method call on a separate line if chained to a single line block.
+
+==> autocorrect exit=0 127 <==
+000.rb:1:28: C: [Corrected] Layout/SingleLineBlockChain: Put method call on a separate line if chained to a single line block.
+
+==> corrected/000.rb 39 <==
+example.select { it.cond? }
+.join('-')
+

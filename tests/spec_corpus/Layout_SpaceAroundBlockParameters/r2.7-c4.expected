@@ -1,0 +1,11 @@
+==> offenses exit=1 214 <==
+000.rb:1:4: C: [Correctable] Layout/SpaceAroundBlockParameters: Space before first block parameter missing.
+000.rb:1:7: C: [Correctable] Layout/SpaceAroundBlockParameters: Space after last block parameter missing.
+
+==> autocorrect exit=0 210 <==
+000.rb:1:4: C: [Corrected] Layout/SpaceAroundBlockParameters: Space before first block parameter missing.
+000.rb:1:7: C: [Corrected] Layout/SpaceAroundBlockParameters: Space after last block parameter missing.
+
+==> corrected/000.rb 22 <==
+->( x, y ) { puts x }
+

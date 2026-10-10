@@ -1,0 +1,30 @@
+==> .rubocop.yml 179 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/AccessModifierDeclarations:
+  AllowModifiersOnAliasMethod: false
+
+==> 000.rb 48 <==
+class Foo
+  private alias_method :bar, :foo
+end
+
+==> 001.rb 50 <==
+class Foo
+  protected alias_method :bar, :foo
+end
+
+==> 002.rb 47 <==
+class Foo
+  public alias_method :bar, :foo
+end
+
+==> 003.rb 56 <==
+class Foo
+  module_function alias_method :bar, :foo
+end
+

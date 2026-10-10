@@ -1,0 +1,10 @@
+==> offenses exit=1 241 <==
+000.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+001.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
+002.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `unless` branches without a body.
+
+==> autocorrect exit=1 241 <==
+000.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+001.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
+002.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `unless` branches without a body.
+

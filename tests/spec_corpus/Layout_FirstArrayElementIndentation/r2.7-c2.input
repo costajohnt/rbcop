@@ -1,0 +1,59 @@
+==> .rubocop.yml 177 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: align_brackets
+
+==> 000.rb 20 <==
+a = [
+      1
+    ]
+
+==> 001.rb 23 <==
+a = [
+      1, 2
+    ]
+
+==> 002.rb 16 <==
+a = [1,
+     2]
+
+==> 003.rb 10 <==
+a = [1, 2]
+==> 004.rb 6 <==
+a = []
+==> 005.rb 13 <==
+a, b = [b, a]
+==> 006.rb 11 <==
+a, b = b, a
+==> 007.rb 14 <==
+func([
+  1
+])
+
+==> 008.rb 14 <==
+var = [
+  1
+]
+
+==> 009.rb 38 <==
+var = [
+  1
+]
+func([
+       1
+     ])
+
+==> 010.rb 11 <==
+a << [
+  ]
+
+==> 011.rb 22 <==
+a = [
+        1
+    ]
+

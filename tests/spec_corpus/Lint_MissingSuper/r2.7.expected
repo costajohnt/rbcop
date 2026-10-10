@@ -1,0 +1,22 @@
+==> offenses exit=1 829 <==
+000.rb:2:3: W: Lint/MissingSuper: Call `super` to initialize state of the parent class.
+001.rb:2:3: W: Lint/MissingSuper: Call `super` to initialize state of the parent class.
+007.rb:2:3: W: Lint/MissingSuper: Call `super` to initialize state of the parent class.
+010.rb:2:3: W: Lint/MissingSuper: Call `super` to initialize state of the parent class.
+014.rb:2:3: W: Lint/MissingSuper: Call `super` to invoke callback defined in the parent class.
+015.rb:3:5: W: Lint/MissingSuper: Call `super` to invoke callback defined in the parent class.
+016.rb:2:3: W: Lint/MissingSuper: Call `super` to invoke callback defined in the parent class.
+018/current.rb:2:3: W: Lint/MissingSuper: Call `super` to initialize state of the parent class.
+019/current.rb:3:5: W: Lint/MissingSuper: Call `super` to initialize state of the parent class.
+
+==> autocorrect exit=1 829 <==
+000.rb:2:3: W: Lint/MissingSuper: Call `super` to initialize state of the parent class.
+001.rb:2:3: W: Lint/MissingSuper: Call `super` to initialize state of the parent class.
+007.rb:2:3: W: Lint/MissingSuper: Call `super` to initialize state of the parent class.
+010.rb:2:3: W: Lint/MissingSuper: Call `super` to initialize state of the parent class.
+014.rb:2:3: W: Lint/MissingSuper: Call `super` to invoke callback defined in the parent class.
+015.rb:3:5: W: Lint/MissingSuper: Call `super` to invoke callback defined in the parent class.
+016.rb:2:3: W: Lint/MissingSuper: Call `super` to invoke callback defined in the parent class.
+018/current.rb:2:3: W: Lint/MissingSuper: Call `super` to initialize state of the parent class.
+019/current.rb:3:5: W: Lint/MissingSuper: Call `super` to initialize state of the parent class.
+

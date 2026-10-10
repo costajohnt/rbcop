@@ -1,0 +1,54 @@
+==> offenses exit=1 862 <==
+000.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `map` over `collect`.
+001.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `map` over `collect`.
+002.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `reduce` over `inject`.
+003.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `reduce` over `inject`.
+004.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `find` over `detect`.
+005.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `find` over `detect`.
+006.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `select` over `find_all`.
+007.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `select` over `find_all`.
+008.rb:1:11: C: [Correctable] Style/CollectionMethods: Prefer `include?` over `member?`.
+009.rb:1:12: C: [Correctable] Style/CollectionMethods: Prefer `include?` over `member?`.
+
+==> autocorrect exit=0 842 <==
+000.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `map` over `collect`.
+001.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `map` over `collect`.
+002.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `reduce` over `inject`.
+003.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `reduce` over `inject`.
+004.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `find` over `detect`.
+005.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `find` over `detect`.
+006.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `select` over `find_all`.
+007.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `select` over `find_all`.
+008.rb:1:11: C: [Corrected] Style/CollectionMethods: Prefer `include?` over `member?`.
+009.rb:1:12: C: [Corrected] Style/CollectionMethods: Prefer `include?` over `member?`.
+
+==> corrected/000.rb 25 <==
+[1, 2, 3].map { it + 1 }
+
+==> corrected/001.rb 26 <==
+[1, 2, 3]&.map { it + 1 }
+
+==> corrected/002.rb 28 <==
+[1, 2, 3].reduce { it + 1 }
+
+==> corrected/003.rb 29 <==
+[1, 2, 3]&.reduce { it + 1 }
+
+==> corrected/004.rb 26 <==
+[1, 2, 3].find { it + 1 }
+
+==> corrected/005.rb 27 <==
+[1, 2, 3]&.find { it + 1 }
+
+==> corrected/006.rb 28 <==
+[1, 2, 3].select { it + 1 }
+
+==> corrected/007.rb 29 <==
+[1, 2, 3]&.select { it + 1 }
+
+==> corrected/008.rb 30 <==
+[1, 2, 3].include? { it + 1 }
+
+==> corrected/009.rb 31 <==
+[1, 2, 3]&.include? { it + 1 }
+

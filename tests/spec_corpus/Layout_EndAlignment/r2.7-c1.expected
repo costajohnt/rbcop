@@ -1,0 +1,187 @@
+==> offenses exit=1 3320 <==
+009.rb:2:3: W: [Correctable] Layout/EndAlignment: `end` at 2, 2 is not aligned with `puts 1; class Test` at 1, 0.
+010.rb:2:3: W: [Correctable] Layout/EndAlignment: `end` at 2, 2 is not aligned with `class Test` at 1, 0.
+011.rb:2:3: W: [Correctable] Layout/EndAlignment: `end` at 2, 2 is not aligned with `puts 1; module Test` at 1, 0.
+012.rb:2:3: W: [Correctable] Layout/EndAlignment: `end` at 2, 2 is not aligned with `module Test` at 1, 0.
+013.rb:2:3: W: [Correctable] Layout/EndAlignment: `end` at 2, 2 is not aligned with `puts 1; if test` at 1, 0.
+014.rb:2:3: W: [Correctable] Layout/EndAlignment: `end` at 2, 2 is not aligned with `if test` at 1, 0.
+015.rb:2:3: W: [Correctable] Layout/EndAlignment: `end` at 2, 2 is not aligned with `puts 1; unless test` at 1, 0.
+016.rb:2:3: W: [Correctable] Layout/EndAlignment: `end` at 2, 2 is not aligned with `unless test` at 1, 0.
+017.rb:2:3: W: [Correctable] Layout/EndAlignment: `end` at 2, 2 is not aligned with `puts 1; while test` at 1, 0.
+018.rb:2:3: W: [Correctable] Layout/EndAlignment: `end` at 2, 2 is not aligned with `while test` at 1, 0.
+019.rb:2:3: W: [Correctable] Layout/EndAlignment: `end` at 2, 2 is not aligned with `puts 1; until test` at 1, 0.
+020.rb:2:3: W: [Correctable] Layout/EndAlignment: `end` at 2, 2 is not aligned with `until test` at 1, 0.
+021.rb:2:3: W: [Correctable] Layout/EndAlignment: `end` at 2, 2 is not aligned with `puts 1; case a when b` at 1, 0.
+022.rb:2:3: W: [Correctable] Layout/EndAlignment: `end` at 2, 2 is not aligned with `case a when b` at 1, 0.
+023.rb:3:3: W: [Correctable] Layout/EndAlignment: `end` at 3, 2 is not aligned with `case a` at 1, 0.
+024.rb:2:6: W: [Correctable] Layout/EndAlignment: `end` at 2, 5 is not aligned with `puts(if test` at 1, 0.
+025.rb:2:7: W: [Correctable] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = if test` at 1, 0.
+026.rb:2:7: W: [Correctable] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = unless test` at 1, 0.
+027.rb:2:7: W: [Correctable] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = while test` at 1, 0.
+028.rb:2:7: W: [Correctable] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = until test` at 1, 0.
+029.rb:2:7: W: [Correctable] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = case a when b` at 1, 0.
+030.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << if test` at 1, 0.
+031.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << unless test` at 1, 0.
+032.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << while test` at 1, 0.
+033.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << until test` at 1, 0.
+034.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << case a when b` at 1, 0.
+035.rb:3:8: W: [Correctable] Layout/EndAlignment: `end` at 3, 7 is not aligned with `var << case a` at 1, 0.
+036.rb:3:1: W: [Correctable] Layout/EndAlignment: `end` at 3, 0 is not aligned with `if test` at 2, 2.
+045.rb:2:6: W: [Correctable] Layout/EndAlignment: `end` at 2, 5 is not aligned with `test case a when b` at 1, 0.
+047.rb:2:6: W: [Correctable] Layout/EndAlignment: `end` at 2, 5 is not aligned with `test case a; in b` at 1, 0.
+
+==> autocorrect exit=0 3260 <==
+009.rb:2:3: W: [Corrected] Layout/EndAlignment: `end` at 2, 2 is not aligned with `puts 1; class Test` at 1, 0.
+010.rb:2:3: W: [Corrected] Layout/EndAlignment: `end` at 2, 2 is not aligned with `class Test` at 1, 0.
+011.rb:2:3: W: [Corrected] Layout/EndAlignment: `end` at 2, 2 is not aligned with `puts 1; module Test` at 1, 0.
+012.rb:2:3: W: [Corrected] Layout/EndAlignment: `end` at 2, 2 is not aligned with `module Test` at 1, 0.
+013.rb:2:3: W: [Corrected] Layout/EndAlignment: `end` at 2, 2 is not aligned with `puts 1; if test` at 1, 0.
+014.rb:2:3: W: [Corrected] Layout/EndAlignment: `end` at 2, 2 is not aligned with `if test` at 1, 0.
+015.rb:2:3: W: [Corrected] Layout/EndAlignment: `end` at 2, 2 is not aligned with `puts 1; unless test` at 1, 0.
+016.rb:2:3: W: [Corrected] Layout/EndAlignment: `end` at 2, 2 is not aligned with `unless test` at 1, 0.
+017.rb:2:3: W: [Corrected] Layout/EndAlignment: `end` at 2, 2 is not aligned with `puts 1; while test` at 1, 0.
+018.rb:2:3: W: [Corrected] Layout/EndAlignment: `end` at 2, 2 is not aligned with `while test` at 1, 0.
+019.rb:2:3: W: [Corrected] Layout/EndAlignment: `end` at 2, 2 is not aligned with `puts 1; until test` at 1, 0.
+020.rb:2:3: W: [Corrected] Layout/EndAlignment: `end` at 2, 2 is not aligned with `until test` at 1, 0.
+021.rb:2:3: W: [Corrected] Layout/EndAlignment: `end` at 2, 2 is not aligned with `puts 1; case a when b` at 1, 0.
+022.rb:2:3: W: [Corrected] Layout/EndAlignment: `end` at 2, 2 is not aligned with `case a when b` at 1, 0.
+023.rb:3:3: W: [Corrected] Layout/EndAlignment: `end` at 3, 2 is not aligned with `case a` at 1, 0.
+024.rb:2:6: W: [Corrected] Layout/EndAlignment: `end` at 2, 5 is not aligned with `puts(if test` at 1, 0.
+025.rb:2:7: W: [Corrected] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = if test` at 1, 0.
+026.rb:2:7: W: [Corrected] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = unless test` at 1, 0.
+027.rb:2:7: W: [Corrected] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = while test` at 1, 0.
+028.rb:2:7: W: [Corrected] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = until test` at 1, 0.
+029.rb:2:7: W: [Corrected] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = case a when b` at 1, 0.
+030.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << if test` at 1, 0.
+031.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << unless test` at 1, 0.
+032.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << while test` at 1, 0.
+033.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << until test` at 1, 0.
+034.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << case a when b` at 1, 0.
+035.rb:3:8: W: [Corrected] Layout/EndAlignment: `end` at 3, 7 is not aligned with `var << case a` at 1, 0.
+036.rb:3:1: W: [Corrected] Layout/EndAlignment: `end` at 3, 0 is not aligned with `if test` at 2, 2.
+045.rb:2:6: W: [Corrected] Layout/EndAlignment: `end` at 2, 5 is not aligned with `test case a when b` at 1, 0.
+047.rb:2:6: W: [Corrected] Layout/EndAlignment: `end` at 2, 5 is not aligned with `test case a; in b` at 1, 0.
+
+==> corrected/009.rb 23 <==
+puts 1; class Test
+end
+
+==> corrected/010.rb 15 <==
+class Test
+end
+
+==> corrected/011.rb 24 <==
+puts 1; module Test
+end
+
+==> corrected/012.rb 16 <==
+module Test
+end
+
+==> corrected/013.rb 20 <==
+puts 1; if test
+end
+
+==> corrected/014.rb 12 <==
+if test
+end
+
+==> corrected/015.rb 24 <==
+puts 1; unless test
+end
+
+==> corrected/016.rb 16 <==
+unless test
+end
+
+==> corrected/017.rb 23 <==
+puts 1; while test
+end
+
+==> corrected/018.rb 15 <==
+while test
+end
+
+==> corrected/019.rb 23 <==
+puts 1; until test
+end
+
+==> corrected/020.rb 15 <==
+until test
+end
+
+==> corrected/021.rb 26 <==
+puts 1; case a when b
+end
+
+==> corrected/022.rb 18 <==
+case a when b
+end
+
+==> corrected/023.rb 16 <==
+case a
+in b
+end
+
+==> corrected/024.rb 18 <==
+puts(if test
+end)
+
+==> corrected/025.rb 18 <==
+var = if test
+end
+
+==> corrected/026.rb 22 <==
+var = unless test
+end
+
+==> corrected/027.rb 21 <==
+var = while test
+end
+
+==> corrected/028.rb 21 <==
+var = until test
+end
+
+==> corrected/029.rb 24 <==
+var = case a when b
+end
+
+==> corrected/030.rb 19 <==
+var << if test
+end
+
+==> corrected/031.rb 23 <==
+var << unless test
+end
+
+==> corrected/032.rb 22 <==
+var << while test
+end
+
+==> corrected/033.rb 22 <==
+var << until test
+end
+
+==> corrected/034.rb 25 <==
+var << case a when b
+end
+
+==> corrected/035.rb 30 <==
+var << case a
+       in b
+end
+
+==> corrected/036.rb 22 <==
+var =
+  if test
+  end
+
+==> corrected/045.rb 23 <==
+test case a when b
+end
+
+==> corrected/047.rb 22 <==
+test case a; in b
+end
+

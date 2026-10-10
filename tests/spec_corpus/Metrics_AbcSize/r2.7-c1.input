@@ -1,0 +1,27 @@
+==> .rubocop.yml 160 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Metrics/AbcSize:
+  Max: 0
+  AllowedMethods:
+  - foo
+
+==> 000.rb 28 <==
+def foo
+  bar.baz(:qux)
+end
+
+==> 001.rb 33 <==
+def self.foo
+  bar.baz(:qux)
+end
+
+==> 002.rb 42 <==
+define_method :foo do
+  bar.baz(:qux)
+end
+

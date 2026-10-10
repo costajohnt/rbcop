@@ -1,0 +1,6 @@
+==> offenses exit=1 96 <==
+000.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+
+==> autocorrect exit=1 96 <==
+000.rb:2:3: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+

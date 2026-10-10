@@ -1,0 +1,70 @@
+==> offenses exit=1 1572 <==
+010.rb:1:1: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+011.rb:1:10: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+012.rb:1:15: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+013.rb:3:13: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+014.rb:2:7: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+015.rb:1:15: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+018.rb:2:4: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+018.rb:2:13: C: Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+020.rb:1:8: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+020.rb:1:17: C: Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+022.rb:2:7: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+022.rb:2:19: C: Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+023.rb:2:7: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+023.rb:2:18: C: [Correctable] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+023.rb:2:34: C: Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+023.rb:2:35: C: Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+
+==> autocorrect exit=0 1105 <==
+010.rb:1:1: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+011.rb:1:10: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+012.rb:1:15: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+013.rb:3:13: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+014.rb:2:7: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+015.rb:1:15: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+018.rb:2:4: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+020.rb:1:8: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+022.rb:2:7: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+023.rb:2:7: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+023.rb:2:18: C: [Corrected] Layout/SpaceInsideArrayLiteralBrackets: Use space inside array brackets.
+
+==> corrected/010.rb 12 <==
+[ 2, 3, 4 ]
+
+==> corrected/011.rb 12 <==
+[ b, c, d ]
+
+==> corrected/012.rb 29 <==
+[ 'qux', 'baz' ] - [ 'baz' ]
+
+==> corrected/013.rb 39 <==
+[ 'ok',
+  'still good',
+  'not good' ]
+
+==> corrected/014.rb 26 <==
+[ :good,
+  :bad ].compact
+
+==> corrected/015.rb 23 <==
+[ 2, 3, 4 ] - [ 3, 4 ]
+
+==> corrected/018.rb 29 <==
+case foo
+in [ bar, baz ]
+end
+
+==> corrected/020.rb 20 <==
+foo in [ bar, baz ]
+
+==> corrected/022.rb 37 <==
+case value
+in ADT[ *head, tail ]
+end
+
+==> corrected/023.rb 55 <==
+case value
+in ADT[ *head, ADT[ *headhead, tail ] ]
+end
+

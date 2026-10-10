@@ -1,0 +1,52 @@
+==> offenses exit=1 2256 <==
+004.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+005.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+006.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+007.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+008.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+009.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+010.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+011.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+016.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+017.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+018.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+019.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+020.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+021.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+022.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+023.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+028.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+029.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+030.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+031.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+032.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+033.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+034.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+035.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+
+==> autocorrect exit=1 2256 <==
+004.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+005.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+006.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+007.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+008.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+009.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+010.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+011.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+016.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+017.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+018.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+019.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+020.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+021.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+022.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+023.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+028.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+029.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+030.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+031.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+032.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+033.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+034.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+035.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is forbidden.
+

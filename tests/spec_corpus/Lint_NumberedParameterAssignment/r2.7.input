@@ -1,0 +1,47 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 12 <==
+_1 = :value
+
+==> 001.rb 12 <==
+_2 = :value
+
+==> 002.rb 12 <==
+_3 = :value
+
+==> 003.rb 12 <==
+_4 = :value
+
+==> 004.rb 12 <==
+_5 = :value
+
+==> 005.rb 12 <==
+_6 = :value
+
+==> 006.rb 12 <==
+_7 = :value
+
+==> 007.rb 12 <==
+_8 = :value
+
+==> 008.rb 12 <==
+_9 = :value
+
+==> 009.rb 12 <==
+_0 = :value
+
+==> 010.rb 13 <==
+_10 = :value
+
+==> 011.rb 37 <==
+non_numbered_parameter_name = :value
+
+==> 012.rb 29 <==
+Hash.new { _1[_2] = :value }
+

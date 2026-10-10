@@ -1,0 +1,30 @@
+==> offenses exit=1 1209 <==
+000.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+001.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+002.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+003.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+004.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+013.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+014.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+015.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+016.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+025.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+026.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+027.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+028.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+
+==> autocorrect exit=1 1209 <==
+000.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+001.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+002.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+003.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+004.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+013.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+014.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+015.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+016.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+025.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+026.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+027.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+028.gemspec:2:3: C: Gemspec/DependencyVersion: Dependency version specification is required.
+

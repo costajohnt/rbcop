@@ -1,0 +1,6 @@
+==> offenses exit=1 126 <==
+000.rb:1:1: R: Metrics/AbcSize: Assignment Branch Condition size for `method_name` is too high. [<100, 100, 400> 424.3/100.3]
+
+==> autocorrect exit=1 126 <==
+000.rb:1:1: R: Metrics/AbcSize: Assignment Branch Condition size for `method_name` is too high. [<100, 100, 400> 424.3/100.3]
+

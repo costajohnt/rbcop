@@ -1,0 +1,235 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 76 <==
+foo.map do |item|
+  if item.bar?
+    item
+  else
+    next
+  end
+end.compact
+
+==> 001.rb 75 <==
+foo.filter_map do |item|
+  if item.bar?
+    item
+  else
+    next
+  end
+end
+
+==> 002.rb 83 <==
+foo.filter_map do |item|
+  if item.bar?
+    item
+  else
+    next
+  end
+end.compact
+
+==> 003.rb 78 <==
+foo&.map do |item|
+  if item.bar?
+    item
+  else
+    next
+  end
+end&.compact
+
+==> 004.rb 91 <==
+foo.map do |item|
+  if item.bar? &&
+    bar.baz
+    item
+  else
+    next
+  end
+end.compact
+
+==> 005.rb 80 <==
+foo.map do |item|
+  if item.bar?
+    next item
+  else
+    nil
+  end
+end.compact
+
+==> 006.rb 76 <==
+foo.map do |item|
+  if item.bar?
+    next
+  else
+    item
+  end
+end.compact
+
+==> 007.rb 80 <==
+foo.map do |item|
+  if item.bar?
+    nil
+  else
+    next item
+  end
+end.compact
+
+==> 008.rb 56 <==
+foo.map do |item|
+  item.bar? ? item : next
+end.compact
+
+==> 009.rb 56 <==
+foo.map do |item|
+  item.bar? ? next : item
+end.compact
+
+==> 010.rb 50 <==
+foo.map do |item|
+  item if item.bar?
+end.compact
+
+==> 011.rb 54 <==
+foo.map do |item|
+  item unless item.bar?
+end.compact
+
+==> 012.rb 58 <==
+foo.map do |item|
+  next if item.bar?
+
+  item
+end.compact
+
+==> 013.rb 62 <==
+foo.map do |item|
+  next unless item.bar?
+
+  item
+end.compact
+
+==> 014.rb 55 <==
+foo.map do |item|
+  next item if item.bar?
+end.compact
+
+==> 015.rb 59 <==
+foo.map do |item|
+  next item unless item.bar?
+end.compact
+
+==> 016.rb 62 <==
+foo.map do |item|
+  next item if item.bar?
+
+  nil
+end.compact
+
+==> 017.rb 66 <==
+foo.map do |item|
+  next item unless item.bar?
+
+  nil
+end.compact
+
+==> 018.rb 62 <==
+foo.map do |item|
+  next nil if item.bar?
+
+  item
+end.compact
+
+==> 019.rb 66 <==
+foo.map do |item|
+  next nil unless item.bar?
+
+  item
+end.compact
+
+==> 020.rb 60 <==
+foo.map do |item|
+  if item.bar?
+    item
+  end
+end.compact
+
+==> 021.rb 64 <==
+foo.map do |item|
+  unless item.bar?
+    item
+  end
+end.compact
+
+==> 022.rb 68 <==
+foo.map do |item|
+  if item.bar?
+    item
+  else
+    next
+  end
+end
+
+==> 023.rb 81 <==
+foo.map do |item|
+  if item.bar?
+    item
+  else
+    next
+  end
+end.do_something
+
+==> 024.rb 81 <==
+foo.map do |item|
+  if item.bar?
+    item
+  else
+    next
+  end
+end.compact(arg)
+
+==> 025.rb 70 <==
+foo.map do |item|
+  if item.bar?
+    1
+  else
+    2
+  end
+end.compact
+
+==> 026.rb 92 <==
+foo.map do |item|
+  if item.bar?
+    item
+  elsif
+    baz
+  else
+    next
+  end
+end.compact
+
+==> 027.rb 54 <==
+return unless item.bar?
+return unless item.baz?
+
+item
+
+==> 028.rb 51 <==
+foo.map { |item| item.bar? ? item : next }.compact
+
+==> 029.rb 51 <==
+foo.map { |item| item.bar? ? next : item }.compact
+
+==> 030.rb 45 <==
+foo.map { |item| item if item.bar? }.compact
+
+==> 031.rb 49 <==
+foo.map { |item| item unless item.bar? }.compact
+
+==> 032.rb 36 <==
+foo.map { |item| item if item.bar }
+

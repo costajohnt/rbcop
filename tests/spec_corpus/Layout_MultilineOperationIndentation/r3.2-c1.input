@@ -1,0 +1,18 @@
+==> .rubocop.yml 172 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+==> 000.rb 21 <==
+next unless 5 ||
+  7
+
+==> 001.rb 17 <==
+next if 5 ||
+  7
+

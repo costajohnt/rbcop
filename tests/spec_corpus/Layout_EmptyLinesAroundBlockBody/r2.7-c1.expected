@@ -1,0 +1,26 @@
+==> offenses exit=1 416 <==
+000.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body beginning.
+000.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body end.
+003.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body beginning.
+003.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body end.
+
+==> autocorrect exit=0 408 <==
+000.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body beginning.
+000.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body end.
+003.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body beginning.
+003.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body end.
+
+==> corrected/000.rb 33 <==
+some_method {
+
+  do_something
+
+}
+
+==> corrected/003.rb 36 <==
+some_method do
+
+  do_something
+
+end
+

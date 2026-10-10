@@ -1,0 +1,64 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 13 <==
+'foo #{bar}'
+
+==> 001.rb 15 <==
+'foo #{bar} }'
+
+==> 002.rb 15 <==
+'foo "#{bar}"'
+
+==> 003.rb 21 <==
+'x' \
+  'foo #{bar}'
+
+==> 004.rb 21 <==
+"x" \
+  'foo #{bar}'
+
+==> 005.rb 21 <==
+hello = "foo #{bar}"
+
+==> 006.rb 25 <==
+foo = "bar '#{baz}' qux"
+
+==> 007.rb 9 <==
+/\#{20}/
+
+==> 008.rb 10 <==
+"\#{msg}"
+
+==> 009.rb 13 <==
+foo = "\xff"
+
+==> 010.rb 49 <==
+foo = "alpha #{variable} beta \#{gamma}\" delta"
+
+==> 011.rb 15 <==
+%w("#{a}-foo")
+
+==> 012.rb 20 <==
+'#{%<expression>s}'
+
+==> 013.rb 51 <==
+'Text `A("#{%<base>s}/%<path>s")` and `B` with C.'
+
+==> 014.rb 15 <==
+'a "b" } #{c}'
+
+==> 015.rb 55 <==
+foo = 'something with #{interpolation}
+spanning lines'
+
+==> 016.rb 53 <==
+foo = <<~TEXT
+  something with #{interpolation}
+TEXT
+

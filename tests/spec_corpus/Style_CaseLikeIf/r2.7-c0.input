@@ -1,0 +1,217 @@
+==> .rubocop.yml 148 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/CaseLikeIf:
+  MinBranchesCount: 2
+
+==> 000.rb 64 <==
+if Integer === x
+elsif /foo/ === x
+elsif (1..10) === x
+else
+end
+
+==> 001.rb 36 <==
+if x == 1
+elsif 'str' == x
+else
+end
+
+==> 002.rb 48 <==
+if x == CONSTANT1
+elsif CONSTANT2 == x
+else
+end
+
+==> 003.rb 59 <==
+if foo == 1
+elsif foo == 2
+else
+  foo == 3 ? bar : baz
+end
+
+==> 004.rb 42 <==
+if x == foo(1)
+elsif bar(1) == x
+else
+end
+
+==> 005.rb 36 <==
+if x == Foo
+elsif Bar == x
+else
+end
+
+==> 006.rb 34 <==
+if x == 1
+elsif x == Foo
+else
+end
+
+==> 007.rb 32 <==
+if x == F
+elsif B == x
+else
+end
+
+==> 008.rb 39 <==
+if equal?(Foo)
+elsif Bar == x
+else
+end
+
+==> 009.rb 44 <==
+if x.is_a?(Foo)
+elsif x.is_a?(Bar)
+else
+end
+
+==> 010.rb 50 <==
+if /foo/.match?(x)
+elsif x.match?(/bar/)
+else
+end
+
+==> 011.rb 46 <==
+if y.match?(x)
+elsif x.match?('str')
+else
+end
+
+==> 012.rb 48 <==
+if match?(/foo/)
+elsif x.match?(/bar/)
+else
+end
+
+==> 013.rb 46 <==
+if include?(Foo)
+elsif include?(Bar)
+else
+end
+
+==> 014.rb 37 <==
+if x == 1
+elsif cover?(Bar)
+else
+end
+
+==> 015.rb 54 <==
+if /foo/ =~ x
+elsif x =~ returns_regexp(arg)
+else
+end
+
+==> 016.rb 54 <==
+if x =~ returns_regexp(arg)
+elsif x =~ /foo/
+else
+end
+
+==> 017.rb 64 <==
+if returns_regexp(arg).match?(x)
+elsif x.match?(/bar/)
+else
+end
+
+==> 018.rb 64 <==
+if /foo/.match?(x)
+elsif returns_regexp(arg).match?(x)
+else
+end
+
+==> 019.rb 61 <==
+if (1..10).include?(x)
+elsif (11...100).include?(x)
+else
+end
+
+==> 020.rb 85 <==
+if Integer === x || x == 2
+elsif 1 == x || (1..10) === x || x.match?(/foo/)
+else
+end
+
+==> 021.rb 97 <==
+if Integer === x || (x == 2 && x == 3)
+elsif 1 == x || (1..10) === x || x.match?(/foo/)
+else
+end
+
+==> 022.rb 115 <==
+if Integer === x || ((x == 2) || (3 == x)) || x =~ /foo/
+elsif 1 == x || (1..10) === x || x.match?(/bar/)
+else
+end
+
+==> 023.rb 62 <==
+if x.type == 1 || x.type == 2
+elsif /foo/ === x.type
+else
+end
+
+==> 024.rb 32 <==
+if x == 2
+elsif 3 == y
+else
+end
+
+==> 025.rb 14 <==
+if x == 1
+end
+
+==> 026.rb 19 <==
+if x == 1
+else
+end
+
+==> 027.rb 23 <==
+unless x == 1
+else
+end
+
+==> 028.rb 15 <==
+x == 1 ? y : z
+
+==> 029.rb 14 <==
+foo if x == 1
+
+==> 030.rb 24 <==
+if x.equal?
+elsif y
+end
+
+==> 031.rb 45 <==
+if /(?<name>.*)/ =~ foo
+elsif foo == 123
+end
+
+==> 032.rb 45 <==
+if foo =~ /(?<name>.*)/
+elsif foo == 123
+end
+
+==> 033.rb 49 <==
+if /(?<name>.*)/.match(foo)
+elsif foo == 123
+end
+
+==> 034.rb 49 <==
+if foo.match(/(?<name>.*)/)
+elsif foo == 123
+end
+
+==> 035.rb 50 <==
+if /(?<name>.*)/.match?(foo)
+elsif foo == 123
+end
+
+==> 036.rb 50 <==
+if foo.match?(/(?<name>.*)/)
+elsif foo == 123
+end
+

@@ -1,0 +1,22 @@
+==> .rubocop.yml 170 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/NumericLiteralPrefix:
+  EnforcedOctalStyle: zero_with_o
+
+==> 000.rb 20 <==
+a = 01234
+b(0O1234)
+
+==> 001.rb 22 <==
+a = -01234
+b(+0O1234)
+
+==> 002.rb 20 <==
+a = 0o101
+b = 0o567
+

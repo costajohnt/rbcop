@@ -1,0 +1,308 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 66 <==
+def some_method
+  foo = 1
+  puts foo
+  1.times do |foo|
+  end
+end
+
+==> 001.rb 67 <==
+def some_method
+  foo = 1
+  puts foo
+  1.times do |*foo|
+  end
+end
+
+==> 002.rb 118 <==
+def some_method
+  foo = 1
+  puts foo
+  proc_taking_block = proc do |&foo|
+  end
+  proc_taking_block.call do
+  end
+end
+
+==> 003.rb 82 <==
+def some_method
+  foo = 1
+  puts foo
+  1.times do |i; foo|
+    puts foo
+  end
+end
+
+==> 004.rb 75 <==
+until foo
+  var = do_something
+end
+
+if bar
+  array.each do |var|
+  end
+end
+
+==> 005.rb 75 <==
+while foo
+  var = do_something
+end
+
+if bar
+  array.each do |var|
+  end
+end
+
+==> 006.rb 96 <==
+if condition?
+  foo = 1
+  puts foo
+  bar.each do |foo|
+  end
+else
+  bar.each do |foo|
+  end
+end
+
+==> 007.rb 134 <==
+def some_method
+  if condition?
+    foo = 1
+    puts foo
+    bar.each do |foo|
+    end
+  else
+    bar.each do |foo|
+    end
+  end
+end
+
+==> 008.rb 225 <==
+def some_method
+  if condition?
+    foo = 1
+    puts foo
+    if other_condition?
+      bar.each do |foo|
+      end
+    end
+  elsif other_condition?
+    bar.each do |foo|
+    end
+  else
+    bar.each do |foo|
+    end
+  end
+end
+
+==> 009.rb 138 <==
+def some_method
+  unless condition?
+    foo = 1
+    puts foo
+    bar.each do |foo|
+    end
+  else
+    bar.each do |foo|
+    end
+  end
+end
+
+==> 010.rb 197 <==
+def some_method
+  case condition
+  when foo then
+    foo = 1
+    puts foo
+    bar.each do |foo|
+    end
+  when bar then
+    bar.each do |foo|
+    end
+  else
+    bar.each do |foo|
+    end
+  end
+end
+
+==> 011.rb 77 <==
+def some_method
+  foo = 1
+
+  if cond
+    bar.each do |foo|
+    end
+  end
+end
+
+==> 012.rb 50 <==
+def some_method(foo)
+  1.times do |foo|
+  end
+end
+
+==> 013.rb 146 <==
+def some_method
+  if condition?
+    foo = 1
+  elsif other_condition?
+    bar.each do |foo|
+    end
+  else
+    bar.each do |foo|
+    end
+  end
+end
+
+==> 014.rb 95 <==
+def some_method
+  unless condition?
+    foo = 1
+  else
+    bar.each do |foo|
+    end
+  end
+end
+
+==> 015.rb 111 <==
+def some_method
+  if condition?
+    foo = 1
+  else
+    bar = [1, 2, 3]
+    bar.each do |foo|
+    end
+  end
+end
+
+==> 016.rb 108 <==
+def some_method
+  case condition
+  when foo then
+    foo = 1
+  else
+    bar.each do |foo|
+    end
+  end
+end
+
+==> 017.rb 79 <==
+case condition
+in String => foo
+  foo
+in Integer
+  bar.each do |foo|
+  end
+end
+
+==> 018.rb 62 <==
+case condition
+in String => foo
+  bar.each do |foo|
+  end
+end
+
+==> 019.rb 66 <==
+def some_method
+  foo = 1
+  puts foo
+  1.times do |bar|
+  end
+end
+
+==> 020.rb 72 <==
+def some_method
+  foo = 1
+  puts foo
+  1.times do
+    foo = 2
+  end
+end
+
+==> 021.rb 73 <==
+def some_method
+  foo = 1
+  puts foo
+  1.times do
+    puts foo
+  end
+end
+
+==> 022.rb 86 <==
+def some_method
+  foo = if condition
+          bar { |foo| baz(foo) }
+        end
+end
+
+==> 023.rb 51 <==
+def some_method
+  foo = bar { |foo| baz(foo) }
+end
+
+==> 024.rb 51 <==
+def some_method
+  1.times do |_, foo, _|
+  end
+end
+
+==> 025.rb 57 <==
+def some_method
+  1.times do |_foo, bar, _foo|
+  end
+end
+
+==> 026.rb 60 <==
+def some_method
+  _ = 1
+  puts _
+  1.times do |_|
+  end
+end
+
+==> 027.rb 69 <==
+def some_method
+  _foo = 1
+  puts _foo
+  1.times do |_foo|
+  end
+end
+
+==> 028.rb 70 <==
+class SomeClass
+  foo = 1
+  puts foo
+  def some_method(foo)
+  end
+end
+
+==> 029.rb 73 <==
+def x(array)
+  array.each { |foo|
+    bar = foo
+  }.each { |bar|
+  }
+end
+
+==> 030.rb 66 <==
+def x(array)
+  array.each {
+    bar = _1
+  }.each { |bar|
+  }
+end
+
+==> 031.rb 56 <==
+def foo(*args)
+  Ractor.new(*args) do |*args|
+  end
+end
+

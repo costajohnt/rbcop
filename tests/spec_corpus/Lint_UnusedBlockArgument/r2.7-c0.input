@@ -1,0 +1,116 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/UnusedBlockArgument:
+  AllowUnusedKeywordArguments: false
+
+==> 000.rb 41 <==
+hash.each do |key, value|
+  puts key
+end
+
+==> 001.rb 42 <==
+obj.method { |foo, bar| stuff(foo, bar) }
+
+==> 002.rb 56 <==
+hash.each do |key, value|
+  key, value = value, key
+end
+
+==> 003.rb 55 <==
+hash.each do |key, value|
+  key, value = value, 42
+end
+
+==> 004.rb 49 <==
+obj.method { |foo, *bars, baz| stuff(foo, baz) }
+
+==> 005.rb 48 <==
+obj.method do |foo, bar = baz|
+  stuff(foo)
+end
+
+==> 006.rb 82 <==
+hash = { foo: 'FOO', bar: 'BAR' }
+hash.each do |key, value|
+  puts :something
+end
+
+==> 007.rb 62 <==
+hash.each do |key,
+              value|
+  puts :something
+end
+
+==> 008.rb 41 <==
+1.times do |index|
+  puts :something
+end
+
+==> 009.rb 46 <==
+define_method(:foo) do |bar|
+  puts 'baz'
+end
+
+==> 010.rb 58 <==
+1.times do |index; block_local_variable|
+  puts index
+end
+
+==> 011.rb 48 <==
+1.times do |index; x|
+  x = 10
+  puts index
+end
+
+==> 012.rb 31 <==
+-> (foo, bar) { do_something }
+
+==> 013.rb 27 <==
+-> (foo, bar) { puts bar }
+
+==> 014.rb 37 <==
+1.times do |_index|
+  puts 'foo'
+end
+
+==> 015.rb 57 <==
+define_method(:foo) do |bar: 'default'|
+  puts 'bar'
+end
+
+==> 016.rb 47 <==
+foo(:foo) do |bar: 'default'|
+  puts 'bar'
+end
+
+==> 017.rb 25 <==
+def some_method(foo)
+end
+
+==> 018.rb 25 <==
+1.times do
+  foo = 1
+end
+
+==> 019.rb 51 <==
+test do |key, value|
+  puts something(binding)
+end
+
+==> 020.rb 74 <==
+test do |key, value|
+  def other(a)
+    puts something(binding)
+  end
+end
+
+==> 021.rb 59 <==
+test do |key, value|
+  puts something(binding(:other))
+end
+

@@ -1,0 +1,14 @@
+==> offenses exit=1 161 <==
+000.rb:1:6: C: [Correctable] Style/YAMLFileRead: Use `load_file(path)` instead.
+002.rb:1:6: C: [Correctable] Style/YAMLFileRead: Use `parse_file(path)` instead.
+
+==> autocorrect exit=0 157 <==
+000.rb:1:6: C: [Corrected] Style/YAMLFileRead: Use `load_file(path)` instead.
+002.rb:1:6: C: [Corrected] Style/YAMLFileRead: Use `parse_file(path)` instead.
+
+==> corrected/000.rb 21 <==
+YAML.load_file(path)
+
+==> corrected/002.rb 22 <==
+YAML.parse_file(path)
+

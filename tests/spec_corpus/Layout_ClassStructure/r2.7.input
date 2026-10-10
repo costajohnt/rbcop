@@ -1,0 +1,448 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 120 <==
+class GridTask
+  DESC = 'Grid Task' # grid task name OID, subclasses should set this
+  extend Helpers::MakeFromFile
+end
+
+==> 001.rb 957 <==
+class Person
+  # extend and include go first
+  extend SomeModule
+  include AnotherModule
+
+  # inner classes
+  CustomError = Class.new(StandardError)
+
+  # constants are next
+  SOME_CONSTANT = 20
+
+  # afterwards we have attribute macros
+  attr_reader :name
+
+  # then we have public delegate macros
+  delegate :to_s, to: :name
+
+  # followed by other macros (if any)
+  validates :name
+
+  # public class methods are next in line
+  def self.some_method
+  end
+
+  # initialization goes between class methods and other instance methods
+  def initialize
+  end
+
+  # followed by other public instance methods
+  def some_method
+  end
+
+  # protected attribute macros and methods go next
+  protected
+
+  attr_reader :protected_name
+
+  def some_protected_method
+  end
+
+  # private attribute macros, delegate macros and methods are grouped near the end
+  private
+
+  attr_reader :private_name
+
+  delegate :some_private_delegate, to: :name
+
+  def some_private_method
+  end
+end
+
+==> 002.rb 85 <==
+class Person
+  CONST = 'wrong place'
+  include AnotherModule
+  extend SomeModule
+end
+
+==> 003.rb 50 <==
+class A
+  test&.private_methods(def foo; end)
+end
+
+==> 004.rb 34 <==
+class A
+  def foo; end if bar
+end
+
+==> 005.rb 42 <==
+class A
+  configure { |c| c.foo = 1 }
+end
+
+==> 006.rb 99 <==
+class Foo
+  begin
+    private def do_internal_work; end
+    public def do_something; end
+  end
+end
+
+==> 007.rb 121 <==
+class Foo
+  begin
+    begin
+      private def do_internal_work; end
+      public def do_something; end
+    end
+  end
+end
+
+==> 008.rb 99 <==
+class Foo
+  begin
+    public def do_something; end
+    private def do_internal_work; end
+  end
+end
+
+==> 009.rb 89 <==
+class Foo
+  begin
+    require 'optional_dependency'
+  rescue LoadError
+    nil
+  end
+end
+
+==> 010.rb 70 <==
+class Foo
+  def instance_method; end
+  def self.class_method; end
+end
+
+==> 011.rb 210 <==
+class MyClass
+  def public_method
+  end
+
+  private
+
+  def first_private_method
+  end
+
+  def second_private_method
+  end
+
+  protected
+
+  def first_protected_method
+  end
+
+  def second_protected_method
+  end
+end
+
+==> 012.rb 437 <==
+class Person
+  include AnotherModule
+  extend SomeModule
+
+  CustomError = Class.new(StandardError)
+
+  validates :name
+
+  attr_reader :name
+
+  def self.some_public_class_method
+  end
+
+  def initialize
+  end
+
+  def some_public_method
+  end
+
+
+  def yet_other_public_method
+  end
+
+  protected
+
+  def some_protected_method
+  end
+
+  def other_public_method
+  end
+
+  private :other_public_method
+
+  private
+
+  def some_private_method
+  end
+end
+
+==> 013.rb 62 <==
+class Person
+  def name; end
+
+  foo = 5
+  LIMIT = foo + 1
+end
+
+==> 014.rb 91 <==
+class Foo
+  # This is a comment for macro method.
+  validates :attr
+  attr_reader :foo
+end
+
+==> 015.rb 153 <==
+class Foo
+  def name; end
+
+  LIMIT = 10
+  CONST = 'wrong place'.freeze
+  RECURSIVE_BASIC_LITERALS_CONST = [1, 2].freeze
+  DYNAMIC_CONST = foo.freeze
+end
+
+==> 016.rb 151 <==
+class Foo
+  def name; end
+
+  PRIVATE_CONST1 = 1
+  PRIVATE_CONST2 = 2
+  private_constant :PRIVATE_CONST1, :PRIVATE_CONST2
+  PUBLIC_CONST = 'public'
+end
+
+==> 017.rb 74 <==
+class Foo
+  def do_something
+  end
+
+  CONSTANT = <<~EOS
+    str
+  EOS
+end
+
+==> 018.rb 77 <==
+class Foo
+  def do_something
+  end
+
+  CONSTANT = <<~EOS
+    #{str}
+  EOS
+end
+
+==> 019.rb 76 <==
+class Foo
+  def do_something
+  end
+
+  CONSTANT = <<~`EOS`
+    str
+  EOS
+end
+
+==> 020.rb 133 <==
+class Foo
+  def instance_method
+    'instance method'
+  end
+
+  def self.class_method
+    <<~EOS
+      class method
+    EOS
+  end
+end
+
+==> 021.rb 60 <==
+class A
+  private def foo
+  end
+
+  public def bar
+  end
+end
+
+==> 022.rb 53 <==
+class A
+  private def foo
+  end
+
+  def bar
+  end
+end
+
+==> 023.rb 91 <==
+class A
+  private def foo; end
+
+  def bar; end
+
+  private def baz; end
+
+  def qux; end
+end
+
+==> 024.rb 118 <==
+class A
+  private_class_method def self.do_internal_work
+  end
+
+  public_class_method def self.do_something
+  end
+end
+
+==> 025.rb 118 <==
+class A
+  public_class_method def self.do_something
+  end
+
+  private_class_method def self.do_internal_work
+  end
+end
+
+==> 026.rb 104 <==
+class A
+  private
+
+  def do_something
+  end
+
+  private_class_method def self.do_internal_work
+  end
+end
+
+==> 027.rb 104 <==
+class A
+  private
+
+  private_class_method def self.do_internal_work
+  end
+
+  def do_something
+  end
+end
+
+==> 028.rb 60 <==
+class A
+  def foo
+  end
+  private :foo
+
+  def bar
+  end
+end
+
+==> 029.rb 68 <==
+class A
+  private
+
+  attr_accessor :foo
+
+  def initialize
+  end
+end
+
+==> 030.rb 62 <==
+class Foo
+  def do_something; end
+  include M
+  CONST = 1
+end
+
+==> 031.rb 91 <==
+class Foo
+  def self.do_something; end
+
+  def initialize; end
+
+  include M
+  CONST = 1
+end
+
+==> 032.rb 63 <==
+class Foo
+  def do_something; end
+  FIRST = 1
+  SECOND = 2
+end
+
+==> 033.rb 74 <==
+class Foo
+  def do_something; end
+  CONST = [*foo].freeze
+  include M
+end
+
+==> 034.rb 81 <==
+class Foo
+  validates :name
+  CONST = do_something.freeze
+  attr_reader :foo
+end
+
+==> 035.rb 95 <==
+class Foo
+  def do_something; end
+  FIRST = 1
+  DYNAMIC = do_something.freeze
+  SECOND = 2
+end
+
+==> 036.rb 88 <==
+class Foo
+  private
+
+  def do_internal_work; end
+
+  public
+
+  def do_something; end
+end
+
+==> 037.rb 83 <==
+class Foo
+  private
+
+  def do_internal_work; end
+
+  public
+
+  attr_reader :foo
+end
+
+==> 038.rb 62 <==
+class Foo
+  def do_something; end
+
+  private
+
+  CONST = 1
+end
+
+==> 039.rb 86 <==
+class << self
+  CONST = 'wrong place'
+  include AnotherModule
+  extend SomeModule
+end
+
+==> 040.rb 59 <==
+class Foo
+  attr_accessor :foo
+  CONST = 'wrong place'
+end
+

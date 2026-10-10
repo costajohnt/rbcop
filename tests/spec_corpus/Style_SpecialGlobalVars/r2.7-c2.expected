@@ -1,0 +1,39 @@
+==> offenses exit=1 612 <==
+000.rb:1:6: C: [Correctable] Style/SpecialGlobalVars: Prefer `$:` over `$LOAD_PATH`.
+001.rb:1:6: C: [Correctable] Style/SpecialGlobalVars: Prefer `$"` over `$LOADED_FEATURES`.
+002.rb:1:6: C: [Correctable] Style/SpecialGlobalVars: Prefer `$0` over `$PROGRAM_NAME`.
+003.rb:1:6: C: [Correctable] Style/SpecialGlobalVars: Prefer `$$` over `$PID`.
+004.rb:1:6: C: [Correctable] Style/SpecialGlobalVars: Prefer `$$` over `$PROCESS_ID`.
+006.rb:1:1: C: [Correctable] Style/SpecialGlobalVars: Prefer `$/` over `$INPUT_RECORD_SEPARATOR`.
+007.rb:1:4: C: [Correctable] Style/SpecialGlobalVars: Prefer `$:` over `$LOAD_PATH`.
+
+==> autocorrect exit=0 598 <==
+000.rb:1:6: C: [Corrected] Style/SpecialGlobalVars: Prefer `$:` over `$LOAD_PATH`.
+001.rb:1:6: C: [Corrected] Style/SpecialGlobalVars: Prefer `$"` over `$LOADED_FEATURES`.
+002.rb:1:6: C: [Corrected] Style/SpecialGlobalVars: Prefer `$0` over `$PROGRAM_NAME`.
+003.rb:1:6: C: [Corrected] Style/SpecialGlobalVars: Prefer `$$` over `$PID`.
+004.rb:1:6: C: [Corrected] Style/SpecialGlobalVars: Prefer `$$` over `$PROCESS_ID`.
+006.rb:1:1: C: [Corrected] Style/SpecialGlobalVars: Prefer `$/` over `$INPUT_RECORD_SEPARATOR`.
+007.rb:1:4: C: [Corrected] Style/SpecialGlobalVars: Prefer `$:` over `$LOAD_PATH`.
+
+==> corrected/000.rb 8 <==
+puts $:
+
+==> corrected/001.rb 8 <==
+puts $"
+
+==> corrected/002.rb 8 <==
+puts $0
+
+==> corrected/003.rb 8 <==
+puts $$
+
+==> corrected/004.rb 8 <==
+puts $$
+
+==> corrected/006.rb 3 <==
+$/
+
+==> corrected/007.rb 6 <==
+"#$:"
+

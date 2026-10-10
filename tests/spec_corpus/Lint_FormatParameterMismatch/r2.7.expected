@@ -1,0 +1,40 @@
+==> offenses exit=1 2216 <==
+015.rb:1:8: W: Lint/FormatParameterMismatch: Number of arguments (1) to `format` doesn't match the number of fields (2).
+016.rb:1:8: W: Lint/FormatParameterMismatch: Number of arguments (1) to `sprintf` doesn't match the number of fields (2).
+017.rb:1:1: W: Lint/FormatParameterMismatch: Number of arguments (1) to `format` doesn't match the number of fields (2).
+018.rb:1:1: W: Lint/FormatParameterMismatch: Number of arguments (1) to `format` doesn't match the number of fields (0).
+019.rb:1:1: W: Lint/FormatParameterMismatch: Number of arguments (3) to `format` doesn't match the number of fields (2).
+023.rb:1:1: W: Lint/FormatParameterMismatch: Number of arguments (3) to `sprintf` doesn't match the number of fields (2).
+025.rb:1:9: W: Lint/FormatParameterMismatch: Number of arguments (3) to `String#%` doesn't match the number of fields (2).
+030.rb:1:19: W: Lint/FormatParameterMismatch: Number of arguments (5) to `String#%` doesn't match the number of fields (3).
+037.rb:1:1: W: Lint/FormatParameterMismatch: Number of arguments (3) to `format` doesn't match the number of fields (2).
+039.rb:1:1: W: Lint/FormatParameterMismatch: Format string is invalid because formatting sequence types (numbered, named or unnumbered) are mixed.
+044.rb:1:1: W: Lint/FormatParameterMismatch: Number of arguments (1) to `format` doesn't match the number of fields (2).
+050.rb:1:1: W: Lint/FormatParameterMismatch: Number of arguments (2) to `format` doesn't match the number of fields (1).
+055.rb:2:6: W: Lint/FormatParameterMismatch: Number of arguments (3) to `format` doesn't match the number of fields (1).
+057.rb:2:6: W: Lint/FormatParameterMismatch: Number of arguments (3) to `format` doesn't match the number of fields (1).
+062.rb:1:1: W: Lint/FormatParameterMismatch: Number of arguments (1) to `format` doesn't match the number of fields (2).
+066.rb:1:9: W: Lint/FormatParameterMismatch: Number of arguments (3) to `String#%` doesn't match the number of fields (2).
+071.rb:1:1: W: Lint/FormatParameterMismatch: Number of arguments (1) to `format` doesn't match the number of fields (2).
+073.rb:1:16: W: Lint/FormatParameterMismatch: Number of arguments (3) to `String#%` doesn't match the number of fields (2).
+
+==> autocorrect exit=1 2216 <==
+015.rb:1:8: W: Lint/FormatParameterMismatch: Number of arguments (1) to `format` doesn't match the number of fields (2).
+016.rb:1:8: W: Lint/FormatParameterMismatch: Number of arguments (1) to `sprintf` doesn't match the number of fields (2).
+017.rb:1:1: W: Lint/FormatParameterMismatch: Number of arguments (1) to `format` doesn't match the number of fields (2).
+018.rb:1:1: W: Lint/FormatParameterMismatch: Number of arguments (1) to `format` doesn't match the number of fields (0).
+019.rb:1:1: W: Lint/FormatParameterMismatch: Number of arguments (3) to `format` doesn't match the number of fields (2).
+023.rb:1:1: W: Lint/FormatParameterMismatch: Number of arguments (3) to `sprintf` doesn't match the number of fields (2).
+025.rb:1:9: W: Lint/FormatParameterMismatch: Number of arguments (3) to `String#%` doesn't match the number of fields (2).
+030.rb:1:19: W: Lint/FormatParameterMismatch: Number of arguments (5) to `String#%` doesn't match the number of fields (3).
+037.rb:1:1: W: Lint/FormatParameterMismatch: Number of arguments (3) to `format` doesn't match the number of fields (2).
+039.rb:1:1: W: Lint/FormatParameterMismatch: Format string is invalid because formatting sequence types (numbered, named or unnumbered) are mixed.
+044.rb:1:1: W: Lint/FormatParameterMismatch: Number of arguments (1) to `format` doesn't match the number of fields (2).
+050.rb:1:1: W: Lint/FormatParameterMismatch: Number of arguments (2) to `format` doesn't match the number of fields (1).
+055.rb:2:6: W: Lint/FormatParameterMismatch: Number of arguments (3) to `format` doesn't match the number of fields (1).
+057.rb:2:6: W: Lint/FormatParameterMismatch: Number of arguments (3) to `format` doesn't match the number of fields (1).
+062.rb:1:1: W: Lint/FormatParameterMismatch: Number of arguments (1) to `format` doesn't match the number of fields (2).
+066.rb:1:9: W: Lint/FormatParameterMismatch: Number of arguments (3) to `String#%` doesn't match the number of fields (2).
+071.rb:1:1: W: Lint/FormatParameterMismatch: Number of arguments (1) to `format` doesn't match the number of fields (2).
+073.rb:1:16: W: Lint/FormatParameterMismatch: Number of arguments (3) to `String#%` doesn't match the number of fields (2).
+

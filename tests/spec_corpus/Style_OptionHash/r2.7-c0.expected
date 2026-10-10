@@ -1,0 +1,6 @@
+==> offenses exit=1 78 <==
+000.rb:1:17: C: Style/OptionHash: Prefer keyword arguments to options hashes.
+
+==> autocorrect exit=1 78 <==
+000.rb:1:17: C: Style/OptionHash: Prefer keyword arguments to options hashes.
+

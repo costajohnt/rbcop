@@ -1,0 +1,44 @@
+==> offenses exit=1 901 <==
+002.rb:2:15: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+004.rb:2:1: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+005.rb:1:4: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+006.rb:1:4: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+007.rb:1:4: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+008.rb:1:4: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+
+==> autocorrect exit=0 889 <==
+002.rb:2:15: C: [Corrected] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+004.rb:2:1: C: [Corrected] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+005.rb:1:4: C: [Corrected] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+006.rb:1:4: C: [Corrected] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+007.rb:1:4: C: [Corrected] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+008.rb:1:4: C: [Corrected] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+
+==> corrected/002.rb 62 <==
+var = do_something
+var == foo || ['bar', 'baz'].include?(var)
+
+==> corrected/004.rb 62 <==
+var = do_something
+['bar', 'baz'].include?(var) || var == foo
+
+==> corrected/005.rb 46 <==
+if ['a', 'b'].include?(a[:key])
+  print a
+end
+
+==> corrected/006.rb 46 <==
+if ['a', 'b'].include?(a[:key])
+  print a
+end
+
+==> corrected/007.rb 54 <==
+if ['a', 'b'].include?(a&.do_something)
+  print a
+end
+
+==> corrected/008.rb 54 <==
+if ['a', 'b'].include?(a&.do_something)
+  print a
+end
+

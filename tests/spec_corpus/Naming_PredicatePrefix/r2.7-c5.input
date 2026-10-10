@@ -1,0 +1,57 @@
+==> .rubocop.yml 211 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/PredicatePrefix:
+  NamePrefix:
+  - is_
+  - has_
+  ForbiddenPrefixes: []
+  UseSorbetSigs: 'true'
+
+==> 000.rb 45 <==
+sig { returns(T::Boolean) }
+def is_attr; end
+
+==> 001.rb 61 <==
+sig { returns(T::Boolean) }
+# Comment here.
+def is_attr; end
+
+==> 002.rb 47 <==
+sig { returns(T::Boolean) }
+
+
+def is_attr; end
+
+==> 003.rb 50 <==
+sig do
+  returns(T::Boolean)
+end
+def is_attr; end
+
+==> 004.rb 107 <==
+sig { returns(T::Array[String]) }
+def has_caused_error
+  errors.add(:base, 'This has caused an error')
+end
+
+==> 005.rb 144 <==
+sig { returns(T::Boolean) }
+def is_attr?; end
+
+sig { returns(String) }
+def has_caused_error
+  errors.add(:base, 'This has caused an error')
+end
+
+==> 006.rb 67 <==
+sig { params(x: Integer).returns(T::Boolean) }
+def is_even(x); end
+
+==> 007.rb 17 <==
+def is_attr; end
+

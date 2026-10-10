@@ -1,0 +1,17 @@
+==> .rubocop.yml 236 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.2
+Style/NumericPredicate:
+  EnforcedStyle: predicate
+  AutoCorrect: true
+  AllowedMethods:
+  - where
+  AllowedPatterns:
+  - order
+
+==> 000.rb 22 <==
+exclude { number > 0 }

@@ -1,0 +1,13 @@
+==> offenses exit=1 98 <==
+000.rb:2:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+
+==> autocorrect exit=0 96 <==
+000.rb:2:3: C: [Corrected] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+
+==> corrected/000.rb 57 <==
+def foo
+  next unless need_next? # comment
+
+  foobar
+end
+

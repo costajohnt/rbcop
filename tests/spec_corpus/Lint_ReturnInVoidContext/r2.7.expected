@@ -1,0 +1,16 @@
+==> offenses exit=1 474 <==
+000.rb:3:5: W: Lint/ReturnInVoidContext: Do not return a value in `initialize`.
+001.rb:3:5: W: Lint/ReturnInVoidContext: Do not return a value in `initialize`.
+002.rb:4:7: W: Lint/ReturnInVoidContext: Do not return a value in `initialize`.
+003.rb:5:7: W: Lint/ReturnInVoidContext: Do not return a value in `initialize`.
+009.rb:4:7: W: Lint/ReturnInVoidContext: Do not return a value in `initialize`.
+013.rb:3:5: W: Lint/ReturnInVoidContext: Do not return a value in `foo=`.
+
+==> autocorrect exit=1 474 <==
+000.rb:3:5: W: Lint/ReturnInVoidContext: Do not return a value in `initialize`.
+001.rb:3:5: W: Lint/ReturnInVoidContext: Do not return a value in `initialize`.
+002.rb:4:7: W: Lint/ReturnInVoidContext: Do not return a value in `initialize`.
+003.rb:5:7: W: Lint/ReturnInVoidContext: Do not return a value in `initialize`.
+009.rb:4:7: W: Lint/ReturnInVoidContext: Do not return a value in `initialize`.
+013.rb:3:5: W: Lint/ReturnInVoidContext: Do not return a value in `foo=`.
+

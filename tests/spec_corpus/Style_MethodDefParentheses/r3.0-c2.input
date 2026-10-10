@@ -1,0 +1,22 @@
+==> .rubocop.yml 193 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Style/MethodDefParentheses:
+  EnforcedStyle: require_no_parentheses_except_multiline
+
+==> 000.rb 14 <==
+def foo() = x
+
+==> 001.rb 15 <==
+def foo(x) = x
+
+==> 002.rb 20 <==
+def foo(x) = bar(x)
+
+==> 003.rb 23 <==
+def foo(...)= bar(...)
+

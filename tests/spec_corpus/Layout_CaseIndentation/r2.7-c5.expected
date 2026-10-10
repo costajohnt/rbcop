@@ -1,0 +1,6 @@
+==> offenses exit=1 73 <==
+000.rb:1:11: C: Layout/CaseIndentation: Indent `when` as deep as `case`.
+
+==> autocorrect exit=1 73 <==
+000.rb:1:11: C: Layout/CaseIndentation: Indent `when` as deep as `case`.
+

@@ -1,0 +1,36 @@
+==> .rubocop.yml 158 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/Alias:
+  EnforcedStyle: prefer_alias_method
+
+==> 000.rb 17 <==
+alias :ala :bala
+
+==> 001.rb 15 <==
+alias ala bala
+
+==> 002.rb 40 <==
+alias :"string#{interpolation}" :symbol
+
+==> 003.rb 24 <==
+alias_method :ala, :bala
+==> 004.rb 16 <==
+alias $ala $bala
+==> 005.rb 75 <==
+module M
+  def foo
+    instance_eval {
+      alias bar baz
+    }
+  end
+end
+
+==> 006.rb 12 <==
+alias_method
+==> 007.rb 17 <==
+alias_method :foo

@@ -1,0 +1,15 @@
+==> .rubocop.yml 190 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/TernaryParentheses:
+  Enabled: true
+  EnforcedStyle: require_no_parentheses
+
+==> 000.rb 23 <==
+(X) ? Y : N
+(X)? Y : N
+

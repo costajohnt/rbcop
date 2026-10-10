@@ -1,0 +1,33 @@
+==> offenses exit=1 906 <==
+000.rb:1:5: C: [Correctable] Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
+001.rb:2:5: C: [Correctable] Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
+002.rb:1:1: C: [Correctable] Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
+002.rb:2:1: C: [Correctable] Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
+003.rb:1:1: C: [Correctable] Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
+013.rb:1:5: C: [Correctable] Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
+
+==> autocorrect exit=0 894 <==
+000.rb:1:5: C: [Corrected] Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
+001.rb:2:5: C: [Corrected] Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
+002.rb:1:1: C: [Corrected] Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
+002.rb:2:1: C: [Corrected] Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
+003.rb:1:1: C: [Corrected] Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
+013.rb:1:5: C: [Corrected] Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
+
+==> corrected/000.rb 10 <==
+s = "abc"
+
+==> corrected/001.rb 20 <==
+s = "abc"
+x = "abc"
+
+==> corrected/002.rb 9 <==
+"'"
+"\\"
+
+==> corrected/003.rb 46 <==
+"This 'string' has 'multiple' escaped quotes"
+
+==> corrected/013.rb 13 <==
+a = "blah #"
+

@@ -1,0 +1,12 @@
+==> offenses exit=1 480 <==
+000.rb:3:1: W: Lint/RescueException: Avoid rescuing the `Exception` class. Perhaps you meant to rescue `StandardError`?
+001.rb:3:1: W: Lint/RescueException: Avoid rescuing the `Exception` class. Perhaps you meant to rescue `StandardError`?
+002.rb:3:1: W: Lint/RescueException: Avoid rescuing the `Exception` class. Perhaps you meant to rescue `StandardError`?
+003.rb:3:1: W: Lint/RescueException: Avoid rescuing the `Exception` class. Perhaps you meant to rescue `StandardError`?
+
+==> autocorrect exit=1 480 <==
+000.rb:3:1: W: Lint/RescueException: Avoid rescuing the `Exception` class. Perhaps you meant to rescue `StandardError`?
+001.rb:3:1: W: Lint/RescueException: Avoid rescuing the `Exception` class. Perhaps you meant to rescue `StandardError`?
+002.rb:3:1: W: Lint/RescueException: Avoid rescuing the `Exception` class. Perhaps you meant to rescue `StandardError`?
+003.rb:3:1: W: Lint/RescueException: Avoid rescuing the `Exception` class. Perhaps you meant to rescue `StandardError`?
+

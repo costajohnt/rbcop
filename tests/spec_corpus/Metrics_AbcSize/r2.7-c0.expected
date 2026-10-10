@@ -1,0 +1,16 @@
+==> offenses exit=1 684 <==
+002.rb:1:1: R: Metrics/AbcSize: Assignment Branch Condition size for `method_name` is too high. [<0, 2, 1> 2.24/0]
+003.rb:1:1: R: Metrics/AbcSize: Assignment Branch Condition size for `method_name` is too high. [<1, 2, 0> 2.24/0]
+004.rb:1:1: R: Metrics/AbcSize: Assignment Branch Condition size for `method_name` is too high. [<3, 4, 5> 7.07/0]
+005.rb:1:1: R: Metrics/AbcSize: Assignment Branch Condition size for `method_name` is too high. [<1, 0, 0> 1/0]
+006.rb:1:1: R: Metrics/AbcSize: Assignment Branch Condition size for `method_name` is too high. [<1, 0, 0> 1/0]
+007.rb:1:1: R: Metrics/AbcSize: Assignment Branch Condition size for `method_name` is too high. [<0, 2, 1> 2.24/0]
+
+==> autocorrect exit=1 684 <==
+002.rb:1:1: R: Metrics/AbcSize: Assignment Branch Condition size for `method_name` is too high. [<0, 2, 1> 2.24/0]
+003.rb:1:1: R: Metrics/AbcSize: Assignment Branch Condition size for `method_name` is too high. [<1, 2, 0> 2.24/0]
+004.rb:1:1: R: Metrics/AbcSize: Assignment Branch Condition size for `method_name` is too high. [<3, 4, 5> 7.07/0]
+005.rb:1:1: R: Metrics/AbcSize: Assignment Branch Condition size for `method_name` is too high. [<1, 0, 0> 1/0]
+006.rb:1:1: R: Metrics/AbcSize: Assignment Branch Condition size for `method_name` is too high. [<1, 0, 0> 1/0]
+007.rb:1:1: R: Metrics/AbcSize: Assignment Branch Condition size for `method_name` is too high. [<0, 2, 1> 2.24/0]
+

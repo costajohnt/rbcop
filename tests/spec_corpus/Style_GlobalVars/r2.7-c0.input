@@ -1,0 +1,231 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/GlobalVars:
+  AllowedVariables:
+  - "$allowed"
+
+==> 000.rb 13 <==
+puts $custom
+
+==> 001.rb 13 <==
+puts $allowed
+==> 002.rb 8 <==
+puts $:
+
+==> 003.rb 16 <==
+puts $LOAD_PATH
+
+==> 004.rb 8 <==
+puts $"
+
+==> 005.rb 22 <==
+puts $LOADED_FEATURES
+
+==> 006.rb 8 <==
+puts $0
+
+==> 007.rb 19 <==
+puts $PROGRAM_NAME
+
+==> 008.rb 8 <==
+puts $!
+
+==> 009.rb 17 <==
+puts $ERROR_INFO
+
+==> 010.rb 8 <==
+puts $@
+
+==> 011.rb 21 <==
+puts $ERROR_POSITION
+
+==> 012.rb 8 <==
+puts $;
+
+==> 013.rb 9 <==
+puts $FS
+
+==> 014.rb 22 <==
+puts $FIELD_SEPARATOR
+
+==> 015.rb 8 <==
+puts $,
+
+==> 016.rb 10 <==
+puts $OFS
+
+==> 017.rb 29 <==
+puts $OUTPUT_FIELD_SEPARATOR
+
+==> 018.rb 8 <==
+puts $/
+
+==> 019.rb 9 <==
+puts $RS
+
+==> 020.rb 29 <==
+puts $INPUT_RECORD_SEPARATOR
+
+==> 021.rb 8 <==
+puts $\
+
+==> 022.rb 10 <==
+puts $ORS
+
+==> 023.rb 30 <==
+puts $OUTPUT_RECORD_SEPARATOR
+
+==> 024.rb 8 <==
+puts $.
+
+==> 025.rb 9 <==
+puts $NR
+
+==> 026.rb 24 <==
+puts $INPUT_LINE_NUMBER
+
+==> 027.rb 8 <==
+puts $_
+
+==> 028.rb 21 <==
+puts $LAST_READ_LINE
+
+==> 029.rb 8 <==
+puts $>
+
+==> 030.rb 21 <==
+puts $DEFAULT_OUTPUT
+
+==> 031.rb 8 <==
+puts $<
+
+==> 032.rb 20 <==
+puts $DEFAULT_INPUT
+
+==> 033.rb 8 <==
+puts $$
+
+==> 034.rb 10 <==
+puts $PID
+
+==> 035.rb 17 <==
+puts $PROCESS_ID
+
+==> 036.rb 8 <==
+puts $?
+
+==> 037.rb 19 <==
+puts $CHILD_STATUS
+
+==> 038.rb 8 <==
+puts $~
+
+==> 039.rb 22 <==
+puts $LAST_MATCH_INFO
+
+==> 040.rb 8 <==
+puts $=
+
+==> 041.rb 17 <==
+puts $IGNORECASE
+
+==> 042.rb 8 <==
+puts $*
+
+==> 043.rb 11 <==
+puts $ARGV
+
+==> 044.rb 8 <==
+puts $&
+
+==> 045.rb 12 <==
+puts $MATCH
+
+==> 046.rb 8 <==
+puts $`
+
+==> 047.rb 15 <==
+puts $PREMATCH
+
+==> 048.rb 8 <==
+puts $'
+
+==> 049.rb 16 <==
+puts $POSTMATCH
+
+==> 050.rb 8 <==
+puts $+
+
+==> 051.rb 23 <==
+puts $LAST_PAREN_MATCH
+
+==> 052.rb 12 <==
+puts $stdin
+
+==> 053.rb 13 <==
+puts $stdout
+
+==> 054.rb 13 <==
+puts $stderr
+
+==> 055.rb 12 <==
+puts $DEBUG
+
+==> 056.rb 15 <==
+puts $FILENAME
+
+==> 057.rb 14 <==
+puts $VERBOSE
+
+==> 058.rb 11 <==
+puts $SAFE
+
+==> 059.rb 9 <==
+puts $-0
+
+==> 060.rb 9 <==
+puts $-a
+
+==> 061.rb 9 <==
+puts $-d
+
+==> 062.rb 9 <==
+puts $-F
+
+==> 063.rb 9 <==
+puts $-i
+
+==> 064.rb 9 <==
+puts $-I
+
+==> 065.rb 9 <==
+puts $-l
+
+==> 066.rb 9 <==
+puts $-p
+
+==> 067.rb 9 <==
+puts $-v
+
+==> 068.rb 9 <==
+puts $-w
+
+==> 069.rb 16 <==
+puts $CLASSPATH
+
+==> 070.rb 20 <==
+puts $JRUBY_VERSION
+
+==> 071.rb 21 <==
+puts $JRUBY_REVISION
+
+==> 072.rb 15 <==
+puts $ENV_JAVA
+
+==> 073.rb 7 <==
+puts $1

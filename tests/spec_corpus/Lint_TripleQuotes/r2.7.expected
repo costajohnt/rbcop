@@ -1,0 +1,33 @@
+==> offenses exit=1 661 <==
+000.rb:1:1: W: [Correctable] Lint/TripleQuotes: Delimiting a string with multiple quotes has no effect, use a single quote instead.
+001.rb:1:1: W: [Correctable] Lint/TripleQuotes: Delimiting a string with multiple quotes has no effect, use a single quote instead.
+002.rb:1:1: W: [Correctable] Lint/TripleQuotes: Delimiting a string with multiple quotes has no effect, use a single quote instead.
+004.rb:1:1: W: [Correctable] Lint/TripleQuotes: Delimiting a string with multiple quotes has no effect, use a single quote instead.
+006.rb:1:10: W: [Correctable] Lint/TripleQuotes: Delimiting a string with multiple quotes has no effect, use a single quote instead.
+
+==> autocorrect exit=0 651 <==
+000.rb:1:1: W: [Corrected] Lint/TripleQuotes: Delimiting a string with multiple quotes has no effect, use a single quote instead.
+001.rb:1:1: W: [Corrected] Lint/TripleQuotes: Delimiting a string with multiple quotes has no effect, use a single quote instead.
+002.rb:1:1: W: [Corrected] Lint/TripleQuotes: Delimiting a string with multiple quotes has no effect, use a single quote instead.
+004.rb:1:1: W: [Corrected] Lint/TripleQuotes: Delimiting a string with multiple quotes has no effect, use a single quote instead.
+006.rb:1:10: W: [Corrected] Lint/TripleQuotes: Delimiting a string with multiple quotes has no effect, use a single quote instead.
+
+==> corrected/000.rb 11 <==
+"a string"
+
+==> corrected/001.rb 15 <==
+"
+  a string
+"
+
+==> corrected/002.rb 3 <==
+""
+
+==> corrected/004.rb 15 <==
+"
+  a string
+"
+
+==> corrected/006.rb 17 <==
+str = "#{'abc'}"
+

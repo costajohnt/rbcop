@@ -1,0 +1,192 @@
+==> .rubocop.yml 196 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Gemspec/DependencyVersion:
+  Enabled: true
+  EnforcedStyle: forbidden
+  AllowedGems: []
+
+==> 000.gemspec 68 <==
+Gem::Specification.new do |spec|
+  spec.add_dependency 'parser'
+end
+
+==> 001.gemspec 69 <==
+Gem::Specification.new do |spec|
+  spec.add_dependency('parser')
+end
+
+==> 002.gemspec 112 <==
+Gem::Specification.new do |spec|
+  spec.add_dependency 'rubocop', git: 'https://github.com/rubocop/rubocop'
+end
+
+==> 003.gemspec 113 <==
+Gem::Specification.new do |spec|
+  spec.add_dependency('rubocop', git: 'https://github.com/rubocop/rubocop')
+end
+
+==> 004.gemspec 92 <==
+Gem::Specification.new do |spec|
+  spec.add_dependency 'parser', '~> 3.1', '>= 3.1.1.0'
+end
+
+==> 005.gemspec 83 <==
+Gem::Specification.new do |spec|
+  spec.add_dependency('parser', '>= 3.1.1.0')
+end
+
+==> 006.gemspec 130 <==
+Gem::Specification.new do |spec|
+  spec.add_dependency 'rubocop', git: 'https://github.com/rubocop/rubocop', ref: '54f4c8228'
+end
+
+==> 007.gemspec 131 <==
+Gem::Specification.new do |spec|
+  spec.add_dependency('rubocop', git: 'https://github.com/rubocop/rubocop', ref: '54f4c8228')
+end
+
+==> 008.gemspec 128 <==
+Gem::Specification.new do |spec|
+  spec.add_dependency 'rubocop', git: 'https://github.com/rubocop/rubocop', tag: 'v1.28.0'
+end
+
+==> 009.gemspec 129 <==
+Gem::Specification.new do |spec|
+  spec.add_dependency('rubocop', git: 'https://github.com/rubocop/rubocop', tag: 'v1.28.0')
+end
+
+==> 010.gemspec 128 <==
+Gem::Specification.new do |spec|
+  spec.add_dependency 'rubocop', git: 'https://github.com/rubocop/rubocop', branch: 'main'
+end
+
+==> 011.gemspec 129 <==
+Gem::Specification.new do |spec|
+  spec.add_dependency('rubocop', git: 'https://github.com/rubocop/rubocop', branch: 'main')
+end
+
+==> 012.gemspec 80 <==
+Gem::Specification.new do |spec|
+  spec.add_development_dependency 'parser'
+end
+
+==> 013.gemspec 81 <==
+Gem::Specification.new do |spec|
+  spec.add_development_dependency('parser')
+end
+
+==> 014.gemspec 124 <==
+Gem::Specification.new do |spec|
+  spec.add_development_dependency 'rubocop', git: 'https://github.com/rubocop/rubocop'
+end
+
+==> 015.gemspec 125 <==
+Gem::Specification.new do |spec|
+  spec.add_development_dependency('rubocop', git: 'https://github.com/rubocop/rubocop')
+end
+
+==> 016.gemspec 104 <==
+Gem::Specification.new do |spec|
+  spec.add_development_dependency 'parser', '~> 3.1', '>= 3.1.1.0'
+end
+
+==> 017.gemspec 95 <==
+Gem::Specification.new do |spec|
+  spec.add_development_dependency('parser', '>= 3.1.1.0')
+end
+
+==> 018.gemspec 142 <==
+Gem::Specification.new do |spec|
+  spec.add_development_dependency 'rubocop', git: 'https://github.com/rubocop/rubocop', ref: '54f4c8228'
+end
+
+==> 019.gemspec 143 <==
+Gem::Specification.new do |spec|
+  spec.add_development_dependency('rubocop', git: 'https://github.com/rubocop/rubocop', ref: '54f4c8228')
+end
+
+==> 020.gemspec 140 <==
+Gem::Specification.new do |spec|
+  spec.add_development_dependency 'rubocop', git: 'https://github.com/rubocop/rubocop', tag: 'v1.28.0'
+end
+
+==> 021.gemspec 141 <==
+Gem::Specification.new do |spec|
+  spec.add_development_dependency('rubocop', git: 'https://github.com/rubocop/rubocop', tag: 'v1.28.0')
+end
+
+==> 022.gemspec 140 <==
+Gem::Specification.new do |spec|
+  spec.add_development_dependency 'rubocop', git: 'https://github.com/rubocop/rubocop', branch: 'main'
+end
+
+==> 023.gemspec 141 <==
+Gem::Specification.new do |spec|
+  spec.add_development_dependency('rubocop', git: 'https://github.com/rubocop/rubocop', branch: 'main')
+end
+
+==> 024.gemspec 76 <==
+Gem::Specification.new do |spec|
+  spec.add_runtime_dependency 'parser'
+end
+
+==> 025.gemspec 77 <==
+Gem::Specification.new do |spec|
+  spec.add_runtime_dependency('parser')
+end
+
+==> 026.gemspec 120 <==
+Gem::Specification.new do |spec|
+  spec.add_runtime_dependency 'rubocop', git: 'https://github.com/rubocop/rubocop'
+end
+
+==> 027.gemspec 121 <==
+Gem::Specification.new do |spec|
+  spec.add_runtime_dependency('rubocop', git: 'https://github.com/rubocop/rubocop')
+end
+
+==> 028.gemspec 100 <==
+Gem::Specification.new do |spec|
+  spec.add_runtime_dependency 'parser', '~> 3.1', '>= 3.1.1.0'
+end
+
+==> 029.gemspec 91 <==
+Gem::Specification.new do |spec|
+  spec.add_runtime_dependency('parser', '>= 3.1.1.0')
+end
+
+==> 030.gemspec 138 <==
+Gem::Specification.new do |spec|
+  spec.add_runtime_dependency 'rubocop', git: 'https://github.com/rubocop/rubocop', ref: '54f4c8228'
+end
+
+==> 031.gemspec 139 <==
+Gem::Specification.new do |spec|
+  spec.add_runtime_dependency('rubocop', git: 'https://github.com/rubocop/rubocop', ref: '54f4c8228')
+end
+
+==> 032.gemspec 136 <==
+Gem::Specification.new do |spec|
+  spec.add_runtime_dependency 'rubocop', git: 'https://github.com/rubocop/rubocop', tag: 'v1.28.0'
+end
+
+==> 033.gemspec 137 <==
+Gem::Specification.new do |spec|
+  spec.add_runtime_dependency('rubocop', git: 'https://github.com/rubocop/rubocop', tag: 'v1.28.0')
+end
+
+==> 034.gemspec 136 <==
+Gem::Specification.new do |spec|
+  spec.add_runtime_dependency 'rubocop', git: 'https://github.com/rubocop/rubocop', branch: 'main'
+end
+
+==> 035.gemspec 137 <==
+Gem::Specification.new do |spec|
+  spec.add_runtime_dependency('rubocop', git: 'https://github.com/rubocop/rubocop', branch: 'main')
+end
+

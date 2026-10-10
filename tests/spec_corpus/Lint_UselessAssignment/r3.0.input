@@ -1,0 +1,22 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+
+==> 000.rb 67 <==
+def some_method
+  foo => { bar: bar }
+  baz { bar -= 1 }
+  foo
+end
+
+==> 001.rb 67 <==
+def some_method
+  foo => { bar: bar }
+  baz { qux -= 1 }
+  foo
+end
+

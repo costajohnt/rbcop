@@ -1,0 +1,68 @@
+==> offenses exit=1 1452 <==
+002.rb:1:1: C: [Correctable] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+004.rb:1:1: C: [Correctable] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+006.rb:1:1: C: [Correctable] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+008.rb:1:1: C: [Correctable] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+011.rb:1:1: C: [Correctable] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+012.rb:1:1: C: [Correctable] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+013.rb:1:1: C: [Correctable] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+014.rb:1:1: C: [Correctable] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+016.rb:1:1: C: [Correctable] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+017.rb:1:1: C: [Correctable] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+018.rb:1:1: C: [Correctable] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+
+==> autocorrect exit=0 1430 <==
+002.rb:1:1: C: [Corrected] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+004.rb:1:1: C: [Corrected] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+006.rb:1:1: C: [Corrected] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+008.rb:1:1: C: [Corrected] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+011.rb:1:1: C: [Corrected] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+012.rb:1:1: C: [Corrected] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+013.rb:1:1: C: [Corrected] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+014.rb:1:1: C: [Corrected] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+016.rb:1:1: C: [Corrected] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+017.rb:1:1: C: [Corrected] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+018.rb:1:1: C: [Corrected] Style/EachForSimpleLoop: Use `Integer#times` for a simple loop which iterates a fixed number of times.
+
+==> corrected/002.rb 26 <==
+10.times { do_something }
+
+==> corrected/004.rb 31 <==
+10.times do
+  do_something
+end
+
+==> corrected/006.rb 26 <==
+10.times { do_something }
+
+==> corrected/008.rb 31 <==
+10.times do
+  do_something
+end
+
+==> corrected/011.rb 12 <==
+11.times {}
+
+==> corrected/012.rb 16 <==
+11.times do
+end
+
+==> corrected/013.rb 15 <==
+5.times do
+end
+
+==> corrected/014.rb 15 <==
+5.times do
+end
+
+==> corrected/016.rb 12 <==
+10.times {}
+
+==> corrected/017.rb 16 <==
+10.times do
+end
+
+==> corrected/018.rb 15 <==
+4.times do
+end
+

@@ -1,0 +1,74 @@
+==> .rubocop.yml 307 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/WordArray:
+  MinSize: 0
+  WordRegex: !ruby/regexp /\A(?:\p{Word}|\p{Word}-\p{Word}|\n|\t)+\z/
+  EnforcedStyle: brackets
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: "()"
+
+==> 000.rb 23 <==
+['one', 'two', 'three']
+==> 001.rb 23 <==
+["one", "two", "three"]
+==> 002.rb 25 <==
+['foo', 'bar', 'foo-bar']
+==> 003.rb 23 <==
+['foo bar', 'baz quux']
+==> 004.rb 18 <==
+%w(one two three)
+
+==> 005.rb 42 <==
+FOO = %w(one@example.com two@example.com)
+
+==> 006.rb 48 <==
+FOO = %w(
+  one@example.com
+  two@example.com
+)
+
+==> 007.rb 5 <==
+%w()
+
+==> 008.rb 24 <==
+%w(one's two's three's)
+
+==> 009.rb 19 <==
+%W(\n \t \b \v \f)
+
+==> 010.rb 20 <==
+%w(foo bar foo-bar)
+
+==> 011.rb 18 <==
+%w(
+  foo
+  bar
+)
+
+==> 012.rb 23 <==
+%W(foo bar #{foo}-bar)
+
+==> 013.rb 18 <==
+%W(#{foo}bar baz)
+
+==> 014.rb 80 <==
+["\xC0",
+ "\xC2\x4a",
+ "\xC2\xC2",
+ "\x4a\x82",
+ "\x82\x82",
+ "\xe1\x82\x4a",
+]
+
+==> 015.rb 118 <==
+# -*- encoding: binary -*-
+["\xC0"] # Invalid as UTF-8
+['a']    # Valid as UTF-8 and ASCII
+["あ"]   # Valid as UTF-8
+

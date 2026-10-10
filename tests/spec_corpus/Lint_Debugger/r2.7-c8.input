@@ -1,0 +1,46 @@
+==> .rubocop.yml 148 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/Debugger:
+  DebuggerMethods:
+  - p
+
+==> 000.rb 8 <==
+p 'foo'
+
+==> 001.rb 13 <==
+foo(p 'foo')
+
+==> 002.rb 11 <==
+p(p 'foo')
+
+==> 003.rb 15 <==
+p.do_something
+
+==> 004.rb 6 <==
+Foo.p
+
+==> 005.rb 58 <==
+let(:p) { foo }
+
+it { expect(do_something(p)).to eq bar }
+
+==> 006.rb 63 <==
+let(:p) { foo }
+
+it { expect(obj&.do_something(p)).to eq bar }
+
+==> 007.rb 61 <==
+let(:p) { foo }
+
+it { expect(do_something(k: p)).to eq bar }
+
+==> 008.rb 63 <==
+let(:p) { foo }
+
+it { expect(do_something([k, p])).to eq bar }
+

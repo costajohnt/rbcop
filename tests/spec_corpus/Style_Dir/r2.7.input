@@ -1,0 +1,20 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 41 <==
+File.expand_path(File.dirname(__FILE__))
+
+==> 001.rb 45 <==
+::File.expand_path(::File.dirname(__FILE__))
+
+==> 002.rb 38 <==
+File.dirname(File.realpath(__FILE__))
+
+==> 003.rb 42 <==
+::File.dirname(::File.realpath(__FILE__))
+

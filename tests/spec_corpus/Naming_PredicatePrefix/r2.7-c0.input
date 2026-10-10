@@ -1,0 +1,30 @@
+==> .rubocop.yml 201 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/PredicatePrefix:
+  NamePrefix:
+  - has_
+  - is_
+  ForbiddenPrefixes:
+  - has_
+  - is_
+
+==> 000.rb 17 <==
+def is_attr; end
+
+==> 001.rb 18 <==
+def has_attr; end
+
+==> 002.rb 19 <==
+def have_attr; end
+
+==> 003.rb 19 <==
+def is_hello=; end
+
+==> 004.rb 16 <==
+def is_2d?; end
+

@@ -1,0 +1,140 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 17 <==
+if test = 42
+end
+
+==> 001.rb 20 <==
+if test = 'foo'
+end
+
+==> 002.rb 23 <==
+if test = "#{foo}"
+end
+
+==> 003.rb 26 <==
+if test = `echo 'hi'`
+end
+
+==> 004.rb 17 <==
+if test = []
+end
+
+==> 005.rb 24 <==
+if test = [1, 2, 3]
+end
+
+==> 006.rb 25 <==
+if test = [42, x, y]
+end
+
+==> 007.rb 17 <==
+if test = {}
+end
+
+==> 008.rb 22 <==
+if test = {x: :y}
+end
+
+==> 009.rb 24 <==
+if test = {x => :y}
+end
+
+==> 010.rb 21 <==
+if test = {x: y}
+end
+
+==> 011.rb 27 <==
+if test = do_something
+end
+
+==> 012.rb 25 <==
+if foo { |x| y = 1 }
+end
+
+==> 013.rb 20 <==
+while test = 42
+end
+
+==> 014.rb 20 <==
+until test = 42
+end
+
+==> 015.rb 18 <==
+if @test = 42
+end
+
+==> 016.rb 19 <==
+if @@test = 42
+end
+
+==> 017.rb 18 <==
+if $test = 42
+end
+
+==> 018.rb 17 <==
+if TEST = 42
+end
+
+==> 019.rb 30 <==
+if collection[index] = 42
+end
+
+==> 020.rb 18 <==
+if test == 10
+end
+
+==> 021.rb 29 <==
+if test == 10 || foo = 1
+end
+
+==> 022.rb 45 <==
+return 1 if any_errors? { o = inspect(file) }
+==> 023.rb 45 <==
+return 1 if any_errors? { o = file }.present?
+==> 024.rb 39 <==
+if x?(bar) || y? { z = baz }
+  foo
+end
+
+==> 025.rb 20 <==
+foo { x if y = 42 }
+
+==> 026.rb 19 <==
+foo { x if y = z }
+
+==> 027.rb 38 <==
+raise StandardError unless foo ||= bar
+==> 028.rb 51 <==
+raise StandardError unless (foo ||= bar) || a = 42
+
+==> 029.rb 50 <==
+raise StandardError unless (foo ||= bar) || a = b
+
+==> 030.rb 24 <==
+if test.method = 42
+end
+
+==> 031.rb 10 <==
+if ()
+end
+
+==> 032.rb 14 <==
+unless ()
+end
+
+==> 033.rb 46 <==
+return if do_something do |z|
+  x, y = *z
+end
+
+==> 034.rb 19 <==
+if (test = 42)
+end
+

@@ -1,0 +1,25 @@
+==> offenses exit=1 536 <==
+000.rb:1:15: W: [Correctable] Lint/SafeNavigationWithEmpty: Avoid calling `empty?` with the safe navigation operator in conditionals.
+001.rb:2:11: W: [Correctable] Lint/SafeNavigationWithEmpty: Avoid calling `empty?` with the safe navigation operator in conditionals.
+002.rb:1:11: W: [Correctable] Lint/SafeNavigationWithEmpty: Avoid calling `empty?` with the safe navigation operator in conditionals.
+003.rb:1:11: W: [Correctable] Lint/SafeNavigationWithEmpty: Avoid calling `empty?` with the safe navigation operator in conditionals.
+
+==> autocorrect exit=0 528 <==
+000.rb:1:15: W: [Corrected] Lint/SafeNavigationWithEmpty: Avoid calling `empty?` with the safe navigation operator in conditionals.
+001.rb:2:11: W: [Corrected] Lint/SafeNavigationWithEmpty: Avoid calling `empty?` with the safe navigation operator in conditionals.
+002.rb:1:11: W: [Corrected] Lint/SafeNavigationWithEmpty: Avoid calling `empty?` with the safe navigation operator in conditionals.
+003.rb:1:11: W: [Corrected] Lint/SafeNavigationWithEmpty: Avoid calling `empty?` with the safe navigation operator in conditionals.
+
+==> corrected/000.rb 32 <==
+return unless foo && foo.empty?
+
+==> corrected/001.rb 51 <==
+foo = build_collection
+return if foo && foo.empty?
+
+==> corrected/002.rb 30 <==
+return if @foo && @foo.empty?
+
+==> corrected/003.rb 28 <==
+return if FOO && FOO.empty?
+

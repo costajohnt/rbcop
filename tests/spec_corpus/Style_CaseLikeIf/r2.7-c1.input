@@ -1,0 +1,16 @@
+==> .rubocop.yml 148 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/CaseLikeIf:
+  MinBranchesCount: 3
+
+==> 000.rb 32 <==
+if x == 1
+elsif x == 2
+else
+end
+

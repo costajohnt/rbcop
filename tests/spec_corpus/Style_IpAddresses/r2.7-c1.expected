@@ -1,0 +1,6 @@
+==> offenses exit=1 64 <==
+000.rb:1:1: C: Style/IpAddresses: Do not hardcode IP addresses.
+
+==> autocorrect exit=1 64 <==
+000.rb:1:1: C: Style/IpAddresses: Do not hardcode IP addresses.
+

@@ -1,0 +1,13 @@
+==> .rubocop.yml 157 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/HashConversion:
+  AllowSplatArgument: true
+
+==> 000.rb 11 <==
+Hash[*ary]
+

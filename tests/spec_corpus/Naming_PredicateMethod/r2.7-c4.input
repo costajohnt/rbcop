@@ -1,0 +1,74 @@
+==> .rubocop.yml 245 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/PredicateMethod:
+  Mode: :aggressive
+  AllowedMethods: []
+  AllowedPatterns: []
+  AllowBangMethods: false
+  WaywardPredicates: []
+
+==> 000.rb 12 <==
+def foo
+end
+
+==> 001.rb 17 <==
+def self.foo
+end
+
+==> 002.rb 17 <==
+def foo
+  ()
+end
+
+==> 003.rb 22 <==
+def self.foo
+  ()
+end
+
+==> 004.rb 50 <==
+def foo
+  case expr
+  in pattern
+    ()
+  end
+end
+
+==> 005.rb 37 <==
+def foo
+  return if bar
+
+  false
+end
+
+==> 006.rb 26 <==
+def initialize
+  foo?
+end
+
+==> 007.rb 39 <==
+def ==(other)
+  hash == other.hash
+end
+
+==> 008.rb 21 <==
+def save!
+  true
+end
+
+==> 009.rb 39 <==
+def foo?
+  return 5 if bar?
+  true
+end
+
+==> 010.rb 39 <==
+def foo?
+  return true if bar?
+  5
+end
+

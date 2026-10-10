@@ -1,0 +1,51 @@
+==> .rubocop.yml 174 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/MultilineMethodCallBraceLayout:
+  EnforcedStyle: same_line
+
+==> 000.rb 32 <==
+foo(a,
+{
+a: <<-EOM
+baz
+EOM
+}
+)
+
+
+==> 001.rb 23 <==
+foo(a,
+{
+foo: bar
+}
+)
+
+
+==> 002.rb 20 <==
+foo(a, # a
+b # b
+)
+
+
+==> 003.rb 13 <==
+foo(
+a,
+b
+)
+
+
+==> 004.rb 20 <==
+foo(a, # a
+b, # b
+)
+
+==> 005.rb 18 <==
+foo&.bar(
+  baz
+)
+

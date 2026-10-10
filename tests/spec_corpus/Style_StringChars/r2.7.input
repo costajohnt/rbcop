@@ -1,0 +1,32 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 17 <==
+string.split(//)
+
+==> 001.rb 17 <==
+string.split('')
+
+==> 002.rb 17 <==
+string.split("")
+
+==> 003.rb 36 <==
+do_something { |foo| foo.split '' }
+
+==> 004.rb 18 <==
+string&.split(//)
+
+==> 005.rb 13 <==
+string.chars
+
+==> 006.rb 18 <==
+string.split(/ /)
+
+==> 007.rb 13 <==
+string.split
+

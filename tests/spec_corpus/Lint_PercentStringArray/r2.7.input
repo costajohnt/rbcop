@@ -1,0 +1,55 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 15 <==
+%w(foo bar baz)
+==> 001.rb 7 <==
+%w(' ")
+==> 002.rb 15 <==
+%w(' " ! = # ,)
+==> 003.rb 7 <==
+:"#{a}"
+==> 004.rb 10 <==
+%w(#{a} b)
+==> 005.rb 24 <==
+%w('foo', 'bar', 'baz')
+
+==> 006.rb 22 <==
+%w('foo' "bar" 'baz')
+
+==> 007.rb 18 <==
+%w('foo' bar baz)
+
+==> 008.rb 17 <==
+%w(foo, bar baz)
+
+==> 009.rb 15 <==
+%W(foo bar baz)
+==> 010.rb 7 <==
+%W(' ")
+==> 011.rb 15 <==
+%W(' " ! = # ,)
+==> 012.rb 10 <==
+%W(#{a} b)
+==> 013.rb 24 <==
+%W('foo', 'bar', 'baz')
+
+==> 014.rb 22 <==
+%W('foo' "bar" 'baz')
+
+==> 015.rb 18 <==
+%W('foo' bar baz)
+
+==> 016.rb 17 <==
+%W(foo, bar baz)
+
+==> 017.rb 16 <==
+%W("a\255\255")
+
+==> 018.rb 8 <==
+%W(\255)

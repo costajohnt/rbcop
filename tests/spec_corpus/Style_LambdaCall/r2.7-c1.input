@@ -1,0 +1,52 @@
+==> .rubocop.yml 150 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/LambdaCall:
+  EnforcedStyle: braces
+
+==> 000.rb 13 <==
+x.call(a, b)
+
+==> 001.rb 14 <==
+x&.call(a, b)
+
+==> 002.rb 41 <==
+x.call(
+  a,
+  # important comment
+  b
+)
+
+==> 003.rb 22 <==
+x.call(a, b)
+x.(a, b)
+
+==> 004.rb 24 <==
+x&.call(a, b)
+x&.(a, b)
+
+==> 005.rb 35 <==
+x.call(a, b)
+x.(a, b)
+x.call(a, b)
+
+==> 006.rb 38 <==
+x&.call(a, b)
+x&.(a, b)
+x&.call(a, b)
+
+==> 007.rb 10 <==
+call(a, b)
+==> 008.rb 7 <==
+a.call
+
+==> 009.rb 18 <==
+a.call asdf, x123
+
+==> 010.rb 19 <==
+a&.call asdf, x123
+

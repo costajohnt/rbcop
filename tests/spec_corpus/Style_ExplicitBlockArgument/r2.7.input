@@ -1,0 +1,132 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 55 <==
+def m
+  items.something(first_arg) { |i| yield i }
+end
+
+==> 001.rb 61 <==
+def m
+  items.something(first_arg) { |i, j| yield i, j }
+end
+
+==> 002.rb 61 <==
+def m
+  items.something(first_arg) { |i, j| yield j, i }
+end
+
+==> 003.rb 50 <==
+def m(&blk)
+  items.something { |i| yield i }
+end
+
+==> 004.rb 51 <==
+def m
+  items.something(a, b,) { |i| yield i }
+end
+
+==> 005.rb 64 <==
+def do_something
+  array&.each do |row|
+    yield row
+  end
+end
+
+==> 006.rb 179 <==
+def m
+  items.something { |i| yield i }
+
+  if condition
+    yield 2
+  elsif other_condition
+    3.times { yield }
+  else
+    other_items.something { |i, j| yield i, j }
+  end
+end
+
+==> 007.rb 20 <==
+def m
+  yield i
+end
+
+==> 008.rb 30 <==
+def m
+  3.times { yield }
+end
+
+==> 009.rb 39 <==
+def do_something
+  super { yield }
+end
+
+==> 010.rb 70 <==
+def m
+  items.something do |i|
+    do_something
+    yield i
+  end
+end
+
+==> 011.rb 53 <==
+def m
+  items.something { |i, j, k| yield j, k }
+end
+
+==> 012.rb 47 <==
+def m
+  items.something { |i, j| yield i }
+end
+
+==> 013.rb 33 <==
+render("partial") do
+  yield
+end
+
+==> 014.rb 38 <==
+def my_method()
+  foo() { yield }
+end
+
+==> 015.rb 38 <==
+def my_method
+  super() { yield }
+end
+
+==> 016.rb 40 <==
+def my_method(x)
+  foo(x) { yield }
+end
+
+==> 017.rb 65 <==
+def my_method(x, y = 42, *args, **options)
+  super { yield }
+end
+
+==> 018.rb 70 <==
+def self.my_method(x, y = 42, *args, **options)
+  super { yield }
+end
+
+==> 019.rb 77 <==
+def foo
+  bar { |baz| yield baz }
+end
+
+def foo
+  bar { |baz| yield baz }
+end
+
+==> 020.rb 62 <==
+def foo
+  def bar.baz
+    qux { |quux| yield quux }
+  end
+end
+

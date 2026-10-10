@@ -1,0 +1,9 @@
+==> offenses exit=1 184 <==
+001.rb:1:1: W: [Correctable] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `10.hours.to_i`, use stricter `Integer(10.hours, 10)`.
+
+==> autocorrect exit=0 182 <==
+001.rb:1:1: W: [Corrected] Lint/NumberConversion: Replace unsafe number conversion with number class parsing, instead of using `10.hours.to_i`, use stricter `Integer(10.hours, 10)`.
+
+==> corrected/001.rb 22 <==
+Integer(10.hours, 10)
+

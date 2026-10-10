@@ -1,0 +1,21 @@
+==> .rubocop.yml 210 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LineLength:
+  Max: 18
+  AllowedPatterns:
+  - "^\\s*test\\s"
+  - !ruby/regexp /^\s*def\s+test_/
+
+==> 000.rb 177 <==
+class ExampleTest < TestCase
+  test 'some really long test description which exceeds length' do
+  end
+  def test_some_other_long_test_description_which_exceeds_length
+  end
+end
+

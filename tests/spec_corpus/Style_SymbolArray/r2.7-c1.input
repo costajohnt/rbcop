@@ -1,0 +1,29 @@
+==> .rubocop.yml 238 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SymbolArray:
+  MinSize: 0
+  EnforcedStyle: percent
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: "[]"
+
+==> 000.rb 21 <==
+[
+:foo,
+:bar,
+:baz
+]
+
+==> 001.rb 37 <==
+[:foo, :bar, :baz,
+:boz, :buz,
+:biz]
+
+==> 002.rb 23 <==
+[:a, :'b[]', :'c[][]']
+

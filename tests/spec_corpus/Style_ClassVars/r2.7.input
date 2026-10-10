@@ -1,0 +1,24 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 34 <==
+class TestClass; @@test = 10; end
+
+==> 001.rb 53 <==
+class TestClass
+  class_variable_set(:@@test, 2)
+end
+
+==> 002.rb 63 <==
+class TestClass; end
+TestClass.class_variable_set(:@@test, 42)
+
+==> 003.rb 15 <==
+@@test.test(20)
+==> 004.rb 18 <==
+class_variable_set

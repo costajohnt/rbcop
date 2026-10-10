@@ -1,0 +1,57 @@
+==> .rubocop.yml 315 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Style/ArgumentsForwarding:
+  RedundantRestArgumentNames:
+  - args
+  - arguments
+  RedundantKeywordRestArgumentNames:
+  - kwargs
+  - options
+  - opts
+  RedundantBlockArgumentNames:
+  - blk
+  - block
+  - proc
+
+==> 000.rb 78 <==
+def foo(*, **, &)
+  with_block(*, **) do
+    bar(baz(*, **, &), it)
+  end
+end
+
+==> 001.rb 86 <==
+def foo(*args, &block)
+  do_something do
+    bar(*args, &block)
+    baz(_1)
+  end
+end
+
+==> 002.rb 80 <==
+def foo(**kwargs, &block)
+  do_something do
+    bar(**kwargs, &block)
+  end
+end
+
+==> 003.rb 92 <==
+def foo(**kwargs, &block)
+  do_something do
+    bar(**kwargs, &block)
+    baz(_1)
+  end
+end
+
+==> 004.rb 78 <==
+def foo(*args, **kwargs)
+  block_method do
+    bar(*args, **kwargs)
+  end
+end
+

@@ -1,0 +1,135 @@
+==> offenses exit=1 2918 <==
+000.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+001.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `filter_map { ... }` with `select`.
+002.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `filter_map { ... }.compact` with `select`.
+003.rb:1:6: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+004.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+005.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+006.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+007.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+008.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+009.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+010.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+011.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+012.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+013.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+014.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+015.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+016.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+017.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+018.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+019.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+020.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+021.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+028.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+029.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+030.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+031.rb:1:5: C: [Correctable] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+
+==> autocorrect exit=0 2866 <==
+000.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+001.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `filter_map { ... }` with `select`.
+002.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `filter_map { ... }.compact` with `select`.
+003.rb:1:6: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+004.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+005.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+006.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+007.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+008.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+009.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+010.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+011.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+012.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+013.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+014.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+015.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+016.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+017.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+018.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+019.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+020.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+021.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+028.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+029.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+030.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `select`.
+031.rb:1:5: C: [Corrected] Style/MapCompactWithConditionalBlock: Replace `map { ... }.compact` with `reject`.
+
+==> corrected/000.rb 32 <==
+foo.select { |item| item.bar? }
+
+==> corrected/001.rb 32 <==
+foo.select { |item| item.bar? }
+
+==> corrected/002.rb 32 <==
+foo.select { |item| item.bar? }
+
+==> corrected/003.rb 33 <==
+foo&.select { |item| item.bar? }
+
+==> corrected/004.rb 47 <==
+foo.select { |item| item.bar? &&
+    bar.baz }
+
+==> corrected/005.rb 32 <==
+foo.select { |item| item.bar? }
+
+==> corrected/006.rb 32 <==
+foo.reject { |item| item.bar? }
+
+==> corrected/007.rb 32 <==
+foo.reject { |item| item.bar? }
+
+==> corrected/008.rb 32 <==
+foo.select { |item| item.bar? }
+
+==> corrected/009.rb 32 <==
+foo.reject { |item| item.bar? }
+
+==> corrected/010.rb 32 <==
+foo.select { |item| item.bar? }
+
+==> corrected/011.rb 32 <==
+foo.reject { |item| item.bar? }
+
+==> corrected/012.rb 32 <==
+foo.reject { |item| item.bar? }
+
+==> corrected/013.rb 32 <==
+foo.select { |item| item.bar? }
+
+==> corrected/014.rb 32 <==
+foo.select { |item| item.bar? }
+
+==> corrected/015.rb 32 <==
+foo.reject { |item| item.bar? }
+
+==> corrected/016.rb 32 <==
+foo.select { |item| item.bar? }
+
+==> corrected/017.rb 32 <==
+foo.reject { |item| item.bar? }
+
+==> corrected/018.rb 32 <==
+foo.select { |item| item.bar? }
+
+==> corrected/019.rb 32 <==
+foo.reject { |item| item.bar? }
+
+==> corrected/020.rb 32 <==
+foo.select { |item| item.bar? }
+
+==> corrected/021.rb 32 <==
+foo.reject { |item| item.bar? }
+
+==> corrected/028.rb 32 <==
+foo.select { |item| item.bar? }
+
+==> corrected/029.rb 32 <==
+foo.reject { |item| item.bar? }
+
+==> corrected/030.rb 32 <==
+foo.select { |item| item.bar? }
+
+==> corrected/031.rb 32 <==
+foo.reject { |item| item.bar? }
+

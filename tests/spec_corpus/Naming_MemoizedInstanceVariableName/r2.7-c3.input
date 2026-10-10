@@ -1,0 +1,54 @@
+==> .rubocop.yml 192 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/MemoizedInstanceVariableName:
+  EnforcedStyleForLeadingUnderscores: optional
+
+==> 000.rb 25 <==
+def x
+  @_x ||= :foo
+end
+
+==> 001.rb 24 <==
+def x
+  @x ||= :foo
+end
+
+==> 002.rb 26 <==
+def _x
+  @_x ||= :foo
+end
+
+==> 003.rb 25 <==
+def _x
+  @x ||= :foo
+end
+
+==> 004.rb 54 <==
+def x
+  return @_x if defined?(@_x)
+  @_x = false
+end
+
+==> 005.rb 51 <==
+def x
+  return @x if defined?(@x)
+  @x = false
+end
+
+==> 006.rb 55 <==
+def _x
+  return @_x if defined?(@_x)
+  @_x = false
+end
+
+==> 007.rb 52 <==
+def _x
+  return @x if defined?(@x)
+  @x = false
+end
+

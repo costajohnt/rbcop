@@ -1,0 +1,18 @@
+==> offenses exit=1 184 <==
+000.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+001.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+
+==> autocorrect exit=0 180 <==
+000.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+001.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+
+==> corrected/000.rb 19 <==
+func {
+  it&.foo
+}
+
+==> corrected/001.rb 22 <==
+func do
+  it&.foo
+end
+

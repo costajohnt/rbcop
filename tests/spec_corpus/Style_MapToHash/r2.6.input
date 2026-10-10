@@ -1,0 +1,104 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.6
+
+==> 000.rb 32 <==
+foo.map { |x| [x, x * 2] }.to_h
+
+==> 001.rb 37 <==
+foo.map { |(k, v)| [k, v * 2] }.to_h
+
+==> 002.rb 41 <==
+foo.map { |x, y| [x.to_s, y.to_i] }.to_h
+
+==> 003.rb 28 <==
+map { |x| [x, x * 2] }.to_h
+
+==> 004.rb 34 <==
+foo&.map { |x| [x, x * 2] }&.to_h
+
+==> 005.rb 33 <==
+foo&.map { |x| [x, x * 2] }.to_h
+
+==> 006.rb 43 <==
+foo&.map { |x, y| [x.to_s, y.to_i] }&.to_h
+
+==> 007.rb 29 <==
+foo.map(&:do_something).to_h
+
+==> 008.rb 31 <==
+foo&.map(&:do_something)&.to_h
+
+==> 009.rb 38 <==
+[1, 2, 3].map { |x| [x, x * 2] }.to_h
+
+==> 010.rb 51 <==
+{ foo: :bar }.map { |x, y| [x.to_s, y.to_s] }.to_h
+
+==> 011.rb 31 <==
+foo.map { |x| x * 2 }.to_h.bar
+
+==> 012.rb 22 <==
+foo.map { |x| x * 2 }
+
+==> 013.rb 47 <==
+foo.map { |x| x * 2 }.to_h { |x| [x.to_s, x] }
+
+==> 014.rb 72 <==
+{foo: bar}
+  .map { |k, v| [k.to_s, v.do_something] }
+  .to_h
+  .freeze
+
+==> 015.rb 36 <==
+foo.collect { |x| [x, x * 2] }.to_h
+
+==> 016.rb 41 <==
+foo.collect { |(k, v)| [k, v * 2] }.to_h
+
+==> 017.rb 45 <==
+foo.collect { |x, y| [x.to_s, y.to_i] }.to_h
+
+==> 018.rb 32 <==
+collect { |x| [x, x * 2] }.to_h
+
+==> 019.rb 38 <==
+foo&.collect { |x| [x, x * 2] }&.to_h
+
+==> 020.rb 37 <==
+foo&.collect { |x| [x, x * 2] }.to_h
+
+==> 021.rb 47 <==
+foo&.collect { |x, y| [x.to_s, y.to_i] }&.to_h
+
+==> 022.rb 33 <==
+foo.collect(&:do_something).to_h
+
+==> 023.rb 35 <==
+foo&.collect(&:do_something)&.to_h
+
+==> 024.rb 42 <==
+[1, 2, 3].collect { |x| [x, x * 2] }.to_h
+
+==> 025.rb 55 <==
+{ foo: :bar }.collect { |x, y| [x.to_s, y.to_s] }.to_h
+
+==> 026.rb 35 <==
+foo.collect { |x| x * 2 }.to_h.bar
+
+==> 027.rb 26 <==
+foo.collect { |x| x * 2 }
+
+==> 028.rb 51 <==
+foo.collect { |x| x * 2 }.to_h { |x| [x.to_s, x] }
+
+==> 029.rb 76 <==
+{foo: bar}
+  .collect { |k, v| [k.to_s, v.do_something] }
+  .to_h
+  .freeze
+

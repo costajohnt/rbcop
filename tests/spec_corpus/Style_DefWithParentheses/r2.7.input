@@ -1,0 +1,33 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 15 <==
+def func()
+end
+
+==> 001.rb 32 <==
+def Test.func()
+  something
+end
+
+==> 002.rb 16 <==
+def func(a)
+end
+
+==> 003.rb 13 <==
+def func
+end
+
+==> 004.rb 23 <==
+def to_s() join '/' end
+==> 005.rb 15 <==
+def foo(); end
+
+==> 006.rb 20 <==
+def foo(); bar; end
+

@@ -1,0 +1,17 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 27 <==
+arr.select { it > 1 }.any?
+
+==> 001.rb 27 <==
+arr.filter { it > 1 }.any?
+
+==> 002.rb 29 <==
+arr.find_all { it > 1 }.any?
+

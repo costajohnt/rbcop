@@ -1,0 +1,96 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/ArrayAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+==> 000.rb 29 <==
+array = [a,
+   b,
+  c,
+   d]
+
+==> 001.rb 27 <==
+array = [a,
+  b,
+  c,
+  d]
+
+==> 002.rb 28 <==
+var = [
+  first,
+  second
+]
+
+==> 003.rb 24 <==
+var =
+  first,
+  second
+
+==> 004.rb 29 <==
+var =
+     first,
+    second
+
+==> 005.rb 16 <==
+array = [ a, b ]
+==> 006.rb 25 <==
+array = [ a, b,
+  c, d ]
+
+==> 007.rb 32 <==
+puts 'Ｒｕｂｙ', [ a,
+  b ]
+
+==> 008.rb 44 <==
+[:l1,
+   [:l2,
+      [:l3,
+        [:l4]]]]
+
+==> 009.rb 34 <==
+[:l1,
+ [:l2,
+  [:l3,
+    [:l4]]]]
+
+==> 010.rb 170 <==
+var = [
+  { :type => 'something',
+    :sql => <<EOF
+Select something
+from atable
+EOF
+  },
+ { :type => 'something',
+   :sql => <<EOF
+Select something
+from atable
+EOF
+ }
+]
+
+==> 011.rb 31 <==
+array = [
+  a,
+  b,
+  c,
+  d
+]
+
+==> 012.rb 33 <==
+array = [
+  a,
+   b,
+  c,
+   d
+]
+
+==> 013.rb 20 <==
+thing, foo =
+  1, 2
+

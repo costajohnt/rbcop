@@ -1,0 +1,242 @@
+==> offenses exit=1 3053 <==
+000.rb:3:3: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+001.rb:1:1: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+004.rb:3:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+005.rb:3:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+005.rb:6:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+005.rb:9:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+006.rb:3:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+006.rb:6:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+006.rb:9:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+007.rb:3:6: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+007.rb:6:6: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+007.rb:9:6: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+008.rb:4:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+008.rb:7:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+008.rb:10:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+009.rb:4:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+009.rb:7:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+009.rb:10:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+010.rb:4:6: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+010.rb:7:6: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+010.rb:10:6: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+011.rb:4:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+011.rb:5:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+012.rb:2:10: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+013.rb:4:10: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+013.rb:5:10: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+014.rb:2:21: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+015.rb:4:17: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+016.rb:4:11: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+017.rb:4:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+018.rb:4:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+018.rb:7:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+018.rb:10:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+
+==> autocorrect exit=0 2987 <==
+000.rb:3:3: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+001.rb:1:1: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+004.rb:3:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+005.rb:3:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+005.rb:6:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+005.rb:9:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+006.rb:3:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+006.rb:6:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+006.rb:9:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+007.rb:3:6: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+007.rb:6:6: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+007.rb:9:6: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+008.rb:4:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+008.rb:7:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+008.rb:10:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+009.rb:4:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+009.rb:7:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+009.rb:10:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+010.rb:4:6: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+010.rb:7:6: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+010.rb:10:6: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+011.rb:4:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+011.rb:5:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+012.rb:2:10: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+013.rb:4:10: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+013.rb:5:10: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+014.rb:2:21: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+015.rb:4:17: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+016.rb:4:11: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+017.rb:4:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+018.rb:4:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+018.rb:7:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+018.rb:10:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+
+==> corrected/000.rb 48 <==
+def foo?
+  foo
+  !test.something.nil?
+  bar
+end
+
+==> corrected/001.rb 21 <==
+!test.something.nil?
+
+==> corrected/004.rb 74 <==
+def foo?
+  unless condition_foo?
+    !foo.nil?
+    do_something
+  end
+end
+
+==> corrected/005.rb 162 <==
+def foo?
+  if condition_foo?
+    !foo.nil?
+    do_something
+  elsif condition_bar?
+    !bar.nil?
+    do_something
+  else
+    !baz.nil?
+    do_something
+  end
+end
+
+==> corrected/006.rb 258 <==
+def foo?
+  if condition_foo?
+    { foo: !foo0.nil?, bar: bar0, baz: baz0 }
+    do_something
+  elsif condition_bar?
+    { foo: !foo1.nil?, bar: bar1, baz: baz1 }
+    do_something
+  else
+    { foo: !foo2.nil?, bar: bar2, baz: baz2 }
+    do_something
+  end
+end
+
+==> corrected/007.rb 207 <==
+def foo?
+  if condition_foo?
+    [!foo0.nil?, bar0, baz0]
+    do_something
+  elsif condition_bar?
+    [!foo1.nil?, bar1, baz1]
+    do_something
+  else
+    [!foo2.nil?, bar2, baz2]
+    do_something
+  end
+end
+
+==> corrected/008.rb 158 <==
+def foo?
+  case condition
+  when foo
+    !foo.nil?
+    do_something
+  when bar
+    !bar.nil?
+    do_something
+  else
+    !baz.nil?
+    do_something
+  end
+end
+
+==> corrected/009.rb 254 <==
+def foo?
+  case condition
+  when foo
+    { foo: !foo0.nil?, bar: bar0, baz: baz0 }
+    do_something
+  when bar
+    { foo: !foo1.nil?, bar: bar1, baz: baz1 }
+    do_something
+  else
+    { foo: !foo2.nil?, bar: bar2, baz: baz2 }
+    do_something
+  end
+end
+
+==> corrected/010.rb 203 <==
+def foo?
+  case condition
+  when foo
+    [!foo0.nil?, bar0, baz0]
+    do_something
+  when bar
+    [!foo1.nil?, bar1, baz1]
+    do_something
+  else
+    [!foo2.nil?, bar2, baz2]
+    do_something
+  end
+end
+
+==> corrected/011.rb 61 <==
+def foo
+  [
+    foo1,
+    !bar1.nil?,
+    !baz1.nil?
+  ]
+end
+
+==> corrected/012.rb 39 <==
+def foo
+  [foo1, !bar1.nil?, baz1]
+end
+
+==> corrected/013.rb 76 <==
+def foo
+  {
+    foo: foo1,
+    bar: !bar1.nil?,
+    baz: !baz1.nil?
+  }
+end
+
+==> corrected/014.rb 56 <==
+def foo
+  { foo: foo1, bar: !bar1.nil?, baz: baz1 }
+end
+
+==> corrected/015.rb 64 <==
+def foo
+  {
+    foo: foo1,
+    bar: { baz: !quux.nil? }
+  }
+end
+
+==> corrected/016.rb 52 <==
+def foo
+  [
+    foo1,
+    [baz, !quux.nil?]
+  ]
+end
+
+==> corrected/017.rb 54 <==
+def foo
+  [
+    foo1,
+    { baz: !quux.nil? }
+  ]
+end
+
+==> corrected/018.rb 152 <==
+def foo?
+  case pattern
+  in foo
+    !foo.nil?
+    do_something
+  in bar
+    !bar.nil?
+    do_something
+  else
+    !baz.nil?
+    do_something
+  end
+end
+

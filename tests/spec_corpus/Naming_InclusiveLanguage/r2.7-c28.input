@@ -1,0 +1,14 @@
+==> .rubocop.yml 189 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/InclusiveLanguage:
+  CheckFilepaths: false
+  FlaggedTerms:
+    master: {}
+
+==> 000/master.rb 0 <==
+

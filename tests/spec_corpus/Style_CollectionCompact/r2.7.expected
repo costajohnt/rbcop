@@ -1,0 +1,14 @@
+==> offenses exit=1 203 <==
+000.rb:1:7: C: [Correctable] Style/CollectionCompact: Use `compact` instead of `reject { _1.nil? }`.
+001.rb:1:7: C: [Correctable] Style/CollectionCompact: Use `compact` instead of `select { !_1.nil? }`.
+
+==> autocorrect exit=0 199 <==
+000.rb:1:7: C: [Corrected] Style/CollectionCompact: Use `compact` instead of `reject { _1.nil? }`.
+001.rb:1:7: C: [Corrected] Style/CollectionCompact: Use `compact` instead of `select { !_1.nil? }`.
+
+==> corrected/000.rb 14 <==
+array.compact
+
+==> corrected/001.rb 14 <==
+array.compact
+

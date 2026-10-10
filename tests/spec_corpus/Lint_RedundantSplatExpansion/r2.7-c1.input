@@ -1,0 +1,19 @@
+==> .rubocop.yml 179 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/RedundantSplatExpansion:
+  AllowPercentLiteralArrayArgument: true
+
+==> 000.rb 31 <==
+do_something(*%w[foo bar baz])
+
+==> 001.rb 42 <==
+maybe_nil&.do_something(*%w[foo bar baz])
+
+==> 002.rb 31 <==
+do_something(*%i[foo bar baz])
+

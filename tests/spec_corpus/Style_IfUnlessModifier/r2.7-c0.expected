@@ -1,0 +1,94 @@
+==> offenses exit=1 3584 <==
+002.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+005.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+006.rb:1:5: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+007.rb:1:6: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+008.rb:1:7: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+009.rb:1:5: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+010.rb:1:5: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+011.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+012.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+017.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+020.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+021.rb:1:5: C: [Correctable] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+022.rb:1:6: C: [Correctable] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+023.rb:1:7: C: [Correctable] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+024.rb:1:5: C: [Correctable] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+025.rb:1:5: C: [Correctable] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+026.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+027.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+
+==> autocorrect exit=0 3548 <==
+002.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+005.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+006.rb:1:5: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+007.rb:1:6: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+008.rb:1:7: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+009.rb:1:5: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+010.rb:1:5: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+011.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+012.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+017.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+020.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+021.rb:1:5: C: [Corrected] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+022.rb:1:6: C: [Corrected] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+023.rb:1:7: C: [Corrected] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+024.rb:1:5: C: [Corrected] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+025.rb:1:5: C: [Corrected] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+026.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+027.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+
+==> corrected/002.rb 26 <==
+do_something if condition
+
+==> corrected/005.rb 14 <==
+x = 0 if true
+
+==> corrected/006.rb 13 <==
+a = (1 if b)
+
+==> corrected/007.rb 14 <==
+@a = (1 if b)
+
+==> corrected/008.rb 15 <==
+@@a = (1 if b)
+
+==> corrected/009.rb 13 <==
+A = (1 if b)
+
+==> corrected/010.rb 13 <==
+a + (1 if b)
+
+==> corrected/011.rb 47 <==
+baz if bar # important comment not to be nuked
+
+==> corrected/012.rb 11 <==
+bar if foo
+
+==> corrected/017.rb 30 <==
+do_something unless condition
+
+==> corrected/020.rb 18 <==
+x = 0 unless true
+
+==> corrected/021.rb 17 <==
+a = (1 unless b)
+
+==> corrected/022.rb 18 <==
+@a = (1 unless b)
+
+==> corrected/023.rb 19 <==
+@@a = (1 unless b)
+
+==> corrected/024.rb 17 <==
+A = (1 unless b)
+
+==> corrected/025.rb 17 <==
+a + (1 unless b)
+
+==> corrected/026.rb 51 <==
+baz unless bar # important comment not to be nuked
+
+==> corrected/027.rb 15 <==
+bar unless foo
+

@@ -1,0 +1,48 @@
+==> .rubocop.yml 173 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/SpaceInsideStringInterpolation:
+  EnforcedStyle: no_space
+
+==> 000.rb 82 <==
+"#{ var}"
+"#{var }"
+"#{   var   }"
+"#{var	}"
+"#{	var	}"
+"#{	var}"
+"#{ 	 var 	 	}"
+
+==> 001.rb 55 <==
+/regexp #{ var}/
+`backticks #{ var}`
+:"symbol #{ var}"
+
+==> 002.rb 11 <==
+"#{ var }"
+
+==> 003.rb 12 <==
+"#{ a; b }"
+
+==> 004.rb 54 <==
+"Variable is    #{var}      "
+"  Variable is  #{var}"
+
+==> 005.rb 5 <==
+"#{}"
+==> 006.rb 14 <==
+"#{
+  code
+}"
+
+==> 007.rb 42 <==
+def foo
+  "#{ # comment
+    code
+  }"
+end
+

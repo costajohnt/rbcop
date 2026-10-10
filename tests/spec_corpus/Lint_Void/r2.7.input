@@ -1,0 +1,1245 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 18 <==
+a * b
+a * b
+a * b
+
+==> 001.rb 16 <==
+something
+a * b
+
+==> 002.rb 5 <==
+a * b
+==> 003.rb 14 <==
+a.*
+something
+
+==> 004.rb 15 <==
+a&.*
+something
+
+==> 005.rb 30 <==
+(a * b)
+((a * b))
+(((a * b)))
+
+==> 006.rb 18 <==
+something
+(a * b)
+
+==> 007.rb 7 <==
+(a * b)
+==> 008.rb 11 <==
+a.*(b)
+nil
+
+==> 009.rb 12 <==
+a&.*(b)
+nil
+
+==> 010.rb 18 <==
+a / b
+a / b
+a / b
+
+==> 011.rb 16 <==
+something
+a / b
+
+==> 012.rb 5 <==
+a / b
+==> 013.rb 14 <==
+a./
+something
+
+==> 014.rb 15 <==
+a&./
+something
+
+==> 015.rb 30 <==
+(a / b)
+((a / b))
+(((a / b)))
+
+==> 016.rb 18 <==
+something
+(a / b)
+
+==> 017.rb 7 <==
+(a / b)
+==> 018.rb 11 <==
+a./(b)
+nil
+
+==> 019.rb 12 <==
+a&./(b)
+nil
+
+==> 020.rb 18 <==
+a % b
+a % b
+a % b
+
+==> 021.rb 16 <==
+something
+a % b
+
+==> 022.rb 5 <==
+a % b
+==> 023.rb 14 <==
+a.%
+something
+
+==> 024.rb 15 <==
+a&.%
+something
+
+==> 025.rb 30 <==
+(a % b)
+((a % b))
+(((a % b)))
+
+==> 026.rb 18 <==
+something
+(a % b)
+
+==> 027.rb 7 <==
+(a % b)
+==> 028.rb 11 <==
+a.%(b)
+nil
+
+==> 029.rb 12 <==
+a&.%(b)
+nil
+
+==> 030.rb 18 <==
+a + b
+a + b
+a + b
+
+==> 031.rb 16 <==
+something
+a + b
+
+==> 032.rb 5 <==
+a + b
+==> 033.rb 14 <==
+a.+
+something
+
+==> 034.rb 15 <==
+a&.+
+something
+
+==> 035.rb 30 <==
+(a + b)
+((a + b))
+(((a + b)))
+
+==> 036.rb 18 <==
+something
+(a + b)
+
+==> 037.rb 7 <==
+(a + b)
+==> 038.rb 11 <==
+a.+(b)
+nil
+
+==> 039.rb 12 <==
+a&.+(b)
+nil
+
+==> 040.rb 18 <==
+a - b
+a - b
+a - b
+
+==> 041.rb 16 <==
+something
+a - b
+
+==> 042.rb 5 <==
+a - b
+==> 043.rb 14 <==
+a.-
+something
+
+==> 044.rb 15 <==
+a&.-
+something
+
+==> 045.rb 30 <==
+(a - b)
+((a - b))
+(((a - b)))
+
+==> 046.rb 18 <==
+something
+(a - b)
+
+==> 047.rb 7 <==
+(a - b)
+==> 048.rb 11 <==
+a.-(b)
+nil
+
+==> 049.rb 12 <==
+a&.-(b)
+nil
+
+==> 050.rb 21 <==
+a == b
+a == b
+a == b
+
+==> 051.rb 17 <==
+something
+a == b
+
+==> 052.rb 6 <==
+a == b
+==> 053.rb 15 <==
+a.==
+something
+
+==> 054.rb 16 <==
+a&.==
+something
+
+==> 055.rb 33 <==
+(a == b)
+((a == b))
+(((a == b)))
+
+==> 056.rb 19 <==
+something
+(a == b)
+
+==> 057.rb 8 <==
+(a == b)
+==> 058.rb 12 <==
+a.==(b)
+nil
+
+==> 059.rb 13 <==
+a&.==(b)
+nil
+
+==> 060.rb 24 <==
+a === b
+a === b
+a === b
+
+==> 061.rb 18 <==
+something
+a === b
+
+==> 062.rb 7 <==
+a === b
+==> 063.rb 16 <==
+a.===
+something
+
+==> 064.rb 17 <==
+a&.===
+something
+
+==> 065.rb 36 <==
+(a === b)
+((a === b))
+(((a === b)))
+
+==> 066.rb 20 <==
+something
+(a === b)
+
+==> 067.rb 9 <==
+(a === b)
+==> 068.rb 13 <==
+a.===(b)
+nil
+
+==> 069.rb 14 <==
+a&.===(b)
+nil
+
+==> 070.rb 21 <==
+a != b
+a != b
+a != b
+
+==> 071.rb 17 <==
+something
+a != b
+
+==> 072.rb 6 <==
+a != b
+==> 073.rb 15 <==
+a.!=
+something
+
+==> 074.rb 16 <==
+a&.!=
+something
+
+==> 075.rb 33 <==
+(a != b)
+((a != b))
+(((a != b)))
+
+==> 076.rb 19 <==
+something
+(a != b)
+
+==> 077.rb 8 <==
+(a != b)
+==> 078.rb 12 <==
+a.!=(b)
+nil
+
+==> 079.rb 13 <==
+a&.!=(b)
+nil
+
+==> 080.rb 18 <==
+a < b
+a < b
+a < b
+
+==> 081.rb 16 <==
+something
+a < b
+
+==> 082.rb 5 <==
+a < b
+==> 083.rb 14 <==
+a.<
+something
+
+==> 084.rb 15 <==
+a&.<
+something
+
+==> 085.rb 30 <==
+(a < b)
+((a < b))
+(((a < b)))
+
+==> 086.rb 18 <==
+something
+(a < b)
+
+==> 087.rb 7 <==
+(a < b)
+==> 088.rb 11 <==
+a.<(b)
+nil
+
+==> 089.rb 12 <==
+a&.<(b)
+nil
+
+==> 090.rb 18 <==
+a > b
+a > b
+a > b
+
+==> 091.rb 16 <==
+something
+a > b
+
+==> 092.rb 5 <==
+a > b
+==> 093.rb 14 <==
+a.>
+something
+
+==> 094.rb 15 <==
+a&.>
+something
+
+==> 095.rb 30 <==
+(a > b)
+((a > b))
+(((a > b)))
+
+==> 096.rb 18 <==
+something
+(a > b)
+
+==> 097.rb 7 <==
+(a > b)
+==> 098.rb 11 <==
+a.>(b)
+nil
+
+==> 099.rb 12 <==
+a&.>(b)
+nil
+
+==> 100.rb 21 <==
+a <= b
+a <= b
+a <= b
+
+==> 101.rb 17 <==
+something
+a <= b
+
+==> 102.rb 6 <==
+a <= b
+==> 103.rb 15 <==
+a.<=
+something
+
+==> 104.rb 16 <==
+a&.<=
+something
+
+==> 105.rb 33 <==
+(a <= b)
+((a <= b))
+(((a <= b)))
+
+==> 106.rb 19 <==
+something
+(a <= b)
+
+==> 107.rb 8 <==
+(a <= b)
+==> 108.rb 12 <==
+a.<=(b)
+nil
+
+==> 109.rb 13 <==
+a&.<=(b)
+nil
+
+==> 110.rb 21 <==
+a >= b
+a >= b
+a >= b
+
+==> 111.rb 17 <==
+something
+a >= b
+
+==> 112.rb 6 <==
+a >= b
+==> 113.rb 15 <==
+a.>=
+something
+
+==> 114.rb 16 <==
+a&.>=
+something
+
+==> 115.rb 33 <==
+(a >= b)
+((a >= b))
+(((a >= b)))
+
+==> 116.rb 19 <==
+something
+(a >= b)
+
+==> 117.rb 8 <==
+(a >= b)
+==> 118.rb 12 <==
+a.>=(b)
+nil
+
+==> 119.rb 13 <==
+a&.>=(b)
+nil
+
+==> 120.rb 24 <==
+a <=> b
+a <=> b
+a <=> b
+
+==> 121.rb 18 <==
+something
+a <=> b
+
+==> 122.rb 7 <==
+a <=> b
+==> 123.rb 16 <==
+a.<=>
+something
+
+==> 124.rb 17 <==
+a&.<=>
+something
+
+==> 125.rb 36 <==
+(a <=> b)
+((a <=> b))
+(((a <=> b)))
+
+==> 126.rb 20 <==
+something
+(a <=> b)
+
+==> 127.rb 9 <==
+(a <=> b)
+==> 128.rb 13 <==
+a.<=>(b)
+nil
+
+==> 129.rb 14 <==
+a&.<=>(b)
+nil
+
+==> 130.rb 9 <==
++b
++b
++b
+
+==> 131.rb 9 <==
+-b
+-b
+-b
+
+==> 132.rb 9 <==
+~b
+~b
+~b
+
+==> 133.rb 8 <==
+b.~
+b.~
+
+==> 134.rb 10 <==
+b&.~
+b&.~
+
+==> 135.rb 9 <==
+!b
+!b
+!b
+
+==> 136.rb 8 <==
+b.!
+b.!
+
+==> 137.rb 10 <==
+b&.!
+b&.!
+
+==> 138.rb 13 <==
+something
++b
+
+==> 139.rb 2 <==
++b
+==> 140.rb 13 <==
+something
+-b
+
+==> 141.rb 2 <==
+-b
+==> 142.rb 13 <==
+something
+~b
+
+==> 143.rb 2 <==
+~b
+==> 144.rb 13 <==
+something
+!b
+
+==> 145.rb 2 <==
+!b
+==> 146.rb 16 <==
+var = 5
+var
+top
+
+==> 147.rb 33 <==
+var = 5
+var unless condition
+top
+
+==> 148.rb 39 <==
+var = 5
+unless condition
+  var
+end
+top
+
+==> 149.rb 34 <==
+var = 5
+condition ? var : nil
+top
+
+==> 150.rb 18 <==
+@var = 5
+@var
+top
+
+==> 151.rb 35 <==
+@var = 5
+@var unless condition
+top
+
+==> 152.rb 41 <==
+@var = 5
+unless condition
+  @var
+end
+top
+
+==> 153.rb 36 <==
+@var = 5
+condition ? @var : nil
+top
+
+==> 154.rb 20 <==
+@@var = 5
+@@var
+top
+
+==> 155.rb 37 <==
+@@var = 5
+@@var unless condition
+top
+
+==> 156.rb 43 <==
+@@var = 5
+unless condition
+  @@var
+end
+top
+
+==> 157.rb 38 <==
+@@var = 5
+condition ? @@var : nil
+top
+
+==> 158.rb 18 <==
+$var = 5
+$var
+top
+
+==> 159.rb 35 <==
+$var = 5
+$var unless condition
+top
+
+==> 160.rb 41 <==
+$var = 5
+unless condition
+  $var
+end
+top
+
+==> 161.rb 36 <==
+$var = 5
+condition ? $var : nil
+top
+
+==> 162.rb 20 <==
+CONST = 5
+CONST
+top
+
+==> 163.rb 29 <==
+Foo::Bar
+
+class Foo::Bar
+end
+
+==> 164.rb 37 <==
+CONST = 5
+CONST unless condition
+top
+
+==> 165.rb 43 <==
+CONST = 5
+unless condition
+  CONST
+end
+top
+
+==> 166.rb 38 <==
+CONST = 5
+condition ? CONST : nil
+top
+
+==> 167.rb 6 <==
+1
+top
+
+==> 168.rb 23 <==
+1 unless condition
+top
+
+==> 169.rb 29 <==
+unless condition
+  1
+end
+top
+
+==> 170.rb 24 <==
+condition ? 1 : nil
+top
+
+==> 171.rb 8 <==
+2.0
+top
+
+==> 172.rb 25 <==
+2.0 unless condition
+top
+
+==> 173.rb 31 <==
+unless condition
+  2.0
+end
+top
+
+==> 174.rb 26 <==
+condition ? 2.0 : nil
+top
+
+==> 175.rb 10 <==
+:test
+top
+
+==> 176.rb 27 <==
+:test unless condition
+top
+
+==> 177.rb 33 <==
+unless condition
+  :test
+end
+top
+
+==> 178.rb 28 <==
+condition ? :test : nil
+top
+
+==> 179.rb 11 <==
+/test/
+top
+
+==> 180.rb 28 <==
+/test/ unless condition
+top
+
+==> 181.rb 34 <==
+unless condition
+  /test/
+end
+top
+
+==> 182.rb 29 <==
+condition ? /test/ : nil
+top
+
+==> 183.rb 8 <==
+[1]
+top
+
+==> 184.rb 25 <==
+[1] unless condition
+top
+
+==> 185.rb 31 <==
+unless condition
+  [1]
+end
+top
+
+==> 186.rb 26 <==
+condition ? [1] : nil
+top
+
+==> 187.rb 7 <==
+{}
+top
+
+==> 188.rb 24 <==
+{} unless condition
+top
+
+==> 189.rb 30 <==
+unless condition
+  {}
+end
+top
+
+==> 190.rb 25 <==
+condition ? {} : nil
+top
+
+==> 191.rb 10 <==
+self; top
+
+==> 192.rb 16 <==
+defined?(x)
+top
+
+==> 193.rb 31 <==
+def foo
+  -> { bar }
+  top
+end
+
+==> 194.rb 31 <==
+def foo
+  top
+  -> { bar }
+end
+
+==> 195.rb 36 <==
+def foo
+  -> { bar }.call
+  top
+end
+
+==> 196.rb 35 <==
+def foo
+  lambda { bar }
+  top
+end
+
+==> 197.rb 35 <==
+def foo
+  top
+  lambda { bar }
+end
+
+==> 198.rb 40 <==
+def foo
+  lambda { bar }.call
+  top
+end
+
+==> 199.rb 33 <==
+def foo
+  proc { bar }
+  top
+end
+
+==> 200.rb 33 <==
+def foo
+  top
+  proc { bar }
+end
+
+==> 201.rb 38 <==
+def foo
+  proc { bar }.call
+  top
+end
+
+==> 202.rb 37 <==
+def foo
+  Proc.new { bar }
+  top
+end
+
+==> 203.rb 37 <==
+def foo
+  top
+  Proc.new { bar }
+end
+
+==> 204.rb 42 <==
+def foo
+  Proc.new { bar }.call
+  top
+end
+
+==> 205.rb 43 <==
+[1,2,3].collect do |n|
+  n.to_s
+end
+"done"
+
+==> 206.rb 36 <==
+[1,2,3].map do
+  _1.to_s
+end
+"done"
+
+==> 207.rb 14 <==
+x.sort
+top(x)
+
+==> 208.rb 22 <==
+x.sort.flatten
+top(x)
+
+==> 209.rb 15 <==
+x&.sort
+top(x)
+
+==> 210.rb 14 <==
+foo = bar
+baz
+
+==> 211.rb 18 <==
+def merge
+end
+
+42
+
+==> 212.rb 37 <==
+def something
+  [foo, bar]
+  baz
+end
+
+==> 213.rb 45 <==
+def something
+  [1, 2, [foo, bar]]
+  baz
+end
+
+==> 214.rb 33 <==
+def something
+  [1, 2]
+  baz
+end
+
+==> 215.rb 38 <==
+def something
+  [1, 2, [3]]
+  baz
+end
+
+==> 216.rb 39 <==
+def something
+  'foo'.freeze
+  baz
+end
+
+==> 217.rb 40 <==
+def something
+  'foo'&.freeze
+  baz
+end
+
+==> 218.rb 37 <==
+def something
+  foo.freeze
+  baz
+end
+
+==> 219.rb 46 <==
+def something
+  [1, ['foo'.freeze]]
+  baz
+end
+
+==> 220.rb 44 <==
+def something
+  [1, [foo.freeze]]
+  baz
+end
+
+==> 221.rb 45 <==
+def something
+  {k1: foo, k2: bar}
+  baz
+end
+
+==> 222.rb 51 <==
+def something
+  {k0: {k1: foo, k2: bar}}
+  baz
+end
+
+==> 223.rb 47 <==
+def something
+  {foo => 1, bar => 2}
+  baz
+end
+
+==> 224.rb 52 <==
+def something
+  {foo: 1, bar: {baz => 2}}
+  baz
+end
+
+==> 225.rb 41 <==
+def something
+  {k1: 1, k2: 2}
+  baz
+end
+
+==> 226.rb 46 <==
+def something
+  {x: {k1: 1, k2: 2}}
+  baz
+end
+
+==> 227.rb 47 <==
+def something
+  {[foo, bar] => :foo}
+  baz
+end
+
+==> 228.rb 43 <==
+def something
+  {[1, 2] => :foo}
+  baz
+end
+
+==> 229.rb 28 <==
+def something
+  42
+  42
+end
+
+==> 230.rb 29 <==
+def initialize
+  42
+  42
+end
+
+==> 231.rb 28 <==
+def foo=(rhs)
+  42
+  42
+end
+
+==> 232.rb 33 <==
+def self.foo=(rhs)
+  42
+  42
+end
+
+==> 233.rb 50 <==
+def name=(name)
+  @name = name
+  reset
+  name
+end
+
+==> 234.rb 36 <==
+array.each do |_item|
+  42
+  42
+end
+
+==> 235.rb 34 <==
+array.each do |_item|
+  CONST
+end
+
+==> 236.rb 31 <==
+array.each do |_item|
+  42
+end
+
+==> 237.rb 151 <==
+enumerator_as_filter.each do |item|
+  # The `filter` method is used to filter for matches with `42`.
+  # In this case, it's not void.
+  item == 42
+end
+
+==> 238.rb 164 <==
+enumerator_as_filter.each do |item|
+  puts item
+
+  # The `filter` method is used to filter for matches with `42`.
+  # In this case, it's not void.
+  item == 42
+end
+
+==> 239.rb 153 <==
+enumerator_as_filter.each do
+  puts _1
+
+  # The `filter` method is used to filter for matches with `42`.
+  # In this case, it's not void.
+  _1 == 42
+end
+
+==> 240.rb 25 <==
+foo.tap do
+  _1
+  42
+end
+
+==> 241.rb 23 <==
+array.each { |_item| }
+
+==> 242.rb 29 <==
+foo.tap do |x|
+  42
+  42
+end
+
+==> 243.rb 36 <==
+for _item in array do
+  42
+  42
+end
+
+==> 244.rb 35 <==
+def foo
+ensure
+  bar
+  42
+  42
+end
+
+==> 245.rb 39 <==
+def foo
+  bar
+ensure
+  [1, 2, [3]]
+end
+
+==> 246.rb 16 <==
+begin
+ 1
+ 2
+end
+
+==> 247.rb 15 <==
+lambda.(a)
+top
+
+==> 248.rb 14 <==
+`touch x`
+nil
+
+==> 249.rb 38 <==
+x = if condition
+      42
+    end
+nil
+
+==> 250.rb 26 <==
+x = (42 if condition)
+nil
+
+==> 251.rb 29 <==
+x = condition ? 42 : nil
+nil
+
+==> 252.rb 16 <==
+%x(touch x)
+nil
+
+==> 253.rb 58 <==
+def foo
+  1..100.times.each { puts 1 }
+  do_something
+end
+
+==> 254.rb 59 <==
+def foo
+  1...100.times.each { puts 1 }
+  do_something
+end
+
+==> 255.rb 32 <==
+def foo
+  __ENCODING__
+  42
+end
+
+==> 256.rb 34 <==
+case foo
+when 1 then 2
+end
+puts 3
+
+==> 257.rb 55 <==
+case foo
+when 1 then 2
+when 3 then 4
+else 5
+end
+puts 6
+
+==> 258.rb 40 <==
+x = 1
+case foo
+when 1 then x
+end
+puts 3
+
+==> 259.rb 45 <==
+case foo
+when 1 then do_something
+end
+puts 3
+
+==> 260.rb 33 <==
+case foo
+when 1
+  nil
+end
+puts 3
+
+==> 261.rb 27 <==
+case foo
+when 1 then 2
+end
+
+==> 262.rb 29 <==
+case foo
+when 1
+end
+puts :ok
+
+==> 263.rb 51 <==
+case foo
+in 1 then 2
+in 2 then 3
+else 4
+end
+puts 5
+
+==> 264.rb 38 <==
+x = 1
+case foo
+in 1 then x
+end
+puts 3
+
+==> 265.rb 43 <==
+case foo
+in 1 then do_something
+end
+puts 3
+
+==> 266.rb 25 <==
+case foo
+in 1 then 2
+end
+
+==> 267.rb 27 <==
+case foo
+in 1
+end
+puts :ok
+
+==> 268.rb 32 <==
+if some_condition
+end
+
+puts :ok
+
+==> 269.rb 8 <==
+((); 1)
+

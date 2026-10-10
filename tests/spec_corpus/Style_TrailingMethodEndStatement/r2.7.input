@@ -1,0 +1,52 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 25 <==
+def some_method
+foo; end
+
+==> 001.rb 28 <==
+def a
+  b
+{ foo: bar }; end
+
+==> 002.rb 46 <==
+def c
+  b = calculation
+  [b] end # because b
+
+==> 003.rb 35 <==
+def d
+  block do
+    foo
+  end end
+
+==> 004.rb 43 <==
+class Foo
+  def some_method
+  foo; end
+end
+
+==> 005.rb 15 <==
+def no_op; end
+
+==> 006.rb 29 <==
+def something; do_stuff; end
+
+==> 007.rb 75 <==
+class Foo
+  def some_method
+    [] end
+  def another_method
+    {} end
+end
+
+==> 008.rb 30 <==
+def self.some_method
+foo; end
+

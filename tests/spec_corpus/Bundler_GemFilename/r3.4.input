@@ -1,0 +1,32 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> Gemfile 8 <==
+print 1
+
+==> Gemfile.lock 8 <==
+print 1
+
+==> gems.locked 8 <==
+print 1
+
+==> gems.rb 8 <==
+print 1
+
+==> spec/Gemfile 8 <==
+print 1
+
+==> spec/Gemfile.lock 8 <==
+print 1
+
+==> spec/gems.locked 8 <==
+print 1
+
+==> spec/gems.rb 8 <==
+print 1
+

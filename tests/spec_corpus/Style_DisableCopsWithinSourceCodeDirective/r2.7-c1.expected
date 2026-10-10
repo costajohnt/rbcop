@@ -1,0 +1,17 @@
+==> offenses exit=1 315 <==
+001.rb:1:9: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives for `Layout/LineLength` are not permitted.
+002.rb:1:9: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives for `Layout/LineLength`, `Style/AndOr` are not permitted.
+
+==> autocorrect exit=0 453 <==
+001.rb:1:9: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives for `Layout/LineLength` are not permitted.
+002.rb:1:9: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives for `Layout/LineLength`, `Style/AndOr` are not permitted.
+002.rb:1:9: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives for `Style/AndOr` are not permitted.
+
+==> corrected/001.rb 13 <==
+def foo 
+end
+
+==> corrected/002.rb 76 <==
+def foo # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+end
+

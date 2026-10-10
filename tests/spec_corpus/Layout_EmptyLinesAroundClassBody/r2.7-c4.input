@@ -1,0 +1,23 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/EmptyLinesAroundClassBody:
+  EnforcedStyle: ending_only
+
+==> 000.rb 36 <==
+class SomeClass
+  do_something
+
+end
+
+==> 001.rb 37 <==
+class SomeClass
+
+  do_something
+
+end
+

@@ -1,0 +1,20 @@
+==> .rubocop.yml 176 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+Style/MethodDefParentheses:
+  EnforcedStyle: require_no_parentheses
+
+==> 000.rb 24 <==
+def foo(*)
+  bar(*)
+end
+
+==> 001.rb 26 <==
+def foo(**)
+  bar(**)
+end
+

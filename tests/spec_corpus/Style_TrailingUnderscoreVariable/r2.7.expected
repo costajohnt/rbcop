@@ -1,0 +1,81 @@
+==> offenses exit=1 2163 <==
+000.rb:1:7: C: [Correctable] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `a, b, = foo()`.
+001.rb:1:4: C: [Correctable] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `a, = foo()`.
+002.rb:1:4: C: [Correctable] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `a, = foo()`.
+003.rb:1:4: C: [Correctable] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `a, = foo()`.
+004.rb:1:1: C: [Correctable] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `foo()`.
+005.rb:1:7: C: [Correctable] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `_, b, = foo()`.
+013.rb:1:4: C: [Correctable] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `a, = foo()`.
+014.rb:1:7: C: [Correctable] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `a, (b,) = foo()`.
+015.rb:1:11: C: [Correctable] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `a, (_, (b,), *_) = foo()`.
+015.rb:1:15: C: [Correctable] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `a, (_, (b, _),) = foo()`.
+019.rb:1:7: C: [Correctable] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `(a, b,) = foo()`.
+020.rb:1:1: C: [Correctable] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `foo()`.
+021.rb:1:1: C: [Correctable] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `foo()`.
+022.rb:1:4: C: [Correctable] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `(a,) = foo()`.
+023.rb:1:4: C: [Correctable] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `a,  = foo`.
+024.rb:1:8: C: [Correctable] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `a, (b, ) = foo`.
+
+==> autocorrect exit=0 2131 <==
+000.rb:1:7: C: [Corrected] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `a, b, = foo()`.
+001.rb:1:4: C: [Corrected] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `a, = foo()`.
+002.rb:1:4: C: [Corrected] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `a, = foo()`.
+003.rb:1:4: C: [Corrected] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `a, = foo()`.
+004.rb:1:1: C: [Corrected] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `foo()`.
+005.rb:1:7: C: [Corrected] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `_, b, = foo()`.
+013.rb:1:4: C: [Corrected] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `a, = foo()`.
+014.rb:1:7: C: [Corrected] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `a, (b,) = foo()`.
+015.rb:1:11: C: [Corrected] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `a, (_, (b,), *_) = foo()`.
+015.rb:1:15: C: [Corrected] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `a, (_, (b, _),) = foo()`.
+019.rb:1:7: C: [Corrected] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `(a, b,) = foo()`.
+020.rb:1:1: C: [Corrected] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `foo()`.
+021.rb:1:1: C: [Corrected] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `foo()`.
+022.rb:1:4: C: [Corrected] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `(a,) = foo()`.
+023.rb:1:4: C: [Corrected] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `a,  = foo`.
+024.rb:1:8: C: [Corrected] Style/TrailingUnderscoreVariable: Do not use trailing `_`s in parallel assignment. Prefer `a, (b, ) = foo`.
+
+==> corrected/000.rb 14 <==
+a, b, = foo()
+
+==> corrected/001.rb 11 <==
+a, = foo()
+
+==> corrected/002.rb 11 <==
+a, = foo()
+
+==> corrected/003.rb 11 <==
+a, = foo()
+
+==> corrected/004.rb 6 <==
+foo()
+
+==> corrected/005.rb 14 <==
+_, b, = foo()
+
+==> corrected/013.rb 11 <==
+a, = foo()
+
+==> corrected/014.rb 16 <==
+a, (b,) = foo()
+
+==> corrected/015.rb 22 <==
+a, (_, (b,),) = foo()
+
+==> corrected/019.rb 16 <==
+(a, b,) = foo()
+
+==> corrected/020.rb 6 <==
+foo()
+
+==> corrected/021.rb 6 <==
+foo()
+
+==> corrected/022.rb 13 <==
+(a,) = foo()
+
+==> corrected/023.rb 10 <==
+a,  = foo
+
+==> corrected/024.rb 15 <==
+a, (b, ) = foo
+

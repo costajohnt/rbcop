@@ -1,0 +1,25 @@
+==> .rubocop.yml 150 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SafeNavigationChainLength:
+  Max: 2
+
+==> 000.rb 17 <==
+x&.foo&.bar&.baz
+
+==> 001.rb 21 <==
+x.foo&.bar&.baz&.zoo
+
+==> 002.rb 26 <==
+x.foo&.bar&.baz&.zoo.nil?
+
+==> 003.rb 12 <==
+x&.foo&.bar
+
+==> 004.rb 10 <==
+x.foo.bar
+

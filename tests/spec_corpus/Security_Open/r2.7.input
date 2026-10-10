@@ -1,0 +1,53 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 16 <==
+open(something)
+
+==> 001.rb 21 <==
+open(something, "r")
+
+==> 002.rb 19 <==
+open("#{foo}.txt")
+
+==> 003.rb 17 <==
+open("| #{foo}")
+
+==> 004.rb 14 <==
+open('| foo')
+
+==> 005.rb 39 <==
+open("#{foo}.txt") do |f|
+  f.gets
+end
+
+==> 006.rb 21 <==
+URI.open("| #{foo}")
+
+==> 007.rb 23 <==
+::URI.open("| #{foo}")
+
+==> 008.rb 43 <==
+::URI.open("| #{foo}") do |f|
+  f.gets
+end
+
+==> 009.rb 16 <==
+open = something
+==> 010.rb 20 <==
+File.open(something)
+==> 011.rb 15 <==
+open("foo.txt")
+==> 012.rb 4 <==
+open
+==> 013.rb 20 <==
+open "prefix_#{foo}"
+==> 014.rb 19 <==
+open "prefix" + foo
+==> 015.rb 18 <==
+open "foo#{2}.txt"

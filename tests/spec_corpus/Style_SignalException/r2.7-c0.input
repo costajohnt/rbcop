@@ -1,0 +1,119 @@
+==> .rubocop.yml 157 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/SignalException:
+  EnforcedStyle: semantic
+
+==> 000.rb 49 <==
+begin
+  raise
+rescue Exception
+  #do nothing
+end
+
+==> 001.rb 52 <==
+def test
+  raise
+rescue Exception
+  #do nothing
+end
+
+==> 002.rb 41 <==
+begin
+  fail
+rescue Exception
+  fail
+end
+
+==> 003.rb 55 <==
+begin
+  fail
+rescue Exception
+  raise RuntimeError
+end
+
+==> 004.rb 83 <==
+def test
+  fail
+rescue StandardError
+  # handle error
+rescue Exception
+  raise
+end
+
+==> 005.rb 44 <==
+def test
+  fail
+rescue Exception
+  fail
+end
+
+==> 006.rb 82 <==
+def test
+  fail
+rescue StandardError
+  # handle error
+rescue Exception
+  fail
+end
+
+==> 007.rb 39 <==
+map do
+  raise 'I'
+end.flatten.compact
+
+==> 008.rb 45 <==
+def test
+  fail
+rescue Exception
+  raise
+end
+
+==> 009.rb 55 <==
+def test
+  test.raise
+rescue Exception
+  test.fail
+end
+
+==> 010.rb 59 <==
+def test
+  Kernel.raise
+rescue Exception
+  Kernel.fail
+end
+
+==> 011.rb 63 <==
+def test
+  ::Kernel.raise
+rescue Exception
+  ::Kernel.fail
+end
+
+==> 012.rb 142 <==
+case cop_config['EnforcedStyle']
+when 'single_quotes' then true
+when 'double_quotes' then false
+else raise 'Unknown StringLiterals style'
+end
+
+==> 013.rb 82 <==
+cop.stub(:on_def) { raise RuntimeError }
+cop.stub(:on_def) { raise RuntimeError }
+
+==> 014.rb 91 <==
+begin
+  raise
+  begin
+    raise
+  rescue
+    fail
+  end
+rescue Exception
+  #do nothing
+end
+

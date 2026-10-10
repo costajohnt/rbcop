@@ -1,0 +1,22 @@
+==> .rubocop.yml 171 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/OneClassPerFile:
+  AllowedClasses:
+  - ErrorA
+  - ErrorB
+
+==> 000.rb 50 <==
+class Foo
+end
+
+class ErrorA
+end
+
+class ErrorB
+end
+

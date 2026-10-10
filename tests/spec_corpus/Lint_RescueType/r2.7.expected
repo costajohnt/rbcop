@@ -1,0 +1,700 @@
+==> offenses exit=1 9660 <==
+004.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `nil` will raise a `TypeError` instead of catching the actual exception.
+005.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `nil` will raise a `TypeError` instead of catching the actual exception.
+006.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `nil` will raise a `TypeError` instead of catching the actual exception.
+007.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `nil` will raise a `TypeError` instead of catching the actual exception.
+008.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `nil` will raise a `TypeError` instead of catching the actual exception.
+009.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `nil` will raise a `TypeError` instead of catching the actual exception.
+010.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `'string'` will raise a `TypeError` instead of catching the actual exception.
+011.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `'string'` will raise a `TypeError` instead of catching the actual exception.
+012.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `'string'` will raise a `TypeError` instead of catching the actual exception.
+013.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `'string'` will raise a `TypeError` instead of catching the actual exception.
+014.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `'string'` will raise a `TypeError` instead of catching the actual exception.
+015.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `'string'` will raise a `TypeError` instead of catching the actual exception.
+016.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `"#{string}"` will raise a `TypeError` instead of catching the actual exception.
+017.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `"#{string}"` will raise a `TypeError` instead of catching the actual exception.
+018.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `"#{string}"` will raise a `TypeError` instead of catching the actual exception.
+019.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `"#{string}"` will raise a `TypeError` instead of catching the actual exception.
+020.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `"#{string}"` will raise a `TypeError` instead of catching the actual exception.
+021.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `"#{string}"` will raise a `TypeError` instead of catching the actual exception.
+022.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `0` will raise a `TypeError` instead of catching the actual exception.
+023.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `0` will raise a `TypeError` instead of catching the actual exception.
+024.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `0` will raise a `TypeError` instead of catching the actual exception.
+025.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `0` will raise a `TypeError` instead of catching the actual exception.
+026.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `0` will raise a `TypeError` instead of catching the actual exception.
+027.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `0` will raise a `TypeError` instead of catching the actual exception.
+028.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `0.0` will raise a `TypeError` instead of catching the actual exception.
+029.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `0.0` will raise a `TypeError` instead of catching the actual exception.
+030.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `0.0` will raise a `TypeError` instead of catching the actual exception.
+031.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `0.0` will raise a `TypeError` instead of catching the actual exception.
+032.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `0.0` will raise a `TypeError` instead of catching the actual exception.
+033.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `0.0` will raise a `TypeError` instead of catching the actual exception.
+034.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `[]` will raise a `TypeError` instead of catching the actual exception.
+035.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `[]` will raise a `TypeError` instead of catching the actual exception.
+036.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `[]` will raise a `TypeError` instead of catching the actual exception.
+037.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `[]` will raise a `TypeError` instead of catching the actual exception.
+038.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `[]` will raise a `TypeError` instead of catching the actual exception.
+039.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `[]` will raise a `TypeError` instead of catching the actual exception.
+040.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `{}` will raise a `TypeError` instead of catching the actual exception.
+041.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `{}` will raise a `TypeError` instead of catching the actual exception.
+042.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `{}` will raise a `TypeError` instead of catching the actual exception.
+043.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `{}` will raise a `TypeError` instead of catching the actual exception.
+044.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `{}` will raise a `TypeError` instead of catching the actual exception.
+045.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `{}` will raise a `TypeError` instead of catching the actual exception.
+046.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `:symbol` will raise a `TypeError` instead of catching the actual exception.
+047.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `:symbol` will raise a `TypeError` instead of catching the actual exception.
+048.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `:symbol` will raise a `TypeError` instead of catching the actual exception.
+049.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `:symbol` will raise a `TypeError` instead of catching the actual exception.
+050.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `:symbol` will raise a `TypeError` instead of catching the actual exception.
+051.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `:symbol` will raise a `TypeError` instead of catching the actual exception.
+052.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `true` will raise a `TypeError` instead of catching the actual exception.
+053.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `true` will raise a `TypeError` instead of catching the actual exception.
+054.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `true` will raise a `TypeError` instead of catching the actual exception.
+055.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `true` will raise a `TypeError` instead of catching the actual exception.
+056.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `true` will raise a `TypeError` instead of catching the actual exception.
+057.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `true` will raise a `TypeError` instead of catching the actual exception.
+058.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `false` will raise a `TypeError` instead of catching the actual exception.
+059.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `false` will raise a `TypeError` instead of catching the actual exception.
+060.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `false` will raise a `TypeError` instead of catching the actual exception.
+061.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `false` will raise a `TypeError` instead of catching the actual exception.
+062.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `false` will raise a `TypeError` instead of catching the actual exception.
+063.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `false` will raise a `TypeError` instead of catching the actual exception.
+064.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `1r` will raise a `TypeError` instead of catching the actual exception.
+065.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `1r` will raise a `TypeError` instead of catching the actual exception.
+066.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `1r` will raise a `TypeError` instead of catching the actual exception.
+067.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `1r` will raise a `TypeError` instead of catching the actual exception.
+068.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `1r` will raise a `TypeError` instead of catching the actual exception.
+069.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `1r` will raise a `TypeError` instead of catching the actual exception.
+070.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `1i` will raise a `TypeError` instead of catching the actual exception.
+071.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `1i` will raise a `TypeError` instead of catching the actual exception.
+072.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `1i` will raise a `TypeError` instead of catching the actual exception.
+073.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `1i` will raise a `TypeError` instead of catching the actual exception.
+074.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `1i` will raise a `TypeError` instead of catching the actual exception.
+075.rb:3:1: W: [Correctable] Lint/RescueType: Rescuing from `1i` will raise a `TypeError` instead of catching the actual exception.
+
+==> autocorrect exit=0 9516 <==
+004.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `nil` will raise a `TypeError` instead of catching the actual exception.
+005.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `nil` will raise a `TypeError` instead of catching the actual exception.
+006.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `nil` will raise a `TypeError` instead of catching the actual exception.
+007.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `nil` will raise a `TypeError` instead of catching the actual exception.
+008.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `nil` will raise a `TypeError` instead of catching the actual exception.
+009.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `nil` will raise a `TypeError` instead of catching the actual exception.
+010.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `'string'` will raise a `TypeError` instead of catching the actual exception.
+011.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `'string'` will raise a `TypeError` instead of catching the actual exception.
+012.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `'string'` will raise a `TypeError` instead of catching the actual exception.
+013.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `'string'` will raise a `TypeError` instead of catching the actual exception.
+014.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `'string'` will raise a `TypeError` instead of catching the actual exception.
+015.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `'string'` will raise a `TypeError` instead of catching the actual exception.
+016.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `"#{string}"` will raise a `TypeError` instead of catching the actual exception.
+017.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `"#{string}"` will raise a `TypeError` instead of catching the actual exception.
+018.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `"#{string}"` will raise a `TypeError` instead of catching the actual exception.
+019.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `"#{string}"` will raise a `TypeError` instead of catching the actual exception.
+020.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `"#{string}"` will raise a `TypeError` instead of catching the actual exception.
+021.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `"#{string}"` will raise a `TypeError` instead of catching the actual exception.
+022.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `0` will raise a `TypeError` instead of catching the actual exception.
+023.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `0` will raise a `TypeError` instead of catching the actual exception.
+024.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `0` will raise a `TypeError` instead of catching the actual exception.
+025.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `0` will raise a `TypeError` instead of catching the actual exception.
+026.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `0` will raise a `TypeError` instead of catching the actual exception.
+027.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `0` will raise a `TypeError` instead of catching the actual exception.
+028.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `0.0` will raise a `TypeError` instead of catching the actual exception.
+029.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `0.0` will raise a `TypeError` instead of catching the actual exception.
+030.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `0.0` will raise a `TypeError` instead of catching the actual exception.
+031.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `0.0` will raise a `TypeError` instead of catching the actual exception.
+032.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `0.0` will raise a `TypeError` instead of catching the actual exception.
+033.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `0.0` will raise a `TypeError` instead of catching the actual exception.
+034.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `[]` will raise a `TypeError` instead of catching the actual exception.
+035.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `[]` will raise a `TypeError` instead of catching the actual exception.
+036.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `[]` will raise a `TypeError` instead of catching the actual exception.
+037.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `[]` will raise a `TypeError` instead of catching the actual exception.
+038.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `[]` will raise a `TypeError` instead of catching the actual exception.
+039.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `[]` will raise a `TypeError` instead of catching the actual exception.
+040.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `{}` will raise a `TypeError` instead of catching the actual exception.
+041.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `{}` will raise a `TypeError` instead of catching the actual exception.
+042.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `{}` will raise a `TypeError` instead of catching the actual exception.
+043.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `{}` will raise a `TypeError` instead of catching the actual exception.
+044.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `{}` will raise a `TypeError` instead of catching the actual exception.
+045.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `{}` will raise a `TypeError` instead of catching the actual exception.
+046.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `:symbol` will raise a `TypeError` instead of catching the actual exception.
+047.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `:symbol` will raise a `TypeError` instead of catching the actual exception.
+048.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `:symbol` will raise a `TypeError` instead of catching the actual exception.
+049.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `:symbol` will raise a `TypeError` instead of catching the actual exception.
+050.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `:symbol` will raise a `TypeError` instead of catching the actual exception.
+051.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `:symbol` will raise a `TypeError` instead of catching the actual exception.
+052.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `true` will raise a `TypeError` instead of catching the actual exception.
+053.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `true` will raise a `TypeError` instead of catching the actual exception.
+054.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `true` will raise a `TypeError` instead of catching the actual exception.
+055.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `true` will raise a `TypeError` instead of catching the actual exception.
+056.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `true` will raise a `TypeError` instead of catching the actual exception.
+057.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `true` will raise a `TypeError` instead of catching the actual exception.
+058.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `false` will raise a `TypeError` instead of catching the actual exception.
+059.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `false` will raise a `TypeError` instead of catching the actual exception.
+060.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `false` will raise a `TypeError` instead of catching the actual exception.
+061.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `false` will raise a `TypeError` instead of catching the actual exception.
+062.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `false` will raise a `TypeError` instead of catching the actual exception.
+063.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `false` will raise a `TypeError` instead of catching the actual exception.
+064.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `1r` will raise a `TypeError` instead of catching the actual exception.
+065.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `1r` will raise a `TypeError` instead of catching the actual exception.
+066.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `1r` will raise a `TypeError` instead of catching the actual exception.
+067.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `1r` will raise a `TypeError` instead of catching the actual exception.
+068.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `1r` will raise a `TypeError` instead of catching the actual exception.
+069.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `1r` will raise a `TypeError` instead of catching the actual exception.
+070.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `1i` will raise a `TypeError` instead of catching the actual exception.
+071.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `1i` will raise a `TypeError` instead of catching the actual exception.
+072.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `1i` will raise a `TypeError` instead of catching the actual exception.
+073.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `1i` will raise a `TypeError` instead of catching the actual exception.
+074.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `1i` will raise a `TypeError` instead of catching the actual exception.
+075.rb:3:1: W: [Corrected] Lint/RescueType: Rescuing from `1i` will raise a `TypeError` instead of catching the actual exception.
+
+==> corrected/004.rb 29 <==
+begin
+  foo
+rescue
+  bar
+end
+
+==> corrected/005.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/006.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/007.rb 42 <==
+begin
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/008.rb 34 <==
+def foobar
+  foo
+rescue
+  bar
+end
+
+==> corrected/009.rb 47 <==
+def foobar
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/010.rb 29 <==
+begin
+  foo
+rescue
+  bar
+end
+
+==> corrected/011.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/012.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/013.rb 42 <==
+begin
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/014.rb 34 <==
+def foobar
+  foo
+rescue
+  bar
+end
+
+==> corrected/015.rb 47 <==
+def foobar
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/016.rb 29 <==
+begin
+  foo
+rescue
+  bar
+end
+
+==> corrected/017.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/018.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/019.rb 42 <==
+begin
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/020.rb 34 <==
+def foobar
+  foo
+rescue
+  bar
+end
+
+==> corrected/021.rb 47 <==
+def foobar
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/022.rb 29 <==
+begin
+  foo
+rescue
+  bar
+end
+
+==> corrected/023.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/024.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/025.rb 42 <==
+begin
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/026.rb 34 <==
+def foobar
+  foo
+rescue
+  bar
+end
+
+==> corrected/027.rb 47 <==
+def foobar
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/028.rb 29 <==
+begin
+  foo
+rescue
+  bar
+end
+
+==> corrected/029.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/030.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/031.rb 42 <==
+begin
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/032.rb 34 <==
+def foobar
+  foo
+rescue
+  bar
+end
+
+==> corrected/033.rb 47 <==
+def foobar
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/034.rb 29 <==
+begin
+  foo
+rescue
+  bar
+end
+
+==> corrected/035.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/036.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/037.rb 42 <==
+begin
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/038.rb 34 <==
+def foobar
+  foo
+rescue
+  bar
+end
+
+==> corrected/039.rb 47 <==
+def foobar
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/040.rb 29 <==
+begin
+  foo
+rescue
+  bar
+end
+
+==> corrected/041.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/042.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/043.rb 42 <==
+begin
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/044.rb 34 <==
+def foobar
+  foo
+rescue
+  bar
+end
+
+==> corrected/045.rb 47 <==
+def foobar
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/046.rb 29 <==
+begin
+  foo
+rescue
+  bar
+end
+
+==> corrected/047.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/048.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/049.rb 42 <==
+begin
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/050.rb 34 <==
+def foobar
+  foo
+rescue
+  bar
+end
+
+==> corrected/051.rb 47 <==
+def foobar
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/052.rb 29 <==
+begin
+  foo
+rescue
+  bar
+end
+
+==> corrected/053.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/054.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/055.rb 42 <==
+begin
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/056.rb 34 <==
+def foobar
+  foo
+rescue
+  bar
+end
+
+==> corrected/057.rb 47 <==
+def foobar
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/058.rb 29 <==
+begin
+  foo
+rescue
+  bar
+end
+
+==> corrected/059.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/060.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/061.rb 42 <==
+begin
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/062.rb 34 <==
+def foobar
+  foo
+rescue
+  bar
+end
+
+==> corrected/063.rb 47 <==
+def foobar
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/064.rb 29 <==
+begin
+  foo
+rescue
+  bar
+end
+
+==> corrected/065.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/066.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/067.rb 42 <==
+begin
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/068.rb 34 <==
+def foobar
+  foo
+rescue
+  bar
+end
+
+==> corrected/069.rb 47 <==
+def foobar
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/070.rb 29 <==
+begin
+  foo
+rescue
+  bar
+end
+
+==> corrected/071.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/072.rb 43 <==
+begin
+  foo
+rescue StandardError
+  bar
+end
+
+==> corrected/073.rb 42 <==
+begin
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+
+==> corrected/074.rb 34 <==
+def foobar
+  foo
+rescue
+  bar
+end
+
+==> corrected/075.rb 47 <==
+def foobar
+  foo
+rescue
+  bar
+ensure
+  baz
+end
+

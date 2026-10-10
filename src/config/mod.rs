@@ -58,8 +58,10 @@ impl Pattern {
     /// PathUtil.match_path?
     pub fn matches(&self, path: &str) -> bool {
         match self {
-            Pattern::Exact(s) => s == path,
+            Pattern::Exact(s) => s == path || hidden_file_in_not_hidden_dir(s, path),
             Pattern::Regex(r) => r.is_match(path),
+            // `pattern == path` first: a file named `[x].rb` matches itself.
+            Pattern::Glob(p) if p == path => true,
             Pattern::Glob(p) => {
                 let p = if p.starts_with("..") {
                     expand_path(Path::new(p), &cwd()).display().to_string()
@@ -108,11 +110,21 @@ pub struct CopConfig {
 }
 
 impl CopConfig {
+    /// `cop_config[key].to_s` of a String or Symbol (`Mode: :conservative` reads as `conservative`).
     pub fn str(&self, key: &str) -> Option<&str> {
-        self.params.str(key)
+        match self.params.get(key)? {
+            Value::Sym(s) => Some(s.strip_prefix(':').unwrap_or(s)),
+            _ => self.params.str(key),
+        }
     }
+    /// `cop_config[key]` as Ruby truthiness: a non-boolean value (`IgnoreMacros: 'true'`) is true;
+    /// None when absent or null.
     pub fn bool(&self, key: &str) -> Option<bool> {
-        self.params.bool(key)
+        match self.params.get(key)? {
+            Value::Null => None,
+            Value::Bool(b) => Some(*b),
+            _ => Some(true),
+        }
     }
     pub fn int(&self, key: &str) -> Option<i64> {
         self.params.int(key)
@@ -375,7 +387,8 @@ impl Resolved {
             if let Some(ext) = s.strip_prefix("**/*.") {
                 exts.push(format!(".{ext}"));
             } else {
-                names.push(s.replace("**/", ""));
+                // `sub`: only the first `**/` goes.
+                names.push(s.replacen("**/", "", 1));
             }
         }
         (exts, names)

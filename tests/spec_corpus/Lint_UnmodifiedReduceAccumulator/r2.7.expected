@@ -1,0 +1,80 @@
+==> offenses exit=1 4094 <==
+004.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+005.rb:3:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+006.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+007.rb:3:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+008.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+038.rb:7:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+040.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+042.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+048.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Do not return an element of the accumulator in `reduce`.
+049.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Do not return an element of the accumulator in `reduce`.
+051.rb:1:28: W: Lint/UnmodifiedReduceAccumulator: Do not return an element of the accumulator in `reduce`.
+052.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+053.rb:2:8: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+054.rb:2:9: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+055.rb:2:8: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+055.rb:3:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+077.rb:3:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+078.rb:1:20: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `_1` will be modified by `reduce`.
+079.rb:1:21: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `_1` will be modified by `reduce`.
+084.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+085.rb:3:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+086.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+087.rb:3:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+088.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+118.rb:7:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+120.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+122.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+128.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Do not return an element of the accumulator in `inject`.
+129.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Do not return an element of the accumulator in `inject`.
+131.rb:1:28: W: Lint/UnmodifiedReduceAccumulator: Do not return an element of the accumulator in `inject`.
+132.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+133.rb:2:8: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+134.rb:2:9: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+135.rb:2:8: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+135.rb:3:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+157.rb:3:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+158.rb:1:20: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `_1` will be modified by `inject`.
+159.rb:1:21: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `_1` will be modified by `inject`.
+
+==> autocorrect exit=1 4094 <==
+004.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+005.rb:3:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+006.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+007.rb:3:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+008.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+038.rb:7:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+040.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+042.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+048.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Do not return an element of the accumulator in `reduce`.
+049.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Do not return an element of the accumulator in `reduce`.
+051.rb:1:28: W: Lint/UnmodifiedReduceAccumulator: Do not return an element of the accumulator in `reduce`.
+052.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+053.rb:2:8: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+054.rb:2:9: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+055.rb:2:8: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+055.rb:3:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+077.rb:3:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `reduce`.
+078.rb:1:20: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `_1` will be modified by `reduce`.
+079.rb:1:21: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `_1` will be modified by `reduce`.
+084.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+085.rb:3:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+086.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+087.rb:3:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+088.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+118.rb:7:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+120.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+122.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+128.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Do not return an element of the accumulator in `inject`.
+129.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Do not return an element of the accumulator in `inject`.
+131.rb:1:28: W: Lint/UnmodifiedReduceAccumulator: Do not return an element of the accumulator in `inject`.
+132.rb:2:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+133.rb:2:8: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+134.rb:2:9: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+135.rb:2:8: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+135.rb:3:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+157.rb:3:3: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `acc` will be modified by `inject`.
+158.rb:1:20: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `_1` will be modified by `inject`.
+159.rb:1:21: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `_1` will be modified by `inject`.
+

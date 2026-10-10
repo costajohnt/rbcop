@@ -1,0 +1,14 @@
+==> offenses exit=1 230 <==
+001.rb:1:6: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside empty hash literal braces detected.
+002.rb:1:6: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside empty hash literal braces detected.
+
+==> autocorrect exit=0 226 <==
+001.rb:1:6: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside empty hash literal braces detected.
+002.rb:1:6: C: [Corrected] Layout/SpaceInsideHashLiteralBraces: Space inside empty hash literal braces detected.
+
+==> corrected/001.rb 7 <==
+h = {}
+
+==> corrected/002.rb 7 <==
+h = {}
+

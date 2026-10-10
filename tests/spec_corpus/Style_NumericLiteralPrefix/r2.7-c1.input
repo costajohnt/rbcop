@@ -1,0 +1,19 @@
+==> .rubocop.yml 168 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/NumericLiteralPrefix:
+  EnforcedOctalStyle: zero_only
+
+==> 000.rb 21 <==
+a = 0O1234
+b(0o1234)
+
+==> 001.rb 12 <==
+a = -0O1234
+
+==> 002.rb 8 <==
+b = 0567

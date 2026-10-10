@@ -1,0 +1,28 @@
+==> offenses exit=1 396 <==
+000.rb:2:16: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a variable.
+001.rb:2:16: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a variable.
+002.rb:2:16: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a variable.
+003.rb:2:16: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a variable.
+
+==> autocorrect exit=0 388 <==
+000.rb:2:16: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a variable.
+001.rb:2:16: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a variable.
+002.rb:2:16: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a variable.
+003.rb:2:16: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a variable.
+
+==> corrected/000.rb 29 <==
+var = 0
+foo in { bar: ^var }
+
+==> corrected/001.rb 30 <==
+var = 0
+foo in { bar: ^@var }
+
+==> corrected/002.rb 31 <==
+var = 0
+foo in { bar: ^@@var }
+
+==> corrected/003.rb 30 <==
+var = 0
+foo in { bar: ^$var }
+

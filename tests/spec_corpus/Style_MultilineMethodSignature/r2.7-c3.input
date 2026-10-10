@@ -1,0 +1,15 @@
+==> .rubocop.yml 137 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LineLength:
+  Max: 20
+
+==> 000.rb 30 <==
+def foo(bar,
+        baz)
+end
+

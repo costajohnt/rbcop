@@ -1,0 +1,24 @@
+==> .rubocop.yml 231 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LineLength:
+  Enabled: true
+  Max: 80
+  AllowURI: false
+  AllowCopDirectives: true
+  URISchemes:
+  - http
+  - https
+
+==> 000.rb 95 <==
+if url == 'https://some.example.com/with/a/rather?long&and=very&complicated=path'
+  puts 1
+end
+
+==> 001.rb 89 <==
+puts 1 if url == 'https://some.example.com/with/a/rather?long&and=very&complicated=path'
+

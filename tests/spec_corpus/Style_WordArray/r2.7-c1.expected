@@ -1,0 +1,60 @@
+==> offenses exit=1 999 <==
+004.rb:1:1: C: [Correctable] Style/WordArray: Use `['one', 'two', 'three']` for an array of words.
+005.rb:1:7: C: [Correctable] Style/WordArray: Use `['one@example.com', 'two@example.com']` for an array of words.
+006.rb:1:7: C: [Correctable] Style/WordArray: Use an array literal `[...]` for an array of words.
+007.rb:1:1: C: [Correctable] Style/WordArray: Use `[]` for an array of words.
+008.rb:1:1: C: [Correctable] Style/WordArray: Use `["one's", "two's", "three's"]` for an array of words.
+009.rb:1:1: C: [Correctable] Style/WordArray: Use `["\n", "\t", "\b", "\v", "\f"]` for an array of words.
+010.rb:1:1: C: [Correctable] Style/WordArray: Use `['foo', 'bar', 'foo-bar']` for an array of words.
+011.rb:1:1: C: [Correctable] Style/WordArray: Use an array literal `[...]` for an array of words.
+012.rb:1:1: C: [Correctable] Style/WordArray: Use `['foo', 'bar', "#{foo}-bar"]` for an array of words.
+013.rb:1:1: C: [Correctable] Style/WordArray: Use `["#{foo}bar", 'baz']` for an array of words.
+
+==> autocorrect exit=0 979 <==
+004.rb:1:1: C: [Corrected] Style/WordArray: Use `['one', 'two', 'three']` for an array of words.
+005.rb:1:7: C: [Corrected] Style/WordArray: Use `['one@example.com', 'two@example.com']` for an array of words.
+006.rb:1:7: C: [Corrected] Style/WordArray: Use an array literal `[...]` for an array of words.
+007.rb:1:1: C: [Corrected] Style/WordArray: Use `[]` for an array of words.
+008.rb:1:1: C: [Corrected] Style/WordArray: Use `["one's", "two's", "three's"]` for an array of words.
+009.rb:1:1: C: [Corrected] Style/WordArray: Use `["\n", "\t", "\b", "\v", "\f"]` for an array of words.
+010.rb:1:1: C: [Corrected] Style/WordArray: Use `['foo', 'bar', 'foo-bar']` for an array of words.
+011.rb:1:1: C: [Corrected] Style/WordArray: Use an array literal `[...]` for an array of words.
+012.rb:1:1: C: [Corrected] Style/WordArray: Use `['foo', 'bar', "#{foo}-bar"]` for an array of words.
+013.rb:1:1: C: [Corrected] Style/WordArray: Use `["#{foo}bar", 'baz']` for an array of words.
+
+==> corrected/004.rb 24 <==
+['one', 'two', 'three']
+
+==> corrected/005.rb 45 <==
+FOO = ['one@example.com', 'two@example.com']
+
+==> corrected/006.rb 51 <==
+FOO = [
+  'one@example.com',
+  'two@example.com'
+]
+
+==> corrected/007.rb 3 <==
+[]
+
+==> corrected/008.rb 30 <==
+["one's", "two's", "three's"]
+
+==> corrected/009.rb 31 <==
+["\n", "\t", "\b", "\v", "\f"]
+
+==> corrected/010.rb 26 <==
+['foo', 'bar', 'foo-bar']
+
+==> corrected/011.rb 21 <==
+[
+  'foo',
+  'bar'
+]
+
+==> corrected/012.rb 29 <==
+['foo', 'bar', "#{foo}-bar"]
+
+==> corrected/013.rb 21 <==
+["#{foo}bar", 'baz']
+

@@ -1,0 +1,55 @@
+==> .rubocop.yml 308 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Naming/FileName:
+  IgnoreExecutableScripts: true
+  ExpectMatchingDefinition: false
+  Regex:
+  CheckDefinitionPathHierarchy: true
+  CheckDefinitionPathHierarchyRoots:
+  - lib
+  - spec
+  - test
+  - src
+
+==> 000/testCase.rb 8 <==
+print 1
+
+==> 001/testCase 8 <==
+print 1
+
+==> 002/test_case.rb 8 <==
+print 1
+
+==> 003/test_case 8 <==
+print 1
+
+==> 004/test_case.rake 8 <==
+print 1
+
+==> 005/some/dir/some_view.html.slim_spec.rb 8 <==
+print 1
+
+==> 006/some/dir/file?!.rb 8 <==
+print 1
+
+==> 007/some/dir/some_file.xlsx+mobile.axlsx 8 <==
+print 1
+
+==> 008/test-case 28 <==
+#!/usr/bin/env ruby
+print 1
+
+==> 009/Gemfile 8 <==
+print 1
+
+==> 010/.pryrc 8 <==
+print 1
+
+==> 011/ünbound_sérvér.rb 8 <==
+print 1
+

@@ -22,6 +22,11 @@ impl Cop for FileName {
         }
         let basename = file.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default();
         let regex = cx.cfg.get("Regex").and_then(|v| v.as_string());
+        // The message interpolates the Regexp (Regexp#to_s), a string as written.
+        let shown = match cx.cfg.get("Regex") {
+            Some(crate::config::value::Value::Regex(r)) => Some(crate::config::value::regexp_to_s(r)),
+            _ => regex.clone(),
+        };
         let msg = if filename_good(&basename, regex.as_deref()) {
             if !cx.cfg.bool("ExpectMatchingDefinition").unwrap_or(false) {
                 return;
@@ -43,7 +48,7 @@ impl Cop for FileName {
             if cx.cfg.bool("IgnoreExecutableScripts").unwrap_or(false) && cx.src.text.starts_with("#!") {
                 return;
             }
-            match &regex {
+            match &shown {
                 Some(r) => format!("`{basename}` should match `{r}`."),
                 None => format!("The name of this source file (`{basename}`) should use snake_case."),
             }

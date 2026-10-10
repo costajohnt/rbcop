@@ -1,0 +1,178 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 36 <==
+# rubocop:disable Layout/LineLength
+
+==> 001.rb 25 <==
+# rubocop:disable Layout
+
+==> 002.rb 52 <==
+# rubocop:disable Layout/LineLength, Style/Encoding
+
+==> 003.rb 22 <==
+# rubocop:disable all
+
+==> 004.rb 35 <==
+# rubocop:enable Layout/LineLength
+
+==> 005.rb 33 <==
+# rubocop:todo Layout/LineLength
+
+==> 006.rb 51 <==
+# rubocop:disable Layout/LineLength Style/Encoding
+
+==> 007.rb 69 <==
+# rubocop:disable Layout/LineLength # rubocop:disable Style/Encoding
+
+==> 008.rb 18 <==
+# rubocop:disable
+
+==> 009.rb 37 <==
+# rubocop:disabled Layout/LineLength
+
+==> 010.rb 11 <==
+# rubocop:
+
+==> 011.rb 38 <==
+# "rubocop:disable Layout/LineLength"
+
+==> 012.rb 38 <==
+# # rubocop:disable Layout/LineLength
+
+==> 013.rb 63 <==
+# rubocop:disable Layout/LineLength -- This is a good comment.
+
+==> 014.rb 90 <==
+# rubocop:disable Layout/LineLength -- see # rubocop:disable Style/Encoding in old branch
+
+==> 015.rb 69 <==
+a = 1 # rubocop:disable Layout/LineLength -- This is a good comment.
+
+==> 016.rb 96 <==
+a = 1 # rubocop:disable Layout/LineLength -- see # rubocop:disable Style/Encoding in old branch
+
+==> 017.rb 62 <==
+# rubocop:disable Layout/LineLength == This is a bad comment.
+
+==> 018.rb 45 <==
+# rubocop:disable-next Layout/LineLength
+foo
+
+==> 019.rb 52 <==
+# rubocop:todo-next Layout/LineLength -- reason
+foo
+
+==> 020.rb 49 <==
+foo # rubocop:disable-next Layout/LineLength
+bar
+
+==> 021.rb 45 <==
+# rubocop:disable-next Layout/LineLenght
+foo
+
+==> 022.rb 61 <==
+# rubocop:next +Layout/LineLength -Style/For -- tradeoff
+foo
+
+==> 023.rb 37 <==
+# rubocop:next Layout/LineLength
+foo
+
+==> 024.rb 19 <==
+# rubocop:next
+foo
+
+==> 025.rb 42 <==
+foo # rubocop:next -Layout/LineLength
+bar
+
+==> 026.rb 38 <==
+# rubocop:next -Layout/LineLenght
+foo
+
+==> 027.rb 115 <==
+# rubocop:disable Layout/LineLength
+# rubocop:enable-next Layout/LineLength
+foo
+# rubocop:enable Layout/LineLength
+
+==> 028.rb 48 <==
+foo # rubocop:enable-next Layout/LineLength
+bar
+
+==> 029.rb 26 <==
+# rubocop:enable-next
+foo
+
+==> 030.rb 44 <==
+# rubocop:enable-next Layout/LineLenght
+foo
+
+==> 031.rb 33 <==
+# rubocop:push Layout/LineLength
+
+==> 032.rb 34 <==
+# rubocop:push -Layout/LineLenght
+
+==> 033.rb 33 <==
+# rubocop:pop +Layout/LineLength
+
+==> 034.rb 29 <==
+# rubocop:push
+# rubocop:pop
+
+==> 035.rb 36 <==
+# rucocop:disable Layout/LineLength
+
+==> 036.rb 36 <==
+# RuboCop:disable Layout/LineLength
+
+==> 037.rb 42 <==
+a = 1 # robocop:disable Layout/LineLength
+
+==> 038.rb 22 <==
+# pylint: disable=foo
+
+==> 039.rb 40 <==
+# TODO: disable the cop here eventually
+
+==> 040.rb 36 <==
+# rubocop:disable Layout/LineLenght
+
+==> 041.rb 53 <==
+# rubocop:disable Layout/LineLength, Style/Encodingg
+
+==> 042.rb 35 <==
+# rubocop:enable Layout/LineLenght
+
+==> 043.rb 29 <==
+# rubocop:disable LineLength
+
+==> 044.rb 68 <==
+x = 1 # rubocop:disable Style/For # rubocop:disable Metrics/AbcSize
+
+==> 045.rb 78 <==
+# rubocop:disable-next Style/For # rubocop:disable-next Metrics/AbcSize
+x = 1
+
+==> 046.rb 65 <==
+x = 1 # rubocop:todo Style/For # rubocop:disable Metrics/AbcSize
+
+==> 047.rb 67 <==
+x = 1 # rubocop:disable Style/For # rubocop:enable Metrics/AbcSize
+
+==> 048.rb 79 <==
+x = 1 # rubocop:disable Style/For -- keep it # rubocop:disable Metrics/AbcSize
+
+==> 049.rb 56 <==
+x = 1 # rubocop:disable Style/For # rubocop:disable all
+
+==> 050.rb 51 <==
+x = 1 # rubocop:disable Style/For, Metrics/AbcSize
+

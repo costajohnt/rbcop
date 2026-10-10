@@ -1,0 +1,49 @@
+==> offenses exit=1 621 <==
+000.rb:1:7: C: [Correctable] Style/ReverseFind: Use `rfind` instead.
+001.rb:1:8: C: [Correctable] Style/ReverseFind: Use `rfind` instead.
+002.rb:1:7: C: [Correctable] Style/ReverseFind: Use `rfind` instead.
+003.rb:1:7: C: [Correctable] Style/ReverseFind: Use `rfind` instead.
+004.rb:1:7: C: [Correctable] Style/ReverseFind: Use `rfind` instead.
+005.rb:1:7: C: [Correctable] Style/ReverseFind: Use `rfind` instead.
+006.rb:1:7: C: [Correctable] Style/ReverseFind: Use `rfind` instead.
+007.rb:1:7: C: [Correctable] Style/ReverseFind: Use `rfind` instead.
+008.rb:1:7: C: [Correctable] Style/ReverseFind: Use `rfind` instead.
+
+==> autocorrect exit=0 603 <==
+000.rb:1:7: C: [Corrected] Style/ReverseFind: Use `rfind` instead.
+001.rb:1:8: C: [Corrected] Style/ReverseFind: Use `rfind` instead.
+002.rb:1:7: C: [Corrected] Style/ReverseFind: Use `rfind` instead.
+003.rb:1:7: C: [Corrected] Style/ReverseFind: Use `rfind` instead.
+004.rb:1:7: C: [Corrected] Style/ReverseFind: Use `rfind` instead.
+005.rb:1:7: C: [Corrected] Style/ReverseFind: Use `rfind` instead.
+006.rb:1:7: C: [Corrected] Style/ReverseFind: Use `rfind` instead.
+007.rb:1:7: C: [Corrected] Style/ReverseFind: Use `rfind` instead.
+008.rb:1:7: C: [Corrected] Style/ReverseFind: Use `rfind` instead.
+
+==> corrected/000.rb 34 <==
+array.rfind { |item| item.even? }
+
+==> corrected/001.rb 35 <==
+array&.rfind { |item| item.even? }
+
+==> corrected/002.rb 25 <==
+array.rfind { _1.even? }
+
+==> corrected/003.rb 25 <==
+array.rfind { it.even? }
+
+==> corrected/004.rb 34 <==
+array.rfind { |item| item.even? }
+
+==> corrected/005.rb 34 <==
+array.rfind { |item| item.even? }
+
+==> corrected/006.rb 34 <==
+array.rfind { |item| item.even? }
+
+==> corrected/007.rb 21 <==
+array.rfind(&:even?)
+
+==> corrected/008.rb 21 <==
+array.rfind(&:even?)
+

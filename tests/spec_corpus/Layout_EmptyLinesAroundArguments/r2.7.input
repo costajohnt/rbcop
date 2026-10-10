@@ -1,0 +1,166 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 14 <==
+foo(
+
+  bar
+)
+
+==> 001.rb 21 <==
+bar(
+  [baz, qux]
+
+)
+
+==> 002.rb 37 <==
+foo.do_something(
+  baz,
+
+  qux: 0
+)
+
+==> 003.rb 31 <==
+foo(
+  baz,
+
+  qux,
+
+  biz,
+
+)
+
+==> 004.rb 22 <==
+foo(biz,
+
+    baz: 0)
+
+==> 005.rb 89 <==
+Foo.prepend(
+  a,
+
+  Module.new do
+    def something; end
+
+    def anything; end
+  end
+)
+
+==> 006.rb 88 <==
+class Foo
+
+  include Bar
+
+  def baz(qux)
+    fizz(
+      qux,
+
+      10
+    )
+  end
+end
+
+==> 007.rb 95 <==
+something(1, 5)
+something_else
+
+foo(biz,
+
+    qux)
+
+quux.map do
+
+end.another.thing(
+
+  [baz]
+)
+
+==> 008.rb 24 <==
+receiver&.foo(
+
+  bar
+)
+
+==> 009.rb 18 <==
+bar(qux,
+
+    78)
+
+==> 010.rb 9 <==
+foo(bar)
+
+==> 011.rb 42 <==
+foo(
+  bar,
+  [],
+  baz = nil,
+  qux: 2
+)
+
+==> 012.rb 29 <==
+foo(bar,
+    [],
+    qux: 2)
+
+==> 013.rb 73 <==
+Foo.prepend(Module.new do
+  def something; end
+
+  def anything; end
+end)
+
+==> 014.rb 58 <==
+fred.map do
+  <<-EOT
+    bar
+
+    foo
+  EOT
+end.join("
+")
+
+==> 015.rb 30 <==
+foo.baz do
+
+  bar
+end.compact
+
+==> 016.rb 40 <==
+bar(<<-DOCS)
+  foo
+
+DOCS
+  .call!(true)
+
+==> 017.rb 17 <==
+foo.
+
+  bar(arg)
+
+==> 018.rb 14 <==
+foo.(
+  arg
+)
+
+==> 019.rb 21 <==
+format('%d
+
+', 1)[0]
+
+==> 020.rb 28 <==
+private(def bar
+
+  baz
+end)
+
+==> 021.rb 31 <==
+foo(:bar, [1,
+
+           2]
+)
+

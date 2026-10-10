@@ -1,0 +1,20 @@
+==> .rubocop.yml 166 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/BeginEndAlignment:
+  EnforcedStyleAlignWith: begin
+
+==> 000.rb 10 <==
+begin 
+end
+==> 001.rb 12 <==
+begin
+  end
+
+==> 002.rb 26 <==
+puts 1; begin 
+        end

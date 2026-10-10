@@ -1,0 +1,26 @@
+==> offenses exit=1 646 <==
+000.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+000.rb:1:16: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+000.rb:2:7: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+000.rb:2:14: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+001.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+001.rb:2:7: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+
+==> autocorrect exit=0 634 <==
+000.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+000.rb:1:16: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+000.rb:2:7: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+000.rb:2:14: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+001.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+001.rb:2:7: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+
+==> corrected/000.rb 30 <==
+def foo(*, &)
+  bar(*, &)
+end
+
+==> corrected/001.rb 40 <==
+def foo(*, &block)
+  bar(*, &block)
+end
+

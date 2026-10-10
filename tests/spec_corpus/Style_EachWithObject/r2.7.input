@@ -1,0 +1,101 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 82 <==
+[].inject({}) { |a, e| a }
+
+[].reduce({}) do |a, e|
+  a[e] = 1
+  a[e] = 1
+  a
+end
+
+==> 001.rb 28 <==
+[]&.inject({}) { |a, e| a }
+
+==> 002.rb 39 <==
+[].reduce({}) do
+  _1[_2] = 1
+  _1
+end
+
+==> 003.rb 40 <==
+[]&.reduce({}) do
+  _1[_2] = 1
+  _1
+end
+
+==> 004.rb 50 <==
+[1, 2, 3].inject({}) do |h, i|
+  h[i] = i
+  h
+end
+
+==> 005.rb 39 <==
+[1, 2, 3].inject({}) do |h, i|
+  h
+end
+
+==> 006.rb 105 <==
+[].inject({}) { $GLOBAL[rand] = rand; $GLOBAL }
+
+[].reduce({}) do
+   $GLOBAL[rand] = rand
+   $GLOBAL
+end
+
+==> 007.rb 89 <==
+[].inject({}) { |h| h[rand] = rand; h }
+
+[].reduce({}) do |h|
+   h[rand] = rand
+   h
+end
+
+==> 008.rb 82 <==
+[].inject({}) do |a, e|
+  a + e
+end
+
+[].reduce({}) do |a, e|
+  my_method e, a
+end
+
+==> 009.rb 54 <==
+[].inject({}) do |a, e|
+end
+
+[].reduce({}) { |a, e| }
+
+==> 010.rb 138 <==
+[].inject({}) do |a, e|
+  a = e if e
+end
+
+[].inject({}) do |a, e|
+  if e
+    a = e
+  end
+end
+
+[].reduce({}) do |a, e|
+  a = e ? e : 2
+end
+
+==> 011.rb 13 <==
+[].inject(:+)
+==> 012.rb 33 <==
+[1, 2, 3].inject { |a, e| a + e }
+==> 013.rb 82 <==
+r = [1, 2, 3].reduce({}) do |memo, item|
+  memo += item > 2 ? item : 0
+  memo
+end
+
+==> 014.rb 28 <==
+array.reduce(0) { |a, e| a }

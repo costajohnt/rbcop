@@ -1,0 +1,27 @@
+==> .rubocop.yml 152 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/EmptyBlock:
+  AllowEmptyLambdas: false
+
+==> 000.rb 14 <==
+lambda do
+end
+
+==> 001.rb 6 <==
+-> {}
+
+==> 002.rb 12 <==
+proc do
+end
+
+==> 003.rb 12 <==
+Proc.new {}
+
+==> 004.rb 14 <==
+::Proc.new {}
+

@@ -1,0 +1,296 @@
+==> .rubocop.yml 162 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Metrics/MethodLength:
+  Max: 5
+  CountComments: false
+
+==> 000.rb 50 <==
+def m
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+end
+
+==> 001.rb 58 <==
+def m
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 002.rb 65 <==
+define_method(:m) do
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+end
+
+==> 003.rb 73 <==
+define_method(:m) do
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 004.rb 89 <==
+define_method(:"#{method_name}=") do
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 005.rb 88 <==
+define_method("#{method_name}=") do
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 006.rb 69 <==
+define_method do
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 007.rb 79 <==
+define_method(:m) do
+  a = _1
+  a = _2
+  a = _3
+  a = _4
+  a = _5
+  a = _6
+end
+
+==> 008.rb 63 <==
+def self.m
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 009.rb 124 <==
+class K
+  class << self
+    def m
+      a = 1
+      a = 2
+      a = 3
+      a = 4
+      a = 5
+      a = 6
+    end
+  end
+end
+
+==> 010.rb 42 <==
+def m
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+end
+
+==> 011.rb 63 <==
+def m(x,
+      y,
+      z)
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+end
+
+==> 012.rb 54 <==
+def m()
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+
+
+  a = 7
+end
+
+==> 013.rb 12 <==
+def m()
+end
+
+==> 014.rb 78 <==
+def one_line; 10 end
+def self.m()
+  a = 1
+  a = 2
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 015.rb 83 <==
+def one_line(test) 10 end
+def self.m()
+  a = 1
+  a = 2
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 016.rb 71 <==
+def m
+  something do
+    a = 2
+    a = 3
+    a = 4
+    a = 5
+  end
+end
+
+==> 017.rb 62 <==
+def m()
+  a = 1
+  #a = 2
+  a = 3
+  #a = 4
+  a = 5
+  a = 6
+end
+
+==> 018.rb 74 <==
+def foo
+  do_something do
+    <<~HEREDOC
+      text
+    HEREDOC
+  end
+end
+
+==> 019.rb 71 <==
+def m
+  a = 1
+  a = 2
+  a = <<~TEXT
+    text
+  TEXT
+  __ENCODING__
+end
+
+==> 020.rb 60 <==
+def m
+  a = 1
+  #a = 2
+  a = 3
+  #a = 4
+  a = 5
+  a = 6
+end
+
+==> 021.rb 60 <==
+def foo
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 022.rb 75 <==
+define_method(:foo) do
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 023.rb 81 <==
+define_method(:foo) do
+  a = _1
+  a = _2
+  a = _3
+  a = _4
+  a = _5
+  a = _6
+end
+
+==> 024.rb 66 <==
+def user_name
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 025.rb 81 <==
+define_method(:user_name) do
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 026.rb 87 <==
+define_method(:user_name) do
+  a = _1
+  a = _2
+  a = _3
+  a = _4
+  a = _5
+  a = _6
+end
+
+==> 027.rb 66 <==
+def firstname
+  a = 1
+  a = 2
+  a = 3
+  a = 4
+  a = 5
+  a = 6
+end
+
+==> 028.rb 57 <==
+def m
+  a = 1
+  a = [
+    2,
+    3,
+    4,
+    5
+  ]
+end
+

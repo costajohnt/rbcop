@@ -1,0 +1,11 @@
+==> offenses exit=1 100 <==
+001.rb:1:8: C: [Correctable] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+
+==> autocorrect exit=0 98 <==
+001.rb:1:8: C: [Corrected] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+
+==> corrected/001.rb 95 <==
+if url == 'https://some.example.com/with/a/rather?long&and=very&complicated=path'
+  puts 1
+end
+
