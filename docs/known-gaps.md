@@ -9,6 +9,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - HTML formatter escapes `& < >` in messages outside code spans and fully escapes paths; GitHub
   Actions formatter escapes CR/LF in the `file=` property. Output differs only when those appear.
 - JUnit escapes cop names in attributes (no effect for real cop names).
+- Style/RedundantFormat evaluates `format` at lint time; a width, precision or result over 10,000
+  bytes (`format('%999999999d', 1)`) gets no offense instead of building a huge string
+  (`MAX_FORMAT_OUTPUT` in `src/cops/style/redundant_format.rs`).
 
 ## Open gaps
 
@@ -22,6 +25,10 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - Deliberate: Style/WordArray correcting a `%W[...]` whose value is invalid UTF-8 (`%W[\xff]`)
   writes the escaped form (`["\xFF"]`); RuboCop writes the raw bytes and then crashes re-parsing
   its own output. The offense message matches RuboCop.
+- Review-loop security audit to run: every place a cop evaluates source-derived values at lint
+  time (format strings, numeric literals and arithmetic, string building, regexes compiled from
+  source, recursion depth on deeply nested code) must be bounded, so linting an untrusted file
+  cannot exhaust CPU or memory. First finding: Style/RedundantFormat padded `%999999999d` to ~1 GB.
 - Review-loop coverage to add: every corpus targets Ruby 3.x, so behaviour at TargetRubyVersion
   2.x (parser-gem grammar differences, min/max ruby cops) is only covered by scenarios. Record a
   specs-corpus oracle at 2.5 and 2.7 and compare.
