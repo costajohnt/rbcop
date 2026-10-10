@@ -1,4 +1,4 @@
-use crate::helpers::range_help::with_surrounding_space;
+use crate::helpers::range_help::{Side, Surrounding, range_with_surrounding_space};
 use crate::prelude::*;
 
 pub const NAME: &str = "Layout/SpaceInsideBlockBraces";
@@ -112,7 +112,7 @@ impl Cop for SpaceInsideBlockBraces {
                 check.offense(cx, le as isize, ds as isize, "Space between { and | detected.");
             }
         } else {
-            let (_, e) = with_surrounding_space(src, lb, le, false, true, true);
+            let (_, e) = range_with_surrounding_space(src.text, lb, le, Surrounding { side: Side::Right, ..Default::default() });
             check.space(cx, lb as isize + 1, e as isize, "Space inside { detected.");
         }
 
@@ -127,7 +127,7 @@ impl Cop for SpaceInsideBlockBraces {
         if !single_line && (column == right_col || column == last_space_count(inner) as isize) {
             return;
         }
-        let (ws, _) = with_surrounding_space(src, rb, re, true, false, true);
+        let (ws, _) = range_with_surrounding_space(src.text, rb, re, Surrounding { side: Side::Left, ..Default::default() });
         let mut begin = ws as isize;
         let mut end = re as isize - 1;
         if src.slice(ws, re).contains('\n') {
