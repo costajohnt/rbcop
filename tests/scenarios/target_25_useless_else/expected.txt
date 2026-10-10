@@ -1,0 +1,5 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+t.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+t.rb:3:1: W: Lint/UselessElseWithoutRescue: `else` without `rescue` is useless.
+t.rb:7:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+t.rb:9:1: W: Lint/UselessElseWithoutRescue: `else` without `rescue` is useless.
