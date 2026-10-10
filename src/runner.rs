@@ -246,6 +246,12 @@ fn analyze(
         let semantic: Vec<_> = result
             .errors()
             .filter(|e| kept(e) && semantic_kind(e) && !fatal(e) && e.location().start_offset() < cut)
+            // `class` with no name (Prism reports the keyword): the parser fails before a name
+            // reduces, so there is no name to check.
+            .filter(|e| {
+                !(matches!(e.type_name(), "class_name" | "module_name")
+                    && tokens.iter().any(|t| t.start == e.location().start_offset() && t.kind.starts_with("KEYWORD_")))
+            })
             .filter_map(|e| {
                 let (s, end) = crate::legacy_syntax::semantic_location(
                     e.type_name(),
