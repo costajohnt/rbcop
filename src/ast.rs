@@ -168,3 +168,36 @@ pub fn send_args<'pr>(call: &CallNode<'pr>) -> Vec<Node<'pr>> {
     }
     args
 }
+
+/// Parser-gem source range of a def/block/lambda body. Prism wraps a body with `rescue`/`ensure`
+/// in an implicit BeginNode spanning from the `do`/`def` to `end`; parser's `rescue`/`ensure`
+/// node spans the body statements and clauses only.
+pub fn body_range(body: &Node) -> (usize, usize) {
+    let loc = body.location();
+    let Some(b) = body.as_begin_node().filter(|b| b.begin_keyword_loc().is_none()) else {
+        return (loc.start_offset(), loc.end_offset());
+    };
+    let start = [
+        b.statements().map(|s| s.location().start_offset()),
+        b.rescue_clause().map(|r| r.location().start_offset()),
+        b.else_clause().map(|e| e.location().start_offset()),
+        b.ensure_clause().map(|e| e.location().start_offset()),
+    ]
+    .into_iter()
+    .flatten()
+    .min()
+    .unwrap_or(loc.start_offset());
+    let end = if let Some(e) = b.ensure_clause() {
+        e.statements().map_or(e.ensure_keyword_loc().end_offset(), |s| s.location().end_offset())
+    } else if let Some(e) = b.else_clause() {
+        e.statements().map_or(e.else_keyword_loc().end_offset(), |s| s.location().end_offset())
+    } else if let Some(mut r) = b.rescue_clause() {
+        while let Some(next) = r.subsequent() {
+            r = next;
+        }
+        r.location().end_offset()
+    } else {
+        b.statements().map_or(loc.end_offset(), |s| s.location().end_offset())
+    };
+    (start, end)
+}
