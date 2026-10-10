@@ -303,6 +303,12 @@ More traps found while porting:
 - rubocop-ast's `receiver` matcher covers blocks (the send's receiver); a lambda's is nil.
 - `respond_to?(:value)` holds only for str, dstr, int, float, sym, rational, complex.
 - ParenthesesCorrector on a send without parentheses raises: no offense.
+- `allowed_receiver?(nil)` raises: receiver-less calls get no offense in AllowedReceivers cops.
+- rubocop-ast `FormatSequence#arg_number` is the last `N$` anywhere in the sequence. Integer and
+  Rational `%f` format exactly with round-half-up; floats round half-even.
+- Prism `unescaped()` borrows the node: `.to_vec()` when the value outlives it.
+- Helpers: `check_single_line_suitability`, `comments_help::{find_end_line, comments_in_lines}`,
+  `select_by`, `block_args::{Single, single_var, single_body}`.
 - Prism `CallNode#message_loc` of an index call (`foo[x]`, `foo[x] = y`) spans the brackets and
   arguments; use `name()` when you mean parser's method name.
 - Helpers: `if_node::{normal_keyword, parts, is_elsif}`, `ruby_string::symbol_inspect`.
