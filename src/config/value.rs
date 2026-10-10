@@ -136,8 +136,19 @@ fn mark_regexps(text: &str) -> String {
     if !text.contains("!ruby/regexp") {
         return text.to_string();
     }
-    let re = Regex::new(r"!ruby/regexp\s+(/.*/[a-z]*)").unwrap();
-    re.replace_all(text, |c: &regex::Captures| format!("'{REGEX_MARK}{}'", c[1].replace('\'', "''"))).into_owned()
+    // The literal may be plain, 'single-quoted' ('' escapes ') or "double-quoted" (\ escapes).
+    let re = Regex::new(r#"!ruby/regexp\s+(?:'((?:[^']|'')*)'|"((?:[^"\\]|\\.)*)"|(/.*/[a-z]*))"#).unwrap();
+    re.replace_all(text, |c: &regex::Captures| {
+        let literal = match (c.get(1), c.get(2), c.get(3)) {
+            (Some(s), _, _) => s.as_str().replace("''", "'"),
+            // ponytail: only \\ and \" are unescaped; other YAML escapes are rare in a regexp.
+            (_, Some(d), _) => d.as_str().replace(r#"\""#, "\"").replace(r"\\", r"\"),
+            (_, _, Some(p)) => p.as_str().to_string(),
+            _ => unreachable!(),
+        };
+        format!("'{REGEX_MARK}{}'", literal.replace('\'', "''"))
+    })
+    .into_owned()
 }
 
 fn convert(y: Yaml) -> Value {
@@ -187,5 +198,6 @@ pub fn ruby_regex(literal: &str) -> Option<Regex> {
     }
     // Ruby's ^ and $ are always line anchors.
     prefix.push('m');
-    Regex::new(&format!("(?{prefix}){}", source.replace(r"\Z", r"\n?\z"))).ok()
+    // Ruby's \w \d \s \h are ASCII-only (Rust's are Unicode); \Z allows a final newline.
+    Regex::new(&format!("(?{prefix}){}", crate::helpers::ruby_string::ruby_regex_classes(source))).ok()
 }

@@ -1,0 +1,14 @@
+AllCops:
+  SuggestExtensions: false
+Naming/InclusiveLanguage:
+  Enabled: true
+  FlaggedTerms:
+    alpha:
+      Regex: !ruby/regexp '/alph\w/'
+    beta:
+      Regex: "/beta/"
+    gamma:
+      Regex: !ruby/regexp "/gamm\\d/"
+Naming/MethodName:
+  AllowedPatterns:
+    - '\Afoo\w+\z'
