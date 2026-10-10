@@ -38,10 +38,9 @@ fn paren_fix(cx: &Cx, idx: usize) -> Option<ParenFix> {
         (s.lparen_loc()?, s.rparen_loc()?, kids)
     } else if let Some(y) = node.as_yield_node() {
         (y.lparen_loc()?, y.rparen_loc()?, y.arguments().map(|a| a.arguments().iter().collect()).unwrap_or_default())
-    } else if let Some(d) = node.as_defined_node() {
-        (d.lparen_loc()?, d.rparen_loc()?, vec![d.value()])
     } else {
-        return None;
+        let d = node.as_defined_node()?;
+        (d.lparen_loc()?, d.rparen_loc()?, vec![d.value()])
     };
     if close.as_slice() != b")" {
         return None;

@@ -21,7 +21,10 @@ fn stmts_range(s: &StatementsNode) -> (usize, usize) {
 }
 
 /// Parser node for a branch's statements: the statement itself, or a begin of 2+.
-fn branch<'pr>(s: Option<StatementsNode<'pr>>) -> Option<(Vec<Node<'pr>>, (usize, usize))> {
+/// A non-empty branch: its statements and their range.
+type Br<'pr> = (Vec<Node<'pr>>, (usize, usize));
+
+fn branch<'pr>(s: Option<StatementsNode<'pr>>) -> Option<Br<'pr>> {
     let s = s?;
     let v: Vec<Node> = s.body().iter().collect();
     if v.is_empty() {
@@ -55,12 +58,12 @@ struct Parts<'pr> {
     keyword: &'static str,
     cond: Node<'pr>,
     /// `if_branch` (unless: its body).
-    if_branch: Option<(Vec<Node<'pr>>, (usize, usize))>,
+    if_branch: Option<Br<'pr>>,
     /// `else_branch` (unless: the else clause); an elsif is reported in `elsif`.
-    else_branch: Option<(Vec<Node<'pr>>, (usize, usize))>,
+    else_branch: Option<Br<'pr>>,
     elsif: Option<Node<'pr>>,
     /// Raw children 1 and 2 (`*node`): unless swaps them.
-    raw: [Option<(Vec<Node<'pr>>, (usize, usize))>; 2],
+    raw: [Option<Br<'pr>>; 2],
 }
 
 fn parts<'pr>(node: &Node<'pr>) -> Parts<'pr> {
@@ -163,7 +166,7 @@ impl Cop for OneLineConditional {
     }
 }
 
-fn raw(src: &Source, b: &Option<(Vec<Node>, (usize, usize))>) -> String {
+fn raw(src: &Source, b: &Option<Br>) -> String {
     match b {
         None => "nil".to_string(),
         Some(v) if v.0.len() == 1 => expr(src, Some(Branch::One(&v.0[0]))),

@@ -8,7 +8,10 @@ pub struct InfiniteLoop;
 /// Every variable VariableForce saw in the file (`after_leaving_scope` runs before the walk):
 /// assignment ranges and reference start offsets.
 #[derive(Default)]
-struct Vars(Vec<(Vec<(usize, usize)>, Vec<usize>)>);
+struct Vars(Vec<VarUses>);
+
+/// (assignment ranges, reference starts) of one variable.
+type VarUses = (Vec<(usize, usize)>, Vec<usize>);
 
 fn truthy_literal(n: &Node) -> bool {
     matches!(
