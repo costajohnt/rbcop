@@ -211,6 +211,14 @@ More traps found while porting:
 - The regex crate has no lookbehind: rewrite `(?<!x)` patterns by hand.
 - Ruby crashes count: when RuboCop raises (e.g. `[nil, 1].max` in FormatString), the oracle has no
   offense there, so neither should rbcop.
+- Alignment corrections: build the edit list first, then call `alignment_corrector::correct` inside
+  the `add_fix` closure (node when RuboCop passes a node, `None` for a range). Never compute
+  `[Correctable]` from a would-it-edit helper. Display width comes from `helpers::alignment`
+  (table generated from unicode-display_width 3.2.0, emoji as plain characters).
+- MultilineMethodCallIndentation with a block corrects the selector line, the body (`ast::body_range`;
+  Prism's implicit begin starts at `do`) and the `end` line. CommentIndentation also shifts preceding
+  same-column comments separated only by blank lines.
+- Ruby's `^` does not match after the final newline.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.
 
