@@ -355,3 +355,29 @@ fn stdin_autocorrect_echoes_original_bytes() {
     }
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// inherit_gem: the rubocop gem is refused (ConfigLoaderResolver's ArgumentError), and a gem that
+/// is not installed gets gem_config_path's `Unable to find gem ...` with RubyGems' message.
+#[test]
+fn inherit_gem_errors_worded_like_rubocop() {
+    let dir = scratch("inherit-gem");
+    fs::write(dir.join("a.rb"), "x = 1\n").unwrap();
+    fs::write(dir.join(".rubocop.yml"), "inherit_gem:\n  rubocop: config/default.yml\n").unwrap();
+    let out = rbcop(&dir, &["-f", "s", "a.rb"]);
+    assert_eq!(text(&out.stderr), "can't inherit configuration from the rubocop gem\n");
+    assert_eq!(out.status.code(), Some(2));
+    fs::write(dir.join(".rubocop.yml"), "inherit_gem:\n  nonexistent_gem_xyz: x.yml\n").unwrap();
+    let out = rbcop(&dir, &["-f", "s", "a.rb"]);
+    let stderr = text(&out.stderr);
+    // Without a ruby on PATH there is no RubyGems message to compare.
+    if !stderr.contains("cannot run ruby") {
+        assert!(
+            stderr.starts_with(
+                "Unable to find gem nonexistent_gem_xyz; is the gem installed? Could not find 'nonexistent_gem_xyz' (>= 0)"
+            ),
+            "{stderr}"
+        );
+    }
+    assert_eq!(out.status.code(), Some(2));
+    let _ = fs::remove_dir_all(&dir);
+}
