@@ -185,9 +185,13 @@ fn is_variable(n: &Node) -> bool {
     )
 }
 
-/// `call_type?` of a node that is not a parser `block` (send/csend).
+/// `call_type?` of a node that is not a parser `block` (send/csend). `/re/ =~ x` is parser
+/// `match_with_lvasgn`, not a send.
 fn call_type(n: &Node) -> bool {
-    n.as_call_node().is_some_and(|c| c.block().is_none_or(|b| b.as_block_node().is_none()))
+    n.as_call_node().is_some_and(|c| {
+        c.block().is_none_or(|b| b.as_block_node().is_none())
+            && !(method_name(&c) == "=~" && c.receiver().is_some_and(|r| r.as_regular_expression_node().is_some()))
+    })
 }
 
 /// Parser arguments of a send/super/yield (a block pass included).

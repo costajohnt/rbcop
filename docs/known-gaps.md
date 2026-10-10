@@ -9,6 +9,13 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - HTML formatter escapes `& < >` in messages outside code spans and fully escapes paths; GitHub
   Actions formatter escapes CR/LF in the `file=` property. Output differs only when those appear.
 - JUnit escapes cop names in attributes (no effect for real cop names).
+- Lint/UselessTimes does not correct a block that assigns its argument with a value (`1.times do |i|
+  i = i * 2 ... end`). RuboCop's `block_reassigns_arg?` matches only a valueless `(lvasgn :i)`
+  (masgn target, op-assign), so it inlines the body with `\bi\b` replaced by `0` and writes
+  `0 = 0 * 2`, a syntax error that its next -A iteration reports as Lint/Syntax and stops on. rbcop
+  treats `i = ...` as a reassignment and reports the offense without `[Correctable]`. Also reached
+  through other cops: Style/ParallelAssignment turning `i, j = i * 2, i * 3` into `i = i * 2`
+  (corpus `specs/lint/useless_times/023.rb`, skipped by the autocorrect gates).
 
 ## Open gaps
 

@@ -59,6 +59,9 @@ struct Reassigns<'a> {
 }
 
 impl<'pr> Visit<'pr> for Reassigns<'_> {
+    // Deliberate difference: RuboCop's `(lvasgn %)` misses `i = x` (an lvasgn with a value), so it
+    // inlines the body as `0 = x`, a syntax error. rbcop counts it and leaves the block
+    // (docs/known-gaps.md).
     fn visit_local_variable_write_node(&mut self, node: &ruby_prism::LocalVariableWriteNode<'pr>) {
         self.found |= node.name().as_slice() == self.name;
         ruby_prism::visit_local_variable_write_node(self, node);
