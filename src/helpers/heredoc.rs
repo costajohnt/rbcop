@@ -129,3 +129,23 @@ pub const KINDS: &[usize] = &[
     crate::node_kind::X_STRING_NODE,
     crate::node_kind::INTERPOLATED_X_STRING_NODE,
 ];
+
+/// Heredoc#heredoc_type over the opening source (`<<~'EOS'` -> `<<~`).
+pub fn heredoc_type(opening: &str) -> &str {
+    OPENING_DELIMITER.captures(opening).and_then(|c| c.get(1)).map_or("", |m| m.as_str())
+}
+
+/// Parser's `loc.heredoc_body` as far as its text goes (Prism drops the `<<~` indentation of the
+/// first line): from the first body part to the terminator line start.
+pub fn body_range(node: &Node) -> Option<Span> {
+    let (_, (end, _), _) = parts(node)?;
+    let first = match node {
+        Node::StringNode { .. } => Some(node.as_string_node()?.content_loc().start_offset()),
+        Node::XStringNode { .. } => Some(node.as_x_string_node()?.content_loc().start_offset()),
+        Node::InterpolatedStringNode { .. } => {
+            node.as_interpolated_string_node()?.parts().iter().next().map(|p| p.location().start_offset())
+        }
+        _ => node.as_interpolated_x_string_node()?.parts().iter().next().map(|p| p.location().start_offset()),
+    };
+    Some((first.unwrap_or(end).min(end), end))
+}

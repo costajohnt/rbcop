@@ -156,3 +156,79 @@ impl<'pr> Visit<'pr> for Ser<'_> {
         }
     }
 }
+
+/// `reparse_scope`: the innermost def/class/module/sclass containing a range.
+struct ScopeFinder<'pr> {
+    range: (usize, usize),
+    found: Option<Node<'pr>>,
+}
+
+impl<'pr> Visit<'pr> for ScopeFinder<'pr> {
+    fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
+        let loc = node.location();
+        let scope = matches!(
+            node,
+            Node::DefNode { .. } | Node::ClassNode { .. } | Node::ModuleNode { .. } | Node::SingletonClassNode { .. }
+        );
+        if scope && loc.start_offset() <= self.range.0 && self.range.1 <= loc.end_offset() {
+            self.found = Some(node);
+        }
+    }
+}
+
+/// (scope range, normalized original, items).
+type Group<T> = (Option<(usize, usize)>, String, Vec<T>);
+
+/// `verified_by_reparse(items, oversized: :verify)` with `apply_reparse_correction` as `apply`:
+/// items grouped by reparse scope, a group kept whole when all its corrections together parse
+/// equivalently, else item by item. `range` gives an item's range; returns the verified items.
+pub fn verified_by_reparse<T: Copy>(
+    text: &str,
+    version: &'static str,
+    program: &Node,
+    items: &[T],
+    range: impl Fn(T) -> (usize, usize),
+    apply: impl Fn(&mut Corrector, T),
+) -> Vec<T> {
+    let source: Arc<str> = Arc::from(text);
+    // (scope range, normalized original, items) in order of first appearance.
+    let mut groups: Vec<Group<T>> = vec![];
+    for &item in items {
+        let mut f = ScopeFinder { range: range(item), found: None };
+        f.visit(program);
+        let scope = f.found.as_ref().map(|n| (n.location().start_offset(), n.location().end_offset()));
+        match groups.iter_mut().find(|g| g.0 == scope) {
+            Some(g) => g.2.push(item),
+            None => {
+                let original = serialize(text, f.found.as_ref().unwrap_or(program));
+                groups.push((scope, original, vec![item]));
+            }
+        }
+    }
+    let verify = |group: &[T], scope: Option<(usize, usize)>, original: &str| {
+        let mut c = Corrector::new(source.clone());
+        for &item in group {
+            apply(&mut c, item);
+        }
+        if c.clobbered() {
+            return false;
+        }
+        let corrected = c.rewrite();
+        match scope {
+            Some((s, e)) => {
+                let end = (e as isize + corrected.len() as isize - text.len() as isize) as usize;
+                corrected.get(s..end).is_some_and(|fragment| parses_equivalently(original, fragment, false, version))
+            }
+            None => parses_equivalently(original, &corrected, true, version),
+        }
+    };
+    let mut out = vec![];
+    for (scope, original, group) in &groups {
+        if group.len() > 1 && verify(group, *scope, original) {
+            out.extend(group.iter().copied());
+        } else {
+            out.extend(group.iter().copied().filter(|&i| verify(&[i], *scope, original)));
+        }
+    }
+    out
+}
