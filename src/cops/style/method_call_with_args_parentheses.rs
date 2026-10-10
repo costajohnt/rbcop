@@ -120,7 +120,7 @@ mod omit {
         let result = ruby_prism::parse_with_version(src.text.as_bytes(), src.version);
         let program = result.node();
         let verified =
-            verified_by_reparse_with(src.text, src.version, &program, &pending, |p| (p.open.0, p.close.1), apply, true);
+            verified_by_reparse_with(src, &program, &pending, |p| (p.open.0, p.close.1), apply, true);
         for p in verified {
             cx.add_fix(p.open.0, p.close.1, MSG, |c| apply(c, p));
         }

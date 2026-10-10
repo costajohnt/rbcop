@@ -3,29 +3,21 @@ use crate::source::Source;
 use helpers::node_equality::same;
 use helpers::parentheses_corrector::{self, ParenFix};
 use helpers::parser_parent::parser_parent_index;
-use helpers::reparsed_equivalence::{parses_equivalently, serialize};
-use std::collections::HashMap;
-use std::sync::Arc;
+use helpers::reparsed_equivalence::verified_by_reparse_with;
 
 pub const NAME: &str = "Style/RedundantParentheses";
 pub static COP: RedundantParentheses = RedundantParentheses;
 pub struct RedundantParentheses;
 
-const MAX_VERIFICATION_FRAGMENT_SIZE: usize = 64 * 1024;
-
 struct Pending {
     range: (usize, usize),
     msg: String,
     fix: ParenFix,
-    /// reparse_scope: the innermost def/class/module/sclass around the offense (None: the file).
-    scope: Option<(usize, usize)>,
 }
 
 #[derive(Default)]
 struct State {
     pending: Vec<Pending>,
-    /// Normalized structure of each scope's original code.
-    scopes: HashMap<Option<(usize, usize)>, String>,
 }
 
 fn range(n: &Node) -> (usize, usize) {
@@ -692,22 +684,13 @@ fn plan(src: &Source, target: &Node, anc: &[Node], parent: Option<usize>) -> Opt
 }
 
 /// `offense(node, msg)`: record a pending offense (verified by reparse at the end of the file).
-fn push_pending(cx: &mut Cx, anc: &[Node], r: (usize, usize), msg: &str, fix: ParenFix) {
-    let src = cx.src;
-    // reparse_scope: the innermost def/class/module/sclass containing the offense.
-    let scope_i = anc.iter().rposition(|a| {
-        matches!(kind::of(a), kind::DEF_NODE | kind::CLASS_NODE | kind::MODULE_NODE | kind::SINGLETON_CLASS_NODE)
-            && range(a).0 <= r.0
-            && r.1 <= range(a).1
-    });
-    let scope = scope_i.map(|i| range(&anc[i]));
+fn push_pending(cx: &mut Cx, r: (usize, usize), msg: &str, fix: ParenFix) {
     let state = cx.state::<State>();
-    state.scopes.entry(scope).or_insert_with(|| serialize(src.text, &anc[scope_i.unwrap_or(0)]));
     let msg = format!("Don't use parentheses around {msg}.");
     if let Some(p) = state.pending.iter_mut().find(|p| p.range == r) {
         p.msg = msg;
     } else {
-        state.pending.push(Pending { range: r, msg, fix, scope });
+        state.pending.push(Pending { range: r, msg, fix });
     }
 }
 
@@ -739,7 +722,7 @@ impl Cop for RedundantParentheses {
                 None,
             );
             let r = (o.start_offset(), c.end_offset());
-            push_pending(cx, anc, r, "a variable", fix);
+            push_pending(cx, r, "a variable", fix);
             return;
         }
         // `def (expr).foo`: parser has no begin there.
@@ -773,7 +756,7 @@ impl Cop for RedundantParentheses {
         };
         let target_node = if target == usize::MAX { node } else { &anc[target] };
         let Some(fix) = plan(src, target_node, anc, target_parent) else { return };
-        push_pending(cx, anc, range(target_node), msg, fix);
+        push_pending(cx, range(target_node), msg, fix);
     }
 
     fn on_file(&self, cx: &mut Cx) {
@@ -782,46 +765,12 @@ impl Cop for RedundantParentheses {
             return;
         }
         let src = cx.src;
-        let source: Arc<str> = Arc::from(src.text);
-        let mut order: Vec<Option<(usize, usize)>> = vec![];
-        for p in &state.pending {
-            if !order.contains(&p.scope) {
-                order.push(p.scope);
-            }
-        }
-        let verify = |items: &[&Pending], scope: Option<(usize, usize)>| -> bool {
-            let mut c = Corrector::new(source.clone());
-            for p in items {
-                parentheses_corrector::apply(&mut c, &p.fix);
-            }
-            if c.clobbered() {
-                return false;
-            }
-            let corrected = c.rewrite();
-            let original = &state.scopes[&scope];
-            match scope {
-                Some((s, e)) => {
-                    let end = (e as isize + corrected.len() as isize - src.text.len() as isize) as usize;
-                    let Some(fragment) = corrected.get(s..end) else { return false };
-                    parses_equivalently(original, fragment, false, src.version)
-                }
-                None => parses_equivalently(original, &corrected, true, src.version),
-            }
-        };
-        let mut keep: Vec<&Pending> = vec![];
-        for scope in order {
-            let group: Vec<&Pending> = state.pending.iter().filter(|p| p.scope == scope).collect();
-            let size = match scope {
-                Some((s, e)) => src.text[s..e].chars().count(),
-                None => src.raw_text.chars().count(),
-            };
-            if size > MAX_VERIFICATION_FRAGMENT_SIZE || (group.len() > 1 && verify(&group, scope)) {
-                keep.extend(group);
-            } else {
-                keep.extend(group.into_iter().filter(|p| verify(std::slice::from_ref(p), scope)));
-            }
-        }
-        for p in keep {
+        let result = ruby_prism::parse_with_version(src.text.as_bytes(), src.version);
+        let pending = &state.pending;
+        let items: Vec<usize> = (0..pending.len()).collect();
+        let apply = |c: &mut Corrector, i: usize| parentheses_corrector::apply(c, &pending[i].fix);
+        for i in verified_by_reparse_with(src, &result.node(), &items, |i| pending[i].range, apply, true) {
+            let p = &pending[i];
             cx.add_fix(p.range.0, p.range.1, p.msg.clone(), |c| parentheses_corrector::apply(c, &p.fix));
         }
     }

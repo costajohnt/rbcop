@@ -6,6 +6,7 @@
 
 use crate::autocorrect::corrector::Corrector;
 use crate::node_kind as kind;
+use crate::source::Source;
 use ruby_prism::{Node, Visit};
 use std::sync::Arc;
 
@@ -328,21 +329,22 @@ pub fn verified_by_reparse_folding<T: Copy>(
     apply: impl Fn(&mut Corrector, T),
     fold: bool,
 ) -> Vec<T> {
-    verified_by_reparse_opts(text, version, program, items, range, apply, ReparseOpts { fold, report_oversized: false })
+    let opts = ReparseOpts { fold, report_oversized: false, raw_text: text };
+    verified_by_reparse_opts(text, version, program, items, range, apply, opts)
 }
 
 /// `verified_by_reparse(items, oversized:)`: with `report_oversized` (`oversized: :report`, the
-/// default), a group whose scope (or file) exceeds 64 KiB is kept without reparsing.
+/// default), a group whose scope (or the raw file) exceeds 64 KiB is kept without reparsing.
 pub fn verified_by_reparse_with<T: Copy>(
-    text: &str,
-    version: &'static str,
+    src: &Source,
     program: &Node,
     items: &[T],
     range: impl Fn(T) -> (usize, usize),
     apply: impl Fn(&mut Corrector, T),
     report_oversized: bool,
 ) -> Vec<T> {
-    verified_by_reparse_opts(text, version, program, items, range, apply, ReparseOpts { fold: false, report_oversized })
+    let opts = ReparseOpts { fold: false, report_oversized, raw_text: src.raw_text };
+    verified_by_reparse_opts(src.text, src.version, program, items, range, apply, opts)
 }
 
 /// MAX_VERIFICATION_FRAGMENT_SIZE (characters of the reparse scope).
@@ -352,9 +354,11 @@ const MAX_VERIFICATION_FRAGMENT_SIZE: usize = 64 * 1024;
 const MAX_ITEM_BY_ITEM_WORK: usize = 1 << 30;
 
 #[derive(Clone, Copy)]
-struct ReparseOpts {
+struct ReparseOpts<'a> {
     fold: bool,
     report_oversized: bool,
+    /// `processed_source.raw_source` (CRLF intact): the whole-file size for `report_oversized`.
+    raw_text: &'a str,
 }
 
 fn verified_by_reparse_opts<T: Copy>(
@@ -366,7 +370,7 @@ fn verified_by_reparse_opts<T: Copy>(
     apply: impl Fn(&mut Corrector, T),
     opts: ReparseOpts,
 ) -> Vec<T> {
-    let ReparseOpts { fold, report_oversized } = opts;
+    let ReparseOpts { fold, report_oversized, raw_text } = opts;
     let source: Arc<str> = Arc::from(text);
     // (scope range, normalized original, items) in order of first appearance.
     let mut groups: Vec<Group<T>> = vec![];
@@ -410,8 +414,8 @@ fn verified_by_reparse_opts<T: Copy>(
     let mut out = vec![];
     for (scope, original, group) in &groups {
         let too_large = || {
-            let (s, e) = scope.unwrap_or((0, text.len()));
-            text[s..e].chars().count() > MAX_VERIFICATION_FRAGMENT_SIZE
+            let fragment = scope.map_or(raw_text, |(s, e)| &text[s..e]);
+            fragment.chars().count() > MAX_VERIFICATION_FRAGMENT_SIZE
         };
         if (report_oversized && too_large()) || (group.len() > 1 && verify(group, *scope, original)) {
             out.extend(group.iter().copied());

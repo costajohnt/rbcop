@@ -2,44 +2,12 @@ use crate::helpers::parser_parent::is_top_const;
 use crate::helpers::range_help::{Side, Surrounding, range_with_surrounding_space};
 use crate::helpers::whole_lines::range_by_whole_lines;
 use crate::prelude::*;
+use crate::cops::style_struct_inheritance::DefinesConstants;
 use ruby_prism::Visit;
 
 pub const NAME: &str = "Style/DataInheritance";
 pub static COP: DataInheritance = DataInheritance;
 pub struct DataInheritance;
-
-/// `class_body.each_node(:casgn, :class, :module).any?`
-#[derive(Default)]
-struct DefinesConstants(bool);
-
-impl<'pr> Visit<'pr> for DefinesConstants {
-    fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
-        self.check(&node);
-    }
-    fn visit_leaf_node_enter(&mut self, node: Node<'pr>) {
-        self.check(&node);
-    }
-}
-
-impl DefinesConstants {
-    fn check(&mut self, node: &Node) {
-        self.0 |= matches!(
-            kind::of(node),
-            kind::CONSTANT_WRITE_NODE
-                | kind::CONSTANT_PATH_WRITE_NODE
-                | kind::CONSTANT_OR_WRITE_NODE
-                | kind::CONSTANT_AND_WRITE_NODE
-                | kind::CONSTANT_OPERATOR_WRITE_NODE
-                | kind::CONSTANT_PATH_OR_WRITE_NODE
-                | kind::CONSTANT_PATH_AND_WRITE_NODE
-                | kind::CONSTANT_PATH_OPERATOR_WRITE_NODE
-                | kind::CONSTANT_TARGET_NODE
-                | kind::CONSTANT_PATH_TARGET_NODE
-                | kind::CLASS_NODE
-                | kind::MODULE_NODE
-        );
-    }
-}
 
 impl Cop for DataInheritance {
     fn correctable(&self) -> bool {
