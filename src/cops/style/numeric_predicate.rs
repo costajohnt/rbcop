@@ -61,9 +61,6 @@ impl Cop for NumericPredicate {
                 return;
             }
             let Some(&(_, op)) = REPLACEMENTS.iter().find(|(p, _)| *p == name) else { return };
-            if !replacement_supported(cx, op) {
-                return;
-            }
             let negated = helpers::parser_parent::parser_parent(cx.ancestors)
                 .and_then(|p| p.as_call_node())
                 .is_some_and(|p| !is_csend(&p) && method_name(&p) == "!");
@@ -80,7 +77,8 @@ impl Cop for NumericPredicate {
     }
 }
 
-/// `positive?` / `negative?` need Ruby 2.3.
+/// `positive?` / `negative?` need Ruby 2.3. Only the predicate style's operator can be `>`/`<`;
+/// the comparison style's is the predicate name, which is always supported.
 fn replacement_supported(cx: &Cx, op: &str) -> bool {
     !matches!(op, ">" | "<") || cx.config.target_ruby >= 2.3
 }
