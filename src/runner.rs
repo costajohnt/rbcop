@@ -65,24 +65,28 @@ pub fn inspect_bytes(
     let error = crate::source::encoding_error(&bytes);
     match String::from_utf8(bytes) {
         Ok(text) => match error {
-            Some(msg) => encoding_error_report(text, msg),
+            Some(msg) => encoding_error_report(text, msg, selected),
             None => inspect(path, display, text, cfg, selected),
         },
         Err(e) => {
             let text = String::from_utf8_lossy(e.as_bytes()).into_owned();
             if let Some(msg) = error {
-                return encoding_error_report(text, msg);
+                return encoding_error_report(text, msg, selected);
             }
             if !crate::source::must_be_utf8(&text) {
                 return inspect(path, display, text, cfg, selected);
             }
-            encoding_error_report(text, "Invalid byte sequence in utf-8.".into())
+            encoding_error_report(text, "Invalid byte sequence in utf-8.".into(), selected)
         }
     }
 }
 
 /// Lint/Syntax#add_offense_from_error: a global offense, beautified message, no version note.
-fn encoding_error_report(text: String, message: String) -> FileReport {
+fn encoding_error_report(text: String, message: String, selected: &dyn Fn(&str) -> bool) -> FileReport {
+    // Lint/Syntax is not mobilized under -x, --only-guide-cops or `StyleGuideCopsOnly`.
+    if !selected("Lint/Syntax") {
+        return FileReport { offenses: Vec::new(), text };
+    }
     let offense = Offense {
         start: 0,
         end: 0,
@@ -352,7 +356,11 @@ fn analyze(
 
     if !errors.is_empty() {
         // RuboCop runs only Lint/Syntax on a file that does not parse, one offense per diagnostic,
-        // and does so even under --only.
+        // and does so even under --only (which always lists it); not under -x or the style-guide
+        // filter, which leave it out.
+        if !selected("Lint/Syntax") {
+            return (Vec::new(), None, Vec::new());
+        }
         let ruby = format_ruby_version(cfg.target_ruby);
         let mut out: Vec<Offense> = errors
             .into_iter()
@@ -416,7 +424,7 @@ fn analyze(
     let config_disabled: Vec<&'static str> = crate::helpers::cop_registry::REGISTRY
         .iter()
         .copied()
-        .filter(|&c| selected(c) && !directives::config_enabled(cfg, c))
+        .filter(|&c| selected(c) && !cfg.cop_enabled(c))
         .collect();
     if src.text.contains("rubocop") {
         // DisableNext needs statement bounds before the cops run (disabled ranges gate `add_fix`).
