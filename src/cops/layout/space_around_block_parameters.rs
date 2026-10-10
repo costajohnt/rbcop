@@ -4,10 +4,14 @@ pub const NAME: &str = "Layout/SpaceAroundBlockParameters";
 pub static COP: SpaceAroundBlockParameters = SpaceAroundBlockParameters;
 pub struct SpaceAroundBlockParameters;
 
-/// `check_space`: report when the two positions touch (no space between them).
-fn check_space(cx: &mut Cx, a: usize, b: usize, range: (usize, usize), msg: &str) {
+/// `check_space`: report when the two positions touch (no space between them). With `node` the
+/// fix inserts a space before the range (`insert_before(node)`), otherwise after it.
+fn check_space(cx: &mut Cx, a: usize, b: usize, range: (usize, usize), msg: &str, node: bool) {
     if a == b {
-        cx.add(range.0, range.1, format!("Space {msg} missing."));
+        let (s, e) = range;
+        cx.add_fix(s, e, format!("Space {msg} missing."), |c| {
+            if node { c.insert_before(s, e, " ") } else { c.insert_after(s, e, " ") }
+        });
     }
 }
 
@@ -15,7 +19,7 @@ fn check_no_space(cx: &mut Cx, a: usize, b: usize, msg: &str) {
     if a >= b || cx.src.slice(a, b).contains('\n') {
         return;
     }
-    cx.add(a, b, format!("{msg} block parameter detected."));
+    cx.add_fix(a, b, format!("{msg} block parameter detected."), |c| c.remove(a, b));
 }
 
 fn check_arg(cx: &mut Cx, arg: &Node) {
@@ -80,16 +84,16 @@ impl Cop for SpaceAroundBlockParameters {
                     check_no_space(cx, last_end, close_s, "Space after last");
                 }
                 "space" => {
-                    check_space(cx, open_e, first_s, (first_s, first_e), "before first block parameter");
+                    check_space(cx, open_e, first_s, (first_s, first_e), "before first block parameter", true);
                     check_no_space(cx, open_e, first_s.saturating_sub(1), "Extra space before first");
-                    check_space(cx, last_end, close_s, (last_s, last_e), "after last block parameter");
+                    check_space(cx, last_end, close_s, (last_s, last_e), "after last block parameter", false);
                     check_no_space(cx, last_end + 1, close_s, "Extra space after last");
                 }
                 _ => {}
             }
         }
         if let Some(body) = body {
-            check_space(cx, close.end_offset(), body_range(&body).0, (close_s, close.end_offset()), "after closing `|`");
+            check_space(cx, close.end_offset(), body_range(&body).0, (close_s, close.end_offset()), "after closing `|`", false);
         }
         for arg in &args {
             check_arg(cx, arg);

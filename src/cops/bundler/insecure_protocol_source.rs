@@ -36,7 +36,7 @@ impl Cop for InsecureProtocolSource {
         } else {
             return;
         };
-        let loc = arg.location();
-        cx.add(loc.start_offset(), loc.end_offset(), msg);
+        let (s, e) = (arg.location().start_offset(), arg.location().end_offset());
+        cx.add_fix(s, e, msg, |c| c.replace(s, e, "'https://rubygems.org'"));
     }
 }

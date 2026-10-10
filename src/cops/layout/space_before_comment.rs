@@ -21,7 +21,7 @@ impl Cop for SpaceBeforeComment {
             }
             // Prism's comment token includes the newline; the parser gem's comment does not.
             let end = src.comments.iter().find(|c| c.start == t2.start).map_or(t2.end, |c| c.end);
-            cx.add(t2.start, end, "Put a space before an end-of-line comment.");
+            cx.add_fix(t2.start, end, "Put a space before an end-of-line comment.", |c| c.insert_before(t2.start, end, " "));
         }
     }
 }

@@ -12,6 +12,11 @@ static IRANGE_SPACE: LazyLock<Regex> =
 static ERANGE_SPACE: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"[ \t\n\x0B\x0C\r]\.\.\.|\.\.\.[ \t\n\x0B\x0C\r]").unwrap());
 
+static IRANGE_BEFORE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"[ \t\n\x0B\x0C\r]+\.\.").unwrap());
+static IRANGE_AFTER: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\.\.[ \t\n\x0B\x0C\r]+").unwrap());
+static ERANGE_BEFORE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"[ \t\n\x0B\x0C\r]+\.\.\.").unwrap());
+static ERANGE_AFTER: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\.\.\.[ \t\n\x0B\x0C\r]+").unwrap());
+
 impl Cop for SpaceInsideRangeLiteral {
     fn correctable(&self) -> bool {
         true
@@ -32,7 +37,10 @@ impl Cop for SpaceInsideRangeLiteral {
         // A line break right after the operator (plus the next line's indentation) is fine.
         let expression = nl.replace(node_text(node), op);
         if space.is_match(&expression) {
-            cx.add(loc.start_offset(), loc.end_offset(), "Space inside range literal.");
+            let (before, after) = if range.is_exclude_end() { (&*ERANGE_BEFORE, &*ERANGE_AFTER) } else { (&*IRANGE_BEFORE, &*IRANGE_AFTER) };
+            let fixed = after.replace(&before.replace(&expression, op), op).into_owned();
+            let (s, e) = (loc.start_offset(), loc.end_offset());
+            cx.add_fix(s, e, "Space inside range literal.", |c| c.replace(s, e, &fixed));
         }
     }
 }

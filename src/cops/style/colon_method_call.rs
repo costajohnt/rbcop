@@ -45,6 +45,7 @@ impl Cop for ColonMethodCall {
         if receiver.as_constant_read_node().is_some_and(|c| c.name().as_slice() == b"Java") {
             return;
         }
-        cx.add(dot.start_offset(), dot.end_offset(), "Do not use `::` for method calls.");
+        let (s, e) = (dot.start_offset(), dot.end_offset());
+        cx.add_fix(s, e, "Do not use `::` for method calls.", |c| c.replace(s, e, "."));
     }
 }

@@ -72,10 +72,10 @@ impl Checker<'_, '_, '_, '_> {
         let (s, e) = (loc.start_offset(), loc.end_offset());
         let kw = text(&loc);
         if self.space_before_missing(s) && !preceded_by_operator(self.ancestors) {
-            self.cx.add(s, e, format!("Space before keyword `{kw}` is missing."));
+            self.cx.add_fix(s, e, format!("Space before keyword `{kw}` is missing."), |c| c.insert_before(s, e, " "));
         }
         if self.space_after_missing(kw, e) {
-            self.cx.add(s, e, format!("Space after keyword `{kw}` is missing."));
+            self.cx.add_fix(s, e, format!("Space after keyword `{kw}` is missing."), |c| c.insert_after(s, e, " "));
         }
     }
 
@@ -96,7 +96,8 @@ impl Checker<'_, '_, '_, '_> {
         if let Some(loc) = loc
             && self.space_before_missing(loc.start_offset())
         {
-            self.cx.add(loc.start_offset(), loc.end_offset(), format!("Space before keyword `{}` is missing.", text(&loc)));
+            let (s, e) = (loc.start_offset(), loc.end_offset());
+            self.cx.add_fix(s, e, format!("Space before keyword `{}` is missing.", text(&loc)), |c| c.insert_before(s, e, " "));
         }
     }
 
@@ -184,10 +185,10 @@ impl Cop for SpaceAroundKeyword {
                 // `super` keyword: the first five bytes of the node.
                 let s = node.location().start_offset();
                 if c.space_before_missing(s) && !preceded_by_operator(c.ancestors) {
-                    c.cx.add(s, s + 5, "Space before keyword `super` is missing.");
+                    c.cx.add_fix(s, s + 5, "Space before keyword `super` is missing.", |k| k.insert_before(s, s + 5, " "));
                 }
                 if c.space_after_missing("super", s + 5) {
-                    c.cx.add(s, s + 5, "Space after keyword `super` is missing.");
+                    c.cx.add_fix(s, s + 5, "Space after keyword `super` is missing.", |k| k.insert_after(s, s + 5, " "));
                 }
             }
             kind::DEFINED_NODE => c.keyword(node.as_defined_node().unwrap().keyword_loc()),

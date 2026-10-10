@@ -26,6 +26,8 @@ impl Cop for DefWithParentheses {
                 return;
             }
         }
-        cx.add(start, end, "Omit the parentheses in defs when the method doesn't accept any arguments.");
+        cx.add_fix(start, end, "Omit the parentheses in defs when the method doesn't accept any arguments.", |c| {
+            c.remove(start, end)
+        });
     }
 }
