@@ -1,0 +1,5 @@
+AllCops:
+  Exclude:
+    - 'x.rb'
+Lint/Debugger:
+  Enabled: false

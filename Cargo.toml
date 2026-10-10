@@ -6,3 +6,5 @@ edition = "2024"
 [dependencies]
 regex = "1.13.1"
 ruby-prism = "1.9.0"
+ruby-prism-sys = "1.9.0"
+yaml-rust2 = "0.13.0"

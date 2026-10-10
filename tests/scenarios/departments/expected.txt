@@ -1,0 +1,8 @@
+Gemfile:1:1: I: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+sample.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for `class Sample`.
+sample.rb:1:1: I: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+sample.rb:2:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+sample.rb:2:3: R: Metrics/MethodLength: Method has too many lines. [12/10]
+sample.rb:7:22: E: [Correctable] Style/NilComparison: Prefer the use of the `nil?` predicate.
+sample.rb:9:121: C: Layout/LineLength: Line is too long. [143/120]
+sample.rb:9:12: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.

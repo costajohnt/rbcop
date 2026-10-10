@@ -1,0 +1,7 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
+emacs.rb:1:1: C: [Correctable] Style/Encoding: Unnecessary utf-8 encoding comment.
+emacs.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+falsy.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+falsy.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+missing.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
+upper.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.

@@ -1,0 +1,7 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+sample.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for `class Sample`.
+sample.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+sample.rb:6:5: W: Lint/Debugger: Remove debugger entry point `binding.pry`.
+sample.rb:7:22: C: [Correctable] Style/NilComparison: Prefer the use of the `nil?` predicate.
+sample.rb:9:101: C: Layout/LineLength: Line is too long. [143/100]
+sample.rb:9:12: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.

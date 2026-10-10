@@ -1,0 +1,6 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+d.rb:12:1: W: Lint/Debugger: Remove debugger entry point `binding.pry`.
+d.rb:15:7: C: [Correctable] Style/NilComparison: Prefer the use of the `nil?` predicate.
+d.rb:20:1: W: Lint/Debugger: Remove debugger entry point `binding.pry`.
+d.rb:3:6: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+d.rb:8:6: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.

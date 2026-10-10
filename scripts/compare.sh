@@ -1,19 +1,36 @@
 #!/bin/sh
-# Diff rbcop against real RuboCop on a directory, using default config and only the cops rbcop implements.
-# usage: scripts/compare.sh <dir>   (needs `rubocop` on PATH; with rbenv set RBENV_VERSION)
+# Diff rbcop against real RuboCop on a directory.
+# usage: scripts/compare.sh [--project-config] <dir> [Cop1,Cop2,...]
+#   default: both run with --force-default-config
+#   --project-config: both use the directory's own .rubocop.yml files (plugins must be installed for RuboCop)
+#   cops default to every cop rbcop implements
+# Needs `rubocop` on PATH (with rbenv, set RBENV_VERSION). Results go to $TMPDIR/rbcop-compare/.
 set -eu
+mode=--force-default-config
+if [ "${1:-}" = "--project-config" ]; then
+  mode=
+  shift
+fi
 dir=$(cd "$1" && pwd)
 bin=$(cd "$(dirname "$0")/.." && pwd)/target/release/rbcop
 out=${TMPDIR:-/tmp}/rbcop-compare
 mkdir -p "$out"
-cops=$("$bin" --list-cops | paste -sd, -)
+cops=${2:-$("$bin" --show-cops | paste -sd, -)}
 
 # LineLength's [Correctable] tag depends on CheckLineBreakable, which rbcop does not model yet.
-norm() { sed -E 's/\[Correctable\] (Layout\/LineLength)/\1/' | LC_ALL=C sort; }
+# rubocop-md lints Ruby inside Markdown; rbcop does not, so .md results are dropped.
+norm() { grep -v '\.md:[0-9]*:[0-9]*: ' | sed -E 's/\[Correctable\] (Layout\/LineLength)/\1/' | LC_ALL=C sort; }
 
 cd "$dir"
-rubocop --force-default-config --cache false --format emacs --only "$cops" . 2>/dev/null | norm > "$out/rubocop.txt" || true
-"$bin" --only "$cops" . 2>"$out/rbcop.err" | norm > "$out/rbcop.txt" || true
+if [ -n "$mode" ]; then
+  rubocop $mode --cache false --format emacs --only "$cops" . 2>"$out/rubocop.err" | norm > "$out/rubocop.txt" || true
+  "$bin" $mode --format emacs --only "$cops" . 2>"$out/rbcop.err" | norm > "$out/rbcop.txt" || true
+else
+  # --only would force-enable the cops, so run everything the config enables and keep rbcop's cops.
+  pattern=": [CWEFRI]: (\[Correctable\] )?($(echo "$cops" | tr , '|')): "
+  rubocop --cache false --format emacs . 2>"$out/rubocop.err" | grep -E "$pattern" | norm > "$out/rubocop.txt" || true
+  "$bin" --format emacs . 2>"$out/rbcop.err" | grep -E "$pattern" | norm > "$out/rbcop.txt" || true
+fi
 
 echo "rubocop: $(wc -l < "$out/rubocop.txt") offenses   rbcop: $(wc -l < "$out/rbcop.txt") offenses"
 LC_ALL=C comm -23 "$out/rubocop.txt" "$out/rbcop.txt" | sed 's/^/< /' > "$out/diff.txt"
@@ -23,5 +40,6 @@ if [ ! -s "$out/diff.txt" ]; then
   exit 0
 fi
 echo "only in rubocop (<): $(grep -c '^<' "$out/diff.txt" || true)   only in rbcop (>): $(grep -c '^>' "$out/diff.txt" || true)"
-sed -E 's/^([<>]).*: [CW]: (\[Correctable\] )?([A-Za-z]+\/[A-Za-z]+):.*/\1 \3/' "$out/diff.txt" | sort | uniq -c | sort -rn
+sed -E 's/^([<>]).*: [CWEFRI]: (\[Correctable\] )?([A-Za-z]+\/[A-Za-z0-9]+):.*/\1 \3/' "$out/diff.txt" | sort | uniq -c | sort -rn | head -40
 echo "details: $out/diff.txt"
+exit 1

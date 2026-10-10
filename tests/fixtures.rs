@@ -5,7 +5,11 @@ use std::process::Command;
 #[test]
 fn matches_rubocop_on_fixtures() {
     let dir = concat!(env!("CARGO_MANIFEST_DIR"), "/tests/fixtures");
-    let out = Command::new(env!("CARGO_BIN_EXE_rbcop")).arg(dir).output().unwrap();
+    let out = Command::new(env!("CARGO_BIN_EXE_rbcop"))
+        .args(["--force-default-config", "--format", "emacs"])
+        .arg(dir)
+        .output()
+        .unwrap();
     let actual: String = String::from_utf8(out.stdout)
         .unwrap()
         .lines()

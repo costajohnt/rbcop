@@ -1,0 +1,5 @@
+inherit_from: .rubocop_base.yml
+Layout/TrailingWhitespace:
+  Enabled: true
+Layout/EmptyLines:
+  Max: 3

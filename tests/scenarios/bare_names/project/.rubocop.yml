@@ -1,0 +1,6 @@
+Debugger:
+  Enabled: false
+LineLength:
+  Max: 50
+NilComparison:
+  Enabled: false

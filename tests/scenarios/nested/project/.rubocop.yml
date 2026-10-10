@@ -1,0 +1,5 @@
+AllCops:
+  Exclude:
+    - 'legacy/**/*'
+Layout/LineLength:
+  Max: 80

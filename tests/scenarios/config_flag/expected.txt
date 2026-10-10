@@ -1,0 +1,20 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+sample.rb:10:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sample.rb:13:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sample.rb:16:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sample.rb:19:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+sample.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for `class Sample`.
+sample.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+sample.rb:2:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+sample.rb:2:3: R: Metrics/MethodLength: Method has too many lines. [12/10]
+sample.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+sample.rb:3:2: C: [Correctable] Layout/IndentationWidth: Use 2 (not -1) spaces for indentation.
+sample.rb:5:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+sample.rb:6:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sample.rb:7:22: C: [Correctable] Style/NilComparison: Prefer the use of the `nil?` predicate.
+sample.rb:7:5: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+sample.rb:7:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sample.rb:8:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sample.rb:9:12: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+sample.rb:9:31: C: Layout/LineLength: Line is too long. [143/30]
+sample.rb:9:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.

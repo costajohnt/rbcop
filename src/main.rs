@@ -1,195 +1,149 @@
-mod cops;
-
-use std::path::{Path, PathBuf};
+use rbcop::config::{Options, Store, relative_path};
+use rbcop::formatter::{self, Inspected};
+use rbcop::runner::{self, FileReport};
+use rbcop::{cops, targets};
+use std::path::PathBuf;
 use std::process::ExitCode;
 use std::{env, fs, thread};
 
-// AllCops/Include from RuboCop's default.yml.
-const EXTENSIONS: &[&str] = &[
-    "rb",
-    "arb",
-    "axlsx",
-    "builder",
-    "gemfile",
-    "gemspec",
-    "jb",
-    "jbuilder",
-    "mspec",
-    "opal",
-    "pluginspec",
-    "podspec",
-    "rabl",
-    "rake",
-    "rbw",
-    "ru",
-    "ruby",
-    "schema",
-    "spec",
-    "thor",
-];
-const FILENAMES: &[&str] = &[
-    ".irbrc",
-    ".pryrc",
-    ".simplecov",
-    "buildfile",
-    "Appraisals",
-    "Berksfile",
-    "Brewfile",
-    "Buildfile",
-    "Capfile",
-    "Dangerfile",
-    "Deliverfile",
-    "Fastfile",
-    "Gemfile",
-    "Guardfile",
-    "Jarfile",
-    "Mavenfile",
-    "Podfile",
-    "Puppetfile",
-    "Rakefile",
-    "rakefile",
-    "Schemafile",
-    "Snapfile",
-    "Steepfile",
-    "Thorfile",
-    "Vagrantfile",
-];
-// AllCops/Exclude, relative to the directory being inspected.
-const EXCLUDED_DIRS: &[&str] = &["node_modules", "tmp", "vendor", ".git"];
+const USAGE: &str = "usage: rbcop [options] [file1, file2, ...]
 
-const USAGE: &str = "usage: rbcop [--only Cop1,Cop2] [--format emacs] [paths...]";
+  -c, --config FILE              Specify configuration file.
+      --force-default-config     Use default configuration even if a config file exists.
+      --only Cop1,Cop2           Run only the given cops.
+      --except Cop1,Cop2         Exclude the given cops.
+  -f, --format FORMATTER         emacs
+  -L, --list-target-files        List all files rbcop will inspect.
+      --show-cops                List implemented cops.
+      --force-exclusion          Apply AllCops/Exclude to files passed explicitly.
+      --ignore-parent-exclusion  Do not inherit AllCops/Exclude from parent .rubocop.yml files.
+      --enable-pending-cops      Run cops marked `Enabled: pending`.
+      --disable-pending-cops     Never run pending cops.
+  -v, --version                  Show the RuboCop version rbcop matches.";
 
-fn main() -> ExitCode {
-    let mut only: Option<Vec<String>> = None;
-    let mut list_files = false;
-    let mut roots = Vec::new();
+struct Cli {
+    opts: Options,
+    except: Vec<String>,
+    format: String,
+    list_targets: bool,
+    force_exclusion: bool,
+    paths: Vec<PathBuf>,
+}
+
+fn parse_args() -> Result<Option<Cli>, String> {
+    let mut cli = Cli {
+        opts: Options::default(),
+        except: Vec::new(),
+        format: "emacs".into(),
+        list_targets: false,
+        force_exclusion: false,
+        paths: Vec::new(),
+    };
     let mut args = env::args().skip(1);
+    let list = |v: Option<String>| v.map(|v| v.split(',').map(|s| s.trim().to_string()).collect()).unwrap_or_default();
     while let Some(arg) = args.next() {
         match arg.as_str() {
-            "--only" => only = args.next().map(|v| v.split(',').map(String::from).collect()),
-            // emacs is the only format so far; accepted so commands match rubocop's.
-            "--format" | "-f" => {
-                args.next();
+            "--only" => cli.opts.only = list(args.next()),
+            "--except" => cli.except = list(args.next()),
+            "-c" | "--config" => cli.opts.config_file = args.next().map(PathBuf::from),
+            "--force-default-config" => cli.opts.force_default_config = true,
+            "-f" | "--format" => cli.format = args.next().ok_or("--format needs a value")?,
+            "-L" | "--list-target-files" => cli.list_targets = true,
+            "--force-exclusion" => cli.force_exclusion = true,
+            "--ignore-parent-exclusion" => cli.opts.ignore_parent_exclusion = true,
+            "--enable-pending-cops" => cli.opts.enable_pending_cops = true,
+            "--disable-pending-cops" => cli.opts.disable_pending_cops = true,
+            "--show-cops" => {
+                cops::ALL.iter().for_each(|c| println!("{}", c.name));
+                return Ok(None);
             }
-            // Like rubocop -L: print the files that would be inspected.
-            "-L" | "--list-files" => list_files = true,
-            "--list-cops" => {
-                cops::COPS.iter().for_each(|c| println!("{}", c.name));
-                return ExitCode::SUCCESS;
+            "-v" | "--version" => {
+                println!("{}", rbcop::config::RUBOCOP_VERSION);
+                return Ok(None);
             }
             "-h" | "--help" => {
                 println!("{USAGE}");
-                return ExitCode::SUCCESS;
+                return Ok(None);
             }
-            a if a.starts_with('-') => {
-                eprintln!("unknown option {a}\n{USAGE}");
-                return ExitCode::from(2);
-            }
-            _ => roots.push(PathBuf::from(arg)),
+            a if a.starts_with('-') => return Err(format!("invalid option: {a}")),
+            _ => cli.paths.push(PathBuf::from(arg)),
         }
     }
-    if roots.is_empty() {
-        roots.push(PathBuf::from("."));
+    if !formatter::FORMATS.contains(&cli.format.as_str()) {
+        return Err(format!("unknown formatter {}", cli.format));
     }
+    Ok(Some(cli))
+}
 
-    let mut files = Vec::new();
-    for root in &roots {
-        if root.is_dir() {
-            walk(root, root, &mut files);
-        } else {
-            files.push(root.clone());
+fn main() -> ExitCode {
+    let cli = match parse_args() {
+        Ok(Some(cli)) => cli,
+        Ok(None) => return ExitCode::SUCCESS,
+        Err(e) => {
+            eprintln!("rbcop: {e}\n{USAGE}");
+            return ExitCode::from(2);
+        }
+    };
+    match run(cli) {
+        Ok(true) => ExitCode::from(1),
+        Ok(false) => ExitCode::SUCCESS,
+        Err(e) => {
+            eprintln!("rbcop: {e}");
+            ExitCode::from(2)
         }
     }
-    files.sort();
-    if list_files {
-        files.iter().for_each(|f| println!("{}", f.display()));
-        return ExitCode::SUCCESS;
-    }
+}
 
-    let on = |cop: &str| only.as_ref().is_none_or(|o| o.iter().any(|c| c == cop));
+/// Returns whether any offense was found.
+fn run(cli: Cli) -> Result<bool, String> {
+    let names: Vec<&'static str> = cops::ALL.iter().map(|c| c.name).collect();
+    let mut store = Store::new(cli.opts.clone(), names)?;
+    let files = targets::find(&mut store, &cli.paths, cli.force_exclusion)?;
+    let cwd = store.cwd().to_path_buf();
+    if cli.list_targets {
+        for f in &files {
+            println!("{}", relative_path(f, &cwd));
+        }
+        return Ok(false);
+    }
+    // Resolve configs up front (single-threaded), then lint in parallel.
+    let mut jobs = Vec::with_capacity(files.len());
+    for f in &files {
+        jobs.push((f.clone(), store.for_file(f)?));
+    }
+    for w in &store.warnings {
+        eprintln!("Warning: {w}");
+    }
+    let only = &cli.opts.only;
+    let except = &cli.except;
+    let selected = |cop: &str| (only.is_empty() || only.iter().any(|o| o == cop)) && !except.iter().any(|e| e == cop);
     let workers = thread::available_parallelism().map_or(4, |n| n.get());
-    let chunk = files.len().div_ceil(workers).max(1);
-    let reports: Vec<String> = thread::scope(|s| {
-        let handles: Vec<_> = files
+    let chunk = jobs.len().div_ceil(workers).max(1);
+    let reports: Vec<FileReport> = thread::scope(|s| {
+        let handles: Vec<_> = jobs
             .chunks(chunk)
-            .map(|part| s.spawn(|| part.iter().map(|f| inspect(f, &on)).collect::<Vec<_>>()))
+            .map(|part| {
+                s.spawn(|| {
+                    part.iter()
+                        .map(|(path, cfg)| {
+                            let text =
+                                fs::read(path).map(|b| String::from_utf8_lossy(&b).into_owned()).unwrap_or_default();
+                            let display = relative_path(path, &cwd);
+                            let mut r = runner::inspect(path, &display, text, cfg, &selected);
+                            r.offenses.sort_by(|a, b| (a.start, a.cop).cmp(&(b.start, b.cop)));
+                            r
+                        })
+                        .collect::<Vec<_>>()
+                })
+            })
             .collect();
         handles.into_iter().flat_map(|h| h.join().unwrap()).collect()
     });
-
-    let mut found = false;
-    for report in reports {
-        found |= !report.is_empty();
-        print!("{report}");
-    }
-    if found { ExitCode::from(1) } else { ExitCode::SUCCESS }
-}
-
-/// Lint one file and render its offenses in RuboCop's emacs format.
-fn inspect(path: &Path, on: &dyn Fn(&str) -> bool) -> String {
-    let Ok(bytes) = fs::read(path) else {
-        eprintln!("rbcop: cannot read {}", path.display());
-        return String::new();
-    };
-    let Ok(text) = String::from_utf8(bytes) else {
-        eprintln!("rbcop: skipping {} (not UTF-8)", path.display());
-        return String::new();
-    };
-    // parser's Source::Buffer normalizes CRLF before any cop sees the source.
-    let text = text.replace("\r\n", "\n");
-    let Some(mut offenses) = cops::check(&text, on) else {
-        eprintln!("rbcop: skipping {} (syntax error)", path.display());
-        return String::new();
-    };
-    offenses.sort_by(|a, b| (a.line, a.col, a.cop).cmp(&(b.line, b.col, b.cop)));
-    let shown = fs::canonicalize(path).unwrap_or_else(|_| path.to_path_buf());
-    let mut out = String::new();
-    for o in offenses {
-        let cop = cops::COPS.iter().find(|c| c.name == o.cop).unwrap();
-        let tag = if cop.correctable { "[Correctable] " } else { "" };
-        out += &format!("{}:{}:{}: {}: {tag}{}: {}\n", shown.display(), o.line, o.col, cop.severity, o.cop, o.msg);
-    }
-    out
-}
-
-/// TargetFinder#ruby_executable?: extensionless file whose shebang names a RubyInterpreters entry.
-fn ruby_executable(path: &Path) -> bool {
-    use std::io::{BufRead, BufReader};
-    if path.extension().is_some() {
-        return false;
-    }
-    let mut first = String::new();
-    let Ok(file) = fs::File::open(path) else {
-        return false;
-    };
-    if BufReader::new(file).read_line(&mut first).is_err() || !first.starts_with("#!") {
-        return false;
-    }
-    first.split(|c: char| !c.is_alphanumeric()).any(|w| matches!(w, "ruby" | "rake" | "jruby"))
-}
-
-/// Collect Ruby files under `dir` the way RuboCop's TargetFinder does with default config.
-fn walk(root: &Path, dir: &Path, files: &mut Vec<PathBuf>) {
-    let Ok(entries) = fs::read_dir(dir) else {
-        return;
-    };
-    for entry in entries.flatten() {
-        let path = entry.path();
-        let name = entry.file_name().to_string_lossy().into_owned();
-        let Ok(kind) = entry.file_type() else {
-            continue;
-        };
-        if kind.is_dir() {
-            if !(dir == root && EXCLUDED_DIRS.contains(&name.as_str())) {
-                walk(root, &path, files);
-            }
-        } else if kind.is_file()
-            && (FILENAMES.contains(&name.as_str())
-                || name.ends_with("Fastfile")
-                || path.extension().is_some_and(|e| EXTENSIONS.contains(&e.to_string_lossy().as_ref()))
-                || ruby_executable(&path))
-        {
-            files.push(path);
-        }
-    }
+    let inspected: Vec<Inspected> = files
+        .iter()
+        .zip(&reports)
+        .map(|(path, report)| Inspected { path, relative: relative_path(path, &cwd), report })
+        .collect();
+    print!("{}", formatter::emacs(&inspected));
+    Ok(reports.iter().any(|r| !r.offenses.is_empty()))
 }

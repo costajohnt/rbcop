@@ -1,0 +1,10 @@
+Layout:
+  Enabled: false
+Layout/LineLength:
+  Enabled: true
+Lint:
+  Enabled: false
+Style/NilComparison:
+  Severity: error
+Style/FrozenStringLiteralComment:
+  Severity: info
