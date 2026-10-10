@@ -26,7 +26,7 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   `src/legacy_syntax.rs` reports the parser gem's Lint/Syntax for syntax newer than the target and
   for genuine syntax errors, approximating racc's error recovery for the diagnostics after the first
   (module doc). Oracles with `config/all-cops.yml` + TargetRubyVersion, diff lines left (specs: all
-  low targets; rails/discourse: 2.7 and 3.1): specs 2.5 208, 2.7 61, 3.0 60, 3.1 59, 3.2 59; rails
+  low targets; rails/discourse: 2.7 and 3.1): specs 2.5 207, 2.7 60, 3.0 59, 3.1 58, 3.2 58; rails
   2.7 14 (8 files), 3.1 3; discourse 2.7 271 (76 of 12609 files), 3.1 5. What remains:
   - Follow-up diagnostics after the first error in a file: recovery is modelled, not the LALR
     tables, so cascades can differ, mostly after a def popped by recovery (`class/module definition
@@ -38,7 +38,7 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   - Below 2.3 nothing lexer-level is checked (`&.`, `<<~`, `"a": 1`, `1r`, required keyword
     arguments are accepted); no oracle below 2.5 was recorded.
   - Not syntax: numbered parameters below 2.7 are method calls for the parser gem (`_1` cops such as
-    Style/SymbolProc, Lint/UnexpectedBlockArity, Lint/Void differ: most of the 157 non-Lint/Syntax
+    Style/SymbolProc, Lint/UnexpectedBlockArity, Lint/Void differ: most of the 156 non-Lint/Syntax
     lines in specs at 2.5, every sampled one `_1`-related);
     `a, b = 1, 2 rescue x` and Style/RescueModifier below 2.6; Lint/AmbiguousOperator's parser-gem
     warning for `foo &:sym` (5 lines per target in specs); `#$-1` interpolation (rails 3.1); an empty
