@@ -184,6 +184,14 @@ More traps found while porting:
   a dot); report nothing on those paths.
 - When one corrector fixes two offenses and then `ignore_node`s, the second offense is not
   `[Correctable]`; a captured flag in the `add_fix` closure reproduces this.
+- Some cops behave differently only while autocorrecting (e.g. IndentationWidth's
+  `other_offense_in_same_range?`): check `cx.fixes.autocorrect`.
+- RuboCop visits a `kwbegin`, then its `ensure`, then its `rescue`; Prism has one BeginNode for all
+  three, so order-dependent checks must run in that order there.
+- A ternary's `:` is not `loc.else`; an `elsif` if-node has no `loc.end`; parser `unless` keeps its
+  body as `node.body` (not swapped like `if`).
+- An offense that depends on ancestors seen later can be stored in `cx.state` keyed by the node's
+  span and emitted when the node itself is visited.
 - macOS paths: RuboCop and rbcop print physical paths (`/private/tmp`, `/private/var`); scratch
   comparisons must normalise with `pwd -P`.
 
