@@ -317,6 +317,10 @@ More traps found while porting:
   modifier `if` does not own the comment above it); trailing comments match by line.
 - Helpers: `hash_subset`, `gem_declaration`, `gemspec_help::first_spec_var`,
   `reparsed_equivalence::verified_by_reparse`, `heredoc::{heredoc_type, body_range}`.
+- A quoted label `"a": 1`: parser's `sym` range is `"a"` (no colon); Prism's SymbolNode includes
+  `":`.
+- `Util#parentheses?` tests `loc.end == ')'`.
+- Helper: `local_references::lvar_lvasgn_names` (`each_descendant(:lvar, :lvasgn)` names).
 - Prism `CallNode#message_loc` of an index call (`foo[x]`, `foo[x] = y`) spans the brackets and
   arguments; use `name()` when you mean parser's method name.
 - Helpers: `if_node::{normal_keyword, parts, is_elsif}`, `ruby_string::symbol_inspect`.
