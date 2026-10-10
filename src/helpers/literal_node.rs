@@ -25,11 +25,32 @@ pub fn literal(node: &Node) -> bool {
         )
 }
 
+/// `- 1` (a minus, whitespace, a numeric literal): Prism makes it a `-@` call, the Prism
+/// translation RuboCop parses with folds it into one negative literal (`(int -1)`), as the parser
+/// gem does. Returns the literal.
+// ponytail: the parser gem (target < 3.3) also folds `+ 1` and `- 1.abs`; the Prism translation
+// does neither, so they stay calls here.
+pub fn folded_numeric<'pr>(node: &Node<'pr>) -> Option<Node<'pr>> {
+    let call = node.as_call_node()?;
+    let recv = call.receiver()?;
+    (call.name().as_slice() == b"-@"
+        && call.call_operator_loc().is_none()
+        && call.arguments().is_none()
+        && call.block().is_none()
+        && call.message_loc().is_some_and(|m| m.end_offset() <= recv.location().start_offset())
+        && matches!(
+            recv,
+            Node::IntegerNode { .. } | Node::FloatNode { .. } | Node::RationalNode { .. } | Node::ImaginaryNode { .. }
+        ))
+    .then_some(recv)
+}
+
 /// `basic_literal?`: str int float sym true false nil complex rational (a multi-line string is a
 /// parser `dstr`, which is not basic).
 pub fn basic_literal(node: &Node) -> bool {
     match node {
         Node::StringNode { .. } => !is_parser_dstr(node),
+        Node::CallNode { .. } => folded_numeric(node).is_some(),
         _ => matches!(
             node,
             Node::IntegerNode { .. }
@@ -51,6 +72,7 @@ const RECURSIVE_METHODS: &[&str] = &["==", "===", "!=", "<=", ">=", ">", "<", "*
 /// `recursive_basic_literal?`.
 pub fn recursive_basic_literal(node: &Node) -> bool {
     match node {
+        Node::CallNode { .. } if folded_numeric(node).is_some() => true,
         Node::CallNode { .. } => {
             let call = node.as_call_node().unwrap();
             // A call with a literal block is a parser `block`, a `&.` call a `csend`: not literal.
@@ -280,6 +302,7 @@ pub fn parser_type(node: &Node) -> &'static str {
         Node::RangeNode { .. } => "irange",
         Node::RegularExpressionNode { .. } | Node::InterpolatedRegularExpressionNode { .. } => "regexp",
         Node::ParenthesesNode { .. } | Node::StatementsNode { .. } => "begin",
+        Node::CallNode { .. } if let Some(n) = folded_numeric(node) => parser_type(&n),
         Node::CallNode { .. } if crate::ast::is_csend(&node.as_call_node().unwrap()) => "csend",
         Node::CallNode { .. } => "send",
         Node::AndNode { .. } => "and",

@@ -1,0 +1,41 @@
+Gemfile:1:1: C: Style/Copyright: Include a copyright notice matching /^Copyright (\(c\) )?2[0-9]{3} .+/ before any code.
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+negative.rb:10:25: C: Style/ExponentialNotation: Use a mantissa >= 1 and < 10.
+negative.rb:14:7: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+negative.rb:15:7: C: [Correctable] Style/YodaCondition: Reverse the order of the operands `- 1.0 == a`.
+negative.rb:15:7: W: Lint/FloatComparison: Avoid equality comparisons of floats as they are unreliable.
+negative.rb:16:3: C: Style/MissingElse: `case` condition requires an `else`-clause.
+negative.rb:17:17: W: Lint/Void: Literal `1` used in void context.
+negative.rb:1:1: C: Style/Copyright: Include a copyright notice matching /^Copyright (\(c\) )?2[0-9]{3} .+/ before any code.
+negative.rb:20:7: W: [Correctable] Lint/Void: Operator `-` used in void context.
+negative.rb:24:1: C: Style/DocumentationMethod: Missing method documentation comment.
+negative.rb:24:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+negative.rb:24:1: R: Metrics/AbcSize: Assignment Branch Condition size for `literal_cmp` is too high. [<0, 0, 1> 1/0]
+negative.rb:24:5: C: Naming/PredicateMethod: Predicate method names should end with `?`.
+negative.rb:25:3: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+negative.rb:28:1: C: Style/DocumentationMethod: Missing method documentation comment.
+negative.rb:28:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+negative.rb:28:1: R: Metrics/AbcSize: Assignment Branch Condition size for `unparenthesized` is too high. [<0, 3, 2> 3.61/0]
+negative.rb:29:3: C: Style/MissingElse: `if` condition requires an `else`-clause.
+negative.rb:29:3: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+negative.rb:29:6: C: [Correctable] Style/NumericPredicate: Use `- 1.negative?` instead of `- 1 < 0`.
+negative.rb:30:5: W: Lint/Void: Literal `1` used in void context.
+negative.rb:32:3: W: [Correctable] Lint/Void: Operator `-@` used in void context.
+negative.rb:32:6: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+negative.rb:33:3: W: [Correctable] Lint/Void: Literal `-1` used in void context.
+negative.rb:3:10: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `input`. If it's necessary, use `_` or `_input` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `sort(*)` if you want the method to accept any arguments but don't care about them.
+negative.rb:3:1: C: Style/DocumentationMethod: Missing method documentation comment.
+negative.rb:3:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+negative.rb:7:13: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+negative.rb:7:1: C: Style/DocumentationMethod: Missing method documentation comment.
+negative.rb:7:1: C: Style/TopLevelMethodDefinition: Do not define methods at the top-level.
+negative.rb:7:1: R: Metrics/AbcSize: Assignment Branch Condition size for `compare` is too high. [<7, 7, 5> 11.09/0]
+negative.rb:7:1: R: Metrics/MethodLength: Method has too many lines. [14/10]
+negative.rb:8:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+yoda.rb:10:6: W: [Correctable] Lint/Void: Operator `-` used in void context.
+yoda.rb:1:1: C: Style/Copyright: Include a copyright notice matching /^Copyright (\(c\) )?2[0-9]{3} .+/ before any code.
+yoda.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+yoda.rb:1:5: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+yoda.rb:6:9: C: [Correctable] Layout/SpaceAroundMethodCallOperator: Avoid using spaces around a method call operator.
+yoda.rb:7:5: C: [Correctable] Style/YodaCondition: Reverse the order of the operands `- 1 == x`.
+yoda.rb:9:7: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
