@@ -31,7 +31,7 @@ impl Cop for NilComparison {
         let recv = call.receiver().unwrap();
         let (start, end) = send_range(&call);
         let comparison = cx.cfg.str("EnforcedStyle") == Some("comparison");
-        let wrap = comparison && parser_parent(cx.ancestors).is_some_and(operator_expression);
+        let wrap = comparison && helpers::parser_parent::parser_parent(cx.ancestors).is_some_and(operator_expression);
         let recv_is_operator = operator_expression(&recv);
         let recv_text = node_text(&recv);
         let recv_end = recv.location().end_offset();
@@ -51,15 +51,6 @@ impl Cop for NilComparison {
             }
         });
     }
-}
-
-/// The parser-gem parent of the current node (Prism-only wrappers and block-owning calls skipped).
-fn parser_parent<'a, 'pr>(ancestors: &'a [Node<'pr>]) -> Option<&'a Node<'pr>> {
-    (0..ancestors.len()).rev().find_map(|i| {
-        let f = frame(&ancestors[i]);
-        let owns_block = f == Frame::Call && ancestors.get(i + 1).is_some_and(|n| frame(n) == Frame::Block);
-        (f != Frame::Transparent && !owns_block).then(|| &ancestors[i])
-    })
 }
 
 const OPERATOR_METHODS: &[&str] = &[
