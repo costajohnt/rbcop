@@ -27,8 +27,7 @@ fn word_regex(cx: &Cx) -> Option<Regex> {
         Value::Regex(r) => r.clone(),
         v => v.as_string()?,
     };
-    // Rust's `\w` is Unicode `\p{Word}`.
-    ruby_regex(&raw.replace(r"\p{Word}", r"\w"))
+    ruby_regex(&raw)
 }
 
 #[derive(Default)]

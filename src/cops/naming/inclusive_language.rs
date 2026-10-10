@@ -28,19 +28,16 @@ const CHECKS: [&str; 6] =
 // ponytail: one cache slot per distinct config, keyed by its debug print; configs are few.
 static CACHE: Mutex<Vec<(String, Arc<Compiled>)>> = Mutex::new(Vec::new());
 
-/// `Regexp#source` of a config value: a `!ruby/regexp` (also the plain `/src/flags` string the
-/// YAML loader leaves for a quoted literal) or a string used as a regex source.
+/// `Regexp#source` of a config value: a `!ruby/regexp` literal (`/src/flags`, plain or quoted in
+/// YAML), or a string used verbatim as a regex source.
 fn regex_source(v: &Value) -> Option<String> {
-    let s = match v {
-        Value::Regex(r) => r.clone(),
-        v => v.as_string()?,
-    };
-    if let Some((src, flags)) = s.strip_prefix('/').and_then(|r| r.rsplit_once('/'))
-        && flags.chars().all(|c| "imxnoeus".contains(c))
-    {
-        return Some(src.to_string());
+    match v {
+        Value::Regex(r) => {
+            let src = r.strip_prefix('/').and_then(|r| r.rsplit_once('/')).map_or(r.as_str(), |(src, _)| src);
+            Some(src.to_string())
+        }
+        v => v.as_string(),
     }
-    Some(s)
 }
 
 /// `Regexp.new(source, Regexp::IGNORECASE)`; Ruby's `^`/`$` are line anchors.

@@ -1,0 +1,7 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+t.rb:3:15: C: Naming/InclusiveLanguage: Consider replacing 'gamm1' with another term.
+t.rb:3:26: C: Naming/InclusiveLanguage: Consider replacing '/beta/' with another term.
+t.rb:3:3: C: Naming/InclusiveLanguage: Consider replacing 'alpha' with another term.
+t.rb:6:5: C: Naming/MethodName: Use snake_case for method names.
+t.rb:6:9: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+t.rb:8:5: C: Naming/MethodName: Use snake_case for method names.

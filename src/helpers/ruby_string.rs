@@ -174,6 +174,11 @@ pub fn ruby_regex_classes(src: &str) -> String {
             'h' => out.push_str("[0-9A-Fa-f]"),
             'H' => out.push_str("[^0-9A-Fa-f]"),
             'Z' => out.push_str(r"\n?\z"),
+            // Onigmo's Unicode `\p{Word}` / `\P{Word}` are the regex crate's (Unicode) `\w` / `\W`.
+            'p' | 'P' if chars.as_str().starts_with("{Word}") => {
+                out.push_str(if e == 'p' { r"\w" } else { r"\W" });
+                chars.nth("{Word}".len() - 1);
+            }
             e => {
                 out.push('\\');
                 out.push(e);
