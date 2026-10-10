@@ -1,0 +1,3 @@
+AllCops:
+  EnabledByDefault: true
+  DisabledByDefault: true

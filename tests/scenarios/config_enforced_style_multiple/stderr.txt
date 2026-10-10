@@ -1,0 +1,2 @@
+Error: invalid EnforcedColonStyle '["key", "bogus"]' for Layout/HashAlignment found in .rubocop.yml
+Valid choices are: key, separator, table

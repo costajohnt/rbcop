@@ -65,7 +65,7 @@ const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
     ("force-exclusion", None, Arg::None, Use::Handle),
     ("only-recognized-file-types", None, Arg::None, Use::Unsupported),
     ("ignore-parent-exclusion", None, Arg::None, Use::Handle),
-    ("ignore-unrecognized-cops", None, Arg::None, Use::Unsupported),
+    ("ignore-unrecognized-cops", None, Arg::None, Use::Handle),
     ("force-default-config", None, Arg::None, Use::Handle),
     ("changed", None, Arg::Optional, Use::Unsupported),
     ("stdin", Some('s'), Arg::Required, Use::Handle),
@@ -396,6 +396,7 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
         "force-default-config" => cli.opts.force_default_config = true,
         "force-exclusion" => cli.force_exclusion = true,
         "ignore-parent-exclusion" => cli.opts.ignore_parent_exclusion = true,
+        "ignore-unrecognized-cops" => cli.opts.ignore_unrecognized_cops = true,
         "enable-pending-cops" => cli.opts.enable_pending_cops = true,
         "disable-pending-cops" => cli.opts.disable_pending_cops = true,
         "preview" => cli.opts.preview = Some(!neg),
@@ -543,6 +544,12 @@ fn red(on: bool, s: &str) -> String {
     formatter::Paint(on).red(s)
 }
 
+/// `warn Rainbow(s).red`: Kernel#warn adds a newline unless the painted text ends with one.
+fn warn_red(on: bool, s: &str) {
+    let s = red(on, s);
+    eprint!("{s}{}", if s.ends_with('\n') { "" } else { "\n" });
+}
+
 /// Float#to_s after #round(5).
 fn ruby_seconds(x: f64) -> String {
     let r = (x * 1e5).round() / 1e5;
@@ -589,10 +596,10 @@ fn main() -> ExitCode {
             eprintln!("rbcop: {m}");
             ERROR
         }
-        Ok(cli) => match run(cli, global) {
+        Ok(cli) => match run(cli, global, parse_color) {
             Ok(code) => code,
             Err(e) => {
-                eprintln!("{}", red(global, &e));
+                warn_red(global, &e);
                 ERROR
             }
         },
@@ -806,7 +813,7 @@ fn same_file_twice(jobs: &[(PathBuf, std::sync::Arc<Resolved>)]) -> bool {
 }
 
 /// Returns the exit status.
-fn run(mut cli: Cli, global: bool) -> Result<u8, String> {
+fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     if cli.help {
         println!("{USAGE}");
         return Ok(0);
@@ -821,9 +828,21 @@ fn run(mut cli: Cli, global: bool) -> Result<u8, String> {
             return Err(format!("Configuration file not found: {}", abs.display()));
         }
     }
-    let mut store = Store::new(cli.opts.clone(), names.clone())?;
+    // CLI#act_on_options loads the -c and pwd configs before --color/--no-color reach Rainbow.
+    cli.opts.color = parse_color;
+    let loaded = Store::new(cli.opts.clone(), names.clone()).and_then(|mut store| {
+        let cwd = store.cwd().to_path_buf();
+        store.for_dir(&cwd).map(|c| (store, c))
+    });
+    let (mut store, pwd_config) = match loaded {
+        Ok(x) => x,
+        Err(e) => {
+            warn_red(parse_color, &e);
+            return Ok(ERROR);
+        }
+    };
+    store.set_color(global);
     let cwd = store.cwd().to_path_buf();
-    let pwd_config = store.for_dir(&cwd)?;
     let pwd = cwd.display().to_string();
 
     // CLI#handle_exiting_options
@@ -944,8 +963,17 @@ fn run(mut cli: Cli, global: bool) -> Result<u8, String> {
 
     // Resolve configs up front (single-threaded), then lint in parallel.
     let mut jobs = Vec::with_capacity(files.len());
+    // RuboCop loads a file's config when the file's turn comes, so an invalid config stops the run
+    // there, after the files before it have been reported.
+    let mut config_error = None;
     for f in &files {
-        jobs.push((f.clone(), store.for_file(f)?));
+        match store.for_file(f) {
+            Ok(c) => jobs.push((f.clone(), c)),
+            Err(e) => {
+                config_error = Some((f.clone(), e));
+                break;
+            }
+        }
     }
     for w in &store.warnings {
         eprintln!("Warning: {w}");
@@ -1045,8 +1073,11 @@ fn run(mut cli: Cli, global: bool) -> Result<u8, String> {
     annotate.json = cli.format.as_deref() == Some("json");
     let mut all_passed = true;
     let mut inspected: Vec<PathBuf> = Vec::new();
+    let mut config_failure = None;
     if error.is_none() {
         let mut cop_notes = Some((cop_warnings, cop_error));
+        let mut stopped = false;
+        let mut warned_configs = std::collections::HashSet::new();
         for ((path, cfg), linted) in jobs.iter().zip(reports.iter_mut()) {
             set.file_started(&cx, path);
             // Runner#mobilized_cop_classes runs once the first file has been read.
@@ -1056,7 +1087,18 @@ fn run(mut cli: Cli, global: bool) -> Result<u8, String> {
                 }
                 if let Some(e) = err {
                     error = Some(e);
+                    stopped = true;
                     break;
+                }
+            }
+            // Config#for_cop warns about deprecated-name configuration once per config, when the
+            // cops are mobilized for its first file.
+            if (stdin_text.is_some() || path.is_file()) && warned_configs.insert(std::sync::Arc::as_ptr(cfg)) {
+                for (cop, msg) in &cfg.deprecated_warnings {
+                    if selected(cop) {
+                        let msg = formatter::Paint(global).yellow(msg);
+                        eprint!("{msg}{}", if msg.ends_with('\n') { "" } else { "\n" });
+                    }
                 }
             }
             let linted = match linted.take() {
@@ -1067,6 +1109,7 @@ fn run(mut cli: Cli, global: bool) -> Result<u8, String> {
                 Ok(l) => l,
                 Err(e) => {
                     error = Some(e);
+                    stopped = true;
                     break;
                 }
             };
@@ -1078,6 +1121,7 @@ fn run(mut cli: Cli, global: bool) -> Result<u8, String> {
                 && let Err(e) = rbcop::autocorrect::write_source(path, new)
             {
                 error = Some(runner::io_error(&e, path));
+                stopped = true;
                 break;
             }
             if let Some(e) = loop_error {
@@ -1092,18 +1136,29 @@ fn run(mut cli: Cli, global: bool) -> Result<u8, String> {
             let shown: Vec<_> = offs.into_iter().filter(|o| displayed(o)).collect();
             set.file_finished(&cx, &FileOut { path, offenses: shown, config: cfg });
             if cli.fail_fast && !passed {
+                stopped = true;
                 break;
             }
             // A formatter's output could not be written: RuboCop raises there and stops.
             if let Some(e) = set.take_error() {
                 error = Some(e);
+                stopped = true;
                 break;
             }
+        }
+        if !stopped && let Some((path, e)) = config_error {
+            set.file_started(&cx, &path);
+            config_failure = Some(e);
         }
     }
     set.finished(&cx, &inspected);
     if let Some(e) = set.take_error() {
         error.get_or_insert(e);
+    }
+    // The ValidationError reaches the CLI before ExecuteRunner's error summary.
+    if let Some(e) = config_failure {
+        warn_red(global, &e);
+        return Ok(ERROR);
     }
     // ExecuteRunner#display_error_summary; any cop error makes the run fail (runner_status).
     let cop_errors = runner::take_errors();

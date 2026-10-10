@@ -2,6 +2,7 @@
 
 pub mod glob;
 pub mod target_ruby;
+pub mod validator;
 pub mod value;
 
 use crate::cop::Severity;
@@ -29,6 +30,10 @@ pub struct Options {
     pub ignore_parent_exclusion: bool,
     /// `--preview` / `--no-preview` (ConfigLoader.preview); wins over `AllCops: Preview`.
     pub preview: Option<bool>,
+    /// `--ignore-unrecognized-cops`: unknown cop names in config are a warning, not an error.
+    pub ignore_unrecognized_cops: bool,
+    /// Rainbow.enabled while configs load (config validation warnings are painted).
+    pub color: bool,
 }
 
 /// One include/exclude entry (FilePatterns / PathUtil.match_path?).
@@ -141,6 +146,11 @@ pub struct Resolved {
     /// TargetRuby#version (e.g. 3.4).
     pub target_ruby: f64,
     cops: HashMap<String, CopConfig>,
+    /// (cop, warning) for configuration under a cop's deprecated name, which Config#for_cop warns
+    /// about the first time the cop's config is asked for.
+    pub deprecated_warnings: Vec<(&'static str, String)>,
+    /// Cop-like keys no registered cop has (see Store::unregistered).
+    unregistered: Vec<String>,
 }
 
 impl Resolved {
@@ -148,10 +158,24 @@ impl Resolved {
         let base_dir = base_dir_for(loaded_path);
         let all_cops = hash.map("AllCops").cloned().unwrap_or_default();
         let target_ruby = target_ruby::detect(&all_cops, &base_dir);
-        let mut r = Resolved { hash, base_dir, target_ruby, cops: HashMap::new() };
+        let mut r = Resolved {
+            hash,
+            base_dir,
+            target_ruby,
+            cops: HashMap::new(),
+            deprecated_warnings: Vec::new(),
+            unregistered: Vec::new(),
+        };
         for &name in cop_names {
             let cfg = r.build_cop(name, opts);
             r.cops.insert(name.to_string(), cfg);
+            for old in validator::deprecated_names_for(name) {
+                if r.hash.map(&old).is_some_and(|m| !m.0.is_empty()) {
+                    let path = loaded_path.map(|p| p.display().to_string()).unwrap_or_default();
+                    let msg = format!("Warning: Using `{old}` configuration in {path} for `{name}`.\n");
+                    r.deprecated_warnings.push((name, msg));
+                }
+            }
         }
         r
     }
@@ -233,6 +257,10 @@ impl Resolved {
         let mut out = Vec::new();
         for (name, v) in &self.hash.0 {
             let Some((dept, _)) = name.rsplit_once('/') else { continue };
+            // PendingCopsReporter#pending_cops_only_qualified
+            if self.unregistered.contains(name) {
+                continue;
+            }
             if self.hash.map(dept).is_some_and(|d| d.get("Enabled") == Some(&Value::Bool(false))) {
                 continue;
             }
@@ -256,10 +284,20 @@ impl Resolved {
 
     /// Config#enable_cop? + Registry#enabled?, then Config#for_badge (§4).
     fn build_cop(&self, name: &str, opts: &Options) -> CopConfig {
-        let cop = self.hash.map(name).cloned().unwrap_or_default();
+        let mut cop = self.hash.map(name).cloned().unwrap_or_default();
         let department = name.rsplit_once('/').map(|(d, _)| d);
         let dept_map = department.and_then(|d| self.hash.map(d)).cloned().unwrap_or_default();
-        let effective = self.enable_cop(name);
+        let mut effective = self.enable_cop(name);
+        // Config#for_cop: configuration under a deprecated name (a rename that only warns) is
+        // merged over the cop's, Enabled included.
+        for old in validator::deprecated_names_for(name) {
+            for (k, v) in self.hash.map(&old).cloned().unwrap_or_default().0 {
+                if k == "Enabled" {
+                    effective = v.clone();
+                }
+                cop.insert(k, v);
+            }
+        }
         let enabled = opts.only.iter().any(|o| o == name)
             || effective == Value::Bool(true)
             || (!opts.disable_pending_cops
@@ -356,9 +394,17 @@ pub struct Store {
     cop_names: Vec<&'static str>,
     default: Map,
     known_cops: Vec<String>,
-    files: HashMap<PathBuf, Map>,
+    /// Each loaded file with what loading it wrote to stderr: ConfigLoader.load_file is not
+    /// cached, so every later load of the file repeats its validation warnings.
+    files: HashMap<PathBuf, (Map, validator::Output)>,
+    /// Everything config loading has written to stderr so far.
+    emitted: validator::Output,
     gem_dirs: HashMap<String, PathBuf>,
     loaded_plugins: Vec<String>,
+    /// A `require:` rbcop cannot load (see validator::Validator::custom_cops).
+    custom_cops: bool,
+    /// Class and module names in loaded plugins' lib/ (see ruby_constants).
+    plugin_constants: std::collections::HashSet<String>,
     dir_to_file: HashMap<PathBuf, Option<PathBuf>>,
     /// inherit_from files being loaded (outermost first), to detect cycles.
     loading: Vec<PathBuf>,
@@ -384,8 +430,11 @@ impl Store {
             default,
             known_cops,
             files: HashMap::new(),
+            emitted: Vec::new(),
             gem_dirs: HashMap::new(),
             loaded_plugins: Vec::new(),
+            custom_cops: false,
+            plugin_constants: Default::default(),
             dir_to_file: HashMap::new(),
             loading: Vec::new(),
             resolved: HashMap::new(),
@@ -402,15 +451,39 @@ impl Store {
             store.forced = Some(Arc::new(r));
         } else if let Some(path) = store.opts.config_file.clone() {
             let path = expand_path(&path, &store.cwd);
-            let user = store.load_file(&path)?;
+            let user = store.load_file(&path, true)?;
             let merged = store.merge_with_default(user);
-            store.forced = Some(Arc::new(Resolved::new(merged, Some(&path), &store.opts, &store.cop_names)));
+            let mut r = Resolved::new(merged, Some(&path), &store.opts, &store.cop_names);
+            r.unregistered = store.unregistered(&r.hash);
+            store.forced = Some(Arc::new(r));
         }
         Ok(store)
     }
 
+    /// Keys of a merged config that name no registered cop (kept when unrecognized cops are
+    /// ignored); Registry.qualified_cop? is false for them.
+    fn unregistered(&self, hash: &Map) -> Vec<String> {
+        hash.keys()
+            .filter(|k| {
+                k.contains('/') && !self.default.contains(k) && !k.split('/').all(|p| self.plugin_constants.contains(p))
+            })
+            .map(String::from)
+            .collect()
+    }
+
     pub fn cwd(&self) -> &Path {
         &self.cwd
+    }
+
+    /// The CLI applies `--color`/`--no-color` once the pwd config has loaded.
+    pub fn set_color(&mut self, on: bool) {
+        self.opts.color = on;
+    }
+
+    /// Config-loading output goes to stderr as it happens, as RuboCop's `warn` does.
+    fn emit(&mut self, out: &[(bool, String)]) {
+        eprint!("{}", validator::render(out, self.opts.color));
+        self.emitted.extend_from_slice(out);
     }
 
     /// ConfigStore#for_dir.
@@ -433,14 +506,17 @@ impl Store {
             // ConfigLoader.apply_default_overrides: only the command line can turn preview on here.
             None => apply_preview_defaults(&self.default, self.opts.preview == Some(true)),
             Some(path) => {
-                let mut user = self.load_file(path)?;
+                let mut user = self.load_file(path, true)?;
+                validator::check_target_ruby(&user, path, &self.cwd)?;
                 if !self.opts.ignore_parent_exclusion {
                     self.add_excludes_from_files(&mut user, path)?;
                 }
                 self.merge_with_default(user)
             }
         };
-        let r = Arc::new(Resolved::new(hash, file.as_deref(), &self.opts, &self.cop_names));
+        let mut r = Resolved::new(hash, file.as_deref(), &self.opts, &self.cop_names);
+        r.unregistered = self.unregistered(&r.hash);
+        let r = Arc::new(r);
         self.resolved.insert(file, r.clone());
         Ok(r)
     }
@@ -474,11 +550,15 @@ impl Store {
         fallbacks.into_iter().find(|p| p.is_file())
     }
 
-    /// ConfigLoader.load_file (§2).
-    fn load_file(&mut self, path: &Path) -> Result<Map, String> {
-        if let Some(m) = self.files.get(path) {
-            return Ok(m.clone());
+    /// ConfigLoader.load_file (§2); `check` runs Config#check (validation).
+    // ponytail: a cached load replays the first load's warnings; a later load in RuboCop sees the
+    // plugins loaded since, which can only make fewer cop names unrecognized.
+    fn load_file(&mut self, path: &Path, check: bool) -> Result<Map, String> {
+        if let Some((m, out)) = self.files.get(path).cloned() {
+            self.emit(&out);
+            return Ok(m);
         }
+        let start = self.emitted.len();
         let text = std::fs::read_to_string(path).map_err(|e| format!("{}: {e}", path.display()))?;
         if text.contains("<%") {
             self.warnings.push(format!("{}: ERB in config is not supported; parsed as plain YAML", path.display()));
@@ -499,6 +579,8 @@ impl Store {
                 }
             }
         }
+        // Local files are custom cops rbcop cannot load.
+        self.custom_cops |= plugins.iter().any(|n| n.starts_with('.') || n.starts_with('/'));
         self.integrate_plugins(plugins)?;
         if let Some(Value::Map(gems)) = hash.remove("inherit_gem") {
             let mut inherit = seq(hash.remove("inherit_from"));
@@ -515,9 +597,40 @@ impl Store {
         self.resolve_inheritance(path, &mut hash)?;
         hash.remove("inherit_from");
         self.add_missing_namespaces(&mut hash);
-        validate_new_cops(&hash, path, &self.cwd)?;
+        if check {
+            let mut out = Vec::new();
+            let checked = validator::Validator {
+                default: &self.default,
+                pwd: &self.cwd,
+                loaded_plugins: &self.loaded_plugins,
+                ignore_unrecognized_cops: self.opts.ignore_unrecognized_cops,
+                custom_cops: self.custom_cops,
+                plugin_constants: &self.plugin_constants,
+                color: self.opts.color,
+            }
+            .check(&mut hash, path, &mut out);
+            self.emit(&out);
+            checked?;
+            // Config#make_excludes_absolute calls `map!` on every Exclude: RuboCop dies with a
+            // NoMethodError (and a backtrace rbcop does not print) on anything but an Array.
+            for (_, section) in &hash.0 {
+                let Some(exclude) = section.as_map().and_then(|m| m.get("Exclude")) else { continue };
+                let receiver = match exclude {
+                    Value::Seq(_) | Value::Null => continue,
+                    Value::Bool(b) => b.to_string(),
+                    Value::Str(_) => "an instance of String".into(),
+                    Value::Sym(_) => "an instance of Symbol".into(),
+                    Value::Int(_) => "an instance of Integer".into(),
+                    Value::Float(_) => "an instance of Float".into(),
+                    Value::Regex(_) => "an instance of Regexp".into(),
+                    Value::Map(_) => "an instance of Hash".into(),
+                };
+                return Err(format!("undefined method 'map!' for {receiver}"));
+            }
+        }
         make_excludes_absolute(&mut hash, &base_dir_for(Some(path)));
-        self.files.insert(path.to_path_buf(), hash.clone());
+        let out = self.emitted[start..].to_vec();
+        self.files.insert(path.to_path_buf(), (hash.clone(), out));
         Ok(hash)
     }
 
@@ -545,7 +658,7 @@ impl Store {
                 return Err(format!("{}: inherit_from cycle through {}", path.display(), base_path.display()));
             }
             self.loading.push(base_path.clone());
-            let base = self.load_file(&base_path);
+            let base = self.load_file(&base_path, true);
             self.loading.pop();
             bases.push((base_path, base?));
         }
@@ -616,7 +729,7 @@ impl Store {
         if top == config_file {
             return Ok(());
         }
-        let highest = self.load_file(&top)?;
+        let highest = self.load_file(&top, true)?;
         let Some(high_excludes) = highest.map("AllCops").and_then(|a| a.get("Exclude")).cloned() else { return Ok(()) };
         let Some(all) = config.map_mut("AllCops") else { return Ok(()) };
         let mut excludes = seq(all.get("Exclude").cloned());
@@ -653,14 +766,19 @@ impl Store {
                 Ok(d) => d,
                 Err(e) => {
                     self.warnings.push(e);
+                    // Its cops are unknown here.
+                    self.custom_cops = true;
                     continue;
                 }
             };
+            ruby_constants(&dir.join("lib"), &mut self.plugin_constants);
             let path = dir.join("config/default.yml");
             if !path.is_file() {
+                // An extension without config/default.yml may still register cops.
+                self.custom_cops = true;
                 continue;
             }
-            let mut plugin = self.load_file(&path)?;
+            let mut plugin = self.load_file(&path, false)?;
             if let Some(Value::Map(new_all)) = plugin.get("AllCops").cloned() {
                 let mut all = combined.map("AllCops").cloned().unwrap_or_default();
                 for (key, value) in new_all.0 {
@@ -818,50 +936,22 @@ fn merge_with_default(base_default: &Map, mut config: Map, unset_nil: bool, cli_
     merge(&default, &config, &mode, unset_nil)
 }
 
-/// ConfigValidator#validate_new_cops_parameter for one loaded file (the only ConfigValidator check
-/// ported): `AllCops: NewCops` must be pending/disable/enable, a department's may also be a version.
-fn validate_new_cops(hash: &Map, path: &Path, pwd: &Path) -> Result<(), String> {
-    const VALUES: [&str; 3] = ["pending", "disable", "enable"];
-    // PathUtil.smart_path
-    let shown = || {
-        let (p, base) = (path.display().to_string(), pwd.display().to_string());
-        if p.starts_with(&base) { relative_path(path, pwd) } else { p }
-    };
-    // Ruby's #inspect-free interpolation (`"#{value}"`) of a YAML scalar.
-    let to_s = |v: &Value| v.as_string().unwrap_or_default();
-    if let Some(v) = hash.map("AllCops").and_then(|a| a.get("NewCops"))
-        && *v != Value::Null
-        && !matches!(v, Value::Str(s) if VALUES.contains(&s.as_str()))
-    {
-        return Err(format!(
-            "Error: invalid {} for `NewCops` found in {}\nValid choices are: {}",
-            to_s(v),
-            shown(),
-            VALUES.join(", ")
-        ));
-    }
-    let version = Regex::new(r"\A\d+(\.\d+)*\z").unwrap();
-    for (name, section) in &hash.0 {
-        let Value::Map(section) = section else { continue };
-        if name == "AllCops" || !crate::helpers::cop_registry::is_department(name) {
-            continue;
-        }
-        let ok = match section.get("NewCops") {
-            None | Some(Value::Null | Value::Int(_) | Value::Float(_)) => true,
-            Some(Value::Str(s)) => VALUES.contains(&s.as_str()) || version.is_match(s),
-            Some(_) => false,
-        };
-        if !ok {
-            return Err(format!(
-                "Error: invalid {} for `NewCops` found in {}\nValid choices for a department are: {}, or a version \
-                 string like '1.50'",
-                to_s(section.get("NewCops").unwrap()),
-                shown(),
-                VALUES.join(", ")
-            ));
+/// Class and module names defined in a gem's lib/: a plugin registers cops its config/default.yml
+/// need not list, and RuboCop's registry knows them.
+// ponytail: a name match, not a registry; `Dept/Cop` counts as known when both are defined.
+fn ruby_constants(dir: &Path, out: &mut std::collections::HashSet<String>) {
+    static RE: std::sync::LazyLock<Regex> =
+        std::sync::LazyLock::new(|| Regex::new(r"(?m)^\s*(?:class|module)\s+([A-Z]\w*)").unwrap());
+    let Ok(entries) = std::fs::read_dir(dir) else { return };
+    for path in entries.flatten().map(|e| e.path()) {
+        if path.is_dir() {
+            ruby_constants(&path, out);
+        } else if path.extension().is_some_and(|e| e == "rb")
+            && let Ok(text) = std::fs::read_to_string(&path)
+        {
+            out.extend(RE.captures_iter(&text).map(|c| c[1].to_string()));
         }
     }
-    Ok(())
 }
 
 /// `Array(value)` for YAML values.

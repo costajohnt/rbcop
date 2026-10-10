@@ -61,6 +61,10 @@ impl Cop for SymbolArray {
         true
     }
 
+    fn ruby_range(&self) -> (f64, f64) {
+        (2.0, f64::MAX)
+    }
+
     fn kinds(&self) -> &'static [usize] {
         &[kind::ARRAY_NODE]
     }

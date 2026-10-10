@@ -1,0 +1,6 @@
+Performance/Count:
+  Enabled: false
+Performance:
+  Enabled: false
+Rails/Date:
+  Enabled: true

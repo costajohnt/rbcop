@@ -1,0 +1,1 @@
+Error: Unsafe cops cannot have a safe autocorrection (section Style/StringLiterals in .rubocop.yml)

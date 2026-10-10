@@ -58,6 +58,10 @@ impl Cop for FrozenStringLiteralComment {
         true
     }
 
+    fn ruby_range(&self) -> (f64, f64) {
+        (2.3, f64::MAX)
+    }
+
     fn on_file(&self, cx: &mut Cx) {
         let src = cx.src;
         let first_code = cx.facts.first_code;

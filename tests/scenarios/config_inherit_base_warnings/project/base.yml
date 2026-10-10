@@ -1,0 +1,4 @@
+Style/FrozenStringLiteralComment:
+  Bogus: 1
+Naming/PredicateName:
+  Enabled: false

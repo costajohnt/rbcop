@@ -1,0 +1,2 @@
+Error: `Performance/*` has been extracted to the `rubocop-performance` gem.
+(obsolete configuration found in .rubocop.yml, please update it)

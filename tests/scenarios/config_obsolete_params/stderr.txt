@@ -1,0 +1,6 @@
+Error: obsolete parameter `RunRailsCops` (for `AllCops`) found in .rubocop.yml
+Use the following configuration instead:
+Rails:
+  Enabled: true
+obsolete parameter `IgnoredMethodPatterns` (for `Style/MethodCallWithArgsParentheses`) found in .rubocop.yml
+`IgnoredMethodPatterns` has been renamed to `AllowedPatterns`.
