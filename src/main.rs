@@ -94,10 +94,10 @@ const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
     ("display-only-correctable", None, Arg::None, Use::Handle),
     ("display-only-safe-correctable", None, Arg::None, Use::Handle),
     ("display-suppressed", None, Arg::None, Use::Unsupported),
-    ("autocorrect", Some('a'), Arg::None, Use::Unsupported),
+    ("autocorrect", Some('a'), Arg::None, Use::Handle),
     ("auto-correct", None, Arg::None, Use::Unsupported),
     ("safe-auto-correct", None, Arg::None, Use::Unsupported),
-    ("autocorrect-all", Some('A'), Arg::None, Use::Unsupported),
+    ("autocorrect-all", Some('A'), Arg::None, Use::Handle),
     ("auto-correct-all", None, Arg::None, Use::Unsupported),
     ("disable-uncorrectable", None, Arg::None, Use::Unsupported),
     ("diff", None, Arg::None, Use::Unsupported),
@@ -140,6 +140,8 @@ enum Fail {
 #[derive(Default)]
 struct Cli {
     opts: Options,
+    /// -a / -A
+    autocorrect: Option<rbcop::autocorrect::Mode>,
     only: Option<Vec<String>>,
     except: Vec<String>,
     /// `-f`/`-o` pairs, in order.
@@ -405,6 +407,8 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
         "display-style-guide" => cli.annotate.display_style_guide = true,
         "stderr" => cli.stderr = true,
         "display-time" => cli.display_time = true,
+        "autocorrect" => cli.autocorrect = Some(rbcop::autocorrect::Mode::Safe),
+        "autocorrect-all" => cli.autocorrect = Some(rbcop::autocorrect::Mode::All),
         "display-only-failed" => cli.only_failed = true,
         "display-only-fail-level-offenses" => cli.only_fail_level = true,
         "display-only-correctable" => cli.only_correctable = true,
@@ -612,6 +616,10 @@ fn run(cli: Cli, global: bool) -> Result<u8, String> {
         println!("{USAGE}");
         return Ok(0);
     }
+    if cli.autocorrect.is_some() && cli.stdin.is_some() {
+        // ponytail: RuboCop prints the corrected source after a separator line; not ported yet.
+        return Err("rbcop: --stdin with -a/-A is not supported yet".into());
+    }
     let names: Vec<&'static str> = cops::ALL.iter().map(|c| c.name).collect();
     // ConfigLoader: a missing -c file is an error, even with --force-default-config.
     if let Some(c) = &cli.opts.config_file {
@@ -745,6 +753,15 @@ fn run(cli: Cli, global: bool) -> Result<u8, String> {
                 s.spawn(|| {
                     part.iter()
                         .map(|(path, cfg)| {
+                            // -a/-A: read, correct until stable, rewrite the file; offenses from every
+                            // iteration come back (fixed ones marked corrected).
+                            if let (Some(mode), None) = (cli.autocorrect, stdin_text) {
+                                if !path.is_file() {
+                                    return None;
+                                }
+                                let display = rbcop::config::relative_path(path, &cwd);
+                                return Some(rbcop::autocorrect::correct_file(path, &display, cfg, &selected, mode));
+                            }
                             let text = match stdin_text {
                                 Some(t) => t.clone(),
                                 None => match fs::read(path) {
