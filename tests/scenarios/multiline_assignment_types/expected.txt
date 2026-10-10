@@ -1,0 +1,195 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+array/t.rb:1:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+array/t.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+array/t.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+array/t.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`. Use `_` or `_a` as a variable name to indicate that it won't be used.
+array/t.rb:1:4: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `b`. Use `_` or `_b` as a variable name to indicate that it won't be used.
+array/t.rb:3:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+array/t.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `c`.
+array/t.rb:4:1: C: [Correctable] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+same_line/types.rb:10:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+same_line/types.rb:11:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `g`.
+same_line/types.rb:13:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `h`.
+same_line/types.rb:15:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `i`.
+same_line/types.rb:17:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `j`.
+same_line/types.rb:18:3: C: [Correctable] Layout/MultilineOperationIndentation: Align the operands of an expression in an assignment spanning multiple lines.
+same_line/types.rb:19:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `k`.
+same_line/types.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+same_line/types.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+same_line/types.rb:20:3: C: [Correctable] Layout/MultilineOperationIndentation: Align the operands of an expression in an assignment spanning multiple lines.
+same_line/types.rb:21:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `l`.
+same_line/types.rb:23:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is not on the same line as the assignment operator `=`.
+same_line/types.rb:23:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `m`.
+same_line/types.rb:26:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is not on the same line as the assignment operator `=`.
+same_line/types.rb:26:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `n`.
+same_line/types.rb:29:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `o`.
+same_line/types.rb:31:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+same_line/types.rb:32:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `q`.
+same_line/types.rb:33:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+same_line/types.rb:35:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+same_line/types.rb:36:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `s`.
+same_line/types.rb:37:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+same_line/types.rb:38:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `t`.
+same_line/types.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `c`.
+same_line/types.rb:40:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `u`.
+same_line/types.rb:42:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `v`.
+same_line/types.rb:44:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `w`.
+same_line/types.rb:45:1: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument when opening brace is on the same line as the first argument.
+same_line/types.rb:47:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+same_line/types.rb:49:13: C: [Correctable] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+same_line/types.rb:49:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `z`.
+same_line/types.rb:4:3: C: [Correctable] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+same_line/types.rb:50:5: C: [Correctable] Layout/BlockEndNewline: Expression at 50, 5 should be on its own line.
+same_line/types.rb:51:5: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+same_line/types.rb:52:3: C: [Correctable] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+same_line/types.rb:54:3: C: [Correctable] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+same_line/types.rb:56:3: C: [Correctable] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+same_line/types.rb:57:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `aa`. Did you mean `a`?
+same_line/types.rb:57:6: C: [Correctable] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+same_line/types.rb:58:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -3) spaces for indentation.
+same_line/types.rb:59:1: W: [Correctable] Layout/EndAlignment: `end` at 59, 0 is not aligned with `while` at 57, 5.
+same_line/types.rb:5:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `d`.
+same_line/types.rb:60:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `ab`. Did you mean `a`?
+same_line/types.rb:60:6: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+same_line/types.rb:61:5: C: [Correctable] Layout/BlockEndNewline: Expression at 61, 5 should be on its own line.
+same_line/types.rb:62:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `ac`. Did you mean `a`?
+same_line/types.rb:62:6: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+same_line/types.rb:64:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `ad`. Did you mean `a`?
+same_line/types.rb:65:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+same_line/types.rb:66:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `ae`. Did you mean `a`?
+same_line/types.rb:67:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+same_line/types.rb:68:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `af`. Did you mean `a`?
+same_line/types.rb:69:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+same_line/types.rb:6:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+same_line/types.rb:70:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `ah`. Did you mean `a`?
+same_line/types.rb:70:6: C: [Correctable] Style/WhileUntilModifier: Favor modifier `until` usage when having a single-line body.
+same_line/types.rb:71:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -3) spaces for indentation.
+same_line/types.rb:72:1: W: [Correctable] Layout/EndAlignment: `end` at 72, 0 is not aligned with `until` at 70, 5.
+same_line/types.rb:73:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `ai`. Did you mean `a`?
+same_line/types.rb:73:6: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+same_line/types.rb:76:10: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `q`.
+same_line/types.rb:76:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `aj`. Did you mean `a`?
+same_line/types.rb:76:6: C: [Correctable] Style/For: Prefer `each` over `for`.
+same_line/types.rb:77:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -3) spaces for indentation.
+same_line/types.rb:79:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `ak`. Did you mean `a`?
+same_line/types.rb:7:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `e`.
+same_line/types.rb:80:3: C: [Correctable] Layout/MultilineOperationIndentation: Align the operands of an expression in an assignment spanning multiple lines.
+same_line/types.rb:81:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `al`. Did you mean `a`?
+same_line/types.rb:81:6: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+same_line/types.rb:82:1: W: [Correctable] Layout/DefEndAlignment: `end` at 82, 0 is not aligned with `def` at 81, 5.
+same_line/types.rb:83:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `am`. Did you mean `a`?
+same_line/types.rb:85:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `an`. Did you mean `a`?
+same_line/types.rb:87:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `ao`. Did you mean `a`?
+same_line/types.rb:8:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+same_line/types.rb:9:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `f`.
+types.rb:10:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+types.rb:11:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:11:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `g`.
+types.rb:13:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:13:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `h`.
+types.rb:15:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:15:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `i`.
+types.rb:17:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:17:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `j`.
+types.rb:18:3: C: [Correctable] Layout/MultilineOperationIndentation: Align the operands of an expression in an assignment spanning multiple lines.
+types.rb:19:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:19:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `k`.
+types.rb:1:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+types.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+types.rb:20:3: C: [Correctable] Layout/MultilineOperationIndentation: Align the operands of an expression in an assignment spanning multiple lines.
+types.rb:21:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:21:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `l`.
+types.rb:23:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `m`.
+types.rb:26:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `n`.
+types.rb:29:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `o`.
+types.rb:31:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+types.rb:32:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:32:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `q`.
+types.rb:32:5: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:33:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+types.rb:34:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:35:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+types.rb:36:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:36:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `s`.
+types.rb:37:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+types.rb:38:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:38:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `t`.
+types.rb:3:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `c`.
+types.rb:40:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:40:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `u`.
+types.rb:42:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:42:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `v`.
+types.rb:44:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:44:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `w`.
+types.rb:45:1: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument when opening brace is on the same line as the first argument.
+types.rb:47:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:47:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+types.rb:49:13: C: [Correctable] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+types.rb:49:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:49:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `z`.
+types.rb:4:3: C: [Correctable] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+types.rb:50:5: C: [Correctable] Layout/BlockEndNewline: Expression at 50, 5 should be on its own line.
+types.rb:51:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:51:5: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+types.rb:52:3: C: [Correctable] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+types.rb:53:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:54:3: C: [Correctable] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+types.rb:55:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:56:3: C: [Correctable] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+types.rb:57:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:57:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `aa`. Did you mean `a`?
+types.rb:57:6: C: [Correctable] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+types.rb:58:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -3) spaces for indentation.
+types.rb:59:1: W: [Correctable] Layout/EndAlignment: `end` at 59, 0 is not aligned with `while` at 57, 5.
+types.rb:5:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:5:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `d`.
+types.rb:60:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:60:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `ab`. Did you mean `a`?
+types.rb:60:6: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+types.rb:61:5: C: [Correctable] Layout/BlockEndNewline: Expression at 61, 5 should be on its own line.
+types.rb:62:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:62:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `ac`. Did you mean `a`?
+types.rb:62:6: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+types.rb:64:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:64:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `ad`. Did you mean `a`?
+types.rb:65:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+types.rb:66:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:66:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `ae`. Did you mean `a`?
+types.rb:67:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+types.rb:68:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:68:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `af`. Did you mean `a`?
+types.rb:69:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+types.rb:6:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+types.rb:70:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:70:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `ah`. Did you mean `a`?
+types.rb:70:6: C: [Correctable] Style/WhileUntilModifier: Favor modifier `until` usage when having a single-line body.
+types.rb:71:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -3) spaces for indentation.
+types.rb:72:1: W: [Correctable] Layout/EndAlignment: `end` at 72, 0 is not aligned with `until` at 70, 5.
+types.rb:73:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:73:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `ai`. Did you mean `a`?
+types.rb:73:6: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+types.rb:76:10: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `q`.
+types.rb:76:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:76:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `aj`. Did you mean `a`?
+types.rb:76:6: C: [Correctable] Style/For: Prefer `each` over `for`.
+types.rb:77:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -3) spaces for indentation.
+types.rb:79:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:79:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `ak`. Did you mean `a`?
+types.rb:7:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:7:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `e`.
+types.rb:80:3: C: [Correctable] Layout/MultilineOperationIndentation: Align the operands of an expression in an assignment spanning multiple lines.
+types.rb:81:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:81:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `al`. Did you mean `a`?
+types.rb:81:6: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+types.rb:82:1: W: [Correctable] Layout/DefEndAlignment: `end` at 82, 0 is not aligned with `def` at 81, 5.
+types.rb:83:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:83:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `am`. Did you mean `a`?
+types.rb:85:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:85:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `an`. Did you mean `a`?
+types.rb:87:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:87:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `ao`. Did you mean `a`?
+types.rb:8:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+types.rb:9:1: C: [Correctable] Layout/MultilineAssignmentLayout: Right hand side of multi-line assignment is on the same line as the assignment operator `=`.
+types.rb:9:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `f`.

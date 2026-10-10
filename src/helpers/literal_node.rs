@@ -289,6 +289,17 @@ pub fn parser_type(node: &Node) -> &'static str {
         Node::InstanceVariableReadNode { .. } => "ivar",
         Node::ClassVariableReadNode { .. } => "cvar",
         Node::GlobalVariableReadNode { .. } => "gvar",
+        Node::WhileNode { .. } if node.as_while_node().unwrap().is_begin_modifier() => "while_post",
+        Node::WhileNode { .. } => "while",
+        Node::UntilNode { .. } if node.as_until_node().unwrap().is_begin_modifier() => "until_post",
+        Node::UntilNode { .. } => "until",
+        Node::ForNode { .. } => "for",
+        Node::DefinedNode { .. } => "defined?",
+        Node::YieldNode { .. } => "yield",
+        Node::SuperNode { .. } => "super",
+        Node::ForwardingSuperNode { .. } => "zsuper",
+        Node::DefNode { .. } if node.as_def_node().unwrap().receiver().is_some() => "defs",
+        Node::DefNode { .. } => "def",
         _ => "other",
     }
 }
