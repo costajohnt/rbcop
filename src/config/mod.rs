@@ -10,7 +10,7 @@ use regex::Regex;
 use std::collections::HashMap;
 use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
-use value::{Map, Value, parse_yaml, ruby_regex};
+use value::{Map, Value, parse_yaml, parse_yaml_file, ruby_regex};
 
 /// RuboCop's own default.yml, vendored from the release rbcop targets (MIT, see config/LICENSE).
 pub const DEFAULT_YML: &str = include_str!("../../config/default.yml");
@@ -559,14 +559,19 @@ impl Store {
             return Ok(m);
         }
         let start = self.emitted.len();
-        let text = std::fs::read_to_string(path).map_err(|e| format!("{}: {e}", path.display()))?;
+        let text = std::fs::read_to_string(path).map_err(|e| match e.kind() {
+            // ConfigLoader.read_file's ConfigNotFoundError.
+            std::io::ErrorKind::NotFound => format!("Configuration file not found: {}", path.display()),
+            _ => format!("{}: {e}", path.display()),
+        })?;
         if text.contains("<%") {
             self.warnings.push(format!("{}: ERB in config is not supported; parsed as plain YAML", path.display()));
         }
-        let mut hash = match parse_yaml(&text).map_err(|e| format!("{}: {e}", path.display()))? {
+        let mut hash = match parse_yaml_file(&text, &path.display().to_string())? {
             Value::Map(m) => m,
             Value::Null => Map::default(),
-            _ => return Err(format!("Malformed configuration in {}", path.display())),
+            // A ValidationError, which the CLI prints as `Error: ...`.
+            _ => return Err(format!("Error: Malformed configuration in {}", path.display())),
         };
         // Plugins (and plugin-capable `require:` gems) only matter here for their default configs.
         let mut plugins = Vec::new();
