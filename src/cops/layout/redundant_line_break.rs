@@ -156,16 +156,17 @@ fn on_send(cx: &mut Cx, node: &Node, block_level: bool) {
     let (mut j, mut block_level) = (chain.len() - 1, block_level);
     loop {
         let cur = chain[j];
-        if !block_level && let Some(call) = cur.as_call_node() {
-            if call.block().is_some_and(|b| b.as_block_node().is_some()) {
-                // convertible_block?: the parent is the block of this send.
-                let parenthesized = call.closing_loc().is_some_and(|c| c.as_slice() == b")");
-                if parenthesized || send_args(&call).is_empty() {
-                    block_level = true;
-                    continue;
-                }
-                break;
+        if !block_level
+            && let Some(call) = cur.as_call_node()
+            && call.block().is_some_and(|b| b.as_block_node().is_some())
+        {
+            // convertible_block?: the parent is the block of this send.
+            let parenthesized = call.closing_loc().is_some_and(|c| c.as_slice() == b")");
+            if parenthesized || send_args(&call).is_empty() {
+                block_level = true;
+                continue;
             }
+            break;
         }
         // The parser parent, skipping Prism-only wrappers.
         let mut p = j;

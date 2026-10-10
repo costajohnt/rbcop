@@ -87,17 +87,10 @@ impl Cop for MultilineAssignmentLayout {
         }
         let (os, oe) = (operator.start_offset(), operator.end_offset());
         let (ns, ne) = (start, node.location().end_offset());
+        let same = src.line_of(os) == src.line_of(rs);
         match cx.cfg.str("EnforcedStyle") {
-            Some("new_line") => {
-                if src.line_of(os) == src.line_of(rs) {
-                    cx.add_fix(ns, ne, NEW_LINE_OFFENSE, |c| c.insert_after(os, oe, "\n"));
-                }
-            }
-            Some("same_line") => {
-                if src.line_of(os) != src.line_of(rs) {
-                    cx.add_fix(ns, ne, SAME_LINE_OFFENSE, |c| c.replace(oe, rs, " "));
-                }
-            }
+            Some("new_line") if same => cx.add_fix(ns, ne, NEW_LINE_OFFENSE, |c| c.insert_after(os, oe, "\n")),
+            Some("same_line") if !same => cx.add_fix(ns, ne, SAME_LINE_OFFENSE, |c| c.replace(oe, rs, " ")),
             _ => {}
         }
     }
