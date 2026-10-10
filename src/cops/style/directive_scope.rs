@@ -187,7 +187,7 @@ impl Cop for DirectiveScope {
         // Registry#disabled_names(config): every cop off in config starts disabled.
         let config_disabled: Vec<&'static str> =
             crate::cops::ALL.iter().map(|r| r.name).filter(|n| !cx.config.cop(n).enabled).collect();
-        let ranges = directives::analyze(src, &config_disabled, &info);
+        let ranges = directives::analyze(src, &config_disabled, &info, directives::prevent_style(cx.config)).ranges;
         let at_line = (0..src.comments.len()).map(|i| (src.line_of(src.comments[i].start), i)).collect();
         let ctx = Ctx { src, info: &info, ranges, at_line };
         let mut found = Vec::new();

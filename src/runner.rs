@@ -47,13 +47,15 @@ pub fn inspect(
     // available (ProcessedSource#raw_source) for cops such as Layout/EndOfLine.
     let (text, raw) = if text.contains("\r\n") { (text.replace("\r\n", "\n"), Some(text)) } else { (text, None) };
     let shared: Arc<str> = Arc::from(text.as_str());
-    let (offenses, _) = analyze(path, display, &shared, raw.as_deref(), cfg, selected, None);
+    let (offenses, _, _) = analyze(path, display, &shared, raw.as_deref(), cfg, selected, None, Redundant::Own);
     FileReport { offenses, text }
 }
 
 /// One autocorrect iteration (see `crate::autocorrect::correct`): the offenses and, unless nothing
 /// was corrected, the collated corrector. Like Team#investigate_with_corrector, offenses of cops
-/// that do not autocorrect are only reported when no correction was made.
+/// that do not autocorrect are only reported when no correction was made. Also returns the
+/// (cop, first line, last line) of the offenses disabled by comments, which RuboCop keeps for
+/// Lint/RedundantCopDisableDirective.
 pub fn analyze_for_correction(
     path: &Path,
     display: &str,
@@ -61,10 +63,43 @@ pub fn analyze_for_correction(
     cfg: &Resolved,
     selected: &dyn Fn(&str) -> bool,
     mode: Mode,
-) -> (Vec<Offense>, Option<Corrector>) {
-    analyze(path, display, text, None, cfg, selected, Some(mode))
+) -> (Vec<Offense>, Option<Corrector>, Vec<Span>) {
+    analyze(path, display, text, None, cfg, selected, Some(mode), Redundant::Skip)
 }
 
+/// Runner#add_redundant_disables after an autocorrect loop: Lint/RedundantCopDisableDirective
+/// alone, judging the directives of `text` against `checked` (every offense the loop found).
+pub fn redundant_disables(
+    path: &Path,
+    display: &str,
+    text: &Arc<str>,
+    cfg: &Resolved,
+    selected: &dyn Fn(&str) -> bool,
+    mode: Mode,
+    checked: &[Span],
+) -> (Vec<Offense>, Option<Corrector>) {
+    let (offenses, corrector, _) =
+        analyze(path, display, text, None, cfg, selected, Some(mode), Redundant::Only(checked));
+    (offenses, corrector)
+}
+
+/// An offense as Lint/RedundantCopDisableDirective sees it: cop, first line, last line.
+pub type Span = (&'static str, usize, usize);
+
+/// When Lint/RedundantCopDisableDirective runs (it needs every other cop's offenses).
+#[derive(Clone, Copy)]
+enum Redundant<'a> {
+    /// After this file's cops (plain inspection).
+    Own,
+    /// Not in this pass (autocorrect iterations).
+    Skip,
+    /// Only it, against offenses found earlier.
+    Only(&'a [Span]),
+}
+
+const REDUNDANT_DISABLE: &str = "Lint/RedundantCopDisableDirective";
+
+#[allow(clippy::too_many_arguments)]
 fn analyze(
     path: &Path,
     display: &str,
@@ -73,7 +108,8 @@ fn analyze(
     cfg: &Resolved,
     selected: &dyn Fn(&str) -> bool,
     mode: Option<Mode>,
-) -> (Vec<Offense>, Option<Corrector>) {
+    redundant: Redundant,
+) -> (Vec<Offense>, Option<Corrector>, Vec<Span>) {
     let text: &str = shared;
     let raw_text = raw_text.unwrap_or(text);
     let version = target_ruby::prism_version(cfg.target_ruby);
@@ -126,13 +162,14 @@ fn analyze(
         out.retain(|o| seen.insert((o.start, o.end)));
         // Then Runner's uniq (same position and message, any range), as for every cop.
         dedup(&mut out);
-        return (out, None);
+        return (out, None, Vec::new());
     }
 
     let opted_in = directives::opted_in(&src);
+    let only_redundant = matches!(redundant, Redundant::Only(_));
     let active: Vec<Active> = crate::cops::ALL
         .iter()
-        .filter(|r| selected(r.name))
+        .filter(|r| selected(r.name) && !only_redundant)
         .filter_map(|r| {
             let c = cfg.cop(r.name);
             let on = c.enabled || opted_in.contains(&r.name);
@@ -150,7 +187,12 @@ fn analyze(
     let pn = program.as_program_node().unwrap();
     let first_code = pn.statements().body().iter().next().map(|n| n.location().start_offset());
     facts.first_code = first_code;
-    let config_disabled: Vec<&'static str> = opted_in.iter().copied().filter(|c| !cfg.cop(c).enabled).collect();
+    // Registry#disabled_names of the --only/--except filtered registry.
+    let config_disabled: Vec<&'static str> = crate::helpers::cop_registry::REGISTRY
+        .iter()
+        .copied()
+        .filter(|&c| selected(c) && !directives::config_enabled(cfg, c))
+        .collect();
     if src.text.contains("rubocop") {
         // DisableNext needs statement bounds before the cops run (disabled ranges gate `add_fix`).
         let bounds = directives::needs_statement_bounds(&src).then(|| StatementBounds::build(&src, &program));
@@ -158,7 +200,11 @@ fn analyze(
         let code = code_lines(&src, &facts);
         let statement_bounds = |line: usize| bounds.at(line);
         let info = directives::LineInfo { code: &code, statement_bounds: &statement_bounds };
-        facts.disabled = directives::disabled_ranges(&src, &config_disabled, &info);
+        let cc = directives::analyze(&src, &config_disabled, &info, directives::prevent_style(cfg));
+        facts.disabled = directives::disabled_ranges(&cc);
+        facts.comment_config = cc;
+        facts.code_lines = code;
+        facts.config_disabled = config_disabled;
     }
     facts.text = shared.clone();
     let mut fixes: Vec<Fixes> = active
@@ -209,15 +255,64 @@ fn analyze(
 
     dedup(&mut out);
     // Parser's Range#last_line is the line of end_pos.
+    let span = |o: &Offense| (o.cop, src.line_of(o.start), src.line_of(o.end.max(o.start)));
+    let mut disabled: Vec<Span> = Vec::new();
     out.retain(|o| {
-        !directives::is_disabled(&facts.disabled, o.cop, src.line_of(o.start), src.line_of(o.end.max(o.start)))
+        let s = span(o);
+        let off = directives::is_disabled(&facts.disabled, s.0, s.1, s.2);
+        if off {
+            disabled.push(s);
+        }
+        !off
     });
+
+    // Runner#add_redundant_disables: offenses_to_check are all offenses, the disabled ones included.
+    let checked: Option<Vec<Span>> = match redundant {
+        Redundant::Own if mode.is_none() => Some(out.iter().map(span).chain(disabled.iter().copied()).collect()),
+        Redundant::Only(c) => Some(c.to_vec()),
+        _ => None,
+    };
+    let mut redundant_fix = None;
+    let rcfg = cfg.cop(REDUNDANT_DISABLE);
+    if let Some(checked) = checked
+        && selected(REDUNDANT_DISABLE)
+        && (rcfg.enabled || opted_in.contains(&REDUNDANT_DISABLE))
+        && cfg.relevant(rcfg, path)
+        && (!facts.disabled.is_empty() || !facts.comment_config.detached.is_empty())
+    {
+        let mut fixes =
+            Fixes { autocorrect: mode.is_some_and(|m| autocorrect::cop_autocorrects(rcfg, m)), ..Fixes::default() };
+        let (mut found, mut state) = (Vec::new(), None);
+        let mut cx = Cx {
+            src: &src,
+            facts: &facts,
+            ancestors: &[],
+            cfg: rcfg,
+            config: cfg,
+            cop: REDUNDANT_DISABLE,
+            correctable: true,
+            out: &mut found,
+            state: &mut state,
+            fixes: &mut fixes,
+        };
+        guarded(REDUNDANT_DISABLE, &src, 0, || {
+            crate::cops::lint_redundant_cop_disable_directive::check(&mut cx, &checked)
+        });
+        found.retain(|o| {
+            let s = span(o);
+            !directives::is_disabled(&facts.disabled, s.0, s.1, s.2)
+        });
+        out.extend(found);
+        redundant_fix = fixes.corrector;
+    }
+
     let mut corrector = None;
     if mode.is_some() {
-        let by_cop: Vec<(&'static str, Corrector)> =
+        let mut by_cop: Vec<(&'static str, Corrector)> =
             active.iter().zip(fixes).filter_map(|(a, f)| Some((a.name, f.corrector?))).collect();
+        by_cop.extend(redundant_fix.map(|c| (REDUNDANT_DISABLE, c)));
         corrector = autocorrect::collate(by_cop, shared.clone());
-        if corrector.is_some() {
+        if corrector.is_some() && !only_redundant {
             // Team#investigate_with_corrector: the other cops do not run in a correcting iteration.
             let correcting: Vec<&str> = active
                 .iter()
@@ -232,7 +327,7 @@ fn analyze(
         o.severity = c.severity.unwrap_or_else(|| default_severity(o.cop));
         o.correctable &= autocorrect_allowed(c);
     }
-    (out, corrector)
+    (out, corrector, disabled)
 }
 
 thread_local! {

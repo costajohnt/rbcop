@@ -18,6 +18,10 @@ out=${TMPDIR:-/tmp}/rbcop-check/$$
 mkdir -p "$out"
 [ "$cops" = all ] && cops=$("$bin" --show-cops | sed -n 's/^\([^ #].*\):$/\1/p' | paste -sd, -)
 pattern=": [CWEFRI]: (\[Correctable\] )?($(echo "$cops" | tr , '|')): "
+# Lint/RedundantCopDisableDirective needs every cop's offenses and is rejected by --only (as in
+# RuboCop), so such runs inspect with all cops (like the oracles) and rely on the pattern filter.
+only="--only $cops"
+case ",$cops," in *,Lint/RedundantCopDisableDirective,*) only= ;; esac
 norm() { grep -E "$pattern" | LC_ALL=C sort; }
 
 status=0
@@ -26,7 +30,7 @@ for c in $corpora; do
   crashes="$oracle_root/$c.txt.crashes"
   [ -f "$crashes" ] || crashes=/dev/null
   # rbcop-oracle = emacs plus range end (path:line:col:last_line:last_col), like scripts/oracle_formatter.rb.
-  (cd "$corpus_root/$c" && "$bin" --config "$root/config/all-cops.yml" --format rbcop-oracle --only "$cops" . 2>"$out/$c.err") \
+  (cd "$corpus_root/$c" && "$bin" --config "$root/config/all-cops.yml" --format rbcop-oracle $only . 2>"$out/$c.err") \
     | awk -F'\t' 'FILENAME == ARGV[1] { skip[$1 "\t" $2] = 1; next }
         { path = $0; sub(/:[0-9]+:[0-9]+:[0-9]+:[0-9]+: .*/, "", path)
           cop = $0; sub(/^.*: [CWEFRI]: (\[Correctable\] )?/, "", cop); sub(/: .*/, "", cop)

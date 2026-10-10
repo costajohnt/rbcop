@@ -87,6 +87,7 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     that only need a parent.
 - Style/DirectiveScope treats only ported cops as disabled by default config; an `enable X` ...
   `disable X` pair for an unported, default-disabled cop can differ (not hit by the gates).
-- Lint/RedundantCopDisableDirective, Lint/RedundantCopEnableDirective, Lint/MissingCopEnableDirective
-  and Style/DisableCopsWithinSourceCodeDirective need every other cop's offenses (suppressed ones
-  included), so they are ported last, once all cops exist.
+- Lint/RedundantCopDisableDirective judges directives against rbcop's own offenses, so a directive
+  for a cop rbcop has not ported yet (e.g. `# rubocop:disable Style/Send`) is reported as
+  redundant. `--except Lint` / `--except RedundantCopDisableDirective` (unqualified or department) do not
+  switch it off, because rbcop's `--except` matches exact names only.

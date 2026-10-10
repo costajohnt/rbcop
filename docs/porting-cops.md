@@ -442,6 +442,12 @@ More traps found while porting:
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.
 
+- Directive cops read `cx.facts.comment_config` (CommentConfig#analyze: ranges with their opening
+  directive, Ruby hash key order, detached `-next` directives), `facts.code_lines` and
+  `facts.config_disabled` (Registry#disabled_names after --only/--except). Lint/RedundantCopDisableDirective
+  is run by the runner after all cops (and once more after an `-A` loop); RuboCop forbids it with
+  `--only`, so the gates run lists containing it without `--only`.
+
 ### Prism tokens vs parser-gem tokens
 
 Use `helpers::parser_tokens::sorted_tokens` when porting token-based cops; it smooths most of this:
