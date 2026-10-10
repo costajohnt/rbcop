@@ -1,0 +1,1 @@
+Layout/EmptyLines,Layout/IndentationStyle,Layout/LineLength,Layout/TrailingEmptyLines,Layout/TrailingWhitespace,Lint/Debugger,Style/FrozenStringLiteralComment,Style/NilComparison

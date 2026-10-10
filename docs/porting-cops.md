@@ -47,6 +47,7 @@ impl Cop for Example {
   The range must be exactly the range RuboCop passes to `add_offense` (node, `loc.selector`, etc.);
   only the start shows in emacs output, but other formatters print the range, and RuboCop drops a
   second offense on an identical range (the runner does the same).
+- A cop with a corrector block reports with `cx.add_fix` instead (see Autocorrect below).
 - Config: `cx.cfg.str("EnforcedStyle")`, `cx.cfg.int("Max")`, `cx.cfg.bool(..)`, `cx.cfg.strings(..)`,
   `cx.cfg.regexes(..)`, `cx.cfg.get(..)` for raw values. Another cop's config:
   `cx.config.for_cop("Layout/IndentationWidth")`. Target Ruby: `cx.config.target_ruby`.
@@ -56,6 +57,33 @@ impl Cop for Example {
   `helpers::<file>::fn`). Check what exists there first. Add new files freely; in an existing helper
   file only append functions. Do not edit runner, config, cop.rs, other cops, or build.rs; if you need
   infrastructure, put it in your cop or a helper and say so in your report.
+
+## Autocorrect
+
+Port the cop's `add_offense(range) { |corrector| ... }` block as `cx.add_fix`:
+
+```rust
+// add_offense(node.loc.selector) { |corrector| corrector.replace(range, '.nil?') }
+cx.add_fix(sel_start, sel_end, msg, |c| c.replace(recv_end, end, ".nil?"));
+```
+
+- `c: &mut Corrector` mirrors RuboCop's Corrector (`src/autocorrect/corrector.rs`): `replace`, `remove`,
+  `wrap`, `insert_before`, `insert_after` take a byte range `(start, end)` like `cx.add`;
+  `remove_preceding` / `remove_leading` / `remove_trailing` take a byte size; `swap((a, b), (c, d))`.
+  Pass the same range RuboCop passes, not just the insertion point: `insert_before(node)` uses the whole
+  node range to decide how edits nest and clobber (`src/autocorrect/tree_rewriter.rs` is parser's
+  TreeRewriter). RuboCop ranges are character offsets; convert column arithmetic to bytes.
+- Compute what the block needs before calling `add_fix` (the closure cannot use `cx`); `cx.src` can
+  be copied into a local first (`let src = cx.src;`).
+- `[Correctable]` follows from the edits: an offense is correctable only if the block made one (and
+  the cop's `AutoCorrect` allows it), so keep RuboCop's conditions inside the block. A cop using
+  `add_fix` still returns `true` from `correctable()` (RuboCop's `extend AutoCorrector`).
+- The block does not run for an offense on a range already reported or disabled by a comment.
+- Range helpers: `helpers::range_help::range_with_surrounding_space`.
+- Check with `scripts/check-autocorrect.sh Cop/Name[,...] [corpus...]` (same env as check-cops.sh,
+  plus `MODE=-a` for safe mode, `LIMIT=n`, `OUT=dir`): it runs `rubocop -A` and `rbcop -A` on
+  copies of the corpus files that have offenses and diffs the rewritten files and the reports.
+  Include the cops that interact with yours (e.g. Layout cops whose edits touch the same lines).
 
 ## Parser gem AST vs Prism AST
 
@@ -128,6 +156,24 @@ More traps found while porting:
 - Where RuboCop crashes (e.g. `nil.blank?` past the last line) the oracle has no offense; the gate
   skips crash-listed (cop, file) pairs, otherwise report nothing on that path.
 - `cx.src.raw_text` is the file as read (CRLF intact); offsets refer to the normalised `cx.src.text`.
+- rubocop-ast `BlockNode#single_line?`/`multiline?` compare the `{`/`do` line with the `}`/`end` line,
+  not the whole block: `Foo.new(x)\n  .tap { ... }` is single-line.
+- In a body with rescue/ensure, Prism's implicit `BeginNode` starts at `do`/`def` and its ensure
+  clause includes `end`; parser's `rescue`/`ensure` spans only statements and clauses (`ast::body_range`).
+- `begin ... end while x` is parser `while_post`, which `on_while` never sees (`is_begin_modifier`).
+- In `Foo::Bar = 1` the target `ConstantPathNode` is part of parser's `casgn`, not a `const` node.
+- Prism emits a `__END__` token; parser has none.
+- `in_macro_scope?` treats `Class.new`/`Module.new`/`Struct.new`/`Data.define` blocks as class-like.
+- Alignment-mixin cops register offenses nested in an earlier offense's range without a corrector
+  (not `[Correctable]`, sometimes a different message): track earlier ranges in `cx.state`.
+- RuboCop drops a second offense on an identical range even with another message, so the order of
+  checks decides which message survives.
+- `ruby_prism::Node` is not `Clone`; collect `(start, end)` ranges when items must be reordered.
+- `on_node(type, arg, :send)` searches inside an argument but not into plain `send` nodes (it does go
+  into csends and blocks); Prism's `ArgumentsNode` sits in between.
+- Parser wraps a `rescue A, B` exception list in an `array`.
+- `a[...]` has no `loc.begin` in parser although Prism has `opening_loc` `[`.
+- A label pair `key: v` has no `operator_loc` in Prism; treat the missing operator as `:`.
 
 ### Prism tokens vs parser-gem tokens
 
@@ -168,7 +214,7 @@ command per call (the gate accepts a comma-separated cop list, so one call cover
 
 ```sh
 cargo build --release
-export RBCOP_CORPUS=/Users/johncosta/.claude/jobs/89c7fab2/tmp/corpus RBCOP_ORACLE=/Users/johncosta/.claude/jobs/89c7fab2/tmp/oracle
+export RBCOP_CORPUS=/Users/johncosta/.claude/jobs/89c7fab2/tmp/corpus RBCOP_ORACLE=/Users/johncosta/.claude/jobs/89c7fab2/tmp/oracle2
 scripts/check-cops.sh Style/Example,Style/Other specs          # fast loop (RuboCop's own spec snippets)
 scripts/check-cops.sh Style/Example,Style/Other                # full gate: specs, rails, discourse
 ```

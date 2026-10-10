@@ -46,13 +46,11 @@ Known gap: RuboCop tags some LineLength offenses `[Correctable]` when it finds a
 ```sh
 cargo build --release
 ./target/release/rbcop [options] [paths...]   # same options, output and exit status as rubocop
+./target/release/rbcop -A [paths...]          # autocorrect (-a: safe corrections only)
 ```
 
 Every builtin RuboCop formatter except autogenconf (`-f progress|simple|clang|emacs|files|fuubar|github|html|json|junit|markdown|offenses|pacman|quiet|sarif|tap|worst`, with RuboCop's key abbreviations and `-o FILE`), the display options (`-D -E -S --display-time --display-only-*`), `--fail-level`, `--color`, `--stdin FILE`, `-L`, `--show-cops`, `-v` and `-V`. `scripts/formatters.sh` records RuboCop's output for `tests/formatters/cases.txt`; `tests/formatters.rs` checks rbcop reproduces it byte for byte.
 
 ## Not yet
 
-- `.rubocop.yml` (rbcop always behaves like `--force-default-config`)
-- Autocorrect
-- `# rubocop:push` / `pop`
-- Lint/Syntax: files with syntax errors are skipped with a warning
+- Autocorrect for cops that have no corrector yet (`-a`/`-A` reports them but does not fix them)

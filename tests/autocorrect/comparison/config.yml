@@ -1,0 +1,10 @@
+Style/NilComparison:
+  EnforcedStyle: comparison
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: always_true
+Layout/LineLength:
+  Max: 40
+AllCops:
+  TargetRubyVersion: 3.4
+  SuggestExtensions: false
+  NewCops: disable

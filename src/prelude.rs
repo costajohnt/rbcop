@@ -2,7 +2,7 @@
 
 pub use crate::ast::*;
 pub use crate::config::value::{Map, Value};
-pub use crate::cop::{Cop, Cx};
+pub use crate::cop::{Cop, Corrector, Cx};
 pub use crate::helpers;
 pub use crate::node_kind as kind;
 pub use crate::source::{Comment, Token};
