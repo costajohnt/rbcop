@@ -317,12 +317,12 @@ impl Formatter for Junit {
         let _ = writeln!(out, "  <testsuite name='rubocop' tests='{}' failures='{}'>", self.files, self.offenses);
         for (class, cop, failures) in &self.cases {
             if failures.is_empty() {
-                let _ = writeln!(out, "    <testcase classname='{}' name='{cop}'/>", xml(class));
+                let _ = writeln!(out, "    <testcase classname='{}' name='{}'/>", xml(class), xml(cop));
                 continue;
             }
-            let _ = writeln!(out, "    <testcase classname='{}' name='{cop}'>", xml(class));
+            let _ = writeln!(out, "    <testcase classname='{}' name='{}'>", xml(class), xml(cop));
             for (message, text) in failures {
-                let _ = writeln!(out, "      <failure type='{cop}' message='{}'>", xml(message));
+                let _ = writeln!(out, "      <failure type='{}' message='{}'>", xml(cop), xml(message));
                 let _ = writeln!(out, "        {}", xml(text));
                 out.push_str("      </failure>\n");
             }

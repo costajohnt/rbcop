@@ -98,3 +98,12 @@ only-failed-misuse|tests/formatters/project|-f s --display-only-failed
 except-syntax|tests/formatters/project|-f e --except Lint/Syntax
 cache-value|tests/formatters/project|-f e --cache maybe
 stdin-with-paths|tests/formatters/project|-f e --stdin a.rb b.rb|tests/formatters/stdin.rb
+# Option-parsing edge cases (none of these write files).
+parse-fo|tests/fixtures|-fo
+parse-o-ambiguous|tests/fixtures|--o x.txt basic.rb
+parse-double-dash|tests/fixtures|-f emacs -- basic.rb
+parse-config-takes-dash|tests/fixtures|-c -o basic.rb
+parse-config-missing|tests/fixtures|-c nope.yml basic.rb
+parse-only-optional|tests/fixtures|--only -f emacs basic.rb
+parse-no-out|tests/fixtures|--no-out basic.rb
+parse-out-missing-arg|tests/fixtures|-f emacs -o

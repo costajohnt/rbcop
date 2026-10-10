@@ -613,6 +613,13 @@ fn run(cli: Cli, global: bool) -> Result<u8, String> {
         return Ok(0);
     }
     let names: Vec<&'static str> = cops::ALL.iter().map(|c| c.name).collect();
+    // ConfigLoader: a missing -c file is an error, even with --force-default-config.
+    if let Some(c) = &cli.opts.config_file {
+        let abs = expand_path(c, &rbcop::config::cwd());
+        if !abs.is_file() {
+            return Err(format!("Configuration file not found: {}", abs.display()));
+        }
+    }
     let mut store = Store::new(cli.opts.clone(), names.clone())?;
     let cwd = store.cwd().to_path_buf();
     let pwd_config = store.for_dir(&cwd)?;
@@ -754,6 +761,18 @@ fn run(cli: Cli, global: bool) -> Result<u8, String> {
             .collect();
         handles.into_iter().flat_map(|h| h.join().unwrap()).collect()
     });
+
+    // Deliberate difference: RuboCop truncates an -o file before inspecting, so `rubocop -o a.rb a.rb`
+    // empties a.rb. rbcop refuses to write output over a file it inspects.
+    for (_, out) in &resolved {
+        if let Some(p) = out {
+            let abs = expand_path(p, &cwd);
+            let canon = abs.canonicalize().ok();
+            if files.iter().any(|f| *f == abs || (canon.is_some() && f.canonicalize().ok() == canon)) {
+                return Err(format!("rbcop: refusing to write --out {}: it is a file being inspected", p.display()));
+            }
+        }
+    }
 
     // Runner#inspect_files
     let mut set = formatter::Set::new(&resolved, &cx, cli.stderr)?;
