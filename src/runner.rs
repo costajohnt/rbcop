@@ -441,7 +441,7 @@ fn analyze(
             state,
             fixes,
         };
-        guarded(a.name, &src, 0, || a.cop.on_file(&mut cx));
+        guarded(a.name, &src, None, || a.cop.on_file(&mut cx));
     }
 
     dedup(&mut out);
@@ -486,7 +486,7 @@ fn analyze(
             state: &mut state,
             fixes: &mut fixes,
         };
-        guarded(REDUNDANT_DISABLE, &src, 0, || {
+        guarded(REDUNDANT_DISABLE, &src, None, || {
             crate::cops::lint_redundant_cop_disable_directive::check(&mut cx, &checked)
         });
         found.retain(|o| {
@@ -523,6 +523,9 @@ fn analyze(
 
 thread_local! {
     static IN_COP: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+    /// Start of the node the running cop callback was given (None in on_file): where
+    /// Commissioner#with_cop_error_handling locates an error.
+    static VISITING: std::cell::Cell<Option<usize>> = const { std::cell::Cell::new(None) };
 }
 
 /// Runner#errors: every cop error of the run, for the end-of-run summary and the exit status.
@@ -530,9 +533,26 @@ static ERRORS: std::sync::Mutex<Vec<String>> = std::sync::Mutex::new(Vec::new())
 
 /// Print a cop error now (Commissioner) and keep it for the summary.
 pub fn cop_error(cop: &str, src: &Source, at: usize) {
-    // Range#line and the 0-based Range#column.
-    let (line, col) = crate::formatter::line_col(src.text, at);
-    file_error(format!("An error occurred while {cop} cop was inspecting {}:{line}:{}.", src.path, col - 1));
+    cop_error_at(cop, src, Some(at));
+}
+
+/// A cop error at the node being visited (Team#process_errors: `path:line:column`, or the bare
+/// path for a callback without a node, such as on_new_investigation).
+pub fn cop_error_at(cop: &str, src: &Source, at: Option<usize>) {
+    let location = match at {
+        // Range#line and the 0-based Range#column.
+        Some(at) => {
+            let (line, col) = crate::formatter::line_col(src.text, at);
+            format!("{}:{line}:{}", src.path, col - 1)
+        }
+        None => src.path.to_string(),
+    };
+    file_error(format!("An error occurred while {cop} cop was inspecting {location}."));
+}
+
+/// The node the running cop callback was given (see VISITING).
+pub fn visiting() -> Option<usize> {
+    VISITING.with(|v| v.get())
 }
 
 /// Print an error now and keep it for the summary (it makes the run fail).
@@ -561,12 +581,14 @@ pub fn in_cop() -> bool {
 
 /// Commissioner#with_cop_error_handling: a cop that fails on one node is reported and skipped
 /// there, and inspection goes on (other nodes, other cops, other files).
-fn guarded(cop: &str, src: &Source, at: usize, f: impl FnOnce()) {
+fn guarded(cop: &str, src: &Source, at: Option<usize>, f: impl FnOnce()) {
     IN_COP.with(|c| c.set(true));
+    VISITING.with(|v| v.set(at));
     let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(f));
     IN_COP.with(|c| c.set(false));
+    VISITING.with(|v| v.set(None));
     if result.is_err() {
-        cop_error(cop, src, at);
+        cop_error_at(cop, src, at);
     }
 }
 
@@ -653,7 +675,7 @@ impl<'pr> Walker<'_, 'pr, '_> {
                 state: &mut self.states[i],
                 fixes: &mut self.fixes[i],
             };
-            guarded(a.name, self.src, node.location().start_offset(), || a.cop.on_node(&mut cx, node));
+            guarded(a.name, self.src, Some(node.location().start_offset()), || a.cop.on_node(&mut cx, node));
         }
     }
 

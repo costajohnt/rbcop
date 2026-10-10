@@ -397,3 +397,17 @@ fn config_load_errors_worded_like_rubocop() {
     }
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// A corrector that clobbers (Style/IfInsideElse on a one-line nested if) is a cop error located
+/// at the node the cop was visiting (the outer `if`, 1:0), not at the offense (the inner `if`).
+#[test]
+fn cop_error_is_located_at_the_visited_node() {
+    let dir = scratch("coperror");
+    fs::write(dir.join(".rubocop.yml"), "AllCops:\n  NewCops: disable\n  TargetRubyVersion: 2.7\n").unwrap();
+    fs::write(dir.join("t.rb"), "if cond then foo else if cond2; bar else baz end; end\n").unwrap();
+    let out = rbcop(&dir, &["--only", "Style/IfInsideElse", "-f", "e", "t.rb"]);
+    let err = text(&out.stderr);
+    assert!(err.starts_with("An error occurred while Style/IfInsideElse cop was inspecting t.rb:1:0.\n"), "{err}");
+    assert_eq!(out.status.code(), Some(1));
+    let _ = fs::remove_dir_all(&dir);
+}
