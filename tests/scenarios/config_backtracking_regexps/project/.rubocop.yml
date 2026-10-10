@@ -1,0 +1,11 @@
+AllCops:
+  NewCops: disable
+  TargetRubyVersion: 3.4
+  SuggestExtensions: false
+Naming/VariableName:
+  AllowedPatterns: ['(?<=foo)Bar', '\A(\w)b\1b\z', '(?>cd)Ef', 'g++H', '(?!x)\wBarBaz']
+Style/NumericLiterals:
+  AllowedPatterns: ['(?=1)\d+']
+Layout/LineLength:
+  Max: 80
+  AllowedPatterns: ['LOOKAHEAD_(?=OK)']

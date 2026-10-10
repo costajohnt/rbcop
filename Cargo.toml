@@ -13,6 +13,7 @@ license = "MIT"
 
 [dependencies]
 libc = "0.2"
+fancy-regex = "0.14.0"
 regex = "1.13.1"
 ruby-prism = "1.9.0"
 ruby-prism-sys = "1.9.0"

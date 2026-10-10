@@ -285,7 +285,7 @@ pub fn acceptable_line_length(cx: &Cx, line: &str, line_number: usize) -> bool {
     }
     let ll = cx.config.for_cop("Layout/LineLength");
     let key = if ll.get("AllowedPatterns").is_some() { "AllowedPatterns" } else { "IgnoredPatterns" };
-    let patterns: Vec<Regex> = match ll.get(key) {
+    let patterns: Vec<crate::config::value::RubyRegex> = match ll.get(key) {
         Some(Value::Seq(items)) => items
             .iter()
             .filter_map(|v| match v {
