@@ -21,7 +21,9 @@ impl Cop for ExponentialNotation {
         if cx.ancestors.last().is_some_and(|p| p.as_imaginary_node().is_some()) {
             return;
         }
-        let source = node_text(node);
+        // The parser `float` range: `- 1e5` is one literal (helpers::integer_node::literal_range).
+        let Some((start, end)) = helpers::integer_node::literal_range(node, cx.ancestors) else { return };
+        let source = cx.src.slice(start, end);
         if !source.contains('e') {
             return;
         }
@@ -42,8 +44,7 @@ impl Cop for ExponentialNotation {
             _ => return,
         };
         if !ok {
-            let loc = node.location();
-            cx.add(loc.start_offset(), loc.end_offset(), msg);
+            cx.add(start, end, msg);
         }
     }
 }
