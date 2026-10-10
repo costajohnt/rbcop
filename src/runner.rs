@@ -33,13 +33,21 @@ pub fn inspect(
     cfg: &Resolved,
     selected: &dyn Fn(&str) -> bool,
 ) -> FileReport {
-    // parser's Source::Buffer normalises CRLF before any cop sees the source.
-    let text = if text.contains("\r\n") { text.replace("\r\n", "\n") } else { text };
-    let offenses = analyze(path, display, &text, cfg, selected);
+    // parser's Source::Buffer normalises CRLF before any cop sees the source; the raw text stays
+    // available (ProcessedSource#raw_source) for cops such as Layout/EndOfLine.
+    let (text, raw) = if text.contains("\r\n") { (text.replace("\r\n", "\n"), Some(text)) } else { (text, None) };
+    let offenses = analyze(path, display, &text, raw.as_deref().unwrap_or(&text), cfg, selected);
     FileReport { offenses, text }
 }
 
-fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dyn Fn(&str) -> bool) -> Vec<Offense> {
+fn analyze(
+    path: &Path,
+    display: &str,
+    text: &str,
+    raw_text: &str,
+    cfg: &Resolved,
+    selected: &dyn Fn(&str) -> bool,
+) -> Vec<Offense> {
     let version = target_ruby::prism_version(cfg.target_ruby);
     let result = ruby_prism::parse_with_version(text.as_bytes(), version);
     // Below 3.3 RuboCop parses with the parser gem, which accepts some things Prism rejects.
@@ -61,7 +69,8 @@ fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dy
         })
         .collect();
     let data = result.data_loc().map(|d| d.start_offset());
-    let src = Source::new(display, text, comments, data, version);
+    let mut src = Source::new(display, text, comments, data, version);
+    src.raw_text = raw_text;
 
     if !errors.is_empty() {
         // RuboCop runs only Lint/Syntax on a file that does not parse, one offense per diagnostic,

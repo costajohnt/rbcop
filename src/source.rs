@@ -21,7 +21,10 @@ pub struct Comment {
 
 pub struct Source<'a> {
     pub path: &'a str,
+    /// Source with CRLF normalised to LF (what parser and every cop see).
     pub text: &'a str,
+    /// The file as read (ProcessedSource#raw_source), CRLF intact. Offsets refer to `text`.
+    pub raw_text: &'a str,
     line_starts: Vec<usize>,
     /// Lines without newlines, stopping before a trailing `__END__` section (ProcessedSource#lines).
     pub lines: Vec<&'a str>,
@@ -42,7 +45,16 @@ impl<'a> Source<'a> {
         let mut line_starts = vec![0];
         line_starts.extend(text.match_indices('\n').map(|(i, _)| i + 1));
         let mut lines: Vec<&str> = text.split('\n').collect();
-        let mut src = Source { path, text, line_starts, lines: Vec::new(), comments, version, tokens: OnceCell::new() };
+        let mut src = Source {
+            path,
+            text,
+            raw_text: text,
+            line_starts,
+            lines: Vec::new(),
+            comments,
+            version,
+            tokens: OnceCell::new(),
+        };
         if let Some(off) = data_start {
             lines.truncate(src.line_of(off) - 1);
         }
