@@ -26,11 +26,18 @@ for c in $corpora; do
   # Files with at least one offense for these cops, relative to the corpus.
   grep -E "$pattern" "$oracle_root/$c.txt" | sed -E 's/:[0-9]+:[0-9]+(:[0-9]+:[0-9]+)?: .*//' | sort -u \
     | sed "s|^$corpus_root/$c/||" | head -n "${LIMIT:-1000000}" > "$dir/files"
-  # Keep the corpus's target Ruby (detected from these files at its root).
-  for v in .ruby-version .tool-versions Gemfile.lock gems.locked; do
+  # Keep the corpus's target Ruby (TargetRuby reads these at its root; a root gemspec's
+  # required_ruby_version takes precedence over .ruby-version, so it must come along too).
+  for v in .ruby-version .tool-versions mise.toml Gemfile.lock gems.locked; do
     if [ -f "$corpus_root/$c/$v" ]; then
       cp "$corpus_root/$c/$v" "$dir/rubocop/$v"
       cp "$corpus_root/$c/$v" "$dir/rbcop/$v"
+    fi
+  done
+  for g in "$corpus_root/$c"/*.gemspec; do
+    if [ -f "$g" ]; then
+      cp "$g" "$dir/rubocop/"
+      cp "$g" "$dir/rbcop/"
     fi
   done
   (cd "$corpus_root/$c" && while IFS= read -r f; do
