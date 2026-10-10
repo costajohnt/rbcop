@@ -1,0 +1,6 @@
+a.rb:3:1: R: Metrics/MethodLength: Method has too many lines. [3/1]
+a.rb:3:9: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `unused`. If it's necessary, use `_` or `_unused` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `foo(*)` if you want the method to accept any arguments but don't care about them.
+a.rb:5:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+a.rb:5:7: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:6:22: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+a.rb:6:9: W: [Correctable] Lint/RaiseException: Use `StandardError` over `Exception`.

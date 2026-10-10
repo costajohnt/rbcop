@@ -373,7 +373,21 @@ pub fn statement_scope_after(lines: &LineInfo, src: &Source, directive_line: i64
     None
 }
 
-/// Cop::Base#enabled_lines?: an offense is suppressed if any of its lines is in a disabled range.
+static IGNORE_COMMENTS: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+
+/// `--ignore-disable-comments`: Cop::Base#enabled_line(s)? is true everywhere for the run.
+pub fn ignore_disable_comments() {
+    IGNORE_COMMENTS.store(true, std::sync::atomic::Ordering::Relaxed);
+}
+
+/// Cop::Base#enabled_lines? negated: whether a directive suppresses an offense on these lines
+/// (never under `--ignore-disable-comments`). Code that reads the comment config itself
+/// (`comment_config.cop_enabled_at_line?`) calls `is_disabled`.
+pub fn suppressed(ranges: &HashMap<String, Vec<(i64, i64)>>, cop: &str, first: usize, last: usize) -> bool {
+    !IGNORE_COMMENTS.load(std::sync::atomic::Ordering::Relaxed) && is_disabled(ranges, cop, first, last)
+}
+
+/// An offense on these lines falls in a range where `cop` is disabled by a comment.
 pub fn is_disabled(ranges: &HashMap<String, Vec<(i64, i64)>>, cop: &str, first: usize, last: usize) -> bool {
     ranges.get(cop).is_some_and(|rs| rs.iter().any(|&(a, b)| b >= first as i64 && a <= last as i64))
 }

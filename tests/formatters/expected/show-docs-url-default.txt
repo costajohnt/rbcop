@@ -1,0 +1,2 @@
+https://docs.rubocop.org/rubocop
+

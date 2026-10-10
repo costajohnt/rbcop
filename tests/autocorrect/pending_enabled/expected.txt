@@ -1,0 +1,6 @@
+endless_require_always.rb:2:3: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
+endless_require_always.rb:2:101: C: Layout/LineLength: Line is too long. [101/100]
+endless_require_always.rb:3:37: C: [Corrected] Layout/SpaceInsideParens: No space inside parentheses detected.
+endless_require_always.rb:3:73: C: [Corrected] Layout/SpaceInsideParens: No space inside parentheses detected.
+non_nil_check.rb:2:4: C: [Corrected] Style/NonNilCheck: Explicit non-nil checks are usually redundant.
+non_nil_check.rb:5:4: C: [Corrected] Style/NonNilCheck: Explicit non-nil checks are usually redundant.

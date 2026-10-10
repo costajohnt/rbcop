@@ -234,6 +234,10 @@ impl Abc {
 
 impl<'pr> Visit<'pr> for Abc {
     fn visit_call_node(&mut self, node: &CallNode<'pr>) {
+        // `- 1` is one literal for RuboCop, not a `-@` send.
+        if crate::helpers::literal_node::folded_numeric(&node.as_node()).is_some() {
+            return;
+        }
         if match_with_lvasgn(node) {
             return self.visit_call_parts(node.receiver(), node);
         }

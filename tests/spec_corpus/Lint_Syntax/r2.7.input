@@ -13,6 +13,10 @@ AllCops:
 foo *some_array
 (
 
+==> 002.rb 19 <==
+if true
+  puts 'x'
+
 ==> 003.rb 4 <==
 # ù
 

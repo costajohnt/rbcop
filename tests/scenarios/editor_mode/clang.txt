@@ -1,0 +1,57 @@
+metrics.rb:4:1: R: Metrics/ClassLength: Class has too many lines. [9/1]
+class Foo
+^^^^^^^^^
+metrics.rb:5:3: R: Metrics/AbcSize: Assignment Branch Condition size for bar is too high. [<1, 1, 2> 2.45/1]
+  def bar(arg)
+  ^^^^^^^
+metrics.rb:5:3: R: Metrics/CyclomaticComplexity: Cyclomatic complexity for bar is too high. [3/1]
+  def bar(arg)
+  ^^^^^^^
+metrics.rb:5:3: R: Metrics/MethodLength: Method has too many lines. [3/1]
+  def bar(arg)
+  ^^^^^^^
+metrics.rb:5:3: R: Metrics/PerceivedComplexity: Perceived complexity for bar is too high. [3/1]
+  def bar(arg)
+  ^^^^^^^
+metrics.rb:12:3: R: Metrics/AbcSize: Assignment Branch Condition size for baz is too high. [<1, 1, 0> 1.41/1]
+  def self.baz
+  ^^^^^^^^^^^^
+metrics.rb:12:3: R: Metrics/MethodLength: Method has too many lines. [2/1]
+  def self.baz
+  ^^^^^^^^^^^^
+metrics.rb:19:1: R: Metrics/ModuleLength: Module has too many lines. [2/1]
+module Mod
+^^^^^^^^^^
+metrics.rb:25:1: R: Metrics/BlockLength: Block has too many lines. [2/1]
+items.each do |i|
+^^^^^^^^^^^^^
+metrics.rb:29:11: R: Metrics/BlockLength: Block has too many lines. [2/1]
+handler = lambda do |v|
+          ^^^^^^^^^
+metrics.rb:34:1: R: Metrics/AbcSize: Assignment Branch Condition size for qux is too high. [<0, 0, 2> 2/1]
+define_method(:qux) do |arg|
+^^^^^^^^^^^^^^^^^^^^^^
+metrics.rb:34:1: R: Metrics/BlockLength: Block has too many lines. [2/1]
+define_method(:qux) do |arg|
+^^^^^^^^^^^^^^^^^^^^^^
+metrics.rb:34:1: R: Metrics/CyclomaticComplexity: Cyclomatic complexity for qux is too high. [3/1]
+define_method(:qux) do |arg|
+^^^^^^^^^^^^^^^^^^^^^^
+metrics.rb:34:1: R: Metrics/MethodLength: Method has too many lines. [2/1]
+define_method(:qux) do |arg|
+^^^^^^^^^^^^^^^^^^^^^^
+metrics.rb:34:1: R: Metrics/PerceivedComplexity: Perceived complexity for qux is too high. [3/1]
+define_method(:qux) do |arg|
+^^^^^^^^^^^^^^^^^^^^^^
+metrics.rb:35:9: W: Lint/Void: Literal 1 used in void context.
+  arg ? 1 : 2
+        ^
+a.rb:3:9: W: Lint/UnusedMethodArgument: Unused method argument - unused. If it's necessary, use _ or _unused as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as foo(*) if you want the method to accept any arguments but don't care about them.
+def foo(unused)
+        ^^^^^^
+a.rb:6:7: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+foo(1)  
+      ^^
+a.rb:8:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+
+2 files inspected, 19 offenses detected, 2 offenses autocorrectable

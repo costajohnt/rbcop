@@ -1,0 +1,1 @@
+--enable-all-cops --disable-all-cops a.rb

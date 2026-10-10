@@ -245,6 +245,10 @@ pub(super) struct Junit {
     classnames: HashMap<PathBuf, String>,
 }
 
+/// Offense::NO_LOCATION#to_s (Struct#inspect).
+const PSEUDO_SOURCE_RANGE: &str = "#<struct RuboCop::Cop::Offense::PseudoSourceRange line=1, column=0, \
+                                   source_line=\"\", begin_pos=0, end_pos=0>";
+
 fn xml(s: &str) -> String {
     let mut out = String::with_capacity(s.len());
     for c in s.chars() {
@@ -307,7 +311,16 @@ impl Formatter for Junit {
                 .clone();
             let failures = target
                 .iter()
-                .map(|o| (o.message.clone(), format!("{}:{}:{}", f.path.display(), o.line, o.real_column())))
+                .map(|o| {
+                    // `offense.location.to_s`: a global offense's PseudoSourceRange is a Struct, so
+                    // its #inspect.
+                    let text = if o.global {
+                        PSEUDO_SOURCE_RANGE.to_string()
+                    } else {
+                        format!("{}:{}:{}", f.path.display(), o.line, o.real_column())
+                    };
+                    (o.message.clone(), text)
+                })
                 .collect();
             self.cases.push((classname, cop, failures));
         }
@@ -622,11 +635,7 @@ fn sarif_rule(f: &FileOut, cop: &str) -> String {
     let cfg = f.config.hash.map(cop).cloned().unwrap_or_default();
     let desc = cfg.str("Description").unwrap_or(cop).to_string();
     let dept = cop.rsplit_once('/').map_or("", |(d, _)| d);
-    let dept_cfg = f.config.hash.map(dept).cloned().unwrap_or_default();
-    let base = dept_cfg.str("DocumentationBaseURL").unwrap_or("https://docs.rubocop.org/rubocop");
-    let ext = dept_cfg.str("DocumentationExtension").unwrap_or(".html");
-    let fragment: String = cop.to_lowercase().chars().filter(char::is_ascii_lowercase).collect();
-    let uri = format!("{base}/cops_{}{ext}#{fragment}", dept.to_lowercase().replace('/', "_"));
+    let uri = super::docs_url(f.config, cop);
     let default_sev = if dept == "Lint" { "warning" } else { "convention" };
     let level = sarif_level(cfg.str("Severity").unwrap_or(default_sev));
     let tag = cop.split('/').next().unwrap_or(cop);

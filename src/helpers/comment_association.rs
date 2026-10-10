@@ -2,6 +2,7 @@
 //! statements: the leading comments a statement collects. Interior comments are always taken by
 //! the statement or its descendants and decorating comments sit on its own lines, so for whole-line
 //! ranges (`range_with_comments_and_lines`) the leading comments are all that matter.
+//! `Associator` runs the whole walk over a subtree (`ast_with_comments[node]` for any node in it).
 
 use crate::source::{Comment, Source};
 use regex::Regex;
@@ -15,7 +16,7 @@ static ENCODING: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"[\s#](en)?coding\s*[:=]\s*[A-Za-z0-9_-]").unwrap());
 
 /// Number of leading comments `advance_through_directives` skips (shebang, magic, encoding).
-fn skipped_directives(src: &Source) -> usize {
+pub fn skipped_directives(src: &Source) -> usize {
     let text = |i: usize| src.comments.get(i).map(|c| src.slice(c.start, c.end));
     let mut i = 0;
     if text(i).is_some_and(|t| t.starts_with("#!")) {
@@ -44,4 +45,93 @@ pub fn leading<'a>(src: &'a Source, start: usize, after: usize, after_line: Opti
         .iter()
         .filter(|c| after_line.is_none_or(|l| src.line_of(c.start) > l))
         .collect()
+}
+
+/// Parser's `Comment::Associator` walk over a subtree: the comments each node gets (leading ones
+/// before it, then after its children the interior ones before its end and those decorating its
+/// last line), as (start, end, comment indices) per parser node in visit order. `cursor` is the
+/// first comment still unassigned. Prism's ArgumentsNode/StatementsNode wrappers are skipped and
+/// a parenthesised `begin` takes no leading comments.
+pub struct Associator<'a> {
+    pub src: &'a Source<'a>,
+    pub cursor: usize,
+    pub stack: Vec<Option<usize>>,
+    pub nodes: Vec<(usize, usize, Vec<usize>)>,
+}
+
+impl<'a> Associator<'a> {
+    pub fn new(src: &'a Source<'a>, cursor: usize) -> Self {
+        Associator { src, cursor, stack: Vec::new(), nodes: Vec::new() }
+    }
+
+    fn comment(&self) -> Option<Comment> {
+        self.src.comments.get(self.cursor).copied()
+    }
+
+    pub fn leading(&mut self, i: usize) {
+        while self.comment().is_some_and(|c| c.end <= self.nodes[i].0) {
+            self.nodes[i].2.push(self.cursor);
+            self.cursor += 1;
+        }
+    }
+
+    pub fn trailing(&mut self, i: usize) {
+        while self.comment().is_some_and(|c| c.end <= self.nodes[i].1) {
+            self.nodes[i].2.push(self.cursor);
+            self.cursor += 1;
+        }
+        let last_line = self.src.line_of(self.nodes[i].1);
+        while self.comment().is_some_and(|c| self.src.line_of(c.start) == last_line) {
+            self.nodes[i].2.push(self.cursor);
+            self.cursor += 1;
+        }
+    }
+
+    /// Enter a parser node spanning `start..end` (also one Prism has no node for, such as the
+    /// `lvasgn` left side of `x ||= y`).
+    pub fn enter_range(&mut self, start: usize, end: usize, leading: bool) {
+        self.nodes.push((start, end, Vec::new()));
+        let i = self.nodes.len() - 1;
+        if leading {
+            self.leading(i);
+        }
+        self.stack.push(Some(i));
+    }
+
+    pub fn enter(&mut self, node: &ruby_prism::Node) {
+        let k = crate::node_kind::of(node);
+        if matches!(k, crate::node_kind::ARGUMENTS_NODE | crate::node_kind::STATEMENTS_NODE) {
+            self.stack.push(None);
+            return;
+        }
+        let loc = node.location();
+        self.enter_range(loc.start_offset(), loc.end_offset(), k != crate::node_kind::PARENTHESES_NODE);
+    }
+
+    pub fn leave(&mut self) {
+        if let Some(Some(i)) = self.stack.pop() {
+            self.trailing(i);
+        }
+    }
+
+    /// The comments of the first node spanning `start..end`.
+    pub fn comments_of(&self, start: usize, end: usize) -> impl Iterator<Item = &'a Comment> + '_ {
+        let src = self.src;
+        self.nodes.iter().find(|n| n.0 == start && n.1 == end).into_iter().flat_map(move |n| n.2.iter().map(move |&c| &src.comments[c]))
+    }
+}
+
+impl<'pr> ruby_prism::Visit<'pr> for Associator<'_> {
+    fn visit_branch_node_enter(&mut self, node: ruby_prism::Node<'pr>) {
+        self.enter(&node);
+    }
+    fn visit_branch_node_leave(&mut self) {
+        self.leave();
+    }
+    fn visit_leaf_node_enter(&mut self, node: ruby_prism::Node<'pr>) {
+        self.enter(&node);
+    }
+    fn visit_leaf_node_leave(&mut self) {
+        self.leave();
+    }
 }

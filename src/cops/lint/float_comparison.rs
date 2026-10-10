@@ -43,6 +43,10 @@ fn is_zero_numeric(n: &Node) -> bool {
 
 fn literal_safe(n: Option<&Node>) -> bool {
     let Some(n) = n else { return false };
+    // `- 0.0` is one literal (helpers::literal_node::folded_numeric); the sign does not matter.
+    if let Some(lit) = helpers::literal_node::folded_numeric(n) {
+        return literal_safe(Some(&lit));
+    }
     if let Some(first) = begin_first(n) {
         return literal_safe(first.as_ref());
     }
@@ -51,6 +55,9 @@ fn literal_safe(n: Option<&Node>) -> bool {
 
 fn is_float(n: Option<&Node>) -> bool {
     let Some(n) = n else { return false };
+    if let Some(lit) = helpers::literal_node::folded_numeric(n) {
+        return lit.as_float_node().is_some();
+    }
     if n.as_float_node().is_some() {
         return true;
     }
