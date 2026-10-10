@@ -1,0 +1,7 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+endless_command.rb:1:16: F: Lint/Syntax: unexpected token tSTRING (Using Ruby 3.0 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+forwarding_opt.rb:1:14: F: Lint/Syntax: unexpected token tBDOT3 (Using Ruby 3.0 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+forwarding_opt.rb:2:8: F: Lint/Syntax: unexpected token tBDOT3 (Using Ruby 3.0 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+pin.rb:2:13: F: Lint/Syntax: unexpected token kTHEN (Using Ruby 3.0 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+pin.rb:2:5: F: Lint/Syntax: unexpected token tLPAREN (Using Ruby 3.0 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+shorthand.rb:2:8: F: Lint/Syntax: unexpected token tRCURLY (Using Ruby 3.0 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)

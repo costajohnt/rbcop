@@ -151,7 +151,7 @@ impl Ctx {
             if !parent_found {
                 let transparent = match a {
                     Node::StatementsNode { .. } => {
-                        let n = a.as_statements_node().unwrap().body().iter().count();
+                        let n = a.as_statements_node().unwrap().body().len();
                         n == 1
                             || matches!(chain.get(i.wrapping_sub(1)), Some(Node::ParenthesesNode { .. }) | Some(Node::EmbeddedStatementsNode { .. }))
                             || chain.get(i.wrapping_sub(1)).is_some_and(|p| is_plain_kwbegin(p))

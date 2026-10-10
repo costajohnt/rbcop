@@ -12,8 +12,8 @@ pub fn uri_regex(schemes: &[String]) -> Option<Regex> {
         return None;
     }
     let alts: Vec<String> = schemes.iter().map(|s| regex::escape(s)).collect();
-    let uric = r"[\-_.!~*'()a-zA-Z\d;/?:@&=+$,\[\]%]";
-    let path = r"[\-_.!~*'()a-zA-Z\d:@&=+$,;/%]*";
+    let uric = r"[\-_.!~*'()a-zA-Z0-9;/?:@&=+$,\[\]%]";
+    let path = r"[\-_.!~*'()a-zA-Z0-9:@&=+$,;/%]*";
     Regex::new(&format!(r"(?i)(?:{}):{path}(?:\?{uric}*)?(?:#{uric}*)?", alts.join("|"))).ok()
 }
 

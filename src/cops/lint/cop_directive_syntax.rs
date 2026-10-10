@@ -20,12 +20,22 @@ const NEXT_DIRECTIVE_AT_EOL_MSG: &str = "A `-next` directive must be on its own 
 const AVAILABLE_MODES: &[&str] = &["disable", "enable", "todo", "push", "pop", "disable-next", "todo-next", "enable-next", "next"];
 const MODES: &str = "disable-next|enable-next|todo-next|disable|enable|todo|push|next|pop";
 
-static MARKER: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"#\s*rubocop\s*:\s*").unwrap());
-static MARKER_START: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\A#\s*rubocop\s*:\s*").unwrap());
+/// Ruby's whitespace for `lstrip`, `split(' ')` and `\s` (ASCII only; `char::is_whitespace` is Unicode).
+const RUBY_SPACE: [char; 6] = [' ', '\t', '\n', '\x0b', '\x0c', '\r'];
+
+use crate::helpers::ruby_string::strip as ruby_strip;
+
+/// A Ruby pattern (ASCII `\s`, `\w`).
+fn ruby_re(pattern: &str) -> Regex {
+    Regex::new(&crate::helpers::ruby_string::ruby_regex_classes(pattern)).unwrap()
+}
+
+static MARKER: LazyLock<Regex> =LazyLock::new(|| ruby_re(r"#\s*rubocop\s*:\s*"));
+static MARKER_START: LazyLock<Regex> = LazyLock::new(|| ruby_re(r"\A#\s*rubocop\s*:\s*"));
 static WITHOUT_COP_NAME: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(&format!(r"\A#\s*rubocop\s*:\s*(?:{MODES})\b\s*\z")).unwrap());
+    LazyLock::new(|| ruby_re(&format!(r"\A#\s*rubocop\s*:\s*(?:{MODES})\b\s*\z")));
 static NEAR_MISS_KEYWORD: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(&format!(r"\A#+\s*([A-Za-z][\w-]*)\s*:\s*(?:{MODES})\b")).unwrap());
+    LazyLock::new(|| ruby_re(&format!(r"\A#+\s*([A-Za-z][\w-]*)\s*:\s*(?:{MODES})\b")));
 
 /// Ruby `str.split(/,\s*/)` / `split(sep)`: trailing empty fields dropped.
 fn ruby_split<'a>(s: &'a str, re: &Regex) -> Vec<&'a str> {
@@ -72,14 +82,14 @@ fn check_directive(cx: &mut Cx, start: usize, end: usize, text: &str) -> Result<
     let directive = directives::parse(text);
     let mode = directive.as_ref().map(|d| d.mode.as_str());
     let cops = directive.as_ref().and_then(|d| d.cops.as_deref());
-    let tail = directive.as_ref().map(|d| text[d.end..].trim_start());
-    let reason = tail.filter(|t| t.starts_with("--")).is_some_and(|t| !t[2..].trim().is_empty());
+    let tail = directive.as_ref().map(|d| text[d.end..].trim_start_matches(RUBY_SPACE));
+    let reason = tail.filter(|t| t.starts_with("--")).is_some_and(|t| !ruby_strip(&t[2..]).is_empty());
 
     // multiple_directives
     let mut matches: Vec<regex::Captures> = DIRECTIVE.captures_iter(text).collect();
     if reason && matches.len() > 1 {
         let first = matches.remove(0);
-        matches.retain(|m| text[m.get(0).unwrap().end()..].trim().is_empty());
+        matches.retain(|m| text[m.get(0).unwrap().end()..].chars().all(|c| RUBY_SPACE.contains(&c)));
         matches.insert(0, first);
     }
     if matches.len() > 1 {
@@ -108,7 +118,7 @@ fn check_directive(cx: &mut Cx, start: usize, end: usize, text: &str) -> Result<
         || !tail.is_some_and(|t| t.is_empty() || t.starts_with("--"));
     if malformed {
         let after_marker = MARKER.replace(text, "");
-        let extra = match after_marker.split_whitespace().next() {
+        let extra = match after_marker.split(RUBY_SPACE).find(|s| !s.is_empty()) {
             None => MISSING_MODE_NAME_MSG,
             Some(m) if !AVAILABLE_MODES.contains(&m) => INVALID_MODE_NAME_MSG,
             _ if missing_cop_name => MISSING_COP_NAME_MSG,
@@ -139,7 +149,7 @@ fn check_directive(cx: &mut Cx, start: usize, end: usize, text: &str) -> Result<
         }
         ops.iter().flat_map(|op| specs.iter().filter(move |s| s.starts_with(*op)).map(|s| &s[1..])).collect()
     } else {
-        static COMMA: LazyLock<Regex> = LazyLock::new(|| Regex::new(r",\s*").unwrap());
+        static COMMA: LazyLock<Regex> = LazyLock::new(|| ruby_re(r",\s*"));
         ruby_split(cops.unwrap_or(""), &COMMA)
     };
     for name in names {
@@ -166,7 +176,7 @@ fn merged(text: &str, directives: &[regex::Captures]) -> Option<String> {
     for (i, m) in directives.iter().enumerate() {
         let from = m.get(0).unwrap().end();
         let to = directives.get(i + 1).map_or(text.len(), |n| n.get(0).unwrap().start());
-        if !text[from..to].trim().is_empty() {
+        if !ruby_strip(&text[from..to]).is_empty() {
             return None;
         }
     }

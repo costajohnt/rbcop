@@ -37,7 +37,9 @@ fn basic_literal(node: &Node) -> bool {
 fn prints_as_self(node: Option<&Node>) -> Result<bool, ()> {
     let node = node.ok_or(())?;
     if basic_literal(node) {
-        return Ok(true);
+        // Deliberate difference: an integer over MAX_INTEGER_WORDS gets no offense, since
+        // `integer_to_s` is quadratic in its size (`"#{0xfff...}"` with 200k digits took 2.6 s).
+        return Ok(node.as_integer_node().is_none_or(|i| i.value().to_u32_digits().1.len() <= MAX_INTEGER_WORDS));
     }
     let children: Vec<Option<Node>> = match kind::of(node) {
         kind::ARRAY_NODE => node.as_array_node().unwrap().elements().iter().map(Some).collect(),
@@ -76,6 +78,9 @@ fn escape_string_content(s: &str) -> String {
 fn quote_escaped(s: &str) -> String {
     s.replace('"', "\\\"")
 }
+
+/// 32-bit words in the largest integer literal the cop converts to decimal (about 9,600 digits).
+const MAX_INTEGER_WORDS: usize = 1000;
 
 /// Integer#to_s of an IntegerNode's value.
 fn integer_to_s(node: &ruby_prism::IntegerNode) -> String {

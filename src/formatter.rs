@@ -12,6 +12,7 @@ pub use report::ruby_platform;
 
 use crate::config::{Resolved, relative_path};
 use crate::cop::{Offense, Severity};
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::{IsTerminal, Write};
 use std::path::{Path, PathBuf};
@@ -59,7 +60,7 @@ pub struct Off {
     /// Range length in characters.
     pub length: usize,
     /// The first line of the range, without its newline.
-    pub source_line: String,
+    pub source_line: Arc<str>,
 }
 
 impl Off {
@@ -97,44 +98,81 @@ pub fn line_col(text: &str, off: usize) -> (usize, usize) {
     (text[..off].matches('\n').count() + 1, text[line_start..off].chars().count() + 1)
 }
 
+/// Position lookups in one source for `offenses`. Everything here is computed once per source:
+/// rescanning the text (or a long line) per offense is quadratic when one long line carries many
+/// offenses (`format('%s%s...', ...)` with 100k sequences took 25 s and 4.8 GB).
+struct Positions<'a> {
+    text: &'a str,
+    starts: Vec<usize>,
+    /// Binary-encoded sources (magic comment) count columns in bytes, as Ruby does.
+    binary: bool,
+    /// Characters before every 256th byte.
+    chars: Vec<usize>,
+    lines: HashMap<usize, Arc<str>>,
+}
+
+impl<'a> Positions<'a> {
+    fn new(text: &'a str) -> Self {
+        let mut starts = vec![0];
+        starts.extend(text.match_indices('\n').map(|(i, _)| i + 1));
+        let mut chars = vec![0];
+        for chunk in text.as_bytes().chunks(256) {
+            chars.push(chars.last().unwrap() + char_starts(chunk));
+        }
+        let binary = crate::source::binary_encoding(text);
+        Positions { text, starts, binary, chars, lines: HashMap::new() }
+    }
+
+    /// Columns between two char boundaries.
+    fn count(&self, from: usize, to: usize) -> usize {
+        let before = |off: usize| self.chars[off / 256] + char_starts(&self.text.as_bytes()[off / 256 * 256..off]);
+        if self.binary { to - from } else { before(to) - before(from) }
+    }
+
+    /// (line, column, line start, offset clamped to a char boundary).
+    fn pos(&self, off: usize) -> (usize, usize, usize, usize) {
+        // Parser keeps counting columns past the end of the source (Layout/EndOfLine ranges
+        // reach beyond the CRLF-normalised text), so an overflow carries into the column.
+        let overflow = off.saturating_sub(self.text.len());
+        let mut off = off.min(self.text.len());
+        while !self.text.is_char_boundary(off) {
+            off -= 1;
+        }
+        let line = self.starts.partition_point(|&s| s <= off);
+        let ls = self.starts[line - 1];
+        (line, self.count(ls, off) + overflow, ls, off)
+    }
+
+    /// The line starting at `ls`, without its newline; shared by every offense on it.
+    fn line(&mut self, ls: usize) -> Arc<str> {
+        let text = self.text;
+        let line = self.lines.entry(ls).or_insert_with(|| {
+            let le = text[ls..].find('\n').map_or(text.len(), |i| ls + i);
+            Arc::from(&text[ls..le])
+        });
+        line.clone()
+    }
+}
+
+/// UTF-8 characters starting in `bytes` (bytes that are not continuation bytes).
+fn char_starts(bytes: &[u8]) -> usize {
+    bytes.iter().filter(|&&b| b & 0xC0 != 0x80).count()
+}
+
 /// Turn runner offenses into formatter offenses; `message` annotates each one.
 pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> String) -> Vec<Off> {
-    let line_starts = |t: &str| {
-        let mut starts = vec![0];
-        starts.extend(t.match_indices('\n').map(|(i, _)| i + 1));
-        starts
-    };
-    let starts = line_starts(text);
+    let mut main = Positions::new(text);
+    // Under autocorrect an offense may refer to the source of an earlier iteration.
+    let mut earlier: HashMap<*const u8, Positions> = HashMap::new();
     let mut out: Vec<Off> = list
         .iter()
         .map(|o| {
-            // Under autocorrect an offense may refer to the source of an earlier iteration.
-            let own;
-            let (text, starts): (&str, &[usize]) = match &o.source {
-                Some(s) => {
-                    own = line_starts(s);
-                    (s, &own)
-                }
-                None => (text, &starts),
+            let p = match &o.source {
+                Some(s) => earlier.entry(s.as_ptr()).or_insert_with(|| Positions::new(s)),
+                None => &mut main,
             };
-            // Binary-encoded sources (magic comment) count columns in bytes, as Ruby does.
-            let binary = crate::source::binary_encoding(text);
-            let count = |s: &str| if binary { s.len() } else { s.chars().count() };
-            let pos = |off: usize| {
-                // Parser keeps counting columns past the end of the source (Layout/EndOfLine ranges
-                // reach beyond the CRLF-normalised text), so an overflow carries into the column.
-                let overflow = off.saturating_sub(text.len());
-                let mut off = off.min(text.len());
-                while !text.is_char_boundary(off) {
-                    off -= 1;
-                }
-                let line = starts.partition_point(|&s| s <= off);
-                let ls = starts[line - 1];
-                (line, count(&text[ls..off]) + overflow, ls, off)
-            };
-            let (line, column, ls, start) = pos(o.start);
-            let (last_line, last_column, _, end) = pos(o.end.max(o.start));
-            let le = text[ls..].find('\n').map_or(text.len(), |i| ls + i);
+            let (line, column, ls, start) = p.pos(o.start);
+            let (last_line, last_column, _, end) = p.pos(o.end.max(o.start));
             let status = if o.corrected {
                 Status::Corrected
             } else if o.correctable {
@@ -144,7 +182,7 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
             };
             if o.global {
                 // Offense::NO_LOCATION: line 1, column 0, empty source line.
-                let (line, column, length, source_line) = (1, 0, 0, String::new());
+                let (line, column, length, source_line) = (1, 0, 0, Arc::from(""));
                 let (last_line, last_column) = (1, 0);
                 let (severity, cop, message) = (o.severity, o.cop, message(o));
                 return Off {
@@ -169,8 +207,8 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
                 column,
                 last_line,
                 last_column,
-                length: count(&text[start..end]),
-                source_line: text[ls..le].to_string(),
+                length: p.count(start, end),
+                source_line: p.line(ls),
             }
         })
         .collect();
@@ -642,7 +680,7 @@ mod tests {
         };
         let v = &offenses("source 'x'\n", &[o], |o| o.message.clone())[0];
         assert_eq!((v.line, v.real_column(), v.last_line, v.real_last_column(), v.length), (1, 1, 1, 1, 0));
-        assert_eq!(v.source_line, "");
+        assert_eq!(&*v.source_line, "");
         assert_eq!(v.status, Status::Unsupported);
     }
 

@@ -1,0 +1,8 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+block_pop.rb:3:3: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+block_pop.rb:7:1: F: Lint/Syntax: unexpected token kEND (Using Ruby 2.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+block_rescue.rb:3:1: F: Lint/Syntax: unexpected token kRESCUE (Using Ruby 2.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+ok.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+ok.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+ok.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+ok.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.

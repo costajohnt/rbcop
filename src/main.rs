@@ -935,40 +935,45 @@ fn run(mut cli: Cli, global: bool) -> Result<u8, String> {
             let handles: Vec<_> = jobs
                 .chunks(chunk)
                 .map(|part| {
-                    s.spawn(|| {
-                        part.iter()
-                            .map(|(path, cfg)| {
-                                // -a/-A: read, correct until stable, rewrite the file; offenses from every
-                                // iteration come back (fixed ones marked corrected).
-                                if let (Some(mode), None) = (cli.autocorrect, stdin_text) {
-                                    if !path.is_file() {
-                                        return None;
+                    // Cops recurse over the AST; runner::MAX_AST_DEPTH (1000) needs under 2 MiB, the
+                    // rest is headroom. Only touched pages are committed.
+                    thread::Builder::new()
+                        .stack_size(64 << 20)
+                        .spawn_scoped(s, || {
+                            part.iter()
+                                .map(|(path, cfg)| {
+                                    // -a/-A: read, correct until stable, rewrite the file; offenses from every
+                                    // iteration come back (fixed ones marked corrected).
+                                    if let (Some(mode), None) = (cli.autocorrect, stdin_text) {
+                                        if !path.is_file() {
+                                            return None;
+                                        }
+                                        let display = rbcop::config::relative_path(path, &cwd);
+                                        return Some(rbcop::autocorrect::correct_file(
+                                            path, &display, cfg, &selected, mode,
+                                        ));
                                     }
+                                    let text = match stdin_text {
+                                        Some(t) => t.clone(),
+                                        None => match fs::read(path) {
+                                            Ok(b) => String::from_utf8_lossy(&b).into_owned(),
+                                            Err(_) => return None,
+                                        },
+                                    };
                                     let display = rbcop::config::relative_path(path, &cwd);
-                                    return Some(rbcop::autocorrect::correct_file(
-                                        path, &display, cfg, &selected, mode,
-                                    ));
-                                }
-                                let text = match stdin_text {
-                                    Some(t) => t.clone(),
-                                    None => match fs::read(path) {
-                                        Ok(b) => String::from_utf8_lossy(&b).into_owned(),
-                                        Err(_) => return None,
-                                    },
-                                };
-                                let display = rbcop::config::relative_path(path, &cwd);
-                                if let Some(mode) = cli.autocorrect {
-                                    let c = rbcop::autocorrect::correct(path, &display, text, cfg, &selected, mode);
-                                    if let Some(e) = &c.error {
-                                        eprintln!("{e}");
+                                    if let Some(mode) = cli.autocorrect {
+                                        let c = rbcop::autocorrect::correct(path, &display, text, cfg, &selected, mode);
+                                        if let Some(e) = &c.error {
+                                            eprintln!("{e}");
+                                        }
+                                        *stdin_corrected.lock().unwrap() = c.source;
+                                        return Some(c.report);
                                     }
-                                    *stdin_corrected.lock().unwrap() = c.source;
-                                    return Some(c.report);
-                                }
-                                Some(runner::inspect(path, &display, text, cfg, &selected))
-                            })
-                            .collect::<Vec<_>>()
-                    })
+                                    Some(runner::inspect(path, &display, text, cfg, &selected))
+                                })
+                                .collect::<Vec<_>>()
+                        })
+                        .expect("spawn worker thread")
                 })
                 .collect();
             handles.into_iter().flat_map(|h| h.join().unwrap()).collect()

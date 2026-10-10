@@ -8,6 +8,7 @@ pub mod cops;
 pub mod directives;
 pub mod formatter;
 pub mod helpers;
+pub mod legacy_syntax;
 pub mod node_kind;
 pub mod prelude;
 pub mod runner;

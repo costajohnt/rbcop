@@ -72,12 +72,19 @@ struct Scanner<'a> {
     names: Vec<&'a [u8]>,
     num_refs: Vec<usize>,
     name_refs: Vec<&'a [u8]>,
+    /// Character sets open around the current position.
+    set_depth: usize,
 }
 
 const POSIX_CLASSES: &[&[u8]] = &[
     b"alnum", b"alpha", b"ascii", b"blank", b"cntrl", b"digit", b"graph", b"lower", b"print", b"punct", b"space",
     b"upper", b"word", b"xdigit",
 ];
+
+/// Deepest group or character-set nesting parsed; deeper patterns are treated as unparsable (the
+/// regexp_parser gem raises), so the recursive scanner and `Expr` trees stay shallow. Prism already
+/// rejects plain literals nested this deep; interpolated ones (`/((((#{a}))))/`) reach here.
+const MAX_NESTING: usize = 1000;
 
 /// Parse a pattern (interpolations already blanked) with the `x` option as given.
 pub fn parse(pattern: &str, extended: bool) -> Option<Parsed> {
@@ -89,6 +96,7 @@ pub fn parse(pattern: &str, extended: bool) -> Option<Parsed> {
         names: Vec::new(),
         num_refs: Vec::new(),
         name_refs: Vec::new(),
+        set_depth: 0,
     };
     sc.sequence(extended, 0)?;
     if sc.i < sc.s.len() {
@@ -122,6 +130,9 @@ impl<'a> Scanner<'a> {
 
     /// A group body (or the whole pattern at depth 0); stops at its `)` (not consumed).
     fn sequence(&mut self, mut extended: bool, depth: usize) -> Option<()> {
+        if depth > MAX_NESTING {
+            return None;
+        }
         while let Some(c) = self.peek(0) {
             match c {
                 b'\\' => {
@@ -369,6 +380,16 @@ impl<'a> Scanner<'a> {
 
     /// A character set at self.i (`[`); records it and its escapes and nested sets.
     fn set(&mut self) -> Option<()> {
+        if self.set_depth >= MAX_NESTING {
+            return None;
+        }
+        self.set_depth += 1;
+        let r = self.set_body();
+        self.set_depth -= 1;
+        r
+    }
+
+    fn set_body(&mut self) -> Option<()> {
         let s = self.s;
         let start = self.i;
         self.i += 1;
@@ -643,6 +664,7 @@ pub fn tree(pattern: &str, extended: bool) -> Option<Vec<Expr>> {
         names: Vec::new(),
         num_refs: Vec::new(),
         name_refs: Vec::new(),
+        set_depth: 0,
     };
     let mut x = extended;
     Some(sc.alternatives(&mut x))

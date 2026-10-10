@@ -19,30 +19,67 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   treats `i = ...` as a reassignment and reports the offense without `[Correctable]`. Also reached
   through other cops: Style/ParallelAssignment turning `i, j = i * 2, i * 3` into `i = i * 2`
   (corpus `specs/lint/useless_times/023.rb`, skipped by the autocorrect gates).
+- A file whose AST is nested more than 1,000 levels deep (`runner::MAX_AST_DEPTH`; the deepest
+  corpus file is 46) is not inspected: rbcop prints `rbcop: <file>: nested more than 1000 levels
+  deep, not inspected.` and counts it as an error (exit 1). RuboCop dies with SystemStackError on
+  such files (10k nested arrays); many cops and helpers recurse over the tree. Prism itself rejects
+  10k nested expressions, but left-associative chains (`a.b.b...`, `a + a + ...`) have no limit.
+- Regexps nested more than 1,000 groups or character sets deep are treated as unparsable by
+  `helpers::regexp_parser` (the regexp_parser gem parses them), so cops that use it report nothing
+  for that regexp. Only interpolated regexps get there: Prism rejects deeper plain literals.
+- Lint/LiteralInInterpolation reports no offense for an integer literal over 1,000 32-bit words
+  (about 9,600 decimal digits): converting it to decimal is quadratic (`"#{0xfff...}"` with 200k
+  hex digits took 2.6 s).
+- Lint/UselessTimes leaves the offense uncorrected when the block argument's name is too long for
+  the regex size limit (about 100k characters) instead of failing the cop.
 
 ## Open gaps
 
-- Target Ruby below 3.3: RuboCop parses with the parser gem for that version and reports syntax newer
-  than the target (e.g. `def x(&)` under 2.7) as Lint/Syntax; rbcop parses with Prism's 3.3 grammar and
-  does not. Messages for genuine syntax errors also come from Prism, not the parser gem.
+- Target Ruby below 3.3 (RuboCop parses with the parser gem's grammar for the target):
+  `src/legacy_syntax.rs` reports the parser gem's Lint/Syntax for syntax newer than the target and
+  for genuine syntax errors, approximating racc's error recovery for the diagnostics after the first
+  (module doc). Oracles with `config/all-cops.yml` + TargetRubyVersion, diff lines left (specs: all
+  low targets; rails/discourse: 2.7 and 3.1): specs 2.5 207, 2.7 60, 3.0 59, 3.1 58, 3.2 58; rails
+  2.7 14 (8 files), 3.1 3; discourse 2.7 271 (76 of 12609 files), 3.1 5. What remains:
+  - Follow-up diagnostics after the first error in a file: recovery is modelled, not the LALR
+    tables, so cascades can differ, mostly after a def popped by recovery (`class/module definition
+    in method body`, `dynamic constant assignment`), after `yyerror`s from semantic actions, and in
+    `case/in` bodies below 2.7 (pattern syntax parsed as statements).
+  - Parser-gem lexer errors (`bare backslash only allowed before newline`, `` unexpected `@' ``,
+    `` `$%' is not allowed ``, ...) where Prism reports a parse error instead; `circular argument
+    reference` is reported at the default value's read but not again at reads in the method body.
+  - Below 2.3 nothing lexer-level is checked (`&.`, `<<~`, `"a": 1`, `1r`, required keyword
+    arguments are accepted); no oracle below 2.5 was recorded.
+  - Not syntax: numbered parameters below 2.7 are method calls for the parser gem (`_1` cops such as
+    Style/SymbolProc, Lint/UnexpectedBlockArity, Lint/Void differ: most of the 156 non-Lint/Syntax
+    lines in specs at 2.5, every sampled one `_1`-related);
+    `a, b = 1, 2 rescue x` and Style/RescueModifier below 2.6; Lint/AmbiguousOperator's parser-gem
+    warning for `foo &:sym` (5 lines per target in specs); `#$-1` interpolation (rails 3.1); an empty
+    heredoc delimiter `<<''` at end of file is a Prism error but valid for the parser gem.
 - `--disable-uncorrectable`, `--auto-gen-config`, `--server`, `--lsp`, `--cache` behaviour (accepted
   and ignored where harmless), custom formatter classes, `require:` of local Ruby files (custom cops).
 - ERB in `.rubocop.yml` is not evaluated; remote `inherit_from` URLs are skipped with a warning.
 - Deliberate: Style/WordArray correcting a `%W[...]` whose value is invalid UTF-8 (`%W[\xff]`)
   writes the escaped form (`["\xFF"]`); RuboCop writes the raw bytes and then crashes re-parsing
   its own output. The offense message matches RuboCop.
-- Review-loop security audit to run: every place a cop evaluates source-derived values at lint
-  time (format strings, numeric literals and arithmetic, string building, regexes compiled from
-  source, recursion depth on deeply nested code) must be bounded, so linting an untrusted file
-  cannot exhaust CPU or memory. First finding: Style/RedundantFormat padded `%999999999d` to ~1 GB.
-- Review-loop regex audit: every regex built from config or source must go through
-  `config::value::ruby_regex` (Ruby class semantics) or `regex::escape` (literal names). Check the
-  cops that call `Regex::new(&...)` directly: lint/cop_directive_syntax, lint/useless_times,
-  layout/line_length, style/numeric_literals, style/directive_scope, style/conditional_assignment,
-  style/magic_comment_format, naming/predicate_prefix, naming/inclusive_language.
-- Review-loop coverage to add: every corpus targets Ruby 3.x, so behaviour at TargetRubyVersion
-  2.x (parser-gem grammar differences, min/max ruby cops) is only covered by scenarios. Record a
-  specs-corpus oracle at 2.5 and 2.7 and compare.
+- Lint-time cost audit (done; `tests/hostile_inputs.rs` runs the generated inputs). What remains
+  is size-driven, not value-driven, and shared with RuboCop's algorithms:
+  - Prism is quadratic on long `a && a && ...` chains (100k operands: 16 s, Ruby's Prism 21 s)
+    and on huge decimal integer literals (800k digits: 0.85 s per parse; token cops lex again).
+  - `-A` on code nested hundreds of levels deep runs up to 200 correction iterations over text
+    that grows with depth squared (300 nested one-line `def`s: about 50 s before the infinite-loop
+    error). Inspection alone stays under a second at the depth limit.
+  - Lint/UselessAssignment's did-you-mean is O(useless assignments x variables) per scope
+    (20k distinct variables in one scope: over a minute).
+- Regex audit (done): regexes built from source or config either use `ruby_regex` /
+  `ruby_regex_classes` (Ruby's ASCII `\s \w \d`) or `regex::escape` a literal name. Fixed:
+  `directives::DIRECTIVE`, Lint/CopDirectiveSyntax (also its `lstrip`/`split`/`strip`, which are
+  ASCII-only in Ruby) and `statement_modifier::first_line_comment` matched Unicode whitespace or
+  word characters (`# rubocop:disable`, `# rubocop:disable Foo/Baré`). Checked equal to
+  RuboCop: Lint/UselessTimes and Style/DirectiveScope (Ruby's `\b` is Unicode-aware, like the
+  regex crate's), Naming/PredicatePrefix (RuboCop interpolates NamePrefix unescaped too, behind the
+  same `start_with?` check), Style/NumericLiterals (AllowedPatterns are already `ruby_regex`),
+  Naming/InclusiveLanguage, Style/ConditionalAssignment, Style/MagicCommentFormat (static).
 - `AllCops/UseProjectIndex` (Rubydex, off by default) is not supported: Lint/DuplicateMethods
   cross-file checks and Naming/AccessorMethodName / PredicatePrefix `overrides_inherited_method?`
   are skipped; Lint/ArgumentMismatch, DeprecatedReference, NameTypo and SuperArgumentMismatch

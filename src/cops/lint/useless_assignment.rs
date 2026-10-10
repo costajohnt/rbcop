@@ -159,6 +159,9 @@ impl Cop for UselessAssignment {
         let mut ignored: Vec<(usize, usize)> = Vec::new();
         let mut offenses: Vec<(usize, usize, String, Fix)> = Vec::new();
         vf::investigate(&tree, |tree, scope, vars| {
+            // The did-you-mean candidates of a scope, built once: rebuilding them per useless
+            // assignment is cubic (20k `x = 1` lines never finished).
+            let mut scope_names: Option<(Id, Vec<&str>)> = None;
             for &v in &scope.variables {
                 let var = &vars[v];
                 if var.name.starts_with('_') {
@@ -197,31 +200,36 @@ impl Cop for UselessAssignment {
                             }
                         }
                         _ => {
-                            let mut all = Vec::new();
-                            if var.scope.naked {
-                                all.push(var.scope.node);
-                            }
-                            scope_nodes(tree, var.scope, var.scope.node, &mut all);
-                            let mut names: Vec<&str> = Vec::new();
-                            for n in all {
-                                let pn = &tree.nodes[n];
-                                if pn.t == T::Send
-                                    && !pn.csend
-                                    && tree.child(n, 0).is_none()
-                                    && pn.nargs == 0
-                                    && &src[pn.start..pn.end] != "->"
-                                    && !names.contains(&pn.name.as_str())
-                                {
-                                    names.push(&pn.name);
+                            if scope_names.as_ref().is_none_or(|(k, _)| *k != var.scope.node) {
+                                let mut all = Vec::new();
+                                if var.scope.naked {
+                                    all.push(var.scope.node);
                                 }
-                            }
-                            for &x in &scope.variables {
-                                let n = vars[x].name.as_str();
-                                if !names.contains(&n) {
-                                    names.push(n);
+                                scope_nodes(tree, var.scope, var.scope.node, &mut all);
+                                let mut seen = std::collections::HashSet::new();
+                                let mut names: Vec<&str> = Vec::new();
+                                for n in all {
+                                    let pn = &tree.nodes[n];
+                                    if pn.t == T::Send
+                                        && !pn.csend
+                                        && tree.child(n, 0).is_none()
+                                        && pn.nargs == 0
+                                        && &src[pn.start..pn.end] != "->"
+                                        && seen.insert(pn.name.as_str())
+                                    {
+                                        names.push(&pn.name);
+                                    }
                                 }
+                                for &x in &scope.variables {
+                                    let n = vars[x].name.as_str();
+                                    if seen.insert(n) {
+                                        names.push(n);
+                                    }
+                                }
+                                scope_names = Some((var.scope.node, names));
                             }
-                            names.retain(|n| *n != var.name);
+                            let names: Vec<&str> =
+                                scope_names.as_ref().unwrap().1.iter().copied().filter(|n| *n != var.name).collect();
                             if let Some(similar) = helpers::did_you_mean::correct(&var.name, &names).first() {
                                 msg.push_str(&format!(" Did you mean `{similar}`?"));
                             }
