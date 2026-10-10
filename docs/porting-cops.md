@@ -260,6 +260,14 @@ More traps found while porting:
 - Compare invalid-UTF-8 string keys as raw bytes, never via `from_utf8_lossy`.
 - Helpers: `comments_help` (CommentsHelp), `literal_node` (literal predicates + structural key),
   `if_node::parser_end`, `nil_receiver_checker`.
+- `def_node_search` / `each_ancestor` with a block return `self` when nothing matches, so a failed
+  lookup can leak the node's s-expression into keys and messages.
+- `each_ancestor(:any_block).first` checks every ancestor, not just the innermost scope.
+- `Module#<=>` is 0 for the same class (truthy); `nil <=> nil` is 0, nil vs class is nil.
+- Prism nests subsequent `rescue` clauses; parser makes them siblings. Treat a RescueNode whose child
+  is the next RescueNode as transparent in parser-ancestor walks.
+- Constants Ruby resolves at runtime: `helpers::ruby_exceptions` (regenerate with
+  `scripts/dump-ruby-exceptions.rb`). Paths in messages go through PathUtil.smart_path semantics.
 - `helpers::regexp_captures` counts named/numbered groups like `RegexpNode#each_capture`.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.
