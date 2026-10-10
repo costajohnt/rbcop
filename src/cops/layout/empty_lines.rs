@@ -24,7 +24,7 @@ impl Cop for EmptyLines {
             let line = i + 2;
             if pair[0].is_empty() && pair[1].is_empty() && !cx.facts.string_lines[line] {
                 let start = src.line_start(line);
-                cx.add(start, start, "Extra blank line detected.");
+                cx.add_fix(start, start + 1, "Extra blank line detected.", |c| c.remove(start, start + 1));
             }
         }
     }

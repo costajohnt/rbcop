@@ -19,6 +19,8 @@ const USAGE: &str = "usage: rbcop [options] [file1, file2, ...]
       --ignore-parent-exclusion  Do not inherit AllCops/Exclude from parent .rubocop.yml files.
       --enable-pending-cops      Run cops marked `Enabled: pending`.
       --disable-pending-cops     Never run pending cops.
+  -a, --autocorrect              Autocorrect offenses (only when it's safe).
+  -A, --autocorrect-all          Autocorrect offenses (safe and unsafe).
   -v, --version                  Show the RuboCop version rbcop matches.";
 
 struct Cli {
@@ -28,6 +30,8 @@ struct Cli {
     list_targets: bool,
     force_exclusion: bool,
     paths: Vec<PathBuf>,
+    /// -a / -A
+    autocorrect: Option<rbcop::autocorrect::Mode>,
 }
 
 fn parse_args() -> Result<Option<Cli>, String> {
@@ -38,6 +42,7 @@ fn parse_args() -> Result<Option<Cli>, String> {
         list_targets: false,
         force_exclusion: false,
         paths: Vec::new(),
+        autocorrect: None,
     };
     let mut args = env::args().skip(1);
     let list = |v: Option<String>| v.map(|v| v.split(',').map(|s| s.trim().to_string()).collect()).unwrap_or_default();
@@ -53,6 +58,9 @@ fn parse_args() -> Result<Option<Cli>, String> {
             "--ignore-parent-exclusion" => cli.opts.ignore_parent_exclusion = true,
             "--enable-pending-cops" => cli.opts.enable_pending_cops = true,
             "--disable-pending-cops" => cli.opts.disable_pending_cops = true,
+            // autocorrect
+            "-a" | "--autocorrect" => cli.autocorrect = Some(rbcop::autocorrect::Mode::Safe),
+            "-A" | "--autocorrect-all" => cli.autocorrect = Some(rbcop::autocorrect::Mode::All),
             "--show-cops" => {
                 cops::ALL.iter().for_each(|c| println!("{}", c.name));
                 return Ok(None);
@@ -126,6 +134,11 @@ fn run(cli: Cli) -> Result<bool, String> {
                 s.spawn(|| {
                     part.iter()
                         .map(|(path, cfg)| {
+                            // autocorrect: reads, corrects and rewrites the file; offenses come sorted.
+                            if let Some(mode) = cli.autocorrect {
+                                let display = relative_path(path, &cwd);
+                                return rbcop::autocorrect::correct_file(path, &display, cfg, &selected, mode);
+                            }
                             let text =
                                 fs::read(path).map(|b| String::from_utf8_lossy(&b).into_owned()).unwrap_or_default();
                             let display = relative_path(path, &cwd);
@@ -145,5 +158,6 @@ fn run(cli: Cli) -> Result<bool, String> {
         .map(|(path, report)| Inspected { path, relative: relative_path(path, &cwd), report })
         .collect();
     print!("{}", formatter::emacs(&inspected));
-    Ok(reports.iter().any(|r| !r.offenses.is_empty()))
+    // Corrected offenses do not fail the run (Runner#considered_failure?).
+    Ok(reports.iter().any(|r| r.offenses.iter().any(|o| !o.corrected)))
 }

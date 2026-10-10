@@ -29,6 +29,8 @@ impl Cop for TrailingEmptyLines {
             n if wanted == 0 => format!("{n} trailing blank lines detected."),
             n => format!("{n} trailing blank lines instead of {wanted} detected."),
         };
-        cx.add(begin, text.len(), msg);
+        let (from, to) = (text.len() - ws_len, text.len());
+        let newlines = if wanted == 0 { "\n" } else { "\n\n" };
+        cx.add_fix(begin, to, msg, |c| c.replace(from, to, newlines));
     }
 }

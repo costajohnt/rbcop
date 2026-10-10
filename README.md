@@ -47,12 +47,13 @@ Known gap: RuboCop tags some LineLength offenses `[Correctable]` when it finds a
 cargo build --release
 ./target/release/rbcop [--only Cop1,Cop2] [paths...]   # emacs-format output, exit 1 on offenses
 ./target/release/rbcop -L .                             # list files that would be inspected
+./target/release/rbcop -A [paths...]                    # autocorrect (-a: safe corrections only)
 ```
 
 ## Not yet
 
 - `.rubocop.yml` (rbcop always behaves like `--force-default-config`)
 - Output formats other than emacs
-- Autocorrect
+- Autocorrect for cops that have no corrector yet (`-a`/`-A` reports them but does not fix them)
 - `# rubocop:push` / `pop`
 - Lint/Syntax: files with syntax errors are skipped with a warning

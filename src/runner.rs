@@ -1,7 +1,8 @@
 //! Run the enabled cops over one file: parse once, walk once, dispatch nodes by kind.
 
+use crate::autocorrect::{self, Mode, corrector::Corrector};
 use crate::config::{CopConfig, Resolved, target_ruby};
-use crate::cop::{Cop, Cx, Facts, Heredoc, Offense, Severity};
+use crate::cop::{Cop, Cx, Facts, Fixes, Heredoc, Offense, Severity};
 use crate::directives;
 use crate::node_kind;
 use crate::source::{Comment, Source};
@@ -11,12 +12,20 @@ use ruby_prism::{
     SplatNode, StatementsNode, StringNode, Visit, XStringNode,
 };
 use std::path::Path;
+use std::sync::Arc;
 
 /// What happened to one file.
 pub struct FileReport {
     pub offenses: Vec<Offense>,
     /// Source text (after CRLF normalisation), kept for formatters that print code.
     pub text: String,
+}
+
+impl FileReport {
+    /// The source an offense's offsets refer to (autocorrect keeps each iteration's source).
+    pub fn text_of<'a>(&'a self, o: &'a Offense) -> &'a str {
+        o.source.as_deref().unwrap_or(&self.text)
+    }
 }
 
 struct Active<'c> {
@@ -35,11 +44,33 @@ pub fn inspect(
 ) -> FileReport {
     // parser's Source::Buffer normalises CRLF before any cop sees the source.
     let text = if text.contains("\r\n") { text.replace("\r\n", "\n") } else { text };
-    let offenses = analyze(path, display, &text, cfg, selected);
+    let (offenses, _) = analyze(path, display, &Arc::from(text.as_str()), cfg, selected, None);
     FileReport { offenses, text }
 }
 
-fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dyn Fn(&str) -> bool) -> Vec<Offense> {
+/// One autocorrect iteration (see `crate::autocorrect::correct`): the offenses and, unless nothing
+/// was corrected, the collated corrector. Like Team#investigate_with_corrector, offenses of cops
+/// that do not autocorrect are only reported when no correction was made.
+pub fn analyze_for_correction(
+    path: &Path,
+    display: &str,
+    text: &Arc<str>,
+    cfg: &Resolved,
+    selected: &dyn Fn(&str) -> bool,
+    mode: Mode,
+) -> (Vec<Offense>, Option<Corrector>) {
+    analyze(path, display, text, cfg, selected, Some(mode))
+}
+
+fn analyze(
+    path: &Path,
+    display: &str,
+    shared: &Arc<str>,
+    cfg: &Resolved,
+    selected: &dyn Fn(&str) -> bool,
+    mode: Option<Mode>,
+) -> (Vec<Offense>, Option<Corrector>) {
+    let text: &str = shared;
     let version = target_ruby::prism_version(cfg.target_ruby);
     let result = ruby_prism::parse_with_version(text.as_bytes(), version);
     // Below 3.3 RuboCop parses with the parser gem, which accepts some things Prism rejects.
@@ -78,10 +109,12 @@ fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dy
                 ),
                 severity: Severity::Fatal,
                 correctable: false,
+                corrected: false,
+                source: None,
             })
             .collect();
         dedup(&mut out);
-        return out;
+        return (out, None);
     }
 
     let opted_in = directives::opted_in(&src);
@@ -105,6 +138,16 @@ fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dy
     let pn = program.as_program_node().unwrap();
     let first_code = pn.statements().body().iter().next().map(|n| n.location().start_offset());
     facts.first_code = first_code;
+    let config_disabled: Vec<&'static str> = opted_in.iter().copied().filter(|c| !cfg.cop(c).enabled).collect();
+    facts.disabled = directives::disabled_spans(&src, &config_disabled);
+    facts.text = shared.clone();
+    let mut fixes: Vec<Fixes> = active
+        .iter()
+        .map(|a| Fixes {
+            autocorrect: mode.is_some_and(|m| a.cop.correctable() && autocorrect::cop_autocorrects(a.cfg, m)),
+            ..Fixes::default()
+        })
+        .collect();
 
     let mut dispatch: Vec<Vec<usize>> = vec![Vec::new(); node_kind::COUNT];
     for (i, a) in active.iter().enumerate() {
@@ -124,10 +167,11 @@ fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dy
         leaf: None,
         out: &mut out,
         states: &mut states,
+        fixes: &mut fixes,
     };
     walker.visit(&program);
 
-    for (a, state) in active.iter().zip(states.iter_mut()) {
+    for ((a, state), fixes) in active.iter().zip(states.iter_mut()).zip(fixes.iter_mut()) {
         let mut cx = Cx {
             src: &src,
             facts: &facts,
@@ -138,20 +182,34 @@ fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dy
             correctable: a.cop.correctable(),
             out: &mut out,
             state,
+            fixes,
         };
         a.cop.on_file(&mut cx);
     }
 
-    let config_disabled: Vec<&'static str> = opted_in.iter().copied().filter(|c| !cfg.cop(c).enabled).collect();
-    let disabled = directives::disabled_spans(&src, &config_disabled);
     dedup(&mut out);
-    out.retain(|o| !directives::is_disabled(&disabled, o.cop, src.line_of(o.start)));
+    out.retain(|o| !directives::is_disabled(&facts.disabled, o.cop, src.line_of(o.start)));
+    let mut corrector = None;
+    if mode.is_some() {
+        let by_cop: Vec<(&'static str, Corrector)> =
+            active.iter().zip(fixes).filter_map(|(a, f)| Some((a.name, f.corrector?))).collect();
+        corrector = autocorrect::collate(by_cop, shared.clone());
+        if corrector.is_some() {
+            // Team#investigate_with_corrector: the other cops do not run in a correcting iteration.
+            let correcting: Vec<&str> = active
+                .iter()
+                .filter(|a| a.cop.correctable() && autocorrect::cop_autocorrects(a.cfg, mode.unwrap()))
+                .map(|a| a.name)
+                .collect();
+            out.retain(|o| correcting.contains(&o.cop));
+        }
+    }
     for o in out.iter_mut() {
         let c = cfg.cop(o.cop);
         o.severity = c.severity.unwrap_or_else(|| default_severity(o.cop));
         o.correctable &= autocorrect_allowed(c);
     }
-    out
+    (out, corrector)
 }
 
 /// Cop::Base#use_corrector: an offense with a corrector is only `[Correctable]` when the cop's
@@ -195,6 +253,7 @@ struct Walker<'s, 'pr, 'c> {
     leaf: Option<Node<'pr>>,
     out: &'s mut Vec<Offense>,
     states: &'s mut [Option<Box<dyn std::any::Any>>],
+    fixes: &'s mut [Fixes],
 }
 
 impl<'pr> Walker<'_, 'pr, '_> {
@@ -211,6 +270,7 @@ impl<'pr> Walker<'_, 'pr, '_> {
                 correctable: a.cop.correctable(),
                 out: self.out,
                 state: &mut self.states[i],
+                fixes: &mut self.fixes[i],
             };
             a.cop.on_node(&mut cx, node);
         }
@@ -314,18 +374,19 @@ impl FactCollector<'_, '_> {
         if !open.starts_with(b"<<") {
             self.facts.string_ranges.push((start, end));
         } else if let Some((b, t, t_end)) = body {
-            self.heredoc(b, t, t_end);
+            self.heredoc(b, t, t_end, open);
             self.facts.string_ranges.push((b, t));
         }
     }
 
     /// Body from `body` to the terminator line starting at `term` (ending at `term_end`).
-    fn heredoc(&mut self, body: usize, term: usize, term_end: usize) {
+    fn heredoc(&mut self, body: usize, term: usize, term_end: usize, opening: &[u8]) {
         let delimiter = self.src.slice(term, term_end).trim().to_string();
         self.facts.heredocs.push(Heredoc {
             first: self.src.line_of(body),
             terminator: self.src.line_of(term),
             delimiter,
+            quoted: opening.ends_with(b"'"),
         });
     }
 }
@@ -354,7 +415,7 @@ impl<'pr> Visit<'pr> for FactCollector<'_, '_> {
         self.cover(c.start_offset(), c.end_offset());
         if node.opening_loc().as_slice().starts_with(b"<<") {
             let t = node.closing_loc();
-            self.heredoc(c.start_offset(), t.start_offset(), t.end_offset());
+            self.heredoc(c.start_offset(), t.start_offset(), t.end_offset(), node.opening_loc().as_slice());
         }
     }
 

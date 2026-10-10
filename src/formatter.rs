@@ -20,7 +20,13 @@ pub fn line_col(text: &str, off: usize) -> (usize, usize) {
 }
 
 fn tag(o: &Offense) -> &'static str {
-    if o.correctable { "[Correctable] " } else { "" }
+    if o.corrected {
+        "[Corrected] "
+    } else if o.correctable {
+        "[Correctable] "
+    } else {
+        ""
+    }
 }
 
 /// `-f emacs`: `/abs/path:line:col: C: [Correctable] Cop/Name: message`
@@ -28,7 +34,7 @@ pub fn emacs(files: &[Inspected]) -> String {
     let mut out = String::new();
     for f in files {
         for o in &f.report.offenses {
-            let (line, col) = line_col(&f.report.text, o.start);
+            let (line, col) = line_col(f.report.text_of(o), o.start);
             let msg = o.message.replace('\n', " ");
             let _ =
                 writeln!(out, "{}:{line}:{col}: {}: {}{}: {msg}", f.path.display(), o.severity.code(), tag(o), o.cop);
