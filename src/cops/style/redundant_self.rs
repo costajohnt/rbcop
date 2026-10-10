@@ -240,10 +240,8 @@ fn param_names(node: &Node, out: &mut Vec<String>) {
             if let Some(r) = p.keyword_rest() {
                 param_names(&r, out);
             }
-            if let Some(b) = p.block() {
-                if let Some(n) = b.name() {
-                    out.push(name(&n));
-                }
+            if let Some(n) = p.block().and_then(|b| b.name()) {
+                out.push(name(&n));
             }
         }
         kind::MULTI_TARGET_NODE => {

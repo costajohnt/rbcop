@@ -338,9 +338,8 @@ impl<'a> Scanner<'a> {
                 b'[' => in_set += 1,
                 b']' if in_set > 0 => in_set -= 1,
                 b'(' if in_set == 0 => {
-                    if s.get(i + 1) != Some(&b'?') {
-                        n += 1;
-                    } else if matches!(s.get(i + 2), Some(b'<' | b'\'')) && !matches!(s.get(i + 3), Some(b'=' | b'!')) {
+                    let named = matches!(s.get(i + 2), Some(b'<' | b'\'')) && !matches!(s.get(i + 3), Some(b'=' | b'!'));
+                    if s.get(i + 1) != Some(&b'?') || named {
                         n += 1;
                     }
                 }
@@ -483,28 +482,6 @@ enum Group {
     Open(bool),
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn escapes_and_sets() {
-        let p = parse(r"a\.[\-x](?#\.)\c\.", false).unwrap();
-        let e: Vec<_> = p.escapes.iter().map(|e| (e.start, e.in_set)).collect();
-        assert_eq!(e, vec![(1, false), (4, true)]);
-        assert_eq!(p.sets.len(), 1);
-        assert_eq!(p.sets[0].members.len(), 2);
-        assert!(parse("(a", false).is_none());
-        assert!(parse("a)", false).is_none());
-        assert!(parse("[a", false).is_none());
-        assert!(parse(r"(x)\2", false).is_none());
-        let x = parse("a # \\.\n\\.", true).unwrap();
-        assert_eq!(x.escapes.len(), 1);
-        let r = parse("[a-z][[:alpha:]][a&&b]", false).unwrap();
-        assert!(r.sets.iter().all(|s| s.members.len() == 1 && s.members[0].kind != MemberKind::Literal));
-    }
-}
-
 /// A regexp literal as RuboCop's `RegexpNode` sees it.
 pub struct Literal {
     /// `loc.begin` (`/`, `%r{`).
@@ -590,4 +567,26 @@ impl Literal {
 /// The byte offset `k` characters after `from` (clamped to the end of `src`).
 pub fn advance_chars(src: &str, from: usize, k: usize) -> usize {
     src[from..].char_indices().nth(k).map_or(src.len(), |(i, _)| from + i)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn escapes_and_sets() {
+        let p = parse(r"a\.[\-x](?#\.)\c\.", false).unwrap();
+        let e: Vec<_> = p.escapes.iter().map(|e| (e.start, e.in_set)).collect();
+        assert_eq!(e, vec![(1, false), (4, true)]);
+        assert_eq!(p.sets.len(), 1);
+        assert_eq!(p.sets[0].members.len(), 2);
+        assert!(parse("(a", false).is_none());
+        assert!(parse("a)", false).is_none());
+        assert!(parse("[a", false).is_none());
+        assert!(parse(r"(x)\2", false).is_none());
+        let x = parse("a # \\.\n\\.", true).unwrap();
+        assert_eq!(x.escapes.len(), 1);
+        let r = parse("[a-z][[:alpha:]][a&&b]", false).unwrap();
+        assert!(r.sets.iter().all(|s| s.members.len() == 1 && s.members[0].kind != MemberKind::Literal));
+    }
 }

@@ -57,9 +57,7 @@ impl Cop for RedundantSort {
         } else {
             return;
         };
-        let ok = if has_block(&sort) {
-            sort_args.is_empty()
-        } else if sorter == "sort" {
+        let ok = if has_block(&sort) || sorter == "sort" {
             sort_args.is_empty()
         } else {
             // sort_by with one argument; the [] form only for plain sends.
@@ -80,7 +78,7 @@ impl Cop for RedundantSort {
         let op = if has_block(&outer) {
             None
         } else {
-            parser_parent(&cx.ancestors[..n - 1]).and_then(|p| {
+            helpers::parser_parent::parser_parent(&cx.ancestors[..n - 1]).and_then(|p| {
                 p.as_and_node().map(|a| a.operator_loc()).or_else(|| p.as_or_node().map(|o| o.operator_loc()))
             })
         };
@@ -97,11 +95,3 @@ impl Cop for RedundantSort {
     }
 }
 
-/// The parser-gem parent of the node whose Prism ancestors are given.
-fn parser_parent<'a, 'pr>(ancestors: &'a [Node<'pr>]) -> Option<&'a Node<'pr>> {
-    (0..ancestors.len()).rev().find_map(|i| {
-        let f = frame(&ancestors[i]);
-        let owns_block = f == Frame::Call && ancestors.get(i + 1).is_some_and(|n| frame(n) == Frame::Block);
-        (f != Frame::Transparent && !owns_block).then(|| &ancestors[i])
-    })
-}
