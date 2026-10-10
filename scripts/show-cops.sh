@@ -1,7 +1,8 @@
 #!/bin/sh
 # Record RuboCop's `--show-cops` output for tests/show_cops.rs (cases must match CASES there).
-# usage: scripts/show-cops.sh   (needs `rubocop` on PATH; with rbenv set RBENV_VERSION)
+# usage: scripts/show-cops.sh   (RuboCop from $RUBOCOP, see scripts/rubocop.sh)
 set -eu
+. "$(dirname "$0")/rubocop.sh"
 root=$(cd "$(dirname "$0")/.." && pwd -P)
 dir=$root/tests/show_cops
 mkdir -p "$dir/expected"

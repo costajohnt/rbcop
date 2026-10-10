@@ -2,7 +2,7 @@
 # Gate for porting cops: compare rbcop with recorded RuboCop oracles (scripts/oracle.sh) for the given cops.
 # usage: scripts/check-cops.sh Cop1/Name[,Cop2/Name...] [corpus...]
 #   corpora default to specs rails discourse rubocop-src jekyll chef fastlane brew mastodon; each needs $RBCOP_CORPUS/<name> and $RBCOP_ORACLE/<name>.txt
-# Exit 0 only if every corpus matches exactly. Diffs: $TMPDIR/rbcop-check/<pid>/<corpus>.diff (printed on failure)
+# Exit 0 only if every corpus matches exactly. Diffs: $TMPDIR/rbcop-check/<pid>/<corpus>.diff (kept and printed on failure)
 set -eu
 cops=$1
 shift
@@ -49,5 +49,11 @@ for c in $corpora; do
     sed -E 's/^([<>]).*: [CWEFRI]: (\[Correctable\] )?([A-Za-z]+\/[A-Za-z0-9]+):.*/   \1 \3/' "$out/$c.diff" | sort | uniq -c | sort -rn | head -20
   fi
 done
-[ $status = 0 ] && echo "all corpora match" || echo "diffs in $out/<corpus>.diff (< only RuboCop, > only rbcop)"
+if [ $status = 0 ]; then
+  # Only failing runs keep their files: each run's dir is up to ~1 GB with every cop on.
+  rm -rf "$out"
+  echo "all corpora match"
+else
+  echo "diffs in $out/<corpus>.diff (< only RuboCop, > only rbcop)"
+fi
 exit $status

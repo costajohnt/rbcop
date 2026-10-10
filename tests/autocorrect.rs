@@ -1,9 +1,10 @@
 //! `rbcop -A` on tests/autocorrect/<case>/input must rewrite files and report offenses exactly as
 //! `rubocop -A` did (recorded by tests/autocorrect/record.sh into expected/ and expected.txt).
 
+mod common;
+
 use std::fs;
 use std::path::Path;
-use std::process::Command;
 
 fn copy_dir(from: &Path, to: &Path) {
     fs::create_dir_all(to).unwrap();
@@ -23,7 +24,7 @@ fn autocorrect_matches_rubocop() {
         let work = std::env::temp_dir().join(format!("rbcop-autocorrect-{case}-{}", std::process::id()));
         let _ = fs::remove_dir_all(&work);
         copy_dir(&dir.join("input"), &work);
-        let out = Command::new(env!("CARGO_BIN_EXE_rbcop"))
+        let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
             .current_dir(&work)
             .args(["-A", "--format", "emacs", "--only", cops.trim(), "-c"])
             .arg(dir.join("config.yml"))

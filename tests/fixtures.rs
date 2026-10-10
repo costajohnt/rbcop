@@ -1,11 +1,11 @@
 //! rbcop output on tests/fixtures must equal RuboCop 1.88.2's (recorded in expected.txt).
 
-use std::process::Command;
+mod common;
 
 #[test]
 fn matches_rubocop_on_fixtures() {
     let dir = concat!(env!("CARGO_MANIFEST_DIR"), "/tests/fixtures");
-    let out = Command::new(env!("CARGO_BIN_EXE_rbcop"))
+    let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
         .args(["--force-default-config", "--format", "emacs"])
         .arg(dir)
         .output()

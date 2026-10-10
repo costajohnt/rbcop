@@ -1,6 +1,6 @@
 # RuboCop configuration semantics
 
-Read from RuboCop 1.88.2 source (`lib/rubocop/`); spot-check against 1.91 when porting. This is the spec `src/config.rs` follows.
+Read from RuboCop 1.88.2 source (`lib/rubocop/`); spot-check against 1.91 when porting. This is the spec `src/config/` follows.
 
 ## 1. Which config applies to a file
 

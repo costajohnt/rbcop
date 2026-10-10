@@ -11,6 +11,10 @@ The bar is **identical output to RuboCop 1.91.0**: same offenses, same ranges, s
   `~/.rbenv/versions/4.0.6/lib/ruby/gems/4.0.0/gems/rubocop-ast-1.50.0/lib/rubocop/ast/`.
 - RuboCop's specs for the cop: `$RBCOP_CORPUS/rubocop-src/spec/rubocop/cop/<dept>/<cop>_spec.rb`.
 - Ruby tools: prefix commands with `RBENV_VERSION=4.0.6` (e.g. `RBENV_VERSION=4.0.6 rubocop ...`).
+  Scripts take RuboCop from `$RUBOCOP` (default `rubocop` on PATH) and stop if it does not run:
+  `RUBOCOP="rbenv exec rubocop" RBENV_VERSION=4.0.6 scripts/check-autocorrect.sh ...`.
+- Pre-merge gate: `scripts/ci.sh` (fmt, clippy, tests; with `RBCOP_CORPUS` and `RBCOP_ORACLE` set,
+  also `check-cops.sh all` and `check-cold.sh`). Prints `ci: ok at <sha>`.
 
 ## Writing the cop
 
@@ -513,7 +517,7 @@ gates still default to specs, rails and discourse; a cross-cop pass over the oth
 `LIMIT=1500 OUT=<dir> scripts/check-autocorrect-all.sh rubocop-src jekyll chef fastlane brew mastodon`.
 
 The oracles were recorded with every cop enabled (`config/all-cops.yml`), so pending and
-disabled-by-default cops are covered too. Diffs land in `$TMPDIR/rbcop-check/<corpus>.diff`
+disabled-by-default cops are covered too. Diffs land in `$TMPDIR/rbcop-check/<pid>/<corpus>.diff`
 (`<` only RuboCop, `>` only rbcop); look at the source line and RuboCop's code until you understand
 the difference. A cop is done when the full gate prints `all corpora match`. Also run
 `cargo test --release` and `cargo clippy --release --all-targets` (no warnings) before committing.

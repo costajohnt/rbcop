@@ -1,8 +1,9 @@
 #!/bin/sh
 # Record RuboCop's output on a corpus with EVERY cop enabled, for cop-by-cop comparison
 # without re-running RuboCop (see scripts/check-cops.sh).
-# usage: scripts/oracle.sh <corpus-dir> <out-file>   (needs `rubocop`; with rbenv set RBENV_VERSION)
+# usage: scripts/oracle.sh <corpus-dir> <out-file>   (RuboCop from $RUBOCOP, see scripts/rubocop.sh)
 set -eu
+. "$(dirname "$0")/rubocop.sh"
 dir=$(cd "$1" && pwd)
 out=$2
 cfg=$(cd "$(dirname "$0")/.." && pwd)/config/all-cops.yml

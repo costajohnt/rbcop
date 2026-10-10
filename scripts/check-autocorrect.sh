@@ -7,6 +7,7 @@
 #        LIMIT=n files per corpus (default all); OUT=scratch dir (default $TMPDIR/rbcop-autocorrect-<worktree name>, so parallel worktrees never share it)
 # Corpus files are only parsed, never executed. Exit 0 only if everything matches.
 set -eu
+. "$(dirname "$0")/rubocop.sh"
 cops=$1
 shift
 corpora=${*:-specs rails discourse}
@@ -57,7 +58,7 @@ for c in $corpora; do
       cp "$f" "$dir/$side/$f"
     done
   done) < "$dir/files"
-  (cd "$dir/rubocop" && RBENV_VERSION=4.0.6 rbenv exec rubocop "$mode" $only --force-default-config \
+  (cd "$dir/rubocop" && rubocop "$mode" $only --force-default-config \
     --cache false --format emacs . > ../rubocop.out 2> ../rubocop.err) || true
   (cd "$dir/rbcop" && "$bin" "$mode" $only --force-default-config --format emacs . > ../rbcop.out 2> ../rbcop.err) || true
   # Both tools print physical paths (getcwd), e.g. /private/var on macOS.

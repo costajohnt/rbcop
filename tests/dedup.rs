@@ -1,8 +1,9 @@
 //! Runner#do_inspection_loop's `offenses_by_iteration.flatten.uniq`: offenses equal on line,
 //! column, cop, message and severity collapse even when their ranges differ.
 
+mod common;
+
 use std::fs;
-use std::process::Command;
 
 #[test]
 fn offenses_at_one_position_collapse_regardless_of_range() {
@@ -12,7 +13,7 @@ fn offenses_at_one_position_collapse_regardless_of_range() {
     fs::write(dir.join("Gemfile"), "").unwrap();
     // MultipleComparison flags `a < b < c < d` and its inner `a < b < c` at the same column.
     fs::write(dir.join("t.rb"), "x = a < b < c < d\n").unwrap();
-    let out = Command::new(env!("CARGO_BIN_EXE_rbcop"))
+    let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
         .args(["--force-default-config", "--only", "Lint/MultipleComparison", "-f", "emacs", "t.rb"])
         .current_dir(&dir)
         .output()

@@ -1,8 +1,9 @@
 //! ast::is_parser_dstr: a backslash-newline inside an interpolating literal is a line continuation,
 //! so parser keeps a plain `str`; inside single quotes the newline stays and parser builds a `dstr`.
 
+mod common;
+
 use std::fs;
-use std::process::Command;
 
 #[test]
 fn backslash_newline_continuation_keeps_a_str() {
@@ -12,7 +13,7 @@ fn backslash_newline_continuation_keeps_a_str() {
     fs::write(dir.join("Gemfile"), "").unwrap();
     // Style/RedundantFileExtensionInRequire skips dstr arguments.
     fs::write(dir.join("t.rb"), "require \"foo\\\n.rb\"\nrequire 'bar\\\n.rb'\nrequire \"baz\\\\\n.rb\"\n").unwrap();
-    let out = Command::new(env!("CARGO_BIN_EXE_rbcop"))
+    let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
         .args(["--force-default-config", "--only", "Style/RedundantFileExtensionInRequire", "-f", "emacs", "t.rb"])
         .current_dir(&dir)
         .output()
