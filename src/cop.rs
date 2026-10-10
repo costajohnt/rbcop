@@ -89,9 +89,20 @@ pub struct Cx<'s, 'pr> {
     /// `Cop::correctable()` of the running cop.
     pub correctable: bool,
     pub out: &'s mut Vec<Offense>,
+    /// Per-file scratch state of the running cop (cops themselves are shared and immutable).
+    pub state: &'s mut Option<Box<dyn std::any::Any>>,
 }
 
 impl Cx<'_, '_> {
+    /// The running cop's per-file state, created with `Default` on first use. It persists from
+    /// the first `on_node` call through `on_file` for the same file.
+    pub fn state<T: Default + 'static>(&mut self) -> &mut T {
+        if !self.state.as_ref().is_some_and(|s| s.is::<T>()) {
+            *self.state = Some(Box::new(T::default()));
+        }
+        self.state.as_mut().unwrap().downcast_mut::<T>().unwrap()
+    }
+
     /// Report an offense on a byte range. Severity is filled in by the runner.
     pub fn add(&mut self, start: usize, end: usize, message: impl Into<String>) {
         self.push(start, end, message.into(), self.correctable);

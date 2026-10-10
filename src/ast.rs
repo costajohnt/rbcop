@@ -122,4 +122,48 @@ pub fn strip_parens<'pr>(node: Node<'pr>) -> Option<Node<'pr>> {
         };
     }
     Some(node)
+
+/// Parser-gem-shaped ancestors with their parser source ranges, nearest first: indexes into
+/// `ancestors` plus (start, end). Prism-only wrappers are skipped, a call that owns the block we
+/// are inside is skipped, and a BlockNode gets the range parser gives the block (call start to block end).
+pub fn parser_ancestor_ranges(ancestors: &[Node]) -> Vec<(usize, usize, usize)> {
+    let mut out = Vec::new();
+    for i in (0..ancestors.len()).rev() {
+        let n = &ancestors[i];
+        let f = frame(n);
+        let call_owning_block =
+            f == Frame::Call && ancestors.get(i + 1).is_some_and(|b| kind::of(b) == kind::BLOCK_NODE);
+        if f == Frame::Transparent || call_owning_block {
+            continue;
+        }
+        let loc = n.location();
+        let start = if kind::of(n) == kind::BLOCK_NODE && i > 0 && kind::of(&ancestors[i - 1]) == kind::CALL_NODE {
+            ancestors[i - 1].location().start_offset()
+        } else {
+            loc.start_offset()
+        };
+        out.push((i, start, loc.end_offset()));
+    }
+    out
+}
+
+/// A heredoc string literal (`<<~X`, `<<-X`, `<<X`), as rubocop-ast `heredoc?`.
+pub fn is_heredoc(node: &Node) -> bool {
+    let opening = match kind::of(node) {
+        kind::STRING_NODE => node.as_string_node().unwrap().opening_loc(),
+        kind::INTERPOLATED_STRING_NODE => node.as_interpolated_string_node().unwrap().opening_loc(),
+        kind::X_STRING_NODE => Some(node.as_x_string_node().unwrap().opening_loc()),
+        kind::INTERPOLATED_X_STRING_NODE => Some(node.as_interpolated_x_string_node().unwrap().opening_loc()),
+        _ => None,
+    };
+    opening.is_some_and(|o| o.as_slice().starts_with(b"<<"))
+}
+
+/// Parser-gem `send` arguments: positional/keyword arguments plus a trailing `&blk` (block_pass).
+pub fn send_args<'pr>(call: &CallNode<'pr>) -> Vec<Node<'pr>> {
+    let mut args = call_args(call);
+    if let Some(b) = call.block().filter(|b| kind::of(b) == kind::BLOCK_ARGUMENT_NODE) {
+        args.push(b);
+    }
+    args
 }

@@ -15,16 +15,15 @@ out=${TMPDIR:-/tmp}/rbcop-check
 mkdir -p "$out"
 [ "$cops" = all ] && cops=$("$bin" --show-cops | paste -sd, -)
 pattern=": [CWEFRI]: (\[Correctable\] )?($(echo "$cops" | tr , '|')): "
-# LineLength's [Correctable] tag depends on CheckLineBreakable, which rbcop does not model yet.
-norm() { grep -E "$pattern" | sed -E 's/\[Correctable\] (Layout\/LineLength)/\1/' | LC_ALL=C sort; }
+norm() { grep -E "$pattern" | LC_ALL=C sort; }
 
 status=0
 for c in $corpora; do
   # Where a RuboCop cop crashed it reported nothing, so drop rbcop's offenses for that (cop, file).
   crashes="$oracle_root/$c.txt.crashes"
-  [ -f "$crashes" ] || : > "$crashes"
+  [ -f "$crashes" ] || crashes=/dev/null
   (cd "$corpus_root/$c" && "$bin" -c "$root/config/all-cops.yml" --format emacs --only "$cops" . 2>"$out/$c.err") \
-    | awk -F'\t' 'NR == FNR { skip[$1 "\t" $2] = 1; next }
+    | awk -F'\t' 'FILENAME == ARGV[1] { skip[$1 "\t" $2] = 1; next }
         { path = $0; sub(/:[0-9]+:[0-9]+: .*/, "", path)
           cop = $0; sub(/^.*: [CWEFRI]: (\[Correctable\] )?/, "", cop); sub(/: .*/, "", cop)
           if (!((cop "\t" path) in skip)) print }' "$crashes" - \

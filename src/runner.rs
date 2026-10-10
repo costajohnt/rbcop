@@ -113,6 +113,7 @@ fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dy
         }
     }
     let mut out = Vec::new();
+    let mut states: Vec<Option<Box<dyn std::any::Any>>> = (0..active.len()).map(|_| None).collect();
     let mut walker = Walker {
         src: &src,
         facts: &facts,
@@ -122,10 +123,11 @@ fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dy
         stack: Vec::new(),
         leaf: None,
         out: &mut out,
+        states: &mut states,
     };
     walker.visit(&program);
 
-    for a in &active {
+    for (a, state) in active.iter().zip(states.iter_mut()) {
         let mut cx = Cx {
             src: &src,
             facts: &facts,
@@ -135,6 +137,7 @@ fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dy
             cop: a.name,
             correctable: a.cop.correctable(),
             out: &mut out,
+            state,
         };
         a.cop.on_file(&mut cx);
     }
@@ -144,9 +147,22 @@ fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dy
     dedup(&mut out);
     out.retain(|o| !directives::is_disabled(&disabled, o.cop, src.line_of(o.start)));
     for o in out.iter_mut() {
-        o.severity = cfg.cop(o.cop).severity.unwrap_or_else(|| default_severity(o.cop));
+        let c = cfg.cop(o.cop);
+        o.severity = c.severity.unwrap_or_else(|| default_severity(o.cop));
+        o.correctable &= autocorrect_allowed(c);
     }
     out
+}
+
+/// Cop::Base#use_corrector: an offense with a corrector is only `[Correctable]` when the cop's
+/// `AutoCorrect` is `always`/`true` (the default) or `contextual`; `false`/`disabled` turn it off.
+fn autocorrect_allowed(cfg: &CopConfig) -> bool {
+    use crate::config::value::Value;
+    match cfg.get("AutoCorrect") {
+        None | Some(Value::Bool(true)) => true,
+        Some(Value::Str(s)) => s == "always" || s == "contextual",
+        _ => false,
+    }
 }
 
 /// Prism reports some semantic errors the parser gem accepts (e.g. top-level `yield` in .builder templates).
@@ -178,6 +194,7 @@ struct Walker<'s, 'pr, 'c> {
     stack: Vec<Node<'pr>>,
     leaf: Option<Node<'pr>>,
     out: &'s mut Vec<Offense>,
+    states: &'s mut [Option<Box<dyn std::any::Any>>],
 }
 
 impl<'pr> Walker<'_, 'pr, '_> {
@@ -193,6 +210,7 @@ impl<'pr> Walker<'_, 'pr, '_> {
                 cop: a.name,
                 correctable: a.cop.correctable(),
                 out: self.out,
+                state: &mut self.states[i],
             };
             a.cop.on_node(&mut cx, node);
         }
