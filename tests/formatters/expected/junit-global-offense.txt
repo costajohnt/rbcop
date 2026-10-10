@@ -1,0 +1,15 @@
+<?xml version='1.0'?>
+<testsuites>
+  <testsuite name='rubocop' tests='1' failures='2'>
+    <testcase classname='x.gemspec' name='Gemspec/RequiredRubyVersion'>
+      <failure type='Gemspec/RequiredRubyVersion' message='Gemspec/RequiredRubyVersion: `required_ruby_version` should be specified.'>
+        #&lt;struct RuboCop::Cop::Offense::PseudoSourceRange line=1, column=0, source_line=&quot;&quot;, begin_pos=0, end_pos=0&gt;
+      </failure>
+    </testcase>
+    <testcase classname='x.gemspec' name='Style/FrozenStringLiteralComment'>
+      <failure type='Style/FrozenStringLiteralComment' message='Style/FrozenStringLiteralComment: Missing frozen string literal comment.'>
+        <root>/tests/formatters/gemspec/x.gemspec:1:1
+      </failure>
+    </testcase>
+  </testsuite>
+</testsuites>
