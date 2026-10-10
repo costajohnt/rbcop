@@ -309,6 +309,14 @@ More traps found while porting:
 - Prism `unescaped()` borrows the node: `.to_vec()` when the value outlives it.
 - Helpers: `check_single_line_suitability`, `comments_help::{find_end_line, comments_in_lines}`,
   `select_by`, `block_args::{Single, single_var, single_body}`.
+- `/re/ =~ x` is parser `match_with_lvasgn`, never a `send`: exclude it from call checks.
+- Hash keys compare structurally in Ruby: identical `[lhs, rhs]` pairs collapse
+  (ParallelAssignment's AssignmentSorter).
+- NodePattern `(lvasgn %)` matches only a valueless lvasgn (masgn target, op-assign).
+- Leading comments belong to the outermost node at that position (a `gem` call with a block or a
+  modifier `if` does not own the comment above it); trailing comments match by line.
+- Helpers: `hash_subset`, `gem_declaration`, `gemspec_help::first_spec_var`,
+  `reparsed_equivalence::verified_by_reparse`, `heredoc::{heredoc_type, body_range}`.
 - Prism `CallNode#message_loc` of an index call (`foo[x]`, `foo[x] = y`) spans the brackets and
   arguments; use `name()` when you mean parser's method name.
 - Helpers: `if_node::{normal_keyword, parts, is_elsif}`, `ruby_string::symbol_inspect`.

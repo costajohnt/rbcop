@@ -66,7 +66,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   (`add_parentheses::ParenFix::Params`); `value_used?` in style/alias and style/block_delimiters
   (`helpers::value_used`); StructInheritance's DefinesConstants visitor copied in
   style/data_inheritance; the runner's `code_lines`/`StatementBounds` duplicated in
-  `helpers::comment_config`.
+  `helpers::comment_config`. Style/RedundantParentheses keeps its own `verified_by_reparse`
+  (switch to `reparsed_equivalence::verified_by_reparse`); Bundler/GemComment ports comment
+  association privately (switch to `helpers::comment_association`).
 - Style/DirectiveScope treats only ported cops as disabled by default config; an `enable X` ...
   `disable X` pair for an unported, default-disabled cop can differ (not hit by the gates).
 - One spec snippet (`naming/method_name/050.rb`, a `%{}` template) gets a duplicated
