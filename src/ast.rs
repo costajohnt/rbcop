@@ -313,3 +313,28 @@ pub fn is_parser_dstr(node: &Node) -> bool {
     }
     node_text(node).contains('\n')
 }
+
+/// Parser `dstr` for a non-heredoc literal, exactly: parser splits a string only on a newline
+/// before the last character of its content, so `"\n"` and `"a\n"` stay `str` (which
+/// `is_parser_dstr` misses). Heredocs as in `is_parser_dstr`.
+pub fn is_parser_dstr_exact(node: &Node) -> bool {
+    match node.as_string_node() {
+        Some(s) if !is_heredoc(node) => {
+            let content = text(&s.content_loc());
+            content.strip_suffix('\n').unwrap_or(content).contains('\n')
+        }
+        _ => is_parser_dstr(node),
+    }
+}
+
+/// Value of an integer literal node (parser `int`; Prism keeps a leading `-` in the literal), or None
+/// for other nodes and values beyond i128.
+pub fn int_literal_value(node: &Node) -> Option<i128> {
+    let value = node.as_integer_node()?.value();
+    let (neg, digits) = value.to_u32_digits();
+    let mut v: i128 = 0;
+    for d in digits.iter().rev() {
+        v = v.checked_mul(1 << 32)?.checked_add(*d as i128)?;
+    }
+    Some(if neg { -v } else { v })
+}
