@@ -106,7 +106,7 @@ impl Cop for RedundantBegin {
                 let Some(b) = node.as_begin_node().filter(|b| b.begin_keyword_loc().is_some()) else { return };
                 let parent = parser_parent(cx.ancestors);
                 let loc = node.location();
-                let offense = (!allowable(&b, parent)).then(|| {
+                let offense = (!allowable(cx, &b, parent)).then(|| {
                     let kw = b.begin_keyword_loc().unwrap();
                     (kw.start_offset(), kw.end_offset(), plan(cx.src, &b, parent))
                 });
@@ -202,10 +202,17 @@ fn children<'pr>(b: &BeginNode<'pr>) -> Vec<Node<'pr>> {
 }
 
 /// allowable_kwbegin?
-fn allowable(b: &BeginNode, parent: Option<&Node>) -> bool {
-    let n = children(b).len();
-    if b.rescue_clause().is_some() || b.ensure_clause().is_some() || b.else_clause().is_some() {
+fn allowable(cx: &Cx, b: &BeginNode, parent: Option<&Node>) -> bool {
+    let mut n = children(b).len();
+    if b.rescue_clause().is_some() || b.ensure_clause().is_some() {
         return true;
+    }
+    if let Some(e) = b.else_clause() {
+        // Below 2.6 the parser gem reads a lonely `else` body as more kwbegin statements.
+        if cx.config.target_ruby >= 2.6 {
+            return true;
+        }
+        n += e.statements().map_or(0, |s| s.body().len());
     }
     if n == 0 || (parent.is_some() && n >= 2) {
         return true;

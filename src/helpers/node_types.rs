@@ -50,6 +50,15 @@ const OPERATOR_METHODS: &[&str] = &[
     "+@", "-@", "!@", "~@", "[]", "[]=", "!", "!=", "!~", "`",
 ];
 
+/// A `_1`..`_9` read below Ruby 2.7: Prism's LocalVariableReadNode is the parser gem's
+/// `(send nil :_1)` there (the runner already dropped the blocks' numbered parameters).
+pub fn is_legacy_numbered_read(cx: &Cx, node: &Node) -> bool {
+    cx.config.target_ruby < 2.7
+        && node.as_local_variable_read_node().is_some_and(|l| {
+            matches!(l.name().as_slice(), [b'_', b'1'..=b'9'])
+        })
+}
+
 /// `operator_method?`
 pub fn is_operator_method(name: &str) -> bool {
     OPERATOR_METHODS.contains(&name)

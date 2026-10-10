@@ -463,7 +463,7 @@ impl<'pr> Check<'_, 'pr> {
         if helpers::literal_node::literal(node) && self.disallowed_literal(node) {
             return Some("a literal");
         }
-        if is_variable(node) {
+        if is_variable(node) && !helpers::node_types::is_legacy_numbered_read(cx, node) {
             return Some("a variable");
         }
         if matches!(kind::of(node), kind::CONSTANT_READ_NODE | kind::CONSTANT_PATH_NODE) {

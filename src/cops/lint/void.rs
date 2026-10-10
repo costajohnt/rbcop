@@ -399,8 +399,10 @@ fn check_var(cx: &mut Cx, ctx: &Ctx, node: &Node) {
         | Node::ItLocalVariableReadNode { .. }
         | Node::BackReferenceReadNode { .. }
         | Node::NumberedReferenceReadNode { .. } => {
-            if matches!(node, Node::BackReferenceReadNode { .. } | Node::NumberedReferenceReadNode { .. }) {
-                return; // nth_ref / back_ref are not `variable?`
+            if matches!(node, Node::BackReferenceReadNode { .. } | Node::NumberedReferenceReadNode { .. })
+                || helpers::node_types::is_legacy_numbered_read(cx, node)
+            {
+                return; // nth_ref / back_ref are not `variable?`, nor a `_1` send
             }
             let msg = format!("Variable `{}` used in void context.", node_text(node));
             report(cx, ctx, node, msg, true);

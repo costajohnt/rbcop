@@ -22,7 +22,8 @@ use std::collections::{HashMap, HashSet};
 
 /// (start, end, message) of each parser-gem diagnostic, before Lint/Syntax's location adjustment.
 /// `seed`: where the source fails to parse even with Prism (see `failure_offset`); `actions`: end
-/// offsets of the semantic errors (reported by the caller), whose yyerror also starts recovery.
+/// offsets of the semantic errors (reported by the caller), whose yyerror also starts recovery;
+/// `circular`: the reads of circular argument references, reported here unless recovery skips them.
 pub fn diagnostics(
     root: &Node,
     prism_tokens: &[Token],
@@ -30,15 +31,16 @@ pub fn diagnostics(
     target: f64,
     seed: Option<usize>,
     actions: &[usize],
+    circular: &[(usize, usize)],
 ) -> Vec<(usize, usize, String)> {
     let toks = convert(prism_tokens, text, target);
     let sorted = by_start(&toks);
     let mut w = Walk { target, toks: &sorted, ..Walk::default() };
     w.visit(root);
-    if w.violations.is_empty() && seed.is_none() {
+    if w.violations.is_empty() && seed.is_none() && circular.is_empty() {
         return Vec::new();
     }
-    simulate(&toks, &w, text, target, seed.unwrap_or(usize::MAX), actions)
+    simulate(&toks, &w, text, target, seed.unwrap_or(usize::MAX), actions, circular)
 }
 
 /// Tokens in source order (the lexers emit a heredoc's body right after its opener).
@@ -74,6 +76,14 @@ pub fn failure_offset(kind: &str, start: usize, end: usize, tokens: &[Token]) ->
         // fails on what follows.
         "write_target_unexpected" => end,
         k if k.starts_with("expect_expression_after_") && k != "expect_expression_after_operator" => end,
+        "ternary_expression_true" | "ternary_expression_false" => end,
+        // A construct left open, reported at its keyword: the parser fails at the end of the file.
+        "def_term" | "class_term" | "module_term" | "begin_term" | "case_term" | "for_term" | "while_term"
+        | "until_term" | "conditional_term" | "block_term_end" | "lambda_term_end"
+            if tokens.iter().any(|t| t.start == start && t.kind.starts_with("KEYWORD_")) =>
+        {
+            tokens.last().map_or(start, |t| t.end)
+        }
         "expression_not_writable" => tokens
             .iter()
             .find(|t| t.start >= start && matches!(parser_type(t.kind), Some("tEQL" | "tOP_ASGN")))
@@ -91,14 +101,31 @@ fn first_error_after(
     from: usize,
     target: f64,
     skip: impl Fn(usize) -> bool,
-) -> Option<usize> {
-    let src = format!("{prefix}{}", &text[from..]);
+    blank: &[(usize, usize)],
+) -> (Option<usize>, Vec<usize>) {
+    // Heredoc bodies whose opener is before `from` are text, not code: blanked (offsets kept).
+    let mut rest = text[from..].to_string();
+    for &(s, e) in blank {
+        let range = s - from..e - from;
+        let spaces: String = rest[range.clone()]
+            .chars()
+            .map(|c| if c == '\n' { "\n".to_string() } else { " ".repeat(c.len_utf8()) })
+            .collect();
+        rest.replace_range(range, &spaces);
+    }
+    let src = format!("{prefix}{rest}");
     let version = crate::config::target_ruby::prism_version(target);
     let (result, tokens) = ruby_prism::parse_with_version_and_tokens(src.as_bytes(), version);
     let sorted = by_start(&convert(&tokens, &src, target));
     let mut w = Walk { target, toks: &sorted, ..Walk::default() };
     w.visit(&result.node());
     let p = prefix.len();
+    // `return` directly in the class body recovery left open: the builder's error (and yyerror).
+    let returns = result
+        .errors()
+        .filter(|e| e.type_name() == "return_invalid" && e.location().start_offset() >= p)
+        .map(|e| e.location().start_offset() - p + from)
+        .collect();
     // Unclosed constructs (errors at the end of the file) are the simulation's `$end` check;
     // semantic errors are not grammar failures (the in_def model covers dynamic constants), and
     // neither are `yield` outside a method or `else` without `rescue` (judged by the simulation).
@@ -106,17 +133,18 @@ fn first_error_after(
         .errors()
         .filter(|e| {
             let k = e.type_name();
-            !k.contains("term") && !crate::syntax::is_semantic(k) && !matches!(k, "invalid_yield")
+            !k.contains("term") && !crate::syntax::is_semantic(k) && !matches!(k, "invalid_yield" | "return_invalid")
         })
         .map(|e| failure_offset(e.type_name(), e.location().start_offset(), e.location().end_offset(), &tokens))
         .filter(|&o| !src.get(o..).unwrap_or("").trim().is_empty())
         .collect::<Vec<_>>();
-    errors
+    let first = errors
         .into_iter()
         .chain(w.violations.keys().copied())
         .filter(|&o| o > p && !skip(o - p + from))
         .min()
-        .map(|o| o - p + from)
+        .map(|o| o - p + from);
+    (first, returns)
 }
 
 /// A token as the parser gem's lexer for the target would produce it.
@@ -125,6 +153,8 @@ struct Tok {
     name: &'static str,
     start: usize,
     end: usize,
+    /// A `do` right after a command name (lexer state EXPR_CMDARG): kDO whatever cmdarg holds.
+    cmd_do: bool,
 }
 
 /// Prism token type to parser gem token (Prism::Translation::Parser::Lexer::TYPES); None = skipped.
@@ -310,6 +340,9 @@ const EXPR_BEG: u32 = 0x1;
 const EXPR_LABEL: u32 = 0x400;
 /// EXPR_BEG | EXPR_MID | EXPR_CLASS.
 const EXPR_BEG_ANY: u32 = 0x1 | 0x40 | 0x200;
+const EXPR_CMDARG: u32 = 0x20;
+/// States after which a newline is skipped (EXPR_BEG | EXPR_FNAME | EXPR_DOT | EXPR_CLASS).
+const NEWLINE_IGNORED: u32 = 0x1 | 0x80 | 0x100 | 0x200;
 
 /// Prism's tokens converted the way Prism::Translation::Parser::Lexer#to_a does for the parts the
 /// grammar's error positions depend on (string/symbol merging, `(` and `{` kinds), followed by `$end`.
@@ -327,6 +360,16 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
         let state_before = state;
         if !matches!(t.kind, "COMMENT" | "EMBDOC_BEGIN" | "EMBDOC_LINE" | "EMBDOC_END") {
             state = t.state;
+        }
+        // Prism folds a significant newline after a trailing comment into the COMMENT token; the
+        // parser gem lexes tNL there (unless the next line continues with a leading `.`/`&.`).
+        if t.kind == "COMMENT" && text[t.start..t.end].ends_with('\n') && state & NEWLINE_IGNORED == 0 {
+            let next = tokens[i..].iter().find(|n| n.kind != "COMMENT").map_or("", |n| n.kind);
+            if !matches!(next, "NEWLINE" | "IGNORED_NEWLINE" | "DOT" | "AMPERSAND_DOT") {
+                out.push(Tok { name: "tNL", start: t.end - 1, end: t.end, cmd_do: false });
+                state = EXPR_BEG;
+            }
+            continue;
         }
         let Some(mut name) = parser_type(t.kind) else { continue };
         let mut end = t.end;
@@ -364,7 +407,13 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
                     i += 1;
                 }
             }
-            "tLCURLY" if t.state == EXPR_BEG | EXPR_LABEL => name = "tLBRACE",
+            // (Not after an operator method name: `alias % {`.)
+            "tLCURLY"
+                if t.state == EXPR_BEG | EXPR_LABEL
+                    && !out.len().checked_sub(2).is_some_and(|k| matches!(out[k].name, "kALIAS" | "kUNDEF")) =>
+            {
+                name = "tLBRACE"
+            }
             // The translator's list misses keywords like `in`; an expression-start lexer state
             // gives tLPAREN as well.
             "tLPAREN2"
@@ -373,6 +422,13 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
                 name = "tLPAREN"
             }
             "tFID" if out.last().is_some_and(|p| p.name == "kDEF") => name = "tIDENTIFIER",
+            // A method name (`def for`, `x.class`, `A::end`): it opens or closes nothing.
+            // ponytail: the parser gem keeps the keyword token after `def` (`fname: reswords`).
+            k if k.starts_with('k')
+                && out.last().is_some_and(|p| matches!(p.name, "kDEF" | "tDOT" | "tANDDOT" | "tCOLON2")) =>
+            {
+                name = "tIDENTIFIER"
+            }
             "kDO" => {
                 let lambda = out.iter().rev().find(|p| matches!(p.name, "kDO_LAMBDA" | "tLAMBDA" | "tLAMBEG"));
                 if lambda.is_some_and(|p| p.name == "tLAMBDA") {
@@ -385,9 +441,53 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
             "tBDOT3" if target < 2.7 || state_before & EXPR_BEG_ANY == 0 => name = "tDOT3",
             _ => {}
         }
-        out.push(Tok { name, start: t.start, end });
+        // The parser gem's expr_cmdarg: a name lexed at a command start (file start, after a
+        // newline, `;`, `(`, a block opener or a statement keyword; not after `|params|`, where
+        // Prism's lexer state says EXPR_CMDARG too).
+        let cmd_do = name == "kDO"
+            && state_before & EXPR_CMDARG != 0
+            && matches!(out.last().map(|p| p.name), Some("tIDENTIFIER" | "tFID" | "tCONSTANT"))
+            && out.len().checked_sub(2).map(|k| out[k].name).is_none_or(|p| {
+                matches!(
+                    p,
+                    "tNL"
+                        | "tSEMI"
+                        | "kDO"
+                        | "kDO_BLOCK"
+                        | "kDO_LAMBDA"
+                        | "tLCURLY"
+                        | "tLAMBEG"
+                        | "tLPAREN"
+                        | "tLPAREN2"
+                        | "tLPAREN_ARG"
+                        | "kTHEN"
+                        | "kELSE"
+                        | "kBEGIN"
+                        | "kENSURE"
+                        | "kIF"
+                        | "kUNLESS"
+                        | "kWHILE"
+                        | "kUNTIL"
+                        | "kAND"
+                        | "kOR"
+                        | "kNOT"
+                        | "kRETURN"
+                )
+            });
+        out.push(Tok { name, start: t.start, end, cmd_do });
+        // A label ending its line: the newline is a tNL when the parser's in_kwarg flag is set
+        // (see `simulate`), else skipped.
+        if name == "tLABEL" {
+            let rest = &text[end..];
+            let line = &rest[..rest.find('\n').unwrap_or(rest.len())];
+            let code = line.find('#').map_or(line, |c| &line[..c]);
+            if code.trim().is_empty() && end + line.len() < text.len() {
+                let nl = end + line.len();
+                out.push(Tok { name: "tLABEL_NL", start: nl, end: nl + 1, cmd_do: false });
+            }
+        }
     }
-    out.push(Tok { name: "$end", start: text.len(), end: text.len() });
+    out.push(Tok { name: "$end", start: text.len(), end: text.len(), cmd_do: false });
     out
 }
 
@@ -516,6 +616,46 @@ fn ends_expr(name: &str) -> bool {
     )
 }
 
+/// Tokens after which the end of the file is unexpected (`a.`, `a +`, `a,`).
+fn wants_operand(name: &str) -> bool {
+    matches!(
+        name,
+        "tDOT"
+            | "tANDDOT"
+            | "tCOLON2"
+            | "tCOMMA"
+            | "tEQL"
+            | "tOP_ASGN"
+            | "tANDOP"
+            | "tOROP"
+            | "kAND"
+            | "kOR"
+            | "tPLUS"
+            | "tMINUS"
+            | "tSTAR2"
+            | "tDIVIDE"
+            | "tPOW"
+            | "tPERCENT"
+            | "tPIPE"
+            | "tAMPER2"
+            | "tCARET"
+            | "tLSHFT"
+            | "tRSHFT"
+            | "tLT"
+            | "tGT"
+            | "tLEQ"
+            | "tGEQ"
+            | "tEQ"
+            | "tNEQ"
+            | "tEQQ"
+            | "tMATCH"
+            | "tNMATCH"
+            | "tCMP"
+            | "tASSOC"
+            | "tEH"
+    )
+}
+
 fn is_closer(name: &str) -> bool {
     matches!(name, "tRPAREN" | "tRBRACK" | "tRCURLY" | "tSTRING_DEND" | "kEND")
 }
@@ -547,6 +687,14 @@ struct Walk<'t> {
     const_writes: HashMap<usize, (usize, usize)>,
     /// `do` keywords that are kDO_BLOCK.
     do_block: HashSet<usize>,
+    /// Openers whose header takes the term before the body (`class A < B` + newline, `def a b` +
+    /// newline, `if a` + newline / `then`, ...): right after it the parser is in the body's first
+    /// state, where `stmts: error stmt` starts.
+    term_headers: HashSet<usize>,
+    /// Start -> end of command-call arguments (`foo a, b`), around which the parser pushes cmdarg.
+    cmd_args: HashMap<usize, usize>,
+    /// Heredocs: (opener start, body and terminator range).
+    heredocs: Vec<(usize, (usize, usize))>,
 }
 
 impl Walk<'_> {
@@ -554,7 +702,7 @@ impl Walk<'_> {
     /// the older lexers).
     fn next_token(&self, end: usize) -> usize {
         let i = self.toks.partition_point(|t| t.start < end);
-        self.toks[i..].iter().find(|t| t.name != "tNL").map_or(usize::MAX, |t| t.start)
+        self.toks[i..].iter().find(|t| !matches!(t.name, "tNL" | "tLABEL_NL")).map_or(usize::MAX, |t| t.start)
     }
     /// End of the first newline or `;` at or after `offset` (where a header without `then`/`do`/parens ends).
     fn term_after(&self, offset: usize) -> usize {
@@ -625,6 +773,9 @@ impl<'pr> Visit<'pr> for Walk<'_> {
             if let Some(eq) = n.equal_loc() {
                 self.violation(eq.start_offset(), 3.0);
             }
+            if n.lparen_loc().is_none() {
+                self.term_headers.insert(kw);
+            }
             let header_end = params.as_ref().map_or(n.name_loc().end_offset(), |p| p.location().end_offset());
             let body = n.rparen_loc().map_or_else(
                 || if n.equal_loc().is_some() { usize::MAX } else { self.term_after(header_end) },
@@ -663,6 +814,9 @@ impl<'pr> Visit<'pr> for Walk<'_> {
         let kw = n.class_keyword_loc().start_offset();
         let header = n.superclass().map_or(n.constant_path().location().end_offset(), |s| s.location().end_offset());
         let body = self.term_after(header);
+        if n.superclass().is_some() {
+            self.term_headers.insert(kw);
+        }
         self.with_owner(kw, body, |s| {
             if let Some(b) = n.body().and_then(|b| b.as_begin_node()) {
                 s.begin_clauses(&b);
@@ -685,6 +839,7 @@ impl<'pr> Visit<'pr> for Walk<'_> {
     fn visit_singleton_class_node(&mut self, n: &ruby_prism::SingletonClassNode<'pr>) {
         let kw = n.class_keyword_loc().start_offset();
         let body = self.term_after(n.expression().location().end_offset());
+        self.term_headers.insert(kw);
         self.with_owner(kw, body, |s| {
             if let Some(b) = n.body().and_then(|b| b.as_begin_node()) {
                 s.begin_clauses(&b);
@@ -703,6 +858,7 @@ impl<'pr> Visit<'pr> for Walk<'_> {
             .then_keyword_loc()
             .map_or_else(|| self.term_after(n.predicate().location().end_offset()), |t| t.end_offset());
         self.body.insert(kw, body);
+        self.term_headers.insert(kw);
         let mut cur = n.then_keyword_loc().map(|t| t.start_offset()).into_iter().collect::<Vec<_>>();
         let mut sub = n.subsequent();
         while let Some(s) = sub {
@@ -730,6 +886,7 @@ impl<'pr> Visit<'pr> for Walk<'_> {
                 .then_keyword_loc()
                 .map_or_else(|| self.term_after(n.predicate().location().end_offset()), |t| t.end_offset());
             self.body.insert(kw, body);
+            self.term_headers.insert(kw);
             for c in n.then_keyword_loc().into_iter().chain(n.else_clause().map(|e| e.else_keyword_loc())) {
                 self.owner.insert(c.start_offset(), kw);
             }
@@ -744,6 +901,7 @@ impl<'pr> Visit<'pr> for Walk<'_> {
                 .do_keyword_loc()
                 .map_or_else(|| self.term_after(n.predicate().location().end_offset()), |d| d.end_offset());
             self.body.insert(kw, body);
+            self.term_headers.insert(kw);
             if let Some(d) = n.do_keyword_loc() {
                 self.owner.insert(d.start_offset(), kw);
             }
@@ -758,6 +916,7 @@ impl<'pr> Visit<'pr> for Walk<'_> {
                 .do_keyword_loc()
                 .map_or_else(|| self.term_after(n.predicate().location().end_offset()), |d| d.end_offset());
             self.body.insert(kw, body);
+            self.term_headers.insert(kw);
             if let Some(d) = n.do_keyword_loc() {
                 self.owner.insert(d.start_offset(), kw);
             }
@@ -771,6 +930,7 @@ impl<'pr> Visit<'pr> for Walk<'_> {
             .do_keyword_loc()
             .map_or_else(|| self.term_after(n.collection().location().end_offset()), |d| d.end_offset());
         self.body.insert(kw, body);
+        self.term_headers.insert(kw);
         self.owner.insert(n.in_keyword_loc().start_offset(), kw);
         if let Some(d) = n.do_keyword_loc() {
             self.owner.insert(d.start_offset(), kw);
@@ -792,6 +952,7 @@ impl<'pr> Visit<'pr> for Walk<'_> {
                     w.conditions().iter().last().map_or(w.keyword_loc().end_offset(), |c| c.location().end_offset());
                 let body = w.then_keyword_loc().map_or_else(|| self.term_after(last), |t| t.end_offset());
                 self.body.insert(kw, body);
+                self.term_headers.insert(kw);
                 first = false;
             }
         }
@@ -817,6 +978,7 @@ impl<'pr> Visit<'pr> for Walk<'_> {
                     .then_loc()
                     .map_or_else(|| self.term_after(i.pattern().location().end_offset()), |t| t.end_offset());
                 self.body.insert(kw, body);
+                self.term_headers.insert(kw);
                 first = false;
             }
         }
@@ -886,16 +1048,53 @@ impl<'pr> Visit<'pr> for Walk<'_> {
         {
             self.do_block.insert(b.opening_loc().start_offset());
         }
+        // `command_args` (the parser pushes cmdarg around them): a call without parentheses
+        // that is not an operator or attribute assignment.
+        let name = String::from_utf8_lossy(n.name().as_slice());
+        if n.opening_loc().is_none()
+            && n.message_loc().is_some()
+            && !crate::helpers::node_types::is_operator_method(&name)
+            && !name.ends_with('=')
+        {
+            let block_arg = n.block().filter(|b| b.as_block_argument_node().is_some());
+            self.command_args(n.arguments(), block_arg);
+        }
         let start = n.message_loc().map_or(n.location().start_offset(), |m| m.start_offset());
         self.in_ctx(start, |s| ruby_prism::visit_call_node(s, n));
     }
 
     fn visit_super_node(&mut self, n: &ruby_prism::SuperNode<'pr>) {
+        if n.lparen_loc().is_none() {
+            self.command_args(n.arguments(), n.block().filter(|b| b.as_block_argument_node().is_some()));
+        }
         self.in_ctx(n.keyword_loc().start_offset(), |s| ruby_prism::visit_super_node(s, n));
     }
 
     fn visit_yield_node(&mut self, n: &ruby_prism::YieldNode<'pr>) {
+        if n.lparen_loc().is_none() {
+            self.command_args(n.arguments(), None);
+        }
         self.in_ctx(n.keyword_loc().start_offset(), |s| ruby_prism::visit_yield_node(s, n));
+    }
+
+    fn visit_string_node(&mut self, n: &ruby_prism::StringNode<'pr>) {
+        self.heredoc(n.opening_loc(), Some(n.content_loc().start_offset()), n.closing_loc());
+    }
+
+    fn visit_x_string_node(&mut self, n: &ruby_prism::XStringNode<'pr>) {
+        self.heredoc(Some(n.opening_loc()), Some(n.content_loc().start_offset()), Some(n.closing_loc()));
+    }
+
+    fn visit_interpolated_string_node(&mut self, n: &ruby_prism::InterpolatedStringNode<'pr>) {
+        let body = n.parts().iter().next().map(|p| p.location().start_offset());
+        self.heredoc(n.opening_loc(), body, n.closing_loc());
+        ruby_prism::visit_interpolated_string_node(self, n);
+    }
+
+    fn visit_interpolated_x_string_node(&mut self, n: &ruby_prism::InterpolatedXStringNode<'pr>) {
+        let body = n.parts().iter().next().map(|p| p.location().start_offset());
+        self.heredoc(Some(n.opening_loc()), body, Some(n.closing_loc()));
+        ruby_prism::visit_interpolated_x_string_node(self, n);
     }
 
     fn visit_parentheses_node(&mut self, n: &ruby_prism::ParenthesesNode<'pr>) {
@@ -1067,6 +1266,32 @@ impl<'pr> Visit<'pr> for Walk<'_> {
 }
 
 impl Walk<'_> {
+    /// `body`: where the first part starts (the body's first line), if any.
+    fn heredoc(
+        &mut self,
+        open: Option<ruby_prism::Location>,
+        body: Option<usize>,
+        close: Option<ruby_prism::Location>,
+    ) {
+        if let (Some(o), Some(c)) = (open, close)
+            && o.as_slice().starts_with(b"<<")
+        {
+            let start = body.unwrap_or(c.start_offset()).min(c.start_offset());
+            self.heredocs.push((o.start_offset(), (start, c.end_offset())));
+        }
+    }
+
+    fn command_args(&mut self, args: Option<ruby_prism::ArgumentsNode>, block_arg: Option<Node>) {
+        let mut range = args.map(|a| (a.location().start_offset(), a.location().end_offset()));
+        if let Some(b) = block_arg {
+            let (s, e) = (b.location().start_offset(), b.location().end_offset());
+            range = Some(range.map_or((s, e), |(rs, re)| (rs.min(s), re.max(e))));
+        }
+        if let Some((s, e)) = range {
+            self.cmd_args.insert(s, e);
+        }
+    }
+
     fn const_write(&mut self, target: &ruby_prism::Location, op: &ruby_prism::Location) {
         self.const_writes.insert(op.start_offset(), (target.start_offset(), target.end_offset()));
     }
@@ -1086,28 +1311,56 @@ impl Walk<'_> {
 /// item can be (only its tokens outside brackets are given).
 fn is_chain(item: &[Tok]) -> bool {
     let operand = |n: &str| matches!(n, "tIDENTIFIER" | "tFID" | "tCONSTANT" | "tIVAR" | "tGVAR" | "tCVAR" | "kSELF");
+    // A literal receiver (`2.days.ago`) is a primary_value, but not an item on its own.
+    let literal = |n: &str| {
+        matches!(n, "tINTEGER" | "tFLOAT" | "tRATIONAL" | "tIMAGINARY" | "tSTRING" | "tSYMBOL" | "tCHARACTER")
+    };
     let mut want_operand = true;
-    for t in item {
+    let mut bare_literal = false;
+    for (k, t) in item.iter().enumerate() {
         match (want_operand, t.name) {
             (true, n) if operand(n) => want_operand = false,
+            (true, n) if k == 0 && literal(n) => (want_operand, bare_literal) = (false, true),
             (true, "tCOLON3") => {}
-            (false, "tDOT" | "tANDDOT" | "tCOLON2") => want_operand = true,
+            (false, "tDOT" | "tANDDOT" | "tCOLON2") => (want_operand, bare_literal) = (true, false),
             (false, "tLPAREN2" | "tRPAREN" | "tLBRACK2" | "tRBRACK") => {}
             _ => return false,
         }
     }
-    !want_operand
+    !want_operand && !bare_literal
 }
 
 /// The builder's error for a multiple-assignment item, if any.
-fn mlhs_item_error(item: &[Tok]) -> Option<(usize, usize, &'static str)> {
+fn mlhs_item_error(item: &[Tok], in_def: bool) -> Option<(usize, usize, &'static str)> {
     if let [t] = item
         && matches!(t.name, "kTRUE" | "kFALSE" | "kNIL" | "kSELF" | "k__FILE__" | "k__LINE__" | "k__ENCODING__")
     {
         return Some((t.start, t.end, "cannot assign to a keyword"));
     }
-    let anddot = item.iter().find(|t| t.name == "tANDDOT").filter(|_| is_chain(item))?;
+    // A constant target (`A`, `x::A`) while the parser believes it is in a def.
+    if in_def
+        && let [first, .., last] | [first @ last] = item
+        && last.name == "tCONSTANT"
+        && (item.len() == 1 || matches!(item[item.len() - 2].name, "tCOLON2" | "tCOLON3"))
+        && is_chain(item)
+    {
+        return Some((first.start, last.end, "dynamic constant assignment"));
+    }
+    // The item's own call operator (`a&.b.c` is fine); a call with arguments is no item at all.
+    if call_with_args(item) {
+        return None;
+    }
+    let anddot = item
+        .iter()
+        .rev()
+        .find(|t| matches!(t.name, "tDOT" | "tANDDOT" | "tCOLON2"))
+        .filter(|t| t.name == "tANDDOT" && is_chain(item))?;
     Some((anddot.start, anddot.end, "&. inside multiple assignment destination"))
+}
+
+/// `a.b(1)`: a chain ending with parenthesized arguments, which cannot be assigned to.
+fn call_with_args(item: &[Tok]) -> bool {
+    item.last().is_some_and(|t| t.name == "tRPAREN") && is_chain(item)
 }
 
 struct Frame {
@@ -1119,6 +1372,12 @@ struct Frame {
     in_def: bool,
 }
 
+/// The marker `diagnostics` returns when racc gives up at `offset` (nothing is lexed after it):
+/// an empty message, which callers drop.
+fn gave_up(offset: usize) -> (usize, usize, String) {
+    (offset, offset, String::new())
+}
+
 /// Runs racc's error recovery over the token stream (see the module doc).
 fn simulate(
     toks: &[Tok],
@@ -1127,9 +1386,16 @@ fn simulate(
     target: f64,
     seed: usize,
     actions: &[usize],
+    circular: &[(usize, usize)],
 ) -> Vec<(usize, usize, String)> {
-    const MAX_REPARSES: usize = 64;
+    const MAX_REPARSES: usize = 256;
     let mut out = Vec::new();
+    // A circular argument reference's yyerror leaves the parser's current argument set: later
+    // reads of that name report it again (until another scope starts).
+    let mut circular_arg: Option<&str> = None;
+    // A builder error found here (circular reference, `return` in a class body) yyerrors when its
+    // node reduces, with the next token as lookahead.
+    let mut pending_yy: Option<usize> = None;
     let mut stack = vec![Frame { name: "", key: usize::MAX, closer: "$end", body: Some(0), in_def: false }];
     // racc's @racc_error_status: errors are reported only at 0; 3 = discarding tokens.
     let mut status = 0u8;
@@ -1137,17 +1403,27 @@ fn simulate(
     // Where parsing last resumed after an error, and where that parse fails next.
     let mut resume = 0;
     let mut fails_at = seed;
+    // `return`s the current resumed parse finds directly in a class body.
+    let mut bad_returns: Vec<usize> = Vec::new();
     let mut reparses = 0;
     let mut first_failure = |stack: &[Frame], from: usize| {
         reparses += 1;
         if reparses > MAX_REPARSES {
-            return usize::MAX;
+            return (usize::MAX, Vec::new());
         }
         // Each open construct's header, made to parse on its own.
         let prefix: String = stack[1..]
             .iter()
             .map(|f| {
-                let header = text.get(f.key..f.body.unwrap_or(f.key)).unwrap_or("");
+                let header = match (f.body, f.name) {
+                    (Some(b), _) => text.get(f.key..b).unwrap_or(""),
+                    // Brackets left open around a construct recovery stays in (`foo(bar do`).
+                    (None, "tLPAREN2" | "tLPAREN_ARG") => "_(",
+                    (None, "tLBRACK2") => "_[",
+                    (None, "tLBRACK") => "[",
+                    (None, "tLBRACE") => "{_:",
+                    _ => "",
+                };
                 let lead = match f.name {
                     "kDO" | "tLCURLY" => "_ ",
                     "tLAMBEG" | "kDO_LAMBDA" => "-> ",
@@ -1158,31 +1434,136 @@ fn simulate(
             })
             .collect();
         // Clause keywords of popped constructs are judged by the simulation.
-        first_error_after(text, &prefix, from, target, |o| w.owner.contains_key(&o)).unwrap_or(usize::MAX)
+        let blank: Vec<(usize, usize)> =
+            w.heredocs.iter().filter(|h| h.0 < from && h.1.0 >= from).map(|h| h.1).collect();
+        let (first, returns) = first_error_after(text, &prefix, from, target, |o| w.owner.contains_key(&o), &blank);
+        (first.unwrap_or(usize::MAX), returns)
+    };
+    // A failure offset fails at the first token at or after it in source order, reached in lexer
+    // order (a heredoc's body is lexed before the rest of its opening line).
+    let mut by_offset: Vec<(usize, usize)> = toks.iter().enumerate().map(|(i, t)| (t.start, i)).collect();
+    by_offset.sort_unstable();
+    let fail_index = |at: usize| by_offset.get(by_offset.partition_point(|&(s, _)| s < at)).map_or(usize::MAX, |p| p.1);
+    // A semantic action's yyerror (racc's C core) cuts the reduced rule's states but searches for
+    // an `error` shift from the stale current state, so it first pops one more: the state the
+    // construct starting at `key` was parsed in. When that is the first state of the enclosing
+    // body, the enclosing construct is lost too.
+    let at_body_start = |stack: &[Frame], key: usize| {
+        let top = stack.last().unwrap();
+        let i = fail_index(key);
+        stack.len() > 1
+            && i > 0
+            && i != usize::MAX
+            && w.term_headers.contains(&top.key)
+            && top.body == Some(toks[i - 1].end)
     };
     // The last token shifted.
     let mut prev = "";
+    let mut prev_end = 0;
     // The parser's @context.in_def.
     let mut in_def = false;
     let mut next_action = 0;
     // The current statement's frame depth, whether it can still be a multiple assignment, and the
     // tokens of its current item at that depth.
     let (mut stmt_depth, mut mlhs_ok, mut item) = (1, true, Vec::<Tok>::new());
+    // The parser gem's cmdarg stack (top last): its lexer pushes false at each bracket and pops at
+    // its closer; the parser pushes true around command arguments and false around block, def,
+    // class, ... bodies, and pops when they reduce. Recovery skips the pops of what it discards,
+    // so a `do` after an error inside command arguments lexes as kDO_BLOCK.
+    let mut cmdarg = vec![false];
+    // Open command arguments: (end offset, frame depth of the call's statement).
+    let mut regions: Vec<(usize, usize)> = Vec::new();
+    let opens_bracket = |n: &str| {
+        matches!(n, "tLPAREN" | "tLPAREN2" | "tLPAREN_ARG" | "tLBRACK" | "tLBRACK2" | "tLBRACE" | "tLCURLY" | "tLAMBEG")
+    };
+    let action_frame = |n: &str| {
+        matches!(
+            n,
+            "kDO"
+                | "tLCURLY"
+                | "kDEF"
+                | "kCLASS"
+                | "kSCLASS"
+                | "kMODULE"
+                | "kBEGIN"
+                | "tLAMBEG"
+                | "kDO_LAMBDA"
+                | "tSTRING_DBEG"
+        )
+    };
+    // The parser's @context.in_kwarg: set while a def's unparenthesized parameter list parses, and
+    // left set when an error abandons it (a label ending its line then lexes a tNL).
+    let mut in_kwarg = false;
+    // Index of the last `,` that continued a multiple-assignment target list.
+    let mut mlhs_comma: Option<usize> = None;
+    let mut dangling_then = false;
+    // Constructs whose `rescue` recovery discarded, and those with a useless `else` (2.6+).
+    let mut lost_rescue: HashSet<usize> = HashSet::new();
+    let mut useless_else: HashSet<usize> = HashSet::new();
     for (i, t) in toks.iter().enumerate() {
+        if t.name == "tLABEL_NL" && !in_kwarg {
+            continue;
+        }
+        let kdo_block = t.name == "kDO" && !t.cmd_do && !w.do_block.contains(&t.start) && cmdarg.last() == Some(&true);
+        if opens_bracket(t.name) {
+            cmdarg.push(false);
+        } else if matches!(t.name, "tRPAREN" | "tRBRACK" | "tRCURLY") {
+            cmdarg.pop();
+        }
+        // Command arguments that ended before `t` reduce with `t` as lookahead (below a bracket
+        // `t` itself pushed).
+        while regions.last().is_some_and(|r| r.0 <= t.start) {
+            regions.pop();
+            let top = if opens_bracket(t.name) { cmdarg.pop() } else { None };
+            cmdarg.pop();
+            cmdarg.extend(top);
+        }
         let mut resumed = false;
         if discarding {
             if !starts_stmt(t.name) {
                 if t.name == "$end" {
                     break;
                 }
+                // A discarded clause keyword leaves its `then` without a clause.
+                if matches!(t.name, "kWHEN" | "kELSIF" | "kIN" | "kRESCUE") {
+                    dangling_then = true;
+                }
+                if t.name == "kRESCUE"
+                    && let Some(&o) = w.owner.get(&t.start)
+                {
+                    lost_rescue.insert(o);
+                }
                 continue;
             }
             discarding = false;
             resumed = true;
             resume = t.start;
-            fails_at = first_failure(&stack, resume);
+            (fails_at, bad_returns) = first_failure(&stack, resume);
             (stmt_depth, mlhs_ok) = (stack.len(), true);
             item.clear();
+        }
+        if matches!(t.name, "kDEF" | "kCLASS" | "kMODULE") {
+            circular_arg = None;
+        }
+        let name = &text[t.start..t.end];
+        let read = t.name == "tIDENTIFIER"
+            && !matches!(prev, "tDOT" | "tANDDOT" | "tCOLON2" | "kDEF")
+            && !toks.get(i + 1).is_some_and(|n| matches!(n.name, "tEQL" | "tOP_ASGN" | "tLPAREN2"));
+        // (A default value recovery resumes at is a statement of its own, its parameter undeclared.)
+        if (!resumed && circular.iter().any(|c| c.0 == t.start)) || (read && circular_arg == Some(name)) {
+            out.push((t.start, t.end, format!("circular argument reference {name}")));
+            circular_arg = Some(name);
+            pending_yy = Some(t.end);
+        }
+        if t.name == "kRETURN" && !in_def && bad_returns.contains(&t.start) {
+            out.push((t.start, t.end, "Invalid return in class/module body".to_string()));
+            pending_yy = Some(t.end);
+        }
+        if let Some(&end) = w.cmd_args.get(&t.start) {
+            let top = if opens_bracket(t.name) { cmdarg.pop() } else { None };
+            cmdarg.push(true);
+            cmdarg.extend(top);
+            regions.push((end, stack.len()));
         }
         // Multiple-assignment items (`a, b = ...`, which a resumed `x, y` parses as): the builder
         // checks each one as its `,` arrives (before any grammar failure further on); a keyword or
@@ -1190,9 +1571,10 @@ fn simulate(
         if t.name == "tCOMMA"
             && stack.len() == stmt_depth
             && mlhs_ok
-            && let Some((s, e, msg)) = mlhs_item_error(&item)
+            && let Some((s, e, msg)) = mlhs_item_error(&item, in_def)
         {
             out.push((s, e, msg.to_string()));
+            regions.retain(|r| r.1 < stack.len());
             (status, discarding, fails_at, mlhs_ok) = (3, true, usize::MAX, false);
             continue;
         }
@@ -1203,46 +1585,87 @@ fn simulate(
             && (matches!(top.name, "kDEF" | "kCLASS" | "kMODULE" | "kSCLASS" | "kBEGIN")
                 || (top.name == "kDO" && target >= 2.5));
         let misplaced = w.owner.get(&t.start).is_some_and(|&o| o != top.key);
-        if misplaced && clause_fits && t.name == "kELSE" && target >= 2.6 {
+        // ...as does an `else` whose `rescue` recovery discarded.
+        let lost = t.name == "kELSE" && !misplaced && lost_rescue.contains(&top.key);
+        if ((misplaced && clause_fits) || lost) && t.name == "kELSE" && target >= 2.6 {
             out.push((t.start, t.end, "else without rescue is useless".to_string()));
+            if lost {
+                useless_else.insert(top.key);
+            }
         }
         let error = (!resumed && w.violations.get(&t.start).is_some_and(|&ctx| ctx >= resume))
-            || t.start >= fails_at
+            || i >= fail_index(fails_at)
             || (is_closer(t.name) && t.name != top.closer)
             || (misplaced && !clause_fits)
             || w.forwarding.get(&t.start).is_some_and(|kw| !stack.iter().any(|f| f.key == *kw))
-            || (t.name == "$end" && stack.len() > 1);
+            || (t.name == "$end" && (stack.len() > 1 || wants_operand(prev)))
+            || kdo_block
+            || t.name == "tLABEL_NL"
+            || (t.name == "kTHEN" && dangling_then)
+            // A label cannot start a multiple-assignment item.
+            || (t.name == "tLABEL" && mlhs_comma.is_some_and(|c| c + 1 == i))
+            || (t.name == "tCOMMA" && stack.len() == stmt_depth && mlhs_ok && call_with_args(&item));
         // A semantic error's yyerror fires while reducing, with the next token as lookahead.
         let mut yyerror = false;
         while next_action < actions.len() && actions[next_action] <= t.start {
             next_action += 1;
             yyerror = true;
         }
+        if pending_yy.is_some_and(|o| o <= t.start) {
+            pending_yy = None;
+            yyerror = true;
+        }
         if error || yyerror {
+            if t.name == "kTHEN" {
+                dangling_then = false;
+            }
             if status == 0 && error {
-                let name = if w.do_block.contains(&t.start) { "kDO_BLOCK" } else { t.name };
+                let name = match t.name {
+                    _ if w.do_block.contains(&t.start) || kdo_block => "kDO_BLOCK",
+                    "tLABEL_NL" => "tNL",
+                    n => n,
+                };
                 out.push((t.start, t.end, format!("unexpected token {name}")));
+            }
+            let top = stack.last().unwrap();
+            if error
+                && top.name == "kDEF"
+                && prev != "kDEF"
+                && w.term_headers.contains(&top.key)
+                && top.body.is_none_or(|b| t.start < b)
+            {
+                in_kwarg = true;
             }
             // After a complete statement LALR default reductions have already reduced the enclosing
             // body: from 2.7 at the top level that is the whole program and racc gives up; from 2.4
             // a block's body reduces with its parameters, leaving no state to shift `error` in it.
             let complete = prev.is_empty() || matches!(prev, "tNL" | "tSEMI") || ends_expr(prev);
-            if target >= 2.7 && stack.len() == 1 && complete {
+            if target >= 2.7 && stack.len() == 1 && complete && error {
+                out.push(gave_up(t.start));
                 break;
             }
             status = 3;
             let unbegun = |f: &Frame| f.body.is_none_or(|b| t.start < b);
             // The statement before the error is the body's own (no construct opened since).
             let direct = !unbegun(stack.last().unwrap());
+            // Right at the start of the body, it reduces as empty.
+            let empty_body = stack.last().unwrap().body == Some(prev_end);
             while stack.len() > 1 && unbegun(stack.last().unwrap()) {
                 stack.pop();
             }
-            if complete && direct && target >= 2.4 && matches!(stack.last().unwrap().name, "kDO" | "tLCURLY") {
+            if (complete || empty_body)
+                && direct
+                && target >= 2.4
+                && matches!(stack.last().unwrap().name, "kDO" | "tLCURLY")
+            {
+                // The block body's reduction runs its action, which pops cmdarg.
                 stack.pop();
+                cmdarg.pop();
                 while stack.len() > 1 && unbegun(stack.last().unwrap()) {
                     stack.pop();
                 }
             }
+            regions.retain(|r| r.1 < stack.len());
             // The failing token is retried in the `error . stmt` state.
             if t.name == "$end" {
                 break;
@@ -1253,12 +1676,15 @@ fn simulate(
                 continue;
             }
             resume = t.start;
-            fails_at = first_failure(&stack, resume);
+            (fails_at, bad_returns) = first_failure(&stack, resume);
             (stmt_depth, mlhs_ok) = (stack.len(), true);
             item.clear();
         }
         if t.name == "tCOMMA" && stack.len() == stmt_depth && mlhs_ok {
             mlhs_ok = is_chain(&item);
+            if mlhs_ok {
+                mlhs_comma = Some(i);
+            }
             item.clear();
         } else if stack.len() == stmt_depth || (is_closer(t.name) && stack.len() == stmt_depth + 1) {
             item.push(*t);
@@ -1270,12 +1696,26 @@ fn simulate(
             while stack.len() > 1 && stack.last().unwrap().body.is_none_or(|b| t.start < b) {
                 stack.pop();
             }
+            if at_body_start(&stack, s) {
+                stack.pop();
+            }
+            regions.retain(|r| r.1 < stack.len());
+            (status, discarding, fails_at) = (3, true, usize::MAX);
+            continue;
+        }
+        // The body with a useless `else` reduces at its `end`: the builder's yyerror, and racc
+        // recovers inside the construct, retrying (and so discarding) the `end`.
+        if t.name == "kEND" && useless_else.remove(&stack.last().unwrap().key) {
+            regions.retain(|r| r.1 < stack.len());
             (status, discarding, fails_at) = (3, true, usize::MAX);
             continue;
         }
         if is_closer(t.name) {
             if stack.len() > 1 {
                 let f = stack.pop().unwrap();
+                if action_frame(f.name) && !(matches!(f.name, "kCLASS" | "kMODULE") && in_def) {
+                    cmdarg.pop();
+                }
                 match f.name {
                     "kDEF" | "kSCLASS" => in_def = f.in_def,
                     // A def popped by recovery never restores the parser's in_def flag. The
@@ -1286,8 +1726,13 @@ fn simulate(
                         out.push((f.key, f.key + len, format!("{what} definition in method body")));
                         let first = toks.iter().find(|t| t.name != "tNL").is_some_and(|t| t.start == f.key);
                         if target >= 2.7 && stack.len() == 1 && first {
+                            out.push(gave_up(t.start));
                             break;
                         }
+                        if at_body_start(&stack, f.key) {
+                            stack.pop();
+                        }
+                        regions.retain(|r| r.1 < stack.len());
                         (status, discarding, fails_at, prev) = (3, true, usize::MAX, t.name);
                         continue;
                     }
@@ -1298,6 +1743,9 @@ fn simulate(
             let sclass = t.name == "kCLASS" && toks.get(i + 1).is_some_and(|n| n.name == "tLSHFT");
             let name = if sclass { "kSCLASS" } else { t.name };
             stack.push(Frame { name, key: t.start, closer, body: w.body.get(&t.start).copied(), in_def });
+            if action_frame(name) {
+                cmdarg.push(false);
+            }
             match name {
                 "kDEF" => in_def = true,
                 "kSCLASS" => in_def = false,
@@ -1309,6 +1757,10 @@ fn simulate(
         }
         status = status.saturating_sub(1);
         prev = t.name;
+        prev_end = t.end;
+        if matches!(t.name, "tNL" | "tSEMI" | "kTHEN") {
+            dangling_then = false;
+        }
         if matches!(t.name, "tNL" | "tSEMI") {
             (stmt_depth, mlhs_ok) = (stack.len(), true);
             item.clear();

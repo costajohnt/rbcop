@@ -1,0 +1,24 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+circular.rb:1:10: F: Lint/Syntax: circular argument reference a (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+circular.rb:2:8: F: Lint/Syntax: circular argument reference a (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+circular.rb:3:8: F: Lint/Syntax: circular argument reference a (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+circular.rb:6:10: F: Lint/Syntax: circular argument reference b (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+class_in_def.rb:1:1: F: Lint/Syntax: class definition in method body (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+class_in_def.rb:3:5: F: Lint/Syntax: class definition in method body (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+class_in_def.rb:8:23: F: Lint/Syntax: unexpected token tEQL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+cmdarg.rb:2:52: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+cmdarg.rb:4:15: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+cmdarg.rb:5:9: F: Lint/Syntax: unexpected token tIDENTIFIER (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+heredoc.rb:6:62: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+in_kwarg.rb:2:41: F: Lint/Syntax: unexpected token tEQL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+in_kwarg.rb:7:23: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+in_kwarg.rb:8:43: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+misc.rb:1:32: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+misc.rb:1:57: F: Lint/Syntax: unexpected token tLABEL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+names.rb:16:12: F: Lint/Syntax: unexpected token tEQL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+names.rb:18:12: F: Lint/Syntax: unexpected token tEQL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+names.rb:2:3: F: Lint/Syntax: class definition in method body (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+valid.rb:1:13: C: Style/GlobalVars: Do not introduce global variables.
+valid.rb:1:13: C: [Correctable] Style/VariableInterpolation: Replace interpolated variable `$-1` with expression `#{$-1}`.
+valid.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+valid.rb:2:18: W: [Correctable] Lint/AmbiguousOperator: Ambiguous block operator. Parenthesize the method arguments if it's surely a block operator, or add a whitespace to the right of the `&` if it should be a binary AND.

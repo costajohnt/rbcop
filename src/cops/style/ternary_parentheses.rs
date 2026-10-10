@@ -114,12 +114,9 @@ impl Cop for TernaryParentheses {
         }
         let parens = paren_children(&cond);
         if let Some(first) = parens.as_ref().and_then(|c| c.first()) {
-            let pm = if cx.config.target_ruby >= 3.0 {
-                first.as_match_predicate_node().is_some()
-            } else {
-                first.as_match_required_node().is_some()
-            };
-            if pm {
+            // `match_pattern_p` from 3.0, `match_pattern` below: both are Prism's one-line `in`
+            // (`=>` is 3.0+ syntax).
+            if first.as_match_predicate_node().is_some() {
                 return;
             }
         }
