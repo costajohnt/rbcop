@@ -216,6 +216,19 @@ line_continuation_crlf.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless 
 line_continuation_crlf.rb:3:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
 line_continuation_crlf.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `b`.
 line_continuation_crlf.rb:3:6: C: [Correctable] Layout/LineContinuationSpacing: Use one space in front of backslash.
+line_continuation_leading_space_crlf.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+line_continuation_leading_space_crlf.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+line_continuation_leading_space_crlf.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+line_continuation_leading_space_crlf.rb:2:1: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
+line_continuation_leading_space_crlf.rb:2:2: C: [Correctable] Layout/LineContinuationLeadingSpace: Move leading spaces to the end of the previous line.
+line_continuation_leading_space_crlf.rb:3:1: C: Layout/EndOfLine: Carriage return character detected.
+line_continuation_leading_space_crlf.rb:3:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+line_continuation_leading_space_crlf.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+line_continuation_leading_space_crlf.rb:4:1: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
+line_continuation_leading_space_crlf.rb:5:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+line_continuation_leading_space_crlf.rb:5:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `z`.
+line_continuation_leading_space_crlf.rb:6:1: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
+line_continuation_leading_space_crlf.rb:6:2: C: [Correctable] Layout/LineContinuationLeadingSpace: Move leading spaces to the end of the previous line.
 line_length_tabs.rb:1:117: C: Layout/LineLength: Line is too long. [124/120]
 line_length_tabs.rb:1:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
 line_length_tabs.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
