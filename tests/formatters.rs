@@ -1,8 +1,10 @@
 //! Formatter and CLI goldens: rbcop's stdout and exit status must equal RuboCop's, recorded by
 //! scripts/formatters.sh from tests/formatters/cases.txt into tests/formatters/expected/.
 
+mod common;
+
 use std::path::Path;
-use std::process::{Command, Stdio};
+use std::process::Stdio;
 
 /// Same substitutions as normalise() in scripts/formatters.sh.
 fn normalise(s: &str, root: &str) -> String {
@@ -45,14 +47,12 @@ fn formatters_match_rubocop() {
             cwd = work.canonicalize().unwrap();
         }
         // `sh -c` so the arguments split and quote exactly as in the recording script.
-        let out = Command::new("sh")
+        let out = common::command("sh")
             .arg("-c")
             .arg(format!("\"$RBCOP\" --cache false --force-default-config --only {cops} {args}"))
             .env("RBCOP", env!("CARGO_BIN_EXE_rbcop"))
             .env("RUBY_PROGRESS_BAR_LENGTH", "80")
             .env("PWD", &cwd)
-            .env_remove("RUBOCOP_OPTS")
-            .env_remove("CLICOLOR_FORCE")
             .current_dir(&cwd)
             .stdin(stdin)
             .output()

@@ -1,8 +1,9 @@
 //! A trailing comma (`a, = x`, `|a, b,|`) is a Prism ImplicitRestNode but no parser node, so cops
 //! must see `|x,|` as `(args (arg :x))` and `a, b, = x` as an mlhs ending at `b`.
 
+mod common;
+
 use std::fs;
-use std::process::Command;
 
 #[test]
 fn trailing_comma_is_no_parser_argument() {
@@ -12,7 +13,7 @@ fn trailing_comma_is_no_parser_argument() {
     fs::write(dir.join("Gemfile"), "").unwrap();
     let src = "arr.sort_by { |x,| x }\nhash.each { |k, v,| p v }\na, b, = arr.each do |x|\n  x\n  end\n";
     fs::write(dir.join("t.rb"), src).unwrap();
-    let out = Command::new(env!("CARGO_BIN_EXE_rbcop"))
+    let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
         .args([
             "--force-default-config",
             "--only",

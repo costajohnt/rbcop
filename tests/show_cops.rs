@@ -1,8 +1,9 @@
 //! `--show-cops` must print exactly what RuboCop prints (tests/show_cops/expected, recorded by
 //! scripts/show-cops.sh in tests/show_cops/project).
 
+mod common;
+
 use std::path::Path;
-use std::process::Command;
 
 /// Keep in sync with scripts/show-cops.sh.
 const CASES: &[(&str, &[&str])] = &[
@@ -24,11 +25,10 @@ fn show_cops_matches_rubocop() {
     let project = dir.join("project");
     let mut failures = Vec::new();
     for (name, args) in CASES {
-        let out = Command::new(env!("CARGO_BIN_EXE_rbcop"))
+        let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
             .args(*args)
             .current_dir(&project)
             .env("PWD", &project)
-            .env_remove("RUBOCOP_OPTS")
             .output()
             .unwrap();
         let actual = String::from_utf8(out.stdout).unwrap().replace(&project.display().to_string(), "<project>");

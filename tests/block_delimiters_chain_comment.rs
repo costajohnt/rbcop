@@ -2,8 +2,9 @@
 //! Range#join takes min begin / max end, so the pre-comment range runs from the comment to the chain
 //! end (this used to panic on a reversed slice). Expected output is RuboCop 1.91.0's.
 
+mod common;
+
 use std::fs;
-use std::process::Command;
 
 #[test]
 fn comment_before_chain_end_moves_above_block() {
@@ -12,7 +13,7 @@ fn comment_before_chain_end_moves_above_block() {
     fs::create_dir_all(&dir).unwrap();
     fs::write(dir.join("Gemfile"), "").unwrap();
     fs::write(dir.join("t.rb"), "expect {\n  foo }.not_to( # does not log\n  bar\n)\n").unwrap();
-    let out = Command::new(env!("CARGO_BIN_EXE_rbcop"))
+    let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
         .args(["-A", "--force-default-config", "--only", "Style/BlockDelimiters", "-f", "emacs", "t.rb"])
         .current_dir(&dir)
         .output()
