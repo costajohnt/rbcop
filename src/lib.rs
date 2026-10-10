@@ -6,6 +6,7 @@ pub mod cop;
 pub mod cops;
 pub mod directives;
 pub mod formatter;
+pub mod helpers;
 pub mod node_kind;
 pub mod prelude;
 pub mod runner;

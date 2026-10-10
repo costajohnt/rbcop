@@ -1,0 +1,7 @@
+# Every cop on, default settings otherwise. Used for oracle runs (scripts/oracle.sh) so each
+# cop can be compared with RuboCop without a dedicated RuboCop run. Paths in this file resolve
+# against the current directory (the file name does not start with .rubocop).
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false

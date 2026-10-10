@@ -33,6 +33,23 @@ fn main() {
         out.push_str(&format!("    crate::cop::Registered {{ name: {m}::NAME, cop: &{m}::COP }},\n"));
     }
     out.push_str("];\n");
-    let dest = Path::new(&std::env::var("OUT_DIR").unwrap()).join("cops.rs");
-    fs::write(dest, out).unwrap();
+    let out_dir = std::env::var("OUT_DIR").unwrap();
+    fs::write(Path::new(&out_dir).join("cops.rs"), out).unwrap();
+
+    // Shared helper modules: every src/helpers/*.rs except mod.rs.
+    println!("cargo:rerun-if-changed=src/helpers");
+    let mut helpers: Vec<_> = fs::read_dir("src/helpers")
+        .unwrap()
+        .flatten()
+        .map(|e| e.path())
+        .filter(|p| p.extension().is_some_and(|x| x == "rs") && p.file_stem().is_some_and(|s| s != "mod"))
+        .collect();
+    helpers.sort();
+    let mut h = String::new();
+    for p in helpers {
+        let stem = p.file_stem().unwrap().to_string_lossy().into_owned();
+        let abs = fs::canonicalize(&p).unwrap();
+        h.push_str(&format!("#[path = {:?}]\npub mod {stem};\n", abs.display().to_string()));
+    }
+    fs::write(Path::new(&out_dir).join("helpers.rs"), h).unwrap();
 }

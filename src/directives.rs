@@ -73,16 +73,20 @@ pub fn opted_in(src: &Source) -> Vec<&'static str> {
             out.extend(expand(d.cops.as_deref().unwrap()));
         }
     }
+    out.sort_unstable();
+    out.dedup();
     out
 }
 
 /// (cop, first line, last line) spans where cops are switched off.
-pub fn disabled_spans(src: &Source) -> Vec<(&'static str, usize, usize)> {
+/// `config_disabled` lists cops switched off in config; they start disabled (CommentConfig injects a
+/// `# rubocop:disable` before line 1), so a `# rubocop:enable` only turns them on from that line.
+pub fn disabled_spans(src: &Source, config_disabled: &[&'static str]) -> Vec<(&'static str, usize, usize)> {
     let mut spans = Vec::new();
     if !src.text.contains("rubocop") {
         return spans;
     }
-    let mut open: Vec<(&'static str, usize)> = Vec::new();
+    let mut open: Vec<(&'static str, usize)> = config_disabled.iter().map(|&c| (c, 0)).collect();
     let mut saved: Vec<Vec<(&'static str, usize)>> = Vec::new();
     for c in &src.comments {
         let comment = src.slice(c.start, c.end);

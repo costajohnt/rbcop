@@ -129,6 +129,12 @@ pub trait Cop: Send + Sync {
     fn correctable(&self) -> bool {
         false
     }
+
+    /// `minimum_target_ruby_version` / `maximum_target_ruby_version`: the cop only runs when the
+    /// target Ruby (TargetRubyVersion) is within this inclusive range.
+    fn ruby_range(&self) -> (f64, f64) {
+        (0.0, f64::MAX)
+    }
 }
 
 /// A registered cop: qualified name plus implementation. The list lives in `crate::cops::ALL`.

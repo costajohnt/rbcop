@@ -91,7 +91,9 @@ fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dy
         .filter_map(|r| {
             let c = cfg.cop(r.name);
             let on = c.enabled || opted_in.contains(&r.name);
-            (on && cfg.relevant(c, path)).then_some(Active { name: r.name, cop: r.cop, cfg: c })
+            let (min, max) = r.cop.ruby_range();
+            let ruby_ok = min <= cfg.target_ruby && cfg.target_ruby <= max;
+            (on && ruby_ok && cfg.relevant(c, path)).then_some(Active { name: r.name, cop: r.cop, cfg: c })
         })
         .collect();
 
@@ -137,7 +139,8 @@ fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dy
         a.cop.on_file(&mut cx);
     }
 
-    let disabled = directives::disabled_spans(&src);
+    let config_disabled: Vec<&'static str> = opted_in.iter().copied().filter(|c| !cfg.cop(c).enabled).collect();
+    let disabled = directives::disabled_spans(&src, &config_disabled);
     dedup(&mut out);
     out.retain(|o| !directives::is_disabled(&disabled, o.cop, src.line_of(o.start)));
     for o in out.iter_mut() {
