@@ -267,6 +267,12 @@ fn analyze(
                     circular.push((s, end));
                     return None;
                 }
+                if e.type_name() == "regexp_parse_error"
+                    && let Some(t) = crate::legacy_syntax::invalid_regexp(e.message(), s, &tokens, text)
+                {
+                    actions.push(t.1);
+                    return Some(t);
+                }
                 let kind = crate::syntax::parser_gem_kind(e.type_name());
                 let t = crate::syntax::translate(kind, e.message(), s, end, text);
                 actions.push(t.1);

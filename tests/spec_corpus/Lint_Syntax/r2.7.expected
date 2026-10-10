@@ -1,10 +1,12 @@
-==> offenses exit=1 336 <==
+==> offenses exit=1 475 <==
 000.rb:1:1: F: Lint/Syntax: unexpected token $end (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 001.rb:3:2: F: Lint/Syntax: unexpected token $end (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+002.rb:2:11: F: Lint/Syntax: unexpected token $end (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 003.rb:1:1: F: Lint/Syntax: Invalid byte sequence in utf-8.
 
-==> autocorrect exit=1 336 <==
+==> autocorrect exit=1 475 <==
 000.rb:1:1: F: Lint/Syntax: unexpected token $end (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 001.rb:3:2: F: Lint/Syntax: unexpected token $end (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+002.rb:2:11: F: Lint/Syntax: unexpected token $end (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 003.rb:1:1: F: Lint/Syntax: Invalid byte sequence in utf-8.
 

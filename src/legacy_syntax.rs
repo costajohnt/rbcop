@@ -68,6 +68,18 @@ pub fn semantic_location(kind: &str, start: usize, end: usize, tokens: &[Token],
     (start, end)
 }
 
+/// Builders::Default#static_regexp: the parser gem compiles a literal regexp with
+/// `Regexp.new(source, EXTENDED if /x)` and reports the RegexpError (`empty char-class: /[]/`) on
+/// the regexp. Prism's regexp_parse_error (at `at`) carries Onigmo's message; the source is the
+/// literal's content with line continuations removed.
+pub fn invalid_regexp(message: &str, at: usize, tokens: &[Token], text: &str) -> Option<(usize, usize, String)> {
+    let i = tokens.iter().rposition(|t| t.kind == "REGEXP_BEGIN" && t.start <= at)?;
+    let close = tokens[i..].iter().find(|t| t.kind == "REGEXP_END")?;
+    let source = text.get(tokens[i].end..close.start)?.replace("\\\n", "");
+    let extended = text.get(close.start..close.end)?.get(1..)?.contains('x');
+    Some((tokens[i].start, close.end, format!("{message}: /{source}/{}", if extended { "x" } else { "" })))
+}
+
 /// The offset of the token an LALR parser fails on for a Prism syntax error: a write target
 /// without `=` fails at the token after it, an unwritable expression at its `=`.
 pub fn failure_offset(kind: &str, start: usize, end: usize, tokens: &[Token]) -> usize {
@@ -392,7 +404,10 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
         // parser gem lexes tNL there (unless the next line continues with a leading `.`/`&.`).
         if t.kind == "COMMENT" && text[t.start..t.end].ends_with('\n') && state & NEWLINE_IGNORED == 0 {
             let next = tokens[i..].iter().find(|n| n.kind != "COMMENT").map_or("", |n| n.kind);
-            if !matches!(next, "NEWLINE" | "IGNORED_NEWLINE" | "DOT" | "AMPERSAND_DOT") {
+            // Blank lines up to the end of the file come out as IGNORED_NEWLINE tokens; the
+            // comment's newline is still significant (`(a, # a\nb) # b\n\n`).
+            let blank_to_eof = tokens[i..].iter().all(|n| matches!(n.kind, "COMMENT" | "IGNORED_NEWLINE" | "EOF"));
+            if blank_to_eof || !matches!(next, "NEWLINE" | "IGNORED_NEWLINE" | "DOT" | "AMPERSAND_DOT") {
                 out.push(Tok { name: "tNL", start: t.end - 1, end: t.end, cmd_do: false });
                 state = EXPR_BEG;
             }
