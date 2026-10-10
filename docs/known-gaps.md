@@ -46,6 +46,15 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   `helpers::reparsed_equivalence`. Layout/EmptyLinesAfterModuleInclusion copies the blank-line and
   enable-directive closures of EmptyLinesAroundAttributeAccessor; share them.
   `helpers::statement_modifier` copies Layout/LineLength's URI regex and validator; share them.
+  Private copies to switch to helpers: AllowedReceivers in style/hash_each_methods
+  (`helpers::allowed_receivers`); `float_to_s` in lint/literal_in_interpolation
+  (`ruby_string::float_to_s`); add_parentheses logic in style/method_def_parentheses
+  (`add_parentheses::ParenFix::Params`); `value_used?` in style/alias and style/block_delimiters
+  (`helpers::value_used`); StructInheritance's DefinesConstants visitor copied in
+  style/data_inheritance; the runner's `code_lines`/`StatementBounds` duplicated in
+  `helpers::comment_config`.
+- Style/DirectiveScope treats only ported cops as disabled by default config; an `enable X` ...
+  `disable X` pair for an unported, default-disabled cop can differ (not hit by the gates).
 - One spec snippet (`naming/method_name/050.rb`, a `%{}` template) gets a duplicated
   "unexpected write target" syntax error location.
 - Lint/RedundantCopDisableDirective, Lint/RedundantCopEnableDirective, Lint/MissingCopEnableDirective
