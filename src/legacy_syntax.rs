@@ -518,6 +518,9 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
     out
 }
 
+/// (start, end, message) of a diagnostic.
+pub type Diagnostic = (usize, usize, String);
+
 /// The parser gem's lexer on the first heredoc Prism reports unterminated (`heredoc_term`; `open`
 /// holds the error offsets): (offset from which Prism-based diagnostics are dropped, the
 /// diagnostics the lexer gives instead). Its heredoc rule needs a newline after the identifier, so
@@ -527,11 +530,7 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
 /// body runs to the end of the file: the fatal string_eof at the opener.
 // ponytail: a bare `<<EOS` after a value (`foo <<EOS` at the end of a file) is a valid shift in
 // the parser gem, which builds another AST; that case is left to the Prism-based diagnostics.
-pub fn unterminated_heredoc(
-    tokens: &[Token],
-    text: &str,
-    open: &[usize],
-) -> Option<(usize, Vec<(usize, usize, String)>)> {
+pub fn unterminated_heredoc(tokens: &[Token], text: &str, open: &[usize]) -> Option<(usize, Vec<Diagnostic>)> {
     let i =
         tokens.iter().position(|t| t.kind == "HEREDOC_START" && open.iter().any(|&o| o >= t.start && o <= t.end))?;
     let (s, e) = (tokens[i].start, tokens[i].end);
