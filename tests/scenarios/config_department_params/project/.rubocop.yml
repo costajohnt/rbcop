@@ -1,0 +1,5 @@
+Lint:
+  NewCops: enable
+  Foo: 1
+AllCops:
+  NewCops: enable

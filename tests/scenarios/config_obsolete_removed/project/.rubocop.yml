@@ -1,0 +1,14 @@
+Style/TrailingComma:
+  Enabled: false
+Lint/UselessComparison:
+  Enabled: false
+Style/BracesAroundHashParameters:
+  Enabled: false
+Layout/SpaceAfterControlKeyword:
+  Enabled: false
+Style/MethodMissing:
+  Enabled: false
+Lint/Eval:
+  Enabled: false
+AlignHash:
+  Enabled: false

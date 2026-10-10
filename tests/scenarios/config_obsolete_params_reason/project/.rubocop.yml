@@ -1,0 +1,4 @@
+Style/Encoding:
+  EnforcedStyle: never
+Style/IfUnlessModifier:
+  MaxLineLength: 80

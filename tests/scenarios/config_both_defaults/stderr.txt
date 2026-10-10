@@ -1,0 +1,1 @@
+Error: Cops cannot be both enabled by default and disabled by default
