@@ -252,7 +252,7 @@ impl Cop for SpaceAroundOperators {
                     return;
                 }
                 let Some(sel) = call.message_loc() else { return };
-                let operator = OPERATOR_METHODS.contains(&name)
+                let operator = helpers::node_types::is_operator_method(name)
                     && !IRREGULAR_METHODS.contains(&name);
                 let unary = node.location().start_offset() == sel.start_offset();
                 let dotted = call.call_operator_loc().is_some();

@@ -20,7 +20,7 @@ impl Cop for SpaceBeforeFirstArg {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         let Some(first) = send_args(&call).into_iter().next() else { return };
-        if OPERATOR_METHODS.contains(&method_name(&call))
+        if helpers::node_types::is_operator_method(method_name(&call))
             || call.equal_loc().is_some()
             || call.opening_loc().is_some_and(|l| l.as_slice() == b"(")
         {
