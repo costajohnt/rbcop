@@ -35,7 +35,7 @@ impl Cop for ConstantReassignment {
                 }) {
                     return;
                 }
-                let mut ns = ancestor_namespaces(&cx.ancestors);
+                let mut ns = ancestor_namespaces(cx.ancestors);
                 append_namespaces(&mut ns, &identifier(node));
                 let constant = ns.pop().unwrap_or_default();
                 let name = qualified(&ns, &constant);
@@ -44,7 +44,7 @@ impl Cop for ConstantReassignment {
             Node::CallNode { .. } => {
                 let call = node.as_call_node().unwrap();
                 let Some(constant) = remove_constant(&call) else { return };
-                let ns = ancestor_namespaces(&cx.ancestors);
+                let ns = ancestor_namespaces(cx.ancestors);
                 if ns.is_empty() {
                     return;
                 }
@@ -188,7 +188,7 @@ fn qualified(ns: &[String], constant: &str) -> String {
 fn on_casgn(cx: &mut Cx, node: &Node) {
     let Some(c) = casgn(node) else { return };
     let path = each_path(&c.ns);
-    if !path.iter().all(|s| *s != Seg::Other) || !simple_assignment(&cx.ancestors) {
+    if !path.iter().all(|s| *s != Seg::Other) || !simple_assignment(cx.ancestors) {
         return;
     }
     let name = if absolute(&c) {
@@ -198,7 +198,7 @@ fn on_casgn(cx: &mut Cx, node: &Node) {
         };
         format!("{ns}::{}", c.name)
     } else {
-        let mut ns = ancestor_namespaces(&cx.ancestors);
+        let mut ns = ancestor_namespaces(cx.ancestors);
         ns.extend(const_names(&path));
         qualified(&ns, &c.name)
     };
