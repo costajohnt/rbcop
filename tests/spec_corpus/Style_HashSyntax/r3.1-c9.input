@@ -1,4 +1,4 @@
-==> .rubocop.yml 231 <==
+==> .rubocop.yml 237 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -6,21 +6,12 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 3.1
 Style/HashSyntax:
-  EnforcedStyle: ruby19
+  EnforcedStyle: hash_rockets
   SupportedStyles:
   - ruby19
   - hash_rockets
-  EnforcedShorthandSyntax: either
+  EnforcedShorthandSyntax: always
 
-==> 000.rb 13 <==
-{foo:, bar:}
-
-==> 001.rb 27 <==
-{foo:, bar: bar, baz: qux}
-
-==> 002.rb 21 <==
-{foo: bar, bar: foo}
-
-==> 003.rb 21 <==
-{foo: foo, bar: bar}
+==> 000.rb 27 <==
+{:foo => foo, :bar => bar}
 

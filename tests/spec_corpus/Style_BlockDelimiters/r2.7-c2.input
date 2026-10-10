@@ -1,4 +1,4 @@
-==> .rubocop.yml 223 <==
+==> .rubocop.yml 220 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -6,7 +6,7 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 2.7
 Style/BlockDelimiters:
-  EnforcedStyle: braces_for_chaining
+  EnforcedStyle: line_count_based
   AllowedMethods:
   - proc
   AllowedPatterns:
@@ -90,45 +90,28 @@ each do
   _1
 end
 
-==> 017.rb 28 <==
-each do |x|
-end.map(&:to_s)
+==> 017.rb 17 <==
+block do |x| end
 
-==> 018.rb 25 <==
-foo = proc {
-  puts 42
+==> 018.rb 28 <==
+foo do rescue => e; bar end
+
+==> 019.rb 23 <==
+foo do rescue; bar end
+
+==> 020.rb 26 <==
+foo do bar ensure baz end
+
+==> 021.rb 26 <==
+foo do bar rescue baz end
+
+==> 022.rb 32 <==
+s.subspec 'Subspec' do |sp| end
+
+==> 023.rb 44 <==
+foo :bar, :baz, qux: lambda { |a|
+  bar a
 }
-
-==> 019.rb 32 <==
-foo = test_method {
-  puts 42
-}
-
-==> 020.rb 54 <==
-foo = [{foo: :bar}].find { |h|
-  h.key?(:foo)
-}[:foo]
-
-==> 021.rb 53 <==
-Hash[
-  {foo: :bar}.map do |k, v|
-    [k, v]
-  end
-]
-
-==> 022.rb 55 <==
-Hash[
-  {foo: :bar}.map { |k, v|
-    [k, v]
-  }.uniq
-]
-
-==> 023.rb 50 <==
-Hash[
-  {foo: :bar}.map { |k, v|
-    [k, v]
-  }
-]
 
 ==> 024.rb 13 <==
 each { |x|
@@ -138,29 +121,127 @@ each { |x|
 foo.bar = baz.map { |x|
 }
 
-==> 026.rb 27 <==
-each { |x|
-}.map(&:to_sym)
+==> 026.rb 42 <==
+blcck {
+}
+block { foo {
+} }.bar # comment
 
-==> 027.rb 40 <==
-foo.bar = baz.map { |x|
-}.map(&:to_sym)
+==> 027.rb 33 <==
+baz.map { |x|
+foo(x) } # comment
 
-==> 028.rb 34 <==
-arr&.each do |x|
-end&.map(&:to_s)
+==> 028.rb 20 <==
+[foo {
+}] # comment
 
-==> 029.rb 81 <==
-map do |a|
-  do_something
-rescue StandardError => e
-  puts 'oh no'
-end.join('-')
+==> 029.rb 52 <==
+baz.map { |x|
+foo(x) }.map { |x| x.quux } # comment
 
-==> 030.rb 62 <==
-map do |a|
-  do_something
-ensure
-  puts 'oh no'
-end.join('-')
+==> 030.rb 42 <==
+baz.map { |x|
+foo(x) }.qux.quux # comment
+
+==> 031.rb 27 <==
+baz.map { |x|
+} # comment
+
+
+==> 032.rb 264 <==
+scope :foo, lambda { |f|
+  where(condition: "value")
+}
+
+expect { something }.to raise_error(ErrorClass) { |error|
+  # ...
+}
+
+expect { x }.to change {
+  Counter.count
+}.from(0).to(1)
+
+cr.stubs client: mock {
+  expects(:email_disabled=).with(true)
+  expects :save
+}
+
+==> 033.rb 21 <==
+foo&.bar baz {
+  y
+}
+
+==> 034.rb 26 <==
+foo.bar baz {
+  y
+}&.quux
+
+==> 035.rb 25 <==
+foo = proc {
+  puts 42
+}
+
+==> 036.rb 32 <==
+foo = test_method {
+  puts 42
+}
+
+==> 037.rb 127 <==
+scope :foo, (lambda { |f|
+  where(condition: "value")
+})
+
+expect { something }.to(raise_error(ErrorClass) { |error|
+  # ...
+})
+
+==> 038.rb 83 <==
+h2[k2] = Hash.new { |h3,k3|
+  h3[k3] = 0
+}
+
+x = done? list.reject { |e|
+  e.nil?
+}
+
+==> 039.rb 41 <==
+each{ |x|
+  some_method
+  other_method
+}
+
+==> 040.rb 40 <==
+(0..3).each { |a| a.times {
+  puts a
+}}
+
+==> 041.rb 27 <==
+foo bar + baz {
+}.qux.quux
+
+==> 042.rb 30 <==
+foo x&.bar + baz {
+}.qux.quux
+
+==> 043.rb 29 <==
+foo bar + baz {
+}.qux + quux
+
+==> 044.rb 66 <==
+my_method :arg1, arg2: proc {
+  something
+}, arg3: :another_value
+
+==> 045.rb 49 <==
+my_method { |x|
+  x.foo } unless bar   # comment
+
+==> 046.rb 29 <==
+map do |x| x.y? rescue z end
+
+==> 047.rb 49 <==
+foo do next unless bar rescue StandardError; end
+
+==> 048.rb 50 <==
+foo do next unless bar; rescue StandardError; end
 

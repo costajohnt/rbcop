@@ -1,4 +1,4 @@
-==> .rubocop.yml 231 <==
+==> .rubocop.yml 242 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -10,7 +10,7 @@ Style/HashSyntax:
   SupportedStyles:
   - ruby19
   - hash_rockets
-  EnforcedShorthandSyntax: either
+  EnforcedShorthandSyntax: either_consistent
 
 ==> 000.rb 21 <==
 {foo: foo, bar: bar}

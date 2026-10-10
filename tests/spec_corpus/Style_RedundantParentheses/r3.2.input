@@ -6,9 +6,6 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 3.2
 
-==> 000.rb 8 <==
-(retry)
-
 ==> 001.rb 14 <==
 next (
   42

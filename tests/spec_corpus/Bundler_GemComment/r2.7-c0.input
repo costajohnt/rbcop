@@ -15,17 +15,19 @@ Bundler/GemComment:
 ==> 000/foo.rb 15 <==
 gem('rubocop')
 
-==> 001/Gemfile 38 <==
+==> 001/Gemfile 0 <==
+
+==> 002/Gemfile 38 <==
 # Style-guide enforcer.
 gem 'rubocop'
 
-==> 002/Gemfile 38 <==
+==> 003/Gemfile 38 <==
 gem 'rubocop' # Style-guide enforcer.
 
-==> 003/Gemfile 11 <==
+==> 004/Gemfile 11 <==
 gem 'rake'
 
-==> 004/Gemfile 88 <==
+==> 005/Gemfile 88 <==
 source 'http://rubygems.org'
 
 # Style-guide enforcer.
@@ -33,36 +35,36 @@ group :development do
   # …
 end
 
-==> 005/Gemfile 14 <==
+==> 006/Gemfile 14 <==
 gem 'rubocop'
 
-==> 006/Gemfile 34 <==
+==> 007/Gemfile 34 <==
 gem 'rubocop', group: development
 
-==> 007/Gemfile 25 <==
+==> 008/Gemfile 25 <==
 gem 'rubocop', '~> 12.0'
 
-==> 008/Gemfile 36 <==
+==> 009/Gemfile 36 <==
 gem 'rubocop', '~> 12.0', '>= 11.0'
 
-==> 009/Gemfile 41 <==
+==> 010/Gemfile 41 <==
 gem 'rubocop', '~> 12.0', required: true
 
-==> 010/Gemfile 25 <==
+==> 011/Gemfile 25 <==
 gem 'rubocop', '>= 12.0'
 
-==> 011/Gemfile 26 <==
+==> 012/Gemfile 26 <==
 gem 'rubocop', ' ~> 12.0'
 
-==> 012/Gemfile 22 <==
+==> 013/Gemfile 22 <==
 gem 'rubocop', '12.0'
 
-==> 013/Gemfile 24 <==
+==> 014/Gemfile 24 <==
 gem 'rubocop', '= 12.0'
 
-==> 014/Gemfile 45 <==
+==> 015/Gemfile 45 <==
 gem 'rubocop', github: 'some_user/some_fork'
 
-==> 015/Gemfile 30 <==
+==> 016/Gemfile 30 <==
 gem 'rubocop', key => 'value'
 

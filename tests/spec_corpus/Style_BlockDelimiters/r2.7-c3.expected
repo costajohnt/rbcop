@@ -1,51 +1,69 @@
-==> offenses exit=1 653 <==
-011.rb:1:6: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
-013.rb:1:6: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
-014.rb:1:21: C: Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
-015.rb:1:6: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
-016.rb:1:19: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
-022.rb:1:5: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
-023.rb:1:5: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
+==> offenses exit=1 1003 <==
+011.rb:1:6: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+014.rb:1:6: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+017.rb:1:6: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for multi-line chained blocks.
+023.rb:2:19: C: [Correctable] Style/BlockDelimiters: Prefer `do...end` for multi-line blocks without chaining.
+024.rb:1:6: C: [Correctable] Style/BlockDelimiters: Prefer `do...end` for multi-line blocks without chaining.
+025.rb:1:19: C: [Correctable] Style/BlockDelimiters: Prefer `do...end` for multi-line blocks without chaining.
+028.rb:1:11: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for multi-line chained blocks.
+029.rb:1:5: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for multi-line chained blocks.
+030.rb:1:5: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for multi-line chained blocks.
 
-==> autocorrect exit=1 641 <==
-011.rb:1:6: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
-013.rb:1:6: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
-014.rb:1:21: C: Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
-015.rb:1:6: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
-016.rb:1:19: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
-022.rb:1:5: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
-023.rb:1:5: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
+==> autocorrect exit=0 985 <==
+011.rb:1:6: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+014.rb:1:6: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+017.rb:1:6: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for multi-line chained blocks.
+023.rb:2:19: C: [Corrected] Style/BlockDelimiters: Prefer `do...end` for multi-line blocks without chaining.
+024.rb:1:6: C: [Corrected] Style/BlockDelimiters: Prefer `do...end` for multi-line blocks without chaining.
+025.rb:1:19: C: [Corrected] Style/BlockDelimiters: Prefer `do...end` for multi-line blocks without chaining.
+028.rb:1:11: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for multi-line chained blocks.
+029.rb:1:5: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for multi-line chained blocks.
+030.rb:1:5: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for multi-line chained blocks.
 
 ==> corrected/011.rb 13 <==
 each { |x| }
 
-==> corrected/013.rb 13 <==
-each { |x|
-}
+==> corrected/014.rb 12 <==
+each { _1 }
 
-==> corrected/015.rb 25 <==
+==> corrected/017.rb 25 <==
 each { |x|
 }.map(&:to_s)
 
-==> corrected/016.rb 26 <==
-foo.bar = baz.map { |x|
-}
+==> corrected/023.rb 53 <==
+Hash[
+  {foo: :bar}.map do |k, v|
+    [k, v]
+  end
+]
 
-==> corrected/022.rb 78 <==
+==> corrected/024.rb 16 <==
+each do |x|
+end
+
+==> corrected/025.rb 29 <==
+foo.bar = baz.map do |x|
+end
+
+==> corrected/028.rb 31 <==
+arr&.each { |x|
+}&.map(&:to_s)
+
+==> corrected/029.rb 88 <==
 map { |a|
   begin
 do_something
 rescue StandardError => e
   puts 'oh no'
 end
-}
+}.join('-')
 
-==> corrected/023.rb 59 <==
+==> corrected/030.rb 69 <==
 map { |a|
   begin
 do_something
 ensure
   puts 'oh no'
 end
-}
+}.join('-')
 

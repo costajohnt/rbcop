@@ -115,15 +115,17 @@ class Foo; end
 
 class Foo; end
 
-==> 021.rb 29 <==
+==> 021.rb 0 <==
+
+==> 022.rb 29 <==
 # frozen_string_literal: true
-==> 022.rb 35 <==
+==> 023.rb 35 <==
 # frozen_string_literal: true
 
   
 
 
-==> 023.rb 47 <==
+==> 024.rb 47 <==
 # frozen_string_literal: true
 
 

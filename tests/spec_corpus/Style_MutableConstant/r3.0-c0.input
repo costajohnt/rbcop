@@ -23,11 +23,129 @@ XXX = 1...99
 ==> 004.rb 15 <==
 XXX = (1...99)
 
-==> 005.rb 64 <==
+==> 005.rb 27 <==
+[1, 2, 3]
+CONST = [1, 2, 3]
+==> 006.rb 29 <==
+[1, 2, 3]
+CONST ||= [1, 2, 3]
+==> 007.rb 27 <==
+%w(a b c)
+CONST = %w(a b c)
+==> 008.rb 29 <==
+%w(a b c)
+CONST ||= %w(a b c)
+==> 009.rb 37 <==
+{ a: 1, b: 2 }
+CONST = { a: 1, b: 2 }
+==> 010.rb 39 <==
+{ a: 1, b: 2 }
+CONST ||= { a: 1, b: 2 }
+==> 011.rb 19 <==
+'str'
+CONST = 'str'
+==> 012.rb 21 <==
+'str'
+CONST ||= 'str'
+==> 013.rb 35 <==
+"top#{1 + 2}"
+CONST = "top#{1 + 2}"
+==> 014.rb 37 <==
+"top#{1 + 2}"
+CONST ||= "top#{1 + 2}"
+==> 015.rb 11 <==
+1
+CONST = 1
+==> 016.rb 13 <==
+1
+CONST ||= 1
+==> 017.rb 15 <==
+1.5
+CONST = 1.5
+==> 018.rb 17 <==
+1.5
+CONST ||= 1.5
+==> 019.rb 17 <==
+:sym
+CONST = :sym
+==> 020.rb 19 <==
+:sym
+CONST ||= :sym
+==> 021.rb 27 <==
+FOO + BAR
+CONST = FOO + BAR
+==> 022.rb 29 <==
+FOO + BAR
+CONST ||= FOO + BAR
+==> 023.rb 27 <==
+FOO - BAR
+CONST = FOO - BAR
+==> 024.rb 29 <==
+FOO - BAR
+CONST ||= FOO - BAR
+==> 025.rb 35 <==
+'foo' + 'bar'
+CONST = 'foo' + 'bar'
+==> 026.rb 37 <==
+'foo' + 'bar'
+CONST ||= 'foo' + 'bar'
+==> 027.rb 29 <==
+ENV['foo']
+CONST = ENV['foo']
+==> 028.rb 31 <==
+ENV['foo']
+CONST ||= ENV['foo']
+==> 029.rb 33 <==
+::ENV['foo']
+CONST = ::ENV['foo']
+==> 030.rb 35 <==
+::ENV['foo']
+CONST ||= ::ENV['foo']
+==> 031.rb 28 <==
+[1, 2, 3]
+CONST = [1, 2, 3]
+
+==> 032.rb 30 <==
+[1, 2, 3]
+CONST ||= [1, 2, 3]
+
+==> 033.rb 28 <==
+%w(a b c)
+CONST = %w(a b c)
+
+==> 034.rb 30 <==
+%w(a b c)
+CONST ||= %w(a b c)
+
+==> 035.rb 38 <==
+{ a: 1, b: 2 }
+CONST = { a: 1, b: 2 }
+
+==> 036.rb 40 <==
+{ a: 1, b: 2 }
+CONST ||= { a: 1, b: 2 }
+
+==> 037.rb 20 <==
+'str'
+CONST = 'str'
+
+==> 038.rb 22 <==
+'str'
+CONST ||= 'str'
+
+==> 039.rb 36 <==
+"top#{1 + 2}"
+CONST = "top#{1 + 2}"
+
+==> 040.rb 38 <==
+"top#{1 + 2}"
+CONST ||= "top#{1 + 2}"
+
+==> 041.rb 64 <==
 X = [1, 2, 3] # shareable_constant_value: literal
 Y = [4, 5, 6]
 
-==> 006.rb 163 <==
+==> 042.rb 163 <==
 # shareable_constant_value: literal
 X = [1, 2, 3]
 # shareable_constant_value: none
@@ -35,7 +153,35 @@ Y = [4, 5, 6]
 # shareable_constant_value: experimental_everything
 Z = [7, 8, 9]
 
-==> 007.rb 85 <==
+==> 043.rb 15 <==
+CONST = "#{a}"
+
+==> 044.rb 17 <==
+CONST ||= "#{a}"
+
+==> 045.rb 45 <==
+# frozen_string_literal: true
+CONST = "#{a}"
+
+==> 046.rb 47 <==
+# frozen_string_literal: true
+CONST ||= "#{a}"
+
+==> 047.rb 63 <==
+# frozen_string_literal: true
+CONST = <<~HERE
+  foo
+  bar
+HERE
+
+==> 048.rb 65 <==
+# frozen_string_literal: true
+CONST ||= <<~HERE
+  foo
+  bar
+HERE
+
+==> 049.rb 85 <==
 # frozen_string_literal: true
 
 CONST = <<~HERE
@@ -43,14 +189,22 @@ CONST = <<~HERE
   bar
 HERE
 
-==> 008.rb 59 <==
+==> 050.rb 59 <==
 # frozen_string_literal: true
 
 CONST = 'foo'         'bar'
 
-==> 009.rb 64 <==
+==> 051.rb 64 <==
 # frozen_string_literal: true
 
 CONST = "#{foo}" \
         'bar'
+
+==> 052.rb 46 <==
+# frozen_string_literal: false
+CONST = "#{a}"
+
+==> 053.rb 48 <==
+# frozen_string_literal: false
+CONST ||= "#{a}"
 

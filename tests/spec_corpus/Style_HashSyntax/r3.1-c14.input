@@ -1,4 +1,4 @@
-==> .rubocop.yml 157 <==
+==> .rubocop.yml 190 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -6,8 +6,9 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 3.1
 Style/HashSyntax:
-  EnforcedStyle: no_mixed_keys
+  EnforcedStyle: hash_rockets
+  EnforcedShorthandSyntax: always
 
-==> 000.rb 18 <==
-{:"t o" => 0, b:}
+==> 000.rb 8 <==
+f(a: a)
 

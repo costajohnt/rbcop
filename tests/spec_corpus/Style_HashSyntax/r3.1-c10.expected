@@ -1,49 +1,16 @@
-==> offenses exit=1 645 <==
-001.rb:1:13: C: [Correctable] Style/HashSyntax: Do not mix explicit and implicit hash values. Omit the hash value.
-002.rb:1:2: C: [Correctable] Style/HashSyntax: Do not mix explicit and implicit hash values. Include the hash value.
-005.rb:1:7: C: [Correctable] Style/HashSyntax: Omit the hash value.
-005.rb:1:17: C: [Correctable] Style/HashSyntax: Omit the hash value.
-006.rb:1:13: C: [Correctable] Style/HashSyntax: Omit the hash value.
-007.rb:1:17: C: [Correctable] Style/HashSyntax: Omit the hash value.
-008.rb:1:16: C: [Correctable] Style/HashSyntax: Omit the hash value.
-009.rb:1:16: C: [Correctable] Style/HashSyntax: Omit the hash value.
+==> offenses exit=1 213 <==
+000.rb:1:2: C: [Correctable] Style/HashSyntax: Include the hash value.
+000.rb:1:8: C: [Correctable] Style/HashSyntax: Include the hash value.
+001.rb:1:2: C: [Correctable] Style/HashSyntax: Include the hash value.
 
-==> autocorrect exit=0 629 <==
-001.rb:1:13: C: [Corrected] Style/HashSyntax: Do not mix explicit and implicit hash values. Omit the hash value.
-002.rb:1:2: C: [Corrected] Style/HashSyntax: Do not mix explicit and implicit hash values. Include the hash value.
-005.rb:1:7: C: [Corrected] Style/HashSyntax: Omit the hash value.
-005.rb:1:17: C: [Corrected] Style/HashSyntax: Omit the hash value.
-006.rb:1:13: C: [Corrected] Style/HashSyntax: Omit the hash value.
-007.rb:1:17: C: [Corrected] Style/HashSyntax: Omit the hash value.
-008.rb:1:16: C: [Corrected] Style/HashSyntax: Omit the hash value.
-009.rb:1:16: C: [Corrected] Style/HashSyntax: Omit the hash value.
+==> autocorrect exit=0 207 <==
+000.rb:1:2: C: [Corrected] Style/HashSyntax: Include the hash value.
+000.rb:1:8: C: [Corrected] Style/HashSyntax: Include the hash value.
+001.rb:1:2: C: [Corrected] Style/HashSyntax: Include the hash value.
 
-==> corrected/001.rb 13 <==
-{foo:, bar:}
+==> corrected/000.rb 21 <==
+{foo: foo, bar: bar}
 
-==> corrected/002.rb 21 <==
-{foo: foo, bar: baz}
-
-==> corrected/005.rb 13 <==
-{foo:, bar:}
-
-==> corrected/006.rb 23 <==
-if foo(bar:)
-  baz
-end
-
-==> corrected/007.rb 27 <==
-unless foo(bar:)
-  baz
-end
-
-==> corrected/008.rb 26 <==
-while foo(bar:)
-  baz
-end
-
-==> corrected/009.rb 26 <==
-until foo(bar:)
-  baz
-end
+==> corrected/001.rb 31 <==
+{foo: foo, bar: bar, baz: qux}
 

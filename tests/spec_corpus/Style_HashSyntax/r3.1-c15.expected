@@ -1,0 +1,11 @@
+==> offenses exit=1 145 <==
+000.rb:1:3: C: [Correctable] Style/HashSyntax: Use hash rockets syntax.
+000.rb:1:12: C: [Correctable] Style/HashSyntax: Use hash rockets syntax.
+
+==> autocorrect exit=0 141 <==
+000.rb:1:3: C: [Corrected] Style/HashSyntax: Use hash rockets syntax.
+000.rb:1:12: C: [Corrected] Style/HashSyntax: Use hash rockets syntax.
+
+==> corrected/000.rb 23 <==
+f(:a => :sym, :b => b)
+

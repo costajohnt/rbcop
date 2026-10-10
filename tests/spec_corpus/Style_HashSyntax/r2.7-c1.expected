@@ -1,26 +1,4 @@
-==> offenses exit=1 363 <==
-000.rb:1:7: C: [Correctable] Style/HashSyntax: Use hash rockets syntax.
-000.rb:1:13: C: [Correctable] Style/HashSyntax: Use hash rockets syntax.
-001.rb:1:15: C: [Correctable] Style/HashSyntax: Use hash rockets syntax.
-002.rb:1:9: C: [Correctable] Style/HashSyntax: Use hash rockets syntax.
-006.rb:1:16: C: [Correctable] Style/HashSyntax: Use hash rockets syntax.
+==> offenses exit=0 0 <==
 
-==> autocorrect exit=0 353 <==
-000.rb:1:7: C: [Corrected] Style/HashSyntax: Use hash rockets syntax.
-000.rb:1:13: C: [Corrected] Style/HashSyntax: Use hash rockets syntax.
-001.rb:1:15: C: [Corrected] Style/HashSyntax: Use hash rockets syntax.
-002.rb:1:9: C: [Corrected] Style/HashSyntax: Use hash rockets syntax.
-006.rb:1:16: C: [Corrected] Style/HashSyntax: Use hash rockets syntax.
-
-==> corrected/000.rb 24 <==
-x = { :a => 0, :b => 2}
-
-==> corrected/001.rb 24 <==
-x = { a => 0, :b => 1 }
-
-==> corrected/002.rb 17 <==
-func(3, :a => 0)
-
-==> corrected/006.rb 24 <==
-method(:puts).(:a => 0)
+==> autocorrect exit=0 0 <==
 

@@ -9,187 +9,191 @@ Style/FrozenStringLiteralComment:
   Enabled: true
   EnforcedStyle: always_true
 
-==> 000.rb 37 <==
+==> 000.rb 0 <==
+
+==> 001.rb 1 <==
+ 
+==> 002.rb 37 <==
 # frozen_string_literal: true
 puts 1
 
-==> 001.rb 38 <==
+==> 003.rb 38 <==
 # frozen_string_literal: false
 puts 1
 
-==> 002.rb 38 <==
+==> 004.rb 38 <==
 # frozen_string_literal: token
 puts 1
 
-==> 003.rb 7 <==
+==> 005.rb 7 <==
 puts 1
 
-==> 004.rb 8 <==
+==> 006.rb 8 <==
 
 puts 1
 
-==> 005.rb 39 <==
+==> 007.rb 39 <==
 # frozen_string_literal: false
 
 puts 1
 
-==> 006.rb 39 <==
+==> 008.rb 39 <==
 # frozen_string_literal: token
 
 puts 1
 
-==> 007.rb 27 <==
+==> 009.rb 27 <==
 #!/usr/bin/env ruby
 puts 1
 
-==> 008.rb 57 <==
+==> 010.rb 57 <==
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 puts 1
 
-==> 009.rb 58 <==
+==> 011.rb 58 <==
 #!/usr/bin/env ruby
 # frozen_string_literal: false
 puts 1
 
-==> 010.rb 58 <==
+==> 012.rb 58 <==
 #!/usr/bin/env ruby
 # frozen_string_literal: token
 puts 1
 
-==> 011.rb 25 <==
+==> 013.rb 25 <==
 # encoding: utf-8
 puts 1
 
-==> 012.rb 55 <==
-# encoding: utf-8
-# frozen_string_literal: true
-puts 1
-
-==> 013.rb 56 <==
-# encoding: utf-8
-# frozen_string_literal: false
-puts 1
-
-==> 014.rb 56 <==
-# encoding: utf-8
-# frozen_string_literal: token
-puts 1
-
-==> 015.rb 45 <==
-#!/usr/bin/env ruby
-# encoding: utf-8
-puts 1
-
-==> 016.rb 75 <==
-#!/usr/bin/env ruby
+==> 014.rb 55 <==
 # encoding: utf-8
 # frozen_string_literal: true
 puts 1
 
-==> 017.rb 76 <==
+==> 015.rb 56 <==
+# encoding: utf-8
+# frozen_string_literal: false
+puts 1
+
+==> 016.rb 56 <==
+# encoding: utf-8
+# frozen_string_literal: token
+puts 1
+
+==> 017.rb 45 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+puts 1
+
+==> 018.rb 75 <==
+#!/usr/bin/env ruby
+# encoding: utf-8
+# frozen_string_literal: true
+puts 1
+
+==> 019.rb 76 <==
 #!/usr/bin/env ruby
 # encoding: utf-8
 # frozen_string_literal: false
 puts 1
 
-==> 018.rb 77 <==
+==> 020.rb 77 <==
 #!/usr/bin/env ruby
 # encoding: utf-8
 # frozen_string_literal: tokens
 puts 1
 
-==> 019.rb 75 <==
+==> 021.rb 75 <==
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 # encoding: utf-8
 puts 1
 
-==> 020.rb 76 <==
+==> 022.rb 76 <==
 #!/usr/bin/env ruby
 # frozen_string_literal: false
 # encoding: utf-8
 puts 1
 
-==> 021.rb 77 <==
+==> 023.rb 77 <==
 #!/usr/bin/env ruby
 # frozen_string_literal: tokens
 # encoding: utf-8
 puts 1
 
-==> 022.rb 100 <==
+==> 024.rb 100 <==
 #!/usr/bin/env ruby
 # -*- encoding: UTF-8; frozen_string_literal: true -*-
 # encoding: utf-8
 puts 1
 
-==> 023.rb 39 <==
+==> 025.rb 39 <==
 # -*- frozen_string_literal: false -*-
 
-==> 024.rb 100 <==
+==> 026.rb 100 <==
 # -*- encoding: utf-8 -*-
 # -*- frozen_string_literal: false -*-
 # -*- warn_indent: true -*-
 puts 1
 
-==> 025.rb 46 <==
+==> 027.rb 46 <==
 #!/usr/bin/env ruby
 # encoding: utf-8
 
 puts 1
 
-==> 026.rb 76 <==
+==> 028.rb 76 <==
 #!/usr/bin/env ruby
 # encoding: utf-8
 # frozen_string_literal: true
 
 puts 1
 
-==> 027.rb 77 <==
+==> 029.rb 77 <==
 #!/usr/bin/env ruby
 # encoding: utf-8
 # frozen_string_literal: false
 
 puts 1
 
-==> 028.rb 78 <==
+==> 030.rb 78 <==
 #!/usr/bin/env ruby
 # encoding: utf-8
 # frozen_string_literal: tokens
 
 puts 1
 
-==> 029.rb 26 <==
+==> 031.rb 26 <==
 # encoding: utf-8
 
 puts 1
 
-==> 030.rb 56 <==
+==> 032.rb 56 <==
 # encoding: utf-8
 # frozen_string_literal: true
 
 puts 1
 
-==> 031.rb 57 <==
+==> 033.rb 57 <==
 # encoding: utf-8
 # frozen_string_literal: false
 
 puts 1
 
-==> 032.rb 58 <==
+==> 034.rb 58 <==
 # encoding: utf-8
 # frozen_string_literal: tokens
 
 puts 1
 
-==> 033.rb 20 <==
+==> 035.rb 20 <==
 #!/usr/bin/env ruby
 
-==> 034.rb 50 <==
+==> 036.rb 50 <==
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-==> 035.rb 103 <==
+==> 037.rb 103 <==
 #!/usr/bin/env ruby
 # encoding: utf-8
 #
@@ -197,7 +201,7 @@ puts 1
 # frozen_string_literal: true
 puts 1
 
-==> 036.rb 104 <==
+==> 038.rb 104 <==
 #!/usr/bin/env ruby
 # encoding: utf-8
 #
@@ -205,25 +209,25 @@ puts 1
 # frozen_string_literal: false
 puts 1
 
-==> 037.rb 56 <==
+==> 039.rb 56 <==
 # encoding: utf-8
 
 puts 1
 # frozen_string_literal: true
 
-==> 038.rb 51 <==
+==> 040.rb 51 <==
 #!/usr/bin/env ruby
 # frozen_string_literal: false
 
-==> 039.rb 52 <==
+==> 041.rb 52 <==
 #!/usr/bin/env ruby
 # frozen_string_literal: tokens
 
-==> 040.rb 38 <==
+==> 042.rb 38 <==
 # frozen_string_literal: FALSE
 puts 1
 
-==> 041.rb 38 <==
+==> 043.rb 38 <==
 # frozen_string_literal: falsE
 puts 1
 

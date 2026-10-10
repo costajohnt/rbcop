@@ -20,7 +20,9 @@ x.empty?
 ﻿
 puts 'foo'
 
-==> 004.rb 14 <==
+==> 004.rb 0 <==
+
+==> 005.rb 14 <==
 class Foo
 end
 

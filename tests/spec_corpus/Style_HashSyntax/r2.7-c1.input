@@ -1,4 +1,4 @@
-==> .rubocop.yml 243 <==
+==> .rubocop.yml 370 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -6,27 +6,18 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 2.7
 Style/HashSyntax:
-  EnforcedStyle: hash_rockets
+  EnforcedStyle: ruby19
   SupportedStyles:
   - ruby19
   - hash_rockets
+  EnforcedShorthandSyntax: always
+  SupportedShorthandSyntax:
+  - always
+  - never
   UseHashRocketsWithSymbolValues: false
+  PreferHashRocketsForNonAlnumEndingSymbols: true
 
-==> 000.rb 18 <==
-x = { a: 0, b: 2}
-
-==> 001.rb 21 <==
-x = { a => 0, b: 1 }
-
-==> 002.rb 14 <==
-func(3, a: 0)
-
-==> 003.rb 24 <==
-x = { :a => 0, :b => 1 }
-==> 004.rb 16 <==
-func(3, :a => 0)
-==> 005.rb 2 <==
-{}
-==> 006.rb 21 <==
-method(:puts).(a: 0)
-
+==> 000.rb 16 <==
+x = { :a? => 0 }
+==> 001.rb 16 <==
+x = { :a! => 0 }

@@ -11,24 +11,32 @@ Layout/TrailingEmptyLines:
 ==> 000.rb 6 <==
 x = 0
 
-==> 001.rb 16 <==
+==> 001.rb 0 <==
+
+==> 002.rb 16 <==
 x = 0
 
 __END__
 
 
-==> 002.rb 10 <==
+==> 003.rb 10 <==
 __END__
 
 
 
-==> 003.rb 9 <==
+==> 004.rb 9 <==
 x = 0
 
 
 
 
-==> 004.rb 148 <==
+==> 005.rb 4 <==
+
+
+
+
+
+==> 006.rb 148 <==
 puts 'testing rubocop when final new line is missing
                           after block comments'
 
@@ -38,11 +46,11 @@ second line
 third line
 =end
 
-==> 005.rb 3 <==
+==> 007.rb 3 <==
 %
 
 
-==> 006.rb 7 <==
+==> 008.rb 7 <==
 x = %
 
 

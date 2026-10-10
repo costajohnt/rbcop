@@ -8,36 +8,212 @@ AllCops:
 Style/MutableConstant:
   EnforcedStyle: literals
 
-==> 000.rb 24 <==
+==> 000.rb 18 <==
+CONST = [1, 2, 3]
+
+==> 001.rb 20 <==
+CONST ||= [1, 2, 3]
+
+==> 002.rb 18 <==
+CONST = %w(a b c)
+
+==> 003.rb 20 <==
+CONST ||= %w(a b c)
+
+==> 004.rb 23 <==
+CONST = { a: 1, b: 2 }
+
+==> 005.rb 25 <==
+CONST ||= { a: 1, b: 2 }
+
+==> 006.rb 14 <==
+CONST = 'str'
+
+==> 007.rb 16 <==
+CONST ||= 'str'
+
+==> 008.rb 22 <==
+CONST = "top#{1 + 2}"
+
+==> 009.rb 24 <==
+CONST ||= "top#{1 + 2}"
+
+==> 010.rb 9 <==
+CONST = 1
+==> 011.rb 11 <==
+CONST ||= 1
+==> 012.rb 11 <==
+CONST = 1.5
+==> 013.rb 13 <==
+CONST ||= 1.5
+==> 014.rb 12 <==
+CONST = :sym
+==> 015.rb 14 <==
+CONST ||= :sym
+==> 016.rb 17 <==
+CONST = FOO + BAR
+==> 017.rb 19 <==
+CONST ||= FOO + BAR
+==> 018.rb 17 <==
+CONST = FOO - BAR
+==> 019.rb 19 <==
+CONST ||= FOO - BAR
+==> 020.rb 21 <==
+CONST = 'foo' + 'bar'
+==> 021.rb 23 <==
+CONST ||= 'foo' + 'bar'
+==> 022.rb 18 <==
+CONST = ENV['foo']
+==> 023.rb 20 <==
+CONST ||= ENV['foo']
+==> 024.rb 20 <==
+CONST = ::ENV['foo']
+==> 025.rb 22 <==
+CONST ||= ::ENV['foo']
+==> 026.rb 24 <==
 TOP_TEST = Something.new
-==> 001.rb 13 <==
+==> 027.rb 13 <==
 FOO = *1..10
 
-==> 002.rb 15 <==
+==> 028.rb 15 <==
 FOO = *(1..10)
 
-==> 003.rb 15 <==
+==> 029.rb 15 <==
 XXX = YYY, ZZZ
 
-==> 004.rb 18 <==
+==> 030.rb 18 <==
 XXX = %w(YYY ZZZ)
 
-==> 005.rb 15 <==
+==> 031.rb 15 <==
 XXX = /regexp/
 
-==> 006.rb 12 <==
+==> 032.rb 12 <==
 XXX = 1..99
 
-==> 007.rb 14 <==
+==> 033.rb 14 <==
 XXX = (1..99)
 
-==> 008.rb 13 <==
+==> 034.rb 13 <==
 XXX = 1...99
 
-==> 009.rb 15 <==
+==> 035.rb 15 <==
 XXX = (1...99)
 
-==> 010.rb 85 <==
+==> 036.rb 28 <==
+[1, 2, 3]
+CONST = [1, 2, 3]
+
+==> 037.rb 30 <==
+[1, 2, 3]
+CONST ||= [1, 2, 3]
+
+==> 038.rb 28 <==
+%w(a b c)
+CONST = %w(a b c)
+
+==> 039.rb 30 <==
+%w(a b c)
+CONST ||= %w(a b c)
+
+==> 040.rb 38 <==
+{ a: 1, b: 2 }
+CONST = { a: 1, b: 2 }
+
+==> 041.rb 40 <==
+{ a: 1, b: 2 }
+CONST ||= { a: 1, b: 2 }
+
+==> 042.rb 20 <==
+'str'
+CONST = 'str'
+
+==> 043.rb 22 <==
+'str'
+CONST ||= 'str'
+
+==> 044.rb 36 <==
+"top#{1 + 2}"
+CONST = "top#{1 + 2}"
+
+==> 045.rb 38 <==
+"top#{1 + 2}"
+CONST ||= "top#{1 + 2}"
+
+==> 046.rb 11 <==
+1
+CONST = 1
+==> 047.rb 13 <==
+1
+CONST ||= 1
+==> 048.rb 15 <==
+1.5
+CONST = 1.5
+==> 049.rb 17 <==
+1.5
+CONST ||= 1.5
+==> 050.rb 17 <==
+:sym
+CONST = :sym
+==> 051.rb 19 <==
+:sym
+CONST ||= :sym
+==> 052.rb 27 <==
+FOO + BAR
+CONST = FOO + BAR
+==> 053.rb 29 <==
+FOO + BAR
+CONST ||= FOO + BAR
+==> 054.rb 27 <==
+FOO - BAR
+CONST = FOO - BAR
+==> 055.rb 29 <==
+FOO - BAR
+CONST ||= FOO - BAR
+==> 056.rb 35 <==
+'foo' + 'bar'
+CONST = 'foo' + 'bar'
+==> 057.rb 37 <==
+'foo' + 'bar'
+CONST ||= 'foo' + 'bar'
+==> 058.rb 29 <==
+ENV['foo']
+CONST = ENV['foo']
+==> 059.rb 31 <==
+ENV['foo']
+CONST ||= ENV['foo']
+==> 060.rb 33 <==
+::ENV['foo']
+CONST = ::ENV['foo']
+==> 061.rb 35 <==
+::ENV['foo']
+CONST ||= ::ENV['foo']
+==> 062.rb 15 <==
+CONST = "#{a}"
+
+==> 063.rb 17 <==
+CONST ||= "#{a}"
+
+==> 064.rb 44 <==
+# frozen_string_literal: true
+CONST = "#{a}"
+==> 065.rb 46 <==
+# frozen_string_literal: true
+CONST ||= "#{a}"
+==> 066.rb 63 <==
+# frozen_string_literal: true
+CONST = <<~HERE
+  foo
+  bar
+HERE
+
+==> 067.rb 65 <==
+# frozen_string_literal: true
+CONST ||= <<~HERE
+  foo
+  bar
+HERE
+
+==> 068.rb 85 <==
 # frozen_string_literal: true
 
 CONST = <<~HERE
@@ -45,14 +221,22 @@ CONST = <<~HERE
   bar
 HERE
 
-==> 011.rb 59 <==
+==> 069.rb 59 <==
 # frozen_string_literal: true
 
 CONST = 'foo'         'bar'
 
-==> 012.rb 30 <==
+==> 070.rb 46 <==
+# frozen_string_literal: false
+CONST = "#{a}"
+
+==> 071.rb 48 <==
+# frozen_string_literal: false
+CONST ||= "#{a}"
+
+==> 072.rb 30 <==
 CONST = [{ a: [], b: 'foo' }]
 
-==> 013.rb 27 <==
+==> 073.rb 27 <==
 CONST = [{ a: [] }].freeze
 

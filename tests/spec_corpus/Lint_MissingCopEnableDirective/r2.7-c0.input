@@ -1,4 +1,4 @@
-==> .rubocop.yml 217 <==
+==> .rubocop.yml 206 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -6,7 +6,7 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 2.7
 Lint/MissingCopEnableDirective:
-  MaxRangeSize: Float::INFINITY
+  MaxRangeSize: .inf
 Layout/SpaceAroundOperators:
   Enabled: true
 

@@ -1,91 +1,81 @@
 ==> offenses exit=1 3730 <==
-001.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-002.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-003.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
-004.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
-005.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-006.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-007.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
-009.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-010.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-011.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
-013.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-014.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-015.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
-017.rb:3:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-018.rb:3:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-020.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-021.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-023.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-024.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-025.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
-027.rb:3:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-028.rb:3:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-029.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
-031.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-032.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-033.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
-036.rb:5:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-037.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
-038.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-039.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-040.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-041.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+003.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+004.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+005.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
+006.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
+007.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+008.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+009.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
+011.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+012.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+013.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
+015.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+016.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+017.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
+019.rb:3:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+020.rb:3:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+022.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+023.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+025.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+026.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+027.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
+029.rb:3:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+030.rb:3:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+031.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
+033.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+034.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+035.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
+038.rb:5:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+039.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
+040.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+041.rb:2:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+042.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+043.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
 
 ==> autocorrect exit=0 3666 <==
-001.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-002.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-003.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
-004.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
-005.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-006.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-007.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
-009.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-010.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-011.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
-013.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-014.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-015.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
-017.rb:3:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-018.rb:3:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-020.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-021.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-023.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-024.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-025.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
-027.rb:3:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-028.rb:3:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-029.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
-031.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-032.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-033.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
-036.rb:5:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-037.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
-038.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-039.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-040.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-041.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
-
-==> corrected/001.rb 37 <==
-# frozen_string_literal: true
-puts 1
-
-==> corrected/002.rb 37 <==
-# frozen_string_literal: true
-puts 1
+003.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+004.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+005.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
+006.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
+007.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+008.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+009.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
+011.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+012.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+013.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
+015.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+016.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+017.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
+019.rb:3:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+020.rb:3:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+022.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+023.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+025.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+026.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+027.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
+029.rb:3:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+030.rb:3:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+031.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
+033.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+034.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+035.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
+038.rb:5:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+039.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing magic comment `# frozen_string_literal: true`.
+040.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+041.rb:2:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+042.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+043.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
 
 ==> corrected/003.rb 37 <==
 # frozen_string_literal: true
 puts 1
 
-==> corrected/004.rb 38 <==
+==> corrected/004.rb 37 <==
 # frozen_string_literal: true
-
 puts 1
 
-==> corrected/005.rb 38 <==
+==> corrected/005.rb 37 <==
 # frozen_string_literal: true
-
 puts 1
 
 ==> corrected/006.rb 38 <==
@@ -93,9 +83,14 @@ puts 1
 
 puts 1
 
-==> corrected/007.rb 57 <==
-#!/usr/bin/env ruby
+==> corrected/007.rb 38 <==
 # frozen_string_literal: true
+
+puts 1
+
+==> corrected/008.rb 38 <==
+# frozen_string_literal: true
+
 puts 1
 
 ==> corrected/009.rb 57 <==
@@ -103,13 +98,13 @@ puts 1
 # frozen_string_literal: true
 puts 1
 
-==> corrected/010.rb 57 <==
+==> corrected/011.rb 57 <==
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 puts 1
 
-==> corrected/011.rb 55 <==
-# encoding: utf-8
+==> corrected/012.rb 57 <==
+#!/usr/bin/env ruby
 # frozen_string_literal: true
 puts 1
 
@@ -118,13 +113,12 @@ puts 1
 # frozen_string_literal: true
 puts 1
 
-==> corrected/014.rb 55 <==
+==> corrected/015.rb 55 <==
 # encoding: utf-8
 # frozen_string_literal: true
 puts 1
 
-==> corrected/015.rb 75 <==
-#!/usr/bin/env ruby
+==> corrected/016.rb 55 <==
 # encoding: utf-8
 # frozen_string_literal: true
 puts 1
@@ -135,7 +129,7 @@ puts 1
 # frozen_string_literal: true
 puts 1
 
-==> corrected/018.rb 75 <==
+==> corrected/019.rb 75 <==
 #!/usr/bin/env ruby
 # encoding: utf-8
 # frozen_string_literal: true
@@ -143,30 +137,29 @@ puts 1
 
 ==> corrected/020.rb 75 <==
 #!/usr/bin/env ruby
-# frozen_string_literal: true
 # encoding: utf-8
+# frozen_string_literal: true
 puts 1
 
-==> corrected/021.rb 75 <==
+==> corrected/022.rb 75 <==
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 # encoding: utf-8
 puts 1
 
-==> corrected/023.rb 38 <==
+==> corrected/023.rb 75 <==
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+# encoding: utf-8
+puts 1
+
+==> corrected/025.rb 38 <==
 # -*- frozen_string_literal: true -*-
 
-==> corrected/024.rb 99 <==
+==> corrected/026.rb 99 <==
 # -*- encoding: utf-8 -*-
 # -*- frozen_string_literal: true -*-
 # -*- warn_indent: true -*-
-puts 1
-
-==> corrected/025.rb 76 <==
-#!/usr/bin/env ruby
-# encoding: utf-8
-# frozen_string_literal: true
-
 puts 1
 
 ==> corrected/027.rb 76 <==
@@ -176,14 +169,15 @@ puts 1
 
 puts 1
 
-==> corrected/028.rb 76 <==
+==> corrected/029.rb 76 <==
 #!/usr/bin/env ruby
 # encoding: utf-8
 # frozen_string_literal: true
 
 puts 1
 
-==> corrected/029.rb 56 <==
+==> corrected/030.rb 76 <==
+#!/usr/bin/env ruby
 # encoding: utf-8
 # frozen_string_literal: true
 
@@ -195,17 +189,23 @@ puts 1
 
 puts 1
 
-==> corrected/032.rb 56 <==
+==> corrected/033.rb 56 <==
 # encoding: utf-8
 # frozen_string_literal: true
 
 puts 1
 
-==> corrected/033.rb 50 <==
+==> corrected/034.rb 56 <==
+# encoding: utf-8
+# frozen_string_literal: true
+
+puts 1
+
+==> corrected/035.rb 50 <==
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-==> corrected/036.rb 103 <==
+==> corrected/038.rb 103 <==
 #!/usr/bin/env ruby
 # encoding: utf-8
 #
@@ -213,26 +213,26 @@ puts 1
 # frozen_string_literal: true
 puts 1
 
-==> corrected/037.rb 86 <==
+==> corrected/039.rb 86 <==
 # encoding: utf-8
 # frozen_string_literal: true
 
 puts 1
 # frozen_string_literal: true
 
-==> corrected/038.rb 50 <==
+==> corrected/040.rb 50 <==
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-==> corrected/039.rb 50 <==
+==> corrected/041.rb 50 <==
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-==> corrected/040.rb 37 <==
+==> corrected/042.rb 37 <==
 # frozen_string_literal: true
 puts 1
 
-==> corrected/041.rb 37 <==
+==> corrected/043.rb 37 <==
 # frozen_string_literal: true
 puts 1
 

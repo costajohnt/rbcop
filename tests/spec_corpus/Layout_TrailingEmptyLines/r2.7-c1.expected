@@ -1,16 +1,22 @@
-==> offenses exit=1 187 <==
+==> offenses exit=1 289 <==
 001.rb:2:1: C: [Correctable] Layout/TrailingEmptyLines: 3 trailing blank lines instead of 1 detected.
-002.rb:2:1: C: [Correctable] Layout/TrailingEmptyLines: Trailing blank line missing.
+002.rb:2:1: C: [Correctable] Layout/TrailingEmptyLines: 3 trailing blank lines instead of 1 detected.
+003.rb:2:1: C: [Correctable] Layout/TrailingEmptyLines: Trailing blank line missing.
 
-==> autocorrect exit=0 183 <==
+==> autocorrect exit=0 283 <==
 001.rb:2:1: C: [Corrected] Layout/TrailingEmptyLines: 3 trailing blank lines instead of 1 detected.
-002.rb:2:1: C: [Corrected] Layout/TrailingEmptyLines: Trailing blank line missing.
+002.rb:2:1: C: [Corrected] Layout/TrailingEmptyLines: 3 trailing blank lines instead of 1 detected.
+003.rb:2:1: C: [Corrected] Layout/TrailingEmptyLines: Trailing blank line missing.
 
 ==> corrected/001.rb 7 <==
 x = 0
 
 
-==> corrected/002.rb 7 <==
+==> corrected/002.rb 2 <==
+
+
+
+==> corrected/003.rb 7 <==
 x = 0
 
 

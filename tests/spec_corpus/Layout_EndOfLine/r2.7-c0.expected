@@ -1,8 +1,8 @@
 ==> offenses exit=1 136 <==
-000.rb:1:1: C: Layout/EndOfLine: Carriage return character missing.
-003.rb:1:1: C: Layout/EndOfLine: Carriage return character missing.
+001.rb:1:1: C: Layout/EndOfLine: Carriage return character missing.
+004.rb:1:1: C: Layout/EndOfLine: Carriage return character missing.
 
 ==> autocorrect exit=1 136 <==
-000.rb:1:1: C: Layout/EndOfLine: Carriage return character missing.
-003.rb:1:1: C: Layout/EndOfLine: Carriage return character missing.
+001.rb:1:1: C: Layout/EndOfLine: Carriage return character missing.
+004.rb:1:1: C: Layout/EndOfLine: Carriage return character missing.
 

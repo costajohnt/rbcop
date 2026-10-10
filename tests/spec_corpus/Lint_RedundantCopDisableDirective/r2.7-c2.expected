@@ -1,4 +1,9 @@
-==> offenses exit=2 0 <==
+==> offenses exit=1 113 <==
+000.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
 
-==> autocorrect exit=2 0 <==
+==> autocorrect exit=0 111 <==
+000.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+
+==> corrected/000.rb 4 <==
+foo
 

@@ -1,24 +1,51 @@
-==> offenses exit=1 199 <==
-001.rb:1:5: C: [Correctable] Style/BlockDelimiters: Brace delimiters `{...}` required for 'sig' method.
-003.rb:1:5: C: [Correctable] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+==> offenses exit=1 653 <==
+011.rb:1:6: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
+013.rb:1:6: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
+014.rb:1:21: C: Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
+015.rb:1:6: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
+016.rb:1:19: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
+022.rb:1:5: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
+023.rb:1:5: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
 
-==> autocorrect exit=0 195 <==
-001.rb:1:5: C: [Corrected] Style/BlockDelimiters: Brace delimiters `{...}` required for 'sig' method.
-003.rb:1:5: C: [Corrected] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+==> autocorrect exit=1 641 <==
+011.rb:1:6: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
+013.rb:1:6: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
+014.rb:1:21: C: Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
+015.rb:1:6: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
+016.rb:1:19: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
+022.rb:1:5: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
+023.rb:1:5: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for blocks.
 
-==> corrected/001.rb 71 <==
-sig {
-  params(
-    foo: string,
-  ).void
+==> corrected/011.rb 13 <==
+each { |x| }
+
+==> corrected/013.rb 13 <==
+each { |x|
 }
-def consume(foo)
-  foo
-end
 
-==> corrected/003.rb 45 <==
-each do |x|
-  some_method
-  other_method
+==> corrected/015.rb 25 <==
+each { |x|
+}.map(&:to_s)
+
+==> corrected/016.rb 26 <==
+foo.bar = baz.map { |x|
+}
+
+==> corrected/022.rb 78 <==
+map { |a|
+  begin
+do_something
+rescue StandardError => e
+  puts 'oh no'
 end
+}
+
+==> corrected/023.rb 59 <==
+map { |a|
+  begin
+do_something
+ensure
+  puts 'oh no'
+end
+}
 

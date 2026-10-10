@@ -21,7 +21,9 @@ fn sections(path: &Path) -> Sections {
         let eol = i + data[i..].iter().position(|&b| b == b'\n').unwrap();
         let header = std::str::from_utf8(&data[i..eol]).unwrap();
         let inner = header.strip_prefix("==> ").and_then(|h| h.strip_suffix(" <=="));
-        let (name, len) = inner.and_then(|h| h.rsplit_once(' ')).unwrap_or_else(|| panic!("{}: bad header {header:?}", path.display()));
+        let (name, len) = inner
+            .and_then(|h| h.rsplit_once(' '))
+            .unwrap_or_else(|| panic!("{}: bad header {header:?}", path.display()));
         let len: usize = len.parse().unwrap();
         out.push((name.to_string(), data[eol + 1..eol + 1 + len].to_vec()));
         i = eol + 1 + len + 1;
@@ -65,11 +67,7 @@ fn run(dir: &Path, cop: &str, autocorrect: bool) -> (String, String) {
     if cop != "Lint/RedundantCopDisableDirective" {
         cmd.args(["--only", cop]);
     }
-    let out = cmd
-        .current_dir(dir)
-        .args(["--config", ".rubocop.yml", "--format", "emacs", "."])
-        .output()
-        .unwrap();
+    let out = cmd.current_dir(dir).args(["--config", ".rubocop.yml", "--format", "emacs", "."]).output().unwrap();
     let prefix = format!("{}/", dir.canonicalize().unwrap().display());
     let stdout = String::from_utf8_lossy(&out.stdout).replace(&prefix, "");
     let status = out.status.code().map_or("signal".into(), |c| c.to_string());
@@ -101,7 +99,8 @@ fn check(root: &Path, variant: &str, work: &Path) -> Vec<String> {
         compare(&format!("{label} exit status"), name.as_bytes(), format!("{label} exit={status}").as_bytes());
     }
     for (name, original) in &input[1..] {
-        let want = expected.iter().find(|(n, _)| n.strip_prefix("corrected/") == Some(name)).map_or(original, |(_, b)| b);
+        let want =
+            expected.iter().find(|(n, _)| n.strip_prefix("corrected/") == Some(name)).map_or(original, |(_, b)| b);
         compare(&format!("-A rewrite of {name}"), want, &fs::read(work.join(name)).unwrap());
     }
     fails

@@ -1,77 +1,77 @@
 ==> offenses exit=1 1020 <==
-002.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
-003.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 004.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 005.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
-008.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
-009.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
-012.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
-013.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
-021.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
-022.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+006.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+007.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+010.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+011.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+014.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+015.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+023.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+024.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 
 ==> autocorrect exit=0 1000 <==
-002.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
-003.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 004.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 005.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
-008.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
-009.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
-012.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
-013.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
-021.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
-022.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+006.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+007.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+010.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+011.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+014.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+015.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+023.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+024.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 
-==> corrected/002.rb 68 <==
+==> corrected/004.rb 68 <==
 # frozen_string_literal: true
 # frozen_string_literal: token
 puts 1
 
-==> corrected/003.rb 37 <==
+==> corrected/005.rb 37 <==
 # frozen_string_literal: true
 puts 1
 
-==> corrected/004.rb 57 <==
+==> corrected/006.rb 57 <==
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 puts 1
 
-==> corrected/005.rb 50 <==
+==> corrected/007.rb 50 <==
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-==> corrected/008.rb 55 <==
+==> corrected/010.rb 55 <==
 # encoding: utf-8
 # frozen_string_literal: true
 puts 1
 
-==> corrected/009.rb 56 <==
+==> corrected/011.rb 56 <==
 # encoding: utf-8
 # frozen_string_literal: true
 
 puts 1
 
-==> corrected/012.rb 75 <==
+==> corrected/014.rb 75 <==
 #!/usr/bin/env ruby
 # encoding: utf-8
 # frozen_string_literal: true
 puts 1
 
-==> corrected/013.rb 76 <==
+==> corrected/015.rb 76 <==
 #!/usr/bin/env ruby
 # encoding: utf-8
 # frozen_string_literal: true
 
 puts 1
 
-==> corrected/021.rb 86 <==
+==> corrected/023.rb 86 <==
 # encoding: utf-8
 # frozen_string_literal: true
 
 puts 1
 # frozen_string_literal: true
 
-==> corrected/022.rb 38 <==
+==> corrected/024.rb 38 <==
 # frozen_string_literal: true
 
 puts 1

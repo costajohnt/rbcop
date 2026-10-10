@@ -108,11 +108,13 @@ module Foo
   end
 end
 
-==> 014.rb 28 <==
+==> 014.rb 0 <==
+
+==> 015.rb 28 <==
 require 'foo'
 require 'bar'
 
-==> 015.rb 55 <==
+==> 016.rb 55 <==
 class Foo
 end
 

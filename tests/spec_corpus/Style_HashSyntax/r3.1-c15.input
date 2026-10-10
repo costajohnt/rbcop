@@ -1,17 +1,15 @@
-==> .rubocop.yml 231 <==
+==> .rubocop.yml 223 <==
 ---
 AllCops:
   EnabledByDefault: true
   NewCops: enable
   SuggestExtensions: false
-  TargetRubyVersion: 3.0
+  TargetRubyVersion: 3.1
 Style/HashSyntax:
   EnforcedStyle: ruby19
-  SupportedStyles:
-  - ruby19
-  - hash_rockets
   EnforcedShorthandSyntax: always
+  UseHashRocketsWithSymbolValues: true
 
-==> 000.rb 21 <==
-{foo: foo, bar: bar}
+==> 000.rb 17 <==
+f(a: :sym, b: b)
 

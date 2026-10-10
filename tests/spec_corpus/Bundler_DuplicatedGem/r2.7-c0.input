@@ -14,22 +14,24 @@ Bundler/DuplicatedGem:
 gem('rubocop')
 gem('rubocop')
 
-==> 001/Gemfile 25 <==
+==> 001/Gemfile 0 <==
+
+==> 002/Gemfile 25 <==
 gem 'rubocop'
 gem 'flog'
 
-==> 002/Gemfile 58 <==
+==> 003/Gemfile 58 <==
 source 'https://rubygems.org'
 gem 'rubocop'
 gem 'rubocop'
 
-==> 003/Gemfile 78 <==
+==> 004/Gemfile 78 <==
 gem 'rubocop'
 group :development do
   gem 'rubocop', path: '/path/to/gem'
 end
 
-==> 004/Gemfile 101 <==
+==> 005/Gemfile 101 <==
 gem 'rubocop'
 if Dir.exist? local
   gem 'rubocop', path: local
@@ -37,7 +39,7 @@ else
   gem 'rubocop', '~> 0.90.0'
 end
 
-==> 005/Gemfile 114 <==
+==> 006/Gemfile 114 <==
 if Dir.exist?(local)
   gem 'rubocop', path: local
   gem 'flog', path: local
@@ -45,7 +47,7 @@ else
   gem 'rubocop', '~> 0.90.0'
 end
 
-==> 006/Gemfile 258 <==
+==> 007/Gemfile 258 <==
 if Dir.exist?(local)
   gem 'rubocop', path: local
 elsif ENV['RUBOCOP_VERSION'] == 'master'
@@ -56,7 +58,7 @@ else
   gem 'rubocop', '~> 0.90.0'
 end
 
-==> 007/Gemfile 198 <==
+==> 008/Gemfile 198 <==
 case
 when Dir.exist?(local)
   gem 'rubocop', path: local
@@ -66,7 +68,7 @@ else
   gem 'rubocop', '~> 0.90.0'
 end
 
-==> 008/Gemfile 162 <==
+==> 009/Gemfile 162 <==
 case
 when Dir.exist?(local)
   gem 'rubocop', path: local

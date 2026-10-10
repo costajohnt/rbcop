@@ -217,7 +217,7 @@ class Extractor
       end
       text = text.lines.grep_v(ANNOTATION).join
     end
-    return if text.strip.empty?
+    return if text.strip.empty? && !SPEC_MODE # Lint/EmptyFile needs them
     raise Unresolved, "unresolved interpolation in source" if text.b.include?(HOLE.b)
 
     cop_config = let_value("cop_config", ctx) || {}
@@ -364,7 +364,7 @@ class Extractor
     when :*, :+, :size, :length, :to_a, :to_s, :to_sym, :upcase, :downcase, :capitalize, :join,
          :sub, :gsub, :chomp, :strip, :first, :last, :flatten, :product, :zip, :keys, :values, :inspect,
          :freeze, :dup, :tr, :delete, :count, :reverse, :sort, :uniq, :lines, :chars, :split,
-         :b, :==, :!=, :include?, :start_with?, :end_with?, :map, :to_h, :!, :-, :index, :match
+         :b, :==, :!=, :include?, :start_with?, :end_with?, :map, :to_h, :!, :-, :index, :match, :compact, :merge
       raise Unresolved, "#{node.name} on #{recv.class}" if recv.nil? && node.receiver
 
       blk = node.block

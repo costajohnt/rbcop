@@ -1,4 +1,8 @@
-==> offenses exit=1 0 <==
+==> offenses exit=1 263 <==
+002.rb:2:1: W: Lint/MissingCopEnableDirective: Re-enable Layout/SpaceAroundOperators cop with `# rubocop:enable` after disabling it.
+003.rb:1:1: W: Lint/MissingCopEnableDirective: Re-enable Layout/SpaceAroundOperators cop with `# rubocop:pop` after disabling it.
 
-==> autocorrect exit=1 0 <==
+==> autocorrect exit=1 263 <==
+002.rb:2:1: W: Lint/MissingCopEnableDirective: Re-enable Layout/SpaceAroundOperators cop with `# rubocop:enable` after disabling it.
+003.rb:1:1: W: Lint/MissingCopEnableDirective: Re-enable Layout/SpaceAroundOperators cop with `# rubocop:pop` after disabling it.
 

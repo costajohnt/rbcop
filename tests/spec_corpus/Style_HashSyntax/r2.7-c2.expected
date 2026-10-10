@@ -1,4 +1,29 @@
-==> offenses exit=0 0 <==
+==> offenses exit=1 490 <==
+000.rb:1:3: C: [Correctable] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
+000.rb:1:10: C: [Correctable] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
+006.rb:1:7: C: [Correctable] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
+006.rb:1:16: C: [Correctable] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
+008.rb:1:21: C: [Correctable] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
+011.rb:1:16: C: [Correctable] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
 
-==> autocorrect exit=0 0 <==
+==> autocorrect exit=0 478 <==
+000.rb:1:3: C: [Corrected] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
+000.rb:1:10: C: [Corrected] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
+006.rb:1:7: C: [Corrected] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
+006.rb:1:16: C: [Corrected] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
+008.rb:1:21: C: [Corrected] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
+011.rb:1:16: C: [Corrected] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
+
+==> corrected/000.rb 15 <==
+{ a: 1, b: 2 }
+
+==> corrected/006.rb 19 <==
+x = { a: 1, b: 2 }
+
+==> corrected/008.rb 55 <==
+rocket_required = { a: :b }
+ruby19_required = { c: 3 }
+
+==> corrected/011.rb 27 <==
+method(:puts).(key: value)
 

@@ -19,7 +19,9 @@ end
 ﻿# comment
   puts 1
 
-==> 004.rb 16 <==
+==> 004.rb 0 <==
+
+==> 005.rb 16 <==
 # comment
 x = 1
 

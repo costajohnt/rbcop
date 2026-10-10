@@ -1,0 +1,49 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+
+==> 000.rb 21 <==
+CONST = "#{a}".freeze
+==> 001.rb 20 <==
+CONST = "#@a".freeze
+==> 002.rb 21 <==
+CONST = "#@@a".freeze
+==> 003.rb 20 <==
+CONST = "#$a".freeze
+==> 004.rb 51 <==
+# frozen_string_literal: true
+CONST = "#{a}".freeze
+==> 005.rb 50 <==
+# frozen_string_literal: true
+CONST = "#@a".freeze
+==> 006.rb 51 <==
+# frozen_string_literal: true
+CONST = "#@@a".freeze
+==> 007.rb 50 <==
+# frozen_string_literal: true
+CONST = "#$a".freeze
+==> 008.rb 52 <==
+# frozen_string_literal: false
+CONST = "#{a}".freeze
+==> 009.rb 51 <==
+# frozen_string_literal: false
+CONST = "#@a".freeze
+==> 010.rb 52 <==
+# frozen_string_literal: false
+CONST = "#@@a".freeze
+==> 011.rb 51 <==
+# frozen_string_literal: false
+CONST = "#$a".freeze
+==> 012.rb 19 <==
+CONST = /./.freeze
+
+==> 013.rb 22 <==
+CONST = (1..5).freeze
+
+==> 014.rb 23 <==
+CONST = (1...5).freeze
+

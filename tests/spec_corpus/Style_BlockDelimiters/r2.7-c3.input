@@ -1,4 +1,4 @@
-==> .rubocop.yml 217 <==
+==> .rubocop.yml 223 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -6,7 +6,7 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 2.7
 Style/BlockDelimiters:
-  EnforcedStyle: always_braces
+  EnforcedStyle: braces_for_chaining
   AllowedMethods:
   - proc
   AllowedPatterns:
@@ -80,50 +80,87 @@ each { |x| }
 each do |x|
 end
 
-==> 014.rb 32 <==
-s.subspec 'Subspec' do |sp| end
+==> 014.rb 15 <==
+each do _1 end
 
-==> 015.rb 28 <==
-each do |x|
-end.map(&:to_s)
-
-==> 016.rb 29 <==
-foo.bar = baz.map do |x|
+==> 015.rb 11 <==
+each { _1 }
+==> 016.rb 17 <==
+each do
+  _1
 end
 
 ==> 017.rb 28 <==
-foo = proc do
-  puts 42
-end
+each do |x|
+end.map(&:to_s)
 
-==> 018.rb 35 <==
-foo = test_method do
+==> 018.rb 25 <==
+foo = proc {
   puts 42
-end
+}
 
-==> 019.rb 13 <==
+==> 019.rb 32 <==
+foo = test_method {
+  puts 42
+}
+
+==> 020.rb 54 <==
+foo = [{foo: :bar}].find { |h|
+  h.key?(:foo)
+}[:foo]
+
+==> 021.rb 53 <==
+Hash[
+  {foo: :bar}.map do |k, v|
+    [k, v]
+  end
+]
+
+==> 022.rb 55 <==
+Hash[
+  {foo: :bar}.map { |k, v|
+    [k, v]
+  }.uniq
+]
+
+==> 023.rb 50 <==
+Hash[
+  {foo: :bar}.map { |k, v|
+    [k, v]
+  }
+]
+
+==> 024.rb 13 <==
 each { |x|
 }
 
-==> 020.rb 26 <==
+==> 025.rb 26 <==
 foo.bar = baz.map { |x|
 }
 
-==> 021.rb 27 <==
+==> 026.rb 27 <==
 each { |x|
 }.map(&:to_sym)
 
-==> 022.rb 71 <==
+==> 027.rb 40 <==
+foo.bar = baz.map { |x|
+}.map(&:to_sym)
+
+==> 028.rb 34 <==
+arr&.each do |x|
+end&.map(&:to_s)
+
+==> 029.rb 81 <==
 map do |a|
   do_something
 rescue StandardError => e
   puts 'oh no'
-end
+end.join('-')
 
-==> 023.rb 52 <==
+==> 030.rb 62 <==
 map do |a|
   do_something
 ensure
   puts 'oh no'
-end
+end.join('-')
 

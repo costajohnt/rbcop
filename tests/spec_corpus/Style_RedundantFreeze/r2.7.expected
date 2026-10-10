@@ -1,4 +1,94 @@
-==> offenses exit=0 0 <==
+==> offenses exit=1 1989 <==
+000.rb:1:9: C: [Correctable] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+001.rb:1:9: C: [Correctable] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+002.rb:1:9: C: [Correctable] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+003.rb:1:9: C: [Correctable] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+004.rb:1:9: C: [Correctable] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+005.rb:1:9: C: [Correctable] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+006.rb:1:9: C: [Correctable] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+007.rb:1:9: C: [Correctable] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+008.rb:1:9: C: [Correctable] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+009.rb:1:9: C: [Correctable] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+010.rb:1:9: C: [Correctable] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+011.rb:1:9: C: [Correctable] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+027.rb:2:9: C: [Correctable] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+034.rb:2:9: C: [Correctable] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+035.rb:2:9: C: [Correctable] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+036.rb:2:9: C: [Correctable] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+037.rb:2:9: C: [Correctable] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
 
-==> autocorrect exit=0 0 <==
+==> autocorrect exit=0 1955 <==
+000.rb:1:9: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+001.rb:1:9: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+002.rb:1:9: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+003.rb:1:9: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+004.rb:1:9: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+005.rb:1:9: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+006.rb:1:9: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+007.rb:1:9: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+008.rb:1:9: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+009.rb:1:9: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+010.rb:1:9: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+011.rb:1:9: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+027.rb:2:9: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+034.rb:2:9: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+035.rb:2:9: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+036.rb:2:9: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+037.rb:2:9: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+
+==> corrected/000.rb 10 <==
+CONST = 1
+
+==> corrected/001.rb 12 <==
+CONST = 1.5
+
+==> corrected/002.rb 13 <==
+CONST = :sym
+
+==> corrected/003.rb 12 <==
+CONST = :""
+
+==> corrected/004.rb 20 <==
+CONST = 'foo'.count
+
+==> corrected/005.rb 16 <==
+CONST = (1 + 2)
+
+==> corrected/006.rb 16 <==
+CONST = (2 > 1)
+
+==> corrected/007.rb 20 <==
+CONST = ('a' > 'b')
+
+==> corrected/008.rb 16 <==
+CONST = (a > b)
+
+==> corrected/009.rb 23 <==
+CONST = [1, 2, 3].size
+
+==> corrected/010.rb 40 <==
+CONST = [1, 2, 3].count { |x| bar?(x) }
+
+==> corrected/011.rb 37 <==
+CONST = [1, 2, 3].count { bar?(_1) }
+
+==> corrected/027.rb 41 <==
+# frozen_string_literal: true
+CONST = ""
+
+==> corrected/034.rb 45 <==
+# frozen_string_literal: true
+CONST = "#{a}"
+
+==> corrected/035.rb 44 <==
+# frozen_string_literal: true
+CONST = "#@a"
+
+==> corrected/036.rb 45 <==
+# frozen_string_literal: true
+CONST = "#@@a"
+
+==> corrected/037.rb 44 <==
+# frozen_string_literal: true
+CONST = "#$a"
 

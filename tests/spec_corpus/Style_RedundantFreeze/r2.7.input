@@ -6,5 +6,121 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 2.7
 
-==> 000.rb 31 <==
+==> 000.rb 17 <==
+CONST = 1.freeze
+
+==> 001.rb 19 <==
+CONST = 1.5.freeze
+
+==> 002.rb 20 <==
+CONST = :sym.freeze
+
+==> 003.rb 19 <==
+CONST = :"".freeze
+
+==> 004.rb 27 <==
+CONST = 'foo'.count.freeze
+
+==> 005.rb 23 <==
+CONST = (1 + 2).freeze
+
+==> 006.rb 23 <==
+CONST = (2 > 1).freeze
+
+==> 007.rb 27 <==
+CONST = ('a' > 'b').freeze
+
+==> 008.rb 23 <==
+CONST = (a > b).freeze
+
+==> 009.rb 30 <==
+CONST = [1, 2, 3].size.freeze
+
+==> 010.rb 47 <==
+CONST = [1, 2, 3].count { |x| bar?(x) }.freeze
+
+==> 011.rb 44 <==
+CONST = [1, 2, 3].count { bar?(_1) }.freeze
+
+==> 012.rb 24 <==
+CONST = [1, 2, 3].freeze
+==> 013.rb 29 <==
+CONST = { a: 1, b: 2 }.freeze
+==> 014.rb 20 <==
+CONST = 'str'.freeze
+==> 015.rb 28 <==
+CONST = "top#{1 + 2}".freeze
+==> 016.rb 25 <==
+CONST = "top#@foo".freeze
+==> 017.rb 26 <==
+CONST = "top#@@foo".freeze
+==> 018.rb 25 <==
+CONST = "top#$foo".freeze
+==> 019.rb 26 <==
+CONST = ('a' + 'b').freeze
+==> 020.rb 25 <==
+CONST = ('a' * 20).freeze
+==> 021.rb 22 <==
+CONST = (a + b).freeze
+==> 022.rb 26 <==
+CONST = ([42] * 42).freeze
+==> 023.rb 25 <==
+CONST = ENV['foo'].freeze
+==> 024.rb 27 <==
+CONST = ::ENV['foo'].freeze
+==> 025.rb 31 <==
 TOP_TEST = Something.new.freeze
+==> 026.rb 18 <==
+CONST = "".freeze
+
+==> 027.rb 48 <==
+# frozen_string_literal: true
+CONST = "".freeze
+
+==> 028.rb 48 <==
+# frozen_string_literal: false
+CONST = "".freeze
+==> 029.rb 17 <==
+CONST = "".freeze
+==> 030.rb 21 <==
+CONST = "#{a}".freeze
+==> 031.rb 20 <==
+CONST = "#@a".freeze
+==> 032.rb 21 <==
+CONST = "#@@a".freeze
+==> 033.rb 20 <==
+CONST = "#$a".freeze
+==> 034.rb 52 <==
+# frozen_string_literal: true
+CONST = "#{a}".freeze
+
+==> 035.rb 51 <==
+# frozen_string_literal: true
+CONST = "#@a".freeze
+
+==> 036.rb 52 <==
+# frozen_string_literal: true
+CONST = "#@@a".freeze
+
+==> 037.rb 51 <==
+# frozen_string_literal: true
+CONST = "#$a".freeze
+
+==> 038.rb 52 <==
+# frozen_string_literal: false
+CONST = "#{a}".freeze
+==> 039.rb 51 <==
+# frozen_string_literal: false
+CONST = "#@a".freeze
+==> 040.rb 52 <==
+# frozen_string_literal: false
+CONST = "#@@a".freeze
+==> 041.rb 51 <==
+# frozen_string_literal: false
+CONST = "#$a".freeze
+==> 042.rb 18 <==
+CONST = /./.freeze
+==> 043.rb 21 <==
+CONST = (1..5).freeze
+==> 044.rb 22 <==
+CONST = (1...5).freeze

@@ -1,41 +1,26 @@
-==> offenses exit=1 650 <==
-001.rb:1:7: C: [Correctable] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
-001.rb:1:16: C: [Correctable] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
-002.rb:1:7: C: [Correctable] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
-004.rb:1:9: C: [Correctable] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
-007.rb:1:7: C: [Correctable] Style/HashSyntax: Don't mix styles in the same hash.
-008.rb:1:7: C: [Correctable] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
-009.rb:1:7: C: [Correctable] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
-010.rb:1:7: C: [Correctable] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
+==> offenses exit=1 363 <==
+000.rb:1:7: C: [Correctable] Style/HashSyntax: Use hash rockets syntax.
+000.rb:1:13: C: [Correctable] Style/HashSyntax: Use hash rockets syntax.
+001.rb:1:15: C: [Correctable] Style/HashSyntax: Use hash rockets syntax.
+002.rb:1:9: C: [Correctable] Style/HashSyntax: Use hash rockets syntax.
+006.rb:1:16: C: [Correctable] Style/HashSyntax: Use hash rockets syntax.
 
-==> autocorrect exit=0 634 <==
-001.rb:1:7: C: [Corrected] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
-001.rb:1:16: C: [Corrected] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
-002.rb:1:7: C: [Corrected] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
-004.rb:1:9: C: [Corrected] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
-007.rb:1:7: C: [Corrected] Style/HashSyntax: Don't mix styles in the same hash.
-008.rb:1:7: C: [Corrected] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
-009.rb:1:7: C: [Corrected] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
-010.rb:1:7: C: [Corrected] Style/HashSyntax: Use the new Ruby 1.9 hash syntax.
+==> autocorrect exit=0 353 <==
+000.rb:1:7: C: [Corrected] Style/HashSyntax: Use hash rockets syntax.
+000.rb:1:13: C: [Corrected] Style/HashSyntax: Use hash rockets syntax.
+001.rb:1:15: C: [Corrected] Style/HashSyntax: Use hash rockets syntax.
+002.rb:1:9: C: [Corrected] Style/HashSyntax: Use hash rockets syntax.
+006.rb:1:16: C: [Corrected] Style/HashSyntax: Use hash rockets syntax.
 
-==> corrected/001.rb 19 <==
-x = { a: 0, b: 2 }
+==> corrected/000.rb 24 <==
+x = { :a => 0, :b => 2}
 
-==> corrected/002.rb 19 <==
-x = { a: 0, b: 1 }
+==> corrected/001.rb 24 <==
+x = { a => 0, :b => 1 }
 
-==> corrected/004.rb 14 <==
-func(3, a: 0)
+==> corrected/002.rb 17 <==
+func(3, :a => 0)
 
-==> corrected/007.rb 26 <==
-x = { :a => 0, "b" => 1 }
-
-==> corrected/008.rb 17 <==
-x = { "t o": 0 }
-
-==> corrected/009.rb 18 <==
-x = { "\tab": 1 }
-
-==> corrected/010.rb 15 <==
-x = { "1": 1 }
+==> corrected/006.rb 24 <==
+method(:puts).(:a => 0)
 

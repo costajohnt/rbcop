@@ -40,17 +40,19 @@ names = Array.new
 # Copyright (c) 2015 Acme Inc.
 names << 'James'
 
-==> 005.rb 55 <==
+==> 005.rb 0 <==
+
+==> 006.rb 55 <==
 #!/usr/bin/env ruby
 names = Array.new
 names << 'James'
 
-==> 006.rb 53 <==
+==> 007.rb 53 <==
 # encoding: utf-8
 names = Array.new
 names << 'James'
 
-==> 007.rb 73 <==
+==> 008.rb 73 <==
 #!/usr/bin/env ruby
 # encoding: utf-8
 names = Array.new

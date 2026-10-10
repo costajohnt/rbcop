@@ -14,7 +14,9 @@ Bundler/DuplicatedGroup:
 group :development
 group :development
 
-==> 001/Gemfile 74 <==
+==> 001/Gemfile 0 <==
+
+==> 002/Gemfile 74 <==
 group :development do
   gem 'rubocop'
 end
@@ -22,7 +24,7 @@ group :test do
   gem 'flog'
 end
 
-==> 002/Gemfile 90 <==
+==> 003/Gemfile 90 <==
 group :development do
   gem 'rubocop'
 end
@@ -30,7 +32,7 @@ group :development do
   gem 'rubocop-rails'
 end
 
-==> 003/Gemfile 91 <==
+==> 004/Gemfile 91 <==
 group :development do
   gem 'rubocop'
 end
@@ -38,7 +40,7 @@ group 'development' do
   gem 'rubocop-rails'
 end
 
-==> 004/Gemfile 133 <==
+==> 005/Gemfile 133 <==
 group :development do
   gem 'rubocop'
 end
@@ -49,7 +51,7 @@ group :ci, :development do
   gem 'flog'
 end
 
-==> 005/Gemfile 97 <==
+==> 006/Gemfile 97 <==
 group :test, foo: true do
   gem 'activesupport'
 end
@@ -58,7 +60,7 @@ group :test, bar: true do
   gem 'rspec'
 end
 
-==> 006/Gemfile 98 <==
+==> 007/Gemfile 98 <==
 group :test, foo: true do
   gem 'activesupport'
 end
@@ -67,7 +69,7 @@ group :test, foo: false do
   gem 'rspec'
 end
 
-==> 007/Gemfile 119 <==
+==> 008/Gemfile 119 <==
 group :test, foo: true, bar: true do
   gem 'activesupport'
 end
@@ -76,7 +78,7 @@ group :test, foo: true, bar: true do
   gem 'rspec'
 end
 
-==> 008/Gemfile 119 <==
+==> 009/Gemfile 119 <==
 group :test, foo: true, bar: true do
   gem 'activesupport'
 end
@@ -85,7 +87,7 @@ group :test, bar: true, foo: true do
   gem 'rspec'
 end
 
-==> 009/Gemfile 104 <==
+==> 010/Gemfile 104 <==
 group :test, :development do
   gem 'rubocop'
 end
@@ -93,7 +95,7 @@ group :development, :test do
   gem 'rubocop-rails'
 end
 
-==> 010/Gemfile 86 <==
+==> 011/Gemfile 86 <==
 group(*LIVE_ENVS) do
   gem 'admin_ui'
 end
@@ -102,7 +104,7 @@ group(*LIVE_ENVS) do
   gem 'public_ui'
 end
 
-==> 011/Gemfile 157 <==
+==> 012/Gemfile 157 <==
 source 'https://rubygems.pkg.github.com/private-org' do
   group :development do
     gem 'rubocop'
@@ -113,7 +115,7 @@ group :development do
   gem 'rubocop-rails'
 end
 
-==> 012/Gemfile 278 <==
+==> 013/Gemfile 278 <==
 source 'https://rubygems.pkg.github.com/private-org' do
   group :development do
     gem 'rubocop'
@@ -130,7 +132,7 @@ group :development do
   gem 'rubocop-performance'
 end
 
-==> 013/Gemfile 216 <==
+==> 014/Gemfile 216 <==
 git 'https://github.com/rubocop/rubocop.git' do
   group :default do
     gem 'rubocop'
@@ -144,7 +146,7 @@ git 'https://github.com/rails/rails.git' do
   end
 end
 
-==> 014/Gemfile 194 <==
+==> 015/Gemfile 194 <==
 git 'https://github.com/rails/rails.git' do
   group :default do
     gem 'activesupport'
@@ -157,7 +159,7 @@ git 'https://github.com/rails/rails.git' do
   end
 end
 
-==> 015/Gemfile 142 <==
+==> 016/Gemfile 142 <==
 platforms :ruby do
   group :default do
     gem 'openssl'
@@ -170,7 +172,7 @@ platforms :jruby do
   end
 end
 
-==> 016/Gemfile 138 <==
+==> 017/Gemfile 138 <==
 platforms :ruby do
   group :default do
     gem 'ruby-debug'
@@ -183,7 +185,7 @@ platforms :ruby do
   end
 end
 
-==> 017/Gemfile 155 <==
+==> 018/Gemfile 155 <==
 path 'components_admin' do
   group :default do
     gem 'admin_ui'
@@ -196,7 +198,7 @@ path 'components_public' do
   end
 end
 
-==> 018/Gemfile 142 <==
+==> 019/Gemfile 142 <==
 path 'components' do
   group :default do
     gem 'admin_ui'
@@ -209,7 +211,7 @@ path 'components' do
   end
 end
 
-==> 019/Gemfile 62 <==
+==> 020/Gemfile 62 <==
 source do
   group :development do
     gem 'rubocop'

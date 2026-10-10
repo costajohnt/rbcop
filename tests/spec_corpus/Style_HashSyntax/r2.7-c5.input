@@ -1,4 +1,4 @@
-==> .rubocop.yml 157 <==
+==> .rubocop.yml 204 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -6,19 +6,22 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 2.7
 Style/HashSyntax:
-  EnforcedStyle: no_mixed_keys
+  EnforcedStyle: ruby19_no_mixed_keys
+  UseHashRocketsWithSymbolValues: false
 
 ==> 000.rb 18 <==
 x = { a: 0, b: 1 }
-==> 001.rb 15 <==
-x = { :a => 0 }
+==> 001.rb 25 <==
+x = { :a => 0, :b => 2 }
+
 ==> 002.rb 22 <==
 x = { :a => 0, b: 1 }
 
 ==> 003.rb 13 <==
 func(3, a: 0)
-==> 004.rb 16 <==
+==> 004.rb 17 <==
 func(3, :a => 0)
+
 ==> 005.rb 25 <==
 x = { :a => 0, "b" => 1 }
 ==> 006.rb 2 <==
@@ -26,25 +29,14 @@ x = { :a => 0, "b" => 1 }
 ==> 007.rb 23 <==
 x = { a: 0, "b" => 1 }
 
-==> 008.rb 28 <==
-x = { :"t o" => 0, :b => 1 }
-==> 009.rb 26 <==
-x = { :"t o" => 0, b: 1 }
+==> 008.rb 20 <==
+x = { :"t o" => 0 }
 
-==> 010.rb 29 <==
-x = { :"\tab" => 1, :b => 1 }
-==> 011.rb 26 <==
-x = { :"	ab" => 1, b: 1 }
+==> 009.rb 21 <==
+x = { :"\tab" => 1 }
 
-==> 012.rb 26 <==
-x = { :"1" => 1, :b => 1 }
-==> 013.rb 24 <==
-x = { :"1" => 1, b: 1 }
+==> 010.rb 18 <==
+x = { :"1" => 1 }
 
-==> 014.rb 20 <==
-{ :a => 1, :b => 2 }
-==> 015.rb 14 <==
-{ a: 1, b: 2 }
-==> 016.rb 18 <==
-{ a: 1, :b => 2 }
-
+==> 011.rb 39 <==
+{"#{foo}": 1, "#{@foo}": 2, "#@foo": 3}

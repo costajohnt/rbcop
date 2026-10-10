@@ -6,30 +6,35 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 2.7
 
-==> 000.rb 14 <==
+==> 000.rb 0 <==
+
+==> 001.rb 1 <==
+
+
+==> 002.rb 14 <==
 class Foo
 end
 
-==> 001.rb 7 <==
+==> 003.rb 7 <==
 puts 1
 
-==> 002.rb 12 <==
+==> 004.rb 12 <==
 # something
 
-==> 003.rb 15 <==
+==> 005.rb 15 <==
 
 class Foo
 end
 
-==> 004.rb 8 <==
+==> 006.rb 8 <==
 
 puts 1
 
-==> 005.rb 13 <==
+==> 007.rb 13 <==
 
 # something
 
-==> 006.rb 16 <==
+==> 008.rb 16 <==
 
 
 class Foo

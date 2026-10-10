@@ -4,8 +4,7 @@ AllCops:
   EnabledByDefault: true
   NewCops: enable
   SuggestExtensions: false
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 2.7
 
-==> 000.rb 23 <==
-a, b = 1, 2 rescue nil
-
+==> 000/Gemfile 7 <==
+print 1

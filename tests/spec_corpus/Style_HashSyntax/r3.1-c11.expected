@@ -1,14 +1,4 @@
-==> offenses exit=1 232 <==
-001.rb:1:13: C: [Correctable] Style/HashSyntax: Do not mix explicit and implicit hash values. Omit the hash value.
-002.rb:1:2: C: [Correctable] Style/HashSyntax: Do not mix explicit and implicit hash values. Include the hash value.
+==> offenses exit=0 0 <==
 
-==> autocorrect exit=0 228 <==
-001.rb:1:13: C: [Corrected] Style/HashSyntax: Do not mix explicit and implicit hash values. Omit the hash value.
-002.rb:1:2: C: [Corrected] Style/HashSyntax: Do not mix explicit and implicit hash values. Include the hash value.
-
-==> corrected/001.rb 13 <==
-{foo:, bar:}
-
-==> corrected/002.rb 21 <==
-{foo: foo, bar: baz}
+==> autocorrect exit=0 0 <==
 
