@@ -329,3 +329,29 @@ fn directory_targets_sort_as_strings() {
     assert_eq!(text(&out.stdout), "Gemfile\nlib/foo-baz.rb\nlib/foo.rb\nlib/foo/bar.rb\n");
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// `--stdin -a/-A` with nothing corrected echoes the source bytes unchanged after the separator,
+/// as RuboCop does, even when they are not UTF-8 (an editor replaces its buffer with this output).
+#[test]
+fn stdin_autocorrect_echoes_original_bytes() {
+    use std::io::Write;
+    use std::process::Stdio;
+    let dir = scratch("stdin-bytes");
+    let src: &[u8] = b"x = \"\xff\"\nputs x\n";
+    for mode in ["-a", "-A"] {
+        let mut child = common::command(env!("CARGO_BIN_EXE_rbcop"))
+            .args(["-f", "s", mode, "--stdin", "invalid.rb"])
+            .current_dir(&dir)
+            .stdin(Stdio::piped())
+            .stdout(Stdio::piped())
+            .stderr(Stdio::null())
+            .spawn()
+            .unwrap();
+        child.stdin.take().unwrap().write_all(src).unwrap();
+        let out = child.wait_with_output().unwrap();
+        let sep = b"====================\n";
+        let at = out.stdout.windows(sep.len()).position(|w| w == sep).expect("separator");
+        assert_eq!(&out.stdout[at + sep.len()..], src, "{mode}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
