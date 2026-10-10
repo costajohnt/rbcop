@@ -199,9 +199,7 @@ impl Cx<'_, '_> {
 
     /// A corrector raised ClobberingError: RuboCop reports the cop error and loses the offense.
     fn cop_error(&self, start: usize) {
-        // Range#line and the 0-based Range#column.
-        let (line, col) = crate::formatter::line_col(self.src.text, start);
-        eprintln!("An error occurred while {} cop was inspecting {}:{line}:{}.", self.cop, self.src.path, col - 1);
+        crate::runner::cop_error(self.cop, self.src, start);
     }
 
     fn push(&mut self, start: usize, end: usize, message: String, correctable: bool, corrected: bool) {
