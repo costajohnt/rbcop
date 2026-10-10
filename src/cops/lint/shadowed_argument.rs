@@ -16,19 +16,19 @@ fn meta_assignment_node(tree: &Tree, n: usize) -> Option<usize> {
     if tree.t(cand) == T::Splat {
         cand = tree.parent(cand).unwrap_or(cand);
     }
-    if tree.t(cand) == T::Mlhs {
-        if let Some(grand) = tree.parent(parent) {
-            let mut g = grand;
-            while tree.t(g) == T::Mlhs {
-                let Some(p) = tree.parent(g) else { break };
-                if tree.t(p) == T::Masgn {
-                    return Some(p);
-                }
-                g = p;
+    if tree.t(cand) == T::Mlhs
+        && let Some(grand) = tree.parent(parent)
+    {
+        let mut g = grand;
+        while tree.t(g) == T::Mlhs {
+            let Some(p) = tree.parent(g) else { break };
+            if tree.t(p) == T::Masgn {
+                return Some(p);
             }
-            if tree.t(grand) == T::Masgn {
-                return Some(grand);
-            }
+            g = p;
+        }
+        if tree.t(grand) == T::Masgn {
+            return Some(grand);
         }
     }
     if tree.t(parent) == T::Splat {

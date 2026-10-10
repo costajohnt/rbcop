@@ -947,10 +947,10 @@ impl Tree {
         }
         let parent = self.parent(target);
         if parent == Some(scope.node) {
-            if let (Some(r), Some(i)) = (outer_indices(self.t(scope.node)), self.sibling_index(target)) {
-                if r.contains(&i) {
-                    return false;
-                }
+            if let (Some(r), Some(i)) = (outer_indices(self.t(scope.node)), self.sibling_index(target))
+                && r.contains(&i)
+            {
+                return false;
             }
             return true;
         }
@@ -1089,12 +1089,12 @@ impl Variable {
 
     fn assign(&mut self, tree: &Tree, node: usize) {
         let branch = tree.branch_of(node, self.scope);
-        if !self.captured_by_block {
-            if let Some(last) = self.assignments.last_mut() {
-                if last.branch == branch && !last.referenced {
-                    last.reassigned = true;
-                }
-            }
+        if !self.captured_by_block
+            && let Some(last) = self.assignments.last_mut()
+            && last.branch == branch
+            && !last.referenced
+        {
+            last.reassigned = true;
         }
         self.assignments.push(Assignment { node, branch, references: Vec::new(), referenced: false, reassigned: false });
     }

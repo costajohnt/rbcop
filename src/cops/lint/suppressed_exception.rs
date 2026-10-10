@@ -43,14 +43,14 @@ impl Cop for SuppressedException {
         if body.is_some() && !nil_body {
             return;
         }
-        if cx.cfg.bool("AllowComments") == Some(true) {
-            if let Some(end_line) = enclosing_end_line(cx) {
-                let first = cx.src.line_of(s);
-                // processed_source[first_line...end_line]: 0-based indexes, so the lines after the rescue line.
-                let lines = cx.src.lines.get(first..end_line.min(cx.src.lines.len())).unwrap_or(&[]);
-                if lines.iter().any(|l| l.trim_start_matches(|c: char| c.is_ascii_whitespace()).starts_with('#')) {
-                    return;
-                }
+        if cx.cfg.bool("AllowComments") == Some(true)
+            && let Some(end_line) = enclosing_end_line(cx)
+        {
+            let first = cx.src.line_of(s);
+            // processed_source[first_line...end_line]: 0-based indexes, so the lines after the rescue line.
+            let lines = cx.src.lines.get(first..end_line.min(cx.src.lines.len())).unwrap_or(&[]);
+            if lines.iter().any(|l| l.trim_start_matches(|c: char| c.is_ascii_whitespace()).starts_with('#')) {
+                return;
             }
         }
         if cx.cfg.bool("AllowNil") == Some(true) && nil_body {
