@@ -95,13 +95,16 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
     let mut starts = vec![0];
     starts.extend(text.match_indices('\n').map(|(i, _)| i + 1));
     let pos = |off: usize| {
+        // Parser keeps counting columns past the end of the source (Layout/EndOfLine ranges reach
+        // beyond the CRLF-normalised text), so an overflow carries into the column.
+        let overflow = off.saturating_sub(text.len());
         let mut off = off.min(text.len());
         while !text.is_char_boundary(off) {
             off -= 1;
         }
         let line = starts.partition_point(|&s| s <= off);
         let ls = starts[line - 1];
-        (line, text[ls..off].chars().count(), ls, off)
+        (line, text[ls..off].chars().count() + overflow, ls, off)
     };
     let mut out: Vec<Off> = list
         .iter()
