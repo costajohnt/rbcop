@@ -88,6 +88,7 @@ stdin-emacs-outside|tests/formatters/project|-f e --stdin ../foo.rb|tests/format
 stdin-json|tests/formatters/project|-f j --stdin lib/foo.rb|tests/formatters/stdin.rb
 stdin-autocorrect|tests/formatters/project|-f s -a --stdin lib/foo.rb|tests/formatters/stdin.rb
 stdin-autocorrect-all-json|tests/formatters/project|-f j -A --stdin lib/foo.rb|tests/formatters/stdin.rb
+stdin-autocorrect-all-stderr|tests/formatters/project|-f s -A --stderr --stdin lib/foo.rb|tests/formatters/stdin.rb
 # Other modes and errors.
 list-target-files|tests/formatters/project|-L
 version|tests/formatters/project|-v
