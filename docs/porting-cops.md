@@ -346,6 +346,13 @@ More traps found while porting:
 - Trailing commas: Prism `ImplicitRestNode` (`a, = x`, `|a,|`) has no parser node.
 - Helpers: `frozen_string_literal`, `integer_node`, `empty_parameter`, `hash_transform_method`,
   `percent_array` (PercentArray + PercentLiteralCorrector; `safe_string_literal` for written code).
+- RuboCop `each_ancestor` loops that look for a target node often never reach it and keep checking
+  ancestors outside the construct: use real parser ancestors of descendants (`helpers::parser_path`).
+- Cop state that a corrector mutates (`@reindented_lines` in Style/Next) must change only when the
+  corrector runs: take it out of `cx.state` before `add_fix`, put it back after.
+- Reading RuboCop source with `grep -v '^ *#'` drops heredoc lines starting with `#{`.
+- Helpers: `parser_path`, `literal_node::parser_type`, `heredoc::dstr_body_lines`,
+  `if_node::parser_begin_end`.
 - `helpers::regexp_captures` counts named/numbered groups like `RegexpNode#each_capture`.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.

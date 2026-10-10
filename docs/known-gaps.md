@@ -33,6 +33,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   lint/ambiguous_operator, lint/constant_definition_in_block, lint/redundant_splat_expansion,
   layout/first_argument_indentation, style/access_modifier_declarations, style/double_negation and
   style/nil_comparison should move to `helpers::parser_parent` (check each copy's semantics first).
+  ENUMERATOR_METHODS is duplicated in lint/unreachable_loop and style/next. Parser-ancestor
+  builders now exist in `parser_parent`, `parser_path`, `variable_force` and `nil_receiver_checker`;
+  converge them on one.
 - One spec snippet (`naming/method_name/050.rb`, a `%{}` template) gets a duplicated
   "unexpected write target" syntax error location.
 - Lint/RedundantCopDisableDirective, Lint/RedundantCopEnableDirective, Lint/MissingCopEnableDirective
