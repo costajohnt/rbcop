@@ -260,8 +260,14 @@ More traps found while porting:
 - Compare invalid-UTF-8 string keys as raw bytes, never via `from_utf8_lossy`.
 - Helpers: `comments_help` (CommentsHelp), `literal_node` (literal predicates + structural key),
   `if_node::parser_end`, `nil_receiver_checker`.
-- `def_node_search` / `each_ancestor` with a block return `self` when nothing matches, so a failed
-  lookup can leak the node's s-expression into keys and messages.
+- `each_ancestor` with a block returns `self` when nothing matches, so a failed lookup can leak the
+  node's s-expression into keys and messages. A `def_node_search` method called with a block
+  returns `nil` when nothing matches (the generated method ends in `nil`).
+- TrailingCommaInArguments (and any `on_send` cop) also sees the `send :[]` inside parser's
+  op_asgn/or_asgn/and_asgn: subscribe to `Index{Operator,Or,And}WriteNode` too.
+- `ast_with_comments[arg]` for call arguments: one comment cursor over the arguments; each takes the
+  comments ending before its end, then those starting on its last line.
+- Helper: `trailing_comma` (TrailingComma mixin, PunctuationCorrector swap_comma).
 - `each_ancestor(:any_block).first` checks every ancestor, not just the innermost scope.
 - `Module#<=>` is 0 for the same class (truthy); `nil <=> nil` is 0, nil vs class is nil.
 - Prism nests subsequent `rescue` clauses; parser makes them siblings. Treat a RescueNode whose child
