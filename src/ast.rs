@@ -122,6 +122,7 @@ pub fn strip_parens<'pr>(node: Node<'pr>) -> Option<Node<'pr>> {
         };
     }
     Some(node)
+}
 
 /// Parser-gem-shaped ancestors with their parser source ranges, nearest first: indexes into
 /// `ancestors` plus (start, end). Prism-only wrappers are skipped, a call that owns the block we
