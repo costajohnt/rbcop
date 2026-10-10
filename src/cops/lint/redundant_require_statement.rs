@@ -63,13 +63,7 @@ impl Cop for RedundantRequireStatement {
                 use helpers::range_help::{range_with_surrounding_space, Side, Surrounding};
                 range_with_surrounding_space(src.text, start, end, Surrounding { side: Side::Right, ..Default::default() })
             }
-            None => {
-                // range_by_whole_lines(include_final_newline: true), clipped to the buffer
-                let first = src.line_start(src.line_of(start));
-                let last_line = src.line_of(end);
-                let line_end = src.line_start(last_line) + src.text[src.line_start(last_line)..].find('\n').unwrap_or(src.text.len() - src.line_start(last_line));
-                (first, (line_end + 1).min(src.text.len()))
-            }
+            None => helpers::whole_lines::range_by_whole_lines(src.text, start, end, true),
         };
         cx.add_fix(start, end, "Remove unnecessary `require` statement.", |c| {
             if let Some((ps, pe)) = modifier {

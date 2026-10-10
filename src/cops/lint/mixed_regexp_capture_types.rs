@@ -10,15 +10,11 @@ impl Cop for MixedRegexpCaptureTypes {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        if let Some((named, numbered)) = helpers::regexp_captures::regexp_captures(node) {
-            if named > 0 && numbered > 0 {
-                let loc = node.location();
-                cx.add(
-                    loc.start_offset(),
-                    loc.end_offset(),
-                    "Do not mix named captures and numbered captures in a Regexp literal.",
-                );
-            }
+        let Some((named, numbered)) = helpers::regexp_captures::regexp_captures(node) else { return };
+        if named > 0 && numbered > 0 {
+            let loc = node.location();
+            let msg = "Do not mix named captures and numbered captures in a Regexp literal.";
+            cx.add(loc.start_offset(), loc.end_offset(), msg);
         }
     }
 }
