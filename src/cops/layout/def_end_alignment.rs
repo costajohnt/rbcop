@@ -24,6 +24,13 @@ fn def_modifier<'pr>(node: &Node<'pr>) -> Option<DefNode<'pr>> {
     }
 }
 
+/// The send in a def-modifier chain whose argument is the def.
+fn innermost_modifier<'pr>(node: &Node<'pr>) -> Option<ruby_prism::CallNode<'pr>> {
+    let call = node.as_call_node()?;
+    let arg = send_args(&call).into_iter().next()?;
+    if arg.as_def_node().is_some() { Some(call) } else { innermost_modifier(&arg) }
+}
+
 impl Cop for DefEndAlignment {
     fn correctable(&self) -> bool {
         true
@@ -57,6 +64,21 @@ impl Cop for DefEndAlignment {
             ignored.insert(start);
         }
         let Some(end) = def.end_keyword_loc() else { return };
-        helpers::end_keyword_alignment::check(cx, (end.start_offset(), end.end_offset()), &ranges, &style);
+        // autocorrect aligns with the def, or in start_of_line style with its parent send.
+        let n = cx.ancestors.len();
+        let parent_send = if kind::of(node) == kind::CALL_NODE {
+            // the def's parent is the innermost modifier send of the chain
+            innermost_modifier(node).map(|c| c.location().start_offset())
+        } else if n >= 2 && kind::of(&cx.ancestors[n - 1]) == kind::ARGUMENTS_NODE {
+            cx.ancestors[n - 2].as_call_node().filter(|c| !is_csend(c)).map(|c| c.location().start_offset())
+        } else {
+            None
+        };
+        let align = match parent_send {
+            Some(p) if style == "start_of_line" => p,
+            _ => start,
+        };
+        let col = cx.src.column(align);
+        helpers::end_keyword_alignment::check(cx, (end.start_offset(), end.end_offset()), &ranges, &style, col);
     }
 }

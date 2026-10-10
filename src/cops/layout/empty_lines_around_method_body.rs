@@ -24,7 +24,7 @@ impl Cop for EmptyLinesAroundMethodBody {
                 && src.lines.get(eq_line).is_some_and(|l| l.is_empty())
             {
                 let start = src.line_start(eq_line + 1);
-                cx.add(start, start + 1, "Extra empty line detected at method body beginning.");
+                cx.add_fix(start, start + 1, "Extra empty line detected at method body beginning.", |c| c.remove(start, start + 1));
             }
             return;
         }

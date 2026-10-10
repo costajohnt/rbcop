@@ -14,6 +14,8 @@ struct State {
     ignored: HashSet<(usize, usize)>,
     /// AllowedPatterns (+ IgnoredPatterns), compiled once per file.
     patterns: Option<Vec<Regex>>,
+    /// `@offense_ranges` (`other_offense_in_same_range?`, only consulted when autocorrecting).
+    offense_ranges: Vec<(usize, usize)>,
 }
 
 fn span(n: &Node) -> (usize, usize) {
@@ -143,39 +145,6 @@ fn first_non_space_char(line: &str) -> Option<usize> {
     line.chars().position(|c| !matches!(c, ' ' | '\t' | '\n' | '\x0b' | '\x0c' | '\r'))
 }
 
-/// Whether AlignmentCorrector.correct(.., tab_indentation: true) edits the node.
-fn corrects(cx: &Cx, range: (usize, usize), node: &Node, delta: i64) -> bool {
-    let src = cx.src;
-    if !using_tabs(cx) {
-        return helpers::alignment_mixin::corrector_edits(src, range.0, range.1, delta, Some(node));
-    }
-    if src.comments.iter().any(|c| c.embdoc && c.start >= range.0 && c.end <= range.1) {
-        return false;
-    }
-    let w = cx.config.for_cop("Layout/IndentationWidth").int("Width").unwrap_or(2);
-    if w <= 0 {
-        return false;
-    }
-    // Tab correction never touches string contents; in practice the leading blanks of a line
-    // inside a heredoc or multi-line string. ponytail: no taboo ranges here, add if corpora differ.
-    let mut pos = range.0;
-    for line in src.text[range.0..range.1].split_inclusive('\n') {
-        let l = src.line_of(pos);
-        let text = src.lines.get(l - 1).copied().unwrap_or("");
-        let leading_len = text.len() - text.trim_start_matches([' ', '\t']).len();
-        let leading = &text[..leading_len];
-        if leading_len != text.len() {
-            let visual: i64 = leading.chars().map(|c| if c == '\t' { w } else { 1 }).sum();
-            let target = "\t".repeat(((visual + delta).max(0) / w) as usize);
-            if leading != target {
-                return true;
-            }
-        }
-        pos += line.len();
-    }
-    false
-}
-
 /// What `check_indentation` needs to know about where the checked body sits.
 struct Ctx {
     /// The body's begin children are in macro scope (for `starts_with_access_modifier?`).
@@ -204,11 +173,10 @@ fn check_indentation(cx: &mut Cx, base: usize, body: Option<&Body>, style: &str,
     if src.line_of(start) == src.line_of(base) {
         return;
     }
-    if let Body::Begin(v) = body {
-        if bare_access_modifier(&v[0], ctx.macro_scope) {
+    if let Body::Begin(v) = body
+        && bare_access_modifier(&v[0], ctx.macro_scope) {
             return;
         }
-    }
     let line = src.lines.get(src.line_of(start) - 1).copied().unwrap_or("");
     if first_non_space_char(line) != Some(src.column(start)) {
         return;
@@ -244,8 +212,23 @@ fn check_indentation(cx: &mut Cx, base: usize, body: Option<&Body>, style: &str,
     } else {
         format!("Use {width} (not {indentation}) spaces for{name} indentation.")
     };
-    let correctable = corrects(cx, range, node, delta);
-    cx.add_with(s.max(0) as usize, e.max(0) as usize, msg, correctable);
+    // When autocorrecting, a body inside an earlier offense's node is left to a later pass.
+    let fix = if cx.fixes.autocorrect {
+        let ranges = &mut cx.state::<State>().offense_ranges;
+        let nested = ranges.iter().any(|&(rs, re)| range.0 >= rs && range.1 <= re);
+        if !nested {
+            ranges.push(range);
+        }
+        !nested
+    } else {
+        true
+    };
+    let set = helpers::alignment_corrector::Settings::of(cx);
+    cx.add_fix(s.max(0) as usize, e.max(0) as usize, msg, |c| {
+        if fix {
+            helpers::alignment_corrector::correct(c, src, set, range.0, range.1, Some(node), delta, true);
+        }
+    });
 }
 
 fn style_align_with<'s>(cx: &Cx<'s, '_>) -> &'s str {
@@ -274,7 +257,7 @@ fn check_members(cx: &mut Cx, base: usize, body: Option<&Body>, macro_scope: boo
     };
     let first_modifier = match body {
         Some(Body::Begin(v)) if access_modifier(&v[0], macro_scope, false) => Some(Body::Child(&v[0])),
-        _ => wrapper_first.filter(|f| access_modifier(f, macro_scope, false)).map(|f| Body::Single(f)),
+        _ => wrapper_first.filter(|f| access_modifier(f, macro_scope, false)).map(Body::Single),
     };
     let outdent = cx.config.for_cop("Layout/AccessModifierIndentation").str("EnforcedStyle") == Some("outdent");
     match (&first_modifier, outdent) {
@@ -382,8 +365,8 @@ fn on_block(cx: &mut Cx, call: Option<&ruby_prism::CallNode>, body: Option<Node>
         return;
     }
     let mut base = end.start_offset();
-    if style_align_with(cx) == "relative_to_receiver" {
-        if let Some(c) = call {
+    if style_align_with(cx) == "relative_to_receiver"
+        && let Some(c) = call {
             let recv_last = c.receiver().map(|r| src.line_of(span(&r).1.saturating_sub(1).max(span(&r).0)));
             if let (Some(dot), Some(rl)) = (c.call_operator_loc(), recv_last) {
                 if rl < src.line_of(dot.start_offset()) {
@@ -393,7 +376,6 @@ fn on_block(cx: &mut Cx, call: Option<&ruby_prism::CallNode>, body: Option<Node>
                 }
             }
         }
-    }
     let body = Body::of(body);
     let ctx = Ctx { macro_scope };
     check_indentation(cx, base, body.as_ref(), "normal", &ctx);
@@ -452,7 +434,6 @@ impl Cop for IndentationWidth {
                 kind::BEGIN_NODE,
                 kind::RESCUE_NODE,
                 kind::FOR_NODE,
-                kind::ENSURE_NODE,
                 kind::PARENTHESES_NODE,
                 kind::SUPER_NODE,
                 kind::FORWARDING_SUPER_NODE,
@@ -478,22 +459,24 @@ impl Cop for IndentationWidth {
         match kind::of(node) {
             kind::BEGIN_NODE => {
                 let b = node.as_begin_node().unwrap();
-                // on_rescue: the else branch
+                // parser order: kwbegin, then its ensure, then the rescue (with the else branch)
+                if let (Some(_), Some(end)) = (b.begin_keyword_loc(), b.end_keyword_loc())
+                    && begins_its_line(cx.src, end.start_offset()) {
+                        let body = if b.rescue_clause().is_some() || b.ensure_clause().is_some() {
+                            Some(Body::wrapped(node.as_begin_node().unwrap()))
+                        } else {
+                            b.statements().and_then(|s| s.body().iter().next()).map(Body::Single)
+                        };
+                        check_indentation(cx, end.start_offset(), body.as_ref(), "normal", &no_macro);
+                    }
+                if let Some(e) = b.ensure_clause() {
+                    let body = Body::of(e.statements().map(|s| s.as_node()));
+                    check_indentation(cx, lstart(e.ensure_keyword_loc()), body.as_ref(), "normal", &no_macro);
+                }
                 if let (Some(_), Some(e)) = (b.rescue_clause(), b.else_clause()) {
                     let body = Body::of(e.statements().map(|s| s.as_node()));
                     check_indentation(cx, lstart(e.else_keyword_loc()), body.as_ref(), "normal", &no_macro);
                 }
-                // on_kwbegin
-                let (Some(_), Some(end)) = (b.begin_keyword_loc(), b.end_keyword_loc()) else { return };
-                if !begins_its_line(cx.src, end.start_offset()) {
-                    return;
-                }
-                let body = if b.rescue_clause().is_some() || b.ensure_clause().is_some() {
-                    Some(Body::wrapped(node.as_begin_node().unwrap()))
-                } else {
-                    b.statements().and_then(|s| s.body().iter().next()).map(Body::Single)
-                };
-                check_indentation(cx, end.start_offset(), body.as_ref(), "normal", &no_macro);
             }
             kind::RESCUE_NODE => {
                 let r = node.as_rescue_node().unwrap();
@@ -504,11 +487,6 @@ impl Cop for IndentationWidth {
                 let f = node.as_for_node().unwrap();
                 let body = Body::of(f.statements().map(|s| s.as_node()));
                 check_indentation(cx, lstart(f.for_keyword_loc()), body.as_ref(), "normal", &no_macro);
-            }
-            kind::ENSURE_NODE => {
-                let e = node.as_ensure_node().unwrap();
-                let body = Body::of(e.statements().map(|s| s.as_node()));
-                check_indentation(cx, lstart(e.ensure_keyword_loc()), body.as_ref(), "normal", &no_macro);
             }
             kind::PARENTHESES_NODE => {
                 let p = node.as_parentheses_node().unwrap();

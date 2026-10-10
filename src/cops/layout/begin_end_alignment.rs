@@ -21,6 +21,8 @@ impl Cop for BeginEndAlignment {
             ("begin", (begin.start_offset(), begin.end_offset())),
             ("start_of_line", helpers::end_keyword_alignment::start_line_range(cx.src, node.location().start_offset())),
         ];
-        helpers::end_keyword_alignment::check(cx, (end.start_offset(), end.end_offset()), &ranges, &style);
+        // alignment_node: the node itself in `begin` style, else the start-of-line range.
+        let col = if style == "begin" { cx.src.column(begin.start_offset()) } else { cx.src.column(ranges[1].1.0) };
+        helpers::end_keyword_alignment::check(cx, (end.start_offset(), end.end_offset()), &ranges, &style, col);
     }
 }

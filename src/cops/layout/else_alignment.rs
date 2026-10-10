@@ -56,8 +56,9 @@ fn check_alignment(cx: &mut Cx, base: (usize, usize), else_range: (usize, usize)
     let base_src = src.slice(base.0, base.1);
     let word = &base_src[..base_src.find(char::is_whitespace).unwrap_or(base_src.len())];
     let msg = format!("Align `{}` with `{}`.", src.slice(else_range.0, else_range.1), word);
-    let correctable = helpers::alignment::corrects(cx, else_range.0, else_range.1, delta);
-    cx.add_with(else_range.0, else_range.1, msg, correctable);
+    let set = helpers::alignment_corrector::Settings::of(cx);
+    let (s, e) = else_range;
+    cx.add_fix(s, e, msg, |c| helpers::alignment_corrector::correct(c, src, set, s, e, None, delta, false));
 }
 
 /// `on_if(node, base)`; `ancestors` are the node's Prism ancestors (for `base_range_of_if`).

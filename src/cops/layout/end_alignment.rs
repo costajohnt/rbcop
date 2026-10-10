@@ -24,7 +24,9 @@ fn lspan(l: Location) -> (usize, usize) {
 }
 
 /// `(loc.keyword, loc.end)` of a node EndAlignment handles; None for nodes it skips.
-fn keyword_and_end(node: &Node) -> Option<((usize, usize), Option<(usize, usize)>)> {
+type Span = (usize, usize);
+
+fn keyword_and_end(node: &Node) -> Option<(Span, Option<Span>)> {
     Some(match kind::of(node) {
         kind::CLASS_NODE => {
             let n = node.as_class_node().unwrap();
@@ -120,12 +122,16 @@ fn check_asgn(cx: &mut Cx, outer_start: usize, inner: &Node) {
     }
 }
 
-/// Report at `end`. `AlignmentCorrector.align_end` replaces the blanks before `end` with the
-/// alignment column's indentation: no edit when both are empty (only possible in variable style).
+/// Report at `end`, autocorrecting with `AlignmentCorrector.align_end(.., alignment_node(node))`.
 fn emit(cx: &mut Cx, node: &Node, end: (usize, usize), msg: String) {
-    let correctable =
-        cx.src.column(end.0) != 0 || style(cx) != "variable" || variable_alignment_column(cx, node) != 0;
-    cx.add_with(end.0, end.1, msg, correctable);
+    let src = cx.src;
+    let column = match style(cx).as_str() {
+        "keyword" => src.column(span(node).0),
+        "variable" => variable_alignment_column(cx, node),
+        _ => src.column(start_line_range(src, span(node).0).0),
+    };
+    let tabs = helpers::alignment_corrector::Settings::of(cx).tabs;
+    cx.add_fix(end.0, end.1, msg, |c| helpers::alignment_corrector::align_end(c, src, tabs, end.0, column));
 }
 
 fn is_setter_or_assignment(n: &Node) -> bool {

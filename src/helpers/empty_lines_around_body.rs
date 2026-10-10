@@ -131,7 +131,14 @@ pub fn check_line(cx: &mut Cx, style: &str, line: i64, msg: &str, want_empty: bo
         return;
     }
     let start = cx.src.line_start(line_no as usize);
-    cx.add(start, start + 1, msg);
+    if start >= cx.src.text.len() {
+        return;
+    }
+    if style == "empty_lines" {
+        cx.add_fix(start, start + 1, msg, |c| c.insert_before(start, start + 1, "\n"));
+    } else {
+        cx.add_fix(start, start + 1, msg, |c| c.remove(start, start + 1));
+    }
 }
 
 fn check_deferred(cx: &mut Cx, body: &[Node]) {
@@ -155,5 +162,6 @@ fn check_deferred(cx: &mut Cx, body: &[Node]) {
         return;
     }
     let start = src.line_start(line_no);
-    cx.add(start, start + 1, format!("Empty line missing before first {ty} definition"));
+    let msg = format!("Empty line missing before first {ty} definition");
+    cx.add_fix(start, start + 1, msg, |c| c.insert_before(start, start + 1, "\n"));
 }

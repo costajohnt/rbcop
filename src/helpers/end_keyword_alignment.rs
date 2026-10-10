@@ -34,9 +34,12 @@ pub fn start_line_range(src: &Source, node_start: usize) -> (usize, usize) {
 
 /// `check_end_kw_alignment(node, align_ranges)` once the node is known not to be ignored:
 /// `end_kw` is `node.loc.end`, `ranges` the candidate (style, range) pairs.
-pub fn check(cx: &mut Cx, end_kw: (usize, usize), ranges: &[(&str, (usize, usize))], style: &str) {
+/// `align_column` is where the autocorrection (`AlignmentCorrector.align_end`) puts the `end`.
+pub fn check(cx: &mut Cx, end_kw: (usize, usize), ranges: &[(&str, (usize, usize))], style: &str, align_column: usize) {
     if let Some(msg) = misalignment(cx.src, end_kw, ranges, style) {
-        cx.add(end_kw.0, end_kw.1, msg);
+        let src = cx.src;
+        let tabs = super::alignment_corrector::Settings::of(cx).tabs;
+        cx.add_fix(end_kw.0, end_kw.1, msg, |c| super::alignment_corrector::align_end(c, src, tabs, end_kw.0, align_column));
     }
 }
 
