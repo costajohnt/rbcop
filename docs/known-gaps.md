@@ -24,7 +24,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 
 - Target Ruby below 3.3: RuboCop parses with the parser gem for that version and reports syntax newer
   than the target (e.g. `def x(&)` under 2.7) as Lint/Syntax; rbcop parses with Prism's 3.3 grammar and
-  does not. Messages for genuine syntax errors also come from Prism, not the parser gem.
+  does not. Messages for genuine syntax errors also come from Prism, not the parser gem. The chef
+  corpus (target 2.7) hits both: an endless-method script and five syntax-error fixtures are listed
+  in `scripts/check-skip.txt`, which check-cops.sh leaves out.
 - `--stdin` together with `-a/-A` (RuboCop prints the corrected source) is refused.
 - `--disable-uncorrectable`, `--auto-gen-config`, `--server`, `--lsp`, `--cache` behaviour (accepted
   and ignored where harmless), custom formatter classes, `require:` of local Ruby files (custom cops).
@@ -51,7 +53,11 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   matches RuboCop with the default config.
 - Metrics/CollectionLiteralLength does not count `rescue A, B` exception lists (parser `array`).
   Lint/SymbolConversion does not treat a backslash-newline inside `:"..."` as a continuation. Naming/PredicatePrefix `validate_config` is not ported.
-- LineLength `SplitStrings: true` break points (string splitting) are not modelled.
+- LineLength `SplitStrings: true` break points (string splitting) are not modelled. The unbracketed
+  `rescue A, B` array is checked as a breakable collection, but is not an ancestor of calls inside
+  the exception list (`contained_by_breakable_collection_on_same_line?`).
+- `helpers::node_equality` compares tokens: plain `'a'` and `"a"` are equal, but `foo()` vs `foo` or
+  escaped vs unescaped spellings of one string (`"\x41"` vs `"A"`) are not, unlike parser nodes.
 - Cleanup pending: Style/SoleNestedConditional has an inline `correction_parses?` that parses with
   Prism's default (latest) grammar; `reparsed_equivalence::correction_parses` parses at the target
   version like RuboCop, so switching is a behaviour change to gate on its own, not a pure dedupe.
