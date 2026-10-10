@@ -41,6 +41,7 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   converge them on one. Style/SoleNestedConditional has an inline `correction_parses?`; switch it to
   `helpers::reparsed_equivalence`. Layout/EmptyLinesAfterModuleInclusion copies the blank-line and
   enable-directive closures of EmptyLinesAroundAttributeAccessor; share them.
+  `helpers::statement_modifier` copies Layout/LineLength's URI regex and validator; share them.
 - One spec snippet (`naming/method_name/050.rb`, a `%{}` template) gets a duplicated
   "unexpected write target" syntax error location.
 - Lint/RedundantCopDisableDirective, Lint/RedundantCopEnableDirective, Lint/MissingCopEnableDirective

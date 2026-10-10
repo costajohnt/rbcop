@@ -280,6 +280,12 @@ More traps found while porting:
   dstr). A backslash-newline inside an interpolating literal is a continuation: still a `str`.
 - Always pass `--cache false` to RuboCop on reused scratch dirs.
 - Helpers: `if_node::{normal_keyword, parts, is_elsif}`, `ruby_string::symbol_inspect`.
+- Binary-encoded files: Ruby `String#inspect` escapes every non-ASCII byte (`"\xE3\x81\x82"`), so
+  use `ruby_string::inspect_binary` when `cx.src.binary`.
+- `AllowedPatterns || IgnoredPatterns`: an empty AllowedPatterns array is truthy; IgnoredPatterns is
+  read only when the AllowedPatterns key is missing.
+- Helpers: `statement_modifier` (StatementModifier + LineLengthHelp), `string_help` (StringHelp,
+  StringLiteralsHelp, StringLiteralCorrector).
 - `each_ancestor(:any_block).first` checks every ancestor, not just the innermost scope.
 - `Module#<=>` is 0 for the same class (truthy); `nil <=> nil` is 0, nil vs class is nil.
 - Prism nests subsequent `rescue` clauses; parser makes them siblings. Treat a RescueNode whose child
