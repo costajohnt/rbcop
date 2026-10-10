@@ -22,9 +22,27 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 
 ## Open gaps
 
-- Target Ruby below 3.3: RuboCop parses with the parser gem for that version and reports syntax newer
-  than the target (e.g. `def x(&)` under 2.7) as Lint/Syntax; rbcop parses with Prism's 3.3 grammar and
-  does not. Messages for genuine syntax errors also come from Prism, not the parser gem.
+- Target Ruby below 3.3 (RuboCop parses with the parser gem's grammar for the target):
+  `src/legacy_syntax.rs` reports the parser gem's Lint/Syntax for syntax newer than the target and
+  for genuine syntax errors, approximating racc's error recovery for the diagnostics after the first
+  (module doc). Oracles with `config/all-cops.yml` + TargetRubyVersion, diff lines left (specs: all
+  low targets; rails/discourse: 2.7 and 3.1): specs 2.5 208, 2.7 61, 3.0 60, 3.1 59, 3.2 59; rails
+  2.7 14 (8 files), 3.1 3; discourse 2.7 271 (76 of 12609 files), 3.1 5. What remains:
+  - Follow-up diagnostics after the first error in a file: recovery is modelled, not the LALR
+    tables, so cascades can differ, mostly after a def popped by recovery (`class/module definition
+    in method body`, `dynamic constant assignment`), after `yyerror`s from semantic actions, and in
+    `case/in` bodies below 2.7 (pattern syntax parsed as statements).
+  - Parser-gem lexer errors (`bare backslash only allowed before newline`, `` unexpected `@' ``,
+    `` `$%' is not allowed ``, ...) where Prism reports a parse error instead; `circular argument
+    reference` is reported at the default value's read but not again at reads in the method body.
+  - Below 2.3 nothing lexer-level is checked (`&.`, `<<~`, `"a": 1`, `1r`, required keyword
+    arguments are accepted); no oracle below 2.5 was recorded.
+  - Not syntax: numbered parameters below 2.7 are method calls for the parser gem (`_1` cops such as
+    Style/SymbolProc, Lint/UnexpectedBlockArity, Lint/Void differ: most of the 157 non-Lint/Syntax
+    lines in specs at 2.5, every sampled one `_1`-related);
+    `a, b = 1, 2 rescue x` and Style/RescueModifier below 2.6; Lint/AmbiguousOperator's parser-gem
+    warning for `foo &:sym` (5 lines per target in specs); `#$-1` interpolation (rails 3.1); an empty
+    heredoc delimiter `<<''` at end of file is a Prism error but valid for the parser gem.
 - `--stdin` together with `-a/-A` (RuboCop prints the corrected source) is refused.
 - `--disable-uncorrectable`, `--auto-gen-config`, `--server`, `--lsp`, `--cache` behaviour (accepted
   and ignored where harmless), custom formatter classes, `require:` of local Ruby files (custom cops).
@@ -41,9 +59,6 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   cops that call `Regex::new(&...)` directly: lint/cop_directive_syntax, lint/useless_times,
   layout/line_length, style/numeric_literals, style/directive_scope, style/conditional_assignment,
   style/magic_comment_format, naming/predicate_prefix, naming/inclusive_language.
-- Review-loop coverage to add: every corpus targets Ruby 3.x, so behaviour at TargetRubyVersion
-  2.x (parser-gem grammar differences, min/max ruby cops) is only covered by scenarios. Record a
-  specs-corpus oracle at 2.5 and 2.7 and compare.
 - `AllCops/UseProjectIndex` (Rubydex, off by default) is not supported: Lint/DuplicateMethods
   cross-file checks and Naming/AccessorMethodName / PredicatePrefix `overrides_inherited_method?`
   are skipped; Lint/ArgumentMismatch, DeprecatedReference, NameTypo and SuperArgumentMismatch

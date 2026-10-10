@@ -76,10 +76,14 @@ fn analyze(
     let text: &str = shared;
     let raw_text = raw_text.unwrap_or(text);
     let version = target_ruby::prism_version(cfg.target_ruby);
-    let result = ruby_prism::parse_with_version(text.as_bytes(), version);
     // Below 3.3 RuboCop parses with the parser gem, which accepts some things Prism rejects.
     let parser_gem = cfg.target_ruby < 3.3;
-    let errors: Vec<(usize, usize, String)> = result
+    let (result, tokens) = if parser_gem {
+        ruby_prism::parse_with_version_and_tokens(text.as_bytes(), version)
+    } else {
+        (ruby_prism::parse_with_version(text.as_bytes(), version), Vec::new())
+    };
+    let mut errors: Vec<(usize, usize, String)> = result
         .errors()
         .filter(|e| !tolerated(e.type_name(), parser_gem, cfg.target_ruby))
         .map(|e| {
@@ -87,6 +91,47 @@ fn analyze(
             crate::syntax::translate(e.type_name(), e.message(), loc.start_offset(), loc.end_offset(), text)
         })
         .collect();
+    // ...rejects syntax newer than the target, and reports where its grammar fails rather than
+    // Prism's messages (semantic errors keep their translated parser-gem messages).
+    if parser_gem {
+        let kept = |e: &ruby_prism::Diagnostic| !tolerated(e.type_name(), parser_gem, cfg.target_ruby);
+        let seed = result
+            .errors()
+            .filter(|e| kept(e) && !crate::syntax::is_semantic(e.type_name()))
+            .map(|e| {
+                crate::legacy_syntax::failure_offset(
+                    e.type_name(),
+                    e.location().start_offset(),
+                    e.location().end_offset(),
+                    &tokens,
+                )
+            })
+            .min();
+        // The parser gem reports semantic errors as it reduces, so only those before its first
+        // grammar failure on Prism's syntax error.
+        let cut = seed.unwrap_or(usize::MAX);
+        let semantic: Vec<_> = result
+            .errors()
+            .filter(|e| kept(e) && crate::syntax::is_semantic(e.type_name()) && e.location().start_offset() < cut)
+            .map(|e| {
+                let (s, end) = crate::legacy_syntax::semantic_location(
+                    e.type_name(),
+                    e.location().start_offset(),
+                    e.location().end_offset(),
+                    &tokens,
+                    text,
+                );
+                crate::syntax::translate(e.type_name(), e.message(), s, end, text)
+            })
+            .collect();
+        let mut actions: Vec<usize> = semantic.iter().map(|e| e.1).collect();
+        actions.sort_unstable();
+        errors = crate::legacy_syntax::diagnostics(&result.node(), &tokens, text, cfg.target_ruby, seed, &actions)
+            .into_iter()
+            .map(|(s, e, msg)| crate::syntax::translate("", &msg, s, e, text))
+            .chain(semantic)
+            .collect();
+    }
     let comments: Vec<Comment> = result
         .comments()
         .map(|c| Comment {
@@ -289,9 +334,12 @@ fn autocorrect_allowed(cfg: &CopConfig) -> bool {
 const TOLERATED_ERRORS: &[&str] = &["invalid_yield"];
 
 /// Prism errors the parser gem accepts for the target. Up to Ruby 2.5, `begin..else..end` without
-/// `rescue` is only a `useless_else` warning (reported by Lint/UselessElseWithoutRescue).
+/// `rescue` is only a `useless_else` warning (reported by Lint/UselessElseWithoutRescue); before
+/// 2.7 `def m(x = x)` is only a warning (Lint/CircularArgumentReference).
 fn tolerated(kind: &str, parser_gem: bool, target_ruby: f64) -> bool {
-    (parser_gem && TOLERATED_ERRORS.contains(&kind)) || (kind == "begin_lonely_else" && target_ruby <= 2.5)
+    (parser_gem && TOLERATED_ERRORS.contains(&kind))
+        || (kind == "begin_lonely_else" && target_ruby <= 2.5)
+        || (kind == "parameter_circular" && target_ruby < 2.7)
 }
 
 /// Cop::Base#default_severity.
