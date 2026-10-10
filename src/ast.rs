@@ -313,3 +313,16 @@ pub fn is_parser_dstr(node: &Node) -> bool {
     }
     node_text(node).contains('\n')
 }
+
+/// Parser `dstr` for a non-heredoc literal, exactly: parser splits a string only on a newline
+/// before the last character of its content, so `"\n"` and `"a\n"` stay `str` (which
+/// `is_parser_dstr` misses). Heredocs as in `is_parser_dstr`.
+pub fn is_parser_dstr_exact(node: &Node) -> bool {
+    match node.as_string_node() {
+        Some(s) if !is_heredoc(node) => {
+            let content = text(&s.content_loc());
+            content.strip_suffix('\n').unwrap_or(content).contains('\n')
+        }
+        _ => is_parser_dstr(node),
+    }
+}
