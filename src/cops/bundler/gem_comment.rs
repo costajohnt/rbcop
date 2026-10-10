@@ -11,89 +11,15 @@ pub struct GemComment;
 static RESTRICTIVE_VERSION: LazyLock<regex::bytes::Regex> =
     LazyLock::new(|| regex::bytes::Regex::new(r"(?-u)\A\s*(?:<|~>|\d|=)").unwrap());
 
-/// Parser's `Comment::Associator` run over the gem `send` and its descendants: the comments each
-/// node gets, as (node first line, comment indices).
-struct Associate<'a> {
-    src: &'a Source<'a>,
-    cursor: usize,
-    stack: Vec<Option<usize>>,
-    /// (start, end, comments) per parser node.
-    nodes: Vec<(usize, usize, Vec<usize>)>,
-}
-
-impl Associate<'_> {
-    fn comment(&self) -> Option<crate::source::Comment> {
-        self.src.comments.get(self.cursor).copied()
-    }
-
-    fn leading(&mut self, i: usize) {
-        while self.comment().is_some_and(|c| c.end <= self.nodes[i].0) {
-            self.nodes[i].2.push(self.cursor);
-            self.cursor += 1;
-        }
-    }
-
-    fn trailing(&mut self, i: usize) {
-        while self.comment().is_some_and(|c| c.end <= self.nodes[i].1) {
-            self.nodes[i].2.push(self.cursor);
-            self.cursor += 1;
-        }
-        let last_line = self.src.line_of(self.nodes[i].1);
-        while self.comment().is_some_and(|c| self.src.line_of(c.start) == last_line) {
-            self.nodes[i].2.push(self.cursor);
-            self.cursor += 1;
-        }
-    }
-
-    fn enter(&mut self, node: &Node) {
-        // Wrappers parser has no node for; a `begin` (parentheses) gets no leading comments.
-        let k = kind::of(node);
-        if matches!(k, kind::ARGUMENTS_NODE | kind::STATEMENTS_NODE) {
-            self.stack.push(None);
-            return;
-        }
-        let loc = node.location();
-        self.nodes.push((loc.start_offset(), loc.end_offset(), Vec::new()));
-        let i = self.nodes.len() - 1;
-        if k != kind::PARENTHESES_NODE {
-            self.leading(i);
-        }
-        self.stack.push(Some(i));
-    }
-
-    fn leave(&mut self) {
-        if let Some(Some(i)) = self.stack.pop() {
-            self.trailing(i);
-        }
-    }
-
-    /// `commented?(node)`: the last associated comment up to the node's first line precedes it
-    /// by at most one line and is a `#` comment.
-    fn commented(&self, i: usize) -> bool {
-        let (start, _, ref comments) = self.nodes[i];
-        let line = self.src.line_of(start);
-        comments.iter().map(|&c| self.src.comments[c]).filter(|c| self.src.line_of(c.start) <= line).last().is_some_and(
-            |c| {
-                line - self.src.line_of(c.start) <= 1
-                    && self.src.slice(c.start, c.end).trim_start_matches([' ', '\t', '\n', '\x0b', '\x0c', '\r']).starts_with('#')
-            },
-        )
-    }
-}
-
-impl<'pr> Visit<'pr> for Associate<'_> {
-    fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
-        self.enter(&node);
-    }
-    fn visit_branch_node_leave(&mut self) {
-        self.leave();
-    }
-    fn visit_leaf_node_enter(&mut self, node: Node<'pr>) {
-        self.enter(&node);
-    }
-    fn visit_leaf_node_leave(&mut self) {
-        self.leave();
-    }
+/// `commented?(node)` for node `i` of the walk: the last associated comment up to the node's first
+/// line precedes it by at most one line and is a `#` comment.
+fn commented(v: &comment_association::Associator, i: usize) -> bool {
+    let (start, _, ref comments) = v.nodes[i];
+    let line = v.src.line_of(start);
+    comments.iter().map(|&c| v.src.comments[c]).filter(|c| v.src.line_of(c.start) <= line).last().is_some_and(|c| {
+        line - v.src.line_of(c.start) <= 1
+            && v.src.slice(c.start, c.end).trim_start_matches([' ', '\t', '\n', '\x0b', '\x0c', '\r']).starts_with('#')
+    })
 }
 
 /// `commented_any_descendant?`
@@ -106,7 +32,8 @@ fn commented_any_descendant(src: &Source, call: &CallNode, ancestors: &[Node]) -
             a.location().start_offset() == s
                 && !matches!(kind::of(a), kind::PROGRAM_NODE | kind::STATEMENTS_NODE | kind::PARENTHESES_NODE)
         });
-    let mut v = Associate { src, cursor: 0, stack: Vec::new(), nodes: vec![(s, e, Vec::new())] };
+    let mut v = comment_association::Associator::new(src, 0);
+    v.nodes.push((s, e, Vec::new()));
     // End of the code before the node: skip back over whitespace and comments.
     let mut prev = s;
     loop {
@@ -141,7 +68,7 @@ fn commented_any_descendant(src: &Source, call: &CallNode, ancestors: &[Node]) -
     }
     v.stack.pop();
     v.trailing(0);
-    (0..v.nodes.len()).any(|i| v.commented(i))
+    (0..v.nodes.len()).any(|i| commented(&v, i))
 }
 
 impl Cop for GemComment {
