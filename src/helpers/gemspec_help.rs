@@ -4,7 +4,7 @@ use crate::prelude::*;
 use ruby_prism::CallNode;
 
 /// `Gem::Specification.new` / `::Gem::Specification.new` without arguments.
-fn is_spec_new(call: &CallNode) -> bool {
+pub fn is_spec_new(call: &CallNode) -> bool {
     if is_csend(call) || method_name(call) != "new" || call.arguments().is_some() {
         return false;
     }
