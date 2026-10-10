@@ -295,6 +295,12 @@ pub const ASSIGNMENT_KINDS: &[usize] = &[
     kind::INDEX_AND_WRITE_NODE,
 ];
 
+/// rubocop-ast OPERATOR_METHODS (`operator_method?`).
+pub const OPERATOR_METHODS: &[&str] = &[
+    "|", "^", "&", "<=>", "==", "===", "=~", ">", ">=", "<", "<=", "<<", ">>", "+", "-", "*", "/", "%", "**", "~",
+    "+@", "-@", "!@", "~@", "[]", "[]=", "!", "!=", "!~", "`",
+];
+
 /// rubocop-ast `assignment?` on any node: the assignment types, plus setter sends (on send and
 /// csend nodes `assignment?` is an alias of `setter_method?`).
 pub fn is_assignment(node: &Node) -> bool {
