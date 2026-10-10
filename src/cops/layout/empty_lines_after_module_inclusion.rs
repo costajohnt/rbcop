@@ -1,3 +1,4 @@
+use crate::cops::layout_empty_lines_around_attribute_accessor::{empty_line_insertion, next_line_empty_or_enable_directive};
 use crate::prelude::*;
 
 pub const NAME: &str = "Layout/EmptyLinesAfterModuleInclusion";
@@ -75,20 +76,8 @@ impl Cop for EmptyLinesAfterModuleInclusion {
         {
             return;
         }
-        let src = cx.src;
         let (start, end) = send_range(&call);
-        let last_line = src.line_of(end);
-        let blank = |line: usize| {
-            src.lines.get(line).is_none_or(|l| l.trim_start_matches([' ', '\t', '\n', '\x0b', '\x0c', '\r', '\0']).is_empty())
-        };
-        let enable_directive = |line: usize| {
-            src.comment_on_line(line).is_some_and(|c| {
-                crate::directives::parse(src.slice(c.start, c.end))
-                    .is_some_and(|d| d.mode == "enable" || d.mode == "enable-next")
-            })
-        };
-        // processed_source[line] is the line after `line` (1-based).
-        if blank(last_line) || (enable_directive(last_line + 1) && blank(last_line + 1)) {
+        if next_line_empty_or_enable_directive(cx.src, end) {
             return;
         }
         // `next_line_node`: RuboCop crashes without a parent; nil under if / rescue / ensure, which
@@ -107,12 +96,7 @@ impl Cop for EmptyLinesAfterModuleInclusion {
         if sibling.is_none_or(|s| allowed(&s)) {
             return;
         }
-        let lines = helpers::whole_lines::range_by_whole_lines(src.text, start, end, false);
-        let next_line = last_line + 1;
-        let at = match src.comment_on_line(next_line) {
-            Some(c) if enable_directive(next_line) => (c.start, c.end),
-            _ => lines,
-        };
+        let at = empty_line_insertion(cx.src, start, end);
         cx.add_fix(start, end, MSG, |c| c.insert_after(at.0, at.1, "\n"));
     }
 }

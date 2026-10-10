@@ -1,5 +1,4 @@
-//! rubocop-ast `in_macro_scope?` / `macro?` / `class_constructor?` on Prism ancestors: the one port
-//! (`macro_scope_nodes` is a deprecated shim over it).
+//! rubocop-ast `in_macro_scope?` / `macro?` / `class_constructor?` on Prism ancestors: the one port.
 
 use crate::ast::method_name;
 use crate::node_kind as kind;

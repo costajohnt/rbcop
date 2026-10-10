@@ -1,6 +1,6 @@
 //! What RuboCop's CommentConfig knows about a file's lines, for cops that inspect directives
-//! (Style/DirectiveScope). Same logic as the runner's private `code_lines` and
-//! `StatementBounds`, which only run when the runner needs them.
+//! (Style/DirectiveScope). The runner uses the same `code_lines` and
+//! `StatementBounds` for its directive ranges.
 
 use crate::cop::Facts;
 use crate::prelude::*;
@@ -35,6 +35,7 @@ pub fn code_lines(src: &Source, facts: &Facts) -> Vec<bool> {
 /// DisableNext#statement_bounds_at for every line: the statement starting there with the greatest
 /// last line (first in pre-order on ties) and the last line of its subtree, where heredocs count
 /// up to their terminator.
+#[derive(Default)]
 pub struct StatementBounds {
     best: HashMap<usize, (usize, usize, usize)>, // first line -> (last line, preorder, subtree end)
 }

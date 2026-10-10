@@ -56,6 +56,18 @@ pub fn is_csend(call: &CallNode) -> bool {
     call.call_operator_loc().is_some_and(|l| l.as_slice() == b"&.")
 }
 
+/// rubocop-ast ENUMERATOR_METHODS.
+#[rustfmt::skip]
+const ENUMERATOR_METHODS: &[&str] = &[
+    "collect", "collect_concat", "detect", "downto", "each", "find", "find_all", "find_index", "inject", "loop", "map!",
+    "map", "reduce", "reject", "reject!", "reverse_each", "select", "select!", "times", "upto",
+];
+
+/// rubocop-ast `enumerator_method?`: ENUMERATOR_METHODS or any `each_*`.
+pub fn is_enumerator_method(name: &str) -> bool {
+    ENUMERATOR_METHODS.contains(&name) || name.starts_with("each_")
+}
+
 /// A Prism ancestor classified by what the parser gem would make of it.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Frame {
