@@ -612,11 +612,15 @@ impl<'pr> Check<'_, 'pr> {
                 return None;
             }
             let mut n = node.as_call_node().unwrap().as_node();
-            while is_send(&n) && unary_operation(&n) && !prefix_not(&n) {
+            while helpers::select_by::plain_send(&n).is_some() && unary_operation(&n) && !prefix_not(&n) {
                 match n.as_call_node().unwrap().receiver() {
                     Some(r) => n = r,
                     None => break,
                 }
+            }
+            // A call with a literal block is a parser `block`, not a method call (`(!a.any? { })`).
+            if n.as_call_node().and_then(|c| c.block()).is_some_and(|b| b.as_block_node().is_some()) {
+                return None;
             }
             return self.method_call_with_redundant_parentheses(&n).then_some("a unary operation");
         }

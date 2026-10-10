@@ -1,7 +1,7 @@
 use crate::prelude::*;
+use helpers::select_by::plain_send;
 use helpers::literal_node::parser_type;
 use helpers::parser_parent::is_top_const;
-use ruby_prism::CallNode;
 
 pub const NAME: &str = "Lint/RedundantTypeConversion";
 pub static COP: RedundantTypeConversion = RedundantTypeConversion;
@@ -20,11 +20,6 @@ fn literal_types(method: &str) -> &'static [&'static str] {
         "to_h" => &["hash"],
         _ => &[],
     }
-}
-
-/// A parser `send` (not csend, not wrapped by a literal block).
-fn plain_send<'pr>(node: &Node<'pr>) -> Option<CallNode<'pr>> {
-    node.as_call_node().filter(|c| !is_csend(c) && !c.block().is_some_and(|b| b.as_block_node().is_some()))
 }
 
 /// `(send {nil? (const {cbase nil?} :Kernel)} :name ...)`
