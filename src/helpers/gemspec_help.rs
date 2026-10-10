@@ -61,3 +61,22 @@ pub fn lvar_name<'pr>(node: &Node<'pr>) -> Option<&'pr [u8]> {
     }
     node.as_it_local_variable_read_node().map(|_| b"it".as_slice())
 }
+
+struct FirstSpec<'pr>(Option<&'pr [u8]>);
+
+impl<'pr> ruby_prism::Visit<'pr> for FirstSpec<'pr> {
+    fn visit_call_node(&mut self, node: &CallNode<'pr>) {
+        if self.0.is_none() {
+            self.0 = spec_block_var(node);
+            ruby_prism::visit_call_node(self, node);
+        }
+    }
+}
+
+/// `match_block_variable_name?`'s target: the block variable of the first
+/// `Gem::Specification.new do |x|` in the file (pre-order), nil without one.
+pub fn first_spec_var<'pr>(program: &Node<'pr>) -> Option<&'pr [u8]> {
+    let mut v = FirstSpec(None);
+    ruby_prism::Visit::visit(&mut v, program);
+    v.0
+}
