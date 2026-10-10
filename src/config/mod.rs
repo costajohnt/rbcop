@@ -58,8 +58,10 @@ impl Pattern {
     /// PathUtil.match_path?
     pub fn matches(&self, path: &str) -> bool {
         match self {
-            Pattern::Exact(s) => s == path,
+            Pattern::Exact(s) => s == path || hidden_file_in_not_hidden_dir(s, path),
             Pattern::Regex(r) => r.is_match(path),
+            // `pattern == path` first: a file named `[x].rb` matches itself.
+            Pattern::Glob(p) if p == path => true,
             Pattern::Glob(p) => {
                 let p = if p.starts_with("..") {
                     expand_path(Path::new(p), &cwd()).display().to_string()
@@ -375,7 +377,8 @@ impl Resolved {
             if let Some(ext) = s.strip_prefix("**/*.") {
                 exts.push(format!(".{ext}"));
             } else {
-                names.push(s.replace("**/", ""));
+                // `sub`: only the first `**/` goes.
+                names.push(s.replacen("**/", "", 1));
             }
         }
         (exts, names)
