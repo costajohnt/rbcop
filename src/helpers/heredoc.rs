@@ -149,3 +149,43 @@ pub fn body_range(node: &Node) -> Option<Span> {
     };
     Some((first.unwrap_or(end).min(end), end))
 }
+
+#[derive(Default)]
+struct FirstHeredoc {
+    end: Option<usize>,
+}
+
+impl FirstHeredoc {
+    fn add(&mut self, node: Node) {
+        if self.end.is_none()
+            && let Some((_, (_, end), _)) = parts(&node)
+        {
+            self.end = Some(end);
+        }
+    }
+}
+
+impl<'pr> Visit<'pr> for FirstHeredoc {
+    fn visit_string_node(&mut self, node: &StringNode<'pr>) {
+        self.add(node.as_node());
+    }
+    fn visit_interpolated_string_node(&mut self, node: &InterpolatedStringNode<'pr>) {
+        self.add(node.as_node());
+        ruby_prism::visit_interpolated_string_node(self, node);
+    }
+    fn visit_x_string_node(&mut self, node: &XStringNode<'pr>) {
+        self.add(node.as_node());
+    }
+    fn visit_interpolated_x_string_node(&mut self, node: &InterpolatedXStringNode<'pr>) {
+        self.add(node.as_node());
+        ruby_prism::visit_interpolated_x_string_node(self, node);
+    }
+}
+
+/// `node.each_node(:any_str).find(&:heredoc?)&.loc&.heredoc_end&.end_pos`: the parser terminator
+/// end (newline excluded) of the first heredoc in pre-order.
+pub fn first_heredoc_end(node: &Node) -> Option<usize> {
+    let mut v = FirstHeredoc::default();
+    v.visit(node);
+    v.end
+}
