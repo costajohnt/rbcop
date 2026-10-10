@@ -23,10 +23,10 @@ impl Cop for ReverseFind {
         if !matches!(method_name(&call), "find" | "detect") || call.arguments().is_some() {
             return;
         }
-        if let Some(b) = call.block().and_then(|b| b.as_block_argument_node()) {
-            if !b.expression().is_some_and(|e| e.as_symbol_node().is_some()) {
-                return;
-            }
+        if let Some(b) = call.block().and_then(|b| b.as_block_argument_node())
+            && !b.expression().is_some_and(|e| e.as_symbol_node().is_some())
+        {
+            return;
         }
         let Some(inner) = call.receiver().and_then(|r| r.as_call_node()) else { return };
         if !matches!(method_name(&inner), "reverse" | "reverse_each") || !send_args(&inner).is_empty() {

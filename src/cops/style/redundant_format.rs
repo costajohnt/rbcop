@@ -646,6 +646,12 @@ fn parse_ruby_float(s: &str) -> Option<f64> {
 // ---------------------------------------------------------------------------------------------
 // Kernel#format
 
+/// Deliberate safety difference from RuboCop: the cop evaluates `format` at lint time, so a width,
+/// precision or result longer than this many bytes (`format('%999999999d', 1)`) stops the
+/// evaluation and the call gets no offense instead of allocating a huge string. A replacement that
+/// long would be an unusable line anyway.
+const MAX_FORMAT_OUTPUT: usize = 10_000;
+
 const FSHARP: u8 = 1;
 const FMINUS: u8 = 2;
 const FPLUS: u8 = 4;
@@ -725,7 +731,7 @@ fn sprintf(fmt: &str, values: &[V]) -> Option<String> {
         let mut prec: usize = 0;
         let mut nextvalue: Option<&V> = None;
         loop {
-            let Some(&c) = b.get(i) else { return None };
+            let &c = b.get(i)?;
             match c {
                 b' ' | b'#' | b'+' | b'-' | b'0' => {
                     if flags & (FWIDTH | FPREC0) != 0 {
@@ -752,6 +758,9 @@ fn sprintf(fmt: &str, values: &[V]) -> Option<String> {
                         if flags & (FWIDTH | FPREC0) != 0 {
                             return None;
                         }
+                        if n > MAX_FORMAT_OUTPUT {
+                            return None;
+                        }
                         width = n;
                         flags |= FWIDTH;
                     }
@@ -766,6 +775,9 @@ fn sprintf(fmt: &str, values: &[V]) -> Option<String> {
                     i = close + 1;
                     if term == b'}' {
                         out.push_str(&format_s(v, flags, width, prec)?);
+                        if out.len() > MAX_FORMAT_OUTPUT {
+                            return None;
+                        }
                         break;
                     }
                     nextvalue = Some(v);
@@ -780,7 +792,7 @@ fn sprintf(fmt: &str, values: &[V]) -> Option<String> {
                     if w < 0 {
                         flags |= FMINUS;
                     }
-                    width = w.unsigned_abs() as usize;
+                    width = usize::try_from(w.unsigned_abs()).ok().filter(|&w| w <= MAX_FORMAT_OUTPUT)?;
                 }
                 b'.' => {
                     if flags & FPREC0 != 0 {
@@ -794,9 +806,9 @@ fn sprintf(fmt: &str, values: &[V]) -> Option<String> {
                         if p < 0 {
                             flags &= !FPREC;
                         }
-                        prec = p.max(0) as usize;
+                        prec = usize::try_from(p.max(0)).ok().filter(|&p| p <= MAX_FORMAT_OUTPUT)?;
                     } else {
-                        prec = read_digits(b, &mut i)?;
+                        prec = read_digits(b, &mut i).filter(|&p| p <= MAX_FORMAT_OUTPUT)?;
                     }
                 }
                 b'\n' | b'\0' | b'%' => {
@@ -821,6 +833,9 @@ fn sprintf(fmt: &str, values: &[V]) -> Option<String> {
                         _ => format_d(v, flags, width, prec)?,
                     };
                     out.push_str(&s);
+                    if out.len() > MAX_FORMAT_OUTPUT {
+                        return None;
+                    }
                     break;
                 }
                 // Other conversions (the cop never accepts them) and malformed sequences.
@@ -999,5 +1014,16 @@ mod tests {
         assert_eq!(parse_ruby_float("5."), Some(5.0));
         assert_eq!(parse_ruby_float("5e"), None);
         assert_eq!(parse_rational_prefix("3/8r"), Some((3, 8)));
+    }
+
+    #[test]
+    fn huge_width_or_precision_gives_up() {
+        let t = std::time::Instant::now();
+        assert_eq!(sprintf("%999999999d", &[V::Num(Num::Int(1))]), None);
+        assert_eq!(sprintf("%.999999999f", &[V::Num(Num::Float(1.0))]), None);
+        assert_eq!(sprintf("%.999999999f", &[V::Num(Num::Rat(1, 3))]), None);
+        assert_eq!(sprintf("%*s", &[V::Num(Num::Int(999_999_999)), V::Str("a".into())]), None);
+        assert_eq!(sprintf("%10000s%10000s", &[V::Str("a".into()), V::Str("b".into())]), None);
+        assert!(t.elapsed() < std::time::Duration::from_secs(1));
     }
 }
