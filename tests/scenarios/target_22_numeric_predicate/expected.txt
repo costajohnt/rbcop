@@ -1,0 +1,14 @@
+comparison/numbers.rb:1:8: W: [Correctable] Lint/Void: Operator `>` used in void context.
+comparison/numbers.rb:2:8: W: [Correctable] Lint/Void: Operator `<` used in void context.
+comparison/numbers.rb:3:8: W: [Correctable] Lint/Void: Operator `==` used in void context.
+comparison/numbers.rb:4:1: C: [Correctable] Style/YodaCondition: Reverse the order of the operands `0 > number`.
+comparison/numbers.rb:4:3: W: [Correctable] Lint/Void: Operator `>` used in void context.
+comparison/numbers.rb:5:1: C: [Correctable] Style/NumericPredicate: Use `number > 0` instead of `number.positive?`.
+comparison/numbers.rb:6:1: C: [Correctable] Style/NumericPredicate: Use `number < 0` instead of `number.negative?`.
+comparison/numbers.rb:7:1: C: [Correctable] Style/NumericPredicate: Use `number == 0` instead of `number.zero?`.
+numbers.rb:1:8: W: [Correctable] Lint/Void: Operator `>` used in void context.
+numbers.rb:2:8: W: [Correctable] Lint/Void: Operator `<` used in void context.
+numbers.rb:3:1: C: [Correctable] Style/NumericPredicate: Use `number.zero?` instead of `number == 0`.
+numbers.rb:3:8: W: [Correctable] Lint/Void: Operator `==` used in void context.
+numbers.rb:4:1: C: [Correctable] Style/YodaCondition: Reverse the order of the operands `0 > number`.
+numbers.rb:4:3: W: [Correctable] Lint/Void: Operator `>` used in void context.
