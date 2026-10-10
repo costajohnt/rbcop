@@ -96,6 +96,52 @@ Location differences to watch: parser `send` source excludes a `do`/`{}` block; 
 `loc.expression` is the opening `<<~X` only; `loc.selector`, `loc.dot`, `loc.begin`/`loc.end` map to
 Prism's `message_loc`, `call_operator_loc`, `opening_loc`/`closing_loc`.
 
+More traps found while porting:
+
+- Prism turns a pattern guard (`in pat if cond`) into an `IfNode`/`UnlessNode`; parser makes it an
+  `if_guard`, so RuboCop's `on_if` never sees it. Skip those with `ast::is_pattern_guard`.
+- Parser `op_asgn` / `or_asgn` / `and_asgn` / `mlhs` contain a `send` that `on_send` fires on; Prism
+  has `CallOperatorWriteNode`, `CallOrWriteNode`, `CallAndWriteNode`, `CallTargetNode`, `IndexTargetNode`
+  instead, so an `on_send` port may need to subscribe to those too.
+- rubocop-ast defines `receiver` on every node (nil for most); `ast::strip_parens` mirrors the common
+  "unwrap `begin`" loop.
+- To walk a subtree (`each_node` / `each_descendant`), implement `ruby_prism::Visit` on a small struct.
+
+### Prism tokens vs parser-gem tokens
+
+Use `helpers::parser_tokens::sorted_tokens` when porting token-based cops; it smooths most of this:
+
+| | Prism | parser gem |
+|---|---|---|
+| newlines inside expressions | `IGNORED_NEWLINE` tokens | none (drop them) |
+| statement newlines | `NEWLINE` | `tNL` |
+| comments | `COMMENT` including the trailing `\n` | `tCOMMENT` without it (use `src.comments` ranges) |
+| `=begin`/`=end` | `EMBDOC_BEGIN`, `EMBDOC_LINE`..., `EMBDOC_END` | one comment token |
+| `{` | `BRACE_LEFT` for hash and block alike | `tLBRACE` (hash) vs `tLCURLY` (block): check the AST |
+| interpolation | `EMBEXPR_BEGIN` / `EMBEXPR_END` | `tSTRING_DBEG` / `tSTRING_DEND` |
+| labels `a:` | one `LABEL` token | one `tLABEL`, same end |
+
+## Correctable flags
+
+RuboCop marks an offense `[Correctable]` only if its corrector block actually made an edit. Where the
+RuboCop cop calls `add_offense` with a block that sometimes adds nothing (e.g. `return if
+part_of_ignored_node?(node)` inside the block), report with `cx.add_with(.., false)` in that case.
+
+## Comparing on a scratch file
+
+Fastest loop for edge cases: write a small `.rb` in a scratch dir with a config that pins the target
+and enables everything, then diff both tools' emacs output:
+
+```sh
+printf 'AllCops:\n  TargetRubyVersion: 3.4\n  NewCops: enable\n' > /tmp/x/.rubocop.yml
+(cd /tmp/x && RBENV_VERSION=4.0.6 rbenv exec rubocop --only Style/Example --format emacs t.rb)
+(cd /tmp/x && /path/to/rbcop --only Style/Example --format emacs t.rb)
+```
+
+Without a pinned `TargetRubyVersion` RuboCop falls back to whatever `.ruby-version`/Gemfile.lock it finds.
+The worktree sandbox rejects shell loops, heredoc writes and variable-built arguments: run one plain
+command per call (the gate accepts a comma-separated cop list, so one call covers a whole batch).
+
 ## The gate
 
 ```sh

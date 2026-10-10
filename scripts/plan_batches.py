@@ -8,7 +8,7 @@ import csv
 import sys
 
 GENERIC = {"AutoCorrector", "RangeHelp", "ConfigurableEnforcedStyle", "TargetRubyVersion", ""}
-MAX_LINES, MAX_COPS = 700, 8
+MAX_LINES, MAX_COPS = 1600, 16
 
 rows = list(csv.DictReader(open(sys.argv[1], encoding="utf-8"), delimiter="\t"))
 done = set(open(sys.argv[2], encoding="utf-8").read().split())
