@@ -210,8 +210,16 @@ fn all_args() -> Result<Vec<String>, Fail> {
     let mut args = Vec::new();
     if Path::new(".rubocop").is_file() {
         let from_file = shellsplit(&fs::read_to_string(".rubocop").unwrap_or_default());
+        // Checked token by token rather than by parsing the file alone: a trailing `-o` would fail
+        // to parse there yet, combined with argv, take the user's first path as the output file.
+        // `--o`, `--ou`, `--out[=...]` and any short-option cluster containing `o` are refused
+        // (this also refuses `-fo`, which RuboCop reads as format `o`; pass that on the command line).
+        let may_write = |t: &String| {
+            (t.starts_with("--o") && "--out".starts_with(t.split('=').next().unwrap_or("")))
+                || (t.starts_with('-') && !t.starts_with("--") && t[1..].contains('o'))
+        };
         let writes = |cli: &Cli| cli.output_path.is_some() || cli.formatters.iter().any(|f| f.1.is_some());
-        if parse_args(from_file.clone()).is_ok_and(|cli| writes(&cli)) {
+        if from_file.iter().any(may_write) || parse_args(from_file.clone()).is_ok_and(|cli| writes(&cli)) {
             return Err(Fail::Unsupported(
                 "-o/--out in the .rubocop arguments file is refused; pass it on the command line".into(),
             ));

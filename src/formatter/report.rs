@@ -53,6 +53,19 @@ pub fn json(s: &str) -> String {
     out
 }
 
+/// Escape `& < >` for HTML text nodes. RuboCop leaves message text outside backtick spans
+/// unescaped (an XSS vector when a message quotes source); rbcop deliberately escapes these three,
+/// which only changes output when such text contains them. Quotes stay, so ordinary messages
+/// ("Don't ...") are byte-identical.
+fn html_text(s: &str) -> String {
+    s.replace('&', "&amp;").replace('<', "&lt;").replace('>', "&gt;")
+}
+
+/// Undo html_text inside a code span before escaping it the RuboCop way.
+fn unescape_text(s: &str) -> String {
+    s.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&")
+}
+
 /// CGI.escapeHTML
 fn html(s: &str) -> String {
     let mut out = String::with_capacity(s.len());
@@ -92,6 +105,29 @@ impl Formatter for Emacs {
     }
 }
 
+/// `-f rbcop-oracle`: emacs format with the range end (`path:line:col:last_line:last_col: ...`),
+/// as scripts/oracle_formatter.rb prints it from RuboCop.
+pub(super) struct Oracle;
+
+impl Formatter for Oracle {
+    fn file_finished(&mut self, out: &mut String, _cx: &Ctx, f: &FileOut) {
+        for o in &f.offenses {
+            let tag = if o.status.correctable() { "[Correctable] " } else { "" };
+            let msg = format!("{tag}{}", o.message).replace('\n', " ");
+            let _ = writeln!(
+                out,
+                "{}:{}:{}:{}:{}: {}: {msg}",
+                f.path.display(),
+                o.line,
+                o.real_column(),
+                o.last_line,
+                o.last_column,
+                o.severity.code()
+            );
+        }
+    }
+}
+
 /// `-f files`: absolute paths of files with offenses.
 pub(super) struct Files;
 
@@ -122,13 +158,10 @@ impl Formatter for Github {
             for o in offs {
                 let sev = if o.severity < min { "warning" } else { "error" };
                 let msg = o.message.replace('%', "%25").replace('\n', "%0A").replace('\r', "%0D");
-                let _ = write!(
-                    out,
-                    "\n::{sev} file={},line={},col={}::{msg}",
-                    cx.smart_path(file),
-                    o.line,
-                    o.real_column()
-                );
+                // Deliberate difference: RuboCop leaves the file property unescaped, so a file name
+                // containing a line break could start a new workflow command. Escape CR/LF there.
+                let file = cx.smart_path(file).replace('\n', "%0A").replace('\r', "%0D");
+                let _ = write!(out, "\n::{sev} file={},line={},col={}::{msg}", file, o.line, o.real_column());
             }
         }
         out.push('\n');
@@ -363,7 +396,7 @@ impl Formatter for Html {
             if offs.is_empty() {
                 continue;
             }
-            let rel = cx.relative(path);
+            let rel = html(&cx.relative(path));
             let _ = write!(
                 s,
                 "\n            <li>\n              <a href=\"#offense_{rel}\">\n                {rel} - {}\n              </a>\n            </li>\n          ",
@@ -374,7 +407,7 @@ impl Formatter for Html {
         for (path, offs) in &files {
             s.push_str("\n      ");
             if !offs.is_empty() {
-                let rel = cx.relative(path);
+                let rel = html(&cx.relative(path));
                 let _ = write!(
                     s,
                     "\n      <div class=\"offense-box\" id=\"offense_{rel}\">\n        <div class=\"box-title-placeholder\"><h3>&nbsp;</h3></div>\n        <div class=\"box-title\"><h3>{rel} - {}</h3></div>\n        <div class=\"offense-reports\">\n          ",
@@ -382,7 +415,10 @@ impl Formatter for Html {
                 );
                 for o in offs {
                     let sev = o.severity.name();
-                    let msg = sub_backticks(&o.message, false, 1, |c| format!("<code>{}</code>", html(c)));
+                    // Code spans are escaped like RuboCop; the text around them is escaped too (see html_text).
+                    let msg = sub_backticks(&html_text(&o.message), false, 1, |c| {
+                        format!("<code>{}</code>", html(&unescape_text(c)))
+                    });
                     let _ = write!(
                         s,
                         "\n          <div class=\"report\">\n            <div class=\"meta\">\n              <span class=\"location\">Line #{}</span> –\n              <span class=\"severity {sev}\">{sev}:</span>\n              <span class=\"message\">{msg}</span>\n            </div>\n            ",

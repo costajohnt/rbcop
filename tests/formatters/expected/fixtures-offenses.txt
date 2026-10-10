@@ -2,9 +2,11 @@
 4   Lint/Debugger
 2   Layout/TrailingEmptyLines [Safe Correctable]
 2   Layout/TrailingWhitespace [Safe Correctable]
+2   Style/FrozenStringLiteralComment [Unsafe Correctable]
+1   Layout/EmptyLines [Safe Correctable]
 1   Layout/IndentationStyle [Safe Correctable]
 1   Layout/LineLength [Safe Correctable]
 1   Style/NilComparison [Safe Correctable]
 --
-11  Total in 2 files
+14  Total in 2 files
 

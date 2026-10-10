@@ -1,1 +1,2 @@
+<root>/tests/formatters/foo.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 <root>/tests/formatters/foo.rb:1:6: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.

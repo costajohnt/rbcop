@@ -1,10 +1,13 @@
 Bundler/DuplicatedGem
 Bundler/DuplicatedGroup
+Bundler/GemFilename
 Bundler/InsecureProtocolSource
 Bundler/OrderedGems
 Gemspec/DuplicatedAssignment
 Gemspec/OrderedDependencies
+Gemspec/RequiredRubyVersion
 Gemspec/RubyVersionGlobalsUsage
+Layout/EmptyLines
 Layout/IndentationStyle
 Layout/LineLength
 Layout/SpaceAfterColon
@@ -21,6 +24,7 @@ Lint/Debugger
 Style/AndOr
 Style/ColonMethodCall
 Style/DefWithParentheses
+Style/FrozenStringLiteralComment
 Style/MethodDefParentheses
 Style/NegatedIf
 Style/NegatedWhile

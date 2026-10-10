@@ -367,14 +367,14 @@ TvFXMeuCkZPcaEBLqvgPBhCuiZo8+sAAAAAASUVORK5CYII=
       <div class="infobox">
         <div class="total">
           3 files inspected,
-          11 offenses detected:
+          14 offenses detected:
         </div>
         <ul class="offenses-list">
 
 
             <li>
               <a href="#offense_basic.rb">
-                basic.rb - 10 offenses
+                basic.rb - 12 offenses
               </a>
             </li>
 
@@ -382,7 +382,7 @@ TvFXMeuCkZPcaEBLqvgPBhCuiZo8+sAAAAAASUVORK5CYII=
 
             <li>
               <a href="#offense_no_newline.rb">
-                no_newline.rb - 1 offense
+                no_newline.rb - 2 offenses
               </a>
             </li>
 
@@ -394,8 +394,19 @@ TvFXMeuCkZPcaEBLqvgPBhCuiZo8+sAAAAAASUVORK5CYII=
 
       <div class="offense-box" id="offense_basic.rb">
         <div class="box-title-placeholder"><h3>&nbsp;</h3></div>
-        <div class="box-title"><h3>basic.rb - 10 offenses</h3></div>
+        <div class="box-title"><h3>basic.rb - 12 offenses</h3></div>
         <div class="offense-reports">
+
+          <div class="report">
+            <div class="meta">
+              <span class="location">Line #1</span> –
+              <span class="severity convention">convention:</span>
+              <span class="message">Style/FrozenStringLiteralComment: Missing frozen string literal comment.</span>
+            </div>
+
+            <pre><code><span class="highlight convention">c</span>lass Foo   </code></pre>
+
+          </div>
 
           <div class="report">
             <div class="meta">
@@ -416,6 +427,15 @@ TvFXMeuCkZPcaEBLqvgPBhCuiZo8+sAAAAAASUVORK5CYII=
             </div>
 
             <pre><code><span class="highlight convention">	</span>x = 1</code></pre>
+
+          </div>
+
+          <div class="report">
+            <div class="meta">
+              <span class="location">Line #5</span> –
+              <span class="severity convention">convention:</span>
+              <span class="message">Layout/EmptyLines: Extra blank line detected.</span>
+            </div>
 
           </div>
 
@@ -514,8 +534,19 @@ TvFXMeuCkZPcaEBLqvgPBhCuiZo8+sAAAAAASUVORK5CYII=
 
       <div class="offense-box" id="offense_no_newline.rb">
         <div class="box-title-placeholder"><h3>&nbsp;</h3></div>
-        <div class="box-title"><h3>no_newline.rb - 1 offense</h3></div>
+        <div class="box-title"><h3>no_newline.rb - 2 offenses</h3></div>
         <div class="offense-reports">
+
+          <div class="report">
+            <div class="meta">
+              <span class="location">Line #1</span> –
+              <span class="severity convention">convention:</span>
+              <span class="message">Style/FrozenStringLiteralComment: Missing frozen string literal comment.</span>
+            </div>
+
+            <pre><code><span class="highlight convention">p</span>uts 1</code></pre>
+
+          </div>
 
           <div class="report">
             <div class="meta">

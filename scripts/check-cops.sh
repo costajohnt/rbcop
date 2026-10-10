@@ -22,9 +22,10 @@ for c in $corpora; do
   # Where a RuboCop cop crashed it reported nothing, so drop rbcop's offenses for that (cop, file).
   crashes="$oracle_root/$c.txt.crashes"
   [ -f "$crashes" ] || crashes=/dev/null
-  (cd "$corpus_root/$c" && "$bin" -c "$root/config/all-cops.yml" --format emacs --only "$cops" . 2>"$out/$c.err") \
+  # rbcop-oracle = emacs plus range end (path:line:col:last_line:last_col), like scripts/oracle_formatter.rb.
+  (cd "$corpus_root/$c" && "$bin" --config "$root/config/all-cops.yml" --format rbcop-oracle --only "$cops" . 2>"$out/$c.err") \
     | awk -F'\t' 'FILENAME == ARGV[1] { skip[$1 "\t" $2] = 1; next }
-        { path = $0; sub(/:[0-9]+:[0-9]+: .*/, "", path)
+        { path = $0; sub(/:[0-9]+:[0-9]+:[0-9]+:[0-9]+: .*/, "", path)
           cop = $0; sub(/^.*: [CWEFRI]: (\[Correctable\] )?/, "", cop); sub(/: .*/, "", cop)
           if (!((cop "\t" path) in skip)) print }' "$crashes" - \
     | norm > "$out/$c.rbcop" || true

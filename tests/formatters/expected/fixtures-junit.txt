@@ -1,13 +1,20 @@
 <?xml version='1.0'?>
 <testsuites>
-  <testsuite name='rubocop' tests='3' failures='11'>
+  <testsuite name='rubocop' tests='3' failures='14'>
     <testcase classname='basic' name='Bundler/DuplicatedGem'/>
     <testcase classname='basic' name='Bundler/DuplicatedGroup'/>
+    <testcase classname='basic' name='Bundler/GemFilename'/>
     <testcase classname='basic' name='Bundler/InsecureProtocolSource'/>
     <testcase classname='basic' name='Bundler/OrderedGems'/>
     <testcase classname='basic' name='Gemspec/DuplicatedAssignment'/>
     <testcase classname='basic' name='Gemspec/OrderedDependencies'/>
+    <testcase classname='basic' name='Gemspec/RequiredRubyVersion'/>
     <testcase classname='basic' name='Gemspec/RubyVersionGlobalsUsage'/>
+    <testcase classname='basic' name='Layout/EmptyLines'>
+      <failure type='Layout/EmptyLines' message='Layout/EmptyLines: Extra blank line detected.'>
+        <root>/tests/fixtures/basic.rb:5:1
+      </failure>
+    </testcase>
     <testcase classname='basic' name='Layout/IndentationStyle'>
       <failure type='Layout/IndentationStyle' message='Layout/IndentationStyle: Tab detected in indentation.'>
         <root>/tests/fixtures/basic.rb:3:1
@@ -57,6 +64,11 @@
     <testcase classname='basic' name='Style/AndOr'/>
     <testcase classname='basic' name='Style/ColonMethodCall'/>
     <testcase classname='basic' name='Style/DefWithParentheses'/>
+    <testcase classname='basic' name='Style/FrozenStringLiteralComment'>
+      <failure type='Style/FrozenStringLiteralComment' message='Style/FrozenStringLiteralComment: Missing frozen string literal comment.'>
+        <root>/tests/fixtures/basic.rb:1:1
+      </failure>
+    </testcase>
     <testcase classname='basic' name='Style/MethodDefParentheses'/>
     <testcase classname='basic' name='Style/NegatedIf'/>
     <testcase classname='basic' name='Style/NegatedWhile'/>
@@ -69,11 +81,14 @@
     <testcase classname='basic' name='Style/UnlessElse'/>
     <testcase classname='clean' name='Bundler/DuplicatedGem'/>
     <testcase classname='clean' name='Bundler/DuplicatedGroup'/>
+    <testcase classname='clean' name='Bundler/GemFilename'/>
     <testcase classname='clean' name='Bundler/InsecureProtocolSource'/>
     <testcase classname='clean' name='Bundler/OrderedGems'/>
     <testcase classname='clean' name='Gemspec/DuplicatedAssignment'/>
     <testcase classname='clean' name='Gemspec/OrderedDependencies'/>
+    <testcase classname='clean' name='Gemspec/RequiredRubyVersion'/>
     <testcase classname='clean' name='Gemspec/RubyVersionGlobalsUsage'/>
+    <testcase classname='clean' name='Layout/EmptyLines'/>
     <testcase classname='clean' name='Layout/IndentationStyle'/>
     <testcase classname='clean' name='Layout/LineLength'/>
     <testcase classname='clean' name='Layout/SpaceAfterColon'/>
@@ -91,6 +106,7 @@
     <testcase classname='clean' name='Style/AndOr'/>
     <testcase classname='clean' name='Style/ColonMethodCall'/>
     <testcase classname='clean' name='Style/DefWithParentheses'/>
+    <testcase classname='clean' name='Style/FrozenStringLiteralComment'/>
     <testcase classname='clean' name='Style/MethodDefParentheses'/>
     <testcase classname='clean' name='Style/NegatedIf'/>
     <testcase classname='clean' name='Style/NegatedWhile'/>
@@ -99,11 +115,14 @@
     <testcase classname='clean' name='Style/UnlessElse'/>
     <testcase classname='no_newline' name='Bundler/DuplicatedGem'/>
     <testcase classname='no_newline' name='Bundler/DuplicatedGroup'/>
+    <testcase classname='no_newline' name='Bundler/GemFilename'/>
     <testcase classname='no_newline' name='Bundler/InsecureProtocolSource'/>
     <testcase classname='no_newline' name='Bundler/OrderedGems'/>
     <testcase classname='no_newline' name='Gemspec/DuplicatedAssignment'/>
     <testcase classname='no_newline' name='Gemspec/OrderedDependencies'/>
+    <testcase classname='no_newline' name='Gemspec/RequiredRubyVersion'/>
     <testcase classname='no_newline' name='Gemspec/RubyVersionGlobalsUsage'/>
+    <testcase classname='no_newline' name='Layout/EmptyLines'/>
     <testcase classname='no_newline' name='Layout/IndentationStyle'/>
     <testcase classname='no_newline' name='Layout/LineLength'/>
     <testcase classname='no_newline' name='Layout/SpaceAfterColon'/>
@@ -125,6 +144,11 @@
     <testcase classname='no_newline' name='Style/AndOr'/>
     <testcase classname='no_newline' name='Style/ColonMethodCall'/>
     <testcase classname='no_newline' name='Style/DefWithParentheses'/>
+    <testcase classname='no_newline' name='Style/FrozenStringLiteralComment'>
+      <failure type='Style/FrozenStringLiteralComment' message='Style/FrozenStringLiteralComment: Missing frozen string literal comment.'>
+        <root>/tests/fixtures/no_newline.rb:1:1
+      </failure>
+    </testcase>
     <testcase classname='no_newline' name='Style/MethodDefParentheses'/>
     <testcase classname='no_newline' name='Style/NegatedIf'/>
     <testcase classname='no_newline' name='Style/NegatedWhile'/>

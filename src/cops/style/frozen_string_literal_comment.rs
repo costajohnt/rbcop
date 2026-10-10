@@ -44,7 +44,7 @@ impl Cop for FrozenStringLiteralComment {
             }
             "always_true" => {
                 if values.is_empty() {
-                    cx.add(0, 0, "Missing magic comment `# frozen_string_literal: true`.");
+                    cx.add(0, 1.min(src.text.len()), "Missing magic comment `# frozen_string_literal: true`.");
                 } else if values[0] != "true"
                     && let Some(c) = comment
                 {
@@ -53,7 +53,7 @@ impl Cop for FrozenStringLiteralComment {
             }
             _ => {
                 if !valid {
-                    cx.add(0, 0, "Missing frozen string literal comment.");
+                    cx.add(0, 1.min(src.text.len()), "Missing frozen string literal comment.");
                 }
             }
         }

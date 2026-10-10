@@ -3,12 +3,16 @@ W.C
 
 Offenses:
 
+basic.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+class Foo   
+^
 basic.rb:1:10: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
 class Foo   
          ^^^
 basic.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
 	x = 1
 ^
+basic.rb:5:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
 basic.rb:6:10: C: [Correctable] Style/NilComparison: Prefer the use of the nil? predicate.
     if x == nil
          ^^
@@ -31,8 +35,11 @@ basic.rb:14:19: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace 
       heredoc line   
                   ^^^
 basic.rb:23:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+no_newline.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+puts 1
+^
 no_newline.rb:1:7: C: [Correctable] Layout/TrailingEmptyLines: Final newline missing.
 puts 1
       
 
-3 files inspected, 11 offenses detected, 6 offenses autocorrectable
+3 files inspected, 14 offenses detected, 9 offenses autocorrectable

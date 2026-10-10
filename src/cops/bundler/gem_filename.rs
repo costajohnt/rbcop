@@ -18,6 +18,6 @@ impl Cop for GemFilename {
         // processed_source.file_path: RuboCop resolves the real absolute path.
         let full = std::fs::canonicalize(path).map_or_else(|_| path.to_string(), |p| p.display().to_string());
         // add_global_offense: RuboCop reports it at line 1, column 1 with no source range.
-        cx.add(0, 0, format!("{msg} (file path: {full})."));
+        cx.add_global(format!("{msg} (file path: {full})."));
     }
 }

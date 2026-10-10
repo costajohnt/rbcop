@@ -1,6 +1,6 @@
 
-10  basic.rb
-1   no_newline.rb
+12  basic.rb
+2   no_newline.rb
 --
-11  Total in 2 files
+14  Total in 2 files
 

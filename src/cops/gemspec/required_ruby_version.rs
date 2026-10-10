@@ -126,7 +126,7 @@ impl Cop for RequiredRubyVersion {
     fn on_file(&self, cx: &mut Cx) {
         if !cx.state::<State>().found {
             // add_global_offense
-            cx.add(0, 0, "`required_ruby_version` should be specified.");
+            cx.add_global("`required_ruby_version` should be specified.");
         }
     }
 }

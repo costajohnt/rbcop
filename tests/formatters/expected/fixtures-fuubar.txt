@@ -1,11 +1,15 @@
 
 Progress: |
+basic.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+class Foo   
+^
 basic.rb:1:10: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
 class Foo   
          ^^^
 basic.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
 	x = 1
 ^
+basic.rb:5:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
 basic.rb:6:10: C: [Correctable] Style/NilComparison: Prefer the use of the nil? predicate.
     if x == nil
          ^^
@@ -30,4 +34,4 @@ basic.rb:14:19: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace 
 basic.rb:23:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
 Progress: |====================================================================|
 
-1 file inspected, 10 offenses detected, 5 offenses autocorrectable
+1 file inspected, 12 offenses detected, 7 offenses autocorrectable

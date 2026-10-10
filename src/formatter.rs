@@ -445,6 +445,11 @@ const KEYS: &[&str] = &[
 
 /// FormatterSet#builtin_formatter_class: the formatter name for a `-f` key.
 pub fn resolve(key: &str) -> Result<&'static str, String> {
+    // Not a RuboCop formatter: emacs plus each offense's end position, matched by
+    // scripts/oracle_formatter.rb, so the parity gate also checks ranges.
+    if key == "rbcop-oracle" {
+        return Ok("rbcop-oracle");
+    }
     if key.starts_with(|c: char| c.is_ascii_uppercase()) || key.starts_with("::") {
         return Err(format!("custom formatter classes are not supported by rbcop: {key}"));
     }
@@ -466,6 +471,7 @@ fn build(name: &str, color: bool, cx: &Ctx, tty: bool) -> Box<dyn Formatter> {
     match name.replace(['[', ']'], "").as_str() {
         "clang" => Box::new(Text::new(Kind::Clang, p, tty)),
         "emacs" => Box::new(report::Emacs),
+        "rbcop-oracle" => Box::new(report::Oracle),
         "files" => Box::new(report::Files),
         "fuubar" => Box::new(Text::new(Kind::Fuubar, p, tty)),
         "github" => Box::new(report::Github::default()),

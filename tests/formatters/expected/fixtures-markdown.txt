@@ -1,8 +1,14 @@
 # RuboCop Inspection Report
 
-3 files inspected, 11 offenses detected:
+3 files inspected, 14 offenses detected:
 
-### basic.rb - (10 offenses)
+### basic.rb - (12 offenses)
+  * **Line # 1 - convention:** Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+
+    ```rb
+    class Foo   
+    ```
+
   * **Line # 1 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
 
     ```rb
@@ -13,6 +19,12 @@
 
     ```rb
     	x = 1
+    ```
+
+  * **Line # 5 - convention:** Layout/EmptyLines: Extra blank line detected.
+
+    ```rb
+     ...
     ```
 
   * **Line # 6 - convention:** Style/NilComparison: Prefer the use of the `nil?` predicate.
@@ -63,7 +75,13 @@
      ...
     ```
 
-### no_newline.rb - (1 offense)
+### no_newline.rb - (2 offenses)
+  * **Line # 1 - convention:** Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+
+    ```rb
+    puts 1
+    ```
+
   * **Line # 1 - convention:** Layout/TrailingEmptyLines: Final newline missing.
 
     ```rb
