@@ -135,12 +135,17 @@ impl Cx<'_, '_> {
 
     /// Report an offense on a byte range. Severity is filled in by the runner.
     pub fn add(&mut self, start: usize, end: usize, message: impl Into<String>) {
-        self.push(start, end, message.into(), self.correctable, false);
+        self.add_with(start, end, message, self.correctable);
     }
 
     /// Report an offense whose `[Correctable]` flag differs from the cop's default
     /// (e.g. LineLength is only correctable when it finds a place to break the line).
     pub fn add_with(&mut self, start: usize, end: usize, message: impl Into<String>, correctable: bool) {
+        // Base#add_offense: `return unless current_offense_locations.add?(range)`, whatever the
+        // message, so a cop's second offense on an identical range is dropped.
+        if self.fixes.seen.contains(&(start, end)) {
+            return;
+        }
         self.push(start, end, message.into(), correctable, false);
     }
 
@@ -194,8 +199,9 @@ impl Cx<'_, '_> {
 
     /// A corrector raised ClobberingError: RuboCop reports the cop error and loses the offense.
     fn cop_error(&self, start: usize) {
+        // Range#line and the 0-based Range#column.
         let (line, col) = crate::formatter::line_col(self.src.text, start);
-        eprintln!("An error occurred while {} cop was inspecting {}:{line}:{col}.", self.cop, self.src.path);
+        eprintln!("An error occurred while {} cop was inspecting {}:{line}:{}.", self.cop, self.src.path, col - 1);
     }
 
     fn push(&mut self, start: usize, end: usize, message: String, correctable: bool, corrected: bool) {

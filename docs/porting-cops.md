@@ -279,6 +279,8 @@ More traps found while porting:
 - A Prism `'a' \ 'b'` concatenation is a flat InterpolatedStringNode without opening (parser's flat
   dstr). A backslash-newline inside an interpolating literal is a continuation: still a `str`.
 - Always pass `--cache false` to RuboCop on reused scratch dirs.
+- Prism `CallNode#message_loc` of an index call (`foo[x]`, `foo[x] = y`) spans the brackets and
+  arguments; use `name()` when you mean parser's method name.
 - Helpers: `if_node::{normal_keyword, parts, is_elsif}`, `ruby_string::symbol_inspect`.
 - Binary-encoded files: Ruby `String#inspect` escapes every non-ASCII byte (`"\xE3\x81\x82"`), so
   use `ruby_string::inspect_binary` when `cx.src.binary`.

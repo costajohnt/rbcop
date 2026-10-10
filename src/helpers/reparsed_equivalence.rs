@@ -106,7 +106,9 @@ impl<'pr> Visit<'pr> for Ser<'_> {
             self.out.push_str(&k.to_string());
             if let Some(c) = node.as_call_node() {
                 self.out.push(' ');
-                self.out.push_str(c.message_loc().map_or("", |m| std::str::from_utf8(m.as_slice()).unwrap_or("")));
+                // The method name, as in parser's `send`: an index call's message_loc spans its
+                // arguments (`[("a")]`), and `foo.()` is `foo.call`.
+                self.out.push_str(std::str::from_utf8(c.name().as_slice()).unwrap_or(""));
                 self.out.push(if c.receiver().is_some() { 'r' } else { '-' });
                 self.out
                     .push_str(c.call_operator_loc().map_or("", |m| std::str::from_utf8(m.as_slice()).unwrap_or("")));
