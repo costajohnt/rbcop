@@ -1,0 +1,30 @@
+Gemfile:6:1: C: [Correctable] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `activesupport` should appear before `zeitwerk`.
+Rakefile.rb:15:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+Rakefile.rb:16:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+Rakefile.rb:1:1: C: Naming/FileName: The name of this source file (`Rakefile.rb`) should use snake_case.
+Rakefile.rb:20:1: R: Metrics/BlockLength: Block has too many lines. [26/25]
+Rakefile.rb:3:15: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+Rakefile.rb:8:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+a.rb:15:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+a.rb:16:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+a.rb:20:1: R: Metrics/BlockLength: Block has too many lines. [26/25]
+a.rb:3:15: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+a.rb:8:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+b.rb:15:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+b.rb:16:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+b.rb:20:1: R: Metrics/BlockLength: Block has too many lines. [26/25]
+c.rb:15:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+c.rb:16:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+c.rb:20:1: R: Metrics/BlockLength: Block has too many lines. [26/25]
+c.rb:3:15: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+c.rb:8:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+lib/BadName.rb:15:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+lib/BadName.rb:16:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+lib/BadName.rb:20:1: R: Metrics/BlockLength: Block has too many lines. [26/25]
+lib/BadName.rb:3:15: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+lib/BadName.rb:8:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+vendor/v.rb:15:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+vendor/v.rb:16:3: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+vendor/v.rb:20:1: R: Metrics/BlockLength: Block has too many lines. [26/25]
+vendor/v.rb:3:15: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+vendor/v.rb:8:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.

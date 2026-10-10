@@ -78,5 +78,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   `disable X` pair for an unported, default-disabled cop can differ (not hit by the gates).
 - Lint/RedundantCopDisableDirective judges directives against rbcop's own offenses, so a directive
   for a cop rbcop has not ported yet (e.g. `# rubocop:disable Style/Send`) is reported as
-  redundant. `--except Lint` / `--except RedundantCopDisableDirective` (unqualified or department) do not
-  switch it off, because rbcop's `--except` matches exact names only.
+  redundant.
+- Department-level `NewCops` (a department's `NewCops: enable` or a version) is not read; only
+  `AllCops: NewCops: enable` enables pending cops. The pending-cops notice RuboCop prints is not ported.
+- JUnit lists testcases in sorted cop order; RuboCop uses its registry (load) order. The `-a` summary
+  says "N offenses autocorrectable" where RuboCop says "N more offenses can be corrected with
+  `rubocop -A`".

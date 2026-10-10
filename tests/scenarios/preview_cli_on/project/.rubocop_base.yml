@@ -1,0 +1,6 @@
+Layout/TrailingWhitespace:
+  Exclude:
+    - 'a.rb'
+Layout/EmptyLines:
+  Exclude:
+    - 'a.rb'
