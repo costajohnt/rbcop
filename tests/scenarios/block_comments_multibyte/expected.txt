@@ -1,0 +1,8 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+after_begin.rb:1:1: C: [Correctable] Style/BlockComments: Do not use block comments.
+after_begin.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+after_end.rb:1:1: C: [Correctable] Style/BlockComments: Do not use block comments.
+after_end.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+body.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+body.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.
+body.rb:2:1: C: [Correctable] Style/BlockComments: Do not use block comments.
