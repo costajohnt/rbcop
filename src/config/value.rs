@@ -134,10 +134,149 @@ const SYM_MARK: &str = "\u{1}rbcop-symbol:";
 
 /// Parse a YAML document the way Psych + RuboCop's restricted loader would.
 pub fn parse_yaml(text: &str) -> Result<Value, String> {
+    parse_yaml_file(text, "<unknown>")
+}
+
+/// `parse_yaml`, with errors worded as RuboCop prints them for the config file `path`: Psych's
+/// `(path): <problem> <context> at line L column C`, `An alias referenced an unknown anchor: x`,
+/// `Tried to load unspecified class: Date`.
+pub fn parse_yaml_file(text: &str, path: &str) -> Result<Value, String> {
     let text = mark_regexps(text);
-    let mut loader = Loader::default();
-    Parser::new(text.chars()).load(&mut loader, true).map_err(|e| e.to_string())?;
-    Ok(loader.docs.into_iter().next().map_or(Value::Map(Map::default()), convert))
+    let mut checks = Checks { chars: text.chars().collect(), ..Checks::default() };
+    if let Err(e) = Parser::new(text.chars()).load(&mut checks, true) {
+        return Err(checks.syntax_error(&e, path));
+    }
+    if let Some(e) = checks.error {
+        return Err(e);
+    }
+    Ok(checks.loader.docs.into_iter().next().map_or(Value::Map(Map::default()), convert))
+}
+
+/// Feeds the loader, keeping what Psych's error messages need: the open collections (where
+/// libyaml's context mark is, flow or block) and the first class the restricted loader refuses.
+#[derive(Default)]
+struct Checks {
+    loader: Loader,
+    chars: Vec<char>,
+    /// Start mark of each open collection, and whether it is a flow collection.
+    opens: Vec<(Marker, bool)>,
+    /// A block mapping just opened: yaml-rust2 marks it at the first `:`, libyaml at its first key,
+    /// the next event.
+    key_mark_pending: bool,
+    error: Option<String>,
+}
+
+impl MarkedEventReceiver for Checks {
+    fn on_event(&mut self, ev: Event, mark: Marker) {
+        if std::mem::take(&mut self.key_mark_pending)
+            && let Some(open) = self.opens.last_mut()
+        {
+            open.0 = mark;
+        }
+        let refused = match &ev {
+            Event::SequenceStart(_, tag) | Event::MappingStart(_, tag) => {
+                let flow = matches!(self.chars.get(mark.index()), Some('[' | '{'));
+                self.opens.push((mark, flow));
+                self.key_mark_pending = !flow && matches!(ev, Event::MappingStart(..));
+                tag.as_ref().and_then(refused_tag)
+            }
+            Event::SequenceEnd | Event::MappingEnd => {
+                self.opens.pop();
+                None
+            }
+            Event::Scalar(v, style, _, tag) => match tag {
+                Some(t) => refused_tag(t),
+                None if *style == TScalarStyle::Plain => refused_scalar(v),
+                None => None,
+            },
+            _ => None,
+        };
+        if self.error.is_none()
+            && let Some(class) = refused
+        {
+            self.error = Some(format!("Tried to load unspecified class: {class}"));
+        }
+        self.loader.on_event(ev, mark);
+    }
+}
+
+impl Checks {
+    /// Psych::SyntaxError#message (libyaml's problem, then its context, at the context mark), or
+    /// Psych's AnchorNotDefined for an alias yaml-rust2 rejects.
+    fn syntax_error(&self, e: &yaml_rust2::ScanError, path: &str) -> String {
+        let info = e.info();
+        if info == "while parsing node, found unknown anchor" {
+            let name: String = self.chars[(e.marker().index() + 1).min(self.chars.len())..]
+                .iter()
+                .take_while(|c| !c.is_whitespace() && !matches!(c, ',' | '[' | ']' | '{' | '}'))
+                .collect();
+            return format!("An alias referenced an unknown anchor: {name}");
+        }
+        let (problem, context) = match info.split_once(", ") {
+            Some((c, p)) if c.starts_with("while ") => (p, Some(c)),
+            _ => (info, None),
+        };
+        let at = self.chars.get(e.marker().index()).copied();
+        let (problem, context) = match (problem, context) {
+            ("expected ',' or ']'", c) => ("did not find expected ',' or ']'", c),
+            (p, Some("while scanning an anchor or alias")) => {
+                (p, Some(if at == Some('*') { "while scanning an alias" } else { "while scanning an anchor" }))
+            }
+            (p, None) if p.starts_with("unexpected character: ") || p.starts_with("tabs disallowed") => {
+                ("found character that cannot start any token", Some("while scanning for the next token"))
+            }
+            pc => pc,
+        };
+        let in_flow = self.opens.last().is_some_and(|o| o.1);
+        let context = match context {
+            Some("while parsing a node") if in_flow => Some("while parsing a flow node"),
+            Some("while parsing a node") => Some("while parsing a block node"),
+            c => c,
+        };
+        // libyaml marks a collection error at the collection's start.
+        let mark = match context {
+            Some(
+                "while parsing a block mapping"
+                | "while parsing a flow mapping"
+                | "while parsing a flow sequence"
+                | "while parsing a block collection",
+            ) => self.opens.last().map_or(*e.marker(), |o| o.0),
+            _ => *e.marker(),
+        };
+        let what = context.map_or(problem.to_string(), |c| format!("{problem} {c}"));
+        // yaml-rust2 marks a disallowed tab after it, libyaml at it.
+        let col = if info.starts_with("tabs disallowed") { mark.col() } else { mark.col() + 1 };
+        format!("({path}): {what} at line {} column {col}", mark.line())
+    }
+}
+
+/// The class Psych's restricted loader (RuboCop permits Regexp and Symbol) refuses for a tag.
+fn refused_tag(tag: &yaml_rust2::parser::Tag) -> Option<String> {
+    let suffix = tag.suffix.strip_prefix("ruby/")?;
+    ["object:", "struct:", "hash:", "array:", "exception:"]
+        .iter()
+        .find_map(|p| suffix.strip_prefix(p))
+        .map(String::from)
+}
+
+/// ScalarScanner turns a plain timestamp into a Time and a date into a Date, which RuboCop's
+/// restricted loader refuses.
+fn refused_scalar(s: &str) -> Option<String> {
+    static TIME: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(
+            r"^-?\d{4}-\d{1,2}-\d{1,2}(?:[Tt]|[ \t\r\n\x0B\x0C]+)\d{1,2}:\d\d:\d\d(?:\.\d*)?(?:[ \t\r\n\x0B\x0C]*(?:Z|[-+]\d{1,2}:?(?:\d\d)?))?$",
+        )
+        .unwrap()
+    });
+    static DATE: LazyLock<Regex> =
+        LazyLock::new(|| Regex::new(r"^\d{4}-(?:1[012]|0\d|\d)-(?:[12]\d|3[01]|0\d|\d)$").unwrap());
+    if TIME.is_match(s) {
+        Some("Time".into())
+    } else if DATE.is_match(s) {
+        Some("Date".into())
+    } else {
+        None
+    }
 }
 
 /// yaml-rust2's YamlLoader, except that a duplicated key replaces the earlier value in place, as
