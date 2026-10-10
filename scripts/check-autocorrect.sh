@@ -24,13 +24,20 @@ for c in $corpora; do
   rm -rf "$dir"
   mkdir -p "$dir/rubocop" "$dir/rbcop"
   # Files with at least one offense for these cops, relative to the corpus.
-  grep -E "$pattern" "$oracle_root/$c.txt" | sed -E 's/:[0-9]+:[0-9]+: .*//' | sort -u \
+  grep -E "$pattern" "$oracle_root/$c.txt" | sed -E 's/:[0-9]+:[0-9]+(:[0-9]+:[0-9]+)?: .*//' | sort -u \
     | sed "s|^$corpus_root/$c/||" | head -n "${LIMIT:-1000000}" > "$dir/files"
-  # Keep the corpus's target Ruby (detected from these files at its root).
-  for v in .ruby-version .tool-versions Gemfile.lock gems.locked; do
+  # Keep the corpus's target Ruby (TargetRuby reads these at its root; a root gemspec's
+  # required_ruby_version takes precedence over .ruby-version, so it must come along too).
+  for v in .ruby-version .tool-versions mise.toml Gemfile.lock gems.locked; do
     if [ -f "$corpus_root/$c/$v" ]; then
       cp "$corpus_root/$c/$v" "$dir/rubocop/$v"
       cp "$corpus_root/$c/$v" "$dir/rbcop/$v"
+    fi
+  done
+  for g in "$corpus_root/$c"/*.gemspec; do
+    if [ -f "$g" ]; then
+      cp "$g" "$dir/rubocop/"
+      cp "$g" "$dir/rbcop/"
     fi
   done
   (cd "$corpus_root/$c" && while IFS= read -r f; do
@@ -42,8 +49,10 @@ for c in $corpora; do
   (cd "$dir/rubocop" && RBENV_VERSION=4.0.6 rbenv exec rubocop "$mode" --only "$cops" --force-default-config \
     --cache false --format emacs . > ../rubocop.out 2> ../rubocop.err) || true
   (cd "$dir/rbcop" && "$bin" "$mode" --only "$cops" --force-default-config --format emacs . > ../rbcop.out 2> ../rbcop.err) || true
-  sed "s|^$dir/rubocop/||" "$dir/rubocop.out" | LC_ALL=C sort > "$dir/rubocop.norm"
-  sed "s|^$dir/rbcop/||" "$dir/rbcop.out" | LC_ALL=C sort > "$dir/rbcop.norm"
+  # Both tools print physical paths (getcwd), e.g. /private/var on macOS.
+  phys=$(cd "$dir" && pwd -P)
+  sed "s|^$phys/rubocop/||; s|^$dir/rubocop/||" "$dir/rubocop.out" | LC_ALL=C sort > "$dir/rubocop.norm"
+  sed "s|^$phys/rbcop/||; s|^$dir/rbcop/||" "$dir/rbcop.out" | LC_ALL=C sort > "$dir/rbcop.norm"
   diff "$dir/rubocop.norm" "$dir/rbcop.norm" > "$dir/report.diff" || true
   diff -r "$dir/rubocop" "$dir/rbcop" > "$dir/files.diff" || true
   files=$(wc -l < "$dir/files" | tr -d ' ')
