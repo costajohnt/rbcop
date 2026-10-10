@@ -321,6 +321,9 @@ More traps found while porting:
   `":`.
 - `Util#parentheses?` tests `loc.end == ')'`.
 - Helper: `local_references::lvar_lvasgn_names` (`each_descendant(:lvar, :lvasgn)` names).
+- `before_declaring_variable` cops use `variable_force::investigate_with`.
+- rubocop-ast `receiver`: `(send $_ ...)`, or `(any_block (call $_ ...))` for blocks; a `defs`
+  uses its own receiver.
 - Prism `CallNode#message_loc` of an index call (`foo[x]`, `foo[x] = y`) spans the brackets and
   arguments; use `name()` when you mean parser's method name.
 - Helpers: `if_node::{normal_keyword, parts, is_elsif}`, `ruby_string::symbol_inspect`.
