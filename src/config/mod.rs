@@ -604,6 +604,10 @@ impl Store {
         if let Some(Value::Map(gems)) = hash.remove("inherit_gem") {
             let mut inherit = seq(hash.remove("inherit_from"));
             for (gem, paths) in Arc::unwrap_or_clone(gems).0 {
+                // ConfigLoaderResolver#resolve_inheritance_from_gems's ArgumentError.
+                if gem == "rubocop" {
+                    return Err("can't inherit configuration from the rubocop gem".into());
+                }
                 let dir = self.gem_dir(&gem)?;
                 for p in seq(Some(paths)).into_iter().rev() {
                     if let Some(p) = p.as_string() {
@@ -859,12 +863,20 @@ impl Store {
             return Err(format!("invalid gem name {gem:?} in config"));
         }
         let out = std::process::Command::new("ruby")
-            .args(["-e", "print Gem::Specification.find_by_name(ARGV[0]).gem_dir", "--", gem])
+            .args([
+                "-e",
+                "begin; print Gem::Specification.find_by_name(ARGV[0]).gem_dir; \
+                 rescue Gem::LoadError => e; $stderr.print e.message; exit 1; end",
+                "--",
+                gem,
+            ])
             .current_dir(&self.cwd)
             .output()
             .map_err(|e| format!("inherit_gem {gem}: cannot run ruby: {e}"))?;
         if !out.status.success() {
-            return Err(format!("inherit_gem {gem}: gem not found ({})", String::from_utf8_lossy(&out.stderr).trim()));
+            // gem_config_path's Gem::LoadError.
+            let message = String::from_utf8_lossy(&out.stderr);
+            return Err(format!("Unable to find gem {gem}; is the gem installed? {}", message.trim_end()));
         }
         let dir = PathBuf::from(String::from_utf8_lossy(&out.stdout).into_owned());
         self.gem_dirs.insert(gem.to_string(), dir.clone());
