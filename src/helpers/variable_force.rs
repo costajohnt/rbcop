@@ -98,6 +98,8 @@ pub struct PNode {
     pub kind: usize,
     /// `send` with `&.` (parser `csend`).
     pub csend: bool,
+    /// `if` written as `unless` (parser keeps `(if cond else then)`).
+    pub unless: bool,
     pub children: Vec<Option<usize>>,
     pub parent: Option<usize>,
 }
@@ -266,6 +268,7 @@ impl Tree {
             modifier: false,
             kind: 0,
             csend: false,
+            unless: false,
             children: Vec::new(),
             parent: None,
         });
@@ -592,6 +595,7 @@ impl Tree {
                 let n = node.as_unless_node().unwrap();
                 let i = self.mk(T::If, range);
                 self.nodes[i].modifier = n.end_keyword_loc().is_none();
+                self.nodes[i].unless = true;
                 self.conv_kid(i, Some(n.predicate()));
                 let els = n.else_clause().and_then(|e| self.stmts(e.statements()));
                 self.kid(i, els);
@@ -631,6 +635,7 @@ impl Tree {
                 for w in c.conditions().iter() {
                     let wn = w.as_when_node().unwrap();
                     let wi = self.mk(T::Other, loc(&w));
+                    self.nodes[wi].kind = kind::WHEN_NODE;
                     for cond in wn.conditions().iter() {
                         let x = self.conv(&cond);
                         self.kid(wi, x);
@@ -650,6 +655,7 @@ impl Tree {
                 for w in c.conditions().iter() {
                     let inn = w.as_in_node().unwrap();
                     let wi = self.mk(T::Other, loc(&w));
+                    self.nodes[wi].kind = kind::IN_NODE;
                     let pattern = inn.pattern();
                     // `in pat if cond`: Prism wraps the pattern in an IfNode/UnlessNode.
                     let guarded = match kind::of(&pattern) {
@@ -1169,24 +1175,36 @@ pub struct Scope {
     pub variables: Vec<usize>,
 }
 
-/// Runs VariableForce over the tree, calling `after_leaving_scope` for each scope as it is left.
-pub struct Force<'t, F: FnMut(&Tree, &Scope, &[Variable])> {
+/// Runs VariableForce over the tree, calling `before_declaring_variable` for each declaration
+/// (the new variable and `variable_table.find_variable(name)`) and `after_leaving_scope` for each
+/// scope as it is left.
+pub struct Force<'t, B: FnMut(&Tree, &Variable, Option<&Variable>), F: FnMut(&Tree, &Scope, &[Variable])> {
     tree: &'t Tree,
     scopes: Vec<Scope>,
     pub variables: Vec<Variable>,
     scanned: HashSet<usize>,
+    before: B,
     hook: F,
 }
 
 pub fn investigate<F: FnMut(&Tree, &Scope, &[Variable])>(tree: &Tree, hook: F) {
+    investigate_with(tree, |_, _, _| {}, hook);
+}
+
+/// `investigate` with a `before_declaring_variable` hook too.
+pub fn investigate_with<B: FnMut(&Tree, &Variable, Option<&Variable>), F: FnMut(&Tree, &Scope, &[Variable])>(
+    tree: &Tree,
+    before: B,
+    hook: F,
+) {
     let Some(root) = tree.root else { return };
-    let mut f = Force { tree, scopes: Vec::new(), variables: Vec::new(), scanned: HashSet::new(), hook };
+    let mut f = Force { tree, scopes: Vec::new(), variables: Vec::new(), scanned: HashSet::new(), before, hook };
     f.push_scope(root);
     f.process_node(root);
     f.pop_scope();
 }
 
-impl<F: FnMut(&Tree, &Scope, &[Variable])> Force<'_, F> {
+impl<B: FnMut(&Tree, &Variable, Option<&Variable>), F: FnMut(&Tree, &Scope, &[Variable])> Force<'_, B, F> {
     fn push_scope(&mut self, node: usize) {
         let naked = !self.tree.t(node).is_scope();
         self.scopes.push(Scope { scope: ScopeRef { node, naked }, variables: Vec::new() });
@@ -1222,14 +1240,17 @@ impl<F: FnMut(&Tree, &Scope, &[Variable])> Force<'_, F> {
 
     fn declare(&mut self, name: &str, node: usize) {
         let scope = self.scopes.last().unwrap().scope;
-        self.variables.push(Variable {
+        let variable = Variable {
             name: name.to_string(),
             declaration: node,
             scope,
             assignments: Vec::new(),
             references: Vec::new(),
             captured_by_block: false,
-        });
+        };
+        let outer = self.find_variable(name).map(|o| &self.variables[o]);
+        (self.before)(self.tree, &variable, outer);
+        self.variables.push(variable);
         let v = self.variables.len() - 1;
         let vars = &mut self.scopes.last_mut().unwrap().variables;
         match vars.iter().position(|&x| self.variables[x].name == name) {

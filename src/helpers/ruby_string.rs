@@ -148,3 +148,42 @@ pub fn float_to_s(f: f64) -> String {
     };
     format!("{sign}{body}")
 }
+
+/// A Ruby regexp source rewritten for the regex crate: Ruby's `\w \W \s \S \d \D \h \H` are
+/// ASCII-only classes (Rust's are Unicode), and `\Z` allows a final newline. Works inside
+/// character classes too (the regex crate nests classes).
+pub fn ruby_regex_classes(src: &str) -> String {
+    let mut out = String::with_capacity(src.len());
+    let mut chars = src.chars();
+    while let Some(c) = chars.next() {
+        if c != '\\' {
+            out.push(c);
+            continue;
+        }
+        let Some(e) = chars.next() else {
+            out.push(c);
+            break;
+        };
+        match e {
+            'w' => out.push_str("[0-9A-Za-z_]"),
+            'W' => out.push_str("[^0-9A-Za-z_]"),
+            's' => out.push_str(r"[\t\n\x0B\x0C\r ]"),
+            'S' => out.push_str(r"[^\t\n\x0B\x0C\r ]"),
+            'd' => out.push_str("[0-9]"),
+            'D' => out.push_str("[^0-9]"),
+            'h' => out.push_str("[0-9A-Fa-f]"),
+            'H' => out.push_str("[^0-9A-Fa-f]"),
+            'Z' => out.push_str(r"\n?\z"),
+            // Onigmo's Unicode `\p{Word}` / `\P{Word}` are the regex crate's (Unicode) `\w` / `\W`.
+            'p' | 'P' if chars.as_str().starts_with("{Word}") => {
+                out.push_str(if e == 'p' { r"\w" } else { r"\W" });
+                chars.nth("{Word}".len() - 1);
+            }
+            e => {
+                out.push('\\');
+                out.push(e);
+            }
+        }
+    }
+    out
+}
