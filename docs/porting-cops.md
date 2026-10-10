@@ -314,6 +314,11 @@ More traps found while porting:
 - Comment association: a `begin` (2+ statements) never gets leading comments (its first statement
   does); a statement gets a same-line trailing comment only if no descendant ends on that line.
 - `|a, b,|` gives a Prism `ImplicitRestNode` parameter that parser has no argument for.
+- Regexp cops reading `parsed_tree`: use `helpers::regexp_parser` (regexp_parser 2.12 subset).
+  Offsets are characters from the end of `loc.begin`; `#{}` is blanked one space per char and a
+  `#@ivar` part loses its `#`, shifting later positions left by one (RuboCop reports them shifted).
+- Prism regexp `closing_loc` includes the options (`/i`); parser `loc.end` is the delimiter only.
+- RuboCop's RESTRICT_ON_SEND lists matter: RedundantReturn includes `lambda`, so `-> {}` is checked.
 - `helpers::regexp_captures` counts named/numbered groups like `RegexpNode#each_capture`.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.
