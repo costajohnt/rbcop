@@ -53,7 +53,9 @@ impl Cop for NumericLiterals {
         }
         // AllowedPattern, anchored: `/\A#{regexp}\z/`.
         let patterns = cx.cfg.regexes("AllowedPatterns").into_iter().chain(cx.cfg.regexes("IgnoredPatterns"));
-        if patterns.into_iter().any(|r| Regex::new(&format!(r"\A(?:{})\z", r.as_str())).is_ok_and(|r| r.is_match(int))) {
+        if patterns.into_iter().any(|r| {
+            crate::config::value::ruby_regex(&format!(r"\A(?:{})\z", r.as_str())).is_some_and(|r| r.is_match(int))
+        }) {
             return;
         }
         if (int.chars().count() as i64) < cx.cfg.int("MinDigits").unwrap_or(5) {

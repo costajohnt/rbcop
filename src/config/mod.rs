@@ -41,7 +41,7 @@ pub struct Options {
 pub enum Pattern {
     Exact(String),
     Glob(String),
-    Regex(Regex),
+    Regex(value::RubyRegex),
 }
 
 impl Pattern {
@@ -124,7 +124,7 @@ impl CopConfig {
         self.params.get(key)
     }
     /// `cop_config[key]` as a list of Regex (AllowedPatterns style: strings become regexps).
-    pub fn regexes(&self, key: &str) -> Vec<Regex> {
+    pub fn regexes(&self, key: &str) -> Vec<value::RubyRegex> {
         match self.params.get(key) {
             Some(Value::Seq(items)) => items
                 .iter()

@@ -1,0 +1,9 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+patterns.rb:13:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `z`.
+patterns.rb:14:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+patterns.rb:14:5: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+patterns.rb:16:81: C: Layout/LineLength: Line is too long. [97/80]
+patterns.rb:5:1: C: Naming/VariableName: Use snake_case for variable names.
+patterns.rb:6:3: C: Naming/VariableName: Use snake_case for variable names.
+patterns.rb:7:1: C: Naming/VariableName: Use snake_case for variable names.
+patterns.rb:8:3: C: Naming/VariableName: Use snake_case for variable names.

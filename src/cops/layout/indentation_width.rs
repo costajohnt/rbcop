@@ -13,7 +13,7 @@ struct State {
     /// `ignore_node`d defs / conditionals, by span.
     ignored: HashSet<(usize, usize)>,
     /// AllowedPatterns (+ IgnoredPatterns), compiled once per file.
-    patterns: Option<Vec<Regex>>,
+    patterns: Option<Vec<crate::config::value::RubyRegex>>,
     /// `@offense_ranges` (`other_offense_in_same_range?`, only consulted when autocorrecting).
     offense_ranges: Vec<(usize, usize)>,
 }

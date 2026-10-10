@@ -379,9 +379,44 @@ fn convert(y: Yaml) -> Value {
     }
 }
 
-/// Compile a Ruby regexp literal (`/src/flags`) or bare source into a Rust regex.
-// ponytail: Ruby-only syntax (lookbehind, \h, possessive) fails to compile and the pattern is skipped.
-pub fn ruby_regex(literal: &str) -> Option<Regex> {
+/// A Ruby regexp from the config. Patterns the regex crate accepts use it; those it rejects
+/// (lookaround, backreferences, atomic groups, possessive quantifiers) fall back to fancy-regex's
+/// backtracking engine.
+#[derive(Clone, Debug)]
+pub enum RubyRegex {
+    Plain(Regex),
+    Backtracking(Box<fancy_regex::Regex>),
+}
+
+impl RubyRegex {
+    /// A backtracking match that hits fancy-regex's backtrack limit counts as no match.
+    pub fn is_match(&self, text: &str) -> bool {
+        match self {
+            RubyRegex::Plain(r) => r.is_match(text),
+            RubyRegex::Backtracking(r) => r.is_match(text).unwrap_or(false),
+        }
+    }
+
+    /// The compiled pattern (Ruby classes and flags already translated).
+    pub fn as_str(&self) -> &str {
+        match self {
+            RubyRegex::Plain(r) => r.as_str(),
+            RubyRegex::Backtracking(r) => r.as_str(),
+        }
+    }
+
+    pub fn replace_all<'t>(&self, text: &'t str, rep: &str) -> std::borrow::Cow<'t, str> {
+        match self {
+            RubyRegex::Plain(r) => r.replace_all(text, rep),
+            RubyRegex::Backtracking(r) => r.replace_all(text, rep),
+        }
+    }
+}
+
+/// Compile a Ruby regexp literal (`/src/flags`) or bare source.
+// ponytail: syntax neither engine knows (`\h` inside classes, `(?<name>` quirks, `\G`, `\K`)
+// fails to compile and the pattern is skipped.
+pub fn ruby_regex(literal: &str) -> Option<RubyRegex> {
     let (source, flags) = match literal.strip_prefix('/').and_then(|r| r.rsplit_once('/')) {
         Some((src, flags)) => (src, flags),
         None => (literal, ""),
@@ -398,7 +433,11 @@ pub fn ruby_regex(literal: &str) -> Option<Regex> {
     // Ruby's ^ and $ are always line anchors.
     prefix.push('m');
     // Ruby's \w \d \s \h are ASCII-only (Rust's are Unicode); \Z allows a final newline.
-    Regex::new(&format!("(?{prefix}){}", crate::helpers::ruby_string::ruby_regex_classes(source))).ok()
+    let pattern = format!("(?{prefix}){}", crate::helpers::ruby_string::ruby_regex_classes(source));
+    match Regex::new(&pattern) {
+        Ok(r) => Some(RubyRegex::Plain(r)),
+        Err(_) => fancy_regex::Regex::new(&pattern).ok().map(|r| RubyRegex::Backtracking(Box::new(r))),
+    }
 }
 
 #[cfg(test)]

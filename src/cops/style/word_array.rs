@@ -1,4 +1,4 @@
-use crate::config::value::ruby_regex;
+use crate::config::value::{RubyRegex, ruby_regex};
 use crate::helpers::percent_array as pa;
 use crate::prelude::*;
 use std::collections::HashMap;
@@ -14,7 +14,7 @@ fn str_content(node: &Node) -> Option<Vec<u8>> {
     node.as_string_node().filter(|_| !is_parser_dstr(node)).map(|s| s.unescaped().to_vec())
 }
 
-fn complex_content(values: &[Node], re: Option<&Regex>) -> bool {
+fn complex_content(values: &[Node], re: Option<&RubyRegex>) -> bool {
     values.iter().any(|v| {
         let Some(bytes) = str_content(v) else { return false };
         let Ok(s) = std::str::from_utf8(&bytes) else { return true };
@@ -22,7 +22,7 @@ fn complex_content(values: &[Node], re: Option<&Regex>) -> bool {
     })
 }
 
-fn word_regex(cx: &Cx) -> Option<Regex> {
+fn word_regex(cx: &Cx) -> Option<RubyRegex> {
     let raw = match cx.cfg.get("WordRegex")? {
         Value::Regex(r) => r.clone(),
         v => v.as_string()?,
@@ -89,7 +89,7 @@ impl Cop for WordArray {
 
 impl WordArray {
     /// within_matrix_of_complex_content?
-    fn within_matrix(&self, cx: &mut Cx, re: Option<&Regex>) -> bool {
+    fn within_matrix(&self, cx: &mut Cx, re: Option<&RubyRegex>) -> bool {
         let Some(parent) = cx.ancestors.last().and_then(|p| p.as_array_node()) else { return false };
         let key = (parent.location().start_offset(), parent.location().end_offset());
         if let Some(&v) = cx.state::<MatrixCache>().0.get(&key) {
