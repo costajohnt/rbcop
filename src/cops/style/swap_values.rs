@@ -43,10 +43,18 @@ impl Cop for SwapValues {
         // considered.
         let Some(stmts) = cx.parent().and_then(|p| p.as_statements_node()) else { return };
         let start = node.location().start_offset();
-        let body: Vec<Node> = stmts.body().iter().collect();
-        let Some(i) = body.iter().position(|n| n.location().start_offset() == start) else { return };
-        let (Some(x), Some(y)) = (body.get(i + 1), body.get(i + 2)) else { return };
-        let (Some(tmp), Some(x), Some(y)) = (simple(node), simple(x), simple(y)) else { return };
+        // Statements start in increasing order: a binary search keeps a long list linear overall.
+        let body = stmts.body();
+        let (mut lo, mut hi) = (0, body.len());
+        while lo < hi {
+            let mid = (lo + hi) / 2;
+            if body.get(mid).unwrap().location().start_offset() < start { lo = mid + 1 } else { hi = mid }
+        }
+        if body.get(lo).is_none_or(|n| n.location().start_offset() != start) {
+            return;
+        }
+        let (Some(x), Some(y)) = (body.get(lo + 1), body.get(lo + 2)) else { return };
+        let (Some(tmp), Some(x), Some(y)) = (simple(node), simple(&x), simple(&y)) else { return };
         if !(x.0 == tmp.1 && y.0 == x.1 && y.1 == tmp.0) {
             return;
         }

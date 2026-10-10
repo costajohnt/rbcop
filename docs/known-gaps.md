@@ -19,6 +19,19 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   treats `i = ...` as a reassignment and reports the offense without `[Correctable]`. Also reached
   through other cops: Style/ParallelAssignment turning `i, j = i * 2, i * 3` into `i = i * 2`
   (corpus `specs/lint/useless_times/023.rb`, skipped by the autocorrect gates).
+- A file whose AST is nested more than 1,000 levels deep (`runner::MAX_AST_DEPTH`; the deepest
+  corpus file is 46) is not inspected: rbcop prints `rbcop: <file>: nested more than 1000 levels
+  deep, not inspected.` and counts it as an error (exit 1). RuboCop dies with SystemStackError on
+  such files (10k nested arrays); many cops and helpers recurse over the tree. Prism itself rejects
+  10k nested expressions, but left-associative chains (`a.b.b...`, `a + a + ...`) have no limit.
+- Regexps nested more than 1,000 groups or character sets deep are treated as unparsable by
+  `helpers::regexp_parser` (the regexp_parser gem parses them), so cops that use it report nothing
+  for that regexp. Only interpolated regexps get there: Prism rejects deeper plain literals.
+- Lint/LiteralInInterpolation reports no offense for an integer literal over 1,000 32-bit words
+  (about 9,600 decimal digits): converting it to decimal is quadratic (`"#{0xfff...}"` with 200k
+  hex digits took 2.6 s).
+- Lint/UselessTimes leaves the offense uncorrected when the block argument's name is too long for
+  the regex size limit (about 100k characters) instead of failing the cop.
 
 ## Open gaps
 
@@ -32,15 +45,24 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - Deliberate: Style/WordArray correcting a `%W[...]` whose value is invalid UTF-8 (`%W[\xff]`)
   writes the escaped form (`["\xFF"]`); RuboCop writes the raw bytes and then crashes re-parsing
   its own output. The offense message matches RuboCop.
-- Review-loop security audit to run: every place a cop evaluates source-derived values at lint
-  time (format strings, numeric literals and arithmetic, string building, regexes compiled from
-  source, recursion depth on deeply nested code) must be bounded, so linting an untrusted file
-  cannot exhaust CPU or memory. First finding: Style/RedundantFormat padded `%999999999d` to ~1 GB.
-- Review-loop regex audit: every regex built from config or source must go through
-  `config::value::ruby_regex` (Ruby class semantics) or `regex::escape` (literal names). Check the
-  cops that call `Regex::new(&...)` directly: lint/cop_directive_syntax, lint/useless_times,
-  layout/line_length, style/numeric_literals, style/directive_scope, style/conditional_assignment,
-  style/magic_comment_format, naming/predicate_prefix, naming/inclusive_language.
+- Lint-time cost audit (done; `tests/hostile_inputs.rs` runs the generated inputs). What remains
+  is size-driven, not value-driven, and shared with RuboCop's algorithms:
+  - Prism is quadratic on long `a && a && ...` chains (100k operands: 16 s, Ruby's Prism 21 s)
+    and on huge decimal integer literals (800k digits: 0.85 s per parse; token cops lex again).
+  - `-A` on code nested hundreds of levels deep runs up to 200 correction iterations over text
+    that grows with depth squared (300 nested one-line `def`s: about 50 s before the infinite-loop
+    error). Inspection alone stays under a second at the depth limit.
+  - Lint/UselessAssignment's did-you-mean is O(useless assignments x variables) per scope
+    (20k distinct variables in one scope: over a minute).
+- Regex audit (done): regexes built from source or config either use `ruby_regex` /
+  `ruby_regex_classes` (Ruby's ASCII `\s \w \d`) or `regex::escape` a literal name. Fixed:
+  `directives::DIRECTIVE`, Lint/CopDirectiveSyntax (also its `lstrip`/`split`/`strip`, which are
+  ASCII-only in Ruby) and `statement_modifier::first_line_comment` matched Unicode whitespace or
+  word characters (`# rubocop:disable`, `# rubocop:disable Foo/Baré`). Checked equal to
+  RuboCop: Lint/UselessTimes and Style/DirectiveScope (Ruby's `\b` is Unicode-aware, like the
+  regex crate's), Naming/PredicatePrefix (RuboCop interpolates NamePrefix unescaped too, behind the
+  same `start_with?` check), Style/NumericLiterals (AllowedPatterns are already `ruby_regex`),
+  Naming/InclusiveLanguage, Style/ConditionalAssignment, Style/MagicCommentFormat (static).
 - Review-loop coverage to add: every corpus targets Ruby 3.x, so behaviour at TargetRubyVersion
   2.x (parser-gem grammar differences, min/max ruby cops) is only covered by scenarios. Record a
   specs-corpus oracle at 2.5 and 2.7 and compare.

@@ -341,3 +341,28 @@ pub fn int_literal_value(node: &Node) -> Option<i128> {
     }
     Some(if neg { -v } else { v })
 }
+
+/// Whether the tree under `node` is nested more than `max` levels deep. The probe stops descending
+/// once it passes `max`, so it never recurses deeper than that itself.
+pub fn deeper_than(node: &Node, max: usize) -> bool {
+    use ruby_prism::Visit;
+    struct Probe {
+        depth: usize,
+        max: usize,
+    }
+    struct TooDeep;
+    impl<'pr> Visit<'pr> for Probe {
+        fn visit_branch_node_enter(&mut self, _: Node<'pr>) {
+            self.depth += 1;
+            if self.depth > self.max {
+                // resume_unwind skips the panic hook: this is control flow, not an error.
+                std::panic::resume_unwind(Box::new(TooDeep));
+            }
+        }
+        fn visit_branch_node_leave(&mut self) {
+            self.depth -= 1;
+        }
+    }
+    let mut probe = Probe { depth: 0, max };
+    std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| probe.visit(node))).is_err()
+}

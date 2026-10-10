@@ -140,6 +140,12 @@ fn analyze(
         .collect();
 
     let program = result.node();
+    // Deliberate difference: RuboCop dies with SystemStackError on very deep nesting; rbcop skips the
+    // file with an error instead, so cops (many of them recursive) never see such a tree.
+    if crate::ast::deeper_than(&program, MAX_AST_DEPTH) {
+        file_error(format!("rbcop: {}: nested more than {MAX_AST_DEPTH} levels deep, not inspected.", src.path));
+        return (Vec::new(), None);
+    }
     let mut facts = Facts::default();
     let mut collector = FactCollector { src: &src, facts: &mut facts };
     collector.facts.string_lines = vec![false; src.line_count() + 2];
@@ -244,10 +250,19 @@ static ERRORS: std::sync::Mutex<Vec<String>> = std::sync::Mutex::new(Vec::new())
 pub fn cop_error(cop: &str, src: &Source, at: usize) {
     // Range#line and the 0-based Range#column.
     let (line, col) = crate::formatter::line_col(src.text, at);
-    let msg = format!("An error occurred while {cop} cop was inspecting {}:{line}:{}.", src.path, col - 1);
+    file_error(format!("An error occurred while {cop} cop was inspecting {}:{line}:{}.", src.path, col - 1));
+}
+
+/// Print an error now and keep it for the summary (it makes the run fail).
+fn file_error(msg: String) {
     eprintln!("{msg}");
     ERRORS.lock().unwrap_or_else(|e| e.into_inner()).push(msg);
 }
+
+/// AST depth beyond which a file is not inspected. Real code stays under 50 (the deepest of the
+/// rails, discourse and RuboCop corpora is 46). At this depth every cop, inspecting and correcting,
+/// ran in the default 2 MiB thread stack; main.rs gives worker threads 64 MiB of headroom.
+pub const MAX_AST_DEPTH: usize = 1000;
 
 /// The run's cop errors, in file order.
 pub fn take_errors() -> Vec<String> {

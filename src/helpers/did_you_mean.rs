@@ -100,6 +100,13 @@ pub fn correct<'a>(input: &str, dictionary: &[&'a str]) -> Vec<&'a str> {
     let mut words: Vec<&str> = dictionary
         .iter()
         .copied()
+        // Jaro-Winkler <= 0.6 * Jaro + 0.4 and Jaro <= (2 + shorter / longer) / 3, so lengths more
+        // than 6x apart never reach 0.834. Skipping them keeps a huge name (a 1 MB cop name in a
+        // directive) from costing O(length * dictionary) per lookup; the result is unchanged.
+        .filter(|w| {
+            let l = normalize(w).chars().count();
+            len <= 3 || l.min(len) * 6 >= l.max(len)
+        })
         .filter(|w| jaro_winkler(&normalize(w), &ni) >= threshold)
         .filter(|w| *w != input)
         .collect();

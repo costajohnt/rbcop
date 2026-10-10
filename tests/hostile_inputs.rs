@@ -1,0 +1,76 @@
+//! Linting an untrusted file must not exhaust CPU or memory, overflow the stack, or fail a cop:
+//! deep nesting, huge evaluated values and long names run every cop within a time budget.
+
+use std::fs;
+use std::process::Command;
+use std::time::{Duration, Instant};
+
+/// Per run (every cop). Release builds take well under a second for each.
+const BUDGET: Duration = Duration::from_secs(60);
+
+fn inputs() -> Vec<(&'static str, String)> {
+    let nest = |open: &str, close: &str, n: usize| format!("x = {}1{}\n", open.repeat(n), close.repeat(n));
+    vec![
+        // Nesting just under runner::MAX_AST_DEPTH runs every cop; deeper is skipped, not overflowed.
+        ("at_limit_array.rb", nest("[", "]", 990)),
+        ("at_limit_paren.rb", nest("(", ")", 490)),
+        ("at_limit_if.rb", format!("{}b{}\n", "if a; ".repeat(990), "; end".repeat(990))),
+        ("at_limit_ternary.rb", format!("x = {}b{}\n", "a ? ".repeat(990), " : c".repeat(990))),
+        ("at_limit_def.rb", format!("{}b{}\n", "def m; ".repeat(490), "; end".repeat(490))),
+        ("too_deep_array.rb", nest("[", "]", 5000)),
+        ("too_deep_chain.rb", format!("x = a{}\n", ".b".repeat(100_000))),
+        ("too_deep_plus.rb", format!("x = {}\n", vec!["a"; 100_000].join(" + "))),
+        // Interpolated regexps are parsed by rbcop, not Prism.
+        ("regexp_groups.rb", format!("x = /{}#{{a}}{}/\n", "(".repeat(100_000), ")".repeat(100_000))),
+        ("regexp_sets.rb", format!("x = /{}#{{a}}{}/\n", "[a".repeat(100_000), "]".repeat(100_000))),
+        // Values evaluated at lint time.
+        (
+            "format_width.rb",
+            "format('%999999999d', 1)\nformat('%.999999999f', 1.0)\nformat('%*d', 999999999, 1)\n".into(),
+        ),
+        ("format_many.rb", format!("format('{}', {})\n", "%s".repeat(50_000), vec!["1"; 50_000].join(", "))),
+        ("interpolated_hex.rb", format!("x = \"#{{0x{}}}\"\n", "f".repeat(200_000))),
+        ("big_numbers.rb", "a = 10**999999999\nb = 1 << 999999999\nc = 'a' * 999999999\nd = 1.0e999999999\n".into()),
+        // Names that end up in regexes or spell checking.
+        ("long_block_arg.rb", format!("1.times {{ |{0}| puts {0} }}\n", "a".repeat(200_000))),
+        ("long_cop_name.rb", format!("# rubocop:disable Style/{}\nx = 1\n", "A".repeat(200_000))),
+        // Size-quadratic paths (sibling lookups, per-offense line copies).
+        ("many_statements.rb", "x = 1\n".repeat(20_000)),
+    ]
+}
+
+#[test]
+fn hostile_inputs_stay_bounded() {
+    let dir = std::env::temp_dir().join(format!("rbcop-hostile-{}", std::process::id()));
+    let _ = fs::remove_dir_all(&dir);
+    fs::create_dir_all(&dir).unwrap();
+    fs::write(dir.join("Gemfile"), "").unwrap();
+    let config = concat!(env!("CARGO_MANIFEST_DIR"), "/config/all-cops.yml");
+    for (name, text) in inputs() {
+        // `-A` re-indents deeply nested code over up to 200 iterations (docs/known-gaps.md), so the
+        // nested-if/def/ternary inputs are only inspected.
+        let modes: &[bool] = if matches!(name, "at_limit_if.rb" | "at_limit_ternary.rb" | "at_limit_def.rb") {
+            &[false]
+        } else {
+            &[false, true]
+        };
+        for &autocorrect in modes {
+            fs::write(dir.join(name), &text).unwrap();
+            let mut cmd = Command::new(env!("CARGO_BIN_EXE_rbcop"));
+            cmd.args(["--force-default-config", "-c", config, "--format", "emacs"]).current_dir(&dir);
+            if autocorrect {
+                cmd.arg("-A");
+            }
+            let t0 = Instant::now();
+            let out = cmd.arg(name).output().unwrap();
+            let elapsed = t0.elapsed();
+            let stderr = String::from_utf8_lossy(&out.stderr);
+            // 1 = offenses (or the too-deep error); a signal (stack overflow abort) has no code.
+            assert!(matches!(out.status.code(), Some(0 | 1)), "{name} -A={autocorrect}: {:?}\n{stderr}", out.status);
+            assert!(!stderr.contains("cop was inspecting"), "{name} -A={autocorrect}: cop error\n{stderr}");
+            assert!(elapsed < BUDGET, "{name} -A={autocorrect}: took {elapsed:?}");
+            assert_eq!(stderr.contains("levels deep, not inspected"), name.starts_with("too_deep"), "{name}\n{stderr}");
+        }
+    }
+    let _ = fs::remove_dir_all(&dir);
+}

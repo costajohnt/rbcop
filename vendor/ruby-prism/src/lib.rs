@@ -144,6 +144,12 @@ impl<'pr> NodeList<'pr> {
         Node::new(self.parser, node)
     }
 
+    /// rbcop patch: the element at `index` in O(1) (the iterator's `nth` walks the list).
+    #[must_use]
+    pub fn get(&self, index: usize) -> Option<Node<'pr>> {
+        (index < self.len()).then(|| unsafe { self.at(index) })
+    }
+
     /// Returns an iterator over the nodes.
     #[must_use]
     pub const fn iter(&self) -> NodeListIter<'pr> {

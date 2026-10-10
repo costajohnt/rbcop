@@ -102,6 +102,8 @@ pub struct PNode {
     pub unless: bool,
     pub children: Vec<Option<usize>>,
     pub parent: Option<usize>,
+    /// Position in the parent's `children` (`sibling_index` in O(1); a 200k-statement body made it quadratic).
+    index: usize,
 }
 
 pub struct Tree {
@@ -271,6 +273,7 @@ impl Tree {
             unless: false,
             children: Vec::new(),
             parent: None,
+            index: 0,
         });
         self.nodes.len() - 1
     }
@@ -284,6 +287,7 @@ impl Tree {
     fn kid(&mut self, parent: usize, child: Option<usize>) {
         if let Some(c) = child {
             self.nodes[c].parent = Some(parent);
+            self.nodes[c].index = self.nodes[parent].children.len();
         }
         self.nodes[parent].children.push(child);
     }
@@ -921,7 +925,9 @@ impl Tree {
 
     pub fn sibling_index(&self, n: usize) -> Option<usize> {
         let p = self.parent(n)?;
-        self.nodes[p].children.iter().position(|c| *c == Some(n))
+        let i = self.nodes[n].index;
+        let kids = &self.nodes[p].children;
+        if kids.get(i) == Some(&Some(n)) { Some(i) } else { kids.iter().position(|c| *c == Some(n)) }
     }
 
     pub fn ancestors(&self, n: usize) -> impl Iterator<Item = usize> + '_ {
