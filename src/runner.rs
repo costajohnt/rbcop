@@ -114,6 +114,7 @@ fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dy
     }
     let mut out = Vec::new();
     let mut states: Vec<Option<Box<dyn std::any::Any>>> = (0..active.len()).map(|_| None).collect();
+    let mut bounds = directives::needs_statement_bounds(&src).then(StatementBounds::default);
     let mut walker = Walker {
         src: &src,
         facts: &facts,
@@ -124,6 +125,7 @@ fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dy
         leaf: None,
         out: &mut out,
         states: &mut states,
+        bounds: bounds.as_mut(),
     };
     walker.visit(&program);
 
@@ -142,10 +144,19 @@ fn analyze(path: &Path, display: &str, text: &str, cfg: &Resolved, selected: &dy
         a.cop.on_file(&mut cx);
     }
 
-    let config_disabled: Vec<&'static str> = opted_in.iter().copied().filter(|c| !cfg.cop(c).enabled).collect();
-    let disabled = directives::disabled_spans(&src, &config_disabled);
     dedup(&mut out);
-    out.retain(|o| !directives::is_disabled(&disabled, o.cop, src.line_of(o.start)));
+    if src.text.contains("rubocop") {
+        let config_disabled: Vec<&'static str> = opted_in.iter().copied().filter(|c| !cfg.cop(c).enabled).collect();
+        let code = code_lines(&src, &facts);
+        let bounds = bounds.unwrap_or_default();
+        let statement_bounds = |line: usize| bounds.at(line);
+        let info = directives::LineInfo { code: &code, statement_bounds: &statement_bounds };
+        let disabled = directives::disabled_ranges(&src, &config_disabled, &info);
+        // Parser's Range#last_line is the line of end_pos.
+        out.retain(|o| {
+            !directives::is_disabled(&disabled, o.cop, src.line_of(o.start), src.line_of(o.end.max(o.start)))
+        });
+    }
     for o in out.iter_mut() {
         let c = cfg.cop(o.cop);
         o.severity = c.severity.unwrap_or_else(|| default_severity(o.cop));
@@ -195,6 +206,7 @@ struct Walker<'s, 'pr, 'c> {
     leaf: Option<Node<'pr>>,
     out: &'s mut Vec<Offense>,
     states: &'s mut [Option<Box<dyn std::any::Any>>],
+    bounds: Option<&'s mut StatementBounds>,
 }
 
 impl<'pr> Walker<'_, 'pr, '_> {
@@ -230,6 +242,14 @@ impl<'pr> Walker<'_, 'pr, '_> {
     fn leaf(&mut self, node: Node<'pr>) {
         if !self.leaf.as_ref().is_some_and(|l| same(l, &node)) {
             self.dispatch(&node);
+            self.leaf_bounds(&node);
+        }
+    }
+
+    fn leaf_bounds(&mut self, node: &Node<'pr>) {
+        if let Some(b) = self.bounds.as_deref_mut() {
+            b.enter(self.src, node);
+            b.leave();
         }
     }
 }
@@ -237,15 +257,22 @@ impl<'pr> Walker<'_, 'pr, '_> {
 impl<'pr> Visit<'pr> for Walker<'_, 'pr, '_> {
     fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
         self.dispatch(&node);
+        if let Some(b) = self.bounds.as_deref_mut() {
+            b.enter(self.src, &node);
+        }
         self.stack.push(node);
     }
 
     fn visit_branch_node_leave(&mut self) {
+        if let Some(b) = self.bounds.as_deref_mut() {
+            b.leave();
+        }
         self.stack.pop();
     }
 
     fn visit_leaf_node_enter(&mut self, node: Node<'pr>) {
         self.dispatch(&node);
+        self.leaf_bounds(&node);
         self.leaf = Some(node);
     }
 
@@ -374,4 +401,96 @@ fn format_ruby_version(v: f64) -> String {
 fn dedup(out: &mut Vec<Offense>) {
     let mut seen = std::collections::HashSet::new();
     out.retain(|o| seen.insert((o.cop, o.start, o.end)));
+}
+
+/// CommentConfig#non_comment_token_line_numbers: lines where a non-comment token starts. Parser
+/// emits a token per line of string/heredoc content, so those lines count too.
+fn code_lines(src: &Source, facts: &Facts) -> Vec<bool> {
+    use ruby_prism_sys as sys;
+    let mut code = facts.string_lines.clone();
+    code.resize(src.line_count() + 2, false);
+    for t in src.tokens() {
+        let skip = matches!(
+            t.kind,
+            sys::PM_TOKEN_COMMENT
+                | sys::PM_TOKEN_EMBDOC_BEGIN
+                | sys::PM_TOKEN_EMBDOC_LINE
+                | sys::PM_TOKEN_EMBDOC_END
+                | sys::PM_TOKEN_NEWLINE
+                | sys::PM_TOKEN_IGNORED_NEWLINE
+                | sys::PM_TOKEN_EOF
+                | sys::PM_TOKEN___END__
+        );
+        if !skip && t.end > t.start {
+            code[src.line_of(t.start)] = true;
+        }
+    }
+    code
+}
+
+/// DisableNext#statement_bounds_at, collected during the walk: for each line, the statement that
+/// starts there with the greatest last line (first in pre-order on ties) and the last line of its
+/// subtree, where heredocs count up to their terminator.
+#[derive(Default)]
+struct StatementBounds {
+    open: Vec<(usize, usize, usize, usize, bool)>, // (preorder, first line, last line, subtree end, statement-like)
+    best: std::collections::HashMap<usize, (usize, usize, usize)>, // first line -> (last line, preorder, subtree end)
+    counter: usize,
+}
+
+impl StatementBounds {
+    fn enter(&mut self, src: &Source, node: &Node) {
+        let loc = node.location();
+        let first = src.line_of(loc.start_offset());
+        let last = src.line_of(loc.end_offset().max(loc.start_offset()));
+        let end = heredoc_end_line(src, node).unwrap_or(last);
+        // Parser `begin` nodes (multi-statement bodies, parens) and Prism-only wrappers are skipped.
+        let k = node_kind::of(node);
+        let statement_like = !matches!(
+            k,
+            node_kind::STATEMENTS_NODE
+                | node_kind::PARENTHESES_NODE
+                | node_kind::PROGRAM_NODE
+                | node_kind::ARGUMENTS_NODE
+                | node_kind::ELSE_NODE
+                | node_kind::EMBEDDED_STATEMENTS_NODE
+        );
+        self.counter += 1;
+        self.open.push((self.counter, first, last, end, statement_like));
+    }
+
+    fn leave(&mut self) {
+        let Some((order, first, last, end, statement_like)) = self.open.pop() else { return };
+        if let Some(parent) = self.open.last_mut() {
+            parent.3 = parent.3.max(end);
+        }
+        if statement_like {
+            let better = match self.best.get(&first) {
+                None => true,
+                Some(&(l, o, _)) => last > l || (last == l && order < o),
+            };
+            if better {
+                self.best.insert(first, (last, order, end));
+            }
+        }
+    }
+
+    fn at(&self, line: usize) -> (usize, usize) {
+        self.best.get(&line).map_or((line, line), |&(_, _, end)| (line, end.max(line)))
+    }
+}
+
+/// Terminator line of a heredoc node (parser's `loc.heredoc_end`).
+fn heredoc_end_line(src: &Source, node: &Node) -> Option<usize> {
+    if !crate::ast::is_heredoc(node) {
+        return None;
+    }
+    let closing = match node_kind::of(node) {
+        node_kind::STRING_NODE => node.as_string_node()?.closing_loc(),
+        node_kind::INTERPOLATED_STRING_NODE => node.as_interpolated_string_node()?.closing_loc(),
+        node_kind::X_STRING_NODE => Some(node.as_x_string_node()?.closing_loc()),
+        node_kind::INTERPOLATED_X_STRING_NODE => Some(node.as_interpolated_x_string_node()?.closing_loc()),
+        _ => None,
+    }?;
+    Some(src.line_of(closing.start_offset()))
 }
