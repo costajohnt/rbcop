@@ -488,7 +488,7 @@ command per call (the gate accepts a comma-separated cop list, so one call cover
 
 ```sh
 cargo build --release
-export RBCOP_CORPUS=/Users/johncosta/.claude/jobs/89c7fab2/tmp/corpus RBCOP_ORACLE=/Users/johncosta/.claude/jobs/89c7fab2/tmp/oracle2
+export RBCOP_CORPUS=/path/to/corpus RBCOP_ORACLE=/path/to/oracle
 scripts/check-cops.sh Style/Example,Style/Other specs          # fast loop (RuboCop's own spec snippets)
 scripts/check-cops.sh Style/Example,Style/Other                # full gate: specs, rails, discourse
 ```
