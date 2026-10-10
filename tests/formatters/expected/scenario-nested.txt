@@ -1,0 +1,90 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+source 'https://rubygems.org'
+^
+a.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+class Sample
+^
+a.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+	y = 1
+^
+a.rb:5:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+a.rb:6:5: W: Lint/Debugger: Remove debugger entry point binding.pry.
+    binding.pry
+    ^^^^^^^^^^^
+a.rb:7:22: C: [Correctable] Style/NilComparison: Prefer the use of the nil? predicate.
+    return true if x == nil
+                     ^^
+a.rb:9:121: C: Layout/LineLength: Line is too long. [143/120]
+    long = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^
+a.rb:19:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+legacy/c.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+class Sample
+^
+legacy/c.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+	y = 1
+^
+legacy/c.rb:5:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+legacy/c.rb:6:5: W: Lint/Debugger: Remove debugger entry point binding.pry.
+    binding.pry
+    ^^^^^^^^^^^
+legacy/c.rb:7:22: C: [Correctable] Style/NilComparison: Prefer the use of the nil? predicate.
+    return true if x == nil
+                     ^^
+legacy/c.rb:9:121: C: Layout/LineLength: Line is too long. [143/120]
+    long = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^
+legacy/c.rb:19:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+sub/b.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+class Sample
+^
+sub/b.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+	y = 1
+^
+sub/b.rb:5:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+sub/b.rb:6:5: W: Lint/Debugger: Remove debugger entry point binding.pry.
+    binding.pry
+    ^^^^^^^^^^^
+sub/b.rb:7:22: C: [Correctable] Style/NilComparison: Prefer the use of the nil? predicate.
+    return true if x == nil
+                     ^^
+sub/b.rb:9:121: C: Layout/LineLength: Line is too long. [143/120]
+    long = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^
+sub/b.rb:19:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+sub2/x.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+class Sample
+^
+sub2/x.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+	y = 1
+^
+sub2/x.rb:5:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+sub2/x.rb:6:5: W: Lint/Debugger: Remove debugger entry point binding.pry.
+    binding.pry
+    ^^^^^^^^^^^
+sub2/x.rb:7:22: C: [Correctable] Style/NilComparison: Prefer the use of the nil? predicate.
+    return true if x == nil
+                     ^^
+sub2/x.rb:9:121: C: Layout/LineLength: Line is too long. [143/120]
+    long = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^
+sub2/x.rb:19:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+sub2/y.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+class Sample
+^
+sub2/y.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+	y = 1
+^
+sub2/y.rb:5:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+sub2/y.rb:6:5: W: Lint/Debugger: Remove debugger entry point binding.pry.
+    binding.pry
+    ^^^^^^^^^^^
+sub2/y.rb:7:22: C: [Correctable] Style/NilComparison: Prefer the use of the nil? predicate.
+    return true if x == nil
+                     ^^
+sub2/y.rb:9:121: C: Layout/LineLength: Line is too long. [143/120]
+    long = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^
+sub2/y.rb:19:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+
+6 files inspected, 36 offenses detected, 26 offenses autocorrectable

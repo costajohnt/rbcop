@@ -1,0 +1,14 @@
+AllCops:
+  Include:
+    - '**/*.rb'
+    - '**/*.thing'
+    - 'Customfile'
+  Exclude:
+    - 'generated/**/*'
+    - '**/*_spec.rb'
+Layout/LineLength:
+  Include:
+    - 'app/**/*.rb'
+Style/NilComparison:
+  Exclude:
+    - '**/legacy_*.rb'

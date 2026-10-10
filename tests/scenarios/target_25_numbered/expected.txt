@@ -1,0 +1,7 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+numbered.rb:11:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+numbered.rb:11:1: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+numbered.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+numbered.rb:2:7: W: [Correctable] Lint/RedundantWithIndex: Use `each` instead of `each_with_index`.
+numbered.rb:9:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around block body.
+numbered.rb:9:6: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.

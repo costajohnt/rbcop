@@ -1,0 +1,77 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a.rb:10:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+a.rb:13:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+a.rb:16:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+a.rb:19:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+a.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for `class Sample`.
+a.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a.rb:2:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+a.rb:2:3: R: Metrics/MethodLength: Method has too many lines. [12/10]
+a.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+a.rb:3:2: C: [Correctable] Layout/IndentationWidth: Use 2 (not -1) spaces for indentation.
+a.rb:5:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+a.rb:6:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+a.rb:6:5: W: Lint/Debugger: Remove debugger entry point `binding.pry`.
+a.rb:7:22: C: [Correctable] Style/NilComparison: Prefer the use of the `nil?` predicate.
+a.rb:7:5: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+a.rb:7:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+a.rb:8:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+a.rb:9:12: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:9:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+a.rb:9:81: C: Layout/LineLength: Line is too long. [143/80]
+sub/b.rb:10:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sub/b.rb:13:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sub/b.rb:16:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sub/b.rb:19:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+sub/b.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for `class Sample`.
+sub/b.rb:2:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+sub/b.rb:2:3: R: Metrics/MethodLength: Method has too many lines. [12/10]
+sub/b.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+sub/b.rb:3:2: C: [Correctable] Layout/IndentationWidth: Use 2 (not -1) spaces for indentation.
+sub/b.rb:5:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+sub/b.rb:6:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sub/b.rb:6:5: W: Lint/Debugger: Remove debugger entry point `binding.pry`.
+sub/b.rb:7:22: C: [Correctable] Style/NilComparison: Prefer the use of the `nil?` predicate.
+sub/b.rb:7:5: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+sub/b.rb:7:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sub/b.rb:8:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sub/b.rb:9:12: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+sub/b.rb:9:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sub2/x.rb:10:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sub2/x.rb:13:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sub2/x.rb:16:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sub2/x.rb:19:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+sub2/x.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for `class Sample`.
+sub2/x.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+sub2/x.rb:2:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+sub2/x.rb:2:3: R: Metrics/MethodLength: Method has too many lines. [12/10]
+sub2/x.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+sub2/x.rb:3:2: C: [Correctable] Layout/IndentationWidth: Use 2 (not -1) spaces for indentation.
+sub2/x.rb:5:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+sub2/x.rb:6:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sub2/x.rb:7:22: C: [Correctable] Style/NilComparison: Prefer the use of the `nil?` predicate.
+sub2/x.rb:7:5: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+sub2/x.rb:7:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sub2/x.rb:8:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sub2/x.rb:9:121: C: Layout/LineLength: Line is too long. [143/120]
+sub2/x.rb:9:12: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+sub2/x.rb:9:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sub2/y.rb:10:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sub2/y.rb:13:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sub2/y.rb:16:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sub2/y.rb:19:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+sub2/y.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for `class Sample`.
+sub2/y.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+sub2/y.rb:2:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+sub2/y.rb:2:3: R: Metrics/MethodLength: Method has too many lines. [12/10]
+sub2/y.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+sub2/y.rb:3:2: C: [Correctable] Layout/IndentationWidth: Use 2 (not -1) spaces for indentation.
+sub2/y.rb:5:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+sub2/y.rb:6:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sub2/y.rb:7:22: C: [Correctable] Style/NilComparison: Prefer the use of the `nil?` predicate.
+sub2/y.rb:7:5: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+sub2/y.rb:7:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sub2/y.rb:8:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+sub2/y.rb:9:121: C: Layout/LineLength: Line is too long. [143/120]
+sub2/y.rb:9:12: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+sub2/y.rb:9:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.

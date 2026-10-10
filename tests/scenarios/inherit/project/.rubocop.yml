@@ -1,0 +1,6 @@
+inherit_from:
+  - base.yml
+  - .rubocop_todo.yml
+
+Style/NilComparison:
+  EnforcedStyle: comparison

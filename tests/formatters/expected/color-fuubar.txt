@@ -1,0 +1,21 @@
+[32m
+Progress: |[0m
+[36municode.rb[0m:4:18: [33mC[0m: [33m[Correctable] [0mStyle/NilComparison: Prefer the use of the [33mnil?[0m predicate.
+name = "日本語テキスト" == nil  
+                        ^^
+[36municode.rb[0m:4:24: [33mC[0m: [33m[Correctable] [0mLayout/TrailingWhitespace: Trailing whitespace detected.
+name = "日本語テキスト" == nil  
+                              ^^
+[36municode.rb[0m:5:1: [33mC[0m: [33m[Correctable] [0mLayout/IndentationStyle: Tab detected in indentation.
+	value = name   
+^
+[36municode.rb[0m:5:14: [33mC[0m: [33m[Correctable] [0mLayout/TrailingWhitespace: Trailing whitespace detected.
+	value = name   
+	            ^^^
+[36municode.rb[0m:6:32: [33mC[0m: [33m[Correctable] [0mLayout/TrailingWhitespace: Trailing whitespace detected.
+msg = "<b>&amp; `tick` 'q'</b>" 
+                               ^
+[36municode.rb[0m:8:1: [33mC[0m: [33m[Correctable] [0mLayout/TrailingEmptyLines: 2 trailing blank lines detected.
+[33mProgress: |====================================================================|
+[0m
+1 file inspected, [31m6 offenses[0m detected, [33m6 offenses[0m autocorrectable

@@ -1,0 +1,17 @@
+
+::error file=crlf.rb,line=3,col=6::Layout/TrailingWhitespace: Trailing whitespace detected.
+::error file=lib/nested/deep.rb,line=4,col=1::Lint/Debugger: Remove debugger entry point `binding.irb`.
+::error file=lib/style.rb,line=3,col=7::Style/DefWithParentheses: Omit the parentheses in defs when the method doesn't accept any arguments.
+::error file=lib/style.rb,line=4,col=9::Layout/SpaceBeforeComma: Space found before comma.
+::error file=lib/style.rb,line=4,col=10::Layout/SpaceAfterComma: Space missing after comma.
+::error file=lib/style.rb,line=6,col=3::Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+::error file=lib/style.rb,line=7,col=4::Layout/SpaceInsideRangeLiteral: Space inside range literal.
+::error file=syntax_error.rb,line=4,col=3::Lint/Syntax: unexpected integer; expected a `)` to close the parameters%0A(Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+::error file=syntax_error.rb,line=4,col=5::Lint/Syntax: unexpected '+', expecting end-of-input%0A(Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+::error file=syntax_error.rb,line=5,col=1::Lint/Syntax: unexpected 'end', assuming it is closing the parent method definition%0A(Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+::error file=unicode.rb,line=4,col=18::Style/NilComparison: Prefer the use of the `nil?` predicate.
+::error file=unicode.rb,line=4,col=24::Layout/TrailingWhitespace: Trailing whitespace detected.
+::error file=unicode.rb,line=5,col=1::Layout/IndentationStyle: Tab detected in indentation.
+::error file=unicode.rb,line=5,col=14::Layout/TrailingWhitespace: Trailing whitespace detected.
+::error file=unicode.rb,line=6,col=32::Layout/TrailingWhitespace: Trailing whitespace detected.
+::error file=unicode.rb,line=8,col=1::Layout/TrailingEmptyLines: 2 trailing blank lines detected.

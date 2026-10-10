@@ -1,0 +1,416 @@
+# Build the "cold" corpus: every expect_offense / expect_no_offenses / expect_correction snippet of
+# the given cops' RuboCop specs, with `#{...}` interpolation, `%{key}` templates, `.each` loops,
+# shared examples and `let`s resolved by a small static evaluator (the spec code is parsed with
+# Prism, never executed), grouped by the TargetRubyVersion and cop_config each example runs with.
+#
+# usage: ruby scripts/extract_cold_corpus.rb <rubocop-src>/spec/rubocop/cop <out-dir> <cops-file> <default.yml>
+#   <cops-file>: one `Dept/Cop` per line (extra columns ignored)
+# Output: <out>/<Dept>_<Cop>/<variant>/{.rubocop.yml, NNN.rb | NNN/<filename>}; variant = r<ruby>[-c<n>].
+# Untagged examples land in both r2.7 (RuboCop's spec default) and r3.4. Snippets the evaluator
+# cannot resolve are listed on stderr; extend the evaluator for them.
+require "prism"
+require "yaml"
+require "fileutils"
+
+spec_root, out_root, cops_file, default_yml = ARGV
+abort "usage: #{$0} <spec/rubocop/cop> <out-dir> <cops-file> <default.yml>" unless default_yml
+
+DEFAULTS = YAML.safe_load_file(default_yml, permitted_classes: [Regexp, Symbol])
+ANNOTATION = /\A\s*((?<!\\)\^+|\^{}) ?/
+GROUPS = %i[describe context].freeze
+EXAMPLES = %i[it specify example].freeze
+EXPECT = %i[expect_offense expect_no_offenses expect_correction].freeze
+
+LOOPS = {
+  each: ->(c, _) { c }, each_key: ->(c, _) { c.map(&:first) }, each_value: ->(c, _) { c.map(&:last) },
+  each_pair: ->(c, _) { c }, each_with_index: ->(c, _) { c.each_with_index.to_a },
+  repeated_permutation: ->(c, a) { c.repeated_permutation(*a).to_a },
+  permutation: ->(c, a) { c.permutation(*a).to_a }, combination: ->(c, a) { c.combination(*a).to_a },
+  product: ->(c, a) { c.product(*a) }
+}.freeze
+# Stands in for an interpolation the evaluator cannot resolve; fine inside dropped annotation lines.
+HOLE = "\u0000unresolved\u0000"
+
+class Unresolved < StandardError; end
+
+Ctx = Struct.new(:env, :lets, :shared, :ruby, :tagged) do
+  def child
+    Ctx.new(env.dup, lets.dup, shared.dup, ruby, tagged)
+  end
+end
+
+class Extractor
+  attr_reader :snippets, :failures
+
+  def initialize(cop, file)
+    @cop = cop
+    @file = file
+    @snippets = []
+    @failures = []
+  end
+
+  def run
+    result = Prism.parse_file(@file)
+    walk(result.value.statements.body, Ctx.new({}, {}, {}, nil, false))
+  end
+
+  private
+
+  def walk(nodes, ctx)
+    nodes.each { |n| prescan(n, ctx) }
+    nodes.each { |n| visit(n, ctx) }
+  end
+
+  def body_of(block)
+    block&.body.is_a?(Prism::StatementsNode) ? block.body.body : []
+  end
+
+  def prescan(node, ctx)
+    return unless node.is_a?(Prism::CallNode) && node.receiver.nil?
+
+    case node.name
+    when :let, :let!
+      name = node.arguments&.arguments&.first
+      ctx.lets[name.unescaped] = [node.block, ctx] if name.is_a?(Prism::SymbolNode)
+    when :shared_examples, :shared_examples_for, :shared_context
+      name = node.arguments.arguments.first
+      ctx.shared[value(name, ctx)] = node.block
+    end
+  end
+
+  def visit(node, ctx)
+    case node
+    when Prism::CallNode then visit_call(node, ctx)
+    when Prism::LocalVariableWriteNode
+      ctx.env[node.name.to_s] = begin
+        value(node.value, ctx)
+      rescue Unresolved => e
+        e
+      end
+    end
+  end
+
+  def visit_call(node, ctx)
+    if GROUPS.include?(node.name) || (EXAMPLES.include?(node.name) && node.receiver.nil?)
+      return unless node.block
+
+      c = ctx.child
+      tags(node, c)
+      walk(body_of(node.block), c)
+    elsif %i[it_behaves_like include_examples include_context it_should_behave_like].include?(node.name)
+      include_shared(node, ctx)
+    elsif LOOPS.key?(node.name) && node.block.is_a?(Prism::BlockNode) && node.receiver
+      each_loop(node, ctx)
+    elsif EXPECT.include?(node.name) && node.receiver.nil?
+      record(node, ctx)
+    elsif node.block.is_a?(Prism::BlockNode) && !%i[let let! shared_examples shared_examples_for shared_context before after around subject].include?(node.name)
+      walk(body_of(node.block), ctx.child)
+    end
+  end
+
+  def tags(node, ctx)
+    (node.arguments&.arguments || []).each do |a|
+      next unless a.is_a?(Prism::SymbolNode) && a.unescaped =~ /\Aruby(\d)(\d)\z/
+
+      ctx.ruby = "#{$1}.#{$2}"
+      ctx.tagged = true
+    end
+  end
+
+  def include_shared(node, ctx)
+    args = node.arguments.arguments
+    name = value(args.first, ctx)
+    block = ctx.shared[name] or return fail_at(node, "unknown shared example #{name.inspect}")
+    c = ctx.child
+    vals = args.drop(1).map { |a| value(a, c) }
+    bind(block.parameters, vals, c)
+    walk(body_of(node.block), c) if node.block
+    walk(body_of(block), c)
+  rescue Unresolved => e
+    fail_at(node, e.message)
+  end
+
+  def each_loop(node, ctx)
+    coll = value(node.receiver, ctx)
+    args = (node.arguments&.arguments || []).map { |a| value(a, ctx) }
+    coll = coll.to_a if coll.is_a?(Range) || coll.is_a?(Hash) || coll.is_a?(Set)
+    raise Unresolved, "#{node.name} over #{coll.class}" unless coll.is_a?(Array)
+
+    coll = LOOPS[node.name].call(coll, args)
+
+    coll.each do |item|
+      c = ctx.child
+      params = node.block.parameters&.parameters
+      names = param_names(params)
+      vals = names.size > 1 && item.is_a?(Array) ? item : [item]
+      bind(node.block.parameters, vals, c)
+      walk(body_of(node.block), c)
+    end
+  rescue Unresolved => e
+    fail_at(node, e.message)
+  end
+
+  def param_names(params)
+    return [] unless params
+
+    params.requireds.map { |p| p.respond_to?(:name) ? p.name.to_s : nil } +
+      params.optionals.map { |p| p.name.to_s }
+  end
+
+  def bind(block_params, vals, ctx)
+    params = block_params&.parameters
+    return unless params
+
+    params.requireds.each_with_index do |p, i|
+      if p.is_a?(Prism::MultiTargetNode)
+        p.lefts.each_with_index { |q, j| ctx.env[q.name.to_s] = vals[i]&.[](j) }
+      else
+        ctx.env[p.name.to_s] = vals[i]
+      end
+    end
+    params.optionals.each_with_index do |p, i|
+      idx = params.requireds.size + i
+      ctx.env[p.name.to_s] = idx < vals.size ? vals[idx] : value(p.value, ctx)
+    end
+  end
+
+  def record(node, ctx)
+    args = node.arguments&.arguments || []
+    kw = {}
+    pos = []
+    args.each { |a| a.is_a?(Prism::KeywordHashNode) ? kw.merge!(value(a, ctx)) : pos << a }
+    text = value(pos[0], ctx)
+    raise Unresolved, "source is #{text.class}" unless text.is_a?(String)
+
+    filename = pos[1] && value(pos[1], ctx)
+    if node.name == :expect_offense
+      kw.each do |k, v|
+        next if k == :loop
+
+        v = v.to_s
+        text = text.gsub("%{#{k}}", v).gsub("^{#{k}}", "^" * v.size).gsub("_{#{k}}", " " * v.size)
+      end
+      text = text.lines.grep_v(ANNOTATION).join
+    end
+    return if text.strip.empty?
+    raise Unresolved, "unresolved interpolation in source" if text.b.include?(HOLE.b)
+
+    cop_config = let_value("cop_config", ctx) || {}
+    other = let_value("other_cops", ctx) || {}
+    ruby = ctx.ruby || (let_value("ruby_version", ctx)&.to_s)
+    rubies = ruby ? [ruby] : ["2.7", "3.4"]
+    rubies.each do |r|
+      @snippets << { ruby: r, config: { @cop => cop_config }.merge(other), filename: filename, text: text }
+    end
+  rescue Unresolved => e
+    fail_at(node, e.message)
+  end
+
+  def let_value(name, ctx)
+    entry = ctx.lets[name] or return nil
+    block, = entry
+    stmts = body_of(block)
+    raise Unresolved, "let(:#{name}) is empty" if stmts.empty?
+    raise Unresolved, "let(:#{name}) has statements" if stmts.size > 1
+
+    value(stmts.last, ctx)
+  end
+
+  # `described_class::NAME`: the literal value of that constant in the cop's own source.
+  def cop_constant(name)
+    lib = @file.sub(%r{/spec/rubocop/cop/}, "/lib/rubocop/cop/").sub(/_spec\.rb\z/, ".rb")
+    queue = [Prism.parse_file(lib).value]
+    until queue.empty?
+      n = queue.shift
+      return const_literal(n.value) if n.is_a?(Prism::ConstantWriteNode) && n.name.to_s == name
+
+      queue.concat(n.compact_child_nodes)
+    end
+    raise Unresolved, "no constant #{name} in #{lib}"
+  end
+
+  def const_literal(node)
+    if node.is_a?(Prism::CallNode) && node.name == :freeze
+      const_literal(node.receiver)
+    elsif node.is_a?(Prism::CallNode) && node.name == :[] && node.receiver&.slice == "Set"
+      node.arguments.arguments.map { |a| value(a, nil) }
+    else
+      value(node, nil)
+    end
+  end
+
+  def fail_at(node, msg)
+    @failures << "#{@file}:#{node.location.start_line}: #{msg}"
+    nil
+  end
+
+  def value(node, ctx)
+    case node
+    when Prism::StringNode, Prism::XStringNode then node.unescaped
+    when Prism::SymbolNode then node.unescaped.to_sym
+    when Prism::IntegerNode, Prism::FloatNode then node.value
+    when Prism::RegularExpressionNode then Regexp.new(node.unescaped)
+    when Prism::TrueNode then true
+    when Prism::FalseNode then false
+    when Prism::NilNode then nil
+    when Prism::InterpolatedStringNode, Prism::InterpolatedSymbolNode
+      s = node.parts.map do |p|
+        case p
+        when Prism::StringNode then p.unescaped
+        when Prism::EmbeddedStatementsNode
+          st = p.statements&.body || []
+          raise Unresolved, "multi-statement interpolation" if st.size > 1
+
+          begin
+            st.empty? ? "" : value(st.first, ctx).to_s
+          rescue Unresolved
+            HOLE
+          end
+        else raise Unresolved, "interpolated #{p.class}"
+        end
+      end.join
+      node.is_a?(Prism::InterpolatedSymbolNode) ? s.to_sym : s
+    when Prism::ArrayNode then node.elements.map { |e| value(e, ctx) }
+    when Prism::HashNode, Prism::KeywordHashNode
+      node.elements.to_h do |a|
+        raise Unresolved, "hash #{a.class}" unless a.is_a?(Prism::AssocNode)
+
+        [value(a.key, ctx), value(a.value, ctx)]
+      end
+    when Prism::RangeNode
+      a = value(node.left, ctx)
+      b = value(node.right, ctx)
+      node.exclude_end? ? (a...b) : (a..b)
+    when Prism::ParenthesesNode
+      value(node.body.body.last, ctx)
+    when Prism::StatementsNode then value(node.body.last, ctx)
+    when Prism::LocalVariableReadNode then lookup(node.name.to_s, ctx)
+    when Prism::CallNode then call_value(node, ctx)
+    when Prism::ConstantPathNode
+      if node.parent&.slice == "described_class"
+        cop_constant(node.name.to_s)
+      else
+        node.slice
+      end
+    when Prism::ConstantReadNode then node.slice
+    when Prism::IfNode, Prism::UnlessNode
+      truthy = value(node.predicate, ctx)
+      truthy = !truthy if node.is_a?(Prism::UnlessNode)
+      branch = truthy ? node.statements : (node.is_a?(Prism::IfNode) ? node.subsequent : node.else_clause)
+      branch = branch.statements if branch.is_a?(Prism::ElseNode)
+      branch ? value(branch, ctx) : nil
+    else raise Unresolved, "cannot evaluate #{node.class}"
+    end
+  end
+
+  def lookup(name, ctx)
+    if ctx.env.key?(name)
+      v = ctx.env[name]
+      raise v if v.is_a?(Unresolved)
+
+      return v
+    end
+    return let_value(name, ctx) if ctx.lets.key?(name)
+
+    raise Unresolved, "unbound #{name}"
+  end
+
+  def call_value(node, ctx)
+    if node.receiver.nil? && node.arguments.nil? && node.block.nil?
+      return lookup(node.name.to_s, ctx)
+    end
+
+    recv = value(node.receiver, ctx) if node.receiver
+    args = (node.arguments&.arguments || []).map { |a| value(a, ctx) }
+    case node.name
+    when :*, :+, :size, :length, :to_a, :to_s, :to_sym, :upcase, :downcase, :capitalize, :join,
+         :sub, :gsub, :chomp, :strip, :first, :last, :flatten, :product, :zip, :keys, :values, :inspect,
+         :freeze, :dup, :tr, :delete, :count, :reverse, :sort, :uniq, :lines, :chars, :split,
+         :b, :==, :!=, :include?, :start_with?, :end_with?, :map, :to_h, :!, :-, :index, :match
+      raise Unresolved, "#{node.name} on #{recv.class}" if recv.nil? && node.receiver
+
+      blk = node.block
+      if blk.is_a?(Prism::BlockArgumentNode) && blk.expression.is_a?(Prism::SymbolNode)
+        recv.public_send(node.name, *args, &blk.expression.unescaped.to_sym)
+      elsif blk
+        raise Unresolved, "#{node.name} with a block"
+      else
+        recv.public_send(node.name, *args)
+      end
+    when :[]
+      recv[*args]
+    when :format
+      format(*args)
+    else raise Unresolved, "call #{node.name}"
+    end
+  rescue ArgumentError, NoMethodError, TypeError => e
+    raise Unresolved, "#{node.name}: #{e.message}"
+  end
+end
+
+def default_filename(cop, config, idx)
+  include = config.dig(cop, "Include") || DEFAULTS.dig(cop, "Include")
+  pat = include&.first
+  return format("%03d.rb", idx) unless pat
+
+  base = File.basename(pat)
+  base.start_with?("*") ? format("%03d", idx) + base.delete_prefix("*") : File.join(format("%03d", idx), base)
+end
+
+def snippet_path(cop, snip, idx)
+  f = snip[:filename]
+  return default_filename(cop, snip[:config], idx) unless f
+
+  f = File.basename(f) if f.start_with?("/")
+  File.join(format("%03d", idx), f)
+end
+
+def rubocop_yml(snip)
+  all = { "AllCops" => { "EnabledByDefault" => true, "NewCops" => "enable", "SuggestExtensions" => false,
+                         "TargetRubyVersion" => snip[:ruby].to_f } }
+  overrides = snip[:config].reject { |_, v| v.empty? }
+  all.merge(overrides).to_yaml
+end
+
+cops = File.readlines(cops_file).map { |l| l.split.first }.compact
+total = 0
+
+# GemFilename's spec builds processed sources by file name instead of expect_offense.
+if cops.include?("Bundler/GemFilename")
+  names = %w[gems.rb gems.locked Gemfile Gemfile.lock].flat_map { |n| [n, "spec/#{n}"] }
+  [[{}, ""], [{ "EnforcedStyle" => "gems.rb" }, "-c1"]].each do |cfg, tag|
+    dir = File.join(out_root, "Bundler_GemFilename", "r3.4#{tag}")
+    FileUtils.mkdir_p(File.join(dir, "spec"))
+    File.write(File.join(dir, ".rubocop.yml"), rubocop_yml(ruby: "3.4", config: { "Bundler/GemFilename" => cfg }))
+    names.each { |n| File.write(File.join(dir, n), "print 1\n") }
+    total += names.size
+  end
+end
+cops.each do |cop|
+  dept, name = cop.split("/")
+  snake = name.gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2').gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
+  spec = File.join(spec_root, dept.downcase, "#{snake}_spec.rb")
+  unless File.exist?(spec)
+    warn "#{cop}: no spec #{spec}"
+    next
+  end
+  ex = Extractor.new(cop, spec)
+  ex.run
+  ex.failures.each { |f| warn "#{cop}: #{f}" }
+  variants = ex.snippets.group_by { |s| [s[:ruby], s[:config]] }
+  configs = variants.keys.map(&:last).uniq
+  variants.each do |(ruby, config), snips|
+    tag = configs.index(config).zero? && config.values.all?(&:empty?) ? "" : "-c#{configs.index(config)}"
+    dir = File.join(out_root, cop.tr("/", "_"), "r#{ruby}#{tag}")
+    FileUtils.mkdir_p(dir)
+    File.write(File.join(dir, ".rubocop.yml"), rubocop_yml(snips.first))
+    snips.uniq { |s| [s[:filename], s[:text]] }.each_with_index do |s, i|
+      path = File.join(dir, snippet_path(cop, s, i))
+      FileUtils.mkdir_p(File.dirname(path))
+      File.write(path, s[:text])
+      total += 1
+    end
+  end
+  warn "#{cop}: #{ex.snippets.size} snippets, #{variants.size} variants, #{ex.failures.size} unresolved"
+end
+puts "#{total} files"

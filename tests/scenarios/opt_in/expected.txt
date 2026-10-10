@@ -1,0 +1,13 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a.rb:11:121: C: Layout/LineLength: Line is too long. [136/120]
+a.rb:11:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+a.rb:11:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:3:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:6:121: C: Layout/LineLength: Line is too long. [136/120]
+a.rb:6:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:7:1: W: Lint/Debugger: Remove debugger entry point `binding.pry`.
+a.rb:9:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+a.rb:9:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+b.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+b.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+b.rb:1:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.

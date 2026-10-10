@@ -1,0 +1,9 @@
+AllCops:
+  Exclude:
+    - 'lib/skip.rb'
+Layout/EmptyLines:
+  Exclude:
+    - 'a.rb'
+Layout/TrailingWhitespace:
+  Exclude:
+    - 'a.rb'

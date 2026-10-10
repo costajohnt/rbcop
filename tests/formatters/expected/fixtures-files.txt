@@ -1,0 +1,2 @@
+<root>/tests/fixtures/basic.rb
+<root>/tests/fixtures/no_newline.rb

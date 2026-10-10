@@ -1,0 +1,15 @@
+
+::error file=basic.rb,line=1,col=1::Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+::error file=basic.rb,line=1,col=10::Layout/TrailingWhitespace: Trailing whitespace detected.
+::error file=basic.rb,line=3,col=1::Layout/IndentationStyle: Tab detected in indentation.
+::error file=basic.rb,line=5,col=1::Layout/EmptyLines: Extra blank line detected.
+::error file=basic.rb,line=6,col=10::Style/NilComparison: Prefer the use of the `nil?` predicate.
+::error file=basic.rb,line=7,col=7::Lint/Debugger: Remove debugger entry point `binding.pry`.
+::error file=basic.rb,line=9,col=5::Lint/Debugger: Remove debugger entry point `byebug`.
+::error file=basic.rb,line=10,col=5::Lint/Debugger: Remove debugger entry point `debugger`.
+::error file=basic.rb,line=11,col=5::Lint/Debugger: Remove debugger entry point `Kernel.binding.irb`.
+::error file=basic.rb,line=12,col=121::Layout/LineLength: Line is too long. [140/120]
+::error file=basic.rb,line=14,col=19::Layout/TrailingWhitespace: Trailing whitespace detected.
+::error file=basic.rb,line=23,col=1::Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+::error file=no_newline.rb,line=1,col=1::Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+::error file=no_newline.rb,line=1,col=7::Layout/TrailingEmptyLines: Final newline missing.

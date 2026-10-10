@@ -1,0 +1,3 @@
+.rubocop.yml - AllCops/Excludes was renamed to AllCops/Exclude
+Error: The `Layout/AlignHash` cop has been renamed to `Layout/HashAlignment`.
+(obsolete configuration found in .rubocop.yml, please update it)

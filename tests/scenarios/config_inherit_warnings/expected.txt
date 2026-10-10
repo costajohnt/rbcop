@@ -1,0 +1,5 @@
+a.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+sub/b.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+sub/b.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+sub/b.rb:1:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.

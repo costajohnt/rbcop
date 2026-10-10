@@ -1,0 +1,13 @@
+Naming/PredicateName:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+  Foo: 1
+Layout/LineLength:
+  IgnoredPatterns: []
+AllCops:
+  Bogus: 1
+Style:
+  Wat: 2
+Lint/Debugger:
+  DebuggerReceivers: [x]

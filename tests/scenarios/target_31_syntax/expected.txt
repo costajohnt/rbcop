@@ -1,0 +1,7 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+anon_args.rb:2:14: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+anon_args.rb:2:26: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+anon_args.rb:2:35: F: Lint/Syntax: no anonymous block parameter (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+anon_args2.rb:2:15: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+anon_args2.rb:3:14: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+hash_anon.rb:4:1: F: Lint/Syntax: unexpected token kEND (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)

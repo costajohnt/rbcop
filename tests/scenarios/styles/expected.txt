@@ -1,0 +1,36 @@
+Gemfile:2:1: C: [Correctable] Layout/TrailingEmptyLines: Trailing blank line missing.
+frozen.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Unnecessary frozen string literal comment.
+frozen.rb:4:1: C: [Correctable] Layout/TrailingEmptyLines: Trailing blank line missing.
+misc.rb:1:1: W: Lint/Debugger: Remove debugger entry point `require 'debug'`.
+misc.rb:2:1: W: Lint/Debugger: Remove debugger entry point `my_debug`.
+misc.rb:7:61: C: Layout/LineLength: Line is too long. [78/60]
+sample.rb:10:1: C: [Correctable] Layout/IndentationStyle: Space detected in indentation.
+sample.rb:10:5: C: Layout/IndentationConsistency: Inconsistent indentation detected.
+sample.rb:11:61: C: Layout/LineLength: Line is too long. [146/60]
+sample.rb:12:1: C: [Correctable] Layout/IndentationStyle: Space detected in indentation.
+sample.rb:13:1: C: [Correctable] Layout/IndentationStyle: Space detected in indentation.
+sample.rb:13:5: C: Layout/IndentationConsistency: Inconsistent indentation detected.
+sample.rb:15:1: C: [Correctable] Layout/IndentationStyle: Space detected in indentation.
+sample.rb:16:1: C: [Correctable] Layout/IndentationStyle: Space detected in indentation.
+sample.rb:16:5: C: Layout/IndentationConsistency: Inconsistent indentation detected.
+sample.rb:17:1: C: [Correctable] Layout/IndentationStyle: Space detected in indentation.
+sample.rb:19:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines instead of 1 detected.
+sample.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for `class Sample`.
+sample.rb:2:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+sample.rb:2:1: C: [Correctable] Layout/IndentationStyle: Space detected in indentation.
+sample.rb:2:3: R: Metrics/MethodLength: Method has too many lines. [12/10]
+sample.rb:3:1: C: [Correctable] Layout/IndentationWidth: Use 1 (not 0) tabs for indentation.
+sample.rb:5:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+sample.rb:6:1: C: [Correctable] Layout/IndentationStyle: Space detected in indentation.
+sample.rb:6:5: C: Layout/IndentationConsistency: Inconsistent indentation detected.
+sample.rb:6:5: W: Lint/Debugger: Remove debugger entry point `binding.pry`.
+sample.rb:7:1: C: [Correctable] Layout/IndentationStyle: Space detected in indentation.
+sample.rb:7:5: C: Layout/IndentationConsistency: Inconsistent indentation detected.
+sample.rb:7:5: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+sample.rb:8:11: C: [Correctable] Style/NilComparison: Prefer the use of the `==` comparison.
+sample.rb:8:1: C: [Correctable] Layout/IndentationStyle: Space detected in indentation.
+sample.rb:8:5: C: Layout/IndentationConsistency: Inconsistent indentation detected.
+sample.rb:9:12: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+sample.rb:9:1: C: [Correctable] Layout/IndentationStyle: Space detected in indentation.
+sample.rb:9:5: C: Layout/IndentationConsistency: Inconsistent indentation detected.
+sample.rb:9:61: C: Layout/LineLength: Line is too long. [143/60]

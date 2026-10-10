@@ -1,0 +1,3 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+Gemfile:1:8: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+bad.rb:2:1: F: Lint/Syntax: unexpected 'end'; expected a `)` to close the parameters (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)

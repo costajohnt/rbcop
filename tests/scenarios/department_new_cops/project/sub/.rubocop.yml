@@ -1,0 +1,6 @@
+inherit_from: ../.rubocop.yml
+
+Style:
+  NewCops: enable
+Lint:
+  NewCops: pending

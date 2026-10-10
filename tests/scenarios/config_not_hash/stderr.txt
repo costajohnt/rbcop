@@ -1,0 +1,3 @@
+Error: The configuration for "Style/StringLiterals" in .rubocop.yml is not a Hash.
+
+Found: [1, "a"]

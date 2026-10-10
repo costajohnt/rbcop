@@ -1,0 +1,9 @@
+AllCops:
+  DisabledByDefault: true
+Layout/LineLength:
+  Max: 100
+Style:
+  Enabled: true
+Lint/Debugger: {}
+Layout/TrailingWhitespace:
+  Enabled: false

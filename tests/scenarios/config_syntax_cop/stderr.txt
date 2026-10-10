@@ -1,0 +1,2 @@
+Error: configuration for Lint/Syntax cop found in .rubocop.yml
+It's not possible to disable this cop.

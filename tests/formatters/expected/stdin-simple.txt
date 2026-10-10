@@ -1,0 +1,5 @@
+== lib/foo.rb ==
+C:  1:  1: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+C:  1:  6: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+
+1 file inspected, 2 offenses detected, 2 offenses autocorrectable

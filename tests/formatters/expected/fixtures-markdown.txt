@@ -1,0 +1,90 @@
+# RuboCop Inspection Report
+
+3 files inspected, 14 offenses detected:
+
+### basic.rb - (12 offenses)
+  * **Line # 1 - convention:** Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+
+    ```rb
+    class Foo   
+    ```
+
+  * **Line # 1 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
+
+    ```rb
+    class Foo   
+    ```
+
+  * **Line # 3 - convention:** Layout/IndentationStyle: Tab detected in indentation.
+
+    ```rb
+    	x = 1
+    ```
+
+  * **Line # 5 - convention:** Layout/EmptyLines: Extra blank line detected.
+
+    ```rb
+     ...
+    ```
+
+  * **Line # 6 - convention:** Style/NilComparison: Prefer the use of the `nil?` predicate.
+
+    ```rb
+        if x == nil
+    ```
+
+  * **Line # 7 - warning:** Lint/Debugger: Remove debugger entry point `binding.pry`.
+
+    ```rb
+          binding.pry
+    ```
+
+  * **Line # 9 - warning:** Lint/Debugger: Remove debugger entry point `byebug`.
+
+    ```rb
+        byebug
+    ```
+
+  * **Line # 10 - warning:** Lint/Debugger: Remove debugger entry point `debugger`.
+
+    ```rb
+        debugger
+    ```
+
+  * **Line # 11 - warning:** Lint/Debugger: Remove debugger entry point `Kernel.binding.irb`.
+
+    ```rb
+        Kernel.binding.irb
+    ```
+
+  * **Line # 12 - convention:** Layout/LineLength: Line is too long. [140/120]
+
+    ```rb
+        y = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    ```
+
+  * **Line # 14 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
+
+    ```rb
+          heredoc line   
+    ```
+
+  * **Line # 23 - convention:** Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+
+    ```rb
+     ...
+    ```
+
+### no_newline.rb - (2 offenses)
+  * **Line # 1 - convention:** Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+
+    ```rb
+    puts 1
+    ```
+
+  * **Line # 1 - convention:** Layout/TrailingEmptyLines: Final newline missing.
+
+    ```rb
+    puts 1
+    ```
+

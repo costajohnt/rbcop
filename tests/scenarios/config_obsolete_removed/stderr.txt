@@ -1,0 +1,14 @@
+Error: The `Layout/AlignHash` cop has been renamed to `Layout/HashAlignment`.
+(obsolete configuration found in .rubocop.yml, please update it)
+The `Lint/Eval` cop has been moved to `Security/Eval`.
+(obsolete configuration found in .rubocop.yml, please update it)
+The `Layout/SpaceAfterControlKeyword` cop has been removed. Please use `Layout/SpaceAroundKeyword` instead.
+(obsolete configuration found in .rubocop.yml, please update it)
+The `Lint/UselessComparison` cop has been removed since it has been superseded by `Lint/BinaryOperatorWithIdenticalOperands`. Please use `Lint/BinaryOperatorWithIdenticalOperands` instead.
+(obsolete configuration found in .rubocop.yml, please update it)
+The `Style/BracesAroundHashParameters` cop has been removed. Please use  and/or  instead.
+(obsolete configuration found in .rubocop.yml, please update it)
+The `Style/TrailingComma` cop has been removed. Please use `Style/TrailingCommaInArguments`, `Style/TrailingCommaInArrayLiteral` and/or `Style/TrailingCommaInHashLiteral` instead.
+(obsolete configuration found in .rubocop.yml, please update it)
+The `Style/MethodMissing` cop has been split into `Style/MethodMissingSuper` and `Style/MissingRespondToMissing`.
+(obsolete configuration found in .rubocop.yml, please update it)

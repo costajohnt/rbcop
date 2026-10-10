@@ -1,0 +1,272 @@
+<?xml version='1.0'?>
+<testsuites>
+  <testsuite name='rubocop' tests='6' failures='16'>
+    <testcase classname='crlf' name='Bundler/DuplicatedGem'/>
+    <testcase classname='crlf' name='Bundler/DuplicatedGroup'/>
+    <testcase classname='crlf' name='Bundler/GemFilename'/>
+    <testcase classname='crlf' name='Bundler/InsecureProtocolSource'/>
+    <testcase classname='crlf' name='Bundler/OrderedGems'/>
+    <testcase classname='crlf' name='Gemspec/DuplicatedAssignment'/>
+    <testcase classname='crlf' name='Gemspec/OrderedDependencies'/>
+    <testcase classname='crlf' name='Gemspec/RequiredRubyVersion'/>
+    <testcase classname='crlf' name='Gemspec/RubyVersionGlobalsUsage'/>
+    <testcase classname='crlf' name='Layout/EmptyLines'/>
+    <testcase classname='crlf' name='Layout/IndentationStyle'/>
+    <testcase classname='crlf' name='Layout/LineLength'/>
+    <testcase classname='crlf' name='Layout/SpaceAfterColon'/>
+    <testcase classname='crlf' name='Layout/SpaceAfterComma'/>
+    <testcase classname='crlf' name='Layout/SpaceAfterNot'/>
+    <testcase classname='crlf' name='Layout/SpaceAfterSemicolon'/>
+    <testcase classname='crlf' name='Layout/SpaceBeforeComma'/>
+    <testcase classname='crlf' name='Layout/SpaceBeforeComment'/>
+    <testcase classname='crlf' name='Layout/SpaceBeforeSemicolon'/>
+    <testcase classname='crlf' name='Layout/SpaceInsideRangeLiteral'/>
+    <testcase classname='crlf' name='Layout/TrailingEmptyLines'/>
+    <testcase classname='crlf' name='Layout/TrailingWhitespace'>
+      <failure type='Layout/TrailingWhitespace' message='Layout/TrailingWhitespace: Trailing whitespace detected.'>
+        <root>/tests/formatters/project/crlf.rb:3:6
+      </failure>
+    </testcase>
+    <testcase classname='crlf' name='Lint/Debugger'/>
+    <testcase classname='crlf' name='Lint/Syntax'/>
+    <testcase classname='crlf' name='Style/AndOr'/>
+    <testcase classname='crlf' name='Style/ColonMethodCall'/>
+    <testcase classname='crlf' name='Style/DefWithParentheses'/>
+    <testcase classname='crlf' name='Style/FrozenStringLiteralComment'/>
+    <testcase classname='crlf' name='Style/MethodDefParentheses'/>
+    <testcase classname='crlf' name='Style/NegatedIf'/>
+    <testcase classname='crlf' name='Style/NegatedWhile'/>
+    <testcase classname='crlf' name='Style/NilComparison'/>
+    <testcase classname='crlf' name='Style/Not'/>
+    <testcase classname='crlf' name='Style/UnlessElse'/>
+    <testcase classname='lib.clean' name='Bundler/DuplicatedGem'/>
+    <testcase classname='lib.clean' name='Bundler/DuplicatedGroup'/>
+    <testcase classname='lib.clean' name='Bundler/GemFilename'/>
+    <testcase classname='lib.clean' name='Bundler/InsecureProtocolSource'/>
+    <testcase classname='lib.clean' name='Bundler/OrderedGems'/>
+    <testcase classname='lib.clean' name='Gemspec/DuplicatedAssignment'/>
+    <testcase classname='lib.clean' name='Gemspec/OrderedDependencies'/>
+    <testcase classname='lib.clean' name='Gemspec/RequiredRubyVersion'/>
+    <testcase classname='lib.clean' name='Gemspec/RubyVersionGlobalsUsage'/>
+    <testcase classname='lib.clean' name='Layout/EmptyLines'/>
+    <testcase classname='lib.clean' name='Layout/IndentationStyle'/>
+    <testcase classname='lib.clean' name='Layout/LineLength'/>
+    <testcase classname='lib.clean' name='Layout/SpaceAfterColon'/>
+    <testcase classname='lib.clean' name='Layout/SpaceAfterComma'/>
+    <testcase classname='lib.clean' name='Layout/SpaceAfterNot'/>
+    <testcase classname='lib.clean' name='Layout/SpaceAfterSemicolon'/>
+    <testcase classname='lib.clean' name='Layout/SpaceBeforeComma'/>
+    <testcase classname='lib.clean' name='Layout/SpaceBeforeComment'/>
+    <testcase classname='lib.clean' name='Layout/SpaceBeforeSemicolon'/>
+    <testcase classname='lib.clean' name='Layout/SpaceInsideRangeLiteral'/>
+    <testcase classname='lib.clean' name='Layout/TrailingEmptyLines'/>
+    <testcase classname='lib.clean' name='Layout/TrailingWhitespace'/>
+    <testcase classname='lib.clean' name='Lint/Debugger'/>
+    <testcase classname='lib.clean' name='Lint/Syntax'/>
+    <testcase classname='lib.clean' name='Style/AndOr'/>
+    <testcase classname='lib.clean' name='Style/ColonMethodCall'/>
+    <testcase classname='lib.clean' name='Style/DefWithParentheses'/>
+    <testcase classname='lib.clean' name='Style/FrozenStringLiteralComment'/>
+    <testcase classname='lib.clean' name='Style/MethodDefParentheses'/>
+    <testcase classname='lib.clean' name='Style/NegatedIf'/>
+    <testcase classname='lib.clean' name='Style/NegatedWhile'/>
+    <testcase classname='lib.clean' name='Style/NilComparison'/>
+    <testcase classname='lib.clean' name='Style/Not'/>
+    <testcase classname='lib.clean' name='Style/UnlessElse'/>
+    <testcase classname='lib.nested.deep' name='Bundler/DuplicatedGem'/>
+    <testcase classname='lib.nested.deep' name='Bundler/DuplicatedGroup'/>
+    <testcase classname='lib.nested.deep' name='Bundler/GemFilename'/>
+    <testcase classname='lib.nested.deep' name='Bundler/InsecureProtocolSource'/>
+    <testcase classname='lib.nested.deep' name='Bundler/OrderedGems'/>
+    <testcase classname='lib.nested.deep' name='Gemspec/DuplicatedAssignment'/>
+    <testcase classname='lib.nested.deep' name='Gemspec/OrderedDependencies'/>
+    <testcase classname='lib.nested.deep' name='Gemspec/RequiredRubyVersion'/>
+    <testcase classname='lib.nested.deep' name='Gemspec/RubyVersionGlobalsUsage'/>
+    <testcase classname='lib.nested.deep' name='Layout/EmptyLines'/>
+    <testcase classname='lib.nested.deep' name='Layout/IndentationStyle'/>
+    <testcase classname='lib.nested.deep' name='Layout/LineLength'/>
+    <testcase classname='lib.nested.deep' name='Layout/SpaceAfterColon'/>
+    <testcase classname='lib.nested.deep' name='Layout/SpaceAfterComma'/>
+    <testcase classname='lib.nested.deep' name='Layout/SpaceAfterNot'/>
+    <testcase classname='lib.nested.deep' name='Layout/SpaceAfterSemicolon'/>
+    <testcase classname='lib.nested.deep' name='Layout/SpaceBeforeComma'/>
+    <testcase classname='lib.nested.deep' name='Layout/SpaceBeforeComment'/>
+    <testcase classname='lib.nested.deep' name='Layout/SpaceBeforeSemicolon'/>
+    <testcase classname='lib.nested.deep' name='Layout/SpaceInsideRangeLiteral'/>
+    <testcase classname='lib.nested.deep' name='Layout/TrailingEmptyLines'/>
+    <testcase classname='lib.nested.deep' name='Layout/TrailingWhitespace'/>
+    <testcase classname='lib.nested.deep' name='Lint/Debugger'>
+      <failure type='Lint/Debugger' message='Lint/Debugger: Remove debugger entry point `binding.irb`.'>
+        <root>/tests/formatters/project/lib/nested/deep.rb:4:1
+      </failure>
+    </testcase>
+    <testcase classname='lib.nested.deep' name='Lint/Syntax'/>
+    <testcase classname='lib.nested.deep' name='Style/AndOr'/>
+    <testcase classname='lib.nested.deep' name='Style/ColonMethodCall'/>
+    <testcase classname='lib.nested.deep' name='Style/DefWithParentheses'/>
+    <testcase classname='lib.nested.deep' name='Style/FrozenStringLiteralComment'/>
+    <testcase classname='lib.nested.deep' name='Style/MethodDefParentheses'/>
+    <testcase classname='lib.nested.deep' name='Style/NegatedIf'/>
+    <testcase classname='lib.nested.deep' name='Style/NegatedWhile'/>
+    <testcase classname='lib.nested.deep' name='Style/NilComparison'/>
+    <testcase classname='lib.nested.deep' name='Style/Not'/>
+    <testcase classname='lib.nested.deep' name='Style/UnlessElse'/>
+    <testcase classname='lib.style' name='Bundler/DuplicatedGem'/>
+    <testcase classname='lib.style' name='Bundler/DuplicatedGroup'/>
+    <testcase classname='lib.style' name='Bundler/GemFilename'/>
+    <testcase classname='lib.style' name='Bundler/InsecureProtocolSource'/>
+    <testcase classname='lib.style' name='Bundler/OrderedGems'/>
+    <testcase classname='lib.style' name='Gemspec/DuplicatedAssignment'/>
+    <testcase classname='lib.style' name='Gemspec/OrderedDependencies'/>
+    <testcase classname='lib.style' name='Gemspec/RequiredRubyVersion'/>
+    <testcase classname='lib.style' name='Gemspec/RubyVersionGlobalsUsage'/>
+    <testcase classname='lib.style' name='Layout/EmptyLines'/>
+    <testcase classname='lib.style' name='Layout/IndentationStyle'/>
+    <testcase classname='lib.style' name='Layout/LineLength'/>
+    <testcase classname='lib.style' name='Layout/SpaceAfterColon'/>
+    <testcase classname='lib.style' name='Layout/SpaceAfterComma'>
+      <failure type='Layout/SpaceAfterComma' message='Layout/SpaceAfterComma: Space missing after comma.'>
+        <root>/tests/formatters/project/lib/style.rb:4:10
+      </failure>
+    </testcase>
+    <testcase classname='lib.style' name='Layout/SpaceAfterNot'/>
+    <testcase classname='lib.style' name='Layout/SpaceAfterSemicolon'/>
+    <testcase classname='lib.style' name='Layout/SpaceBeforeComma'>
+      <failure type='Layout/SpaceBeforeComma' message='Layout/SpaceBeforeComma: Space found before comma.'>
+        <root>/tests/formatters/project/lib/style.rb:4:9
+      </failure>
+    </testcase>
+    <testcase classname='lib.style' name='Layout/SpaceBeforeComment'/>
+    <testcase classname='lib.style' name='Layout/SpaceBeforeSemicolon'/>
+    <testcase classname='lib.style' name='Layout/SpaceInsideRangeLiteral'>
+      <failure type='Layout/SpaceInsideRangeLiteral' message='Layout/SpaceInsideRangeLiteral: Space inside range literal.'>
+        <root>/tests/formatters/project/lib/style.rb:7:4
+      </failure>
+    </testcase>
+    <testcase classname='lib.style' name='Layout/TrailingEmptyLines'/>
+    <testcase classname='lib.style' name='Layout/TrailingWhitespace'/>
+    <testcase classname='lib.style' name='Lint/Debugger'/>
+    <testcase classname='lib.style' name='Lint/Syntax'/>
+    <testcase classname='lib.style' name='Style/AndOr'/>
+    <testcase classname='lib.style' name='Style/ColonMethodCall'/>
+    <testcase classname='lib.style' name='Style/DefWithParentheses'>
+      <failure type='Style/DefWithParentheses' message='Style/DefWithParentheses: Omit the parentheses in defs when the method doesn&apos;t accept any arguments.'>
+        <root>/tests/formatters/project/lib/style.rb:3:7
+      </failure>
+    </testcase>
+    <testcase classname='lib.style' name='Style/FrozenStringLiteralComment'/>
+    <testcase classname='lib.style' name='Style/MethodDefParentheses'/>
+    <testcase classname='lib.style' name='Style/NegatedIf'>
+      <failure type='Style/NegatedIf' message='Style/NegatedIf: Favor `unless` over `if` for negative conditions.'>
+        <root>/tests/formatters/project/lib/style.rb:6:3
+      </failure>
+    </testcase>
+    <testcase classname='lib.style' name='Style/NegatedWhile'/>
+    <testcase classname='lib.style' name='Style/NilComparison'/>
+    <testcase classname='lib.style' name='Style/Not'/>
+    <testcase classname='lib.style' name='Style/UnlessElse'/>
+    <testcase classname='syntax_error' name='Bundler/DuplicatedGem'/>
+    <testcase classname='syntax_error' name='Bundler/DuplicatedGroup'/>
+    <testcase classname='syntax_error' name='Bundler/GemFilename'/>
+    <testcase classname='syntax_error' name='Bundler/InsecureProtocolSource'/>
+    <testcase classname='syntax_error' name='Bundler/OrderedGems'/>
+    <testcase classname='syntax_error' name='Gemspec/DuplicatedAssignment'/>
+    <testcase classname='syntax_error' name='Gemspec/OrderedDependencies'/>
+    <testcase classname='syntax_error' name='Gemspec/RequiredRubyVersion'/>
+    <testcase classname='syntax_error' name='Gemspec/RubyVersionGlobalsUsage'/>
+    <testcase classname='syntax_error' name='Layout/EmptyLines'/>
+    <testcase classname='syntax_error' name='Layout/IndentationStyle'/>
+    <testcase classname='syntax_error' name='Layout/LineLength'/>
+    <testcase classname='syntax_error' name='Layout/SpaceAfterColon'/>
+    <testcase classname='syntax_error' name='Layout/SpaceAfterComma'/>
+    <testcase classname='syntax_error' name='Layout/SpaceAfterNot'/>
+    <testcase classname='syntax_error' name='Layout/SpaceAfterSemicolon'/>
+    <testcase classname='syntax_error' name='Layout/SpaceBeforeComma'/>
+    <testcase classname='syntax_error' name='Layout/SpaceBeforeComment'/>
+    <testcase classname='syntax_error' name='Layout/SpaceBeforeSemicolon'/>
+    <testcase classname='syntax_error' name='Layout/SpaceInsideRangeLiteral'/>
+    <testcase classname='syntax_error' name='Layout/TrailingEmptyLines'/>
+    <testcase classname='syntax_error' name='Layout/TrailingWhitespace'/>
+    <testcase classname='syntax_error' name='Lint/Debugger'/>
+    <testcase classname='syntax_error' name='Lint/Syntax'>
+      <failure type='Lint/Syntax' message='Lint/Syntax: unexpected integer; expected a `)` to close the parameters
+(Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)'>
+        <root>/tests/formatters/project/syntax_error.rb:4:3
+      </failure>
+      <failure type='Lint/Syntax' message='Lint/Syntax: unexpected &apos;+&apos;, expecting end-of-input
+(Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)'>
+        <root>/tests/formatters/project/syntax_error.rb:4:5
+      </failure>
+      <failure type='Lint/Syntax' message='Lint/Syntax: unexpected &apos;end&apos;, assuming it is closing the parent method definition
+(Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)'>
+        <root>/tests/formatters/project/syntax_error.rb:5:1
+      </failure>
+    </testcase>
+    <testcase classname='syntax_error' name='Style/AndOr'/>
+    <testcase classname='syntax_error' name='Style/ColonMethodCall'/>
+    <testcase classname='syntax_error' name='Style/DefWithParentheses'/>
+    <testcase classname='syntax_error' name='Style/FrozenStringLiteralComment'/>
+    <testcase classname='syntax_error' name='Style/MethodDefParentheses'/>
+    <testcase classname='syntax_error' name='Style/NegatedIf'/>
+    <testcase classname='syntax_error' name='Style/NegatedWhile'/>
+    <testcase classname='syntax_error' name='Style/NilComparison'/>
+    <testcase classname='syntax_error' name='Style/Not'/>
+    <testcase classname='syntax_error' name='Style/UnlessElse'/>
+    <testcase classname='unicode' name='Bundler/DuplicatedGem'/>
+    <testcase classname='unicode' name='Bundler/DuplicatedGroup'/>
+    <testcase classname='unicode' name='Bundler/GemFilename'/>
+    <testcase classname='unicode' name='Bundler/InsecureProtocolSource'/>
+    <testcase classname='unicode' name='Bundler/OrderedGems'/>
+    <testcase classname='unicode' name='Gemspec/DuplicatedAssignment'/>
+    <testcase classname='unicode' name='Gemspec/OrderedDependencies'/>
+    <testcase classname='unicode' name='Gemspec/RequiredRubyVersion'/>
+    <testcase classname='unicode' name='Gemspec/RubyVersionGlobalsUsage'/>
+    <testcase classname='unicode' name='Layout/EmptyLines'/>
+    <testcase classname='unicode' name='Layout/IndentationStyle'>
+      <failure type='Layout/IndentationStyle' message='Layout/IndentationStyle: Tab detected in indentation.'>
+        <root>/tests/formatters/project/unicode.rb:5:1
+      </failure>
+    </testcase>
+    <testcase classname='unicode' name='Layout/LineLength'/>
+    <testcase classname='unicode' name='Layout/SpaceAfterColon'/>
+    <testcase classname='unicode' name='Layout/SpaceAfterComma'/>
+    <testcase classname='unicode' name='Layout/SpaceAfterNot'/>
+    <testcase classname='unicode' name='Layout/SpaceAfterSemicolon'/>
+    <testcase classname='unicode' name='Layout/SpaceBeforeComma'/>
+    <testcase classname='unicode' name='Layout/SpaceBeforeComment'/>
+    <testcase classname='unicode' name='Layout/SpaceBeforeSemicolon'/>
+    <testcase classname='unicode' name='Layout/SpaceInsideRangeLiteral'/>
+    <testcase classname='unicode' name='Layout/TrailingEmptyLines'>
+      <failure type='Layout/TrailingEmptyLines' message='Layout/TrailingEmptyLines: 2 trailing blank lines detected.'>
+        <root>/tests/formatters/project/unicode.rb:8:1
+      </failure>
+    </testcase>
+    <testcase classname='unicode' name='Layout/TrailingWhitespace'>
+      <failure type='Layout/TrailingWhitespace' message='Layout/TrailingWhitespace: Trailing whitespace detected.'>
+        <root>/tests/formatters/project/unicode.rb:4:24
+      </failure>
+      <failure type='Layout/TrailingWhitespace' message='Layout/TrailingWhitespace: Trailing whitespace detected.'>
+        <root>/tests/formatters/project/unicode.rb:5:14
+      </failure>
+      <failure type='Layout/TrailingWhitespace' message='Layout/TrailingWhitespace: Trailing whitespace detected.'>
+        <root>/tests/formatters/project/unicode.rb:6:32
+      </failure>
+    </testcase>
+    <testcase classname='unicode' name='Lint/Debugger'/>
+    <testcase classname='unicode' name='Lint/Syntax'/>
+    <testcase classname='unicode' name='Style/AndOr'/>
+    <testcase classname='unicode' name='Style/ColonMethodCall'/>
+    <testcase classname='unicode' name='Style/DefWithParentheses'/>
+    <testcase classname='unicode' name='Style/FrozenStringLiteralComment'/>
+    <testcase classname='unicode' name='Style/MethodDefParentheses'/>
+    <testcase classname='unicode' name='Style/NegatedIf'/>
+    <testcase classname='unicode' name='Style/NegatedWhile'/>
+    <testcase classname='unicode' name='Style/NilComparison'>
+      <failure type='Style/NilComparison' message='Style/NilComparison: Prefer the use of the `nil?` predicate.'>
+        <root>/tests/formatters/project/unicode.rb:4:18
+      </failure>
+    </testcase>
+    <testcase classname='unicode' name='Style/Not'/>
+    <testcase classname='unicode' name='Style/UnlessElse'/>
+  </testsuite>
+</testsuites>

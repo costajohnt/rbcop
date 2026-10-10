@@ -1,0 +1,614 @@
+cop	enabled	lines	mixins	file
+Bundler/DuplicatedGem	true	94	RangeHelp	lib/rubocop/cop/bundler/duplicated_gem.rb
+Bundler/DuplicatedGroup	true	127	RangeHelp	lib/rubocop/cop/bundler/duplicated_group.rb
+Bundler/GemComment	false	173	DefNode,GemDeclaration	lib/rubocop/cop/bundler/gem_comment.rb
+Bundler/GemFilename	true	102	ConfigurableEnforcedStyle	lib/rubocop/cop/bundler/gem_filename.rb
+Bundler/GemVersion	false	132	ConfigurableEnforcedStyle,GemDeclaration	lib/rubocop/cop/bundler/gem_version.rb
+Bundler/InsecureProtocolSource	true	85	AutoCorrector	lib/rubocop/cop/bundler/insecure_protocol_source.rb
+Bundler/OrderedGems	true	69	OrderedGemNode,AutoCorrector	lib/rubocop/cop/bundler/ordered_gems.rb
+Gemspec/AddRuntimeDependency	pending	38	AutoCorrector	lib/rubocop/cop/gemspec/add_runtime_dependency.rb
+Gemspec/AttributeAssignment	pending	91	GemspecHelp	lib/rubocop/cop/gemspec/attribute_assignment.rb
+Gemspec/DependencyVersion	false	152	ConfigurableEnforcedStyle,GemspecHelp	lib/rubocop/cop/gemspec/dependency_version.rb
+Gemspec/DeprecatedAttributeAssignment	pending	91	RangeHelp,AutoCorrector	lib/rubocop/cop/gemspec/deprecated_attribute_assignment.rb
+Gemspec/DevelopmentDependencies	pending	107	ConfigurableEnforcedStyle	lib/rubocop/cop/gemspec/development_dependencies.rb
+Gemspec/DuplicatedAssignment	true	121	RangeHelp,GemspecHelp	lib/rubocop/cop/gemspec/duplicated_assignment.rb
+Gemspec/OrderedDependencies	true	100	OrderedGemNode,AutoCorrector	lib/rubocop/cop/gemspec/ordered_dependencies.rb
+Gemspec/RequireMFA	pending	162	GemspecHelp,AutoCorrector	lib/rubocop/cop/gemspec/require_mfa.rb
+Gemspec/RequiredRubyVersion	true	129		lib/rubocop/cop/gemspec/required_ruby_version.rb
+Gemspec/RubyVersionGlobalsUsage	true	55	GemspecHelp	lib/rubocop/cop/gemspec/ruby_version_globals_usage.rb
+Layout/AccessModifierIndentation	true	104	Alignment,ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/access_modifier_indentation.rb
+Layout/ArgumentAlignment	true	153	Alignment,AutoCorrector	lib/rubocop/cop/layout/argument_alignment.rb
+Layout/ArrayAlignment	true	84	Alignment,AutoCorrector	lib/rubocop/cop/layout/array_alignment.rb
+Layout/AssignmentIndentation	true	57	CheckAssignment,Alignment,AutoCorrector	lib/rubocop/cop/layout/assignment_indentation.rb
+Layout/BeginEndAlignment	true	73	EndKeywordAlignment,AutoCorrector	lib/rubocop/cop/layout/begin_end_alignment.rb
+Layout/BlockAlignment	true	312	ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/block_alignment.rb
+Layout/BlockEndNewline	true	83	Alignment,AutoCorrector	lib/rubocop/cop/layout/block_end_newline.rb
+Layout/CaseIndentation	true	221	Alignment,ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/case_indentation.rb
+Layout/ClassStructure	false	474	VisibilityHelp,CommentsHelp,AutoCorrector	lib/rubocop/cop/layout/class_structure.rb
+Layout/ClosingHeredocIndentation	true	123	Heredoc,AutoCorrector	lib/rubocop/cop/layout/closing_heredoc_indentation.rb
+Layout/ClosingParenthesisIndentation	true	193	Alignment,AutoCorrector	lib/rubocop/cop/layout/closing_parenthesis_indentation.rb
+Layout/CommentIndentation	true	178	Alignment,AutoCorrector	lib/rubocop/cop/layout/comment_indentation.rb
+Layout/ConditionPosition	true	70	RangeHelp,AutoCorrector	lib/rubocop/cop/layout/condition_position.rb
+Layout/DefEndAlignment	true	73	EndKeywordAlignment,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/def_end_alignment.rb
+Layout/DotPosition	true	139	ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/dot_position.rb
+Layout/ElseAlignment	true	144	EndKeywordAlignment,Alignment,CheckAssignment,AutoCorrector	lib/rubocop/cop/layout/else_alignment.rb
+Layout/EmptyComment	true	151	RangeHelp,AutoCorrector	lib/rubocop/cop/layout/empty_comment.rb
+Layout/EmptyLineAfterGuardClause	true	232	RangeHelp,Util,AutoCorrector	lib/rubocop/cop/layout/empty_line_after_guard_clause.rb
+Layout/EmptyLineAfterMagicComment	true	129	RangeHelp,AutoCorrector	lib/rubocop/cop/layout/empty_line_after_magic_comment.rb
+Layout/EmptyLineAfterMultilineCondition	false	136	RangeHelp,AutoCorrector	lib/rubocop/cop/layout/empty_line_after_multiline_condition.rb
+Layout/EmptyLineBetweenDefs	true	324	RangeHelp,AutoCorrector	lib/rubocop/cop/layout/empty_line_between_defs.rb
+Layout/EmptyLines	true	73	RangeHelp,AutoCorrector	lib/rubocop/cop/layout/empty_lines.rb
+Layout/EmptyLinesAfterModuleInclusion	pending	101	RangeHelp,AutoCorrector	lib/rubocop/cop/layout/empty_lines_after_module_inclusion.rb
+Layout/EmptyLinesAroundAccessModifier	true	241	ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/empty_lines_around_access_modifier.rb
+Layout/EmptyLinesAroundArguments	true	82	RangeHelp,AutoCorrector	lib/rubocop/cop/layout/empty_lines_around_arguments.rb
+Layout/EmptyLinesAroundAttributeAccessor	true	140	RangeHelp,AllowedMethods,AutoCorrector	lib/rubocop/cop/layout/empty_lines_around_attribute_accessor.rb
+Layout/EmptyLinesAroundBeginBody	true	41	EmptyLinesAroundBody,AutoCorrector	lib/rubocop/cop/layout/empty_lines_around_begin_body.rb
+Layout/EmptyLinesAroundBlockBody	true	51	EmptyLinesAroundBody,AutoCorrector	lib/rubocop/cop/layout/empty_lines_around_block_body.rb
+Layout/EmptyLinesAroundClassBody	true	99	EmptyLinesAroundBody,AutoCorrector	lib/rubocop/cop/layout/empty_lines_around_class_body.rb
+Layout/EmptyLinesAroundExceptionHandlingKeywords	true	139	EmptyLinesAroundBody,AutoCorrector	lib/rubocop/cop/layout/empty_lines_around_exception_handling_keywords.rb
+Layout/EmptyLinesAroundMethodBody	true	64	EmptyLinesAroundBody,AutoCorrector	lib/rubocop/cop/layout/empty_lines_around_method_body.rb
+Layout/EmptyLinesAroundModuleBody	true	73	EmptyLinesAroundBody,AutoCorrector	lib/rubocop/cop/layout/empty_lines_around_module_body.rb
+Layout/EndAlignment	true	216	CheckAssignment,EndKeywordAlignment,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/end_alignment.rb
+Layout/EndOfLine	true	92	ConfigurableEnforcedStyle,RangeHelp	lib/rubocop/cop/layout/end_of_line.rb
+Layout/ExtraSpacing	true	287	PrecedingFollowingAlignment,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/extra_spacing.rb
+Layout/FirstArgumentIndentation	true	335	Alignment,ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/first_argument_indentation.rb
+Layout/FirstArrayElementIndentation	true	202	Alignment,ConfigurableEnforcedStyle,MultilineElementIndentation,AutoCorrector	lib/rubocop/cop/layout/first_array_element_indentation.rb
+Layout/FirstArrayElementLineBreak	false	94	FirstElementLineBreak,AutoCorrector	lib/rubocop/cop/layout/first_array_element_line_break.rb
+Layout/FirstHashElementIndentation	true	239	Alignment,ConfigurableEnforcedStyle,MultilineElementIndentation,AutoCorrector	lib/rubocop/cop/layout/first_hash_element_indentation.rb
+Layout/FirstHashElementLineBreak	false	68	FirstElementLineBreak,AutoCorrector	lib/rubocop/cop/layout/first_hash_element_line_break.rb
+Layout/FirstMethodArgumentLineBreak	false	105	FirstElementLineBreak,AllowedMethods,AutoCorrector	lib/rubocop/cop/layout/first_method_argument_line_break.rb
+Layout/FirstMethodParameterLineBreak	false	75	FirstElementLineBreak,AutoCorrector	lib/rubocop/cop/layout/first_method_parameter_line_break.rb
+Layout/FirstParameterIndentation	true	112	Alignment,ConfigurableEnforcedStyle,MultilineElementIndentation,AutoCorrector	lib/rubocop/cop/layout/first_parameter_indentation.rb
+Layout/HashAlignment	true	396	HashAlignmentStyles,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/hash_alignment.rb
+Layout/HeredocArgumentClosingParenthesis	false	312	RangeHelp,AutoCorrector	lib/rubocop/cop/layout/heredoc_argument_closing_parenthesis.rb
+Layout/HeredocIndentation	true	195	Alignment,Heredoc,TargetRubyVersion,AutoCorrector	lib/rubocop/cop/layout/heredoc_indentation.rb
+Layout/IndentationConsistency	true	205	Alignment,ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/layout/indentation_consistency.rb
+Layout/IndentationStyle	true	115	Alignment,ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/indentation_style.rb
+Layout/IndentationWidth	true	535	ConfigurableEnforcedStyle,EndKeywordAlignment,Alignment,CheckAssignment,AllowedPattern,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/indentation_width.rb
+Layout/InitialIndentation	true	55	RangeHelp,AutoCorrector	lib/rubocop/cop/layout/initial_indentation.rb
+Layout/LeadingCommentSpace	true	230	RangeHelp,AutoCorrector	lib/rubocop/cop/layout/leading_comment_space.rb
+Layout/LeadingEmptyLines	true	48	AutoCorrector	lib/rubocop/cop/layout/leading_empty_lines.rb
+Layout/LineContinuationLeadingSpace	pending	153	RangeHelp,AutoCorrector	lib/rubocop/cop/layout/line_continuation_leading_space.rb
+Layout/LineContinuationSpacing	pending	145	RangeHelp,AutoCorrector	lib/rubocop/cop/layout/line_continuation_spacing.rb
+Layout/LineEndStringConcatenationIndentation	pending	143	ConfigurableEnforcedStyle,Alignment,AutoCorrector	lib/rubocop/cop/layout/line_end_string_concatenation_indentation.rb
+Layout/LineLength	true	528	CheckLineBreakable,AllowedPattern,RangeHelp,LineLengthHelp,EndlessMethodRewriter,AutoCorrector	lib/rubocop/cop/layout/line_length.rb
+Layout/MultilineArrayBraceLayout	true	115	MultilineLiteralBraceLayout,AutoCorrector	lib/rubocop/cop/layout/multiline_array_brace_layout.rb
+Layout/MultilineArrayLineBreaks	false	65	MultilineElementLineBreaks,AutoCorrector	lib/rubocop/cop/layout/multiline_array_line_breaks.rb
+Layout/MultilineAssignmentLayout	false	123	CheckAssignment,ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/multiline_assignment_layout.rb
+Layout/MultilineBlockLayout	true	164	RangeHelp,AutoCorrector	lib/rubocop/cop/layout/multiline_block_layout.rb
+Layout/MultilineHashBraceLayout	true	115	MultilineLiteralBraceLayout,AutoCorrector	lib/rubocop/cop/layout/multiline_hash_brace_layout.rb
+Layout/MultilineHashKeyLineBreaks	false	74	MultilineElementLineBreaks,AutoCorrector	lib/rubocop/cop/layout/multiline_hash_key_line_breaks.rb
+Layout/MultilineMethodArgumentLineBreaks	false	112	MultilineElementLineBreaks,AutoCorrector	lib/rubocop/cop/layout/multiline_method_argument_line_breaks.rb
+Layout/MultilineMethodCallBraceLayout	true	132	MultilineLiteralBraceLayout,AutoCorrector	lib/rubocop/cop/layout/multiline_method_call_brace_layout.rb
+Layout/MultilineMethodCallIndentation	true	468	ConfigurableEnforcedStyle,Alignment,MultilineExpressionIndentation,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/multiline_method_call_indentation.rb
+Layout/MultilineMethodDefinitionBraceLayout	true	128	MultilineLiteralBraceLayout,AutoCorrector	lib/rubocop/cop/layout/multiline_method_definition_brace_layout.rb
+Layout/MultilineMethodParameterLineBreaks	false	78	MultilineElementLineBreaks,AutoCorrector	lib/rubocop/cop/layout/multiline_method_parameter_line_breaks.rb
+Layout/MultilineOperationIndentation	true	130	ConfigurableEnforcedStyle,Alignment,MultilineExpressionIndentation,AutoCorrector	lib/rubocop/cop/layout/multiline_operation_indentation.rb
+Layout/ParameterAlignment	true	118	Alignment,AutoCorrector	lib/rubocop/cop/layout/parameter_alignment.rb
+Layout/RedundantLineBreak	false	213	CheckAssignment,CheckSingleLineSuitability,ReparsedEquivalence,AutoCorrector	lib/rubocop/cop/layout/redundant_line_break.rb
+Layout/RescueEnsureAlignment	true	219	RangeHelp,EndKeywordAlignment,AutoCorrector	lib/rubocop/cop/layout/rescue_ensure_alignment.rb
+Layout/SingleLineBlockChain	false	69	RangeHelp,AutoCorrector	lib/rubocop/cop/layout/single_line_block_chain.rb
+Layout/SpaceAfterColon	true	49	AutoCorrector	lib/rubocop/cop/layout/space_after_colon.rb
+Layout/SpaceAfterComma	true	32	SpaceAfterPunctuation,AutoCorrector	lib/rubocop/cop/layout/space_after_comma.rb
+Layout/SpaceAfterMethodName	true	39	RangeHelp,AutoCorrector	lib/rubocop/cop/layout/space_after_method_name.rb
+Layout/SpaceAfterNot	true	39	RangeHelp,AutoCorrector	lib/rubocop/cop/layout/space_after_not.rb
+Layout/SpaceAfterSemicolon	true	39	SpaceAfterPunctuation,AutoCorrector	lib/rubocop/cop/layout/space_after_semicolon.rb
+Layout/SpaceAroundBlockParameters	true	173	ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/space_around_block_parameters.rb
+Layout/SpaceAroundEqualsInParameterDefault	true	89	SurroundingSpace,ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/space_around_equals_in_parameter_default.rb
+Layout/SpaceAroundKeyword	true	276	AutoCorrector	lib/rubocop/cop/layout/space_around_keyword.rb
+Layout/SpaceAroundMethodCallOperator	true	98	RangeHelp,AutoCorrector	lib/rubocop/cop/layout/space_around_method_call_operator.rb
+Layout/SpaceAroundOperators	true	318	PrecedingFollowingAlignment,RangeHelp,RationalLiteral,AutoCorrector	lib/rubocop/cop/layout/space_around_operators.rb
+Layout/SpaceBeforeBlockBraces	true	164	ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/space_before_block_braces.rb
+Layout/SpaceBeforeBrackets	pending	40	RangeHelp,AutoCorrector	lib/rubocop/cop/layout/space_before_brackets.rb
+Layout/SpaceBeforeComma	true	29	SpaceBeforePunctuation,AutoCorrector	lib/rubocop/cop/layout/space_before_comma.rb
+Layout/SpaceBeforeComment	true	34	AutoCorrector	lib/rubocop/cop/layout/space_before_comment.rb
+Layout/SpaceBeforeFirstArg	true	73	PrecedingFollowingAlignment,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/space_before_first_arg.rb
+Layout/SpaceBeforeSemicolon	true	24	SpaceBeforePunctuation,AutoCorrector	lib/rubocop/cop/layout/space_before_semicolon.rb
+Layout/SpaceInLambdaLiteral	true	79	ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/space_in_lambda_literal.rb
+Layout/SpaceInsideArrayLiteralBrackets	true	236	SurroundingSpace,ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/layout/space_inside_array_literal_brackets.rb
+Layout/SpaceInsideArrayPercentLiteral	true	46	MatchRange,PercentLiteral,AutoCorrector	lib/rubocop/cop/layout/space_inside_array_percent_literal.rb
+Layout/SpaceInsideBlockBraces	true	268	ConfigurableEnforcedStyle,SurroundingSpace,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/space_inside_block_braces.rb
+Layout/SpaceInsideHashLiteralBraces	true	215	SurroundingSpace,ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/space_inside_hash_literal_braces.rb
+Layout/SpaceInsideParens	true	176	SurroundingSpace,RangeHelp,ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/layout/space_inside_parens.rb
+Layout/SpaceInsidePercentLiteralDelimiters	true	94	MatchRange,PercentLiteral,AutoCorrector	lib/rubocop/cop/layout/space_inside_percent_literal_delimiters.rb
+Layout/SpaceInsideRangeLiteral	true	54	AutoCorrector	lib/rubocop/cop/layout/space_inside_range_literal.rb
+Layout/SpaceInsideReferenceBrackets	true	143	SurroundingSpace,ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/layout/space_inside_reference_brackets.rb
+Layout/SpaceInsideStringInterpolation	true	63	Interpolation,SurroundingSpace,ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/layout/space_inside_string_interpolation.rb
+Layout/TrailingEmptyLines	true	113	ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/layout/trailing_empty_lines.rb
+Layout/TrailingWhitespace	true	133	RangeHelp,Heredoc,AutoCorrector	lib/rubocop/cop/layout/trailing_whitespace.rb
+Lint/AmbiguousAssignment	pending	46	CheckAssignment,RangeHelp	lib/rubocop/cop/lint/ambiguous_assignment.rb
+Lint/AmbiguousBlockAssociation	true	176	AllowedMethods,AllowedPattern,AutoCorrector	lib/rubocop/cop/lint/ambiguous_block_association.rb
+Lint/AmbiguousOperator	true	105	AutoCorrector	lib/rubocop/cop/lint/ambiguous_operator.rb
+Lint/AmbiguousOperatorPrecedence	pending	102	AutoCorrector	lib/rubocop/cop/lint/ambiguous_operator_precedence.rb
+Lint/AmbiguousRange	pending	112	RationalLiteral,AutoCorrector	lib/rubocop/cop/lint/ambiguous_range.rb
+Lint/AmbiguousRegexpLiteral	true	78	AutoCorrector	lib/rubocop/cop/lint/ambiguous_regexp_literal.rb
+Lint/ArgumentMismatch	pending	99	ProjectIndexHelp,IndexedMethodArity	lib/rubocop/cop/lint/argument_mismatch.rb
+Lint/ArrayLiteralInRegexp	pending	118	Interpolation,AutoCorrector	lib/rubocop/cop/lint/array_literal_in_regexp.rb
+Lint/AssignmentInCondition	true	121	SafeAssignment,AutoCorrector	lib/rubocop/cop/lint/assignment_in_condition.rb
+Lint/BigDecimalNew	true	41	AutoCorrector	lib/rubocop/cop/lint/big_decimal_new.rb
+Lint/BinaryOperatorWithIdenticalOperands	true	66		lib/rubocop/cop/lint/binary_operator_with_identical_operands.rb
+Lint/BooleanSymbol	true	61	AutoCorrector	lib/rubocop/cop/lint/boolean_symbol.rb
+Lint/CircularArgumentReference	true	104	TargetRubyVersion	lib/rubocop/cop/lint/circular_argument_reference.rb
+Lint/ConstantDefinitionInBlock	true	100	AllowedMethods	lib/rubocop/cop/lint/constant_definition_in_block.rb
+Lint/ConstantOverwrittenInRescue	pending	52	RangeHelp,AutoCorrector	lib/rubocop/cop/lint/constant_overwritten_in_rescue.rb
+Lint/ConstantReassignment	pending	227	ProjectIndexHelp	lib/rubocop/cop/lint/constant_reassignment.rb
+Lint/ConstantResolution	false	118	ProjectIndexHelp	lib/rubocop/cop/lint/constant_resolution.rb
+Lint/CopDirectiveSyntax	true	240	AutoCorrector	lib/rubocop/cop/lint/cop_directive_syntax.rb
+Lint/DataDefineOverride	pending	63		lib/rubocop/cop/lint/data_define_override.rb
+Lint/Debugger	true	155		lib/rubocop/cop/lint/debugger.rb
+Lint/DeprecatedClassMethods	true	118	AutoCorrector	lib/rubocop/cop/lint/deprecated_class_methods.rb
+Lint/DeprecatedConstants	pending	82	AutoCorrector	lib/rubocop/cop/lint/deprecated_constants.rb
+Lint/DeprecatedOpenSSLConstant	true	148	RangeHelp,AutoCorrector	lib/rubocop/cop/lint/deprecated_open_ssl_constant.rb
+Lint/DeprecatedReference	pending	194	ProjectIndexHelp	lib/rubocop/cop/lint/deprecated_reference.rb
+Lint/DisjunctiveAssignmentInConstructor	true	110	AutoCorrector	lib/rubocop/cop/lint/disjunctive_assignment_in_constructor.rb
+Lint/DuplicateBranch	pending	188		lib/rubocop/cop/lint/duplicate_branch.rb
+Lint/DuplicateCaseCondition	true	39		lib/rubocop/cop/lint/duplicate_case_condition.rb
+Lint/DuplicateElsifCondition	true	39		lib/rubocop/cop/lint/duplicate_elsif_condition.rb
+Lint/DuplicateHashKey	true	33	Duplication	lib/rubocop/cop/lint/duplicate_hash_key.rb
+Lint/DuplicateMagicComment	pending	73	FrozenStringLiteral,RangeHelp,AutoCorrector	lib/rubocop/cop/lint/duplicate_magic_comment.rb
+Lint/DuplicateMatchPattern	pending	122	TargetRubyVersion	lib/rubocop/cop/lint/duplicate_match_pattern.rb
+Lint/DuplicateMethods	true	723	ProjectIndexHelp	lib/rubocop/cop/lint/duplicate_methods.rb
+Lint/DuplicateRegexpCharacterClassElement	pending	84	RangeHelp,AutoCorrector	lib/rubocop/cop/lint/duplicate_regexp_character_class_element.rb
+Lint/DuplicateRequire	true	56	RangeHelp,AutoCorrector	lib/rubocop/cop/lint/duplicate_require.rb
+Lint/DuplicateRescueException	true	47	RescueNode	lib/rubocop/cop/lint/duplicate_rescue_exception.rb
+Lint/DuplicateSetElement	pending	87	AutoCorrector	lib/rubocop/cop/lint/duplicate_set_element.rb
+Lint/EachWithObjectArgument	true	40		lib/rubocop/cop/lint/each_with_object_argument.rb
+Lint/ElseLayout	true	107	Alignment,RangeHelp,AutoCorrector	lib/rubocop/cop/lint/else_layout.rb
+Lint/EmptyBlock	pending	94		lib/rubocop/cop/lint/empty_block.rb
+Lint/EmptyClass	pending	95		lib/rubocop/cop/lint/empty_class.rb
+Lint/EmptyConditionalBody	true	153	CommentsHelp,AutoCorrector	lib/rubocop/cop/lint/empty_conditional_body.rb
+Lint/EmptyEnsure	true	48	AutoCorrector	lib/rubocop/cop/lint/empty_ensure.rb
+Lint/EmptyExpression	true	40		lib/rubocop/cop/lint/empty_expression.rb
+Lint/EmptyFile	true	46		lib/rubocop/cop/lint/empty_file.rb
+Lint/EmptyInPattern	pending	71	TargetRubyVersion,CommentsHelp	lib/rubocop/cop/lint/empty_in_pattern.rb
+Lint/EmptyInterpolation	true	42	Interpolation,AutoCorrector	lib/rubocop/cop/lint/empty_interpolation.rb
+Lint/EmptyWhen	true	68	CommentsHelp	lib/rubocop/cop/lint/empty_when.rb
+Lint/EnsureReturn	true	69		lib/rubocop/cop/lint/ensure_return.rb
+Lint/ErbNewArguments	true	164	RangeHelp,TargetRubyVersion,AutoCorrector	lib/rubocop/cop/lint/erb_new_arguments.rb
+Lint/FlipFlop	true	38		lib/rubocop/cop/lint/flip_flop.rb
+Lint/FloatComparison	true	137		lib/rubocop/cop/lint/float_comparison.rb
+Lint/FloatOutOfRange	true	28		lib/rubocop/cop/lint/float_out_of_range.rb
+Lint/FormatParameterMismatch	true	191		lib/rubocop/cop/lint/format_parameter_mismatch.rb
+Lint/HashCompareByIdentity	true	48		lib/rubocop/cop/lint/hash_compare_by_identity.rb
+Lint/HashNewWithKeywordArgumentsAsDefault	pending	55	AutoCorrector	lib/rubocop/cop/lint/hash_new_with_keyword_arguments_as_default.rb
+Lint/HeredocMethodCallPosition	false	152	RangeHelp,AutoCorrector	lib/rubocop/cop/lint/heredoc_method_call_position.rb
+Lint/IdentityComparison	true	54	AutoCorrector	lib/rubocop/cop/lint/identity_comparison.rb
+Lint/ImplicitStringConcatenation	true	111	AutoCorrector	lib/rubocop/cop/lint/implicit_string_concatenation.rb
+Lint/IncompatibleIoSelectWithFiberScheduler	pending	85	AutoCorrector	lib/rubocop/cop/lint/incompatible_io_select_with_fiber_scheduler.rb
+Lint/IneffectiveAccessModifier	true	113		lib/rubocop/cop/lint/ineffective_access_modifier.rb
+Lint/InheritException	true	151	ConfigurableEnforcedStyle,ProjectIndexHelp,AutoCorrector	lib/rubocop/cop/lint/inherit_exception.rb
+Lint/InterpolationCheck	true	83	AutoCorrector	lib/rubocop/cop/lint/interpolation_check.rb
+Lint/ItWithoutArgumentsInBlock	pending	50	NodePattern,TargetRubyVersion	lib/rubocop/cop/lint/it_without_arguments_in_block.rb
+Lint/LambdaWithoutLiteralBlock	pending	51	AutoCorrector	lib/rubocop/cop/lint/lambda_without_literal_block.rb
+Lint/LiteralAsCondition	true	291	RangeHelp,AutoCorrector	lib/rubocop/cop/lint/literal_as_condition.rb
+Lint/LiteralAssignmentInCondition	pending	95		lib/rubocop/cop/lint/literal_assignment_in_condition.rb
+Lint/LiteralInInterpolation	true	204	Interpolation,RangeHelp,PercentLiteral,AutoCorrector	lib/rubocop/cop/lint/literal_in_interpolation.rb
+Lint/Loop	true	80	AutoCorrector	lib/rubocop/cop/lint/loop.rb
+Lint/MisplacedMagicComment	pending	185	RangeHelp,AutoCorrector	lib/rubocop/cop/lint/misplaced_magic_comment.rb
+Lint/MissingCopEnableDirective	true	133	RangeHelp	lib/rubocop/cop/lint/missing_cop_enable_directive.rb
+Lint/MissingSuper	true	189	ProjectIndexHelp	lib/rubocop/cop/lint/missing_super.rb
+Lint/MixedCaseRange	pending	113	RangeHelp,AutoCorrector	lib/rubocop/cop/lint/mixed_case_range.rb
+Lint/MixedRegexpCaptureTypes	true	37		lib/rubocop/cop/lint/mixed_regexp_capture_types.rb
+Lint/MultipleComparison	true	48	AutoCorrector	lib/rubocop/cop/lint/multiple_comparison.rb
+Lint/NameTypo	pending	270	ProjectIndexHelp	lib/rubocop/cop/lint/name_typo.rb
+Lint/NestedMethodDefinition	true	142	AllowedMethods,AllowedPattern	lib/rubocop/cop/lint/nested_method_definition.rb
+Lint/NestedPercentLiteral	true	63	PercentLiteral	lib/rubocop/cop/lint/nested_percent_literal.rb
+Lint/NextWithoutAccumulator	true	53		lib/rubocop/cop/lint/next_without_accumulator.rb
+Lint/NoReturnInBeginEndBlocks	pending	73		lib/rubocop/cop/lint/no_return_in_begin_end_blocks.rb
+Lint/NonAtomicFileOperation	pending	174	AutoCorrector	lib/rubocop/cop/lint/non_atomic_file_operation.rb
+Lint/NonDeterministicRequireOrder	true	185	TargetRubyVersion,AutoCorrector	lib/rubocop/cop/lint/non_deterministic_require_order.rb
+Lint/NonLocalExitFromIterator	true	86		lib/rubocop/cop/lint/non_local_exit_from_iterator.rb
+Lint/NumberConversion	false	209	AllowedMethods,AllowedPattern,AutoCorrector	lib/rubocop/cop/lint/number_conversion.rb
+Lint/NumberedParameterAssignment	pending	46		lib/rubocop/cop/lint/numbered_parameter_assignment.rb
+Lint/NumericOperationWithConstantResult	pending	104	AutoCorrector	lib/rubocop/cop/lint/numeric_operation_with_constant_result.rb
+Lint/OrAssignmentToConstant	pending	41	AutoCorrector	lib/rubocop/cop/lint/or_assignment_to_constant.rb
+Lint/OrderedMagicComments	true	81	FrozenStringLiteral,AutoCorrector	lib/rubocop/cop/lint/ordered_magic_comments.rb
+Lint/OutOfRangeRegexpRef	true	140		lib/rubocop/cop/lint/out_of_range_regexp_ref.rb
+Lint/ParenthesesAsGroupedExpression	true	93	RangeHelp,AutoCorrector	lib/rubocop/cop/lint/parentheses_as_grouped_expression.rb
+Lint/PercentStringArray	true	74	PercentLiteral,AutoCorrector	lib/rubocop/cop/lint/percent_string_array.rb
+Lint/PercentSymbolArray	true	64	PercentLiteral,AutoCorrector	lib/rubocop/cop/lint/percent_symbol_array.rb
+Lint/RaiseException	true	110	AutoCorrector	lib/rubocop/cop/lint/raise_exception.rb
+Lint/RandOne	true	42		lib/rubocop/cop/lint/rand_one.rb
+Lint/RedundantCopDisableDirective	true	440	RangeHelp,AutoCorrector	lib/rubocop/cop/lint/redundant_cop_disable_directive.rb
+Lint/RedundantCopEnableDirective	true	169	RangeHelp,SurroundingSpace,AutoCorrector	lib/rubocop/cop/lint/redundant_cop_enable_directive.rb
+Lint/RedundantDirGlobSort	pending	73	TargetRubyVersion,AutoCorrector	lib/rubocop/cop/lint/redundant_dir_glob_sort.rb
+Lint/RedundantRegexpQuantifiers	pending	130	RangeHelp,AutoCorrector	lib/rubocop/cop/lint/redundant_regexp_quantifiers.rb
+Lint/RedundantRequireStatement	true	79	RangeHelp,AutoCorrector	lib/rubocop/cop/lint/redundant_require_statement.rb
+Lint/RedundantSafeNavigation	true	282	AllowedMethods,AutoCorrector	lib/rubocop/cop/lint/redundant_safe_navigation.rb
+Lint/RedundantSplatExpansion	true	219	AutoCorrector	lib/rubocop/cop/lint/redundant_splat_expansion.rb
+Lint/RedundantStringCoercion	true	68	Interpolation,AutoCorrector	lib/rubocop/cop/lint/redundant_string_coercion.rb
+Lint/RedundantTypeConversion	pending	267	AutoCorrector	lib/rubocop/cop/lint/redundant_type_conversion.rb
+Lint/RedundantWithIndex	true	86	RangeHelp,AutoCorrector	lib/rubocop/cop/lint/redundant_with_index.rb
+Lint/RedundantWithObject	true	87	RangeHelp,AutoCorrector	lib/rubocop/cop/lint/redundant_with_object.rb
+Lint/RefinementImportMethods	pending	59	TargetRubyVersion,AutoCorrector	lib/rubocop/cop/lint/refinement_import_methods.rb
+Lint/RegexpAsCondition	true	44	AutoCorrector	lib/rubocop/cop/lint/regexp_as_condition.rb
+Lint/RequireParentheses	true	71	RangeHelp	lib/rubocop/cop/lint/require_parentheses.rb
+Lint/RequireRangeParentheses	pending	58		lib/rubocop/cop/lint/require_range_parentheses.rb
+Lint/RequireRelativeSelfPath	pending	52	RangeHelp,AutoCorrector	lib/rubocop/cop/lint/require_relative_self_path.rb
+Lint/RescueException	true	38		lib/rubocop/cop/lint/rescue_exception.rb
+Lint/RescueType	true	82	AutoCorrector	lib/rubocop/cop/lint/rescue_type.rb
+Lint/ReturnInVoidContext	true	55		lib/rubocop/cop/lint/return_in_void_context.rb
+Lint/SafeNavigationChain	true	140	NilMethods,TargetRubyVersion,AutoCorrector	lib/rubocop/cop/lint/safe_navigation_chain.rb
+Lint/SafeNavigationConsistency	true	164	NilMethods,AutoCorrector	lib/rubocop/cop/lint/safe_navigation_consistency.rb
+Lint/SafeNavigationWithEmpty	true	46	AutoCorrector	lib/rubocop/cop/lint/safe_navigation_with_empty.rb
+Lint/ScriptPermission	true	77	AutoCorrector	lib/rubocop/cop/lint/script_permission.rb
+Lint/SelfAssignment	true	171		lib/rubocop/cop/lint/self_assignment.rb
+Lint/SendWithMixinArgument	true	83	RangeHelp,AutoCorrector	lib/rubocop/cop/lint/send_with_mixin_argument.rb
+Lint/ShadowedArgument	true	177		lib/rubocop/cop/lint/shadowed_argument.rb
+Lint/ShadowedException	true	165	RescueNode,RangeHelp	lib/rubocop/cop/lint/shadowed_exception.rb
+Lint/ShadowingOuterLocalVariable	false	130		lib/rubocop/cop/lint/shadowing_outer_local_variable.rb
+Lint/SharedMutableDefault	pending	78		lib/rubocop/cop/lint/shared_mutable_default.rb
+Lint/StructNewOverride	true	75		lib/rubocop/cop/lint/struct_new_override.rb
+Lint/SuperArgumentMismatch	pending	179	ProjectIndexHelp,IndexedMethodArity	lib/rubocop/cop/lint/super_argument_mismatch.rb
+Lint/SuppressedException	true	132		lib/rubocop/cop/lint/suppressed_exception.rb
+Lint/SuppressedExceptionInNumberConversion	pending	122	TargetRubyVersion,AutoCorrector	lib/rubocop/cop/lint/suppressed_exception_in_number_conversion.rb
+Lint/SymbolConversion	pending	201	ConfigurableEnforcedStyle,SymbolHelp,AutoCorrector	lib/rubocop/cop/lint/symbol_conversion.rb
+Lint/Syntax	true	73		lib/rubocop/cop/lint/syntax.rb
+Lint/ToEnumArguments	pending	167		lib/rubocop/cop/lint/to_enum_arguments.rb
+Lint/ToJSON	true	52	AutoCorrector	lib/rubocop/cop/lint/to_json.rb
+Lint/TopLevelReturnWithArgument	true	48	AutoCorrector	lib/rubocop/cop/lint/top_level_return_with_argument.rb
+Lint/TrailingCommaInAttributeDeclaration	true	59	RangeHelp,AutoCorrector	lib/rubocop/cop/lint/trailing_comma_in_attribute_declaration.rb
+Lint/TripleQuotes	pending	71	AutoCorrector	lib/rubocop/cop/lint/triple_quotes.rb
+Lint/UnderscorePrefixedVariableName	true	80		lib/rubocop/cop/lint/underscore_prefixed_variable_name.rb
+Lint/UnescapedBracketInRegexp	pending	114	AutoCorrector	lib/rubocop/cop/lint/unescaped_bracket_in_regexp.rb
+Lint/UnexpectedBlockArity	pending	92		lib/rubocop/cop/lint/unexpected_block_arity.rb
+Lint/UnifiedInteger	true	40	AutoCorrector	lib/rubocop/cop/lint/unified_integer.rb
+Lint/UnmodifiedReduceAccumulator	pending	206		lib/rubocop/cop/lint/unmodified_reduce_accumulator.rb
+Lint/UnreachableCode	true	150		lib/rubocop/cop/lint/unreachable_code.rb
+Lint/UnreachableLoop	true	208	AllowedPattern	lib/rubocop/cop/lint/unreachable_loop.rb
+Lint/UnreachablePatternBranch	pending	113	TargetRubyVersion	lib/rubocop/cop/lint/unreachable_pattern_branch.rb
+Lint/UnusedBlockArgument	true	172	UnusedArgument,AutoCorrector	lib/rubocop/cop/lint/unused_block_argument.rb
+Lint/UnusedMethodArgument	true	147	UnusedArgument,AutoCorrector	lib/rubocop/cop/lint/unused_method_argument.rb
+Lint/UnusedPrivateMethod	false	234	AllowedPattern,ProjectIndexHelp	lib/rubocop/cop/lint/unused_private_method.rb
+Lint/UriEscapeUnescape	true	81		lib/rubocop/cop/lint/uri_escape_unescape.rb
+Lint/UriRegexp	true	56	AutoCorrector	lib/rubocop/cop/lint/uri_regexp.rb
+Lint/UselessAccessModifier	true	320	RangeHelp,AutoCorrector	lib/rubocop/cop/lint/useless_access_modifier.rb
+Lint/UselessAssignment	true	241	AutoCorrector	lib/rubocop/cop/lint/useless_assignment.rb
+Lint/UselessConstantScoping	pending	107		lib/rubocop/cop/lint/useless_constant_scoping.rb
+Lint/UselessDefaultValueArgument	pending	92	AllowedReceivers,AutoCorrector	lib/rubocop/cop/lint/useless_default_value_argument.rb
+Lint/UselessDefined	pending	55		lib/rubocop/cop/lint/useless_defined.rb
+Lint/UselessElseWithoutRescue	true	44	TargetRubyVersion	lib/rubocop/cop/lint/useless_else_without_rescue.rb
+Lint/UselessMethodDefinition	true	77	AutoCorrector	lib/rubocop/cop/lint/useless_method_definition.rb
+Lint/UselessNumericOperation	pending	79	AutoCorrector	lib/rubocop/cop/lint/useless_numeric_operation.rb
+Lint/UselessOr	pending	111	AutoCorrector	lib/rubocop/cop/lint/useless_or.rb
+Lint/UselessRescue	pending	88		lib/rubocop/cop/lint/useless_rescue.rb
+Lint/UselessRuby2Keywords	pending	133		lib/rubocop/cop/lint/useless_ruby2_keywords.rb
+Lint/UselessSetterCall	true	161	AutoCorrector	lib/rubocop/cop/lint/useless_setter_call.rb
+Lint/UselessTimes	true	135	RangeHelp,AutoCorrector	lib/rubocop/cop/lint/useless_times.rb
+Lint/Void	true	309	RangeHelp,AutoCorrector	lib/rubocop/cop/lint/void.rb
+Metrics/AbcSize	true	56	MethodComplexity	lib/rubocop/cop/metrics/abc_size.rb
+Metrics/BlockLength	true	88	CodeLength,AllowedMethods,AllowedPattern	lib/rubocop/cop/metrics/block_length.rb
+Metrics/BlockNesting	true	95		lib/rubocop/cop/metrics/block_nesting.rb
+Metrics/ClassLength	true	77	CodeLength	lib/rubocop/cop/metrics/class_length.rb
+Metrics/CollectionLiteralLength	pending	83		lib/rubocop/cop/metrics/collection_literal_length.rb
+Metrics/CyclomaticComplexity	true	58	MethodComplexity,Utils	lib/rubocop/cop/metrics/cyclomatic_complexity.rb
+Metrics/MethodLength	true	80	CodeLength,AllowedMethods,AllowedPattern	lib/rubocop/cop/metrics/method_length.rb
+Metrics/ModuleLength	true	62	CodeLength	lib/rubocop/cop/metrics/module_length.rb
+Metrics/ParameterLists	true	147		lib/rubocop/cop/metrics/parameter_lists.rb
+Metrics/PerceivedComplexity	true	89		lib/rubocop/cop/metrics/perceived_complexity.rb
+Migration/DepartmentName	true	87	RangeHelp,AutoCorrector	lib/rubocop/cop/migration/department_name.rb
+Naming/AccessorMethodName	true	102	ProjectIndexHelp	lib/rubocop/cop/naming/accessor_method_name.rb
+Naming/AsciiIdentifiers	true	90	RangeHelp	lib/rubocop/cop/naming/ascii_identifiers.rb
+Naming/BinaryOperatorParameterName	true	69	AutoCorrector	lib/rubocop/cop/naming/binary_operator_parameter_name.rb
+Naming/BlockForwarding	pending	159	ConfigurableEnforcedStyle,RangeHelp,TargetRubyVersion,AutoCorrector	lib/rubocop/cop/naming/block_forwarding.rb
+Naming/BlockParameterName	true	49	UncommunicativeName	lib/rubocop/cop/naming/block_parameter_name.rb
+Naming/ClassAndModuleCamelCase	true	45		lib/rubocop/cop/naming/class_and_module_camel_case.rb
+Naming/ConstantName	true	82		lib/rubocop/cop/naming/constant_name.rb
+Naming/FileName	true	246		lib/rubocop/cop/naming/file_name.rb
+Naming/HeredocDelimiterCase	true	68	Heredoc,ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/naming/heredoc_delimiter_case.rb
+Naming/HeredocDelimiterNaming	true	57	Heredoc	lib/rubocop/cop/naming/heredoc_delimiter_naming.rb
+Naming/InclusiveLanguage	false	303	RangeHelp,AutoCorrector	lib/rubocop/cop/naming/inclusive_language.rb
+Naming/MemoizedInstanceVariableName	true	301	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/naming/memoized_instance_variable_name.rb
+Naming/MethodName	true	256	ConfigurableNaming,AllowedPattern,RangeHelp,ForbiddenIdentifiers,ForbiddenPattern	lib/rubocop/cop/naming/method_name.rb
+Naming/MethodParameterName	true	58	UncommunicativeName	lib/rubocop/cop/naming/method_parameter_name.rb
+Naming/PredicateMethod	pending	330	AllowedMethods,AllowedPattern	lib/rubocop/cop/naming/predicate_method.rb
+Naming/PredicatePrefix	true	232	ProjectIndexHelp,AllowedMethods	lib/rubocop/cop/naming/predicate_prefix.rb
+Naming/RescuedExceptionsVariableName	true	177	AutoCorrector	lib/rubocop/cop/naming/rescued_exceptions_variable_name.rb
+Naming/VariableName	true	112	AllowedIdentifiers,ConfigurableNaming,AllowedPattern,ForbiddenIdentifiers,ForbiddenPattern	lib/rubocop/cop/naming/variable_name.rb
+Naming/VariableNumber	true	157	AllowedIdentifiers,ConfigurableNumbering,AllowedPattern	lib/rubocop/cop/naming/variable_number.rb
+Security/CompoundHash	pending	108		lib/rubocop/cop/security/compound_hash.rb
+Security/Eval	true	47		lib/rubocop/cop/security/eval.rb
+Security/IoMethods	pending	49	AutoCorrector	lib/rubocop/cop/security/io_methods.rb
+Security/JSONLoad	true	69	AutoCorrector	lib/rubocop/cop/security/json_load.rb
+Security/MarshalLoad	true	39		lib/rubocop/cop/security/marshal_load.rb
+Security/Open	true	90		lib/rubocop/cop/security/open.rb
+Security/YAMLLoad	true	50	TargetRubyVersion,AutoCorrector	lib/rubocop/cop/security/yaml_load.rb
+Style/AccessModifierDeclarations	true	377	ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/style/access_modifier_declarations.rb
+Style/AccessorGrouping	true	225	ConfigurableEnforcedStyle,RangeHelp,VisibilityHelp,AutoCorrector	lib/rubocop/cop/style/accessor_grouping.rb
+Style/Alias	true	170	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/alias.rb
+Style/AmbiguousEndlessMethodDefinition	pending	79	TargetRubyVersion,EndlessMethodRewriter,RangeHelp,AutoCorrector	lib/rubocop/cop/style/ambiguous_endless_method_definition.rb
+Style/AndOr	true	159	ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/style/and_or.rb
+Style/ArgumentsForwarding	pending	579	RangeHelp,TargetRubyVersion,NodePattern,AutoCorrector	lib/rubocop/cop/style/arguments_forwarding.rb
+Style/ArrayCoercion	false	87	AutoCorrector	lib/rubocop/cop/style/array_coercion.rb
+Style/ArrayFirstLast	false	90	AutoCorrector	lib/rubocop/cop/style/array_first_last.rb
+Style/ArrayIntersect	pending	218	TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/array_intersect.rb
+Style/ArrayIntersectWithSingleElement	pending	50	AutoCorrector	lib/rubocop/cop/style/array_intersect_with_single_element.rb
+Style/ArrayJoin	true	41	AutoCorrector	lib/rubocop/cop/style/array_join.rb
+Style/AsciiComments	false	60	RangeHelp	lib/rubocop/cop/style/ascii_comments.rb
+Style/Attr	true	83	RangeHelp,AutoCorrector	lib/rubocop/cop/style/attr.rb
+Style/AutoResourceCleanup	false	55		lib/rubocop/cop/style/auto_resource_cleanup.rb
+Style/BarePercentLiterals	true	77	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/bare_percent_literals.rb
+Style/BeginBlock	true	23		lib/rubocop/cop/style/begin_block.rb
+Style/BisectedAttrAccessor	true	125	RangeHelp,AutoCorrector	lib/rubocop/cop/style/bisected_attr_accessor.rb
+Style/BitwisePredicate	pending	106	TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/bitwise_predicate.rb
+Style/BlockComments	true	66	RangeHelp,AutoCorrector	lib/rubocop/cop/style/block_comments.rb
+Style/BlockDelimiters	true	507	ConfigurableEnforcedStyle,AllowedMethods,AllowedPattern,RangeHelp,AutoCorrector	lib/rubocop/cop/style/block_delimiters.rb
+Style/CaseEquality	true	122	AutoCorrector	lib/rubocop/cop/style/case_equality.rb
+Style/CaseLikeIf	true	275	RangeHelp,MinBranchesCount,AutoCorrector	lib/rubocop/cop/style/case_like_if.rb
+Style/CharacterLiteral	true	57	StringHelp,AutoCorrector	lib/rubocop/cop/style/character_literal.rb
+Style/ClassAndModuleChildren	true	303	Alignment,ConfigurableEnforcedStyle,ProjectIndexHelp,RangeHelp,AutoCorrector	lib/rubocop/cop/style/class_and_module_children.rb
+Style/ClassCheck	true	55	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/class_check.rb
+Style/ClassEqualityComparison	true	142	RangeHelp,AllowedMethods,AllowedPattern,AutoCorrector	lib/rubocop/cop/style/class_equality_comparison.rb
+Style/ClassMethods	true	54	AutoCorrector	lib/rubocop/cop/style/class_methods.rb
+Style/ClassMethodsDefinitions	false	164	ConfigurableEnforcedStyle,CommentsHelp,VisibilityHelp,RangeHelp,AutoCorrector	lib/rubocop/cop/style/class_methods_definitions.rb
+Style/ClassVars	true	64		lib/rubocop/cop/style/class_vars.rb
+Style/CollectionCompact	pending	163	AllowedReceivers,RangeHelp,TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/collection_compact.rb
+Style/CollectionMethods	false	93	MethodPreference,AutoCorrector	lib/rubocop/cop/style/collection_methods.rb
+Style/CollectionQuerying	pending	167	RangeHelp,AutoCorrector	lib/rubocop/cop/style/collection_querying.rb
+Style/ColonMethodCall	true	55	AutoCorrector	lib/rubocop/cop/style/colon_method_call.rb
+Style/ColonMethodDefinition	true	37	AutoCorrector	lib/rubocop/cop/style/colon_method_definition.rb
+Style/CombinableDefined	pending	115	RangeHelp,AutoCorrector	lib/rubocop/cop/style/combinable_defined.rb
+Style/CombinableLoops	true	135	AutoCorrector	lib/rubocop/cop/style/combinable_loops.rb
+Style/CommandLiteral	true	181	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/command_literal.rb
+Style/CommentAnnotation	true	130	RangeHelp,AutoCorrector	lib/rubocop/cop/style/comment_annotation.rb
+Style/CommentedKeyword	true	118	RangeHelp,AutoCorrector	lib/rubocop/cop/style/commented_keyword.rb
+Style/ComparableBetween	pending	78	AutoCorrector	lib/rubocop/cop/style/comparable_between.rb
+Style/ComparableClamp	pending	136	Alignment,TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/comparable_clamp.rb
+Style/ConcatArrayLiterals	pending	100	AutoCorrector	lib/rubocop/cop/style/concat_array_literals.rb
+Style/ConditionalAssignment	true	692	NodePattern,ConditionalAssignmentHelper,ConfigurableEnforcedStyle,ReparsedEquivalence,ConditionalCorrectorHelper,AutoCorrector	lib/rubocop/cop/style/conditional_assignment.rb
+Style/ConstantVisibility	false	108		lib/rubocop/cop/style/constant_visibility.rb
+Style/Copyright	false	124	RangeHelp,AutoCorrector	lib/rubocop/cop/style/copyright.rb
+Style/DataInheritance	pending	100	RangeHelp,TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/data_inheritance.rb
+Style/DateTime	false	94	AutoCorrector	lib/rubocop/cop/style/date_time.rb
+Style/DefWithParentheses	true	74	RangeHelp,AutoCorrector	lib/rubocop/cop/style/def_with_parentheses.rb
+Style/DigChain	pending	94	CommentsHelp,DigHelp,AutoCorrector	lib/rubocop/cop/style/dig_chain.rb
+Style/Dir	true	50	TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/dir.rb
+Style/DirEmpty	pending	58	TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/dir_empty.rb
+Style/DirectiveScope	pending	304	RangeHelp,AutoCorrector	lib/rubocop/cop/style/directive_scope.rb
+Style/DisableCopsWithinSourceCodeDirective	false	195	AutoCorrector	lib/rubocop/cop/style/disable_cops_within_source_code_directive.rb
+Style/DocumentDynamicEvalDefinition	pending	174		lib/rubocop/cop/style/document_dynamic_eval_definition.rb
+Style/Documentation	true	245	DocumentationComment,ProjectIndexHelp,RangeHelp	lib/rubocop/cop/style/documentation.rb
+Style/DocumentationMethod	false	148	DocumentationComment,DefNode	lib/rubocop/cop/style/documentation_method.rb
+Style/DoubleNegation	true	159	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/double_negation.rb
+Style/EachForSimpleLoop	true	86	AutoCorrector	lib/rubocop/cop/style/each_for_simple_loop.rb
+Style/EachWithObject	true	140	RangeHelp,AutoCorrector	lib/rubocop/cop/style/each_with_object.rb
+Style/EmptyBlockParameter	true	47	EmptyParameter,RangeHelp,AutoCorrector	lib/rubocop/cop/style/empty_block_parameter.rb
+Style/EmptyCaseCondition	true	126	RangeHelp,AutoCorrector	lib/rubocop/cop/style/empty_case_condition.rb
+Style/EmptyClassDefinition	pending	126	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/empty_class_definition.rb
+Style/EmptyElse	true	207	OnNormalIfUnless,ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/style/empty_else.rb
+Style/EmptyHeredoc	pending	64	Heredoc,RangeHelp,StringLiteralsHelp,AutoCorrector	lib/rubocop/cop/style/empty_heredoc.rb
+Style/EmptyLambdaParameter	true	44	EmptyParameter,RangeHelp,AutoCorrector	lib/rubocop/cop/style/empty_lambda_parameter.rb
+Style/EmptyLiteral	true	156	FrozenStringLiteral,RangeHelp,StringLiteralsHelp,AutoCorrector	lib/rubocop/cop/style/empty_literal.rb
+Style/EmptyMethod	true	123	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/empty_method.rb
+Style/EmptyStringInsideInterpolation	pending	110	ConfigurableEnforcedStyle,Interpolation,AutoCorrector	lib/rubocop/cop/style/empty_string_inside_interpolation.rb
+Style/Encoding	true	69	RangeHelp,AutoCorrector	lib/rubocop/cop/style/encoding.rb
+Style/EndBlock	true	30	AutoCorrector	lib/rubocop/cop/style/end_block.rb
+Style/EndlessMethod	pending	260	ConfigurableEnforcedStyle,EndlessMethodRewriter,TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/endless_method.rb
+Style/EnvHome	pending	60	AutoCorrector	lib/rubocop/cop/style/env_home.rb
+Style/EvalWithLocation	true	229	AutoCorrector	lib/rubocop/cop/style/eval_with_location.rb
+Style/EvenOdd	true	66	AutoCorrector	lib/rubocop/cop/style/even_odd.rb
+Style/ExactRegexpMatch	pending	76	AutoCorrector	lib/rubocop/cop/style/exact_regexp_match.rb
+Style/ExpandPathArguments	true	191	RangeHelp,AutoCorrector	lib/rubocop/cop/style/expand_path_arguments.rb
+Style/ExplicitBlockArgument	true	166	RangeHelp,AutoCorrector	lib/rubocop/cop/style/explicit_block_argument.rb
+Style/ExponentialNotation	true	117	ConfigurableEnforcedStyle	lib/rubocop/cop/style/exponential_notation.rb
+Style/FetchEnvVar	pending	159	AutoCorrector	lib/rubocop/cop/style/fetch_env_var.rb
+Style/FileEmpty	pending	71	TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/file_empty.rb
+Style/FileNull	pending	91	AutoCorrector	lib/rubocop/cop/style/file_null.rb
+Style/FileOpen	pending	84		lib/rubocop/cop/style/file_open.rb
+Style/FileRead	pending	109	RangeHelp,AutoCorrector	lib/rubocop/cop/style/file_read.rb
+Style/FileTouch	pending	75	AutoCorrector	lib/rubocop/cop/style/file_touch.rb
+Style/FileWrite	pending	138	RangeHelp,AutoCorrector	lib/rubocop/cop/style/file_write.rb
+Style/FloatDivision	true	163	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/float_division.rb
+Style/For	true	98	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/for.rb
+Style/FormatString	true	167	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/format_string.rb
+Style/FormatStringToken	true	298	ConfigurableEnforcedStyle,AllowedMethods,AllowedPattern,AutoCorrector	lib/rubocop/cop/style/format_string_token.rb
+Style/FrozenStringLiteralComment	true	221	ConfigurableEnforcedStyle,FrozenStringLiteral,RangeHelp,TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/frozen_string_literal_comment.rb
+Style/GlobalStdStream	true	79	AutoCorrector	lib/rubocop/cop/style/global_std_stream.rb
+Style/GlobalVars	true	81		lib/rubocop/cop/style/global_vars.rb
+Style/GuardClause	true	327	RangeHelp,MinBodyLength,StatementModifier,AutoCorrector	lib/rubocop/cop/style/guard_clause.rb
+Style/HashAsLastArrayItem	true	118	RangeHelp,ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/hash_as_last_array_item.rb
+Style/HashConversion	pending	159	AutoCorrector	lib/rubocop/cop/style/hash_conversion.rb
+Style/HashEachMethods	true	220	AllowedReceivers,Lint,AutoCorrector	lib/rubocop/cop/style/hash_each_methods.rb
+Style/HashExcept	pending	80	HashSubset,TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/hash_except.rb
+Style/HashFetchChain	pending	104	TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/hash_fetch_chain.rb
+Style/HashLikeCase	true	71	MinBranchesCount	lib/rubocop/cop/style/hash_like_case.rb
+Style/HashLookupMethod	false	105	ConfigurableEnforcedStyle,AllowedReceivers,AutoCorrector	lib/rubocop/cop/style/hash_lookup_method.rb
+Style/HashSlice	pending	96	HashSubset,TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/hash_slice.rb
+Style/HashSyntax	true	308	ConfigurableEnforcedStyle,HashShorthandSyntax,RangeHelp,AutoCorrector	lib/rubocop/cop/style/hash_syntax.rb
+Style/HashTransformKeys	true	105	HashTransformMethod,TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/hash_transform_keys.rb
+Style/HashTransformValues	true	103	HashTransformMethod,TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/hash_transform_values.rb
+Style/IdenticalConditionalBranches	true	282	RangeHelp,AutoCorrector	lib/rubocop/cop/style/identical_conditional_branches.rb
+Style/IfInsideElse	true	160	RangeHelp,AutoCorrector	lib/rubocop/cop/style/if_inside_else.rb
+Style/IfUnlessModifier	true	320	StatementModifier,RangeHelp,CommentsHelp,AutoCorrector	lib/rubocop/cop/style/if_unless_modifier.rb
+Style/IfUnlessModifierOfIfUnless	true	43	StatementModifier,AutoCorrector	lib/rubocop/cop/style/if_unless_modifier_of_if_unless.rb
+Style/IfWithBooleanLiteralBranches	pending	166	AllowedMethods,AutoCorrector	lib/rubocop/cop/style/if_with_boolean_literal_branches.rb
+Style/IfWithSemicolon	true	142	OnNormalIfUnless,AutoCorrector	lib/rubocop/cop/style/if_with_semicolon.rb
+Style/ImplicitRuntimeError	false	34		lib/rubocop/cop/style/implicit_runtime_error.rb
+Style/InPatternThen	pending	60	TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/in_pattern_then.rb
+Style/InfiniteLoop	true	127	Alignment,AutoCorrector	lib/rubocop/cop/style/infinite_loop.rb
+Style/InlineComment	false	37		lib/rubocop/cop/style/inline_comment.rb
+Style/InverseMethods	true	200	RangeHelp,AutoCorrector	lib/rubocop/cop/style/inverse_methods.rb
+Style/InvertibleUnlessCondition	false	180	AutoCorrector	lib/rubocop/cop/style/invertible_unless_condition.rb
+Style/IpAddresses	false	74	StringHelp	lib/rubocop/cop/style/ip_addresses.rb
+Style/ItAssignment	pending	93		lib/rubocop/cop/style/it_assignment.rb
+Style/ItBlockParameter	pending	121	ConfigurableEnforcedStyle,TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/it_block_parameter.rb
+Style/KeywordArgumentsMerging	pending	71	AutoCorrector	lib/rubocop/cop/style/keyword_arguments_merging.rb
+Style/KeywordParametersOrder	true	85	RangeHelp,AutoCorrector	lib/rubocop/cop/style/keyword_parameters_order.rb
+Style/Lambda	true	136	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/lambda.rb
+Style/LambdaCall	true	90	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/lambda_call.rb
+Style/LineEndConcatenation	true	143	RangeHelp,AutoCorrector	lib/rubocop/cop/style/line_end_concatenation.rb
+Style/MagicCommentFormat	pending	307	ConfigurableEnforcedStyle,SimpleForwardable,AutoCorrector	lib/rubocop/cop/style/magic_comment_format.rb
+Style/MapCompactWithConditionalBlock	pending	179	AutoCorrector	lib/rubocop/cop/style/map_compact_with_conditional_block.rb
+Style/MapIntoArray	pending	236	RangeHelp,AutoCorrector	lib/rubocop/cop/style/map_into_array.rb
+Style/MapJoin	pending	123	RangeHelp,AutoCorrector	lib/rubocop/cop/style/map_join.rb
+Style/MapToHash	pending	89	TargetRubyVersion,RangeHelp,AutoCorrector	lib/rubocop/cop/style/map_to_hash.rb
+Style/MapToSet	pending	63	RangeHelp,AutoCorrector	lib/rubocop/cop/style/map_to_set.rb
+Style/MethodCallWithArgsParentheses	false	277	ConfigurableEnforcedStyle,AllowedMethods,AllowedPattern,RequireParentheses,OmitParentheses,AutoCorrector	lib/rubocop/cop/style/method_call_with_args_parentheses.rb
+Style/MethodCallWithoutArgsParentheses	true	125	AllowedMethods,AllowedPattern,AutoCorrector	lib/rubocop/cop/style/method_call_without_args_parentheses.rb
+Style/MethodCalledOnDoEndBlock	false	55	RangeHelp	lib/rubocop/cop/style/method_called_on_do_end_block.rb
+Style/MethodDefParentheses	true	182	ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/style/method_def_parentheses.rb
+Style/MinMax	true	64	AutoCorrector	lib/rubocop/cop/style/min_max.rb
+Style/MinMaxComparison	pending	94	RangeHelp,AutoCorrector	lib/rubocop/cop/style/min_max_comparison.rb
+Style/MissingElse	false	185	OnNormalIfUnless,ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/missing_else.rb
+Style/MissingRespondToMissing	true	115	ProjectIndexHelp	lib/rubocop/cop/style/missing_respond_to_missing.rb
+Style/MixinGrouping	true	135	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/mixin_grouping.rb
+Style/MixinUsage	true	72		lib/rubocop/cop/style/mixin_usage.rb
+Style/ModuleFunction	true	172	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/module_function.rb
+Style/ModuleMemberExistenceCheck	pending	110	AutoCorrector	lib/rubocop/cop/style/module_member_existence_check.rb
+Style/MultilineBlockChain	true	51	RangeHelp	lib/rubocop/cop/style/multiline_block_chain.rb
+Style/MultilineIfModifier	true	58	StatementModifier,Alignment,AutoCorrector	lib/rubocop/cop/style/multiline_if_modifier.rb
+Style/MultilineIfThen	true	50	OnNormalIfUnless,RangeHelp,AutoCorrector	lib/rubocop/cop/style/multiline_if_then.rb
+Style/MultilineInPatternThen	pending	60	RangeHelp,TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/multiline_in_pattern_then.rb
+Style/MultilineMemoization	true	102	Alignment,ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/multiline_memoization.rb
+Style/MultilineMethodSignature	false	99	RangeHelp,AutoCorrector	lib/rubocop/cop/style/multiline_method_signature.rb
+Style/MultilineTernaryOperator	true	102	CommentsHelp,AutoCorrector	lib/rubocop/cop/style/multiline_ternary_operator.rb
+Style/MultilineWhenThen	true	60	RangeHelp,AutoCorrector	lib/rubocop/cop/style/multiline_when_then.rb
+Style/MultipleComparison	true	175	AutoCorrector	lib/rubocop/cop/style/multiple_comparison.rb
+Style/MutableConstant	true	345	ShareableConstantValue,FrozenStringLiteral,ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/mutable_constant.rb
+Style/NegatedIf	true	98	ConfigurableEnforcedStyle,NegativeConditional,AutoCorrector	lib/rubocop/cop/style/negated_if.rb
+Style/NegatedIfElseCondition	pending	136	RangeHelp,AutoCorrector	lib/rubocop/cop/style/negated_if_else_condition.rb
+Style/NegatedUnless	true	88	ConfigurableEnforcedStyle,NegativeConditional,AutoCorrector	lib/rubocop/cop/style/negated_unless.rb
+Style/NegatedWhile	true	40	NegativeConditional,AutoCorrector	lib/rubocop/cop/style/negated_while.rb
+Style/NegativeArrayIndex	pending	220	RangeHelp,AutoCorrector	lib/rubocop/cop/style/negative_array_index.rb
+Style/NestedFileDirname	pending	66	RangeHelp,TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/nested_file_dirname.rb
+Style/NestedModifier	true	105	RangeHelp,AutoCorrector	lib/rubocop/cop/style/nested_modifier.rb
+Style/NestedParenthesizedCalls	true	79	RangeHelp,AllowedMethods,AutoCorrector	lib/rubocop/cop/style/nested_parenthesized_calls.rb
+Style/NestedTernaryOperator	true	63	RangeHelp,AutoCorrector	lib/rubocop/cop/style/nested_ternary_operator.rb
+Style/Next	true	277	ConfigurableEnforcedStyle,MinBodyLength,RangeHelp,AutoCorrector	lib/rubocop/cop/style/next.rb
+Style/NilComparison	true	113	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/nil_comparison.rb
+Style/NilLambda	pending	78	RangeHelp,AutoCorrector	lib/rubocop/cop/style/nil_lambda.rb
+Style/NonNilCheck	true	168	AutoCorrector	lib/rubocop/cop/style/non_nil_check.rb
+Style/Not	true	80	RangeHelp,AutoCorrector	lib/rubocop/cop/style/not.rb
+Style/NumberedParameters	pending	46	ConfigurableEnforcedStyle,TargetRubyVersion	lib/rubocop/cop/style/numbered_parameters.rb
+Style/NumberedParametersLimit	pending	58	TargetRubyVersion,ExcludeLimit	lib/rubocop/cop/style/numbered_parameters_limit.rb
+Style/NumericLiteralPrefix	true	129	IntegerNode,AutoCorrector	lib/rubocop/cop/style/numeric_literal_prefix.rb
+Style/NumericLiterals	true	130	IntegerNode,AllowedPattern,AutoCorrector	lib/rubocop/cop/style/numeric_literals.rb
+Style/NumericPredicate	true	185	ConfigurableEnforcedStyle,AllowedMethods,AllowedPattern,AutoCorrector	lib/rubocop/cop/style/numeric_predicate.rb
+Style/ObjectThen	pending	76	ConfigurableEnforcedStyle,TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/object_then.rb
+Style/OneClassPerFile	pending	115	RangeHelp	lib/rubocop/cop/style/one_class_per_file.rb
+Style/OneLineConditional	true	157	Alignment,ConfigurableEnforcedStyle,OnNormalIfUnless,AutoCorrector	lib/rubocop/cop/style/one_line_conditional.rb
+Style/OpenStructUse	pending	69		lib/rubocop/cop/style/open_struct_use.rb
+Style/OperatorMethodCall	pending	99	AutoCorrector	lib/rubocop/cop/style/operator_method_call.rb
+Style/OptionHash	false	54		lib/rubocop/cop/style/option_hash.rb
+Style/OptionalArguments	true	60		lib/rubocop/cop/style/optional_arguments.rb
+Style/OptionalBooleanParameter	true	64	AllowedMethods	lib/rubocop/cop/style/optional_boolean_parameter.rb
+Style/OrAssignment	true	94	AutoCorrector	lib/rubocop/cop/style/or_assignment.rb
+Style/ParallelAssignment	true	321	RescueNode,RuboCop,Alignment,AutoCorrector	lib/rubocop/cop/style/parallel_assignment.rb
+Style/ParenthesesAroundCondition	true	141	SafeAssignment,Parentheses,RangeHelp,AutoCorrector	lib/rubocop/cop/style/parentheses_around_condition.rb
+Style/PartitionInsteadOfDoubleSelect	pending	270	RangeHelp,AutoCorrector	lib/rubocop/cop/style/partition_instead_of_double_select.rb
+Style/PercentLiteralDelimiters	true	122	PercentLiteral,AutoCorrector	lib/rubocop/cop/style/percent_literal_delimiters.rb
+Style/PercentQLiterals	true	70	PercentLiteral,ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/percent_q_literals.rb
+Style/PerlBackrefs	true	129	AutoCorrector	lib/rubocop/cop/style/perl_backrefs.rb
+Style/PredicateWithKind	pending	84	RangeHelp,AutoCorrector	lib/rubocop/cop/style/predicate_with_kind.rb
+Style/PreferredHashMethods	true	74	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/preferred_hash_methods.rb
+Style/Proc	true	38	AutoCorrector	lib/rubocop/cop/style/proc.rb
+Style/QuotedSymbols	pending	122	ConfigurableEnforcedStyle,SymbolHelp,StringLiteralsHelp,AutoCorrector	lib/rubocop/cop/style/quoted_symbols.rb
+Style/RaiseArgs	true	160	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/raise_args.rb
+Style/RandomWithOffset	true	153	AutoCorrector	lib/rubocop/cop/style/random_with_offset.rb
+Style/ReduceToHash	pending	200	TargetRubyVersion,RangeHelp,AutoCorrector	lib/rubocop/cop/style/reduce_to_hash.rb
+Style/RedundantArgument	pending	131	RangeHelp,AutoCorrector	lib/rubocop/cop/style/redundant_argument.rb
+Style/RedundantArrayConstructor	pending	77	AutoCorrector	lib/rubocop/cop/style/redundant_array_constructor.rb
+Style/RedundantArrayFlatten	pending	50	AutoCorrector	lib/rubocop/cop/style/redundant_array_flatten.rb
+Style/RedundantAssignment	true	124	AutoCorrector	lib/rubocop/cop/style/redundant_assignment.rb
+Style/RedundantBegin	true	239	RangeHelp,AutoCorrector	lib/rubocop/cop/style/redundant_begin.rb
+Style/RedundantCapitalW	true	46	PercentLiteral,AutoCorrector	lib/rubocop/cop/style/redundant_capital_w.rb
+Style/RedundantCondition	true	343	AllowedMethods,CommentsHelp,RangeHelp,AutoCorrector	lib/rubocop/cop/style/redundant_condition.rb
+Style/RedundantConditional	true	84	Alignment,AutoCorrector	lib/rubocop/cop/style/redundant_conditional.rb
+Style/RedundantConstantBase	pending	121	ProjectIndexHelp,AutoCorrector	lib/rubocop/cop/style/redundant_constant_base.rb
+Style/RedundantCurrentDirectoryInPath	pending	62	RangeHelp,AutoCorrector	lib/rubocop/cop/style/redundant_current_directory_in_path.rb
+Style/RedundantDoubleSplatHashBraces	pending	137	AutoCorrector	lib/rubocop/cop/style/redundant_double_splat_hash_braces.rb
+Style/RedundantEach	pending	118	AutoCorrector	lib/rubocop/cop/style/redundant_each.rb
+Style/RedundantException	true	91	AutoCorrector	lib/rubocop/cop/style/redundant_exception.rb
+Style/RedundantFetchBlock	true	113	FrozenStringLiteral,RangeHelp,AutoCorrector	lib/rubocop/cop/style/redundant_fetch_block.rb
+Style/RedundantFileExtensionInRequire	true	70	RangeHelp,AutoCorrector	lib/rubocop/cop/style/redundant_file_extension_in_require.rb
+Style/RedundantFilterChain	pending	118	AutoCorrector	lib/rubocop/cop/style/redundant_filter_chain.rb
+Style/RedundantFormat	pending	319	AutoCorrector	lib/rubocop/cop/style/redundant_format.rb
+Style/RedundantFreeze	true	69	FrozenStringLiteral,AutoCorrector	lib/rubocop/cop/style/redundant_freeze.rb
+Style/RedundantHeredocDelimiterQuotes	pending	63	Heredoc,AutoCorrector	lib/rubocop/cop/style/redundant_heredoc_delimiter_quotes.rb
+Style/RedundantInitialize	pending	165	CommentsHelp,RangeHelp,AutoCorrector	lib/rubocop/cop/style/redundant_initialize.rb
+Style/RedundantInterpolation	true	147	PercentLiteral,AutoCorrector	lib/rubocop/cop/style/redundant_interpolation.rb
+Style/RedundantInterpolationUnfreeze	pending	62	FrozenStringLiteral,TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/redundant_interpolation_unfreeze.rb
+Style/RedundantLineContinuation	pending	203	MatchRange,ReparsedEquivalence,AutoCorrector	lib/rubocop/cop/style/redundant_line_continuation.rb
+Style/RedundantMinMaxBy	pending	93	RangeHelp,AutoCorrector	lib/rubocop/cop/style/redundant_min_max_by.rb
+Style/RedundantParentheses	true	371	Parentheses,ReparsedEquivalence,AutoCorrector	lib/rubocop/cop/style/redundant_parentheses.rb
+Style/RedundantPercentQ	true	110	AutoCorrector	lib/rubocop/cop/style/redundant_percent_q.rb
+Style/RedundantRegexpArgument	pending	115	StringLiteralsHelp,AutoCorrector	lib/rubocop/cop/style/redundant_regexp_argument.rb
+Style/RedundantRegexpCharacterClass	true	120	AutoCorrector	lib/rubocop/cop/style/redundant_regexp_character_class.rb
+Style/RedundantRegexpConstructor	pending	46	AutoCorrector	lib/rubocop/cop/style/redundant_regexp_constructor.rb
+Style/RedundantRegexpEscape	true	132	RangeHelp,AutoCorrector	lib/rubocop/cop/style/redundant_regexp_escape.rb
+Style/RedundantReturn	true	190	RangeHelp,AutoCorrector	lib/rubocop/cop/style/redundant_return.rb
+Style/RedundantSelf	true	224	AutoCorrector	lib/rubocop/cop/style/redundant_self.rb
+Style/RedundantSelfAssignment	true	105	RangeHelp,AutoCorrector	lib/rubocop/cop/style/redundant_self_assignment.rb
+Style/RedundantSelfAssignmentBranch	pending	85	AutoCorrector	lib/rubocop/cop/style/redundant_self_assignment_branch.rb
+Style/RedundantSort	true	209	RangeHelp,AutoCorrector	lib/rubocop/cop/style/redundant_sort.rb
+Style/RedundantSortBy	true	79	RangeHelp,AutoCorrector	lib/rubocop/cop/style/redundant_sort_by.rb
+Style/RedundantStringEscape	pending	184	MatchRange,AutoCorrector	lib/rubocop/cop/style/redundant_string_escape.rb
+Style/RedundantStructKeywordInit	false	133	TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/redundant_struct_keyword_init.rb
+Style/RegexpLiteral	true	260	ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/style/regexp_literal.rb
+Style/RequireOrder	false	139	RangeHelp,AutoCorrector	lib/rubocop/cop/style/require_order.rb
+Style/RescueModifier	true	111	Alignment,RangeHelp,RescueNode,AutoCorrector	lib/rubocop/cop/style/rescue_modifier.rb
+Style/RescueStandardError	true	126	RescueNode,ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/style/rescue_standard_error.rb
+Style/ReturnNil	false	99	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/return_nil.rb
+Style/ReturnNilInPredicateMethodDefinition	pending	137	AllowedMethods,AllowedPattern,AutoCorrector	lib/rubocop/cop/style/return_nil_in_predicate_method_definition.rb
+Style/ReverseFind	pending	51	TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/reverse_find.rb
+Style/SafeNavigation	true	436	NilMethods,RangeHelp,TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/safe_navigation.rb
+Style/SafeNavigationChainLength	pending	52		lib/rubocop/cop/style/safe_navigation_chain_length.rb
+Style/Sample	true	149	AutoCorrector	lib/rubocop/cop/style/sample.rb
+Style/SelectByKind	pending	158	RangeHelp,AutoCorrector	lib/rubocop/cop/style/select_by_kind.rb
+Style/SelectByRange	pending	197	RangeHelp,AutoCorrector	lib/rubocop/cop/style/select_by_range.rb
+Style/SelectByRegexp	pending	198	RangeHelp,AutoCorrector	lib/rubocop/cop/style/select_by_regexp.rb
+Style/SelfAssignment	true	95	AutoCorrector	lib/rubocop/cop/style/self_assignment.rb
+Style/Semicolon	true	203	RangeHelp,AutoCorrector	lib/rubocop/cop/style/semicolon.rb
+Style/Send	false	29		lib/rubocop/cop/style/send.rb
+Style/SendWithLiteralMethodName	pending	105	AutoCorrector	lib/rubocop/cop/style/send_with_literal_method_name.rb
+Style/SignalException	true	217	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/signal_exception.rb
+Style/SingleArgumentDig	true	73	DigHelp,AutoCorrector	lib/rubocop/cop/style/single_argument_dig.rb
+Style/SingleLineBlockParams	false	119	AutoCorrector	lib/rubocop/cop/style/single_line_block_params.rb
+Style/SingleLineDoEndBlock	pending	90	CheckSingleLineSuitability,AutoCorrector	lib/rubocop/cop/style/single_line_do_end_block.rb
+Style/SingleLineMethods	true	149	Alignment,AutoCorrector	lib/rubocop/cop/style/single_line_methods.rb
+Style/SlicingWithRange	true	146	TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/slicing_with_range.rb
+Style/SoleNestedConditional	true	262	RangeHelp,ReparsedEquivalence,AutoCorrector	lib/rubocop/cop/style/sole_nested_conditional.rb
+Style/SpecialGlobalVars	true	264	ConfigurableEnforcedStyle,RangeHelp,RequireLibrary,AutoCorrector	lib/rubocop/cop/style/special_global_vars.rb
+Style/StabbyLambdaParentheses	true	81	ConfigurableEnforcedStyle,AutoCorrector	lib/rubocop/cop/style/stabby_lambda_parentheses.rb
+Style/StaticClass	false	149	ProjectIndexHelp,RangeHelp,VisibilityHelp,AutoCorrector	lib/rubocop/cop/style/static_class.rb
+Style/StderrPuts	true	57	RangeHelp,AutoCorrector	lib/rubocop/cop/style/stderr_puts.rb
+Style/StringChars	pending	42	RangeHelp,AutoCorrector	lib/rubocop/cop/style/string_chars.rb
+Style/StringConcatenation	true	195	AutoCorrector	lib/rubocop/cop/style/string_concatenation.rb
+Style/StringHashKeys	false	59	AutoCorrector	lib/rubocop/cop/style/string_hash_keys.rb
+Style/StringLiterals	true	129	ConfigurableEnforcedStyle,StringLiteralsHelp,StringHelp,AutoCorrector	lib/rubocop/cop/style/string_literals.rb
+Style/StringLiteralsInInterpolation	true	76	ConfigurableEnforcedStyle,StringLiteralsHelp,StringHelp,AutoCorrector	lib/rubocop/cop/style/string_literals_in_interpolation.rb
+Style/StringMethods	false	36	MethodPreference,AutoCorrector	lib/rubocop/cop/style/string_methods.rb
+Style/Strip	true	45	RangeHelp,AutoCorrector	lib/rubocop/cop/style/strip.rb
+Style/StructInheritance	true	108	RangeHelp,AutoCorrector	lib/rubocop/cop/style/struct_inheritance.rb
+Style/SuperArguments	pending	220	AutoCorrector	lib/rubocop/cop/style/super_arguments.rb
+Style/SuperWithArgsParentheses	pending	35	AutoCorrector	lib/rubocop/cop/style/super_with_args_parentheses.rb
+Style/SwapValues	pending	101	RangeHelp,AutoCorrector	lib/rubocop/cop/style/swap_values.rb
+Style/SymbolArray	true	133	ArrayMinSize,ArraySyntax,ConfigurableEnforcedStyle,PercentArray,TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/symbol_array.rb
+Style/SymbolLiteral	true	28	AutoCorrector	lib/rubocop/cop/style/symbol_literal.rb
+Style/SymbolProc	true	282	CommentsHelp,RangeHelp,AllowedMethods,AllowedPattern,AutoCorrector	lib/rubocop/cop/style/symbol_proc.rb
+Style/TallyMethod	pending	181	TargetRubyVersion,RangeHelp,AutoCorrector	lib/rubocop/cop/style/tally_method.rb
+Style/TernaryParentheses	true	251	SafeAssignment,ConfigurableEnforcedStyle,SurroundingSpace,AutoCorrector	lib/rubocop/cop/style/ternary_parentheses.rb
+Style/TimeNow	pending	41	AutoCorrector	lib/rubocop/cop/style/time_now.rb
+Style/TopLevelMethodDefinition	false	86		lib/rubocop/cop/style/top_level_method_definition.rb
+Style/TrailingBodyOnClass	true	41	Alignment,TrailingBody,AutoCorrector	lib/rubocop/cop/style/trailing_body_on_class.rb
+Style/TrailingBodyOnMethodDefinition	true	55	Alignment,TrailingBody,AutoCorrector	lib/rubocop/cop/style/trailing_body_on_method_definition.rb
+Style/TrailingBodyOnModule	true	40	Alignment,TrailingBody,AutoCorrector	lib/rubocop/cop/style/trailing_body_on_module.rb
+Style/TrailingCommaInArguments	true	160	TrailingComma,AutoCorrector	lib/rubocop/cop/style/trailing_comma_in_arguments.rb
+Style/TrailingCommaInArrayLiteral	true	137	TrailingComma,AutoCorrector	lib/rubocop/cop/style/trailing_comma_in_array_literal.rb
+Style/TrailingCommaInBlockArgs	false	105	AutoCorrector	lib/rubocop/cop/style/trailing_comma_in_block_args.rb
+Style/TrailingCommaInHashLiteral	true	139	TrailingComma,AutoCorrector	lib/rubocop/cop/style/trailing_comma_in_hash_literal.rb
+Style/TrailingMethodEndStatement	true	63	AutoCorrector	lib/rubocop/cop/style/trailing_method_end_statement.rb
+Style/TrailingUnderscoreVariable	true	151	SurroundingSpace,RangeHelp,AutoCorrector	lib/rubocop/cop/style/trailing_underscore_variable.rb
+Style/TrivialAccessors	true	254	AllowedMethods,AutoCorrector	lib/rubocop/cop/style/trivial_accessors.rb
+Style/UnlessElse	true	56	AutoCorrector	lib/rubocop/cop/style/unless_else.rb
+Style/UnlessLogicalOperators	false	106	ConfigurableEnforcedStyle	lib/rubocop/cop/style/unless_logical_operators.rb
+Style/UnpackFirst	true	59	TargetRubyVersion,AutoCorrector	lib/rubocop/cop/style/unpack_first.rb
+Style/VariableInterpolation	true	44	Interpolation,AutoCorrector	lib/rubocop/cop/style/variable_interpolation.rb
+Style/WhenThen	true	37	AutoCorrector	lib/rubocop/cop/style/when_then.rb
+Style/WhileUntilDo	true	54	AutoCorrector	lib/rubocop/cop/style/while_until_do.rb
+Style/WhileUntilModifier	true	67	StatementModifier,AutoCorrector	lib/rubocop/cop/style/while_until_modifier.rb
+Style/WordArray	true	156	ArrayMinSize,ArraySyntax,ConfigurableEnforcedStyle,PercentArray,AutoCorrector	lib/rubocop/cop/style/word_array.rb
+Style/YAMLFileRead	pending	66	AutoCorrector	lib/rubocop/cop/style/yaml_file_read.rb
+Style/YodaCondition	true	184	ConfigurableEnforcedStyle,RangeHelp,AutoCorrector	lib/rubocop/cop/style/yoda_condition.rb
+Style/YodaExpression	false	92	AutoCorrector	lib/rubocop/cop/style/yoda_expression.rb
+Style/ZeroLengthPredicate	true	157	AutoCorrector	lib/rubocop/cop/style/zero_length_predicate.rb

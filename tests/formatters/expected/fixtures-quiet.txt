@@ -1,0 +1,18 @@
+== basic.rb ==
+C:  1:  1: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+C:  1: 10: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+C:  3:  1: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+C:  5:  1: [Correctable] Layout/EmptyLines: Extra blank line detected.
+C:  6: 10: [Correctable] Style/NilComparison: Prefer the use of the nil? predicate.
+W:  7:  7: Lint/Debugger: Remove debugger entry point binding.pry.
+W:  9:  5: Lint/Debugger: Remove debugger entry point byebug.
+W: 10:  5: Lint/Debugger: Remove debugger entry point debugger.
+W: 11:  5: Lint/Debugger: Remove debugger entry point Kernel.binding.irb.
+C: 12:121: Layout/LineLength: Line is too long. [140/120]
+C: 14: 19: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+C: 23:  1: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+== no_newline.rb ==
+C:  1:  1: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+C:  1:  7: [Correctable] Layout/TrailingEmptyLines: Final newline missing.
+
+3 files inspected, 14 offenses detected, 9 offenses autocorrectable

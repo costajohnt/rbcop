@@ -1,0 +1,7 @@
+Metrics/BlockLength:
+  ExcludedMethods: [x]
+  IgnoredMethods: [y]
+Style/MethodCallWithArgsParentheses:
+  IgnoredMethodPatterns: []
+AllCops:
+  RunRailsCops: true

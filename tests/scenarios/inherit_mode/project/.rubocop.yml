@@ -1,0 +1,16 @@
+inherit_from: .rubocop_base.yml
+inherit_mode:
+  merge:
+    - Exclude
+AllCops:
+  Exclude:
+    - 'c.rb'
+Layout/EmptyLines:
+  Exclude:
+    - 'b.rb'
+Layout/TrailingWhitespace:
+  inherit_mode:
+    override:
+      - Exclude
+  Exclude:
+    - 'b.rb'

@@ -1,0 +1,4 @@
+Error: `Performance` cops have been extracted to the `rubocop-performance` gem.
+(obsolete configuration found in .rubocop.yml, please update it)
+`Rails/*` has been extracted to the `rubocop-rails` gem.
+(obsolete configuration found in .rubocop.yml, please update it)

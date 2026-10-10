@@ -1,0 +1,29 @@
+# Corpus files (corpus/relative/path) the autocorrect gates skip because RuboCop 1.91 itself
+# crashes on them under -A, aborting the rest of its run, or writes a syntax error that rbcop
+# deliberately does not reproduce. Keep this list minimal and explain each.
+#
+# Style/WordArray writes invalid-UTF-8 string values back as raw bytes; RuboCop's formatter then
+# raises "invalid byte sequence in UTF-8" (rbcop writes the escaped form, see docs/known-gaps.md).
+specs/lint/nested_percent_literal/003.rb
+specs/lint/percent_string_array/000.rb
+specs/lint/percent_string_array/001.rb
+specs/naming/inclusive_language/008.rb
+#
+# Lint/UselessTimes inlines `1.times do |i| ... i = i * 2 ... end` (after Style/ParallelAssignment)
+# as `0 = 0 * 2`, a syntax error; rbcop deliberately leaves the block (docs/known-gaps.md).
+specs/lint/useless_times/023.rb
+#
+# RuboCop -A writes a syntax error that rbcop reproduces byte for byte, but the parser gem's
+# diagnostics on it differ (src/legacy_syntax.rs approximates them, docs/known-gaps.md):
+# Lint/NumberConversion rewrites `x == :to_r` into `x == { |i| ... }` (first error at the `{`, not the
+# `|` after it); Style/RedundantSort + Layout/SingleLineBlockChain leave a hash pair's comma on its
+# own line (follow-up diagnostics after the first error).
+rubocop-src/spec/rubocop/cop/lint/redundant_type_conversion_spec.rb
+fastlane/deliver/lib/deliver/options.rb
+#
+# chef syntax-error files listed in scripts/check-skip.txt.
+chef/habitat/config/client.rb
+chef/spec/data/cookbooks/borken/recipes/default.rb
+chef/spec/data/cookbooks/ignorken/files/default/not_me.rb
+chef/spec/data/cookbooks/ignorken/recipes/ignoreme.rb
+chef/spec/data/cookbooks/ignorken/templates/ubuntu-12.10/not_me.rb

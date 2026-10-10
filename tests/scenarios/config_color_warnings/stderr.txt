@@ -1,0 +1,400 @@
+Warning: The `Naming/PredicateName` cop has been renamed to `Naming/PredicatePrefix`.
+(obsolete configuration found in .rubocop.yml, please update it)
+obsolete parameter `DebuggerReceivers` (for `Lint/Debugger`) found in .rubocop.yml
+`DebuggerReceivers` is no longer necessary, method receivers should be specified in `DebuggerMethods` instead.
+obsolete parameter `IgnoredPatterns` (for `Layout/LineLength`) found in .rubocop.yml
+`IgnoredPatterns` has been renamed to `AllowedPatterns`.
+Warning: Style/FrozenStringLiteralComment does not support Foo parameter.
+
+Supported parameters are:
+
+  - Enabled
+  - EnforcedStyle
+  - SupportedStyles
+  - Exclude
+Warning: Layout/LineLength does not support IgnoredPatterns parameter.
+
+Supported parameters are:
+
+  - Enabled
+  - Max
+  - AllowHeredoc
+  - AllowURI
+  - AllowQualifiedName
+  - URISchemes
+  - AllowRBSInlineAnnotation
+  - AllowCopDirectives
+  - AllowedPatterns
+  - SplitStrings
+Warning: AllCops does not support Bogus parameter.
+
+Supported parameters are:
+
+  - RubyInterpreters
+  - Include
+  - Exclude
+  - DefaultFormatter
+  - FailLevel
+  - DisplayCopNames
+  - DisplayStyleGuide
+  - StyleGuideBaseURL
+  - DocumentationBaseURL
+  - DocumentationExtension
+  - ExtraDetails
+  - StyleGuideCopsOnly
+  - EnabledByDefault
+  - DisabledByDefault
+  - NewCops
+  - UseProjectIndex
+  - ProjectIndexIncludesGems
+  - UseCache
+  - MaxFilesInCache
+  - CacheRootDirectory
+  - AllowSymlinksInCacheRootDirectory
+  - TargetRubyVersion
+  - ParserEngine
+  - SuggestExtensions
+  - ActiveSupportExtensionsEnabled
+  - StringLiteralsFrozenByDefault
+Warning: Lint/Debugger does not support DebuggerReceivers parameter.
+
+Supported parameters are:
+
+  - Enabled
+  - DebuggerMethods
+  - DebuggerRequires
+[33mThe following cops were added to RuboCop, but are not configured. Please set Enabled to either `true` or `false` in your `.rubocop.yml` file.
+
+Please also note that you can opt-in to new cops by default by adding this to your config:
+  AllCops:
+    NewCops: enable
+[0m
+[33mGemspec/AddRuntimeDependency: # new in 1.65[0m
+[33m  Enabled: true[0m
+[33mGemspec/AttributeAssignment: # new in 1.77[0m
+[33m  Enabled: true[0m
+[33mGemspec/DeprecatedAttributeAssignment: # new in 1.30[0m
+[33m  Enabled: true[0m
+[33mGemspec/DevelopmentDependencies: # new in 1.44[0m
+[33m  Enabled: true[0m
+[33mGemspec/RequireMFA: # new in 1.23[0m
+[33m  Enabled: true[0m
+[33mLayout/EmptyLinesAfterModuleInclusion: # new in 1.79[0m
+[33m  Enabled: true[0m
+[33mLayout/LineContinuationLeadingSpace: # new in 1.31[0m
+[33m  Enabled: true[0m
+[33mLayout/LineContinuationSpacing: # new in 1.31[0m
+[33m  Enabled: true[0m
+[33mLayout/LineEndStringConcatenationIndentation: # new in 1.18[0m
+[33m  Enabled: true[0m
+[33mLayout/SpaceBeforeBrackets: # new in 1.7[0m
+[33m  Enabled: true[0m
+[33mLint/AmbiguousAssignment: # new in 1.7[0m
+[33m  Enabled: true[0m
+[33mLint/AmbiguousOperatorPrecedence: # new in 1.21[0m
+[33m  Enabled: true[0m
+[33mLint/AmbiguousRange: # new in 1.19[0m
+[33m  Enabled: true[0m
+[33mLint/ArgumentMismatch: # new in 1.90[0m
+[33m  Enabled: true[0m
+[33mLint/ArrayLiteralInRegexp: # new in 1.71[0m
+[33m  Enabled: true[0m
+[33mLint/ConstantOverwrittenInRescue: # new in 1.31[0m
+[33m  Enabled: true[0m
+[33mLint/ConstantReassignment: # new in 1.70[0m
+[33m  Enabled: true[0m
+[33mLint/DataDefineOverride: # new in 1.85[0m
+[33m  Enabled: true[0m
+[33mLint/DeprecatedConstants: # new in 1.8[0m
+[33m  Enabled: true[0m
+[33mLint/DeprecatedReference: # new in 1.89[0m
+[33m  Enabled: true[0m
+[33mLint/DuplicateBranch: # new in 1.3[0m
+[33m  Enabled: true[0m
+[33mLint/DuplicateMagicComment: # new in 1.37[0m
+[33m  Enabled: true[0m
+[33mLint/DuplicateMatchPattern: # new in 1.50[0m
+[33m  Enabled: true[0m
+[33mLint/DuplicateRegexpCharacterClassElement: # new in 1.1[0m
+[33m  Enabled: true[0m
+[33mLint/DuplicateSetElement: # new in 1.67[0m
+[33m  Enabled: true[0m
+[33mLint/EmptyBlock: # new in 1.1[0m
+[33m  Enabled: true[0m
+[33mLint/EmptyClass: # new in 1.3[0m
+[33m  Enabled: true[0m
+[33mLint/EmptyInPattern: # new in 1.16[0m
+[33m  Enabled: true[0m
+[33mLint/HashNewWithKeywordArgumentsAsDefault: # new in 1.69[0m
+[33m  Enabled: true[0m
+[33mLint/IncompatibleIoSelectWithFiberScheduler: # new in 1.21[0m
+[33m  Enabled: true[0m
+[33mLint/ItWithoutArgumentsInBlock: # new in 1.59[0m
+[33m  Enabled: true[0m
+[33mLint/LambdaWithoutLiteralBlock: # new in 1.8[0m
+[33m  Enabled: true[0m
+[33mLint/LiteralAssignmentInCondition: # new in 1.58[0m
+[33m  Enabled: true[0m
+[33mLint/MisplacedMagicComment: # new in 1.91[0m
+[33m  Enabled: true[0m
+[33mLint/MixedCaseRange: # new in 1.53[0m
+[33m  Enabled: true[0m
+[33mLint/NameTypo: # new in 1.89[0m
+[33m  Enabled: true[0m
+[33mLint/NoReturnInBeginEndBlocks: # new in 1.2[0m
+[33m  Enabled: true[0m
+[33mLint/NonAtomicFileOperation: # new in 1.31[0m
+[33m  Enabled: true[0m
+[33mLint/NumberedParameterAssignment: # new in 1.9[0m
+[33m  Enabled: true[0m
+[33mLint/NumericOperationWithConstantResult: # new in 1.69[0m
+[33m  Enabled: true[0m
+[33mLint/OrAssignmentToConstant: # new in 1.9[0m
+[33m  Enabled: true[0m
+[33mLint/RedundantDirGlobSort: # new in 1.8[0m
+[33m  Enabled: true[0m
+[33mLint/RedundantRegexpQuantifiers: # new in 1.53[0m
+[33m  Enabled: true[0m
+[33mLint/RedundantTypeConversion: # new in 1.72[0m
+[33m  Enabled: true[0m
+[33mLint/RefinementImportMethods: # new in 1.27[0m
+[33m  Enabled: true[0m
+[33mLint/RequireRangeParentheses: # new in 1.32[0m
+[33m  Enabled: true[0m
+[33mLint/RequireRelativeSelfPath: # new in 1.22[0m
+[33m  Enabled: true[0m
+[33mLint/SharedMutableDefault: # new in 1.70[0m
+[33m  Enabled: true[0m
+[33mLint/SuperArgumentMismatch: # new in 1.90[0m
+[33m  Enabled: true[0m
+[33mLint/SuppressedExceptionInNumberConversion: # new in 1.72[0m
+[33m  Enabled: true[0m
+[33mLint/SymbolConversion: # new in 1.9[0m
+[33m  Enabled: true[0m
+[33mLint/ToEnumArguments: # new in 1.1[0m
+[33m  Enabled: true[0m
+[33mLint/TripleQuotes: # new in 1.9[0m
+[33m  Enabled: true[0m
+[33mLint/UnescapedBracketInRegexp: # new in 1.68[0m
+[33m  Enabled: true[0m
+[33mLint/UnexpectedBlockArity: # new in 1.5[0m
+[33m  Enabled: true[0m
+[33mLint/UnmodifiedReduceAccumulator: # new in 1.1[0m
+[33m  Enabled: true[0m
+[33mLint/UnreachablePatternBranch: # new in 1.85[0m
+[33m  Enabled: true[0m
+[33mLint/UselessConstantScoping: # new in 1.72[0m
+[33m  Enabled: true[0m
+[33mLint/UselessDefaultValueArgument: # new in 1.76[0m
+[33m  Enabled: true[0m
+[33mLint/UselessDefined: # new in 1.69[0m
+[33m  Enabled: true[0m
+[33mLint/UselessNumericOperation: # new in 1.66[0m
+[33m  Enabled: true[0m
+[33mLint/UselessOr: # new in 1.76[0m
+[33m  Enabled: true[0m
+[33mLint/UselessRescue: # new in 1.43[0m
+[33m  Enabled: true[0m
+[33mLint/UselessRuby2Keywords: # new in 1.23[0m
+[33m  Enabled: true[0m
+[33mMetrics/CollectionLiteralLength: # new in 1.47[0m
+[33m  Enabled: true[0m
+[33mNaming/BlockForwarding: # new in 1.24[0m
+[33m  Enabled: true[0m
+[33mNaming/PredicateMethod: # new in 1.76[0m
+[33m  Enabled: true[0m
+[33mSecurity/CompoundHash: # new in 1.28[0m
+[33m  Enabled: true[0m
+[33mSecurity/IoMethods: # new in 1.22[0m
+[33m  Enabled: true[0m
+[33mStyle/AmbiguousEndlessMethodDefinition: # new in 1.68[0m
+[33m  Enabled: true[0m
+[33mStyle/ArgumentsForwarding: # new in 1.1[0m
+[33m  Enabled: true[0m
+[33mStyle/ArrayIntersect: # new in 1.40[0m
+[33m  Enabled: true[0m
+[33mStyle/ArrayIntersectWithSingleElement: # new in 1.81[0m
+[33m  Enabled: true[0m
+[33mStyle/BitwisePredicate: # new in 1.68[0m
+[33m  Enabled: true[0m
+[33mStyle/CollectionCompact: # new in 1.2[0m
+[33m  Enabled: true[0m
+[33mStyle/CollectionQuerying: # new in 1.77[0m
+[33m  Enabled: true[0m
+[33mStyle/CombinableDefined: # new in 1.68[0m
+[33m  Enabled: true[0m
+[33mStyle/ComparableBetween: # new in 1.74[0m
+[33m  Enabled: true[0m
+[33mStyle/ComparableClamp: # new in 1.44[0m
+[33m  Enabled: true[0m
+[33mStyle/ConcatArrayLiterals: # new in 1.41[0m
+[33m  Enabled: true[0m
+[33mStyle/DataInheritance: # new in 1.49[0m
+[33m  Enabled: true[0m
+[33mStyle/DigChain: # new in 1.69[0m
+[33m  Enabled: true[0m
+[33mStyle/DirEmpty: # new in 1.48[0m
+[33m  Enabled: true[0m
+[33mStyle/DirectiveScope: # new in 1.90[0m
+[33m  Enabled: true[0m
+[33mStyle/DocumentDynamicEvalDefinition: # new in 1.1[0m
+[33m  Enabled: true[0m
+[33mStyle/EmptyClassDefinition: # new in 1.84[0m
+[33m  Enabled: true[0m
+[33mStyle/EmptyHeredoc: # new in 1.32[0m
+[33m  Enabled: true[0m
+[33mStyle/EmptyStringInsideInterpolation: # new in 1.76[0m
+[33m  Enabled: true[0m
+[33mStyle/EndlessMethod: # new in 1.8[0m
+[33m  Enabled: true[0m
+[33mStyle/EnvHome: # new in 1.29[0m
+[33m  Enabled: true[0m
+[33mStyle/ExactRegexpMatch: # new in 1.51[0m
+[33m  Enabled: true[0m
+[33mStyle/FetchEnvVar: # new in 1.28[0m
+[33m  Enabled: true[0m
+[33mStyle/FileEmpty: # new in 1.48[0m
+[33m  Enabled: true[0m
+[33mStyle/FileNull: # new in 1.69[0m
+[33m  Enabled: true[0m
+[33mStyle/FileOpen: # new in 1.85[0m
+[33m  Enabled: true[0m
+[33mStyle/FileRead: # new in 1.24[0m
+[33m  Enabled: true[0m
+[33mStyle/FileTouch: # new in 1.69[0m
+[33m  Enabled: true[0m
+[33mStyle/FileWrite: # new in 1.24[0m
+[33m  Enabled: true[0m
+[33mStyle/HashConversion: # new in 1.10[0m
+[33m  Enabled: true[0m
+[33mStyle/HashExcept: # new in 1.7[0m
+[33m  Enabled: true[0m
+[33mStyle/HashFetchChain: # new in 1.75[0m
+[33m  Enabled: true[0m
+[33mStyle/HashSlice: # new in 1.71[0m
+[33m  Enabled: true[0m
+[33mStyle/IfWithBooleanLiteralBranches: # new in 1.9[0m
+[33m  Enabled: true[0m
+[33mStyle/InPatternThen: # new in 1.16[0m
+[33m  Enabled: true[0m
+[33mStyle/ItAssignment: # new in 1.70[0m
+[33m  Enabled: true[0m
+[33mStyle/ItBlockParameter: # new in 1.75[0m
+[33m  Enabled: true[0m
+[33mStyle/KeywordArgumentsMerging: # new in 1.68[0m
+[33m  Enabled: true[0m
+[33mStyle/MagicCommentFormat: # new in 1.35[0m
+[33m  Enabled: true[0m
+[33mStyle/MapCompactWithConditionalBlock: # new in 1.30[0m
+[33m  Enabled: true[0m
+[33mStyle/MapIntoArray: # new in 1.63[0m
+[33m  Enabled: true[0m
+[33mStyle/MapJoin: # new in 1.85[0m
+[33m  Enabled: true[0m
+[33mStyle/MapToHash: # new in 1.24[0m
+[33m  Enabled: true[0m
+[33mStyle/MapToSet: # new in 1.42[0m
+[33m  Enabled: true[0m
+[33mStyle/MinMaxComparison: # new in 1.42[0m
+[33m  Enabled: true[0m
+[33mStyle/ModuleMemberExistenceCheck: # new in 1.82[0m
+[33m  Enabled: true[0m
+[33mStyle/MultilineInPatternThen: # new in 1.16[0m
+[33m  Enabled: true[0m
+[33mStyle/NegatedIfElseCondition: # new in 1.2[0m
+[33m  Enabled: true[0m
+[33mStyle/NegativeArrayIndex: # new in 1.84[0m
+[33m  Enabled: true[0m
+[33mStyle/NestedFileDirname: # new in 1.26[0m
+[33m  Enabled: true[0m
+[33mStyle/NilLambda: # new in 1.3[0m
+[33m  Enabled: true[0m
+[33mStyle/NumberedParameters: # new in 1.22[0m
+[33m  Enabled: true[0m
+[33mStyle/NumberedParametersLimit: # new in 1.22[0m
+[33m  Enabled: true[0m
+[33mStyle/ObjectThen: # new in 1.28[0m
+[33m  Enabled: true[0m
+[33mStyle/OneClassPerFile: # new in 1.85[0m
+[33m  Enabled: true[0m
+[33mStyle/OpenStructUse: # new in 1.23[0m
+[33m  Enabled: true[0m
+[33mStyle/OperatorMethodCall: # new in 1.37[0m
+[33m  Enabled: true[0m
+[33mStyle/PartitionInsteadOfDoubleSelect: # new in 1.85[0m
+[33m  Enabled: true[0m
+[33mStyle/PredicateWithKind: # new in 1.85[0m
+[33m  Enabled: true[0m
+[33mStyle/QuotedSymbols: # new in 1.16[0m
+[33m  Enabled: true[0m
+[33mStyle/ReduceToHash: # new in 1.85[0m
+[33m  Enabled: true[0m
+[33mStyle/RedundantArgument: # new in 1.4[0m
+[33m  Enabled: true[0m
+[33mStyle/RedundantArrayConstructor: # new in 1.52[0m
+[33m  Enabled: true[0m
+[33mStyle/RedundantArrayFlatten: # new in 1.76[0m
+[33m  Enabled: true[0m
+[33mStyle/RedundantConstantBase: # new in 1.40[0m
+[33m  Enabled: true[0m
+[33mStyle/RedundantCurrentDirectoryInPath: # new in 1.53[0m
+[33m  Enabled: true[0m
+[33mStyle/RedundantDoubleSplatHashBraces: # new in 1.41[0m
+[33m  Enabled: true[0m
+[33mStyle/RedundantEach: # new in 1.38[0m
+[33m  Enabled: true[0m
+[33mStyle/RedundantFilterChain: # new in 1.52[0m
+[33m  Enabled: true[0m
+[33mStyle/RedundantFormat: # new in 1.72[0m
+[33m  Enabled: true[0m
+[33mStyle/RedundantHeredocDelimiterQuotes: # new in 1.45[0m
+[33m  Enabled: true[0m
+[33mStyle/RedundantInitialize: # new in 1.27[0m
+[33m  Enabled: true[0m
+[33mStyle/RedundantInterpolationUnfreeze: # new in 1.66[0m
+[33m  Enabled: true[0m
+[33mStyle/RedundantLineContinuation: # new in 1.49[0m
+[33m  Enabled: true[0m
+[33mStyle/RedundantMinMaxBy: # new in 1.85[0m
+[33m  Enabled: true[0m
+[33mStyle/RedundantRegexpArgument: # new in 1.53[0m
+[33m  Enabled: true[0m
+[33mStyle/RedundantRegexpConstructor: # new in 1.52[0m
+[33m  Enabled: true[0m
+[33mStyle/RedundantSelfAssignmentBranch: # new in 1.19[0m
+[33m  Enabled: true[0m
+[33mStyle/RedundantStringEscape: # new in 1.37[0m
+[33m  Enabled: true[0m
+[33mStyle/ReturnNilInPredicateMethodDefinition: # new in 1.53[0m
+[33m  Enabled: true[0m
+[33mStyle/ReverseFind: # new in 1.84[0m
+[33m  Enabled: true[0m
+[33mStyle/SafeNavigationChainLength: # new in 1.68[0m
+[33m  Enabled: true[0m
+[33mStyle/SelectByKind: # new in 1.85[0m
+[33m  Enabled: true[0m
+[33mStyle/SelectByRange: # new in 1.85[0m
+[33m  Enabled: true[0m
+[33mStyle/SelectByRegexp: # new in 1.22[0m
+[33m  Enabled: true[0m
+[33mStyle/SendWithLiteralMethodName: # new in 1.64[0m
+[33m  Enabled: true[0m
+[33mStyle/SingleLineDoEndBlock: # new in 1.57[0m
+[33m  Enabled: true[0m
+[33mStyle/StringChars: # new in 1.12[0m
+[33m  Enabled: true[0m
+[33mStyle/SuperArguments: # new in 1.64[0m
+[33m  Enabled: true[0m
+[33mStyle/SuperWithArgsParentheses: # new in 1.58[0m
+[33m  Enabled: true[0m
+[33mStyle/SwapValues: # new in 1.1[0m
+[33m  Enabled: true[0m
+[33mStyle/TallyMethod: # new in 1.85[0m
+[33m  Enabled: true[0m
+[33mStyle/TimeNow: # new in 1.90[0m
+[33m  Enabled: true[0m
+[33mStyle/YAMLFileRead: # new in 1.53[0m
+[33m  Enabled: true[0m
+[33mFor more information: https://docs.rubocop.org/rubocop/versioning.html[0m
+[33mWarning: Using `Naming/PredicateName` configuration in .rubocop.yml for `Naming/PredicatePrefix`.
+[0m

@@ -1,0 +1,31 @@
+basic.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for `class Foo`.
+basic.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+basic.rb:1:10: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+basic.rb:2:3: R: Metrics/MethodLength: Method has too many lines. [14/10]
+basic.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+basic.rb:3:2: C: [Correctable] Layout/IndentationWidth: Use 2 (not -1) spaces for indentation.
+basic.rb:5:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+basic.rb:6:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+basic.rb:6:5: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+basic.rb:6:10: C: [Correctable] Style/NilComparison: Prefer the use of the `nil?` predicate.
+basic.rb:7:7: W: Lint/Debugger: Remove debugger entry point `binding.pry`.
+basic.rb:9:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+basic.rb:9:5: W: Lint/Debugger: Remove debugger entry point `byebug`.
+basic.rb:10:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+basic.rb:10:5: W: Lint/Debugger: Remove debugger entry point `debugger`.
+basic.rb:11:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+basic.rb:11:5: W: Lint/Debugger: Remove debugger entry point `Kernel.binding.irb`.
+basic.rb:12:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+basic.rb:12:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+basic.rb:12:9: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+basic.rb:12:121: C: Layout/LineLength: Line is too long. [140/120]
+basic.rb:13:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+basic.rb:13:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `s`.
+basic.rb:14:19: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+basic.rb:19:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+basic.rb:19:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `z`.
+basic.rb:19:9: C: [Correctable] Style/YodaCondition: Reverse the order of the operands `nil != x`.
+basic.rb:20:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+basic.rb:23:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+no_newline.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+no_newline.rb:1:7: C: [Correctable] Layout/TrailingEmptyLines: Final newline missing.

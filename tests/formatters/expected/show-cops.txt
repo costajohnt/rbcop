@@ -1,0 +1,89 @@
+# Supports --autocorrect
+Layout/LineLength:
+  Description: Checks that line length does not exceed the configured limit.
+  StyleGuide: "#max-line-length"
+  Enabled: true
+  VersionAdded: '0.25'
+  VersionChanged: '1.82'
+  Max: 120
+  AllowHeredoc: true
+  AllowURI: true
+  AllowQualifiedName: true
+  URISchemes:
+  - http
+  - https
+  AllowRBSInlineAnnotation: false
+  AllowCopDirectives: true
+  AllowedPatterns: []
+  SplitStrings: false
+
+# Supports --autocorrect
+Layout/TrailingWhitespace:
+  Description: Avoid trailing whitespace.
+  StyleGuide: "#no-trailing-whitespace"
+  Enabled: true
+  VersionAdded: '0.49'
+  VersionChanged: '1.0'
+  AllowInHeredoc: false
+
+Lint/Debugger:
+  Description: Checks for debugger calls.
+  Enabled: true
+  VersionAdded: '0.14'
+  VersionChanged: '1.63'
+  DebuggerMethods:
+    Kernel:
+    - binding.irb
+    - Kernel.binding.irb
+    Byebug:
+    - byebug
+    - remote_byebug
+    - Kernel.byebug
+    - Kernel.remote_byebug
+    Capybara:
+    - page.save_and_open_page
+    - page.save_and_open_screenshot
+    - page.save_page
+    - page.save_screenshot
+    - save_and_open_page
+    - save_and_open_screenshot
+    - save_page
+    - save_screenshot
+    debug.rb:
+    - binding.b
+    - binding.break
+    - Kernel.binding.b
+    - Kernel.binding.break
+    Pry:
+    - binding.pry
+    - binding.remote_pry
+    - binding.pry_remote
+    - Kernel.binding.pry
+    - Kernel.binding.remote_pry
+    - Kernel.binding.pry_remote
+    - Pry.rescue
+    - pry
+    Rails:
+    - debugger
+    - Kernel.debugger
+    RubyJard:
+    - jard
+    WebConsole:
+    - binding.console
+  DebuggerRequires:
+    debug.rb:
+    - debug/open
+    - debug/start
+
+# Supports --autocorrect
+Style/NilComparison:
+  Description: Prefer x.nil? to x == nil.
+  StyleGuide: "#predicate-methods"
+  Enabled: true
+  VersionAdded: '0.12'
+  VersionChanged: '0.59'
+  EnforcedStyle: predicate
+  SupportedStyles:
+  - predicate
+  - comparison
+

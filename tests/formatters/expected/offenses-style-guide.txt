@@ -1,0 +1,15 @@
+
+4   Layout/TrailingWhitespace [Safe Correctable] (https://rubystyle.guide#no-trailing-whitespace)
+3   Lint/Syntax
+1   Layout/IndentationStyle [Safe Correctable] (https://rubystyle.guide#spaces-indentation)
+1   Layout/SpaceAfterComma [Safe Correctable] (https://rubystyle.guide#spaces-operators)
+1   Layout/SpaceBeforeComma [Safe Correctable]
+1   Layout/SpaceInsideRangeLiteral [Safe Correctable] (https://rubystyle.guide#no-space-inside-range-literals)
+1   Layout/TrailingEmptyLines [Safe Correctable] (https://rubystyle.guide#newline-eof)
+1   Lint/Debugger
+1   Style/DefWithParentheses [Safe Correctable] (https://rubystyle.guide#method-parens)
+1   Style/NegatedIf [Safe Correctable] (https://rubystyle.guide#unless-for-negatives)
+1   Style/NilComparison [Safe Correctable] (https://rubystyle.guide#predicate-methods)
+--
+16  Total in 5 files
+

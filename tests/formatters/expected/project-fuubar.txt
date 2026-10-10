@@ -1,0 +1,21 @@
+
+Progress: |
+unicode.rb:4:18: C: [Correctable] Style/NilComparison: Prefer the use of the nil? predicate.
+name = "日本語テキスト" == nil  
+                        ^^
+unicode.rb:4:24: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+name = "日本語テキスト" == nil  
+                              ^^
+unicode.rb:5:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+	value = name   
+^
+unicode.rb:5:14: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+	value = name   
+	            ^^^
+unicode.rb:6:32: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+msg = "<b>&amp; `tick` 'q'</b>" 
+                               ^
+unicode.rb:8:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+Progress: |====================================================================|
+
+1 file inspected, 6 offenses detected, 6 offenses autocorrectable

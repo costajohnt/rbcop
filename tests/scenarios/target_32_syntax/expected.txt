@@ -1,0 +1,7 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+assign.rb:2:7: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+assign.rb:7:1: F: Lint/Syntax: unexpected token kEND (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+not_writable.rb:1:13: F: Lint/Syntax: unexpected token tEQL (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+ok.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+unexpected.rb:2:16: F: Lint/Syntax: unexpected token tIDENTIFIER (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+unexpected.rb:4:3: F: Lint/Syntax: unexpected token kEND (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
