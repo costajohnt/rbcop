@@ -1,0 +1,8 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+bodies.rb:15:9: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+bodies.rb:17:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
+bodies.rb:1:15: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+bodies.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+bodies.rb:2:3: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+bodies.rb:6:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a one-line rescue.
+bodies.rb:6:4: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
