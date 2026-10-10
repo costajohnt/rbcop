@@ -4,7 +4,7 @@
 # reported offenses (with [Corrected] tags).
 # usage: scripts/check-autocorrect.sh Cop1/Name[,Cop2/Name...] [corpus...]
 #   env: RBCOP_CORPUS, RBCOP_ORACLE (as for check-cops.sh); MODE=-A (default) or -a;
-#        LIMIT=n files per corpus (default all); OUT=scratch dir (default $TMPDIR/rbcop-autocorrect)
+#        LIMIT=n files per corpus (default all); OUT=scratch dir (default $TMPDIR/rbcop-autocorrect-<worktree name>, so parallel worktrees never share it)
 # Corpus files are only parsed, never executed. Exit 0 only if everything matches.
 set -eu
 cops=$1
@@ -12,10 +12,12 @@ shift
 corpora=${*:-specs rails discourse}
 root=$(cd "$(dirname "$0")/.." && pwd)
 bin=$root/target/release/rbcop
+# A stale binary reports phantom diffs (e.g. right after a merge).
+(cd "$root" && cargo build --release -q)
 corpus_root=${RBCOP_CORPUS:?set RBCOP_CORPUS to the corpus directory}
 oracle_root=${RBCOP_ORACLE:?set RBCOP_ORACLE to the oracle directory}
 mode=${MODE:--A}
-out=${OUT:-${TMPDIR:-/tmp}/rbcop-autocorrect}
+out=${OUT:-${TMPDIR:-/tmp}/rbcop-autocorrect-$(basename "$root")}
 pattern=": [CWEFRI]: (\[Correctable\] )?($(echo "$cops" | tr , '|')): "
 
 status=0

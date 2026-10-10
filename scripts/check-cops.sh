@@ -2,13 +2,15 @@
 # Gate for porting cops: compare rbcop with recorded RuboCop oracles (scripts/oracle.sh) for the given cops.
 # usage: scripts/check-cops.sh Cop1/Name[,Cop2/Name...] [corpus...]
 #   corpora default to specs rails discourse; each needs $RBCOP_CORPUS/<name> and $RBCOP_ORACLE/<name>.txt
-# Exit 0 only if every corpus matches exactly. Diffs: $TMPDIR/rbcop-check/<corpus>.diff
+# Exit 0 only if every corpus matches exactly. Diffs: $TMPDIR/rbcop-check/<pid>/<corpus>.diff (printed on failure)
 set -eu
 cops=$1
 shift
 corpora=${*:-specs rails discourse}
 root=$(cd "$(dirname "$0")/.." && pwd)
 bin=$root/target/release/rbcop
+# A stale binary reports phantom diffs (e.g. right after a merge).
+(cd "$root" && cargo build --release -q)
 corpus_root=${RBCOP_CORPUS:?set RBCOP_CORPUS to the corpus directory}
 oracle_root=${RBCOP_ORACLE:?set RBCOP_ORACLE to the oracle directory}
 # Per run, so concurrent gates (parallel porting agents) never share diff files.

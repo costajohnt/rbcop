@@ -294,6 +294,9 @@ More traps found while porting:
   can set an offense range past the line end. A single `|a|` is `arg`, not `procarg0`.
 - Parser heredoc `children.empty?` is true only for an empty body.
 - `helpers::uncommunicative_name`; `helpers::heredoc::parts` (opening, parser heredoc_end, empty?).
+- `def (expr).foo`: use `strip_parens` to get parser's receiver source.
+- `ruby_prism::Integer` has no `TryFrom<i64>`: use `try_into::<i32>()` or `to_u32_digits()`.
+- Helpers: `annotation_comment` (AnnotationComment), `magic_comment::{encoding, without_encoding}`.
 - `helpers::regexp_captures` counts named/numbered groups like `RegexpNode#each_capture`.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.
