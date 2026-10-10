@@ -128,6 +128,24 @@ More traps found while porting:
 - Where RuboCop crashes (e.g. `nil.blank?` past the last line) the oracle has no offense; the gate
   skips crash-listed (cop, file) pairs, otherwise report nothing on that path.
 - `cx.src.raw_text` is the file as read (CRLF intact); offsets refer to the normalised `cx.src.text`.
+- rubocop-ast `BlockNode#single_line?`/`multiline?` compare the `{`/`do` line with the `}`/`end` line,
+  not the whole block: `Foo.new(x)\n  .tap { ... }` is single-line.
+- In a body with rescue/ensure, Prism's implicit `BeginNode` starts at `do`/`def` and its ensure
+  clause includes `end`; parser's `rescue`/`ensure` spans only statements and clauses (`ast::body_range`).
+- `begin ... end while x` is parser `while_post`, which `on_while` never sees (`is_begin_modifier`).
+- In `Foo::Bar = 1` the target `ConstantPathNode` is part of parser's `casgn`, not a `const` node.
+- Prism emits a `__END__` token; parser has none.
+- `in_macro_scope?` treats `Class.new`/`Module.new`/`Struct.new`/`Data.define` blocks as class-like.
+- Alignment-mixin cops register offenses nested in an earlier offense's range without a corrector
+  (not `[Correctable]`, sometimes a different message): track earlier ranges in `cx.state`.
+- RuboCop drops a second offense on an identical range even with another message, so the order of
+  checks decides which message survives.
+- `ruby_prism::Node` is not `Clone`; collect `(start, end)` ranges when items must be reordered.
+- `on_node(type, arg, :send)` searches inside an argument but not into plain `send` nodes (it does go
+  into csends and blocks); Prism's `ArgumentsNode` sits in between.
+- Parser wraps a `rescue A, B` exception list in an `array`.
+- `a[...]` has no `loc.begin` in parser although Prism has `opening_loc` `[`.
+- A label pair `key: v` has no `operator_loc` in Prism; treat the missing operator as `:`.
 
 ### Prism tokens vs parser-gem tokens
 
@@ -168,7 +186,7 @@ command per call (the gate accepts a comma-separated cop list, so one call cover
 
 ```sh
 cargo build --release
-export RBCOP_CORPUS=/Users/johncosta/.claude/jobs/89c7fab2/tmp/corpus RBCOP_ORACLE=/Users/johncosta/.claude/jobs/89c7fab2/tmp/oracle
+export RBCOP_CORPUS=/Users/johncosta/.claude/jobs/89c7fab2/tmp/corpus RBCOP_ORACLE=/Users/johncosta/.claude/jobs/89c7fab2/tmp/oracle2
 scripts/check-cops.sh Style/Example,Style/Other specs          # fast loop (RuboCop's own spec snippets)
 scripts/check-cops.sh Style/Example,Style/Other                # full gate: specs, rails, discourse
 ```
