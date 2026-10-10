@@ -237,6 +237,14 @@ More traps found while porting:
 - A corrector shared by two offenses can be one reference-capturing closure (it is `Copy`).
 - Cops whose fix lives in a helper: reference `helpers::<name>` (whose file calls `add_fix`) or add a
   `// corrector: <where>` line so `scripts/missing-correctors.sh` stays quiet.
+- VariableForce cops (Unused*, UselessAssignment, ShadowingOuterLocalVariable, ...) use
+  `helpers::variable_force`: `Tree::build(program)` then `investigate(&tree, |tree, scope, vars| ...)`.
+  Extend it; never write a second tracker.
+- Prism `RescueNode` spans all following `rescue` clauses; parser `resbody` ends at its body (or last
+  exception / `=> var`, plus a trailing `;`, never `then`). Use `helpers::resbody`.
+- `void_context?` counts `initialize` only on a plain `def`, not `def self.initialize`.
+- Prism `Visit` branch/leaf enter hooks are not called for concretely typed fields (StatementsNode,
+  ArgumentsNode, ElseNode, ...); override `visit_X_node` instead.
 - `helpers::regexp_captures` counts named/numbered groups like `RegexpNode#each_capture`.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.
