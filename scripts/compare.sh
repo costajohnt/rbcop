@@ -4,8 +4,9 @@
 #   default: both run with --force-default-config
 #   --project-config: both use the directory's own .rubocop.yml files (plugins must be installed for RuboCop)
 #   cops default to every cop rbcop implements
-# Needs `rubocop` on PATH (with rbenv, set RBENV_VERSION). Results go to $TMPDIR/rbcop-compare/.
+# RuboCop from $RUBOCOP (see scripts/rubocop.sh). Results go to $TMPDIR/rbcop-compare/.
 set -eu
+. "$(dirname "$0")/rubocop.sh"
 mode=--force-default-config
 if [ "${1:-}" = "--project-config" ]; then
   mode=
@@ -15,7 +16,9 @@ dir=$(cd "$1" && pwd)
 bin=$(cd "$(dirname "$0")/.." && pwd)/target/release/rbcop
 out=${TMPDIR:-/tmp}/rbcop-compare/$(basename "$dir")${mode:+-default}
 mkdir -p "$out"
-cops=${2:-$("$bin" --show-cops | sed -n 's/^\([^ #].*\):$/\1/p' | paste -sd, -)}
+# Lint/RedundantCopDisableDirective is left out of the default: --only rejects it, and both tools
+# would then print nothing and compare as "identical".
+cops=${2:-$("$bin" --show-cops | sed -n 's/^\([^ #].*\):$/\1/p' | grep -vx 'Lint/RedundantCopDisableDirective' | paste -sd, -)}
 
 # LineLength's [Correctable] tag depends on CheckLineBreakable, which rbcop does not model yet.
 # rubocop-md lints Ruby inside Markdown; rbcop does not, so .md results are dropped.

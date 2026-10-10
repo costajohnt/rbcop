@@ -8,12 +8,12 @@
 # env: RBCOP_CORPUS, RBCOP_ORACLE; OUT=scratch dir (default $TMPDIR/rbcop-cold-<worktree name>).
 # Corpus files are only parsed, never executed. Exit 0 only if everything matches.
 set -eu
+. "$(dirname "$0")/rubocop.sh"
 root=$(cd "$(dirname "$0")/.." && pwd)
 bin=$root/target/release/rbcop
 corpus=${RBCOP_CORPUS:?set RBCOP_CORPUS to the corpus directory}/cold
 oracle=${RBCOP_ORACLE:?set RBCOP_ORACLE to the oracle directory}/cold.txt
 out=${OUT:-${TMPDIR:-/tmp}/rbcop-cold-$(basename "$root")}
-rubocop() { RBENV_VERSION=4.0.6 rbenv exec rubocop "$@"; }
 variants() { find "$corpus${1:+/$1}" -name .rubocop.yml | sed 's|/\.rubocop\.yml$||' | sort; }
 crashes() { sed -n 's/^An error occurred while \([^ ]*\) cop was inspecting \(.*\):[0-9]*:[0-9]*\.$/\1	\2/p' "$@"; }
 
