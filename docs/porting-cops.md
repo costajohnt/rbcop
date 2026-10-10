@@ -295,6 +295,14 @@ More traps found while porting:
 - Helpers: `regexp_parser::tree` (expression tree), `allowed_receivers`, `value_used`,
   `file_open_patterns`, `comment_config`, `add_parentheses::ParenFix::Params`,
   `ruby_string::{regexp_escape, float_to_s}`.
+- Parser `Range#join` takes min begin / max end: build joined ranges the same way and never slice
+  with possibly reversed ends (BlockDelimiters' chained-block comment move).
+- A bare lowercase type in a NodePattern (`next`) matches that type with any children.
+- `BlockNode#lambda?` is `send_node.method?(:lambda)` (any receiver/arguments); `proc?` requires
+  `proc`/`Proc.new` with no arguments.
+- rubocop-ast's `receiver` matcher covers blocks (the send's receiver); a lambda's is nil.
+- `respond_to?(:value)` holds only for str, dstr, int, float, sym, rational, complex.
+- ParenthesesCorrector on a send without parentheses raises: no offense.
 - Prism `CallNode#message_loc` of an index call (`foo[x]`, `foo[x] = y`) spans the brackets and
   arguments; use `name()` when you mean parser's method name.
 - Helpers: `if_node::{normal_keyword, parts, is_elsif}`, `ruby_string::symbol_inspect`.
