@@ -72,3 +72,40 @@ pub fn single_arg_or_numbered(block: &ruby_prism::BlockNode, allow_empty: bool) 
         _ => false,
     }
 }
+
+/// Kind of a block with a single block variable.
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+pub enum Single {
+    /// `(block _ (args (arg x)) _)`
+    Arg,
+    /// `(numblock _ 1 _)`
+    Numbered,
+    /// `(itblock _ _ _)`
+    It,
+}
+
+/// The block's single variable: `|x|` (parser `(args (arg x))`), `_1` in a numblock whose highest
+/// parameter is 1, or `it`. Returns the kind and the variable name.
+pub fn single_var<'pr>(block: &ruby_prism::BlockNode<'pr>) -> Option<(Single, &'pr [u8])> {
+    let params = block.parameters()?;
+    if let Some(n) = params.as_numbered_parameters_node() {
+        return (n.maximum() == 1).then_some((Single::Numbered, b"_1".as_slice()));
+    }
+    if params.as_it_parameters_node().is_some() {
+        return Some((Single::It, b"it".as_slice()));
+    }
+    let bp = params.as_block_parameters_node()?;
+    match children(&bp).as_slice() {
+        [one] => Some((Single::Arg, one.as_required_parameter_node()?.name().as_slice())),
+        _ => None,
+    }
+}
+
+/// The block body when it is one parser node (not a multi-statement `begin`).
+pub fn single_body<'pr>(block: &ruby_prism::BlockNode<'pr>) -> Option<Node<'pr>> {
+    let body = block.body()?;
+    let Some(s) = body.as_statements_node() else { return Some(body) };
+    let mut it = s.body().iter();
+    let first = it.next();
+    if it.next().is_some() { None } else { first }
+}
