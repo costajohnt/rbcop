@@ -136,7 +136,7 @@ pub fn bracketed_with_whitespace(src: &Source, node: &ArrayNode, elements: &[Str
 }
 
 /// PreferredDelimiters for a percent literal type (`%w`, `%I`, ...).
-fn delimiters(cx: &Cx, ty: &str) -> (String, String) {
+pub fn delimiters(cx: &Cx, ty: &str) -> (String, String) {
     let cfg = cx.config.for_cop("Style/PercentLiteralDelimiters");
     let pref = cfg.map("PreferredDelimiters");
     let d = pref.and_then(|m| if m.contains("default") { m.str(ty).or_else(|| m.str("default")) } else { m.str(ty) });
