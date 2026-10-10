@@ -14,8 +14,6 @@ Layout_LineLength/r2.7-c16
 #
 # rbcop bugs found by this corpus, filed as issues:
 Layout_MultilineMethodDefinitionBraceLayout/r2.7-c2/001.rb  # #60 Lint/Syntax first error position
-Style_RedundantRegexpEscape/r2.7/164.rb  # #61 parser gem's `empty char-class` diagnostic
 Style_RedundantParentheses/r3.2/000.rb  # #62 reparse rejects `retry` outside rescue
 Lint_SelfAssignment/r2.7-c2  # #63 AllowRBSInlineAnnotation not ported
 Style_RescueModifier/r2.6/000.rb  # #64 masgn rescue-modifier precedence below 2.7
-Lint_Syntax/r2.7/002.rb  # #60 Lint/Syntax first error token (`if true` left open: $end, not tNL)
