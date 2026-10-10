@@ -1,0 +1,3 @@
+Layout/HashAlignment:
+  EnforcedHashRocketStyle: [key, table]
+  EnforcedColonStyle: [key, bogus]

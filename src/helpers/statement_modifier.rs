@@ -238,8 +238,9 @@ fn omitted_value_in_last_hash_arg(c: &ruby_prism::CallNode) -> bool {
 pub fn first_line_comment<'a>(cx: &Cx<'a, '_>, s: &Stmt) -> Option<&'a str> {
     let c = cx.src.comment_on_line(first_line(cx, s))?;
     let text = cx.src.slice(c.start, c.end);
+    // Ruby's \s is ASCII-only.
     let re = Regex::new(&format!(
-        r"#\s*rubocop\s*:\s*(disable|todo)\s*([^,],)*\s*(all|{})",
+        r"#[\t\n\x0B\x0C\r ]*rubocop[\t\n\x0B\x0C\r ]*:[\t\n\x0B\x0C\r ]*(disable|todo)[\t\n\x0B\x0C\r ]*([^,],)*[\t\n\x0B\x0C\r ]*(all|{})",
         regex::escape(cx.cop)
     ))
     .unwrap();

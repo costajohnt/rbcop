@@ -1,0 +1,14 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+beginless.rb:1:5: F: Lint/Syntax: unexpected token tDOT2 (Using Ruby 2.5 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+block_rescue.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+block_rescue.rb:3:1: C: [Correctable] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+case_in.rb:2:1: F: Lint/Syntax: unexpected token kIN (Using Ruby 2.5 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+case_in_def.rb:10:1: F: Lint/Syntax: unexpected token kEND (Using Ruby 2.5 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+case_in_def.rb:3:3: F: Lint/Syntax: unexpected token kIN (Using Ruby 2.5 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+case_in_def.rb:5:3: F: Lint/Syntax: unexpected token kIN (Using Ruby 2.5 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+circular.rb:1:19: W: Lint/CircularArgumentReference: Circular argument reference - `msg`.
+circular.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+endless_range.rb:1:9: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.5 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+endless_range.rb:2:15: F: Lint/Syntax: unexpected token tRBRACK (Using Ruby 2.5 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+forwarding.rb:1:7: F: Lint/Syntax: unexpected token tDOT3 (Using Ruby 2.5 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+no_kwargs.rb:1:9: F: Lint/Syntax: unexpected token kNIL (Using Ruby 2.5 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)

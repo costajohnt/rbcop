@@ -66,6 +66,8 @@ only-correctable|tests/formatters/project|-f s --display-only-correctable
 only-safe-correctable|tests/formatters/project|-f s --display-only-safe-correctable
 junit-only-failed|tests/formatters/project|-f junit --display-only-failed
 junit-only-failed-abbrev|tests/formatters/project|-f ju --display-only-failed
+# --only again replaces the list: cops whose registry (load) order differs from name order.
+junit-registry-order|tests/formatters/project|-f ju --only Style/DocumentationMethod,Style/DocumentDynamicEvalDefinition,Lint/SharedMutableDefault,Lint/SafeNavigationConsistency,Layout/EmptyLines,Layout/EmptyLineBetweenDefs,Naming/BinaryOperatorParameterName lib/clean.rb
 github-fail-level|tests/formatters/project|-f g --fail-level F
 fail-fast|tests/formatters/project|-f s -F crlf.rb lib/style.rb
 missing-file|tests/formatters/project|-f s nope.rb unicode.rb
@@ -84,6 +86,8 @@ parallel-ignored|tests/formatters/project|-f e -P -F lib/clean.rb
 stdin-simple|tests/formatters/project|-f s --stdin lib/foo.rb|tests/formatters/stdin.rb
 stdin-emacs-outside|tests/formatters/project|-f e --stdin ../foo.rb|tests/formatters/stdin.rb
 stdin-json|tests/formatters/project|-f j --stdin lib/foo.rb|tests/formatters/stdin.rb
+stdin-autocorrect|tests/formatters/project|-f s -a --stdin lib/foo.rb|tests/formatters/stdin.rb
+stdin-autocorrect-all-json|tests/formatters/project|-f j -A --stdin lib/foo.rb|tests/formatters/stdin.rb
 # Other modes and errors.
 list-target-files|tests/formatters/project|-L
 version|tests/formatters/project|-v
@@ -107,3 +111,18 @@ parse-config-missing|tests/fixtures|-c nope.yml basic.rb
 parse-only-optional|tests/fixtures|--only -f emacs basic.rb
 parse-no-out|tests/fixtures|--no-out basic.rb
 parse-out-missing-arg|tests/fixtures|-f emacs -o
+# Autocorrection summaries (fix-* cases run on a copy): -a leaves the unsafe FrozenStringLiteralComment.
+fix-safe-progress|tests/formatters/fix|-f p -a
+fix-safe-simple|tests/formatters/fix|-f s -a
+fix-safe-clang|tests/formatters/fix|-f c -a
+fix-safe-tap|tests/formatters/fix|-f t -a
+fix-safe-quiet|tests/formatters/fix|-f q -a
+fix-safe-fuubar|tests/formatters/fix|-f fu -a a.rb
+fix-safe-color|tests/formatters/fix|-f s -a --color
+fix-safe-one|tests/formatters/fix|-f s -a b.rb
+fix-safe-long|tests/formatters/fix|-f s --autocorrect a.rb
+fix-all-simple|tests/formatters/fix|-f s -A
+fix-all-progress|tests/formatters/fix|-f p --autocorrect-all --color
+fix-none-simple|tests/formatters/fix|-f s
+fix-safe-and-all|tests/formatters/fix|-f s -a -A
+fix-safe-only-correctable|tests/formatters/fix|-f s -a --display-only-correctable

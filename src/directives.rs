@@ -12,7 +12,9 @@ pub static DIRECTIVE: LazyLock<Regex> = LazyLock::new(|| {
     let signed = format!(r"[+\-]{name}(?:\s+[+\-]{name})*");
     // AVAILABLE_MODES sorted longest first, as RuboCop builds MODES_PATTERN.
     let modes = "disable-next|enable-next|todo-next|disable|enable|todo|push|next|pop";
-    Regex::new(&format!(r"#\s*rubocop\s*:\s*({modes})\b(?:\s*(all|{names})|\s+({signed}))?")).unwrap()
+    // Ruby's \s and \w are ASCII-only.
+    let re = format!(r"#\s*rubocop\s*:\s*({modes})\b(?:\s*(all|{names})|\s+({signed}))?");
+    Regex::new(&crate::helpers::ruby_string::ruby_regex_classes(&re)).unwrap()
 });
 
 const LINT_SYNTAX: &str = "Lint/Syntax";
@@ -238,7 +240,7 @@ pub fn config_enabled(config: &crate::config::Resolved, cop: &str) -> bool {
     }
     match config.for_cop(cop).get("Enabled") {
         Some(Value::Bool(b)) => *b,
-        Some(Value::Str(s)) => s == "pending" && config.all_cops().str("NewCops") == Some("enable"),
+        Some(Value::Str(s)) => s == "pending" && config.enabled_new_cop(cop),
         _ => false,
     }
 }

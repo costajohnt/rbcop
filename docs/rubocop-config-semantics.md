@@ -51,6 +51,14 @@ override_enabled_for_disabled_departments(default, config)
 Config.new(merge(default, config, inherit_mode: config['inherit_mode'] || {}, unset_nil: true))
 ```
 
+- Preview (1.91): preview is on if `--preview`/`--no-preview` says so, else if the hash's own
+  `AllCops: Preview == true`. `apply_preview_defaults` runs on the defaults before everything above:
+  each top-level entry's `Preview` hash is shallow-merged over it under preview, and the `Preview` key is
+  dropped either way (default.yml's `AllCops: Preview` carries `FailLevel: warning`). With no user file
+  (or `--force-default-config`) only the CLI flag counts. Under preview, every inherit_mode used in a
+  merge (`determine_inherit_mode` during inheritance, the default merge's root mode) gets `Exclude` added
+  to `merge` unless it already lists `Exclude` in `merge` or `override`. `Enabled: preview` cops run only
+  under preview.
 - `handle_disabled_by_default`: for each user department key (no `/`) with truthy `Enabled` (checked before the transform below), restore the real default `Enabled` for that department's cops. Then every user top-level key gets `{'Enabled' => true}.merge(params)`, so any cop key present (inherited ones included) is enabled unless it says otherwise.
 - `enable_cop?(name, opts)`: true if `Enabled == true` (or Lint/Syntax); `cop_enabled = opts.fetch('Enabled') { !DisabledByDefault }`; `'override_department'` means true; false if department `Enabled == false`; else `cop_enabled`. Department = everything before the last `/`.
 - `Registry#enabled?`: `--only` lists force-enable. Otherwise `Enabled == true`, or `== 'pending'` with `AllCops/NewCops: enable` or `--enable-pending-cops` (`--disable-pending-cops` wins). Any other value is off.
@@ -71,6 +79,8 @@ Config.new(merge(default, config, inherit_mode: config['inherit_mode'] || {}, un
 - `ruby_file?`: extension from cwd config Include patterns that start with `**/*.`; filename from other Include patterns (`**/` stripped); or extensionless non-empty file whose first line matches `/#!.*(ruby|rake|jruby)/` (RubyInterpreters from the file's config).
 - Explicit file args are **not** Exclude-filtered unless `--force-exclusion` (cwd config, or the file's config with `--ignore-parent-exclusion`).
 - Dir pruning by `.../**/*` Excludes is only an optimisation.
+- Symlinked files are kept; symlinked directories are followed unless their realpath matches a
+  `.../**/*` Exclude or the walked directory's realpath starts with theirs (a loop).
 
 ## 7. Does a cop run on a file
 

@@ -16,7 +16,8 @@ const USAGE: &str = "Usage: rbcop [options] [file1, file2, ...]
 
 Accepts RuboCop's command-line options. Supported:
   -c, --config FILE, --force-default-config, --only/--except COPS, --force-exclusion,
-  --ignore-parent-exclusion, --enable-pending-cops, --disable-pending-cops, -s/--stdin FILE,
+  --ignore-parent-exclusion, --enable-pending-cops, --disable-pending-cops, --[no-]preview,
+  -s/--stdin FILE, -a/--autocorrect, -A/--autocorrect-all (and their deprecated spellings),
   -F/--fail-fast, --fail-level SEVERITY, -f/--format FORMATTER, -o/--out FILE,
   -D/--[no-]display-cop-names, -E/--extra-details, -S/--display-style-guide, --display-time,
   --display-only-fail-level-offenses, --display-only-correctable, --display-only-safe-correctable,
@@ -59,12 +60,12 @@ const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
     ("enable-pending-cops", None, Arg::None, Use::Handle),
     ("disable-all-cops", None, Arg::None, Use::Unsupported),
     ("enable-all-cops", None, Arg::None, Use::Unsupported),
-    ("[no-]preview", None, Arg::None, Use::Unsupported),
+    ("[no-]preview", None, Arg::None, Use::Handle),
     ("ignore-disable-comments", None, Arg::None, Use::Unsupported),
     ("force-exclusion", None, Arg::None, Use::Handle),
     ("only-recognized-file-types", None, Arg::None, Use::Unsupported),
     ("ignore-parent-exclusion", None, Arg::None, Use::Handle),
-    ("ignore-unrecognized-cops", None, Arg::None, Use::Unsupported),
+    ("ignore-unrecognized-cops", None, Arg::None, Use::Handle),
     ("force-default-config", None, Arg::None, Use::Handle),
     ("changed", None, Arg::Optional, Use::Unsupported),
     ("stdin", Some('s'), Arg::Required, Use::Handle),
@@ -95,10 +96,10 @@ const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
     ("display-only-safe-correctable", None, Arg::None, Use::Handle),
     ("display-suppressed", None, Arg::None, Use::Unsupported),
     ("autocorrect", Some('a'), Arg::None, Use::Handle),
-    ("auto-correct", None, Arg::None, Use::Unsupported),
-    ("safe-auto-correct", None, Arg::None, Use::Unsupported),
+    ("auto-correct", None, Arg::None, Use::Handle),
+    ("safe-auto-correct", None, Arg::None, Use::Handle),
     ("autocorrect-all", Some('A'), Arg::None, Use::Handle),
-    ("auto-correct-all", None, Arg::None, Use::Unsupported),
+    ("auto-correct-all", None, Arg::None, Use::Handle),
     ("disable-uncorrectable", None, Arg::None, Use::Unsupported),
     ("diff", None, Arg::None, Use::Unsupported),
     ("auto-gen-config", None, Arg::None, Use::Unsupported),
@@ -142,6 +143,9 @@ struct Cli {
     opts: Options,
     /// -a / -A
     autocorrect: Option<rbcop::autocorrect::Mode>,
+    /// `@options[:safe_autocorrect]` / `[:autocorrect_all]`: both may be given (and then refused).
+    safe_autocorrect: bool,
+    autocorrect_all: bool,
     only: Option<Vec<String>>,
     except: Vec<String>,
     /// `-f`/`-o` pairs, in order.
@@ -174,34 +178,51 @@ struct Cli {
     exiting: Vec<&'static str>,
 }
 
-/// Shellwords.split
-fn shellsplit(s: &str) -> Vec<String> {
+/// Shellwords.split; Err is its ArgumentError for an unterminated quote.
+fn shellsplit(s: &str) -> Result<Vec<String>, String> {
+    let unmatched = || format!("Unmatched quote: {s:?}");
     let mut out = Vec::new();
     let mut cur: Option<String> = None;
     let mut chars = s.chars();
     while let Some(c) = chars.next() {
         match c {
-            c if c.is_whitespace() => out.extend(cur.take()),
+            // Ruby's \s
+            ' ' | '\t' | '\n' | '\x0B' | '\x0C' | '\r' => out.extend(cur.take()),
             '\'' => {
                 let w = cur.get_or_insert_with(String::new);
-                w.extend(chars.by_ref().take_while(|&c| c != '\''));
-            }
-            '"' => {
-                let w = cur.get_or_insert_with(String::new);
-                while let Some(c) = chars.next() {
-                    match c {
-                        '"' => break,
-                        '\\' => w.extend(chars.next()),
+                loop {
+                    match chars.next().ok_or_else(unmatched)? {
+                        '\'' => break,
                         c => w.push(c),
                     }
                 }
             }
-            '\\' => cur.get_or_insert_with(String::new).extend(chars.next()),
+            '"' => {
+                let w = cur.get_or_insert_with(String::new);
+                loop {
+                    match chars.next().ok_or_else(unmatched)? {
+                        '"' => break,
+                        // Only $ ` " \ and newline are escaped inside double quotes.
+                        '\\' => match chars.next().ok_or_else(unmatched)? {
+                            c @ ('$' | '`' | '"' | '\\' | '\n') => w.push(c),
+                            c => {
+                                w.push('\\');
+                                w.push(c);
+                            }
+                        },
+                        c => w.push(c),
+                    }
+                }
+            }
+            '\\' => {
+                let w = cur.get_or_insert_with(String::new);
+                w.push(chars.next().unwrap_or('\\'));
+            }
             c => cur.get_or_insert_with(String::new).push(c),
         }
     }
     out.extend(cur);
-    out
+    Ok(out)
 }
 
 /// ArgumentsFile (`.rubocop` in the working directory) + ArgumentsEnv (`RUBOCOP_OPTS`) + argv.
@@ -211,7 +232,8 @@ fn shellsplit(s: &str) -> Vec<String> {
 fn all_args() -> Result<Vec<String>, Fail> {
     let mut args = Vec::new();
     if Path::new(".rubocop").is_file() {
-        let from_file = shellsplit(&fs::read_to_string(".rubocop").unwrap_or_default());
+        let text = fs::read_to_string(".rubocop").map_err(|e| Fail::Arg(format!(".rubocop: {e}")))?;
+        let from_file = shellsplit(&text).map_err(Fail::Arg)?;
         // Checked token by token rather than by parsing the file alone: a trailing `-o` would fail
         // to parse there yet, combined with argv, take the user's first path as the output file.
         // `--o`, `--ou`, `--out[=...]` and any short-option cluster containing `o` are refused
@@ -228,8 +250,9 @@ fn all_args() -> Result<Vec<String>, Fail> {
         }
         args.extend(from_file);
     }
-    args.extend(shellsplit(&env::var("RUBOCOP_OPTS").unwrap_or_default()));
-    args.extend(env::args().skip(1));
+    args.extend(shellsplit(&env::var("RUBOCOP_OPTS").unwrap_or_default()).map_err(Fail::Arg)?);
+    // env::args panics on an argument that is not UTF-8 (a file name on Linux, say).
+    args.extend(env::args_os().skip(1).map(|a| a.to_string_lossy().into_owned()));
     Ok(args)
 }
 
@@ -373,8 +396,10 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
         "force-default-config" => cli.opts.force_default_config = true,
         "force-exclusion" => cli.force_exclusion = true,
         "ignore-parent-exclusion" => cli.opts.ignore_parent_exclusion = true,
+        "ignore-unrecognized-cops" => cli.opts.ignore_unrecognized_cops = true,
         "enable-pending-cops" => cli.opts.enable_pending_cops = true,
         "disable-pending-cops" => cli.opts.disable_pending_cops = true,
+        "preview" => cli.opts.preview = Some(!neg),
         "fail-fast" => cli.fail_fast = true,
         "stdin" => cli.stdin = value,
         "parallel" => cli.parallel = Some(!neg),
@@ -407,8 +432,22 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
         "display-style-guide" => cli.annotate.display_style_guide = true,
         "stderr" => cli.stderr = true,
         "display-time" => cli.display_time = true,
-        "autocorrect" => cli.autocorrect = Some(rbcop::autocorrect::Mode::Safe),
-        "autocorrect-all" => cli.autocorrect = Some(rbcop::autocorrect::Mode::All),
+        "auto-correct" | "safe-auto-correct" | "auto-correct-all" => {
+            // Options#handle_deprecated_option, warned while parsing (only a literal --no-color
+            // on the command line turns its colour off).
+            let new = if name == "auto-correct-all" { "--autocorrect-all" } else { "--autocorrect" };
+            let color = global_color(None) && !env::args().any(|a| a == "--no-color");
+            eprintln!("{}", formatter::Paint(color).yellow(&format!("--{name} is deprecated; use {new} instead.")));
+            return apply(cli, &new[2..], neg, value);
+        }
+        "autocorrect" => {
+            cli.autocorrect = Some(rbcop::autocorrect::Mode::Safe);
+            cli.safe_autocorrect = true;
+        }
+        "autocorrect-all" => {
+            cli.autocorrect = Some(rbcop::autocorrect::Mode::All);
+            cli.autocorrect_all = true;
+        }
         "display-only-failed" => cli.only_failed = true,
         "display-only-fail-level-offenses" => cli.only_fail_level = true,
         "display-only-correctable" => cli.only_correctable = true,
@@ -434,7 +473,7 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
 }
 
 /// OptionsValidator#validate_compatibility (the checks that apply to what rbcop supports).
-fn validate(cli: &mut Cli) -> Result<(), Fail> {
+fn validate(cli: &mut Cli, global: bool) -> Result<(), Fail> {
     if cli.only.as_ref().is_some_and(|o| {
         o.iter().any(|c| c == "Lint/RedundantCopDisableDirective" || c == "RedundantCopDisableDirective")
     }) {
@@ -446,11 +485,19 @@ fn validate(cli: &mut Cli) -> Result<(), Fail> {
     if cli.cache.as_ref().is_some_and(|c| c != "true" && c != "false") {
         return Err(Fail::Arg("-C/--cache argument must be true or false".into()));
     }
+    if cli.safe_autocorrect && cli.autocorrect_all {
+        // Rainbow(<<~MESSAGE).red, then warned red again: the trailing newline is part of the message.
+        let m = "Error: Both safe and unsafe autocorrect options are specified, use only one.\n";
+        return Err(Fail::Arg(red(global, m)));
+    }
     if cli.only_failed && cli.format.as_deref() != Some("junit") {
         return Err(Fail::Arg("--display-only-failed can only be used together with --format junit.".into()));
     }
     if cli.only_failed && (cli.only_correctable || cli.only_safe_correctable) {
         return Err(Fail::Arg("--display-only-failed cannot be used together with other display options.".into()));
+    }
+    if cli.autocorrect.is_some() && (cli.only_correctable || cli.only_safe_correctable) {
+        return Err(Fail::Arg("--autocorrect cannot be used with --display-only-[safe-]correctable.".into()));
     }
     if cli.parallel.is_some() {
         let invalid: Vec<&str> = [
@@ -497,6 +544,12 @@ fn red(on: bool, s: &str) -> String {
     formatter::Paint(on).red(s)
 }
 
+/// `warn Rainbow(s).red`: Kernel#warn adds a newline unless the painted text ends with one.
+fn warn_red(on: bool, s: &str) {
+    let s = red(on, s);
+    eprint!("{s}{}", if s.ends_with('\n') { "" } else { "\n" });
+}
+
 /// Float#to_s after #round(5).
 fn ruby_seconds(x: f64) -> String {
     let r = (x * 1e5).round() / 1e5;
@@ -526,23 +579,27 @@ fn main() -> ExitCode {
         Err(_) => (false, None),
     };
     let global = global_color(color_opt);
-    let status = match parsed.and_then(|mut cli| validate(&mut cli).map(|_| cli)) {
+    // Option errors are raised inside Options#parse, before --color/--no-color reach Rainbow.
+    let parse_color = global_color(None);
+    let status = match parsed.and_then(|mut cli| validate(&mut cli, parse_color).map(|_| cli)) {
         Err(Fail::Parse(m)) => {
             eprintln!("{m}\nFor usage information, use --help");
             ERROR
         }
         Err(Fail::Arg(m)) => {
-            eprintln!("{}", red(global, &m));
+            // Kernel#warn: no newline added after one the message already ends with.
+            let m = red(parse_color, &m);
+            eprint!("{m}{}", if m.ends_with('\n') { "" } else { "\n" });
             ERROR
         }
         Err(Fail::Unsupported(m)) => {
             eprintln!("rbcop: {m}");
             ERROR
         }
-        Ok(cli) => match run(cli, global) {
+        Ok(cli) => match run(cli, global, parse_color) {
             Ok(code) => code,
             Err(e) => {
-                eprintln!("{}", red(global, &e));
+                warn_red(global, &e);
                 ERROR
             }
         },
@@ -589,9 +646,9 @@ fn show_cops(patterns: &[String], cfg: &Resolved, pwd: &str) {
                 out.push_str("# Supports --autocorrect\n");
             }
             out.push_str(&format!("{name}:\n"));
-            // Config#for_cop: the cop's own hash with Enabled resolved to true/false.
+            // Config#for_cop: the cop's own hash with Enabled from Config#enable_cop? (raw `pending` stays).
             let mut map = cfg.hash.map(name).cloned().unwrap_or_default();
-            let enabled = rbcop::config::value::Value::Bool(cfg.cop(name).enabled);
+            let enabled = cfg.enable_cop(name);
             match map.get_mut("Enabled") {
                 Some(v) => *v = enabled,
                 None => map.insert("Enabled", enabled),
@@ -603,6 +660,28 @@ fn show_cops(patterns: &[String], cfg: &Resolved, pwd: &str) {
         }
     }
     print!("{out}");
+}
+
+/// CLI#report_pending_cops (PendingCopsReporter): on stderr, before any formatter output.
+fn report_pending_cops(cfg: &Resolved, global: bool) {
+    const BANNER: &str = "The following cops were added to RuboCop, but are not configured. Please set Enabled to \
+                          either `true` or `false` in your `.rubocop.yml` file.\n\nPlease also note that you can \
+                          opt-in to new cops by default by adding this to your config:\n  AllCops:\n    NewCops: \
+                          enable\n";
+    let pending = cfg.pending_cops();
+    if pending.is_empty() {
+        return;
+    }
+    let p = formatter::Paint(global);
+    // Kernel#warn adds a newline unless the (painted) text already ends with one.
+    let warn = |s: String| if s.ends_with('\n') { s } else { s + "\n" };
+    let mut out = warn(p.yellow(BANNER));
+    for (name, version) in pending {
+        out.push_str(&warn(p.yellow(&format!("{name}: # new in {version}"))));
+        out.push_str(&warn(p.yellow("  Enabled: true")));
+    }
+    out.push_str(&warn(p.yellow("For more information: https://docs.rubocop.org/rubocop/versioning.html")));
+    eprint!("{out}");
 }
 
 /// RuboCop::Version.verbose
@@ -621,16 +700,125 @@ fn verbose_version(cfg: &Resolved) -> String {
     )
 }
 
+/// Badge.camel_case
+fn badge_camel_case(part: &str) -> String {
+    if part == "rspec" {
+        return "RSpec".into();
+    }
+    // gsub(/^[a-z]|_[a-z]/) { |m| m[-1].upcase }
+    let chars: Vec<char> = part.chars().collect();
+    let mut out = String::new();
+    let mut i = 0;
+    while i < chars.len() {
+        let c = chars[i];
+        if i == 0 && c.is_ascii_lowercase() {
+            out.push(c.to_ascii_uppercase());
+        } else if c == '_' && chars.get(i + 1).is_some_and(|n| n.is_ascii_lowercase()) {
+            out.push(chars[i + 1].to_ascii_uppercase());
+            i += 1;
+        } else {
+            out.push(c);
+        }
+        i += 1;
+    }
+    out
+}
+
+/// Registry#qualified_cop_name(name, origin) with its warnings; Err is AmbiguousCopName.
+fn qualify_option_name(name: &str, origin: &str, warnings: &mut Vec<String>) -> Result<String, String> {
+    use rbcop::helpers::cop_registry::REGISTRY;
+    // Badge.parse: Ruby's split drops trailing empty fields.
+    let mut parts: Vec<String> = name.split('/').map(badge_camel_case).collect();
+    while parts.len() > 1 && parts.last().is_some_and(|p| p.is_empty()) {
+        parts.pop();
+    }
+    let cop = parts.pop().unwrap_or_default();
+    let dept = parts.join("/");
+    let qualified = !parts.is_empty();
+    let basename = |c: &str| c.rsplit('/').next().unwrap_or(c).to_string();
+    if !qualified && REGISTRY.iter().any(|c| basename(c) == name) {
+        warnings.push(format!("{origin}: Warning: no department given for {name}."));
+    }
+    if qualified && REGISTRY.contains(&format!("{dept}/{cop}").as_str()) {
+        return Ok(name.to_string());
+    }
+    let mut depts: Vec<&str> = REGISTRY.iter().filter_map(|c| c.rsplit_once('/').map(|(d, _)| d)).collect();
+    depts.dedup();
+    let hits: Vec<String> =
+        depts.into_iter().map(|d| format!("{d}/{cop}")).filter(|q| REGISTRY.contains(&q.as_str())).collect();
+    let given = if qualified { format!("{dept}/{cop}") } else { cop.clone() };
+    match hits.as_slice() {
+        [] => Ok(name.to_string()),
+        [real] => {
+            if qualified && *real != given {
+                warnings.push(format!("{origin}: Warning: {given} has the wrong namespace - replace it with {real}"));
+            }
+            Ok(real.clone())
+        }
+        many => Err(format!(
+            "Error: Ambiguous cop name `{given}` used in {origin} needs department qualifier. Did you mean {}?",
+            many.join(" or ")
+        )),
+    }
+}
+
+/// Runner#qualify_option_cop_names, then OptionsValidator.validate_cop_list. RuboCop does this when
+/// it mobilizes the first team, so the warnings and the error surface at the first inspected file.
+fn qualify_cop_options(cli: &mut Cli) -> (Vec<String>, Option<String>) {
+    use rbcop::helpers::{cop_registry, did_you_mean};
+    let mut warnings = Vec::new();
+    for (opt, list) in [("only", cli.only.as_mut()), ("except", Some(&mut cli.except))] {
+        let Some(list) = list else { continue };
+        if opt == "except" && list.is_empty() {
+            continue;
+        }
+        for n in list.iter_mut() {
+            match qualify_option_name(n, &format!("--{opt} option"), &mut warnings) {
+                Ok(q) => *n = q,
+                Err(e) => return (warnings, Some(e)),
+            }
+        }
+    }
+    cli.opts.only = cli.only.clone().unwrap_or_default();
+    for list in [cli.only.as_deref().unwrap_or_default(), &cli.except] {
+        for n in list {
+            let n = n.as_str();
+            if cop_registry::REGISTRY.contains(&n)
+                || cop_registry::is_department(n)
+                || n == "Syntax"
+                || n == "Lint/Syntax"
+            {
+                continue;
+            }
+            let names: Vec<&str> = cop_registry::REGISTRY.iter().copied().filter(|c| *c != n).collect();
+            let similar = did_you_mean::correct(n, &names);
+            let mut msg = format!("Unrecognized cop or department: {n}.");
+            if !similar.is_empty() {
+                msg.push_str(&format!("\nDid you mean? {}", similar.join(", ")));
+            }
+            return (warnings, Some(msg));
+        }
+    }
+    (warnings, None)
+}
+
+/// One linted file: (report, corrected source to write back, infinite-loop error), or a read error.
+type Linted = Result<(FileReport, Option<String>, Option<String>), String>;
+
+/// Whether two targets are the same file on disk (one of them through a symlink, say).
+fn same_file_twice(jobs: &[(PathBuf, std::sync::Arc<Resolved>)]) -> bool {
+    use std::os::unix::fs::MetadataExt;
+    let mut seen = std::collections::HashSet::new();
+    jobs.iter().filter_map(|(p, _)| fs::metadata(p).ok()).any(|m| !seen.insert((m.dev(), m.ino())))
+}
+
 /// Returns the exit status.
-fn run(cli: Cli, global: bool) -> Result<u8, String> {
+fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     if cli.help {
         println!("{USAGE}");
         return Ok(0);
     }
-    if cli.autocorrect.is_some() && cli.stdin.is_some() {
-        // ponytail: RuboCop prints the corrected source after a separator line; not ported yet.
-        return Err("rbcop: --stdin with -a/-A is not supported yet".into());
-    }
+    let (cop_warnings, cop_error) = qualify_cop_options(&mut cli);
     // Lint/Syntax lives in the runner but is a registered cop with its own config in RuboCop.
     let names: Vec<&'static str> = cops::ALL.iter().map(|c| c.name).chain(["Lint/Syntax"]).collect();
     // ConfigLoader: a missing -c file is an error, even with --force-default-config.
@@ -640,9 +828,21 @@ fn run(cli: Cli, global: bool) -> Result<u8, String> {
             return Err(format!("Configuration file not found: {}", abs.display()));
         }
     }
-    let mut store = Store::new(cli.opts.clone(), names.clone())?;
+    // CLI#act_on_options loads the -c and pwd configs before --color/--no-color reach Rainbow.
+    cli.opts.color = parse_color;
+    let loaded = Store::new(cli.opts.clone(), names.clone()).and_then(|mut store| {
+        let cwd = store.cwd().to_path_buf();
+        store.for_dir(&cwd).map(|c| (store, c))
+    });
+    let (mut store, pwd_config) = match loaded {
+        Ok(x) => x,
+        Err(e) => {
+            warn_red(parse_color, &e);
+            return Ok(ERROR);
+        }
+    };
+    store.set_color(global);
     let cwd = store.cwd().to_path_buf();
-    let pwd_config = store.for_dir(&cwd)?;
     let pwd = cwd.display().to_string();
 
     // CLI#handle_exiting_options
@@ -657,6 +857,9 @@ fn run(cli: Cli, global: bool) -> Result<u8, String> {
     if let Some(patterns) = &cli.show_cops {
         show_cops(patterns, &pwd_config, &pwd);
         return Ok(0);
+    }
+    if !cli.opts.disable_pending_cops && !cli.opts.enable_pending_cops {
+        report_pending_cops(&pwd_config, global);
     }
 
     // CLI#apply_default_formatter, then FormatterSet#add_formatter's lookup.
@@ -687,7 +890,7 @@ fn run(cli: Cli, global: bool) -> Result<u8, String> {
             if !excluded {
                 files.push(abs);
             }
-            Some(String::from_utf8_lossy(&buf).into_owned())
+            Some(buf)
         }
         None => {
             let args = if cli.paths.is_empty() { vec![PathBuf::new()] } else { cli.paths.clone() };
@@ -728,6 +931,7 @@ fn run(cli: Cli, global: bool) -> Result<u8, String> {
             fail_level: cli.fail_level,
             only: cli.only.clone(),
             except: cli.except.clone(),
+            safe_autocorrect: cli.autocorrect == Some(rbcop::autocorrect::Mode::Safe),
         },
         global_color: global,
         pwd_config: pwd_config.clone(),
@@ -744,55 +948,9 @@ fn run(cli: Cli, global: bool) -> Result<u8, String> {
         return Ok(0);
     }
 
-    // Resolve configs up front (single-threaded), then lint in parallel.
-    let mut jobs = Vec::with_capacity(files.len());
-    for f in &files {
-        jobs.push((f.clone(), store.for_file(f)?));
-    }
-    for w in &store.warnings {
-        eprintln!("Warning: {w}");
-    }
-    let only = &cli.opts.only;
-    let except = &cli.except;
-    let selected = |cop: &str| (only.is_empty() || only.iter().any(|o| o == cop)) && !except.iter().any(|e| e == cop);
-    let workers = thread::available_parallelism().map_or(4, |n| n.get());
-    let chunk = jobs.len().div_ceil(workers).max(1);
-    let stdin_text = &stdin_text;
-    let reports: Vec<Option<FileReport>> = thread::scope(|s| {
-        let handles: Vec<_> = jobs
-            .chunks(chunk)
-            .map(|part| {
-                s.spawn(|| {
-                    part.iter()
-                        .map(|(path, cfg)| {
-                            // -a/-A: read, correct until stable, rewrite the file; offenses from every
-                            // iteration come back (fixed ones marked corrected).
-                            if let (Some(mode), None) = (cli.autocorrect, stdin_text) {
-                                if !path.is_file() {
-                                    return None;
-                                }
-                                let display = rbcop::config::relative_path(path, &cwd);
-                                return Some(rbcop::autocorrect::correct_file(path, &display, cfg, &selected, mode));
-                            }
-                            let text = match stdin_text {
-                                Some(t) => t.clone(),
-                                None => match fs::read(path) {
-                                    Ok(b) => String::from_utf8_lossy(&b).into_owned(),
-                                    Err(_) => return None,
-                                },
-                            };
-                            let display = rbcop::config::relative_path(path, &cwd);
-                            Some(runner::inspect(path, &display, text, cfg, &selected))
-                        })
-                        .collect::<Vec<_>>()
-                })
-            })
-            .collect();
-        handles.into_iter().flat_map(|h| h.join().unwrap()).collect()
-    });
-
     // Deliberate difference: RuboCop truncates an -o file before inspecting, so `rubocop -o a.rb a.rb`
-    // empties a.rb. rbcop refuses to write output over a file it inspects.
+    // empties a.rb. rbcop refuses to write output over a file it inspects (checked before -a changes
+    // any file).
     for (_, out) in &resolved {
         if let Some(p) = out {
             let abs = expand_path(p, &cwd);
@@ -802,6 +960,94 @@ fn run(cli: Cli, global: bool) -> Result<u8, String> {
             }
         }
     }
+
+    // Resolve configs up front (single-threaded), then lint in parallel.
+    let mut jobs = Vec::with_capacity(files.len());
+    // RuboCop loads a file's config when the file's turn comes, so an invalid config stops the run
+    // there, after the files before it have been reported.
+    let mut config_error = None;
+    for f in &files {
+        match store.for_file(f) {
+            Ok(c) => jobs.push((f.clone(), c)),
+            Err(e) => {
+                config_error = Some((f.clone(), e));
+                break;
+            }
+        }
+    }
+    for w in &store.warnings {
+        eprintln!("Warning: {w}");
+    }
+    let only = &cli.opts.only;
+    let except = &cli.except;
+    // Runner#mobilize_cop_badge?: Badge#match_name? takes cop names and department names.
+    let match_name =
+        |list: &[String], cop: &str| list.iter().any(|n| n == cop || cop.rsplit_once('/').is_some_and(|(d, _)| d == n));
+    let selected = |cop: &str| {
+        // Runner#check_for_redundant_disables? never runs the directive cop under --only.
+        // ponytail: so it also drops out of Registry#disabled_names there; matters only when the
+        // config disables Lint/RedundantCopDisableDirective and --only names its department.
+        if cop == "Lint/RedundantCopDisableDirective" && !only.is_empty() {
+            return false;
+        }
+        (only.is_empty() || match_name(only, cop)) && !match_name(except, cop)
+    };
+    let stdin_text = &stdin_text;
+    // --stdin with -a/-A: the corrected source, printed after the report.
+    let mut stdin_corrected: Option<String> = None;
+    // One file: (report, corrected source to write back, infinite-loop error), or a read error.
+    // -a/-A: read, correct until stable; offenses from every iteration come back (fixed ones marked
+    // corrected). The file is written in the reporting loop below, in file order, as RuboCop does.
+    let lint = |path: &PathBuf, cfg: &Resolved| -> Linted {
+        let display = rbcop::config::relative_path(path, &cwd);
+        if let Some(bytes) = stdin_text {
+            // --stdin with -a/-A: the corrected source is printed after the report (@options[:stdin]).
+            if let Some(mode) = cli.autocorrect {
+                let c = rbcop::autocorrect::correct_bytes(path, &display, bytes.clone(), cfg, &selected, mode);
+                return Ok((c.report, c.source, c.error));
+            }
+            return Ok((runner::inspect_bytes(path, &display, bytes.clone(), cfg, &selected), None, None));
+        }
+        if let Some(mode) = cli.autocorrect {
+            let c = rbcop::autocorrect::correct_file(path, &display, cfg, &selected, mode)?;
+            return Ok((c.report, c.source, c.error));
+        }
+        let bytes = fs::read(path).map_err(|e| runner::io_error(&e, path))?;
+        Ok((runner::inspect_bytes(path, &display, bytes, cfg, &selected), None, None))
+    };
+    // A panic outside a cop (cop panics are reported by runner::guarded) ends the run at that file,
+    // like any error, instead of taking down every worker's results with it.
+    let lint_one = |path: &PathBuf, cfg: &Resolved| -> Linted {
+        std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| lint(path, cfg)))
+            .unwrap_or_else(|_| Err(format!("rbcop: internal error while inspecting {}", path.display())))
+    };
+    // Cops recurse over the AST; runner::MAX_AST_DEPTH (1000) needs under 2 MiB, the rest is
+    // headroom. Only touched pages are committed.
+    let big_stack = || thread::Builder::new().stack_size(64 << 20);
+    // Files are linted in parallel up front, unless RuboCop's sequential order is observable:
+    // --fail-fast stops at the first failing file (later files are neither inspected nor corrected),
+    // and under -a a file reached through two paths (a symlink) must see the first correction.
+    // An invalid --only/--except list fails before any file is inspected (or corrected).
+    let lazy = cop_error.is_some() || cli.fail_fast || (cli.autocorrect.is_some() && same_file_twice(&jobs));
+    let mut reports: Vec<Option<Linted>> = if lazy {
+        jobs.iter().map(|_| None).collect()
+    } else {
+        let workers = thread::available_parallelism().map_or(4, |n| n.get());
+        let chunk = jobs.len().div_ceil(workers).max(1);
+        thread::scope(|s| {
+            let handles: Vec<_> = jobs
+                .chunks(chunk)
+                .map(|part| {
+                    big_stack()
+                        .spawn_scoped(s, || {
+                            part.iter().map(|(path, cfg)| Some(lint_one(path, cfg))).collect::<Vec<_>>()
+                        })
+                        .expect("spawn worker thread")
+                })
+                .collect();
+            handles.into_iter().flat_map(|h| h.join().unwrap()).collect()
+        })
+    };
 
     // Runner#inspect_files
     let mut set = formatter::Set::new(&resolved, &cx, cli.stderr)?;
@@ -827,13 +1073,60 @@ fn run(cli: Cli, global: bool) -> Result<u8, String> {
     annotate.json = cli.format.as_deref() == Some("json");
     let mut all_passed = true;
     let mut inspected: Vec<PathBuf> = Vec::new();
+    let mut config_failure = None;
     if error.is_none() {
-        for ((path, cfg), report) in jobs.iter().zip(&reports) {
+        let mut cop_notes = Some((cop_warnings, cop_error));
+        let mut stopped = false;
+        let mut warned_configs = std::collections::HashSet::new();
+        for ((path, cfg), linted) in jobs.iter().zip(reports.iter_mut()) {
             set.file_started(&cx, path);
-            let Some(report) = report else {
-                error = Some(format!("Error: No such file or directory: {}", path.display()));
-                break;
+            // Runner#mobilized_cop_classes runs once the first file has been read.
+            if let Some((warnings, err)) = cop_notes.take_if(|_| stdin_text.is_some() || path.is_file()) {
+                for w in warnings {
+                    eprintln!("{w}");
+                }
+                if let Some(e) = err {
+                    error = Some(e);
+                    stopped = true;
+                    break;
+                }
+            }
+            // Config#for_cop warns about deprecated-name configuration once per config, when the
+            // cops are mobilized for its first file.
+            if (stdin_text.is_some() || path.is_file()) && warned_configs.insert(std::sync::Arc::as_ptr(cfg)) {
+                for (cop, msg) in &cfg.deprecated_warnings {
+                    if selected(cop) {
+                        let msg = formatter::Paint(global).yellow(msg);
+                        eprint!("{msg}{}", if msg.ends_with('\n') { "" } else { "\n" });
+                    }
+                }
+            }
+            let linted = match linted.take() {
+                Some(l) => l,
+                None => thread::scope(|s| big_stack().spawn_scoped(s, || lint_one(path, cfg)).unwrap().join().unwrap()),
             };
+            let (report, corrected, loop_error) = match linted {
+                Ok(l) => l,
+                Err(e) => {
+                    error = Some(e);
+                    stopped = true;
+                    break;
+                }
+            };
+            // Team#autocorrect writes the file before it is reported (with --stdin, keeps the source
+            // for printing); a failed write ends the run.
+            if stdin_text.is_some() {
+                stdin_corrected = corrected;
+            } else if let Some(new) = &corrected
+                && let Err(e) = rbcop::autocorrect::write_source(path, new)
+            {
+                error = Some(runner::io_error(&e, path));
+                stopped = true;
+                break;
+            }
+            if let Some(e) = loop_error {
+                eprintln!("{e}");
+            }
             let offs = formatter::offenses(&report.text, &report.offenses, |o| {
                 formatter::annotate(cfg, o.cop, &o.message, annotate)
             });
@@ -843,11 +1136,30 @@ fn run(cli: Cli, global: bool) -> Result<u8, String> {
             let shown: Vec<_> = offs.into_iter().filter(|o| displayed(o)).collect();
             set.file_finished(&cx, &FileOut { path, offenses: shown, config: cfg });
             if cli.fail_fast && !passed {
+                stopped = true;
+                break;
+            }
+            // A formatter's output could not be written: RuboCop raises there and stops.
+            if let Some(e) = set.take_error() {
+                error = Some(e);
+                stopped = true;
                 break;
             }
         }
+        if !stopped && let Some((path, e)) = config_error {
+            set.file_started(&cx, &path);
+            config_failure = Some(e);
+        }
     }
     set.finished(&cx, &inspected);
+    if let Some(e) = set.take_error() {
+        error.get_or_insert(e);
+    }
+    // The ValidationError reaches the CLI before ExecuteRunner's error summary.
+    if let Some(e) = config_failure {
+        warn_red(global, &e);
+        return Ok(ERROR);
+    }
     // ExecuteRunner#display_error_summary; any cop error makes the run fail (runner_status).
     let cop_errors = runner::take_errors();
     if !cop_errors.is_empty() {
@@ -865,6 +1177,19 @@ fn run(cli: Cli, global: bool) -> Result<u8, String> {
     if let Some(e) = error {
         eprintln!("{}", red(global, e.trim_end()));
         return Ok(ERROR);
+    }
+    // ExecuteRunner#maybe_print_corrected_source: the separator follows --stderr, the source is
+    // printed to stdout either way; integration formatters get neither.
+    if let (Some(_), Some(original)) = (cli.autocorrect, stdin_text)
+        && !matches!(cli.format.as_deref(), Some("h" | "html" | "j" | "json" | "ju" | "junit"))
+    {
+        let separator = "=".repeat(20);
+        if cli.stderr {
+            eprintln!("{separator}");
+        } else {
+            println!("{separator}");
+        }
+        print!("{}", stdin_corrected.as_deref().unwrap_or(&String::from_utf8_lossy(original)));
     }
     Ok(if all_passed && cop_errors.is_empty() { 0 } else { OFFENSES })
 }

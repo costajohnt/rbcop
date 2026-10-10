@@ -51,6 +51,51 @@ pub fn inspect(
     FileReport { offenses, text }
 }
 
+/// Inspect a file's bytes as read. A source that must be UTF-8 (`source::must_be_utf8`) but is not
+/// gets only RuboCop's Lint/Syntax `Invalid byte sequence in utf-8.`; other non-UTF-8 sources are
+/// inspected lossily.
+pub fn inspect_bytes(
+    path: &Path,
+    display: &str,
+    bytes: Vec<u8>,
+    cfg: &Resolved,
+    selected: &dyn Fn(&str) -> bool,
+) -> FileReport {
+    match String::from_utf8(bytes) {
+        Ok(text) => inspect(path, display, text, cfg, selected),
+        Err(e) => {
+            let text = String::from_utf8_lossy(e.as_bytes()).into_owned();
+            if !crate::source::must_be_utf8(&text) {
+                return inspect(path, display, text, cfg, selected);
+            }
+            // Lint/Syntax#add_offense_from_error: a global offense, beautified message, no version note.
+            let offense = Offense {
+                start: 0,
+                end: 0,
+                cop: "Lint/Syntax",
+                message: "Invalid byte sequence in utf-8.".into(),
+                severity: Severity::Fatal,
+                correctable: false,
+                global: true,
+                corrected: false,
+                source: None,
+            };
+            FileReport { offenses: vec![offense], text }
+        }
+    }
+}
+
+/// How Ruby words a failed `File.read`/`File.open` of `path` (RuboCop raises its own error for a
+/// missing file).
+pub fn io_error(e: &std::io::Error, path: &Path) -> String {
+    if e.kind() == std::io::ErrorKind::NotFound {
+        return format!("Error: No such file or directory: {}", path.display());
+    }
+    let msg = e.to_string();
+    let msg = msg.split(" (os error").next().unwrap_or(&msg);
+    format!("{msg} @ rb_sysopen - {}", path.display())
+}
+
 /// One autocorrect iteration (see `crate::autocorrect::correct`): the offenses and, unless nothing
 /// was corrected, the collated corrector. Like Team#investigate_with_corrector, offenses of cops
 /// that do not autocorrect are only reported when no correction was made. Also returns the
@@ -113,10 +158,14 @@ fn analyze(
     let text: &str = shared;
     let raw_text = raw_text.unwrap_or(text);
     let version = target_ruby::prism_version(cfg.target_ruby);
-    let result = ruby_prism::parse_with_version(text.as_bytes(), version);
     // Below 3.3 RuboCop parses with the parser gem, which accepts some things Prism rejects.
     let parser_gem = cfg.target_ruby < 3.3;
-    let errors: Vec<(usize, usize, String)> = result
+    let (result, tokens) = if parser_gem {
+        ruby_prism::parse_with_version_and_tokens(text.as_bytes(), version)
+    } else {
+        (ruby_prism::parse_with_version(text.as_bytes(), version), Vec::new())
+    };
+    let mut errors: Vec<(usize, usize, String)> = result
         .errors()
         .filter(|e| !tolerated(e.type_name(), parser_gem, cfg.target_ruby))
         .map(|e| {
@@ -124,6 +173,47 @@ fn analyze(
             crate::syntax::translate(e.type_name(), e.message(), loc.start_offset(), loc.end_offset(), text)
         })
         .collect();
+    // ...rejects syntax newer than the target, and reports where its grammar fails rather than
+    // Prism's messages (semantic errors keep their translated parser-gem messages).
+    if parser_gem {
+        let kept = |e: &ruby_prism::Diagnostic| !tolerated(e.type_name(), parser_gem, cfg.target_ruby);
+        let seed = result
+            .errors()
+            .filter(|e| kept(e) && !crate::syntax::is_semantic(e.type_name()))
+            .map(|e| {
+                crate::legacy_syntax::failure_offset(
+                    e.type_name(),
+                    e.location().start_offset(),
+                    e.location().end_offset(),
+                    &tokens,
+                )
+            })
+            .min();
+        // The parser gem reports semantic errors as it reduces, so only those before its first
+        // grammar failure on Prism's syntax error.
+        let cut = seed.unwrap_or(usize::MAX);
+        let semantic: Vec<_> = result
+            .errors()
+            .filter(|e| kept(e) && crate::syntax::is_semantic(e.type_name()) && e.location().start_offset() < cut)
+            .map(|e| {
+                let (s, end) = crate::legacy_syntax::semantic_location(
+                    e.type_name(),
+                    e.location().start_offset(),
+                    e.location().end_offset(),
+                    &tokens,
+                    text,
+                );
+                crate::syntax::translate(e.type_name(), e.message(), s, end, text)
+            })
+            .collect();
+        let mut actions: Vec<usize> = semantic.iter().map(|e| e.1).collect();
+        actions.sort_unstable();
+        errors = crate::legacy_syntax::diagnostics(&result.node(), &tokens, text, cfg.target_ruby, seed, &actions)
+            .into_iter()
+            .map(|(s, e, msg)| crate::syntax::translate("", &msg, s, e, text))
+            .chain(semantic)
+            .collect();
+    }
     let comments: Vec<Comment> = result
         .comments()
         .map(|c| Comment {
@@ -180,6 +270,12 @@ fn analyze(
         .collect();
 
     let program = result.node();
+    // Deliberate difference: RuboCop dies with SystemStackError on very deep nesting; rbcop skips the
+    // file with an error instead, so cops (many of them recursive) never see such a tree.
+    if crate::ast::deeper_than(&program, MAX_AST_DEPTH) {
+        file_error(format!("rbcop: {}: nested more than {MAX_AST_DEPTH} levels deep, not inspected.", src.path));
+        return (Vec::new(), None, Vec::new());
+    }
     let mut facts = Facts::default();
     let mut collector = FactCollector { src: &src, facts: &mut facts };
     collector.facts.string_lines = vec![false; src.line_count() + 2];
@@ -341,10 +437,19 @@ static ERRORS: std::sync::Mutex<Vec<String>> = std::sync::Mutex::new(Vec::new())
 pub fn cop_error(cop: &str, src: &Source, at: usize) {
     // Range#line and the 0-based Range#column.
     let (line, col) = crate::formatter::line_col(src.text, at);
-    let msg = format!("An error occurred while {cop} cop was inspecting {}:{line}:{}.", src.path, col - 1);
+    file_error(format!("An error occurred while {cop} cop was inspecting {}:{line}:{}.", src.path, col - 1));
+}
+
+/// Print an error now and keep it for the summary (it makes the run fail).
+fn file_error(msg: String) {
     eprintln!("{msg}");
     ERRORS.lock().unwrap_or_else(|e| e.into_inner()).push(msg);
 }
+
+/// AST depth beyond which a file is not inspected. Real code stays under 50 (the deepest of the
+/// rails, discourse and RuboCop corpora is 46). At this depth every cop, inspecting and correcting,
+/// ran in the default 2 MiB thread stack; main.rs gives worker threads 64 MiB of headroom.
+pub const MAX_AST_DEPTH: usize = 1000;
 
 /// The run's cop errors, in file order.
 pub fn take_errors() -> Vec<String> {
@@ -386,9 +491,14 @@ fn autocorrect_allowed(cfg: &CopConfig) -> bool {
 const TOLERATED_ERRORS: &[&str] = &["invalid_yield"];
 
 /// Prism errors the parser gem accepts for the target. Up to Ruby 2.5, `begin..else..end` without
-/// `rescue` is only a `useless_else` warning (reported by Lint/UselessElseWithoutRescue).
+/// `rescue` is only a `useless_else` warning (reported by Lint/UselessElseWithoutRescue); before
+/// 2.7 `def m(x = x)` is only a warning (Lint/CircularArgumentReference); before 3.0 `_1 = x` is
+/// accepted (Builders::Default#check_reserved_for_numparam; Lint/NumberedParameterAssignment).
 fn tolerated(kind: &str, parser_gem: bool, target_ruby: f64) -> bool {
-    (parser_gem && TOLERATED_ERRORS.contains(&kind)) || (kind == "begin_lonely_else" && target_ruby <= 2.5)
+    (parser_gem && TOLERATED_ERRORS.contains(&kind))
+        || (kind == "begin_lonely_else" && target_ruby <= 2.5)
+        || (kind == "parameter_circular" && target_ruby < 2.7)
+        || (kind == "parameter_numbered_reserved" && target_ruby < 3.0)
 }
 
 /// Cop::Base#default_severity.

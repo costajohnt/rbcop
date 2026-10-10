@@ -1,0 +1,18 @@
+AllCops:
+  NewCops: disable
+  Excludes:
+    - foo.rb
+Style/StringLiteralz:
+  Enabled: true
+Layout/AlignHash:
+  Enabled: true
+Naming/PredicateName:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+  Foo: 1
+  Bar: [1]
+Layout/LineLength:
+  IgnoredPatterns: []
+Foo:
+  Enabled: true

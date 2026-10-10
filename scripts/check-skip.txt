@@ -1,13 +1,11 @@
 # Corpus files (corpus/relative/path) that scripts/check-cops.sh leaves out on both sides because
 # their differences are documented gaps (docs/known-gaps.md). Keep this list minimal and explain each.
 #
-# Target Ruby 2.7 (chef.gemspec): RuboCop parses with the 2.7 parser gem grammar, so endless
-# methods (`def x = ...`) are a Lint/Syntax error there and nothing else is reported; rbcop parses
-# with Prism's 3.3 grammar and inspects the file.
-chef/scripts/rest_resource_integration_test.rb
-#
-# Genuine syntax errors (a Habitat template, "cat walked on the keyboard" fixtures): Lint/Syntax
-# messages and positions come from Prism, not the parser gem.
+# Genuine syntax errors under target Ruby 2.7 (chef.gemspec), where src/legacy_syntax.rs
+# approximates the parser gem's error recovery: the "cat walked on the keyboard" fixtures miss the
+# follow-up `unterminated string meets end of file`, and in the Habitat template
+# (`{{#if cfg.x ~}}`, where `#` starts a comment for the parser gem) the first error is reported at
+# the `{{` instead of the next line's string.
 chef/habitat/config/client.rb
 chef/spec/data/cookbooks/borken/recipes/default.rb
 chef/spec/data/cookbooks/ignorken/files/default/not_me.rb

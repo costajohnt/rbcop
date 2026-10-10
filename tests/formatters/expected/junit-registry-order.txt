@@ -1,0 +1,13 @@
+<?xml version='1.0'?>
+<testsuites>
+  <testsuite name='rubocop' tests='1' failures='0'>
+    <testcase classname='lib.clean' name='Layout/EmptyLineBetweenDefs'/>
+    <testcase classname='lib.clean' name='Layout/EmptyLines'/>
+    <testcase classname='lib.clean' name='Lint/SharedMutableDefault'/>
+    <testcase classname='lib.clean' name='Lint/SafeNavigationConsistency'/>
+    <testcase classname='lib.clean' name='Lint/Syntax'/>
+    <testcase classname='lib.clean' name='Naming/BinaryOperatorParameterName'/>
+    <testcase classname='lib.clean' name='Style/DocumentationMethod'/>
+    <testcase classname='lib.clean' name='Style/DocumentDynamicEvalDefinition'/>
+  </testsuite>
+</testsuites>

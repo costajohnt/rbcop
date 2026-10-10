@@ -1,0 +1,6 @@
+Style/StringLiteralz:
+  Enabled: false
+FooBar:
+  Enabled: true
+Style/FrozenStringLiteralComment:
+  Bogus: 1

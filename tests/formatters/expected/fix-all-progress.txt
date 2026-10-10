@@ -1,0 +1,22 @@
+Inspecting 2 files
+[33mC[0m[33mC[0m
+
+Offenses:
+
+[36ma.rb[0m:1:1: [33mC[0m: [32m[Corrected] [0mStyle/FrozenStringLiteralComment: Missing frozen string literal comment.
+puts x 
+^
+[36ma.rb[0m:1:7: [33mC[0m: [32m[Corrected] [0mLayout/TrailingWhitespace: Trailing whitespace detected.
+puts x 
+      ^
+[36ma.rb[0m:2:1: [33mC[0m: [32m[Corrected] [0mStyle/NegatedIf: Favor [33munless[0m over [33mif[0m for negative conditions.
+puts(1) if !x
+^^^^^^^^^^^^^
+[36ma.rb[0m:3:1: [33mC[0m: [32m[Corrected] [0mStyle/NegatedIf: Favor [33munless[0m over [33mif[0m for negative conditions.
+puts 2 if !x
+^^^^^^^^^^^^
+[36mb.rb[0m:1:1: [33mC[0m: [32m[Corrected] [0mStyle/FrozenStringLiteralComment: Missing frozen string literal comment.
+puts 1
+^
+
+2 files inspected, [31m5 offenses[0m detected, [32m5 offenses[0m corrected

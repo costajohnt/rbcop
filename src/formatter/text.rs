@@ -69,14 +69,21 @@ impl Text {
     }
 
     /// SimpleTextFormatter::Report#summary
-    fn summary(&self, out: &mut String, files: usize) {
+    fn summary(&self, out: &mut String, cx: &Ctx, files: usize) {
         let p = self.p;
         let files = pluralize(files, "file", false);
         let t = pluralize(self.offenses, "offense", true);
         let offenses = if self.offenses == 0 { p.green(&t) } else { p.red(&t) };
         let t = pluralize(self.corrections, "offense", false);
         let corrections = if self.corrections == self.offenses { p.green(&t) } else { p.cyan(&t) };
-        let correctable = format!("{} autocorrectable", p.yellow(&pluralize(self.correctable, "offense", false)));
+        let correctable = if cx.opts.safe_autocorrect {
+            format!(
+                "{} can be corrected with `rubocop -A`",
+                p.yellow(&pluralize(self.correctable, "more offense", false))
+            )
+        } else {
+            format!("{} autocorrectable", p.yellow(&pluralize(self.correctable, "offense", false)))
+        };
         let s = match (self.corrections > 0, self.correctable > 0) {
             (true, true) => {
                 format!("{files} inspected, {offenses} detected, {corrections} corrected, {correctable}")
@@ -336,10 +343,10 @@ impl Formatter for Text {
                         offs.iter().for_each(|o| self.report_offense(out, cx, file, o));
                     }
                 }
-                self.summary(out, inspected.len());
+                self.summary(out, cx, inspected.len());
             }
             Kind::Quiet if self.offenses == 0 => {}
-            _ => self.summary(out, inspected.len()),
+            _ => self.summary(out, cx, inspected.len()),
         }
     }
 }

@@ -62,6 +62,29 @@ fn config_scenarios_match_rubocop() {
             .map(String::from)
             .collect();
         expected.sort();
+        // stderr.txt, when recorded, is compared byte for byte (it covers every RuboCop cop).
+        // Absolute paths in it are recorded relative to the project, like stdout.
+        let stderr = String::from_utf8_lossy(&out.stderr).replace(&prefix, "");
+        if let Ok(err) = std::fs::read_to_string(dir.join("stderr.txt"))
+            && err != stderr
+        {
+            failures.push(format!(
+                "{}: stderr differs\n--- rubocop\n{err}\n--- rbcop\n{}",
+                dir.file_name().unwrap().to_string_lossy(),
+                String::from_utf8_lossy(&out.stderr)
+            ));
+        }
+        // status, when recorded, is RuboCop's exit status.
+        if let Ok(status) = std::fs::read_to_string(dir.join("status"))
+            && status.trim().parse::<i32>().ok() != out.status.code()
+        {
+            failures.push(format!(
+                "{}: exit status {:?}, rubocop {}",
+                dir.file_name().unwrap().to_string_lossy(),
+                out.status.code(),
+                status.trim()
+            ));
+        }
         if actual != expected {
             let missing: Vec<_> = expected.iter().filter(|l| !actual.contains(l)).collect();
             let extra: Vec<_> = actual.iter().filter(|l| !expected.contains(l)).collect();

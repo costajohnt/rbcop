@@ -12,6 +12,7 @@ pub use report::ruby_platform;
 
 use crate::config::{Resolved, relative_path};
 use crate::cop::{Offense, Severity};
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::{IsTerminal, Write};
 use std::path::{Path, PathBuf};
@@ -59,7 +60,7 @@ pub struct Off {
     /// Range length in characters.
     pub length: usize,
     /// The first line of the range, without its newline.
-    pub source_line: String,
+    pub source_line: Arc<str>,
 }
 
 impl Off {
@@ -97,44 +98,81 @@ pub fn line_col(text: &str, off: usize) -> (usize, usize) {
     (text[..off].matches('\n').count() + 1, text[line_start..off].chars().count() + 1)
 }
 
+/// Position lookups in one source for `offenses`. Everything here is computed once per source:
+/// rescanning the text (or a long line) per offense is quadratic when one long line carries many
+/// offenses (`format('%s%s...', ...)` with 100k sequences took 25 s and 4.8 GB).
+struct Positions<'a> {
+    text: &'a str,
+    starts: Vec<usize>,
+    /// Binary-encoded sources (magic comment) count columns in bytes, as Ruby does.
+    binary: bool,
+    /// Characters before every 256th byte.
+    chars: Vec<usize>,
+    lines: HashMap<usize, Arc<str>>,
+}
+
+impl<'a> Positions<'a> {
+    fn new(text: &'a str) -> Self {
+        let mut starts = vec![0];
+        starts.extend(text.match_indices('\n').map(|(i, _)| i + 1));
+        let mut chars = vec![0];
+        for chunk in text.as_bytes().chunks(256) {
+            chars.push(chars.last().unwrap() + char_starts(chunk));
+        }
+        let binary = crate::source::binary_encoding(text);
+        Positions { text, starts, binary, chars, lines: HashMap::new() }
+    }
+
+    /// Columns between two char boundaries.
+    fn count(&self, from: usize, to: usize) -> usize {
+        let before = |off: usize| self.chars[off / 256] + char_starts(&self.text.as_bytes()[off / 256 * 256..off]);
+        if self.binary { to - from } else { before(to) - before(from) }
+    }
+
+    /// (line, column, line start, offset clamped to a char boundary).
+    fn pos(&self, off: usize) -> (usize, usize, usize, usize) {
+        // Parser keeps counting columns past the end of the source (Layout/EndOfLine ranges
+        // reach beyond the CRLF-normalised text), so an overflow carries into the column.
+        let overflow = off.saturating_sub(self.text.len());
+        let mut off = off.min(self.text.len());
+        while !self.text.is_char_boundary(off) {
+            off -= 1;
+        }
+        let line = self.starts.partition_point(|&s| s <= off);
+        let ls = self.starts[line - 1];
+        (line, self.count(ls, off) + overflow, ls, off)
+    }
+
+    /// The line starting at `ls`, without its newline; shared by every offense on it.
+    fn line(&mut self, ls: usize) -> Arc<str> {
+        let text = self.text;
+        let line = self.lines.entry(ls).or_insert_with(|| {
+            let le = text[ls..].find('\n').map_or(text.len(), |i| ls + i);
+            Arc::from(&text[ls..le])
+        });
+        line.clone()
+    }
+}
+
+/// UTF-8 characters starting in `bytes` (bytes that are not continuation bytes).
+fn char_starts(bytes: &[u8]) -> usize {
+    bytes.iter().filter(|&&b| b & 0xC0 != 0x80).count()
+}
+
 /// Turn runner offenses into formatter offenses; `message` annotates each one.
 pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> String) -> Vec<Off> {
-    let line_starts = |t: &str| {
-        let mut starts = vec![0];
-        starts.extend(t.match_indices('\n').map(|(i, _)| i + 1));
-        starts
-    };
-    let starts = line_starts(text);
+    let mut main = Positions::new(text);
+    // Under autocorrect an offense may refer to the source of an earlier iteration.
+    let mut earlier: HashMap<*const u8, Positions> = HashMap::new();
     let mut out: Vec<Off> = list
         .iter()
         .map(|o| {
-            // Under autocorrect an offense may refer to the source of an earlier iteration.
-            let own;
-            let (text, starts): (&str, &[usize]) = match &o.source {
-                Some(s) => {
-                    own = line_starts(s);
-                    (s, &own)
-                }
-                None => (text, &starts),
+            let p = match &o.source {
+                Some(s) => earlier.entry(s.as_ptr()).or_insert_with(|| Positions::new(s)),
+                None => &mut main,
             };
-            // Binary-encoded sources (magic comment) count columns in bytes, as Ruby does.
-            let binary = crate::source::binary_encoding(text);
-            let count = |s: &str| if binary { s.len() } else { s.chars().count() };
-            let pos = |off: usize| {
-                // Parser keeps counting columns past the end of the source (Layout/EndOfLine ranges
-                // reach beyond the CRLF-normalised text), so an overflow carries into the column.
-                let overflow = off.saturating_sub(text.len());
-                let mut off = off.min(text.len());
-                while !text.is_char_boundary(off) {
-                    off -= 1;
-                }
-                let line = starts.partition_point(|&s| s <= off);
-                let ls = starts[line - 1];
-                (line, count(&text[ls..off]) + overflow, ls, off)
-            };
-            let (line, column, ls, start) = pos(o.start);
-            let (last_line, last_column, _, end) = pos(o.end.max(o.start));
-            let le = text[ls..].find('\n').map_or(text.len(), |i| ls + i);
+            let (line, column, ls, start) = p.pos(o.start);
+            let (last_line, last_column, _, end) = p.pos(o.end.max(o.start));
             let status = if o.corrected {
                 Status::Corrected
             } else if o.correctable {
@@ -144,7 +182,7 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
             };
             if o.global {
                 // Offense::NO_LOCATION: line 1, column 0, empty source line.
-                let (line, column, length, source_line) = (1, 0, 0, String::new());
+                let (line, column, length, source_line) = (1, 0, 0, Arc::from(""));
                 let (last_line, last_column) = (1, 0);
                 let (severity, cop, message) = (o.severity, o.cop, message(o));
                 return Off {
@@ -169,8 +207,8 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
                 column,
                 last_line,
                 last_column,
-                length: count(&text[start..end]),
-                source_line: text[ls..le].to_string(),
+                length: p.count(start, end),
+                source_line: p.line(ls),
             }
         })
         .collect();
@@ -277,6 +315,8 @@ pub struct Opts {
     /// `--only` (with Lint/Syntax added, as RuboCop does).
     pub only: Option<Vec<String>>,
     pub except: Vec<String>,
+    /// `@options[:safe_autocorrect]` (-a): the summary points at `rubocop -A`.
+    pub safe_autocorrect: bool,
 }
 
 /// Shared, read-only context for one run.
@@ -354,8 +394,22 @@ pub trait Formatter {
 pub struct Paint(pub bool);
 
 impl Paint {
+    /// Rainbow::StringUtils.wrap_with_sgr: the code goes after any SGR codes the string starts
+    /// with, and no reset is added to a string that already ends with one.
     pub fn wrap(self, s: &str, code: &str) -> String {
-        if self.0 { format!("\x1b[{code}m{s}\x1b[0m") } else { s.to_string() }
+        if !self.0 {
+            return s.to_string();
+        }
+        let mut lead = 0;
+        while let Some(rest) = s[lead..].strip_prefix("\x1b[") {
+            let digits = rest.bytes().take_while(|b| b.is_ascii_digit() || *b == b';').count();
+            if digits == 0 || rest.as_bytes().get(digits) != Some(&b'm') {
+                break;
+            }
+            lead += 2 + digits + 1;
+        }
+        let reset = if s.ends_with("\x1b[0m") { "" } else { "\x1b[0m" };
+        format!("{}\x1b[{code}m{}{reset}", &s[..lead], &s[lead..])
     }
     pub fn red(self, s: &str) -> String {
         self.wrap(s, "31")
@@ -525,12 +579,14 @@ fn build(name: &str, color: bool, cx: &Ctx, tty: bool) -> Box<dyn Formatter> {
 enum Sink {
     Stdout,
     Stderr,
-    File(File),
+    File(File, PathBuf),
 }
 
 /// FormatterSet: every `-f`/`-o` pair, in command-line order.
 pub struct Set {
     items: Vec<(Box<dyn Formatter>, Sink)>,
+    /// The first failed write, worded as Ruby's.
+    error: Option<String>,
 }
 
 impl Set {
@@ -545,7 +601,7 @@ impl Set {
                     }
                     let f = File::create(p).map_err(|e| format!("{}: {e}", p.display()))?;
                     let tty = f.is_terminal();
-                    (Sink::File(f), tty)
+                    (Sink::File(f, p.clone()), tty)
                 }
                 None if stderr => (Sink::Stderr, std::io::stderr().is_terminal()),
                 None => (Sink::Stdout, cx.stdout_tty),
@@ -557,7 +613,7 @@ impl Set {
             };
             items.push((build(name, color, cx, tty), sink));
         }
-        Ok(Set { items })
+        Ok(Set { items, error: None })
     }
 
     fn each(&mut self, mut f: impl FnMut(&mut dyn Formatter, &mut String)) {
@@ -565,12 +621,21 @@ impl Set {
         for (fmt, sink) in &mut self.items {
             f(fmt.as_mut(), &mut buf);
             if !buf.is_empty() {
-                // ponytail: write errors (closed pipe, full disk) are ignored, as `puts` to a closed pipe would end RuboCop anyway.
-                let _ = match sink {
-                    Sink::Stdout => std::io::stdout().write_all(buf.as_bytes()),
-                    Sink::Stderr => std::io::stderr().write_all(buf.as_bytes()),
-                    Sink::File(file) => file.write_all(buf.as_bytes()),
+                let (written, name) = match sink {
+                    Sink::Stdout => (std::io::stdout().write_all(buf.as_bytes()), "<STDOUT>".to_string()),
+                    Sink::Stderr => (std::io::stderr().write_all(buf.as_bytes()), "<STDERR>".to_string()),
+                    Sink::File(file, path) => (file.write_all(buf.as_bytes()), path.display().to_string()),
                 };
+                // A closed pipe is ignored (output is going nowhere anyway); any other failure (a full
+                // disk, a file size limit) is an error that fails the run, as RuboCop's raise does.
+                if let Err(e) = written
+                    && e.kind() != std::io::ErrorKind::BrokenPipe
+                    && self.error.is_none()
+                {
+                    let msg = e.to_string();
+                    let msg = msg.split(" (os error").next().unwrap_or(&msg).to_string();
+                    self.error = Some(format!("{msg} @ rb_sys_fail_on_write - {name}"));
+                }
                 buf.clear();
             }
         }
@@ -591,6 +656,10 @@ impl Set {
     }
     pub fn file_finished(&mut self, cx: &Ctx, file: &FileOut) {
         self.each(|f, out| f.file_finished(out, cx, file));
+    }
+    /// The first output write that failed since the last call.
+    pub fn take_error(&mut self) -> Option<String> {
+        self.error.take()
     }
     pub fn finished(&mut self, cx: &Ctx, inspected: &[PathBuf]) {
         self.each(|f, out| f.finished(out, cx, inspected));
@@ -626,7 +695,7 @@ mod tests {
         };
         let v = &offenses("source 'x'\n", &[o], |o| o.message.clone())[0];
         assert_eq!((v.line, v.real_column(), v.last_line, v.real_last_column(), v.length), (1, 1, 1, 1, 0));
-        assert_eq!(v.source_line, "");
+        assert_eq!(&*v.source_line, "");
         assert_eq!(v.status, Status::Unsupported);
     }
 

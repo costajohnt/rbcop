@@ -1,0 +1,1 @@
+Error: Property AutoCorrect of Style/StringLiterals cop is supposed to be `always`, `contextual`, `disabled`, or a boolean and sometimes is not.

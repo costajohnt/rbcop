@@ -1,0 +1,2 @@
+Error: invalid bogus for `FailLevel` found in .rubocop.yml
+Valid choices are: info, refactor, convention, warning, error, fatal

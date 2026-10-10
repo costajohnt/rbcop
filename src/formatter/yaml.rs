@@ -13,7 +13,9 @@ pub fn dump(map: &Map) -> String {
 
 fn map_body(out: &mut String, map: &Map, indent: usize) {
     for (k, v) in &map.0 {
-        let key = scalar(&Value::Str(k.clone()), indent, indent + 2);
+        // Keys do not keep the Symbol/String distinction; a `:name` key is taken as a Symbol.
+        let k = if k.chars().count() > 1 && k.starts_with(':') { Value::Sym(k.clone()) } else { Value::Str(k.clone()) };
+        let key = scalar(&k, indent, indent + 2);
         out.push_str(&" ".repeat(indent));
         out.push_str(&key);
         out.push(':');
@@ -78,9 +80,14 @@ fn scalar(v: &Value, col: usize, cont: usize) -> String {
         Value::Null => String::new(),
         Value::Bool(b) => b.to_string(),
         Value::Int(i) => i.to_string(),
+        Value::Float(f) if f.is_nan() => ".nan".into(),
+        Value::Float(f) if f.is_infinite() => (if *f > 0.0 { ".inf" } else { "-.inf" }).into(),
         Value::Float(f) if f.fract() == 0.0 && f.abs() < 1e16 => format!("{f:.1}"),
         Value::Float(f) => f.to_string(),
         Value::Regex(r) => format!("!ruby/regexp {r}"),
+        // Psych#visit_Symbol: plain when libyaml allows it, else libyaml's single-quoted fallback.
+        Value::Sym(s) if plain_allowed(s) => fold(s, col, cont),
+        Value::Sym(s) => format!("'{}'", fold(&s.replace('\'', "''"), col + 1, cont)),
         Value::Str(s) => string(s, col, cont),
         Value::Seq(_) | Value::Map(_) => String::new(),
     }
@@ -104,23 +111,53 @@ fn string(s: &str, col: usize, cont: usize) -> String {
     match style {
         Style::Plain => fold(s, col, cont),
         Style::Single => format!("'{}'", fold(&s.replace('\'', "''"), col + 1, cont)),
-        Style::Double => {
-            let mut out = String::from("\"");
-            for c in s.chars() {
-                match c {
-                    '"' => out.push_str("\\\""),
-                    '\\' => out.push_str("\\\\"),
-                    '\n' => out.push_str("\\n"),
-                    '\t' => out.push_str("\\t"),
-                    '\r' => out.push_str("\\r"),
-                    c if c.is_control() => out.push_str(&format!("\\x{:02X}", c as u32)),
-                    c => out.push(c),
+        Style::Double => double(s, col, cont),
+    }
+}
+
+/// libyaml's yaml_emitter_write_double_quoted: escapes, and a break at a space past column 80
+/// (a following space is kept by an escaping backslash).
+fn double(s: &str, col: usize, cont: usize) -> String {
+    let chars: Vec<char> = s.chars().collect();
+    let mut out = String::from("\"");
+    let mut column = col + 1;
+    let mut spaces = false;
+    for (i, &c) in chars.iter().enumerate() {
+        let escaped = match c {
+            '"' => Some("\\\"".to_string()),
+            '\\' => Some("\\\\".to_string()),
+            '\n' => Some("\\n".to_string()),
+            '\t' => Some("\\t".to_string()),
+            '\r' => Some("\\r".to_string()),
+            c if c.is_control() => Some(format!("\\x{:02X}", c as u32)),
+            _ => None,
+        };
+        if let Some(e) = escaped {
+            column += e.len();
+            out.push_str(&e);
+            spaces = false;
+        } else if c == ' ' {
+            if !spaces && column > 80 && i != 0 && i + 1 != chars.len() {
+                out.push('\n');
+                out.push_str(&" ".repeat(cont));
+                column = cont;
+                if chars.get(i + 1) == Some(&' ') {
+                    out.push('\\');
+                    column += 1;
                 }
+            } else {
+                out.push(c);
+                column += 1;
             }
-            out.push('"');
-            out
+            spaces = true;
+        } else {
+            out.push(c);
+            column += 1;
+            spaces = false;
         }
     }
+    out.push('"');
+    out
 }
 
 /// libyaml breaks a plain or single-quoted scalar at a space once the line is past 80 columns.
@@ -238,5 +275,14 @@ mod tests {
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\nr: \"- a\"\ns: a,b\n\
             w: 0o17\nx: '1_000'\n\"y\": \"y\"\naa: '2024-01-01'\nad: 1e3\n";
         assert_eq!(dump(&map), expected);
+    }
+
+    #[test]
+    fn quoted_colon_string_is_not_a_symbol() {
+        let Value::Map(m) = crate::config::value::parse_yaml("a: ':x'\nb: :x\nc:\n- \":y\"\n- :y\n").unwrap() else {
+            panic!()
+        };
+        assert_eq!(dump(&m), "a: \":x\"\nb: :x\nc:\n- \":y\"\n- :y\n");
+        assert_eq!(m.str("b"), Some(":x"));
     }
 }

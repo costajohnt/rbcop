@@ -1,0 +1,4 @@
+Error: obsolete parameter `EnforcedStyle` (for `Style/Encoding`) found in .rubocop.yml
+`Style/Encoding` no longer supports styles. The "never" behavior is always assumed.
+obsolete parameter `MaxLineLength` (for `Style/IfUnlessModifier`) found in .rubocop.yml
+`Style/IfUnlessModifier: MaxLineLength` has been removed. Use `Layout/LineLength: Max` instead

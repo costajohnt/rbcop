@@ -210,7 +210,9 @@ impl UselessTimes {
         let mut source = cx.src.text[bs..be].to_string();
         if let Some(name) = &block_arg {
             let name = String::from_utf8_lossy(name.as_slice());
-            let re = Regex::new(&format!(r"\b{}\b", regex::escape(&name))).unwrap();
+            // Deliberate difference: a name too long for the regex size limit (~100k characters)
+            // leaves the offense uncorrected instead of failing the cop.
+            let Ok(re) = Regex::new(&format!(r"\b{}\b", regex::escape(&name))) else { return Some(Fix::None) };
             source = re.replace_all(&source, "0").into_owned();
         }
         let (from, to) = (cx.src.column(start), cx.src.column(bs));
