@@ -1,6 +1,6 @@
 use crate::directives::DIRECTIVE;
 use crate::prelude::*;
-use helpers::line_length_help::{find_excessive_range, uri_regex};
+use helpers::line_length_help::{find_excessive_range, last_match, last_uri, uri_regex};
 
 pub const NAME: &str = "Layout/LineLength";
 pub static COP: LineLength = LineLength;
@@ -28,8 +28,8 @@ impl Settings {
     }
 
     /// LineLengthHelp#find_excessive_range, in character columns.
-    fn excessive_range(&self, line: &str, pattern: &Regex, check_uri: bool) -> Option<(usize, usize)> {
-        find_excessive_range(line, pattern, check_uri, self.max, self.indentation_difference(line))
+    fn excessive_range(&self, line: &str, last: Option<(usize, usize)>) -> Option<(usize, usize)> {
+        find_excessive_range(line, last, self.max, self.indentation_difference(line))
     }
 }
 
@@ -370,7 +370,9 @@ impl Cop for LineLength {
                 }
                 let first_is_heredoc = call_args(&call).first().is_some_and(is_heredoc);
                 let range = send_range(&call);
-                if let Some(pos) = breakable_element(cx, range, &elements, Some((call.opening_loc().is_some(), first_is_heredoc)), None, false) {
+                // `parenthesized?` is `loc.end == ")"`: an index call (`a[k] = v`) is not.
+                let parenthesized = call.opening_loc().is_some_and(|o| o.as_slice() == b"(");
+                if let Some(pos) = breakable_element(cx, range, &elements, Some((parenthesized, first_is_heredoc)), None, false) {
                     record_node_break(cx, pos);
                 }
             }
@@ -449,7 +451,9 @@ impl Cop for LineLength {
                 continue;
             }
             let start = src.line_start(lineno);
-            let at = |col: usize| start + line.char_indices().nth(col).map_or(line.len(), |(b, _)| b);
+            // source_range(buffer, line, col...): columns past the line's end (line_length counts
+            // tab indentation as several columns) run on into the following lines.
+            let at = |col: usize| start + src.text[start..].char_indices().nth(col).map_or(src.text.len() - start, |(b, _)| b);
             // register_offense: insert a line break before the breakable range, if any.
             let break_line = |c: &mut Corrector| {
                 if let Some(&(b, e)) = breaks.get(&i) {
@@ -458,7 +462,7 @@ impl Cop for LineLength {
             };
             if let Some(rewrite) = endless.get(&i) {
                 let from = max.saturating_sub(s.indentation_difference(line));
-                cx.add_fix(at(from), at(line.chars().count()), format!("Line is too long. [{len}/{max}]"), |c| {
+                cx.add_fix(at(from), at(len), format!("Line is too long. [{len}/{max}]"), |c| {
                     if let Some((b, e, r)) = rewrite {
                         c.replace(*b, *e, r);
                     }
@@ -480,8 +484,8 @@ impl Cop for LineLength {
             }
             let mut range = None;
             if allow_uri || allow_qn {
-                let u = uri.as_ref().and_then(|r| s.excessive_range(line, r, true));
-                let q = if allow_qn { s.excessive_range(line, &QUALIFIED_NAME, false) } else { None };
+                let u = uri.as_ref().and_then(|r| s.excessive_range(line, last_uri(r, line)));
+                let q = if allow_qn { s.excessive_range(line, last_match(&QUALIFIED_NAME, line)) } else { None };
                 let ok = |r: (usize, usize)| r.0 < max && r.1 == len;
                 let allowed_combination = match (u, q) {
                     (Some(u), Some(q)) => ok(u) && ok(q),
@@ -498,7 +502,7 @@ impl Cop for LineLength {
                 _ => max.saturating_sub(s.indentation_difference(line)),
             };
             // ponytail: SplitStrings break points (strings split with a backslash) are not modelled yet.
-            cx.add_fix(at(from), at(line.chars().count()), format!("Line is too long. [{len}/{max}]"), break_line);
+            cx.add_fix(at(from), at(len), format!("Line is too long. [{len}/{max}]"), break_line);
         }
     }
 }

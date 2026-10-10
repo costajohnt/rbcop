@@ -12,7 +12,7 @@ impl Cop for UselessElseWithoutRescue {
     /// The parser gem's `useless_else` warning (targets up to 2.5) is Prism's `begin_lonely_else`
     /// error, which the runner tolerates for those targets (runner::tolerated).
     fn on_file(&self, cx: &mut Cx) {
-        let result = ruby_prism::parse_with_version(cx.src.text.as_bytes(), cx.src.version);
+        let result = ruby_prism::parse_with_version(cx.src.text.as_bytes(), cx.src.version, !cx.src.binary);
         // Prism's error spans the whole else clause; parser's diagnostic is the `else` keyword.
         let found: Vec<usize> =
             result.errors().filter(|e| e.type_name() == "begin_lonely_else").map(|e| e.location().start_offset()).collect();

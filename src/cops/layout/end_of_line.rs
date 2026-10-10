@@ -8,8 +8,7 @@ impl Cop for EndOfLine {
     fn on_file(&self, cx: &mut Cx) {
         // `native` follows the platform; rbcop never runs on Windows.
         let crlf = cx.cfg.str("EnforcedStyle") == Some("crlf");
-        let tokens = helpers::parser_tokens::sorted_tokens(cx.src);
-        let last_line = tokens.last().map_or(cx.src.lines.len(), |t| cx.src.line_of(t.start));
+        let last_line = helpers::parser_tokens::last_token_line(cx.src).unwrap_or(cx.src.lines.len());
         for (index, line) in cx.src.raw_text.split_inclusive('\n').enumerate() {
             if index >= last_line {
                 break;

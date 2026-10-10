@@ -9,8 +9,9 @@ pub const NAME: &str = "Style/Documentation";
 pub static COP: Documentation = Documentation;
 pub struct Documentation;
 
-static NODOC: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)^#\s*:nodoc:").unwrap());
-static NODOC_ALL: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)^#\s*:nodoc:\s+all\s*$").unwrap());
+static NODOC: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)^#(?-u:\s)*:nodoc:").unwrap());
+// `"\s+all\s*$"` is a double-quoted Ruby string there: its `\s` is a literal space.
+static NODOC_ALL: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)^#(?-u:\s)*:nodoc: +all *$").unwrap());
 
 /// Every Prism node range in the file, sorted by end (for comment-association frontiers).
 #[derive(Default)]
@@ -58,7 +59,10 @@ fn associated<'a>(src: &'a Source, ranges: &[(usize, usize)], r: (usize, usize))
     let child_on_last_line = ranges
         .iter()
         .any(|&(s, e)| s >= r.0 && e <= r.1 && (s, e) != r && e > s && src.line_of(e - 1) == last_line);
-    if !child_on_last_line {
+    // A node finished before `r` starts on that line already took the comment (the associator's
+    // cursor gives a decorating comment to the first node whose trailing pass sees it).
+    let taken_earlier = prev.is_some_and(|e| src.line_of(e - 1) == last_line);
+    if !child_on_last_line && !taken_earlier {
         out.extend(src.comments.iter().filter(|c| c.start >= r.1 && src.line_of(c.start) == last_line));
     }
     out
@@ -168,6 +172,13 @@ fn include_statement_only(node: &Node) -> bool {
         Node::StatementsNode { .. } => node.as_statements_node().unwrap().body().iter().all(|n| include_statement_only(&n)),
         Node::ArrayNode { .. } => node.as_array_node().unwrap().elements().iter().all(|n| include_statement_only(&n)),
         Node::HashNode { .. } => node.as_hash_node().unwrap().elements().iter().next().is_none(),
+        // `//`: (regexp (regopt)), no parts and no option symbols
+        Node::RegularExpressionNode { .. } => {
+            let r = node.as_regular_expression_node().unwrap();
+            r.content_loc().as_slice().is_empty() && r.closing_loc().as_slice().len() == 1
+        }
+        // an empty `dstr` (`%Q()`, empty heredoc) has no children
+        Node::StringNode { .. } => is_parser_dstr(node) && node.as_string_node().unwrap().unescaped().is_empty(),
         Node::ParenthesesNode { .. } => node.as_parentheses_node().unwrap().body().is_some_and(|b| include_statement_only(&b)),
         Node::AndNode { .. } => {
             let a = node.as_and_node().unwrap();
@@ -201,11 +212,22 @@ fn constant_visibility_declaration(node: &Node) -> bool {
 /// Documentation#namespace?
 fn namespace(body: &Option<Node>) -> bool {
     let Some(body) = body.as_ref() else { return false };
+    fn declarations<'pr>(mut children: impl Iterator<Item = Node<'pr>>) -> bool {
+        children.all(|c| constant_definition(&c) || constant_visibility_declaration(&c))
+    }
     match body.as_statements_node() {
-        Some(s) if s.body().iter().count() > 1 => {
-            s.body().iter().all(|c| constant_definition(&c) || constant_visibility_declaration(&c))
-        }
-        Some(s) => s.body().iter().next().is_some_and(|c| constant_definition(&c)),
+        Some(s) if s.body().iter().count() > 1 => declarations(s.body().iter()),
+        Some(s) => s.body().iter().next().is_some_and(|c| match c.as_parentheses_node() {
+            // A parenthesized body is a parser `begin` too: its statements (none for `()`).
+            Some(p) => match p.body() {
+                Some(b) => match b.as_statements_node() {
+                    Some(inner) => declarations(inner.body().iter()),
+                    None => declarations(std::iter::once(b)),
+                },
+                None => true,
+            },
+            None => constant_definition(&c),
+        }),
         None => false,
     }
 }
@@ -273,7 +295,12 @@ impl Documentation {
         // documentation_comment? (`ends` are the sorted node ends, as in `ranges`)
         let r = range(node);
         let enclosing = ranges.iter().filter(|&&(s, e)| s < r.0 && e >= r.1).map(|&(s, _)| s).max().unwrap_or(0);
-        if documentation_comment(cx, ends, start, enclosing) {
+        // As the first statement of a body with `rescue`/`ensure`, the parser `rescue`/`ensure`
+        // node starts where the class does and takes the comments before it.
+        let wrapped = matches!(anc, [.., b, s]
+            if s.as_statements_node().and_then(|s| s.body().iter().next()).is_some_and(|f| range(&f) == r)
+                && b.as_begin_node().is_some_and(|b| b.rescue_clause().is_some() || b.ensure_clause().is_some()));
+        if !wrapped && documentation_comment(cx, ends, start, enclosing) {
             return None;
         }
         // constant_allowed?

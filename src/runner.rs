@@ -52,7 +52,8 @@ pub fn inspect(
 }
 
 /// Inspect a file's bytes as read. A source that must be UTF-8 (`source::must_be_utf8`) but is not
-/// gets only RuboCop's Lint/Syntax `Invalid byte sequence in utf-8.`; other non-UTF-8 sources are
+/// gets only RuboCop's Lint/Syntax `Invalid byte sequence in utf-8.` (a US-ASCII one with a byte
+/// above 0x7f its transcoding error, `source::encoding_error`); other non-UTF-8 sources are
 /// inspected lossily.
 pub fn inspect_bytes(
     path: &Path,
@@ -61,28 +62,39 @@ pub fn inspect_bytes(
     cfg: &Resolved,
     selected: &dyn Fn(&str) -> bool,
 ) -> FileReport {
+    let error = crate::source::encoding_error(&bytes);
     match String::from_utf8(bytes) {
-        Ok(text) => inspect(path, display, text, cfg, selected),
+        Ok(text) => match error {
+            Some(msg) => encoding_error_report(text, msg),
+            None => inspect(path, display, text, cfg, selected),
+        },
         Err(e) => {
             let text = String::from_utf8_lossy(e.as_bytes()).into_owned();
+            if let Some(msg) = error {
+                return encoding_error_report(text, msg);
+            }
             if !crate::source::must_be_utf8(&text) {
                 return inspect(path, display, text, cfg, selected);
             }
-            // Lint/Syntax#add_offense_from_error: a global offense, beautified message, no version note.
-            let offense = Offense {
-                start: 0,
-                end: 0,
-                cop: "Lint/Syntax",
-                message: "Invalid byte sequence in utf-8.".into(),
-                severity: Severity::Fatal,
-                correctable: false,
-                global: true,
-                corrected: false,
-                source: None,
-            };
-            FileReport { offenses: vec![offense], text }
+            encoding_error_report(text, "Invalid byte sequence in utf-8.".into())
         }
     }
+}
+
+/// Lint/Syntax#add_offense_from_error: a global offense, beautified message, no version note.
+fn encoding_error_report(text: String, message: String) -> FileReport {
+    let offense = Offense {
+        start: 0,
+        end: 0,
+        cop: "Lint/Syntax",
+        message,
+        severity: Severity::Fatal,
+        correctable: false,
+        global: true,
+        corrected: false,
+        source: None,
+    };
+    FileReport { offenses: vec![offense], text }
 }
 
 /// How Ruby words a failed `File.read`/`File.open` of `path` (RuboCop raises its own error for a
@@ -105,11 +117,12 @@ pub fn analyze_for_correction(
     path: &Path,
     display: &str,
     text: &Arc<str>,
+    raw_text: Option<&str>,
     cfg: &Resolved,
     selected: &dyn Fn(&str) -> bool,
     mode: Mode,
 ) -> (Vec<Offense>, Option<Corrector>, Vec<Span>) {
-    analyze(path, display, text, None, cfg, selected, Some(mode), Redundant::Skip)
+    analyze(path, display, text, raw_text, cfg, selected, Some(mode), Redundant::Skip)
 }
 
 /// Runner#add_redundant_disables after an autocorrect loop: Lint/RedundantCopDisableDirective
@@ -161,9 +174,9 @@ fn analyze(
     // Below 3.3 RuboCop parses with the parser gem, which accepts some things Prism rejects.
     let parser_gem = cfg.target_ruby < 3.3;
     let (result, tokens) = if parser_gem {
-        ruby_prism::parse_with_version_and_tokens(text.as_bytes(), version)
+        ruby_prism::parse_with_version_and_tokens(text.as_bytes(), version, !crate::source::binary_encoding(text))
     } else {
-        (ruby_prism::parse_with_version(text.as_bytes(), version), Vec::new())
+        (ruby_prism::parse_with_version(text.as_bytes(), version, !crate::source::binary_encoding(text)), Vec::new())
     };
     let mut errors: Vec<(usize, usize, String)> = result
         .errors()
@@ -203,7 +216,7 @@ fn analyze(
                     &tokens,
                     text,
                 );
-                crate::syntax::translate(e.type_name(), e.message(), s, end, text)
+                crate::syntax::translate(crate::syntax::parser_gem_kind(e.type_name()), e.message(), s, end, text)
             })
             .collect();
         let mut actions: Vec<usize> = semantic.iter().map(|e| e.1).collect();
@@ -213,6 +226,14 @@ fn analyze(
             .map(|(s, e, msg)| crate::syntax::translate("", &msg, s, e, text))
             .chain(semantic)
             .collect();
+    }
+    // Pattern variable names the parser gem's builder rejects, only reached when Prism found no
+    // error (a tree walk, so only on trees the depth check below accepts; patterns need `in`/`=>`).
+    if errors.is_empty()
+        && (text.contains("in") || text.contains("=>"))
+        && !crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH)
+    {
+        errors.extend(crate::syntax::pattern_variable_errors(&result.node()));
     }
     let comments: Vec<Comment> = result
         .comments()

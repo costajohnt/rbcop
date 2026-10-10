@@ -34,16 +34,8 @@ fn needs_double(src: &str) -> bool {
     })
 }
 
-/// Parser makes a symbol literal spanning lines a `dsym` (same split rule as strings).
 fn parser_dsym(sym: &ruby_prism::SymbolNode) -> bool {
-    let Some(v) = sym.value_loc() else { return false };
-    let content = text(&v);
-    let body = content.strip_suffix('\n').unwrap_or(content).as_bytes();
-    let opening = sym.opening_loc().map(|o| text(&o)).unwrap_or("");
-    let interpolating = !(opening.contains('\'') || opening.starts_with("%s"));
-    body.iter().enumerate().any(|(i, &b)| {
-        b == b'\n' && !(interpolating && body[..i].iter().rev().take_while(|&&c| c == b'\\').count() % 2 == 1)
-    })
+    crate::ast::is_parser_dsym(&sym.as_node())
 }
 
 impl Cop for QuotedSymbols {

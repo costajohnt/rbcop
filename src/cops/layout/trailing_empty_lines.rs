@@ -16,7 +16,8 @@ impl Cop for TrailingEmptyLines {
             return;
         }
         let wanted: i64 = if cx.cfg.str("EnforcedStyle") == Some("final_blank_line") { 1 } else { 0 };
-        let ws_len = text.len() - text.trim_end_matches(|c: char| c.is_ascii_whitespace()).len();
+        // `/\s*\Z/`: Ruby `\s` includes \v, which `char::is_ascii_whitespace` does not.
+        let ws_len = text.len() - text.trim_end_matches(|c: char| c.is_ascii() && helpers::parser_tokens::is_ruby_space(c as u8)).len();
         let ws = &text[text.len() - ws_len..];
         let blank = ws.matches('\n').count() as i64 - 1;
         if blank == wanted {

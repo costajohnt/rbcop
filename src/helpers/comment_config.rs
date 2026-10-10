@@ -89,6 +89,13 @@ impl BoundsWalker<'_, '_> {
         self.open.push((self.counter, first, last, end, statement_like));
     }
 
+    /// A parser node Prism has no node for (`rescue`/`ensure` around a body), as a statement.
+    fn enter_span(&mut self, start: usize, end: usize) {
+        let (first, last) = (self.src.line_of(start), self.src.line_of(end.max(start)));
+        self.counter += 1;
+        self.open.push((self.counter, first, last, last, true));
+    }
+
     fn leave(&mut self) {
         let Some((order, first, last, end, statement_like)) = self.open.pop() else { return };
         if let Some(parent) = self.open.last_mut() {
@@ -163,6 +170,48 @@ impl<'pr> Visit<'pr> for BoundsWalker<'_, '_> {
     }
     fn visit_leaf_node_leave(&mut self) {
         self.leaf = None;
+    }
+    /// Parser wraps a body with rescue clauses in a `rescue` node (body start to the last clause or
+    /// `else` body) and that in an `ensure` node (to the ensure body); both start on the body's line.
+    fn visit_begin_node(&mut self, node: &ruby_prism::BeginNode<'pr>) {
+        let (rescue, ensure) = (node.rescue_clause(), node.ensure_clause());
+        if rescue.is_none() && ensure.is_none() {
+            return ruby_prism::visit_begin_node(self, node);
+        }
+        let span = |l: ruby_prism::Location| (l.start_offset(), l.end_offset());
+        let stmts = node.statements();
+        let mut inner = stmts.as_ref().map(|s| span(s.location()));
+        if let Some(r) = &rescue {
+            let end = match node.else_clause() {
+                Some(e) => e.statements().map_or(span(e.else_keyword_loc()).1, |s| span(s.location()).1),
+                None => span(r.location()).1,
+            };
+            inner = Some((inner.map_or(span(r.location()).0, |i| i.0), end));
+        }
+        if let Some(e) = &ensure {
+            let kw = span(e.ensure_keyword_loc());
+            let end = e.statements().map_or(kw.1, |s| span(s.location()).1);
+            self.enter_span(inner.map_or(kw.0, |i| i.0), end);
+        }
+        if let Some((s, e)) = inner.filter(|_| rescue.is_some()) {
+            self.enter_span(s, e);
+        }
+        if let Some(s) = &stmts {
+            self.visit_statements_node(s);
+        }
+        if let Some(r) = &rescue {
+            self.visit_rescue_node(r);
+        }
+        if let Some(e) = node.else_clause() {
+            self.visit_else_node(&e);
+        }
+        if rescue.is_some() {
+            self.leave();
+        }
+        if let Some(e) = &ensure {
+            self.visit_ensure_node(e);
+            self.leave();
+        }
     }
     fn visit_block_parameter_node(&mut self, node: &ruby_prism::BlockParameterNode<'pr>) {
         self.leaf(&node.as_node());

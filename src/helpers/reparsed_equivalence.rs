@@ -21,7 +21,7 @@ pub fn correction_parses(source: Arc<str>, version: &'static str, edit: impl FnO
 }
 
 pub fn valid_syntax(text: &str, version: &'static str) -> bool {
-    ruby_prism::parse_with_version(text.as_bytes(), version).errors().next().is_none()
+    ruby_prism::parse_with_version(text.as_bytes(), version, !crate::source::binary_encoding(text)).errors().next().is_none()
 }
 
 /// The normalized structure of `node` (whose source is `text`).
@@ -51,7 +51,7 @@ pub fn parses_equivalently_folding(
     version: &'static str,
     fold: bool,
 ) -> bool {
-    let result = ruby_prism::parse_with_version(fragment.as_bytes(), version);
+    let result = ruby_prism::parse_with_version(fragment.as_bytes(), version, !crate::source::binary_encoding(fragment));
     if result.errors().next().is_some() {
         return false;
     }
@@ -308,29 +308,48 @@ type Group<T> = (Option<(usize, usize)>, String, Vec<T>);
 /// items grouped by reparse scope, a group kept whole when all its corrections together parse
 /// equivalently, else item by item. `range` gives an item's range; returns the verified items.
 pub fn verified_by_reparse<T: Copy>(
-    text: &str,
-    version: &'static str,
+    src: &Source,
     program: &Node,
     items: &[T],
     range: impl Fn(T) -> (usize, usize),
     apply: impl Fn(&mut Corrector, T),
 ) -> Vec<T> {
-    verified_by_reparse_folding(text, version, program, items, range, apply, false)
+    verified_by_reparse_folding(src, program, items, range, apply, false)
 }
 
 /// `verified_by_reparse` comparing with `serialize_folding(.., fold)` (RedundantLineBreak's
 /// `normalize_reparsed_ast`).
 pub fn verified_by_reparse_folding<T: Copy>(
-    text: &str,
-    version: &'static str,
+    src: &Source,
     program: &Node,
     items: &[T],
     range: impl Fn(T) -> (usize, usize),
     apply: impl Fn(&mut Corrector, T),
     fold: bool,
 ) -> Vec<T> {
-    let opts = ReparseOpts { fold, report_oversized: false, raw_text: text };
-    verified_by_reparse_opts(text, version, program, items, range, apply, opts)
+    let opts = ReparseOpts { fold, report_oversized: false, raw_text: src.raw_text };
+    verified_by_reparse_opts(src.text, src.version, program, items, range, apply, opts)
+}
+
+/// `corrected_scope_fragment`: `corrected[begin_pos...(end_pos + delta)]` in characters, where
+/// RuboCop's delta is against the raw source, so each CRLF the normalised text lacks moves the
+/// cut one character left (a negative end counts from the end, as Ruby's String#[] does).
+/// `end` is the scope's end byte in `corrected`; `None` when Ruby's slice is nil or empty.
+fn scope_fragment(corrected: &str, start: usize, end: usize, crlf: usize) -> Option<&str> {
+    if crlf == 0 {
+        return corrected.get(start..end);
+    }
+    let len = corrected.chars().count() as isize;
+    let b = corrected.get(..start)?.chars().count() as isize;
+    let mut x = corrected.get(..end)?.chars().count() as isize - crlf as isize;
+    if x < 0 {
+        x += len;
+    }
+    if x <= b {
+        return None;
+    }
+    let byte = |c: isize| corrected.char_indices().nth(c as usize).map_or(corrected.len(), |(i, _)| i);
+    Some(&corrected[start..byte(x.min(len))])
 }
 
 /// `verified_by_reparse(items, oversized:)`: with `report_oversized` (`oversized: :report`, the
@@ -371,6 +390,7 @@ fn verified_by_reparse_opts<T: Copy>(
     opts: ReparseOpts,
 ) -> Vec<T> {
     let ReparseOpts { fold, report_oversized, raw_text } = opts;
+    let crlf = if raw_text.len() == text.len() { 0 } else { raw_text.matches("\r\n").count() };
     let source: Arc<str> = Arc::from(text);
     // (scope range, normalized original, items) in order of first appearance.
     let mut groups: Vec<Group<T>> = vec![];
@@ -406,7 +426,8 @@ fn verified_by_reparse_opts<T: Copy>(
         match scope {
             Some((s, e)) => {
                 let end = (e as isize + corrected.len() as isize - text.len() as isize) as usize;
-                corrected.get(s..end).is_some_and(|fragment| parses_equivalently_folding(original, fragment, false, version, fold))
+                scope_fragment(&corrected, s, end, crlf)
+                    .is_some_and(|fragment| parses_equivalently_folding(original, fragment, false, version, fold))
             }
             None => parses_equivalently_folding(original, &corrected, true, version, fold),
         }

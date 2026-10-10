@@ -87,6 +87,22 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   also counts as 3 bytes in later columns of its line (RuboCop: 1 per byte), e.g. the end of
   Lint/PercentSymbolArray's range on `%i[\xC0 :foo]` (`scripts/cold-skip.txt`).
   Sources that must be UTF-8 and are not get RuboCop's `Lint/Syntax: Invalid byte sequence in utf-8.`
+  RuboCop's transcoding error is reproduced only for US-ASCII (`"\xe3" on us-ascii.`); a source
+  in another encoding with a byte sequence invalid there (`# encoding: euc-jp`) is inspected as
+  UTF-8 instead.
+  In a binary source a one-character range on a multibyte character (Layout/
+  EmptyLineAfterMagicComment's `source_range(buffer, line, 0)`) is one byte for RuboCop and the
+  whole character for rbcop.
+- RuboCop's formatters abort the whole run (`invalid byte sequence in UTF-8` from `String#tr`)
+  when an offense message quotes invalid UTF-8 (from a non-UTF-8 source, or a value such as
+  `%W(a\255)`'s in Style/WordArray's message); rbcop reports the file and goes on.
+- A unary minus separated from a numeric literal (`- 0.09e3`, `-\n1`) is one negative literal for
+  RuboCop (the translation layer's `numeric_negate`, its range starting at the `-`) and a `-@` call
+  on the literal for rbcop's cops: ranges and sources of numeric-literal cops differ there
+  (Style/ExponentialNotation reports at the literal, not the `-`).
+- RuboCop cop crashes on odd input are not reproduced: RuboCop prints `An error occurred while
+  ...` and exits 1 where rbcop's port inspects the file normally (Layout/EmptyLinesAroundMethodBody
+  on `def foo(bar` / `    )end`, Style/NegativeArrayIndex, Style/HashConversion, Style/RequireOrder).
 - Deliberate: Style/WordArray correcting a `%W[...]` whose value is invalid UTF-8 (`%W[\xff]`)
   writes the escaped form (`["\xFF"]`); RuboCop writes the raw bytes and then crashes re-parsing
   its own output. The offense message matches RuboCop.

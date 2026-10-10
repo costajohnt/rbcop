@@ -1,0 +1,1 @@
+Layout/EndOfLine,Layout/LineLength,Layout/TrailingEmptyLines,Layout/TrailingWhitespace,Style/TrailingBodyOnClass,Layout/IndentationWidth,Lint/AmbiguousRegexpLiteral

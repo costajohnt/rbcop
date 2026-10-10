@@ -735,12 +735,15 @@ extern "C" {
 
 /// rbcop patch: parse as a given Ruby version (`"3.3"`, `"3.4"`, `"4.0"`, ...), like
 /// `Prism.parse(source, version: ...)`. Unknown versions fall back to the latest grammar.
+/// `encoding_locked` is `Prism.parse(..., encoding: false)`: magic encoding comments are ignored
+/// (what Prism::Translation::Parser does for every source that is not binary).
 #[must_use]
-pub fn parse_with_version<'a>(source: &'a [u8], version: &str) -> ParseResult<'a> {
+pub fn parse_with_version<'a>(source: &'a [u8], version: &str, encoding_locked: bool) -> ParseResult<'a> {
     unsafe {
         // A zeroed pm_options_t is prism's own default (`pm_options_t options = { 0 }`).
         let mut options = MaybeUninit::<ruby_prism_sys::pm_options_t>::zeroed().assume_init();
         pm_options_version_set(&mut options, version.as_ptr().cast(), version.len());
+        options.encoding_locked = encoding_locked;
         // Prism::Translation::Parser (what RuboCop uses) always parses with partial_script: true.
         pm_options_partial_script_set(&mut options, true);
 
@@ -775,7 +778,11 @@ pub struct Token {
 
 /// rbcop patch: `parse_with_version` that also returns every token lexed, in order.
 #[must_use]
-pub fn parse_with_version_and_tokens<'a>(source: &'a [u8], version: &str) -> (ParseResult<'a>, Vec<Token>) {
+pub fn parse_with_version_and_tokens<'a>(
+    source: &'a [u8],
+    version: &str,
+    encoding_locked: bool,
+) -> (ParseResult<'a>, Vec<Token>) {
     extern "C" {
         fn pm_token_type_name(token_type: ruby_prism_sys::pm_token_type_t) -> *const c_char;
     }
@@ -795,6 +802,7 @@ pub fn parse_with_version_and_tokens<'a>(source: &'a [u8], version: &str) -> (Pa
     unsafe {
         let mut options = MaybeUninit::<ruby_prism_sys::pm_options_t>::zeroed().assume_init();
         pm_options_version_set(&mut options, version.as_ptr().cast(), version.len());
+        options.encoding_locked = encoding_locked;
         pm_options_partial_script_set(&mut options, true);
 
         let uninit = Box::into_raw(Box::new(MaybeUninit::<pm_parser_t>::uninit()));
