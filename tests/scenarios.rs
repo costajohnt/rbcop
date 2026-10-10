@@ -57,7 +57,8 @@ fn config_scenarios_match_rubocop() {
         let mut expected: Vec<String> = std::fs::read_to_string(dir.join("expected.txt"))
             .unwrap()
             .lines()
-            .filter(|l| cop_of(l).is_some_and(|c| cops.contains(c)))
+            // Lint/Syntax is not in --show-cops output but rbcop always reports it.
+            .filter(|l| cop_of(l).is_some_and(|c| c == "Lint/Syntax" || cops.contains(c)))
             .map(String::from)
             .collect();
         expected.sort();

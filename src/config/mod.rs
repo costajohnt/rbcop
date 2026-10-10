@@ -151,7 +151,7 @@ impl Resolved {
     ) -> Self {
         let base_dir = base_dir_for(loaded_path);
         let all_cops = hash.map("AllCops").cloned().unwrap_or_default();
-        let target_ruby = target_ruby::detect(&all_cops, &base_dir, loaded_path.is_some(), project_root);
+        let target_ruby = target_ruby::detect(&all_cops, &base_dir, project_root);
         let mut r = Resolved { hash, base_dir, target_ruby, cops: HashMap::new() };
         for &name in cop_names {
             let cfg = r.build_cop(name, opts);

@@ -14,7 +14,7 @@ fn to_f(s: &str) -> Option<f64> {
 }
 
 /// The version and, for messages, which source supplied it.
-pub fn detect(all_cops: &Map, base_dir: &Path, has_config_file: bool, project_root: Option<&Path>) -> f64 {
+pub fn detect(all_cops: &Map, base_dir: &Path, project_root: Option<&Path>) -> f64 {
     if let Some(v) = std::env::var("RUBOCOP_TARGET_RUBY_VERSION").ok().and_then(|s| to_f(&s)) {
         return v;
     }
@@ -45,14 +45,14 @@ pub fn detect(all_cops: &Map, base_dir: &Path, has_config_file: bool, project_ro
             }
         }
     }
-    if has_config_file {
-        for name in ["Gemfile.lock", "gems.locked"] {
-            if let Some(file) = find_file_upwards(name, base_dir, project_root) {
-                if let Some(v) = lockfile_version(&std::fs::read_to_string(file).unwrap_or_default()) {
-                    return v;
-                }
-                break;
+    // Config#bundler_lock_file_path needs a loaded_path, which RuboCop always has: the default
+    // configuration is loaded from default.yml (base dir = pwd).
+    for name in ["Gemfile.lock", "gems.locked"] {
+        if let Some(file) = find_file_upwards(name, base_dir, project_root) {
+            if let Some(v) = lockfile_version(&std::fs::read_to_string(file).unwrap_or_default()) {
+                return v;
             }
+            break;
         }
     }
     DEFAULT_VERSION
