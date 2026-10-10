@@ -1,4 +1,5 @@
 use crate::directives::{self, DIRECTIVE};
+use crate::helpers::cop_registry::{REGISTRY, is_department, qualified_cop_name};
 use crate::prelude::*;
 
 pub const NAME: &str = "Lint/CopDirectiveSyntax";
@@ -25,11 +26,6 @@ static WITHOUT_COP_NAME: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(&format!(r"\A#\s*rubocop\s*:\s*(?:{MODES})\b\s*\z")).unwrap());
 static NEAR_MISS_KEYWORD: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(&format!(r"\A#+\s*([A-Za-z][\w-]*)\s*:\s*(?:{MODES})\b")).unwrap());
-/// Every cop RuboCop's registry knows: the cops in default.yml.
-static REGISTRY: LazyLock<Vec<&'static str>> = LazyLock::new(|| {
-    let re = Regex::new(r"(?m)^([A-Z]\w*(?:/\w+)+):").unwrap();
-    re.captures_iter(crate::config::DEFAULT_YML).map(|c| c.get(1).unwrap().as_str()).collect()
-});
 
 /// Ruby `str.split(/,\s*/)` / `split(sep)`: trailing empty fields dropped.
 fn ruby_split<'a>(s: &'a str, re: &Regex) -> Vec<&'a str> {
@@ -38,45 +34,6 @@ fn ruby_split<'a>(s: &'a str, re: &Regex) -> Vec<&'a str> {
         v.pop();
     }
     v
-}
-
-fn department_of(name: &str) -> &str {
-    name.rsplit_once('/').map_or("", |(d, _)| d)
-}
-
-fn is_department(name: &str) -> bool {
-    REGISTRY.iter().any(|c| department_of(c) == name)
-}
-
-/// Badge.camel_case
-fn camel_case(part: &str) -> String {
-    if part == "rspec" {
-        return "RSpec".to_string();
-    }
-    static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^[a-z]|_[a-z]").unwrap());
-    RE.replace_all(part, |c: &regex::Captures| c[0][c[0].len() - 1..].to_uppercase()).into_owned()
-}
-
-/// Registry#qualified_cop_name(name, nil, warn: false); Err on AmbiguousCopName.
-fn qualified_cop_name(name: &str) -> Result<String, ()> {
-    let mut parts: Vec<String> = name.split('/').map(camel_case).collect();
-    while parts.last().is_some_and(|p| p.is_empty()) {
-        parts.pop();
-    }
-    let Some(cop) = parts.pop() else { return Ok(name.to_string()) };
-    let dept = parts.join("/");
-    let registered = |d: &str| REGISTRY.iter().any(|c| department_of(c) == d && c.rsplit('/').next() == Some(cop.as_str()));
-    if !parts.is_empty() && registered(&dept) {
-        return Ok(name.to_string());
-    }
-    let mut depts: Vec<&str> = REGISTRY.iter().map(|c| department_of(c)).collect();
-    depts.dedup();
-    let hits: Vec<&str> = depts.into_iter().filter(|d| registered(d)).collect();
-    match hits.as_slice() {
-        [] => Ok(name.to_string()),
-        [d] => Ok(format!("{d}/{cop}")),
-        _ => Err(()),
-    }
 }
 
 impl Cop for CopDirectiveSyntax {
@@ -189,7 +146,7 @@ fn check_directive(cx: &mut Cx, start: usize, end: usize, text: &str) -> Result<
         if is_department(name) {
             continue;
         }
-        let qualified = qualified_cop_name(name)?;
+        let qualified = qualified_cop_name(name).ok_or(())?;
         if REGISTRY.contains(&qualified.as_str()) || is_department(&qualified) {
             continue;
         }

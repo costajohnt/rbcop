@@ -1,6 +1,5 @@
 //! RuboCop's `Registry.global` (every cop in default.yml, not just the ported ones) and
 //! `ConfigObsoletion.legacy_cop_names`.
-// ponytail: Lint/CopDirectiveSyntax keeps a private copy of REGISTRY/qualified_cop_name; switch it here.
 
 use regex::Regex;
 use std::sync::LazyLock;
