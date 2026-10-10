@@ -39,6 +39,7 @@ impl Cop for EmptyLineAfterMagicComment {
         );
         // source_range(buffer, line, 0): one character.
         let len = src.text[start..].chars().next().map_or(0, char::len_utf8);
-        cx.add(start, start + len, msg);
+        let insert = "\n".repeat((expected - actual as i64) as usize);
+        cx.add_fix(start, start + len, msg, |c| c.insert_before(start, start + len, &insert));
     }
 }

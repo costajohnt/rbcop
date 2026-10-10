@@ -24,6 +24,7 @@ impl Cop for LeadingEmptyLines {
         }
         // ponytail: Prism token ends differ from parser's for strings etc.; only comments are mapped.
         let end = src.comments.iter().find(|c| c.start == token.start).map_or(token.end, |c| c.end);
-        cx.add(token.start, end, "Unnecessary blank line at the beginning of the source.");
+        let first = token.start;
+        cx.add_fix(token.start, end, "Unnecessary blank line at the beginning of the source.", |c| c.remove(0, first));
     }
 }

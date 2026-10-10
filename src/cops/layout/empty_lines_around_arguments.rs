@@ -41,8 +41,8 @@ impl Cop for EmptyLinesAroundArguments {
             }
             let last = src.line_of(s);
             if last - src.line_of(pos) > 1 {
-                let line_start = src.line_start(last - 1);
-                cx.add(line_start, src.line_start(last), "Empty line detected around arguments.");
+                let (a, b) = (src.line_start(last - 1), src.line_start(last));
+                cx.add_fix(a, b, "Empty line detected around arguments.", |c| c.remove(a, b));
             }
         }
     }

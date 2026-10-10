@@ -164,11 +164,28 @@ impl EmptyLinesAroundAccessModifier {
         let blk = cx.config.for_cop("Layout/EmptyLinesAroundBlockBody");
         let no_empty_lines = blk.truthy("Enabled") && blk.str("EnforcedStyle") == Some("no_empty_lines");
         let strict = inside_block && no_empty_lines;
-        let is_first = index == Some(0);
-        let is_last = multi.zip(index).is_some_and(|(s, i)| i + 1 == s.len());
+        // `children.first != node` compares structurally: an identical modifier counts as the node.
+        let me = (loc.start_offset(), loc.end_offset());
+        let same = |n: &Node| helpers::node_equality::same(src, (n.location().start_offset(), n.location().end_offset()), me);
+        let is_first = multi.is_some_and(|s| same(&s[0]));
+        let is_last = multi.is_some_and(|s| same(&s[s.len() - 1]));
         let insert_before = !previous_line_empty && (!strict || multi.is_none() || !is_first);
         let insert_after = !strict || (multi.is_some() && !is_last);
-        let edits_after = insert_after && if style == "around" { !next_line_empty } else { next_line_empty_and_exists };
-        cx.add_with(loc.start_offset(), loc.end_offset(), msg, insert_before || edits_after);
+        let line = helpers::whole_lines::range_by_whole_lines(src.text, loc.start_offset(), loc.end_offset(), false);
+        // next_empty_line_range: source_range(buffer, last_line + 1, 0), one character.
+        let next = if last_line < src.line_count() { src.line_start(last_line + 1) } else { src.text.len() };
+        let next = (next, next + src.text[next..].chars().next().map_or(0, char::len_utf8));
+        let around = style == "around";
+        cx.add_fix(loc.start_offset(), loc.end_offset(), msg, |c| {
+            if insert_before {
+                c.insert_before(line.0, line.1, "\n");
+            }
+            if insert_after && around && !next_line_empty {
+                c.insert_after(line.0, line.1, "\n");
+            }
+            if insert_after && !around && next_line_empty_and_exists {
+                c.remove(next.0, next.1);
+            }
+        });
     }
 }

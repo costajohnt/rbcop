@@ -61,7 +61,14 @@ impl Cop for EmptyLinesAroundAttributeAccessor {
             }
         };
         if require {
-            cx.add(start, end, "Add an empty line after attribute accessor.");
+            // Insert after the node's whole lines, or after an enable directive on the next line.
+            let lines = helpers::whole_lines::range_by_whole_lines(src.text, start, end, false);
+            let next_line = src.line_of(end) + 1;
+            let at = match src.comment_on_line(next_line) {
+                Some(c) if enable_directive(next_line) => (c.start, c.end),
+                _ => lines,
+            };
+            cx.add_fix(start, end, "Add an empty line after attribute accessor.", |c| c.insert_after(at.0, at.1, "\n"));
         }
     }
 }
