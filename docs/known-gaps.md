@@ -38,6 +38,12 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   in place) are kept, as are files owned by another user or in an unwritable directory (in place);
   extended attributes and ACLs are not copied to the renamed file. Files are written in the reporting
   loop, in target order, so an error or `--fail-fast` stops before later files change.
+- Directory walks follow symlinked directories and keep symlinked files, as TargetFinder does, so
+  `-a/-A` corrects files a project links to outside itself, exactly as RuboCop does (checked on a
+  scratch project). A symlinked directory that is already an ancestor of the walked directory
+  (same device and inode) is not entered: RuboCop's realpath prefix test misses two-link cycles
+  (`d1/to2 -> ../d2`, `d2/to1 -> ../d1`) and lists the same files under ever longer paths until the
+  OS returns ELOOP. The walk is iterative.
 - An `inherit_from` cycle is an error (`... inherit_from cycle through ...`, exit 2); RuboCop recurses
   until SystemStackError.
 - A panic outside a cop (cop panics are reported as cop errors) ends the run at that file with
@@ -69,14 +75,12 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     `a, b = 1, 2 rescue x` and Style/RescueModifier below 2.6; Lint/AmbiguousOperator's parser-gem
     warning for `foo &:sym` (5 lines per target in specs); `#$-1` interpolation (rails 3.1); an empty
     heredoc delimiter `<<''` at end of file is a Prism error but valid for the parser gem.
-- `--stdin` together with `-a/-A` (RuboCop prints the corrected source) is refused.
 - `--disable-uncorrectable`, `--auto-gen-config`, `--server`, `--lsp`, `--cache` behaviour (accepted
   and ignored where harmless), custom formatter classes, `require:` of local Ruby files (custom cops).
 - ERB in `.rubocop.yml` is not evaluated; remote `inherit_from` URLs are skipped with a warning.
-- ConfigValidator is not ported: unknown cops or departments (`Error: unrecognized cop or department
-  ...`), wrong types (`Enabled: "true"`), obsolete parameters and invalid `Severity` values are not
-  reported, and the `... is concealed by line N` warning for a duplicated YAML key is not printed
-  (the last value wins, as in Psych).
+- A duplicated YAML key: the last value wins in the first key's place, as in Psych, but the
+  `... is concealed by line N` warning is not printed. Wrong value types (`Enabled: "true"`) and
+  invalid `Severity` values are not reported (see ConfigValidator below).
 - Sources whose magic comment names another encoding (`# encoding: iso-8859-1`) are inspected with
   invalid UTF-8 bytes replaced; RuboCop transcodes them to UTF-8. They are never autocorrected.
   Sources that must be UTF-8 and are not get RuboCop's `Lint/Syntax: Invalid byte sequence in utf-8.`
@@ -147,8 +151,12 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - Lint/RedundantCopDisableDirective judges directives against rbcop's own offenses, so a directive
   for a cop rbcop has not ported yet (e.g. `# rubocop:disable Style/Send`) is reported as
   redundant.
-- Department-level `NewCops` (a department's `NewCops: enable` or a version) is not read; only
-  `AllCops: NewCops: enable` enables pending cops. The pending-cops notice RuboCop prints is not ported.
-- JUnit lists testcases in sorted cop order; RuboCop uses its registry (load) order. The `-a` summary
-  says "N offenses autocorrectable" where RuboCop says "N more offenses can be corrected with
-  `rubocop -A`".
+- ConfigValidator is ported only for `NewCops` (AllCops and department values). Its other checks
+  (unrecognized cops or parameters, obsolete config, EnforcedStyle values, Lint/Syntax config) and
+  their warnings and errors are not; with `-f` of a bogus formatter RuboCop also prints a Ruby
+  backtrace rbcop does not.
+- The pending-cops notice treats any `Enabled: pending` key with a department as a registered cop;
+  RuboCop would have rejected an unknown cop name earlier, which rbcop does not validate.
+- YAML: a plain `:name` value loads as a Symbol (`Value::Sym`) and a quoted `':name'` as a String,
+  so `--show-cops` dumps them apart; mapping keys do not keep the distinction (a quoted `':q':` key
+  is dumped as the symbol `:q:`).

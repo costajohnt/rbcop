@@ -39,6 +39,11 @@ static REGISTRY: LazyLock<Registry> = LazyLock::new(|| {
     r
 });
 
+/// A cop's position in RuboCop's registry (load) order; unknown names sort last.
+pub fn registry_index(name: &str) -> usize {
+    REGISTRY.order.get(name).copied().unwrap_or(usize::MAX)
+}
+
 /// Cop::AutocorrectLogic#autocorrect? for a cop that supports autocorrection (`Cop::correctable`).
 pub fn cop_autocorrects(cfg: &CopConfig, mode: Mode) -> bool {
     // autocorrect_enabled?
@@ -51,7 +56,7 @@ pub fn cop_autocorrects(cfg: &CopConfig, mode: Mode) -> bool {
 /// Team#collate_corrections: merge each cop's corrector in registry order, skipping a cop whose
 /// corrections clobber what is already merged or that an earlier merged cop is incompatible with.
 pub fn collate(mut by_cop: Vec<(&'static str, Corrector)>, source: Arc<str>) -> Option<Corrector> {
-    by_cop.sort_by_key(|(name, _)| REGISTRY.order.get(name).copied().unwrap_or(usize::MAX));
+    by_cop.sort_by_key(|(name, _)| registry_index(name));
     let mut merged = Corrector::new(source);
     let mut skips: HashSet<&str> = HashSet::new();
     for (name, c) in &by_cop {
@@ -178,12 +183,24 @@ pub fn correct_file(
     mode: Mode,
 ) -> Result<Corrected, String> {
     let bytes = std::fs::read(path).map_err(|e| runner::io_error(&e, path))?;
+    Ok(correct_bytes(path, display, bytes, cfg, selected, mode))
+}
+
+/// `correct` for a source as read (a file or stdin).
+pub fn correct_bytes(
+    path: &Path,
+    display: &str,
+    bytes: Vec<u8>,
+    cfg: &Resolved,
+    selected: &dyn Fn(&str) -> bool,
+    mode: Mode,
+) -> Corrected {
     match String::from_utf8(bytes) {
-        Ok(text) => Ok(correct(path, display, text, cfg, selected, mode)),
-        // ponytail: never rewrite a file that is not valid UTF-8; it is only inspected.
+        Ok(text) => correct(path, display, text, cfg, selected, mode),
+        // ponytail: never rewrite a source that is not valid UTF-8; it is only inspected.
         Err(e) => {
             let report = runner::inspect_bytes(path, display, e.into_bytes(), cfg, selected);
-            Ok(Corrected { report, source: None, error: None })
+            Corrected { report, source: None, error: None }
         }
     }
 }
@@ -197,7 +214,7 @@ pub fn correct_file(
 pub fn write_source(path: &Path, new: &str) -> std::io::Result<()> {
     use std::fs;
     use std::io::Write;
-    use std::os::unix::fs::MetadataExt;
+    use std::os::unix::fs::{MetadataExt, OpenOptionsExt};
     static COUNTER: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
     let target = fs::canonicalize(path)?;
     // File.open(path, 'w') fails on a file that is not writable; the rename must not get round that.
@@ -205,15 +222,18 @@ pub fn write_source(path: &Path, new: &str) -> std::io::Result<()> {
     let meta = fs::metadata(&target)?;
     // SAFETY: geteuid has no preconditions.
     if meta.nlink() == 1 && meta.uid() == unsafe { libc::geteuid() } {
+        // An unguessable name, created exclusively (O_EXCL: never an existing file or symlink) and
+        // readable by the owner only until it has the file's own group and mode, before any content.
         let n = COUNTER.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+        let nanos = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map_or(0, |d| d.as_nanos());
         let name = target.file_name().unwrap_or_default().to_string_lossy();
-        let tmp = target.with_file_name(format!(".{name}.rbcop-{}-{n}.tmp", std::process::id()));
-        if let Ok(mut f) = fs::OpenOptions::new().write(true).create_new(true).open(&tmp) {
+        let tmp = target.with_file_name(format!(".{name}.rbcop-{}-{n}-{nanos:x}.tmp", std::process::id()));
+        if let Ok(mut f) = fs::OpenOptions::new().write(true).create_new(true).mode(0o600).open(&tmp) {
             // The file's group, too (a group rbcop's user is not in cannot be given: write in place).
             if std::os::unix::fs::fchown(&f, None, Some(meta.gid())).is_ok() {
                 let written = (|| {
-                    f.write_all(new.as_bytes())?;
                     f.set_permissions(meta.permissions())?;
+                    f.write_all(new.as_bytes())?;
                     f.sync_all()?;
                     fs::rename(&tmp, &target)
                 })();

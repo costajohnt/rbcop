@@ -192,6 +192,63 @@ impl Resolved {
         }
     }
 
+    /// Config#new_cops_setting_for: the department's `NewCops`, else `AllCops: NewCops`, as `to_s`.
+    fn new_cops_setting(&self, name: &str) -> String {
+        let set = |v: Option<&Value>| v.filter(|v| !matches!(v, Value::Null | Value::Bool(false))).cloned();
+        let dept = name.rsplit_once('/').and_then(|(d, _)| self.hash.map(d));
+        set(dept.and_then(|d| d.get("NewCops")))
+            .or_else(|| set(self.hash.map("AllCops").and_then(|a| a.get("NewCops"))))
+            .and_then(|v| v.as_string())
+            .unwrap_or_default()
+    }
+
+    /// Config#enabled_new_cop? (`covered` false) and #new_cops_covered? (`covered` true, where
+    /// `disable` also settles the cop): `enable`, `disable`, or a version covering VersionAdded.
+    fn new_cops(&self, name: &str, covered: bool) -> bool {
+        match self.new_cops_setting(name).as_str() {
+            "enable" => true,
+            "disable" => covered,
+            "" | "pending" => false,
+            pinned => {
+                let added = self.hash.map(name).and_then(|m| m.get("VersionAdded")).and_then(Value::as_string);
+                match (added.as_deref().and_then(gem_version), gem_version(pinned)) {
+                    (Some(added), Some(pinned)) => added <= pinned,
+                    _ => false,
+                }
+            }
+        }
+    }
+
+    /// Config#enabled_new_cop?
+    pub fn enabled_new_cop(&self, name: &str) -> bool {
+        self.new_cops(name, false)
+    }
+
+    /// Config#pending_cops (only registered cops, as PendingCopsReporter keeps them): every
+    /// `Enabled: pending` cop no `NewCops` setting settles, outside a disabled department, in config
+    /// order, with its VersionAdded.
+    // ponytail: "registered" is "a key with a department"; RuboCop rejects unknown cop names in
+    // config before this runs, which rbcop does not validate.
+    pub fn pending_cops(&self) -> Vec<(&str, String)> {
+        let mut out = Vec::new();
+        for (name, v) in &self.hash.0 {
+            let Some((dept, _)) = name.rsplit_once('/') else { continue };
+            if self.hash.map(dept).is_some_and(|d| d.get("Enabled") == Some(&Value::Bool(false))) {
+                continue;
+            }
+            let Value::Map(meta) = v else { continue };
+            if meta.str("Enabled") != Some("pending") || self.new_cops(name, true) {
+                continue;
+            }
+            let version = match meta.get("VersionAdded") {
+                None | Some(Value::Null | Value::Bool(false)) => "N/A".to_string(),
+                Some(v) => v.as_string().unwrap_or_default(),
+            };
+            out.push((name.as_str(), version));
+        }
+        out
+    }
+
     /// Config#preview?(options).
     pub fn preview(&self, opts: &Options) -> bool {
         opts.preview.unwrap_or_else(|| self.all_cops().get("Preview") == Some(&Value::Bool(true)))
@@ -203,12 +260,11 @@ impl Resolved {
         let department = name.rsplit_once('/').map(|(d, _)| d);
         let dept_map = department.and_then(|d| self.hash.map(d)).cloned().unwrap_or_default();
         let effective = self.enable_cop(name);
-        let new_cops = self.all_cops().str("NewCops") == Some("enable");
         let enabled = opts.only.iter().any(|o| o == name)
             || effective == Value::Bool(true)
             || (!opts.disable_pending_cops
                 && effective == Value::Str("pending".into())
-                && (opts.enable_pending_cops || new_cops))
+                && (opts.enable_pending_cops || self.new_cops(name, false)))
             || (effective == Value::Str("preview".into()) && self.preview(opts));
         let mut params = dept_map;
         for (k, v) in cop.0 {
@@ -459,6 +515,7 @@ impl Store {
         self.resolve_inheritance(path, &mut hash)?;
         hash.remove("inherit_from");
         self.add_missing_namespaces(&mut hash);
+        validate_new_cops(&hash, path, &self.cwd)?;
         make_excludes_absolute(&mut hash, &base_dir_for(Some(path)));
         self.files.insert(path.to_path_buf(), hash.clone());
         Ok(hash)
@@ -761,6 +818,52 @@ fn merge_with_default(base_default: &Map, mut config: Map, unset_nil: bool, cli_
     merge(&default, &config, &mode, unset_nil)
 }
 
+/// ConfigValidator#validate_new_cops_parameter for one loaded file (the only ConfigValidator check
+/// ported): `AllCops: NewCops` must be pending/disable/enable, a department's may also be a version.
+fn validate_new_cops(hash: &Map, path: &Path, pwd: &Path) -> Result<(), String> {
+    const VALUES: [&str; 3] = ["pending", "disable", "enable"];
+    // PathUtil.smart_path
+    let shown = || {
+        let (p, base) = (path.display().to_string(), pwd.display().to_string());
+        if p.starts_with(&base) { relative_path(path, pwd) } else { p }
+    };
+    // Ruby's #inspect-free interpolation (`"#{value}"`) of a YAML scalar.
+    let to_s = |v: &Value| v.as_string().unwrap_or_default();
+    if let Some(v) = hash.map("AllCops").and_then(|a| a.get("NewCops"))
+        && *v != Value::Null
+        && !matches!(v, Value::Str(s) if VALUES.contains(&s.as_str()))
+    {
+        return Err(format!(
+            "Error: invalid {} for `NewCops` found in {}\nValid choices are: {}",
+            to_s(v),
+            shown(),
+            VALUES.join(", ")
+        ));
+    }
+    let version = Regex::new(r"\A\d+(\.\d+)*\z").unwrap();
+    for (name, section) in &hash.0 {
+        let Value::Map(section) = section else { continue };
+        if name == "AllCops" || !crate::helpers::cop_registry::is_department(name) {
+            continue;
+        }
+        let ok = match section.get("NewCops") {
+            None | Some(Value::Null | Value::Int(_) | Value::Float(_)) => true,
+            Some(Value::Str(s)) => VALUES.contains(&s.as_str()) || version.is_match(s),
+            Some(_) => false,
+        };
+        if !ok {
+            return Err(format!(
+                "Error: invalid {} for `NewCops` found in {}\nValid choices for a department are: {}, or a version \
+                 string like '1.50'",
+                to_s(section.get("NewCops").unwrap()),
+                shown(),
+                VALUES.join(", ")
+            ));
+        }
+    }
+    Ok(())
+}
+
 /// `Array(value)` for YAML values.
 fn seq(v: Option<Value>) -> Vec<Value> {
     match v {
@@ -899,6 +1002,31 @@ fn base_dir_for(loaded: Option<&Path>) -> PathBuf {
         }
         _ => cwd(),
     }
+}
+
+/// Config#comparable_version: a dotted numeric version, trailing zero segments dropped so the
+/// comparison is Gem::Version's (`1.5.0 == 1.5`, `1.65 > 1.7`).
+// ponytail: prerelease versions (`1.2.a`) give None; NewCops versions are validated numeric and
+// VersionAdded values in default.yml are numeric.
+fn gem_version(s: &str) -> Option<Vec<u64>> {
+    let mut out: Vec<u64> = s
+        .split('.')
+        .map(|p| p.parse().ok().filter(|_| p.bytes().all(|b| b.is_ascii_digit())))
+        .collect::<Option<_>>()?;
+    while out.len() > 1 && out.last() == Some(&0) {
+        out.pop();
+    }
+    Some(out)
+}
+
+#[test]
+fn gem_versions_compare_like_rubygems() {
+    assert!(gem_version("1.65") > gem_version("1.7"));
+    assert_eq!(gem_version("1.5.0"), gem_version("1.5"));
+    assert!(gem_version("1.5") < gem_version("1.5.1"));
+    assert_eq!(gem_version("N/A"), None);
+    assert_eq!(gem_version("<<next>>"), None);
+    assert_eq!(gem_version("1.x"), None);
 }
 
 /// Dir.pwd (no symlink resolution, like Ruby).

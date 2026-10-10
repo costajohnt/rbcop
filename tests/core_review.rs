@@ -177,7 +177,8 @@ fn inherit_from_cycle_is_an_error() {
 fn inherit_from_glob() {
     let dir = scratch("glob");
     fs::create_dir_all(dir.join("cfg")).unwrap();
-    fs::write(dir.join(".rubocop.yml"), "inherit_from:\n  - cfg/*.yml\n  - other.yml\n").unwrap();
+    fs::write(dir.join(".rubocop.yml"), "inherit_from:\n  - cfg/*.yml\n  - other.yml\nAllCops:\n  NewCops: disable\n")
+        .unwrap();
     fs::write(dir.join("cfg/one.yml"), "Style/StringLiterals:\n  EnforcedStyle: double_quotes\n").unwrap();
     fs::write(dir.join("cfg/two.yml"), "Layout/LineLength:\n  Max: 5\n").unwrap();
     fs::write(dir.join("other.yml"), "Layout/LineLength:\n  Max: 7\n").unwrap();
@@ -215,6 +216,48 @@ fn target_finder_follows_symlinks() {
     assert_eq!(listed, ["lib/a.rb", "lib/link.rb", "linkdir/deep/d.rb", "linkdir/o.rb"]);
     let _ = fs::remove_dir_all(&dir);
     let _ = fs::remove_dir_all(&outside);
+}
+
+/// A cycle through two symlinked directories is entered once, not expanded until ELOOP, and a
+/// deep directory tree is walked without recursion.
+#[test]
+fn target_finder_stops_at_symlink_cycles_and_survives_deep_trees() {
+    let dir = scratch("cycles");
+    fs::create_dir_all(dir.join("d1")).unwrap();
+    fs::create_dir_all(dir.join("d2")).unwrap();
+    symlink("../d2", dir.join("d1/to2")).unwrap();
+    symlink("../d1", dir.join("d2/to1")).unwrap();
+    fs::write(dir.join("d1/a.rb"), "").unwrap();
+    let mut deep = dir.join("deep");
+    for _ in 0..400 {
+        deep.push("d");
+    }
+    fs::create_dir_all(&deep).unwrap();
+    fs::write(deep.join("z.rb"), "").unwrap();
+    let out = rbcop(&dir, &["-L"]);
+    let listed: Vec<&str> = std::str::from_utf8(&out.stdout).unwrap().lines().filter(|l| l.ends_with(".rb")).collect();
+    assert_eq!(listed.len(), 3, "{listed:?}");
+    assert!(listed.contains(&"d1/a.rb") && listed.contains(&"d2/to1/a.rb"), "{listed:?}");
+    assert!(listed.iter().any(|l| l.ends_with("/d/z.rb")));
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// The temporary file behind an atomic -a write never has a wider mode than the file it replaces,
+/// and a pre-existing symlink at a temp-like name is not followed.
+#[test]
+fn autocorrect_temp_file_does_not_widen_access() {
+    let dir = scratch("tmpmode");
+    fs::write(dir.join("secret.rb"), "x  =  1\n").unwrap();
+    fs::set_permissions(dir.join("secret.rb"), fs::Permissions::from_mode(0o600)).unwrap();
+    fs::write(dir.join("victim"), "keep\n").unwrap();
+    symlink("victim", dir.join(format!(".secret.rb.rbcop-{}-0.tmp", std::process::id()))).unwrap();
+    let mut args = vec!["-a"];
+    args.extend(SPACING);
+    args.push("secret.rb");
+    assert_eq!(rbcop(&dir, &args).status.code(), Some(0));
+    assert_eq!(fs::metadata(dir.join("secret.rb")).unwrap().mode() & 0o777, 0o600);
+    assert_eq!(fs::read_to_string(dir.join("victim")).unwrap(), "keep\n");
+    let _ = fs::remove_dir_all(&dir);
 }
 
 /// TargetRubyVersion sources (.ruby-version, a lone gemspec) are searched up to `/`, not only up to

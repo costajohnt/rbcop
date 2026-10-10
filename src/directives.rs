@@ -240,7 +240,7 @@ pub fn config_enabled(config: &crate::config::Resolved, cop: &str) -> bool {
     }
     match config.for_cop(cop).get("Enabled") {
         Some(Value::Bool(b)) => *b,
-        Some(Value::Str(s)) => s == "pending" && config.all_cops().str("NewCops") == Some("enable"),
+        Some(Value::Str(s)) => s == "pending" && config.enabled_new_cop(cop),
         _ => false,
     }
 }

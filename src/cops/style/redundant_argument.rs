@@ -14,6 +14,8 @@ fn value_inspect(v: &Value) -> Option<String> {
         Value::Int(i) => i.to_string(),
         Value::Float(f) => float_to_s(*f),
         Value::Str(s) => inspect(s.as_bytes()),
+        // Symbol#inspect: the `:name` as written.
+        Value::Sym(s) => s.clone(),
         _ => return None,
     })
 }

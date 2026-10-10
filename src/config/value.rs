@@ -12,6 +12,9 @@ pub enum Value {
     Int(i64),
     Float(f64),
     Str(String),
+    /// A plain `:name` scalar, which Psych loads as a Symbol, kept as written (colon included). Readers
+    /// see it as the string it always was; only `--show-cops` dumps it differently from a quoted one.
+    Sym(String),
     /// `!ruby/regexp /source/flags`, kept as written.
     Regex(String),
     Seq(Vec<Value>),
@@ -74,7 +77,7 @@ impl Map {
 
     pub fn str(&self, key: &str) -> Option<&str> {
         match self.get(key) {
-            Some(Value::Str(s)) => Some(s),
+            Some(Value::Str(s) | Value::Sym(s)) => Some(s),
             _ => None,
         }
     }
@@ -107,7 +110,7 @@ impl Map {
 impl Value {
     pub fn as_string(&self) -> Option<String> {
         match self {
-            Value::Str(s) => Some(s.clone()),
+            Value::Str(s) | Value::Sym(s) => Some(s.clone()),
             Value::Int(i) => Some(i.to_string()),
             Value::Float(f) => Some(f.to_string()),
             Value::Bool(b) => Some(b.to_string()),
@@ -126,6 +129,8 @@ impl Value {
 
 const REGEX_MARK: &str = "\u{1}rbcop-regexp:";
 
+const SYM_MARK: &str = "\u{1}rbcop-symbol:";
+
 /// Parse a YAML document the way Psych + RuboCop's restricted loader would.
 pub fn parse_yaml(text: &str) -> Result<Value, String> {
     let text = mark_regexps(text);
@@ -135,7 +140,8 @@ pub fn parse_yaml(text: &str) -> Result<Value, String> {
 }
 
 /// yaml-rust2's YamlLoader, except that a duplicated key replaces the earlier value in place, as
-/// Psych does (YamlLoader rejects the document).
+/// Psych does (YamlLoader rejects the document), and a plain `:name` scalar (a Symbol to Psych's
+/// ScalarScanner) is marked, so it can be told apart from a quoted ':name' String.
 #[derive(Default)]
 struct Loader {
     docs: Vec<Yaml>,
@@ -169,6 +175,9 @@ impl MarkedEventReceiver for Loader {
             Event::Scalar(v, style, aid, tag) => {
                 // Quoted scalars are strings; `!!str` and other tags as YamlLoader treats them.
                 let node = match (style, tag) {
+                    (TScalarStyle::Plain, None) if v.chars().count() > 1 && v.starts_with(':') => {
+                        Yaml::String(format!("{SYM_MARK}{v}"))
+                    }
                     (TScalarStyle::Plain, Some(t)) if t.handle == "tag:yaml.org,2002:" => match t.suffix.as_str() {
                         "str" => Yaml::String(v),
                         _ => Yaml::from_str(&v),
@@ -246,9 +255,10 @@ fn convert(y: Yaml) -> Value {
             ".nan" | ".NaN" | ".NAN" => Value::Float(f64::NAN),
             _ => r.parse().map_or(Value::Str(r), Value::Float),
         },
-        Yaml::String(s) => match s.strip_prefix(REGEX_MARK) {
-            Some(re) => Value::Regex(re.to_string()),
-            None => Value::Str(s),
+        Yaml::String(s) => match (s.strip_prefix(REGEX_MARK), s.strip_prefix(SYM_MARK)) {
+            (Some(re), _) => Value::Regex(re.to_string()),
+            (_, Some(sym)) => Value::Sym(sym.to_string()),
+            _ => Value::Str(s),
         },
         Yaml::Array(items) => Value::Seq(items.into_iter().map(convert).collect()),
         Yaml::Hash(h) => {
@@ -272,7 +282,8 @@ fn convert(y: Yaml) -> Value {
                     continue;
                 }
                 let key = match k {
-                    Yaml::String(s) => s,
+                    // ponytail: a Symbol key and a quoted ':name' key both become the String key.
+                    Yaml::String(s) => s.strip_prefix(SYM_MARK).map_or(s.clone(), String::from),
                     Yaml::Integer(i) => i.to_string(),
                     Yaml::Boolean(b) => b.to_string(),
                     Yaml::Real(r) => r,
