@@ -11,17 +11,28 @@ use ruby_prism::{Node, Visit};
 use std::sync::Arc;
 
 /// `correction_parses?`: the source with the edits applied (no clobbering) has no syntax errors.
-pub fn correction_parses(source: Arc<str>, version: &'static str, edit: impl FnOnce(&mut Corrector)) -> bool {
+pub fn correction_parses(
+    source: Arc<str>,
+    version: &'static str,
+    parser_gem: bool,
+    edit: impl FnOnce(&mut Corrector),
+) -> bool {
     let mut c = Corrector::new(source);
     edit(&mut c);
     if c.clobbered() {
         return false;
     }
-    valid_syntax(&c.rewrite(), version)
+    valid_syntax(&c.rewrite(), version, parser_gem)
 }
 
-pub fn valid_syntax(text: &str, version: &'static str) -> bool {
-    ruby_prism::parse_with_version(text.as_bytes(), version, !crate::source::binary_encoding(text)).errors().next().is_none()
+/// Prism parses `text` without errors, except those the parser gem accepts when it is the
+/// target's parser (`retry` outside `rescue`, top-level `yield`; `Source::parser_gem`).
+pub fn valid_syntax(text: &str, version: &'static str, parser_gem: bool) -> bool {
+    no_errors(&ruby_prism::parse_with_version(text.as_bytes(), version, !crate::source::binary_encoding(text)), parser_gem)
+}
+
+fn no_errors(result: &ruby_prism::ParseResult, parser_gem: bool) -> bool {
+    !result.errors().any(|e| !(parser_gem && crate::runner::TOLERATED_ERRORS.contains(&e.type_name())))
 }
 
 /// The normalized structure of `node` (whose source is `text`).
@@ -39,8 +50,14 @@ pub fn serialize_folding(text: &str, node: &Node, fold: bool) -> String {
 
 /// `parses_equivalently?`: `fragment` parses without errors to a single statement (or, with
 /// `whole_file`, a program) whose structure is `original`.
-pub fn parses_equivalently(original: &str, fragment: &str, whole_file: bool, version: &'static str) -> bool {
-    parses_equivalently_folding(original, fragment, whole_file, version, false)
+pub fn parses_equivalently(
+    original: &str,
+    fragment: &str,
+    whole_file: bool,
+    version: &'static str,
+    parser_gem: bool,
+) -> bool {
+    parses_equivalently_folding(original, fragment, whole_file, version, parser_gem, false)
 }
 
 /// `parses_equivalently` with `serialize_folding`.
@@ -49,10 +66,11 @@ pub fn parses_equivalently_folding(
     fragment: &str,
     whole_file: bool,
     version: &'static str,
+    parser_gem: bool,
     fold: bool,
 ) -> bool {
     let result = ruby_prism::parse_with_version(fragment.as_bytes(), version, !crate::source::binary_encoding(fragment));
-    if result.errors().next().is_some() {
+    if !no_errors(&result, parser_gem) {
         return false;
     }
     let root = result.node();
@@ -332,7 +350,7 @@ pub fn verified_by_reparse_folding<T: Copy>(
     fold: bool,
 ) -> Vec<T> {
     let opts = ReparseOpts { fold, report_oversized: false, raw_text: src.raw_text };
-    verified_by_reparse_opts(src.text, src.version, program, items, range, apply, opts)
+    verified_by_reparse_opts(src.text, src.version, src.parser_gem, program, items, range, apply, opts)
 }
 
 /// `corrected_scope_fragment`: `corrected[begin_pos...(end_pos + delta)]` in characters, where
@@ -367,7 +385,7 @@ pub fn verified_by_reparse_with<T: Copy>(
     report_oversized: bool,
 ) -> Vec<T> {
     let opts = ReparseOpts { fold: false, report_oversized, raw_text: src.raw_text };
-    verified_by_reparse_opts(src.text, src.version, program, items, range, apply, opts)
+    verified_by_reparse_opts(src.text, src.version, src.parser_gem, program, items, range, apply, opts)
 }
 
 /// MAX_VERIFICATION_FRAGMENT_SIZE (characters of the reparse scope).
@@ -384,9 +402,11 @@ struct ReparseOpts<'a> {
     raw_text: &'a str,
 }
 
+#[allow(clippy::too_many_arguments)]
 fn verified_by_reparse_opts<T: Copy>(
     text: &str,
     version: &'static str,
+    parser_gem: bool,
     program: &Node,
     items: &[T],
     range: impl Fn(T) -> (usize, usize),
@@ -431,9 +451,9 @@ fn verified_by_reparse_opts<T: Copy>(
             Some((s, e)) => {
                 let end = (e as isize + corrected.len() as isize - text.len() as isize) as usize;
                 scope_fragment(&corrected, s, end, crlf)
-                    .is_some_and(|fragment| parses_equivalently_folding(original, fragment, false, version, fold))
+                    .is_some_and(|fragment| parses_equivalently_folding(original, fragment, false, version, parser_gem, fold))
             }
-            None => parses_equivalently_folding(original, &corrected, true, version, fold),
+            None => parses_equivalently_folding(original, &corrected, true, version, parser_gem, fold),
         }
     };
     let mut out = vec![];
