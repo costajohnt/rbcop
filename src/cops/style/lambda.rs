@@ -13,8 +13,7 @@ fn span(l: &Location) -> (usize, usize) {
 fn lambda_arg_string(bp: &BlockParametersNode) -> String {
     let mut regular: Vec<&str> = Vec::new();
     if let Some(p) = bp.parameters() {
-        // `|a, b,|`: Prism's ImplicitRestNode is no parser argument
-        regular = parameter_nodes(&p).iter().filter(|n| n.as_implicit_rest_node().is_none()).map(node_text).collect();
+        regular = parameter_nodes(&p).iter().map(node_text).collect();
     }
     let shadow: Vec<&str> = bp.locals().iter().map(|l| node_text(&l)).collect();
     let mut s = regular.join(", ");

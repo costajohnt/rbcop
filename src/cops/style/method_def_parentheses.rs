@@ -53,6 +53,6 @@ impl Cop for MethodDefParentheses {
 fn anonymous_arguments(p: &ruby_prism::ParametersNode) -> bool {
     p.keyword_rest().is_some_and(|k| {
         k.as_forwarding_parameter_node().is_some() || k.as_keyword_rest_parameter_node().is_some_and(|k| k.name().is_none())
-    }) || p.rest().and_then(|r| r.as_rest_parameter_node()).is_some_and(|r| r.name().is_none())
+    }) || crate::ast::parser_rest(p.rest()).and_then(|r| r.as_rest_parameter_node()).is_some_and(|r| r.name().is_none())
         || p.block().is_some_and(|b| b.name().is_none())
 }

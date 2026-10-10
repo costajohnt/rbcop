@@ -336,6 +336,23 @@ More traps found while porting:
 - `loc.name` on `or_asgn`/`op_asgn` is the variable name with sigil; on a constant path, the last
   segment.
 - `helpers::format_string::sequence_parts` splits one format sequence.
+- Parser folds `- 12345` into one negative `int`; Prism makes a `-@` call. `1i` is a Prism
+  ImaginaryNode wrapping the number; parser has no `int` there.
+- NodePattern named wildcards unify: `(arg _val) ... (lvar _val)` needs the same name.
+- `ast_with_comments`: a trailing comment on `module A # x` belongs to the name const (in `A::B`, to
+  the inner `A`); interior comments go to descendants.
+- `parser_parent(&anc[..i])` returns the owning call when `anc[i]` is a BlockNode; use
+  `parser_parent_index`.
+- Trailing commas: Prism `ImplicitRestNode` (`a, = x`, `|a,|`) has no parser node.
+- Helpers: `frozen_string_literal`, `integer_node`, `empty_parameter`, `hash_transform_method`,
+  `percent_array` (PercentArray + PercentLiteralCorrector; `safe_string_literal` for written code).
+- RuboCop `each_ancestor` loops that look for a target node often never reach it and keep checking
+  ancestors outside the construct: use real parser ancestors of descendants (`helpers::parser_path`).
+- Cop state that a corrector mutates (`@reindented_lines` in Style/Next) must change only when the
+  corrector runs: take it out of `cx.state` before `add_fix`, put it back after.
+- Reading RuboCop source with `grep -v '^ *#'` drops heredoc lines starting with `#{`.
+- Helpers: `parser_path`, `literal_node::parser_type`, `heredoc::dstr_body_lines`,
+  `if_node::parser_begin_end`.
 - `helpers::regexp_captures` counts named/numbered groups like `RegexpNode#each_capture`.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.

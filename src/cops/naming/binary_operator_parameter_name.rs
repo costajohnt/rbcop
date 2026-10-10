@@ -37,7 +37,7 @@ impl Cop for BinaryOperatorParameterName {
         let Some(params) = def.parameters() else { return };
         if params.requireds().len() != 1
             || !params.optionals().is_empty()
-            || params.rest().is_some()
+            || crate::ast::parser_rest(params.rest()).is_some()
             || !params.posts().is_empty()
             || !params.keywords().is_empty()
             || params.keyword_rest().is_some()

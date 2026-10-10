@@ -1,3 +1,4 @@
+basic.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for `class Foo`.
 basic.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 basic.rb:1:10: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
 basic.rb:2:3: R: Metrics/MethodLength: Method has too many lines. [14/10]

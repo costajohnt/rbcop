@@ -358,7 +358,7 @@ fn def_params(def: &ruby_prism::DefNode) -> Vec<Element> {
     let mut nodes: Vec<Node> = Vec::new();
     nodes.extend(p.requireds().iter());
     nodes.extend(p.optionals().iter());
-    nodes.extend(p.rest());
+    nodes.extend(crate::ast::parser_rest(p.rest()));
     nodes.extend(p.posts().iter());
     nodes.extend(p.keywords().iter());
     nodes.extend(p.keyword_rest());

@@ -329,7 +329,7 @@ impl Tree {
             kind::MULTI_TARGET_NODE => {
                 let m = node.as_multi_target_node().unwrap();
                 let i = self.mk(T::Mlhs, range);
-                self.targets(i, m.lefts().iter(), m.rest(), m.rights().iter());
+                self.targets(i, m.lefts().iter(), crate::ast::parser_rest(m.rest()), m.rights().iter());
                 Some(i)
             }
             kind::SPLAT_NODE => {
@@ -340,7 +340,6 @@ impl Tree {
                 }
                 Some(i)
             }
-            kind::IMPLICIT_REST_NODE => None,
             _ => self.conv(node),
         }
     }
@@ -393,7 +392,7 @@ impl Tree {
             kind::MULTI_TARGET_NODE => {
                 let m = node.as_multi_target_node().unwrap();
                 let i = self.mk(T::Mlhs, range);
-                for n in m.lefts().iter().chain(m.rest()).chain(m.rights().iter()) {
+                for n in m.lefts().iter().chain(crate::ast::parser_rest(m.rest())).chain(m.rights().iter()) {
                     let c = match n.as_splat_node() {
                         Some(s) => {
                             let name = s
@@ -410,7 +409,6 @@ impl Tree {
                 }
                 i
             }
-            kind::IMPLICIT_REST_NODE => return None,
             _ => self.mk(T::Other, range),
         })
     }
@@ -421,7 +419,7 @@ impl Tree {
         if let Some(p) = params {
             all.extend(p.requireds().iter());
             all.extend(p.optionals().iter());
-            all.extend(p.rest());
+            all.extend(crate::ast::parser_rest(p.rest()));
             all.extend(p.posts().iter());
             all.extend(p.keywords().iter());
             all.extend(p.keyword_rest());
@@ -736,13 +734,13 @@ impl Tree {
             kind::MULTI_WRITE_NODE => {
                 let m = node.as_multi_write_node().unwrap();
                 let i = self.mk(T::Masgn, range);
-                let first = m.lefts().iter().chain(m.rest()).chain(m.rights().iter()).map(|n| loc(&n)).collect::<Vec<_>>();
+                let first = m.lefts().iter().chain(crate::ast::parser_rest(m.rest())).chain(m.rights().iter()).map(|n| loc(&n)).collect::<Vec<_>>();
                 let mlhs_range = match (m.lparen_loc(), m.rparen_loc()) {
                     (Some(l), Some(r)) => (l.start_offset(), r.end_offset()),
                     _ => (first.first().map_or(range.0, |r| r.0), first.last().map_or(range.0, |r| r.1)),
                 };
                 let mlhs = self.mk(T::Mlhs, mlhs_range);
-                self.targets(mlhs, m.lefts().iter(), m.rest(), m.rights().iter());
+                self.targets(mlhs, m.lefts().iter(), crate::ast::parser_rest(m.rest()), m.rights().iter());
                 self.kid(i, Some(mlhs));
                 self.conv_kid(i, Some(m.value()));
                 i

@@ -231,7 +231,7 @@ fn param_names(node: &Node, out: &mut Vec<String>) {
             for n in p.requireds().iter().chain(p.optionals().iter()) {
                 param_names(&n, out);
             }
-            if let Some(r) = p.rest() {
+            if let Some(r) = crate::ast::parser_rest(p.rest()) {
                 param_names(&r, out);
             }
             for n in p.posts().iter().chain(p.keywords().iter()) {
@@ -249,7 +249,7 @@ fn param_names(node: &Node, out: &mut Vec<String>) {
             for n in m.lefts().iter() {
                 param_names(&n, out);
             }
-            if let Some(r) = m.rest() {
+            if let Some(r) = crate::ast::parser_rest(m.rest()) {
                 param_names(&r, out);
             }
             for n in m.rights().iter() {

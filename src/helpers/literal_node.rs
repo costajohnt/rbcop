@@ -256,6 +256,43 @@ pub fn expression_range(node: &Node) -> (usize, usize) {
     (loc.start_offset(), end)
 }
 
+/// Parser node `type` for literal-ish and common expression nodes (for `node.type ==` comparisons).
+/// ponytail: rare node kinds fall back to "other"; extend when a cop compares them.
+pub fn parser_type(node: &Node) -> &'static str {
+    match node {
+        Node::StringNode { .. } if is_parser_dstr(node) => "dstr",
+        Node::StringNode { .. } | Node::SourceFileNode { .. } => "str",
+        Node::InterpolatedStringNode { .. } => "dstr",
+        Node::XStringNode { .. } | Node::InterpolatedXStringNode { .. } => "xstr",
+        Node::SymbolNode { .. } => "sym",
+        Node::InterpolatedSymbolNode { .. } => "dsym",
+        Node::IntegerNode { .. } | Node::SourceLineNode { .. } => "int",
+        Node::FloatNode { .. } => "float",
+        Node::ImaginaryNode { .. } => "complex",
+        Node::RationalNode { .. } => "rational",
+        Node::TrueNode { .. } => "true",
+        Node::FalseNode { .. } => "false",
+        Node::NilNode { .. } => "nil",
+        Node::SelfNode { .. } => "self",
+        Node::ArrayNode { .. } => "array",
+        Node::HashNode { .. } | Node::KeywordHashNode { .. } => "hash",
+        Node::RangeNode { .. } if node.as_range_node().unwrap().is_exclude_end() => "erange",
+        Node::RangeNode { .. } => "irange",
+        Node::RegularExpressionNode { .. } | Node::InterpolatedRegularExpressionNode { .. } => "regexp",
+        Node::ParenthesesNode { .. } | Node::StatementsNode { .. } => "begin",
+        Node::CallNode { .. } if crate::ast::is_csend(&node.as_call_node().unwrap()) => "csend",
+        Node::CallNode { .. } => "send",
+        Node::AndNode { .. } => "and",
+        Node::OrNode { .. } => "or",
+        Node::ConstantReadNode { .. } | Node::ConstantPathNode { .. } => "const",
+        Node::LocalVariableReadNode { .. } => "lvar",
+        Node::InstanceVariableReadNode { .. } => "ivar",
+        Node::ClassVariableReadNode { .. } => "cvar",
+        Node::GlobalVariableReadNode { .. } => "gvar",
+        _ => "other",
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

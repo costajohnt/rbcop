@@ -28,7 +28,7 @@ impl Cop for MultilineMethodDefinitionBraceLayout {
         };
         let mut children: Vec<Node> = params.requireds().iter().collect();
         children.extend(params.optionals().iter());
-        children.extend(params.rest());
+        children.extend(crate::ast::parser_rest(params.rest()));
         children.extend(params.posts().iter());
         children.extend(params.keywords().iter());
         children.extend(params.keyword_rest());

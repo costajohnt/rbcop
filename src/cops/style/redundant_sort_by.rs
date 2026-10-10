@@ -38,7 +38,7 @@ impl Cop for RedundantSortBy {
                 let reqs: Vec<_> = params.requireds().iter().collect();
                 if reqs.len() != 1
                     || params.optionals().iter().count() != 0
-                    || params.rest().is_some()
+                    || crate::ast::parser_rest(params.rest()).is_some()
                     || params.posts().iter().count() != 0
                     || params.keywords().iter().count() != 0
                     || params.keyword_rest().is_some()
