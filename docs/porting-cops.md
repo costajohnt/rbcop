@@ -245,6 +245,13 @@ More traps found while porting:
 - `void_context?` counts `initialize` only on a plain `def`, not `def self.initialize`.
 - Prism `Visit` branch/leaf enter hooks are not called for concretely typed fields (StatementsNode,
   ArgumentsNode, ElseNode, ...); override `visit_X_node` instead.
+- `logical_operator?` is only `&&`/`||`, not `and`/`or`. rubocop-ast `if_branch` of an `unless` is
+  its body (the then part).
+- Float#to_s is fixed notation only for decimal exponents in (-4, 16); otherwise `1.0e+15`,
+  `1.0e-05` (2+ exponent digits).
+- `children.first.to_s` on dstr/dsym prints an s-expression, so string-matching cops only ever match
+  plain str/sym elements.
+- `helpers::nil_methods` is `nil.methods` from a live RuboCop (includes `to_json`, `to_yaml`).
 - `helpers::regexp_captures` counts named/numbered groups like `RegexpNode#each_capture`.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.
