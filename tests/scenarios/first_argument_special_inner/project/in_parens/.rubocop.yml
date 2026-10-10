@@ -1,0 +1,3 @@
+inherit_from: ../.rubocop.yml
+Layout/FirstArgumentIndentation:
+  EnforcedStyle: special_for_inner_method_call_in_parentheses

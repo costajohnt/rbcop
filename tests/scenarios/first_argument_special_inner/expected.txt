@@ -1,0 +1,13 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+in_parens/t.rb:10:19: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the line after the last argument when opening brace is on a separate line from the first argument.
+in_parens/t.rb:13:3: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than `defaults.merge(`.
+in_parens/t.rb:13:9: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the line after the last argument when opening brace is on a separate line from the first argument.
+in_parens/t.rb:4:13: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+in_parens/t.rb:4:19: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the line after the last argument when opening brace is on a separate line from the first argument.
+in_parens/t.rb:7:9: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the line after the last argument when opening brace is on a separate line from the first argument.
+t.rb:10:19: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the line after the last argument when opening brace is on a separate line from the first argument.
+t.rb:13:3: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than `defaults.merge(`.
+t.rb:13:9: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the line after the last argument when opening brace is on a separate line from the first argument.
+t.rb:4:19: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the line after the last argument when opening brace is on a separate line from the first argument.
+t.rb:7:3: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than `defaults.merge(`.
+t.rb:7:9: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the line after the last argument when opening brace is on a separate line from the first argument.

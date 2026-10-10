@@ -21,6 +21,7 @@ enum Style {
     Consistent,
     RelativeToReceiver,
     SpecialForInner,
+    SpecialForInnerInParens,
     SpecialInsideParens,
 }
 
@@ -64,7 +65,7 @@ impl Ctx<'_, '_, '_> {
             return false;
         }
         let parenthesized = parent.opening_loc().is_some_and(|l| l.as_slice() == b"(");
-        if !parenthesized && self.style == Style::SpecialForInner {
+        if !parenthesized && self.style == Style::SpecialForInnerInParens {
             return false;
         }
         span(self.node).0 > parent.location().start_offset()
@@ -143,7 +144,8 @@ impl Cop for FirstArgumentIndentation {
             Some("consistent") => Style::Consistent,
             Some("consistent_relative_to_receiver") => Style::RelativeToReceiver,
             Some("special_inside_parentheses") => Style::SpecialInsideParens,
-            _ => Style::SpecialForInner,
+            Some("special_for_inner_method_call") => Style::SpecialForInner,
+            _ => Style::SpecialForInnerInParens,
         };
         let comment_lines =
             src.comments.iter().filter(|c| begins_its_line(src, c.start)).map(|c| src.line_of(c.start)).collect();
@@ -195,7 +197,7 @@ impl Cop for FirstArgumentIndentation {
 /// the whole receiver chain.
 fn correct_target(c: &Ctx, ancestors: &[Node], delta: i64) -> (usize, usize, Option<usize>) {
     let first = span(c.first);
-    if c.style != Style::SpecialForInner {
+    if c.style != Style::SpecialForInnerInParens {
         return (first.0, first.1, None);
     }
     // find_top_level_send: climb while the parent call has us as its `.` receiver.
