@@ -1,0 +1,7 @@
+[x].rb:1:1: C: Naming/FileName: The name of this source file (`[x].rb`) should use snake_case.
+[x].rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+[x].rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+[x].rb:1:2: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+top.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+top.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+top.rb:1:2: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
