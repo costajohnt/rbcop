@@ -245,6 +245,21 @@ More traps found while porting:
 - `void_context?` counts `initialize` only on a plain `def`, not `def self.initialize`.
 - Prism `Visit` branch/leaf enter hooks are not called for concretely typed fields (StatementsNode,
   ArgumentsNode, ElseNode, ...); override `visit_X_node` instead.
+- `logical_operator?` is only `&&`/`||`, not `and`/`or`. rubocop-ast `if_branch` of an `unless` is
+  its body (the then part).
+- Float#to_s is fixed notation only for decimal exponents in (-4, 16); otherwise `1.0e+15`,
+  `1.0e-05` (2+ exponent digits).
+- `children.first.to_s` on dstr/dsym prints an s-expression, so string-matching cops only ever match
+  plain str/sym elements.
+- `helpers::nil_methods` is `nil.methods` from a live RuboCop (includes `to_json`, `to_yaml`).
+- Parser `when` without a body ends at its last condition (Prism includes `then`). Label symbol
+  ranges (`a:`) exclude the colon. Parser `if` `loc.begin` can be `;`. `def (expr).foo` drops the
+  parens. `"#{a}"` is a parser `begin` (on_begin fires). Plain `begin..end` is `(kwbegin a b)`
+  with no inner `begin`. `a rescue b` is `(rescue a (resbody nil nil b) nil)`.
+- `each_descendant` excludes the node itself.
+- Compare invalid-UTF-8 string keys as raw bytes, never via `from_utf8_lossy`.
+- Helpers: `comments_help` (CommentsHelp), `literal_node` (literal predicates + structural key),
+  `if_node::parser_end`, `nil_receiver_checker`.
 - `helpers::regexp_captures` counts named/numbered groups like `RegexpNode#each_capture`.
 - Reusable ports: `format_string` (Utils::FormatString), `ruby_string::inspect`, `did_you_mean`,
   `add_parentheses`, `node_equality` (token approximation of structural `==`), `whole_lines`.

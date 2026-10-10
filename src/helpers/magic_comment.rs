@@ -46,6 +46,29 @@ pub fn any(comment: &str) -> bool {
         || SIMPLE_RBS.captures(comment).is_some_and(|c| matches!(&c[1], "enabled" | "disabled"))
 }
 
+static EMACS_ENCODING: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(&format!(r"\A(?:en)?coding{S}*:{S}*{TOKEN}\z")).unwrap());
+
+/// `MagicComment.parse(comment).encoding_specified?`.
+pub fn encoding_specified(comment: &str) -> bool {
+    if let Some(c) = EMACS.captures(comment) {
+        return c[1].split(';').any(|t| EMACS_ENCODING.is_match(ruby_strip(t)));
+    }
+    if let Some(c) = VIM.captures(comment) {
+        let mut parts: Vec<&str> = c[1].split(", ").collect();
+        while parts.last() == Some(&"") {
+            parts.pop();
+        }
+        return parts.len() > 1 && parts.into_iter().any(|t| VIM_ENCODING.is_match(ruby_strip(t)));
+    }
+    SIMPLE_ENCODING.is_match(comment)
+}
+
+/// `MagicComment.parse(comment).valid?`.
+pub fn valid(comment: &str) -> bool {
+    comment.starts_with('#') && any(comment)
+}
+
 #[cfg(test)]
 mod tests {
     use super::any;
