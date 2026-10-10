@@ -11,20 +11,15 @@ impl Cop for LeadingEmptyLines {
 
     fn on_file(&self, cx: &mut Cx) {
         let src = cx.src;
-        // parser has no token for `__END__` (the data section is not lexed).
-        let Some(token) = helpers::parser_tokens::sorted_tokens(src)
-            .into_iter()
-            .find(|t| t.kind != sys::PM_TOKEN_NEWLINE)
-            .filter(|t| t.kind != sys::PM_TOKEN___END__)
+        // Parser-shaped tokens: one tSTRING for a simple string, comments without their newline.
+        let Some(token) = helpers::parser_tokens::translated(src).into_iter().find(|t| t.kind != sys::PM_TOKEN_NEWLINE)
         else {
             return;
         };
         if src.line_of(token.start) <= 1 {
             return;
         }
-        // ponytail: Prism token ends differ from parser's for strings etc.; only comments are mapped.
-        let end = src.comments.iter().find(|c| c.start == token.start).map_or(token.end, |c| c.end);
-        let first = token.start;
+        let (first, end) = (token.start, token.end);
         cx.add_fix(token.start, end, "Unnecessary blank line at the beginning of the source.", |c| c.remove(0, first));
     }
 }

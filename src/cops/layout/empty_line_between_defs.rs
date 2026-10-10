@@ -68,6 +68,13 @@ impl Cop for EmptyLineBetweenDefs {
         if body.len() < 2 {
             return;
         }
+        // A plain `begin ... end` is a `kwbegin` holding the statements itself (no `begin` node).
+        let kwbegin = cx.ancestors.last().and_then(|p| p.as_begin_node()).is_some_and(|b| {
+            b.begin_keyword_loc().is_some() && b.rescue_clause().is_none() && b.ensure_clause().is_none() && b.else_clause().is_none()
+        });
+        if kwbegin {
+            return;
+        }
         let parents: Vec<&Node> = cx.ancestors.iter().chain([node]).collect();
         let (min, max) = match cx.cfg.get("NumberOfEmptyLines") {
             Some(Value::Seq(v)) => {

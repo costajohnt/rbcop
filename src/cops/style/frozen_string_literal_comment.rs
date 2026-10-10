@@ -65,13 +65,10 @@ impl Cop for FrozenStringLiteralComment {
     fn on_file(&self, cx: &mut Cx) {
         let src = cx.src;
         let first_code = cx.facts.first_code;
-        if first_code.is_none() && src.comments.is_empty() {
+        if helpers::parser_tokens::tokens_empty(src, first_code) {
             return;
         }
-        let leading = match first_code {
-            Some(off) => &src.lines[..(src.line_of(off) - 1).min(src.lines.len())],
-            None => &src.lines[..],
-        };
+        let leading = helpers::frozen_string_literal::leading(cx);
         let values: Vec<String> = leading.iter().filter_map(|l| frozen_value(l)).collect();
         let valid = values.iter().any(|v| v == "true" || v == "false");
         // The first comment token anywhere that specifies the setting.

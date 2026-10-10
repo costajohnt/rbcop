@@ -73,7 +73,7 @@ impl Cop for RedundantLineContinuation {
         }
 
         let remove_backslash = |c: &mut Corrector, r: (usize, usize)| c.remove(r.0, r.0 + 1);
-        for r in verified_by_reparse(text, src.version, node, &candidates, |r| r, remove_backslash) {
+        for r in verified_by_reparse(src, node, &candidates, |r| r, remove_backslash) {
             cx.add_fix(r.0, r.1, MSG, |c| c.remove(r.0, r.0 + 1));
         }
 
@@ -85,7 +85,7 @@ impl Cop for RedundantLineContinuation {
         }
         let end = src.line_start(last) + line.len();
         let r = (end - 1, end);
-        if within_comment(r) || verified_by_reparse(text, src.version, node, &[r], |r| r, remove_backslash).is_empty() {
+        if within_comment(r) || verified_by_reparse(src, node, &[r], |r| r, remove_backslash).is_empty() {
             return;
         }
         cx.add_fix(r.0, r.1, MSG, |c| c.remove(r.0, r.1));

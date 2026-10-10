@@ -20,12 +20,14 @@ pub fn range(src: &Source, node: &RescueNode) -> (usize, usize) {
     .flatten()
     .max()
     .unwrap();
-    let rest = &src.text.as_bytes()[end..];
-    let ws = rest.iter().take_while(|&&b| b == b' ' || b == b'\t').count();
-    if rest.get(ws) == Some(&b';') {
-        return (start, end + ws + 1);
-    }
-    (start, end)
+    (start, semicolon_end(end, &src.text.as_bytes()[end..]))
+}
+
+/// The translation layer's `srange_semicolon`: a `;` after the clause head (`rest` is the source
+/// from `end` on), past Ruby whitespace (newlines too), ends the bodiless `resbody` there.
+pub fn semicolon_end(end: usize, rest: &[u8]) -> usize {
+    let ws = rest.iter().take_while(|&&b| crate::helpers::parser_tokens::is_ruby_space(b)).count();
+    if rest.get(ws) == Some(&b';') { end + ws + 1 } else { end }
 }
 
 /// The `resbody` range of a modifier rescue (`x rescue y`): keyword to the rescue expression.

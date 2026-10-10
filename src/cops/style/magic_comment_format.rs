@@ -50,7 +50,7 @@ impl Cop for MagicCommentFormat {
         // first non-comment token.
         let Some(first_code) = cx.facts.first_code else { return };
         let src = cx.src;
-        let first_line = src.line_of(first_code);
+        let first_line = src.line_of(helpers::parser_tokens::first_non_comment_token(src, Some(first_code)).unwrap_or(first_code));
         let snake = cx.cfg.str("EnforcedStyle") != Some("kebab_case");
         let (wrong_sep, right_sep) = if snake { ('-', '_') } else { ('_', '-') };
         let directive_case = capitalization(cx, "DirectiveCapitalization");

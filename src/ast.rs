@@ -207,11 +207,23 @@ pub fn body_range(body: &Node) -> (usize, usize) {
         while let Some(next) = r.subsequent() {
             r = next;
         }
-        r.location().end_offset()
+        resbody_end(&b, &r)
     } else {
         b.statements().map_or(loc.end_offset(), |s| s.location().end_offset())
     };
     (start, end)
+}
+
+/// End of the parser `resbody` of the last rescue clause `r` of `b`: `helpers::resbody::range`
+/// without a Source (the BeginNode's own source covers the gap after the clause head).
+fn resbody_end(b: &ruby_prism::BeginNode, r: &ruby_prism::RescueNode) -> usize {
+    if let Some(s) = r.statements() {
+        return s.location().end_offset();
+    }
+    // Prism's clause ends at its head (keyword, exceptions or `=> var`; not `then`).
+    let head_end = r.location().end_offset();
+    let (b_start, b_src) = (b.location().start_offset(), b.location().as_slice());
+    crate::helpers::resbody::semicolon_end(head_end, b_src.get(head_end.saturating_sub(b_start)..).unwrap_or_default())
 }
 
 /// `.rest()` of a MultiWriteNode / MultiTargetNode / ParametersNode as parser sees it: Prism's
@@ -326,6 +338,12 @@ pub fn is_parser_dstr(node: &Node) -> bool {
         return true;
     }
     let Some(s) = node.as_string_node() else { return false };
+    // An empty percent literal or heredoc has no string token: parser builds an empty `dstr`.
+    if s.content_loc().start_offset() == s.content_loc().end_offset()
+        && s.opening_loc().is_some_and(|o| matches!(o.as_slice().first(), Some(b'%' | b'<')))
+    {
+        return true;
+    }
     if is_heredoc(node) {
         return text(&s.content_loc()).trim_end_matches('\n').contains('\n');
     }
@@ -337,6 +355,29 @@ pub fn is_parser_dstr(node: &Node) -> bool {
     let body = content.strip_suffix('\n').unwrap_or(content).as_bytes();
     let opening = s.opening_loc().map(|o| text(&o)).unwrap_or("");
     let interpolating = !(opening.starts_with('\'') || opening.starts_with("%q"));
+    body.iter().enumerate().any(|(i, &b)| {
+        b == b'\n' && !(interpolating && body[..i].iter().rev().take_while(|&&c| c == b'\\').count() % 2 == 1)
+    })
+}
+
+/// Parser `dsym`: an interpolated symbol, or a symbol literal spanning several lines (split like
+/// `is_parser_dstr`). An empty quoted one (`:""`, `%s()`) is an empty `dsym`; an empty quoted
+/// label (`"": 1`) is a `dsym` for the parser gem (target below 3.3) but a `sym` for the Prism
+/// translation.
+pub fn is_parser_dsym(node: &Node, target_ruby: f64) -> bool {
+    if node.as_interpolated_symbol_node().is_some() {
+        return true;
+    }
+    let Some(sym) = node.as_symbol_node() else { return false };
+    let content = sym.value_loc().map_or("", |v| text(&v));
+    let quoted = sym.opening_loc().is_some_and(|o| o.as_slice() != b":");
+    if quoted && content.is_empty() {
+        let label = sym.closing_loc().is_some_and(|c| c.as_slice().ends_with(b":"));
+        return !label || target_ruby < 3.3;
+    }
+    let body = content.strip_suffix('\n').unwrap_or(content).as_bytes();
+    let opening = sym.opening_loc().map(|o| text(&o)).unwrap_or("");
+    let interpolating = !(opening.contains('\'') || opening.starts_with("%s"));
     body.iter().enumerate().any(|(i, &b)| {
         b == b'\n' && !(interpolating && body[..i].iter().rev().take_while(|&&c| c == b'\\').count() % 2 == 1)
     })

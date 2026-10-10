@@ -29,6 +29,11 @@ pub fn is_semantic(kind: &str) -> bool {
         )
 }
 
+/// The `translate` kind for an error the parser gem itself reports (its own wording throughout).
+pub fn parser_gem_kind(kind: &str) -> &str {
+    if kind == "argument_no_forwarding_ampersand" { "argument_no_forwarding_amp" } else { kind }
+}
+
 /// (start, end, message) of a Prism error after the translation layer's rewrites.
 pub fn translate(kind: &str, prism_message: &str, start: usize, end: usize, text: &str) -> (usize, usize, String) {
     let slice = |s: usize, e: usize| text.get(s..e.min(text.len())).unwrap_or("").to_string();
@@ -39,9 +44,10 @@ pub fn translate(kind: &str, prism_message: &str, start: usize, end: usize, text
         "argument_formal_class" => (start, end, fixed("formal argument cannot be a class variable")),
         "argument_formal_global" => (start, end, fixed("formal argument cannot be a global variable")),
         "argument_formal_ivar" => (start, end, fixed("formal argument cannot be an instance variable")),
-        "argument_no_forwarding_amp" | "argument_no_forwarding_ampersand" => {
-            (start, end, fixed("no anonymous block parameter"))
-        }
+        // prism 1.9 calls it `argument_no_forwarding_ampersand`, which the translation layer
+        // (still matching `_amp`) passes through with Prism's message; the parser gem (targets
+        // below 3.3, `parser_gem_kind`) has its own wording.
+        "argument_no_forwarding_amp" => (start, end, fixed("no anonymous block parameter")),
         "argument_no_forwarding_star" => (start, end, fixed("no anonymous rest parameter")),
         "argument_no_forwarding_star_star" => (start, end, fixed("no anonymous keyword rest parameter")),
         "begin_lonely_else" => (start, start + 4, fixed("else without rescue is useless")),
@@ -93,4 +99,71 @@ pub fn translate(kind: &str, prism_message: &str, start: usize, end: usize, text
         }
     }
     (start, end, msg)
+}
+
+static LVAR_NAME: std::sync::LazyLock<regex::Regex> =
+    std::sync::LazyLock::new(|| regex::Regex::new(r"\A[\p{Lowercase}_][\p{Alphabetic}\p{Nd}_]*\z").unwrap());
+
+/// The parser gem builder's `check_lvar_name` on pattern variables (`in x`, `in {x:}`, `in [*x]`,
+/// `in a => x`): Ruby's `[[:lower:]]`/`[[:alnum:]]` reject names Prism accepts, such as one starting
+/// with a non-lowercase letter (`in 变量`) or containing U+3000. (start, end, message) of each.
+pub fn pattern_variable_errors(program: &ruby_prism::Node) -> Vec<(usize, usize, String)> {
+    use ruby_prism::Visit;
+    struct Walk {
+        in_pattern: bool,
+        out: Vec<(usize, usize, String)>,
+    }
+    impl Walk {
+        fn pattern(&mut self, node: &ruby_prism::Node) {
+            let outer = std::mem::replace(&mut self.in_pattern, true);
+            self.visit(node);
+            self.in_pattern = outer;
+        }
+    }
+    impl<'pr> Visit<'pr> for Walk {
+        fn visit_in_node(&mut self, n: &ruby_prism::InNode<'pr>) {
+            // A guard (`in x if y`) wraps the pattern in an IfNode/UnlessNode; only its statements are the pattern.
+            let pat = n.pattern();
+            if let Some(i) = pat.as_if_node() {
+                if let Some(s) = i.statements() {
+                    self.pattern(&s.as_node());
+                }
+                self.visit(&i.predicate());
+            } else if let Some(u) = pat.as_unless_node() {
+                if let Some(s) = u.statements() {
+                    self.pattern(&s.as_node());
+                }
+                self.visit(&u.predicate());
+            } else {
+                self.pattern(&pat);
+            }
+            if let Some(s) = n.statements() {
+                self.visit(&s.as_node());
+            }
+        }
+        fn visit_match_predicate_node(&mut self, n: &ruby_prism::MatchPredicateNode<'pr>) {
+            self.visit(&n.value());
+            self.pattern(&n.pattern());
+        }
+        fn visit_match_required_node(&mut self, n: &ruby_prism::MatchRequiredNode<'pr>) {
+            self.visit(&n.value());
+            self.pattern(&n.pattern());
+        }
+        fn visit_pinned_expression_node(&mut self, n: &ruby_prism::PinnedExpressionNode<'pr>) {
+            let outer = std::mem::replace(&mut self.in_pattern, false);
+            self.visit(&n.expression());
+            self.in_pattern = outer;
+        }
+        fn visit_local_variable_target_node(&mut self, n: &ruby_prism::LocalVariableTargetNode<'pr>) {
+            let name = String::from_utf8_lossy(n.name().as_slice());
+            if self.in_pattern && !LVAR_NAME.is_match(&name) {
+                let loc = n.location();
+                let msg = format!("`{name}' is not allowed as a local variable name");
+                self.out.push((loc.start_offset(), loc.end_offset(), msg));
+            }
+        }
+    }
+    let mut w = Walk { in_pattern: false, out: Vec::new() };
+    w.visit(program);
+    w.out
 }

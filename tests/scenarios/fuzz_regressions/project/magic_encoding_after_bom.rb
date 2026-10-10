@@ -1,0 +1,2 @@
+﻿# encoding: ascii
+x = "é"

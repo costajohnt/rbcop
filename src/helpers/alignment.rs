@@ -58,7 +58,7 @@ pub fn first_non_space(line: &str) -> Option<usize> {
 
 /// Ruby `String#blank?` (rubocop core_ext): empty or whitespace only.
 pub fn blank(line: &str) -> bool {
-    line.chars().all(char::is_whitespace)
+    line.bytes().all(crate::helpers::parser_tokens::is_ruby_space)
 }
 
 /// Alignment#within?.

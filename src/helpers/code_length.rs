@@ -71,7 +71,7 @@ fn blank(line: &str) -> bool {
 }
 
 /// `comment_line?`: `/^\s*#/`.
-fn comment_line(line: &str) -> bool {
+pub fn comment_line(line: &str) -> bool {
     line.trim_start_matches([' ', '\t', '\n', '\r', '\x0b', '\x0c']).starts_with('#')
 }
 
