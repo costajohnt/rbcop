@@ -14,3 +14,10 @@ upper_case.rb:1:1: F: Lint/Syntax: Unknown encoding name - bogus.
 us_ascii_after_code.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 us_ascii_after_code.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
 us_ascii_after_code.rb:1:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+utf8_mac.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+utf8_mac.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+utf8_mac.rb:2:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+utf8_mac_dos.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+utf8_mac_dos.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+utf8_mac_dos.rb:2:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+utf8_mac_mixed_case.rb:1:1: F: Lint/Syntax: Unknown encoding name - utf8.
