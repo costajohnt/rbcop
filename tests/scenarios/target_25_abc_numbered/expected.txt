@@ -1,0 +1,9 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+abc.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+abc.rb:1:1: R: Metrics/AbcSize: Assignment Branch Condition size for `m` is too high. [<0, 2, 0> 2/0]
+abc.rb:5:1: R: Metrics/AbcSize: Assignment Branch Condition size for `n` is too high. [<0, 5, 2> 5.39/0]
+abc.rb:9:1: R: Metrics/AbcSize: Assignment Branch Condition size for `o` is too high. [<0, 6, 0> 6/0]
+discount/abc.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+discount/abc.rb:1:1: R: Metrics/AbcSize: Assignment Branch Condition size for `m` is too high. [<0, 2, 0> 2/0]
+discount/abc.rb:5:1: R: Metrics/AbcSize: Assignment Branch Condition size for `n` is too high. [<0, 4, 2> 4.47/0]
+discount/abc.rb:9:1: R: Metrics/AbcSize: Assignment Branch Condition size for `o` is too high. [<0, 4, 0> 4/0]

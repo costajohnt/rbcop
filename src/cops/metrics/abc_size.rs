@@ -13,7 +13,7 @@ impl Cop for AbcSize {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let Some((name, body, (start, end))) = target(cx, node) else { return };
         let discount = !cx.cfg.bool("CountRepeatedAttributes").unwrap_or(false);
-        let (size, vector) = helpers::abc_size_calculator::calculate(&body, discount);
+        let (size, vector) = helpers::abc_size_calculator::calculate(&body, discount, cx.config.target_ruby < 2.7);
         let max = max(cx);
         if size <= max {
             return;
