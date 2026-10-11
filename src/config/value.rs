@@ -376,7 +376,7 @@ impl Loader {
 /// Psych's `ScalarScanner#tokenize` (YAML 1.1, `strict_integer: false`) for a plain scalar:
 /// `yes`/`on`/`off`, `1_000`, `0100` (octal), `1:30` (base 60), `1.` and so on.
 // ponytail: timestamps and dates stay strings (RuboCop's safe_load refuses Time/Date anyway); an
-// integer beyond i64 stays a string.
+// integer beyond i64 saturates to i64::MAX/MIN.
 fn psych_scalar(s: &str) -> Yaml {
     static WORDISH: LazyLock<Regex> =
         LazyLock::new(|| Regex::new(r"^[^\d.:-]?[\p{Alphabetic}_ \t\r\n\x0B\x0C!@#$%^&*(){}<>|/\\~;=]+").unwrap());
@@ -447,8 +447,13 @@ fn psych_scalar(s: &str) -> Yaml {
         } else {
             t.parse()
         };
-        if let Ok(i) = parsed {
-            return Yaml::Integer(if neg { -i } else { i });
+        match parsed {
+            Ok(i) => return Yaml::Integer(if neg { -i } else { i }),
+            // Psych makes a Bignum; it saturates here (docs/known-gaps.md).
+            Err(e) if *e.kind() == std::num::IntErrorKind::PosOverflow => {
+                return Yaml::Integer(if neg { i64::MIN } else { i64::MAX });
+            }
+            Err(_) => {}
         }
     }
     Yaml::String(s.into())
