@@ -1,0 +1,5 @@
+b.rb:5:11: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+c.rb:4:11: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+f.rb:3:1: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+g.rb:4:20: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+h.rb:4:8: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
