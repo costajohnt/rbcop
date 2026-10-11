@@ -1,0 +1,19 @@
+t27/a.rb:12:1: W: [Correctable] Lint/Void: `lambda(1) { |x| x }` used in void context.
+t27/a.rb:13:1: W: [Correctable] Lint/Void: `proc { |x; y| x }` used in void context.
+t27/a.rb:14:1: W: [Correctable] Lint/Void: `proc { }` used in void context.
+t27/a.rb:15:1: W: [Correctable] Lint/Void: `Proc.new { }` used in void context.
+t27/a.rb:2:1: W: [Correctable] Lint/Void: `Proc.new { it.method }` used in void context.
+t27/a.rb:5:1: W: [Correctable] Lint/Void: `proc { |x| x }` used in void context.
+t27/a.rb:6:1: W: [Correctable] Lint/Void: `Proc.new { |x| x.method }` used in void context.
+t27/a.rb:7:1: W: [Correctable] Lint/Void: `lambda { _1 }` used in void context.
+t27/a.rb:8:1: W: [Correctable] Lint/Void: `lambda { it }` used in void context.
+t27/a.rb:9:1: W: [Correctable] Lint/Void: `Proc.new` used in void context.
+t34/a.rb:12:1: W: [Correctable] Lint/Void: `lambda(1) { |x| x }` used in void context.
+t34/a.rb:13:1: W: [Correctable] Lint/Void: `proc { |x; y| x }` used in void context.
+t34/a.rb:14:1: W: [Correctable] Lint/Void: `proc { }` used in void context.
+t34/a.rb:15:1: W: [Correctable] Lint/Void: `Proc.new { }` used in void context.
+t34/a.rb:5:1: W: [Correctable] Lint/Void: `proc { |x| x }` used in void context.
+t34/a.rb:6:1: W: [Correctable] Lint/Void: `Proc.new { |x| x.method }` used in void context.
+t34/a.rb:7:1: W: [Correctable] Lint/Void: `lambda { _1 }` used in void context.
+t34/a.rb:8:1: W: [Correctable] Lint/Void: `lambda { it }` used in void context.
+t34/a.rb:9:1: W: [Correctable] Lint/Void: `Proc.new` used in void context.
