@@ -22,7 +22,12 @@ impl Cop for RedundantCapitalW {
         let interpolation = array
             .elements()
             .iter()
-            .any(|e| e.as_interpolated_string_node().is_some() || is_parser_dstr(&e) || double_quotes_required(node_text(&e)));
+            .any(|e| {
+                e.as_interpolated_string_node().is_some()
+                    || is_parser_dstr(&e)
+                    || helpers::string_help::legacy_eof_split(cx, &e)
+                    || double_quotes_required(node_text(&e))
+            });
         if interpolation {
             return;
         }

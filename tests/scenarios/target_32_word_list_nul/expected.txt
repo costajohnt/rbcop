@@ -1,0 +1,19 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+w1.rb:1:10: F: Lint/Syntax: unexpected token tSTRING_CONTENT (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+w10.rb:1:12: F: Lint/Syntax: unexpected token tSTRING_CONTENT (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+w11.rb:1:10: F: Lint/Syntax: unexpected token tSTRING_CONTENT (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+w14.rb:1:11: F: Lint/Syntax: unexpected token tSTRING_CONTENT (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+w2.rb:2:3: F: Lint/Syntax: unexpected token tSTRING_CONTENT (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+w3.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+w4.rb:1:9: F: Lint/Syntax: unexpected token tSTRING_CONTENT (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+w5.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+w6.rb:1:10: F: Lint/Syntax: unexpected token tSTRING_CONTENT (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+w7.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+w8.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+w9.rb:1:10: F: Lint/Syntax: unexpected token tSTRING_CONTENT (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+x1.rb:1:10: F: Lint/Syntax: unexpected token tSTRING_CONTENT (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+x2.rb:1:10: F: Lint/Syntax: unexpected token tSTRING_CONTENT (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+x4.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+x6.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+x6.rb:1:5: C: [Correctable] Style/RedundantCapitalW: Do not use `%W` unless interpolation is needed. If not, use `%w`.
+x7.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.

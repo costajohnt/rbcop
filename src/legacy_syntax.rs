@@ -44,6 +44,16 @@ pub fn diagnostics(
             w.violations.entry(p[1].start).or_insert(p[1].start);
         }
     }
+    // A word split at a raw NUL, ^D or ^Z (`convert`): the grammar has no rule for two contents in
+    // a row.
+    for p in sorted.windows(2) {
+        if p[0].name == "tSTRING_CONTENT"
+            && p[1].name == "tSTRING_CONTENT"
+            && text[..p[1].start].ends_with(['\0', '\x04', '\x1a'])
+        {
+            w.violations.entry(p[1].start).or_insert(p[1].start);
+        }
+    }
     if w.violations.is_empty() && seed.is_none() && circular.is_empty() && w.semantic.is_empty() {
         return Vec::new();
     }
@@ -640,6 +650,8 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
     let mut out: Vec<Tok> = Vec::with_capacity(tokens.len() + 1);
     // Lexer state after the previous token (the start of a file is EXPR_BEG).
     let mut state = EXPR_BEG;
+    // Inside a `%w`/`%i` literal.
+    let mut qwords = false;
     let mut i = 0;
     while i < tokens.len() {
         let t = tokens[i];
@@ -787,6 +799,26 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
                         | "kRETURN"
                 )
             });
+        match name {
+            "tQWORDS_BEG" | "tQSYMBOLS_BEG" => qwords = true,
+            "tSTRING_END" => qwords = false,
+            // The parser gem's `%w`/`%i` word scanner ends a word at a raw NUL, ^D or ^Z (its
+            // `c_eof`) without a tSPACE: a character other than whitespace right after it starts a
+            // second tSTRING_CONTENT (`diagnostics` reports it, #322).
+            "tSTRING_CONTENT" if qwords => {
+                let mut start = t.start;
+                for (k, _) in text[t.start..end].match_indices(['\0', '\x04', '\x1a']) {
+                    let next = t.start + k + 1;
+                    if next < end && !crate::helpers::parser_tokens::is_ruby_space(text.as_bytes()[next]) {
+                        out.push(Tok { name, start, end: next, cmd_do });
+                        start = next;
+                    }
+                }
+                out.push(Tok { name, start, end, cmd_do });
+                continue;
+            }
+            _ => {}
+        }
         out.push(Tok { name, start: t.start, end, cmd_do });
         // A label ending its line: the newline is a tNL when the parser's in_kwarg flag is set
         // (see `simulate`), else skipped.
