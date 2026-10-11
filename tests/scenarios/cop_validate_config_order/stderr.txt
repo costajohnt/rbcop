@@ -1,0 +1,1 @@
+Error: The `Layout/MultilineOperationIndentation` cop only accepts an `IndentationWidth` configuration parameter when `EnforcedStyle` is `indented`.

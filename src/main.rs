@@ -1114,23 +1114,6 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         }
     }
 
-    // Resolve configs up front (single-threaded), then lint in parallel.
-    let mut jobs = Vec::with_capacity(files.len());
-    // RuboCop loads a file's config when the file's turn comes, so an invalid config stops the run
-    // there, after the files before it have been reported.
-    let mut config_error = None;
-    for f in &files {
-        match store.for_file(f) {
-            Ok(c) => jobs.push((f.clone(), c)),
-            Err(e) => {
-                config_error = Some((f.clone(), e));
-                break;
-            }
-        }
-    }
-    for w in &store.warnings {
-        eprintln!("Warning: {w}");
-    }
     let only = &cli.opts.only;
     let except = &cli.except;
     // Runner#mobilize_cop_badge?: Badge#match_name? takes cop names and department names.
@@ -1145,6 +1128,41 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         }
         (only.is_empty() || match_name(only, cop)) && !match_name(except, cop)
     };
+    // Runner#mobilize_cop_badge?: without --only, --only-guide-cops or `AllCops:
+    // StyleGuideCopsOnly` keeps only cops whose own config has a StyleGuide.
+    // Lint/RedundantCopDisableDirective is not a team cop: Runner#redundant_cop_disable_directive
+    // runs it past this filter.
+    // ponytail: it so also enters Registry#disabled_names under the filter, which matters only
+    // for a config that disables it.
+    let badge_selected = |cop: &str, cfg: &Resolved| {
+        let guide_only = only.is_empty() && (cli.only_guide || cfg.all_cops().truthy("StyleGuideCopsOnly"));
+        selected(cop)
+            && (!guide_only
+                || cfg.hash.map(cop).is_some_and(|c| c.truthy("StyleGuide"))
+                || cop == "Lint/RedundantCopDisableDirective")
+    };
+    // Resolve configs up front (single-threaded), then lint in parallel.
+    let mut jobs = Vec::with_capacity(files.len());
+    // RuboCop loads a file's config when the file's turn comes, so an invalid config stops the run
+    // there, after the files before it have been reported. The same holds for a cop's
+    // validate_config, which runs when the file's team is mobilized.
+    let mut config_error = None;
+    for f in &files {
+        let checked = store.for_file(f).and_then(|c| {
+            rbcop::config::validator::cop_validate_config(&c, |cop| badge_selected(cop, &c) && c.cop_enabled(cop))
+                .map(|()| c)
+        });
+        match checked {
+            Ok(c) => jobs.push((f.clone(), c)),
+            Err(e) => {
+                config_error = Some((f.clone(), e));
+                break;
+            }
+        }
+    }
+    for w in &store.warnings {
+        eprintln!("Warning: {w}");
+    }
     let stdin_text = &stdin_text;
     // --stdin with -a/-A: the corrected source, printed after the report.
     let mut stdin_corrected: Option<String> = None;
@@ -1153,16 +1171,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     // corrected). The file is written in the reporting loop below, in file order, as RuboCop does.
     let lint = |path: &PathBuf, cfg: &Resolved| -> Linted {
         let display = rbcop::config::relative_path(path, &cwd);
-        // Runner#mobilize_cop_badge?: without --only, --only-guide-cops or `AllCops:
-        // StyleGuideCopsOnly` keeps only cops whose own config has a StyleGuide.
-        let guide_only = only.is_empty() && (cli.only_guide || cfg.all_cops().truthy("StyleGuideCopsOnly"));
-        let has_guide = |cop: &str| cfg.hash.map(cop).is_some_and(|c| c.truthy("StyleGuide"));
-        // Lint/RedundantCopDisableDirective is not a team cop: Runner#redundant_cop_disable_directive
-        // runs it past this filter.
-        // ponytail: it so also enters Registry#disabled_names under the filter, which matters only
-        // for a config that disables it.
-        let selected =
-            |cop: &str| selected(cop) && (!guide_only || has_guide(cop) || cop == "Lint/RedundantCopDisableDirective");
+        let selected = |cop: &str| badge_selected(cop, cfg);
         if let Some(bytes) = stdin_text {
             // --stdin with -a/-A: the corrected source is printed after the report (@options[:stdin]).
             if let Some(mode) = cli.autocorrect {

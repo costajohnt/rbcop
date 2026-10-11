@@ -1,0 +1,1 @@
+a.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
