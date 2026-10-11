@@ -123,12 +123,16 @@ impl Values<'_> {
     fn value(&self, node: &Node, in_hash: bool) -> String {
         // A folded `- 1` is `(int -1)`: its value, negated.
         if let Some(lit) = crate::helpers::literal_node::folded_numeric(node) {
+            let neg = crate::helpers::literal_node::folded_negative(node);
             return match kind::of(&lit) {
                 kind::INTEGER_NODE => {
                     let s = integer_to_s(&lit.as_integer_node().unwrap());
-                    if s == "0" { s } else { format!("-{s}") }
+                    if s == "0" || !neg { s } else { format!("-{s}") }
                 }
-                kind::FLOAT_NODE => float_to_s(-lit.as_float_node().unwrap().value()),
+                kind::FLOAT_NODE => {
+                    let v = lit.as_float_node().unwrap().value();
+                    float_to_s(if neg { -v } else { v })
+                }
                 _ => self.source(node),
             };
         }

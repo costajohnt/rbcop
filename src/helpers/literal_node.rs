@@ -25,15 +25,28 @@ pub fn literal(node: &Node) -> bool {
         )
 }
 
+thread_local! {
+    /// The file being inspected parses with the parser gem (target < 3.3), whose lexer folds a
+    /// separated unary plus too (set by runner::analyze).
+    static FOLD_PLUS: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+}
+
+/// Whether `folded_numeric` folds `+ 1` as well as `- 1` (target < 3.3) for this thread's file.
+pub fn set_fold_plus(on: bool) {
+    FOLD_PLUS.set(on);
+}
+
 /// `- 1` (a minus, whitespace, a numeric literal): Prism makes it a `-@` call, the Prism
 /// translation RuboCop parses with folds it into one negative literal (`(int -1)`), as the parser
-/// gem does. Returns the literal.
-// ponytail: the parser gem (target < 3.3) also folds `+ 1` and `- 1.abs`; the Prism translation
-// does neither, so they stay calls here.
+/// gem does; below 3.3 the parser gem folds `+ 1` into `(int 1)` as well (#249). Returns the
+/// literal; `folded_negative` tells the sign.
+// ponytail: the parser gem (target < 3.3) also folds `- 1.abs`; the Prism translation does not, so
+// it stays a call here.
 pub fn folded_numeric<'pr>(node: &Node<'pr>) -> Option<Node<'pr>> {
     let call = node.as_call_node()?;
     let recv = call.receiver()?;
-    (call.name().as_slice() == b"-@"
+    let op = call.name().as_slice();
+    ((op == b"-@" || (op == b"+@" && FOLD_PLUS.get()))
         && call.call_operator_loc().is_none()
         && call.arguments().is_none()
         && call.block().is_none()
@@ -45,6 +58,11 @@ pub fn folded_numeric<'pr>(node: &Node<'pr>) -> Option<Node<'pr>> {
     .then_some(recv)
 }
 
+/// A folded literal is negative (`- 1`, not `+ 1`).
+pub fn folded_negative(node: &Node) -> bool {
+    node.as_call_node().is_some_and(|c| c.name().as_slice() == b"-@")
+}
+
 /// `kind::of` with a folded `- 1` seen as the literal it folds to (parser's `(int -1)`): use it
 /// wherever a cop matches numeric literal kinds.
 pub fn folded_kind(node: &Node) -> usize {
@@ -54,7 +72,7 @@ pub fn folded_kind(node: &Node) -> usize {
 /// A float literal's value, a folded `- 1.5` included.
 pub fn float_literal_value(node: &Node) -> Option<f64> {
     match folded_numeric(node) {
-        Some(l) => l.as_float_node().map(|f| -f.value()),
+        Some(l) => l.as_float_node().map(|f| if folded_negative(node) { -f.value() } else { f.value() }),
         None => node.as_float_node().map(|f| f.value()),
     }
 }
@@ -195,9 +213,9 @@ fn float_key(src: &str) -> String {
 /// literal/const trees `recursive_basic_literal?` accepts; other nodes fall back to type + source.
 /// ponytail: `__FILE__` keys use the source text, not the buffer name parser substitutes.
 pub fn key(node: &Node) -> String {
-    // A folded `- 1` is the parser's `(int -1)`: the key of the negated literal.
+    // A folded `- 1` is the parser's `(int -1)`: the key of the negated literal (`+ 1`'s is 1's).
     if let Some(l) = folded_numeric(node) {
-        let neg = format!("-{}", node_text(&l));
+        let neg = format!("{}{}", if folded_negative(node) { "-" } else { "" }, node_text(&l));
         return match l {
             Node::IntegerNode { .. } => format!("int:{}", int_value(&neg)),
             Node::FloatNode { .. } => float_key(&neg),
