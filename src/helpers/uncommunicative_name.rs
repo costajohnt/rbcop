@@ -65,12 +65,15 @@ pub fn check(cx: &mut Cx, args: &[Node], name_type: &str) {
         if allowed.iter().any(|a| a == name) {
             continue;
         }
-        // range: `full.size (+1/+2)` characters from the arg's begin (blockarg: from `&`)
+        // range: `full.size (+1/+2)` characters from the arg's begin (blockarg: from `&`). An
+        // mlhs name is an s-expression that can run past the end of the source; parser counts
+        // on (one column per character), and so do the formatters (#312).
         let start = arg.location().start_offset();
         let len = full.chars().count() + extra;
-        let Some(end) = cx.src.text[start..].char_indices().map(|(i, _)| start + i).chain([cx.src.text.len()]).nth(len)
-        else {
-            continue;
+        let rest = &cx.src.text[start..];
+        let end = match rest.char_indices().nth(len) {
+            Some((i, _)) => start + i,
+            None => cx.src.text.len() + (len - rest.chars().count()),
         };
         let nchars = name.chars().count();
         // only the first offense on a range survives
