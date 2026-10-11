@@ -10,15 +10,24 @@ pub struct Declaration {
     pub name: String,
     /// Method name (OrderedDependencies only compares declarations of the same method).
     pub method: String,
+    /// No enclosing node starts at the send (`gem 'a' if x` wraps it in a modifier): parser's
+    /// Comment::Associator hands a leading comment to the outermost node starting there.
+    pub outermost: bool,
 }
 
 impl Declaration {
-    /// From a call whose first argument is a plain string (`(send ... (str _) ...)`).
-    pub fn of(call: &ruby_prism::CallNode) -> Option<Self> {
+    /// From a call whose first argument is a plain string (`(send ... (str _) ...)`); `ancestors`
+    /// are the call's Prism ancestors (`cx.ancestors`).
+    pub fn of(call: &ruby_prism::CallNode, ancestors: &[Node]) -> Option<Self> {
         let first = call_args(call).into_iter().next()?;
         let name = String::from_utf8_lossy(first.as_string_node()?.unescaped()).into_owned();
         let (start, end) = send_range(call);
-        Some(Declaration { start, end, name, method: method_name(call).to_string() })
+        // A statement list starting here is the statement itself (or a parser `begin`, which never
+        // takes leading comments).
+        let outermost = !ancestors.iter().any(|a| {
+            a.location().start_offset() == start && !matches!(kind::of(a), kind::PROGRAM_NODE | kind::STATEMENTS_NODE)
+        });
+        Some(Declaration { start, end, name, method: method_name(call).to_string(), outermost })
     }
 }
 
@@ -33,9 +42,10 @@ static ENCODING: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"[\s#](en)?codin
 
 /// Line of `get_source_range(node, comments_as_separators)`: with TreatCommentsAsGroupSeparators
 /// off, the first comment parser's Comment::Associator attaches to the node.
-fn first_line(cx: &Cx, start: usize) -> usize {
+fn first_line(cx: &Cx, d: &Declaration) -> usize {
     let src = cx.src;
-    if cx.cfg.bool("TreatCommentsAsGroupSeparators") == Some(true) {
+    let start = d.start;
+    if !d.outermost || cx.cfg.bool("TreatCommentsAsGroupSeparators") == Some(true) {
         return src.line_of(start);
     }
     // Associator skips a leading shebang, magic comment and encoding comment (in that order).
@@ -77,7 +87,7 @@ pub fn check_pair(
     swap_with: &Declaration,
     msg: fn(&str, &str) -> String,
 ) {
-    if cx.src.line_of(previous.end) + 1 != first_line(cx, current.start) {
+    if cx.src.line_of(previous.end) + 1 != first_line(cx, current) {
         return;
     }
     if canonical(cx, &current.name) >= canonical(cx, &previous.name) {
@@ -101,7 +111,7 @@ pub fn check_pair(
 /// (or the node) through the node's last line, final newline included.
 fn declaration_with_comment(cx: &Cx, d: &Declaration) -> (usize, usize) {
     let src = cx.src;
-    let begin = src.line_start(first_line(cx, d.start));
+    let begin = src.line_start(first_line(cx, d));
     let end_line_start = src.line_start(src.line_of(d.end));
     let end = src.text[end_line_start..].find('\n').map_or(src.text.len(), |i| end_line_start + i + 1);
     (begin, end)

@@ -30,7 +30,7 @@ impl Cop for OrderedDependencies {
         if !is_csend(&call)
             && call.receiver().is_some_and(|r| lvar_name(&r, cx.config.target_ruby).is_some())
             && matches!(method_name(&call), "add_dependency" | "add_runtime_dependency" | "add_development_dependency")
-            && let Some(d) = Declaration::of(&call)
+            && let Some(d) = Declaration::of(&call, cx.ancestors)
         {
             cx.state::<State>().0.push(d);
         }

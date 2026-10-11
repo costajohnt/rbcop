@@ -1,0 +1,33 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+assign_and_read.rb:1:1: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+assign_and_read.rb:1:1: C: Naming/VariableName: Use snake_case for variable names.
+assign_and_read.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+assign_and_read.rb:2:6: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+assign_and_read.rb:2:6: C: Naming/VariableName: Use snake_case for variable names.
+class_name.rb:1:7: F: Lint/Syntax: class or module name must be a constant literal (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+in_block.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+in_block.rb:2:3: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+in_block.rb:2:3: C: Naming/VariableName: Use snake_case for variable names.
+in_block.rb:3:8: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+in_block.rb:3:8: C: Naming/VariableName: Use snake_case for variable names.
+latin.rb:1:1: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+latin.rb:1:1: C: Naming/VariableName: Use snake_case for variable names.
+latin.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+latin.rb:2:6: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+latin.rb:2:6: C: Naming/VariableName: Use snake_case for variable names.
+method_and_symbol.rb:1:10: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+method_and_symbol.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+method_and_symbol.rb:1:8: C: [Correctable] Style/ColonMethodCall: Do not use `::` for method calls.
+method_and_symbol.rb:4:5: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+method_and_symbol.rb:4:5: C: Naming/MethodName: Use snake_case for method names.
+receiver.rb:1:1: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+receiver.rb:1:1: C: Naming/VariableName: Use snake_case for variable names.
+receiver.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+receiver.rb:2:1: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+receiver.rb:2:1: C: Naming/VariableName: Use snake_case for variable names.
+scope_token.rb:1:7: F: Lint/Syntax: unexpected token tIDENTIFIER (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+unused.rb:1:1: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+unused.rb:1:1: C: Naming/VariableName: Use snake_case for variable names.
+unused.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+unused.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `Жx`.
+with_blank_line_dot.rb:4:3: F: Lint/Syntax: unexpected token tDOT (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)

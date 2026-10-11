@@ -121,10 +121,13 @@ pub fn variable(node: &ruby_prism::Node, ancestors: &[ruby_prism::Node]) -> Opti
             let st = n.name_loc().start_offset();
             (OtherArg, s(n.name()), (st, st + n.name().as_slice().len()))
         }
+        // parser's lvar is the bare name (Prism's `foo(name:)` read spans the colon)
         N::LocalVariableReadNode { .. } => {
             let n = node.as_local_variable_read_node()?;
-            (Lvar, s(n.name()), l(n.location()))
+            (Lvar, s(n.name()), crate::helpers::lvar::range(&n.location(), n.name().as_slice()))
         }
+        // the implicit `it` block parameter (3.4+) is an lvar for parser
+        N::ItLocalVariableReadNode { .. } => (Lvar, "it".to_string(), crate::helpers::lvar::range(&node.location(), b"it")),
         N::LocalVariableWriteNode { .. } => {
             let n = node.as_local_variable_write_node()?;
             (Lvasgn, s(n.name()), l(n.name_loc()))
@@ -231,6 +234,7 @@ pub const VARIABLE_KINDS: &[usize] = &[
     crate::node_kind::REQUIRED_KEYWORD_PARAMETER_NODE,
     crate::node_kind::OPTIONAL_KEYWORD_PARAMETER_NODE,
     crate::node_kind::LOCAL_VARIABLE_READ_NODE,
+    crate::node_kind::IT_LOCAL_VARIABLE_READ_NODE,
     crate::node_kind::LOCAL_VARIABLE_WRITE_NODE,
     crate::node_kind::LOCAL_VARIABLE_OPERATOR_WRITE_NODE,
     crate::node_kind::LOCAL_VARIABLE_OR_WRITE_NODE,

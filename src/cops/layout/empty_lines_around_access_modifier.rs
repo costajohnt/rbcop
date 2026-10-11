@@ -102,7 +102,10 @@ impl EmptyLinesAroundAccessModifier {
         let body_end = |l: usize| class_lines.is_some_and(|(_, e)| l + 1 == e);
         let lines = &src.lines;
         let previous_line_empty = {
-            let prev = lines[..first_line.saturating_sub(1).min(lines.len())].iter().rev().find(|l| !COMMENT_LINE.is_match(l));
+            // `processed_source[0..(send_line - 2)]`: on line 1 that is `[0..-1]`, every line, so the
+            // file's last non-comment line decides (blank only when the file ends in a newline).
+            let upto = if first_line == 1 { lines.len() } else { (first_line - 1).min(lines.len()) };
+            let prev = lines[..upto].iter().rev().find(|l| !COMMENT_LINE.is_match(l));
             prev.is_none_or(|p| block_start(first_line) || class_def(first_line) || blank(p))
         };
         // next_line_empty?: `nil.blank?` raises in RuboCop past the last line, so no offense there.

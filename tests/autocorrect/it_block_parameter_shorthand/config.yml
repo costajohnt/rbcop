@@ -1,0 +1,11 @@
+AllCops:
+  NewCops: disable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Style/ItBlockParameter:
+  EnforcedStyle: always
+Style/SingleLineBlockParams:
+  Methods:
+    - reduce: [acc, elem]
+Layout/LineLength:
+  Max: 50

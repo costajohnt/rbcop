@@ -1,0 +1,9 @@
+t.rb:10:3: C: Style/DocumentationMethod: Missing method documentation comment.
+t.rb:14:6: C: Style/Documentation: Missing top-level documentation comment for `class Baz`.
+t.rb:15:3: C: Style/DocumentationMethod: Missing method documentation comment.
+t.rb:22:1: C: Style/Documentation: Missing top-level documentation comment for `class Qux`.
+t.rb:23:3: C: Style/DocumentationMethod: Missing method documentation comment.
+t.rb:28:3: C: Style/DocumentationMethod: Missing method documentation comment.
+t.rb:32:3: C: Style/DocumentationMethod: Missing method documentation comment.
+t.rb:38:2: C: Style/DocumentationMethod: Missing method documentation comment.
+t.rb:5:3: C: Style/DocumentationMethod: Missing method documentation comment.

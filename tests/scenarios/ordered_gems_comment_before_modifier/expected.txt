@@ -1,0 +1,4 @@
+Gemfile:10:1: C: [Correctable] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `e` should appear before `f`.
+Gemfile:8:1: C: [Correctable] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `c` should appear before `d`.
+both.gemspec:6:3: C: [Correctable] Gemspec/OrderedDependencies: Dependencies should be sorted in an alphabetical order within their section of the gemspec. Dependency `c` should appear before `d`.
+plain.gemspec:4:3: C: [Correctable] Gemspec/OrderedDependencies: Dependencies should be sorted in an alphabetical order within their section of the gemspec. Dependency `a` should appear before `b`.
