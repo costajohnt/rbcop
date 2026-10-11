@@ -1,0 +1,1 @@
+red.rb:3:9: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/AbcSize`.

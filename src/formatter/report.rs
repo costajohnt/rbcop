@@ -287,13 +287,7 @@ impl Formatter for Junit {
                 continue;
             }
             // Registry#enabled: --only names are enabled outright, others by config.
-            let enabled = only.is_some_and(|o| o.iter().any(|n| n == cop))
-                || if cop == "Lint/Syntax" {
-                    f.config.hash.map(cop).and_then(|c| c.bool("Enabled")) == Some(true)
-                } else {
-                    f.config.cop(cop).enabled
-                };
-            if !enabled {
+            if !f.config.cop_enabled(cop) {
                 continue;
             }
             let target: Vec<&Off> = f.offenses.iter().filter(|o| o.cop == cop).collect();
