@@ -1,4 +1,4 @@
-use crate::cops::style_frozen_string_literal_comment::frozen_value;
+use crate::helpers::magic_comment::frozen_string_literal as frozen_value;
 use crate::prelude::*;
 
 pub const NAME: &str = "Lint/DuplicateMagicComment";

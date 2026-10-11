@@ -1,0 +1,1 @@
+--only Style/FrozenStringLiteralComment,Lint/DuplicateMagicComment,Lint/MisplacedMagicComment,Style/Encoding
