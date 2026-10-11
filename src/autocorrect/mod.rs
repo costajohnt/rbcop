@@ -272,12 +272,11 @@ fn infinite_loop(path: &Path, iterations: &[Vec<Offense>]) -> String {
     let cause: Vec<String> = iterations
         .iter()
         .map(|offenses| {
-            let mut names: Vec<&str> = Vec::new();
-            for o in offenses {
-                if !names.contains(&o.cop) {
-                    names.push(o.cop);
-                }
-            }
+            // InfiniteCorrectionLoop maps the team's offenses to cop names: the team reports per
+            // cop, and Registry#sort! orders its cops by name.
+            let mut names: Vec<&str> = offenses.iter().map(|o| o.cop).collect();
+            names.sort_unstable();
+            names.dedup();
             names.join(", ")
         })
         .collect();
