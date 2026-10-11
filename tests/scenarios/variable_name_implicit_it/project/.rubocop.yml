@@ -1,0 +1,10 @@
+AllCops:
+  TargetRubyVersion: 3.4
+  NewCops: enable
+  SuggestExtensions: false
+Naming/VariableName:
+  ForbiddenPatterns:
+  - t$
+Naming/VariableNumber:
+  ForbiddenIdentifiers:
+  - it
