@@ -704,23 +704,21 @@ pub fn visiting() -> Option<usize> {
     VISITING.with(|v| v.get())
 }
 
-/// Runner#warnings: every RuboCop::Warning a cop raised, for the end-of-run summary.
-static WARNINGS: std::sync::Mutex<Vec<String>> = std::sync::Mutex::new(Vec::new());
-
-/// Team#handle_warning: a cop's Warning, printed now and kept for the summary (one per raise).
-pub fn cop_warning(message: &str, src: &Source) {
-    let msg = format!("{message} (from file: {})", src.absolute_path());
-    eprintln!("{msg}");
-    WARNINGS.lock().unwrap_or_else(|e| e.into_inner()).push(msg);
+thread_local! {
+    /// Team#warnings: every RuboCop::Warning a cop raised for the file this thread is linting,
+    /// one per raise, in order. The reporting loop prints them when it reaches the file (RuboCop
+    /// prints them as it inspects, in target order) and keeps them for the end-of-run summary.
+    static FILE_WARNINGS: std::cell::RefCell<Vec<String>> = const { std::cell::RefCell::new(Vec::new()) };
 }
 
-/// The run's cop warnings, in file order.
-pub fn take_warnings() -> Vec<String> {
-    let mut warnings = std::mem::take(&mut *WARNINGS.lock().unwrap_or_else(|e| e.into_inner()));
-    // Files run in parallel; a stable sort by path keeps each file's raises together, in order.
-    warnings
-        .sort_by(|a, b| a.rsplit_once(" (from file: ").map(|x| x.1).cmp(&b.rsplit_once(" (from file: ").map(|x| x.1)));
-    warnings
+/// Team#handle_warning: a cop's Warning for the file being linted.
+pub fn cop_warning(message: &str, src: &Source) {
+    FILE_WARNINGS.with(|w| w.borrow_mut().push(format!("{message} (from file: {})", src.absolute_path())));
+}
+
+/// The warnings the cops raised on this thread since the last call (one file's, in order).
+pub fn take_file_warnings() -> Vec<String> {
+    FILE_WARNINGS.with(|w| std::mem::take(&mut *w.borrow_mut()))
 }
 
 /// Print an error now and keep it for the summary (it makes the run fail).

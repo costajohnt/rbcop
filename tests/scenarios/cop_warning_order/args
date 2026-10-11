@@ -1,0 +1,1 @@
+-a --only Style/Copyright c.rb b.rb a.rb
