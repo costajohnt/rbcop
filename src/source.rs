@@ -231,19 +231,49 @@ fn magic_encoding(text: &str) -> Option<&str> {
     if text.starts_with('\u{feff}') {
         return None;
     }
-    let mut lines = text.lines();
-    let first = lines.next().unwrap_or("");
-    let line = if first.starts_with("#!") { lines.next().unwrap_or("") } else { first };
+    // `\A(.*)\n?(.*\n)?`: the second line counts only when a newline ends it; the comment must
+    // start the line.
+    let (first, rest) = text.split_once('\n').unwrap_or((text, ""));
+    let line = if first.starts_with("#!") { rest.split_once('\n')?.0 } else { first };
+    if !line.starts_with('#') {
+        return None;
+    }
     let c = ENCODING_RE.captures(line)?;
     Some(c.get(1)?.as_str().trim_end_matches("-unix").trim_end_matches("-dos").trim_end_matches("-mac"))
 }
 
-/// Parser::Source::Buffer.reencode_string failing on a source whose magic comment says US-ASCII
-/// but which has a byte above 0x7f: RuboCop's beautified `"\xe3" on us-ascii.` (other encodings
-/// are not checked; see docs/known-gaps.md).
+/// Encoding.name_list of Ruby 4.0.6 (RuboCop's Ruby), lowercase: what `Encoding.find` accepts.
+const ENCODING_NAMES: &str = "\
+    646 ansi_x3.4-1968 ascii ascii-8bit big5 big5-hkscs big5-hkscs:2008 big5-uao binary cesu-8 \
+    cp1250 cp1251 cp1252 cp1253 cp1254 cp1255 cp1256 cp1257 cp1258 cp437 cp50220 cp50221 cp51932 \
+    cp65000 cp65001 cp720 cp737 cp775 cp850 cp852 cp855 cp857 cp860 cp861 cp862 cp863 cp864 cp865 \
+    cp866 cp869 cp874 cp878 cp932 cp936 cp949 cp950 cp951 cswindows31j ebcdic-cp-us emacs-mule \
+    euc-cn euc-jis-2004 euc-jisx0213 euc-jp euc-jp-ms euc-kr euc-tw euccn eucjp eucjp-ms euckr \
+    euctw external filesystem gb12345 gb18030 gb1988 gb2312 gbk ibm037 ibm437 ibm720 ibm737 ibm775 \
+    ibm850 ibm852 ibm855 ibm857 ibm860 ibm861 ibm862 ibm863 ibm864 ibm865 ibm866 ibm869 internal \
+    iso-2022-jp iso-2022-jp-2 iso-2022-jp-kddi iso-8859-1 iso-8859-10 iso-8859-11 iso-8859-13 \
+    iso-8859-14 iso-8859-15 iso-8859-16 iso-8859-2 iso-8859-3 iso-8859-4 iso-8859-5 iso-8859-6 \
+    iso-8859-7 iso-8859-8 iso-8859-9 iso2022-jp iso2022-jp2 iso8859-1 iso8859-10 iso8859-11 \
+    iso8859-13 iso8859-14 iso8859-15 iso8859-16 iso8859-2 iso8859-3 iso8859-4 iso8859-5 iso8859-6 \
+    iso8859-7 iso8859-8 iso8859-9 koi8-r koi8-u locale maccenteuro maccroatian maccyrillic macgreek \
+    maciceland macjapan macjapanese macroman macromania macthai macturkish macukraine pck shift_jis \
+    sjis sjis-docomo sjis-kddi sjis-softbank stateless-iso-2022-jp stateless-iso-2022-jp-kddi \
+    tis-620 ucs-2be ucs-4be ucs-4le us-ascii utf-16 utf-16be utf-16le utf-32 utf-32be utf-32le \
+    utf-7 utf-8 utf-8-hfs utf-8-mac utf8-docomo utf8-kddi utf8-mac utf8-softbank windows-1250 \
+    windows-1251 windows-1252 windows-1253 windows-1254 windows-1255 windows-1256 windows-1257 \
+    windows-1258 windows-31j windows-874";
+
+/// Parser::Source::Buffer.recognize_encoding failing on a magic comment naming no encoding
+/// (`Unknown encoding name - bogus.`, the message capitalized: the rest downcased), or
+/// reencode_string failing on a source whose magic comment says US-ASCII but which has a byte above
+/// 0x7f: RuboCop's beautified `"\xe3" on us-ascii.` (other encodings are not checked; see
+/// docs/known-gaps.md). Either way RuboCop runs no cop and corrects nothing.
 pub fn encoding_error(bytes: &[u8]) -> Option<String> {
     let head = String::from_utf8_lossy(&bytes[..bytes.len().min(1024)]);
     let name = magic_encoding(&head)?;
+    if !ENCODING_NAMES.split_ascii_whitespace().any(|n| n.eq_ignore_ascii_case(name)) {
+        return Some(format!("Unknown encoding name - {}.", name.to_ascii_lowercase()));
+    }
     let ascii = ["us-ascii", "ascii", "ansi_x3.4-1968", "646"].iter().any(|n| name.eq_ignore_ascii_case(n));
     let b = bytes.iter().find(|&&b| b > 0x7f).filter(|_| ascii)?;
     Some(format!("\"\\x{b:02x}\" on us-ascii."))
