@@ -1324,6 +1324,16 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         warn_red(global, &e);
         return Ok(ERROR);
     }
+    // ExecuteRunner#display_warning_summary, before the error summary.
+    let cop_warnings = runner::take_warnings();
+    if !cop_warnings.is_empty() {
+        let n = cop_warnings.len();
+        let paint = formatter::Paint(global);
+        eprintln!("{}", paint.yellow(&format!("\n{n} warning{}:", if n == 1 { "" } else { "s" })));
+        for w in &cop_warnings {
+            eprintln!("{}", paint.yellow(w));
+        }
+    }
     // ExecuteRunner#display_error_summary; any cop error makes the run fail (runner_status).
     let cop_errors = runner::take_errors();
     if !cop_errors.is_empty() {

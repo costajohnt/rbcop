@@ -428,8 +428,32 @@ fn cop_error_is_located_at_the_visited_node() {
     fs::write(dir.join("t.rb"), "if cond then foo else if cond2; bar else baz end; end\n").unwrap();
     let out = rbcop(&dir, &["--only", "Style/IfInsideElse", "-f", "e", "t.rb"]);
     let err = text(&out.stderr);
-    assert!(err.starts_with("An error occurred while Style/IfInsideElse cop was inspecting t.rb:1:0.\n"), "{err}");
+    // Team#process_errors names the file by its absolute path (Dir.pwd is physical).
+    let abs = dir.join("t.rb");
+    let want = format!("An error occurred while Style/IfInsideElse cop was inspecting {}:1:0.\n", abs.display());
+    assert!(err.starts_with(&want), "{err}");
     assert_eq!(out.status.code(), Some(1));
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// The processed file name is the expanded absolute path: `__FILE__`'s value (Style/StringConcatenation
+/// folds it into the literal) and a cop Warning's `(from file: ...)`, which ExecuteRunner repeats
+/// in its end-of-run `N warnings:` summary, one per raise (two -A iterations here).
+#[test]
+fn file_name_is_the_absolute_path() {
+    let dir = scratch("abspath");
+    fs::create_dir_all(dir.join("sub")).unwrap();
+    fs::write(dir.join("sub/t.rb"), "x = __FILE__ + 'top'\n").unwrap();
+    let only = "Style/StringConcatenation,Style/Copyright";
+    let out = rbcop(&dir, &["-A", "--only", only, "--force-default-config", "-f", "e", "sub/../sub/t.rb"]);
+    let abs = dir.join("sub/t.rb").display().to_string();
+    assert_eq!(fs::read_to_string(dir.join("sub/t.rb")).unwrap(), format!("x = \"{abs}top\"\n"));
+    let warning =
+        format!("Style/Copyright: An AutocorrectNotice must be defined in your RuboCop config (from file: {abs})");
+    let err = text(&out.stderr);
+    assert!(err.ends_with(&format!("\n2 warnings:\n{warning}\n{warning}\n")), "{err}");
+    assert_eq!(err.matches(&warning).count(), 4, "{err}");
+    assert_eq!(out.status.code(), Some(0));
     let _ = fs::remove_dir_all(&dir);
 }
 
