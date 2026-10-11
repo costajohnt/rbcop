@@ -1,0 +1,21 @@
+a.rb:2:13: C: [Correctable] Layout/LineLength: Line is too long. [17/12]
+a.rb:2:3: C: Style/NumberedParameters: Avoid using numbered parameters.
+a.rb:3:13: C: [Correctable] Layout/LineLength: Line is too long. [14/12]
+a.rb:3:3: C: Style/NumberedParameters: Avoid using numbered parameters.
+a.rb:4:3: C: Style/NumberedParameters: Avoid using numbered parameters.
+a.rb:5:13: C: [Correctable] Layout/LineLength: Line is too long. [18/12]
+a.rb:6:13: C: [Correctable] Layout/LineLength: Line is too long. [20/12]
+a.rb:7:13: C: [Correctable] Layout/LineLength: Line is too long. [21/12]
+a.rb:8:13: C: [Correctable] Layout/LineLength: Line is too long. [21/12]
+a.rb:9:13: C: [Correctable] Layout/LineLength: Line is too long. [22/12]
+empty_block.rb:1:13: C: [Correctable] Layout/LineLength: Line is too long. [16/12]
+empty_block.rb:1:1: W: Lint/EmptyBlock: Empty block detected.
+empty_block.rb:3:13: C: [Correctable] Layout/LineLength: Line is too long. [20/12]
+empty_block.rb:3:1: W: Lint/EmptyBlock: Empty block detected.
+empty_block.rb:4:13: C: [Correctable] Layout/LineLength: Line is too long. [18/12]
+empty_block.rb:4:1: W: Lint/EmptyBlock: Empty block detected.
+empty_block.rb:7:13: C: [Correctable] Layout/LineLength: Line is too long. [13/12]
+empty_block.rb:7:1: W: Lint/EmptyBlock: Empty block detected.
+empty_block.rb:8:13: C: [Correctable] Layout/LineLength: Line is too long. [21/12]
+empty_block.rb:8:1: C: Style/NumberedParameters: Avoid using numbered parameters.
+empty_block.rb:8:1: W: Lint/EmptyBlock: Empty block detected.

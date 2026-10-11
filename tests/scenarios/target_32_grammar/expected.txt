@@ -1,0 +1,22 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+f1.rb:2:11: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+f2.rb:2:8: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+mc130.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+mc130.rb:5:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `value`.
+o1.rb:2:13: F: Lint/Syntax: unexpected token kOR (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+o10.rb:1:18: F: Lint/Syntax: unexpected token kOR (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+o11.rb:1:13: F: Lint/Syntax: unexpected token kOR (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+o13.rb:1:13: F: Lint/Syntax: unexpected token kAND (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+o14.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+o14.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.
+o15.rb:1:11: F: Lint/Syntax: unexpected token kOR (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+o17.rb:1:11: F: Lint/Syntax: unexpected token kOR (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+o2.rb:2:13: F: Lint/Syntax: unexpected token kAND (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+o3.rb:1:11: F: Lint/Syntax: unexpected token kOR (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+o4.rb:1:14: F: Lint/Syntax: unexpected token kOR (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+o5.rb:1:13: F: Lint/Syntax: unexpected token kOR (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+o6.rb:1:14: F: Lint/Syntax: unexpected token kOR (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+o7.rb:1:12: F: Lint/Syntax: unexpected token kOR (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+o8.rb:1:15: F: Lint/Syntax: unexpected token kOR (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+o9.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+o9.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.

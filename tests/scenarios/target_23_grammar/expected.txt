@@ -1,0 +1,15 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+m1.rb:3:5: F: Lint/Syntax: multiple assignment in conditional context (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+m2.rb:2:7: F: Lint/Syntax: multiple assignment in conditional context (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+m2.rb:6:1: F: Lint/Syntax: class definition in method body (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+m3.rb:1:10: F: Lint/Syntax: multiple assignment in conditional context (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+m4.rb:1:12: F: Lint/Syntax: multiple assignment in conditional context (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+m5.rb:1:6: F: Lint/Syntax: multiple assignment in conditional context (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+o3.rb:1:11: F: Lint/Syntax: unexpected token kOR (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+r1.rb:1:13: F: Lint/Syntax: unexpected token kRESCUE_MOD (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+r2.rb:2:11: F: Lint/Syntax: unexpected token kRESCUE_MOD (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+r3.rb:1:11: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+r3.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+r3.rb:1:5: W: [Correctable] Lint/ParenthesesAsGroupedExpression: `(a = foo rescue bar)` interpreted as grouped expression.
+r3.rb:1:7: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.
+r4.rb:1:10: F: Lint/Syntax: unexpected token kRESCUE_MOD (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)

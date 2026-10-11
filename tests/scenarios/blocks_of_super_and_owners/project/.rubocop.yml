@@ -1,0 +1,8 @@
+AllCops:
+  TargetRubyVersion: 3.4
+  NewCops: enable
+  SuggestExtensions: false
+Style/NumberedParameters:
+  EnforcedStyle: disallow
+Layout/LineLength:
+  Max: 12

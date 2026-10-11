@@ -34,6 +34,8 @@ pub struct Source<'a> {
     /// Target below Ruby 3.3: RuboCop parses with the parser gem, which accepts a few things Prism
     /// rejects (`runner::TOLERATED_ERRORS`).
     pub parser_gem: bool,
+    /// AllCops/TargetRubyVersion (set by the runner).
+    pub target_ruby: f64,
     /// Magic comment says binary/ASCII-8BIT: Ruby counts columns in bytes (see `binary_encoding`).
     pub binary: bool,
     tokens: OnceCell<Vec<Token>>,
@@ -41,6 +43,11 @@ pub struct Source<'a> {
 }
 
 impl<'a> Source<'a> {
+    /// The target when the parser gem parses it (below 3.3), for checks of the target's grammar.
+    pub fn legacy(&self) -> Option<f64> {
+        self.parser_gem.then_some(self.target_ruby)
+    }
+
     /// The processed source's file name: TargetFinder's expanded absolute path (`.`/`..` folded,
     /// symlinks kept), which RuboCop uses for `__FILE__` and in cop error/warning locations.
     pub fn absolute_path(&self) -> String {
@@ -68,6 +75,7 @@ impl<'a> Source<'a> {
             comments,
             version,
             parser_gem: false,
+            target_ruby: 3.4,
             binary: binary_encoding(text),
             tokens: OnceCell::new(),
             lex_tokens: OnceCell::new(),

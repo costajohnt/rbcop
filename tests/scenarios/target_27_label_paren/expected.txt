@@ -1,0 +1,57 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+compact/sp108.rb:1:10: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+compact/sp108.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+compact/sp108.rb:2:5: C: [Correctable] Layout/SpaceInsideParens: No space inside parentheses detected.
+compact/sp108.rb:2:8: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+compact/sp108.rb:3:10: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+compact/sp108.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+compact/sp108.rb:4:13: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+compact/sp108.rb:4:5: W: [Correctable] Lint/AmbiguousOperator: Ambiguous keyword splat operator. Parenthesize the method arguments if it's surely a keyword splat operator, or add a whitespace to the right of the `**` if it should be an exponent.
+compact/sp108.rb:5:10: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+compact/sp108.rb:5:5: C: [Correctable] Style/QuotedSymbols: Prefer single-quoted symbols when you don't need string interpolation or special symbols.
+compact/sp108.rb:5:5: W: [Correctable] Lint/SymbolConversion: Unnecessary symbol conversion; use `a:` instead.
+compact/sp108.rb:6:6: C: [Correctable] Layout/SpaceAfterColon: Space missing after colon.
+compact/sp108.rb:6:7: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+compact/sp108.rb:6:8: C: [Correctable] Layout/SpaceInsideParens: No space inside parentheses detected.
+compact/sp108.rb:7:8: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+compact/sp108b.rb:1:16: C: [Correctable] Layout/SpaceInsideParens: No space inside parentheses detected.
+compact/sp108b.rb:1:16: W: Lint/EmptyBlock: Empty block detected.
+compact/sp108b.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+compact/sp108b.rb:2:8: C: [Correctable] Layout/SpaceInsideParens: No space inside parentheses detected.
+compact/sp108b.rb:3:10: C: [Correctable] Layout/SpaceInsideParens: No space inside parentheses detected.
+compact/sp108b.rb:3:5: C: [Correctable] Layout/SpaceInsideParens: No space inside parentheses detected.
+compact/sp108b.rb:3:8: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+compact/sp108b.rb:3:9: C: [Correctable] Layout/SpaceInsideParens: No space inside parentheses detected.
+compact/sp108b.rb:4:10: C: [Correctable] Layout/SpaceInsideParens: No space inside parentheses detected.
+compact/sp108b.rb:4:8: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+compact/sp108b.rb:4:9: C: [Correctable] Layout/SpaceInsideParens: No space inside parentheses detected.
+sp108.rb:1:10: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+sp108.rb:1:11: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+sp108.rb:1:15: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+sp108.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+sp108.rb:2:11: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+sp108.rb:2:8: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+sp108.rb:2:9: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+sp108.rb:3:10: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+sp108.rb:3:11: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+sp108.rb:3:13: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+sp108.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+sp108.rb:4:13: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+sp108.rb:4:14: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+sp108.rb:4:16: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+sp108.rb:4:5: W: [Correctable] Lint/AmbiguousOperator: Ambiguous keyword splat operator. Parenthesize the method arguments if it's surely a keyword splat operator, or add a whitespace to the right of the `**` if it should be an exponent.
+sp108.rb:5:10: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+sp108.rb:5:11: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+sp108.rb:5:13: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+sp108.rb:5:5: C: [Correctable] Style/QuotedSymbols: Prefer single-quoted symbols when you don't need string interpolation or special symbols.
+sp108.rb:5:5: W: [Correctable] Lint/SymbolConversion: Unnecessary symbol conversion; use `a:` instead.
+sp108.rb:6:6: C: [Correctable] Layout/SpaceAfterColon: Space missing after colon.
+sp108.rb:6:7: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+sp108.rb:6:9: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+sp108.rb:7:11: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+sp108.rb:7:8: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+sp108.rb:7:9: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+sp108b.rb:1:16: W: Lint/EmptyBlock: Empty block detected.
+sp108b.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+sp108b.rb:3:8: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+sp108b.rb:4:8: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.

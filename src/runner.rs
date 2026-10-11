@@ -390,6 +390,7 @@ fn analyze(
     let mut src = Source::new(display, text, comments, data, version);
     src.raw_text = raw_text;
     src.parser_gem = parser_gem;
+    src.target_ruby = cfg.target_ruby;
 
     if !errors.is_empty() {
         // RuboCop runs only Lint/Syntax on a file that does not parse, one offense per diagnostic,
