@@ -135,7 +135,18 @@ impl<'a> Source<'a> {
     /// The same tokens in lexer order (`processed_source.tokens`): a heredoc's body follows its
     /// opening token, before the rest of the opening line.
     pub fn lex_tokens(&self) -> &[Token] {
-        self.lex_tokens.get_or_init(|| lex(&self.text.as_bytes()[..self.lex_end], self.version, !self.binary))
+        self.lex_tokens.get_or_init(|| {
+            let mut tokens = lex(&self.text.as_bytes()[..self.lex_end], self.version, !self.binary);
+            // Below 3.3 the parser gem's tIDENTIFIER (`Ж`, as `runner::parse_for_target` parses it).
+            if self.parser_gem {
+                for t in tokens.iter_mut().filter(|t| t.kind == ruby_prism_sys::PM_TOKEN_CONSTANT) {
+                    if crate::legacy_syntax::non_ascii_constant_start(&self.text[t.start..]).is_some() {
+                        t.kind = ruby_prism_sys::PM_TOKEN_IDENTIFIER;
+                    }
+                }
+            }
+            tokens
+        })
     }
 
     /// Comment that starts on `line`, if any.

@@ -66,11 +66,15 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 
 - Static regexp literals Onigmo rejects (RuboCop compiles each with `Regexp.new` and reports
   Lint/Syntax): `helpers::onigmo_compile` covers group names and references, repeat ranges,
-  character class ranges, POSIX bracket names and look-behind bodies with quantifiers,
-  backreferences or nested look-arounds. Not modelled, so not reported: `/x` literals and `(?x)`,
-  unknown `\p{..}` property names, `\x{..}`, `\c`/`\M-`/`\C-` escapes, multi-digit backrefs,
-  `\g<0>` (never ending recursion), invalid group-name characters, alternation of different
-  lengths inside a look-behind's groups (`(?<=(a|bc))`). Below 3.3 the error does not start racc's
+  character class ranges, POSIX bracket names, `\k<+n>`, and look-behind bodies with quantifiers,
+  backreferences, nested look-arounds or (under a negative look-behind) capture groups. Not
+  modelled, so not reported: `/x` literals and `(?x)`, `\p{..}` names outside the common ones
+  (`onigmo_compile::PROPERTY_NAMES`; an unknown name such as `\p{Foo}` stops the check, so a later
+  error in the pattern is not reported either), `\x{..}`, `\c`/`\M-`/`\C-` escapes, multi-digit
+  backrefs, relative calls `\g<+n>`, `\g<0>` (never ending recursion), invalid group-name
+  characters, alternation of different lengths inside a look-behind's groups (`(?<=(a|bc))`). A
+  pattern with both a bad numbered backref and a bad look-behind reports the backref; Onigmo
+  reports whichever comes first. Below 3.3 the error does not start racc's
   recovery when nothing else in the file fails, so `if /a{3,2}/ ... end` misses the parser gem's
   follow-up `unexpected token kEND`. At 3.3+ RuboCop crashes on such a regexp in `=~` (the
   translation's `match_op`); rbcop reports the Lint/Syntax.

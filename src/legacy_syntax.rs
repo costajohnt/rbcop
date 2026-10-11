@@ -151,6 +151,18 @@ pub fn indented_data_marker(text: &str, tokens: &[Token]) -> Option<(usize, usiz
     )
 }
 
+/// A Prism CONSTANT starting at `name` that the parser gem's lexer reads as an identifier (it
+/// starts constants only at ASCII `A`-`Z`): its first character and that character's lowercase
+/// form, which Prism reads as an identifier at the same offsets.
+// ponytail: a same-length one-char lowercase only (else the constant stays); `Ж` and an existing
+// `ж` would share one local.
+pub fn non_ascii_constant_start(name: &str) -> Option<(char, char)> {
+    let c = name.chars().next().filter(|c| !c.is_ascii())?;
+    let mut lower = c.to_lowercase();
+    let (Some(l), None) = (lower.next(), lower.next()) else { return None };
+    (l != c && l.len_utf8() == c.len_utf8()).then_some((c, l))
+}
+
 /// Tokens in source order (the lexers emit a heredoc's body right after its opener).
 fn by_start(toks: &[Tok]) -> Vec<Tok> {
     let mut sorted = toks.to_vec();
