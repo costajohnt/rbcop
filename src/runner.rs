@@ -194,7 +194,7 @@ fn analyze(
     let first = parse(text, version, parser_gem);
     // 2.7 to 3.2: the parser gem continues a call over whitespace-only lines before a leading
     // `.`/`&.`, where Prism ends the statement. Parse with those lines made comment lines instead.
-    let continued = (parser_gem && cfg.target_ruby >= 2.7)
+    let (mut continued, fake) = (parser_gem && cfg.target_ruby >= 2.7)
         .then(|| {
             let dots: Vec<usize> = first
                 .0
@@ -204,10 +204,15 @@ fn analyze(
                 .collect();
             crate::legacy_syntax::continue_over_blank_lines(text, &dots)
         })
-        .flatten();
-    let (mut result, tokens) = match &continued {
-        Some((t, _)) => parse(t, version, parser_gem),
-        None => first,
+        .flatten()
+        .unwrap_or_default();
+    // The `#`s are written back to the original bytes once parsed: node text is the user's text.
+    let (mut result, tokens) = if fake.is_empty() {
+        first
+    } else {
+        let restore: Vec<(usize, u8)> = fake.iter().map(|&f| (f, text.as_bytes()[f])).collect();
+        let utf8 = !crate::source::binary_encoding(text);
+        ruby_prism::parse_with_version_and_tokens_restoring(&mut continued, version, utf8, &restore)
     };
     // Numbered parameters are 2.7+: below that `foo { _1 }` is a block without arguments.
     if cfg.target_ruby < 2.7 {
@@ -382,7 +387,7 @@ fn analyze(
     }
     let comments: Vec<Comment> = result
         .comments()
-        .filter(|c| continued.as_ref().is_none_or(|(_, fake)| !fake.contains(&c.location().start_offset())))
+        .filter(|c| !fake.contains(&c.location().start_offset()))
         .map(|c| Comment {
             start: c.location().start_offset(),
             end: c.location().end_offset(),
