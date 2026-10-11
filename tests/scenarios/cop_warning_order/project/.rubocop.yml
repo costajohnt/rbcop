@@ -1,0 +1,6 @@
+AllCops:
+  SuggestExtensions: false
+  NewCops: disable
+Style/Copyright:
+  Enabled: true
+  AutocorrectNotice: 'bad'

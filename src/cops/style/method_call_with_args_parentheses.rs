@@ -232,8 +232,15 @@ mod omit {
         }
     }
 
+    /// `splat?`: parser `splat`, `kwsplat` or `block_pass`. Anonymous `*` / `**` are parser's
+    /// `forwarded_restarg` / `forwarded_kwrestarg`, not splats; anonymous `&` is still a `block_pass`.
     fn is_splat(n: &Node) -> bool {
-        matches!(kind::of(n), kind::SPLAT_NODE | kind::ASSOC_SPLAT_NODE | kind::BLOCK_ARGUMENT_NODE)
+        match n {
+            Node::SplatNode { .. } => n.as_splat_node().unwrap().expression().is_some(),
+            Node::AssocSplatNode { .. } => n.as_assoc_splat_node().unwrap().value().is_some(),
+            Node::BlockArgumentNode { .. } => true,
+            _ => false,
+        }
     }
 
     fn is_ternary(n: &Node) -> bool {
