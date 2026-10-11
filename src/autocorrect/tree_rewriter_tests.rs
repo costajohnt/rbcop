@@ -111,3 +111,55 @@ fn utf8_offsets() {
     r.replace(0, 2, "e").unwrap();
     assert_eq!(r.process(), "e = \"ü\"");
 }
+
+/// The in-place gap insertion (`insert_in_gaps`) builds the same tree as `Action::combine`, for
+/// single edits and for merged rewriters, clobbering included.
+#[test]
+fn gap_insertion_matches_combine() {
+    let src: Arc<str> = Arc::from("abcdefghijklmnopqrstuvwxyz0123456789");
+    let raise = Policies {
+        crossing_deletions: Policy::Raise,
+        different_replacements: Policy::Raise,
+        swallowed_insertions: Policy::Raise,
+    };
+    let mut seed = 7u64;
+    let mut rand = |n: usize| {
+        seed = seed.wrapping_mul(6364136223846793005).wrapping_add(1442695040888963407);
+        (seed >> 33) as usize % n
+    };
+    for round in 0..2000 {
+        let p = if round % 2 == 0 { Policies::default() } else { raise };
+        let (mut fast, mut slow) = (TreeRewriter::new(src.clone(), p), TreeRewriter::new(src.clone(), p));
+        let (mut fast_ok, mut slow_ok) = (true, true);
+        for _ in 0..1 + rand(8) {
+            let a = rand(src.len() + 1);
+            let b = (a + rand(4)).min(src.len());
+            let (before, rep, after) = match rand(4) {
+                0 => ("", Some(""), ""),
+                1 => ("", Some("R"), ""),
+                2 => ("<", None, ""),
+                _ => ("<", None, ">"),
+            };
+            let span = Span { begin: a as isize, end: b as isize };
+            let leaf = Rc::new(Action::leaf(span, before.into(), rep.map(String::from), after.into()));
+            let mut one = TreeRewriter::new(src.clone(), p);
+            one.root = one.root.combine(&leaf, &p).unwrap();
+            // Merged in (the add_fix path) or applied directly.
+            let res = if rand(2) == 0 {
+                fast.merge(&one)
+            } else {
+                match rep {
+                    Some(r) => fast.replace(a, b, r),
+                    None => fast.wrap(a, b, before, after),
+                }
+            };
+            fast_ok &= res.is_ok();
+            match slow.root.combine(&one.root, &p) {
+                Ok(r) => slow.root = r,
+                Err(_) => slow_ok = false,
+            }
+        }
+        assert_eq!(fast_ok, slow_ok, "round {round}");
+        assert_eq!(fast.as_replacements(), slow.as_replacements(), "round {round}");
+    }
+}

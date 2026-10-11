@@ -100,6 +100,19 @@ pub fn line_col(text: &str, off: usize) -> (usize, usize) {
     (text[..off].matches('\n').count() + 1, text[line_start..off].chars().count() + 1)
 }
 
+/// Offsets where each line of `text` starts, for `line_col_at`.
+pub fn line_starts(text: &str) -> Vec<usize> {
+    std::iter::once(0).chain(text.match_indices('\n').map(|(i, _)| i + 1)).collect()
+}
+
+/// `line_col` with the line starts of `text` indexed once (`line_starts`): no rescan of the text
+/// before `off` per lookup.
+pub fn line_col_at(text: &str, starts: &[usize], off: usize) -> (usize, usize) {
+    let off = off.min(text.len());
+    let line = starts.partition_point(|&s| s <= off);
+    (line, text[starts[line - 1]..off].chars().count() + 1)
+}
+
 /// Position lookups in one source for `offenses`. Everything here is computed once per source:
 /// rescanning the text (or a long line) per offense is quadratic when one long line carries many
 /// offenses (`format('%s%s...', ...)` with 100k sequences took 25 s and 4.8 GB).

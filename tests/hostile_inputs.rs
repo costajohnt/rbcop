@@ -9,12 +9,11 @@ use std::time::{Duration, Instant};
 /// CPU time per run (every cop). Release builds take well under a second for each; CPU time,
 /// not wall time, so a loaded machine (parallel gates) does not fail the test.
 const BUDGET: Duration = Duration::from_secs(60);
-/// CPU time per `-A` run: many_statements.rb's 20,000 corrections take ~39 s on a slow core
-/// because correction cost is quadratic in the number of corrections (#178). Tighten to BUDGET
-/// once that is linear.
-const AUTOCORRECT_BUDGET: Duration = Duration::from_secs(180);
 /// Wall-clock backstop for a run that hangs without using CPU.
 const WALL_BUDGET: Duration = Duration::from_secs(600);
+
+/// RUSAGE_CHILDREN is per process: the tests' CPU measurements must not overlap.
+static SERIAL: std::sync::Mutex<()> = std::sync::Mutex::new(());
 
 /// User + system CPU time of the waited-for child processes so far.
 fn children_cpu() -> Duration {
@@ -61,6 +60,7 @@ fn inputs() -> Vec<(&'static str, String)> {
 
 #[test]
 fn hostile_inputs_stay_bounded() {
+    let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
     let dir = std::env::temp_dir().join(format!("rbcop-hostile-{}", std::process::id()));
     let _ = fs::remove_dir_all(&dir);
     fs::create_dir_all(&dir).unwrap();
@@ -88,11 +88,34 @@ fn hostile_inputs_stay_bounded() {
             // 1 = offenses (or the too-deep error); a signal (stack overflow abort) has no code.
             assert!(matches!(out.status.code(), Some(0 | 1)), "{name} -A={autocorrect}: {:?}\n{stderr}", out.status);
             assert!(!stderr.contains("cop was inspecting"), "{name} -A={autocorrect}: cop error\n{stderr}");
-            let budget = if autocorrect { AUTOCORRECT_BUDGET } else { BUDGET };
-            assert!(cpu < budget, "{name} -A={autocorrect}: took {cpu:?} CPU");
+            assert!(cpu < BUDGET, "{name} -A={autocorrect}: took {cpu:?} CPU");
             assert!(elapsed < WALL_BUDGET, "{name} -A={autocorrect}: took {elapsed:?}");
             assert_eq!(stderr.contains("levels deep, not inspected"), name.starts_with("too_deep"), "{name}\n{stderr}");
         }
     }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// -A stays linear in the number of corrections: 100,000 correctable offenses (one per line)
+/// took 58 s CPU (a whole-source line/column scan per offense, and a copy of every earlier edit
+/// per merged correction); now well under a second.
+#[test]
+fn many_corrections_stay_linear() {
+    let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+    let dir = std::env::temp_dir().join(format!("rbcop-hostile-ac-{}", std::process::id()));
+    let _ = fs::remove_dir_all(&dir);
+    fs::create_dir_all(&dir).unwrap();
+    fs::write(dir.join("Gemfile"), "").unwrap();
+    fs::write(dir.join("t.rb"), "x \"a\"\n".repeat(100_000)).unwrap();
+    let cpu0 = children_cpu();
+    let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
+        .args(["--force-default-config", "--only", "Style/StringLiterals", "-A", "--format", "emacs", "t.rb"])
+        .current_dir(&dir)
+        .output()
+        .unwrap();
+    let cpu = children_cpu() - cpu0;
+    assert_eq!(out.status.code(), Some(0), "{}", String::from_utf8_lossy(&out.stderr));
+    assert_eq!(fs::read_to_string(dir.join("t.rb")).unwrap(), "x 'a'\n".repeat(100_000));
+    assert!(cpu < Duration::from_secs(10), "took {cpu:?} CPU");
     let _ = fs::remove_dir_all(&dir);
 }
