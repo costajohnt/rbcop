@@ -455,10 +455,22 @@ fn lambda_or_proc(node: &Node) -> bool {
         return true;
     }
     let Some(call) = node.as_call_node() else { return false };
-    let has_block = call.block().is_some_and(|b| b.as_block_node().is_some());
+    let block = call.block().and_then(|b| b.as_block_node());
     let name = method_name(&call);
+    // BlockNode#lambda? (any block, numbered/`it` included): the block's send is named `lambda`,
+    // whatever its receiver or arguments.
+    if block.is_some() && name == "lambda" {
+        return true;
+    }
+    // `proc?` matches a parser `block` only: a block with numbered parameters (`numblock`) or `it`
+    // (`itblock`) is neither `proc { _1 }` nor `Proc.new { it }`.
+    let plain_block = block.as_ref().is_some_and(|b| b.parameters().is_none_or(|p| p.as_block_parameters_node().is_some()));
+    // Its patterns take a bare `send` (no arguments; `&blk` is a parser argument).
+    if is_csend(&call) || call.arguments().is_some() || call.block().is_some_and(|b| b.as_block_argument_node().is_some()) {
+        return false;
+    }
     match call.receiver() {
-        None => has_block && (name == "lambda" || name == "proc") && !is_csend(&call),
+        None => name == "proc" && plain_block,
         Some(r) => {
             let proc_const = match &r {
                 Node::ConstantReadNode { .. } => node_text(&r) == "Proc",
@@ -468,7 +480,7 @@ fn lambda_or_proc(node: &Node) -> bool {
                 }
                 _ => false,
             };
-            proc_const && name == "new" && !is_csend(&call)
+            proc_const && name == "new" && (block.is_none() || plain_block)
         }
     }
 }
