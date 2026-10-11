@@ -53,6 +53,7 @@ pub fn last_token_line(src: &Source) -> Option<usize> {
     // Line of the last terminator of the heredocs opened on the current line (Prism lexes a
     // heredoc's body right after its opener).
     let mut heredoc_end = None;
+    let lvar_ends = std::cell::OnceCell::new();
     for (i, t) in raw.iter().enumerate() {
         if t.kind == PM_TOKEN_HEREDOC_END {
             heredoc_end = Some(src.line_of(t.start));
@@ -69,7 +70,7 @@ pub fn last_token_line(src: &Source) -> Option<usize> {
             && let Some(h) = heredoc_end.take()
             && src.parser_gem
             && i > 0
-            && legacy_arg_state(src, &raw[i - 1])
+            && legacy_arg_state(&raw[i - 1], || lvar_ends.get_or_init(|| lvar_read_ends(src)))
         {
             // The parser gem's lexer reads the newline of a line with heredocs in an argument
             // state twice: `on_newline` skips past the heredoc bodies, then `fhold; fgoto expr_end`
@@ -104,10 +105,10 @@ pub fn last_token_line(src: &Source) -> Option<usize> {
 /// expr_mid), where a newline is re-lexed in expr_end: a method name (an identifier that is not a
 /// known local variable, a constant, `a.b`), `super`, `yield`, `defined?`, `return`, `break`, `next`.
 /// Literals, variables, `)`, `]`, `}`, `self`/`nil`/`true` and a comment leave it in expr_end.
-fn legacy_arg_state(src: &Source, t: &Token) -> bool {
+fn legacy_arg_state<'a>(t: &Token, lvar_ends: impl FnOnce() -> &'a Vec<usize>) -> bool {
     use sys::*;
     match t.kind {
-        PM_TOKEN_IDENTIFIER => !lvar_read_ends_at(src, t.end),
+        PM_TOKEN_IDENTIFIER => lvar_ends().binary_search(&t.end).is_err(),
         PM_TOKEN_CONSTANT
         | PM_TOKEN_METHOD_NAME
         | PM_TOKEN_KEYWORD_SUPER
@@ -120,23 +121,22 @@ fn legacy_arg_state(src: &Source, t: &Token) -> bool {
     }
 }
 
-/// A local variable read ends at `end` (the identifier is a declared local, not a method call).
-/// ponytail: one extra parse, only reached for a heredoc line ending in an identifier below 3.3.
-fn lvar_read_ends_at(src: &Source, end: usize) -> bool {
+/// Sorted end offsets of the local variable reads (an identifier ending there is a declared local,
+/// not a method call). One extra parse per file, only when a heredoc line ends in an identifier
+/// below 3.3.
+fn lvar_read_ends(src: &Source) -> Vec<usize> {
     use ruby_prism::Visit;
-    struct Find {
-        end: usize,
-        found: bool,
-    }
+    struct Find(Vec<usize>);
     impl<'pr> Visit<'pr> for Find {
         fn visit_local_variable_read_node(&mut self, n: &ruby_prism::LocalVariableReadNode<'pr>) {
-            self.found |= n.location().end_offset() == self.end;
+            self.0.push(n.location().end_offset());
         }
     }
     let result = ruby_prism::parse_with_version(src.text.as_bytes(), src.version, !src.binary);
-    let mut find = Find { end, found: false };
+    let mut find = Find(Vec::new());
     find.visit(&result.node());
-    find.found
+    find.0.sort_unstable();
+    find.0
 }
 
 /// Position-sorted `tokens` (e.g. `translated`) in lexer order, the order of
