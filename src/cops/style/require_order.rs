@@ -1,13 +1,17 @@
-use crate::helpers::comment_association::leading;
+use crate::helpers::comment_association::{self, Associator};
 use crate::helpers::literal_node::parser_type;
 use crate::helpers::whole_lines::range_by_whole_lines;
 use crate::prelude::*;
 use helpers::select_by::plain_send;
-use ruby_prism::CallNode;
+use ruby_prism::{CallNode, Visit};
 
 pub const NAME: &str = "Style/RequireOrder";
 pub static COP: RequireOrder = RequireOrder;
 pub struct RequireOrder;
+
+/// The file's Comment::Associator result (node range -> comment indices), built on first use.
+#[derive(Default)]
+struct Associated(Option<Vec<(usize, usize, Vec<usize>)>>);
 
 /// A modifier `if`/`unless`: Some(its single body statement); a non-modifier one: None.
 /// Other nodes: Err(()).
@@ -121,20 +125,24 @@ impl Cop for RequireOrder {
             }
         }
         let Some(k) = found else { return };
-        // range_with_comments_and_lines: the statement, its leading comments, whole lines
+        // range_with_comments_and_lines: the statement joined with the comments parser's
+        // Comment::Associator gives it (`ast_with_comments[node]`), whole lines. A comment on a
+        // `def m # c` header line is a leading comment of the first body statement, since no
+        // earlier child of the def has a location to take it (#326).
+        let nodes = cx.state::<Associated>().0.get_or_insert_with(|| {
+            let mut a = Associator::new(src, comment_association::skipped_directives(src));
+            a.visit(&anc[0]);
+            a.nodes
+        });
         let with_comments = |i: usize| {
             let l = list[i].location();
-            let (after, after_line) = if i > 0 {
-                let e = list[i - 1].location().end_offset();
-                (e, Some(src.line_of(e)))
-            } else if stmts_idx > 0 && anc[stmts_idx - 1].as_program_node().is_none() {
-                let s = anc[stmts_idx - 1].location().start_offset();
-                (s, Some(src.line_of(s)))
-            } else {
-                (0, None)
-            };
-            let start = leading(src, l.start_offset(), after, after_line).iter().map(|c| c.start).min().unwrap_or(l.start_offset());
-            range_by_whole_lines(src.text, start.min(l.start_offset()), l.end_offset(), true)
+            let (mut start, mut end) = (l.start_offset(), l.end_offset());
+            let comments = nodes.iter().find(|n| n.0 == start && n.1 == end).into_iter().flat_map(|n| n.2.iter());
+            for &c in comments {
+                start = start.min(src.comments[c].start);
+                end = end.max(src.comments[c].end);
+            }
+            range_by_whole_lines(src.text, start, end, true)
         };
         let range1 = with_comments(k);
         let range2 = with_comments(pos);
