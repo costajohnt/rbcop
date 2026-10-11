@@ -220,10 +220,11 @@ fn resbody_end(b: &ruby_prism::BeginNode, r: &ruby_prism::RescueNode) -> usize {
     if let Some(s) = r.statements() {
         return s.location().end_offset();
     }
-    // Prism's clause ends at its head (keyword, exceptions or `=> var`; not `then`).
-    let head_end = r.location().end_offset();
+    use crate::helpers::resbody;
+    let head_end = resbody::head_end(r);
     let (b_start, b_src) = (b.location().start_offset(), b.location().as_slice());
-    crate::helpers::resbody::semicolon_end(head_end, b_src.get(head_end.saturating_sub(b_start)..).unwrap_or_default())
+    let rest = b_src.get(head_end.saturating_sub(b_start)..).unwrap_or_default();
+    resbody::bodiless_end(r, head_end, rest, crate::helpers::literal_node::parser_gem_file())
 }
 
 /// `.rest()` of a MultiWriteNode / MultiTargetNode / ParametersNode as parser sees it: Prism's
