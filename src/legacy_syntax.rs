@@ -101,16 +101,24 @@ pub fn continue_over_blank_lines(text: &str, dots: &[usize]) -> Option<(Vec<u8>,
     Some((bytes, fake))
 }
 
-/// A Prism CONSTANT starting at `name` that the parser gem's lexer reads as an identifier (it
-/// starts constants only at ASCII `A`-`Z`): its first character and that character's lowercase
-/// form, which Prism reads as an identifier at the same offsets.
-// ponytail: a same-length one-char lowercase only (else the constant stays); `Ж` and an existing
-// `ж` would share one local.
-pub fn non_ascii_constant_start(name: &str) -> Option<(char, char)> {
-    let c = name.chars().next().filter(|c| !c.is_ascii())?;
-    let mut lower = c.to_lowercase();
-    let (Some(l), None) = (lower.next(), lower.next()) else { return None };
-    (l != c && l.len_utf8() == c.len_utf8()).then_some((c, l))
+/// The first character of a Prism CONSTANT starting at `name` that the parser gem's lexer reads
+/// as an identifier (it starts constants only at ASCII `A`-`Z`).
+pub fn non_ascii_constant_start(name: &str) -> Option<char> {
+    name.chars().next().filter(|c| !c.is_ascii())
+}
+
+/// A lowercase character of `c`'s UTF-8 length that occurs nowhere in `text` and is no other
+/// capital's stand-in (`taken`): Prism reads it as an identifier start at `c`'s offsets, and the
+/// name it starts can equal no other name in the file (`Ж` and `ж` stay two locals).
+pub fn stand_in(c: char, text: &str, taken: &[(char, char)]) -> Option<char> {
+    let range = match c.len_utf8() {
+        2 => 0x80..0x800,
+        3 => 0x800..0x1_0000,
+        _ => 0x1_0000..0x11_0000,
+    };
+    range
+        .filter_map(char::from_u32)
+        .find(|&l| l.is_lowercase() && !taken.iter().any(|&(_, s)| s == l) && !text.contains(l))
 }
 
 /// Tokens in source order (the lexers emit a heredoc's body right after its opener).

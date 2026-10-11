@@ -1,0 +1,36 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+block_param.rb:1:1: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+block_param.rb:1:1: C: Naming/VariableName: Use snake_case for variable names.
+block_param.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+block_param.rb:2:13: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+block_param.rb:2:21: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+block_param.rb:3:6: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+block_param.rb:3:6: C: Naming/VariableName: Use snake_case for variable names.
+both_cases.rb:1:1: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+both_cases.rb:1:1: C: Naming/VariableName: Use snake_case for variable names.
+both_cases.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+both_cases.rb:2:1: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+both_cases.rb:2:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `ж`. Did you mean `Ж`?
+both_cases.rb:3:6: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+both_cases.rb:3:6: C: Naming/VariableName: Use snake_case for variable names.
+latin_pair.rb:1:1: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+latin_pair.rb:1:1: C: Naming/VariableName: Use snake_case for variable names.
+latin_pair.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+latin_pair.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `Ñ`. Did you mean `ñ`?
+latin_pair.rb:2:1: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+latin_pair.rb:3:6: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+other_length.rb:1:1: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+other_length.rb:1:1: C: Naming/VariableName: Use snake_case for variable names.
+other_length.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+other_length.rb:2:6: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+other_length.rb:2:6: C: Naming/VariableName: Use snake_case for variable names.
+other_length.rb:3:1: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+other_length.rb:3:1: C: Naming/VariableName: Use snake_case for variable names.
+other_length.rb:4:6: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+other_length.rb:4:6: C: Naming/VariableName: Use snake_case for variable names.
+stand_in_present.rb:1:1: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+stand_in_present.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+stand_in_present.rb:2:1: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+stand_in_present.rb:2:1: C: Naming/VariableName: Use snake_case for variable names.
+stand_in_present.rb:2:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `Ñ`.
+stand_in_present.rb:3:6: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
