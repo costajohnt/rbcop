@@ -569,15 +569,26 @@ const SEARCH_LIMIT: usize = 1_000_000;
 const ANCHORED_LIMIT: usize = 10_000;
 const RETRY_BUDGET: usize = SEARCH_LIMIT + 64 * ANCHORED_LIMIT;
 // A pattern that gives up on one input gives up on the next, and a cop calls it once per comment,
-// token or identifier: this caps what one pattern spends giving up over the whole run (about 2 s),
-// after which it answers "no match" at once. Keyed by pattern: cops build a RubyRegex per call
-// from their config.
+// token or identifier: this caps what one pattern spends giving up on one file (about 2 s), after
+// which it answers "no match" at once. Keyed by pattern: cops build a RubyRegex per call from their
+// config. Per file (`reset_run_budget`, on the thread linting it), so a file's offenses never depend
+// on the other files of the run or on which worker thread got there first (#324).
 const RUN_BUDGET: usize = 32 * RETRY_BUDGET;
-static SPENT: std::sync::Mutex<Vec<(String, usize)>> = std::sync::Mutex::new(Vec::new());
+thread_local! {
+    static SPENT: std::cell::RefCell<Vec<(String, usize)>> = const { std::cell::RefCell::new(Vec::new()) };
+}
 
-/// Charge `steps` to the pattern's run total; false once it is over RUN_BUDGET.
+/// Start a new file's RUN_BUDGET for every pattern (this thread).
+pub fn reset_run_budget() {
+    SPENT.with(|s| s.borrow_mut().clear());
+}
+
+/// Charge `steps` to the pattern's total for the current file; false once it is over RUN_BUDGET.
 fn charge(pattern: &str, steps: usize) -> bool {
-    let mut spent = SPENT.lock().unwrap_or_else(|e| e.into_inner());
+    SPENT.with(|s| charge_in(&mut s.borrow_mut(), pattern, steps))
+}
+
+fn charge_in(spent: &mut Vec<(String, usize)>, pattern: &str, steps: usize) -> bool {
     let total = match spent.iter_mut().find(|(p, _)| p == pattern) {
         Some((_, t)) => t,
         None => {
@@ -734,6 +745,9 @@ mod tests {
         assert!(t0.elapsed() < std::time::Duration::from_secs(10), "took {:?}", t0.elapsed());
         // The ceiling: a cheap match of the exhausted pattern is no longer found.
         assert!(!re.is_match("B"));
+        // Until the next file.
+        reset_run_budget();
+        assert!(re.is_match("B"));
     }
 
     // Expected values from Ruby 4.0 `YAML.safe_load(..., aliases: true)` (Psych).

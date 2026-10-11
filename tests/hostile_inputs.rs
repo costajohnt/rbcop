@@ -96,6 +96,43 @@ fn hostile_inputs_stay_bounded() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// A backtracking config pattern's run budget is per file: a file's offenses are the same linted
+/// alone or after other files that exhaust the pattern, whichever worker thread gets them (#324).
+/// `z.rb` gives up 31 times (under the budget) and then has a cheap match; with a budget shared by
+/// the run, the 32 files before it (at least one on its thread) used it up and the match was lost.
+#[test]
+fn config_regex_budget_is_per_file() {
+    let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+    let dir = std::env::temp_dir().join(format!("rbcop-hostile-budget-{}", std::process::id()));
+    let _ = fs::remove_dir_all(&dir);
+    fs::create_dir_all(&dir).unwrap();
+    fs::write(dir.join("Gemfile"), "").unwrap();
+    fs::write(dir.join(".rubocop.yml"), "Layout/LineLength:\n  Max: 10\n  AllowedPatterns: ['(a|aa)+(?=d)|B']\n")
+        .unwrap();
+    let hard = format!("# {}\n", "a".repeat(60));
+    for i in 0..32 {
+        fs::write(dir.join(format!("h{i:02}.rb")), &hard).unwrap();
+    }
+    fs::write(dir.join("z.rb"), format!("{}# B {}\n", hard.repeat(31), "x".repeat(20))).unwrap();
+    let run = |files: &[&str]| {
+        let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
+            .args(["--only", "Layout/LineLength", "--format", "emacs"])
+            .args(files)
+            .current_dir(&dir)
+            .output()
+            .unwrap();
+        String::from_utf8_lossy(&out.stdout)
+            .lines()
+            .filter(|l| l.contains("z.rb:"))
+            .map(String::from)
+            .collect::<Vec<_>>()
+    };
+    let alone = run(&["z.rb"]);
+    assert_eq!(alone.len(), 31, "{alone:?}");
+    assert_eq!(run(&["."]), alone);
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// -A stays linear in the number of corrections: 100,000 correctable offenses (one per line)
 /// took 58 s CPU (a whole-source line/column scan per offense, and a copy of every earlier edit
 /// per merged correction); now well under a second.

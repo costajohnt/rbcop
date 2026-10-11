@@ -1202,6 +1202,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     // A panic outside a cop (cop panics are reported by runner::guarded) ends the run at that file,
     // like any error, instead of taking down every worker's results with it.
     let lint_one = |path: &PathBuf, cfg: &Resolved, mode: Option<rbcop::autocorrect::Mode>| -> Linted {
+        rbcop::config::value::reset_run_budget();
         std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| lint(path, cfg, mode)))
             .unwrap_or_else(|_| Err(format!("rbcop: internal error while inspecting {}", path.display())))
             .map(|(report, corrected, loop_error)| (report, corrected, loop_error, runner::take_file_warnings()))
