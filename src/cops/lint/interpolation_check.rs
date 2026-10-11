@@ -15,8 +15,8 @@ fn has_interpolation(src: &str) -> bool {
     })
 }
 
-/// `valid_syntax?`: the double-quoted version parses to a single `dstr`.
-fn valid_syntax(src: &str) -> bool {
+/// `valid_syntax?`: the double-quoted version parses (as the target's parser does) to a single `dstr`.
+fn valid_syntax(src: &str, version: &'static str, legacy: Option<f64>) -> bool {
     let dq = if src.contains('"') {
         let s = src.strip_prefix('\'').map_or(src.to_string(), |s| format!("%{{{s}"));
         match s.strip_suffix('\'') {
@@ -30,10 +30,10 @@ fn valid_syntax(src: &str) -> bool {
             None => s,
         }
     };
-    let result = ruby_prism::parse(dq.as_bytes());
-    if result.errors().next().is_some() {
+    let mut buf = Vec::new();
+    let Some(result) = helpers::reparsed_equivalence::parse_clean(&dq, &mut buf, version, legacy) else {
         return false;
-    }
+    };
     let program = result.node();
     let stmts: Vec<Node> = program.as_program_node().unwrap().statements().body().iter().collect();
     stmts.len() == 1 && stmts[0].as_interpolated_string_node().is_some()
@@ -64,7 +64,7 @@ impl Cop for InterpolationCheck {
         }) {
             return;
         }
-        if close.as_slice().is_empty() || !has_interpolation(src) || !valid_syntax(src) {
+        if close.as_slice().is_empty() || !has_interpolation(src) || !valid_syntax(src, cx.src.version, cx.src.legacy()) {
             return;
         }
         let (start, end) = if src.contains('"') { ("%{", "}") } else { ("\"", "\"") };

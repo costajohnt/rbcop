@@ -1,0 +1,2 @@
+foo(**bar, a: a,
+  b: b)

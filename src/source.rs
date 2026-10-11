@@ -43,6 +43,9 @@ pub struct Source<'a> {
     /// Where lexing stops: the end, or an indented `__END__` the parser gem ends the input at
     /// (runner::parse_for_target; Prism would lex past it).
     lex_end: usize,
+    /// The bytes `runner::parse_for_target`'s copy changed (offset, new byte): lexed with them, so
+    /// the tokens agree with the parse.
+    pub lex_edits: Vec<(usize, u8)>,
 }
 
 impl<'a> Source<'a> {
@@ -82,6 +85,7 @@ impl<'a> Source<'a> {
             binary: binary_encoding(text),
             tokens: OnceCell::new(),
             lex_tokens: OnceCell::new(),
+            lex_edits: Vec::new(),
             lex_end: data_start.filter(|&d| !text[d..].starts_with("__END__")).unwrap_or(text.len()),
         };
         // ProcessedSource#lines stops at `__END__` only after the last token; with no tokens at
@@ -136,7 +140,13 @@ impl<'a> Source<'a> {
     /// opening token, before the rest of the opening line.
     pub fn lex_tokens(&self) -> &[Token] {
         self.lex_tokens.get_or_init(|| {
-            let mut tokens = lex(&self.text.as_bytes()[..self.lex_end], self.version, !self.binary);
+            let mut copy = self.text.as_bytes()[..self.lex_end].to_vec();
+            for &(o, b) in &self.lex_edits {
+                if let Some(c) = copy.get_mut(o) {
+                    *c = b;
+                }
+            }
+            let mut tokens = lex(&copy, self.version, !self.binary);
             // Below 3.3 the parser gem's tIDENTIFIER (`Ж`, as `runner::parse_for_target` parses it).
             if self.parser_gem {
                 for t in tokens.iter_mut().filter(|t| t.kind == ruby_prism_sys::PM_TOKEN_CONSTANT) {
@@ -219,7 +229,7 @@ fn lex(source: &[u8], version: &str, encoding_locked: bool) -> Vec<Token> {
 
 static ENCODING_RE: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
     // Ruby `\s` is ASCII.
-    regex::Regex::new(r"[\t\n\x0B\x0C\r #](?:en)?coding[\t\n\x0B\x0C\r ]*[:=][\t\n\x0B\x0C\r ]*(utf8-mac|[A-Za-z0-9_-]+?(?:-unix|-dos|-mac)|[A-Za-z0-9_-]+)")
+    regex::Regex::new(r"[\t\n\x0B\x0C\r #](?:en)?coding[\t\n\x0B\x0C\r ]*[:=][\t\n\x0B\x0C\r ]*(?:(utf8-mac)|([A-Za-z0-9_-]+?)(?:-unix|-dos|-mac)|([A-Za-z0-9_-]+))")
         .unwrap()
 });
 
@@ -245,7 +255,8 @@ fn magic_encoding(text: &str) -> Option<&str> {
         return None;
     }
     let c = ENCODING_RE.captures(line)?;
-    Some(c.get(1)?.as_str().trim_end_matches("-unix").trim_end_matches("-dos").trim_end_matches("-mac"))
+    // `utf8-mac` (lowercase) is special-cased before the emacs suffix is chewed.
+    Some(c.get(1).or_else(|| c.get(2)).or_else(|| c.get(3))?.as_str())
 }
 
 /// Encoding.name_list of Ruby 4.0.6 (RuboCop's Ruby), lowercase: what `Encoding.find` accepts.

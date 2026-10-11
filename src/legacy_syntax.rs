@@ -69,8 +69,9 @@ pub fn continue_over_blank_lines(text: &str, dots: &[usize]) -> Option<(Vec<u8>,
         if !text[dot..].starts_with('.') && !text[dot..].starts_with("&.") {
             continue;
         }
-        let mut line_start = text[..dot].rfind('\n').map_or(0, |i| i + 1);
-        if !text[line_start..dot].trim_start_matches([' ', '\t']).is_empty() {
+        // Walk back over the indentation only: an rfind per dot is quadratic on one long line (#316).
+        let mut line_start = text[..dot].trim_end_matches([' ', '\t']).len();
+        if line_start > 0 && text.as_bytes()[line_start - 1] != b'\n' {
             continue;
         }
         let mut blank = Vec::new();
@@ -126,10 +127,10 @@ pub fn non_ascii_constant_start(name: &str) -> Option<char> {
     name.chars().next().filter(|c| !c.is_ascii())
 }
 
-/// A lowercase character of `c`'s UTF-8 length that occurs nowhere in `text` and is no other
-/// capital's stand-in (`taken`): Prism reads it as an identifier start at `c`'s offsets, and the
-/// name it starts can equal no other name in the file (`Ж` and `ж` stay two locals).
-pub fn stand_in(c: char, text: &str, taken: &[(char, char)]) -> Option<char> {
+/// A lowercase character of `c`'s UTF-8 length that is not among the file's characters (`present`)
+/// and is no other capital's stand-in (`taken`): Prism reads it as an identifier start at `c`'s
+/// offsets, and the name it starts can equal no other name in the file (`Ж` and `ж` stay two locals).
+pub fn stand_in(c: char, present: &std::collections::HashSet<char>, taken: &[(char, Option<char>)]) -> Option<char> {
     let range = match c.len_utf8() {
         2 => 0x80..0x800,
         3 => 0x800..0x1_0000,
@@ -137,7 +138,7 @@ pub fn stand_in(c: char, text: &str, taken: &[(char, char)]) -> Option<char> {
     };
     range
         .filter_map(char::from_u32)
-        .find(|&l| l.is_lowercase() && !taken.iter().any(|&(_, s)| s == l) && !text.contains(l))
+        .find(|&l| l.is_lowercase() && !taken.iter().any(|&(_, s)| s == Some(l)) && !present.contains(&l))
 }
 
 /// The parser gem's lexer ends the input at `__END__` alone on a line it reads in its line_begin
@@ -155,8 +156,12 @@ pub fn indented_data_marker(text: &str, tokens: &[Token]) -> Option<(usize, usiz
     let skipped = |k: &str| matches!(k, "COMMENT" | "IGNORED_NEWLINE" | "EMBDOC_BEGIN" | "EMBDOC_LINE" | "EMBDOC_END");
     tokens.iter().enumerate().filter(|(_, t)| t.kind == "IDENTIFIER" && &text[t.start..t.end] == "__END__").find_map(
         |(i, t)| {
-            let line = text[..t.start].rfind('\n').map_or(0, |i| i + 1);
+            // Only the indentation is walked: an rfind per token is quadratic on one long line (#316).
+            let line = text[..t.start].trim_end_matches([' ', '\t', '\x0b', '\x0c']).len();
             let indent = &text[line..t.start];
+            if !(line == 0 || text.as_bytes()[line - 1] == b'\n') {
+                return None;
+            }
             let prev = tokens[..i].iter().rposition(|p| !skipped(p.kind));
             // The `|` at `j` closes a block's parameters (`{ |a, b|`, `do |a|`).
             let block_params_end = |j: usize| {
@@ -181,11 +186,7 @@ pub fn indented_data_marker(text: &str, tokens: &[Token]) -> Option<(usize, usiz
                         && !matches!(p.kind, "PIPE" | "TILDE" | "BANG" | "COMMA" | "BRACE_LEFT")
                         || p.kind == "BRACE_LEFT" && p.state & EXPR_LABEL == 0)
             });
-            (!indent.is_empty()
-                && indent.bytes().all(|b| matches!(b, b' ' | b'\t' | b'\x0b' | b'\x0c'))
-                && text[t.end..].starts_with('\n')
-                && line_begin)
-                .then_some((line, indent.len()))
+            (!indent.is_empty() && text[t.end..].starts_with('\n') && line_begin).then_some((line, indent.len()))
         },
     )
 }
@@ -1074,6 +1075,17 @@ struct Walk<'t> {
 impl Walk<'_> {
     /// The first token after the one ending at `end`, skipping newlines (ignored after an operator by
     /// the older lexers).
+    /// Below 3.3 a `block_command` is no call argument: as the only argument in `(...)` or `[...]`
+    /// of a call, `super` or `yield`, the grammar fails at its `do` (`foo(bar baz do end)`; #239, #302).
+    fn sole_block_command(&mut self, args: Option<ruby_prism::ArgumentsNode>) {
+        if let Some(args) = args
+            && args.arguments().len() == 1
+            && let Some(d) = args.arguments().iter().next().and_then(|a| block_command_do(&a))
+        {
+            self.violation(d, 3.3);
+        }
+    }
+
     fn next_token(&self, end: usize) -> usize {
         let i = self.toks.partition_point(|t| t.start < end);
         self.toks[i..].iter().find(|t| !matches!(t.name, "tNL" | "tLABEL_NL")).map_or(usize::MAX, |t| t.start)
@@ -1483,18 +1495,8 @@ impl<'pr> Visit<'pr> for Walk<'_> {
         {
             self.do_block.insert(b.opening_loc().start_offset());
         }
-        // Below 3.3 `command do_block` is a block_command, not a call argument: it cannot be the
-        // only argument in `(...)` or `[...]` (`foo(bar baz do end)`; #239).
-        if n.opening_loc().is_some()
-            && let Some(args) = n.arguments()
-            && args.arguments().len() == 1
-            && let Some(inner) = args.arguments().iter().next().and_then(|a| a.as_call_node())
-            && inner.opening_loc().is_none()
-            && inner.arguments().is_some()
-            && let Some(b) =
-                inner.block().and_then(|b| b.as_block_node()).filter(|b| b.opening_loc().as_slice() == b"do")
-        {
-            self.violation(b.opening_loc().start_offset(), 3.3);
+        if n.opening_loc().is_some() {
+            self.sole_block_command(n.arguments());
         }
         // Below 3.3 `not x` without parentheses is an expr, never an assigned value (`x = not y`;
         // #240); as an argument, see visit_arguments_node.
@@ -1503,7 +1505,8 @@ impl<'pr> Visit<'pr> for Walk<'_> {
             && n.opening_loc().is_none()
         {
             let i = self.toks.partition_point(|t| t.start < m.start_offset());
-            if i > 0 && matches!(self.toks[i - 1].name, "tEQL" | "tOP_ASGN") {
+            // ...nor the operand of `!`, which takes an `arg` (`!not x`; #305).
+            if i > 0 && matches!(self.toks[i - 1].name, "tEQL" | "tOP_ASGN" | "tBANG") {
                 let next = self.next_token(m.end_offset());
                 self.violation(next, 3.3);
             }
@@ -1539,14 +1542,18 @@ impl<'pr> Visit<'pr> for Walk<'_> {
     }
 
     fn visit_super_node(&mut self, n: &ruby_prism::SuperNode<'pr>) {
-        if n.lparen_loc().is_none() {
+        if n.lparen_loc().is_some() {
+            self.sole_block_command(n.arguments());
+        } else {
             self.command_args(n.arguments(), n.block().filter(|b| b.as_block_argument_node().is_some()));
         }
         self.in_ctx(n.keyword_loc().start_offset(), |s| ruby_prism::visit_super_node(s, n));
     }
 
     fn visit_yield_node(&mut self, n: &ruby_prism::YieldNode<'pr>) {
-        if n.lparen_loc().is_none() {
+        if n.lparen_loc().is_some() {
+            self.sole_block_command(n.arguments());
+        } else {
             self.command_args(n.arguments(), None);
         }
         self.in_ctx(n.keyword_loc().start_offset(), |s| ruby_prism::visit_yield_node(s, n));
@@ -1689,14 +1696,15 @@ impl<'pr> Visit<'pr> for Walk<'_> {
 
     fn visit_match_predicate_node(&mut self, n: &ruby_prism::MatchPredicateNode<'pr>) {
         // Below 3.3 the value of `value in pat` is an `arg`: a command whose arguments run up to the
-        // `in` (`return x in [1]`, which Prism reads as `(return x) in [1]`) fails there (#231).
+        // `in` (`return x in [1]`, which Prism reads as `(return x) in [1]`) fails there (#231), and
+        // so does an assignment of one (`x = foo 1 in [1]`, a command_asgn; #304).
         let v = n.value();
         let command = v.as_return_node().is_some_and(|r| r.arguments().is_some())
             || v.as_break_node().is_some_and(|r| r.arguments().is_some())
             || v.as_next_node().is_some_and(|r| r.arguments().is_some())
             || v.as_yield_node().is_some_and(|y| y.arguments().is_some() && y.lparen_loc().is_none())
             || v.as_super_node().is_some_and(|y| y.arguments().is_some() && y.lparen_loc().is_none());
-        if command {
+        if command || command_asgn(&v) {
             self.violation(n.operator_loc().start_offset(), 3.3);
         }
         self.in_ctx(n.location().start_offset(), |s| {
@@ -1823,6 +1831,26 @@ impl Walk<'_> {
 /// `command_asgn`: an assignment whose value is a command call without parentheses (`a = foo 1`,
 /// `a.b += foo 1`, `a = b = foo 1`). Below 3.3 it is a statement, so it cannot be the left operand
 /// of `or`/`and`.
+/// The `do` of a `block_command`: a command with a `do` block (`bar baz do end`, `super x do end`)
+/// or a call chained on one (`bar baz do end.qux`).
+fn block_command_do(n: &Node) -> Option<usize> {
+    let do_of = |b: Option<Node>| {
+        let b = b?.as_block_node().filter(|b| b.opening_loc().as_slice() == b"do")?;
+        Some(b.opening_loc().start_offset())
+    };
+    if let Some(c) = n.as_call_node() {
+        if c.opening_loc().is_none()
+            && c.arguments().is_some()
+            && let Some(d) = do_of(c.block())
+        {
+            return Some(d);
+        }
+        return block_command_do(&c.receiver()?);
+    }
+    let s = n.as_super_node().filter(|s| s.lparen_loc().is_none() && s.arguments().is_some())?;
+    do_of(s.block())
+}
+
 fn command_asgn(node: &Node) -> bool {
     let value = match crate::ast::assignment_parts(node) {
         Some((_, v)) if node.as_multi_write_node().is_none() => v,
@@ -1847,6 +1875,9 @@ fn command_asgn(node: &Node) -> bool {
     }
     value.as_super_node().is_some_and(|s| s.lparen_loc().is_none() && s.arguments().is_some())
         || value.as_yield_node().is_some_and(|y| y.lparen_loc().is_none() && y.arguments().is_some())
+        || value.as_return_node().is_some_and(|r| r.arguments().is_some())
+        || value.as_break_node().is_some_and(|r| r.arguments().is_some())
+        || value.as_next_node().is_some_and(|r| r.arguments().is_some())
 }
 
 fn is_chain(item: &[Tok]) -> bool {

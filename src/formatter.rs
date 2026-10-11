@@ -188,6 +188,8 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
             };
             let (line, column, ls, start) = p.pos(o.start);
             let (last_line, last_column, _, end) = p.pos(o.end.max(o.start));
+            // Range#length is end_pos - begin_pos, past the end of the source included.
+            let overflow = o.end.max(o.start).saturating_sub(p.text.len());
             let status = if o.corrected {
                 Status::Corrected
             } else if o.correctable {
@@ -223,7 +225,7 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
                 column,
                 last_line,
                 last_column,
-                length: p.count(start, end),
+                length: p.count(start, end) + overflow,
                 source_line: p.line(ls),
                 global: false,
             }
