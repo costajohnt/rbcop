@@ -69,8 +69,9 @@ pub fn continue_over_blank_lines(text: &str, dots: &[usize]) -> Option<(Vec<u8>,
         if !text[dot..].starts_with('.') && !text[dot..].starts_with("&.") {
             continue;
         }
-        let mut line_start = text[..dot].rfind('\n').map_or(0, |i| i + 1);
-        if !text[line_start..dot].trim_start_matches([' ', '\t']).is_empty() {
+        // Walk back over the indentation only: an rfind per dot is quadratic on one long line (#316).
+        let mut line_start = text[..dot].trim_end_matches([' ', '\t']).len();
+        if line_start > 0 && text.as_bytes()[line_start - 1] != b'\n' {
             continue;
         }
         let mut blank = Vec::new();
@@ -136,8 +137,12 @@ pub fn indented_data_marker(text: &str, tokens: &[Token]) -> Option<(usize, usiz
     let skipped = |k: &str| matches!(k, "COMMENT" | "IGNORED_NEWLINE" | "EMBDOC_BEGIN" | "EMBDOC_LINE" | "EMBDOC_END");
     tokens.iter().enumerate().filter(|(_, t)| t.kind == "IDENTIFIER" && &text[t.start..t.end] == "__END__").find_map(
         |(i, t)| {
-            let line = text[..t.start].rfind('\n').map_or(0, |i| i + 1);
+            // Only the indentation is walked: an rfind per token is quadratic on one long line (#316).
+            let line = text[..t.start].trim_end_matches([' ', '\t', '\x0b', '\x0c']).len();
             let indent = &text[line..t.start];
+            if !(line == 0 || text.as_bytes()[line - 1] == b'\n') {
+                return None;
+            }
             let prev = tokens[..i].iter().rposition(|p| !skipped(p.kind));
             // The `|` at `j` closes a block's parameters (`{ |a, b|`, `do |a|`).
             let block_params_end = |j: usize| {
@@ -162,11 +167,7 @@ pub fn indented_data_marker(text: &str, tokens: &[Token]) -> Option<(usize, usiz
                         && !matches!(p.kind, "PIPE" | "TILDE" | "BANG" | "COMMA" | "BRACE_LEFT")
                         || p.kind == "BRACE_LEFT" && p.state & EXPR_LABEL == 0)
             });
-            (!indent.is_empty()
-                && indent.bytes().all(|b| matches!(b, b' ' | b'\t' | b'\x0b' | b'\x0c'))
-                && text[t.end..].starts_with('\n')
-                && line_begin)
-                .then_some((line, indent.len()))
+            (!indent.is_empty() && text[t.end..].starts_with('\n') && line_begin).then_some((line, indent.len()))
         },
     )
 }
