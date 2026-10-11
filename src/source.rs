@@ -219,7 +219,7 @@ fn lex(source: &[u8], version: &str, encoding_locked: bool) -> Vec<Token> {
 
 static ENCODING_RE: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
     // Ruby `\s` is ASCII.
-    regex::Regex::new(r"[\t\n\x0B\x0C\r #](?:en)?coding[\t\n\x0B\x0C\r ]*[:=][\t\n\x0B\x0C\r ]*(utf8-mac|[A-Za-z0-9_-]+?(?:-unix|-dos|-mac)|[A-Za-z0-9_-]+)")
+    regex::Regex::new(r"[\t\n\x0B\x0C\r #](?:en)?coding[\t\n\x0B\x0C\r ]*[:=][\t\n\x0B\x0C\r ]*(?:(utf8-mac)|([A-Za-z0-9_-]+?)(?:-unix|-dos|-mac)|([A-Za-z0-9_-]+))")
         .unwrap()
 });
 
@@ -245,7 +245,8 @@ fn magic_encoding(text: &str) -> Option<&str> {
         return None;
     }
     let c = ENCODING_RE.captures(line)?;
-    Some(c.get(1)?.as_str().trim_end_matches("-unix").trim_end_matches("-dos").trim_end_matches("-mac"))
+    // `utf8-mac` (lowercase) is special-cased before the emacs suffix is chewed.
+    Some(c.get(1).or_else(|| c.get(2)).or_else(|| c.get(3))?.as_str())
 }
 
 /// Encoding.name_list of Ruby 4.0.6 (RuboCop's Ruby), lowercase: what `Encoding.find` accepts.
