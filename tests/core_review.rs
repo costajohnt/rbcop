@@ -501,6 +501,25 @@ fn help_headings_are_bright_when_coloured() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// Lint/SelfAssignment with AllowRBSInlineAnnotation associates comments once per file, not once
+/// per offense (20,000 offenses took 36 s of CPU when each one walked the whole file; 40,000
+/// quadruple that, so a loaded machine still separates the two).
+#[test]
+fn self_assignment_rbs_annotation_is_linear() {
+    let dir = scratch("self-assignment-rbs");
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "AllCops:\n  NewCops: disable\nLint/SelfAssignment:\n  AllowRBSInlineAnnotation: true\n",
+    )
+    .unwrap();
+    fs::write(dir.join("a.rb"), format!("a = 1\n{}", "a = a\n".repeat(40_000))).unwrap();
+    let t0 = std::time::Instant::now();
+    let out = rbcop(&dir, &["--only", "Lint/SelfAssignment", "-f", "q", "a.rb"]);
+    assert!(t0.elapsed() < std::time::Duration::from_secs(60), "took {:?}", t0.elapsed());
+    assert!(text(&out.stdout).ends_with("1 file inspected, 40000 offenses detected\n"));
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// JUnit lists Lint/Syntax as RuboCop's Registry#enabled does (Config#enable_cop? is always true
 /// for it), under --disable-all-cops and with the Lint department disabled.
 #[test]
