@@ -179,19 +179,48 @@ pub fn parse_for_target<'t>(
         return (ruby_prism::parse_with_version(text.as_bytes(), version, utf8), Vec::new(), Vec::new());
     }
     let (mut result, mut tokens) = ruby_prism::parse_with_version_and_tokens(text.as_bytes(), version, utf8);
+    // Rewrites of a copy for Prism, keeping every offset; the original bytes are written back once
+    // parsed, so node text is the user's text (#169).
+    let mut copy: Option<Vec<u8>> = None;
+    let mut restore: Vec<(usize, u8)> = Vec::new();
+    // The parser gem's lexer starts a constant only at ASCII `A`-`Z` (`Ж = 1` is a local): such a
+    // CONSTANT's first character becomes its lowercase form for Prism (#219).
+    for t in tokens.iter().filter(|t| t.kind == "CONSTANT") {
+        let Some((c, l)) = crate::legacy_syntax::non_ascii_constant_start(&text[t.start..]) else { continue };
+        let bytes = copy.get_or_insert_with(|| text.as_bytes().to_vec());
+        let mut enc = [0u8; 4];
+        l.encode_utf8(&mut enc);
+        for i in 0..c.len_utf8() {
+            restore.push((t.start + i, bytes[t.start + i]));
+            bytes[t.start + i] = enc[i];
+        }
+    }
+    let (errors, dots) = {
+        let dots = |tokens: &[ruby_prism::Token]| -> Vec<usize> {
+            tokens.iter().filter(|t| matches!(t.kind, "DOT" | "AMPERSAND_DOT")).map(|t| t.start).collect()
+        };
+        match &copy {
+            None => (result.errors().next().is_some(), dots(&tokens)),
+            Some(c) => {
+                let (r, t) = ruby_prism::parse_with_version_and_tokens(c, version, utf8);
+                (r.errors().next().is_some(), dots(&t))
+            }
+        }
+    };
     let mut fake = Vec::new();
     // 2.7 to 3.2: the parser gem continues a call over whitespace-only lines before a leading
-    // `.`/`&.`, where Prism ends the expression. Parse with those lines made comment lines instead,
-    // and write the original bytes back once parsed: node text is the user's text (#169).
-    if target_ruby >= 2.7 && result.errors().next().is_some() {
-        let dots: Vec<usize> =
-            tokens.iter().filter(|t| matches!(t.kind, "DOT" | "AMPERSAND_DOT")).map(|t| t.start).collect();
-        if let Some((copy, added)) = crate::legacy_syntax::continue_over_blank_lines(text, &dots) {
-            let restore: Vec<(usize, u8)> = added.iter().map(|&f| (f, text.as_bytes()[f])).collect();
-            *buf = copy;
-            (result, tokens) = ruby_prism::parse_with_version_and_tokens_restoring(buf, version, utf8, &restore);
+    // `.`/`&.`, where Prism ends the expression. Parse with those lines made comment lines instead.
+    if target_ruby >= 2.7 && errors {
+        let current = copy.as_deref().map_or(text, |c| std::str::from_utf8(c).unwrap_or(text));
+        if let Some((rewritten, added)) = crate::legacy_syntax::continue_over_blank_lines(current, &dots) {
+            restore.extend(added.iter().map(|&f| (f, text.as_bytes()[f])));
+            copy = Some(rewritten);
             fake = added;
         }
+    }
+    if let Some(c) = copy {
+        *buf = c;
+        (result, tokens) = ruby_prism::parse_with_version_and_tokens_restoring(buf, version, utf8, &restore);
     }
     // A delimiter Prism lexes byte-wise (`%<U+00A0>q(`) splits a character between two tokens:
     // move the split to the character's end so every token slices the text (#250).
@@ -687,23 +716,21 @@ pub fn visiting() -> Option<usize> {
     VISITING.with(|v| v.get())
 }
 
-/// Runner#warnings: every RuboCop::Warning a cop raised, for the end-of-run summary.
-static WARNINGS: std::sync::Mutex<Vec<String>> = std::sync::Mutex::new(Vec::new());
-
-/// Team#handle_warning: a cop's Warning, printed now and kept for the summary (one per raise).
-pub fn cop_warning(message: &str, src: &Source) {
-    let msg = format!("{message} (from file: {})", src.absolute_path());
-    eprintln!("{msg}");
-    WARNINGS.lock().unwrap_or_else(|e| e.into_inner()).push(msg);
+thread_local! {
+    /// Team#warnings: every RuboCop::Warning a cop raised for the file this thread is linting,
+    /// one per raise, in order. The reporting loop prints them when it reaches the file (RuboCop
+    /// prints them as it inspects, in target order) and keeps them for the end-of-run summary.
+    static FILE_WARNINGS: std::cell::RefCell<Vec<String>> = const { std::cell::RefCell::new(Vec::new()) };
 }
 
-/// The run's cop warnings, in file order.
-pub fn take_warnings() -> Vec<String> {
-    let mut warnings = std::mem::take(&mut *WARNINGS.lock().unwrap_or_else(|e| e.into_inner()));
-    // Files run in parallel; a stable sort by path keeps each file's raises together, in order.
-    warnings
-        .sort_by(|a, b| a.rsplit_once(" (from file: ").map(|x| x.1).cmp(&b.rsplit_once(" (from file: ").map(|x| x.1)));
-    warnings
+/// Team#handle_warning: a cop's Warning for the file being linted.
+pub fn cop_warning(message: &str, src: &Source) {
+    FILE_WARNINGS.with(|w| w.borrow_mut().push(format!("{message} (from file: {})", src.absolute_path())));
+}
+
+/// The warnings the cops raised on this thread since the last call (one file's, in order).
+pub fn take_file_warnings() -> Vec<String> {
+    FILE_WARNINGS.with(|w| std::mem::take(&mut *w.borrow_mut()))
 }
 
 /// Print an error now and keep it for the summary (it makes the run fail).
@@ -768,10 +795,15 @@ const TOLERATED_ERRORS: &[&str] = &["invalid_yield", "invalid_retry_without_resc
 /// Before 2.7 `_1` is an ordinary identifier, so Prism's numbered-parameter checks (`|a| a + _1`,
 /// `_1` in nested blocks, `_1 = x` in a block that reads `_1`) do not apply.
 /// The parser gem also ends a `<<''` heredoc (empty delimiter) at the end of the file, where Prism
-/// finds it unterminated.
+/// finds it unterminated. Before 2.5 `return` in a class/module body is accepted (the builder's
+/// `invalid_return` check is 2.5+). Before the target that has anonymous forwarding (`&` 3.1, `*`
+/// and `**` 3.2) the grammar fails on the argument, with no "no anonymous ... parameter" error.
 pub fn tolerated(e: &ruby_prism::Diagnostic, parser_gem: bool, target_ruby: f64, text: &str) -> bool {
     let kind = e.type_name();
     (parser_gem && TOLERATED_ERRORS.contains(&kind))
+        || (kind == "return_invalid" && target_ruby < 2.5)
+        || (kind == "argument_no_forwarding_ampersand" && target_ruby < 3.1)
+        || (matches!(kind, "argument_no_forwarding_star" | "argument_no_forwarding_star_star") && target_ruby < 3.2)
         || (kind == "begin_lonely_else" && target_ruby <= 2.5)
         || (kind == "parameter_circular" && target_ruby < 2.7)
         || (kind == "parameter_numbered_reserved" && target_ruby < 3.0)

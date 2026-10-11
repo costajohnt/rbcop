@@ -1,4 +1,4 @@
-use crate::helpers::documentation_comment::{comments_taken_by_ancestor, documentation_comment};
+use crate::helpers::documentation_comment::{comments_taken_by_ancestor, documentation_comment, enclosing_start};
 use crate::helpers::comment_association::leading;
 use crate::helpers::parser_parent::parser_parent_index;
 use crate::prelude::*;
@@ -169,6 +169,12 @@ fn include_statement_only(node: &Node) -> bool {
         | Node::ForwardingSuperNode { .. }
         | Node::RetryNode { .. }
         | Node::RedoNode { .. } => true,
+        // (return args...): bare `return` (valid in a class body below 2.5) has no children.
+        Node::ReturnNode { .. } => node
+            .as_return_node()
+            .unwrap()
+            .arguments()
+            .is_none_or(|a| a.arguments().iter().all(|n| include_statement_only(&n))),
         Node::StatementsNode { .. } => node.as_statements_node().unwrap().body().iter().all(|n| include_statement_only(&n)),
         Node::ArrayNode { .. } => node.as_array_node().unwrap().elements().iter().all(|n| include_statement_only(&n)),
         Node::HashNode { .. } => node.as_hash_node().unwrap().elements().iter().next().is_none(),
@@ -299,7 +305,7 @@ impl Documentation {
         let start = node.location().start_offset();
         // documentation_comment? (`ends` are the sorted node ends, as in `ranges`)
         let r = range(node);
-        let enclosing = ranges.iter().filter(|&&(s, e)| s < r.0 && e >= r.1).map(|&(s, _)| s).max().unwrap_or(0);
+        let enclosing = enclosing_start(anc, r.0);
         // As the first statement of a body with `rescue`/`ensure`, the parser `rescue`/`ensure`
         // node starts where the class does and takes the comments before it.
         let wrapped = matches!(anc, [.., b, s]

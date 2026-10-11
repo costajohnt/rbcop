@@ -17,15 +17,14 @@ struct Lvars<'a> {
 
 impl<'pr> Visit<'pr> for Lvars<'_> {
     fn visit_local_variable_read_node(&mut self, node: &LocalVariableReadNode<'pr>) {
-        let l = node.location();
-        if l.as_slice() == self.name.as_bytes() {
-            self.out.push((l.start_offset(), l.end_offset()));
+        // `d.source == name`: parser's lvar is the bare name even for `foo(name:)`.
+        if node.name().as_slice() == self.name.as_bytes() {
+            self.out.push(helpers::lvar::range(&node.location(), self.name.as_bytes()));
         }
     }
     fn visit_it_local_variable_read_node(&mut self, node: &ItLocalVariableReadNode<'pr>) {
-        let l = node.location();
-        if l.as_slice() == self.name.as_bytes() {
-            self.out.push((l.start_offset(), l.end_offset()));
+        if self.name == "it" {
+            self.out.push(helpers::lvar::range(&node.location(), b"it"));
         }
     }
 }

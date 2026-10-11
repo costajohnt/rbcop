@@ -11,16 +11,9 @@ struct Lvars(Vec<(usize, usize, String)>);
 
 impl<'pr> Visit<'pr> for Lvars {
     fn visit_local_variable_read_node(&mut self, node: &ruby_prism::LocalVariableReadNode<'pr>) {
-        let l = node.location();
-        self.0.push((l.start_offset(), l.end_offset(), node_text(&node.as_node()).to_string()));
-    }
-    // `id:` value omission: parser's lvar is `id` (Prism's spans the colon too).
-    fn visit_implicit_node(&mut self, node: &ruby_prism::ImplicitNode<'pr>) {
-        if let Some(lvar) = node.value().as_local_variable_read_node() {
-            let name = String::from_utf8_lossy(lvar.name().as_slice()).into_owned();
-            let start = lvar.location().start_offset();
-            self.0.push((start, start + name.len(), name));
-        }
+        let name = node.name().as_slice();
+        let (s, e) = helpers::lvar::range(&node.location(), name);
+        self.0.push((s, e, String::from_utf8_lossy(name).into_owned()));
     }
 }
 
