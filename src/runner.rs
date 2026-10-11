@@ -20,6 +20,8 @@ pub struct FileReport {
     pub offenses: Vec<Offense>,
     /// Source text (after CRLF normalisation), kept for formatters that print code.
     pub text: String,
+    /// Warnings printed when the file is reported (`no department given` for directive names).
+    pub warnings: Vec<String>,
 }
 
 impl FileReport {
@@ -47,8 +49,9 @@ pub fn inspect(
     // available (ProcessedSource#raw_source) for cops such as Layout/EndOfLine.
     let (text, raw) = if text.contains("\r\n") { (text.replace("\r\n", "\n"), Some(text)) } else { (text, None) };
     let shared: Arc<str> = Arc::from(text.as_str());
+    directives::take_warnings();
     let (offenses, _, _) = analyze(path, display, &shared, raw.as_deref(), cfg, selected, None, Redundant::Own);
-    FileReport { offenses, text }
+    FileReport { offenses, text, warnings: directives::take_warnings() }
 }
 
 /// Inspect a file's bytes as read. A source that must be UTF-8 (`source::must_be_utf8`) but is not
@@ -85,7 +88,7 @@ pub fn inspect_bytes(
 fn encoding_error_report(text: String, message: String, selected: &dyn Fn(&str) -> bool) -> FileReport {
     // Lint/Syntax is not mobilized under -x, --only-guide-cops or `StyleGuideCopsOnly`.
     if !selected("Lint/Syntax") {
-        return FileReport { offenses: Vec::new(), text };
+        return FileReport { offenses: Vec::new(), text, warnings: Vec::new() };
     }
     let offense = Offense {
         start: 0,
@@ -98,7 +101,7 @@ fn encoding_error_report(text: String, message: String, selected: &dyn Fn(&str) 
         corrected: false,
         source: None,
     };
-    FileReport { offenses: vec![offense], text }
+    FileReport { offenses: vec![offense], text, warnings: Vec::new() }
 }
 
 /// How Ruby words a failed `File.read`/`File.open` of `path` (RuboCop raises its own error for a
@@ -277,9 +280,25 @@ fn analyze(
         let mut actions: Vec<usize> = Vec::new();
         // Circular argument references: the simulation reports them where the parser reads them.
         let mut circular: Vec<(usize, usize)> = Vec::new();
+        // Numbered parameters (2.7+): the parser gem's per-identifier errors come from the tree
+        // walk below, in place of Prism's; Prism's reserved-name errors stay where the walk has
+        // nothing (parameters named `_1`).
+        let numbered = if cfg.target_ruby >= 2.7 && !crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH) {
+            crate::syntax::numbered_parameter_errors(&result.node(), cfg.target_ruby)
+        } else {
+            Vec::new()
+        };
+        let numbered_kind = |e: &ruby_prism::Diagnostic| {
+            let k = e.type_name();
+            k.starts_with("numbered_parameter_")
+                || k == "expression_not_writable_numbered"
+                || (k == "parameter_numbered_reserved" && numbered.iter().any(|n| n.0 == e.location().start_offset()))
+        };
         let mut semantic: Vec<_> = result
             .errors()
-            .filter(|e| kept(e) && semantic_kind(e) && !fatal(e) && e.location().start_offset() < cut)
+            .filter(|e| {
+                kept(e) && semantic_kind(e) && !fatal(e) && !numbered_kind(e) && e.location().start_offset() < cut
+            })
             .filter_map(|e| {
                 let (s, end) = crate::legacy_syntax::semantic_location(
                     e.type_name(),
@@ -307,6 +326,10 @@ fn analyze(
                 Some(t)
             })
             .collect();
+        for e in numbered.into_iter().filter(|e| e.0 < cut) {
+            actions.push(e.1);
+            semantic.push(e);
+        }
         // Onigmo compile errors of static regexps: semantic errors too (the builder's diagnostic).
         if !crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH) {
             for e in crate::syntax::regexp_compile_errors(&result.node(), text).into_iter().filter(|e| e.0 < cut) {
@@ -397,7 +420,19 @@ fn analyze(
     src.parser_gem = parser_gem;
     src.target_ruby = cfg.target_ruby;
 
+    // CommentConfig is analyzed once per investigation, not again for the redundant-directive pass
+    // (it reuses the processed source).
+    let warn = !matches!(redundant, Redundant::Only(_));
     if !errors.is_empty() {
+        // ponytail: without a tree there are no statement bounds, so a detached disable-next or
+        // enable-next warns here where RuboCop's would not.
+        if warn && src.text.contains("rubocop") {
+            for c in &src.comments {
+                if let Some(d) = directives::parse(src.slice(c.start, c.end)).filter(|d| d.mode != "pop") {
+                    directives::warn_unqualified(&src, &d);
+                }
+            }
+        }
         // RuboCop runs only Lint/Syntax on a file that does not parse, one offense per diagnostic,
         // and does so even under --only (which always lists it); not under -x or the style-guide
         // filter, which leave it out.
@@ -476,7 +511,7 @@ fn analyze(
         let code = code_lines(&src, &facts);
         let statement_bounds = |line: usize| bounds.at(line);
         let info = directives::LineInfo { code: &code, statement_bounds: &statement_bounds };
-        let cc = directives::analyze(&src, &config_disabled, &info, directives::prevent_style(cfg));
+        let cc = directives::analyze(&src, &config_disabled, &info, directives::prevent_style(cfg), warn);
         facts.disabled = directives::disabled_ranges(&cc);
         facts.comment_config = cc;
         facts.code_lines = code;
@@ -888,7 +923,9 @@ impl FactCollector<'_, '_> {
             self.facts.string_ranges.push((start, end));
         } else if let Some((b, t, t_end)) = body {
             self.heredoc(b, t, t_end, open);
-            self.facts.string_ranges.push((b, t));
+            // loc.heredoc_body starts at the beginning of the body's first line; Prism's first
+            // part starts after a `<<~` indentation when it is an interpolation (`\t#{a} b`).
+            self.facts.string_ranges.push((self.src.line_start(self.src.line_of(b)), t));
         }
     }
 

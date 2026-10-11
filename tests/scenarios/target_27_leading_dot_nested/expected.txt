@@ -18,9 +18,16 @@ reparse_line_continuation.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComm
 reparse_line_continuation.rb:1:9: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
 reparse_line_continuation.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.bar` with `foo \` on line 1.
 reparse_line_continuation.rb:4:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+reparse_numbered_assigned.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+reparse_numbered_assigned.rb:1:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+reparse_numbered_assigned.rb:2:11: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+reparse_numbered_assigned.rb:2:11: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+reparse_numbered_assigned.rb:2:17: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
 reparse_numbered_assignment.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 reparse_numbered_assignment.rb:1:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
 reparse_numbered_assignment.rb:2:12: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+reparse_numbered_nested.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+reparse_numbered_nested.rb:1:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
 ternary.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 ternary.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `d`.
 ternary.rb:1:5: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.

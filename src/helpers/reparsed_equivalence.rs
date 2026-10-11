@@ -42,7 +42,19 @@ fn parse_clean<'t>(
 ) -> Option<ruby_prism::ParseResult<'t>> {
     let target = legacy.unwrap_or(f64::INFINITY);
     let (result, tokens, _) = crate::runner::parse_for_target(text, buf, version, target);
-    if result.errors().any(|e| !crate::runner::tolerated(&e, legacy.is_some(), target, text)) {
+    // From 2.7 the parser gem's numbered-parameter errors are the runner's tree walk, not Prism's.
+    // (`runner::analyze`'s `numbered_kind`); Prism's reserved-name errors stay where it has none.
+    let walk = legacy.is_some_and(|t| t >= 2.7)
+        && !crate::ast::deeper_than(&result.node(), crate::runner::MAX_AST_DEPTH);
+    let walked = if walk { crate::syntax::numbered_parameter_errors(&result.node(), target) } else { Vec::new() };
+    if !walked.is_empty() {
+        return None;
+    }
+    let numbered = |e: &ruby_prism::Diagnostic| {
+        let k = e.type_name();
+        walk && (k.starts_with("numbered_parameter_") || k == "expression_not_writable_numbered")
+    };
+    if result.errors().any(|e| !crate::runner::tolerated(&e, legacy.is_some(), target, text) && !numbered(&e)) {
         return None;
     }
     if legacy.is_none() {

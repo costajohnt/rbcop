@@ -150,6 +150,11 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - RuboCop cop crashes on odd input are not reproduced: RuboCop prints `An error occurred while
   ...` and exits 1 where rbcop's port inspects the file normally (Layout/EmptyLinesAroundMethodBody
   on `def foo(bar` / `    )end`, Style/NegativeArrayIndex, Style/HashConversion, Style/RequireOrder).
+  Cop errors from config values (MinBodyLength / MinBranchesCount not a positive Integer,
+  SafeNavigationChainLength `Max` 0 or less, a zero indentation width with tabs, #114) are
+  reproduced. Order of cop errors: rbcop's `N errors occurred:` summary is sorted, RuboCop's is in
+  raise order; and errors printed as they happen come from on_file cops (RuboCop's
+  on_new_investigation) after the node walk's, where RuboCop prints them first.
 - Deliberate: Style/WordArray correcting a `%W[...]` whose value is invalid UTF-8 (`%W[\xff]`)
   writes the escaped form (`["\xFF"]`); RuboCop writes the raw bytes and then crashes re-parsing
   its own output. The offense message matches RuboCop.
@@ -177,7 +182,7 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   (index-only) never report, and Lint/ConstantReassignment's cross-file message is skipped. This
   matches RuboCop with the default config.
 - Metrics/CollectionLiteralLength does not count `rescue A, B` exception lists (parser `array`).
-  Lint/SymbolConversion does not treat a backslash-newline inside `:"..."` as a continuation. Naming/PredicatePrefix `validate_config` is not ported.
+  Lint/SymbolConversion does not treat a backslash-newline inside `:"..."` as a continuation.
 - LineLength `SplitStrings: true` break points (string splitting) are not modelled. The unbracketed
   `rescue A, B` array is checked as a breakable collection, but is not an ancestor of calls inside
   the exception list (`contained_by_breakable_collection_on_same_line?`).
@@ -216,6 +221,10 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     is a rewrite of two large ports rather than a dedupe; the ancestor helpers work on
     `cx.ancestors` directly, so moving them onto a tree would add a tree build per file for cops
     that only need a parent.
+- Style/DirectiveScope runs on the program node, so its cop errors (a clobbering correction under -A,
+  two `enable`/`disable` pairs back to back) are located at the first statement (`a.rb:4:0`) where
+  RuboCop's on_new_investigation gives the bare path, and its later -A iterations print fewer
+  `no department given` warnings than RuboCop's.
 - Style/DirectiveScope treats only ported cops as disabled by default config; an `enable X` ...
   `disable X` pair for an unported, default-disabled cop can differ (not hit by the gates).
 - Lint/RedundantCopDisableDirective judges directives against rbcop's own offenses, so a directive

@@ -218,7 +218,8 @@ fn check_indentation(cx: &mut Cx, base: usize, body: Option<&Body>, style: &str,
     let (s, e) = if ind <= begin { (ind, begin) } else { (begin, ind) };
     let name = if style == "normal" { String::new() } else { format!(" {style}") };
     let msg = if tabs {
-        let actual = if width == 0 { 0 } else { indentation.div_euclid(width) };
+        // Integer#/ by a zero Width raises ZeroDivisionError (a cop error), as div_euclid panics.
+        let actual = indentation.div_euclid(width);
         format!("Use 1 (not {actual}) tabs for{name} indentation.")
     } else {
         format!("Use {width} (not {indentation}) spaces for{name} indentation.")

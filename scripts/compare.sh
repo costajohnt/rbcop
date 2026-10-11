@@ -13,12 +13,13 @@ if [ "${1:-}" = "--project-config" ]; then
   shift
 fi
 dir=$(cd "$1" && pwd)
-bin=$(cd "$(dirname "$0")/.." && pwd)/target/release/rbcop
+. "$(dirname "$0")/rbcop.sh"
 out=${TMPDIR:-/tmp}/rbcop-compare/$(basename "$dir")${mode:+-default}
 mkdir -p "$out"
 # Lint/RedundantCopDisableDirective is left out of the default: --only rejects it, and both tools
 # would then print nothing and compare as "identical".
-cops=${2:-$("$bin" --show-cops | sed -n 's/^\([^ #].*\):$/\1/p' | grep -vx 'Lint/RedundantCopDisableDirective' | paste -sd, -)}
+cops=${2:-}
+[ -n "$cops" ] || cops=$(rbcop_only_cops)
 
 # LineLength's [Correctable] tag depends on CheckLineBreakable, which rbcop does not model yet.
 # rubocop-md lints Ruby inside Markdown; rbcop does not, so .md results are dropped.

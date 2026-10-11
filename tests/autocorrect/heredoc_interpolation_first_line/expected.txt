@@ -1,0 +1,2 @@
+e.rb:2:1: C: [Corrected] Layout/IndentationStyle: Tab detected in indentation.
+g.rb:1:121: C: Layout/LineLength: Line is too long. [132/120]

@@ -1,0 +1,5 @@
+inherit_from: ../.rubocop.yml
+Layout/EmptyLineAfterMagicComment:
+  NumberOfEmptyLines: 0
+Layout/MultilineMethodCallIndentation:
+  IndentationWidth: 4

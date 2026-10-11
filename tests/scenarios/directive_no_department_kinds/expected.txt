@@ -1,0 +1,14 @@
+a.rb:10:26: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics` department.
+a.rb:10:48: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Layout/LineLength`.
+a.rb:10:67: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of all cops.
+a.rb:10:8: W: Lint/CopDirectiveSyntax: Unknown cop name `LineLength `.
+a.rb:11:1: C: [Correctable] Style/DirectiveScope: Use `disable-next` instead of a `disable`/`enable` pair around a single statement.
+a.rb:11:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/AbcSize`, `Metrics/MethodLength`.
+a.rb:13:1: C: [Correctable] Style/DirectiveScope: Use `enable-next` instead of an `enable`/`disable` pair around a single statement.
+a.rb:15:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/AbcSize`, `Metrics/MethodLength`.
+a.rb:17:1: W: Lint/CopDirectiveSyntax: Unknown cop name `NotACop`.
+a.rb:17:41: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of NotACop.
+a.rb:17:50: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of RedundantCopDisableDirective.
+a.rb:18:1: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `ClassLength` (did you mean `Metrics/ClassLength`?).
+a.rb:3:1: C: [Correctable] Style/DirectiveScope: Use `next` instead of `push`/`pop` around a single statement.
+a.rb:6:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
