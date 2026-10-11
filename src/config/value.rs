@@ -1,6 +1,7 @@
 //! Config values as RuboCop sees them after Psych: insertion-ordered maps, plus Regexp.
 
 use regex::Regex;
+use std::borrow::Cow;
 use std::sync::{Arc, LazyLock};
 use yaml_rust2::Yaml;
 use yaml_rust2::parser::{Event, MarkedEventReceiver, Parser};
@@ -548,34 +549,74 @@ pub fn regexp_to_s(literal: &str) -> String {
 /// A Ruby regexp from the config. Patterns the regex crate accepts use it; those it rejects
 /// (lookaround, backreferences, atomic groups, possessive quantifiers) fall back to fancy-regex's
 /// backtracking engine.
+///
+/// fancy-regex gives up after a step budget where Onigmo (with its match cache) finishes.
+/// A search that gives up is retried one start position at a time with the `\G`-anchored copy, so
+/// a later match is still found; a start position that gives up on its own counts as no match
+/// there (docs/known-gaps.md).
 #[derive(Clone, Debug)]
 pub enum RubyRegex {
     Plain(Regex),
-    Backtracking(Box<fancy_regex::Regex>),
+    Backtracking { re: Box<fancy_regex::Regex>, anchored: Box<fancy_regex::Regex> },
+}
+
+// ponytail: fancy-regex has no match cache, so these budgets only bound the cost of exponential
+// patterns; a smaller per-position budget keeps the retry scan linear in the text.
+const SEARCH_LIMIT: usize = 1_000_000;
+const ANCHORED_LIMIT: usize = 100_000;
+
+fn fancy(pattern: &str, limit: usize) -> Option<Box<fancy_regex::Regex>> {
+    fancy_regex::RegexBuilder::new(pattern).backtrack_limit(limit).build().ok().map(Box::new)
 }
 
 impl RubyRegex {
-    /// A backtracking match that hits fancy-regex's backtrack limit counts as no match.
     pub fn is_match(&self, text: &str) -> bool {
-        match self {
-            RubyRegex::Plain(r) => r.is_match(text),
-            RubyRegex::Backtracking(r) => r.is_match(text).unwrap_or(false),
-        }
+        self.find_at(text, 0).is_some()
     }
 
     /// The compiled pattern (Ruby classes and flags already translated).
     pub fn as_str(&self) -> &str {
         match self {
             RubyRegex::Plain(r) => r.as_str(),
-            RubyRegex::Backtracking(r) => r.as_str(),
+            RubyRegex::Backtracking { re, .. } => re.as_str(),
         }
     }
 
-    pub fn replace_all<'t>(&self, text: &'t str, rep: &str) -> std::borrow::Cow<'t, str> {
+    /// The leftmost match starting at or after byte `start`, as a byte range.
+    pub fn find_at(&self, text: &str, start: usize) -> Option<(usize, usize)> {
         match self {
-            RubyRegex::Plain(r) => r.replace_all(text, rep),
-            RubyRegex::Backtracking(r) => r.replace_all(text, rep),
+            RubyRegex::Plain(r) => r.find_at(text, start).map(|m| (m.start(), m.end())),
+            RubyRegex::Backtracking { re, anchored } => match re.find_from_pos(text, start) {
+                Ok(m) => m.map(|m| (m.start(), m.end())),
+                Err(_) => (start..=text.len())
+                    .filter(|&p| text.is_char_boundary(p))
+                    .find_map(|p| anchored.find_from_pos(text, p).ok().flatten())
+                    .map(|m| (m.start(), m.end())),
+            },
         }
+    }
+
+    /// `String#gsub` with a block: each non-overlapping match replaced by `f(matched text)`.
+    pub fn replace_all_with<'t>(&self, text: &'t str, mut f: impl FnMut(&str) -> String) -> Cow<'t, str> {
+        let mut out = String::new();
+        let (mut last, mut pos, mut any) = (0, 0, false);
+        while pos <= text.len() {
+            let Some((s, e)) = self.find_at(text, pos) else { break };
+            out.push_str(&text[last..s]);
+            out.push_str(&f(&text[s..e]));
+            (last, any) = (e, true);
+            pos = if e > s { e } else { e + text[e..].chars().next().map_or(1, char::len_utf8) };
+        }
+        if !any {
+            return Cow::Borrowed(text);
+        }
+        out.push_str(&text[last..]);
+        Cow::Owned(out)
+    }
+
+    /// `String#gsub(re, rep)` with a literal replacement.
+    pub fn replace_all<'t>(&self, text: &'t str, rep: &str) -> Cow<'t, str> {
+        self.replace_all_with(text, |_| rep.to_string())
     }
 }
 
@@ -602,13 +643,30 @@ pub fn ruby_regex(literal: &str) -> Option<RubyRegex> {
     let pattern = format!("(?{prefix}){}", crate::helpers::ruby_string::ruby_regex_classes(source));
     match Regex::new(&pattern) {
         Ok(r) => Some(RubyRegex::Plain(r)),
-        Err(_) => fancy_regex::Regex::new(&pattern).ok().map(|r| RubyRegex::Backtracking(Box::new(r))),
+        Err(_) => Some(RubyRegex::Backtracking {
+            re: fancy(&pattern, SEARCH_LIMIT)?,
+            anchored: fancy(&format!(r"\G(?:{pattern})"), ANCHORED_LIMIT)?,
+        }),
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    // Onigmo: `"a"*46 + "B" =~ /(a|aa)+(?=c)|B/` is 46; gsub leaves the text when nothing matches.
+    #[test]
+    fn backtracking_regex_past_the_step_budget() {
+        let text = format!("{}B", "a".repeat(46));
+        let re = ruby_regex("(a|aa)+(?=c)|B").unwrap();
+        assert!(matches!(re, RubyRegex::Backtracking { .. }));
+        assert_eq!(re.find_at(&text, 0), Some((46, 47)));
+        let re = ruby_regex("(a|aa)+(?=c)").unwrap();
+        assert!(!re.is_match(&text));
+        assert_eq!(re.replace_all(&text, ""), text);
+        let re = ruby_regex("/a(?=b)/i").unwrap();
+        assert_eq!(re.replace_all_with("xAbab", |m| format!("<{m}>")), "x<A>b<a>b");
+    }
 
     // Expected values from Ruby 4.0 `YAML.safe_load(..., aliases: true)` (Psych).
     #[test]

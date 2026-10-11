@@ -500,3 +500,22 @@ fn help_headings_are_bright_when_coloured() {
     assert!(!text(&run(&["-h", "--no-color"]).stdout).contains('\x1b'));
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// JUnit lists Lint/Syntax as RuboCop's Registry#enabled does (Config#enable_cop? is always true
+/// for it), under --disable-all-cops and with the Lint department disabled.
+#[test]
+fn junit_lists_lint_syntax_when_cops_are_disabled() {
+    let dir = scratch("junit-syntax");
+    fs::write(dir.join("a.rb"), "x = 1\n").unwrap();
+    let out = text(&rbcop(&dir, &["--disable-all-cops", "-f", "ju", "a.rb"]).stdout);
+    assert_eq!(
+        out,
+        "<?xml version='1.0'?>\n<testsuites>\n  <testsuite name='rubocop' tests='1' failures='0'>\n    \
+         <testcase classname='a' name='Lint/Syntax'/>\n  </testsuite>\n</testsuites>\n"
+    );
+    fs::write(dir.join(".rubocop.yml"), "AllCops:\n  NewCops: disable\nLint:\n  Enabled: false\n").unwrap();
+    let out = text(&rbcop(&dir, &["-f", "ju", "a.rb"]).stdout);
+    assert!(out.contains("<testcase classname='a' name='Lint/Syntax'/>"));
+    assert!(!out.contains("name='Lint/AmbiguousOperator'"));
+    let _ = fs::remove_dir_all(&dir);
+}

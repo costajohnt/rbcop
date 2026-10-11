@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use helpers::select_by::plain_send;
 
 pub const NAME: &str = "Style/ExpandPathArguments";
 pub static COP: ExpandPathArguments = ExpandPathArguments;
@@ -18,11 +19,6 @@ fn is_const(node: &Node, name: &str) -> bool {
         }
         _ => false,
     }
-}
-
-/// A plain parser `send` (no `&.`, no attached block).
-fn plain_send<'pr>(node: &Node<'pr>) -> Option<ruby_prism::CallNode<'pr>> {
-    node.as_call_node().filter(|c| !is_csend(c) && c.block().is_none_or(|b| b.as_block_node().is_none()))
 }
 
 fn range(node: &Node) -> (usize, usize) {

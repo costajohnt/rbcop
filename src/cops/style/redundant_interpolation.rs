@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use helpers::select_by::plain_send;
 use helpers::node_types::is_operator_method;
 
 pub const NAME: &str = "Style/RedundantInterpolation";
@@ -17,12 +18,6 @@ fn is_variable(node: &Node) -> bool {
             | kind::NUMBERED_REFERENCE_READ_NODE
             | kind::BACK_REFERENCE_READ_NODE
     )
-}
-
-/// A parser `send` (not csend, not a call with a literal block).
-fn plain_send<'pr>(node: &Node<'pr>) -> Option<ruby_prism::CallNode<'pr>> {
-    node.as_call_node()
-        .filter(|c| !is_csend(c) && !c.block().is_some_and(|b| b.as_block_node().is_some()))
 }
 
 impl Cop for RedundantInterpolation {

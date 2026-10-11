@@ -53,6 +53,11 @@ fn by_start(toks: &[Tok]) -> Vec<Tok> {
 /// Where the parser gem reports a semantic error Prism also finds: a circular argument reference
 /// at the parameter's first read in its default value (Prism: at the parameter).
 pub fn semantic_location(kind: &str, start: usize, end: usize, tokens: &[Token], text: &str) -> (usize, usize) {
+    if matches!(kind, "class_name" | "module_name") {
+        // The builder reports the cname token (`bar` of `class Foo::bar`).
+        let name = tokens.iter().rfind(|t| t.start >= start && t.start < end.max(start + 1));
+        return name.map_or((start, end), |t| (t.start, t.end));
+    }
     if kind != "parameter_circular" {
         return (start, end);
     }
@@ -80,6 +85,70 @@ pub fn invalid_regexp(message: &str, at: usize, tokens: &[Token], text: &str) ->
     Some((tokens[i].start, close.end, format!("{message}: /{source}/{}", if extended { "x" } else { "" })))
 }
 
+/// Where the parser gem's lexer raises "unterminated string meets end of file": the opener of the
+/// innermost string-like literal (string, symbol, regexp, xstring, %w/%i list) still open at the
+/// end of the input. Prism reports some of these at the end of the file, others with their own
+/// error kinds (`regexp_term`, `list_w_lower_term`, ...). Returns (outermost, innermost) opener:
+/// Prism's errors from the outer literal left open are not the parser gem's.
+/// `kinds` are Prism's error kinds; only one about a literal left open triggers the check.
+pub fn unterminated_literal<'a>(mut kinds: impl Iterator<Item = &'a str>, tokens: &[Token]) -> Option<(usize, usize)> {
+    let literal_eof = |k: &str| {
+        matches!(
+            k,
+            "string_literal_eof" | "string_literal_term" | "string_interpolated_term" | "regexp_term" | "xstring_term"
+        ) || k.starts_with("symbol_term_")
+            || (k.starts_with("list_") && k.ends_with("_term"))
+    };
+    if !kinds.any(literal_eof) {
+        return None;
+    }
+    let mut open: Vec<usize> = Vec::new();
+    for (i, t) in tokens.iter().enumerate() {
+        let next = tokens.get(i + 1).map_or("", |n| n.kind);
+        match t.kind {
+            // `:foo`, `:%`: a one-token symbol (no content or end follows its SYMBOL_BEGIN).
+            "SYMBOL_BEGIN" if !matches!(next, "STRING_CONTENT" | "EMBEXPR_BEGIN" | "EMBVAR" | "STRING_END" | "EOF") => {
+            }
+            "STRING_BEGIN" | "SYMBOL_BEGIN" | "REGEXP_BEGIN" | "BACKTICK" | "PERCENT_LOWER_X" | "PERCENT_LOWER_W"
+            | "PERCENT_UPPER_W" | "PERCENT_LOWER_I" | "PERCENT_UPPER_I" => open.push(t.start),
+            "STRING_END" | "REGEXP_END" | "LABEL_END" => {
+                open.pop();
+            }
+            "__END__" => break,
+            _ => {}
+        }
+    }
+    Some((*open.first()?, *open.last()?))
+}
+
+/// Prism's `class_name`/`module_name` when the parser gem fails the grammar instead of reporting
+/// it from the builder: Some(offset of the failing token). The gem's `cpath` reaches the builder's
+/// "must be a constant literal" check only for a `tIDENTIFIER` cname (`class foo`, `Foo::bar`,
+/// `::foo`); a token that cannot start a name (`class <x`, `class;`) fails right after the
+/// keyword, and any other primary (`class 1`, `class foo.bar`) fails where `::` was expected.
+pub fn class_name_failure(kind: &str, start: usize, end: usize, tokens: &[Token]) -> Option<usize> {
+    if !matches!(kind, "class_name" | "module_name") {
+        return None;
+    }
+    let code = |t: &&Token| !matches!(t.kind, "COMMENT" | "NEWLINE" | "IGNORED_NEWLINE");
+    let at_keyword = tokens.iter().any(|t| t.start == start && matches!(t.kind, "KEYWORD_CLASS" | "KEYWORD_MODULE"));
+    if at_keyword {
+        // The lexer skips newlines after `class`/`module` (EXPR_CLASS), not `;`.
+        return tokens.iter().filter(code).find(|t| t.start >= end).map(|t| t.start);
+    }
+    let i = tokens.iter().rposition(|t| t.start < end.max(start + 1) && code(&t))?;
+    let prev = tokens[..i].iter().rev().find(code).map(|t| t.kind);
+    let cname = matches!(tokens[i].kind, "IDENTIFIER" | "CONSTANT")
+        && prev.is_some_and(|k| matches!(k, "KEYWORD_CLASS" | "KEYWORD_MODULE" | "COLON_COLON" | "UCOLON_COLON"));
+    if cname {
+        return None;
+    }
+    tokens
+        .iter()
+        .find(|t| t.start >= tokens[i].end && !matches!(t.kind, "COMMENT" | "IGNORED_NEWLINE"))
+        .map(|t| t.start)
+}
+
 /// The offset of the token an LALR parser fails on for a Prism syntax error: a write target
 /// without `=` fails at the token after it, an unwritable expression at its `=`.
 pub fn failure_offset(kind: &str, start: usize, end: usize, tokens: &[Token]) -> usize {
@@ -104,6 +173,9 @@ pub fn failure_offset(kind: &str, start: usize, end: usize, tokens: &[Token]) ->
         if at_failing_token { only_trivia_from(start) } else { !kind.starts_with("invalid_") && only_trivia_from(end) };
     if truncated {
         return eof;
+    }
+    if let Some(at) = class_name_failure(kind, start, end, tokens) {
+        return at;
     }
     match kind {
         // Located at the `=`, `,`, ... (but `_after_operator` at the failing token); the parser
@@ -171,7 +243,8 @@ fn first_error_after(
         .filter(|e| {
             let k = e.type_name();
             !k.contains("term")
-                && !crate::syntax::is_semantic(k)
+                && (!crate::syntax::is_semantic(k)
+                    || class_name_failure(k, e.location().start_offset(), e.location().end_offset(), &tokens).is_some())
                 && !matches!(k, "invalid_yield" | "invalid_retry_without_rescue" | "return_invalid")
         })
         .map(|e| failure_offset(e.type_name(), e.location().start_offset(), e.location().end_offset(), &tokens))
