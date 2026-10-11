@@ -235,55 +235,102 @@ pub fn correct_bytes(
 ///
 /// Deliberate difference: a file whose canonical path is not under one of `roots` (canonical
 /// paths, see `outside_roots`) is refused with PermissionDenied, checked here right before the
-/// write, and the final component is never followed as a symlink after that check.
+/// write. The directories from that root down to the file are then opened one by one without
+/// following symlinks, and every later step works relative to the last one (`openat`, `renameat`),
+/// so a directory swapped for a symlink after the check fails the write instead of redirecting it.
 // ponytail: extended attributes and ACLs are not copied to the renamed file.
-// ponytail: a parent directory swapped for a symlink between the check and the write is not
-// caught (needs openat with O_NOFOLLOW per component).
 pub fn write_source(path: &Path, new: &str, roots: &[PathBuf]) -> std::io::Result<()> {
     use std::fs;
     use std::io::Write;
     use std::os::unix::fs::{MetadataExt, OpenOptionsExt};
     static COUNTER: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
     let target = fs::canonicalize(path)?;
-    if outside_roots(&target, roots) {
+    let Some(root) = roots.iter().find(|r| target.starts_with(r)) else {
         let msg = format!("{} resolves to {}, outside the project", path.display(), target.display());
         return Err(std::io::Error::new(std::io::ErrorKind::PermissionDenied, msg));
-    }
-    let nofollow = || {
-        let mut o = fs::OpenOptions::new();
-        o.write(true).custom_flags(libc::O_NOFOLLOW);
-        o
     };
+    let (Some(parent), Some(name)) = (target.parent(), target.file_name()) else {
+        return Err(std::io::ErrorKind::InvalidInput.into());
+    };
+    // A file argument is its own root: start at its directory.
+    let base = if *root == target { parent } else { root.as_path() };
+    let mut dir = fs::OpenOptions::new().read(true).custom_flags(libc::O_DIRECTORY).open(base)?;
+    for c in parent.strip_prefix(base).unwrap_or(Path::new("")).components() {
+        dir = at::open(&dir, c.as_os_str(), libc::O_RDONLY | libc::O_DIRECTORY | libc::O_NOFOLLOW, 0)?;
+    }
     // File.open(path, 'w') fails on a file that is not writable; the rename must not get round that.
-    drop(nofollow().open(&target)?);
-    let meta = fs::metadata(&target)?;
+    let mut file = at::open(&dir, name, libc::O_WRONLY | libc::O_NOFOLLOW, 0)?;
+    let meta = file.metadata()?;
     // SAFETY: geteuid has no preconditions.
     if meta.nlink() == 1 && meta.uid() == unsafe { libc::geteuid() } {
         // An unguessable name, created exclusively (O_EXCL: never an existing file or symlink) and
         // readable by the owner only until it has the file's own group and mode, before any content.
         let n = COUNTER.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
         let nanos = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map_or(0, |d| d.as_nanos());
-        let name = target.file_name().unwrap_or_default().to_string_lossy();
-        let tmp = target.with_file_name(format!(".{name}.rbcop-{}-{n}-{nanos:x}.tmp", std::process::id()));
-        if let Ok(mut f) = fs::OpenOptions::new().write(true).create_new(true).mode(0o600).open(&tmp) {
+        let tmp = format!(".{}.rbcop-{}-{n}-{nanos:x}.tmp", name.to_string_lossy(), std::process::id());
+        let tmp = std::ffi::OsStr::new(&tmp);
+        let flags = libc::O_WRONLY | libc::O_CREAT | libc::O_EXCL | libc::O_NOFOLLOW;
+        if let Ok(mut f) = at::open(&dir, tmp, flags, 0o600) {
             // The file's group, too (a group rbcop's user is not in cannot be given: write in place).
             if std::os::unix::fs::fchown(&f, None, Some(meta.gid())).is_ok() {
                 let written = (|| {
                     f.set_permissions(meta.permissions())?;
                     f.write_all(new.as_bytes())?;
                     f.sync_all()?;
-                    fs::rename(&tmp, &target)
+                    at::rename(&dir, tmp, name)
                 })();
                 if written.is_err() {
-                    let _ = fs::remove_file(&tmp);
+                    let _ = at::unlink(&dir, tmp);
                 }
                 return written;
             }
             drop(f);
-            let _ = fs::remove_file(&tmp);
+            let _ = at::unlink(&dir, tmp);
         }
     }
-    nofollow().truncate(true).open(&target)?.write_all(new.as_bytes())
+    file.set_len(0)?;
+    file.write_all(new.as_bytes())
+}
+
+/// `openat`, `renameat` and `unlinkat` relative to an open directory.
+mod at {
+    use std::ffi::{CString, OsStr};
+    use std::fs::File;
+    use std::io::{Error, Result};
+    use std::os::fd::{AsRawFd, FromRawFd};
+    use std::os::unix::ffi::OsStrExt;
+
+    fn c(name: &OsStr) -> Result<CString> {
+        Ok(CString::new(name.as_bytes())?)
+    }
+
+    fn check(r: libc::c_int) -> Result<libc::c_int> {
+        if r < 0 { Err(Error::last_os_error()) } else { Ok(r) }
+    }
+
+    pub fn open(dir: &File, name: &OsStr, flags: libc::c_int, mode: libc::mode_t) -> Result<File> {
+        let name = c(name)?;
+        // SAFETY: `dir` is an open descriptor and `name` a NUL-terminated string, both alive for
+        // the call; the mode is passed promoted to c_uint, as the variadic argument expects.
+        let fd = check(unsafe {
+            libc::openat(dir.as_raw_fd(), name.as_ptr(), flags | libc::O_CLOEXEC, libc::c_uint::from(mode))
+        })?;
+        // SAFETY: `fd` was just returned by openat and is owned by nothing else.
+        Ok(unsafe { File::from_raw_fd(fd) })
+    }
+
+    pub fn rename(dir: &File, from: &OsStr, to: &OsStr) -> Result<()> {
+        let (from, to) = (c(from)?, c(to)?);
+        let d = dir.as_raw_fd();
+        // SAFETY: an open descriptor and two NUL-terminated strings, all alive for the call.
+        check(unsafe { libc::renameat(d, from.as_ptr(), d, to.as_ptr()) }).map(drop)
+    }
+
+    pub fn unlink(dir: &File, name: &OsStr) -> Result<()> {
+        let name = c(name)?;
+        // SAFETY: an open descriptor and a NUL-terminated string, both alive for the call.
+        check(unsafe { libc::unlinkat(dir.as_raw_fd(), name.as_ptr(), 0) }).map(drop)
+    }
 }
 
 /// Whether the canonical path `target` lies outside every root: canonical directories (the
@@ -372,5 +419,27 @@ mod tests {
         ];
         assert_eq!(collate(by_cop, src.clone()).unwrap().rewrite(), "abcde");
         assert!(collate(vec![("Layout/EmptyLines", fix(&src, |_| {}))], src).is_none());
+    }
+
+    #[test]
+    fn write_source_keeps_mode_and_refuses_outside_roots() {
+        use std::os::unix::fs::PermissionsExt;
+        let dir = std::env::temp_dir().join(format!("rbcop-write-source-{}", std::process::id()));
+        let sub = dir.join("a/b");
+        std::fs::create_dir_all(&sub).unwrap();
+        let file = sub.join("x.rb");
+        std::fs::write(&file, "old\n").unwrap();
+        std::fs::set_permissions(&file, std::fs::Permissions::from_mode(0o640)).unwrap();
+        let root = std::fs::canonicalize(&dir).unwrap();
+        write_source(&file, "new\n", std::slice::from_ref(&root)).unwrap();
+        assert_eq!(std::fs::read_to_string(&file).unwrap(), "new\n");
+        assert_eq!(std::fs::metadata(&file).unwrap().permissions().mode() & 0o777, 0o640);
+        assert_eq!(std::fs::read_dir(&sub).unwrap().count(), 1, "temp file left behind");
+        // A file argument is its own root.
+        write_source(&file, "again\n", &[std::fs::canonicalize(&file).unwrap()]).unwrap();
+        assert_eq!(std::fs::read_to_string(&file).unwrap(), "again\n");
+        let err = write_source(&file, "no\n", &[root.join("elsewhere")]).unwrap_err();
+        assert_eq!(err.kind(), std::io::ErrorKind::PermissionDenied);
+        std::fs::remove_dir_all(&dir).unwrap();
     }
 }
