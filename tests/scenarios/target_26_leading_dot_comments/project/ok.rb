@@ -1,0 +1,3 @@
+foo
+  .bar # ok
+  .baz

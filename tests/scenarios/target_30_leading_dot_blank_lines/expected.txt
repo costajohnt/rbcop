@@ -1,0 +1,15 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+block.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+block.rb:4:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+block.rb:5:9: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+comment_after.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+comment_after.rb:2:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+comment_first.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+comment_first.rb:3:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+empty_line.rb:4:3: F: Lint/Syntax: unexpected token tDOT (Using Ruby 3.0 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+spaces.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+spaces.rb:2:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+tabs.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+tabs.rb:2:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+tabs.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+tabs.rb:3:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.

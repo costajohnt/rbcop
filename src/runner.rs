@@ -177,10 +177,34 @@ fn analyze(
     let version = target_ruby::prism_version(cfg.target_ruby);
     // Below 3.3 RuboCop parses with the parser gem, which accepts some things Prism rejects.
     let parser_gem = cfg.target_ruby < 3.3;
-    let (mut result, tokens) = if parser_gem {
-        ruby_prism::parse_with_version_and_tokens(text.as_bytes(), version, !crate::source::binary_encoding(text))
-    } else {
-        (ruby_prism::parse_with_version(text.as_bytes(), version, !crate::source::binary_encoding(text)), Vec::new())
+    fn parse<'t>(
+        t: &'t str,
+        version: &'static str,
+        parser_gem: bool,
+    ) -> (ruby_prism::ParseResult<'t>, Vec<ruby_prism::Token>) {
+        if parser_gem {
+            ruby_prism::parse_with_version_and_tokens(t.as_bytes(), version, !crate::source::binary_encoding(t))
+        } else {
+            (ruby_prism::parse_with_version(t.as_bytes(), version, !crate::source::binary_encoding(t)), Vec::new())
+        }
+    }
+    let first = parse(text, version, parser_gem);
+    // 2.7 to 3.2: the parser gem continues a call over whitespace-only lines before a leading
+    // `.`/`&.`, where Prism ends the statement. Parse with those lines made comment lines instead.
+    let continued = (parser_gem && cfg.target_ruby >= 2.7)
+        .then(|| {
+            let dots: Vec<usize> = first
+                .0
+                .errors()
+                .filter(|e| e.type_name() == "unexpected_token_ignore")
+                .map(|e| e.location().start_offset())
+                .collect();
+            crate::legacy_syntax::continue_over_blank_lines(text, &dots)
+        })
+        .flatten();
+    let (mut result, tokens) = match &continued {
+        Some((t, _)) => parse(t, version, parser_gem),
+        None => first,
     };
     // Numbered parameters are 2.7+: below that `foo { _1 }` is a block without arguments.
     if cfg.target_ruby < 2.7 {
@@ -339,6 +363,7 @@ fn analyze(
     }
     let comments: Vec<Comment> = result
         .comments()
+        .filter(|c| continued.as_ref().is_none_or(|(_, fake)| !fake.contains(&c.location().start_offset())))
         .map(|c| Comment {
             start: c.location().start_offset(),
             end: c.location().end_offset(),

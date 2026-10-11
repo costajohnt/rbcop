@@ -37,10 +37,60 @@ pub fn diagnostics(
     let sorted = by_start(&toks);
     let mut w = Walk { target, toks: &sorted, ..Walk::default() };
     w.visit(root);
+    // Before 2.7 a comment line ends the statement before a leading `.`/`&.` (`convert`), which
+    // then cannot start one; Prism accepts the call, so there is no seed for it.
+    if target < 2.7 {
+        for p in sorted.windows(2).filter(|p| p[0].name == "tNL" && matches!(p[1].name, "tDOT" | "tAMPER")) {
+            w.violations.entry(p[1].start).or_insert(p[1].start);
+        }
+    }
     if w.violations.is_empty() && seed.is_none() && circular.is_empty() {
         return Vec::new();
     }
     simulate(&toks, &w, text, target, seed.unwrap_or(usize::MAX), actions, circular)
+}
+
+/// `text` with the whitespace-only lines between a receiver and a leading `.`/`&.` (at `dots`,
+/// where Prism ignored the dot) turned into comment lines, which Prism continues the call over, and
+/// the offsets of those `#`s. The parser gem (2.7 to 3.2) skips such lines, but an empty line ends
+/// the statement there too, so a dot after one keeps its error.
+// ponytail: the AST's own slices show the `#`; cops read `Source::text`, which keeps the spaces.
+pub fn continue_over_blank_lines(text: &str, dots: &[usize]) -> Option<(String, Vec<usize>)> {
+    let mut fake = Vec::new();
+    for &dot in dots {
+        if !text[dot..].starts_with('.') && !text[dot..].starts_with("&.") {
+            continue;
+        }
+        let mut line_start = text[..dot].rfind('\n').map_or(0, |i| i + 1);
+        if !text[line_start..dot].trim_start_matches([' ', '\t']).is_empty() {
+            continue;
+        }
+        let mut blank = Vec::new();
+        while line_start > 0 {
+            let prev = text[..line_start - 1].rfind('\n').map_or(0, |i| i + 1);
+            let line = &text[prev..line_start - 1];
+            if line.is_empty() {
+                blank.clear();
+                break;
+            }
+            let rest = line.trim_start_matches([' ', '\t']);
+            if rest.is_empty() {
+                blank.push(prev);
+            } else if !rest.starts_with('#') {
+                break;
+            }
+            line_start = prev;
+        }
+        fake.extend(blank);
+    }
+    if fake.is_empty() {
+        return None;
+    }
+    let mut bytes = text.as_bytes().to_vec();
+    for &f in &fake {
+        bytes[f] = b'#';
+    }
+    Some((String::from_utf8(bytes).ok()?, fake))
 }
 
 /// Tokens in source order (the lexers emit a heredoc's body right after its opener).
@@ -476,7 +526,13 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
         // Prism folds a significant newline after a trailing comment into the COMMENT token; the
         // parser gem lexes tNL there (unless the next line continues with a leading `.`/`&.`).
         if t.kind == "COMMENT" && text[t.start..t.end].ends_with('\n') && state & NEWLINE_IGNORED == 0 {
-            let next = tokens[i..].iter().find(|n| n.kind != "COMMENT").map_or("", |n| n.kind);
+            // Before 2.7 a comment line between the receiver and a leading `.`/`&.` ends the
+            // statement (only the very next line can continue it).
+            let next = if target < 2.7 {
+                tokens.get(i).map_or("", |n| n.kind)
+            } else {
+                tokens[i..].iter().find(|n| n.kind != "COMMENT").map_or("", |n| n.kind)
+            };
             // Blank lines up to the end of the file come out as IGNORED_NEWLINE tokens; the
             // comment's newline is still significant (`(a, # a\nb) # b\n\n`).
             let blank_to_eof = tokens[i..].iter().all(|n| matches!(n.kind, "COMMENT" | "IGNORED_NEWLINE" | "EOF"));
@@ -486,8 +542,22 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
             }
             continue;
         }
+        // The newline Prism ignores before comment lines and a leading `.`/`&.` (2.7+ only).
+        if target < 2.7
+            && t.kind == "IGNORED_NEWLINE"
+            && state_before & NEWLINE_IGNORED == 0
+            && tokens.get(i).is_some_and(|n| n.kind == "COMMENT")
+        {
+            out.push(Tok { name: "tNL", start: t.start, end: t.end, cmd_do: false });
+            state = EXPR_BEG;
+            continue;
+        }
         let Some(mut name) = parser_type(t.kind) else { continue };
         let mut end = t.end;
+        // `&.` where a statement starts: the lexer reads `&` (tAMPER) and then `.`.
+        if name == "tANDDOT" && out.last().is_none_or(|p| p.name == "tNL") {
+            (name, end) = ("tAMPER", t.start + 1);
+        }
         let next = |k: usize| tokens.get(k).map_or("", |t| t.kind);
         match name {
             "tSTRING_BEG" if t.kind == "STRING_BEGIN" => {
