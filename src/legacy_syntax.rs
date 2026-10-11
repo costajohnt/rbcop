@@ -126,15 +126,7 @@ pub fn stand_in(c: char, present: &std::collections::HashSet<char>, taken: &[(ch
 /// state, after leading whitespace too; Prism (and Ruby) only at column 0, so for an indented one
 /// returns its line start and indentation length (#228). Parse a copy with that line rewritten to
 /// `__END__\n` + the indentation (same length), which Prism takes as the data marker.
-///
-/// line_begin follows a significant newline (or `;`, or the start of the file) and a newline the
-/// lexer skips in its expr_value state: after a binary or assignment operator other than `=`, `?`,
-/// `do`, a block's `{` or `|params|`, a def's `(`. After `=`, `,`, `(`, `[`, a hash's `{`, `.` or
-/// `::` it reads `__END__` as an identifier.
-// ponytail: an approximation of lexer.rl's transitions from Prism's lexer states, checked against
-// RuboCop on the contexts above; a context not listed may still differ.
 pub fn indented_data_marker(text: &str, tokens: &[Token]) -> Option<(usize, usize)> {
-    let skipped = |k: &str| matches!(k, "COMMENT" | "IGNORED_NEWLINE" | "EMBDOC_BEGIN" | "EMBDOC_LINE" | "EMBDOC_END");
     tokens.iter().enumerate().filter(|(_, t)| t.kind == "IDENTIFIER" && &text[t.start..t.end] == "__END__").find_map(
         |(i, t)| {
             // Only the indentation is walked: an rfind per token is quadratic on one long line (#316).
@@ -143,33 +135,63 @@ pub fn indented_data_marker(text: &str, tokens: &[Token]) -> Option<(usize, usiz
             if !(line == 0 || text.as_bytes()[line - 1] == b'\n') {
                 return None;
             }
-            let prev = tokens[..i].iter().rposition(|p| !skipped(p.kind));
-            // The `|` at `j` closes a block's parameters (`{ |a, b|`, `do |a|`).
-            let block_params_end = |j: usize| {
-                tokens[..j].iter().rposition(|x| x.kind == "PIPE").is_some_and(|k| {
-                    k > 0 && matches!(tokens[k - 1].kind, "BRACE_LEFT" | "KEYWORD_DO" | "KEYWORD_DO_BLOCK")
-                })
-            };
-            let line_begin = prev.is_none_or(|j| {
-                let p = &tokens[j];
-                let def_paren = p.kind == "PARENTHESIS_LEFT"
-                    && tokens[j.saturating_sub(4)..j].iter().any(|d| d.kind == "KEYWORD_DEF");
-                matches!(p.kind, "NEWLINE" | "SEMICOLON")
-                    || p.state & NEWLINE_IGNORED == 0
-                    || def_paren
-                    || (p.kind == "PIPE" && block_params_end(j))
-                    || (p.state & (EXPR_BEG | EXPR_LABEL) == EXPR_BEG
-                        && (p.kind != "EQUAL" && !p.kind.ends_with("_EQUAL")
-                            || matches!(
-                                p.kind,
-                                "EQUAL_EQUAL" | "EQUAL_EQUAL_EQUAL" | "BANG_EQUAL" | "LESS_EQUAL" | "GREATER_EQUAL"
-                            ))
-                        && !matches!(p.kind, "PIPE" | "TILDE" | "BANG" | "COMMA" | "BRACE_LEFT")
-                        || p.kind == "BRACE_LEFT" && p.state & EXPR_LABEL == 0)
-            });
-            (!indent.is_empty() && text[t.end..].starts_with('\n') && line_begin).then_some((line, indent.len()))
+            (!indent.is_empty() && text[t.end..].starts_with('\n') && line_begin(text, tokens, i))
+                .then_some((line, indent.len()))
         },
     )
+}
+
+/// Prism's column-0 data marker (its `__END__` token, where it stops lexing) when the parser gem's
+/// lexer is not in its line_begin state there and reads an identifier instead (#337): its offset.
+pub fn identifier_data_marker(text: &str, tokens: &[Token]) -> Option<usize> {
+    let i = tokens.iter().position(|t| t.kind == "__END__")?;
+    (!line_begin(text, tokens, i)).then_some(tokens[i].start)
+}
+
+/// A 7-byte identifier for an `__END__` the parser gem reads as one (`identifier_data_marker`),
+/// used nowhere in `text`.
+pub fn end_stand_in(text: &str) -> Option<String> {
+    (b'a'..=b'z').map(|c| format!("__END_{}", c as char)).find(|n| !text.contains(n.as_str()))
+}
+
+/// Whether the parser gem's lexer is in its line_begin state at the line of `tokens[i]` (where it
+/// reads `__END__` as the data marker).
+///
+/// line_begin follows a significant newline (or `;`, or the start of the file) and a newline the
+/// lexer skips in its expr_value state: after a binary or assignment operator other than `=`, `?`,
+/// `do`, a block's `{` or `|params|`. After `=`, `,`, `(` (a def's too), `[`, a hash's `{`, `.` or
+/// `::` it reads `__END__` as an identifier, and so after a `\` line continuation (no newline at
+/// all).
+// ponytail: an approximation of lexer.rl's transitions from Prism's lexer states, checked against
+// RuboCop on the contexts above; a context not listed may still differ.
+fn line_begin(text: &str, tokens: &[Token], i: usize) -> bool {
+    let skipped = |k: &str| matches!(k, "COMMENT" | "IGNORED_NEWLINE" | "EMBDOC_BEGIN" | "EMBDOC_LINE" | "EMBDOC_END");
+    let prev = tokens[..i].iter().rposition(|p| !skipped(p.kind));
+    // The `|` at `j` closes a block's parameters (`{ |a, b|`, `do |a|`).
+    let block_params_end = |j: usize| {
+        tokens[..j]
+            .iter()
+            .rposition(|x| x.kind == "PIPE")
+            .is_some_and(|k| k > 0 && matches!(tokens[k - 1].kind, "BRACE_LEFT" | "KEYWORD_DO" | "KEYWORD_DO_BLOCK"))
+    };
+    prev.is_none_or(|j| {
+        let p = &tokens[j];
+        let line = text[..tokens[i].start].trim_end_matches([' ', '\t', '\x0b', '\x0c']).len();
+        let gap = &text[p.end.min(line)..line];
+        let continued = gap.ends_with("\\\n") || gap.ends_with("\\\r\n");
+        !continued
+            && (matches!(p.kind, "NEWLINE" | "SEMICOLON")
+                || p.state & NEWLINE_IGNORED == 0
+                || (p.kind == "PIPE" && block_params_end(j))
+                || (p.state & (EXPR_BEG | EXPR_LABEL) == EXPR_BEG
+                    && (p.kind != "EQUAL" && !p.kind.ends_with("_EQUAL")
+                        || matches!(
+                            p.kind,
+                            "EQUAL_EQUAL" | "EQUAL_EQUAL_EQUAL" | "BANG_EQUAL" | "LESS_EQUAL" | "GREATER_EQUAL"
+                        ))
+                    && !matches!(p.kind, "PIPE" | "TILDE" | "BANG" | "COMMA" | "BRACE_LEFT" | "UCOLON_COLON")
+                    || p.kind == "BRACE_LEFT" && p.state & EXPR_LABEL == 0))
+    })
 }
 
 /// NULs the parser gem's lexer ends a heredoc line at, where that makes a terminator line (Prism
