@@ -180,17 +180,33 @@ pub fn parse_for_target<'t>(
     }
     let (mut result, mut tokens) = ruby_prism::parse_with_version_and_tokens(text.as_bytes(), version, utf8);
     let mut fake = Vec::new();
-    // 2.7 to 3.2: the parser gem continues a call over whitespace-only lines before a leading
-    // `.`/`&.`, where Prism ends the expression. Parse with those lines made comment lines instead,
-    // and write the original bytes back once parsed: node text is the user's text (#169).
-    if target_ruby >= 2.7 && result.errors().next().is_some() {
-        let dots: Vec<usize> =
-            tokens.iter().filter(|t| matches!(t.kind, "DOT" | "AMPERSAND_DOT")).map(|t| t.start).collect();
-        if let Some((copy, added)) = crate::legacy_syntax::continue_over_blank_lines(text, &dots) {
-            let restore: Vec<(usize, u8)> = added.iter().map(|&f| (f, text.as_bytes()[f])).collect();
+    // Parse a copy where Prism reads what the parser gem lexes, and write the original bytes back
+    // once parsed: node text is the user's text.
+    if result.errors().next().is_some() {
+        // A NUL ends a heredoc line for the parser gem's lexer (#247).
+        let mut edits: Vec<(usize, u8)> = if text.contains('\0') {
+            crate::legacy_syntax::heredoc_nul_breaks(text, &tokens).into_iter().map(|o| (o, b'\n')).collect()
+        } else {
+            Vec::new()
+        };
+        // 2.7 to 3.2: the parser gem continues a call over whitespace-only lines before a leading
+        // `.`/`&.`, where Prism ends the expression: those lines become comment lines (#169).
+        if target_ruby >= 2.7 {
+            let dots: Vec<usize> =
+                tokens.iter().filter(|t| matches!(t.kind, "DOT" | "AMPERSAND_DOT")).map(|t| t.start).collect();
+            if let Some((_, added)) = crate::legacy_syntax::continue_over_blank_lines(text, &dots) {
+                edits.extend(added.iter().map(|&f| (f, b'#')));
+                fake = added;
+            }
+        }
+        if !edits.is_empty() {
+            let mut copy = text.as_bytes().to_vec();
+            for &(o, b) in &edits {
+                copy[o] = b;
+            }
+            let restore: Vec<(usize, u8)> = edits.iter().map(|&(o, _)| (o, text.as_bytes()[o])).collect();
             *buf = copy;
             (result, tokens) = ruby_prism::parse_with_version_and_tokens_restoring(buf, version, utf8, &restore);
-            fake = added;
         }
     }
     // Numbered parameters are 2.7+: below that `foo { _1 }` is a block without arguments.

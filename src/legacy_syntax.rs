@@ -101,6 +101,47 @@ pub fn continue_over_blank_lines(text: &str, dots: &[usize]) -> Option<(Vec<u8>,
     Some((bytes, fake))
 }
 
+/// NULs the parser gem's lexer ends a heredoc line at, where that makes a terminator line (Prism
+/// reads them as text and leaves the heredoc open): in ` \0 SQL` or `  SQL\0` the segment between
+/// NULs and newlines is the `SQL` terminator, its leading spaces and tabs allowed after `<<~`/`<<-`
+/// (#247). Parse a copy with these NULs made newlines, written back once parsed.
+pub fn heredoc_nul_breaks(text: &str, tokens: &[Token]) -> Vec<usize> {
+    let ids: Vec<(&str, bool)> = tokens
+        .iter()
+        .filter(|t| t.kind == "HEREDOC_START")
+        .filter_map(|t| {
+            let s = text.get(t.start..t.end)?.strip_prefix("<<")?;
+            let (indent, s) = s.strip_prefix(['~', '-']).map_or((false, s), |r| (true, r));
+            Some((s.trim_matches(['\'', '"', '`']), indent))
+        })
+        .collect();
+    let mut out = Vec::new();
+    let mut start = 0;
+    for line in text.split_inclusive('\n') {
+        let body = line.trim_end_matches('\n');
+        if !ids.is_empty() && body.contains('\0') {
+            let mut seg_start = start;
+            for seg in body.split('\0') {
+                let seg_end = seg_start + seg.len();
+                let closes = ids
+                    .iter()
+                    .any(|&(id, indent)| (if indent { seg.trim_start_matches([' ', '\t']) } else { seg }) == id);
+                if closes {
+                    if seg_start > start {
+                        out.push(seg_start - 1);
+                    }
+                    if seg_end < start + body.len() {
+                        out.push(seg_end);
+                    }
+                }
+                seg_start = seg_end + 1;
+            }
+        }
+        start += line.len();
+    }
+    out
+}
+
 /// Tokens in source order (the lexers emit a heredoc's body right after its opener).
 fn by_start(toks: &[Tok]) -> Vec<Tok> {
     let mut sorted = toks.to_vec();
