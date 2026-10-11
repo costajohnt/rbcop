@@ -56,6 +56,20 @@ pub fn documentation_comment(cx: &Cx, ends: &[usize], start: usize, enclosing: u
     })
 }
 
+/// The `enclosing` argument of `documentation_comment`: the start of the nearest ancestor starting
+/// before `start`, whose own leading comments cannot be the node's. The Comment::Associator gives a
+/// parser `begin` (parentheses, a statement list) no leading comments, so `# Doc\n(class Foo`
+/// documents the class; Prism's StatementsNode and ProgramNode start where their first statement
+/// does and have no parser node of their own.
+pub fn enclosing_start(anc: &[Node], start: usize) -> usize {
+    anc.iter()
+        .rev()
+        .filter(|a| !matches!(a, Node::ParenthesesNode { .. } | Node::StatementsNode { .. } | Node::ProgramNode { .. }))
+        .map(|a| a.location().start_offset())
+        .find(|&s| s < start)
+        .unwrap_or(0)
+}
+
 /// Whether an ancestor starting where the node does (a modifier: `end if x`, `end while y`) takes
 /// the preceding comments: the Comment::Associator gives leading comments to the outermost node
 /// starting there, skipping only `begin` bodies. `anc` are the node's Prism ancestors.

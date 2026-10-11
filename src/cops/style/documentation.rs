@@ -1,4 +1,4 @@
-use crate::helpers::documentation_comment::{comments_taken_by_ancestor, documentation_comment};
+use crate::helpers::documentation_comment::{comments_taken_by_ancestor, documentation_comment, enclosing_start};
 use crate::helpers::comment_association::leading;
 use crate::helpers::parser_parent::parser_parent_index;
 use crate::prelude::*;
@@ -299,7 +299,7 @@ impl Documentation {
         let start = node.location().start_offset();
         // documentation_comment? (`ends` are the sorted node ends, as in `ranges`)
         let r = range(node);
-        let enclosing = ranges.iter().filter(|&&(s, e)| s < r.0 && e >= r.1).map(|&(s, _)| s).max().unwrap_or(0);
+        let enclosing = enclosing_start(anc, r.0);
         // As the first statement of a body with `rescue`/`ensure`, the parser `rescue`/`ensure`
         // node starts where the class does and takes the comments before it.
         let wrapped = matches!(anc, [.., b, s]
