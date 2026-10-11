@@ -38,7 +38,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   fancy-regex (`config::value::RubyRegex`), which has no match cache: a search is capped at 1M
   backtracking steps, then retried one start position at a time with 10k steps each, within a
   budget of 64 retried positions per call; a start position that exhausts its steps, and
-  every position past the budget, counts as no match. Onigmo finishes such patterns
+  every position past the budget, counts as no match. The steps spent giving up are also summed
+  per pattern over the run (32 call budgets, about 2 s): past that the pattern answers no match
+  without searching, even where a search would have been cheap. Onigmo finishes such patterns
   (`(a|aa)+(?=c)` on a long run of `a`) and may find a match at a position rbcop gave up on.
 - Lint/UselessTimes leaves the offense uncorrected when the block argument's name is too long for
   the regex size limit (about 100k characters) instead of failing the cop.
