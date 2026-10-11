@@ -519,3 +519,21 @@ fn junit_lists_lint_syntax_when_cops_are_disabled() {
     assert!(!out.contains("name='Lint/AmbiguousOperator'"));
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// A config regexp with catastrophic backtracking (fancy-regex path) on a 100k-character name stays
+/// within one bounded retry budget per match instead of len * 100k steps.
+#[test]
+fn backtracking_config_regexp_on_a_long_name_is_bounded() {
+    let dir = scratch("backtracking-long");
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "AllCops:\n  NewCops: disable\nNaming/VariableName:\n  AllowedPatterns:\n    - '(a|aa)+(?=c)'\n",
+    )
+    .unwrap();
+    fs::write(dir.join("a.rb"), format!("{}B = 1\n", "a".repeat(100_000))).unwrap();
+    let t0 = std::time::Instant::now();
+    let out = rbcop(&dir, &["--only", "Naming/VariableName", "-f", "q", "a.rb"]);
+    assert!(t0.elapsed() < std::time::Duration::from_secs(30), "took {:?}", t0.elapsed());
+    assert!(text(&out.stdout).ends_with("1 file inspected, 1 offense detected\n"), "{}", text(&out.stdout));
+    let _ = fs::remove_dir_all(&dir);
+}
