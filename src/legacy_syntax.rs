@@ -54,7 +54,7 @@ pub fn diagnostics(
             w.violations.entry(p[1].start).or_insert(p[1].start);
         }
     }
-    if w.violations.is_empty() && seed.is_none() && circular.is_empty() && w.semantic.is_empty() {
+    if w.violations.is_empty() && seed.is_none() && circular.is_empty() && w.semantic.is_empty() && !w.dynamic_const {
         return Vec::new();
     }
     // The walk's builder errors, reported as they reduce: before the first grammar failure.
@@ -1088,6 +1088,11 @@ struct Walk<'t> {
     defs: Vec<(usize, bool)>,
     /// Constant assignment operator -> the target's range (`dynamic constant assignment` in a def).
     const_writes: HashMap<usize, (usize, usize)>,
+    /// Inside a def's body (not reset by blocks; a `class << x` body resets it).
+    in_def: bool,
+    /// An op-assign to a plain constant in a def (`CONST ||= 1`): Prism accepts it, the parser
+    /// gem's `assignable` reports `dynamic constant assignment`, which `simulate` emits.
+    dynamic_const: bool,
     /// `do` keywords that are kDO_BLOCK.
     do_block: HashSet<usize>,
     /// `{` keywords the lexer gives as tLBRACE_ARG (a block on an index call: `a[k] {`).
@@ -1277,7 +1282,9 @@ impl<'pr> Visit<'pr> for Walk<'_> {
         if let Some(b) = n.body().and_then(|b| b.as_begin_node()) {
             self.begin_clauses(&b);
         }
+        let in_def = std::mem::replace(&mut self.in_def, true);
         ruby_prism::visit_def_node(self, n);
+        self.in_def = in_def;
         self.owners.pop();
         self.defs.pop();
         self.ctx.pop();
@@ -1317,7 +1324,9 @@ impl<'pr> Visit<'pr> for Walk<'_> {
             if let Some(b) = n.body().and_then(|b| b.as_begin_node()) {
                 s.begin_clauses(&b);
             }
+            let in_def = std::mem::replace(&mut s.in_def, false);
             ruby_prism::visit_singleton_class_node(s, n);
+            s.in_def = in_def;
         });
     }
 
@@ -1791,16 +1800,19 @@ impl<'pr> Visit<'pr> for Walk<'_> {
 
     fn visit_constant_or_write_node(&mut self, n: &ruby_prism::ConstantOrWriteNode<'pr>) {
         self.const_write(&n.name_loc(), &n.operator_loc());
+        self.dynamic_const |= self.in_def;
         ruby_prism::visit_constant_or_write_node(self, n);
     }
 
     fn visit_constant_and_write_node(&mut self, n: &ruby_prism::ConstantAndWriteNode<'pr>) {
         self.const_write(&n.name_loc(), &n.operator_loc());
+        self.dynamic_const |= self.in_def;
         ruby_prism::visit_constant_and_write_node(self, n);
     }
 
     fn visit_constant_operator_write_node(&mut self, n: &ruby_prism::ConstantOperatorWriteNode<'pr>) {
         self.const_write(&n.name_loc(), &n.binary_operator_loc());
+        self.dynamic_const |= self.in_def;
         ruby_prism::visit_constant_operator_write_node(self, n);
     }
 
@@ -1810,17 +1822,14 @@ impl<'pr> Visit<'pr> for Walk<'_> {
     }
 
     fn visit_constant_path_or_write_node(&mut self, n: &ruby_prism::ConstantPathOrWriteNode<'pr>) {
-        self.const_write(&n.target().location(), &n.operator_loc());
         ruby_prism::visit_constant_path_or_write_node(self, n);
     }
 
     fn visit_constant_path_and_write_node(&mut self, n: &ruby_prism::ConstantPathAndWriteNode<'pr>) {
-        self.const_write(&n.target().location(), &n.operator_loc());
         ruby_prism::visit_constant_path_and_write_node(self, n);
     }
 
     fn visit_constant_path_operator_write_node(&mut self, n: &ruby_prism::ConstantPathOperatorWriteNode<'pr>) {
-        self.const_write(&n.target().location(), &n.binary_operator_loc());
         ruby_prism::visit_constant_path_operator_write_node(self, n);
     }
 
