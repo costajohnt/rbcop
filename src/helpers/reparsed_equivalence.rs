@@ -60,6 +60,11 @@ pub fn parse_clean<'t>(
     if legacy.is_none() {
         return Some(result);
     }
+    // The parser-gem simulation recurses over the tree (#351): a tree the runner would not inspect
+    // does not count as clean.
+    if crate::ast::deeper_than(&result.node(), crate::runner::MAX_AST_DEPTH) {
+        return None;
+    }
     let diags = crate::legacy_syntax::diagnostics(&result.node(), &tokens, text, target, None, &[], &[]);
     diags.is_empty().then_some(result)
 }
