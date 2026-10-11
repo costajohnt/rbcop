@@ -121,6 +121,56 @@ pub fn stand_in(c: char, text: &str, taken: &[(char, char)]) -> Option<char> {
         .find(|&l| l.is_lowercase() && !taken.iter().any(|&(_, s)| s == l) && !text.contains(l))
 }
 
+/// The parser gem's lexer ends the input at `__END__` alone on a line it reads in its line_begin
+/// state, after leading whitespace too; Prism (and Ruby) only at column 0, so for an indented one
+/// returns its line start and indentation length (#228). Parse a copy with that line rewritten to
+/// `__END__\n` + the indentation (same length), which Prism takes as the data marker.
+///
+/// line_begin follows a significant newline (or `;`, or the start of the file) and a newline the
+/// lexer skips in its expr_value state: after a binary or assignment operator other than `=`, `?`,
+/// `do`, a block's `{` or `|params|`, a def's `(`. After `=`, `,`, `(`, `[`, a hash's `{`, `.` or
+/// `::` it reads `__END__` as an identifier.
+// ponytail: an approximation of lexer.rl's transitions from Prism's lexer states, checked against
+// RuboCop on the contexts above; a context not listed may still differ.
+pub fn indented_data_marker(text: &str, tokens: &[Token]) -> Option<(usize, usize)> {
+    let skipped = |k: &str| matches!(k, "COMMENT" | "IGNORED_NEWLINE" | "EMBDOC_BEGIN" | "EMBDOC_LINE" | "EMBDOC_END");
+    tokens.iter().enumerate().filter(|(_, t)| t.kind == "IDENTIFIER" && &text[t.start..t.end] == "__END__").find_map(
+        |(i, t)| {
+            let line = text[..t.start].rfind('\n').map_or(0, |i| i + 1);
+            let indent = &text[line..t.start];
+            let prev = tokens[..i].iter().rposition(|p| !skipped(p.kind));
+            // The `|` at `j` closes a block's parameters (`{ |a, b|`, `do |a|`).
+            let block_params_end = |j: usize| {
+                tokens[..j].iter().rposition(|x| x.kind == "PIPE").is_some_and(|k| {
+                    k > 0 && matches!(tokens[k - 1].kind, "BRACE_LEFT" | "KEYWORD_DO" | "KEYWORD_DO_BLOCK")
+                })
+            };
+            let line_begin = prev.is_none_or(|j| {
+                let p = &tokens[j];
+                let def_paren = p.kind == "PARENTHESIS_LEFT"
+                    && tokens[j.saturating_sub(4)..j].iter().any(|d| d.kind == "KEYWORD_DEF");
+                matches!(p.kind, "NEWLINE" | "SEMICOLON")
+                    || p.state & NEWLINE_IGNORED == 0
+                    || def_paren
+                    || (p.kind == "PIPE" && block_params_end(j))
+                    || (p.state & (EXPR_BEG | EXPR_LABEL) == EXPR_BEG
+                        && (p.kind != "EQUAL" && !p.kind.ends_with("_EQUAL")
+                            || matches!(
+                                p.kind,
+                                "EQUAL_EQUAL" | "EQUAL_EQUAL_EQUAL" | "BANG_EQUAL" | "LESS_EQUAL" | "GREATER_EQUAL"
+                            ))
+                        && !matches!(p.kind, "PIPE" | "TILDE" | "BANG" | "COMMA" | "BRACE_LEFT")
+                        || p.kind == "BRACE_LEFT" && p.state & EXPR_LABEL == 0)
+            });
+            (!indent.is_empty()
+                && indent.bytes().all(|b| matches!(b, b' ' | b'\t' | b'\x0b' | b'\x0c'))
+                && text[t.end..].starts_with('\n')
+                && line_begin)
+                .then_some((line, indent.len()))
+        },
+    )
+}
+
 /// NULs the parser gem's lexer ends a heredoc line at, where that makes a terminator line (Prism
 /// reads them as text and leaves the heredoc open): in ` \0 SQL` or `  SQL\0` the segment between
 /// NULs and newlines is the `SQL` terminator, its leading spaces and tabs allowed after `<<~`/`<<-`

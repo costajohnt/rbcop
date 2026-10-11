@@ -40,6 +40,9 @@ pub struct Source<'a> {
     pub binary: bool,
     tokens: OnceCell<Vec<Token>>,
     lex_tokens: OnceCell<Vec<Token>>,
+    /// Where lexing stops: the end, or an indented `__END__` the parser gem ends the input at
+    /// (runner::parse_for_target; Prism would lex past it).
+    lex_end: usize,
 }
 
 impl<'a> Source<'a> {
@@ -79,10 +82,13 @@ impl<'a> Source<'a> {
             binary: binary_encoding(text),
             tokens: OnceCell::new(),
             lex_tokens: OnceCell::new(),
+            lex_end: data_start.filter(|&d| !text[d..].starts_with("__END__")).unwrap_or(text.len()),
         };
         // ProcessedSource#lines stops at `__END__` only after the last token; with no tokens at
-        // all (nothing but whitespace before it) it keeps every line.
+        // all (nothing but whitespace before it) it keeps every line, and an indented `__END__`
+        // (the parser gem's data marker below 3.3) is not the `__END__` line it looks for.
         if let Some(off) = data_start
+            && text[off..].starts_with("__END__")
             && !text[..off].bytes().all(|b| b" \t\r\n\x0b\x0c".contains(&b))
         {
             lines.truncate(src.line_of(off) - 1);
@@ -130,7 +136,7 @@ impl<'a> Source<'a> {
     /// opening token, before the rest of the opening line.
     pub fn lex_tokens(&self) -> &[Token] {
         self.lex_tokens.get_or_init(|| {
-            let mut tokens = lex(self.text.as_bytes(), self.version, !self.binary);
+            let mut tokens = lex(&self.text.as_bytes()[..self.lex_end], self.version, !self.binary);
             // Below 3.3 the parser gem's tIDENTIFIER (`Ж`, as `runner::parse_for_target` parses it).
             if self.parser_gem {
                 for t in tokens.iter_mut().filter(|t| t.kind == ruby_prism_sys::PM_TOKEN_CONSTANT) {

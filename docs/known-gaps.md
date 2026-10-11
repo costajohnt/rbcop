@@ -90,6 +90,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - `in - 1` (a sign, whitespace, a number in a pattern) below 3.3: the parser gem lexes it as
   `tUNARY_NUM` and accepts it, but Prism (and Ruby's own parse.y) reject it, so rbcop has no tree
   for the file and reports Prism's failure as Lint/Syntax (#126).
+- `a&. &.b` (`&.` right after `&.`/`.`) below 3.3: the parser gem reads `(a&.&).b`, a call to `&`,
+  and lints the file; Prism lexes `&.` as one token and rejects it (as MRI does), so rbcop
+  reports Lint/Syntax (#232).
 
 - Target Ruby below 3.3 (RuboCop parses with the parser gem's grammar for the target):
   `src/legacy_syntax.rs` reports the parser gem's Lint/Syntax for syntax newer than the target and

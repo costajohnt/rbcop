@@ -205,12 +205,23 @@ pub fn parse_for_target<'t>(
             bytes[t.start + i] = enc[i];
         }
     }
+    // An indented `__END__` ends the input for the parser gem (#228): the copy has it start its
+    // line (`__END__\n` + the indentation, same length).
+    if text.contains("__END__")
+        && let Some((line, indent)) = crate::legacy_syntax::indented_data_marker(text, &tokens)
+    {
+        let bytes = copy.get_or_insert_with(|| text.as_bytes().to_vec());
+        for (o, b) in (line..).zip(b"__END__\n".iter().copied().chain(std::iter::repeat_n(b' ', indent))) {
+            restore.push((o, text.as_bytes()[o]));
+            bytes[o] = b;
+        }
+    }
     // A NUL ends a heredoc line for the parser gem's lexer: the NULs that make a terminator line
     // become newlines (#247).
     if text.contains('\0') && result.errors().next().is_some() {
         for o in crate::legacy_syntax::heredoc_nul_breaks(text, &tokens) {
             let bytes = copy.get_or_insert_with(|| text.as_bytes().to_vec());
-            restore.push((o, bytes[o]));
+            restore.push((o, text.as_bytes()[o]));
             bytes[o] = b'\n';
         }
     }
