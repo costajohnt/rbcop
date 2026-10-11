@@ -78,3 +78,15 @@ pub fn is_unary_operation(call: &ruby_prism::CallNode) -> bool {
         is_operator_method(method_name(call)) && sel.start_offset() == call.location().start_offset()
     })
 }
+
+/// The literal block (parser `block`/`numblock`/`itblock`) of a call, `super(...)` or zsuper: the
+/// Prism nodes that own a BlockNode.
+pub fn literal_block<'pr>(node: &Node<'pr>) -> Option<ruby_prism::BlockNode<'pr>> {
+    let block = match node {
+        Node::CallNode { .. } => node.as_call_node().unwrap().block(),
+        Node::SuperNode { .. } => node.as_super_node().unwrap().block(),
+        Node::ForwardingSuperNode { .. } => node.as_forwarding_super_node().unwrap().block().map(|b| b.as_node()),
+        _ => None,
+    };
+    block.and_then(|b| b.as_block_node())
+}

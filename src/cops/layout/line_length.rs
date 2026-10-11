@@ -345,7 +345,16 @@ impl Cop for LineLength {
     }
 
     fn kinds(&self) -> &'static [usize] {
-        &[kind::CALL_NODE, kind::DEF_NODE, kind::ARRAY_NODE, kind::HASH_NODE, kind::LAMBDA_NODE, kind::RESCUE_NODE]
+        &[
+            kind::CALL_NODE,
+            kind::SUPER_NODE,
+            kind::FORWARDING_SUPER_NODE,
+            kind::DEF_NODE,
+            kind::ARRAY_NODE,
+            kind::HASH_NODE,
+            kind::LAMBDA_NODE,
+            kind::RESCUE_NODE,
+        ]
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
@@ -376,6 +385,13 @@ impl Cop for LineLength {
                 let parenthesized = call.opening_loc().is_some_and(|l| l.as_slice() == b"(");
                 if let Some(pos) = breakable_element(cx, range, &elements, Some((parenthesized, first_is_heredoc)), None, false) {
                     record_node_break(cx, pos);
+                }
+            }
+            // on_block for the block of `super(...)`/zsuper (no receiver, not a lambda); RuboCop's
+            // on_send does not run for `super`.
+            kind::SUPER_NODE | kind::FORWARDING_SUPER_NODE => {
+                if let Some(block) = helpers::node_types::literal_block(node) {
+                    check_block(cx, node.location().start_offset(), &block.as_node(), None, false);
                 }
             }
             kind::RESCUE_NODE => {
