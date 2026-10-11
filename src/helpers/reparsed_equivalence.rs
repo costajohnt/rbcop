@@ -41,7 +41,7 @@ fn parse_clean<'t>(
     legacy: Option<f64>,
 ) -> Option<ruby_prism::ParseResult<'t>> {
     let target = legacy.unwrap_or(f64::INFINITY);
-    let (result, tokens, _) = crate::runner::parse_for_target(text, buf, version, target);
+    let (result, tokens, ..) = crate::runner::parse_for_target(text, buf, version, target);
     // From 2.7 the parser gem's numbered-parameter errors are the runner's tree walk, not Prism's.
     // (`runner::analyze`'s `numbered_kind`); Prism's reserved-name errors stay where it has none.
     let walk = legacy.is_some_and(|t| t >= 2.7)

@@ -119,3 +119,29 @@ fn many_corrections_stay_linear() {
     assert!(cpu < Duration::from_secs(10), "took {cpu:?} CPU");
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// Below 3.3 a constant starting with a non-ASCII capital gets a lowercase stand-in absent from
+/// the file: the candidates were each searched for in the whole text, for every such constant when
+/// none was free (8,000 lines took 10 s, #300). Now the file's characters are collected once.
+#[test]
+fn non_ascii_capital_stand_ins_stay_linear() {
+    let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+    let dir = std::env::temp_dir().join(format!("rbcop-hostile-capital-{}", std::process::id()));
+    let _ = fs::remove_dir_all(&dir);
+    fs::create_dir_all(&dir).unwrap();
+    fs::write(dir.join("Gemfile"), "").unwrap();
+    fs::write(dir.join(".rubocop.yml"), "AllCops:\n  TargetRubyVersion: 3.2\n  NewCops: disable\n").unwrap();
+    // Every 2-byte lowercase letter occurs, so `Ж` has no stand-in at all.
+    let lower: String = (0x80..0x800).filter_map(char::from_u32).filter(|c| c.is_lowercase()).collect();
+    fs::write(dir.join("t.rb"), format!("{}# {lower}\n", "Жa\n".repeat(40_000))).unwrap();
+    let cpu0 = children_cpu();
+    let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
+        .args(["--only", "Lint/Syntax", "--format", "emacs", "t.rb"])
+        .current_dir(&dir)
+        .output()
+        .unwrap();
+    let cpu = children_cpu() - cpu0;
+    assert_eq!(out.status.code(), Some(0), "{}", String::from_utf8_lossy(&out.stdout));
+    assert!(cpu < Duration::from_secs(10), "took {cpu:?} CPU");
+    let _ = fs::remove_dir_all(&dir);
+}
