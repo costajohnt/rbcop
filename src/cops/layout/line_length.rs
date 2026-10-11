@@ -507,7 +507,8 @@ impl Cop for LineLength {
                 continue;
             }
             if allow_directives && comment.is_some_and(|c| crate::directives::parse(c).is_some()) {
-                let before = DIRECTIVE.split(line).next().unwrap_or("").trim_end().chars().count();
+                // `before_comment(line).rstrip.length`
+                let before = helpers::ruby_string::rstrip(DIRECTIVE.split(line).next().unwrap_or("")).chars().count();
                 if before > max {
                     cx.add_fix(at(max), at(before), format!("Line is too long. [{before}/{max}]"), break_line);
                 }

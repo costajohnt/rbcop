@@ -22,7 +22,7 @@ impl Check<'_> {
         let (s, e) = (s as usize, e as usize);
         let range_src = cx.src.slice(s, e);
         cx.add_fix(s, e, msg, |c| {
-            if range_src.bytes().any(|b| b.is_ascii_whitespace() || b == 0x0b) {
+            if range_src.bytes().any(helpers::parser_tokens::is_ruby_space) {
                 c.remove(s, e);
             } else if range_src == "{}" {
                 c.replace(s, e, "{ }");
@@ -85,7 +85,7 @@ impl Cop for SpaceInsideBlockBraces {
             return;
         }
         let inner = src.slice(le, rb);
-        if !inner.bytes().any(|b| !(b.is_ascii_whitespace() || b == 0x0b)) {
+        if !inner.bytes().any(|b| !helpers::parser_tokens::is_ruby_space(b)) {
             if empty_style == "no_space" {
                 check.offense(cx, le as isize, rb as isize, "Space inside empty braces detected.");
             }
@@ -104,7 +104,7 @@ impl Cop for SpaceInsideBlockBraces {
 
         // check_left_brace
         let first = inner.as_bytes()[0];
-        if !(first.is_ascii_whitespace() || first == 0x0b) {
+        if !helpers::parser_tokens::is_ruby_space(first) {
             if let Some((ds, de)) = pipe {
                 if le == ds && before_params {
                     check.offense(cx, lb as isize, de as isize, "Space between { and | missing.");
@@ -123,7 +123,7 @@ impl Cop for SpaceInsideBlockBraces {
         }
 
         // check_right_brace
-        let ends_non_space = inner.split('\n').any(|l| l.bytes().last().is_some_and(|b| !(b.is_ascii_whitespace() || b == 0x0b)));
+        let ends_non_space = inner.split('\n').any(|l| l.bytes().last().is_some_and(|b| !helpers::parser_tokens::is_ruby_space(b)));
         if single_line && ends_non_space {
             check.no_space(cx, rb, re, "Space missing inside }.");
             return;

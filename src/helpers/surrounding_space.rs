@@ -15,6 +15,7 @@ pub enum Side {
     None,
 }
 
+/// `SINGLE_SPACE_REGEXP = /[ \t]/`: deliberately not Ruby's `\s`.
 fn blank(c: Option<&u8>) -> bool {
     matches!(c, Some(b' ' | b'\t'))
 }

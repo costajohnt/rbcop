@@ -13,9 +13,7 @@ fn send<'pr>(node: &Node<'pr>) -> Option<ruby_prism::CallNode<'pr>> {
     node.as_call_node().filter(|c| c.block().is_none_or(|b| b.as_block_node().is_none()))
 }
 
-fn strip(s: &str) -> &str {
-    s.trim_matches(|c: char| c.is_ascii_whitespace() || c == '\0')
-}
+use helpers::ruby_string::strip;
 
 impl Cop for HeredocMethodCallPosition {
     fn correctable(&self) -> bool {

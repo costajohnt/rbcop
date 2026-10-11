@@ -73,7 +73,8 @@ impl ArgumentAlignment {
         let src = cx.src;
         let base = if fixed {
             let line = src.lines[src.line_of(selector) - 1];
-            let indent = line.chars().take_while(|c| c.is_ascii_whitespace()).count() as i64;
+            // `/\S.*/.match(line).begin(0)`
+            let indent = line.chars().take_while(|&c| helpers::ruby_string::is_space(c)).count() as i64;
             indent + helpers::alignment::configured_indentation_width(cx)
         } else {
             helpers::alignment::display_column(src, first_start) as i64

@@ -24,7 +24,7 @@ impl Cop for SpaceAfterColon {
             node.as_optional_keyword_parameter_node().unwrap().name_loc().end_offset()
         };
         // Ruby's /\s/ on the next character; end of file counts as missing.
-        if !matches!(cx.src.text.as_bytes().get(colon_end), Some(b' ' | b'\t' | b'\n' | b'\x0b' | b'\x0c' | b'\r')) {
+        if !cx.src.text.as_bytes().get(colon_end).is_some_and(|&b| helpers::parser_tokens::is_ruby_space(b)) {
             cx.add_fix(colon_end - 1, colon_end, "Space missing after colon.", |c| c.insert_after(colon_end - 1, colon_end, " "));
         }
     }

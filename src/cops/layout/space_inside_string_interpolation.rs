@@ -11,7 +11,7 @@ fn blank(b: Option<&u8>) -> bool {
 
 /// Token#space_after? / space_before? (`\s`).
 fn ws(b: Option<&u8>) -> bool {
-    matches!(b, Some(b' ' | b'\t' | b'\n' | b'\x0b' | b'\x0c' | b'\r'))
+    b.is_some_and(|&b| helpers::parser_tokens::is_ruby_space(b))
 }
 
 /// At 3.3+ RuboCop lexes with Prism's translation lexer, which drops a one-line string content
@@ -53,7 +53,7 @@ impl Cop for SpaceInsideStringInterpolation {
         // empty_brackets?: no token between `#{` and `}` (`#{ ;}` has one, Prism drops it).
         let inner = src.slice(open.end_offset(), close.start_offset());
         if src.line_of(open.start_offset()) != src.line_of(close.start_offset())
-            || inner.bytes().all(|b| b == b' ' || b == b'\t')
+            || inner.bytes().all(helpers::parser_tokens::is_ruby_space)
         {
             return;
         }

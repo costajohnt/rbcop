@@ -1,0 +1,9 @@
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.4
+Layout/SpaceInsideStringInterpolation:
+  EnforcedStyle: space
+Layout/SpaceInsideArrayLiteralBrackets:
+  EnforcedStyle: space
+Style/Lambda:
+  EnforcedStyle: literal

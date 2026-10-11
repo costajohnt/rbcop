@@ -22,7 +22,7 @@ impl Cop for FirstArrayElementLineBreak {
         if a.opening_loc().is_none() {
             // `assignment_on_same_line?`: the line before the array ends in `=`.
             let line_start = cx.src.line_start(cx.src.line_of(start));
-            let before = cx.src.slice(line_start, start).trim_end_matches(|c: char| c.is_ascii_whitespace());
+            let before = cx.src.slice(line_start, start).trim_end_matches(helpers::ruby_string::is_space);
             if !before.ends_with('=') || cx.cfg.bool("AllowImplicitArrayLiterals").unwrap_or(false) {
                 return;
             }

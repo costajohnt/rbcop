@@ -114,7 +114,7 @@ pub fn parser_begin_end(node: &Node) -> Option<usize> {
     }
     let end = pred.location().end_offset();
     let rest = &node.location().as_slice()[end - node.location().start_offset()..];
-    let blanks = rest.iter().take_while(|&&b| matches!(b, b' ' | b'\t' | b'\n')).count();
+    let blanks = rest.iter().take_while(|&&b| crate::helpers::parser_tokens::is_ruby_space(b)).count();
     (rest.get(blanks) == Some(&b';')).then_some(end + blanks + 1)
 }
 

@@ -180,6 +180,7 @@ fn with_reason_end(comment: &str, d: &Directive) -> usize {
 /// range_with_comma (positions relative to the comment text).
 fn range_with_comma(comment: &str, start: usize, end_of_comment: usize, at: usize, len: usize) -> (usize, usize) {
     let b = comment.as_bytes();
+    // SurroundingSpace's `SINGLE_SPACE_REGEXP = /[ \t]/`, not Ruby's `\s`.
     let blank = |c: Option<&u8>| matches!(c, Some(b' ' | b'\t'));
     // SurroundingSpace#reposition: src[-1] is the last character.
     let mut begin = at;

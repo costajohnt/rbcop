@@ -17,7 +17,7 @@ impl Cop for IndentationStyle {
         let width = width.unwrap_or(2).max(0) as usize;
         for (i, line) in cx.src.lines.iter().enumerate() {
             // /\A\s*\t+/ (spaces style) or /\A\s* +/ (tabs style)
-            let ws = line.len() - line.trim_start_matches(|c: char| c.is_ascii_whitespace()).len();
+            let ws = line.len() - line.trim_start_matches(helpers::ruby_string::is_space).len();
             let Some(last) = line[..ws].rfind(bad) else { continue };
             let start = cx.src.line_start(i + 1);
             let end = start + last + 1;

@@ -68,12 +68,12 @@ impl Folds {
 
 /// String#blank?: empty or only whitespace (Ruby `lstrip` also strips NUL).
 fn blank(line: &str) -> bool {
-    line.bytes().all(|b| matches!(b, b' ' | b'\t' | b'\n' | 0x0b | 0x0c | b'\r' | 0))
+    crate::helpers::ruby_string::blank(line)
 }
 
 /// `comment_line?`: `/^\s*#/`.
 pub fn comment_line(line: &str) -> bool {
-    line.trim_start_matches([' ', '\t', '\n', '\r', '\x0b', '\x0c']).starts_with('#')
+    line.trim_start_matches(crate::helpers::ruby_string::is_space).starts_with('#')
 }
 
 fn ident(node: &Node) -> (usize, usize, usize) {

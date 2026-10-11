@@ -1,0 +1,101 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+argalign.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+argalign.rb:1:3: C: [Correctable] Layout/InitialIndentation: Indentation of first line in file detected.
+elagc.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+elagc.rb:2:10: C: [Correctable] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+elagc.rb:2:13: C: Layout/LineLength: Line is too long. [13/12]
+elagc.rb:6:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+elagc.rb:7:10: C: [Correctable] Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
+elagc.rb:7:13: C: Layout/LineLength: Line is too long. [13/12]
+elamc.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+faelb.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+faelb.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+faelb.rb:1:3: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+faelb.rb:2:5: C: [Correctable] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+faelb.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+faelb.rb:3:3: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+faelb.rb:4:5: C: [Correctable] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+hacp.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+hacp.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+hacp.rb:4:2: C: [Correctable] Layout/ClosingParenthesisIndentation: Align `)` with `(`.
+hacp.rb:7:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+hacp.rb:8:2: C: [Correctable] Layout/ClosingParenthesisIndentation: Align `)` with `(`.
+hmcp.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+hmcp.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+hmcp.rb:4:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+ifsemi.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+ifsemi.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+ifsemi.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if a;` - use a ternary operator instead.
+ifsemi.rb:1:5: C: [Correctable] Layout/SpaceBeforeSemicolon: Space found before semicolon.
+ifsemi.rb:2:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+ifsemi.rb:2:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if a;` - use a ternary operator instead.
+ifsemi.rb:2:5: C: [Correctable] Layout/SpaceBeforeSemicolon: Space found before semicolon.
+ifsemi.rb:3:13: C: [Correctable] Layout/LineLength: Line is too long. [13/12]
+ifsemi.rb:3:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+ifsemi.rb:3:1: C: [Correctable] Style/IfWithSemicolon: Do not use `if a;` - use a ternary operator instead.
+ifsemi.rb:3:5: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+ifsemi.rb:3:5: C: [Correctable] Layout/SpaceBeforeSemicolon: Space found before semicolon.
+indent_style.rb:1:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+indent_style.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+indent_style.rb:1:3: C: [Correctable] Layout/InitialIndentation: Indentation of first line in file detected.
+indent_style.rb:1:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+indent_style.rb:2:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+indent_style.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `bar`.
+linelen.rb:1:13: C: Layout/LineLength: Line is too long. [14/12]
+linelen.rb:1:15: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `Foo` (unknown cop).
+linelen.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+mixin.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+mixin.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in a single statement.
+mixin.rb:3:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in a single statement.
+mixin2.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+mixin2.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in a single statement.
+mixin2.rb:3:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in a single statement.
+next1.rb:1:13: C: Layout/LineLength: Line is too long. [14/12]
+next1.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+next1.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+next1.rb:3:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+next2.rb:1:13: C: Layout/LineLength: Line is too long. [14/12]
+next2.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+next2.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+sialb.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+sialb.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+sialb.rb:2:4: C: [Correctable] Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
+sialb.rb:3:2: C: Layout/FirstArrayElementIndentation: Indent the right bracket the same as the start of the line where the left bracket is.
+sialb.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+sialb.rb:5:4: C: [Correctable] Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
+sialb.rb:6:2: C: Layout/FirstArrayElementIndentation: Indent the right bracket the same as the start of the line where the left bracket is.
+sisi.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+sisi.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+sisi.rb:1:5: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+sisi.rb:1:6: W: Lint/EmptyExpression: Avoid empty expressions.
+sisi.rb:1:6: W: [Correctable] Lint/EmptyInterpolation: Empty interpolation detected.
+sisi.rb:2:11: C: Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+sisi.rb:2:13: C: Layout/LineLength: Line is too long. [13/12]
+sisi.rb:2:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+sisi.rb:2:5: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+sisi.rb:2:8: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+sisi.rb:2:8: C: [Correctable] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+sisi.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `w`.
+sisi.rb:3:5: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+sisi.rb:3:6: W: Lint/EmptyExpression: Avoid empty expressions.
+sisi.rb:3:6: W: [Correctable] Lint/EmptyInterpolation: Empty interpolation detected.
+ua.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+ua.rb:3:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`. Use `+` instead of `+=`.
+ua.rb:3:4: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+ua.rb:3:6: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `+=`.
+unless_else.rb:1:13: C: [Correctable] Layout/LineLength: Line is too long. [23/12]
+unless_else.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+unless_else.rb:1:1: C: [Correctable] Style/IfWithSemicolon: Do not use `unless a;` - use a ternary operator instead.
+unless_else.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `unless/then/else/end` constructs.
+unless_else.rb:1:1: C: [Correctable] Style/UnlessElse: Do not use `unless` with `else`. Rewrite these with the positive case first.
+unless_else.rb:1:9: C: [Correctable] Layout/SpaceBeforeSemicolon: Space found before semicolon.
+unless_else.rb:2:13: C: [Correctable] Layout/LineLength: Line is too long. [23/12]
+unless_else.rb:2:1: C: [Correctable] Style/IfWithSemicolon: Do not use `unless a;` - use a ternary operator instead.
+unless_else.rb:2:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `unless/then/else/end` constructs.
+unless_else.rb:2:1: C: [Correctable] Style/UnlessElse: Do not use `unless` with `else`. Rewrite these with the positive case first.
+unless_else.rb:2:9: C: [Correctable] Layout/SpaceBeforeSemicolon: Space found before semicolon.
+warray.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+warray.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+warray.rb:1:5: C: [Correctable] Style/WordArray: Use `%w` or `%W` for an array of words.
+warray.rb:3:6: C: [Correctable] Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
+warray.rb:4:2: C: Layout/FirstArrayElementIndentation: Indent the right bracket the same as the start of the line where the left bracket is.

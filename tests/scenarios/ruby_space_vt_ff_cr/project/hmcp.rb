@@ -1,0 +1,4 @@
+<<~EOS
+  x
+EOS
+.strip

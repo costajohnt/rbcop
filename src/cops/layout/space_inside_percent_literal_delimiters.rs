@@ -38,7 +38,7 @@ impl Cop for SpaceInsidePercentLiteralDelimiters {
         let (start, end) = (open.end_offset(), close.start_offset());
         let body = cx.src.slice(start, end);
         // `range.source.strip.empty?` (Ruby strip: ASCII whitespace and NUL).
-        if !body.is_empty() && body.bytes().all(|b| matches!(b, b' ' | b'\t' | b'\n' | b'\x0b' | b'\x0c' | b'\r' | 0)) {
+        if !body.is_empty() && helpers::ruby_string::strip(body).is_empty() {
             cx.add_fix(start, end, MSG, |c| c.remove(start, end));
         }
         let loc = node.location();

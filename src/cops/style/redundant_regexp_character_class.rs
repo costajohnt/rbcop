@@ -34,7 +34,7 @@ impl Cop for RedundantRegexpCharacterClass {
                 continue;
             }
             let elem = &lit.pattern[m.start..m.end];
-            let whitespace_in_free_space = lit.extended && elem.bytes().any(|b| matches!(b, b' ' | b'\t'..=b'\r'));
+            let whitespace_in_free_space = lit.extended && elem.bytes().any(helpers::parser_tokens::is_ruby_space);
             let backreference = elem.len() == 2 && elem.starts_with('\\') && matches!(elem.as_bytes()[1], b'1'..=b'9');
             if whitespace_in_free_space
                 || elem == "\\b"

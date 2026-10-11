@@ -170,7 +170,7 @@ impl Cop for HeredocArgumentClosingParenthesis {
         let Some(node_close) = call.closing_loc() else { return };
         if let Some(heredoc_end) = args.iter().filter_map(|a| helpers::heredoc::parts(a).map(|p| p.1.1)).max()
             && heredoc_end < node_close.start_offset()
-            && !src.slice(heredoc_end, node_close.start_offset()).trim_matches(|c: char| c.is_ascii_whitespace() || c == '\0').is_empty()
+            && !helpers::ruby_string::strip(src.slice(heredoc_end, node_close.start_offset())).is_empty()
         {
             return;
         }

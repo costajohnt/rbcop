@@ -133,7 +133,7 @@ fn scope_nodes(tree: &Tree, scope: ScopeRef, n: Id, out: &mut Vec<Id>) {
 /// `loc.operator` of an op-assign node whose left side ends at `lhs_end`.
 fn operator(src: &str, lhs_end: usize, value_start: usize) -> Option<(usize, usize)> {
     let between = &src[lhs_end..value_start];
-    let start = lhs_end + between.find(|c: char| !c.is_ascii_whitespace())?;
+    let start = lhs_end + between.find(|c: char| !helpers::ruby_string::is_space(c))?;
     let end = lhs_end + between.find('=')? + 1;
     Some((start, end))
 }

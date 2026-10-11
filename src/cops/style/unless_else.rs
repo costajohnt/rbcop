@@ -31,12 +31,7 @@ impl Cop for UnlessElse {
         // range_between_condition_and_else / range_between_else_and_end
         // Parser's `loc.begin` is `then`, or else a `;` ending the condition (Prism has no loc for it).
         let pred_end = u.predicate().location().end_offset();
-        let semi = cx.src.text[pred_end..].trim_start_matches([' ', '\t']).starts_with(';');
-        let body_start = match u.then_keyword_loc() {
-            Some(t) => t.end_offset(),
-            None if semi => cx.src.text[pred_end..].find(';').unwrap() + pred_end + 1,
-            None => pred_end,
-        };
+        let body_start = helpers::if_node::parser_begin_end(node).unwrap_or(pred_end);
         let body = (body_start, else_kw.start_offset());
         let else_range = (else_kw.end_offset(), end_kw.start_offset());
         cx.add_fix(

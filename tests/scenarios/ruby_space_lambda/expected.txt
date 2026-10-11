@@ -1,0 +1,10 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+lambda.rb:1:13: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+lambda.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+lambda.rb:1:5: C: [Correctable] Style/Lambda: Use the `lambda` method for all lambdas.
+lambda.rb:1:5: C: [Correctable] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+lambda.rb:2:13: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+lambda.rb:2:5: C: [Correctable] Style/Lambda: Use the `lambda` method for all lambdas.
+lambda.rb:2:5: C: [Correctable] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+lambda.rb:3:5: C: [Correctable] Style/Lambda: Use the `lambda` method for all lambdas.
+lambda.rb:4:4: C: [Correctable] Layout/BlockEndNewline: Expression at 4, 4 should be on its own line.
