@@ -1,0 +1,1 @@
+Error: The `Naming/PredicatePrefix` cop is misconfigured. Prefix foo_ must be included in NamePrefix because it is included in ForbiddenPrefixes.

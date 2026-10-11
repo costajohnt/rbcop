@@ -581,6 +581,47 @@ pub fn check_target_ruby(hash: &Map, path: &Path, pwd: &Path) -> Result<(), Stri
     Err(format!("Error: {msg}\nSupported versions: {}", supported.join(", ")))
 }
 
+/// Team#validate_config: the `validate_config` of each cop the team mobilizes (`team` says which),
+/// in registry order; the first ValidationError wins. RuboCop 1.91 has four.
+pub fn cop_validate_config(cfg: &super::Resolved, team: impl Fn(&str) -> bool) -> Result<(), String> {
+    const MAGIC: &str = "Layout/EmptyLineAfterMagicComment";
+    if team(MAGIC) {
+        let n = cfg.cop(MAGIC).params.get("NumberOfEmptyLines").cloned().unwrap_or(Value::Null);
+        if !matches!(n, Value::Int(i) if i > 0) {
+            return Err(format!(
+                "Error: The `{MAGIC}` cop only accepts a positive integer for its `NumberOfEmptyLines` configuration \
+                 parameter, but `{}` was given.",
+                inspect(&n)
+            ));
+        }
+    }
+    for cop in ["Layout/MultilineMethodCallIndentation", "Layout/MultilineOperationIndentation"] {
+        let c = cfg.cop(cop);
+        if team(cop) && c.str("EnforcedStyle") == Some("aligned") && c.params.truthy("IndentationWidth") {
+            return Err(format!(
+                "Error: The `{cop}` cop only accepts an `IndentationWidth` configuration parameter when \
+                 `EnforcedStyle` is `indented`."
+            ));
+        }
+    }
+    const PREDICATE: &str = "Naming/PredicatePrefix";
+    if team(PREDICATE) {
+        let p = &cfg.cop(PREDICATE).params;
+        // ponytail: a non-Array ForbiddenPrefixes crashes RuboCop (NoMethodError); not reproduced.
+        if let (Some(Value::Seq(forbidden)), Some(Value::Seq(names))) =
+            (p.get("ForbiddenPrefixes"), p.get("NamePrefix"))
+            && let Some(f) = forbidden.iter().find(|f| !names.contains(f))
+        {
+            return Err(format!(
+                "Error: The `{PREDICATE}` cop is misconfigured. Prefix {} must be included in NamePrefix because it is \
+                 included in ForbiddenPrefixes.",
+                to_s(f)
+            ));
+        }
+    }
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

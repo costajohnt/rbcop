@@ -177,7 +177,7 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   (index-only) never report, and Lint/ConstantReassignment's cross-file message is skipped. This
   matches RuboCop with the default config.
 - Metrics/CollectionLiteralLength does not count `rescue A, B` exception lists (parser `array`).
-  Lint/SymbolConversion does not treat a backslash-newline inside `:"..."` as a continuation. Naming/PredicatePrefix `validate_config` is not ported.
+  Lint/SymbolConversion does not treat a backslash-newline inside `:"..."` as a continuation.
 - LineLength `SplitStrings: true` break points (string splitting) are not modelled. The unbracketed
   `rescue A, B` array is checked as a breakable collection, but is not an ancestor of calls inside
   the exception list (`contained_by_breakable_collection_on_same_line?`).
