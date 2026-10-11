@@ -133,7 +133,14 @@ fn lineage(x: &Node, ancestors: &[Node]) -> Vec<P> {
     while i > 0 {
         i -= 1;
         let a = &ancestors[i];
-        let (s, e) = span(a);
+        let (mut s, e) = span(a);
+        // A parenthesized def's parser `args` starts at its `(` (Prism's parameters at the first
+        // one), so a block in a default value on a later line stops at its `optarg`/`kwoptarg`.
+        if a.as_parameters_node().is_some()
+            && let Some(l) = i.checked_sub(1).and_then(|j| ancestors[j].as_def_node()).and_then(|d| d.lparen_loc())
+        {
+            s = l.start_offset();
+        }
         match frame(a) {
             Frame::Transparent => continue,
             _ if kind::of(a) == kind::BLOCK_NODE => {
