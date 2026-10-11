@@ -1,0 +1,8 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+anddot.rb:3:3: F: Lint/Syntax: unexpected token tAMPER (Using Ruby 2.6 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+blank.rb:3:3: F: Lint/Syntax: unexpected token tAMPER (Using Ruby 2.6 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+chain.rb:4:3: F: Lint/Syntax: unexpected token tDOT (Using Ruby 2.6 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+chain.rb:6:3: F: Lint/Syntax: unexpected token tDOT (Using Ruby 2.6 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+dot.rb:3:3: F: Lint/Syntax: unexpected token tDOT (Using Ruby 2.6 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+ok.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+trailing.rb:3:3: F: Lint/Syntax: unexpected token tDOT (Using Ruby 2.6 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
