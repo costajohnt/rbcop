@@ -227,6 +227,20 @@ pub fn parse_for_target<'t>(
         if errors && cur.contains('\0') {
             round.extend(crate::legacy_syntax::heredoc_nul_breaks(cur, &tokens).into_iter().map(|o| (o, b'\n')));
         }
+        // The parser gem ends a `<<''` heredoc at a line of spaces and tabs, Prism only at an empty
+        // line: the copy moves that line's newline before its blanks (`  \n` -> `\n  `, #318).
+        for t in tokens
+            .iter()
+            .filter(|t| t.kind == "HEREDOC_START" && matches!(&cur[t.start..t.end], "<<''" | "<<\"\"" | "<<``"))
+        {
+            if let Some(range) = crate::legacy_syntax::blank_heredoc_terminator(cur, t.start) {
+                let line = &cur.as_bytes()[range.clone()];
+                round.push((range.start, b'\n'));
+                if line.ends_with(b"\n") {
+                    round.extend((range.start + 1..range.end).zip(line[..line.len() - 1].iter().copied()));
+                }
+            }
+        }
         round.retain(|&(o, b)| cur.as_bytes()[o] != b);
         if round.is_empty() {
             break;
@@ -847,9 +861,9 @@ pub fn tolerated(e: &ruby_prism::Diagnostic, parser_gem: bool, target_ruby: f64,
         || ((kind.starts_with("numbered_parameter_") || kind == "expression_not_writable_numbered")
             && target_ruby < 2.7)
         || (parser_gem && e.message().starts_with("unterminated heredoc; can't find string \"\"") && {
-            // No blank line (which ends the parser gem's heredoc) before the end of the file.
-            let body = text[e.location().end_offset()..].split_once('\n').map_or("", |(_, b)| b);
-            body.lines().all(|l| !l.trim().is_empty())
+            // The parser gem ends the heredoc at the empty line after a final newline (a line of
+            // spaces and tabs before it is rewritten into an empty line by `parse_for_target`).
+            text.ends_with('\n')
         })
 }
 

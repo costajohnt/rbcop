@@ -112,6 +112,25 @@ pub fn continue_over_blank_lines(text: &str, dots: &[usize]) -> Option<(Vec<u8>,
     Some((bytes, fake))
 }
 
+/// The first line after the one holding `opener` that has only spaces and tabs (with its newline, if
+/// any), unless an empty line comes first: where the parser gem ends a `<<''` heredoc (its
+/// `delimiter?` takes any space/tab indentation before the empty delimiter).
+pub fn blank_heredoc_terminator(text: &str, opener: usize) -> Option<std::ops::Range<usize>> {
+    let mut start = opener + text[opener..].find('\n')? + 1;
+    while start < text.len() {
+        let end = text[start..].find('\n').map_or(text.len(), |i| start + i + 1);
+        let line = text[start..end].strip_suffix('\n').unwrap_or(&text[start..end]);
+        if line.is_empty() {
+            return None;
+        }
+        if line.bytes().all(|b| matches!(b, b' ' | b'\t')) {
+            return Some(start..end);
+        }
+        start = end;
+    }
+    None
+}
+
 /// The first character of a Prism CONSTANT starting at `name` that the parser gem's lexer reads
 /// as an identifier (it starts constants only at ASCII `A`-`Z`).
 pub fn non_ascii_constant_start(name: &str) -> Option<char> {
