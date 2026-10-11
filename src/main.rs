@@ -1174,21 +1174,25 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     let stdin_text = &stdin_text;
     // --stdin with -a/-A: the corrected source, printed after the report.
     let mut stdin_corrected: Option<String> = None;
+    let write_roots = rbcop::autocorrect::write_roots(&cwd, &cli.paths);
     // One file: (report, corrected source to write back, infinite-loop error), or a read error.
     // -a/-A: read, correct until stable; offenses from every iteration come back (fixed ones marked
     // corrected). The file is written in the reporting loop below, in file order, as RuboCop does.
-    let lint = |path: &PathBuf, cfg: &Resolved| -> Result<(FileReport, Option<String>, Option<String>), String> {
+    let lint = |path: &PathBuf,
+                cfg: &Resolved,
+                mode: Option<rbcop::autocorrect::Mode>|
+     -> Result<(FileReport, Option<String>, Option<String>), String> {
         let display = rbcop::config::relative_path(path, &cwd);
         let selected = |cop: &str| badge_selected(cop, cfg);
         if let Some(bytes) = stdin_text {
             // --stdin with -a/-A: the corrected source is printed after the report (@options[:stdin]).
-            if let Some(mode) = cli.autocorrect {
+            if let Some(mode) = mode {
                 let c = rbcop::autocorrect::correct_bytes(path, &display, bytes.clone(), cfg, &selected, mode);
                 return Ok((c.report, c.source, c.error));
             }
             return Ok((runner::inspect_bytes(path, &display, bytes.clone(), cfg, &selected), None, None));
         }
-        if let Some(mode) = cli.autocorrect {
+        if let Some(mode) = mode {
             let c = rbcop::autocorrect::correct_file(path, &display, cfg, &selected, mode)?;
             return Ok((c.report, c.source, c.error));
         }
@@ -1197,8 +1201,8 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     };
     // A panic outside a cop (cop panics are reported by runner::guarded) ends the run at that file,
     // like any error, instead of taking down every worker's results with it.
-    let lint_one = |path: &PathBuf, cfg: &Resolved| -> Linted {
-        std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| lint(path, cfg)))
+    let lint_one = |path: &PathBuf, cfg: &Resolved, mode: Option<rbcop::autocorrect::Mode>| -> Linted {
+        std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| lint(path, cfg, mode)))
             .unwrap_or_else(|_| Err(format!("rbcop: internal error while inspecting {}", path.display())))
             .map(|(report, corrected, loop_error)| (report, corrected, loop_error, runner::take_file_warnings()))
     };
@@ -1226,7 +1230,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                 .map(|part| {
                     big_stack()
                         .spawn_scoped(s, || {
-                            part.iter().map(|(path, cfg)| Some(lint_one(path, cfg))).collect::<Vec<_>>()
+                            part.iter()
+                                .map(|(path, cfg)| Some(lint_one(path, cfg, cli.autocorrect)))
+                                .collect::<Vec<_>>()
                         })
                         .expect("spawn worker thread")
                 })
@@ -1295,7 +1301,31 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             }
             let linted = match linted.take() {
                 Some(l) => l,
-                None => thread::scope(|s| big_stack().spawn_scoped(s, || lint_one(path, cfg)).unwrap().join().unwrap()),
+                None => thread::scope(|s| {
+                    big_stack().spawn_scoped(s, || lint_one(path, cfg, cli.autocorrect)).unwrap().join().unwrap()
+                }),
+            };
+            // Deliberate difference: under -a/-A a file that resolves outside the project (the
+            // working directory and the command-line paths) is not written; it is reported as
+            // without -a/-A. write_source checks again right before writing.
+            let refused = match &linted {
+                Ok((_, Some(_), _, _)) if stdin_text.is_none() => {
+                    fs::canonicalize(path).ok().filter(|real| rbcop::autocorrect::outside_roots(real, &write_roots))
+                }
+                _ => None,
+            };
+            let linted = match refused {
+                Some(real) => {
+                    let display = rbcop::config::relative_path(path, &cwd);
+                    eprintln!(
+                        "rbcop: not autocorrecting {display}: it resolves to {}, outside the project",
+                        real.display()
+                    );
+                    thread::scope(|s| {
+                        big_stack().spawn_scoped(s, || lint_one(path, cfg, None)).unwrap().join().unwrap()
+                    })
+                }
+                None => linted,
             };
             let (report, corrected, loop_error, warnings) = match linted {
                 Ok(l) => l,
@@ -1320,7 +1350,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             if stdin_text.is_some() {
                 stdin_corrected = corrected;
             } else if let Some(new) = &corrected
-                && let Err(e) = rbcop::autocorrect::write_source(path, new)
+                && let Err(e) = rbcop::autocorrect::write_source(path, new, &write_roots)
             {
                 error = Some(runner::io_error(&e, path));
                 stopped = true;

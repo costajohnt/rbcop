@@ -11,7 +11,7 @@ use crate::formatter::{line_col_at, line_starts};
 use crate::runner::{self, FileReport};
 use corrector::Corrector;
 use std::collections::{HashMap, HashSet};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::sync::{Arc, LazyLock};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -232,15 +232,30 @@ pub fn correct_bytes(
 /// truncated: the content goes to a temporary file in the same directory, which is renamed over
 /// the target. A rename would change more than the content of a hard-linked file or of one owned
 /// by someone else, and cannot be done in a directory rbcop may not write; those are written in place.
+///
+/// Deliberate difference: a file whose canonical path is not under one of `roots` (canonical
+/// paths, see `outside_roots`) is refused with PermissionDenied, checked here right before the
+/// write, and the final component is never followed as a symlink after that check.
 // ponytail: extended attributes and ACLs are not copied to the renamed file.
-pub fn write_source(path: &Path, new: &str) -> std::io::Result<()> {
+// ponytail: a parent directory swapped for a symlink between the check and the write is not
+// caught (needs openat with O_NOFOLLOW per component).
+pub fn write_source(path: &Path, new: &str, roots: &[PathBuf]) -> std::io::Result<()> {
     use std::fs;
     use std::io::Write;
     use std::os::unix::fs::{MetadataExt, OpenOptionsExt};
     static COUNTER: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
     let target = fs::canonicalize(path)?;
+    if outside_roots(&target, roots) {
+        let msg = format!("{} resolves to {}, outside the project", path.display(), target.display());
+        return Err(std::io::Error::new(std::io::ErrorKind::PermissionDenied, msg));
+    }
+    let nofollow = || {
+        let mut o = fs::OpenOptions::new();
+        o.write(true).custom_flags(libc::O_NOFOLLOW);
+        o
+    };
     // File.open(path, 'w') fails on a file that is not writable; the rename must not get round that.
-    drop(fs::OpenOptions::new().write(true).open(&target)?);
+    drop(nofollow().open(&target)?);
     let meta = fs::metadata(&target)?;
     // SAFETY: geteuid has no preconditions.
     if meta.nlink() == 1 && meta.uid() == unsafe { libc::geteuid() } {
@@ -268,7 +283,21 @@ pub fn write_source(path: &Path, new: &str) -> std::io::Result<()> {
             let _ = fs::remove_file(&tmp);
         }
     }
-    fs::write(&target, new)
+    nofollow().truncate(true).open(&target)?.write_all(new.as_bytes())
+}
+
+/// Whether the canonical path `target` lies outside every root: canonical directories (the
+/// working directory, directory arguments) and canonical files (file arguments, matched exactly).
+pub fn outside_roots(target: &Path, roots: &[PathBuf]) -> bool {
+    !roots.iter().any(|r| target.starts_with(r))
+}
+
+/// `write_source`'s roots for a run: the working directory and each command-line path, canonical.
+pub fn write_roots(cwd: &Path, args: &[PathBuf]) -> Vec<PathBuf> {
+    std::iter::once(cwd.to_path_buf())
+        .chain(args.iter().map(|a| crate::config::expand_path(a, cwd)))
+        .filter_map(|p| std::fs::canonicalize(p).ok())
+        .collect()
 }
 
 fn infinite_loop(path: &Path, iterations: &[Vec<Offense>]) -> String {
