@@ -1,0 +1,11 @@
+t.rb:14:1: C: Style/Documentation: Missing top-level documentation comment for `module R`.
+t.rb:19:1: C: Style/Documentation: Missing top-level documentation comment for `module S`.
+t.rb:25:1: C: Style/Documentation: Missing top-level documentation comment for `module T`.
+t.rb:28:5: C: Style/DocumentationMethod: Missing method documentation comment.
+t.rb:33:1: C: Style/Documentation: Missing top-level documentation comment for `class A`.
+t.rb:34:3: C: Style/DocumentationMethod: Missing method documentation comment.
+t.rb:38:1: C: Style/Documentation: Missing top-level documentation comment for `module B`.
+t.rb:39:3: C: Style/DocumentationMethod: Missing method documentation comment.
+t.rb:45:3: C: Style/DocumentationMethod: Missing method documentation comment.
+t.rb:49:3: C: Style/DocumentationMethod: Missing method documentation comment.
+t.rb:53:3: C: Style/DocumentationMethod: Missing method documentation comment.
