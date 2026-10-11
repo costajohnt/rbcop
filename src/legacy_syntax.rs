@@ -1055,6 +1055,17 @@ struct Walk<'t> {
 impl Walk<'_> {
     /// The first token after the one ending at `end`, skipping newlines (ignored after an operator by
     /// the older lexers).
+    /// Below 3.3 a `block_command` is no call argument: as the only argument in `(...)` or `[...]`
+    /// of a call, `super` or `yield`, the grammar fails at its `do` (`foo(bar baz do end)`; #239, #302).
+    fn sole_block_command(&mut self, args: Option<ruby_prism::ArgumentsNode>) {
+        if let Some(args) = args
+            && args.arguments().len() == 1
+            && let Some(d) = args.arguments().iter().next().and_then(|a| block_command_do(&a))
+        {
+            self.violation(d, 3.3);
+        }
+    }
+
     fn next_token(&self, end: usize) -> usize {
         let i = self.toks.partition_point(|t| t.start < end);
         self.toks[i..].iter().find(|t| !matches!(t.name, "tNL" | "tLABEL_NL")).map_or(usize::MAX, |t| t.start)
@@ -1464,18 +1475,8 @@ impl<'pr> Visit<'pr> for Walk<'_> {
         {
             self.do_block.insert(b.opening_loc().start_offset());
         }
-        // Below 3.3 `command do_block` is a block_command, not a call argument: it cannot be the
-        // only argument in `(...)` or `[...]` (`foo(bar baz do end)`; #239).
-        if n.opening_loc().is_some()
-            && let Some(args) = n.arguments()
-            && args.arguments().len() == 1
-            && let Some(inner) = args.arguments().iter().next().and_then(|a| a.as_call_node())
-            && inner.opening_loc().is_none()
-            && inner.arguments().is_some()
-            && let Some(b) =
-                inner.block().and_then(|b| b.as_block_node()).filter(|b| b.opening_loc().as_slice() == b"do")
-        {
-            self.violation(b.opening_loc().start_offset(), 3.3);
+        if n.opening_loc().is_some() {
+            self.sole_block_command(n.arguments());
         }
         // Below 3.3 `not x` without parentheses is an expr, never an assigned value (`x = not y`;
         // #240); as an argument, see visit_arguments_node.
@@ -1520,14 +1521,18 @@ impl<'pr> Visit<'pr> for Walk<'_> {
     }
 
     fn visit_super_node(&mut self, n: &ruby_prism::SuperNode<'pr>) {
-        if n.lparen_loc().is_none() {
+        if n.lparen_loc().is_some() {
+            self.sole_block_command(n.arguments());
+        } else {
             self.command_args(n.arguments(), n.block().filter(|b| b.as_block_argument_node().is_some()));
         }
         self.in_ctx(n.keyword_loc().start_offset(), |s| ruby_prism::visit_super_node(s, n));
     }
 
     fn visit_yield_node(&mut self, n: &ruby_prism::YieldNode<'pr>) {
-        if n.lparen_loc().is_none() {
+        if n.lparen_loc().is_some() {
+            self.sole_block_command(n.arguments());
+        } else {
             self.command_args(n.arguments(), None);
         }
         self.in_ctx(n.keyword_loc().start_offset(), |s| ruby_prism::visit_yield_node(s, n));
@@ -1804,6 +1809,26 @@ impl Walk<'_> {
 /// `command_asgn`: an assignment whose value is a command call without parentheses (`a = foo 1`,
 /// `a.b += foo 1`, `a = b = foo 1`). Below 3.3 it is a statement, so it cannot be the left operand
 /// of `or`/`and`.
+/// The `do` of a `block_command`: a command with a `do` block (`bar baz do end`, `super x do end`)
+/// or a call chained on one (`bar baz do end.qux`).
+fn block_command_do(n: &Node) -> Option<usize> {
+    let do_of = |b: Option<Node>| {
+        let b = b?.as_block_node().filter(|b| b.opening_loc().as_slice() == b"do")?;
+        Some(b.opening_loc().start_offset())
+    };
+    if let Some(c) = n.as_call_node() {
+        if c.opening_loc().is_none()
+            && c.arguments().is_some()
+            && let Some(d) = do_of(c.block())
+        {
+            return Some(d);
+        }
+        return block_command_do(&c.receiver()?);
+    }
+    let s = n.as_super_node().filter(|s| s.lparen_loc().is_none() && s.arguments().is_some())?;
+    do_of(s.block())
+}
+
 fn command_asgn(node: &Node) -> bool {
     let value = match crate::ast::assignment_parts(node) {
         Some((_, v)) if node.as_multi_write_node().is_none() => v,
