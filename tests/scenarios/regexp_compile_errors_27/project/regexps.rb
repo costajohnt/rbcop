@@ -16,4 +16,10 @@ n = /a{3,\
 o = /[\d-a]/
 q = /(?<=a{2})b|[a-z-0]|\A[\w.-]+@[a-z\d-]+\z|(a)\1|(?<x>y)\k<x>/
 r = /a{3, 2}|{,}|[a-[b]]|\p{Alpha}+/
-p a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, q, r
+s = /(?<!(a))b/
+t = /(?<!(?<n>a))/
+u = /(?<!a|(b))/
+v = /(a)\k<+1>/
+w = /\p{Alpha}[b-a]/
+x = /(?<=(a))|(?<!(?:a))|(?<!(?i:a))|\p{ Lu }|\p{^Alpha}|\P{In_Basic_Latin}|(?<!a)(b)/
+p a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, q, r, s, t, u, v, w, x

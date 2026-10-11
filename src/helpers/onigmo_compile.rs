@@ -68,6 +68,8 @@ struct Scan {
     refs: Vec<Ref>,
     /// Look-behind nesting depth.
     lookbehind: usize,
+    /// Negative look-behind nesting depth: no capture group may open under one.
+    neg_lookbehind: usize,
     bad_lookbehind: bool,
 }
 
@@ -76,6 +78,17 @@ type R = Result<(), Stop>;
 const POSIX: [&str; 14] = [
     "alnum", "alpha", "ascii", "blank", "cntrl", "digit", "graph", "lower", "print", "punct", "space", "upper", "xdigit",
     "word",
+];
+
+/// `\p{..}` names Onigmo accepts (folded as it folds them), checked against Ruby 4.0: POSIX
+/// classes, general categories (short and long), common binary properties and major scripts.
+const PROPERTY_NAMES: &[&str] = &[
+    "alnum", "alpha", "ascii", "blank", "cntrl", "digit", "graph", "lower", "print", "punct", "space", "upper", "xdigit",
+    "word", "any", "l", "lu", "ll", "lt", "lm", "lo", "lc", "m", "mn", "mc", "me", "n", "nd", "nl", "no", "p", "pc", "pd",
+    "ps", "pe", "pi", "pf", "po", "s", "sm", "sc", "sk", "so", "z", "zs", "zl", "zp", "c", "cc", "cf", "cs", "co", "cn",
+    "letter", "casedletter", "mark", "number", "punctuation", "symbol", "separator", "other", "alphabetic", "uppercase",
+    "lowercase", "whitespace", "emoji", "latin", "latn", "greek", "cyrillic", "arabic", "hebrew", "han", "hiragana",
+    "katakana", "hangul", "thai", "common", "inherited", "unknown", "inbasiclatin",
 ];
 
 fn err<T>(m: &str) -> Result<T, Stop> {
@@ -99,6 +112,15 @@ impl Scan {
 
     fn variable_in_lookbehind(&mut self) {
         if self.lookbehind > 0 {
+            self.bad_lookbehind = true;
+        }
+    }
+
+    /// A capture group opens (`(`, `(?<name>`, `(?'name'`): Onigmo allows none inside a negative
+    /// look-behind, at any depth (`(?<!(?:(a)))`, `(?<!(?<=(a)))`).
+    fn capture(&mut self) {
+        self.groups += 1;
+        if self.neg_lookbehind > 0 {
             self.bad_lookbehind = true;
         }
     }
@@ -197,6 +219,7 @@ impl Scan {
     fn group(&mut self) -> R {
         self.i += 1; // (
         let mut lookbehind = false;
+        let negative = self.peek(2) == Some('!');
         if self.peek(0) == Some('?') {
             match (self.peek(1), self.peek(2)) {
                 (Some('#'), _) => {
@@ -222,7 +245,7 @@ impl Scan {
                     if !name.chars().next().is_some_and(|c| c.is_alphabetic() || c == '_') {
                         return Err(Stop::Unknown);
                     }
-                    self.groups += 1;
+                    self.capture();
                     self.names.push(name);
                 }
                 (Some(':'), _) => self.i += 2,
@@ -247,14 +270,16 @@ impl Scan {
                 }
             }
         } else {
-            self.groups += 1;
+            self.capture();
         }
         if lookbehind {
             self.lookbehind += 1;
+            self.neg_lookbehind += usize::from(negative);
         }
         self.alternation(true)?;
         if lookbehind {
             self.lookbehind -= 1;
+            self.neg_lookbehind -= usize::from(negative);
         }
         self.i += 1; // )
         Ok(())
@@ -316,6 +341,10 @@ impl Scan {
         }
         if backref {
             self.variable_in_lookbehind();
+            // A backref has no relative-forward form: `\k<+1>` is looked up as a name.
+            if name.starts_with('+') {
+                return err(&format!("undefined name <{name}> reference"));
+            }
         }
         let first = name.chars().next().unwrap();
         if first.is_ascii_digit() || ((first == '-' || first == '+') && name.len() > 1) {
@@ -372,6 +401,19 @@ impl Scan {
                     j += 1;
                 }
                 if j >= self.c.len() {
+                    return Err(Stop::Unknown);
+                }
+                // `\p{^Name}` negates; the message drops the `^`. Onigmo looks the name up
+                // lowercased without spaces, hyphens and underscores.
+                let name: String = self.c[self.i + 3..j].iter().collect();
+                let name = name.strip_prefix('^').unwrap_or(&name);
+                let folded: String = name.chars().filter(|c| !matches!(c, ' ' | '-' | '_')).flat_map(char::to_lowercase).collect();
+                if name.is_empty() {
+                    return err("invalid character property name {}");
+                }
+                // ponytail: only common names are known; Onigmo's full table (scripts, blocks,
+                // ages, derived properties) is not modelled, so any other name stops the check.
+                if !PROPERTY_NAMES.contains(&folded.as_str()) {
                     return Err(Stop::Unknown);
                 }
                 self.i = j + 1;
@@ -601,6 +643,32 @@ mod tests {
             ("a{3,2}[b-a]", Some("upper is smaller than lower in repeat range")),
             ("[b-a]a{3,2}", Some("empty range in char class")),
             (r"\p{Alpha}+(?:\.\d+)*", None),
+            ("(?<!(a))b", Some("invalid pattern in look-behind")),
+            ("(?<!(?<n>a))", Some("invalid pattern in look-behind")),
+            ("(?<!a|(b))", Some("invalid pattern in look-behind")),
+            ("(?<!(?:(a)))", Some("invalid pattern in look-behind")),
+            ("(?<!(?<=(a)))", Some("invalid pattern in look-behind")),
+            ("(?<=(?<!(a)))", Some("invalid pattern in look-behind")),
+            ("(?<!(?:a))", None),
+            ("(?<!(?i:a))", None),
+            ("(?<!a)(b)", None),
+            ("(?<!a|bc)", None),
+            (r"(a)\k<+1>", Some("undefined name <+1> reference")),
+            (r"(a)\k<+0>", Some("undefined name <+0> reference")),
+            (r"\k<+1>(?<n>a)", Some("undefined name <+1> reference")),
+            (r"(a)\k<+1>\k<m>", Some("undefined name <+1> reference")),
+            (r"(a)\k<m>\k<+1>", Some("undefined name <m> reference")),
+            (r"(a)\k<-1>\k<+1>", Some("undefined name <+1> reference")),
+            (r"\p{Alpha}[b-a]", Some("empty range in char class")),
+            (r"\p{ L u }[b-a]", Some("empty range in char class")),
+            (r"\p{^Alpha}[b-a]", Some("empty range in char class")),
+            (r"\P{In_Basic_Latin}[b-a]", Some("empty range in char class")),
+            (r"[\p{Lu}-a]", Some("unmatched range specifier in char-class")),
+            (r"\p{}", Some("invalid character property name {}")),
+            (r"\p{^}", Some("invalid character property name {}")),
+            // Unknown names stop the check (Onigmo: invalid character property name {Foo}).
+            (r"\p{Foo}[b-a]", None),
+            (r"[\p{Foo}-a]", None),
             (r"\A[\w.-]+@[a-z\d-]+\z", None),
             (r"^(\d+)-(\d+)$", None),
         ];
