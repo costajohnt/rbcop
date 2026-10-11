@@ -949,7 +949,8 @@ fn qualify_cop_options(cli: &mut Cli) -> (Vec<String>, Option<String>) {
 }
 
 /// One linted file: (report, corrected source to write back, infinite-loop error), or a read error.
-type Linted = Result<(FileReport, Option<String>, Option<String>), String>;
+/// One file's result: report, corrected source, loop error, and the warnings its cops raised.
+type Linted = Result<(FileReport, Option<String>, Option<String>, Vec<String>), String>;
 
 /// Whether two targets are the same file on disk (one of them through a symlink, say).
 fn same_file_twice(jobs: &[(PathBuf, std::sync::Arc<Resolved>)]) -> bool {
@@ -1151,7 +1152,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     // One file: (report, corrected source to write back, infinite-loop error), or a read error.
     // -a/-A: read, correct until stable; offenses from every iteration come back (fixed ones marked
     // corrected). The file is written in the reporting loop below, in file order, as RuboCop does.
-    let lint = |path: &PathBuf, cfg: &Resolved| -> Linted {
+    let lint = |path: &PathBuf, cfg: &Resolved| -> Result<(FileReport, Option<String>, Option<String>), String> {
         let display = rbcop::config::relative_path(path, &cwd);
         // Runner#mobilize_cop_badge?: without --only, --only-guide-cops or `AllCops:
         // StyleGuideCopsOnly` keeps only cops whose own config has a StyleGuide.
@@ -1183,6 +1184,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     let lint_one = |path: &PathBuf, cfg: &Resolved| -> Linted {
         std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| lint(path, cfg)))
             .unwrap_or_else(|_| Err(format!("rbcop: internal error while inspecting {}", path.display())))
+            .map(|(report, corrected, loop_error)| (report, corrected, loop_error, runner::take_file_warnings()))
     };
     // Cops recurse over the AST; runner::MAX_AST_DEPTH (1000) needs under 2 MiB, the rest is
     // headroom. Only touched pages are committed.
@@ -1237,6 +1239,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     let mut all_passed = true;
     let mut inspected: Vec<PathBuf> = Vec::new();
     let mut config_failure = None;
+    let mut cop_warnings_raised: Vec<String> = Vec::new();
     if error.is_none() {
         let mut cop_notes = Some((cop_warnings, cop_error));
         let mut stopped = false;
@@ -1268,7 +1271,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                 Some(l) => l,
                 None => thread::scope(|s| big_stack().spawn_scoped(s, || lint_one(path, cfg)).unwrap().join().unwrap()),
             };
-            let (report, corrected, loop_error) = match linted {
+            let (report, corrected, loop_error, warnings) = match linted {
                 Ok(l) => l,
                 Err(e) => {
                     error = Some(e);
@@ -1276,6 +1279,12 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                     break;
                 }
             };
+            // Team#handle_warning prints each warning as the file is inspected; Runner#warnings
+            // keeps them for the summary, in the same order.
+            for w in &warnings {
+                eprintln!("{w}");
+            }
+            cop_warnings_raised.extend(warnings);
             // Team#autocorrect writes the file before it is reported (with --stdin, keeps the source
             // for printing); a failed write ends the run.
             if stdin_text.is_some() {
@@ -1325,12 +1334,11 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         return Ok(ERROR);
     }
     // ExecuteRunner#display_warning_summary, before the error summary.
-    let cop_warnings = runner::take_warnings();
-    if !cop_warnings.is_empty() {
-        let n = cop_warnings.len();
+    if !cop_warnings_raised.is_empty() {
+        let n = cop_warnings_raised.len();
         let paint = formatter::Paint(global);
         eprintln!("{}", paint.yellow(&format!("\n{n} warning{}:", if n == 1 { "" } else { "s" })));
-        for w in &cop_warnings {
+        for w in &cop_warnings_raised {
             eprintln!("{}", paint.yellow(w));
         }
     }
