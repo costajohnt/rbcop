@@ -28,7 +28,7 @@ impl Cop for OrderedGems {
         // (send nil? :gem str ...)
         if call.receiver().is_none()
             && method_name(&call) == "gem"
-            && let Some(d) = Declaration::of(&call)
+            && let Some(d) = Declaration::of(&call, cx.ancestors)
         {
             cx.state::<State>().0.push(d);
         }
