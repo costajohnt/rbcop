@@ -159,6 +159,19 @@ fn invalid_utf8_is_a_syntax_error() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// A magic comment naming no encoding: RuboCop refuses the file, so -A must not rewrite it (#246).
+#[test]
+fn unknown_encoding_name_is_not_corrected() {
+    let dir = scratch("unknown_encoding");
+    let src = b"# encoding: utf-8names = Array.new\nx = 1\n";
+    fs::write(dir.join("t.rb"), src).unwrap();
+    let out = rbcop(&dir, &["-A", "--force-default-config", "-f", "e", "t.rb"]);
+    let want = format!("{}/t.rb:1:1: F: Lint/Syntax: Unknown encoding name - utf-8names.\n", dir.display());
+    assert_eq!(text(&out.stdout).lines().next().map(|l| format!("{l}\n")), Some(want));
+    assert_eq!(fs::read(dir.join("t.rb")).unwrap(), src);
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// An inherit_from cycle is reported as an error (RuboCop overflows its stack; rbcop used to abort).
 #[test]
 fn inherit_from_cycle_is_an_error() {
