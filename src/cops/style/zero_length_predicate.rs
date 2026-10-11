@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use helpers::select_by::plain_send;
 use helpers::parser_parent::{is_top_const, parser_parent};
 use ruby_prism::CallNode;
 
@@ -20,11 +21,6 @@ fn args<'pr>(call: &CallNode<'pr>) -> Vec<Node<'pr>> {
     let mut a = call_args(call);
     a.extend(call.block().filter(|b| b.as_block_argument_node().is_some()));
     a
-}
-
-/// A plain parser `send` (not csend, no block literal attached).
-fn plain_send<'pr>(node: &Node<'pr>) -> Option<CallNode<'pr>> {
-    node.as_call_node().filter(|c| !is_csend(c) && c.block().is_none_or(|b| b.as_block_node().is_none()))
 }
 
 /// ZeroLengthPredicate#non_polymorphic_collection? on the parent send.

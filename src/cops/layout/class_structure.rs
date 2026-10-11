@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use helpers::select_by::plain_send;
 use crate::source::Source;
 use ruby_prism::CallNode;
 use std::collections::{HashMap, HashSet};
@@ -24,12 +25,6 @@ impl Conf {
     }
 }
 
-/// A parser `send` (no literal block, not `&.`).
-fn as_send<'pr>(node: &Node<'pr>) -> Option<CallNode<'pr>> {
-    let call = node.as_call_node()?;
-    (!matches!(call.block(), Some(Node::BlockNode { .. })) && !is_csend(&call)).then_some(call)
-}
-
 /// The scope name of a receiver-less `private`/`protected`/`public` send.
 fn visibility_scope(call: &CallNode) -> Option<&'static str> {
     let name = method_name(call);
@@ -38,12 +33,12 @@ fn visibility_scope(call: &CallNode) -> Option<&'static str> {
 
 /// `(send nil? VISIBILITY_SCOPES)`.
 fn visibility_block(node: &Node) -> Option<&'static str> {
-    as_send(node).filter(|c| send_args(c).is_empty()).and_then(|c| visibility_scope(&c))
+    plain_send(node).filter(|c| send_args(c).is_empty()).and_then(|c| visibility_scope(&c))
 }
 
 /// `(send nil? VISIBILITY_SCOPES (sym _))`: the scope and the symbol.
 fn visibility_inline_on_method_name(node: &Node) -> Option<(&'static str, Vec<u8>)> {
-    let call = as_send(node)?;
+    let call = plain_send(node)?;
     let args = send_args(&call);
     let sym = args.first().filter(|_| args.len() == 1)?.as_symbol_node()?;
     Some((visibility_scope(&call)?, sym.unescaped().to_vec()))
@@ -56,7 +51,7 @@ fn def_modifier(call: &CallNode) -> bool {
     }
     match send_args(call).into_iter().next() {
         Some(Node::DefNode { .. }) => true,
-        Some(arg) => as_send(&arg).is_some_and(|c| def_modifier(&c)),
+        Some(arg) => plain_send(&arg).is_some_and(|c| def_modifier(&c)),
         None => false,
     }
 }
@@ -72,7 +67,7 @@ fn is_casgn(node: &Node) -> bool {
 /// A namespace-less `casgn` whose value is a send other than `<literal>.freeze`.
 fn dynamic_constant(node: &Node) -> bool {
     let Some(casgn) = node.as_constant_write_node() else { return false };
-    as_send(&casgn.value()).is_some_and(|c| {
+    plain_send(&casgn.value()).is_some_and(|c| {
         !(method_name(&c) == "freeze"
             && c.receiver().is_some_and(|r| helpers::literal_node::recursive_basic_literal(&r)))
     })
@@ -128,7 +123,7 @@ impl<'pr> Body<'pr> {
         // private_constant?: `parent.each_child_node(:send)` with a matching symbol argument.
         let private: HashSet<Vec<u8>> = sibs
             .iter()
-            .filter_map(as_send)
+            .filter_map(plain_send)
             .filter(|c| method_name(c) == "private_constant")
             .flat_map(|c| send_args(&c).into_iter().filter_map(|a| a.as_symbol_node().map(|s| s.unescaped().to_vec())))
             .collect();
@@ -229,7 +224,7 @@ fn visibility_dependent(conf: &Conf, node: &Node) -> bool {
     if node.as_def_node().is_some_and(|d| d.receiver().is_none()) {
         return true;
     }
-    let Some(call) = as_send(node) else { return false };
+    let Some(call) = plain_send(node) else { return false };
     if def_modifier(&call) {
         return false;
     }

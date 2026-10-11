@@ -186,10 +186,24 @@ fn int_value(src: &str) -> String {
     }
 }
 
+fn float_key(src: &str) -> String {
+    let t = src.replace('_', "");
+    format!("float:{}", t.parse::<f64>().map_or(t, |f| format!("{f:?}")))
+}
+
 /// Structural key: two nodes are parser-equal (`==`) when their keys are equal. Exact for the
 /// literal/const trees `recursive_basic_literal?` accepts; other nodes fall back to type + source.
 /// ponytail: `__FILE__` keys use the source text, not the buffer name parser substitutes.
 pub fn key(node: &Node) -> String {
+    // A folded `- 1` is the parser's `(int -1)`: the key of the negated literal.
+    if let Some(l) = folded_numeric(node) {
+        let neg = format!("-{}", node_text(&l));
+        return match l {
+            Node::IntegerNode { .. } => format!("int:{}", int_value(&neg)),
+            Node::FloatNode { .. } => float_key(&neg),
+            _ => format!("{:?}:{neg}", std::mem::discriminant(&l)),
+        };
+    }
     match node {
         Node::StringNode { .. } => {
             let s = node.as_string_node().unwrap();
@@ -204,10 +218,7 @@ pub fn key(node: &Node) -> String {
         Node::XStringNode { .. } => format!("xstr(str:{:?})", bytes(node.as_x_string_node().unwrap().unescaped())),
         Node::SymbolNode { .. } => format!("sym:{:?}", bytes(node.as_symbol_node().unwrap().unescaped())),
         Node::IntegerNode { .. } => format!("int:{}", int_value(node_text(node))),
-        Node::FloatNode { .. } => {
-            let t = node_text(node).replace('_', "");
-            format!("float:{}", t.parse::<f64>().map_or(t, |f| format!("{f:?}")))
-        }
+        Node::FloatNode { .. } => float_key(node_text(node)),
         Node::TrueNode { .. } => "true".into(),
         Node::FalseNode { .. } => "false".into(),
         Node::NilNode { .. } => "nil".into(),

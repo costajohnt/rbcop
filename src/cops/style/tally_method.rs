@@ -84,7 +84,7 @@ fn each_with_object_block(call: &CallNode) -> bool {
     if method_name(&new) != "new"
         || new.block().is_some()
         || !new.receiver().is_some_and(|r| is_top_const(&r, "Hash"))
-        || !matches!(call_args(&new).as_slice(), [z] if z.as_integer_node().is_some() && int_literal_value(z) == Some(0))
+        || !matches!(call_args(&new).as_slice(), [z] if int_literal_value(z) == Some(0))
     {
         return false;
     }
@@ -93,7 +93,7 @@ fn each_with_object_block(call: &CallNode) -> bool {
     if op.binary_operator().as_slice() != b"+"
         || op.block().is_some()
         || is_csend_loc(op.call_operator_loc())
-        || !(op.value().as_integer_node().is_some() && int_literal_value(&op.value()) == Some(1))
+        || int_literal_value(&op.value()) != Some(1)
     {
         return false;
     }

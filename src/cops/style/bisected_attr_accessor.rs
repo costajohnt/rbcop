@@ -1,5 +1,6 @@
 use crate::cop::Corrector;
 use crate::prelude::*;
+use helpers::select_by::plain_send;
 use ruby_prism::CallNode;
 
 pub const NAME: &str = "Style/BisectedAttrAccessor";
@@ -26,11 +27,6 @@ fn visibility_block<'pr>(n: &Node<'pr>) -> Option<&'pr str> {
     let name = method_name(&c);
     (c.receiver().is_none() && c.arguments().is_none() && c.block().is_none() && matches!(name, "private" | "protected" | "public"))
         .then_some(name)
-}
-
-/// A parser `send` statement (no literal block, not `&.`).
-fn plain_send<'pr>(n: &Node<'pr>) -> Option<CallNode<'pr>> {
-    n.as_call_node().filter(|c| !is_csend(c) && c.block().is_none_or(|b| b.as_block_node().is_none()))
 }
 
 impl Cop for BisectedAttrAccessor {
