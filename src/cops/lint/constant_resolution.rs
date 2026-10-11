@@ -21,7 +21,13 @@ impl Cop for ConstantResolution {
             return;
         }
         let loc = node.location();
-        cx.add(loc.start_offset(), loc.end_offset(), "Fully qualify this constant to avoid possibly ambiguous resolution.");
+        let (start, mut end) = (loc.start_offset(), loc.end_offset());
+        // The omitted value of `{ Foo: }` is a parser `const` spanning the bare name; Prism's
+        // ImplicitNode and the ConstantReadNode inside it include the colon (#315).
+        if cx.parent().is_some_and(|p| p.as_implicit_node().is_some()) && cx.src.text.as_bytes()[end - 1] == b':' {
+            end -= 1;
+        }
+        cx.add(start, end, "Fully qualify this constant to avoid possibly ambiguous resolution.");
     }
 }
 
