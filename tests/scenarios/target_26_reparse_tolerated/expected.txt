@@ -1,0 +1,10 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+circular.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+circular.rb:1:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+circular.rb:2:11: W: Lint/CircularArgumentReference: Circular argument reference - `x`.
+circular.rb:2:7: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+numbered_assignment.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+numbered_assignment.rb:1:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+numbered_assignment.rb:2:12: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+numbered_with_params.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+numbered_with_params.rb:1:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
