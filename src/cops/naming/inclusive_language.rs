@@ -1,5 +1,6 @@
 use crate::helpers::parser_tokens::{self as pt, T_STRING, T_SYMBOL};
-use crate::helpers::ruby_string::{ruby_regex_classes, strip};
+use crate::config::value::{RubyRegex, ruby_regex};
+use crate::helpers::ruby_string::strip;
 use crate::prelude::*;
 use std::sync::{Arc, Mutex};
 
@@ -10,7 +11,7 @@ pub struct InclusiveLanguage;
 /// One `FlaggedTerms` entry: its regex (WholeWord's lookarounds become a boundary check), the
 /// message suffix and the sole suggestion used by the corrector.
 struct Term {
-    re: Regex,
+    re: RubyRegex,
     whole_word: bool,
     suffix: String,
     sole: Option<String>,
@@ -18,7 +19,7 @@ struct Term {
 
 struct Compiled {
     terms: Vec<Term>,
-    allowed: Option<Regex>,
+    allowed: Option<RubyRegex>,
     checks: [bool; 6],
 }
 
@@ -41,8 +42,8 @@ fn regex_source(v: &Value) -> Option<String> {
 }
 
 /// `Regexp.new(source, Regexp::IGNORECASE)`; Ruby's `^`/`$` are line anchors.
-fn compile(source: &str) -> Option<Regex> {
-    Regex::new(&format!("(?im){}", ruby_regex_classes(source))).ok()
+fn compile(source: &str) -> Option<RubyRegex> {
+    ruby_regex(&format!("/{source}/i"))
 }
 
 /// preprocess_suggestions + format_suggestions.
@@ -96,7 +97,6 @@ fn compiled(cx: &Cx) -> Arc<Compiled> {
             } else {
                 (term.clone(), def.truthy("WholeWord"))
             };
-            // ponytail: a pattern the regex crate cannot compile (lookaround, backrefs) drops the term.
             let Some(re) = compile(&source) else { continue };
             terms.push(Term {
                 re,
@@ -140,11 +140,11 @@ fn char_len_at(s: &str, i: usize) -> usize {
 /// First acceptable match of a term at or after `from`.
 fn find_term(t: &Term, s: &str, mut from: usize) -> Option<(usize, usize)> {
     while from <= s.len() {
-        let m = t.re.find_at(s, from)?;
-        if !t.whole_word || whole_word_ok(s, m.start(), m.end()) {
-            return Some((m.start(), m.end()));
+        let (ms, me) = t.re.find_at(s, from)?;
+        if !t.whole_word || whole_word_ok(s, ms, me) {
+            return Some((ms, me));
         }
-        from = m.start() + char_len_at(s, m.start());
+        from = ms + char_len_at(s, ms);
     }
     None
 }
@@ -156,7 +156,7 @@ impl Compiled {
         let masked;
         let s = match &self.allowed {
             Some(a) => {
-                masked = a.replace_all(input, |c: &regex::Captures| "*".repeat(c[0].chars().count()));
+                masked = a.replace_all_with(input, |m| "*".repeat(m.chars().count()));
                 &*masked
             }
             None => input,
