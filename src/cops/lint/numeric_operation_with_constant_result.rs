@@ -44,7 +44,7 @@ impl Cop for NumericOperationWithConstantResult {
         let (s, e) = (l.start_offset(), l.end_offset());
         if let Some(w) = node.as_local_variable_operator_write_node() {
             let value = w.value();
-            let rhs = if value.as_integer_node().is_some() {
+            let rhs = if helpers::literal_node::folded_kind(&value) == kind::INTEGER_NODE {
                 Operand::Int(int_literal_value(&value))
             } else if let Some(v) = value.as_local_variable_read_node() {
                 Operand::Name(v.name().as_slice())
@@ -67,7 +67,7 @@ impl Cop for NumericOperationWithConstantResult {
         let Some(lhs) = call.receiver().as_ref().and_then(bare_call) else { return };
         let args = call_args(&call);
         let [arg] = args.as_slice() else { return };
-        let rhs = if arg.as_integer_node().is_some() {
+        let rhs = if helpers::literal_node::folded_kind(arg) == kind::INTEGER_NODE {
             Operand::Int(int_literal_value(arg))
         } else if let Some(name) = bare_call(arg) {
             Operand::Name(name)
