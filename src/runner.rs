@@ -923,7 +923,9 @@ impl FactCollector<'_, '_> {
             self.facts.string_ranges.push((start, end));
         } else if let Some((b, t, t_end)) = body {
             self.heredoc(b, t, t_end, open);
-            self.facts.string_ranges.push((b, t));
+            // loc.heredoc_body starts at the beginning of the body's first line; Prism's first
+            // part starts after a `<<~` indentation when it is an interpolation (`\t#{a} b`).
+            self.facts.string_ranges.push((self.src.line_start(self.src.line_of(b)), t));
         }
     }
 
