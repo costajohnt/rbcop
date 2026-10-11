@@ -1,0 +1,5 @@
+a.rb:4:1: C: [Corrected] Layout/BlockAlignment: `}` at 4, 0 is not aligned with `-> {` at 2, 15 or `to:, with: -> {` at 2, 4.
+a.rb:4:10: C: Layout/BlockAlignment: `}` at 4, 9 is not aligned with `-> {` at 2, 15 or `to:, with: -> {` at 2, 4.
+c.rb:4:1: C: [Corrected] Layout/BlockAlignment: `}` at 4, 0 is not aligned with `-> {` at 2, 15 or `to, with = -> {` at 2, 4.
+c.rb:4:9: C: Layout/BlockAlignment: `}` at 4, 8 is not aligned with `-> {` at 2, 15 or `to, with = -> {` at 2, 4.
+f.rb:4:1: C: [Corrected] Layout/BlockAlignment: `}` at 4, 0 is not aligned with `-> {` at 2, 6 or `b = -> {` at 2, 2.

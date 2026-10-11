@@ -1,0 +1,6 @@
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+Naming/PredicatePrefix:
+  ForbiddenPrefixes: [is_, foo_]
+  NamePrefix: [is_]

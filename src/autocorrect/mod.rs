@@ -95,6 +95,7 @@ pub fn correct(
     selected: &dyn Fn(&str) -> bool,
     mode: Mode,
 ) -> Corrected {
+    crate::directives::take_warnings();
     let (mut offenses, mut current, changed, error, disabled) =
         inspection_loop(path, display, Arc::from(text), cfg, selected, mode);
     let mut changed = changed;
@@ -124,7 +125,11 @@ pub fn correct(
             }
         }
     }
-    let report = FileReport { offenses: uniq_sorted(offenses), text: normalise(&current).to_string() };
+    let report = FileReport {
+        offenses: uniq_sorted(offenses),
+        text: normalise(&current).to_string(),
+        warnings: crate::directives::take_warnings(),
+    };
     Corrected { source: changed.then(|| current.to_string()), report, error }
 }
 
@@ -272,12 +277,11 @@ fn infinite_loop(path: &Path, iterations: &[Vec<Offense>]) -> String {
     let cause: Vec<String> = iterations
         .iter()
         .map(|offenses| {
-            let mut names: Vec<&str> = Vec::new();
-            for o in offenses {
-                if !names.contains(&o.cop) {
-                    names.push(o.cop);
-                }
-            }
+            // InfiniteCorrectionLoop maps the team's offenses to cop names: the team reports per
+            // cop, and Registry#sort! orders its cops by name.
+            let mut names: Vec<&str> = offenses.iter().map(|o| o.cop).collect();
+            names.sort_unstable();
+            names.dedup();
             names.join(", ")
         })
         .collect();
