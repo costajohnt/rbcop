@@ -179,19 +179,48 @@ pub fn parse_for_target<'t>(
         return (ruby_prism::parse_with_version(text.as_bytes(), version, utf8), Vec::new(), Vec::new());
     }
     let (mut result, mut tokens) = ruby_prism::parse_with_version_and_tokens(text.as_bytes(), version, utf8);
+    // Rewrites of a copy for Prism, keeping every offset; the original bytes are written back once
+    // parsed, so node text is the user's text (#169).
+    let mut copy: Option<Vec<u8>> = None;
+    let mut restore: Vec<(usize, u8)> = Vec::new();
+    // The parser gem's lexer starts a constant only at ASCII `A`-`Z` (`Ж = 1` is a local): such a
+    // CONSTANT's first character becomes its lowercase form for Prism (#219).
+    for t in tokens.iter().filter(|t| t.kind == "CONSTANT") {
+        let Some((c, l)) = crate::legacy_syntax::non_ascii_constant_start(&text[t.start..]) else { continue };
+        let bytes = copy.get_or_insert_with(|| text.as_bytes().to_vec());
+        let mut enc = [0u8; 4];
+        l.encode_utf8(&mut enc);
+        for i in 0..c.len_utf8() {
+            restore.push((t.start + i, bytes[t.start + i]));
+            bytes[t.start + i] = enc[i];
+        }
+    }
+    let (errors, dots) = {
+        let dots = |tokens: &[ruby_prism::Token]| -> Vec<usize> {
+            tokens.iter().filter(|t| matches!(t.kind, "DOT" | "AMPERSAND_DOT")).map(|t| t.start).collect()
+        };
+        match &copy {
+            None => (result.errors().next().is_some(), dots(&tokens)),
+            Some(c) => {
+                let (r, t) = ruby_prism::parse_with_version_and_tokens(c, version, utf8);
+                (r.errors().next().is_some(), dots(&t))
+            }
+        }
+    };
     let mut fake = Vec::new();
     // 2.7 to 3.2: the parser gem continues a call over whitespace-only lines before a leading
-    // `.`/`&.`, where Prism ends the expression. Parse with those lines made comment lines instead,
-    // and write the original bytes back once parsed: node text is the user's text (#169).
-    if target_ruby >= 2.7 && result.errors().next().is_some() {
-        let dots: Vec<usize> =
-            tokens.iter().filter(|t| matches!(t.kind, "DOT" | "AMPERSAND_DOT")).map(|t| t.start).collect();
-        if let Some((copy, added)) = crate::legacy_syntax::continue_over_blank_lines(text, &dots) {
-            let restore: Vec<(usize, u8)> = added.iter().map(|&f| (f, text.as_bytes()[f])).collect();
-            *buf = copy;
-            (result, tokens) = ruby_prism::parse_with_version_and_tokens_restoring(buf, version, utf8, &restore);
+    // `.`/`&.`, where Prism ends the expression. Parse with those lines made comment lines instead.
+    if target_ruby >= 2.7 && errors {
+        let current = copy.as_deref().map_or(text, |c| std::str::from_utf8(c).unwrap_or(text));
+        if let Some((rewritten, added)) = crate::legacy_syntax::continue_over_blank_lines(current, &dots) {
+            restore.extend(added.iter().map(|&f| (f, text.as_bytes()[f])));
+            copy = Some(rewritten);
             fake = added;
         }
+    }
+    if let Some(c) = copy {
+        *buf = c;
+        (result, tokens) = ruby_prism::parse_with_version_and_tokens_restoring(buf, version, utf8, &restore);
     }
     // Numbered parameters are 2.7+: below that `foo { _1 }` is a block without arguments.
     if target_ruby < 2.7 {
