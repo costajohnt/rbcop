@@ -15,9 +15,8 @@ fn useless(op: &[u8], number: i128) -> bool {
     }
 }
 
-/// `(int $_)`: an integer literal's value (Prism folds `-1`, as parser does).
+/// `(int $_)`: an integer literal's value (a folded `- 1` included).
 fn int_value(node: &Node) -> Option<i128> {
-    node.as_integer_node()?;
     int_literal_value(node)
 }
 

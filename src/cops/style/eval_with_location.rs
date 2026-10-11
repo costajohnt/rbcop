@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use helpers::select_by::plain_send;
 
 pub const NAME: &str = "Style/EvalWithLocation";
 pub static COP: EvalWithLocation = EvalWithLocation;
@@ -7,11 +8,6 @@ pub struct EvalWithLocation;
 /// `(const {nil? cbase} :Kernel)`
 fn kernel(node: &Node) -> bool {
     crate::helpers::code_length::global_const(node, &["Kernel"])
-}
-
-/// A parser `send` (not csend, not wrapped by a block).
-fn plain_send<'pr>(node: &Node<'pr>) -> Option<ruby_prism::CallNode<'pr>> {
-    node.as_call_node().filter(|c| !is_csend(c) && !c.block().is_some_and(|b| b.as_block_node().is_some()))
 }
 
 fn int_is(node: &Node, want: i64) -> bool {

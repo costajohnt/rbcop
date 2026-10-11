@@ -39,7 +39,7 @@ fn regexp_last_match(node: Option<Node>) -> bool {
         }
         _ => false,
     });
-    const_ok && args.len() == 1 && args[0].as_integer_node().is_some()
+    const_ok && args.len() == 1 && helpers::literal_node::folded_kind(&args[0]) == kind::INTEGER_NODE
 }
 
 /// (dot, selector) ranges of a `x.to_f` call.

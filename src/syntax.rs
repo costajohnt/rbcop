@@ -12,6 +12,7 @@ pub fn is_semantic(kind: &str) -> bool {
         || matches!(
             kind,
             "argument_block_multi"
+                | "expression_not_writable_numbered"
                 | "begin_lonely_else"
                 | "class_name"
                 | "module_name"
@@ -167,6 +168,132 @@ pub fn pattern_variable_errors(program: &ruby_prism::Node) -> Vec<(usize, usize,
     }
     let mut w = Walk { in_pattern: false, out: Vec::new() };
     w.visit(program);
+    w.out
+}
+
+/// Numbered-parameter errors as the parser gem (2.7 to 3.2) reports them, one per identifier:
+/// Ruby27#try_declare_numparam for a read of `_1`..`_9` and Builders::Default#assignable for a
+/// write, each against the static environment and the max_numparam_stack (a dynamic scope per
+/// block or lambda, a static one per def/class/module/sclass). An error's yyerror skips the
+/// declaration, so every later read or write of the same name errs again. Prism reports
+/// `numbered_parameter_ordinary` once per block, `numbered_parameter_outer_block` where the parser
+/// gem sees an inherited local, and assignments with its own kinds and wording (#164); its
+/// reserved-name errors on parameters (`|_1|`) have no counterpart here. (start, end, message).
+pub fn numbered_parameter_errors(program: &ruby_prism::Node, target: f64) -> Vec<(usize, usize, String)> {
+    use ruby_prism::Visit;
+    struct Scope {
+        dynamic: bool,
+        ordinary: bool,
+        max: u8,
+        declared: Vec<u8>,
+    }
+    struct Walk {
+        target: f64,
+        scopes: Vec<Scope>,
+        out: Vec<(usize, usize, String)>,
+    }
+    fn numparam(name: &[u8]) -> Option<u8> {
+        match name {
+            [b'_', d @ b'1'..=b'9'] => Some(d - b'0'),
+            _ => None,
+        }
+    }
+    impl Walk {
+        fn scoped(&mut self, dynamic: bool, ordinary: bool, f: impl FnOnce(&mut Self)) {
+            let declared =
+                if dynamic { self.scopes.last().map_or(Vec::new(), |s| s.declared.clone()) } else { Vec::new() };
+            self.scopes.push(Scope { dynamic, ordinary, max: 0, declared });
+            f(self);
+            self.scopes.pop();
+        }
+        fn read(&mut self, name: &[u8], loc: ruby_prism::Location) {
+            let Some(n) = numparam(name) else { return };
+            let top = self.scopes.len() - 1;
+            if !self.scopes[top].dynamic || self.scopes[top].declared.contains(&n) {
+                return;
+            }
+            let (s, e) = (loc.start_offset(), loc.end_offset());
+            if self.scopes[top].ordinary {
+                self.out.push((s, e, "ordinary parameter is defined".to_string()));
+            } else if self.scopes[..top].iter().rev().take_while(|s| s.dynamic).any(|s| s.max > 0) {
+                self.out.push((s, e, "numbered parameter is already used in an outer scope".to_string()));
+            } else {
+                self.scopes[top].declared.push(n);
+                self.scopes[top].max = self.scopes[top].max.max(n);
+            }
+        }
+        fn write(&mut self, name: &[u8], loc: ruby_prism::Location) {
+            let Some(n) = numparam(name) else { return };
+            let top = self.scopes.last_mut().unwrap();
+            let (s, e) = (loc.start_offset(), loc.end_offset());
+            if top.dynamic && top.max > 0 {
+                self.out.push((s, e, format!("cannot assign to numbered parameter _{n}")));
+            } else if self.target >= 3.0 {
+                self.out.push((s, e, format!("_{n} is reserved for numbered parameter")));
+            } else if !top.declared.contains(&n) {
+                top.declared.push(n);
+            }
+        }
+    }
+    impl<'pr> Visit<'pr> for Walk {
+        fn visit_block_node(&mut self, n: &ruby_prism::BlockNode<'pr>) {
+            let ordinary = n.parameters().is_some_and(|p| p.as_block_parameters_node().is_some());
+            self.scoped(true, ordinary, |w| ruby_prism::visit_block_node(w, n));
+        }
+        fn visit_lambda_node(&mut self, n: &ruby_prism::LambdaNode<'pr>) {
+            let ordinary = n.parameters().is_some_and(|p| p.as_block_parameters_node().is_some());
+            self.scoped(true, ordinary, |w| ruby_prism::visit_lambda_node(w, n));
+        }
+        fn visit_def_node(&mut self, n: &ruby_prism::DefNode<'pr>) {
+            self.scoped(false, false, |w| ruby_prism::visit_def_node(w, n));
+        }
+        fn visit_class_node(&mut self, n: &ruby_prism::ClassNode<'pr>) {
+            self.scoped(false, false, |w| ruby_prism::visit_class_node(w, n));
+        }
+        fn visit_module_node(&mut self, n: &ruby_prism::ModuleNode<'pr>) {
+            self.scoped(false, false, |w| ruby_prism::visit_module_node(w, n));
+        }
+        fn visit_singleton_class_node(&mut self, n: &ruby_prism::SingletonClassNode<'pr>) {
+            self.scoped(false, false, |w| ruby_prism::visit_singleton_class_node(w, n));
+        }
+        fn visit_local_variable_read_node(&mut self, n: &ruby_prism::LocalVariableReadNode<'pr>) {
+            self.read(n.name().as_slice(), n.location());
+        }
+        fn visit_call_node(&mut self, n: &ruby_prism::CallNode<'pr>) {
+            if n.is_variable_call() {
+                self.read(n.name().as_slice(), n.location());
+            } else {
+                ruby_prism::visit_call_node(self, n);
+            }
+        }
+        // The target is reduced (and checked) before the value is parsed.
+        fn visit_local_variable_write_node(&mut self, n: &ruby_prism::LocalVariableWriteNode<'pr>) {
+            self.write(n.name().as_slice(), n.name_loc());
+            self.visit(&n.value());
+        }
+        fn visit_local_variable_operator_write_node(&mut self, n: &ruby_prism::LocalVariableOperatorWriteNode<'pr>) {
+            self.write(n.name().as_slice(), n.name_loc());
+            self.visit(&n.value());
+        }
+        fn visit_local_variable_or_write_node(&mut self, n: &ruby_prism::LocalVariableOrWriteNode<'pr>) {
+            self.write(n.name().as_slice(), n.name_loc());
+            self.visit(&n.value());
+        }
+        fn visit_local_variable_and_write_node(&mut self, n: &ruby_prism::LocalVariableAndWriteNode<'pr>) {
+            self.write(n.name().as_slice(), n.name_loc());
+            self.visit(&n.value());
+        }
+        fn visit_local_variable_target_node(&mut self, n: &ruby_prism::LocalVariableTargetNode<'pr>) {
+            self.write(n.name().as_slice(), n.location());
+        }
+    }
+    let mut w = Walk {
+        target,
+        scopes: vec![Scope { dynamic: false, ordinary: false, max: 0, declared: Vec::new() }],
+        out: Vec::new(),
+    };
+    w.visit(program);
+    w.out.sort_unstable();
     w.out
 }
 

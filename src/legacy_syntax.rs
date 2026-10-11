@@ -58,12 +58,12 @@ pub fn diagnostics(
     out
 }
 
-/// `text` with the whitespace-only lines between a receiver and a leading `.`/`&.` (at `dots`,
-/// where Prism ignored the dot) turned into comment lines, which Prism continues the call over, and
+/// `text` with the whitespace-only lines between a receiver and a leading `.`/`&.` (of the
+/// `.`/`&.` tokens at `dots`) turned into comment lines, which Prism continues the call over, and
 /// the offsets of those `#`s. The parser gem (2.7 to 3.2) skips such lines, but an empty line ends
-/// the statement there too, so a dot after one keeps its error.
-// ponytail: the AST's own slices show the `#`; cops read `Source::text`, which keeps the spaces.
-pub fn continue_over_blank_lines(text: &str, dots: &[usize]) -> Option<(String, Vec<usize>)> {
+/// the statement there too, so a dot after one keeps its error. Parse the copy with
+/// `parse_with_version_and_tokens_restoring` so no slice of the AST reads a `#` (#169).
+pub fn continue_over_blank_lines(text: &str, dots: &[usize]) -> Option<(Vec<u8>, Vec<usize>)> {
     let mut fake = Vec::new();
     for &dot in dots {
         if !text[dot..].starts_with('.') && !text[dot..].starts_with("&.") {
@@ -98,7 +98,7 @@ pub fn continue_over_blank_lines(text: &str, dots: &[usize]) -> Option<(String, 
     for &f in &fake {
         bytes[f] = b'#';
     }
-    Some((String::from_utf8(bytes).ok()?, fake))
+    Some((bytes, fake))
 }
 
 /// Tokens in source order (the lexers emit a heredoc's body right after its opener).

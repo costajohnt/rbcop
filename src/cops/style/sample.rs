@@ -26,7 +26,7 @@ fn sample_size(args: &[Node]) -> Size {
         [arg] => {
             if let Some(r) = arg.as_range_node() {
                 range_size(&r)
-            } else if arg.as_integer_node().is_some() {
+            } else if helpers::literal_node::folded_kind(arg) == kind::INTEGER_NODE {
                 match int_literal_value(arg) {
                     Some(0 | -1) => Size::Nil,
                     _ => Size::Unknown,

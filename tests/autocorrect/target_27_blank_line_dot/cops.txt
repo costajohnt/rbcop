@@ -1,0 +1,1 @@
+Style/ParallelAssignment,Layout/EmptyComment,Layout/CommentIndentation

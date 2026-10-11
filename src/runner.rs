@@ -164,6 +164,42 @@ enum Redundant<'a> {
 
 const REDUNDANT_DISABLE: &str = "Lint/RedundantCopDisableDirective";
 
+/// The parse of `text` that cops see and syntax checks judge, with the lexer's tokens (below 3.3)
+/// and the offsets of the comment lines the parse added (to drop from the file's comments).
+/// `analyze` and the reparse checks (`reparsed_equivalence`) share it; `buf` holds a rewritten copy.
+pub fn parse_for_target<'t>(
+    text: &'t str,
+    buf: &'t mut Vec<u8>,
+    version: &'static str,
+    target_ruby: f64,
+) -> (ruby_prism::ParseResult<'t>, Vec<ruby_prism::Token>, Vec<usize>) {
+    let utf8 = !crate::source::binary_encoding(text);
+    // Below 3.3 RuboCop parses with the parser gem, which accepts some things Prism rejects.
+    if target_ruby >= 3.3 {
+        return (ruby_prism::parse_with_version(text.as_bytes(), version, utf8), Vec::new(), Vec::new());
+    }
+    let (mut result, mut tokens) = ruby_prism::parse_with_version_and_tokens(text.as_bytes(), version, utf8);
+    let mut fake = Vec::new();
+    // 2.7 to 3.2: the parser gem continues a call over whitespace-only lines before a leading
+    // `.`/`&.`, where Prism ends the expression. Parse with those lines made comment lines instead,
+    // and write the original bytes back once parsed: node text is the user's text (#169).
+    if target_ruby >= 2.7 && result.errors().next().is_some() {
+        let dots: Vec<usize> =
+            tokens.iter().filter(|t| matches!(t.kind, "DOT" | "AMPERSAND_DOT")).map(|t| t.start).collect();
+        if let Some((copy, added)) = crate::legacy_syntax::continue_over_blank_lines(text, &dots) {
+            let restore: Vec<(usize, u8)> = added.iter().map(|&f| (f, text.as_bytes()[f])).collect();
+            *buf = copy;
+            (result, tokens) = ruby_prism::parse_with_version_and_tokens_restoring(buf, version, utf8, &restore);
+            fake = added;
+        }
+    }
+    // Numbered parameters are 2.7+: below that `foo { _1 }` is a block without arguments.
+    if target_ruby < 2.7 {
+        result.drop_numbered_parameters();
+    }
+    (result, tokens, fake)
+}
+
 #[allow(clippy::too_many_arguments)]
 fn analyze(
     path: &Path,
@@ -180,39 +216,8 @@ fn analyze(
     let version = target_ruby::prism_version(cfg.target_ruby);
     // Below 3.3 RuboCop parses with the parser gem, which accepts some things Prism rejects.
     let parser_gem = cfg.target_ruby < 3.3;
-    fn parse<'t>(
-        t: &'t str,
-        version: &'static str,
-        parser_gem: bool,
-    ) -> (ruby_prism::ParseResult<'t>, Vec<ruby_prism::Token>) {
-        if parser_gem {
-            ruby_prism::parse_with_version_and_tokens(t.as_bytes(), version, !crate::source::binary_encoding(t))
-        } else {
-            (ruby_prism::parse_with_version(t.as_bytes(), version, !crate::source::binary_encoding(t)), Vec::new())
-        }
-    }
-    let first = parse(text, version, parser_gem);
-    // 2.7 to 3.2: the parser gem continues a call over whitespace-only lines before a leading
-    // `.`/`&.`, where Prism ends the statement. Parse with those lines made comment lines instead.
-    let continued = (parser_gem && cfg.target_ruby >= 2.7)
-        .then(|| {
-            let dots: Vec<usize> = first
-                .0
-                .errors()
-                .filter(|e| e.type_name() == "unexpected_token_ignore")
-                .map(|e| e.location().start_offset())
-                .collect();
-            crate::legacy_syntax::continue_over_blank_lines(text, &dots)
-        })
-        .flatten();
-    let (mut result, tokens) = match &continued {
-        Some((t, _)) => parse(t, version, parser_gem),
-        None => first,
-    };
-    // Numbered parameters are 2.7+: below that `foo { _1 }` is a block without arguments.
-    if cfg.target_ruby < 2.7 {
-        result.drop_numbered_parameters();
-    }
+    let mut buf = Vec::new();
+    let (result, tokens, fake) = parse_for_target(text, &mut buf, version, cfg.target_ruby);
     let mut errors: Vec<(usize, usize, String)> = result
         .errors()
         .filter(|e| !tolerated(e, parser_gem, cfg.target_ruby, text))
@@ -275,9 +280,25 @@ fn analyze(
         let mut actions: Vec<usize> = Vec::new();
         // Circular argument references: the simulation reports them where the parser reads them.
         let mut circular: Vec<(usize, usize)> = Vec::new();
+        // Numbered parameters (2.7+): the parser gem's per-identifier errors come from the tree
+        // walk below, in place of Prism's; Prism's reserved-name errors stay where the walk has
+        // nothing (parameters named `_1`).
+        let numbered = if cfg.target_ruby >= 2.7 && !crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH) {
+            crate::syntax::numbered_parameter_errors(&result.node(), cfg.target_ruby)
+        } else {
+            Vec::new()
+        };
+        let numbered_kind = |e: &ruby_prism::Diagnostic| {
+            let k = e.type_name();
+            k.starts_with("numbered_parameter_")
+                || k == "expression_not_writable_numbered"
+                || (k == "parameter_numbered_reserved" && numbered.iter().any(|n| n.0 == e.location().start_offset()))
+        };
         let mut semantic: Vec<_> = result
             .errors()
-            .filter(|e| kept(e) && semantic_kind(e) && !fatal(e) && e.location().start_offset() < cut)
+            .filter(|e| {
+                kept(e) && semantic_kind(e) && !fatal(e) && !numbered_kind(e) && e.location().start_offset() < cut
+            })
             .filter_map(|e| {
                 let (s, end) = crate::legacy_syntax::semantic_location(
                     e.type_name(),
@@ -305,6 +326,10 @@ fn analyze(
                 Some(t)
             })
             .collect();
+        for e in numbered.into_iter().filter(|e| e.0 < cut) {
+            actions.push(e.1);
+            semantic.push(e);
+        }
         // Onigmo compile errors of static regexps: semantic errors too (the builder's diagnostic).
         if !crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH) {
             for e in crate::syntax::regexp_compile_errors(&result.node(), text).into_iter().filter(|e| e.0 < cut) {
@@ -382,7 +407,7 @@ fn analyze(
     }
     let comments: Vec<Comment> = result
         .comments()
-        .filter(|c| continued.as_ref().is_none_or(|(_, fake)| !fake.contains(&c.location().start_offset())))
+        .filter(|c| !fake.contains(&c.location().start_offset()))
         .map(|c| Comment {
             start: c.location().start_offset(),
             end: c.location().end_offset(),
@@ -722,7 +747,7 @@ fn autocorrect_allowed(cfg: &CopConfig) -> bool {
 /// templates, `retry` outside `rescue`, void value expressions such as `x = return 1`: the parser
 /// gem has no void-value check).
 // ponytail: only verified ones are tolerated; add more as real code turns them up.
-pub const TOLERATED_ERRORS: &[&str] = &["invalid_yield", "invalid_retry_without_rescue", "void_expression"];
+const TOLERATED_ERRORS: &[&str] = &["invalid_yield", "invalid_retry_without_rescue", "void_expression"];
 
 /// Prism errors the parser gem accepts for the target. Up to Ruby 2.5, `begin..else..end` without
 /// `rescue` is only a `useless_else` warning (reported by Lint/UselessElseWithoutRescue); before
@@ -734,7 +759,7 @@ pub const TOLERATED_ERRORS: &[&str] = &["invalid_yield", "invalid_retry_without_
 /// finds it unterminated. Before 2.5 `return` in a class/module body is accepted (the builder's
 /// `invalid_return` check is 2.5+). Before the target that has anonymous forwarding (`&` 3.1, `*`
 /// and `**` 3.2) the grammar fails on the argument, with no "no anonymous ... parameter" error.
-fn tolerated(e: &ruby_prism::Diagnostic, parser_gem: bool, target_ruby: f64, text: &str) -> bool {
+pub fn tolerated(e: &ruby_prism::Diagnostic, parser_gem: bool, target_ruby: f64, text: &str) -> bool {
     let kind = e.type_name();
     (parser_gem && TOLERATED_ERRORS.contains(&kind))
         || (kind == "return_invalid" && target_ruby < 2.5)
@@ -903,7 +928,9 @@ impl FactCollector<'_, '_> {
             self.facts.string_ranges.push((start, end));
         } else if let Some((b, t, t_end)) = body {
             self.heredoc(b, t, t_end, open);
-            self.facts.string_ranges.push((b, t));
+            // loc.heredoc_body starts at the beginning of the body's first line; Prism's first
+            // part starts after a `<<~` indentation when it is an interpolation (`\t#{a} b`).
+            self.facts.string_ranges.push((self.src.line_start(self.src.line_of(b)), t));
         }
     }
 
