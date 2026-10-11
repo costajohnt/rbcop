@@ -1,0 +1,11 @@
+c.rb:3:3: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+d.rb:3:3: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+e.rb:3:3: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+f.rb:3:3: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+g.rb:3:3: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+h.rb:3:3: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+i.rb:5:3: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+j.rb:4:3: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+k.rb:3:3: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+l.rb:4:1: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+m.rb:3:3: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.

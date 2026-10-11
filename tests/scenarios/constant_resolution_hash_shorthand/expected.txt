@@ -1,0 +1,6 @@
+h.rb:1:7: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.
+h.rb:2:3: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.
+i.rb:1:7: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.
+i.rb:2:14: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.
+i.rb:2:3: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.
+j.rb:1:7: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.

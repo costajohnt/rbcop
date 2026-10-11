@@ -104,6 +104,12 @@ impl<'a> Associator<'a> {
             self.stack.push(None);
             return;
         }
+        // Parser's `rescue`/`ensure` node for a body with clauses starts at the first statement,
+        // not at the `def`/`do` Prism's implicit BeginNode starts at (#326).
+        if k == crate::node_kind::BEGIN_NODE && node.as_begin_node().unwrap().begin_keyword_loc().is_none() {
+            let (s, e) = crate::ast::body_range(node);
+            return self.enter_range(s, e, true);
+        }
         let loc = node.location();
         self.enter_range(loc.start_offset(), loc.end_offset(), k != crate::node_kind::PARENTHESES_NODE);
     }
@@ -133,5 +139,50 @@ impl<'pr> ruby_prism::Visit<'pr> for Associator<'_> {
     }
     fn visit_leaf_node_leave(&mut self) {
         self.leave();
+    }
+    /// `def m()` without parameters: parser's `(args)` spans the parentheses and takes the comment
+    /// decorating that line; Prism has no node for them (#326).
+    fn visit_def_node(&mut self, node: &ruby_prism::DefNode<'pr>) {
+        if let Some(r) = node.receiver() {
+            self.visit(&r);
+        }
+        match node.parameters() {
+            Some(p) => self.visit_parameters_node(&p),
+            None => {
+                if let (Some(l), Some(r)) = (node.lparen_loc(), node.rparen_loc()) {
+                    self.enter_range(l.start_offset(), r.end_offset(), true);
+                    self.leave();
+                }
+            }
+        }
+        if let Some(b) = node.body() {
+            self.visit(&b);
+        }
+    }
+    /// A call with a literal block is parser's `block` whose first child is the `send`: a comment
+    /// decorating the send's last line (`foo do # c`) belongs to the send (#326).
+    fn visit_call_node(&mut self, node: &ruby_prism::CallNode<'pr>) {
+        let block = node.block().filter(|b| b.as_block_node().is_some());
+        if block.is_some() {
+            let (s, e) = crate::ast::send_range(node);
+            self.enter_range(s, e, true);
+        }
+        if let Some(r) = node.receiver() {
+            self.visit(&r);
+        }
+        if let Some(a) = node.arguments() {
+            self.visit_arguments_node(&a);
+        }
+        match block {
+            Some(b) => {
+                self.leave();
+                self.visit(&b);
+            }
+            None => {
+                if let Some(b) = node.block() {
+                    self.visit(&b);
+                }
+            }
+        }
     }
 }
