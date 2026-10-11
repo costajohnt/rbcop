@@ -1,0 +1,1 @@
+hash[key] { |x| x }

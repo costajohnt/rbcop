@@ -731,10 +731,15 @@ pub const TOLERATED_ERRORS: &[&str] = &["invalid_yield", "invalid_retry_without_
 /// Before 2.7 `_1` is an ordinary identifier, so Prism's numbered-parameter checks (`|a| a + _1`,
 /// `_1` in nested blocks, `_1 = x` in a block that reads `_1`) do not apply.
 /// The parser gem also ends a `<<''` heredoc (empty delimiter) at the end of the file, where Prism
-/// finds it unterminated.
+/// finds it unterminated. Before 2.5 `return` in a class/module body is accepted (the builder's
+/// `invalid_return` check is 2.5+). Before the target that has anonymous forwarding (`&` 3.1, `*`
+/// and `**` 3.2) the grammar fails on the argument, with no "no anonymous ... parameter" error.
 fn tolerated(e: &ruby_prism::Diagnostic, parser_gem: bool, target_ruby: f64, text: &str) -> bool {
     let kind = e.type_name();
     (parser_gem && TOLERATED_ERRORS.contains(&kind))
+        || (kind == "return_invalid" && target_ruby < 2.5)
+        || (kind == "argument_no_forwarding_ampersand" && target_ruby < 3.1)
+        || (matches!(kind, "argument_no_forwarding_star" | "argument_no_forwarding_star_star") && target_ruby < 3.2)
         || (kind == "begin_lonely_else" && target_ruby <= 2.5)
         || (kind == "parameter_circular" && target_ruby < 2.7)
         || (kind == "parameter_numbered_reserved" && target_ruby < 3.0)

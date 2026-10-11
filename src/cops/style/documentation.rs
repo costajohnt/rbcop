@@ -169,6 +169,12 @@ fn include_statement_only(node: &Node) -> bool {
         | Node::ForwardingSuperNode { .. }
         | Node::RetryNode { .. }
         | Node::RedoNode { .. } => true,
+        // (return args...): bare `return` (valid in a class body below 2.5) has no children.
+        Node::ReturnNode { .. } => node
+            .as_return_node()
+            .unwrap()
+            .arguments()
+            .is_none_or(|a| a.arguments().iter().all(|n| include_statement_only(&n))),
         Node::StatementsNode { .. } => node.as_statements_node().unwrap().body().iter().all(|n| include_statement_only(&n)),
         Node::ArrayNode { .. } => node.as_array_node().unwrap().elements().iter().all(|n| include_statement_only(&n)),
         Node::HashNode { .. } => node.as_hash_node().unwrap().elements().iter().next().is_none(),

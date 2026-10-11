@@ -21,6 +21,7 @@ pub fn is_semantic(kind: &str) -> bool {
                 | "embdoc_term"
                 | "parameter_circular"
                 | "parameter_name_repeat"
+                | "return_invalid"
                 | "parameter_numbered_reserved"
                 | "regexp_parse_error"
                 | "regexp_unknown_options"
