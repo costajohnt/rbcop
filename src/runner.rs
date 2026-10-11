@@ -164,6 +164,9 @@ enum Redundant<'a> {
 
 const REDUNDANT_DISABLE: &str = "Lint/RedundantCopDisableDirective";
 
+/// Bytes a rewritten copy changed: (offset, new byte).
+pub type ByteEdits = Vec<(usize, u8)>;
+
 /// The parse of `text` that cops see and syntax checks judge, with the lexer's tokens (below 3.3),
 /// the offsets of the comment lines the parse added (to drop from the file's comments), and the
 /// bytes the parsed copy changed besides those (`Source::lex_tokens` lexes the same copy).
@@ -173,7 +176,7 @@ pub fn parse_for_target<'t>(
     buf: &'t mut Vec<u8>,
     version: &'static str,
     target_ruby: f64,
-) -> (ruby_prism::ParseResult<'t>, Vec<ruby_prism::Token>, Vec<usize>, Vec<(usize, u8)>) {
+) -> (ruby_prism::ParseResult<'t>, Vec<ruby_prism::Token>, Vec<usize>, ByteEdits) {
     let utf8 = !crate::source::binary_encoding(text);
     // Below 3.3 RuboCop parses with the parser gem, which accepts some things Prism rejects.
     if target_ruby >= 3.3 {
