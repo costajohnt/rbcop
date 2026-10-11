@@ -1,0 +1,71 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+e01.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e01.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.
+e01.rb:2:1: C: [Correctable] Layout/AssignmentIndentation: Indent the first line of the right-hand-side of a multi-line assignment.
+e02.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e02.rb:2:1: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+e03.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e03.rb:2:1: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+e04.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e04.rb:2:1: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+e04.rb:3:1: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument when opening brace is on the same line as the first argument.
+e05.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e05.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+e05.rb:2:1: C: [Correctable] Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the start of the line where the left square bracket is.
+e06.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e06.rb:1:4: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+e06.rb:2:1: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+e07.rb:3:4: F: Lint/Syntax: unexpected token $end (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+e08.rb:3:4: F: Lint/Syntax: unexpected token $end (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+e09.rb:3:4: F: Lint/Syntax: unexpected token $end (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+e10.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e10.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+e11.rb:2:8: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+e12.rb:2:8: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+e14.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e14.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.
+e14.rb:2:1: C: [Correctable] Layout/AssignmentIndentation: Indent the first line of the right-hand-side of a multi-line assignment.
+e15.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e15.rb:3:1: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+e16.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e16.rb:2:1: C: [Correctable] Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+e16.rb:3:1: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element when the opening brace is on the same line as the first array element.
+e16.rb:5:1: C: [Correctable] Layout/EmptyLinesAroundArguments: Empty line detected around arguments.
+e16.rb:6:1: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+e17.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e17.rb:2:1: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+e19.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e19.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.
+e20.rb:2:3: F: Lint/Syntax: unexpected token tIDENTIFIER (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+g1.rb:1:1: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+g1.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+g1.rb:2:1: C: Naming/MethodParameterName: Only use lowercase characters for method parameter.
+g1.rb:2:1: C: Naming/VariableName: Use snake_case for variable names.
+g1.rb:2:1: C: [Correctable] Layout/FirstParameterIndentation: Use 2 spaces for indentation in method args, relative to the start of the line where the left parenthesis is.
+g2.rb:1:1: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+g2.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+g2.rb:2:3: C: Naming/MethodParameterName: Only use lowercase characters for method parameter.
+g2.rb:2:3: C: Naming/VariableName: Use snake_case for variable names.
+g3.rb:1:1: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+g3.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+g3.rb:1:7: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+g3.rb:2:1: C: Naming/MethodParameterName: Only use lowercase characters for method parameter.
+g3.rb:2:1: C: Naming/VariableName: Use snake_case for variable names.
+g3.rb:2:1: C: [Correctable] Layout/ParameterAlignment: Align the parameters of a method definition if they span more than one line.
+g3.rb:3:1: C: [Correctable] Layout/MultilineMethodDefinitionBraceLayout: Closing method definition brace must be on the same line as the last parameter when opening brace is on the same line as the first parameter.
+g4.rb:2:1: F: Lint/Syntax: unexpected token tIDENTIFIER (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+g5.rb:2:3: F: Lint/Syntax: unexpected token tIDENTIFIER (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+g6.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+g6.rb:1:4: C: [Correctable] Style/ColonMethodCall: Do not use `::` for method calls.
+g6.rb:2:1: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+g7.rb:1:1: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+g7.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+g7.rb:1:7: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+g7.rb:1:7: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+g7.rb:2:1: C: Naming/MethodParameterName: Only use lowercase characters for method parameter.
+g7.rb:2:1: C: Naming/VariableName: Use snake_case for variable names.
+g7.rb:2:1: C: [Correctable] Layout/ParameterAlignment: Align the parameters of a method definition if they span more than one line.
+g9.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+g9.rb:3:1: C: Naming/MethodParameterName: Only use lowercase characters for method parameter.
+g9.rb:3:1: C: Naming/VariableName: Use snake_case for variable names.
+g9.rb:3:1: C: [Correctable] Layout/FirstParameterIndentation: Use 2 spaces for indentation in method args, relative to the start of the line where the left parenthesis is.

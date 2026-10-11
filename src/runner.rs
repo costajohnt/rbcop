@@ -222,6 +222,14 @@ pub fn parse_for_target<'t>(
         {
             round.extend((line..).zip(b"__END__\n".iter().copied().chain(std::iter::repeat_n(b' ', indent))));
         }
+        // A column-0 `__END__` the parser gem reads as an identifier (after `=`, `(`, `,`, `.`, a
+        // `\` continuation, ...) is an identifier the file does not use, so Prism lexes on (#337).
+        if cur.contains("__END__")
+            && let Some(at) = crate::legacy_syntax::identifier_data_marker(cur, &tokens)
+            && let Some(name) = crate::legacy_syntax::end_stand_in(text)
+        {
+            round.extend((at..).zip(name.bytes()));
+        }
         // A NUL ends a heredoc line for the parser gem's lexer: the NULs that make a terminator line
         // become newlines (#247).
         if errors && cur.contains('\0') {
