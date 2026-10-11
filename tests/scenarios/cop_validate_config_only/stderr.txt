@@ -1,1 +1,2 @@
+--only option: Warning: no department given for EmptyLineAfterMagicComment.
 Error: The `Layout/EmptyLineAfterMagicComment` cop only accepts a positive integer for its `NumberOfEmptyLines` configuration parameter, but `1.0` was given.

@@ -1,1 +1,1 @@
---only Layout/EmptyLineAfterMagicComment a.rb
+--only EmptyLineAfterMagicComment a.rb

@@ -1144,16 +1144,23 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     // Resolve configs up front (single-threaded), then lint in parallel.
     let mut jobs = Vec::with_capacity(files.len());
     // RuboCop loads a file's config when the file's turn comes, so an invalid config stops the run
-    // there, after the files before it have been reported. The same holds for a cop's
-    // validate_config, which runs when the file's team is mobilized.
+    // there, after the files before it have been reported.
     let mut config_error = None;
+    // Team#validate_config fails the same way, but later: when the file's team is mobilized, after
+    // the --only/--except warnings and Config#for_cop's. (index in jobs, error)
+    let mut team_error = None;
     for f in &files {
-        let checked = store.for_file(f).and_then(|c| {
-            rbcop::config::validator::cop_validate_config(&c, |cop| badge_selected(cop, &c) && c.cop_enabled(cop))
-                .map(|()| c)
-        });
-        match checked {
-            Ok(c) => jobs.push((f.clone(), c)),
+        match store.for_file(f) {
+            Ok(c) => {
+                let valid = rbcop::config::validator::cop_validate_config(&c, |cop| {
+                    badge_selected(cop, &c) && c.cop_enabled(cop)
+                });
+                jobs.push((f.clone(), c));
+                if let Err(e) = valid {
+                    team_error = Some((jobs.len() - 1, e));
+                    break;
+                }
+            }
             Err(e) => {
                 config_error = Some((f.clone(), e));
                 break;
@@ -1200,7 +1207,12 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     // --fail-fast stops at the first failing file (later files are neither inspected nor corrected),
     // and under -a a file reached through two paths (a symlink) must see the first correction.
     // An invalid --only/--except list fails before any file is inspected (or corrected).
-    let lazy = cop_error.is_some() || cli.fail_fast || (cli.autocorrect.is_some() && same_file_twice(&jobs));
+    // A failing validate_config stops the run before its file is inspected (lazily, so no cop
+    // error of that file is printed).
+    let lazy = cop_error.is_some()
+        || team_error.is_some()
+        || cli.fail_fast
+        || (cli.autocorrect.is_some() && same_file_twice(&jobs));
     let mut reports: Vec<Option<Linted>> = if lazy {
         jobs.iter().map(|_| None).collect()
     } else {
@@ -1250,7 +1262,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         let mut cop_notes = Some((cop_warnings, cop_error));
         let mut stopped = false;
         let mut warned_configs = std::collections::HashSet::new();
-        for ((path, cfg), linted) in jobs.iter().zip(reports.iter_mut()) {
+        for (idx, ((path, cfg), linted)) in jobs.iter().zip(reports.iter_mut()).enumerate() {
             set.file_started(&cx, path);
             // Runner#mobilized_cop_classes runs once the first file has been read.
             if let Some((warnings, err)) = cop_notes.take_if(|_| stdin_text.is_some() || path.is_file()) {
@@ -1272,6 +1284,11 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                         eprint!("{msg}{}", if msg.ends_with('\n') { "" } else { "\n" });
                     }
                 }
+            }
+            if let Some((_, e)) = team_error.take_if(|(i, _)| *i == idx) {
+                config_failure = Some(e);
+                stopped = true;
+                break;
             }
             let linted = match linted.take() {
                 Some(l) => l,
