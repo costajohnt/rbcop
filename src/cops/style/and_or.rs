@@ -39,7 +39,7 @@ fn report(cx: &mut Cx, node: &Node, parent_is_and: bool) {
     };
     let mut edits = Vec::new();
     for (expr, is_last) in [(&lhs, false), (&rhs, true)] {
-        match expr.as_call_node().filter(|c| !is_csend(c) && !has_block(c)) {
+        match expr.as_call_node().filter(|c| !is_csend(c) && !has_block(c) && !match_with_lvasgn(c)) {
             Some(call) => correct_send(&call, expr, is_last, src, &mut edits),
             None if matches!(kind::of(expr), kind::RETURN_NODE | kind::NEXT_NODE | kind::BREAK_NODE | kind::YIELD_NODE)
                 || is_assignment(expr) =>
@@ -71,6 +71,11 @@ fn report(cx: &mut Cx, node: &Node, parent_is_and: bool) {
     });
 }
 
+/// `/re/ =~ x` with a static regexp is parser's `match_with_lvasgn`, not a `send` (#325).
+fn match_with_lvasgn(call: &ruby_prism::CallNode) -> bool {
+    call.name().as_slice() == b"=~" && call.receiver().is_some_and(|r| r.as_regular_expression_node().is_some())
+}
+
 /// A call with a `{}`/`do` block is a parser `block`, not a `send`.
 fn has_block(call: &ruby_prism::CallNode) -> bool {
     call.block().is_some_and(|b| b.as_block_node().is_some())
@@ -90,7 +95,7 @@ fn correct_send(call: &ruby_prism::CallNode, node: &Node, is_last: bool, src: &s
         match call.message_loc().map(|l| l.as_slice()) {
             Some(b"!") => {
                 if let Some(recv) = call.receiver()
-                    && let Some(rc) = recv.as_call_node().filter(|c| !is_csend(c) && !has_block(c))
+                    && let Some(rc) = recv.as_call_node().filter(|c| !is_csend(c) && !has_block(c) && !match_with_lvasgn(c))
                 {
                     correct_send(&rc, &recv, false, src, edits);
                 }
