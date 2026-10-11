@@ -368,17 +368,19 @@ impl<'pr> Check<'_, 'pr> {
             .is_some_and(|r| same(self.src, range(&r), self.me()))
     }
 
+    /// `rescue?`: `{^resbody ^^resbody}`, the parser parent or grandparent is a resbody (#327).
+    /// A RescueNode is one; a modifier rescue's implicit resbody holds its rescue expression.
     fn rescue(&self) -> bool {
-        let n = self.anc.len();
-        match self.anc.last().map(kind::of) {
-            Some(kind::RESCUE_NODE) => true,
-            Some(kind::STATEMENTS_NODE) => n >= 2 && self.anc[n - 2].as_rescue_node().is_some(),
-            Some(kind::RESCUE_MODIFIER_NODE) => {
-                let r = self.anc[n - 1].as_rescue_modifier_node().unwrap();
-                range(&r.rescue_expression()) == self.me()
+        let resbody_of = |i: usize, child: (usize, usize)| match &self.anc[i] {
+            Node::RescueNode { .. } => true,
+            Node::RescueModifierNode { .. } => {
+                range(&self.anc[i].as_rescue_modifier_node().unwrap().rescue_expression()) == child
             }
             _ => false,
-        }
+        };
+        let Some(p) = self.pi else { return false };
+        resbody_of(p, self.me())
+            || parser_parent_index(self.anc, p).is_some_and(|g| resbody_of(g, range(&self.anc[p])))
     }
 
     fn parens_required(&self) -> bool {
