@@ -20,6 +20,8 @@ pub struct FileReport {
     pub offenses: Vec<Offense>,
     /// Source text (after CRLF normalisation), kept for formatters that print code.
     pub text: String,
+    /// Warnings printed when the file is reported (`no department given` for directive names).
+    pub warnings: Vec<String>,
 }
 
 impl FileReport {
@@ -47,8 +49,9 @@ pub fn inspect(
     // available (ProcessedSource#raw_source) for cops such as Layout/EndOfLine.
     let (text, raw) = if text.contains("\r\n") { (text.replace("\r\n", "\n"), Some(text)) } else { (text, None) };
     let shared: Arc<str> = Arc::from(text.as_str());
+    directives::take_warnings();
     let (offenses, _, _) = analyze(path, display, &shared, raw.as_deref(), cfg, selected, None, Redundant::Own);
-    FileReport { offenses, text }
+    FileReport { offenses, text, warnings: directives::take_warnings() }
 }
 
 /// Inspect a file's bytes as read. A source that must be UTF-8 (`source::must_be_utf8`) but is not
@@ -85,7 +88,7 @@ pub fn inspect_bytes(
 fn encoding_error_report(text: String, message: String, selected: &dyn Fn(&str) -> bool) -> FileReport {
     // Lint/Syntax is not mobilized under -x, --only-guide-cops or `StyleGuideCopsOnly`.
     if !selected("Lint/Syntax") {
-        return FileReport { offenses: Vec::new(), text };
+        return FileReport { offenses: Vec::new(), text, warnings: Vec::new() };
     }
     let offense = Offense {
         start: 0,
@@ -98,7 +101,7 @@ fn encoding_error_report(text: String, message: String, selected: &dyn Fn(&str) 
         corrected: false,
         source: None,
     };
-    FileReport { offenses: vec![offense], text }
+    FileReport { offenses: vec![offense], text, warnings: Vec::new() }
 }
 
 /// How Ruby words a failed `File.read`/`File.open` of `path` (RuboCop raises its own error for a
@@ -392,7 +395,19 @@ fn analyze(
     src.parser_gem = parser_gem;
     src.target_ruby = cfg.target_ruby;
 
+    // CommentConfig is analyzed once per investigation, not again for the redundant-directive pass
+    // (it reuses the processed source).
+    let warn = !matches!(redundant, Redundant::Only(_));
     if !errors.is_empty() {
+        // ponytail: without a tree there are no statement bounds, so a detached disable-next or
+        // enable-next warns here where RuboCop's would not.
+        if warn && src.text.contains("rubocop") {
+            for c in &src.comments {
+                if let Some(d) = directives::parse(src.slice(c.start, c.end)).filter(|d| d.mode != "pop") {
+                    directives::warn_unqualified(&src, &d);
+                }
+            }
+        }
         // RuboCop runs only Lint/Syntax on a file that does not parse, one offense per diagnostic,
         // and does so even under --only (which always lists it); not under -x or the style-guide
         // filter, which leave it out.
@@ -471,7 +486,7 @@ fn analyze(
         let code = code_lines(&src, &facts);
         let statement_bounds = |line: usize| bounds.at(line);
         let info = directives::LineInfo { code: &code, statement_bounds: &statement_bounds };
-        let cc = directives::analyze(&src, &config_disabled, &info, directives::prevent_style(cfg));
+        let cc = directives::analyze(&src, &config_disabled, &info, directives::prevent_style(cfg), warn);
         facts.disabled = directives::disabled_ranges(&cc);
         facts.comment_config = cc;
         facts.code_lines = code;

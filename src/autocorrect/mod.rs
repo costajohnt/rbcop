@@ -95,6 +95,7 @@ pub fn correct(
     selected: &dyn Fn(&str) -> bool,
     mode: Mode,
 ) -> Corrected {
+    crate::directives::take_warnings();
     let (mut offenses, mut current, changed, error, disabled) =
         inspection_loop(path, display, Arc::from(text), cfg, selected, mode);
     let mut changed = changed;
@@ -124,7 +125,11 @@ pub fn correct(
             }
         }
     }
-    let report = FileReport { offenses: uniq_sorted(offenses), text: normalise(&current).to_string() };
+    let report = FileReport {
+        offenses: uniq_sorted(offenses),
+        text: normalise(&current).to_string(),
+        warnings: crate::directives::take_warnings(),
+    };
     Corrected { source: changed.then(|| current.to_string()), report, error }
 }
 
