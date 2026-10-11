@@ -1,0 +1,8 @@
+Style/Copyright: AutocorrectNotice 'bad' must match Notice /^Copyright (\(c\) )?2[0-9]{3} .+/ (from file: c.rb)
+Style/Copyright: AutocorrectNotice 'bad' must match Notice /^Copyright (\(c\) )?2[0-9]{3} .+/ (from file: b.rb)
+Style/Copyright: AutocorrectNotice 'bad' must match Notice /^Copyright (\(c\) )?2[0-9]{3} .+/ (from file: a.rb)
+
+3 warnings:
+Style/Copyright: AutocorrectNotice 'bad' must match Notice /^Copyright (\(c\) )?2[0-9]{3} .+/ (from file: c.rb)
+Style/Copyright: AutocorrectNotice 'bad' must match Notice /^Copyright (\(c\) )?2[0-9]{3} .+/ (from file: b.rb)
+Style/Copyright: AutocorrectNotice 'bad' must match Notice /^Copyright (\(c\) )?2[0-9]{3} .+/ (from file: a.rb)

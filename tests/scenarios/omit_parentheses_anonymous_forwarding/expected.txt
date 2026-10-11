@@ -1,0 +1,4 @@
+kwrest.rb:2:15: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+mixed.rb:2:18: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+nested.rb:2:6: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+rest.rb:2:14: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
