@@ -1,0 +1,1 @@
+--only Lint/SuppressedException,Lint/UselessRescue,Lint/DuplicateBranch,Lint/ShadowedException,Lint/RescueException,Naming/RescuedExceptionsVariableName,Lint/SuppressedExceptionInNumberConversion,Layout/EmptyLineAfterMultilineCondition,Metrics/BlockNesting
