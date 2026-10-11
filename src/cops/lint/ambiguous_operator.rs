@@ -47,10 +47,11 @@ impl Cop for AmbiguousOperator {
             p = gp;
         }
         let fix = parens::plan(&ancestors[p], text);
-        // Prism does not warn for `foo &:sym`; the parser gem (below 3.3) does, as for any
-        // `&` lexed as an argument prefix after a space: the first argument of a call without `(`.
+        // Prism warns for `foo &x` but not when `&` starts a symbol (`foo &:sym`, `foo &:sym..x`);
+        // the parser gem (below 3.3) warns for every `&` lexed as an argument prefix after a
+        // space: the first argument of a call without `(`, whatever follows.
         let amp_sym = cx.config.target_ruby < 3.3
-            && node.as_block_argument_node().and_then(|b| b.expression()).is_some_and(|e| e.as_symbol_node().is_some())
+            && node.as_block_argument_node().and_then(|b| b.expression()).is_some()
             && text[..start].ends_with([' ', '\t'])
             && ancestors[p].as_call_node().is_some_and(|c| c.opening_loc().is_none() && c.arguments().is_none());
         let state = cx.state::<State>();
