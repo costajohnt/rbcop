@@ -37,10 +37,18 @@ pub fn diagnostics(
     let sorted = by_start(&toks);
     let mut w = Walk { target, toks: &sorted, ..Walk::default() };
     w.visit(root);
-    if w.violations.is_empty() && seed.is_none() && circular.is_empty() {
+    if w.violations.is_empty() && seed.is_none() && circular.is_empty() && w.semantic.is_empty() {
         return Vec::new();
     }
-    simulate(&toks, &w, text, target, seed.unwrap_or(usize::MAX), actions, circular)
+    // The walk's builder errors, reported as they reduce: before the first grammar failure.
+    let cut = w.violations.keys().copied().chain(seed).min().unwrap_or(usize::MAX);
+    let semantic: Vec<_> = std::mem::take(&mut w.semantic).into_iter().filter(|s| s.0 < cut).collect();
+    let mut actions = actions.to_vec();
+    actions.extend(semantic.iter().map(|s| s.1));
+    actions.sort_unstable();
+    let mut out = simulate(&toks, &w, text, target, seed.unwrap_or(usize::MAX), &actions, circular);
+    out.extend(semantic);
+    out
 }
 
 /// Tokens in source order (the lexers emit a heredoc's body right after its opener).
@@ -849,6 +857,8 @@ struct Walk<'t> {
     cmd_args: HashMap<usize, usize>,
     /// Heredocs: (opener start, body and terminator range).
     heredocs: Vec<(usize, (usize, usize))>,
+    /// Builder errors the target's parser gem reports where Prism does not: (start, end, message).
+    semantic: Vec<(usize, usize, String)>,
 }
 
 impl Walk<'_> {
@@ -867,6 +877,39 @@ impl Walk<'_> {
         if self.target < below {
             let ctx = self.ctx.last().copied().unwrap_or(offset);
             self.violations.entry(offset).or_insert(ctx);
+        }
+    }
+    fn token_at(&self, offset: usize) -> Option<&Tok> {
+        self.toks.get(self.toks.partition_point(|t| t.start < offset)).filter(|t| t.start == offset)
+    }
+    /// Builders::Default#check_condition: a multiple assignment as a condition is an error up to
+    /// Ruby 2.3 (`if (a, b = foo)`), also inside `and`/`or`/`!`/parentheses/flip-flops.
+    fn check_condition(&mut self, cond: &Node) {
+        if let Some(m) = cond.as_multi_write_node() {
+            if self.target < 2.4 {
+                let l = m.location();
+                let msg = "multiple assignment in conditional context".to_string();
+                self.semantic.push((l.start_offset(), l.end_offset(), msg));
+            }
+        } else if let Some(b) = cond.as_parentheses_node().and_then(|p| p.body()) {
+            self.check_condition(&b);
+        } else if let Some(b) = cond.as_statements_node() {
+            let body = b.body();
+            if body.len() == 1 {
+                self.check_condition(&body.iter().next().unwrap());
+            }
+        } else if let Some(a) = cond.as_and_node() {
+            self.check_condition(&a.left());
+            self.check_condition(&a.right());
+        } else if let Some(o) = cond.as_or_node() {
+            self.check_condition(&o.left());
+            self.check_condition(&o.right());
+        } else if let Some(r) = cond.as_range_node() {
+            for side in [r.left(), r.right()].into_iter().flatten() {
+                self.check_condition(&side);
+            }
+        } else if let Some(r) = cond.as_call_node().filter(|c| c.name().as_slice() == b"!").and_then(|c| c.receiver()) {
+            self.check_condition(&r);
         }
     }
     fn in_ctx(&mut self, start: usize, f: impl FnOnce(&mut Self)) {
@@ -1003,6 +1046,7 @@ impl<'pr> Visit<'pr> for Walk<'_> {
     }
 
     fn visit_if_node(&mut self, n: &ruby_prism::IfNode<'pr>) {
+        self.check_condition(&n.predicate());
         // Ternaries and modifiers have no `end`; an `elsif` belongs to the first `if`.
         let Some(kw) = n.if_keyword_loc().filter(|k| n.end_keyword_loc().is_some() && k.as_slice() == b"if") else {
             return ruby_prism::visit_if_node(self, n);
@@ -1034,6 +1078,7 @@ impl<'pr> Visit<'pr> for Walk<'_> {
     }
 
     fn visit_unless_node(&mut self, n: &ruby_prism::UnlessNode<'pr>) {
+        self.check_condition(&n.predicate());
         if n.end_keyword_loc().is_some() {
             let kw = n.keyword_loc().start_offset();
             let body = n
@@ -1049,6 +1094,7 @@ impl<'pr> Visit<'pr> for Walk<'_> {
     }
 
     fn visit_while_node(&mut self, n: &ruby_prism::WhileNode<'pr>) {
+        self.check_condition(&n.predicate());
         if n.closing_loc().is_some() {
             let kw = n.keyword_loc().start_offset();
             let body = n
@@ -1064,6 +1110,7 @@ impl<'pr> Visit<'pr> for Walk<'_> {
     }
 
     fn visit_until_node(&mut self, n: &ruby_prism::UntilNode<'pr>) {
+        self.check_condition(&n.predicate());
         if n.closing_loc().is_some() {
             let kw = n.keyword_loc().start_offset();
             let body = n
@@ -1194,6 +1241,20 @@ impl<'pr> Visit<'pr> for Walk<'_> {
         self.ctx.pop();
     }
 
+    fn visit_or_node(&mut self, n: &ruby_prism::OrNode<'pr>) {
+        if n.operator_loc().as_slice() == b"or" && command_asgn(&n.left()) {
+            self.violation(n.operator_loc().start_offset(), 3.3);
+        }
+        ruby_prism::visit_or_node(self, n);
+    }
+
+    fn visit_and_node(&mut self, n: &ruby_prism::AndNode<'pr>) {
+        if n.operator_loc().as_slice() == b"and" && command_asgn(&n.left()) {
+            self.violation(n.operator_loc().start_offset(), 3.3);
+        }
+        ruby_prism::visit_and_node(self, n);
+    }
+
     fn visit_call_node(&mut self, n: &ruby_prism::CallNode<'pr>) {
         // The `do` of a command call's block (`foo a do`) lexes as kDO_BLOCK.
         if n.opening_loc().is_none()
@@ -1253,6 +1314,15 @@ impl<'pr> Visit<'pr> for Walk<'_> {
 
     fn visit_parentheses_node(&mut self, n: &ruby_prism::ParenthesesNode<'pr>) {
         self.body.insert(n.opening_loc().start_offset(), n.opening_loc().end_offset());
+        // `tLPAREN_ARG expr rparen` up to 2.3 (stmt from 2.4): no rescue modifier directly inside.
+        if self.token_at(n.opening_loc().start_offset()).is_some_and(|t| t.name == "tLPAREN_ARG")
+            && let Some(r) = n.body().and_then(|b| b.as_statements_node()).and_then(|b| {
+                let body = b.body();
+                (body.len() == 1).then(|| body.iter().next().unwrap()).and_then(|x| x.as_rescue_modifier_node())
+            })
+        {
+            self.violation(r.keyword_loc().start_offset(), 2.4);
+        }
         ruby_prism::visit_parentheses_node(self, n);
     }
 
@@ -1279,6 +1349,11 @@ impl<'pr> Visit<'pr> for Walk<'_> {
             } else if let Some(f) = a.as_forwarding_arguments_node() {
                 let at = f.location().start_offset();
                 self.violation(at, 2.7);
+                // A trailing comma after `...` is 3.3+ (`c(a, ...,)`).
+                let next = self.next_token(f.location().end_offset());
+                if self.token_at(next).is_some_and(|t| t.name == "tCOMMA") {
+                    self.violation(next, 3.3);
+                }
                 if let Some(&(kw, _)) = self.defs.iter().rev().find(|d| d.1) {
                     self.forwarding.insert(at, kw);
                 }
@@ -1463,6 +1538,35 @@ impl Walk<'_> {
 
 /// A chain of calls or variables (`a`, `a.b`, `A::B`, `a&.b(1)[2]`): what a multiple-assignment
 /// item can be (only its tokens outside brackets are given).
+/// `command_asgn`: an assignment whose value is a command call without parentheses (`a = foo 1`,
+/// `a.b += foo 1`, `a = b = foo 1`). Below 3.3 it is a statement, so it cannot be the left operand
+/// of `or`/`and`.
+fn command_asgn(node: &Node) -> bool {
+    let value = match crate::ast::assignment_parts(node) {
+        Some((_, v)) if node.as_multi_write_node().is_none() => v,
+        _ => {
+            let setter = node.as_call_node().filter(|c| c.equal_loc().is_some());
+            match setter.and_then(|c| c.arguments()).and_then(|a| a.arguments().iter().last()) {
+                Some(v) => v,
+                None => return false,
+            }
+        }
+    };
+    if command_asgn(&value) {
+        return true;
+    }
+    if let Some(c) = value.as_call_node() {
+        let name = String::from_utf8_lossy(c.name().as_slice());
+        return c.opening_loc().is_none()
+            && c.message_loc().is_some()
+            && c.arguments().is_some()
+            && !crate::helpers::node_types::is_operator_method(&name)
+            && !name.ends_with('=');
+    }
+    value.as_super_node().is_some_and(|s| s.lparen_loc().is_none() && s.arguments().is_some())
+        || value.as_yield_node().is_some_and(|y| y.lparen_loc().is_none() && y.arguments().is_some())
+}
+
 fn is_chain(item: &[Tok]) -> bool {
     let operand = |n: &str| matches!(n, "tIDENTIFIER" | "tFID" | "tCONSTANT" | "tIVAR" | "tGVAR" | "tCVAR" | "kSELF");
     // A literal receiver (`2.days.ago`) is a primary_value, but not an item on its own.

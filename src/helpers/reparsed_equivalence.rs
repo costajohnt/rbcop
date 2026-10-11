@@ -14,7 +14,7 @@ use std::sync::Arc;
 pub fn correction_parses(
     source: Arc<str>,
     version: &'static str,
-    parser_gem: bool,
+    legacy: Option<f64>,
     edit: impl FnOnce(&mut Corrector),
 ) -> bool {
     let mut c = Corrector::new(source);
@@ -22,17 +22,30 @@ pub fn correction_parses(
     if c.clobbered() {
         return false;
     }
-    valid_syntax(&c.rewrite(), version, parser_gem)
+    valid_syntax(&c.rewrite(), version, legacy)
 }
 
 /// Prism parses `text` without errors, except those the parser gem accepts when it is the
-/// target's parser (`retry` outside `rescue`, top-level `yield`; `Source::parser_gem`).
-pub fn valid_syntax(text: &str, version: &'static str, parser_gem: bool) -> bool {
-    no_errors(&ruby_prism::parse_with_version(text.as_bytes(), version, !crate::source::binary_encoding(text)), parser_gem)
+/// target's parser (`retry` outside `rescue`, top-level `yield`; `Source::legacy`).
+pub fn valid_syntax(text: &str, version: &'static str, legacy: Option<f64>) -> bool {
+    parse_clean(text, version, legacy).is_some()
 }
 
-fn no_errors(result: &ruby_prism::ParseResult, parser_gem: bool) -> bool {
-    !result.errors().any(|e| !(parser_gem && crate::runner::TOLERATED_ERRORS.contains(&e.type_name())))
+/// The parse of `text` when it has no syntax errors. With `legacy` (a target below 3.3, parsed by
+/// the parser gem) Prism errors that gem accepts are ignored, and the target grammar's own
+/// (`legacy_syntax`: newer syntax, `a = foo 1 or b`, ...) count.
+fn parse_clean<'t>(text: &'t str, version: &'static str, legacy: Option<f64>) -> Option<ruby_prism::ParseResult<'t>> {
+    let utf8 = !crate::source::binary_encoding(text);
+    let Some(target) = legacy else {
+        let result = ruby_prism::parse_with_version(text.as_bytes(), version, utf8);
+        return (result.errors().count() == 0).then_some(result);
+    };
+    let (result, tokens) = ruby_prism::parse_with_version_and_tokens(text.as_bytes(), version, utf8);
+    if result.errors().any(|e| !crate::runner::TOLERATED_ERRORS.contains(&e.type_name())) {
+        return None;
+    }
+    let diags = crate::legacy_syntax::diagnostics(&result.node(), &tokens, text, target, None, &[], &[]);
+    diags.is_empty().then_some(result)
 }
 
 /// The normalized structure of `node` (whose source is `text`).
@@ -55,9 +68,9 @@ pub fn parses_equivalently(
     fragment: &str,
     whole_file: bool,
     version: &'static str,
-    parser_gem: bool,
+    legacy: Option<f64>,
 ) -> bool {
-    parses_equivalently_folding(original, fragment, whole_file, version, parser_gem, false)
+    parses_equivalently_folding(original, fragment, whole_file, version, legacy, false)
 }
 
 /// `parses_equivalently` with `serialize_folding`.
@@ -66,13 +79,10 @@ pub fn parses_equivalently_folding(
     fragment: &str,
     whole_file: bool,
     version: &'static str,
-    parser_gem: bool,
+    legacy: Option<f64>,
     fold: bool,
 ) -> bool {
-    let result = ruby_prism::parse_with_version(fragment.as_bytes(), version, !crate::source::binary_encoding(fragment));
-    if !no_errors(&result, parser_gem) {
-        return false;
-    }
+    let Some(result) = parse_clean(fragment, version, legacy) else { return false };
     let root = result.node();
     if whole_file {
         return serialize_folding(fragment, &root, fold) == original;
@@ -350,7 +360,7 @@ pub fn verified_by_reparse_folding<T: Copy>(
     fold: bool,
 ) -> Vec<T> {
     let opts = ReparseOpts { fold, report_oversized: false, raw_text: src.raw_text };
-    verified_by_reparse_opts(src.text, src.version, src.parser_gem, program, items, range, apply, opts)
+    verified_by_reparse_opts(src.text, src.version, src.legacy(), program, items, range, apply, opts)
 }
 
 /// `corrected_scope_fragment`: `corrected[begin_pos...(end_pos + delta)]` in characters, where
@@ -385,7 +395,7 @@ pub fn verified_by_reparse_with<T: Copy>(
     report_oversized: bool,
 ) -> Vec<T> {
     let opts = ReparseOpts { fold: false, report_oversized, raw_text: src.raw_text };
-    verified_by_reparse_opts(src.text, src.version, src.parser_gem, program, items, range, apply, opts)
+    verified_by_reparse_opts(src.text, src.version, src.legacy(), program, items, range, apply, opts)
 }
 
 /// MAX_VERIFICATION_FRAGMENT_SIZE (characters of the reparse scope).
@@ -406,7 +416,7 @@ struct ReparseOpts<'a> {
 fn verified_by_reparse_opts<T: Copy>(
     text: &str,
     version: &'static str,
-    parser_gem: bool,
+    legacy: Option<f64>,
     program: &Node,
     items: &[T],
     range: impl Fn(T) -> (usize, usize),
@@ -451,9 +461,9 @@ fn verified_by_reparse_opts<T: Copy>(
             Some((s, e)) => {
                 let end = (e as isize + corrected.len() as isize - text.len() as isize) as usize;
                 scope_fragment(&corrected, s, end, crlf)
-                    .is_some_and(|fragment| parses_equivalently_folding(original, fragment, false, version, parser_gem, fold))
+                    .is_some_and(|fragment| parses_equivalently_folding(original, fragment, false, version, legacy, fold))
             }
-            None => parses_equivalently_folding(original, &corrected, true, version, parser_gem, fold),
+            None => parses_equivalently_folding(original, &corrected, true, version, legacy, fold),
         }
     };
     let mut out = vec![];
