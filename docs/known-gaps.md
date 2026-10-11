@@ -30,6 +30,10 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - Lint/LiteralInInterpolation reports no offense for an integer literal over 1,000 32-bit words
   (about 9,600 decimal digits): converting it to decimal is quadratic (`"#{0xfff...}"` with 200k
   hex digits took 2.6 s).
+- A config integer beyond 64 bits (`Max: 99999999999999999999`) loads as `i64::MAX` (or
+  `i64::MIN`); Psych makes a Bignum. Cops behave the same (nothing reaches that size), but
+  `--show-cops` and messages that quote the limit (`[14/-99999999999999999999]`) print the
+  saturated value where RuboCop prints the digits as written.
 - Config regexps the regex crate rejects (lookaround, backreferences, atomic groups) run on
   fancy-regex (`config::value::RubyRegex`), which has no match cache: a search is capped at 1M
   backtracking steps, then retried one start position at a time with 10k steps each, within a
@@ -59,6 +63,20 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   file creation is worded `<path>: <reason>`.
 
 ## Open gaps
+
+- Static regexp literals Onigmo rejects (RuboCop compiles each with `Regexp.new` and reports
+  Lint/Syntax): `helpers::onigmo_compile` covers group names and references, repeat ranges,
+  character class ranges, POSIX bracket names and look-behind bodies with quantifiers,
+  backreferences or nested look-arounds. Not modelled, so not reported: `/x` literals and `(?x)`,
+  unknown `\p{..}` property names, `\x{..}`, `\c`/`\M-`/`\C-` escapes, multi-digit backrefs,
+  `\g<0>` (never ending recursion), invalid group-name characters, alternation of different
+  lengths inside a look-behind's groups (`(?<=(a|bc))`). Below 3.3 the error does not start racc's
+  recovery when nothing else in the file fails, so `if /a{3,2}/ ... end` misses the parser gem's
+  follow-up `unexpected token kEND`. At 3.3+ RuboCop crashes on such a regexp in `=~` (the
+  translation's `match_op`); rbcop reports the Lint/Syntax.
+- `in - 1` (a sign, whitespace, a number in a pattern) below 3.3: the parser gem lexes it as
+  `tUNARY_NUM` and accepts it, but Prism (and Ruby's own parse.y) reject it, so rbcop has no tree
+  for the file and reports Prism's failure as Lint/Syntax (#126).
 
 - Target Ruby below 3.3 (RuboCop parses with the parser gem's grammar for the target):
   `src/legacy_syntax.rs` reports the parser gem's Lint/Syntax for syntax newer than the target and

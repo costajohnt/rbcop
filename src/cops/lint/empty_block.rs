@@ -33,16 +33,19 @@ fn comment_disables_cop(comment: &str, cop: &str) -> bool {
 
 impl Cop for EmptyBlock {
     fn kinds(&self) -> &'static [usize] {
-        &[kind::BLOCK_NODE, kind::LAMBDA_NODE]
+        // A block is handled on entering its owner: the parser `block` wraps its send, so RuboCop
+        // reaches the outer block of `foo {}.to bar do end` before the receiver's (and Runner's
+        // uniq keeps the first offense at a position).
+        &[kind::CALL_NODE, kind::SUPER_NODE, kind::FORWARDING_SUPER_NODE, kind::LAMBDA_NODE]
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let (body, lambda_or_proc, start) = match node.as_block_node() {
-            Some(b) => {
-                let Some(owner) = cx.ancestors.last() else { return };
-                (b.body(), lambda_or_proc(owner), owner.location().start_offset())
+        let (body, lambda_or_proc, end) = match node.as_lambda_node() {
+            Some(l) => (l.body(), true, node.location().end_offset()),
+            None => {
+                let Some(b) = helpers::node_types::literal_block(node) else { return };
+                (b.body(), lambda_or_proc(node), b.location().end_offset())
             }
-            None => (node.as_lambda_node().unwrap().body(), true, node.location().start_offset()),
         };
         if body.is_some() {
             return;
@@ -50,7 +53,7 @@ impl Cop for EmptyBlock {
         if lambda_or_proc && cx.cfg.bool("AllowEmptyLambdas").unwrap_or(false) {
             return;
         }
-        let end = node.location().end_offset();
+        let start = node.location().start_offset();
         if cx.cfg.bool("AllowComments").unwrap_or(false) {
             let (first, last) = (cx.src.line_of(start), cx.src.line_of(end));
             let contains = cx.src.comments.iter().any(|c| (first..=last).contains(&cx.src.line_of(c.start)));

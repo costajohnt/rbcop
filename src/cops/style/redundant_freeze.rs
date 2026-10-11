@@ -61,7 +61,7 @@ fn immutable_literal(cx: &Cx, node: Node) -> bool {
             | Node::ImaginaryNode { .. }
             | Node::RationalNode { .. }
             | Node::SourceLineNode { .. }
-    );
+    ) || crate::helpers::literal_node::folded_numeric(&node).is_some();
     if immutable {
         return true;
     }
@@ -90,7 +90,7 @@ fn plain_send<'pr>(node: &Node<'pr>) -> Option<ruby_prism::CallNode<'pr>> {
 }
 
 fn is_number(node: &Node) -> bool {
-    matches!(node, Node::IntegerNode { .. } | Node::FloatNode { .. })
+    matches!(crate::helpers::literal_node::folded_kind(node), kind::INTEGER_NODE | kind::FLOAT_NODE)
 }
 
 fn operation_produces_immutable_object(node: &Node) -> bool {

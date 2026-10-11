@@ -34,6 +34,17 @@ impl Cop for SpaceInsideParens {
         let space_after = |t: &Token| text[t.end..].starts_with([' ', '\t', '\n', '\r', '\x0c', '\x0b']);
         let style = cx.cfg.str("EnforcedStyle").unwrap_or("no_space").to_string();
         let extraneous = |cx: &mut Cx, s: usize, e: usize| cx.add_fix(s, e, MSG, |c| c.remove(s, e));
+        // Below 3.3 the parser gem lexes a `(` after a label (`foo a: ( b )`) as tLPAREN, which
+        // Prism tokenizes like tLPAREN_ARG: retype it.
+        if src.parser_gem {
+            for i in 1..tokens.len() {
+                if tokens[i].kind == sys::PM_TOKEN_PARENTHESIS_LEFT_PARENTHESES
+                    && matches!(tokens[i - 1].kind, sys::PM_TOKEN_LABEL | sys::PM_TOKEN_LABEL_END)
+                {
+                    tokens[i].kind = sys::PM_TOKEN_PARENTHESIS_LEFT;
+                }
+            }
+        }
         for w in tokens.windows(2) {
             let (t1, t2) = (&w[0], &w[1]);
             let parens = left(t1) || right(t2);

@@ -45,6 +45,20 @@ pub fn folded_numeric<'pr>(node: &Node<'pr>) -> Option<Node<'pr>> {
     .then_some(recv)
 }
 
+/// `kind::of` with a folded `- 1` seen as the literal it folds to (parser's `(int -1)`): use it
+/// wherever a cop matches numeric literal kinds.
+pub fn folded_kind(node: &Node) -> usize {
+    folded_numeric(node).map_or_else(|| crate::node_kind::of(node), |l| crate::node_kind::of(&l))
+}
+
+/// A float literal's value, a folded `- 1.5` included.
+pub fn float_literal_value(node: &Node) -> Option<f64> {
+    match folded_numeric(node) {
+        Some(l) => l.as_float_node().map(|f| -f.value()),
+        None => node.as_float_node().map(|f| f.value()),
+    }
+}
+
 /// `basic_literal?`: str int float sym true false nil complex rational (a multi-line string is a
 /// parser `dstr`, which is not basic).
 pub fn basic_literal(node: &Node) -> bool {

@@ -10,7 +10,7 @@ impl Cop for NumberedParameters {
     }
 
     fn kinds(&self) -> &'static [usize] {
-        &[kind::CALL_NODE, kind::LAMBDA_NODE]
+        &[kind::CALL_NODE, kind::SUPER_NODE, kind::FORWARDING_SUPER_NODE, kind::LAMBDA_NODE]
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
@@ -18,7 +18,7 @@ impl Cop for NumberedParameters {
         let (params, open, close) = if let Some(l) = node.as_lambda_node() {
             (l.parameters(), l.opening_loc(), l.closing_loc())
         } else {
-            let Some(b) = node.as_call_node().unwrap().block().and_then(|b| b.as_block_node()) else { return };
+            let Some(b) = helpers::node_types::literal_block(node) else { return };
             (b.parameters(), b.opening_loc(), b.closing_loc())
         };
         if !params.is_some_and(|p| p.as_numbered_parameters_node().is_some()) {

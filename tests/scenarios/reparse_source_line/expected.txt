@@ -1,0 +1,3 @@
+c.rb:2:9: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+d.rb:2:11: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+e.rb:4:7: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.

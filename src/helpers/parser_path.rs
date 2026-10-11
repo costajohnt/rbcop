@@ -54,13 +54,7 @@ fn send_frame<'pr>(call: &CallNode<'pr>) -> Frame<'pr> {
 }
 
 fn has_block(n: &Node) -> bool {
-    let block = match n {
-        Node::CallNode { .. } => n.as_call_node().unwrap().block(),
-        Node::SuperNode { .. } => n.as_super_node().unwrap().block(),
-        Node::ForwardingSuperNode { .. } => n.as_forwarding_super_node().unwrap().block().map(|b| b.as_node()),
-        _ => None,
-    };
-    block.is_some_and(|b| b.as_block_node().is_some())
+    crate::helpers::node_types::literal_block(n).is_some()
 }
 
 /// The parser node a Prism node stands for when it is the subject (a call with a block is the block).

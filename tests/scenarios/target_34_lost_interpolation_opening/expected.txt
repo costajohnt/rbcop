@@ -1,0 +1,20 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+continued.rb:12:5: C: [Correctable] Style/CommandLiteral: Use backticks around command string.
+continued.rb:13:5: C: [Correctable] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+continued.rb:13:9: C: Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+continued.rb:15:3: C: [Correctable] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+continued.rb:15:5: C: Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+continued.rb:18:5: C: [Correctable] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+continued.rb:18:7: C: Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+continued.rb:19:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+continued.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+continued.rb:21:3: C: [Correctable] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+continued.rb:21:5: C: Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+continued.rb:23:5: C: [Correctable] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+continued.rb:23:9: C: Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+continued.rb:24:5: W: [Correctable] Lint/ImplicitStringConcatenation: Combine 'a' and "b d" into a single string literal, rather than using implicit string concatenation.
+continued.rb:5:5: C: [Correctable] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+continued.rb:5:9: C: Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+continued.rb:8:11: C: [Correctable] Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+continued.rb:8:13: C: Layout/SpaceInsideStringInterpolation: Do not use space inside string interpolation.
+space/continued.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.

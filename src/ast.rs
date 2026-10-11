@@ -386,6 +386,10 @@ pub fn is_parser_dsym(node: &Node, target_ruby: f64) -> bool {
 /// Value of an integer literal node (parser `int`; Prism keeps a leading `-` in the literal), or None
 /// for other nodes and values beyond i128.
 pub fn int_literal_value(node: &Node) -> Option<i128> {
+    // A folded `- 1` is the parser's `(int -1)`.
+    if let Some(l) = crate::helpers::literal_node::folded_numeric(node) {
+        return int_literal_value(&l).map(|v| -v);
+    }
     let value = node.as_integer_node()?.value();
     let (neg, digits) = value.to_u32_digits();
     let mut v: i128 = 0;

@@ -428,7 +428,10 @@ fn cop_error_is_located_at_the_visited_node() {
     fs::write(dir.join("t.rb"), "if cond then foo else if cond2; bar else baz end; end\n").unwrap();
     let out = rbcop(&dir, &["--only", "Style/IfInsideElse", "-f", "e", "t.rb"]);
     let err = text(&out.stderr);
-    assert!(err.starts_with("An error occurred while Style/IfInsideElse cop was inspecting t.rb:1:0.\n"), "{err}");
+    // Team#process_errors names the file by its absolute path (Dir.pwd is physical).
+    let abs = dir.join("t.rb");
+    let want = format!("An error occurred while Style/IfInsideElse cop was inspecting {}:1:0.\n", abs.display());
+    assert!(err.starts_with(&want), "{err}");
     assert_eq!(out.status.code(), Some(1));
     let _ = fs::remove_dir_all(&dir);
 }
@@ -448,6 +451,27 @@ fn infinite_loop_names_cops_in_name_order() {
     );
     assert!(text(&out.stderr).contains(&want), "{}", text(&out.stderr));
     assert_eq!(out.status.code(), Some(1));
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// The processed file name is the expanded absolute path: `__FILE__`'s value (Style/StringConcatenation
+/// folds it into the literal) and a cop Warning's `(from file: ...)`, which ExecuteRunner repeats
+/// in its end-of-run `N warnings:` summary, one per raise (two -A iterations here).
+#[test]
+fn file_name_is_the_absolute_path() {
+    let dir = scratch("abspath");
+    fs::create_dir_all(dir.join("sub")).unwrap();
+    fs::write(dir.join("sub/t.rb"), "x = __FILE__ + 'top'\n").unwrap();
+    let only = "Style/StringConcatenation,Style/Copyright";
+    let out = rbcop(&dir, &["-A", "--only", only, "--force-default-config", "-f", "e", "sub/../sub/t.rb"]);
+    let abs = dir.join("sub/t.rb").display().to_string();
+    assert_eq!(fs::read_to_string(dir.join("sub/t.rb")).unwrap(), format!("x = \"{abs}top\"\n"));
+    let warning =
+        format!("Style/Copyright: An AutocorrectNotice must be defined in your RuboCop config (from file: {abs})");
+    let err = text(&out.stderr);
+    assert!(err.ends_with(&format!("\n2 warnings:\n{warning}\n{warning}\n")), "{err}");
+    assert_eq!(err.matches(&warning).count(), 4, "{err}");
+    assert_eq!(out.status.code(), Some(0));
     let _ = fs::remove_dir_all(&dir);
 }
 
@@ -516,6 +540,25 @@ fn help_headings_are_bright_when_coloured() {
     );
     assert_eq!(out.matches("\x1b[").count(), 24);
     assert!(!text(&run(&["-h", "--no-color"]).stdout).contains('\x1b'));
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// Lint/SelfAssignment with AllowRBSInlineAnnotation associates comments once per file, not once
+/// per offense (20,000 offenses took 36 s of CPU when each one walked the whole file; 40,000
+/// quadruple that, so a loaded machine still separates the two).
+#[test]
+fn self_assignment_rbs_annotation_is_linear() {
+    let dir = scratch("self-assignment-rbs");
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "AllCops:\n  NewCops: disable\nLint/SelfAssignment:\n  AllowRBSInlineAnnotation: true\n",
+    )
+    .unwrap();
+    fs::write(dir.join("a.rb"), format!("a = 1\n{}", "a = a\n".repeat(40_000))).unwrap();
+    let t0 = std::time::Instant::now();
+    let out = rbcop(&dir, &["--only", "Lint/SelfAssignment", "-f", "q", "a.rb"]);
+    assert!(t0.elapsed() < std::time::Duration::from_secs(60), "took {:?}", t0.elapsed());
+    assert!(text(&out.stdout).ends_with("1 file inspected, 40000 offenses detected\n"));
     let _ = fs::remove_dir_all(&dir);
 }
 

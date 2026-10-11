@@ -422,7 +422,7 @@ fn correction_parses(cx: &mut Cx, edits: &[Edit]) -> bool {
     let src = cx.src;
     let state = cx.state::<State>();
     let source = state.source.get_or_insert_with(|| Arc::from(src.text)).clone();
-    helpers::reparsed_equivalence::correction_parses(source, src.version, src.parser_gem, |c| apply(c, edits))
+    helpers::reparsed_equivalence::correction_parses(source, src.version, src.legacy(), |c| apply(c, edits))
 }
 
 fn report(cx: &mut Cx, node_range: (usize, usize), msg: &str, edits: Option<Vec<Edit>>) {
