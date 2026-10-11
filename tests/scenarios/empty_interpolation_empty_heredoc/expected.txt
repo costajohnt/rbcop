@@ -1,0 +1,2 @@
+i.rb:2:3: W: [Correctable] Lint/EmptyInterpolation: Empty interpolation detected.
+j.rb:2:3: W: [Correctable] Lint/EmptyInterpolation: Empty interpolation detected.
