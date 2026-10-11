@@ -184,9 +184,19 @@ pub fn parse_for_target<'t>(
     let mut copy: Option<Vec<u8>> = None;
     let mut restore: Vec<(usize, u8)> = Vec::new();
     // The parser gem's lexer starts a constant only at ASCII `A`-`Z` (`Ж = 1` is a local): such a
-    // CONSTANT's first character becomes its lowercase form for Prism (#219).
+    // CONSTANT's first character becomes, for Prism, a lowercase stand-in the file does not use
+    // (#219, #259); each capital keeps its own.
+    let mut stand_ins: Vec<(char, char)> = Vec::new();
     for t in tokens.iter().filter(|t| t.kind == "CONSTANT") {
-        let Some((c, l)) = crate::legacy_syntax::non_ascii_constant_start(&text[t.start..]) else { continue };
+        let Some(c) = crate::legacy_syntax::non_ascii_constant_start(&text[t.start..]) else { continue };
+        let l = match stand_ins.iter().find(|&&(k, _)| k == c) {
+            Some(&(_, l)) => l,
+            None => {
+                let Some(l) = crate::legacy_syntax::stand_in(c, text, &stand_ins) else { continue };
+                stand_ins.push((c, l));
+                l
+            }
+        };
         let bytes = copy.get_or_insert_with(|| text.as_bytes().to_vec());
         let mut enc = [0u8; 4];
         l.encode_utf8(&mut enc);
