@@ -1,0 +1,6 @@
+brace_block.rb:1:21: C: [Corrected] Style/ItBlockParameter: Use `it` block parameter.
+brace_block.rb:2:23: C: [Corrected] Style/ItBlockParameter: Use `it` block parameter.
+brace_block.rb:3:29: C: [Corrected] Style/ItBlockParameter: Use `it` block parameter.
+do_block.rb:2:7: C: [Corrected] Style/ItBlockParameter: Use `it` block parameter.
+long.rb:1:51: C: Layout/LineLength: Line is too long. [82/50]
+reduce.rb:1:19: C: [Corrected] Style/SingleLineBlockParams: Name `reduce` block params `|acc, elem|`.
