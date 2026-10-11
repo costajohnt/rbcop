@@ -107,10 +107,10 @@ pub fn non_ascii_constant_start(name: &str) -> Option<char> {
     name.chars().next().filter(|c| !c.is_ascii())
 }
 
-/// A lowercase character of `c`'s UTF-8 length that occurs nowhere in `text` and is no other
-/// capital's stand-in (`taken`): Prism reads it as an identifier start at `c`'s offsets, and the
-/// name it starts can equal no other name in the file (`Ж` and `ж` stay two locals).
-pub fn stand_in(c: char, text: &str, taken: &[(char, char)]) -> Option<char> {
+/// A lowercase character of `c`'s UTF-8 length that is not among the file's characters (`present`)
+/// and is no other capital's stand-in (`taken`): Prism reads it as an identifier start at `c`'s
+/// offsets, and the name it starts can equal no other name in the file (`Ж` and `ж` stay two locals).
+pub fn stand_in(c: char, present: &std::collections::HashSet<char>, taken: &[(char, Option<char>)]) -> Option<char> {
     let range = match c.len_utf8() {
         2 => 0x80..0x800,
         3 => 0x800..0x1_0000,
@@ -118,7 +118,7 @@ pub fn stand_in(c: char, text: &str, taken: &[(char, char)]) -> Option<char> {
     };
     range
         .filter_map(char::from_u32)
-        .find(|&l| l.is_lowercase() && !taken.iter().any(|&(_, s)| s == l) && !text.contains(l))
+        .find(|&l| l.is_lowercase() && !taken.iter().any(|&(_, s)| s == Some(l)) && !present.contains(&l))
 }
 
 /// The parser gem's lexer ends the input at `__END__` alone on a line it reads in its line_begin

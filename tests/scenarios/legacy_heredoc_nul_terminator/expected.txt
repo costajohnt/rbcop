@@ -6,10 +6,19 @@ after.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to var
 body_nul.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 body_nul.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
 body_nul.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+constant_after.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+constant_after.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+constant_after.rb:5:1: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+constant_after.rb:5:1: C: Naming/VariableName: Use snake_case for variable names.
+constant_after.rb:6:6: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+constant_after.rb:6:6: C: Naming/VariableName: Use snake_case for variable names.
 dash_indent.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 dash_indent.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
 dash_indent.rb:3:3: C: [Correctable] Layout/ClosingHeredocIndentation: `SQL` is not aligned with `x = <<-SQL`.
 dash_indent.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+data_marker_after.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+data_marker_after.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+data_marker_after.rb:6:3: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
 plain_before.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 plain_before.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
 plain_before.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
@@ -23,3 +32,9 @@ squiggly_indent.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignm
 squiggly_indent.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
 squiggly_indent.rb:3:3: C: [Correctable] Layout/ClosingHeredocIndentation: `SQL` is not aligned with `x = <<~SQL`.
 squiggly_indent.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+tokens_after.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+tokens_after.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+tokens_after.rb:4:5: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+tokens_after.rb:4:7: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+tokens_after.rb:5:7: C: [Correctable] Layout/SpaceAfterComma: Space missing after comma.
+tokens_after.rb:7:1: C: [Correctable] Layout/TrailingEmptyLines: 1 trailing blank lines detected.

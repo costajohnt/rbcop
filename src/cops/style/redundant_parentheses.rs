@@ -779,7 +779,7 @@ impl Cop for RedundantParentheses {
         }
         let src = cx.src;
         let mut buf = Vec::new();
-        let (result, _, _) = crate::runner::parse_for_target(src.text, &mut buf, src.version, src.target_ruby);
+        let (result, ..) = crate::runner::parse_for_target(src.text, &mut buf, src.version, src.target_ruby);
         let pending = &state.pending;
         let items: Vec<usize> = (0..pending.len()).collect();
         let apply = |c: &mut Corrector, i: usize| parentheses_corrector::apply(c, &pending[i].fix);
