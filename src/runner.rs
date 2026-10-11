@@ -164,83 +164,88 @@ enum Redundant<'a> {
 
 const REDUNDANT_DISABLE: &str = "Lint/RedundantCopDisableDirective";
 
-/// The parse of `text` that cops see and syntax checks judge, with the lexer's tokens (below 3.3)
-/// and the offsets of the comment lines the parse added (to drop from the file's comments).
+/// Bytes a rewritten copy changed: (offset, new byte).
+pub type ByteEdits = Vec<(usize, u8)>;
+
+/// The parse of `text` that cops see and syntax checks judge, with the lexer's tokens (below 3.3),
+/// the offsets of the comment lines the parse added (to drop from the file's comments), and the
+/// bytes the parsed copy changed besides those (`Source::lex_tokens` lexes the same copy).
 /// `analyze` and the reparse checks (`reparsed_equivalence`) share it; `buf` holds a rewritten copy.
 pub fn parse_for_target<'t>(
     text: &'t str,
     buf: &'t mut Vec<u8>,
     version: &'static str,
     target_ruby: f64,
-) -> (ruby_prism::ParseResult<'t>, Vec<ruby_prism::Token>, Vec<usize>) {
+) -> (ruby_prism::ParseResult<'t>, Vec<ruby_prism::Token>, Vec<usize>, ByteEdits) {
     let utf8 = !crate::source::binary_encoding(text);
     // Below 3.3 RuboCop parses with the parser gem, which accepts some things Prism rejects.
     if target_ruby >= 3.3 {
-        return (ruby_prism::parse_with_version(text.as_bytes(), version, utf8), Vec::new(), Vec::new());
+        return (ruby_prism::parse_with_version(text.as_bytes(), version, utf8), Vec::new(), Vec::new(), Vec::new());
     }
     let (mut result, mut tokens) = ruby_prism::parse_with_version_and_tokens(text.as_bytes(), version, utf8);
-    // Rewrites of a copy for Prism, keeping every offset; the original bytes are written back once
-    // parsed, so node text is the user's text (#169).
+    let mut errors = result.errors().next().is_some();
+    // Rewrites of a copy for Prism, keeping every offset (and valid UTF-8); the original bytes are
+    // written back once parsed, so node text is the user's text (#169).
     let mut copy: Option<Vec<u8>> = None;
-    let mut restore: Vec<(usize, u8)> = Vec::new();
-    // The parser gem's lexer starts a constant only at ASCII `A`-`Z` (`Ж = 1` is a local): such a
-    // CONSTANT's first character becomes, for Prism, a lowercase stand-in the file does not use
-    // (#219, #259); each capital keeps its own.
-    let mut stand_ins: Vec<(char, char)> = Vec::new();
-    for t in tokens.iter().filter(|t| t.kind == "CONSTANT") {
-        let Some(c) = crate::legacy_syntax::non_ascii_constant_start(&text[t.start..]) else { continue };
-        let l = match stand_ins.iter().find(|&&(k, _)| k == c) {
-            Some(&(_, l)) => l,
-            None => {
-                let Some(l) = crate::legacy_syntax::stand_in(c, text, &stand_ins) else { continue };
-                stand_ins.push((c, l));
-                l
-            }
-        };
-        let bytes = copy.get_or_insert_with(|| text.as_bytes().to_vec());
-        let mut enc = [0u8; 4];
-        l.encode_utf8(&mut enc);
-        for i in 0..c.len_utf8() {
-            restore.push((t.start + i, bytes[t.start + i]));
-            bytes[t.start + i] = enc[i];
+    let mut edits: Vec<(usize, u8)> = Vec::new();
+    let mut stand_ins: Vec<(char, Option<char>)> = Vec::new();
+    let mut present: Option<std::collections::HashSet<char>> = None;
+    // Each rewrite is found in the tokens of the copy so far, which one rewrite can change for
+    // another (a heredoc a NUL closes ends before an indented `__END__` or a constant, #306): parse
+    // the copy again until no rewrite is left.
+    // ponytail: bounded at 8 rounds; each round removes what it rewrites, so real files need 1-2.
+    for _ in 0..8 {
+        let cur = copy.as_deref().map_or(text, |c| std::str::from_utf8(c).unwrap_or(text));
+        let mut round: Vec<(usize, u8)> = Vec::new();
+        // The parser gem's lexer starts a constant only at ASCII `A`-`Z` (`Ж = 1` is a local): such
+        // a CONSTANT's first character becomes, for Prism, a lowercase stand-in the file does not use
+        // (#219, #259); each capital keeps its own (or none, when every candidate is in the file).
+        for t in tokens.iter().filter(|t| t.kind == "CONSTANT") {
+            let Some(c) = crate::legacy_syntax::non_ascii_constant_start(&cur[t.start..]) else { continue };
+            let l = match stand_ins.iter().find(|&&(k, _)| k == c) {
+                Some(&(_, l)) => l,
+                None => {
+                    let present = present.get_or_insert_with(|| text.chars().collect());
+                    let l = crate::legacy_syntax::stand_in(c, present, &stand_ins);
+                    stand_ins.push((c, l));
+                    l
+                }
+            };
+            let Some(l) = l else { continue };
+            let mut enc = [0u8; 4];
+            round.extend((t.start..).zip(l.encode_utf8(&mut enc).bytes()));
         }
-    }
-    // An indented `__END__` ends the input for the parser gem (#228): the copy has it start its
-    // line (`__END__\n` + the indentation, same length).
-    if text.contains("__END__")
-        && let Some((line, indent)) = crate::legacy_syntax::indented_data_marker(text, &tokens)
-    {
+        // An indented `__END__` ends the input for the parser gem (#228): the copy has it start its
+        // line (`__END__\n` + the indentation, same length).
+        if cur.contains("__END__")
+            && let Some((line, indent)) = crate::legacy_syntax::indented_data_marker(cur, &tokens)
+        {
+            round.extend((line..).zip(b"__END__\n".iter().copied().chain(std::iter::repeat_n(b' ', indent))));
+        }
+        // A NUL ends a heredoc line for the parser gem's lexer: the NULs that make a terminator line
+        // become newlines (#247).
+        if errors && cur.contains('\0') {
+            round.extend(crate::legacy_syntax::heredoc_nul_breaks(cur, &tokens).into_iter().map(|o| (o, b'\n')));
+        }
+        round.retain(|&(o, b)| cur.as_bytes()[o] != b);
+        if round.is_empty() {
+            break;
+        }
         let bytes = copy.get_or_insert_with(|| text.as_bytes().to_vec());
-        for (o, b) in (line..).zip(b"__END__\n".iter().copied().chain(std::iter::repeat_n(b' ', indent))) {
-            restore.push((o, text.as_bytes()[o]));
+        for &(o, b) in &round {
             bytes[o] = b;
         }
+        edits.extend(round);
+        let (r, t) = ruby_prism::parse_with_version_and_tokens(bytes, version, utf8);
+        (errors, tokens) = (r.errors().next().is_some(), t);
     }
-    // A NUL ends a heredoc line for the parser gem's lexer: the NULs that make a terminator line
-    // become newlines (#247).
-    if text.contains('\0') && result.errors().next().is_some() {
-        for o in crate::legacy_syntax::heredoc_nul_breaks(text, &tokens) {
-            let bytes = copy.get_or_insert_with(|| text.as_bytes().to_vec());
-            restore.push((o, text.as_bytes()[o]));
-            bytes[o] = b'\n';
-        }
-    }
-    let (errors, dots) = {
-        let dots = |tokens: &[ruby_prism::Token]| -> Vec<usize> {
-            tokens.iter().filter(|t| matches!(t.kind, "DOT" | "AMPERSAND_DOT")).map(|t| t.start).collect()
-        };
-        match &copy {
-            None => (result.errors().next().is_some(), dots(&tokens)),
-            Some(c) => {
-                let (r, t) = ruby_prism::parse_with_version_and_tokens(c, version, utf8);
-                (r.errors().next().is_some(), dots(&t))
-            }
-        }
-    };
+    let mut restore: Vec<(usize, u8)> = edits.iter().map(|&(o, _)| (o, text.as_bytes()[o])).collect();
     let mut fake = Vec::new();
     // 2.7 to 3.2: the parser gem continues a call over whitespace-only lines before a leading
     // `.`/`&.`, where Prism ends the expression. Parse with those lines made comment lines instead.
     if target_ruby >= 2.7 && errors {
+        let dots: Vec<usize> =
+            tokens.iter().filter(|t| matches!(t.kind, "DOT" | "AMPERSAND_DOT")).map(|t| t.start).collect();
         let current = copy.as_deref().map_or(text, |c| std::str::from_utf8(c).unwrap_or(text));
         if let Some((rewritten, added)) = crate::legacy_syntax::continue_over_blank_lines(current, &dots) {
             restore.extend(added.iter().map(|&f| (f, text.as_bytes()[f])));
@@ -267,7 +272,7 @@ pub fn parse_for_target<'t>(
     if target_ruby < 2.7 {
         result.drop_numbered_parameters();
     }
-    (result, tokens, fake)
+    (result, tokens, fake, edits)
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -288,7 +293,7 @@ fn analyze(
     let parser_gem = cfg.target_ruby < 3.3;
     crate::helpers::literal_node::set_fold_plus(parser_gem);
     let mut buf = Vec::new();
-    let (result, tokens, fake) = parse_for_target(text, &mut buf, version, cfg.target_ruby);
+    let (result, tokens, fake, edits) = parse_for_target(text, &mut buf, version, cfg.target_ruby);
     let mut errors: Vec<(usize, usize, String)> = result
         .errors()
         .filter(|e| !tolerated(e, parser_gem, cfg.target_ruby, text))
@@ -491,6 +496,7 @@ fn analyze(
     src.raw_text = raw_text;
     src.parser_gem = parser_gem;
     src.target_ruby = cfg.target_ruby;
+    src.lex_edits = edits;
 
     // CommentConfig is analyzed once per investigation, not again for the redundant-directive pass
     // (it reuses the processed source).

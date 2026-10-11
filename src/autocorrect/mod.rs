@@ -242,7 +242,7 @@ pub fn correct_bytes(
 pub fn write_source(path: &Path, new: &str, roots: &[PathBuf]) -> std::io::Result<()> {
     use std::fs;
     use std::io::Write;
-    use std::os::unix::fs::{MetadataExt, OpenOptionsExt};
+    use std::os::unix::fs::MetadataExt;
     static COUNTER: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
     let target = fs::canonicalize(path)?;
     let Some(root) = roots.iter().find(|r| target.starts_with(r)) else {
@@ -254,9 +254,11 @@ pub fn write_source(path: &Path, new: &str, roots: &[PathBuf]) -> std::io::Resul
     };
     // A file argument is its own root: start at its directory.
     let base = if *root == target { parent } else { root.as_path() };
-    let mut dir = fs::OpenOptions::new().read(true).custom_flags(libc::O_DIRECTORY).open(base)?;
+    // Search-only descriptors: like path-based `open`/`rename`, the walk needs only execute
+    // permission on each directory, not read.
+    let mut dir = at::open_dir(base)?;
     for c in parent.strip_prefix(base).unwrap_or(Path::new("")).components() {
-        dir = at::open(&dir, c.as_os_str(), libc::O_RDONLY | libc::O_DIRECTORY | libc::O_NOFOLLOW, 0)?;
+        dir = at::open(&dir, c.as_os_str(), at::DIR | libc::O_NOFOLLOW, 0)?;
     }
     // File.open(path, 'w') fails on a file that is not writable; the rename must not get round that.
     let mut file = at::open(&dir, name, libc::O_WRONLY | libc::O_NOFOLLOW, 0)?;
@@ -302,6 +304,28 @@ mod at {
 
     fn c(name: &OsStr) -> Result<CString> {
         Ok(CString::new(name.as_bytes())?)
+    }
+
+    /// Directory flags for a descriptor used only as the base of `*at` calls.
+    #[cfg(any(target_os = "linux", target_os = "android"))]
+    pub const DIR: libc::c_int = libc::O_PATH | libc::O_DIRECTORY;
+    #[cfg(any(target_os = "macos", target_os = "ios", target_os = "freebsd"))]
+    pub const DIR: libc::c_int = libc::O_SEARCH | libc::O_DIRECTORY;
+    #[cfg(not(any(
+        target_os = "linux",
+        target_os = "android",
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "freebsd"
+    )))]
+    pub const DIR: libc::c_int = libc::O_RDONLY | libc::O_DIRECTORY;
+
+    pub fn open_dir(path: &std::path::Path) -> Result<File> {
+        let path = c(path.as_os_str())?;
+        // SAFETY: a NUL-terminated string alive for the call.
+        let fd = check(unsafe { libc::open(path.as_ptr(), DIR | libc::O_CLOEXEC) })?;
+        // SAFETY: `fd` was just returned by open and is owned by nothing else.
+        Ok(unsafe { File::from_raw_fd(fd) })
     }
 
     fn check(r: libc::c_int) -> Result<libc::c_int> {

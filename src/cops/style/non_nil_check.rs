@@ -78,9 +78,15 @@ impl Cop for NonNilCheck {
             return cx.add_fix(s, e, "Explicit non-nil checks are usually redundant.", |c| c.replace(s, e, &fix));
         }
         if name == "nil?" {
-            // unless_and_nil_check?: the condition of an `unless`
-            let Some(parent) = parser_parent(cx.ancestors).and_then(|p| p.as_unless_node()) else { return };
+            // unless_and_nil_check?: the condition of an `unless` (an `if` node; a pattern guard
+            // `in pat unless cond` is a parser `unless_guard`, which never matches, #311)
+            let Some(parent_node) = parser_parent(cx.ancestors) else { return };
+            let Some(parent) = parent_node.as_unless_node() else { return };
             if parent.predicate().location().start_offset() != s || parent.predicate().location().end_offset() != e {
+                return;
+            }
+            let pi = cx.ancestors.iter().position(|a| std::ptr::eq(a, parent_node)).unwrap();
+            if is_pattern_guard(parent_node, &cx.ancestors[..pi]) {
                 return;
             }
             // autocorrect_unless_nil raises on a receiver-less `nil?`: the offense is lost.

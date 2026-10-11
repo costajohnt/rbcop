@@ -183,6 +183,9 @@ pub fn numbered_parameter_errors(program: &ruby_prism::Node, target: f64) -> Vec
     use ruby_prism::Visit;
     struct Scope {
         dynamic: bool,
+        /// Inside a block or lambda (the parser gem's `context.in_dynamic_block?`), which a
+        /// def/class/module body nested in it does not reset.
+        in_block: bool,
         ordinary: bool,
         max: u8,
         declared: Vec<u8>,
@@ -202,14 +205,17 @@ pub fn numbered_parameter_errors(program: &ruby_prism::Node, target: f64) -> Vec
         fn scoped(&mut self, dynamic: bool, ordinary: bool, f: impl FnOnce(&mut Self)) {
             let declared =
                 if dynamic { self.scopes.last().map_or(Vec::new(), |s| s.declared.clone()) } else { Vec::new() };
-            self.scopes.push(Scope { dynamic, ordinary, max: 0, declared });
+            let in_block = dynamic || self.scopes.last().is_some_and(|s| s.in_block);
+            self.scopes.push(Scope { dynamic, in_block, ordinary, max: 0, declared });
             f(self);
             self.scopes.pop();
         }
         fn read(&mut self, name: &[u8], loc: ruby_prism::Location) {
             let Some(n) = numparam(name) else { return };
             let top = self.scopes.len() - 1;
-            if !self.scopes[top].dynamic || self.scopes[top].declared.contains(&n) {
+            // A def/class body in a block takes `_1` as a numbered parameter too, checked against
+            // the scopes outside it (`foo { _1; def x; _1; end }` is an error).
+            if !self.scopes[top].in_block || self.scopes[top].declared.contains(&n) {
                 return;
             }
             let (s, e) = (loc.start_offset(), loc.end_offset());
@@ -289,7 +295,7 @@ pub fn numbered_parameter_errors(program: &ruby_prism::Node, target: f64) -> Vec
     }
     let mut w = Walk {
         target,
-        scopes: vec![Scope { dynamic: false, ordinary: false, max: 0, declared: Vec::new() }],
+        scopes: vec![Scope { dynamic: false, in_block: false, ordinary: false, max: 0, declared: Vec::new() }],
         out: Vec::new(),
     };
     w.visit(program);
