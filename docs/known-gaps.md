@@ -150,6 +150,11 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - RuboCop cop crashes on odd input are not reproduced: RuboCop prints `An error occurred while
   ...` and exits 1 where rbcop's port inspects the file normally (Layout/EmptyLinesAroundMethodBody
   on `def foo(bar` / `    )end`, Style/NegativeArrayIndex, Style/HashConversion, Style/RequireOrder).
+  Cop errors from config values (MinBodyLength / MinBranchesCount not a positive Integer,
+  SafeNavigationChainLength `Max` 0 or less, a zero indentation width with tabs, #114) are
+  reproduced. Order of cop errors: rbcop's `N errors occurred:` summary is sorted, RuboCop's is in
+  raise order; and errors printed as they happen come from on_file cops (RuboCop's
+  on_new_investigation) after the node walk's, where RuboCop prints them first.
 - Deliberate: Style/WordArray correcting a `%W[...]` whose value is invalid UTF-8 (`%W[\xff]`)
   writes the escaped form (`["\xFF"]`); RuboCop writes the raw bytes and then crashes re-parsing
   its own output. The offense message matches RuboCop.

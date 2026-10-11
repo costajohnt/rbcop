@@ -436,6 +436,73 @@ fn cop_error_is_located_at_the_visited_node() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// Option values RuboCop's cops raise on (#114): MinBodyLength / MinBranchesCount not a positive
+/// Integer, SafeNavigationChainLength `Max: 0` (add_offense(nil), also for a csend with a block),
+/// a zero IndentationWidth with tabs (ZeroDivisionError). Each is a cop error at the visited node
+/// (IndentationStyle's in on_new_investigation, so the bare path) and the offense is lost.
+/// Expected lines recorded from RuboCop 1.91.
+#[test]
+fn config_values_cops_raise_on_are_cop_errors() {
+    let cases = [
+        (
+            "Style/GuardClause:\n  MinBodyLength: 0\nStyle/Next:\n  MinBodyLength: 1.5\nStyle/CaseLikeIf:\n  \
+             MinBranchesCount: 0\nStyle/HashLikeCase:\n  MinBranchesCount: -1\nStyle/SafeNavigationChainLength:\n  Max: 0\n",
+            "def m\n  if a\n    b\n  end\nend\n[1].each do |x|\n  if x\n    y\n  end\nend\nif x == 1\n  a\nelsif x == 2\n  \
+             b\nend\ncase x\nwhen 1 then :a\nwhen 2 then :b\nend\nfoo&.bar\nfoo&.bar { }\n",
+            "Style/GuardClause,Style/Next,Style/CaseLikeIf,Style/HashLikeCase,Style/SafeNavigationChainLength",
+            &[
+                "Style/GuardClause:1:0",
+                "Style/Next:6:0",
+                "Style/CaseLikeIf:11:0",
+                "Style/HashLikeCase:16:0",
+                "Style/SafeNavigationChainLength:20:0",
+                "Style/SafeNavigationChainLength:21:0",
+            ][..],
+        ),
+        (
+            "Layout/IndentationWidth:\n  Width: 0\nLayout/IndentationStyle:\n  EnforcedStyle: tabs\n",
+            "def m\n  x\nend\n",
+            "Layout/IndentationWidth,Layout/IndentationStyle",
+            &["Layout/IndentationStyle", "Layout/IndentationWidth:1:0"][..],
+        ),
+    ];
+    for (config, source, only, want) in cases {
+        let dir = scratch("configraise");
+        fs::write(
+            dir.join(".rubocop.yml"),
+            format!("AllCops:\n  NewCops: enable\n  SuggestExtensions: false\n{config}"),
+        )
+        .unwrap();
+        fs::write(dir.join("a.rb"), source).unwrap();
+        let out = rbcop(&dir, &["--only", only, "-f", "e", "a.rb"]);
+        let abs = dir.join("a.rb").display().to_string();
+        let want: Vec<String> = want
+            .iter()
+            .map(|w| match w.split_once(':') {
+                Some((cop, at)) => format!("An error occurred while {cop} cop was inspecting {abs}:{at}."),
+                None => format!("An error occurred while {w} cop was inspecting {abs}."),
+            })
+            .collect();
+        let err = text(&out.stderr);
+        // The end-of-run summary, as a set: rbcop sorts it (runner::take_errors) where RuboCop
+        // keeps raise order, and runs on_file cops after the walk, so the errors printed as they
+        // happen put IndentationStyle's (RuboCop: on_new_investigation, first) last.
+        let mut want = want;
+        want.sort();
+        let mut got: Vec<&str> = err
+            .lines()
+            .skip_while(|l| !l.ends_with("errors occurred:"))
+            .skip(1)
+            .take_while(|l| l.starts_with("An error"))
+            .collect();
+        got.sort();
+        assert_eq!(got, want, "{err}");
+        assert_eq!(text(&out.stdout), "", "{only}");
+        assert_eq!(out.status.code(), Some(1));
+        let _ = fs::remove_dir_all(&dir);
+    }
+}
+
 /// The processed file name is the expanded absolute path: `__FILE__`'s value (Style/StringConcatenation
 /// folds it into the literal) and a cop Warning's `(from file: ...)`, which ExecuteRunner repeats
 /// in its end-of-run `N warnings:` summary, one per raise (two -A iterations here).
