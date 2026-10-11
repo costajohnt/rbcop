@@ -1,0 +1,20 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+Gemfile:1:26: C: [Correctable] Migration/DepartmentName: Department name is missing.
+Gemfile:1:8: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Layout/LineLength`.
+Gemfile:2:19: C: [Correctable] Migration/DepartmentName: Department name is missing.
+Gemfile:2:1: W: Lint/MissingCopEnableDirective: Re-enable Metrics/AbcSize cop with `# rubocop:enable` after disabling it.
+Gemfile:2:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/AbcSize`, `Metrics/MethodLength`.
+Gemfile:2:33: C: [Correctable] Migration/DepartmentName: Department name is missing.
+Gemfile:3:26: C: [Correctable] Migration/DepartmentName: Department name is missing.
+Gemfile:3:8: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Layout/LineLength`.
+Gemfile:4:18: C: [Correctable] Migration/DepartmentName: Department name is missing.
+a.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a.rb:1:26: C: [Correctable] Migration/DepartmentName: Department name is missing.
+a.rb:1:8: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Layout/LineLength`.
+a.rb:2:19: C: [Correctable] Migration/DepartmentName: Department name is missing.
+a.rb:2:1: W: Lint/MissingCopEnableDirective: Re-enable Metrics/AbcSize cop with `# rubocop:enable` after disabling it.
+a.rb:2:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/AbcSize`, `Metrics/MethodLength`.
+a.rb:2:33: C: [Correctable] Migration/DepartmentName: Department name is missing.
+a.rb:3:26: C: [Correctable] Migration/DepartmentName: Department name is missing.
+a.rb:3:8: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Layout/LineLength`.
+a.rb:4:18: C: [Correctable] Migration/DepartmentName: Department name is missing.

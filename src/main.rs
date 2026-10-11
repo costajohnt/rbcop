@@ -1276,6 +1276,10 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                     break;
                 }
             };
+            // Registry#print_department_missing_warning, written while the file was inspected.
+            for w in &report.warnings {
+                eprintln!("{w}");
+            }
             // Team#autocorrect writes the file before it is reported (with --stdin, keeps the source
             // for printing); a failed write ends the run.
             if stdin_text.is_some() {
