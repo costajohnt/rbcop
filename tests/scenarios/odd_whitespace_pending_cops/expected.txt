@@ -1,0 +1,8 @@
+in_pattern.rb:2:8: C: [Correctable] Style/InPatternThen: Do not use `in foo;`. Use `in foo then` instead.
+in_pattern.rb:3:8: C: [Correctable] Style/InPatternThen: Do not use `in baz;`. Use `in baz then` instead.
+in_pattern.rb:4:9: C: [Correctable] Style/InPatternThen: Do not use `in quux;`. Use `in quux then` instead.
+in_pattern.rb:5:12: C: [Correctable] Style/InPatternThen: Do not use `in [a, b];`. Use `in [a, b] then` instead.
+line_break.rb:1:12: C: [Correctable] Layout/FirstMethodArgumentLineBreak: Add a line break before the first argument of a multi-line method argument list.
+line_break.rb:3:12: C: [Correctable] Layout/FirstMethodArgumentLineBreak: Add a line break before the first argument of a multi-line method argument list.
+line_break.rb:5:12: C: [Correctable] Layout/FirstMethodArgumentLineBreak: Add a line break before the first argument of a multi-line method argument list.
+line_break.rb:7:12: C: [Correctable] Layout/FirstMethodArgumentLineBreak: Add a line break before the first argument of a multi-line method argument list.
