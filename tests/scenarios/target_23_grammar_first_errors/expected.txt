@@ -1,0 +1,32 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+block_trailing_comma.rb:1:14: F: Lint/Syntax: unexpected token tPIPE (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+class_return.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+class_return_masgn.rb:2:18: F: Lint/Syntax: multiple assignment in conditional context (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+class_return_unless.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for `class C`.
+class_return_unless.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+class_return_value.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for `class C`.
+class_return_value.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+class_return_value.rb:2:3: W: [Correctable] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+def_trailing_comma.rb:1:9: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+def_trailing_comma_kwarg.rb:1:13: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+def_trailing_comma_kwrest.rb:1:14: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+def_trailing_comma_optkw.rb:1:15: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+def_trailing_comma_rest.rb:1:13: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+forward_block.rb:1:6: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+forward_block_in_class.rb:2:16: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+forward_block_in_class.rb:2:9: F: Lint/Syntax: unexpected token tEQL (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+forward_kwrest.rb:1:15: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+forward_kwrest.rb:1:7: F: Lint/Syntax: unexpected token tEQL (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+forward_rest.rb:1:14: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+forward_rest.rb:1:7: F: Lint/Syntax: unexpected token tEQL (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+index_block.rb:1:11: F: Lint/Syntax: unexpected token tLBRACE_ARG (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+index_block.rb:1:20: F: Lint/Syntax: unexpected token tRCURLY (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+index_block_chain.rb:1:14: F: Lint/Syntax: unexpected token tLBRACE_ARG (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+index_block_params.rb:1:11: F: Lint/Syntax: unexpected token tLBRACE_ARG (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+index_block_params.rb:1:19: F: Lint/Syntax: unexpected token tRCURLY (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+index_do_block.rb:1:11: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+lambda_do_ensure.rb:3:1: F: Lint/Syntax: unexpected token kENSURE (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+lambda_do_rescue.rb:3:1: F: Lint/Syntax: unexpected token kRESCUE (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+lambda_params_do_rescue.rb:3:1: F: Lint/Syntax: unexpected token kRESCUE (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+module_return_if.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for `module M`.
+module_return_if.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
