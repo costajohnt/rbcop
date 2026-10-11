@@ -85,6 +85,7 @@ fn immutable_literal(cx: &Cx, node: Node) -> bool {
     }
 }
 
+// Narrower than select_by::plain_send: a `&blk` pass is allowed, a literal block is not.
 fn plain_send<'pr>(node: &Node<'pr>) -> Option<ruby_prism::CallNode<'pr>> {
     node.as_call_node().filter(|c| !is_csend(c) && c.block().is_none_or(|b| b.as_block_argument_node().is_some()))
 }

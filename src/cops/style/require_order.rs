@@ -2,6 +2,7 @@ use crate::helpers::comment_association::leading;
 use crate::helpers::literal_node::parser_type;
 use crate::helpers::whole_lines::range_by_whole_lines;
 use crate::prelude::*;
+use helpers::select_by::plain_send;
 use ruby_prism::CallNode;
 
 pub const NAME: &str = "Style/RequireOrder";
@@ -28,11 +29,6 @@ fn modifier_body<'pr>(n: &Node<'pr>) -> Result<Option<Node<'pr>>, ()> {
     let mut it = stmts.into_iter().flat_map(|s| s.body().iter());
     let first = it.next();
     Ok(if it.next().is_some() { None } else { first })
-}
-
-/// A parser `send` (no literal block).
-fn plain_send<'pr>(n: &Node<'pr>) -> Option<CallNode<'pr>> {
-    n.as_call_node().filter(|c| !is_csend(c) && c.block().is_none_or(|b| b.as_block_node().is_none()))
 }
 
 fn arguments<'pr>(c: &CallNode<'pr>) -> Vec<Node<'pr>> {
