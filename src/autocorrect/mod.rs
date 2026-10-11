@@ -7,7 +7,7 @@ pub mod tree_rewriter;
 use crate::config::value::Value;
 use crate::config::{CopConfig, Resolved};
 use crate::cop::Offense;
-use crate::formatter::line_col;
+use crate::formatter::{line_col_at, line_starts};
 use crate::runner::{self, FileReport};
 use corrector::Corrector;
 use std::collections::{HashMap, HashSet};
@@ -95,6 +95,7 @@ pub fn correct(
     selected: &dyn Fn(&str) -> bool,
     mode: Mode,
 ) -> Corrected {
+    crate::directives::take_warnings();
     let (mut offenses, mut current, changed, error, disabled) =
         inspection_loop(path, display, Arc::from(text), cfg, selected, mode);
     let mut changed = changed;
@@ -102,10 +103,8 @@ pub fn correct(
     // judges the final source against every offense found, and when it removed directives the
     // whole loop runs once more; both offense lists are kept (`offenses |= new_offenses`).
     if error.is_none() {
-        let span = |o: &Offense| {
-            let text = o.source.as_deref().unwrap_or("");
-            (o.cop, line_col(text, o.start).0, line_col(text, o.end.max(o.start)).0)
-        };
+        let mut lines = Lines::default();
+        let span = |o: &Offense| (o.cop, lines.line_col(o, o.start).0, lines.line_col(o, o.end.max(o.start)).0);
         let checked: Vec<runner::Span> = offenses.iter().map(span).chain(disabled).collect();
         let normalised = normalise(&current);
         let (mut found, corrector) =
@@ -124,7 +123,11 @@ pub fn correct(
             }
         }
     }
-    let report = FileReport { offenses: uniq_sorted(offenses), text: normalise(&current).to_string() };
+    let report = FileReport {
+        offenses: uniq_sorted(offenses),
+        text: normalise(&current).to_string(),
+        warnings: crate::directives::take_warnings(),
+    };
     Corrected { source: changed.then(|| current.to_string()), report, error }
 }
 
@@ -272,23 +275,37 @@ fn infinite_loop(path: &Path, iterations: &[Vec<Offense>]) -> String {
     let cause: Vec<String> = iterations
         .iter()
         .map(|offenses| {
-            let mut names: Vec<&str> = Vec::new();
-            for o in offenses {
-                if !names.contains(&o.cop) {
-                    names.push(o.cop);
-                }
-            }
+            // InfiniteCorrectionLoop maps the team's offenses to cop names: the team reports per
+            // cop, and Registry#sort! orders its cops by name.
+            let mut names: Vec<&str> = offenses.iter().map(|o| o.cop).collect();
+            names.sort_unstable();
+            names.dedup();
             names.join(", ")
         })
         .collect();
     format!("Infinite loop detected in {} and caused by {}", path.display(), cause.join(" -> "))
 }
 
+/// Line/column lookups for offenses of a file's sources (one per -A iteration), with each
+/// source's line starts indexed once: rescanning the source per offense made -A quadratic in the
+/// number of corrections.
+#[derive(Default)]
+struct Lines(HashMap<usize, Vec<usize>>);
+
+impl Lines {
+    fn line_col(&mut self, o: &Offense, off: usize) -> (usize, usize) {
+        let text = o.source.as_deref().unwrap_or("");
+        let starts = self.0.entry(text.as_ptr() as usize).or_insert_with(|| line_starts(text));
+        line_col_at(text, starts, off)
+    }
+}
+
 /// `offenses.flatten.uniq` then `sort`: Offense equality and order are by
 /// (line, column, cop name, message, severity).
 fn uniq_sorted(offenses: Vec<Offense>) -> Vec<Offense> {
-    let key = |o: &Offense| {
-        let (line, col) = line_col(o.source.as_deref().unwrap_or(""), o.start);
+    let mut lines = Lines::default();
+    let mut key = |o: &Offense| {
+        let (line, col) = lines.line_col(o, o.start);
         (line, col, o.cop, o.message.clone(), o.severity)
     };
     let mut seen = HashSet::new();

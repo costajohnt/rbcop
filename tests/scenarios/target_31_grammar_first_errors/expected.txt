@@ -1,0 +1,31 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+block_trailing_comma.rb:1:14: F: Lint/Syntax: unexpected token tPIPE (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+class_return.rb:2:3: F: Lint/Syntax: Invalid return in class/module body (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+class_return_unless.rb:2:3: F: Lint/Syntax: Invalid return in class/module body (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+class_return_value.rb:2:3: F: Lint/Syntax: Invalid return in class/module body (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+def_trailing_comma.rb:1:9: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+def_trailing_comma_kwarg.rb:1:13: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+def_trailing_comma_kwrest.rb:1:14: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+def_trailing_comma_optkw.rb:1:15: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+def_trailing_comma_rest.rb:1:13: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+forward_block.rb:1:5: F: Lint/Syntax: no anonymous block parameter (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+forward_block_in_class.rb:2:15: F: Lint/Syntax: no anonymous block parameter (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+forward_kwrest.rb:1:15: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+forward_rest.rb:1:14: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+index_block.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+index_block_chain.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+index_block_params.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+index_do_block.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+lambda_do_ensure.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+lambda_do_ensure.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+lambda_do_ensure.rb:1:5: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+lambda_do_rescue.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+lambda_do_rescue.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+lambda_do_rescue.rb:1:5: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+lambda_do_rescue.rb:3:25: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `e`.
+lambda_params_do_rescue.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+lambda_params_do_rescue.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+lambda_params_do_rescue.rb:1:5: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+lambda_params_do_rescue.rb:1:8: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `a`. If it's necessary, use `_` or `_a` as an argument name to indicate that it won't be used. Also consider using a proc without arguments instead of a lambda if you want it to accept any arguments but don't care about them.
+lambda_params_do_rescue.rb:3:1: C: [Correctable] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+module_return_if.rb:1:11: F: Lint/Syntax: Invalid return in class/module body (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)

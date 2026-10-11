@@ -4,6 +4,7 @@
 use crate::source::Source;
 use regex::Regex;
 use std::collections::HashMap;
+use std::path::Path;
 use std::sync::LazyLock;
 
 pub static DIRECTIVE: LazyLock<Regex> = LazyLock::new(|| {
@@ -103,6 +104,62 @@ fn department_cops(dept: &str) -> Vec<&'static str> {
         .filter(|c| c.starts_with(&prefix))
         .filter(|c| dept != "Lint" || (*c != LINT_SYNTAX && *c != LINT_REDUNDANT))
         .collect()
+}
+
+thread_local! {
+    /// The `no department given` warnings of the file being inspected on this thread, in order.
+    static WARNINGS: std::cell::RefCell<Vec<String>> = const { std::cell::RefCell::new(Vec::new()) };
+}
+
+/// The warnings `warn_unqualified` collected on this thread since the last call.
+pub fn take_warnings() -> Vec<String> {
+    WARNINGS.with(|w| std::mem::take(&mut *w.borrow_mut()))
+}
+
+/// Registry#qualified_cop_name's print_department_missing_warning, for the names of `d` that
+/// CommentConfig qualifies (department names are expanded first, so never warned about): a bare
+/// name of a known cop warns, once per occurrence, each time the file's directives are analyzed.
+pub fn warn_unqualified(src: &Source, d: &Directive) {
+    if d.cops.as_deref() == Some("all") {
+        return;
+    }
+    let names: Vec<&str> =
+        if d.signed() { d.signed_args().into_iter().map(|(_, n)| n).collect() } else { d.raw_names() };
+    for raw in names.into_iter().filter(|raw| !is_department(raw)) {
+        warn_name(src, raw);
+    }
+}
+
+/// `print_department_missing_warning` for one (non-department) directive name.
+fn warn_name(src: &Source, raw: &str) {
+    static BASENAMES: LazyLock<std::collections::HashSet<&'static str>> = LazyLock::new(|| {
+        known().map(|c| c.rsplit('/').next().unwrap_or(c)).chain(["RedundantCopDisableDirective"]).collect()
+    });
+    let name = raw.trim();
+    if !BASENAMES.contains(name) {
+        return;
+    }
+    let path = crate::config::validator::smart_path(Path::new(&src.absolute_path()), &crate::config::cwd());
+    let fix = if src.path.ends_with(".rb") { " Run `rubocop -a --only Migration/DepartmentName` to fix." } else { "" };
+    WARNINGS.with(|w| w.borrow_mut().push(format!("{path}: Warning: no department given for {name}.{fix}")));
+}
+
+/// `directive.cop_names.all? { |cop| ... qualified_name(cop) ... }` (Style/DirectiveScope): like
+/// `cop_names(d).iter().all(f)`, warning about each bare name as it is reached.
+pub fn all_cop_names(src: &Source, d: &Directive, mut f: impl FnMut(&str) -> bool) -> bool {
+    if d.cops.as_deref() == Some("all") {
+        return cop_names(d).iter().all(|c| f(c));
+    }
+    d.raw_names().into_iter().all(|raw| {
+        if is_department(raw) {
+            return department_cops(raw).into_iter().all(&mut f);
+        }
+        if raw == LINT_SYNTAX {
+            return true;
+        }
+        warn_name(src, raw);
+        f(&qualify(raw))
+    })
 }
 
 /// Registry.qualified_cop_name: a bare name becomes the unique cop with that name; anything else
@@ -244,7 +301,13 @@ pub struct CommentConfig {
 /// CommentConfig#analyze. `config_disabled` are cops off in config (they start disabled from
 /// before line 1); `prevent_style` is `prevent_directive_disabling?` (Style/DisableCopsWithinSourceCodeDirective
 /// is `Enabled: true` in config, so no directive disables it).
-pub fn analyze(src: &Source, config_disabled: &[&'static str], lines: &LineInfo, prevent_style: bool) -> CommentConfig {
+pub fn analyze(
+    src: &Source,
+    config_disabled: &[&'static str],
+    lines: &LineInfo,
+    prevent_style: bool,
+    warn: bool,
+) -> CommentConfig {
     if !src.text.contains("rubocop") {
         return CommentConfig::default();
     }
@@ -272,6 +335,9 @@ pub fn analyze(src: &Source, config_disabled: &[&'static str], lines: &LineInfo,
         let line = src.line_of(c.start) as i64;
         match d.mode.as_str() {
             "push" => {
+                if warn {
+                    warn_unqualified(src, &d);
+                }
                 stack.push(analyses.clone());
                 for (op, cop) in resolve_signed(&d) {
                     let a = entry(&mut analyses, &mut order, cop);
@@ -297,10 +363,17 @@ pub fn analyze(src: &Source, config_disabled: &[&'static str], lines: &LineInfo,
                 }
             }
             "disable-next" | "todo-next" | "next" | "enable-next" => {
+                // PushPop#resolve_push_cops runs before DisableNext looks for the statement.
+                if warn && d.mode == "next" {
+                    warn_unqualified(src, &d);
+                }
                 let Some((first, last)) = statement_scope_after(lines, src, line) else {
                     detached.push(index);
                     continue;
                 };
+                if warn && d.mode != "next" {
+                    warn_unqualified(src, &d);
+                }
                 let (first, last) = (first as i64, last as i64);
                 let ops: Vec<(char, String)> = match d.mode.as_str() {
                     "next" => resolve_signed(&d),
@@ -319,6 +392,9 @@ pub fn analyze(src: &Source, config_disabled: &[&'static str], lines: &LineInfo,
             }
             _ => {
                 let single_line = d.start != 0;
+                if warn {
+                    warn_unqualified(src, &d);
+                }
                 for cop in cop_names(&d) {
                     let a = entry(&mut analyses, &mut order, cop);
                     if !lines.comment_only(line) || single_line {

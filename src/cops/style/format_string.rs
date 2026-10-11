@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use helpers::select_by::plain_send;
 
 pub const NAME: &str = "Style/FormatString";
 pub static COP: FormatString = FormatString;
@@ -8,11 +9,6 @@ const AUTOCORRECTABLE_METHODS: &[&str] = &["to_d", "to_f", "to_h", "to_i", "to_r
 
 fn is_str(node: &Node) -> bool {
     node.as_string_node().is_some() || node.as_interpolated_string_node().is_some()
-}
-
-/// A parser `send` (not csend, no attached `{}`/`do` block).
-fn is_send(node: &Node) -> bool {
-    node.as_call_node().is_some_and(|c| !is_csend(&c) && c.block().is_none_or(|b| b.as_block_node().is_none()))
 }
 
 fn display(style: &str) -> &str {
@@ -36,7 +32,7 @@ fn format_single_parameter(arg: &Node) -> String {
         )
         || arg.as_call_node().is_some_and(|c| {
             // `parenthesized?` is `loc.end == ')'`: `x[:k]` (Prism opening `[`) is not.
-            is_send(arg)
+            plain_send(arg).is_some()
                 && helpers::node_types::is_operator_method(method_name(&c))
                 && c.closing_loc().is_none_or(|l| l.as_slice() != b")")
         });
@@ -82,7 +78,7 @@ impl Cop for FormatString {
             && recv.as_ref().is_some_and(is_str)
             && args.len() == 1
             && (args[0].as_local_variable_read_node().is_some()
-                || (is_send(&args[0])
+                || (plain_send(&args[0]).is_some()
                     && !AUTOCORRECTABLE_METHODS.contains(&method_name(&args[0].as_call_node().unwrap()))));
         let (s, e) = send_range(&call);
         let replacement: Option<String> = if variable {

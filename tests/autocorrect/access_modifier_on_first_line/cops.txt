@@ -1,0 +1,1 @@
+Layout/EmptyLinesAroundAccessModifier,Layout/InitialIndentation,Style/FrozenStringLiteralComment,Layout/EmptyLineAfterMagicComment,Lint/UselessAccessModifier,Layout/LineLength

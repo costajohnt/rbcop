@@ -105,7 +105,7 @@ impl Next {
         let allowed = match &p.end_kw {
             None => cx.cfg.str("EnforcedStyle") == Some("skip_modifier_ifs"),
             Some(e) => {
-                let min = cx.cfg.int("MinBodyLength").unwrap_or(1) as usize;
+                let min = cx.cfg.positive_int("MinBodyLength", 1);
                 cx.src.line_of(e.start_offset()) - cx.src.line_of(p.keyword.start_offset()) <= min
             }
         };

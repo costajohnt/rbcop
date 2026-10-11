@@ -1,0 +1,3 @@
+puts(foo
+	
+  &.bar)

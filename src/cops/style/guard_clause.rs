@@ -217,7 +217,7 @@ impl GuardClause {
         if Self::accepted_form(cx, &p, true, false) {
             return;
         }
-        let min = cx.cfg.int("MinBodyLength").unwrap_or(1) as usize;
+        let min = cx.cfg.positive_int("MinBodyLength", 1);
         let end = p.end_kw.as_ref().unwrap();
         if cx.src.line_of(end.start_offset()) - cx.src.line_of(p.keyword.start_offset()) <= min {
             return;

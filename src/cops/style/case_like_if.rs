@@ -262,7 +262,7 @@ impl Cop for CaseLikeIf {
         if !n.subsequent().is_some_and(|s| s.as_if_node().is_some()) || is_pattern_guard(node, cx.ancestors) {
             return;
         }
-        let min = cx.cfg.int("MinBranchesCount").filter(|&m| m > 0).unwrap_or(3) as usize;
+        let min = cx.cfg.positive_int("MinBranchesCount", 3);
         if branch_count(node) < min {
             return;
         }

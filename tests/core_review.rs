@@ -436,6 +436,91 @@ fn cop_error_is_located_at_the_visited_node() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// InfiniteCorrectionLoop lists each iteration's cops in team order, which Registry#sort! makes
+/// cop-name order (specs corpus style/redundant_line_continuation/089.rb).
+#[test]
+fn infinite_loop_names_cops_in_name_order() {
+    let dir = scratch("infloop");
+    fs::write(dir.join("t.rb"), "class Foo\n  memoize \\\n  def do_something\n  end\nend\n").unwrap();
+    let only = "Layout/DefEndAlignment,Layout/TrailingWhitespace,Style/EmptyMethod,Style/Semicolon";
+    let out = rbcop(&dir, &["-A", "--only", only, "--force-default-config", "-f", "e", "t.rb"]);
+    let want = format!(
+        "Infinite loop detected in {} and caused by Layout/DefEndAlignment -> Layout/TrailingWhitespace, \
+         Style/EmptyMethod, Style/Semicolon\n",
+        dir.join("t.rb").display()
+    );
+    assert!(text(&out.stderr).contains(&want), "{}", text(&out.stderr));
+    assert_eq!(out.status.code(), Some(1));
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// Option values RuboCop's cops raise on (#114): MinBodyLength / MinBranchesCount not a positive
+/// Integer, SafeNavigationChainLength `Max: 0` (add_offense(nil), also for a csend with a block),
+/// a zero IndentationWidth with tabs (ZeroDivisionError). Each is a cop error at the visited node
+/// (IndentationStyle's in on_new_investigation, so the bare path) and the offense is lost.
+/// Expected lines recorded from RuboCop 1.91.
+#[test]
+fn config_values_cops_raise_on_are_cop_errors() {
+    let cases = [
+        (
+            "Style/GuardClause:\n  MinBodyLength: 0\nStyle/Next:\n  MinBodyLength: 1.5\nStyle/CaseLikeIf:\n  \
+             MinBranchesCount: 0\nStyle/HashLikeCase:\n  MinBranchesCount: -1\nStyle/SafeNavigationChainLength:\n  Max: 0\n",
+            "def m\n  if a\n    b\n  end\nend\n[1].each do |x|\n  if x\n    y\n  end\nend\nif x == 1\n  a\nelsif x == 2\n  \
+             b\nend\ncase x\nwhen 1 then :a\nwhen 2 then :b\nend\nfoo&.bar\nfoo&.bar { }\n",
+            "Style/GuardClause,Style/Next,Style/CaseLikeIf,Style/HashLikeCase,Style/SafeNavigationChainLength",
+            &[
+                "Style/GuardClause:1:0",
+                "Style/Next:6:0",
+                "Style/CaseLikeIf:11:0",
+                "Style/HashLikeCase:16:0",
+                "Style/SafeNavigationChainLength:20:0",
+                "Style/SafeNavigationChainLength:21:0",
+            ][..],
+        ),
+        (
+            "Layout/IndentationWidth:\n  Width: 0\nLayout/IndentationStyle:\n  EnforcedStyle: tabs\n",
+            "def m\n  x\nend\n",
+            "Layout/IndentationWidth,Layout/IndentationStyle",
+            &["Layout/IndentationStyle", "Layout/IndentationWidth:1:0"][..],
+        ),
+    ];
+    for (config, source, only, want) in cases {
+        let dir = scratch("configraise");
+        fs::write(
+            dir.join(".rubocop.yml"),
+            format!("AllCops:\n  NewCops: enable\n  SuggestExtensions: false\n{config}"),
+        )
+        .unwrap();
+        fs::write(dir.join("a.rb"), source).unwrap();
+        let out = rbcop(&dir, &["--only", only, "-f", "e", "a.rb"]);
+        let abs = dir.join("a.rb").display().to_string();
+        let want: Vec<String> = want
+            .iter()
+            .map(|w| match w.split_once(':') {
+                Some((cop, at)) => format!("An error occurred while {cop} cop was inspecting {abs}:{at}."),
+                None => format!("An error occurred while {w} cop was inspecting {abs}."),
+            })
+            .collect();
+        let err = text(&out.stderr);
+        // The end-of-run summary, as a set: rbcop sorts it (runner::take_errors) where RuboCop
+        // keeps raise order, and runs on_file cops after the walk, so the errors printed as they
+        // happen put IndentationStyle's (RuboCop: on_new_investigation, first) last.
+        let mut want = want;
+        want.sort();
+        let mut got: Vec<&str> = err
+            .lines()
+            .skip_while(|l| !l.ends_with("errors occurred:"))
+            .skip(1)
+            .take_while(|l| l.starts_with("An error"))
+            .collect();
+        got.sort();
+        assert_eq!(got, want, "{err}");
+        assert_eq!(text(&out.stdout), "", "{only}");
+        assert_eq!(out.status.code(), Some(1));
+        let _ = fs::remove_dir_all(&dir);
+    }
+}
+
 /// The processed file name is the expanded absolute path: `__FILE__`'s value (Style/StringConcatenation
 /// folds it into the literal) and a cop Warning's `(from file: ...)`, which ExecuteRunner repeats
 /// in its end-of-run `N warnings:` summary, one per raise (two -A iterations here).
@@ -578,5 +663,51 @@ fn backtracking_config_regexp_on_a_long_name_is_bounded() {
     let out = rbcop(&dir, &["--only", "Naming/VariableName", "-f", "q", "a.rb"]);
     assert!(t0.elapsed() < std::time::Duration::from_secs(30), "took {:?}", t0.elapsed());
     assert!(text(&out.stdout).ends_with("1 file inspected, 1 offense detected\n"), "{}", text(&out.stdout));
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// The corpus gates fail loudly when the binary they test is missing or lists no cops (#163). A
+/// missing binary once produced an empty cop list, filtered both sides to nothing and reported
+/// `all corpora match`. `cargo` is stubbed so the scripts' rebuild cannot restore the binary.
+#[test]
+fn gate_scripts_fail_without_a_binary_or_cops() {
+    let dir = scratch("gate-scripts");
+    let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+    let stubs = dir.join("bin");
+    fs::create_dir_all(stubs.join("release")).unwrap();
+    fs::write(stubs.join("cargo"), "#!/bin/sh\nexit 0\n").unwrap();
+    fs::set_permissions(stubs.join("cargo"), fs::Permissions::from_mode(0o755)).unwrap();
+    let path = format!("{}:{}", stubs.display(), std::env::var("PATH").unwrap_or_default());
+    let run = |script: &str, args: &[&str]| {
+        let out = std::process::Command::new("sh")
+            .arg(root.join("scripts").join(script))
+            .args(args)
+            .env("PATH", &path)
+            .env("CARGO_TARGET_DIR", &stubs)
+            .env("RBCOP_CORPUS", &dir)
+            .env("RBCOP_ORACLE", &dir)
+            .current_dir(&dir)
+            .output()
+            .unwrap();
+        (out.status.code(), text(&out.stdout), text(&out.stderr))
+    };
+    // No binary at all.
+    let (code, out, err) = run("check-cops.sh", &["all", "specs"]);
+    assert_eq!(code, Some(1), "{out}{err}");
+    assert!(err.contains("rbcop does not run as"), "{out}{err}");
+    assert!(!out.contains("all corpora match"), "{out}");
+    // A binary that runs but implements no cops.
+    let fake = stubs.join("release/rbcop");
+    fs::write(&fake, "#!/bin/sh\n[ \"$1\" = --version ] && echo 0.0.0\nexit 0\n").unwrap();
+    fs::set_permissions(&fake, fs::Permissions::from_mode(0o755)).unwrap();
+    for (script, args) in [("check-cops.sh", &["all", "specs"][..]), ("compare.sh", &["."][..])] {
+        let (code, out, err) = run(script, args);
+        assert_eq!(code, Some(1), "{script}: {out}{err}");
+        assert!(err.contains("no cops from"), "{script}: {out}{err}");
+    }
+    // An explicitly empty cop list.
+    let (code, _, err) = run("check-cops.sh", &["", "specs"]);
+    assert_eq!(code, Some(1), "{err}");
+    assert!(err.contains("empty cop list"), "{err}");
     let _ = fs::remove_dir_all(&dir);
 }
