@@ -556,9 +556,13 @@ pub enum RubyRegex {
 }
 
 // ponytail: fancy-regex has no match cache, so these budgets only bound the cost of exponential
-// patterns; a smaller per-position budget keeps the retry scan linear in the text.
+// patterns: one search gets SEARCH_LIMIT steps, each retried start position ANCHORED_LIMIT, and a
+// whole find_at / replace_all call RETRY_BUDGET for the searches that give up and the retries
+// (one search, then 64 positions). An anchored retry also costs time linear in the text (the
+// delegated inner regex), so the retry count is kept small: about 1 s on a 100k-character line.
 const SEARCH_LIMIT: usize = 1_000_000;
-const ANCHORED_LIMIT: usize = 100_000;
+const ANCHORED_LIMIT: usize = 10_000;
+const RETRY_BUDGET: usize = SEARCH_LIMIT + 64 * ANCHORED_LIMIT;
 
 fn fancy(pattern: &str, limit: usize) -> Option<Box<fancy_regex::Regex>> {
     fancy_regex::RegexBuilder::new(pattern).backtrack_limit(limit).build().ok().map(Box::new)
@@ -579,24 +583,43 @@ impl RubyRegex {
 
     /// The leftmost match starting at or after byte `start`, as a byte range.
     pub fn find_at(&self, text: &str, start: usize) -> Option<(usize, usize)> {
-        match self {
-            RubyRegex::Plain(r) => r.find_at(text, start).map(|m| (m.start(), m.end())),
-            RubyRegex::Backtracking { re, anchored } => match re.find_from_pos(text, start) {
-                Ok(m) => m.map(|m| (m.start(), m.end())),
-                Err(_) => (start..=text.len())
-                    .filter(|&p| text.is_char_boundary(p))
-                    .find_map(|p| anchored.find_from_pos(text, p).ok().flatten())
-                    .map(|m| (m.start(), m.end())),
-            },
+        let mut budget = RETRY_BUDGET;
+        self.find_budgeted(text, start, &mut budget)
+    }
+
+    /// `find_at` charging `budget` for every search that gives up and every anchored retry (at
+    /// its full step limit); once it is spent the rest of the text counts as no match.
+    fn find_budgeted(&self, text: &str, start: usize, budget: &mut usize) -> Option<(usize, usize)> {
+        let (re, anchored) = match self {
+            RubyRegex::Plain(r) => return r.find_at(text, start).map(|m| (m.start(), m.end())),
+            RubyRegex::Backtracking { re, anchored } => (re, anchored),
+        };
+        if *budget < SEARCH_LIMIT {
+            return None;
         }
+        match re.find_from_pos(text, start) {
+            Ok(m) => return m.map(|m| (m.start(), m.end())),
+            Err(_) => *budget -= SEARCH_LIMIT,
+        }
+        for p in (start..=text.len()).filter(|&p| text.is_char_boundary(p)) {
+            if *budget < ANCHORED_LIMIT {
+                return None;
+            }
+            *budget -= ANCHORED_LIMIT;
+            if let Ok(Some(m)) = anchored.find_from_pos(text, p) {
+                return Some((m.start(), m.end()));
+            }
+        }
+        None
     }
 
     /// `String#gsub` with a block: each non-overlapping match replaced by `f(matched text)`.
     pub fn replace_all_with<'t>(&self, text: &'t str, mut f: impl FnMut(&str) -> String) -> Cow<'t, str> {
         let mut out = String::new();
         let (mut last, mut pos, mut any) = (0, 0, false);
+        let mut budget = RETRY_BUDGET;
         while pos <= text.len() {
-            let Some((s, e)) = self.find_at(text, pos) else { break };
+            let Some((s, e)) = self.find_budgeted(text, pos, &mut budget) else { break };
             out.push_str(&text[last..s]);
             out.push_str(&f(&text[s..e]));
             (last, any) = (e, true);
@@ -661,6 +684,13 @@ mod tests {
         assert_eq!(re.replace_all(&text, ""), text);
         let re = ruby_regex("/a(?=b)/i").unwrap();
         assert_eq!(re.replace_all_with("xAbab", |m| format!("<{m}>")), "x<A>b<a>b");
+        // One budget per call: a 100k-character line costs a few million steps, not len * limit.
+        let long = "a".repeat(100_000);
+        let re = ruby_regex("(a|aa)+(?=c)").unwrap();
+        let t0 = std::time::Instant::now();
+        assert!(!re.is_match(&long));
+        assert_eq!(re.replace_all(&long, ""), long);
+        assert!(t0.elapsed() < std::time::Duration::from_secs(20), "took {:?}", t0.elapsed());
     }
 
     // Expected values from Ruby 4.0 `YAML.safe_load(..., aliases: true)` (Psych).
