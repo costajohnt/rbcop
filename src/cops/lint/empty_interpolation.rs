@@ -20,9 +20,12 @@ impl Cop for EmptyInterpolation {
             return;
         }
         let e = node.as_embedded_statements_node().unwrap();
+        // `nil_type? || (basic_literal? && str_content&.empty?)`: an empty heredoc or percent
+        // literal is a parser `dstr`, not a basic literal, so it keeps the interpolation (#303).
         let empty = e.statements().is_none_or(|s| {
             s.body().iter().all(|c| {
-                c.as_nil_node().is_some() || c.as_string_node().is_some_and(|s| s.unescaped().is_empty())
+                c.as_nil_node().is_some()
+                    || (!is_parser_dstr(&c) && c.as_string_node().is_some_and(|s| s.unescaped().is_empty()))
             })
         });
         if !empty {
