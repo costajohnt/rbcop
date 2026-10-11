@@ -1157,7 +1157,12 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         // StyleGuideCopsOnly` keeps only cops whose own config has a StyleGuide.
         let guide_only = only.is_empty() && (cli.only_guide || cfg.all_cops().truthy("StyleGuideCopsOnly"));
         let has_guide = |cop: &str| cfg.hash.map(cop).is_some_and(|c| c.truthy("StyleGuide"));
-        let selected = |cop: &str| selected(cop) && (!guide_only || has_guide(cop));
+        // Lint/RedundantCopDisableDirective is not a team cop: Runner#redundant_cop_disable_directive
+        // runs it past this filter.
+        // ponytail: it so also enters Registry#disabled_names under the filter, which matters only
+        // for a config that disables it.
+        let selected =
+            |cop: &str| selected(cop) && (!guide_only || has_guide(cop) || cop == "Lint/RedundantCopDisableDirective");
         if let Some(bytes) = stdin_text {
             // --stdin with -a/-A: the corrected source is printed after the report (@options[:stdin]).
             if let Some(mode) = cli.autocorrect {

@@ -16,7 +16,7 @@ fn expected_name(cx: &Cx, name: &str, prefix: &str) -> String {
 fn allowed_method_name(cx: &Cx, name: &str, prefix: &str) -> bool {
     // `/^#{prefix}[^0-9]/`: the prefix is interpolated unescaped
     let matches =
-        name.starts_with(prefix) && Regex::new(&format!("(?m)^{prefix}[^0-9]")).is_ok_and(|r| r.is_match(name));
+        name.starts_with(prefix) && crate::config::value::ruby_regex(&format!("^{prefix}[^0-9]")).is_some_and(|r| r.is_match(name));
     !matches
         || name == expected_name(cx, name, prefix)
         || name.ends_with('=')

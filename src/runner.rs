@@ -65,24 +65,28 @@ pub fn inspect_bytes(
     let error = crate::source::encoding_error(&bytes);
     match String::from_utf8(bytes) {
         Ok(text) => match error {
-            Some(msg) => encoding_error_report(text, msg),
+            Some(msg) => encoding_error_report(text, msg, selected),
             None => inspect(path, display, text, cfg, selected),
         },
         Err(e) => {
             let text = String::from_utf8_lossy(e.as_bytes()).into_owned();
             if let Some(msg) = error {
-                return encoding_error_report(text, msg);
+                return encoding_error_report(text, msg, selected);
             }
             if !crate::source::must_be_utf8(&text) {
                 return inspect(path, display, text, cfg, selected);
             }
-            encoding_error_report(text, "Invalid byte sequence in utf-8.".into())
+            encoding_error_report(text, "Invalid byte sequence in utf-8.".into(), selected)
         }
     }
 }
 
 /// Lint/Syntax#add_offense_from_error: a global offense, beautified message, no version note.
-fn encoding_error_report(text: String, message: String) -> FileReport {
+fn encoding_error_report(text: String, message: String, selected: &dyn Fn(&str) -> bool) -> FileReport {
+    // Lint/Syntax is not mobilized under -x, --only-guide-cops or `StyleGuideCopsOnly`.
+    if !selected("Lint/Syntax") {
+        return FileReport { offenses: Vec::new(), text };
+    }
     let offense = Offense {
         start: 0,
         end: 0,
@@ -215,15 +219,16 @@ fn analyze(
             }
         };
         let fatal_at = result.errors().filter(|e| kept(e) && fatal(e)).map(|e| e.location().start_offset()).min();
-        // A string left open at the end of the file: the lexer's fatal string_eof, whatever the
-        // parser reported before.
-        let open_string = result
-            .errors()
-            .filter(|e| e.type_name() == "string_literal_eof")
-            .map(|e| e.location().start_offset())
-            .min();
+        // A string left open at the end of the file: the lexer's fatal string_eof at its opener,
+        // whatever the parser reported before.
+        let open_literal = crate::legacy_syntax::unterminated_literal(result.errors().map(|e| e.type_name()), &tokens);
+        let open_string = open_literal.map(|o| o.1);
         let semantic_kind = |e: &ruby_prism::Diagnostic| {
-            (crate::syntax::is_semantic(e.type_name()) && e.type_name() != "string_literal_eof") || bare_backslash(e)
+            let (k, l) = (e.type_name(), e.location());
+            (crate::syntax::is_semantic(k)
+                && k != "string_literal_eof"
+                && crate::legacy_syntax::class_name_failure(k, l.start_offset(), l.end_offset(), &tokens).is_none())
+                || bare_backslash(e)
         };
         let seed = result
             .errors()
@@ -246,12 +251,6 @@ fn analyze(
         let mut semantic: Vec<_> = result
             .errors()
             .filter(|e| kept(e) && semantic_kind(e) && !fatal(e) && e.location().start_offset() < cut)
-            // `class` with no name (Prism reports the keyword): the parser fails before a name
-            // reduces, so there is no name to check.
-            .filter(|e| {
-                !(matches!(e.type_name(), "class_name" | "module_name")
-                    && tokens.iter().any(|t| t.start == e.location().start_offset() && t.kind.starts_with("KEYWORD_")))
-            })
             .filter_map(|e| {
                 let (s, end) = crate::legacy_syntax::semantic_location(
                     e.type_name(),
@@ -326,7 +325,8 @@ fn analyze(
                 errors.push((f, f + 1, format!("unexpected `{}'", text.get(f..f + 1).unwrap_or(""))));
             }
             Some((s, 0)) => {
-                errors.retain(|e| e.0 < s);
+                let outer = open_literal.map_or(s, |o| o.0);
+                errors.retain(|e| e.0 < outer);
                 errors.push((s, s + 1, "unterminated string meets end of file".to_string()));
             }
             Some((s, _)) => {
@@ -368,7 +368,11 @@ fn analyze(
 
     if !errors.is_empty() {
         // RuboCop runs only Lint/Syntax on a file that does not parse, one offense per diagnostic,
-        // and does so even under --only.
+        // and does so even under --only (which always lists it); not under -x or the style-guide
+        // filter, which leave it out.
+        if !selected("Lint/Syntax") {
+            return (Vec::new(), None, Vec::new());
+        }
         let ruby = format_ruby_version(cfg.target_ruby);
         let mut out: Vec<Offense> = errors
             .into_iter()
@@ -432,7 +436,7 @@ fn analyze(
     let config_disabled: Vec<&'static str> = crate::helpers::cop_registry::REGISTRY
         .iter()
         .copied()
-        .filter(|&c| selected(c) && !directives::config_enabled(cfg, c))
+        .filter(|&c| selected(c) && !cfg.cop_enabled(c))
         .collect();
     if src.text.contains("rubocop") {
         // DisableNext needs statement bounds before the cops run (disabled ranges gate `add_fix`).

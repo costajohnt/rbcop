@@ -1,15 +1,10 @@
 use crate::helpers::parser_parent::is_top_const;
 use crate::prelude::*;
-use ruby_prism::CallNode;
+use helpers::select_by::plain_send;
 
 pub const NAME: &str = "Style/FileEmpty";
 pub static COP: FileEmpty = FileEmpty;
 pub struct FileEmpty;
-
-/// A plain send (no attached block, not `&.`).
-fn plain_send<'pr>(node: &Node<'pr>) -> Option<CallNode<'pr>> {
-    node.as_call_node().filter(|c| !is_csend(c) && c.block().is_none_or(|b| b.as_block_node().is_none()))
-}
 
 /// `(send $(const {nil? cbase} {:File :FileTest}) <methods> $_)`: the const and the argument.
 fn file_call<'pr>(node: &Node<'pr>, methods: &[&str]) -> Option<(Node<'pr>, Node<'pr>)> {

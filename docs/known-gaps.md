@@ -30,6 +30,11 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - Lint/LiteralInInterpolation reports no offense for an integer literal over 1,000 32-bit words
   (about 9,600 decimal digits): converting it to decimal is quadratic (`"#{0xfff...}"` with 200k
   hex digits took 2.6 s).
+- Config regexps the regex crate rejects (lookaround, backreferences, atomic groups) run on
+  fancy-regex (`config::value::RubyRegex`), which has no match cache: a search is capped at 1M
+  backtracking steps, then retried one start position at a time with 100k steps each, and a start
+  position that exhausts its budget counts as no match there. Onigmo finishes such patterns
+  (`(a|aa)+(?=c)` on a long run of `a`) and may find a match at a position rbcop gave up on.
 - Lint/UselessTimes leaves the offense uncorrected when the block argument's name is too long for
   the regex size limit (about 100k characters) instead of failing the cop.
 - `-a/-A` writes a corrected file through a temporary file in the same directory renamed over it

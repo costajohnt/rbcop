@@ -1,0 +1,3 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a.rb:5:1: C: [Correctable] Style/DirectiveScope: Use `disable-next` instead of a `disable`/`enable` pair around a single statement.
+a.rb:5:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Security/IoMethods`.

@@ -6,8 +6,23 @@ mod common;
 use std::fs;
 use std::time::{Duration, Instant};
 
-/// Per run (every cop). Release builds take well under a second for each.
+/// CPU time per run (every cop). Release builds take well under a second for each; CPU time,
+/// not wall time, so a loaded machine (parallel gates) does not fail the test.
 const BUDGET: Duration = Duration::from_secs(60);
+/// Wall-clock backstop for a run that hangs without using CPU.
+const WALL_BUDGET: Duration = Duration::from_secs(600);
+
+/// User + system CPU time of the waited-for child processes so far.
+fn children_cpu() -> Duration {
+    // SAFETY: getrusage only writes the zeroed struct it is given.
+    let ru = unsafe {
+        let mut ru: libc::rusage = std::mem::zeroed();
+        libc::getrusage(libc::RUSAGE_CHILDREN, &mut ru);
+        ru
+    };
+    let tv = |t: libc::timeval| Duration::from_secs(t.tv_sec as u64) + Duration::from_micros(t.tv_usec as u64);
+    tv(ru.ru_utime) + tv(ru.ru_stime)
+}
 
 fn inputs() -> Vec<(&'static str, String)> {
     let nest = |open: &str, close: &str, n: usize| format!("x = {}1{}\n", open.repeat(n), close.repeat(n));
@@ -62,14 +77,15 @@ fn hostile_inputs_stay_bounded() {
             if autocorrect {
                 cmd.arg("-A");
             }
-            let t0 = Instant::now();
+            let (t0, cpu0) = (Instant::now(), children_cpu());
             let out = cmd.arg(name).output().unwrap();
-            let elapsed = t0.elapsed();
+            let (elapsed, cpu) = (t0.elapsed(), children_cpu() - cpu0);
             let stderr = String::from_utf8_lossy(&out.stderr);
             // 1 = offenses (or the too-deep error); a signal (stack overflow abort) has no code.
             assert!(matches!(out.status.code(), Some(0 | 1)), "{name} -A={autocorrect}: {:?}\n{stderr}", out.status);
             assert!(!stderr.contains("cop was inspecting"), "{name} -A={autocorrect}: cop error\n{stderr}");
-            assert!(elapsed < BUDGET, "{name} -A={autocorrect}: took {elapsed:?}");
+            assert!(cpu < BUDGET, "{name} -A={autocorrect}: took {cpu:?} CPU");
+            assert!(elapsed < WALL_BUDGET, "{name} -A={autocorrect}: took {elapsed:?}");
             assert_eq!(stderr.contains("levels deep, not inspected"), name.starts_with("too_deep"), "{name}\n{stderr}");
         }
     }
