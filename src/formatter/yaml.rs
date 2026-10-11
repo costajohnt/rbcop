@@ -82,8 +82,8 @@ fn scalar(v: &Value, col: usize, cont: usize) -> String {
         Value::Int(i) => i.to_string(),
         Value::Float(f) if f.is_nan() => ".nan".into(),
         Value::Float(f) if f.is_infinite() => (if *f > 0.0 { ".inf" } else { "-.inf" }).into(),
-        Value::Float(f) if f.fract() == 0.0 && f.abs() < 1e16 => format!("{f:.1}"),
-        Value::Float(f) => f.to_string(),
+        // Psych emits Float#to_s for finite floats.
+        Value::Float(f) => crate::helpers::ruby_string::float_to_s(*f),
         Value::Regex(r) => format!("!ruby/regexp {r}"),
         // Psych#visit_Symbol: plain when libyaml allows it, else libyaml's single-quoted fallback.
         Value::Sym(s) if plain_allowed(s) => fold(s, col, cont),
@@ -247,6 +247,18 @@ fn tokenizes_to_string(s: &str) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    // RuboCop 1.91.0 `--show-cops` (Psych dump) of `Max: 0.00001`, `1.0e+20`,
+    // `12345678901234567.0`, `5.0`, `0.5`.
+    #[test]
+    fn floats_dump_as_float_to_s() {
+        let f = |x: f64| scalar(&Value::Float(x), 0, 0);
+        assert_eq!(f(0.00001), "1.0e-05");
+        assert_eq!(f(1.0e20), "1.0e+20");
+        assert_eq!(f(12345678901234567.0), "1.2345678901234568e+16");
+        assert_eq!(f(5.0), "5.0");
+        assert_eq!(f(0.5), "0.5");
+    }
 
     #[test]
     fn psych_styles() {
