@@ -426,7 +426,7 @@ pub fn statement_scope_after(lines: &LineInfo, src: &Source, directive_line: i64
         if !lines.comment_only(l as i64) {
             return Some((lines.statement_bounds)(l));
         }
-        if crate::helpers::ruby_string::blank(&src.lines[l - 1]) {
+        if crate::helpers::ruby_string::blank(src.lines[l - 1]) {
             return None;
         }
     }
