@@ -643,14 +643,17 @@ fn autocorrect_allowed(cfg: &CopConfig) -> bool {
 }
 
 /// Prism reports some semantic errors the parser gem accepts (e.g. top-level `yield` in .builder
-/// templates, `retry` outside `rescue`).
+/// templates, `retry` outside `rescue`, void value expressions such as `x = return 1`: the parser
+/// gem has no void-value check).
 // ponytail: only verified ones are tolerated; add more as real code turns them up.
-pub const TOLERATED_ERRORS: &[&str] = &["invalid_yield", "invalid_retry_without_rescue"];
+pub const TOLERATED_ERRORS: &[&str] = &["invalid_yield", "invalid_retry_without_rescue", "void_expression"];
 
 /// Prism errors the parser gem accepts for the target. Up to Ruby 2.5, `begin..else..end` without
 /// `rescue` is only a `useless_else` warning (reported by Lint/UselessElseWithoutRescue); before
 /// 2.7 `def m(x = x)` is only a warning (Lint/CircularArgumentReference); before 3.0 `_1 = x` is
 /// accepted (Builders::Default#check_reserved_for_numparam; Lint/NumberedParameterAssignment).
+/// Before 2.7 `_1` is an ordinary identifier, so Prism's numbered-parameter checks (`|a| a + _1`,
+/// `_1` in nested blocks, `_1 = x` in a block that reads `_1`) do not apply.
 /// The parser gem also ends a `<<''` heredoc (empty delimiter) at the end of the file, where Prism
 /// finds it unterminated.
 fn tolerated(e: &ruby_prism::Diagnostic, parser_gem: bool, target_ruby: f64, text: &str) -> bool {
@@ -659,6 +662,8 @@ fn tolerated(e: &ruby_prism::Diagnostic, parser_gem: bool, target_ruby: f64, tex
         || (kind == "begin_lonely_else" && target_ruby <= 2.5)
         || (kind == "parameter_circular" && target_ruby < 2.7)
         || (kind == "parameter_numbered_reserved" && target_ruby < 3.0)
+        || ((kind.starts_with("numbered_parameter_") || kind == "expression_not_writable_numbered")
+            && target_ruby < 2.7)
         || (parser_gem && e.message().starts_with("unterminated heredoc; can't find string \"\"") && {
             // No blank line (which ends the parser gem's heredoc) before the end of the file.
             let body = text[e.location().end_offset()..].split_once('\n').map_or("", |(_, b)| b);

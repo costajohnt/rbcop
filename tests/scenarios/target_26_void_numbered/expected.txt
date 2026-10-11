@@ -1,0 +1,19 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+numbered.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+numbered.rb:2:12: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+numbered.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+numbered.rb:3:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+numbered.rb:3:25: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+numbered.rb:4:11: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+numbered.rb:4:9: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+void.rb:10:1: C: [Correctable] Layout/ElseAlignment: Align `else` with `if`.
+void.rb:11:3: W: [Correctable] Lint/TopLevelReturnWithArgument: Top level return with argument detected.
+void.rb:12:1: W: [Correctable] Layout/EndAlignment: `end` at 12, 0 is not aligned with `if` at 8, 4.
+void.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+void.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+void.rb:3:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+void.rb:3:7: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+void.rb:4:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `z`.
+void.rb:8:1: C: [Correctable] Style/ConditionalAssignment: Assign variables inside of conditionals.
+void.rb:8:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `v`.
+void.rb:9:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -2) spaces for indentation.
