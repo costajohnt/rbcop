@@ -101,14 +101,13 @@ fn find_by_cop_name(cop: &str) -> Option<String> {
 
 /// Registry#enabled? (cop config, ignoring comment opt-ins).
 fn enabled(cx: &Cx, cop: &str) -> bool {
-    directives::config_enabled(cx.config, cop)
+    cx.config.cop_enabled(cop)
 }
 
 /// pending_cop_not_run?
 fn pending_not_run(cx: &Cx, cop: &str) -> bool {
     known(cop)
-        && matches!(cx.config.for_cop(cop).get("Enabled"), Some(crate::config::value::Value::Str(s)) if s == "pending")
-        && !enabled(cx, cop)
+        && { let e = cx.config.enable_cop(cop); e == crate::config::value::Value::Str("pending".into()) && !cx.config.enabled_pending_cop(cop, &e) }
 }
 
 fn unknown(cop: &str) -> bool {

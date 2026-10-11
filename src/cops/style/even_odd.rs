@@ -1,5 +1,6 @@
 use crate::helpers::node_types::is_operator_method;
 use crate::prelude::*;
+use helpers::select_by::plain_send;
 
 pub const NAME: &str = "Style/EvenOdd";
 pub static COP: EvenOdd = EvenOdd;
@@ -10,11 +11,6 @@ fn int_is(node: &Node, want: i32) -> bool {
         let v: Result<i32, _> = i.value().try_into();
         v.is_ok_and(|v| v == want)
     })
-}
-
-/// A parser `send` (not csend, not wrapped by a block).
-fn plain_send<'pr>(node: &Node<'pr>) -> Option<ruby_prism::CallNode<'pr>> {
-    node.as_call_node().filter(|c| !is_csend(c) && !c.block().is_some_and(|b| b.as_block_node().is_some()))
 }
 
 /// `(send $_ :% (int 2))`

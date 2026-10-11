@@ -39,7 +39,7 @@ impl Cop for MissingCopEnableDirective {
                     continue;
                 }
                 // expected_open_range?
-                if r.0 == i64::MIN || (!directives::config_enabled(cx.config, cop) && r.1 == i64::MAX) {
+                if r.0 == i64::MIN || (!cx.config.cop_enabled(cop) && r.1 == i64::MAX) {
                     continue;
                 }
                 // processed_source.comment_at_line(line_range.begin); RuboCop raises on nil.

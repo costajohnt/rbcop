@@ -1,0 +1,17 @@
+AllCops:
+  NewCops: disable
+  SuggestExtensions: false
+Naming/ClassAndModuleCamelCase:
+  AllowedNames:
+    - '(a|aa)+(?=c)'
+Naming/VariableName:
+  AllowedPatterns:
+    - '(a|aa)+(?=c)|B'
+Naming/InclusiveLanguage:
+  Enabled: true
+  FlaggedTerms:
+    foo:
+      Regex: !ruby/regexp '/foo(?!bar)/'
+    qux:
+      WholeWord: true
+      AllowedRegex: 'qux(?=_ok)'
