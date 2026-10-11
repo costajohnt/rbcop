@@ -10,7 +10,7 @@
 set -eu
 . "$(dirname "$0")/rubocop.sh"
 root=$(cd "$(dirname "$0")/.." && pwd)
-bin=$root/target/release/rbcop
+. "$root/scripts/rbcop.sh"
 corpus=${RBCOP_CORPUS:?set RBCOP_CORPUS to the corpus directory}/cold
 oracle=${RBCOP_ORACLE:?set RBCOP_ORACLE to the oracle directory}/cold.txt
 out=${OUT:-${TMPDIR:-/tmp}/rbcop-cold-$(basename "$root")}
