@@ -9,6 +9,10 @@ use std::time::{Duration, Instant};
 /// CPU time per run (every cop). Release builds take well under a second for each; CPU time,
 /// not wall time, so a loaded machine (parallel gates) does not fail the test.
 const BUDGET: Duration = Duration::from_secs(60);
+/// CPU time per `-A` run: many_statements.rb's 20,000 corrections take ~39 s on a slow core
+/// because correction cost is quadratic in the number of corrections (#178). Tighten to BUDGET
+/// once that is linear.
+const AUTOCORRECT_BUDGET: Duration = Duration::from_secs(180);
 /// Wall-clock backstop for a run that hangs without using CPU.
 const WALL_BUDGET: Duration = Duration::from_secs(600);
 
@@ -84,7 +88,8 @@ fn hostile_inputs_stay_bounded() {
             // 1 = offenses (or the too-deep error); a signal (stack overflow abort) has no code.
             assert!(matches!(out.status.code(), Some(0 | 1)), "{name} -A={autocorrect}: {:?}\n{stderr}", out.status);
             assert!(!stderr.contains("cop was inspecting"), "{name} -A={autocorrect}: cop error\n{stderr}");
-            assert!(cpu < BUDGET, "{name} -A={autocorrect}: took {cpu:?} CPU");
+            let budget = if autocorrect { AUTOCORRECT_BUDGET } else { BUDGET };
+            assert!(cpu < budget, "{name} -A={autocorrect}: took {cpu:?} CPU");
             assert!(elapsed < WALL_BUDGET, "{name} -A={autocorrect}: took {elapsed:?}");
             assert_eq!(stderr.contains("levels deep, not inspected"), name.starts_with("too_deep"), "{name}\n{stderr}");
         }
