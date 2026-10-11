@@ -1362,6 +1362,31 @@ impl<'pr> Visit<'pr> for Walk<'_> {
         {
             self.do_block.insert(b.opening_loc().start_offset());
         }
+        // Below 3.3 `command do_block` is a block_command, not a call argument: it cannot be the
+        // only argument in `(...)` or `[...]` (`foo(bar baz do end)`; #239).
+        if n.opening_loc().is_some()
+            && let Some(args) = n.arguments()
+            && args.arguments().len() == 1
+            && let Some(inner) = args.arguments().iter().next().and_then(|a| a.as_call_node())
+            && inner.opening_loc().is_none()
+            && inner.arguments().is_some()
+            && let Some(b) =
+                inner.block().and_then(|b| b.as_block_node()).filter(|b| b.opening_loc().as_slice() == b"do")
+        {
+            self.violation(b.opening_loc().start_offset(), 3.3);
+        }
+        // Below 3.3 `not x` without parentheses is an expr, never an assigned value (`x = not y`;
+        // #240); as an argument, see visit_arguments_node.
+        if self.target < 3.3
+            && let Some(m) = n.message_loc().filter(|m| m.as_slice() == b"not")
+            && n.opening_loc().is_none()
+        {
+            let i = self.toks.partition_point(|t| t.start < m.start_offset());
+            if i > 0 && matches!(self.toks[i - 1].name, "tEQL" | "tOP_ASGN") {
+                let next = self.next_token(m.end_offset());
+                self.violation(next, 3.3);
+            }
+        }
         // A block on an index call (`a[k] { }`, `a[k] do end`): 2.5. Its `do` is a kDO_BLOCK.
         if n.name().as_slice() == b"[]"
             && n.opening_loc().is_some_and(|o| o.as_slice() == b"[")
@@ -1457,6 +1482,17 @@ impl<'pr> Visit<'pr> for Walk<'_> {
 
     fn visit_arguments_node(&mut self, n: &ruby_prism::ArgumentsNode<'pr>) {
         for a in n.arguments().iter() {
+            // Below 3.3 call arguments are `arg`s: `not x` without parentheses is an `expr`, so
+            // the grammar fails on the token after `not` (#240).
+            if let Some(m) = a
+                .as_call_node()
+                .filter(|c| c.opening_loc().is_none())
+                .and_then(|c| c.message_loc())
+                .filter(|m| m.as_slice() == b"not")
+            {
+                let next = self.next_token(m.end_offset());
+                self.violation(next, 3.3);
+            }
             if let Some(s) = a.as_splat_node().filter(|s| s.expression().is_none()) {
                 let next = self.next_token(s.operator_loc().end_offset());
                 self.violation(next, 3.2);
@@ -1531,6 +1567,17 @@ impl<'pr> Visit<'pr> for Walk<'_> {
     }
 
     fn visit_match_predicate_node(&mut self, n: &ruby_prism::MatchPredicateNode<'pr>) {
+        // Below 3.3 the value of `value in pat` is an `arg`: a command whose arguments run up to the
+        // `in` (`return x in [1]`, which Prism reads as `(return x) in [1]`) fails there (#231).
+        let v = n.value();
+        let command = v.as_return_node().is_some_and(|r| r.arguments().is_some())
+            || v.as_break_node().is_some_and(|r| r.arguments().is_some())
+            || v.as_next_node().is_some_and(|r| r.arguments().is_some())
+            || v.as_yield_node().is_some_and(|y| y.arguments().is_some() && y.lparen_loc().is_none())
+            || v.as_super_node().is_some_and(|y| y.arguments().is_some() && y.lparen_loc().is_none());
+        if command {
+            self.violation(n.operator_loc().start_offset(), 3.3);
+        }
         self.in_ctx(n.location().start_offset(), |s| {
             s.violation(n.operator_loc().start_offset(), 2.7);
             ruby_prism::visit_match_predicate_node(s, n);

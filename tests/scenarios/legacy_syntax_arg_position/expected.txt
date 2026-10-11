@@ -1,0 +1,19 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+do_block_index.rb:1:14: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+do_block_multiline.rb:2:16: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+do_block_ok.rb:1:15: C: [Correctable] Layout/SpaceInsideBlockBraces: Space inside empty braces detected.
+do_block_ok.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+do_block_ok.rb:1:5: C: [Correctable] Style/NestedParenthesizedCalls: Add parentheses to nested method call `bar quux { }`.
+do_block_ok.rb:1:5: W: [Correctable] Lint/AmbiguousBlockAssociation: Parenthesize the param `quux { }` to make sure that the block will be associated with the `quux` method call.
+do_block_ok.rb:2:15: C: Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+do_block_ok.rb:3:14: C: Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+do_block_paren.rb:1:18: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+not_arg.rb:2:9: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+not_assign.rb:1:9: F: Lint/Syntax: unexpected token tIDENTIFIER (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+not_paren.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+not_paren.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+not_paren.rb:1:5: C: [Correctable] Style/Not: Use `!` instead of `not`.
+not_paren.rb:2:4: C: [Correctable] Style/Not: Use `!` instead of `not`.
+paren_return_in.rb:1:11: F: Lint/Syntax: unexpected token kIN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+return_in.rb:1:10: F: Lint/Syntax: unexpected token kIN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+yield_in.rb:2:11: F: Lint/Syntax: unexpected token kIN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
