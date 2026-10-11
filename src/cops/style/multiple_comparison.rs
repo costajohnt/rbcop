@@ -9,9 +9,10 @@ fn range(n: &Node) -> (usize, usize) {
     (n.location().start_offset(), n.location().end_offset())
 }
 
-/// parser `call`: send/csend (a call with a literal block is a `block`).
+/// parser `call`: send/csend (a call with a literal block is a `block`; a folded `- 1` an `int`).
 fn is_call(n: &Node) -> bool {
     n.as_call_node().is_some_and(|c| !c.block().is_some_and(|b| b.as_block_node().is_some()))
+        && helpers::literal_node::folded_numeric(n).is_none()
 }
 
 fn is_lvar(n: &Node) -> bool {

@@ -234,7 +234,7 @@ impl Cop for SpaceAroundOperators {
                 let first = args.first();
                 let name = method_name(&call);
                 if name == "/"
-                    && call.receiver().is_some_and(|r| r.as_integer_node().is_some())
+                    && call.receiver().is_some_and(|r| helpers::literal_node::folded_kind(&r) == kind::INTEGER_NODE)
                     && args.len() == 1
                     && first.is_some_and(|a| a.as_rational_node().is_some())
                 {
