@@ -280,9 +280,25 @@ fn analyze(
         let mut actions: Vec<usize> = Vec::new();
         // Circular argument references: the simulation reports them where the parser reads them.
         let mut circular: Vec<(usize, usize)> = Vec::new();
+        // Numbered parameters (2.7+): the parser gem's per-identifier errors come from the tree
+        // walk below, in place of Prism's; Prism's reserved-name errors stay where the walk has
+        // nothing (parameters named `_1`).
+        let numbered = if cfg.target_ruby >= 2.7 && !crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH) {
+            crate::syntax::numbered_parameter_errors(&result.node(), cfg.target_ruby)
+        } else {
+            Vec::new()
+        };
+        let numbered_kind = |e: &ruby_prism::Diagnostic| {
+            let k = e.type_name();
+            k.starts_with("numbered_parameter_")
+                || k == "expression_not_writable_numbered"
+                || (k == "parameter_numbered_reserved" && numbered.iter().any(|n| n.0 == e.location().start_offset()))
+        };
         let mut semantic: Vec<_> = result
             .errors()
-            .filter(|e| kept(e) && semantic_kind(e) && !fatal(e) && e.location().start_offset() < cut)
+            .filter(|e| {
+                kept(e) && semantic_kind(e) && !fatal(e) && !numbered_kind(e) && e.location().start_offset() < cut
+            })
             .filter_map(|e| {
                 let (s, end) = crate::legacy_syntax::semantic_location(
                     e.type_name(),
@@ -310,6 +326,10 @@ fn analyze(
                 Some(t)
             })
             .collect();
+        for e in numbered.into_iter().filter(|e| e.0 < cut) {
+            actions.push(e.1);
+            semantic.push(e);
+        }
         // Onigmo compile errors of static regexps: semantic errors too (the builder's diagnostic).
         if !crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH) {
             for e in crate::syntax::regexp_compile_errors(&result.node(), text).into_iter().filter(|e| e.0 < cut) {
