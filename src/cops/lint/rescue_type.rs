@@ -7,7 +7,7 @@ pub struct RescueType;
 /// INVALID_TYPES: array complex dstr false float hash nil int rational str sym true.
 fn invalid(node: &Node) -> bool {
     matches!(
-        kind::of(node),
+        crate::helpers::literal_node::folded_kind(node),
         kind::ARRAY_NODE
             | kind::IMAGINARY_NODE
             | kind::INTERPOLATED_STRING_NODE

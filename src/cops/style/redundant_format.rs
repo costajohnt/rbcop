@@ -283,7 +283,7 @@ fn acceptable_literal(node: &Node) -> bool {
             | Node::TrueNode { .. }
             | Node::FalseNode { .. }
             | Node::NilNode { .. }
-    )
+    ) || crate::helpers::literal_node::folded_numeric(node).is_some()
 }
 
 /// `numeric?`: a numeric literal, a parser `str`, or a rational/complex expression.
@@ -292,6 +292,7 @@ fn numeric(node: &Node) -> bool {
         || (node.as_string_node().is_some() && !is_parser_dstr(node))
         || rational_number(node)
         || complex_number(node)
+        || crate::helpers::literal_node::folded_numeric(node).is_some()
 }
 
 fn single_paren<'pr>(node: &Node<'pr>) -> Option<Node<'pr>> {
@@ -408,6 +409,13 @@ fn typed_argument_value(node: &Node) -> Option<V> {
             pairs.push((name, value));
         }
         return Some(V::Hash(pairs));
+    }
+    if let Some(l) = crate::helpers::literal_node::folded_numeric(node) {
+        return match l {
+            Node::IntegerNode { .. } => int_literal_value(node).map(|i| V::Num(Num::Int(i))),
+            Node::FloatNode { .. } => crate::helpers::literal_node::float_literal_value(node).map(|f| V::Num(Num::Float(f))),
+            _ => None,
+        };
     }
     if rational_number(node) {
         return parse_rational_prefix(node_text(node)).map(|(n, d)| V::Num(Num::Rat(n, d)));

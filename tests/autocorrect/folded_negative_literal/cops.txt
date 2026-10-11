@@ -1,0 +1,1 @@
+Lint/LiteralInInterpolation,Lint/LiteralAsCondition,Style/InfiniteLoop,Lint/RandOne,Style/RedundantFreeze,Lint/RescueType,Lint/RedundantSplatExpansion,Style/RedundantFormat,Lint/ArrayLiteralInRegexp,Lint/EachWithObjectArgument

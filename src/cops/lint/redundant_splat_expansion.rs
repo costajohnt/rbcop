@@ -67,7 +67,7 @@ fn classify(node: &Node) -> Grand {
 
 fn is_string_like(node: &Node) -> bool {
     matches!(
-        kind::of(node),
+        crate::helpers::literal_node::folded_kind(node),
         kind::STRING_NODE | kind::INTERPOLATED_STRING_NODE | kind::SOURCE_FILE_NODE | kind::INTEGER_NODE | kind::FLOAT_NODE
     )
 }

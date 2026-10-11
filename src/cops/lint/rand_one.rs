@@ -6,11 +6,8 @@ pub struct RandOne;
 
 /// `(int {-1 1})` / `(float {-1.0 1.0})`
 fn one(node: &Node) -> bool {
-    if let Some(i) = node.as_integer_node() {
-        let v: Result<i32, _> = i.value().try_into();
-        return matches!(v, Ok(1 | -1));
-    }
-    node.as_float_node().is_some_and(|f| f.value().abs() == 1.0)
+    matches!(crate::ast::int_literal_value(node), Some(1 | -1))
+        || crate::helpers::literal_node::float_literal_value(node).is_some_and(|f| f.abs() == 1.0)
 }
 
 /// `(const {nil? cbase} :Kernel)`

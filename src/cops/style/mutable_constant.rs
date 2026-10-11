@@ -51,7 +51,7 @@ fn ast_immutable_literal(node: &Node) -> bool {
             | Node::NilNode { .. }
             | Node::ImaginaryNode { .. }
             | Node::RationalNode { .. }
-    )
+    ) || crate::helpers::literal_node::folded_numeric(node).is_some()
 }
 
 /// A parser `send` (not csend, not a block).
@@ -72,7 +72,7 @@ fn range_in_parens(node: &Node) -> bool {
 }
 
 fn is_number(node: &Node) -> bool {
-    matches!(node, Node::IntegerNode { .. } | Node::FloatNode { .. })
+    matches!(crate::helpers::literal_node::folded_kind(node), kind::INTEGER_NODE | kind::FLOAT_NODE)
 }
 
 fn env_index(node: &Node) -> bool {
