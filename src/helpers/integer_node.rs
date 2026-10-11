@@ -10,15 +10,14 @@ pub fn integer_part(source: &str) -> &str {
 
 /// The parser `int`/`float` node range for a Prism Integer/Float node, or None where parser has
 /// no such node (the numeric part of an imaginary literal). Parser folds `- 12345` (a `-@` call on
-/// a literal, with whitespace) into one negative literal.
+/// a literal, with whitespace) into one negative literal (below 3.3 `+ 12345` too).
 pub fn literal_range(node: &Node, ancestors: &[Node]) -> Option<(usize, usize)> {
     let loc = node.location();
     match ancestors.last() {
         Some(p) if p.as_imaginary_node().is_some() => None,
         Some(p) => match p.as_call_node() {
             Some(c)
-                if c.name().as_slice() == b"-@"
-                    && c.call_operator_loc().is_none()
+                if crate::helpers::literal_node::folded_numeric(p).is_some()
                     && c.receiver().is_some_and(|r| r.location().start_offset() == loc.start_offset())
                     && c.message_loc().is_some_and(|m| m.end_offset() == m.start_offset() + 1)
                     && c.location().start_offset() + 1 < loc.start_offset() =>

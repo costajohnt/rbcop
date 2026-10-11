@@ -49,7 +49,8 @@ impl Cop for InPatternThen {
         // `loc.begin`: the `;` after the pattern (and guard).
         let bytes = cx.src.text.as_bytes();
         let mut semi = head_end;
-        while semi < bytes.len() && matches!(bytes[semi], b' ' | b'\t') {
+        // Any whitespace the lexer skips (`\r`, `\v`, `\f` included; a newline makes the node multi-line).
+        while semi < bytes.len() && helpers::parser_tokens::is_ruby_space(bytes[semi]) {
             semi += 1;
         }
         if bytes.get(semi) != Some(&b';') {

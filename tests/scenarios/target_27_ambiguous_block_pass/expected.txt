@@ -1,0 +1,8 @@
+a.rb:1:9: W: [Correctable] Lint/AmbiguousOperator: Ambiguous block operator. Parenthesize the method arguments if it's surely a block operator, or add a whitespace to the right of the `&` if it should be a binary AND.
+a.rb:2:29: W: [Correctable] Lint/AmbiguousOperator: Ambiguous block operator. Parenthesize the method arguments if it's surely a block operator, or add a whitespace to the right of the `&` if it should be a binary AND.
+a.rb:3:9: W: [Correctable] Lint/AmbiguousOperator: Ambiguous block operator. Parenthesize the method arguments if it's surely a block operator, or add a whitespace to the right of the `&` if it should be a binary AND.
+a.rb:4:9: W: [Correctable] Lint/AmbiguousOperator: Ambiguous block operator. Parenthesize the method arguments if it's surely a block operator, or add a whitespace to the right of the `&` if it should be a binary AND.
+a.rb:5:9: W: [Correctable] Lint/AmbiguousOperator: Ambiguous block operator. Parenthesize the method arguments if it's surely a block operator, or add a whitespace to the right of the `&` if it should be a binary AND.
+a.rb:6:9: W: [Correctable] Lint/AmbiguousOperator: Ambiguous block operator. Parenthesize the method arguments if it's surely a block operator, or add a whitespace to the right of the `&` if it should be a binary AND.
+a.rb:7:9: W: [Correctable] Lint/AmbiguousOperator: Ambiguous block operator. Parenthesize the method arguments if it's surely a block operator, or add a whitespace to the right of the `&` if it should be a binary AND.
+a.rb:8:7: W: [Correctable] Lint/AmbiguousOperator: Ambiguous block operator. Parenthesize the method arguments if it's surely a block operator, or add a whitespace to the right of the `&` if it should be a binary AND.

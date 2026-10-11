@@ -206,6 +206,15 @@ pub fn parse_for_target<'t>(
             bytes[o] = b;
         }
     }
+    // A NUL ends a heredoc line for the parser gem's lexer: the NULs that make a terminator line
+    // become newlines (#247).
+    if text.contains('\0') && result.errors().next().is_some() {
+        for o in crate::legacy_syntax::heredoc_nul_breaks(text, &tokens) {
+            let bytes = copy.get_or_insert_with(|| text.as_bytes().to_vec());
+            restore.push((o, text.as_bytes()[o]));
+            bytes[o] = b'\n';
+        }
+    }
     let (errors, dots) = {
         let dots = |tokens: &[ruby_prism::Token]| -> Vec<usize> {
             tokens.iter().filter(|t| matches!(t.kind, "DOT" | "AMPERSAND_DOT")).map(|t| t.start).collect()
@@ -233,6 +242,17 @@ pub fn parse_for_target<'t>(
         *buf = c;
         (result, tokens) = ruby_prism::parse_with_version_and_tokens_restoring(buf, version, utf8, &restore);
     }
+    // A delimiter Prism lexes byte-wise (`%<U+00A0>q(`) splits a character between two tokens:
+    // move the split to the character's end so every token slices the text (#250).
+    let ceil = |mut o: usize| {
+        while !text.is_char_boundary(o) {
+            o += 1;
+        }
+        o
+    };
+    for t in &mut tokens {
+        (t.start, t.end) = (ceil(t.start), ceil(t.end));
+    }
     // Numbered parameters are 2.7+: below that `foo { _1 }` is a block without arguments.
     if target_ruby < 2.7 {
         result.drop_numbered_parameters();
@@ -256,6 +276,7 @@ fn analyze(
     let version = target_ruby::prism_version(cfg.target_ruby);
     // Below 3.3 RuboCop parses with the parser gem, which accepts some things Prism rejects.
     let parser_gem = cfg.target_ruby < 3.3;
+    crate::helpers::literal_node::set_fold_plus(parser_gem);
     let mut buf = Vec::new();
     let (result, tokens, fake) = parse_for_target(text, &mut buf, version, cfg.target_ruby);
     let mut errors: Vec<(usize, usize, String)> = result
@@ -278,7 +299,8 @@ fn analyze(
         // `@`, `@@` or `$` without a name: the lexer's fatal "unexpected `@'" ends the parse there.
         let fatal = |e: &ruby_prism::Diagnostic| {
             let s = e.location().start_offset();
-            let after = text[s..].trim_start_matches(['@', '$']).chars().next();
+            // Bytes: Prism can place an error inside a multibyte character (#250).
+            let after = text.as_bytes()[s..].iter().find(|b| !matches!(b, b'@' | b'$'));
             match e.type_name().trim_end_matches("_3_3") {
                 "incomplete_variable_instance" | "incomplete_variable_class" => {
                     !after.is_some_and(|c| c.is_ascii_digit())
@@ -396,7 +418,7 @@ fn analyze(
         let heredoc_term: Vec<usize> = result
             .errors()
             .filter(|e| e.type_name() == "heredoc_term")
-            .filter(|e| kept(e) || !text[e.location().end_offset()..].contains('\n'))
+            .filter(|e| kept(e) || !text.as_bytes()[e.location().end_offset()..].contains(&b'\n'))
             .map(|e| e.location().start_offset())
             .collect();
         let heredoc = crate::legacy_syntax::unterminated_heredoc(&tokens, text, &heredoc_term).filter(|h| lexed(&h.0));

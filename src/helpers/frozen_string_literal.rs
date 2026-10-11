@@ -2,7 +2,7 @@
 
 use crate::config::value::Value;
 use crate::cop::Cx;
-use crate::cops::style_frozen_string_literal_comment::frozen_value;
+use crate::helpers::magic_comment::frozen_string_literal as frozen_value;
 
 /// `leading_comment_lines`: the lines before the first non-comment token's line.
 pub fn leading<'a>(cx: &Cx<'a, '_>) -> &'a [&'a str] {

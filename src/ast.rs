@@ -388,7 +388,8 @@ pub fn is_parser_dsym(node: &Node, target_ruby: f64) -> bool {
 pub fn int_literal_value(node: &Node) -> Option<i128> {
     // A folded `- 1` is the parser's `(int -1)`.
     if let Some(l) = crate::helpers::literal_node::folded_numeric(node) {
-        return int_literal_value(&l).map(|v| -v);
+        let neg = crate::helpers::literal_node::folded_negative(node);
+        return int_literal_value(&l).map(|v| if neg { -v } else { v });
     }
     let value = node.as_integer_node()?.value();
     let (neg, digits) = value.to_u32_digits();

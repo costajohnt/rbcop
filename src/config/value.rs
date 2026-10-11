@@ -568,6 +568,26 @@ pub enum RubyRegex {
 const SEARCH_LIMIT: usize = 1_000_000;
 const ANCHORED_LIMIT: usize = 10_000;
 const RETRY_BUDGET: usize = SEARCH_LIMIT + 64 * ANCHORED_LIMIT;
+// A pattern that gives up on one input gives up on the next, and a cop calls it once per comment,
+// token or identifier: this caps what one pattern spends giving up over the whole run (about 2 s),
+// after which it answers "no match" at once. Keyed by pattern: cops build a RubyRegex per call
+// from their config.
+const RUN_BUDGET: usize = 32 * RETRY_BUDGET;
+static SPENT: std::sync::Mutex<Vec<(String, usize)>> = std::sync::Mutex::new(Vec::new());
+
+/// Charge `steps` to the pattern's run total; false once it is over RUN_BUDGET.
+fn charge(pattern: &str, steps: usize) -> bool {
+    let mut spent = SPENT.lock().unwrap_or_else(|e| e.into_inner());
+    let total = match spent.iter_mut().find(|(p, _)| p == pattern) {
+        Some((_, t)) => t,
+        None => {
+            spent.push((pattern.to_string(), 0));
+            &mut spent.last_mut().unwrap().1
+        }
+    };
+    *total = total.saturating_add(steps);
+    *total < RUN_BUDGET
+}
 
 fn fancy(pattern: &str, limit: usize) -> Option<Box<fancy_regex::Regex>> {
     fancy_regex::RegexBuilder::new(pattern).backtrack_limit(limit).build().ok().map(Box::new)
@@ -599,15 +619,18 @@ impl RubyRegex {
             RubyRegex::Plain(r) => return r.find_at(text, start).map(|m| (m.start(), m.end())),
             RubyRegex::Backtracking { re, anchored } => (re, anchored),
         };
-        if *budget < SEARCH_LIMIT {
+        if *budget < SEARCH_LIMIT || !charge(re.as_str(), 0) {
             return None;
         }
         match re.find_from_pos(text, start) {
             Ok(m) => return m.map(|m| (m.start(), m.end())),
             Err(_) => *budget -= SEARCH_LIMIT,
         }
+        if !charge(re.as_str(), SEARCH_LIMIT) {
+            return None;
+        }
         for p in (start..=text.len()).filter(|&p| text.is_char_boundary(p)) {
-            if *budget < ANCHORED_LIMIT {
+            if *budget < ANCHORED_LIMIT || !charge(re.as_str(), ANCHORED_LIMIT) {
                 return None;
             }
             *budget -= ANCHORED_LIMIT;
@@ -696,6 +719,21 @@ mod tests {
         assert!(!re.is_match(&long));
         assert_eq!(re.replace_all(&long, ""), long);
         assert!(t0.elapsed() < std::time::Duration::from_secs(20), "took {:?}", t0.elapsed());
+    }
+
+    // A pattern that gives up on every call stops being searched once it has spent RUN_BUDGET:
+    // 200 calls cost 32 budgets, not 200 (about 70 ms each on a 60-character line).
+    #[test]
+    fn backtracking_regex_past_the_run_budget() {
+        let re = ruby_regex("(a|aa)+(?=d)|B").unwrap();
+        let line = format!("# {} 1", "a".repeat(60));
+        let t0 = std::time::Instant::now();
+        for _ in 0..200 {
+            assert!(!re.is_match(&line));
+        }
+        assert!(t0.elapsed() < std::time::Duration::from_secs(10), "took {:?}", t0.elapsed());
+        // The ceiling: a cheap match of the exhausted pattern is no longer found.
+        assert!(!re.is_match("B"));
     }
 
     // Expected values from Ruby 4.0 `YAML.safe_load(..., aliases: true)` (Psych).

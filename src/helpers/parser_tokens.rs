@@ -50,12 +50,32 @@ pub fn last_token_line(src: &Source) -> Option<usize> {
         t.is_some_and(|t| matches!(t.kind, PM_TOKEN_COMMENT | PM_TOKEN_AMPERSAND_DOT | PM_TOKEN_DOT))
     };
     let (mut last, mut deferred) = (None, None);
+    // Line of the last terminator of the heredocs opened on the current line (Prism lexes a
+    // heredoc's body right after its opener).
+    let mut heredoc_end = None;
     for (i, t) in raw.iter().enumerate() {
+        if t.kind == PM_TOKEN_HEREDOC_END {
+            heredoc_end = Some(src.line_of(t.start));
+        }
         if skip(t.kind) {
+            if t.kind == PM_TOKEN_IGNORED_NEWLINE {
+                heredoc_end = None;
+            }
             continue;
         }
-        let line = src.line_of(t.start);
+        let mut line = src.line_of(t.start);
         let next = raw.get(i + 1);
+        if t.kind == PM_TOKEN_NEWLINE
+            && let Some(h) = heredoc_end.take()
+            && src.parser_gem
+            && i > 0
+            && legacy_arg_state(src, &raw[i - 1])
+        {
+            // The parser gem's lexer reads the newline of a line with heredocs in an argument
+            // state twice: `on_newline` skips past the heredoc bodies, then `fhold; fgoto expr_end`
+            // re-lexes the newline ending the last terminator line, where the tNL lands.
+            line = h;
+        }
         match t.kind {
             PM_TOKEN_NEWLINE if next.is_some_and(|n| n.kind == PM_TOKEN_COMMENT) => deferred = Some(line),
             PM_TOKEN_COMMENT => {
@@ -78,6 +98,45 @@ pub fn last_token_line(src: &Source) -> Option<usize> {
         }
     }
     last
+}
+
+/// After this token the parser gem's lexer is in an argument state (expr_arg, expr_cmdarg,
+/// expr_mid), where a newline is re-lexed in expr_end: a method name (an identifier that is not a
+/// known local variable, a constant, `a.b`), `super`, `yield`, `defined?`, `return`, `break`, `next`.
+/// Literals, variables, `)`, `]`, `}`, `self`/`nil`/`true` and a comment leave it in expr_end.
+fn legacy_arg_state(src: &Source, t: &Token) -> bool {
+    use sys::*;
+    match t.kind {
+        PM_TOKEN_IDENTIFIER => !lvar_read_ends_at(src, t.end),
+        PM_TOKEN_CONSTANT
+        | PM_TOKEN_METHOD_NAME
+        | PM_TOKEN_KEYWORD_SUPER
+        | PM_TOKEN_KEYWORD_YIELD
+        | PM_TOKEN_KEYWORD_DEFINED
+        | PM_TOKEN_KEYWORD_RETURN
+        | PM_TOKEN_KEYWORD_BREAK
+        | PM_TOKEN_KEYWORD_NEXT => true,
+        _ => false,
+    }
+}
+
+/// A local variable read ends at `end` (the identifier is a declared local, not a method call).
+/// ponytail: one extra parse, only reached for a heredoc line ending in an identifier below 3.3.
+fn lvar_read_ends_at(src: &Source, end: usize) -> bool {
+    use ruby_prism::Visit;
+    struct Find {
+        end: usize,
+        found: bool,
+    }
+    impl<'pr> Visit<'pr> for Find {
+        fn visit_local_variable_read_node(&mut self, n: &ruby_prism::LocalVariableReadNode<'pr>) {
+            self.found |= n.location().end_offset() == self.end;
+        }
+    }
+    let result = ruby_prism::parse_with_version(src.text.as_bytes(), src.version, !src.binary);
+    let mut find = Find { end, found: false };
+    find.visit(&result.node());
+    find.found
 }
 
 /// Position-sorted `tokens` (e.g. `translated`) in lexer order, the order of

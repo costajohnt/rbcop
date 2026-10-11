@@ -29,7 +29,8 @@ pub fn check_method_line_break(cx: &mut Cx, node_start: usize, children: &[(usiz
     } else {
         line.chars().take(col).collect()
     };
-    if !prefix.trim_end_matches(|c: char| c.is_ascii_whitespace()).ends_with('(') {
+    // Ruby's `\s` (`\v` included, which is_ascii_whitespace leaves out).
+    if !prefix.trim_end_matches(|c: char| c.is_ascii() && crate::helpers::parser_tokens::is_ruby_space(c as u8)).ends_with('(') {
         return;
     }
     check_children_line_break(cx, node_start, children, ignore_last, msg);

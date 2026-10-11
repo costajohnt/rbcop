@@ -159,6 +159,19 @@ fn invalid_utf8_is_a_syntax_error() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// A magic comment naming no encoding: RuboCop refuses the file, so -A must not rewrite it (#246).
+#[test]
+fn unknown_encoding_name_is_not_corrected() {
+    let dir = scratch("unknown_encoding");
+    let src = b"# encoding: utf-8names = Array.new\nx = 1\n";
+    fs::write(dir.join("t.rb"), src).unwrap();
+    let out = rbcop(&dir, &["-A", "--force-default-config", "-f", "e", "t.rb"]);
+    let want = format!("{}/t.rb:1:1: F: Lint/Syntax: Unknown encoding name - utf-8names.\n", dir.display());
+    assert_eq!(text(&out.stdout).lines().next().map(|l| format!("{l}\n")), Some(want));
+    assert_eq!(fs::read(dir.join("t.rb")).unwrap(), src);
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// An inherit_from cycle is reported as an error (RuboCop overflows its stack; rbcop used to abort).
 #[test]
 fn inherit_from_cycle_is_an_error() {
@@ -710,4 +723,72 @@ fn gate_scripts_fail_without_a_binary_or_cops() {
     assert_eq!(code, Some(1), "{err}");
     assert!(err.contains("empty cop list"), "{err}");
     let _ = fs::remove_dir_all(&dir);
+}
+
+/// Deliberate difference: -a/-A never writes a file that resolves outside the project (the working
+/// directory and the command-line paths). The file is reported as without -a, with one warning.
+fn assert_refused(dir: &Path, outside_file: &Path, shown: &str, args: &[&str]) {
+    let plain = rbcop(dir, &[SPACING, args].concat());
+    for flag in ["-a", "-A"] {
+        let out = rbcop(dir, &[&[flag], SPACING, args].concat());
+        assert_eq!(fs::read_to_string(outside_file).unwrap(), "x  =  1\n", "{flag}");
+        assert_eq!(text(&out.stdout), text(&plain.stdout), "{flag}");
+        assert!(!text(&out.stdout).contains("[Corrected]"), "{flag}");
+        assert_eq!(out.status.code(), Some(1), "{flag}");
+        let real = outside_file.canonicalize().unwrap();
+        let warning =
+            format!("rbcop: not autocorrecting {shown}: it resolves to {}, outside the project\n", real.display());
+        assert_eq!(text(&out.stderr), warning, "{flag}");
+    }
+}
+
+#[test]
+fn autocorrect_refuses_symlinked_dir_outside_project() {
+    let dir = scratch("escape-dir");
+    let outside = scratch("escape-dir-outside");
+    fs::write(outside.join("o.rb"), "x  =  1\n").unwrap();
+    symlink(&outside, dir.join("ext")).unwrap();
+    assert_refused(&dir, &outside.join("o.rb"), "ext/o.rb", &[]);
+    let _ = fs::remove_dir_all(&dir);
+    let _ = fs::remove_dir_all(&outside);
+}
+
+#[test]
+fn autocorrect_refuses_symlinked_file_outside_project() {
+    let dir = scratch("escape-file");
+    let outside = scratch("escape-file-outside");
+    fs::write(outside.join("o.rb"), "x  =  1\n").unwrap();
+    symlink(outside.join("o.rb"), dir.join("l.rb")).unwrap();
+    assert_refused(&dir, &outside.join("o.rb"), "l.rb", &[]);
+    let _ = fs::remove_dir_all(&dir);
+    let _ = fs::remove_dir_all(&outside);
+}
+
+/// Paths given explicitly may lie outside the working directory; `..` that stays inside and a
+/// symlink that resolves inside are corrected as usual.
+#[test]
+fn autocorrect_writes_explicit_and_inside_paths() {
+    let dir = scratch("inside");
+    let outside = scratch("inside-outside");
+    fs::create_dir_all(outside.join("d")).unwrap();
+    for f in [outside.join("o.rb"), outside.join("d/o.rb")] {
+        fs::write(f, "x  =  1\n").unwrap();
+    }
+    fs::create_dir_all(dir.join("lib/sub")).unwrap();
+    for f in ["lib/a.rb", "lib/sub/b.rb", "c.rb"] {
+        fs::write(dir.join(f), "x  =  1\n").unwrap();
+    }
+    symlink("lib", dir.join("alias")).unwrap();
+    let (o, d) = (outside.join("o.rb"), outside.join("d"));
+    let mut args = vec!["-a"];
+    args.extend(SPACING);
+    args.extend([o.to_str().unwrap(), d.to_str().unwrap(), "alias/a.rb", "lib/sub/../../c.rb", "lib/sub/b.rb"]);
+    let out = rbcop(&dir, &args);
+    assert_eq!(out.status.code(), Some(0), "{}", text(&out.stderr));
+    assert!(!text(&out.stderr).contains("not autocorrecting"), "{}", text(&out.stderr));
+    for f in [o, outside.join("d/o.rb"), dir.join("lib/a.rb"), dir.join("c.rb"), dir.join("lib/sub/b.rb")] {
+        assert_eq!(fs::read_to_string(&f).unwrap(), "x = 1\n", "{}", f.display());
+    }
+    let _ = fs::remove_dir_all(&dir);
+    let _ = fs::remove_dir_all(&outside);
 }

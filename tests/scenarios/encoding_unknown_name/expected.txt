@@ -1,0 +1,16 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+after_code.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+after_code.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+after_shebang.rb:1:1: F: Lint/Syntax: Unknown encoding name - bogus.
+bogus.rb:1:1: F: Lint/Syntax: Unknown encoding name - bogus.
+indented.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+indented.rb:1:3: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 0).
+joined_line.rb:1:1: F: Lint/Syntax: Unknown encoding name - utf-8names.
+second_line_unterminated.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+second_line_unterminated.rb:1:1: W: Lint/ScriptPermission: Script file second_line_unterminated.rb doesn't have execute permission.
+second_line_unterminated.rb:2:18: C: [Correctable] Layout/TrailingEmptyLines: Final newline missing.
+suffix.rb:1:1: F: Lint/Syntax: Unknown encoding name - bogus.
+upper_case.rb:1:1: F: Lint/Syntax: Unknown encoding name - bogus.
+us_ascii_after_code.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+us_ascii_after_code.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+us_ascii_after_code.rb:1:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
