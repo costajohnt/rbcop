@@ -1675,14 +1675,15 @@ impl<'pr> Visit<'pr> for Walk<'_> {
 
     fn visit_match_predicate_node(&mut self, n: &ruby_prism::MatchPredicateNode<'pr>) {
         // Below 3.3 the value of `value in pat` is an `arg`: a command whose arguments run up to the
-        // `in` (`return x in [1]`, which Prism reads as `(return x) in [1]`) fails there (#231).
+        // `in` (`return x in [1]`, which Prism reads as `(return x) in [1]`) fails there (#231), and
+        // so does an assignment of one (`x = foo 1 in [1]`, a command_asgn; #304).
         let v = n.value();
         let command = v.as_return_node().is_some_and(|r| r.arguments().is_some())
             || v.as_break_node().is_some_and(|r| r.arguments().is_some())
             || v.as_next_node().is_some_and(|r| r.arguments().is_some())
             || v.as_yield_node().is_some_and(|y| y.arguments().is_some() && y.lparen_loc().is_none())
             || v.as_super_node().is_some_and(|y| y.arguments().is_some() && y.lparen_loc().is_none());
-        if command {
+        if command || command_asgn(&v) {
             self.violation(n.operator_loc().start_offset(), 3.3);
         }
         self.in_ctx(n.location().start_offset(), |s| {
@@ -1853,6 +1854,9 @@ fn command_asgn(node: &Node) -> bool {
     }
     value.as_super_node().is_some_and(|s| s.lparen_loc().is_none() && s.arguments().is_some())
         || value.as_yield_node().is_some_and(|y| y.lparen_loc().is_none() && y.arguments().is_some())
+        || value.as_return_node().is_some_and(|r| r.arguments().is_some())
+        || value.as_break_node().is_some_and(|r| r.arguments().is_some())
+        || value.as_next_node().is_some_and(|r| r.arguments().is_some())
 }
 
 fn is_chain(item: &[Tok]) -> bool {
