@@ -319,6 +319,12 @@ fn analyze(
     // ...rejects syntax newer than the target, and reports where its grammar fails rather than
     // Prism's messages (semantic errors keep their translated parser-gem messages).
     if parser_gem {
+        // The parser-gem simulation below walks the tree recursively (`legacy_syntax::diagnostics`),
+        // so the depth guard (see `program` below) comes first here: a long chain overflowed (#351).
+        if crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH) {
+            file_error(format!("rbcop: {display}: nested more than {MAX_AST_DEPTH} levels deep, not inspected."));
+            return (Vec::new(), None, Vec::new());
+        }
         let kept = |e: &ruby_prism::Diagnostic| !tolerated(e, parser_gem, cfg.target_ruby, text);
         // A stray backslash is the parser gem's lexer error: reported, then skipped (no recovery).
         let bare_backslash = |e: &ruby_prism::Diagnostic| {
@@ -374,7 +380,7 @@ fn analyze(
         // Numbered parameters (2.7+): the parser gem's per-identifier errors come from the tree
         // walk below, in place of Prism's; Prism's reserved-name errors stay where the walk has
         // nothing (parameters named `_1`).
-        let numbered = if cfg.target_ruby >= 2.7 && !crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH) {
+        let numbered = if cfg.target_ruby >= 2.7 {
             crate::syntax::numbered_parameter_errors(&result.node(), cfg.target_ruby)
         } else {
             Vec::new()
@@ -422,11 +428,9 @@ fn analyze(
             semantic.push(e);
         }
         // Onigmo compile errors of static regexps: semantic errors too (the builder's diagnostic).
-        if !crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH) {
-            for e in crate::syntax::regexp_compile_errors(&result.node(), text).into_iter().filter(|e| e.0 < cut) {
-                actions.push(e.1);
-                semantic.push(e);
-            }
+        for e in crate::syntax::regexp_compile_errors(&result.node(), text).into_iter().filter(|e| e.0 < cut) {
+            actions.push(e.1);
+            semantic.push(e);
         }
         actions.sort_unstable();
         let diags = crate::legacy_syntax::diagnostics(

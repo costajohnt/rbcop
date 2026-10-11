@@ -96,6 +96,34 @@ fn hostile_inputs_stay_bounded() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// Below 3.3 the parser-gem simulation walks the tree recursively: the depth guard runs before it,
+/// so a long chain gets the too-deep error instead of a stack overflow (#351).
+#[test]
+fn too_deep_below_3_3_is_skipped() {
+    let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+    let dir = std::env::temp_dir().join(format!("rbcop-hostile-legacy-deep-{}", std::process::id()));
+    let _ = fs::remove_dir_all(&dir);
+    fs::create_dir_all(&dir).unwrap();
+    fs::write(dir.join(".rubocop.yml"), "AllCops:\n  TargetRubyVersion: 3.2\n  NewCops: disable\n").unwrap();
+    fs::write(dir.join("chain.rb"), format!("x = a{}\n", ".b".repeat(400_000))).unwrap();
+    // A syntax error too: the simulation that reports it is the recursive part.
+    fs::write(dir.join("chain_error.rb"), format!("x = a{} +\n", ".b".repeat(400_000))).unwrap();
+    for name in ["chain.rb", "chain_error.rb"] {
+        let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
+            .args(["--only", "Style/StringLiterals", "--format", "emacs", name])
+            .current_dir(&dir)
+            .output()
+            .unwrap();
+        let stderr = String::from_utf8_lossy(&out.stderr);
+        assert_eq!(out.status.code(), Some(1), "{name}: {:?}\n{stderr}", out.status);
+        assert!(
+            stderr.contains(&format!("rbcop: {name}: nested more than 1000 levels deep, not inspected.")),
+            "{stderr}"
+        );
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// A backtracking config pattern's run budget is per file: a file's offenses are the same linted
 /// alone or after other files that exhaust the pattern, whichever worker thread gets them (#324).
 /// `z.rb` gives up 31 times (under the budget) and then has a cheap match; with a budget shared by
