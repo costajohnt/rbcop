@@ -30,7 +30,8 @@ impl Cop for IndentationStyle {
                     c.replace(start, end, &ws.replace('\t', &" ".repeat(width)));
                 } else {
                     // gsub(/\A\s+/) { "\t" * (match.size / width) }: the range is all whitespace.
-                    c.replace(start, end, &"\t".repeat(ws.chars().count() / width.max(1)));
+                    // A zero width raises ZeroDivisionError there (a cop error); so does `/` here.
+                    c.replace(start, end, &"\t".repeat(ws.chars().count() / width));
                 }
             });
         }
