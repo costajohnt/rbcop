@@ -195,6 +195,15 @@ pub fn parse_for_target<'t>(
             bytes[t.start + i] = enc[i];
         }
     }
+    // A NUL ends a heredoc line for the parser gem's lexer: the NULs that make a terminator line
+    // become newlines (#247).
+    if text.contains('\0') && result.errors().next().is_some() {
+        for o in crate::legacy_syntax::heredoc_nul_breaks(text, &tokens) {
+            let bytes = copy.get_or_insert_with(|| text.as_bytes().to_vec());
+            restore.push((o, bytes[o]));
+            bytes[o] = b'\n';
+        }
+    }
     let (errors, dots) = {
         let dots = |tokens: &[ruby_prism::Token]| -> Vec<usize> {
             tokens.iter().filter(|t| matches!(t.kind, "DOT" | "AMPERSAND_DOT")).map(|t| t.start).collect()

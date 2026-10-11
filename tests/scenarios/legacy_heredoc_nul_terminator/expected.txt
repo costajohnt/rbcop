@@ -1,0 +1,25 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+after.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+after.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+after.rb:3:1: C: [Correctable] Layout/ClosingHeredocIndentation: `SQL` is not aligned with `x = <<~SQL`.
+after.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+body_nul.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+body_nul.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+body_nul.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+dash_indent.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+dash_indent.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+dash_indent.rb:3:3: C: [Correctable] Layout/ClosingHeredocIndentation: `SQL` is not aligned with `x = <<-SQL`.
+dash_indent.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+plain_before.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+plain_before.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+plain_before.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+split_terminator.rb:1:5: F: Lint/Syntax: unterminated string meets end of file (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+squiggly_before.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+squiggly_before.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+squiggly_before.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+squiggly_before.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+squiggly_indent.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+squiggly_indent.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+squiggly_indent.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+squiggly_indent.rb:3:3: C: [Correctable] Layout/ClosingHeredocIndentation: `SQL` is not aligned with `x = <<~SQL`.
+squiggly_indent.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.

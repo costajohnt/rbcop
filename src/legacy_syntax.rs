@@ -101,6 +101,50 @@ pub fn continue_over_blank_lines(text: &str, dots: &[usize]) -> Option<(Vec<u8>,
     Some((bytes, fake))
 }
 
+/// NULs the parser gem's lexer ends a heredoc line at, where that makes a terminator line (Prism
+/// reads them as text and leaves the heredoc open): in ` \0 SQL` or `  SQL\0` the segment between
+/// NULs and newlines is the `SQL` terminator, its leading spaces and tabs allowed after `<<~`/`<<-`
+/// (#247). Parse a copy with these NULs made newlines, written back once parsed.
+pub fn heredoc_nul_breaks(text: &str, tokens: &[Token]) -> Vec<usize> {
+    // Sets, so each segment costs two lookups however many heredocs the file opens (a file with many
+    // heredocs and many NUL segments must stay linear).
+    let (mut exact, mut indented): (HashSet<&str>, HashSet<&str>) = (HashSet::new(), HashSet::new());
+    for t in tokens.iter().filter(|t| t.kind == "HEREDOC_START") {
+        let Some(s) = text.get(t.start..t.end).and_then(|s| s.strip_prefix("<<")) else { continue };
+        let (indent, s) = s.strip_prefix(['~', '-']).map_or((false, s), |r| (true, r));
+        let id = s.trim_matches(['\'', '"', '`']);
+        if indent {
+            indented.insert(id)
+        } else {
+            exact.insert(id)
+        };
+    }
+    let has_ids = !exact.is_empty() || !indented.is_empty();
+    let mut out = Vec::new();
+    let mut start = 0;
+    for line in text.split_inclusive('\n') {
+        let body = line.trim_end_matches('\n');
+        if has_ids && body.contains('\0') {
+            let mut seg_start = start;
+            for seg in body.split('\0') {
+                let seg_end = seg_start + seg.len();
+                let closes = exact.contains(seg) || indented.contains(seg.trim_start_matches([' ', '\t']));
+                if closes {
+                    if seg_start > start {
+                        out.push(seg_start - 1);
+                    }
+                    if seg_end < start + body.len() {
+                        out.push(seg_end);
+                    }
+                }
+                seg_start = seg_end + 1;
+            }
+        }
+        start += line.len();
+    }
+    out
+}
+
 /// A Prism CONSTANT starting at `name` that the parser gem's lexer reads as an identifier (it
 /// starts constants only at ASCII `A`-`Z`): its first character and that character's lowercase
 /// form, which Prism reads as an identifier at the same offsets.
