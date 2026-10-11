@@ -1,0 +1,21 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+c01.rb:2:3: F: Lint/Syntax: dynamic constant assignment (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+c02.rb:2:3: F: Lint/Syntax: dynamic constant assignment (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+c03.rb:2:3: F: Lint/Syntax: dynamic constant assignment (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+c04.rb:1:14: F: Lint/Syntax: dynamic constant assignment (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+c05.rb:2:3: F: Lint/Syntax: dynamic constant assignment (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+c06.rb:2:3: F: Lint/Syntax: dynamic constant assignment (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+c07.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+c08.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+c09.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for `class A`.
+c09.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+c10.rb:2:3: F: Lint/Syntax: dynamic constant assignment (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+c10.rb:4:1: F: Lint/Syntax: unexpected token kEND (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+c11.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+c12.rb:2:3: F: Lint/Syntax: dynamic constant assignment (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+c13.rb:4:1: F: Lint/Syntax: unexpected token kEND (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+c14.rb:2:3: F: Lint/Syntax: dynamic constant assignment (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+c14.rb:3:3: F: Lint/Syntax: dynamic constant assignment (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+c15.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+c15.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+c16.rb:2:7: F: Lint/Syntax: dynamic constant assignment (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
