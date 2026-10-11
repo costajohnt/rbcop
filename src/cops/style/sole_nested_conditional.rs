@@ -312,7 +312,9 @@ impl Cop for SoleNestedConditional {
         // correction_parses?
         let mut probe = Corrector::new(cx.facts.text.clone());
         apply(&mut probe, &edits);
-        if probe.clobbered() || ruby_prism::parse(probe.rewrite().as_bytes()).errors().next().is_some() {
+        if probe.clobbered()
+            || !helpers::reparsed_equivalence::valid_syntax(&probe.rewrite(), cx.src.version, cx.src.legacy())
+        {
             return;
         }
         let msg = format!(
