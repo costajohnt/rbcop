@@ -87,6 +87,14 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   `config/all-cops.yml` + TargetRubyVersion, diff lines left (specs: all low targets;
   rails/discourse: 2.7 and 3.1): specs 2.5 7, 2.7 1, 3.0 1, 3.1 1, 3.2 1; rails 2.7 0, 3.1 0;
   discourse 2.7 32 (11 of 12609 files), 3.1 1. What remains:
+  - The first error's wording, token name or position on invalid code, when both tools reject the
+    file: rbcop parses with Prism and maps its errors onto the parser gem's racc messages, but the
+    two lexers and grammars fail at different places on arbitrary broken input (an unclosed `{`
+    or `[` pattern, `BEGIN` inside a def, `a.{}`, `x.0`, a stray `:`, doubled or trailing commas,
+    unary `+`/`-` at end of file, `class ::foo`, Prism's anonymous-parameter errors). Both tools
+    report the file as unparseable and run no other cop on it, so the outcome is the same; only
+    the Lint/Syntax message text or column differs. Differences in WHETHER code parses (rbcop
+    accepting what the parser gem rejects, or the reverse) are bugs, not part of this gap.
   - Follow-up diagnostics after the first error in a file: recovery is modelled (including the
     lexer's cmdarg stack and in_kwarg flag left set by abandoned constructs, and racc's C core
     popping one state too many after a semantic action's yyerror), not the LALR tables, so some
