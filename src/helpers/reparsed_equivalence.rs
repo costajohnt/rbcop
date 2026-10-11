@@ -34,7 +34,7 @@ pub fn valid_syntax(text: &str, version: &'static str, legacy: Option<f64>) -> b
 /// The parse of `text` when it has no syntax errors. With `legacy` (a target below 3.3, parsed by
 /// the parser gem) the file is parsed and its Prism errors tolerated as `runner::analyze` does,
 /// and the target grammar's own (`legacy_syntax`: newer syntax, `a = foo 1 or b`, ...) count.
-fn parse_clean<'t>(
+pub fn parse_clean<'t>(
     text: &'t str,
     buf: &'t mut Vec<u8>,
     version: &'static str,
