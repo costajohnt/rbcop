@@ -94,7 +94,12 @@ impl Cop for SpaceInsideBlockBraces {
 
         // args_delimiter: `|` or `(` of explicit block parameters (block_type? only).
         let delim = params.and_then(|p| p.as_block_parameters_node()).and_then(|p| p.opening_loc());
-        let pipe = delim.as_ref().filter(|d| d.as_slice() == b"|").map(|d| (d.start_offset(), d.end_offset()));
+        // Below 2.7 the parser gem lexes empty `||` as one tOROP: the args node has no `|` begin.
+        let oror = |d: &ruby_prism::Location| cx.config.target_ruby < 2.7 && src.text[d.end_offset()..].starts_with('|');
+        let pipe = delim
+            .as_ref()
+            .filter(|d| d.as_slice() == b"|" && !oror(d))
+            .map(|d| (d.start_offset(), d.end_offset()));
         let before_params = cx.cfg.bool("SpaceBeforeBlockParameters").unwrap_or(true);
 
         // check_left_brace
