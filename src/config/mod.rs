@@ -168,6 +168,8 @@ pub struct Resolved {
     pub deprecated_warnings: Vec<(&'static str, String)>,
     /// Cop-like keys no registered cop has (see Store::unregistered).
     unregistered: Vec<String>,
+    /// The options the cops were resolved with (Registry#enabled_cop_name? for other cop names).
+    opts: Options,
 }
 
 impl Resolved {
@@ -182,6 +184,7 @@ impl Resolved {
             cops: HashMap::new(),
             deprecated_warnings: Vec::new(),
             unregistered: Vec::new(),
+            opts: opts.clone(),
         };
         for &name in cop_names {
             let cfg = r.build_cop(name, opts);
@@ -299,6 +302,35 @@ impl Resolved {
         opts.preview.unwrap_or_else(|| self.all_cops().get("Preview") == Some(&Value::Bool(true)))
     }
 
+    /// Registry#enabled_pending_cop? for a cop whose Config#for_cop `Enabled` is `enabled`.
+    pub fn enabled_pending_cop(&self, name: &str, enabled: &Value) -> bool {
+        !self.opts.disable_pending_cops
+            && *enabled == Value::Str("pending".into())
+            && (self.opts.enable_pending_cops || self.new_cops(name, false))
+    }
+
+    /// Registry#enabled_cop_name?: `effective` is Config#for_cop's `Enabled`, `cop` its params.
+    fn enabled_cop_name(&self, name: &str, effective: &Value, cop: &Map, opts: &Options) -> bool {
+        let safe = || !matches!(cop.get("Safe"), Some(Value::Null | Value::Bool(false)));
+        opts.only.iter().any(|o| o == name)
+            || ((*effective == Value::Bool(true)
+                || self.enabled_pending_cop(name, effective)
+                || (*effective == Value::Str("preview".into()) && self.preview(opts)))
+                && (!opts.safe || safe()))
+    }
+
+    /// Registry#enabled? for any cop name, ported or not (Lint/Syntax included): the one place
+    /// that applies config, `--only`, `--safe`, pending/preview options and `--disable-all-cops`.
+    pub fn cop_enabled(&self, name: &str) -> bool {
+        match self.cops.get(name) {
+            Some(c) => c.enabled,
+            None => {
+                let cop = self.hash.map(name).cloned().unwrap_or_default();
+                self.enabled_cop_name(name, &self.enable_cop(name), &cop, &self.opts)
+            }
+        }
+    }
+
     /// Config#enable_cop? + Registry#enabled?, then Config#for_badge (§4).
     fn build_cop(&self, name: &str, opts: &Options) -> CopConfig {
         let mut cop = self.hash.map(name).cloned().unwrap_or_default();
@@ -315,14 +347,7 @@ impl Resolved {
                 cop.insert(k, v);
             }
         }
-        let safe = || !matches!(cop.get("Safe"), Some(Value::Null | Value::Bool(false)));
-        let enabled = opts.only.iter().any(|o| o == name)
-            || ((effective == Value::Bool(true)
-                || (!opts.disable_pending_cops
-                    && effective == Value::Str("pending".into())
-                    && (opts.enable_pending_cops || self.new_cops(name, false)))
-                || (effective == Value::Str("preview".into()) && self.preview(opts)))
-                && (!opts.safe || safe()));
+        let enabled = self.enabled_cop_name(name, &effective, &cop, opts);
         let mut params = dept_map;
         for (k, v) in cop.0 {
             params.insert(k, v);

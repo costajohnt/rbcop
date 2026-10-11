@@ -1,0 +1,5 @@
+a.rb:1:7: C: Naming/ClassAndModuleCamelCase: Use CamelCase for classes and modules.
+c.rb:1:1: C: Naming/InclusiveLanguage: Consider replacing 'foo' with another term.
+c.rb:4:1: C: Naming/InclusiveLanguage: Consider replacing 'qux' with another term.
+c.rb:5:24: C: Naming/InclusiveLanguage: Consider replacing 'qux' with another term.
+c.rb:5:3: C: Naming/InclusiveLanguage: Consider replacing 'foo' with another term.

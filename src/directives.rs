@@ -229,22 +229,6 @@ pub fn prevent_style(config: &crate::config::Resolved) -> bool {
     matches!(config.for_cop(STYLE_DISABLE_COPS).get("Enabled"), Some(crate::config::value::Value::Bool(true)))
 }
 
-/// Registry#enabled? for a cop name in config (cops rbcop has not ported fall back to a literal
-/// `Enabled: true`, or `pending` with `NewCops: enable`).
-pub fn config_enabled(config: &crate::config::Resolved, cop: &str) -> bool {
-    use crate::config::value::Value;
-    static PORTED: LazyLock<std::collections::HashSet<&'static str>> =
-        LazyLock::new(|| crate::cops::ALL.iter().map(|r| r.name).collect());
-    if PORTED.contains(cop) {
-        return config.cop(cop).enabled;
-    }
-    match config.for_cop(cop).get("Enabled") {
-        Some(Value::Bool(b)) => *b,
-        Some(Value::Str(s)) => s == "pending" && config.enabled_new_cop(cop),
-        _ => false,
-    }
-}
-
 /// The result of CommentConfig#analyze.
 #[derive(Default)]
 pub struct CommentConfig {
