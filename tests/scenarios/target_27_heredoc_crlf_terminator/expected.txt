@@ -1,0 +1,8 @@
+a.rb:3:1: C: Layout/EndOfLine: Carriage return character detected.
+d.rb:5:1: C: Layout/EndOfLine: Carriage return character detected.
+e.rb:3:1: C: Layout/EndOfLine: Carriage return character detected.
+g.rb:3:1: C: Layout/EndOfLine: Carriage return character detected.
+h.rb:4:1: C: Layout/EndOfLine: Carriage return character detected.
+i.rb:3:1: C: Layout/EndOfLine: Carriage return character detected.
+j.rb:3:1: C: Layout/EndOfLine: Carriage return character detected.
+l.rb:3:1: C: Layout/EndOfLine: Carriage return character detected.
