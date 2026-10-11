@@ -81,7 +81,7 @@ pub fn parse(comment: &str) -> Option<Directive> {
     let m = DIRECTIVE.captures(comment)?;
     let whole = m.get(0).unwrap();
     let pre = &comment[..whole.start()];
-    if pre.starts_with('#') && pre[1..].trim().is_empty() {
+    if pre.starts_with('#') && crate::helpers::ruby_string::blank(&pre[1..]) {
         return None;
     }
     let cops = m.get(2).or(m.get(3)).map(|c| c.as_str().to_string());
@@ -426,7 +426,7 @@ pub fn statement_scope_after(lines: &LineInfo, src: &Source, directive_line: i64
         if !lines.comment_only(l as i64) {
             return Some((lines.statement_bounds)(l));
         }
-        if src.lines[l - 1].trim().is_empty() {
+        if crate::helpers::ruby_string::blank(&src.lines[l - 1]) {
             return None;
         }
     }

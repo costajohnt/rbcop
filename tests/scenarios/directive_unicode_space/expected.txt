@@ -1,0 +1,18 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+d1.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+d1.rb:2:9: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+d2.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+d2.rb:2:9: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+d3.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+d3.rb:2:3: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 0).
+d3.rb:2:3: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Lint/UselessAssignment`.
+d3.rb:3:1: C: Naming/AsciiIdentifiers: Use only ascii symbols in identifiers.
+d3.rb:3:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+d3.rb:3:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+d3.rb:4:3: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+d3.rb:4:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+d4.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+d4.rb:2:3: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Lint/UselessAssignment`.
+d4.rb:4:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+d5.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+d5.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.

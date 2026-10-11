@@ -1,0 +1,67 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+e1.rb:1:5: F: Lint/Syntax: unterminated string meets end of file (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+f13.rb:1:5: F: Lint/Syntax: unterminated string meets end of file (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+f14.rb:1:5: F: Lint/Syntax: unterminated string meets end of file (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+f16.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+f16.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+f16.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+f16.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+f16.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+f16.rb:3:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+f16.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+f9.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+f9.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+f9.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+f9.rb:4:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+f9.rb:4:1: C: [Correctable] Layout/ClosingHeredocIndentation: `` is not aligned with `x = <<''`.
+f9.rb:4:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+h1.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+h1.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+h1.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+h1.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+h1.rb:3:1: C: [Correctable] Layout/ClosingHeredocIndentation: `` is not aligned with `x = <<''`.
+h1.rb:3:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+h1.rb:4:4: C: [Correctable] Layout/TrailingEmptyLines: Final newline missing.
+h2.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+h2.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+h2.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+h2.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+h2.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+h2.rb:3:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+h2.rb:4:4: C: [Correctable] Layout/TrailingEmptyLines: Final newline missing.
+h3.rb:1:5: F: Lint/Syntax: unterminated string meets end of file (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+h5.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+h5.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+h5.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+h5.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+h5.rb:3:1: C: [Correctable] Layout/ClosingHeredocIndentation: `` is not aligned with `x = <<''`.
+h5.rb:3:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+h6.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+h6.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+h6.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<-`.
+h6.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+h6.rb:3:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+h6.rb:4:4: C: [Correctable] Layout/TrailingEmptyLines: Final newline missing.
+h7.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+h7.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+h7.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+h7.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+h7.rb:3:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+h7.rb:4:4: C: [Correctable] Layout/TrailingEmptyLines: Final newline missing.
+h8.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+h8.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+h8.rb:4:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+h8.rb:4:1: C: [Correctable] Layout/ClosingHeredocIndentation: `` is not aligned with `x = <<''`.
+h8.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundMethodBody: Extra empty line detected at method body end.
+h9.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+h9.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+h9.rb:4:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+h9.rb:4:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+k1.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+k1.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+k1.rb:4:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+k1.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundMethodBody: Extra empty line detected at method body end.
+k3.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+k3.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+k3.rb:4:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+k3.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundMethodBody: Extra empty line detected at method body end.

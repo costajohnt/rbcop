@@ -53,7 +53,15 @@ impl Cop for ClosingHeredocIndentation {
         };
         let (Some(open), Some(close)) = (open, close) else { return };
         let o = open.as_slice();
-        if !o.starts_with(b"<<") || !matches!(o.get(2), Some(b'~' | b'-')) {
+        // heredoc_type == SIMPLE_HEREDOC: OPENING_DELIMITER needs a delimiter character outside the
+        // quotes, so `<<''` has no type (and is checked) while `<<-''`/`<<~''` read as `<<` with
+        // the delimiter `-`/`~`.
+        let empty_quotes = |q: &[u8]| q.len() == 2 && q[0] == q[1] && matches!(q[0], b'\'' | b'"' | b'`');
+        let simple = match o.get(2) {
+            Some(b'~' | b'-') => empty_quotes(&o[3..]),
+            _ => !empty_quotes(&o[2..]),
+        };
+        if !o.starts_with(b"<<") || simple {
             return;
         }
         let src = cx.src;
