@@ -12,9 +12,8 @@ cops=$1
 shift
 corpora=${*:-specs rails discourse}
 root=$(cd "$(dirname "$0")/.." && pwd)
-bin=$root/target/release/rbcop
-# A stale binary reports phantom diffs (e.g. right after a merge).
-(cd "$root" && cargo build --release -q)
+. "$root/scripts/rbcop.sh"
+[ -n "$cops" ] || { echo "check-autocorrect: empty cop list" >&2; exit 1; }
 corpus_root=${RBCOP_CORPUS:?set RBCOP_CORPUS to the corpus directory}
 oracle_root=${RBCOP_ORACLE:?set RBCOP_ORACLE to the oracle directory}
 mode=${MODE:--A}

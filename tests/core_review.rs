@@ -598,3 +598,49 @@ fn backtracking_config_regexp_on_a_long_name_is_bounded() {
     assert!(text(&out.stdout).ends_with("1 file inspected, 1 offense detected\n"), "{}", text(&out.stdout));
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// The corpus gates fail loudly when the binary they test is missing or lists no cops (#163). A
+/// missing binary once produced an empty cop list, filtered both sides to nothing and reported
+/// `all corpora match`. `cargo` is stubbed so the scripts' rebuild cannot restore the binary.
+#[test]
+fn gate_scripts_fail_without_a_binary_or_cops() {
+    let dir = scratch("gate-scripts");
+    let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+    let stubs = dir.join("bin");
+    fs::create_dir_all(stubs.join("release")).unwrap();
+    fs::write(stubs.join("cargo"), "#!/bin/sh\nexit 0\n").unwrap();
+    fs::set_permissions(stubs.join("cargo"), fs::Permissions::from_mode(0o755)).unwrap();
+    let path = format!("{}:{}", stubs.display(), std::env::var("PATH").unwrap_or_default());
+    let run = |script: &str, args: &[&str]| {
+        let out = std::process::Command::new("sh")
+            .arg(root.join("scripts").join(script))
+            .args(args)
+            .env("PATH", &path)
+            .env("CARGO_TARGET_DIR", &stubs)
+            .env("RBCOP_CORPUS", &dir)
+            .env("RBCOP_ORACLE", &dir)
+            .current_dir(&dir)
+            .output()
+            .unwrap();
+        (out.status.code(), text(&out.stdout), text(&out.stderr))
+    };
+    // No binary at all.
+    let (code, out, err) = run("check-cops.sh", &["all", "specs"]);
+    assert_eq!(code, Some(1), "{out}{err}");
+    assert!(err.contains("rbcop does not run as"), "{out}{err}");
+    assert!(!out.contains("all corpora match"), "{out}");
+    // A binary that runs but implements no cops.
+    let fake = stubs.join("release/rbcop");
+    fs::write(&fake, "#!/bin/sh\n[ \"$1\" = --version ] && echo 0.0.0\nexit 0\n").unwrap();
+    fs::set_permissions(&fake, fs::Permissions::from_mode(0o755)).unwrap();
+    for (script, args) in [("check-cops.sh", &["all", "specs"][..]), ("compare.sh", &["."][..])] {
+        let (code, out, err) = run(script, args);
+        assert_eq!(code, Some(1), "{script}: {out}{err}");
+        assert!(err.contains("no cops from"), "{script}: {out}{err}");
+    }
+    // An explicitly empty cop list.
+    let (code, _, err) = run("check-cops.sh", &["", "specs"]);
+    assert_eq!(code, Some(1), "{err}");
+    assert!(err.contains("empty cop list"), "{err}");
+    let _ = fs::remove_dir_all(&dir);
+}
