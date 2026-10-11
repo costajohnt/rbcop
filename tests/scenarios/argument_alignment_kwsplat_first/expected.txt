@@ -1,0 +1,3 @@
+d.rb:3:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+e.rb:3:4: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+f.rb:2:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
