@@ -1,0 +1,3 @@
+inherit_from: ../.rubocop.yml
+Layout/SpaceInsideBlockBraces:
+  EnforcedStyle: no_space
