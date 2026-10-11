@@ -39,6 +39,17 @@ pub fn legacy_gvar_interpolations(cx: &Cx, node: &Node) -> Vec<(usize, usize)> {
     out
 }
 
+/// The parser gem's lexer (targets below 3.3) ends a string content token at a raw NUL, ^D or ^Z
+/// byte (its `c_eof`), so `"a\0b"` is a `dstr` of two `str` parts there (`"a\0"` and `"\0"`, with
+/// nothing after the byte, stay one `str`); Prism keeps one plain string.
+pub fn legacy_eof_split(cx: &Cx, node: &Node) -> bool {
+    cx.config.target_ruby < 3.3
+        && node.as_string_node().is_some_and(|s| {
+            let content = s.content_loc().as_slice();
+            content.iter().take(content.len().saturating_sub(1)).any(|&b| matches!(b, 0 | 0x04 | 0x1a))
+        })
+}
+
 /// StringHelp#on_regexp ignores the node: a str anywhere inside a regexp is skipped.
 pub fn in_regexp(ancestors: &[Node]) -> bool {
     ancestors.iter().any(|a| {
