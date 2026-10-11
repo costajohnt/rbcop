@@ -20,7 +20,7 @@ fn unescaped(node: &Node) -> Vec<u8> {
 fn basic_literal(node: &Node) -> bool {
     parser_str(node)
         || matches!(
-            kind::of(node),
+            crate::helpers::literal_node::folded_kind(node),
             kind::INTEGER_NODE
                 | kind::FLOAT_NODE
                 | kind::SYMBOL_NODE
@@ -121,6 +121,17 @@ impl Values<'_> {
 
     /// `autocorrected_value` / `autocorrected_value_in_hash`.
     fn value(&self, node: &Node, in_hash: bool) -> String {
+        // A folded `- 1` is `(int -1)`: its value, negated.
+        if let Some(lit) = crate::helpers::literal_node::folded_numeric(node) {
+            return match kind::of(&lit) {
+                kind::INTEGER_NODE => {
+                    let s = integer_to_s(&lit.as_integer_node().unwrap());
+                    if s == "0" { s } else { format!("-{s}") }
+                }
+                kind::FLOAT_NODE => float_to_s(-lit.as_float_node().unwrap().value()),
+                _ => self.source(node),
+            };
+        }
         match kind::of(node) {
             kind::INTEGER_NODE => integer_to_s(&node.as_integer_node().unwrap()),
             kind::FLOAT_NODE => float_to_s(node.as_float_node().unwrap().value()),

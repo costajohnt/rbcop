@@ -18,7 +18,7 @@ impl Cop for EachWithObjectArgument {
         let [arg] = args.as_slice() else { return };
         // immutable_literal?: int float sym dsym true false nil complex rational
         let immutable = matches!(
-            kind::of(arg),
+            crate::helpers::literal_node::folded_kind(arg),
             kind::INTEGER_NODE
                 | kind::FLOAT_NODE
                 | kind::SYMBOL_NODE
