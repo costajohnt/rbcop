@@ -130,6 +130,25 @@ pub fn shareable_constant_value(comment: &str) -> Option<String> {
     SIMPLE_SHAREABLE.captures(comment).map(|m| m[1].to_string())
 }
 
+static EMACS_FROZEN: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(&format!(r"\Afrozen[_-]string[_-]literal{S}*:{S}*{TOKEN}\z")).unwrap());
+static SIMPLE_FROZEN: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(&format!(r"(?i)\A{S}*#{S}*frozen[_-]string[_-]literal:{S}*{TOKEN}{S}*\z")).unwrap());
+
+/// `MagicComment.parse(comment).frozen_string_literal`: `true`/`false` lowercased, any other
+/// token as written (editor comments downcase it), None if unspecified (vim comments never set it).
+pub fn frozen_string_literal(comment: &str) -> Option<String> {
+    let value = if let Some(c) = EMACS.captures(comment) {
+        let tokens = editor_tokens(c.get(1).unwrap().as_str(), ";");
+        tokens.iter().find_map(|t| EMACS_FROZEN.captures(t).map(|m| m[1].to_lowercase()))?
+    } else if VIM.is_match(comment) {
+        return None;
+    } else {
+        SIMPLE_FROZEN.captures(comment)?[1].to_string()
+    };
+    Some(if value.eq_ignore_ascii_case("true") || value.eq_ignore_ascii_case("false") { value.to_lowercase() } else { value })
+}
+
 #[cfg(test)]
 mod tests {
     use super::any;

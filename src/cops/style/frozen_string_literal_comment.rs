@@ -6,22 +6,18 @@ pub const NAME: &str = "Style/FrozenStringLiteralComment";
 pub static COP: FrozenStringLiteralComment = FrozenStringLiteralComment;
 pub struct FrozenStringLiteralComment;
 
-static SIMPLE: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r"(?i)\A\s*#\s*frozen[_-]string[_-]literal:\s*([[:alnum:]\-_]+)\s*\z").unwrap());
+/// Style/Encoding::ENCODING_PATTERN (Ruby's `\s` is ASCII-only)
+static ENCODING: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"#.*coding(?-u:\s)?[:=](?-u:\s)?(?:UTF|utf)-8").unwrap());
+
+/// EmacsComment::FORMAT
 static EMACS: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"-\*-(.+)-\*-").unwrap());
-static EMACS_FROZEN: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r"(?i)\Afrozen[_-]string[_-]literal\s*:\s*([[:alnum:]\-_]+)\z").unwrap());
-/// Style/Encoding::ENCODING_PATTERN
-static ENCODING: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"#.*coding\s?[:=]\s?(?:UTF|utf)-8").unwrap());
 
 const ENABLED: &str = "# frozen_string_literal: true";
 
-/// MagicComment#frozen_string_literal: Some("true"/"false"/other token, lowercased), None if unspecified.
-pub fn frozen_value(line: &str) -> Option<String> {
-    match EMACS.captures(line) {
-        Some(e) => e[1].split(';').find_map(|t| EMACS_FROZEN.captures(t.trim()).map(|c| c[1].to_lowercase())),
-        None => SIMPLE.captures(line).map(|c| c[1].to_lowercase()),
-    }
+/// MagicComment#frozen_string_literal.
+fn frozen_value(line: &str) -> Option<String> {
+    helpers::magic_comment::frozen_string_literal(line)
 }
 
 /// `buffer.line_range(line)`: the line without its newline.
