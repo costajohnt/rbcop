@@ -1,0 +1,23 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+collections.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+collections.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+collections.rb:2:17: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+collections.rb:2:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `z`.
+interpolation.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+interpolation.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+interpolation.rb:1:5: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+interpolation.rb:1:8: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+interpolation.rb:2:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+interpolation.rb:2:5: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+interpolation.rb:2:8: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+not_folded.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+not_folded.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `c`.
+not_folded.rb:1:9: C: [Correctable] Layout/SpaceAroundOperators: Space around operator `**` detected.
+parens.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+parens.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+parens.rb:1:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+parens.rb:1:6: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+parens.rb:2:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+parens.rb:2:6: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+parens.rb:3:8: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+parens.rb:3:9: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
