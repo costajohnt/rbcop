@@ -606,9 +606,9 @@ pub fn cop_error_at(cop: &str, src: &Source, at: Option<usize>) {
         // Range#line and the 0-based Range#column.
         Some(at) => {
             let (line, col) = crate::formatter::line_col(src.text, at);
-            format!("{}:{line}:{}", src.path, col - 1)
+            format!("{}:{line}:{}", src.absolute_path(), col - 1)
         }
-        None => src.path.to_string(),
+        None => src.absolute_path(),
     };
     file_error(format!("An error occurred while {cop} cop was inspecting {location}."));
 }
@@ -616,6 +616,25 @@ pub fn cop_error_at(cop: &str, src: &Source, at: Option<usize>) {
 /// The node the running cop callback was given (see VISITING).
 pub fn visiting() -> Option<usize> {
     VISITING.with(|v| v.get())
+}
+
+/// Runner#warnings: every RuboCop::Warning a cop raised, for the end-of-run summary.
+static WARNINGS: std::sync::Mutex<Vec<String>> = std::sync::Mutex::new(Vec::new());
+
+/// Team#handle_warning: a cop's Warning, printed now and kept for the summary (one per raise).
+pub fn cop_warning(message: &str, src: &Source) {
+    let msg = format!("{message} (from file: {})", src.absolute_path());
+    eprintln!("{msg}");
+    WARNINGS.lock().unwrap_or_else(|e| e.into_inner()).push(msg);
+}
+
+/// The run's cop warnings, in file order.
+pub fn take_warnings() -> Vec<String> {
+    let mut warnings = std::mem::take(&mut *WARNINGS.lock().unwrap_or_else(|e| e.into_inner()));
+    // Files run in parallel; a stable sort by path keeps each file's raises together, in order.
+    warnings
+        .sort_by(|a, b| a.rsplit_once(" (from file: ").map(|x| x.1).cmp(&b.rsplit_once(" (from file: ").map(|x| x.1)));
+    warnings
 }
 
 /// Print an error now and keep it for the summary (it makes the run fail).

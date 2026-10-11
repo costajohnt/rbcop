@@ -41,6 +41,14 @@ pub struct Source<'a> {
 }
 
 impl<'a> Source<'a> {
+    /// The processed source's file name: TargetFinder's expanded absolute path (`.`/`..` folded,
+    /// symlinks kept), which RuboCop uses for `__FILE__` and in cop error/warning locations.
+    pub fn absolute_path(&self) -> String {
+        crate::config::expand_path(std::path::Path::new(self.path), &crate::config::cwd())
+            .to_string_lossy()
+            .into_owned()
+    }
+
     pub fn new(
         path: &'a str,
         text: &'a str,
