@@ -1485,7 +1485,8 @@ impl<'pr> Visit<'pr> for Walk<'_> {
             && n.opening_loc().is_none()
         {
             let i = self.toks.partition_point(|t| t.start < m.start_offset());
-            if i > 0 && matches!(self.toks[i - 1].name, "tEQL" | "tOP_ASGN") {
+            // ...nor the operand of `!`, which takes an `arg` (`!not x`; #305).
+            if i > 0 && matches!(self.toks[i - 1].name, "tEQL" | "tOP_ASGN" | "tBANG") {
                 let next = self.next_token(m.end_offset());
                 self.violation(next, 3.3);
             }
