@@ -1,0 +1,27 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+assigned_then_read.rb:1:11: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+assigned_then_read.rb:1:11: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+assigned_then_read.rb:1:17: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+assigned_then_read.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+def_scope.rb:3:13: F: Lint/Syntax: ordinary parameter is defined (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+inner_block.rb:1:17: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+inner_block.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+inner_local.rb:1:27: F: Lint/Syntax: ordinary parameter is defined (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+lambda_sees_local.rb:1:11: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+lambda_sees_local.rb:1:11: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+lambda_sees_local.rb:1:17: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+lambda_sees_local.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+lambdas.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+nested_params.rb:1:11: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+nested_params.rb:1:11: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+nested_params.rb:1:17: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+nested_params.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+nested_params.rb:1:26: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `b`. You can omit the argument if you don't care about it.
+other_name.rb:1:19: F: Lint/Syntax: ordinary parameter is defined (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+outer_block.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+outer_local.rb:1:16: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `a`. You can omit the argument if you don't care about it.
+outer_local.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+outer_local.rb:1:1: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+outer_local.rb:1:1: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+outer_local.rb:1:7: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+sibling_block.rb:1:27: F: Lint/Syntax: ordinary parameter is defined (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)

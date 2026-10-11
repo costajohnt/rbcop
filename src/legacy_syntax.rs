@@ -101,6 +101,34 @@ pub fn continue_over_blank_lines(text: &str, dots: &[usize]) -> Option<(Vec<u8>,
     Some((bytes, fake))
 }
 
+/// Whether a local variable written at `write` is in the parser gem's static environment at `at`:
+/// the write comes first, and no `def`/`class`/`module`/`class <<` scope separates them (blocks
+/// and lambdas see their outer locals, not their inner ones).
+pub fn local_visible(root: &Node, write: usize, at: usize) -> bool {
+    struct Scopes(Vec<(usize, usize, bool)>);
+    impl<'pr> Visit<'pr> for Scopes {
+        fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
+            let hard = node.as_def_node().is_some()
+                || node.as_class_node().is_some()
+                || node.as_module_node().is_some()
+                || node.as_singleton_class_node().is_some();
+            if !hard && node.as_block_node().is_none() && node.as_lambda_node().is_none() {
+                return;
+            }
+            self.0.push((node.location().start_offset(), node.location().end_offset(), hard));
+        }
+    }
+    if write >= at {
+        return false;
+    }
+    let mut scopes = Scopes(Vec::new());
+    scopes.visit(root);
+    let has = |s: &(usize, usize, bool), o: usize| s.0 <= o && o < s.1;
+    // The innermost scope of the write must hold `at`, through soft scopes only.
+    let home = scopes.0.iter().filter(|s| has(s, write)).min_by_key(|s| s.1 - s.0);
+    home.is_none_or(|h| has(h, at)) && !scopes.0.iter().any(|s| s.2 && has(s, at) && !has(s, write))
+}
+
 /// Tokens in source order (the lexers emit a heredoc's body right after its opener).
 fn by_start(toks: &[Tok]) -> Vec<Tok> {
     let mut sorted = toks.to_vec();

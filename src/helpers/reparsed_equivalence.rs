@@ -42,7 +42,7 @@ fn parse_clean<'t>(
 ) -> Option<ruby_prism::ParseResult<'t>> {
     let target = legacy.unwrap_or(f64::INFINITY);
     let (result, tokens, _) = crate::runner::parse_for_target(text, buf, version, target);
-    if result.errors().any(|e| !crate::runner::tolerated(&e, legacy.is_some(), target, text)) {
+    if result.errors().any(|e| !crate::runner::tolerated(&e, &result, legacy.is_some(), target, text)) {
         return None;
     }
     if legacy.is_none() {

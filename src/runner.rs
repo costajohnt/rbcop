@@ -217,7 +217,7 @@ fn analyze(
     let (result, tokens, fake) = parse_for_target(text, &mut buf, version, cfg.target_ruby);
     let mut errors: Vec<(usize, usize, String)> = result
         .errors()
-        .filter(|e| !tolerated(e, parser_gem, cfg.target_ruby, text))
+        .filter(|e| !tolerated(e, &result, parser_gem, cfg.target_ruby, text))
         .map(|e| {
             let loc = e.location();
             crate::syntax::translate(e.type_name(), e.message(), loc.start_offset(), loc.end_offset(), text)
@@ -226,7 +226,7 @@ fn analyze(
     // ...rejects syntax newer than the target, and reports where its grammar fails rather than
     // Prism's messages (semantic errors keep their translated parser-gem messages).
     if parser_gem {
-        let kept = |e: &ruby_prism::Diagnostic| !tolerated(e, parser_gem, cfg.target_ruby, text);
+        let kept = |e: &ruby_prism::Diagnostic| !tolerated(e, &result, parser_gem, cfg.target_ruby, text);
         // A stray backslash is the parser gem's lexer error: reported, then skipped (no recovery).
         let bare_backslash = |e: &ruby_prism::Diagnostic| {
             let loc = e.location();
@@ -719,12 +719,31 @@ const TOLERATED_ERRORS: &[&str] = &["invalid_yield", "invalid_retry_without_resc
 /// 2.7 `def m(x = x)` is only a warning (Lint/CircularArgumentReference); before 3.0 `_1 = x` is
 /// accepted (Builders::Default#check_reserved_for_numparam; Lint/NumberedParameterAssignment).
 /// Before 2.7 `_1` is an ordinary identifier, so Prism's numbered-parameter checks (`|a| a + _1`,
-/// `_1` in nested blocks, `_1 = x` in a block that reads `_1`) do not apply.
+/// `_1` in nested blocks, `_1 = x` in a block that reads `_1`) do not apply. Up to 3.2 the gem
+/// has no check of `_1` in both an outer and an inner block (`foo { _1 + bar { _1 } }`), and
+/// before 3.0 a `_1` read where an earlier `_1 = x` is visible is that local, not a numbered
+/// parameter, so a block's ordinary parameters do not matter (`foo { |a| _1 = a; _1 }`).
 /// The parser gem also ends a `<<''` heredoc (empty delimiter) at the end of the file, where Prism
 /// finds it unterminated.
-pub fn tolerated(e: &ruby_prism::Diagnostic, parser_gem: bool, target_ruby: f64, text: &str) -> bool {
+pub fn tolerated(
+    e: &ruby_prism::Diagnostic,
+    result: &ruby_prism::ParseResult,
+    parser_gem: bool,
+    target_ruby: f64,
+    text: &str,
+) -> bool {
     let kind = e.type_name();
+    let (start, end) = (e.location().start_offset(), e.location().end_offset());
     (parser_gem && TOLERATED_ERRORS.contains(&kind))
+        || (parser_gem && matches!(kind, "numbered_parameter_outer_block" | "numbered_parameter_inner_block"))
+        || (kind == "numbered_parameter_ordinary"
+            && target_ruby < 3.0
+            && result.errors().any(|w| {
+                let l = w.location();
+                w.type_name() == "parameter_numbered_reserved"
+                    && text.get(l.start_offset()..l.end_offset()) == text.get(start..end)
+                    && crate::legacy_syntax::local_visible(&result.node(), l.start_offset(), start)
+            }))
         || (kind == "begin_lonely_else" && target_ruby <= 2.5)
         || (kind == "parameter_circular" && target_ruby < 2.7)
         || (kind == "parameter_numbered_reserved" && target_ruby < 3.0)

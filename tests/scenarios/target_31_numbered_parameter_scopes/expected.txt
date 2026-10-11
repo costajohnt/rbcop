@@ -1,0 +1,7 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+assigned_then_read.rb:1:11: F: Lint/Syntax: _1 is reserved for numbered parameter (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+assigned_then_read.rb:1:19: F: Lint/Syntax: ordinary parameter is defined (Using Ruby 3.1 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+inner_block.rb:1:17: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+inner_block.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+lambdas.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+outer_block.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
