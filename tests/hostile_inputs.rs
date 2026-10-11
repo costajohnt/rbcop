@@ -96,6 +96,35 @@ fn hostile_inputs_stay_bounded() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// Below 3.3 a file with a syntax error is reparsed with rewrites for the parser gem's lexer; the
+/// per-token scans behind them stay linear on one long line (#316: half these sizes took 9.7 s and 4.3 s CPU).
+#[test]
+fn legacy_rewrites_stay_linear_on_one_line() {
+    let cases = [
+        ("dots.rb", format!("x = 1; {}\n)\n", "a.b; ".repeat(800_000))),
+        ("data_markers.rb", format!("x = [{}]\n)\n", "__END__, ".repeat(400_000))),
+    ];
+    let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+    let dir = std::env::temp_dir().join(format!("rbcop-hostile-line-{}", std::process::id()));
+    let _ = fs::remove_dir_all(&dir);
+    fs::create_dir_all(&dir).unwrap();
+    fs::write(dir.join("Gemfile"), "").unwrap();
+    fs::write(dir.join(".rubocop.yml"), "AllCops:\n  TargetRubyVersion: 3.2\n  NewCops: enable\n").unwrap();
+    for (name, text) in cases {
+        fs::write(dir.join(name), text).unwrap();
+        let cpu0 = children_cpu();
+        let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
+            .args(["--only", "Lint/Syntax", "--format", "emacs", name])
+            .current_dir(&dir)
+            .output()
+            .unwrap();
+        let cpu = children_cpu() - cpu0;
+        assert_eq!(out.status.code(), Some(1), "{name}: {}", String::from_utf8_lossy(&out.stderr));
+        assert!(cpu < Duration::from_secs(10), "{name}: took {cpu:?} CPU");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// -A stays linear in the number of corrections: 100,000 correctable offenses (one per line)
 /// took 58 s CPU (a whole-source line/column scan per offense, and a copy of every earlier edit
 /// per merged correction); now well under a second.
