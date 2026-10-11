@@ -388,3 +388,9 @@ mod tests {
         assert_ne!(keys[5], keys[6]);
     }
 }
+
+/// Whether this thread's file parses with the parser gem (target < 3.3), for helpers that get no
+/// Source (set by runner::analyze with `set_fold_plus`).
+pub fn parser_gem_file() -> bool {
+    FOLD_PLUS.get()
+}

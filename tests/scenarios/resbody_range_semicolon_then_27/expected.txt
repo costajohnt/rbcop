@@ -1,0 +1,15 @@
+a.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+b.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+c.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+d.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+e.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+f.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+g.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+h.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+i.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+j.rb:3:1: W: Lint/RescueException: Avoid rescuing the `Exception` class. Perhaps you meant to rescue `StandardError`?
+j.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+k.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+k.rb:5:1: W: Lint/SuppressedException: Do not suppress exceptions.
+l.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.
+n.rb:3:1: W: Lint/SuppressedException: Do not suppress exceptions.

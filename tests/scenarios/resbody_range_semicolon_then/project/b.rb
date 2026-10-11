@@ -1,0 +1,6 @@
+begin
+  foo
+rescue
+
+  ;
+end
