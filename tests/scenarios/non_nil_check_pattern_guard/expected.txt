@@ -1,0 +1,4 @@
+b.rb:2:9: C: [Correctable] Style/NonNilCheck: Explicit non-nil checks are usually redundant.
+b.rb:4:9: C: [Correctable] Style/NonNilCheck: Explicit non-nil checks are usually redundant.
+c.rb:1:12: C: [Correctable] Style/NonNilCheck: Explicit non-nil checks are usually redundant.
+c.rb:2:8: C: [Correctable] Style/NonNilCheck: Explicit non-nil checks are usually redundant.

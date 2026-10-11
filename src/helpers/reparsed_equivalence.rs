@@ -34,14 +34,14 @@ pub fn valid_syntax(text: &str, version: &'static str, legacy: Option<f64>) -> b
 /// The parse of `text` when it has no syntax errors. With `legacy` (a target below 3.3, parsed by
 /// the parser gem) the file is parsed and its Prism errors tolerated as `runner::analyze` does,
 /// and the target grammar's own (`legacy_syntax`: newer syntax, `a = foo 1 or b`, ...) count.
-fn parse_clean<'t>(
+pub fn parse_clean<'t>(
     text: &'t str,
     buf: &'t mut Vec<u8>,
     version: &'static str,
     legacy: Option<f64>,
 ) -> Option<ruby_prism::ParseResult<'t>> {
     let target = legacy.unwrap_or(f64::INFINITY);
-    let (result, tokens, _) = crate::runner::parse_for_target(text, buf, version, target);
+    let (result, tokens, ..) = crate::runner::parse_for_target(text, buf, version, target);
     // From 2.7 the parser gem's numbered-parameter errors are the runner's tree walk, not Prism's.
     // (`runner::analyze`'s `numbered_kind`); Prism's reserved-name errors stay where it has none.
     let walk = legacy.is_some_and(|t| t >= 2.7)

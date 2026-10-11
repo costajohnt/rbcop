@@ -742,6 +742,43 @@ fn assert_refused(dir: &Path, outside_file: &Path, shown: &str, args: &[&str]) {
     }
 }
 
+/// Correcting needs only search (x) permission on the directories down to the file, as RuboCop's
+/// path-based write does: a directory that cannot be listed (mode 0300), as an intermediate
+/// directory, as the file's own directory, or as the working directory, is no obstacle.
+#[test]
+fn autocorrect_writes_through_unreadable_directories() {
+    if root() {
+        return;
+    }
+    let dir = scratch("noread");
+    fs::create_dir_all(dir.join("sub/deep")).unwrap();
+    for f in ["sub/a.rb", "sub/b.rb", "sub/deep/c.rb"] {
+        fs::write(dir.join(f), "x  =  1\n").unwrap();
+    }
+    for d in ["sub/deep", "sub"] {
+        fs::set_permissions(dir.join(d), fs::Permissions::from_mode(0o300)).unwrap();
+    }
+    let mut args = vec!["-a"];
+    args.extend(SPACING);
+    let mut outs = vec![];
+    for (cwd, file) in [(dir.clone(), "sub/a.rb"), (dir.clone(), "sub/deep/c.rb"), (dir.join("sub"), "b.rb")] {
+        let mut a = args.clone();
+        a.push(file);
+        outs.push(rbcop(&cwd, &a));
+    }
+    for d in ["sub", "sub/deep"] {
+        fs::set_permissions(dir.join(d), fs::Permissions::from_mode(0o755)).unwrap();
+    }
+    for out in outs {
+        assert_eq!(out.status.code(), Some(0), "{}", text(&out.stderr));
+        assert!(text(&out.stdout).contains("[Corrected]"), "{}", text(&out.stdout));
+    }
+    for f in ["sub/a.rb", "sub/b.rb", "sub/deep/c.rb"] {
+        assert_eq!(fs::read_to_string(dir.join(f)).unwrap(), "x = 1\n", "{f}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
 #[test]
 fn autocorrect_refuses_symlinked_dir_outside_project() {
     let dir = scratch("escape-dir");

@@ -52,7 +52,6 @@ impl ArgumentAlignment {
         if style == Some("with_first_argument") && separator {
             return;
         }
-        let first_start = args[0].location().start_offset();
         let mut args = args;
         let items: Vec<Node> = if fixed {
             let last = args.pop().unwrap();
@@ -77,7 +76,10 @@ impl ArgumentAlignment {
             let indent = line.chars().take_while(|&c| helpers::ruby_string::is_space(c)).count() as i64;
             indent + helpers::alignment::configured_indentation_width(cx)
         } else {
-            helpers::alignment::display_column(src, first_start) as i64
+            // base_column(node, items.first): the first pair of a braceless hash, not the hash
+            // itself (`foo(**bar,\n  a: a, b: b)` is aligned on `a:`, #313)
+            let Some(first) = items.first() else { return };
+            helpers::alignment::display_column(src, first.location().start_offset()) as i64
         };
         let msg = if fixed { FIXED_INDENT_MSG } else { ALIGN_PARAMS_MSG };
         let set = helpers::alignment_corrector::Settings::of(cx);

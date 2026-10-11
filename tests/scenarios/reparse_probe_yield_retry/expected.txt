@@ -1,0 +1,3 @@
+r.rb:4:7: F: Lint/Syntax: Invalid retry without rescue (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+s.rb:3:5: C: [Correctable] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+y.rb:1:5: W: [Correctable] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.

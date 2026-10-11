@@ -133,6 +133,35 @@ fn config_regex_budget_is_per_file() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// Below 3.3 a file with a syntax error is reparsed with rewrites for the parser gem's lexer; the
+/// per-token scans behind them stay linear on one long line (#316: half these sizes took 9.7 s and 4.3 s CPU).
+#[test]
+fn legacy_rewrites_stay_linear_on_one_line() {
+    let cases = [
+        ("dots.rb", format!("x = 1; {}\n)\n", "a.b; ".repeat(800_000))),
+        ("data_markers.rb", format!("x = [{}]\n)\n", "__END__, ".repeat(400_000))),
+    ];
+    let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+    let dir = std::env::temp_dir().join(format!("rbcop-hostile-line-{}", std::process::id()));
+    let _ = fs::remove_dir_all(&dir);
+    fs::create_dir_all(&dir).unwrap();
+    fs::write(dir.join("Gemfile"), "").unwrap();
+    fs::write(dir.join(".rubocop.yml"), "AllCops:\n  TargetRubyVersion: 3.2\n  NewCops: enable\n").unwrap();
+    for (name, text) in cases {
+        fs::write(dir.join(name), text).unwrap();
+        let cpu0 = children_cpu();
+        let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
+            .args(["--only", "Lint/Syntax", "--format", "emacs", name])
+            .current_dir(&dir)
+            .output()
+            .unwrap();
+        let cpu = children_cpu() - cpu0;
+        assert_eq!(out.status.code(), Some(1), "{name}: {}", String::from_utf8_lossy(&out.stderr));
+        assert!(cpu < Duration::from_secs(10), "{name}: took {cpu:?} CPU");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// -A stays linear in the number of corrections: 100,000 correctable offenses (one per line)
 /// took 58 s CPU (a whole-source line/column scan per offense, and a copy of every earlier edit
 /// per merged correction); now well under a second.
@@ -153,6 +182,63 @@ fn many_corrections_stay_linear() {
     let cpu = children_cpu() - cpu0;
     assert_eq!(out.status.code(), Some(0), "{}", String::from_utf8_lossy(&out.stderr));
     assert_eq!(fs::read_to_string(dir.join("t.rb")).unwrap(), "x 'a'\n".repeat(100_000));
+    assert!(cpu < Duration::from_secs(10), "took {cpu:?} CPU");
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// Below 3.3 (the parser gem's lexer is modelled on Prism's tokens), per-line token work stays
+/// linear: each `(file, --only, text)` takes well under a second; the budget catches a scan or
+/// reparse per line.
+#[test]
+fn legacy_token_scans_stay_linear() {
+    let cases = [
+        // Layout/EndOfLine reparsed the whole file per heredoc line ending in an identifier (#317):
+        // 48k lines took about 40 s.
+        ("heredoc_ident.rb", "Layout/EndOfLine", format!("def bar; end\n{}", "foo <<~A, bar\n  x\nA\n".repeat(12_000))),
+    ];
+    let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+    let dir = std::env::temp_dir().join(format!("rbcop-hostile-legacy-{}", std::process::id()));
+    let _ = fs::remove_dir_all(&dir);
+    fs::create_dir_all(&dir).unwrap();
+    fs::write(dir.join("Gemfile"), "").unwrap();
+    fs::write(dir.join(".rubocop.yml"), "AllCops:\n  TargetRubyVersion: 3.2\n  NewCops: enable\n").unwrap();
+    for (name, only, text) in cases {
+        fs::write(dir.join(name), text).unwrap();
+        let cpu0 = children_cpu();
+        let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
+            .args(["--only", only, "--format", "emacs", name])
+            .current_dir(&dir)
+            .output()
+            .unwrap();
+        let cpu = children_cpu() - cpu0;
+        assert!(matches!(out.status.code(), Some(0 | 1)), "{name}: {}", String::from_utf8_lossy(&out.stderr));
+        assert!(cpu < Duration::from_secs(10), "{name}: took {cpu:?} CPU");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// Below 3.3 a constant starting with a non-ASCII capital gets a lowercase stand-in absent from
+/// the file: the candidates were each searched for in the whole text, for every such constant when
+/// none was free (8,000 lines took 10 s, #300). Now the file's characters are collected once.
+#[test]
+fn non_ascii_capital_stand_ins_stay_linear() {
+    let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+    let dir = std::env::temp_dir().join(format!("rbcop-hostile-capital-{}", std::process::id()));
+    let _ = fs::remove_dir_all(&dir);
+    fs::create_dir_all(&dir).unwrap();
+    fs::write(dir.join("Gemfile"), "").unwrap();
+    fs::write(dir.join(".rubocop.yml"), "AllCops:\n  TargetRubyVersion: 3.2\n  NewCops: disable\n").unwrap();
+    // Every 2-byte lowercase letter occurs, so `Ж` has no stand-in at all.
+    let lower: String = (0x80..0x800).filter_map(char::from_u32).filter(|c| c.is_lowercase()).collect();
+    fs::write(dir.join("t.rb"), format!("{}# {lower}\n", "Жa\n".repeat(40_000))).unwrap();
+    let cpu0 = children_cpu();
+    let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
+        .args(["--only", "Lint/Syntax", "--format", "emacs", "t.rb"])
+        .current_dir(&dir)
+        .output()
+        .unwrap();
+    let cpu = children_cpu() - cpu0;
+    assert_eq!(out.status.code(), Some(0), "{}", String::from_utf8_lossy(&out.stdout));
     assert!(cpu < Duration::from_secs(10), "took {cpu:?} CPU");
     let _ = fs::remove_dir_all(&dir);
 }
