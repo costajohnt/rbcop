@@ -58,8 +58,8 @@ pub fn diagnostics(
     out
 }
 
-/// `text` with the whitespace-only lines between a receiver and a leading `.`/`&.` (at `dots`,
-/// where Prism ignored the dot) turned into comment lines, which Prism continues the call over, and
+/// `text` with the whitespace-only lines between a receiver and a leading `.`/`&.` (of the
+/// `.`/`&.` tokens at `dots`) turned into comment lines, which Prism continues the call over, and
 /// the offsets of those `#`s. The parser gem (2.7 to 3.2) skips such lines, but an empty line ends
 /// the statement there too, so a dot after one keeps its error. Parse the copy with
 /// `parse_with_version_and_tokens_restoring` so no slice of the AST reads a `#` (#169).

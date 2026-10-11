@@ -32,7 +32,7 @@ pub struct Source<'a> {
     /// Prism grammar version the file was parsed with (see config::target_ruby::prism_version).
     pub version: &'static str,
     /// Target below Ruby 3.3: RuboCop parses with the parser gem, which accepts a few things Prism
-    /// rejects (`runner::TOLERATED_ERRORS`).
+    /// rejects (`runner::tolerated`).
     pub parser_gem: bool,
     /// AllCops/TargetRubyVersion (set by the runner).
     pub target_ruby: f64,

@@ -28,21 +28,25 @@ pub fn correction_parses(
 /// Prism parses `text` without errors, except those the parser gem accepts when it is the
 /// target's parser (`retry` outside `rescue`, top-level `yield`; `Source::legacy`).
 pub fn valid_syntax(text: &str, version: &'static str, legacy: Option<f64>) -> bool {
-    parse_clean(text, version, legacy).is_some()
+    parse_clean(text, &mut Vec::new(), version, legacy).is_some()
 }
 
 /// The parse of `text` when it has no syntax errors. With `legacy` (a target below 3.3, parsed by
-/// the parser gem) Prism errors that gem accepts are ignored, and the target grammar's own
-/// (`legacy_syntax`: newer syntax, `a = foo 1 or b`, ...) count.
-fn parse_clean<'t>(text: &'t str, version: &'static str, legacy: Option<f64>) -> Option<ruby_prism::ParseResult<'t>> {
-    let utf8 = !crate::source::binary_encoding(text);
-    let Some(target) = legacy else {
-        let result = ruby_prism::parse_with_version(text.as_bytes(), version, utf8);
-        return (result.errors().count() == 0).then_some(result);
-    };
-    let (result, tokens) = ruby_prism::parse_with_version_and_tokens(text.as_bytes(), version, utf8);
-    if result.errors().any(|e| !crate::runner::TOLERATED_ERRORS.contains(&e.type_name())) {
+/// the parser gem) the file is parsed and its Prism errors tolerated as `runner::analyze` does,
+/// and the target grammar's own (`legacy_syntax`: newer syntax, `a = foo 1 or b`, ...) count.
+fn parse_clean<'t>(
+    text: &'t str,
+    buf: &'t mut Vec<u8>,
+    version: &'static str,
+    legacy: Option<f64>,
+) -> Option<ruby_prism::ParseResult<'t>> {
+    let target = legacy.unwrap_or(f64::INFINITY);
+    let (result, tokens, _) = crate::runner::parse_for_target(text, buf, version, target);
+    if result.errors().any(|e| !crate::runner::tolerated(&e, legacy.is_some(), target, text)) {
         return None;
+    }
+    if legacy.is_none() {
+        return Some(result);
     }
     let diags = crate::legacy_syntax::diagnostics(&result.node(), &tokens, text, target, None, &[], &[]);
     diags.is_empty().then_some(result)
@@ -85,7 +89,8 @@ pub fn parses_equivalently_folding(
     legacy: Option<f64>,
     fold: bool,
 ) -> bool {
-    let Some(result) = parse_clean(fragment, version, legacy) else { return false };
+    let mut buf = Vec::new();
+    let Some(result) = parse_clean(fragment, &mut buf, version, legacy) else { return false };
     let root = result.node();
     if whole_file {
         return serialize_folding(fragment, &root, fold) == original;
