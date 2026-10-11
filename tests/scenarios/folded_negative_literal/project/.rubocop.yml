@@ -1,6 +1,4 @@
 AllCops:
-  EnabledByDefault: true
-  TargetRubyVersion: 3.4
+  NewCops: enable
   SuggestExtensions: false
-Metrics/AbcSize:
-  Max: 0
+  TargetRubyVersion: 3.4

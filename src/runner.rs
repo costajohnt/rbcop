@@ -177,10 +177,34 @@ fn analyze(
     let version = target_ruby::prism_version(cfg.target_ruby);
     // Below 3.3 RuboCop parses with the parser gem, which accepts some things Prism rejects.
     let parser_gem = cfg.target_ruby < 3.3;
-    let (mut result, tokens) = if parser_gem {
-        ruby_prism::parse_with_version_and_tokens(text.as_bytes(), version, !crate::source::binary_encoding(text))
-    } else {
-        (ruby_prism::parse_with_version(text.as_bytes(), version, !crate::source::binary_encoding(text)), Vec::new())
+    fn parse<'t>(
+        t: &'t str,
+        version: &'static str,
+        parser_gem: bool,
+    ) -> (ruby_prism::ParseResult<'t>, Vec<ruby_prism::Token>) {
+        if parser_gem {
+            ruby_prism::parse_with_version_and_tokens(t.as_bytes(), version, !crate::source::binary_encoding(t))
+        } else {
+            (ruby_prism::parse_with_version(t.as_bytes(), version, !crate::source::binary_encoding(t)), Vec::new())
+        }
+    }
+    let first = parse(text, version, parser_gem);
+    // 2.7 to 3.2: the parser gem continues a call over whitespace-only lines before a leading
+    // `.`/`&.`, where Prism ends the statement. Parse with those lines made comment lines instead.
+    let continued = (parser_gem && cfg.target_ruby >= 2.7)
+        .then(|| {
+            let dots: Vec<usize> = first
+                .0
+                .errors()
+                .filter(|e| e.type_name() == "unexpected_token_ignore")
+                .map(|e| e.location().start_offset())
+                .collect();
+            crate::legacy_syntax::continue_over_blank_lines(text, &dots)
+        })
+        .flatten();
+    let (mut result, tokens) = match &continued {
+        Some((t, _)) => parse(t, version, parser_gem),
+        None => first,
     };
     // Numbered parameters are 2.7+: below that `foo { _1 }` is a block without arguments.
     if cfg.target_ruby < 2.7 {
@@ -248,7 +272,7 @@ fn analyze(
         let mut actions: Vec<usize> = Vec::new();
         // Circular argument references: the simulation reports them where the parser reads them.
         let mut circular: Vec<(usize, usize)> = Vec::new();
-        let semantic: Vec<_> = result
+        let mut semantic: Vec<_> = result
             .errors()
             .filter(|e| kept(e) && semantic_kind(e) && !fatal(e) && e.location().start_offset() < cut)
             .filter_map(|e| {
@@ -278,6 +302,13 @@ fn analyze(
                 Some(t)
             })
             .collect();
+        // Onigmo compile errors of static regexps: semantic errors too (the builder's diagnostic).
+        if !crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH) {
+            for e in crate::syntax::regexp_compile_errors(&result.node(), text).into_iter().filter(|e| e.0 < cut) {
+                actions.push(e.1);
+                semantic.push(e);
+            }
+        }
         actions.sort_unstable();
         let diags = crate::legacy_syntax::diagnostics(
             &result.node(),
@@ -337,8 +368,18 @@ fn analyze(
     {
         errors.extend(crate::syntax::pattern_variable_errors(&result.node()));
     }
+    // Onigmo compile errors of static regexps (below 3.3 they are semantic errors above), reported
+    // by the Prism translation only when the file otherwise parses.
+    if !parser_gem
+        && errors.is_empty()
+        && text.contains(['/', '%'])
+        && !crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH)
+    {
+        errors.extend(crate::syntax::regexp_compile_errors(&result.node(), text));
+    }
     let comments: Vec<Comment> = result
         .comments()
+        .filter(|c| continued.as_ref().is_none_or(|(_, fake)| !fake.contains(&c.location().start_offset())))
         .map(|c| Comment {
             start: c.location().start_offset(),
             end: c.location().end_offset(),
@@ -582,9 +623,9 @@ pub fn cop_error_at(cop: &str, src: &Source, at: Option<usize>) {
         // Range#line and the 0-based Range#column.
         Some(at) => {
             let (line, col) = crate::formatter::line_col(src.text, at);
-            format!("{}:{line}:{}", src.path, col - 1)
+            format!("{}:{line}:{}", src.absolute_path(), col - 1)
         }
-        None => src.path.to_string(),
+        None => src.absolute_path(),
     };
     file_error(format!("An error occurred while {cop} cop was inspecting {location}."));
 }
@@ -592,6 +633,25 @@ pub fn cop_error_at(cop: &str, src: &Source, at: Option<usize>) {
 /// The node the running cop callback was given (see VISITING).
 pub fn visiting() -> Option<usize> {
     VISITING.with(|v| v.get())
+}
+
+/// Runner#warnings: every RuboCop::Warning a cop raised, for the end-of-run summary.
+static WARNINGS: std::sync::Mutex<Vec<String>> = std::sync::Mutex::new(Vec::new());
+
+/// Team#handle_warning: a cop's Warning, printed now and kept for the summary (one per raise).
+pub fn cop_warning(message: &str, src: &Source) {
+    let msg = format!("{message} (from file: {})", src.absolute_path());
+    eprintln!("{msg}");
+    WARNINGS.lock().unwrap_or_else(|e| e.into_inner()).push(msg);
+}
+
+/// The run's cop warnings, in file order.
+pub fn take_warnings() -> Vec<String> {
+    let mut warnings = std::mem::take(&mut *WARNINGS.lock().unwrap_or_else(|e| e.into_inner()));
+    // Files run in parallel; a stable sort by path keeps each file's raises together, in order.
+    warnings
+        .sort_by(|a, b| a.rsplit_once(" (from file: ").map(|x| x.1).cmp(&b.rsplit_once(" (from file: ").map(|x| x.1)));
+    warnings
 }
 
 /// Print an error now and keep it for the summary (it makes the run fail).

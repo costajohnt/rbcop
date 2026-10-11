@@ -1,0 +1,7 @@
+AllCops:
+  NewCops: disable
+  SuggestExtensions: false
+Metrics/MethodLength:
+  Max: 99999999999999999999
+Layout/LineLength:
+  Max: 99999999999999999999

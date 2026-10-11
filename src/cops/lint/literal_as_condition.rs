@@ -7,7 +7,7 @@ pub struct LiteralAsCondition;
 
 fn truthy_literal(n: &Node) -> bool {
     matches!(
-        kind::of(n),
+        crate::helpers::literal_node::folded_kind(n),
         kind::STRING_NODE
             | kind::INTERPOLATED_STRING_NODE
             | kind::X_STRING_NODE

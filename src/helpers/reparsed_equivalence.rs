@@ -56,7 +56,10 @@ pub fn serialize(text: &str, node: &Node) -> String {
 /// `serialize`, with RedundantLineBreak#fold_string_concatenation when `fold` is set: string
 /// literals compare by value, adjacent literal parts merge, and `str + str` folds into one string.
 pub fn serialize_folding(text: &str, node: &Node, fold: bool) -> String {
-    let mut s = Ser { text, out: String::new(), frames: vec![], fold, suppress: 0, budget: FOLD_BUDGET };
+    // `__LINE__` is an `int` of its line in the parsed source: the scope fragment RuboCop reparses
+    // (line 1 at the node), or the whole file.
+    let line_base = if node.as_program_node().is_some() { 0 } else { node.location().start_offset() };
+    let mut s = Ser { text, out: String::new(), frames: vec![], fold, suppress: 0, budget: FOLD_BUDGET, line_base };
     s.visit(node);
     s.out
 }
@@ -125,6 +128,8 @@ struct Ser<'t> {
     /// Nodes below a Folded frame produce no output.
     suppress: usize,
     budget: usize,
+    /// Where line 1 of the parsed source starts in `text`.
+    line_base: usize,
 }
 
 impl Ser<'_> {
@@ -154,6 +159,7 @@ impl Ser<'_> {
                                 fold: true,
                                 suppress: 0,
                                 budget: self.budget,
+                                line_base: self.line_base,
                             };
                             sub.visit(&p);
                             self.budget = sub.budget;
@@ -291,8 +297,15 @@ impl<'pr> Visit<'pr> for Ser<'_> {
             return;
         }
         let loc = node.location();
+        let line;
         let k = match &node {
-            Node::SourceLineNode { .. } => "__LINE__",
+            // RedundantLineBreak (the folding cop) rewrites it to `__LINE0__` on both sides first.
+            Node::SourceLineNode { .. } if self.fold => "__LINE__",
+            Node::SourceLineNode { .. } => {
+                let n = self.text.get(self.line_base..loc.start_offset()).map_or(0, |t| t.matches('\n').count());
+                line = format!("__LINE__ {}", n + 1);
+                &line
+            }
             // It spans the whole block.
             Node::ItParametersNode { .. } => "",
             _ => &self.text[loc.start_offset()..loc.end_offset()],

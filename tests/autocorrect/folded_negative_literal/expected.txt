@@ -1,0 +1,21 @@
+a.rb:3:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+a.rb:4:11: W: [Corrected] Lint/LiteralAsCondition: Literal `- 2` appeared as a condition.
+a.rb:5:8: C: [Corrected] Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.
+a.rb:5:14: W: [Corrected] Lint/LiteralAsCondition: Literal `- 3` appeared as a condition.
+a.rb:6:6: W: Lint/RandOne: `rand(- 1)` always returns `0`. Perhaps you meant `rand(2)` or `rand`?
+a.rb:7:6: W: [Corrected] Lint/LiteralAsCondition: Literal `- 1` appeared as a condition.
+a.rb:8:7: W: Lint/LiteralAsCondition: Literal `- 1` appeared as a condition.
+a.rb:9:12: W: [Corrected] Lint/LiteralAsCondition: Literal `- 2` appeared as a condition.
+a.rb:11:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+a.rb:12:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+a.rb:13:9: W: [Corrected] Lint/LiteralInInterpolation: Literal interpolation detected.
+a.rb:14:14: W: [Corrected] Lint/LiteralAsCondition: Literal `- 1.0` appeared as a condition.
+b.rb:3:7: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+b.rb:4:5: C: [Corrected] Style/RedundantFreeze: Do not freeze immutable objects, as freezing them has no effect.
+b.rb:6:1: W: Lint/EachWithObjectArgument: The argument to each_with_object cannot be immutable.
+b.rb:9:1: W: [Corrected] Lint/RescueType: Rescuing from `- 1` will raise a `TypeError` instead of catching the actual exception.
+b.rb:12:6: W: [Corrected] Lint/RedundantSplatExpansion: Replace splat expansion with comma separated values.
+b.rb:13:6: C: [Corrected] Style/RedundantFormat: Use `'-1'` directly instead of `format`.
+b.rb:14:6: C: [Corrected] Style/RedundantFormat: Use `'-1.500000'` directly instead of `format`.
+b.rb:16:7: W: [Corrected] Lint/ArrayLiteralInRegexp: Use alternation instead of interpolating an array in a regexp.
+b.rb:30:6: W: [Corrected] Lint/LiteralAsCondition: Literal `-1` appeared as a condition.

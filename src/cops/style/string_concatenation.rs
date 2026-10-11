@@ -174,7 +174,7 @@ impl Cop for StringConcatenation {
             above[i].as_call_node().is_some_and(|c| !is_csend(&c) && !owns_block && corrected.contains(&send_range(&c)))
         });
         let edit = !corrected_ancestor && !parts.iter().any(|p| uncorrectable(cx.src, p));
-        let fixed = if edit { replacement(&parts, cx.src.path) } else { String::new() };
+        let fixed = if edit { replacement(&parts, &cx.src.absolute_path()) } else { String::new() };
         let done = Cell::new(false);
         cx.add_fix(range.0, range.1, "Prefer string interpolation to string concatenation.", |c| {
             if edit {

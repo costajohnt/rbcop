@@ -8,13 +8,13 @@ pub struct ArrayLiteralInRegexp;
 /// `value.respond_to?(:value) ? value.value : value.source` for a `LITERAL_TYPES` element, as
 /// `to_s`; `None` for any other element.
 fn literal_value(node: &Node) -> Option<String> {
-    Some(match kind::of(node) {
+    Some(match crate::helpers::literal_node::folded_kind(node) {
         kind::STRING_NODE if !is_parser_dstr(node) => {
             String::from_utf8_lossy(node.as_string_node().unwrap().unescaped()).into_owned()
         }
         kind::SYMBOL_NODE => String::from_utf8_lossy(node.as_symbol_node().unwrap().unescaped()).into_owned(),
         kind::INTEGER_NODE => int_literal_value(node)?.to_string(),
-        kind::FLOAT_NODE => float_to_s(node.as_float_node().unwrap().value()),
+        kind::FLOAT_NODE => float_to_s(crate::helpers::literal_node::float_literal_value(node)?),
         kind::TRUE_NODE | kind::FALSE_NODE | kind::NIL_NODE => node_text(node).to_string(),
         _ => return None,
     })

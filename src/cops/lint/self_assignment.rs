@@ -1,25 +1,39 @@
 use crate::prelude::*;
 use crate::helpers::comment_association;
 use crate::source::Source;
+use std::collections::HashMap;
 use ruby_prism::Visit;
 
 pub const NAME: &str = "Lint/SelfAssignment";
 pub static COP: SelfAssignment = SelfAssignment;
 pub struct SelfAssignment;
 
-/// The whole-file comment walk with the parser `lvasgn`/`casgn` left side of `stmt` (an or/and
-/// assignment to a variable or constant, `lhs` = its name) added: parser visits it first, so it
-/// takes a comment decorating its line.
+/// The parser `lvasgn`/`casgn` left side of every or/and assignment to a variable or constant,
+/// keyed by the assignment's range (Prism has no node for it).
+#[derive(Default)]
+struct Lhs(HashMap<(usize, usize), (usize, usize)>);
+
+impl<'pr> Visit<'pr> for Lhs {
+    fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
+        if let (Some(r), true) = annotation_target(&node) {
+            self.0.entry(range(&node)).or_insert(r);
+        }
+    }
+}
+
+/// The whole-file comment walk with each or/and assignment's left side added under the first node
+/// spanning the assignment: parser visits it first, so it takes a comment decorating its line.
 struct Walk<'a> {
     a: comment_association::Associator<'a>,
-    stmt: (usize, usize),
-    lhs: Option<(usize, usize)>,
+    lhs: HashMap<(usize, usize), (usize, usize)>,
 }
 
 impl<'pr> Visit<'pr> for Walk<'_> {
     fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
         self.a.enter(&node);
-        if let Some((s, e)) = self.lhs.filter(|_| range(&node) == self.stmt && kind::of(&node) != kind::STATEMENTS_NODE) {
+        if kind::of(&node) != kind::STATEMENTS_NODE
+            && let Some((s, e)) = self.lhs.remove(&range(&node))
+        {
             self.a.enter_range(s, e, true);
             self.a.leave();
         }
@@ -35,20 +49,36 @@ impl<'pr> Visit<'pr> for Walk<'_> {
     }
 }
 
+/// `processed_source.ast_with_comments`, computed once per file: the comment indices of the first
+/// parser node spanning each range.
+#[derive(Default)]
+struct Associated(Option<HashMap<(usize, usize), Vec<usize>>>);
+
 /// `allow_rbs_inline_annotation? && rbs_inline_annotation?(target)`: a `#:` comment among those
-/// parser's Comment::Associator gives the target node (`processed_source.ast_with_comments`).
-fn rbs_annotated(cx: &Cx, stmt: &Node, target: Option<(usize, usize)>, lhs: bool) -> bool {
+/// parser's Comment::Associator gives the target node.
+fn rbs_annotated(cx: &mut Cx, target: Option<(usize, usize)>) -> bool {
     let Some((s, e)) = target.filter(|_| cx.cfg.params.truthy("AllowRBSInlineAnnotation")) else { return false };
-    let Some(program) = cx.ancestors.first() else { return false };
+    let ancestors = cx.ancestors;
+    let Some(program) = ancestors.first() else { return false };
     let src = cx.src;
-    let mut w = Walk {
-        a: comment_association::Associator::new(src, comment_association::skipped_directives(src)),
-        stmt: range(stmt),
-        lhs: lhs.then_some((s, e)),
-    };
-    w.visit(program);
-    w.a.comments_of(s, e).any(|c| src.slice(c.start, c.end).starts_with("#:"))
+    let assoc = cx.state::<Associated>();
+    let map = assoc.0.get_or_insert_with(|| {
+        let mut lhs = Lhs::default();
+        lhs.visit(program);
+        let mut w = Walk {
+            a: comment_association::Associator::new(src, comment_association::skipped_directives(src)),
+            lhs: lhs.0,
+        };
+        w.visit(program);
+        let mut map = HashMap::new();
+        for (start, end, comments) in w.a.nodes {
+            map.entry((start, end)).or_insert(comments);
+        }
+        map
+    });
+    map.get(&(s, e)).is_some_and(|cs| cs.iter().any(|&i| src.slice(src.comments[i].start, src.comments[i].end).starts_with("#:")))
 }
+
 
 /// The node `rbs_inline_annotation?` looks at: the value of a plain assignment, the first target
 /// of a multiple assignment, the left side of an or/and assignment (true when parser has a node
@@ -191,7 +221,7 @@ impl SelfAssignment {
         } else {
             return;
         };
-        if offense && !rbs_annotated(cx, node, call.receiver().map(|r| range(&r)), false) {
+        if offense && !rbs_annotated(cx, call.receiver().map(|r| range(&r))) {
             let (s, e) = send_range(&call);
             cx.add(s, e, "Self-assignment detected.");
         }
@@ -345,8 +375,8 @@ impl Cop for SelfAssignment {
             }
             _ => false,
         };
-        let (target, lhs) = annotation_target(node);
-        if offense && !rbs_annotated(cx, node, target, lhs) {
+        let (target, _) = annotation_target(node);
+        if offense && !rbs_annotated(cx, target) {
             let (s, e) = range(node);
             cx.add(s, e, "Self-assignment detected.");
         }

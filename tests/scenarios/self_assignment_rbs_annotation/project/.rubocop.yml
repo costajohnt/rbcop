@@ -1,0 +1,5 @@
+AllCops:
+  NewCops: disable
+  SuggestExtensions: false
+Lint/SelfAssignment:
+  AllowRBSInlineAnnotation: true

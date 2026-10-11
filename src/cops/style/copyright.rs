@@ -75,7 +75,7 @@ impl Cop for Copyright {
             };
             if let Some(p) = problem {
                 if !crate::directives::suppressed(&cx.facts.disabled, cx.cop, 1, 1) {
-                    eprintln!("{NAME}: {p} (from file: {})", src.path);
+                    crate::runner::cop_warning(&format!("{NAME}: {p}"), src);
                     return;
                 }
                 return cx.add(0, end, msg);
