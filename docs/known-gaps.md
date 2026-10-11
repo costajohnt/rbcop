@@ -11,8 +11,8 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   follows symlinked files and directories found while walking and rewrites their targets. Such a
   file is still inspected and reported as without `-a` (no `[Corrected]`), left unchanged, and
   `rbcop: not autocorrecting <file>: it resolves to <path>, outside the project` goes to stderr;
-  the exit status follows its offenses. The check is repeated right before the write, which never
-  follows a final-component symlink. `--stdin` is unaffected.
+  the exit status follows its offenses. The check is repeated right before the write, which follows
+  no symlink after it (directories are opened one by one, relative to the last). `--stdin` is unaffected.
 - HTML formatter escapes `& < >` in messages outside code spans and fully escapes paths; GitHub
   Actions formatter escapes CR/LF in the `file=` property. Output differs only when those appear.
 - JUnit escapes cop names in attributes (no effect for real cop names).
