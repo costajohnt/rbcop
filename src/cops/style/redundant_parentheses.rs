@@ -158,6 +158,7 @@ fn prefix_not(n: &Node) -> bool {
     n.as_call_node().is_some_and(|c| method_name(&c) == "!" && c.message_loc().is_some_and(|m| m.as_slice() == b"not"))
 }
 
+// Not select_by::plain_send: `n` is a parser parent, and the send inside a block is still a send.
 fn is_send(n: &Node) -> bool {
     n.as_call_node().is_some_and(|c| !is_csend(&c))
 }

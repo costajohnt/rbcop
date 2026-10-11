@@ -1,7 +1,7 @@
 use crate::helpers::const_name::const_name;
 use crate::helpers::parser_parent::{is_operator_keyword, is_ternary, parser_parent};
 use crate::prelude::*;
-use ruby_prism::CallNode;
+use helpers::select_by::plain_send;
 
 pub const NAME: &str = "Style/RaiseArgs";
 pub static COP: RaiseArgs = RaiseArgs;
@@ -70,11 +70,6 @@ impl Cop for RaiseArgs {
         let msg = format!("Provide an exception class and message as arguments to `{method}`.");
         cx.add_fix(s, e, msg, |c| c.replace(s, e, &fix));
     }
-}
-
-/// A parser `send` (not csend, no attached block).
-fn plain_send<'pr>(node: &Node<'pr>) -> Option<CallNode<'pr>> {
-    node.as_call_node().filter(|c| !is_csend(c) && !c.block().is_some_and(|b| b.as_block_node().is_some()))
 }
 
 fn is_hash(node: &Node) -> bool {
