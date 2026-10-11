@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use helpers::select_by::plain_send;
 use ruby_prism::{CallNode, Visit};
 
 pub const NAME: &str = "Lint/NonDeterministicRequireOrder";
@@ -16,10 +17,6 @@ fn is_dir(node: Option<Node>) -> bool {
     node.as_constant_path_node().is_some_and(|p| p.parent().is_none() && p.name().is_some_and(|n| n.as_slice() == b"Dir"))
 }
 
-fn plain_send(call: &CallNode) -> bool {
-    !is_csend(call) && !call.block().is_some_and(|b| b.as_block_node().is_some())
-}
-
 /// `(send (const {nil? cbase} :Dir) :glob ...)`
 fn dir_glob(call: &CallNode) -> bool {
     !is_csend(call) && method_name(call) == "glob" && is_dir(call.receiver())
@@ -29,9 +26,11 @@ fn dir_glob(call: &CallNode) -> bool {
 fn dir_each(call: &CallNode) -> bool {
     !is_csend(call)
         && method_name(call) == "each"
-        && call.receiver().and_then(|r| r.as_call_node()).is_some_and(|r| {
-            plain_send(&r) && matches!(method_name(&r), "[]" | "glob") && is_dir(r.receiver())
-        })
+        && call
+            .receiver()
+            .as_ref()
+            .and_then(plain_send)
+            .is_some_and(|r| matches!(method_name(&r), "[]" | "glob") && is_dir(r.receiver()))
 }
 
 /// `(block-pass (send nil? :method (sym {:require :require_relative})))`

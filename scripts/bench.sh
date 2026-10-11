@@ -7,15 +7,12 @@
 set -eu
 dir=$(cd "$1" && pwd)
 root=$(cd "$(dirname "$0")/.." && pwd)
-bin=$root/target/release/rbcop
+. "$root/scripts/rbcop.sh"
 rubocop=${RUBOCOP:-rubocop}
-(cd "$root" && cargo build --release -q)
 # Word splitting on $rubocop is intended ("rbenv exec rubocop").
 # shellcheck disable=SC2086
 version=$($rubocop --version 2>/dev/null) || { echo "bench: '$rubocop --version' failed; set RUBOCOP" >&2; exit 1; }
-cops=$("$bin" --show-cops | sed -n 's/^\([A-Z][A-Za-z]*\/[A-Za-z0-9]*\):$/\1/p' \
-  | grep -vx 'Lint/RedundantCopDisableDirective' | paste -sd, -)
-[ -n "$cops" ] || { echo "bench: no cops from $bin --show-cops" >&2; exit 1; }
+cops=$(rbcop_only_cops)
 # Physical path: RuboCop rejects a cache root under a symlink (macOS /var) and --parallel then
 # silently drops results (see scripts/oracle.sh).
 cache=$(cd "$(mktemp -d)" && pwd -P)

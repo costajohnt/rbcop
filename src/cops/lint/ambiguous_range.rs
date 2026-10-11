@@ -70,7 +70,7 @@ fn rational_literal(node: &Node) -> bool {
     node.as_call_node().is_some_and(|c| {
         method_name(&c) == "/"
             && !is_csend(&c)
-            && c.receiver().is_some_and(|r| r.as_integer_node().is_some())
+            && c.receiver().is_some_and(|r| helpers::literal_node::folded_kind(&r) == kind::INTEGER_NODE)
             && matches!(call_args(&c).as_slice(), [a] if a.as_rational_node().is_some())
             && c.block().is_none()
     })

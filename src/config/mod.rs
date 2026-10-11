@@ -131,6 +131,16 @@ impl CopConfig {
             _ => Some(true),
         }
     }
+    /// MinBodyLength#min_body_length / MinBranchesCount#min_branches_count: `cop_config[key] ||
+    /// default`, which must be a positive Integer or the cop raises (a cop error at the node it
+    /// was visiting, via runner::guarded).
+    pub fn positive_int(&self, key: &str, default: i64) -> usize {
+        match self.params.get(key) {
+            None | Some(Value::Null | Value::Bool(false)) => default as usize,
+            Some(Value::Int(i)) if *i > 0 => *i as usize,
+            _ => panic!("{key} needs to be a positive integer!"),
+        }
+    }
     pub fn int(&self, key: &str) -> Option<i64> {
         self.params.int(key)
     }

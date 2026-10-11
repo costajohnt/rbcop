@@ -1,6 +1,7 @@
 use crate::helpers::node_equality::same;
 use crate::helpers::parser_parent::{parser_parent, parser_parent_index};
 use crate::prelude::*;
+use helpers::select_by::plain_send;
 use crate::source::Source;
 
 pub const NAME: &str = "Style/FetchEnvVar";
@@ -52,11 +53,6 @@ fn child_nodes(node: &Node) -> Vec<Range> {
     }
 }
 
-/// `condition.send_type?`: a send without `&.` and without an attached block.
-fn is_send(node: &Node) -> bool {
-    node.as_call_node().is_some_and(|c| !is_csend(&c) && c.block().is_none_or(|b| b.as_block_node().is_none()))
-}
-
 fn eq_list(src: &Source, a: &[Range], b: &[Range]) -> bool {
     a.len() == b.len() && a.iter().zip(b).all(|(&x, &y)| same(src, x, y))
 }
@@ -64,7 +60,7 @@ fn eq_list(src: &Source, a: &[Range], b: &[Range]) -> bool {
 const COMPARISON: &[&str] = &["==", "===", "!=", "<=", ">=", ">", "<"];
 
 fn used_in_condition(src: &Source, node: Range, children: &[Range], condition: &Node) -> bool {
-    if is_send(condition) {
+    if plain_send(condition).is_some() {
         let c = condition.as_call_node().unwrap();
         let name = method_name(&c);
         let cond_children = child_nodes(condition);
@@ -136,14 +132,14 @@ impl Cop for FetchEnvVar {
                 cond.filter(|_| !guard)
             });
             if let Some(condition) = if_node {
-                if is_send(&condition) && eq_list(src, &child_nodes(&condition), &children) {
+                if plain_send(&condition).is_some() && eq_list(src, &child_nodes(&condition), &children) {
                     return;
                 }
                 if used_in_condition(src, this, &children, &condition) {
                     return;
                 }
             }
-            if let Some(p) = parent.filter(|p| is_send(p)) {
+            if let Some(p) = parent.filter(|p| plain_send(p).is_some()) {
                 let c = p.as_call_node().unwrap();
                 let name = method_name(&c);
                 let prefix_bang = name == "!" && c.message_loc().is_some_and(|m| m.as_slice() == b"!");

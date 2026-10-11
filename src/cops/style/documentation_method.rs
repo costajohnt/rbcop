@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use helpers::documentation_comment::{comments_taken_by_ancestor, documentation_comment, node_ends};
+use helpers::documentation_comment::{comments_taken_by_ancestor, documentation_comment, enclosing_start, node_ends};
 use helpers::parser_parent::{parser_parent, parser_parent_index};
 use helpers::visibility_help::{node_visibility, non_public_modifier, siblings};
 
@@ -55,8 +55,7 @@ impl Cop for DocumentationMethod {
             Some(c) => send_range(&c),
             None => (loc.start_offset(), loc.end_offset()),
         };
-        let enclosing =
-            target_anc.iter().rev().map(|a| a.location().start_offset()).find(|&s| s < r.0).unwrap_or(0);
+        let enclosing = enclosing_start(target_anc, r.0);
         let documented =
             !comments_taken_by_ancestor(target_anc, r.0) && documentation_comment(cx, &ends, r.0, enclosing);
         cx.state::<State>().ends = Some(ends);

@@ -342,8 +342,15 @@ fn return_value_of_scope(src: &crate::source::Source, ancestors: &[Node], range:
         | kind::ARRAY_NODE
         | kind::RANGE_NODE => true,
         kind::RESCUE_MODIFIER_NODE => false,
-        // ponytail: `parent.children.last == node` approximated as "only closers follow in the parent".
+        // ponytail: `parent.children.last == node` approximated as "only closers follow in the parent",
+        // plus rubocop-ast's structural `==` against a statements list's last statement.
         _ => {
+            if let Some(last) = p.as_statements_node().and_then(|s| s.body().iter().last()) {
+                let l = (last.location().start_offset(), last.location().end_offset());
+                if l != range && helpers::node_equality::same(src, l, range) {
+                    return true;
+                }
+            }
             let rest = src.slice(range.1.min(p.location().end_offset()), p.location().end_offset());
             rest.split(|c: char| c.is_whitespace() || matches!(c, ')' | ']' | '}' | ';'))
                 .all(|w| w.is_empty() || w == "end")

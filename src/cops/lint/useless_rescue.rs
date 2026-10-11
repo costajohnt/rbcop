@@ -13,7 +13,8 @@ struct Lvars(Vec<String>);
 
 impl<'pr> Visit<'pr> for Lvars {
     fn visit_local_variable_read_node(&mut self, node: &ruby_prism::LocalVariableReadNode<'pr>) {
-        self.0.push(String::from_utf8_lossy(node.location().as_slice()).into_owned());
+        // parser's lvar source is the bare name (Prism's `foo(name:)` read spans the colon).
+        self.0.push(String::from_utf8_lossy(node.name().as_slice()).into_owned());
     }
 }
 

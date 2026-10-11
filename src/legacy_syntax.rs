@@ -58,12 +58,12 @@ pub fn diagnostics(
     out
 }
 
-/// `text` with the whitespace-only lines between a receiver and a leading `.`/`&.` (at `dots`,
-/// where Prism ignored the dot) turned into comment lines, which Prism continues the call over, and
+/// `text` with the whitespace-only lines between a receiver and a leading `.`/`&.` (of the
+/// `.`/`&.` tokens at `dots`) turned into comment lines, which Prism continues the call over, and
 /// the offsets of those `#`s. The parser gem (2.7 to 3.2) skips such lines, but an empty line ends
-/// the statement there too, so a dot after one keeps its error.
-// ponytail: the AST's own slices show the `#`; cops read `Source::text`, which keeps the spaces.
-pub fn continue_over_blank_lines(text: &str, dots: &[usize]) -> Option<(String, Vec<usize>)> {
+/// the statement there too, so a dot after one keeps its error. Parse the copy with
+/// `parse_with_version_and_tokens_restoring` so no slice of the AST reads a `#` (#169).
+pub fn continue_over_blank_lines(text: &str, dots: &[usize]) -> Option<(Vec<u8>, Vec<usize>)> {
     let mut fake = Vec::new();
     for &dot in dots {
         if !text[dot..].starts_with('.') && !text[dot..].starts_with("&.") {
@@ -98,7 +98,7 @@ pub fn continue_over_blank_lines(text: &str, dots: &[usize]) -> Option<(String, 
     for &f in &fake {
         bytes[f] = b'#';
     }
-    Some((String::from_utf8(bytes).ok()?, fake))
+    Some((bytes, fake))
 }
 
 /// Tokens in source order (the lexers emit a heredoc's body right after its opener).
@@ -239,6 +239,11 @@ pub fn failure_offset(kind: &str, start: usize, end: usize, tokens: &[Token]) ->
         // Located at the `=`, `,`, ... (but `_after_operator` at the failing token); the parser
         // fails on what follows.
         "write_target_unexpected" => end,
+        // A trailing `,` in parameters: `f_args` shifts it and fails on the `)` / `|` after it.
+        "parameter_wild_loose_comma" => tokens
+            .iter()
+            .find(|t| t.start >= end && !matches!(t.kind, "NEWLINE" | "IGNORED_NEWLINE" | "COMMENT"))
+            .map_or(end, |t| t.start),
         k if k.starts_with("expect_expression_after_") && k != "expect_expression_after_operator" => end,
         "ternary_expression_true" | "ternary_expression_false" => end,
         // A construct left open, reported at its keyword: the parser fails at the end of the file.
@@ -919,6 +924,8 @@ struct Walk<'t> {
     const_writes: HashMap<usize, (usize, usize)>,
     /// `do` keywords that are kDO_BLOCK.
     do_block: HashSet<usize>,
+    /// `{` keywords the lexer gives as tLBRACE_ARG (a block on an index call: `a[k] {`).
+    brace_arg: HashSet<usize>,
     /// Openers whose header takes the term before the body (`class A < B` + newline, `def a b` +
     /// newline, `if a` + newline / `then`, ...): right after it the parser is in the body's first
     /// state, where `stmts: error stmt` starts.
@@ -1302,6 +1309,16 @@ impl<'pr> Visit<'pr> for Walk<'_> {
         let open = n.opening_loc().start_offset();
         let body_node = n.body().and_then(|b| b.as_begin_node());
         self.ctx.push(n.location().start_offset());
+        // `rescue`/`ensure` in a `-> do ... end` body: 2.6 (`lambda_body`'s do_body).
+        if n.opening_loc().as_slice() == b"do"
+            && let Some(b) = &body_node
+        {
+            if let Some(r) = b.rescue_clause() {
+                self.violation(r.keyword_loc().start_offset(), 2.6);
+            } else if let Some(e) = b.ensure_clause() {
+                self.violation(e.ensure_keyword_loc().start_offset(), 2.6);
+            }
+        }
         self.with_owner(open, n.opening_loc().end_offset(), |s| {
             if let Some(b) = &body_node {
                 s.begin_clauses(b);
@@ -1332,6 +1349,21 @@ impl<'pr> Visit<'pr> for Walk<'_> {
             && let Some(b) = n.block().and_then(|b| b.as_block_node()).filter(|b| b.opening_loc().as_slice() == b"do")
         {
             self.do_block.insert(b.opening_loc().start_offset());
+        }
+        // A block on an index call (`a[k] { }`, `a[k] do end`): 2.5. Its `do` is a kDO_BLOCK.
+        if n.name().as_slice() == b"[]"
+            && n.opening_loc().is_some_and(|o| o.as_slice() == b"[")
+            && let Some(b) = n.block().and_then(|b| b.as_block_node())
+        {
+            let open = b.opening_loc().start_offset();
+            if self.target < 2.5 {
+                if b.opening_loc().as_slice() == b"do" {
+                    self.do_block.insert(open);
+                } else {
+                    self.brace_arg.insert(open);
+                }
+            }
+            self.violation(open, 2.5);
         }
         // `command_args` (the parser pushes cmdarg around them): a call without parentheses
         // that is not an operator or attribute assignment.
@@ -1950,6 +1982,7 @@ fn simulate(
             if status == 0 && error {
                 let name = match t.name {
                     _ if w.do_block.contains(&t.start) || kdo_block => "kDO_BLOCK",
+                    _ if w.brace_arg.contains(&t.start) => "tLBRACE_ARG",
                     "tLABEL_NL" => "tNL",
                     n => n,
                 };

@@ -1,0 +1,7 @@
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Layout/HashAlignment:
+  EnforcedColonStyle: separator
+  EnforcedHashRocketStyle: separator

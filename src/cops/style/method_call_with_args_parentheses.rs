@@ -117,7 +117,8 @@ mod omit {
             return;
         }
         let src = cx.src;
-        let result = ruby_prism::parse_with_version(src.text.as_bytes(), src.version, !src.binary);
+        let mut buf = Vec::new();
+        let (result, _, _) = crate::runner::parse_for_target(src.text, &mut buf, src.version, src.target_ruby);
         let program = result.node();
         let verified =
             verified_by_reparse_with(src, &program, &pending, |p| (p.open.0, p.close.1), apply, true);

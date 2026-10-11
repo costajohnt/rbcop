@@ -323,8 +323,47 @@ impl TreeRewriter {
             Arc::ptr_eq(&self.source, &with.source) || self.source == with.source,
             "TreeRewriter are not for the same source_buffer"
         );
+        // The roots never carry edits of their own (no range can reach theirs), so merging is
+        // placing `with`'s top-level actions; in the common case each fits between ours.
+        if with.root.insert_before.is_empty()
+            && with.root.insert_after.is_empty()
+            && with.root.replacement.is_none()
+            && self.insert_in_gaps(&with.root.children)
+        {
+            return Ok(());
+        }
         self.root = self.root.combine(&with.root, &self.policies)?;
         Ok(())
+    }
+
+    /// Where `action` would land among the root's children if it overlaps none of them:
+    /// analyse_hierarchy's `center == 0` (place_in_hierarchy then only splices it in).
+    fn gap_index(&self, action: &Action) -> Option<usize> {
+        let r = action.range;
+        let left = self.root.bsearch_child_index(0, |c| c.range.end > r.begin);
+        let right = self.root.bsearch_child_index(left.saturating_sub(1), |c| c.range.begin >= r.end);
+        (left == right).then_some(left)
+    }
+
+    /// Splice actions that each fall in a gap between the root's children, in place: what
+    /// `root.combine` would build, without copying the root's children per action (quadratic
+    /// over a file's corrections). False, with nothing changed, unless every action fits.
+    fn insert_in_gaps(&mut self, actions: &[Rc<Action>]) -> bool {
+        if self.root.replacement.is_some() {
+            return false;
+        }
+        let actions: Vec<&Rc<Action>> = actions.iter().filter(|a| !a.is_empty()).collect();
+        // Sorted, non-overlapping actions keep fitting once the earlier ones are spliced in.
+        let disjoint =
+            actions.windows(2).all(|w| w[0].range.end <= w[1].range.begin && w[0].range.end < w[1].range.end);
+        if !disjoint || actions.iter().any(|a| self.gap_index(a).is_none()) {
+            return false;
+        }
+        for a in actions {
+            let i = self.gap_index(a).unwrap();
+            Rc::make_mut(&mut self.root).children.insert(i, a.clone());
+        }
+        true
     }
 
     pub fn replace(&mut self, start: usize, end: usize, content: &str) -> Result<(), Clobbering> {
@@ -387,6 +426,9 @@ impl TreeRewriter {
         );
         let span = Span { begin: start as isize, end: end as isize };
         let action = Rc::new(Action::leaf(span, before, replacement, after));
+        if self.insert_in_gaps(std::slice::from_ref(&action)) {
+            return Ok(());
+        }
         self.root = self.root.combine(&action, &self.policies)?;
         Ok(())
     }

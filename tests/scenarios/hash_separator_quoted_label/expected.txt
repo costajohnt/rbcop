@@ -1,0 +1,5 @@
+a.rb:14:4: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+a.rb:15:3: C: [Correctable] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
+a.rb:18:3: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+a.rb:6:3: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+a.rb:7:3: C: [Correctable] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.

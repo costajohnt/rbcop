@@ -308,7 +308,7 @@ fn int_op(node: &Node, op: &str, literal: fn(&Node) -> bool) -> bool {
     !is_csend(&c)
         && method_name(&c) == op
         && c.block().is_none()
-        && c.receiver().is_some_and(|r| r.as_integer_node().is_some())
+        && c.receiver().is_some_and(|r| helpers::literal_node::folded_kind(&r) == kind::INTEGER_NODE)
         && matches!(call_args(&c).as_slice(), [a] if literal(a))
 }
 

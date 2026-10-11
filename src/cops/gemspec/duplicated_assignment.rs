@@ -78,7 +78,7 @@ impl Cop for DuplicatedAssignment {
         if let Some(t) = node.as_call_target_node() {
             // `spec.a, spec.b = ...`: parser's mlhs holds `(send (lvar spec) :a=)`.
             let name = String::from_utf8_lossy(t.name().as_slice()).into_owned();
-            if let Some(recv) = lvar_name(&t.receiver()).filter(|_| !t.is_safe_navigation() && assignment_method(&name)) {
+            if let Some(recv) = lvar_name(&t.receiver(), cx.config.target_ruby).filter(|_| !t.is_safe_navigation() && assignment_method(&name)) {
                 let loc = t.location();
                 let a = Assignment {
                     receiver: recv.to_vec(),
@@ -105,7 +105,7 @@ impl Cop for DuplicatedAssignment {
         let Some(recv) = call.receiver() else { return };
         let name = method_name(&call);
         let (start, end) = send_range(&call);
-        if let Some(r) = lvar_name(&recv) {
+        if let Some(r) = lvar_name(&recv, cx.config.target_ruby) {
             if assignment_method(name) {
                 let a = Assignment { receiver: r.to_vec(), key: name.to_string(), spec, shown: name.to_string(), start, end };
                 cx.state::<State>().plain.push(a);
@@ -115,7 +115,7 @@ impl Cop for DuplicatedAssignment {
         // (send (send (lvar X) _) :[]= literal? _)
         let args = send_args(&call);
         let Some(inner) = recv.as_call_node() else { return };
-        let Some(r) = inner.receiver().as_ref().and_then(lvar_name) else { return };
+        let Some(r) = inner.receiver().and_then(|r| lvar_name(&r, cx.config.target_ruby)) else { return };
         if name != "[]=" || args.len() != 2 || !is_literal(&args[0]) {
             return;
         }

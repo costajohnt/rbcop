@@ -1,0 +1,7 @@
+Gemfile:1:2: C: Layout/LineLength: Line is too long. [29/1]
+heredoc.rb:1:2: C: Layout/LineLength: Line is too long. [8/1]
+heredoc.rb:3:2: C: Layout/LineLength: Line is too long. [2/1]
+heredoc.rb:4:1: C: Layout/LineLength: Line is too long. [3/1]
+space_tab.rb:2:2: C: Layout/LineLength: Line is too long. [2/1]
+tab_text.rb:2:1: C: Layout/LineLength: Line is too long. [3/1]
+two_tabs.rb:2:2: C: Layout/LineLength: Line is too long. [2/1]

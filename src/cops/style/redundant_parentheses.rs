@@ -158,6 +158,7 @@ fn prefix_not(n: &Node) -> bool {
     n.as_call_node().is_some_and(|c| method_name(&c) == "!" && c.message_loc().is_some_and(|m| m.as_slice() == b"not"))
 }
 
+// Not select_by::plain_send: `n` is a parser parent, and the send inside a block is still a send.
 fn is_send(n: &Node) -> bool {
     n.as_call_node().is_some_and(|c| !is_csend(&c))
 }
@@ -777,7 +778,8 @@ impl Cop for RedundantParentheses {
             return;
         }
         let src = cx.src;
-        let result = ruby_prism::parse_with_version(src.text.as_bytes(), src.version, !src.binary);
+        let mut buf = Vec::new();
+        let (result, _, _) = crate::runner::parse_for_target(src.text, &mut buf, src.version, src.target_ruby);
         let pending = &state.pending;
         let items: Vec<usize> = (0..pending.len()).collect();
         let apply = |c: &mut Corrector, i: usize| parentheses_corrector::apply(c, &pending[i].fix);

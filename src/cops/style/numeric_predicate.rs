@@ -8,7 +8,7 @@ pub struct NumericPredicate;
 const REPLACEMENTS: &[(&str, &str)] = &[("zero?", "=="), ("positive?", ">"), ("negative?", "<")];
 
 fn is_zero(node: &Node) -> bool {
-    node.as_integer_node().is_some() && int_literal_value(node) == Some(0)
+    int_literal_value(node) == Some(0)
 }
 
 fn allowed(cx: &Cx, name: &str) -> bool {

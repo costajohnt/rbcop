@@ -1,0 +1,6 @@
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+Layout/EmptyLineAfterMagicComment:
+  Enabled: false
+  NumberOfEmptyLines: 1.0

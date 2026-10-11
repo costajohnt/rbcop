@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use helpers::select_by::plain_send;
 use ruby_prism::{IfNode, Visit};
 
 pub const NAME: &str = "Lint/LiteralAsCondition";
@@ -60,11 +61,6 @@ fn primitive_array(a: &ruby_prism::ArrayNode) -> bool {
     a.elements().iter().all(|e| basic_literal(&e))
 }
 
-/// Parser `send` (not csend, not the send of a block).
-fn is_send(n: &Node) -> bool {
-    n.as_call_node().is_some_and(|c| !is_csend(&c) && !c.block().is_some_and(|b| b.as_block_node().is_some()))
-}
-
 /// The only child of a parser `begin` (parenthesized expression), if it has exactly one.
 fn single_begin_child<'pr>(n: &Node<'pr>) -> Option<Node<'pr>> {
     let body = n.as_parentheses_node()?.body()?;
@@ -100,7 +96,7 @@ fn void_value(n: &Node) -> bool {
 
 /// `check_node` / `handle_node`: literal operands of `!`, `and`/`or` and parentheses.
 fn check_node(cx: &mut Cx, n: &Node) {
-    if let Some(c) = n.as_call_node().filter(|_| is_send(n)) {
+    if let Some(c) = plain_send(n) {
         if c.receiver().is_some() && method_name(&c) == "!" && c.message_loc().is_some_and(|m| m.as_slice() == b"!") {
             handle_node(cx, &c.receiver().unwrap(), false);
         }
@@ -121,7 +117,7 @@ fn handle_node(cx: &mut Cx, n: &Node, parent_is_and: bool) {
             let (s, e) = range(n);
             cx.add_with(s, e, msg(node_text(n)), false);
         }
-    } else if is_send(n) || n.as_and_node().is_some() || n.as_or_node().is_some() || n.as_parentheses_node().is_some() {
+    } else if plain_send(n).is_some() || n.as_and_node().is_some() || n.as_or_node().is_some() || n.as_parentheses_node().is_some() {
         check_node(cx, n);
     }
 }

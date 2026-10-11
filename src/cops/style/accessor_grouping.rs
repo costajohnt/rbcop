@@ -1,16 +1,12 @@
 use crate::helpers::node_equality;
 use crate::helpers::range_help::{Side, Surrounding, range_with_surrounding_space};
 use crate::prelude::*;
+use helpers::select_by::plain_send;
 use ruby_prism::CallNode;
 
 pub const NAME: &str = "Style/AccessorGrouping";
 pub static COP: AccessorGrouping = AccessorGrouping;
 pub struct AccessorGrouping;
-
-/// A parser `send` (not csend, not the send of a block).
-fn as_send<'pr>(n: &Node<'pr>) -> Option<CallNode<'pr>> {
-    n.as_call_node().filter(|c| !is_csend(c) && !c.block().is_some_and(|b| b.as_block_node().is_some()))
-}
 
 /// rubocop-ast `attribute_accessor?`.
 fn attribute_accessor(call: &CallNode) -> bool {
@@ -27,7 +23,7 @@ fn access_modifier(call: &CallNode) -> bool {
 
 /// `visibility_block?`: `(send nil? {:private :protected :public})`
 fn visibility_block<'pr>(n: &Node<'pr>) -> Option<&'pr str> {
-    let call = as_send(n)?;
+    let call = plain_send(n)?;
     let name = method_name(&call);
     (call.receiver().is_none() && send_args(&call).is_empty() && matches!(name, "private" | "protected" | "public"))
         .then_some(name)
@@ -63,7 +59,7 @@ impl<'pr> Body<'_, 'pr> {
                     Some(c)
                 }
             }
-            Some(_) => as_send(prev),
+            Some(_) => plain_send(prev),
             None => prev.as_lambda_node().and_then(|l| l.body()).and_then(|b| single_send(&b)),
         };
         let Some(prev) = prev_send else { return true };
@@ -83,7 +79,7 @@ impl<'pr> Body<'_, 'pr> {
 
     /// `groupable_sibling_accessor?(node, sibling)`
     fn groupable_sibling(&self, i: usize, j: usize) -> bool {
-        let (Some(node), Some(sib)) = (as_send(&self.stmts[i]), as_send(&self.stmts[j])) else { return false };
+        let (Some(node), Some(sib)) = (plain_send(&self.stmts[i]), plain_send(&self.stmts[j])) else { return false };
         attribute_accessor(&sib)
             && method_name(&sib) == method_name(&node)
             && self.visibility(j) == self.visibility(i)
@@ -99,7 +95,7 @@ impl<'pr> Body<'_, 'pr> {
     fn skip_for_grouping(&self, i: usize) -> bool {
         let right = &self.stmts[i + 1..];
         right.iter().any(|n| n.as_constant_write_node().is_some() || n.as_constant_path_write_node().is_some())
-            && (i + 1..self.stmts.len()).any(|j| as_send(&self.stmts[j]).is_some() && self.groupable_sibling(i, j))
+            && (i + 1..self.stmts.len()).any(|j| plain_send(&self.stmts[j]).is_some() && self.groupable_sibling(i, j))
     }
 }
 
@@ -107,7 +103,7 @@ fn single_send<'pr>(body: &Node<'pr>) -> Option<CallNode<'pr>> {
     let stmts = body.as_statements_node()?;
     let mut it = stmts.body().iter();
     let (Some(first), None) = (it.next(), it.next()) else { return None };
-    as_send(&first)
+    plain_send(&first)
 }
 
 /// Parser children of a lone class-body statement that can hold sends: a block's (or lambda's)
@@ -165,13 +161,13 @@ impl Cop for AccessorGrouping {
         // ponytail: only block/lambda and `if` children are modelled (not unless, rescue, ...).
         let Some(stmts) = body.and_then(|b| b.as_statements_node()) else { return };
         let mut stmts: Vec<Node> = stmts.body().iter().collect();
-        if stmts.len() == 1 && as_send(&stmts[0]).is_none() {
+        if stmts.len() == 1 && plain_send(&stmts[0]).is_none() {
             stmts = single_statement_children(&stmts[0]);
         }
         let grouped = cx.cfg.str("EnforcedStyle").unwrap_or("grouped") == "grouped";
         let b = Body { src: cx.src, stmts: &stmts };
         for (i, stmt) in stmts.iter().enumerate() {
-            let Some(call) = as_send(stmt).filter(attribute_accessor) else { continue };
+            let Some(call) = plain_send(stmt).filter(attribute_accessor) else { continue };
             if b.previous_line_comment(&call) || !b.groupable_accessor(i, &call) {
                 continue;
             }
@@ -193,7 +189,7 @@ impl Cop for AccessorGrouping {
                     .then(|| {
                         let mut names: Vec<&str> = Vec::new();
                         for &j in &accessors {
-                            for a in send_args(&as_send(&stmts[j]).unwrap()) {
+                            for a in send_args(&plain_send(&stmts[j]).unwrap()) {
                                 let t = node_text(&a);
                                 if !names.contains(&t) {
                                     names.push(t);

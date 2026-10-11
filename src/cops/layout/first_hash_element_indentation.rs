@@ -15,20 +15,11 @@ const WORDS: Words = Words {
     left_name: "left curly brace",
 };
 
-/// Parser key source length: a `key:` label's symbol excludes the colon.
-fn key_length(key: &Node) -> usize {
-    let loc = key.location();
-    let mut text = node_text(key);
-    let label = match kind::of(key) {
-        kind::SYMBOL_NODE => key.as_symbol_node().unwrap().closing_loc().is_some_and(|c| c.as_slice() == b":"),
-        kind::INTERPOLATED_SYMBOL_NODE => {
-            key.as_interpolated_symbol_node().unwrap().closing_loc().is_some_and(|c| c.as_slice().ends_with(b":"))
-        }
-        _ => false,
-    };
-    if label && text.ends_with(':') && loc.end_offset() > loc.start_offset() {
-        text = &text[..text.len() - 1];
-    }
+/// Parser key source length: a `key:` label's symbol excludes the colon (quoted labels included: the
+/// pair then has no operator of its own, the colon sits in the key's closing).
+fn key_length(pair: &ruby_prism::AssocNode) -> usize {
+    let text = node_text(&pair.key());
+    let text = if pair.operator_loc().is_none() { text.strip_suffix(':').unwrap_or(text) } else { text };
     text.chars().count()
 }
 
@@ -64,7 +55,7 @@ impl Cop for FirstHashElementIndentation {
             let key = if rocket { "EnforcedHashRocketStyle" } else { "EnforcedColonStyle" };
             let separator = cx.config.for_cop("Layout/HashAlignment").str(key) == Some("separator");
             let offset = if separator {
-                let lengths: Vec<usize> = pairs.iter().map(|p| key_length(&p.key())).collect();
+                let lengths: Vec<usize> = pairs.iter().map(|p| key_length(p)).collect();
                 (lengths.iter().max().unwrap() - lengths[0]) as i64
             } else {
                 0

@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use helpers::select_by::plain_send;
 use crate::source::Source;
 use helpers::parser_path::{Frame, Tag, ancestors, frame_of};
 use helpers::range_help::{Side, Surrounding, range_with_surrounding_space};
@@ -17,14 +18,9 @@ fn rng(n: &Node) -> R {
     (l.start_offset(), l.end_offset())
 }
 
-/// A plain parser `send` (not csend, not a block call).
-fn as_send<'pr>(n: &Node<'pr>) -> Option<ruby_prism::CallNode<'pr>> {
-    n.as_call_node().filter(|c| !is_csend(c) && c.block().is_none_or(|b| b.as_block_node().is_none()))
-}
-
 /// `(send $_ :name)` with no arguments.
 fn send_recv<'pr>(n: &Node<'pr>, names: &[&str]) -> Option<Node<'pr>> {
-    let c = as_send(n)?;
+    let c = plain_send(n)?;
     if !names.contains(&method_name(&c)) || c.arguments().is_some() || c.block().is_some() {
         return None;
     }
@@ -125,7 +121,7 @@ impl<'pr> Ctx<'_, '_, 'pr> {
         if len > max || self.unsafe_method_used(chain, a) {
             return false;
         }
-        !as_send(chain_node).is_some_and(|c| method_name(&c) == "empty?")
+        !plain_send(chain_node).is_some_and(|c| method_name(&c) == "empty?")
     }
 
     fn unsafe_method_used(&self, chain: &Frame, a: &[Frame]) -> bool {

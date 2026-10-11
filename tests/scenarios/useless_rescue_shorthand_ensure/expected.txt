@@ -1,0 +1,1 @@
+v.rb:11:1: W: Lint/UselessRescue: Useless `rescue` detected.

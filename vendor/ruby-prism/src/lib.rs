@@ -809,6 +809,43 @@ pub fn parse_with_version_and_tokens<'a>(
     version: &str,
     encoding_locked: bool,
 ) -> (ParseResult<'a>, Vec<Token>) {
+    // SAFETY: prism only reads the buffer, which `source` keeps alive and unchanged for 'a.
+    let (parser, node, tokens) = unsafe { parse_tokens_raw(source.as_ptr(), source.len(), version, encoding_locked) };
+    (ParseResult { source, parser, node }, tokens)
+}
+
+/// rbcop patch: `parse_with_version_and_tokens`, then each `(offset, byte)` of `restore` written
+/// back into `source`, so every slice of the result (node, comment and token locations) reads the
+/// restored bytes. For parsing a rewritten copy whose offsets match the original text.
+///
+/// # Panics
+/// Panics if an offset of `restore` is out of bounds.
+#[must_use]
+pub fn parse_with_version_and_tokens_restoring<'a>(
+    source: &'a mut [u8],
+    version: &str,
+    encoding_locked: bool,
+    restore: &[(usize, u8)],
+) -> (ParseResult<'a>, Vec<Token>) {
+    let len = source.len();
+    assert!(restore.iter().all(|&(i, _)| i < len), "restore offset out of bounds");
+    let ptr = source.as_mut_ptr();
+    // SAFETY: prism keeps raw pointers derived from `ptr`; the writes go through `ptr` as well,
+    // before any shared reference to the buffer exists.
+    let (parser, node, tokens) = unsafe { parse_tokens_raw(ptr, len, version, encoding_locked) };
+    for &(i, b) in restore {
+        unsafe { *ptr.add(i) = b };
+    }
+    let source: &'a [u8] = source;
+    (ParseResult { source, parser, node }, tokens)
+}
+
+unsafe fn parse_tokens_raw(
+    source: *const u8,
+    len: usize,
+    version: &str,
+    encoding_locked: bool,
+) -> (NonNull<pm_parser_t>, NonNull<pm_node_t>, Vec<Token>) {
     extern "C" {
         fn pm_token_type_name(token_type: ruby_prism_sys::pm_token_type_t) -> *const c_char;
     }
@@ -832,7 +869,7 @@ pub fn parse_with_version_and_tokens<'a>(
         pm_options_partial_script_set(&mut options, true);
 
         let uninit = Box::into_raw(Box::new(MaybeUninit::<pm_parser_t>::uninit()));
-        pm_parser_init((*uninit).as_mut_ptr(), source.as_ptr(), source.len(), &options);
+        pm_parser_init((*uninit).as_mut_ptr(), source, len, &options);
         let parser = (*uninit).assume_init_mut();
         let mut tokens: Box<Vec<Token>> = Box::default();
         let mut callback = Box::new(ruby_prism_sys::pm_lex_callback_t {
@@ -846,7 +883,7 @@ pub fn parse_with_version_and_tokens<'a>(
         (*parser.as_ptr()).lex_callback = std::ptr::null_mut();
         pm_options_free(&mut options);
 
-        (ParseResult { source, parser, node }, *tokens)
+        (parser, node, *tokens)
     }
 }
 

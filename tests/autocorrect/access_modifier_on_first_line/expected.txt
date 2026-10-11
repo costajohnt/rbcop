@@ -1,0 +1,47 @@
+a.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a.rb:1:3: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `private`.
+a.rb:1:3: C: [Corrected] Layout/InitialIndentation: Indentation of first line in file detected.
+a.rb:1:3: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+a.rb:3:1: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+b.rb:1:1: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `private`.
+b.rb:1:1: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+b.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+b.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+b.rb:2:1: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+b.rb:3:1: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+c.rb:1:1: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `private`.
+c.rb:1:1: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+c.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+c.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+c.rb:2:1: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+c.rb:3:1: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+d.rb:1:1: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `private`.
+d.rb:1:1: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+d.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+d.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+d.rb:2:1: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+d.rb:3:1: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+e.rb:1:1: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+e.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+f.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+f.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+f.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `private`.
+f.rb:2:1: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+f.rb:3:1: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+g.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+g.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+h.rb:1:1: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `private`.
+h.rb:1:1: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+h.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+h.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+h.rb:2:1: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+h.rb:3:1: W: [Corrected] Lint/UselessAccessModifier: Useless `private` access modifier.
+i.rb:1:1: C: [Corrected] Layout/EmptyLinesAroundAccessModifier: Keep a blank line before and after `protected`.
+i.rb:1:1: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+i.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+i.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+i.rb:2:1: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+i.rb:3:1: W: [Corrected] Lint/UselessAccessModifier: Useless `protected` access modifier.
+z.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+z.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
+z.rb:3:121: C: Layout/LineLength: Line is too long. [132/120]

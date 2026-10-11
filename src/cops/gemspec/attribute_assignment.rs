@@ -15,6 +15,7 @@ type Indexed<'pr> = (&'pr [u8], &'pr [u8], (usize, usize));
 
 #[derive(Default)]
 struct Collect<'pr> {
+    target_ruby: f64,
     /// Block variable of the first `Gem::Specification.new do |x|`.
     spec_var: Option<&'pr [u8]>,
     /// (receiver, attribute) of `x.attr = v`
@@ -26,7 +27,7 @@ struct Collect<'pr> {
 impl<'pr> Collect<'pr> {
     fn plain_send(&mut self, recv: &Node<'pr>, name: &'pr [u8]) {
         // (send (lvar ...) _ ...) .select(&:assignment_method?)
-        if let Some(r) = lvar_name(recv)
+        if let Some(r) = lvar_name(recv, self.target_ruby)
             && assignment_method(name)
         {
             self.plain.push((r, name[..name.len() - 1].to_vec()));
@@ -52,7 +53,7 @@ impl<'pr> Visit<'pr> for Collect<'pr> {
                 && !is_csend(&inner)
                 && inner.block().is_none()
                 && send_args(&inner).is_empty()
-                && let Some(r) = inner.receiver().as_ref().and_then(lvar_name)
+                && let Some(r) = inner.receiver().and_then(|r| lvar_name(&r, self.target_ruby))
             {
                 self.indexed.push((r, inner.name().as_slice(), send_range(node)));
             }
@@ -73,7 +74,7 @@ impl Cop for AttributeAssignment {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let mut c = Collect::default();
+        let mut c = Collect { target_ruby: cx.config.target_ruby, ..Collect::default() };
         c.visit(node);
         // match_block_variable_name?: compares with the first specification's variable (nil
         // without one: `def_node_search` with a block returns nil).

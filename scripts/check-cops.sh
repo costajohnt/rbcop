@@ -8,15 +8,18 @@ cops=$1
 shift
 corpora=${*:-specs rails discourse rubocop-src jekyll chef fastlane brew mastodon}
 root=$(cd "$(dirname "$0")/.." && pwd)
-bin=$root/target/release/rbcop
-# A stale binary reports phantom diffs (e.g. right after a merge).
-(cd "$root" && cargo build --release -q)
+. "$root/scripts/rbcop.sh"
 corpus_root=${RBCOP_CORPUS:?set RBCOP_CORPUS to the corpus directory}
 oracle_root=${RBCOP_ORACLE:?set RBCOP_ORACLE to the oracle directory}
 # Per run, so concurrent gates (parallel porting agents) never share diff files.
 out=${TMPDIR:-/tmp}/rbcop-check/$$
 mkdir -p "$out"
-[ "$cops" = all ] && cops=$("$bin" --show-cops | sed -n 's/^\([^ #].*\):$/\1/p' | paste -sd, -)
+all=
+if [ "$cops" = all ]; then
+  all=1
+  cops=$(rbcop_cops)
+fi
+[ -n "$cops" ] || { echo "check-cops: empty cop list" >&2; exit 1; }
 pattern=": [CWEFRI]: (\[Correctable\] )?($(echo "$cops" | tr , '|')): "
 # Lint/RedundantCopDisableDirective needs every cop's offenses and is rejected by --only (as in
 # RuboCop), so such runs inspect with all cops (like the oracles) and rely on the pattern filter.
@@ -31,6 +34,7 @@ for c in $corpora; do
   # Where a RuboCop cop crashed it reported nothing, so drop rbcop's offenses for that (cop, file).
   crashes="$oracle_root/$c.txt.crashes"
   [ -f "$crashes" ] || crashes=/dev/null
+  [ -s "$oracle_root/$c.txt" ] || { echo "check-cops: oracle $oracle_root/$c.txt is missing or empty" >&2; exit 1; }
   sed -n "s|^$c/\(.*\)|$corpus_root/$c/\1:|p" "$root/scripts/check-skip.txt" > "$out/$c.skip"
   # rbcop-oracle = emacs plus range end (path:line:col:last_line:last_col), like scripts/oracle_formatter.rb.
   (cd "$corpus_root/$c" && "$bin" --config "$root/config/all-cops.yml" --format rbcop-oracle $only . 2>"$out/$c.err") \
@@ -43,7 +47,13 @@ for c in $corpora; do
   LC_ALL=C comm -23 "$out/$c.rubocop" "$out/$c.rbcop" | sed 's/^/< /' > "$out/$c.diff"
   LC_ALL=C comm -13 "$out/$c.rubocop" "$out/$c.rbcop" | sed 's/^/> /' >> "$out/$c.diff"
   n=$(wc -l < "$out/$c.diff" | tr -d ' ')
-  printf '%-10s rubocop %6s  rbcop %6s  diff %5s\n' "$c" "$(wc -l < "$out/$c.rubocop" | tr -d ' ')" "$(wc -l < "$out/$c.rbcop" | tr -d ' ')" "$n"
+  n_rubocop=$(wc -l < "$out/$c.rubocop" | tr -d ' ')
+  printf '%-10s rubocop %6s  rbcop %6s  diff %5s\n' "$c" "$n_rubocop" "$(wc -l < "$out/$c.rbcop" | tr -d ' ')" "$n"
+  # With every cop on, a non-empty oracle filtered to nothing means the pattern is broken, not a match.
+  if [ -n "$all" ] && [ "$n_rubocop" = 0 ]; then
+    echo "check-cops: no oracle offenses for $c match the cop list" >&2
+    exit 1
+  fi
   if [ "$n" != 0 ]; then
     status=1
     sed -E 's/^([<>]).*: [CWEFRI]: (\[Correctable\] )?([A-Za-z]+\/[A-Za-z0-9]+):.*/   \1 \3/' "$out/$c.diff" | sort | uniq -c | sort -rn | head -20
