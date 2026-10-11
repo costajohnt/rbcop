@@ -1,6 +1,7 @@
 use crate::helpers::if_node::parser_end;
 use crate::helpers::parser_parent::{is_operator_keyword, parser_parent};
 use crate::prelude::*;
+use helpers::select_by::plain_send;
 use ruby_prism::StatementsNode;
 
 pub const NAME: &str = "Style/IfWithBooleanLiteralBranches";
@@ -23,10 +24,6 @@ fn boolean(stmts: Option<StatementsNode>) -> Option<(bool, usize)> {
 
 fn is_elsif(node: &Node) -> bool {
     node.as_if_node().and_then(|i| i.if_keyword_loc()).is_some_and(|k| k.as_slice() == b"elsif")
-}
-
-fn plain_send<'pr>(node: &Node<'pr>) -> Option<ruby_prism::CallNode<'pr>> {
-    node.as_call_node().filter(|c| !is_csend(c))
 }
 
 fn return_boolean_value(cx: &Cx, cond: Option<Node>) -> bool {

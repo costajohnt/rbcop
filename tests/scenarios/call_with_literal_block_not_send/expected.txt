@@ -1,0 +1,5 @@
+if_boolean.rb:10:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+if_boolean.rb:7:16: C: [Correctable] Style/IfWithBooleanLiteralBranches: Remove redundant ternary operator with boolean literal branches.
+parens.rb:3:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+parens.rb:8:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a unary operation.
+parens.rb:9:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a unary operation.
