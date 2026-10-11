@@ -1,0 +1,4 @@
+ lambda =
+ -> {
+  puts 'hello'
+}

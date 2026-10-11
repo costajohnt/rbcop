@@ -214,7 +214,6 @@ impl Cop for UselessAssignment {
                                         && !pn.csend
                                         && tree.child(n, 0).is_none()
                                         && pn.nargs == 0
-                                        && &src[pn.start..pn.end] != "->"
                                         && seen.insert(pn.name.as_str())
                                     {
                                         names.push(&pn.name);
