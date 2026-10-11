@@ -1,0 +1,7 @@
+AllCops:
+  TargetRubyVersion: 3.4
+  SuggestExtensions: false
+Naming/BlockParameterName:
+  MinNameLength: 20
+Naming/MethodParameterName:
+  MinNameLength: 20

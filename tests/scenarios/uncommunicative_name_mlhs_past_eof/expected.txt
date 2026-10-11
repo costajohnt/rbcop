@@ -1,0 +1,6 @@
+a.rb:1:7: C: Naming/MethodParameterName: Method parameter must be at least 20 characters long.
+b.rb:1:11: C: Naming/BlockParameterName: Block parameter must be at least 20 characters long.
+d.rb:1:11: C: Naming/BlockParameterName: Block parameter must be at least 20 characters long.
+e.rb:1:7: C: Naming/MethodParameterName: Method parameter must be at least 20 characters long.
+f.rb:1:10: C: Naming/BlockParameterName: Block parameter must be at least 20 characters long.
+f.rb:1:20: C: Naming/BlockParameterName: Block parameter must be at least 20 characters long.
