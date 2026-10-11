@@ -168,3 +168,40 @@ pub fn pattern_variable_errors(program: &ruby_prism::Node) -> Vec<(usize, usize,
     w.visit(program);
     w.out
 }
+
+/// Builders::Default#static_regexp: every regexp literal without interpolation is compiled with
+/// `Regexp.new`, and Onigmo's error (`helpers::onigmo_compile`) is reported on the literal as
+/// `<message>: /source/` (source with line continuations removed). (start, end, message) of each.
+// ponytail: `/x` literals are skipped (free-spacing mode is not modelled).
+pub fn regexp_compile_errors(program: &ruby_prism::Node, text: &str) -> Vec<(usize, usize, String)> {
+    use ruby_prism::Visit;
+    struct Walk<'t> {
+        text: &'t str,
+        out: Vec<(usize, usize, String)>,
+    }
+    impl Walk<'_> {
+        fn check(&mut self, node: &ruby_prism::Node, content: ruby_prism::Location, closing: ruby_prism::Location) {
+            let flags = self.text.get(closing.start_offset() + 1..closing.end_offset()).unwrap_or("");
+            if flags.contains('x') {
+                return;
+            }
+            let Some(source) = self.text.get(content.start_offset()..content.end_offset()) else { return };
+            let source = source.replace("\\\n", "");
+            if let Some(msg) = crate::helpers::onigmo_compile::error(&source) {
+                let loc = node.location();
+                self.out.push((loc.start_offset(), loc.end_offset(), format!("{msg}: /{source}/")));
+            }
+        }
+    }
+    impl<'pr> Visit<'pr> for Walk<'_> {
+        fn visit_regular_expression_node(&mut self, n: &ruby_prism::RegularExpressionNode<'pr>) {
+            self.check(&n.as_node(), n.content_loc(), n.closing_loc());
+        }
+        fn visit_match_last_line_node(&mut self, n: &ruby_prism::MatchLastLineNode<'pr>) {
+            self.check(&n.as_node(), n.content_loc(), n.closing_loc());
+        }
+    }
+    let mut w = Walk { text, out: Vec::new() };
+    w.visit(program);
+    w.out
+}

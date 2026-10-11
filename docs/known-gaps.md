@@ -54,6 +54,20 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 
 ## Open gaps
 
+- Static regexp literals Onigmo rejects (RuboCop compiles each with `Regexp.new` and reports
+  Lint/Syntax): `helpers::onigmo_compile` covers group names and references, repeat ranges,
+  character class ranges, POSIX bracket names and look-behind bodies with quantifiers,
+  backreferences or nested look-arounds. Not modelled, so not reported: `/x` literals and `(?x)`,
+  unknown `\p{..}` property names, `\x{..}`, `\c`/`\M-`/`\C-` escapes, multi-digit backrefs,
+  `\g<0>` (never ending recursion), invalid group-name characters, alternation of different
+  lengths inside a look-behind's groups (`(?<=(a|bc))`). Below 3.3 the error does not start racc's
+  recovery when nothing else in the file fails, so `if /a{3,2}/ ... end` misses the parser gem's
+  follow-up `unexpected token kEND`. At 3.3+ RuboCop crashes on such a regexp in `=~` (the
+  translation's `match_op`); rbcop reports the Lint/Syntax.
+- `in - 1` (a sign, whitespace, a number in a pattern) below 3.3: the parser gem lexes it as
+  `tUNARY_NUM` and accepts it, but Prism (and Ruby's own parse.y) reject it, so rbcop has no tree
+  for the file and reports Prism's failure as Lint/Syntax (#126).
+
 - Target Ruby below 3.3 (RuboCop parses with the parser gem's grammar for the target):
   `src/legacy_syntax.rs` reports the parser gem's Lint/Syntax for syntax newer than the target and
   for genuine syntax errors, approximating racc's error recovery for the diagnostics after the first
