@@ -20,7 +20,8 @@ impl Settings {
         if self.tab_width == 0 {
             return 0;
         }
-        line.bytes().take_while(|&b| b == b'\t').count() * (self.tab_width - 1)
+        // `line.index(/[^\t]/) || 0`: a line made only of tabs is not widened.
+        line.bytes().position(|b| b != b'\t').unwrap_or(0) * (self.tab_width - 1)
     }
 
     fn line_length(&self, line: &str) -> usize {
