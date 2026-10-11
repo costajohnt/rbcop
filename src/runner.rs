@@ -272,7 +272,7 @@ fn analyze(
         let mut actions: Vec<usize> = Vec::new();
         // Circular argument references: the simulation reports them where the parser reads them.
         let mut circular: Vec<(usize, usize)> = Vec::new();
-        let semantic: Vec<_> = result
+        let mut semantic: Vec<_> = result
             .errors()
             .filter(|e| kept(e) && semantic_kind(e) && !fatal(e) && e.location().start_offset() < cut)
             .filter_map(|e| {
@@ -302,6 +302,13 @@ fn analyze(
                 Some(t)
             })
             .collect();
+        // Onigmo compile errors of static regexps: semantic errors too (the builder's diagnostic).
+        if !crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH) {
+            for e in crate::syntax::regexp_compile_errors(&result.node(), text).into_iter().filter(|e| e.0 < cut) {
+                actions.push(e.1);
+                semantic.push(e);
+            }
+        }
         actions.sort_unstable();
         let diags = crate::legacy_syntax::diagnostics(
             &result.node(),
@@ -360,6 +367,15 @@ fn analyze(
         && !crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH)
     {
         errors.extend(crate::syntax::pattern_variable_errors(&result.node()));
+    }
+    // Onigmo compile errors of static regexps (below 3.3 they are semantic errors above), reported
+    // by the Prism translation only when the file otherwise parses.
+    if !parser_gem
+        && errors.is_empty()
+        && text.contains(['/', '%'])
+        && !crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH)
+    {
+        errors.extend(crate::syntax::regexp_compile_errors(&result.node(), text));
     }
     let comments: Vec<Comment> = result
         .comments()
