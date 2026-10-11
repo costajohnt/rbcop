@@ -1201,6 +1201,28 @@ impl Walk<'_> {
 }
 
 impl<'pr> Visit<'pr> for Walk<'_> {
+    // Below 2.4 (no `command_rhs` yet) an op-assign's value, or an op-assign that is an
+    // assignment's value, cannot be a command assignment (`x = y ||= foo 1`, `x ||= y = foo 1`):
+    // the grammar fails at the command's first argument (#339).
+    fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
+        if self.target >= 2.4 || node.as_multi_write_node().is_some() {
+            return;
+        }
+        let op_assign = |n: &Node| crate::ast::assignment_parts(n).is_some_and(|(op, _)| op.as_slice() != b"=");
+        let value = match crate::ast::assignment_parts(&node) {
+            Some((_, v)) => v,
+            None => match setter_value(&node) {
+                Some(v) => v,
+                None => return,
+            },
+        };
+        if (op_assign(&node) || op_assign(&value))
+            && let Some(at) = command_asgn_arg(&value)
+        {
+            self.violation(at, 2.4);
+        }
+    }
+
     fn visit_def_node(&mut self, n: &ruby_prism::DefNode<'pr>) {
         let kw = n.def_keyword_loc().start_offset();
         self.ctx.push(kw);
@@ -1884,32 +1906,45 @@ fn block_command_do(n: &Node) -> Option<usize> {
 }
 
 fn command_asgn(node: &Node) -> bool {
+    command_asgn_arg(node).is_some()
+}
+
+/// The value of a setter call (`a.b = v`, `a[i] = v`).
+fn setter_value<'pr>(node: &Node<'pr>) -> Option<Node<'pr>> {
+    let setter = node.as_call_node().filter(|c| c.equal_loc().is_some())?;
+    setter.arguments()?.arguments().iter().last()
+}
+
+/// `command_asgn`'s command (a call, `super`, `yield`, `return`, `break`, `next` with arguments
+/// and no parentheses, also before a `rescue` modifier): the start of its first argument.
+fn command_asgn_arg(node: &Node) -> Option<usize> {
     let value = match crate::ast::assignment_parts(node) {
         Some((_, v)) if node.as_multi_write_node().is_none() => v,
-        _ => {
-            let setter = node.as_call_node().filter(|c| c.equal_loc().is_some());
-            match setter.and_then(|c| c.arguments()).and_then(|a| a.arguments().iter().last()) {
-                Some(v) => v,
-                None => return false,
-            }
-        }
+        _ => setter_value(node)?,
     };
-    if command_asgn(&value) {
-        return true;
+    let value = value.as_rescue_modifier_node().map_or(value, |r| r.expression());
+    if let Some(at) = command_asgn_arg(&value) {
+        return Some(at);
     }
+    let first =
+        |a: Option<ruby_prism::ArgumentsNode>| a?.arguments().iter().next().map(|v| v.location().start_offset());
     if let Some(c) = value.as_call_node() {
         let name = String::from_utf8_lossy(c.name().as_slice());
-        return c.opening_loc().is_none()
+        let command = c.opening_loc().is_none()
             && c.message_loc().is_some()
-            && c.arguments().is_some()
             && !crate::helpers::node_types::is_operator_method(&name)
             && !name.ends_with('=');
+        return first(c.arguments()).filter(|_| command);
     }
-    value.as_super_node().is_some_and(|s| s.lparen_loc().is_none() && s.arguments().is_some())
-        || value.as_yield_node().is_some_and(|y| y.lparen_loc().is_none() && y.arguments().is_some())
-        || value.as_return_node().is_some_and(|r| r.arguments().is_some())
-        || value.as_break_node().is_some_and(|r| r.arguments().is_some())
-        || value.as_next_node().is_some_and(|r| r.arguments().is_some())
+    if let Some(s) = value.as_super_node() {
+        return first(s.arguments()).filter(|_| s.lparen_loc().is_none());
+    }
+    if let Some(y) = value.as_yield_node() {
+        return first(y.arguments()).filter(|_| y.lparen_loc().is_none());
+    }
+    first(value.as_return_node().and_then(|r| r.arguments()))
+        .or_else(|| first(value.as_break_node().and_then(|r| r.arguments())))
+        .or_else(|| first(value.as_next_node().and_then(|r| r.arguments())))
 }
 
 fn is_chain(item: &[Tok]) -> bool {
@@ -2142,7 +2177,7 @@ fn simulate(
             resumed = true;
             resume = t.start;
             (fails_at, bad_returns) = first_failure(&stack, resume);
-            (stmt_depth, mlhs_ok) = (stack.len(), true);
+            (stmt_depth, mlhs_ok, mlhs_comma) = (stack.len(), true, None);
             item.clear();
         }
         if matches!(t.name, "kDEF" | "kCLASS" | "kMODULE") {
@@ -2207,6 +2242,12 @@ fn simulate(
             || (t.name == "kTHEN" && dangling_then)
             // A label cannot start a multiple-assignment item.
             || (t.name == "tLABEL" && mlhs_comma.is_some_and(|c| c + 1 == i))
+            // A list of chains (`a, b`) the statement ends without an `=`.
+            || (matches!(t.name, "tNL" | "tSEMI" | "$end")
+                && stack.len() == stmt_depth
+                && mlhs_ok
+                && mlhs_comma.is_some()
+                && is_chain(&item))
             || (t.name == "tCOMMA" && stack.len() == stmt_depth && mlhs_ok && call_with_args(&item));
         // A semantic error's yyerror fires while reducing, with the next token as lookahead.
         let mut yyerror = false;
@@ -2281,7 +2322,7 @@ fn simulate(
             }
             resume = t.start;
             (fails_at, bad_returns) = first_failure(&stack, resume);
-            (stmt_depth, mlhs_ok) = (stack.len(), true);
+            (stmt_depth, mlhs_ok, mlhs_comma) = (stack.len(), true, None);
             item.clear();
         }
         if t.name == "tCOMMA" && stack.len() == stmt_depth && mlhs_ok {
@@ -2366,7 +2407,7 @@ fn simulate(
             dangling_then = false;
         }
         if matches!(t.name, "tNL" | "tSEMI") {
-            (stmt_depth, mlhs_ok) = (stack.len(), true);
+            (stmt_depth, mlhs_ok, mlhs_comma) = (stack.len(), true, None);
             item.clear();
         }
     }

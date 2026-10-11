@@ -1,0 +1,50 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a01.rb:1:15: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a02.rb:1:14: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a03.rb:1:18: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a04.rb:1:17: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a05.rb:1:15: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a06.rb:1:19: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a07.rb:2:19: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a08.rb:1:17: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a09.rb:1:15: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a10.rb:1:21: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a11.rb:1:15: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a12.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a12.rb:1:1: W: Lint/UselessAssignment: Useless assignment to variable - `y`. Use `||` instead of `||=`.
+a13.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a14.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a14.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+a15.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a15.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+a15.rb:1:5: W: Lint/UselessAssignment: Useless assignment to variable - `y`.
+a16.rb:1:16: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a17.rb:1:15: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a18.rb:1:19: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a19.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a19.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`. Use `+` instead of `+=`.
+a20.rb:1:15: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a21.rb:1:17: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a22.rb:1:18: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a23.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a24.rb:1:18: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a25.rb:1:15: F: Lint/Syntax: unexpected token tIDENTIFIER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a25.rb:1:19: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a26.rb:1:16: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a27.rb:1:15: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a28.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a28.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+a28.rb:1:6: W: Lint/UselessAssignment: Useless assignment to variable - `y`.
+a29.rb:1:18: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a30.rb:1:17: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a31.rb:2:20: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a32.rb:1:24: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a33.rb:1:15: F: Lint/Syntax: unexpected token tUNARY_NUM (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+a34.rb:1:15: F: Lint/Syntax: unexpected token tSTAR (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+b1.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+b1.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+b1.rb:1:5: W: Lint/UselessAssignment: Useless assignment to variable - `y`.
+b1.rb:2:12: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+b1.rb:2:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `z`.
+b1.rb:3:10: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+b1.rb:3:1: W: Lint/UselessAssignment: Useless assignment to variable - `v`. Use `||` instead of `||=`.
