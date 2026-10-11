@@ -121,6 +121,50 @@ pub fn stand_in(c: char, text: &str, taken: &[(char, char)]) -> Option<char> {
         .find(|&l| l.is_lowercase() && !taken.iter().any(|&(_, s)| s == l) && !text.contains(l))
 }
 
+/// NULs the parser gem's lexer ends a heredoc line at, where that makes a terminator line (Prism
+/// reads them as text and leaves the heredoc open): in ` \0 SQL` or `  SQL\0` the segment between
+/// NULs and newlines is the `SQL` terminator, its leading spaces and tabs allowed after `<<~`/`<<-`
+/// (#247). Parse a copy with these NULs made newlines, written back once parsed.
+pub fn heredoc_nul_breaks(text: &str, tokens: &[Token]) -> Vec<usize> {
+    // Sets, so each segment costs two lookups however many heredocs the file opens (a file with many
+    // heredocs and many NUL segments must stay linear).
+    let (mut exact, mut indented): (HashSet<&str>, HashSet<&str>) = (HashSet::new(), HashSet::new());
+    for t in tokens.iter().filter(|t| t.kind == "HEREDOC_START") {
+        let Some(s) = text.get(t.start..t.end).and_then(|s| s.strip_prefix("<<")) else { continue };
+        let (indent, s) = s.strip_prefix(['~', '-']).map_or((false, s), |r| (true, r));
+        let id = s.trim_matches(['\'', '"', '`']);
+        if indent {
+            indented.insert(id)
+        } else {
+            exact.insert(id)
+        };
+    }
+    let has_ids = !exact.is_empty() || !indented.is_empty();
+    let mut out = Vec::new();
+    let mut start = 0;
+    for line in text.split_inclusive('\n') {
+        let body = line.trim_end_matches('\n');
+        if has_ids && body.contains('\0') {
+            let mut seg_start = start;
+            for seg in body.split('\0') {
+                let seg_end = seg_start + seg.len();
+                let closes = exact.contains(seg) || indented.contains(seg.trim_start_matches([' ', '\t']));
+                if closes {
+                    if seg_start > start {
+                        out.push(seg_start - 1);
+                    }
+                    if seg_end < start + body.len() {
+                        out.push(seg_end);
+                    }
+                }
+                seg_start = seg_end + 1;
+            }
+        }
+        start += line.len();
+    }
+    out
+}
+
 /// Tokens in source order (the lexers emit a heredoc's body right after its opener).
 fn by_start(toks: &[Tok]) -> Vec<Tok> {
     let mut sorted = toks.to_vec();
