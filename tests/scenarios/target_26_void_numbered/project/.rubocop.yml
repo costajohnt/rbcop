@@ -1,0 +1,6 @@
+AllCops:
+  TargetRubyVersion: 2.6
+  NewCops: enable
+  SuggestExtensions: false
+Style/ConditionalAssignment:
+  EnforcedStyle: assign_inside_condition
