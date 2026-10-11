@@ -53,7 +53,11 @@ impl UriRegex {
         let mut out = vec![];
         let mut pos = 0;
         while let Some(p) = line[pos..].char_indices().map(|(i, _)| pos + i).find(|&p| self.starts_uri(&line[p..])) {
-            let Some(m) = self.body.find(&line[p..]) else { break };
+            // `scan` moves on to the next position when a scheme candidate is not a URI.
+            let Some(m) = self.body.find(&line[p..]) else {
+                pos = p + line[p..].chars().next().map_or(1, char::len_utf8);
+                continue;
+            };
             out.push((p, p + m.end()));
             pos = p + m.end().max(1);
         }
