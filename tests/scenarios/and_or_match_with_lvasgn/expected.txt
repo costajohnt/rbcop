@@ -1,0 +1,11 @@
+r.rb:1:6: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+s.rb:1:6: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+t.rb:1:6: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+u.rb:1:6: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+u.rb:4:6: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+w.rb:1:17: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+w.rb:4:16: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+x.rb:1:13: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+x.rb:4:13: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+y.rb:1:17: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+y.rb:1:34: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
