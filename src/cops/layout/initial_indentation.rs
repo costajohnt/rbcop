@@ -13,7 +13,8 @@ impl Cop for InitialIndentation {
         let src = cx.src;
         let tokens = helpers::parser_tokens::translated(src);
         let Some(t) = tokens.iter().find(|t| !src.text[t.start..].starts_with('#')) else { return };
-        // Only spaces/tabs to the left count (a BOM gives a non-zero column but no space).
+        // Only spaces/tabs to the left count (a BOM gives a non-zero column but no space):
+        // range_with_surrounding_space(newlines: false) moves over `/[ \t]/` only, not Ruby's `\s`.
         if matches!(src.text.as_bytes()[..t.start].last(), Some(b' ' | b'\t')) {
             let o = helpers::range_help::Surrounding {
                 side: helpers::range_help::Side::Left,

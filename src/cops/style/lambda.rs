@@ -101,7 +101,7 @@ impl Cop for Lambda {
         let braces = l.opening_loc().as_slice() == b"{";
         let unparenthesized_arg = arg_to_unparenthesized_call(node, cx.ancestors);
         let bytes = src.text.as_bytes();
-        let separating_space = bytes.get(open.0 + 2).is_some_and(|c| c.is_ascii_whitespace());
+        let separating_space = bytes.get(open.0 + 2).is_some_and(|&c| helpers::parser_tokens::is_ruby_space(c));
         cx.add_fix(sel.0, sel.1, msg, |c| {
             // remove_unparenthesized_whitespace
             if let (false, false, Some((as_, ae))) = (empty, parenthesized, args_loc) {

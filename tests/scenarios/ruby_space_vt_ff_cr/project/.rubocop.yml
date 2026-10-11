@@ -1,0 +1,10 @@
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.4
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+Layout/LineLength:
+  Max: 12
+  AllowedPatterns: []
+Style/MixinGrouping:
+  EnforcedStyle: grouped

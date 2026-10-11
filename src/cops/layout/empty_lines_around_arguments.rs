@@ -36,7 +36,7 @@ impl Cop for EmptyLinesAroundArguments {
             // range_with_surrounding_space(whitespace: true, side: :left)
             let bytes = src.text.as_bytes();
             let mut pos = s;
-            while pos > 0 && matches!(bytes[pos - 1], b' ' | b'\t' | b'\n' | b'\r' | b'\x0c' | b'\x0b') {
+            while pos > 0 && helpers::parser_tokens::is_ruby_space(bytes[pos - 1]) {
                 pos -= 1;
             }
             let last = src.line_of(s);

@@ -122,7 +122,7 @@ impl Ctx<'_> {
     fn begins_its_line(&self, off: usize) -> bool {
         let s = self.src.line_start(self.line(off));
         let line = &self.src.text[s..];
-        let first = line.bytes().position(|b| !matches!(b, b' ' | b'\t' | b'\n' | b'\x0b' | b'\x0c' | b'\r'));
+        let first = line.bytes().position(|b| !helpers::parser_tokens::is_ruby_space(b));
         first == Some(off - s)
     }
     fn pairs(&self) -> impl Iterator<Item = &Elem> {

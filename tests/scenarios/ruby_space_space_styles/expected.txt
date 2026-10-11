@@ -1,0 +1,24 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+lambda.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+lambda.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `f`.
+lambda.rb:1:5: C: [Correctable] Style/Lambda: Use the `-> { ... }` lambda literal syntax for all lambdas.
+lambda.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `g`.
+lambda.rb:4:5: C: [Correctable] Style/Lambda: Use the `-> { ... }` lambda literal syntax for all lambdas.
+sialb.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+sialb.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+sialb.rb:2:4: C: [Correctable] Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
+sialb.rb:3:2: C: Layout/FirstArrayElementIndentation: Indent the right bracket the same as the start of the line where the left bracket is.
+sialb.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+sialb.rb:4:8: C: [Correctable] Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
+sialb.rb:5:2: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element when the opening brace is on the same line as the first array element.
+sisi.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+sisi.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+sisi.rb:1:5: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+sisi.rb:1:6: W: Lint/EmptyExpression: Avoid empty expressions.
+sisi.rb:1:6: W: [Correctable] Lint/EmptyInterpolation: Empty interpolation detected.
+sisi.rb:2:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+sisi.rb:2:5: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+sisi.rb:2:6: W: Lint/EmptyExpression: Avoid empty expressions.
+sisi.rb:2:6: W: [Correctable] Lint/EmptyInterpolation: Empty interpolation detected.
+sisi.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `z`.
+sisi.rb:3:5: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.

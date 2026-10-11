@@ -56,7 +56,7 @@ impl Cop for MixinGrouping {
                 } else {
                     let prev = mixins.windows(2).find(|w| same(w[1].1, *me)).map(|w| w[0].1);
                     if let Some((_, pe)) = prev
-                        && !src.text[pe..rs].chars().any(|c| !c.is_ascii_whitespace()) {
+                        && !src.text[pe..rs].bytes().any(|b| !helpers::parser_tokens::is_ruby_space(b)) {
                             rs = pe;
                         }
                     String::new()

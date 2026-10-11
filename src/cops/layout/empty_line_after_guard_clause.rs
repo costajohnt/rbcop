@@ -195,7 +195,7 @@ fn heredoc_parts(src: &Source, node: &Node) -> (usize, usize, (usize, usize)) {
 
 fn blank_line(src: &Source, line: usize) -> Option<bool> {
     // processed_source[line] (0-based) is the 1-based line `line + 1`.
-    src.lines.get(line).map(|l| l.trim_start_matches(|c: char| c.is_ascii_whitespace() || c == '\0').is_empty())
+    src.lines.get(line).map(|l| helpers::ruby_string::blank(l))
 }
 
 /// Comment starting on 1-based `line` that is an enable directive or a simplecov directive.

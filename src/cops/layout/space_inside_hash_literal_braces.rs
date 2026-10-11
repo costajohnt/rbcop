@@ -10,6 +10,7 @@ struct State {
     tokens: Option<Vec<Token>>,
 }
 
+/// `range_of_space_to_the_right/left` step over `/[ \t]/`, not Ruby's `\s`.
 fn blank(c: Option<&u8>) -> bool {
     matches!(c, Some(b' ' | b'\t'))
 }
@@ -94,7 +95,7 @@ impl Cop for SpaceInsideHashLiteralBraces {
             let problem = if expect_space { "missing" } else { "detected" };
             let range_src = src.slice(s, e);
             cx.add_fix(s, e, format!("Space inside {inside} {problem}."), |c| {
-                if range_src.bytes().any(|c| c.is_ascii_whitespace() || c == 0x0b) {
+                if range_src.bytes().any(helpers::parser_tokens::is_ruby_space) {
                     c.remove(s, e);
                 } else if range_src == "{" {
                     c.insert_after(s, e, " ");
@@ -109,7 +110,7 @@ impl Cop for SpaceInsideHashLiteralBraces {
                 _ => (loc.start_offset(), loc.end_offset()),
             };
             let inner = src.slice(s, e);
-            if !inner.is_empty() && inner.bytes().all(|c| c.is_ascii_whitespace() || c == 0x0b) {
+            if !inner.is_empty() && inner.bytes().all(helpers::parser_tokens::is_ruby_space) {
                 cx.add_fix(s, e, "Space inside empty hash literal braces detected.", |c| c.remove(s, e));
             }
         }

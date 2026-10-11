@@ -60,6 +60,7 @@ pub fn correct(
             let line = src.line_of(p);
             let ls = src.line_start(line);
             let text = src.lines.get(line - 1).copied().unwrap_or("");
+            // `line_range.source[/\A[ \t]*/]`, not Ruby's `\s`.
             let leading_len = text.len() - text.trim_start_matches([' ', '\t']).len();
             if leading_len == text.len() {
                 continue;

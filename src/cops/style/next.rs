@@ -90,7 +90,7 @@ fn source_line<'a>(src: &'a crate::source::Source, line: usize) -> &'a str {
 
 /// Index of the first non-whitespace character (`line =~ /\S/`).
 fn indent_of(line: &str) -> Option<usize> {
-    line.chars().position(|c| !c.is_ascii_whitespace())
+    line.chars().position(|c| !helpers::ruby_string::is_space(c))
 }
 
 impl Next {
@@ -161,7 +161,7 @@ impl Cop for Next {
         let cond_end = helpers::if_node::parser_begin_end(&offending).unwrap_or(pred_loc.end_offset());
         let (end_start, end_end) = (end_kw.start_offset(), end_kw.end_offset());
         let rest = &src.text.as_bytes()[end_end..];
-        let ws = rest.iter().take_while(|b| b.is_ascii_whitespace()).count();
+        let ws = rest.iter().take_while(|&&b| helpers::parser_tokens::is_ruby_space(b)).count();
         let mut end_begin = src.line_start(src.line_of(end_start));
         if rest[..ws].contains(&b'\n') || ws == rest.len() {
             end_begin -= 1;

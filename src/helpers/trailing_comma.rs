@@ -140,7 +140,7 @@ fn put_comma(cx: &mut Cx, items: &[Node], kind: &str) {
     let (s, e) = range(last);
     let text = cx.src.slice(s, e);
     let ix = text.rfind('\n').unwrap_or(0);
-    let Some(off) = text[ix..].bytes().position(|b| !matches!(b, b' ' | b'\t' | b'\r' | b'\n' | b'\x0c' | b'\x0b')) else {
+    let Some(off) = text[ix..].bytes().position(|b| !crate::helpers::parser_tokens::is_ruby_space(b)) else {
         return;
     };
     let start = s + ix + off;

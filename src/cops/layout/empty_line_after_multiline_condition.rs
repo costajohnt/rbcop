@@ -13,7 +13,7 @@ fn range(n: &Node) -> (usize, usize) {
 
 /// `processed_source[line].blank?` (`line` is 1-based, so this is the following line).
 fn next_line_empty(cx: &Cx, line: usize) -> bool {
-    cx.src.lines.get(line).is_none_or(|l| l.chars().all(|c| c.is_ascii_whitespace() || c == '\0'))
+    cx.src.lines.get(line).is_none_or(|l| helpers::ruby_string::blank(l))
 }
 
 /// `add_offense(range) { insert_after(range_by_whole_lines(node), "\n") }`.

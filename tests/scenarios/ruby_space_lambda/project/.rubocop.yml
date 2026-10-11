@@ -1,0 +1,5 @@
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.4
+Style/Lambda:
+  EnforcedStyle: lambda

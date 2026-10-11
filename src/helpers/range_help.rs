@@ -45,11 +45,12 @@ pub fn range_with_surrounding_space(src: &str, start: usize, end: usize, opts: S
 }
 
 fn final_pos(src: &str, pos: isize, step: isize, o: Surrounding) -> usize {
+    // `/[ \t]/` first (not Ruby's `\s`); `whitespace:` then moves over `/\s/`.
     let blank = |c: u8| c == b' ' || c == b'\t';
     let pos = move_pos(src, pos, step, true, blank);
     let pos = move_pos_str(src, pos, step, o.continuations, b"\\\n");
     let pos = move_pos(src, pos, step, o.newlines, |c| c == b'\n');
-    move_pos(src, pos, step, o.whitespace, |c| c.is_ascii_whitespace() || c == 0x0b) as usize
+    move_pos(src, pos, step, o.whitespace, crate::helpers::parser_tokens::is_ruby_space) as usize
 }
 
 /// Ruby's `src[i]`: a negative index counts from the end (RuboCop relies on this at offset 0).

@@ -194,7 +194,7 @@ pub fn percent_literal_replacement(cx: &Cx, node: &Node, values: &[Vec<u8>], cha
             out.push_str(&fix(v));
         }
         if let Some(last) = lines.last() {
-            let ws = last.len() - last.trim_start_matches(|c: char| c.is_ascii_whitespace()).len();
+            let ws = last.len() - last.trim_start_matches(crate::helpers::ruby_string::is_space).len();
             if last[ws..].starts_with(']') {
                 out.push('\n');
                 out.push_str(&last[..ws]);

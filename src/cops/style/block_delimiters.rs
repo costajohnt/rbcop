@@ -188,7 +188,7 @@ fn on_block(cx: &mut Cx, b: &Block) {
     let breaks = !braces && b.unparenthesized_args;
     let (open, close) = (b.opening, b.closing);
     let text = src.text;
-    let ws = |i: usize| text.as_bytes().get(i).is_some_and(|c| matches!(c, b' ' | b'\t' | b'\n' | b'\r' | 0x0c | 0x0b));
+    let ws = |i: usize| text.as_bytes().get(i).is_some_and(|&c| helpers::parser_tokens::is_ruby_space(c));
     let ws_before = |i: usize| if i == 0 { ws(text.len().wrapping_sub(1)) } else { ws(i - 1) };
     // Comment after the closing brace, moved before the block.
     let comment_move = (braces && !breaks)
@@ -199,7 +199,7 @@ fn on_block(cx: &mut Cx, b: &Block) {
             // parser's Range#join takes the min begin and max end, so a chain ending after the
             // comment (`}.to( # c\n  x\n)`) gives the range from the comment to the chain end.
             let join = |a: usize, b: usize| (a.min(b), a.max(b));
-            let is_ws = |c: char| c.is_ascii_whitespace() || c == '\x0b';
+            let is_ws = helpers::ruby_string::is_space;
             // source_range_before_comment
             let (pre_start, joined_end) = join(anchor.1, cs);
             let pre_end = pre_start + text[pre_start..joined_end].trim_end_matches(is_ws).len();

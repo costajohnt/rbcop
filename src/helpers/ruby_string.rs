@@ -1,8 +1,33 @@
 //! Ruby String semantics that differ from Rust's (Unicode-aware) defaults.
 
+/// Ruby's `\s` as a char: ASCII space, \t, \n, \v, \f, \r (not NBSP or U+3000, which Rust's
+/// `char::is_whitespace` matches, and including \v, which `is_ascii_whitespace` leaves out).
+pub fn is_space(c: char) -> bool {
+    c.is_ascii() && crate::helpers::parser_tokens::is_ruby_space(c as u8)
+}
+
+fn is_strip(c: char) -> bool {
+    is_space(c) || c == '\0'
+}
+
 /// String#strip: removes ASCII whitespace and NUL only.
 pub fn strip(s: &str) -> &str {
-    s.trim_matches(|c: char| matches!(c, ' ' | '\t' | '\n' | '\x0b' | '\x0c' | '\r' | '\0'))
+    s.trim_matches(is_strip)
+}
+
+/// String#lstrip.
+pub fn lstrip(s: &str) -> &str {
+    s.trim_start_matches(is_strip)
+}
+
+/// String#rstrip.
+pub fn rstrip(s: &str) -> &str {
+    s.trim_end_matches(is_strip)
+}
+
+/// RuboCop's `String#blank?` (`empty? || lstrip.empty?`).
+pub fn blank(s: &str) -> bool {
+    lstrip(s).is_empty()
 }
 
 /// String#inspect of a UTF-8 string (invalid bytes as `\xNN`).

@@ -115,7 +115,7 @@ impl Cop for SpaceInsideArrayLiteralBrackets {
         } else {
             // end_has_own_line?
             let col = src.column(right.start);
-            col == 0 || src.lines[line(&right) - 1].chars().take(col).all(|c| c.is_ascii_whitespace())
+            col == 0 || src.lines[line(&right) - 1].chars().take(col).all(helpers::ruby_string::is_space)
         };
 
         let planned: Vec<Planned> = match style.as_str() {
