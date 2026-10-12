@@ -1,0 +1,94 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/foo/app/models/bar.rb 28 <==
+user.errors[:name] << 'msg'
+
+==> 001/foo/app/models/bar.rb 24 <==
+user.errors[:name] = []
+
+==> 002/foo/app/models/bar.rb 25 <==
+user.errors[:name].clear
+
+==> 003/foo/app/models/bar.rb 37 <==
+user.errors.messages[:name] << 'msg'
+
+==> 004/foo/app/models/bar.rb 33 <==
+user.errors.messages[:name] = []
+
+==> 005/foo/app/models/bar.rb 34 <==
+user.errors.messages[:name].clear
+
+==> 006/foo/app/models/bar.rb 32 <==
+errors.messages[:name].present?
+
+==> 007/foo/app/models/bar.rb 33 <==
+user.errors.details[:name] << {}
+
+==> 008/foo/app/models/bar.rb 32 <==
+user.errors.details[:name] = []
+
+==> 009/foo/app/models/bar.rb 33 <==
+user.errors.details[:name].clear
+
+==> 010/foo/app/models/bar.rb 31 <==
+errors.details[:name].present?
+
+==> 011/foo/app/models/bar.rb 23 <==
+errors[:name].present?
+
+==> 012/foo/app/models/bar.rb 28 <==
+errors.messages[:name].keys
+
+==> 013/foo/app/models/bar.rb 27 <==
+errors.details[:name].keys
+
+==> 014/foo/app/lib/bar.rb 28 <==
+user.errors[:name] << 'msg'
+
+==> 015/foo/app/lib/bar.rb 24 <==
+user.errors[:name] = []
+
+==> 016/foo/app/lib/bar.rb 25 <==
+user.errors[:name].clear
+
+==> 017/foo/app/lib/bar.rb 37 <==
+user.errors.messages[:name] << 'msg'
+
+==> 018/foo/app/lib/bar.rb 33 <==
+user.errors.messages[:name] = []
+
+==> 019/foo/app/lib/bar.rb 34 <==
+user.errors.messages[:name].clear
+
+==> 020/foo/app/lib/bar.rb 32 <==
+errors.messages[:name].present?
+
+==> 021/foo/app/lib/bar.rb 33 <==
+user.errors.details[:name] << {}
+
+==> 022/foo/app/lib/bar.rb 32 <==
+user.errors.details[:name] = []
+
+==> 023/foo/app/lib/bar.rb 33 <==
+user.errors.details[:name].clear
+
+==> 024/foo/app/lib/bar.rb 31 <==
+errors.details[:name].present?
+
+==> 025/foo/app/lib/bar.rb 23 <==
+errors[:name].present?
+
+==> 026/foo/app/lib/bar.rb 28 <==
+errors.messages[:name].keys
+
+==> 027/foo/app/lib/bar.rb 27 <==
+errors.details[:name].keys
+

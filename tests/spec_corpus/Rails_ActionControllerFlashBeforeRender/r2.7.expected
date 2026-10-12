@@ -1,0 +1,148 @@
+==> offenses exit=1 1498 <==
+000/000.rb:3:5: C: [Correctable] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+001/001.rb:3:5: C: [Correctable] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+002/002.rb:3:5: C: [Correctable] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+003/003.rb:3:5: C: [Correctable] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+004/004.rb:3:5: C: [Correctable] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+005/005.rb:3:5: C: [Correctable] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+006/006.rb:3:5: C: [Correctable] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+007/007.rb:3:5: C: [Correctable] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+009/009.rb:3:5: C: [Correctable] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+010/010.rb:3:5: C: [Correctable] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+012/012.rb:3:5: C: [Correctable] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+015/015.rb:5:7: C: [Correctable] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+019/019.rb:3:5: C: [Correctable] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+022/022.rb:5:7: C: [Correctable] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+
+==> autocorrect exit=0 1470 <==
+000/000.rb:3:5: C: [Corrected] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+001/001.rb:3:5: C: [Corrected] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+002/002.rb:3:5: C: [Corrected] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+003/003.rb:3:5: C: [Corrected] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+004/004.rb:3:5: C: [Corrected] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+005/005.rb:3:5: C: [Corrected] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+006/006.rb:3:5: C: [Corrected] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+007/007.rb:3:5: C: [Corrected] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+009/009.rb:3:5: C: [Corrected] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+010/010.rb:3:5: C: [Corrected] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+012/012.rb:3:5: C: [Corrected] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+015/015.rb:5:7: C: [Corrected] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+019/019.rb:3:5: C: [Corrected] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+022/022.rb:5:7: C: [Corrected] Rails/ActionControllerFlashBeforeRender: Use `flash.now` before `render`.
+
+==> corrected/000/000.rb 119 <==
+class HomeController < ::ActionController::Base
+  def create
+    flash.now[:alert] = "msg"
+    render :index
+  end
+end
+
+==> corrected/001/001.rb 101 <==
+class HomeController < ::ActionController::Base
+  def create
+    flash.now[:alert] = "msg"
+  end
+end
+
+==> corrected/002/002.rb 118 <==
+class HomeController < ::ApplicationController
+  def create
+    flash.now[:alert] = "msg"
+    render :index
+  end
+end
+
+==> corrected/003/003.rb 100 <==
+class HomeController < ::ApplicationController
+  def create
+    flash.now[:alert] = "msg"
+  end
+end
+
+==> corrected/004/004.rb 117 <==
+class HomeController < ActionController::Base
+  def create
+    flash.now[:alert] = "msg"
+    render :index
+  end
+end
+
+==> corrected/005/005.rb 99 <==
+class HomeController < ActionController::Base
+  def create
+    flash.now[:alert] = "msg"
+  end
+end
+
+==> corrected/006/006.rb 116 <==
+class HomeController < ApplicationController
+  def create
+    flash.now[:alert] = "msg"
+    render :index
+  end
+end
+
+==> corrected/007/007.rb 98 <==
+class HomeController < ApplicationController
+  def create
+    flash.now[:alert] = "msg"
+  end
+end
+
+==> corrected/009/009.rb 123 <==
+class HomeController < ActionController::Base
+  before_action do
+    flash.now[:alert] = "msg"
+    render :index
+  end
+end
+
+==> corrected/010/010.rb 122 <==
+class HomeController < ApplicationController
+  before_action do
+    flash.now[:alert] = "msg"
+    render :index
+  end
+end
+
+==> corrected/012/012.rb 130 <==
+class HomeController < ActionController::Base
+  def create
+    flash.now[:alert] = "msg" if condition
+    render :index
+  end
+end
+
+==> corrected/015/015.rb 164 <==
+class HomeController < ActionController::Base
+  def create
+    if condition
+      do_something
+      flash.now[:alert] = "msg"
+    end
+
+    render :index
+  end
+end
+
+==> corrected/019/019.rb 129 <==
+class HomeController < ApplicationController
+  def create
+    flash.now[:alert] = "msg" if condition
+    render :index
+  end
+end
+
+==> corrected/022/022.rb 163 <==
+class HomeController < ApplicationController
+  def create
+    if condition
+      do_something
+      flash.now[:alert] = "msg"
+    end
+
+    render :index
+  end
+end
+

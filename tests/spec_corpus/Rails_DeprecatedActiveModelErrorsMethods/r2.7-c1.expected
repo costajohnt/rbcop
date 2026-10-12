@@ -1,0 +1,38 @@
+==> offenses exit=1 1361 <==
+000/foo/app/models/bar.rb:2:1: W: [Correctable] Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+001/foo/app/models/bar.rb:1:1: W: [Correctable] Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+002/foo/app/models/bar.rb:1:1: W: Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+003/foo/app/models/bar.rb:1:1: W: Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+004/foo/app/models/bar.rb:1:1: W: Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+005/foo/app/lib/bar.rb:2:1: W: [Correctable] Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+006/foo/app/lib/bar.rb:1:1: W: [Correctable] Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+007/foo/app/lib/bar.rb:1:1: W: Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+008/foo/app/lib/bar.rb:1:1: W: Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+009/foo/app/lib/bar.rb:1:1: W: Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+
+==> autocorrect exit=1 1353 <==
+000/foo/app/models/bar.rb:2:1: W: [Corrected] Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+001/foo/app/models/bar.rb:1:1: W: [Corrected] Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+002/foo/app/models/bar.rb:1:1: W: Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+003/foo/app/models/bar.rb:1:1: W: Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+004/foo/app/models/bar.rb:1:1: W: Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+005/foo/app/lib/bar.rb:2:1: W: [Corrected] Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+006/foo/app/lib/bar.rb:1:1: W: [Corrected] Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+007/foo/app/lib/bar.rb:1:1: W: Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+008/foo/app/lib/bar.rb:1:1: W: Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+009/foo/app/lib/bar.rb:1:1: W: Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+
+==> corrected/000/foo/app/models/bar.rb 47 <==
+user = create_user
+user.errors.attribute_names
+
+==> corrected/001/foo/app/models/bar.rb 44 <==
+user.errors.attribute_names.include?(:name)
+
+==> corrected/005/foo/app/lib/bar.rb 47 <==
+user = create_user
+user.errors.attribute_names
+
+==> corrected/006/foo/app/lib/bar.rb 44 <==
+user.errors.attribute_names.include?(:name)
+

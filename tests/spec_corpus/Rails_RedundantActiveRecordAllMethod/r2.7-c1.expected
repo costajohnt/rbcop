@@ -1,0 +1,9 @@
+==> offenses exit=1 97 <==
+000/000.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+
+==> autocorrect exit=0 95 <==
+000/000.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+
+==> corrected/000/000.rb 11 <==
+User.first
+

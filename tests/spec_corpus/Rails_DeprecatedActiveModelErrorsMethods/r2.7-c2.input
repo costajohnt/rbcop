@@ -1,0 +1,49 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 6.0
+
+==> 000/foo/app/models/bar.rb 36 <==
+user = create_user
+user.errors.keys
+
+==> 001/foo/app/models/bar.rb 33 <==
+user.errors.keys.include?(:name)
+
+==> 002/foo/app/models/bar.rb 19 <==
+user.errors.values
+
+==> 003/foo/app/models/bar.rb 17 <==
+user.errors.to_h
+
+==> 004/foo/app/models/bar.rb 19 <==
+user.errors.to_xml
+
+==> 005/foo/app/models/bar.rb 12 <==
+errors.keys
+
+==> 006/foo/app/lib/bar.rb 36 <==
+user = create_user
+user.errors.keys
+
+==> 007/foo/app/lib/bar.rb 33 <==
+user.errors.keys.include?(:name)
+
+==> 008/foo/app/lib/bar.rb 19 <==
+user.errors.values
+
+==> 009/foo/app/lib/bar.rb 17 <==
+user.errors.to_h
+
+==> 010/foo/app/lib/bar.rb 19 <==
+user.errors.to_xml
+
+==> 011/foo/app/lib/bar.rb 12 <==
+errors.keys
+
