@@ -14,7 +14,7 @@ impl Cop for UnderscorePrefixedVariableName {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let tree = Tree::build(&node.as_program_node().unwrap());
+        let tree = Tree::build(&node.as_program_node().unwrap(), cx.src);
         let allow_kw = cx.cfg.bool("AllowKeywordBlockArguments") == Some(true);
         let mut ranges: Vec<(usize, usize)> = Vec::new();
         vf::investigate(&tree, |tree, scope, vars| {

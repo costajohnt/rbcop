@@ -74,7 +74,7 @@ impl Cop for UnusedMethodArgument {
         let allowed: Vec<String> = cx.cfg.strings("NotImplementedExceptions");
         let mut defs = Defs { allowed: &allowed, info: HashMap::new() };
         defs.visit(node);
-        let tree = Tree::build(&node.as_program_node().unwrap());
+        let tree = Tree::build(&node.as_program_node().unwrap(), cx.src);
         let allow_kw = cx.cfg.bool("AllowUnusedKeywordArguments") == Some(true);
         let ignore_empty = cx.cfg.bool("IgnoreEmptyMethods") == Some(true);
         let ignore_not_impl = cx.cfg.bool("IgnoreNotImplementedMethods") == Some(true);

@@ -140,7 +140,7 @@ impl Cop for MapIntoArray {
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         if let Some(p) = node.as_program_node() {
-            let tree = Tree::build(&p);
+            let tree = Tree::build(&p, cx.src);
             let mut all = Vec::new();
             vf::investigate(&tree, |tree, scope, vars| {
                 for &v in &scope.variables {
