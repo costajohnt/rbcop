@@ -11,7 +11,7 @@ impl Cop for ShadowingOuterLocalVariable {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let tree = Tree::build(&node.as_program_node().unwrap());
+        let tree = Tree::build(&node.as_program_node().unwrap(), cx.src);
         let text = cx.src.text;
         let mut found: Vec<(usize, usize, String)> = Vec::new();
         vf::investigate_with(

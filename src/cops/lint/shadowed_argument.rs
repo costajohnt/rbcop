@@ -112,7 +112,7 @@ impl Cop for ShadowedArgument {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let tree = Tree::build(&node.as_program_node().unwrap());
+        let tree = Tree::build(&node.as_program_node().unwrap(), cx.src);
         let ignore_implicit = cx.cfg.bool("IgnoreImplicitReferences") == Some(true);
         let mut offenses = Vec::new();
         vf::investigate(&tree, |tree, scope, vars| {
