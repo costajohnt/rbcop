@@ -1,0 +1,52 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+b.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+b.rb:1:5: C: [Correctable] Style/NestedParenthesizedCalls: Add parentheses to nested method call `i.not 1`.
+c.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+d.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e.rb:1:6: C: [Correctable] Style/ColonMethodCall: Do not use `::` for method calls.
+f.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+g.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+h.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+i.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+i.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+j.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+k.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+l.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+m.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+n.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+o.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+o.rb:1:6: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+p.rb:1:9: F: Lint/Syntax: unexpected token tIDENTIFIER (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+q.rb:1:9: F: Lint/Syntax: unexpected token tIDENTIFIER (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+r.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+s.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+t.rb:1:11: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+t.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+t.rb:1:5: C: [Correctable] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+t.rb:1:5: W: Lint/EmptyBlock: Empty block detected.
+u.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+v.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+v.rb:1:6: C: [Correctable] Style/ColonMethodCall: Do not use `::` for method calls.
+w.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+w.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`. Use `+` instead of `+=`.
+y.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+y.rb:1:5: C: [Correctable] Style/Not: Use `!` instead of `not`.
+z.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+z.rb:1:5: C: [Correctable] Style/Not: Use `!` instead of `not`.
+z.rb:1:8: W: Lint/EmptyExpression: Avoid empty expressions.
+z2.rb:1:12: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+z2.rb:1:9: F: Lint/Syntax: unexpected token tLPAREN_ARG (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+z3.rb:1:9: F: Lint/Syntax: unexpected token tLPAREN_ARG (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+z4.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+z4.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+z4.rb:1:5: C: [Correctable] Style/Not: Use `!` instead of `not`.
+z4.rb:1:8: W: Lint/EmptyExpression: Avoid empty expressions.
+z5.rb:1:9: F: Lint/Syntax: unexpected token tLPAREN_ARG (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+z6.rb:1:1: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+z6.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+z6.rb:1:2: C: [Correctable] Style/Not: Use `!` instead of `not`.
+z6.rb:1:5: W: Lint/EmptyExpression: Avoid empty expressions.
+z7.rb:1:14: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+z7.rb:1:9: F: Lint/Syntax: unexpected token tLPAREN_ARG (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)

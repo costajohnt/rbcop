@@ -1662,8 +1662,7 @@ impl<'pr> Visit<'pr> for Walk<'_> {
         // Below 3.3 `not x` without parentheses is an expr, never an assigned value (`x = not y`;
         // #240); as an argument, see visit_arguments_node.
         if self.target < 3.3
-            && let Some(m) = n.message_loc().filter(|m| m.as_slice() == b"not")
-            && n.opening_loc().is_none()
+            && let Some(m) = bare_not(n)
         {
             let i = self.toks.partition_point(|t| t.start < m.start_offset());
             // ...nor the operand of `!`, which takes an `arg` (`!not x`; #305).
@@ -1794,12 +1793,7 @@ impl<'pr> Visit<'pr> for Walk<'_> {
         for a in n.arguments().iter() {
             // Below 3.3 call arguments are `arg`s: `not x` without parentheses is an `expr`, so
             // the grammar fails on the token after `not` (#240).
-            if let Some(m) = a
-                .as_call_node()
-                .filter(|c| c.opening_loc().is_none())
-                .and_then(|c| c.message_loc())
-                .filter(|m| m.as_slice() == b"not")
-            {
+            if let Some(m) = a.as_call_node().and_then(|c| bare_not(&c)) {
                 let next = self.next_token(m.end_offset());
                 self.violation(next, 3.3);
             }
@@ -2016,6 +2010,17 @@ impl Walk<'_> {
 /// `command_asgn`: an assignment whose value is a command call without parentheses (`a = foo 1`,
 /// `a.b += foo 1`, `a = b = foo 1`). Below 3.3 it is a statement, so it cannot be the left operand
 /// of `or`/`and`.
+/// The `not` of a `not x` without parentheses (an `expr` below 3.3): not a method named `not`
+/// after `.`/`&.`/`::` (`foo(a.not)`, #369), and not `not()` (`kNOT tLPAREN2 rparen`, a primary).
+fn bare_not<'pr>(c: &ruby_prism::CallNode<'pr>) -> Option<ruby_prism::Location<'pr>> {
+    let m = c.message_loc().filter(|m| m.as_slice() == b"not")?;
+    let empty_parens = c
+        .receiver()
+        .and_then(|r| r.as_parentheses_node())
+        .is_some_and(|p| p.body().is_none() && p.opening_loc().start_offset() == m.end_offset());
+    (c.opening_loc().is_none() && c.call_operator_loc().is_none() && !empty_parens).then_some(m)
+}
+
 /// The `do` of a `block_command`: a command with a `do` block (`bar baz do end`, `super x do end`)
 /// or a call chained on one (`bar baz do end.qux`).
 fn block_command_do(n: &Node) -> Option<usize> {
