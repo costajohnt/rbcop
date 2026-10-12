@@ -1,0 +1,135 @@
+==> .rubocop.yml 189 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Performance/CollectionLiteralInLoop:
+  MinSize: 1
+
+==> 000.rb 39 <==
+while true
+  [1, 2, 3].include?(e)
+end
+
+==> 001.rb 45 <==
+while i < 100
+  { foo: :bar }.key?(:foo)
+end
+
+==> 002.rb 42 <==
+until i < 100
+  [1, 2, 3].include?(e)
+end
+
+==> 003.rb 45 <==
+until i < 100
+  { foo: :bar }.key?(:foo)
+end
+
+==> 004.rb 44 <==
+for i in 1..100
+  [1, 2, 3].include?(e)
+end
+
+==> 005.rb 47 <==
+for i in 1..100
+  { foo: :bar }.key?(:foo)
+end
+
+==> 006.rb 48 <==
+begin
+  [1, 2, 3].include?(e)
+end while i < 100
+
+==> 007.rb 51 <==
+begin
+  { foo: :bar }.key?(:foo)
+end while i < 100
+
+==> 008.rb 48 <==
+begin
+  [1, 2, 3].include?(e)
+end until i < 100
+
+==> 009.rb 51 <==
+begin
+  { foo: :bar }.key?(:foo)
+end until i < 100
+
+==> 010.rb 36 <==
+loop do
+  [1, 2, 3].include?(e)
+end
+
+==> 011.rb 39 <==
+loop do
+  { foo: :bar }.key?(:foo)
+end
+
+==> 012.rb 46 <==
+array.all? do |e|
+  [1, 2, 3].include?(e)
+end
+
+==> 013.rb 49 <==
+array.all? do |e|
+  { foo: :bar }.key?(:foo)
+end
+
+==> 014.rb 40 <==
+all? do |e|
+  [1, 2, 3].include?(e)
+end
+
+==> 015.rb 22 <==
+[1, 2, 3].include?(e)
+
+==> 016.rb 25 <==
+{ foo: :bar }.key?(:foo)
+
+==> 017.rb 29 <==
+[1, 2, variable].include?(e)
+
+==> 018.rb 38 <==
+{ foo: { bar: variable } }.key?(:foo)
+
+==> 019.rb 44 <==
+[[1, 2, 3] | [2, 3, 4]].each { |e| puts e }
+
+==> 020.rb 61 <==
+({ foo: :bar }.merge(baz: :quux)).each { |k, v| puts k + v }
+
+==> 021.rb 35 <==
+loop do
+  [1, nil, 3].compact!
+end
+
+==> 022.rb 66 <==
+loop do
+  { foo: :bar, baz: nil }.select! { |_k, v| !v.nil? }
+end
+
+==> 023.rb 34 <==
+loop do
+  array = [1, nil, 3]
+end
+
+==> 024.rb 45 <==
+loop do
+  hash = { foo: :bar, baz: nil }
+end
+
+==> 025.rb 27 <==
+while x < 100
+  puts x
+end
+
+==> 026.rb 41 <==
+loop do
+  array.all? { |x| x > 100 }
+end
+

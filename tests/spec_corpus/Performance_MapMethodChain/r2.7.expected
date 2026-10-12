@@ -1,0 +1,18 @@
+==> offenses exit=1 730 <==
+000.rb:1:7: C: Performance/MapMethodChain: Use `map { |x| x.foo.bar }` instead of `map` method chain.
+001.rb:1:7: C: Performance/MapMethodChain: Use `collect { |x| x.foo.bar }` instead of `collect` method chain.
+002.rb:1:7: C: Performance/MapMethodChain: Use `map { |x| x.foo.bar }` instead of `map` method chain.
+003.rb:2:7: C: Performance/MapMethodChain: Use `map { |x| x.foo.bar }` instead of `map` method chain.
+004.rb:1:7: C: Performance/MapMethodChain: Use `map { |x| x.foo.bar.baz }` instead of `map` method chain.
+005.rb:1:8: C: Performance/MapMethodChain: Use `map { |x| x.foo.bar.baz }` instead of `map` method chain.
+006.rb:1:1: C: Performance/MapMethodChain: Use `map { |x| x.foo.bar }` instead of `map` method chain.
+
+==> autocorrect exit=1 730 <==
+000.rb:1:7: C: Performance/MapMethodChain: Use `map { |x| x.foo.bar }` instead of `map` method chain.
+001.rb:1:7: C: Performance/MapMethodChain: Use `collect { |x| x.foo.bar }` instead of `collect` method chain.
+002.rb:1:7: C: Performance/MapMethodChain: Use `map { |x| x.foo.bar }` instead of `map` method chain.
+003.rb:2:7: C: Performance/MapMethodChain: Use `map { |x| x.foo.bar }` instead of `map` method chain.
+004.rb:1:7: C: Performance/MapMethodChain: Use `map { |x| x.foo.bar.baz }` instead of `map` method chain.
+005.rb:1:8: C: Performance/MapMethodChain: Use `map { |x| x.foo.bar.baz }` instead of `map` method chain.
+006.rb:1:1: C: Performance/MapMethodChain: Use `map { |x| x.foo.bar }` instead of `map` method chain.
+

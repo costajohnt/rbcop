@@ -1,0 +1,146 @@
+==> offenses exit=1 1914 <==
+000.rb:1:12: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+001.rb:1:13: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+002.rb:1:13: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+003.rb:1:12: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+004.rb:1:13: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+005.rb:1:13: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+006.rb:1:12: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+007.rb:1:12: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+008.rb:1:12: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+009.rb:2:4: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+010.rb:2:3: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+011.rb:1:12: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+012.rb:2:4: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+013.rb:2:13: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+014.rb:1:12: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+015.rb:2:4: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+016.rb:2:3: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+017.rb:1:12: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+018.rb:2:4: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+019.rb:1:12: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+020.rb:1:12: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+021.rb:2:14: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+022.rb:1:18: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+023.rb:1:36: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+
+==> autocorrect exit=0 1866 <==
+000.rb:1:12: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+001.rb:1:13: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+002.rb:1:13: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+003.rb:1:12: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+004.rb:1:13: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+005.rb:1:13: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+006.rb:1:12: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+007.rb:1:12: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+008.rb:1:12: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+009.rb:2:4: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+010.rb:2:3: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+011.rb:1:12: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+012.rb:2:4: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+013.rb:2:13: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+014.rb:1:12: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+015.rb:2:4: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+016.rb:2:3: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+017.rb:1:12: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+018.rb:2:4: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+019.rb:1:12: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+020.rb:1:12: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+021.rb:2:14: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+022.rb:1:18: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+023.rb:1:36: C: [Corrected] Performance/MapCompact: Use `filter_map` instead.
+
+==> corrected/000.rb 38 <==
+collection.filter_map(&:do_something)
+
+==> corrected/001.rb 39 <==
+collection&.filter_map(&:do_something)
+
+==> corrected/002.rb 39 <==
+collection&.filter_map(&:do_something)
+
+==> corrected/003.rb 51 <==
+collection.filter_map { |item| item.do_something }
+
+==> corrected/004.rb 52 <==
+collection&.filter_map { |item| item.do_something }
+
+==> corrected/005.rb 52 <==
+collection&.filter_map { |item| item.do_something }
+
+==> corrected/006.rb 38 <==
+collection.filter_map(&:do_something)
+
+==> corrected/007.rb 51 <==
+collection.filter_map { |item| item.do_something }
+
+==> corrected/008.rb 44 <==
+collection.filter_map(&:do_something).first
+
+==> corrected/009.rb 50 <==
+collection
+  .filter_map(&:do_something)
+  .first
+
+==> corrected/010.rb 50 <==
+collection.
+  filter_map(&:do_something).
+  first
+
+==> corrected/011.rb 47 <==
+collection.filter_map(&:do_something)
+  .first
+
+==> corrected/012.rb 50 <==
+collection
+  .filter_map(&:do_something)
+  .first
+
+==> corrected/013.rb 61 <==
+foo[1] ||= collection
+           .filter_map(&:do_something)
+
+==> corrected/014.rb 57 <==
+collection.filter_map { |item| item.do_something }.first
+
+==> corrected/015.rb 63 <==
+collection
+  .filter_map { |item| item.do_something }
+  .first
+
+==> corrected/016.rb 63 <==
+collection.
+  filter_map { |item| item.do_something }.
+  first
+
+==> corrected/017.rb 60 <==
+collection.filter_map { |item| item.do_something }
+  .first
+
+==> corrected/018.rb 63 <==
+collection
+  .filter_map { |item| item.do_something }
+  .first
+
+==> corrected/019.rb 33 <==
+collection.filter_map { |item|
+}
+
+==> corrected/020.rb 46 <==
+collection.filter_map { |item|
+}.do_something
+
+==> corrected/021.rb 53 <==
+do_something(
+  collection.filter_map { |item|
+  }
+)
+
+==> corrected/022.rb 42 <==
+ret = collection.filter_map do |item|
+end
+
+==> corrected/023.rb 60 <==
+object.new_collection = collection.filter_map do |item|
+end
+

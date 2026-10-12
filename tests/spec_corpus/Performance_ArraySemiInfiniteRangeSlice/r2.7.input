@@ -1,0 +1,46 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 23 <==
+array[..2]
+array[...2]
+
+==> 001.rb 23 <==
+array[2..]
+array[2...]
+
+==> 002.rb 34 <==
+array.slice(2..)
+array.slice(..2)
+
+==> 003.rb 36 <==
+array&.slice(2..)
+array&.slice(..2)
+
+==> 004.rb 12 <==
+array[0..2]
+
+==> 005.rb 30 <==
+array[..index]
+array[index..]
+
+==> 006.rb 24 <==
+array[..-2]
+array[-2..]
+
+==> 007.rb 11 <==
+'str'[3..]
+
+==> 008.rb 30 <==
+"string#{interpolation}"[3..]
+
+==> 009.rb 11 <==
+`str`[3..]
+

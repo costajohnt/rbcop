@@ -1,0 +1,90 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 38 <==
+array.sort { |a, b| a.foo <=> b.foo }
+
+==> 001.rb 42 <==
+array.sort { |a, b| a[:foo] <=> b[:foo] }
+
+==> 002.rb 44 <==
+array.sort { |a, b| a['foo'] <=> b['foo'] }
+
+==> 003.rb 36 <==
+array.sort { |a, b| a[1] <=> b[1] }
+
+==> 004.rb 29 <==
+array.sort { |a, b| b <=> a }
+==> 005.rb 27 <==
+array.sort_by { |a| a.baz }
+==> 006.rb 39 <==
+array.sort! { |a, b| a.foo <=> b.foo }
+
+==> 007.rb 43 <==
+array.sort! { |a, b| a[:foo] <=> b[:foo] }
+
+==> 008.rb 45 <==
+array.sort! { |a, b| a['foo'] <=> b['foo'] }
+
+==> 009.rb 37 <==
+array.sort! { |a, b| a[1] <=> b[1] }
+
+==> 010.rb 30 <==
+array.sort! { |a, b| b <=> a }
+==> 011.rb 28 <==
+array.sort_by! { |a| a.baz }
+==> 012.rb 37 <==
+array.max { |a, b| a.foo <=> b.foo }
+
+==> 013.rb 41 <==
+array.max { |a, b| a[:foo] <=> b[:foo] }
+
+==> 014.rb 43 <==
+array.max { |a, b| a['foo'] <=> b['foo'] }
+
+==> 015.rb 35 <==
+array.max { |a, b| a[1] <=> b[1] }
+
+==> 016.rb 28 <==
+array.max { |a, b| b <=> a }
+==> 017.rb 26 <==
+array.max_by { |a| a.baz }
+==> 018.rb 37 <==
+array.min { |a, b| a.foo <=> b.foo }
+
+==> 019.rb 41 <==
+array.min { |a, b| a[:foo] <=> b[:foo] }
+
+==> 020.rb 43 <==
+array.min { |a, b| a['foo'] <=> b['foo'] }
+
+==> 021.rb 35 <==
+array.min { |a, b| a[1] <=> b[1] }
+
+==> 022.rb 28 <==
+array.min { |a, b| b <=> a }
+==> 023.rb 26 <==
+array.min_by { |a| a.baz }
+==> 024.rb 40 <==
+array.minmax { |a, b| a.foo <=> b.foo }
+
+==> 025.rb 44 <==
+array.minmax { |a, b| a[:foo] <=> b[:foo] }
+
+==> 026.rb 46 <==
+array.minmax { |a, b| a['foo'] <=> b['foo'] }
+
+==> 027.rb 38 <==
+array.minmax { |a, b| a[1] <=> b[1] }
+
+==> 028.rb 31 <==
+array.minmax { |a, b| b <=> a }
+==> 029.rb 29 <==
+array.minmax_by { |a| a.baz }

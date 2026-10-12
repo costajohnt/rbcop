@@ -1,0 +1,48 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+
+==> 000.rb 14 <==
+BigDecimal(1)
+
+==> 001.rb 7 <==
+1.to_d
+
+==> 002.rb 33 <==
+BigDecimal(1.5, exception: true)
+
+==> 003.rb 26 <==
+1.5.to_d(exception: true)
+
+==> 004.rb 20 <==
+BigDecimal(3.14, 1)
+
+==> 005.rb 13 <==
+3.14.to_d(1)
+
+==> 006.rb 42 <==
+precision = 1
+BigDecimal(3.14, precision)
+
+==> 007.rb 35 <==
+precision = 1
+3.14.to_d(precision)
+
+==> 008.rb 37 <==
+BigDecimal(3.14, 1, exception: true)
+
+==> 009.rb 30 <==
+3.14.to_d(1, exception: true)
+
+==> 010.rb 16 <==
+BigDecimal('1')
+
+==> 011.rb 9 <==
+'1'.to_d
+

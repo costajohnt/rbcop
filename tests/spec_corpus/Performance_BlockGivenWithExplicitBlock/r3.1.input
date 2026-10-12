@@ -1,0 +1,16 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+
+==> 000.rb 99 <==
+def method(x, &)
+  raise ArgumentError, "block required" unless block_given?
+  do_something(&)
+end
+

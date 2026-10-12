@@ -1,0 +1,20 @@
+==> offenses exit=1 462 <==
+000.rb:1:6: C: Performance/IoReadlines: Use `each_line.map` instead of `readlines.map`.
+001.rb:1:4: C: Performance/IoReadlines: Use `each_line.map` instead of `readlines.map`.
+002.rb:1:4: C: Performance/IoReadlines: Use `each_line` instead of `readlines.each`.
+004.rb:1:6: C: [Correctable] Performance/IoReadlines: Use `each_line.map` instead of `readlines.map`.
+005.rb:1:6: C: [Correctable] Performance/IoReadlines: Use `each_line` instead of `readlines.each`.
+
+==> autocorrect exit=1 458 <==
+000.rb:1:6: C: Performance/IoReadlines: Use `each_line.map` instead of `readlines.map`.
+001.rb:1:4: C: Performance/IoReadlines: Use `each_line.map` instead of `readlines.map`.
+002.rb:1:4: C: Performance/IoReadlines: Use `each_line` instead of `readlines.each`.
+004.rb:1:6: C: [Corrected] Performance/IoReadlines: Use `each_line.map` instead of `readlines.map`.
+005.rb:1:6: C: [Corrected] Performance/IoReadlines: Use `each_line` instead of `readlines.each`.
+
+==> corrected/004.rb 38 <==
+file.each_line(10).map { |l| l.size }
+
+==> corrected/005.rb 34 <==
+file.each_line(10) { |l| puts l }
+

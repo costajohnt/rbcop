@@ -1,0 +1,91 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 45 <==
+x.start_with?(a, b) || x.start_with?("c", D)
+
+==> 001.rb 44 <==
+x.start_with?(a, "b") || x.start_with?(C, d)
+==> 002.rb 47 <==
+x&.start_with?(a, b) || x&.start_with?("c", D)
+
+==> 003.rb 46 <==
+x.start_with?(a, b) || x&.start_with?("c", D)
+
+==> 004.rb 46 <==
+x&.start_with?(a, b) || x.start_with?("c", D)
+
+==> 005.rb 40 <==
+x.start_with?("a") || y.start_with?("b")
+==> 006.rb 41 <==
+x.end_with?(a, b) || x.end_with?("c", D)
+
+==> 007.rb 41 <==
+!x.end_with?(a, b) || x.end_with?("c", D)
+==> 008.rb 41 <==
+x.end_with?(a, b) || !x.end_with?("c", D)
+==> 009.rb 40 <==
+x.end_with?(a, "b") || x.end_with?(C, d)
+==> 010.rb 36 <==
+x.end_with?("a") || y.end_with?("b")
+==> 011.rb 38 <==
+x.start_with?("a") || x.end_with?("b")
+==> 012.rb 46 <==
+x.starts_with?(a, b) || x.starts_with?("c", D)
+==> 013.rb 42 <==
+x.ends_with?(a, b) || x.ends_with?("c", D)
+==> 014.rb 47 <==
+!x.start_with?(a, b) && !x.start_with?("c", D)
+
+==> 015.rb 45 <==
+!x.start_with?(a, b) && x.start_with?("c", D)
+==> 016.rb 45 <==
+x.start_with?(a, b) && !x.start_with?("c", D)
+==> 017.rb 46 <==
+!x.start_with?(a, "b") && !x.start_with?(C, d)
+==> 018.rb 49 <==
+!x&.start_with?(a, b) && !x&.start_with?("c", D)
+
+==> 019.rb 48 <==
+!x.start_with?(a, b) && !x&.start_with?("c", D)
+
+==> 020.rb 48 <==
+!x&.start_with?(a, b) && !x.start_with?("c", D)
+
+==> 021.rb 42 <==
+!x.start_with?("a") && !y.start_with?("b")
+==> 022.rb 43 <==
+!x.end_with?(a, b) && !x.end_with?("c", D)
+
+==> 023.rb 42 <==
+!x.end_with?(a, "b") && !x.end_with?(C, d)
+==> 024.rb 38 <==
+!x.end_with?("a") && !y.end_with?("b")
+==> 025.rb 40 <==
+!x.start_with?("a") && !x.end_with?("b")
+==> 026.rb 48 <==
+!x.starts_with?(a, b) && !x.starts_with?("c", D)
+==> 027.rb 44 <==
+!x.ends_with?(a, b) && !x.ends_with?("c", D)
+==> 028.rb 47 <==
+x.starts_with?(a, b) || x.starts_with?("c", D)
+
+==> 029.rb 47 <==
+x.starts_with?(a, "b") || x.starts_with?(C, d)
+
+==> 030.rb 42 <==
+x.starts_with?("a") || y.starts_with?("b")
+==> 031.rb 43 <==
+x.ends_with?(a, b) || x.ends_with?("c", D)
+
+==> 032.rb 42 <==
+x.ends_with?(a, "b") || x.ends_with?(C, d)
+==> 033.rb 38 <==
+x.ends_with?("a") || y.ends_with?("b")

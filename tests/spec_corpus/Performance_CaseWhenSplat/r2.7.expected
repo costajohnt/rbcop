@@ -1,0 +1,128 @@
+==> offenses exit=1 2041 <==
+003.rb:2:1: C: [Correctable] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+004.rb:2:1: C: [Correctable] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+005.rb:2:1: C: [Correctable] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+006.rb:2:1: C: [Correctable] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+007.rb:2:1: C: [Correctable] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+008.rb:2:1: C: [Correctable] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+008.rb:4:1: C: [Correctable] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+009.rb:2:1: C: [Correctable] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+009.rb:6:1: C: [Correctable] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+010.rb:2:1: C: [Correctable] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+010.rb:6:1: C: [Correctable] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+013.rb:2:1: C: [Correctable] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+014.rb:2:1: C: [Correctable] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+
+==> autocorrect exit=0 2015 <==
+003.rb:2:1: C: [Corrected] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+004.rb:2:1: C: [Corrected] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+005.rb:2:1: C: [Corrected] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+006.rb:2:1: C: [Corrected] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+007.rb:2:1: C: [Corrected] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+008.rb:2:1: C: [Corrected] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+008.rb:4:1: C: [Corrected] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+009.rb:2:1: C: [Corrected] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+009.rb:6:1: C: [Corrected] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+010.rb:2:1: C: [Corrected] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+010.rb:6:1: C: [Corrected] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+013.rb:2:1: C: [Corrected] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+014.rb:2:1: C: [Corrected] Performance/CaseWhenSplat: Reordering `when` conditions with a splat to the end of the `when` branches can improve performance.
+
+==> corrected/003.rb 57 <==
+case foo
+when 4
+  foobar
+when *cond
+  bar
+else
+  baz
+end
+
+==> corrected/004.rb 63 <==
+case foo
+when 3
+  baz
+when *cond
+  # bar
+  # bar
+    # bar
+end
+
+==> corrected/005.rb 45 <==
+case foo
+when 4
+  foobar
+when *baz
+  bar
+end
+
+==> corrected/006.rb 49 <==
+case foo
+when 4 then baz
+when *cond then bar
+end
+
+==> corrected/007.rb 34 <==
+case foo
+when Bar, *Foo
+  nil
+end
+
+==> corrected/008.rb 76 <==
+case foo
+when 4
+  foobar
+when *cond1
+  bar
+when *cond2
+  doo
+else
+  baz
+end
+
+==> corrected/009.rb 100 <==
+case foo
+when 8
+  barfoo
+when 4
+  foobar
+when *cond1
+  bar
+when *SOME_CONSTANT
+  doo
+else
+  baz
+end
+
+==> corrected/010.rb 113 <==
+case foo
+when 8
+  barfoo
+when 4
+  foobar
+when *cond3
+  doofoo
+when *cond1
+  bar
+when *cond2
+  doo
+else
+  baz
+end
+
+==> corrected/013.rb 49 <==
+case foo
+when *[1, 2]
+  baz
+when *cond
+  bar
+end
+
+==> corrected/014.rb 55 <==
+case foo
+when cond3
+  baz
+when cond1, *cond2
+  bar
+end
+

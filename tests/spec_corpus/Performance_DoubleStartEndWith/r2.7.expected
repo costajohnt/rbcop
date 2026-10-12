@@ -1,0 +1,54 @@
+==> offenses exit=1 1555 <==
+000.rb:1:1: C: [Correctable] Performance/DoubleStartEndWith: Use `x.start_with?(a, b, "c", D)` instead of `x.start_with?(a, b) || x.start_with?("c", D)`.
+002.rb:1:1: C: [Correctable] Performance/DoubleStartEndWith: Use `x&.start_with?(a, b, "c", D)` instead of `x&.start_with?(a, b) || x&.start_with?("c", D)`.
+003.rb:1:1: C: [Correctable] Performance/DoubleStartEndWith: Use `x.start_with?(a, b, "c", D)` instead of `x.start_with?(a, b) || x&.start_with?("c", D)`.
+004.rb:1:1: C: [Correctable] Performance/DoubleStartEndWith: Use `x&.start_with?(a, b, "c", D)` instead of `x&.start_with?(a, b) || x.start_with?("c", D)`.
+006.rb:1:1: C: [Correctable] Performance/DoubleStartEndWith: Use `x.end_with?(a, b, "c", D)` instead of `x.end_with?(a, b) || x.end_with?("c", D)`.
+014.rb:1:1: C: [Correctable] Performance/DoubleStartEndWith: Use `!x.start_with?(a, b, "c", D)` instead of `!x.start_with?(a, b) && !x.start_with?("c", D)`.
+018.rb:1:1: C: [Correctable] Performance/DoubleStartEndWith: Use `!x&.start_with?(a, b, "c", D)` instead of `!x&.start_with?(a, b) && !x&.start_with?("c", D)`.
+019.rb:1:1: C: [Correctable] Performance/DoubleStartEndWith: Use `!x.start_with?(a, b, "c", D)` instead of `!x.start_with?(a, b) && !x&.start_with?("c", D)`.
+020.rb:1:1: C: [Correctable] Performance/DoubleStartEndWith: Use `!x&.start_with?(a, b, "c", D)` instead of `!x&.start_with?(a, b) && !x.start_with?("c", D)`.
+022.rb:1:1: C: [Correctable] Performance/DoubleStartEndWith: Use `!x.end_with?(a, b, "c", D)` instead of `!x.end_with?(a, b) && !x.end_with?("c", D)`.
+
+==> autocorrect exit=0 1535 <==
+000.rb:1:1: C: [Corrected] Performance/DoubleStartEndWith: Use `x.start_with?(a, b, "c", D)` instead of `x.start_with?(a, b) || x.start_with?("c", D)`.
+002.rb:1:1: C: [Corrected] Performance/DoubleStartEndWith: Use `x&.start_with?(a, b, "c", D)` instead of `x&.start_with?(a, b) || x&.start_with?("c", D)`.
+003.rb:1:1: C: [Corrected] Performance/DoubleStartEndWith: Use `x.start_with?(a, b, "c", D)` instead of `x.start_with?(a, b) || x&.start_with?("c", D)`.
+004.rb:1:1: C: [Corrected] Performance/DoubleStartEndWith: Use `x&.start_with?(a, b, "c", D)` instead of `x&.start_with?(a, b) || x.start_with?("c", D)`.
+006.rb:1:1: C: [Corrected] Performance/DoubleStartEndWith: Use `x.end_with?(a, b, "c", D)` instead of `x.end_with?(a, b) || x.end_with?("c", D)`.
+014.rb:1:1: C: [Corrected] Performance/DoubleStartEndWith: Use `!x.start_with?(a, b, "c", D)` instead of `!x.start_with?(a, b) && !x.start_with?("c", D)`.
+018.rb:1:1: C: [Corrected] Performance/DoubleStartEndWith: Use `!x&.start_with?(a, b, "c", D)` instead of `!x&.start_with?(a, b) && !x&.start_with?("c", D)`.
+019.rb:1:1: C: [Corrected] Performance/DoubleStartEndWith: Use `!x.start_with?(a, b, "c", D)` instead of `!x.start_with?(a, b) && !x&.start_with?("c", D)`.
+020.rb:1:1: C: [Corrected] Performance/DoubleStartEndWith: Use `!x&.start_with?(a, b, "c", D)` instead of `!x&.start_with?(a, b) && !x.start_with?("c", D)`.
+022.rb:1:1: C: [Corrected] Performance/DoubleStartEndWith: Use `!x.end_with?(a, b, "c", D)` instead of `!x.end_with?(a, b) && !x.end_with?("c", D)`.
+
+==> corrected/000.rb 28 <==
+x.start_with?(a, b, "c", D)
+
+==> corrected/002.rb 29 <==
+x&.start_with?(a, b, "c", D)
+
+==> corrected/003.rb 28 <==
+x.start_with?(a, b, "c", D)
+
+==> corrected/004.rb 29 <==
+x&.start_with?(a, b, "c", D)
+
+==> corrected/006.rb 26 <==
+x.end_with?(a, b, "c", D)
+
+==> corrected/014.rb 29 <==
+!x.start_with?(a, b, "c", D)
+
+==> corrected/018.rb 30 <==
+!x&.start_with?(a, b, "c", D)
+
+==> corrected/019.rb 29 <==
+!x.start_with?(a, b, "c", D)
+
+==> corrected/020.rb 30 <==
+!x&.start_with?(a, b, "c", D)
+
+==> corrected/022.rb 27 <==
+!x.end_with?(a, b, "c", D)
+

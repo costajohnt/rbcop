@@ -1,0 +1,129 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 39 <==
+collection.map(&:do_something).compact
+
+==> 001.rb 40 <==
+collection&.map(&:do_something).compact
+
+==> 002.rb 41 <==
+collection&.map(&:do_something)&.compact
+
+==> 003.rb 52 <==
+collection.map { |item| item.do_something }.compact
+
+==> 004.rb 53 <==
+collection&.map { |item| item.do_something }.compact
+
+==> 005.rb 54 <==
+collection&.map { |item| item.do_something }&.compact
+
+==> 006.rb 43 <==
+collection.collect(&:do_something).compact
+
+==> 007.rb 56 <==
+collection.collect { |item| item.do_something }.compact
+
+==> 008.rb 45 <==
+collection.map(&:do_something).compact.first
+
+==> 009.rb 54 <==
+collection
+  .map(&:do_something)
+  .compact
+  .first
+
+==> 010.rb 54 <==
+collection.
+  map(&:do_something).
+  compact.
+  first
+
+==> 011.rb 48 <==
+collection.map(&:do_something).compact
+  .first
+
+==> 012.rb 51 <==
+collection
+  .map(&:do_something).compact
+  .first
+
+==> 013.rb 62 <==
+foo[1] ||= collection
+           .map(&:do_something).compact
+
+==> 014.rb 58 <==
+collection.map { |item| item.do_something }.compact.first
+
+==> 015.rb 67 <==
+collection
+  .map { |item| item.do_something }
+  .compact
+  .first
+
+==> 016.rb 67 <==
+collection.
+  map { |item| item.do_something }.
+  compact.
+  first
+
+==> 017.rb 61 <==
+collection.map { |item| item.do_something }.compact
+  .first
+
+==> 018.rb 64 <==
+collection
+  .map { |item| item.do_something }.compact
+  .first
+
+==> 019.rb 34 <==
+collection.map { |item|
+}.compact
+
+==> 020.rb 47 <==
+collection.map { |item|
+}.compact.do_something
+
+==> 021.rb 54 <==
+do_something(
+  collection.map { |item|
+  }.compact
+)
+
+==> 022.rb 43 <==
+ret = collection.map do |item|
+end.compact
+
+==> 023.rb 61 <==
+object.new_collection = collection.map do |item|
+end.compact
+
+==> 024.rb 40 <==
+collection.map(&:do_something).compact!
+
+==> 025.rb 53 <==
+collection.map { |item| item.do_something }.compact!
+
+==> 026.rb 44 <==
+collection.collect(&:do_something).compact!
+
+==> 027.rb 57 <==
+collection.collect { |item| item.do_something }.compact!
+
+==> 028.rb 39 <==
+collection.compact.map(&:do_something)
+
+==> 029.rb 50 <==
+collection.not_map_method(&:do_something).compact
+
+==> 030.rb 38 <==
+collection.filter_map(&:do_something)
+

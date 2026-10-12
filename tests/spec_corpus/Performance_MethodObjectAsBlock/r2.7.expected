@@ -1,0 +1,10 @@
+==> offenses exit=1 336 <==
+000.rb:1:11: C: Performance/MethodObjectAsBlock: Use block explicitly instead of block-passing a method object.
+001.rb:1:11: C: Performance/MethodObjectAsBlock: Use block explicitly instead of block-passing a method object.
+002.rb:1:25: C: Performance/MethodObjectAsBlock: Use block explicitly instead of block-passing a method object.
+
+==> autocorrect exit=1 336 <==
+000.rb:1:11: C: Performance/MethodObjectAsBlock: Use block explicitly instead of block-passing a method object.
+001.rb:1:11: C: Performance/MethodObjectAsBlock: Use block explicitly instead of block-passing a method object.
+002.rb:1:25: C: Performance/MethodObjectAsBlock: Use block explicitly instead of block-passing a method object.
+

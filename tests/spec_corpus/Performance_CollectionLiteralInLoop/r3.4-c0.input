@@ -1,0 +1,142 @@
+==> .rubocop.yml 189 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Performance/CollectionLiteralInLoop:
+  MinSize: 1
+
+==> 000.rb 43 <==
+each do
+  { foo: :bar }.include?(:foo)
+end
+
+==> 001.rb 35 <==
+each do
+  [1, 2, 3].index(foo)
+end
+
+==> 002.rb 54 <==
+
+array.all? do |e|
+  [1, 2, 3].include?("string")
+end
+
+==> 003.rb 59 <==
+
+array.all? do |e|
+  [1, 2, 3].include?("string".call)
+end
+
+==> 004.rb 64 <==
+
+array.all? do |e|
+  [1, 2, 3].include?("string".call.call)
+end
+
+==> 005.rb 65 <==
+
+array.all? do |e|
+  [1, 2, 3].include?("string".call(true))
+end
+
+==> 006.rb 50 <==
+
+array.all? do |e|
+  [1, 2, 3].include?(self)
+end
+
+==> 007.rb 55 <==
+
+array.all? do |e|
+  [1, 2, 3].include?(self.call)
+end
+
+==> 008.rb 60 <==
+
+array.all? do |e|
+  [1, 2, 3].include?(self.call.call)
+end
+
+==> 009.rb 61 <==
+
+array.all? do |e|
+  [1, 2, 3].include?(self.call(true))
+end
+
+==> 010.rb 80 <==
+local_variable = 123
+array.all? do |e|
+  [1, 2, 3].include?(local_variable)
+end
+
+==> 011.rb 85 <==
+local_variable = 123
+array.all? do |e|
+  [1, 2, 3].include?(local_variable.call)
+end
+
+==> 012.rb 90 <==
+local_variable = 123
+array.all? do |e|
+  [1, 2, 3].include?(local_variable.call.call)
+end
+
+==> 013.rb 91 <==
+local_variable = 123
+array.all? do |e|
+  [1, 2, 3].include?(local_variable.call(true))
+end
+
+==> 014.rb 57 <==
+
+array.all? do |e|
+  [1, 2, 3].include?(method_call)
+end
+
+==> 015.rb 62 <==
+
+array.all? do |e|
+  [1, 2, 3].include?(method_call.call)
+end
+
+==> 016.rb 67 <==
+
+array.all? do |e|
+  [1, 2, 3].include?(method_call.call.call)
+end
+
+==> 017.rb 68 <==
+
+array.all? do |e|
+  [1, 2, 3].include?(method_call.call(true))
+end
+
+==> 018.rb 64 <==
+
+array.all? do |e|
+  [1, 2, 3].include?(@instance_variable)
+end
+
+==> 019.rb 69 <==
+
+array.all? do |e|
+  [1, 2, 3].include?(@instance_variable.call)
+end
+
+==> 020.rb 74 <==
+
+array.all? do |e|
+  [1, 2, 3].include?(@instance_variable.call.call)
+end
+
+==> 021.rb 75 <==
+
+array.all? do |e|
+  [1, 2, 3].include?(@instance_variable.call(true))
+end
+
