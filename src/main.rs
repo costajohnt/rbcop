@@ -1119,8 +1119,12 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     let only = &cli.opts.only;
     let except = &cli.except;
     // Runner#mobilize_cop_badge?: Badge#match_name? takes cop names and department names.
-    let match_name =
-        |list: &[String], cop: &str| list.iter().any(|n| n == cop || cop.rsplit_once('/').is_some_and(|(d, _)| d == n));
+    // Sets: every file asks about every cop, and `--only` may list all of them.
+    let only_set: std::collections::HashSet<&str> = only.iter().map(String::as_str).collect();
+    let except_set: std::collections::HashSet<&str> = except.iter().map(String::as_str).collect();
+    let match_name = |list: &std::collections::HashSet<&str>, cop: &str| {
+        list.contains(cop) || cop.rsplit_once('/').is_some_and(|(d, _)| list.contains(d))
+    };
     let selected = |cop: &str| {
         // Runner#check_for_redundant_disables? never runs the directive cop under --only.
         // ponytail: so it also drops out of Registry#disabled_names there; matters only when the
@@ -1128,7 +1132,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         if cop == "Lint/RedundantCopDisableDirective" && !only.is_empty() {
             return false;
         }
-        (only.is_empty() || match_name(only, cop)) && !match_name(except, cop)
+        (only.is_empty() || match_name(&only_set, cop)) && (except.is_empty() || !match_name(&except_set, cop))
     };
     // Runner#mobilize_cop_badge?: without --only, --only-guide-cops or `AllCops:
     // StyleGuideCopsOnly` keeps only cops whose own config has a StyleGuide.
