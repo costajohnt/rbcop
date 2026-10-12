@@ -1229,7 +1229,9 @@ fn gem_versions_compare_like_rubygems() {
 /// Dir.pwd (no symlink resolution, like Ruby).
 pub fn cwd() -> PathBuf {
     // Ruby's Dir.pwd is getcwd(3), the physical path (/private/tmp, not /tmp); so is current_dir.
-    std::env::current_dir().unwrap_or_default()
+    // Read once: cops ask per file, getcwd is slow on macOS, and rbcop never changes directory.
+    static CWD: std::sync::OnceLock<PathBuf> = std::sync::OnceLock::new();
+    CWD.get_or_init(|| std::env::current_dir().unwrap_or_default()).clone()
 }
 
 /// File.expand_path(path, base): absolute, with `.` and `..` folded, symlinks untouched.
