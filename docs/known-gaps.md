@@ -70,6 +70,20 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - Error wording for I/O failures follows Ruby's (`Permission denied @ rb_sysopen - <file>`,
   `... @ rb_sys_fail_on_write - <out file>`) but without the backtrace; a failed `-o` directory or
   file creation is worded `<path>: <reason>`.
+- rubocop-rails corrections that splice string or symbol content from the file into new source are
+  withheld when that content is not inert. RuboCop applies them unescaped and can write arbitrary
+  code (`tag("div\nsystem('x')")` becomes `tag.div` and then `system('x')()`). Offenses and
+  `[Correctable]` markers are unchanged. Under `-a`/`-A` such an offense stays `[Correctable]`
+  (not `[Corrected]`) and the source is left as is. Corrections are applied only when:
+  Rails/ContentTag: the tag name matches `\A[a-z_][a-zA-Z0-9_]*[!?]?\z`.
+  Rails/DotSeparatedKeys: every key and scope part has no quote, backslash, `#{` or line break.
+  Rails/LinkToBlank: an existing `rel:` is a plain `'...'`/`"..."` literal whose source equals its
+  value with none of those characters, and a new `rel:` copies a `'`, `"` or `:` delimiter.
+  Rails/RootPublicPath: the path after `public/` has none of those characters.
+  Rails/MigrationClassName: the file name camelizes to `\A[A-Z][A-Za-z0-9_]*\z`.
+  Other Rails corrections insert source text or escaped literals (`inspect`/`dump`) and are not
+  changed. Fixture: tests/autocorrect/rails_untrusted_text (RuboCop's output is kept in
+  `rubocop-output/`).
 
 ## Open gaps
 

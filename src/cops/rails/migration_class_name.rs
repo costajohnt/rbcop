@@ -41,6 +41,11 @@ impl Cop for MigrationClassName {
             return;
         }
         let msg = format!("Replace with `{camelized}` that matches the file name.");
+        // Deliberate difference: a file name that does not camelize to a constant name is not spliced in.
+        static CONST: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\A[A-Z][A-Za-z0-9_]*\z").unwrap());
+        if !CONST.is_match(&camelized) {
+            return cx.add_withheld_fix(s, e, msg);
+        }
         cx.add_fix(s, e, msg, |c| c.replace(s, e, &camelized));
     }
 }

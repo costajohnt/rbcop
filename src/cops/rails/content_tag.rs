@@ -97,6 +97,16 @@ impl Cop for ContentTag {
         let sel = call.message_loc().unwrap().start_offset();
         let rest: Vec<&str> = args[1..].iter().map(|a| node_text(a)).collect();
         let replacement = format!("tag.{preferred}({})", rest.join(", "));
+        // Deliberate difference: only a plain method name is spliced in as `tag.<name>`.
+        static METHOD: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\A[a-z_][a-zA-Z0-9_]*[!?]?\z").unwrap());
+        if !METHOD.is_match(&preferred) {
+            let before = cx.out.len();
+            cx.add_withheld_fix(s, e, msg);
+            if cx.out.len() > before && cx.out.last().unwrap().correctable {
+                cx.state::<Corrected>().0.push((s, e));
+            }
+            return;
+        }
         let ran = Cell::new(false);
         cx.add_fix(s, e, msg, |c| {
             c.replace(sel, e, &replacement);

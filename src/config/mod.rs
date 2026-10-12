@@ -244,7 +244,21 @@ impl Resolved {
                 let file = ["Gemfile.lock", "gems.locked"]
                     .iter()
                     .find_map(|n| self.base_dir.ancestors().map(|d| d.join(n)).find(|f| f.is_file()))?;
-                Some(locked_gem_versions(&std::fs::read_to_string(file).unwrap_or_default()))
+                let text = std::fs::read_to_string(file).unwrap_or_default();
+                // Bundler::LockfileParser resolves PATH sources against Bundler.root, which needs a
+                // Gemfile, gems.rb or .bundle upwards from the working directory; without one it
+                // raises GemfileNotFound and RuboCop's Lockfile reports no gems.
+                let has_path = text.lines().any(|l| l.trim_end_matches('\r') == "PATH");
+                if has_path && std::env::var_os("BUNDLE_GEMFILE").is_none() {
+                    let cwd = cwd();
+                    let root = cwd.ancestors().any(|d| {
+                        d.join("gems.rb").is_file() || d.join("Gemfile").is_file() || d.join(".bundle").is_dir()
+                    });
+                    if !root {
+                        return Some(HashMap::new());
+                    }
+                }
+                Some(locked_gem_versions(&text))
             })
             .as_ref()
     }

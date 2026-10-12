@@ -1,4 +1,4 @@
-Rails.public_path.join('a'b; system('x')')
+Rails.root.join("public/a'b; system('x')")
 Rails.root.join("public/#{x}")
 Rails.public_path.join("a\nb")
 enum status: {"a'b" => 0, "c\"d" => 1, "\u00E9" => 2, "#{x}" => 3, :"e f" => 4, "g" => 5}

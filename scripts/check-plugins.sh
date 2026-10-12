@@ -10,7 +10,8 @@
 # rubocop-rails also changes some of RuboCop's own cops (its default.yml settings, Style/HashExcept's
 # minimum Ruby, MigratedSchemaVersion), so those are checked against its oracles too, and mastodon is
 # checked once more with its own .rubocop.yml (oracle mastodon-project.txt, recorded with
-# CONFIG=$RBCOP_CORPUS/mastodon/.rubocop.yml and the plugin gems mastodon's Gemfile.lock pins).
+# CONFIG=$RBCOP_CORPUS/mastodon/.rubocop.yml and the plugin gems mastodon's Gemfile.lock pins;
+# RuboCop finds nothing there, so this checks rbcop raises no false positives under a real config).
 # Exit 0 only if every plugin matches everywhere.
 set -eu
 root=$(cd "$(dirname "$0")/.." && pwd)
@@ -40,7 +41,8 @@ for spec in performance:Performance rails:Rails; do
     mkdir -p "${TMPDIR:-/tmp}/rbcop-mastodon-project"
     ln -sf "$oracle/mastodon-project.txt" "${TMPDIR:-/tmp}/rbcop-mastodon-project/mastodon.txt"
     ln -sf "$oracle/mastodon-project.txt.crashes" "${TMPDIR:-/tmp}/rbcop-mastodon-project/mastodon.txt.crashes"
-    CONFIG=$project RBCOP_ORACLE="${TMPDIR:-/tmp}/rbcop-mastodon-project" sh "$root/scripts/check-cops.sh" "$mcops" mastodon || status=1
+    # mastodon is clean under its own config, so the oracle is empty: rbcop must report nothing either.
+    ALLOW_EMPTY_ORACLE=1 CONFIG=$project RBCOP_ORACLE="${TMPDIR:-/tmp}/rbcop-mastodon-project" sh "$root/scripts/check-cops.sh" "$mcops" mastodon || status=1
   fi
 done
 [ $status = 0 ] && echo "plugins: all corpora match"

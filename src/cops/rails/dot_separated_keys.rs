@@ -62,6 +62,7 @@ impl Cop for DotSeparatedKeys {
                 Some(Some(v)) => parts.push(v),
             }
         }
+        let inert = parts.iter().chain([&key_value]).all(|p| helpers::rails::inert_text(p));
         let mut new_key = format!("'{}.{key_value}'", parts.join("."));
         // squeeze('.')
         while new_key.contains("..") {
@@ -71,6 +72,10 @@ impl Cop for DotSeparatedKeys {
         let (ps, pe) = (pair.location().start_offset(), pair.location().end_offset());
         let (rs, re) = helpers::rails::left_space_and_comma(&src.text, ps, pe);
         let (ks, ke) = (key.location().start_offset(), key.location().end_offset());
+        if !inert {
+            // Deliberate difference: key parts that are not plain text are not spliced into a literal.
+            return cx.add_withheld_fix(ps, pe, "Use the dot-separated keys instead of specifying the `:scope` option.");
+        }
         cx.add_fix(ps, pe, "Use the dot-separated keys instead of specifying the `:scope` option.", |c| {
             c.remove(rs, re);
             c.replace(ks, ke, &new_key);

@@ -47,10 +47,17 @@ impl Cop for LinkToBlank {
                 .into_iter()
                 .find(|p| key_is(p, "rel") && helpers::rails::str_value(&p.value()).is_some())
         });
+        // (range inside the quotes, new text, whether splicing it is safe)
         let rel = rel_node.map(|p| {
             let v = p.value();
             let (s, e) = (v.location().start_offset() + 1, v.location().end_offset() - 1);
-            (s, e, format!("{} noopener", helpers::rails::str_value(&v).unwrap()))
+            let value = helpers::rails::str_value(&v).unwrap();
+            // Deliberate difference: only a plain '...'/"..." literal whose source is its value.
+            let plain = matches!(node_text(&v).as_bytes().first(), Some(b'\'' | b'"'))
+                && e >= s
+                && cx.src.slice(s, e) == value
+                && helpers::rails::inert_text(&value);
+            (s, e, format!("{value} noopener"), plain)
         });
         for h in &opts {
             let pairs = helpers::rails::hash_pairs(h);
@@ -76,8 +83,16 @@ impl Cop for LinkToBlank {
                 // `pairs.last` is nil: the corrector raises.
                 continue;
             }
+            let safe = match &rel {
+                Some((.., plain)) => *plain,
+                None => matches!(quote, '\'' | '"' | ':'),
+            };
+            if !safe {
+                cx.add_withheld_fix(s, e, "Specify a `:rel` option containing noopener.");
+                continue;
+            }
             cx.add_fix(s, e, "Specify a `:rel` option containing noopener.", |c| match &rel {
-                Some((a, b, text)) => c.replace(*a, *b, text),
+                Some((a, b, text, _)) => c.replace(*a, *b, text),
                 None => {
                     let (a, b) = last.flatten().unwrap();
                     c.insert_after(a, b, &new_rel);

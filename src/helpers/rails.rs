@@ -449,3 +449,10 @@ pub fn ruby_split(s: &str, sep: char) -> Vec<&str> {
     }
     parts
 }
+
+/// Text from a string or symbol that a correction may splice into a quoted literal: no quotes,
+/// backslashes, interpolation or line breaks (rbcop withholds the correction otherwise, a
+/// deliberate difference from RuboCop, docs/known-gaps.md).
+pub fn inert_text(s: &str) -> bool {
+    !s.contains(['\'', '"', '\\', '\n', '\r']) && !s.contains("#{") && !s.contains('\0')
+}

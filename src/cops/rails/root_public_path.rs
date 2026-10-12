@@ -40,6 +40,10 @@ impl Cop for RootPublicPath {
             replacement += &format!(".join({})", parts.join(", "));
         }
         let (s, e) = send_range(&call);
+        if !helpers::rails::inert_text(&first) {
+            // Deliberate difference: the path is spliced into a '...' literal only when plain.
+            return cx.add_withheld_fix(s, e, "Use `Rails.public_path`.");
+        }
         cx.add_fix(s, e, "Use `Rails.public_path`.", |c| c.replace(s, e, &replacement));
     }
 }
