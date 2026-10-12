@@ -27,3 +27,7 @@ mimalloc = { version = "0.1", default-features = false }
 # Vendored with an added parse_with_version (see vendor/ruby-prism/src/lib.rs, "rbcop patch").
 [patch.crates-io]
 ruby-prism = { path = "vendor/ruby-prism" }
+
+# Thin LTO: ~9% fewer cycles linting discourse (#388), for ~5 s more per release rebuild.
+[profile.release]
+lto = "thin"
