@@ -1,0 +1,8 @@
+==> offenses exit=1 194 <==
+test/002_test.rb:6:5: C: Minitest/AssertOutput: Use `assert_output` instead of mutating $stdout.
+test/005_test.rb:7:7: C: Minitest/AssertOutput: Use `assert_output` instead of mutating $stdout.
+
+==> autocorrect exit=1 194 <==
+test/002_test.rb:6:5: C: Minitest/AssertOutput: Use `assert_output` instead of mutating $stdout.
+test/005_test.rb:7:7: C: Minitest/AssertOutput: Use `assert_output` instead of mutating $stdout.
+

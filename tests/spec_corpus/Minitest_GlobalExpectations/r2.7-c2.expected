@@ -1,0 +1,2756 @@
+==> offenses exit=1 35275 <==
+test/000_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/001_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/003_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/004_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/005_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/006_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/007_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/008_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/009_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/010_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/011_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/012_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/013_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/014_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/015_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/016_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/017_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/018_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/019_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/020_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/021_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/022_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/023_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/024_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/025_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/026_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/027_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect { n }` instead.
+test/028_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/029_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/030_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/031_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/032_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/033_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/035_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/036_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/037_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/038_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/040_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/042_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/043_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/045_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/046_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/047_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/048_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/049_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/050_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/051_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/052_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/053_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/054_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect { n }` instead.
+test/055_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/056_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/057_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect { n }` instead.
+test/058_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/059_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/060_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/061_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/062_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/063_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/064_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/065_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect { n }` instead.
+test/066_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/068_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/069_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/070_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/071_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/072_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/073_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/074_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/075_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/076_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/077_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/078_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/079_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/080_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/081_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/083_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/084_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/085_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/086_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/087_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/088_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/089_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/090_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/091_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/092_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/093_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/094_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/095_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/096_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/097_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/098_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/099_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/101_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/102_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/103_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/104_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/105_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect { n }` instead.
+test/106_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/107_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/108_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/109_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/111_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/112_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/113_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/114_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/115_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/116_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/117_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/118_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/119_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/120_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/121_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/122_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/123_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/124_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/125_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/126_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/127_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/128_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/130_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/131_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect { n }` instead.
+test/132_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/133_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect { n }` instead.
+test/134_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/135_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/135_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n.must_equal(42))` instead.
+test/136_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/137_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/139_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/140_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/141_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/142_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/143_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/144_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/145_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/146_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/147_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/148_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/149_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect { n }` instead.
+test/150_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/151_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/152_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/153_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/154_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/155_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/157_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/159_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/160_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/161_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/162_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/163_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/164_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/165_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/166_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/167_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/168_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/169_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/170_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/170_test.rb:2:5: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/171_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/172_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/173_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/174_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(A.foo.bar)` instead.
+test/175_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/176_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/177_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/178_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/179_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/180_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/181_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/182_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/183_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/184_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/185_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/186_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/187_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/188_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/189_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/190_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/192_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/193_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/194_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/195_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/196_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/198_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/199_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/200_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/201_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/202_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/203_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/204_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/205_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/206_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/207_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/208_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/209_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/210_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/212_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/213_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/214_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/215_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/216_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/217_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/218_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/219_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/220_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/221_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/222_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/223_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/224_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/225_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/226_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/227_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/228_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/229_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/230_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/231_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/232_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/233_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/234_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/235_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/236_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/237_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/238_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/239_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/240_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/241_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/242_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/243_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/244_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/245_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/246_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/247_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/248_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect { n }` instead.
+test/249_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/252_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/253_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/254_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/255_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/256_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/257_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/258_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/259_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/260_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/261_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/262_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/265_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/266_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/267_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/268_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/269_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/270_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/271_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/273_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/274_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/275_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/276_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/277_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/279_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/280_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/281_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/282_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/283_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/284_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/285_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/286_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/287_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/288_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/289_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/290_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/291_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/293_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/294_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/295_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/297_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/298_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/299_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/300_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/301_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/302_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/303_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/304_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/305_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/306_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/307_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/308_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/309_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/310_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/311_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/313_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/314_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/315_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/316_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/319_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/321_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/322_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/323_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/324_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/325_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/326_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/327_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/328_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/329_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/331_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/332_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/333_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/334_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/336_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/337_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/338_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/339_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/340_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/341_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/342_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/343_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/344_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/345_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/346_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/347_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/349_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/350_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/351_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/352_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/353_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/354_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/355_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/356_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/357_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/359_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/360_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/361_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/362_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/364_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/365_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/366_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/367_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/368_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/369_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/370_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/371_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/372_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/373_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/374_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/375_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/376_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/377_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/378_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/379_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/380_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/381_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/382_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/383_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/384_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/385_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect { n }` instead.
+test/386_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/387_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/389_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/390_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/391_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/392_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/393_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/394_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/395_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/396_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/397_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/398_test.rb:2:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect` instead.
+test/399_test.rb:3:3: W: [Correctable] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+
+==> autocorrect exit=0 34539 <==
+test/000_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/001_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/003_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/004_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/005_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/006_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/007_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/008_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/009_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/010_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/011_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/012_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/013_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/014_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/015_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/016_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/017_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/018_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/019_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/020_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/021_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/022_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/023_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/024_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/025_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/026_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/027_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect { n }` instead.
+test/028_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/029_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/030_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/031_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/032_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/033_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/035_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/036_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/037_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/038_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/040_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/042_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/043_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/045_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/046_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/047_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/048_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/049_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/050_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/051_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/052_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/053_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/054_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect { n }` instead.
+test/055_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/056_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/057_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect { n }` instead.
+test/058_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/059_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/060_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/061_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/062_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/063_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/064_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/065_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect { n }` instead.
+test/066_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/068_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/069_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/070_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/071_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/072_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/073_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/074_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/075_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/076_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/077_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/078_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/079_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/080_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/081_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/083_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/084_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/085_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/086_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/087_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/088_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/089_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/090_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/091_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/092_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/093_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/094_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/095_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/096_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/097_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/098_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/099_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/101_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/102_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/103_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/104_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/105_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect { n }` instead.
+test/106_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/107_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/108_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/109_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/111_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/112_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/113_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/114_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/115_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/116_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/117_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/118_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/119_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/120_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/121_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/122_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/123_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/124_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/125_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/126_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/127_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/128_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/130_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/131_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect { n }` instead.
+test/132_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/133_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect { n }` instead.
+test/134_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/135_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/135_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n.must_equal(42))` instead.
+test/136_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/137_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/139_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/140_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/141_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/142_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/143_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/144_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/145_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/146_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/147_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/148_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/149_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect { n }` instead.
+test/150_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/151_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/152_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/153_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/154_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/155_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/157_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/159_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/160_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/161_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/162_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/163_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/164_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/165_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/166_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/167_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/168_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/169_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/170_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/170_test.rb:2:5: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/171_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/172_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/173_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/174_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(A.foo.bar)` instead.
+test/175_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/176_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/177_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/178_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/179_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/180_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/181_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/182_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/183_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/184_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/185_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/186_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/187_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/188_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/189_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/190_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/192_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/193_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/194_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/195_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/196_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/198_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/199_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/200_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/201_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/202_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/203_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/204_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/205_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/206_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/207_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/208_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/209_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/210_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/212_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/213_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/214_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/215_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/216_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/217_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/218_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/219_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/220_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/221_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/222_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/223_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/224_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/225_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/226_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/227_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/228_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/229_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/230_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/231_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/232_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/233_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/234_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/235_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/236_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/237_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/238_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/239_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/240_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/241_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/242_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/243_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/244_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/245_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/246_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/247_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/248_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect { n }` instead.
+test/249_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/252_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/253_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/254_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/255_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/256_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/257_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/258_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/259_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/260_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/261_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/262_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/265_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/266_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/267_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/268_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/269_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/270_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/271_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/273_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/274_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/275_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/276_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/277_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/279_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/280_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/281_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/282_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/283_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/284_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/285_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/286_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/287_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/288_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/289_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/290_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/291_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/293_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/294_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/295_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/297_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/298_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/299_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/300_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/301_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/302_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/303_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/304_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/305_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/306_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/307_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/308_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/309_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/310_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/311_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/313_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/314_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/315_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/316_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/319_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/321_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/322_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/323_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/324_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/325_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/326_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/327_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/328_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/329_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/331_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/332_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/333_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(C)` instead.
+test/334_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/336_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/337_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/338_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/339_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/340_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/341_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/342_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/343_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/344_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/345_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/346_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/347_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/349_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/350_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/351_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/352_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/353_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/354_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/355_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/356_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/357_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/359_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/360_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/361_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/362_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/364_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/365_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/366_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/367_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/368_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/369_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/370_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/371_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/372_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/373_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/374_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/375_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/376_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/377_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/378_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n)` instead.
+test/379_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/380_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/381_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+test/382_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/383_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n)` instead.
+test/384_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/385_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect { n }` instead.
+test/386_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/387_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/389_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n[:foo])` instead.
+test/390_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/391_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect($n[:foo])` instead.
+test/392_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/393_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n)` instead.
+test/394_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(options[:a][:b])` instead.
+test/395_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(foo(a))` instead.
+test/396_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@n[:foo])` instead.
+test/397_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(n)` instead.
+test/398_test.rb:2:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect` instead.
+test/399_test.rb:3:3: W: [Corrected] Minitest/GlobalExpectations: Use `expect(@@n[:foo])` instead.
+
+==> corrected/test/000_test.rb 85 <==
+it 'does something' do
+  @n = do_something
+  expect(@n[:foo]).must_be_kind_of 42
+end
+
+==> corrected/test/001_test.rb 83 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).path_must_exist 42
+end
+
+==> corrected/test/003_test.rb 80 <==
+it 'does something' do
+  @n = do_something
+  expect(@n[:foo]).wont_match 42
+end
+
+==> corrected/test/004_test.rb 68 <==
+it 'does something' do
+  expect(options[:a][:b]).must_include 0
+end
+
+==> corrected/test/005_test.rb 57 <==
+it 'does something' do
+  expect(foo(a)).must_equal 0
+end
+
+==> corrected/test/006_test.rb 58 <==
+it 'does something' do
+  expect(n).must_be_kind_of 42
+end
+
+==> corrected/test/007_test.rb 87 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).path_must_exist 42
+end
+
+==> corrected/test/008_test.rb 57 <==
+it 'does something' do
+  expect(C).must_be_empty(:a)
+end
+
+==> corrected/test/009_test.rb 54 <==
+it 'does something' do
+  expect(foo(a)).must_be 0
+end
+
+==> corrected/test/010_test.rb 74 <==
+it 'does something' do
+  $n = do_something
+  expect($n).must_equal 42
+end
+
+==> corrected/test/011_test.rb 63 <==
+it 'does something' do
+  expect(C).must_be_instance_of(:a)
+end
+
+==> corrected/test/012_test.rb 83 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).wont_be_kind_of 42
+end
+
+==> corrected/test/013_test.rb 58 <==
+it 'does something' do
+  expect(n).path_must_exist 42
+end
+
+==> corrected/test/014_test.rb 84 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).wont_be_close_to 42
+end
+
+==> corrected/test/015_test.rb 57 <==
+it 'does something' do
+  expect { n }.must_output 42
+end
+
+==> corrected/test/016_test.rb 84 <==
+it 'does something' do
+  $n = do_something
+  expect($n).must_be_within_delta 42
+end
+
+==> corrected/test/017_test.rb 55 <==
+it 'does something' do
+  expect(C).wont_be_nil(:a)
+end
+
+==> corrected/test/018_test.rb 78 <==
+it 'does something' do
+  expect(options[:a][:b]).wont_be_within_epsilon 0
+end
+
+==> corrected/test/019_test.rb 92 <==
+it 'does something' do
+  @n = do_something
+  expect(@n[:foo]).wont_be_within_epsilon 42
+end
+
+==> corrected/test/020_test.rb 76 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).must_match 42
+end
+
+==> corrected/test/021_test.rb 69 <==
+it 'does something' do
+  expect(foo(a)).must_be_within_epsilon 0
+end
+
+==> corrected/test/022_test.rb 83 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).must_be_same_as 42
+end
+
+==> corrected/test/023_test.rb 56 <==
+it 'does something' do
+  expect(n).must_be_empty 42
+end
+
+==> corrected/test/024_test.rb 71 <==
+it 'does something' do
+  expect(options[:a][:b]).must_be_same_as 0
+end
+
+==> corrected/test/025_test.rb 53 <==
+it 'does something' do
+  expect(n).wont_match 42
+end
+
+==> corrected/test/026_test.rb 66 <==
+it 'does something' do
+  expect(C).wont_be_within_epsilon(:a)
+end
+
+==> corrected/test/027_test.rb 56 <==
+it 'does something' do
+  expect { n }.must_throw 42
+end
+
+==> corrected/test/028_test.rb 80 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).wont_match 42
+end
+
+==> corrected/test/029_test.rb 58 <==
+it 'does something' do
+  expect(n).must_respond_to 42
+end
+
+==> corrected/test/030_test.rb 55 <==
+it 'does something' do
+  expect(n).must_include 42
+end
+
+==> corrected/test/031_test.rb 81 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).wont_be_same_as 42
+end
+
+==> corrected/test/032_test.rb 86 <==
+it 'does something' do
+  @n = do_something
+  expect(@n[:foo]).must_be_close_to 42
+end
+
+==> corrected/test/033_test.rb 67 <==
+it 'does something' do
+  expect(foo(a)).must_be_within_delta 0
+end
+
+==> corrected/test/035_test.rb 86 <==
+it 'does something' do
+  @n = do_something
+  expect(@n[:foo]).wont_be_close_to 42
+end
+
+==> corrected/test/036_test.rb 74 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).must_match 42
+end
+
+==> corrected/test/037_test.rb 77 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).must_be_empty 42
+end
+
+==> corrected/test/038_test.rb 71 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).wont_be 42
+end
+
+==> corrected/test/040_test.rb 90 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).must_be_within_epsilon 42
+end
+
+==> corrected/test/042_test.rb 59 <==
+it 'does something' do
+  expect(n).wont_be_close_to 42
+end
+
+==> corrected/test/043_test.rb 77 <==
+it 'does something' do
+  n = do_something
+  expect(n).must_respond_to 42
+end
+
+==> corrected/test/045_test.rb 66 <==
+it 'does something' do
+  expect(foo(a)).must_be_instance_of 0
+end
+
+==> corrected/test/046_test.rb 83 <==
+it 'does something' do
+  @n = do_something
+  expect(@n[:foo]).wont_be_empty 42
+end
+
+==> corrected/test/047_test.rb 59 <==
+it 'does something' do
+  expect(foo(a)).must_include 0
+end
+
+==> corrected/test/048_test.rb 53 <==
+it 'does something' do
+  expect(n).must_throw 42
+end
+
+==> corrected/test/049_test.rb 83 <==
+it 'does something' do
+  $n = do_something
+  expect($n).must_be_instance_of 42
+end
+
+==> corrected/test/050_test.rb 78 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).wont_match 42
+end
+
+==> corrected/test/051_test.rb 92 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).wont_be_within_epsilon 42
+end
+
+==> corrected/test/052_test.rb 88 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).must_be_within_delta 42
+end
+
+==> corrected/test/053_test.rb 77 <==
+it 'does something' do
+  n = do_something
+  expect(n).path_wont_exist 42
+end
+
+==> corrected/test/054_test.rb 64 <==
+it 'does something' do
+  expect { n }.must_pattern_match 42
+end
+
+==> corrected/test/055_test.rb 78 <==
+it 'does something' do
+  expect(options[:a][:b]).must_be_within_epsilon 0
+end
+
+==> corrected/test/056_test.rb 65 <==
+it 'does something' do
+  expect(n).wont_be_within_epsilon 42
+end
+
+==> corrected/test/057_test.rb 64 <==
+it 'does something' do
+  expect { n }.wont_pattern_match 42
+end
+
+==> corrected/test/058_test.rb 79 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).must_respond_to 42
+end
+
+==> corrected/test/059_test.rb 63 <==
+it 'does something' do
+  expect(n).must_be_within_delta 42
+end
+
+==> corrected/test/060_test.rb 87 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).path_wont_exist 42
+end
+
+==> corrected/test/061_test.rb 54 <==
+it 'does something' do
+  expect(C).wont_equal(:a)
+end
+
+==> corrected/test/062_test.rb 86 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).must_be_within_delta 42
+end
+
+==> corrected/test/063_test.rb 78 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).wont_include 42
+end
+
+==> corrected/test/064_test.rb 71 <==
+it 'does something' do
+  expect(options[:a][:b]).path_wont_exist 0
+end
+
+==> corrected/test/065_test.rb 57 <==
+it 'does something' do
+  expect { n }.must_output 42
+end
+
+==> corrected/test/066_test.rb 71 <==
+it 'does something' do
+  expect(options[:a][:b]).path_must_exist 0
+end
+
+==> corrected/test/068_test.rb 83 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).wont_be_same_as 42
+end
+
+==> corrected/test/069_test.rb 82 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).must_be_close_to 42
+end
+
+==> corrected/test/070_test.rb 53 <==
+it 'does something' do
+  expect(n).wont_equal 42
+end
+
+==> corrected/test/071_test.rb 85 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).must_be_empty 42
+end
+
+==> corrected/test/072_test.rb 58 <==
+it 'does something' do
+  expect(n).wont_respond_to 42
+end
+
+==> corrected/test/073_test.rb 81 <==
+it 'does something' do
+  n = do_something
+  expect(n).wont_be_instance_of 42
+end
+
+==> corrected/test/074_test.rb 86 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).wont_be_within_epsilon 42
+end
+
+==> corrected/test/075_test.rb 82 <==
+it 'does something' do
+  n = do_something
+  expect(n).wont_be_within_delta 42
+end
+
+==> corrected/test/076_test.rb 85 <==
+it 'does something' do
+  @n = do_something
+  expect(@n[:foo]).path_wont_exist 42
+end
+
+==> corrected/test/077_test.rb 58 <==
+it 'does something' do
+  expect(n).wont_respond_to 42
+end
+
+==> corrected/test/078_test.rb 54 <==
+it 'does something' do
+  expect(n).wont_be_nil 42
+end
+
+==> corrected/test/079_test.rb 78 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).wont_equal 42
+end
+
+==> corrected/test/080_test.rb 56 <==
+it 'does something' do
+  expect(n).must_be_empty 42
+end
+
+==> corrected/test/081_test.rb 62 <==
+it 'does something' do
+  expect(foo(a)).wont_be_same_as 0
+end
+
+==> corrected/test/083_test.rb 55 <==
+it 'does something' do
+  expect(C).must_be_nil(:a)
+end
+
+==> corrected/test/084_test.rb 80 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).wont_include 42
+end
+
+==> corrected/test/085_test.rb 71 <==
+it 'does something' do
+  expect(options[:a][:b]).must_be_kind_of 0
+end
+
+==> corrected/test/086_test.rb 62 <==
+it 'does something' do
+  expect(foo(a)).must_be_same_as 0
+end
+
+==> corrected/test/087_test.rb 66 <==
+it 'does something' do
+  expect(options[:a][:b]).wont_match 0
+end
+
+==> corrected/test/088_test.rb 84 <==
+it 'does something' do
+  n = do_something
+  expect(n).must_be_within_epsilon 42
+end
+
+==> corrected/test/089_test.rb 53 <==
+it 'does something' do
+  expect(n).must_raise 42
+end
+
+==> corrected/test/090_test.rb 86 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).wont_be_within_delta 42
+end
+
+==> corrected/test/091_test.rb 59 <==
+it 'does something' do
+  expect(n).wont_be_close_to 42
+end
+
+==> corrected/test/092_test.rb 55 <==
+it 'does something' do
+  expect(n).wont_include 42
+end
+
+==> corrected/test/093_test.rb 78 <==
+it 'does something' do
+  n = do_something
+  expect(n).must_be_close_to 42
+end
+
+==> corrected/test/094_test.rb 79 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).path_wont_exist 42
+end
+
+==> corrected/test/095_test.rb 84 <==
+it 'does something' do
+  n = do_something
+  expect(n).wont_be_within_epsilon 42
+end
+
+==> corrected/test/096_test.rb 54 <==
+it 'does something' do
+  expect(C).must_equal(:a)
+end
+
+==> corrected/test/097_test.rb 79 <==
+it 'does something' do
+  $n = do_something
+  expect($n).path_must_exist 42
+end
+
+==> corrected/test/098_test.rb 68 <==
+it 'does something' do
+  expect(options[:a][:b]).wont_include 0
+end
+
+==> corrected/test/099_test.rb 58 <==
+it 'does something' do
+  expect(n).must_be_same_as 42
+end
+
+==> corrected/test/101_test.rb 76 <==
+it 'does something' do
+  $n = do_something
+  expect($n).must_include 42
+end
+
+==> corrected/test/102_test.rb 92 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).wont_be_within_delta 42
+end
+
+==> corrected/test/103_test.rb 88 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).wont_be_close_to 42
+end
+
+==> corrected/test/104_test.rb 59 <==
+it 'does something' do
+  expect(C).path_wont_exist(:a)
+end
+
+==> corrected/test/105_test.rb 56 <==
+it 'does something' do
+  expect { n }.must_raise 42
+end
+
+==> corrected/test/106_test.rb 81 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).path_wont_exist 42
+end
+
+==> corrected/test/107_test.rb 56 <==
+it 'does something' do
+  expect(C).wont_include(:a)
+end
+
+==> corrected/test/108_test.rb 79 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).wont_respond_to 42
+end
+
+==> corrected/test/109_test.rb 57 <==
+it 'does something' do
+  expect(foo(a)).wont_match 0
+end
+
+==> corrected/test/111_test.rb 54 <==
+it 'does something' do
+  expect(n).must_output 42
+end
+
+==> corrected/test/112_test.rb 83 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).must_be_kind_of 42
+end
+
+==> corrected/test/113_test.rb 79 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).must_be_nil 42
+end
+
+==> corrected/test/114_test.rb 58 <==
+it 'does something' do
+  expect(n).wont_be_same_as 42
+end
+
+==> corrected/test/115_test.rb 58 <==
+it 'does something' do
+  expect(n).wont_be_kind_of 42
+end
+
+==> corrected/test/116_test.rb 71 <==
+it 'does something' do
+  expect(options[:a][:b]).wont_be_kind_of 0
+end
+
+==> corrected/test/117_test.rb 56 <==
+it 'does something' do
+  expect(n).wont_be_empty 42
+end
+
+==> corrected/test/118_test.rb 53 <==
+it 'does something' do
+  expect(n).must_match 42
+end
+
+==> corrected/test/119_test.rb 62 <==
+it 'does something' do
+  expect(foo(a)).must_respond_to 0
+end
+
+==> corrected/test/120_test.rb 77 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).wont_be_nil 42
+end
+
+==> corrected/test/121_test.rb 66 <==
+it 'does something' do
+  expect(foo(a)).wont_be_instance_of 0
+end
+
+==> corrected/test/122_test.rb 71 <==
+it 'does something' do
+  expect(options[:a][:b]).wont_respond_to 0
+end
+
+==> corrected/test/123_test.rb 76 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).wont_equal 42
+end
+
+==> corrected/test/124_test.rb 60 <==
+it 'does something' do
+  expect(foo(a)).wont_be_empty 0
+end
+
+==> corrected/test/125_test.rb 87 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).must_be_same_as 42
+end
+
+==> corrected/test/126_test.rb 75 <==
+it 'does something' do
+  expect(options[:a][:b]).must_be_instance_of 0
+end
+
+==> corrected/test/127_test.rb 75 <==
+it 'does something' do
+  expect(options[:a][:b]).wont_be_instance_of 0
+end
+
+==> corrected/test/128_test.rb 79 <==
+it 'does something' do
+  $n = do_something
+  expect($n).path_wont_exist 42
+end
+
+==> corrected/test/130_test.rb 85 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).wont_be_kind_of 42
+end
+
+==> corrected/test/131_test.rb 56 <==
+it 'does something' do
+  expect { n }.must_raise 42
+end
+
+==> corrected/test/132_test.rb 67 <==
+it 'does something' do
+  expect(options[:a][:b]).must_be_nil 0
+end
+
+==> corrected/test/133_test.rb 60 <==
+it 'does something' do
+  expect { n }.must_be_silent 42
+end
+
+==> corrected/test/134_test.rb 50 <==
+it 'does something' do
+  expect(n).wont_be 42
+end
+
+==> corrected/test/135_test.rb 77 <==
+it 'does something' do
+  expect(expect(n).must_equal(42)).must_equal(43)
+end
+
+==> corrected/test/136_test.rb 57 <==
+it 'does something' do
+  expect(n).must_be_silent 42
+end
+
+==> corrected/test/137_test.rb 54 <==
+it 'does something' do
+  expect(n).must_be_nil 42
+end
+
+==> corrected/test/139_test.rb 83 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).must_respond_to 42
+end
+
+==> corrected/test/140_test.rb 53 <==
+it 'does something' do
+  expect(n).must_match 42
+end
+
+==> corrected/test/141_test.rb 73 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).wont_be 42
+end
+
+==> corrected/test/142_test.rb 72 <==
+it 'does something' do
+  n = do_something
+  expect(n).must_equal 42
+end
+
+==> corrected/test/143_test.rb 77 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).must_be_nil 42
+end
+
+==> corrected/test/144_test.rb 78 <==
+it 'does something' do
+  n = do_something
+  expect(n).wont_be_close_to 42
+end
+
+==> corrected/test/145_test.rb 63 <==
+it 'does something' do
+  expect(n).wont_be_within_delta 42
+end
+
+==> corrected/test/146_test.rb 66 <==
+it 'does something' do
+  expect(C).must_be_within_epsilon(:a)
+end
+
+==> corrected/test/147_test.rb 79 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).wont_be_empty 42
+end
+
+==> corrected/test/148_test.rb 82 <==
+it 'does something' do
+  @n = do_something
+  expect(@n[:foo]).wont_include 42
+end
+
+==> corrected/test/149_test.rb 57 <==
+it 'does something' do
+  expect { n }.must_output 42
+end
+
+==> corrected/test/150_test.rb 78 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).must_equal 42
+end
+
+==> corrected/test/151_test.rb 60 <==
+it 'does something' do
+  expect(C).must_be_close_to(:a)
+end
+
+==> corrected/test/152_test.rb 62 <==
+it 'does something' do
+  expect(n).wont_be_instance_of 42
+end
+
+==> corrected/test/153_test.rb 72 <==
+it 'does something' do
+  n = do_something
+  expect(n).wont_equal 42
+end
+
+==> corrected/test/154_test.rb 91 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).must_be_instance_of 42
+end
+
+==> corrected/test/155_test.rb 63 <==
+it 'does something' do
+  expect(n).must_be_within_delta 42
+end
+
+==> corrected/test/157_test.rb 59 <==
+it 'does something' do
+  expect(C).wont_be_kind_of(:a)
+end
+
+==> corrected/test/159_test.rb 87 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).must_be_instance_of 42
+end
+
+==> corrected/test/160_test.rb 58 <==
+it 'does something' do
+  expect(n).path_must_exist 42
+end
+
+==> corrected/test/161_test.rb 56 <==
+it 'does something' do
+  expect(n).wont_be_empty 42
+end
+
+==> corrected/test/162_test.rb 58 <==
+it 'does something' do
+  expect(n).wont_be_same_as 42
+end
+
+==> corrected/test/163_test.rb 76 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).wont_include 42
+end
+
+==> corrected/test/164_test.rb 81 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).path_must_exist 42
+end
+
+==> corrected/test/165_test.rb 83 <==
+it 'does something' do
+  $n = do_something
+  expect($n).wont_be_instance_of 42
+end
+
+==> corrected/test/166_test.rb 59 <==
+it 'does something' do
+  expect(n).must_be_close_to 42
+end
+
+==> corrected/test/167_test.rb 77 <==
+it 'does something' do
+  $n = do_something
+  expect($n).wont_be_empty 42
+end
+
+==> corrected/test/168_test.rb 54 <==
+it 'does something' do
+  expect(C).must_match(:a)
+end
+
+==> corrected/test/169_test.rb 56 <==
+it 'does something' do
+  expect { n }.must_raise 42
+end
+
+==> corrected/test/170_test.rb 77 <==
+it 'does something' do
+  expect(expect(n).must_equal(42)).must_equal(43)
+end
+
+==> corrected/test/171_test.rb 58 <==
+it 'does something' do
+  expect(n).must_be_kind_of 42
+end
+
+==> corrected/test/172_test.rb 58 <==
+it 'does something' do
+  expect(n).wont_be_kind_of 42
+end
+
+==> corrected/test/173_test.rb 76 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).wont_match 42
+end
+
+==> corrected/test/174_test.rb 61 <==
+it 'does something' do
+  expect(A.foo.bar).must_equal 42
+end
+
+==> corrected/test/175_test.rb 71 <==
+it 'does something' do
+  expect(options[:a][:b]).must_respond_to 0
+end
+
+==> corrected/test/176_test.rb 71 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).must_be 42
+end
+
+==> corrected/test/177_test.rb 82 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).wont_be_close_to 42
+end
+
+==> corrected/test/178_test.rb 74 <==
+it 'does something' do
+  n = do_something
+  expect(n).must_include 42
+end
+
+==> corrected/test/179_test.rb 71 <==
+it 'does something' do
+  $n = do_something
+  expect($n).wont_be 42
+end
+
+==> corrected/test/180_test.rb 79 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).wont_be_nil 42
+end
+
+==> corrected/test/181_test.rb 81 <==
+it 'does something' do
+  @n = do_something
+  expect(@n[:foo]).must_be_nil 42
+end
+
+==> corrected/test/182_test.rb 53 <==
+it 'does something' do
+  expect(n).wont_equal 42
+end
+
+==> corrected/test/183_test.rb 80 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).wont_be_close_to 42
+end
+
+==> corrected/test/184_test.rb 83 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).must_be_nil 42
+end
+
+==> corrected/test/185_test.rb 54 <==
+it 'does something' do
+  expect(n).wont_be_nil 42
+end
+
+==> corrected/test/186_test.rb 54 <==
+it 'does something' do
+  expect(foo(a)).wont_be 0
+end
+
+==> corrected/test/187_test.rb 86 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).must_be_close_to 42
+end
+
+==> corrected/test/188_test.rb 50 <==
+it 'does something' do
+  expect(n).must_be 42
+end
+
+==> corrected/test/189_test.rb 59 <==
+it 'does something' do
+  expect(C).must_be_kind_of(:a)
+end
+
+==> corrected/test/190_test.rb 85 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).path_must_exist 42
+end
+
+==> corrected/test/192_test.rb 77 <==
+it 'does something' do
+  n = do_something
+  expect(n).wont_be_kind_of 42
+end
+
+==> corrected/test/193_test.rb 88 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).must_be_within_epsilon 42
+end
+
+==> corrected/test/194_test.rb 51 <==
+it 'does something' do
+  expect(n).must_be_nil
+end
+
+==> corrected/test/195_test.rb 69 <==
+it 'does something' do
+  expect(options[:a][:b]).must_be_empty 0
+end
+
+==> corrected/test/196_test.rb 61 <==
+it 'does something' do
+  expect(n).wont_pattern_match 42
+end
+
+==> corrected/test/198_test.rb 64 <==
+it 'does something' do
+  expect { n }.wont_pattern_match 42
+end
+
+==> corrected/test/199_test.rb 62 <==
+it 'does something' do
+  expect(n).must_be_instance_of 42
+end
+
+==> corrected/test/200_test.rb 57 <==
+it 'does something' do
+  expect(n).must_be_silent 42
+end
+
+==> corrected/test/201_test.rb 58 <==
+it 'does something' do
+  expect(n).must_be_same_as 42
+end
+
+==> corrected/test/202_test.rb 53 <==
+it 'does something' do
+  expect(n).must_match 42
+end
+
+==> corrected/test/203_test.rb 50 <==
+it 'does something' do
+  expect(n).must_be 42
+end
+
+==> corrected/test/204_test.rb 69 <==
+it 'does something' do
+  expect(options[:a][:b]).wont_be_empty 0
+end
+
+==> corrected/test/205_test.rb 55 <==
+it 'does something' do
+  expect(n).wont_include 42
+end
+
+==> corrected/test/206_test.rb 62 <==
+it 'does something' do
+  expect(n).wont_be_instance_of 42
+end
+
+==> corrected/test/207_test.rb 67 <==
+it 'does something' do
+  expect(options[:a][:b]).wont_be_nil 0
+end
+
+==> corrected/test/208_test.rb 74 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).wont_match 42
+end
+
+==> corrected/test/209_test.rb 85 <==
+it 'does something' do
+  @n = do_something
+  expect(@n[:foo]).must_respond_to 42
+end
+
+==> corrected/test/210_test.rb 76 <==
+it 'does something' do
+  expect(options[:a][:b]).wont_be_within_delta 0
+end
+
+==> corrected/test/212_test.rb 54 <==
+it 'does something' do
+  expect(n).wont_be_nil 42
+end
+
+==> corrected/test/213_test.rb 85 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).wont_be_same_as 42
+end
+
+==> corrected/test/214_test.rb 72 <==
+it 'does something' do
+  n = do_something
+  expect(n).must_match 42
+end
+
+==> corrected/test/215_test.rb 55 <==
+it 'does something' do
+  expect(n).must_include 42
+end
+
+==> corrected/test/216_test.rb 51 <==
+it 'does something' do
+  expect(C).must_be(:a)
+end
+
+==> corrected/test/217_test.rb 83 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).wont_be_nil 42
+end
+
+==> corrected/test/218_test.rb 80 <==
+it 'does something' do
+  @n = do_something
+  expect(@n[:foo]).wont_equal 42
+end
+
+==> corrected/test/219_test.rb 85 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).must_be_instance_of 42
+end
+
+==> corrected/test/220_test.rb 89 <==
+it 'does something' do
+  @n = do_something
+  expect(@n[:foo]).must_be_instance_of 42
+end
+
+==> corrected/test/221_test.rb 78 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).must_include 42
+end
+
+==> corrected/test/222_test.rb 77 <==
+it 'does something' do
+  n = do_something
+  expect(n).must_be_same_as 42
+end
+
+==> corrected/test/223_test.rb 64 <==
+it 'does something' do
+  expect(C).wont_be_within_delta(:a)
+end
+
+==> corrected/test/224_test.rb 88 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).wont_be_within_delta 42
+end
+
+==> corrected/test/225_test.rb 74 <==
+it 'does something' do
+  n = do_something
+  expect(n).wont_include 42
+end
+
+==> corrected/test/226_test.rb 81 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).must_be_empty 42
+end
+
+==> corrected/test/227_test.rb 81 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).wont_be_kind_of 42
+end
+
+==> corrected/test/228_test.rb 82 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).wont_match 42
+end
+
+==> corrected/test/229_test.rb 62 <==
+it 'does something' do
+  expect(foo(a)).wont_be_kind_of 0
+end
+
+==> corrected/test/230_test.rb 63 <==
+it 'does something' do
+  expect(foo(a)).wont_be_close_to 0
+end
+
+==> corrected/test/231_test.rb 63 <==
+it 'does something' do
+  expect(options[:a][:b]).wont_be 0
+end
+
+==> corrected/test/232_test.rb 54 <==
+it 'does something' do
+  expect(n).must_output 42
+end
+
+==> corrected/test/233_test.rb 62 <==
+it 'does something' do
+  expect(n).must_be_instance_of 42
+end
+
+==> corrected/test/234_test.rb 81 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).wont_be_nil 42
+end
+
+==> corrected/test/235_test.rb 80 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).wont_equal 42
+end
+
+==> corrected/test/236_test.rb 58 <==
+it 'does something' do
+  expect(foo(a)).wont_be_nil 0
+end
+
+==> corrected/test/237_test.rb 77 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).wont_be 42
+end
+
+==> corrected/test/238_test.rb 87 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).wont_respond_to 42
+end
+
+==> corrected/test/239_test.rb 83 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).path_wont_exist 42
+end
+
+==> corrected/test/240_test.rb 83 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).wont_respond_to 42
+end
+
+==> corrected/test/241_test.rb 69 <==
+it 'does something' do
+  expect(foo(a)).wont_be_within_epsilon 0
+end
+
+==> corrected/test/242_test.rb 79 <==
+it 'does something' do
+  $n = do_something
+  expect($n).wont_respond_to 42
+end
+
+==> corrected/test/243_test.rb 92 <==
+it 'does something' do
+  @n = do_something
+  expect(@n[:foo]).must_be_within_epsilon 42
+end
+
+==> corrected/test/244_test.rb 57 <==
+it 'does something' do
+  expect(C).wont_be_empty(:a)
+end
+
+==> corrected/test/245_test.rb 77 <==
+it 'does something' do
+  n = do_something
+  expect(n).wont_respond_to 42
+end
+
+==> corrected/test/246_test.rb 74 <==
+it 'does something' do
+  $n = do_something
+  expect($n).wont_match 42
+end
+
+==> corrected/test/247_test.rb 75 <==
+it 'does something' do
+  n = do_something
+  expect(n).must_be_empty 42
+end
+
+==> corrected/test/248_test.rb 64 <==
+it 'does something' do
+  expect { n }.must_pattern_match 42
+end
+
+==> corrected/test/249_test.rb 92 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).must_be_within_epsilon 42
+end
+
+==> corrected/test/252_test.rb 75 <==
+it 'does something' do
+  $n = do_something
+  expect($n).wont_be_nil 42
+end
+
+==> corrected/test/253_test.rb 75 <==
+it 'does something' do
+  $n = do_something
+  expect($n).must_be_nil 42
+end
+
+==> corrected/test/254_test.rb 53 <==
+it 'does something' do
+  expect(n).wont_match 42
+end
+
+==> corrected/test/255_test.rb 81 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).must_be_kind_of 42
+end
+
+==> corrected/test/256_test.rb 64 <==
+it 'does something' do
+  expect { n }.must_pattern_match 42
+end
+
+==> corrected/test/257_test.rb 94 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).must_be_within_epsilon 42
+end
+
+==> corrected/test/258_test.rb 82 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).wont_include 42
+end
+
+==> corrected/test/259_test.rb 62 <==
+it 'does something' do
+  expect(foo(a)).wont_respond_to 0
+end
+
+==> corrected/test/260_test.rb 77 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).must_be 42
+end
+
+==> corrected/test/261_test.rb 84 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).must_include 42
+end
+
+==> corrected/test/262_test.rb 69 <==
+it 'does something' do
+  n = do_something
+  expect(n).must_be 42
+end
+
+==> corrected/test/265_test.rb 77 <==
+it 'does something' do
+  n = do_something
+  expect(n).path_must_exist 42
+end
+
+==> corrected/test/266_test.rb 76 <==
+it 'does something' do
+  expect(options[:a][:b]).must_be_within_delta 0
+end
+
+==> corrected/test/267_test.rb 53 <==
+it 'does something' do
+  expect(n).wont_match 42
+end
+
+==> corrected/test/268_test.rb 83 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).must_be_instance_of 42
+end
+
+==> corrected/test/269_test.rb 56 <==
+it 'does something' do
+  expect(n).wont_be_empty 42
+end
+
+==> corrected/test/270_test.rb 59 <==
+it 'does something' do
+  expect(foo(a)).wont_include 0
+end
+
+==> corrected/test/271_test.rb 62 <==
+it 'does something' do
+  expect(n).wont_be_instance_of 42
+end
+
+==> corrected/test/273_test.rb 65 <==
+it 'does something' do
+  expect(n).must_be_within_epsilon 42
+end
+
+==> corrected/test/274_test.rb 65 <==
+it 'does something' do
+  expect(n).wont_be_within_epsilon 42
+end
+
+==> corrected/test/275_test.rb 65 <==
+it 'does something' do
+  expect(n).wont_be_within_epsilon 42
+end
+
+==> corrected/test/276_test.rb 58 <==
+it 'does something' do
+  expect(n).wont_be_same_as 42
+end
+
+==> corrected/test/277_test.rb 65 <==
+it 'does something' do
+  expect(n).must_be_within_epsilon 42
+end
+
+==> corrected/test/279_test.rb 75 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).wont_be 42
+end
+
+==> corrected/test/280_test.rb 56 <==
+it 'does something' do
+  expect { n }.must_raise 42
+end
+
+==> corrected/test/281_test.rb 81 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).wont_respond_to 42
+end
+
+==> corrected/test/282_test.rb 79 <==
+it 'does something' do
+  $n = do_something
+  expect($n).wont_be_kind_of 42
+end
+
+==> corrected/test/283_test.rb 61 <==
+it 'does something' do
+  expect(n).must_pattern_match 42
+end
+
+==> corrected/test/284_test.rb 59 <==
+it 'does something' do
+  expect(C).wont_be_same_as(:a)
+end
+
+==> corrected/test/285_test.rb 91 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).wont_be_instance_of 42
+end
+
+==> corrected/test/286_test.rb 53 <==
+it 'does something' do
+  expect(n).must_equal 42
+end
+
+==> corrected/test/287_test.rb 53 <==
+it 'does something' do
+  expect(n).must_equal 42
+end
+
+==> corrected/test/288_test.rb 53 <==
+it 'does something' do
+  expect(n).must_throw 42
+end
+
+==> corrected/test/289_test.rb 59 <==
+it 'does something' do
+  expect(C).path_must_exist(:a)
+end
+
+==> corrected/test/290_test.rb 53 <==
+it 'does something' do
+  expect(n).must_equal 42
+end
+
+==> corrected/test/291_test.rb 59 <==
+it 'does something' do
+  expect(C).wont_respond_to(:a)
+end
+
+==> corrected/test/293_test.rb 87 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).must_be_kind_of 42
+end
+
+==> corrected/test/294_test.rb 84 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).must_be_within_delta 42
+end
+
+==> corrected/test/295_test.rb 87 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).wont_be_instance_of 42
+end
+
+==> corrected/test/297_test.rb 56 <==
+it 'does something' do
+  expect(C).must_include(:a)
+end
+
+==> corrected/test/298_test.rb 81 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).must_be_same_as 42
+end
+
+==> corrected/test/299_test.rb 56 <==
+it 'does something' do
+  expect(n).must_be_empty 42
+end
+
+==> corrected/test/300_test.rb 60 <==
+it 'does something' do
+  expect { n }.must_be_silent 42
+end
+
+==> corrected/test/301_test.rb 54 <==
+it 'does something' do
+  expect(n).must_be_nil 42
+end
+
+==> corrected/test/302_test.rb 79 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).must_be_same_as 42
+end
+
+==> corrected/test/303_test.rb 80 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).must_be_close_to 42
+end
+
+==> corrected/test/304_test.rb 79 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).path_must_exist 42
+end
+
+==> corrected/test/305_test.rb 64 <==
+it 'does something' do
+  expect { n }.wont_pattern_match 42
+end
+
+==> corrected/test/306_test.rb 64 <==
+it 'does something' do
+  expect(C).must_be_within_delta(:a)
+end
+
+==> corrected/test/307_test.rb 74 <==
+it 'does something' do
+  $n = do_something
+  expect($n).wont_equal 42
+end
+
+==> corrected/test/308_test.rb 90 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).wont_be_within_delta 42
+end
+
+==> corrected/test/309_test.rb 50 <==
+it 'does something' do
+  expect(n).wont_be 42
+end
+
+==> corrected/test/310_test.rb 86 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).must_be_within_epsilon 42
+end
+
+==> corrected/test/311_test.rb 90 <==
+it 'does something' do
+  @n = do_something
+  expect(@n[:foo]).must_be_within_delta 42
+end
+
+==> corrected/test/313_test.rb 67 <==
+it 'does something' do
+  expect(foo(a)).wont_be_within_delta 0
+end
+
+==> corrected/test/314_test.rb 77 <==
+it 'does something' do
+  @n = do_something
+  expect(@n[:foo]).wont_be 42
+end
+
+==> corrected/test/315_test.rb 79 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).wont_be 42
+end
+
+==> corrected/test/316_test.rb 79 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).must_be_kind_of 42
+end
+
+==> corrected/test/319_test.rb 59 <==
+it 'does something' do
+  expect(C).must_respond_to(:a)
+end
+
+==> corrected/test/321_test.rb 85 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).wont_be_instance_of 42
+end
+
+==> corrected/test/322_test.rb 81 <==
+it 'does something' do
+  n = do_something
+  expect(n).must_be_instance_of 42
+end
+
+==> corrected/test/323_test.rb 84 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).wont_be_within_delta 42
+end
+
+==> corrected/test/324_test.rb 53 <==
+it 'does something' do
+  expect(n).must_raise 42
+end
+
+==> corrected/test/325_test.rb 79 <==
+it 'does something' do
+  $n = do_something
+  expect($n).must_be_kind_of 42
+end
+
+==> corrected/test/326_test.rb 73 <==
+it 'does something' do
+  n = do_something
+  expect(n).must_be_nil 42
+end
+
+==> corrected/test/327_test.rb 59 <==
+it 'does something' do
+  expect(C).must_be_same_as(:a)
+end
+
+==> corrected/test/328_test.rb 77 <==
+it 'does something' do
+  n = do_something
+  expect(n).must_be_kind_of 42
+end
+
+==> corrected/test/329_test.rb 74 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).wont_equal 42
+end
+
+==> corrected/test/331_test.rb 82 <==
+it 'does something' do
+  n = do_something
+  expect(n).must_be_within_delta 42
+end
+
+==> corrected/test/332_test.rb 88 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).must_be_close_to 42
+end
+
+==> corrected/test/333_test.rb 51 <==
+it 'does something' do
+  expect(C).wont_be(:a)
+end
+
+==> corrected/test/334_test.rb 58 <==
+it 'does something' do
+  expect(n).must_respond_to 42
+end
+
+==> corrected/test/336_test.rb 75 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).must_be_nil 42
+end
+
+==> corrected/test/337_test.rb 79 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).must_be_empty 42
+end
+
+==> corrected/test/338_test.rb 60 <==
+it 'does something' do
+  expect(foo(a)).must_be_empty 0
+end
+
+==> corrected/test/339_test.rb 85 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).must_be_same_as 42
+end
+
+==> corrected/test/340_test.rb 71 <==
+it 'does something' do
+  $n = do_something
+  expect($n).must_be 42
+end
+
+==> corrected/test/341_test.rb 75 <==
+it 'does something' do
+  n = do_something
+  expect(n).wont_be_empty 42
+end
+
+==> corrected/test/342_test.rb 75 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).wont_be_nil 42
+end
+
+==> corrected/test/343_test.rb 58 <==
+it 'does something' do
+  expect(n).must_be_kind_of 42
+end
+
+==> corrected/test/344_test.rb 57 <==
+it 'does something' do
+  expect(foo(a)).must_match 0
+end
+
+==> corrected/test/345_test.rb 63 <==
+it 'does something' do
+  expect(n).wont_be_within_delta 42
+end
+
+==> corrected/test/346_test.rb 63 <==
+it 'does something' do
+  expect(n).must_be_within_delta 42
+end
+
+==> corrected/test/347_test.rb 80 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).must_equal 42
+end
+
+==> corrected/test/349_test.rb 62 <==
+it 'does something' do
+  expect(foo(a)).path_must_exist 0
+end
+
+==> corrected/test/350_test.rb 83 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).wont_be_instance_of 42
+end
+
+==> corrected/test/351_test.rb 55 <==
+it 'does something' do
+  expect(n).must_include 42
+end
+
+==> corrected/test/352_test.rb 66 <==
+it 'does something' do
+  expect(options[:a][:b]).wont_equal 0
+end
+
+==> corrected/test/353_test.rb 60 <==
+it 'does something' do
+  expect { n }.must_be_silent 42
+end
+
+==> corrected/test/354_test.rb 94 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).wont_be_within_epsilon 42
+end
+
+==> corrected/test/355_test.rb 85 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).wont_be_empty 42
+end
+
+==> corrected/test/356_test.rb 50 <==
+it 'does something' do
+  expect(n).wont_be 42
+end
+
+==> corrected/test/357_test.rb 79 <==
+it 'does something' do
+  $n = do_something
+  expect($n).must_be_same_as 42
+end
+
+==> corrected/test/359_test.rb 82 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).must_match 42
+end
+
+==> corrected/test/360_test.rb 85 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).wont_respond_to 42
+end
+
+==> corrected/test/361_test.rb 63 <==
+it 'does something' do
+  expect(options[:a][:b]).must_be 0
+end
+
+==> corrected/test/362_test.rb 86 <==
+it 'does something' do
+  $n = do_something
+  expect($n).wont_be_within_epsilon 42
+end
+
+==> corrected/test/364_test.rb 61 <==
+it 'does something' do
+  expect(n).must_pattern_match 42
+end
+
+==> corrected/test/365_test.rb 74 <==
+it 'does something' do
+  $n = do_something
+  expect($n).must_match 42
+end
+
+==> corrected/test/366_test.rb 82 <==
+it 'does something' do
+  @n = do_something
+  expect(@n[:foo]).must_include 42
+end
+
+==> corrected/test/367_test.rb 66 <==
+it 'does something' do
+  expect(options[:a][:b]).must_match 0
+end
+
+==> corrected/test/368_test.rb 83 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).wont_be_empty 42
+end
+
+==> corrected/test/369_test.rb 85 <==
+it 'does something' do
+  @n = do_something
+  expect(@n[:foo]).wont_be_kind_of 42
+end
+
+==> corrected/test/370_test.rb 86 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).wont_be_close_to 42
+end
+
+==> corrected/test/371_test.rb 62 <==
+it 'does something' do
+  expect(foo(a)).must_be_kind_of 0
+end
+
+==> corrected/test/372_test.rb 73 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).must_be 42
+end
+
+==> corrected/test/373_test.rb 82 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).wont_equal 42
+end
+
+==> corrected/test/374_test.rb 58 <==
+it 'does something' do
+  expect(n).path_wont_exist 42
+end
+
+==> corrected/test/375_test.rb 81 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).must_be_nil 42
+end
+
+==> corrected/test/376_test.rb 58 <==
+it 'does something' do
+  expect(n).path_wont_exist 42
+end
+
+==> corrected/test/377_test.rb 69 <==
+it 'does something' do
+  n = do_something
+  expect(n).wont_be 42
+end
+
+==> corrected/test/378_test.rb 74 <==
+it 'does something' do
+  @n = do_something
+  expect(@n).must_equal 42
+end
+
+==> corrected/test/379_test.rb 72 <==
+it 'does something' do
+  n = do_something
+  expect(n).wont_match 42
+end
+
+==> corrected/test/380_test.rb 58 <==
+it 'does something' do
+  expect(n).wont_be_kind_of 42
+end
+
+==> corrected/test/381_test.rb 82 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).must_equal 42
+end
+
+==> corrected/test/382_test.rb 83 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).must_be_empty 42
+end
+
+==> corrected/test/383_test.rb 76 <==
+it 'does something' do
+  $n = do_something
+  expect($n).wont_include 42
+end
+
+==> corrected/test/384_test.rb 78 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).must_match 42
+end
+
+==> corrected/test/385_test.rb 56 <==
+it 'does something' do
+  expect { n }.must_throw 42
+end
+
+==> corrected/test/386_test.rb 63 <==
+it 'does something' do
+  expect(foo(a)).must_be_close_to 0
+end
+
+==> corrected/test/387_test.rb 89 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).must_be_instance_of 42
+end
+
+==> corrected/test/389_test.rb 90 <==
+it 'does something' do
+  n = do_something
+  expect(n[:foo]).wont_be_within_epsilon 42
+end
+
+==> corrected/test/390_test.rb 77 <==
+it 'does something' do
+  @n = do_something
+  expect(@n[:foo]).must_be 42
+end
+
+==> corrected/test/391_test.rb 89 <==
+it 'does something' do
+  $n = do_something
+  expect($n[:foo]).wont_be_instance_of 42
+end
+
+==> corrected/test/392_test.rb 81 <==
+it 'does something' do
+  @n = do_something
+  expect(@n[:foo]).wont_be_nil 42
+end
+
+==> corrected/test/393_test.rb 81 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n).must_respond_to 42
+end
+
+==> corrected/test/394_test.rb 72 <==
+it 'does something' do
+  expect(options[:a][:b]).must_be_close_to 0
+end
+
+==> corrected/test/395_test.rb 58 <==
+it 'does something' do
+  expect(foo(a)).must_be_nil 0
+end
+
+==> corrected/test/396_test.rb 80 <==
+it 'does something' do
+  @n = do_something
+  expect(@n[:foo]).must_match 42
+end
+
+==> corrected/test/397_test.rb 55 <==
+it 'does something' do
+  expect(n).wont_include 42
+end
+
+==> corrected/test/398_test.rb 53 <==
+it 'does something' do
+  expect(n).wont_equal 42
+end
+
+==> corrected/test/399_test.rb 79 <==
+it 'does something' do
+  @@n = do_something
+  expect(@@n[:foo]).must_be 42
+end
+

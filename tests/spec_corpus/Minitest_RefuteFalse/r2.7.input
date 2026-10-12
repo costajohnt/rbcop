@@ -1,0 +1,62 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 83 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(!test)
+  end
+end
+
+==> test/001_test.rb 150 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(false, obj.do_something, <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+
+==> test/002_test.rb 100 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(false, somestuff)
+  end
+end
+
+==> test/003_test.rb 87 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute(somestuff)
+  end
+end
+
+==> test/004_test.rb 118 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(false, obj.do_something, 'message')
+  end
+end
+
+==> test/005_test.rb 111 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(false, somestuff, 'message')
+  end
+end
+
+==> test/006_test.rb 94 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(!test, 'message')
+  end
+end
+

@@ -1,0 +1,10 @@
+==> offenses exit=1 376 <==
+test/000_test.rb:6:1: C: Minitest/DuplicateTestRun: Subclasses with test methods causes the parent' tests to run them twice.
+test/000_test.rb:14:1: C: Minitest/DuplicateTestRun: Subclasses with test methods causes the parent' tests to run them twice.
+test/003_test.rb:6:1: C: Minitest/DuplicateTestRun: Subclasses with test methods causes the parent' tests to run them twice.
+
+==> autocorrect exit=1 376 <==
+test/000_test.rb:6:1: C: Minitest/DuplicateTestRun: Subclasses with test methods causes the parent' tests to run them twice.
+test/000_test.rb:14:1: C: Minitest/DuplicateTestRun: Subclasses with test methods causes the parent' tests to run them twice.
+test/003_test.rb:6:1: C: Minitest/DuplicateTestRun: Subclasses with test methods causes the parent' tests to run them twice.
+

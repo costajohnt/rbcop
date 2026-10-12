@@ -1,0 +1,58 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 96 <==
+class FooTest
+  private
+  test "does something"  do
+    assert_equal 42, do_something
+  end
+end
+
+==> test/001_test.rb 94 <==
+class FooTest < Minitest::Test
+  private
+  def test_does_something
+    do_something
+  end
+end
+
+==> test/002_test.rb 94 <==
+class FooTest
+  private
+  def test_does_something
+    assert_equal 42, do_something
+  end
+end
+
+==> test/003_test.rb 106 <==
+class FooTest < Minitest::Test
+  private
+  def does_something
+    assert_equal 42, do_something
+  end
+end
+
+==> test/004_test.rb 111 <==
+class FooTest < Minitest::Test
+  private
+  def test_does_something
+    assert_equal 42, do_something
+  end
+end
+
+==> test/005_test.rb 113 <==
+class FooTest < Minitest::Test
+  protected
+  def test_does_something
+    assert_equal 42, do_something
+  end
+end
+

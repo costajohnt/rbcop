@@ -1,0 +1,164 @@
+==> offenses exit=1 3647 <==
+test/000_test.rb:1:30: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/001_test.rb:1:19: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/002_test.rb:1:24: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/003_test.rb:1:17: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/004_test.rb:1:30: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/005_test.rb:1:28: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/006_test.rb:1:24: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/007_test.rb:1:26: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/008_test.rb:1:30: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/009_test.rb:1:26: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/010_test.rb:1:7: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/011_test.rb:1:38: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/012_test.rb:1:34: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/013_test.rb:1:19: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/014_test.rb:1:34: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/015_test.rb:1:34: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/016_test.rb:1:17: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/017_test.rb:1:26: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/018_test.rb:1:29: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/019_test.rb:1:14: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/020_test.rb:1:34: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/021_test.rb:1:26: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/022_test.rb:1:30: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/023_test.rb:1:23: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/024_test.rb:1:14: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/025_test.rb:1:20: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/027_test.rb:1:23: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/028_test.rb:1:38: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/029_test.rb:1:29: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/030_test.rb:1:28: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/031_test.rb:1:26: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/032_test.rb:1:26: C: [Correctable] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+
+==> autocorrect exit=0 3583 <==
+test/000_test.rb:1:30: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/001_test.rb:1:19: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/002_test.rb:1:24: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/003_test.rb:1:17: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/004_test.rb:1:30: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/005_test.rb:1:28: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/006_test.rb:1:24: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/007_test.rb:1:26: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/008_test.rb:1:30: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/009_test.rb:1:26: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/010_test.rb:1:7: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/011_test.rb:1:38: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/012_test.rb:1:34: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/013_test.rb:1:19: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/014_test.rb:1:34: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/015_test.rb:1:34: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/016_test.rb:1:17: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/017_test.rb:1:26: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/018_test.rb:1:29: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/019_test.rb:1:14: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/020_test.rb:1:34: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/021_test.rb:1:26: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/022_test.rb:1:30: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/023_test.rb:1:23: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/024_test.rb:1:14: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/025_test.rb:1:20: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/027_test.rb:1:23: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/028_test.rb:1:38: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/029_test.rb:1:29: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/030_test.rb:1:28: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/031_test.rb:1:26: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+test/032_test.rb:1:26: C: [Corrected] Minitest/RedundantMessageArgument: Remove the redundant message argument.
+
+==> corrected/test/000_test.rb 29 <==
+assert_respond_to(obj, meth)
+
+==> corrected/test/001_test.rb 18 <==
+refute_empty(obj)
+
+==> corrected/test/002_test.rb 23 <==
+assert_equal(exp, act)
+
+==> corrected/test/003_test.rb 16 <==
+refute_nil(obj)
+
+==> corrected/test/004_test.rb 29 <==
+refute_respond_to(obj, meth)
+
+==> corrected/test/005_test.rb 27 <==
+refute_match(matcher, obj)
+
+==> corrected/test/006_test.rb 23 <==
+refute_equal(exp, act)
+
+==> corrected/test/007_test.rb 25 <==
+refute_kind_of(cls, obj)
+
+==> corrected/test/008_test.rb 29 <==
+refute_instance_of(cls, obj)
+
+==> corrected/test/009_test.rb 25 <==
+refute_predicate(o1, op)
+
+==> corrected/test/010_test.rb 8 <==
+flunk()
+
+==> corrected/test/011_test.rb 37 <==
+refute_in_epsilon(exp, act, epsilon)
+
+==> corrected/test/012_test.rb 33 <==
+assert_in_delta(exp, act, delta)
+
+==> corrected/test/013_test.rb 18 <==
+assert_empty(obj)
+
+==> corrected/test/014_test.rb 33 <==
+refute_in_delta(exp, act, delta)
+
+==> corrected/test/015_test.rb 33 <==
+refute_includes(collection, obj)
+
+==> corrected/test/016_test.rb 16 <==
+assert_nil(obj)
+
+==> corrected/test/017_test.rb 25 <==
+refute_path_exists(path)
+
+==> corrected/test/018_test.rb 28 <==
+refute_operator(o1, op, op)
+
+==> corrected/test/019_test.rb 13 <==
+refute(test)
+
+==> corrected/test/020_test.rb 33 <==
+assert_includes(collection, obj)
+
+==> corrected/test/021_test.rb 25 <==
+assert_predicate(o1, op)
+
+==> corrected/test/022_test.rb 29 <==
+assert_instance_of(cls, obj)
+
+==> corrected/test/023_test.rb 22 <==
+refute_same(exp, act)
+
+==> corrected/test/024_test.rb 13 <==
+assert(test)
+
+==> corrected/test/025_test.rb 19 <==
+assert_throws(sym)
+
+==> corrected/test/027_test.rb 22 <==
+assert_same(exp, act)
+
+==> corrected/test/028_test.rb 37 <==
+assert_in_epsilon(exp, act, epsilon)
+
+==> corrected/test/029_test.rb 28 <==
+assert_operator(o1, op, op)
+
+==> corrected/test/030_test.rb 27 <==
+assert_match(matcher, obj)
+
+==> corrected/test/031_test.rb 25 <==
+assert_kind_of(cls, obj)
+
+==> corrected/test/032_test.rb 25 <==
+assert_path_exists(path)
+

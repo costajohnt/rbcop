@@ -1,0 +1,12 @@
+==> offenses exit=1 488 <==
+test/000_test.rb:3:3: W: Minitest/NonPublicTestMethod: Non `public` test method detected. Make it `public` for it to run.
+test/002_test.rb:3:3: W: Minitest/NonPublicTestMethod: Non `public` test method detected. Make it `public` for it to run.
+test/004_test.rb:3:3: W: Minitest/NonPublicTestMethod: Non `public` test method detected. Make it `public` for it to run.
+test/005_test.rb:3:3: W: Minitest/NonPublicTestMethod: Non `public` test method detected. Make it `public` for it to run.
+
+==> autocorrect exit=1 488 <==
+test/000_test.rb:3:3: W: Minitest/NonPublicTestMethod: Non `public` test method detected. Make it `public` for it to run.
+test/002_test.rb:3:3: W: Minitest/NonPublicTestMethod: Non `public` test method detected. Make it `public` for it to run.
+test/004_test.rb:3:3: W: Minitest/NonPublicTestMethod: Non `public` test method detected. Make it `public` for it to run.
+test/005_test.rb:3:3: W: Minitest/NonPublicTestMethod: Non `public` test method detected. Make it `public` for it to run.
+

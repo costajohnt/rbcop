@@ -1,0 +1,63 @@
+==> offenses exit=1 633 <==
+test/000_test.rb:6:3: C: [Correctable] Minitest/LifecycleHooksOrder: `before_setup` is supposed to appear before `after_teardown`.
+test/000_test.rb:12:3: C: [Correctable] Minitest/LifecycleHooksOrder: `teardown` is supposed to appear before `test_something`.
+test/000_test.rb:16:3: C: [Correctable] Minitest/LifecycleHooksOrder: `setup` is supposed to appear before `teardown`.
+test/003_test.rb:8:3: C: [Correctable] Minitest/LifecycleHooksOrder: `before_setup` is supposed to appear before `after_teardown`.
+test/006_test.rb:6:3: C: [Correctable] Minitest/LifecycleHooksOrder: `setup` is supposed to appear before `test_something`.
+
+==> autocorrect exit=0 1235 <==
+test/000_test.rb:6:3: C: [Corrected] Minitest/LifecycleHooksOrder: `before_setup` is supposed to appear before `after_teardown`.
+test/000_test.rb:6:3: C: [Corrected] Minitest/LifecycleHooksOrder: `setup` is supposed to appear before `teardown`.
+test/000_test.rb:8:3: C: [Corrected] Minitest/LifecycleHooksOrder: `teardown` is supposed to appear before `after_teardown`.
+test/000_test.rb:11:3: C: [Corrected] Minitest/LifecycleHooksOrder: `setup` is supposed to appear before `after_teardown`.
+test/000_test.rb:12:3: C: [Corrected] Minitest/LifecycleHooksOrder: `teardown` is supposed to appear before `test_something`.
+test/000_test.rb:15:3: C: [Corrected] Minitest/LifecycleHooksOrder: `setup` is supposed to appear before `test_something`.
+test/000_test.rb:16:3: C: [Corrected] Minitest/LifecycleHooksOrder: `setup` is supposed to appear before `teardown`.
+test/003_test.rb:8:3: C: [Corrected] Minitest/LifecycleHooksOrder: `before_setup` is supposed to appear before `after_teardown`.
+test/006_test.rb:6:3: C: [Corrected] Minitest/LifecycleHooksOrder: `setup` is supposed to appear before `test_something`.
+test/006_test.rb:7:3: C: [Corrected] Minitest/LifecycleHooksOrder: `teardown` is supposed to appear before `test_something`.
+
+==> corrected/test/000_test.rb 263 <==
+class FooTest < Minitest::Test
+  def before_setup; end
+  def setup
+    setup_something
+  end
+  def teardown
+    cleanup
+  end
+  def after_teardown
+    more_cleanup
+  end
+
+
+  def test_something
+    assert_equal foo, bar
+  end
+
+
+
+  def test_something_else; end
+end
+
+==> corrected/test/003_test.rb 156 <==
+class FooTest < Minitest::Test
+  # before_setup comment
+  def before_setup; end
+  # after_teardown comment
+  def after_teardown
+    more_cleanup
+  end
+
+end
+
+==> corrected/test/006_test.rb 126 <==
+class FooTest < Minitest::Test
+  def setup; end
+  def teardown; end
+  def test_something
+    assert_equal foo, bar
+  end
+
+end
+

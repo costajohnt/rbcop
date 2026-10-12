@@ -1,0 +1,37 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 142 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_output("something", "") do
+      puts object.do_something
+    end
+  end
+end
+
+==> test/001_test.rb 133 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_output("", "") do
+      puts object.do_something
+    end
+  end
+end
+
+==> test/002_test.rb 125 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_silent do
+      puts object.do_something
+    end
+  end
+end
+

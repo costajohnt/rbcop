@@ -1,0 +1,34 @@
+==> offenses exit=1 326 <==
+test/002_test.rb:3:5: C: [Correctable] Minitest/AssertEmpty: Prefer using `assert_empty(somestuff, <<~MESSAGE)`.
+test/004_test.rb:3:5: C: [Correctable] Minitest/AssertEmpty: Prefer using `assert_empty(somestuff)`.
+test/005_test.rb:3:5: C: [Correctable] Minitest/AssertEmpty: Prefer using `assert_empty(somestuff, 'message')`.
+
+==> autocorrect exit=0 320 <==
+test/002_test.rb:3:5: C: [Corrected] Minitest/AssertEmpty: Prefer using `assert_empty(somestuff, <<~MESSAGE)`.
+test/004_test.rb:3:5: C: [Corrected] Minitest/AssertEmpty: Prefer using `assert_empty(somestuff)`.
+test/005_test.rb:3:5: C: [Corrected] Minitest/AssertEmpty: Prefer using `assert_empty(somestuff, 'message')`.
+
+==> corrected/test/002_test.rb 136 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_empty(somestuff, <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+
+==> corrected/test/004_test.rb 93 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_empty(somestuff)
+  end
+end
+
+==> corrected/test/005_test.rb 104 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_empty(somestuff, 'message')
+  end
+end
+

@@ -1,0 +1,42 @@
+==> offenses exit=1 464 <==
+test/003_test.rb:3:5: C: [Correctable] Minitest/AssertPredicate: Prefer using `assert_predicate(obj, :one?, 'message')`.
+test/008_test.rb:3:5: C: [Correctable] Minitest/AssertPredicate: Prefer using `assert_predicate(self, :one?)`.
+test/009_test.rb:3:5: C: [Correctable] Minitest/AssertPredicate: Prefer using `assert_predicate(obj, :one?, <<~MESSAGE)`.
+test/010_test.rb:3:5: C: [Correctable] Minitest/AssertPredicate: Prefer using `assert_predicate(obj, :one?)`.
+
+==> autocorrect exit=0 456 <==
+test/003_test.rb:3:5: C: [Corrected] Minitest/AssertPredicate: Prefer using `assert_predicate(obj, :one?, 'message')`.
+test/008_test.rb:3:5: C: [Corrected] Minitest/AssertPredicate: Prefer using `assert_predicate(self, :one?)`.
+test/009_test.rb:3:5: C: [Corrected] Minitest/AssertPredicate: Prefer using `assert_predicate(obj, :one?, <<~MESSAGE)`.
+test/010_test.rb:3:5: C: [Corrected] Minitest/AssertPredicate: Prefer using `assert_predicate(obj, :one?)`.
+
+==> corrected/test/003_test.rb 109 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_predicate(obj, :one?, 'message')
+  end
+end
+
+==> corrected/test/008_test.rb 99 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_predicate(self, :one?)
+  end
+end
+
+==> corrected/test/009_test.rb 136 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_predicate(obj, :one?, <<~MESSAGE)
+      message
+    MESSAGE
+  end
+end
+
+==> corrected/test/010_test.rb 98 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_predicate(obj, :one?)
+  end
+end
+

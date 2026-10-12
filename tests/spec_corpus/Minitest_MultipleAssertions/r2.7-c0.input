@@ -1,0 +1,507 @@
+==> .rubocop.yml 174 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Minitest/MultipleAssertions:
+  Max: 1
+
+==> test/000_test.rb 379 <==
+class FooTest < ActiveSupport::TestCase
+  test "#render errors include stack traces" do
+    err = assert_raises React::ServerRendering::PrerenderError do
+      @renderer.render("NonExistentComponent", {}, nil)
+    end
+
+    assert_match(/NonExistentComponent/, err.to_s, "it names the component")
+
+    assert_match(/
+/, err.to_s, "it includes the multi-line backtrace")
+  end
+end
+
+==> test/001_test.rb 427 <==
+class FooTest < ActiveSupport::TestCase
+  test "#render errors include stack traces" do
+    err = assert_raises React::ServerRendering::PrerenderError do
+      @renderer.render("NonExistentComponent", {}, nil)
+      assert_equal 1, 1
+      assert_equal 1, 1
+    end
+
+    assert_match(/NonExistentComponent/, err.to_s, "it names the component")
+
+    assert_match(/
+/, err.to_s, "it includes the multi-line backtrace")
+  end
+end
+
+==> test/002_test.rb 109 <==
+class FooTest < Minitest::Test
+  def test_asserts_once
+    assert_equal(foo, Bar.assert_something)
+  end
+end
+
+==> test/003_test.rb 139 <==
+class FooTest < Minitest::Test
+  def test_asserts_two_times
+    assert_raises(SomeError) do
+      assert_equal(baz, bar)
+    end
+  end
+end
+
+==> test/004_test.rb 164 <==
+class FooTest < ActiveSupport::TestCase
+  test 'something' do
+    if condition
+      assert_equal(foo, bar)
+    else
+      assert_equal(foo, baz)
+    end
+  end
+end
+
+==> test/005_test.rb 123 <==
+class FooTest < ActiveSupport::TestCase
+  test 'something' do
+    assert_equal(foo, bar)
+    assert_empty(array)
+  end
+end
+
+==> test/006_test.rb 129 <==
+class FooTest < ActiveSupport::TestCase
+  test 'something' do
+    do_something
+  rescue Foo
+    assert_equal(foo, bar)
+  end
+end
+
+==> test/007_test.rb 330 <==
+class FooTest < ActiveSupport::TestCase
+  test 'something' do
+    _ = begin
+          do_something
+        rescue Foo
+          assert_equal(foo, bar)
+          assert_empty(array)
+        rescue Bar
+          assert_equal(foo, bar) # 1
+          assert_empty(array) # 2
+          assert_equal(foo, baz) # 3
+        end
+  end
+end
+
+==> test/008_test.rb 198 <==
+class FooTest < ActiveSupport::TestCase
+  test 'something' do
+    if condition
+      assert_equal(foo, bar) # 1
+      assert_empty(array) # 2
+    else
+      assert_equal(foo, baz)
+    end
+  end
+end
+
+==> test/009_test.rb 124 <==
+class FooTest < Minitest::Test
+  def test_asserts_once
+    var ||= assert_equal(1, 2)
+
+    assert_equal(foo, bar)
+  end
+end
+
+==> test/010_test.rb 112 <==
+class FooTest < Minitest::Test
+  def test_asserts_once
+    var ||= :value
+
+    assert_equal(foo, bar)
+  end
+end
+
+==> test/011_test.rb 362 <==
+class FooTest < ActiveSupport::TestCase
+  test 'something' do
+    _ = case
+        when condition1
+          assert_equal(foo, bar)
+          assert_empty(array)
+        when condition2
+          assert_equal(foo, bar) # 1
+          assert_empty(array) # 2
+          assert_equal(foo, baz) # 3
+        else
+          assert_equal(foo, zoo)
+        end
+  end
+end
+
+==> test/012_test.rb 363 <==
+class FooTest < ActiveSupport::TestCase
+  test 'something' do
+    _ = case variable
+        in pattern1
+          assert_equal(foo, bar)
+          assert_empty(array)
+        in pattern2
+          assert_equal(foo, bar) # 1
+          assert_empty(array) # 2
+          assert_equal(foo, baz) # 3
+        else
+          assert_equal(foo, zoo)
+        end
+  end
+end
+
+==> test/013_test.rb 222 <==
+class FooTest < ActiveSupport::TestCase
+  test 'something' do
+    _ = if condition
+          assert_equal(foo, bar) # 1
+          assert_empty(array) # 2
+        else
+          assert_equal(foo, baz)
+        end
+  end
+end
+
+==> test/014_test.rb 117 <==
+class FooTest < Minitest::Test
+  def test_asserts_twice
+    assert_equal(foo, bar)
+    assert_empty(array)
+  end
+end
+
+==> test/015_test.rb 256 <==
+class FooTest < ActiveSupport::TestCase
+  test 'something' do
+    do_something
+  rescue Foo
+    assert_equal(foo, bar)
+    assert_empty(array)
+  rescue Bar
+    assert_equal(foo, bar) # 1
+    assert_empty(array) # 2
+    assert_equal(foo, baz) # 3
+  end
+end
+
+==> test/016_test.rb 92 <==
+class FooTest < Minitest::Test
+  def test_asserts_once
+    _ = assert_equal(1, 2)
+  end
+end
+
+==> test/017_test.rb 423 <==
+class FooTest < ActiveSupport::TestCase
+  test 'something' do
+    if condition1
+      assert foo
+    elsif condition2
+      assert foo
+    else
+      begin
+        do_something
+      rescue Foo
+        assert foo
+      rescue Bar
+        # noop
+      rescue Zoo
+        case
+        when condition
+          assert foo
+        else
+          assert foo
+        end
+      else
+        assert foo
+      end
+    end
+  end
+end
+
+==> test/018_test.rb 126 <==
+class FooTest < ActiveSupport::TestCase
+  def test_asserts_twice
+    assert_equal(foo, bar)
+    assert_empty(array)
+  end
+end
+
+==> test/019_test.rb 130 <==
+class FooTest < Minitest::Test
+  def test_asserts_two_times
+    assert_something do
+      assert_equal(_1, bar)
+    end
+  end
+end
+
+==> test/020/test/foo_test.rb 303 <==
+      class FooTest < Minitest::Test
+        def test_asserts_once
+          assert_equal(foo, bar)
+        end
+
+        def test_asserts_four_times
+          assert_equal(foo, bar)
+          assert_equal(foo, bar)
+          assert_equal(foo, bar)
+          assert_equal(foo, bar)
+        end
+      end
+
+==> test/021_test.rb 318 <==
+class FooTest < ActiveSupport::TestCase
+  test 'something' do
+    case
+    when condition1
+      assert_equal(foo, bar)
+      assert_empty(array)
+    when condition2
+      assert_equal(foo, bar) # 1
+      assert_empty(array) # 2
+      assert_equal(foo, baz) # 3
+    else
+      assert_equal(foo, zoo)
+    end
+  end
+end
+
+==> test/022_test.rb 112 <==
+class FooTest < Minitest::Test
+  def test_asserts_once
+    obj.value = 42
+
+    assert_equal(foo, bar)
+  end
+end
+
+==> test/023_test.rb 188 <==
+class FooTest < ActiveSupport::TestCase
+  test 'something' do
+    case variable
+    in pattern1
+      assert_equal(foo, bar)
+    in pattern2
+      assert_equal(foo, baz)
+    end
+  end
+end
+
+==> test/024_test.rb 575 <==
+class FooTest < ActiveSupport::TestCase
+  test "#render errors include stack traces" do
+    err = assert_raises React::ServerRendering::PrerenderError do
+      assert_equal 1, 1
+
+      assert_raises React::ServerRendering::PrerenderError do
+        assert_equal 1, 1
+      end
+
+      _ = assert_raises React::ServerRendering::PrerenderError do
+        assert_equal 1, 1
+        assert_equal 1, 1
+      end
+    end
+
+    assert_match(/NonExistentComponent/, err.to_s, "it names the component")
+
+    assert_match(/
+/, err.to_s, "it includes the multi-line backtrace")
+  end
+end
+
+==> test/025_test.rb 150 <==
+class FooTest < Minitest::Test
+  def test_asserts_twice
+    assert_equal(foo, bar)
+    for baz in [1, 2]
+      assert_equal(baz, 1)
+    end
+  end
+end
+
+==> test/026_test.rb 156 <==
+class FooTest < Minitest::Test
+  def with_recorded_fixture(name)
+    test(name) do
+      assert_equal(foo, bar)
+      assert_empty(array)
+    end
+  end
+end
+
+==> test/027_test.rb 579 <==
+class FooTest < ActiveSupport::TestCase
+  test "#render errors include stack traces" do
+    err = assert_raises React::ServerRendering::PrerenderError do
+      assert_equal _1, 1
+
+      assert_raises React::ServerRendering::PrerenderError do
+        assert_equal _1, 1
+      end
+
+      _ = assert_raises React::ServerRendering::PrerenderError do
+        assert_equal _1, 1
+        assert_equal _1, 1
+      end
+    end
+
+    assert_match(/NonExistentComponent/, err.to_s, "it names the component")
+
+    assert_match(/
+/, err.to_s, "it includes the multi-line backtrace")
+  end
+end
+
+==> test/028_test.rb 130 <==
+class FooTest < Minitest::Test
+  def test_asserts_two_times
+    assert_something do
+      assert_equal(it, bar)
+    end
+  end
+end
+
+==> test/029_test.rb 120 <==
+class FooTest < Minitest::Test
+  def test_asserts_twice
+    _ = assert_equal(1, 2)
+    _ = assert_equal(1, 2)
+  end
+end
+
+==> test/030_test.rb 176 <==
+class FooTest < ActiveSupport::TestCase
+  test 'something' do
+    case
+    when condition1
+      assert_equal(foo, bar)
+    else
+      assert_equal(foo, zoo)
+    end
+  end
+end
+
+==> test/031_test.rb 611 <==
+class FooTest < Minitest::Test
+  def test_all_types_of_assignment
+    # lvasgn
+    foo = assert_equal(1, 1)
+    # ivasgn
+    @instance_variable = assert_equal(1, 1)
+    # cvasgn
+    @@class_variable = assert_equal(1, 1)
+    # gvasgn
+    $global_variable = assert_equal(1, 1)
+    # casgn
+    # MyClass::CONSTANT_VALUE = assert_equal(1, 1)
+    # masgn
+    a, b, c = assert_equal(1, 1)
+    a, b, c = [assert_equal(1, 1), assert_equal(1, 1), assert_equal(1, 1)]
+    # op_asgn
+    counter += assert_equal(1, 1)
+    # or_asgn
+    result ||= assert_equal(1, 1)
+    # and_asgn
+    flag &&= assert_equal(1, 1)
+  end
+end
+
+==> test/032_test.rb 92 <==
+class FooTest < Minitest::Test
+  def test_asserts_once
+    assert_equal(foo, bar)
+  end
+end
+
+==> test/033_test.rb 579 <==
+class FooTest < ActiveSupport::TestCase
+  test "#render errors include stack traces" do
+    err = assert_raises React::ServerRendering::PrerenderError do
+      assert_equal it, 1
+
+      assert_raises React::ServerRendering::PrerenderError do
+        assert_equal it, 1
+      end
+
+      _ = assert_raises React::ServerRendering::PrerenderError do
+        assert_equal it, 1
+        assert_equal it, 1
+      end
+    end
+
+    assert_match(/NonExistentComponent/, err.to_s, "it names the component")
+
+    assert_match(/
+/, err.to_s, "it includes the multi-line backtrace")
+  end
+end
+
+==> test/034_test.rb 100 <==
+class FooTest
+  def test_asserts_twice
+    assert_equal(foo, bar)
+    assert_empty(array)
+  end
+end
+
+==> test/035_test.rb 103 <==
+class Foo < Base
+  def test_asserts_twice
+    assert_equal(foo, bar)
+    assert_empty(array)
+  end
+end
+
+==> test/036_test.rb 134 <==
+class FooTest < Minitest::Test
+  # No 'test_' prefix
+  def asserts_twice
+    assert_equal(foo, bar)
+    assert_empty(array)
+  end
+end
+
+==> test/037_test.rb 137 <==
+class FooTest < Minitest::Test
+  def test_does_not_crash
+    _, _ = foo
+    _, _ = []
+    _, _ = {}
+    _, _ = ''
+    _, _ = 1
+  end
+end
+
+==> test/038_test.rb 319 <==
+class FooTest < ActiveSupport::TestCase
+  test 'something' do
+    case variable
+    in pattern1
+      assert_equal(foo, bar)
+      assert_empty(array)
+    in pattern2
+      assert_equal(foo, bar) # 1
+      assert_empty(array) # 2
+      assert_equal(foo, baz) # 3
+    else
+      assert_equal(foo, zoo)
+    end
+  end
+end
+

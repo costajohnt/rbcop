@@ -1,0 +1,132 @@
+==> offenses exit=1 1368 <==
+test/000_test.rb:3:3: C: [Correctable] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/001_test.rb:5:3: C: [Correctable] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/002_test.rb:5:3: C: [Correctable] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/003_test.rb:3:3: C: [Correctable] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/006_test.rb:6:3: C: [Correctable] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/008_test.rb:5:3: C: [Correctable] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/011_test.rb:7:3: C: [Correctable] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/013_test.rb:3:3: C: [Correctable] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/016_test.rb:3:3: C: [Correctable] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/018_test.rb:4:3: C: [Correctable] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/021_test.rb:3:3: C: [Correctable] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/022_test.rb:6:5: C: [Correctable] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+
+==> autocorrect exit=0 1344 <==
+test/000_test.rb:3:3: C: [Corrected] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/001_test.rb:5:3: C: [Corrected] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/002_test.rb:5:3: C: [Corrected] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/003_test.rb:3:3: C: [Corrected] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/006_test.rb:6:3: C: [Corrected] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/008_test.rb:5:3: C: [Corrected] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/011_test.rb:7:3: C: [Corrected] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/013_test.rb:3:3: C: [Corrected] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/016_test.rb:3:3: C: [Corrected] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/018_test.rb:4:3: C: [Corrected] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/021_test.rb:3:3: C: [Corrected] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+test/022_test.rb:6:5: C: [Corrected] Minitest/EmptyLineBeforeAssertionMethods: Add empty line before assertion.
+
+==> corrected/test/000_test.rb 121 <==
+def test_do_something
+  set.each { |thing| do_something(thing) }
+
+  assert_equal 'This is really bad', error.message
+end
+
+==> corrected/test/001_test.rb 84 <==
+def test_do_something
+  <<~EOS
+    text
+  EOS
+
+  assert_equal(expected, actual)
+end
+
+==> corrected/test/002_test.rb 106 <==
+def test_do_something
+  do_something do
+    do_something_more
+  end
+
+  assert_equal(expected, actual)
+end
+
+==> corrected/test/003_test.rb 85 <==
+def test_do_something
+  do_something # comment
+
+  assert_equal(expected, actual)
+end
+
+==> corrected/test/006_test.rb 97 <==
+def test_do_something
+  do_something(
+    foo,
+    bar
+  )
+
+  assert_equal(expected, actual)
+end
+
+==> corrected/test/008_test.rb 98 <==
+def test_do_something
+  do_something(<<~EOS)
+    text
+  EOS
+
+  assert_equal(expected, actual)
+end
+
+==> corrected/test/011_test.rb 153 <==
+def test_do_something
+  set.each do |thing|
+    refute_nil(thing)
+
+    do_something(thing)
+  end
+
+  assert_equal 'This is really bad', error.message
+end
+
+==> corrected/test/013_test.rb 75 <==
+def test_do_something
+  do_something
+
+  assert_equal(expected, actual)
+end
+
+==> corrected/test/016_test.rb 102 <==
+def test_do_something
+  set = Set.new([1,2,3])
+
+  set.each do |thing|
+    refute_nil(thing)
+  end
+end
+
+==> corrected/test/018_test.rb 106 <==
+def test_do_something
+  set.each do |thing|
+  end
+
+  assert_equal 'This is really bad', error.message
+end
+
+==> corrected/test/021_test.rb 93 <==
+def test_do_something
+  set = Set.new([1,2,3])
+
+  set.each { |thing| refute_nil(thing) }
+end
+
+==> corrected/test/022_test.rb 188 <==
+def test_do_something
+  yaml_load_paths.each do |path|
+    YAML.load_file(path)
+  rescue Psych::Exception => e
+    do_something
+
+    flunk("Error loading #{path}: #{e.inspect}")
+  end
+end
+

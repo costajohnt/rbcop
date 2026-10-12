@@ -7,6 +7,7 @@ require 'rubocop'
 # rubocop-performance adds itself to two core cops' autocorrect_incompatible_with.
 require 'rubocop-performance'
 require 'rubocop-rails'
+require 'rubocop-minitest'
 
 RuboCop::Cop::Registry.global.filter_by_badge { true }.cops.each do |cop|
   incompatible = cop.autocorrect_incompatible_with.map(&:cop_name)

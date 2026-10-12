@@ -1,0 +1,31 @@
+==> offenses exit=1 365 <==
+test/000_test.rb:3:5: C: [Correctable] Minitest/RefuteOperator: Prefer using `refute_operator(expected, :<, actual)`.
+test/004_test.rb:3:5: C: [Correctable] Minitest/RefuteOperator: Prefer using `refute_operator(expected, :<, actual)`.
+test/006_test.rb:3:5: C: [Correctable] Minitest/RefuteOperator: Prefer using `refute_operator(expected, :<, actual, 'message')`.
+
+==> autocorrect exit=0 359 <==
+test/000_test.rb:3:5: C: [Corrected] Minitest/RefuteOperator: Prefer using `refute_operator(expected, :<, actual)`.
+test/004_test.rb:3:5: C: [Corrected] Minitest/RefuteOperator: Prefer using `refute_operator(expected, :<, actual)`.
+test/006_test.rb:3:5: C: [Corrected] Minitest/RefuteOperator: Prefer using `refute_operator(expected, :<, actual, 'message')`.
+
+==> corrected/test/000_test.rb 106 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_operator expected, :<, actual
+  end
+end
+
+==> corrected/test/004_test.rb 107 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_operator(expected, :<, actual)
+  end
+end
+
+==> corrected/test/006_test.rb 118 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_operator(expected, :<, actual, 'message')
+  end
+end
+

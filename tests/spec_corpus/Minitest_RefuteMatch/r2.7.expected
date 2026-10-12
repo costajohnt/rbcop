@@ -1,0 +1,166 @@
+==> offenses exit=1 1894 <==
+test/000_test.rb:3:5: C: [Correctable] Minitest/RefuteMatch: Prefer using `refute_match(/regexp/, object)`.
+test/001_test.rb:3:5: C: [Correctable] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object, 'message')`.
+test/002_test.rb:3:5: C: [Correctable] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object, <<~MESSAGE)`.
+test/004_test.rb:3:5: C: [Correctable] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object, <<~MESSAGE)`.
+test/005_test.rb:3:5: C: [Correctable] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object)`.
+test/006_test.rb:3:5: C: [Correctable] Minitest/RefuteMatch: Prefer using `refute_match(/regexp/, object)`.
+test/007_test.rb:3:5: C: [Correctable] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object, 'message')`.
+test/010_test.rb:3:5: C: [Correctable] Minitest/RefuteMatch: Prefer using `refute_match(/regexp/, object)`.
+test/013_test.rb:3:5: C: [Correctable] Minitest/RefuteMatch: Prefer using `refute_match(/regexp/, object)`.
+test/015_test.rb:3:5: C: [Correctable] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object)`.
+test/017_test.rb:3:5: C: [Correctable] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object)`.
+test/018_test.rb:3:5: C: [Correctable] Minitest/RefuteMatch: Prefer using `refute_match(/regexp/, object)`.
+test/019_test.rb:3:5: C: [Correctable] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object, 'message')`.
+test/020_test.rb:3:5: C: [Correctable] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object)`.
+test/021_test.rb:3:5: C: [Correctable] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object)`.
+test/022_test.rb:3:5: C: [Correctable] Minitest/RefuteMatch: Prefer using `refute_match(/regexp/, object)`.
+test/023_test.rb:3:5: C: [Correctable] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object, <<~MESSAGE)`.
+
+==> autocorrect exit=0 1860 <==
+test/000_test.rb:3:5: C: [Corrected] Minitest/RefuteMatch: Prefer using `refute_match(/regexp/, object)`.
+test/001_test.rb:3:5: C: [Corrected] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object, 'message')`.
+test/002_test.rb:3:5: C: [Corrected] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object, <<~MESSAGE)`.
+test/004_test.rb:3:5: C: [Corrected] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object, <<~MESSAGE)`.
+test/005_test.rb:3:5: C: [Corrected] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object)`.
+test/006_test.rb:3:5: C: [Corrected] Minitest/RefuteMatch: Prefer using `refute_match(/regexp/, object)`.
+test/007_test.rb:3:5: C: [Corrected] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object, 'message')`.
+test/010_test.rb:3:5: C: [Corrected] Minitest/RefuteMatch: Prefer using `refute_match(/regexp/, object)`.
+test/013_test.rb:3:5: C: [Corrected] Minitest/RefuteMatch: Prefer using `refute_match(/regexp/, object)`.
+test/015_test.rb:3:5: C: [Corrected] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object)`.
+test/017_test.rb:3:5: C: [Corrected] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object)`.
+test/018_test.rb:3:5: C: [Corrected] Minitest/RefuteMatch: Prefer using `refute_match(/regexp/, object)`.
+test/019_test.rb:3:5: C: [Corrected] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object, 'message')`.
+test/020_test.rb:3:5: C: [Corrected] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object)`.
+test/021_test.rb:3:5: C: [Corrected] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object)`.
+test/022_test.rb:3:5: C: [Corrected] Minitest/RefuteMatch: Prefer using `refute_match(/regexp/, object)`.
+test/023_test.rb:3:5: C: [Corrected] Minitest/RefuteMatch: Prefer using `refute_match(matcher, object, <<~MESSAGE)`.
+
+==> corrected/test/000_test.rb 100 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_match(/regexp/, object)
+  end
+end
+
+==> corrected/test/001_test.rb 110 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_match(matcher, object, 'message')
+  end
+end
+
+==> corrected/test/002_test.rb 142 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_match(matcher, object, <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+
+==> corrected/test/004_test.rb 142 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_match(matcher, object, <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+
+==> corrected/test/005_test.rb 99 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_match(matcher, object)
+  end
+end
+
+==> corrected/test/006_test.rb 100 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_match(/regexp/, object)
+  end
+end
+
+==> corrected/test/007_test.rb 110 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_match(matcher, object, 'message')
+  end
+end
+
+==> corrected/test/010_test.rb 100 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_match(/regexp/, object)
+  end
+end
+
+==> corrected/test/013_test.rb 100 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_match(/regexp/, object)
+  end
+end
+
+==> corrected/test/015_test.rb 99 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_match(matcher, object)
+  end
+end
+
+==> corrected/test/017_test.rb 99 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_match(matcher, object)
+  end
+end
+
+==> corrected/test/018_test.rb 100 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_match(/regexp/, object)
+  end
+end
+
+==> corrected/test/019_test.rb 110 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_match(matcher, object, 'message')
+  end
+end
+
+==> corrected/test/020_test.rb 99 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_match(matcher, object)
+  end
+end
+
+==> corrected/test/021_test.rb 99 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_match(matcher, object)
+  end
+end
+
+==> corrected/test/022_test.rb 100 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_match(/regexp/, object)
+  end
+end
+
+==> corrected/test/023_test.rb 142 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_match(matcher, object, <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+

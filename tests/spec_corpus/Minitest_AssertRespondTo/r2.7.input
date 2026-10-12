@@ -1,0 +1,55 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 147 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(respond_to?(:do_something), <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+
+==> test/001_test.rb 111 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(object.respond_to?(:do_something))
+  end
+end
+
+==> test/002_test.rb 104 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(respond_to?(:do_something))
+  end
+end
+
+==> test/003_test.rb 122 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_respond_to('rubocop-minitest', :do_something)
+  end
+end
+
+==> test/004_test.rb 122 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(object.respond_to?(:do_something), 'message')
+  end
+end
+
+==> test/005_test.rb 113 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert((object.respond_to?(:do_something)))
+  end
+end
+

@@ -1,0 +1,6 @@
+# The defaults plus the rubocop-minitest plugin: the autocorrect gate config for plugin cops
+# (scripts/check-plugins.sh), the plugin counterpart of --force-default-config.
+plugins:
+  - rubocop-minitest
+AllCops:
+  SuggestExtensions: false

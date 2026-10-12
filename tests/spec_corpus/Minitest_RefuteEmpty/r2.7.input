@@ -1,0 +1,55 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 94 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute(somestuff.empty?)
+  end
+end
+
+==> test/001_test.rb 93 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_empty(somestuff)
+  end
+end
+
+==> test/002_test.rb 105 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute(somestuff.empty?, 'message')
+  end
+end
+
+==> test/003_test.rb 95 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute(File.empty?(path))
+  end
+end
+
+==> test/004_test.rb 137 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute(somestuff.empty?, <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+
+==> test/005_test.rb 96 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute((somestuff.empty?))
+  end
+end
+

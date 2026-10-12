@@ -1,0 +1,10 @@
+==> offenses exit=1 234 <==
+test/001_test.rb:11:3: C: Minitest/NoAssertions: Test case has no assertions.
+test/007_test.rb:11:7: C: Minitest/NoAssertions: Test case has no assertions.
+test/008_test.rb:10:5: C: Minitest/NoAssertions: Test case has no assertions.
+
+==> autocorrect exit=1 234 <==
+test/001_test.rb:11:3: C: Minitest/NoAssertions: Test case has no assertions.
+test/007_test.rb:11:7: C: Minitest/NoAssertions: Test case has no assertions.
+test/008_test.rb:10:5: C: Minitest/NoAssertions: Test case has no assertions.
+

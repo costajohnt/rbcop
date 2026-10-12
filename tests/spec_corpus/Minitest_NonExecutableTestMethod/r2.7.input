@@ -1,0 +1,144 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 56 <==
+class FooTest < Minitest::Test
+end
+def do_something
+end
+
+==> test/001_test.rb 62 <==
+class FooTest < ActiveSupport::TestCase
+end
+
+def test_foo
+end
+
+==> test/002_test.rb 23 <==
+def test_something
+end
+
+==> test/003_test.rb 65 <==
+class FooTest < ActiveSupport::TestCase
+end
+def do_something
+end
+
+==> test/004_test.rb 95 <==
+class FooTest < Minitest::Test
+  def test_foo
+  end
+  class BarTest < Minitest::Test
+  end
+end
+
+==> test/005_test.rb 137 <==
+class FooTest < Minitest::Test
+  def test_foo
+  end
+end
+
+class TestHelperMailer < ActionMailer::Base
+  def test_parameter_args
+  end
+end
+
+==> test/006_test.rb 113 <==
+class FooTest < Minitest::Test
+  def test_foo
+  end
+end
+
+class FooTest < Minitest::Test
+  def test_foo
+  end
+end
+
+==> test/007_test.rb 232 <==
+class SetTest < ActiveRecord::AbstractMysqlTestCase
+  class SetTest < ActiveRecord::Base
+  end
+
+  def test_should_not_be_unsigned
+    column = SetTest.columns_hash["set_column"]
+    assert_not_predicate column, :unsigned?
+  end
+end
+
+==> test/008_test.rb 62 <==
+def test_foo
+end
+
+class FooTest < ActiveSupport::TestCase
+end
+
+==> test/009_test.rb 133 <==
+class FooTest < ActiveRecord::TestCase
+  def test_foo
+    def test_bar
+    end
+  end
+end
+
+class BarTest < ActiveRecord::TestCase
+end
+
+==> test/010_test.rb 52 <==
+class FooTest < Minitest::Test
+end
+def test_foo
+end
+
+==> test/011_test.rb 56 <==
+class FooTest < Minitest::Test
+  def test_foo
+  end
+end
+
+==> test/012_test.rb 182 <==
+module ActiveRecord
+  class AdapterTest < ActiveRecord::TestCase
+    unless current_adapter?(:PostgreSQLAdapter)
+      def test_update_prepared_statement
+      end
+    end
+  end
+end
+
+==> test/013_test.rb 99 <==
+module M
+  class FooTest < Minitest::Test
+    def test_foo
+    end
+  end
+
+  def test_bar
+  end
+end
+
+==> test/014_test.rb 111 <==
+class FooTest < Minitest::Test
+  def test_foo
+  end
+end
+
+module TestHelper
+  def test_parameter_args
+  end
+end
+
+==> test/015_test.rb 95 <==
+class FooTest < Minitest::Test
+  class BarTest < Minitest::Test
+  end
+  def test_foo
+  end
+end
+

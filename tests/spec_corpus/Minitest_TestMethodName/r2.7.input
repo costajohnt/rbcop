@@ -1,0 +1,70 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 234 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(expected, actual)
+    assert_equal expected, actual
+  end
+
+  def do_something_else
+    assert_equal(expected, actual)
+    assert_equal expected, actual
+  end
+end
+
+==> test/001_test.rb 68 <==
+class FooTest < Minitest::Test
+  def do_something
+    foo
+  end
+end
+
+==> test/002_test.rb 100 <==
+class FooTest < Minitest::Test
+  def do_something(arg)
+    assert_equal(expected, actual)
+  end
+end
+
+==> test/003_test.rb 43 <==
+class FooTest
+  def do_something
+  end
+end
+
+==> test/004_test.rb 106 <==
+class FooTest < Minitest::Test
+  private
+
+  def do_something
+    assert_equal(expected, actual)
+  end
+end
+
+==> test/005_test.rb 88 <==
+class FooTest < Minitest::Test
+  def setup
+    assert_equal(expected, actual)
+  end
+end
+
+==> test/006_test.rb 166 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(expected, actual)
+  end
+
+  def do_something_else
+    assert_equal(expected, actual)
+  end
+end
+

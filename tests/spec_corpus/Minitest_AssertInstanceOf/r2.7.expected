@@ -1,0 +1,64 @@
+==> offenses exit=1 757 <==
+test/000_test.rb:3:5: C: [Correctable] Minitest/AssertInstanceOf: Prefer using `assert_instance_of(SomeClass, object, 'message')`.
+test/001_test.rb:3:5: C: [Correctable] Minitest/AssertInstanceOf: Prefer using `assert_instance_of(SomeClass, obj, <<~MESSAGE)`.
+test/002_test.rb:3:5: C: [Correctable] Minitest/AssertInstanceOf: Prefer using `assert_instance_of(SomeClass, obj)`.
+test/004_test.rb:3:5: C: [Correctable] Minitest/AssertInstanceOf: Prefer using `assert_instance_of(SomeClass, object, <<~MESSAGE)`.
+test/005_test.rb:3:5: C: [Correctable] Minitest/AssertInstanceOf: Prefer using `assert_instance_of(SomeClass, obj, 'message')`.
+test/006_test.rb:3:5: C: [Correctable] Minitest/AssertInstanceOf: Prefer using `assert_instance_of(SomeClass, object)`.
+
+==> autocorrect exit=0 745 <==
+test/000_test.rb:3:5: C: [Corrected] Minitest/AssertInstanceOf: Prefer using `assert_instance_of(SomeClass, object, 'message')`.
+test/001_test.rb:3:5: C: [Corrected] Minitest/AssertInstanceOf: Prefer using `assert_instance_of(SomeClass, obj, <<~MESSAGE)`.
+test/002_test.rb:3:5: C: [Corrected] Minitest/AssertInstanceOf: Prefer using `assert_instance_of(SomeClass, obj)`.
+test/004_test.rb:3:5: C: [Corrected] Minitest/AssertInstanceOf: Prefer using `assert_instance_of(SomeClass, object, <<~MESSAGE)`.
+test/005_test.rb:3:5: C: [Corrected] Minitest/AssertInstanceOf: Prefer using `assert_instance_of(SomeClass, obj, 'message')`.
+test/006_test.rb:3:5: C: [Corrected] Minitest/AssertInstanceOf: Prefer using `assert_instance_of(SomeClass, object)`.
+
+==> corrected/test/000_test.rb 118 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_instance_of(SomeClass, object, 'message')
+  end
+end
+
+==> corrected/test/001_test.rb 147 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_instance_of(SomeClass, obj, <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+
+==> corrected/test/002_test.rb 104 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_instance_of(SomeClass, obj)
+  end
+end
+
+==> corrected/test/004_test.rb 150 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_instance_of(SomeClass, object, <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+
+==> corrected/test/005_test.rb 115 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_instance_of(SomeClass, obj, 'message')
+  end
+end
+
+==> corrected/test/006_test.rb 107 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_instance_of(SomeClass, object)
+  end
+end
+

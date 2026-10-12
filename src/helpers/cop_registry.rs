@@ -29,6 +29,12 @@ pub const NATIVE_PLUGINS: &[NativePlugin] = &[
         default_yml: include_str!("../../config/plugins/rubocop-rails.yml"),
         obsoletion: Some(include_str!("../../config/plugins/rubocop-rails-obsoletion.yml")),
     },
+    NativePlugin {
+        gem: "rubocop-minitest",
+        departments: &["Minitest"],
+        default_yml: include_str!("../../config/plugins/rubocop-minitest.yml"),
+        obsoletion: None,
+    },
 ];
 
 pub fn native_plugin(gem: &str) -> Option<&'static NativePlugin> {

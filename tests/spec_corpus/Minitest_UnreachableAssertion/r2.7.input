@@ -1,0 +1,48 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 71 <==
+assert_raises FooError do
+  obj.foo
+  assert_equal('foo', obj.bar)
+end
+
+==> test/001_test.rb 71 <==
+assert_raises FooError do
+  assert_equal('foo', obj.bar)
+  obj.foo
+end
+
+==> test/002_test.rb 61 <==
+assert_raises FooError do
+  do_something('foo', obj.bar)
+end
+
+==> test/003_test.rb 54 <==
+do_something do
+  obj.foo
+  assert_empty(obj.bar)
+end
+
+==> test/004_test.rb 64 <==
+assert_raises(Minitest::Assertion) do
+  assert_response 200
+end
+
+==> test/005_test.rb 30 <==
+assert_raises FooError do
+end
+
+==> test/006_test.rb 64 <==
+assert_raises FooError do
+  obj.foo
+  assert_empty(obj.bar)
+end
+

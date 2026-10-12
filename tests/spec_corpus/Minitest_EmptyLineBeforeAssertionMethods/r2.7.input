@@ -1,0 +1,214 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 120 <==
+def test_do_something
+  set.each { |thing| do_something(thing) }
+  assert_equal 'This is really bad', error.message
+end
+
+==> test/001_test.rb 83 <==
+def test_do_something
+  <<~EOS
+    text
+  EOS
+  assert_equal(expected, actual)
+end
+
+==> test/002_test.rb 105 <==
+def test_do_something
+  do_something do
+    do_something_more
+  end
+  assert_equal(expected, actual)
+end
+
+==> test/003_test.rb 84 <==
+def test_do_something
+  do_something # comment
+  assert_equal(expected, actual)
+end
+
+==> test/004_test.rb 170 <==
+def test_do_something
+  yaml_load_paths.each do |path|
+    YAML.load_file(path)
+  rescue Psych::Exception => e
+    flunk("Error loading #{path}: #{e.inspect}")
+  end
+end
+
+==> test/005_test.rb 85 <==
+def test_do_something
+  do_something do
+    assert_equal(expected, actual)
+  end
+end
+
+==> test/006_test.rb 96 <==
+def test_do_something
+  do_something(
+    foo,
+    bar
+  )
+  assert_equal(expected, actual)
+end
+
+==> test/007_test.rb 179 <==
+def test_do_something
+  block = -> { raise CustomError, 'This is really bad' }
+  error = assert_raises(CustomError, &block)
+  assert_equal 'This is really bad', error.message
+end
+
+==> test/008_test.rb 97 <==
+def test_do_something
+  do_something(<<~EOS)
+    text
+  EOS
+  assert_equal(expected, actual)
+end
+
+==> test/009_test.rb 82 <==
+def test_do_something
+  if condition
+    assert_equal(expected, actual)
+  end
+end
+
+==> test/010_test.rb 31 <==
+assert_equal(expected, actual)
+
+==> test/011_test.rb 152 <==
+def test_do_something
+  set.each do |thing|
+    refute_nil(thing)
+
+    do_something(thing)
+  end
+  assert_equal 'This is really bad', error.message
+end
+
+==> test/012_test.rb 85 <==
+def test_do_something
+  while condition
+    assert_equal(expected, actual)
+  end
+end
+
+==> test/013_test.rb 74 <==
+def test_do_something
+  do_something
+  assert_equal(expected, actual)
+end
+
+==> test/014_test.rb 20 <==
+do_something(thing)
+
+==> test/015_test.rb 120 <==
+def test_do_something
+  set = Set.new([1,2,3])
+
+  refute_nil(set)
+  set.each do |thing|
+    refute_nil(thing)
+  end
+end
+
+==> test/016_test.rb 101 <==
+def test_do_something
+  set = Set.new([1,2,3])
+  set.each do |thing|
+    refute_nil(thing)
+  end
+end
+
+==> test/017_test.rb 101 <==
+class FooTest < Minitest::Test
+  test "do something" do
+    assert_equal(expected, actual)
+  end
+end
+
+==> test/018_test.rb 105 <==
+def test_do_something
+  set.each do |thing|
+  end
+  assert_equal 'This is really bad', error.message
+end
+
+==> test/019_test.rb 97 <==
+def test_do_something
+  assert_raises(CustomError) do
+    do_something
+  end
+  assert(thing)
+end
+
+==> test/020_test.rb 103 <==
+def test_do_something
+  set = Set.new([1,2,3])
+  set.each do |thing|
+    do_something(thing)
+  end
+end
+
+==> test/021_test.rb 92 <==
+def test_do_something
+  set = Set.new([1,2,3])
+  set.each { |thing| refute_nil(thing) }
+end
+
+==> test/022_test.rb 187 <==
+def test_do_something
+  yaml_load_paths.each do |path|
+    YAML.load_file(path)
+  rescue Psych::Exception => e
+    do_something
+    flunk("Error loading #{path}: #{e.inspect}")
+  end
+end
+
+==> test/023_test.rb 118 <==
+def test_do_something
+  set.each { |thing| refute_nil(thing) }
+  assert_equal 'This is really bad', error.message
+end
+
+==> test/024_test.rb 145 <==
+def test_do_something
+  set.each do |thing|
+    do_something
+
+    refute_nil(thing)
+  end
+  assert_equal 'This is really bad', error.message
+end
+
+==> test/025_test.rb 75 <==
+def test_do_something
+  do_something
+
+  assert_equal(expected, actual)
+end
+
+==> test/026_test.rb 56 <==
+def test_do_something
+  assert_not foo
+  assert bar
+end
+
+==> test/027_test.rb 85 <==
+def test_do_something
+  until condition
+    assert_equal(expected, actual)
+  end
+end
+

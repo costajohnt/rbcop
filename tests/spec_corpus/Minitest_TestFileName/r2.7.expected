@@ -1,0 +1,8 @@
+==> offenses exit=1 236 <==
+test/002/lib/foo.rb:1:1: C: Minitest/TestFileName: Test file path should start with `test_` or end with `_test.rb`.
+test/005/lib/foo/bar.rb:1:1: C: Minitest/TestFileName: Test file path should start with `test_` or end with `_test.rb`.
+
+==> autocorrect exit=1 236 <==
+test/002/lib/foo.rb:1:1: C: Minitest/TestFileName: Test file path should start with `test_` or end with `_test.rb`.
+test/005/lib/foo/bar.rb:1:1: C: Minitest/TestFileName: Test file path should start with `test_` or end with `_test.rb`.
+
