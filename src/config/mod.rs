@@ -165,6 +165,23 @@ impl CopConfig {
     }
 }
 
+/// FNV-1a: SipHash's DoS resistance buys nothing for cop names, and its cost showed up per file.
+#[derive(Default)]
+struct Fnv(u64);
+
+impl std::hash::Hasher for Fnv {
+    fn finish(&self) -> u64 {
+        self.0
+    }
+    fn write(&mut self, bytes: &[u8]) {
+        let mut h = if self.0 == 0 { 0xcbf2_9ce4_8422_2325 } else { self.0 };
+        for &b in bytes {
+            h = (h ^ u64::from(b)).wrapping_mul(0x0100_0000_01b3);
+        }
+        self.0 = h;
+    }
+}
+
 /// A fully merged config (one per `.rubocop.yml`, or the default).
 pub struct Resolved {
     pub hash: Map,
@@ -172,7 +189,8 @@ pub struct Resolved {
     pub base_dir: PathBuf,
     /// TargetRuby#version (e.g. 3.4).
     pub target_ruby: f64,
-    cops: HashMap<String, CopConfig>,
+    /// Looked up twice per cop and file, so with a cheap hash (the keys are cop names).
+    cops: HashMap<String, CopConfig, std::hash::BuildHasherDefault<Fnv>>,
     /// (cop, warning) for configuration under a cop's deprecated name, which Config#for_cop warns
     /// about the first time the cop's config is asked for.
     pub deprecated_warnings: Vec<(&'static str, String)>,
@@ -194,7 +212,7 @@ impl Resolved {
             hash,
             base_dir,
             target_ruby,
-            cops: HashMap::new(),
+            cops: HashMap::default(),
             deprecated_warnings: Vec::new(),
             unregistered: Vec::new(),
             opts: opts.clone(),
@@ -350,8 +368,9 @@ impl Resolved {
         match self.cops.get(name) {
             Some(c) => c.enabled,
             None => {
-                let cop = self.hash.map(name).cloned().unwrap_or_default();
-                self.enabled_cop_name(name, &self.enable_cop(name), &cop, &self.opts)
+                static EMPTY: Map = Map(Vec::new());
+                let cop = self.hash.map(name).unwrap_or(&EMPTY);
+                self.enabled_cop_name(name, &self.enable_cop(name), cop, &self.opts)
             }
         }
     }
