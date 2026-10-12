@@ -671,6 +671,28 @@ pub fn begin_statements<'pr>(cx: &Cx, node: &Node<'pr>) -> Option<Vec<Node<'pr>>
     (stmts.len() > 1 && !kwbegin).then_some(stmts)
 }
 
+/// def_node_search `(pair (sym $_key) (sym $_value))` in a node: each symbol pair's names.
+pub fn each_sym_pair(cx: &Cx, node: &Node, f: &mut dyn FnMut(&str, &str)) {
+    struct V<'a, 'b> {
+        target: f64,
+        f: &'a mut dyn FnMut(&str, &str),
+        _p: std::marker::PhantomData<&'b ()>,
+    }
+    impl<'pr> Visit<'pr> for V<'_, '_> {
+        fn visit_assoc_node(&mut self, n: &ruby_prism::AssocNode<'pr>) {
+            let (k, v) = (n.key(), n.value());
+            let sym = |x: &Node| x.as_symbol_node().is_some() && !is_parser_dsym(x, self.target);
+            if sym(&k) && sym(&v) {
+                let kv = helpers::rails::sym_value(&k).unwrap_or_default();
+                let vv = helpers::rails::sym_value(&v).unwrap_or_default();
+                (self.f)(&kv, &vv);
+            }
+            ruby_prism::visit_assoc_node(self, n);
+        }
+    }
+    V { target: cx.src.target_ruby, f, _p: std::marker::PhantomData }.visit(node);
+}
+
 /// A node's byte range.
 pub fn node_range(node: &Node) -> (usize, usize) {
     let l = node.location();

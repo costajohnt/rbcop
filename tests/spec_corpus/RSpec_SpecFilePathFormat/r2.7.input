@@ -1,0 +1,133 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/wrong_path_foo_spec.rb 32 <==
+describe MyClass, 'foo' do; end
+
+==> 001/wrong_path_foo_spec.rb 37 <==
+example_group MyClass, 'foo' do; end
+
+==> 002/wrong_class_foo_spec.rb 33 <==
+describe MyClass, '#foo' do; end
+
+==> 003/wrong_class_foo_spec.rb 46 <==
+describe MyClass, '#foo', blah: :blah do; end
+
+==> 004/wrong_class_spec.rb 25 <==
+describe MyClass do; end
+
+==> 005/spec/models/random/userx_spec.rb 42 <==
+RSpec.describe User, type: :model do; end
+
+==> 006/spec/models/my_user_spec.rb 22 <==
+describe User do; end
+
+==> 007/some/classy_spec.rb 29 <==
+describe Some::Class do; end
+
+==> 008/wrong_class_spec.rb 27 <==
+describe ::MyClass do; end
+
+==> 009/wrong_class_spec.rb 31 <==
+describe MyClass, :foo do; end
+
+==> 010/wrong_class_spec.rb 49 <==
+describe MyClass, "via `local_failures`" do; end
+
+==> 011/user.rb 34 <==
+shared_examples_for 'foo' do; end
+
+==> 012/spec.rb 34 <==
+describe 'Test something' do; end
+
+==> 013/spec.rb 72 <==
+describe MyClass, 'do_this' do; end
+describe MyClass, 'do_that' do; end
+
+==> 014/some/class_spec.rb 29 <==
+describe Some::Class do; end
+
+==> 015/parent_dir/some/class_spec.rb 29 <==
+describe Some::Class do; end
+
+==> 016/my_class_spec.rb 25 <==
+describe MyClass do; end
+
+==> 017/abc_one/two_spec.rb 29 <==
+describe ABCOne::Two do; end
+
+==> 018/allcaps_spec.rb 25 <==
+describe ALLCAPS do; end
+
+==> 019/ipv4_and_ipv6_spec.rb 29 <==
+describe IPV4AndIPV6 do; end
+
+==> 020/user_validations_spec.rb 22 <==
+describe User do; end
+
+==> 021/some/class/inst_spec.rb 38 <==
+describe Some::Class, '#inst' do; end
+
+==> 022/some/classx/inst_spec.rb 38 <==
+describe Some::Class, '#inst' do; end
+
+==> 023/some/class/inst_spec.rb 38 <==
+describe Some::Class, '.inst' do; end
+
+==> 024/some/class_inst_spec.rb 38 <==
+describe Some::Class, '#inst' do; end
+
+==> 025/some/class_inst_spec.rb 38 <==
+describe Some::Class, '.inst' do; end
+
+==> 026/some/class/instance_methods/inst_spec.rb 38 <==
+describe Some::Class, '#inst' do; end
+
+==> 027/some/class/class_methods/inst_spec.rb 38 <==
+describe Some::Class, '.inst' do; end
+
+==> 028/some/class/pred_spec.rb 39 <==
+describe Some::Class, '#pred?' do; end
+
+==> 029/some/class/bang_spec.rb 39 <==
+describe Some::Class, '#bang!' do; end
+
+==> 030/some/class/thing_predicate_spec.rb 40 <==
+describe Some::Class, '#thing?' do; end
+
+==> 031/my_little_class/spaceship_operator_spec.rb 39 <==
+describe MyLittleClass, '#<=>' do; end
+
+==> 032/home/foo/spec/models/bar_spec.rb 21 <==
+describe Foo do; end
+
+==> 033/home/foo/spec/very/my_class_spec.rb 48 <==
+describe Very::Long::Namespace::MyClass do; end
+
+==> 034/home/foo/spec/very/long/my_class_spec.rb 67 <==
+module Very
+  module Medium
+    describe MyClass do; end
+  end
+end
+
+==> 035/my_class_spec.rb 48 <==
+describe Very::Long::Namespace::MyClass do; end
+
+==> 036/036_spec.rb 14 <==
+class Foo
+end
+
+==> 037/spec/routing/foo_spec.rb 48 <==
+describe 'routes to the foo controller' do; end
+
+==> 038/spec/foo_spec.rb 64 <==
+describe 'routes to the foo controller', type: :routing do; end
+

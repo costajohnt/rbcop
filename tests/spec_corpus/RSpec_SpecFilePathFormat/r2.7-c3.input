@@ -1,0 +1,15 @@
+==> .rubocop.yml 182 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/SpecFilePathFormat:
+  IgnoreMethods: false
+
+==> 000/my_class_spec.rb 48 <==
+describe MyClass, '#look_here_a_method' do; end
+
