@@ -346,7 +346,12 @@ pub fn is_parser_dstr(node: &Node) -> bool {
         return true;
     }
     if is_heredoc(node) {
-        return text(&s.content_loc()).trim_end_matches('\n').contains('\n');
+        // a backslash-newline continues the line in an interpolating heredoc too
+        let body = text(&s.content_loc()).trim_end_matches('\n').as_bytes();
+        let interpolating = !s.opening_loc().is_some_and(|o| o.as_slice().contains(&b'\''));
+        return body.iter().enumerate().any(|(i, &b)| {
+            b == b'\n' && !(interpolating && body[..i].iter().rev().take_while(|&&c| c == b'\\').count() % 2 == 1)
+        });
     }
     // Parser splits a literal only on a newline before the last character of its content, so a
     // literal whose only newline ends the content (`"a<newline>"`) stays a `str`. In an

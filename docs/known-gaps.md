@@ -73,12 +73,6 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 
 ## Open gaps
 
-- Lint/DuplicateMethods, `def Const.m` with no enclosing class/module/casgn defining `Const`: RuboCop
-  keys the method on the `defs` node's s-expression (`lookup_constant`'s `each_ancestor` returns the
-  node), so identical repeats are reported with that s-expression as the method name.
-  `helpers::parser_sexp` prints sends, variables, constants, literals, arrays, hashes, `and`/`or`,
-  `return` and plain parameters; a definition holding anything else (a block, `if`, index, splat,
-  keyword arguments in a call, ...) is not reported (#360).
 - Static regexp literals Onigmo rejects (RuboCop compiles each with `Regexp.new` and reports
   Lint/Syntax): `helpers::onigmo_compile` covers group names and references, repeat ranges,
   character class ranges, POSIX bracket names, `\k<+n>`, and look-behind bodies with quantifiers,
