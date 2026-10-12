@@ -329,6 +329,10 @@ fn parent_module_name(anc: &[Node], pas: &[PA]) -> Option<String> {
 fn humanize_scope(scope: &str) -> String {
     let s = scope.as_bytes();
     let tag = "#<Class:";
+    // Both patterns need the tag; most scopes (plain `Foo::Bar`) skip the quadratic scan.
+    if !scope.contains(tag) {
+        return finish(scope.to_string());
+    }
     for p in 0..=s.len() {
         if !scope.is_char_boundary(p) {
             continue;
@@ -337,6 +341,9 @@ fn humanize_scope(scope: &str) -> String {
         let line_end = scope[p..].find('\n').map_or(scope.len(), |e| p + e);
         for q in (p..=line_end).rev() {
             if !scope.is_char_boundary(q) {
+                continue;
+            }
+            if !scope[q..].starts_with("::#<Class:") {
                 continue;
             }
             let name = &scope[p..q];
