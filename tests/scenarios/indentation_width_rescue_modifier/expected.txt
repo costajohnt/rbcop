@@ -1,0 +1,5 @@
+a.rb:2:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+b.rb:3:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -2) spaces for indentation.
+c.rb:2:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
+d.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not -2) spaces for indentation.
+e.rb:2:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 6) spaces for indentation.
