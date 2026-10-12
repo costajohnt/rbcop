@@ -1,0 +1,314 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> db/000/000.rb 130 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    create_table :users do |t|
+  t.string :name
+end
+
+  end
+end
+
+==> db/001/001.rb 127 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    create_table :users do
+  _1.string :name
+end
+
+  end
+end
+
+==> db/002/002.rb 140 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    up_only { execute "UPDATE posts SET published = 'true'" }
+
+  end
+end
+
+==> db/003/003.rb 175 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    [:users, :articles].each do |table|
+  create_table table do |t|
+    t.string :name
+  end
+end
+
+  end
+end
+
+==> db/004/004.rb 231 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    def change
+  change_table :invoices do |t|
+    decimals_params = {precision: 10, scale: 2}
+
+    t.decimal :total_discount, decimals_params
+  end
+end
+
+  end
+end
+
+==> db/005/005.rb 135 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    def change
+  change_table :invoices do |t|
+  end
+end
+
+  end
+end
+
+==> db/006/006.rb 340 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    reversible do |dir|
+  dir.up do
+    execute "ALTER TABLE `pages_linked_pages` ADD UNIQUE `page_id_linked_page_id` (`page_id`,`linked_page_id`)"
+  end
+
+  dir.down do
+    execute "ALTER TABLE `pages_linked_pages` DROP INDEX `page_id_linked_page_id`"
+  end
+end
+
+  end
+end
+
+==> db/007/007.rb 128 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    drop_table :users do |t|
+  t.string :name
+end
+
+  end
+end
+
+==> db/008/008.rb 125 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    drop_table :users do
+  _1.string :name
+end
+
+  end
+end
+
+==> db/009/009.rb 125 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    drop_table :users do
+  it.string :name
+end
+
+  end
+end
+
+==> db/010/010.rb 114 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    drop_table :users, &:timestamps
+
+  end
+end
+
+==> db/011/011.rb 93 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    drop_table
+
+  end
+end
+
+==> db/012/012.rb 133 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    up_only { change_column(:posts, :state, :string) }
+
+  end
+end
+
+==> db/013/013.rb 150 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+          change_column_default(:posts, :state, from: nil, to: "draft")
+
+  end
+end
+
+==> db/014/014.rb 150 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+          change_column_default(:posts, :state, to: "draft", from: nil)
+
+  end
+end
+
+==> db/015/015.rb 173 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+          columns = [:foo, :bar]
+      change_column_default(*columns, from: nil, to: "draft")
+
+  end
+end
+
+==> db/016/016.rb 141 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+          change_table_comment(:posts, from: nil, to: "draft")
+
+  end
+end
+
+==> db/017/017.rb 150 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+          change_column_comment(:posts, :state, from: nil, to: "draft")
+
+  end
+end
+
+==> db/018/018.rb 133 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    remove_column(:suppliers, :qualification, :string)
+
+  end
+end
+
+==> db/019/019.rb 146 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    remove_column(:suppliers, :qualification, :string, null: false)
+
+  end
+end
+
+==> db/020/020.rb 122 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    remove_foreign_key :accounts, :branches
+
+  end
+end
+
+==> db/021/021.rb 132 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    remove_foreign_key :accounts, to_table: :branches
+
+  end
+end
+
+==> db/022/022.rb 185 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    change_table :users do |t|
+  t.column :name, :string
+  t.text :description
+  t.boolean :authorized
+end
+
+  end
+end
+
+==> db/023/023.rb 180 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+          change_table :users do |t|
+        t.change_default :authorized, from: nil, to: 1
+      end
+
+  end
+end
+
+==> db/024/024.rb 145 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    change_table :users do |t|
+  t.remove_index column: :email
+end
+
+  end
+end
+
+==> db/025/025.rb 137 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    change_table :users do |t|
+  t.remove_index :email
+end
+
+  end
+end
+
+==> db/026/026.rb 154 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    change_table :users do |t|
+  t.remove_index :email, if_exists: true
+end
+
+  end
+end
+
+==> db/027/027.rb 118 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    remove_index(:posts, column: :body)
+
+  end
+end
+
+==> db/028/028.rb 110 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    remove_index(:posts, :body)
+
+  end
+end
+
+==> db/animals_migrate/029/20250101010101_create_animals.rb 100 <==
+class CreateAnimals < ActiveRecord::Migration[7.0]
+  def change
+    create_table :animals
+  end
+end
+
+==> db/animals_migrate/030/20250101010101_remove_animals.rb 98 <==
+class RemoveAnimals < ActiveRecord::Migration[7.0]
+  def change
+    drop_table :animals
+  end
+end
+
+==> db/animals_migrate/031/20190101010101_remove_animals.rb 98 <==
+class RemoveAnimals < ActiveRecord::Migration[7.0]
+  def change
+    drop_table :animals
+  end
+end
+
+==> db/migrate/032/20250101010101_remove_animals.rb 100 <==
+class ::RemoveAnimals < ActiveRecord::Migration[7.0]
+  def change
+    drop_table :animals
+  end
+end
+

@@ -1,0 +1,51 @@
+==> .rubocop.yml 168 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/Blank:
+  UnlessPresent: true
+
+==> 000/000.rb 25 <==
+something if foo.present?
+==> 001/001.rb 27 <==
+something unless foo.blank?
+==> 002/002.rb 32 <==
+if foo.present?
+  something
+end
+
+==> 003/003.rb 34 <==
+unless foo.blank?
+  something
+end
+
+==> 004/004.rb 68 <==
+if bar.present?
+  something
+elsif bar.present?
+  something_else
+end
+
+==> 005/005.rb 30 <==
+something unless foo.present?
+
+==> 006/006.rb 26 <==
+something unless present?
+
+==> 007/007.rb 36 <==
+unless foo.present?
+  something
+end
+
+==> 008/008.rb 58 <==
+unless foo.present?
+  something
+else
+  something_else
+end
+

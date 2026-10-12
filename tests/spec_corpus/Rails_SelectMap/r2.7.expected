@@ -1,0 +1,44 @@
+==> offenses exit=1 869 <==
+000/000.rb:1:7: C: [Correctable] Rails/SelectMap: Use `pluck(:column_name)` instead of `select` with `map`.
+001/001.rb:1:8: C: [Correctable] Rails/SelectMap: Use `pluck(:column_name)` instead of `select` with `map`.
+002/002.rb:1:7: C: [Correctable] Rails/SelectMap: Use `pluck(:column_name)` instead of `select` with `map`.
+003/003.rb:1:7: C: [Correctable] Rails/SelectMap: Use `pluck(:column_name)` instead of `select` with `collect`.
+004/004.rb:1:7: C: [Correctable] Rails/SelectMap: Use `pluck(:column_name)` instead of `select` with `map`.
+005/005.rb:1:1: C: [Correctable] Rails/SelectMap: Use `pluck(:column_name)` instead of `select` with `map`.
+006/006.rb:1:1: C: [Correctable] Rails/SelectMap: Use `pluck(:column_name)` instead of `select` with `map`.
+007/007.rb:1:11: C: [Correctable] Rails/SelectMap: Use `pluck(:column_name)` instead of `select` with `map`.
+
+==> autocorrect exit=0 853 <==
+000/000.rb:1:7: C: [Corrected] Rails/SelectMap: Use `pluck(:column_name)` instead of `select` with `map`.
+001/001.rb:1:8: C: [Corrected] Rails/SelectMap: Use `pluck(:column_name)` instead of `select` with `map`.
+002/002.rb:1:7: C: [Corrected] Rails/SelectMap: Use `pluck(:column_name)` instead of `select` with `map`.
+003/003.rb:1:7: C: [Corrected] Rails/SelectMap: Use `pluck(:column_name)` instead of `select` with `collect`.
+004/004.rb:1:7: C: [Corrected] Rails/SelectMap: Use `pluck(:column_name)` instead of `select` with `map`.
+005/005.rb:1:1: C: [Corrected] Rails/SelectMap: Use `pluck(:column_name)` instead of `select` with `map`.
+006/006.rb:1:1: C: [Corrected] Rails/SelectMap: Use `pluck(:column_name)` instead of `select` with `map`.
+007/007.rb:1:11: C: [Corrected] Rails/SelectMap: Use `pluck(:column_name)` instead of `select` with `map`.
+
+==> corrected/000/000.rb 26 <==
+Model.pluck(:column_name)
+
+==> corrected/001/001.rb 26 <==
+Model.pluck(:column_name)
+
+==> corrected/002/002.rb 26 <==
+Model.pluck(:column_name)
+
+==> corrected/003/003.rb 26 <==
+Model.pluck(:column_name)
+
+==> corrected/004/004.rb 44 <==
+Model.where(conditions).pluck(:column_name)
+
+==> corrected/005/005.rb 20 <==
+pluck(:column_name)
+
+==> corrected/006/006.rb 38 <==
+where(conditions).pluck(:column_name)
+
+==> corrected/007/007.rb 30 <==
+relation&.pluck(:column_name)
+

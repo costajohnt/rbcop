@@ -1,0 +1,97 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 32 <==
+User.where('name != ?', 'Gabe')
+
+==> 001/001.rb 24 <==
+User.where('name != ?')
+
+==> 002/002.rb 33 <==
+User&.where('name != ?', 'Gabe')
+
+==> 003/003.rb 42 <==
+User.where('name != :name', name: 'Gabe')
+
+==> 004/004.rb 32 <==
+User.where('name <> ?', 'Gabe')
+
+==> 005/005.rb 42 <==
+User.where('name <> :name', name: 'Gabe')
+
+==> 006/006.rb 31 <==
+User.where('name IS NOT NULL')
+
+==> 007/007.rb 48 <==
+User.where("name NOT IN (?)", ['john', 'jane'])
+
+==> 008/008.rb 60 <==
+User.where("name NOT IN (:names)", names: ['john', 'jane'])
+
+==> 009/009.rb 35 <==
+User.where("name NOT IN (:names)")
+
+==> 010/010.rb 56 <==
+Course.where('enrollments.student_id != ?', student.id)
+
+==> 011/011.rb 56 <==
+Course.where('enrollments.student_id <> ?', student.id)
+
+==> 012/012.rb 27 <==
+where('name != ?', 'Gabe')
+
+==> 013/013.rb 34 <==
+User.where(['name != ?', 'Gabe'])
+
+==> 014/014.rb 35 <==
+User&.where(['name != ?', 'Gabe'])
+
+==> 015/015.rb 48 <==
+User.where(['name != :name', { name: 'Gabe' }])
+
+==> 016/016.rb 34 <==
+User.where(['name <> ?', 'Gabe'])
+
+==> 017/017.rb 48 <==
+User.where(['name <> :name', { name: 'Gabe' }])
+
+==> 018/018.rb 33 <==
+User.where(['name IS NOT NULL'])
+
+==> 019/019.rb 50 <==
+User.where(["name NOT IN (?)", ['john', 'jane']])
+
+==> 020/020.rb 62 <==
+User.where(["name NOT IN (:names)", names: ['john', 'jane']])
+
+==> 021/021.rb 58 <==
+Course.where(['enrollments.student_id != ?', student.id])
+
+==> 022/022.rb 58 <==
+Course.where(['enrollments.student_id <> ?', student.id])
+
+==> 023/023.rb 26 <==
+User.where.not(name: nil)
+
+==> 024/024.rb 25 <==
+User.where(name: 'john')
+
+==> 025/025.rb 31 <==
+User.where('name = ?', 'john')
+
+==> 026/026.rb 49 <==
+User.where('name != ? AND age != ?', 'john', 19)
+
+==> 027/027.rb 49 <==
+User.where('name <> ? AND age <> ?', 'john', 19)
+
+==> 028/028.rb 47 <==
+User.where('database.users.name != ?', 'Gabe')
+

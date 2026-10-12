@@ -1,0 +1,24 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/models/000/000.rb 100 <==
+class Article
+  belongs_to :member, foreign_key: :user_id
+  validates :member, uniqueness: true
+end
+
+==> db/schema.rb 213 <==
+ActiveRecord::Schema.define(version: 2020_02_02_075409) do
+  create_table "articles", force: :cascade do |t|
+    t.bigint "foo_id", null: false
+    t.index ["user_id"], name: "idx_user_id", unique: true
+  end
+end
+

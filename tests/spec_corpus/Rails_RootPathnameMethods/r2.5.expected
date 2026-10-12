@@ -1,0 +1,41 @@
+==> offenses exit=1 993 <==
+000/000.rb:1:1: C: [Correctable] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob('**/*.rb')`.
+001/001.rb:1:1: C: [Correctable] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob('**/*.rb')`.
+002/002.rb:1:1: C: [Correctable] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob("**/#{path}/*.rb")`.
+003/003.rb:1:1: C: [Correctable] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob('**/*.rb')`.
+004/004.rb:1:1: C: [Correctable] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob("**/#{path}/*.rb")`.
+005/005.rb:1:1: C: [Correctable] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob("db/seeds/#{Rails.env}/*.rb")`.
+006/006.rb:1:1: C: [Correctable] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob('spec/support/**/*.rb')`.
+
+==> autocorrect exit=0 979 <==
+000/000.rb:1:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob('**/*.rb')`.
+001/001.rb:1:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob('**/*.rb')`.
+002/002.rb:1:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob("**/#{path}/*.rb")`.
+003/003.rb:1:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob('**/*.rb')`.
+004/004.rb:1:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob("**/#{path}/*.rb")`.
+005/005.rb:1:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob("db/seeds/#{Rails.env}/*.rb")`.
+006/006.rb:1:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob('spec/support/**/*.rb')`.
+
+==> corrected/000/000.rb 27 <==
+Rails.root.glob('**/*.rb')
+
+==> corrected/001/001.rb 27 <==
+Rails.root.glob('**/*.rb')
+
+==> corrected/002/002.rb 35 <==
+Rails.root.glob("**/#{path}/*.rb")
+
+==> corrected/003/003.rb 27 <==
+Rails.root.glob('**/*.rb')
+
+==> corrected/004/004.rb 35 <==
+Rails.root.glob("**/#{path}/*.rb")
+
+==> corrected/005/005.rb 82 <==
+Rails.root.glob("db/seeds/#{Rails.env}/*.rb").sort.each do |file|
+  load file
+end
+
+==> corrected/006/006.rb 40 <==
+Rails.root.glob('spec/support/**/*.rb')
+

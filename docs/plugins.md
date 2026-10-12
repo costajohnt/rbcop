@@ -7,9 +7,11 @@ running the pinned plugin version below.
 | Gem | Version | Departments | Cops ported | Issue |
 |---|---|---|---|---|
 | rubocop-performance | 1.27.0 | Performance | all 52 | #283 |
+| rubocop-rails | 2.38.0 | Rails | all 138 | #284 |
 
 Each version is the newest release that supports RuboCop 1.91.0 (rubocop-performance 1.27.0
-requires `rubocop >= 1.89.0, < 2.0`; released 2026-08-16). The gem's `config/default.yml` is vendored
+requires `rubocop >= 1.89.0, < 2.0`, released 2026-08-16; rubocop-rails 2.38.0 requires
+`rubocop >= 1.89.0, < 2.0`, released 2026-09-20). The gem's `config/default.yml` is vendored
 as `config/plugins/<gem>.yml` (MIT, `config/plugins/LICENSE-<gem>`), so the gem need not be
 installed; a different installed version is ignored.
 
@@ -31,6 +33,25 @@ installed; a different installed version is ignored.
   `Store::set_only` then re-resolves the configs already loaded.
 - Autocorrect order and `autocorrect_incompatible_with` come from `src/autocorrect/registry.tsv`
   (`scripts/autocorrect_registry.rb` requires each native plugin).
+
+## rubocop-rails specifics
+
+- `TargetRailsVersion` comes from `AllCops: TargetRailsVersion`, else the `railties` version in the
+  `Gemfile.lock` / `gems.locked` found upward from the config's directory (as Bundler resolves it,
+  so a lockfile with a `PATH` section and no Gemfile reachable from the working directory is
+  ignored), else 5.0. Cops with a minimum Rails version are skipped below it.
+- `Include`/`Exclude` defaults and per-cop settings come from the vendored default.yml; obsolete
+  parameters come from `config/plugins/rubocop-rails-obsoletion.yml`.
+- Inflection (`pluralize`, `singularize`, `underscore`, `camelize`, `tableize`) follows
+  ActiveSupport's default English inflections (`src/helpers/inflector.rs`), checked against
+  activesupport 8.1.4.
+- `db/schema.rb` is found upward from the working directory and read once per run
+  (`src/helpers/schema.rs`, rubocop-rails' SchemaLoader), for Rails/UniqueValidationWithoutIndex and
+  Rails/UnusedIgnoredColumns. `config/database.yml` (from the working directory) and `DATABASE_URL`
+  set the database for Rails/BulkChangeTable when its `Database` is unset.
+- Some Rails corrections that splice string content into new code are withheld when that content is
+  not inert there, where RuboCop writes it unescaped; see the deliberate differences in
+  docs/known-gaps.md.
 
 ## Porting a plugin
 

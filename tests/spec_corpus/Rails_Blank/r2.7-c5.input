@@ -1,0 +1,16 @@
+==> .rubocop.yml 207 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/Blank:
+  NilOrEmpty: true
+  NotPresent: true
+  UnlessPresent: false
+
+==> 000/000.rb 29 <==
+something unless foo.present?

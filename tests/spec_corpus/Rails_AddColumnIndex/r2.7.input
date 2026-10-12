@@ -1,0 +1,34 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> db/000/20250101010101_add_column_to_table.rb 62 <==
+add_column :table, :column, :integer, default: 0, index: true
+
+==> db/001/20250101010101_add_column_to_table.rb 99 <==
+add_column :table, :column, :integer, default: 0, index: { unique: true, name: 'my_unique_index' }
+
+==> db/002/20250101010101_add_column_to_table.rb 62 <==
+add_column :table, :column, :integer, index: true, default: 0
+
+==> db/003/20250101010101_add_column_to_table.rb 66 <==
+add_column :table, :column, :integer, 'index' => true, default: 0
+
+==> db/004/20250101010101_add_column_to_table.rb 84 <==
+add_column :table, :column, :integer,
+           index: true,
+           default: 0
+
+==> db/005/20250101010101_add_column_to_table.rb 125 <==
+add_column :table, :column, :integer, default: 0, index: true
+add_column :table, :column2, :integer, default: 0, index: true
+
+==> db/006/006.rb 49 <==
+add_column :table, :column, :integer, default: 0
+

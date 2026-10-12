@@ -1,0 +1,25 @@
+==> .rubocop.yml 229 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/FindEach:
+  AllowedMethods:
+  - order
+  - lock
+  AllowedPatterns: []
+  IgnoredMethods: []
+
+==> 000/000.rb 42 <==
+User.order(:name).each { |u| u.something }
+==> 001/001.rb 61 <==
+User.order(:name).includes(:company).each { |u| u.something }
+==> 002/002.rb 34 <==
+User.lock.each { |u| u.something }
+==> 003/003.rb 44 <==
+User.joins(:posts).each { |u| u.something }
+

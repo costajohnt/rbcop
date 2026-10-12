@@ -1,0 +1,466 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 34 <==
+User.all.and(User.where(age: 30))
+
+==> 001/001.rb 34 <==
+User.all.annotate("selecting id")
+
+==> 002/002.rb 14 <==
+User.all.any?
+
+==> 003/003.rb 23 <==
+User.all.average(:age)
+
+==> 004/004.rb 35 <==
+User.all.calculate(:average, :age)
+
+==> 005/005.rb 15 <==
+User.all.count
+
+==> 006/006.rb 39 <==
+User.all.create_or_find_by(name: name)
+
+==> 007/007.rb 40 <==
+User.all.create_or_find_by!(name: name)
+
+==> 008/008.rb 33 <==
+User.all.create_with(name: name)
+
+==> 009/009.rb 20 <==
+User.all.delete_all
+
+==> 010/010.rb 27 <==
+User.all.delete_by(id: id)
+
+==> 011/011.rb 21 <==
+User.all.destroy_all
+
+==> 012/012.rb 28 <==
+User.all.destroy_by(id: id)
+
+==> 013/013.rb 18 <==
+User.all.distinct
+
+==> 014/014.rb 31 <==
+User.all.eager_load(:articles)
+
+==> 015/015.rb 24 <==
+User.all.except(:order)
+
+==> 016/016.rb 25 <==
+User.all.excluding(user)
+
+==> 017/017.rb 17 <==
+User.all.exists?
+
+==> 018/018.rb 31 <==
+User.all.extending(Pagination)
+
+==> 019/019.rb 39 <==
+User.all.extract_associated(:articles)
+
+==> 020/020.rb 15 <==
+User.all.fifth
+
+==> 021/021.rb 16 <==
+User.all.fifth!
+
+==> 022/022.rb 18 <==
+User.all.find(id)
+
+==> 023/023.rb 29 <==
+User.all.find_by(name: name)
+
+==> 024/024.rb 30 <==
+User.all.find_by!(name: name)
+
+==> 025/025.rb 35 <==
+User.all.find_each(&:do_something)
+
+==> 026/026.rb 41 <==
+User.all.find_in_batches(&:do_something)
+
+==> 027/027.rb 39 <==
+User.all.find_or_create_by(name: name)
+
+==> 028/028.rb 40 <==
+User.all.find_or_create_by!(name: name)
+
+==> 029/029.rb 43 <==
+User.all.find_or_initialize_by(name: name)
+
+==> 030/030.rb 34 <==
+User.all.find_sole_by(name: name)
+
+==> 031/031.rb 15 <==
+User.all.first
+
+==> 032/032.rb 16 <==
+User.all.first!
+
+==> 033/033.rb 37 <==
+User.all.first_or_create(name: name)
+
+==> 034/034.rb 38 <==
+User.all.first_or_create!(name: name)
+
+==> 035/035.rb 41 <==
+User.all.first_or_initialize(name: name)
+
+==> 036/036.rb 19 <==
+User.all.forty_two
+
+==> 037/037.rb 20 <==
+User.all.forty_two!
+
+==> 038/038.rb 16 <==
+User.all.fourth
+
+==> 039/039.rb 17 <==
+User.all.fourth!
+
+==> 040/040.rb 23 <==
+User.all.from("users")
+
+==> 041/041.rb 21 <==
+User.all.group(:age)
+
+==> 042/042.rb 33 <==
+User.all.having("AVG(age) > 30")
+
+==> 043/043.rb 13 <==
+User.all.ids
+
+==> 044/044.rb 36 <==
+User.all.in_batches(&:do_something)
+
+==> 045/045.rb 31 <==
+User.all.in_order_of(:id, ids)
+
+==> 046/046.rb 29 <==
+User.all.includes(:articles)
+
+==> 047/047.rb 22 <==
+User.all.invert_where
+
+==> 048/048.rb 26 <==
+User.all.joins(:articles)
+
+==> 049/049.rb 14 <==
+User.all.last
+
+==> 050/050.rb 15 <==
+User.all.last!
+
+==> 051/051.rb 31 <==
+User.all.left_joins(:articles)
+
+==> 052/052.rb 37 <==
+User.all.left_outer_joins(:articles)
+
+==> 053/053.rb 18 <==
+User.all.limit(n)
+
+==> 054/054.rb 14 <==
+User.all.lock
+
+==> 055/055.rb 15 <==
+User.all.many?
+
+==> 056/056.rb 23 <==
+User.all.maximum(:age)
+
+==> 057/057.rb 22 <==
+User.all.merge(users)
+
+==> 058/058.rb 23 <==
+User.all.minimum(:age)
+
+==> 059/059.rb 14 <==
+User.all.none
+
+==> 060/060.rb 15 <==
+User.all.none?
+
+==> 061/061.rb 19 <==
+User.all.offset(n)
+
+==> 062/062.rb 14 <==
+User.all.one?
+
+==> 063/063.rb 22 <==
+User.all.only(:order)
+
+==> 064/064.rb 64 <==
+User.all.optimizer_hints("SeqScan(users)", "Parallel(users 8)")
+
+==> 065/065.rb 33 <==
+User.all.or(User.where(age: 30))
+
+==> 066/066.rb 28 <==
+User.all.order(:created_at)
+
+==> 067/067.rb 19 <==
+User.all.pick(:id)
+
+==> 068/068.rb 21 <==
+User.all.pluck(:age)
+
+==> 069/069.rb 28 <==
+User.all.preload(:articles)
+
+==> 070/070.rb 18 <==
+User.all.readonly
+
+==> 071/071.rb 31 <==
+User.all.references(:articles)
+
+==> 072/072.rb 30 <==
+User.all.reorder(:created_at)
+
+==> 073/073.rb 24 <==
+User.all.reselect(:age)
+
+==> 074/074.rb 26 <==
+User.all.rewhere(id: ids)
+
+==> 075/075.rb 16 <==
+User.all.second
+
+==> 076/076.rb 17 <==
+User.all.second!
+
+==> 077/077.rb 24 <==
+User.all.second_to_last
+
+==> 078/078.rb 25 <==
+User.all.second_to_last!
+
+==> 079/079.rb 22 <==
+User.all.select(:age)
+
+==> 080/080.rb 14 <==
+User.all.sole
+
+==> 081/081.rb 24 <==
+User.all.strict_loading
+
+==> 082/082.rb 19 <==
+User.all.sum(:age)
+
+==> 083/083.rb 17 <==
+User.all.take(n)
+
+==> 084/084.rb 15 <==
+User.all.take!
+
+==> 085/085.rb 15 <==
+User.all.third
+
+==> 086/086.rb 16 <==
+User.all.third!
+
+==> 087/087.rb 23 <==
+User.all.third_to_last
+
+==> 088/088.rb 24 <==
+User.all.third_to_last!
+
+==> 089/089.rb 19 <==
+User.all.touch_all
+
+==> 090/090.rb 25 <==
+User.all.unscope(:order)
+
+==> 091/091.rb 32 <==
+User.all.update_all(name: name)
+
+==> 092/092.rb 24 <==
+User.all.where(id: ids)
+
+==> 093/093.rb 23 <==
+User.all.without(user)
+
+==> 094/094.rb 37 <==
+user.articles.all.order(:created_at)
+
+==> 095/095.rb 9 <==
+User.all
+
+==> 096/096.rb 29 <==
+User.all.map(&:do_something)
+
+==> 097/097.rb 23 <==
+do_something(User.all)
+
+==> 098/098.rb 42 <==
+do_something(User.all.order(:created_at))
+
+==> 099/099.rb 14 <==
+sum(User.all)
+
+==> 100/100.rb 21 <==
+page.all(:parameter)
+
+==> 101/101.rb 34 <==
+page.all(:parameter).do_something
+
+==> 102/102.rb 41 <==
+page.all(:parameter).select(some_filter)
+
+==> 103/103.rb 11 <==
+User.all()
+
+==> 104/104.rb 30 <==
+User.all().order(:created_at)
+
+==> 105/105.rb 24 <==
+User.all().do_something
+
+==> 106/106.rb 43 <==
+User.all.any? { |item| item.do_something }
+
+==> 107/107.rb 34 <==
+User.all.any? { _1.do_something }
+
+==> 108/108.rb 30 <==
+User.all.any?(&:do_something)
+
+==> 109/109.rb 31 <==
+do_something { User.all.any? }
+
+==> 110/110.rb 44 <==
+User.all.count { |item| item.do_something }
+
+==> 111/111.rb 35 <==
+User.all.count { _1.do_something }
+
+==> 112/112.rb 31 <==
+User.all.count(&:do_something)
+
+==> 113/113.rb 32 <==
+do_something { User.all.count }
+
+==> 114/114.rb 43 <==
+User.all.find { |item| item.do_something }
+
+==> 115/115.rb 34 <==
+User.all.find { _1.do_something }
+
+==> 116/116.rb 30 <==
+User.all.find(&:do_something)
+
+==> 117/117.rb 31 <==
+do_something { User.all.find }
+
+==> 118/118.rb 44 <==
+User.all.none? { |item| item.do_something }
+
+==> 119/119.rb 35 <==
+User.all.none? { _1.do_something }
+
+==> 120/120.rb 31 <==
+User.all.none?(&:do_something)
+
+==> 121/121.rb 32 <==
+do_something { User.all.none? }
+
+==> 122/122.rb 43 <==
+User.all.one? { |item| item.do_something }
+
+==> 123/123.rb 34 <==
+User.all.one? { _1.do_something }
+
+==> 124/124.rb 30 <==
+User.all.one?(&:do_something)
+
+==> 125/125.rb 31 <==
+do_something { User.all.one? }
+
+==> 126/126.rb 45 <==
+User.all.select { |item| item.do_something }
+
+==> 127/127.rb 36 <==
+User.all.select { _1.do_something }
+
+==> 128/128.rb 32 <==
+User.all.select(&:do_something)
+
+==> 129/129.rb 33 <==
+do_something { User.all.select }
+
+==> 130/130.rb 42 <==
+User.all.sum { |item| item.do_something }
+
+==> 131/131.rb 33 <==
+User.all.sum { _1.do_something }
+
+==> 132/132.rb 29 <==
+User.all.sum(&:do_something)
+
+==> 133/133.rb 30 <==
+do_something { User.all.sum }
+
+==> 134/134.rb 63 <==
+class User
+  def do_something
+    all.where(id: ids)
+  end
+end
+
+==> 135/135.rb 69 <==
+class User < Foo
+  def do_something
+    all.where(id: ids)
+  end
+end
+
+==> 136/136.rb 82 <==
+class User < ApplicationRecord
+  scope :admins, -> { all.where(admin: true) }
+end
+
+==> 137/137.rb 84 <==
+class User < ::ApplicationRecord
+  scope :admins, -> { all.where(admin: true) }
+end
+
+==> 138/138.rb 83 <==
+class User < ActiveRecord::Base
+  scope :admins, -> { all.where(admin: true) }
+end
+
+==> 139/139.rb 85 <==
+class User < ::ActiveRecord::Base
+  scope :admins, -> { all.where(admin: true) }
+end
+
+==> 140/140.rb 29 <==
+user.articles.all.delete_all
+
+==> 141/141.rb 38 <==
+users = User.all
+users.all.delete_all
+
+==> 142/142.rb 15 <==
+all.delete_all
+
+==> 143/143.rb 30 <==
+user.articles.all.destroy_all
+
+==> 144/144.rb 39 <==
+users = User.all
+users.all.destroy_all
+
+==> 145/145.rb 16 <==
+all.destroy_all
+

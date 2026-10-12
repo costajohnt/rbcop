@@ -1,0 +1,49 @@
+==> offenses exit=1 1047 <==
+000/000.rb:1:33: C: [Correctable] Rails/PluckInWhere: Use `select` instead of `pluck` within `where` query method.
+001/001.rb:1:33: C: [Correctable] Rails/PluckInWhere: Use `select(:id)` instead of `ids` within `where` query method.
+002/002.rb:1:37: C: [Correctable] Rails/PluckInWhere: Use `select` instead of `pluck` within `where` query method.
+003/003.rb:1:37: C: [Correctable] Rails/PluckInWhere: Use `select(:id)` instead of `ids` within `where` query method.
+004/004.rb:1:36: C: [Correctable] Rails/PluckInWhere: Use `select` instead of `pluck` within `where` query method.
+005/005.rb:1:44: C: [Correctable] Rails/PluckInWhere: Use `select` instead of `pluck` within `where` query method.
+006/006.rb:1:44: C: [Correctable] Rails/PluckInWhere: Use `select(:id)` instead of `ids` within `where` query method.
+012/012.rb:1:34: C: [Correctable] Rails/PluckInWhere: Use `select` instead of `pluck` within `where` query method.
+013/013.rb:1:34: C: [Correctable] Rails/PluckInWhere: Use `select(:id)` instead of `ids` within `where` query method.
+
+==> autocorrect exit=0 1029 <==
+000/000.rb:1:33: C: [Corrected] Rails/PluckInWhere: Use `select` instead of `pluck` within `where` query method.
+001/001.rb:1:33: C: [Corrected] Rails/PluckInWhere: Use `select(:id)` instead of `ids` within `where` query method.
+002/002.rb:1:37: C: [Corrected] Rails/PluckInWhere: Use `select` instead of `pluck` within `where` query method.
+003/003.rb:1:37: C: [Corrected] Rails/PluckInWhere: Use `select(:id)` instead of `ids` within `where` query method.
+004/004.rb:1:36: C: [Corrected] Rails/PluckInWhere: Use `select` instead of `pluck` within `where` query method.
+005/005.rb:1:44: C: [Corrected] Rails/PluckInWhere: Use `select` instead of `pluck` within `where` query method.
+006/006.rb:1:44: C: [Corrected] Rails/PluckInWhere: Use `select(:id)` instead of `ids` within `where` query method.
+012/012.rb:1:34: C: [Corrected] Rails/PluckInWhere: Use `select` instead of `pluck` within `where` query method.
+013/013.rb:1:34: C: [Corrected] Rails/PluckInWhere: Use `select(:id)` instead of `ids` within `where` query method.
+
+==> corrected/000/000.rb 45 <==
+Post.where(user_id: User.active.select(:id))
+
+==> corrected/001/001.rb 45 <==
+Post.where(user_id: User.active.select(:id))
+
+==> corrected/002/002.rb 49 <==
+Post.where.not(user_id: User.active.select(:id))
+
+==> corrected/003/003.rb 49 <==
+Post.where.not(user_id: User.active.select(:id))
+
+==> corrected/004/004.rb 48 <==
+Post&.where(user_id: User&.active&.select(:id))
+
+==> corrected/005/005.rb 56 <==
+Post.rewhere('user_id IN (?)', User.active.select(:id))
+
+==> corrected/006/006.rb 56 <==
+Post.rewhere('user_id IN (?)', User.active.select(:id))
+
+==> corrected/012/012.rb 46 <==
+Post.where(user_id: users.active.select(:id))
+
+==> corrected/013/013.rb 46 <==
+Post.where(user_id: users.active.select(:id))
+

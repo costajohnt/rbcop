@@ -1,0 +1,39 @@
+==> offenses exit=1 660 <==
+000/000.rb:1:6: C: [Correctable] Rails/FindById: Use `find(1)` instead of `where(id: 1).take!`.
+001/001.rb:1:6: C: [Correctable] Rails/FindById: Use `find(1)` instead of `where(id: 1)&.take!`.
+002/002.rb:1:7: C: [Correctable] Rails/FindById: Use `find(1)` instead of `where(id: 1)&.take!`.
+003/003.rb:1:6: C: [Correctable] Rails/FindById: Use `find(1)` instead of `find_by_id!(1)`.
+004/004.rb:1:7: C: [Correctable] Rails/FindById: Use `find(1)` instead of `find_by_id!(1)`.
+005/005.rb:1:6: C: [Correctable] Rails/FindById: Use `find(1)` instead of `find_by!(id: 1)`.
+006/006.rb:1:7: C: [Correctable] Rails/FindById: Use `find(1)` instead of `find_by!(id: 1)`.
+
+==> autocorrect exit=0 646 <==
+000/000.rb:1:6: C: [Corrected] Rails/FindById: Use `find(1)` instead of `where(id: 1).take!`.
+001/001.rb:1:6: C: [Corrected] Rails/FindById: Use `find(1)` instead of `where(id: 1)&.take!`.
+002/002.rb:1:7: C: [Corrected] Rails/FindById: Use `find(1)` instead of `where(id: 1)&.take!`.
+003/003.rb:1:6: C: [Corrected] Rails/FindById: Use `find(1)` instead of `find_by_id!(1)`.
+004/004.rb:1:7: C: [Corrected] Rails/FindById: Use `find(1)` instead of `find_by_id!(1)`.
+005/005.rb:1:6: C: [Corrected] Rails/FindById: Use `find(1)` instead of `find_by!(id: 1)`.
+006/006.rb:1:7: C: [Corrected] Rails/FindById: Use `find(1)` instead of `find_by!(id: 1)`.
+
+==> corrected/000/000.rb 13 <==
+User.find(1)
+
+==> corrected/001/001.rb 13 <==
+User.find(1)
+
+==> corrected/002/002.rb 14 <==
+User&.find(1)
+
+==> corrected/003/003.rb 13 <==
+User.find(1)
+
+==> corrected/004/004.rb 14 <==
+User&.find(1)
+
+==> corrected/005/005.rb 13 <==
+User.find(1)
+
+==> corrected/006/006.rb 14 <==
+User&.find(1)
+

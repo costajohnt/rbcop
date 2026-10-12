@@ -1,0 +1,14 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 6.1
+
+==> 000/000.rb 44 <==
+redirect_back(fallback_location: root_path)
+

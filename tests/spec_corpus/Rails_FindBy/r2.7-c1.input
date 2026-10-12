@@ -1,0 +1,15 @@
+==> .rubocop.yml 172 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/FindBy:
+  IgnoreWhereFirst: true
+
+==> 000/000.rb 24 <==
+User.where(id: x).first
+

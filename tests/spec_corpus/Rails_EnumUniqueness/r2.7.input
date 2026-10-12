@@ -1,0 +1,88 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/models/000/000.rb 44 <==
+enum :status, [:active, :archived, :active]
+
+==> app/models/001/001.rb 53 <==
+enum :status, [:active, :archived, :active, :active]
+
+==> app/models/002/002.rb 34 <==
+enum :status, [:active, :archived]
+==> app/models/003/003.rb 76 <==
+enum :status, [:active, :archived, :active], default: :active, prefix: true
+
+==> app/models/004/004.rb 85 <==
+enum :status, [:active, :archived, :active, :active], default: :active, prefix: true
+
+==> app/models/005/005.rb 66 <==
+enum :status, [:active, :archived], default: :active, prefix: true
+==> app/models/006/006.rb 41 <==
+enum :status, { active: 0, archived: 0 }
+
+==> app/models/007/007.rb 53 <==
+enum :status, { active: 0, pending: 0, archived: 0 }
+
+==> app/models/008/008.rb 38 <==
+enum status: { active: 0, pending: 1 }
+==> app/models/009/009.rb 73 <==
+enum :status, { active: 0, archived: 0 }, default: :active, prefix: true
+
+==> app/models/010/010.rb 85 <==
+enum :status, { active: 0, pending: 0, archived: 0 }, default: :active, prefix: true
+
+==> app/models/011/011.rb 70 <==
+enum status: { active: 0, pending: 1 }, default: :active, prefix: true
+==> app/models/012/012.rb 22 <==
+enum :status, statuses
+==> app/models/013/013.rb 32 <==
+enum :status, User.statuses.keys
+==> app/models/014/014.rb 22 <==
+enum :status, STATUSES
+==> app/models/015/015.rb 45 <==
+enum "status", [:active, :archived, :active]
+
+==> app/models/016/016.rb 40 <==
+enum KEY, [:active, :archived, :active]
+
+==> app/models/017/017.rb 43 <==
+enum status: [:active, :archived, :active]
+
+==> app/models/018/018.rb 52 <==
+enum status: [:active, :archived, :active, :active]
+
+==> app/models/019/019.rb 33 <==
+enum status: [:active, :archived]
+==> app/models/020/020.rb 40 <==
+enum status: { active: 0, archived: 0 }
+
+==> app/models/021/021.rb 52 <==
+enum status: { active: 0, pending: 0, archived: 0 }
+
+==> app/models/022/022.rb 54 <==
+var = { status: { active: 0, archived: 1 } }
+enum var
+
+==> app/models/023/023.rb 21 <==
+enum status: statuses
+==> app/models/024/024.rb 31 <==
+enum status: User.statuses.keys
+==> app/models/025/025.rb 21 <==
+enum status: STATUSES
+==> app/models/026/026.rb 47 <==
+enum "status" => [:active, :archived, :active]
+
+==> app/models/027/027.rb 42 <==
+enum KEY => [:active, :archived, :active]
+
+==> app/models/028/028.rb 89 <==
+enum status: [:active, :archived, :active],
+    role: [:owner, :member, :guest, :member]
+

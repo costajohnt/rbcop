@@ -1,0 +1,50 @@
+==> offenses exit=1 824 <==
+001/001.rb:1:17: C: [Correctable] Rails/ApplicationRecord: Models should subclass `ApplicationRecord`.
+002/002.rb:1:17: C: [Correctable] Rails/ApplicationRecord: Models should subclass `ApplicationRecord`.
+003/003.rb:1:17: C: [Correctable] Rails/ApplicationRecord: Models should subclass `ApplicationRecord`.
+004/004.rb:2:19: C: [Correctable] Rails/ApplicationRecord: Models should subclass `ApplicationRecord`.
+005/005.rb:1:25: C: [Correctable] Rails/ApplicationRecord: Models should subclass `ApplicationRecord`.
+006/006.rb:1:21: C: [Correctable] Rails/ApplicationRecord: Models should subclass `ApplicationRecord`.
+007/007.rb:1:29: C: [Correctable] Rails/ApplicationRecord: Models should subclass `ApplicationRecord`.
+008/008.rb:1:11: C: [Correctable] Rails/ApplicationRecord: Models should subclass `ApplicationRecord`.
+
+==> autocorrect exit=0 808 <==
+001/001.rb:1:17: C: [Corrected] Rails/ApplicationRecord: Models should subclass `ApplicationRecord`.
+002/002.rb:1:17: C: [Corrected] Rails/ApplicationRecord: Models should subclass `ApplicationRecord`.
+003/003.rb:1:17: C: [Corrected] Rails/ApplicationRecord: Models should subclass `ApplicationRecord`.
+004/004.rb:2:19: C: [Corrected] Rails/ApplicationRecord: Models should subclass `ApplicationRecord`.
+005/005.rb:1:25: C: [Corrected] Rails/ApplicationRecord: Models should subclass `ApplicationRecord`.
+006/006.rb:1:21: C: [Corrected] Rails/ApplicationRecord: Models should subclass `ApplicationRecord`.
+007/007.rb:1:29: C: [Corrected] Rails/ApplicationRecord: Models should subclass `ApplicationRecord`.
+008/008.rb:1:11: C: [Corrected] Rails/ApplicationRecord: Models should subclass `ApplicationRecord`.
+
+==> corrected/001/001.rb 38 <==
+class MyModel < ApplicationRecord
+end
+
+==> corrected/002/002.rb 38 <==
+class MyModel < ApplicationRecord
+end
+
+==> corrected/003/003.rb 39 <==
+class MyModel < ApplicationRecord; end
+
+==> corrected/004/004.rb 60 <==
+module Nested
+  class MyModel < ApplicationRecord
+  end
+end
+
+==> corrected/005/005.rb 46 <==
+class Nested::MyModel < ApplicationRecord
+end
+
+==> corrected/006/006.rb 39 <==
+MyModel = Class.new(ApplicationRecord)
+
+==> corrected/007/007.rb 47 <==
+Nested::MyModel = Class.new(ApplicationRecord)
+
+==> corrected/008/008.rb 32 <==
+Class.new(ApplicationRecord) {}
+

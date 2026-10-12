@@ -1,0 +1,59 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/helpers/000/000.rb 48 <==
+def welcome_message
+  "Hello #{@user.name}"
+end
+
+==> app/helpers/001/001.rb 55 <==
+def welcome_message(user)
+  @user_name = user.name
+end
+
+==> app/helpers/002/002.rb 53 <==
+def welcome_message(user)
+  "Hello #{user.name}"
+end
+
+==> app/helpers/003/003.rb 36 <==
+def foo
+  @cache ||= heavy_load
+end
+
+==> app/helpers/004/004.rb 127 <==
+class MyFormBuilder < ActionView::Helpers::FormBuilder
+  def do_something
+    @template
+    @template = do_something
+  end
+end
+
+==> app/helpers/005/005.rb 129 <==
+class MyFormBuilder < ::ActionView::Helpers::FormBuilder
+  def do_something
+    @template
+    @template = do_something
+  end
+end
+
+==> app/helpers/006/006.rb 156 <==
+module ButtonHelper
+  class Button
+    def initialize(text:)
+      @text = text
+    end
+  end
+
+  def button(**args)
+    render Button.new(**args)
+  end
+end
+

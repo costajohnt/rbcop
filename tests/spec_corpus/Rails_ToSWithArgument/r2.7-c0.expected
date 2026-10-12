@@ -1,0 +1,19 @@
+==> offenses exit=1 258 <==
+002/002.rb:1:1: C: [Correctable] Rails/ToSWithArgument: Use `to_formatted_s` instead.
+003/003.rb:1:3: C: [Correctable] Rails/ToSWithArgument: Use `to_formatted_s` instead.
+004/004.rb:1:4: C: [Correctable] Rails/ToSWithArgument: Use `to_formatted_s` instead.
+
+==> autocorrect exit=0 252 <==
+002/002.rb:1:1: C: [Corrected] Rails/ToSWithArgument: Use `to_formatted_s` instead.
+003/003.rb:1:3: C: [Corrected] Rails/ToSWithArgument: Use `to_formatted_s` instead.
+004/004.rb:1:4: C: [Corrected] Rails/ToSWithArgument: Use `to_formatted_s` instead.
+
+==> corrected/002/002.rb 27 <==
+to_formatted_s(:delimited)
+
+==> corrected/003/003.rb 29 <==
+1.to_formatted_s(:delimited)
+
+==> corrected/004/004.rb 30 <==
+1&.to_formatted_s(:delimited)
+

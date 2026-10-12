@@ -1,0 +1,10 @@
+==> offenses exit=1 288 <==
+000/000.rb:1:1: C: Rails/RequireDependency: Do not use `require_dependency` with Zeitwerk mode.
+001/001.rb:1:1: C: Rails/RequireDependency: Do not use `require_dependency` with Zeitwerk mode.
+002/002.rb:1:1: C: Rails/RequireDependency: Do not use `require_dependency` with Zeitwerk mode.
+
+==> autocorrect exit=1 288 <==
+000/000.rb:1:1: C: Rails/RequireDependency: Do not use `require_dependency` with Zeitwerk mode.
+001/001.rb:1:1: C: Rails/RequireDependency: Do not use `require_dependency` with Zeitwerk mode.
+002/002.rb:1:1: C: Rails/RequireDependency: Do not use `require_dependency` with Zeitwerk mode.
+

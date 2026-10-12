@@ -1,0 +1,15 @@
+==> .rubocop.yml 184 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Rails/UniqBeforePluck:
+  EnforcedStyle: aggressive
+
+==> 000/000.rb 48 <==
+Model.where(foo: 1).pluck(:name).uniq { it[0] }
+

@@ -1,0 +1,30 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/models/000/000.rb 35 <==
+scope :active, where(active: true)
+
+==> app/models/001/001.rb 21 <==
+scope :active, "adsf"
+==> app/models/002/002.rb 41 <==
+scope :active, -> { where(active: true) }
+==> app/models/003/003.rb 51 <==
+scope :active, ->(active) { where(active: active) }
+==> app/models/004/004.rb 45 <==
+scope :active, lambda { where(active: true) }
+==> app/models/005/005.rb 56 <==
+scope :active, lambda { |active| where(active: active) }
+==> app/models/006/006.rb 94 <==
+scope :active, (lambda do |active|
+                 where(active: active)
+               end)
+
+==> app/models/007/007.rb 43 <==
+scope :active, proc { where(active: true) }

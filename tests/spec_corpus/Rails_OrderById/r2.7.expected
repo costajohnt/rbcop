@@ -1,0 +1,12 @@
+==> offenses exit=1 506 <==
+000/000.rb:1:6: C: Rails/OrderById: Do not use the `id` column for ordering. Use a timestamp column to order chronologically.
+001/001.rb:1:6: C: Rails/OrderById: Do not use the `id` column for ordering. Use a timestamp column to order chronologically.
+002/002.rb:1:28: C: Rails/OrderById: Do not use the `id` column for ordering. Use a timestamp column to order chronologically.
+003/003.rb:1:28: C: Rails/OrderById: Do not use the `id` column for ordering. Use a timestamp column to order chronologically.
+
+==> autocorrect exit=1 506 <==
+000/000.rb:1:6: C: Rails/OrderById: Do not use the `id` column for ordering. Use a timestamp column to order chronologically.
+001/001.rb:1:6: C: Rails/OrderById: Do not use the `id` column for ordering. Use a timestamp column to order chronologically.
+002/002.rb:1:28: C: Rails/OrderById: Do not use the `id` column for ordering. Use a timestamp column to order chronologically.
+003/003.rb:1:28: C: Rails/OrderById: Do not use the `id` column for ordering. Use a timestamp column to order chronologically.
+

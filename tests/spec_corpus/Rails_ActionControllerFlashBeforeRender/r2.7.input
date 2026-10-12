@@ -1,0 +1,391 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 115 <==
+class HomeController < ::ActionController::Base
+  def create
+    flash[:alert] = "msg"
+    render :index
+  end
+end
+
+==> 001/001.rb 97 <==
+class HomeController < ::ActionController::Base
+  def create
+    flash[:alert] = "msg"
+  end
+end
+
+==> 002/002.rb 114 <==
+class HomeController < ::ApplicationController
+  def create
+    flash[:alert] = "msg"
+    render :index
+  end
+end
+
+==> 003/003.rb 96 <==
+class HomeController < ::ApplicationController
+  def create
+    flash[:alert] = "msg"
+  end
+end
+
+==> 004/004.rb 113 <==
+class HomeController < ActionController::Base
+  def create
+    flash[:alert] = "msg"
+    render :index
+  end
+end
+
+==> 005/005.rb 95 <==
+class HomeController < ActionController::Base
+  def create
+    flash[:alert] = "msg"
+  end
+end
+
+==> 006/006.rb 112 <==
+class HomeController < ApplicationController
+  def create
+    flash[:alert] = "msg"
+    render :index
+  end
+end
+
+==> 007/007.rb 94 <==
+class HomeController < ApplicationController
+  def create
+    flash[:alert] = "msg"
+  end
+end
+
+==> 008/008.rb 107 <==
+class NonController < ApplicationRecord
+  def create
+    flash[:alert] = "msg"
+    render :index
+  end
+end
+
+==> 009/009.rb 119 <==
+class HomeController < ActionController::Base
+  before_action do
+    flash[:alert] = "msg"
+    render :index
+  end
+end
+
+==> 010/010.rb 118 <==
+class HomeController < ApplicationController
+  before_action do
+    flash[:alert] = "msg"
+    render :index
+  end
+end
+
+==> 011/011.rb 113 <==
+class NonController < ApplicationRecord
+  before_action do
+    flash[:alert] = "msg"
+    render :index
+  end
+end
+
+==> 012/012.rb 126 <==
+class HomeController < ActionController::Base
+  def create
+    flash[:alert] = "msg" if condition
+    render :index
+  end
+end
+
+==> 013/013.rb 146 <==
+class HomeController < ActionController::Base
+  def create
+    if condition
+      flash[:alert] = "msg"
+    end
+
+    redirect_to :index
+  end
+end
+
+==> 014/014.rb 170 <==
+class HomeController < ActionController::Base
+  def create
+    if condition
+      flash[:alert] = "msg"
+    end
+
+    redirect_back fallback_location: root_path
+  end
+end
+
+==> 015/015.rb 160 <==
+class HomeController < ActionController::Base
+  def create
+    if condition
+      do_something
+      flash[:alert] = "msg"
+    end
+
+    render :index
+  end
+end
+
+==> 016/016.rb 165 <==
+class HomeController < ActionController::Base
+  def create
+    if condition
+      do_something
+      flash[:alert] = "msg"
+    end
+
+    redirect_to :index
+  end
+end
+
+==> 017/017.rb 180 <==
+class HomeController < ActionController::Base
+  def create
+    if condition
+      flash[:alert] = "msg"
+      redirect_to :index
+
+      return
+    end
+
+    render :index
+  end
+end
+
+==> 018/018.rb 216 <==
+class HomeController < ActionController::Base
+  def create
+    begin
+      do_something
+      flash[:alert] = "msg in begin"
+    rescue
+      flash[:alert] = "msg in rescue"
+    end
+
+    redirect_to :index
+  end
+end
+
+==> 019/019.rb 125 <==
+class HomeController < ApplicationController
+  def create
+    flash[:alert] = "msg" if condition
+    render :index
+  end
+end
+
+==> 020/020.rb 145 <==
+class HomeController < ApplicationController
+  def create
+    if condition
+      flash[:alert] = "msg"
+    end
+
+    redirect_to :index
+  end
+end
+
+==> 021/021.rb 169 <==
+class HomeController < ApplicationController
+  def create
+    if condition
+      flash[:alert] = "msg"
+    end
+
+    redirect_back fallback_location: root_path
+  end
+end
+
+==> 022/022.rb 159 <==
+class HomeController < ApplicationController
+  def create
+    if condition
+      do_something
+      flash[:alert] = "msg"
+    end
+
+    render :index
+  end
+end
+
+==> 023/023.rb 164 <==
+class HomeController < ApplicationController
+  def create
+    if condition
+      do_something
+      flash[:alert] = "msg"
+    end
+
+    redirect_to :index
+  end
+end
+
+==> 024/024.rb 179 <==
+class HomeController < ApplicationController
+  def create
+    if condition
+      flash[:alert] = "msg"
+      redirect_to :index
+
+      return
+    end
+
+    render :index
+  end
+end
+
+==> 025/025.rb 215 <==
+class HomeController < ApplicationController
+  def create
+    begin
+      do_something
+      flash[:alert] = "msg in begin"
+    rescue
+      flash[:alert] = "msg in rescue"
+    end
+
+    redirect_to :index
+  end
+end
+
+==> 026/026.rb 117 <==
+class HomeController < ApplicationController
+  def self.create
+    flash[:alert] = "msg"
+    render :index
+  end
+end
+
+==> 027/027.rb 89 <==
+class HomeController < ApplicationController
+  flash[:alert] = "msg"
+  render :index
+end
+
+==> 028/028.rb 36 <==
+flash[:alert] = "msg"
+render :index
+
+==> 029/029.rb 137 <==
+class HomeController < ApplicationController
+  def create
+    flash[:alert] = "msg"
+    redirect_to "https://www.example.com/"
+  end
+end
+
+==> 030/030.rb 174 <==
+class HomeController < ApplicationController
+  def create
+    render :index and return if foo?
+    flash[:alert] = "msg"
+    redirect_to "https://www.example.com/"
+  end
+end
+
+==> 031/031.rb 191 <==
+class HomeController < ApplicationController
+  def create
+    if condition
+      flash[:alert] = "msg"
+      return redirect_to "https://www.example.com/"
+    end
+    render :index
+  end
+end
+
+==> 032/032.rb 329 <==
+class HomeController < ApplicationController
+  def create
+    if foo.update(params)
+      flash[:success] = 'msg'
+
+      if redirect_to_index?
+        redirect_to index
+      else
+        redirect_to path(foo)
+      end
+    else
+      flash.now[:alert] = 'msg'
+      render :edit, status: :unprocessable_entity
+    end
+  end
+end
+
+==> 033/033.rb 424 <==
+class HomeController < ApplicationController
+  def create
+    if remote_request? || sandbox?
+      if current_user.nil?
+        render :index
+      else
+        head :forbidden
+      end
+    elsif current_user.nil?
+      redirect_to sign_in_path
+    else
+      flash[:alert] = 'msg'
+      if request.referer.present?
+        redirect_to(request.referer)
+      else
+        redirect_to(root_path)
+      end
+    end
+  end
+end
+
+==> 034/034.rb 135 <==
+class HomeController < ApplicationController
+  def create
+  rescue
+    flash[:alert] = 'msg'
+  ensure
+    redirect_to :index
+  end
+end
+
+==> 035/035.rb 179 <==
+class HomeController < ApplicationController
+  def create
+    messages = %w[foo bar baz]
+    messages.each { |message| flash[:alert] = message }
+
+    redirect_to :index
+  end
+end
+
+==> 036/036.rb 192 <==
+class HomeController < ApplicationController
+  def create
+    messages = %w[foo bar baz]
+    messages.each do |message|
+      flash[:alert] = message
+    end
+
+    redirect_to :index
+  end
+end
+
+==> 037/037.rb 111 <==
+class NonController < ApplicationRecord
+  before_action do
+    flash[:notice] = 'hello'
+  end.do_something
+end
+

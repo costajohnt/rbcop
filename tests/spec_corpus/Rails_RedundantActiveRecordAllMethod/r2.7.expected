@@ -1,0 +1,552 @@
+==> offenses exit=1 10489 <==
+000/000.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+001/001.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+002/002.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+003/003.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+004/004.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+005/005.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+006/006.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+007/007.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+008/008.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+009/009.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+010/010.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+011/011.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+012/012.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+013/013.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+014/014.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+015/015.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+016/016.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+017/017.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+018/018.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+019/019.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+020/020.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+021/021.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+022/022.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+023/023.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+024/024.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+025/025.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+026/026.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+027/027.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+028/028.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+029/029.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+030/030.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+031/031.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+032/032.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+033/033.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+034/034.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+035/035.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+036/036.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+037/037.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+038/038.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+039/039.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+040/040.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+041/041.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+042/042.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+043/043.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+044/044.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+045/045.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+046/046.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+047/047.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+048/048.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+049/049.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+050/050.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+051/051.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+052/052.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+053/053.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+054/054.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+055/055.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+056/056.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+057/057.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+058/058.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+059/059.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+060/060.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+061/061.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+062/062.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+063/063.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+064/064.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+065/065.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+066/066.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+067/067.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+068/068.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+069/069.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+070/070.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+071/071.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+072/072.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+073/073.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+074/074.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+075/075.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+076/076.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+077/077.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+078/078.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+079/079.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+080/080.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+081/081.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+082/082.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+083/083.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+084/084.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+085/085.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+086/086.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+087/087.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+088/088.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+089/089.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+090/090.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+091/091.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+092/092.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+093/093.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+094/094.rb:1:15: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+098/098.rb:1:19: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+104/104.rb:1:6: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+109/109.rb:1:21: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+113/113.rb:1:21: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+117/117.rb:1:21: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+121/121.rb:1:21: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+125/125.rb:1:21: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+129/129.rb:1:21: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+133/133.rb:1:21: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+136/136.rb:2:23: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+137/137.rb:2:23: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+138/138.rb:2:23: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+139/139.rb:2:23: C: [Correctable] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+
+==> autocorrect exit=0 10273 <==
+000/000.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+001/001.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+002/002.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+003/003.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+004/004.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+005/005.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+006/006.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+007/007.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+008/008.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+009/009.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+010/010.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+011/011.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+012/012.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+013/013.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+014/014.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+015/015.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+016/016.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+017/017.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+018/018.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+019/019.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+020/020.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+021/021.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+022/022.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+023/023.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+024/024.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+025/025.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+026/026.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+027/027.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+028/028.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+029/029.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+030/030.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+031/031.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+032/032.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+033/033.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+034/034.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+035/035.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+036/036.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+037/037.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+038/038.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+039/039.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+040/040.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+041/041.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+042/042.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+043/043.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+044/044.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+045/045.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+046/046.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+047/047.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+048/048.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+049/049.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+050/050.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+051/051.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+052/052.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+053/053.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+054/054.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+055/055.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+056/056.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+057/057.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+058/058.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+059/059.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+060/060.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+061/061.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+062/062.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+063/063.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+064/064.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+065/065.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+066/066.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+067/067.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+068/068.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+069/069.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+070/070.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+071/071.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+072/072.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+073/073.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+074/074.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+075/075.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+076/076.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+077/077.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+078/078.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+079/079.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+080/080.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+081/081.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+082/082.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+083/083.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+084/084.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+085/085.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+086/086.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+087/087.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+088/088.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+089/089.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+090/090.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+091/091.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+092/092.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+093/093.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+094/094.rb:1:15: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+098/098.rb:1:19: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+104/104.rb:1:6: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+109/109.rb:1:21: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+113/113.rb:1:21: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+117/117.rb:1:21: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+121/121.rb:1:21: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+125/125.rb:1:21: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+129/129.rb:1:21: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+133/133.rb:1:21: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+136/136.rb:2:23: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+137/137.rb:2:23: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+138/138.rb:2:23: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+139/139.rb:2:23: C: [Corrected] Rails/RedundantActiveRecordAllMethod: Redundant `all` detected.
+
+==> corrected/000/000.rb 30 <==
+User.and(User.where(age: 30))
+
+==> corrected/001/001.rb 30 <==
+User.annotate("selecting id")
+
+==> corrected/002/002.rb 10 <==
+User.any?
+
+==> corrected/003/003.rb 19 <==
+User.average(:age)
+
+==> corrected/004/004.rb 31 <==
+User.calculate(:average, :age)
+
+==> corrected/005/005.rb 11 <==
+User.count
+
+==> corrected/006/006.rb 35 <==
+User.create_or_find_by(name: name)
+
+==> corrected/007/007.rb 36 <==
+User.create_or_find_by!(name: name)
+
+==> corrected/008/008.rb 29 <==
+User.create_with(name: name)
+
+==> corrected/009/009.rb 16 <==
+User.delete_all
+
+==> corrected/010/010.rb 23 <==
+User.delete_by(id: id)
+
+==> corrected/011/011.rb 17 <==
+User.destroy_all
+
+==> corrected/012/012.rb 24 <==
+User.destroy_by(id: id)
+
+==> corrected/013/013.rb 14 <==
+User.distinct
+
+==> corrected/014/014.rb 27 <==
+User.eager_load(:articles)
+
+==> corrected/015/015.rb 20 <==
+User.except(:order)
+
+==> corrected/016/016.rb 21 <==
+User.excluding(user)
+
+==> corrected/017/017.rb 13 <==
+User.exists?
+
+==> corrected/018/018.rb 27 <==
+User.extending(Pagination)
+
+==> corrected/019/019.rb 35 <==
+User.extract_associated(:articles)
+
+==> corrected/020/020.rb 11 <==
+User.fifth
+
+==> corrected/021/021.rb 12 <==
+User.fifth!
+
+==> corrected/022/022.rb 14 <==
+User.find(id)
+
+==> corrected/023/023.rb 25 <==
+User.find_by(name: name)
+
+==> corrected/024/024.rb 26 <==
+User.find_by!(name: name)
+
+==> corrected/025/025.rb 31 <==
+User.find_each(&:do_something)
+
+==> corrected/026/026.rb 37 <==
+User.find_in_batches(&:do_something)
+
+==> corrected/027/027.rb 35 <==
+User.find_or_create_by(name: name)
+
+==> corrected/028/028.rb 36 <==
+User.find_or_create_by!(name: name)
+
+==> corrected/029/029.rb 39 <==
+User.find_or_initialize_by(name: name)
+
+==> corrected/030/030.rb 30 <==
+User.find_sole_by(name: name)
+
+==> corrected/031/031.rb 11 <==
+User.first
+
+==> corrected/032/032.rb 12 <==
+User.first!
+
+==> corrected/033/033.rb 33 <==
+User.first_or_create(name: name)
+
+==> corrected/034/034.rb 34 <==
+User.first_or_create!(name: name)
+
+==> corrected/035/035.rb 37 <==
+User.first_or_initialize(name: name)
+
+==> corrected/036/036.rb 15 <==
+User.forty_two
+
+==> corrected/037/037.rb 16 <==
+User.forty_two!
+
+==> corrected/038/038.rb 12 <==
+User.fourth
+
+==> corrected/039/039.rb 13 <==
+User.fourth!
+
+==> corrected/040/040.rb 19 <==
+User.from("users")
+
+==> corrected/041/041.rb 17 <==
+User.group(:age)
+
+==> corrected/042/042.rb 29 <==
+User.having("AVG(age) > 30")
+
+==> corrected/043/043.rb 9 <==
+User.ids
+
+==> corrected/044/044.rb 32 <==
+User.in_batches(&:do_something)
+
+==> corrected/045/045.rb 27 <==
+User.in_order_of(:id, ids)
+
+==> corrected/046/046.rb 25 <==
+User.includes(:articles)
+
+==> corrected/047/047.rb 18 <==
+User.invert_where
+
+==> corrected/048/048.rb 22 <==
+User.joins(:articles)
+
+==> corrected/049/049.rb 10 <==
+User.last
+
+==> corrected/050/050.rb 11 <==
+User.last!
+
+==> corrected/051/051.rb 27 <==
+User.left_joins(:articles)
+
+==> corrected/052/052.rb 33 <==
+User.left_outer_joins(:articles)
+
+==> corrected/053/053.rb 14 <==
+User.limit(n)
+
+==> corrected/054/054.rb 10 <==
+User.lock
+
+==> corrected/055/055.rb 11 <==
+User.many?
+
+==> corrected/056/056.rb 19 <==
+User.maximum(:age)
+
+==> corrected/057/057.rb 18 <==
+User.merge(users)
+
+==> corrected/058/058.rb 19 <==
+User.minimum(:age)
+
+==> corrected/059/059.rb 10 <==
+User.none
+
+==> corrected/060/060.rb 11 <==
+User.none?
+
+==> corrected/061/061.rb 15 <==
+User.offset(n)
+
+==> corrected/062/062.rb 10 <==
+User.one?
+
+==> corrected/063/063.rb 18 <==
+User.only(:order)
+
+==> corrected/064/064.rb 60 <==
+User.optimizer_hints("SeqScan(users)", "Parallel(users 8)")
+
+==> corrected/065/065.rb 29 <==
+User.or(User.where(age: 30))
+
+==> corrected/066/066.rb 24 <==
+User.order(:created_at)
+
+==> corrected/067/067.rb 15 <==
+User.pick(:id)
+
+==> corrected/068/068.rb 17 <==
+User.pluck(:age)
+
+==> corrected/069/069.rb 24 <==
+User.preload(:articles)
+
+==> corrected/070/070.rb 14 <==
+User.readonly
+
+==> corrected/071/071.rb 27 <==
+User.references(:articles)
+
+==> corrected/072/072.rb 26 <==
+User.reorder(:created_at)
+
+==> corrected/073/073.rb 20 <==
+User.reselect(:age)
+
+==> corrected/074/074.rb 22 <==
+User.rewhere(id: ids)
+
+==> corrected/075/075.rb 12 <==
+User.second
+
+==> corrected/076/076.rb 13 <==
+User.second!
+
+==> corrected/077/077.rb 20 <==
+User.second_to_last
+
+==> corrected/078/078.rb 21 <==
+User.second_to_last!
+
+==> corrected/079/079.rb 18 <==
+User.select(:age)
+
+==> corrected/080/080.rb 10 <==
+User.sole
+
+==> corrected/081/081.rb 20 <==
+User.strict_loading
+
+==> corrected/082/082.rb 15 <==
+User.sum(:age)
+
+==> corrected/083/083.rb 13 <==
+User.take(n)
+
+==> corrected/084/084.rb 11 <==
+User.take!
+
+==> corrected/085/085.rb 11 <==
+User.third
+
+==> corrected/086/086.rb 12 <==
+User.third!
+
+==> corrected/087/087.rb 19 <==
+User.third_to_last
+
+==> corrected/088/088.rb 20 <==
+User.third_to_last!
+
+==> corrected/089/089.rb 15 <==
+User.touch_all
+
+==> corrected/090/090.rb 21 <==
+User.unscope(:order)
+
+==> corrected/091/091.rb 28 <==
+User.update_all(name: name)
+
+==> corrected/092/092.rb 20 <==
+User.where(id: ids)
+
+==> corrected/093/093.rb 19 <==
+User.without(user)
+
+==> corrected/094/094.rb 33 <==
+user.articles.order(:created_at)
+
+==> corrected/098/098.rb 38 <==
+do_something(User.order(:created_at))
+
+==> corrected/104/104.rb 24 <==
+User.order(:created_at)
+
+==> corrected/109/109.rb 27 <==
+do_something { User.any? }
+
+==> corrected/113/113.rb 28 <==
+do_something { User.count }
+
+==> corrected/117/117.rb 27 <==
+do_something { User.find }
+
+==> corrected/121/121.rb 28 <==
+do_something { User.none? }
+
+==> corrected/125/125.rb 27 <==
+do_something { User.one? }
+
+==> corrected/129/129.rb 29 <==
+do_something { User.select }
+
+==> corrected/133/133.rb 26 <==
+do_something { User.sum }
+
+==> corrected/136/136.rb 78 <==
+class User < ApplicationRecord
+  scope :admins, -> { where(admin: true) }
+end
+
+==> corrected/137/137.rb 80 <==
+class User < ::ApplicationRecord
+  scope :admins, -> { where(admin: true) }
+end
+
+==> corrected/138/138.rb 79 <==
+class User < ActiveRecord::Base
+  scope :admins, -> { where(admin: true) }
+end
+
+==> corrected/139/139.rb 81 <==
+class User < ::ActiveRecord::Base
+  scope :admins, -> { where(admin: true) }
+end
+

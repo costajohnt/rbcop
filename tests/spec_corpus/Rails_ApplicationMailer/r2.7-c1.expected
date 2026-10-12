@@ -1,0 +1,41 @@
+==> offenses exit=1 728 <==
+002/002.rb:1:18: C: [Correctable] Rails/ApplicationMailer: Mailers should subclass `ApplicationMailer`.
+003/003.rb:1:18: C: [Correctable] Rails/ApplicationMailer: Mailers should subclass `ApplicationMailer`.
+004/004.rb:2:20: C: [Correctable] Rails/ApplicationMailer: Mailers should subclass `ApplicationMailer`.
+005/005.rb:1:26: C: [Correctable] Rails/ApplicationMailer: Mailers should subclass `ApplicationMailer`.
+006/006.rb:1:22: C: [Correctable] Rails/ApplicationMailer: Mailers should subclass `ApplicationMailer`.
+007/007.rb:1:30: C: [Correctable] Rails/ApplicationMailer: Mailers should subclass `ApplicationMailer`.
+008/008.rb:1:11: C: [Correctable] Rails/ApplicationMailer: Mailers should subclass `ApplicationMailer`.
+
+==> autocorrect exit=0 714 <==
+002/002.rb:1:18: C: [Corrected] Rails/ApplicationMailer: Mailers should subclass `ApplicationMailer`.
+003/003.rb:1:18: C: [Corrected] Rails/ApplicationMailer: Mailers should subclass `ApplicationMailer`.
+004/004.rb:2:20: C: [Corrected] Rails/ApplicationMailer: Mailers should subclass `ApplicationMailer`.
+005/005.rb:1:26: C: [Corrected] Rails/ApplicationMailer: Mailers should subclass `ApplicationMailer`.
+006/006.rb:1:22: C: [Corrected] Rails/ApplicationMailer: Mailers should subclass `ApplicationMailer`.
+007/007.rb:1:30: C: [Corrected] Rails/ApplicationMailer: Mailers should subclass `ApplicationMailer`.
+008/008.rb:1:11: C: [Corrected] Rails/ApplicationMailer: Mailers should subclass `ApplicationMailer`.
+
+==> corrected/002/002.rb 40 <==
+class MyMailer < ApplicationMailer; end
+
+==> corrected/003/003.rb 40 <==
+class MyMailer < ApplicationMailer; end
+
+==> corrected/004/004.rb 60 <==
+module Nested
+  class MyMailer < ApplicationMailer; end
+end
+
+==> corrected/005/005.rb 48 <==
+class Nested::MyMailer < ApplicationMailer; end
+
+==> corrected/006/006.rb 40 <==
+MyMailer = Class.new(ApplicationMailer)
+
+==> corrected/007/007.rb 48 <==
+Nested::MyMailer = Class.new(ApplicationMailer)
+
+==> corrected/008/008.rb 32 <==
+Class.new(ApplicationMailer) {}
+

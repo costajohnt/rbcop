@@ -1,0 +1,10 @@
+==> offenses exit=1 247 <==
+000/000.rb:1:1: C: Rails/Env: Use Feature Flags or config instead of `Rails.env`.
+000/000.rb:1:27: C: Rails/Env: Use Feature Flags or config instead of `Rails.env`.
+001/001.rb:1:1: C: Rails/Env: Use Feature Flags or config instead of `Rails.env`.
+
+==> autocorrect exit=1 247 <==
+000/000.rb:1:1: C: Rails/Env: Use Feature Flags or config instead of `Rails.env`.
+000/000.rb:1:27: C: Rails/Env: Use Feature Flags or config instead of `Rails.env`.
+001/001.rb:1:1: C: Rails/Env: Use Feature Flags or config instead of `Rails.env`.
+

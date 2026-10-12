@@ -1,0 +1,131 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 6.1
+
+==> 000/000.rb 64 <==
+Foo.left_joins(:foo).where(foos: { id: nil }).where(bar: "bar")
+
+==> 001/001.rb 63 <==
+Foo.left_joins(:foo).where(foo: { id: nil }).where(bar: "bar")
+
+==> 002/002.rb 59 <==
+left_joins(:foo).where(foo: { id: nil }).where(bar: "bar")
+
+==> 003/003.rb 70 <==
+Foo.left_outer_joins(:foo).where(foos: { id: nil }).where(bar: "bar")
+
+==> 004/004.rb 64 <==
+Foo.where(foos: { id: nil }).left_joins(:foo).where(bar: "bar")
+
+==> 005/005.rb 60 <==
+where(foos: { id: nil }).left_joins(:foo).where(bar: "bar")
+
+==> 006/006.rb 58 <==
+Foo.where(foos: { id: nil }, bar: "bar").left_joins(:foo)
+
+==> 007/007.rb 54 <==
+where(foos: { id: nil }, bar: "bar").left_joins(:foo)
+
+==> 008/008.rb 58 <==
+Foo.left_joins(:foo).where(foos: { id: nil }, bar: "bar")
+
+==> 009/009.rb 58 <==
+Foo.left_joins(:foo).where(bar: "bar", foos: { id: nil })
+
+==> 010/010.rb 58 <==
+Foo.left_joins(:foo).joins(:bar).where(foos: { id: nil })
+
+==> 011/011.rb 73 <==
+Foo
+  .left_joins(:foo)
+  .where(foos: { id: nil })
+  .where(bar: "bar")
+
+==> 012/012.rb 64 <==
+Foo
+  .left_joins(:foo)
+  .where(foos: { id: nil }, bar: "bar")
+
+==> 013/013.rb 76 <==
+Foo
+  .left_joins(:foo)
+  .where(
+    foos: { id: nil },
+    bar: "bar"
+  )
+
+==> 014/014.rb 73 <==
+Foo.
+  left_joins(:foo).
+  where(foos: { id: nil }).
+  where(bar: "bar")
+
+==> 015/015.rb 67 <==
+Foo.left_joins(:foo).where(foos: { id: nil })
+  .where(bar: "bar")
+
+==> 016/016.rb 70 <==
+Foo
+  .left_joins(:foo).where(bar: "bar")
+  .where(foos: { id: nil })
+
+==> 017/017.rb 70 <==
+Foo
+  .left_joins(:foo).where(foos: { id: nil })
+  .where(bar: "bar")
+
+==> 018/018.rb 104 <==
+def test
+  Foo.left_joins(:foo).any?
+
+  do_something
+
+  Foo.left_joins(:foo).where(foos: {id: nil})
+end
+
+==> 019/019.rb 52 <==
+Foo.left_joins(:foo).or(Foo.where(foos: {id: nil}))
+
+==> 020/020.rb 53 <==
+Foo.where(foos: {id: nil}).and(Foo.left_joins(:foo))
+
+==> 021/021.rb 87 <==
+Foo.left_joins(:foo).where(foos: {id: nil}).or(Foo.where(bar: "bar").left_joins(:foo))
+
+==> 022/022.rb 88 <==
+Foo.left_joins(:foo).where(bar: "bar").and(Foo.where(foos: {id: nil}).left_joins(:foo))
+
+==> 023/023.rb 122 <==
+def test
+  Foo.left_joins(:foo).where(foos: {id: nil})
+
+  do_something
+
+  Foo.left_joins(:foo).where(foos: {id: nil})
+end
+
+==> 024/024.rb 142 <==
+Foo.left_joins(:foo).where(bazs: { id: nil })
+Foo.left_joins(:foobar).where(foo: { id: nil })
+Foo.left_joins(:foo).where(foobar: { id: nil })
+
+==> 025/025.rb 48 <==
+Foo.left_joins(:foo).where(foos: { name: nil })
+
+==> 026/026.rb 44 <==
+Foo.left_joins(:foo).where(foos: { id: 1 })
+
+==> 027/027.rb 102 <==
+Foo.left_joins(foo: :bar).where(bars: { id: nil })
+Foo.left_joins(bar: :foo).where(bars: { id: nil })
+
+==> 028/028.rb 52 <==
+Foo.left_joins(left_joins).where(bars: { id: nil })
+

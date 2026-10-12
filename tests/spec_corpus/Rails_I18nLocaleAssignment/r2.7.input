@@ -1,0 +1,21 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> spec/000/000.rb 18 <==
+I18n.locale = :fr
+
+==> spec/001/001.rb 20 <==
+::I18n.locale = :fr
+
+==> spec/002/002.rb 44 <==
+I18n.with_locale(:fr) do
+  do_something
+end
+

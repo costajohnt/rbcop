@@ -1,0 +1,14 @@
+==> offenses exit=1 206 <==
+001/001.rb:1:1: C: [Correctable] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name`.
+002/002.rb:1:1: C: [Correctable] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name`.
+
+==> autocorrect exit=0 202 <==
+001/001.rb:1:1: C: [Corrected] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name`.
+002/002.rb:1:1: C: [Corrected] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name`.
+
+==> corrected/001/001.rb 47 <==
+Specification.find_by(name: "backend").gem_dir
+
+==> corrected/002/002.rb 57 <==
+RubyGems::Specification.find_by(name: "backend").gem_dir
+

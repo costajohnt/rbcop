@@ -1,0 +1,324 @@
+==> offenses exit=1 5236 <==
+002/002.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.second`.
+004/004.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.0.second`.
+006/006.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.second`.
+008/008.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.0.second`.
+012/012.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.minute`.
+014/014.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.0.minute`.
+016/016.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.minute`.
+018/018.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.0.minute`.
+022/022.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.hour`.
+024/024.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.0.hour`.
+026/026.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.hour`.
+028/028.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.0.hour`.
+032/032.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.day`.
+034/034.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.0.day`.
+036/036.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.day`.
+038/038.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.0.day`.
+042/042.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.week`.
+044/044.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.0.week`.
+046/046.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.week`.
+048/048.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.0.week`.
+052/052.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.fortnight`.
+054/054.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.0.fortnight`.
+056/056.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.fortnight`.
+058/058.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.0.fortnight`.
+062/062.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.month`.
+064/064.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.0.month`.
+066/066.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.month`.
+068/068.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.0.month`.
+072/072.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.year`.
+074/074.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.0.year`.
+076/076.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.year`.
+078/078.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.0.year`.
+082/082.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.byte`.
+084/084.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.0.byte`.
+086/086.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.byte`.
+088/088.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.0.byte`.
+092/092.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.kilobyte`.
+094/094.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.0.kilobyte`.
+096/096.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.kilobyte`.
+098/098.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.0.kilobyte`.
+102/102.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.megabyte`.
+104/104.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.0.megabyte`.
+106/106.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.megabyte`.
+108/108.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.0.megabyte`.
+112/112.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.gigabyte`.
+114/114.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.0.gigabyte`.
+116/116.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.gigabyte`.
+118/118.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.0.gigabyte`.
+122/122.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.terabyte`.
+124/124.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.0.terabyte`.
+126/126.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.terabyte`.
+128/128.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.0.terabyte`.
+132/132.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.petabyte`.
+134/134.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.0.petabyte`.
+136/136.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.petabyte`.
+138/138.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.0.petabyte`.
+142/142.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.exabyte`.
+144/144.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.0.exabyte`.
+146/146.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.exabyte`.
+148/148.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.0.exabyte`.
+152/152.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.zettabyte`.
+154/154.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `-1.0.zettabyte`.
+156/156.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.zettabyte`.
+158/158.rb:1:1: C: [Correctable] Rails/PluralizationGrammar: Prefer `1.0.zettabyte`.
+
+==> autocorrect exit=0 5108 <==
+002/002.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.second`.
+004/004.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.0.second`.
+006/006.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.second`.
+008/008.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.0.second`.
+012/012.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.minute`.
+014/014.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.0.minute`.
+016/016.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.minute`.
+018/018.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.0.minute`.
+022/022.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.hour`.
+024/024.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.0.hour`.
+026/026.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.hour`.
+028/028.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.0.hour`.
+032/032.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.day`.
+034/034.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.0.day`.
+036/036.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.day`.
+038/038.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.0.day`.
+042/042.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.week`.
+044/044.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.0.week`.
+046/046.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.week`.
+048/048.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.0.week`.
+052/052.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.fortnight`.
+054/054.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.0.fortnight`.
+056/056.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.fortnight`.
+058/058.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.0.fortnight`.
+062/062.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.month`.
+064/064.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.0.month`.
+066/066.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.month`.
+068/068.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.0.month`.
+072/072.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.year`.
+074/074.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.0.year`.
+076/076.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.year`.
+078/078.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.0.year`.
+082/082.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.byte`.
+084/084.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.0.byte`.
+086/086.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.byte`.
+088/088.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.0.byte`.
+092/092.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.kilobyte`.
+094/094.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.0.kilobyte`.
+096/096.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.kilobyte`.
+098/098.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.0.kilobyte`.
+102/102.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.megabyte`.
+104/104.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.0.megabyte`.
+106/106.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.megabyte`.
+108/108.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.0.megabyte`.
+112/112.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.gigabyte`.
+114/114.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.0.gigabyte`.
+116/116.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.gigabyte`.
+118/118.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.0.gigabyte`.
+122/122.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.terabyte`.
+124/124.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.0.terabyte`.
+126/126.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.terabyte`.
+128/128.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.0.terabyte`.
+132/132.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.petabyte`.
+134/134.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.0.petabyte`.
+136/136.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.petabyte`.
+138/138.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.0.petabyte`.
+142/142.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.exabyte`.
+144/144.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.0.exabyte`.
+146/146.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.exabyte`.
+148/148.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.0.exabyte`.
+152/152.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.zettabyte`.
+154/154.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `-1.0.zettabyte`.
+156/156.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.zettabyte`.
+158/158.rb:1:1: C: [Corrected] Rails/PluralizationGrammar: Prefer `1.0.zettabyte`.
+
+==> corrected/002/002.rb 14 <==
+-1.second.ago
+
+==> corrected/004/004.rb 16 <==
+-1.0.second.ago
+
+==> corrected/006/006.rb 13 <==
+1.second.ago
+
+==> corrected/008/008.rb 15 <==
+1.0.second.ago
+
+==> corrected/012/012.rb 14 <==
+-1.minute.ago
+
+==> corrected/014/014.rb 16 <==
+-1.0.minute.ago
+
+==> corrected/016/016.rb 13 <==
+1.minute.ago
+
+==> corrected/018/018.rb 15 <==
+1.0.minute.ago
+
+==> corrected/022/022.rb 12 <==
+-1.hour.ago
+
+==> corrected/024/024.rb 14 <==
+-1.0.hour.ago
+
+==> corrected/026/026.rb 11 <==
+1.hour.ago
+
+==> corrected/028/028.rb 13 <==
+1.0.hour.ago
+
+==> corrected/032/032.rb 11 <==
+-1.day.ago
+
+==> corrected/034/034.rb 13 <==
+-1.0.day.ago
+
+==> corrected/036/036.rb 10 <==
+1.day.ago
+
+==> corrected/038/038.rb 12 <==
+1.0.day.ago
+
+==> corrected/042/042.rb 12 <==
+-1.week.ago
+
+==> corrected/044/044.rb 14 <==
+-1.0.week.ago
+
+==> corrected/046/046.rb 11 <==
+1.week.ago
+
+==> corrected/048/048.rb 13 <==
+1.0.week.ago
+
+==> corrected/052/052.rb 17 <==
+-1.fortnight.ago
+
+==> corrected/054/054.rb 19 <==
+-1.0.fortnight.ago
+
+==> corrected/056/056.rb 16 <==
+1.fortnight.ago
+
+==> corrected/058/058.rb 18 <==
+1.0.fortnight.ago
+
+==> corrected/062/062.rb 13 <==
+-1.month.ago
+
+==> corrected/064/064.rb 15 <==
+-1.0.month.ago
+
+==> corrected/066/066.rb 12 <==
+1.month.ago
+
+==> corrected/068/068.rb 14 <==
+1.0.month.ago
+
+==> corrected/072/072.rb 12 <==
+-1.year.ago
+
+==> corrected/074/074.rb 14 <==
+-1.0.year.ago
+
+==> corrected/076/076.rb 11 <==
+1.year.ago
+
+==> corrected/078/078.rb 13 <==
+1.0.year.ago
+
+==> corrected/082/082.rb 12 <==
+-1.byte.ago
+
+==> corrected/084/084.rb 14 <==
+-1.0.byte.ago
+
+==> corrected/086/086.rb 11 <==
+1.byte.ago
+
+==> corrected/088/088.rb 13 <==
+1.0.byte.ago
+
+==> corrected/092/092.rb 16 <==
+-1.kilobyte.ago
+
+==> corrected/094/094.rb 18 <==
+-1.0.kilobyte.ago
+
+==> corrected/096/096.rb 15 <==
+1.kilobyte.ago
+
+==> corrected/098/098.rb 17 <==
+1.0.kilobyte.ago
+
+==> corrected/102/102.rb 16 <==
+-1.megabyte.ago
+
+==> corrected/104/104.rb 18 <==
+-1.0.megabyte.ago
+
+==> corrected/106/106.rb 15 <==
+1.megabyte.ago
+
+==> corrected/108/108.rb 17 <==
+1.0.megabyte.ago
+
+==> corrected/112/112.rb 16 <==
+-1.gigabyte.ago
+
+==> corrected/114/114.rb 18 <==
+-1.0.gigabyte.ago
+
+==> corrected/116/116.rb 15 <==
+1.gigabyte.ago
+
+==> corrected/118/118.rb 17 <==
+1.0.gigabyte.ago
+
+==> corrected/122/122.rb 16 <==
+-1.terabyte.ago
+
+==> corrected/124/124.rb 18 <==
+-1.0.terabyte.ago
+
+==> corrected/126/126.rb 15 <==
+1.terabyte.ago
+
+==> corrected/128/128.rb 17 <==
+1.0.terabyte.ago
+
+==> corrected/132/132.rb 16 <==
+-1.petabyte.ago
+
+==> corrected/134/134.rb 18 <==
+-1.0.petabyte.ago
+
+==> corrected/136/136.rb 15 <==
+1.petabyte.ago
+
+==> corrected/138/138.rb 17 <==
+1.0.petabyte.ago
+
+==> corrected/142/142.rb 15 <==
+-1.exabyte.ago
+
+==> corrected/144/144.rb 17 <==
+-1.0.exabyte.ago
+
+==> corrected/146/146.rb 14 <==
+1.exabyte.ago
+
+==> corrected/148/148.rb 16 <==
+1.0.exabyte.ago
+
+==> corrected/152/152.rb 17 <==
+-1.zettabyte.ago
+
+==> corrected/154/154.rb 19 <==
+-1.0.zettabyte.ago
+
+==> corrected/156/156.rb 16 <==
+1.zettabyte.ago
+
+==> corrected/158/158.rb 18 <==
+1.0.zettabyte.ago
+

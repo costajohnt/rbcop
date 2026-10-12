@@ -1,0 +1,55 @@
+==> .rubocop.yml 189 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/Date:
+  EnforcedStyle: strict
+  AllowToTime: true
+
+==> 000/000.rb 16 <==
+Some::Date.today
+==> 001/001.rb 20 <==
+Some::Date.yesterday
+==> 002/002.rb 19 <==
+Some::Date.tomorrow
+==> 003/003.rb 18 <==
+Some::Date.current
+==> 004/004.rb 29 <==
+date.to_time_in_current_zone
+
+==> 005/005.rb 30 <==
+date&.to_time_in_current_zone
+
+==> 006/006.rb 27 <==
+to_time_in_current_zone = 1
+==> 007/007.rb 29 <==
+date..to_time_in_current_zone
+==> 008/008.rb 18 <==
+date.to_time(:utc)
+==> 009/009.rb 41 <==
+"2016-07-12 14:36:31 +0100".to_time(:utc)
+==> 010/010.rb 13 <==
+date.to_time
+
+==> 011/011.rb 14 <==
+date&.to_time
+
+==> 012/012.rb 11 <==
+to_time = 1
+==> 013/013.rb 13 <==
+date..to_time
+==> 014/014.rb 36 <==
+"2016-07-12 14:36:31".to_time(:utc)
+
+==> 015/015.rb 40 <==
+"2017-09-22T22:46:06.497Z".to_time(:utc)
+==> 016/016.rb 1 <==
+A
+==> 017/017.rb 46 <==
+"2016-07-12 14:36:31".to_time_in_current_zone
+

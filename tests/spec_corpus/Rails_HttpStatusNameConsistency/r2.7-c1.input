@@ -1,0 +1,92 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> Gemfile.lock 101 <==
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rack (3.1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rack
+
+==> app/controllers/000/000.rb 70 <==
+render json: { error: 'Invalid data' }, status: :unprocessable_entity
+
+==> app/controllers/001/001.rb 27 <==
+head :unprocessable_entity
+
+==> app/controllers/002/002.rb 53 <==
+redirect_to some_path, status: :unprocessable_entity
+
+==> app/controllers/003/003.rb 38 <==
+assert_response :unprocessable_entity
+
+==> app/controllers/004/004.rb 62 <==
+assert_redirected_to some_path, status: :unprocessable_entity
+
+==> app/controllers/005/005.rb 93 <==
+render json: { error: 'Invalid data' }, status: some_condition ? :unprocessable_entity : :ok
+
+==> app/controllers/006/006.rb 71 <==
+render json: { error: 'Invalid data' }, status: :unprocessable_content
+
+==> app/controllers/007/007.rb 41 <==
+{ unprocessable_entity: 'Invalid data' }
+
+==> app/controllers/008/008.rb 179 <==
+status_var = :unprocessable_entity
+head status_var
+render json: { error: 'Invalid data' }, status: status_var
+redirect_to some_path, status: status_var
+assert_response status_var
+
+==> app/controllers/009/009.rb 86 <==
+head get_status_code
+render json: { error: 'Invalid data' }, status: calculate_status
+
+==> app/controllers/010/010.rb 67 <==
+render json: { error: 'File too big' }, status: :payload_too_large
+
+==> app/controllers/011/011.rb 24 <==
+head :payload_too_large
+
+==> app/controllers/012/012.rb 50 <==
+redirect_to some_path, status: :payload_too_large
+
+==> app/controllers/013/013.rb 35 <==
+assert_response :payload_too_large
+
+==> app/controllers/014/014.rb 59 <==
+assert_redirected_to some_path, status: :payload_too_large
+
+==> app/controllers/015/015.rb 90 <==
+render json: { error: 'File too big' }, status: some_condition ? :payload_too_large : :ok
+
+==> app/controllers/016/016.rb 67 <==
+render json: { error: 'File too big' }, status: :content_too_large
+
+==> app/controllers/017/017.rb 38 <==
+{ payload_too_large: 'File too big' }
+
+==> app/controllers/018/018.rb 176 <==
+status_var = :payload_too_large
+head status_var
+render json: { error: 'Invalid data' }, status: status_var
+redirect_to some_path, status: status_var
+assert_response status_var
+
+==> app/controllers/019/019.rb 51 <==
+head :unprocessable_entity
+head :payload_too_large
+

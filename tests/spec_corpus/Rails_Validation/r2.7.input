@@ -1,0 +1,260 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/models/000/000.rb 48 <==
+validates_acceptance_of :full_name, :birth_date
+
+==> app/models/001/001.rb 49 <==
+validates_acceptance_of(:full_name, :birth_date)
+
+==> app/models/002/002.rb 50 <==
+validates_acceptance_of [:full_name, :birth_date]
+
+==> app/models/003/003.rb 57 <==
+validates_acceptance_of [:full_name, :birth_date].freeze
+
+==> app/models/004/004.rb 49 <==
+validates_acceptance_of %i[full_name birth_date]
+
+==> app/models/005/005.rb 56 <==
+validates_acceptance_of %i[full_name birth_date].freeze
+
+==> app/models/006/006.rb 48 <==
+validates_comparison_of :full_name, :birth_date
+
+==> app/models/007/007.rb 49 <==
+validates_comparison_of(:full_name, :birth_date)
+
+==> app/models/008/008.rb 50 <==
+validates_comparison_of [:full_name, :birth_date]
+
+==> app/models/009/009.rb 57 <==
+validates_comparison_of [:full_name, :birth_date].freeze
+
+==> app/models/010/010.rb 49 <==
+validates_comparison_of %i[full_name birth_date]
+
+==> app/models/011/011.rb 56 <==
+validates_comparison_of %i[full_name birth_date].freeze
+
+==> app/models/012/012.rb 50 <==
+validates_confirmation_of :full_name, :birth_date
+
+==> app/models/013/013.rb 51 <==
+validates_confirmation_of(:full_name, :birth_date)
+
+==> app/models/014/014.rb 52 <==
+validates_confirmation_of [:full_name, :birth_date]
+
+==> app/models/015/015.rb 59 <==
+validates_confirmation_of [:full_name, :birth_date].freeze
+
+==> app/models/016/016.rb 51 <==
+validates_confirmation_of %i[full_name birth_date]
+
+==> app/models/017/017.rb 58 <==
+validates_confirmation_of %i[full_name birth_date].freeze
+
+==> app/models/018/018.rb 47 <==
+validates_exclusion_of :full_name, :birth_date
+
+==> app/models/019/019.rb 48 <==
+validates_exclusion_of(:full_name, :birth_date)
+
+==> app/models/020/020.rb 49 <==
+validates_exclusion_of [:full_name, :birth_date]
+
+==> app/models/021/021.rb 56 <==
+validates_exclusion_of [:full_name, :birth_date].freeze
+
+==> app/models/022/022.rb 48 <==
+validates_exclusion_of %i[full_name birth_date]
+
+==> app/models/023/023.rb 55 <==
+validates_exclusion_of %i[full_name birth_date].freeze
+
+==> app/models/024/024.rb 44 <==
+validates_format_of :full_name, :birth_date
+
+==> app/models/025/025.rb 45 <==
+validates_format_of(:full_name, :birth_date)
+
+==> app/models/026/026.rb 46 <==
+validates_format_of [:full_name, :birth_date]
+
+==> app/models/027/027.rb 53 <==
+validates_format_of [:full_name, :birth_date].freeze
+
+==> app/models/028/028.rb 45 <==
+validates_format_of %i[full_name birth_date]
+
+==> app/models/029/029.rb 52 <==
+validates_format_of %i[full_name birth_date].freeze
+
+==> app/models/030/030.rb 47 <==
+validates_inclusion_of :full_name, :birth_date
+
+==> app/models/031/031.rb 48 <==
+validates_inclusion_of(:full_name, :birth_date)
+
+==> app/models/032/032.rb 49 <==
+validates_inclusion_of [:full_name, :birth_date]
+
+==> app/models/033/033.rb 56 <==
+validates_inclusion_of [:full_name, :birth_date].freeze
+
+==> app/models/034/034.rb 48 <==
+validates_inclusion_of %i[full_name birth_date]
+
+==> app/models/035/035.rb 55 <==
+validates_inclusion_of %i[full_name birth_date].freeze
+
+==> app/models/036/036.rb 44 <==
+validates_length_of :full_name, :birth_date
+
+==> app/models/037/037.rb 45 <==
+validates_length_of(:full_name, :birth_date)
+
+==> app/models/038/038.rb 46 <==
+validates_length_of [:full_name, :birth_date]
+
+==> app/models/039/039.rb 53 <==
+validates_length_of [:full_name, :birth_date].freeze
+
+==> app/models/040/040.rb 45 <==
+validates_length_of %i[full_name birth_date]
+
+==> app/models/041/041.rb 52 <==
+validates_length_of %i[full_name birth_date].freeze
+
+==> app/models/042/042.rb 50 <==
+validates_numericality_of :full_name, :birth_date
+
+==> app/models/043/043.rb 51 <==
+validates_numericality_of(:full_name, :birth_date)
+
+==> app/models/044/044.rb 52 <==
+validates_numericality_of [:full_name, :birth_date]
+
+==> app/models/045/045.rb 59 <==
+validates_numericality_of [:full_name, :birth_date].freeze
+
+==> app/models/046/046.rb 51 <==
+validates_numericality_of %i[full_name birth_date]
+
+==> app/models/047/047.rb 58 <==
+validates_numericality_of %i[full_name birth_date].freeze
+
+==> app/models/048/048.rb 46 <==
+validates_presence_of :full_name, :birth_date
+
+==> app/models/049/049.rb 47 <==
+validates_presence_of(:full_name, :birth_date)
+
+==> app/models/050/050.rb 48 <==
+validates_presence_of [:full_name, :birth_date]
+
+==> app/models/051/051.rb 55 <==
+validates_presence_of [:full_name, :birth_date].freeze
+
+==> app/models/052/052.rb 47 <==
+validates_presence_of %i[full_name birth_date]
+
+==> app/models/053/053.rb 54 <==
+validates_presence_of %i[full_name birth_date].freeze
+
+==> app/models/054/054.rb 45 <==
+validates_absence_of :full_name, :birth_date
+
+==> app/models/055/055.rb 46 <==
+validates_absence_of(:full_name, :birth_date)
+
+==> app/models/056/056.rb 47 <==
+validates_absence_of [:full_name, :birth_date]
+
+==> app/models/057/057.rb 54 <==
+validates_absence_of [:full_name, :birth_date].freeze
+
+==> app/models/058/058.rb 46 <==
+validates_absence_of %i[full_name birth_date]
+
+==> app/models/059/059.rb 53 <==
+validates_absence_of %i[full_name birth_date].freeze
+
+==> app/models/060/060.rb 42 <==
+validates_size_of :full_name, :birth_date
+
+==> app/models/061/061.rb 43 <==
+validates_size_of(:full_name, :birth_date)
+
+==> app/models/062/062.rb 44 <==
+validates_size_of [:full_name, :birth_date]
+
+==> app/models/063/063.rb 51 <==
+validates_size_of [:full_name, :birth_date].freeze
+
+==> app/models/064/064.rb 43 <==
+validates_size_of %i[full_name birth_date]
+
+==> app/models/065/065.rb 50 <==
+validates_size_of %i[full_name birth_date].freeze
+
+==> app/models/066/066.rb 48 <==
+validates_uniqueness_of :full_name, :birth_date
+
+==> app/models/067/067.rb 49 <==
+validates_uniqueness_of(:full_name, :birth_date)
+
+==> app/models/068/068.rb 50 <==
+validates_uniqueness_of [:full_name, :birth_date]
+
+==> app/models/069/069.rb 57 <==
+validates_uniqueness_of [:full_name, :birth_date].freeze
+
+==> app/models/070/070.rb 49 <==
+validates_uniqueness_of %i[full_name birth_date]
+
+==> app/models/071/071.rb 56 <==
+validates_uniqueness_of %i[full_name birth_date].freeze
+
+==> app/models/072/072.rb 29 <==
+validates_numericality_of :a
+
+==> app/models/073/073.rb 33 <==
+validates_numericality_of :a, :b
+
+==> app/models/074/074.rb 45 <==
+validates_numericality_of :a, :b, minimum: 1
+
+==> app/models/075/075.rb 49 <==
+validates_numericality_of :a, :b, { minimum: 1 }
+
+==> app/models/076/076.rb 69 <==
+validates_comparison_of :a, :b, greater_than: -> { Time.zone.today }
+
+==> app/models/077/077.rb 33 <==
+validates_numericality_of :a, *b
+
+==> app/models/078/078.rb 49 <==
+validates_numericality_of :a, *b, :c, minimum: 1
+
+==> app/models/079/079.rb 32 <==
+validates_numericality_of :a, b
+
+==> app/models/080/080.rb 32 <==
+validates_numericality_of :a, B
+
+==> app/models/081/081.rb 51 <==
+b = { minimum: 1 }
+validates_numericality_of :a, b
+
+==> app/models/082/082.rb 26 <==
+validates_numericality_of
+

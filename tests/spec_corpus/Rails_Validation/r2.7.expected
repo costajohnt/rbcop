@@ -1,0 +1,399 @@
+==> offenses exit=1 12934 <==
+app/models/000/000.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, acceptance: value` over `validates_acceptance_of`.
+app/models/001/001.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, acceptance: value` over `validates_acceptance_of`.
+app/models/002/002.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, acceptance: value` over `validates_acceptance_of`.
+app/models/003/003.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, acceptance: value` over `validates_acceptance_of`.
+app/models/004/004.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, acceptance: value` over `validates_acceptance_of`.
+app/models/005/005.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, acceptance: value` over `validates_acceptance_of`.
+app/models/006/006.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, comparison: value` over `validates_comparison_of`.
+app/models/007/007.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, comparison: value` over `validates_comparison_of`.
+app/models/008/008.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, comparison: value` over `validates_comparison_of`.
+app/models/009/009.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, comparison: value` over `validates_comparison_of`.
+app/models/010/010.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, comparison: value` over `validates_comparison_of`.
+app/models/011/011.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, comparison: value` over `validates_comparison_of`.
+app/models/012/012.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, confirmation: value` over `validates_confirmation_of`.
+app/models/013/013.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, confirmation: value` over `validates_confirmation_of`.
+app/models/014/014.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, confirmation: value` over `validates_confirmation_of`.
+app/models/015/015.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, confirmation: value` over `validates_confirmation_of`.
+app/models/016/016.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, confirmation: value` over `validates_confirmation_of`.
+app/models/017/017.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, confirmation: value` over `validates_confirmation_of`.
+app/models/018/018.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, exclusion: value` over `validates_exclusion_of`.
+app/models/019/019.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, exclusion: value` over `validates_exclusion_of`.
+app/models/020/020.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, exclusion: value` over `validates_exclusion_of`.
+app/models/021/021.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, exclusion: value` over `validates_exclusion_of`.
+app/models/022/022.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, exclusion: value` over `validates_exclusion_of`.
+app/models/023/023.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, exclusion: value` over `validates_exclusion_of`.
+app/models/024/024.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, format: value` over `validates_format_of`.
+app/models/025/025.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, format: value` over `validates_format_of`.
+app/models/026/026.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, format: value` over `validates_format_of`.
+app/models/027/027.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, format: value` over `validates_format_of`.
+app/models/028/028.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, format: value` over `validates_format_of`.
+app/models/029/029.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, format: value` over `validates_format_of`.
+app/models/030/030.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, inclusion: value` over `validates_inclusion_of`.
+app/models/031/031.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, inclusion: value` over `validates_inclusion_of`.
+app/models/032/032.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, inclusion: value` over `validates_inclusion_of`.
+app/models/033/033.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, inclusion: value` over `validates_inclusion_of`.
+app/models/034/034.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, inclusion: value` over `validates_inclusion_of`.
+app/models/035/035.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, inclusion: value` over `validates_inclusion_of`.
+app/models/036/036.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, length: value` over `validates_length_of`.
+app/models/037/037.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, length: value` over `validates_length_of`.
+app/models/038/038.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, length: value` over `validates_length_of`.
+app/models/039/039.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, length: value` over `validates_length_of`.
+app/models/040/040.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, length: value` over `validates_length_of`.
+app/models/041/041.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, length: value` over `validates_length_of`.
+app/models/042/042.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/043/043.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/044/044.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/045/045.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/046/046.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/047/047.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/048/048.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, presence: value` over `validates_presence_of`.
+app/models/049/049.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, presence: value` over `validates_presence_of`.
+app/models/050/050.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, presence: value` over `validates_presence_of`.
+app/models/051/051.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, presence: value` over `validates_presence_of`.
+app/models/052/052.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, presence: value` over `validates_presence_of`.
+app/models/053/053.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, presence: value` over `validates_presence_of`.
+app/models/054/054.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, absence: value` over `validates_absence_of`.
+app/models/055/055.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, absence: value` over `validates_absence_of`.
+app/models/056/056.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, absence: value` over `validates_absence_of`.
+app/models/057/057.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, absence: value` over `validates_absence_of`.
+app/models/058/058.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, absence: value` over `validates_absence_of`.
+app/models/059/059.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, absence: value` over `validates_absence_of`.
+app/models/060/060.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, size: value` over `validates_size_of`.
+app/models/061/061.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, size: value` over `validates_size_of`.
+app/models/062/062.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, size: value` over `validates_size_of`.
+app/models/063/063.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, size: value` over `validates_size_of`.
+app/models/064/064.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, size: value` over `validates_size_of`.
+app/models/065/065.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, size: value` over `validates_size_of`.
+app/models/066/066.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, uniqueness: value` over `validates_uniqueness_of`.
+app/models/067/067.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, uniqueness: value` over `validates_uniqueness_of`.
+app/models/068/068.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, uniqueness: value` over `validates_uniqueness_of`.
+app/models/069/069.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, uniqueness: value` over `validates_uniqueness_of`.
+app/models/070/070.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, uniqueness: value` over `validates_uniqueness_of`.
+app/models/071/071.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, uniqueness: value` over `validates_uniqueness_of`.
+app/models/072/072.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/073/073.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/074/074.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/075/075.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/076/076.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, comparison: value` over `validates_comparison_of`.
+app/models/077/077.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/078/078.rb:1:1: C: [Correctable] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+
+==> autocorrect exit=0 12776 <==
+app/models/000/000.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, acceptance: value` over `validates_acceptance_of`.
+app/models/001/001.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, acceptance: value` over `validates_acceptance_of`.
+app/models/002/002.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, acceptance: value` over `validates_acceptance_of`.
+app/models/003/003.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, acceptance: value` over `validates_acceptance_of`.
+app/models/004/004.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, acceptance: value` over `validates_acceptance_of`.
+app/models/005/005.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, acceptance: value` over `validates_acceptance_of`.
+app/models/006/006.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, comparison: value` over `validates_comparison_of`.
+app/models/007/007.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, comparison: value` over `validates_comparison_of`.
+app/models/008/008.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, comparison: value` over `validates_comparison_of`.
+app/models/009/009.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, comparison: value` over `validates_comparison_of`.
+app/models/010/010.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, comparison: value` over `validates_comparison_of`.
+app/models/011/011.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, comparison: value` over `validates_comparison_of`.
+app/models/012/012.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, confirmation: value` over `validates_confirmation_of`.
+app/models/013/013.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, confirmation: value` over `validates_confirmation_of`.
+app/models/014/014.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, confirmation: value` over `validates_confirmation_of`.
+app/models/015/015.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, confirmation: value` over `validates_confirmation_of`.
+app/models/016/016.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, confirmation: value` over `validates_confirmation_of`.
+app/models/017/017.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, confirmation: value` over `validates_confirmation_of`.
+app/models/018/018.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, exclusion: value` over `validates_exclusion_of`.
+app/models/019/019.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, exclusion: value` over `validates_exclusion_of`.
+app/models/020/020.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, exclusion: value` over `validates_exclusion_of`.
+app/models/021/021.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, exclusion: value` over `validates_exclusion_of`.
+app/models/022/022.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, exclusion: value` over `validates_exclusion_of`.
+app/models/023/023.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, exclusion: value` over `validates_exclusion_of`.
+app/models/024/024.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, format: value` over `validates_format_of`.
+app/models/025/025.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, format: value` over `validates_format_of`.
+app/models/026/026.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, format: value` over `validates_format_of`.
+app/models/027/027.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, format: value` over `validates_format_of`.
+app/models/028/028.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, format: value` over `validates_format_of`.
+app/models/029/029.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, format: value` over `validates_format_of`.
+app/models/030/030.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, inclusion: value` over `validates_inclusion_of`.
+app/models/031/031.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, inclusion: value` over `validates_inclusion_of`.
+app/models/032/032.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, inclusion: value` over `validates_inclusion_of`.
+app/models/033/033.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, inclusion: value` over `validates_inclusion_of`.
+app/models/034/034.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, inclusion: value` over `validates_inclusion_of`.
+app/models/035/035.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, inclusion: value` over `validates_inclusion_of`.
+app/models/036/036.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, length: value` over `validates_length_of`.
+app/models/037/037.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, length: value` over `validates_length_of`.
+app/models/038/038.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, length: value` over `validates_length_of`.
+app/models/039/039.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, length: value` over `validates_length_of`.
+app/models/040/040.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, length: value` over `validates_length_of`.
+app/models/041/041.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, length: value` over `validates_length_of`.
+app/models/042/042.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/043/043.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/044/044.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/045/045.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/046/046.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/047/047.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/048/048.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, presence: value` over `validates_presence_of`.
+app/models/049/049.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, presence: value` over `validates_presence_of`.
+app/models/050/050.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, presence: value` over `validates_presence_of`.
+app/models/051/051.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, presence: value` over `validates_presence_of`.
+app/models/052/052.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, presence: value` over `validates_presence_of`.
+app/models/053/053.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, presence: value` over `validates_presence_of`.
+app/models/054/054.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, absence: value` over `validates_absence_of`.
+app/models/055/055.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, absence: value` over `validates_absence_of`.
+app/models/056/056.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, absence: value` over `validates_absence_of`.
+app/models/057/057.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, absence: value` over `validates_absence_of`.
+app/models/058/058.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, absence: value` over `validates_absence_of`.
+app/models/059/059.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, absence: value` over `validates_absence_of`.
+app/models/060/060.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, size: value` over `validates_size_of`.
+app/models/061/061.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, size: value` over `validates_size_of`.
+app/models/062/062.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, size: value` over `validates_size_of`.
+app/models/063/063.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, size: value` over `validates_size_of`.
+app/models/064/064.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, size: value` over `validates_size_of`.
+app/models/065/065.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, size: value` over `validates_size_of`.
+app/models/066/066.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, uniqueness: value` over `validates_uniqueness_of`.
+app/models/067/067.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, uniqueness: value` over `validates_uniqueness_of`.
+app/models/068/068.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, uniqueness: value` over `validates_uniqueness_of`.
+app/models/069/069.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, uniqueness: value` over `validates_uniqueness_of`.
+app/models/070/070.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, uniqueness: value` over `validates_uniqueness_of`.
+app/models/071/071.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, uniqueness: value` over `validates_uniqueness_of`.
+app/models/072/072.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/073/073.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/074/074.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/075/075.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/076/076.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, comparison: value` over `validates_comparison_of`.
+app/models/077/077.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+app/models/078/078.rb:1:1: C: [Corrected] Rails/Validation: Prefer the new style validations `validates :column, numericality: value` over `validates_numericality_of`.
+
+==> corrected/app/models/000/000.rb 52 <==
+validates :full_name, :birth_date, acceptance: true
+
+==> corrected/app/models/001/001.rb 53 <==
+validates(:full_name, :birth_date, acceptance: true)
+
+==> corrected/app/models/002/002.rb 52 <==
+validates :full_name, :birth_date, acceptance: true
+
+==> corrected/app/models/003/003.rb 52 <==
+validates :full_name, :birth_date, acceptance: true
+
+==> corrected/app/models/004/004.rb 52 <==
+validates :full_name, :birth_date, acceptance: true
+
+==> corrected/app/models/005/005.rb 52 <==
+validates :full_name, :birth_date, acceptance: true
+
+==> corrected/app/models/006/006.rb 52 <==
+validates :full_name, :birth_date, comparison: true
+
+==> corrected/app/models/007/007.rb 53 <==
+validates(:full_name, :birth_date, comparison: true)
+
+==> corrected/app/models/008/008.rb 52 <==
+validates :full_name, :birth_date, comparison: true
+
+==> corrected/app/models/009/009.rb 52 <==
+validates :full_name, :birth_date, comparison: true
+
+==> corrected/app/models/010/010.rb 52 <==
+validates :full_name, :birth_date, comparison: true
+
+==> corrected/app/models/011/011.rb 52 <==
+validates :full_name, :birth_date, comparison: true
+
+==> corrected/app/models/012/012.rb 54 <==
+validates :full_name, :birth_date, confirmation: true
+
+==> corrected/app/models/013/013.rb 55 <==
+validates(:full_name, :birth_date, confirmation: true)
+
+==> corrected/app/models/014/014.rb 54 <==
+validates :full_name, :birth_date, confirmation: true
+
+==> corrected/app/models/015/015.rb 54 <==
+validates :full_name, :birth_date, confirmation: true
+
+==> corrected/app/models/016/016.rb 54 <==
+validates :full_name, :birth_date, confirmation: true
+
+==> corrected/app/models/017/017.rb 54 <==
+validates :full_name, :birth_date, confirmation: true
+
+==> corrected/app/models/018/018.rb 51 <==
+validates :full_name, :birth_date, exclusion: true
+
+==> corrected/app/models/019/019.rb 52 <==
+validates(:full_name, :birth_date, exclusion: true)
+
+==> corrected/app/models/020/020.rb 51 <==
+validates :full_name, :birth_date, exclusion: true
+
+==> corrected/app/models/021/021.rb 51 <==
+validates :full_name, :birth_date, exclusion: true
+
+==> corrected/app/models/022/022.rb 51 <==
+validates :full_name, :birth_date, exclusion: true
+
+==> corrected/app/models/023/023.rb 51 <==
+validates :full_name, :birth_date, exclusion: true
+
+==> corrected/app/models/024/024.rb 48 <==
+validates :full_name, :birth_date, format: true
+
+==> corrected/app/models/025/025.rb 49 <==
+validates(:full_name, :birth_date, format: true)
+
+==> corrected/app/models/026/026.rb 48 <==
+validates :full_name, :birth_date, format: true
+
+==> corrected/app/models/027/027.rb 48 <==
+validates :full_name, :birth_date, format: true
+
+==> corrected/app/models/028/028.rb 48 <==
+validates :full_name, :birth_date, format: true
+
+==> corrected/app/models/029/029.rb 48 <==
+validates :full_name, :birth_date, format: true
+
+==> corrected/app/models/030/030.rb 51 <==
+validates :full_name, :birth_date, inclusion: true
+
+==> corrected/app/models/031/031.rb 52 <==
+validates(:full_name, :birth_date, inclusion: true)
+
+==> corrected/app/models/032/032.rb 51 <==
+validates :full_name, :birth_date, inclusion: true
+
+==> corrected/app/models/033/033.rb 51 <==
+validates :full_name, :birth_date, inclusion: true
+
+==> corrected/app/models/034/034.rb 51 <==
+validates :full_name, :birth_date, inclusion: true
+
+==> corrected/app/models/035/035.rb 51 <==
+validates :full_name, :birth_date, inclusion: true
+
+==> corrected/app/models/036/036.rb 48 <==
+validates :full_name, :birth_date, length: true
+
+==> corrected/app/models/037/037.rb 49 <==
+validates(:full_name, :birth_date, length: true)
+
+==> corrected/app/models/038/038.rb 48 <==
+validates :full_name, :birth_date, length: true
+
+==> corrected/app/models/039/039.rb 48 <==
+validates :full_name, :birth_date, length: true
+
+==> corrected/app/models/040/040.rb 48 <==
+validates :full_name, :birth_date, length: true
+
+==> corrected/app/models/041/041.rb 48 <==
+validates :full_name, :birth_date, length: true
+
+==> corrected/app/models/042/042.rb 54 <==
+validates :full_name, :birth_date, numericality: true
+
+==> corrected/app/models/043/043.rb 55 <==
+validates(:full_name, :birth_date, numericality: true)
+
+==> corrected/app/models/044/044.rb 54 <==
+validates :full_name, :birth_date, numericality: true
+
+==> corrected/app/models/045/045.rb 54 <==
+validates :full_name, :birth_date, numericality: true
+
+==> corrected/app/models/046/046.rb 54 <==
+validates :full_name, :birth_date, numericality: true
+
+==> corrected/app/models/047/047.rb 54 <==
+validates :full_name, :birth_date, numericality: true
+
+==> corrected/app/models/048/048.rb 50 <==
+validates :full_name, :birth_date, presence: true
+
+==> corrected/app/models/049/049.rb 51 <==
+validates(:full_name, :birth_date, presence: true)
+
+==> corrected/app/models/050/050.rb 50 <==
+validates :full_name, :birth_date, presence: true
+
+==> corrected/app/models/051/051.rb 50 <==
+validates :full_name, :birth_date, presence: true
+
+==> corrected/app/models/052/052.rb 50 <==
+validates :full_name, :birth_date, presence: true
+
+==> corrected/app/models/053/053.rb 50 <==
+validates :full_name, :birth_date, presence: true
+
+==> corrected/app/models/054/054.rb 49 <==
+validates :full_name, :birth_date, absence: true
+
+==> corrected/app/models/055/055.rb 50 <==
+validates(:full_name, :birth_date, absence: true)
+
+==> corrected/app/models/056/056.rb 49 <==
+validates :full_name, :birth_date, absence: true
+
+==> corrected/app/models/057/057.rb 49 <==
+validates :full_name, :birth_date, absence: true
+
+==> corrected/app/models/058/058.rb 49 <==
+validates :full_name, :birth_date, absence: true
+
+==> corrected/app/models/059/059.rb 49 <==
+validates :full_name, :birth_date, absence: true
+
+==> corrected/app/models/060/060.rb 48 <==
+validates :full_name, :birth_date, length: true
+
+==> corrected/app/models/061/061.rb 49 <==
+validates(:full_name, :birth_date, length: true)
+
+==> corrected/app/models/062/062.rb 48 <==
+validates :full_name, :birth_date, length: true
+
+==> corrected/app/models/063/063.rb 48 <==
+validates :full_name, :birth_date, length: true
+
+==> corrected/app/models/064/064.rb 48 <==
+validates :full_name, :birth_date, length: true
+
+==> corrected/app/models/065/065.rb 48 <==
+validates :full_name, :birth_date, length: true
+
+==> corrected/app/models/066/066.rb 52 <==
+validates :full_name, :birth_date, uniqueness: true
+
+==> corrected/app/models/067/067.rb 53 <==
+validates(:full_name, :birth_date, uniqueness: true)
+
+==> corrected/app/models/068/068.rb 52 <==
+validates :full_name, :birth_date, uniqueness: true
+
+==> corrected/app/models/069/069.rb 52 <==
+validates :full_name, :birth_date, uniqueness: true
+
+==> corrected/app/models/070/070.rb 52 <==
+validates :full_name, :birth_date, uniqueness: true
+
+==> corrected/app/models/071/071.rb 52 <==
+validates :full_name, :birth_date, uniqueness: true
+
+==> corrected/app/models/072/072.rb 33 <==
+validates :a, numericality: true
+
+==> corrected/app/models/073/073.rb 37 <==
+validates :a, :b, numericality: true
+
+==> corrected/app/models/074/074.rb 47 <==
+validates :a, :b, numericality: { minimum: 1 }
+
+==> corrected/app/models/075/075.rb 47 <==
+validates :a, :b, numericality: { minimum: 1 }
+
+==> corrected/app/models/076/076.rb 71 <==
+validates :a, :b, comparison: { greater_than: -> { Time.zone.today } }
+
+==> corrected/app/models/077/077.rb 37 <==
+validates :a, *b, numericality: true
+
+==> corrected/app/models/078/078.rb 51 <==
+validates :a, *b, :c, numericality: { minimum: 1 }
+

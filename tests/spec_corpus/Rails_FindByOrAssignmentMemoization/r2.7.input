@@ -1,0 +1,60 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 54 <==
+@current_user ||= User.find_by(id: session[:user_id])
+
+==> 001/001.rb 149 <==
+class Foo
+  def initialize
+    @not_current_user = nil
+  end
+
+  def current_user
+    @current_user ||= User.find_by(id: session[:user_id])
+  end
+end
+
+==> 002/002.rb 145 <==
+class Foo
+  def initialize
+    @current_user = nil
+  end
+
+  def current_user
+    @current_user ||= User.find_by(id: session[:user_id])
+  end
+end
+
+==> 003/003.rb 108 <==
+def current_user
+  @current_user ||= User.find_by(id: session[:user_id])
+
+  @current_user.do_something!
+end
+
+==> 004/004.rb 55 <==
+@current_user ||= User.find_by!(id: session[:user_id])
+
+==> 005/005.rb 53 <==
+current_user ||= User.find_by(id: session[:user_id])
+
+==> 006/006.rb 72 <==
+@current_user ||= User.find_by(id: session[:user_id]) || User.anonymous
+
+==> 007/007.rb 80 <==
+@current_user ||= session[:user_id] ? User.find_by(id: session[:user_id]) : nil
+
+==> 008/008.rb 75 <==
+@current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+
+==> 009/009.rb 84 <==
+@current_user ||= User.find_by(id: session[:user_id]) unless session[:user_id].nil?
+

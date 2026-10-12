@@ -318,6 +318,24 @@ pub fn parse_for_target<'t>(
     (result, tokens, fake, edits)
 }
 
+/// rubocop-rails MigrationFileSkippable (prepended to every cop's add_offense once the gem loads):
+/// a file whose name holds a 14-digit timestamp at or before `AllCops: MigratedSchemaVersion` gets
+/// no offenses (and so no corrections) from any cop.
+fn already_migrated_file(path: &Path, cfg: &Resolved) -> bool {
+    use crate::config::value::Value;
+    let version = match cfg.all_cops().get("MigratedSchemaVersion") {
+        None | Some(Value::Null) => return false,
+        Some(Value::Str(s)) => s.clone(),
+        Some(Value::Int(i)) => i.to_string(),
+        Some(v) => v.as_string().unwrap_or_default(),
+    };
+    let name = path.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default();
+    let bytes = name.as_bytes();
+    let stamp = (0..bytes.len().saturating_sub(13)).find(|&i| bytes[i..i + 14].iter().all(u8::is_ascii_digit));
+    // `schema_version <= migrated_schema_version.to_s`: a String comparison.
+    stamp.is_some_and(|i| name[i..i + 14] <= *version)
+}
+
 #[allow(clippy::too_many_arguments)]
 fn analyze(
     path: &Path,
@@ -329,6 +347,10 @@ fn analyze(
     mode: Option<Mode>,
     redundant: Redundant,
 ) -> (Vec<Offense>, Option<Corrector>, Vec<Span>) {
+    let rails = crate::helpers::cop_registry::plugin_loaded("rubocop-rails");
+    if rails && already_migrated_file(path, cfg) {
+        return (Vec::new(), None, Vec::new());
+    }
     let text: &str = shared;
     let raw_text = raw_text.unwrap_or(text);
     let version = target_ruby::prism_version(cfg.target_ruby);
@@ -608,9 +630,15 @@ fn analyze(
         .filter_map(|r| {
             let c = cfg.cop(r.name);
             let on = c.enabled || opted_in.contains(&r.name);
-            let (min, max) = r.cop.ruby_range();
+            let (mut min, max) = r.cop.ruby_range();
+            // rubocop-rails: `Style::HashExcept.minimum_target_ruby_version(2.0)` once it is loaded.
+            if r.name == "Style/HashExcept" && rails {
+                min = 2.0;
+            }
             let ruby_ok = min <= cfg.target_ruby && cfg.target_ruby <= max;
-            (on && ruby_ok && cfg.relevant(c, path)).then_some(Active { name: r.name, cop: r.cop, cfg: c })
+            // Base#relevant_file?: target_satisfies_all_gem_version_requirements? (railties).
+            let rails_ok = r.cop.min_rails() == 0.0 || cfg.target_rails_version() >= r.cop.min_rails();
+            (on && ruby_ok && rails_ok && cfg.relevant(c, path)).then_some(Active { name: r.name, cop: r.cop, cfg: c })
         })
         .collect();
 
@@ -765,7 +793,11 @@ fn analyze(
     }
     for o in out.iter_mut() {
         let c = cfg.cop(o.cop);
-        o.severity = c.severity.unwrap_or_else(|| default_severity(o.cop));
+        // find_severity: the configured Severity, else one the cop passed to add_offense (any
+        // but the Convention placeholder), else the department default.
+        o.severity = c
+            .severity
+            .unwrap_or_else(|| if o.severity == Severity::Convention { default_severity(o.cop) } else { o.severity });
         o.correctable &= autocorrect_allowed(c);
     }
     (out, corrector, disabled)

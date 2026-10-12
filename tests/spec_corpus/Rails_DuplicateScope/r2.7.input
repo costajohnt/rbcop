@@ -1,0 +1,34 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 261 <==
+class Post < ApplicationRecord
+  scope :visible, -> { where(visible: true) }
+  scope :hidden, -> { where(visible: true) }
+  scope :new, -> { where(created_at: 1.week.ago..Date.current) }
+  scope :popular, -> { where(comments_count: 1000..Float::INFINITY) }
+end
+
+==> 001/001.rb 191 <==
+class Post < ApplicationRecord
+  scope :with_visibility, ->(value) { where(visible: value) }
+
+  scope :visible, -> { with_visibility(true) }
+  scope :hidden, -> { with_visibility(true) }
+end
+
+==> 002/002.rb 262 <==
+class Post < ApplicationRecord
+  scope :visible, -> { where(visible: true) }
+  scope :hidden, -> { where(visible: false) }
+  scope :new, -> { where(created_at: 1.week.ago..Date.current) }
+  scope :popular, -> { where(comments_count: 1000..Float::INFINITY) }
+end
+

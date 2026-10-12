@@ -1,0 +1,43 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> db/migrate/000/20250101010101_create_users.rb 53 <==
+class CreateUsers < ActiveRecord::Migration[7.0]
+end
+
+==> db/migrate/001/20250101010101_create_users.rb 93 <==
+class Article < ActiveRecord::Base
+end
+
+class CreateUsers < ActiveRecord::Migration[7.0]
+end
+
+==> db/migrate/002/20250101010101_create_users.rb 96 <==
+class CreateUsers < ActiveRecord::Migration[7.0]
+  class Article < ActiveRecord::Base
+  end
+end
+
+==> db/migrate/003/20250101010101_create_users.rb 51 <==
+class SellBooks < ActiveRecord::Migration[7.0]
+end
+
+==> db/migrate/004/20250101010101_create_users.rb 53 <==
+class ::SellBooks < ActiveRecord::Migration[7.0]
+end
+
+==> db/migrate/005/20220101050505_add_blobs.active_storage.rb 50 <==
+class AddBlobs < ActiveRecord::Migration[7.0]
+end
+
+==> db/migrate/006/20250101010101_remove_unused_oauth_scope_grants.rb 70 <==
+class RemoveUnusedOAuthScopeGrants < ActiveRecord::Migration[7.0]
+end
+

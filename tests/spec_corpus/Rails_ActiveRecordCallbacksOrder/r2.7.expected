@@ -1,0 +1,34 @@
+==> offenses exit=1 414 <==
+app/models/000/000.rb:5:3: C: [Correctable] Rails/ActiveRecordCallbacksOrder: `after_save` is supposed to appear before `after_commit`.
+app/models/000/000.rb:10:3: C: [Correctable] Rails/ActiveRecordCallbacksOrder: `before_validation` is supposed to appear before `after_save`.
+app/models/001/001.rb:3:3: C: [Correctable] Rails/ActiveRecordCallbacksOrder: `after_save` is supposed to appear before `after_commit`.
+
+==> autocorrect exit=0 822 <==
+app/models/000/000.rb:5:3: C: [Corrected] Rails/ActiveRecordCallbacksOrder: `after_save` is supposed to appear before `after_commit`.
+app/models/000/000.rb:5:3: C: [Corrected] Rails/ActiveRecordCallbacksOrder: `before_validation` is supposed to appear before `after_save`.
+app/models/000/000.rb:6:3: C: [Corrected] Rails/ActiveRecordCallbacksOrder: `before_validation` is supposed to appear before `after_commit`.
+app/models/000/000.rb:10:3: C: [Corrected] Rails/ActiveRecordCallbacksOrder: `before_validation` is supposed to appear before `after_save`.
+app/models/001/001.rb:3:3: C: [Corrected] Rails/ActiveRecordCallbacksOrder: `after_save` is supposed to appear before `after_commit`.
+app/models/001/001.rb:4:3: C: [Corrected] Rails/ActiveRecordCallbacksOrder: `after_save` is supposed to appear before `after_commit`.
+
+==> corrected/app/models/000/000.rb 250 <==
+class User < ApplicationRecord
+  scope :admins, -> { where(admin: true) }
+
+  before_validation :before_validation_callback
+  after_save :after_save_callback
+  after_commit :after_commit_callback
+
+  def some_method
+  end
+
+  some_other_macros :foo
+end
+
+==> corrected/app/models/001/001.rb 143 <==
+class User < ApplicationRecord
+  after_save :after_save_callback1
+  after_save :after_save_callback2
+  after_commit :after_commit_callback
+end
+

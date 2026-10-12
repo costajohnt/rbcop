@@ -1,0 +1,19 @@
+==> offenses exit=1 471 <==
+app/controllers/000/000.rb:1:50: C: [Correctable] Rails/IgnoredSkipActionFilterOption: `if` option will be ignored when `only` and `if` are used together.
+app/controllers/001/001.rb:1:67: C: [Correctable] Rails/IgnoredSkipActionFilterOption: `if` option will be ignored when `only` and `if` are used together.
+app/controllers/002/002.rb:1:37: C: [Correctable] Rails/IgnoredSkipActionFilterOption: `except` option will be ignored when `if` and `except` are used together.
+
+==> autocorrect exit=0 465 <==
+app/controllers/000/000.rb:1:50: C: [Corrected] Rails/IgnoredSkipActionFilterOption: `if` option will be ignored when `only` and `if` are used together.
+app/controllers/001/001.rb:1:67: C: [Corrected] Rails/IgnoredSkipActionFilterOption: `if` option will be ignored when `only` and `if` are used together.
+app/controllers/002/002.rb:1:37: C: [Corrected] Rails/IgnoredSkipActionFilterOption: `except` option will be ignored when `if` and `except` are used together.
+
+==> corrected/app/controllers/000/000.rb 48 <==
+skip_before_action :login_required, only: :show
+
+==> corrected/app/controllers/001/001.rb 65 <==
+skip_before_action :login_required, :another_action, only: :show
+
+==> corrected/app/controllers/002/002.rb 57 <==
+skip_before_action :login_required, if: :trusted_origin?
+

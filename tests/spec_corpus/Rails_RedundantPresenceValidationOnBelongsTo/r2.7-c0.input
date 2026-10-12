@@ -1,0 +1,136 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 5.0
+
+==> 000/000.rb 49 <==
+belongs_to :user
+validates :user, presence: true
+
+==> 001/001.rb 52 <==
+belongs_to :user
+validates :user_id, presence: true
+
+==> 002/002.rb 77 <==
+belongs_to :author, foreign_key: :user_id
+validates :user_id, presence: true
+
+==> 003/003.rb 97 <==
+belongs_to :author, class_name: 'User', foreign_key: :user_id
+validates :user_id, presence: true
+
+==> 004/004.rb 76 <==
+belongs_to :author, foreign_key: :user_id
+validates :author, presence: true
+
+==> 005/005.rb 69 <==
+belongs_to :user, -> { not_deleted }
+validates :user, presence: true
+
+==> 006/006.rb 67 <==
+belongs_to :user
+validates :user, uniqueness: true, presence: true
+
+==> 007/007.rb 67 <==
+belongs_to :user
+validates :user, presence: true, uniqueness: true
+
+==> 008/008.rb 73 <==
+belongs_to :user
+belongs_to :book
+validates :user, :book, presence: true
+
+==> 009/009.rb 56 <==
+belongs_to :user
+validates :user, :name, presence: true
+
+==> 010/010.rb 56 <==
+belongs_to :user
+validates :name, :user, presence: true
+
+==> 011/011.rb 74 <==
+belongs_to :user
+validates :user, :name, presence: true, uniqueness: true
+
+==> 012/012.rb 96 <==
+class Profile
+  belongs_to :user
+  validates :user, :name, presence: true, uniqueness: true
+end
+
+==> 013/013.rb 75 <==
+belongs_to :user
+validates :user, presence: { message: 'Must be present' }
+
+==> 014/014.rb 100 <==
+belongs_to :user, -> { where(foo: true) }, inverse_of: :employee
+validates :user_id, presence: true
+
+==> 015/015.rb 70 <==
+belongs_to :user
+with_options presence: true do
+  validates :user
+end
+
+==> 016/016.rb 49 <==
+belongs_to :user
+validates :user, absence: false
+
+==> 017/017.rb 50 <==
+belongs_to :user
+validates 'user', presence: true
+
+==> 018/018.rb 55 <==
+belongs_to :user
+validates :user_count, presence: true
+
+==> 019/019.rb 53 <==
+belongs_to :user
+validates :user_id, presence: false
+
+==> 020/020.rb 68 <==
+belongs_to :user, optional: true
+validates :user_id, presence: true
+
+==> 021/021.rb 69 <==
+belongs_to :user, required: false
+validates :user_id, presence: true
+
+==> 022/022.rb 79 <==
+belongs_to :author, foreign_key: :user_id
+validates :author_id, presence: true
+
+==> 023/023.rb 92 <==
+belongs_to :author, foreign_key: :user_id, optional: true
+validates :author, presence: true
+
+==> 024/024.rb 71 <==
+belongs_to :user
+validates :user, presence: true, if: -> { condition }
+
+==> 025/025.rb 91 <==
+belongs_to :user
+validates :user, presence: true, if: -> { condition }, numericality: true
+
+==> 026/026.rb 75 <==
+belongs_to :user
+validates :user, presence: true, unless: -> { condition }
+
+==> 027/027.rb 63 <==
+belongs_to :user
+validates :user, presence: true, strict: true
+
+==> 028/028.rb 75 <==
+belongs_to :user
+validates :user, presence: true, strict: MissingUserError
+
+==> 029/029.rb 69 <==
+belongs_to :user
+validates :user, presence: true, allow_blank: false
+

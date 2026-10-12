@@ -1,0 +1,490 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 22 <==
+some_variable.seconds
+
+==> 001/001.rb 19 <==
+some_method.second
+
+==> 002/002.rb 15 <==
+-1.seconds.ago
+
+==> 003/003.rb 10 <==
+-1.second
+
+==> 004/004.rb 17 <==
+-1.0.seconds.ago
+
+==> 005/005.rb 12 <==
+-1.0.second
+
+==> 006/006.rb 14 <==
+1.seconds.ago
+
+==> 007/007.rb 9 <==
+1.second
+
+==> 008/008.rb 16 <==
+1.0.seconds.ago
+
+==> 009/009.rb 11 <==
+1.0.second
+
+==> 010/010.rb 22 <==
+some_variable.minutes
+
+==> 011/011.rb 19 <==
+some_method.minute
+
+==> 012/012.rb 15 <==
+-1.minutes.ago
+
+==> 013/013.rb 10 <==
+-1.minute
+
+==> 014/014.rb 17 <==
+-1.0.minutes.ago
+
+==> 015/015.rb 12 <==
+-1.0.minute
+
+==> 016/016.rb 14 <==
+1.minutes.ago
+
+==> 017/017.rb 9 <==
+1.minute
+
+==> 018/018.rb 16 <==
+1.0.minutes.ago
+
+==> 019/019.rb 11 <==
+1.0.minute
+
+==> 020/020.rb 20 <==
+some_variable.hours
+
+==> 021/021.rb 17 <==
+some_method.hour
+
+==> 022/022.rb 13 <==
+-1.hours.ago
+
+==> 023/023.rb 8 <==
+-1.hour
+
+==> 024/024.rb 15 <==
+-1.0.hours.ago
+
+==> 025/025.rb 10 <==
+-1.0.hour
+
+==> 026/026.rb 12 <==
+1.hours.ago
+
+==> 027/027.rb 7 <==
+1.hour
+
+==> 028/028.rb 14 <==
+1.0.hours.ago
+
+==> 029/029.rb 9 <==
+1.0.hour
+
+==> 030/030.rb 19 <==
+some_variable.days
+
+==> 031/031.rb 16 <==
+some_method.day
+
+==> 032/032.rb 12 <==
+-1.days.ago
+
+==> 033/033.rb 7 <==
+-1.day
+
+==> 034/034.rb 14 <==
+-1.0.days.ago
+
+==> 035/035.rb 9 <==
+-1.0.day
+
+==> 036/036.rb 11 <==
+1.days.ago
+
+==> 037/037.rb 6 <==
+1.day
+
+==> 038/038.rb 13 <==
+1.0.days.ago
+
+==> 039/039.rb 8 <==
+1.0.day
+
+==> 040/040.rb 20 <==
+some_variable.weeks
+
+==> 041/041.rb 17 <==
+some_method.week
+
+==> 042/042.rb 13 <==
+-1.weeks.ago
+
+==> 043/043.rb 8 <==
+-1.week
+
+==> 044/044.rb 15 <==
+-1.0.weeks.ago
+
+==> 045/045.rb 10 <==
+-1.0.week
+
+==> 046/046.rb 12 <==
+1.weeks.ago
+
+==> 047/047.rb 7 <==
+1.week
+
+==> 048/048.rb 14 <==
+1.0.weeks.ago
+
+==> 049/049.rb 9 <==
+1.0.week
+
+==> 050/050.rb 25 <==
+some_variable.fortnights
+
+==> 051/051.rb 22 <==
+some_method.fortnight
+
+==> 052/052.rb 18 <==
+-1.fortnights.ago
+
+==> 053/053.rb 13 <==
+-1.fortnight
+
+==> 054/054.rb 20 <==
+-1.0.fortnights.ago
+
+==> 055/055.rb 15 <==
+-1.0.fortnight
+
+==> 056/056.rb 17 <==
+1.fortnights.ago
+
+==> 057/057.rb 12 <==
+1.fortnight
+
+==> 058/058.rb 19 <==
+1.0.fortnights.ago
+
+==> 059/059.rb 14 <==
+1.0.fortnight
+
+==> 060/060.rb 21 <==
+some_variable.months
+
+==> 061/061.rb 18 <==
+some_method.month
+
+==> 062/062.rb 14 <==
+-1.months.ago
+
+==> 063/063.rb 9 <==
+-1.month
+
+==> 064/064.rb 16 <==
+-1.0.months.ago
+
+==> 065/065.rb 11 <==
+-1.0.month
+
+==> 066/066.rb 13 <==
+1.months.ago
+
+==> 067/067.rb 8 <==
+1.month
+
+==> 068/068.rb 15 <==
+1.0.months.ago
+
+==> 069/069.rb 10 <==
+1.0.month
+
+==> 070/070.rb 20 <==
+some_variable.years
+
+==> 071/071.rb 17 <==
+some_method.year
+
+==> 072/072.rb 13 <==
+-1.years.ago
+
+==> 073/073.rb 8 <==
+-1.year
+
+==> 074/074.rb 15 <==
+-1.0.years.ago
+
+==> 075/075.rb 10 <==
+-1.0.year
+
+==> 076/076.rb 12 <==
+1.years.ago
+
+==> 077/077.rb 7 <==
+1.year
+
+==> 078/078.rb 14 <==
+1.0.years.ago
+
+==> 079/079.rb 9 <==
+1.0.year
+
+==> 080/080.rb 20 <==
+some_variable.bytes
+
+==> 081/081.rb 17 <==
+some_method.byte
+
+==> 082/082.rb 13 <==
+-1.bytes.ago
+
+==> 083/083.rb 8 <==
+-1.byte
+
+==> 084/084.rb 15 <==
+-1.0.bytes.ago
+
+==> 085/085.rb 10 <==
+-1.0.byte
+
+==> 086/086.rb 12 <==
+1.bytes.ago
+
+==> 087/087.rb 7 <==
+1.byte
+
+==> 088/088.rb 14 <==
+1.0.bytes.ago
+
+==> 089/089.rb 9 <==
+1.0.byte
+
+==> 090/090.rb 24 <==
+some_variable.kilobytes
+
+==> 091/091.rb 21 <==
+some_method.kilobyte
+
+==> 092/092.rb 17 <==
+-1.kilobytes.ago
+
+==> 093/093.rb 12 <==
+-1.kilobyte
+
+==> 094/094.rb 19 <==
+-1.0.kilobytes.ago
+
+==> 095/095.rb 14 <==
+-1.0.kilobyte
+
+==> 096/096.rb 16 <==
+1.kilobytes.ago
+
+==> 097/097.rb 11 <==
+1.kilobyte
+
+==> 098/098.rb 18 <==
+1.0.kilobytes.ago
+
+==> 099/099.rb 13 <==
+1.0.kilobyte
+
+==> 100/100.rb 24 <==
+some_variable.megabytes
+
+==> 101/101.rb 21 <==
+some_method.megabyte
+
+==> 102/102.rb 17 <==
+-1.megabytes.ago
+
+==> 103/103.rb 12 <==
+-1.megabyte
+
+==> 104/104.rb 19 <==
+-1.0.megabytes.ago
+
+==> 105/105.rb 14 <==
+-1.0.megabyte
+
+==> 106/106.rb 16 <==
+1.megabytes.ago
+
+==> 107/107.rb 11 <==
+1.megabyte
+
+==> 108/108.rb 18 <==
+1.0.megabytes.ago
+
+==> 109/109.rb 13 <==
+1.0.megabyte
+
+==> 110/110.rb 24 <==
+some_variable.gigabytes
+
+==> 111/111.rb 21 <==
+some_method.gigabyte
+
+==> 112/112.rb 17 <==
+-1.gigabytes.ago
+
+==> 113/113.rb 12 <==
+-1.gigabyte
+
+==> 114/114.rb 19 <==
+-1.0.gigabytes.ago
+
+==> 115/115.rb 14 <==
+-1.0.gigabyte
+
+==> 116/116.rb 16 <==
+1.gigabytes.ago
+
+==> 117/117.rb 11 <==
+1.gigabyte
+
+==> 118/118.rb 18 <==
+1.0.gigabytes.ago
+
+==> 119/119.rb 13 <==
+1.0.gigabyte
+
+==> 120/120.rb 24 <==
+some_variable.terabytes
+
+==> 121/121.rb 21 <==
+some_method.terabyte
+
+==> 122/122.rb 17 <==
+-1.terabytes.ago
+
+==> 123/123.rb 12 <==
+-1.terabyte
+
+==> 124/124.rb 19 <==
+-1.0.terabytes.ago
+
+==> 125/125.rb 14 <==
+-1.0.terabyte
+
+==> 126/126.rb 16 <==
+1.terabytes.ago
+
+==> 127/127.rb 11 <==
+1.terabyte
+
+==> 128/128.rb 18 <==
+1.0.terabytes.ago
+
+==> 129/129.rb 13 <==
+1.0.terabyte
+
+==> 130/130.rb 24 <==
+some_variable.petabytes
+
+==> 131/131.rb 21 <==
+some_method.petabyte
+
+==> 132/132.rb 17 <==
+-1.petabytes.ago
+
+==> 133/133.rb 12 <==
+-1.petabyte
+
+==> 134/134.rb 19 <==
+-1.0.petabytes.ago
+
+==> 135/135.rb 14 <==
+-1.0.petabyte
+
+==> 136/136.rb 16 <==
+1.petabytes.ago
+
+==> 137/137.rb 11 <==
+1.petabyte
+
+==> 138/138.rb 18 <==
+1.0.petabytes.ago
+
+==> 139/139.rb 13 <==
+1.0.petabyte
+
+==> 140/140.rb 23 <==
+some_variable.exabytes
+
+==> 141/141.rb 20 <==
+some_method.exabyte
+
+==> 142/142.rb 16 <==
+-1.exabytes.ago
+
+==> 143/143.rb 11 <==
+-1.exabyte
+
+==> 144/144.rb 18 <==
+-1.0.exabytes.ago
+
+==> 145/145.rb 13 <==
+-1.0.exabyte
+
+==> 146/146.rb 15 <==
+1.exabytes.ago
+
+==> 147/147.rb 10 <==
+1.exabyte
+
+==> 148/148.rb 17 <==
+1.0.exabytes.ago
+
+==> 149/149.rb 12 <==
+1.0.exabyte
+
+==> 150/150.rb 25 <==
+some_variable.zettabytes
+
+==> 151/151.rb 22 <==
+some_method.zettabyte
+
+==> 152/152.rb 18 <==
+-1.zettabytes.ago
+
+==> 153/153.rb 13 <==
+-1.zettabyte
+
+==> 154/154.rb 20 <==
+-1.0.zettabytes.ago
+
+==> 155/155.rb 15 <==
+-1.0.zettabyte
+
+==> 156/156.rb 17 <==
+1.zettabytes.ago
+
+==> 157/157.rb 12 <==
+1.zettabyte
+
+==> 158/158.rb 19 <==
+1.0.zettabytes.ago
+
+==> 159/159.rb 14 <==
+1.0.zettabyte
+

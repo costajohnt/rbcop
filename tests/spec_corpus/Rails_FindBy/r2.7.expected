@@ -1,0 +1,36 @@
+==> offenses exit=1 518 <==
+000/000.rb:1:6: C: [Correctable] Rails/FindBy: Use `find_by` instead of `where.take`.
+001/001.rb:1:6: C: [Correctable] Rails/FindBy: Use `find_by` instead of `where&.take`.
+002/002.rb:1:7: C: [Correctable] Rails/FindBy: Use `find_by` instead of `where&.take`.
+003/003.rb:2:4: C: [Correctable] Rails/FindBy: Use `find_by` instead of `where.take`.
+004/004.rb:2:3: C: [Correctable] Rails/FindBy: Use `find_by` instead of `where.take`.
+005/005.rb:1:8: C: [Correctable] Rails/FindBy: Use `find_by` instead of `where.take`.
+
+==> autocorrect exit=0 506 <==
+000/000.rb:1:6: C: [Corrected] Rails/FindBy: Use `find_by` instead of `where.take`.
+001/001.rb:1:6: C: [Corrected] Rails/FindBy: Use `find_by` instead of `where&.take`.
+002/002.rb:1:7: C: [Corrected] Rails/FindBy: Use `find_by` instead of `where&.take`.
+003/003.rb:2:4: C: [Corrected] Rails/FindBy: Use `find_by` instead of `where.take`.
+004/004.rb:2:3: C: [Corrected] Rails/FindBy: Use `find_by` instead of `where.take`.
+005/005.rb:1:8: C: [Corrected] Rails/FindBy: Use `find_by` instead of `where.take`.
+
+==> corrected/000/000.rb 20 <==
+User.find_by(id: x)
+
+==> corrected/001/001.rb 20 <==
+User.find_by(id: x)
+
+==> corrected/002/002.rb 21 <==
+User&.find_by(id: x)
+
+==> corrected/003/003.rb 23 <==
+User
+  .find_by(id: x)
+
+==> corrected/004/004.rb 23 <==
+User.
+  find_by(id: x)
+
+==> corrected/005/005.rb 22 <==
+users&.find_by(id: x)
+

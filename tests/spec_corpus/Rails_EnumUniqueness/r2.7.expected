@@ -1,0 +1,52 @@
+==> offenses exit=1 2698 <==
+app/models/000/000.rb:1:36: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/001/001.rb:1:36: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/001/001.rb:1:45: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/003/003.rb:1:36: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/004/004.rb:1:36: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/004/004.rb:1:45: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/006/006.rb:1:38: C: Rails/EnumUniqueness: Duplicate value `0` found in `status` enum declaration.
+app/models/007/007.rb:1:37: C: Rails/EnumUniqueness: Duplicate value `0` found in `status` enum declaration.
+app/models/007/007.rb:1:50: C: Rails/EnumUniqueness: Duplicate value `0` found in `status` enum declaration.
+app/models/009/009.rb:1:38: C: Rails/EnumUniqueness: Duplicate value `0` found in `status` enum declaration.
+app/models/010/010.rb:1:37: C: Rails/EnumUniqueness: Duplicate value `0` found in `status` enum declaration.
+app/models/010/010.rb:1:50: C: Rails/EnumUniqueness: Duplicate value `0` found in `status` enum declaration.
+app/models/015/015.rb:1:37: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/016/016.rb:1:32: C: Rails/EnumUniqueness: Duplicate value `:active` found in `KEY` enum declaration.
+app/models/017/017.rb:1:35: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/018/018.rb:1:35: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/018/018.rb:1:44: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/020/020.rb:1:37: C: Rails/EnumUniqueness: Duplicate value `0` found in `status` enum declaration.
+app/models/021/021.rb:1:36: C: Rails/EnumUniqueness: Duplicate value `0` found in `status` enum declaration.
+app/models/021/021.rb:1:49: C: Rails/EnumUniqueness: Duplicate value `0` found in `status` enum declaration.
+app/models/026/026.rb:1:39: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/027/027.rb:1:34: C: Rails/EnumUniqueness: Duplicate value `:active` found in `KEY` enum declaration.
+app/models/028/028.rb:1:35: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/028/028.rb:2:37: C: Rails/EnumUniqueness: Duplicate value `:member` found in `role` enum declaration.
+
+==> autocorrect exit=1 2698 <==
+app/models/000/000.rb:1:36: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/001/001.rb:1:36: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/001/001.rb:1:45: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/003/003.rb:1:36: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/004/004.rb:1:36: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/004/004.rb:1:45: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/006/006.rb:1:38: C: Rails/EnumUniqueness: Duplicate value `0` found in `status` enum declaration.
+app/models/007/007.rb:1:37: C: Rails/EnumUniqueness: Duplicate value `0` found in `status` enum declaration.
+app/models/007/007.rb:1:50: C: Rails/EnumUniqueness: Duplicate value `0` found in `status` enum declaration.
+app/models/009/009.rb:1:38: C: Rails/EnumUniqueness: Duplicate value `0` found in `status` enum declaration.
+app/models/010/010.rb:1:37: C: Rails/EnumUniqueness: Duplicate value `0` found in `status` enum declaration.
+app/models/010/010.rb:1:50: C: Rails/EnumUniqueness: Duplicate value `0` found in `status` enum declaration.
+app/models/015/015.rb:1:37: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/016/016.rb:1:32: C: Rails/EnumUniqueness: Duplicate value `:active` found in `KEY` enum declaration.
+app/models/017/017.rb:1:35: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/018/018.rb:1:35: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/018/018.rb:1:44: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/020/020.rb:1:37: C: Rails/EnumUniqueness: Duplicate value `0` found in `status` enum declaration.
+app/models/021/021.rb:1:36: C: Rails/EnumUniqueness: Duplicate value `0` found in `status` enum declaration.
+app/models/021/021.rb:1:49: C: Rails/EnumUniqueness: Duplicate value `0` found in `status` enum declaration.
+app/models/026/026.rb:1:39: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/027/027.rb:1:34: C: Rails/EnumUniqueness: Duplicate value `:active` found in `KEY` enum declaration.
+app/models/028/028.rb:1:35: C: Rails/EnumUniqueness: Duplicate value `:active` found in `status` enum declaration.
+app/models/028/028.rb:2:37: C: Rails/EnumUniqueness: Duplicate value `:member` found in `role` enum declaration.
+

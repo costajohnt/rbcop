@@ -1,0 +1,28 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 16 <==
+User.order(:id)
+
+==> 001/001.rb 21 <==
+User.order(id: :asc)
+
+==> 002/002.rb 48 <==
+scope :chronological, -> { order(primary_key) }
+
+==> 003/003.rb 56 <==
+scope :chronological, -> { order(primary_key => :asc) }
+
+==> 004/004.rb 24 <==
+User.order(:created_at)
+
+==> 005/005.rb 40 <==
+User.order(id: :asc, created_at: :desc)
+

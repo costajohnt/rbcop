@@ -1,0 +1,21 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> spec/000/000.rb 18 <==
+Time.zone = 'EST'
+
+==> spec/001/001.rb 20 <==
+::Time.zone = 'EST'
+
+==> spec/002/002.rb 63 <==
+Time.use_zone('EST') do
+  current_est_time = Time.zone.now
+end
+

@@ -1,0 +1,8 @@
+==> offenses exit=1 200 <==
+000/000.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `toggle!` because it skips validations.
+001/001.rb:1:7: C: Rails/SkipsModelValidations: Avoid using `toggle!` because it skips validations.
+
+==> autocorrect exit=1 200 <==
+000/000.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `toggle!` because it skips validations.
+001/001.rb:1:7: C: Rails/SkipsModelValidations: Avoid using `toggle!` because it skips validations.
+

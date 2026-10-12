@@ -1,0 +1,55 @@
+==> offenses exit=1 1210 <==
+000/000.rb:1:1: C: [Correctable] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+000/000.rb:2:1: C: [Correctable] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+000/000.rb:3:1: C: [Correctable] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+000/000.rb:4:1: C: [Correctable] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+000/000.rb:5:1: C: [Correctable] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+000/000.rb:6:1: C: [Correctable] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+000/000.rb:7:1: C: [Correctable] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+000/000.rb:8:1: C: [Correctable] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+000/000.rb:9:1: C: [Correctable] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+000/000.rb:10:1: C: [Correctable] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+001/001.rb:1:1: C: [Correctable] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+002/002.rb:1:1: C: [Correctable] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+003/003.rb:2:3: C: [Correctable] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+
+==> autocorrect exit=0 1184 <==
+000/000.rb:1:1: C: [Corrected] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+000/000.rb:2:1: C: [Corrected] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+000/000.rb:3:1: C: [Corrected] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+000/000.rb:4:1: C: [Corrected] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+000/000.rb:5:1: C: [Corrected] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+000/000.rb:6:1: C: [Corrected] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+000/000.rb:7:1: C: [Corrected] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+000/000.rb:8:1: C: [Corrected] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+000/000.rb:9:1: C: [Corrected] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+000/000.rb:10:1: C: [Corrected] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+001/001.rb:1:1: C: [Corrected] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+002/002.rb:1:1: C: [Corrected] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+003/003.rb:2:3: C: [Corrected] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+
+==> corrected/000/000.rb 120 <==
+freeze_time
+freeze_time
+freeze_time
+freeze_time
+freeze_time
+freeze_time
+freeze_time
+freeze_time
+freeze_time
+freeze_time
+
+==> corrected/001/001.rb 34 <==
+freeze_time do
+  do_something
+end
+
+==> corrected/002/002.rb 29 <==
+freeze_time { do_something }
+
+==> corrected/003/003.rb 48 <==
+around do |example|
+  freeze_time(&example)
+end
+

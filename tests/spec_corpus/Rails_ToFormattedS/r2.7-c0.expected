@@ -1,0 +1,14 @@
+==> offenses exit=1 148 <==
+000/000.rb:1:6: C: [Correctable] Rails/ToFormattedS: Use `to_fs` instead.
+001/001.rb:1:7: C: [Correctable] Rails/ToFormattedS: Use `to_fs` instead.
+
+==> autocorrect exit=0 144 <==
+000/000.rb:1:6: C: [Corrected] Rails/ToFormattedS: Use `to_fs` instead.
+001/001.rb:1:7: C: [Corrected] Rails/ToFormattedS: Use `to_fs` instead.
+
+==> corrected/000/000.rb 16 <==
+time.to_fs(:db)
+
+==> corrected/001/001.rb 17 <==
+time&.to_fs(:db)
+

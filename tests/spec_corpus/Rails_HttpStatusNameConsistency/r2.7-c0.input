@@ -1,0 +1,26 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> Gemfile.lock 101 <==
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rack (3.0.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rack
+
+==> app/controllers/000/000.rb 94 <==
+render json: { error: 'Invalid data' }, status: :unprocessable_entity
+head :payload_too_large
+

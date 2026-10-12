@@ -1,0 +1,22 @@
+==> offenses exit=1 1044 <==
+000/000.rb:1:40: C: Rails/I18nLocaleTexts: Move locale texts to the locale files in the `config/locales` directory.
+000/000.rb:2:33: C: Rails/I18nLocaleTexts: Move locale texts to the locale files in the `config/locales` directory.
+002/002.rb:1:32: C: Rails/I18nLocaleTexts: Move locale texts to the locale files in the `config/locales` directory.
+003/003.rb:1:53: C: Rails/I18nLocaleTexts: Move locale texts to the locale files in the `config/locales` directory.
+004/004.rb:1:40: C: Rails/I18nLocaleTexts: Move locale texts to the locale files in the `config/locales` directory.
+005/005.rb:1:39: C: Rails/I18nLocaleTexts: Move locale texts to the locale files in the `config/locales` directory.
+008/008.rb:1:18: C: Rails/I18nLocaleTexts: Move locale texts to the locale files in the `config/locales` directory.
+010/010.rb:1:22: C: Rails/I18nLocaleTexts: Move locale texts to the locale files in the `config/locales` directory.
+012/012.rb:1:31: C: Rails/I18nLocaleTexts: Move locale texts to the locale files in the `config/locales` directory.
+
+==> autocorrect exit=1 1044 <==
+000/000.rb:1:40: C: Rails/I18nLocaleTexts: Move locale texts to the locale files in the `config/locales` directory.
+000/000.rb:2:33: C: Rails/I18nLocaleTexts: Move locale texts to the locale files in the `config/locales` directory.
+002/002.rb:1:32: C: Rails/I18nLocaleTexts: Move locale texts to the locale files in the `config/locales` directory.
+003/003.rb:1:53: C: Rails/I18nLocaleTexts: Move locale texts to the locale files in the `config/locales` directory.
+004/004.rb:1:40: C: Rails/I18nLocaleTexts: Move locale texts to the locale files in the `config/locales` directory.
+005/005.rb:1:39: C: Rails/I18nLocaleTexts: Move locale texts to the locale files in the `config/locales` directory.
+008/008.rb:1:18: C: Rails/I18nLocaleTexts: Move locale texts to the locale files in the `config/locales` directory.
+010/010.rb:1:22: C: Rails/I18nLocaleTexts: Move locale texts to the locale files in the `config/locales` directory.
+012/012.rb:1:31: C: Rails/I18nLocaleTexts: Move locale texts to the locale files in the `config/locales` directory.
+

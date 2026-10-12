@@ -12,13 +12,24 @@ pub struct NativePlugin {
     pub departments: &'static [&'static str],
     /// The gem's config/default.yml at the version in docs/plugins.md.
     pub default_yml: &'static str,
+    /// The gem's config/obsoletion.yml (ConfigObsoletion.files), if it ships one.
+    pub obsoletion: Option<&'static str>,
 }
 
-pub const NATIVE_PLUGINS: &[NativePlugin] = &[NativePlugin {
-    gem: "rubocop-performance",
-    departments: &["Performance"],
-    default_yml: include_str!("../../config/plugins/rubocop-performance.yml"),
-}];
+pub const NATIVE_PLUGINS: &[NativePlugin] = &[
+    NativePlugin {
+        gem: "rubocop-performance",
+        departments: &["Performance"],
+        default_yml: include_str!("../../config/plugins/rubocop-performance.yml"),
+        obsoletion: None,
+    },
+    NativePlugin {
+        gem: "rubocop-rails",
+        departments: &["Rails"],
+        default_yml: include_str!("../../config/plugins/rubocop-rails.yml"),
+        obsoletion: Some(include_str!("../../config/plugins/rubocop-rails-obsoletion.yml")),
+    },
+];
 
 pub fn native_plugin(gem: &str) -> Option<&'static NativePlugin> {
     NATIVE_PLUGINS.iter().find(|p| p.gem == gem)
@@ -64,7 +75,9 @@ pub fn register_plugin(plugin: &'static NativePlugin) {
     }
     reg.1.push(plugin.gem);
     let mut names = reg.0.unwrap_or_else(|| REGISTRY.core.as_slice()).to_vec();
-    names.extend(cop_names(plugin.default_yml));
+    // A plugin's default.yml also configures some of RuboCop's cops: those are registered already.
+    let new: Vec<&'static str> = cop_names(plugin.default_yml).into_iter().filter(|n| !names.contains(n)).collect();
+    names.extend(new);
     // ponytail: leaks one name list per plugin load (a handful per process at most).
     reg.0 = Some(Vec::leak(names));
 }
@@ -125,6 +138,16 @@ pub fn is_unrunnable(cop: &str) -> bool {
 pub fn has_unrunnable() -> bool {
     let open = OPEN.read().unwrap();
     open.custom || open.foreign || !open.constants.is_empty()
+}
+
+/// Whether a native plugin's gem has been loaded (required) in this process.
+pub fn plugin_loaded(gem: &str) -> bool {
+    REGISTRY.plugins.read().unwrap().1.contains(&gem)
+}
+
+/// The loaded native plugins, in load order.
+pub fn loaded_plugins() -> Vec<&'static NativePlugin> {
+    REGISTRY.plugins.read().unwrap().1.iter().filter_map(|g| native_plugin(g)).collect()
 }
 
 /// Whether a cop is registered: RuboCop's own always, a native plugin's once its gem is loaded.

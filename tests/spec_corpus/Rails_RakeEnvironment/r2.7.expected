@@ -1,0 +1,54 @@
+==> offenses exit=1 1084 <==
+000/Rakefile:1:1: C: [Correctable] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+001/Rakefile:1:1: C: [Correctable] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+002/Rakefile:1:1: C: [Correctable] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+003/Rakefile:1:1: C: [Correctable] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+004/Rakefile:1:1: C: [Correctable] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+005/Rakefile:1:1: C: [Correctable] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+006/Rakefile:1:1: C: Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+007/Rakefile:1:1: C: [Correctable] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+008/Rakefile:1:1: C: [Correctable] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+
+==> autocorrect exit=1 1068 <==
+000/Rakefile:1:1: C: [Corrected] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+001/Rakefile:1:1: C: [Corrected] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+002/Rakefile:1:1: C: [Corrected] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+003/Rakefile:1:1: C: [Corrected] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+004/Rakefile:1:1: C: [Corrected] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+005/Rakefile:1:1: C: [Corrected] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+006/Rakefile:1:1: C: Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+007/Rakefile:1:1: C: [Corrected] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+008/Rakefile:1:1: C: [Corrected] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+
+==> corrected/000/Rakefile 30 <==
+task foo: :environment do
+end
+
+==> corrected/001/Rakefile 34 <==
+task 'bar' => :environment do
+end
+
+==> corrected/002/Rakefile 42 <==
+task 'foo:bar:baz' => :environment do
+end
+
+==> corrected/003/Rakefile 41 <==
+task :foo, [:arg] => :environment do
+end
+
+==> corrected/004/Rakefile 41 <==
+task :foo, [:arg] => :environment do
+end
+
+==> corrected/005/Rakefile 50 <==
+task :foo, [:arg1, 'arg2'] => :environment do
+end
+
+==> corrected/007/Rakefile 32 <==
+task foo: [:environment] do
+end
+
+==> corrected/008/Rakefile 43 <==
+task :foo, [:arg] => [:environment] do
+end
+

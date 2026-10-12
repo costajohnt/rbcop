@@ -1,0 +1,168 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 34 <==
+User.all.each { |u| u.something }
+
+==> 001/001.rb 46 <==
+User.all.order(:name).each { |u| u.something }
+==> 002/002.rb 43 <==
+User.all.limit(10).each { |u| u.something }
+==> 003/003.rb 53 <==
+User.all.select(:name, :age).each { |u| u.something }
+==> 004/004.rb 60 <==
+User.eager_load(:association_name).each { |u| u.something }
+
+==> 005/005.rb 72 <==
+User.eager_load(:association_name).order(:name).each { |u| u.something }
+==> 006/006.rb 69 <==
+User.eager_load(:association_name).limit(10).each { |u| u.something }
+==> 007/007.rb 79 <==
+User.eager_load(:association_name).select(:name, :age).each { |u| u.something }
+==> 008/008.rb 58 <==
+User.includes(:association_name).each { |u| u.something }
+
+==> 009/009.rb 70 <==
+User.includes(:association_name).order(:name).each { |u| u.something }
+==> 010/010.rb 67 <==
+User.includes(:association_name).limit(10).each { |u| u.something }
+==> 011/011.rb 77 <==
+User.includes(:association_name).select(:name, :age).each { |u| u.something }
+==> 012/012.rb 55 <==
+User.joins(:association_name).each { |u| u.something }
+
+==> 013/013.rb 67 <==
+User.joins(:association_name).order(:name).each { |u| u.something }
+==> 014/014.rb 64 <==
+User.joins(:association_name).limit(10).each { |u| u.something }
+==> 015/015.rb 74 <==
+User.joins(:association_name).select(:name, :age).each { |u| u.something }
+==> 016/016.rb 60 <==
+User.left_joins(:association_name).each { |u| u.something }
+
+==> 017/017.rb 72 <==
+User.left_joins(:association_name).order(:name).each { |u| u.something }
+==> 018/018.rb 69 <==
+User.left_joins(:association_name).limit(10).each { |u| u.something }
+==> 019/019.rb 79 <==
+User.left_joins(:association_name).select(:name, :age).each { |u| u.something }
+==> 020/020.rb 66 <==
+User.left_outer_joins(:association_name).each { |u| u.something }
+
+==> 021/021.rb 78 <==
+User.left_outer_joins(:association_name).order(:name).each { |u| u.something }
+==> 022/022.rb 75 <==
+User.left_outer_joins(:association_name).limit(10).each { |u| u.something }
+==> 023/023.rb 85 <==
+User.left_outer_joins(:association_name).select(:name, :age).each { |u| u.something }
+==> 024/024.rb 73 <==
+User.where(name: name).or(User.where(age: age)).each { |u| u.something }
+
+==> 025/025.rb 85 <==
+User.where(name: name).or(User.where(age: age)).order(:name).each { |u| u.something }
+==> 026/026.rb 82 <==
+User.where(name: name).or(User.where(age: age)).limit(10).each { |u| u.something }
+==> 027/027.rb 92 <==
+User.where(name: name).or(User.where(age: age)).select(:name, :age).each { |u| u.something }
+==> 028/028.rb 57 <==
+User.preload(:association_name).each { |u| u.something }
+
+==> 029/029.rb 69 <==
+User.preload(:association_name).order(:name).each { |u| u.something }
+==> 030/030.rb 66 <==
+User.preload(:association_name).limit(10).each { |u| u.something }
+==> 031/031.rb 76 <==
+User.preload(:association_name).select(:name, :age).each { |u| u.something }
+==> 032/032.rb 60 <==
+User.references(:association_name).each { |u| u.something }
+
+==> 033/033.rb 72 <==
+User.references(:association_name).order(:name).each { |u| u.something }
+==> 034/034.rb 69 <==
+User.references(:association_name).limit(10).each { |u| u.something }
+==> 035/035.rb 79 <==
+User.references(:association_name).select(:name, :age).each { |u| u.something }
+==> 036/036.rb 39 <==
+User.unscoped.each { |u| u.something }
+
+==> 037/037.rb 51 <==
+User.unscoped.order(:name).each { |u| u.something }
+==> 038/038.rb 48 <==
+User.unscoped.limit(10).each { |u| u.something }
+==> 039/039.rb 58 <==
+User.unscoped.select(:name, :age).each { |u| u.something }
+==> 040/040.rb 48 <==
+User.where(name: name).each { |u| u.something }
+
+==> 041/041.rb 60 <==
+User.where(name: name).order(:name).each { |u| u.something }
+==> 042/042.rb 57 <==
+User.where(name: name).limit(10).each { |u| u.something }
+==> 043/043.rb 67 <==
+User.where(name: name).select(:name, :age).each { |u| u.something }
+==> 044/044.rb 52 <==
+User.where.not(name: name).each { |u| u.something }
+
+==> 045/045.rb 64 <==
+User.where.not(name: name).order(:name).each { |u| u.something }
+==> 046/046.rb 61 <==
+User.where.not(name: name).limit(10).each { |u| u.something }
+==> 047/047.rb 71 <==
+User.where.not(name: name).select(:name, :age).each { |u| u.something }
+==> 048/048.rb 20 <==
+FOO.each { |u| u.x }
+==> 049/049.rb 30 <==
+User.all.find_each { |u| u.x }
+==> 050/050.rb 103 <==
+class Model < ApplicationRecord
+  model.errors.where(:title).each { |error| do_something(error)  }
+end
+
+==> 051/051.rb 86 <==
+class Model < ApplicationRecord
+  where(record: [record1, record2]).each(&:touch)
+end
+
+==> 052/052.rb 26 <==
+User.all.each { |u| u.x }
+
+==> 053/053.rb 40 <==
+class C; User.all.each { |u| u.x }; end
+
+==> 054/054.rb 35 <==
+class C
+  all.each { |u| u.x }
+end
+
+==> 055/055.rb 41 <==
+class C < Foo
+  all.each { |u| u.x }
+end
+
+==> 056/056.rb 55 <==
+class C < ApplicationRecord
+  all.each { |u| u.x }
+end
+
+==> 057/057.rb 57 <==
+class C < ::ApplicationRecord
+  all.each { |u| u.x }
+end
+
+==> 058/058.rb 56 <==
+class C < ActiveRecord::Base
+  all.each { |u| u.x }
+end
+
+==> 059/059.rb 58 <==
+class C < ::ActiveRecord::Base
+  all.each { |u| u.x }
+end
+

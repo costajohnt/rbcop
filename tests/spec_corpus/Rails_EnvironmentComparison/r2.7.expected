@@ -1,0 +1,64 @@
+==> offenses exit=1 1596 <==
+000/000.rb:1:1: C: [Correctable] Rails/EnvironmentComparison: Favor `Rails.env.production?` over `Rails.env == 'production'`.
+001/001.rb:1:1: C: [Correctable] Rails/EnvironmentComparison: Favor `Rails.env.production?` over `'production' == Rails.env`.
+002/002.rb:1:1: C: [Correctable] Rails/EnvironmentComparison: Favor `!Rails.env.production?` over `Rails.env != 'production'`.
+003/003.rb:1:1: C: [Correctable] Rails/EnvironmentComparison: Favor `!Rails.env.production?` over `'production' != Rails.env`.
+004/004.rb:1:1: C: [Correctable] Rails/EnvironmentComparison: Do not compare `Rails.env` with a symbol, it will always evaluate to `false`.
+005/005.rb:1:1: C: [Correctable] Rails/EnvironmentComparison: Do not compare `Rails.env` with a symbol, it will always evaluate to `false`.
+006/006.rb:1:1: C: [Correctable] Rails/EnvironmentComparison: Do not compare `Rails.env` with a symbol, it will always evaluate to `false`.
+007/007.rb:1:1: C: [Correctable] Rails/EnvironmentComparison: Do not compare `Rails.env` with a symbol, it will always evaluate to `false`.
+008/008.rb:1:1: C: [Correctable] Rails/EnvironmentComparison: Favor `Rails.env.production?` over `Rails.env.to_sym == :production`.
+009/009.rb:1:1: C: [Correctable] Rails/EnvironmentComparison: Favor `Rails.env.production?` over `:production == Rails.env.to_sym`.
+010/010.rb:1:1: C: [Correctable] Rails/EnvironmentComparison: Favor `!Rails.env.production?` over `Rails.env.to_sym != :production`.
+011/011.rb:1:1: C: [Correctable] Rails/EnvironmentComparison: Favor `!Rails.env.production?` over `:production != Rails.env.to_sym`.
+
+==> autocorrect exit=0 1572 <==
+000/000.rb:1:1: C: [Corrected] Rails/EnvironmentComparison: Favor `Rails.env.production?` over `Rails.env == 'production'`.
+001/001.rb:1:1: C: [Corrected] Rails/EnvironmentComparison: Favor `Rails.env.production?` over `'production' == Rails.env`.
+002/002.rb:1:1: C: [Corrected] Rails/EnvironmentComparison: Favor `!Rails.env.production?` over `Rails.env != 'production'`.
+003/003.rb:1:1: C: [Corrected] Rails/EnvironmentComparison: Favor `!Rails.env.production?` over `'production' != Rails.env`.
+004/004.rb:1:1: C: [Corrected] Rails/EnvironmentComparison: Do not compare `Rails.env` with a symbol, it will always evaluate to `false`.
+005/005.rb:1:1: C: [Corrected] Rails/EnvironmentComparison: Do not compare `Rails.env` with a symbol, it will always evaluate to `false`.
+006/006.rb:1:1: C: [Corrected] Rails/EnvironmentComparison: Do not compare `Rails.env` with a symbol, it will always evaluate to `false`.
+007/007.rb:1:1: C: [Corrected] Rails/EnvironmentComparison: Do not compare `Rails.env` with a symbol, it will always evaluate to `false`.
+008/008.rb:1:1: C: [Corrected] Rails/EnvironmentComparison: Favor `Rails.env.production?` over `Rails.env.to_sym == :production`.
+009/009.rb:1:1: C: [Corrected] Rails/EnvironmentComparison: Favor `Rails.env.production?` over `:production == Rails.env.to_sym`.
+010/010.rb:1:1: C: [Corrected] Rails/EnvironmentComparison: Favor `!Rails.env.production?` over `Rails.env.to_sym != :production`.
+011/011.rb:1:1: C: [Corrected] Rails/EnvironmentComparison: Favor `!Rails.env.production?` over `:production != Rails.env.to_sym`.
+
+==> corrected/000/000.rb 22 <==
+Rails.env.production?
+
+==> corrected/001/001.rb 22 <==
+Rails.env.production?
+
+==> corrected/002/002.rb 23 <==
+!Rails.env.production?
+
+==> corrected/003/003.rb 23 <==
+!Rails.env.production?
+
+==> corrected/004/004.rb 22 <==
+Rails.env.production?
+
+==> corrected/005/005.rb 22 <==
+Rails.env.production?
+
+==> corrected/006/006.rb 23 <==
+!Rails.env.production?
+
+==> corrected/007/007.rb 23 <==
+!Rails.env.production?
+
+==> corrected/008/008.rb 22 <==
+Rails.env.production?
+
+==> corrected/009/009.rb 22 <==
+Rails.env.production?
+
+==> corrected/010/010.rb 23 <==
+!Rails.env.production?
+
+==> corrected/011/011.rb 23 <==
+!Rails.env.production?
+

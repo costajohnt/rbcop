@@ -1,0 +1,53 @@
+==> .rubocop.yml 176 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/HttpStatus:
+  EnforcedStyle: numeric
+
+==> 000/000.rb 660 <==
+render :foo, status: :ok
+render json: { foo: 'bar' }, status: :not_found
+render status: :not_found, json: { foo: 'bar' }
+render plain: 'foo/bar', status: :not_modified
+redirect_to root_url, status: :moved_permanently
+redirect_to action: 'index', status: :moved_permanently
+redirect_to root_path(utm_source: :pr, utm_medium: :web), status: :moved_permanently
+head :ok
+head :ok, location: 'accounts'
+assert_response :ok
+assert_response :not_found, 'message'
+assert_redirected_to '/some/path', status: :moved_permanently
+assert_redirected_to action: 'index', status: :moved_permanently
+assert_redirected_to '/some/path', { status: :moved_permanently }, 'message'
+
+==> 001/001.rb 362 <==
+render :foo, status: 200
+render json: { foo: bar }, status: 404
+render plain: 'foo/bar', status: 304
+redirect_to root_url, status: 301
+redirect_to root_path(utm_source: :pr, utm_medium: :web), status: 301
+head 200
+assert_response 200
+assert_response 404, 'message'
+assert_redirected_to '/some/path', status: 301
+assert_redirected_to action: 'index', status: 301
+
+==> 002/002.rb 218 <==
+render :foo, status: :error
+render :foo, status: :success
+render :foo, status: :missing
+render :foo, status: :redirect
+assert_response :error
+assert_response :success
+assert_response :missing
+assert_response :redirect
+
+==> 003/003.rb 41 <==
+render json: { foo: 'bar' }, status: :ng
+

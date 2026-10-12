@@ -1,0 +1,19 @@
+==> offenses exit=1 343 <==
+003/003.rb:1:6: C: [Correctable] Rails/Date: Do not use `Date.today` without zone. Use `Time.zone.today` instead.
+004/004.rb:1:8: C: [Correctable] Rails/Date: Do not use `Date.today` without zone. Use `Time.zone.today` instead.
+005/005.rb:1:23: C: [Correctable] Rails/Date: `to_time_in_current_zone` is deprecated. Use `in_time_zone` instead.
+
+==> autocorrect exit=0 337 <==
+003/003.rb:1:6: C: [Corrected] Rails/Date: Do not use `Date.today` without zone. Use `Time.zone.today` instead.
+004/004.rb:1:8: C: [Corrected] Rails/Date: Do not use `Date.today` without zone. Use `Time.zone.today` instead.
+005/005.rb:1:23: C: [Corrected] Rails/Date: `to_time_in_current_zone` is deprecated. Use `in_time_zone` instead.
+
+==> corrected/003/003.rb 16 <==
+Time.zone.today
+
+==> corrected/004/004.rb 18 <==
+::Time.zone.today
+
+==> corrected/005/005.rb 35 <==
+"2016-07-12 14:36:31".in_time_zone
+

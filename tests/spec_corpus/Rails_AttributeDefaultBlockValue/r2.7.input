@@ -1,0 +1,87 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/models/000/000.rb 51 <==
+def bar
+end
+
+attribute :foo, :string, default: bar
+
+==> app/models/001/001.rb 46 <==
+attribute :foo, :string, default: Foo.new.bar
+
+==> app/models/002/002.rb 49 <==
+attribute :foo, :string, default: Foo.bar.freeze
+
+==> app/models/003/003.rb 76 <==
+attribute :roles, :string, array: true, default: [Foo.default_roles].freeze
+
+==> app/models/004/004.rb 45 <==
+attribute :config, default: { a: [] }.freeze
+
+==> app/models/005/005.rb 50 <==
+attribute :foo, :string, array: true, default: []
+
+==> app/models/006/006.rb 28 <==
+attribute :foo, default: {}
+
+==> app/models/007/007.rb 42 <==
+attribute :foo, :string, default: Foo.bar
+
+==> app/models/008/008.rb 77 <==
+attribute :foo, :string, limit: 1,
+                         default: Foo.bar
+
+==> app/models/009/009.rb 41 <==
+attribute :foo, :boolean, default: false
+
+==> app/models/010/010.rb 40 <==
+attribute :foo, :boolean, default: true
+
+==> app/models/011/011.rb 39 <==
+attribute :foo, :string, default: :bar
+
+==> app/models/012/012.rb 37 <==
+attribute :foo, :integer, default: 1
+
+==> app/models/013/013.rb 40 <==
+attribute :foo, :decimal, default: 3.14
+
+==> app/models/014/014.rb 59 <==
+CONSTANT = :foo
+attribute :bar, :string, default: CONSTANT
+
+==> app/models/015/015.rb 57 <==
+attribute :foo, :datetime, default: -> { Time.zone.now }
+
+==> app/models/016/016.rb 57 <==
+attribute :foo, :string, array: true, default: [].freeze
+
+==> app/models/017/017.rb 35 <==
+attribute :foo, default: {}.freeze
+
+==> app/models/018/018.rb 26 <==
+attribute :foo, :datetime
+
+==> app/models/019/019.rb 42 <==
+attribute :foo, :bar, array: FooBar.array
+
+==> app/models/020/020.rb 42 <==
+attribute :foo, :bar, range: FooBar.range
+
+==> app/models/021/021.rb 42 <==
+attribute :foo, :bar, limit: FooBar.limit
+
+==> app/models/022/022.rb 66 <==
+attribute :foo, :string, range: true, default: Foo.bar, limit: 10
+
+==> app/models/023/023.rb 52 <==
+attribute :foo, :string, default: Foo.bar, limit: 1
+

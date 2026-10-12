@@ -1,0 +1,49 @@
+==> offenses exit=1 1091 <==
+000/000.rb:3:5: C: [Correctable] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+000/000.rb:4:5: C: [Correctable] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+000/000.rb:5:5: C: [Correctable] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+000/000.rb:6:5: C: [Correctable] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+001/001.rb:3:5: C: [Correctable] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+001/001.rb:4:5: C: [Correctable] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+001/001.rb:5:5: C: [Correctable] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+001/001.rb:6:5: C: [Correctable] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+003/003.rb:2:3: C: [Correctable] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+003/003.rb:2:17: C: [Correctable] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+
+==> autocorrect exit=0 1071 <==
+000/000.rb:3:5: C: [Corrected] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+000/000.rb:4:5: C: [Corrected] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+000/000.rb:5:5: C: [Corrected] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+000/000.rb:6:5: C: [Corrected] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+001/001.rb:3:5: C: [Corrected] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+001/001.rb:4:5: C: [Corrected] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+001/001.rb:5:5: C: [Corrected] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+001/001.rb:6:5: C: [Corrected] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+003/003.rb:2:3: C: [Corrected] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+003/003.rb:2:17: C: [Corrected] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+
+==> corrected/000/000.rb 175 <==
+class Account < ApplicationRecord
+  with_options dependent: :destroy do
+    has_many :customers
+    has_many :products
+    has_many :invoices
+    has_many :expenses
+  end
+end
+
+==> corrected/001/001.rb 175 <==
+class Account < ApplicationRecord
+  with_options dependent: :destroy do
+    has_many :customers
+    has_many :products
+    has_many :invoices
+    has_many :expenses
+  end
+end
+
+==> corrected/003/003.rb 55 <==
+with_options options: false do
+  invoke(something)
+end
+

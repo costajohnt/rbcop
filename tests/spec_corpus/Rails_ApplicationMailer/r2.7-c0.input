@@ -1,0 +1,37 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 4.2
+
+==> 000/000.rb 50 <==
+class ApplicationMailer < ActionMailer::Base; end
+
+==> 001/001.rb 50 <==
+ApplicationMailer = Class.new(ActionMailer::Base)
+
+==> 002/002.rb 41 <==
+class MyMailer < ActionMailer::Base; end
+
+==> 003/003.rb 61 <==
+module Nested
+  class MyMailer < ActionMailer::Base; end
+end
+
+==> 004/004.rb 49 <==
+class Nested::MyMailer < ActionMailer::Base; end
+
+==> 005/005.rb 41 <==
+MyMailer = Class.new(ActionMailer::Base)
+
+==> 006/006.rb 49 <==
+Nested::MyMailer = Class.new(ActionMailer::Base)
+
+==> 007/007.rb 33 <==
+Class.new(ActionMailer::Base) {}
+

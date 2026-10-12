@@ -1,0 +1,115 @@
+==> offenses exit=1 1830 <==
+000/000.rb:2:21: C: [Correctable] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+003/003.rb:2:48: C: [Correctable] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+004/004.rb:2:21: C: [Correctable] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+005/005.rb:2:21: C: [Correctable] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+008/008.rb:2:51: C: [Correctable] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+009/009.rb:4:21: C: [Correctable] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+011/011.rb:2:39: C: [Correctable] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+014/014.rb:2:22: C: [Correctable] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+017/017.rb:2:52: C: [Correctable] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+018/018.rb:4:22: C: [Correctable] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+020/020.rb:2:40: C: [Correctable] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+023/023.rb:2:37: C: [Correctable] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+026/026.rb:2:67: C: [Correctable] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+027/027.rb:4:37: C: [Correctable] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+029/029.rb:2:55: C: [Correctable] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+
+==> autocorrect exit=0 1800 <==
+000/000.rb:2:21: C: [Corrected] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+003/003.rb:2:48: C: [Corrected] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+004/004.rb:2:21: C: [Corrected] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+005/005.rb:2:21: C: [Corrected] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+008/008.rb:2:51: C: [Corrected] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+009/009.rb:4:21: C: [Corrected] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+011/011.rb:2:39: C: [Corrected] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+014/014.rb:2:22: C: [Corrected] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+017/017.rb:2:52: C: [Corrected] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+018/018.rb:4:22: C: [Corrected] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+020/020.rb:2:40: C: [Corrected] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+023/023.rb:2:37: C: [Corrected] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+026/026.rb:2:67: C: [Corrected] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+027/027.rb:4:37: C: [Corrected] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+029/029.rb:2:55: C: [Corrected] Rails/RedundantForeignKey: Specifying the default value for `foreign_key` is redundant.
+
+==> corrected/000/000.rb 37 <==
+class Comment
+  belongs_to :post
+end
+
+==> corrected/003/003.rb 85 <==
+class Comment
+  belongs_to :post, class_name: 'SpecialPost', dependent: :destroy
+end
+
+==> corrected/004/004.rb 40 <==
+class_methods do
+  belongs_to :post
+end
+
+==> corrected/005/005.rb 34 <==
+class Book
+  has_one :chapter
+end
+
+==> corrected/008/008.rb 85 <==
+class Book
+  has_one :chapter, class_name: 'SpecialChapter', dependent: :destroy
+end
+
+==> corrected/009/009.rb 56 <==
+class Book
+  belongs_to :series
+
+  has_one :chapter
+end
+
+==> corrected/011/011.rb 52 <==
+class Book
+  has_one :chapter, as: :publishable
+end
+
+==> corrected/014/014.rb 35 <==
+class Book
+  has_many :chapter
+end
+
+==> corrected/017/017.rb 86 <==
+class Book
+  has_many :chapter, class_name: 'SpecialChapter', dependent: :destroy
+end
+
+==> corrected/018/018.rb 57 <==
+class Book
+  belongs_to :series
+
+  has_many :chapter
+end
+
+==> corrected/020/020.rb 53 <==
+class Book
+  has_many :chapter, as: :publishable
+end
+
+==> corrected/023/023.rb 50 <==
+class Book
+  has_and_belongs_to_many :chapter
+end
+
+==> corrected/026/026.rb 101 <==
+class Book
+  has_and_belongs_to_many :chapter, class_name: 'SpecialChapter', dependent: :destroy
+end
+
+==> corrected/027/027.rb 72 <==
+class Book
+  belongs_to :series
+
+  has_and_belongs_to_many :chapter
+end
+
+==> corrected/029/029.rb 68 <==
+class Book
+  has_and_belongs_to_many :chapter, as: :publishable
+end
+

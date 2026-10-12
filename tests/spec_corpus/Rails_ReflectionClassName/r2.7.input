@@ -1,0 +1,63 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 66 <==
+has_many :accounts, class_name: Account, foreign_key: :account_id
+
+==> 001/001.rb 45 <==
+has_many :accounts, class_name: Account.name
+
+==> 002/002.rb 45 <==
+has_many :accounts, class_name: Account.to_s
+
+==> 003/003.rb 38 <==
+has_one :account, class_name: Account
+
+==> 004/004.rb 41 <==
+belongs_to :account, class_name: Account
+
+==> 005/005.rb 58 <==
+belongs_to :account, -> { distinct }, class_name: Account
+
+==> 006/006.rb 51 <==
+has_many :accounts, class_name: "#{prefix}Account"
+
+==> 007/007.rb 50 <==
+has_many :accounts, class_name: do_something.to_s
+
+==> 008/008.rb 37 <==
+has_many :accounts, class_name: to_s
+
+==> 009/009.rb 151 <==
+has_many :accounts, class_name: 'Account', foreign_key: :account_id
+has_one :account, class_name: 'Account'
+belongs_to :account, class_name: 'Account'
+
+==> 010/010.rb 148 <==
+has_many :accounts, class_name: :Account, foreign_key: :account_id
+has_one :account, class_name: :Account
+belongs_to :account, class_name: :Account
+
+==> 011/011.rb 65 <==
+class_name = Account
+
+has_many :accounts, class_name: class_name
+
+==> 012/012.rb 67 <==
+class_name = 'Account'
+
+has_many :accounts, class_name: class_name
+
+==> 013/013.rb 43 <==
+has_many :accounts, class_name: class_name
+
+==> 014/014.rb 54 <==
+has_many :accounts, class_name: some_thing.class_name
+

@@ -1,0 +1,36 @@
+==> offenses exit=1 672 <==
+000/000.rb:1:21: C: [Correctable] Rails/ReflectionClassName: Use a string value for `class_name`.
+001/001.rb:1:21: C: [Correctable] Rails/ReflectionClassName: Use a string value for `class_name`.
+002/002.rb:1:21: C: [Correctable] Rails/ReflectionClassName: Use a string value for `class_name`.
+003/003.rb:1:19: C: [Correctable] Rails/ReflectionClassName: Use a string value for `class_name`.
+004/004.rb:1:22: C: [Correctable] Rails/ReflectionClassName: Use a string value for `class_name`.
+005/005.rb:1:39: C: [Correctable] Rails/ReflectionClassName: Use a string value for `class_name`.
+011/011.rb:3:21: C: Rails/ReflectionClassName: Use a string value for `class_name`.
+
+==> autocorrect exit=1 660 <==
+000/000.rb:1:21: C: [Corrected] Rails/ReflectionClassName: Use a string value for `class_name`.
+001/001.rb:1:21: C: [Corrected] Rails/ReflectionClassName: Use a string value for `class_name`.
+002/002.rb:1:21: C: [Corrected] Rails/ReflectionClassName: Use a string value for `class_name`.
+003/003.rb:1:19: C: [Corrected] Rails/ReflectionClassName: Use a string value for `class_name`.
+004/004.rb:1:22: C: [Corrected] Rails/ReflectionClassName: Use a string value for `class_name`.
+005/005.rb:1:39: C: [Corrected] Rails/ReflectionClassName: Use a string value for `class_name`.
+011/011.rb:3:21: C: Rails/ReflectionClassName: Use a string value for `class_name`.
+
+==> corrected/000/000.rb 68 <==
+has_many :accounts, class_name: "Account", foreign_key: :account_id
+
+==> corrected/001/001.rb 42 <==
+has_many :accounts, class_name: "Account"
+
+==> corrected/002/002.rb 42 <==
+has_many :accounts, class_name: "Account"
+
+==> corrected/003/003.rb 40 <==
+has_one :account, class_name: "Account"
+
+==> corrected/004/004.rb 43 <==
+belongs_to :account, class_name: "Account"
+
+==> corrected/005/005.rb 60 <==
+belongs_to :account, -> { distinct }, class_name: "Account"
+

@@ -1,0 +1,38 @@
+==> .rubocop.yml 178 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/ShortI18n:
+  EnforcedStyle: aggressive
+
+==> 000/000.rb 20 <==
+I18n.translate :key
+
+==> 001/001.rb 22 <==
+::I18n.translate :key
+
+==> 002/002.rb 23 <==
+I18n.localize Time.now
+
+==> 003/003.rb 25 <==
+::I18n.localize Time.now
+
+==> 004/004.rb 11 <==
+I18n.t :key
+==> 005/005.rb 15 <==
+I18n.l Time.now
+==> 006/006.rb 6 <==
+t :key
+==> 007/007.rb 10 <==
+l Time.now
+==> 008/008.rb 15 <==
+translate :key
+
+==> 009/009.rb 18 <==
+localize Time.now
+

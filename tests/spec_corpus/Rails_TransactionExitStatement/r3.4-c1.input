@@ -1,0 +1,33 @@
+==> .rubocop.yml 212 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Rails/TransactionExitStatement:
+  TransactionMethods:
+  - writable_transaction
+
+==> 000/000.rb 93 <==
+ApplicationRecord.writable_transaction do
+  it.after_commit { }
+  return if user.active?
+end
+
+==> 001/001.rb 83 <==
+ApplicationRecord.writable_transaction do
+  foo.each do
+    return if it
+  end
+end
+
+==> 002/002.rb 82 <==
+ApplicationRecord.writable_transaction do
+  foo.each do
+    break if it
+  end
+end
+

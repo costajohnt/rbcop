@@ -1,0 +1,64 @@
+==> .rubocop.yml 164 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/ActionFilter:
+  Include:
+
+==> app/controllers/000/000.rb 23 <==
+after_action :something
+==> app/controllers/001/001.rb 30 <==
+append_after_action :something
+==> app/controllers/002/002.rb 31 <==
+append_around_action :something
+==> app/controllers/003/003.rb 31 <==
+append_before_action :something
+==> app/controllers/004/004.rb 24 <==
+around_action :something
+==> app/controllers/005/005.rb 24 <==
+before_action :something
+==> app/controllers/006/006.rb 31 <==
+prepend_after_action :something
+==> app/controllers/007/007.rb 32 <==
+prepend_around_action :something
+==> app/controllers/008/008.rb 32 <==
+prepend_before_action :something
+==> app/controllers/009/009.rb 28 <==
+skip_after_action :something
+==> app/controllers/010/010.rb 29 <==
+skip_around_action :something
+==> app/controllers/011/011.rb 29 <==
+skip_before_action :something
+==> app/controllers/012/012.rb 31 <==
+skip_action_callback :something
+==> app/controllers/013/013.rb 23 <==
+after_filter :something
+==> app/controllers/014/014.rb 30 <==
+append_after_filter :something
+==> app/controllers/015/015.rb 31 <==
+append_around_filter :something
+==> app/controllers/016/016.rb 31 <==
+append_before_filter :something
+==> app/controllers/017/017.rb 24 <==
+around_filter :something
+==> app/controllers/018/018.rb 24 <==
+before_filter :something
+==> app/controllers/019/019.rb 31 <==
+prepend_after_filter :something
+==> app/controllers/020/020.rb 32 <==
+prepend_around_filter :something
+==> app/controllers/021/021.rb 32 <==
+prepend_before_filter :something
+==> app/controllers/022/022.rb 28 <==
+skip_after_filter :something
+==> app/controllers/023/023.rb 29 <==
+skip_around_filter :something
+==> app/controllers/024/024.rb 29 <==
+skip_before_filter :something
+==> app/controllers/025/025.rb 22 <==
+skip_filter :something

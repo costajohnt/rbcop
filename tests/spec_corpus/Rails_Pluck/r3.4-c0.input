@@ -1,0 +1,23 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+  TargetRailsVersion: 5.0
+
+==> 000/000.rb 19 <==
+x.map { it[:foo] }
+
+==> 001/001.rb 36 <==
+x.map { it[foo...it.to_something] }
+
+==> 002/002.rb 23 <==
+x.collect { it[:foo] }
+
+==> 003/003.rb 40 <==
+x.collect { it[foo...it.to_something] }
+

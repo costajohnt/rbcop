@@ -1,0 +1,23 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/models/000/000.rb 84 <==
+class User
+  self.table_name = 'members'
+  validates :account, uniqueness: true
+end
+
+==> db/schema.rb 154 <==
+ActiveRecord::Schema.define(version: 2020_02_02_075409) do
+  create_table "members", force: :cascade do |t|
+    t.string "account", null: false
+  end
+end
+

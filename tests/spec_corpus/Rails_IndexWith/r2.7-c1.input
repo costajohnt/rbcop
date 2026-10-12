@@ -1,0 +1,17 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 5.2
+
+==> 000/000.rb 50 <==
+x.each_with_object({}) { |el, h| h[el] = foo(el) }
+==> 001/001.rb 35 <==
+x.map { |el| [el, el.to_sym] }.to_h
+==> 002/002.rb 36 <==
+Hash[x.map { |el| [el, el.to_sym] }]

@@ -1,0 +1,115 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 23 <==
+foo.safe_concat('bar')
+
+==> 001/001.rb 46 <==
+safe_join([i18n_text.safe_concat(i18n_text)])
+
+==> 002/002.rb 24 <==
+foo&.safe_concat('bar')
+
+==> 003/003.rb 16 <==
+"foo".html_safe
+
+==> 004/004.rb 20 <==
+"foo#{1}".html_safe
+
+==> 005/005.rb 29 <==
+<<~HTML.html_safe
+  foo
+HTML
+
+==> 006/006.rb 32 <==
+<<~HTML.html_safe
+  #{foo}
+HTML
+
+==> 007/007.rb 35 <==
+<<~HTML.html_safe
+  foo
+  bar
+HTML
+
+==> 008/008.rb 38 <==
+<<~HTML.html_safe
+  foo
+  #{bar}
+HTML
+
+==> 009/009.rb 14 <==
+foo.html_safe
+
+==> 010/010.rb 19 <==
+foo.html_safe(one)
+
+==> 011/011.rb 9 <==
+html_safe
+==> 012/012.rb 40 <==
+safe_join([i18n_text.html_safe, "foo"])
+
+==> 013/013.rb 45 <==
+foo(safe_join([i18n_text.html_safe, "bar"]))
+
+==> 014/014.rb 15 <==
+foo&.html_safe
+
+==> 015/015.rb 9 <==
+raw(foo)
+
+==> 016/016.rb 11 <==
+raw("foo")
+
+==> 017/017.rb 13 <==
+foo.raw(foo)
+
+==> 018/018.rb 3 <==
+raw
+==> 019/019.rb 13 <==
+raw(one, two)
+==> 020/020.rb 26 <==
+# foo.html_safe
+# raw foo
+
+==> 021/021.rb 35 <==
+safe_join([raw(i18n_text), "foo"])
+
+==> 022/022.rb 40 <==
+foo(safe_join([raw(i18n_text), "bar"]))
+
+==> 023/023.rb 108 <==
+I18n.t('foo.bar.baz', scope: [:x, :y, :z]).html_safe
+::I18n.t('foo.bar.baz', scope: [:x, :y, :z]).html_safe
+
+==> 024/024.rb 124 <==
+I18n.translate('foo.bar.baz', scope: [:x, :y, :z]).html_safe
+::I18n.translate('foo.bar.baz', scope: [:x, :y, :z]).html_safe
+
+==> 025/025.rb 27 <==
+t('foo.bar.baz').html_safe
+
+==> 026/026.rb 35 <==
+translate('foo.bar.baz').html_safe
+
+==> 027/027.rb 82 <==
+I18n.l(Time.now, locale: :de).html_safe
+::I18n.l(Time.now, locale: :de).html_safe
+
+==> 028/028.rb 96 <==
+I18n.localize(Time.now, locale: :de).html_safe
+::I18n.localize(Time.now, locale: :de).html_safe
+
+==> 029/029.rb 22 <==
+l(Time.now).html_safe
+
+==> 030/030.rb 29 <==
+localize(Time.now).html_safe
+

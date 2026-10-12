@@ -1,0 +1,79 @@
+==> offenses exit=1 1666 <==
+app/controllers/000/000.rb:1:7: C: [Correctable] Rails/StrongParametersExpect: Use `expect(:key)` instead.
+app/controllers/042/042.rb:1:18: C: [Correctable] Rails/StrongParametersExpect: Use `expect(:id)` instead.
+app/controllers/043/043.rb:1:19: C: [Correctable] Rails/StrongParametersExpect: Use `expect(:id)` instead.
+app/controllers/046/046.rb:1:27: C: [Correctable] Rails/StrongParametersExpect: Use `expect(:key)` instead.
+app/controllers/051/051.rb:1:31: C: [Correctable] Rails/StrongParametersExpect: Use `expect(:key)` instead.
+app/controllers/061/061.rb:1:8: C: [Correctable] Rails/StrongParametersExpect: Use `expect(user: [:name, :age])` instead.
+app/controllers/062/062.rb:1:9: C: [Correctable] Rails/StrongParametersExpect: Use `expect(user: [:name, :age])` instead.
+app/controllers/063/063.rb:1:8: C: [Correctable] Rails/StrongParametersExpect: Use `expect(user: [:name, :age])` instead.
+app/controllers/064/064.rb:1:9: C: [Correctable] Rails/StrongParametersExpect: Use `expect(user: [:name, :age])` instead.
+app/controllers/065/065.rb:1:8: C: [Correctable] Rails/StrongParametersExpect: Use `expect(user: [:name, some_ids: []])` instead.
+app/controllers/066/066.rb:1:8: C: [Correctable] Rails/StrongParametersExpect: Use `expect(user: [*parameters, some_ids: []])` instead.
+app/controllers/067/067.rb:2:8: C: [Correctable] Rails/StrongParametersExpect: Use `expect(var => [:name, some_ids: []])` instead.
+app/controllers/068/068.rb:1:8: C: [Correctable] Rails/StrongParametersExpect: Use `expect(user: [:name, :age])` instead.
+app/controllers/069/069.rb:2:4: C: [Correctable] Rails/StrongParametersExpect: Use `expect(user: [:name, :age])` instead.
+
+==> autocorrect exit=0 1638 <==
+app/controllers/000/000.rb:1:7: C: [Corrected] Rails/StrongParametersExpect: Use `expect(:key)` instead.
+app/controllers/042/042.rb:1:18: C: [Corrected] Rails/StrongParametersExpect: Use `expect(:id)` instead.
+app/controllers/043/043.rb:1:19: C: [Corrected] Rails/StrongParametersExpect: Use `expect(:id)` instead.
+app/controllers/046/046.rb:1:27: C: [Corrected] Rails/StrongParametersExpect: Use `expect(:key)` instead.
+app/controllers/051/051.rb:1:31: C: [Corrected] Rails/StrongParametersExpect: Use `expect(:key)` instead.
+app/controllers/061/061.rb:1:8: C: [Corrected] Rails/StrongParametersExpect: Use `expect(user: [:name, :age])` instead.
+app/controllers/062/062.rb:1:9: C: [Corrected] Rails/StrongParametersExpect: Use `expect(user: [:name, :age])` instead.
+app/controllers/063/063.rb:1:8: C: [Corrected] Rails/StrongParametersExpect: Use `expect(user: [:name, :age])` instead.
+app/controllers/064/064.rb:1:9: C: [Corrected] Rails/StrongParametersExpect: Use `expect(user: [:name, :age])` instead.
+app/controllers/065/065.rb:1:8: C: [Corrected] Rails/StrongParametersExpect: Use `expect(user: [:name, some_ids: []])` instead.
+app/controllers/066/066.rb:1:8: C: [Corrected] Rails/StrongParametersExpect: Use `expect(user: [*parameters, some_ids: []])` instead.
+app/controllers/067/067.rb:2:8: C: [Corrected] Rails/StrongParametersExpect: Use `expect(var => [:name, some_ids: []])` instead.
+app/controllers/068/068.rb:1:8: C: [Corrected] Rails/StrongParametersExpect: Use `expect(user: [:name, :age])` instead.
+app/controllers/069/069.rb:2:4: C: [Corrected] Rails/StrongParametersExpect: Use `expect(user: [:name, :age])` instead.
+
+==> corrected/app/controllers/000/000.rb 33 <==
+params.expect(:key).do_something
+
+==> corrected/app/controllers/042/042.rb 31 <==
+Model.find(params.expect(:id))
+
+==> corrected/app/controllers/043/043.rb 32 <==
+Model&.find(params.expect(:id))
+
+==> corrected/app/controllers/046/046.rb 41 <==
+Model.find_by!(key: params.expect(:key))
+
+==> corrected/app/controllers/051/051.rb 45 <==
+Model.find_sole_by(key: params.expect(:key))
+
+==> corrected/app/controllers/061/061.rb 35 <==
+params.expect(user: [:name, :age])
+
+==> corrected/app/controllers/062/062.rb 36 <==
+params&.expect(user: [:name, :age])
+
+==> corrected/app/controllers/063/063.rb 35 <==
+params.expect(user: [:name, :age])
+
+==> corrected/app/controllers/064/064.rb 36 <==
+params&.expect(user: [:name, :age])
+
+==> corrected/app/controllers/065/065.rb 43 <==
+params.expect(user: [:name, some_ids: []])
+
+==> corrected/app/controllers/066/066.rb 49 <==
+params.expect(user: [*parameters, some_ids: []])
+
+==> corrected/app/controllers/067/067.rb 56 <==
+var = :user
+params.expect(var => [:name, some_ids: []])
+
+==> corrected/app/controllers/068/068.rb 61 <==
+params.expect(
+  user: [:name, # comment
+  :age] # comment
+)
+
+==> corrected/app/controllers/069/069.rb 38 <==
+params
+  .expect(user: [:name, :age])
+

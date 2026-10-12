@@ -1,0 +1,19 @@
+==> offenses exit=1 594 <==
+000/000.rb:1:1: C: [Correctable] Rails/BelongsTo: You specified `required: false`, in Rails > 5.0 the required option is deprecated and you want to use `optional: true`.
+001/001.rb:1:1: C: [Correctable] Rails/BelongsTo: You specified `required: true`, in Rails > 5.0 the required option is deprecated and you want to use `optional: false`. In most configurations, this is the default and you can omit this option altogether
+002/002.rb:1:1: C: [Correctable] Rails/BelongsTo: You specified `required: false`, in Rails > 5.0 the required option is deprecated and you want to use `optional: true`.
+
+==> autocorrect exit=0 588 <==
+000/000.rb:1:1: C: [Corrected] Rails/BelongsTo: You specified `required: false`, in Rails > 5.0 the required option is deprecated and you want to use `optional: true`.
+001/001.rb:1:1: C: [Corrected] Rails/BelongsTo: You specified `required: true`, in Rails > 5.0 the required option is deprecated and you want to use `optional: false`. In most configurations, this is the default and you can omit this option altogether
+002/002.rb:1:1: C: [Corrected] Rails/BelongsTo: You specified `required: false`, in Rails > 5.0 the required option is deprecated and you want to use `optional: true`.
+
+==> corrected/000/000.rb 32 <==
+belongs_to :foo, optional: true
+
+==> corrected/001/001.rb 33 <==
+belongs_to :foo, optional: false
+
+==> corrected/002/002.rb 44 <==
+belongs_to :foo, -> { bar }, optional: true
+

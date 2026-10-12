@@ -1,0 +1,89 @@
+==> offenses exit=1 1767 <==
+006/006.rb:1:1: C: [Correctable] Rails/Blank: Use `foo.blank?` instead of `foo.nil? || foo.empty?`.
+007/007.rb:1:1: C: [Correctable] Rails/Blank: Use `blank?` instead of `nil? || empty?`.
+008/008.rb:1:1: C: [Correctable] Rails/Blank: Use `foo.blank?` instead of `foo == nil || foo.empty?`.
+009/009.rb:1:1: C: [Correctable] Rails/Blank: Use `foo.blank?` instead of `nil == foo || foo.empty?`.
+010/010.rb:1:1: C: [Correctable] Rails/Blank: Use `foo.blank?` instead of `!foo || foo.empty?`.
+011/011.rb:1:1: C: [Correctable] Rails/Blank: Use `foo.blank?` instead of `foo.nil? || !!foo.empty?`.
+012/012.rb:1:1: C: [Correctable] Rails/Blank: Use `foo.blank?` instead of `foo == nil || !!foo.empty?`.
+013/013.rb:1:1: C: [Correctable] Rails/Blank: Use `foo.blank?` instead of `nil == foo || !!foo.empty?`.
+014/014.rb:1:1: C: [Correctable] Rails/Blank: Use `foo.bar.blank?` instead of `foo.bar.nil? || foo.bar.empty?`.
+015/015.rb:1:1: C: [Correctable] Rails/Blank: Use `FOO.blank?` instead of `FOO.nil? || FOO.empty?`.
+016/016.rb:1:1: C: [Correctable] Rails/Blank: Use `Foo.blank?` instead of `Foo.nil? || Foo.empty?`.
+017/017.rb:1:1: C: [Correctable] Rails/Blank: Use `Foo::Bar.blank?` instead of `Foo::Bar.nil? || Foo::Bar.empty?`.
+018/018.rb:1:1: C: [Correctable] Rails/Blank: Use `@foo.blank?` instead of `@foo.nil? || @foo.empty?`.
+019/019.rb:1:1: C: [Correctable] Rails/Blank: Use `$foo.blank?` instead of `$foo.nil? || $foo.empty?`.
+020/020.rb:1:1: C: [Correctable] Rails/Blank: Use `@@foo.blank?` instead of `@@foo.nil? || @@foo.empty?`.
+021/021.rb:1:1: C: [Correctable] Rails/Blank: Use `foo[bar].blank?` instead of `foo[bar].nil? || foo[bar].empty?`.
+022/022.rb:1:1: C: [Correctable] Rails/Blank: Use `foo(bar).blank?` instead of `foo(bar).nil? || foo(bar).empty?`.
+
+==> autocorrect exit=0 1733 <==
+006/006.rb:1:1: C: [Corrected] Rails/Blank: Use `foo.blank?` instead of `foo.nil? || foo.empty?`.
+007/007.rb:1:1: C: [Corrected] Rails/Blank: Use `blank?` instead of `nil? || empty?`.
+008/008.rb:1:1: C: [Corrected] Rails/Blank: Use `foo.blank?` instead of `foo == nil || foo.empty?`.
+009/009.rb:1:1: C: [Corrected] Rails/Blank: Use `foo.blank?` instead of `nil == foo || foo.empty?`.
+010/010.rb:1:1: C: [Corrected] Rails/Blank: Use `foo.blank?` instead of `!foo || foo.empty?`.
+011/011.rb:1:1: C: [Corrected] Rails/Blank: Use `foo.blank?` instead of `foo.nil? || !!foo.empty?`.
+012/012.rb:1:1: C: [Corrected] Rails/Blank: Use `foo.blank?` instead of `foo == nil || !!foo.empty?`.
+013/013.rb:1:1: C: [Corrected] Rails/Blank: Use `foo.blank?` instead of `nil == foo || !!foo.empty?`.
+014/014.rb:1:1: C: [Corrected] Rails/Blank: Use `foo.bar.blank?` instead of `foo.bar.nil? || foo.bar.empty?`.
+015/015.rb:1:1: C: [Corrected] Rails/Blank: Use `FOO.blank?` instead of `FOO.nil? || FOO.empty?`.
+016/016.rb:1:1: C: [Corrected] Rails/Blank: Use `Foo.blank?` instead of `Foo.nil? || Foo.empty?`.
+017/017.rb:1:1: C: [Corrected] Rails/Blank: Use `Foo::Bar.blank?` instead of `Foo::Bar.nil? || Foo::Bar.empty?`.
+018/018.rb:1:1: C: [Corrected] Rails/Blank: Use `@foo.blank?` instead of `@foo.nil? || @foo.empty?`.
+019/019.rb:1:1: C: [Corrected] Rails/Blank: Use `$foo.blank?` instead of `$foo.nil? || $foo.empty?`.
+020/020.rb:1:1: C: [Corrected] Rails/Blank: Use `@@foo.blank?` instead of `@@foo.nil? || @@foo.empty?`.
+021/021.rb:1:1: C: [Corrected] Rails/Blank: Use `foo[bar].blank?` instead of `foo[bar].nil? || foo[bar].empty?`.
+022/022.rb:1:1: C: [Corrected] Rails/Blank: Use `foo(bar).blank?` instead of `foo(bar).nil? || foo(bar).empty?`.
+
+==> corrected/006/006.rb 11 <==
+foo.blank?
+
+==> corrected/007/007.rb 7 <==
+blank?
+
+==> corrected/008/008.rb 11 <==
+foo.blank?
+
+==> corrected/009/009.rb 11 <==
+foo.blank?
+
+==> corrected/010/010.rb 11 <==
+foo.blank?
+
+==> corrected/011/011.rb 11 <==
+foo.blank?
+
+==> corrected/012/012.rb 11 <==
+foo.blank?
+
+==> corrected/013/013.rb 11 <==
+foo.blank?
+
+==> corrected/014/014.rb 15 <==
+foo.bar.blank?
+
+==> corrected/015/015.rb 11 <==
+FOO.blank?
+
+==> corrected/016/016.rb 11 <==
+Foo.blank?
+
+==> corrected/017/017.rb 16 <==
+Foo::Bar.blank?
+
+==> corrected/018/018.rb 12 <==
+@foo.blank?
+
+==> corrected/019/019.rb 12 <==
+$foo.blank?
+
+==> corrected/020/020.rb 13 <==
+@@foo.blank?
+
+==> corrected/021/021.rb 16 <==
+foo[bar].blank?
+
+==> corrected/022/022.rb 16 <==
+foo(bar).blank?
+

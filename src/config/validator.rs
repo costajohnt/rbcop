@@ -243,7 +243,10 @@ impl Validator<'_> {
         for name in &valid {
             let (Some(section), Some(default)) = (hash.map(name), self.default.map(name)) else { continue };
             for param in section.keys() {
-                if COMMON_PARAMS.contains(&param) || default.contains(param) {
+                // rubocop-rails appends TargetRailsVersion to ConfigValidator::COMMON_PARAMS.
+                let rails_param =
+                    param == "TargetRailsVersion" && crate::helpers::cop_registry::plugin_loaded("rubocop-rails");
+                if COMMON_PARAMS.contains(&param) || rails_param || default.contains(param) {
                     continue;
                 }
                 if param == "NewCops" && self.is_department(name) {
@@ -397,7 +400,18 @@ impl Validator<'_> {
         }
         let mut target = None;
         for kind in ["changed_parameters", "changed_enforced_styles"] {
-            let Some(Value::Seq(entries)) = OBSOLETION.get(kind) else { continue };
+            // ConfigObsoletion.files: RuboCop's rules, then each loaded plugin's (arrays concatenate).
+            let mut entries: Vec<Value> = match OBSOLETION.get(kind) {
+                Some(Value::Seq(e)) => e.to_vec(),
+                _ => Vec::new(),
+            };
+            for plugin in crate::helpers::cop_registry::loaded_plugins() {
+                if let Some(Ok(Value::Map(m))) = plugin.obsoletion.map(parse_yaml)
+                    && let Some(Value::Seq(e)) = m.get(kind)
+                {
+                    entries.extend(e.iter().cloned());
+                }
+            }
             for entry in entries.iter() {
                 let Value::Map(meta) = entry else { continue };
                 for cop in strings(meta.get("cops")) {

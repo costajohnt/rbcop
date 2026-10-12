@@ -1,0 +1,57 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/config/routes.rb 96 <==
+Rails.application.routes.draw do
+  get '/users', '/other_path/users', '/another_path/users'
+end
+
+==> 001/config/routes.rb 115 <==
+Rails.application.routes.draw do
+  get '/users', '/other_path/users', '/another_path/users', to: 'users#index'
+end
+
+==> 002/config/routes.rb 107 <==
+Rails.application.routes.draw do
+  get '/users', '/other_path/users', '/another_path/users', **options
+end
+
+==> 003/config/routes.rb 75 <==
+Rails.application.routes.draw do
+  get :resend, :generate_new_password
+end
+
+==> 004/config/routes.rb 106 <==
+Rails.application.routes.draw do
+  get '/users'
+  get '/other_path/users'
+  get '/another_path/users'
+end
+
+==> 005/config/routes.rb 163 <==
+Rails.application.routes.draw do
+  get '/users', to: 'users#index'
+  get '/other_path/users', to: 'users#index'
+  get '/another_path/users', to: 'users#index'
+end
+
+==> 006/config/routes.rb 67 <==
+Rails.application.routes.draw do
+  get '/other_path/users', []
+end
+
+==> 007/config/routes.rb 43 <==
+Rails.application.routes.draw do
+  get
+end
+
+==> 008/config/routes.rb 57 <==
+get '/users', '/other_path/users', '/another_path/users'
+

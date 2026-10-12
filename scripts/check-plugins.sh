@@ -7,6 +7,11 @@
 # env:   RBCOP_CORPUS, RBCOP_ORACLE (as for check-cops.sh); RBCOP_PLUGIN_ORACLE (default
 #        $RBCOP_ORACLE/../oracle-<plugin>), RBCOP_CORPUS2 (default $RBCOP_CORPUS/../corpus2);
 #        PLUGIN_AC_CORPORA (corpora for the -A pass, default specs rails discourse mastodon brew)
+# rubocop-rails also changes some of RuboCop's own cops (its default.yml settings, Style/HashExcept's
+# minimum Ruby, MigratedSchemaVersion), so those are checked against its oracles too, and mastodon is
+# checked once more with its own .rubocop.yml (oracle mastodon-project.txt, recorded with
+# CONFIG=$RBCOP_CORPUS/mastodon/.rubocop.yml and the plugin gems mastodon's Gemfile.lock pins;
+# RuboCop finds nothing there, so this checks rbcop raises no false positives under a real config).
 # Exit 0 only if every plugin matches everywhere.
 set -eu
 root=$(cd "$(dirname "$0")/.." && pwd)
@@ -14,12 +19,13 @@ root=$(cd "$(dirname "$0")/.." && pwd)
 corpus=${RBCOP_CORPUS:?set RBCOP_CORPUS}
 corpus2=${RBCOP_CORPUS2:-$corpus/../corpus2}
 status=0
-for spec in performance:Performance; do
+for spec in performance:Performance rails:Rails; do
   plugin=${spec%%:*} dept=${spec#*:}
   oracle=${RBCOP_PLUGIN_ORACLE:-${RBCOP_ORACLE:?set RBCOP_ORACLE}/../oracle-$plugin}
   [ -d "$oracle" ] || { echo "check-plugins: no oracles for rubocop-$plugin in $oracle" >&2; exit 1; }
   cops=$(CONFIG="$root/config/all-cops-$plugin.yml" rbcop_cops | tr , '\n' | grep "^$dept/" | paste -sd, -)
   [ -n "$cops" ] || { echo "check-plugins: no $dept cops in --show-cops" >&2; exit 1; }
+  [ "$plugin" = rails ] && cops="$cops,Lint/NumberConversion,Lint/RedundantSafeNavigation,Lint/SafeNavigationChain,Lint/UselessAccessModifier,Lint/UselessMethodDefinition,Style/AndOr,Style/CollectionCompact,Style/FormatStringToken,Style/HashExcept,Style/InvertibleUnlessCondition,Style/SymbolProc"
   echo "rubocop-$plugin: $(echo "$cops" | tr , '\n' | wc -l | tr -d ' ') cops"
   export CONFIG="$root/config/all-cops-$plugin.yml"
   RBCOP_ORACLE=$oracle sh "$root/scripts/check-cops.sh" "$cops" || status=1
@@ -28,6 +34,16 @@ for spec in performance:Performance; do
   CONFIG="$root/config/plugin-$plugin.yml" RBCOP_ORACLE=$oracle \
     sh "$root/scripts/check-autocorrect.sh" "$cops" ${PLUGIN_AC_CORPORA:-specs rails discourse mastodon brew} || status=1
   unset CONFIG
+  if [ "$plugin" = rails ]; then
+    # A real Rails app's own config: every cop rbcop implements, as mastodon configures them.
+    project="$corpus/mastodon/.rubocop.yml"
+    mcops=$(CONFIG=$project rbcop_cops)
+    mkdir -p "${TMPDIR:-/tmp}/rbcop-mastodon-project"
+    ln -sf "$oracle/mastodon-project.txt" "${TMPDIR:-/tmp}/rbcop-mastodon-project/mastodon.txt"
+    ln -sf "$oracle/mastodon-project.txt.crashes" "${TMPDIR:-/tmp}/rbcop-mastodon-project/mastodon.txt.crashes"
+    # mastodon is clean under its own config, so the oracle is empty: rbcop must report nothing either.
+    ALLOW_EMPTY_ORACLE=1 CONFIG=$project RBCOP_ORACLE="${TMPDIR:-/tmp}/rbcop-mastodon-project" sh "$root/scripts/check-cops.sh" "$mcops" mastodon || status=1
+  fi
 done
 [ $status = 0 ] && echo "plugins: all corpora match"
 exit $status

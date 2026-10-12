@@ -1,0 +1,10 @@
+==> offenses exit=1 370 <==
+000/000.rb:1:6: C: Rails/Date: Do not use `to_time` on Date objects, because they know nothing about the time zone in use.
+001/001.rb:1:7: C: Rails/Date: Do not use `to_time` on Date objects, because they know nothing about the time zone in use.
+004/004.rb:1:23: C: Rails/Date: Do not use `to_time` on Date objects, because they know nothing about the time zone in use.
+
+==> autocorrect exit=1 370 <==
+000/000.rb:1:6: C: Rails/Date: Do not use `to_time` on Date objects, because they know nothing about the time zone in use.
+001/001.rb:1:7: C: Rails/Date: Do not use `to_time` on Date objects, because they know nothing about the time zone in use.
+004/004.rb:1:23: C: Rails/Date: Do not use `to_time` on Date objects, because they know nothing about the time zone in use.
+

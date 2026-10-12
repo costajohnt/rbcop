@@ -1,0 +1,16 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/models/000/000.rb 32 <==
+has_and_belongs_to_many :groups
+
+==> app/models/001/001.rb 36 <==
+obj.has_and_belongs_to_many :groups
+

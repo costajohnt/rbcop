@@ -1,0 +1,61 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 23 <==
+User.where(id: x).take
+
+==> 001/001.rb 24 <==
+User.where(id: x)&.take
+
+==> 002/002.rb 25 <==
+User&.where(id: x)&.take
+
+==> 003/003.rb 29 <==
+User
+  .where(id: x)
+  .take
+
+==> 004/004.rb 29 <==
+User.
+  where(id: x).
+  take
+
+==> 005/005.rb 25 <==
+users&.where(id: x).take
+
+==> 006/006.rb 19 <==
+User.find_by(id: x)
+==> 007/007.rb 40 <==
+Model.where(foo: :bar).order(:baz).take
+
+==> 008/008.rb 30 <==
+User.where(attr: arg).take(5)
+
+==> 009/009.rb 24 <==
+do_something {}.take(5)
+
+==> 010/010.rb 8 <==
+take(5)
+
+==> 011/011.rb 19 <==
+where { foo }.take
+
+==> 012/012.rb 49 <==
+array = Array.new(1) { rand }
+array.compact.take
+
+==> 013/013.rb 50 <==
+array = Array.new(1) { rand }
+array.compact.first
+
+==> 014/014.rb 12 <==
+(1..2).first
+==> 015/015.rb 14 <==
+(1..2).take(1)

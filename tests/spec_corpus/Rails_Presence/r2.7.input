@@ -1,0 +1,307 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 21 <==
+a.present? ? a : nil
+
+==> 001/001.rb 21 <==
+!a.present? ? nil: a
+
+==> 002/002.rb 19 <==
+a.blank? ? nil : a
+
+==> 003/003.rb 20 <==
+!a.blank? ? a : nil
+
+==> 004/004.rb 19 <==
+a.present? ? a : b
+
+==> 005/005.rb 20 <==
+!a.present? ? b : a
+
+==> 006/006.rb 17 <==
+a.blank? ? b : a
+
+==> 007/007.rb 18 <==
+!a.blank? ? a : b
+
+==> 008/008.rb 19 <==
+a.present? ? a : 1
+
+==> 009/009.rb 17 <==
+a.blank? ? 1 : a
+
+==> 010/010.rb 55 <==
+a(:bar).map(&:baz).present? ? a(:bar).map(&:baz) : nil
+
+==> 011/011.rb 23 <==
+a.present? ? a : b[:c]
+
+==> 012/012.rb 33 <==
+if a.present?
+  a
+else
+  nil
+end
+
+==> 013/013.rb 37 <==
+unless a.present?
+  nil
+else
+  a
+end
+
+==> 014/014.rb 43 <==
+if a.present?
+  a
+else
+  b.to_f + 12.0
+end
+
+==> 015/015.rb 43 <==
+if a.present?
+  a
+else
+  b.to_f * 12.0
+end
+
+==> 016/016.rb 16 <==
+a if a.present?
+
+==> 017/017.rb 18 <==
+a unless a.blank?
+
+==> 018/018.rb 171 <==
+if [1, 2, 3].map { |num| num + 1 }
+            .map { |num| num + 2 }
+            .present?
+            [1, 2, 3].map { |num| num + 1 }.map { |num| num + 2 }
+else
+  b
+end
+
+==> 019/019.rb 25 <==
+a.present? ? a.foo : nil
+
+==> 020/020.rb 23 <==
+a.blank? ? nil : a.foo
+
+==> 021/021.rb 20 <==
+a.foo if a.present?
+
+==> 022/022.rb 22 <==
+a.foo unless a.blank?
+
+==> 023/023.rb 42 <==
+a.present? ? a.foo(42, key: :value) : nil
+
+==> 024/024.rb 24 <==
+a.present? ? a[1] : nil
+
+==> 025/025.rb 23 <==
+a[1] = 1 if a.present?
+
+==> 026/026.rb 31 <==
+a.attribute = 42 if a.present?
+
+==> 027/027.rb 26 <==
+a.present? ? a + 42 : nil
+
+==> 028/028.rb 21 <==
+a <= 0 if a.present?
+
+==> 029/029.rb 26 <==
+a.present? ? a > 42 : nil
+
+==> 030/030.rb 29 <==
+foo << "bar" if foo.present?
+
+==> 031/031.rb 33 <==
+foo =~ /pattern/ if foo.present?
+
+==> 032/032.rb 29 <==
+a.present? ? a.foo.bar : nil
+
+==> 033/033.rb 29 <==
+x = a.present? ? a.foo : nil
+
+==> 034/034.rb 25 <==
+a.present? ?
+  a :
+  nil
+
+==> 035/035.rb 57 <==
+if value.present?
+  value
+else
+  do_something(value)
+end
+
+==> 036/036.rb 56 <==
+if value.present?
+  value
+else
+  do_something value
+end
+
+==> 037/037.rb 61 <==
+if value.present?
+  value
+else
+  do_something arg1, arg2
+end
+
+==> 038/038.rb 60 <==
+if value.present?
+  value
+else
+  foo.do_something value
+end
+
+==> 039/039.rb 35 <==
+a < if b.present?
+  b
+else
+  c
+end
+
+==> 040/040.rb 35 <==
+a > if b.present?
+  b
+else
+  c
+end
+
+==> 041/041.rb 36 <==
+a <= if b.present?
+  b
+else
+  c
+end
+
+==> 042/042.rb 36 <==
+a >= if b.present?
+  b
+else
+  c
+end
+
+==> 043/043.rb 36 <==
+a == if b.present?
+  b
+else
+  c
+end
+
+==> 044/044.rb 36 <==
+a != if b.present?
+  b
+else
+  c
+end
+
+==> 045/045.rb 56 <==
+a && if b.present?
+       b
+     else
+       c
+     end
+
+==> 046/046.rb 24 <==
+foo(a.present? ? a : b)
+
+==> 047/047.rb 28 <==
+foo bar, a.present? ? a : b
+
+==> 048/048.rb 56 <==
+a || if b.present?
+       b
+     else
+       c
+     end
+
+==> 049/049.rb 23 <==
+x = a.present? ? a : b
+
+==> 050/050.rb 11 <==
+a.presence
+
+==> 051/051.rb 21 <==
+a.present? ? b : nil
+
+==> 052/052.rb 43 <==
+puts foo if present?
+puts foo if !present?
+
+==> 053/053.rb 19 <==
+a.blank? ? nil : b
+
+==> 054/054.rb 39 <==
+puts foo if blank?
+puts foo if !blank?
+
+==> 055/055.rb 13 <==
+a if a.blank?
+==> 056/056.rb 19 <==
+a unless a.present?
+==> 057/057.rb 63 <==
+if a.present?
+  a
+else
+  something
+  something
+  something
+end
+
+==> 058/058.rb 61 <==
+if a.present?
+  a
+else
+  something; something; something
+end
+
+==> 059/059.rb 34 <==
+if a.present?
+  a
+elsif b
+  b
+end
+
+==> 060/060.rb 36 <==
+if a.present?
+  a
+else
+  b if c
+end
+
+==> 061/061.rb 95 <==
+if something_method.present?
+  something_method
+else
+  invalid_method rescue StandardError
+end
+
+==> 062/062.rb 56 <==
+if a.present?
+  a
+else
+  fetch_state while waiting?
+end
+
+==> 063/063.rb 43 <==
+if something?
+  a
+elsif b.present?
+  b
+end
+
+==> 064/20190101010101_add_column_to_table.rb 21 <==
+a.present? ? a : nil
+

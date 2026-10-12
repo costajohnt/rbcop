@@ -1,0 +1,10 @@
+==> offenses exit=1 343 <==
+000/000.rb:2:3: C: Rails/DefaultScope: Avoid use of `default_scope`. It is better to use explicitly named scopes.
+001/001.rb:2:12: C: Rails/DefaultScope: Avoid use of `default_scope`. It is better to use explicitly named scopes.
+002/002.rb:3:9: C: Rails/DefaultScope: Avoid use of `default_scope`. It is better to use explicitly named scopes.
+
+==> autocorrect exit=1 343 <==
+000/000.rb:2:3: C: Rails/DefaultScope: Avoid use of `default_scope`. It is better to use explicitly named scopes.
+001/001.rb:2:12: C: Rails/DefaultScope: Avoid use of `default_scope`. It is better to use explicitly named scopes.
+002/002.rb:3:9: C: Rails/DefaultScope: Avoid use of `default_scope`. It is better to use explicitly named scopes.
+

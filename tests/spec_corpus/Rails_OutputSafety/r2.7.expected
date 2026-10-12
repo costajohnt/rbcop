@@ -1,0 +1,32 @@
+==> offenses exit=1 1308 <==
+000/000.rb:1:5: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+001/001.rb:1:22: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+002/002.rb:1:6: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+004/004.rb:1:11: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+006/006.rb:1:9: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+008/008.rb:1:9: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+009/009.rb:1:5: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+012/012.rb:1:22: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+013/013.rb:1:26: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+014/014.rb:1:6: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+015/015.rb:1:1: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+016/016.rb:1:1: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+021/021.rb:1:12: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+022/022.rb:1:16: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+
+==> autocorrect exit=1 1308 <==
+000/000.rb:1:5: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+001/001.rb:1:22: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+002/002.rb:1:6: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+004/004.rb:1:11: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+006/006.rb:1:9: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+008/008.rb:1:9: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+009/009.rb:1:5: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+012/012.rb:1:22: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+013/013.rb:1:26: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+014/014.rb:1:6: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+015/015.rb:1:1: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+016/016.rb:1:1: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+021/021.rb:1:12: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+022/022.rb:1:16: C: Rails/OutputSafety: Tagging a string as html safe may be a security risk.
+

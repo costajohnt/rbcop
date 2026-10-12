@@ -1,0 +1,24 @@
+==> .rubocop.yml 232 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/SkipsModelValidations:
+  ForbiddenMethods:
+  - toggle!
+  - touch
+  AllowedMethods:
+  - touch
+
+==> 000/000.rb 22 <==
+user.toggle!(:active)
+
+==> 001/001.rb 23 <==
+user&.toggle!(:active)
+
+==> 002/002.rb 17 <==
+User.touch(:attr)

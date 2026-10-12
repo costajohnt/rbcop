@@ -1,0 +1,43 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 7.0
+
+==> app/models/000/000.rb 34 <==
+enum :status, %i[active archived]
+
+==> app/models/001/001.rb 34 <==
+enum :status, %w[active archived]
+
+==> app/models/002/002.rb 34 <==
+enum :status, %i(active archived)
+
+==> app/models/003/003.rb 34 <==
+enum :status, %w(active archived)
+
+==> app/models/004/004.rb 35 <==
+enum :status, [:active, :archived]
+
+==> app/models/005/005.rb 35 <==
+enum "status", %i[active archived]
+
+==> app/models/006/006.rb 30 <==
+enum KEY, %i[active archived]
+
+==> app/models/007/007.rb 56 <==
+enum :status, [:old, :"very active", "is archived", 42]
+
+==> app/models/008/008.rb 28 <==
+enum :status, [OLD, ACTIVE]
+
+==> app/models/009/009.rb 44 <==
+enum :status, [STATUS::OLD, STATUS::ACTIVE]
+
+==> app/models/010/010.rb 40 <==
+enum :status, { active: 0, archived: 1 }

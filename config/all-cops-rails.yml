@@ -1,0 +1,10 @@
+# config/all-cops.yml plus the rubocop-rails plugin: the oracle config for plugin parity
+# (scripts/check-plugins.sh). Paths resolve against the current directory, as in all-cops.yml;
+# TargetRailsVersion comes from the corpus's Gemfile.lock (railties) and db/schema.rb is found
+# from the current directory, as rubocop-rails does.
+plugins:
+  - rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false

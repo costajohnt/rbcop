@@ -1,0 +1,9 @@
+==> offenses exit=1 88 <==
+000/000.rb:1:20: C: [Correctable] Rails/UniqBeforePluck: Use `distinct` before `pluck`.
+
+==> autocorrect exit=0 86 <==
+000/000.rb:1:20: C: [Corrected] Rails/UniqBeforePluck: Use `distinct` before `pluck`.
+
+==> corrected/000/000.rb 28 <==
+Model.distinct.pluck(:name)
+

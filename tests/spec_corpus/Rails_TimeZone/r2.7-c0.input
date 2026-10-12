@@ -1,0 +1,182 @@
+==> .rubocop.yml 173 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/TimeZone:
+  EnforcedStyle: strict
+
+==> 000/000.rb 40 <==
+Time.new("l\366, 26 maj 2001 00:15:58")
+
+==> 001/001.rb 9 <==
+Time.now
+
+==> 002/002.rb 18 <==
+Time.now(in: nil)
+
+==> 003/003.rb 23 <==
+Time.now(in: '+03:00')
+
+==> 004/004.rb 9 <==
+Time.new
+
+==> 005/005.rb 30 <==
+Time.new(2012, 6, 10, 12, 00)
+
+==> 006/006.rb 32 <==
+Time.new("2012-06-10 10:12:00")
+
+==> 007/007.rb 30 <==
+Range.new(1, Time.class.to_s)
+
+==> 008/008.rb 41 <==
+Time.new(1988, 3, 15, 3, 0, 0, '-05:00')
+
+==> 009/009.rb 39 <==
+Time.new(2012, 6, 10, 12, 00, in: nil)
+
+==> 010/010.rb 44 <==
+Time.new(2012, 6, 10, 12, 00, in: '-05:00')
+
+==> 011/011.rb 11 <==
+::Time.now
+
+==> 012/012.rb 36 <==
+Some::Time.now(0).strftime('%H:%M')
+
+==> 013/013.rb 22 <==
+Time.now.in_time_zone
+
+==> 014/014.rb 13 <==
+Time.now.utc
+
+==> 015/015.rb 18 <==
+Time.now.getlocal
+
+==> 016/016.rb 19 <==
+Time.now.xmlschema
+
+==> 017/017.rb 17 <==
+Time.now.iso8601
+
+==> 018/018.rb 18 <==
+Time.now.jisx0301
+
+==> 019/019.rb 17 <==
+Time.now.rfc3339
+
+==> 020/020.rb 18 <==
+Time.now.httpdate
+
+==> 021/021.rb 14 <==
+Time.now.to_i
+
+==> 022/022.rb 14 <==
+Time.now.to_f
+
+==> 023/023.rb 30 <==
+"2012-03-02 16:05:37".to_time
+
+==> 024/024.rb 31 <==
+"2012-03-02 16:05:37"&.to_time
+
+==> 025/025.rb 31 <==
+"2012-03-02T16:05:37Z".to_time
+
+==> 026/026.rb 8 <==
+to_time
+
+==> 027/027.rb 34 <==
+Time.parse("2012-03-02 16:05:37")
+
+==> 028/028.rb 35 <==
+Time.parse("2012-03-02T16:05:37Z")
+
+==> 029/029.rb 35 <==
+Time.parse("2012-03-02T16:05:37z")
+
+==> 030/030.rb 35 <==
+Time.parse("2012-03-02T16:05:37E")
+
+==> 031/031.rb 40 <==
+Time.parse("2012-03-02 16:05:37 +0100")
+
+==> 032/032.rb 41 <==
+Time.parse("2012-03-02 16:05:37 +01:00")
+
+==> 033/033.rb 12 <==
+Time.at(ts)
+
+==> 034/034.rb 25 <==
+Time.at(ts).in_time_zone
+
+==> 035/035.rb 21 <==
+Time.at(ts, in: nil)
+
+==> 036/036.rb 26 <==
+Time.at(ts, in: '+03:00')
+
+==> 037/037.rb 40 <==
+Time.parse('12:00').localtime('+03:00')
+
+==> 038/038.rb 30 <==
+Time.parse('12:00').localtime
+
+==> 039/039.rb 46 <==
+return Foo, Time.parse("2012-03-02 16:05:37")
+
+==> 040/040.rb 13 <==
+Time.current
+
+==> 041/041.rb 13 <==
+Time.zone.now
+==> 042/042.rb 15 <==
+Time.zone.today
+==> 043/043.rb 36 <==
+Time.zone.local(2012, 6, 10, 12, 00)
+==> 044/044.rb 38 <==
+Time.zone.parse("2012-03-02 16:05:37")
+==> 045/045.rb 16 <==
+Time.zone.at(ts)
+==> 046/046.rb 34 <==
+Time.zone.parse('12:00').localtime
+==> 047/047.rb 44 <==
+Time.zone.parse('12:00').localtime('+03:00')
+==> 048/048.rb 21 <==
+Time.zone_default.now
+==> 049/049.rb 23 <==
+Time.zone_default.today
+==> 050/050.rb 44 <==
+Time.zone_default.local(2012, 6, 10, 12, 00)
+==> 051/051.rb 25 <==
+Time.find_zone('EST').now
+==> 052/052.rb 27 <==
+Time.find_zone('EST').today
+==> 053/053.rb 48 <==
+Time.find_zone('EST').local(2012, 6, 10, 12, 00)
+==> 054/054.rb 26 <==
+Time.find_zone!('EST').now
+==> 055/055.rb 28 <==
+Time.find_zone!('EST').today
+==> 056/056.rb 49 <==
+Time.find_zone!('EST').local(2012, 6, 10, 12, 00)
+==> 057/057.rb 15 <==
+Some::Time.now
+
+==> 058/058.rb 17 <==
+Some::Time.local
+
+==> 059/059.rb 15 <==
+Some::Time.new
+
+==> 060/060.rb 17 <==
+Some::Time.parse
+
+==> 061/061.rb 14 <==
+Some::Time.at
+

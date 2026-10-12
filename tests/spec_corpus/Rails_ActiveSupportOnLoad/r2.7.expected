@@ -1,0 +1,29 @@
+==> offenses exit=1 868 <==
+000/000.rb:1:1: C: [Correctable] Rails/ActiveSupportOnLoad: Use `ActiveSupport.on_load(:active_record) { include MyClass }` instead of `ActiveRecord::Base.include(MyClass)`.
+002/002.rb:1:1: C: [Correctable] Rails/ActiveSupportOnLoad: Use `ActiveSupport.on_load(:active_record) { prepend MyClass }` instead of `ActiveRecord::Base.prepend(MyClass)`.
+003/003.rb:1:1: C: [Correctable] Rails/ActiveSupportOnLoad: Use `ActiveSupport.on_load(:active_record) { extend MyClass }` instead of `ActiveRecord::Base.extend(MyClass)`.
+004/004.rb:1:1: C: [Correctable] Rails/ActiveSupportOnLoad: Use `ActiveSupport.on_load(:active_record) { extend MyClass }` instead of `::ActiveRecord::Base.extend(MyClass)`.
+005/005.rb:1:1: C: [Correctable] Rails/ActiveSupportOnLoad: Use `ActiveSupport.on_load(:active_record) { extend my_class }` instead of `ActiveRecord::Base.extend(my_class)`.
+
+==> autocorrect exit=0 858 <==
+000/000.rb:1:1: C: [Corrected] Rails/ActiveSupportOnLoad: Use `ActiveSupport.on_load(:active_record) { include MyClass }` instead of `ActiveRecord::Base.include(MyClass)`.
+002/002.rb:1:1: C: [Corrected] Rails/ActiveSupportOnLoad: Use `ActiveSupport.on_load(:active_record) { prepend MyClass }` instead of `ActiveRecord::Base.prepend(MyClass)`.
+003/003.rb:1:1: C: [Corrected] Rails/ActiveSupportOnLoad: Use `ActiveSupport.on_load(:active_record) { extend MyClass }` instead of `ActiveRecord::Base.extend(MyClass)`.
+004/004.rb:1:1: C: [Corrected] Rails/ActiveSupportOnLoad: Use `ActiveSupport.on_load(:active_record) { extend MyClass }` instead of `::ActiveRecord::Base.extend(MyClass)`.
+005/005.rb:1:1: C: [Corrected] Rails/ActiveSupportOnLoad: Use `ActiveSupport.on_load(:active_record) { extend my_class }` instead of `ActiveRecord::Base.extend(my_class)`.
+
+==> corrected/000/000.rb 58 <==
+ActiveSupport.on_load(:active_record) { include MyClass }
+
+==> corrected/002/002.rb 58 <==
+ActiveSupport.on_load(:active_record) { prepend MyClass }
+
+==> corrected/003/003.rb 57 <==
+ActiveSupport.on_load(:active_record) { extend MyClass }
+
+==> corrected/004/004.rb 57 <==
+ActiveSupport.on_load(:active_record) { extend MyClass }
+
+==> corrected/005/005.rb 58 <==
+ActiveSupport.on_load(:active_record) { extend my_class }
+

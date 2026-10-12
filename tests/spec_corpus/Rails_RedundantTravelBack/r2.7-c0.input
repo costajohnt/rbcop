@@ -1,0 +1,33 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 5.2
+
+==> spec/000/000.rb 46 <==
+def teardown
+  do_something
+  travel_back
+end
+
+==> spec/001/001.rb 42 <==
+after do
+  do_something
+  travel_back
+end
+
+==> spec/002/002.rb 35 <==
+def do_something
+  travel_back
+end
+
+==> spec/003/003.rb 34 <==
+do_something do
+  travel_back
+end
+

@@ -1,0 +1,19 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> spec/controllers/000/000.rb 51 <==
+expect(response.parsed_body).to eq('foo' => 'bar')
+
+==> spec/controllers/001/001.rb 56 <==
+expect(JSON.parse(response.body)).to eq('foo' => 'bar')
+
+==> spec/controllers/002/002.rb 58 <==
+expect(::JSON.parse(response.body)).to eq('foo' => 'bar')
+

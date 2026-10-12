@@ -1,0 +1,50 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/models/000/000.rb 250 <==
+class User < ApplicationRecord
+  scope :admins, -> { where(admin: true) }
+
+  after_commit :after_commit_callback
+  after_save :after_save_callback
+
+  def some_method
+  end
+
+  before_validation :before_validation_callback
+  some_other_macros :foo
+end
+
+==> app/models/001/001.rb 143 <==
+class User < ApplicationRecord
+  after_commit :after_commit_callback
+  after_save :after_save_callback1
+  after_save :after_save_callback2
+end
+
+==> app/models/002/002.rb 225 <==
+class User < ApplicationRecord
+  scope :admins, -> { where(admin: true) }
+
+  before_validation :before_validation_callback
+  after_save :after_save_callback
+
+  def some_method
+  end
+
+  after_commit :after_commit_callback
+end
+
+==> app/models/003/003.rb 59 <==
+class User < ApplicationRecord
+  def some_method
+  end
+end
+

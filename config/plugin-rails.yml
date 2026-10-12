@@ -1,0 +1,6 @@
+# The defaults plus the rubocop-rails plugin: the autocorrect gate config for plugin cops
+# (scripts/check-plugins.sh), the plugin counterpart of --force-default-config.
+plugins:
+  - rubocop-rails
+AllCops:
+  SuggestExtensions: false

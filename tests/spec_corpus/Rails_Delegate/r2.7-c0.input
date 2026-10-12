@@ -1,0 +1,186 @@
+==> .rubocop.yml 176 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/Delegate:
+  EnforceForPrefixed: true
+
+==> 000/000.rb 22 <==
+def foo
+  bar.foo
+end
+
+==> 001/001.rb 32 <==
+def foo(baz)
+  bar.foo(baz)
+end
+
+==> 002/002.rb 23 <==
+def foo
+  self.foo
+end
+
+==> 003/003.rb 61 <==
+module A
+  module_function
+
+  def foo
+    self.foo
+  end
+end
+
+==> 004/004.rb 58 <==
+module A
+  module_function def foo
+    self.foo
+  end
+end
+
+==> 005/005.rb 26 <==
+def bar_foo
+  bar.foo
+end
+
+==> 006/006.rb 31 <==
+def bar_foo
+  self.bar_foo
+end
+
+==> 007/007.rb 27 <==
+def self.fox
+  new.fox
+end
+
+==> 008/008.rb 26 <==
+def fox
+  bar.foo.fox
+end
+
+==> 009/009.rb 32 <==
+def fox(baz)
+  bar.fox(foo)
+end
+
+==> 010/010.rb 43 <==
+def fox(foo = nil)
+  bar.fox(foo || 5)
+end
+
+==> 011/011.rb 33 <==
+def fox(a, baz)
+  bar.fox(a)
+end
+
+==> 012/012.rb 33 <==
+def fox(foo:)
+  bar.fox(foo)
+end
+
+==> 013/013.rb 26 <==
+def fox_foo
+  bar.foo
+end
+
+==> 014/014.rb 27 <==
+def fox(bar)
+  bar.fox
+end
+
+==> 015/015.rb 26 <==
+def fox
+  bar(42).fox
+end
+
+==> 016/016.rb 94 <==
+private def fox # leading spaces are on purpose
+  bar.fox
+end
+
+private
+
+def fox
+  bar.fox
+end
+
+==> 017/017.rb 98 <==
+protected def fox # leading spaces are on purpose
+  bar.fox
+end
+
+protected
+
+def fox
+  bar.fox
+end
+
+==> 018/018.rb 105 <==
+class A
+  class B
+
+    private
+
+    def foo
+      bar.foo
+    end
+  end
+
+  def baz
+    foo.baz
+  end
+end
+
+==> 019/019.rb 29 <==
+def new
+  @bar = Foo.new
+end
+
+==> 020/020.rb 53 <==
+def change
+  add_column :images, :size, :integer
+end
+
+==> 021/021.rb 23 <==
+def foo
+  bar&.foo
+end
+
+==> 022/022.rb 29 <==
+def foo
+  self.class.foo
+end
+
+==> 023/023.rb 24 <==
+def foo
+  CONST.foo
+end
+
+==> 024/024.rb 36 <==
+def foo
+  SomeModule::CONST.foo
+end
+
+==> 025/025.rb 38 <==
+def foo
+  ::SomeModule::CONST.foo
+end
+
+==> 026/026.rb 37 <==
+def foo
+  @instance_variable.foo
+end
+
+==> 027/027.rb 35 <==
+def foo
+  @@class_variable.foo
+end
+
+==> 028/028.rb 35 <==
+def foo
+  $global_variable.foo
+end
+

@@ -1,0 +1,26 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 46 <==
+render status: 200, inline: 'inline template'
+
+==> 001/001.rb 50 <==
+render status: 200, 'inline' => 'inline template'
+
+==> 002/002.rb 14 <==
+render :index
+
+==> 003/003.rb 47 <==
+render json: users, serializer: UserSerializer
+
+==> 004/004.rb 120 <==
+serializer = users.respond_to?(:each) ? :each_serializer : :serializer
+render json: users, serializer => UserSerializer
+

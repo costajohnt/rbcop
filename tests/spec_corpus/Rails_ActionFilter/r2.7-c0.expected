@@ -1,0 +1,56 @@
+==> offenses exit=1 1599 <==
+app/controllers/013/013.rb:1:1: C: [Correctable] Rails/ActionFilter: Prefer `after_action` over `after_filter`.
+app/controllers/014/014.rb:1:1: C: [Correctable] Rails/ActionFilter: Prefer `append_after_action` over `append_after_filter`.
+app/controllers/015/015.rb:1:1: C: [Correctable] Rails/ActionFilter: Prefer `append_around_action` over `append_around_filter`.
+app/controllers/016/016.rb:1:1: C: [Correctable] Rails/ActionFilter: Prefer `append_before_action` over `append_before_filter`.
+app/controllers/017/017.rb:1:1: C: [Correctable] Rails/ActionFilter: Prefer `around_action` over `around_filter`.
+app/controllers/018/018.rb:1:1: C: [Correctable] Rails/ActionFilter: Prefer `before_action` over `before_filter`.
+app/controllers/019/019.rb:1:1: C: [Correctable] Rails/ActionFilter: Prefer `prepend_after_action` over `prepend_after_filter`.
+app/controllers/020/020.rb:1:1: C: [Correctable] Rails/ActionFilter: Prefer `prepend_around_action` over `prepend_around_filter`.
+app/controllers/021/021.rb:1:1: C: [Correctable] Rails/ActionFilter: Prefer `prepend_before_action` over `prepend_before_filter`.
+app/controllers/022/022.rb:1:1: C: [Correctable] Rails/ActionFilter: Prefer `skip_after_action` over `skip_after_filter`.
+app/controllers/023/023.rb:1:1: C: [Correctable] Rails/ActionFilter: Prefer `skip_around_action` over `skip_around_filter`.
+app/controllers/024/024.rb:1:1: C: [Correctable] Rails/ActionFilter: Prefer `skip_before_action` over `skip_before_filter`.
+app/controllers/025/025.rb:1:1: C: [Correctable] Rails/ActionFilter: Prefer `skip_action_callback` over `skip_filter`.
+
+==> autocorrect exit=0 1573 <==
+app/controllers/013/013.rb:1:1: C: [Corrected] Rails/ActionFilter: Prefer `after_action` over `after_filter`.
+app/controllers/014/014.rb:1:1: C: [Corrected] Rails/ActionFilter: Prefer `append_after_action` over `append_after_filter`.
+app/controllers/015/015.rb:1:1: C: [Corrected] Rails/ActionFilter: Prefer `append_around_action` over `append_around_filter`.
+app/controllers/016/016.rb:1:1: C: [Corrected] Rails/ActionFilter: Prefer `append_before_action` over `append_before_filter`.
+app/controllers/017/017.rb:1:1: C: [Corrected] Rails/ActionFilter: Prefer `around_action` over `around_filter`.
+app/controllers/018/018.rb:1:1: C: [Corrected] Rails/ActionFilter: Prefer `before_action` over `before_filter`.
+app/controllers/019/019.rb:1:1: C: [Corrected] Rails/ActionFilter: Prefer `prepend_after_action` over `prepend_after_filter`.
+app/controllers/020/020.rb:1:1: C: [Corrected] Rails/ActionFilter: Prefer `prepend_around_action` over `prepend_around_filter`.
+app/controllers/021/021.rb:1:1: C: [Corrected] Rails/ActionFilter: Prefer `prepend_before_action` over `prepend_before_filter`.
+app/controllers/022/022.rb:1:1: C: [Corrected] Rails/ActionFilter: Prefer `skip_after_action` over `skip_after_filter`.
+app/controllers/023/023.rb:1:1: C: [Corrected] Rails/ActionFilter: Prefer `skip_around_action` over `skip_around_filter`.
+app/controllers/024/024.rb:1:1: C: [Corrected] Rails/ActionFilter: Prefer `skip_before_action` over `skip_before_filter`.
+app/controllers/025/025.rb:1:1: C: [Corrected] Rails/ActionFilter: Prefer `skip_action_callback` over `skip_filter`.
+
+==> corrected/app/controllers/013/013.rb 23 <==
+after_action :something
+==> corrected/app/controllers/014/014.rb 30 <==
+append_after_action :something
+==> corrected/app/controllers/015/015.rb 31 <==
+append_around_action :something
+==> corrected/app/controllers/016/016.rb 31 <==
+append_before_action :something
+==> corrected/app/controllers/017/017.rb 24 <==
+around_action :something
+==> corrected/app/controllers/018/018.rb 24 <==
+before_action :something
+==> corrected/app/controllers/019/019.rb 31 <==
+prepend_after_action :something
+==> corrected/app/controllers/020/020.rb 32 <==
+prepend_around_action :something
+==> corrected/app/controllers/021/021.rb 32 <==
+prepend_before_action :something
+==> corrected/app/controllers/022/022.rb 28 <==
+skip_after_action :something
+==> corrected/app/controllers/023/023.rb 29 <==
+skip_around_action :something
+==> corrected/app/controllers/024/024.rb 29 <==
+skip_before_action :something
+==> corrected/app/controllers/025/025.rb 31 <==
+skip_action_callback :something

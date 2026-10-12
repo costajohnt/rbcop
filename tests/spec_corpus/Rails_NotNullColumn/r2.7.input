@@ -1,0 +1,146 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> db/000/20250101010101_add_name_to_users.rb 47 <==
+add_column :users, :name, :string, null: false
+
+==> db/001/20190101010101_add_name_to_users.rb 47 <==
+add_column :users, :name, :string, null: false
+
+==> db/002/002.rb 60 <==
+add_column :users, :name, :string, null: false, default: ""
+
+==> db/003/003.rb 52 <==
+add_column(:users, :name, type, default: 'default')
+
+==> db/004/20250101010101_add_name_to_users.rb 61 <==
+add_column :users, :name, :string, null: false, default: nil
+
+==> db/005/005.rb 183 <==
+add_column :users, :height_in, :virtual, as: "height_cm / 2.54", null: false, default: nil
+add_column :users, :height_in, 'virtual', as: "height_cm / 2.54", null: false, default: nil
+
+==> db/006/006.rb 46 <==
+add_column :users, :name, :string, null: true
+
+==> db/007/007.rb 34 <==
+add_column :users, :name, :string
+
+==> db/008/008.rb 115 <==
+add_column :users, :name, :string
+User.update_all(name: "dummy")
+change_column :users, :name, :string, null: false
+
+==> db/009/009.rb 176 <==
+class CreateUsersTable < ActiveRecord::Migration
+  def change
+    create_table :users do |t|
+      t.string :name, null: false
+      t.timestamps null: false
+    end
+  end
+end
+
+==> db/010/010.rb 119 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    change_table :invoices do |t|
+    end
+  end
+end
+
+==> db/011/20250101010101_create_users.rb 82 <==
+def change
+  change_table :users do |t|
+    t.string :name, null: false
+  end
+end
+
+==> db/012/20250101010101_create_users.rb 117 <==
+def change
+  change_table :users do |t|
+    t.string :name, null: false
+    t.string :address, null: false
+  end
+end
+
+==> db/013/013.rb 95 <==
+def change
+  change_table :users do |t|
+    t.string :name, null: false, default: ""
+  end
+end
+
+==> db/014/014.rb 69 <==
+def change
+  change_table :users do |t|
+    t.string :name
+  end
+end
+
+==> db/015/20250101010101_create_users.rb 91 <==
+def change
+  change_table :users do |t|
+    t.column :name, :string, null: false
+  end
+end
+
+==> db/016/016.rb 104 <==
+def change
+  change_table :users do |t|
+    t.column :name, :string, null: false, default: ""
+  end
+end
+
+==> db/017/017.rb 78 <==
+def change
+  change_table :users do |t|
+    t.column :name, :string
+  end
+end
+
+==> db/018/20250101010101_create_users.rb 89 <==
+def change
+  change_table :users do |t|
+    t.references :address, null: false
+  end
+end
+
+==> db/019/019.rb 76 <==
+def change
+  change_table :users do |t|
+    t.references :address
+  end
+end
+
+==> db/020/20250101010101_create_products.rb 48 <==
+add_reference :products, :category, null: false
+
+==> db/021/021.rb 60 <==
+add_reference :products, :category, null: false, default: 1
+
+==> db/022/022.rb 35 <==
+add_reference :products, :category
+
+==> db/023/023.rb 68 <==
+def change
+  add_column :articles, :content, :text, null: false
+end
+
+==> db/024/024.rb 69 <==
+def change
+  add_column :articles, :content, 'text', null: false
+end
+
+==> db/025/20250101010101_add_content_to_articles.rb 68 <==
+def change
+  add_column :articles, :content, :text, null: false
+end
+

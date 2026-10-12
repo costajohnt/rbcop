@@ -1,0 +1,109 @@
+==> offenses exit=1 3000 <==
+000/000.rb:1:6: C: [Correctable] Rails/WhereNot: Use `where.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+002/002.rb:1:7: C: [Correctable] Rails/WhereNot: Use `where&.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+003/003.rb:1:6: C: [Correctable] Rails/WhereNot: Use `where.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+004/004.rb:1:6: C: [Correctable] Rails/WhereNot: Use `where.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+005/005.rb:1:6: C: [Correctable] Rails/WhereNot: Use `where.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+006/006.rb:1:6: C: [Correctable] Rails/WhereNot: Use `where.not(name: nil)` instead of manually constructing negated SQL in `where`.
+007/007.rb:1:6: C: [Correctable] Rails/WhereNot: Use `where.not(name: ['john', 'jane'])` instead of manually constructing negated SQL in `where`.
+008/008.rb:1:6: C: [Correctable] Rails/WhereNot: Use `where.not(name: ['john', 'jane'])` instead of manually constructing negated SQL in `where`.
+010/010.rb:1:8: C: [Correctable] Rails/WhereNot: Use `where.not(enrollments: { student_id: student.id })` instead of manually constructing negated SQL in `where`.
+011/011.rb:1:8: C: [Correctable] Rails/WhereNot: Use `where.not(enrollments: { student_id: student.id })` instead of manually constructing negated SQL in `where`.
+012/012.rb:1:1: C: [Correctable] Rails/WhereNot: Use `where.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+013/013.rb:1:6: C: [Correctable] Rails/WhereNot: Use `where.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+014/014.rb:1:7: C: [Correctable] Rails/WhereNot: Use `where&.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+015/015.rb:1:6: C: [Correctable] Rails/WhereNot: Use `where.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+016/016.rb:1:6: C: [Correctable] Rails/WhereNot: Use `where.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+017/017.rb:1:6: C: [Correctable] Rails/WhereNot: Use `where.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+018/018.rb:1:6: C: [Correctable] Rails/WhereNot: Use `where.not(name: nil)` instead of manually constructing negated SQL in `where`.
+019/019.rb:1:6: C: [Correctable] Rails/WhereNot: Use `where.not(name: ['john', 'jane'])` instead of manually constructing negated SQL in `where`.
+020/020.rb:1:6: C: [Correctable] Rails/WhereNot: Use `where.not(name: ['john', 'jane'])` instead of manually constructing negated SQL in `where`.
+021/021.rb:1:8: C: [Correctable] Rails/WhereNot: Use `where.not(enrollments: { student_id: student.id })` instead of manually constructing negated SQL in `where`.
+022/022.rb:1:8: C: [Correctable] Rails/WhereNot: Use `where.not(enrollments: { student_id: student.id })` instead of manually constructing negated SQL in `where`.
+
+==> autocorrect exit=0 2958 <==
+000/000.rb:1:6: C: [Corrected] Rails/WhereNot: Use `where.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+002/002.rb:1:7: C: [Corrected] Rails/WhereNot: Use `where&.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+003/003.rb:1:6: C: [Corrected] Rails/WhereNot: Use `where.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+004/004.rb:1:6: C: [Corrected] Rails/WhereNot: Use `where.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+005/005.rb:1:6: C: [Corrected] Rails/WhereNot: Use `where.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+006/006.rb:1:6: C: [Corrected] Rails/WhereNot: Use `where.not(name: nil)` instead of manually constructing negated SQL in `where`.
+007/007.rb:1:6: C: [Corrected] Rails/WhereNot: Use `where.not(name: ['john', 'jane'])` instead of manually constructing negated SQL in `where`.
+008/008.rb:1:6: C: [Corrected] Rails/WhereNot: Use `where.not(name: ['john', 'jane'])` instead of manually constructing negated SQL in `where`.
+010/010.rb:1:8: C: [Corrected] Rails/WhereNot: Use `where.not(enrollments: { student_id: student.id })` instead of manually constructing negated SQL in `where`.
+011/011.rb:1:8: C: [Corrected] Rails/WhereNot: Use `where.not(enrollments: { student_id: student.id })` instead of manually constructing negated SQL in `where`.
+012/012.rb:1:1: C: [Corrected] Rails/WhereNot: Use `where.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+013/013.rb:1:6: C: [Corrected] Rails/WhereNot: Use `where.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+014/014.rb:1:7: C: [Corrected] Rails/WhereNot: Use `where&.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+015/015.rb:1:6: C: [Corrected] Rails/WhereNot: Use `where.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+016/016.rb:1:6: C: [Corrected] Rails/WhereNot: Use `where.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+017/017.rb:1:6: C: [Corrected] Rails/WhereNot: Use `where.not(name: 'Gabe')` instead of manually constructing negated SQL in `where`.
+018/018.rb:1:6: C: [Corrected] Rails/WhereNot: Use `where.not(name: nil)` instead of manually constructing negated SQL in `where`.
+019/019.rb:1:6: C: [Corrected] Rails/WhereNot: Use `where.not(name: ['john', 'jane'])` instead of manually constructing negated SQL in `where`.
+020/020.rb:1:6: C: [Corrected] Rails/WhereNot: Use `where.not(name: ['john', 'jane'])` instead of manually constructing negated SQL in `where`.
+021/021.rb:1:8: C: [Corrected] Rails/WhereNot: Use `where.not(enrollments: { student_id: student.id })` instead of manually constructing negated SQL in `where`.
+022/022.rb:1:8: C: [Corrected] Rails/WhereNot: Use `where.not(enrollments: { student_id: student.id })` instead of manually constructing negated SQL in `where`.
+
+==> corrected/000/000.rb 29 <==
+User.where.not(name: 'Gabe')
+
+==> corrected/002/002.rb 31 <==
+User&.where&.not(name: 'Gabe')
+
+==> corrected/003/003.rb 29 <==
+User.where.not(name: 'Gabe')
+
+==> corrected/004/004.rb 29 <==
+User.where.not(name: 'Gabe')
+
+==> corrected/005/005.rb 29 <==
+User.where.not(name: 'Gabe')
+
+==> corrected/006/006.rb 26 <==
+User.where.not(name: nil)
+
+==> corrected/007/007.rb 39 <==
+User.where.not(name: ['john', 'jane'])
+
+==> corrected/008/008.rb 39 <==
+User.where.not(name: ['john', 'jane'])
+
+==> corrected/010/010.rb 58 <==
+Course.where.not(enrollments: { student_id: student.id })
+
+==> corrected/011/011.rb 58 <==
+Course.where.not(enrollments: { student_id: student.id })
+
+==> corrected/012/012.rb 24 <==
+where.not(name: 'Gabe')
+
+==> corrected/013/013.rb 29 <==
+User.where.not(name: 'Gabe')
+
+==> corrected/014/014.rb 31 <==
+User&.where&.not(name: 'Gabe')
+
+==> corrected/015/015.rb 29 <==
+User.where.not(name: 'Gabe')
+
+==> corrected/016/016.rb 29 <==
+User.where.not(name: 'Gabe')
+
+==> corrected/017/017.rb 29 <==
+User.where.not(name: 'Gabe')
+
+==> corrected/018/018.rb 26 <==
+User.where.not(name: nil)
+
+==> corrected/019/019.rb 39 <==
+User.where.not(name: ['john', 'jane'])
+
+==> corrected/020/020.rb 39 <==
+User.where.not(name: ['john', 'jane'])
+
+==> corrected/021/021.rb 58 <==
+Course.where.not(enrollments: { student_id: student.id })
+
+==> corrected/022/022.rb 58 <==
+Course.where.not(enrollments: { student_id: student.id })
+

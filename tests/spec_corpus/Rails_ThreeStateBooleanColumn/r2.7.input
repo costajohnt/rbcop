@@ -1,0 +1,124 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> db/000/20250101010101_add_active_to_users.rb 153 <==
+add_column :users, :active, :boolean
+add_column :users, :active, :boolean, default: true
+add_column :users, :active, :boolean, default: true, null: true
+
+==> db/001/20190101010101_add_active_to_users.rb 153 <==
+add_column :users, :active, :boolean
+add_column :users, :active, :boolean, default: true
+add_column :users, :active, :boolean, default: true, null: true
+
+==> db/002/002.rb 35 <==
+add_column :users, :email, :string
+
+==> db/003/003.rb 65 <==
+add_column :users, :active, :boolean, default: true, null: false
+
+==> db/004/004.rb 98 <==
+def change
+  add_column :users, :active, :boolean
+  change_column_null :users, :active, false
+end
+
+==> db/005/005.rb 96 <==
+def change
+  add_column table, :active, :boolean
+  change_column_null table, :active, false
+end
+
+==> db/006/20250101010101_add_active_to_users.rb 187 <==
+def change
+  add_column :users, :active, :boolean
+  change_column_null :users, :admin, false
+  change_column_null :projects, :active, false
+  change_column_null :users, :active, true
+end
+
+==> db/007/20250101010101_add_active_to_users.rb 123 <==
+t.column :active, :boolean
+t.column :active, :boolean, default: true
+t.column :active, :boolean, default: true, null: true
+
+==> db/008/008.rb 25 <==
+t.column :email, :string
+
+==> db/009/009.rb 55 <==
+t.column :active, :boolean, default: true, null: false
+
+==> db/010/010.rb 126 <==
+def change
+  create_table(:users) do |t|
+    t.column :active, :boolean
+  end
+  change_column_null :users, :active, false
+end
+
+==> db/011/011.rb 124 <==
+def change
+  create_table(table) do |t|
+    t.column :active, :boolean
+  end
+  change_column_null table, :active, false
+end
+
+==> db/012/012.rb 215 <==
+def change
+  create_table(:users) do |t|
+    t.column :active, :boolean
+  end
+  change_column_null :users, :admin, false
+  change_column_null :projects, :active, false
+  change_column_null :users, :active, true
+end
+
+==> db/013/20250101010101_add_active_to_users.rb 96 <==
+t.boolean :active
+t.boolean :active, default: true
+t.boolean :active, default: true, null: true
+
+==> db/014/014.rb 46 <==
+t.boolean :active, default: true, null: false
+
+==> db/015/015.rb 71 <==
+def change
+  drop_table(:users) do |t|
+    t.boolean :active
+  end
+end
+
+==> db/016/016.rb 117 <==
+def change
+  create_table(:users) do |t|
+    t.boolean :active
+  end
+  change_column_null :users, :active, false
+end
+
+==> db/017/017.rb 115 <==
+def change
+  create_table(table) do |t|
+    t.boolean :active
+  end
+  change_column_null table, :active, false
+end
+
+==> db/018/20250101010101_add_active_to_users.rb 206 <==
+def change
+  create_table(:users) do |t|
+    t.boolean :active
+  end
+  change_column_null :users, :admin, false
+  change_column_null :projects, :active, false
+  change_column_null :users, :active, true
+end
+

@@ -1,0 +1,19 @@
+==> offenses exit=1 277 <==
+004/004.rb:1:1: C: [Correctable] Rails/ContentTag: Use `tag.br` instead of `tag(:br)`.
+007/007.rb:1:1: C: [Correctable] Rails/ContentTag: Use `tag.foo_bar` instead of `tag('foo-bar')`.
+009/009.rb:1:1: C: [Correctable] Rails/ContentTag: Use `tag._foo` instead of `tag('-foo')`.
+
+==> autocorrect exit=0 271 <==
+004/004.rb:1:1: C: [Corrected] Rails/ContentTag: Use `tag.br` instead of `tag(:br)`.
+007/007.rb:1:1: C: [Corrected] Rails/ContentTag: Use `tag.foo_bar` instead of `tag('foo-bar')`.
+009/009.rb:1:1: C: [Corrected] Rails/ContentTag: Use `tag._foo` instead of `tag('-foo')`.
+
+==> corrected/004/004.rb 9 <==
+tag.br()
+
+==> corrected/007/007.rb 29 <==
+tag.foo_bar(class: 'strong')
+
+==> corrected/009/009.rb 26 <==
+tag._foo(class: 'strong')
+

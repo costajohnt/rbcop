@@ -1,0 +1,56 @@
+==> offenses exit=1 2664 <==
+000/000.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `decrement!` because it skips validations.
+001/001.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `decrement_counter` because it skips validations.
+002/002.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `increment!` because it skips validations.
+003/003.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `increment_counter` because it skips validations.
+004/004.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `insert` because it skips validations.
+005/005.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `insert!` because it skips validations.
+006/006.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `insert_all` because it skips validations.
+007/007.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `insert_all!` because it skips validations.
+008/008.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `toggle!` because it skips validations.
+009/009.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `touch` because it skips validations.
+010/010.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `touch_all` because it skips validations.
+011/011.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `update_all` because it skips validations.
+012/012.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `update_attribute` because it skips validations.
+013/013.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `update_column` because it skips validations.
+014/014.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `update_columns` because it skips validations.
+015/015.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `update_counters` because it skips validations.
+016/016.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `upsert` because it skips validations.
+017/017.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `upsert_all` because it skips validations.
+024/024.rb:1:1: C: Rails/SkipsModelValidations: Avoid using `insert` because it skips validations.
+025/025.rb:1:1: C: Rails/SkipsModelValidations: Avoid using `insert` because it skips validations.
+026/026.rb:1:1: C: Rails/SkipsModelValidations: Avoid using `insert` because it skips validations.
+031/031.rb:1:1: C: Rails/SkipsModelValidations: Avoid using `insert!` because it skips validations.
+032/032.rb:1:1: C: Rails/SkipsModelValidations: Avoid using `insert!` because it skips validations.
+033/033.rb:1:1: C: Rails/SkipsModelValidations: Avoid using `insert!` because it skips validations.
+050/050.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `touch` because it skips validations.
+051/051.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `touch_all` because it skips validations.
+
+==> autocorrect exit=1 2664 <==
+000/000.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `decrement!` because it skips validations.
+001/001.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `decrement_counter` because it skips validations.
+002/002.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `increment!` because it skips validations.
+003/003.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `increment_counter` because it skips validations.
+004/004.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `insert` because it skips validations.
+005/005.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `insert!` because it skips validations.
+006/006.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `insert_all` because it skips validations.
+007/007.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `insert_all!` because it skips validations.
+008/008.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `toggle!` because it skips validations.
+009/009.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `touch` because it skips validations.
+010/010.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `touch_all` because it skips validations.
+011/011.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `update_all` because it skips validations.
+012/012.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `update_attribute` because it skips validations.
+013/013.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `update_column` because it skips validations.
+014/014.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `update_columns` because it skips validations.
+015/015.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `update_counters` because it skips validations.
+016/016.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `upsert` because it skips validations.
+017/017.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `upsert_all` because it skips validations.
+024/024.rb:1:1: C: Rails/SkipsModelValidations: Avoid using `insert` because it skips validations.
+025/025.rb:1:1: C: Rails/SkipsModelValidations: Avoid using `insert` because it skips validations.
+026/026.rb:1:1: C: Rails/SkipsModelValidations: Avoid using `insert` because it skips validations.
+031/031.rb:1:1: C: Rails/SkipsModelValidations: Avoid using `insert!` because it skips validations.
+032/032.rb:1:1: C: Rails/SkipsModelValidations: Avoid using `insert!` because it skips validations.
+033/033.rb:1:1: C: Rails/SkipsModelValidations: Avoid using `insert!` because it skips validations.
+050/050.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `touch` because it skips validations.
+051/051.rb:1:6: C: Rails/SkipsModelValidations: Avoid using `touch_all` because it skips validations.
+

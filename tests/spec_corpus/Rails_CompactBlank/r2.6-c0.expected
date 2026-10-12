@@ -1,0 +1,9 @@
+==> offenses exit=1 83 <==
+000/000.rb:1:12: C: [Correctable] Rails/CompactBlank: Use `compact_blank` instead.
+
+==> autocorrect exit=0 81 <==
+000/000.rb:1:12: C: [Corrected] Rails/CompactBlank: Use `compact_blank` instead.
+
+==> corrected/000/000.rb 25 <==
+collection.compact_blank
+

@@ -1,0 +1,45 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/models/000/000.rb 54 <==
+class User
+  validates :account, uniqueness: true
+end
+
+==> app/models/001/001.rb 55 <==
+class User
+  validates :account, uniqueness: false
+end
+
+==> app/models/002/002.rb 53 <==
+class User
+  validates :account, uniqueness: nil
+end
+
+==> app/models/003/003.rb 27 <==
+class User
+  validates
+end
+
+==> app/models/004/004.rb 68 <==
+class User
+  validates
+  after_commit :foo
+  def foo; true; end
+end
+
+==> db/schema.rb 210 <==
+ActiveRecord::Schema.define(version: 2020_02_02_075409) do
+  create_table "users", force: :cascade do |t|
+    t.string "account", null: false
+    # t.index ["account"], name: "index_users_on_account"
+  end
+end
+

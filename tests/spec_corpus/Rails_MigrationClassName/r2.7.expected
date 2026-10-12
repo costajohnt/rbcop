@@ -1,0 +1,16 @@
+==> offenses exit=1 298 <==
+db/migrate/003/20250101010101_create_users.rb:1:7: C: [Correctable] Rails/MigrationClassName: Replace with `CreateUsers` that matches the file name.
+db/migrate/004/20250101010101_create_users.rb:1:9: C: [Correctable] Rails/MigrationClassName: Replace with `CreateUsers` that matches the file name.
+
+==> autocorrect exit=0 294 <==
+db/migrate/003/20250101010101_create_users.rb:1:7: C: [Corrected] Rails/MigrationClassName: Replace with `CreateUsers` that matches the file name.
+db/migrate/004/20250101010101_create_users.rb:1:9: C: [Corrected] Rails/MigrationClassName: Replace with `CreateUsers` that matches the file name.
+
+==> corrected/db/migrate/003/20250101010101_create_users.rb 53 <==
+class CreateUsers < ActiveRecord::Migration[7.0]
+end
+
+==> corrected/db/migrate/004/20250101010101_create_users.rb 55 <==
+class ::CreateUsers < ActiveRecord::Migration[7.0]
+end
+

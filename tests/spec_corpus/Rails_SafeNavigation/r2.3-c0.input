@@ -1,0 +1,17 @@
+==> .rubocop.yml 175 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.3
+Rails/SafeNavigation:
+  ConvertTry: false
+
+==> 000/000.rb 23 <==
+[1, 2].foo.try!(&block)
+==> 001/001.rb 35 <==
+[1, 2].bar = :==
+foo.try!(baz, bar)

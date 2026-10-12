@@ -1,0 +1,6 @@
+==> offenses exit=1 80 <==
+app/models/000/000.rb:2:3: C: Rails/InverseOf: Specify an `:inverse_of` option.
+
+==> autocorrect exit=1 80 <==
+app/models/000/000.rb:2:3: C: Rails/InverseOf: Specify an `:inverse_of` option.
+
