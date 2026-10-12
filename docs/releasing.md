@@ -33,3 +33,7 @@ anything until the last step.
 6. Publish (manual, after review): `gh release create vX.Y.Z dist/*.tar.gz dist/*.sha256
    dist/gems/*.gem dist/rbcop.rb`, `gem push` each gem, and copy `dist/rbcop.rb` into the tap.
    The GitHub Action downloads from the release, so it works once the release exists.
+   Once the workflow runs, gems go out through RubyGems trusted publishing instead of an API
+   key: register the workflow (`release.yml`, environment `rubygems`) as a trusted publisher
+   for the `rbcop` gem on rubygems.org (a pending publisher before the first push), protect the
+   `rubygems` environment with a required reviewer, and start a manual run with `publish-gems`.
