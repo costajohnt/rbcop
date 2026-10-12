@@ -161,6 +161,42 @@ impl<'pr> Visit<'pr> for V<'_, 'pr> {
         }
     }
 
+    // `A::B = x` is parser's (casgn (const nil :A) :B x): the target is no `const` node, its
+    // namespace is.
+    fn visit_constant_path_write_node(&mut self, node: &ruby_prism::ConstantPathWriteNode<'pr>) {
+        if let Some(ns) = node.target().parent() {
+            self.visit(&ns);
+        }
+        self.visit(&node.value());
+    }
+
+    fn visit_constant_path_operator_write_node(&mut self, node: &ruby_prism::ConstantPathOperatorWriteNode<'pr>) {
+        if let Some(ns) = node.target().parent() {
+            self.visit(&ns);
+        }
+        self.visit(&node.value());
+    }
+
+    fn visit_constant_path_or_write_node(&mut self, node: &ruby_prism::ConstantPathOrWriteNode<'pr>) {
+        if let Some(ns) = node.target().parent() {
+            self.visit(&ns);
+        }
+        self.visit(&node.value());
+    }
+
+    fn visit_constant_path_and_write_node(&mut self, node: &ruby_prism::ConstantPathAndWriteNode<'pr>) {
+        if let Some(ns) = node.target().parent() {
+            self.visit(&ns);
+        }
+        self.visit(&node.value());
+    }
+
+    fn visit_constant_path_target_node(&mut self, node: &ruby_prism::ConstantPathTargetNode<'pr>) {
+        if let Some(ns) = node.parent() {
+            self.visit(&ns);
+        }
+    }
+
     fn visit_def_node(&mut self, node: &ruby_prism::DefNode<'pr>) {
         // `def` is a scope change, `defs` (def self.x) is not.
         if node.receiver().is_some() {

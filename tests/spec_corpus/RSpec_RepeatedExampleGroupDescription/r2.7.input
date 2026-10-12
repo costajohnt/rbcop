@@ -1,0 +1,180 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 89 <==
+describe 'doing x' do
+  # example group
+end
+
+describe 'doing x' do
+  # example group
+end
+
+==> 001/001_spec.rb 107 <==
+context 'when awesome case' do
+  # example group
+end
+
+context 'when awesome case' do
+  # example group
+end
+
+==> 002/002_spec.rb 258 <==
+describe 'super feature' do
+  context 'when some case' do
+    # ...
+  end
+
+  context 'when awesome case' do
+    # example group
+  end
+
+  context 'when awesome case' do
+    # example group
+  end
+
+  context 'when awesome case' do
+    # example group
+  end
+end
+
+==> 003/003_spec.rb 89 <==
+describe 'doing x' do
+  # example group
+end
+
+describe 'doing y' do
+  # example group
+end
+
+==> 004/004_spec.rb 113 <==
+RSpec.describe 'Animal', 'dog' do
+  # example group
+end
+
+RSpec.describe 'Animal', 'cat' do
+  # example group
+end
+
+==> 005/005_spec.rb 145 <==
+RSpec.describe 'Animal', 'dog', type: :request do
+  # example group
+end
+
+RSpec.describe 'Animal', 'cat', type: :request do
+  # example group
+end
+
+==> 006/006_spec.rb 86 <==
+describe 'Animal' do
+  # example group
+end
+
+context 'Animal' do
+  # example group
+end
+
+==> 007/007_spec.rb 186 <==
+helpers.describe 'doing x' do
+  it { cool_predicate_method }
+end
+
+RSpec.describe 'doing x' do
+  it { cool_predicate_method }
+end
+
+context 'doing x' do
+  it { cool_predicate_method }
+end
+
+==> 008/008_spec.rb 186 <==
+RSpec.describe 'doing x' do
+  it { cool_predicate_method }
+end
+
+context 'doing x' do
+  it { cool_predicate_method }
+end
+
+helpers.describe 'doing x' do
+  it { cool_predicate_method }
+end
+
+==> 009/009_spec.rb 258 <==
+RSpec.describe 'A' do
+  stub_all_http_calls()
+  allowed_statuses = %i[open submitted approved].freeze
+  before { create(:admin) }
+
+  describe '#load' do
+    it { cool_predicate_method }
+  end
+
+  describe '#load' do
+    it { cool_predicate_method }
+  end
+end
+
+==> 010/010_spec.rb 95 <==
+context "when class is #{A::B}" do
+  # ...
+end
+
+context "when class is #{C::D}" do
+  # ...
+end
+
+==> 011/011_spec.rb 95 <==
+context "when class is #{A::B}" do
+  # ...
+end
+
+context "when class is #{A::B}" do
+  # ...
+end
+
+==> 012/012_spec.rb 57 <==
+context A::B do
+  # ...
+end
+
+context C::D do
+  # ...
+end
+
+==> 013/013_spec.rb 73 <==
+context(description) do
+  # ...
+end
+
+context(description) do
+  # ...
+end
+
+==> 014/014_spec.rb 148 <==
+describe 'repeated' do
+  it { is_expected.to be_truthy }
+end
+
+before { do_something }
+
+describe 'repeated' do
+  it { is_expected.to be_truthy }
+end
+
+==> 015/015_spec.rb 47 <==
+context do
+  # ...
+end
+
+context do
+  # ...
+end
+

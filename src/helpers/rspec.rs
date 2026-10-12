@@ -608,6 +608,69 @@ pub fn config_integer(v: Option<&Value>) -> Option<i64> {
     }
 }
 
+/// A structural key of an optional node (rubocop-ast nodes compare by type and children): its parser
+/// s-expression, `nil` for none.
+pub fn skey(src: &crate::source::Source, node: Option<&Node>) -> String {
+    match node {
+        None => "nil".to_string(),
+        // a body of several statements is a parser `begin`
+        Some(n) if n.as_statements_node().is_some() => {
+            let kids: Vec<Node> = n.as_statements_node().unwrap().body().iter().collect();
+            match kids.len() {
+                0 => "nil".to_string(),
+                1 => skey(src, kids.first()),
+                _ => format!("(begin {})", skeys(src, &kids)),
+            }
+        }
+        Some(n) => helpers::parser_sexp::sexp(n, src).unwrap_or_else(|| format!("?{}", node_text(n))),
+    }
+}
+
+/// Structural key of a list of nodes.
+pub fn skeys(src: &crate::source::Source, nodes: &[Node]) -> String {
+    let parts: Vec<String> = nodes.iter().map(|n| skey(src, Some(n))).collect();
+    format!("[{}]", parts.join(", "))
+}
+
+/// RuboCop::RSpec::Example parts of an example block: (doc_string, metadata), as captured by
+/// `(send _ _ $_ ...)` and `(send _ _ _ $...)` (None when the send has no argument).
+pub fn example_parts<'pr>(call: &CallNode<'pr>) -> (Option<Node<'pr>>, Option<Vec<Node<'pr>>>) {
+    let mut args = send_args(call).into_iter();
+    match args.next() {
+        None => (None, None),
+        Some(first) => (Some(first), Some(args.collect())),
+    }
+}
+
+/// RepeatedItems#find_repeated_groups: items grouped by key (first appearance order), groups of
+/// two or more.
+pub fn repeated_groups<T>(items: Vec<(String, T)>) -> Vec<Vec<T>> {
+    let mut groups: Vec<(String, Vec<T>)> = Vec::new();
+    for (key, item) in items {
+        match groups.iter_mut().find(|(k, _)| *k == key) {
+            Some((_, v)) => v.push(item),
+            None => groups.push((key, vec![item])),
+        }
+    }
+    groups.into_iter().map(|(_, v)| v).filter(|v| v.len() > 1).collect()
+}
+
+/// RepeatedItems#add_repeated_lines' message part: the other items' first lines, as Ruby prints
+/// an array (`[3, 7]`).
+pub fn lines_list(lines: &[usize]) -> String {
+    format!("[{}]", lines.iter().map(|l| l.to_string()).collect::<Vec<_>>().join(", "))
+}
+
+/// The statements of a parser `begin` for an `on_begin` cop visiting a StatementsNode: two or more
+/// statements, not the direct body of a plain `begin ... end` (a `kwbegin`).
+pub fn begin_statements<'pr>(cx: &Cx, node: &Node<'pr>) -> Option<Vec<Node<'pr>>> {
+    let stmts: Vec<Node> = node.as_statements_node()?.body().iter().collect();
+    let kwbegin = cx.ancestors.last().and_then(|p| p.as_begin_node()).is_some_and(|b| {
+        b.begin_keyword_loc().is_some() && b.rescue_clause().is_none() && b.ensure_clause().is_none() && b.else_clause().is_none()
+    });
+    (stmts.len() > 1 && !kwbegin).then_some(stmts)
+}
+
 /// A node's byte range.
 pub fn node_range(node: &Node) -> (usize, usize) {
     let l = node.location();
