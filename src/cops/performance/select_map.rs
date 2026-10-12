@@ -20,7 +20,7 @@ impl Cop for SelectMap {
         if name != "select" && name != "filter" {
             return;
         }
-        if call_args(&call).first().is_some() {
+        if !call_args(&call).is_empty() {
             return;
         }
         let anc = cx.ancestors;
