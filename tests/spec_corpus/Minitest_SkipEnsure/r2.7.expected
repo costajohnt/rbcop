@@ -1,0 +1,10 @@
+==> offenses exit=1 294 <==
+test/007_test.rb:5:1: W: Minitest/SkipEnsure: `ensure` is called even though the test is skipped.
+test/008_test.rb:5:1: W: Minitest/SkipEnsure: `ensure` is called even though the test is skipped.
+test/009_test.rb:5:1: W: Minitest/SkipEnsure: `ensure` is called even though the test is skipped.
+
+==> autocorrect exit=1 294 <==
+test/007_test.rb:5:1: W: Minitest/SkipEnsure: `ensure` is called even though the test is skipped.
+test/008_test.rb:5:1: W: Minitest/SkipEnsure: `ensure` is called even though the test is skipped.
+test/009_test.rb:5:1: W: Minitest/SkipEnsure: `ensure` is called even though the test is skipped.
+

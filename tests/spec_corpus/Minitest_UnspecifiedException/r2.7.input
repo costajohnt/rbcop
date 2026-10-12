@@ -1,0 +1,31 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 120 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_raises(FooException) { raise FooException }
+  end
+end
+
+==> test/001_test.rb 106 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_raises { raise FooException }
+  end
+end
+
+==> test/002_test.rb 133 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_raises('This should have raised') { raise FooException }
+  end
+end
+

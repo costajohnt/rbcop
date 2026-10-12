@@ -1,0 +1,109 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 34 <==
+assert_respond_to(obj, meth, nil)
+
+==> test/001_test.rb 23 <==
+refute_empty(obj, nil)
+
+==> test/002_test.rb 28 <==
+assert_equal(exp, act, nil)
+
+==> test/003_test.rb 21 <==
+refute_nil(obj, nil)
+
+==> test/004_test.rb 34 <==
+refute_respond_to(obj, meth, nil)
+
+==> test/005_test.rb 32 <==
+refute_match(matcher, obj, nil)
+
+==> test/006_test.rb 28 <==
+refute_equal(exp, act, nil)
+
+==> test/007_test.rb 30 <==
+refute_kind_of(cls, obj, nil)
+
+==> test/008_test.rb 34 <==
+refute_instance_of(cls, obj, nil)
+
+==> test/009_test.rb 30 <==
+refute_predicate(o1, op, nil)
+
+==> test/010_test.rb 11 <==
+flunk(nil)
+
+==> test/011_test.rb 42 <==
+refute_in_epsilon(exp, act, epsilon, nil)
+
+==> test/012_test.rb 38 <==
+assert_in_delta(exp, act, delta, nil)
+
+==> test/013_test.rb 23 <==
+assert_empty(obj, nil)
+
+==> test/014_test.rb 38 <==
+refute_in_delta(exp, act, delta, nil)
+
+==> test/015_test.rb 38 <==
+refute_includes(collection, obj, nil)
+
+==> test/016_test.rb 21 <==
+assert_nil(obj, nil)
+
+==> test/017_test.rb 30 <==
+refute_path_exists(path, nil)
+
+==> test/018_test.rb 33 <==
+refute_operator(o1, op, op, nil)
+
+==> test/019_test.rb 18 <==
+refute(test, nil)
+
+==> test/020_test.rb 38 <==
+assert_includes(collection, obj, nil)
+
+==> test/021_test.rb 30 <==
+assert_predicate(o1, op, nil)
+
+==> test/022_test.rb 34 <==
+assert_instance_of(cls, obj, nil)
+
+==> test/023_test.rb 27 <==
+refute_same(exp, act, nil)
+
+==> test/024_test.rb 18 <==
+assert(test, nil)
+
+==> test/025_test.rb 24 <==
+assert_throws(sym, nil)
+
+==> test/026_test.rb 24 <==
+assert(test, 'message')
+
+==> test/027_test.rb 27 <==
+assert_same(exp, act, nil)
+
+==> test/028_test.rb 42 <==
+assert_in_epsilon(exp, act, epsilon, nil)
+
+==> test/029_test.rb 33 <==
+assert_operator(o1, op, op, nil)
+
+==> test/030_test.rb 32 <==
+assert_match(matcher, obj, nil)
+
+==> test/031_test.rb 30 <==
+assert_kind_of(cls, obj, nil)
+
+==> test/032_test.rb 30 <==
+assert_path_exists(path, nil)
+

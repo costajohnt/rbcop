@@ -1,0 +1,40 @@
+==> offenses exit=1 448 <==
+test/000_test.rb:3:5: C: [Correctable] Minitest/RefutePathExists: Prefer using `refute_path_exists(path, 'message')`.
+test/001_test.rb:3:5: C: [Correctable] Minitest/RefutePathExists: Prefer using `refute_path_exists(path)`.
+test/002_test.rb:3:5: C: [Correctable] Minitest/RefutePathExists: Prefer using `refute_path_exists path`.
+test/004_test.rb:3:5: C: [Correctable] Minitest/RefutePathExists: Prefer using `refute_path_exists path, 'message'`.
+
+==> autocorrect exit=0 440 <==
+test/000_test.rb:3:5: C: [Corrected] Minitest/RefutePathExists: Prefer using `refute_path_exists(path, 'message')`.
+test/001_test.rb:3:5: C: [Corrected] Minitest/RefutePathExists: Prefer using `refute_path_exists(path)`.
+test/002_test.rb:3:5: C: [Corrected] Minitest/RefutePathExists: Prefer using `refute_path_exists path`.
+test/004_test.rb:3:5: C: [Corrected] Minitest/RefutePathExists: Prefer using `refute_path_exists path, 'message'`.
+
+==> corrected/test/000_test.rb 105 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_path_exists(path, 'message')
+  end
+end
+
+==> corrected/test/001_test.rb 94 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_path_exists(path)
+  end
+end
+
+==> corrected/test/002_test.rb 93 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_path_exists path
+  end
+end
+
+==> corrected/test/004_test.rb 104 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_path_exists path, 'message'
+  end
+end
+

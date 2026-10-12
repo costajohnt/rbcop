@@ -1,0 +1,45 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 106 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(File.exist?(path), 'message')
+  end
+end
+
+==> test/001_test.rb 95 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(File.exist?(path))
+  end
+end
+
+==> test/002_test.rb 94 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert File.exist?(path)
+  end
+end
+
+==> test/003_test.rb 94 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_path_exists(path)
+  end
+end
+
+==> test/004_test.rb 105 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert File.exist?(path), 'message'
+  end
+end
+

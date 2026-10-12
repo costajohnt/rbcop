@@ -1,0 +1,67 @@
+==> offenses exit=1 840 <==
+test/001_test.rb:3:5: C: [Correctable] Minitest/RefuteEqual: Prefer using `refute_equal('rubocop-minitest', actual, 'message')`.
+test/002_test.rb:3:5: C: [Correctable] Minitest/RefuteEqual: Prefer using `refute_equal('rubocop-minitest', actual)`.
+test/004_test.rb:3:5: C: [Correctable] Minitest/RefuteEqual: Prefer using `refute_equal('rubocop-minitest', actual)`.
+test/005_test.rb:3:5: C: [Correctable] Minitest/RefuteEqual: Prefer using `refute_equal(obj.expected, other_obj.actual)`.
+test/007_test.rb:3:5: C: [Correctable] Minitest/RefuteEqual: Prefer using `refute_equal('rubocop-minitest', actual)`.
+test/010_test.rb:3:5: C: [Correctable] Minitest/RefuteEqual: Prefer using `refute_equal('rubocop-minitest', actual, message)`.
+test/012_test.rb:3:5: C: [Correctable] Minitest/RefuteEqual: Prefer using `refute_equal(expected, actual)`.
+
+==> autocorrect exit=0 826 <==
+test/001_test.rb:3:5: C: [Corrected] Minitest/RefuteEqual: Prefer using `refute_equal('rubocop-minitest', actual, 'message')`.
+test/002_test.rb:3:5: C: [Corrected] Minitest/RefuteEqual: Prefer using `refute_equal('rubocop-minitest', actual)`.
+test/004_test.rb:3:5: C: [Corrected] Minitest/RefuteEqual: Prefer using `refute_equal('rubocop-minitest', actual)`.
+test/005_test.rb:3:5: C: [Corrected] Minitest/RefuteEqual: Prefer using `refute_equal(obj.expected, other_obj.actual)`.
+test/007_test.rb:3:5: C: [Corrected] Minitest/RefuteEqual: Prefer using `refute_equal('rubocop-minitest', actual)`.
+test/010_test.rb:3:5: C: [Corrected] Minitest/RefuteEqual: Prefer using `refute_equal('rubocop-minitest', actual, message)`.
+test/012_test.rb:3:5: C: [Corrected] Minitest/RefuteEqual: Prefer using `refute_equal(expected, actual)`.
+
+==> corrected/test/001_test.rb 121 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_equal('rubocop-minitest', actual, 'message')
+  end
+end
+
+==> corrected/test/002_test.rb 110 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_equal('rubocop-minitest', actual)
+  end
+end
+
+==> corrected/test/004_test.rb 110 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_equal('rubocop-minitest', actual)
+  end
+end
+
+==> corrected/test/005_test.rb 114 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_equal(obj.expected, other_obj.actual)
+  end
+end
+
+==> corrected/test/007_test.rb 110 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_equal('rubocop-minitest', actual)
+  end
+end
+
+==> corrected/test/010_test.rb 119 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_equal('rubocop-minitest', actual, message)
+  end
+end
+
+==> corrected/test/012_test.rb 100 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_equal(expected, actual)
+  end
+end
+

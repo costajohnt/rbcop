@@ -1,0 +1,70 @@
+==> offenses exit=1 852 <==
+test/001_test.rb:3:5: C: [Correctable] Minitest/AssertEqual: Prefer using `assert_equal('rubocop-minitest', actual, <<~MESSAGE)`.
+test/002_test.rb:3:5: C: [Correctable] Minitest/AssertEqual: Prefer using `assert_equal(obj.expected, other_obj.actual)`.
+test/003_test.rb:3:5: C: [Correctable] Minitest/AssertEqual: Prefer using `assert_equal('rubocop-minitest', actual)`.
+test/005_test.rb:3:5: C: [Correctable] Minitest/AssertEqual: Prefer using `assert_equal('rubocop-minitest', actual)`.
+test/007_test.rb:3:5: C: [Correctable] Minitest/AssertEqual: Prefer using `assert_equal('rubocop-minitest', actual, 'message')`.
+test/009_test.rb:3:5: C: [Correctable] Minitest/AssertEqual: Prefer using `assert_equal('rubocop-minitest', actual, message)`.
+test/010_test.rb:3:5: C: [Correctable] Minitest/AssertEqual: Prefer using `assert_equal(expected, actual)`.
+
+==> autocorrect exit=0 838 <==
+test/001_test.rb:3:5: C: [Corrected] Minitest/AssertEqual: Prefer using `assert_equal('rubocop-minitest', actual, <<~MESSAGE)`.
+test/002_test.rb:3:5: C: [Corrected] Minitest/AssertEqual: Prefer using `assert_equal(obj.expected, other_obj.actual)`.
+test/003_test.rb:3:5: C: [Corrected] Minitest/AssertEqual: Prefer using `assert_equal('rubocop-minitest', actual)`.
+test/005_test.rb:3:5: C: [Corrected] Minitest/AssertEqual: Prefer using `assert_equal('rubocop-minitest', actual)`.
+test/007_test.rb:3:5: C: [Corrected] Minitest/AssertEqual: Prefer using `assert_equal('rubocop-minitest', actual, 'message')`.
+test/009_test.rb:3:5: C: [Corrected] Minitest/AssertEqual: Prefer using `assert_equal('rubocop-minitest', actual, message)`.
+test/010_test.rb:3:5: C: [Corrected] Minitest/AssertEqual: Prefer using `assert_equal(expected, actual)`.
+
+==> corrected/test/001_test.rb 153 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal('rubocop-minitest', actual, <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+
+==> corrected/test/002_test.rb 114 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(obj.expected, other_obj.actual)
+  end
+end
+
+==> corrected/test/003_test.rb 110 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal('rubocop-minitest', actual)
+  end
+end
+
+==> corrected/test/005_test.rb 110 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal('rubocop-minitest', actual)
+  end
+end
+
+==> corrected/test/007_test.rb 121 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal('rubocop-minitest', actual, 'message')
+  end
+end
+
+==> corrected/test/009_test.rb 119 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal('rubocop-minitest', actual, message)
+  end
+end
+
+==> corrected/test/010_test.rb 100 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(expected, actual)
+  end
+end
+

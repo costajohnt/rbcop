@@ -1,0 +1,63 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 120 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_equal(expected.object_id, actual.object_id)
+  end
+end
+
+==> test/001_test.rb 144 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute(expected.equal?(actual), <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+
+==> test/002_test.rb 99 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_same(expected, actual)
+  end
+end
+
+==> test/003_test.rb 130 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute(expected.eql?(actual))
+    refute(foo.combines?(bar))
+  end
+end
+
+==> test/004_test.rb 101 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute(expected.equal?(actual))
+  end
+end
+
+==> test/005_test.rb 112 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute(expected.equal?(actual), 'message')
+  end
+end
+
+==> test/006_test.rb 115 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute(obj.expected.equal?(other_obj.actual))
+  end
+end
+

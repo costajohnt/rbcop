@@ -1,0 +1,8 @@
+==> offenses exit=1 234 <==
+test/000_test.rb:4:5: W: Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(3, my_list.length)`?
+test/003_test.rb:4:5: W: Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(3, my_list_length)`?
+
+==> autocorrect exit=1 234 <==
+test/000_test.rb:4:5: W: Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(3, my_list.length)`?
+test/003_test.rb:4:5: W: Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(3, my_list_length)`?
+

@@ -1,0 +1,31 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 92 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(foo, bar)
+  end
+end
+
+==> test/001_test.rb 80 <==
+class FooTest < Minitest::Test
+  def setup
+    assert_equal(foo, bar)
+  end
+end
+
+==> test/002_test.rb 59 <==
+class Foo
+  def setup
+    assert_equal(foo, bar)
+  end
+end
+

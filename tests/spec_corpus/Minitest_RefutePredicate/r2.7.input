@@ -1,0 +1,90 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 94 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute(obj.do_something)
+  end
+end
+
+==> test/001_test.rb 91 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute(obj.foo?(arg))
+  end
+end
+
+==> test/002_test.rb 120 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute([1, 2, 3].any? { some_filter_function it })
+  end
+end
+
+==> test/003_test.rb 97 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute(obj.one?, 'message')
+  end
+end
+
+==> test/004_test.rb 102 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    obj = create_obj
+    refute(obj)
+  end
+end
+
+==> test/005_test.rb 88 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute((obj.one?))
+  end
+end
+
+==> test/006_test.rb 98 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_predicate(obj, :one?)
+  end
+end
+
+==> test/007_test.rb 86 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute(obj.one?)
+  end
+end
+
+==> test/008_test.rb 82 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute(one?)
+  end
+end
+
+==> test/009_test.rb 124 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute(obj.one?, <<~MESSAGE)
+      message
+    MESSAGE
+  end
+end
+
+==> test/010_test.rb 120 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute([1, 2, 3].any? { some_filter_function _1 })
+  end
+end
+

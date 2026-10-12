@@ -1,0 +1,57 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 80 <==
+class FooTest < Minitest::Test
+  def setup
+    $stdout = StringIO.new
+  end
+end
+
+==> test/001_test.rb 118 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    $stdout = StringIO.new
+    assert_equal foo, bar
+  end
+end
+
+==> test/002_test.rb 174 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    $stdout = StringIO.new
+    puts object.method
+    $stdout.rewind
+    assert_match expected, $stdout.read
+  end
+end
+
+==> test/003_test.rb 87 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    $myvariable = foo
+  end
+end
+
+==> test/004_test.rb 13 <==
+$foo = false
+
+==> test/005_test.rb 211 <==
+class FooTest < Minitest::Test
+  describe Foo do
+    it "does something" do
+      $stdout = StringIO.new
+      puts object.method
+      $stdout.rewind
+      assert_match expected, $stdout.read
+    end
+  end
+end
+

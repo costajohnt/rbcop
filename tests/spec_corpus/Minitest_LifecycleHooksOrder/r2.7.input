@@ -1,0 +1,76 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 263 <==
+class FooTest < Minitest::Test
+  def after_teardown
+    more_cleanup
+  end
+
+  def before_setup; end
+
+  def test_something
+    assert_equal foo, bar
+  end
+
+  def teardown
+    cleanup
+  end
+
+  def setup
+    setup_something
+  end
+
+  def test_something_else; end
+end
+
+==> test/001_test.rb 96 <==
+class FooTest < Minitest::Test
+  def do_something; end
+  def setup; end
+  def teardown; end
+end
+
+==> test/002_test.rb 72 <==
+class FooTest < Minitest::Test
+  def setup; end
+  def teardown; end
+end
+
+==> test/003_test.rb 156 <==
+class FooTest < Minitest::Test
+  # after_teardown comment
+  def after_teardown
+    more_cleanup
+  end
+
+  # before_setup comment
+  def before_setup; end
+end
+
+==> test/004_test.rb 55 <==
+class FooTest
+  def teardown; end
+  def setup; end
+end
+
+==> test/005_test.rb 36 <==
+class FooTest < Minitest::Test; end
+
+==> test/006_test.rb 126 <==
+class FooTest < Minitest::Test
+  def test_something
+    assert_equal foo, bar
+  end
+
+  def setup; end
+  def teardown; end
+end
+

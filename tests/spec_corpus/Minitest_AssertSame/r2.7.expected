@@ -1,0 +1,52 @@
+==> offenses exit=1 567 <==
+test/000_test.rb:3:5: C: [Correctable] Minitest/AssertSame: Prefer using `assert_same(obj.expected, other_obj.actual)`.
+test/001_test.rb:3:5: C: [Correctable] Minitest/AssertSame: Prefer using `assert_same(expected, actual)`.
+test/004_test.rb:3:5: C: [Correctable] Minitest/AssertSame: Prefer using `assert_same(expected, actual, 'message')`.
+test/005_test.rb:3:5: C: [Correctable] Minitest/AssertSame: Prefer using `assert_same(expected, actual, <<~MESSAGE)`.
+test/006_test.rb:3:5: C: [Correctable] Minitest/AssertSame: Prefer using `assert_same(expected, actual)`.
+
+==> autocorrect exit=0 557 <==
+test/000_test.rb:3:5: C: [Corrected] Minitest/AssertSame: Prefer using `assert_same(obj.expected, other_obj.actual)`.
+test/001_test.rb:3:5: C: [Corrected] Minitest/AssertSame: Prefer using `assert_same(expected, actual)`.
+test/004_test.rb:3:5: C: [Corrected] Minitest/AssertSame: Prefer using `assert_same(expected, actual, 'message')`.
+test/005_test.rb:3:5: C: [Corrected] Minitest/AssertSame: Prefer using `assert_same(expected, actual, <<~MESSAGE)`.
+test/006_test.rb:3:5: C: [Corrected] Minitest/AssertSame: Prefer using `assert_same(expected, actual)`.
+
+==> corrected/test/000_test.rb 113 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_same(obj.expected, other_obj.actual)
+  end
+end
+
+==> corrected/test/001_test.rb 99 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_same(expected, actual)
+  end
+end
+
+==> corrected/test/004_test.rb 110 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_same(expected, actual, 'message')
+  end
+end
+
+==> corrected/test/005_test.rb 142 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_same(expected, actual, <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+
+==> corrected/test/006_test.rb 99 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_same(expected, actual)
+  end
+end
+

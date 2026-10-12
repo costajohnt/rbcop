@@ -1,0 +1,6 @@
+==> offenses exit=1 103 <==
+test/001_test.rb:3:5: C: Minitest/AssertionInLifecycleHook: Do not use `assert_equal` in `setup` hook.
+
+==> autocorrect exit=1 103 <==
+test/001_test.rb:3:5: C: Minitest/AssertionInLifecycleHook: Do not use `assert_equal` in `setup` hook.
+

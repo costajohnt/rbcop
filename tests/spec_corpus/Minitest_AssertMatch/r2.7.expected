@@ -1,0 +1,157 @@
+==> offenses exit=1 1787 <==
+test/000_test.rb:3:5: C: [Correctable] Minitest/AssertMatch: Prefer using `assert_match(matcher, object, 'message')`.
+test/003_test.rb:3:5: C: [Correctable] Minitest/AssertMatch: Prefer using `assert_match(matcher, object, <<~MESSAGE)`.
+test/004_test.rb:3:5: C: [Correctable] Minitest/AssertMatch: Prefer using `assert_match(/regexp/, object)`.
+test/005_test.rb:3:5: C: [Correctable] Minitest/AssertMatch: Prefer using `assert_match(/regexp/, object)`.
+test/007_test.rb:3:5: C: [Correctable] Minitest/AssertMatch: Prefer using `assert_match(matcher, object)`.
+test/009_test.rb:3:5: C: [Correctable] Minitest/AssertMatch: Prefer using `assert_match(matcher, object, <<~MESSAGE)`.
+test/010_test.rb:3:5: C: [Correctable] Minitest/AssertMatch: Prefer using `assert_match(matcher, object, <<~MESSAGE)`.
+test/011_test.rb:3:5: C: [Correctable] Minitest/AssertMatch: Prefer using `assert_match(/regexp/, object)`.
+test/013_test.rb:3:5: C: [Correctable] Minitest/AssertMatch: Prefer using `assert_match(/regexp/, object)`.
+test/015_test.rb:3:5: C: [Correctable] Minitest/AssertMatch: Prefer using `assert_match(matcher, object, 'message')`.
+test/017_test.rb:3:5: C: [Correctable] Minitest/AssertMatch: Prefer using `assert_match(/regexp/, object)`.
+test/018_test.rb:3:5: C: [Correctable] Minitest/AssertMatch: Prefer using `assert_match(/regexp/, object)`.
+test/019_test.rb:3:5: C: [Correctable] Minitest/AssertMatch: Prefer using `assert_match(matcher, object, 'message')`.
+test/020_test.rb:3:5: C: [Correctable] Minitest/AssertMatch: Prefer using `assert_match(matcher, object)`.
+test/021_test.rb:3:5: C: [Correctable] Minitest/AssertMatch: Prefer using `assert_match(matcher, object)`.
+test/022_test.rb:3:5: C: [Correctable] Minitest/AssertMatch: Prefer using `assert_match(matcher, object)`.
+
+==> autocorrect exit=0 1755 <==
+test/000_test.rb:3:5: C: [Corrected] Minitest/AssertMatch: Prefer using `assert_match(matcher, object, 'message')`.
+test/003_test.rb:3:5: C: [Corrected] Minitest/AssertMatch: Prefer using `assert_match(matcher, object, <<~MESSAGE)`.
+test/004_test.rb:3:5: C: [Corrected] Minitest/AssertMatch: Prefer using `assert_match(/regexp/, object)`.
+test/005_test.rb:3:5: C: [Corrected] Minitest/AssertMatch: Prefer using `assert_match(/regexp/, object)`.
+test/007_test.rb:3:5: C: [Corrected] Minitest/AssertMatch: Prefer using `assert_match(matcher, object)`.
+test/009_test.rb:3:5: C: [Corrected] Minitest/AssertMatch: Prefer using `assert_match(matcher, object, <<~MESSAGE)`.
+test/010_test.rb:3:5: C: [Corrected] Minitest/AssertMatch: Prefer using `assert_match(matcher, object, <<~MESSAGE)`.
+test/011_test.rb:3:5: C: [Corrected] Minitest/AssertMatch: Prefer using `assert_match(/regexp/, object)`.
+test/013_test.rb:3:5: C: [Corrected] Minitest/AssertMatch: Prefer using `assert_match(/regexp/, object)`.
+test/015_test.rb:3:5: C: [Corrected] Minitest/AssertMatch: Prefer using `assert_match(matcher, object, 'message')`.
+test/017_test.rb:3:5: C: [Corrected] Minitest/AssertMatch: Prefer using `assert_match(/regexp/, object)`.
+test/018_test.rb:3:5: C: [Corrected] Minitest/AssertMatch: Prefer using `assert_match(/regexp/, object)`.
+test/019_test.rb:3:5: C: [Corrected] Minitest/AssertMatch: Prefer using `assert_match(matcher, object, 'message')`.
+test/020_test.rb:3:5: C: [Corrected] Minitest/AssertMatch: Prefer using `assert_match(matcher, object)`.
+test/021_test.rb:3:5: C: [Corrected] Minitest/AssertMatch: Prefer using `assert_match(matcher, object)`.
+test/022_test.rb:3:5: C: [Corrected] Minitest/AssertMatch: Prefer using `assert_match(matcher, object)`.
+
+==> corrected/test/000_test.rb 110 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_match(matcher, object, 'message')
+  end
+end
+
+==> corrected/test/003_test.rb 142 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_match(matcher, object, <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+
+==> corrected/test/004_test.rb 100 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_match(/regexp/, object)
+  end
+end
+
+==> corrected/test/005_test.rb 100 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_match(/regexp/, object)
+  end
+end
+
+==> corrected/test/007_test.rb 99 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_match(matcher, object)
+  end
+end
+
+==> corrected/test/009_test.rb 142 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_match(matcher, object, <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+
+==> corrected/test/010_test.rb 142 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_match(matcher, object, <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+
+==> corrected/test/011_test.rb 100 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_match(/regexp/, object)
+  end
+end
+
+==> corrected/test/013_test.rb 100 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_match(/regexp/, object)
+  end
+end
+
+==> corrected/test/015_test.rb 110 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_match(matcher, object, 'message')
+  end
+end
+
+==> corrected/test/017_test.rb 100 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_match(/regexp/, object)
+  end
+end
+
+==> corrected/test/018_test.rb 100 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_match(/regexp/, object)
+  end
+end
+
+==> corrected/test/019_test.rb 110 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_match(matcher, object, 'message')
+  end
+end
+
+==> corrected/test/020_test.rb 99 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_match(matcher, object)
+  end
+end
+
+==> corrected/test/021_test.rb 99 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_match(matcher, object)
+  end
+end
+
+==> corrected/test/022_test.rb 99 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_match(matcher, object)
+  end
+end
+

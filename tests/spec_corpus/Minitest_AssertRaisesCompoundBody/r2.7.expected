@@ -1,0 +1,6 @@
+==> offenses exit=1 128 <==
+test/005_test.rb:1:1: C: Minitest/AssertRaisesCompoundBody: Reduce `assert_raises` block body to contain only the raising code.
+
+==> autocorrect exit=1 128 <==
+test/005_test.rb:1:1: C: Minitest/AssertRaisesCompoundBody: Reduce `assert_raises` block body to contain only the raising code.
+

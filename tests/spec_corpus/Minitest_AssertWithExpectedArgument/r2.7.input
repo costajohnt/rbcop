@@ -1,0 +1,69 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 119 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    my_list = [1, 2, 3]
+    assert(3, my_list.length)
+  end
+end
+
+==> test/001_test.rb 89 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert([], message)
+  end
+end
+
+==> test/002_test.rb 112 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert([], "empty array should be truthy")
+  end
+end
+
+==> test/003_test.rb 118 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    my_list_length = 3
+    assert(3, my_list_length)
+  end
+end
+
+==> test/004_test.rb 82 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(true)
+  end
+end
+
+==> test/005_test.rb 173 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    additional_message = 'hello world'
+    assert([], "empty array should be truthy #{additional_message}")
+  end
+end
+
+==> test/006_test.rb 85 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert([], msg)
+  end
+end
+
+==> test/007_test.rb 93 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(3, actual)
+  end
+end
+

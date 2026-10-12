@@ -8,10 +8,12 @@ running the pinned plugin version below.
 |---|---|---|---|---|
 | rubocop-performance | 1.27.0 | Performance | all 52 | #283 |
 | rubocop-rails | 2.38.0 | Rails | all 138 | #284 |
+| rubocop-minitest | 0.41.0 | Minitest | all 55 | #286 |
 
 Each version is the newest release that supports RuboCop 1.91.0 (rubocop-performance 1.27.0
 requires `rubocop >= 1.89.0, < 2.0`, released 2026-08-16; rubocop-rails 2.38.0 requires
-`rubocop >= 1.89.0, < 2.0`, released 2026-09-20). The gem's `config/default.yml` is vendored
+`rubocop >= 1.89.0, < 2.0`, released 2026-09-20;
+rubocop-minitest 0.41.0 requires `rubocop >= 1.89.0, < 2.0`, released 2026-10-02). The gem's `config/default.yml` is vendored
 as `config/plugins/<gem>.yml` (MIT, `config/plugins/LICENSE-<gem>`), so the gem need not be
 installed; a different installed version is ignored.
 
@@ -65,6 +67,8 @@ installed; a different installed version is ignored.
    for the nine corpora and the corpus2 projects (oracle dir next to `$RBCOP_ORACLE`).
 4. Record the gem's spec examples into `tests/spec_corpus` from the gem's source at the pinned tag:
    `PLUGIN=<gem> scripts/record-spec-corpus.sh <gem-src>` (only that plugin's cop dirs are replaced).
+   A gem tested with Minitest (`test/rubocop/cop`, rubocop-minitest) is extracted by running its
+   tests with the installed gem (scripts/extract_minitest_corpus.rb).
 5. Port the cops as in docs/porting-cops.md (Ruby source in the installed gem). Quick loop:
    `SPEC_CORPUS_ONLY=<Dept>_ cargo test --release --test spec_corpus`.
 6. Add the plugin to the loop in `scripts/check-plugins.sh`, which `scripts/ci.sh` runs: offenses on

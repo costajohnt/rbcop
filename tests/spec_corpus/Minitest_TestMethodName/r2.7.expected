@@ -1,0 +1,32 @@
+==> offenses exit=1 230 <==
+test/000_test.rb:7:7: C: [Correctable] Minitest/TestMethodName: Test method name should start with `test_` prefix.
+test/006_test.rb:6:7: C: [Correctable] Minitest/TestMethodName: Test method name should start with `test_` prefix.
+
+==> autocorrect exit=0 226 <==
+test/000_test.rb:7:7: C: [Corrected] Minitest/TestMethodName: Test method name should start with `test_` prefix.
+test/006_test.rb:6:7: C: [Corrected] Minitest/TestMethodName: Test method name should start with `test_` prefix.
+
+==> corrected/test/000_test.rb 239 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(expected, actual)
+    assert_equal expected, actual
+  end
+
+  def test_do_something_else
+    assert_equal(expected, actual)
+    assert_equal expected, actual
+  end
+end
+
+==> corrected/test/006_test.rb 171 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(expected, actual)
+  end
+
+  def test_do_something_else
+    assert_equal(expected, actual)
+  end
+end
+
