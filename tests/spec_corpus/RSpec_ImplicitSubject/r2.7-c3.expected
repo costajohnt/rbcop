@@ -1,0 +1,16 @@
+==> offenses exit=1 178 <==
+004/004_spec.rb:1:6: C: [Correctable] RSpec/ImplicitSubject: Don't use explicit subject.
+005/005_spec.rb:2:3: C: [Correctable] RSpec/ImplicitSubject: Don't use explicit subject.
+
+==> autocorrect exit=0 174 <==
+004/004_spec.rb:1:6: C: [Corrected] RSpec/ImplicitSubject: Don't use explicit subject.
+005/005_spec.rb:2:3: C: [Corrected] RSpec/ImplicitSubject: Don't use explicit subject.
+
+==> corrected/004/004_spec.rb 30 <==
+it { is_expected.to be_good }
+
+==> corrected/005/005_spec.rb 35 <==
+it do
+  is_expected.to be_good
+end
+

@@ -1,0 +1,22 @@
+==> .rubocop.yml 226 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/IndexedLet:
+  Max: 1
+  AllowedIdentifiers:
+  - item_1
+  - item_2
+  AllowedPatterns: []
+
+==> 000/000_spec.rb 94 <==
+describe SomeService do
+  let(:item_1) { create(:item) }
+  let(:item_2) { create(:item) }
+end
+

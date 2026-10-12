@@ -1,0 +1,33 @@
+==> .rubocop.yml 182 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/ImplicitSubject:
+  EnforcedStyle: disallow
+
+==> 000/000_spec.rb 63 <==
+it 'expect subject to be used' do
+  is_expected.to be_good
+end
+
+==> 001/001_spec.rb 30 <==
+it { is_expected.to be_good }
+
+==> 002/002_spec.rb 75 <==
+it 'expect subject to be used' do
+  should be_good
+  should_not be_bad
+end
+
+==> 003/003_spec.rb 47 <==
+it { should be_good }
+it { should_not be_bad }
+
+==> 004/004_spec.rb 42 <==
+its(:quality) { is_expected.to be :high }
+

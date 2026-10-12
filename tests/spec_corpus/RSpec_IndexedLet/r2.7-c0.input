@@ -1,0 +1,83 @@
+==> .rubocop.yml 207 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/IndexedLet:
+  Max: 1
+  AllowedIdentifiers: []
+  AllowedPatterns: []
+
+==> 000/000_spec.rb 94 <==
+describe SomeService do
+  let(:item_1) { create(:item) }
+  let(:item_2) { create(:item) }
+end
+
+==> 001/001_spec.rb 96 <==
+describe SomeService do
+  let("item_1") { create(:item) }
+  let("item_2") { create(:item) }
+end
+
+==> 002/002_spec.rb 92 <==
+describe SomeService do
+  let(:item1) { create(:item) }
+  let(:item2) { create(:item) }
+end
+
+==> 003/003_spec.rb 74 <==
+describe SomeService do
+  let(:item_1, &block)
+  let(:item_2, &block)
+end
+
+==> 004/004_spec.rb 131 <==
+describe SomeService do
+  let(:item_1) { create(:item) }
+
+  context "some context" do
+    let(:item_2) { create(:item) }
+  end
+end
+
+==> 005/005_spec.rb 147 <==
+context SomeService do
+  let(:user_1_item_1) { create(:item) }
+  let(:user_1_item_2) { create(:item) }
+  let(:user_2_item_1) { create(:item) }
+end
+
+==> 006/006_spec.rb 99 <==
+context SomeService do
+  let(:user_7_day_average) { 700 }
+  let(:user_30_day_average) { 3000 }
+end
+
+==> 007/007_spec.rb 98 <==
+describe SomeService do
+  let(:item_1) { create(:item) }
+  let(:foo_item_1) { create(:item) }
+end
+
+==> 008/008_spec.rb 92 <==
+describe SomeService do
+  let(:item) { create(:item) }
+  let(:item_1) { create(:item) }
+end
+
+==> 009/009_spec.rb 95 <==
+describe SomeService do
+  let(:item_1) { create(:item) }
+  let("item_2") { create(:item) }
+end
+
+==> 010/010_spec.rb 61 <==
+describe SomeService do
+  let(:item_1) { create(:item) }
+end
+

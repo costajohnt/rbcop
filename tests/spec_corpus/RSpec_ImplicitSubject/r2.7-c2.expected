@@ -1,0 +1,34 @@
+==> offenses exit=1 534 <==
+000/000_spec.rb:2:3: C: [Correctable] RSpec/ImplicitSubject: Don't use implicit subject.
+001/001_spec.rb:1:6: C: [Correctable] RSpec/ImplicitSubject: Don't use implicit subject.
+002/002_spec.rb:2:3: C: [Correctable] RSpec/ImplicitSubject: Don't use implicit subject.
+002/002_spec.rb:3:3: C: [Correctable] RSpec/ImplicitSubject: Don't use implicit subject.
+003/003_spec.rb:1:6: C: [Correctable] RSpec/ImplicitSubject: Don't use implicit subject.
+003/003_spec.rb:2:6: C: [Correctable] RSpec/ImplicitSubject: Don't use implicit subject.
+
+==> autocorrect exit=0 522 <==
+000/000_spec.rb:2:3: C: [Corrected] RSpec/ImplicitSubject: Don't use implicit subject.
+001/001_spec.rb:1:6: C: [Corrected] RSpec/ImplicitSubject: Don't use implicit subject.
+002/002_spec.rb:2:3: C: [Corrected] RSpec/ImplicitSubject: Don't use implicit subject.
+002/002_spec.rb:3:3: C: [Corrected] RSpec/ImplicitSubject: Don't use implicit subject.
+003/003_spec.rb:1:6: C: [Corrected] RSpec/ImplicitSubject: Don't use implicit subject.
+003/003_spec.rb:2:6: C: [Corrected] RSpec/ImplicitSubject: Don't use implicit subject.
+
+==> corrected/000/000_spec.rb 67 <==
+it 'expect subject to be used' do
+  expect(subject).to be_good
+end
+
+==> corrected/001/001_spec.rb 34 <==
+it { expect(subject).to be_good }
+
+==> corrected/002/002_spec.rb 99 <==
+it 'expect subject to be used' do
+  expect(subject).to be_good
+  expect(subject).not_to be_bad
+end
+
+==> corrected/003/003_spec.rb 71 <==
+it { expect(subject).to be_good }
+it { expect(subject).not_to be_bad }
+

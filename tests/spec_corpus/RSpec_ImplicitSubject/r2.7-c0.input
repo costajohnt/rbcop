@@ -1,0 +1,46 @@
+==> .rubocop.yml 190 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/ImplicitSubject:
+  EnforcedStyle: single_line_only
+
+==> 000/000_spec.rb 63 <==
+it 'expect subject to be used' do
+  is_expected.to be_good
+end
+
+==> 001/001_spec.rb 47 <==
+its(:quality) do
+  is_expected.to be :high
+end
+
+==> 002/002_spec.rb 75 <==
+it 'expect subject to be used' do
+  should be_good
+  should_not be_bad
+end
+
+==> 003/003_spec.rb 30 <==
+it { is_expected.to be_good }
+
+==> 004/004_spec.rb 22 <==
+it { should be_good }
+
+==> 005/005_spec.rb 130 <==
+it 'uses some similar sounding methods' do
+  expect(baz).to receive(:is_expected)
+  baz.is_expected
+  foo.should(deny_access)
+end
+
+==> 006/006_spec.rb 90 <==
+def permits(actions)
+  actions.each { |action| is_expected.to permit_action(action) }
+end
+

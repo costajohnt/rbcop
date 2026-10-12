@@ -1,0 +1,92 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 101 <==
+describe do
+  subject { -> { boom } }
+  it { is_expected.to change { something }.to(new_value) }
+end
+
+==> 001/001_spec.rb 77 <==
+describe do
+  subject { 'normal' }
+  it { is_expected.to eq(something) }
+end
+
+==> 002/002_spec.rb 102 <==
+describe do
+  subject! { -> { boom } }
+  it { is_expected.to change { something }.to(new_value) }
+end
+
+==> 003/003_spec.rb 106 <==
+describe do
+  subject! { lambda { boom } }
+  it { is_expected.to change { something }.to(new_value) }
+end
+
+==> 004/004_spec.rb 104 <==
+describe do
+  subject! { proc { boom } }
+  it { is_expected.to change { something }.to(new_value) }
+end
+
+==> 005/005_spec.rb 108 <==
+describe do
+  subject! { Proc.new { boom } }
+  it { is_expected.to change { something }.to(new_value) }
+end
+
+==> 006/006_spec.rb 108 <==
+describe do
+  subject(:name) { -> { boom } }
+  it { is_expected.to change { something }.to(new_value) }
+end
+
+==> 007/007_spec.rb 122 <==
+describe do
+  subject { -> { boom } }
+  context do
+    it { is_expected.to change { something }.to(new_value) }
+  end
+end
+
+==> 008/008_spec.rb 126 <==
+describe do
+  subject { -> { boom } }
+  context do
+    subject { 'normal' }
+    it { is_expected.to eq(something) }
+  end
+end
+
+==> 009/009_spec.rb 88 <==
+describe do
+  subject { {hash: -> { boom }} }
+  it { is_expected.to be(something) }
+end
+
+==> 010/010_spec.rb 93 <==
+describe do
+  subject { -> { boom } }
+  it { should change { something }.to(new_value) }
+end
+
+==> 011/011_spec.rb 97 <==
+describe do
+  subject { -> { boom } }
+  it { should_not change { something }.to(new_value) }
+end
+
+==> 012/012_spec.rb 118 <==
+shared_examples 'subject is defined somewhere else' do
+  it { is_expected.to change { something }.to(new_value) }
+end
+

@@ -1,0 +1,24 @@
+==> offenses exit=1 1000 <==
+000/000_spec.rb:2:3: C: RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+003/003_spec.rb:3:5: C: RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+004/004_spec.rb:2:3: C: RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+005/005_spec.rb:3:5: C: RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+006/006_spec.rb:2:3: C: RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+007/007_spec.rb:2:3: C: RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+009/009_spec.rb:2:3: C: RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+010/010_spec.rb:3:5: C: RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+013/013_spec.rb:9:5: C: RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+015/015_spec.rb:3:5: C: RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+
+==> autocorrect exit=1 1000 <==
+000/000_spec.rb:2:3: C: RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+003/003_spec.rb:3:5: C: RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+004/004_spec.rb:2:3: C: RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+005/005_spec.rb:3:5: C: RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+006/006_spec.rb:2:3: C: RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+007/007_spec.rb:2:3: C: RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+009/009_spec.rb:2:3: C: RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+010/010_spec.rb:3:5: C: RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+013/013_spec.rb:9:5: C: RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+015/015_spec.rb:3:5: C: RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+

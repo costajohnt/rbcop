@@ -1,0 +1,34 @@
+==> .rubocop.yml 190 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/ImplicitSubject:
+  EnforcedStyle: require_implicit
+
+==> 000/000_spec.rb 30 <==
+it { is_expected.to be_good }
+
+==> 001/001_spec.rb 54 <==
+it { expect { subject }.to change(goodness, :count) }
+
+==> 002/002_spec.rb 43 <==
+its(:quality) { is_expected.to be(:high) }
+
+==> 003/003_spec.rb 79 <==
+subject(:instance) { described_class.new }
+
+it { expect(instance).to be_good }
+
+==> 004/004_spec.rb 34 <==
+it { expect(subject).to be_good }
+
+==> 005/005_spec.rb 39 <==
+it do
+  expect(subject).to be_good
+end
+
