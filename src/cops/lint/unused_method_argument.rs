@@ -74,12 +74,12 @@ impl Cop for UnusedMethodArgument {
         let allowed: Vec<String> = cx.cfg.strings("NotImplementedExceptions");
         let mut defs = Defs { allowed: &allowed, info: HashMap::new() };
         defs.visit(node);
-        let tree = Tree::build(&node.as_program_node().unwrap(), cx.src);
+        let tree = Tree::shared(&node.as_program_node().unwrap(), cx.src);
         let allow_kw = cx.cfg.bool("AllowUnusedKeywordArguments") == Some(true);
         let ignore_empty = cx.cfg.bool("IgnoreEmptyMethods") == Some(true);
         let ignore_not_impl = cx.cfg.bool("IgnoreNotImplementedMethods") == Some(true);
         let mut offenses: Vec<(usize, String)> = Vec::new();
-        vf::investigate(&tree, |tree, scope, vars| {
+        vf::investigate(tree, |tree, scope, vars| {
             for &v in &scope.variables {
                 let var = &vars[v];
                 if !var.is_method_argument(tree) {
@@ -127,8 +127,8 @@ impl Cop for UnusedMethodArgument {
         });
         let src = cx.src;
         for (decl, msg) in offenses {
-            let (s, e) = unused_arg_corrector::name_range(&tree, decl);
-            let fix = unused_arg_corrector::correction(src.text, &tree, decl);
+            let (s, e) = unused_arg_corrector::name_range(tree, decl);
+            let fix = unused_arg_corrector::correction(src.text, tree, decl);
             cx.add_fix(s, e, msg, |c| {
                 if let Some((fs, fe, text)) = fix {
                     c.replace(fs, fe, &text);

@@ -544,6 +544,11 @@ fn analyze(
     src.parser_gem = parser_gem;
     src.target_ruby = cfg.target_ruby;
     src.lex_edits = edits;
+    // From 3.3 the runner's parse is parse_warnings::parse (unedited text, same version and
+    // encoding): its warnings save that second parse.
+    if !parser_gem {
+        let _ = src.parse_warnings.set(crate::helpers::parse_warnings::from_result(&result));
+    }
 
     // CommentConfig is analyzed once per investigation, not again for the redundant-directive pass
     // (it reuses the processed source).

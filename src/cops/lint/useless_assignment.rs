@@ -154,11 +154,11 @@ impl Cop for UselessAssignment {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let tree = Tree::build(&node.as_program_node().unwrap(), cx.src);
+        let tree = Tree::shared(&node.as_program_node().unwrap(), cx.src);
         let src = cx.src.text;
         let mut ignored: Vec<(usize, usize)> = Vec::new();
         let mut offenses: Vec<(usize, usize, String, Fix)> = Vec::new();
-        vf::investigate(&tree, |tree, scope, vars| {
+        vf::investigate(tree, |tree, scope, vars| {
             // The did-you-mean candidates of a scope, built once: rebuilding them per useless
             // assignment is cubic (20k `x = 1` lines never finished).
             let mut scope_names: Option<(Id, Vec<&str>)> = None;
