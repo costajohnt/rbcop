@@ -33,6 +33,10 @@ env:
   ZIG_VERSION: 0.13.0
   ZIG_SHA256: d45312e61ebcc48032b77bc4cf7fd6915c11fa16e4aad116b66c9468211230ea
   CARGO_ZIGBUILD_VERSION: 0.23.4
+  RELEASE_TARGETS: >-
+    aarch64-apple-darwin x86_64-apple-darwin x86_64-unknown-linux-gnu aarch64-unknown-linux-gnu
+    x86_64-unknown-linux-musl aarch64-unknown-linux-musl
+  GEM_PLATFORMS: arm64-darwin x86_64-darwin x86_64-linux-gnu aarch64-linux-gnu x86_64-linux-musl aarch64-linux-musl
 
 jobs:
   linux:
@@ -108,6 +112,10 @@ jobs:
           name: release
           path: release/
 
+  # The publishing jobs check an explicit allowlist (RELEASE_TARGETS, GEM_PLATFORMS and the
+  # version): the directory holds exactly those files, the checksum file has exactly one
+  # `<64 hex>  <bare name>` line for each and nothing else, every file matches, and the upload
+  # names the files one by one, never a glob.
   draft-release:
     needs: package
     runs-on: ubuntu-24.04
@@ -119,12 +127,29 @@ jobs:
         with:
           name: release
           path: release
-      - run: cd release && sha256sum -c SHA256SUMS
       - env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ needs.package.outputs.version }}
         run: |
-          gh release create "v$VERSION" --repo "$GITHUB_REPOSITORY" --draft --title "rbcop $VERSION" release/*
+          set -euo pipefail
+          printf '%s' "$VERSION" | grep -Eqx '[0-9]+\.[0-9]+\.[0-9]+'
+          expected=$({
+            for t in $RELEASE_TARGETS; do echo "rbcop-$VERSION-$t.tar.gz"; done
+            for p in $GEM_PLATFORMS; do echo "rbcop-$VERSION-$p.gem"; done
+            echo "rbcop-$VERSION.gem"
+            echo rbcop.rb
+          } | LC_ALL=C sort)
+          cd release
+          # Exactly the expected files plus SHA256SUMS (a name with a newline or space fails here).
+          test "$(find . -mindepth 1 | wc -l)" -eq "$(( $(printf '%s\n' "$expected" | wc -l) + 1 ))"
+          test "$(find . -mindepth 1 -type f ! -name SHA256SUMS -printf '%f\n' | LC_ALL=C sort)" = "$expected"
+          # One well-formed line per expected file, nothing else, no duplicates.
+          if grep -Evx '[0-9a-f]{64}  [A-Za-z0-9._-]+' SHA256SUMS; then echo "malformed SHA256SUMS" >&2; exit 1; fi
+          test "$(cut -c67- SHA256SUMS | LC_ALL=C sort)" = "$expected"
+          sha256sum --strict -c SHA256SUMS
+          mapfile -t files < <(printf '%s\n' "$expected")
+          gh release create "v$VERSION" --repo "$GITHUB_REPOSITORY" --draft --title "rbcop $VERSION" \
+            "${files[@]}" SHA256SUMS
 
   publish-gems:
     if: inputs.stage == 'publish-gems' && startsWith(github.ref, 'refs/tags/v')
@@ -143,15 +168,28 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
         run: |
-          sums="packaging/checksums/${TAG#v}.sha256"
-          test -f "$sums"
-          mkdir gems
-          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern '*.gem' --dir gems
-          # Every downloaded gem must be listed with a matching checksum.
-          cd gems
-          for gem in *.gem; do
-            grep -E "^[0-9a-f]{64}  $gem\$" "../$sums" | sha256sum -c -
-          done
+          set -euo pipefail
+          version=${TAG#v}
+          printf '%s' "$version" | grep -Eqx '[0-9]+\.[0-9]+\.[0-9]+'
+          sums="$PWD/packaging/checksums/$version.sha256"
+          # The pinned file: only well-formed lines, no duplicate names.
+          if grep -Evx '[0-9a-f]{64}  [A-Za-z0-9._-]+' "$sums"; then echo "malformed $sums" >&2; exit 1; fi
+          test -z "$(cut -c67- "$sums" | LC_ALL=C sort | uniq -d)"
+          gems=$({
+            for p in $GEM_PLATFORMS; do echo "rbcop-$version-$p.gem"; done
+            echo "rbcop-$version.gem"
+          } | LC_ALL=C sort)
+          mkdir gems && cd gems
+          while read -r gem; do
+            gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "$gem" --dir .
+            line=$(awk -v f="$gem" 'substr($0, 67) == f' "$sums")
+            test -n "$line"
+            printf '%s\n' "$line" | sha256sum --strict -c -
+          done <<< "$gems"
+          test "$(find . -mindepth 1 -printf '%f\n' | LC_ALL=C sort)" = "$gems"
+          printf '%s\n' "$gems" > ../gems.txt
       - uses: rubygems/configure-rubygems-credentials@dc5a8d8553e6ee01fc26761a49e99e733d17954a # v2.1.0
       # The runner image's RubyGems; no setup-ruby or Bundler in this job.
-      - run: for gem in gems/*.gem; do gem push "$gem"; done
+      - run: |
+          set -euo pipefail
+          while read -r gem; do gem push "gems/$gem"; done < gems.txt
