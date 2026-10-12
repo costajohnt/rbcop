@@ -1,0 +1,30 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:1:13: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+b.rb:1:13: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+c.rb:1:13: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+d.rb:1:13: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+e.rb:1:13: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+f.rb:1:13: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+for_newline.rb:1:17: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+g.rb:1:12: F: Lint/Syntax: unexpected token tIDENTIFIER (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+g.rb:1:22: F: Lint/Syntax: unexpected token tRBRACK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+h.rb:1:14: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+h.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+h.rb:1:5: C: [Correctable] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+h.rb:1:5: W: Lint/EmptyBlock: Empty block detected.
+i.rb:1:13: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+j.rb:1:17: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+l.rb:1:17: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+m.rb:1:13: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+n.rb:1:14: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+o.rb:1:17: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+p.rb:1:10: F: Lint/Syntax: unexpected token tIDENTIFIER (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+p.rb:1:20: F: Lint/Syntax: unexpected token tRBRACK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+q.rb:1:13: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+r.rb:1:13: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+s.rb:1:17: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+t.rb:1:13: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+u.rb:1:13: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+v.rb:1:13: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+w.rb:1:13: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+x.rb:2:15: F: Lint/Syntax: unexpected token kDO_BLOCK (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)

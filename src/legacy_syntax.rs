@@ -1135,7 +1135,8 @@ impl Walk<'_> {
     /// The first token after the one ending at `end`, skipping newlines (ignored after an operator by
     /// the older lexers).
     /// Below 3.3 a `block_command` is no call argument: as the only argument in `(...)` or `[...]`
-    /// of a call, `super` or `yield`, the grammar fails at its `do` (`foo(bar baz do end)`; #239, #302).
+    /// of a call, `super` or `yield`, or the only subscript of an index assignment or op-assign, the
+    /// grammar fails at its `do` (`foo(bar baz do end)`, `a[bar baz do end] = 1`; #239, #302, #370).
     fn sole_block_command(&mut self, args: Option<ruby_prism::ArgumentsNode>) {
         if let Some(args) = args
             && args.arguments().len() == 1
@@ -1583,6 +1584,15 @@ impl<'pr> Visit<'pr> for Walk<'_> {
         if n.opening_loc().is_some() {
             self.sole_block_command(n.arguments());
         }
+        // `foo[k] = v`: the subscript (`opt_call_args`) is every argument but the value (#370).
+        if n.name().as_slice() == b"[]="
+            && n.opening_loc().is_some_and(|o| o.as_slice() == b"[")
+            && let Some(args) = n.arguments()
+            && args.arguments().len() == 2
+            && let Some(d) = args.arguments().iter().next().and_then(|a| block_command_do(&a))
+        {
+            self.violation(d, 3.3);
+        }
         // Below 3.3 `not x` without parentheses is an expr, never an assigned value (`x = not y`;
         // #240); as an argument, see visit_arguments_node.
         if self.target < 3.3
@@ -1624,6 +1634,27 @@ impl<'pr> Visit<'pr> for Walk<'_> {
         }
         let start = n.message_loc().map_or(n.location().start_offset(), |m| m.start_offset());
         self.in_ctx(start, |s| ruby_prism::visit_call_node(s, n));
+    }
+
+    // An index op-assign or assignment target's subscript is `opt_call_args` too (#370).
+    fn visit_index_operator_write_node(&mut self, n: &ruby_prism::IndexOperatorWriteNode<'pr>) {
+        self.sole_block_command(n.arguments());
+        ruby_prism::visit_index_operator_write_node(self, n);
+    }
+
+    fn visit_index_or_write_node(&mut self, n: &ruby_prism::IndexOrWriteNode<'pr>) {
+        self.sole_block_command(n.arguments());
+        ruby_prism::visit_index_or_write_node(self, n);
+    }
+
+    fn visit_index_and_write_node(&mut self, n: &ruby_prism::IndexAndWriteNode<'pr>) {
+        self.sole_block_command(n.arguments());
+        ruby_prism::visit_index_and_write_node(self, n);
+    }
+
+    fn visit_index_target_node(&mut self, n: &ruby_prism::IndexTargetNode<'pr>) {
+        self.sole_block_command(n.arguments());
+        ruby_prism::visit_index_target_node(self, n);
     }
 
     fn visit_super_node(&mut self, n: &ruby_prism::SuperNode<'pr>) {
