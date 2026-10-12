@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Runs the native binary the gem ships: libexec/rbcop in a platform gem, or in the `ruby` platform
+# gem (every binary, for lockfiles that only list `ruby`) libexec/<rust target>/rbcop for this host.
+require 'rbconfig'
+
+libexec = File.expand_path('../libexec', __dir__)
+binary = File.join(libexec, 'rbcop')
+unless File.exist?(binary)
+  host = RbConfig::CONFIG
+  cpu = { 'arm64' => 'aarch64', 'amd64' => 'x86_64', 'x64' => 'x86_64' }.fetch(host['host_cpu'], host['host_cpu'])
+  target = case host['host_os']
+           when /darwin/ then "#{cpu}-apple-darwin"
+           when /linux-musl/ then "#{cpu}-unknown-linux-musl"
+           when /linux/ then "#{cpu}-unknown-linux-gnu"
+           end
+  binary = File.join(libexec, target.to_s, 'rbcop')
+  abort "rbcop: this gem has no binary for #{host['host']}" unless target && File.exist?(binary)
+end
+exec([binary, 'rbcop'], *ARGV)

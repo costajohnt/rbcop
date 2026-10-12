@@ -67,7 +67,12 @@ fn config_scenarios_match_rubocop() {
         expected.sort();
         // stderr.txt, when recorded, is compared byte for byte (it covers every RuboCop cop).
         // Absolute paths in it are recorded relative to the project, like stdout.
-        let stderr = String::from_utf8_lossy(&out.stderr).replace(&prefix, "");
+        // The skipped-cops notice (src/fallback.rs) is a deliberate difference, tested in tests/fallback.rs.
+        let stderr: String = String::from_utf8_lossy(&out.stderr)
+            .replace(&prefix, "")
+            .split_inclusive('\n')
+            .filter(|l| !l.starts_with("rbcop: not running "))
+            .collect();
         if let Ok(err) = std::fs::read_to_string(dir.join("stderr.txt"))
             && err != stderr
         {

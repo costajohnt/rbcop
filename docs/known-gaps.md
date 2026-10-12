@@ -149,13 +149,15 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - `--list-enabled-cops-for` and `--show-docs-url` know RuboCop's cops, those of native plugins and
   the default.yml cops of other loaded plugins; cops a plugin registers without a default.yml entry
   are not listed and get no URL.
-- Custom formatter classes and `require:` of local Ruby files (custom cops) are not supported.
+- Custom formatter classes and `require:` of local Ruby files (custom cops) are not supported. rbcop names
+  the cops it skips on stderr, and `RBCOP_FALLBACK=1` runs them with RuboCop (README, "Plugins and custom cops").
 - Cops rbcop cannot run (a non-native plugin's, custom cops): Lint/RedundantCopDisableDirective
   never reports a directive naming one, nor a `disable all` while any is loaded, since their
   offenses are unknown (RuboCop reports those that turn out redundant). With custom cops loaded, a
   directive naming a cop in a department rbcop does not know is not reported as unknown.
 - A native plugin uses its vendored default.yml and pinned behaviour whatever version of the gem is
-  installed, and works when the gem is not installed (RuboCop fails to load it then).- ERB in `.rubocop.yml` is not evaluated; remote `inherit_from` URLs are skipped with a warning.
+  installed, and works when the gem is not installed (RuboCop fails to load it then).
+- ERB in `.rubocop.yml` is not evaluated; remote `inherit_from` URLs are skipped with a warning.
 - A duplicated YAML key: the last value wins in the first key's place, as in Psych, but the
   `... is concealed by line N` warning is not printed. Wrong value types (`Enabled: "true"`) and
   invalid `Severity` values are not reported (see ConfigValidator below).

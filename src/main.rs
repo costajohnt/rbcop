@@ -12,6 +12,13 @@ use std::process::ExitCode;
 use std::time::Instant;
 use std::{env, fs, thread};
 
+mod fallback;
+
+// musl's malloc is a bottleneck for the worker threads; glibc and macOS keep the system allocator.
+#[cfg(target_env = "musl")]
+#[global_allocator]
+static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
+
 /// `rubocop -h` (OptionParser#help for RuboCop 1.91.0's options), recorded verbatim.
 const HELP: &str = include_str!("help.txt");
 
@@ -1176,6 +1183,34 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     for w in &store.warnings {
         eprintln!("Warning: {w}");
     }
+    // Deliberate difference: cops rbcop cannot run are named on stderr, or run by RuboCop.
+    let names: Vec<&'static str> = cops::ALL.iter().map(|c| c.name).chain(["Lint/Syntax"]).collect();
+    let implemented: std::collections::HashSet<&str> = names.iter().copied().collect();
+    let mut seen = std::collections::HashSet::new();
+    let configs: Vec<&Resolved> =
+        jobs.iter().filter(|(_, c)| seen.insert(std::sync::Arc::as_ptr(c))).map(|(_, c)| &**c).collect();
+    let skipped = fallback::unimplemented(configs.iter().copied(), &implemented, |cop, cfg| badge_selected(cop, cfg));
+    // RuboCop's --except rejects a native plugin's cops when that plugin is not loaded: pass only the
+    // cops some resolved config has an entry for (a plugin's entries come with its default.yml).
+    let known: std::collections::HashSet<&str> =
+        configs.iter().flat_map(|c| c.hash.0.iter().map(|(k, _)| k.as_str())).collect();
+    let names: Vec<&'static str> = names.into_iter().filter(|&n| n == "Lint/Syntax" || known.contains(n)).collect();
+    let mut fallback_offenses = std::collections::HashMap::new();
+    if !skipped.is_empty() || store.requires_ruby_code() {
+        if fallback::enabled() && stdin_text.is_none() && config_error.is_none() && team_error.is_none() {
+            let files: Vec<PathBuf> = jobs.iter().map(|(p, _)| p.clone()).collect();
+            let child = fallback::Child {
+                opts: &cli.opts,
+                except,
+                only_guide: cli.only_guide,
+                force_exclusion: cli.force_exclusion,
+                autocorrect: cli.autocorrect,
+            };
+            fallback_offenses = fallback::run(&files, &cwd, &names, child)?;
+        } else {
+            eprintln!("{}", fallback::notice(&skipped, store.requires_ruby_code()));
+        }
+    }
     let stdin_text = &stdin_text;
     // --stdin with -a/-A: the corrected source, printed after the report.
     let mut stdin_corrected: Option<String> = None;
@@ -1345,7 +1380,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                 }
                 None => linted,
             };
-            let (report, corrected, loop_error, warnings) = match linted {
+            let (mut report, corrected, loop_error, warnings) = match linted {
                 Ok(l) => l,
                 Err(e) => {
                     error = Some(e);
@@ -1378,6 +1413,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             if let Some(e) = loop_error {
                 runner::file_error(e);
             }
+            report.offenses.extend(fallback_offenses.remove(path).unwrap_or_default());
             let offs = formatter::offenses(&report.text, &report.offenses, |o| {
                 formatter::annotate(cfg, o.cop, &o.message, annotate)
             });
