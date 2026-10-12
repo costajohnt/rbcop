@@ -382,6 +382,154 @@ pub fn branches<'pr>(node: &Node<'pr>) -> Option<Vec<Option<Node<'pr>>>> {
     Some(out)
 }
 
+/// Whether a docstring correction (text built from the literal's value, written back between the
+/// first opening and the last closing delimiter) only re-writes what the source already says.
+/// RuboCop splices the unescaped value, which can close the literal early or start an
+/// interpolation; rbcop withholds the correction otherwise (docs/known-gaps.md). Inert: every
+/// string part reads exactly as written (no escapes), and an adjacent-literal concatenation
+/// (`'a' \ 'b'`) is made of plain quoted literals opening and closing with the same quote whose
+/// text has neither that quote nor (for `"`) `#{`, `#@` or `#$`.
+pub fn docstring_inert(node: &Node) -> bool {
+    fn as_written(node: &Node) -> bool {
+        if let Some(s) = node.as_string_node() {
+            return s.unescaped() == s.content_loc().as_slice();
+        }
+        if let Some(i) = node.as_interpolated_string_node() {
+            return i.parts().iter().all(|p| match kind::of(&p) {
+                kind::STRING_NODE | kind::INTERPOLATED_STRING_NODE => as_written(&p),
+                _ => true,
+            });
+        }
+        true
+    }
+    /// The literals of a concatenation, flattened.
+    fn literals<'pr>(node: Node<'pr>, out: &mut Vec<Node<'pr>>) {
+        match node.as_interpolated_string_node() {
+            Some(i) if i.opening_loc().is_none() => i.parts().iter().for_each(|p| literals(p, out)),
+            _ => out.push(node),
+        }
+    }
+    fn opening<'a>(node: &Node<'a>) -> Option<&'a [u8]> {
+        match node.as_interpolated_string_node() {
+            Some(i) => i.opening_loc().map(|l| l.as_slice()),
+            None => node.as_string_node()?.opening_loc().map(|l| l.as_slice()),
+        }
+    }
+    fn closing<'a>(node: &Node<'a>) -> Option<&'a [u8]> {
+        match node.as_interpolated_string_node() {
+            Some(i) => i.closing_loc().map(|l| l.as_slice()),
+            None => node.as_string_node()?.closing_loc().map(|l| l.as_slice()),
+        }
+    }
+    /// The text as it is spliced, in runs between `#{...}` parts (adjacent parts' values join).
+    fn values<'pr>(node: &Node<'pr>, out: &mut Vec<Vec<u8>>) {
+        if let Some(s) = node.as_string_node() {
+            out.last_mut().unwrap().extend(s.unescaped());
+        } else if let Some(i) = node.as_interpolated_string_node() {
+            i.parts().iter().for_each(|p| values(&p, out));
+        } else if let Some(v) = node.as_embedded_variable_node() {
+            out.last_mut().unwrap().extend(node_text(&v.variable()).as_bytes());
+        } else {
+            out.push(Vec::new());
+        }
+    }
+    let single = match node.as_interpolated_string_node() {
+        Some(i) => i.opening_loc().is_some(),
+        None => node.as_string_node().is_some_and(|s| s.opening_loc().is_some()),
+    };
+    if single {
+        return as_written(node);
+    }
+    let mut parts = Vec::new();
+    for p in node.as_interpolated_string_node().map(|i| i.parts().iter().collect::<Vec<_>>()).unwrap_or_default() {
+        literals(p, &mut parts);
+    }
+    let Some(q) = parts.first().and_then(opening).filter(|o| *o == b"'" || *o == b"\"") else { return false };
+    if !parts.iter().all(|p| matches!(opening(p), Some(b"'" | b"\"")) && as_written(p)) {
+        return false;
+    }
+    if parts.last().and_then(closing) != Some(q) {
+        return false;
+    }
+    let mut vals = vec![Vec::new()];
+    parts.iter().for_each(|p| values(p, &mut vals));
+    vals.iter().all(|v| {
+        !v.contains(&q[0])
+            && !v.contains(&b'\\')
+            && (q != b"\"" || ![b"#{", b"#@", b"#$"].iter().any(|seq| v.windows(2).any(|w| w == *seq)))
+    })
+}
+
+/// A parser `dstr` whose first child is a `str` or `dstr`, or has a `sym` in it
+/// (`(dstr ({str dstr `sym} ...) ...)`).
+pub fn dstr_first_is_str(node: &Node) -> bool {
+    if node.as_string_node().is_some() {
+        return true;
+    }
+    let Some(first) = node.as_interpolated_string_node().and_then(|i| i.parts().iter().next()) else { return false };
+    if matches!(kind::of(&first), kind::STRING_NODE | kind::INTERPOLATED_STRING_NODE) {
+        return true;
+    }
+    struct V(bool);
+    impl<'pr> Visit<'pr> for V {
+        fn visit_symbol_node(&mut self, _: &ruby_prism::SymbolNode<'pr>) {
+            self.0 = true;
+        }
+    }
+    let mut v = V(false);
+    v.visit(&first);
+    v.0
+}
+
+/// def_node_search `(send nil? #Expectations.all ...)` under `node` (itself included), in order.
+pub fn expectations<'pr>(l: &Language, node: &Node<'pr>) -> Vec<CallNode<'pr>> {
+    struct V<'a, 'pr> {
+        l: &'a Language,
+        out: Vec<CallNode<'pr>>,
+    }
+    impl<'pr> Visit<'pr> for V<'_, 'pr> {
+        fn visit_call_node(&mut self, n: &CallNode<'pr>) {
+            if n.receiver().is_none() && self.l.expectation(method_name(n)) {
+                self.out.push(n.as_node().as_call_node().unwrap());
+            }
+            ruby_prism::visit_call_node(self, n);
+        }
+    }
+    let mut v = V { l, out: Vec::new() };
+    v.visit(node);
+    v.out
+}
+
+/// RuboCop::RSpec::Hook#scope of a hook call: "each", "context", "suite", or None.
+pub fn hook_scope(call: &CallNode) -> Option<&'static str> {
+    let Some(arg) = send_args(call).into_iter().next() else { return Some("each") };
+    if arg.as_hash_node().is_some() || arg.as_keyword_hash_node().is_some() {
+        return Some("each");
+    }
+    // scope_name: `scope_argument.to_a.first`
+    let name: Option<String> = match kind::of(&arg) {
+        kind::SYMBOL_NODE => Some(String::from_utf8_lossy(arg.as_symbol_node().unwrap().unescaped()).into_owned()),
+        kind::CALL_NODE => {
+            let c = arg.as_call_node().unwrap();
+            if c.receiver().is_some() || block_of(&c).is_some() {
+                return None;
+            }
+            None
+        }
+        kind::CONSTANT_READ_NODE => None,
+        kind::LOCAL_VARIABLE_READ_NODE => {
+            Some(String::from_utf8_lossy(arg.as_local_variable_read_node().unwrap().name().as_slice()).into_owned())
+        }
+        _ => return None,
+    };
+    match name.as_deref() {
+        None | Some("each" | "example") => Some("each"),
+        Some("context" | "all") => Some("context"),
+        Some("suite") => Some("suite"),
+        _ => None,
+    }
+}
+
 /// A node's byte range.
 pub fn node_range(node: &Node) -> (usize, usize) {
     let l = node.location();

@@ -1,0 +1,67 @@
+==> offenses exit=1 845 <==
+000/000_spec.rb:2:21: C: [Correctable] RSpec/ExpectChange: Prefer `change { User.count }`.
+001/001_spec.rb:2:21: C: [Correctable] RSpec/ExpectChange: Prefer `change { User::Token::Auth.count }`.
+002/002_spec.rb:2:21: C: [Correctable] RSpec/ExpectChange: Prefer `change { user.count }`.
+003/003_spec.rb:2:21: C: [Correctable] RSpec/ExpectChange: Prefer `change { user.status }`.
+004/004_spec.rb:2:30: C: [Correctable] RSpec/ExpectChange: Prefer `change { users.green.count }`.
+005/005_spec.rb:2:21: C: [Correctable] RSpec/ExpectChange: Prefer `change { ::User.count }`.
+006/006_spec.rb:2:30: C: [Correctable] RSpec/ExpectChange: Prefer `change { @food.taste }`.
+007/007_spec.rb:2:30: C: [Correctable] RSpec/ExpectChange: Prefer `change { $token.value }`.
+009/009_spec.rb:2:18: C: [Correctable] RSpec/ExpectChange: Prefer `change { User.count }`.
+
+==> autocorrect exit=0 827 <==
+000/000_spec.rb:2:21: C: [Corrected] RSpec/ExpectChange: Prefer `change { User.count }`.
+001/001_spec.rb:2:21: C: [Corrected] RSpec/ExpectChange: Prefer `change { User::Token::Auth.count }`.
+002/002_spec.rb:2:21: C: [Corrected] RSpec/ExpectChange: Prefer `change { user.count }`.
+003/003_spec.rb:2:21: C: [Corrected] RSpec/ExpectChange: Prefer `change { user.status }`.
+004/004_spec.rb:2:30: C: [Corrected] RSpec/ExpectChange: Prefer `change { users.green.count }`.
+005/005_spec.rb:2:21: C: [Corrected] RSpec/ExpectChange: Prefer `change { ::User.count }`.
+006/006_spec.rb:2:30: C: [Corrected] RSpec/ExpectChange: Prefer `change { @food.taste }`.
+007/007_spec.rb:2:30: C: [Corrected] RSpec/ExpectChange: Prefer `change { $token.value }`.
+009/009_spec.rb:2:18: C: [Corrected] RSpec/ExpectChange: Prefer `change { User.count }`.
+
+==> corrected/000/000_spec.rb 58 <==
+it do
+  expect { run }.to change { User.count }.by(1)
+end
+
+==> corrected/001/001_spec.rb 71 <==
+it do
+  expect { run }.to change { User::Token::Auth.count }.by(1)
+end
+
+==> corrected/002/002_spec.rb 52 <==
+it do
+  expect { run }.to change { user.count }
+end
+
+==> corrected/003/003_spec.rb 53 <==
+it do
+  expect { run }.to change { user.status }
+end
+
+==> corrected/004/004_spec.rb 74 <==
+it do
+  expect { paint_users! }.to change { users.green.count }.by(1)
+end
+
+==> corrected/005/005_spec.rb 54 <==
+it do
+  expect { run }.to change { ::User.count }
+end
+
+==> corrected/006/006_spec.rb 72 <==
+it do
+  expect { paint_users! }.to change { @food.taste }.to(:sour)
+end
+
+==> corrected/007/007_spec.rb 71 <==
+it do
+  expect { paint_users! }.to change { $token.value }.to(nil)
+end
+
+==> corrected/009/009_spec.rb 55 <==
+it do
+  expect(run).to change { User.count }.by(1)
+end
+

@@ -1,0 +1,33 @@
+==> .rubocop.yml 211 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/ExpectChange:
+  EnforcedStyle: method_call
+  NegatedMatcher: not_change
+
+==> 000/000_spec.rb 56 <==
+it do
+  expect { run }.to not_change { User.count }
+end
+
+==> 001/001_spec.rb 75 <==
+it do
+  expect { run }.to change(Foo, :bar).and not_change { Foo.baz }
+end
+
+==> 002/002_spec.rb 76 <==
+it do
+  expect { run }.to change { Foo.bar }.and not_change { Foo.baz }
+end
+
+==> 003/003_spec.rb 74 <==
+it do
+  expect { run }.to change(Foo, :bar).and not_change(Foo, :baz)
+end
+

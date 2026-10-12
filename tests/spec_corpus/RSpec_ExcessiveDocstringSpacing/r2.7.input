@@ -1,0 +1,296 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 33 <==
+foo "should do something" do; end
+==> 001/001_spec.rb 16 <==
+describe do
+end
+
+==> 002/002_spec.rb 30 <==
+describe '  #mymethod' do
+end
+
+==> 003/003_spec.rb 34 <==
+describe '　　#mymethod' do
+end
+
+==> 004/004_spec.rb 30 <==
+describe ' #mymethod' do
+end
+
+==> 005/005_spec.rb 31 <==
+describe "  ##{:stuff}" do
+end
+
+==> 006/006_spec.rb 30 <==
+describe '#mymethod  ' do
+end
+
+==> 007/007_spec.rb 34 <==
+describe '#mymethod　　' do
+end
+
+==> 008/008_spec.rb 30 <==
+describe '#mymethod ' do
+end
+
+==> 009/009_spec.rb 32 <==
+describe ' #mymethod ' do
+end
+
+==> 010/010_spec.rb 31 <==
+describe "##{:stuff}  " do
+end
+
+==> 011/011_spec.rb 22 <==
+describe '   ' do
+end
+
+==> 012/012_spec.rb 28 <==
+describe '#mymethod' do
+end
+
+==> 013/013_spec.rb 29 <==
+describe "##{should}" do
+end
+
+==> 014/014_spec.rb 40 <==
+describe '#mymethod   (is cool)' do
+end
+
+==> 015/015_spec.rb 51 <==
+describe '#mymethod      (  is     cool  )' do
+end
+
+==> 016/016_spec.rb 47 <==
+describe '#mymethod ' \
+    '(is cool)' do
+end
+
+==> 017/017_spec.rb 49 <==
+describe '#mymethod   ' \
+    '(is cool)' do
+end
+
+==> 018/018_spec.rb 50 <==
+describe "  ##{object} " \
+    "(is cool)" do
+end
+
+==> 019/019_spec.rb 15 <==
+context do
+end
+
+==> 020/020_spec.rb 40 <==
+context '  when doing something' do
+end
+
+==> 021/021_spec.rb 29 <==
+context ' #mymethod' do
+end
+
+==> 022/022_spec.rb 50 <==
+context "  when doing something #{:stuff}" do
+end
+
+==> 023/023_spec.rb 40 <==
+context 'when doing something  ' do
+end
+
+==> 024/024_spec.rb 29 <==
+context '#mymethod ' do
+end
+
+==> 025/025_spec.rb 31 <==
+context ' #mymethod ' do
+end
+
+==> 026/026_spec.rb 40 <==
+context "when doing #{:stuff}  " do
+end
+
+==> 027/027_spec.rb 42 <==
+context "  when doing #{:stuff}  " do
+end
+
+==> 028/028_spec.rb 21 <==
+context '   ' do
+end
+
+==> 029/029_spec.rb 38 <==
+context 'when doing something' do
+end
+
+==> 030/030_spec.rb 50 <==
+context "#{should} the value be incorrect" do
+end
+
+==> 031/031_spec.rb 34 <==
+context 'when   something' do
+end
+
+==> 032/032_spec.rb 53 <==
+context 'when     something    cool happens!' do
+end
+
+==> 033/033_spec.rb 57 <==
+context 'when doing something ' \
+    'like this' do
+end
+
+==> 034/034_spec.rb 59 <==
+context 'when doing something   ' \
+    'like this' do
+end
+
+==> 035/035_spec.rb 64 <==
+context "  when doing something " \
+    "like #{object}" do
+end
+
+==> 036/036_spec.rb 10 <==
+it do
+end
+
+==> 037/037_spec.rb 29 <==
+it '  does something' do
+end
+
+==> 038/038_spec.rb 29 <==
+it ' does something' do
+end
+
+==> 039/039_spec.rb 39 <==
+it "  does something #{:stuff}" do
+end
+
+==> 040/040_spec.rb 29 <==
+it 'does something  ' do
+end
+
+==> 041/041_spec.rb 29 <==
+it 'does something ' do
+end
+
+==> 042/042_spec.rb 31 <==
+it ' does something ' do
+end
+
+==> 043/043_spec.rb 39 <==
+it "does something #{:stuff}  " do
+end
+
+==> 044/044_spec.rb 20 <==
+it "tests  " do
+end
+
+==> 045/045_spec.rb 24 <==
+it "#{:stuff}  " do
+end
+
+==> 046/046_spec.rb 35 <==
+it "#{:stuff} something   " do
+end
+
+==> 047/047_spec.rb 16 <==
+it '   ' do
+end
+
+==> 048/048_spec.rb 33 <==
+it 'finds no should here' do
+end
+
+==> 049/049_spec.rb 34 <==
+it "#{should} not be here" do
+end
+
+==> 050/050_spec.rb 29 <==
+it 'does   something' do
+end
+
+==> 051/051_spec.rb 39 <==
+it 'does  something      cool!' do
+end
+
+==> 052/052_spec.rb 59 <==
+it 'should do something ' \
+    'and correctly fix' do
+end
+
+==> 053/053_spec.rb 56 <==
+it 'does something   ' \
+    'and correctly fix' do
+end
+
+==> 054/054_spec.rb 53 <==
+it "  does something " \
+    "with #{object}" do
+end
+
+==> 055/055_spec.rb 33 <==
+xcontext "when testing  " do
+end
+
+==> 056/056_spec.rb 29 <==
+feature "  #{:stuff}" do
+end
+
+==> 057/057_spec.rb 35 <==
+its("  length  ") { should eq(1) }
+
+==> 058/058_spec.rb 60 <==
+skip '  this   please   ' \
+    '  and thank you  !' do
+end
+
+==> 059/059_spec.rb 53 <==
+skip '  this   please   ' \
+    '  and thank you  !'
+
+==> 060/060_spec.rb 208 <==
+context "some context" do
+  [].each do |i|
+    it "does something, lala1: #{i[:a].first} - #{i[:a].last},
+        lala2: #{i[:a].first} - #{i[:a].last}" do
+      # something
+
+      # expect
+    end
+  end
+end
+
+==> 061/061_spec.rb 254 <==
+it <<~DESC do
+  does not remove
+    another comments reports,
+    another comments votes,
+    another   comments image,
+    another comments feeds,
+    another comments   notifications,
+  another comments public feeds,
+    another comments subs
+DESC
+end
+
+==> 062/062_spec.rb 74 <==
+describe "  ##{object} " \
+    "(is cool)" \
+      ' ' \
+      " " do
+end
+
+==> 063/063_spec.rb 125 <==
+it 'does something' do
+  Foo.describe('  does something')
+  Bar.context('  does something')
+  Baz.it('  does something')
+end
+
