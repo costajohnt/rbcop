@@ -681,6 +681,28 @@ impl RubyRegex {
 // ponytail: syntax neither engine knows (`\h` inside classes, `(?<name>` quirks, `\G`, `\K`)
 // fails to compile and the pattern is skipped.
 pub fn ruby_regex(literal: &str) -> Option<RubyRegex> {
+    // Cops compile their config's patterns per file (or per node); compiling is far slower than
+    // matching, so each thread keeps what it compiled. Clones share the compiled program.
+    // ponytail: cleared when full; patterns come from config, so it never fills in practice.
+    thread_local! {
+        static COMPILED: std::cell::RefCell<std::collections::HashMap<String, Option<RubyRegex>>> =
+            std::cell::RefCell::new(std::collections::HashMap::new());
+    }
+    if let Some(hit) = COMPILED.with(|c| c.borrow().get(literal).cloned()) {
+        return hit;
+    }
+    let re = compile_ruby_regex(literal);
+    COMPILED.with(|c| {
+        let mut c = c.borrow_mut();
+        if c.len() >= 4096 {
+            c.clear();
+        }
+        c.insert(literal.to_string(), re.clone());
+    });
+    re
+}
+
+fn compile_ruby_regex(literal: &str) -> Option<RubyRegex> {
     let (source, flags) = match literal.strip_prefix('/').and_then(|r| r.rsplit_once('/')) {
         Some((src, flags)) => (src, flags),
         None => (literal, ""),
