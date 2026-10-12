@@ -30,7 +30,12 @@ if [ ! -f "$checksums" ]; then
   echo "rbcop: no pinned checksums for $version ($checksums)" >&2
   exit 1
 fi
-expected=$(awk -v f="$name.tar.gz" '$2 == f || $2 == "*" f { print $1 }' "$checksums")
+# Every line must be `<64 hex>  <bare file name>`; then take the line for this archive by exact name.
+if grep -Evx '[0-9a-f]{64}  [A-Za-z0-9._-]+' "$checksums" >/dev/null; then
+  echo "rbcop: malformed line in $checksums" >&2
+  exit 1
+fi
+expected=$(awk -v f="$name.tar.gz" 'substr($0, 67) == f { print substr($0, 1, 64) }' "$checksums")
 # Exactly one 64-hex-digit entry, or fail.
 if [ "$(printf '%s\n' "$expected" | wc -l)" -ne 1 ] || ! printf '%s' "$expected" | grep -Eqx '[0-9a-f]{64}'; then
   echo "rbcop: no single pinned checksum for $name.tar.gz in $checksums" >&2
