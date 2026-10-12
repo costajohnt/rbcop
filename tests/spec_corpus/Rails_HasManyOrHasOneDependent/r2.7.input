@@ -1,0 +1,219 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/models/000/000.rb 52 <==
+class Person < ApplicationRecord
+  has_one :foo
+end
+
+==> app/models/001/001.rb 71 <==
+class Person < ApplicationRecord
+  has_one :foo, class_name: 'bar'
+end
+
+==> app/models/002/002.rb 73 <==
+class Person < ApplicationRecord
+  has_one :foo, dependent: :destroy
+end
+
+==> app/models/003/003.rb 77 <==
+class Person < ApplicationRecord
+  has_one :foo, **{dependent: :destroy}
+end
+
+==> app/models/004/004.rb 59 <==
+class Person < ApplicationRecord
+  has_one :foo, **bar
+end
+
+==> app/models/005/005.rb 68 <==
+class Person < ApplicationRecord
+  has_one :foo, dependent: nil
+end
+
+==> app/models/006/006.rb 67 <==
+class Person < ApplicationRecord
+  has_one :foo, through: :bar
+end
+
+==> app/models/007/007.rb 66 <==
+class Person < ApplicationRecord
+  has_one :foo, through: nil
+end
+
+==> app/models/008/008.rb 98 <==
+class Person < ApplicationRecord
+  with_options dependent: :destroy do
+    has_one :foo
+  end
+end
+
+==> app/models/009/009.rb 117 <==
+class Person < ApplicationRecord
+  with_options dependent: :destroy do
+    has_one :foo, class_name: 'Foo'
+  end
+end
+
+==> app/models/010/010.rb 112 <==
+class Person < ApplicationRecord
+  with_options dependent: :destroy do |model|
+    model.has_one :foo
+  end
+end
+
+==> app/models/011/011.rb 53 <==
+class Person < ApplicationRecord
+  has_many :foo
+end
+
+==> app/models/012/012.rb 72 <==
+class Person < ApplicationRecord
+  has_many :foo, class_name: 'bar'
+end
+
+==> app/models/013/013.rb 84 <==
+class User < ApplicationRecord
+  has_many :articles, -> { where(active: true) }
+end
+
+==> app/models/014/014.rb 30 <==
+has_many :foo, dependent: :bar
+==> app/models/015/015.rb 105 <==
+class User < ApplicationRecord
+  has_many :articles, -> { where(active: true) }, dependent: :destroy
+end
+
+==> app/models/016/016.rb 69 <==
+class Person < ApplicationRecord
+  has_many :foo, dependent: nil
+end
+
+==> app/models/017/017.rb 29 <==
+has_many :foo, through: :bars
+==> app/models/018/018.rb 129 <==
+class User < ApplicationRecord
+  has_many :activities, -> { order(created_at: :desc) }, through: :notes, source: :activities
+end
+
+==> app/models/019/019.rb 67 <==
+class Person < ApplicationRecord
+  has_many :foo, through: nil
+end
+
+==> app/models/020/020.rb 92 <==
+class Person < ApplicationRecord
+  with_options through: nil do
+    has_many :foo
+  end
+end
+
+==> app/models/021/021.rb 99 <==
+class Person < ApplicationRecord
+  with_options dependent: :destroy do
+    has_many :foo
+  end
+end
+
+==> app/models/022/022.rb 113 <==
+class Person < ApplicationRecord
+  with_options dependent: :destroy do |model|
+    model.has_many :foo
+  end
+end
+
+==> app/models/023/023.rb 134 <==
+class Person < ApplicationRecord
+  with_options dependent: :destroy do
+    has_many :foo do
+      def bar
+      end
+    end
+  end
+end
+
+==> app/models/024/024.rb 117 <==
+class Person < ApplicationRecord
+  with_options dependent: :destroy do
+    has_many :foo
+    has_many :bar
+  end
+end
+
+==> app/models/025/025.rb 224 <==
+class Article < ApplicationRecord
+  with_options dependent: :destroy do
+    has_many :tags
+    with_options class_name: 'Tag' do
+      has_many :special_tags, foreign_key: :special_id, inverse_of: :special
+    end
+  end
+end
+
+==> app/models/026/026.rb 53 <==
+class Person < ActiveRecord::Base
+  has_one :foo
+end
+
+==> app/models/027/027.rb 87 <==
+module Foo
+  extend ActiveSupport::Concern
+
+  included do
+    has_many :bazs
+  end
+end
+
+==> app/models/028/028.rb 71 <==
+module Foo
+  def self.included(base)
+    base.has_many :bazs
+  end
+end
+
+==> app/models/029/029.rb 92 <==
+module Foo
+  def self.included(base)
+    base.has_many :bazs, dependent: :destroy
+  end
+end
+
+==> app/models/030/030.rb 87 <==
+class User < ActiveResource::Base
+  has_many :projects, class_name: 'API::Project'
+end
+
+==> app/models/031/031.rb 89 <==
+class User < ::ActiveResource::Base
+  has_many :projects, class_name: 'API::Project'
+end
+
+==> app/models/032/032.rb 85 <==
+class Person < ActiveRecord::Base
+  has_one :foo
+
+  def readonly?
+    true
+  end
+end
+
+==> app/models/033/033.rb 86 <==
+class Person < ActiveRecord::Base
+  has_one :foo
+
+  def readonly?
+    false
+  end
+end
+
+==> app/models/034/034.rb 37 <==
+class Person < ApplicationRecord
+end
+

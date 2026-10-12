@@ -1,0 +1,145 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 108 <==
+class Post < ApplicationRecord
+  belongs_to :foo
+  belongs_to :bar
+  belongs_to :foo
+  belongs_to :blah
+end
+
+==> 001/001.rb 123 <==
+class Post < ApplicationRecord
+  belongs_to :foo
+  belongs_to :bar
+  belongs_to :foo, -> { active }
+  belongs_to :blah
+end
+
+==> 002/002.rb 104 <==
+class Post < ApplicationRecord
+  has_many :foos
+  has_many :bars
+  has_many :foos
+  has_many :blahs
+end
+
+==> 003/003.rb 120 <==
+class Post < ApplicationRecord
+  has_many :foos
+  has_many :bars
+  has_many 'foos', -> { active }
+  has_many :blahs
+end
+
+==> 004/004.rb 106 <==
+class Post < ApplicationRecord
+  belongs_to :foos, -> { active }
+  alias bars foos
+  belongs_to :foos
+end
+
+==> 005/005.rb 96 <==
+class Post < ApplicationRecord
+  has_one :foo
+  has_one :bar
+  has_one :foo
+  has_one :blah
+end
+
+==> 006/006.rb 111 <==
+class Post < ApplicationRecord
+  has_one :foo
+  has_one :bar
+  has_one :foo, -> { active }
+  has_one :blah
+end
+
+==> 007/007.rb 164 <==
+class Post < ApplicationRecord
+  has_and_belongs_to_many :foos
+  has_and_belongs_to_many :bars
+  has_and_belongs_to_many :foos
+  has_and_belongs_to_many :blahs
+end
+
+==> 008/008.rb 179 <==
+class Post < ApplicationRecord
+  has_and_belongs_to_many :foos
+  has_and_belongs_to_many :bars
+  has_and_belongs_to_many :foos, -> { active }
+  has_and_belongs_to_many :blahs
+end
+
+==> 009/009.rb 310 <==
+class Post < ApplicationRecord
+  has_many :foos
+  has_and_belongs_to_many :foos
+  has_and_belongs_to_many :bars
+  has_and_belongs_to_many :foos, -> { active }
+  has_and_belongs_to_many :blahs
+
+  has_one :author
+  has_one :top_comment, -> { order(likes: :desc) }, class_name: 'Comment'
+  belongs_to :author
+end
+
+==> 010/010.rb 176 <==
+class Post < ApplicationRecord
+  has_many :foos, class_name: 'Foo'
+  has_many :bars, class_name: 'Foo'
+
+  has_one :baz, class_name: 'Bar'
+  has_one :qux, class_name: 'Bar'
+end
+
+==> 011/011.rb 111 <==
+class Post < ApplicationRecord
+  belongs_to :foos, class_name: 'Foo'
+  belongs_to :bars, class_name: 'Foo'
+end
+
+==> 012/012.rb 335 <==
+class Post < ApplicationRecord
+  has_many :foos, if: condition, class_name: 'Foo'
+  has_many :bars, if: some_condition, class_name: 'Foo'
+
+  has_one :baz, -> { condition }, class_name: 'Bar'
+  has_one :qux, -> { some_condition }, class_name: 'Bar'
+
+  belongs_to :group, class_name: 'IndustryGroup', foreign_key: :industry_group_id
+end
+
+==> 013/013.rb 65 <==
+class Post < ApplicationRecord
+  validates_presence_of :name
+end
+
+==> 014/014.rb 387 <==
+        class Post < ApplicationRecord
+          belongs_to :user
+
+          has_many :comments
+          has_many :commenters, through: :comments
+
+          has_many :active_comments, -> { active }, class_name: 'Comment'
+
+          has_one :top_comment, -> { order(likes: :desc) }, class_name: 'Comment'
+
+          has_and_belongs_to_many :related_posts, class_name: 'Post'
+        end
+
+==> 015/015.rb 186 <==
+        class Post < ActiveModel::Serializer
+          has_many :comments, key: :remarks, if: :formal_mode?
+          has_many :comments, key: :rejoinders, if: :debate_mode?
+        end
+

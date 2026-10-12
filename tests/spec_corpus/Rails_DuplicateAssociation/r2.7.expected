@@ -1,0 +1,137 @@
+==> offenses exit=1 3667 <==
+000/000.rb:2:3: W: [Correctable] Rails/DuplicateAssociation: Association `foo` is defined multiple times. Don't repeat associations.
+000/000.rb:4:3: W: [Correctable] Rails/DuplicateAssociation: Association `foo` is defined multiple times. Don't repeat associations.
+001/001.rb:2:3: W: [Correctable] Rails/DuplicateAssociation: Association `foo` is defined multiple times. Don't repeat associations.
+001/001.rb:4:3: W: [Correctable] Rails/DuplicateAssociation: Association `foo` is defined multiple times. Don't repeat associations.
+002/002.rb:2:3: W: [Correctable] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+002/002.rb:4:3: W: [Correctable] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+003/003.rb:2:3: W: [Correctable] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+003/003.rb:4:3: W: [Correctable] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+004/004.rb:2:3: W: [Correctable] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+004/004.rb:4:3: W: [Correctable] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+005/005.rb:2:3: W: [Correctable] Rails/DuplicateAssociation: Association `foo` is defined multiple times. Don't repeat associations.
+005/005.rb:4:3: W: [Correctable] Rails/DuplicateAssociation: Association `foo` is defined multiple times. Don't repeat associations.
+006/006.rb:2:3: W: [Correctable] Rails/DuplicateAssociation: Association `foo` is defined multiple times. Don't repeat associations.
+006/006.rb:4:3: W: [Correctable] Rails/DuplicateAssociation: Association `foo` is defined multiple times. Don't repeat associations.
+007/007.rb:2:3: W: [Correctable] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+007/007.rb:4:3: W: [Correctable] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+008/008.rb:2:3: W: [Correctable] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+008/008.rb:4:3: W: [Correctable] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+009/009.rb:2:3: W: [Correctable] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+009/009.rb:3:3: W: [Correctable] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+009/009.rb:5:3: W: [Correctable] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+009/009.rb:8:3: W: [Correctable] Rails/DuplicateAssociation: Association `author` is defined multiple times. Don't repeat associations.
+009/009.rb:10:3: W: [Correctable] Rails/DuplicateAssociation: Association `author` is defined multiple times. Don't repeat associations.
+010/010.rb:2:3: W: [Correctable] Rails/DuplicateAssociation: Association `class_name: 'Foo'` is defined multiple times. Don't repeat associations.
+010/010.rb:3:3: W: [Correctable] Rails/DuplicateAssociation: Association `class_name: 'Foo'` is defined multiple times. Don't repeat associations.
+010/010.rb:5:3: W: [Correctable] Rails/DuplicateAssociation: Association `class_name: 'Bar'` is defined multiple times. Don't repeat associations.
+010/010.rb:6:3: W: [Correctable] Rails/DuplicateAssociation: Association `class_name: 'Bar'` is defined multiple times. Don't repeat associations.
+
+==> autocorrect exit=0 3613 <==
+000/000.rb:2:3: W: [Corrected] Rails/DuplicateAssociation: Association `foo` is defined multiple times. Don't repeat associations.
+000/000.rb:4:3: W: [Corrected] Rails/DuplicateAssociation: Association `foo` is defined multiple times. Don't repeat associations.
+001/001.rb:2:3: W: [Corrected] Rails/DuplicateAssociation: Association `foo` is defined multiple times. Don't repeat associations.
+001/001.rb:4:3: W: [Corrected] Rails/DuplicateAssociation: Association `foo` is defined multiple times. Don't repeat associations.
+002/002.rb:2:3: W: [Corrected] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+002/002.rb:4:3: W: [Corrected] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+003/003.rb:2:3: W: [Corrected] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+003/003.rb:4:3: W: [Corrected] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+004/004.rb:2:3: W: [Corrected] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+004/004.rb:4:3: W: [Corrected] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+005/005.rb:2:3: W: [Corrected] Rails/DuplicateAssociation: Association `foo` is defined multiple times. Don't repeat associations.
+005/005.rb:4:3: W: [Corrected] Rails/DuplicateAssociation: Association `foo` is defined multiple times. Don't repeat associations.
+006/006.rb:2:3: W: [Corrected] Rails/DuplicateAssociation: Association `foo` is defined multiple times. Don't repeat associations.
+006/006.rb:4:3: W: [Corrected] Rails/DuplicateAssociation: Association `foo` is defined multiple times. Don't repeat associations.
+007/007.rb:2:3: W: [Corrected] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+007/007.rb:4:3: W: [Corrected] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+008/008.rb:2:3: W: [Corrected] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+008/008.rb:4:3: W: [Corrected] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+009/009.rb:2:3: W: [Corrected] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+009/009.rb:3:3: W: [Corrected] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+009/009.rb:5:3: W: [Corrected] Rails/DuplicateAssociation: Association `foos` is defined multiple times. Don't repeat associations.
+009/009.rb:8:3: W: [Corrected] Rails/DuplicateAssociation: Association `author` is defined multiple times. Don't repeat associations.
+009/009.rb:10:3: W: [Corrected] Rails/DuplicateAssociation: Association `author` is defined multiple times. Don't repeat associations.
+010/010.rb:2:3: W: [Corrected] Rails/DuplicateAssociation: Association `class_name: 'Foo'` is defined multiple times. Don't repeat associations.
+010/010.rb:3:3: W: [Corrected] Rails/DuplicateAssociation: Association `class_name: 'Foo'` is defined multiple times. Don't repeat associations.
+010/010.rb:5:3: W: [Corrected] Rails/DuplicateAssociation: Association `class_name: 'Bar'` is defined multiple times. Don't repeat associations.
+010/010.rb:6:3: W: [Corrected] Rails/DuplicateAssociation: Association `class_name: 'Bar'` is defined multiple times. Don't repeat associations.
+
+==> corrected/000/000.rb 90 <==
+class Post < ApplicationRecord
+  belongs_to :foo
+  belongs_to :bar
+  belongs_to :blah
+end
+
+==> corrected/001/001.rb 105 <==
+class Post < ApplicationRecord
+  belongs_to :foo, -> { active }
+  belongs_to :bar
+  belongs_to :blah
+end
+
+==> corrected/002/002.rb 87 <==
+class Post < ApplicationRecord
+  has_many :foos
+  has_many :bars
+  has_many :blahs
+end
+
+==> corrected/003/003.rb 103 <==
+class Post < ApplicationRecord
+  has_many 'foos', -> { active }
+  has_many :bars
+  has_many :blahs
+end
+
+==> corrected/004/004.rb 72 <==
+class Post < ApplicationRecord
+  belongs_to :foos
+  alias bars foos
+end
+
+==> corrected/005/005.rb 81 <==
+class Post < ApplicationRecord
+  has_one :foo
+  has_one :bar
+  has_one :blah
+end
+
+==> corrected/006/006.rb 96 <==
+class Post < ApplicationRecord
+  has_one :foo, -> { active }
+  has_one :bar
+  has_one :blah
+end
+
+==> corrected/007/007.rb 132 <==
+class Post < ApplicationRecord
+  has_and_belongs_to_many :foos
+  has_and_belongs_to_many :bars
+  has_and_belongs_to_many :blahs
+end
+
+==> corrected/008/008.rb 147 <==
+class Post < ApplicationRecord
+  has_and_belongs_to_many :foos, -> { active }
+  has_and_belongs_to_many :bars
+  has_and_belongs_to_many :blahs
+end
+
+==> corrected/009/009.rb 243 <==
+class Post < ApplicationRecord
+  has_and_belongs_to_many :foos, -> { active }
+  has_and_belongs_to_many :bars
+  has_and_belongs_to_many :blahs
+
+  belongs_to :author
+  has_one :top_comment, -> { order(likes: :desc) }, class_name: 'Comment'
+end
+
+==> corrected/010/010.rb 106 <==
+class Post < ApplicationRecord
+  has_many :bars, class_name: 'Foo'
+
+  has_one :qux, class_name: 'Bar'
+end
+

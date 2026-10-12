@@ -1,0 +1,55 @@
+==> offenses exit=1 1889 <==
+app/models/000/000.rb:1:14: W: [Correctable] Rails/EnumSyntax: Enum defined with keyword arguments in `status` enum declaration. Use positional arguments instead.
+app/models/001/001.rb:1:9: W: Rails/EnumSyntax: Enum defined with keyword arguments in `x` enum declaration. Use positional arguments instead.
+app/models/001/001.rb:1:25: W: Rails/EnumSyntax: Enum defined with keyword arguments in `y` enum declaration. Use positional arguments instead.
+app/models/002/002.rb:1:14: W: [Correctable] Rails/EnumSyntax: Enum defined with keyword arguments in `status` enum declaration. Use positional arguments instead.
+app/models/003/003.rb:1:43: W: [Correctable] Rails/EnumSyntax: Enum defined with deprecated options in `status` enum declaration. Remove the `_` prefix.
+app/models/003/003.rb:1:58: W: [Correctable] Rails/EnumSyntax: Enum defined with deprecated options in `status` enum declaration. Remove the `_` prefix.
+app/models/004/004.rb:1:18: W: [Correctable] Rails/EnumSyntax: Enum defined with keyword arguments in `status` enum declaration. Use positional arguments instead.
+app/models/005/005.rb:1:13: W: [Correctable] Rails/EnumSyntax: Enum defined with keyword arguments in `KEY` enum declaration. Use positional arguments instead.
+app/models/006/006.rb:1:15: W: [Correctable] Rails/EnumSyntax: Enum defined with keyword arguments in `_key` enum declaration. Use positional arguments instead.
+app/models/007/007.rb:1:11: W: [Correctable] Rails/EnumSyntax: Enum defined with keyword arguments in `key` enum declaration. Use positional arguments instead.
+app/models/008/008.rb:1:14: W: [Correctable] Rails/EnumSyntax: Enum defined with keyword arguments in `status` enum declaration. Use positional arguments instead.
+app/models/009/009.rb:1:14: W: [Correctable] Rails/EnumSyntax: Enum defined with keyword arguments in `status` enum declaration. Use positional arguments instead.
+
+==> autocorrect exit=1 1869 <==
+app/models/000/000.rb:1:14: W: [Corrected] Rails/EnumSyntax: Enum defined with keyword arguments in `status` enum declaration. Use positional arguments instead.
+app/models/001/001.rb:1:9: W: Rails/EnumSyntax: Enum defined with keyword arguments in `x` enum declaration. Use positional arguments instead.
+app/models/001/001.rb:1:25: W: Rails/EnumSyntax: Enum defined with keyword arguments in `y` enum declaration. Use positional arguments instead.
+app/models/002/002.rb:1:14: W: [Corrected] Rails/EnumSyntax: Enum defined with keyword arguments in `status` enum declaration. Use positional arguments instead.
+app/models/003/003.rb:1:43: W: [Corrected] Rails/EnumSyntax: Enum defined with deprecated options in `status` enum declaration. Remove the `_` prefix.
+app/models/003/003.rb:1:58: W: [Corrected] Rails/EnumSyntax: Enum defined with deprecated options in `status` enum declaration. Remove the `_` prefix.
+app/models/004/004.rb:1:18: W: [Corrected] Rails/EnumSyntax: Enum defined with keyword arguments in `status` enum declaration. Use positional arguments instead.
+app/models/005/005.rb:1:13: W: [Corrected] Rails/EnumSyntax: Enum defined with keyword arguments in `KEY` enum declaration. Use positional arguments instead.
+app/models/006/006.rb:1:15: W: [Corrected] Rails/EnumSyntax: Enum defined with keyword arguments in `_key` enum declaration. Use positional arguments instead.
+app/models/007/007.rb:1:11: W: [Corrected] Rails/EnumSyntax: Enum defined with keyword arguments in `key` enum declaration. Use positional arguments instead.
+app/models/008/008.rb:1:14: W: [Corrected] Rails/EnumSyntax: Enum defined with keyword arguments in `status` enum declaration. Use positional arguments instead.
+app/models/009/009.rb:1:14: W: [Corrected] Rails/EnumSyntax: Enum defined with keyword arguments in `status` enum declaration. Use positional arguments instead.
+
+==> corrected/app/models/000/000.rb 48 <==
+enum :status, %i[active archived], prefix: true
+
+==> corrected/app/models/002/002.rb 55 <==
+enum :status, { active: 0, archived: 1 }, prefix: true
+
+==> corrected/app/models/003/003.rb 69 <==
+enum :status, { active: 0, archived: 1 }, prefix: true, suffix: true
+
+==> corrected/app/models/004/004.rb 42 <==
+enum "status", { active: 0, archived: 1 }
+
+==> corrected/app/models/005/005.rb 37 <==
+enum KEY, { active: 0, archived: 1 }
+
+==> corrected/app/models/006/006.rb 53 <==
+enum :_key, { active: 0, archived: 1 }, prefix: true
+
+==> corrected/app/models/007/007.rb 61 <==
+enum :key, %i[foo bar].map.with_index { |v, i| [v, i] }.to_h
+
+==> corrected/app/models/008/008.rb 41 <==
+enum :status, { active: 0, archived: 1 }
+
+==> corrected/app/models/009/009.rb 125 <==
+enum :status, { active: 0, archived: 1 }, prefix: true, suffix: true, default: :active, scopes: true, instance_methods: true
+

@@ -1,0 +1,30 @@
+==> offenses exit=1 1210 <==
+app/models/000/000.rb:2:3: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/001/001.rb:2:3: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/004/004.rb:2:3: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/007/007.rb:2:3: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/011/011.rb:2:3: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/012/012.rb:2:3: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/013/013.rb:2:3: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/019/019.rb:2:3: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/020/020.rb:3:5: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/026/026.rb:2:3: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/027/027.rb:5:5: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/028/028.rb:3:10: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/033/033.rb:2:3: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+
+==> autocorrect exit=1 1210 <==
+app/models/000/000.rb:2:3: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/001/001.rb:2:3: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/004/004.rb:2:3: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/007/007.rb:2:3: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/011/011.rb:2:3: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/012/012.rb:2:3: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/013/013.rb:2:3: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/019/019.rb:2:3: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/020/020.rb:3:5: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/026/026.rb:2:3: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/027/027.rb:5:5: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/028/028.rb:3:10: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+app/models/033/033.rb:2:3: C: Rails/HasManyOrHasOneDependent: Specify a `:dependent` option.
+
