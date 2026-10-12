@@ -40,6 +40,12 @@ pub struct Source<'a> {
     pub binary: bool,
     tokens: OnceCell<Vec<Token>>,
     lex_tokens: OnceCell<Vec<Token>>,
+    /// variable_force's tree of the program, built once for the cops that walk it.
+    pub(crate) variable_tree: OnceCell<crate::helpers::variable_force::Tree>,
+    /// parser_tokens::translated, which a dozen cops ask for.
+    pub(crate) translated_tokens: OnceCell<Vec<Token>>,
+    /// parse_warnings::warnings (a second parse), shared by the cops that need it.
+    pub(crate) parse_warnings: OnceCell<Vec<crate::helpers::parse_warnings::Warning>>,
     /// Where lexing stops: the end, or an indented `__END__` the parser gem ends the input at
     /// (runner::parse_for_target; Prism would lex past it).
     lex_end: usize,
@@ -85,6 +91,9 @@ impl<'a> Source<'a> {
             binary: binary_encoding(text),
             tokens: OnceCell::new(),
             lex_tokens: OnceCell::new(),
+            variable_tree: OnceCell::new(),
+            translated_tokens: OnceCell::new(),
+            parse_warnings: OnceCell::new(),
             lex_edits: Vec::new(),
             lex_end: data_start.filter(|&d| !text[d..].starts_with("__END__")).unwrap_or(text.len()),
         };
