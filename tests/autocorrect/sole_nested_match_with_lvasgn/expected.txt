@@ -1,0 +1,10 @@
+a.rb:2:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+a.rb:8:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+a.rb:14:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+a.rb:20:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+a.rb:26:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+a.rb:32:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+a.rb:38:7: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+a.rb:42:7: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+a.rb:46:7: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
+a.rb:50:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
