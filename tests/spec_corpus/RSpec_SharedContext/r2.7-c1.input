@@ -1,0 +1,38 @@
+==> .rubocop.yml 169 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/SharedContext:
+  Strict: true
+
+==> 000/000_spec.rb 61 <==
+shared_context 'foo' do
+  it 'performs actions' do
+  end
+end
+
+==> 001/001_spec.rb 83 <==
+shared_context 'foo' do
+  let(:foo) { :bar }
+
+  it 'performs actions' do
+  end
+end
+
+==> 002/002_spec.rb 75 <==
+shared_context 'foo' do
+  let(:foo) { :bar }
+
+  include_examples 'baz'
+end
+
+==> 003/003_spec.rb 49 <==
+shared_context 'foo' do
+  let(:foo) { :bar }
+end
+

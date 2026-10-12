@@ -1,0 +1,8 @@
+==> offenses exit=1 200 <==
+000/000_spec.rb:2:3: C: RSpec/SkipBlockInsideExample: Don't pass a block to `skip` inside examples.
+001/001_spec.rb:2:3: C: RSpec/SkipBlockInsideExample: Don't pass a block to `skip` inside examples.
+
+==> autocorrect exit=1 200 <==
+000/000_spec.rb:2:3: C: RSpec/SkipBlockInsideExample: Don't pass a block to `skip` inside examples.
+001/001_spec.rb:2:3: C: RSpec/SkipBlockInsideExample: Don't pass a block to `skip` inside examples.
+

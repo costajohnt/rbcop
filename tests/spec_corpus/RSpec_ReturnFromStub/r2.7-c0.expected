@@ -1,0 +1,62 @@
+==> offenses exit=1 859 <==
+000/000_spec.rb:2:31: C: [Correctable] RSpec/ReturnFromStub: Use `and_return` for static values.
+001/001_spec.rb:2:31: C: [Correctable] RSpec/ReturnFromStub: Use `and_return` for static values.
+002/002_spec.rb:2:31: C: [Correctable] RSpec/ReturnFromStub: Use `and_return` for static values.
+003/003_spec.rb:2:31: C: [Correctable] RSpec/ReturnFromStub: Use `and_return` for static values.
+004/004_spec.rb:2:56: C: [Correctable] RSpec/ReturnFromStub: Use `and_return` for static values.
+005/005_spec.rb:2:31: C: [Correctable] RSpec/ReturnFromStub: Use `and_return` for static values.
+006/006_spec.rb:2:31: C: [Correctable] RSpec/ReturnFromStub: Use `and_return` for static values.
+012/012_spec.rb:2:31: C: [Correctable] RSpec/ReturnFromStub: Use `and_return` for static values.
+013/013_spec.rb:2:31: C: RSpec/ReturnFromStub: Use `and_return` for static values.
+
+==> autocorrect exit=1 843 <==
+000/000_spec.rb:2:31: C: [Corrected] RSpec/ReturnFromStub: Use `and_return` for static values.
+001/001_spec.rb:2:31: C: [Corrected] RSpec/ReturnFromStub: Use `and_return` for static values.
+002/002_spec.rb:2:31: C: [Corrected] RSpec/ReturnFromStub: Use `and_return` for static values.
+003/003_spec.rb:2:31: C: [Corrected] RSpec/ReturnFromStub: Use `and_return` for static values.
+004/004_spec.rb:2:56: C: [Corrected] RSpec/ReturnFromStub: Use `and_return` for static values.
+005/005_spec.rb:2:31: C: [Corrected] RSpec/ReturnFromStub: Use `and_return` for static values.
+006/006_spec.rb:2:31: C: [Corrected] RSpec/ReturnFromStub: Use `and_return` for static values.
+012/012_spec.rb:2:31: C: [Corrected] RSpec/ReturnFromStub: Use `and_return` for static values.
+013/013_spec.rb:2:31: C: RSpec/ReturnFromStub: Use `and_return` for static values.
+
+==> corrected/000/000_spec.rb 55 <==
+it do
+  allow(Foo).to receive(:bar).and_return(42)
+end
+
+==> corrected/001/001_spec.rb 56 <==
+it do
+  allow(Foo).to receive(:bar).and_return(nil)
+end
+
+==> corrected/002/002_spec.rb 61 <==
+it do
+  allow(Foo).to receive(:bar).and_return([42, 43])
+end
+
+==> corrected/003/003_spec.rb 67 <==
+it do
+  allow(Foo).to receive(:bar).and_return({a: 42, b: 43})
+end
+
+==> corrected/004/004_spec.rb 80 <==
+it do
+  allow(Question).to receive(:meaning).with(:universe).and_return(42)
+end
+
+==> corrected/005/005_spec.rb 66 <==
+it do
+  allow(Foo).to receive(:bar).and_return(Life::MEANING)
+end
+
+==> corrected/006/006_spec.rb 74 <==
+it do
+  allow(Foo).to receive(:bar).and_return({Life::MEANING => 42})
+end
+
+==> corrected/012/012_spec.rb 74 <==
+it do
+  allow(Foo).to receive(:bar).and_return("You called"     "me")
+end
+
