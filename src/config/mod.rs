@@ -531,6 +531,12 @@ impl Store {
         &self.cwd
     }
 
+    /// A config so far loaded `require:`s Ruby code rbcop cannot load (custom cops, or a plugin
+    /// gem it could not integrate).
+    pub fn requires_ruby_code(&self) -> bool {
+        self.custom_cops
+    }
+
     /// The CLI applies `--color`/`--no-color` once the pwd config has loaded.
     pub fn set_color(&mut self, on: bool) {
         self.opts.color = on;
