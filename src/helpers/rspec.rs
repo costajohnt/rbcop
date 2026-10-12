@@ -381,34 +381,14 @@ pub fn branches<'pr>(node: &Node<'pr>) -> Option<Vec<Option<Node<'pr>>>> {
     }
     Some(out)
 }
-
 /// Whether a docstring correction (text built from the literal's value, written back between the
-/// first opening and the last closing delimiter) only re-writes what the source already says.
-/// RuboCop splices the unescaped value, which can close the literal early or start an
-/// interpolation; rbcop withholds the correction otherwise (docs/known-gaps.md). Inert: every
-/// string part reads exactly as written (no escapes), and an adjacent-literal concatenation
-/// (`'a' \ 'b'`) is made of plain quoted literals opening and closing with the same quote whose
-/// text has neither that quote nor (for `"`) `#{`, `#@` or `#$`.
+/// first opening and the last closing delimiter) is inert there. RuboCop splices the unescaped
+/// value, which can close the literal early or start an interpolation; rbcop withholds the
+/// correction otherwise (docs/known-gaps.md). Inert: the string parts' text (runs of adjacent
+/// parts joined) has no backslash and none of the delimiter's characters, and, where the result
+/// interpolates, no `#{`, `#@` or `#$`; an adjacent-literal concatenation (`'a' \ 'b'`) must be
+/// made of plain quoted literals, the first opening with the quote the last closes with.
 pub fn docstring_inert(node: &Node) -> bool {
-    fn as_written(node: &Node) -> bool {
-        if let Some(s) = node.as_string_node() {
-            return s.unescaped() == s.content_loc().as_slice();
-        }
-        if let Some(i) = node.as_interpolated_string_node() {
-            return i.parts().iter().all(|p| match kind::of(&p) {
-                kind::STRING_NODE | kind::INTERPOLATED_STRING_NODE => as_written(&p),
-                _ => true,
-            });
-        }
-        true
-    }
-    /// The literals of a concatenation, flattened.
-    fn literals<'pr>(node: Node<'pr>, out: &mut Vec<Node<'pr>>) {
-        match node.as_interpolated_string_node() {
-            Some(i) if i.opening_loc().is_none() => i.parts().iter().for_each(|p| literals(p, out)),
-            _ => out.push(node),
-        }
-    }
     fn opening<'a>(node: &Node<'a>) -> Option<&'a [u8]> {
         match node.as_interpolated_string_node() {
             Some(i) => i.opening_loc().map(|l| l.as_slice()),
@@ -419,6 +399,13 @@ pub fn docstring_inert(node: &Node) -> bool {
         match node.as_interpolated_string_node() {
             Some(i) => i.closing_loc().map(|l| l.as_slice()),
             None => node.as_string_node()?.closing_loc().map(|l| l.as_slice()),
+        }
+    }
+    /// The literals of a concatenation, flattened.
+    fn literals<'pr>(node: Node<'pr>, out: &mut Vec<Node<'pr>>) {
+        match node.as_interpolated_string_node() {
+            Some(i) if i.opening_loc().is_none() => i.parts().iter().for_each(|p| literals(p, out)),
+            _ => out.push(node),
         }
     }
     /// The text as it is spliced, in runs between `#{...}` parts (adjacent parts' values join).
@@ -437,26 +424,36 @@ pub fn docstring_inert(node: &Node) -> bool {
         Some(i) => i.opening_loc().is_some(),
         None => node.as_string_node().is_some_and(|s| s.opening_loc().is_some()),
     };
-    if single {
-        return as_written(node);
+    let mut owned = Vec::new();
+    if !single {
+        for p in node.as_interpolated_string_node().map(|i| i.parts().iter().collect::<Vec<_>>()).unwrap_or_default() {
+            literals(p, &mut owned);
+        }
     }
-    let mut parts = Vec::new();
-    for p in node.as_interpolated_string_node().map(|i| i.parts().iter().collect::<Vec<_>>()).unwrap_or_default() {
-        literals(p, &mut parts);
-    }
-    let Some(q) = parts.first().and_then(opening).filter(|o| *o == b"'" || *o == b"\"") else { return false };
-    if !parts.iter().all(|p| matches!(opening(p), Some(b"'" | b"\"")) && as_written(p)) {
+    let parts: Vec<&Node> = if single { vec![node] } else { owned.iter().collect() };
+    let Some(open) = parts.first().and_then(|p| opening(p)) else { return false };
+    let Some(close) = parts.last().and_then(|p| closing(p)) else { return false };
+    if !single
+        && !(matches!(open, b"'" | b"\"")
+            && open == close
+            && parts.iter().all(|p| matches!(opening(p), Some(b"'" | b"\"")) && matches!(closing(p), Some(b"'" | b"\""))))
+    {
         return false;
     }
-    if parts.last().and_then(closing) != Some(q) {
-        return false;
+    // the delimiter characters of the literal the text is written into
+    let mut delims: Vec<u8> = close.to_vec();
+    if let Some(&last) = open.last()
+        && open.len() > 1
+    {
+        delims.push(last);
     }
-    let mut vals = vec![Vec::new()];
-    parts.iter().for_each(|p| values(p, &mut vals));
-    vals.iter().all(|v| {
-        !v.contains(&q[0])
-            && !v.contains(&b'\\')
-            && (q != b"\"" || ![b"#{", b"#@", b"#$"].iter().any(|seq| v.windows(2).any(|w| w == *seq)))
+    let interpolating = !(open == b"'" || open.starts_with(b"%q") || open.starts_with(b"%w") || open.starts_with(b"%i"));
+    let mut runs = vec![Vec::new()];
+    parts.iter().for_each(|p| values(p, &mut runs));
+    runs.iter().all(|v| {
+        !v.contains(&b'\\')
+            && !v.iter().any(|b| delims.contains(b))
+            && !(interpolating && [b"#{", b"#@", b"#$"].iter().any(|seq| v.windows(2).any(|w| w == *seq)))
     })
 }
 

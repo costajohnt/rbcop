@@ -1,0 +1,48 @@
+==> .rubocop.yml 215 <==
+---
+plugins:
+- rubocop-factory_bot
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+FactoryBot/FactoryNameStyle:
+  EnforcedStyle: :symbol
+  ExplicitOnly: false
+
+==> 000/000_spec.rb 15 <==
+create('user')
+
+==> 001/001_spec.rb 57 <==
+create('user',
+  username: "PETER",
+  peter: "USERNAME")
+
+==> 002/002_spec.rb 13 <==
+build 'user'
+
+==> 003/003_spec.rb 26 <==
+FactoryBot.create('user')
+
+==> 004/004_spec.rb 14 <==
+create(:user)
+
+==> 005/005_spec.rb 13 <==
+build(:user)
+
+==> 006/006_spec.rb 23 <==
+create("user_#{type}")
+
+==> 007/007_spec.rb 21 <==
+build("user_#{'a'}")
+
+==> 008/008_spec.rb 18 <==
+create user: :foo
+
+==> 009/009_spec.rb 17 <==
+build user: :foo
+
+==> 010/010_spec.rb 25 <==
+create("users/internal")
+

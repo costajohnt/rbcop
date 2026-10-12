@@ -1,0 +1,22 @@
+==> .rubocop.yml 211 <==
+---
+plugins:
+- rubocop-factory_bot
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+FactoryBot/AssociationStyle:
+  NonImplicitAssociationMethods:
+  - email
+
+==> 000/spec/factories.rb 95 <==
+sequence(:email) { |n| "person#{n}@example.com" }
+
+factory :user do
+  email
+
+  skip_create
+end
+

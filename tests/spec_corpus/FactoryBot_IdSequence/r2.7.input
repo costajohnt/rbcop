@@ -1,0 +1,73 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-factory_bot
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/spec/factories.rb 119 <==
+FactoryBot.define do
+  factory :post do
+    summary { "A summary" }
+    sequence :id
+    title { "A title" }
+  end
+end
+
+==> 001/spec/factories.rb 126 <==
+FactoryBot.define do
+  factory :post do
+    summary { "A summary" }
+    sequence(:id, 1000)
+    title { "A title" }
+  end
+end
+
+==> 002/spec/factories.rb 144 <==
+FactoryBot.define do
+  factory :post do
+    summary { "A summary" }
+    sequence(
+      :id,
+      1000
+    )
+    title { "A title" }
+  end
+end
+
+==> 003/spec/factories.rb 135 <==
+FactoryBot.define do
+  factory :post do
+    summary { "A summary" }
+    sequence(:id, (1..10).cycle)
+    title { "A title" }
+  end
+end
+
+==> 004/spec/factories.rb 131 <==
+FactoryBot.define do
+  factory :post do
+    summary { "A summary" }
+    sequence :something_else
+    title { "A title" }
+  end
+end
+
+==> 005/spec/factories.rb 40 <==
+FactoryBot.define do
+  sequence(id)
+end
+
+==> 006/spec/factories.rb 36 <==
+FactoryBot.define do
+  sequence
+end
+
+==> 007/spec/factories.rb 45 <==
+FactoryBot.define do
+  foo.sequence(:id)
+end
+

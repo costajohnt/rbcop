@@ -1,0 +1,98 @@
+==> offenses exit=1 2361 <==
+000/spec/factories.rb:3:5: C: [Correctable] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:4:5: C: [Correctable] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:5:5: C: [Correctable] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:6:5: C: [Correctable] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:7:5: C: [Correctable] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:8:5: C: [Correctable] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:9:5: C: [Correctable] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:10:5: C: [Correctable] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:11:5: C: [Correctable] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:12:5: C: [Correctable] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:13:5: C: [Correctable] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:14:5: C: [Correctable] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+001/spec/factories.rb:4:7: C: [Correctable] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+001/spec/factories.rb:5:7: C: [Correctable] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+002/spec/factories.rb:4:7: C: [Correctable] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+002/spec/factories.rb:5:7: C: [Correctable] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+003/spec/factories.rb:4:5: C: [Correctable] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+004/spec/factories.rb:3:5: C: [Correctable] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+004/spec/factories.rb:5:7: C: [Correctable] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+
+==> autocorrect exit=0 2323 <==
+000/spec/factories.rb:3:5: C: [Corrected] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:4:5: C: [Corrected] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:5:5: C: [Corrected] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:6:5: C: [Corrected] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:7:5: C: [Corrected] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:8:5: C: [Corrected] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:9:5: C: [Corrected] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:10:5: C: [Corrected] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:11:5: C: [Corrected] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:12:5: C: [Corrected] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:13:5: C: [Corrected] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+000/spec/factories.rb:14:5: C: [Corrected] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+001/spec/factories.rb:4:7: C: [Corrected] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+001/spec/factories.rb:5:7: C: [Corrected] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+002/spec/factories.rb:4:7: C: [Corrected] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+002/spec/factories.rb:5:7: C: [Corrected] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+003/spec/factories.rb:4:5: C: [Corrected] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+004/spec/factories.rb:3:5: C: [Corrected] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+004/spec/factories.rb:5:7: C: [Corrected] FactoryBot/AttributeDefinedStatically: Use a block to declare attribute values.
+
+==> corrected/000/spec/factories.rb 456 <==
+FactoryBot.define do
+  factory :post do
+    title { "Something" }
+    comments_count { 0 }
+    tag { Tag::MAGIC }
+    recent_statuses { [] }
+    status { [:draft, :published].sample }
+    published_at { 1.day.from_now }
+    created_at { 1.day.ago }
+    update_times { [Time.current] }
+    meta_tags { { foo: Time.current } }
+    other_tags { { foo: Time.current } }
+    options { { color: :blue } }
+    other_options { { Tag::MAGIC => :magic } }
+  end
+end
+
+==> corrected/001/spec/factories.rb 148 <==
+FactoryBot.define do
+  factory :post do
+    trait :published do
+      title { "Something" }
+      published_at { 1.day.from_now }
+    end
+  end
+end
+
+==> corrected/002/spec/factories.rb 141 <==
+FactoryBot.define do
+  factory :post do
+    transient do
+      title { "Something" }
+      published_at { 1.day.from_now }
+    end
+  end
+end
+
+==> corrected/003/spec/factories.rb 111 <==
+FactoryBot.define do
+  factory :post do
+    self.start { Date.today }
+    self.end { Date.tomorrow }
+  end
+end
+
+==> corrected/004/spec/factories.rb 240 <==
+FactoryBot.define do
+  factory :post do |post_definition|
+    post_definition.end { Date.tomorrow }
+    post_definition.trait :published do |published_definition|
+      published_definition.published_at { 1.day.from_now }
+    end
+  end
+end
+

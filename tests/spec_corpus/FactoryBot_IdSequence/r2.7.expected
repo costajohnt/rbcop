@@ -1,0 +1,44 @@
+==> offenses exit=1 448 <==
+000/spec/factories.rb:4:5: C: [Correctable] FactoryBot/IdSequence: Do not create a sequence for an id attribute
+001/spec/factories.rb:4:5: C: [Correctable] FactoryBot/IdSequence: Do not create a sequence for an id attribute
+002/spec/factories.rb:4:5: C: [Correctable] FactoryBot/IdSequence: Do not create a sequence for an id attribute
+003/spec/factories.rb:4:5: C: [Correctable] FactoryBot/IdSequence: Do not create a sequence for an id attribute
+
+==> autocorrect exit=0 440 <==
+000/spec/factories.rb:4:5: C: [Corrected] FactoryBot/IdSequence: Do not create a sequence for an id attribute
+001/spec/factories.rb:4:5: C: [Corrected] FactoryBot/IdSequence: Do not create a sequence for an id attribute
+002/spec/factories.rb:4:5: C: [Corrected] FactoryBot/IdSequence: Do not create a sequence for an id attribute
+003/spec/factories.rb:4:5: C: [Corrected] FactoryBot/IdSequence: Do not create a sequence for an id attribute
+
+==> corrected/000/spec/factories.rb 102 <==
+FactoryBot.define do
+  factory :post do
+    summary { "A summary" }
+    title { "A title" }
+  end
+end
+
+==> corrected/001/spec/factories.rb 102 <==
+FactoryBot.define do
+  factory :post do
+    summary { "A summary" }
+    title { "A title" }
+  end
+end
+
+==> corrected/002/spec/factories.rb 102 <==
+FactoryBot.define do
+  factory :post do
+    summary { "A summary" }
+    title { "A title" }
+  end
+end
+
+==> corrected/003/spec/factories.rb 102 <==
+FactoryBot.define do
+  factory :post do
+    summary { "A summary" }
+    title { "A title" }
+  end
+end
+

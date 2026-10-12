@@ -1,0 +1,33 @@
+==> .rubocop.yml 187 <==
+---
+plugins:
+- rubocop-factory_bot
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+FactoryBot/ExcessiveCreateList:
+  MaxAmount: 10
+
+==> 000/000_spec.rb 26 <==
+expect(true).to be_truthy
+
+==> 001/001_spec.rb 36 <==
+create_list(:merge_requests, value)
+
+==> 002/002_spec.rb 32 <==
+create_list(:merge_requests, 9)
+
+==> 003/003_spec.rb 33 <==
+create_list(:merge_requests, 10)
+
+==> 004/004_spec.rb 33 <==
+create_list(:merge_requests, 11)
+
+==> 005/005_spec.rb 44 <==
+FactoryBot.create_list(:merge_requests, 11)
+
+==> 006/006_spec.rb 45 <==
+FactoryBot.create_list('warehouse/user', 11)
+
