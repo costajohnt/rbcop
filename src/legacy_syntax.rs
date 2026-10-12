@@ -112,20 +112,76 @@ pub fn continue_over_blank_lines(text: &str, dots: &[usize]) -> Option<(Vec<u8>,
     Some((bytes, fake))
 }
 
-/// The first line after the one holding `opener` that has only spaces and tabs (with its newline, if
-/// any), unless an empty line comes first: where the parser gem ends a `<<''` heredoc (its
-/// `delimiter?` takes any space/tab indentation before the empty delimiter).
-pub fn blank_heredoc_terminator(text: &str, opener: usize) -> Option<std::ops::Range<usize>> {
-    let mut start = opener + text[opener..].find('\n')? + 1;
+/// Where the parser gem ends a plain heredoc, and how a copy makes Prism end it there too.
+pub struct PlainHeredoc {
+    /// The end of the terminator line (where the next heredoc on the opener's line starts).
+    pub after: usize,
+    /// Byte edits of the copy (none when Prism ends the heredoc there already).
+    pub edits: Vec<(usize, u8)>,
+    /// `(delimiter, line start)`: where Prism's terminator is in the copy and where the parser
+    /// gem's starts (`ParseResult::move_heredoc_ends`).
+    pub moved: Option<(usize, usize)>,
+}
+
+/// For the plain heredoc (`<<ID`, `<<'ID'`, `<<"ID"`, ``<<`ID` ``, also the empty `<<''`) that
+/// `tokens[i]` opens, whose body starts at `body` (default: the next token): the parser gem
+/// (Literal#delimiter?) closes it at the first line that is the delimiter after spaces and tabs
+/// (trailing `\r`s dropped), Prism only at a line that is exactly the delimiter (#318, #355). When
+/// the parser gem's terminator comes first, the copy moves the previous line's newline after the
+/// terminator's indentation (`foo\n  EOS` -> `foo  \nEOS`), so the next line keeps its column (an
+/// `=begin`, another heredoc's body or terminator; #353). When the previous line is another
+/// heredoc's terminator (or the file ends without a newline after a `<<''` terminator), the
+/// indentation moves to the start of the next line instead (`  EOS\n` -> `EOS\n  `). None for
+/// other heredocs and when no line closes it.
+// ponytail: a `#{...}` spanning lines is not skipped; its lines are taken as body lines.
+pub fn plain_heredoc_terminator(text: &str, tokens: &[Token], i: usize, body: Option<usize>) -> Option<PlainHeredoc> {
+    let t = &tokens[i];
+    let rest = text.get(t.start..t.end)?.strip_prefix("<<")?;
+    let (id, interpolating) = match rest.as_bytes().first() {
+        Some(b'-' | b'~') => return None,
+        Some(&q @ (b'\'' | b'"' | b'`')) => (rest.get(1..rest.len() - 1)?, q != b'\''),
+        _ => (rest, true),
+    };
+    let body = body.or_else(|| tokens.get(i + 1).map(|n| n.start))?;
+    if body <= t.end || !text[..body].ends_with('\n') {
+        return None;
+    }
+    let bytes = text.as_bytes();
+    let (mut start, mut continued) = (body, false);
     while start < text.len() {
-        let end = text[start..].find('\n').map_or(text.len(), |i| start + i + 1);
+        let end = text[start..].find('\n').map_or(text.len(), |n| start + n + 1);
         let line = text[start..end].strip_suffix('\n').unwrap_or(&text[start..end]);
-        if line.is_empty() {
-            return None;
+        if line.strip_suffix('\r').unwrap_or(line) == id {
+            return Some(PlainHeredoc { after: end, edits: Vec::new(), moved: None });
         }
-        if line.bytes().all(|b| matches!(b, b' ' | b'\t')) {
-            return Some(start..end);
+        let line = line.trim_end_matches('\r');
+        let indent = line.len().saturating_sub(id.len());
+        if !continued
+            && indent > 0
+            && line.ends_with(id)
+            && line.as_bytes()[..indent].iter().all(|&b| matches!(b, b' ' | b'\t'))
+        {
+            let delim = start + indent;
+            // The previous line is this body's or the opener's (ending in neither `\r` nor a `\`
+            // continuation): its newline moves to just before the delimiter.
+            let opener_line = !text[t.end..start - 1].contains('\n');
+            // Prism finds no empty terminator line at the end of the file without a newline.
+            let nl = text[start..end].ends_with('\n');
+            if (start > body || opener_line) && !matches!(bytes[start - 2], b'\r' | b'\\') && (nl || !id.is_empty()) {
+                let mut edits: Vec<(usize, u8)> = (start..delim).map(|o| (o - 1, bytes[o])).collect();
+                edits.push((delim - 1, b'\n'));
+                return Some(PlainHeredoc { after: end, edits, moved: Some((delim, start)) });
+            }
+            if line.len() + usize::from(nl) != end - start {
+                return None;
+            }
+            // Without a final newline the new one takes a blank's place.
+            let blanks = &bytes[start + usize::from(!nl)..delim];
+            let moved = id.bytes().chain(*b"\n").chain(blanks.iter().copied());
+            return Some(PlainHeredoc { after: end, edits: (start..).zip(moved).collect(), moved: None });
         }
+        let backslashes = line.bytes().rev().take_while(|&b| b == b'\\').count();
+        continued = interpolating && backslashes % 2 == 1;
         start = end;
     }
     None

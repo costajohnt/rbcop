@@ -1,0 +1,3 @@
+x = <<EOS
+  foo
+    EOS

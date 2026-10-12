@@ -1,0 +1,251 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+a.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+a.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+a353.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a353.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+a353.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+a353.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+a353.rb:3:1: C: [Correctable] Layout/ClosingHeredocIndentation: `` is not aligned with `x = <<''`.
+a353.rb:3:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+a353.rb:4:1: C: [Correctable] Style/BlockComments: Do not use block comments.
+a355.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a355.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+a355.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+a355.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+a357.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a357.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+a357.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+a357.rb:4:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+a357.rb:5:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+a357.rb:5:1: C: [Correctable] Layout/ClosingHeredocIndentation: `` is not aligned with `foo(<<'', <<'')` or beginning of method definition.
+a357.rb:5:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+b.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+b.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+b.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+b.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+b353.rb:1:11: C: [Correctable] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+b353.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+b353.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+b353.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+b353.rb:3:1: C: [Correctable] Layout/ClosingHeredocIndentation: `` is not aligned with `foo(<<'', <<A)` or beginning of method definition.
+b353.rb:3:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+b355.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+b355.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+b355.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+b355.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+b355.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+b357.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+b357.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+b357.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+b357.rb:4:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+b357.rb:5:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+b357.rb:5:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+b357.rb:5:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+c.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+c.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+c.rb:5:1: C: [Correctable] Layout/ClosingHeredocIndentation: `B` is not aligned with `foo(<<A, <<~B)` or beginning of method definition.
+c353.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+c353.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+c353.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+c353.rb:3:1: C: [Correctable] Layout/ClosingHeredocIndentation: `` is not aligned with `foo(<<'', <<A)` or beginning of method definition.
+c353.rb:3:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+c353.rb:4:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+c355.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+c355.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+c355.rb:1:5: C: [Correctable] Style/RedundantHeredocDelimiterQuotes: Remove the redundant heredoc delimiter quotes, use `<<EOS` instead.
+c355.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+c355.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+c357.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+c357.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+c357.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+c357.rb:3:1: C: [Correctable] Layout/ClosingHeredocIndentation: `` is not aligned with `foo(<<'', <<'', <<'')` or beginning of method definition.
+c357.rb:3:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+c357.rb:4:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+c357.rb:5:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+c357.rb:5:1: C: [Correctable] Layout/ClosingHeredocIndentation: `` is not aligned with `foo(<<'', <<'', <<'')` or beginning of method definition.
+c357.rb:5:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+c357.rb:6:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+c357.rb:7:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+c357.rb:7:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+c357.rb:7:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+d.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+d.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<-`.
+d.rb:3:1: C: [Correctable] Layout/ClosingHeredocIndentation: `A` is not aligned with `foo(<<-A, <<B)` or beginning of method definition.
+d.rb:4:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+d353.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+d353.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+d353.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+d353.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+d353.rb:3:1: C: [Correctable] Layout/ClosingHeredocIndentation: `` is not aligned with `x = <<''`.
+d353.rb:3:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+d355.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+d355.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+d355.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+d355.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+e.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+e.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+e.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+e.rb:3:6: C: [Correctable] Layout/TrailingEmptyLines: Final newline missing.
+e353.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e353.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+e353.rb:1:5: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+e353.rb:1:5: C: [Correctable] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+e353.rb:2:1: C: [Correctable] Layout/ClosingHeredocIndentation: `` is not aligned with `x = <<''`.
+e353.rb:2:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+e355.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e355.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+e355.rb:1:5: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+e355.rb:1:5: C: [Correctable] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+f.rb:1:1: C: Layout/EndOfLine: Carriage return character detected.
+f.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+f.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+f.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+f.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+f353.rb:1:10: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+f353.rb:1:10: C: [Correctable] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+f353.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+f353.rb:1:5: C: [Correctable] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+f353.rb:3:1: C: [Correctable] Layout/ClosingHeredocIndentation: `` is not aligned with `foo(<<A, <<'')` or beginning of method definition.
+f353.rb:3:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+f355.rb:1:10: C: [Correctable] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+f355.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+f355.rb:1:5: C: [Correctable] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+g.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+g.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+g.rb:4:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+g353.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+g353.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+g353.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+g353.rb:3:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+g353.rb:5:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+g355.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+g355.rb:4:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+h.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+h.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+h.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+h.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+h.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+h353.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+h353.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+h353.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+h353.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+h353.rb:3:1: C: [Correctable] Layout/ClosingHeredocIndentation: `` is not aligned with `x = <<''`.
+h353.rb:3:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+h355.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+h355.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+h355.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+h355.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+h355.rb:4:1: C: [Correctable] Style/BlockComments: Do not use block comments.
+i.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+i.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+i.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+i.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+i355.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+i355.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+i355.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+i355.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+j.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+j.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+j.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+j.rb:4:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+j355.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+j355.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+j355.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+j355.rb:4:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+k.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+k.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+k.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+k.rb:4:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+k355.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+k355.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+k355.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+k355.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+l.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+l.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+l.rb:1:5: C: [Correctable] Style/RedundantHeredocDelimiterQuotes: Remove the redundant heredoc delimiter quotes, use `<<EOS` instead.
+l.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+l.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+l355.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+l355.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+l355.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+m.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+m.rb:2:3: C: [Correctable] Style/RedundantAssignment: Redundant assignment before returning detected.
+m.rb:4:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+m355.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+m355.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+m355.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+m355.rb:3:1: C: Layout/EndOfLine: Carriage return character detected.
+m355.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+n.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+n.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+n.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+n.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+n.rb:4:1: C: [Correctable] Style/BlockComments: Do not use block comments.
+n355.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+n355.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+n355.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+n355.rb:4:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+n355.rb:6:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+n355.rb:7:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+o.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+o.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+o.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+o.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+o.rb:3:1: C: [Correctable] Layout/ClosingHeredocIndentation: `` is not aligned with `x = <<''`.
+o.rb:3:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+o.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+o.rb:5:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+o.rb:6:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+o.rb:6:1: C: [Correctable] Layout/ClosingHeredocIndentation: `` is not aligned with `y = <<''`.
+o.rb:6:1: C: [Correctable] Layout/TrailingEmptyLines: 1 trailing blank lines detected.
+o.rb:6:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+p.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+p.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.
+p.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+p.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+p.rb:4:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+p.rb:5:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+p.rb:5:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+p.rb:5:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+q.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+q.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+q.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+r.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+r.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+r.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+r.rb:4:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+s.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+s.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+s.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+s.rb:4:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+t.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+t.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+t.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+t.rb:3:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+u.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+u.rb:1:3: C: Style/StringConcatenation: Prefer string interpolation to string concatenation.
+u.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+u.rb:4:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+v.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+v.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+v.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<`.
+v.rb:5:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+w.rb:1:10: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+w.rb:1:10: C: [Correctable] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+w.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+w.rb:1:5: C: [Correctable] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+w.rb:3:1: C: [Correctable] Layout/ClosingHeredocIndentation: `` is not aligned with `foo(<<A, <<'')` or beginning of method definition.
+w.rb:3:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+x.rb:1:10: C: [Correctable] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+x.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+x.rb:1:5: C: [Correctable] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+x.rb:3:4: C: [Correctable] Layout/TrailingEmptyLines: Final newline missing.
+y.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+y.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+y.rb:1:5: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+y.rb:1:5: C: [Correctable] Style/EmptyHeredoc: Use an empty string literal instead of heredoc.
+y.rb:2:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+y.rb:2:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
