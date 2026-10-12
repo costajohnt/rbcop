@@ -1,0 +1,20 @@
+==> offenses exit=1 436 <==
+000/000_spec.rb:1:19: C: [Correctable] RSpec/EmptyOutput: Use `not_to` instead of matching on an empty output.
+000/000_spec.rb:2:19: C: [Correctable] RSpec/EmptyOutput: Use `not_to` instead of matching on an empty output.
+001/001_spec.rb:1:23: C: [Correctable] RSpec/EmptyOutput: Use `to` instead of matching on an empty output.
+001/001_spec.rb:2:23: C: [Correctable] RSpec/EmptyOutput: Use `to` instead of matching on an empty output.
+
+==> autocorrect exit=0 428 <==
+000/000_spec.rb:1:19: C: [Corrected] RSpec/EmptyOutput: Use `not_to` instead of matching on an empty output.
+000/000_spec.rb:2:19: C: [Corrected] RSpec/EmptyOutput: Use `not_to` instead of matching on an empty output.
+001/001_spec.rb:1:23: C: [Corrected] RSpec/EmptyOutput: Use `to` instead of matching on an empty output.
+001/001_spec.rb:2:23: C: [Corrected] RSpec/EmptyOutput: Use `to` instead of matching on an empty output.
+
+==> corrected/000/000_spec.rb 78 <==
+expect { foo }.not_to output.to_stderr
+expect { foo }.not_to output.to_stdout
+
+==> corrected/001/001_spec.rb 70 <==
+expect { foo }.to output.to_stderr
+expect { foo }.to output.to_stdout
+

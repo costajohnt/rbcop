@@ -245,6 +245,143 @@ pub fn right_sibling<'pr>(ancestors: &[Node<'pr>], node: &Node) -> Option<Node<'
     items.into_iter().nth(i + 1)
 }
 
+/// rubocop-ast `DstrNode#value` (and `StrNode#value`): str children's values, other children's
+/// source (`#@x` without its `#`).
+pub fn dstr_value(node: &Node) -> String {
+    fn bytes(node: &Node, out: &mut Vec<u8>) {
+        if let Some(s) = node.as_string_node() {
+            out.extend(s.unescaped());
+            return;
+        }
+        let Some(i) = node.as_interpolated_string_node() else {
+            out.extend(node_text(node).as_bytes());
+            return;
+        };
+        for part in i.parts().iter() {
+            match part {
+                Node::StringNode { .. } | Node::InterpolatedStringNode { .. } => bytes(&part, out),
+                Node::EmbeddedVariableNode { .. } => {
+                    out.extend(node_text(&part.as_embedded_variable_node().unwrap().variable()).as_bytes())
+                }
+                _ => out.extend(node_text(&part).as_bytes()),
+            }
+        }
+    }
+    let mut out = Vec::new();
+    bytes(node, &mut out);
+    String::from_utf8_lossy(&out).into_owned()
+}
+
+/// The first parser argument of a `|...|` block parameter list: its range and `name` (`""` when
+/// anonymous; None for a destructuring `(a, b)`, which has no name). None without any argument.
+pub fn first_block_param(p: &ruby_prism::BlockParametersNode) -> Option<(usize, usize, Option<String>)> {
+    let named = |n: &Node, name: Option<ruby_prism::ConstantId>| {
+        let (s, e) = node_range(n);
+        Some((s, e, Some(name.map(|c| String::from_utf8_lossy(c.as_slice()).into_owned()).unwrap_or_default())))
+    };
+    if let Some(params) = p.parameters() {
+        let first = params
+            .requireds()
+            .iter()
+            .chain(params.optionals().iter())
+            .chain(params.rest().filter(|r| r.as_implicit_rest_node().is_none()))
+            .chain(params.posts().iter())
+            .chain(params.keywords().iter())
+            .chain(params.keyword_rest())
+            .chain(params.block().map(|b| b.as_node()))
+            .next();
+        if let Some(n) = first {
+            return match &n {
+                Node::RequiredParameterNode { .. } => named(&n, Some(n.as_required_parameter_node().unwrap().name())),
+                Node::OptionalParameterNode { .. } => named(&n, Some(n.as_optional_parameter_node().unwrap().name())),
+                Node::RestParameterNode { .. } => named(&n, n.as_rest_parameter_node().unwrap().name()),
+                Node::RequiredKeywordParameterNode { .. } => {
+                    named(&n, Some(n.as_required_keyword_parameter_node().unwrap().name()))
+                }
+                Node::OptionalKeywordParameterNode { .. } => {
+                    named(&n, Some(n.as_optional_keyword_parameter_node().unwrap().name()))
+                }
+                Node::KeywordRestParameterNode { .. } => named(&n, n.as_keyword_rest_parameter_node().unwrap().name()),
+                Node::BlockParameterNode { .. } => named(&n, n.as_block_parameter_node().unwrap().name()),
+                _ => {
+                    let (s, e) = node_range(&n);
+                    Some((s, e, None))
+                }
+            };
+        }
+    }
+    let local = p.locals().iter().next()?;
+    named(&local, local.as_block_local_variable_node().map(|l| l.name()))
+}
+
+/// The parser node a Prism statement list stands for: its single statement, nil when empty, the
+/// list itself (a `begin`) otherwise.
+pub fn parser_body<'pr>(stmts: Option<Node<'pr>>) -> Option<Node<'pr>> {
+    let node = stmts?;
+    match node.as_statements_node() {
+        Some(s) => {
+            let mut items: Vec<Node> = s.body().iter().collect();
+            match items.len() {
+                0 => None,
+                1 => items.pop(),
+                _ => Some(node),
+            }
+        }
+        None => Some(node),
+    }
+}
+
+/// The children of a parser `begin`: a 2+ statement list or parentheses (`(a; b)`, `(a)`).
+pub fn begin_children<'pr>(node: &Node<'pr>) -> Option<Vec<Node<'pr>>> {
+    if let Some(s) = node.as_statements_node() {
+        return Some(s.body().iter().collect());
+    }
+    let p = node.as_parentheses_node()?;
+    Some(match p.body() {
+        None => Vec::new(),
+        Some(b) => match b.as_statements_node() {
+            Some(s) => s.body().iter().collect(),
+            None => vec![b],
+        },
+    })
+}
+
+/// rubocop-ast `branches` of an `if` (IfNode/UnlessNode, elsif chains flattened) or `case`;
+/// None for other nodes.
+pub fn branches<'pr>(node: &Node<'pr>) -> Option<Vec<Option<Node<'pr>>>> {
+    if let Some(i) = node.as_if_node() {
+        let mut out = vec![parser_body(i.statements().map(|s| s.as_node()))];
+        match i.subsequent() {
+            None => {}
+            Some(sub) => {
+                if let Some(e) = sub.as_else_node() {
+                    out.push(parser_body(e.statements().map(|s| s.as_node())));
+                } else if sub.as_if_node().is_some() {
+                    out.extend(branches(&sub)?);
+                }
+            }
+        }
+        return Some(out);
+    }
+    if let Some(u) = node.as_unless_node() {
+        let mut out = vec![parser_body(u.statements().map(|s| s.as_node()))];
+        if let Some(e) = u.else_clause() {
+            out.push(parser_body(e.statements().map(|s| s.as_node())));
+        }
+        return Some(out);
+    }
+    let c = node.as_case_node()?;
+    let mut out: Vec<Option<Node>> = c
+        .conditions()
+        .iter()
+        .map(|w| parser_body(w.as_when_node().and_then(|w| w.statements()).map(|s| s.as_node())))
+        .collect();
+    if let Some(e) = c.else_clause() {
+        out.push(parser_body(e.statements().map(|s| s.as_node())));
+    }
+    Some(out)
+}
+
 /// A node's byte range.
 pub fn node_range(node: &Node) -> (usize, usize) {
     let l = node.location();
@@ -611,7 +748,7 @@ pub fn top_level_groups<'pr>(l: &Language, program: &Node<'pr>) -> Vec<Node<'pr>
 
 /// Metadata#on_block for a visited node: the metadata argument lists of `RSpec.configure` hooks
 /// (`config.before(:each, ...)`) and of example/group/hook blocks, in RuboCop's order.
-pub fn metadata_lists<'pr>(l: &Language, node: &Node<'pr>) -> Vec<Vec<Node<'pr>>> {
+pub fn metadata_lists<'pr>(l: &Language, node: &Node<'pr>) -> Vec<(CallNode<'pr>, Vec<Node<'pr>>)> {
     let mut out = Vec::new();
     let Some(call) = plain_block_call(node) else { return out };
     // rspec_configure: (block (send #rspec? :configure) (args (arg $_)) ...)
@@ -637,7 +774,7 @@ pub fn metadata_lists<'pr>(l: &Language, node: &Node<'pr>) -> Vec<Vec<Node<'pr>>
             struct V<'a, 'pr> {
                 l: &'a Language,
                 var: &'a [u8],
-                out: &'a mut Vec<Vec<Node<'pr>>>,
+                out: &'a mut Vec<(CallNode<'pr>, Vec<Node<'pr>>)>,
             }
             impl<'pr> Visit<'pr> for V<'_, 'pr> {
                 fn visit_call_node(&mut self, n: &CallNode<'pr>) {
@@ -650,7 +787,7 @@ pub fn metadata_lists<'pr>(l: &Language, node: &Node<'pr>) -> Vec<Vec<Node<'pr>>
                     {
                         let args = send_args(n);
                         if !args.is_empty() {
-                            self.out.push(args.into_iter().skip(1).collect());
+                            self.out.push((n.as_node().as_call_node().unwrap(), args.into_iter().skip(1).collect()));
                         }
                     }
                     ruby_prism::visit_call_node(self, n);
@@ -665,7 +802,7 @@ pub fn metadata_lists<'pr>(l: &Language, node: &Node<'pr>) -> Vec<Vec<Node<'pr>>
     if rspec_recv(&call) && (l.example(n) || l.example_group(n) || l.shared_group(n) || l.hook(n)) {
         let args = send_args(&call);
         if !args.is_empty() {
-            out.push(args.into_iter().skip(1).collect());
+            out.push((call, args.into_iter().skip(1).collect()));
         }
     }
     out

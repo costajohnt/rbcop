@@ -1,0 +1,93 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 29 <==
+around do
+  do_something
+end
+
+==> 001/001_spec.rb 36 <==
+around(:each) do
+  do_something
+end
+
+==> 002/002_spec.rb 36 <==
+around do |test|
+  do_something
+end
+
+==> 003/003_spec.rb 42 <==
+around do |test, unused|
+  unused.run
+end
+
+==> 004/004_spec.rb 28 <==
+around do |test|
+  test
+end
+
+==> 005/005_spec.rb 36 <==
+around do |test|
+  test.inspect
+end
+
+==> 006/006_spec.rb 32 <==
+around do |test|
+  test.run
+end
+
+==> 007/007_spec.rb 33 <==
+around do |test|
+  test.call
+end
+
+==> 008/008_spec.rb 38 <==
+around do |test|
+  1.times(&test)
+end
+
+==> 009/009_spec.rb 72 <==
+around do |test|
+  something_that_might_run_test(test, another_arg)
+end
+
+==> 010/010_spec.rb 53 <==
+around do |test|
+  foo { yield(some_arg, test) }
+end
+
+==> 011/011_spec.rb 14 <==
+around { _1 }
+
+==> 012/012_spec.rb 27 <==
+around do
+  _1.inspect
+end
+
+==> 013/013_spec.rb 23 <==
+around do
+  _1.run
+end
+
+==> 014/014_spec.rb 24 <==
+around do
+  _1.call
+end
+
+==> 015/015_spec.rb 29 <==
+around do
+  1.times(&_1)
+end
+
+==> 016/016_spec.rb 63 <==
+around do
+  something_that_might_run_test(_1, another_arg)
+end
+

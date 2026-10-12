@@ -1,0 +1,6 @@
+==> offenses exit=1 93 <==
+000/000_spec.rb:1:9: C: RSpec/ContextWording: Context description should match /^a\$b\\d\b/.
+
+==> autocorrect exit=1 93 <==
+000/000_spec.rb:1:9: C: RSpec/ContextWording: Context description should match /^a\$b\\d\b/.
+

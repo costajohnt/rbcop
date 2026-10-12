@@ -1,0 +1,8 @@
+==> offenses exit=1 165 <==
+000/000_spec.rb:1:10: C: RSpec/AroundBlock: You should call `it.call` or `it.run`.
+001/001_spec.rb:2:3: C: RSpec/AroundBlock: You should call `it.call` or `it.run`.
+
+==> autocorrect exit=1 165 <==
+000/000_spec.rb:1:10: C: RSpec/AroundBlock: You should call `it.call` or `it.run`.
+001/001_spec.rb:2:3: C: RSpec/AroundBlock: You should call `it.call` or `it.run`.
+

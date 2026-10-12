@@ -1,0 +1,8 @@
+==> offenses exit=1 181 <==
+000/000_spec.rb:1:9: C: RSpec/ContextWording: Context description should match /とき$/.
+001/001_spec.rb:1:16: C: RSpec/ContextWording: Context description should match /とき$/.
+
+==> autocorrect exit=1 181 <==
+000/000_spec.rb:1:9: C: RSpec/ContextWording: Context description should match /とき$/.
+001/001_spec.rb:1:16: C: RSpec/ContextWording: Context description should match /とき$/.
+

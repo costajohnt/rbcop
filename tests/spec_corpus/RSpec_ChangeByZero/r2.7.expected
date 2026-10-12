@@ -1,0 +1,114 @@
+==> offenses exit=1 5314 <==
+000/000_spec.rb:2:21: C: [Correctable] RSpec/ChangeByZero: Prefer `not_to change` over `to change.by(0)`.
+000/000_spec.rb:3:21: C: [Correctable] RSpec/ChangeByZero: Prefer `not_to change` over `to change.by(0)`.
+000/000_spec.rb:4:21: C: [Correctable] RSpec/ChangeByZero: Prefer `not_to change` over `to change.by(0)`.
+000/000_spec.rb:5:21: C: [Correctable] RSpec/ChangeByZero: Prefer `not_to change` over `to change.by(0)`.
+001/001_spec.rb:2:21: C: [Correctable] RSpec/ChangeByZero: Prefer `not_to change` over `to a_block_changing.by(0)`.
+002/002_spec.rb:2:21: C: [Correctable] RSpec/ChangeByZero: Prefer `not_to change` over `to changing.by(0)`.
+003/003_spec.rb:2:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+003/003_spec.rb:2:49: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+003/003_spec.rb:3:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+003/003_spec.rb:3:50: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+003/003_spec.rb:4:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+003/003_spec.rb:5:44: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+004/004_spec.rb:2:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+004/004_spec.rb:2:47: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+004/004_spec.rb:3:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+004/004_spec.rb:3:48: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+004/004_spec.rb:4:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+004/004_spec.rb:5:42: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+005/005_spec.rb:2:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+005/005_spec.rb:2:48: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+005/005_spec.rb:3:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+005/005_spec.rb:3:49: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+005/005_spec.rb:4:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+005/005_spec.rb:5:43: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+006/006_spec.rb:2:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+006/006_spec.rb:2:47: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+006/006_spec.rb:3:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+006/006_spec.rb:3:48: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+006/006_spec.rb:4:41: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+006/006_spec.rb:5:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+007/007_spec.rb:3:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+007/007_spec.rb:4:10: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+007/007_spec.rb:6:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+007/007_spec.rb:7:10: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+008/008_spec.rb:3:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+008/008_spec.rb:4:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+008/008_spec.rb:6:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+008/008_spec.rb:7:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+009/009_spec.rb:3:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+009/009_spec.rb:4:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+009/009_spec.rb:6:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+009/009_spec.rb:7:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+010/010_spec.rb:3:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+010/010_spec.rb:4:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+010/010_spec.rb:6:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+010/010_spec.rb:7:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+
+==> autocorrect exit=1 5302 <==
+000/000_spec.rb:2:21: C: [Corrected] RSpec/ChangeByZero: Prefer `not_to change` over `to change.by(0)`.
+000/000_spec.rb:3:21: C: [Corrected] RSpec/ChangeByZero: Prefer `not_to change` over `to change.by(0)`.
+000/000_spec.rb:4:21: C: [Corrected] RSpec/ChangeByZero: Prefer `not_to change` over `to change.by(0)`.
+000/000_spec.rb:5:21: C: [Corrected] RSpec/ChangeByZero: Prefer `not_to change` over `to change.by(0)`.
+001/001_spec.rb:2:21: C: [Corrected] RSpec/ChangeByZero: Prefer `not_to change` over `to a_block_changing.by(0)`.
+002/002_spec.rb:2:21: C: [Corrected] RSpec/ChangeByZero: Prefer `not_to change` over `to changing.by(0)`.
+003/003_spec.rb:2:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+003/003_spec.rb:2:49: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+003/003_spec.rb:3:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+003/003_spec.rb:3:50: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+003/003_spec.rb:4:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+003/003_spec.rb:5:44: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+004/004_spec.rb:2:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+004/004_spec.rb:2:47: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+004/004_spec.rb:3:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+004/004_spec.rb:3:48: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+004/004_spec.rb:4:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+004/004_spec.rb:5:42: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+005/005_spec.rb:2:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+005/005_spec.rb:2:48: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+005/005_spec.rb:3:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+005/005_spec.rb:3:49: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+005/005_spec.rb:4:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+005/005_spec.rb:5:43: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+006/006_spec.rb:2:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+006/006_spec.rb:2:47: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+006/006_spec.rb:3:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+006/006_spec.rb:3:48: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+006/006_spec.rb:4:41: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+006/006_spec.rb:5:21: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+007/007_spec.rb:3:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+007/007_spec.rb:4:10: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+007/007_spec.rb:6:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+007/007_spec.rb:7:10: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+008/008_spec.rb:3:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+008/008_spec.rb:4:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+008/008_spec.rb:6:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+008/008_spec.rb:7:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+009/009_spec.rb:3:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+009/009_spec.rb:4:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+009/009_spec.rb:6:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+009/009_spec.rb:7:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+010/010_spec.rb:3:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+010/010_spec.rb:4:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+010/010_spec.rb:6:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+010/010_spec.rb:7:9: C: RSpec/ChangeByZero: Prefer negated matchers with compound expectations over `change.by(0)`.
+
+==> corrected/000/000_spec.rb 181 <==
+it do
+  expect { foo }.not_to change(Foo, :bar)
+  expect { foo }.not_to change(::Foo, :bar)
+  expect { foo }.not_to change { Foo.bar }
+  expect { foo }.not_to change(Foo, :bar)
+end
+
+==> corrected/001/001_spec.rb 52 <==
+it do
+  expect { foo }.not_to change(Foo, :bar)
+end
+
+==> corrected/002/002_spec.rb 52 <==
+it do
+  expect { foo }.not_to change(Foo, :bar)
+end
+

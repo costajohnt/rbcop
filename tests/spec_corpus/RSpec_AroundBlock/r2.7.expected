@@ -1,0 +1,20 @@
+==> offenses exit=1 691 <==
+000/000_spec.rb:1:1: C: RSpec/AroundBlock: Test object should be passed to around block.
+001/001_spec.rb:1:1: C: RSpec/AroundBlock: Test object should be passed to around block.
+002/002_spec.rb:1:12: C: RSpec/AroundBlock: You should call `test.call` or `test.run`.
+003/003_spec.rb:1:12: C: RSpec/AroundBlock: You should call `test.call` or `test.run`.
+004/004_spec.rb:1:12: C: RSpec/AroundBlock: You should call `test.call` or `test.run`.
+005/005_spec.rb:1:12: C: RSpec/AroundBlock: You should call `test.call` or `test.run`.
+011/011_spec.rb:1:10: C: RSpec/AroundBlock: You should call `_1.call` or `_1.run`.
+012/012_spec.rb:2:3: C: RSpec/AroundBlock: You should call `_1.call` or `_1.run`.
+
+==> autocorrect exit=1 691 <==
+000/000_spec.rb:1:1: C: RSpec/AroundBlock: Test object should be passed to around block.
+001/001_spec.rb:1:1: C: RSpec/AroundBlock: Test object should be passed to around block.
+002/002_spec.rb:1:12: C: RSpec/AroundBlock: You should call `test.call` or `test.run`.
+003/003_spec.rb:1:12: C: RSpec/AroundBlock: You should call `test.call` or `test.run`.
+004/004_spec.rb:1:12: C: RSpec/AroundBlock: You should call `test.call` or `test.run`.
+005/005_spec.rb:1:12: C: RSpec/AroundBlock: You should call `test.call` or `test.run`.
+011/011_spec.rb:1:10: C: RSpec/AroundBlock: You should call `_1.call` or `_1.run`.
+012/012_spec.rb:2:3: C: RSpec/AroundBlock: You should call `_1.call` or `_1.run`.
+

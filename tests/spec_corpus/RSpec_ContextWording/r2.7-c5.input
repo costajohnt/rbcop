@@ -1,0 +1,31 @@
+==> .rubocop.yml 208 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/ContextWording:
+  Prefixes:
+  - when
+  AllowedPatterns:
+  - patterns
+
+==> 000/000_spec.rb 46 <==
+context 'this is an incorrect context' do
+end
+
+==> 001/001_spec.rb 53 <==
+shared_context 'this is an incorrect context' do
+end
+
+==> 002/002_spec.rb 44 <==
+context 'when this is valid context' do
+end
+
+==> 003/003_spec.rb 48 <==
+context 'this is valid patterns context' do
+end
+
