@@ -8,3 +8,4 @@ a.rb:38:7: C: [Corrected] Style/SoleNestedConditional: Consider merging nested c
 a.rb:42:7: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
 a.rb:46:7: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `unless` conditions.
 a.rb:50:3: C: [Corrected] Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
+z.rb:1:121: C: Layout/LineLength: Line is too long. [132/120]

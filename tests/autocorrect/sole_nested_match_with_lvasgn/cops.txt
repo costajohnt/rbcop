@@ -1,1 +1,1 @@
-Style/SoleNestedConditional
+Style/SoleNestedConditional,Layout/LineLength
