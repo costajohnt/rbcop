@@ -1,0 +1,216 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 62 <==
+ApplicationRecord.transaction do
+  return if user.active?
+end
+
+==> 001/001.rb 84 <==
+ApplicationRecord.transaction do
+  _1.after_commit { }
+  return if user.active?
+end
+
+==> 002/002.rb 61 <==
+ApplicationRecord.transaction do
+  break if user.active?
+end
+
+==> 003/003.rb 61 <==
+ApplicationRecord.transaction do
+  throw if user.active?
+end
+
+==> 004/004.rb 60 <==
+ApplicationRecord.transaction do
+  next if user.active?
+end
+
+==> 005/005.rb 61 <==
+ApplicationRecord.transaction do
+  raise if user.active?
+end
+
+==> 006/006.rb 77 <==
+ApplicationRecord.transaction do
+  loop do
+    return if condition
+  end
+end
+
+==> 007/007.rb 74 <==
+ApplicationRecord.transaction do
+  foo.each do
+    return if _1
+  end
+end
+
+==> 008/008.rb 76 <==
+ApplicationRecord.transaction do
+  loop do
+    throw if condition
+  end
+end
+
+==> 009/009.rb 76 <==
+ApplicationRecord.transaction do
+  loop do
+    break if condition
+  end
+end
+
+==> 010/010.rb 94 <==
+ApplicationRecord.transaction do
+  while proceed_looping? do
+    break if condition
+  end
+end
+
+==> 011/011.rb 91 <==
+ApplicationRecord.transaction do
+  until stop_looping? do
+    break if condition
+  end
+end
+
+==> 012/012.rb 73 <==
+ApplicationRecord.transaction do
+  foo.each do
+    break if _1
+  end
+end
+
+==> 013/013.rb 66 <==
+ApplicationRecord.transaction do
+rescue
+  return do_something
+end
+
+==> 014/014.rb 76 <==
+ApplicationRecord.transaction do
+  return if user.active?
+rescue
+  pass
+end
+
+==> 015/015.rb 37 <==
+ApplicationRecord.transaction do
+end
+
+==> 016/016.rb 16 <==
+transaction.foo
+
+==> 017/017.rb 12 <==
+transaction
+
+==> 018/018.rb 60 <==
+ApplicationRecord.with_lock do
+  return if user.active?
+end
+
+==> 019/019.rb 82 <==
+ApplicationRecord.with_lock do
+  _1.after_commit { }
+  return if user.active?
+end
+
+==> 020/020.rb 59 <==
+ApplicationRecord.with_lock do
+  break if user.active?
+end
+
+==> 021/021.rb 59 <==
+ApplicationRecord.with_lock do
+  throw if user.active?
+end
+
+==> 022/022.rb 58 <==
+ApplicationRecord.with_lock do
+  next if user.active?
+end
+
+==> 023/023.rb 59 <==
+ApplicationRecord.with_lock do
+  raise if user.active?
+end
+
+==> 024/024.rb 75 <==
+ApplicationRecord.with_lock do
+  loop do
+    return if condition
+  end
+end
+
+==> 025/025.rb 72 <==
+ApplicationRecord.with_lock do
+  foo.each do
+    return if _1
+  end
+end
+
+==> 026/026.rb 74 <==
+ApplicationRecord.with_lock do
+  loop do
+    throw if condition
+  end
+end
+
+==> 027/027.rb 74 <==
+ApplicationRecord.with_lock do
+  loop do
+    break if condition
+  end
+end
+
+==> 028/028.rb 92 <==
+ApplicationRecord.with_lock do
+  while proceed_looping? do
+    break if condition
+  end
+end
+
+==> 029/029.rb 89 <==
+ApplicationRecord.with_lock do
+  until stop_looping? do
+    break if condition
+  end
+end
+
+==> 030/030.rb 71 <==
+ApplicationRecord.with_lock do
+  foo.each do
+    break if _1
+  end
+end
+
+==> 031/031.rb 64 <==
+ApplicationRecord.with_lock do
+rescue
+  return do_something
+end
+
+==> 032/032.rb 74 <==
+ApplicationRecord.with_lock do
+  return if user.active?
+rescue
+  pass
+end
+
+==> 033/033.rb 35 <==
+ApplicationRecord.with_lock do
+end
+
+==> 034/034.rb 14 <==
+with_lock.foo
+
+==> 035/035.rb 10 <==
+with_lock
+

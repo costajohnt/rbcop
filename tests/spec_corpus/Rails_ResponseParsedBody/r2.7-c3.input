@@ -1,0 +1,38 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 7.1
+
+==> spec/controllers/000/000.rb 30 <==
+Nokogiri::HTML(response.body)
+
+==> spec/controllers/001/001.rb 31 <==
+Nokogiri::HTML4(response.body)
+
+==> spec/controllers/002/002.rb 31 <==
+Nokogiri::HTML5(response.body)
+
+==> spec/controllers/003/003.rb 36 <==
+Nokogiri::HTML.parse(response.body)
+
+==> spec/controllers/004/004.rb 37 <==
+Nokogiri::HTML4.parse(response.body)
+
+==> spec/controllers/005/005.rb 37 <==
+Nokogiri::HTML5.parse(response.body)
+
+==> spec/controllers/006/006.rb 46 <==
+Nokogiri::HTML::Document.parse(response.body)
+
+==> spec/controllers/007/007.rb 47 <==
+Nokogiri::HTML4::Document.parse(response.body)
+
+==> spec/controllers/008/008.rb 47 <==
+Nokogiri::HTML5::Document.parse(response.body)
+
