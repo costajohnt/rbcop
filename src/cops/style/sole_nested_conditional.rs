@@ -145,9 +145,14 @@ fn add_parentheses(n: &Node) -> bool {
         HasAssignment { root: span(n), kind: kind::of(n), found: &mut found }.visit(n);
         return found;
     }
-    let Some(c) = n.as_call_node() else { return false };
+    // `/re/ =~ x` with a static regexp is parser's `match_with_lvasgn`, not a `call` (#391).
+    let Some(c) = n.as_call_node().filter(|c| !match_with_lvasgn(c)) else { return false };
     let parenthesized = c.closing_loc().is_some_and(|l| l.as_slice() == b")");
     (has_args(&c) && !parenthesized) || (method_name(&c) == "!" && c.message_loc().is_some_and(|m| m.as_slice() == b"not"))
+}
+
+fn match_with_lvasgn(c: &ruby_prism::CallNode) -> bool {
+    c.name().as_slice() == b"=~" && c.receiver().is_some_and(|r| r.as_regular_expression_node().is_some())
 }
 
 /// `add_parentheses_if_needed`
