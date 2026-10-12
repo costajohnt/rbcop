@@ -3,6 +3,7 @@
 //! Ruby `[[:lower:]]`/`[[:upper:]]` are the Unicode Lowercase/Uppercase properties; `\d` is ASCII.
 
 use crate::config::CopConfig;
+use crate::config::value::Value;
 use regex::Regex;
 use std::sync::LazyLock;
 
@@ -32,20 +33,31 @@ pub fn numbering_valid(style: &str, name: &str) -> bool {
     }
 }
 
-fn strip_sigils(name: &str) -> String {
-    name.chars().filter(|&c| c != '@' && c != '$').collect()
+fn strip_sigils(name: &str) -> std::borrow::Cow<'_, str> {
+    if name.contains(['@', '$']) { name.chars().filter(|&c| c != '@' && c != '$').collect() } else { name.into() }
+}
+
+/// `cfg.strings(key).contains(name)` without collecting the list: the Naming cops ask per identifier.
+fn listed(cfg: &CopConfig, key: &str, name: &str) -> bool {
+    let is = |v: &Value| match v {
+        Value::Str(s) | Value::Sym(s) | Value::Regex(s) => s == name,
+        v => v.as_string().as_deref() == Some(name),
+    };
+    match cfg.get(key) {
+        Some(Value::Seq(items)) => items.iter().any(is),
+        Some(v) => is(v),
+        None => false,
+    }
 }
 
 /// AllowedIdentifiers#allowed_identifier? (sigils `@`/`$` removed first).
 pub fn allowed_identifier(cfg: &CopConfig, name: &str) -> bool {
-    let name = strip_sigils(name);
-    cfg.strings("AllowedIdentifiers").contains(&name)
+    listed(cfg, "AllowedIdentifiers", &strip_sigils(name))
 }
 
 /// ForbiddenIdentifiers#forbidden_identifier? || ForbiddenPattern#forbidden_pattern?
 pub fn forbidden_name(cfg: &CopConfig, name: &str) -> bool {
-    let bare = strip_sigils(name);
-    cfg.strings("ForbiddenIdentifiers").contains(&bare)
+    listed(cfg, "ForbiddenIdentifiers", &strip_sigils(name))
         || cfg.regexes("ForbiddenPatterns").iter().any(|r| r.is_match(name))
 }
 
