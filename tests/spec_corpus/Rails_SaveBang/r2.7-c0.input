@@ -1,0 +1,1196 @@
+==> .rubocop.yml 177 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/SaveBang:
+  AllowImplicitReturn: true
+
+==> 000/000.rb 5 <==
+save
+
+==> 001/001.rb 13 <==
+object&.save
+
+==> 002/002.rb 12 <==
+object.save!
+==> 003/003.rb 26 <==
+Model.save(1, name: 'Tom')
+==> 004/004.rb 18 <==
+object.save('Tom')
+==> 005/005.rb 21 <==
+object.save if false
+
+==> 006/006.rb 50 <==
+if condition
+  puts "true"
+else
+  object.save
+end
+
+==> 007/007.rb 40 <==
+return [{ success: object.save }, true]
+
+==> 008/008.rb 24 <==
+handle_save(object.save)
+==> 009/009.rb 30 <==
+handle_save(object.save, true)
+==> 010/010.rb 33 <==
+handle_save(success: object.save)
+==> 011/011.rb 33 <==
+result = { success: object.save }
+==> 012/012.rb 65 <==
+def foo
+  return foo.save if do_the_save
+  do_something_else
+end
+
+==> 013/013.rb 30 <==
+def foo
+  return foo.save
+end
+
+==> 014/014.rb 83 <==
+objects.each do |object|
+  next object.save if do_the_save
+  do_something_else
+end
+
+==> 015/015.rb 45 <==
+objects.each do |object|
+  next foo.save
+end
+
+==> 016/016.rb 156 <==
+gateway = true
+gateway.save
+gateway.save { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.save
+merchant.gateway.save { |t| t.name = 'Tom' }
+
+==> 017/017.rb 169 <==
+customer.save
+merchant.customer.save
+customer(true).save
+merchant.customer(true).save
+customer.save { |t| t.name = 'Tom' }
+merchant.customer.save { |t| t.name = 'Tom' }
+
+==> 018/018.rb 98 <==
+NonActiveRecord.save
+NameSpace::NonActiveRecord.save
+::NonActiveRecord.save
+NonActiveRecord::save
+
+==> 019/019.rb 99 <==
+NameSpace::NonActiveRecord.save
+::NameSpace::NonActiveRecord.save
+NameSpace::NonActiveRecord::save
+
+==> 020/020.rb 21 <==
+NonActiveRecord.save
+
+==> 021/021.rb 32 <==
+NameSpace::NonActiveRecord.save
+
+==> 022/022.rb 22 <==
+merchant.gateway.save
+
+==> 023/023.rb 13 <==
+gateway.save
+
+==> 024/024.rb 57 <==
+A::B.merchant.gateway.save
+A::B::merchant::gateway::save
+
+==> 025/025.rb 16 <==
+B.merchant.save
+
+==> 026/026.rb 32 <==
+def foo
+  object.save
+  bar
+end
+
+==> 027/027.rb 7 <==
+update
+
+==> 028/028.rb 15 <==
+object&.update
+
+==> 029/029.rb 14 <==
+object.update!
+==> 030/030.rb 28 <==
+Model.update(1, name: 'Tom')
+==> 031/031.rb 20 <==
+object.update('Tom')
+==> 032/032.rb 23 <==
+object.update if false
+
+==> 033/033.rb 52 <==
+if condition
+  puts "true"
+else
+  object.update
+end
+
+==> 034/034.rb 42 <==
+return [{ success: object.update }, true]
+
+==> 035/035.rb 26 <==
+handle_save(object.update)
+==> 036/036.rb 32 <==
+handle_save(object.update, true)
+==> 037/037.rb 35 <==
+handle_save(success: object.update)
+==> 038/038.rb 35 <==
+result = { success: object.update }
+==> 039/039.rb 67 <==
+def foo
+  return foo.update if do_the_save
+  do_something_else
+end
+
+==> 040/040.rb 32 <==
+def foo
+  return foo.update
+end
+
+==> 041/041.rb 85 <==
+objects.each do |object|
+  next object.update if do_the_save
+  do_something_else
+end
+
+==> 042/042.rb 47 <==
+objects.each do |object|
+  next foo.update
+end
+
+==> 043/043.rb 164 <==
+gateway = true
+gateway.update
+gateway.update { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.update
+merchant.gateway.update { |t| t.name = 'Tom' }
+
+==> 044/044.rb 181 <==
+customer.update
+merchant.customer.update
+customer(true).update
+merchant.customer(true).update
+customer.update { |t| t.name = 'Tom' }
+merchant.customer.update { |t| t.name = 'Tom' }
+
+==> 045/045.rb 106 <==
+NonActiveRecord.update
+NameSpace::NonActiveRecord.update
+::NonActiveRecord.update
+NonActiveRecord::update
+
+==> 046/046.rb 105 <==
+NameSpace::NonActiveRecord.update
+::NameSpace::NonActiveRecord.update
+NameSpace::NonActiveRecord::update
+
+==> 047/047.rb 23 <==
+NonActiveRecord.update
+
+==> 048/048.rb 34 <==
+NameSpace::NonActiveRecord.update
+
+==> 049/049.rb 24 <==
+merchant.gateway.update
+
+==> 050/050.rb 15 <==
+gateway.update
+
+==> 051/051.rb 61 <==
+A::B.merchant.gateway.update
+A::B::merchant::gateway::update
+
+==> 052/052.rb 18 <==
+B.merchant.update
+
+==> 053/053.rb 34 <==
+def foo
+  object.update
+  bar
+end
+
+==> 054/054.rb 18 <==
+update_attributes
+
+==> 055/055.rb 26 <==
+object&.update_attributes
+
+==> 056/056.rb 25 <==
+object.update_attributes!
+==> 057/057.rb 39 <==
+Model.update_attributes(1, name: 'Tom')
+==> 058/058.rb 31 <==
+object.update_attributes('Tom')
+==> 059/059.rb 34 <==
+object.update_attributes if false
+
+==> 060/060.rb 63 <==
+if condition
+  puts "true"
+else
+  object.update_attributes
+end
+
+==> 061/061.rb 53 <==
+return [{ success: object.update_attributes }, true]
+
+==> 062/062.rb 37 <==
+handle_save(object.update_attributes)
+==> 063/063.rb 43 <==
+handle_save(object.update_attributes, true)
+==> 064/064.rb 46 <==
+handle_save(success: object.update_attributes)
+==> 065/065.rb 46 <==
+result = { success: object.update_attributes }
+==> 066/066.rb 78 <==
+def foo
+  return foo.update_attributes if do_the_save
+  do_something_else
+end
+
+==> 067/067.rb 43 <==
+def foo
+  return foo.update_attributes
+end
+
+==> 068/068.rb 96 <==
+objects.each do |object|
+  next object.update_attributes if do_the_save
+  do_something_else
+end
+
+==> 069/069.rb 58 <==
+objects.each do |object|
+  next foo.update_attributes
+end
+
+==> 070/070.rb 208 <==
+gateway = true
+gateway.update_attributes
+gateway.update_attributes { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.update_attributes
+merchant.gateway.update_attributes { |t| t.name = 'Tom' }
+
+==> 071/071.rb 247 <==
+customer.update_attributes
+merchant.customer.update_attributes
+customer(true).update_attributes
+merchant.customer(true).update_attributes
+customer.update_attributes { |t| t.name = 'Tom' }
+merchant.customer.update_attributes { |t| t.name = 'Tom' }
+
+==> 072/072.rb 150 <==
+NonActiveRecord.update_attributes
+NameSpace::NonActiveRecord.update_attributes
+::NonActiveRecord.update_attributes
+NonActiveRecord::update_attributes
+
+==> 073/073.rb 138 <==
+NameSpace::NonActiveRecord.update_attributes
+::NameSpace::NonActiveRecord.update_attributes
+NameSpace::NonActiveRecord::update_attributes
+
+==> 074/074.rb 34 <==
+NonActiveRecord.update_attributes
+
+==> 075/075.rb 45 <==
+NameSpace::NonActiveRecord.update_attributes
+
+==> 076/076.rb 35 <==
+merchant.gateway.update_attributes
+
+==> 077/077.rb 26 <==
+gateway.update_attributes
+
+==> 078/078.rb 83 <==
+A::B.merchant.gateway.update_attributes
+A::B::merchant::gateway::update_attributes
+
+==> 079/079.rb 29 <==
+B.merchant.update_attributes
+
+==> 080/080.rb 45 <==
+def foo
+  object.update_attributes
+  bar
+end
+
+==> 081/081.rb 8 <==
+destroy
+
+==> 082/082.rb 16 <==
+object&.destroy
+
+==> 083/083.rb 15 <==
+object.destroy!
+==> 084/084.rb 29 <==
+Model.destroy(1, name: 'Tom')
+==> 085/085.rb 21 <==
+object.destroy('Tom')
+==> 086/086.rb 24 <==
+object.destroy if false
+
+==> 087/087.rb 53 <==
+if condition
+  puts "true"
+else
+  object.destroy
+end
+
+==> 088/088.rb 43 <==
+return [{ success: object.destroy }, true]
+
+==> 089/089.rb 27 <==
+handle_save(object.destroy)
+==> 090/090.rb 33 <==
+handle_save(object.destroy, true)
+==> 091/091.rb 36 <==
+handle_save(success: object.destroy)
+==> 092/092.rb 36 <==
+result = { success: object.destroy }
+==> 093/093.rb 68 <==
+def foo
+  return foo.destroy if do_the_save
+  do_something_else
+end
+
+==> 094/094.rb 33 <==
+def foo
+  return foo.destroy
+end
+
+==> 095/095.rb 86 <==
+objects.each do |object|
+  next object.destroy if do_the_save
+  do_something_else
+end
+
+==> 096/096.rb 48 <==
+objects.each do |object|
+  next foo.destroy
+end
+
+==> 097/097.rb 168 <==
+gateway = true
+gateway.destroy
+gateway.destroy { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.destroy
+merchant.gateway.destroy { |t| t.name = 'Tom' }
+
+==> 098/098.rb 187 <==
+customer.destroy
+merchant.customer.destroy
+customer(true).destroy
+merchant.customer(true).destroy
+customer.destroy { |t| t.name = 'Tom' }
+merchant.customer.destroy { |t| t.name = 'Tom' }
+
+==> 099/099.rb 110 <==
+NonActiveRecord.destroy
+NameSpace::NonActiveRecord.destroy
+::NonActiveRecord.destroy
+NonActiveRecord::destroy
+
+==> 100/100.rb 108 <==
+NameSpace::NonActiveRecord.destroy
+::NameSpace::NonActiveRecord.destroy
+NameSpace::NonActiveRecord::destroy
+
+==> 101/101.rb 24 <==
+NonActiveRecord.destroy
+
+==> 102/102.rb 35 <==
+NameSpace::NonActiveRecord.destroy
+
+==> 103/103.rb 25 <==
+merchant.gateway.destroy
+
+==> 104/104.rb 16 <==
+gateway.destroy
+
+==> 105/105.rb 63 <==
+A::B.merchant.gateway.destroy
+A::B::merchant::gateway::destroy
+
+==> 106/106.rb 19 <==
+B.merchant.destroy
+
+==> 107/107.rb 35 <==
+def foo
+  object.destroy
+  bar
+end
+
+==> 108/108.rb 7 <==
+create
+
+==> 109/109.rb 15 <==
+object&.create
+
+==> 110/110.rb 14 <==
+object.create!
+==> 111/111.rb 28 <==
+Model.create(1, name: 'Tom')
+==> 112/112.rb 20 <==
+object.create('Tom')
+==> 113/113.rb 23 <==
+object.create if false
+
+==> 114/114.rb 52 <==
+if condition
+  puts "true"
+else
+  object.create
+end
+
+==> 115/115.rb 42 <==
+return [{ success: object.create }, true]
+
+==> 116/116.rb 26 <==
+handle_save(object.create)
+==> 117/117.rb 32 <==
+handle_save(object.create, true)
+==> 118/118.rb 35 <==
+handle_save(success: object.create)
+==> 119/119.rb 35 <==
+result = { success: object.create }
+==> 120/120.rb 67 <==
+def foo
+  return foo.create if do_the_save
+  do_something_else
+end
+
+==> 121/121.rb 32 <==
+def foo
+  return foo.create
+end
+
+==> 122/122.rb 85 <==
+objects.each do |object|
+  next object.create if do_the_save
+  do_something_else
+end
+
+==> 123/123.rb 47 <==
+objects.each do |object|
+  next foo.create
+end
+
+==> 124/124.rb 164 <==
+gateway = true
+gateway.create
+gateway.create { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.create
+merchant.gateway.create { |t| t.name = 'Tom' }
+
+==> 125/125.rb 181 <==
+customer.create
+merchant.customer.create
+customer(true).create
+merchant.customer(true).create
+customer.create { |t| t.name = 'Tom' }
+merchant.customer.create { |t| t.name = 'Tom' }
+
+==> 126/126.rb 106 <==
+NonActiveRecord.create
+NameSpace::NonActiveRecord.create
+::NonActiveRecord.create
+NonActiveRecord::create
+
+==> 127/127.rb 105 <==
+NameSpace::NonActiveRecord.create
+::NameSpace::NonActiveRecord.create
+NameSpace::NonActiveRecord::create
+
+==> 128/128.rb 23 <==
+NonActiveRecord.create
+
+==> 129/129.rb 34 <==
+NameSpace::NonActiveRecord.create
+
+==> 130/130.rb 24 <==
+merchant.gateway.create
+
+==> 131/131.rb 15 <==
+gateway.create
+
+==> 132/132.rb 61 <==
+A::B.merchant.gateway.create
+A::B::merchant::gateway::create
+
+==> 133/133.rb 18 <==
+B.merchant.create
+
+==> 134/134.rb 55 <==
+x = object.create
+if x.persisted? then; something; end
+
+==> 135/135.rb 87 <==
+x = object.create do |obj|
+  obj.name = 'Tom'
+end
+if x.persisted? then; something; end
+
+==> 136/136.rb 79 <==
+x = User.unverified.with_initial_values.create
+if x.persisted?; something; end
+
+==> 137/137.rb 39 <==
+return unless object.create.persisted?
+
+==> 138/138.rb 68 <==
+if (user = User.create).persisted?
+  foo(user)
+else
+  bar(user)
+end
+
+==> 139/139.rb 57 <==
+if (user = User.create)
+  foo(user)
+else
+  bar(user)
+end
+
+==> 140/140.rb 84 <==
+if something
+elsif (user = User.create).persisted?
+  foo(user)
+else
+  bar(user)
+end
+
+==> 141/141.rb 49 <==
+user = User.create
+
+if user.persisted?
+  foo
+end
+
+==> 142/142.rb 51 <==
+@user = User.create
+
+if @user.persisted?
+  foo
+end
+
+==> 143/143.rb 51 <==
+$user = User.create
+
+if $user.persisted?
+  foo
+end
+
+==> 144/144.rb 56 <==
+a, b = User.create, User.new
+
+if a.persisted?
+  foo
+end
+
+==> 145/145.rb 51 <==
+user ||= User.create
+
+if user.persisted?
+  foo
+end
+
+==> 146/146.rb 64 <==
+def find_or_create(**opts)
+  find(**opts) || create(**opts)
+end
+
+==> 147/147.rb 34 <==
+def foo
+  object.create
+  bar
+end
+
+==> 148/148.rb 18 <==
+create_or_find_by
+
+==> 149/149.rb 26 <==
+object&.create_or_find_by
+
+==> 150/150.rb 25 <==
+object.create_or_find_by!
+==> 151/151.rb 39 <==
+Model.create_or_find_by(1, name: 'Tom')
+==> 152/152.rb 31 <==
+object.create_or_find_by('Tom')
+==> 153/153.rb 34 <==
+object.create_or_find_by if false
+
+==> 154/154.rb 63 <==
+if condition
+  puts "true"
+else
+  object.create_or_find_by
+end
+
+==> 155/155.rb 53 <==
+return [{ success: object.create_or_find_by }, true]
+
+==> 156/156.rb 37 <==
+handle_save(object.create_or_find_by)
+==> 157/157.rb 43 <==
+handle_save(object.create_or_find_by, true)
+==> 158/158.rb 46 <==
+handle_save(success: object.create_or_find_by)
+==> 159/159.rb 46 <==
+result = { success: object.create_or_find_by }
+==> 160/160.rb 78 <==
+def foo
+  return foo.create_or_find_by if do_the_save
+  do_something_else
+end
+
+==> 161/161.rb 43 <==
+def foo
+  return foo.create_or_find_by
+end
+
+==> 162/162.rb 96 <==
+objects.each do |object|
+  next object.create_or_find_by if do_the_save
+  do_something_else
+end
+
+==> 163/163.rb 58 <==
+objects.each do |object|
+  next foo.create_or_find_by
+end
+
+==> 164/164.rb 208 <==
+gateway = true
+gateway.create_or_find_by
+gateway.create_or_find_by { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.create_or_find_by
+merchant.gateway.create_or_find_by { |t| t.name = 'Tom' }
+
+==> 165/165.rb 247 <==
+customer.create_or_find_by
+merchant.customer.create_or_find_by
+customer(true).create_or_find_by
+merchant.customer(true).create_or_find_by
+customer.create_or_find_by { |t| t.name = 'Tom' }
+merchant.customer.create_or_find_by { |t| t.name = 'Tom' }
+
+==> 166/166.rb 150 <==
+NonActiveRecord.create_or_find_by
+NameSpace::NonActiveRecord.create_or_find_by
+::NonActiveRecord.create_or_find_by
+NonActiveRecord::create_or_find_by
+
+==> 167/167.rb 138 <==
+NameSpace::NonActiveRecord.create_or_find_by
+::NameSpace::NonActiveRecord.create_or_find_by
+NameSpace::NonActiveRecord::create_or_find_by
+
+==> 168/168.rb 34 <==
+NonActiveRecord.create_or_find_by
+
+==> 169/169.rb 45 <==
+NameSpace::NonActiveRecord.create_or_find_by
+
+==> 170/170.rb 35 <==
+merchant.gateway.create_or_find_by
+
+==> 171/171.rb 26 <==
+gateway.create_or_find_by
+
+==> 172/172.rb 83 <==
+A::B.merchant.gateway.create_or_find_by
+A::B::merchant::gateway::create_or_find_by
+
+==> 173/173.rb 29 <==
+B.merchant.create_or_find_by
+
+==> 174/174.rb 66 <==
+x = object.create_or_find_by
+if x.persisted? then; something; end
+
+==> 175/175.rb 98 <==
+x = object.create_or_find_by do |obj|
+  obj.name = 'Tom'
+end
+if x.persisted? then; something; end
+
+==> 176/176.rb 90 <==
+x = User.unverified.with_initial_values.create_or_find_by
+if x.persisted?; something; end
+
+==> 177/177.rb 50 <==
+return unless object.create_or_find_by.persisted?
+
+==> 178/178.rb 79 <==
+if (user = User.create_or_find_by).persisted?
+  foo(user)
+else
+  bar(user)
+end
+
+==> 179/179.rb 68 <==
+if (user = User.create_or_find_by)
+  foo(user)
+else
+  bar(user)
+end
+
+==> 180/180.rb 95 <==
+if something
+elsif (user = User.create_or_find_by).persisted?
+  foo(user)
+else
+  bar(user)
+end
+
+==> 181/181.rb 60 <==
+user = User.create_or_find_by
+
+if user.persisted?
+  foo
+end
+
+==> 182/182.rb 62 <==
+@user = User.create_or_find_by
+
+if @user.persisted?
+  foo
+end
+
+==> 183/183.rb 62 <==
+$user = User.create_or_find_by
+
+if $user.persisted?
+  foo
+end
+
+==> 184/184.rb 67 <==
+a, b = User.create_or_find_by, User.new
+
+if a.persisted?
+  foo
+end
+
+==> 185/185.rb 62 <==
+user ||= User.create_or_find_by
+
+if user.persisted?
+  foo
+end
+
+==> 186/186.rb 75 <==
+def find_or_create(**opts)
+  find(**opts) || create_or_find_by(**opts)
+end
+
+==> 187/187.rb 45 <==
+def foo
+  object.create_or_find_by
+  bar
+end
+
+==> 188/188.rb 16 <==
+first_or_create
+
+==> 189/189.rb 24 <==
+object&.first_or_create
+
+==> 190/190.rb 23 <==
+object.first_or_create!
+==> 191/191.rb 37 <==
+Model.first_or_create(1, name: 'Tom')
+==> 192/192.rb 29 <==
+object.first_or_create('Tom')
+==> 193/193.rb 32 <==
+object.first_or_create if false
+
+==> 194/194.rb 61 <==
+if condition
+  puts "true"
+else
+  object.first_or_create
+end
+
+==> 195/195.rb 51 <==
+return [{ success: object.first_or_create }, true]
+
+==> 196/196.rb 35 <==
+handle_save(object.first_or_create)
+==> 197/197.rb 41 <==
+handle_save(object.first_or_create, true)
+==> 198/198.rb 44 <==
+handle_save(success: object.first_or_create)
+==> 199/199.rb 44 <==
+result = { success: object.first_or_create }
+==> 200/200.rb 76 <==
+def foo
+  return foo.first_or_create if do_the_save
+  do_something_else
+end
+
+==> 201/201.rb 41 <==
+def foo
+  return foo.first_or_create
+end
+
+==> 202/202.rb 94 <==
+objects.each do |object|
+  next object.first_or_create if do_the_save
+  do_something_else
+end
+
+==> 203/203.rb 56 <==
+objects.each do |object|
+  next foo.first_or_create
+end
+
+==> 204/204.rb 200 <==
+gateway = true
+gateway.first_or_create
+gateway.first_or_create { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.first_or_create
+merchant.gateway.first_or_create { |t| t.name = 'Tom' }
+
+==> 205/205.rb 235 <==
+customer.first_or_create
+merchant.customer.first_or_create
+customer(true).first_or_create
+merchant.customer(true).first_or_create
+customer.first_or_create { |t| t.name = 'Tom' }
+merchant.customer.first_or_create { |t| t.name = 'Tom' }
+
+==> 206/206.rb 142 <==
+NonActiveRecord.first_or_create
+NameSpace::NonActiveRecord.first_or_create
+::NonActiveRecord.first_or_create
+NonActiveRecord::first_or_create
+
+==> 207/207.rb 132 <==
+NameSpace::NonActiveRecord.first_or_create
+::NameSpace::NonActiveRecord.first_or_create
+NameSpace::NonActiveRecord::first_or_create
+
+==> 208/208.rb 32 <==
+NonActiveRecord.first_or_create
+
+==> 209/209.rb 43 <==
+NameSpace::NonActiveRecord.first_or_create
+
+==> 210/210.rb 33 <==
+merchant.gateway.first_or_create
+
+==> 211/211.rb 24 <==
+gateway.first_or_create
+
+==> 212/212.rb 79 <==
+A::B.merchant.gateway.first_or_create
+A::B::merchant::gateway::first_or_create
+
+==> 213/213.rb 27 <==
+B.merchant.first_or_create
+
+==> 214/214.rb 64 <==
+x = object.first_or_create
+if x.persisted? then; something; end
+
+==> 215/215.rb 96 <==
+x = object.first_or_create do |obj|
+  obj.name = 'Tom'
+end
+if x.persisted? then; something; end
+
+==> 216/216.rb 88 <==
+x = User.unverified.with_initial_values.first_or_create
+if x.persisted?; something; end
+
+==> 217/217.rb 48 <==
+return unless object.first_or_create.persisted?
+
+==> 218/218.rb 77 <==
+if (user = User.first_or_create).persisted?
+  foo(user)
+else
+  bar(user)
+end
+
+==> 219/219.rb 66 <==
+if (user = User.first_or_create)
+  foo(user)
+else
+  bar(user)
+end
+
+==> 220/220.rb 93 <==
+if something
+elsif (user = User.first_or_create).persisted?
+  foo(user)
+else
+  bar(user)
+end
+
+==> 221/221.rb 58 <==
+user = User.first_or_create
+
+if user.persisted?
+  foo
+end
+
+==> 222/222.rb 60 <==
+@user = User.first_or_create
+
+if @user.persisted?
+  foo
+end
+
+==> 223/223.rb 60 <==
+$user = User.first_or_create
+
+if $user.persisted?
+  foo
+end
+
+==> 224/224.rb 65 <==
+a, b = User.first_or_create, User.new
+
+if a.persisted?
+  foo
+end
+
+==> 225/225.rb 60 <==
+user ||= User.first_or_create
+
+if user.persisted?
+  foo
+end
+
+==> 226/226.rb 73 <==
+def find_or_create(**opts)
+  find(**opts) || first_or_create(**opts)
+end
+
+==> 227/227.rb 43 <==
+def foo
+  object.first_or_create
+  bar
+end
+
+==> 228/228.rb 18 <==
+find_or_create_by
+
+==> 229/229.rb 26 <==
+object&.find_or_create_by
+
+==> 230/230.rb 25 <==
+object.find_or_create_by!
+==> 231/231.rb 39 <==
+Model.find_or_create_by(1, name: 'Tom')
+==> 232/232.rb 31 <==
+object.find_or_create_by('Tom')
+==> 233/233.rb 34 <==
+object.find_or_create_by if false
+
+==> 234/234.rb 63 <==
+if condition
+  puts "true"
+else
+  object.find_or_create_by
+end
+
+==> 235/235.rb 53 <==
+return [{ success: object.find_or_create_by }, true]
+
+==> 236/236.rb 37 <==
+handle_save(object.find_or_create_by)
+==> 237/237.rb 43 <==
+handle_save(object.find_or_create_by, true)
+==> 238/238.rb 46 <==
+handle_save(success: object.find_or_create_by)
+==> 239/239.rb 46 <==
+result = { success: object.find_or_create_by }
+==> 240/240.rb 78 <==
+def foo
+  return foo.find_or_create_by if do_the_save
+  do_something_else
+end
+
+==> 241/241.rb 43 <==
+def foo
+  return foo.find_or_create_by
+end
+
+==> 242/242.rb 96 <==
+objects.each do |object|
+  next object.find_or_create_by if do_the_save
+  do_something_else
+end
+
+==> 243/243.rb 58 <==
+objects.each do |object|
+  next foo.find_or_create_by
+end
+
+==> 244/244.rb 208 <==
+gateway = true
+gateway.find_or_create_by
+gateway.find_or_create_by { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.find_or_create_by
+merchant.gateway.find_or_create_by { |t| t.name = 'Tom' }
+
+==> 245/245.rb 247 <==
+customer.find_or_create_by
+merchant.customer.find_or_create_by
+customer(true).find_or_create_by
+merchant.customer(true).find_or_create_by
+customer.find_or_create_by { |t| t.name = 'Tom' }
+merchant.customer.find_or_create_by { |t| t.name = 'Tom' }
+
+==> 246/246.rb 150 <==
+NonActiveRecord.find_or_create_by
+NameSpace::NonActiveRecord.find_or_create_by
+::NonActiveRecord.find_or_create_by
+NonActiveRecord::find_or_create_by
+
+==> 247/247.rb 138 <==
+NameSpace::NonActiveRecord.find_or_create_by
+::NameSpace::NonActiveRecord.find_or_create_by
+NameSpace::NonActiveRecord::find_or_create_by
+
+==> 248/248.rb 34 <==
+NonActiveRecord.find_or_create_by
+
+==> 249/249.rb 45 <==
+NameSpace::NonActiveRecord.find_or_create_by
+
+==> 250/250.rb 35 <==
+merchant.gateway.find_or_create_by
+
+==> 251/251.rb 26 <==
+gateway.find_or_create_by
+
+==> 252/252.rb 83 <==
+A::B.merchant.gateway.find_or_create_by
+A::B::merchant::gateway::find_or_create_by
+
+==> 253/253.rb 29 <==
+B.merchant.find_or_create_by
+
+==> 254/254.rb 66 <==
+x = object.find_or_create_by
+if x.persisted? then; something; end
+
+==> 255/255.rb 98 <==
+x = object.find_or_create_by do |obj|
+  obj.name = 'Tom'
+end
+if x.persisted? then; something; end
+
+==> 256/256.rb 90 <==
+x = User.unverified.with_initial_values.find_or_create_by
+if x.persisted?; something; end
+
+==> 257/257.rb 50 <==
+return unless object.find_or_create_by.persisted?
+
+==> 258/258.rb 79 <==
+if (user = User.find_or_create_by).persisted?
+  foo(user)
+else
+  bar(user)
+end
+
+==> 259/259.rb 68 <==
+if (user = User.find_or_create_by)
+  foo(user)
+else
+  bar(user)
+end
+
+==> 260/260.rb 95 <==
+if something
+elsif (user = User.find_or_create_by).persisted?
+  foo(user)
+else
+  bar(user)
+end
+
+==> 261/261.rb 60 <==
+user = User.find_or_create_by
+
+if user.persisted?
+  foo
+end
+
+==> 262/262.rb 62 <==
+@user = User.find_or_create_by
+
+if @user.persisted?
+  foo
+end
+
+==> 263/263.rb 62 <==
+$user = User.find_or_create_by
+
+if $user.persisted?
+  foo
+end
+
+==> 264/264.rb 67 <==
+a, b = User.find_or_create_by, User.new
+
+if a.persisted?
+  foo
+end
+
+==> 265/265.rb 62 <==
+user ||= User.find_or_create_by
+
+if user.persisted?
+  foo
+end
+
+==> 266/266.rb 75 <==
+def find_or_create(**opts)
+  find(**opts) || find_or_create_by(**opts)
+end
+
+==> 267/267.rb 45 <==
+def foo
+  object.find_or_create_by
+  bar
+end
+
+==> 268/268.rb 13 <==
+variable += 1
+==> 269/269.rb 35 <==
+ENV.update("DISABLE_SPRING" => "1")
