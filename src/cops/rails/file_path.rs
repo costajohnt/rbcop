@@ -150,7 +150,7 @@ impl Cop for FilePath {
                 let rest = src.slice(from, to);
                 let rest = rest.strip_prefix('/').unwrap_or(rest).to_string();
                 // Deliberate difference: the path text is spliced into a "..." literal only when plain.
-                safe &= helpers::rails::inert_text(&rest);
+                safe &= helpers::rails::inert_in(&rest, '"');
                 edits.push((from, to, r(a), format!(", \"{rest}\"")));
             }
             let (os, oe) = offense_range(src, s, e);
@@ -171,7 +171,7 @@ impl Cop for FilePath {
             let joined: Vec<String> = args.iter().filter_map(str_val).collect();
             let joined = joined.join("/");
             let (os, oe) = offense_range(src, s, e);
-            if !helpers::rails::inert_text(&joined) {
+            if !helpers::rails::inert_in(&joined, '"') {
                 return cx.add_withheld_fix(os, oe, message(cx, false));
             }
             let first = r(&args[0]);
@@ -255,10 +255,17 @@ fn on_dstr(cx: &mut Cx, node: &Node, d: &ruby_prism::InterpolatedStringNode) {
         let rargs = send_args(root);
         let Some(last) = rargs.last() else { return };
         let ext = node_text(n).to_string();
-        let target = last.as_string_node().filter(|_| str_val(last).is_some()).and_then(|st| st.closing_loc());
+        let last_str = last.as_string_node().filter(|_| str_val(last).is_some());
+        let target = last_str.as_ref().and_then(|st| st.closing_loc());
         let (ns, ne) = (n.location().start_offset(), n.location().end_offset());
-        // Deliberate difference: the extension text is spliced in only when plain.
-        if target.is_some() && !helpers::rails::inert_text(&ext) {
+        // Deliberate difference: the extension text is spliced in only when inert in that literal.
+        let quote = last_str.as_ref().and_then(|st| st.opening_loc()).map(|o| o.as_slice());
+        let inert = match quote {
+            Some(b"'") => helpers::rails::inert_in(&ext, '\''),
+            Some(b"\"") => helpers::rails::inert_in(&ext, '"'),
+            _ => helpers::rails::inert_text(&ext),
+        };
+        if target.is_some() && !inert {
             return cx.add_withheld_fix(os, oe, message(cx, false));
         }
         cx.add_fix(os, oe, message(cx, false), |c| {

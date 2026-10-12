@@ -90,7 +90,12 @@ impl Cop for RootPathnameMethods {
                 node_text(&jargs[0]).to_string()
             } else {
                 // join_arguments
-                let mut interpolate = false;
+                let interpolate = jargs.iter().any(|a| helpers::rails::node_value(a).is_none());
+                let has_interp = jargs.iter().any(|a| {
+                    a.as_interpolated_string_node().is_some_and(|d| d.parts().iter().any(|p| p.as_embedded_statements_node().is_some()))
+                });
+                let double = cx.config.for_cop("Style/StringLiterals").str("EnforcedStyle") == Some("double_quotes");
+                let q = if double || has_interp || interpolate { '"' } else { '\'' };
                 let parts: Vec<String> = jargs
                     .iter()
                     .map(|a| match helpers::rails::node_value(a) {
@@ -98,22 +103,17 @@ impl Cop for RootPathnameMethods {
                             // Deliberate difference (docs/known-gaps.md): literal text goes into
                             // the new quotes only when inert there.
                             safe &= match a.as_interpolated_string_node() {
-                                Some(d) => d.parts().iter().all(|p| p.as_embedded_statements_node().is_some() || helpers::rails::node_value(&p).is_some_and(|v| helpers::rails::inert_text(&v))),
-                                None => helpers::rails::inert_text(&v),
+                                Some(d) => d.parts().iter().all(|p| {
+                                    p.as_embedded_statements_node().is_some()
+                                        || helpers::rails::node_value(&p).is_some_and(|v| helpers::rails::inert_in(&v, q))
+                                }),
+                                None => helpers::rails::inert_in(&v, q),
                             };
                             v
                         }
-                        None => {
-                            interpolate = true;
-                            format!("#{{{}}}", node_text(a))
-                        }
+                        None => format!("#{{{}}}", node_text(a)),
                     })
                     .collect();
-                let has_interp = jargs.iter().any(|a| {
-                    a.as_interpolated_string_node().is_some_and(|d| d.parts().iter().any(|p| p.as_embedded_statements_node().is_some()))
-                });
-                let double = cx.config.for_cop("Style/StringLiterals").str("EnforcedStyle") == Some("double_quotes");
-                let q = if double || has_interp || interpolate { '"' } else { '\'' };
                 format!("{q}{}{q}", parts.join("/"))
             };
             format!("{receiver}.glob({argument})")

@@ -1,5 +1,5 @@
 Rails.root.join("app/models")
-Rails.root.join('app', "a'b")
+Rails.root.join("app/a'b")
 Rails.root.join('app', "a\nb")
 Rails.root.join('app', "a\\b")
 Rails.root.join("a'b").to_s

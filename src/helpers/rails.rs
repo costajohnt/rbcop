@@ -457,6 +457,12 @@ pub fn inert_text(s: &str) -> bool {
     !s.contains(['\'', '"', '\\', '\n', '\r', '\0']) && !["#{", "#@", "#$"].iter().any(|i| s.contains(i))
 }
 
+/// `inert_text` for a known target literal: `quote` is `'` or `"`; the other quote is allowed.
+pub fn inert_in(s: &str, quote: char) -> bool {
+    let other = if quote == '"' { '\'' } else { '"' };
+    inert_text(&s.replace(other, ""))
+}
+
 /// Source of a pair's value as parser sees it: an omitted value (`key:`) is just `key`.
 pub fn pair_value_source<'pr>(p: &ruby_prism::AssocNode<'pr>) -> &'pr str {
     let v = p.value();

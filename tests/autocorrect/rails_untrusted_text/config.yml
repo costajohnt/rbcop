@@ -58,3 +58,8 @@ Rails/RakeEnvironment:
 Rails/I18nLazyLookup:
   Enabled: true
   Include: ['**/*.rb']
+Rails/StrongParametersExpect:
+  Enabled: true
+  Include: ['**/*.rb']
+Rails/RootPathnameMethods:
+  Enabled: true

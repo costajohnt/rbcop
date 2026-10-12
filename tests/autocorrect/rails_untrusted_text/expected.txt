@@ -17,11 +17,20 @@ others.rb:23:1: W: [Corrected] Rails/RedirectBackOrTo: Use `redirect_back_or_to`
 others.rb:24:6: C: [Corrected] Rails/SelectMap: Use `pluck(:"a'b")` instead of `select` with `map`.
 others.rb:25:6: C: [Corrected] Rails/Pick: Prefer `pick(:"a b")` over `pluck(:"a b").first`.
 others.rb:27:1: C: [Corrected] Rails/RelativeDateConstant: Do not assign `since` to constants as it will be evaluated only once.
+params.rb:1:8: C: [Correctable] Rails/StrongParametersExpect: Use `expect(a b: [:name])` instead.
+params.rb:2:8: C: [Correctable] Rails/StrongParametersExpect: Use `expect(x: 1, y: [:name])` instead.
+params.rb:3:8: C: [Correctable] Rails/StrongParametersExpect: Use `expect(a'b: [:name])` instead.
+params.rb:4:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob("app/a'b")`.
+params.rb:4:10: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+params.rb:5:1: C: [Correctable] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob('app/#@x')`.
+params.rb:5:10: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+params.rb:6:1: C: [Correctable] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob("app/a\b/#{dir}")`.
 paths.rb:1:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
-paths.rb:2:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:2:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
 paths.rb:3:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
 paths.rb:4:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
 paths.rb:5:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to').to_s`.
+paths.rb:5:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join("a'b")`.
 paths.rb:6:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
 paths.rb:7:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
 paths.rb:8:5: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
@@ -35,6 +44,25 @@ paths.rb:18:1: C: [Correctable] Rails/RakeEnvironment: Include `:environment` ta
 paths.rb:20:1: C: [Corrected] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
 paths.rb:24:7: C: [Correctable] Rails/I18nLazyLookup: Use lazy lookup for the text used in controllers.
 paths.rb:25:7: C: [Corrected] Rails/I18nLazyLookup: Use lazy lookup for the text used in controllers.
+safe.rb:2:8: C: [Corrected] Rails/StrongParametersExpect: Use `expect(user: [:name, :age])` instead.
+safe.rb:3:8: C: [Corrected] Rails/StrongParametersExpect: Use `expect(user: [:name])` instead.
+safe.rb:4:8: C: [Corrected] Rails/StrongParametersExpect: Use `expect(key => [:name])` instead.
+safe.rb:5:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob("app/**/*.rb")`.
+safe.rb:5:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob('app/**/*.rb')`.
+safe.rb:5:10: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+safe.rb:6:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob("config/*.yml")`.
+safe.rb:6:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob('config/*.yml')`.
+safe.rb:6:5: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+safe.rb:7:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join("config/a'b").read`.
+safe.rb:7:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join('config', "a'b").read`.
+safe.rb:7:11: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+safe.rb:8:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+safe.rb:9:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+safe.rb:10:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to').to_s`.
+safe.rb:10:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join("a'b")`.
+safe.rb:11:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+safe.rb:12:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+safe.rb:13:1: C: [Corrected] Rails/EnvironmentComparison: Favor `Rails.env.production?` over `Rails.env == 'production'`.
 t.rb:1:1: C: [Correctable] Rails/ContentTag: Use `tag.div system('x')` instead of `tag("div\nsystem('x')")`.
 t.rb:5:1: C: [Correctable] Rails/ContentTag: Use `tag.x#{y}` instead of `tag("x#{y}")`.
 t.rb:8:1: C: [Correctable] Rails/ContentTag: Use `tag.div ` instead of `tag(<<~X)`.
