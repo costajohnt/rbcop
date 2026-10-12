@@ -1,0 +1,2 @@
+x rescue
+  foo
