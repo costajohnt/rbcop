@@ -96,6 +96,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   Other Rails corrections insert source text or escaped literals (`inspect`/`dump`) and are not
   changed. Fixture: tests/autocorrect/rails_untrusted_text (RuboCop's output is kept in
   `rubocop-output/`).
+- rubocop-minitest corrections were checked against the same rule: none splices string or symbol
+  content into new source (they move the source of whole arguments and receivers, and write method
+  names and operators, which are identifiers), so none is withheld.
 
 ## Open gaps
 

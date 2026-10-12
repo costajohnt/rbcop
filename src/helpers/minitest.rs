@@ -130,7 +130,34 @@ pub fn test_class(class: &ClassNode) -> bool {
 /// def's parser siblings when there are two or more) and its index there.
 pub fn class_def_nodes<'pr>(class: &ClassNode<'pr>) -> (Vec<Node<'pr>>, Vec<usize>) {
     // ponytail: a class body with rescue/ensure is a parser `rescue`/`ensure`; treated as no defs.
-    let body = stmts(class.body());
+    let mut body = stmts(class.body());
+    if body.len() == 1 && body[0].as_def_node().is_none() {
+        // `class_def.each_child_node(:def)` of a lone statement: an `if` holding a single def.
+        let one = |s: Option<ruby_prism::StatementsNode<'pr>>| -> Vec<Node<'pr>> {
+            parser_body(s.map(|s| s.as_node())).into_iter().collect()
+        };
+        body = match &body[0] {
+            Node::IfNode { .. } => {
+                let n = body[0].as_if_node().unwrap();
+                let mut k = one(n.statements());
+                if let Some(e) = n.subsequent().and_then(|e| e.as_else_node()) {
+                    k.extend(one(e.statements()));
+                }
+                k
+            }
+            Node::UnlessNode { .. } => {
+                let n = body[0].as_unless_node().unwrap();
+                let mut k = one(n.statements());
+                if let Some(e) = n.else_clause() {
+                    k.extend(one(e.statements()));
+                }
+                k
+            }
+            _ => Vec::new(),
+        };
+        // Their parent is the `if`, whose other children (condition, defs) set no visibility.
+        body.retain(|n| n.as_def_node().is_some());
+    }
     let idx = (0..body.len()).filter(|&i| body[i].as_def_node().is_some_and(|d| d.receiver().is_none())).collect();
     (body, idx)
 }
