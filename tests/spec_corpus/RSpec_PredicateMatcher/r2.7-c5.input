@@ -1,0 +1,18 @@
+==> .rubocop.yml 247 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/PredicateMatcher:
+  EnforcedStyle: explicit
+  Strict: false
+  AllowedExplicitMatchers:
+  - have_http_status
+
+==> 000/000_spec.rb 37 <==
+expect(foo).to have_http_status(:ok)
+

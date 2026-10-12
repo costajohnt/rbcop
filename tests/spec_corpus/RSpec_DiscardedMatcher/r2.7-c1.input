@@ -1,0 +1,20 @@
+==> .rubocop.yml 200 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/DiscardedMatcher:
+  CustomMatcherMethods:
+  - custom_matcher
+
+==> 000/000_spec.rb 77 <==
+specify do
+  expect(foo).to \
+    receive(:bar)
+    custom_matcher(:foo)
+end
+

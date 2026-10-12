@@ -1,0 +1,116 @@
+==> offenses exit=1 3553 <==
+000/000_spec.rb:1:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_empty` matcher over `empty?`.
+000/000_spec.rb:2:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_empty` matcher over `empty?`.
+000/000_spec.rb:3:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_empty` matcher over `empty?`.
+000/000_spec.rb:4:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_empty` matcher over `empty?`.
+000/000_spec.rb:5:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_empty` matcher over `empty?`.
+000/000_spec.rb:6:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_empty` matcher over `empty?`.
+000/000_spec.rb:7:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_empty` matcher over `empty?`.
+001/001_spec.rb:1:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `exist` matcher over `exist?`.
+001/001_spec.rb:2:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `exist` matcher over `exist?`.
+001/001_spec.rb:3:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `exist` matcher over `exists?`.
+001/001_spec.rb:4:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `have_something` matcher over `has_something?`.
+001/001_spec.rb:5:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `have_something` matcher over `has_something?`.
+001/001_spec.rb:6:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `include` matcher over `include?`.
+001/001_spec.rb:7:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `respond_to` matcher over `respond_to?`.
+001/001_spec.rb:8:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_something` matcher over `something?`.
+003/003_spec.rb:1:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_something` matcher over `something?`.
+003/003_spec.rb:2:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_something` matcher over `something?`.
+003/003_spec.rb:3:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_something` matcher over `something?`.
+003/003_spec.rb:4:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_something` matcher over `something?`.
+003/003_spec.rb:5:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `have_key` matcher over `has_key?`.
+003/003_spec.rb:6:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_a` matcher over `is_a?`.
+003/003_spec.rb:7:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_an_instance_of` matcher over `instance_of?`.
+004/004_spec.rb:1:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_something` matcher over `something?`.
+005/005_spec.rb:1:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_all` matcher over `all?`.
+005/005_spec.rb:2:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_all` matcher over `all?`.
+005/005_spec.rb:3:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_all` matcher over `all?`.
+005/005_spec.rb:4:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_all` matcher over `all?`.
+005/005_spec.rb:5:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_all` matcher over `all?`.
+005/005_spec.rb:6:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_something` matcher over `something?`.
+005/005_spec.rb:7:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_all` matcher over `all?`.
+005/005_spec.rb:8:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_all` matcher over `all?`.
+005/005_spec.rb:10:1: C: [Correctable] RSpec/PredicateMatcher: Prefer using `be_all` matcher over `all?`.
+
+==> autocorrect exit=0 3489 <==
+000/000_spec.rb:1:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_empty` matcher over `empty?`.
+000/000_spec.rb:2:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_empty` matcher over `empty?`.
+000/000_spec.rb:3:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_empty` matcher over `empty?`.
+000/000_spec.rb:4:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_empty` matcher over `empty?`.
+000/000_spec.rb:5:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_empty` matcher over `empty?`.
+000/000_spec.rb:6:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_empty` matcher over `empty?`.
+000/000_spec.rb:7:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_empty` matcher over `empty?`.
+001/001_spec.rb:1:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `exist` matcher over `exist?`.
+001/001_spec.rb:2:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `exist` matcher over `exist?`.
+001/001_spec.rb:3:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `exist` matcher over `exists?`.
+001/001_spec.rb:4:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `have_something` matcher over `has_something?`.
+001/001_spec.rb:5:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `have_something` matcher over `has_something?`.
+001/001_spec.rb:6:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `include` matcher over `include?`.
+001/001_spec.rb:7:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `respond_to` matcher over `respond_to?`.
+001/001_spec.rb:8:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_something` matcher over `something?`.
+003/003_spec.rb:1:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_something` matcher over `something?`.
+003/003_spec.rb:2:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_something` matcher over `something?`.
+003/003_spec.rb:3:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_something` matcher over `something?`.
+003/003_spec.rb:4:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_something` matcher over `something?`.
+003/003_spec.rb:5:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `have_key` matcher over `has_key?`.
+003/003_spec.rb:6:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_a` matcher over `is_a?`.
+003/003_spec.rb:7:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_an_instance_of` matcher over `instance_of?`.
+004/004_spec.rb:1:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_something` matcher over `something?`.
+005/005_spec.rb:1:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_all` matcher over `all?`.
+005/005_spec.rb:2:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_all` matcher over `all?`.
+005/005_spec.rb:3:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_all` matcher over `all?`.
+005/005_spec.rb:4:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_all` matcher over `all?`.
+005/005_spec.rb:5:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_all` matcher over `all?`.
+005/005_spec.rb:6:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_something` matcher over `something?`.
+005/005_spec.rb:7:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_all` matcher over `all?`.
+005/005_spec.rb:8:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_all` matcher over `all?`.
+005/005_spec.rb:10:1: C: [Corrected] RSpec/PredicateMatcher: Prefer using `be_all` matcher over `all?`.
+
+==> corrected/000/000_spec.rb 192 <==
+expect(foo).to be_empty
+expect(foo).to be_empty, 'fail'
+expect(foo).not_to be_empty
+expect(foo).not_to be_empty
+expect(foo).not_to be_empty
+expect(foo).to be_empty
+expect(foo).not_to be_empty
+
+==> corrected/001/001_spec.rb 231 <==
+expect(foo).to exist
+expect(foo).to exist, 'fail'
+expect(foo).to exist
+expect(foo).to have_something
+expect(foo).not_to have_something
+expect(foo).to include(something)
+expect(foo).to respond_to(:bar)
+expect(foo).to be_something()
+
+==> corrected/003/003_spec.rb 251 <==
+expect(foo).to be_something('foo')
+expect(foo).to be_something('foo'), 'fail'
+expect(foo).to be_something('foo', 'bar')
+expect(foo).to be_something 1, 2
+expect(foo).to have_key('foo')
+expect(foo).to be_a(Array)
+expect(foo).to be_an_instance_of(Array)
+
+==> corrected/004/004_spec.rb 48 <==
+expect(foo).to be_something(<<~TEXT)
+  bar
+TEXT
+
+==> corrected/005/005_spec.rb 352 <==
+expect(foo).to be_all(&:present?)
+expect(foo).to be_all(&:present?), 'fail'
+expect(foo).to be_all { |x| x.present? }
+expect(foo).to be_all(n) { |x| x.present? }
+expect(foo).to be_all { present }
+expect(foo).to be_something(x) { |y| y.present? }
+expect(foo).to be_all { }
+expect(foo).to be_all do; end
+
+expect(foo).to be_all do |x|
+  x + 1
+  x >= 2
+end
+

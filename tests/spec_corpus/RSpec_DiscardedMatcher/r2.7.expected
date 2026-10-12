@@ -1,0 +1,20 @@
+==> offenses exit=1 999 <==
+000/000_spec.rb:4:5: C: RSpec/DiscardedMatcher: The result of `change` is not used. Did you mean to chain it with `.and`?
+001/001_spec.rb:3:3: C: RSpec/DiscardedMatcher: The result of `change` is not used. Did you mean to chain it with `.and`?
+002/002_spec.rb:3:3: C: RSpec/DiscardedMatcher: The result of `receive` is not used. Did you mean to chain it with `.and`?
+004/004_spec.rb:3:3: C: RSpec/DiscardedMatcher: The result of `receive_message_chain` is not used. Did you mean to chain it with `.and`?
+005/005_spec.rb:3:3: C: RSpec/DiscardedMatcher: The result of `output` is not used. Did you mean to chain it with `.and`?
+007/007_spec.rb:3:3: C: RSpec/DiscardedMatcher: The result of `have_received` is not used. Did you mean to chain it with `.and`?
+023/023_spec.rb:4:8: C: RSpec/DiscardedMatcher: The result of `change` is not used. Did you mean to chain it with `.and`?
+028/028_spec.rb:8:9: C: RSpec/DiscardedMatcher: The result of `change` is not used. Did you mean to chain it with `.and`?
+
+==> autocorrect exit=1 999 <==
+000/000_spec.rb:4:5: C: RSpec/DiscardedMatcher: The result of `change` is not used. Did you mean to chain it with `.and`?
+001/001_spec.rb:3:3: C: RSpec/DiscardedMatcher: The result of `change` is not used. Did you mean to chain it with `.and`?
+002/002_spec.rb:3:3: C: RSpec/DiscardedMatcher: The result of `receive` is not used. Did you mean to chain it with `.and`?
+004/004_spec.rb:3:3: C: RSpec/DiscardedMatcher: The result of `receive_message_chain` is not used. Did you mean to chain it with `.and`?
+005/005_spec.rb:3:3: C: RSpec/DiscardedMatcher: The result of `output` is not used. Did you mean to chain it with `.and`?
+007/007_spec.rb:3:3: C: RSpec/DiscardedMatcher: The result of `have_received` is not used. Did you mean to chain it with `.and`?
+023/023_spec.rb:4:8: C: RSpec/DiscardedMatcher: The result of `change` is not used. Did you mean to chain it with `.and`?
+028/028_spec.rb:8:9: C: RSpec/DiscardedMatcher: The result of `change` is not used. Did you mean to chain it with `.and`?
+

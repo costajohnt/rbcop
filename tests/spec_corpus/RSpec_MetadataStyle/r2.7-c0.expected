@@ -1,0 +1,62 @@
+==> offenses exit=1 1001 <==
+003/003_spec.rb:1:23: C: [Correctable] RSpec/MetadataStyle: Use symbol style for metadata.
+004/004_spec.rb:1:23: C: [Correctable] RSpec/MetadataStyle: Use symbol style for metadata.
+004/004_spec.rb:1:32: C: [Correctable] RSpec/MetadataStyle: Use symbol style for metadata.
+005/005_spec.rb:1:29: C: [Correctable] RSpec/MetadataStyle: Use symbol style for metadata.
+006/006_spec.rb:1:23: C: [Correctable] RSpec/MetadataStyle: Use symbol style for metadata.
+008/008_spec.rb:1:27: C: [Correctable] RSpec/MetadataStyle: Use symbol style for metadata.
+009/009_spec.rb:1:25: C: [Correctable] RSpec/MetadataStyle: Use symbol style for metadata.
+010/010_spec.rb:1:25: C: [Correctable] RSpec/MetadataStyle: Use symbol style for metadata.
+010/010_spec.rb:1:34: C: [Correctable] RSpec/MetadataStyle: Use symbol style for metadata.
+011/011_spec.rb:1:25: C: [Correctable] RSpec/MetadataStyle: Use symbol style for metadata.
+012/012_spec.rb:1:31: C: [Correctable] RSpec/MetadataStyle: Use symbol style for metadata.
+
+==> autocorrect exit=0 979 <==
+003/003_spec.rb:1:23: C: [Corrected] RSpec/MetadataStyle: Use symbol style for metadata.
+004/004_spec.rb:1:23: C: [Corrected] RSpec/MetadataStyle: Use symbol style for metadata.
+004/004_spec.rb:1:32: C: [Corrected] RSpec/MetadataStyle: Use symbol style for metadata.
+005/005_spec.rb:1:29: C: [Corrected] RSpec/MetadataStyle: Use symbol style for metadata.
+006/006_spec.rb:1:23: C: [Corrected] RSpec/MetadataStyle: Use symbol style for metadata.
+008/008_spec.rb:1:27: C: [Corrected] RSpec/MetadataStyle: Use symbol style for metadata.
+009/009_spec.rb:1:25: C: [Corrected] RSpec/MetadataStyle: Use symbol style for metadata.
+010/010_spec.rb:1:25: C: [Corrected] RSpec/MetadataStyle: Use symbol style for metadata.
+010/010_spec.rb:1:34: C: [Corrected] RSpec/MetadataStyle: Use symbol style for metadata.
+011/011_spec.rb:1:25: C: [Corrected] RSpec/MetadataStyle: Use symbol style for metadata.
+012/012_spec.rb:1:31: C: [Corrected] RSpec/MetadataStyle: Use symbol style for metadata.
+
+==> corrected/003/003_spec.rb 32 <==
+describe 'Something', :a do
+end
+
+==> corrected/004/004_spec.rb 36 <==
+describe 'Something', :a, :b do
+end
+
+==> corrected/005/005_spec.rb 38 <==
+describe 'Something', :a, b: 1 do
+end
+
+==> corrected/006/006_spec.rb 38 <==
+describe 'Something', :a, b: 1 do
+end
+
+==> corrected/008/008_spec.rb 36 <==
+describe 'Something', :b, :a do
+end
+
+==> corrected/009/009_spec.rb 38 <==
+describe 'Something', :a, {  } do
+end
+
+==> corrected/010/010_spec.rb 42 <==
+describe 'Something', :a, :b, {  } do
+end
+
+==> corrected/011/011_spec.rb 42 <==
+describe 'Something', :a, { b: 1 } do
+end
+
+==> corrected/012/012_spec.rb 42 <==
+describe 'Something', :a, { b: 1 } do
+end
+

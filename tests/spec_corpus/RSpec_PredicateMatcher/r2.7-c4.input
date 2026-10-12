@@ -1,0 +1,118 @@
+==> .rubocop.yml 229 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/PredicateMatcher:
+  EnforcedStyle: explicit
+  Strict: false
+  AllowedExplicitMatchers: []
+
+==> 000/000_spec.rb 114 <==
+expect(foo).to be_empty
+expect(foo).to be_empty, 'fail'
+expect(foo).not_to be_empty
+expect(foo).to have_something
+
+==> 001/001_spec.rb 61 <==
+expect(foo).to be_something(1, 2)
+expect(foo).to have_key(1)
+
+==> 002/002_spec.rb 159 <==
+expect(foo).to be_all(&:present?)
+expect(foo).to be_all { |x| x.present? }
+expect(foo).to be_all { present }
+expect(foo).to be_something(x) { |y| y.present? }
+
+==> 003/003_spec.rb 279 <==
+expect(foo).to be_truthy
+expect(foo).to be_truthy, 'fail'
+expect(foo).to be_falsey
+expect(foo).to be_falsy
+expect(foo).to have_attributes(name: 'foo')
+expect(foo).to have_received(:foo)
+expect(foo).to be_between(1, 10)
+expect(foo).to be_within(0.1).of(10.0)
+expect(foo).to exist
+
+==> 004/004_spec.rb 56 <==
+expect(foo).to be(true)
+expect(foo).to be(true), 'fail'
+
+==> 005/005_spec.rb 285 <==
+expect(foo).to be_something
+expect(foo).to be_something, 'fail'
+expect(foo).not_to be_something
+expect(foo).to have_something
+expect(foo).to be_a(Array)
+expect(foo).to be_instance_of(Array)
+expect(foo).to include('bar')
+expect(foo).to respond_to(:method)
+expect(foo).to be_something()
+
+==> 006/006_spec.rb 98 <==
+expect(foo).to be_something(1)
+expect(foo).to be_something(1, 2)
+expect(foo).to be_something 1, 2
+
+==> 007/007_spec.rb 43 <==
+expect(foo).to include(<<~TEXT)
+  bar
+TEXT
+
+==> 008/008_spec.rb 123 <==
+expect(foo)
+  .to be_something(<<~TEXT)
+    bar
+  TEXT
+
+expect(foo)
+  .to be_something(bar, <<~TEXT, 'baz')
+    bar
+  TEXT
+
+==> 009/009_spec.rb 129 <==
+expect(foo)
+  .to be_something(<<~TEXT)
+    #{bar}
+  TEXT
+
+expect(foo)
+  .to be_something(bar, <<~TEXT, 'baz')
+    #{bar}
+  TEXT
+
+==> 010/010_spec.rb 137 <==
+expect(foo)
+  .to be_something(<<~`COMMAND`)
+    pwd
+  COMMAND
+
+expect(foo)
+  .to be_something(bar, <<~COMMAND, 'baz')
+    pwd
+  COMMAND
+
+==> 011/011_spec.rb 54 <==
+expect(foo).to include
+expect(foo).to include, 'fail'
+
+==> 012/012_spec.rb 33 <==
+expect(foo).to include(foo, bar)
+
+==> 013/013_spec.rb 221 <==
+expect(foo).to be_all { |x| x.present? }
+expect(foo).to be_all(n) { |x| x.ok? }
+expect(foo).to be_all { present }
+expect(foo).to be_all { }
+expect(foo).to be_all do; end
+
+expect(foo).to be_all do |x|
+  x + 1
+  x >= 2
+end
+
