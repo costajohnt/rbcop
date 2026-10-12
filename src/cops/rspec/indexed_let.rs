@@ -4,6 +4,9 @@ pub const NAME: &str = "RSpec/IndexedLet";
 pub static COP: IndexedLet = IndexedLet;
 pub struct IndexedLet;
 
+/// (name without digits, lets as (range, name))
+type Group = (String, Vec<(usize, usize, String)>);
+
 static SUFFIX_INDEX: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)_?[0-9]+$").unwrap());
 static INDEX: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"[0-9]+").unwrap());
 
@@ -67,7 +70,7 @@ impl Cop for IndexedLet {
             .collect();
         let max = cx.cfg.int("Max").unwrap_or(1);
         // filter_indexed_lets: group by name without digits, groups over Max
-        let mut groups: Vec<(String, Vec<(usize, usize, String)>)> = Vec::new();
+        let mut groups: Vec<Group> = Vec::new();
         for stmt in helpers::rspec::body_children(body) {
             if !helpers::rspec::let_(&l, &stmt) {
                 continue;

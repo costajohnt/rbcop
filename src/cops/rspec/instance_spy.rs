@@ -5,6 +5,9 @@ pub const NAME: &str = "RSpec/InstanceSpy";
 pub static COP: InstanceSpy = InstanceSpy;
 pub struct InstanceSpy;
 
+/// (variable, instance_double send, its selector, `.as_null_object`)
+type Double = (Vec<u8>, (usize, usize), (usize, usize), (usize, usize));
+
 impl Cop for InstanceSpy {
     fn correctable(&self) -> bool {
         true
@@ -23,7 +26,7 @@ impl Cop for InstanceSpy {
         struct V {
             /// null_double: (lvasgn $_ (send $(send nil? :instance_double ...) :as_null_object))
             /// as (var, instance_double send range, selector, `.as_null_object` range)
-            doubles: Vec<(Vec<u8>, (usize, usize), (usize, usize), (usize, usize))>,
+            doubles: Vec<Double>,
             /// have_received_usage: (send (send nil? :expect (lvar $_)) :to (send nil? :have_received ...) ...)
             usages: Vec<Vec<u8>>,
         }
