@@ -1,0 +1,1 @@
+a.rb:7:10: C: [Correctable] Style/RedundantSelf: Redundant `self` detected.
