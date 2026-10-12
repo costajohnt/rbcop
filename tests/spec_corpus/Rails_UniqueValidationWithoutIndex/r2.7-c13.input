@@ -1,0 +1,48 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/models/000/000.rb 91 <==
+class Article
+  belongs_to :user
+  validates :user, uniqueness: true, if: -> { false }
+end
+
+==> app/models/001/001.rb 94 <==
+class Article
+  belongs_to :user
+  validates :user, uniqueness: true, unless: -> { true }
+end
+
+==> app/models/002/002.rb 89 <==
+class Article
+  belongs_to :user
+  validates :user, uniqueness: { if: -> { false } }
+end
+
+==> app/models/003/003.rb 93 <==
+class Article
+  belongs_to :user
+  validates :user, uniqueness: { unless: -> { false } }
+end
+
+==> app/models/004/004.rb 138 <==
+class Article
+  belongs_to :user
+  enum :status, [:draft, :published]
+  validates :user, uniqueness: { conditions: -> { published } }
+end
+
+==> db/schema.rb 155 <==
+ActiveRecord::Schema.define(version: 2020_02_02_075409) do
+  create_table "articles", force: :cascade do |t|
+    t.bigint "user_id", null: false
+  end
+end
+

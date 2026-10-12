@@ -1,0 +1,23 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/models/000/000.rb 125 <==
+class Email < ApplicationRecord
+  validates :address, presence: true, uniqueness: { case_sensitive: false }, email: true
+end
+
+==> db/schema.rb 235 <==
+ActiveRecord::Schema.define(version: 2020_02_02_075409) do
+  create_table 'emails', force: :cascade do |t|
+    t.string 'address', null: false
+    t.index 'lower(address)', name: 'index_emails_on_lower_address', unique: true
+  end
+end
+

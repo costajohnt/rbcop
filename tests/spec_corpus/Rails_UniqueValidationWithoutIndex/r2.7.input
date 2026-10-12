@@ -1,0 +1,20 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/models/000/000.rb 74 <==
+class User < ApplicationRecord
+  validates :account, uniqueness: true
+end
+
+==> app/models/001/001.rb 69 <==
+class User < ApplicationRecord
+  validates :name, presence: true
+end
+

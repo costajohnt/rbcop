@@ -1,0 +1,62 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/models/000/000.rb 73 <==
+class User < ApplicationRecord
+  self.ignored_columns = [:real_name]
+end
+
+==> app/models/001/001.rb 53 <==
+module Abc
+  self.ignored_columns = [:real_name]
+end
+
+==> app/models/002/002.rb 74 <==
+class User < ApplicationRecord
+  self.ignored_columns = ['real_name']
+end
+
+==> app/models/003/003.rb 71 <==
+class User < ApplicationRecord
+  self.ignored_columns = [:account]
+end
+
+==> app/models/004/004.rb 72 <==
+class User < ApplicationRecord
+  self.ignored_columns = ['account']
+end
+
+==> app/models/005/005.rb 83 <==
+class User < ApplicationRecord
+  self.ignored_columns = [:real_name, :account]
+end
+
+==> app/models/006/006.rb 85 <==
+class User < ApplicationRecord
+  self.ignored_columns = ['real_name', 'account']
+end
+
+==> app/models/007/007.rb 66 <==
+class User < ApplicationRecord
+  self.ignored_columns = array
+end
+
+==> app/models/008/008.rb 75 <==
+class User < ApplicationRecord
+  self.ignored_columns += ['real_name']
+end
+
+==> db/schema.rb 152 <==
+ActiveRecord::Schema.define(version: 2020_02_02_075409) do
+  create_table "users", force: :cascade do |t|
+    t.string "account", null: false
+  end
+end
+
