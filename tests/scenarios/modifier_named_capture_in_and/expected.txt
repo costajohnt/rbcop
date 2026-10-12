@@ -1,0 +1,8 @@
+a.rb:10:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+a.rb:13:1: C: [Correctable] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+a.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+a.rb:4:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+t27/a.rb:10:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+t27/a.rb:13:1: C: [Correctable] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+t27/a.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+t27/a.rb:4:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
