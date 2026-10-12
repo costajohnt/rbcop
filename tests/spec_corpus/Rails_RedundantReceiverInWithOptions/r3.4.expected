@@ -1,0 +1,22 @@
+==> offenses exit=1 436 <==
+000/000.rb:3:5: C: [Correctable] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+000/000.rb:4:5: C: [Correctable] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+000/000.rb:5:5: C: [Correctable] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+000/000.rb:6:5: C: [Correctable] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+
+==> autocorrect exit=0 428 <==
+000/000.rb:3:5: C: [Corrected] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+000/000.rb:4:5: C: [Corrected] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+000/000.rb:5:5: C: [Corrected] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+000/000.rb:6:5: C: [Corrected] Rails/RedundantReceiverInWithOptions: Redundant receiver in `with_options`.
+
+==> corrected/000/000.rb 175 <==
+class Account < ApplicationRecord
+  with_options dependent: :destroy do
+    has_many :customers
+    has_many :products
+    has_many :invoices
+    has_many :expenses
+  end
+end
+

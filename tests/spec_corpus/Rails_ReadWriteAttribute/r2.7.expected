@@ -1,0 +1,121 @@
+==> offenses exit=1 1998 <==
+app/models/000/000.rb:1:7: C: [Correctable] Rails/ReadWriteAttribute: Prefer `self[:test]`.
+app/models/001/001.rb:1:7: C: [Correctable] Rails/ReadWriteAttribute: Prefer `self['test']`.
+app/models/003/003.rb:2:10: C: [Correctable] Rails/ReadWriteAttribute: Prefer `self[:baz]`.
+app/models/004/004.rb:1:7: C: [Correctable] Rails/ReadWriteAttribute: Prefer `self['test']`.
+app/models/005/005.rb:1:7: C: [Correctable] Rails/ReadWriteAttribute: Prefer `self['test_' + postfix]`.
+app/models/006/006.rb:1:7: C: [Correctable] Rails/ReadWriteAttribute: Prefer `self[:attr]`.
+app/models/008/008.rb:2:3: C: [Correctable] Rails/ReadWriteAttribute: Prefer `self[column]`.
+app/models/009/009.rb:2:3: C: [Correctable] Rails/ReadWriteAttribute: Prefer `self[ATTR_NAME]`.
+app/models/010/010.rb:1:1: C: [Correctable] Rails/ReadWriteAttribute: Prefer `self[:test] = val`.
+app/models/011/011.rb:2:3: C: [Correctable] Rails/ReadWriteAttribute: Prefer `self[column] = 'value'`.
+app/models/012/012.rb:2:3: C: [Correctable] Rails/ReadWriteAttribute: Prefer `self[ATTR_NAME] = value`.
+app/models/013/013.rb:1:1: C: [Correctable] Rails/ReadWriteAttribute: Prefer `self['attr'] = 'test'`.
+app/models/014/014.rb:1:1: C: [Correctable] Rails/ReadWriteAttribute: Prefer `self['attr'] = 'test'`.
+app/models/016/016.rb:2:17: C: [Correctable] Rails/ReadWriteAttribute: Prefer `self[:baz] = "baz"`.
+app/models/017/017.rb:1:1: C: [Correctable] Rails/ReadWriteAttribute: Prefer `self[:attr] = 'test_' + postfix`.
+app/models/018/018.rb:2:3: C: [Correctable] Rails/ReadWriteAttribute: Prefer `self["attr"] = 'test_' + postfix`.
+app/models/019/019.rb:1:1: C: [Correctable] Rails/ReadWriteAttribute: Prefer `self[:attr] = val`.
+app/models/021/021.rb:2:3: C: [Correctable] Rails/ReadWriteAttribute: Prefer `self[:bar] = read_attribute(:foo)`.
+app/models/022/022.rb:1:1: C: Rails/ReadWriteAttribute: Prefer `self[:attr] = read_attribute(:other)`.
+app/models/022/022.rb:1:24: C: [Correctable] Rails/ReadWriteAttribute: Prefer `self[:other]`.
+
+==> autocorrect exit=0 1962 <==
+app/models/000/000.rb:1:7: C: [Corrected] Rails/ReadWriteAttribute: Prefer `self[:test]`.
+app/models/001/001.rb:1:7: C: [Corrected] Rails/ReadWriteAttribute: Prefer `self['test']`.
+app/models/003/003.rb:2:10: C: [Corrected] Rails/ReadWriteAttribute: Prefer `self[:baz]`.
+app/models/004/004.rb:1:7: C: [Corrected] Rails/ReadWriteAttribute: Prefer `self['test']`.
+app/models/005/005.rb:1:7: C: [Corrected] Rails/ReadWriteAttribute: Prefer `self['test_' + postfix]`.
+app/models/006/006.rb:1:7: C: [Corrected] Rails/ReadWriteAttribute: Prefer `self[:attr]`.
+app/models/008/008.rb:2:3: C: [Corrected] Rails/ReadWriteAttribute: Prefer `self[column]`.
+app/models/009/009.rb:2:3: C: [Corrected] Rails/ReadWriteAttribute: Prefer `self[ATTR_NAME]`.
+app/models/010/010.rb:1:1: C: [Corrected] Rails/ReadWriteAttribute: Prefer `self[:test] = val`.
+app/models/011/011.rb:2:3: C: [Corrected] Rails/ReadWriteAttribute: Prefer `self[column] = 'value'`.
+app/models/012/012.rb:2:3: C: [Corrected] Rails/ReadWriteAttribute: Prefer `self[ATTR_NAME] = value`.
+app/models/013/013.rb:1:1: C: [Corrected] Rails/ReadWriteAttribute: Prefer `self['attr'] = 'test'`.
+app/models/014/014.rb:1:1: C: [Corrected] Rails/ReadWriteAttribute: Prefer `self['attr'] = 'test'`.
+app/models/016/016.rb:2:17: C: [Corrected] Rails/ReadWriteAttribute: Prefer `self[:baz] = "baz"`.
+app/models/017/017.rb:1:1: C: [Corrected] Rails/ReadWriteAttribute: Prefer `self[:attr] = 'test_' + postfix`.
+app/models/018/018.rb:2:3: C: [Corrected] Rails/ReadWriteAttribute: Prefer `self["attr"] = 'test_' + postfix`.
+app/models/019/019.rb:1:1: C: [Corrected] Rails/ReadWriteAttribute: Prefer `self[:attr] = val`.
+app/models/021/021.rb:2:3: C: [Corrected] Rails/ReadWriteAttribute: Prefer `self[:bar] = read_attribute(:foo)`.
+app/models/022/022.rb:1:1: C: [Corrected] Rails/ReadWriteAttribute: Prefer `self[:attr] = self[:other]`.
+app/models/022/022.rb:1:24: C: [Corrected] Rails/ReadWriteAttribute: Prefer `self[:other]`.
+
+==> corrected/app/models/000/000.rb 18 <==
+res = self[:test]
+
+==> corrected/app/models/001/001.rb 19 <==
+res = self['test']
+
+==> corrected/app/models/003/003.rb 32 <==
+def foo
+  bar || self[:baz]
+end
+
+==> corrected/app/models/004/004.rb 19 <==
+res = self['test']
+
+==> corrected/app/models/005/005.rb 30 <==
+res = self['test_' + postfix]
+
+==> corrected/app/models/006/006.rb 41 <==
+res = self[(
+'test_' + postfix
+).to_sym]
+
+==> corrected/app/models/008/008.rb 48 <==
+def do_the_read_from(column)
+  self[column]
+end
+
+==> corrected/app/models/009/009.rb 38 <==
+def do_the_read
+  self[ATTR_NAME]
+end
+
+==> corrected/app/models/010/010.rb 18 <==
+self[:test] = val
+
+==> corrected/app/models/011/011.rb 57 <==
+def do_the_write_to(column)
+  self[column] = 'value'
+end
+
+==> corrected/app/models/012/012.rb 54 <==
+def do_the_write(value)
+  self[ATTR_NAME] = value
+end
+
+==> corrected/app/models/013/013.rb 22 <==
+self['attr'] = 'test'
+
+==> corrected/app/models/014/014.rb 22 <==
+self['attr'] = 'test'
+
+==> corrected/app/models/016/016.rb 55 <==
+def foo=(value)
+  bar(value) || self[:baz] = "baz"
+end
+
+==> corrected/app/models/017/017.rb 32 <==
+self[:attr] = 'test_' + postfix
+
+==> corrected/app/models/018/018.rb 53 <==
+def attr2=(k)
+  self["attr"] = 'test_' + postfix
+end
+
+==> corrected/app/models/019/019.rb 43 <==
+self[:attr] = (
+'test_' + postfix
+).to_sym
+
+==> corrected/app/models/021/021.rb 48 <==
+def foo
+  self[:bar] = read_attribute(:foo)
+end
+
+==> corrected/app/models/022/022.rb 27 <==
+self[:attr] = self[:other]
+

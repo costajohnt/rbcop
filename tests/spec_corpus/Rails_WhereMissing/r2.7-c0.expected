@@ -1,0 +1,142 @@
+==> offenses exit=1 3114 <==
+000/000.rb:1:5: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+001/001.rb:1:5: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foo: { id: nil })`.
+002/002.rb:1:1: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foo: { id: nil })`.
+003/003.rb:1:5: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_outer_joins(:foo).where(foos: { id: nil })`.
+004/004.rb:1:30: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+005/005.rb:1:26: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+006/006.rb:1:42: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+007/007.rb:1:38: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+008/008.rb:1:5: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+009/009.rb:1:5: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+010/010.rb:1:5: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+011/011.rb:2:4: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+012/012.rb:2:4: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+013/013.rb:2:4: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+014/014.rb:2:3: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+015/015.rb:1:5: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+016/016.rb:2:4: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+017/017.rb:2:4: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+018/018.rb:6:7: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+021/021.rb:1:5: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+022/022.rb:1:71: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+023/023.rb:2:7: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+023/023.rb:6:7: C: [Correctable] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+
+==> autocorrect exit=0 3068 <==
+000/000.rb:1:5: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+001/001.rb:1:5: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foo: { id: nil })`.
+002/002.rb:1:1: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foo: { id: nil })`.
+003/003.rb:1:5: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_outer_joins(:foo).where(foos: { id: nil })`.
+004/004.rb:1:30: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+005/005.rb:1:26: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+006/006.rb:1:42: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+007/007.rb:1:38: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+008/008.rb:1:5: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+009/009.rb:1:5: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+010/010.rb:1:5: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+011/011.rb:2:4: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+012/012.rb:2:4: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+013/013.rb:2:4: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+014/014.rb:2:3: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+015/015.rb:1:5: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+016/016.rb:2:4: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+017/017.rb:2:4: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+018/018.rb:6:7: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+021/021.rb:1:5: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+022/022.rb:1:71: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+023/023.rb:2:7: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+023/023.rb:6:7: C: [Corrected] Rails/WhereMissing: Use `where.missing(:foo)` instead of `left_joins(:foo).where(foos: { id: nil })`.
+
+==> corrected/000/000.rb 42 <==
+Foo.where.missing(:foo).where(bar: "bar")
+
+==> corrected/001/001.rb 42 <==
+Foo.where.missing(:foo).where(bar: "bar")
+
+==> corrected/002/002.rb 38 <==
+where.missing(:foo).where(bar: "bar")
+
+==> corrected/003/003.rb 42 <==
+Foo.where.missing(:foo).where(bar: "bar")
+
+==> corrected/004/004.rb 42 <==
+Foo.where.missing(:foo).where(bar: "bar")
+
+==> corrected/005/005.rb 38 <==
+where.missing(:foo).where(bar: "bar")
+
+==> corrected/006/006.rb 42 <==
+Foo.where(bar: "bar").where.missing(:foo)
+
+==> corrected/007/007.rb 38 <==
+where(bar: "bar").where.missing(:foo)
+
+==> corrected/008/008.rb 42 <==
+Foo.where.missing(:foo).where(bar: "bar")
+
+==> corrected/009/009.rb 42 <==
+Foo.where.missing(:foo).where(bar: "bar")
+
+==> corrected/010/010.rb 36 <==
+Foo.where.missing(:foo).joins(:bar)
+
+==> corrected/011/011.rb 48 <==
+Foo
+  .where.missing(:foo)
+  .where(bar: "bar")
+
+==> corrected/012/012.rb 48 <==
+Foo
+  .where.missing(:foo)
+  .where(bar: "bar")
+
+==> corrected/013/013.rb 56 <==
+Foo
+  .where.missing(:foo)
+  .where(
+    bar: "bar"
+  )
+
+==> corrected/014/014.rb 48 <==
+Foo.
+  where.missing(:foo).
+  where(bar: "bar")
+
+==> corrected/015/015.rb 45 <==
+Foo.where.missing(:foo)
+  .where(bar: "bar")
+
+==> corrected/016/016.rb 45 <==
+Foo
+  .where.missing(:foo).where(bar: "bar")
+
+==> corrected/017/017.rb 48 <==
+Foo
+  .where.missing(:foo)
+  .where(bar: "bar")
+
+==> corrected/018/018.rb 84 <==
+def test
+  Foo.left_joins(:foo).any?
+
+  do_something
+
+  Foo.where.missing(:foo)
+end
+
+==> corrected/021/021.rb 67 <==
+Foo.where.missing(:foo).or(Foo.where(bar: "bar").left_joins(:foo))
+
+==> corrected/022/022.rb 68 <==
+Foo.left_joins(:foo).where(bar: "bar").and(Foo.where.missing(:foo))
+
+==> corrected/023/023.rb 82 <==
+def test
+  Foo.where.missing(:foo)
+
+  do_something
+
+  Foo.where.missing(:foo)
+end
+

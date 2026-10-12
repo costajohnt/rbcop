@@ -1,0 +1,106 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/models/000/000.rb 28 <==
+res = read_attribute(:test)
+
+==> app/models/001/001.rb 29 <==
+res = read_attribute('test')
+
+==> app/models/002/002.rb 42 <==
+def foo
+  bar || read_attribute(:foo)
+end
+
+==> app/models/003/003.rb 42 <==
+def foo
+  bar || read_attribute(:baz)
+end
+
+==> app/models/004/004.rb 28 <==
+res = read_attribute 'test'
+
+==> app/models/005/005.rb 40 <==
+res = read_attribute('test_' + postfix)
+
+==> app/models/006/006.rb 53 <==
+res = read_attribute(
+(
+'test_' + postfix
+).to_sym
+)
+
+==> app/models/007/007.rb 34 <==
+res = object.read_attribute(:test)
+==> app/models/008/008.rb 58 <==
+def do_the_read_from(column)
+  read_attribute(column)
+end
+
+==> app/models/009/009.rb 48 <==
+def do_the_read
+  read_attribute(ATTR_NAME)
+end
+
+==> app/models/010/010.rb 28 <==
+write_attribute(:test, val)
+
+==> app/models/011/011.rb 67 <==
+def do_the_write_to(column)
+  write_attribute(column, 'value')
+end
+
+==> app/models/012/012.rb 64 <==
+def do_the_write(value)
+  write_attribute(ATTR_NAME, value)
+end
+
+==> app/models/013/013.rb 32 <==
+write_attribute('attr', 'test')
+
+==> app/models/014/014.rb 31 <==
+write_attribute 'attr', 'test'
+
+==> app/models/015/015.rb 65 <==
+def foo=(value)
+  bar(value) || write_attribute(:foo, "baz")
+end
+
+==> app/models/016/016.rb 65 <==
+def foo=(value)
+  bar(value) || write_attribute(:baz, "baz")
+end
+
+==> app/models/017/017.rb 42 <==
+write_attribute(:attr, 'test_' + postfix)
+
+==> app/models/018/018.rb 63 <==
+def attr2=(k)
+  write_attribute("attr", 'test_' + postfix)
+end
+
+==> app/models/019/019.rb 55 <==
+write_attribute(
+:attr,
+(
+'test_' + postfix
+).to_sym
+)
+
+==> app/models/020/020.rb 34 <==
+object.write_attribute(:test, val)
+==> app/models/021/021.rb 58 <==
+def foo
+  write_attribute(:bar, read_attribute(:foo))
+end
+
+==> app/models/022/022.rb 47 <==
+write_attribute(:attr, read_attribute(:other))
+

@@ -1,0 +1,13 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+
+==> 000/000.rb 78 <==
+def current_user(arg) = @current_user ||= User.find_by(id: session[:user_id])
+
