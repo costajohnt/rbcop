@@ -2,7 +2,8 @@
 # Download the release binary for this machine, check its SHA-256, and put it in DIR/rbcop.
 # usage: scripts/dist/install.sh VERSION DIR
 # RBCOP_DOWNLOAD_BASE: where the archives are (default: the GitHub release vVERSION); any URL curl
-# reads, file:// included. Used by action.yml.
+# reads, file:// included. RBCOP_SHA256: also require this SHA-256 for the archive. The binary is
+# only run (`-v`) after both checks. Used by action.yml.
 set -eu
 version=$1
 dir=$2
@@ -27,6 +28,10 @@ expected=$(cut -d' ' -f1 "$tmp/sum")
 actual=$($sum "$tmp/$name.tar.gz" | cut -d' ' -f1)
 if [ "$expected" != "$actual" ]; then
   echo "rbcop: checksum mismatch for $name.tar.gz (expected $expected, got $actual)" >&2
+  exit 1
+fi
+if [ -n "${RBCOP_SHA256:-}" ] && [ "$RBCOP_SHA256" != "$actual" ]; then
+  echo "rbcop: $name.tar.gz is not the pinned one (RBCOP_SHA256 $RBCOP_SHA256, got $actual)" >&2
   exit 1
 fi
 tar -C "$tmp" -xzf "$tmp/$name.tar.gz"

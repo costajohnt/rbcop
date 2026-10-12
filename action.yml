@@ -20,6 +20,11 @@ inputs:
   rubocop:
     description: The RuboCop command for the fallback (RBCOP_RUBOCOP)
     default: bundle exec rubocop
+  sha256:
+    description: >-
+      Expected SHA-256 of the release archive for this runner. The archive is always checked
+      against the release's .sha256 file before rbcop runs; this also pins it to a known value.
+    default: ''
 
 runs:
   using: composite
@@ -32,10 +37,14 @@ runs:
         if [ -z "$VERSION" ]; then
           VERSION=$(sed -n 's/^version = "\(.*\)"/\1/p' "$GITHUB_ACTION_PATH/Cargo.toml" | head -1)
         fi
+        if ! printf '%s' "$VERSION" | grep -Eqx '[0-9]+\.[0-9]+\.[0-9]+'; then
+          echo "rbcop: not a release version: $VERSION" >&2
+          exit 1
+        fi
         echo "version=$VERSION" >> "$GITHUB_OUTPUT"
         echo "dir=$RUNNER_TOOL_CACHE/rbcop/$VERSION/$RUNNER_OS-$RUNNER_ARCH" >> "$GITHUB_OUTPUT"
     - id: cache
-      uses: actions/cache@v4
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
       with:
         path: ${{ steps.version.outputs.dir }}
         key: rbcop-${{ steps.version.outputs.version }}-${{ runner.os }}-${{ runner.arch }}
@@ -44,6 +53,7 @@ runs:
       env:
         VERSION: ${{ steps.version.outputs.version }}
         DIR: ${{ steps.version.outputs.dir }}
+        RBCOP_SHA256: ${{ inputs.sha256 }}
       run: sh "$GITHUB_ACTION_PATH/scripts/dist/install.sh" "$VERSION" "$DIR"
     - shell: bash
       env:
