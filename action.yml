@@ -1,9 +1,13 @@
 name: rbcop
-description: Run rbcop, RuboCop 1.91 reimplemented in Rust, from a cached prebuilt binary
+description: Run rbcop, RuboCop 1.91 reimplemented in Rust, from a cached, checksum-verified release binary
 author: John Costa
 branding:
   icon: check-circle
   color: red
+
+# The archive's SHA-256 is pinned in this repository (packaging/checksums/<version>.sha256) and
+# checked on every run, cache hits included, before the binary is extracted; a missing entry or a
+# mismatch fails the step. Only the downloaded archive is cached, never the extracted binary.
 
 inputs:
   version:
@@ -20,11 +24,6 @@ inputs:
   rubocop:
     description: The RuboCop command for the fallback (RBCOP_RUBOCOP)
     default: bundle exec rubocop
-  sha256:
-    description: >-
-      Expected SHA-256 of the release archive for this runner. The archive is always checked
-      against the release's .sha256 file before rbcop runs; this also pins it to a known value.
-    default: ''
 
 runs:
   using: composite
@@ -42,23 +41,18 @@ runs:
           exit 1
         fi
         echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-        echo "dir=$RUNNER_TOOL_CACHE/rbcop/$VERSION/$RUNNER_OS-$RUNNER_ARCH" >> "$GITHUB_OUTPUT"
-    - id: cache
-      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        echo "archives=$RUNNER_TOOL_CACHE/rbcop/$VERSION/$RUNNER_OS-$RUNNER_ARCH" >> "$GITHUB_OUTPUT"
+    - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
       with:
-        path: ${{ steps.version.outputs.dir }}
-        key: rbcop-${{ steps.version.outputs.version }}-${{ runner.os }}-${{ runner.arch }}
-    - if: steps.cache.outputs.cache-hit != 'true'
-      shell: bash
-      env:
-        VERSION: ${{ steps.version.outputs.version }}
-        DIR: ${{ steps.version.outputs.dir }}
-        RBCOP_SHA256: ${{ inputs.sha256 }}
-      run: sh "$GITHUB_ACTION_PATH/scripts/dist/install.sh" "$VERSION" "$DIR"
+        path: ${{ steps.version.outputs.archives }}
+        key: rbcop-archive-${{ steps.version.outputs.version }}-${{ runner.os }}-${{ runner.arch }}
     - shell: bash
       env:
-        DIR: ${{ steps.version.outputs.dir }}
-      run: echo "$DIR" >> "$GITHUB_PATH"
+        VERSION: ${{ steps.version.outputs.version }}
+        RBCOP_ARCHIVE_CACHE: ${{ steps.version.outputs.archives }}
+      run: |
+        sh "$GITHUB_ACTION_PATH/scripts/dist/install.sh" "$VERSION" "$RUNNER_TEMP/rbcop-bin"
+        echo "$RUNNER_TEMP/rbcop-bin" >> "$GITHUB_PATH"
     - if: inputs.args != ''
       shell: bash
       env:
