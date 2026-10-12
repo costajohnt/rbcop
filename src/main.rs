@@ -1131,7 +1131,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         if cop == "Lint/RedundantCopDisableDirective" && !only.is_empty() {
             return false;
         }
-        (only.is_empty() || match_name(&only_set, cop)) && !match_name(&except_set, cop)
+        (only.is_empty() || match_name(&only_set, cop)) && (except.is_empty() || !match_name(&except_set, cop))
     };
     // Runner#mobilize_cop_badge?: without --only, --only-guide-cops or `AllCops:
     // StyleGuideCopsOnly` keeps only cops whose own config has a StyleGuide.
