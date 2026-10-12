@@ -11,6 +11,10 @@ impl Cop for VariableName {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
+        // Below 2.7 a `_1` read is parser's `send`, which `on_lvar` never sees (#362).
+        if helpers::node_types::is_legacy_numbered_read(cx, node) {
+            return;
+        }
         let Some((k, name, start, end)) = naming::variable(node, cx.ancestors) else { return };
         if k == VarKind::Gvasgn {
             if naming::forbidden_name(cx.cfg, &name) {
