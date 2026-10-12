@@ -1,0 +1,14 @@
+==> offenses exit=1 220 <==
+000.rb:1:1: C: [Correctable] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.map`.
+001.rb:1:1: C: [Correctable] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.collect`.
+
+==> autocorrect exit=0 216 <==
+000.rb:1:1: C: [Corrected] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.map`.
+001.rb:1:1: C: [Corrected] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.collect`.
+
+==> corrected/000.rb 25 <==
+Array.new(4) { it.to_s }
+
+==> corrected/001.rb 25 <==
+Array.new(4) { it.to_s }
+

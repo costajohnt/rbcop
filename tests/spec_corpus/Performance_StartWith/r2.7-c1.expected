@@ -1,0 +1,664 @@
+==> offenses exit=1 18876 <==
+000.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+001.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+002.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+003.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+004.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+005.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+006.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+007.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+008.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+009.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+010.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+011.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+012.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+013.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+014.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+015.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+016.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+017.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+020.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+021.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+024.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+025.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+028.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+029.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+032.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+033.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+036.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+037.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+072.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+073.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+074.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+075.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+076.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+077.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+078.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+079.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+080.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+081.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+082.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+083.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+084.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+085.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+086.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+087.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+088.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+089.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+090.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+091.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+092.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+093.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+094.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+095.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+096.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+097.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+098.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+099.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+100.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+101.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+102.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+103.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+104.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+105.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+108.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+109.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+112.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+113.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+116.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+117.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+120.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+121.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+124.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+125.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+160.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+161.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+162.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+163.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+164.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+165.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+166.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+167.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+168.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+169.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+170.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+171.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+172.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+173.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+174.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+175.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+176.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+177.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+178.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+179.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+180.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+181.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+182.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+183.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+184.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+185.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+186.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+187.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+188.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+189.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+190.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+191.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+192.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+193.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+196.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+197.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+200.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+201.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+204.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+205.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+208.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+209.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+212.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+213.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+248.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+249.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+250.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+251.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+252.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+253.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+254.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+255.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+256.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+257.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+258.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+259.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+260.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+261.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+262.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+263.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+
+==> autocorrect exit=0 18612 <==
+000.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+001.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+002.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+003.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+004.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+005.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+006.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+007.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+008.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+009.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+010.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+011.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+012.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+013.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+014.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+015.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+016.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+017.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+020.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+021.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+024.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+025.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+028.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+029.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+032.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+033.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+036.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+037.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+072.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+073.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+074.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+075.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+076.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+077.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+078.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+079.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+080.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+081.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+082.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+083.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+084.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+085.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+086.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+087.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+088.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+089.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+090.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+091.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+092.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+093.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+094.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+095.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+096.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+097.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+098.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+099.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+100.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+101.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+102.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+103.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+104.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+105.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+108.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+109.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+112.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+113.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+116.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+117.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+120.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+121.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+124.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+125.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+160.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+161.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+162.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+163.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+164.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+165.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+166.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+167.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+168.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+169.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+170.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+171.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+172.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+173.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+174.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+175.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+176.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+177.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+178.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+179.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+180.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+181.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+182.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+183.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+184.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+185.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+186.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+187.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+188.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+189.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+190.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+191.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+192.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+193.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+196.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+197.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+200.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+201.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+204.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+205.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+208.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+209.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+212.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+213.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+248.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+249.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+250.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+251.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+252.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+253.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+254.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+255.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+256.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+257.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+258.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+259.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+260.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+261.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+262.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+263.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+
+==> corrected/000.rb 23 <==
+str.start_with?('abc')
+
+==> corrected/001.rb 23 <==
+str.start_with?('abc')
+
+==> corrected/002.rb 23 <==
+str.start_with?('abc')
+
+==> corrected/003.rb 23 <==
+str.start_with?('abc')
+
+==> corrected/004.rb 22 <==
+str.start_with?("\a")
+
+==> corrected/005.rb 22 <==
+str.start_with?("\a")
+
+==> corrected/006.rb 22 <==
+str.start_with?("\e")
+
+==> corrected/007.rb 22 <==
+str.start_with?("\e")
+
+==> corrected/008.rb 22 <==
+str.start_with?("\f")
+
+==> corrected/009.rb 22 <==
+str.start_with?("\f")
+
+==> corrected/010.rb 22 <==
+str.start_with?("\r")
+
+==> corrected/011.rb 22 <==
+str.start_with?("\r")
+
+==> corrected/012.rb 22 <==
+str.start_with?("\t")
+
+==> corrected/013.rb 22 <==
+str.start_with?("\t")
+
+==> corrected/014.rb 22 <==
+str.start_with?("\v")
+
+==> corrected/015.rb 22 <==
+str.start_with?("\v")
+
+==> corrected/016.rb 21 <==
+str.start_with?('.')
+
+==> corrected/017.rb 21 <==
+str.start_with?('.')
+
+==> corrected/020.rb 21 <==
+str.start_with?('*')
+
+==> corrected/021.rb 21 <==
+str.start_with?('*')
+
+==> corrected/024.rb 21 <==
+str.start_with?('?')
+
+==> corrected/025.rb 21 <==
+str.start_with?('?')
+
+==> corrected/028.rb 21 <==
+str.start_with?('$')
+
+==> corrected/029.rb 21 <==
+str.start_with?('$')
+
+==> corrected/032.rb 21 <==
+str.start_with?('^')
+
+==> corrected/033.rb 21 <==
+str.start_with?('^')
+
+==> corrected/036.rb 21 <==
+str.start_with?('|')
+
+==> corrected/037.rb 21 <==
+str.start_with?('|')
+
+==> corrected/072.rb 21 <==
+str.start_with?('i')
+
+==> corrected/073.rb 21 <==
+str.start_with?('i')
+
+==> corrected/074.rb 21 <==
+str.start_with?('j')
+
+==> corrected/075.rb 21 <==
+str.start_with?('j')
+
+==> corrected/076.rb 21 <==
+str.start_with?('l')
+
+==> corrected/077.rb 21 <==
+str.start_with?('l')
+
+==> corrected/078.rb 21 <==
+str.start_with?('m')
+
+==> corrected/079.rb 21 <==
+str.start_with?('m')
+
+==> corrected/080.rb 21 <==
+str.start_with?('o')
+
+==> corrected/081.rb 21 <==
+str.start_with?('o')
+
+==> corrected/082.rb 21 <==
+str.start_with?('q')
+
+==> corrected/083.rb 21 <==
+str.start_with?('q')
+
+==> corrected/084.rb 21 <==
+str.start_with?('y')
+
+==> corrected/085.rb 21 <==
+str.start_with?('y')
+
+==> corrected/086.rb 22 <==
+str.start_with?('\\')
+
+==> corrected/087.rb 22 <==
+str.start_with?('\\')
+
+==> corrected/088.rb 23 <==
+str.start_with?('abc')
+
+==> corrected/089.rb 23 <==
+str.start_with?('abc')
+
+==> corrected/090.rb 23 <==
+str.start_with?('abc')
+
+==> corrected/091.rb 23 <==
+str.start_with?('abc')
+
+==> corrected/092.rb 22 <==
+str.start_with?("\a")
+
+==> corrected/093.rb 22 <==
+str.start_with?("\a")
+
+==> corrected/094.rb 22 <==
+str.start_with?("\e")
+
+==> corrected/095.rb 22 <==
+str.start_with?("\e")
+
+==> corrected/096.rb 22 <==
+str.start_with?("\f")
+
+==> corrected/097.rb 22 <==
+str.start_with?("\f")
+
+==> corrected/098.rb 22 <==
+str.start_with?("\r")
+
+==> corrected/099.rb 22 <==
+str.start_with?("\r")
+
+==> corrected/100.rb 22 <==
+str.start_with?("\t")
+
+==> corrected/101.rb 22 <==
+str.start_with?("\t")
+
+==> corrected/102.rb 22 <==
+str.start_with?("\v")
+
+==> corrected/103.rb 22 <==
+str.start_with?("\v")
+
+==> corrected/104.rb 21 <==
+str.start_with?('.')
+
+==> corrected/105.rb 21 <==
+str.start_with?('.')
+
+==> corrected/108.rb 21 <==
+str.start_with?('*')
+
+==> corrected/109.rb 21 <==
+str.start_with?('*')
+
+==> corrected/112.rb 21 <==
+str.start_with?('?')
+
+==> corrected/113.rb 21 <==
+str.start_with?('?')
+
+==> corrected/116.rb 21 <==
+str.start_with?('$')
+
+==> corrected/117.rb 21 <==
+str.start_with?('$')
+
+==> corrected/120.rb 21 <==
+str.start_with?('^')
+
+==> corrected/121.rb 21 <==
+str.start_with?('^')
+
+==> corrected/124.rb 21 <==
+str.start_with?('|')
+
+==> corrected/125.rb 21 <==
+str.start_with?('|')
+
+==> corrected/160.rb 21 <==
+str.start_with?('i')
+
+==> corrected/161.rb 21 <==
+str.start_with?('i')
+
+==> corrected/162.rb 21 <==
+str.start_with?('j')
+
+==> corrected/163.rb 21 <==
+str.start_with?('j')
+
+==> corrected/164.rb 21 <==
+str.start_with?('l')
+
+==> corrected/165.rb 21 <==
+str.start_with?('l')
+
+==> corrected/166.rb 21 <==
+str.start_with?('m')
+
+==> corrected/167.rb 21 <==
+str.start_with?('m')
+
+==> corrected/168.rb 21 <==
+str.start_with?('o')
+
+==> corrected/169.rb 21 <==
+str.start_with?('o')
+
+==> corrected/170.rb 21 <==
+str.start_with?('q')
+
+==> corrected/171.rb 21 <==
+str.start_with?('q')
+
+==> corrected/172.rb 21 <==
+str.start_with?('y')
+
+==> corrected/173.rb 21 <==
+str.start_with?('y')
+
+==> corrected/174.rb 22 <==
+str.start_with?('\\')
+
+==> corrected/175.rb 22 <==
+str.start_with?('\\')
+
+==> corrected/176.rb 23 <==
+str.start_with?('abc')
+
+==> corrected/177.rb 23 <==
+str.start_with?('abc')
+
+==> corrected/178.rb 23 <==
+str.start_with?('abc')
+
+==> corrected/179.rb 23 <==
+str.start_with?('abc')
+
+==> corrected/180.rb 22 <==
+str.start_with?("\a")
+
+==> corrected/181.rb 22 <==
+str.start_with?("\a")
+
+==> corrected/182.rb 22 <==
+str.start_with?("\e")
+
+==> corrected/183.rb 22 <==
+str.start_with?("\e")
+
+==> corrected/184.rb 22 <==
+str.start_with?("\f")
+
+==> corrected/185.rb 22 <==
+str.start_with?("\f")
+
+==> corrected/186.rb 22 <==
+str.start_with?("\r")
+
+==> corrected/187.rb 22 <==
+str.start_with?("\r")
+
+==> corrected/188.rb 22 <==
+str.start_with?("\t")
+
+==> corrected/189.rb 22 <==
+str.start_with?("\t")
+
+==> corrected/190.rb 22 <==
+str.start_with?("\v")
+
+==> corrected/191.rb 22 <==
+str.start_with?("\v")
+
+==> corrected/192.rb 21 <==
+str.start_with?('.')
+
+==> corrected/193.rb 21 <==
+str.start_with?('.')
+
+==> corrected/196.rb 21 <==
+str.start_with?('*')
+
+==> corrected/197.rb 21 <==
+str.start_with?('*')
+
+==> corrected/200.rb 21 <==
+str.start_with?('?')
+
+==> corrected/201.rb 21 <==
+str.start_with?('?')
+
+==> corrected/204.rb 21 <==
+str.start_with?('$')
+
+==> corrected/205.rb 21 <==
+str.start_with?('$')
+
+==> corrected/208.rb 21 <==
+str.start_with?('^')
+
+==> corrected/209.rb 21 <==
+str.start_with?('^')
+
+==> corrected/212.rb 21 <==
+str.start_with?('|')
+
+==> corrected/213.rb 21 <==
+str.start_with?('|')
+
+==> corrected/248.rb 21 <==
+str.start_with?('i')
+
+==> corrected/249.rb 21 <==
+str.start_with?('i')
+
+==> corrected/250.rb 21 <==
+str.start_with?('j')
+
+==> corrected/251.rb 21 <==
+str.start_with?('j')
+
+==> corrected/252.rb 21 <==
+str.start_with?('l')
+
+==> corrected/253.rb 21 <==
+str.start_with?('l')
+
+==> corrected/254.rb 21 <==
+str.start_with?('m')
+
+==> corrected/255.rb 21 <==
+str.start_with?('m')
+
+==> corrected/256.rb 21 <==
+str.start_with?('o')
+
+==> corrected/257.rb 21 <==
+str.start_with?('o')
+
+==> corrected/258.rb 21 <==
+str.start_with?('q')
+
+==> corrected/259.rb 21 <==
+str.start_with?('q')
+
+==> corrected/260.rb 21 <==
+str.start_with?('y')
+
+==> corrected/261.rb 21 <==
+str.start_with?('y')
+
+==> corrected/262.rb 22 <==
+str.start_with?('\\')
+
+==> corrected/263.rb 22 <==
+str.start_with?('\\')
+

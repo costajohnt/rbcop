@@ -1,0 +1,24 @@
+==> offenses exit=1 348 <==
+000.rb:1:7: C: [Correctable] Performance/RedundantSortBlock: Use `sort` without block.
+001.rb:1:8: C: [Correctable] Performance/RedundantSortBlock: Use `sort` without block.
+005.rb:1:7: C: [Correctable] Performance/RedundantSortBlock: Use `sort` without block.
+006.rb:1:8: C: [Correctable] Performance/RedundantSortBlock: Use `sort` without block.
+
+==> autocorrect exit=0 340 <==
+000.rb:1:7: C: [Corrected] Performance/RedundantSortBlock: Use `sort` without block.
+001.rb:1:8: C: [Corrected] Performance/RedundantSortBlock: Use `sort` without block.
+005.rb:1:7: C: [Corrected] Performance/RedundantSortBlock: Use `sort` without block.
+006.rb:1:8: C: [Corrected] Performance/RedundantSortBlock: Use `sort` without block.
+
+==> corrected/000.rb 11 <==
+array.sort
+
+==> corrected/001.rb 12 <==
+array&.sort
+
+==> corrected/005.rb 11 <==
+array.sort
+
+==> corrected/006.rb 12 <==
+array&.sort
+

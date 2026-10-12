@@ -1,0 +1,20 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 29 <==
+OpenStruct.new(key: "value")
+
+==> 001.rb 31 <==
+::OpenStruct.new(key: "value")
+
+==> 002.rb 50 <==
+MyStruct = Struct.new(:key)
+MyStruct.new('value')
+

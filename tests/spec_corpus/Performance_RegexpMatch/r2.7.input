@@ -1,0 +1,2747 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 60 <==
+def foo
+  if "foo".match(re)
+    do_something($&)
+  end
+end
+
+==> 001.rb 65 <==
+def self.foo
+  if "foo".match(re)
+    do_something($&)
+  end
+end
+
+==> 002.rb 43 <==
+def foo
+  return $& if "foo".match(re)
+end
+
+==> 003.rb 47 <==
+def foo
+  return $& unless "foo".match(re)
+end
+
+==> 004.rb 60 <==
+def foo
+  return if "foo".match(re)
+
+  do_something($&)
+end
+
+==> 005.rb 87 <==
+def foo
+  bar do
+    if "foo".match(re)
+      do_something
+    end
+  end
+  puts $&
+end
+
+==> 006.rb 60 <==
+def foo
+  if "foo".match(re)
+    do_something($')
+  end
+end
+
+==> 007.rb 65 <==
+def self.foo
+  if "foo".match(re)
+    do_something($')
+  end
+end
+
+==> 008.rb 43 <==
+def foo
+  return $' if "foo".match(re)
+end
+
+==> 009.rb 47 <==
+def foo
+  return $' unless "foo".match(re)
+end
+
+==> 010.rb 60 <==
+def foo
+  return if "foo".match(re)
+
+  do_something($')
+end
+
+==> 011.rb 87 <==
+def foo
+  bar do
+    if "foo".match(re)
+      do_something
+    end
+  end
+  puts $'
+end
+
+==> 012.rb 60 <==
+def foo
+  if "foo".match(re)
+    do_something($`)
+  end
+end
+
+==> 013.rb 65 <==
+def self.foo
+  if "foo".match(re)
+    do_something($`)
+  end
+end
+
+==> 014.rb 43 <==
+def foo
+  return $` if "foo".match(re)
+end
+
+==> 015.rb 47 <==
+def foo
+  return $` unless "foo".match(re)
+end
+
+==> 016.rb 60 <==
+def foo
+  return if "foo".match(re)
+
+  do_something($`)
+end
+
+==> 017.rb 87 <==
+def foo
+  bar do
+    if "foo".match(re)
+      do_something
+    end
+  end
+  puts $`
+end
+
+==> 018.rb 60 <==
+def foo
+  if "foo".match(re)
+    do_something($~)
+  end
+end
+
+==> 019.rb 65 <==
+def self.foo
+  if "foo".match(re)
+    do_something($~)
+  end
+end
+
+==> 020.rb 43 <==
+def foo
+  return $~ if "foo".match(re)
+end
+
+==> 021.rb 47 <==
+def foo
+  return $~ unless "foo".match(re)
+end
+
+==> 022.rb 60 <==
+def foo
+  return if "foo".match(re)
+
+  do_something($~)
+end
+
+==> 023.rb 87 <==
+def foo
+  bar do
+    if "foo".match(re)
+      do_something
+    end
+  end
+  puts $~
+end
+
+==> 024.rb 60 <==
+def foo
+  if "foo".match(re)
+    do_something($1)
+  end
+end
+
+==> 025.rb 65 <==
+def self.foo
+  if "foo".match(re)
+    do_something($1)
+  end
+end
+
+==> 026.rb 43 <==
+def foo
+  return $1 if "foo".match(re)
+end
+
+==> 027.rb 47 <==
+def foo
+  return $1 unless "foo".match(re)
+end
+
+==> 028.rb 60 <==
+def foo
+  return if "foo".match(re)
+
+  do_something($1)
+end
+
+==> 029.rb 87 <==
+def foo
+  bar do
+    if "foo".match(re)
+      do_something
+    end
+  end
+  puts $1
+end
+
+==> 030.rb 60 <==
+def foo
+  if "foo".match(re)
+    do_something($2)
+  end
+end
+
+==> 031.rb 65 <==
+def self.foo
+  if "foo".match(re)
+    do_something($2)
+  end
+end
+
+==> 032.rb 43 <==
+def foo
+  return $2 if "foo".match(re)
+end
+
+==> 033.rb 47 <==
+def foo
+  return $2 unless "foo".match(re)
+end
+
+==> 034.rb 60 <==
+def foo
+  return if "foo".match(re)
+
+  do_something($2)
+end
+
+==> 035.rb 87 <==
+def foo
+  bar do
+    if "foo".match(re)
+      do_something
+    end
+  end
+  puts $2
+end
+
+==> 036.rb 62 <==
+def foo
+  if "foo".match(re)
+    do_something($100)
+  end
+end
+
+==> 037.rb 67 <==
+def self.foo
+  if "foo".match(re)
+    do_something($100)
+  end
+end
+
+==> 038.rb 45 <==
+def foo
+  return $100 if "foo".match(re)
+end
+
+==> 039.rb 49 <==
+def foo
+  return $100 unless "foo".match(re)
+end
+
+==> 040.rb 62 <==
+def foo
+  return if "foo".match(re)
+
+  do_something($100)
+end
+
+==> 041.rb 89 <==
+def foo
+  bar do
+    if "foo".match(re)
+      do_something
+    end
+  end
+  puts $100
+end
+
+==> 042.rb 64 <==
+def foo
+  if "foo".match(re)
+    do_something($MATCH)
+  end
+end
+
+==> 043.rb 69 <==
+def self.foo
+  if "foo".match(re)
+    do_something($MATCH)
+  end
+end
+
+==> 044.rb 47 <==
+def foo
+  return $MATCH if "foo".match(re)
+end
+
+==> 045.rb 51 <==
+def foo
+  return $MATCH unless "foo".match(re)
+end
+
+==> 046.rb 64 <==
+def foo
+  return if "foo".match(re)
+
+  do_something($MATCH)
+end
+
+==> 047.rb 91 <==
+def foo
+  bar do
+    if "foo".match(re)
+      do_something
+    end
+  end
+  puts $MATCH
+end
+
+==> 048.rb 75 <==
+def foo
+  if "foo".match(re)
+    do_something(Regexp.last_match)
+  end
+end
+
+==> 049.rb 80 <==
+def self.foo
+  if "foo".match(re)
+    do_something(Regexp.last_match)
+  end
+end
+
+==> 050.rb 58 <==
+def foo
+  return Regexp.last_match if "foo".match(re)
+end
+
+==> 051.rb 62 <==
+def foo
+  return Regexp.last_match unless "foo".match(re)
+end
+
+==> 052.rb 75 <==
+def foo
+  return if "foo".match(re)
+
+  do_something(Regexp.last_match)
+end
+
+==> 053.rb 102 <==
+def foo
+  bar do
+    if "foo".match(re)
+      do_something
+    end
+  end
+  puts Regexp.last_match
+end
+
+==> 054.rb 77 <==
+def foo
+  if "foo".match(re)
+    do_something(::Regexp.last_match)
+  end
+end
+
+==> 055.rb 82 <==
+def self.foo
+  if "foo".match(re)
+    do_something(::Regexp.last_match)
+  end
+end
+
+==> 056.rb 60 <==
+def foo
+  return ::Regexp.last_match if "foo".match(re)
+end
+
+==> 057.rb 64 <==
+def foo
+  return ::Regexp.last_match unless "foo".match(re)
+end
+
+==> 058.rb 77 <==
+def foo
+  return if "foo".match(re)
+
+  do_something(::Regexp.last_match)
+end
+
+==> 059.rb 104 <==
+def foo
+  bar do
+    if "foo".match(re)
+      do_something
+    end
+  end
+  puts ::Regexp.last_match
+end
+
+==> 060.rb 78 <==
+def foo
+  if "foo".match(re)
+    do_something(Regexp.last_match(1))
+  end
+end
+
+==> 061.rb 83 <==
+def self.foo
+  if "foo".match(re)
+    do_something(Regexp.last_match(1))
+  end
+end
+
+==> 062.rb 61 <==
+def foo
+  return Regexp.last_match(1) if "foo".match(re)
+end
+
+==> 063.rb 65 <==
+def foo
+  return Regexp.last_match(1) unless "foo".match(re)
+end
+
+==> 064.rb 78 <==
+def foo
+  return if "foo".match(re)
+
+  do_something(Regexp.last_match(1))
+end
+
+==> 065.rb 105 <==
+def foo
+  bar do
+    if "foo".match(re)
+      do_something
+    end
+  end
+  puts Regexp.last_match(1)
+end
+
+==> 066.rb 63 <==
+def foo
+  if "foo".match(re, 1)
+    do_something($&)
+  end
+end
+
+==> 067.rb 68 <==
+def self.foo
+  if "foo".match(re, 1)
+    do_something($&)
+  end
+end
+
+==> 068.rb 46 <==
+def foo
+  return $& if "foo".match(re, 1)
+end
+
+==> 069.rb 50 <==
+def foo
+  return $& unless "foo".match(re, 1)
+end
+
+==> 070.rb 63 <==
+def foo
+  return if "foo".match(re, 1)
+
+  do_something($&)
+end
+
+==> 071.rb 90 <==
+def foo
+  bar do
+    if "foo".match(re, 1)
+      do_something
+    end
+  end
+  puts $&
+end
+
+==> 072.rb 63 <==
+def foo
+  if "foo".match(re, 1)
+    do_something($')
+  end
+end
+
+==> 073.rb 68 <==
+def self.foo
+  if "foo".match(re, 1)
+    do_something($')
+  end
+end
+
+==> 074.rb 46 <==
+def foo
+  return $' if "foo".match(re, 1)
+end
+
+==> 075.rb 50 <==
+def foo
+  return $' unless "foo".match(re, 1)
+end
+
+==> 076.rb 63 <==
+def foo
+  return if "foo".match(re, 1)
+
+  do_something($')
+end
+
+==> 077.rb 90 <==
+def foo
+  bar do
+    if "foo".match(re, 1)
+      do_something
+    end
+  end
+  puts $'
+end
+
+==> 078.rb 63 <==
+def foo
+  if "foo".match(re, 1)
+    do_something($`)
+  end
+end
+
+==> 079.rb 68 <==
+def self.foo
+  if "foo".match(re, 1)
+    do_something($`)
+  end
+end
+
+==> 080.rb 46 <==
+def foo
+  return $` if "foo".match(re, 1)
+end
+
+==> 081.rb 50 <==
+def foo
+  return $` unless "foo".match(re, 1)
+end
+
+==> 082.rb 63 <==
+def foo
+  return if "foo".match(re, 1)
+
+  do_something($`)
+end
+
+==> 083.rb 90 <==
+def foo
+  bar do
+    if "foo".match(re, 1)
+      do_something
+    end
+  end
+  puts $`
+end
+
+==> 084.rb 63 <==
+def foo
+  if "foo".match(re, 1)
+    do_something($~)
+  end
+end
+
+==> 085.rb 68 <==
+def self.foo
+  if "foo".match(re, 1)
+    do_something($~)
+  end
+end
+
+==> 086.rb 46 <==
+def foo
+  return $~ if "foo".match(re, 1)
+end
+
+==> 087.rb 50 <==
+def foo
+  return $~ unless "foo".match(re, 1)
+end
+
+==> 088.rb 63 <==
+def foo
+  return if "foo".match(re, 1)
+
+  do_something($~)
+end
+
+==> 089.rb 90 <==
+def foo
+  bar do
+    if "foo".match(re, 1)
+      do_something
+    end
+  end
+  puts $~
+end
+
+==> 090.rb 63 <==
+def foo
+  if "foo".match(re, 1)
+    do_something($1)
+  end
+end
+
+==> 091.rb 68 <==
+def self.foo
+  if "foo".match(re, 1)
+    do_something($1)
+  end
+end
+
+==> 092.rb 46 <==
+def foo
+  return $1 if "foo".match(re, 1)
+end
+
+==> 093.rb 50 <==
+def foo
+  return $1 unless "foo".match(re, 1)
+end
+
+==> 094.rb 63 <==
+def foo
+  return if "foo".match(re, 1)
+
+  do_something($1)
+end
+
+==> 095.rb 90 <==
+def foo
+  bar do
+    if "foo".match(re, 1)
+      do_something
+    end
+  end
+  puts $1
+end
+
+==> 096.rb 63 <==
+def foo
+  if "foo".match(re, 1)
+    do_something($2)
+  end
+end
+
+==> 097.rb 68 <==
+def self.foo
+  if "foo".match(re, 1)
+    do_something($2)
+  end
+end
+
+==> 098.rb 46 <==
+def foo
+  return $2 if "foo".match(re, 1)
+end
+
+==> 099.rb 50 <==
+def foo
+  return $2 unless "foo".match(re, 1)
+end
+
+==> 100.rb 63 <==
+def foo
+  return if "foo".match(re, 1)
+
+  do_something($2)
+end
+
+==> 1000.rb 54 <==
+def foo
+  return if re =~ foo
+
+  do_something($')
+end
+
+==> 1001.rb 81 <==
+def foo
+  bar do
+    if re =~ foo
+      do_something
+    end
+  end
+  puts $'
+end
+
+==> 1002.rb 54 <==
+def foo
+  if re =~ foo
+    do_something($`)
+  end
+end
+
+==> 1003.rb 59 <==
+def self.foo
+  if re =~ foo
+    do_something($`)
+  end
+end
+
+==> 1004.rb 37 <==
+def foo
+  return $` if re =~ foo
+end
+
+==> 1005.rb 41 <==
+def foo
+  return $` unless re =~ foo
+end
+
+==> 1006.rb 54 <==
+def foo
+  return if re =~ foo
+
+  do_something($`)
+end
+
+==> 1007.rb 81 <==
+def foo
+  bar do
+    if re =~ foo
+      do_something
+    end
+  end
+  puts $`
+end
+
+==> 1008.rb 54 <==
+def foo
+  if re =~ foo
+    do_something($~)
+  end
+end
+
+==> 1009.rb 59 <==
+def self.foo
+  if re =~ foo
+    do_something($~)
+  end
+end
+
+==> 101.rb 90 <==
+def foo
+  bar do
+    if "foo".match(re, 1)
+      do_something
+    end
+  end
+  puts $2
+end
+
+==> 1010.rb 37 <==
+def foo
+  return $~ if re =~ foo
+end
+
+==> 1011.rb 41 <==
+def foo
+  return $~ unless re =~ foo
+end
+
+==> 1012.rb 54 <==
+def foo
+  return if re =~ foo
+
+  do_something($~)
+end
+
+==> 1013.rb 81 <==
+def foo
+  bar do
+    if re =~ foo
+      do_something
+    end
+  end
+  puts $~
+end
+
+==> 1014.rb 54 <==
+def foo
+  if re =~ foo
+    do_something($1)
+  end
+end
+
+==> 1015.rb 59 <==
+def self.foo
+  if re =~ foo
+    do_something($1)
+  end
+end
+
+==> 1016.rb 37 <==
+def foo
+  return $1 if re =~ foo
+end
+
+==> 1017.rb 41 <==
+def foo
+  return $1 unless re =~ foo
+end
+
+==> 1018.rb 54 <==
+def foo
+  return if re =~ foo
+
+  do_something($1)
+end
+
+==> 1019.rb 81 <==
+def foo
+  bar do
+    if re =~ foo
+      do_something
+    end
+  end
+  puts $1
+end
+
+==> 102.rb 65 <==
+def foo
+  if "foo".match(re, 1)
+    do_something($100)
+  end
+end
+
+==> 1020.rb 54 <==
+def foo
+  if re =~ foo
+    do_something($2)
+  end
+end
+
+==> 1021.rb 59 <==
+def self.foo
+  if re =~ foo
+    do_something($2)
+  end
+end
+
+==> 1022.rb 37 <==
+def foo
+  return $2 if re =~ foo
+end
+
+==> 1023.rb 41 <==
+def foo
+  return $2 unless re =~ foo
+end
+
+==> 1024.rb 54 <==
+def foo
+  return if re =~ foo
+
+  do_something($2)
+end
+
+==> 1025.rb 81 <==
+def foo
+  bar do
+    if re =~ foo
+      do_something
+    end
+  end
+  puts $2
+end
+
+==> 1026.rb 56 <==
+def foo
+  if re =~ foo
+    do_something($100)
+  end
+end
+
+==> 1027.rb 61 <==
+def self.foo
+  if re =~ foo
+    do_something($100)
+  end
+end
+
+==> 1028.rb 39 <==
+def foo
+  return $100 if re =~ foo
+end
+
+==> 1029.rb 43 <==
+def foo
+  return $100 unless re =~ foo
+end
+
+==> 103.rb 70 <==
+def self.foo
+  if "foo".match(re, 1)
+    do_something($100)
+  end
+end
+
+==> 1030.rb 56 <==
+def foo
+  return if re =~ foo
+
+  do_something($100)
+end
+
+==> 1031.rb 83 <==
+def foo
+  bar do
+    if re =~ foo
+      do_something
+    end
+  end
+  puts $100
+end
+
+==> 1032.rb 58 <==
+def foo
+  if re =~ foo
+    do_something($MATCH)
+  end
+end
+
+==> 1033.rb 63 <==
+def self.foo
+  if re =~ foo
+    do_something($MATCH)
+  end
+end
+
+==> 1034.rb 41 <==
+def foo
+  return $MATCH if re =~ foo
+end
+
+==> 1035.rb 45 <==
+def foo
+  return $MATCH unless re =~ foo
+end
+
+==> 1036.rb 58 <==
+def foo
+  return if re =~ foo
+
+  do_something($MATCH)
+end
+
+==> 1037.rb 85 <==
+def foo
+  bar do
+    if re =~ foo
+      do_something
+    end
+  end
+  puts $MATCH
+end
+
+==> 1038.rb 69 <==
+def foo
+  if re =~ foo
+    do_something(Regexp.last_match)
+  end
+end
+
+==> 1039.rb 74 <==
+def self.foo
+  if re =~ foo
+    do_something(Regexp.last_match)
+  end
+end
+
+==> 104.rb 48 <==
+def foo
+  return $100 if "foo".match(re, 1)
+end
+
+==> 1040.rb 52 <==
+def foo
+  return Regexp.last_match if re =~ foo
+end
+
+==> 1041.rb 56 <==
+def foo
+  return Regexp.last_match unless re =~ foo
+end
+
+==> 1042.rb 69 <==
+def foo
+  return if re =~ foo
+
+  do_something(Regexp.last_match)
+end
+
+==> 1043.rb 96 <==
+def foo
+  bar do
+    if re =~ foo
+      do_something
+    end
+  end
+  puts Regexp.last_match
+end
+
+==> 1044.rb 71 <==
+def foo
+  if re =~ foo
+    do_something(::Regexp.last_match)
+  end
+end
+
+==> 1045.rb 76 <==
+def self.foo
+  if re =~ foo
+    do_something(::Regexp.last_match)
+  end
+end
+
+==> 1046.rb 54 <==
+def foo
+  return ::Regexp.last_match if re =~ foo
+end
+
+==> 1047.rb 58 <==
+def foo
+  return ::Regexp.last_match unless re =~ foo
+end
+
+==> 1048.rb 71 <==
+def foo
+  return if re =~ foo
+
+  do_something(::Regexp.last_match)
+end
+
+==> 1049.rb 98 <==
+def foo
+  bar do
+    if re =~ foo
+      do_something
+    end
+  end
+  puts ::Regexp.last_match
+end
+
+==> 105.rb 52 <==
+def foo
+  return $100 unless "foo".match(re, 1)
+end
+
+==> 1050.rb 72 <==
+def foo
+  if re =~ foo
+    do_something(Regexp.last_match(1))
+  end
+end
+
+==> 1051.rb 77 <==
+def self.foo
+  if re =~ foo
+    do_something(Regexp.last_match(1))
+  end
+end
+
+==> 1052.rb 55 <==
+def foo
+  return Regexp.last_match(1) if re =~ foo
+end
+
+==> 1053.rb 59 <==
+def foo
+  return Regexp.last_match(1) unless re =~ foo
+end
+
+==> 1054.rb 72 <==
+def foo
+  return if re =~ foo
+
+  do_something(Regexp.last_match(1))
+end
+
+==> 1055.rb 99 <==
+def foo
+  bar do
+    if re =~ foo
+      do_something
+    end
+  end
+  puts Regexp.last_match(1)
+end
+
+==> 1056.rb 54 <==
+def foo
+  if re =~ FOO
+    do_something($&)
+  end
+end
+
+==> 1057.rb 59 <==
+def self.foo
+  if re =~ FOO
+    do_something($&)
+  end
+end
+
+==> 1058.rb 37 <==
+def foo
+  return $& if re =~ FOO
+end
+
+==> 1059.rb 41 <==
+def foo
+  return $& unless re =~ FOO
+end
+
+==> 106.rb 65 <==
+def foo
+  return if "foo".match(re, 1)
+
+  do_something($100)
+end
+
+==> 1060.rb 54 <==
+def foo
+  return if re =~ FOO
+
+  do_something($&)
+end
+
+==> 1061.rb 81 <==
+def foo
+  bar do
+    if re =~ FOO
+      do_something
+    end
+  end
+  puts $&
+end
+
+==> 1062.rb 54 <==
+def foo
+  if re =~ FOO
+    do_something($')
+  end
+end
+
+==> 1063.rb 59 <==
+def self.foo
+  if re =~ FOO
+    do_something($')
+  end
+end
+
+==> 1064.rb 37 <==
+def foo
+  return $' if re =~ FOO
+end
+
+==> 1065.rb 41 <==
+def foo
+  return $' unless re =~ FOO
+end
+
+==> 1066.rb 54 <==
+def foo
+  return if re =~ FOO
+
+  do_something($')
+end
+
+==> 1067.rb 81 <==
+def foo
+  bar do
+    if re =~ FOO
+      do_something
+    end
+  end
+  puts $'
+end
+
+==> 1068.rb 54 <==
+def foo
+  if re =~ FOO
+    do_something($`)
+  end
+end
+
+==> 1069.rb 59 <==
+def self.foo
+  if re =~ FOO
+    do_something($`)
+  end
+end
+
+==> 107.rb 92 <==
+def foo
+  bar do
+    if "foo".match(re, 1)
+      do_something
+    end
+  end
+  puts $100
+end
+
+==> 1070.rb 37 <==
+def foo
+  return $` if re =~ FOO
+end
+
+==> 1071.rb 41 <==
+def foo
+  return $` unless re =~ FOO
+end
+
+==> 1072.rb 54 <==
+def foo
+  return if re =~ FOO
+
+  do_something($`)
+end
+
+==> 1073.rb 81 <==
+def foo
+  bar do
+    if re =~ FOO
+      do_something
+    end
+  end
+  puts $`
+end
+
+==> 1074.rb 54 <==
+def foo
+  if re =~ FOO
+    do_something($~)
+  end
+end
+
+==> 1075.rb 59 <==
+def self.foo
+  if re =~ FOO
+    do_something($~)
+  end
+end
+
+==> 1076.rb 37 <==
+def foo
+  return $~ if re =~ FOO
+end
+
+==> 1077.rb 41 <==
+def foo
+  return $~ unless re =~ FOO
+end
+
+==> 1078.rb 54 <==
+def foo
+  return if re =~ FOO
+
+  do_something($~)
+end
+
+==> 1079.rb 81 <==
+def foo
+  bar do
+    if re =~ FOO
+      do_something
+    end
+  end
+  puts $~
+end
+
+==> 108.rb 67 <==
+def foo
+  if "foo".match(re, 1)
+    do_something($MATCH)
+  end
+end
+
+==> 1080.rb 54 <==
+def foo
+  if re =~ FOO
+    do_something($1)
+  end
+end
+
+==> 1081.rb 59 <==
+def self.foo
+  if re =~ FOO
+    do_something($1)
+  end
+end
+
+==> 1082.rb 37 <==
+def foo
+  return $1 if re =~ FOO
+end
+
+==> 1083.rb 41 <==
+def foo
+  return $1 unless re =~ FOO
+end
+
+==> 1084.rb 54 <==
+def foo
+  return if re =~ FOO
+
+  do_something($1)
+end
+
+==> 1085.rb 81 <==
+def foo
+  bar do
+    if re =~ FOO
+      do_something
+    end
+  end
+  puts $1
+end
+
+==> 1086.rb 54 <==
+def foo
+  if re =~ FOO
+    do_something($2)
+  end
+end
+
+==> 1087.rb 59 <==
+def self.foo
+  if re =~ FOO
+    do_something($2)
+  end
+end
+
+==> 1088.rb 37 <==
+def foo
+  return $2 if re =~ FOO
+end
+
+==> 1089.rb 41 <==
+def foo
+  return $2 unless re =~ FOO
+end
+
+==> 109.rb 72 <==
+def self.foo
+  if "foo".match(re, 1)
+    do_something($MATCH)
+  end
+end
+
+==> 1090.rb 54 <==
+def foo
+  return if re =~ FOO
+
+  do_something($2)
+end
+
+==> 1091.rb 81 <==
+def foo
+  bar do
+    if re =~ FOO
+      do_something
+    end
+  end
+  puts $2
+end
+
+==> 1092.rb 56 <==
+def foo
+  if re =~ FOO
+    do_something($100)
+  end
+end
+
+==> 1093.rb 61 <==
+def self.foo
+  if re =~ FOO
+    do_something($100)
+  end
+end
+
+==> 1094.rb 39 <==
+def foo
+  return $100 if re =~ FOO
+end
+
+==> 1095.rb 43 <==
+def foo
+  return $100 unless re =~ FOO
+end
+
+==> 1096.rb 56 <==
+def foo
+  return if re =~ FOO
+
+  do_something($100)
+end
+
+==> 1097.rb 83 <==
+def foo
+  bar do
+    if re =~ FOO
+      do_something
+    end
+  end
+  puts $100
+end
+
+==> 1098.rb 58 <==
+def foo
+  if re =~ FOO
+    do_something($MATCH)
+  end
+end
+
+==> 1099.rb 63 <==
+def self.foo
+  if re =~ FOO
+    do_something($MATCH)
+  end
+end
+
+==> 110.rb 50 <==
+def foo
+  return $MATCH if "foo".match(re, 1)
+end
+
+==> 1100.rb 41 <==
+def foo
+  return $MATCH if re =~ FOO
+end
+
+==> 1101.rb 45 <==
+def foo
+  return $MATCH unless re =~ FOO
+end
+
+==> 1102.rb 58 <==
+def foo
+  return if re =~ FOO
+
+  do_something($MATCH)
+end
+
+==> 1103.rb 85 <==
+def foo
+  bar do
+    if re =~ FOO
+      do_something
+    end
+  end
+  puts $MATCH
+end
+
+==> 1104.rb 69 <==
+def foo
+  if re =~ FOO
+    do_something(Regexp.last_match)
+  end
+end
+
+==> 1105.rb 74 <==
+def self.foo
+  if re =~ FOO
+    do_something(Regexp.last_match)
+  end
+end
+
+==> 1106.rb 52 <==
+def foo
+  return Regexp.last_match if re =~ FOO
+end
+
+==> 1107.rb 56 <==
+def foo
+  return Regexp.last_match unless re =~ FOO
+end
+
+==> 1108.rb 69 <==
+def foo
+  return if re =~ FOO
+
+  do_something(Regexp.last_match)
+end
+
+==> 1109.rb 96 <==
+def foo
+  bar do
+    if re =~ FOO
+      do_something
+    end
+  end
+  puts Regexp.last_match
+end
+
+==> 111.rb 54 <==
+def foo
+  return $MATCH unless "foo".match(re, 1)
+end
+
+==> 1110.rb 71 <==
+def foo
+  if re =~ FOO
+    do_something(::Regexp.last_match)
+  end
+end
+
+==> 1111.rb 76 <==
+def self.foo
+  if re =~ FOO
+    do_something(::Regexp.last_match)
+  end
+end
+
+==> 1112.rb 54 <==
+def foo
+  return ::Regexp.last_match if re =~ FOO
+end
+
+==> 1113.rb 58 <==
+def foo
+  return ::Regexp.last_match unless re =~ FOO
+end
+
+==> 1114.rb 71 <==
+def foo
+  return if re =~ FOO
+
+  do_something(::Regexp.last_match)
+end
+
+==> 1115.rb 98 <==
+def foo
+  bar do
+    if re =~ FOO
+      do_something
+    end
+  end
+  puts ::Regexp.last_match
+end
+
+==> 1116.rb 72 <==
+def foo
+  if re =~ FOO
+    do_something(Regexp.last_match(1))
+  end
+end
+
+==> 1117.rb 77 <==
+def self.foo
+  if re =~ FOO
+    do_something(Regexp.last_match(1))
+  end
+end
+
+==> 1118.rb 55 <==
+def foo
+  return Regexp.last_match(1) if re =~ FOO
+end
+
+==> 1119.rb 59 <==
+def foo
+  return Regexp.last_match(1) unless re =~ FOO
+end
+
+==> 112.rb 67 <==
+def foo
+  return if "foo".match(re, 1)
+
+  do_something($MATCH)
+end
+
+==> 1120.rb 72 <==
+def foo
+  return if re =~ FOO
+
+  do_something(Regexp.last_match(1))
+end
+
+==> 1121.rb 99 <==
+def foo
+  bar do
+    if re =~ FOO
+      do_something
+    end
+  end
+  puts Regexp.last_match(1)
+end
+
+==> 1122.rb 54 <==
+def foo
+  if FOO =~ re
+    do_something($&)
+  end
+end
+
+==> 1123.rb 59 <==
+def self.foo
+  if FOO =~ re
+    do_something($&)
+  end
+end
+
+==> 1124.rb 37 <==
+def foo
+  return $& if FOO =~ re
+end
+
+==> 1125.rb 41 <==
+def foo
+  return $& unless FOO =~ re
+end
+
+==> 1126.rb 54 <==
+def foo
+  return if FOO =~ re
+
+  do_something($&)
+end
+
+==> 1127.rb 81 <==
+def foo
+  bar do
+    if FOO =~ re
+      do_something
+    end
+  end
+  puts $&
+end
+
+==> 1128.rb 54 <==
+def foo
+  if FOO =~ re
+    do_something($')
+  end
+end
+
+==> 1129.rb 59 <==
+def self.foo
+  if FOO =~ re
+    do_something($')
+  end
+end
+
+==> 113.rb 94 <==
+def foo
+  bar do
+    if "foo".match(re, 1)
+      do_something
+    end
+  end
+  puts $MATCH
+end
+
+==> 1130.rb 37 <==
+def foo
+  return $' if FOO =~ re
+end
+
+==> 1131.rb 41 <==
+def foo
+  return $' unless FOO =~ re
+end
+
+==> 1132.rb 54 <==
+def foo
+  return if FOO =~ re
+
+  do_something($')
+end
+
+==> 1133.rb 81 <==
+def foo
+  bar do
+    if FOO =~ re
+      do_something
+    end
+  end
+  puts $'
+end
+
+==> 1134.rb 54 <==
+def foo
+  if FOO =~ re
+    do_something($`)
+  end
+end
+
+==> 1135.rb 59 <==
+def self.foo
+  if FOO =~ re
+    do_something($`)
+  end
+end
+
+==> 1136.rb 37 <==
+def foo
+  return $` if FOO =~ re
+end
+
+==> 1137.rb 41 <==
+def foo
+  return $` unless FOO =~ re
+end
+
+==> 1138.rb 54 <==
+def foo
+  return if FOO =~ re
+
+  do_something($`)
+end
+
+==> 1139.rb 81 <==
+def foo
+  bar do
+    if FOO =~ re
+      do_something
+    end
+  end
+  puts $`
+end
+
+==> 114.rb 78 <==
+def foo
+  if "foo".match(re, 1)
+    do_something(Regexp.last_match)
+  end
+end
+
+==> 1140.rb 54 <==
+def foo
+  if FOO =~ re
+    do_something($~)
+  end
+end
+
+==> 1141.rb 59 <==
+def self.foo
+  if FOO =~ re
+    do_something($~)
+  end
+end
+
+==> 1142.rb 37 <==
+def foo
+  return $~ if FOO =~ re
+end
+
+==> 1143.rb 41 <==
+def foo
+  return $~ unless FOO =~ re
+end
+
+==> 1144.rb 54 <==
+def foo
+  return if FOO =~ re
+
+  do_something($~)
+end
+
+==> 1145.rb 81 <==
+def foo
+  bar do
+    if FOO =~ re
+      do_something
+    end
+  end
+  puts $~
+end
+
+==> 1146.rb 54 <==
+def foo
+  if FOO =~ re
+    do_something($1)
+  end
+end
+
+==> 1147.rb 59 <==
+def self.foo
+  if FOO =~ re
+    do_something($1)
+  end
+end
+
+==> 1148.rb 37 <==
+def foo
+  return $1 if FOO =~ re
+end
+
+==> 1149.rb 41 <==
+def foo
+  return $1 unless FOO =~ re
+end
+
+==> 115.rb 83 <==
+def self.foo
+  if "foo".match(re, 1)
+    do_something(Regexp.last_match)
+  end
+end
+
+==> 1150.rb 54 <==
+def foo
+  return if FOO =~ re
+
+  do_something($1)
+end
+
+==> 1151.rb 81 <==
+def foo
+  bar do
+    if FOO =~ re
+      do_something
+    end
+  end
+  puts $1
+end
+
+==> 1152.rb 54 <==
+def foo
+  if FOO =~ re
+    do_something($2)
+  end
+end
+
+==> 1153.rb 59 <==
+def self.foo
+  if FOO =~ re
+    do_something($2)
+  end
+end
+
+==> 1154.rb 37 <==
+def foo
+  return $2 if FOO =~ re
+end
+
+==> 1155.rb 41 <==
+def foo
+  return $2 unless FOO =~ re
+end
+
+==> 1156.rb 54 <==
+def foo
+  return if FOO =~ re
+
+  do_something($2)
+end
+
+==> 1157.rb 81 <==
+def foo
+  bar do
+    if FOO =~ re
+      do_something
+    end
+  end
+  puts $2
+end
+
+==> 1158.rb 56 <==
+def foo
+  if FOO =~ re
+    do_something($100)
+  end
+end
+
+==> 1159.rb 61 <==
+def self.foo
+  if FOO =~ re
+    do_something($100)
+  end
+end
+
+==> 116.rb 61 <==
+def foo
+  return Regexp.last_match if "foo".match(re, 1)
+end
+
+==> 1160.rb 39 <==
+def foo
+  return $100 if FOO =~ re
+end
+
+==> 1161.rb 43 <==
+def foo
+  return $100 unless FOO =~ re
+end
+
+==> 1162.rb 56 <==
+def foo
+  return if FOO =~ re
+
+  do_something($100)
+end
+
+==> 1163.rb 83 <==
+def foo
+  bar do
+    if FOO =~ re
+      do_something
+    end
+  end
+  puts $100
+end
+
+==> 1164.rb 58 <==
+def foo
+  if FOO =~ re
+    do_something($MATCH)
+  end
+end
+
+==> 1165.rb 63 <==
+def self.foo
+  if FOO =~ re
+    do_something($MATCH)
+  end
+end
+
+==> 1166.rb 41 <==
+def foo
+  return $MATCH if FOO =~ re
+end
+
+==> 1167.rb 45 <==
+def foo
+  return $MATCH unless FOO =~ re
+end
+
+==> 1168.rb 58 <==
+def foo
+  return if FOO =~ re
+
+  do_something($MATCH)
+end
+
+==> 1169.rb 85 <==
+def foo
+  bar do
+    if FOO =~ re
+      do_something
+    end
+  end
+  puts $MATCH
+end
+
+==> 117.rb 65 <==
+def foo
+  return Regexp.last_match unless "foo".match(re, 1)
+end
+
+==> 1170.rb 69 <==
+def foo
+  if FOO =~ re
+    do_something(Regexp.last_match)
+  end
+end
+
+==> 1171.rb 74 <==
+def self.foo
+  if FOO =~ re
+    do_something(Regexp.last_match)
+  end
+end
+
+==> 1172.rb 52 <==
+def foo
+  return Regexp.last_match if FOO =~ re
+end
+
+==> 1173.rb 56 <==
+def foo
+  return Regexp.last_match unless FOO =~ re
+end
+
+==> 1174.rb 69 <==
+def foo
+  return if FOO =~ re
+
+  do_something(Regexp.last_match)
+end
+
+==> 1175.rb 96 <==
+def foo
+  bar do
+    if FOO =~ re
+      do_something
+    end
+  end
+  puts Regexp.last_match
+end
+
+==> 1176.rb 71 <==
+def foo
+  if FOO =~ re
+    do_something(::Regexp.last_match)
+  end
+end
+
+==> 1177.rb 76 <==
+def self.foo
+  if FOO =~ re
+    do_something(::Regexp.last_match)
+  end
+end
+
+==> 1178.rb 54 <==
+def foo
+  return ::Regexp.last_match if FOO =~ re
+end
+
+==> 1179.rb 58 <==
+def foo
+  return ::Regexp.last_match unless FOO =~ re
+end
+
+==> 118.rb 78 <==
+def foo
+  return if "foo".match(re, 1)
+
+  do_something(Regexp.last_match)
+end
+
+==> 1180.rb 71 <==
+def foo
+  return if FOO =~ re
+
+  do_something(::Regexp.last_match)
+end
+
+==> 1181.rb 98 <==
+def foo
+  bar do
+    if FOO =~ re
+      do_something
+    end
+  end
+  puts ::Regexp.last_match
+end
+
+==> 1182.rb 72 <==
+def foo
+  if FOO =~ re
+    do_something(Regexp.last_match(1))
+  end
+end
+
+==> 1183.rb 77 <==
+def self.foo
+  if FOO =~ re
+    do_something(Regexp.last_match(1))
+  end
+end
+
+==> 1184.rb 55 <==
+def foo
+  return Regexp.last_match(1) if FOO =~ re
+end
+
+==> 1185.rb 59 <==
+def foo
+  return Regexp.last_match(1) unless FOO =~ re
+end
+
+==> 1186.rb 72 <==
+def foo
+  return if FOO =~ re
+
+  do_something(Regexp.last_match(1))
+end
+
+==> 1187.rb 99 <==
+def foo
+  bar do
+    if FOO =~ re
+      do_something
+    end
+  end
+  puts Regexp.last_match(1)
+end
+
+==> 1188.rb 56 <==
+def foo
+  if /re/ !~ foo
+    do_something($&)
+  end
+end
+
+==> 1189.rb 61 <==
+def self.foo
+  if /re/ !~ foo
+    do_something($&)
+  end
+end
+
+==> 119.rb 105 <==
+def foo
+  bar do
+    if "foo".match(re, 1)
+      do_something
+    end
+  end
+  puts Regexp.last_match
+end
+
+==> 1190.rb 39 <==
+def foo
+  return $& if /re/ !~ foo
+end
+
+==> 1191.rb 43 <==
+def foo
+  return $& unless /re/ !~ foo
+end
+
+==> 1192.rb 56 <==
+def foo
+  return if /re/ !~ foo
+
+  do_something($&)
+end
+
+==> 1193.rb 83 <==
+def foo
+  bar do
+    if /re/ !~ foo
+      do_something
+    end
+  end
+  puts $&
+end
+
+==> 1194.rb 56 <==
+def foo
+  if /re/ !~ foo
+    do_something($')
+  end
+end
+
+==> 1195.rb 61 <==
+def self.foo
+  if /re/ !~ foo
+    do_something($')
+  end
+end
+
+==> 1196.rb 39 <==
+def foo
+  return $' if /re/ !~ foo
+end
+
+==> 1197.rb 43 <==
+def foo
+  return $' unless /re/ !~ foo
+end
+
+==> 1198.rb 56 <==
+def foo
+  return if /re/ !~ foo
+
+  do_something($')
+end
+
+==> 1199.rb 83 <==
+def foo
+  bar do
+    if /re/ !~ foo
+      do_something
+    end
+  end
+  puts $'
+end
+
+==> 120.rb 80 <==
+def foo
+  if "foo".match(re, 1)
+    do_something(::Regexp.last_match)
+  end
+end
+
+==> 1200.rb 56 <==
+def foo
+  if /re/ !~ foo
+    do_something($`)
+  end
+end
+
+==> 1201.rb 61 <==
+def self.foo
+  if /re/ !~ foo
+    do_something($`)
+  end
+end
+
+==> 1202.rb 39 <==
+def foo
+  return $` if /re/ !~ foo
+end
+
+==> 1203.rb 43 <==
+def foo
+  return $` unless /re/ !~ foo
+end
+
+==> 1204.rb 56 <==
+def foo
+  return if /re/ !~ foo
+
+  do_something($`)
+end
+
+==> 1205.rb 83 <==
+def foo
+  bar do
+    if /re/ !~ foo
+      do_something
+    end
+  end
+  puts $`
+end
+
+==> 1206.rb 56 <==
+def foo
+  if /re/ !~ foo
+    do_something($~)
+  end
+end
+
+==> 1207.rb 61 <==
+def self.foo
+  if /re/ !~ foo
+    do_something($~)
+  end
+end
+
+==> 1208.rb 39 <==
+def foo
+  return $~ if /re/ !~ foo
+end
+
+==> 1209.rb 43 <==
+def foo
+  return $~ unless /re/ !~ foo
+end
+
+==> 121.rb 85 <==
+def self.foo
+  if "foo".match(re, 1)
+    do_something(::Regexp.last_match)
+  end
+end
+
+==> 1210.rb 56 <==
+def foo
+  return if /re/ !~ foo
+
+  do_something($~)
+end
+
+==> 1211.rb 83 <==
+def foo
+  bar do
+    if /re/ !~ foo
+      do_something
+    end
+  end
+  puts $~
+end
+
+==> 1212.rb 56 <==
+def foo
+  if /re/ !~ foo
+    do_something($1)
+  end
+end
+
+==> 1213.rb 61 <==
+def self.foo
+  if /re/ !~ foo
+    do_something($1)
+  end
+end
+
+==> 1214.rb 39 <==
+def foo
+  return $1 if /re/ !~ foo
+end
+
+==> 1215.rb 43 <==
+def foo
+  return $1 unless /re/ !~ foo
+end
+
+==> 1216.rb 56 <==
+def foo
+  return if /re/ !~ foo
+
+  do_something($1)
+end
+
+==> 1217.rb 83 <==
+def foo
+  bar do
+    if /re/ !~ foo
+      do_something
+    end
+  end
+  puts $1
+end
+
+==> 1218.rb 56 <==
+def foo
+  if /re/ !~ foo
+    do_something($2)
+  end
+end
+
+==> 1219.rb 61 <==
+def self.foo
+  if /re/ !~ foo
+    do_something($2)
+  end
+end
+
+==> 122.rb 63 <==
+def foo
+  return ::Regexp.last_match if "foo".match(re, 1)
+end
+
+==> 1220.rb 39 <==
+def foo
+  return $2 if /re/ !~ foo
+end
+
+==> 1221.rb 43 <==
+def foo
+  return $2 unless /re/ !~ foo
+end
+
+==> 1222.rb 56 <==
+def foo
+  return if /re/ !~ foo
+
+  do_something($2)
+end
+
+==> 1223.rb 83 <==
+def foo
+  bar do
+    if /re/ !~ foo
+      do_something
+    end
+  end
+  puts $2
+end
+
+==> 1224.rb 58 <==
+def foo
+  if /re/ !~ foo
+    do_something($100)
+  end
+end
+
+==> 1225.rb 63 <==
+def self.foo
+  if /re/ !~ foo
+    do_something($100)
+  end
+end
+
+==> 1226.rb 41 <==
+def foo
+  return $100 if /re/ !~ foo
+end
+
+==> 1227.rb 45 <==
+def foo
+  return $100 unless /re/ !~ foo
+end
+
+==> 1228.rb 58 <==
+def foo
+  return if /re/ !~ foo
+
+  do_something($100)
+end
+
+==> 1229.rb 85 <==
+def foo
+  bar do
+    if /re/ !~ foo
+      do_something
+    end
+  end
+  puts $100
+end
+
+==> 123.rb 67 <==
+def foo
+  return ::Regexp.last_match unless "foo".match(re, 1)
+end
+
+==> 1230.rb 60 <==
+def foo
+  if /re/ !~ foo
+    do_something($MATCH)
+  end
+end
+
+==> 1231.rb 65 <==
+def self.foo
+  if /re/ !~ foo
+    do_something($MATCH)
+  end
+end
+
+==> 1232.rb 43 <==
+def foo
+  return $MATCH if /re/ !~ foo
+end
+
+==> 1233.rb 47 <==
+def foo
+  return $MATCH unless /re/ !~ foo
+end
+
+==> 1234.rb 60 <==
+def foo
+  return if /re/ !~ foo
+
+  do_something($MATCH)
+end
+
+==> 1235.rb 87 <==
+def foo
+  bar do
+    if /re/ !~ foo
+      do_something
+    end
+  end
+  puts $MATCH
+end
+
+==> 1236.rb 71 <==
+def foo
+  if /re/ !~ foo
+    do_something(Regexp.last_match)
+  end
+end
+
+==> 1237.rb 76 <==
+def self.foo
+  if /re/ !~ foo
+    do_something(Regexp.last_match)
+  end
+end
+
+==> 1238.rb 54 <==
+def foo
+  return Regexp.last_match if /re/ !~ foo
+end
+
+==> 1239.rb 58 <==
+def foo
+  return Regexp.last_match unless /re/ !~ foo
+end
+
+==> 124.rb 80 <==
+def foo
+  return if "foo".match(re, 1)
+
+  do_something(::Regexp.last_match)
+end
+
+==> 1240.rb 71 <==
+def foo
+  return if /re/ !~ foo
+
+  do_something(Regexp.last_match)
+end
+
+==> 1241.rb 98 <==
+def foo
+  bar do
+    if /re/ !~ foo
+      do_something
+    end
+  end
+  puts Regexp.last_match
+end
+
+==> 1242.rb 73 <==
+def foo
+  if /re/ !~ foo
+    do_something(::Regexp.last_match)
+  end
+end
+
+==> 1243.rb 78 <==
+def self.foo
+  if /re/ !~ foo
+    do_something(::Regexp.last_match)
+  end
+end
+
+==> 1244.rb 56 <==
+def foo
+  return ::Regexp.last_match if /re/ !~ foo
+end
+
+==> 1245.rb 60 <==
+def foo
+  return ::Regexp.last_match unless /re/ !~ foo
+end
+
+==> 1246.rb 73 <==
+def foo
+  return if /re/ !~ foo
+
+  do_something(::Regexp.last_match)
+end
+
+==> 1247.rb 100 <==
+def foo
+  bar do
+    if /re/ !~ foo
+      do_something
+    end
+  end
+  puts ::Regexp.last_match
+end
+
+==> 1248.rb 74 <==
+def foo
+  if /re/ !~ foo
+    do_something(Regexp.last_match(1))
+  end
+end
+
+==> 1249.rb 79 <==
+def self.foo
+  if /re/ !~ foo
+    do_something(Regexp.last_match(1))
+  end
+end
+
+==> 125.rb 107 <==
+def foo
+  bar do
+    if "foo".match(re, 1)
+      do_something
+    end
+  end
+  puts ::Regexp.last_match
+end
+
+==> 1250.rb 57 <==
+def foo
+  return Regexp.last_match(1) if /re/ !~ foo
+end
+
+==> 1251.rb 61 <==
+def foo
+  return Regexp.last_match(1) unless /re/ !~ foo
+end
+
+==> 1252.rb 74 <==
+def foo
+  return if /re/ !~ foo
+
+  do_something(Regexp.last_match(1))
+end
+
+==> 1253.rb 101 <==
+def foo
+  bar do
+    if /re/ !~ foo
+      do_something
+    end
+  end
+  puts Regexp.last_match(1)
+end
+
+==> 1254.rb 56 <==
+def foo
+  if foo !~ /re/
+    do_something($&)
+  end
+end
+
+==> 1255.rb 61 <==
+def self.foo
+  if foo !~ /re/
+    do_something($&)
+  end
+end
+
+==> 1256.rb 39 <==
+def foo
+  return $& if foo !~ /re/
+end
+
+==> 1257.rb 43 <==
+def foo
+  return $& unless foo !~ /re/
+end
+
+==> 1258.rb 56 <==
+def foo
+  return if foo !~ /re/
+
+  do_something($&)
+end
+
+==> 1259.rb 83 <==
+def foo
+  bar do
+    if foo !~ /re/
+      do_something
+    end
+  end
+  puts $&
+end
+
+==> 126.rb 81 <==
+def foo
+  if "foo".match(re, 1)
+    do_something(Regexp.last_match(1))
+  end
+end
+
+==> 1260.rb 56 <==
+def foo
+  if foo !~ /re/
+    do_something($')
+  end
+end
+
+==> 1261.rb 61 <==
+def self.foo
+  if foo !~ /re/
+    do_something($')
+  end
+end
+
+==> 1262.rb 39 <==
+def foo
+  return $' if foo !~ /re/
+end
+
+==> 1263.rb 43 <==
+def foo
+  return $' unless foo !~ /re/
+end
+
+==> 1264.rb 56 <==
+def foo
+  return if foo !~ /re/
+
+  do_something($')
+end
+
+==> 1265.rb 83 <==
+def foo
+  bar do
+    if foo !~ /re/
+      do_something
+    end
+  end
+  puts $'
+end
+
+==> 1266.rb 56 <==
+def foo
+  if foo !~ /re/
+    do_something($`)
+  end
+end
+
+==> 1267.rb 61 <==
+def self.foo
+  if foo !~ /re/
+    do_something($`)
+  end
+end
+
+==> 1268.rb 39 <==
+def foo
+  return $` if foo !~ /re/
+end
+
+==> 1269.rb 43 <==
+def foo
+  return $` unless foo !~ /re/
+end
+
+==> 127.rb 86 <==
+def self.foo
+  if "foo".match(re, 1)
+    do_something(Regexp.last_match(1))
+  end
+end
+
+==> 1270.rb 56 <==
+def foo
+  return if foo !~ /re/
+
+  do_something($`)
+end
+
+==> 1271.rb 83 <==
+def foo
+  bar do
+    if foo !~ /re/
+      do_something
+    end
+  end
+  puts $`
+end
+

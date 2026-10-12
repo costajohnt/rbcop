@@ -1,0 +1,66 @@
+==> offenses exit=1 1680 <==
+000.rb:1:7: C: Performance/Sum: Use `sum` instead of `inject(:+)`, unless calling `inject(:+)` on an empty array.
+001.rb:1:7: C: Performance/Sum: Use `sum` instead of `inject(&:+)`, unless calling `inject(&:+)` on an empty array.
+002.rb:1:7: C: Performance/Sum: Use `sum` instead of `inject(:+)`, unless calling `inject(:+)` on an empty array.
+003.rb:1:7: C: Performance/Sum: Use `sum` instead of `reduce(:+)`, unless calling `reduce(:+)` on an empty array.
+004.rb:1:7: C: Performance/Sum: Use `sum` instead of `reduce(&:+)`, unless calling `reduce(&:+)` on an empty array.
+005.rb:1:7: C: Performance/Sum: Use `sum` instead of `reduce(:+)`, unless calling `reduce(:+)` on an empty array.
+006.rb:1:7: C: [Correctable] Performance/Sum: Use `sum { ... }` instead of `map { ... }.sum`.
+007.rb:1:7: C: [Correctable] Performance/Sum: Use `sum { ... }` instead of `map { ... }.sum`.
+008.rb:1:1: C: [Correctable] Performance/Sum: Use `sum { ... }` instead of `map { ... }.sum`.
+009.rb:1:7: C: [Correctable] Performance/Sum: Use `sum(10) { ... }` instead of `map { ... }.sum(10)`.
+010.rb:1:7: C: [Correctable] Performance/Sum: Use `sum(10) { ... }` instead of `map { ... }.sum(10)`.
+013.rb:1:7: C: [Correctable] Performance/Sum: Use `sum { ... }` instead of `collect { ... }.sum`.
+014.rb:1:7: C: [Correctable] Performance/Sum: Use `sum { ... }` instead of `collect { ... }.sum`.
+015.rb:1:1: C: [Correctable] Performance/Sum: Use `sum { ... }` instead of `collect { ... }.sum`.
+016.rb:1:7: C: [Correctable] Performance/Sum: Use `sum(10) { ... }` instead of `collect { ... }.sum(10)`.
+017.rb:1:7: C: [Correctable] Performance/Sum: Use `sum(10) { ... }` instead of `collect { ... }.sum(10)`.
+
+==> autocorrect exit=1 1660 <==
+000.rb:1:7: C: Performance/Sum: Use `sum` instead of `inject(:+)`, unless calling `inject(:+)` on an empty array.
+001.rb:1:7: C: Performance/Sum: Use `sum` instead of `inject(&:+)`, unless calling `inject(&:+)` on an empty array.
+002.rb:1:7: C: Performance/Sum: Use `sum` instead of `inject(:+)`, unless calling `inject(:+)` on an empty array.
+003.rb:1:7: C: Performance/Sum: Use `sum` instead of `reduce(:+)`, unless calling `reduce(:+)` on an empty array.
+004.rb:1:7: C: Performance/Sum: Use `sum` instead of `reduce(&:+)`, unless calling `reduce(&:+)` on an empty array.
+005.rb:1:7: C: Performance/Sum: Use `sum` instead of `reduce(:+)`, unless calling `reduce(:+)` on an empty array.
+006.rb:1:7: C: [Corrected] Performance/Sum: Use `sum { ... }` instead of `map { ... }.sum`.
+007.rb:1:7: C: [Corrected] Performance/Sum: Use `sum { ... }` instead of `map { ... }.sum`.
+008.rb:1:1: C: [Corrected] Performance/Sum: Use `sum { ... }` instead of `map { ... }.sum`.
+009.rb:1:7: C: [Corrected] Performance/Sum: Use `sum(10) { ... }` instead of `map { ... }.sum(10)`.
+010.rb:1:7: C: [Corrected] Performance/Sum: Use `sum(10) { ... }` instead of `map { ... }.sum(10)`.
+013.rb:1:7: C: [Corrected] Performance/Sum: Use `sum { ... }` instead of `collect { ... }.sum`.
+014.rb:1:7: C: [Corrected] Performance/Sum: Use `sum { ... }` instead of `collect { ... }.sum`.
+015.rb:1:1: C: [Corrected] Performance/Sum: Use `sum { ... }` instead of `collect { ... }.sum`.
+016.rb:1:7: C: [Corrected] Performance/Sum: Use `sum(10) { ... }` instead of `collect { ... }.sum(10)`.
+017.rb:1:7: C: [Corrected] Performance/Sum: Use `sum(10) { ... }` instead of `collect { ... }.sum(10)`.
+
+==> corrected/006.rb 31 <==
+array.sum { |elem| elem ** 2 }
+
+==> corrected/007.rb 19 <==
+array.sum(&:count)
+
+==> corrected/008.rb 13 <==
+sum(&:count)
+
+==> corrected/009.rb 23 <==
+array.sum(10, &:count)
+
+==> corrected/010.rb 35 <==
+array.sum(10) { |elem| elem ** 2 }
+
+==> corrected/013.rb 31 <==
+array.sum { |elem| elem ** 2 }
+
+==> corrected/014.rb 19 <==
+array.sum(&:count)
+
+==> corrected/015.rb 13 <==
+sum(&:count)
+
+==> corrected/016.rb 23 <==
+array.sum(10, &:count)
+
+==> corrected/017.rb 35 <==
+array.sum(10) { |elem| elem ** 2 }
+

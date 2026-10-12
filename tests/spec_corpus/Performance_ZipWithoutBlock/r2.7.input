@@ -1,0 +1,125 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 28 <==
+[1, 2, 3].map { |id| [id] }
+
+==> 001.rb 26 <==
+[1, 2, 3].map { |e| [e] }
+
+==> 002.rb 23 <==
+(1..3).map { |x| [x] }
+
+==> 003.rb 28 <==
+(a..b).map do
+  |m| [m]
+end
+
+==> 004.rb 29 <==
+[1, 2, 3]&.map { |id| [id] }
+
+==> 005.rb 27 <==
+[1, 2, 3]&.map { |e| [e] }
+
+==> 006.rb 24 <==
+(1..3)&.map { |x| [x] }
+
+==> 007.rb 29 <==
+(a..b)&.map do
+  |m| [m]
+end
+
+==> 008.rb 42 <==
+[nil, tuple].flatten.map { |e| [e] }.call
+
+==> 009.rb 26 <==
+[1, 2, 3].map { |id| id }
+
+==> 010.rb 32 <==
+[1, 2, 3].map { |id| [id, id] }
+
+==> 011.rb 32 <==
+[1, 2, 3].collect { |id| [id] }
+
+==> 012.rb 27 <==
+[1, 2, 3].collect { [_1] }
+
+==> 013.rb 31 <==
+[1, 2, 3].select { |id| [id] }
+
+==> 014.rb 33 <==
+[1, 2, 3].filter_map {|id| [id]}
+
+==> 015.rb 31 <==
+[1, 2, 3].flat_map {|id| [id]}
+
+==> 016.rb 30 <==
+[1, 2, 3].map { |id| [[id]] }
+
+==> 017.rb 30 <==
+[1, 2, 3].map { |id| id + 1 }
+
+==> 018.rb 35 <==
+[1, 2, 3].map { |id| [id] + [id] }
+
+==> 019.rb 32 <==
+[1, 2, 3].map { |id| [id][id] }
+
+==> 020.rb 14 <==
+[1, 2, 3].map
+
+==> 021.rb 17 <==
+[1, 2, 3].map {}
+
+==> 022.rb 31 <==
+[1, [2], 3].map { |id| [*id] }
+
+==> 023.rb 38 <==
+[1, 2, 3].map { |id| Array.wrap(id) }
+
+==> 024.rb 59 <==
+[1,2,3].each_with_object([]) {|id, object| object << [id]}
+
+==> 025.rb 23 <==
+[1, 2, 3].map { [_1] }
+
+==> 026.rb 32 <==
+[1, 2].sum.map { [_1] }.flatten
+
+==> 027.rb 20 <==
+(1..3).map { [_1] }
+
+==> 028.rb 23 <==
+(a..b).map do [_1] end
+
+==> 029.rb 30 <==
+[1, 2, 3].filter_map { [_1] }
+
+==> 030.rb 27 <==
+[1, 2, 3].map { [_1 + 1] }
+
+==> 031.rb 25 <==
+[1, 2, 3].map { [[_1]] }
+
+==> 032.rb 26 <==
+[1, 2, 3].map { |e| [1] }
+
+==> 033.rb 23 <==
+[1, 2, 3].map { [id] }
+
+==> 034.rb 21 <==
+[1, 2, 3].map { [] }
+
+==> 035.rb 18 <==
+map { |id| [id] }
+
+==> 036.rb 22 <==
+foo.map { |id| [id] }
+

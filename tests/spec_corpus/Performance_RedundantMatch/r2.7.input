@@ -1,0 +1,120 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 51 <==
+def method(str)
+ something(str.match(/regex/))
+end
+
+==> 001.rb 53 <==
+def method(str)
+ @var = str.match(/regex/)
+ true
+end
+
+==> 002.rb 40 <==
+def method(str)
+ str.match(/regex/)
+end
+
+==> 003.rb 45 <==
+/regex/.match(str) do |m|
+  something(m)
+end
+
+==> 004.rb 12 <==
+match("bar")
+==> 005.rb 32 <==
+something if str.match(/regex/)
+
+==> 006.rb 32 <==
+something if /regex/.match(str)
+
+==> 007.rb 38 <==
+something if /regex/.match(a ? b : c)
+
+==> 008.rb 35 <==
+something if /regex/.match(a && b)
+
+==> 009.rb 35 <==
+something if /regex/.match(a || b)
+
+==> 010.rb 33 <==
+something if /regex/.match(a..b)
+
+==> 011.rb 37 <==
+something if /regex/.match(method a)
+
+==> 012.rb 36 <==
+something if /regex/.match(super a)
+
+==> 013.rb 35 <==
+something if /regex/.match(a == b)
+
+==> 014.rb 51 <==
+something if /regex/.match(if a then b else c end)
+
+==> 015.rb 38 <==
+something if /regex/.match(method(a))
+
+==> 016.rb 35 <==
+something if /regex/.match(method)
+
+==> 017.rb 34 <==
+something if /regex/.match(super)
+
+==> 018.rb 36 <==
+something if /regex/.match(a.==(b))
+
+==> 019.rb 34 <==
+something if /regex/.match(a | b)
+
+==> 020.rb 34 <==
+something if /regex/.match(a ^ b)
+
+==> 021.rb 34 <==
+something if /regex/.match(a & b)
+
+==> 022.rb 34 <==
+something if /regex/.match(a + b)
+
+==> 023.rb 34 <==
+something if /regex/.match(a - b)
+
+==> 024.rb 34 <==
+something if /regex/.match(a * b)
+
+==> 025.rb 34 <==
+something if /regex/.match(a / b)
+
+==> 026.rb 34 <==
+something if /regex/.match(a % b)
+
+==> 027.rb 35 <==
+something if /regex/.match(a ** b)
+
+==> 028.rb 34 <==
+something if /regex/.match(a > b)
+
+==> 029.rb 35 <==
+something if /regex/.match(a >= b)
+
+==> 030.rb 34 <==
+something if /regex/.match(a < b)
+
+==> 031.rb 35 <==
+something if /regex/.match(a <= b)
+
+==> 032.rb 35 <==
+something if /regex/.match(a << b)
+
+==> 033.rb 35 <==
+something if /regex/.match(a >> b)
+

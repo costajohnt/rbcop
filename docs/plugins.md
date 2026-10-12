@@ -6,7 +6,7 @@ running the pinned plugin version below.
 
 | Gem | Version | Departments | Cops ported | Issue |
 |---|---|---|---|---|
-| rubocop-performance | 1.27.0 | Performance | see `--show-cops Performance/*` | #283 |
+| rubocop-performance | 1.27.0 | Performance | all 52 | #283 |
 
 Each version is the newest release that supports RuboCop 1.91.0 (rubocop-performance 1.27.0
 requires `rubocop >= 1.89.0, < 2.0`; released 2026-08-16). The gem's `config/default.yml` is vendored

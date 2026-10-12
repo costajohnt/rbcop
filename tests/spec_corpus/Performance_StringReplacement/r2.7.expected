@@ -1,0 +1,329 @@
+==> offenses exit=1 5844 <==
+033.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+034.rb:1:8: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+035.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+036.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+037.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+038.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+039.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+040.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+041.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+042.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+043.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+044.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+045.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+046.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+047.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+048.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+049.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+050.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+051.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+052.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+053.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+054.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+055.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+056.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+057.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+058.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+059.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+060.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+061.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+062.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+063.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+064.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+065.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+066.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+067.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+068.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+069.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+070.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+071.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+072.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+073.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+074.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+075.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+076.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+077.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+078.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+079.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+080.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+081.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+082.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+083.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+084.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+085.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+086.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+087.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+088.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete` instead of `gsub`.
+090.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+091.rb:1:8: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+092.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+093.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+094.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+110.rb:1:9: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+111.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+112.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `tr!` instead of `gsub!`.
+113.rb:1:7: C: [Correctable] Performance/StringReplacement: Use `delete!` instead of `gsub!`.
+
+==> autocorrect exit=0 5714 <==
+033.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+034.rb:1:8: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+035.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+036.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+037.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+038.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+039.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+040.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+041.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+042.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+043.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+044.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+045.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+046.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+047.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+048.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+049.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+050.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+051.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+052.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+053.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+054.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+055.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+056.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+057.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+058.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+059.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+060.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+061.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+062.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+063.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+064.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+065.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+066.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+067.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+068.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+069.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+070.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+071.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+072.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+073.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+074.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+075.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+076.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+077.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+078.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+079.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+080.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+081.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+082.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+083.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+084.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+085.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+086.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+087.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+088.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete` instead of `gsub`.
+090.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+091.rb:1:8: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+092.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+093.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+094.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+110.rb:1:9: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+111.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr` instead of `gsub`.
+112.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `tr!` instead of `gsub!`.
+113.rb:1:7: C: [Corrected] Performance/StringReplacement: Use `delete!` instead of `gsub!`.
+
+==> corrected/033.rb 18 <==
+'abc'.delete(' ')
+
+==> corrected/034.rb 19 <==
+'abc'&.delete(' ')
+
+==> corrected/035.rb 19 <==
+'abc'.tr('a', 'a')
+
+==> corrected/036.rb 18 <==
+'abc'.delete('a')
+
+==> corrected/037.rb 19 <==
+'abc'.tr('b', 'a')
+
+==> corrected/038.rb 18 <==
+'abc'.delete('b')
+
+==> corrected/039.rb 19 <==
+'abc'.tr('c', 'a')
+
+==> corrected/040.rb 18 <==
+'abc'.delete('c')
+
+==> corrected/041.rb 19 <==
+'abc'.tr("'", 'a')
+
+==> corrected/042.rb 18 <==
+'abc'.delete("'")
+
+==> corrected/043.rb 19 <==
+'abc'.tr('"', 'a')
+
+==> corrected/044.rb 18 <==
+'abc'.delete('"')
+
+==> corrected/045.rb 19 <==
+'abc'.tr('%', 'a')
+
+==> corrected/046.rb 18 <==
+'abc'.delete('%')
+
+==> corrected/047.rb 19 <==
+'abc'.tr('!', 'a')
+
+==> corrected/048.rb 18 <==
+'abc'.delete('!')
+
+==> corrected/049.rb 19 <==
+'abc'.tr('=', 'a')
+
+==> corrected/050.rb 18 <==
+'abc'.delete('=')
+
+==> corrected/051.rb 19 <==
+'abc'.tr('<', 'a')
+
+==> corrected/052.rb 18 <==
+'abc'.delete('<')
+
+==> corrected/053.rb 19 <==
+'abc'.tr('>', 'a')
+
+==> corrected/054.rb 18 <==
+'abc'.delete('>')
+
+==> corrected/055.rb 19 <==
+'abc'.tr('#', 'a')
+
+==> corrected/056.rb 18 <==
+'abc'.delete('#')
+
+==> corrected/057.rb 19 <==
+'abc'.tr('&', 'a')
+
+==> corrected/058.rb 18 <==
+'abc'.delete('&')
+
+==> corrected/059.rb 19 <==
+'abc'.tr(';', 'a')
+
+==> corrected/060.rb 18 <==
+'abc'.delete(';')
+
+==> corrected/061.rb 19 <==
+'abc'.tr(':', 'a')
+
+==> corrected/062.rb 18 <==
+'abc'.delete(':')
+
+==> corrected/063.rb 19 <==
+'abc'.tr('`', 'a')
+
+==> corrected/064.rb 18 <==
+'abc'.delete('`')
+
+==> corrected/065.rb 19 <==
+'abc'.tr('~', 'a')
+
+==> corrected/066.rb 18 <==
+'abc'.delete('~')
+
+==> corrected/067.rb 19 <==
+'abc'.tr('1', 'a')
+
+==> corrected/068.rb 18 <==
+'abc'.delete('1')
+
+==> corrected/069.rb 19 <==
+'abc'.tr('2', 'a')
+
+==> corrected/070.rb 18 <==
+'abc'.delete('2')
+
+==> corrected/071.rb 19 <==
+'abc'.tr('3', 'a')
+
+==> corrected/072.rb 18 <==
+'abc'.delete('3')
+
+==> corrected/073.rb 19 <==
+'abc'.tr('-', 'a')
+
+==> corrected/074.rb 18 <==
+'abc'.delete('-')
+
+==> corrected/075.rb 19 <==
+'abc'.tr('_', 'a')
+
+==> corrected/076.rb 18 <==
+'abc'.delete('_')
+
+==> corrected/077.rb 19 <==
+'abc'.tr(',', 'a')
+
+==> corrected/078.rb 18 <==
+'abc'.delete(',')
+
+==> corrected/079.rb 20 <==
+'abc'.tr("\r", 'a')
+
+==> corrected/080.rb 19 <==
+'abc'.delete("\r")
+
+==> corrected/081.rb 20 <==
+'abc'.tr('\\', 'a')
+
+==> corrected/082.rb 19 <==
+'abc'.delete('\\')
+
+==> corrected/083.rb 19 <==
+'abc'.tr('y', 'a')
+
+==> corrected/084.rb 18 <==
+'abc'.delete('y')
+
+==> corrected/085.rb 21 <==
+'abc'.tr('ሴ', 'a')
+
+==> corrected/086.rb 20 <==
+'abc'.delete('ሴ')
+
+==> corrected/087.rb 19 <==
+'abc'.tr('e', 'a')
+
+==> corrected/088.rb 18 <==
+'abc'.delete('e')
+
+==> corrected/090.rb 20 <==
+'abc'.tr("\n", ',')
+
+==> corrected/091.rb 20 <==
+'/abc'.tr('a', 'd')
+
+==> corrected/092.rb 19 <==
+'abc'.tr('b', '2')
+
+==> corrected/093.rb 19 <==
+'abc'.tr('b', '2')
+
+==> corrected/094.rb 19 <==
+'123'.tr('1', 'a')
+
+==> corrected/110.rb 21 <==
+'a + c'.tr('+', '-')
+
+==> corrected/111.rb 19 <==
+'abc'.tr('a', '1')
+
+==> corrected/112.rb 20 <==
+'abc'.tr!('a', '1')
+
+==> corrected/113.rb 19 <==
+'abc'.delete!('a')
+

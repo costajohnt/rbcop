@@ -1,0 +1,64 @@
+==> offenses exit=1 801 <==
+000.rb:1:11: C: [Correctable] Performance/ReverseEach: Use `reverse_each` instead of `reverse.each`.
+001.rb:1:8: C: [Correctable] Performance/ReverseEach: Use `reverse_each` instead of `reverse.each`.
+002.rb:1:8: C: [Correctable] Performance/ReverseEach: Use `reverse_each` instead of `reverse.each`.
+003.rb:2:5: C: [Correctable] Performance/ReverseEach: Use `reverse_each` instead of `reverse.each`.
+004.rb:5:5: C: [Correctable] Performance/ReverseEach: Use `reverse_each` instead of `reverse.each`.
+005.rb:6:3: C: [Correctable] Performance/ReverseEach: Use `reverse_each` instead of `reverse.each`.
+008.rb:6:3: C: [Correctable] Performance/ReverseEach: Use `reverse_each` instead of `reverse.each`.
+009.rb:6:4: C: [Correctable] Performance/ReverseEach: Use `reverse_each` instead of `reverse.each`.
+
+==> autocorrect exit=0 785 <==
+000.rb:1:11: C: [Corrected] Performance/ReverseEach: Use `reverse_each` instead of `reverse.each`.
+001.rb:1:8: C: [Corrected] Performance/ReverseEach: Use `reverse_each` instead of `reverse.each`.
+002.rb:1:8: C: [Corrected] Performance/ReverseEach: Use `reverse_each` instead of `reverse.each`.
+003.rb:2:5: C: [Corrected] Performance/ReverseEach: Use `reverse_each` instead of `reverse.each`.
+004.rb:5:5: C: [Corrected] Performance/ReverseEach: Use `reverse_each` instead of `reverse.each`.
+005.rb:6:3: C: [Corrected] Performance/ReverseEach: Use `reverse_each` instead of `reverse.each`.
+008.rb:6:3: C: [Corrected] Performance/ReverseEach: Use `reverse_each` instead of `reverse.each`.
+009.rb:6:4: C: [Corrected] Performance/ReverseEach: Use `reverse_each` instead of `reverse.each`.
+
+==> corrected/000.rb 38 <==
+[1, 2, 3].reverse_each { |e| puts e }
+
+==> corrected/001.rb 35 <==
+array&.reverse_each { |e| puts e }
+
+==> corrected/002.rb 35 <==
+array&.reverse_each { |e| puts e }
+
+==> corrected/003.rb 48 <==
+arr = [1, 2, 3]
+arr.reverse_each { |e| puts e }
+
+==> corrected/004.rb 57 <==
+def arr
+  [1, 2, 3]
+end
+
+arr.reverse_each { |e| puts e }
+
+==> corrected/005.rb 60 <==
+def arr
+  [1, 2, 3]
+end
+
+arr.
+  reverse_each { |e| puts e }
+
+==> corrected/008.rb 57 <==
+def arr
+  [1, 2]
+end
+
+arr.
+  reverse_each { |e| puts e }
+
+==> corrected/009.rb 57 <==
+def arr
+  [1, 2]
+end
+
+arr
+  .reverse_each { |e| puts e }
+

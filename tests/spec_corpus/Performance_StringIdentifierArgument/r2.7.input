@@ -1,0 +1,121 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 36 <==
+attr_accessor 'one', 'two', 'three'
+
+==> 001.rb 33 <==
+attr_accessor :one, :two, :three
+
+==> 002.rb 34 <==
+attr_reader 'one', 'two', 'three'
+
+==> 003.rb 31 <==
+attr_reader :one, :two, :three
+
+==> 004.rb 34 <==
+attr_writer 'one', 'two', 'three'
+
+==> 005.rb 31 <==
+attr_writer :one, :two, :three
+
+==> 006.rb 30 <==
+private 'one', 'two', 'three'
+
+==> 007.rb 27 <==
+private :one, :two, :three
+
+==> 008.rb 39 <==
+private_constant 'one', 'two', 'three'
+
+==> 009.rb 36 <==
+private_constant :one, :two, :three
+
+==> 010.rb 32 <==
+protected 'one', 'two', 'three'
+
+==> 011.rb 29 <==
+protected :one, :two, :three
+
+==> 012.rb 29 <==
+public 'one', 'two', 'three'
+
+==> 013.rb 26 <==
+public :one, :two, :three
+
+==> 014.rb 38 <==
+public_constant 'one', 'two', 'three'
+
+==> 015.rb 35 <==
+public_constant :one, :two, :three
+
+==> 016.rb 38 <==
+module_function 'one', 'two', 'three'
+
+==> 017.rb 35 <==
+module_function :one, :two, :three
+
+==> 018.rb 33 <==
+obj.alias_method('do_something')
+
+==> 019.rb 34 <==
+obj.attr_accessor('do_something')
+
+==> 020.rb 32 <==
+obj.attr_reader('do_something')
+
+==> 021.rb 32 <==
+obj.attr_writer('do_something')
+
+==> 022.rb 29 <==
+obj.autoload('do_something')
+
+==> 023.rb 30 <==
+obj.autoload?('do_something')
+
+==> 024.rb 28 <==
+obj.private('do_something')
+
+==> 025.rb 37 <==
+obj.private_constant('do_something')
+
+==> 026.rb 30 <==
+obj.protected('do_something')
+
+==> 027.rb 27 <==
+obj.public('do_something')
+
+==> 028.rb 36 <==
+obj.public_constant('do_something')
+
+==> 029.rb 36 <==
+obj.module_function('do_something')
+
+==> 030.rb 5 <==
+send
+
+==> 031.rb 9 <==
+send(42)
+
+==> 032.rb 31 <==
+Object.const_defined?('::Foo')
+
+==> 033.rb 34 <==
+Object.const_defined?('Foo::Bar')
+
+==> 034.rb 20 <==
+foo('do_something')
+
+==> 035.rb 31 <==
+send(':foo is :bar', foo, bar)
+
+==> 036.rb 12 <==
+attr('foo')
+

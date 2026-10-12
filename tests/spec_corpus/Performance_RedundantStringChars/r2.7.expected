@@ -1,0 +1,59 @@
+==> offenses exit=1 1145 <==
+000.rb:1:5: C: [Correctable] Performance/RedundantStringChars: Use `[0..2].chars` instead of `chars[0..2]`.
+001.rb:1:5: C: [Correctable] Performance/RedundantStringChars: Use `[0..2].chars` instead of `chars.slice(0..2)`.
+002.rb:1:5: C: [Correctable] Performance/RedundantStringChars: Use `[0]` instead of `chars.first`.
+003.rb:1:5: C: [Correctable] Performance/RedundantStringChars: Use `[0]` instead of `chars[0]`.
+004.rb:1:5: C: [Correctable] Performance/RedundantStringChars: Use `[42]` instead of `chars[42]`.
+005.rb:1:5: C: [Correctable] Performance/RedundantStringChars: Use `[0...2].chars` instead of `chars.first(2)`.
+006.rb:1:5: C: [Correctable] Performance/RedundantStringChars: Use `[-1]` instead of `chars.last`.
+008.rb:1:5: C: [Correctable] Performance/RedundantStringChars: Use `[0...2].chars` instead of `chars.take(2)`.
+010.rb:1:5: C: [Correctable] Performance/RedundantStringChars: Use `.length` instead of `chars.length`.
+011.rb:1:5: C: [Correctable] Performance/RedundantStringChars: Use `.size` instead of `chars.size`.
+012.rb:1:5: C: [Correctable] Performance/RedundantStringChars: Use `.empty?` instead of `chars.empty?`.
+
+==> autocorrect exit=0 1123 <==
+000.rb:1:5: C: [Corrected] Performance/RedundantStringChars: Use `[0..2].chars` instead of `chars[0..2]`.
+001.rb:1:5: C: [Corrected] Performance/RedundantStringChars: Use `[0..2].chars` instead of `chars.slice(0..2)`.
+002.rb:1:5: C: [Corrected] Performance/RedundantStringChars: Use `[0]` instead of `chars.first`.
+003.rb:1:5: C: [Corrected] Performance/RedundantStringChars: Use `[0]` instead of `chars[0]`.
+004.rb:1:5: C: [Corrected] Performance/RedundantStringChars: Use `[42]` instead of `chars[42]`.
+005.rb:1:5: C: [Corrected] Performance/RedundantStringChars: Use `[0...2].chars` instead of `chars.first(2)`.
+006.rb:1:5: C: [Corrected] Performance/RedundantStringChars: Use `[-1]` instead of `chars.last`.
+008.rb:1:5: C: [Corrected] Performance/RedundantStringChars: Use `[0...2].chars` instead of `chars.take(2)`.
+010.rb:1:5: C: [Corrected] Performance/RedundantStringChars: Use `.length` instead of `chars.length`.
+011.rb:1:5: C: [Corrected] Performance/RedundantStringChars: Use `.size` instead of `chars.size`.
+012.rb:1:5: C: [Corrected] Performance/RedundantStringChars: Use `.empty?` instead of `chars.empty?`.
+
+==> corrected/000.rb 16 <==
+str[0..2].chars
+
+==> corrected/001.rb 16 <==
+str[0..2].chars
+
+==> corrected/002.rb 7 <==
+str[0]
+
+==> corrected/003.rb 7 <==
+str[0]
+
+==> corrected/004.rb 8 <==
+str[42]
+
+==> corrected/005.rb 17 <==
+str[0...2].chars
+
+==> corrected/006.rb 8 <==
+str[-1]
+
+==> corrected/008.rb 17 <==
+str[0...2].chars
+
+==> corrected/010.rb 11 <==
+str.length
+
+==> corrected/011.rb 9 <==
+str.size
+
+==> corrected/012.rb 11 <==
+str.empty?
+

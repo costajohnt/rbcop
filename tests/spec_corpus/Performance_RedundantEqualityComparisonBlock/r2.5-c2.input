@@ -1,0 +1,18 @@
+==> .rubocop.yml 211 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.5
+Performance/RedundantEqualityComparisonBlock:
+  AllowRegexpMatch: false
+
+==> 000.rb 38 <==
+items.all? { |item| item =~ pattern }
+
+==> 001.rb 43 <==
+items.all? { |item| item.match?(pattern) }
+

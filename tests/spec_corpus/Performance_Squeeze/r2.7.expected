@@ -1,0 +1,24 @@
+==> offenses exit=1 334 <==
+000.rb:1:5: C: [Correctable] Performance/Squeeze: Use `squeeze` instead of `gsub`.
+001.rb:1:6: C: [Correctable] Performance/Squeeze: Use `squeeze` instead of `gsub`.
+002.rb:1:5: C: [Correctable] Performance/Squeeze: Use `squeeze!` instead of `gsub!`.
+006.rb:1:5: C: [Correctable] Performance/Squeeze: Use `squeeze` instead of `gsub`.
+
+==> autocorrect exit=0 326 <==
+000.rb:1:5: C: [Corrected] Performance/Squeeze: Use `squeeze` instead of `gsub`.
+001.rb:1:6: C: [Corrected] Performance/Squeeze: Use `squeeze` instead of `gsub`.
+002.rb:1:5: C: [Corrected] Performance/Squeeze: Use `squeeze!` instead of `gsub!`.
+006.rb:1:5: C: [Corrected] Performance/Squeeze: Use `squeeze` instead of `gsub`.
+
+==> corrected/000.rb 17 <==
+str.squeeze('a')
+
+==> corrected/001.rb 18 <==
+str&.squeeze('a')
+
+==> corrected/002.rb 18 <==
+str.squeeze!('a')
+
+==> corrected/006.rb 18 <==
+str.squeeze("\n")
+
