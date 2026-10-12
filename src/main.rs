@@ -1190,9 +1190,11 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     let configs: Vec<&Resolved> =
         jobs.iter().filter(|(_, c)| seen.insert(std::sync::Arc::as_ptr(c))).map(|(_, c)| &**c).collect();
     let skipped = fallback::unimplemented(configs.iter().copied(), &implemented, |cop, cfg| badge_selected(cop, cfg));
-    // RuboCop's --except rejects a native plugin's cops when that plugin is not loaded.
-    let names: Vec<&'static str> =
-        names.into_iter().filter(|&n| n == "Lint/Syntax" || configs.iter().any(|c| c.registered(n))).collect();
+    // RuboCop's --except rejects a native plugin's cops when that plugin is not loaded: pass only the
+    // cops some resolved config has an entry for (a plugin's entries come with its default.yml).
+    let known: std::collections::HashSet<&str> =
+        configs.iter().flat_map(|c| c.hash.0.iter().map(|(k, _)| k.as_str())).collect();
+    let names: Vec<&'static str> = names.into_iter().filter(|&n| n == "Lint/Syntax" || known.contains(n)).collect();
     let mut fallback_offenses = std::collections::HashMap::new();
     if !skipped.is_empty() || store.requires_ruby_code() {
         if fallback::enabled() && stdin_text.is_none() && config_error.is_none() && team_error.is_none() {
