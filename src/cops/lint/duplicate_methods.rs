@@ -571,7 +571,7 @@ impl Cop for DuplicateMethods {
                             // lookup_constant without a match: `each_ancestor` returns the defs
                             // node itself, so the key is its s-expression (#360).
                             found.extend(ctx.found_const_method(&short, &name).or_else(|| {
-                                let sexp = helpers::parser_sexp::sexp(node)?;
+                                let sexp = helpers::parser_sexp::sexp(node, src)?;
                                 Some(ctx.found_method(format!("{sexp}.{name}"), None))
                             }));
                         }
