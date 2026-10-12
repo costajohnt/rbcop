@@ -558,8 +558,32 @@ pub fn cop_rule(cx: &mut Cx, node: &Node, assertion: &str, targets: &[&str], pre
         return;
     }
     let args = send_args(&call);
-    let Some(inner) = args.first().and_then(as_call) else { return };
-    let inner_args = send_args(&inner);
+    // AssertEmpty/RefuteEmpty only ask `respond_to?(:method?)`: a block literal qualifies too, its
+    // `arguments` being the block parameters.
+    let block_ok = |a: &Node| {
+        targets.is_empty()
+            && any_block_call(a).is_some_and(|c| {
+                match c.block().unwrap().as_block_node().unwrap().parameters() {
+                    Some(Node::BlockParametersNode { .. }) => c
+                        .block()
+                        .unwrap()
+                        .as_block_node()
+                        .unwrap()
+                        .parameters()
+                        .unwrap()
+                        .as_block_parameters_node()
+                        .unwrap()
+                        .parameters()
+                        .is_none(),
+                    _ => true,
+                }
+            })
+    };
+    let Some(inner) = args.first().and_then(|a| as_call(a).or_else(|| block_ok(a).then(|| a.as_call_node().unwrap())))
+    else {
+        return;
+    };
+    let inner_args = if inner.block().is_some_and(|b| b.as_block_node().is_some()) { Vec::new() } else { send_args(&inner) };
     let name = method_name(&inner);
     if targets.is_empty() {
         if name != "empty?" || !inner_args.is_empty() {

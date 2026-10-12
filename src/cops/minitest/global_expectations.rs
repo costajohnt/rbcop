@@ -46,17 +46,16 @@ impl Cop for GlobalExpectations {
         }
         let (rs, re) = range(&receiver);
         let block_matcher = is_block_matcher(name);
-        // receiver.lambda? (a block, or a send, responds to it; anything else raises) and its body.
+        // receiver.lambda? (`({block numblock itblock} (send nil? :lambda) ...)`) and its body.
         let lambda_body = match &receiver {
             Node::LambdaNode { .. } => Some(receiver.as_lambda_node().unwrap().body()),
             Node::CallNode { .. } => {
                 let c = receiver.as_call_node().unwrap();
                 match c.block().and_then(|b| b.as_block_node()) {
-                    Some(b) if method_name(&c) == "lambda" => Some(b.body()),
+                    Some(b) if method_name(&c) == "lambda" && c.receiver().is_none() => Some(b.body()),
                     _ => None,
                 }
             }
-            _ if block_matcher && method.is_none() => return,
             _ => None,
         };
         let lambda_src = match &lambda_body {
@@ -73,7 +72,14 @@ impl Cop for GlobalExpectations {
             None => format!("{preferred}({})", &cx.src.text[rs..re]),
         };
         let message = format!("Use `{shown}` instead.");
-        let numbered = matches!(receiver, Node::CallNode { .. }) && block_call(&receiver).is_none() && any_block_call(&receiver).is_some();
+        // `receiver.block_type?` excludes numblock/itblock lambdas, which get wrapped instead.
+        let numbered = match &receiver {
+            Node::LambdaNode { .. } => matches!(
+                receiver.as_lambda_node().unwrap().parameters(),
+                Some(Node::NumberedParametersNode { .. }) | Some(Node::ItParametersNode { .. })
+            ),
+            _ => block_call(&receiver).is_none(),
+        };
         cx.add_fix(rs, re, message, |c| {
             if let Some(sel) = dsl_selector {
                 c.replace(sel.start_offset(), sel.end_offset(), preferred);

@@ -127,6 +127,14 @@ fn left_sibling<'pr>(anc: &[Node<'pr>], node: &Node<'pr>) -> Option<Sibling<'pr>
                 _ => None,
             }
         }
+        Node::AndNode { .. } => {
+            let n = parent.as_and_node().unwrap();
+            (range(&n.right()) == me).then(|| Sibling::Node(n.left()))
+        }
+        Node::OrNode { .. } => {
+            let n = parent.as_or_node().unwrap();
+            (range(&n.right()) == me).then(|| Sibling::Node(n.left()))
+        }
         Node::IfNode { .. } | Node::UnlessNode { .. } | Node::WhileNode { .. } | Node::UntilNode { .. } => {
             Some(Sibling::Accept)
         }
