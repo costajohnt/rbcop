@@ -147,7 +147,8 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     no effect (rbcop keeps no result cache and always lints in parallel).
 - `--list-enabled-cops-for` and `--show-docs-url` know RuboCop's own cops only: cops of plugins
   (`plugins:` / `require:` gems) are not listed and get no URL.
-- Custom formatter classes and `require:` of local Ruby files (custom cops) are not supported.
+- Custom formatter classes and `require:` of local Ruby files (custom cops) are not supported. rbcop names
+  the cops it skips on stderr, and `RBCOP_FALLBACK=1` runs them with RuboCop (README, "Plugins and custom cops").
 - ERB in `.rubocop.yml` is not evaluated; remote `inherit_from` URLs are skipped with a warning.
 - A duplicated YAML key: the last value wins in the first key's place, as in Psych, but the
   `... is concealed by line N` warning is not printed. Wrong value types (`Enabled: "true"`) and
