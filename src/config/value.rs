@@ -733,16 +733,15 @@ mod tests {
     }
 
     // A pattern that gives up on every call stops being searched once it has spent RUN_BUDGET:
-    // 200 calls cost 32 budgets, not 200 (about 70 ms each on a 60-character line).
+    // 200 calls cost 32 budgets, not 200 (about 70 ms each on a 60-character line). No wall-clock
+    // assert: it failed on a loaded machine; the exhausted-pattern checks below prove the budget.
     #[test]
     fn backtracking_regex_past_the_run_budget() {
         let re = ruby_regex("(a|aa)+(?=d)|B").unwrap();
         let line = format!("# {} 1", "a".repeat(60));
-        let t0 = std::time::Instant::now();
         for _ in 0..200 {
             assert!(!re.is_match(&line));
         }
-        assert!(t0.elapsed() < std::time::Duration::from_secs(10), "took {:?}", t0.elapsed());
         // The ceiling: a cheap match of the exhausted pattern is no longer found.
         assert!(!re.is_match("B"));
         // Until the next file.
