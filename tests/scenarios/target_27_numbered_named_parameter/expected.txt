@@ -1,0 +1,19 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:1:17: F: Lint/Syntax: ordinary parameter is defined (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+t.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+t.rb:1:8: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+t2.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+t2.rb:1:8: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+v.rb:1:11: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+v.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+v.rb:1:8: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `a`. If it's necessary, use `_` or `_a` as an argument name to indicate that it won't be used.
+w.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+w.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `f`.
+w.rb:1:8: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+x.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+x.rb:1:8: C: [Correctable] Layout/SpaceAfterSemicolon: Space missing after semicolon.
+x.rb:1:8: C: [Correctable] Layout/SpaceAroundBlockParameters: Space before first block parameter detected.
+x.rb:1:9: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+y.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+y.rb:1:7: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+y.rb:1:7: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.

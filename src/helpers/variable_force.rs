@@ -7,7 +7,7 @@
 
 use crate::node_kind as kind;
 use ruby_prism::{Node, Visit};
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum T {
@@ -109,6 +109,9 @@ pub struct PNode {
 pub struct Tree {
     pub nodes: Vec<PNode>,
     pub root: Option<usize>,
+    /// rubocop-ast structural identity (`node_equality::shape`) of each `lvasgn`: Array#include?
+    /// compares nodes with `==` (#361).
+    lvasgn_shapes: HashMap<usize, Vec<String>>,
 }
 
 fn loc(node: &Node) -> (usize, usize) {
@@ -253,10 +256,20 @@ fn shorthand<'pr>(node: &Node<'pr>) -> Option<(T, Vec<Node<'pr>>, Node<'pr>)> {
 }
 
 impl Tree {
-    pub fn build(program: &ruby_prism::ProgramNode) -> Tree {
-        let mut tree = Tree { nodes: Vec::new(), root: None };
+    pub fn build(program: &ruby_prism::ProgramNode, src: &crate::source::Source) -> Tree {
+        let mut tree = Tree { nodes: Vec::new(), root: None, lvasgn_shapes: HashMap::new() };
         tree.root = tree.stmts(Some(program.statements()));
+        for (i, n) in tree.nodes.iter().enumerate() {
+            if n.t == T::Lvasgn {
+                tree.lvasgn_shapes.insert(i, crate::helpers::node_equality::shape(src, n.start, n.end));
+            }
+        }
         tree
+    }
+
+    /// `a == b` for two `lvasgn` nodes.
+    fn same_lvasgn(&self, a: usize, b: usize) -> bool {
+        a == b || self.lvasgn_shapes.get(&a).is_some_and(|s| self.lvasgn_shapes.get(&b) == Some(s))
     }
 
     fn mk(&mut self, t: T, (start, end): (usize, usize)) -> usize {
@@ -1308,7 +1321,7 @@ impl<B: FnMut(&Tree, &Variable, Option<&Variable>), F: FnMut(&Tree, &Scope, &[Va
         for name in names {
             let Some(v) = self.find_variable(&tree.nodes[name].name) else { continue };
             let mut in_loop: Vec<&mut Assignment> =
-                self.variables[v].assignments.iter_mut().filter(|a| assignments.contains(&a.node)).collect();
+                self.variables[v].assignments.iter_mut().filter(|a| assignments.iter().any(|&n| tree.same_lvasgn(n, a.node))).collect();
             for a in in_loop.iter_mut() {
                 if tree.ancestors(a.node).any(|x| matches!(tree.t(x), T::If | T::Case | T::CaseMatch | T::Rescue)) {
                     a.references.push(n);

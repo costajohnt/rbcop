@@ -1,0 +1,7 @@
+a.rb:2:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+a.rb:5:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+a.rb:6:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+a.rb:7:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+t27/a.rb:2:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+t27/a.rb:5:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.
+t27/a.rb:7:9: W: [Correctable] Lint/LiteralInInterpolation: Literal interpolation detected.

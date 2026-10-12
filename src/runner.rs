@@ -190,6 +190,8 @@ pub fn parse_for_target<'t>(
     let mut edits: Vec<(usize, u8)> = Vec::new();
     let mut stand_ins: Vec<(char, Option<char>)> = Vec::new();
     let mut present: Option<std::collections::HashSet<char>> = None;
+    // Heredoc terminators the copy has Prism find past their indentation: (found, line start).
+    let mut heredoc_ends: Vec<(usize, usize)> = Vec::new();
     // Each rewrite is found in the tokens of the copy so far, which one rewrite can change for
     // another (a heredoc a NUL closes ends before an indented `__END__` or a constant, #306): parse
     // the copy again until no rewrite is left.
@@ -235,18 +237,19 @@ pub fn parse_for_target<'t>(
         if errors && cur.contains('\0') {
             round.extend(crate::legacy_syntax::heredoc_nul_breaks(cur, &tokens).into_iter().map(|o| (o, b'\n')));
         }
-        // The parser gem ends a `<<''` heredoc at a line of spaces and tabs, Prism only at an empty
-        // line: the copy moves that line's newline before its blanks (`  \n` -> `\n  `, #318).
-        for t in tokens
-            .iter()
-            .filter(|t| t.kind == "HEREDOC_START" && matches!(&cur[t.start..t.end], "<<''" | "<<\"\"" | "<<``"))
-        {
-            if let Some(range) = crate::legacy_syntax::blank_heredoc_terminator(cur, t.start) {
-                let line = &cur.as_bytes()[range.clone()];
-                round.push((range.start, b'\n'));
-                if line.ends_with(b"\n") {
-                    round.extend((range.start + 1..range.end).zip(line[..line.len() - 1].iter().copied()));
-                }
+        // The parser gem ends a plain heredoc at its delimiter after spaces and tabs (a `<<''` at a
+        // blank line), Prism only at the delimiter alone (#318, #355): see plain_heredoc_terminator.
+        // A heredoc after another on its line starts where the parser gem ends that one: Prism's
+        // tokens do not show it when Prism's body runs on (#357), so each body is scanned once.
+        let mut chain: Option<(usize, usize)> = None;
+        for (i, t) in tokens.iter().enumerate().filter(|(_, t)| t.kind == "HEREDOC_START") {
+            let line_end = cur[t.end..].find('\n').map_or(cur.len(), |n| t.end + n);
+            let body = chain.filter(|c| c.0 == line_end).map(|c| c.1);
+            chain = None;
+            if let Some(h) = crate::legacy_syntax::plain_heredoc_terminator(cur, &tokens, i, body) {
+                chain = Some((line_end, h.after));
+                round.extend(h.edits);
+                heredoc_ends.extend(h.moved);
             }
         }
         round.retain(|&(o, b)| cur.as_bytes()[o] != b);
@@ -278,6 +281,17 @@ pub fn parse_for_target<'t>(
     if let Some(c) = copy {
         *buf = c;
         (result, tokens) = ruby_prism::parse_with_version_and_tokens_restoring(buf, version, utf8, &restore);
+        if !heredoc_ends.is_empty() {
+            heredoc_ends.sort_unstable();
+            result.move_heredoc_ends(&heredoc_ends);
+            for t in tokens.iter_mut().filter(|t| matches!(t.kind, "HEREDOC_END" | "STRING_CONTENT")) {
+                for o in [&mut t.start, &mut t.end] {
+                    if let Ok(i) = heredoc_ends.binary_search_by_key(&*o, |e| e.0) {
+                        *o = heredoc_ends[i].1;
+                    }
+                }
+            }
+        }
     }
     // A delimiter Prism lexes byte-wise (`%<U+00A0>q(`) splits a character between two tokens:
     // move the split to the character's end so every token slices the text (#250).
@@ -293,6 +307,13 @@ pub fn parse_for_target<'t>(
     // Numbered parameters are 2.7+: below that `foo { _1 }` is a block without arguments.
     if target_ruby < 2.7 {
         result.drop_numbered_parameters();
+    }
+    // Below 3.0 `_1 = 1` declares a local whose reads Prism gives as calls (#364).
+    if target_ruby < 3.0 && text.as_bytes().windows(2).any(|w| w[0] == b'_' && matches!(w[1], b'1'..=b'9')) {
+        let reads = crate::syntax::assigned_numbered_reads(&result.node());
+        if !reads.is_empty() {
+            result.variable_calls_as_locals(&reads);
+        }
     }
     (result, tokens, fake, edits)
 }

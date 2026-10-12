@@ -1,0 +1,8 @@
+b.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+b.rb:4:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+c.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+c.rb:4:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+d.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+f.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+f.rb:4:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+g.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.

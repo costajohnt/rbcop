@@ -112,20 +112,76 @@ pub fn continue_over_blank_lines(text: &str, dots: &[usize]) -> Option<(Vec<u8>,
     Some((bytes, fake))
 }
 
-/// The first line after the one holding `opener` that has only spaces and tabs (with its newline, if
-/// any), unless an empty line comes first: where the parser gem ends a `<<''` heredoc (its
-/// `delimiter?` takes any space/tab indentation before the empty delimiter).
-pub fn blank_heredoc_terminator(text: &str, opener: usize) -> Option<std::ops::Range<usize>> {
-    let mut start = opener + text[opener..].find('\n')? + 1;
+/// Where the parser gem ends a plain heredoc, and how a copy makes Prism end it there too.
+pub struct PlainHeredoc {
+    /// The end of the terminator line (where the next heredoc on the opener's line starts).
+    pub after: usize,
+    /// Byte edits of the copy (none when Prism ends the heredoc there already).
+    pub edits: Vec<(usize, u8)>,
+    /// `(delimiter, line start)`: where Prism's terminator is in the copy and where the parser
+    /// gem's starts (`ParseResult::move_heredoc_ends`).
+    pub moved: Option<(usize, usize)>,
+}
+
+/// For the plain heredoc (`<<ID`, `<<'ID'`, `<<"ID"`, ``<<`ID` ``, also the empty `<<''`) that
+/// `tokens[i]` opens, whose body starts at `body` (default: the next token): the parser gem
+/// (Literal#delimiter?) closes it at the first line that is the delimiter after spaces and tabs
+/// (trailing `\r`s dropped), Prism only at a line that is exactly the delimiter (#318, #355). When
+/// the parser gem's terminator comes first, the copy moves the previous line's newline after the
+/// terminator's indentation (`foo\n  EOS` -> `foo  \nEOS`), so the next line keeps its column (an
+/// `=begin`, another heredoc's body or terminator; #353). When the previous line is another
+/// heredoc's terminator (or the file ends without a newline after a `<<''` terminator), the
+/// indentation moves to the start of the next line instead (`  EOS\n` -> `EOS\n  `). None for
+/// other heredocs and when no line closes it.
+// ponytail: a `#{...}` spanning lines is not skipped; its lines are taken as body lines.
+pub fn plain_heredoc_terminator(text: &str, tokens: &[Token], i: usize, body: Option<usize>) -> Option<PlainHeredoc> {
+    let t = &tokens[i];
+    let rest = text.get(t.start..t.end)?.strip_prefix("<<")?;
+    let (id, interpolating) = match rest.as_bytes().first() {
+        Some(b'-' | b'~') => return None,
+        Some(&q @ (b'\'' | b'"' | b'`')) => (rest.get(1..rest.len() - 1)?, q != b'\''),
+        _ => (rest, true),
+    };
+    let body = body.or_else(|| tokens.get(i + 1).map(|n| n.start))?;
+    if body <= t.end || !text[..body].ends_with('\n') {
+        return None;
+    }
+    let bytes = text.as_bytes();
+    let (mut start, mut continued) = (body, false);
     while start < text.len() {
-        let end = text[start..].find('\n').map_or(text.len(), |i| start + i + 1);
+        let end = text[start..].find('\n').map_or(text.len(), |n| start + n + 1);
         let line = text[start..end].strip_suffix('\n').unwrap_or(&text[start..end]);
-        if line.is_empty() {
-            return None;
+        if line.strip_suffix('\r').unwrap_or(line) == id {
+            return Some(PlainHeredoc { after: end, edits: Vec::new(), moved: None });
         }
-        if line.bytes().all(|b| matches!(b, b' ' | b'\t')) {
-            return Some(start..end);
+        let line = line.trim_end_matches('\r');
+        let indent = line.len().saturating_sub(id.len());
+        if !continued
+            && indent > 0
+            && line.ends_with(id)
+            && line.as_bytes()[..indent].iter().all(|&b| matches!(b, b' ' | b'\t'))
+        {
+            let delim = start + indent;
+            // The previous line is this body's or the opener's (ending in neither `\r` nor a `\`
+            // continuation): its newline moves to just before the delimiter.
+            let opener_line = !text[t.end..start - 1].contains('\n');
+            // Prism finds no empty terminator line at the end of the file without a newline.
+            let nl = text[start..end].ends_with('\n');
+            if (start > body || opener_line) && !matches!(bytes[start - 2], b'\r' | b'\\') && (nl || !id.is_empty()) {
+                let mut edits: Vec<(usize, u8)> = (start..delim).map(|o| (o - 1, bytes[o])).collect();
+                edits.push((delim - 1, b'\n'));
+                return Some(PlainHeredoc { after: end, edits, moved: Some((delim, start)) });
+            }
+            if line.len() + usize::from(nl) != end - start {
+                return None;
+            }
+            // Without a final newline the new one takes a blank's place.
+            let blanks = &bytes[start + usize::from(!nl)..delim];
+            let moved = id.bytes().chain(*b"\n").chain(blanks.iter().copied());
+            return Some(PlainHeredoc { after: end, edits: (start..).zip(moved).collect(), moved: None });
         }
+        let backslashes = line.bytes().rev().take_while(|&b| b == b'\\').count();
+        continued = interpolating && backslashes % 2 == 1;
         start = end;
     }
     None
@@ -189,7 +245,7 @@ pub fn end_stand_in(text: &str) -> Option<String> {
 /// line_begin follows a significant newline (or `;`, or the start of the file) and a newline the
 /// lexer skips in its expr_value state: after a binary or assignment operator other than `=`, `?`,
 /// `do`, a block's `{` or `|params|`. After `=`, `,`, `(` (a def's too), `[`, a hash's `{`, `.` or
-/// `::` it reads `__END__` as an identifier, and so after a `\` line continuation (no newline at
+/// `::`, or a ternary's `:` (#368), it reads `__END__` as an identifier, and so after a `\` line continuation (no newline at
 /// all).
 // ponytail: an approximation of lexer.rl's transitions from Prism's lexer states, checked against
 // RuboCop on the contexts above; a context not listed may still differ.
@@ -218,7 +274,10 @@ fn line_begin(text: &str, tokens: &[Token], i: usize) -> bool {
                             p.kind,
                             "EQUAL_EQUAL" | "EQUAL_EQUAL_EQUAL" | "BANG_EQUAL" | "LESS_EQUAL" | "GREATER_EQUAL"
                         ))
-                    && !matches!(p.kind, "PIPE" | "TILDE" | "BANG" | "COMMA" | "BRACE_LEFT" | "UCOLON_COLON")
+                    && !matches!(
+                        p.kind,
+                        "PIPE" | "TILDE" | "BANG" | "COMMA" | "BRACE_LEFT" | "UCOLON_COLON" | "COLON"
+                    )
                     || p.kind == "BRACE_LEFT" && p.state & EXPR_LABEL == 0))
     })
 }
@@ -1112,6 +1171,11 @@ struct Walk<'t> {
     const_writes: HashMap<usize, (usize, usize)>,
     /// Inside a def's body (not reset by blocks; a `class << x` body resets it).
     in_def: bool,
+    /// The innermost def's keyword when it is endless (`def f = ...`), which `simulate`'s in_def
+    /// model has no frame for.
+    in_endless: Option<usize>,
+    /// Constant assignment operator in an endless def's body (#354) -> the def's keyword.
+    endless_const_writes: HashMap<usize, usize>,
     /// An op-assign to a plain constant in a def (`CONST ||= 1`): Prism accepts it, the parser
     /// gem's `assignable` reports `dynamic constant assignment`, which `simulate` emits.
     dynamic_const: bool,
@@ -1135,7 +1199,8 @@ impl Walk<'_> {
     /// The first token after the one ending at `end`, skipping newlines (ignored after an operator by
     /// the older lexers).
     /// Below 3.3 a `block_command` is no call argument: as the only argument in `(...)` or `[...]`
-    /// of a call, `super` or `yield`, the grammar fails at its `do` (`foo(bar baz do end)`; #239, #302).
+    /// of a call, `super` or `yield`, or the only subscript of an index assignment or op-assign, the
+    /// grammar fails at its `do` (`foo(bar baz do end)`, `a[bar baz do end] = 1`; #239, #302, #370).
     fn sole_block_command(&mut self, args: Option<ruby_prism::ArgumentsNode>) {
         if let Some(args) = args
             && args.arguments().len() == 1
@@ -1305,8 +1370,9 @@ impl<'pr> Visit<'pr> for Walk<'_> {
             self.begin_clauses(&b);
         }
         let in_def = std::mem::replace(&mut self.in_def, true);
+        let in_endless = std::mem::replace(&mut self.in_endless, n.equal_loc().map(|_| kw));
         ruby_prism::visit_def_node(self, n);
-        self.in_def = in_def;
+        (self.in_def, self.in_endless) = (in_def, in_endless);
         self.owners.pop();
         self.defs.pop();
         self.ctx.pop();
@@ -1347,8 +1413,9 @@ impl<'pr> Visit<'pr> for Walk<'_> {
                 s.begin_clauses(&b);
             }
             let in_def = std::mem::replace(&mut s.in_def, false);
+            let in_endless = s.in_endless.take();
             ruby_prism::visit_singleton_class_node(s, n);
-            s.in_def = in_def;
+            (s.in_def, s.in_endless) = (in_def, in_endless);
         });
     }
 
@@ -1583,6 +1650,15 @@ impl<'pr> Visit<'pr> for Walk<'_> {
         if n.opening_loc().is_some() {
             self.sole_block_command(n.arguments());
         }
+        // `foo[k] = v`: the subscript (`opt_call_args`) is every argument but the value (#370).
+        if n.name().as_slice() == b"[]="
+            && n.opening_loc().is_some_and(|o| o.as_slice() == b"[")
+            && let Some(args) = n.arguments()
+            && args.arguments().len() == 2
+            && let Some(d) = args.arguments().iter().next().and_then(|a| block_command_do(&a))
+        {
+            self.violation(d, 3.3);
+        }
         // Below 3.3 `not x` without parentheses is an expr, never an assigned value (`x = not y`;
         // #240); as an argument, see visit_arguments_node.
         if self.target < 3.3
@@ -1624,6 +1700,27 @@ impl<'pr> Visit<'pr> for Walk<'_> {
         }
         let start = n.message_loc().map_or(n.location().start_offset(), |m| m.start_offset());
         self.in_ctx(start, |s| ruby_prism::visit_call_node(s, n));
+    }
+
+    // An index op-assign or assignment target's subscript is `opt_call_args` too (#370).
+    fn visit_index_operator_write_node(&mut self, n: &ruby_prism::IndexOperatorWriteNode<'pr>) {
+        self.sole_block_command(n.arguments());
+        ruby_prism::visit_index_operator_write_node(self, n);
+    }
+
+    fn visit_index_or_write_node(&mut self, n: &ruby_prism::IndexOrWriteNode<'pr>) {
+        self.sole_block_command(n.arguments());
+        ruby_prism::visit_index_or_write_node(self, n);
+    }
+
+    fn visit_index_and_write_node(&mut self, n: &ruby_prism::IndexAndWriteNode<'pr>) {
+        self.sole_block_command(n.arguments());
+        ruby_prism::visit_index_and_write_node(self, n);
+    }
+
+    fn visit_index_target_node(&mut self, n: &ruby_prism::IndexTargetNode<'pr>) {
+        self.sole_block_command(n.arguments());
+        ruby_prism::visit_index_target_node(self, n);
     }
 
     fn visit_super_node(&mut self, n: &ruby_prism::SuperNode<'pr>) {
@@ -1898,6 +1995,9 @@ impl Walk<'_> {
 
     fn const_write(&mut self, target: &ruby_prism::Location, op: &ruby_prism::Location) {
         self.const_writes.insert(op.start_offset(), (target.start_offset(), target.end_offset()));
+        if let Some(kw) = self.in_endless {
+            self.endless_const_writes.insert(op.start_offset(), kw);
+        }
     }
 
     fn hash_element(&mut self, e: &Node) {
@@ -2367,7 +2467,9 @@ fn simulate(
         }
         // Assigning a constant while the parser believes it is in a def (see in_def): the
         // builder's error, then recovery from the `=`.
-        if let Some(&(s, e)) = w.const_writes.get(&t.start).filter(|_| in_def) {
+        if let Some(&(s, e)) =
+            w.const_writes.get(&t.start).filter(|_| in_def || w.endless_const_writes.contains_key(&t.start))
+        {
             out.push((s, e, "dynamic constant assignment".to_string()));
             while stack.len() > 1 && stack.last().unwrap().body.is_none_or(|b| t.start < b) {
                 stack.pop();
@@ -2377,6 +2479,19 @@ fn simulate(
             }
             regions.retain(|r| r.1 < stack.len());
             (status, discarding, fails_at) = (3, true, usize::MAX);
+            // Recovery discards an endless def (#354): at the top level racc gives up, elsewhere
+            // in_def stays set (as for a popped def).
+            if let Some(&kw) = w.endless_const_writes.get(&t.start) {
+                while stack.len() > 1 && stack.last().unwrap().key > kw {
+                    stack.pop();
+                }
+                regions.retain(|r| r.1 < stack.len());
+                if stack.len() == 1 {
+                    out.push(gave_up(t.start));
+                    break;
+                }
+                in_def = true;
+            }
             continue;
         }
         // The body with a useless `else` reduces at its `end`: the builder's yyerror, and racc

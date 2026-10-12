@@ -716,6 +716,141 @@ impl<'pr> ParseResult<'pr> {
         // SAFETY: no Node views exist while `&mut self` is held; the detached node is freed once.
         unsafe { pm_visit_node(self.node.as_ptr(), visit, self.parser.as_ptr().cast()) }
     }
+
+    /// rbcop patch: for each `(from, to)` of `ends` (sorted by `from`, `to < from`), a heredoc
+    /// terminator Prism found at `from` belongs at `to`, the start of its line: every string node
+    /// whose closing starts at `from`, or whose content ends there, is moved to `to`, and the
+    /// `from - to` spaces/tabs the content's unescaped value ends with before its last newline are
+    /// dropped. For a copy parsed with the terminator's indentation moved before the previous
+    /// newline (`foo\n  EOS` read as `foo  \nEOS`).
+    pub fn move_heredoc_ends(&mut self, ends: &[(usize, usize)]) {
+        use ruby_prism_sys::{pm_location_t, pm_node_type, pm_string_t};
+        extern "C" {
+            fn pm_visit_node(node: *const pm_node_t, visitor: unsafe extern "C" fn(*const pm_node_t, *mut std::ffi::c_void) -> bool, data: *mut std::ffi::c_void);
+        }
+        struct Data<'a> {
+            base: *const u8,
+            ends: &'a [(usize, usize)],
+        }
+        impl Data<'_> {
+            fn target(&self, p: *const u8) -> Option<usize> {
+                let o = usize::try_from(unsafe { p.offset_from(self.base) }).ok()?;
+                let i = self.ends.binary_search_by_key(&o, |e| e.0).ok()?;
+                Some(self.ends[i].1)
+            }
+        }
+        unsafe fn trim(s: &mut pm_string_t, k: usize) {
+            unsafe {
+                if s.type_ == ruby_prism_sys::PM_STRING_SHARED && s.length >= k {
+                    // A slice of the (restored) source: `...\n` + the indentation.
+                    s.length -= k;
+                } else if s.type_ == ruby_prism_sys::PM_STRING_OWNED && s.length > k {
+                    let bytes = std::slice::from_raw_parts_mut(s.source.cast_mut(), s.length);
+                    let n = bytes.len();
+                    if bytes[n - 1] == b'\n' && bytes[n - 1 - k..n - 1].iter().all(|&b| b == b' ' || b == b'\t') {
+                        bytes[n - 1 - k] = b'\n';
+                        s.length -= k;
+                    }
+                }
+            }
+        }
+        unsafe fn content(d: &Data<'_>, loc: &mut pm_location_t, unescaped: Option<&mut pm_string_t>) {
+            unsafe {
+                if let Some(to) = d.target(loc.end) {
+                    let k = usize::try_from(loc.end.offset_from(d.base)).unwrap_or(0) - to;
+                    if loc.start > d.base.add(to) || loc.start == loc.end {
+                        loc.start = d.base.add(to);
+                    }
+                    loc.end = d.base.add(to);
+                    if let Some(u) = unescaped {
+                        trim(u, k);
+                    }
+                }
+            }
+        }
+        unsafe fn closing(d: &Data<'_>, loc: &mut pm_location_t) {
+            unsafe {
+                if let Some(to) = d.target(loc.start) {
+                    loc.start = d.base.add(to);
+                }
+            }
+        }
+        unsafe extern "C" fn visit(node: *const pm_node_t, data: *mut std::ffi::c_void) -> bool {
+            unsafe {
+                let d = &*data.cast::<Data<'_>>();
+                let node = node.cast_mut();
+                match u32::from((*node).type_) {
+                    t if t == pm_node_type::PM_STRING_NODE as u32 => {
+                        let n = &mut *node.cast::<ruby_prism_sys::pm_string_node_t>();
+                        // A part's location is its content; a heredoc's is its opener.
+                        if n.base.location.end == n.content_loc.end {
+                            let mut loc = n.base.location;
+                            content(d, &mut loc, None);
+                            n.base.location = loc;
+                        }
+                        content(d, &mut n.content_loc, Some(&mut n.unescaped));
+                        closing(d, &mut n.closing_loc);
+                    }
+                    t if t == pm_node_type::PM_X_STRING_NODE as u32 => {
+                        let n = &mut *node.cast::<ruby_prism_sys::pm_x_string_node_t>();
+                        content(d, &mut n.content_loc, Some(&mut n.unescaped));
+                        closing(d, &mut n.closing_loc);
+                    }
+                    t if t == pm_node_type::PM_INTERPOLATED_STRING_NODE as u32 => {
+                        closing(d, &mut (*node.cast::<ruby_prism_sys::pm_interpolated_string_node_t>()).closing_loc);
+                    }
+                    t if t == pm_node_type::PM_INTERPOLATED_X_STRING_NODE as u32 => {
+                        closing(d, &mut (*node.cast::<ruby_prism_sys::pm_interpolated_x_string_node_t>()).closing_loc);
+                    }
+                    _ => {}
+                }
+            }
+            true
+        }
+        let mut data = Data { base: unsafe { (*self.parser.as_ptr()).start }, ends };
+        // SAFETY: no Node views exist while `&mut self` is held.
+        unsafe { pm_visit_node(self.node.as_ptr(), visit, std::ptr::from_mut(&mut data).cast()) }
+    }
+
+    /// rbcop patch: turn the variable calls (`foo`, no receiver, arguments or block) starting at
+    /// `offsets` into LocalVariableReadNodes of the same name (depth 0), in place. For `_1` reads
+    /// after `_1 = 1` below Ruby 3.0, which Prism, having refused to declare `_1`, gives as calls.
+    pub fn variable_calls_as_locals(&mut self, offsets: &[usize]) {
+        use ruby_prism_sys::{pm_call_node_t, pm_local_variable_read_node_t, pm_node_type};
+        extern "C" {
+            fn pm_visit_node(node: *const pm_node_t, visitor: unsafe extern "C" fn(*const pm_node_t, *mut std::ffi::c_void) -> bool, data: *mut std::ffi::c_void);
+        }
+        struct Data<'a> {
+            base: *const u8,
+            offsets: &'a [usize],
+        }
+        const VARIABLE_CALL: u16 = 8;
+        unsafe extern "C" fn visit(node: *const pm_node_t, data: *mut std::ffi::c_void) -> bool {
+            unsafe {
+                let data = &*data.cast::<Data<'_>>();
+                if u32::from((*node).type_) != pm_node_type::PM_CALL_NODE as u32 || (*node).flags & VARIABLE_CALL == 0 {
+                    return true;
+                }
+                let start = usize::try_from((*node).location.start.offset_from(data.base)).unwrap_or(usize::MAX);
+                if data.offsets.binary_search(&start).is_err() {
+                    return true;
+                }
+                let call = node.cast_mut().cast::<pm_call_node_t>();
+                // A variable call owns no children, so nothing is leaked; the read node is smaller
+                // than the call node it overwrites, and both are freed by the node's address.
+                let name = (*call).name;
+                let read = node.cast_mut().cast::<pm_local_variable_read_node_t>();
+                (*read).base.type_ = pm_node_type::PM_LOCAL_VARIABLE_READ_NODE as _;
+                (*read).base.flags &= 0x3; // newline, static literal
+                (*read).name = name;
+                (*read).depth = 0;
+            }
+            true
+        }
+        let mut data = Data { base: unsafe { (*self.parser.as_ptr()).start }, offsets };
+        // SAFETY: no Node views exist while `&mut self` is held.
+        unsafe { pm_visit_node(self.node.as_ptr(), visit, std::ptr::from_mut(&mut data).cast()) }
+    }
 }
 
 impl Drop for ParseResult<'_> {

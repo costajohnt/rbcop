@@ -17,13 +17,13 @@ fn unescaped(node: &Node) -> Vec<u8> {
 }
 
 /// rubocop-ast `basic_literal?`.
-fn basic_literal(node: &Node) -> bool {
+fn basic_literal(node: &Node, target_ruby: f64) -> bool {
     parser_str(node)
+        || (node.as_symbol_node().is_some() && !crate::ast::is_parser_dsym(node, target_ruby))
         || matches!(
             crate::helpers::literal_node::folded_kind(node),
             kind::INTEGER_NODE
                 | kind::FLOAT_NODE
-                | kind::SYMBOL_NODE
                 | kind::TRUE_NODE
                 | kind::FALSE_NODE
                 | kind::NIL_NODE
@@ -34,9 +34,9 @@ fn basic_literal(node: &Node) -> bool {
 }
 
 /// `prints_as_self?`; Err where RuboCop crashes on a nil child (endless/beginless range).
-fn prints_as_self(node: Option<&Node>) -> Result<bool, ()> {
+fn prints_as_self(node: Option<&Node>, target_ruby: f64) -> Result<bool, ()> {
     let node = node.ok_or(())?;
-    if basic_literal(node) {
+    if basic_literal(node, target_ruby) {
         // Deliberate difference: an integer over MAX_INTEGER_WORDS gets no offense, since
         // `integer_to_s` is quadratic in its size (`"#{0xfff...}"` with 200k digits took 2.6 s).
         return Ok(node.as_integer_node().is_none_or(|i| i.value().to_u32_digits().1.len() <= MAX_INTEGER_WORDS));
@@ -55,7 +55,7 @@ fn prints_as_self(node: Option<&Node>) -> Result<bool, ()> {
         _ => return Ok(false),
     };
     for child in children {
-        if !prints_as_self(child.as_ref())? {
+        if !prints_as_self(child.as_ref(), target_ruby)? {
             return Ok(false);
         }
     }
@@ -245,7 +245,7 @@ impl Cop for LiteralInInterpolation {
         if (parser_str(&last) && (no_begin || last.as_source_file_node().is_some())) || text == "__LINE__" {
             return;
         }
-        if prints_as_self(Some(&last)) != Ok(true) {
+        if prints_as_self(Some(&last), cx.config.target_ruby) != Ok(true) {
             return;
         }
         let l = last.location();

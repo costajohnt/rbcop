@@ -1,0 +1,59 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a.rb:1:1: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+a.rb:1:1: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+b.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+b.rb:2:3: C: [Correctable] Style/RedundantAssignment: Redundant assignment before returning detected.
+b.rb:2:3: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+b.rb:2:3: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+c.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+c.rb:1:1: W: Lint/NumberedParameterAssignment: `_2` is reserved for numbered parameter; consider another name.
+c.rb:1:1: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+d.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+d.rb:1:1: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+e.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e.rb:1:1: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+e.rb:1:1: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+f.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+f.rb:1:1: C: [Correctable] Style/ParallelAssignment: Do not use parallel assignment.
+f.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`. Use `_` or `_a` as a variable name to indicate that it won't be used.
+f.rb:1:4: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+f.rb:1:4: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+g.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+g.rb:2:3: C: [Correctable] Style/RedundantAssignment: Redundant assignment before returning detected.
+g.rb:2:3: W: Lint/NumberedParameterAssignment: `_9` is reserved for numbered parameter; consider another name.
+g.rb:2:3: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+i.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+i.rb:1:1: W: Lint/NumberedParameterAssignment: `_10` is similar to numbered parameter; consider another name.
+i.rb:1:1: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+j.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+j.rb:1:1: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+j.rb:1:1: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+k.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+k.rb:1:1: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+k.rb:1:1: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+l.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+l.rb:1:1: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+m.rb:1:13: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+m.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+m.rb:1:7: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+m.rb:1:7: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+n.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+n.rb:1:1: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+n.rb:1:1: W: Lint/SelfAssignment: Self-assignment detected.
+n.rb:1:1: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+o.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+o.rb:1:1: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+o.rb:1:1: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+o.rb:2:1: C: Style/Documentation: Missing top-level documentation comment for `class A`.
+q.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+q.rb:1:1: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+q.rb:1:1: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+r.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+r.rb:1:1: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+r.rb:1:1: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+r.rb:2:9: W: [Correctable] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in `puts`.
+s.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+s.rb:1:7: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+s.rb:2:3: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+s.rb:2:3: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.

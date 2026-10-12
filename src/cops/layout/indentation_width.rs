@@ -460,6 +460,7 @@ impl Cop for IndentationWidth {
             k.extend([
                 kind::BEGIN_NODE,
                 kind::RESCUE_NODE,
+                kind::RESCUE_MODIFIER_NODE,
                 kind::FOR_NODE,
                 kind::PARENTHESES_NODE,
                 kind::SUPER_NODE,
@@ -508,6 +509,12 @@ impl Cop for IndentationWidth {
             kind::RESCUE_NODE => {
                 let r = node.as_rescue_node().unwrap();
                 let body = Body::of(r.statements().map(|s| s.as_node()));
+                check_indentation(cx, lstart(r.keyword_loc()), body.as_ref(), "normal", &no_macro);
+            }
+            // A modifier rescue is parser's `rescue` with a `resbody` keyed on the keyword (#367).
+            kind::RESCUE_MODIFIER_NODE => {
+                let r = node.as_rescue_modifier_node().unwrap();
+                let body = Body::of(Some(r.rescue_expression()));
                 check_indentation(cx, lstart(r.keyword_loc()), body.as_ref(), "normal", &no_macro);
             }
             kind::FOR_NODE => {
