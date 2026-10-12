@@ -198,17 +198,18 @@ pub fn interpret_string_escapes(s: &str) -> Vec<u8> {
             i += 6;
             continue;
         }
-        if c == b'u' && rest.get(1) == Some(&b'{') {
-            if let Some(close) = rest[2..].iter().position(|&d| d == b'}') {
-                // `escape[3..].split(/\s+/).map(&:hex)`: the closing `}` stays on the last part.
-                static WS: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"[ \t\n\x0b\x0c\r]+").unwrap());
-                let raw = String::from_utf8_lossy(&rest[2..2 + close + 1]).into_owned();
-                for part in WS.split(&raw) {
-                    push_char(&mut out, ruby_hex(part));
-                }
-                i += 3 + close + 1;
-                continue;
+        if c == b'u'
+            && rest.get(1) == Some(&b'{')
+            && let Some(close) = rest[2..].iter().position(|&d| d == b'}')
+        {
+            // `escape[3..].split(/\s+/).map(&:hex)`: the closing `}` stays on the last part.
+            static WS: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"[ \t\n\x0b\x0c\r]+").unwrap());
+            let raw = String::from_utf8_lossy(&rest[2..2 + close + 1]).into_owned();
+            for part in WS.split(&raw) {
+                push_char(&mut out, ruby_hex(part));
             }
+            i += 3 + close + 1;
+            continue;
         }
         // Any other escaped character stands for itself.
         let len = std::str::from_utf8(&b[i + 1..]).ok().and_then(|t| t.chars().next()).map_or(1, char::len_utf8);
