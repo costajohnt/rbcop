@@ -1,0 +1,4 @@
+a.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `all?(Symbol)` to `all? { ... }` with a kind check.
+a.rb:2:1: C: [Corrected] Style/PredicateWithKind: Prefer `all?(Symbol)` to `all? { ... }` with a kind check.
+a.rb:3:1: C: [Corrected] Style/PredicateWithKind: Prefer `any?(String)` to `any? { ... }` with a kind check.
+z.rb:1:121: C: Layout/LineLength: Line is too long. [132/120]
