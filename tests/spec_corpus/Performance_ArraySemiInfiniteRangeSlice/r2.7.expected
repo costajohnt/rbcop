@@ -1,0 +1,36 @@
+==> offenses exit=1 996 <==
+000.rb:1:1: C: [Correctable] Performance/ArraySemiInfiniteRangeSlice: Use `take` instead of `[]` with semi-infinite range.
+000.rb:2:1: C: [Correctable] Performance/ArraySemiInfiniteRangeSlice: Use `take` instead of `[]` with semi-infinite range.
+001.rb:1:1: C: [Correctable] Performance/ArraySemiInfiniteRangeSlice: Use `drop` instead of `[]` with semi-infinite range.
+001.rb:2:1: C: [Correctable] Performance/ArraySemiInfiniteRangeSlice: Use `drop` instead of `[]` with semi-infinite range.
+002.rb:1:1: C: [Correctable] Performance/ArraySemiInfiniteRangeSlice: Use `drop` instead of `slice` with semi-infinite range.
+002.rb:2:1: C: [Correctable] Performance/ArraySemiInfiniteRangeSlice: Use `take` instead of `slice` with semi-infinite range.
+003.rb:1:1: C: [Correctable] Performance/ArraySemiInfiniteRangeSlice: Use `drop` instead of `slice` with semi-infinite range.
+003.rb:2:1: C: [Correctable] Performance/ArraySemiInfiniteRangeSlice: Use `take` instead of `slice` with semi-infinite range.
+
+==> autocorrect exit=0 980 <==
+000.rb:1:1: C: [Corrected] Performance/ArraySemiInfiniteRangeSlice: Use `take` instead of `[]` with semi-infinite range.
+000.rb:2:1: C: [Corrected] Performance/ArraySemiInfiniteRangeSlice: Use `take` instead of `[]` with semi-infinite range.
+001.rb:1:1: C: [Corrected] Performance/ArraySemiInfiniteRangeSlice: Use `drop` instead of `[]` with semi-infinite range.
+001.rb:2:1: C: [Corrected] Performance/ArraySemiInfiniteRangeSlice: Use `drop` instead of `[]` with semi-infinite range.
+002.rb:1:1: C: [Corrected] Performance/ArraySemiInfiniteRangeSlice: Use `drop` instead of `slice` with semi-infinite range.
+002.rb:2:1: C: [Corrected] Performance/ArraySemiInfiniteRangeSlice: Use `take` instead of `slice` with semi-infinite range.
+003.rb:1:1: C: [Corrected] Performance/ArraySemiInfiniteRangeSlice: Use `drop` instead of `slice` with semi-infinite range.
+003.rb:2:1: C: [Corrected] Performance/ArraySemiInfiniteRangeSlice: Use `take` instead of `slice` with semi-infinite range.
+
+==> corrected/000.rb 28 <==
+array.take(3)
+array.take(2)
+
+==> corrected/001.rb 28 <==
+array.drop(2)
+array.drop(2)
+
+==> corrected/002.rb 28 <==
+array.drop(2)
+array.take(3)
+
+==> corrected/003.rb 28 <==
+array.drop(2)
+array.take(3)
+

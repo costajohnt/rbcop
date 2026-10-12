@@ -1,0 +1,59 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 24 <==
+[1, 2, 3, 4].first.uniq
+
+==> 001.rb 28 <==
+[1, 2, 3, 4].first(10).uniq
+
+==> 002.rb 48 <==
+variable = 42
+[1, 2, 3, 4].first(variable).uniq
+
+==> 003.rb 38 <==
+[1, 2, 3, 4].first(do_something).uniq
+
+==> 004.rb 29 <==
+[1, 2, 3, 4].zip {|f| }.uniq
+
+==> 005.rb 33 <==
+[1, 2, 3, 4].zip {|f| }.zip.uniq
+
+==> 006.rb 40 <==
+nodes.flat_map(&:file_ids).compact.uniq
+
+==> 007.rb 45 <==
+nodes.flat_map { |node| node.file_ids }.uniq
+
+==> 008.rb 33 <==
+nodes.filter_map(&:file_id).uniq
+
+==> 009.rb 38 <==
+nodes.collect_concat(&:file_ids).uniq
+
+==> 010.rb 27 <==
+nodes.flat_map(&:file_ids)
+
+==> 011.rb 60 <==
+some_array.lazy.map(&:some_obj_method).reject(&:nil?).first
+
+==> 012.rb 61 <==
+model.select(:foo, :bar).select { |item| item.do_something }
+
+==> 013.rb 60 <==
+model.select { |item| item.foo }.select { |item| item.bar }
+
+==> 014.rb 51 <==
+model.select { _1.foo }.select { |item| item.bar }
+
+==> 015.rb 44 <==
+model.select(:foo, :bar).select(:baz, :qux)
+

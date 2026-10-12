@@ -1,0 +1,81 @@
+==> .rubocop.yml 187 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.5
+Performance/DeletePrefix:
+  SafeMultiline: true
+
+==> 000.rb 25 <==
+str.gsub(/\Aprefix/, '')
+
+==> 001.rb 26 <==
+str&.gsub(/\Aprefix/, '')
+
+==> 002.rb 26 <==
+str.gsub!(/\Aprefix/, '')
+
+==> 003.rb 24 <==
+str.sub(/\Aprefix/, '')
+
+==> 004.rb 25 <==
+str.sub!(/\Aprefix/, '')
+
+==> 005.rb 24 <==
+str.gsub(/^prefix/, '')
+
+==> 006.rb 25 <==
+str.gsub!(/^prefix/, '')
+
+==> 007.rb 23 <==
+str.sub(/^prefix/, '')
+
+==> 008.rb 24 <==
+str.sub!(/^prefix/, '')
+
+==> 009.rb 24 <==
+str.gsub(/pattern/, '')
+
+==> 010.rb 25 <==
+str.gsub!(/pattern/, '')
+
+==> 011.rb 23 <==
+str.sub(/pattern/, '')
+
+==> 012.rb 24 <==
+str.sub!(/pattern/, '')
+
+==> 013.rb 27 <==
+str.gsub(/\Aprefix\z/, '')
+
+==> 014.rb 28 <==
+str.gsub!(/\Aprefix\z/, '')
+
+==> 015.rb 26 <==
+str.sub(/\Aprefix\z/, '')
+
+==> 016.rb 27 <==
+str.sub!(/\Aprefix\z/, '')
+
+==> 017.rb 28 <==
+str.gsub(/\Aprefix/, 'foo')
+
+==> 018.rb 29 <==
+str.gsub!(/\Aprefix/, 'foo')
+
+==> 019.rb 27 <==
+str.sub(/\Aprefix/, 'foo')
+
+==> 020.rb 28 <==
+str.sub!(/\Aprefix/, 'foo')
+
+==> 021.rb 28 <==
+str.delete_prefix('prefix')
+
+==> 022.rb 29 <==
+str.delete_prefix!('prefix')
+

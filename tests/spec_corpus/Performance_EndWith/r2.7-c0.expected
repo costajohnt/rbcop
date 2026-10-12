@@ -1,0 +1,14 @@
+==> offenses exit=1 266 <==
+000.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+001.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+
+==> autocorrect exit=0 262 <==
+000.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+001.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+
+==> corrected/000.rb 22 <==
+str&.end_with?('abc')
+
+==> corrected/001.rb 22 <==
+str&.end_with?('abc')
+

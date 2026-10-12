@@ -1,0 +1,14 @@
+==> offenses exit=1 226 <==
+000.rb:1:7: C: [Correctable] Performance/RedundantEqualityComparisonBlock: Use `all?(pattern)` instead of block.
+001.rb:1:7: C: [Correctable] Performance/RedundantEqualityComparisonBlock: Use `all?(pattern)` instead of block.
+
+==> autocorrect exit=0 222 <==
+000.rb:1:7: C: [Corrected] Performance/RedundantEqualityComparisonBlock: Use `all?(pattern)` instead of block.
+001.rb:1:7: C: [Corrected] Performance/RedundantEqualityComparisonBlock: Use `all?(pattern)` instead of block.
+
+==> corrected/000.rb 20 <==
+items.all?(pattern)
+
+==> corrected/001.rb 20 <==
+items.all?(pattern)
+

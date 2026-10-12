@@ -1,0 +1,19 @@
+==> .rubocop.yml 216 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.3
+Performance/Sum:
+  SafeAutoCorrect: false
+  OnlySumOrWithInitialValue: false
+
+==> 000.rb 21 <==
+array.inject(10, :+)
+
+==> 001.rb 21 <==
+array.reduce(10, :+)
+

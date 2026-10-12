@@ -1,0 +1,89 @@
+==> offenses exit=1 1900 <==
+000.rb:1:7: C: [Correctable] Performance/RedundantEqualityComparisonBlock: Use `all?(pattern)` instead of block.
+001.rb:1:7: C: [Correctable] Performance/RedundantEqualityComparisonBlock: Use `all?(other)` instead of block.
+002.rb:1:7: C: [Correctable] Performance/RedundantEqualityComparisonBlock: Use `all?(Klass)` instead of block.
+003.rb:1:7: C: [Correctable] Performance/RedundantEqualityComparisonBlock: Use `all?(Klass)` instead of block.
+005.rb:1:7: C: [Correctable] Performance/RedundantEqualityComparisonBlock: Use `any?(pattern)` instead of block.
+006.rb:1:7: C: [Correctable] Performance/RedundantEqualityComparisonBlock: Use `any?(other)` instead of block.
+007.rb:1:7: C: [Correctable] Performance/RedundantEqualityComparisonBlock: Use `any?(Klass)` instead of block.
+008.rb:1:7: C: [Correctable] Performance/RedundantEqualityComparisonBlock: Use `any?(Klass)` instead of block.
+010.rb:1:7: C: [Correctable] Performance/RedundantEqualityComparisonBlock: Use `one?(pattern)` instead of block.
+011.rb:1:7: C: [Correctable] Performance/RedundantEqualityComparisonBlock: Use `one?(other)` instead of block.
+012.rb:1:7: C: [Correctable] Performance/RedundantEqualityComparisonBlock: Use `one?(Klass)` instead of block.
+013.rb:1:7: C: [Correctable] Performance/RedundantEqualityComparisonBlock: Use `one?(Klass)` instead of block.
+015.rb:1:7: C: [Correctable] Performance/RedundantEqualityComparisonBlock: Use `none?(pattern)` instead of block.
+016.rb:1:7: C: [Correctable] Performance/RedundantEqualityComparisonBlock: Use `none?(other)` instead of block.
+017.rb:1:7: C: [Correctable] Performance/RedundantEqualityComparisonBlock: Use `none?(Klass)` instead of block.
+018.rb:1:7: C: [Correctable] Performance/RedundantEqualityComparisonBlock: Use `none?(Klass)` instead of block.
+020.rb:1:20: C: [Correctable] Performance/RedundantEqualityComparisonBlock: Use `all?(other)` instead of block.
+
+==> autocorrect exit=0 1866 <==
+000.rb:1:7: C: [Corrected] Performance/RedundantEqualityComparisonBlock: Use `all?(pattern)` instead of block.
+001.rb:1:7: C: [Corrected] Performance/RedundantEqualityComparisonBlock: Use `all?(other)` instead of block.
+002.rb:1:7: C: [Corrected] Performance/RedundantEqualityComparisonBlock: Use `all?(Klass)` instead of block.
+003.rb:1:7: C: [Corrected] Performance/RedundantEqualityComparisonBlock: Use `all?(Klass)` instead of block.
+005.rb:1:7: C: [Corrected] Performance/RedundantEqualityComparisonBlock: Use `any?(pattern)` instead of block.
+006.rb:1:7: C: [Corrected] Performance/RedundantEqualityComparisonBlock: Use `any?(other)` instead of block.
+007.rb:1:7: C: [Corrected] Performance/RedundantEqualityComparisonBlock: Use `any?(Klass)` instead of block.
+008.rb:1:7: C: [Corrected] Performance/RedundantEqualityComparisonBlock: Use `any?(Klass)` instead of block.
+010.rb:1:7: C: [Corrected] Performance/RedundantEqualityComparisonBlock: Use `one?(pattern)` instead of block.
+011.rb:1:7: C: [Corrected] Performance/RedundantEqualityComparisonBlock: Use `one?(other)` instead of block.
+012.rb:1:7: C: [Corrected] Performance/RedundantEqualityComparisonBlock: Use `one?(Klass)` instead of block.
+013.rb:1:7: C: [Corrected] Performance/RedundantEqualityComparisonBlock: Use `one?(Klass)` instead of block.
+015.rb:1:7: C: [Corrected] Performance/RedundantEqualityComparisonBlock: Use `none?(pattern)` instead of block.
+016.rb:1:7: C: [Corrected] Performance/RedundantEqualityComparisonBlock: Use `none?(other)` instead of block.
+017.rb:1:7: C: [Corrected] Performance/RedundantEqualityComparisonBlock: Use `none?(Klass)` instead of block.
+018.rb:1:7: C: [Corrected] Performance/RedundantEqualityComparisonBlock: Use `none?(Klass)` instead of block.
+020.rb:1:20: C: [Corrected] Performance/RedundantEqualityComparisonBlock: Use `all?(other)` instead of block.
+
+==> corrected/000.rb 20 <==
+items.all?(pattern)
+
+==> corrected/001.rb 18 <==
+items.all?(other)
+
+==> corrected/002.rb 18 <==
+items.all?(Klass)
+
+==> corrected/003.rb 18 <==
+items.all?(Klass)
+
+==> corrected/005.rb 20 <==
+items.any?(pattern)
+
+==> corrected/006.rb 18 <==
+items.any?(other)
+
+==> corrected/007.rb 18 <==
+items.any?(Klass)
+
+==> corrected/008.rb 18 <==
+items.any?(Klass)
+
+==> corrected/010.rb 20 <==
+items.one?(pattern)
+
+==> corrected/011.rb 18 <==
+items.one?(other)
+
+==> corrected/012.rb 18 <==
+items.one?(Klass)
+
+==> corrected/013.rb 18 <==
+items.one?(Klass)
+
+==> corrected/015.rb 21 <==
+items.none?(pattern)
+
+==> corrected/016.rb 19 <==
+items.none?(other)
+
+==> corrected/017.rb 19 <==
+items.none?(Klass)
+
+==> corrected/018.rb 19 <==
+items.none?(Klass)
+
+==> corrected/020.rb 31 <==
+items.do_something.all?(other)
+

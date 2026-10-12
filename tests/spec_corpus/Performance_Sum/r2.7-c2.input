@@ -1,0 +1,72 @@
+==> .rubocop.yml 180 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Performance/Sum:
+  SafeAutoCorrect: true
+
+==> 000.rb 17 <==
+array.inject(:+)
+
+==> 001.rb 18 <==
+array.inject(&:+)
+
+==> 002.rb 16 <==
+array.inject :+
+
+==> 003.rb 17 <==
+array.reduce(:+)
+
+==> 004.rb 18 <==
+array.reduce(&:+)
+
+==> 005.rb 16 <==
+array.reduce :+
+
+==> 006.rb 35 <==
+array.map { |elem| elem ** 2 }.sum
+
+==> 007.rb 23 <==
+array.map(&:count).sum
+
+==> 008.rb 17 <==
+map(&:count).sum
+
+==> 009.rb 27 <==
+array.map(&:count).sum(10)
+
+==> 010.rb 39 <==
+array.map { |elem| elem ** 2 }.sum(10)
+
+==> 011.rb 44 <==
+array.map(&:count).sum { |elem| elem ** 2 }
+
+==> 012.rb 32 <==
+array.map(&:count).sum(&:count)
+
+==> 013.rb 39 <==
+array.collect { |elem| elem ** 2 }.sum
+
+==> 014.rb 27 <==
+array.collect(&:count).sum
+
+==> 015.rb 21 <==
+collect(&:count).sum
+
+==> 016.rb 31 <==
+array.collect(&:count).sum(10)
+
+==> 017.rb 43 <==
+array.collect { |elem| elem ** 2 }.sum(10)
+
+==> 018.rb 48 <==
+array.collect(&:count).sum { |elem| elem ** 2 }
+
+==> 019.rb 36 <==
+array.collect(&:count).sum(&:count)
+

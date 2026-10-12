@@ -32,9 +32,13 @@ fn autocorrect_matches_rubocop() {
         let work = std::env::temp_dir().join(format!("rbcop-autocorrect-{case}-{}", std::process::id()));
         let _ = fs::remove_dir_all(&work);
         copy_dir(&dir.join("input"), &work);
+        // `all`: no --only (as tests/autocorrect/record.sh); config.yml picks the cops.
+        let only = if cops.trim() == "all" { vec![] } else { vec!["--only", cops.trim()] };
         let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
             .current_dir(&work)
-            .args(["-A", "--format", "emacs", "--only", cops.trim(), "-c"])
+            .args(["-A", "--format", "emacs"])
+            .args(only)
+            .arg("-c")
             .arg(dir.join("config.yml"))
             .arg(".")
             .output()

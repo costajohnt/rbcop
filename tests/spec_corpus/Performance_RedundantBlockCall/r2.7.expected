@@ -1,0 +1,81 @@
+==> offenses exit=1 1077 <==
+000.rb:2:3: C: [Correctable] Performance/RedundantBlockCall: Use `yield` instead of `block.call`.
+001.rb:2:3: C: [Correctable] Performance/RedundantBlockCall: Use `yield` instead of `block.call`.
+002.rb:2:3: C: [Correctable] Performance/RedundantBlockCall: Use `yield` instead of `block.call`.
+003.rb:2:3: C: [Correctable] Performance/RedundantBlockCall: Use `yield` instead of `block.call`.
+004.rb:2:3: C: [Correctable] Performance/RedundantBlockCall: Use `yield` instead of `block.call`.
+004.rb:3:3: C: [Correctable] Performance/RedundantBlockCall: Use `yield` instead of `block.call`.
+005.rb:2:3: C: [Correctable] Performance/RedundantBlockCall: Use `yield` instead of `func.call`.
+016.rb:3:5: C: [Correctable] Performance/RedundantBlockCall: Use `yield` instead of `block.call`.
+017.rb:2:3: C: [Correctable] Performance/RedundantBlockCall: Use `yield` instead of `func.call`.
+018.rb:2:3: C: [Correctable] Performance/RedundantBlockCall: Use `yield` instead of `block.call`.
+019.rb:3:16: C: [Correctable] Performance/RedundantBlockCall: Use `yield` instead of `block.call`.
+
+==> autocorrect exit=0 1055 <==
+000.rb:2:3: C: [Corrected] Performance/RedundantBlockCall: Use `yield` instead of `block.call`.
+001.rb:2:3: C: [Corrected] Performance/RedundantBlockCall: Use `yield` instead of `block.call`.
+002.rb:2:3: C: [Corrected] Performance/RedundantBlockCall: Use `yield` instead of `block.call`.
+003.rb:2:3: C: [Corrected] Performance/RedundantBlockCall: Use `yield` instead of `block.call`.
+004.rb:2:3: C: [Corrected] Performance/RedundantBlockCall: Use `yield` instead of `block.call`.
+004.rb:3:3: C: [Corrected] Performance/RedundantBlockCall: Use `yield` instead of `block.call`.
+005.rb:2:3: C: [Corrected] Performance/RedundantBlockCall: Use `yield` instead of `func.call`.
+016.rb:3:5: C: [Corrected] Performance/RedundantBlockCall: Use `yield` instead of `block.call`.
+017.rb:2:3: C: [Corrected] Performance/RedundantBlockCall: Use `yield` instead of `func.call`.
+018.rb:2:3: C: [Corrected] Performance/RedundantBlockCall: Use `yield` instead of `block.call`.
+019.rb:3:16: C: [Corrected] Performance/RedundantBlockCall: Use `yield` instead of `block.call`.
+
+==> corrected/000.rb 31 <==
+def method(&block)
+  yield
+end
+
+==> corrected/001.rb 31 <==
+def method(&block)
+  yield
+end
+
+==> corrected/002.rb 36 <==
+def self.method(&block)
+  yield
+end
+
+==> corrected/003.rb 36 <==
+def method(&block)
+  yield 1, 2
+end
+
+==> corrected/004.rb 43 <==
+def method(&block)
+  yield 1
+  yield 2
+end
+
+==> corrected/005.rb 30 <==
+def method(&func)
+  yield
+end
+
+==> corrected/016.rb 78 <==
+def method(&block)
+  ->(i) { puts i }.then do |_block|
+    yield(1)
+  end
+end
+
+==> corrected/017.rb 33 <==
+def method(&func)
+  yield(1)
+end
+
+==> corrected/018.rb 37 <==
+def method(&block)
+  yield(a, b)
+end
+
+==> corrected/019.rb 116 <==
+def method(&block)
+  each_with_object({}) do |(key, value), acc|
+    acc.merge!(yield(key) => rhs[value])
+  end
+end
+

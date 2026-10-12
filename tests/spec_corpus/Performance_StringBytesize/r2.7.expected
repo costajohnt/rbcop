@@ -1,0 +1,34 @@
+==> offenses exit=1 787 <==
+000.rb:1:8: C: [Correctable] Performance/StringBytesize: Use `String#bytesize` instead of calculating the size of the bytes array.
+001.rb:1:8: C: [Correctable] Performance/StringBytesize: Use `String#bytesize` instead of calculating the size of the bytes array.
+002.rb:1:8: C: [Correctable] Performance/StringBytesize: Use `String#bytesize` instead of calculating the size of the bytes array.
+003.rb:1:10: C: [Correctable] Performance/StringBytesize: Use `String#bytesize` instead of calculating the size of the bytes array.
+004.rb:1:9: C: [Correctable] Performance/StringBytesize: Use `String#bytesize` instead of calculating the size of the bytes array.
+005.rb:1:9: C: [Correctable] Performance/StringBytesize: Use `String#bytesize` instead of calculating the size of the bytes array.
+
+==> autocorrect exit=0 775 <==
+000.rb:1:8: C: [Corrected] Performance/StringBytesize: Use `String#bytesize` instead of calculating the size of the bytes array.
+001.rb:1:8: C: [Corrected] Performance/StringBytesize: Use `String#bytesize` instead of calculating the size of the bytes array.
+002.rb:1:8: C: [Corrected] Performance/StringBytesize: Use `String#bytesize` instead of calculating the size of the bytes array.
+003.rb:1:10: C: [Corrected] Performance/StringBytesize: Use `String#bytesize` instead of calculating the size of the bytes array.
+004.rb:1:9: C: [Corrected] Performance/StringBytesize: Use `String#bytesize` instead of calculating the size of the bytes array.
+005.rb:1:9: C: [Corrected] Performance/StringBytesize: Use `String#bytesize` instead of calculating the size of the bytes array.
+
+==> corrected/000.rb 16 <==
+string.bytesize
+
+==> corrected/001.rb 16 <==
+string.bytesize
+
+==> corrected/002.rb 16 <==
+string.bytesize
+
+==> corrected/003.rb 18 <==
+"foobar".bytesize
+
+==> corrected/004.rb 17 <==
+string&.bytesize
+
+==> corrected/005.rb 17 <==
+string&.bytesize
+

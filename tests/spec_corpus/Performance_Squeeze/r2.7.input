@@ -1,0 +1,31 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 20 <==
+str.gsub(/a+/, 'a')
+
+==> 001.rb 21 <==
+str&.gsub(/a+/, 'a')
+
+==> 002.rb 21 <==
+str.gsub!(/a+/, 'a')
+
+==> 003.rb 17 <==
+str.squeeze('a')
+
+==> 004.rb 18 <==
+str.squeeze!('a')
+
+==> 005.rb 20 <==
+str.gsub(/a+/, 'b')
+
+==> 006.rb 21 <==
+str.gsub(/\n+/, ?\n)
+

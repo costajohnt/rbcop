@@ -1,0 +1,45 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 28 <==
+array.map(&:foo).map(&:bar)
+
+==> 001.rb 36 <==
+array.collect(&:foo).collect(&:bar)
+
+==> 002.rb 32 <==
+array.map(&:foo).collect(&:bar)
+
+==> 003.rb 49 <==
+array = create_array
+array.map(&:foo).map(&:bar)
+
+==> 004.rb 39 <==
+array.map(&:foo).map(&:bar).map(&:baz)
+
+==> 005.rb 40 <==
+array&.map(&:foo).map(&:bar).map(&:baz)
+
+==> 006.rb 22 <==
+map(&:foo).map(&:bar)
+
+==> 007.rb 46 <==
+array.do_something(&:foo).do_something(&:bar)
+
+==> 008.rb 41 <==
+array.map(&:foo).do_something.map(&:bar)
+
+==> 009.rb 33 <==
+array.flat_map(&:foo).map(&:bar)
+
+==> 010.rb 49 <==
+array = create_array
+array.map(&:foo).join(', ')
+

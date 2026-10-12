@@ -1,0 +1,280 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 9 <==
+'a'.size
+
+==> 001.rb 10 <==
+'a'&.size
+
+==> 002.rb 9 <==
+"a".size
+
+==> 003.rb 11 <==
+%q(a).size
+
+==> 004.rb 11 <==
+%Q(a).size
+
+==> 005.rb 10 <==
+%(a).size
+
+==> 006.rb 13 <==
+"#{foo}".size
+==> 007.rb 15 <==
+%Q(#{foo}).size
+==> 008.rb 14 <==
+%(#{foo}).size
+==> 009.rb 16 <==
+CONST = 'a'.size
+==> 010.rb 16 <==
+CONST = "a".size
+==> 011.rb 18 <==
+CONST = %q(a).size
+==> 012.rb 27 <==
+CONST = %q(a).size + 1 * 20
+==> 013.rb 21 <==
+foo = "abc"
+foo.size
+
+==> 014.rb 10 <==
+:foo.size
+
+==> 015.rb 16 <==
+:'foo-bar'.size
+
+==> 016.rb 18 <==
+:"foo-#{bar}".size
+==> 017.rb 17 <==
+%s(foo-bar).size
+
+==> 018.rb 17 <==
+CONST = :foo.size
+==> 019.rb 17 <==
+[1, 2, foo].size
+
+==> 020.rb 19 <==
+%w(1, 2, foo).size
+
+==> 021.rb 19 <==
+%W(1, 2, foo).size
+
+==> 022.rb 17 <==
+[1, 2, *foo].size
+==> 023.rb 25 <==
+foo = [1, 2, 3]
+foo.size
+
+==> 024.rb 22 <==
+CONST = [1, 2, 3].size
+==> 025.rb 18 <==
+{a: 1, b: 2}.size
+
+==> 026.rb 28 <==
+foo = {a: 1, b: 2}
+foo.size
+
+==> 027.rb 18 <==
+{a: 1, **foo}.size
+==> 028.rb 25 <==
+CONST = {a: 1, b: 2}.size
+==> 029.rb 11 <==
+'a'.length
+
+==> 030.rb 12 <==
+'a'&.length
+
+==> 031.rb 11 <==
+"a".length
+
+==> 032.rb 13 <==
+%q(a).length
+
+==> 033.rb 13 <==
+%Q(a).length
+
+==> 034.rb 12 <==
+%(a).length
+
+==> 035.rb 15 <==
+"#{foo}".length
+==> 036.rb 17 <==
+%Q(#{foo}).length
+==> 037.rb 16 <==
+%(#{foo}).length
+==> 038.rb 18 <==
+CONST = 'a'.length
+==> 039.rb 18 <==
+CONST = "a".length
+==> 040.rb 20 <==
+CONST = %q(a).length
+==> 041.rb 29 <==
+CONST = %q(a).length + 1 * 20
+==> 042.rb 23 <==
+foo = "abc"
+foo.length
+
+==> 043.rb 12 <==
+:foo.length
+
+==> 044.rb 18 <==
+:'foo-bar'.length
+
+==> 045.rb 20 <==
+:"foo-#{bar}".length
+==> 046.rb 19 <==
+%s(foo-bar).length
+
+==> 047.rb 19 <==
+CONST = :foo.length
+==> 048.rb 19 <==
+[1, 2, foo].length
+
+==> 049.rb 21 <==
+%w(1, 2, foo).length
+
+==> 050.rb 21 <==
+%W(1, 2, foo).length
+
+==> 051.rb 19 <==
+[1, 2, *foo].length
+==> 052.rb 27 <==
+foo = [1, 2, 3]
+foo.length
+
+==> 053.rb 24 <==
+CONST = [1, 2, 3].length
+==> 054.rb 20 <==
+{a: 1, b: 2}.length
+
+==> 055.rb 30 <==
+foo = {a: 1, b: 2}
+foo.length
+
+==> 056.rb 20 <==
+{a: 1, **foo}.length
+==> 057.rb 27 <==
+CONST = {a: 1, b: 2}.length
+==> 058.rb 10 <==
+'a'.count
+
+==> 059.rb 11 <==
+'a'&.count
+
+==> 060.rb 10 <==
+"a".count
+
+==> 061.rb 12 <==
+%q(a).count
+
+==> 062.rb 12 <==
+%Q(a).count
+
+==> 063.rb 11 <==
+%(a).count
+
+==> 064.rb 14 <==
+"#{foo}".count
+==> 065.rb 16 <==
+%Q(#{foo}).count
+==> 066.rb 15 <==
+%(#{foo}).count
+==> 067.rb 17 <==
+CONST = 'a'.count
+==> 068.rb 17 <==
+CONST = "a".count
+==> 069.rb 19 <==
+CONST = %q(a).count
+==> 070.rb 28 <==
+CONST = %q(a).count + 1 * 20
+==> 071.rb 22 <==
+foo = "abc"
+foo.count
+
+==> 072.rb 11 <==
+:foo.count
+
+==> 073.rb 17 <==
+:'foo-bar'.count
+
+==> 074.rb 19 <==
+:"foo-#{bar}".count
+==> 075.rb 18 <==
+%s(foo-bar).count
+
+==> 076.rb 18 <==
+CONST = :foo.count
+==> 077.rb 18 <==
+[1, 2, foo].count
+
+==> 078.rb 20 <==
+%w(1, 2, foo).count
+
+==> 079.rb 20 <==
+%W(1, 2, foo).count
+
+==> 080.rb 18 <==
+[1, 2, *foo].count
+==> 081.rb 26 <==
+foo = [1, 2, 3]
+foo.count
+
+==> 082.rb 23 <==
+CONST = [1, 2, 3].count
+==> 083.rb 19 <==
+{a: 1, b: 2}.count
+
+==> 084.rb 29 <==
+foo = {a: 1, b: 2}
+foo.count
+
+==> 085.rb 19 <==
+{a: 1, **foo}.count
+==> 086.rb 26 <==
+CONST = {a: 1, b: 2}.count
+==> 087.rb 16 <==
+"foo".count(bar)
+==> 088.rb 17 <==
+"foo".count(@bar)
+==> 089.rb 17 <==
+"foo".count('o')
+
+==> 090.rb 28 <==
+"foo".count { |v| v == 'a' }
+==> 091.rb 25 <==
+"foo".count { _1 == 'a' }
+==> 092.rb 20 <==
+"foo".count(&:any?) 
+==> 093.rb 20 <==
+[1, 2, 3].count(bar)
+==> 094.rb 21 <==
+[1, 2, 3].count(@bar)
+==> 095.rb 21 <==
+[1, 2, 3].count('o')
+
+==> 096.rb 32 <==
+[1, 2, 3].count { |v| v == 'a' }
+==> 097.rb 29 <==
+[1, 2, 3].count { _1 == 'a' }
+==> 098.rb 24 <==
+[1, 2, 3].count(&:any?) 
+==> 099.rb 23 <==
+{a: 1, b: 2}.count(bar)
+==> 100.rb 24 <==
+{a: 1, b: 2}.count(@bar)
+==> 101.rb 24 <==
+{a: 1, b: 2}.count('o')
+
+==> 102.rb 35 <==
+{a: 1, b: 2}.count { |v| v == 'a' }
+==> 103.rb 32 <==
+{a: 1, b: 2}.count { _1 == 'a' }
+==> 104.rb 27 <==
+{a: 1, b: 2}.count(&:any?) 

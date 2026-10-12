@@ -1,0 +1,154 @@
+==> offenses exit=1 3726 <==
+000.rb:1:1: C: [Correctable] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `str.upcase == 'string'`.
+001.rb:1:1: C: [Correctable] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `str.upcase == ('string')`.
+002.rb:1:1: C: [Correctable] Performance/Casecmp: Use `!str.casecmp('string').zero?` instead of `str.upcase != 'string'`.
+003.rb:1:1: C: [Correctable] Performance/Casecmp: Use `!str.casecmp('string').zero?` instead of `str.upcase != ('string')`.
+004.rb:1:1: C: [Correctable] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `str.upcase.eql? 'string'`.
+005.rb:1:1: C: [Correctable] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `str.upcase.eql?('string')`.
+006.rb:1:1: C: [Correctable] Performance/Casecmp: Use `str.casecmp( 'string' ).zero?` instead of `str.upcase.eql? ( 'string' )`.
+007.rb:1:1: C: [Correctable] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `'string' == str.upcase`.
+008.rb:1:1: C: [Correctable] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `('string') == str.upcase`.
+009.rb:1:1: C: [Correctable] Performance/Casecmp: Use `!str.casecmp('string').zero?` instead of `'string' != str.upcase`.
+010.rb:1:1: C: [Correctable] Performance/Casecmp: Use `str.casecmp( 'string' ).zero?` instead of `( 'string' ).eql? str.upcase`.
+011.rb:1:1: C: [Correctable] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `'string'.eql? str.upcase`.
+012.rb:1:1: C: [Correctable] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `'string'.eql?(str.upcase)`.
+013.rb:1:1: C: [Correctable] Performance/Casecmp: Use `obj.casecmp(str).zero?` instead of `obj.upcase == str.upcase`.
+014.rb:1:1: C: [Correctable] Performance/Casecmp: Use `obj.casecmp(str).zero?` instead of `obj.upcase.eql? str.upcase`.
+019.rb:1:1: C: [Correctable] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `str.downcase == 'string'`.
+020.rb:1:1: C: [Correctable] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `str.downcase == ('string')`.
+021.rb:1:1: C: [Correctable] Performance/Casecmp: Use `!str.casecmp('string').zero?` instead of `str.downcase != 'string'`.
+022.rb:1:1: C: [Correctable] Performance/Casecmp: Use `!str.casecmp('string').zero?` instead of `str.downcase != ('string')`.
+023.rb:1:1: C: [Correctable] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `str.downcase.eql? 'string'`.
+024.rb:1:1: C: [Correctable] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `str.downcase.eql?('string')`.
+025.rb:1:1: C: [Correctable] Performance/Casecmp: Use `str.casecmp( 'string' ).zero?` instead of `str.downcase.eql? ( 'string' )`.
+026.rb:1:1: C: [Correctable] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `'string' == str.downcase`.
+027.rb:1:1: C: [Correctable] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `('string') == str.downcase`.
+028.rb:1:1: C: [Correctable] Performance/Casecmp: Use `!str.casecmp('string').zero?` instead of `'string' != str.downcase`.
+029.rb:1:1: C: [Correctable] Performance/Casecmp: Use `str.casecmp( 'string' ).zero?` instead of `( 'string' ).eql? str.downcase`.
+030.rb:1:1: C: [Correctable] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `'string'.eql? str.downcase`.
+031.rb:1:1: C: [Correctable] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `'string'.eql?(str.downcase)`.
+032.rb:1:1: C: [Correctable] Performance/Casecmp: Use `obj.casecmp(str).zero?` instead of `obj.downcase == str.downcase`.
+033.rb:1:1: C: [Correctable] Performance/Casecmp: Use `obj.casecmp(str).zero?` instead of `obj.downcase.eql? str.downcase`.
+
+==> autocorrect exit=0 3666 <==
+000.rb:1:1: C: [Corrected] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `str.upcase == 'string'`.
+001.rb:1:1: C: [Corrected] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `str.upcase == ('string')`.
+002.rb:1:1: C: [Corrected] Performance/Casecmp: Use `!str.casecmp('string').zero?` instead of `str.upcase != 'string'`.
+003.rb:1:1: C: [Corrected] Performance/Casecmp: Use `!str.casecmp('string').zero?` instead of `str.upcase != ('string')`.
+004.rb:1:1: C: [Corrected] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `str.upcase.eql? 'string'`.
+005.rb:1:1: C: [Corrected] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `str.upcase.eql?('string')`.
+006.rb:1:1: C: [Corrected] Performance/Casecmp: Use `str.casecmp( 'string' ).zero?` instead of `str.upcase.eql? ( 'string' )`.
+007.rb:1:1: C: [Corrected] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `'string' == str.upcase`.
+008.rb:1:1: C: [Corrected] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `('string') == str.upcase`.
+009.rb:1:1: C: [Corrected] Performance/Casecmp: Use `!str.casecmp('string').zero?` instead of `'string' != str.upcase`.
+010.rb:1:1: C: [Corrected] Performance/Casecmp: Use `str.casecmp( 'string' ).zero?` instead of `( 'string' ).eql? str.upcase`.
+011.rb:1:1: C: [Corrected] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `'string'.eql? str.upcase`.
+012.rb:1:1: C: [Corrected] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `'string'.eql?(str.upcase)`.
+013.rb:1:1: C: [Corrected] Performance/Casecmp: Use `obj.casecmp(str).zero?` instead of `obj.upcase == str.upcase`.
+014.rb:1:1: C: [Corrected] Performance/Casecmp: Use `obj.casecmp(str).zero?` instead of `obj.upcase.eql? str.upcase`.
+019.rb:1:1: C: [Corrected] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `str.downcase == 'string'`.
+020.rb:1:1: C: [Corrected] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `str.downcase == ('string')`.
+021.rb:1:1: C: [Corrected] Performance/Casecmp: Use `!str.casecmp('string').zero?` instead of `str.downcase != 'string'`.
+022.rb:1:1: C: [Corrected] Performance/Casecmp: Use `!str.casecmp('string').zero?` instead of `str.downcase != ('string')`.
+023.rb:1:1: C: [Corrected] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `str.downcase.eql? 'string'`.
+024.rb:1:1: C: [Corrected] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `str.downcase.eql?('string')`.
+025.rb:1:1: C: [Corrected] Performance/Casecmp: Use `str.casecmp( 'string' ).zero?` instead of `str.downcase.eql? ( 'string' )`.
+026.rb:1:1: C: [Corrected] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `'string' == str.downcase`.
+027.rb:1:1: C: [Corrected] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `('string') == str.downcase`.
+028.rb:1:1: C: [Corrected] Performance/Casecmp: Use `!str.casecmp('string').zero?` instead of `'string' != str.downcase`.
+029.rb:1:1: C: [Corrected] Performance/Casecmp: Use `str.casecmp( 'string' ).zero?` instead of `( 'string' ).eql? str.downcase`.
+030.rb:1:1: C: [Corrected] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `'string'.eql? str.downcase`.
+031.rb:1:1: C: [Corrected] Performance/Casecmp: Use `str.casecmp('string').zero?` instead of `'string'.eql?(str.downcase)`.
+032.rb:1:1: C: [Corrected] Performance/Casecmp: Use `obj.casecmp(str).zero?` instead of `obj.downcase == str.downcase`.
+033.rb:1:1: C: [Corrected] Performance/Casecmp: Use `obj.casecmp(str).zero?` instead of `obj.downcase.eql? str.downcase`.
+
+==> corrected/000.rb 28 <==
+str.casecmp('string').zero?
+
+==> corrected/001.rb 28 <==
+str.casecmp('string').zero?
+
+==> corrected/002.rb 29 <==
+!str.casecmp('string').zero?
+
+==> corrected/003.rb 29 <==
+!str.casecmp('string').zero?
+
+==> corrected/004.rb 28 <==
+str.casecmp('string').zero?
+
+==> corrected/005.rb 28 <==
+str.casecmp('string').zero?
+
+==> corrected/006.rb 30 <==
+str.casecmp( 'string' ).zero?
+
+==> corrected/007.rb 28 <==
+str.casecmp('string').zero?
+
+==> corrected/008.rb 28 <==
+str.casecmp('string').zero?
+
+==> corrected/009.rb 29 <==
+!str.casecmp('string').zero?
+
+==> corrected/010.rb 30 <==
+str.casecmp( 'string' ).zero?
+
+==> corrected/011.rb 28 <==
+str.casecmp('string').zero?
+
+==> corrected/012.rb 28 <==
+str.casecmp('string').zero?
+
+==> corrected/013.rb 23 <==
+obj.casecmp(str).zero?
+
+==> corrected/014.rb 23 <==
+obj.casecmp(str).zero?
+
+==> corrected/019.rb 28 <==
+str.casecmp('string').zero?
+
+==> corrected/020.rb 28 <==
+str.casecmp('string').zero?
+
+==> corrected/021.rb 29 <==
+!str.casecmp('string').zero?
+
+==> corrected/022.rb 29 <==
+!str.casecmp('string').zero?
+
+==> corrected/023.rb 28 <==
+str.casecmp('string').zero?
+
+==> corrected/024.rb 28 <==
+str.casecmp('string').zero?
+
+==> corrected/025.rb 30 <==
+str.casecmp( 'string' ).zero?
+
+==> corrected/026.rb 28 <==
+str.casecmp('string').zero?
+
+==> corrected/027.rb 28 <==
+str.casecmp('string').zero?
+
+==> corrected/028.rb 29 <==
+!str.casecmp('string').zero?
+
+==> corrected/029.rb 30 <==
+str.casecmp( 'string' ).zero?
+
+==> corrected/030.rb 28 <==
+str.casecmp('string').zero?
+
+==> corrected/031.rb 28 <==
+str.casecmp('string').zero?
+
+==> corrected/032.rb 23 <==
+obj.casecmp(str).zero?
+
+==> corrected/033.rb 23 <==
+obj.casecmp(str).zero?
+

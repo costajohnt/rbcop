@@ -1,0 +1,16 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 25 <==
+"foo".count { it == 'a' }
+==> 001.rb 29 <==
+[1, 2, 3].count { it == 'a' }
+==> 002.rb 32 <==
+{a: 1, b: 2}.count { it == 'a' }

@@ -1,0 +1,150 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 43 <==
+[1, 2, 3, 4].map { |e| [e, e] }.flatten(1)
+
+==> 001.rb 45 <==
+[1, 2, 3, 4]&.map { |e| [e, e] }&.flatten(1)
+
+==> 002.rb 57 <==
+[1, 2, 3, 4]
+  .map { |e| [e, e] }
+  .flatten(1)
+  .size
+
+==> 003.rb 35 <==
+[1, 2, 3, 4].map(&:foo).flatten(1)
+
+==> 004.rb 36 <==
+[1, 2, 3, 4]&.map(&:foo).flatten(1)
+
+==> 005.rb 49 <==
+[1, 2, 3, 4]
+  .map(&:foo)
+  .flatten(1)
+  .size
+
+==> 006.rb 34 <==
+[1, 2, 3, 4].map(&foo).flatten(1)
+
+==> 007.rb 42 <==
+[1, 2, 3, 4].map { |e| [e, e] }.flatten(3)
+==> 008.rb 40 <==
+[1, 2, 3, 4].map! { |e| [e, e] }.flatten
+==> 009.rb 44 <==
+[1, 2, 3, 4].map { |e| [e, e] }.flatten!(1)
+
+==> 010.rb 46 <==
+[1, 2, 3, 4]&.map { |e| [e, e] }&.flatten!(1)
+
+==> 011.rb 58 <==
+[1, 2, 3, 4]
+  .map { |e| [e, e] }
+  .flatten!(1)
+  .size
+
+==> 012.rb 36 <==
+[1, 2, 3, 4].map(&:foo).flatten!(1)
+
+==> 013.rb 37 <==
+[1, 2, 3, 4]&.map(&:foo).flatten!(1)
+
+==> 014.rb 50 <==
+[1, 2, 3, 4]
+  .map(&:foo)
+  .flatten!(1)
+  .size
+
+==> 015.rb 35 <==
+[1, 2, 3, 4].map(&foo).flatten!(1)
+
+==> 016.rb 43 <==
+[1, 2, 3, 4].map { |e| [e, e] }.flatten!(3)
+==> 017.rb 41 <==
+[1, 2, 3, 4].map! { |e| [e, e] }.flatten!
+==> 018.rb 47 <==
+[1, 2, 3, 4].collect { |e| [e, e] }.flatten(1)
+
+==> 019.rb 49 <==
+[1, 2, 3, 4]&.collect { |e| [e, e] }&.flatten(1)
+
+==> 020.rb 61 <==
+[1, 2, 3, 4]
+  .collect { |e| [e, e] }
+  .flatten(1)
+  .size
+
+==> 021.rb 39 <==
+[1, 2, 3, 4].collect(&:foo).flatten(1)
+
+==> 022.rb 40 <==
+[1, 2, 3, 4]&.collect(&:foo).flatten(1)
+
+==> 023.rb 53 <==
+[1, 2, 3, 4]
+  .collect(&:foo)
+  .flatten(1)
+  .size
+
+==> 024.rb 38 <==
+[1, 2, 3, 4].collect(&foo).flatten(1)
+
+==> 025.rb 46 <==
+[1, 2, 3, 4].collect { |e| [e, e] }.flatten(3)
+==> 026.rb 44 <==
+[1, 2, 3, 4].collect! { |e| [e, e] }.flatten
+==> 027.rb 48 <==
+[1, 2, 3, 4].collect { |e| [e, e] }.flatten!(1)
+
+==> 028.rb 50 <==
+[1, 2, 3, 4]&.collect { |e| [e, e] }&.flatten!(1)
+
+==> 029.rb 62 <==
+[1, 2, 3, 4]
+  .collect { |e| [e, e] }
+  .flatten!(1)
+  .size
+
+==> 030.rb 40 <==
+[1, 2, 3, 4].collect(&:foo).flatten!(1)
+
+==> 031.rb 41 <==
+[1, 2, 3, 4]&.collect(&:foo).flatten!(1)
+
+==> 032.rb 54 <==
+[1, 2, 3, 4]
+  .collect(&:foo)
+  .flatten!(1)
+  .size
+
+==> 033.rb 39 <==
+[1, 2, 3, 4].collect(&foo).flatten!(1)
+
+==> 034.rb 47 <==
+[1, 2, 3, 4].collect { |e| [e, e] }.flatten!(3)
+==> 035.rb 45 <==
+[1, 2, 3, 4].collect! { |e| [e, e] }.flatten!
+==> 036.rb 39 <==
+[1, 2, 3, 4].map { |e| [e, e] }.flatten
+==> 037.rb 40 <==
+[1, 2, 3, 4].map { |e| [e, e] }.flatten!
+==> 038.rb 40 <==
+[1, 2, 3, 4].map { |e| [e, e] }.flatten
+
+==> 039.rb 44 <==
+[1, 2, 3, 4].collect { |e| [e, e] }.flatten
+
+==> 040.rb 41 <==
+[1, 2, 3, 4].map { |e| [e, e] }.flatten!
+
+==> 041.rb 45 <==
+[1, 2, 3, 4].collect { |e| [e, e] }.flatten!
+

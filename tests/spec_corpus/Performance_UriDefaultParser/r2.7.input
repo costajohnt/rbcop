@@ -1,0 +1,16 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 28 <==
+URI::Parser.new.make_regexp
+
+==> 001.rb 30 <==
+::URI::Parser.new.make_regexp
+

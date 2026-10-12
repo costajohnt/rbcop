@@ -1,0 +1,84 @@
+==> offenses exit=1 1830 <==
+000.rb:1:1: C: [Correctable] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.map`.
+001.rb:1:1: C: [Correctable] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.map`.
+002.rb:1:1: C: [Correctable] Performance/TimesMap: Use `Array.new(42)` with a block instead of `.times.map`.
+003.rb:1:1: C: [Correctable] Performance/TimesMap: Use `Array.new(4.2)` with a block instead of `.times.map`.
+007.rb:1:1: C: [Correctable] Performance/TimesMap: Use `Array.new(n)` with a block instead of `.times.map` only if `n` is always 0 or more.
+008.rb:1:1: C: [Correctable] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.map`.
+009.rb:1:1: C: [Correctable] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.map`.
+012.rb:1:1: C: [Correctable] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.map`.
+013.rb:1:1: C: [Correctable] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.collect`.
+014.rb:1:1: C: [Correctable] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.collect`.
+015.rb:1:1: C: [Correctable] Performance/TimesMap: Use `Array.new(42)` with a block instead of `.times.collect`.
+016.rb:1:1: C: [Correctable] Performance/TimesMap: Use `Array.new(4.2)` with a block instead of `.times.collect`.
+020.rb:1:1: C: [Correctable] Performance/TimesMap: Use `Array.new(n)` with a block instead of `.times.collect` only if `n` is always 0 or more.
+021.rb:1:1: C: [Correctable] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.collect`.
+022.rb:1:1: C: [Correctable] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.collect`.
+025.rb:1:1: C: [Correctable] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.collect`.
+
+==> autocorrect exit=0 1798 <==
+000.rb:1:1: C: [Corrected] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.map`.
+001.rb:1:1: C: [Corrected] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.map`.
+002.rb:1:1: C: [Corrected] Performance/TimesMap: Use `Array.new(42)` with a block instead of `.times.map`.
+003.rb:1:1: C: [Corrected] Performance/TimesMap: Use `Array.new(4.2)` with a block instead of `.times.map`.
+007.rb:1:1: C: [Corrected] Performance/TimesMap: Use `Array.new(n)` with a block instead of `.times.map` only if `n` is always 0 or more.
+008.rb:1:1: C: [Corrected] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.map`.
+009.rb:1:1: C: [Corrected] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.map`.
+012.rb:1:1: C: [Corrected] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.map`.
+013.rb:1:1: C: [Corrected] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.collect`.
+014.rb:1:1: C: [Corrected] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.collect`.
+015.rb:1:1: C: [Corrected] Performance/TimesMap: Use `Array.new(42)` with a block instead of `.times.collect`.
+016.rb:1:1: C: [Corrected] Performance/TimesMap: Use `Array.new(4.2)` with a block instead of `.times.collect`.
+020.rb:1:1: C: [Corrected] Performance/TimesMap: Use `Array.new(n)` with a block instead of `.times.collect` only if `n` is always 0 or more.
+021.rb:1:1: C: [Corrected] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.collect`.
+022.rb:1:1: C: [Corrected] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.collect`.
+025.rb:1:1: C: [Corrected] Performance/TimesMap: Use `Array.new(4)` with a block instead of `.times.collect`.
+
+==> corrected/000.rb 28 <==
+Array.new(4) { |i| i.to_s }
+
+==> corrected/001.rb 28 <==
+Array.new(4) { |i| i.to_s }
+
+==> corrected/002.rb 29 <==
+Array.new(42) { |i| i.to_s }
+
+==> corrected/003.rb 30 <==
+Array.new(4.2) { |i| i.to_s }
+
+==> corrected/007.rb 28 <==
+Array.new(n) { |i| i.to_s }
+
+==> corrected/008.rb 28 <==
+Array.new(4, &method(:foo))
+
+==> corrected/009.rb 28 <==
+Array.new(4, &method(:foo))
+
+==> corrected/012.rb 25 <==
+Array.new(4) { _1.to_s }
+
+==> corrected/013.rb 28 <==
+Array.new(4) { |i| i.to_s }
+
+==> corrected/014.rb 28 <==
+Array.new(4) { |i| i.to_s }
+
+==> corrected/015.rb 29 <==
+Array.new(42) { |i| i.to_s }
+
+==> corrected/016.rb 30 <==
+Array.new(4.2) { |i| i.to_s }
+
+==> corrected/020.rb 28 <==
+Array.new(n) { |i| i.to_s }
+
+==> corrected/021.rb 28 <==
+Array.new(4, &method(:foo))
+
+==> corrected/022.rb 28 <==
+Array.new(4, &method(:foo))
+
+==> corrected/025.rb 25 <==
+Array.new(4) { _1.to_s }
+

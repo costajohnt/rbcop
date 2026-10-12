@@ -1,0 +1,34 @@
+==> offenses exit=1 2348 <==
+000.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Array literals in loops. It is better to extract it into a local variable or a constant.
+001.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Hash literals in loops. It is better to extract it into a local variable or a constant.
+002.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Array literals in loops. It is better to extract it into a local variable or a constant.
+003.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Hash literals in loops. It is better to extract it into a local variable or a constant.
+004.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Array literals in loops. It is better to extract it into a local variable or a constant.
+005.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Hash literals in loops. It is better to extract it into a local variable or a constant.
+006.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Array literals in loops. It is better to extract it into a local variable or a constant.
+007.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Hash literals in loops. It is better to extract it into a local variable or a constant.
+008.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Array literals in loops. It is better to extract it into a local variable or a constant.
+009.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Hash literals in loops. It is better to extract it into a local variable or a constant.
+010.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Array literals in loops. It is better to extract it into a local variable or a constant.
+011.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Hash literals in loops. It is better to extract it into a local variable or a constant.
+012.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Array literals in loops. It is better to extract it into a local variable or a constant.
+013.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Hash literals in loops. It is better to extract it into a local variable or a constant.
+014.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Array literals in loops. It is better to extract it into a local variable or a constant.
+
+==> autocorrect exit=1 2348 <==
+000.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Array literals in loops. It is better to extract it into a local variable or a constant.
+001.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Hash literals in loops. It is better to extract it into a local variable or a constant.
+002.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Array literals in loops. It is better to extract it into a local variable or a constant.
+003.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Hash literals in loops. It is better to extract it into a local variable or a constant.
+004.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Array literals in loops. It is better to extract it into a local variable or a constant.
+005.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Hash literals in loops. It is better to extract it into a local variable or a constant.
+006.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Array literals in loops. It is better to extract it into a local variable or a constant.
+007.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Hash literals in loops. It is better to extract it into a local variable or a constant.
+008.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Array literals in loops. It is better to extract it into a local variable or a constant.
+009.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Hash literals in loops. It is better to extract it into a local variable or a constant.
+010.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Array literals in loops. It is better to extract it into a local variable or a constant.
+011.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Hash literals in loops. It is better to extract it into a local variable or a constant.
+012.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Array literals in loops. It is better to extract it into a local variable or a constant.
+013.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Hash literals in loops. It is better to extract it into a local variable or a constant.
+014.rb:2:3: C: Performance/CollectionLiteralInLoop: Avoid immutable Array literals in loops. It is better to extract it into a local variable or a constant.
+

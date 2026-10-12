@@ -1,0 +1,14 @@
+==> offenses exit=1 286 <==
+000.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+001.rb:1:1: C: [Correctable] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+
+==> autocorrect exit=0 282 <==
+000.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+001.rb:1:1: C: [Corrected] Performance/StartWith: Use `String#start_with?` instead of a regex match anchored to the beginning of the string.
+
+==> corrected/000.rb 24 <==
+str&.start_with?('abc')
+
+==> corrected/001.rb 24 <==
+str&.start_with?('abc')
+

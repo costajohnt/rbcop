@@ -1,0 +1,166 @@
+==> .rubocop.yml 216 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Performance/Sum:
+  SafeAutoCorrect: false
+  OnlySumOrWithInitialValue: false
+
+==> 000.rb 21 <==
+array.inject(10, :+)
+
+==> 001.rb 22 <==
+array&.inject(10, :+)
+
+==> 002.rb 44 <==
+array.inject(10) { |acc, elem| acc + elem }
+
+==> 003.rb 45 <==
+array&.inject(10) { |acc, elem| acc + elem }
+
+==> 004.rb 44 <==
+array.inject(10) { |acc, elem| elem + acc }
+
+==> 005.rb 20 <==
+array.inject(0, :+)
+
+==> 006.rb 19 <==
+array.inject 0, :+
+
+==> 007.rb 22 <==
+array.inject(0.0, :+)
+
+==> 008.rb 23 <==
+array.inject(init, :+)
+
+==> 009.rb 21 <==
+array.inject(0, &:+)
+
+==> 010.rb 18 <==
+array.inject(&:+)
+
+==> 011.rb 17 <==
+array.inject(:+)
+
+==> 012.rb 16 <==
+array.inject :+
+
+==> 013.rb 21 <==
+[1, 2, 3].inject(:+)
+
+==> 014.rb 14 <==
+[].inject(:+)
+
+==> 015.rb 38 <==
+array.inject { |acc, elem| elem * 2 }
+
+==> 016.rb 10 <==
+array.sum
+
+==> 017.rb 21 <==
+array.reduce(10, :+)
+
+==> 018.rb 22 <==
+array&.reduce(10, :+)
+
+==> 019.rb 44 <==
+array.reduce(10) { |acc, elem| acc + elem }
+
+==> 020.rb 45 <==
+array&.reduce(10) { |acc, elem| acc + elem }
+
+==> 021.rb 44 <==
+array.reduce(10) { |acc, elem| elem + acc }
+
+==> 022.rb 20 <==
+array.reduce(0, :+)
+
+==> 023.rb 19 <==
+array.reduce 0, :+
+
+==> 024.rb 22 <==
+array.reduce(0.0, :+)
+
+==> 025.rb 23 <==
+array.reduce(init, :+)
+
+==> 026.rb 21 <==
+array.reduce(0, &:+)
+
+==> 027.rb 18 <==
+array.reduce(&:+)
+
+==> 028.rb 17 <==
+array.reduce(:+)
+
+==> 029.rb 16 <==
+array.reduce :+
+
+==> 030.rb 21 <==
+[1, 2, 3].reduce(:+)
+
+==> 031.rb 14 <==
+[].reduce(:+)
+
+==> 032.rb 38 <==
+array.reduce { |acc, elem| elem * 2 }
+
+==> 033.rb 35 <==
+array.map { |elem| elem ** 2 }.sum
+
+==> 034.rb 37 <==
+array&.map { |elem| elem ** 2 }&.sum
+
+==> 035.rb 23 <==
+array.map(&:count).sum
+
+==> 036.rb 25 <==
+array&.map(&:count)&.sum
+
+==> 037.rb 17 <==
+map(&:count).sum
+
+==> 038.rb 27 <==
+array.map(&:count).sum(10)
+
+==> 039.rb 39 <==
+array.map { |elem| elem ** 2 }.sum(10)
+
+==> 040.rb 44 <==
+array.map(&:count).sum { |elem| elem ** 2 }
+
+==> 041.rb 32 <==
+array.map(&:count).sum(&:count)
+
+==> 042.rb 39 <==
+array.collect { |elem| elem ** 2 }.sum
+
+==> 043.rb 41 <==
+array&.collect { |elem| elem ** 2 }&.sum
+
+==> 044.rb 27 <==
+array.collect(&:count).sum
+
+==> 045.rb 29 <==
+array&.collect(&:count)&.sum
+
+==> 046.rb 21 <==
+collect(&:count).sum
+
+==> 047.rb 31 <==
+array.collect(&:count).sum(10)
+
+==> 048.rb 43 <==
+array.collect { |elem| elem ** 2 }.sum(10)
+
+==> 049.rb 48 <==
+array.collect(&:count).sum { |elem| elem ** 2 }
+
+==> 050.rb 36 <==
+array.collect(&:count).sum(&:count)
+

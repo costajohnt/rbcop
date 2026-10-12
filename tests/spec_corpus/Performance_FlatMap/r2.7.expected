@@ -1,0 +1,160 @@
+==> offenses exit=1 2694 <==
+000.rb:1:14: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `map...flatten`.
+001.rb:1:15: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `map...flatten`.
+002.rb:2:4: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `map...flatten`.
+003.rb:1:14: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `map...flatten`.
+004.rb:1:15: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `map...flatten`.
+005.rb:2:4: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `map...flatten`.
+006.rb:1:14: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `map...flatten`.
+009.rb:1:14: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `map...flatten!`.
+010.rb:1:15: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `map...flatten!`.
+011.rb:2:4: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `map...flatten!`.
+012.rb:1:14: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `map...flatten!`.
+013.rb:1:15: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `map...flatten!`.
+014.rb:2:4: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `map...flatten!`.
+015.rb:1:14: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `map...flatten!`.
+018.rb:1:14: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `collect...flatten`.
+019.rb:1:15: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `collect...flatten`.
+020.rb:2:4: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `collect...flatten`.
+021.rb:1:14: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `collect...flatten`.
+022.rb:1:15: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `collect...flatten`.
+023.rb:2:4: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `collect...flatten`.
+024.rb:1:14: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `collect...flatten`.
+027.rb:1:14: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `collect...flatten!`.
+028.rb:1:15: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `collect...flatten!`.
+029.rb:2:4: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `collect...flatten!`.
+030.rb:1:14: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `collect...flatten!`.
+031.rb:1:15: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `collect...flatten!`.
+032.rb:2:4: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `collect...flatten!`.
+033.rb:1:14: C: [Correctable] Performance/FlatMap: Use `flat_map` instead of `collect...flatten!`.
+
+==> autocorrect exit=0 2638 <==
+000.rb:1:14: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `map...flatten`.
+001.rb:1:15: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `map...flatten`.
+002.rb:2:4: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `map...flatten`.
+003.rb:1:14: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `map...flatten`.
+004.rb:1:15: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `map...flatten`.
+005.rb:2:4: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `map...flatten`.
+006.rb:1:14: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `map...flatten`.
+009.rb:1:14: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `map...flatten!`.
+010.rb:1:15: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `map...flatten!`.
+011.rb:2:4: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `map...flatten!`.
+012.rb:1:14: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `map...flatten!`.
+013.rb:1:15: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `map...flatten!`.
+014.rb:2:4: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `map...flatten!`.
+015.rb:1:14: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `map...flatten!`.
+018.rb:1:14: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `collect...flatten`.
+019.rb:1:15: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `collect...flatten`.
+020.rb:2:4: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `collect...flatten`.
+021.rb:1:14: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `collect...flatten`.
+022.rb:1:15: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `collect...flatten`.
+023.rb:2:4: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `collect...flatten`.
+024.rb:1:14: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `collect...flatten`.
+027.rb:1:14: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `collect...flatten!`.
+028.rb:1:15: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `collect...flatten!`.
+029.rb:2:4: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `collect...flatten!`.
+030.rb:1:14: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `collect...flatten!`.
+031.rb:1:15: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `collect...flatten!`.
+032.rb:2:4: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `collect...flatten!`.
+033.rb:1:14: C: [Corrected] Performance/FlatMap: Use `flat_map` instead of `collect...flatten!`.
+
+==> corrected/000.rb 37 <==
+[1, 2, 3, 4].flat_map { |e| [e, e] }
+
+==> corrected/001.rb 38 <==
+[1, 2, 3, 4]&.flat_map { |e| [e, e] }
+
+==> corrected/002.rb 48 <==
+[1, 2, 3, 4]
+  .flat_map { |e| [e, e] }
+  .size
+
+==> corrected/003.rb 29 <==
+[1, 2, 3, 4].flat_map(&:foo)
+
+==> corrected/004.rb 30 <==
+[1, 2, 3, 4]&.flat_map(&:foo)
+
+==> corrected/005.rb 40 <==
+[1, 2, 3, 4]
+  .flat_map(&:foo)
+  .size
+
+==> corrected/006.rb 28 <==
+[1, 2, 3, 4].flat_map(&foo)
+
+==> corrected/009.rb 37 <==
+[1, 2, 3, 4].flat_map { |e| [e, e] }
+
+==> corrected/010.rb 38 <==
+[1, 2, 3, 4]&.flat_map { |e| [e, e] }
+
+==> corrected/011.rb 48 <==
+[1, 2, 3, 4]
+  .flat_map { |e| [e, e] }
+  .size
+
+==> corrected/012.rb 29 <==
+[1, 2, 3, 4].flat_map(&:foo)
+
+==> corrected/013.rb 30 <==
+[1, 2, 3, 4]&.flat_map(&:foo)
+
+==> corrected/014.rb 40 <==
+[1, 2, 3, 4]
+  .flat_map(&:foo)
+  .size
+
+==> corrected/015.rb 28 <==
+[1, 2, 3, 4].flat_map(&foo)
+
+==> corrected/018.rb 37 <==
+[1, 2, 3, 4].flat_map { |e| [e, e] }
+
+==> corrected/019.rb 38 <==
+[1, 2, 3, 4]&.flat_map { |e| [e, e] }
+
+==> corrected/020.rb 48 <==
+[1, 2, 3, 4]
+  .flat_map { |e| [e, e] }
+  .size
+
+==> corrected/021.rb 29 <==
+[1, 2, 3, 4].flat_map(&:foo)
+
+==> corrected/022.rb 30 <==
+[1, 2, 3, 4]&.flat_map(&:foo)
+
+==> corrected/023.rb 40 <==
+[1, 2, 3, 4]
+  .flat_map(&:foo)
+  .size
+
+==> corrected/024.rb 28 <==
+[1, 2, 3, 4].flat_map(&foo)
+
+==> corrected/027.rb 37 <==
+[1, 2, 3, 4].flat_map { |e| [e, e] }
+
+==> corrected/028.rb 38 <==
+[1, 2, 3, 4]&.flat_map { |e| [e, e] }
+
+==> corrected/029.rb 48 <==
+[1, 2, 3, 4]
+  .flat_map { |e| [e, e] }
+  .size
+
+==> corrected/030.rb 29 <==
+[1, 2, 3, 4].flat_map(&:foo)
+
+==> corrected/031.rb 30 <==
+[1, 2, 3, 4]&.flat_map(&:foo)
+
+==> corrected/032.rb 40 <==
+[1, 2, 3, 4]
+  .flat_map(&:foo)
+  .size
+
+==> corrected/033.rb 28 <==
+[1, 2, 3, 4].flat_map(&foo)
+

@@ -1,0 +1,6 @@
+==> offenses exit=1 167 <==
+000.rb:1:25: C: Performance/ChainArrayAllocation: Use unchained `select` and `select!` (followed by `return array` if required) instead of chaining `select...select`.
+
+==> autocorrect exit=1 167 <==
+000.rb:1:25: C: Performance/ChainArrayAllocation: Use unchained `select` and `select!` (followed by `return array` if required) instead of chaining `select...select`.
+

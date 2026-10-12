@@ -1,0 +1,82 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 38 <==
+[1, 2, 3].reverse.each { |e| puts e }
+
+==> 001.rb 35 <==
+array&.reverse.each { |e| puts e }
+
+==> 002.rb 36 <==
+array&.reverse&.each { |e| puts e }
+
+==> 003.rb 48 <==
+arr = [1, 2, 3]
+arr.reverse.each { |e| puts e }
+
+==> 004.rb 57 <==
+def arr
+  [1, 2, 3]
+end
+
+arr.reverse.each { |e| puts e }
+
+==> 005.rb 63 <==
+def arr
+  [1, 2, 3]
+end
+
+arr.
+  reverse.
+  each { |e| puts e }
+
+==> 006.rb 17 <==
+[1, 2, 3].reverse
+==> 007.rb 29 <==
+[1, 2, 3].each { |e| puts e }
+==> 008.rb 60 <==
+def arr
+  [1, 2]
+end
+
+arr.
+  reverse.
+  each { |e| puts e }
+
+==> 009.rb 60 <==
+def arr
+  [1, 2]
+end
+
+arr
+  .reverse
+  .each { |e| puts e }
+
+==> 010.rb 44 <==
+ret = [1, 2, 3].reverse.each { |e| puts e }
+
+==> 011.rb 45 <==
+@ret = [1, 2, 3].reverse.each { |e| puts e }
+
+==> 012.rb 46 <==
+@@ret = [1, 2, 3].reverse.each { |e| puts e }
+
+==> 013.rb 45 <==
+$ret = [1, 2, 3].reverse.each { |e| puts e }
+
+==> 014.rb 44 <==
+RET = [1, 2, 3].reverse.each { |e| puts e }
+
+==> 015.rb 43 <==
+[1, 2, 3].reverse.each { |e| puts e }.last
+
+==> 016.rb 45 <==
+return [1, 2, 3].reverse.each { |e| puts e }
+

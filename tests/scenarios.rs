@@ -11,7 +11,9 @@ fn bin() -> &'static str {
 }
 
 fn implemented() -> BTreeSet<String> {
-    let out = common::command(bin()).arg("--show-cops").output().unwrap();
+    // With the native plugins loaded, so their cops are listed too.
+    let config = concat!(env!("CARGO_MANIFEST_DIR"), "/config/all-cops-performance.yml");
+    let out = common::command(bin()).args(["--show-cops", "--config", config]).output().unwrap();
     // `--show-cops` prints RuboCop's YAML; cop names are the unindented keys.
     String::from_utf8(out.stdout)
         .unwrap()

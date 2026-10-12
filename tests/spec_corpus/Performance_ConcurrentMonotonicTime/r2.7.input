@@ -1,0 +1,22 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 26 <==
+Concurrent.monotonic_time
+
+==> 001.rb 28 <==
+::Concurrent.monotonic_time
+
+==> 002.rb 41 <==
+Concurrent.monotonic_time(:float_second)
+
+==> 003.rb 48 <==
+Process.clock_gettime(Process::CLOCK_MONOTONIC)
+

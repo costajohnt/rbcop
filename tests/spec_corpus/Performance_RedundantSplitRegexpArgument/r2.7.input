@@ -1,0 +1,45 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 22 <==
+'a,b,c'.insert(2, 'a')
+==> 001.rb 18 <==
+'a,b,c'.split(',')
+==> 002.rb 19 <==
+'a,b,c'.split(/,+/)
+==> 003.rb 29 <==
+'fooSplitbar'.split(/split/i)
+==> 004.rb 29 <==
+'foo         bar'.split(/ /)
+
+==> 005.rb 20 <==
+'a,b,c'.split(/\./)
+
+==> 006.rb 17 <==
+str&.split(/\./)
+
+==> 007.rb 30 <==
+"foo\nbar\nbaz\n".split(/\n/)
+
+==> 008.rb 38 <==
+"foo\n\nbar\n\nbaz\n\n".split(/\n\n/)
+
+==> 009.rb 27 <==
+"foo\\\.bar".split(/\\\./)
+
+==> 010.rb 37 <==
+"foo\nbar\nbaz\n".split(/foo\n\.\n/)
+
+==> 011.rb 19 <==
+'a,b,c'.split(/,/)
+
+==> 012.rb 30 <==
+'foo         bar'.split(/  /)
+

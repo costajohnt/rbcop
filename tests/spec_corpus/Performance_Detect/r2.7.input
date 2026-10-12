@@ -1,0 +1,201 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 42 <==
+[1, 2, 3].select { |i| i % 2 == 0 }.first
+
+==> 001.rb 39 <==
+array&.select { |i| i % 2 == 0 }.first
+
+==> 002.rb 44 <==
+[1, 2, 3].select { |i| i % 2 == 0 }.first(n)
+==> 003.rb 41 <==
+[1, 2, 3].select { |i| i % 2 == 0 }.last
+
+==> 004.rb 43 <==
+[1, 2, 3].select { |i| i % 2 == 0 }.last(n)
+==> 005.rb 47 <==
+[1, 2, 3].select do |i|
+  i % 2 == 0
+end.first
+
+==> 006.rb 46 <==
+[1, 2, 3].select do |i|
+  i % 2 == 0
+end.last
+
+==> 007.rb 32 <==
+[1, 2, 3].select(&:even?).first
+
+==> 008.rb 29 <==
+array&.select(&:even?).first
+
+==> 009.rb 31 <==
+[1, 2, 3].select(&:even?).last
+
+==> 010.rb 29 <==
+[1, 2, 3].select(&:even?)[0]
+
+==> 011.rb 30 <==
+[1, 2, 3].select(&:even?)[-1]
+
+==> 012.rb 27 <==
+lazy.select(&:even?).first
+
+==> 013.rb 39 <==
+[1, 2, 3].select { |i| i % 2 == 0 }[0]
+
+==> 014.rb 40 <==
+[1, 2, 3].select { |i| i % 2 == 0 }[-1]
+
+==> 015.rb 35 <==
+[1, 2, 3].select { |i| i % 2 == 0 }
+==> 016.rb 20 <==
+adapter.select.first
+==> 017.rb 33 <==
+adapter.select('something').first
+==> 018.rb 41 <==
+adapter.lazy.select { 'something' }.first
+==> 019.rb 44 <==
+[1, 2, 3].find_all { |i| i % 2 == 0 }.first
+
+==> 020.rb 41 <==
+array&.find_all { |i| i % 2 == 0 }.first
+
+==> 021.rb 46 <==
+[1, 2, 3].find_all { |i| i % 2 == 0 }.first(n)
+==> 022.rb 43 <==
+[1, 2, 3].find_all { |i| i % 2 == 0 }.last
+
+==> 023.rb 45 <==
+[1, 2, 3].find_all { |i| i % 2 == 0 }.last(n)
+==> 024.rb 49 <==
+[1, 2, 3].find_all do |i|
+  i % 2 == 0
+end.first
+
+==> 025.rb 48 <==
+[1, 2, 3].find_all do |i|
+  i % 2 == 0
+end.last
+
+==> 026.rb 34 <==
+[1, 2, 3].find_all(&:even?).first
+
+==> 027.rb 31 <==
+array&.find_all(&:even?).first
+
+==> 028.rb 33 <==
+[1, 2, 3].find_all(&:even?).last
+
+==> 029.rb 31 <==
+[1, 2, 3].find_all(&:even?)[0]
+
+==> 030.rb 32 <==
+[1, 2, 3].find_all(&:even?)[-1]
+
+==> 031.rb 29 <==
+lazy.find_all(&:even?).first
+
+==> 032.rb 41 <==
+[1, 2, 3].find_all { |i| i % 2 == 0 }[0]
+
+==> 033.rb 42 <==
+[1, 2, 3].find_all { |i| i % 2 == 0 }[-1]
+
+==> 034.rb 37 <==
+[1, 2, 3].find_all { |i| i % 2 == 0 }
+==> 035.rb 22 <==
+adapter.find_all.first
+==> 036.rb 35 <==
+adapter.find_all('something').first
+==> 037.rb 43 <==
+adapter.lazy.find_all { 'something' }.first
+==> 038.rb 42 <==
+[1, 2, 3].filter { |i| i % 2 == 0 }.first
+
+==> 039.rb 39 <==
+array&.filter { |i| i % 2 == 0 }.first
+
+==> 040.rb 44 <==
+[1, 2, 3].filter { |i| i % 2 == 0 }.first(n)
+==> 041.rb 41 <==
+[1, 2, 3].filter { |i| i % 2 == 0 }.last
+
+==> 042.rb 43 <==
+[1, 2, 3].filter { |i| i % 2 == 0 }.last(n)
+==> 043.rb 47 <==
+[1, 2, 3].filter do |i|
+  i % 2 == 0
+end.first
+
+==> 044.rb 46 <==
+[1, 2, 3].filter do |i|
+  i % 2 == 0
+end.last
+
+==> 045.rb 32 <==
+[1, 2, 3].filter(&:even?).first
+
+==> 046.rb 29 <==
+array&.filter(&:even?).first
+
+==> 047.rb 31 <==
+[1, 2, 3].filter(&:even?).last
+
+==> 048.rb 29 <==
+[1, 2, 3].filter(&:even?)[0]
+
+==> 049.rb 30 <==
+[1, 2, 3].filter(&:even?)[-1]
+
+==> 050.rb 27 <==
+lazy.filter(&:even?).first
+
+==> 051.rb 39 <==
+[1, 2, 3].filter { |i| i % 2 == 0 }[0]
+
+==> 052.rb 40 <==
+[1, 2, 3].filter { |i| i % 2 == 0 }[-1]
+
+==> 053.rb 35 <==
+[1, 2, 3].filter { |i| i % 2 == 0 }
+==> 054.rb 20 <==
+adapter.filter.first
+==> 055.rb 33 <==
+adapter.filter('something').first
+==> 056.rb 41 <==
+adapter.lazy.filter { 'something' }.first
+==> 057.rb 35 <==
+[1, 2, 3].detect { |i| i % 2 == 0 }
+==> 058.rb 38 <==
+[1, 2, 3].select { true }
+.first['x']
+
+==> 059.rb 39 <==
+[1, 2, 3].select(&:blank?)
+.first['x']
+
+==> 060.rb 40 <==
+[1, 2, 3].find_all { true }
+.first['x']
+
+==> 061.rb 41 <==
+[1, 2, 3].find_all(&:blank?)
+.first['x']
+
+==> 062.rb 38 <==
+[1, 2, 3].filter { true }
+.first['x']
+
+==> 063.rb 39 <==
+[1, 2, 3].filter(&:blank?)
+.first['x']
+

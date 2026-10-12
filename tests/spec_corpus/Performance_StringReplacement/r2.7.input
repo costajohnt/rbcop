@@ -1,0 +1,331 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 20 <==
+'abc'.insert(2, 'a')
+==> 001.rb 22 <==
+'abc'.gsub('ab', 'de')
+==> 002.rb 35 <==
+regex = /a/
+'abc'.gsub(regex, '1')
+
+==> 003.rb 49 <==
+replacement = 'e'
+'abc'.gsub('abc', replacement)
+
+==> 004.rb 61 <==
+regex = /a/
+replacement = 'e'
+'abc'.gsub(regex, replacement)
+
+==> 005.rb 15 <==
+'abc'.gsub('a')
+==> 006.rb 33 <==
+'abc'.gsub('a') { |s| s.upcase } 
+==> 007.rb 36 <==
+foo = 'a'
+'abc'.gsub("#{foo}", '1')
+
+==> 008.rb 36 <==
+foo = '1'
+'abc'.gsub('a', "#{foo}")
+
+==> 009.rb 19 <==
+'abc'.gsub(//, '1')
+==> 010.rb 31 <==
+'abc'.gsub(Regexp.new(''), '1')
+==> 011.rb 31 <==
+'abc'.gsub(Regexp.new(//), '1')
+==> 012.rb 21 <==
+'abc'.gsub(/a/i, '1')
+==> 013.rb 33 <==
+'abc'.gsub(Regexp.new(/a/i), '1')
+==> 014.rb 19 <==
+'abc'.gsub('', '1')
+==> 015.rb 21 <==
+'abc'.gsub('a', 'ab')
+==> 016.rb 21 <==
+'abc'.gsub('ab', 'd')
+==> 017.rb 23 <==
+'abc'.gsub!('ab', 'de')
+==> 018.rb 36 <==
+regex = /a/
+'abc'.gsub!(regex, '1')
+
+==> 019.rb 50 <==
+replacement = 'e'
+'abc'.gsub!('abc', replacement)
+
+==> 020.rb 62 <==
+regex = /a/
+replacement = 'e'
+'abc'.gsub!(regex, replacement)
+
+==> 021.rb 16 <==
+'abc'.gsub!('a')
+==> 022.rb 34 <==
+'abc'.gsub!('a') { |s| s.upcase } 
+==> 023.rb 37 <==
+foo = 'a'
+'abc'.gsub!("#{foo}", '1')
+
+==> 024.rb 37 <==
+foo = '1'
+'abc'.gsub!('a', "#{foo}")
+
+==> 025.rb 20 <==
+'abc'.gsub!(//, '1')
+==> 026.rb 32 <==
+'abc'.gsub!(Regexp.new(''), '1')
+==> 027.rb 32 <==
+'abc'.gsub!(Regexp.new(//), '1')
+==> 028.rb 22 <==
+'abc'.gsub!(/a/i, '1')
+==> 029.rb 34 <==
+'abc'.gsub!(Regexp.new(/a/i), '1')
+==> 030.rb 20 <==
+'abc'.gsub!('', '1')
+==> 031.rb 22 <==
+'abc'.gsub!('a', 'ab')
+==> 032.rb 22 <==
+'abc'.gsub!('ab', 'd')
+==> 033.rb 20 <==
+'abc'.gsub(/ /, '')
+
+==> 034.rb 21 <==
+'abc'&.gsub(/ /, '')
+
+==> 035.rb 21 <==
+'abc'.gsub(/a/, 'a')
+
+==> 036.rb 20 <==
+'abc'.gsub(/a/, '')
+
+==> 037.rb 21 <==
+'abc'.gsub(/b/, 'a')
+
+==> 038.rb 20 <==
+'abc'.gsub(/b/, '')
+
+==> 039.rb 21 <==
+'abc'.gsub(/c/, 'a')
+
+==> 040.rb 20 <==
+'abc'.gsub(/c/, '')
+
+==> 041.rb 21 <==
+'abc'.gsub(/'/, 'a')
+
+==> 042.rb 20 <==
+'abc'.gsub(/'/, '')
+
+==> 043.rb 21 <==
+'abc'.gsub(/"/, 'a')
+
+==> 044.rb 20 <==
+'abc'.gsub(/"/, '')
+
+==> 045.rb 21 <==
+'abc'.gsub(/%/, 'a')
+
+==> 046.rb 20 <==
+'abc'.gsub(/%/, '')
+
+==> 047.rb 21 <==
+'abc'.gsub(/!/, 'a')
+
+==> 048.rb 20 <==
+'abc'.gsub(/!/, '')
+
+==> 049.rb 21 <==
+'abc'.gsub(/=/, 'a')
+
+==> 050.rb 20 <==
+'abc'.gsub(/=/, '')
+
+==> 051.rb 21 <==
+'abc'.gsub(/</, 'a')
+
+==> 052.rb 20 <==
+'abc'.gsub(/</, '')
+
+==> 053.rb 21 <==
+'abc'.gsub(/>/, 'a')
+
+==> 054.rb 20 <==
+'abc'.gsub(/>/, '')
+
+==> 055.rb 21 <==
+'abc'.gsub(/#/, 'a')
+
+==> 056.rb 20 <==
+'abc'.gsub(/#/, '')
+
+==> 057.rb 21 <==
+'abc'.gsub(/&/, 'a')
+
+==> 058.rb 20 <==
+'abc'.gsub(/&/, '')
+
+==> 059.rb 21 <==
+'abc'.gsub(/;/, 'a')
+
+==> 060.rb 20 <==
+'abc'.gsub(/;/, '')
+
+==> 061.rb 21 <==
+'abc'.gsub(/:/, 'a')
+
+==> 062.rb 20 <==
+'abc'.gsub(/:/, '')
+
+==> 063.rb 21 <==
+'abc'.gsub(/`/, 'a')
+
+==> 064.rb 20 <==
+'abc'.gsub(/`/, '')
+
+==> 065.rb 21 <==
+'abc'.gsub(/~/, 'a')
+
+==> 066.rb 20 <==
+'abc'.gsub(/~/, '')
+
+==> 067.rb 21 <==
+'abc'.gsub(/1/, 'a')
+
+==> 068.rb 20 <==
+'abc'.gsub(/1/, '')
+
+==> 069.rb 21 <==
+'abc'.gsub(/2/, 'a')
+
+==> 070.rb 20 <==
+'abc'.gsub(/2/, '')
+
+==> 071.rb 21 <==
+'abc'.gsub(/3/, 'a')
+
+==> 072.rb 20 <==
+'abc'.gsub(/3/, '')
+
+==> 073.rb 21 <==
+'abc'.gsub(/-/, 'a')
+
+==> 074.rb 20 <==
+'abc'.gsub(/-/, '')
+
+==> 075.rb 21 <==
+'abc'.gsub(/_/, 'a')
+
+==> 076.rb 20 <==
+'abc'.gsub(/_/, '')
+
+==> 077.rb 21 <==
+'abc'.gsub(/,/, 'a')
+
+==> 078.rb 20 <==
+'abc'.gsub(/,/, '')
+
+==> 079.rb 22 <==
+'abc'.gsub(/\r/, 'a')
+
+==> 080.rb 21 <==
+'abc'.gsub(/\r/, '')
+
+==> 081.rb 22 <==
+'abc'.gsub(/\\/, 'a')
+
+==> 082.rb 21 <==
+'abc'.gsub(/\\/, '')
+
+==> 083.rb 22 <==
+'abc'.gsub(/\y/, 'a')
+
+==> 084.rb 21 <==
+'abc'.gsub(/\y/, '')
+
+==> 085.rb 26 <==
+'abc'.gsub(/\u1234/, 'a')
+
+==> 086.rb 25 <==
+'abc'.gsub(/\u1234/, '')
+
+==> 087.rb 24 <==
+'abc'.gsub(/\x65/, 'a')
+
+==> 088.rb 23 <==
+'abc'.gsub(/\x65/, '')
+
+==> 089.rb 22 <==
+'abc'.gsub(/a/, 'def')
+==> 090.rb 22 <==
+'abc'.gsub(/\n/, ',')
+
+==> 091.rb 24 <==
+'/abc'.gsub(%r{a}, 'd')
+
+==> 092.rb 33 <==
+'abc'.gsub(Regexp.new('b'), '2')
+
+==> 093.rb 33 <==
+'abc'.gsub(Regexp.new(/b/), '2')
+
+==> 094.rb 37 <==
+'123'.gsub(Regexp.compile('1'), 'a')
+
+==> 095.rb 23 <==
+'abc'.gsub(/a+/, 'def')
+==> 096.rb 23 <==
+'abc'.gsub(/a*/, 'def')
+==> 097.rb 19 <==
+'abc'.gsub(/^/, '')
+==> 098.rb 19 <==
+'abc'.gsub(/$/, '')
+==> 099.rb 23 <==
+'abc'.gsub(/a?/, 'def')
+==> 100.rb 20 <==
+'abc'.gsub(/./, 'a')
+==> 101.rb 22 <==
+'abc'.gsub(/a|b/, 'd')
+==> 102.rb 23 <==
+'abc'.gsub(/(ab)/, 'd')
+==> 103.rb 25 <==
+'(abc)'.gsub(/(ab)/, 'd')
+==> 104.rb 24 <==
+'abc'.gsub(/a{3,}/, 'd')
+==> 105.rb 24 <==
+'abc'.gsub(/[a-z]/, 'd')
+==> 106.rb 21 <==
+"abc".gsub(/\s/, "d")
+==> 107.rb 36 <==
+foo = 'a'
+"abc".gsub(/#{foo}/, "d")
+
+==> 108.rb 48 <==
+foo = 'a'
+"abc".gsub(Regexp.new("#{foo}"), "d")
+
+==> 109.rb 48 <==
+foo = 'a'
+"abc".gsub(Regexp.new(/#{foo}/), "d")
+
+==> 110.rb 23 <==
+'a + c'.gsub('+', '-')
+
+==> 111.rb 21 <==
+'abc'.gsub('a', '1')
+
+==> 112.rb 22 <==
+'abc'.gsub!('a', '1')
+
+==> 113.rb 21 <==
+'abc'.gsub!('a', '')
+
