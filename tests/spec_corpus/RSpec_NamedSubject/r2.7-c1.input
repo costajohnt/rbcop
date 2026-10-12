@@ -1,0 +1,67 @@
+==> .rubocop.yml 183 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/NamedSubject:
+  IgnoreSharedExamples: false
+
+==> 000/000_spec.rb 185 <==
+RSpec.describe User do
+  subject { described_class.new }
+
+  it "is valid" do
+    expect(subject.valid?).to be(true)
+  end
+
+  specify do
+    expect(subject.valid?).to be(true)
+  end
+end
+
+==> 001/001_spec.rb 167 <==
+RSpec.describe User do
+  subject { described_class.new }
+
+  before(:each) do
+    do_something_with(subject)
+  end
+
+  after do
+    do_something_with(subject)
+  end
+end
+
+==> 002/002_spec.rb 125 <==
+RSpec.describe User do
+  subject { described_class.new }
+
+  around(:each) do |test|
+    do_something_with(subject)
+  end
+end
+
+==> 003/003_spec.rb 26 <==
+def foo
+  it(subject)
+end
+
+==> 004/004_spec.rb 260 <==
+RSpec.describe User do
+  subject(:new_user) { described_class.new }
+
+  shared_examples_for 'a valid new user' do
+    it "is a User" do
+      expect(subject).to be_a(User)
+    end
+
+    it "is valid" do
+      expect(subject.valid?).to be(true)
+    end
+  end
+end
+

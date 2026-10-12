@@ -1,0 +1,89 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 74 <==
+RSpec.describe Foo do
+  it { bar }
+
+  it { expect(baz).to be_truthy }
+end
+
+==> 001/001_spec.rb 16 <==
+specify { bar }
+
+==> 002/002_spec.rb 24 <==
+it { should be_truthy }
+
+==> 003/003_spec.rb 22 <==
+it { bar }
+it { baz }
+
+==> 004/004_spec.rb 26 <==
+it { custom_expect(bar) }
+
+==> 005/005_spec.rb 18 <==
+custom_it { foo }
+
+==> 006/006_spec.rb 49 <==
+RSpec.describe Foo do
+  it 'not implemented'
+end
+
+==> 007/007_spec.rb 16 <==
+pending { bar }
+
+==> 008/008_spec.rb 13 <==
+skip { bar }
+
+==> 009/009_spec.rb 83 <==
+it "is implemented but waiting" do
+  pending "something else getting finished"
+end
+
+==> 010/010_spec.rb 30 <==
+it "is skipped" do
+  skip
+end
+
+==> 011/011_spec.rb 403 <==
+it 'is skipped', :skip do
+  foo
+end
+it 'is skipped', skip: true do
+  foo
+end
+it 'is skipped', skip: "test" do
+  foo
+end
+it 'is skipped', skip: "test" \
+                       "foo" do
+  foo
+end
+it 'is pending', :pending do
+  foo
+end
+it 'is pending', pending: true do
+  foo
+end
+it 'is pending', pending: "test" do
+  foo
+end
+it 'is pending', pending: "test" \
+                          "foo" do
+  foo
+end
+
+==> 012/012_spec.rb 73 <==
+RSpec.describe Foo do
+  it { _1 }
+
+  it { expect(baz).to be_truthy }
+end
+

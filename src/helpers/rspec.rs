@@ -530,6 +530,84 @@ pub fn hook_scope(call: &CallNode) -> Option<&'static str> {
     }
 }
 
+/// Variable#variable_definition? of a let/subject (block or block-pass send): the name argument,
+/// `(send nil? {#Subjects.all #Helpers.all} $({any_sym str dstr} ...) ...)`.
+pub fn variable_definition<'pr>(_cx: &Cx, l: &Language, node: &Node<'pr>) -> Option<Node<'pr>> {
+    let call = node.as_call_node()?;
+    let n = method_name(&call);
+    if call.receiver().is_some() || !(l.subject(n) || l.helper(n)) {
+        return None;
+    }
+    let first = send_args(&call).into_iter().next()?;
+    matches!(kind::of(&first), kind::SYMBOL_NODE | kind::INTERPOLATED_SYMBOL_NODE | kind::STRING_NODE | kind::INTERPOLATED_STRING_NODE)
+        .then_some(first)
+}
+
+/// `node.child_nodes` for the parser node a body is, as far as cops look for blocks in it: a
+/// `begin`'s statements, a block's (send, then) body, an `if`'s condition and branches.
+pub fn child_nodes<'pr>(node: &Node<'pr>) -> Vec<Node<'pr>> {
+    if let Some(cs) = begin_children(node) {
+        return cs;
+    }
+    if let Some(c) = any_block_call(node) {
+        let mut out: Vec<Node> = c.receiver().into_iter().chain(send_args(&c)).collect();
+        out.extend(parser_body(block_body(&c)));
+        return out;
+    }
+    if let Some(i) = node.as_if_node() {
+        let mut out = vec![i.predicate()];
+        out.extend(parser_body(i.statements().map(|s| s.as_node())));
+        match i.subsequent() {
+            Some(s) if s.as_else_node().is_some() => {
+                out.extend(parser_body(s.as_else_node().unwrap().statements().map(|s| s.as_node())))
+            }
+            Some(s) => out.push(s),
+            None => {}
+        }
+        return out;
+    }
+    Vec::new()
+}
+
+/// SkipOrPending#skipped_in_metadata?: `{(send _ _ <(sym {:skip :pending}) ...>)
+/// (send _ _ ... (hash <(pair (sym {:skip :pending}) { true str dstr }) ...>))}`
+pub fn skipped_in_metadata(cx: &Cx, call: &CallNode) -> bool {
+    if is_csend(call) {
+        return false;
+    }
+    let args = send_args(call);
+    let key = |n: &Node| is_sym(cx, n) && matches!(helpers::rails::sym_value(n).as_deref(), Some("skip" | "pending"));
+    if args.iter().any(&key) {
+        return true;
+    }
+    let Some(pairs) = args.last().and_then(helpers::rails::hash_elements) else { return false };
+    pairs.iter().filter_map(|p| p.as_assoc_node()).any(|p| {
+        let v = p.value();
+        key(&p.key()) && (v.as_true_node().is_some() || is_str(&v) || is_dstr(&v))
+    })
+}
+
+/// SkipOrPending#skip_or_pending_inside_block?: `(block <(send nil? {:skip :pending} ...) ...>)`,
+/// a direct child of the block: its own send or its single body statement.
+pub fn skip_or_pending_inside_block(node: &Node) -> bool {
+    let Some(c) = plain_block_call(node) else { return false };
+    if !is_csend(&c) && c.receiver().is_none() && matches!(method_name(&c), "skip" | "pending") {
+        return true;
+    }
+    parser_body(block_body(&c)).is_some_and(|b| {
+        send_call(&b).is_some_and(|s| s.receiver().is_none() && matches!(method_name(&s), "skip" | "pending"))
+    })
+}
+
+/// `Integer(value)` of a config value: an integer, or a string of decimal digits.
+pub fn config_integer(v: Option<&Value>) -> Option<i64> {
+    match v? {
+        Value::Int(i) => Some(*i),
+        Value::Str(s) => s.trim().replace('_', "").parse().ok(),
+        _ => None,
+    }
+}
+
 /// A node's byte range.
 pub fn node_range(node: &Node) -> (usize, usize) {
     let l = node.location();

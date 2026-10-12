@@ -1,0 +1,29 @@
+==> .rubocop.yml 172 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/MultipleExpectations:
+  Max: '2'
+
+==> 000/000_spec.rb 108 <==
+describe Foo do
+  it 'uses expect twice' do
+    expect(foo).to eq(bar)
+    expect(baz).to eq(bar)
+  end
+end
+
+==> 001/001_spec.rb 141 <==
+describe Foo do
+  it 'uses expect three times' do
+    expect(foo).to eq(bar)
+    expect(baz).to eq(bar)
+    expect(qux).to eq(bar)
+  end
+end
+

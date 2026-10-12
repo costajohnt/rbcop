@@ -1,0 +1,12 @@
+==> offenses exit=1 456 <==
+000/000_spec.rb:1:1: C: RSpec/MultipleDescribes: Do not use multiple top-level example groups - try to nest them.
+001/001_spec.rb:1:1: C: RSpec/MultipleDescribes: Do not use multiple top-level example groups - try to nest them.
+002/002_spec.rb:1:1: C: RSpec/MultipleDescribes: Do not use multiple top-level example groups - try to nest them.
+003/003_spec.rb:1:1: C: RSpec/MultipleDescribes: Do not use multiple top-level example groups - try to nest them.
+
+==> autocorrect exit=1 456 <==
+000/000_spec.rb:1:1: C: RSpec/MultipleDescribes: Do not use multiple top-level example groups - try to nest them.
+001/001_spec.rb:1:1: C: RSpec/MultipleDescribes: Do not use multiple top-level example groups - try to nest them.
+002/002_spec.rb:1:1: C: RSpec/MultipleDescribes: Do not use multiple top-level example groups - try to nest them.
+003/003_spec.rb:1:1: C: RSpec/MultipleDescribes: Do not use multiple top-level example groups - try to nest them.
+

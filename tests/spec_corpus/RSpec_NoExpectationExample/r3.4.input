@@ -1,0 +1,17 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000/000_spec.rb 73 <==
+RSpec.describe Foo do
+  it { it }
+
+  it { expect(baz).to be_truthy }
+end
+

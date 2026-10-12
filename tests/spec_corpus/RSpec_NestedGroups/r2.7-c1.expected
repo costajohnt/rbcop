@@ -1,0 +1,8 @@
+==> offenses exit=1 180 <==
+000/000_spec.rb:3:5: C: RSpec/NestedGroups: Maximum example group nesting exceeded [3/2].
+000/000_spec.rb:4:7: C: RSpec/NestedGroups: Maximum example group nesting exceeded [4/2].
+
+==> autocorrect exit=1 180 <==
+000/000_spec.rb:3:5: C: RSpec/NestedGroups: Maximum example group nesting exceeded [3/2].
+000/000_spec.rb:4:7: C: RSpec/NestedGroups: Maximum example group nesting exceeded [4/2].
+

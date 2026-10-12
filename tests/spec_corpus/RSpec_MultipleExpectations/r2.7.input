@@ -1,0 +1,154 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 108 <==
+describe Foo do
+  it 'uses expect twice' do
+    expect(foo).to eq(bar)
+    expect(baz).to eq(bar)
+  end
+end
+
+==> 001/001_spec.rb 151 <==
+describe Foo do
+  it 'does something neat' do
+    expect(neat).to be(true)
+  end
+
+  it 'does something cool' do
+    expect(cool).to be(true)
+  end
+end
+
+==> 002/002_spec.rb 168 <==
+describe Foo do
+  it 'uses expect_any_instance_of twice' do
+    expect_any_instance_of(Foo).to receive(:bar)
+    expect_any_instance_of(Foo).to receive(:baz)
+  end
+end
+
+==> 003/003_spec.rb 136 <==
+describe Foo do
+  it 'uses expect_any_instance_of twice' do
+    is_expected.to receive(:bar)
+    is_expected.to receive(:baz)
+  end
+end
+
+==> 004/004_spec.rb 157 <==
+describe Foo do
+  it 'uses expect with block twice' do
+    expect { something }.to change(Foo.count)
+    expect { something }.to change(Bar.count)
+  end
+end
+
+==> 005/005_spec.rb 148 <==
+describe Foo do
+  it 'aggregates failures' do
+    aggregate_failures do
+      expect(foo).to eq(bar)
+      expect(baz).to eq(bar)
+    end
+  end
+end
+
+==> 006/006_spec.rb 142 <==
+describe Foo do
+  it 'has multiple aggregate_failures calls' do
+    aggregate_failures do
+    end
+    aggregate_failures do
+    end
+  end
+end
+
+==> 007/007_spec.rb 135 <==
+describe Foo do
+  it 'uses expect twice', :foo, :aggregate_failures do
+    expect(foo).to eq(bar)
+    expect(baz).to eq(bar)
+  end
+end
+
+==> 008/008_spec.rb 135 <==
+describe Foo, :foo, :aggregate_failures do
+  it 'uses expect twice' do
+    expect(foo).to eq(bar)
+    expect(baz).to eq(bar)
+  end
+end
+
+==> 009/009_spec.rb 148 <==
+describe Foo do
+  it 'uses expect twice', :foo, bar: 1, aggregate_failures: true do
+    expect(foo).to eq(bar)
+    expect(baz).to eq(bar)
+  end
+end
+
+==> 010/010_spec.rb 148 <==
+describe Foo, :foo, bar: 1, aggregate_failures: true do
+  it 'uses expect twice' do
+    expect(foo).to eq(bar)
+    expect(baz).to eq(bar)
+  end
+end
+
+==> 011/011_spec.rb 161 <==
+describe Foo, aggregate_failures: true do
+  it 'uses expect twice', aggregate_failures: false do
+    expect(foo).to eq(bar)
+    expect(baz).to eq(bar)
+  end
+end
+
+==> 012/012_spec.rb 135 <==
+describe Foo do
+  it 'uses expect twice', aggregate_failures: false do
+    expect(foo).to eq(bar)
+    expect(baz).to eq(bar)
+  end
+end
+
+==> 013/013_spec.rb 135 <==
+describe Foo, aggregate_failures: false do
+  it 'uses expect twice' do
+    expect(foo).to eq(bar)
+    expect(baz).to eq(bar)
+  end
+end
+
+==> 014/014_spec.rb 228 <==
+describe Foo do
+  it 'uses expect twice' do
+    expect(foo).to eq(bar)
+    expect(baz).to eq(bar)
+  end
+  it 'with aggregate_failures', aggregate_failures: true do
+    expect(foo).to eq(bar)
+    expect(baz).to eq(bar)
+  end
+end
+
+==> 015/015_spec.rb 266 <==
+describe Bar, aggregate_failures: true do
+  describe Foo do
+    it 'uses expect twice' do
+      expect(foo).to eq(bar)
+      expect(baz).to eq(bar)
+    end
+    it 'with aggregate_failures', aggregate_failures: false do
+      expect(foo).to eq(bar)
+    end
+  end
+end
+

@@ -1,0 +1,84 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 75 <==
+it 'something' do
+  something = 1
+  expect(something).kind_of? Integer
+end
+
+==> 001/001_spec.rb 49 <==
+it 'something' do
+  expect(something).eq? 42
+end
+
+==> 002/002_spec.rb 42 <==
+it 'something' do
+  is_expected == 42
+end
+
+==> 003/003_spec.rb 65 <==
+it 'something' do
+  expect{something}.kind_of? StandardError
+end
+
+==> 004/004_spec.rb 42 <==
+it 'something' do
+  expect(something)
+end
+
+==> 005/005_spec.rb 7 <==
+expect
+
+==> 006/006_spec.rb 58 <==
+it 'something' do
+  expect(something).to be_a Integer
+end
+
+==> 007/007_spec.rb 45 <==
+it 'something' do
+  is_expected.to eq 42
+end
+
+==> 008/008_spec.rb 72 <==
+it 'something' do
+  expect{something}.to raise_error(StandardError)
+end
+
+==> 009/009_spec.rb 62 <==
+it 'something' do
+  expect(something).not_to be_a Integer
+end
+
+==> 010/010_spec.rb 49 <==
+it 'something' do
+  is_expected.not_to eq 42
+end
+
+==> 011/011_spec.rb 76 <==
+it 'something' do
+  expect{something}.not_to raise_error(StandardError)
+end
+
+==> 012/012_spec.rb 62 <==
+it 'something' do
+  expect(something).to_not be_a Integer
+end
+
+==> 013/013_spec.rb 49 <==
+it 'something' do
+  is_expected.to_not eq 42
+end
+
+==> 014/014_spec.rb 76 <==
+it 'something' do
+  expect{something}.to_not raise_error(StandardError)
+end
+

@@ -1,0 +1,39 @@
+==> .rubocop.yml 195 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/NoExpectationExample:
+  AllowedPatterns:
+  - "^expect_"
+
+==> 000/000_spec.rb 24 <==
+it { expect_something }
+
+==> 001/001_spec.rb 73 <==
+it { expect_something(foo, bar) }
+it { expect_something(foo, bar, baz) }
+
+==> 002/002_spec.rb 59 <==
+it do
+  do_something
+  expect_something
+  do_something
+end
+
+==> 003/003_spec.rb 91 <==
+it do
+  do_something
+  some_patterns.each do
+    expect_something
+  end
+  do_something
+end
+
+==> 004/004_spec.rb 28 <==
+it { not_expect_something }
+

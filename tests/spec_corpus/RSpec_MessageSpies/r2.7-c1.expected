@@ -1,0 +1,20 @@
+==> offenses exit=1 768 <==
+000/000_spec.rb:1:16: C: RSpec/MessageSpies: Prefer `receive` for setting message expectations.
+001/001_spec.rb:2:16: C: RSpec/MessageSpies: Prefer `receive` for setting message expectations.
+002/002_spec.rb:1:17: C: RSpec/MessageSpies: Prefer `receive` for setting message expectations.
+003/003_spec.rb:1:16: C: RSpec/MessageSpies: Prefer `receive` for setting message expectations.
+004/004_spec.rb:1:20: C: RSpec/MessageSpies: Prefer `receive` for setting message expectations.
+005/005_spec.rb:1:20: C: RSpec/MessageSpies: Prefer `receive` for setting message expectations.
+006/006_spec.rb:1:16: C: RSpec/MessageSpies: Prefer `receive` for setting message expectations.
+007/007_spec.rb:1:16: C: RSpec/MessageSpies: Prefer `receive` for setting message expectations.
+
+==> autocorrect exit=1 768 <==
+000/000_spec.rb:1:16: C: RSpec/MessageSpies: Prefer `receive` for setting message expectations.
+001/001_spec.rb:2:16: C: RSpec/MessageSpies: Prefer `receive` for setting message expectations.
+002/002_spec.rb:1:17: C: RSpec/MessageSpies: Prefer `receive` for setting message expectations.
+003/003_spec.rb:1:16: C: RSpec/MessageSpies: Prefer `receive` for setting message expectations.
+004/004_spec.rb:1:20: C: RSpec/MessageSpies: Prefer `receive` for setting message expectations.
+005/005_spec.rb:1:20: C: RSpec/MessageSpies: Prefer `receive` for setting message expectations.
+006/006_spec.rb:1:16: C: RSpec/MessageSpies: Prefer `receive` for setting message expectations.
+007/007_spec.rb:1:16: C: RSpec/MessageSpies: Prefer `receive` for setting message expectations.
+

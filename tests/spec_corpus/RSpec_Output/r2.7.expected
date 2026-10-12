@@ -1,0 +1,76 @@
+==> offenses exit=1 1360 <==
+000/000_spec.rb:1:1: C: [Correctable] RSpec/Output: Do not write to stdout in specs.
+001/001_spec.rb:1:1: C: [Correctable] RSpec/Output: Do not write to stdout in specs.
+002/002_spec.rb:1:1: C: [Correctable] RSpec/Output: Do not write to stdout in specs.
+003/003_spec.rb:1:1: C: [Correctable] RSpec/Output: Do not write to stdout in specs.
+004/004_spec.rb:1:1: C: [Correctable] RSpec/Output: Do not write to stdout in specs.
+005/005_spec.rb:1:1: C: [Correctable] RSpec/Output: Do not write to stdout in specs.
+006/006_spec.rb:1:1: C: [Correctable] RSpec/Output: Do not write to stdout in specs.
+007/007_spec.rb:1:1: C: [Correctable] RSpec/Output: Do not write to stdout in specs.
+008/008_spec.rb:1:1: C: [Correctable] RSpec/Output: Do not write to stdout in specs.
+009/009_spec.rb:1:1: C: [Correctable] RSpec/Output: Do not write to stdout in specs.
+011/011_spec.rb:1:1: C: [Correctable] RSpec/Output: Do not write to stdout in specs.
+011/011_spec.rb:2:1: C: [Correctable] RSpec/Output: Do not write to stdout in specs.
+011/011_spec.rb:3:1: C: [Correctable] RSpec/Output: Do not write to stdout in specs.
+011/011_spec.rb:4:1: C: [Correctable] RSpec/Output: Do not write to stdout in specs.
+011/011_spec.rb:5:1: C: [Correctable] RSpec/Output: Do not write to stdout in specs.
+012/012_spec.rb:1:1: C: [Correctable] RSpec/Output: Do not write to stdout in specs.
+
+==> autocorrect exit=0 1328 <==
+000/000_spec.rb:1:1: C: [Corrected] RSpec/Output: Do not write to stdout in specs.
+001/001_spec.rb:1:1: C: [Corrected] RSpec/Output: Do not write to stdout in specs.
+002/002_spec.rb:1:1: C: [Corrected] RSpec/Output: Do not write to stdout in specs.
+003/003_spec.rb:1:1: C: [Corrected] RSpec/Output: Do not write to stdout in specs.
+004/004_spec.rb:1:1: C: [Corrected] RSpec/Output: Do not write to stdout in specs.
+005/005_spec.rb:1:1: C: [Corrected] RSpec/Output: Do not write to stdout in specs.
+006/006_spec.rb:1:1: C: [Corrected] RSpec/Output: Do not write to stdout in specs.
+007/007_spec.rb:1:1: C: [Corrected] RSpec/Output: Do not write to stdout in specs.
+008/008_spec.rb:1:1: C: [Corrected] RSpec/Output: Do not write to stdout in specs.
+009/009_spec.rb:1:1: C: [Corrected] RSpec/Output: Do not write to stdout in specs.
+011/011_spec.rb:1:1: C: [Corrected] RSpec/Output: Do not write to stdout in specs.
+011/011_spec.rb:2:1: C: [Corrected] RSpec/Output: Do not write to stdout in specs.
+011/011_spec.rb:3:1: C: [Corrected] RSpec/Output: Do not write to stdout in specs.
+011/011_spec.rb:4:1: C: [Corrected] RSpec/Output: Do not write to stdout in specs.
+011/011_spec.rb:5:1: C: [Corrected] RSpec/Output: Do not write to stdout in specs.
+012/012_spec.rb:1:1: C: [Corrected] RSpec/Output: Do not write to stdout in specs.
+
+==> corrected/000/000_spec.rb 1 <==
+
+
+==> corrected/001/001_spec.rb 1 <==
+
+
+==> corrected/002/002_spec.rb 1 <==
+
+
+==> corrected/003/003_spec.rb 1 <==
+
+
+==> corrected/004/004_spec.rb 1 <==
+
+
+==> corrected/005/005_spec.rb 1 <==
+
+
+==> corrected/006/006_spec.rb 1 <==
+
+
+==> corrected/007/007_spec.rb 1 <==
+
+
+==> corrected/008/008_spec.rb 1 <==
+
+
+==> corrected/009/009_spec.rb 1 <==
+
+
+==> corrected/011/011_spec.rb 5 <==
+
+
+
+
+
+
+==> corrected/012/012_spec.rb 1 <==
+
+

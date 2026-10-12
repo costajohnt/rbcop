@@ -1,0 +1,10 @@
+==> offenses exit=1 315 <==
+000/000_spec.rb:1:1: C: RSpec/MultipleMemoizedHelpers: Example group has too many memoized helpers [2/1]
+001/001_spec.rb:1:1: C: RSpec/MultipleMemoizedHelpers: Example group has too many memoized helpers [2/1]
+007/007_spec.rb:4:3: C: RSpec/MultipleMemoizedHelpers: Example group has too many memoized helpers [2/1]
+
+==> autocorrect exit=1 315 <==
+000/000_spec.rb:1:1: C: RSpec/MultipleMemoizedHelpers: Example group has too many memoized helpers [2/1]
+001/001_spec.rb:1:1: C: RSpec/MultipleMemoizedHelpers: Example group has too many memoized helpers [2/1]
+007/007_spec.rb:4:3: C: RSpec/MultipleMemoizedHelpers: Example group has too many memoized helpers [2/1]
+

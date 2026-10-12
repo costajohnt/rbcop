@@ -1,0 +1,50 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 164 <==
+describe 'hello there' do
+  subject(:foo) { 1 }
+  subject(:bar) { 2 }
+  subject { 3 }
+  subject(:baz) { 4 }
+
+  describe 'baz' do
+    subject(:norf) { 1 }
+  end
+end
+
+==> 001/001_spec.rb 54 <==
+describe Foo do
+  subject! { a }
+  subject! { b }
+end
+
+==> 002/002_spec.rb 302 <==
+describe Foo do
+  it_behaves_like 'user' do
+    subject { described_class.new(user, described_class) }
+
+    it { expect(subject).not_to be_accessible }
+  end
+
+  it_behaves_like 'admin' do
+    subject { described_class.new(user, described_class) }
+
+    it { expect(subject).to be_accessible }
+  end
+end
+
+==> 003/003_spec.rb 78 <==
+describe 'hello there' do
+  subject { 1 }
+  subject { 2 }
+  subject { 3 }
+end
+

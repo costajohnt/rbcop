@@ -1,0 +1,83 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 192 <==
+describe MyClass do
+  context 'when foo' do
+    context 'when bar' do
+      context 'when baz' do
+      end
+    end
+  end
+
+  context 'when qux' do
+    context 'when norf' do
+    end
+  end
+end
+
+==> 001/001_spec.rb 131 <==
+example_group MyClass do
+  context 'when foo' do
+    context 'when bar' do
+      context 'when baz' do
+      end
+    end
+  end
+end
+
+==> 002/002_spec.rb 193 <==
+shared_examples_for 'nested like express' do
+  context 'when foo' do
+    context 'when bar' do
+      context 'when baz' do
+        context 'when qux' do
+        end
+      end
+    end
+  end
+end
+
+==> 003/003_spec.rb 161 <==
+class MyThingy
+  describe MyClass do
+    context 'when foo' do
+      context 'when bar' do
+        context 'when baz' do
+        end
+      end
+    end
+  end
+end
+
+==> 004/004_spec.rb 165 <==
+module MyNamespace
+  describe MyClass do
+    context 'when foo' do
+      context 'when bar' do
+        context 'when baz' do
+        end
+      end
+    end
+  end
+end
+
+==> 005/005_spec.rb 161 <==
+describe MyClass do
+  context 'when foo' do
+    context 'when bar' do
+      [].each do |i|
+        context 'when baz' do
+        end
+      end
+    end
+  end
+end
+
