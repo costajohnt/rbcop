@@ -68,10 +68,10 @@ impl Pattern {
             // `pattern == path` first: a file named `[x].rb` matches itself.
             Pattern::Glob(p) if p == path => true,
             Pattern::Glob(p) => {
-                let p = if p.starts_with("..") {
-                    expand_path(Path::new(p), &cwd()).display().to_string()
+                let p: std::borrow::Cow<str> = if p.starts_with("..") {
+                    expand_path(Path::new(p), &cwd()).display().to_string().into()
                 } else {
-                    p.clone()
+                    p.into()
                 };
                 glob::fnmatch(&p, path, false) || hidden_file_in_not_hidden_dir(&p, path)
             }
@@ -165,6 +165,23 @@ impl CopConfig {
     }
 }
 
+/// FNV-1a: SipHash's DoS resistance buys nothing for cop names, and its cost showed up per file.
+#[derive(Default)]
+struct Fnv(u64);
+
+impl std::hash::Hasher for Fnv {
+    fn finish(&self) -> u64 {
+        self.0
+    }
+    fn write(&mut self, bytes: &[u8]) {
+        let mut h = if self.0 == 0 { 0xcbf2_9ce4_8422_2325 } else { self.0 };
+        for &b in bytes {
+            h = (h ^ u64::from(b)).wrapping_mul(0x0100_0000_01b3);
+        }
+        self.0 = h;
+    }
+}
+
 /// A fully merged config (one per `.rubocop.yml`, or the default).
 #[derive(Clone)]
 pub struct Resolved {
@@ -173,7 +190,8 @@ pub struct Resolved {
     pub base_dir: PathBuf,
     /// TargetRuby#version (e.g. 3.4).
     pub target_ruby: f64,
-    cops: HashMap<String, CopConfig>,
+    /// Looked up twice per cop and file, so with a cheap hash (the keys are cop names).
+    cops: HashMap<String, CopConfig, std::hash::BuildHasherDefault<Fnv>>,
     /// (cop, warning) for configuration under a cop's deprecated name, which Config#for_cop warns
     /// about the first time the cop's config is asked for.
     pub deprecated_warnings: Vec<(&'static str, String)>,
@@ -181,6 +199,9 @@ pub struct Resolved {
     unregistered: Vec<String>,
     /// The options the cops were resolved with (Registry#enabled_cop_name? for other cop names).
     opts: Options,
+    /// for_cop of every cop-like key, built on first use: cops ask for other cops' settings per
+    /// node, and building one takes two linear scans of the whole config and a clone.
+    for_cop_cache: std::sync::OnceLock<HashMap<String, Map>>,
 }
 
 impl Resolved {
@@ -192,10 +213,11 @@ impl Resolved {
             hash,
             base_dir,
             target_ruby,
-            cops: HashMap::new(),
+            cops: HashMap::default(),
             deprecated_warnings: Vec::new(),
             unregistered: Vec::new(),
             opts: opts.clone(),
+            for_cop_cache: std::sync::OnceLock::new(),
         };
         for &name in cop_names {
             let cfg = r.build_cop(name, opts);
@@ -211,8 +233,9 @@ impl Resolved {
         r
     }
 
-    pub fn all_cops(&self) -> Map {
-        self.hash.map("AllCops").cloned().unwrap_or_default()
+    pub fn all_cops(&self) -> &Map {
+        static EMPTY: Map = Map(Vec::new());
+        self.hash.map("AllCops").unwrap_or(&EMPTY)
     }
 
     pub fn cop(&self, name: &str) -> &CopConfig {
@@ -220,7 +243,17 @@ impl Resolved {
     }
 
     /// Any cop's raw parameters (department merged under cop), implemented by rbcop or not.
-    pub fn for_cop(&self, name: &str) -> Map {
+    pub fn for_cop(&self, name: &str) -> std::borrow::Cow<'_, Map> {
+        let cache = self.for_cop_cache.get_or_init(|| {
+            self.hash.keys().filter(|k| k.contains('/')).map(|k| (k.to_string(), self.merged_for_cop(k))).collect()
+        });
+        match cache.get(name) {
+            Some(m) => std::borrow::Cow::Borrowed(m),
+            None => std::borrow::Cow::Owned(self.merged_for_cop(name)),
+        }
+    }
+
+    fn merged_for_cop(&self, name: &str) -> Map {
         let mut params = name.rsplit_once('/').and_then(|(d, _)| self.hash.map(d)).cloned().unwrap_or_default();
         for (k, v) in self.hash.map(name).cloned().unwrap_or_default().0 {
             params.insert(k, v);
@@ -336,8 +369,9 @@ impl Resolved {
         match self.cops.get(name) {
             Some(c) => c.enabled,
             None => {
-                let cop = self.hash.map(name).cloned().unwrap_or_default();
-                self.enabled_cop_name(name, &self.enable_cop(name), &cop, &self.opts)
+                static EMPTY: Map = Map(Vec::new());
+                let cop = self.hash.map(name).unwrap_or(&EMPTY);
+                self.enabled_cop_name(name, &self.enable_cop(name), cop, &self.opts)
             }
         }
     }
@@ -400,14 +434,14 @@ impl Resolved {
     /// Config#file_to_exclude? (AllCops/Exclude against the absolute path).
     pub fn file_to_exclude(&self, file: &Path) -> bool {
         let abs = file.display().to_string();
-        patterns(&self.all_cops(), "Exclude").unwrap_or_default().iter().any(|p| p.matches(&abs))
+        patterns(self.all_cops(), "Exclude").unwrap_or_default().iter().any(|p| p.matches(&abs))
     }
 
     /// Config#file_to_include? (AllCops/Include).
     pub fn file_to_include(&self, file: &Path) -> bool {
         let rel = self.relative(file);
         let abs = file.display().to_string();
-        let include = patterns(&self.all_cops(), "Include").unwrap_or_default();
+        let include = patterns(self.all_cops(), "Include").unwrap_or_default();
         let hidden = rel.starts_with('.') && !rel.starts_with("..");
         let possibly_hidden = include.iter().any(|p| match p {
             Pattern::Regex(_) => true,
@@ -1267,7 +1301,9 @@ fn gem_versions_compare_like_rubygems() {
 /// Dir.pwd (no symlink resolution, like Ruby).
 pub fn cwd() -> PathBuf {
     // Ruby's Dir.pwd is getcwd(3), the physical path (/private/tmp, not /tmp); so is current_dir.
-    std::env::current_dir().unwrap_or_default()
+    // Read once: cops ask per file, getcwd is slow on macOS, and rbcop never changes directory.
+    static CWD: std::sync::OnceLock<PathBuf> = std::sync::OnceLock::new();
+    CWD.get_or_init(|| std::env::current_dir().unwrap_or_default()).clone()
 }
 
 /// File.expand_path(path, base): absolute, with `.` and `..` folded, symlinks untouched.

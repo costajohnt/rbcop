@@ -256,6 +256,11 @@ fn shorthand<'pr>(node: &Node<'pr>) -> Option<(T, Vec<Node<'pr>>, Node<'pr>)> {
 }
 
 impl Tree {
+    /// The program's tree, built on first use and shared by every cop inspecting `src`.
+    pub fn shared<'s>(program: &ruby_prism::ProgramNode, src: &'s crate::source::Source) -> &'s Tree {
+        src.variable_tree.get_or_init(|| Tree::build(program, src))
+    }
+
     pub fn build(program: &ruby_prism::ProgramNode, src: &crate::source::Source) -> Tree {
         let mut tree = Tree { nodes: Vec::new(), root: None, lvasgn_shapes: HashMap::new() };
         tree.root = tree.stmts(Some(program.statements()));
