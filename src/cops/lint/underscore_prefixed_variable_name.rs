@@ -14,10 +14,10 @@ impl Cop for UnderscorePrefixedVariableName {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let tree = Tree::build(&node.as_program_node().unwrap(), cx.src);
+        let tree = Tree::shared(&node.as_program_node().unwrap(), cx.src);
         let allow_kw = cx.cfg.bool("AllowKeywordBlockArguments") == Some(true);
         let mut ranges: Vec<(usize, usize)> = Vec::new();
-        vf::investigate(&tree, |tree, scope, vars| {
+        vf::investigate(tree, |tree, scope, vars| {
             for &v in &scope.variables {
                 let var = &vars[v];
                 if !var.name.starts_with('_') || !var.references.iter().any(|r| r.explicit(tree)) {
