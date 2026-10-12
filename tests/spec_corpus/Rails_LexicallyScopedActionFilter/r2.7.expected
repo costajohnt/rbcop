@@ -1,0 +1,22 @@
+==> offenses exit=1 1095 <==
+app/controllers/000/000.rb:2:3: C: Rails/LexicallyScopedActionFilter: `health_check` is not explicitly defined on the class.
+app/controllers/001/001.rb:2:3: C: Rails/LexicallyScopedActionFilter: `health_check` is not explicitly defined on the class.
+app/controllers/002/002.rb:2:3: C: Rails/LexicallyScopedActionFilter: `settings` is not explicitly defined on the class.
+app/controllers/003/003.rb:2:3: C: Rails/LexicallyScopedActionFilter: `settings`, `logout` are not explicitly defined on the class.
+app/controllers/004/004.rb:2:3: C: Rails/LexicallyScopedActionFilter: `index`, `show` are not explicitly defined on the class.
+app/controllers/005/005.rb:5:5: C: Rails/LexicallyScopedActionFilter: `foo` is not explicitly defined on the module.
+app/controllers/011/011.rb:2:3: C: Rails/LexicallyScopedActionFilter: `foo` is not explicitly defined on the class.
+app/controllers/013/013.rb:2:3: C: Rails/LexicallyScopedActionFilter: `foo` is not explicitly defined on the class.
+app/controllers/015/015.rb:2:3: C: Rails/LexicallyScopedActionFilter: `foo` is not explicitly defined on the class.
+
+==> autocorrect exit=1 1095 <==
+app/controllers/000/000.rb:2:3: C: Rails/LexicallyScopedActionFilter: `health_check` is not explicitly defined on the class.
+app/controllers/001/001.rb:2:3: C: Rails/LexicallyScopedActionFilter: `health_check` is not explicitly defined on the class.
+app/controllers/002/002.rb:2:3: C: Rails/LexicallyScopedActionFilter: `settings` is not explicitly defined on the class.
+app/controllers/003/003.rb:2:3: C: Rails/LexicallyScopedActionFilter: `settings`, `logout` are not explicitly defined on the class.
+app/controllers/004/004.rb:2:3: C: Rails/LexicallyScopedActionFilter: `index`, `show` are not explicitly defined on the class.
+app/controllers/005/005.rb:5:5: C: Rails/LexicallyScopedActionFilter: `foo` is not explicitly defined on the module.
+app/controllers/011/011.rb:2:3: C: Rails/LexicallyScopedActionFilter: `foo` is not explicitly defined on the class.
+app/controllers/013/013.rb:2:3: C: Rails/LexicallyScopedActionFilter: `foo` is not explicitly defined on the class.
+app/controllers/015/015.rb:2:3: C: Rails/LexicallyScopedActionFilter: `foo` is not explicitly defined on the class.
+

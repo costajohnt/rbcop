@@ -1,0 +1,198 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/controllers/000/000.rb 124 <==
+class LoginController < ApplicationController
+  before_action :require_login, except: 'health_check'
+
+  def index
+  end
+end
+
+==> app/controllers/001/001.rb 126 <==
+class LoginController < ApplicationController
+  skip_before_action :require_login, only: :health_check
+
+  def index
+  end
+end
+
+==> app/controllers/002/002.rb 126 <==
+class LoginController < ApplicationController
+  before_action :require_login, only: %w[index settings]
+
+  def index
+  end
+end
+
+==> app/controllers/003/003.rb 133 <==
+class LoginController < ApplicationController
+  before_action :require_login, only: %i[index settings logout]
+
+  def index
+  end
+end
+
+==> app/controllers/004/004.rb 103 <==
+class LoginController < ApplicationController
+  before_action :require_login, only: %i[index show]
+end
+
+==> app/controllers/005/005.rb 125 <==
+module FooMixin
+  extend ActiveSupport::Concern
+
+  included do
+    before_action proc { authenticate }, only: :foo
+  end
+end
+
+==> app/controllers/006/006.rb 131 <==
+class LoginController < ApplicationController
+  before_action :require_login, except: 'health_check'
+
+  def health_check
+  end
+end
+
+==> app/controllers/007/007.rb 133 <==
+class LoginController < ApplicationController
+  skip_before_action :require_login, only: :health_check
+
+  def health_check
+  end
+end
+
+==> app/controllers/008/008.rb 148 <==
+class LoginController < ApplicationController
+  before_action :require_login, only: %w[index settings]
+
+  def index
+  end
+
+  def settings
+  end
+end
+
+==> app/controllers/009/009.rb 175 <==
+class LoginController < ApplicationController
+  before_action :require_login, only: %i[index settings logout]
+
+  def index
+  end
+
+  def settings
+  end
+
+  def logout
+  end
+end
+
+==> app/controllers/010/010.rb 181 <==
+class FooController < ApplicationController
+  before_action :authorize!, only: %i[index show]
+
+  def index
+  end
+  alias_method :show, :index
+
+  private
+
+  def authorize!
+  end
+end
+
+==> app/controllers/011/011.rb 179 <==
+class FooController < ApplicationController
+  before_action :authorize!, only: %i[foo show]
+
+  def index
+  end
+  alias_method :show, :index
+
+  private
+
+  def authorize!
+  end
+end
+
+==> app/controllers/012/012.rb 134 <==
+class FooController < ApplicationController
+  before_action :authorize!, only: %i[index show]
+
+  delegate :index, :show, to: :foo
+end
+
+==> app/controllers/013/013.rb 124 <==
+class FooController < ApplicationController
+  before_action :authorize!, only: %i[foo show]
+
+  delegate :show, to: :bar
+end
+
+==> app/controllers/014/014.rb 171 <==
+class FooController < ApplicationController
+  before_action :authorize!, only: %i[index show]
+
+  def index
+  end
+  alias show index
+
+  private
+
+  def authorize!
+  end
+end
+
+==> app/controllers/015/015.rb 169 <==
+class FooController < ApplicationController
+  before_action :authorize!, only: %i[foo show]
+
+  def index
+  end
+  alias show index
+
+  private
+
+  def authorize!
+  end
+end
+
+==> app/controllers/016/016.rb 139 <==
+class Test < ActionController
+  before_action(:authenticate, only: %i[update cancel]) unless foo
+
+  def update; end
+
+  def cancel; end
+end
+
+==> app/controllers/017/017.rb 141 <==
+module FooMixin
+  extend ActiveSupport::Concern
+
+  included do
+    before_action proc { authenticate }, only: :foo
+  end
+
+  def foo; end
+end
+
+==> app/controllers/018/018.rb 130 <==
+class FooController < ApplicationController
+  before_action :foo, except: %I[index show]
+
+  def index
+  end
+
+  def show
+  end
+end
+
