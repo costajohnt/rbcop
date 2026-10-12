@@ -1,0 +1,44 @@
+# rubocop-rspec family cops whose corrections build Ruby source from text in the file (docstrings,
+# symbol and string values, regexp text, CSS ids): quotes, backslashes, newlines and interpolation.
+# Deliberate difference (docs/known-gaps.md): where RuboCop's correction splices non-inert text,
+# rbcop withholds it; expected/ is rbcop's output and rubocop-output/ RuboCop's (recorded by
+# tests/autocorrect/record.sh).
+plugins:
+  - rubocop-rspec
+  - rubocop-factory_bot
+  - rubocop-capybara
+AllCops:
+  TargetRubyVersion: 3.3
+  SuggestExtensions: false
+  DisabledByDefault: true
+RSpec/ExampleWording:
+  Enabled: true
+RSpec/ExcessiveDocstringSpacing:
+  Enabled: true
+RSpec/ExpectChange:
+  Enabled: true
+  EnforcedStyle: block
+RSpec/MatchWithSimpleRegex:
+  Enabled: true
+RSpec/MetadataStyle:
+  Enabled: true
+  EnforcedStyle: hash
+RSpec/ReceiveMessages:
+  Enabled: true
+RSpec/SharedExamples:
+  Enabled: true
+RSpec/SingleArgumentMessageChain:
+  Enabled: true
+RSpec/VerifiedDoubleReference:
+  Enabled: true
+FactoryBot/CreateList:
+  Enabled: true
+FactoryBot/AssociationStyle:
+  Enabled: true
+  Include: ['**/factories.rb']
+Capybara/SpecificFinders:
+  Enabled: true
+Capybara/RedundantWithinFind:
+  Enabled: true
+Capybara/RSpec/CurrentPathExpectation:
+  Enabled: true

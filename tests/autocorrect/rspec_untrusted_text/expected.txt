@@ -1,0 +1,35 @@
+factories.rb:3:5: C: [Corrected] FactoryBot/AssociationStyle: Use implicit style to define associations.
+factories.rb:4:5: C: [Corrected] FactoryBot/AssociationStyle: Use implicit style to define associations.
+factories.rb:5:5: C: [Correctable] FactoryBot/AssociationStyle: Use implicit style to define associations.
+factories.rb:6:5: C: [Correctable] FactoryBot/AssociationStyle: Use implicit style to define associations.
+factories.rb:7:5: C: [Correctable] FactoryBot/AssociationStyle: Use implicit style to define associations.
+untrusted_spec.rb:2:7: C: [Corrected] RSpec/ExampleWording: Do not use should when describing your tests.
+untrusted_spec.rb:9:7: C: [Correctable] RSpec/ExampleWording: Do not use should when describing your tests.
+untrusted_spec.rb:13:7: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+untrusted_spec.rb:16:7: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+untrusted_spec.rb:19:7: C: RSpec/ExampleWording: Your example description is insufficient.
+untrusted_spec.rb:19:15: C: [Correctable] RSpec/MetadataStyle: Use hash style for metadata.
+untrusted_spec.rb:19:23: C: [Corrected] RSpec/MetadataStyle: Use hash style for metadata.
+untrusted_spec.rb:23:23: C: [Corrected] RSpec/ExpectChange: Prefer `change { User.count }`.
+untrusted_spec.rb:24:23: C: [Correctable] RSpec/ExpectChange: Prefer `change { User.count; system('x') }`.
+untrusted_spec.rb:25:21: C: [Corrected] RSpec/MatchWithSimpleRegex: Prefer using `include('abc')` when the regex is a simple string literal.
+untrusted_spec.rb:26:21: C: [Correctable] RSpec/MatchWithSimpleRegex: Prefer using `include('a\b')` when the regex is a simple string literal.
+untrusted_spec.rb:27:21: C: [Correctable] RSpec/MatchWithSimpleRegex: Prefer using `include("it's #{x}")` when the regex is a simple string literal.
+untrusted_spec.rb:31:5: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [32].
+untrusted_spec.rb:32:5: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [31].
+untrusted_spec.rb:32:5: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [33].
+untrusted_spec.rb:33:5: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [32].
+untrusted_spec.rb:35:19: C: [Corrected] RSpec/SingleArgumentMessageChain: Use `receive` instead of calling `receive_message_chain` with a single argument.
+untrusted_spec.rb:36:19: C: [Corrected] RSpec/SingleArgumentMessageChain: Use `receive` instead of calling `receive_message_chain` with a single argument.
+untrusted_spec.rb:37:19: C: [Corrected] RSpec/SingleArgumentMessageChain: Use `receive` instead of calling `receive_message_chain` with a single argument.
+untrusted_spec.rb:40:19: C: [Correctable] RSpec/SharedExamples: Prefer 'it's' over `:"it's"` to titleize shared examples.
+untrusted_spec.rb:40:19: C: [Corrected] RSpec/SharedExamples: Prefer 'plain' over `:plain` to titleize shared examples.
+untrusted_spec.rb:45:21: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+untrusted_spec.rb:50:5: C: [Corrected] FactoryBot/CreateList: Prefer create_list.
+untrusted_spec.rb:55:5: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+untrusted_spec.rb:56:5: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+untrusted_spec.rb:58:12: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+untrusted_spec.rb:59:12: C: [Correctable] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+untrusted_spec.rb:61:12: C: [Correctable] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+untrusted_spec.rb:64:5: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+untrusted_spec.rb:65:5: C: [Correctable] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`

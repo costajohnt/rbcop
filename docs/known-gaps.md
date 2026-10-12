@@ -99,6 +99,31 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - rubocop-minitest corrections were checked against the same rule: none splices string or symbol
   content into new source (they move the source of whole arguments and receivers, and write method
   names and operators, which are identifiers), so none is withheld.
+- rubocop-rspec, rubocop-factory_bot and rubocop-capybara corrections that splice string or symbol
+  content into new source are withheld by the same rule (offenses and `[Correctable]` unchanged).
+  Corrections are applied only when:
+  RSpec/ExampleWording and RSpec/ExcessiveDocstringSpacing: the docstring text written back between
+  its delimiters has no backslash, none of the delimiter's characters and (when it interpolates) no
+  `#{`/`#@`/`#$`; a `'a' \ 'b'` concatenation is made of plain quoted literals with one quote.
+  RSpec/ExpectChange (block style): the attribute is a method name.
+  RSpec/MatchWithSimpleRegex: the text has no backslash, nor `#{`/`#@`/`#$` when it needs `"..."`.
+  RSpec/MetadataStyle (hash style): the symbol is a plain label.
+  RSpec/ReceiveMessages: every merged key is a plain label (otherwise the whole group is withheld).
+  RSpec/SharedExamples: the text is a plain symbol name (symbol style) or has no quote or backslash
+  (string style).
+  RSpec/SingleArgumentMessageChain: the symbol key is a plain name.
+  RSpec/VerifiedDoubleReference (constant style): the string is a constant name.
+  FactoryBot/AssociationStyle (implicit style): the association name, keys and factory names are
+  plain names.
+  FactoryBot/CreateList (block form): the factory name is a plain name.
+  Capybara/SpecificFinders: the id written into `'...'` has no quote; `class:` values are written
+  with `inspect`; an array of other values is withheld.
+  Capybara/RedundantWithinFind: the `find_by_id` string is a `'...'`/`"..."` literal whose value is
+  inert in it (no matching quote, backslash, line break or interpolation).
+  Capybara/RSpec/CurrentPathExpectation: a string turned into a regexp literal is printable ASCII
+  without backslashes, `#` or `()[]{}*+?|` (so the regexp is always valid and its `inspect` is the
+  text with `/` escaped); a backtick string has no backslash, backtick or `#`.
+  Fixture: tests/autocorrect/rspec_untrusted_text (RuboCop's output in `rubocop-output/`).
 
 ## Open gaps
 
@@ -330,3 +355,13 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   yaml-rust2's errors; a few differ from libyaml's: an unknown `%` directive, content after a `...`
   document end, and an alias to an unknown anchor followed by more on the line (`a: *x y`) report a
   different problem. The Ruby backtrace RuboCop prints after the message is not reproduced.
+- rubocop-rspec family:
+  - RSpec/SpecFilePathFormat with `EnforcedInflector: active_support` uses
+    ActiveSupport's default inflections; the project's `InflectorPath` file is not evaluated (a
+    missing one is a cop error, as in RuboCop).
+  - rubocop-rspec_rails loaded without rubocop-rspec: RuboCop fails to load the plugin
+    (`uninitialized constant RuboCop::Cop::RSpec::InsideExampleGroup`); rbcop runs the RSpecRails
+    cops with rubocop-rspec's default `RSpec/Language`.
+  - Capybara/RSpec/CurrentPathExpectation on `match "<invalid regexp>"` (`match "("`): RuboCop's
+    `Regexp.new` raises and the offense is lost to a cop error; rbcop reports the offense with the
+    correction withheld.
