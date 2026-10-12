@@ -1,0 +1,84 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 31 <==
+User.where('name = ?', 'Gabe')
+
+==> 001/001.rb 35 <==
+User.where.not('name = ?', 'Gabe')
+
+==> 002/002.rb 32 <==
+User&.where('name = ?', 'Gabe')
+
+==> 003/003.rb 41 <==
+User.where('name = :name', name: 'Gabe')
+
+==> 004/004.rb 27 <==
+User.where('name IS NULL')
+
+==> 005/005.rb 44 <==
+User.where("name IN (?)", ['john', 'jane'])
+
+==> 006/006.rb 56 <==
+User.where("name IN (:names)", names: ['john', 'jane'])
+
+==> 007/007.rb 55 <==
+Course.where('enrollments.student_id = ?', student.id)
+
+==> 008/008.rb 33 <==
+User.where(['name = ?', 'Gabe'])
+
+==> 009/009.rb 34 <==
+User&.where(['name = ?', 'Gabe'])
+
+==> 010/010.rb 47 <==
+User.where(['name = :name', { name: 'Gabe' }])
+
+==> 011/011.rb 29 <==
+User.where(['name IS NULL'])
+
+==> 012/012.rb 46 <==
+User.where(["name IN (?)", ['john', 'jane']])
+
+==> 013/013.rb 58 <==
+User.where(["name IN (:names)", names: ['john', 'jane']])
+
+==> 014/014.rb 57 <==
+Course.where(['enrollments.student_id = ?', student.id])
+
+==> 015/015.rb 22 <==
+User.where(name: nil)
+
+==> 016/016.rb 25 <==
+User.where(name: 'john')
+
+==> 017/017.rb 32 <==
+User.where('name != ?', 'john')
+
+==> 018/018.rb 47 <==
+User.where('name = ? AND age = ?', 'john', 19)
+
+==> 019/019.rb 106 <==
+sql = User.where('name = :name').select(:id).to_sql
+
+User.where("id IN (#{sql})", name: 'Lastname').first
+
+==> 020/020.rb 25 <==
+User.where('name = ?', )
+
+==> 021/021.rb 33 <==
+User.where("name IN (:names)", )
+
+==> 022/022.rb 30 <==
+users.not('name = ?', 'Gabe')
+
+==> 023/023.rb 46 <==
+User.where('database.users.name = ?', 'Gabe')
+

@@ -1,0 +1,21 @@
+==> offenses exit=1 294 <==
+005/005.rb:1:11: C: [Correctable] Rails/Blank: Use `if foo.blank?` instead of `unless foo.present?`.
+006/006.rb:1:11: C: [Correctable] Rails/Blank: Use `if blank?` instead of `unless present?`.
+007/007.rb:1:1: C: [Correctable] Rails/Blank: Use `if foo.blank?` instead of `unless foo.present?`.
+
+==> autocorrect exit=0 288 <==
+005/005.rb:1:11: C: [Corrected] Rails/Blank: Use `if foo.blank?` instead of `unless foo.present?`.
+006/006.rb:1:11: C: [Corrected] Rails/Blank: Use `if blank?` instead of `unless present?`.
+007/007.rb:1:1: C: [Corrected] Rails/Blank: Use `if foo.blank?` instead of `unless foo.present?`.
+
+==> corrected/005/005.rb 24 <==
+something if foo.blank?
+
+==> corrected/006/006.rb 20 <==
+something if blank?
+
+==> corrected/007/007.rb 30 <==
+if foo.blank?
+  something
+end
+

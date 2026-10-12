@@ -1,0 +1,64 @@
+==> .rubocop.yml 213 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/Present:
+  NotNilAndNotEmpty: true
+  NotBlank: false
+  UnlessBlank: false
+
+==> 000/000.rb 8 <==
+foo.nil?
+==> 001/001.rb 10 <==
+foo.empty?
+==> 002/002.rb 22 <==
+foo.nil? || bar.empty?
+==> 003/003.rb 18 <==
+foo && !bar.empty?
+==> 004/004.rb 19 <==
+foo && !foo.empty?
+
+==> 005/005.rb 25 <==
+!foo.nil? && !foo.empty?
+
+==> 006/006.rb 17 <==
+!nil? && !empty?
+
+==> 007/007.rb 26 <==
+foo != nil && !foo.empty?
+
+==> 008/008.rb 21 <==
+!!foo && !foo.empty?
+
+==> 009/009.rb 33 <==
+!foo.bar.nil? && !foo.bar.empty?
+
+==> 010/010.rb 25 <==
+!FOO.nil? && !FOO.empty?
+
+==> 011/011.rb 25 <==
+!Foo.nil? && !Foo.empty?
+
+==> 012/012.rb 27 <==
+!@foo.nil? && !@foo.empty?
+
+==> 013/013.rb 27 <==
+!$foo.nil? && !$foo.empty?
+
+==> 014/014.rb 29 <==
+!@@foo.nil? && !@@foo.empty?
+
+==> 015/015.rb 35 <==
+!foo[bar].nil? && !foo[bar].empty?
+
+==> 016/016.rb 35 <==
+!Foo::Bar.nil? && !Foo::Bar.empty?
+
+==> 017/017.rb 35 <==
+!foo(bar).nil? && !foo(bar).empty?
+

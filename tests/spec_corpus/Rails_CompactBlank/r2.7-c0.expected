@@ -1,0 +1,84 @@
+==> offenses exit=1 1334 <==
+000/000.rb:1:12: C: [Correctable] Rails/CompactBlank: Use `compact_blank` instead.
+001/001.rb:1:12: C: [Correctable] Rails/CompactBlank: Use `compact_blank` instead.
+002/002.rb:1:12: C: [Correctable] Rails/CompactBlank: Use `compact_blank` instead.
+003/003.rb:1:12: C: [Correctable] Rails/CompactBlank: Use `compact_blank!` instead.
+004/004.rb:1:12: C: [Correctable] Rails/CompactBlank: Use `compact_blank!` instead.
+005/005.rb:1:12: C: [Correctable] Rails/CompactBlank: Use `compact_blank!` instead.
+008/008.rb:1:39: C: [Correctable] Rails/CompactBlank: Use `compact_blank` instead.
+009/009.rb:1:12: C: [Correctable] Rails/CompactBlank: Use `compact_blank` instead.
+010/010.rb:1:12: C: [Correctable] Rails/CompactBlank: Use `compact_blank` instead.
+011/011.rb:1:12: C: [Correctable] Rails/CompactBlank: Use `compact_blank` instead.
+012/012.rb:1:12: C: [Correctable] Rails/CompactBlank: Use `compact_blank` instead.
+013/013.rb:1:12: C: [Correctable] Rails/CompactBlank: Use `compact_blank` instead.
+014/014.rb:1:12: C: [Correctable] Rails/CompactBlank: Use `compact_blank` instead.
+015/015.rb:1:12: C: [Correctable] Rails/CompactBlank: Use `compact_blank!` instead.
+016/016.rb:1:12: C: [Correctable] Rails/CompactBlank: Use `compact_blank!` instead.
+017/017.rb:1:12: C: [Correctable] Rails/CompactBlank: Use `compact_blank!` instead.
+
+==> autocorrect exit=0 1302 <==
+000/000.rb:1:12: C: [Corrected] Rails/CompactBlank: Use `compact_blank` instead.
+001/001.rb:1:12: C: [Corrected] Rails/CompactBlank: Use `compact_blank` instead.
+002/002.rb:1:12: C: [Corrected] Rails/CompactBlank: Use `compact_blank` instead.
+003/003.rb:1:12: C: [Corrected] Rails/CompactBlank: Use `compact_blank!` instead.
+004/004.rb:1:12: C: [Corrected] Rails/CompactBlank: Use `compact_blank!` instead.
+005/005.rb:1:12: C: [Corrected] Rails/CompactBlank: Use `compact_blank!` instead.
+008/008.rb:1:39: C: [Corrected] Rails/CompactBlank: Use `compact_blank` instead.
+009/009.rb:1:12: C: [Corrected] Rails/CompactBlank: Use `compact_blank` instead.
+010/010.rb:1:12: C: [Corrected] Rails/CompactBlank: Use `compact_blank` instead.
+011/011.rb:1:12: C: [Corrected] Rails/CompactBlank: Use `compact_blank` instead.
+012/012.rb:1:12: C: [Corrected] Rails/CompactBlank: Use `compact_blank` instead.
+013/013.rb:1:12: C: [Corrected] Rails/CompactBlank: Use `compact_blank` instead.
+014/014.rb:1:12: C: [Corrected] Rails/CompactBlank: Use `compact_blank` instead.
+015/015.rb:1:12: C: [Corrected] Rails/CompactBlank: Use `compact_blank!` instead.
+016/016.rb:1:12: C: [Corrected] Rails/CompactBlank: Use `compact_blank!` instead.
+017/017.rb:1:12: C: [Corrected] Rails/CompactBlank: Use `compact_blank!` instead.
+
+==> corrected/000/000.rb 25 <==
+collection.compact_blank
+
+==> corrected/001/001.rb 25 <==
+collection.compact_blank
+
+==> corrected/002/002.rb 25 <==
+collection.compact_blank
+
+==> corrected/003/003.rb 26 <==
+collection.compact_blank!
+
+==> corrected/004/004.rb 26 <==
+collection.compact_blank!
+
+==> corrected/005/005.rb 26 <==
+collection.compact_blank!
+
+==> corrected/008/008.rb 54 <==
+hash.transform_values { |value| value.compact_blank }
+
+==> corrected/009/009.rb 25 <==
+collection.compact_blank
+
+==> corrected/010/010.rb 25 <==
+collection.compact_blank
+
+==> corrected/011/011.rb 25 <==
+collection.compact_blank
+
+==> corrected/012/012.rb 25 <==
+collection.compact_blank
+
+==> corrected/013/013.rb 25 <==
+collection.compact_blank
+
+==> corrected/014/014.rb 25 <==
+collection.compact_blank
+
+==> corrected/015/015.rb 26 <==
+collection.compact_blank!
+
+==> corrected/016/016.rb 26 <==
+collection.compact_blank!
+
+==> corrected/017/017.rb 26 <==
+collection.compact_blank!
+

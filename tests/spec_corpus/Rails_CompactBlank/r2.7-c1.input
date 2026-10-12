@@ -1,0 +1,23 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 6.0
+
+==> 000/000.rb 35 <==
+collection.reject { |e| e.blank? }
+
+==> 001/001.rb 35 <==
+collection.reject { |e| e.empty? }
+
+==> 002/002.rb 37 <==
+collection.select { |e| e.present? }
+
+==> 003/003.rb 37 <==
+collection.filter { |e| e.present? }
+

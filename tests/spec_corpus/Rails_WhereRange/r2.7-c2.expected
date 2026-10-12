@@ -1,0 +1,14 @@
+==> offenses exit=1 237 <==
+000/000.rb:1:7: C: [Correctable] Rails/WhereRange: Use `where(column: ..value)` instead of manually constructing SQL.
+001/001.rb:1:7: C: [Correctable] Rails/WhereRange: Use `where(column: ...value)` instead of manually constructing SQL.
+
+==> autocorrect exit=0 233 <==
+000/000.rb:1:7: C: [Corrected] Rails/WhereRange: Use `where(column: ..value)` instead of manually constructing SQL.
+001/001.rb:1:7: C: [Corrected] Rails/WhereRange: Use `where(column: ...value)` instead of manually constructing SQL.
+
+==> corrected/000/000.rb 29 <==
+Model.where(column: ..value)
+
+==> corrected/001/001.rb 30 <==
+Model.where(column: ...value)
+

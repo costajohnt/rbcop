@@ -1,0 +1,71 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.6
+  TargetRailsVersion: 6.0
+
+==> 000/000.rb 34 <==
+Model.where('column >= ?', value)
+
+==> 001/001.rb 42 <==
+Model.where('column >= :min', min: value)
+
+==> 002/002.rb 40 <==
+Model.where('table.column >= ?', value)
+
+==> 003/003.rb 33 <==
+Model.where('column > ?', value)
+
+==> 004/004.rb 58 <==
+Model.where('column >= ? AND column < ?', value1, value2)
+
+==> 005/005.rb 59 <==
+Model.where('column >= ? AND column <= ?', value1, value2)
+
+==> 006/006.rb 74 <==
+Model.where('column >= :min AND column < :max', min: value1, max: value2)
+
+==> 007/007.rb 60 <==
+Model.where('column1 >= ? AND column2 < ?', value1, value2)
+
+==> 008/008.rb 60 <==
+Model.where('column >= :min AND column < :max', min: value)
+
+==> 009/009.rb 36 <==
+Model.where(['column >= ?', value])
+
+==> 010/010.rb 61 <==
+Model.where(['column >= ? AND column <= ?', value1, value2])
+
+==> 011/011.rb 38 <==
+Model.where.not('column >= ?', value)
+
+==> 012/012.rb 250 <==
+Model.where('  column  >= ?   ', value)
+Model.where(' column >=     :min    ', min: value)
+Model.where(' column   >=    ?   AND   column  <   ? ', value1, value2)
+Model.where(' column   >=  :min  AND column   <   :max    ', min: value1, max: value2)
+
+==> 013/013.rb 29 <==
+Model.where(column: value..)
+
+==> 014/014.rb 33 <==
+Model.where.not(column: value..)
+
+==> 015/015.rb 30 <==
+foo.not('column >= ?', value)
+
+==> 016/016.rb 41 <==
+Model.where('column >= ?', true ? 1 : 2)
+
+==> 017/017.rb 34 <==
+Model.where('column <= ?', value)
+
+==> 018/018.rb 33 <==
+Model.where('column < ?', value)
+

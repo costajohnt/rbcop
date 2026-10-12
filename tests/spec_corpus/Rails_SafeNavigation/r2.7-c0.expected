@@ -1,0 +1,10 @@
+==> offenses exit=1 101 <==
+005/005.rb:1:1: C: [Correctable] Rails/SafeNavigation: Use safe navigation (`&.`) instead of `try!`.
+
+==> autocorrect exit=0 198 <==
+005/005.rb:1:1: C: [Corrected] Rails/SafeNavigation: Use safe navigation (`&.`) instead of `try!`.
+005/005.rb:1:9: C: [Corrected] Rails/SafeNavigation: Use safe navigation (`&.`) instead of `try!`.
+
+==> corrected/005/005.rb 23 <==
+foo&.[](bar&.[](:baz))
+

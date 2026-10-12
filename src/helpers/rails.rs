@@ -456,3 +456,54 @@ pub fn ruby_split(s: &str, sep: char) -> Vec<&str> {
 pub fn inert_text(s: &str) -> bool {
     !s.contains(['\'', '"', '\\', '\n', '\r']) && !s.contains("#{") && !s.contains('\0')
 }
+
+/// Source of a pair's value as parser sees it: an omitted value (`key:`) is just `key`.
+pub fn pair_value_source<'pr>(p: &ruby_prism::AssocNode<'pr>) -> &'pr str {
+    let v = p.value();
+    let t = node_text(&v);
+    if v.as_implicit_node().is_some() { t.strip_suffix(':').unwrap_or(t) } else { t }
+}
+
+/// The nearest parser `any_block` ancestor of the visited node, as the call that owns it (None for
+/// a lambda literal, whose send has no receiver). `Some(None)` when the nearest block is a lambda.
+/// A call with a block counts when the node is inside its block, receiver or arguments.
+pub fn nearest_block_owner<'a, 'pr>(ancestors: &'a [Node<'pr>]) -> Option<Option<CallNode<'pr>>> {
+    for i in (0..ancestors.len()).rev() {
+        match &ancestors[i] {
+            Node::BlockNode { .. } => return Some(i.checked_sub(1).and_then(|k| ancestors[k].as_call_node())),
+            Node::LambdaNode { .. } => return Some(None),
+            Node::CallNode { .. } => {
+                let c = ancestors[i].as_call_node().unwrap();
+                if c.block().is_some_and(|b| b.as_block_node().is_some())
+                    && !ancestors.get(i + 1).is_some_and(|n| n.as_block_node().is_some())
+                {
+                    return Some(Some(c));
+                }
+            }
+            _ => {}
+        }
+    }
+    None
+}
+
+/// Parser children of an if/unless: (condition, true branch, false branch), bodies as single nodes
+/// (a multi-statement body is the StatementsNode, parser's `begin`); `unless` swaps the branches.
+pub fn if_children<'pr>(node: &Node<'pr>) -> Option<(Node<'pr>, Option<Node<'pr>>, Option<Node<'pr>>)> {
+    let body = |s: Option<ruby_prism::StatementsNode<'pr>>| -> Option<Node<'pr>> {
+        let s = s?;
+        let mut v: Vec<Node<'pr>> = s.body().iter().collect();
+        if v.len() == 1 { v.pop() } else { Some(s.as_node()) }
+    };
+    let els = |e: Option<Node<'pr>>| -> Option<Node<'pr>> {
+        let e = e?;
+        match e.as_else_node() {
+            Some(el) => body(el.statements()),
+            None => Some(e),
+        }
+    };
+    if let Some(n) = node.as_if_node() {
+        return Some((n.predicate(), body(n.statements()), els(n.subsequent())));
+    }
+    let n = node.as_unless_node()?;
+    Some((n.predicate(), els(n.else_clause().map(|e| e.as_node())), body(n.statements())))
+}

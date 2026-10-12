@@ -1,0 +1,19 @@
+==> offenses exit=1 268 <==
+000/000.rb:1:1: C: [Correctable] Rails/Blank: Use `foo.blank?` instead of `!foo.present?`.
+001/001.rb:1:1: C: [Correctable] Rails/Blank: Use `foo.blank?` instead of `not foo.present?`.
+002/002.rb:1:1: C: [Correctable] Rails/Blank: Use `blank?` instead of `!present?`.
+
+==> autocorrect exit=0 262 <==
+000/000.rb:1:1: C: [Corrected] Rails/Blank: Use `foo.blank?` instead of `!foo.present?`.
+001/001.rb:1:1: C: [Corrected] Rails/Blank: Use `foo.blank?` instead of `not foo.present?`.
+002/002.rb:1:1: C: [Corrected] Rails/Blank: Use `blank?` instead of `!present?`.
+
+==> corrected/000/000.rb 11 <==
+foo.blank?
+
+==> corrected/001/001.rb 11 <==
+foo.blank?
+
+==> corrected/002/002.rb 7 <==
+blank?
+

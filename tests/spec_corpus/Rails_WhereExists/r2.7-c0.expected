@@ -1,0 +1,39 @@
+==> offenses exit=1 886 <==
+000/000.rb:1:6: C: [Correctable] Rails/WhereExists: Prefer `exists?(name: 'john')` over `where(name: 'john').exists?`.
+001/001.rb:1:6: C: [Correctable] Rails/WhereExists: Prefer `exists?(name: 'john')` over `where(name: 'john')&.exists?`.
+002/002.rb:1:7: C: [Correctable] Rails/WhereExists: Prefer `exists?(name: 'john')` over `where(name: 'john')&.exists?`.
+003/003.rb:1:6: C: [Correctable] Rails/WhereExists: Prefer `exists?(['name = ?', 'john'])` over `where(['name = ?', 'john']).exists?`.
+004/004.rb:1:6: C: [Correctable] Rails/WhereExists: Prefer `exists?(['name = ?', 'john'])` over `where('name = ?', 'john').exists?`.
+005/005.rb:1:1: C: [Correctable] Rails/WhereExists: Prefer `exists?(['name = ?', 'john'])` over `where('name = ?', 'john').exists?`.
+006/006.rb:1:12: C: [Correctable] Rails/WhereExists: Prefer `exists?(published: true)` over `where(published: true).exists?`.
+
+==> autocorrect exit=0 872 <==
+000/000.rb:1:6: C: [Corrected] Rails/WhereExists: Prefer `exists?(name: 'john')` over `where(name: 'john').exists?`.
+001/001.rb:1:6: C: [Corrected] Rails/WhereExists: Prefer `exists?(name: 'john')` over `where(name: 'john')&.exists?`.
+002/002.rb:1:7: C: [Corrected] Rails/WhereExists: Prefer `exists?(name: 'john')` over `where(name: 'john')&.exists?`.
+003/003.rb:1:6: C: [Corrected] Rails/WhereExists: Prefer `exists?(['name = ?', 'john'])` over `where(['name = ?', 'john']).exists?`.
+004/004.rb:1:6: C: [Corrected] Rails/WhereExists: Prefer `exists?(['name = ?', 'john'])` over `where('name = ?', 'john').exists?`.
+005/005.rb:1:1: C: [Corrected] Rails/WhereExists: Prefer `exists?(['name = ?', 'john'])` over `where('name = ?', 'john').exists?`.
+006/006.rb:1:12: C: [Corrected] Rails/WhereExists: Prefer `exists?(published: true)` over `where(published: true).exists?`.
+
+==> corrected/000/000.rb 27 <==
+User.exists?(name: 'john')
+
+==> corrected/001/001.rb 27 <==
+User.exists?(name: 'john')
+
+==> corrected/002/002.rb 28 <==
+User&.exists?(name: 'john')
+
+==> corrected/003/003.rb 35 <==
+User.exists?(['name = ?', 'john'])
+
+==> corrected/004/004.rb 35 <==
+User.exists?(['name = ?', 'john'])
+
+==> corrected/005/005.rb 30 <==
+exists?(['name = ?', 'john'])
+
+==> corrected/006/006.rb 36 <==
+user.posts.exists?(published: true)
+

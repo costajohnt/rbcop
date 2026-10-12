@@ -1,0 +1,68 @@
+==> offenses exit=1 1210 <==
+000/000.rb:1:3: C: [Correctable] Rails/Pluck: Prefer `pluck(:foo)` over `map { |a| a[:foo] }`.
+001/001.rb:1:4: C: [Correctable] Rails/Pluck: Prefer `pluck(:foo)` over `map { |a| a[:foo] }`.
+002/002.rb:1:3: C: [Correctable] Rails/Pluck: Prefer `pluck('foo')` over `map { |a| a['foo'] }`.
+003/003.rb:1:3: C: [Correctable] Rails/Pluck: Prefer `pluck(obj.do_something)` over `map { |a| a[obj.do_something] }`.
+009/009.rb:1:3: C: [Correctable] Rails/Pluck: Prefer `pluck(:foo)` over `map { _1[:foo] }`.
+012/012.rb:2:5: C: [Correctable] Rails/Pluck: Prefer `pluck(:foo)` over `map { |a| a[:foo] }`.
+017/017.rb:1:3: C: [Correctable] Rails/Pluck: Prefer `pluck(:foo)` over `collect { |a| a[:foo] }`.
+018/018.rb:1:4: C: [Correctable] Rails/Pluck: Prefer `pluck(:foo)` over `collect { |a| a[:foo] }`.
+019/019.rb:1:3: C: [Correctable] Rails/Pluck: Prefer `pluck('foo')` over `collect { |a| a['foo'] }`.
+020/020.rb:1:3: C: [Correctable] Rails/Pluck: Prefer `pluck(obj.do_something)` over `collect { |a| a[obj.do_something] }`.
+026/026.rb:1:3: C: [Correctable] Rails/Pluck: Prefer `pluck(:foo)` over `collect { _1[:foo] }`.
+029/029.rb:2:5: C: [Correctable] Rails/Pluck: Prefer `pluck(:foo)` over `collect { |a| a[:foo] }`.
+
+==> autocorrect exit=0 1186 <==
+000/000.rb:1:3: C: [Corrected] Rails/Pluck: Prefer `pluck(:foo)` over `map { |a| a[:foo] }`.
+001/001.rb:1:4: C: [Corrected] Rails/Pluck: Prefer `pluck(:foo)` over `map { |a| a[:foo] }`.
+002/002.rb:1:3: C: [Corrected] Rails/Pluck: Prefer `pluck('foo')` over `map { |a| a['foo'] }`.
+003/003.rb:1:3: C: [Corrected] Rails/Pluck: Prefer `pluck(obj.do_something)` over `map { |a| a[obj.do_something] }`.
+009/009.rb:1:3: C: [Corrected] Rails/Pluck: Prefer `pluck(:foo)` over `map { _1[:foo] }`.
+012/012.rb:2:5: C: [Corrected] Rails/Pluck: Prefer `pluck(:foo)` over `map { |a| a[:foo] }`.
+017/017.rb:1:3: C: [Corrected] Rails/Pluck: Prefer `pluck(:foo)` over `collect { |a| a[:foo] }`.
+018/018.rb:1:4: C: [Corrected] Rails/Pluck: Prefer `pluck(:foo)` over `collect { |a| a[:foo] }`.
+019/019.rb:1:3: C: [Corrected] Rails/Pluck: Prefer `pluck('foo')` over `collect { |a| a['foo'] }`.
+020/020.rb:1:3: C: [Corrected] Rails/Pluck: Prefer `pluck(obj.do_something)` over `collect { |a| a[obj.do_something] }`.
+026/026.rb:1:3: C: [Corrected] Rails/Pluck: Prefer `pluck(:foo)` over `collect { _1[:foo] }`.
+029/029.rb:2:5: C: [Corrected] Rails/Pluck: Prefer `pluck(:foo)` over `collect { |a| a[:foo] }`.
+
+==> corrected/000/000.rb 14 <==
+x.pluck(:foo)
+
+==> corrected/001/001.rb 15 <==
+x&.pluck(:foo)
+
+==> corrected/002/002.rb 15 <==
+x.pluck('foo')
+
+==> corrected/003/003.rb 26 <==
+x.pluck(obj.do_something)
+
+==> corrected/009/009.rb 14 <==
+x.pluck(:foo)
+
+==> corrected/012/012.rb 27 <==
+foo do
+  x.pluck(:foo)
+end
+
+==> corrected/017/017.rb 14 <==
+x.pluck(:foo)
+
+==> corrected/018/018.rb 15 <==
+x&.pluck(:foo)
+
+==> corrected/019/019.rb 15 <==
+x.pluck('foo')
+
+==> corrected/020/020.rb 26 <==
+x.pluck(obj.do_something)
+
+==> corrected/026/026.rb 14 <==
+x.pluck(:foo)
+
+==> corrected/029/029.rb 27 <==
+foo do
+  x.pluck(:foo)
+end
+

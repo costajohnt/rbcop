@@ -1,0 +1,100 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 6.1
+
+==> 000/000.rb 35 <==
+collection.reject { |e| e.blank? }
+
+==> 001/001.rb 28 <==
+collection.reject(&:blank?)
+
+==> 002/002.rb 38 <==
+collection.reject { |k, v| v.blank? }
+
+==> 003/003.rb 38 <==
+collection.delete_if { |e| e.blank? }
+
+==> 004/004.rb 31 <==
+collection.delete_if(&:blank?)
+
+==> 005/005.rb 41 <==
+collection.delete_if { |k, v| v.blank? }
+
+==> 006/006.rb 36 <==
+collection.reject! { |e| e.blank? }
+
+==> 007/007.rb 29 <==
+collection.reject!(&:blank?)
+
+==> 008/008.rb 57 <==
+hash.transform_values { |value| value.reject(&:blank?) }
+
+==> 009/009.rb 37 <==
+collection.select { |e| e.present? }
+
+==> 010/010.rb 30 <==
+collection.select(&:present?)
+
+==> 011/011.rb 40 <==
+collection.select { |k, v| v.present? }
+
+==> 012/012.rb 37 <==
+collection.filter { |e| e.present? }
+
+==> 013/013.rb 30 <==
+collection.filter(&:present?)
+
+==> 014/014.rb 40 <==
+collection.filter { |k, v| v.present? }
+
+==> 015/015.rb 38 <==
+collection.keep_if { |e| e.present? }
+
+==> 016/016.rb 31 <==
+collection.keep_if(&:present?)
+
+==> 017/017.rb 41 <==
+collection.keep_if { |k, v| v.present? }
+
+==> 018/018.rb 38 <==
+collection.select! { |e| e.present? }
+
+==> 019/019.rb 31 <==
+collection.select!(&:present?)
+
+==> 020/020.rb 38 <==
+collection.filter! { |e| e.present? }
+
+==> 021/021.rb 31 <==
+collection.filter!(&:present?)
+
+==> 022/022.rb 25 <==
+collection.compact_blank
+
+==> 023/023.rb 26 <==
+collection.compact_blank!
+
+==> 024/024.rb 38 <==
+collection.reject { |k, v| k.blank? }
+
+==> 025/025.rb 56 <==
+def foo(arg)
+  collection.reject { |_| arg.blank? }
+end
+
+==> 026/026.rb 35 <==
+collection.reject { |e| e.empty? }
+
+==> 027/027.rb 35 <==
+collection.select { |e| e.blank? }
+
+==> 028/028.rb 35 <==
+collection.filter { |e| e.blank? }
+
