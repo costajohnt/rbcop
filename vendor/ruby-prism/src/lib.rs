@@ -716,6 +716,46 @@ impl<'pr> ParseResult<'pr> {
         // SAFETY: no Node views exist while `&mut self` is held; the detached node is freed once.
         unsafe { pm_visit_node(self.node.as_ptr(), visit, self.parser.as_ptr().cast()) }
     }
+
+    /// rbcop patch: turn the variable calls (`foo`, no receiver, arguments or block) starting at
+    /// `offsets` into LocalVariableReadNodes of the same name (depth 0), in place. For `_1` reads
+    /// after `_1 = 1` below Ruby 3.0, which Prism, having refused to declare `_1`, gives as calls.
+    pub fn variable_calls_as_locals(&mut self, offsets: &[usize]) {
+        use ruby_prism_sys::{pm_call_node_t, pm_local_variable_read_node_t, pm_node_type};
+        extern "C" {
+            fn pm_visit_node(node: *const pm_node_t, visitor: unsafe extern "C" fn(*const pm_node_t, *mut std::ffi::c_void) -> bool, data: *mut std::ffi::c_void);
+        }
+        struct Data<'a> {
+            base: *const u8,
+            offsets: &'a [usize],
+        }
+        const VARIABLE_CALL: u16 = 8;
+        unsafe extern "C" fn visit(node: *const pm_node_t, data: *mut std::ffi::c_void) -> bool {
+            unsafe {
+                let data = &*data.cast::<Data<'_>>();
+                if u32::from((*node).type_) != pm_node_type::PM_CALL_NODE as u32 || (*node).flags & VARIABLE_CALL == 0 {
+                    return true;
+                }
+                let start = usize::try_from((*node).location.start.offset_from(data.base)).unwrap_or(usize::MAX);
+                if data.offsets.binary_search(&start).is_err() {
+                    return true;
+                }
+                let call = node.cast_mut().cast::<pm_call_node_t>();
+                // A variable call owns no children, so nothing is leaked; the read node is smaller
+                // than the call node it overwrites, and both are freed by the node's address.
+                let name = (*call).name;
+                let read = node.cast_mut().cast::<pm_local_variable_read_node_t>();
+                (*read).base.type_ = pm_node_type::PM_LOCAL_VARIABLE_READ_NODE as _;
+                (*read).base.flags &= 0x3; // newline, static literal
+                (*read).name = name;
+                (*read).depth = 0;
+            }
+            true
+        }
+        let mut data = Data { base: unsafe { (*self.parser.as_ptr()).start }, offsets };
+        // SAFETY: no Node views exist while `&mut self` is held.
+        unsafe { pm_visit_node(self.node.as_ptr(), visit, std::ptr::from_mut(&mut data).cast()) }
+    }
 }
 
 impl Drop for ParseResult<'_> {
