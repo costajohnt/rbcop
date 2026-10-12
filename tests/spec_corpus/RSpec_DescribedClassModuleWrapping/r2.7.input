@@ -1,0 +1,47 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 54 <==
+RSpec.describe MyClass do
+  subject { "MyClass" }
+end
+
+==> 001/001_spec.rb 81 <==
+module MyModule
+  RSpec.describe MyClass do
+
+    subject { "MyClass" }
+  end
+end
+
+==> 002/002_spec.rb 87 <==
+module MyModule
+  RSpec.describe MyClass do
+    _1
+    subject { "MyClass" }
+  end
+end
+
+==> 003/003_spec.rb 122 <==
+module MyFirstModule
+  module MySecondModule
+    RSpec.describe MyClass do
+
+      subject { "MyClass" }
+    end
+  end
+end
+
+==> 004/004_spec.rb 44 <==
+module MyModule
+  def some_method
+  end
+end
+

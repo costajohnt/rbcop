@@ -5,7 +5,8 @@
 # usage: ruby scripts/record_spec_corpus.rb <rubocop-src> <out-dir>
 # env:   RUBOCOP (command, word-split; default `rubocop`), JOBS (default: CPU count),
 #        PLUGIN=<gem>: <rubocop-src> is that plugin's source at the version in docs/plugins.md, and
-#        its cops (from config/plugins/<gem>.yml) are recorded with `plugins: [<gem>]`
+#        its cops (from config/plugins/<gem>.yml) are recorded with `plugins: [<gem>]`;
+#        PLUGINS=<gem>,<gem> overrides that list (rubocop-rspec_rails needs rubocop-rspec loaded too)
 #
 # Per variant (<Dept_Cop>/<variant>, one .rubocop.yml), two bundle files:
 #   <variant>.input     the .rubocop.yml and the source files
@@ -54,12 +55,14 @@ end
 Dir.mktmpdir("rbcop-spec-corpus") do |tmp|
   extracted = File.join(tmp, "extracted")
   cops = File.join(tmp, "cops.txt")
-  names = File.read(default_yml).scan(%r{^([A-Z]\w+/\w+):$}).flatten
+  names = File.read(default_yml).scan(%r{^([A-Z]\w+(?:/\w+)+):$}).flatten
+  # A nested department (Capybara/RSpec) is a key too, but not a cop.
+  names -= names.map { |n| n.rpartition("/").first }
   # A plugin's default.yml also configures some of RuboCop's cops: those stay RuboCop's.
   names -= File.read(File.join(root, "config/default.yml")).scan(%r{^([A-Z]\w+/\w+):$}).flatten if plugin
   File.write(cops, names.join("\n"))
   log = File.join(tmp, "extract.log")
-  ok = system({ "SPEC" => "1", "PLUGINS" => plugin }, RbConfig.ruby, File.join(root, "scripts/extract_cold_corpus.rb"),
+  ok = system({ "SPEC" => "1", "PLUGINS" => ENV.fetch("PLUGINS", plugin) }, RbConfig.ruby, File.join(root, "scripts/extract_cold_corpus.rb"),
               File.join(src, "spec/rubocop/cop"), extracted, cops, default_yml,
               out: File::NULL, err: log)
   abort "extractor failed, see #{log}:\n#{File.read(log)[-2000..]}" unless ok
@@ -87,7 +90,7 @@ Dir.mktmpdir("rbcop-spec-corpus") do |tmp|
         end
         next if files.empty?
 
-        cop = v.split("/").first.sub("_", "/")
+        cop = v.split("/").first.tr("_", "/")
         work = File.join(tmp, "ac", v)
         FileUtils.mkdir_p(File.dirname(work))
         FileUtils.cp_r(dir, work)

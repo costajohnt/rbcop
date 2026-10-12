@@ -1,0 +1,24 @@
+==> .rubocop.yml 179 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/ClassCheck:
+  EnforcedStyle: be_kind_of
+
+==> 000/000_spec.rb 27 <==
+expect(a).to be_kind_of(b)
+
+==> 001/001_spec.rb 29 <==
+expect(a).to be_a_kind_of(b)
+
+==> 002/002_spec.rb 21 <==
+expect(a).to be_a(b)
+
+==> 003/003_spec.rb 22 <==
+expect(a).to be_an(b)
+

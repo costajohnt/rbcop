@@ -204,6 +204,8 @@ pub struct Resolved {
     for_cop_cache: std::sync::OnceLock<HashMap<String, Map>>,
     /// Config#gem_versions_in_target, read on first use.
     gem_versions: std::sync::OnceLock<Option<HashMap<String, String>>>,
+    /// rubocop-rspec `RSpec: Language` (RuboCop::RSpec::Language.config), read on first use.
+    pub rspec_language: std::sync::OnceLock<std::sync::Arc<crate::helpers::rspec::Language>>,
 }
 
 impl Resolved {
@@ -221,6 +223,7 @@ impl Resolved {
             opts: opts.clone(),
             for_cop_cache: std::sync::OnceLock::new(),
             gem_versions: std::sync::OnceLock::new(),
+            rspec_language: std::sync::OnceLock::new(),
         };
         for &name in cop_names {
             let cfg = r.build_cop(name, opts);
@@ -457,9 +460,21 @@ impl Resolved {
             }
         }
         let enabled = self.enabled_cop_name(name, &effective, &cop, opts);
+        // Config#for_badge: the department's Exclude and the cop's are unioned.
+        let union = match (dept_map.get("Exclude"), cop.get("Exclude")) {
+            (Some(Value::Seq(d)), Some(Value::Seq(c))) if department.is_some() => {
+                let mut all = d.to_vec();
+                all.extend(c.iter().filter(|v| !d.contains(v)).cloned());
+                Some(Value::Seq(all.into()))
+            }
+            _ => None,
+        };
         let mut params = dept_map;
         for (k, v) in cop.0 {
             params.insert(k, v);
+        }
+        if let Some(u) = union {
+            params.insert("Exclude", u);
         }
         let severity = params.str("Severity").and_then(Severity::parse);
         CopConfig {

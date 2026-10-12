@@ -1,0 +1,187 @@
+==> .rubocop.yml 194 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/EmptyLineAfterHook:
+  AllowConsecutiveOneLiners: false
+
+==> 000/000_spec.rb 117 <==
+RSpec.describe User do
+  before { do_something_else }
+  before do
+    do_something
+  end
+  it { does_something }
+end
+
+==> 001/001_spec.rb 77 <==
+RSpec.describe User do
+  before { do_something }
+  it { does_something }
+end
+
+==> 002/002_spec.rb 76 <==
+RSpec.describe User do
+  after { do_something }
+  it { does_something }
+end
+
+==> 003/003_spec.rb 80 <==
+RSpec.describe User do
+  around { |test| test.run }
+  it { does_something }
+end
+
+==> 004/004_spec.rb 78 <==
+RSpec.describe User do
+  before { do_something }
+
+  it { does_something }
+end
+
+==> 005/005_spec.rb 77 <==
+RSpec.describe User do
+  after { do_something }
+
+  it { does_something }
+end
+
+==> 006/006_spec.rb 81 <==
+RSpec.describe User do
+  around { |test| test.run }
+
+  it { does_something }
+end
+
+==> 007/007_spec.rb 87 <==
+RSpec.describe User do
+  before do
+    do_something
+  end
+
+  it { does_something }
+end
+
+==> 008/008_spec.rb 86 <==
+RSpec.describe User do
+  after do
+    do_something
+  end
+
+  it { does_something }
+end
+
+==> 009/009_spec.rb 90 <==
+RSpec.describe User do
+  around do |test|
+    test.run
+  end
+
+  it { does_something }
+end
+
+==> 010/010_spec.rb 53 <==
+RSpec.describe User do
+  before { do_something }
+end
+
+==> 011/011_spec.rb 90 <==
+RSpec.describe User do
+  before { do_something }
+  # comment
+
+  it { does_something }
+end
+
+==> 012/012_spec.rb 89 <==
+RSpec.describe User do
+  before { do_something }
+  # comment
+  it { does_something }
+end
+
+==> 013/013_spec.rb 121 <==
+RSpec.describe User do
+  before { do_something }
+  # multiline comment
+  # multiline comment
+  it { does_something }
+end
+
+==> 014/014_spec.rb 136 <==
+RSpec.describe User do
+  # rubocop:disable RSpec/Foo
+  before { do_something }
+  # rubocop:enable RSpec/Foo
+  it { does_something }
+end
+
+==> 015/015_spec.rb 136 <==
+RSpec.describe User do
+  before { do_something }
+  # rubocop:disable RSpec/Foo
+  it { does_something }
+  # rubocop:enable RSpec/Foo
+end
+
+==> 016/016_spec.rb 195 <==
+RSpec.describe User do
+  # rubocop:disable RSpec/Foo
+  before { do_something }
+  # rubocop:enable RSpec/Foo
+  # rubocop:disable RSpec/Foo
+  it { does_something }
+  # rubocop:enable RSpec/Foo
+end
+
+==> 017/017_spec.rb 117 <==
+RSpec.describe User do
+  before do
+    do_something
+  end
+  before { do_something_else }
+  it { does_something }
+end
+
+==> 018/018_spec.rb 108 <==
+RSpec.describe User do
+  before { do_something }
+  before { do_something_else }
+  it { does_something }
+end
+
+==> 019/019_spec.rb 130 <==
+RSpec.describe User do
+  before { do_something }
+  # this is a comment
+  before { do_something_else }
+  it { does_something }
+end
+
+==> 020/020_spec.rb 107 <==
+RSpec.describe User do
+  before { do_something }
+  after { do_something_else }
+  it { does_something }
+end
+
+==> 021/021_spec.rb 71 <==
+RSpec.describe User do
+  around { _1.run }
+  it { does_something }
+end
+
+==> 022/022_spec.rb 81 <==
+RSpec.describe User do
+  around do
+    _1.run
+  end
+
+  it { does_something }
+end
+

@@ -344,7 +344,20 @@ impl Validator<'_> {
         // CopRule#violated?: the old name, or its bare cop name.
         let has = |old: &str| hash.contains(old) || hash.contains(old.rsplit('/').next().unwrap_or(old));
         let empty = Map::default();
-        let rules = |kind: &str| OBSOLETION.map(kind).map(|m| m.0.clone()).unwrap_or_default();
+        // ConfigObsoletion.files: RuboCop's rules, then each loaded plugin's (later keys win).
+        let rules = |kind: &str| {
+            let mut all = OBSOLETION.map(kind).cloned().unwrap_or_default();
+            for plugin in crate::helpers::cop_registry::loaded_plugins() {
+                if let Some(Ok(Value::Map(m))) = plugin.obsoletion.map(parse_yaml)
+                    && let Some(Value::Map(rules)) = m.get(kind)
+                {
+                    for (k, v) in rules.0.iter() {
+                        all.insert(k.clone(), v.clone());
+                    }
+                }
+            }
+            all.0
+        };
         for (old, v) in rules("renamed") {
             if v == Value::Null || !has(&old) {
                 continue;

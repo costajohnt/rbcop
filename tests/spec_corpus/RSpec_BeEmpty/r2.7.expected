@@ -1,0 +1,24 @@
+==> offenses exit=1 428 <==
+000/000_spec.rb:1:18: C: [Correctable] RSpec/BeEmpty: Use `be_empty` matchers for checking an empty array.
+001/001_spec.rb:1:18: C: [Correctable] RSpec/BeEmpty: Use `be_empty` matchers for checking an empty array.
+002/002_spec.rb:1:18: C: [Correctable] RSpec/BeEmpty: Use `be_empty` matchers for checking an empty array.
+003/003_spec.rb:1:18: C: [Correctable] RSpec/BeEmpty: Use `be_empty` matchers for checking an empty array.
+
+==> autocorrect exit=0 420 <==
+000/000_spec.rb:1:18: C: [Corrected] RSpec/BeEmpty: Use `be_empty` matchers for checking an empty array.
+001/001_spec.rb:1:18: C: [Corrected] RSpec/BeEmpty: Use `be_empty` matchers for checking an empty array.
+002/002_spec.rb:1:18: C: [Corrected] RSpec/BeEmpty: Use `be_empty` matchers for checking an empty array.
+003/003_spec.rb:1:18: C: [Corrected] RSpec/BeEmpty: Use `be_empty` matchers for checking an empty array.
+
+==> corrected/000/000_spec.rb 26 <==
+expect(array).to be_empty
+
+==> corrected/001/001_spec.rb 44 <==
+expect(array).to be_empty, "with a message"
+
+==> corrected/002/002_spec.rb 26 <==
+expect(array).to be_empty
+
+==> corrected/003/003_spec.rb 44 <==
+expect(array).to be_empty, "with a message"
+

@@ -1,0 +1,34 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 65 <==
+it { expect(foo).to eql(true) }
+it { expect(foo).to eql(false) }
+
+==> 001/001_spec.rb 60 <==
+it { expect(foo).to eql(0) }
+it { expect(foo).to eql(123) }
+
+==> 002/002_spec.rb 63 <==
+it { expect(foo).to eql(1.0) }
+it { expect(foo).to eql(1.23) }
+
+==> 003/003_spec.rb 32 <==
+it { expect(foo).to eql(:foo) }
+
+==> 004/004_spec.rb 31 <==
+it { expect(foo).to eql(nil) }
+
+==> 005/005_spec.rb 33 <==
+it { expect(foo).to eql('foo') }
+
+==> 006/006_spec.rb 33 <==
+it { expect(foo).to_not eql(1) }
+

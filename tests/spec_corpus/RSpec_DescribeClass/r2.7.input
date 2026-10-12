@@ -1,0 +1,127 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 31 <==
+describe "bad describe" do
+end
+
+==> 001/001_spec.rb 26 <==
+RSpec.describe Foo do
+end
+
+==> 002/002_spec.rb 28 <==
+::RSpec.describe Foo do
+end
+
+==> 003/003_spec.rb 53 <==
+require 'spec_helper'
+describe "bad describe" do
+end
+
+==> 004/004_spec.rb 44 <==
+describe "bad describe", "blah blah" do
+end
+
+==> 005/005_spec.rb 63 <==
+describe Some::Class do
+  describe "bad describe" do
+  end
+end
+
+==> 006/006_spec.rb 79 <==
+describe 'Thing' do
+  subject { Object.const_get(self.class.description) }
+end
+
+==> 007/007_spec.rb 85 <==
+describe 'Some::Thing' do
+  subject { Object.const_get(self.class.description) }
+end
+
+==> 008/008_spec.rb 81 <==
+describe 'VERSION' do
+  subject { Object.const_get(self.class.description) }
+end
+
+==> 009/009_spec.rb 87 <==
+describe 'Some::VERSION' do
+  subject { Object.const_get(self.class.description) }
+end
+
+==> 010/010_spec.rb 89 <==
+describe '::Some::VERSION' do
+  subject { Object.const_get(self.class.description) }
+end
+
+==> 011/011_spec.rb 86 <==
+describe 'activeRecord' do
+  subject { Object.const_get(self.class.description) }
+end
+
+==> 012/012_spec.rb 80 <==
+describe '2Thing' do
+  subject { Object.const_get(self.class.description) }
+end
+
+==> 013/013_spec.rb 74 <==
+describe '' do
+  subject { Object.const_get(self.class.description) }
+end
+
+==> 014/014_spec.rb 39 <==
+RSpec.describe do
+end
+
+describe do
+end
+
+==> 015/015_spec.rb 137 <==
+shared_examples 'Common::Interface' do
+  describe '#public_interface' do
+    it 'conforms to interface' do
+      # ...
+    end
+  end
+end
+
+==> 016/016_spec.rb 142 <==
+RSpec.shared_context 'Common::Interface' do
+  describe '#public_interface' do
+    it 'conforms to interface' do
+      # ...
+    end
+  end
+end
+
+==> 017/017_spec.rb 116 <==
+shared_context do
+  describe '#public_interface' do
+    it 'conforms to interface' do
+      # ...
+    end
+  end
+end
+
+==> 018/018_spec.rb 45 <==
+describe 'widgets/index', type: :view do
+end
+
+==> 019/019_spec.rb 37 <==
+describe 'foo bar', foo: :bar do
+end
+
+==> 020/020_spec.rb 67 <==
+describe 'my new feature', :test, foo: :bar, type: :feature do
+end
+
+==> 021/021_spec.rb 40 <==
+describe 'wow', blah, type: :wow do
+end
+

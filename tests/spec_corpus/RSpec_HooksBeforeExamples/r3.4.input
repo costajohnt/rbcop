@@ -1,0 +1,32 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000/000_spec.rb 88 <==
+RSpec.describe User do
+  it { is_expected.to be_after_around_hook }
+  around { it }
+end
+
+==> 001/001_spec.rb 122 <==
+RSpec.describe User do
+  context 'a context' do
+    it { is_expected.to be_after_around_hook }
+  end
+
+  around { it }
+end
+
+==> 002/002_spec.rb 94 <==
+RSpec.describe User do
+  include_examples('should be after around-hook')
+
+  around { it }
+end
+

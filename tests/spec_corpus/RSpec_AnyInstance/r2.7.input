@@ -1,0 +1,25 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 63 <==
+before do
+  allow_any_instance_of(Object).to receive(:foo)
+end
+
+==> 001/001_spec.rb 64 <==
+before do
+  expect_any_instance_of(Object).to receive(:foo)
+end
+
+==> 002/002_spec.rb 57 <==
+before do
+  Object.any_instance.should_receive(:foo)
+end
+

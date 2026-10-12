@@ -1,0 +1,29 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 27 <==
+describe(:some_method) { }
+
+==> 001/001_spec.rb 42 <==
+describe(:some_method, "description") { }
+
+==> 002/002_spec.rb 48 <==
+RSpec.describe(:some_method, "description") { }
+
+==> 003/003_spec.rb 52 <==
+RSpec.describe Foo do
+  describe :to_s do
+  end
+end
+
+==> 004/004_spec.rb 28 <==
+describe("#some_method") { }
+==> 005/005_spec.rb 25 <==
+context(:some_method) { }

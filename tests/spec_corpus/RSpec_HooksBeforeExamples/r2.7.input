@@ -1,0 +1,114 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 91 <==
+RSpec.describe User do
+  it { is_expected.to be_after_before_hook }
+  before { setup }
+end
+
+==> 001/001_spec.rb 125 <==
+RSpec.describe User do
+  context 'a context' do
+    it { is_expected.to be_after_before_hook }
+  end
+
+  before { setup }
+end
+
+==> 002/002_spec.rb 97 <==
+RSpec.describe User do
+  include_examples('should be after before-hook')
+
+  before { setup }
+end
+
+==> 003/003_spec.rb 91 <==
+RSpec.describe User do
+  it { is_expected.to be_after_after_hook }
+  after { cleanup }
+end
+
+==> 004/004_spec.rb 100 <==
+RSpec.describe User do
+  it { is_expected.to be_after_before_hook }
+  before(:each) { cleanup }
+end
+
+==> 005/005_spec.rb 156 <==
+RSpec.describe User do
+  it { is_expected.to be_after_before_hook } # h
+  # setup the system
+  # with multiline comment
+  before { setup } # some setup
+end
+
+==> 006/006_spec.rb 225 <==
+RSpec.describe User do
+  before(:each) { setup }
+  after(:each) { cleanup }
+
+  it { is_expected.to be_after_hooks }
+
+  context 'a context' do
+    it { is_expected.to work }
+  end
+
+  include_examples('everything is fine')
+end
+
+==> 007/007_spec.rb 188 <==
+RSpec.describe User do
+  before { setup }
+
+  context 'something else' do
+    before { additional_setup }
+    it { is_expected.to work }
+  end
+
+  include_examples('everything is fine')
+end
+
+==> 008/008_spec.rb 80 <==
+RSpec.describe User do
+  include_context 'special user'
+
+  before { setup }
+end
+
+==> 009/009_spec.rb 91 <==
+RSpec.describe User do
+  include_examples 'special user' do
+    before { setup }
+  end
+end
+
+==> 010/010_spec.rb 88 <==
+RSpec.describe User do
+  it { is_expected.to be_after_around_hook }
+  around { _1 }
+end
+
+==> 011/011_spec.rb 122 <==
+RSpec.describe User do
+  context 'a context' do
+    it { is_expected.to be_after_around_hook }
+  end
+
+  around { _1 }
+end
+
+==> 012/012_spec.rb 94 <==
+RSpec.describe User do
+  include_examples('should be after around-hook')
+
+  around { _1 }
+end
+

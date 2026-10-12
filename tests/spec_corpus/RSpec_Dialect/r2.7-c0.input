@@ -1,0 +1,33 @@
+==> .rubocop.yml 190 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/Dialect:
+  PreferredMethods:
+    context: describe
+
+==> 000/000_spec.rb 40 <==
+describe 'display name presence' do
+end
+
+==> 001/001_spec.rb 84 <==
+it 'tests common context invocations' do
+  expect(request.context).to be_empty?
+end
+
+==> 002/002_spec.rb 39 <==
+context 'display name presence' do
+end
+
+==> 003/003_spec.rb 121 <==
+RSpec.context 'context' do
+  it 'tests common context invocations' do
+    expect(request.context).to be_empty?
+  end
+end
+
