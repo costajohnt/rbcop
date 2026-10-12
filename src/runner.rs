@@ -308,6 +308,13 @@ pub fn parse_for_target<'t>(
     if target_ruby < 2.7 {
         result.drop_numbered_parameters();
     }
+    // Below 3.0 `_1 = 1` declares a local whose reads Prism gives as calls (#364).
+    if target_ruby < 3.0 && text.as_bytes().windows(2).any(|w| w[0] == b'_' && matches!(w[1], b'1'..=b'9')) {
+        let reads = crate::syntax::assigned_numbered_reads(&result.node());
+        if !reads.is_empty() {
+            result.variable_calls_as_locals(&reads);
+        }
+    }
     (result, tokens, fake, edits)
 }
 

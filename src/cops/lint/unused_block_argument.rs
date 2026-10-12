@@ -22,7 +22,7 @@ impl Cop for UnusedBlockArgument {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let tree = Tree::build(&node.as_program_node().unwrap());
+        let tree = Tree::build(&node.as_program_node().unwrap(), cx.src);
         let ignore_empty = cx.cfg.bool("IgnoreEmptyBlocks") == Some(true);
         let allow_kw = cx.cfg.bool("AllowUnusedKeywordArguments") == Some(true);
         let mut offenses: Vec<(usize, String)> = Vec::new();

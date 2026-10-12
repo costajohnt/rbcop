@@ -228,6 +228,12 @@ pub fn numbered_parameter_errors(program: &ruby_prism::Node, target: f64) -> Vec
                 self.scopes[top].max = self.scopes[top].max.max(n);
             }
         }
+        fn declare(&mut self, name: &[u8]) {
+            let top = self.scopes.last_mut().unwrap();
+            if let Some(n) = numparam(name).filter(|n| !top.declared.contains(n)) {
+                top.declared.push(n);
+            }
+        }
         fn write(&mut self, name: &[u8], loc: ruby_prism::Location) {
             let Some(n) = numparam(name) else { return };
             let top = self.scopes.last_mut().unwrap();
@@ -250,8 +256,16 @@ pub fn numbered_parameter_errors(program: &ruby_prism::Node, target: f64) -> Vec
             let ordinary = n.parameters().is_some_and(|p| p.as_block_parameters_node().is_some());
             self.scoped(true, ordinary, |w| ruby_prism::visit_lambda_node(w, n));
         }
+        // A def's `f_norm_arg`s and keyword arguments (not `*`, `**`, `&` or `...`) mark its scope as
+        // having ordinary parameters (#363): a `_1` in it, inside a block, is an error.
         fn visit_def_node(&mut self, n: &ruby_prism::DefNode<'pr>) {
-            self.scoped(false, false, |w| ruby_prism::visit_def_node(w, n));
+            let ordinary = n.parameters().is_some_and(|p| {
+                !(p.requireds().is_empty()
+                    && p.optionals().is_empty()
+                    && p.posts().is_empty()
+                    && p.keywords().is_empty())
+            });
+            self.scoped(false, ordinary, |w| ruby_prism::visit_def_node(w, n));
         }
         fn visit_class_node(&mut self, n: &ruby_prism::ClassNode<'pr>) {
             self.scoped(false, false, |w| ruby_prism::visit_class_node(w, n));
@@ -292,12 +306,130 @@ pub fn numbered_parameter_errors(program: &ruby_prism::Node, target: f64) -> Vec
         fn visit_local_variable_target_node(&mut self, n: &ruby_prism::LocalVariableTargetNode<'pr>) {
             self.write(n.name().as_slice(), n.location());
         }
+        // A parameter named `_1` (2.7: `foo { |_1| _1 }`) is a declared local, so reads of it are no
+        // numbered parameters; from 3.0 Prism reports the name as reserved.
+        fn visit_required_parameter_node(&mut self, n: &ruby_prism::RequiredParameterNode<'pr>) {
+            self.declare(n.name().as_slice());
+        }
+        fn visit_optional_parameter_node(&mut self, n: &ruby_prism::OptionalParameterNode<'pr>) {
+            self.declare(n.name().as_slice());
+            ruby_prism::visit_optional_parameter_node(self, n);
+        }
+        fn visit_block_local_variable_node(&mut self, n: &ruby_prism::BlockLocalVariableNode<'pr>) {
+            self.declare(n.name().as_slice());
+        }
     }
     let mut w = Walk {
         target,
         scopes: vec![Scope { dynamic: false, in_block: false, ordinary: false, max: 0, declared: Vec::new() }],
         out: Vec::new(),
     };
+    w.visit(program);
+    w.out.sort_unstable();
+    w.out
+}
+
+/// Below Ruby 3.0 `_1 = 1` declares a local for the parser gem, whose later reads are `lvar`s
+/// (#364); Prism refuses to declare a `_1`..`_9` local and gives those reads as variable calls.
+/// The start offsets (sorted) of the `_N` variable calls the parser gem reads as locals: declared
+/// by an assignment or parameter in the same scope, or around a block.
+pub fn assigned_numbered_reads(program: &ruby_prism::Node) -> Vec<usize> {
+    use ruby_prism::Visit;
+    fn numbered(name: &[u8]) -> bool {
+        matches!(name, [b'_', b'1'..=b'9'])
+    }
+    struct Walk {
+        /// The `_N` names declared in each scope (a block's starts with its parent's).
+        scopes: Vec<Vec<Vec<u8>>>,
+        out: Vec<usize>,
+    }
+    impl Walk {
+        fn scoped(&mut self, inherit: bool, f: impl FnOnce(&mut Self)) {
+            let declared = if inherit { self.scopes.last().cloned().unwrap_or_default() } else { Vec::new() };
+            self.scopes.push(declared);
+            f(self);
+            self.scopes.pop();
+        }
+        fn declare(&mut self, name: &[u8]) {
+            let top = self.scopes.last_mut().unwrap();
+            if numbered(name) && !top.iter().any(|d| d == name) {
+                top.push(name.to_vec());
+            }
+        }
+    }
+    impl<'pr> Visit<'pr> for Walk {
+        fn visit_block_node(&mut self, n: &ruby_prism::BlockNode<'pr>) {
+            self.scoped(true, |w| ruby_prism::visit_block_node(w, n));
+        }
+        fn visit_lambda_node(&mut self, n: &ruby_prism::LambdaNode<'pr>) {
+            self.scoped(true, |w| ruby_prism::visit_lambda_node(w, n));
+        }
+        fn visit_def_node(&mut self, n: &ruby_prism::DefNode<'pr>) {
+            if let Some(r) = n.receiver() {
+                self.visit(&r);
+            }
+            self.scoped(false, |w| {
+                if let Some(p) = n.parameters() {
+                    w.visit(&p.as_node());
+                }
+                if let Some(b) = n.body() {
+                    w.visit(&b);
+                }
+            });
+        }
+        fn visit_class_node(&mut self, n: &ruby_prism::ClassNode<'pr>) {
+            self.scoped(false, |w| ruby_prism::visit_class_node(w, n));
+        }
+        fn visit_module_node(&mut self, n: &ruby_prism::ModuleNode<'pr>) {
+            self.scoped(false, |w| ruby_prism::visit_module_node(w, n));
+        }
+        fn visit_singleton_class_node(&mut self, n: &ruby_prism::SingletonClassNode<'pr>) {
+            self.visit(&n.expression());
+            self.scoped(false, |w| {
+                if let Some(b) = n.body() {
+                    w.visit(&b);
+                }
+            });
+        }
+        fn visit_call_node(&mut self, n: &ruby_prism::CallNode<'pr>) {
+            let name = n.name().as_slice();
+            if n.is_variable_call() && numbered(name) && self.scopes.last().unwrap().iter().any(|d| d == name) {
+                self.out.push(n.location().start_offset());
+            }
+            ruby_prism::visit_call_node(self, n);
+        }
+        // The target is declared before the value is parsed (`_1 = _1` reads the local).
+        fn visit_local_variable_write_node(&mut self, n: &ruby_prism::LocalVariableWriteNode<'pr>) {
+            self.declare(n.name().as_slice());
+            self.visit(&n.value());
+        }
+        fn visit_local_variable_operator_write_node(&mut self, n: &ruby_prism::LocalVariableOperatorWriteNode<'pr>) {
+            self.declare(n.name().as_slice());
+            self.visit(&n.value());
+        }
+        fn visit_local_variable_or_write_node(&mut self, n: &ruby_prism::LocalVariableOrWriteNode<'pr>) {
+            self.declare(n.name().as_slice());
+            self.visit(&n.value());
+        }
+        fn visit_local_variable_and_write_node(&mut self, n: &ruby_prism::LocalVariableAndWriteNode<'pr>) {
+            self.declare(n.name().as_slice());
+            self.visit(&n.value());
+        }
+        fn visit_local_variable_target_node(&mut self, n: &ruby_prism::LocalVariableTargetNode<'pr>) {
+            self.declare(n.name().as_slice());
+        }
+        fn visit_required_parameter_node(&mut self, n: &ruby_prism::RequiredParameterNode<'pr>) {
+            self.declare(n.name().as_slice());
+        }
+        fn visit_optional_parameter_node(&mut self, n: &ruby_prism::OptionalParameterNode<'pr>) {
+            self.declare(n.name().as_slice());
+            ruby_prism::visit_optional_parameter_node(self, n);
+        }
+        fn visit_block_local_variable_node(&mut self, n: &ruby_prism::BlockLocalVariableNode<'pr>) {
+            self.declare(n.name().as_slice());
+        }
+    }
+    let mut w = Walk { scopes: vec![Vec::new()], out: Vec::new() };
     w.visit(program);
     w.out.sort_unstable();
     w.out

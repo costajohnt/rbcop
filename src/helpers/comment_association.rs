@@ -50,7 +50,7 @@ pub fn leading<'a>(src: &'a Source, start: usize, after: usize, after_line: Opti
 /// Parser's `Comment::Associator` walk over a subtree: the comments each node gets (leading ones
 /// before it, then after its children the interior ones before its end and those decorating its
 /// last line), as (start, end, comment indices) per parser node in visit order. `cursor` is the
-/// first comment still unassigned. Prism's ArgumentsNode/StatementsNode wrappers are skipped and
+/// first comment still unassigned. Prism's ProgramNode/ArgumentsNode/StatementsNode wrappers are skipped and
 /// a parenthesised `begin` takes no leading comments.
 pub struct Associator<'a> {
     pub src: &'a Source<'a>,
@@ -100,7 +100,9 @@ impl<'a> Associator<'a> {
 
     pub fn enter(&mut self, node: &ruby_prism::Node) {
         let k = crate::node_kind::of(node);
-        if matches!(k, crate::node_kind::ARGUMENTS_NODE | crate::node_kind::STATEMENTS_NODE) {
+        // Parser has no program node: its root is the lone statement or a `begin` (which takes no
+        // leading comments), so the file-leading comments go to the first statement (#356).
+        if matches!(k, crate::node_kind::ARGUMENTS_NODE | crate::node_kind::STATEMENTS_NODE | crate::node_kind::PROGRAM_NODE) {
             self.stack.push(None);
             return;
         }

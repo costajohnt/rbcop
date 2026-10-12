@@ -19,7 +19,7 @@ fn block_arg_name<'pr>(block: &ruby_prism::BlockNode<'pr>) -> Option<&'pr [u8]> 
     }
     let p = bp.parameters()?;
     if p.optionals().iter().next().is_some()
-        || p.rest().is_some()
+        || crate::ast::parser_rest(p.rest()).is_some()
         || p.posts().iter().next().is_some()
         || p.keywords().iter().next().is_some()
         || p.keyword_rest().is_some()

@@ -1,0 +1,17 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a.rb:1:5: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
+c.rb:1:12: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+c.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+c.rb:1:5: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
+f.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+f.rb:1:5: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
+h.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+h.rb:1:5: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use single-line instead.
+i.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+i.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+i.rb:1:5: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
+k.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+k.rb:1:5: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
+l.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+l.rb:1:5: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.

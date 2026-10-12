@@ -31,11 +31,6 @@ const KEYWORDS: &[&str] = &[
     "__ENCODING__",
 ];
 
-const OPERATOR_METHODS: &[&str] = &[
-    "|", "^", "&", "<=>", "==", "===", "=~", ">", ">=", "<", "<=", "<<", ">>", "+", "-", "*", "/", "%", "**", "~",
-    "+@", "-@", "!@", "~@", "!", "!=", "!~", "`",
-];
-
 /// Parser node identity: range plus a type tag (a block call is tagged apart from its send).
 type Key = (usize, usize, usize);
 const BLOCK_TAG: usize = usize::MAX;
@@ -175,7 +170,7 @@ impl Walker {
             return;
         }
         let m = method_name(call);
-        if OPERATOR_METHODS.contains(&m)
+        if helpers::node_types::is_operator_method(m)
             || KEYWORDS.contains(&m)
             || m.starts_with(|c: char| c.is_ascii_uppercase())
             || call.equal_loc().is_some()

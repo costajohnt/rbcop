@@ -154,7 +154,7 @@ impl Cop for UselessAssignment {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let tree = Tree::build(&node.as_program_node().unwrap());
+        let tree = Tree::build(&node.as_program_node().unwrap(), cx.src);
         let src = cx.src.text;
         let mut ignored: Vec<(usize, usize)> = Vec::new();
         let mut offenses: Vec<(usize, usize, String, Fix)> = Vec::new();

@@ -1,0 +1,18 @@
+a.rb:3:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+b.rb:5:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+c.rb:4:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+d.rb:4:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+e.rb:4:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+f.rb:5:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_c.rb:3:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_d.rb:3:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_e.rb:3:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_f.rb:3:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_g.rb:3:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_h.rb:3:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_i.rb:5:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_j.rb:4:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_k.rb:3:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_l.rb:4:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_m.rb:3:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+z.rb:1:121: C: Layout/LineLength: Line is too long. [132/120]

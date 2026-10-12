@@ -125,6 +125,10 @@ impl<'pr> ruby_prism::Visit<'pr> for Lvasgn {
     fn visit_match_required_node(&mut self, node: &ruby_prism::MatchRequiredNode<'pr>) {
         self.visit(&node.value());
     }
+    // A named-capture match is parser's `match_with_lvasgn` (regexp and receiver only, #366).
+    fn visit_match_write_node(&mut self, node: &ruby_prism::MatchWriteNode<'pr>) {
+        self.visit_call_node(&node.call());
+    }
     fn visit_in_node(&mut self, node: &ruby_prism::InNode<'pr>) {
         if let Some(s) = node.statements() {
             self.visit_statements_node(&s);

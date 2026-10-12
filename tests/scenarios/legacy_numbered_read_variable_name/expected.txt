@@ -1,0 +1,5 @@
+a.rb:4:1: C: Naming/VariableName: Use camelCase for variable names.
+t27/a.rb:1:18: C: Naming/VariableName: Use camelCase for variable names.
+t27/a.rb:2:22: C: Naming/VariableName: Use camelCase for variable names.
+t27/a.rb:3:16: C: Naming/VariableName: Use camelCase for variable names.
+t27/a.rb:4:1: C: Naming/VariableName: Use camelCase for variable names.
