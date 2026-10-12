@@ -23,7 +23,8 @@ set -eu
 root=$(cd "$(dirname "$0")/.." && pwd)
 . "$root/scripts/rbcop.sh"
 corpus=${RBCOP_CORPUS:?set RBCOP_CORPUS}
-corpus2=${RBCOP_CORPUS2:-$corpus/../corpus2}
+# Resolved: check-autocorrect.sh strips "$RBCOP_CORPUS/<corpus>/" from the oracles' paths.
+corpus2=$(cd "${RBCOP_CORPUS2:-$corpus/../corpus2}" && pwd)
 status=0
 for spec in performance:Performance rails:Rails minitest:Minitest rspec:RSpec,RSpecRails,FactoryBot,Capybara; do
   plugin=${spec%%:*} dept=${spec#*:}
