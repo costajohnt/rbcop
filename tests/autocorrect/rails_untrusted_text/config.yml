@@ -1,0 +1,49 @@
+# rubocop-rails cops whose corrections build Ruby source from text in the file (tag names, i18n
+# keys, rel values, paths, enum values, ...): quotes, backslashes, newlines, interpolation, `;`,
+# non-ASCII, heredocs and %-literals. rbcop must rewrite exactly as RuboCop does, including where
+# RuboCop's own correction produces broken or surprising code.
+plugins:
+  - rubocop-rails
+AllCops:
+  TargetRubyVersion: 3.3
+  TargetRailsVersion: 8.0
+  SuggestExtensions: false
+  DisabledByDefault: true
+Rails/ContentTag:
+  Enabled: true
+Rails/DotSeparatedKeys:
+  Enabled: true
+Rails/LinkToBlank:
+  Enabled: true
+Rails/RootPublicPath:
+  Enabled: true
+Rails/EnumHash:
+  Enabled: true
+  Include: ['**/*.rb']
+Rails/RenderPlainText:
+  Enabled: true
+Rails/ReflectionClassName:
+  Enabled: true
+Rails/FindById:
+  Enabled: true
+Rails/RootJoinChain:
+  Enabled: true
+Rails/FreezeTime:
+  Enabled: true
+Rails/OrderArguments:
+  Enabled: true
+Rails/EagerEvaluationLogMessage:
+  Enabled: true
+Rails/ActiveSupportOnLoad:
+  Enabled: true
+Rails/AddColumnIndex:
+  Enabled: true
+  Include: ['**/*.rb']
+Rails/RedirectBackOrTo:
+  Enabled: true
+Rails/SelectMap:
+  Enabled: true
+Rails/Pick:
+  Enabled: true
+Rails/RelativeDateConstant:
+  Enabled: true
