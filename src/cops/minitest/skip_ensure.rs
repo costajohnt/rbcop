@@ -78,9 +78,12 @@ fn outer_rescue(ancestors: &[Node], node: &Node) -> bool {
 
 /// The first `skip` send (no receiver) in pre-order, with whether a rescue lies between it and
 /// the walk's root and its nearest if ancestor below the root.
+/// (a rescue node, the node as a parser `if`: keyword and condition)
+type Frame = (bool, Option<(&'static str, (usize, usize))>);
+
 struct FindSkip {
-    stack: Vec<(bool, Option<(&'static str, (usize, usize))>)>,
-    found: Option<(bool, Option<(&'static str, (usize, usize))>)>,
+    stack: Vec<Frame>,
+    found: Option<Frame>,
     root: (usize, usize),
     skip_root: bool,
 }

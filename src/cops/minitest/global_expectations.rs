@@ -66,7 +66,7 @@ impl Cop for GlobalExpectations {
         let shown = match method {
             Some(_) => preferred.to_string(),
             None if block_matcher => {
-                let body = lambda_src.as_deref().unwrap_or(&cx.src.text[rs..re]);
+                let body = lambda_src.unwrap_or(&cx.src.text[rs..re]);
                 format!("{preferred} {{ {body} }}")
             }
             None => format!("{preferred}({})", &cx.src.text[rs..re]),

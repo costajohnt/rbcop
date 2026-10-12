@@ -142,13 +142,8 @@ fn left_sibling<'pr>(anc: &[Node<'pr>], node: &Node<'pr>) -> Option<Sibling<'pr>
             let args: Vec<Node> = parent.as_arguments_node().unwrap().arguments().iter().collect();
             let i = args.iter().position(|a| range(a) == me)?;
             if i == 0 {
-                // The method name precedes the first argument (or the receiver, for `a.b(x)`... a
-                // symbol either way when there is no receiver).
-                let call = anc.get(anc.len().checked_sub(2)?)?.as_call_node();
-                return match call {
-                    Some(_) => Some(Sibling::Accept),
-                    None => None,
-                };
+                // A call's method name (a symbol child) precedes its first argument.
+                return anc.get(anc.len().checked_sub(2)?)?.as_call_node().map(|_| Sibling::Accept);
             }
             Some(Sibling::Node(args.into_iter().nth(i - 1).unwrap()))
         }

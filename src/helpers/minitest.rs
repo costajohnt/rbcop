@@ -527,13 +527,8 @@ pub fn multiple_assertions_count(node: &Node) -> usize {
     count(Some(node))
 }
 
-/// rubocop-ast `heredoc?` on a str/dstr/xstr node.
-pub fn is_heredoc_node(node: &Node) -> bool {
-    is_heredoc(node)
-}
-
 /// A class ancestor (nearest first) of the node with these Prism ancestors.
-pub fn nearest_class<'a, 'pr>(ancestors: &'a [Node<'pr>]) -> Option<ClassNode<'pr>> {
+pub fn nearest_class<'pr>(ancestors: &[Node<'pr>]) -> Option<ClassNode<'pr>> {
     ancestors.iter().rev().find_map(|a| a.as_class_node())
 }
 
@@ -654,10 +649,8 @@ pub fn compare_cop(cx: &mut Cx, node: &Node, preferred: &str, forms: &[Form], re
                     found = Some((range(&e), range(&a), is_regexp(&a), 1, true));
                 }
             }
-            Form::Op(outer, op) if *outer == name => {
-                if args.len() >= 3 && is_sym(&args[1], op) {
-                    found = Some((range(&args[0]), range(&args[2]), is_regexp(&args[2]), 3, false));
-                }
+            Form::Op(outer, op) if *outer == name && args.len() >= 3 && is_sym(&args[1], op) => {
+                found = Some((range(&args[0]), range(&args[2]), is_regexp(&args[2]), 3, false));
             }
             _ => {}
         }
