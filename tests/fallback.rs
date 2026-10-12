@@ -68,18 +68,42 @@ fn required_ruby_code_is_named_on_stderr() {
         "rbcop: not running cops from Ruby code the config requires; set RBCOP_FALLBACK=1 to run them with RuboCop\n"
     );
     assert!(!text(&out.stdout).contains("Avoid"), "{}", text(&out.stdout));
-    // Configured cops rbcop does not implement are counted by department.
-    fs::write(dir.join(".rubocop.yml"), format!("{CONFIG}Custom/NoFoo:\n  Enabled: true\n")).unwrap();
-    let out = rbcop(&dir, false, &["-f", "e"]);
-    assert_eq!(
-        text(&out.stderr),
-        "rbcop: not running 1 cop it does not implement (Custom: 1) or cops from Ruby code the config requires; \
-         set RBCOP_FALLBACK=1 to run them with RuboCop\n"
-    );
-    // No notice when --only leaves nothing rbcop cannot run... except the required code, which
-    // may define any cop.
+    // Required code may define any cop, so --only does not silence it.
     let out = rbcop(&dir, false, &["-f", "e", "--only", "Style/StringLiterals"]);
     assert!(text(&out.stderr).contains("cops from Ruby code"), "{}", text(&out.stderr));
+    // A plugin's cops are counted by department: a fake plugin gem found through GEM_PATH.
+    let gems = dir.join("gems");
+    fs::create_dir_all(gems.join("specifications")).unwrap();
+    fs::create_dir_all(gems.join("gems/rubocop-fake-0.1.0/config")).unwrap();
+    fs::write(
+        gems.join("specifications/rubocop-fake-0.1.0.gemspec"),
+        "Gem::Specification.new { |s| s.name = 'rubocop-fake'; s.version = '0.1.0' }\n",
+    )
+    .unwrap();
+    fs::write(
+        gems.join("gems/rubocop-fake-0.1.0/config/default.yml"),
+        "Fake/One:\n  Enabled: true\nFake/Two:\n  Enabled: true\nFake/Off:\n  Enabled: false\n",
+    )
+    .unwrap();
+    fs::write(dir.join(".rubocop.yml"), "plugins:\n  - rubocop-fake\nAllCops:\n  NewCops: enable\n").unwrap();
+    let run = |args: &[&str]| {
+        let mut cmd = common::command(env!("CARGO_BIN_EXE_rbcop"));
+        cmd.env("GEM_PATH", &gems).args(args).current_dir(&dir).output().unwrap()
+    };
+    let out = run(&["-f", "e", "a.rb"]);
+    // Without a ruby on PATH the gem cannot be found.
+    if !text(&out.stderr).contains("cannot run ruby") {
+        assert_eq!(
+            text(&out.stderr),
+            "rbcop: not running 2 cops it does not implement (Fake: 2); set RBCOP_FALLBACK=1 to run them with \
+             RuboCop\n"
+        );
+        // ...and --only/--except leave out what they deselect.
+        let out = run(&["-f", "e", "--except", "Fake/One", "a.rb"]);
+        assert!(text(&out.stderr).contains("(Fake: 1)"), "{}", text(&out.stderr));
+        let out = run(&["-f", "e", "--only", "Style/StringLiterals", "a.rb"]);
+        assert_eq!(text(&out.stderr), "");
+    }
     let _ = fs::remove_dir_all(&dir);
 }
 

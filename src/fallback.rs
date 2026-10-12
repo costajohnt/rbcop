@@ -18,7 +18,9 @@ pub fn enabled() -> bool {
     std::env::var_os("RBCOP_FALLBACK").is_some_and(|v| v == "1")
 }
 
-/// Cops enabled (and selected) in any of `configs` that rbcop does not implement.
+/// Registered cops enabled (and selected) in any of `configs` that rbcop does not implement. A
+/// renamed cop's old name or a custom cop's config is not registered: custom cops are counted as
+/// required code.
 pub fn unimplemented<'c>(
     configs: impl IntoIterator<Item = &'c Resolved>,
     implemented: &HashSet<&str>,
@@ -30,6 +32,7 @@ pub fn unimplemented<'c>(
             if name.contains('/')
                 && !implemented.contains(name.as_str())
                 && !out.contains(name)
+                && cfg.registered(name)
                 && selected(name, cfg)
                 && cfg.cop_enabled(name)
             {

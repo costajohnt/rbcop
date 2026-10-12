@@ -278,6 +278,12 @@ impl Resolved {
         self.new_cops(name, false)
     }
 
+    /// A cop name some registered cop has: in the defaults (core and integrated plugins) or, as
+    /// Store::unregistered decides, defined by a loaded plugin.
+    pub fn registered(&self, name: &str) -> bool {
+        !self.unregistered.iter().any(|n| n == name)
+    }
+
     /// Config#pending_cops (only registered cops, as PendingCopsReporter keeps them): every
     /// `Enabled: pending` cop no `NewCops` setting settles, outside a disabled department, in config
     /// order, with its VersionAdded.
