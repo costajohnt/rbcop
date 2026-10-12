@@ -1,0 +1,250 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 88 <==
+describe SomeClass do
+  user = create(:user)
+
+  before { user.update(admin: true) }
+end
+
+==> 001/001_spec.rb 152 <==
+describe SomeClass do
+  user = create(:user)
+
+  it 'updates the user' do
+    expect { user.update(admin: true) }.to change(user, :updated_at)
+  end
+end
+
+==> 002/002_spec.rb 89 <==
+describe SomeClass do
+  user = create(:user)
+
+  it_behaves_like 'some example', user
+end
+
+==> 003/003_spec.rb 98 <==
+describe SomeClass do
+  user = create(:user)
+
+  it_behaves_like 'some example', [user, user2]
+end
+
+==> 004/004_spec.rb 75 <==
+describe SomeClass do
+  user = create(:user)
+
+  let(:my_user) { user }
+end
+
+==> 005/005_spec.rb 69 <==
+describe SomeClass do
+  user = create(:user)
+
+  subject { user }
+end
+
+==> 006/006_spec.rb 156 <==
+shared_examples 'some examples' do |subject|
+  subject = SecureRandom.uuid
+
+  it 'renders the subject' do
+    expect(mail.subject).to eq(subject)
+  end
+end
+
+==> 007/007_spec.rb 129 <==
+describe SomeClass do
+  user = create(:user)
+
+  it 'does something' do
+    expect("foo_#{user.name}").to eq("foo_bar")
+  end
+end
+
+==> 008/008_spec.rb 141 <==
+describe SomeClass do
+  article = foo ? 'a' : 'the'
+
+  it "updates #{article} user" do
+    user.update(preferred_article: article)
+  end
+end
+
+==> 009/009_spec.rb 177 <==
+describe SomeClass do
+  user = create(:user)
+
+  it 'updates the user' do
+    expect { user.update(admin: true) }.to change(user, :updated_at)
+    user = create(:user)
+  end
+end
+
+==> 010/010_spec.rb 86 <==
+user = create(:user)
+
+describe SomeClass do
+  before { user.update(admin: true) }
+end
+
+==> 011/011_spec.rb 177 <==
+describe SomeClass do
+  user = create(:user)
+
+  it 'updates the user' do
+    user = create(:user)
+    expect { user.update(admin: true) }.to change(user, :updated_at)
+  end
+end
+
+==> 012/012_spec.rb 147 <==
+shared_examples 'some examples' do |subject|
+  it 'renders the subject' do
+    subject = 'hello'
+    expect(mail.subject).to eq(subject)
+  end
+end
+
+==> 013/013_spec.rb 125 <==
+shared_examples 'some examples' do |subject|
+  it 'renders the subject' do
+    expect(mail.subject).to eq(subject)
+  end
+end
+
+==> 014/014_spec.rb 126 <==
+shared_examples 'some examples' do |subject:|
+  it 'renders the subject' do
+    expect(mail.subject).to eq(subject)
+  end
+end
+
+==> 015/015_spec.rb 154 <==
+describe SomeClass do
+  it 'updates the user' do
+    user = create(:user)
+
+    expect { user.update(admin: true) }.to change(user, :updated_at)
+  end
+end
+
+==> 016/016_spec.rb 229 <==
+describe SomeClass do
+  let(:my_user) do
+    user = create(:user)
+    user.flag!
+    user
+  end
+
+  it 'updates the user' do
+    user = create(:user)
+
+    expect { user.update(admin: true) }.to change(user, :updated_at)
+  end
+end
+
+==> 017/017_spec.rb 157 <==
+describe SomeClass do
+  description = "updates the user"
+
+  it description do
+    expect { user.update(admin: true) }.to change(user, :updated_at)
+  end
+end
+
+==> 018/018_spec.rb 166 <==
+describe SomeClass do
+  article = foo ? 'a' : 'the'
+
+  it "updates #{article} user" do
+    expect { user.update(admin: true) }.to change(user, :updated_at)
+  end
+end
+
+==> 019/019_spec.rb 109 <==
+describe SomeClass do
+  article = foo ? 'a' : 'the'
+
+  it_behaves_like 'some example', "#{article} user"
+end
+
+==> 020/020_spec.rb 110 <==
+describe SomeClass do
+  article = foo ? 'a' : 'the'
+
+  it_behaves_like 'some example', :"#{article}_user"
+end
+
+==> 021/021_spec.rb 115 <==
+describe SomeClass do
+  examples = foo ? 'definite article' : 'indefinite article'
+
+  it_behaves_like examples
+end
+
+==> 022/022_spec.rb 144 <==
+describe SomeClass do
+  %i[user user2].each do |user|
+    let(user) do
+      user = create(:user)
+      user.flag!
+      user
+    end
+  end
+end
+
+==> 023/023_spec.rb 121 <==
+describe SomeClass do
+  user = create(:user)
+  user.flag!
+
+  it 'does something' do
+    expect(foo).to eq(bar)
+  end
+end
+
+==> 024/024_spec.rb 100 <==
+FactoryBot.define :foo do
+  bar = 123
+
+  after(:create) do |foo|
+    foo.update(bar: bar)
+  end
+end
+
+==> 025/025_spec.rb 144 <==
+describe SomeClass do
+  skip_message = 'not yet implemented'
+
+  it 'does something', skip: skip_message do
+    expect(1 + 2).to eq(3)
+  end
+end
+
+==> 026/026_spec.rb 150 <==
+describe SomeClass do
+  pending_message = 'work in progress'
+
+  it 'does something', pending: pending_message do
+    expect(1 + 2).to eq(3)
+  end
+end
+
+==> 027/027_spec.rb 139 <==
+describe SomeClass do
+  skip_message = 'not yet implemented'
+
+  it 'does something', skip: skip_message do
+    puts skip_message
+  end
+end
+

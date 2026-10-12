@@ -693,6 +693,64 @@ pub fn each_sym_pair(cx: &Cx, node: &Node, f: &mut dyn FnMut(&str, &str)) {
     V { target: cx.src.target_ruby, f, _p: std::marker::PhantomData }.visit(node);
 }
 
+/// RuboCop::RSpec::AlignLetBrace#offending_tokens: single-line `let` blocks whose `{`/`do`
+/// (`left`) or `}`/`end` is not at its chunk's maximum column, with the spaces to insert.
+pub fn align_let_brace(cx: &Cx, program: &Node, left: bool) -> Vec<((usize, usize), usize)> {
+    struct V<'a> {
+        l: &'a Language,
+        src: &'a crate::source::Source<'a>,
+        left: bool,
+        /// (line, token range, token column)
+        lets: Vec<(usize, (usize, usize), usize)>,
+    }
+    impl<'pr> Visit<'pr> for V<'_> {
+        fn visit_call_node(&mut self, n: &CallNode<'pr>) {
+            let node = n.as_node();
+            if let Some(b) = block_of(n)
+                && is_plain(&b)
+                && let_(self.l, &node)
+                && single_line(self.src, &node)
+            {
+                let tok = if self.left { b.opening_loc() } else { b.closing_loc() };
+                let r = (tok.start_offset(), tok.end_offset());
+                self.lets.push((self.src.line_of(node.location().start_offset()), r, self.src.column(r.0)));
+            }
+            ruby_prism::visit_call_node(self, n);
+        }
+    }
+    let l = lang(cx);
+    let mut v = V { l: &l, src: cx.src, left, lets: Vec::new() };
+    v.visit(program);
+    // adjacent_let_chunks: Enumerable#chunk on "a line after a gap"; a let after a gap is a chunk
+    // of its own, the lets after it start the next one
+    let mut chunks: Vec<(bool, Vec<usize>)> = Vec::new();
+    let mut last_line: Option<usize> = None;
+    for (i, &(line, _, _)) in v.lets.iter().enumerate() {
+        last_line = match last_line {
+            None => Some(line),
+            Some(ll) if ll + 1 == line => Some(line),
+            Some(_) => None,
+        };
+        let key = last_line.is_none();
+        match chunks.last_mut() {
+            Some((k, members)) if *k == key => members.push(i),
+            _ => chunks.push((key, vec![i])),
+        }
+    }
+    let mut out = Vec::new();
+    for (i, &(_, range, column)) in v.lets.iter().enumerate() {
+        // let_group_for: the chunk holding this let
+        let Some((_, members)) = chunks.iter().find(|(_, m)| m.contains(&i)) else {
+            continue;
+        };
+        let target = members.iter().map(|&j| v.lets[j].2).max().unwrap_or(column);
+        if target != column {
+            out.push((range, target - column));
+        }
+    }
+    out
+}
+
 /// A node's byte range.
 pub fn node_range(node: &Node) -> (usize, usize) {
     let l = node.location();
