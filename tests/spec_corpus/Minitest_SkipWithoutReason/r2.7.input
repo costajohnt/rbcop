@@ -1,0 +1,85 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 15 <==
+skip('Reason')
+
+==> test/001_test.rb 5 <==
+skip
+
+==> test/002_test.rb 9 <==
+skip('')
+
+==> test/003_test.rb 53 <==
+begin
+  do_something
+rescue ArgumentError
+  skip
+end
+
+==> test/004_test.rb 12 <==
+object.skip
+
+==> test/005_test.rb 125 <==
+skip if condition?
+
+case
+when condition?
+  skip
+else
+  do_something
+end
+
+case
+when condition?
+  do_something
+else
+  skip
+end
+
+==> test/006_test.rb 13 <==
+skip(reason)
+
+==> test/007_test.rb 141 <==
+if condition?
+  do_something
+  skip
+end
+
+case
+when condition?
+  do_something
+  skip
+end
+
+case
+when condition?
+else
+  do_something
+  skip
+end
+
+==> test/008_test.rb 22 <==
+skip while condition?
+
+==> test/009_test.rb 82 <==
+if condition?
+  skip
+else
+  skip
+end
+
+case
+when condition?
+  skip
+else
+  skip
+end
+

@@ -1,0 +1,387 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 29 <==
+refute_in_delta x.foo, x.foo
+
+==> test/001_test.rb 25 <==
+refute_includes foo, bar
+
+==> test/002_test.rb 22 <==
+refute_equal foo, bar
+
+==> test/003_test.rb 26 <==
+refute_equal x.foo, x.foo
+
+==> test/004_test.rb 15 <==
+refute_nil foo
+
+==> test/005_test.rb 25 <==
+refute_includes({}, foo)
+
+==> test/006_test.rb 25 <==
+refute_in_delta foo, bar
+
+==> test/007_test.rb 25 <==
+assert_same x.foo, x.foo
+
+==> test/008_test.rb 27 <==
+assert_silent do
+  foo
+end
+
+==> test/009_test.rb 129 <==
+assert []
+assert [foo]
+
+assert({})
+assert({ key: value })
+
+assert nil
+assert true
+assert false
+
+assert ""
+assert "foo"
+
+assert 1
+
+==> test/010_test.rb 16 <==
+assert_same foo
+
+==> test/011_test.rb 26 <==
+assert `ls`
+assert %x{ls}
+
+==> test/012_test.rb 54 <==
+refute_in_epsilon [], []
+refute_in_epsilon $foo, $foo
+
+==> test/013_test.rb 34 <==
+assert_nil `ls`
+assert_nil %x{ls}
+
+==> test/014_test.rb 35 <==
+foo = get_foo
+refute_same foo, foo
+
+==> test/015_test.rb 33 <==
+refute_empty false, "My message"
+
+==> test/016_test.rb 20 <==
+assert_in_delta foo
+
+==> test/017_test.rb 17 <==
+assert_empty foo
+
+==> test/018_test.rb 15 <==
+assert_not foo
+
+==> test/019_test.rb 41 <==
+foo = get_foo
+refute_in_epsilon foo, foo
+
+==> test/020_test.rb 17 <==
+assert_silent {}
+
+==> test/021_test.rb 27 <==
+assert_in_epsilon foo, foo
+
+==> test/022_test.rb 16 <==
+refute_same foo
+
+==> test/023_test.rb 31 <==
+assert_not false, "My message"
+
+==> test/024_test.rb 11 <==
+assert foo
+
+==> test/025_test.rb 27 <==
+assert false, "My message"
+
+==> test/026_test.rb 35 <==
+foo = get_foo
+assert_same foo, foo
+
+==> test/027_test.rb 27 <==
+refute_in_epsilon foo, bar
+
+==> test/028_test.rb 50 <==
+refute_in_delta [], []
+refute_in_delta $foo, $foo
+
+==> test/029_test.rb 27 <==
+refute_in_epsilon foo, foo
+
+==> test/030_test.rb 34 <==
+assert_not `ls`
+assert_not %x{ls}
+
+==> test/031_test.rb 21 <==
+assert_same foo, bar
+
+==> test/032_test.rb 38 <==
+refute_empty `ls`
+refute_empty %x{ls}
+
+==> test/033_test.rb 25 <==
+assert_includes foo, bar
+
+==> test/034_test.rb 21 <==
+refute_same foo, bar
+
+==> test/035_test.rb 42 <==
+assert_same [], []
+assert_same $foo, $foo
+
+==> test/036_test.rb 20 <==
+refute_in_delta foo
+
+==> test/037_test.rb 39 <==
+foo = get_foo
+assert_in_delta foo, foo
+
+==> test/038_test.rb 21 <==
+refute_same foo, foo
+
+==> test/039_test.rb 27 <==
+refute false, "My message"
+
+==> test/040_test.rb 24 <==
+assert_includes "", foo
+
+==> test/041_test.rb 42 <==
+refute_same [], []
+refute_same $foo, $foo
+
+==> test/042_test.rb 22 <==
+refute_equal foo, foo
+
+==> test/043_test.rb 17 <==
+assert_equal foo
+
+==> test/044_test.rb 17 <==
+refute_equal foo
+
+==> test/045_test.rb 41 <==
+foo = get_foo
+assert_in_epsilon foo, foo
+
+==> test/046_test.rb 169 <==
+refute_nil []
+refute_nil [foo]
+
+refute_nil({})
+refute_nil({ key: value })
+
+refute_nil nil
+refute_nil true
+refute_nil false
+
+refute_nil ""
+refute_nil "foo"
+
+refute_nil 1
+
+==> test/047_test.rb 189 <==
+assert_empty []
+assert_empty [foo]
+
+assert_empty({})
+assert_empty({ key: value })
+
+assert_empty nil
+assert_empty true
+assert_empty false
+
+assert_empty ""
+assert_empty "foo"
+
+assert_empty 1
+
+==> test/048_test.rb 11 <==
+refute foo
+
+==> test/049_test.rb 169 <==
+assert_nil []
+assert_nil [foo]
+
+assert_nil({})
+assert_nil({ key: value })
+
+assert_nil nil
+assert_nil true
+assert_nil false
+
+assert_nil ""
+assert_nil "foo"
+
+assert_nil 1
+
+==> test/050_test.rb 44 <==
+refute_equal [], []
+refute_equal $foo, $foo
+
+==> test/051_test.rb 21 <==
+assert_same foo, foo
+
+==> test/052_test.rb 17 <==
+foo.assert(true)
+
+==> test/053_test.rb 189 <==
+refute_empty []
+refute_empty [foo]
+
+refute_empty({})
+refute_empty({ key: value })
+
+refute_empty nil
+refute_empty true
+refute_empty false
+
+refute_empty ""
+refute_empty "foo"
+
+refute_empty 1
+
+==> test/054_test.rb 31 <==
+refute_in_epsilon x.foo, x.foo
+
+==> test/055_test.rb 24 <==
+assert_includes [], foo
+
+==> test/056_test.rb 44 <==
+assert_equal [], []
+assert_equal $foo, $foo
+
+==> test/057_test.rb 27 <==
+assert_in_epsilon foo, bar
+
+==> test/058_test.rb 38 <==
+assert_empty `ls`
+assert_empty %x{ls}
+
+==> test/059_test.rb 129 <==
+refute []
+refute [foo]
+
+refute({})
+refute({ key: value })
+
+refute nil
+refute true
+refute false
+
+refute ""
+refute "foo"
+
+refute 1
+
+==> test/060_test.rb 36 <==
+foo = get_foo
+refute_equal foo, foo
+
+==> test/061_test.rb 25 <==
+refute_in_delta foo, foo
+
+==> test/062_test.rb 39 <==
+foo = get_foo
+refute_in_delta foo, foo
+
+==> test/063_test.rb 22 <==
+assert_equal foo, foo
+
+==> test/064_test.rb 25 <==
+refute_same x.foo, x.foo
+
+==> test/065_test.rb 25 <==
+assert_in_delta foo, foo
+
+==> test/066_test.rb 24 <==
+refute_includes "", foo
+
+==> test/067_test.rb 50 <==
+assert_in_delta [], []
+assert_in_delta $foo, $foo
+
+==> test/068_test.rb 15 <==
+assert_nil foo
+
+==> test/069_test.rb 31 <==
+assert_nil false, "My message"
+
+==> test/070_test.rb 25 <==
+assert_in_delta foo, bar
+
+==> test/071_test.rb 31 <==
+assert_in_epsilon x.foo, x.foo
+
+==> test/072_test.rb 54 <==
+assert_in_epsilon [], []
+assert_in_epsilon $foo, $foo
+
+==> test/073_test.rb 17 <==
+refute_empty foo
+
+==> test/074_test.rb 25 <==
+assert_includes({}, foo)
+
+==> test/075_test.rb 26 <==
+assert_equal x.foo, x.foo
+
+==> test/076_test.rb 31 <==
+refute_nil false, "My message"
+
+==> test/077_test.rb 33 <==
+assert_empty false, "My message"
+
+==> test/078_test.rb 22 <==
+assert_in_epsilon foo
+
+==> test/079_test.rb 22 <==
+refute_in_epsilon foo
+
+==> test/080_test.rb 26 <==
+refute `ls`
+refute %x{ls}
+
+==> test/081_test.rb 22 <==
+assert_equal foo, bar
+
+==> test/082_test.rb 34 <==
+refute_nil `ls`
+refute_nil %x{ls}
+
+==> test/083_test.rb 36 <==
+foo = get_foo
+assert_equal foo, foo
+
+==> test/084_test.rb 24 <==
+refute_includes [], foo
+
+==> test/085_test.rb 29 <==
+assert_in_delta x.foo, x.foo
+
+==> test/086_test.rb 169 <==
+assert_not []
+assert_not [foo]
+
+assert_not({})
+assert_not({ key: value })
+
+assert_not nil
+assert_not true
+assert_not false
+
+assert_not ""
+assert_not "foo"
+
+assert_not 1
+

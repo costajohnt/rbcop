@@ -1,0 +1,49 @@
+==> offenses exit=1 595 <==
+test/001_test.rb:3:18: C: [Correctable] Minitest/LiteralAsActualArgument: Replace the literal with the first argument.
+test/002_test.rb:3:18: C: [Correctable] Minitest/LiteralAsActualArgument: Replace the literal with the first argument.
+test/007_test.rb:3:18: C: [Correctable] Minitest/LiteralAsActualArgument: Replace the literal with the first argument.
+test/008_test.rb:3:18: C: [Correctable] Minitest/LiteralAsActualArgument: Replace the literal with the first argument.
+test/009_test.rb:3:18: C: [Correctable] Minitest/LiteralAsActualArgument: Replace the literal with the first argument.
+
+==> autocorrect exit=0 585 <==
+test/001_test.rb:3:18: C: [Corrected] Minitest/LiteralAsActualArgument: Replace the literal with the first argument.
+test/002_test.rb:3:18: C: [Corrected] Minitest/LiteralAsActualArgument: Replace the literal with the first argument.
+test/007_test.rb:3:18: C: [Corrected] Minitest/LiteralAsActualArgument: Replace the literal with the first argument.
+test/008_test.rb:3:18: C: [Corrected] Minitest/LiteralAsActualArgument: Replace the literal with the first argument.
+test/009_test.rb:3:18: C: [Corrected] Minitest/LiteralAsActualArgument: Replace the literal with the first argument.
+
+==> corrected/test/001_test.rb 112 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal([1, 2, { key: :value }], foo)
+  end
+end
+
+==> corrected/test/002_test.rb 89 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal 2, foo
+  end
+end
+
+==> corrected/test/007_test.rb 91 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal({}, foo)
+  end
+end
+
+==> corrected/test/008_test.rb 102 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal({key: :value}, foo)
+  end
+end
+
+==> corrected/test/009_test.rb 90 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(2, foo)
+  end
+end
+

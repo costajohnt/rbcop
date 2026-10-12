@@ -62,9 +62,11 @@ Dir.mktmpdir("rbcop-spec-corpus") do |tmp|
   names -= File.read(File.join(root, "config/default.yml")).scan(%r{^([A-Z]\w+/\w+):$}).flatten if plugin
   File.write(cops, names.join("\n"))
   log = File.join(tmp, "extract.log")
-  ok = system({ "SPEC" => "1", "PLUGINS" => ENV.fetch("PLUGINS", plugin) }, RbConfig.ruby, File.join(root, "scripts/extract_cold_corpus.rb"),
-              File.join(src, "spec/rubocop/cop"), extracted, cops, default_yml,
-              out: File::NULL, err: log)
+  # A plugin tested with Minitest (rubocop-minitest) has test/rubocop/cop instead of specs.
+  minitest = plugin && !File.directory?(File.join(src, "spec")) && File.directory?(File.join(src, "test/rubocop/cop"))
+  script, from = minitest ? ["extract_minitest_corpus.rb", src] : ["extract_cold_corpus.rb", File.join(src, "spec/rubocop/cop")]
+  ok = system({ "SPEC" => "1", "PLUGINS" => ENV.fetch("PLUGINS", plugin) }, RbConfig.ruby, File.join(root, "scripts", script),
+              from, extracted, cops, default_yml, out: File::NULL, err: log)
   abort "extractor failed, see #{log}:\n#{File.read(log)[-2000..]}" unless ok
   unresolved = File.readlines(log).count { |l| !l.include?(" snippets, ") }
 

@@ -1,0 +1,40 @@
+==> offenses exit=1 470 <==
+test/000_test.rb:3:5: C: [Correctable] Minitest/RefuteKindOf: Prefer using `refute_kind_of(SomeClass, object, 'message')`.
+test/001_test.rb:3:5: C: [Correctable] Minitest/RefuteKindOf: Prefer using `refute_kind_of(SomeClass, object)`.
+test/002_test.rb:3:5: C: [Correctable] Minitest/RefuteKindOf: Prefer using `refute_kind_of(SomeClass, object, 'message')`.
+test/004_test.rb:3:5: C: [Correctable] Minitest/RefuteKindOf: Prefer using `refute_kind_of(SomeClass, object)`.
+
+==> autocorrect exit=0 462 <==
+test/000_test.rb:3:5: C: [Corrected] Minitest/RefuteKindOf: Prefer using `refute_kind_of(SomeClass, object, 'message')`.
+test/001_test.rb:3:5: C: [Corrected] Minitest/RefuteKindOf: Prefer using `refute_kind_of(SomeClass, object)`.
+test/002_test.rb:3:5: C: [Corrected] Minitest/RefuteKindOf: Prefer using `refute_kind_of(SomeClass, object, 'message')`.
+test/004_test.rb:3:5: C: [Corrected] Minitest/RefuteKindOf: Prefer using `refute_kind_of(SomeClass, object)`.
+
+==> corrected/test/000_test.rb 114 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_kind_of(SomeClass, object, 'message')
+  end
+end
+
+==> corrected/test/001_test.rb 103 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_kind_of(SomeClass, object)
+  end
+end
+
+==> corrected/test/002_test.rb 114 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_kind_of(SomeClass, object, 'message')
+  end
+end
+
+==> corrected/test/004_test.rb 103 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_kind_of(SomeClass, object)
+  end
+end
+

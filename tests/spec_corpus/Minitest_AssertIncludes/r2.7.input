@@ -1,0 +1,84 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 107 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert((collection.include?(object)))
+  end
+end
+
+==> test/001_test.rb 104 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(collection.member?(object))
+  end
+end
+
+==> test/002_test.rb 105 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(collection.include?(object))
+  end
+end
+
+==> test/003_test.rb 108 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    collection = []
+    assert(collection)
+  end
+end
+
+==> test/004_test.rb 105 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_includes(collection, object)
+  end
+end
+
+==> test/005_test.rb 101 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(collection.key?(object))
+  end
+end
+
+==> test/006_test.rb 105 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(collection.has_key?(object))
+  end
+end
+
+==> test/007_test.rb 148 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(collection.include?(object), <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+
+==> test/008_test.rb 116 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(collection.include?(object), 'message')
+  end
+end
+
+==> test/009_test.rb 106 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(collection.end_with?(string))
+  end
+end
+

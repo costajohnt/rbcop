@@ -1,0 +1,10 @@
+==> offenses exit=1 285 <==
+test/000_test.rb:2:3: C: Minitest/MultipleAssertions: Test case has too many assertions [4/2].
+test/001_test.rb:2:3: C: Minitest/MultipleAssertions: Test case has too many assertions [4/2].
+test/002_test.rb:2:3: C: Minitest/MultipleAssertions: Test case has too many assertions [5/2].
+
+==> autocorrect exit=1 285 <==
+test/000_test.rb:2:3: C: Minitest/MultipleAssertions: Test case has too many assertions [4/2].
+test/001_test.rb:2:3: C: Minitest/MultipleAssertions: Test case has too many assertions [4/2].
+test/002_test.rb:2:3: C: Minitest/MultipleAssertions: Test case has too many assertions [5/2].
+

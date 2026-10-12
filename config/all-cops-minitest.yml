@@ -1,0 +1,8 @@
+# config/all-cops.yml plus the rubocop-minitest plugin: the oracle config for plugin parity
+# (scripts/check-plugins.sh). Paths resolve against the current directory, as in all-cops.yml.
+plugins:
+  - rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false

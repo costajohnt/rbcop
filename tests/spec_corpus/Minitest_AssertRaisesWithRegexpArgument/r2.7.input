@@ -1,0 +1,25 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 68 <==
+assert_raises(MyError, SomeOtherError, some_local_var) do
+  foo
+end
+
+==> test/001_test.rb 52 <==
+assert_raises(MyError, /some message/) do
+  foo
+end
+
+==> test/002_test.rb 36 <==
+assert_raises(MyError) do
+  foo
+end
+

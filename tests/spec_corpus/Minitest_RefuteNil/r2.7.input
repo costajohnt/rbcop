@@ -1,0 +1,76 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 103 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute(somestuff.nil?, 'message')
+  end
+end
+
+==> test/001_test.rb 98 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_equal(nil, somestuff)
+  end
+end
+
+==> test/002_test.rb 112 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_predicate(object, :nil?, 'message')
+  end
+end
+
+==> test/003_test.rb 92 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute(somestuff.nil?)
+  end
+end
+
+==> test/004_test.rb 116 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_equal(nil, obj.do_something, 'message')
+  end
+end
+
+==> test/005_test.rb 91 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_nil(somestuff)
+  end
+end
+
+==> test/006_test.rb 109 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_equal(nil, somestuff, 'message')
+  end
+end
+
+==> test/007_test.rb 148 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_equal(nil, obj.do_something, <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+
+==> test/008_test.rb 101 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_predicate(object, :nil?)
+  end
+end
+

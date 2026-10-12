@@ -1,0 +1,79 @@
+==> offenses exit=1 840 <==
+test/000_test.rb:3:5: C: [Correctable] Minitest/RefuteNil: Prefer using `refute_nil(somestuff, 'message')`.
+test/001_test.rb:3:5: C: [Correctable] Minitest/RefuteNil: Prefer using `refute_nil(somestuff)`.
+test/002_test.rb:3:5: C: [Correctable] Minitest/RefuteNil: Prefer using `refute_nil(object, 'message')`.
+test/003_test.rb:3:5: C: [Correctable] Minitest/RefuteNil: Prefer using `refute_nil(somestuff)`.
+test/004_test.rb:3:5: C: [Correctable] Minitest/RefuteNil: Prefer using `refute_nil(obj.do_something, 'message')`.
+test/006_test.rb:3:5: C: [Correctable] Minitest/RefuteNil: Prefer using `refute_nil(somestuff, 'message')`.
+test/007_test.rb:3:5: C: [Correctable] Minitest/RefuteNil: Prefer using `refute_nil(obj.do_something, <<~MESSAGE)`.
+test/008_test.rb:3:5: C: [Correctable] Minitest/RefuteNil: Prefer using `refute_nil(object)`.
+
+==> autocorrect exit=0 824 <==
+test/000_test.rb:3:5: C: [Corrected] Minitest/RefuteNil: Prefer using `refute_nil(somestuff, 'message')`.
+test/001_test.rb:3:5: C: [Corrected] Minitest/RefuteNil: Prefer using `refute_nil(somestuff)`.
+test/002_test.rb:3:5: C: [Corrected] Minitest/RefuteNil: Prefer using `refute_nil(object, 'message')`.
+test/003_test.rb:3:5: C: [Corrected] Minitest/RefuteNil: Prefer using `refute_nil(somestuff)`.
+test/004_test.rb:3:5: C: [Corrected] Minitest/RefuteNil: Prefer using `refute_nil(obj.do_something, 'message')`.
+test/006_test.rb:3:5: C: [Corrected] Minitest/RefuteNil: Prefer using `refute_nil(somestuff, 'message')`.
+test/007_test.rb:3:5: C: [Corrected] Minitest/RefuteNil: Prefer using `refute_nil(obj.do_something, <<~MESSAGE)`.
+test/008_test.rb:3:5: C: [Corrected] Minitest/RefuteNil: Prefer using `refute_nil(object)`.
+
+==> corrected/test/000_test.rb 102 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_nil(somestuff, 'message')
+  end
+end
+
+==> corrected/test/001_test.rb 91 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_nil(somestuff)
+  end
+end
+
+==> corrected/test/002_test.rb 99 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_nil(object, 'message')
+  end
+end
+
+==> corrected/test/003_test.rb 91 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_nil(somestuff)
+  end
+end
+
+==> corrected/test/004_test.rb 109 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_nil(obj.do_something, 'message')
+  end
+end
+
+==> corrected/test/006_test.rb 102 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_nil(somestuff, 'message')
+  end
+end
+
+==> corrected/test/007_test.rb 141 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_nil(obj.do_something, <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+
+==> corrected/test/008_test.rb 88 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_nil(object)
+  end
+end
+

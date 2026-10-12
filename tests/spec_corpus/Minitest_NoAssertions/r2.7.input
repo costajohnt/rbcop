@@ -1,0 +1,116 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 84 <==
+class FooTest < Minitest::Test
+  def foo_bar
+    puts "this isn't a test"
+  end
+end
+
+==> test/001_test.rb 206 <==
+class FooTest < Minitest::Test
+  include Foo
+
+  setup { }
+  teardown { }
+
+  test "valid test" do
+    assert true
+  end
+
+  test "the truth" do
+  end
+
+  test "another valid test" do
+    assert true
+  end
+end
+
+==> test/002_test.rb 154 <==
+class FooTest < Minitest::Test
+  describe 'foo' do
+    it 'must include [false, true]' do
+      value([false, true]).must_include value
+    end
+  end
+end
+
+==> test/003_test.rb 78 <==
+class FooTest < Minitest::Test
+  def test_the_truth
+    assert true
+  end
+end
+
+==> test/004_test.rb 96 <==
+class FooTest < Minitest::Test
+  def build_matrix(name)
+    it(name) { do_something }
+  end
+end
+
+==> test/005_test.rb 72 <==
+class FooTest < Minitest::Test
+  def test_the_truth
+    flunk
+  end
+end
+
+==> test/006_test.rb 85 <==
+class FooTest < Minitest::Test
+  foo "bar" do
+    puts "this isn't a test"
+  end
+end
+
+==> test/007_test.rb 203 <==
+class FooTest < Minitest::Test
+  include Foo
+
+  setup { }
+  teardown { }
+
+  def test_valid_test
+    assert true
+  end
+
+  def test_the_truth
+  end
+
+  def test_another_valid_test
+    assert true
+  end
+end
+
+==> test/008_test.rb 181 <==
+class FooTest < Minitest::Test
+  describe Foo do
+    setup { }
+    teardown { }
+
+    it "asserts the truth" do
+      assert true
+    end
+
+    it "does nothing" do
+    end
+  end
+end
+
+==> test/009_test.rb 156 <==
+class FooTest < Minitest::Test
+  describe 'foo' do
+    it 'must have good data' do
+      _(invalid_recs).must_be_empty ->{ do_something }
+    end
+  end
+end
+

@@ -1,0 +1,10 @@
+==> offenses exit=1 246 <==
+test/000_test.rb:1:1: C: Minitest/NoTestCases: Test class should have test cases.
+test/004_test.rb:1:1: C: Minitest/NoTestCases: Test class should have test cases.
+test/006_test.rb:1:1: C: Minitest/NoTestCases: Test class should have test cases.
+
+==> autocorrect exit=1 246 <==
+test/000_test.rb:1:1: C: Minitest/NoTestCases: Test class should have test cases.
+test/004_test.rb:1:1: C: Minitest/NoTestCases: Test class should have test cases.
+test/006_test.rb:1:1: C: Minitest/NoTestCases: Test class should have test cases.
+

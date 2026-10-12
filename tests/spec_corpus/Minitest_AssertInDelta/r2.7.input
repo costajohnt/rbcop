@@ -1,0 +1,45 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 103 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(0.2, foo, 'message')
+  end
+end
+
+==> test/001_test.rb 95 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_in_delta(foo, 0.2)
+  end
+end
+
+==> test/002_test.rb 92 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(0.2, foo)
+  end
+end
+
+==> test/003_test.rb 91 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal foo, bar
+  end
+end
+
+==> test/004_test.rb 92 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(foo, 0.2)
+  end
+end
+

@@ -30,6 +30,12 @@ pub const NATIVE_PLUGINS: &[NativePlugin] = &[
         obsoletion: Some(include_str!("../../config/plugins/rubocop-rails-obsoletion.yml")),
     },
     NativePlugin {
+        gem: "rubocop-minitest",
+        departments: &["Minitest"],
+        default_yml: include_str!("../../config/plugins/rubocop-minitest.yml"),
+        obsoletion: None,
+    },
+    NativePlugin {
         gem: "rubocop-rspec",
         departments: &["RSpec"],
         default_yml: include_str!("../../config/plugins/rubocop-rspec.yml"),

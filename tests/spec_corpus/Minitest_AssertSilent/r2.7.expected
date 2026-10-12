@@ -1,0 +1,15 @@
+==> offenses exit=1 92 <==
+test/001_test.rb:3:5: C: [Correctable] Minitest/AssertSilent: Prefer using `assert_silent`.
+
+==> autocorrect exit=0 90 <==
+test/001_test.rb:3:5: C: [Corrected] Minitest/AssertSilent: Prefer using `assert_silent`.
+
+==> corrected/test/001_test.rb 125 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_silent do
+      puts object.do_something
+    end
+  end
+end
+

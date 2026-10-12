@@ -1,0 +1,113 @@
+==> .rubocop.yml 174 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Minitest/MultipleAssertions:
+  Max: 2
+
+==> test/000_test.rb 540 <==
+class FooTest < ActiveSupport::TestCase
+  test 'something' do
+    if condition1
+      assert foo
+    elsif condition2
+      assert foo
+    else
+      begin
+        do_something
+        assert foo # 1
+      rescue Foo
+        assert foo
+        assert foo
+      rescue Bar
+        # noop
+      rescue Zoo
+        case
+        when condition
+          assert foo # 2
+          assert foo # 3
+          assert foo # 4
+        else
+          assert foo
+          assert foo
+        end
+      else
+        assert foo
+      end
+    end
+  end
+end
+
+==> test/001_test.rb 657 <==
+class FooTest < ActiveSupport::TestCase
+  test 'something' do
+    _= if condition1
+         assert foo
+       elsif condition2
+         assert foo
+       else
+         begin
+           do_something
+           assert foo # 1
+         rescue Foo
+           assert foo
+           assert foo
+         rescue Bar
+           # noop
+         rescue Zoo
+           _ = case
+               when condition
+                 assert foo # 2
+                 assert foo # 3
+                 assert foo # 4
+               else
+                 assert foo
+                 assert foo
+               end
+         else
+           assert foo
+         end
+       end
+  end
+end
+
+==> test/002_test.rb 634 <==
+class FooTest < ActiveSupport::TestCase
+  test 'something' do
+    _, _, _ = [
+       if condition1
+         assert foo
+       else
+         assert foo
+       end,
+       begin
+         do_something
+         assert foo # 1
+       rescue Foo
+         assert foo
+         assert foo
+       rescue Bar
+         # noop
+       rescue Zoo
+         _ = case
+             when condition
+               assert foo # 2
+               assert foo # 3
+               assert foo # 4
+             else
+               assert foo
+               assert foo
+             end
+       else
+         assert foo
+       end,
+       assert(foo)
+    ]
+  end
+end
+

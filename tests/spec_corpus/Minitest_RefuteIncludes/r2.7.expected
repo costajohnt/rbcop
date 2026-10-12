@@ -1,0 +1,43 @@
+==> offenses exit=1 487 <==
+test/000_test.rb:3:5: C: [Correctable] Minitest/RefuteIncludes: Prefer using `refute_includes(collection, object)`.
+test/002_test.rb:3:5: C: [Correctable] Minitest/RefuteIncludes: Prefer using `refute_includes(collection, object, <<~MESSAGE)`.
+test/003_test.rb:3:5: C: [Correctable] Minitest/RefuteIncludes: Prefer using `refute_includes(collection, object, 'message')`.
+test/008_test.rb:3:5: C: [Correctable] Minitest/RefuteIncludes: Prefer using `refute_includes(collection, object)`.
+
+==> autocorrect exit=0 479 <==
+test/000_test.rb:3:5: C: [Corrected] Minitest/RefuteIncludes: Prefer using `refute_includes(collection, object)`.
+test/002_test.rb:3:5: C: [Corrected] Minitest/RefuteIncludes: Prefer using `refute_includes(collection, object, <<~MESSAGE)`.
+test/003_test.rb:3:5: C: [Corrected] Minitest/RefuteIncludes: Prefer using `refute_includes(collection, object, 'message')`.
+test/008_test.rb:3:5: C: [Corrected] Minitest/RefuteIncludes: Prefer using `refute_includes(collection, object)`.
+
+==> corrected/test/000_test.rb 105 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_includes(collection, object)
+  end
+end
+
+==> corrected/test/002_test.rb 148 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_includes(collection, object, <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+
+==> corrected/test/003_test.rb 116 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_includes(collection, object, 'message')
+  end
+end
+
+==> corrected/test/008_test.rb 105 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_includes(collection, object)
+  end
+end
+

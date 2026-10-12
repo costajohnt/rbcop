@@ -1,0 +1,52 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 124 <==
+class FooTest < Minitest::Test
+  def build_matrix(cases)
+    cases.each do |name|
+      it(name) { skip }
+    end
+  end
+end
+
+==> test/001_test.rb 37 <==
+class FooTest
+  def perform; end
+end
+
+==> test/002_test.rb 96 <==
+class FooTest < Minitest::Test
+  [1, 2].each do |number|
+    test 'something' do; end
+  end
+end
+
+==> test/003_test.rb 62 <==
+class FooTest < Minitest::Test
+  test 'something' do; end
+end
+
+==> test/004_test.rb 35 <==
+class FooTest < Minitest::Test
+end
+
+==> test/005_test.rb 55 <==
+class FooTest < Minitest::Test
+  def test_foo; end
+end
+
+==> test/006_test.rb 65 <==
+class FooTest < Minitest::Test
+  def perform
+    1 + 2
+  end
+end
+

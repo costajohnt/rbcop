@@ -7,6 +7,7 @@ require 'rubocop'
 # rubocop-performance adds itself to two core cops' autocorrect_incompatible_with.
 require 'rubocop-performance'
 require 'rubocop-rails'
+require 'rubocop-minitest'
 require 'rubocop-rspec'
 require 'rubocop-rspec_rails'
 require 'rubocop-factory_bot'
