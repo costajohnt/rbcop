@@ -68,10 +68,10 @@ impl Pattern {
             // `pattern == path` first: a file named `[x].rb` matches itself.
             Pattern::Glob(p) if p == path => true,
             Pattern::Glob(p) => {
-                let p = if p.starts_with("..") {
-                    expand_path(Path::new(p), &cwd()).display().to_string()
+                let p: std::borrow::Cow<str> = if p.starts_with("..") {
+                    expand_path(Path::new(p), &cwd()).display().to_string().into()
                 } else {
-                    p.clone()
+                    p.into()
                 };
                 glob::fnmatch(&p, path, false) || hidden_file_in_not_hidden_dir(&p, path)
             }
