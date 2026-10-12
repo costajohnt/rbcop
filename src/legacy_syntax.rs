@@ -1112,6 +1112,11 @@ struct Walk<'t> {
     const_writes: HashMap<usize, (usize, usize)>,
     /// Inside a def's body (not reset by blocks; a `class << x` body resets it).
     in_def: bool,
+    /// The innermost def's keyword when it is endless (`def f = ...`), which `simulate`'s in_def
+    /// model has no frame for.
+    in_endless: Option<usize>,
+    /// Constant assignment operator in an endless def's body (#354) -> the def's keyword.
+    endless_const_writes: HashMap<usize, usize>,
     /// An op-assign to a plain constant in a def (`CONST ||= 1`): Prism accepts it, the parser
     /// gem's `assignable` reports `dynamic constant assignment`, which `simulate` emits.
     dynamic_const: bool,
@@ -1305,8 +1310,9 @@ impl<'pr> Visit<'pr> for Walk<'_> {
             self.begin_clauses(&b);
         }
         let in_def = std::mem::replace(&mut self.in_def, true);
+        let in_endless = std::mem::replace(&mut self.in_endless, n.equal_loc().map(|_| kw));
         ruby_prism::visit_def_node(self, n);
-        self.in_def = in_def;
+        (self.in_def, self.in_endless) = (in_def, in_endless);
         self.owners.pop();
         self.defs.pop();
         self.ctx.pop();
@@ -1347,8 +1353,9 @@ impl<'pr> Visit<'pr> for Walk<'_> {
                 s.begin_clauses(&b);
             }
             let in_def = std::mem::replace(&mut s.in_def, false);
+            let in_endless = s.in_endless.take();
             ruby_prism::visit_singleton_class_node(s, n);
-            s.in_def = in_def;
+            (s.in_def, s.in_endless) = (in_def, in_endless);
         });
     }
 
@@ -1898,6 +1905,9 @@ impl Walk<'_> {
 
     fn const_write(&mut self, target: &ruby_prism::Location, op: &ruby_prism::Location) {
         self.const_writes.insert(op.start_offset(), (target.start_offset(), target.end_offset()));
+        if let Some(kw) = self.in_endless {
+            self.endless_const_writes.insert(op.start_offset(), kw);
+        }
     }
 
     fn hash_element(&mut self, e: &Node) {
@@ -2367,7 +2377,9 @@ fn simulate(
         }
         // Assigning a constant while the parser believes it is in a def (see in_def): the
         // builder's error, then recovery from the `=`.
-        if let Some(&(s, e)) = w.const_writes.get(&t.start).filter(|_| in_def) {
+        if let Some(&(s, e)) =
+            w.const_writes.get(&t.start).filter(|_| in_def || w.endless_const_writes.contains_key(&t.start))
+        {
             out.push((s, e, "dynamic constant assignment".to_string()));
             while stack.len() > 1 && stack.last().unwrap().body.is_none_or(|b| t.start < b) {
                 stack.pop();
@@ -2377,6 +2389,19 @@ fn simulate(
             }
             regions.retain(|r| r.1 < stack.len());
             (status, discarding, fails_at) = (3, true, usize::MAX);
+            // Recovery discards an endless def (#354): at the top level racc gives up, elsewhere
+            // in_def stays set (as for a popped def).
+            if let Some(&kw) = w.endless_const_writes.get(&t.start) {
+                while stack.len() > 1 && stack.last().unwrap().key > kw {
+                    stack.pop();
+                }
+                regions.retain(|r| r.1 < stack.len());
+                if stack.len() == 1 {
+                    out.push(gave_up(t.start));
+                    break;
+                }
+                in_def = true;
+            }
             continue;
         }
         // The body with a useless `else` reduces at its `end`: the builder's yyerror, and racc
