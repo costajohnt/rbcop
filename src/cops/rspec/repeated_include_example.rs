@@ -7,55 +7,6 @@ pub struct RepeatedIncludeExample;
 /// (signature, (send range, shared examples name source))
 type Item = (String, ((usize, usize), String));
 
-/// RuboCop::RSpec::Node#recursive_literal_or_const?
-fn recursive_literal_or_const(node: &Node) -> bool {
-    let all = |items: &mut dyn Iterator<Item = Node>| {
-        for n in items {
-            if !recursive_literal_or_const(&n) {
-                return false;
-            }
-        }
-        true
-    };
-    match node {
-        Node::ArrayNode { .. } => all(&mut node.as_array_node().unwrap().elements().iter()),
-        Node::HashNode { .. } => all(&mut node.as_hash_node().unwrap().elements().iter()),
-        Node::KeywordHashNode { .. } => all(&mut node.as_keyword_hash_node().unwrap().elements().iter()),
-        Node::AssocNode { .. } => {
-            let a = node.as_assoc_node().unwrap();
-            recursive_literal_or_const(&a.key()) && recursive_literal_or_const(&a.value())
-        }
-        Node::RangeNode { .. } => {
-            let r = node.as_range_node().unwrap();
-            r.left().is_none_or(|n| recursive_literal_or_const(&n)) && r.right().is_none_or(|n| recursive_literal_or_const(&n))
-        }
-        Node::ParenthesesNode { .. } => {
-            helpers::rspec::begin_children(node).is_some_and(|cs| cs.iter().all(|c| recursive_literal_or_const(c)))
-        }
-        // dstr, xstr, dsym, regexp: composite, children recursively (`#{...}` is a `begin`)
-        Node::InterpolatedStringNode { .. } => {
-            all(&mut node.as_interpolated_string_node().unwrap().parts().iter())
-        }
-        Node::InterpolatedSymbolNode { .. } => {
-            all(&mut node.as_interpolated_symbol_node().unwrap().parts().iter())
-        }
-        Node::InterpolatedRegularExpressionNode { .. } => {
-            all(&mut node.as_interpolated_regular_expression_node().unwrap().parts().iter())
-        }
-        Node::InterpolatedXStringNode { .. } => {
-            all(&mut node.as_interpolated_x_string_node().unwrap().parts().iter())
-        }
-        Node::EmbeddedStatementsNode { .. } => node
-            .as_embedded_statements_node()
-            .unwrap()
-            .statements()
-            .is_none_or(|s| s.body().iter().all(|n| recursive_literal_or_const(&n))),
-        Node::EmbeddedVariableNode { .. } => false,
-        Node::StringNode { .. } | Node::XStringNode { .. } => true,
-        Node::ConstantReadNode { .. } | Node::ConstantPathNode { .. } => true,
-        _ => helpers::literal_node::literal(node),
-    }
-}
 
 impl Cop for RepeatedIncludeExample {
     fn kinds(&self) -> &'static [usize] {
@@ -77,7 +28,7 @@ impl Cop for RepeatedIncludeExample {
         let src = cx.src;
         let items: Vec<Item> = includes
             .iter()
-            .filter(|c| send_args(c).iter().all(|a| recursive_literal_or_const(a)))
+            .filter(|c| send_args(c).iter().all(|a| helpers::rspec::recursive_literal_or_const(a)))
             .map(|c| {
                 let args = send_args(c);
                 // shared_examples_name: the first argument (RuboCop raises without one)
