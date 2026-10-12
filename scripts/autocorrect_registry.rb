@@ -6,6 +6,7 @@ require 'rubocop'
 # Native plugins (src/helpers/cop_registry.rs NATIVE_PLUGINS): their cops follow RuboCop's, and
 # rubocop-performance adds itself to two core cops' autocorrect_incompatible_with.
 require 'rubocop-performance'
+require 'rubocop-rails'
 
 RuboCop::Cop::Registry.global.filter_by_badge { true }.cops.each do |cop|
   incompatible = cop.autocorrect_incompatible_with.map(&:cop_name)

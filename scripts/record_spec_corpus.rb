@@ -54,7 +54,10 @@ end
 Dir.mktmpdir("rbcop-spec-corpus") do |tmp|
   extracted = File.join(tmp, "extracted")
   cops = File.join(tmp, "cops.txt")
-  File.write(cops, File.read(default_yml).scan(%r{^([A-Z]\w+/\w+):$}).join("\n"))
+  names = File.read(default_yml).scan(%r{^([A-Z]\w+/\w+):$}).flatten
+  # A plugin's default.yml also configures some of RuboCop's cops: those stay RuboCop's.
+  names -= File.read(File.join(root, "config/default.yml")).scan(%r{^([A-Z]\w+/\w+):$}).flatten if plugin
+  File.write(cops, names.join("\n"))
   log = File.join(tmp, "extract.log")
   ok = system({ "SPEC" => "1", "PLUGINS" => plugin }, RbConfig.ruby, File.join(root, "scripts/extract_cold_corpus.rb"),
               File.join(src, "spec/rubocop/cop"), extracted, cops, default_yml,

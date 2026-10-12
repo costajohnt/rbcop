@@ -254,6 +254,12 @@ pub trait Cop: Send + Sync {
     fn ruby_range(&self) -> (f64, f64) {
         (0.0, f64::MAX)
     }
+
+    /// rubocop-rails `minimum_target_rails_version`: the cop only runs when the target Rails
+    /// (`Resolved::target_rails_version`) is at least this.
+    fn min_rails(&self) -> f64 {
+        0.0
+    }
 }
 
 /// A registered cop: qualified name plus implementation. The list lives in `crate::cops::ALL`.

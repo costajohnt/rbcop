@@ -202,6 +202,8 @@ pub struct Resolved {
     /// for_cop of every cop-like key, built on first use: cops ask for other cops' settings per
     /// node, and building one takes two linear scans of the whole config and a clone.
     for_cop_cache: std::sync::OnceLock<HashMap<String, Map>>,
+    /// Config#gem_versions_in_target, read on first use.
+    gem_versions: std::sync::OnceLock<Option<HashMap<String, String>>>,
 }
 
 impl Resolved {
@@ -218,6 +220,7 @@ impl Resolved {
             unregistered: Vec::new(),
             opts: opts.clone(),
             for_cop_cache: std::sync::OnceLock::new(),
+            gem_versions: std::sync::OnceLock::new(),
         };
         for &name in cop_names {
             let cfg = r.build_cop(name, opts);
@@ -231,6 +234,43 @@ impl Resolved {
             }
         }
         r
+    }
+
+    /// Config#gem_versions_in_target: the locked version of each gem in the Gemfile.lock (or
+    /// gems.locked) found upwards from the base dir, or None without a lockfile.
+    pub fn gem_versions_in_target(&self) -> Option<&HashMap<String, String>> {
+        self.gem_versions
+            .get_or_init(|| {
+                let file = ["Gemfile.lock", "gems.locked"]
+                    .iter()
+                    .find_map(|n| self.base_dir.ancestors().map(|d| d.join(n)).find(|f| f.is_file()))?;
+                Some(locked_gem_versions(&std::fs::read_to_string(file).unwrap_or_default()))
+            })
+            .as_ref()
+    }
+
+    /// Whether the target locks `gem` at a version `>= min` (Base#target_satisfies_all_gem_version_requirements?).
+    pub fn gem_at_least(&self, gem: &str, min: &str) -> bool {
+        let locked = self.gem_versions_in_target().and_then(|v| v.get(gem)).and_then(|v| gem_version(v));
+        locked.is_some_and(|v| Some(v) >= gem_version(min))
+    }
+
+    /// TargetRailsVersion.resolve: `AllCops: TargetRailsVersion`, else the locked `railties`
+    /// major.minor, else 5.0.
+    pub fn target_rails_version(&self) -> f64 {
+        match self.all_cops().get("TargetRailsVersion") {
+            Some(Value::Float(f)) => return *f,
+            Some(Value::Int(i)) => return *i as f64,
+            Some(Value::Str(s)) => return ruby_to_f(s),
+            Some(Value::Null) | None => {}
+            // ponytail: `true.to_f` raises in Ruby; other scalars are not valid configs.
+            Some(_) => return 0.0,
+        }
+        let Some(v) = self.gem_versions_in_target().and_then(|v| v.get("railties")) else { return 5.0 };
+        let mut parts = v.split('.');
+        let major = parts.next().unwrap_or("0");
+        let minor = parts.next().filter(|m| m.bytes().all(|b| b.is_ascii_digit())).unwrap_or("0");
+        format!("{major}.{minor}").parse().unwrap_or(5.0)
     }
 
     pub fn all_cops(&self) -> &Map {
@@ -1286,6 +1326,34 @@ fn gem_version(s: &str) -> Option<Vec<u64>> {
         out.pop();
     }
     Some(out)
+}
+
+/// Ruby's String#to_f.
+fn ruby_to_f(s: &str) -> f64 {
+    static RE: std::sync::LazyLock<regex::Regex> =
+        std::sync::LazyLock::new(|| regex::Regex::new(r"^\s*[-+]?\d+(?:\.\d+)?").unwrap());
+    RE.find(s).and_then(|m| m.as_str().trim().parse().ok()).unwrap_or(0.0)
+}
+
+/// Bundler::LockfileParser specs as `Lockfile#gem_versions` returns them: every `    name (version)`
+/// spec line (4-space indent) of a GEM/GIT/PATH section, platform suffix dropped, last one wins.
+fn locked_gem_versions(text: &str) -> HashMap<String, String> {
+    static RE: std::sync::LazyLock<regex::Regex> =
+        std::sync::LazyLock::new(|| regex::Regex::new(r"^ {4}([^ (]\S*) \(([^-)]*)(?:-[^)]*)?\)!?$").unwrap());
+    text.lines()
+        .filter_map(|l| RE.captures(l.trim_end_matches('\r')))
+        .map(|c| (c[1].to_string(), c[2].to_string()))
+        .collect()
+}
+
+#[test]
+fn lockfile_gem_versions() {
+    let v = locked_gem_versions(
+        "GEM\n  remote: x\n  specs:\n    railties (8.1.4)\n      actionpack (= 8.1.4)\n    nokogiri (1.18.0-x86_64-linux)\n\nDEPENDENCIES\n  rails (~> 8.1)\n",
+    );
+    assert_eq!(v.get("railties").map(String::as_str), Some("8.1.4"));
+    assert_eq!(v.get("nokogiri").map(String::as_str), Some("1.18.0"));
+    assert!(!v.contains_key("actionpack") && !v.contains_key("rails"));
 }
 
 #[test]
