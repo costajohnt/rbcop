@@ -189,7 +189,7 @@ pub fn end_stand_in(text: &str) -> Option<String> {
 /// line_begin follows a significant newline (or `;`, or the start of the file) and a newline the
 /// lexer skips in its expr_value state: after a binary or assignment operator other than `=`, `?`,
 /// `do`, a block's `{` or `|params|`. After `=`, `,`, `(` (a def's too), `[`, a hash's `{`, `.` or
-/// `::` it reads `__END__` as an identifier, and so after a `\` line continuation (no newline at
+/// `::`, or a ternary's `:` (#368), it reads `__END__` as an identifier, and so after a `\` line continuation (no newline at
 /// all).
 // ponytail: an approximation of lexer.rl's transitions from Prism's lexer states, checked against
 // RuboCop on the contexts above; a context not listed may still differ.
@@ -218,7 +218,10 @@ fn line_begin(text: &str, tokens: &[Token], i: usize) -> bool {
                             p.kind,
                             "EQUAL_EQUAL" | "EQUAL_EQUAL_EQUAL" | "BANG_EQUAL" | "LESS_EQUAL" | "GREATER_EQUAL"
                         ))
-                    && !matches!(p.kind, "PIPE" | "TILDE" | "BANG" | "COMMA" | "BRACE_LEFT" | "UCOLON_COLON")
+                    && !matches!(
+                        p.kind,
+                        "PIPE" | "TILDE" | "BANG" | "COMMA" | "BRACE_LEFT" | "UCOLON_COLON" | "COLON"
+                    )
                     || p.kind == "BRACE_LEFT" && p.state & EXPR_LABEL == 0))
     })
 }
