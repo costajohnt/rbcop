@@ -1,17 +1,19 @@
 others.rb:1:1: C: [Corrected] Rails/RootPublicPath: Use `Rails.public_path`.
 others.rb:1:27: F: Lint/Syntax: unexpected local variable or method; expected a `)` to close the arguments (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 others.rb:1:41: F: Lint/Syntax: unexpected string literal, expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+others.rb:3:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
 others.rb:3:1: C: [Corrected] Rails/RootPublicPath: Use `Rails.public_path`.
 others.rb:4:14: C: [Corrected] Rails/EnumHash: Enum defined as an array found in `status` enum declaration. Use hash syntax instead.
-others.rb:4:18: F: Lint/Syntax: unexpected local variable or method, expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
-others.rb:4:28: F: Lint/Syntax: unexpected local variable or method, expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
-others.rb:4:29: F: Lint/Syntax: unexpected token \ (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
-others.rb:4:89: F: Lint/Syntax: unexpected '}', expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 others.rb:5:12: C: [Corrected] Rails/EnumHash: Enum defined as an array found in `kind` enum declaration. Use hash syntax instead.
+others.rb:5:18: F: Lint/Syntax: unexpected local variable or method, expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+others.rb:5:28: F: Lint/Syntax: unexpected local variable or method, expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+others.rb:5:29: F: Lint/Syntax: unexpected token \ (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+others.rb:5:89: F: Lint/Syntax: unexpected '}', expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 others.rb:10:18: C: [Corrected] Rails/ReflectionClassName: Use a string value for `class_name`.
 others.rb:13:6: C: [Corrected] Rails/FindById: Use `find("1'); system('x')")` instead of `where(id: "1'); system('x')").take!`.
 others.rb:14:6: C: [Corrected] Rails/FindById: Use `find("a\nb")` instead of `find_by!(id: "a\nb")`.
 others.rb:15:1: C: [Corrected] Rails/RootJoinChain: Use `Rails.root.join(...)` instead of chaining `#join` calls.
+others.rb:16:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
 others.rb:16:1: C: [Corrected] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
 others.rb:19:20: C: [Corrected] Rails/EagerEvaluationLogMessage: Pass a block to `Rails.logger.debug`.
 others.rb:20:19: C: [Corrected] Rails/EagerEvaluationLogMessage: Pass a block to `Rails.logger.debug`.
@@ -21,6 +23,32 @@ others.rb:23:1: W: [Corrected] Rails/RedirectBackOrTo: Use `redirect_back_or_to`
 others.rb:24:6: C: [Corrected] Rails/SelectMap: Use `pluck(:"a'b")` instead of `select` with `map`.
 others.rb:25:6: C: [Corrected] Rails/Pick: Prefer `pick(:"a b")` over `pluck(:"a b").first`.
 others.rb:27:1: C: [Corrected] Rails/RelativeDateConstant: Do not assign `since` to constants as it will be evaluated only once.
+paths.rb:1:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:2:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:3:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:4:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:5:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to').to_s`.
+paths.rb:6:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:7:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:8:5: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:9:8: F: Lint/Syntax: unterminated heredoc; can't find string "P" anywhere before EOF (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+paths.rb:11:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:12:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:12:25: F: Lint/Syntax: unexpected local variable or method; expected a `)` to close the arguments (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+paths.rb:13:1: C: [Corrected] Rails/EnvironmentComparison: Favor `Rails.env.production?` over `Rails.env == 'production'`.
+paths.rb:13:21: F: Lint/Syntax: unexpected local variable or method, expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+paths.rb:14:1: C: [Corrected] Rails/EnvironmentComparison: Favor `Rails.env.pro duction?` over `Rails.env == "pro duction"`.
+paths.rb:15:1: C: [Corrected] Rails/EnvironmentComparison: Favor `Rails.env.a; system('x')?` over `Rails.env == "a; system('x')"`.
+paths.rb:16:1: C: [Corrected] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+paths.rb:16:22: F: Lint/Syntax: unexpected local variable or method, expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+paths.rb:18:1: C: [Corrected] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+paths.rb:20:1: C: [Corrected] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+paths.rb:24:7: C: [Corrected] Rails/I18nLazyLookup: Use lazy lookup for the text used in controllers.
+paths.rb:25:7: C: [Corrected] Rails/I18nLazyLookup: Use lazy lookup for the text used in controllers.
+paths.rb:25:13: F: Lint/Syntax: unexpected ')', expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+paths.rb:27:3: F: Lint/Syntax: unexpected token end (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+paths.rb:28:1: F: Lint/Syntax: unexpected token end (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+paths.rb:28:4: F: Lint/Syntax: unexpected end-of-input, assuming it is closing the parent top level context (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 t.rb:1:1: C: [Corrected] Rails/ContentTag: Use `tag.div system('x')` instead of `tag("div\nsystem('x')")`.
 t.rb:2:12: F: Lint/Syntax: unexpected '(', expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 t.rb:5:1: C: [Corrected] Rails/ContentTag: Use `tag.x#{y}` instead of `tag("x#{y}")`.

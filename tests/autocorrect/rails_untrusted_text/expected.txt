@@ -6,6 +6,7 @@ others.rb:10:18: C: [Corrected] Rails/ReflectionClassName: Use a string value fo
 others.rb:12:19: C: Rails/ReflectionClassName: Use a string value for `class_name`.
 others.rb:13:6: C: [Corrected] Rails/FindById: Use `find("1'); system('x')")` instead of `where(id: "1'); system('x')").take!`.
 others.rb:14:6: C: [Corrected] Rails/FindById: Use `find("a\nb")` instead of `find_by!(id: "a\nb")`.
+others.rb:15:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
 others.rb:15:1: C: [Corrected] Rails/RootJoinChain: Use `Rails.root.join(...)` instead of chaining `#join` calls.
 others.rb:16:1: C: [Corrected] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
 others.rb:19:20: C: [Corrected] Rails/EagerEvaluationLogMessage: Pass a block to `Rails.logger.debug`.
@@ -16,6 +17,24 @@ others.rb:23:1: W: [Corrected] Rails/RedirectBackOrTo: Use `redirect_back_or_to`
 others.rb:24:6: C: [Corrected] Rails/SelectMap: Use `pluck(:"a'b")` instead of `select` with `map`.
 others.rb:25:6: C: [Corrected] Rails/Pick: Prefer `pick(:"a b")` over `pluck(:"a b").first`.
 others.rb:27:1: C: [Corrected] Rails/RelativeDateConstant: Do not assign `since` to constants as it will be evaluated only once.
+paths.rb:1:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:2:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:3:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:4:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:5:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to').to_s`.
+paths.rb:6:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:7:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:8:5: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:11:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:12:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:13:1: C: [Corrected] Rails/EnvironmentComparison: Favor `Rails.env.production?` over `Rails.env == 'production'`.
+paths.rb:14:1: C: [Correctable] Rails/EnvironmentComparison: Favor `Rails.env.pro duction?` over `Rails.env == "pro duction"`.
+paths.rb:15:1: C: [Correctable] Rails/EnvironmentComparison: Favor `Rails.env.a; system('x')?` over `Rails.env == "a; system('x')"`.
+paths.rb:16:1: C: [Corrected] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+paths.rb:18:1: C: [Correctable] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+paths.rb:20:1: C: [Corrected] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+paths.rb:24:7: C: [Correctable] Rails/I18nLazyLookup: Use lazy lookup for the text used in controllers.
+paths.rb:25:7: C: [Corrected] Rails/I18nLazyLookup: Use lazy lookup for the text used in controllers.
 t.rb:1:1: C: [Correctable] Rails/ContentTag: Use `tag.div system('x')` instead of `tag("div\nsystem('x')")`.
 t.rb:5:1: C: [Correctable] Rails/ContentTag: Use `tag.x#{y}` instead of `tag("x#{y}")`.
 t.rb:8:1: C: [Correctable] Rails/ContentTag: Use `tag.div ` instead of `tag(<<~X)`.

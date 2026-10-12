@@ -48,3 +48,13 @@ Rails/Pick:
   Enabled: true
 Rails/RelativeDateConstant:
   Enabled: true
+Rails/FilePath:
+  Enabled: true
+Rails/EnvironmentComparison:
+  Enabled: true
+Rails/RakeEnvironment:
+  Enabled: true
+  Include: ['**/*.rb']
+Rails/I18nLazyLookup:
+  Enabled: true
+  Include: ['**/*.rb']
