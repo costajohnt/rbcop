@@ -1,0 +1,257 @@
+==> .rubocop.yml 193 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/BulkChangeTable:
+  Database: mysql
+  Include:
+  - "*"
+
+==> 000/000.rb 116 <==
+def change
+  change_table :users do |t|
+    t.string :name, null: false
+    t.string :address, null: true
+  end
+end
+
+==> 001/001.rb 98 <==
+def change
+  add_column :users, :name, :string, null: false
+  remove_column :users, :nickname
+end
+
+==> 002/002.rb 89 <==
+def change
+  change_table :users do |t|
+    t.index :name
+    t.index :address
+  end
+end
+
+==> 003/003.rb 76 <==
+def change
+  remove_index :users, :name
+  remove_index :users, :address
+end
+
+==> 004/004.rb 123 <==
+def change
+  change_table :users do |t|
+    t.change_default :name, 'unknown'
+    t.change_default :address, nil
+  end
+end
+
+==> 005/005.rb 108 <==
+def change
+  change_column_default :users, :name, false
+  change_column_default :users, :address, false
+end
+
+==> 006/006.rb 102 <==
+def change
+  change_column_null :users, :name, false
+  change_column_null :users, :address, false
+end
+
+==> 007/007.rb 34 <==
+def up
+  change_table(:users)
+end
+
+==> 008/008.rb 43 <==
+def up
+  change_table(:users) do
+  end
+end
+
+==> 009/009.rb 417 <==
+def change
+  add_reference :users, :team
+  add_column :users, :name, :string, null: false
+  remove_column :users, :nickname
+  remove_column :users, :flag
+  add_column :teams, :owner_name, :string, null: false
+  add_column :teams, :member_count, :integer, null: false
+  User.reset_column_information
+  User.all.each do |user|
+    user.refresh!
+  end
+  remove_column :users, :name
+  remove_column :users, :metadata
+end
+
+==> 010/010.rb 128 <==
+def change
+  change_table :users, bulk: true do |t|
+    t.string :name, null: false
+    t.string :address, null: true
+  end
+end
+
+==> 011/011.rb 129 <==
+def change
+  change_table :users, bulk: false do |t|
+    t.string :name, null: false
+    t.string :address, null: true
+  end
+end
+
+==> 012/012.rb 105 <==
+def change
+  change_table :users do |t|
+    t.belongs_to :team
+    t.string :name, null: false
+  end
+end
+
+==> 013/013.rb 82 <==
+def change
+  change_table :users do |t|
+    t.string :name, null: false
+  end
+end
+
+==> 014/014.rb 230 <==
+def change
+  change_table :users do |t|
+    if Rails.env.test?
+      t.string :name, null: true
+      t.string :address, null: true
+    else
+      t.string :name, null: false
+      t.string :address, null: false
+    end
+  end
+end
+
+==> 015/015.rb 261 <==
+def change
+  reversible do |dir|
+    change_table :users do |t|
+      dir.up do
+        t.string :name, null: false
+        t.string :address, null: false
+      end
+
+      dir.down do
+        t.remove :name
+        t.remove :address
+      end
+    end
+  end
+end
+
+==> 016/016.rb 130 <==
+def change
+  add_reference :users, :team
+  add_column :users, :name, :string, null: false
+  remove_column :teams, :owner_name
+end
+
+==> 017/017.rb 128 <==
+def change
+  add_column :users, :name, :string, null: false
+  add_reference :users, :team
+  remove_column :users, :nickname
+end
+
+==> 018/018.rb 168 <==
+def change
+  add_column :users, :name, :string, null: false
+  User.find_each do |user|
+    user.update(name: user.nickname)
+  end
+  remove_column :users, :nickname
+end
+
+==> 019/019.rb 94 <==
+def change
+  add_reference :users, :team
+  add_column :users, :name, :string, null: false
+end
+
+==> 020/020.rb 64 <==
+def change
+  add_column :users, :name, :string, null: false
+end
+
+==> 021/021.rb 286 <==
+def change
+  if Rails.env.test?
+    add_reference :users, :team
+    add_column :users, :name, :string, null: true
+    remove_column :users, :nickname
+  else
+    add_reference :users, :team
+    add_column :users, :name, :string, null: false
+    remove_column :users, :nickname
+  end
+end
+
+==> 022/022.rb 74 <==
+class EmptyMigration < ActiveRecord::Migration[5.1]
+  def change; end
+end
+
+==> 023/023.rb 78 <==
+def change
+  remove_index "users", :name
+  remove_index "users", :address
+end
+
+==> 024/024.rb 77 <==
+def change
+  remove_index "users", :name
+  remove_index :users, :address
+end
+
+==> 025/025.rb 108 <==
+def change
+  %w[owners members].each do |table|
+    add_column table, :name, :string, null: false
+  end
+end
+
+==> 026/026.rb 80 <==
+def change
+  change_table :users do |t|
+    t.remove :name, :metadata
+  end
+end
+
+==> 027/027.rb 69 <==
+def change
+  change_table :users do |t|
+    t.remove :name
+  end
+end
+
+==> 028/028.rb 95 <==
+def change
+  change_table :users do |t|
+    t.remove :name, :metadata, type: :string
+  end
+end
+
+==> 029/029.rb 84 <==
+def change
+  change_table :users do |t|
+    t.remove :name, type: :string
+  end
+end
+
+==> 030/030.rb 115 <==
+def change
+  change_table :users do |t|
+    t.change_null :name, false
+    t.change_null :address, false
+  end
+end
+
