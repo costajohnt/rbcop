@@ -3,7 +3,21 @@
 
 /// Does `path` match `pattern` under Ruby's fnmatch with FNM_PATHNAME and FNM_EXTGLOB?
 pub fn fnmatch(pattern: &str, path: &str, dotmatch: bool) -> bool {
-    expand_braces(pattern).iter().any(|p| fnmatch_path(p.as_bytes(), path.as_bytes(), dotmatch))
+    // Every file is matched against every Include/Exclude pattern: skip the brace expansion's
+    // allocations when there are no braces, and patterns whose literal tail the path lacks.
+    let one =
+        |p: &str| path.as_bytes().ends_with(literal_tail(p)) && fnmatch_path(p.as_bytes(), path.as_bytes(), dotmatch);
+    if pattern.contains('{') { expand_braces(pattern).iter().any(|p| one(p)) } else { one(pattern) }
+}
+
+/// The bytes after the pattern's last metacharacter (or `/`), which a matching path must end with.
+fn literal_tail(p: &str) -> &[u8] {
+    let b = p.as_bytes();
+    let start = b
+        .iter()
+        .rposition(|c| matches!(c, b'*' | b'?' | b'[' | b']' | b'\\' | b'/' | b'{' | b'}'))
+        .map_or(0, |i| i + 1);
+    &b[start..]
 }
 
 /// Ruby's `glob?` test in PathUtil: does the string contain glob metacharacters?

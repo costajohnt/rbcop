@@ -51,7 +51,7 @@ fn smart_path(display: &str) -> String {
     if !display.starts_with("../") {
         return display.to_string();
     }
-    let mut abs = std::env::current_dir().unwrap_or_default();
+    let mut abs = crate::config::cwd();
     for part in std::path::Path::new(display).components() {
         match part {
             std::path::Component::ParentDir => {
