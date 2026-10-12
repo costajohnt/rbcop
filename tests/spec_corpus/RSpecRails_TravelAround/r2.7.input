@@ -1,0 +1,148 @@
+==> .rubocop.yml 155 <==
+---
+plugins:
+- rubocop-rspec
+- rubocop-rspec_rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 23 <==
+before { freeze_time }
+
+==> 001/001_spec.rb 69 <==
+around(:all) do |example|
+  freeze_time do
+    example.run
+  end
+end
+
+==> 002/002_spec.rb 71 <==
+around(:suite) do |example|
+  freeze_time do
+    example.run
+  end
+end
+
+==> 003/003_spec.rb 87 <==
+around do |example|
+  freeze_time do
+    do_some_preparation
+    example.run
+  end
+end
+
+==> 004/004_spec.rb 63 <==
+around do |example|
+  freeze_time do
+    example.run
+  end
+end
+
+==> 005/005_spec.rb 79 <==
+around do |example|
+  other = example
+  freeze_time do
+    other.run
+  end
+end
+
+==> 006/006_spec.rb 64 <==
+around do |example|
+  other = proc {}
+  freeze_time(&other)
+end
+
+==> 007/007_spec.rb 89 <==
+around do |example|
+  [1].each do
+    freeze_time do
+      example.run
+    end
+  end
+end
+
+==> 008/008_spec.rb 72 <==
+around do
+  example = double
+  freeze_time do
+    example.run
+  end
+end
+
+==> 009/009_spec.rb 67 <==
+around do |test_case|
+  freeze_time do
+    test_case.run
+  end
+end
+
+==> 010/010_spec.rb 48 <==
+around do |example|
+  freeze_time(&example)
+end
+
+==> 011/011_spec.rb 55 <==
+examples.each do |example|
+  freeze_time(&example)
+end
+
+==> 012/012_spec.rb 70 <==
+around(:each) do |example|
+  freeze_time do
+    example.run
+  end
+end
+
+==> 013/013_spec.rb 70 <==
+around do |example|
+  foo
+
+  freeze_time do
+    example.run
+  end
+end
+
+==> 014/014_spec.rb 55 <==
+around do |example|
+  foo
+
+  freeze_time(&example)
+end
+
+==> 015/015_spec.rb 68 <==
+around do |example|
+  travel(duration) do
+    example.run
+  end
+end
+
+==> 016/016_spec.rb 67 <==
+around do |example|
+  travel_to(time) do
+    example.run
+  end
+end
+
+==> 017/017_spec.rb 133 <==
+describe Foo do
+  context 'when bar' do
+    around do |example|
+      freeze_time do
+        example.run
+      end
+    end
+  end
+end
+
+==> 018/018_spec.rb 110 <==
+describe Foo do
+  context 'when bar' do
+    around do |example|
+      freeze_time(&example)
+    end
+  end
+end
+
