@@ -1,0 +1,2 @@
+# c
+require "b"
