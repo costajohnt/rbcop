@@ -9,6 +9,9 @@ for case in "$here"/*/; do
   cops=$(cat "$case/cops.txt" 2>/dev/null || cat "$here/cops.txt")
   rm -rf "$case/expected"
   cp -R "$case/input" "$case/expected"
-  (cd "$case/expected" && RBENV_VERSION=4.0.6 rbenv exec rubocop -A -c ../config.yml --only "$cops" --cache false \
+  # `all`: no --only (Lint/RedundantCopDisableDirective cannot run under it); config.yml picks the cops.
+  only="--only $cops"
+  [ "$cops" = all ] && only=
+  (cd "$case/expected" && RBENV_VERSION=4.0.6 rbenv exec rubocop -A -c ../config.yml $only --cache false \
     --format emacs . 2>/dev/null | sed "s|^$case/expected/||" > ../expected.txt) || true
 done

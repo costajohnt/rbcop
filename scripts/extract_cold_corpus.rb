@@ -406,6 +406,8 @@ end
 def rubocop_yml(snip)
   all = { "AllCops" => { "EnabledByDefault" => true, "NewCops" => "enable", "SuggestExtensions" => false,
                          "TargetRubyVersion" => snip[:ruby].to_f } }
+  # PLUGINS=gem[,gem]: a plugin's specs run with the plugin loaded.
+  all = { "plugins" => ENV["PLUGINS"].split(",") }.merge(all) if ENV["PLUGINS"]
   overrides = snip[:config].reject { |_, v| v.empty? }
   # `--only` refuses Lint/RedundantCopDisableDirective, so the spec corpus runs it alone this way.
   if SPEC_MODE && snip[:config].key?("Lint/RedundantCopDisableDirective")

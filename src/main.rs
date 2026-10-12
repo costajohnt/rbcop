@@ -763,7 +763,8 @@ fn ruby_version_string(v: f64) -> String {
 
 /// `--show-cops`: CLI::Command::ShowCops for the cops rbcop implements.
 fn show_cops(patterns: &[String], cfg: &Resolved, pwd: &str) {
-    let mut names: Vec<&'static str> = cops::ALL.iter().map(|r| r.name).collect();
+    let mut names: Vec<&'static str> =
+        cops::ALL.iter().map(|r| r.name).filter(|n| rbcop::helpers::cop_registry::is_registered(n)).collect();
     // Lint/Syntax lives in the runner, not in cops::ALL, but RuboCop's registry lists it.
     names.push("Lint/Syntax");
     names.sort_unstable();
@@ -929,11 +930,7 @@ fn qualify_cop_options(cli: &mut Cli) -> (Vec<String>, Option<String>) {
     for list in [cli.only.as_deref().unwrap_or_default(), &cli.except] {
         for n in list {
             let n = n.as_str();
-            if cop_registry::REGISTRY.contains(&n)
-                || cop_registry::is_department(n)
-                || n == "Syntax"
-                || n == "Lint/Syntax"
-            {
+            if cop_registry::is_known(n) || cop_registry::is_department(n) || n == "Syntax" || n == "Lint/Syntax" {
                 continue;
             }
             let names: Vec<&str> = cop_registry::REGISTRY.iter().copied().filter(|c| *c != n).collect();
@@ -961,7 +958,6 @@ fn same_file_twice(jobs: &[(PathBuf, std::sync::Arc<Resolved>)]) -> bool {
 
 /// Returns the exit status.
 fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
-    let (cop_warnings, cop_error) = qualify_cop_options(&mut cli);
     // Lint/Syntax lives in the runner but is a registered cop with its own config in RuboCop.
     let names: Vec<&'static str> = cops::ALL.iter().map(|c| c.name).chain(["Lint/Syntax"]).collect();
     // ConfigLoader: a missing -c file is an error, even with --force-default-config.
@@ -977,7 +973,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         let cwd = store.cwd().to_path_buf();
         store.for_dir(&cwd).map(|c| (store, c))
     });
-    let (mut store, pwd_config) = match loaded {
+    let (mut store, mut pwd_config) = match loaded {
         Ok(x) => x,
         Err(e) => {
             warn_red(parse_color, &e);
@@ -1076,6 +1072,12 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         }
     };
 
+    // Runner#qualify_option_cop_names runs when the first team mobilizes, after the configs (and
+    // the plugins they load, whose cops join the registry) are loaded.
+    let (cop_warnings, cop_error) = qualify_cop_options(&mut cli);
+    store.set_only(cli.opts.only.clone());
+    pwd_config = store.for_dir(&cwd)?;
+
     let cx = Ctx {
         pwd: pwd.clone(),
         opts: Opts {
@@ -1089,8 +1091,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         },
         global_color: global,
         pwd_config: pwd_config.clone(),
-        default_config: Store::new(Options { force_default_config: true, ..Options::default() }, names)?
-            .for_dir(&cwd)?,
+        default_config: store.default_config(),
         io_console: resolved.iter().any(|(n, _)| matches!(*n, "[fu]ubar" | "[o]ffenses")),
         stdout_tty: std::io::stdout().is_terminal(),
     };

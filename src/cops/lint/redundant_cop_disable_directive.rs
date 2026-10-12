@@ -67,6 +67,10 @@ fn department_disabled(cop: &str, d: &Directive) -> bool {
 }
 
 fn known(cop: &str) -> bool {
+    crate::helpers::cop_registry::is_known(cop)
+}
+
+fn registered(cop: &str) -> bool {
     REGISTRY.contains(&cop)
 }
 
@@ -96,7 +100,7 @@ fn find_by_cop_name(cop: &str) -> Option<String> {
         out
     };
     let name = cop.split('/').map(camel).collect::<Vec<_>>().join("/");
-    known(&name).then_some(name)
+    registered(&name).then_some(name)
 }
 
 /// Registry#enabled? (cop config, ignoring comment opt-ins).
@@ -185,7 +189,9 @@ pub fn check(cx: &mut Cx, checked: &[Span]) {
 
     for cop in &cc.order {
         let Some(ranges) = cc.ranges.get(cop) else { continue };
-        if pending_not_run(cx, cop) {
+        // Deliberate difference: a cop RuboCop would run but rbcop cannot (a plugin rbcop does not
+        // implement, custom cops) may have offenses there, so its directives are never redundant.
+        if pending_not_run(cx, cop) || crate::helpers::cop_registry::is_unrunnable(cop) {
             continue;
         }
         // each_already_disabled
@@ -218,7 +224,8 @@ pub fn check(cx: &mut Cx, checked: &[Span]) {
             let (i, d) = (r.2.unwrap(), d.unwrap());
             let found = if d.disabled_all() {
                 let next_follows = ranges.get(idx + 1).is_some_and(|n| r.1 == n.0);
-                (!next_follows && ctx.free(r, |_| true)).then(|| "all".to_string())
+                let unknowable = crate::helpers::cop_registry::has_unrunnable();
+                (!next_follows && !unknowable && ctx.free(r, |_| true)).then(|| "all".to_string())
             } else if department_disabled(cop, &d) {
                 ctx.redundant_department(cop, r)
             } else {

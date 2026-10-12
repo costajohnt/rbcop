@@ -257,7 +257,7 @@ Lint/UnreachableCode
 Lint/UnreachableLoop
 Lint/UnreachablePatternBranch
 Lint/UnusedBlockArgument
-Lint/UnusedMethodArgument	Style/ExplicitBlockArgument
+Lint/UnusedMethodArgument	Style/ExplicitBlockArgument	Performance/BlockGivenWithExplicitBlock
 Lint/UnusedPrivateMethod
 Lint/UriEscapeUnescape
 Lint/UriRegexp
@@ -288,7 +288,7 @@ Metrics/PerceivedComplexity
 Migration/DepartmentName
 Naming/AccessorMethodName
 Naming/AsciiIdentifiers
-Naming/BlockForwarding	Lint/AmbiguousOperator	Style/ArgumentsForwarding	Style/ExplicitBlockArgument	Style/MethodDefParentheses
+Naming/BlockForwarding	Lint/AmbiguousOperator	Style/ArgumentsForwarding	Style/ExplicitBlockArgument	Style/MethodDefParentheses	Performance/BlockGivenWithExplicitBlock
 Naming/BlockParameterName
 Naming/ClassAndModuleCamelCase
 Naming/ConstantName
@@ -611,3 +611,55 @@ Style/YAMLFileRead
 Style/YodaCondition
 Style/YodaExpression
 Style/ZeroLengthPredicate
+Performance/AncestorsInclude
+Performance/ArraySemiInfiniteRangeSlice
+Performance/BigDecimalWithNumericArgument
+Performance/BindCall
+Performance/BlockGivenWithExplicitBlock	Lint/UnusedMethodArgument	Naming/BlockForwarding
+Performance/Caller
+Performance/CaseWhenSplat
+Performance/Casecmp
+Performance/CollectionLiteralInLoop
+Performance/CompareWithBlock
+Performance/ConcurrentMonotonicTime
+Performance/ConstantRegexp	Performance/RegexpMatch
+Performance/Count
+Performance/DeletePrefix
+Performance/DeleteSuffix
+Performance/Detect
+Performance/DoubleStartEndWith
+Performance/EndWith
+Performance/FixedSize
+Performance/FlatMap
+Performance/InefficientHashSearch
+Performance/MapCompact
+Performance/MapMethodChain
+Performance/MethodObjectAsBlock
+Performance/OpenStruct
+Performance/RangeInclude
+Performance/IoReadlines
+Performance/RedundantBlockCall
+Performance/RedundantEqualityComparisonBlock
+Performance/RedundantMatch
+Performance/RedundantMerge
+Performance/RedundantSortBlock
+Performance/RedundantSplitRegexpArgument
+Performance/RedundantStringChars
+Performance/RegexpMatch	Performance/ConstantRegexp
+Performance/ReverseEach
+Performance/ReverseFirst
+Performance/SelectMap
+Performance/Size
+Performance/SortReverse
+Performance/Squeeze
+Performance/StringBytesize
+Performance/StartWith
+Performance/StringIdentifierArgument
+Performance/StringInclude
+Performance/StringReplacement
+Performance/Sum
+Performance/TimesMap
+Performance/UnfreezeString
+Performance/UriDefaultParser
+Performance/ChainArrayAllocation
+Performance/ZipWithoutBlock

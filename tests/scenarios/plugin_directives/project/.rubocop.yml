@@ -1,0 +1,8 @@
+plugins:
+  - rubocop-performance
+require:
+  - ./no_foo.rb
+AllCops:
+  TargetRubyVersion: 3.4
+  SuggestExtensions: false
+  NewCops: enable
