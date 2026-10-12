@@ -60,7 +60,7 @@ end
 ## Without Bundler
 
 - Homebrew: a formula (`rbcop.rb`) is attached to each release.
-- Release archives: `rbcop-<version>-<target>.tar.gz` with a `.sha256` file, for `aarch64-apple-darwin`, `x86_64-apple-darwin`, `{x86_64,aarch64}-unknown-linux-gnu` (glibc 2.17 or newer) and `{x86_64,aarch64}-unknown-linux-musl` (static). `scripts/dist/install.sh VERSION DIR` downloads the right one, checks its SHA-256 and installs `DIR/rbcop`.
+- Release archives: `rbcop-<version>-<target>.tar.gz`, for `aarch64-apple-darwin`, `x86_64-apple-darwin`, `{x86_64,aarch64}-unknown-linux-gnu` (glibc 2.17 or newer) and `{x86_64,aarch64}-unknown-linux-musl` (static). `scripts/dist/install.sh VERSION DIR` downloads the right one, checks it against the SHA-256 pinned in the repository (`packaging/checksums/VERSION.sha256`) and installs `DIR/rbcop`; it refuses an archive that is not listed or does not match.
 - From source: `cargo build --release` (Rust 1.88 or newer).
 
 ## CI
@@ -69,7 +69,7 @@ rbcop has no result cache: every run inspects every file, using all cores. On a 
 
 ### GitHub Actions
 
-The action downloads the release binary (cached across runs) and runs it. A drop-in workflow for a project with core cops only:
+The action downloads the release archive (cached across runs), checks it against the checksum pinned in the action's own ref on every run, and runs rbcop. A drop-in workflow for a project with core cops only:
 
 ```yaml
 name: Lint
