@@ -12,6 +12,11 @@ use std::process::ExitCode;
 use std::time::Instant;
 use std::{env, fs, thread};
 
+// musl's malloc is a bottleneck for the worker threads; glibc and macOS keep the system allocator.
+#[cfg(target_env = "musl")]
+#[global_allocator]
+static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
+
 /// `rubocop -h` (OptionParser#help for RuboCop 1.91.0's options), recorded verbatim.
 const HELP: &str = include_str!("help.txt");
 
