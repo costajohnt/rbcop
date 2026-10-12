@@ -12,6 +12,8 @@ use std::process::ExitCode;
 use std::time::Instant;
 use std::{env, fs, thread};
 
+mod fallback;
+
 // musl's malloc is a bottleneck for the worker threads; glibc and macOS keep the system allocator.
 #[cfg(target_env = "musl")]
 #[global_allocator]
@@ -1123,8 +1125,12 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     let only = &cli.opts.only;
     let except = &cli.except;
     // Runner#mobilize_cop_badge?: Badge#match_name? takes cop names and department names.
-    let match_name =
-        |list: &[String], cop: &str| list.iter().any(|n| n == cop || cop.rsplit_once('/').is_some_and(|(d, _)| d == n));
+    // Sets: every file asks about every cop, and `--only` may list all of them.
+    let only_set: std::collections::HashSet<&str> = only.iter().map(String::as_str).collect();
+    let except_set: std::collections::HashSet<&str> = except.iter().map(String::as_str).collect();
+    let match_name = |list: &std::collections::HashSet<&str>, cop: &str| {
+        list.contains(cop) || cop.rsplit_once('/').is_some_and(|(d, _)| list.contains(d))
+    };
     let selected = |cop: &str| {
         // Runner#check_for_redundant_disables? never runs the directive cop under --only.
         // ponytail: so it also drops out of Registry#disabled_names there; matters only when the
@@ -1132,7 +1138,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         if cop == "Lint/RedundantCopDisableDirective" && !only.is_empty() {
             return false;
         }
-        (only.is_empty() || match_name(only, cop)) && !match_name(except, cop)
+        (only.is_empty() || match_name(&only_set, cop)) && (except.is_empty() || !match_name(&except_set, cop))
     };
     // Runner#mobilize_cop_badge?: without --only, --only-guide-cops or `AllCops:
     // StyleGuideCopsOnly` keeps only cops whose own config has a StyleGuide.
@@ -1175,6 +1181,28 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     }
     for w in &store.warnings {
         eprintln!("Warning: {w}");
+    }
+    // Deliberate difference: cops rbcop cannot run are named on stderr, or run by RuboCop.
+    let names: Vec<&'static str> = cops::ALL.iter().map(|c| c.name).chain(["Lint/Syntax"]).collect();
+    let implemented: std::collections::HashSet<&str> = names.iter().copied().collect();
+    let mut seen = std::collections::HashSet::new();
+    let configs = jobs.iter().filter(|(_, c)| seen.insert(std::sync::Arc::as_ptr(c))).map(|(_, c)| &**c);
+    let skipped = fallback::unimplemented(configs, &implemented, |cop, cfg| badge_selected(cop, cfg));
+    let mut fallback_offenses = std::collections::HashMap::new();
+    if !skipped.is_empty() || store.requires_ruby_code() {
+        if fallback::enabled() && stdin_text.is_none() && config_error.is_none() && team_error.is_none() {
+            let files: Vec<PathBuf> = jobs.iter().map(|(p, _)| p.clone()).collect();
+            let child = fallback::Child {
+                opts: &cli.opts,
+                except,
+                only_guide: cli.only_guide,
+                force_exclusion: cli.force_exclusion,
+                autocorrect: cli.autocorrect,
+            };
+            fallback_offenses = fallback::run(&files, &cwd, &names, child)?;
+        } else {
+            eprintln!("{}", fallback::notice(&skipped, store.requires_ruby_code()));
+        }
     }
     let stdin_text = &stdin_text;
     // --stdin with -a/-A: the corrected source, printed after the report.
@@ -1228,23 +1256,35 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     let mut reports: Vec<Option<Linted>> = if lazy {
         jobs.iter().map(|_| None).collect()
     } else {
-        let workers = thread::available_parallelism().map_or(4, |n| n.get());
-        let chunk = jobs.len().div_ceil(workers).max(1);
+        let workers = thread::available_parallelism().map_or(4, |n| n.get()).clamp(1, jobs.len().max(1));
+        // Each worker takes the next file, largest first, so no core idles while another finishes
+        // a long run of big files (fixed chunks of the sorted list did). Results keep file order.
+        let mut order: Vec<usize> = (0..jobs.len()).collect();
+        order.sort_by_cached_key(|&i| std::cmp::Reverse(fs::metadata(&jobs[i].0).map_or(0, |m| m.len())));
+        let next = std::sync::atomic::AtomicUsize::new(0);
+        let mut reports: Vec<Option<Linted>> = jobs.iter().map(|_| None).collect();
         thread::scope(|s| {
-            let handles: Vec<_> = jobs
-                .chunks(chunk)
-                .map(|part| {
+            let handles: Vec<_> = (0..workers)
+                .map(|_| {
                     big_stack()
                         .spawn_scoped(s, || {
-                            part.iter()
-                                .map(|(path, cfg)| Some(lint_one(path, cfg, cli.autocorrect)))
-                                .collect::<Vec<_>>()
+                            let mut done = Vec::new();
+                            while let Some(&i) = order.get(next.fetch_add(1, std::sync::atomic::Ordering::Relaxed)) {
+                                let (path, cfg) = &jobs[i];
+                                done.push((i, lint_one(path, cfg, cli.autocorrect)));
+                            }
+                            done
                         })
                         .expect("spawn worker thread")
                 })
                 .collect();
-            handles.into_iter().flat_map(|h| h.join().unwrap()).collect()
-        })
+            for h in handles {
+                for (i, linted) in h.join().unwrap() {
+                    reports[i] = Some(linted);
+                }
+            }
+        });
+        reports
     };
 
     // Runner#inspect_files
@@ -1333,7 +1373,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                 }
                 None => linted,
             };
-            let (report, corrected, loop_error, warnings) = match linted {
+            let (mut report, corrected, loop_error, warnings) = match linted {
                 Ok(l) => l,
                 Err(e) => {
                     error = Some(e);
@@ -1366,6 +1406,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             if let Some(e) = loop_error {
                 runner::file_error(e);
             }
+            report.offenses.extend(fallback_offenses.remove(path).unwrap_or_default());
             let offs = formatter::offenses(&report.text, &report.offenses, |o| {
                 formatter::annotate(cfg, o.cop, &o.message, annotate)
             });
