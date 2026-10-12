@@ -1,0 +1,91 @@
+==> offenses exit=1 1868 <==
+000/000_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_selector`.
+002/002_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_text`.
+003/003_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_css`.
+005/005_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_xpath`.
+007/007_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_text`.
+009/009_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_title`.
+011/011_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_current_path`.
+013/013_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_link`.
+015/015_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_button`.
+017/017_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_field`.
+019/019_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_checked_field`.
+021/021_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_unchecked_field`.
+023/023_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_select`.
+025/025_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_table`.
+027/027_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_sibling`.
+029/029_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_ancestor`.
+031/031_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_content`.
+
+==> autocorrect exit=0 1834 <==
+000/000_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_selector`.
+002/002_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_text`.
+003/003_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_css`.
+005/005_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_xpath`.
+007/007_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_text`.
+009/009_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_title`.
+011/011_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_current_path`.
+013/013_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_link`.
+015/015_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_button`.
+017/017_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_field`.
+019/019_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_checked_field`.
+021/021_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_unchecked_field`.
+023/023_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_select`.
+025/025_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_table`.
+027/027_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_sibling`.
+029/029_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_ancestor`.
+031/031_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).not_to have_content`.
+
+==> corrected/000/000_spec.rb 39 <==
+expect(page).not_to have_selector('a')
+
+==> corrected/002/002_spec.rb 62 <==
+expect(page).not_to have_text(exact_text: <<~TEXT)
+  foo
+TEXT
+
+==> corrected/003/003_spec.rb 34 <==
+expect(page).not_to have_css('a')
+
+==> corrected/005/005_spec.rb 36 <==
+expect(page).not_to have_xpath('a')
+
+==> corrected/007/007_spec.rb 35 <==
+expect(page).not_to have_text('a')
+
+==> corrected/009/009_spec.rb 36 <==
+expect(page).not_to have_title('a')
+
+==> corrected/011/011_spec.rb 43 <==
+expect(page).not_to have_current_path('a')
+
+==> corrected/013/013_spec.rb 35 <==
+expect(page).not_to have_link('a')
+
+==> corrected/015/015_spec.rb 37 <==
+expect(page).not_to have_button('a')
+
+==> corrected/017/017_spec.rb 36 <==
+expect(page).not_to have_field('a')
+
+==> corrected/019/019_spec.rb 44 <==
+expect(page).not_to have_checked_field('a')
+
+==> corrected/021/021_spec.rb 46 <==
+expect(page).not_to have_unchecked_field('a')
+
+==> corrected/023/023_spec.rb 37 <==
+expect(page).not_to have_select('a')
+
+==> corrected/025/025_spec.rb 36 <==
+expect(page).not_to have_table('a')
+
+==> corrected/027/027_spec.rb 38 <==
+expect(page).not_to have_sibling('a')
+
+==> corrected/029/029_spec.rb 39 <==
+expect(page).not_to have_ancestor('a')
+
+==> corrected/031/031_spec.rb 38 <==
+expect(page).not_to have_content('a')
+

@@ -1,0 +1,48 @@
+==> offenses exit=1 2256 <==
+000/000_spec.rb:1:46: C: Capybara/RSpec/VisibilityMatcher: Use `:visible` instead of `true`.
+001/001_spec.rb:1:46: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+002/002_spec.rb:1:38: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+002/002_spec.rb:2:42: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+002/002_spec.rb:3:35: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+002/002_spec.rb:4:38: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+002/002_spec.rb:5:36: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+002/002_spec.rb:6:38: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+002/002_spec.rb:7:40: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+002/002_spec.rb:8:43: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+002/002_spec.rb:9:45: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:1:41: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:2:45: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:3:38: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:4:41: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:5:39: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:6:41: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:7:43: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:8:46: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:9:48: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+004/004_spec.rb:1:52: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+005/005_spec.rb:1:56: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+
+==> autocorrect exit=1 2256 <==
+000/000_spec.rb:1:46: C: Capybara/RSpec/VisibilityMatcher: Use `:visible` instead of `true`.
+001/001_spec.rb:1:46: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+002/002_spec.rb:1:38: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+002/002_spec.rb:2:42: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+002/002_spec.rb:3:35: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+002/002_spec.rb:4:38: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+002/002_spec.rb:5:36: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+002/002_spec.rb:6:38: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+002/002_spec.rb:7:40: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+002/002_spec.rb:8:43: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+002/002_spec.rb:9:45: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:1:41: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:2:45: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:3:38: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:4:41: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:5:39: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:6:41: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:7:43: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:8:46: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:9:48: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+004/004_spec.rb:1:52: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+005/005_spec.rb:1:56: C: Capybara/RSpec/VisibilityMatcher: Use `:all` or `:hidden` instead of `false`.
+
