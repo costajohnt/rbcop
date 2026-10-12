@@ -25,3 +25,4 @@ class UsersController < ApplicationController
     t('users.show.title')
   end
 end
+%{#{Rails.root}/a"b}

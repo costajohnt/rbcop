@@ -11,3 +11,4 @@ File.join(Rails.root, "a'b")
 "#{Rails.root}/a\"b"
 "#{Rails.root.join('x')}.rb"
 Rails.env == 'production'
+%{#{Rails.root}/config/app.rb}

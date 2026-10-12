@@ -228,7 +228,9 @@ fn on_dstr(cx: &mut Cx, node: &Node, d: &ruby_prism::InterpolatedStringNode) {
             Some((rs, re, false))
         };
         // Deliberate difference: only a plain "..." string's text is spliced into a new "..." literal.
-        let plain = d.opening_loc().is_some_and(|o| o.as_slice() == b"\"");
+        // Source moved out of another interpolating literal (`%{...}`, a heredoc) keeps its meaning
+        // in "..." when it has no `"`, backslash or line break.
+        let plain = d.opening_loc().is_some_and(|o| o.as_slice() == b"\"") || !arg.contains(['"', '\\', '\n', '\r']);
         if !plain {
             cx.add_withheld_fix(os, oe, message(cx, false));
         } else {

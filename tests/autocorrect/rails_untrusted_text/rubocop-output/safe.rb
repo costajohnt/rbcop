@@ -11,3 +11,4 @@ Rails.root.join("a'b").to_s
 "#{Rails.root.join("a\"b")}"
 "#{Rails.root.join('x.rb')}"
 Rails.env.production?
+%{#{Rails.root.join("config/app.rb")}}

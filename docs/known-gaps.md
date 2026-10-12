@@ -83,9 +83,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   Rails/MigrationClassName: the file name camelizes to `\A[A-Z][A-Za-z0-9_]*\z`.
   Rails/FilePath: path segments joined into one `"..."` (or split into `, "..."` arguments) and an
   extension moved into a literal are inert in that literal: no matching quote (the other quote is
-  fine), backslash, `#{`/`#@`/`#$` (for `"..."`) or line break; text moved out of a
-  `"#{Rails.root}/..."` string is corrected only when that string is a plain `"..."` literal (not a
-  heredoc or %-literal). `File.join` segments are re-escaped (`inspect`) and stay corrected.
+  fine), backslash, `#{`/`#@`/`#$` (for `"..."`) or line break; source moved out of a
+  `"#{Rails.root}/..."` string into a new `"..."` is corrected when that string is a plain `"..."`
+  literal, or (a `%{...}` literal, a heredoc) when the moved text has no `"`, backslash or line break. `File.join` segments are re-escaped (`inspect`) and stay corrected.
   Rails/EnvironmentComparison: the compared value is an identifier (it becomes `Rails.env.<value>?`).
   Rails/RakeEnvironment: a symbol task name is a plain label (`\A[A-Za-z_][A-Za-z0-9_]*\z`).
   Rails/I18nLazyLookup: the key that goes into the new `'...'` has none of those characters.
