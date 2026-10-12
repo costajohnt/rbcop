@@ -1,28 +1,30 @@
-# Release: build the archives and gems for a vX.Y.Z tag and attach them to a draft GitHub release.
-# Not run while the repository is private (hosted minutes); the same steps run by hand with
-# scripts/dist/*.sh (docs/releasing.md).
+# Release, in two manual runs (docs/releasing.md). Not run while the repository is private (hosted
+# minutes); the same steps run by hand with scripts/dist/*.sh.
 #
-# Gems are pushed only from a manual run (workflow_dispatch with `publish-gems`), through RubyGems
-# trusted publishing (OIDC, no API key secret), in the `release` environment, which should require
-# a reviewer. The Homebrew formula (dist/rbcop.rb) is attached to the release and copied into the
-# tap by hand.
+#   stage `build`: build the archives, gems and Homebrew formula and attach them, with SHA256SUMS,
+#     to a draft release v<Cargo.toml version>. A maintainer then commits that SHA256SUMS as
+#     packaging/checksums/<version>.sha256 (the GitHub Action and scripts/dist/install.sh only run
+#     archives listed there) and publishes the draft on that commit, which creates the tag.
+#   stage `publish-gems` (run on the tag): download the gems from the published release, check them
+#     against the committed packaging/checksums file, and push them with RubyGems trusted
+#     publishing (OIDC, no API key secret).
 #
 # Hardening: third-party actions are pinned to commit SHAs; the workflow token is read-only except
-# in the two publishing jobs, which run no project code, use no caches, check the built artifacts
-# against SHA256SUMS and wait for the `release` environment; only tags and manual runs trigger
-# it, never pull requests; no event data is interpolated into scripts; zig is checked against its
-# published SHA-256 and Rust crates against Cargo.lock (--locked).
+# in the two publishing jobs, which run no project code (no build scripts, no Bundler, no caches),
+# check what they publish against checksums first, and wait for the `release` environment (give
+# it a required reviewer); only manual runs trigger the workflow, never pushes or pull requests;
+# no event data is interpolated into scripts; zig is checked against its published SHA-256 and
+# Rust crates against Cargo.lock (--locked).
 name: release
 
 on:
-  push:
-    tags: ['v*']
   workflow_dispatch:
     inputs:
-      publish-gems:
-        description: Push the gems to rubygems.org after building them
-        type: boolean
-        default: false
+      stage:
+        description: build (draft release) or publish-gems (run on the published tag)
+        type: choice
+        options: [build, publish-gems]
+        default: build
 
 permissions:
   contents: read
@@ -34,6 +36,7 @@ env:
 
 jobs:
   linux:
+    if: inputs.stage == 'build'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -55,6 +58,7 @@ jobs:
           path: dist/
 
   macos:
+    if: inputs.stage == 'build'
     runs-on: macos-14
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -70,6 +74,8 @@ jobs:
   package:
     needs: [linux, macos]
     runs-on: ubuntu-24.04
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -81,10 +87,10 @@ jobs:
       - uses: ruby/setup-ruby@762794c140bbeda0f1224786aa33b4b46783a6c1 # v1.326.0
         with:
           ruby-version: '3.4'
+      - id: version
+        run: echo "version=$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)" >> "$GITHUB_OUTPUT"
       - run: sh scripts/dist/gem.sh
       - run: sh scripts/dist/homebrew.sh > dist/rbcop.rb
-      # One checksum list for everything the publishing jobs receive; they check it first.
-      - run: cd dist && sha256sum -- *.tar.gz rbcop.rb gems/*.gem > SHA256SUMS
       # The x86_64 platform gem and the `ruby` gem install and run without a Rust toolchain.
       - run: |
           for gem in dist/gems/rbcop-*-x86_64-linux-gnu.gem dist/gems/rbcop-[0-9]*[0-9].gem; do
@@ -92,21 +98,17 @@ jobs:
             gem install --local --no-document --install-dir "$RUNNER_TEMP/gems" "$gem"
             GEM_HOME="$RUNNER_TEMP/gems" "$RUNNER_TEMP/gems/bin/rbcop" -v
           done
+      # Everything published, by file name; committed later as packaging/checksums/<version>.sha256.
+      - run: |
+          mkdir release
+          cp dist/*.tar.gz dist/rbcop.rb dist/gems/*.gem release/
+          cd release && sha256sum -- * > SHA256SUMS
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: release
-          path: |
-            dist/*.tar.gz
-            dist/*.sha256
-            dist/rbcop.rb
-            dist/gems/*.gem
-            dist/SHA256SUMS
+          path: release/
 
-  # Publishing jobs run no project code (no checkout, no build scripts, no caches): they take the
-  # package job's artifact, check it against SHA256SUMS, and upload. Both wait for the `release`
-  # environment, which should require a reviewer.
   draft-release:
-    if: github.event_name == 'push'
     needs: package
     runs-on: ubuntu-24.04
     environment: release
@@ -116,29 +118,40 @@ jobs:
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: release
-          path: dist
-      - run: cd dist && sha256sum -c SHA256SUMS
+          path: release
+      - run: cd release && sha256sum -c SHA256SUMS
       - env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.ref_name }}
+          VERSION: ${{ needs.package.outputs.version }}
         run: |
-          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --draft --title "rbcop $TAG" \
-            dist/*.tar.gz dist/*.sha256 dist/rbcop.rb dist/gems/*.gem dist/SHA256SUMS
+          gh release create "v$VERSION" --repo "$GITHUB_REPOSITORY" --draft --title "rbcop $VERSION" release/*
 
   publish-gems:
-    if: github.event_name == 'workflow_dispatch' && inputs.publish-gems
-    needs: package
+    if: inputs.stage == 'publish-gems' && startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-24.04
     environment: release
     permissions:
       contents: read
       id-token: write
     steps:
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      # Only for packaging/checksums; nothing from the checkout is run.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          name: release
-          path: dist
-      - run: cd dist && sha256sum -c SHA256SUMS
+          persist-credentials: false
+          sparse-checkout: packaging/checksums
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          sums="packaging/checksums/${TAG#v}.sha256"
+          test -f "$sums"
+          mkdir gems
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern '*.gem' --dir gems
+          # Every downloaded gem must be listed with a matching checksum.
+          cd gems
+          for gem in *.gem; do
+            grep -E "^[0-9a-f]{64}  $gem\$" "../$sums" | sha256sum -c -
+          done
       - uses: rubygems/configure-rubygems-credentials@dc5a8d8553e6ee01fc26761a49e99e733d17954a # v2.1.0
-      # The runner image's RubyGems; no setup-ruby (and its bundler cache) in this job.
-      - run: for gem in dist/gems/*.gem; do gem push "$gem"; done
+      # The runner image's RubyGems; no setup-ruby or Bundler in this job.
+      - run: for gem in gems/*.gem; do gem push "$gem"; done

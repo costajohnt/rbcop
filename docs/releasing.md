@@ -2,9 +2,14 @@
 
 The repository is private, so releases are built by hand (hosted Actions minutes are not used);
 `.github/workflows/release.yml` runs the same scripts once it is public. Nothing below publishes
-anything until the last step.
+anything until step 7.
 
-1. Set `version` in `Cargo.toml` and tag `vX.Y.Z` after the gate (`scripts/ci.sh`) passes.
+The GitHub Action and `scripts/dist/install.sh` only run an archive whose SHA-256 is listed in
+`packaging/checksums/X.Y.Z.sha256` at the tag, so that file is committed before the tag exists,
+from the exact archives that get uploaded. Builds are not byte-reproducible across hosts: never
+rebuild between committing the checksums and uploading.
+
+1. Set `version` in `Cargo.toml` after the gate (`scripts/ci.sh`) passes.
 2. Linux archives, on a Linux x86_64 host with `zig` 0.13 and `cargo-zigbuild` on `PATH` and the
    four Rust targets installed (`rustup target add {x86_64,aarch64}-unknown-linux-{gnu,musl}`):
 
@@ -28,12 +33,19 @@ anything until the last step.
          "$PWD/config/all-cops.yml" <corpus>/jekyll <corpus>/mastodon
 
    and the same for `dist/gems/rbcop-X.Y.Z.gem` (the `ruby` platform gem).
-   `RBCOP_DOWNLOAD_BASE=file://$PWD/dist scripts/dist/install.sh X.Y.Z /tmp/b` checks the
-   installer and the checksums.
-6. Publish (manual, after review): `gh release create vX.Y.Z dist/*.tar.gz dist/*.sha256
-   dist/gems/*.gem dist/rbcop.rb`, `gem push` each gem, and copy `dist/rbcop.rb` into the tap.
-   The GitHub Action downloads from the release, so it works once the release exists.
-   Once the workflow runs, gems go out through RubyGems trusted publishing instead of an API
-   key: register the workflow (`release.yml`, environment `release`) as a trusted publisher
-   for the `rbcop` gem on rubygems.org (a pending publisher before the first push), protect the
-   `release` environment with a required reviewer, and start a manual run with `publish-gems`.
+6. Pin the checksums and check the installer against them:
+
+       (cd dist && sha256sum -- *.tar.gz rbcop.rb gems/*.gem | sed 's|  gems/|  |') \
+         > packaging/checksums/X.Y.Z.sha256
+       RBCOP_DOWNLOAD_BASE=file://$PWD/dist scripts/dist/install.sh X.Y.Z /tmp/b
+
+   Commit the file, then tag that commit `vX.Y.Z`.
+7. Publish (after review): `gh release create vX.Y.Z dist/*.tar.gz dist/rbcop.rb dist/gems/*.gem`,
+   `gem push` each gem, and copy `dist/rbcop.rb` into the tap.
+
+With the workflow (once public): run it with stage `build`; it attaches everything and a
+`SHA256SUMS` to a draft release. Commit that `SHA256SUMS` as `packaging/checksums/X.Y.Z.sha256`,
+publish the draft on that commit (which creates the tag), then run the workflow on the tag with
+stage `publish-gems`. Gems go out through RubyGems trusted publishing: register `release.yml`
+with environment `release` as a trusted publisher for the `rbcop` gem on rubygems.org (a pending
+publisher before the first push), and give the `release` environment a required reviewer.
