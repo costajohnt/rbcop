@@ -589,3 +589,41 @@ pub fn send_chain_names(ancestors: &[Node], i: usize, first: &CallNode) -> Vec<S
     out.extend(call_ancestors(&ancestors[..i]).filter(|c| !is_csend(c)).map(|c| method_name(&c).to_string()));
     out
 }
+
+/// DatabaseTypeResolvable#database: the cop's `Database`, else the adapter of `development` in
+/// ./config/database.yml (mysql2/trilogy: mysql, postgresql/postgis: postgresql), else
+/// DATABASE_URL's scheme.
+pub fn database(cx: &Cx) -> Option<String> {
+    if let Some(d) = cx.cfg.str("Database") {
+        return Some(d.to_string());
+    }
+    let from_yaml = || -> Option<Option<&'static str>> {
+        let text = std::fs::read_to_string(crate::config::cwd().join("config/database.yml")).ok()?;
+        let Ok(Value::Map(yaml)) = crate::config::value::parse_yaml(&text) else { return None };
+        let dev = yaml.map("development")?;
+        let adapter = match dev.get("adapter") {
+            Some(a) if !matches!(a, Value::Null | Value::Bool(false)) => a.as_string(),
+            _ => yaml.map("shared").and_then(|s| s.get("adapter")).and_then(|a| a.as_string()).or_else(|| {
+                // `database_yaml.first.last['adapter']`
+                let (_, first) = dev.0.first()?;
+                first.as_map()?.get("adapter")?.as_string()
+            }),
+        };
+        Some(match adapter.as_deref() {
+            Some("mysql2" | "trilogy") => Some("mysql"),
+            Some("postgresql" | "postgis") => Some("postgresql"),
+            _ => None,
+        })
+    };
+    if let Some(Some(d)) = from_yaml() {
+        return Some(d.to_string());
+    }
+    let url = std::env::var("DATABASE_URL").unwrap_or_default();
+    if url.starts_with("mysql2://") || url.starts_with("trilogy://") {
+        Some("mysql".to_string())
+    } else if url.starts_with("postgres://") || url.starts_with("postgresql://") {
+        Some("postgresql".to_string())
+    } else {
+        None
+    }
+}
