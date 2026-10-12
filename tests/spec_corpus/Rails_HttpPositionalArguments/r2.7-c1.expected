@@ -1,0 +1,118 @@
+==> offenses exit=1 3083 <==
+spec/000/000.rb:1:14: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `get`.
+spec/002/002.rb:1:15: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+spec/003/003.rb:1:16: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `patch`.
+spec/004/004.rb:1:14: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `put`.
+spec/005/005.rb:1:17: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `delete`.
+spec/006/006.rb:1:15: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `head`.
+spec/019/019.rb:1:11: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `get`.
+spec/021/021.rb:2:7: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `patch`.
+spec/022/022.rb:2:6: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+spec/029/029.rb:1:18: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+spec/030/030.rb:1:19: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+spec/031/031.rb:1:19: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+spec/032/032.rb:1:32: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `get`.
+spec/033/033.rb:1:28: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `get`.
+spec/034/034.rb:1:28: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `get`.
+spec/035/035.rb:1:15: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+spec/036/036.rb:1:15: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+spec/037/037.rb:1:15: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+spec/038/038.rb:2:18: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+spec/039/039.rb:1:18: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+spec/040/040.rb:1:18: C: [Correctable] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+
+==> autocorrect exit=0 3041 <==
+spec/000/000.rb:1:14: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `get`.
+spec/002/002.rb:1:15: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+spec/003/003.rb:1:16: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `patch`.
+spec/004/004.rb:1:14: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `put`.
+spec/005/005.rb:1:17: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `delete`.
+spec/006/006.rb:1:15: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `head`.
+spec/019/019.rb:1:11: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `get`.
+spec/021/021.rb:2:7: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `patch`.
+spec/022/022.rb:2:6: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+spec/029/029.rb:1:18: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+spec/030/030.rb:1:19: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+spec/031/031.rb:1:19: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+spec/032/032.rb:1:32: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `get`.
+spec/033/033.rb:1:28: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `get`.
+spec/034/034.rb:1:28: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `get`.
+spec/035/035.rb:1:15: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+spec/036/036.rb:1:15: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+spec/037/037.rb:1:15: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+spec/038/038.rb:2:18: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+spec/039/039.rb:1:18: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+spec/040/040.rb:1:18: C: [Corrected] Rails/HttpPositionalArguments: Use keyword arguments instead of positional arguments for http call: `post`.
+
+==> corrected/spec/000/000.rb 43 <==
+get :create, params: { user_id: @user.id }
+
+==> corrected/spec/002/002.rb 44 <==
+post :create, params: { user_id: @user.id }
+
+==> corrected/spec/003/003.rb 45 <==
+patch :update, params: { user_id: @user.id }
+
+==> corrected/spec/004/004.rb 43 <==
+put :create, params: { user_id: @user.id }
+
+==> corrected/spec/005/005.rb 46 <==
+delete :create, params: { user_id: @user.id }
+
+==> corrected/spec/006/006.rb 44 <==
+head :create, params: { user_id: @user.id }
+
+==> corrected/spec/019/019.rb 40 <==
+get :new, params: { user_id: @user.id }
+
+==> corrected/spec/021/021.rb 152 <==
+patch :update, params: { id: @user.id, ac: {
+        article_id: @article1.id,
+        profile_id: @profile1.id,
+        content: 'Some Text'
+      } }
+
+==> corrected/spec/022/022.rb 147 <==
+post :create, params: { id: @user.id, ac: {
+       article_id: @article1.id,
+       profile_id: @profile1.id,
+       content: 'Some Text'
+     } }
+
+==> corrected/spec/029/029.rb 35 <==
+post user_attrs, params: { id: 1 }
+
+==> corrected/spec/030/030.rb 36 <==
+post :user_attrs, params: { id: 1 }
+
+==> corrected/spec/031/031.rb 37 <==
+post(:user_attrs, params: { id: 1 })
+
+==> corrected/spec/032/032.rb 49 <==
+get '/auth/linkedin/callback', params: { id: 1 }
+
+==> corrected/spec/033/033.rb 75 <==
+get some_path(profile.id), session: { 'HTTP_REFERER' => p_url(p.id).to_s }
+
+==> corrected/spec/034/034.rb 124 <==
+get some_path(profile.id), params: { user_id: @user.id, profile_id: p.id }, session: { 'HTTP_REFERER' => p_url(p.id).to_s }
+
+==> corrected/spec/035/035.rb 40 <==
+post :create, params: confirmation_data
+
+==> corrected/spec/036/036.rb 58 <==
+post :create, params: { id: 7, comment: { body: "hei" } }
+
+==> corrected/spec/037/037.rb 46 <==
+post :create, params: { id: 7, format: :rss }
+
+==> corrected/spec/038/038.rb 51 <==
+params = { id: 1 }
+post user_attrs, params: params
+
+==> corrected/spec/039/039.rb 32 <==
+post user_attrs, params: params
+
+==> corrected/spec/040/040.rb 48 <==
+post user_attrs, params: params.merge(foo: bar)
+

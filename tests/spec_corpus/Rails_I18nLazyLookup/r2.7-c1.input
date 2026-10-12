@@ -1,0 +1,45 @@
+==> .rubocop.yml 181 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/I18nLazyLookup:
+  EnforcedStyle: explicit
+
+==> app/controllers/000/000.rb 77 <==
+class FooController
+  def action
+    t '.key'
+    translate '.key'
+  end
+end
+
+==> app/controllers/001/001.rb 66 <==
+class FooController
+  def action
+    t 'foo.action.key'
+  end
+end
+
+==> app/controllers/002/002.rb 68 <==
+class FooController
+  def action
+    t ['.key']
+    t key
+  end
+end
+
+==> app/controllers/003/003.rb 106 <==
+module Bar
+  class FooController
+    def action
+      t '.key'
+      t 'foo.action.key'
+    end
+  end
+end
+

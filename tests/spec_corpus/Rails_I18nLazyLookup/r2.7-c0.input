@@ -1,0 +1,76 @@
+==> .rubocop.yml 177 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/I18nLazyLookup:
+  EnforcedStyle: lazy
+
+==> app/controllers/000/000.rb 97 <==
+class FooController
+  def action
+    t 'foo.action.key'
+    translate 'foo.action.key'
+  end
+end
+
+==> app/controllers/001/001.rb 107 <==
+class FooController
+  def action
+    I18n.t 'foo.action.key'
+    I18n.translate 'foo.action.key'
+  end
+end
+
+==> app/controllers/002/002.rb 83 <==
+class FooService
+  def do_something
+    t 'foo_service.do_something.key'
+  end
+end
+
+==> app/controllers/003/003.rb 77 <==
+class FooController
+  private
+
+  def action
+    t 'foo.action.key'
+  end
+end
+
+==> app/controllers/004/004.rb 63 <==
+class FooController
+  def action
+    t 'one.two.key'
+  end
+end
+
+==> app/controllers/005/005.rb 56 <==
+class FooController
+  def action
+    t '.key'
+  end
+end
+
+==> app/controllers/006/006.rb 78 <==
+class FooController
+  def action
+    t ['foo.action.key']
+    t key
+  end
+end
+
+==> app/controllers/007/007.rb 120 <==
+module Bar
+  class FooController
+    def action
+      t 'bar.foo.action.key'
+      t 'foo.action.key'
+    end
+  end
+end
+
