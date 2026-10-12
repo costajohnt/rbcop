@@ -1,0 +1,40 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 6 <==
+caller
+==> 001.rb 18 <==
+caller(1, 1).first
+==> 002.rb 16 <==
+caller_locations
+==> 003.rb 13 <==
+caller.first
+
+==> 004.rb 16 <==
+caller(1).first
+
+==> 005.rb 16 <==
+caller(2).first
+
+==> 006.rb 10 <==
+caller[1]
+
+==> 007.rb 13 <==
+caller(1)[1]
+
+==> 008.rb 13 <==
+caller(2)[1]
+
+==> 009.rb 23 <==
+caller_locations.first
+
+==> 010.rb 20 <==
+caller_locations[1]
+

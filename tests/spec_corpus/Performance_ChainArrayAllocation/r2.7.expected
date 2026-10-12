@@ -1,0 +1,26 @@
+==> offenses exit=1 1829 <==
+001.rb:1:24: C: Performance/ChainArrayAllocation: Use unchained `first` and `uniq!` (followed by `return array` if required) instead of chaining `first...uniq`.
+002.rb:2:30: C: Performance/ChainArrayAllocation: Use unchained `first` and `uniq!` (followed by `return array` if required) instead of chaining `first...uniq`.
+003.rb:1:34: C: Performance/ChainArrayAllocation: Use unchained `first` and `uniq!` (followed by `return array` if required) instead of chaining `first...uniq`.
+005.rb:1:29: C: Performance/ChainArrayAllocation: Use unchained `zip` and `uniq!` (followed by `return array` if required) instead of chaining `zip...uniq`.
+006.rb:1:28: C: Performance/ChainArrayAllocation: Use unchained `flat_map` and `compact!` (followed by `return array` if required) instead of chaining `flat_map...compact`.
+006.rb:1:36: C: Performance/ChainArrayAllocation: Use unchained `compact` and `uniq!` (followed by `return array` if required) instead of chaining `compact...uniq`.
+007.rb:1:41: C: Performance/ChainArrayAllocation: Use unchained `flat_map` and `uniq!` (followed by `return array` if required) instead of chaining `flat_map...uniq`.
+008.rb:1:29: C: Performance/ChainArrayAllocation: Use unchained `filter_map` and `uniq!` (followed by `return array` if required) instead of chaining `filter_map...uniq`.
+009.rb:1:34: C: Performance/ChainArrayAllocation: Use unchained `collect_concat` and `uniq!` (followed by `return array` if required) instead of chaining `collect_concat...uniq`.
+013.rb:1:34: C: Performance/ChainArrayAllocation: Use unchained `select` and `select!` (followed by `return array` if required) instead of chaining `select...select`.
+014.rb:1:25: C: Performance/ChainArrayAllocation: Use unchained `select` and `select!` (followed by `return array` if required) instead of chaining `select...select`.
+
+==> autocorrect exit=1 1829 <==
+001.rb:1:24: C: Performance/ChainArrayAllocation: Use unchained `first` and `uniq!` (followed by `return array` if required) instead of chaining `first...uniq`.
+002.rb:2:30: C: Performance/ChainArrayAllocation: Use unchained `first` and `uniq!` (followed by `return array` if required) instead of chaining `first...uniq`.
+003.rb:1:34: C: Performance/ChainArrayAllocation: Use unchained `first` and `uniq!` (followed by `return array` if required) instead of chaining `first...uniq`.
+005.rb:1:29: C: Performance/ChainArrayAllocation: Use unchained `zip` and `uniq!` (followed by `return array` if required) instead of chaining `zip...uniq`.
+006.rb:1:28: C: Performance/ChainArrayAllocation: Use unchained `flat_map` and `compact!` (followed by `return array` if required) instead of chaining `flat_map...compact`.
+006.rb:1:36: C: Performance/ChainArrayAllocation: Use unchained `compact` and `uniq!` (followed by `return array` if required) instead of chaining `compact...uniq`.
+007.rb:1:41: C: Performance/ChainArrayAllocation: Use unchained `flat_map` and `uniq!` (followed by `return array` if required) instead of chaining `flat_map...uniq`.
+008.rb:1:29: C: Performance/ChainArrayAllocation: Use unchained `filter_map` and `uniq!` (followed by `return array` if required) instead of chaining `filter_map...uniq`.
+009.rb:1:34: C: Performance/ChainArrayAllocation: Use unchained `collect_concat` and `uniq!` (followed by `return array` if required) instead of chaining `collect_concat...uniq`.
+013.rb:1:34: C: Performance/ChainArrayAllocation: Use unchained `select` and `select!` (followed by `return array` if required) instead of chaining `select...select`.
+014.rb:1:25: C: Performance/ChainArrayAllocation: Use unchained `select` and `select!` (followed by `return array` if required) instead of chaining `select...select`.
+

@@ -1,0 +1,341 @@
+==> offenses exit=1 5302 <==
+000.rb:1:11: C: [Correctable] Performance/Count: Use `count` instead of `select...size`.
+001.rb:1:12: C: [Correctable] Performance/Count: Use `count` instead of `select...size`.
+002.rb:1:20: C: [Correctable] Performance/Count: Use `count` instead of `select...size`.
+003.rb:1:11: C: [Correctable] Performance/Count: Use `count` instead of `select...length`.
+004.rb:1:14: C: [Correctable] Performance/Count: Use `count` instead of `select...length`.
+005.rb:1:11: C: [Correctable] Performance/Count: Use `count` instead of `select...count`.
+006.rb:1:14: C: [Correctable] Performance/Count: Use `count` instead of `select...count`.
+009.rb:3:12: C: [Correctable] Performance/Count: Use `count` instead of `select...count`.
+010.rb:1:5: C: [Correctable] Performance/Count: Use `count` instead of `select...count`.
+011.rb:2:4: C: [Correctable] Performance/Count: Use `count` instead of `select...count`.
+012.rb:1:6: C: [Correctable] Performance/Count: Use `count` instead of `select...count`.
+013.rb:3:5: C: [Correctable] Performance/Count: Use `count` instead of `select...count`.
+018.rb:1:11: C: [Correctable] Performance/Count: Use `count` instead of `find_all...size`.
+019.rb:1:12: C: [Correctable] Performance/Count: Use `count` instead of `find_all...size`.
+020.rb:1:20: C: [Correctable] Performance/Count: Use `count` instead of `find_all...size`.
+021.rb:1:11: C: [Correctable] Performance/Count: Use `count` instead of `find_all...length`.
+022.rb:1:14: C: [Correctable] Performance/Count: Use `count` instead of `find_all...length`.
+023.rb:1:11: C: [Correctable] Performance/Count: Use `count` instead of `find_all...count`.
+024.rb:1:14: C: [Correctable] Performance/Count: Use `count` instead of `find_all...count`.
+027.rb:3:12: C: [Correctable] Performance/Count: Use `count` instead of `find_all...count`.
+028.rb:1:5: C: [Correctable] Performance/Count: Use `count` instead of `find_all...count`.
+029.rb:2:4: C: [Correctable] Performance/Count: Use `count` instead of `find_all...count`.
+030.rb:1:6: C: [Correctable] Performance/Count: Use `count` instead of `find_all...count`.
+031.rb:3:5: C: [Correctable] Performance/Count: Use `count` instead of `find_all...count`.
+036.rb:1:11: C: [Correctable] Performance/Count: Use `count` instead of `filter...size`.
+037.rb:1:12: C: [Correctable] Performance/Count: Use `count` instead of `filter...size`.
+038.rb:1:20: C: [Correctable] Performance/Count: Use `count` instead of `filter...size`.
+039.rb:1:11: C: [Correctable] Performance/Count: Use `count` instead of `filter...length`.
+040.rb:1:14: C: [Correctable] Performance/Count: Use `count` instead of `filter...length`.
+041.rb:1:11: C: [Correctable] Performance/Count: Use `count` instead of `filter...count`.
+042.rb:1:14: C: [Correctable] Performance/Count: Use `count` instead of `filter...count`.
+045.rb:3:12: C: [Correctable] Performance/Count: Use `count` instead of `filter...count`.
+046.rb:1:5: C: [Correctable] Performance/Count: Use `count` instead of `filter...count`.
+047.rb:2:4: C: [Correctable] Performance/Count: Use `count` instead of `filter...count`.
+048.rb:1:6: C: [Correctable] Performance/Count: Use `count` instead of `filter...count`.
+049.rb:3:5: C: [Correctable] Performance/Count: Use `count` instead of `filter...count`.
+054.rb:1:11: C: [Correctable] Performance/Count: Use `count` instead of `reject...size`.
+055.rb:1:12: C: [Correctable] Performance/Count: Use `count` instead of `reject...size`.
+056.rb:1:20: C: [Correctable] Performance/Count: Use `count` instead of `reject...size`.
+057.rb:1:11: C: [Correctable] Performance/Count: Use `count` instead of `reject...length`.
+058.rb:1:14: C: [Correctable] Performance/Count: Use `count` instead of `reject...length`.
+059.rb:1:11: C: [Correctable] Performance/Count: Use `count` instead of `reject...count`.
+060.rb:1:14: C: [Correctable] Performance/Count: Use `count` instead of `reject...count`.
+063.rb:3:12: C: [Correctable] Performance/Count: Use `count` instead of `reject...count`.
+064.rb:1:5: C: [Correctable] Performance/Count: Use `count` instead of `reject...count`.
+065.rb:2:4: C: [Correctable] Performance/Count: Use `count` instead of `reject...count`.
+066.rb:1:6: C: [Correctable] Performance/Count: Use `count` instead of `reject...count`.
+067.rb:3:5: C: [Correctable] Performance/Count: Use `count` instead of `reject...count`.
+083.rb:1:7: C: [Correctable] Performance/Count: Use `count` instead of `select...size`.
+084.rb:1:7: C: [Correctable] Performance/Count: Use `count` instead of `select...count`.
+085.rb:1:7: C: [Correctable] Performance/Count: Use `count` instead of `select...length`.
+086.rb:1:7: C: [Correctable] Performance/Count: Use `count` instead of `select...size`.
+087.rb:1:7: C: [Correctable] Performance/Count: Use `count` instead of `reject...size`.
+088.rb:1:7: C: [Correctable] Performance/Count: Use `count` instead of `reject...count`.
+089.rb:1:7: C: [Correctable] Performance/Count: Use `count` instead of `reject...length`.
+090.rb:1:7: C: [Correctable] Performance/Count: Use `count` instead of `reject...size`.
+091.rb:1:7: C: [Correctable] Performance/Count: Use `count` instead of `reject...size`.
+092.rb:1:7: C: [Correctable] Performance/Count: Use `count` instead of `reject...length`.
+093.rb:1:7: C: [Correctable] Performance/Count: Use `count` instead of `reject...length`.
+
+==> autocorrect exit=0 5184 <==
+000.rb:1:11: C: [Corrected] Performance/Count: Use `count` instead of `select...size`.
+001.rb:1:12: C: [Corrected] Performance/Count: Use `count` instead of `select...size`.
+002.rb:1:20: C: [Corrected] Performance/Count: Use `count` instead of `select...size`.
+003.rb:1:11: C: [Corrected] Performance/Count: Use `count` instead of `select...length`.
+004.rb:1:14: C: [Corrected] Performance/Count: Use `count` instead of `select...length`.
+005.rb:1:11: C: [Corrected] Performance/Count: Use `count` instead of `select...count`.
+006.rb:1:14: C: [Corrected] Performance/Count: Use `count` instead of `select...count`.
+009.rb:3:12: C: [Corrected] Performance/Count: Use `count` instead of `select...count`.
+010.rb:1:5: C: [Corrected] Performance/Count: Use `count` instead of `select...count`.
+011.rb:2:4: C: [Corrected] Performance/Count: Use `count` instead of `select...count`.
+012.rb:1:6: C: [Corrected] Performance/Count: Use `count` instead of `select...count`.
+013.rb:3:5: C: [Corrected] Performance/Count: Use `count` instead of `select...count`.
+018.rb:1:11: C: [Corrected] Performance/Count: Use `count` instead of `find_all...size`.
+019.rb:1:12: C: [Corrected] Performance/Count: Use `count` instead of `find_all...size`.
+020.rb:1:20: C: [Corrected] Performance/Count: Use `count` instead of `find_all...size`.
+021.rb:1:11: C: [Corrected] Performance/Count: Use `count` instead of `find_all...length`.
+022.rb:1:14: C: [Corrected] Performance/Count: Use `count` instead of `find_all...length`.
+023.rb:1:11: C: [Corrected] Performance/Count: Use `count` instead of `find_all...count`.
+024.rb:1:14: C: [Corrected] Performance/Count: Use `count` instead of `find_all...count`.
+027.rb:3:12: C: [Corrected] Performance/Count: Use `count` instead of `find_all...count`.
+028.rb:1:5: C: [Corrected] Performance/Count: Use `count` instead of `find_all...count`.
+029.rb:2:4: C: [Corrected] Performance/Count: Use `count` instead of `find_all...count`.
+030.rb:1:6: C: [Corrected] Performance/Count: Use `count` instead of `find_all...count`.
+031.rb:3:5: C: [Corrected] Performance/Count: Use `count` instead of `find_all...count`.
+036.rb:1:11: C: [Corrected] Performance/Count: Use `count` instead of `filter...size`.
+037.rb:1:12: C: [Corrected] Performance/Count: Use `count` instead of `filter...size`.
+038.rb:1:20: C: [Corrected] Performance/Count: Use `count` instead of `filter...size`.
+039.rb:1:11: C: [Corrected] Performance/Count: Use `count` instead of `filter...length`.
+040.rb:1:14: C: [Corrected] Performance/Count: Use `count` instead of `filter...length`.
+041.rb:1:11: C: [Corrected] Performance/Count: Use `count` instead of `filter...count`.
+042.rb:1:14: C: [Corrected] Performance/Count: Use `count` instead of `filter...count`.
+045.rb:3:12: C: [Corrected] Performance/Count: Use `count` instead of `filter...count`.
+046.rb:1:5: C: [Corrected] Performance/Count: Use `count` instead of `filter...count`.
+047.rb:2:4: C: [Corrected] Performance/Count: Use `count` instead of `filter...count`.
+048.rb:1:6: C: [Corrected] Performance/Count: Use `count` instead of `filter...count`.
+049.rb:3:5: C: [Corrected] Performance/Count: Use `count` instead of `filter...count`.
+054.rb:1:11: C: [Corrected] Performance/Count: Use `count` instead of `reject...size`.
+055.rb:1:12: C: [Corrected] Performance/Count: Use `count` instead of `reject...size`.
+056.rb:1:20: C: [Corrected] Performance/Count: Use `count` instead of `reject...size`.
+057.rb:1:11: C: [Corrected] Performance/Count: Use `count` instead of `reject...length`.
+058.rb:1:14: C: [Corrected] Performance/Count: Use `count` instead of `reject...length`.
+059.rb:1:11: C: [Corrected] Performance/Count: Use `count` instead of `reject...count`.
+060.rb:1:14: C: [Corrected] Performance/Count: Use `count` instead of `reject...count`.
+063.rb:3:12: C: [Corrected] Performance/Count: Use `count` instead of `reject...count`.
+064.rb:1:5: C: [Corrected] Performance/Count: Use `count` instead of `reject...count`.
+065.rb:2:4: C: [Corrected] Performance/Count: Use `count` instead of `reject...count`.
+066.rb:1:6: C: [Corrected] Performance/Count: Use `count` instead of `reject...count`.
+067.rb:3:5: C: [Corrected] Performance/Count: Use `count` instead of `reject...count`.
+083.rb:1:7: C: [Corrected] Performance/Count: Use `count` instead of `select...size`.
+084.rb:1:7: C: [Corrected] Performance/Count: Use `count` instead of `select...count`.
+085.rb:1:7: C: [Corrected] Performance/Count: Use `count` instead of `select...length`.
+086.rb:1:7: C: [Corrected] Performance/Count: Use `count` instead of `select...size`.
+087.rb:1:7: C: [Corrected] Performance/Count: Use `count` instead of `reject...size`.
+088.rb:1:7: C: [Corrected] Performance/Count: Use `count` instead of `reject...count`.
+089.rb:1:7: C: [Corrected] Performance/Count: Use `count` instead of `reject...length`.
+090.rb:1:7: C: [Corrected] Performance/Count: Use `count` instead of `reject...size`.
+091.rb:1:7: C: [Corrected] Performance/Count: Use `count` instead of `reject...size`.
+092.rb:1:7: C: [Corrected] Performance/Count: Use `count` instead of `reject...length`.
+093.rb:1:7: C: [Corrected] Performance/Count: Use `count` instead of `reject...length`.
+
+==> corrected/000.rb 32 <==
+[1, 2, 3].count { |e| e.even? }
+
+==> corrected/001.rb 33 <==
+[1, 2, 3]&.count { |e| e.even? }
+
+==> corrected/002.rb 41 <==
+{a: 1, b: 2, c: 3}.count { |e| e == :a }
+
+==> corrected/003.rb 32 <==
+[1, 2, 3].count { |e| e.even? }
+
+==> corrected/004.rb 35 <==
+{a: 1, b: 2}.count { |e| e == :a }
+
+==> corrected/005.rb 32 <==
+[1, 2, 3].count { |e| e.even? }
+
+==> corrected/006.rb 35 <==
+{a: 1, b: 2}.count { |e| e == :a }
+
+==> corrected/009.rb 100 <==
+Data = Struct.new(:value)
+array = [Data.new(2), Data.new(3), Data.new(2)]
+puts array.count(&:value)
+
+==> corrected/010.rb 23 <==
+foo.count(&:something)
+
+==> corrected/011.rb 39 <==
+foo
+  .count(&:something)
+  .positive?
+
+==> corrected/012.rb 24 <==
+foo&.count(&:something)
+
+==> corrected/013.rb 64 <==
+class A < Array
+  def count(&block)
+    count(&block)
+  end
+end
+
+==> corrected/018.rb 32 <==
+[1, 2, 3].count { |e| e.even? }
+
+==> corrected/019.rb 33 <==
+[1, 2, 3]&.count { |e| e.even? }
+
+==> corrected/020.rb 41 <==
+{a: 1, b: 2, c: 3}.count { |e| e == :a }
+
+==> corrected/021.rb 32 <==
+[1, 2, 3].count { |e| e.even? }
+
+==> corrected/022.rb 35 <==
+{a: 1, b: 2}.count { |e| e == :a }
+
+==> corrected/023.rb 32 <==
+[1, 2, 3].count { |e| e.even? }
+
+==> corrected/024.rb 35 <==
+{a: 1, b: 2}.count { |e| e == :a }
+
+==> corrected/027.rb 100 <==
+Data = Struct.new(:value)
+array = [Data.new(2), Data.new(3), Data.new(2)]
+puts array.count(&:value)
+
+==> corrected/028.rb 23 <==
+foo.count(&:something)
+
+==> corrected/029.rb 39 <==
+foo
+  .count(&:something)
+  .positive?
+
+==> corrected/030.rb 24 <==
+foo&.count(&:something)
+
+==> corrected/031.rb 64 <==
+class A < Array
+  def count(&block)
+    count(&block)
+  end
+end
+
+==> corrected/036.rb 32 <==
+[1, 2, 3].count { |e| e.even? }
+
+==> corrected/037.rb 33 <==
+[1, 2, 3]&.count { |e| e.even? }
+
+==> corrected/038.rb 41 <==
+{a: 1, b: 2, c: 3}.count { |e| e == :a }
+
+==> corrected/039.rb 32 <==
+[1, 2, 3].count { |e| e.even? }
+
+==> corrected/040.rb 35 <==
+{a: 1, b: 2}.count { |e| e == :a }
+
+==> corrected/041.rb 32 <==
+[1, 2, 3].count { |e| e.even? }
+
+==> corrected/042.rb 35 <==
+{a: 1, b: 2}.count { |e| e == :a }
+
+==> corrected/045.rb 100 <==
+Data = Struct.new(:value)
+array = [Data.new(2), Data.new(3), Data.new(2)]
+puts array.count(&:value)
+
+==> corrected/046.rb 23 <==
+foo.count(&:something)
+
+==> corrected/047.rb 39 <==
+foo
+  .count(&:something)
+  .positive?
+
+==> corrected/048.rb 24 <==
+foo&.count(&:something)
+
+==> corrected/049.rb 64 <==
+class A < Array
+  def count(&block)
+    count(&block)
+  end
+end
+
+==> corrected/054.rb 35 <==
+[1, 2, 3].count { |e| !(e.even?) }
+
+==> corrected/055.rb 36 <==
+[1, 2, 3]&.count { |e| !(e.even?) }
+
+==> corrected/056.rb 44 <==
+{a: 1, b: 2, c: 3}.count { |e| !(e == :a) }
+
+==> corrected/057.rb 35 <==
+[1, 2, 3].count { |e| !(e.even?) }
+
+==> corrected/058.rb 38 <==
+{a: 1, b: 2}.count { |e| !(e == :a) }
+
+==> corrected/059.rb 35 <==
+[1, 2, 3].count { |e| !(e.even?) }
+
+==> corrected/060.rb 38 <==
+{a: 1, b: 2}.count { |e| !(e == :a) }
+
+==> corrected/063.rb 120 <==
+Data = Struct.new(:value)
+array = [Data.new(2), Data.new(3), Data.new(2)]
+puts array.count { |element| !element.value }
+
+==> corrected/064.rb 43 <==
+foo.count { |element| !element.something }
+
+==> corrected/065.rb 59 <==
+foo
+  .count { |element| !element.something }
+  .positive?
+
+==> corrected/066.rb 44 <==
+foo&.count { |element| !element.something }
+
+==> corrected/067.rb 72 <==
+class A < Array
+  def count(&block)
+    count { !block.call }
+  end
+end
+
+==> corrected/083.rb 26 <==
+array.count { |e| e > 2 }
+
+==> corrected/084.rb 26 <==
+array.count { |e| e > 2 }
+
+==> corrected/085.rb 26 <==
+array.count { |e| e > 2 }
+
+==> corrected/086.rb 21 <==
+array.count(&:value)
+
+==> corrected/087.rb 29 <==
+array.count { |e| !(e > 2) }
+
+==> corrected/088.rb 29 <==
+array.count { |e| !(e > 2) }
+
+==> corrected/089.rb 29 <==
+array.count { |e| !(e > 2) }
+
+==> corrected/090.rb 41 <==
+array.count { |element| !element.value }
+
+==> corrected/091.rb 28 <==
+array.count { !block.call }
+
+==> corrected/092.rb 31 <==
+array.count {
+  foo
+  !(bar)
+}
+
+==> corrected/093.rb 63 <==
+array.count {
+  foo
+  !(if bar
+    baz
+  else
+    qux
+  end)
+}
+

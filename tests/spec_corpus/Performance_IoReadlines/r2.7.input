@@ -1,0 +1,31 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 46 <==
+File.readlines('testfile').map { |l| l.size }
+
+==> 001.rb 44 <==
+IO.readlines('testfile').map { |l| l.size }
+
+==> 002.rb 45 <==
+IO.readlines('testfile').each { |l| puts l }
+
+==> 003.rb 49 <==
+File.readlines('testfile').not_enumerable_method
+
+==> 004.rb 38 <==
+file.readlines(10).map { |l| l.size }
+
+==> 005.rb 39 <==
+file.readlines(10).each { |l| puts l }
+
+==> 006.rb 37 <==
+file.readlines.not_enumerable_method
+

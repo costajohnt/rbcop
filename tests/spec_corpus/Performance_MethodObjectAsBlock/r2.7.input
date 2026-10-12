@@ -1,0 +1,25 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 34 <==
+array.map(&method(:do_something))
+
+==> 001.rb 38 <==
+array.map(&foo.method(:do_something))
+
+==> 002.rb 48 <==
+array.detect(-> { 10 }, &method(:do_something))
+
+==> 003.rb 33 <==
+array.map(method(:do_something))
+
+==> 004.rb 34 <==
+array.map { |e| do_something(e) }
+

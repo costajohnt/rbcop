@@ -1,0 +1,28 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 49 <==
+items.any? { |item| item == do_something(item) }
+
+==> 001.rb 49 <==
+items.any? { |item| do_something(item) == item }
+
+==> 002.rb 52 <==
+items.any? { |item| item == do_something[0..item] }
+
+==> 003.rb 52 <==
+items.any? { |item| do_something[0..item] == item }
+
+==> 004.rb 22 <==
+items.any? { |item| }
+
+==> 005.rb 15 <==
+items.any? { }
+

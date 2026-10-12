@@ -1,0 +1,24 @@
+==> .rubocop.yml 188 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.5
+Performance/DeletePrefix:
+  SafeMultiline: false
+
+==> 000.rb 24 <==
+str.gsub(/^prefix/, '')
+
+==> 001.rb 25 <==
+str.gsub!(/^prefix/, '')
+
+==> 002.rb 23 <==
+str.sub(/^prefix/, '')
+
+==> 003.rb 24 <==
+str.sub!(/^prefix/, '')
+

@@ -1,0 +1,26 @@
+==> offenses exit=1 881 <==
+000.rb:1:5: C: Performance/SelectMap: Use `filter_map` instead of `select.map`.
+001.rb:1:6: C: Performance/SelectMap: Use `filter_map` instead of `select.map`.
+002.rb:1:5: C: Performance/SelectMap: Use `filter_map` instead of `filter.map`.
+003.rb:1:6: C: Performance/SelectMap: Use `filter_map` instead of `select.map`.
+004.rb:1:6: C: Performance/SelectMap: Use `filter_map` instead of `filter.map`.
+005.rb:1:5: C: Performance/SelectMap: Use `filter_map` instead of `select.map`.
+006.rb:1:6: C: Performance/SelectMap: Use `filter_map` instead of `select.map`.
+007.rb:1:5: C: Performance/SelectMap: Use `filter_map` instead of `select.map`.
+008.rb:1:5: C: Performance/SelectMap: Use `filter_map` instead of `select.map`.
+009.rb:1:18: C: Performance/SelectMap: Use `filter_map` instead of `select.map`.
+010.rb:1:1: C: Performance/SelectMap: Use `filter_map` instead of `select.map`.
+
+==> autocorrect exit=1 881 <==
+000.rb:1:5: C: Performance/SelectMap: Use `filter_map` instead of `select.map`.
+001.rb:1:6: C: Performance/SelectMap: Use `filter_map` instead of `select.map`.
+002.rb:1:5: C: Performance/SelectMap: Use `filter_map` instead of `filter.map`.
+003.rb:1:6: C: Performance/SelectMap: Use `filter_map` instead of `select.map`.
+004.rb:1:6: C: Performance/SelectMap: Use `filter_map` instead of `filter.map`.
+005.rb:1:5: C: Performance/SelectMap: Use `filter_map` instead of `select.map`.
+006.rb:1:6: C: Performance/SelectMap: Use `filter_map` instead of `select.map`.
+007.rb:1:5: C: Performance/SelectMap: Use `filter_map` instead of `select.map`.
+008.rb:1:5: C: Performance/SelectMap: Use `filter_map` instead of `select.map`.
+009.rb:1:18: C: Performance/SelectMap: Use `filter_map` instead of `select.map`.
+010.rb:1:1: C: Performance/SelectMap: Use `filter_map` instead of `select.map`.
+

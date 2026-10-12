@@ -1,0 +1,27 @@
+==> offenses exit=1 428 <==
+000.rb:1:1: C: [Correctable] Performance/UnfreezeString: Use unary plus to get an unfrozen string literal.
+001.rb:1:1: C: [Correctable] Performance/UnfreezeString: Use unary plus to get an unfrozen string literal.
+002.rb:1:1: C: [Correctable] Performance/UnfreezeString: Use unary plus to get an unfrozen string literal.
+003.rb:1:1: C: [Correctable] Performance/UnfreezeString: Use unary plus to get an unfrozen string literal.
+
+==> autocorrect exit=0 420 <==
+000.rb:1:1: C: [Corrected] Performance/UnfreezeString: Use unary plus to get an unfrozen string literal.
+001.rb:1:1: C: [Corrected] Performance/UnfreezeString: Use unary plus to get an unfrozen string literal.
+002.rb:1:1: C: [Corrected] Performance/UnfreezeString: Use unary plus to get an unfrozen string literal.
+003.rb:1:1: C: [Corrected] Performance/UnfreezeString: Use unary plus to get an unfrozen string literal.
+
+==> corrected/000.rb 4 <==
++""
+
+==> corrected/001.rb 7 <==
++"foo"
+
+==> corrected/002.rb 25 <==
++<<TEXT
+  foo
+  bar
+TEXT
+
+==> corrected/003.rb 16 <==
++"foo#{bar}baz"
+

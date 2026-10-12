@@ -1,0 +1,119 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 36 <==
+def method(&block)
+  block.call
+end
+
+==> 001.rb 38 <==
+def method(&block)
+  block.call()
+end
+
+==> 002.rb 41 <==
+def self.method(&block)
+  block.call
+end
+
+==> 003.rb 41 <==
+def method(&block)
+  block.call 1, 2
+end
+
+==> 004.rb 53 <==
+def method(&block)
+  block.call 1
+  block.call 2
+end
+
+==> 005.rb 34 <==
+def method(&func)
+  func.call
+end
+
+==> 006.rb 39 <==
+def method(&block)
+ something.call
+end
+
+==> 007.rb 23 <==
+def method(&block)
+end
+
+==> 008.rb 48 <==
+def method(&block)
+  block.call(&some_proc)
+end
+
+==> 009.rb 53 <==
+def method(&block)
+  block.call { do_something }
+end
+
+==> 010.rb 56 <==
+def method(&block)
+  block.call { _1.do_something }
+end
+
+==> 011.rb 51 <==
+def method(&block)
+  block.call(1, &some_proc)
+end
+
+==> 012.rb 67 <==
+def method(&block)
+  block.call(1, &some_proc)
+  block.call(2)
+end
+
+==> 013.rb 68 <==
+def method(&block)
+  block ||= ->(i) { puts i }
+  block.call(1)
+end
+
+==> 014.rb 66 <==
+def method(&block)
+  block = ->(i) { puts i }
+  block.call(1)
+end
+
+==> 015.rb 82 <==
+def method(&block)
+  ->(i) { puts i }.then do |block|
+    block.call(1)
+  end
+end
+
+==> 016.rb 83 <==
+def method(&block)
+  ->(i) { puts i }.then do |_block|
+    block.call(1)
+  end
+end
+
+==> 017.rb 37 <==
+def method(&func)
+  func.call(1)
+end
+
+==> 018.rb 42 <==
+def method(&block)
+  block.call(a, b)
+end
+
+==> 019.rb 121 <==
+def method(&block)
+  each_with_object({}) do |(key, value), acc|
+    acc.merge!(block.call(key) => rhs[value])
+  end
+end
+

@@ -1,0 +1,16 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000.rb 24 <==
+4.times.map { it.to_s }
+
+==> 001.rb 28 <==
+4.times.collect { it.to_s }
+

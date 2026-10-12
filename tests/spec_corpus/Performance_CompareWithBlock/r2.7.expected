@@ -1,0 +1,104 @@
+==> offenses exit=1 2693 <==
+000.rb:1:7: C: [Correctable] Performance/CompareWithBlock: Use `sort_by(&:foo)` instead of `sort { |a, b| a.foo <=> b.foo }`.
+001.rb:1:7: C: [Correctable] Performance/CompareWithBlock: Use `sort_by { |a| a[:foo] }` instead of `sort { |a, b| a[:foo] <=> b[:foo] }`.
+002.rb:1:7: C: [Correctable] Performance/CompareWithBlock: Use `sort_by { |a| a['foo'] }` instead of `sort { |a, b| a['foo'] <=> b['foo'] }`.
+003.rb:1:7: C: [Correctable] Performance/CompareWithBlock: Use `sort_by { |a| a[1] }` instead of `sort { |a, b| a[1] <=> b[1] }`.
+006.rb:1:7: C: [Correctable] Performance/CompareWithBlock: Use `sort_by!(&:foo)` instead of `sort! { |a, b| a.foo <=> b.foo }`.
+007.rb:1:7: C: [Correctable] Performance/CompareWithBlock: Use `sort_by! { |a| a[:foo] }` instead of `sort! { |a, b| a[:foo] <=> b[:foo] }`.
+008.rb:1:7: C: [Correctable] Performance/CompareWithBlock: Use `sort_by! { |a| a['foo'] }` instead of `sort! { |a, b| a['foo'] <=> b['foo'] }`.
+009.rb:1:7: C: [Correctable] Performance/CompareWithBlock: Use `sort_by! { |a| a[1] }` instead of `sort! { |a, b| a[1] <=> b[1] }`.
+012.rb:1:7: C: [Correctable] Performance/CompareWithBlock: Use `max_by(&:foo)` instead of `max { |a, b| a.foo <=> b.foo }`.
+013.rb:1:7: C: [Correctable] Performance/CompareWithBlock: Use `max_by { |a| a[:foo] }` instead of `max { |a, b| a[:foo] <=> b[:foo] }`.
+014.rb:1:7: C: [Correctable] Performance/CompareWithBlock: Use `max_by { |a| a['foo'] }` instead of `max { |a, b| a['foo'] <=> b['foo'] }`.
+015.rb:1:7: C: [Correctable] Performance/CompareWithBlock: Use `max_by { |a| a[1] }` instead of `max { |a, b| a[1] <=> b[1] }`.
+018.rb:1:7: C: [Correctable] Performance/CompareWithBlock: Use `min_by(&:foo)` instead of `min { |a, b| a.foo <=> b.foo }`.
+019.rb:1:7: C: [Correctable] Performance/CompareWithBlock: Use `min_by { |a| a[:foo] }` instead of `min { |a, b| a[:foo] <=> b[:foo] }`.
+020.rb:1:7: C: [Correctable] Performance/CompareWithBlock: Use `min_by { |a| a['foo'] }` instead of `min { |a, b| a['foo'] <=> b['foo'] }`.
+021.rb:1:7: C: [Correctable] Performance/CompareWithBlock: Use `min_by { |a| a[1] }` instead of `min { |a, b| a[1] <=> b[1] }`.
+024.rb:1:7: C: [Correctable] Performance/CompareWithBlock: Use `minmax_by(&:foo)` instead of `minmax { |a, b| a.foo <=> b.foo }`.
+025.rb:1:7: C: [Correctable] Performance/CompareWithBlock: Use `minmax_by { |a| a[:foo] }` instead of `minmax { |a, b| a[:foo] <=> b[:foo] }`.
+026.rb:1:7: C: [Correctable] Performance/CompareWithBlock: Use `minmax_by { |a| a['foo'] }` instead of `minmax { |a, b| a['foo'] <=> b['foo'] }`.
+027.rb:1:7: C: [Correctable] Performance/CompareWithBlock: Use `minmax_by { |a| a[1] }` instead of `minmax { |a, b| a[1] <=> b[1] }`.
+
+==> autocorrect exit=0 2653 <==
+000.rb:1:7: C: [Corrected] Performance/CompareWithBlock: Use `sort_by(&:foo)` instead of `sort { |a, b| a.foo <=> b.foo }`.
+001.rb:1:7: C: [Corrected] Performance/CompareWithBlock: Use `sort_by { |a| a[:foo] }` instead of `sort { |a, b| a[:foo] <=> b[:foo] }`.
+002.rb:1:7: C: [Corrected] Performance/CompareWithBlock: Use `sort_by { |a| a['foo'] }` instead of `sort { |a, b| a['foo'] <=> b['foo'] }`.
+003.rb:1:7: C: [Corrected] Performance/CompareWithBlock: Use `sort_by { |a| a[1] }` instead of `sort { |a, b| a[1] <=> b[1] }`.
+006.rb:1:7: C: [Corrected] Performance/CompareWithBlock: Use `sort_by!(&:foo)` instead of `sort! { |a, b| a.foo <=> b.foo }`.
+007.rb:1:7: C: [Corrected] Performance/CompareWithBlock: Use `sort_by! { |a| a[:foo] }` instead of `sort! { |a, b| a[:foo] <=> b[:foo] }`.
+008.rb:1:7: C: [Corrected] Performance/CompareWithBlock: Use `sort_by! { |a| a['foo'] }` instead of `sort! { |a, b| a['foo'] <=> b['foo'] }`.
+009.rb:1:7: C: [Corrected] Performance/CompareWithBlock: Use `sort_by! { |a| a[1] }` instead of `sort! { |a, b| a[1] <=> b[1] }`.
+012.rb:1:7: C: [Corrected] Performance/CompareWithBlock: Use `max_by(&:foo)` instead of `max { |a, b| a.foo <=> b.foo }`.
+013.rb:1:7: C: [Corrected] Performance/CompareWithBlock: Use `max_by { |a| a[:foo] }` instead of `max { |a, b| a[:foo] <=> b[:foo] }`.
+014.rb:1:7: C: [Corrected] Performance/CompareWithBlock: Use `max_by { |a| a['foo'] }` instead of `max { |a, b| a['foo'] <=> b['foo'] }`.
+015.rb:1:7: C: [Corrected] Performance/CompareWithBlock: Use `max_by { |a| a[1] }` instead of `max { |a, b| a[1] <=> b[1] }`.
+018.rb:1:7: C: [Corrected] Performance/CompareWithBlock: Use `min_by(&:foo)` instead of `min { |a, b| a.foo <=> b.foo }`.
+019.rb:1:7: C: [Corrected] Performance/CompareWithBlock: Use `min_by { |a| a[:foo] }` instead of `min { |a, b| a[:foo] <=> b[:foo] }`.
+020.rb:1:7: C: [Corrected] Performance/CompareWithBlock: Use `min_by { |a| a['foo'] }` instead of `min { |a, b| a['foo'] <=> b['foo'] }`.
+021.rb:1:7: C: [Corrected] Performance/CompareWithBlock: Use `min_by { |a| a[1] }` instead of `min { |a, b| a[1] <=> b[1] }`.
+024.rb:1:7: C: [Corrected] Performance/CompareWithBlock: Use `minmax_by(&:foo)` instead of `minmax { |a, b| a.foo <=> b.foo }`.
+025.rb:1:7: C: [Corrected] Performance/CompareWithBlock: Use `minmax_by { |a| a[:foo] }` instead of `minmax { |a, b| a[:foo] <=> b[:foo] }`.
+026.rb:1:7: C: [Corrected] Performance/CompareWithBlock: Use `minmax_by { |a| a['foo'] }` instead of `minmax { |a, b| a['foo'] <=> b['foo'] }`.
+027.rb:1:7: C: [Corrected] Performance/CompareWithBlock: Use `minmax_by { |a| a[1] }` instead of `minmax { |a, b| a[1] <=> b[1] }`.
+
+==> corrected/000.rb 21 <==
+array.sort_by(&:foo)
+
+==> corrected/001.rb 30 <==
+array.sort_by { |a| a[:foo] }
+
+==> corrected/002.rb 31 <==
+array.sort_by { |a| a['foo'] }
+
+==> corrected/003.rb 27 <==
+array.sort_by { |a| a[1] }
+
+==> corrected/006.rb 22 <==
+array.sort_by!(&:foo)
+
+==> corrected/007.rb 31 <==
+array.sort_by! { |a| a[:foo] }
+
+==> corrected/008.rb 32 <==
+array.sort_by! { |a| a['foo'] }
+
+==> corrected/009.rb 28 <==
+array.sort_by! { |a| a[1] }
+
+==> corrected/012.rb 20 <==
+array.max_by(&:foo)
+
+==> corrected/013.rb 29 <==
+array.max_by { |a| a[:foo] }
+
+==> corrected/014.rb 30 <==
+array.max_by { |a| a['foo'] }
+
+==> corrected/015.rb 26 <==
+array.max_by { |a| a[1] }
+
+==> corrected/018.rb 20 <==
+array.min_by(&:foo)
+
+==> corrected/019.rb 29 <==
+array.min_by { |a| a[:foo] }
+
+==> corrected/020.rb 30 <==
+array.min_by { |a| a['foo'] }
+
+==> corrected/021.rb 26 <==
+array.min_by { |a| a[1] }
+
+==> corrected/024.rb 23 <==
+array.minmax_by(&:foo)
+
+==> corrected/025.rb 32 <==
+array.minmax_by { |a| a[:foo] }
+
+==> corrected/026.rb 33 <==
+array.minmax_by { |a| a['foo'] }
+
+==> corrected/027.rb 29 <==
+array.minmax_by { |a| a[1] }
+

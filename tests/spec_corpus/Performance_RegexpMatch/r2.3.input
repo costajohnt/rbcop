@@ -1,0 +1,14 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.3
+
+==> 000.rb 23 <==
+if 'foo'.match(re)
+end
+

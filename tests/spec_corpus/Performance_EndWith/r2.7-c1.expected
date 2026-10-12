@@ -1,0 +1,634 @@
+==> offenses exit=1 16758 <==
+000.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+001.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+002.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+003.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+004.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+005.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+006.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+007.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+008.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+009.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+012.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+013.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+016.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+017.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+020.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+021.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+024.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+025.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+026.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+027.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+028.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+029.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+030.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+031.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+032.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+033.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+066.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+067.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+068.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+069.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+070.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+071.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+072.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+073.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+074.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+075.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+076.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+077.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+078.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+079.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+080.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+081.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+082.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+083.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+084.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+085.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+086.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+087.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+088.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+089.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+090.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+091.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+094.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+095.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+098.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+099.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+102.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+103.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+106.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+107.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+108.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+109.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+110.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+111.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+112.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+113.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+114.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+115.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+148.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+149.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+150.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+151.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+152.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+153.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+154.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+155.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+156.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+157.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+158.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+159.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+160.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+161.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+162.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+163.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+164.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+165.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+166.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+167.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+168.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+169.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+170.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+171.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+172.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+173.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+176.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+177.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+180.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+181.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+184.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+185.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+188.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+189.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+190.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+191.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+192.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+193.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+194.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+195.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+196.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+197.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+230.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+231.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+232.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+233.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+234.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+235.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+236.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+237.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+238.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+239.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+240.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+241.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+242.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+243.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+244.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+245.rb:1:1: C: [Correctable] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+
+==> autocorrect exit=0 16506 <==
+000.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+001.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+002.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+003.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+004.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+005.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+006.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+007.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+008.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+009.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+012.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+013.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+016.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+017.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+020.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+021.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+024.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+025.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+026.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+027.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+028.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+029.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+030.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+031.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+032.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+033.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+066.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+067.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+068.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+069.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+070.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+071.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+072.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+073.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+074.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+075.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+076.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+077.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+078.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+079.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+080.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+081.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+082.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+083.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+084.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+085.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+086.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+087.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+088.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+089.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+090.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+091.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+094.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+095.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+098.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+099.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+102.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+103.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+106.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+107.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+108.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+109.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+110.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+111.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+112.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+113.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+114.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+115.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+148.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+149.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+150.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+151.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+152.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+153.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+154.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+155.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+156.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+157.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+158.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+159.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+160.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+161.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+162.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+163.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+164.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+165.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+166.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+167.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+168.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+169.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+170.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+171.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+172.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+173.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+176.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+177.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+180.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+181.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+184.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+185.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+188.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+189.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+190.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+191.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+192.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+193.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+194.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+195.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+196.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+197.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+230.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+231.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+232.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+233.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+234.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+235.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+236.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+237.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+238.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+239.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+240.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+241.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+242.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+243.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+244.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+245.rb:1:1: C: [Corrected] Performance/EndWith: Use `String#end_with?` instead of a regex match anchored to the end of the string.
+
+==> corrected/000.rb 21 <==
+str.end_with?('abc')
+
+==> corrected/001.rb 21 <==
+str.end_with?('abc')
+
+==> corrected/002.rb 21 <==
+str.end_with?('abc')
+
+==> corrected/003.rb 21 <==
+str.end_with?('abc')
+
+==> corrected/004.rb 20 <==
+str.end_with?("\n")
+
+==> corrected/005.rb 20 <==
+str.end_with?("\n")
+
+==> corrected/006.rb 20 <==
+str.end_with?("\t")
+
+==> corrected/007.rb 20 <==
+str.end_with?("\t")
+
+==> corrected/008.rb 19 <==
+str.end_with?('.')
+
+==> corrected/009.rb 19 <==
+str.end_with?('.')
+
+==> corrected/012.rb 19 <==
+str.end_with?('$')
+
+==> corrected/013.rb 19 <==
+str.end_with?('$')
+
+==> corrected/016.rb 19 <==
+str.end_with?('^')
+
+==> corrected/017.rb 19 <==
+str.end_with?('^')
+
+==> corrected/020.rb 19 <==
+str.end_with?('|')
+
+==> corrected/021.rb 19 <==
+str.end_with?('|')
+
+==> corrected/024.rb 20 <==
+str.end_with?("\a")
+
+==> corrected/025.rb 20 <==
+str.end_with?("\a")
+
+==> corrected/026.rb 20 <==
+str.end_with?("\e")
+
+==> corrected/027.rb 20 <==
+str.end_with?("\e")
+
+==> corrected/028.rb 20 <==
+str.end_with?("\f")
+
+==> corrected/029.rb 20 <==
+str.end_with?("\f")
+
+==> corrected/030.rb 20 <==
+str.end_with?("\r")
+
+==> corrected/031.rb 20 <==
+str.end_with?("\r")
+
+==> corrected/032.rb 20 <==
+str.end_with?("\v")
+
+==> corrected/033.rb 20 <==
+str.end_with?("\v")
+
+==> corrected/066.rb 19 <==
+str.end_with?('i')
+
+==> corrected/067.rb 19 <==
+str.end_with?('i')
+
+==> corrected/068.rb 19 <==
+str.end_with?('j')
+
+==> corrected/069.rb 19 <==
+str.end_with?('j')
+
+==> corrected/070.rb 19 <==
+str.end_with?('l')
+
+==> corrected/071.rb 19 <==
+str.end_with?('l')
+
+==> corrected/072.rb 19 <==
+str.end_with?('m')
+
+==> corrected/073.rb 19 <==
+str.end_with?('m')
+
+==> corrected/074.rb 19 <==
+str.end_with?('o')
+
+==> corrected/075.rb 19 <==
+str.end_with?('o')
+
+==> corrected/076.rb 19 <==
+str.end_with?('q')
+
+==> corrected/077.rb 19 <==
+str.end_with?('q')
+
+==> corrected/078.rb 19 <==
+str.end_with?('y')
+
+==> corrected/079.rb 19 <==
+str.end_with?('y')
+
+==> corrected/080.rb 20 <==
+str.end_with?('\\')
+
+==> corrected/081.rb 20 <==
+str.end_with?('\\')
+
+==> corrected/082.rb 21 <==
+str.end_with?('abc')
+
+==> corrected/083.rb 21 <==
+str.end_with?('abc')
+
+==> corrected/084.rb 21 <==
+str.end_with?('abc')
+
+==> corrected/085.rb 21 <==
+str.end_with?('abc')
+
+==> corrected/086.rb 20 <==
+str.end_with?("\n")
+
+==> corrected/087.rb 20 <==
+str.end_with?("\n")
+
+==> corrected/088.rb 20 <==
+str.end_with?("\t")
+
+==> corrected/089.rb 20 <==
+str.end_with?("\t")
+
+==> corrected/090.rb 19 <==
+str.end_with?('.')
+
+==> corrected/091.rb 19 <==
+str.end_with?('.')
+
+==> corrected/094.rb 19 <==
+str.end_with?('$')
+
+==> corrected/095.rb 19 <==
+str.end_with?('$')
+
+==> corrected/098.rb 19 <==
+str.end_with?('^')
+
+==> corrected/099.rb 19 <==
+str.end_with?('^')
+
+==> corrected/102.rb 19 <==
+str.end_with?('|')
+
+==> corrected/103.rb 19 <==
+str.end_with?('|')
+
+==> corrected/106.rb 20 <==
+str.end_with?("\a")
+
+==> corrected/107.rb 20 <==
+str.end_with?("\a")
+
+==> corrected/108.rb 20 <==
+str.end_with?("\e")
+
+==> corrected/109.rb 20 <==
+str.end_with?("\e")
+
+==> corrected/110.rb 20 <==
+str.end_with?("\f")
+
+==> corrected/111.rb 20 <==
+str.end_with?("\f")
+
+==> corrected/112.rb 20 <==
+str.end_with?("\r")
+
+==> corrected/113.rb 20 <==
+str.end_with?("\r")
+
+==> corrected/114.rb 20 <==
+str.end_with?("\v")
+
+==> corrected/115.rb 20 <==
+str.end_with?("\v")
+
+==> corrected/148.rb 19 <==
+str.end_with?('i')
+
+==> corrected/149.rb 19 <==
+str.end_with?('i')
+
+==> corrected/150.rb 19 <==
+str.end_with?('j')
+
+==> corrected/151.rb 19 <==
+str.end_with?('j')
+
+==> corrected/152.rb 19 <==
+str.end_with?('l')
+
+==> corrected/153.rb 19 <==
+str.end_with?('l')
+
+==> corrected/154.rb 19 <==
+str.end_with?('m')
+
+==> corrected/155.rb 19 <==
+str.end_with?('m')
+
+==> corrected/156.rb 19 <==
+str.end_with?('o')
+
+==> corrected/157.rb 19 <==
+str.end_with?('o')
+
+==> corrected/158.rb 19 <==
+str.end_with?('q')
+
+==> corrected/159.rb 19 <==
+str.end_with?('q')
+
+==> corrected/160.rb 19 <==
+str.end_with?('y')
+
+==> corrected/161.rb 19 <==
+str.end_with?('y')
+
+==> corrected/162.rb 20 <==
+str.end_with?('\\')
+
+==> corrected/163.rb 20 <==
+str.end_with?('\\')
+
+==> corrected/164.rb 21 <==
+str.end_with?('abc')
+
+==> corrected/165.rb 21 <==
+str.end_with?('abc')
+
+==> corrected/166.rb 21 <==
+str.end_with?('abc')
+
+==> corrected/167.rb 21 <==
+str.end_with?('abc')
+
+==> corrected/168.rb 20 <==
+str.end_with?("\n")
+
+==> corrected/169.rb 20 <==
+str.end_with?("\n")
+
+==> corrected/170.rb 20 <==
+str.end_with?("\t")
+
+==> corrected/171.rb 20 <==
+str.end_with?("\t")
+
+==> corrected/172.rb 19 <==
+str.end_with?('.')
+
+==> corrected/173.rb 19 <==
+str.end_with?('.')
+
+==> corrected/176.rb 19 <==
+str.end_with?('$')
+
+==> corrected/177.rb 19 <==
+str.end_with?('$')
+
+==> corrected/180.rb 19 <==
+str.end_with?('^')
+
+==> corrected/181.rb 19 <==
+str.end_with?('^')
+
+==> corrected/184.rb 19 <==
+str.end_with?('|')
+
+==> corrected/185.rb 19 <==
+str.end_with?('|')
+
+==> corrected/188.rb 20 <==
+str.end_with?("\a")
+
+==> corrected/189.rb 20 <==
+str.end_with?("\a")
+
+==> corrected/190.rb 20 <==
+str.end_with?("\e")
+
+==> corrected/191.rb 20 <==
+str.end_with?("\e")
+
+==> corrected/192.rb 20 <==
+str.end_with?("\f")
+
+==> corrected/193.rb 20 <==
+str.end_with?("\f")
+
+==> corrected/194.rb 20 <==
+str.end_with?("\r")
+
+==> corrected/195.rb 20 <==
+str.end_with?("\r")
+
+==> corrected/196.rb 20 <==
+str.end_with?("\v")
+
+==> corrected/197.rb 20 <==
+str.end_with?("\v")
+
+==> corrected/230.rb 19 <==
+str.end_with?('i')
+
+==> corrected/231.rb 19 <==
+str.end_with?('i')
+
+==> corrected/232.rb 19 <==
+str.end_with?('j')
+
+==> corrected/233.rb 19 <==
+str.end_with?('j')
+
+==> corrected/234.rb 19 <==
+str.end_with?('l')
+
+==> corrected/235.rb 19 <==
+str.end_with?('l')
+
+==> corrected/236.rb 19 <==
+str.end_with?('m')
+
+==> corrected/237.rb 19 <==
+str.end_with?('m')
+
+==> corrected/238.rb 19 <==
+str.end_with?('o')
+
+==> corrected/239.rb 19 <==
+str.end_with?('o')
+
+==> corrected/240.rb 19 <==
+str.end_with?('q')
+
+==> corrected/241.rb 19 <==
+str.end_with?('q')
+
+==> corrected/242.rb 19 <==
+str.end_with?('y')
+
+==> corrected/243.rb 19 <==
+str.end_with?('y')
+
+==> corrected/244.rb 20 <==
+str.end_with?('\\')
+
+==> corrected/245.rb 20 <==
+str.end_with?('\\')
+

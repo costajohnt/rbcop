@@ -1,0 +1,31 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 23 <==
+array.reverse.first(5)
+
+==> 001.rb 24 <==
+array.reverse&.first(5)
+
+==> 002.rb 25 <==
+array&.reverse&.first(5)
+
+==> 003.rb 20 <==
+array.reverse.first
+
+==> 004.rb 21 <==
+array&.reverse.first
+
+==> 005.rb 14 <==
+array.reverse
+
+==> 006.rb 22 <==
+array.reverse.last(5)
+

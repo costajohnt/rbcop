@@ -1,0 +1,22 @@
+==> .rubocop.yml 189 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Performance/CollectionLiteralInLoop:
+  MinSize: 2
+
+==> 000.rb 33 <==
+while true
+  [1].include?(e)
+end
+
+==> 001.rb 45 <==
+while i < 100
+  { foo: :bar }.key?(:foo)
+end
+

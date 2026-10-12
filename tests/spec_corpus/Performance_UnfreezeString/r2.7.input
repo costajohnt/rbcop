@@ -1,0 +1,31 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 11 <==
+String.new
+
+==> 001.rb 15 <==
+String.new('')
+
+==> 002.rb 18 <==
+String.new('foo')
+
+==> 003.rb 50 <==
+String.new('foo').force_encoding(Encoding::ASCII)
+
+==> 004.rb 4 <==
++""
+
+==> 005.rb 10 <==
++"foobar"
+
+==> 006.rb 26 <==
+String.new(capacity: 100)
+

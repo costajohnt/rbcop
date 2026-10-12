@@ -1,0 +1,44 @@
+==> offenses exit=1 912 <==
+005.rb:1:15: C: [Correctable] Performance/RedundantSplitRegexpArgument: Use string as argument instead of regexp.
+006.rb:1:12: C: [Correctable] Performance/RedundantSplitRegexpArgument: Use string as argument instead of regexp.
+007.rb:1:25: C: [Correctable] Performance/RedundantSplitRegexpArgument: Use string as argument instead of regexp.
+008.rb:1:31: C: [Correctable] Performance/RedundantSplitRegexpArgument: Use string as argument instead of regexp.
+009.rb:1:20: C: [Correctable] Performance/RedundantSplitRegexpArgument: Use string as argument instead of regexp.
+010.rb:1:25: C: [Correctable] Performance/RedundantSplitRegexpArgument: Use string as argument instead of regexp.
+011.rb:1:15: C: [Correctable] Performance/RedundantSplitRegexpArgument: Use string as argument instead of regexp.
+012.rb:1:25: C: [Correctable] Performance/RedundantSplitRegexpArgument: Use string as argument instead of regexp.
+
+==> autocorrect exit=0 896 <==
+005.rb:1:15: C: [Corrected] Performance/RedundantSplitRegexpArgument: Use string as argument instead of regexp.
+006.rb:1:12: C: [Corrected] Performance/RedundantSplitRegexpArgument: Use string as argument instead of regexp.
+007.rb:1:25: C: [Corrected] Performance/RedundantSplitRegexpArgument: Use string as argument instead of regexp.
+008.rb:1:31: C: [Corrected] Performance/RedundantSplitRegexpArgument: Use string as argument instead of regexp.
+009.rb:1:20: C: [Corrected] Performance/RedundantSplitRegexpArgument: Use string as argument instead of regexp.
+010.rb:1:25: C: [Corrected] Performance/RedundantSplitRegexpArgument: Use string as argument instead of regexp.
+011.rb:1:15: C: [Corrected] Performance/RedundantSplitRegexpArgument: Use string as argument instead of regexp.
+012.rb:1:25: C: [Corrected] Performance/RedundantSplitRegexpArgument: Use string as argument instead of regexp.
+
+==> corrected/005.rb 19 <==
+'a,b,c'.split(".")
+
+==> corrected/006.rb 16 <==
+str&.split(".")
+
+==> corrected/007.rb 30 <==
+"foo\nbar\nbaz\n".split("\n")
+
+==> corrected/008.rb 38 <==
+"foo\n\nbar\n\nbaz\n\n".split("\n\n")
+
+==> corrected/009.rb 26 <==
+"foo\\\.bar".split("\\.")
+
+==> corrected/010.rb 36 <==
+"foo\nbar\nbaz\n".split("foo\n.\n")
+
+==> corrected/011.rb 19 <==
+'a,b,c'.split(",")
+
+==> corrected/012.rb 30 <==
+'foo         bar'.split("  ")
+

@@ -11,7 +11,9 @@ fn bin() -> &'static str {
 }
 
 fn implemented() -> BTreeSet<String> {
-    let out = common::command(bin()).arg("--show-cops").output().unwrap();
+    // With the native plugins loaded, so their cops are listed too.
+    let config = concat!(env!("CARGO_MANIFEST_DIR"), "/config/all-cops-performance.yml");
+    let out = common::command(bin()).args(["--show-cops", "--config", config]).output().unwrap();
     // `--show-cops` prints RuboCop's YAML; cop names are the unindented keys.
     String::from_utf8(out.stdout)
         .unwrap()
@@ -65,7 +67,12 @@ fn config_scenarios_match_rubocop() {
         expected.sort();
         // stderr.txt, when recorded, is compared byte for byte (it covers every RuboCop cop).
         // Absolute paths in it are recorded relative to the project, like stdout.
-        let stderr = String::from_utf8_lossy(&out.stderr).replace(&prefix, "");
+        // The skipped-cops notice (src/fallback.rs) is a deliberate difference, tested in tests/fallback.rs.
+        let stderr: String = String::from_utf8_lossy(&out.stderr)
+            .replace(&prefix, "")
+            .split_inclusive('\n')
+            .filter(|l| !l.starts_with("rbcop: not running "))
+            .collect();
         if let Ok(err) = std::fs::read_to_string(dir.join("stderr.txt"))
             && err != stderr
         {

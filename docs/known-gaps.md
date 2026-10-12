@@ -140,15 +140,23 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   - `--changed [REVISION]`: needs RuboCop's git diff of changed files.
   - `--server`, `--start-server`, `--stop-server`, `--restart-server`, `--server-status`,
     `--no-detach`, `--lsp`, `--mcp`: long-running server modes (`--no-server` is accepted).
-  - `-r/--require`, `--plugin`: load Ruby code (`plugins:` in a config file only merges the gem's
-    default configuration).
+  - `-r/--require`, `--plugin`: load Ruby code. In a config file, `plugins:` / `require:` of a
+    plugin rbcop implements natively (docs/plugins.md) runs its cops; any other gem only merges its
+    default configuration and its cops do not run.
   - `-d/--debug`, `--profile`, `--memory`: Ruby-level diagnostics (backtraces, stackprof).
   - `-C/--cache`, `--cache-root`, `-P/--[no-]parallel`, `--raise-cop-error` are accepted and have
     no effect (rbcop keeps no result cache and always lints in parallel).
-- `--list-enabled-cops-for` and `--show-docs-url` know RuboCop's own cops only: cops of plugins
-  (`plugins:` / `require:` gems) are not listed and get no URL.
+- `--list-enabled-cops-for` and `--show-docs-url` know RuboCop's cops, those of native plugins and
+  the default.yml cops of other loaded plugins; cops a plugin registers without a default.yml entry
+  are not listed and get no URL.
 - Custom formatter classes and `require:` of local Ruby files (custom cops) are not supported. rbcop names
   the cops it skips on stderr, and `RBCOP_FALLBACK=1` runs them with RuboCop (README, "Plugins and custom cops").
+- Cops rbcop cannot run (a non-native plugin's, custom cops): Lint/RedundantCopDisableDirective
+  never reports a directive naming one, nor a `disable all` while any is loaded, since their
+  offenses are unknown (RuboCop reports those that turn out redundant). With custom cops loaded, a
+  directive naming a cop in a department rbcop does not know is not reported as unknown.
+- A native plugin uses its vendored default.yml and pinned behaviour whatever version of the gem is
+  installed, and works when the gem is not installed (RuboCop fails to load it then).
 - ERB in `.rubocop.yml` is not evaluated; remote `inherit_from` URLs are skipped with a warning.
 - A duplicated YAML key: the last value wins in the first key's place, as in Psych, but the
   `... is concealed by line N` warning is not printed. Wrong value types (`Enabled: "true"`) and
@@ -279,8 +287,8 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     `Include` crashes RuboCop later (per cop or in `FilePatterns`); rbcop treats it as one pattern.
     Other values RuboCop crashes on (a non-String `FailLevel`, `TargetRubyVersion: true`, a
     non-Hash section under an unknown name) are not reproduced.
-  - The `extension supports plugin, specify plugins:` warning for `require:` of a plugin gem and
-    RuboCop's backtrace for a bogus `-f` formatter are not printed.
+  - The `extension supports plugin, specify plugins:` warning for `require:` of a plugin gem rbcop
+    does not implement, and RuboCop's backtrace for a bogus `-f` formatter, are not printed.
   - `-c FILE`: the `Using ... configuration` warning for a deprecated cop name shows the expanded
     path; RuboCop shows the argument as given.
 - YAML: a plain `:name` value loads as a Symbol (`Value::Sym`) and a quoted `':name'` as a String,

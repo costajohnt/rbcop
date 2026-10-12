@@ -1,0 +1,56 @@
+==> offenses exit=1 1339 <==
+002.rb:1:12: C: [Correctable] Performance/BigDecimalWithNumericArgument: Convert float literal to string and pass it to `BigDecimal`.
+003.rb:1:1: C: [Correctable] Performance/BigDecimalWithNumericArgument: Convert float literal to string and pass it to `BigDecimal`.
+004.rb:1:12: C: [Correctable] Performance/BigDecimalWithNumericArgument: Convert float literal to string and pass it to `BigDecimal`.
+005.rb:1:1: C: [Correctable] Performance/BigDecimalWithNumericArgument: Convert float literal to string and pass it to `BigDecimal`.
+006.rb:2:12: C: [Correctable] Performance/BigDecimalWithNumericArgument: Convert float literal to string and pass it to `BigDecimal`.
+007.rb:2:1: C: [Correctable] Performance/BigDecimalWithNumericArgument: Convert float literal to string and pass it to `BigDecimal`.
+008.rb:1:12: C: [Correctable] Performance/BigDecimalWithNumericArgument: Convert float literal to string and pass it to `BigDecimal`.
+009.rb:1:1: C: [Correctable] Performance/BigDecimalWithNumericArgument: Convert float literal to string and pass it to `BigDecimal`.
+010.rb:1:12: C: [Correctable] Performance/BigDecimalWithNumericArgument: Convert string literal to integer and pass it to `BigDecimal`.
+011.rb:1:1: C: [Correctable] Performance/BigDecimalWithNumericArgument: Convert string literal to integer and pass it to `BigDecimal`.
+
+==> autocorrect exit=0 1319 <==
+002.rb:1:12: C: [Corrected] Performance/BigDecimalWithNumericArgument: Convert float literal to string and pass it to `BigDecimal`.
+003.rb:1:1: C: [Corrected] Performance/BigDecimalWithNumericArgument: Convert float literal to string and pass it to `BigDecimal`.
+004.rb:1:12: C: [Corrected] Performance/BigDecimalWithNumericArgument: Convert float literal to string and pass it to `BigDecimal`.
+005.rb:1:1: C: [Corrected] Performance/BigDecimalWithNumericArgument: Convert float literal to string and pass it to `BigDecimal`.
+006.rb:2:12: C: [Corrected] Performance/BigDecimalWithNumericArgument: Convert float literal to string and pass it to `BigDecimal`.
+007.rb:2:1: C: [Corrected] Performance/BigDecimalWithNumericArgument: Convert float literal to string and pass it to `BigDecimal`.
+008.rb:1:12: C: [Corrected] Performance/BigDecimalWithNumericArgument: Convert float literal to string and pass it to `BigDecimal`.
+009.rb:1:1: C: [Corrected] Performance/BigDecimalWithNumericArgument: Convert float literal to string and pass it to `BigDecimal`.
+010.rb:1:12: C: [Corrected] Performance/BigDecimalWithNumericArgument: Convert string literal to integer and pass it to `BigDecimal`.
+011.rb:1:1: C: [Corrected] Performance/BigDecimalWithNumericArgument: Convert string literal to integer and pass it to `BigDecimal`.
+
+==> corrected/002.rb 35 <==
+BigDecimal('1.5', exception: true)
+
+==> corrected/003.rb 35 <==
+BigDecimal('1.5', exception: true)
+
+==> corrected/004.rb 22 <==
+BigDecimal('3.14', 1)
+
+==> corrected/005.rb 22 <==
+BigDecimal('3.14', 1)
+
+==> corrected/006.rb 44 <==
+precision = 1
+BigDecimal('3.14', precision)
+
+==> corrected/007.rb 44 <==
+precision = 1
+BigDecimal('3.14', precision)
+
+==> corrected/008.rb 39 <==
+BigDecimal('3.14', 1, exception: true)
+
+==> corrected/009.rb 39 <==
+BigDecimal('3.14', 1, exception: true)
+
+==> corrected/010.rb 14 <==
+BigDecimal(1)
+
+==> corrected/011.rb 7 <==
+1.to_d
+

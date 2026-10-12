@@ -1,0 +1,85 @@
+==> offenses exit=1 2707 <==
+000.rb:1:15: C: [Correctable] Performance/StringIdentifierArgument: Use `:one` instead of `'one'`.
+000.rb:1:22: C: [Correctable] Performance/StringIdentifierArgument: Use `:two` instead of `'two'`.
+000.rb:1:29: C: [Correctable] Performance/StringIdentifierArgument: Use `:three` instead of `'three'`.
+002.rb:1:13: C: [Correctable] Performance/StringIdentifierArgument: Use `:one` instead of `'one'`.
+002.rb:1:20: C: [Correctable] Performance/StringIdentifierArgument: Use `:two` instead of `'two'`.
+002.rb:1:27: C: [Correctable] Performance/StringIdentifierArgument: Use `:three` instead of `'three'`.
+004.rb:1:13: C: [Correctable] Performance/StringIdentifierArgument: Use `:one` instead of `'one'`.
+004.rb:1:20: C: [Correctable] Performance/StringIdentifierArgument: Use `:two` instead of `'two'`.
+004.rb:1:27: C: [Correctable] Performance/StringIdentifierArgument: Use `:three` instead of `'three'`.
+006.rb:1:9: C: [Correctable] Performance/StringIdentifierArgument: Use `:one` instead of `'one'`.
+006.rb:1:16: C: [Correctable] Performance/StringIdentifierArgument: Use `:two` instead of `'two'`.
+006.rb:1:23: C: [Correctable] Performance/StringIdentifierArgument: Use `:three` instead of `'three'`.
+008.rb:1:18: C: [Correctable] Performance/StringIdentifierArgument: Use `:one` instead of `'one'`.
+008.rb:1:25: C: [Correctable] Performance/StringIdentifierArgument: Use `:two` instead of `'two'`.
+008.rb:1:32: C: [Correctable] Performance/StringIdentifierArgument: Use `:three` instead of `'three'`.
+010.rb:1:11: C: [Correctable] Performance/StringIdentifierArgument: Use `:one` instead of `'one'`.
+010.rb:1:18: C: [Correctable] Performance/StringIdentifierArgument: Use `:two` instead of `'two'`.
+010.rb:1:25: C: [Correctable] Performance/StringIdentifierArgument: Use `:three` instead of `'three'`.
+012.rb:1:8: C: [Correctable] Performance/StringIdentifierArgument: Use `:one` instead of `'one'`.
+012.rb:1:15: C: [Correctable] Performance/StringIdentifierArgument: Use `:two` instead of `'two'`.
+012.rb:1:22: C: [Correctable] Performance/StringIdentifierArgument: Use `:three` instead of `'three'`.
+014.rb:1:17: C: [Correctable] Performance/StringIdentifierArgument: Use `:one` instead of `'one'`.
+014.rb:1:24: C: [Correctable] Performance/StringIdentifierArgument: Use `:two` instead of `'two'`.
+014.rb:1:31: C: [Correctable] Performance/StringIdentifierArgument: Use `:three` instead of `'three'`.
+016.rb:1:17: C: [Correctable] Performance/StringIdentifierArgument: Use `:one` instead of `'one'`.
+016.rb:1:24: C: [Correctable] Performance/StringIdentifierArgument: Use `:two` instead of `'two'`.
+016.rb:1:31: C: [Correctable] Performance/StringIdentifierArgument: Use `:three` instead of `'three'`.
+
+==> autocorrect exit=0 2653 <==
+000.rb:1:15: C: [Corrected] Performance/StringIdentifierArgument: Use `:one` instead of `'one'`.
+000.rb:1:22: C: [Corrected] Performance/StringIdentifierArgument: Use `:two` instead of `'two'`.
+000.rb:1:29: C: [Corrected] Performance/StringIdentifierArgument: Use `:three` instead of `'three'`.
+002.rb:1:13: C: [Corrected] Performance/StringIdentifierArgument: Use `:one` instead of `'one'`.
+002.rb:1:20: C: [Corrected] Performance/StringIdentifierArgument: Use `:two` instead of `'two'`.
+002.rb:1:27: C: [Corrected] Performance/StringIdentifierArgument: Use `:three` instead of `'three'`.
+004.rb:1:13: C: [Corrected] Performance/StringIdentifierArgument: Use `:one` instead of `'one'`.
+004.rb:1:20: C: [Corrected] Performance/StringIdentifierArgument: Use `:two` instead of `'two'`.
+004.rb:1:27: C: [Corrected] Performance/StringIdentifierArgument: Use `:three` instead of `'three'`.
+006.rb:1:9: C: [Corrected] Performance/StringIdentifierArgument: Use `:one` instead of `'one'`.
+006.rb:1:16: C: [Corrected] Performance/StringIdentifierArgument: Use `:two` instead of `'two'`.
+006.rb:1:23: C: [Corrected] Performance/StringIdentifierArgument: Use `:three` instead of `'three'`.
+008.rb:1:18: C: [Corrected] Performance/StringIdentifierArgument: Use `:one` instead of `'one'`.
+008.rb:1:25: C: [Corrected] Performance/StringIdentifierArgument: Use `:two` instead of `'two'`.
+008.rb:1:32: C: [Corrected] Performance/StringIdentifierArgument: Use `:three` instead of `'three'`.
+010.rb:1:11: C: [Corrected] Performance/StringIdentifierArgument: Use `:one` instead of `'one'`.
+010.rb:1:18: C: [Corrected] Performance/StringIdentifierArgument: Use `:two` instead of `'two'`.
+010.rb:1:25: C: [Corrected] Performance/StringIdentifierArgument: Use `:three` instead of `'three'`.
+012.rb:1:8: C: [Corrected] Performance/StringIdentifierArgument: Use `:one` instead of `'one'`.
+012.rb:1:15: C: [Corrected] Performance/StringIdentifierArgument: Use `:two` instead of `'two'`.
+012.rb:1:22: C: [Corrected] Performance/StringIdentifierArgument: Use `:three` instead of `'three'`.
+014.rb:1:17: C: [Corrected] Performance/StringIdentifierArgument: Use `:one` instead of `'one'`.
+014.rb:1:24: C: [Corrected] Performance/StringIdentifierArgument: Use `:two` instead of `'two'`.
+014.rb:1:31: C: [Corrected] Performance/StringIdentifierArgument: Use `:three` instead of `'three'`.
+016.rb:1:17: C: [Corrected] Performance/StringIdentifierArgument: Use `:one` instead of `'one'`.
+016.rb:1:24: C: [Corrected] Performance/StringIdentifierArgument: Use `:two` instead of `'two'`.
+016.rb:1:31: C: [Corrected] Performance/StringIdentifierArgument: Use `:three` instead of `'three'`.
+
+==> corrected/000.rb 33 <==
+attr_accessor :one, :two, :three
+
+==> corrected/002.rb 31 <==
+attr_reader :one, :two, :three
+
+==> corrected/004.rb 31 <==
+attr_writer :one, :two, :three
+
+==> corrected/006.rb 27 <==
+private :one, :two, :three
+
+==> corrected/008.rb 36 <==
+private_constant :one, :two, :three
+
+==> corrected/010.rb 29 <==
+protected :one, :two, :three
+
+==> corrected/012.rb 26 <==
+public :one, :two, :three
+
+==> corrected/014.rb 35 <==
+public_constant :one, :two, :three
+
+==> corrected/016.rb 35 <==
+module_function :one, :two, :three
+

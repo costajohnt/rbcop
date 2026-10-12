@@ -1,0 +1,3 @@
+a.rb:5:33: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Performance/Detect`.
+a.rb:8:7: W: Lint/CopDirectiveSyntax: Unknown cop name `Performance/Bogus` (did you mean `Performance/Count`?).
+a.rb:8:7: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `Performance/Bogus` (did you mean `Performance/Count`?).

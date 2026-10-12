@@ -1,0 +1,241 @@
+==> offenses exit=1 4062 <==
+000.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `select.first`.
+001.rb:1:8: C: [Correctable] Performance/Detect: Use `find` instead of `select.first`.
+003.rb:1:11: C: [Correctable] Performance/Detect: Use `reverse.find` instead of `select.last`.
+005.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `select.first`.
+006.rb:1:11: C: [Correctable] Performance/Detect: Use `reverse.find` instead of `select.last`.
+007.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `select.first`.
+008.rb:1:8: C: [Correctable] Performance/Detect: Use `find` instead of `select.first`.
+009.rb:1:11: C: [Correctable] Performance/Detect: Use `reverse.find` instead of `select.last`.
+010.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `select[0]`.
+011.rb:1:11: C: [Correctable] Performance/Detect: Use `reverse.find` instead of `select[-1]`.
+012.rb:1:6: C: [Correctable] Performance/Detect: Use `find` instead of `select.first`.
+013.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `select[0]`.
+014.rb:1:11: C: [Correctable] Performance/Detect: Use `reverse.find` instead of `select[-1]`.
+019.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `find_all.first`.
+020.rb:1:8: C: [Correctable] Performance/Detect: Use `find` instead of `find_all.first`.
+022.rb:1:11: C: [Correctable] Performance/Detect: Use `reverse.find` instead of `find_all.last`.
+024.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `find_all.first`.
+025.rb:1:11: C: [Correctable] Performance/Detect: Use `reverse.find` instead of `find_all.last`.
+026.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `find_all.first`.
+027.rb:1:8: C: [Correctable] Performance/Detect: Use `find` instead of `find_all.first`.
+028.rb:1:11: C: [Correctable] Performance/Detect: Use `reverse.find` instead of `find_all.last`.
+029.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `find_all[0]`.
+030.rb:1:11: C: [Correctable] Performance/Detect: Use `reverse.find` instead of `find_all[-1]`.
+031.rb:1:6: C: [Correctable] Performance/Detect: Use `find` instead of `find_all.first`.
+032.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `find_all[0]`.
+033.rb:1:11: C: [Correctable] Performance/Detect: Use `reverse.find` instead of `find_all[-1]`.
+038.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `filter.first`.
+039.rb:1:8: C: [Correctable] Performance/Detect: Use `find` instead of `filter.first`.
+041.rb:1:11: C: [Correctable] Performance/Detect: Use `reverse.find` instead of `filter.last`.
+043.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `filter.first`.
+044.rb:1:11: C: [Correctable] Performance/Detect: Use `reverse.find` instead of `filter.last`.
+045.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `filter.first`.
+046.rb:1:8: C: [Correctable] Performance/Detect: Use `find` instead of `filter.first`.
+047.rb:1:11: C: [Correctable] Performance/Detect: Use `reverse.find` instead of `filter.last`.
+048.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `filter[0]`.
+049.rb:1:11: C: [Correctable] Performance/Detect: Use `reverse.find` instead of `filter[-1]`.
+050.rb:1:6: C: [Correctable] Performance/Detect: Use `find` instead of `filter.first`.
+051.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `filter[0]`.
+052.rb:1:11: C: [Correctable] Performance/Detect: Use `reverse.find` instead of `filter[-1]`.
+058.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `select.first`.
+059.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `select.first`.
+060.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `find_all.first`.
+061.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `find_all.first`.
+062.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `filter.first`.
+063.rb:1:11: C: [Correctable] Performance/Detect: Use `find` instead of `filter.first`.
+
+==> autocorrect exit=0 3972 <==
+000.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `select.first`.
+001.rb:1:8: C: [Corrected] Performance/Detect: Use `find` instead of `select.first`.
+003.rb:1:11: C: [Corrected] Performance/Detect: Use `reverse.find` instead of `select.last`.
+005.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `select.first`.
+006.rb:1:11: C: [Corrected] Performance/Detect: Use `reverse.find` instead of `select.last`.
+007.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `select.first`.
+008.rb:1:8: C: [Corrected] Performance/Detect: Use `find` instead of `select.first`.
+009.rb:1:11: C: [Corrected] Performance/Detect: Use `reverse.find` instead of `select.last`.
+010.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `select[0]`.
+011.rb:1:11: C: [Corrected] Performance/Detect: Use `reverse.find` instead of `select[-1]`.
+012.rb:1:6: C: [Corrected] Performance/Detect: Use `find` instead of `select.first`.
+013.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `select[0]`.
+014.rb:1:11: C: [Corrected] Performance/Detect: Use `reverse.find` instead of `select[-1]`.
+019.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `find_all.first`.
+020.rb:1:8: C: [Corrected] Performance/Detect: Use `find` instead of `find_all.first`.
+022.rb:1:11: C: [Corrected] Performance/Detect: Use `reverse.find` instead of `find_all.last`.
+024.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `find_all.first`.
+025.rb:1:11: C: [Corrected] Performance/Detect: Use `reverse.find` instead of `find_all.last`.
+026.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `find_all.first`.
+027.rb:1:8: C: [Corrected] Performance/Detect: Use `find` instead of `find_all.first`.
+028.rb:1:11: C: [Corrected] Performance/Detect: Use `reverse.find` instead of `find_all.last`.
+029.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `find_all[0]`.
+030.rb:1:11: C: [Corrected] Performance/Detect: Use `reverse.find` instead of `find_all[-1]`.
+031.rb:1:6: C: [Corrected] Performance/Detect: Use `find` instead of `find_all.first`.
+032.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `find_all[0]`.
+033.rb:1:11: C: [Corrected] Performance/Detect: Use `reverse.find` instead of `find_all[-1]`.
+038.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `filter.first`.
+039.rb:1:8: C: [Corrected] Performance/Detect: Use `find` instead of `filter.first`.
+041.rb:1:11: C: [Corrected] Performance/Detect: Use `reverse.find` instead of `filter.last`.
+043.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `filter.first`.
+044.rb:1:11: C: [Corrected] Performance/Detect: Use `reverse.find` instead of `filter.last`.
+045.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `filter.first`.
+046.rb:1:8: C: [Corrected] Performance/Detect: Use `find` instead of `filter.first`.
+047.rb:1:11: C: [Corrected] Performance/Detect: Use `reverse.find` instead of `filter.last`.
+048.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `filter[0]`.
+049.rb:1:11: C: [Corrected] Performance/Detect: Use `reverse.find` instead of `filter[-1]`.
+050.rb:1:6: C: [Corrected] Performance/Detect: Use `find` instead of `filter.first`.
+051.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `filter[0]`.
+052.rb:1:11: C: [Corrected] Performance/Detect: Use `reverse.find` instead of `filter[-1]`.
+058.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `select.first`.
+059.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `select.first`.
+060.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `find_all.first`.
+061.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `find_all.first`.
+062.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `filter.first`.
+063.rb:1:11: C: [Corrected] Performance/Detect: Use `find` instead of `filter.first`.
+
+==> corrected/000.rb 34 <==
+[1, 2, 3].find { |i| i % 2 == 0 }
+
+==> corrected/001.rb 31 <==
+array&.find { |i| i % 2 == 0 }
+
+==> corrected/003.rb 42 <==
+[1, 2, 3].reverse.find { |i| i % 2 == 0 }
+
+==> corrected/005.rb 39 <==
+[1, 2, 3].find do |i|
+  i % 2 == 0
+end
+
+==> corrected/006.rb 47 <==
+[1, 2, 3].reverse.find do |i|
+  i % 2 == 0
+end
+
+==> corrected/007.rb 24 <==
+[1, 2, 3].find(&:even?)
+
+==> corrected/008.rb 21 <==
+array&.find(&:even?)
+
+==> corrected/009.rb 32 <==
+[1, 2, 3].reverse.find(&:even?)
+
+==> corrected/010.rb 24 <==
+[1, 2, 3].find(&:even?)
+
+==> corrected/011.rb 32 <==
+[1, 2, 3].reverse.find(&:even?)
+
+==> corrected/012.rb 19 <==
+lazy.find(&:even?)
+
+==> corrected/013.rb 34 <==
+[1, 2, 3].find { |i| i % 2 == 0 }
+
+==> corrected/014.rb 42 <==
+[1, 2, 3].reverse.find { |i| i % 2 == 0 }
+
+==> corrected/019.rb 34 <==
+[1, 2, 3].find { |i| i % 2 == 0 }
+
+==> corrected/020.rb 31 <==
+array&.find { |i| i % 2 == 0 }
+
+==> corrected/022.rb 42 <==
+[1, 2, 3].reverse.find { |i| i % 2 == 0 }
+
+==> corrected/024.rb 39 <==
+[1, 2, 3].find do |i|
+  i % 2 == 0
+end
+
+==> corrected/025.rb 47 <==
+[1, 2, 3].reverse.find do |i|
+  i % 2 == 0
+end
+
+==> corrected/026.rb 24 <==
+[1, 2, 3].find(&:even?)
+
+==> corrected/027.rb 21 <==
+array&.find(&:even?)
+
+==> corrected/028.rb 32 <==
+[1, 2, 3].reverse.find(&:even?)
+
+==> corrected/029.rb 24 <==
+[1, 2, 3].find(&:even?)
+
+==> corrected/030.rb 32 <==
+[1, 2, 3].reverse.find(&:even?)
+
+==> corrected/031.rb 19 <==
+lazy.find(&:even?)
+
+==> corrected/032.rb 34 <==
+[1, 2, 3].find { |i| i % 2 == 0 }
+
+==> corrected/033.rb 42 <==
+[1, 2, 3].reverse.find { |i| i % 2 == 0 }
+
+==> corrected/038.rb 34 <==
+[1, 2, 3].find { |i| i % 2 == 0 }
+
+==> corrected/039.rb 31 <==
+array&.find { |i| i % 2 == 0 }
+
+==> corrected/041.rb 42 <==
+[1, 2, 3].reverse.find { |i| i % 2 == 0 }
+
+==> corrected/043.rb 39 <==
+[1, 2, 3].find do |i|
+  i % 2 == 0
+end
+
+==> corrected/044.rb 47 <==
+[1, 2, 3].reverse.find do |i|
+  i % 2 == 0
+end
+
+==> corrected/045.rb 24 <==
+[1, 2, 3].find(&:even?)
+
+==> corrected/046.rb 21 <==
+array&.find(&:even?)
+
+==> corrected/047.rb 32 <==
+[1, 2, 3].reverse.find(&:even?)
+
+==> corrected/048.rb 24 <==
+[1, 2, 3].find(&:even?)
+
+==> corrected/049.rb 32 <==
+[1, 2, 3].reverse.find(&:even?)
+
+==> corrected/050.rb 19 <==
+lazy.find(&:even?)
+
+==> corrected/051.rb 34 <==
+[1, 2, 3].find { |i| i % 2 == 0 }
+
+==> corrected/052.rb 42 <==
+[1, 2, 3].reverse.find { |i| i % 2 == 0 }
+
+==> corrected/058.rb 29 <==
+[1, 2, 3].find { true }['x']
+
+==> corrected/059.rb 30 <==
+[1, 2, 3].find(&:blank?)['x']
+
+==> corrected/060.rb 29 <==
+[1, 2, 3].find { true }['x']
+
+==> corrected/061.rb 30 <==
+[1, 2, 3].find(&:blank?)['x']
+
+==> corrected/062.rb 29 <==
+[1, 2, 3].find { true }['x']
+
+==> corrected/063.rb 30 <==
+[1, 2, 3].find(&:blank?)['x']
+

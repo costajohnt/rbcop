@@ -1,0 +1,14 @@
+==> offenses exit=1 234 <==
+000.rb:1:1: C: [Correctable] Performance/UriDefaultParser: Use `URI::DEFAULT_PARSER` instead of `URI::Parser.new`.
+001.rb:1:1: C: [Correctable] Performance/UriDefaultParser: Use `::URI::DEFAULT_PARSER` instead of `::URI::Parser.new`.
+
+==> autocorrect exit=0 230 <==
+000.rb:1:1: C: [Corrected] Performance/UriDefaultParser: Use `URI::DEFAULT_PARSER` instead of `URI::Parser.new`.
+001.rb:1:1: C: [Corrected] Performance/UriDefaultParser: Use `::URI::DEFAULT_PARSER` instead of `::URI::Parser.new`.
+
+==> corrected/000.rb 32 <==
+URI::DEFAULT_PARSER.make_regexp
+
+==> corrected/001.rb 34 <==
+::URI::DEFAULT_PARSER.make_regexp
+

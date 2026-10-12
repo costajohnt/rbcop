@@ -1,0 +1,88 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 27 <==
+4.times.map { |i| i.to_s }
+
+==> 001.rb 29 <==
+4&.times&.map { |i| i.to_s }
+
+==> 002.rb 30 <==
+42&.times&.map { |i| i.to_s }
+
+==> 003.rb 31 <==
+4.2&.times&.map { |i| i.to_s }
+
+==> 004.rb 31 <==
+nil&.times&.map { |i| i.to_s }
+
+==> 005.rb 36 <==
+nullable&.times&.map { |i| i.to_s }
+
+==> 006.rb 37 <==
+@nullable&.times&.map { |i| i.to_s }
+
+==> 007.rb 27 <==
+n.times.map { |i| i.to_s }
+
+==> 008.rb 27 <==
+4.times.map(&method(:foo))
+
+==> 009.rb 29 <==
+4&.times&.map(&method(:foo))
+
+==> 010.rb 12 <==
+4.times.map
+
+==> 011.rb 25 <==
+times.map { |i| i.to_s }
+
+==> 012.rb 24 <==
+4.times.map { _1.to_s }
+
+==> 013.rb 31 <==
+4.times.collect { |i| i.to_s }
+
+==> 014.rb 33 <==
+4&.times&.collect { |i| i.to_s }
+
+==> 015.rb 34 <==
+42&.times&.collect { |i| i.to_s }
+
+==> 016.rb 35 <==
+4.2&.times&.collect { |i| i.to_s }
+
+==> 017.rb 35 <==
+nil&.times&.collect { |i| i.to_s }
+
+==> 018.rb 40 <==
+nullable&.times&.collect { |i| i.to_s }
+
+==> 019.rb 41 <==
+@nullable&.times&.collect { |i| i.to_s }
+
+==> 020.rb 31 <==
+n.times.collect { |i| i.to_s }
+
+==> 021.rb 31 <==
+4.times.collect(&method(:foo))
+
+==> 022.rb 33 <==
+4&.times&.collect(&method(:foo))
+
+==> 023.rb 16 <==
+4.times.collect
+
+==> 024.rb 29 <==
+times.collect { |i| i.to_s }
+
+==> 025.rb 28 <==
+4.times.collect { _1.to_s }
+

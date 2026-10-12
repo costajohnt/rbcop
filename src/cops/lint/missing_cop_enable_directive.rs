@@ -1,6 +1,6 @@
 use crate::config::value::Value;
 use crate::directives;
-use crate::helpers::cop_registry::{REGISTRY, is_department};
+use crate::helpers::cop_registry::{is_department, is_known};
 use crate::prelude::*;
 
 pub const NAME: &str = "Lint/MissingCopEnableDirective";
@@ -35,7 +35,7 @@ impl Cop for MissingCopEnableDirective {
                 }
                 // acceptable_range?
                 let (min, max) = (as_f64(r.0), as_f64(r.1));
-                if max - min < max_range + 2.0 || !REGISTRY.contains(&cop.as_str()) {
+                if max - min < max_range + 2.0 || !is_known(cop) {
                     continue;
                 }
                 // expected_open_range?

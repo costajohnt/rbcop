@@ -1,0 +1,39 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 57 <==
+def method(x, &block)
+  do_something if block_given?
+end
+
+==> 001.rb 62 <==
+def self.method(x, &block)
+  do_something if block_given?
+end
+
+==> 002.rb 59 <==
+def method(x, &myblock)
+  do_something if block_given?
+end
+
+==> 003.rb 49 <==
+def method(x)
+  do_something if block_given?
+end
+
+==> 004.rb 75 <==
+def method(a, &block)
+  block ||= -> {}
+  do_something if block_given?
+end
+
+==> 005.rb 29 <==
+do_something if block_given?
+

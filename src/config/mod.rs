@@ -183,6 +183,7 @@ impl std::hash::Hasher for Fnv {
 }
 
 /// A fully merged config (one per `.rubocop.yml`, or the default).
+#[derive(Clone)]
 pub struct Resolved {
     pub hash: Map,
     /// Base for relative Include patterns (base_dir_for_path_parameters of the loaded file).
@@ -577,6 +578,29 @@ impl Store {
         self.custom_cops
     }
 
+    /// The qualified `--only` list, known once configs (and so plugins) have loaded: Registry#enabled?
+    /// enables those cops outright, so every config resolved so far is re-resolved with it.
+    pub fn set_only(&mut self, only: Vec<String>) {
+        if self.opts.only == only {
+            return;
+        }
+        self.opts.only = only;
+        for r in self.resolved.values_mut().chain(self.forced.iter_mut()) {
+            let r = Arc::make_mut(r);
+            r.opts = self.opts.clone();
+            for &name in &self.cop_names {
+                let cfg = r.build_cop(name, &self.opts);
+                r.cops.insert(name.to_string(), cfg);
+            }
+        }
+    }
+
+    /// ConfigLoader.default_configuration: default.yml with the plugins loaded so far merged in.
+    pub fn default_config(&self) -> Arc<Resolved> {
+        let opts = Options { force_default_config: true, ..Options::default() };
+        Arc::new(Resolved::new(apply_default_overrides(&self.default, &opts), None, &opts, &self.cop_names))
+    }
+
     /// The CLI applies `--color`/`--no-color` once the pwd config has loaded.
     pub fn set_color(&mut self, on: bool) {
         self.opts.color = on;
@@ -677,10 +701,21 @@ impl Store {
         };
         // Plugins (and plugin-capable `require:` gems) only matter here for their default configs.
         let mut plugins = Vec::new();
+        let mut migrate = Vec::new();
         for key in ["plugins", "require"] {
             for entry in seq(hash.remove(key)) {
                 match entry {
-                    Value::Str(s) => plugins.push(s),
+                    Value::Str(s) => {
+                        // ConfigLoaderResolver#resolve_requires: a plugin-capable gem under
+                        // `require:` (known here for native plugins) warns, then loads as a plugin.
+                        if key == "require" && crate::helpers::cop_registry::native_plugin(&s).is_some() {
+                            migrate.push((true, format!(
+                                "{s} extension supports plugin, specify `plugins: {s}` instead of `require: {s}` in {}.\nFor more information, see https://docs.rubocop.org/rubocop/plugin_migration_guide.html.\n",
+                                path.display()
+                            )));
+                        }
+                        plugins.push(s)
+                    }
                     Value::Map(m) => plugins.extend(m.keys().map(String::from)),
                     _ => {}
                 }
@@ -689,6 +724,8 @@ impl Store {
         // Local files are custom cops rbcop cannot load.
         self.custom_cops |= plugins.iter().any(|n| n.starts_with('.') || n.starts_with('/'));
         self.integrate_plugins(plugins)?;
+        crate::helpers::cop_registry::set_open(self.custom_cops, &self.plugin_constants);
+        self.emit(&migrate);
         if let Some(Value::Map(gems)) = hash.remove("inherit_gem") {
             let mut inherit = seq(hash.remove("inherit_from"));
             for (gem, paths) in Arc::unwrap_or_clone(gems).0 {
@@ -873,23 +910,39 @@ impl Store {
         let mut configured: Vec<String> = Vec::new();
         for name in names {
             self.loaded_plugins.push(name.clone());
-            let dir = match self.gem_dir(&name) {
-                Ok(d) => d,
-                Err(e) => {
-                    self.warnings.push(e);
-                    // Its cops are unknown here.
+            let mut plugin = if let Some(native) = crate::helpers::cop_registry::native_plugin(&name) {
+                // A plugin rbcop implements: its cops register and its vendored default.yml merges,
+                // so the gem need not be installed. Path parameters there resolve against the
+                // working directory, as for any config file not named .rubocop*.
+                crate::helpers::cop_registry::register_plugin(native);
+                let label = format!("{name}/config/default.yml");
+                let Value::Map(m) = parse_yaml_file(native.default_yml, &label)? else { continue };
+                let mut m = Arc::unwrap_or_clone(m);
+                make_excludes_absolute(&mut m, &self.cwd);
+                m
+            } else {
+                let dir = match self.gem_dir(&name) {
+                    Ok(d) => d,
+                    Err(e) => {
+                        self.warnings.push(e);
+                        // Its cops are unknown here.
+                        self.custom_cops = true;
+                        continue;
+                    }
+                };
+                ruby_constants(&dir.join("lib"), &mut self.plugin_constants);
+                let path = dir.join("config/default.yml");
+                if !path.is_file() {
+                    // An extension without config/default.yml may still register cops.
                     self.custom_cops = true;
                     continue;
                 }
+                let m = self.load_file(&path, false)?;
+                crate::helpers::cop_registry::register_foreign(
+                    m.keys().filter(|k| k.contains('/')).map(String::from).collect(),
+                );
+                m
             };
-            ruby_constants(&dir.join("lib"), &mut self.plugin_constants);
-            let path = dir.join("config/default.yml");
-            if !path.is_file() {
-                // An extension without config/default.yml may still register cops.
-                self.custom_cops = true;
-                continue;
-            }
-            let mut plugin = self.load_file(&path, false)?;
             if let Some(Value::Map(new_all)) = plugin.get("AllCops").cloned() {
                 let mut all = combined.map("AllCops").cloned().unwrap_or_default();
                 for (key, value) in Arc::unwrap_or_clone(new_all).0 {

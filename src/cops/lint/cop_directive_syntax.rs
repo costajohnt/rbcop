@@ -158,7 +158,7 @@ fn check_directive(cx: &mut Cx, start: usize, end: usize, text: &str) -> Result<
             continue;
         }
         let qualified = qualified_cop_name(name).ok_or(())?;
-        if REGISTRY.contains(&qualified.as_str()) || is_department(&qualified) {
+        if crate::helpers::cop_registry::is_known(&qualified) || is_department(&qualified) {
             continue;
         }
         let dictionary: Vec<&str> = REGISTRY.iter().copied().filter(|n| *n != name).collect();

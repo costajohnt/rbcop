@@ -1,0 +1,9 @@
+==> offenses exit=1 108 <==
+005.rb:1:1: C: [Correctable] Performance/RedundantMerge: Use `hash[:a] = 1` instead of `hash.merge!(a: 1)`.
+
+==> autocorrect exit=0 106 <==
+005.rb:1:1: C: [Corrected] Performance/RedundantMerge: Use `hash[:a] = 1` instead of `hash.merge!(a: 1)`.
+
+==> corrected/005.rb 13 <==
+hash[:a] = 1
+

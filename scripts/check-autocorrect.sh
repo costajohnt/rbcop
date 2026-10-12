@@ -17,6 +17,9 @@ root=$(cd "$(dirname "$0")/.." && pwd)
 corpus_root=${RBCOP_CORPUS:?set RBCOP_CORPUS to the corpus directory}
 oracle_root=${RBCOP_ORACLE:?set RBCOP_ORACLE to the oracle directory}
 mode=${MODE:--A}
+# CONFIG: run both tools with that config (e.g. config/plugin-performance.yml, with its plugin oracles) instead of the defaults.
+cfg_args=--force-default-config
+[ -n "${CONFIG:-}" ] && cfg_args="--config $CONFIG"
 out=${OUT:-${TMPDIR:-/tmp}/rbcop-autocorrect-$(basename "$root")}
 pattern=": [CWEFRI]: (\[Correctable\] )?($(echo "$cops" | tr , '|')): "
 # RuboCop rejects --only with Lint/RedundantCopDisableDirective (options.rb validate_compatibility)
@@ -57,9 +60,9 @@ for c in $corpora; do
       cp "$f" "$dir/$side/$f"
     done
   done) < "$dir/files"
-  (cd "$dir/rubocop" && rubocop "$mode" $only --force-default-config \
+  (cd "$dir/rubocop" && rubocop "$mode" $only $cfg_args \
     --cache false --format emacs . > ../rubocop.out 2> ../rubocop.err) || true
-  (cd "$dir/rbcop" && "$bin" "$mode" $only --force-default-config --format emacs . > ../rbcop.out 2> ../rbcop.err) || true
+  (cd "$dir/rbcop" && "$bin" "$mode" $only $cfg_args --format emacs . > ../rbcop.out 2> ../rbcop.err) || true
   # Both tools print physical paths (getcwd), e.g. /private/var on macOS.
   phys=$(cd "$dir" && pwd -P)
   sed "s|^$phys/rubocop/||; s|^$dir/rubocop/||" "$dir/rubocop.out" | LC_ALL=C sort > "$dir/rubocop.norm"

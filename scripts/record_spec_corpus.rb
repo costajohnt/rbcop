@@ -3,7 +3,9 @@
 # cop and config variant. Run through scripts/record-spec-corpus.sh, which checks RuboCop runs.
 #
 # usage: ruby scripts/record_spec_corpus.rb <rubocop-src> <out-dir>
-# env:   RUBOCOP (command, word-split; default `rubocop`), JOBS (default: CPU count)
+# env:   RUBOCOP (command, word-split; default `rubocop`), JOBS (default: CPU count),
+#        PLUGIN=<gem>: <rubocop-src> is that plugin's source at the version in docs/plugins.md, and
+#        its cops (from config/plugins/<gem>.yml) are recorded with `plugins: [<gem>]`
 #
 # Per variant (<Dept_Cop>/<variant>, one .rubocop.yml), two bundle files:
 #   <variant>.input     the .rubocop.yml and the source files
@@ -25,6 +27,8 @@ src, out = ARGV
 abort "usage: #{$0} <rubocop-src> <out-dir>" unless out
 
 root = File.expand_path("..", __dir__)
+plugin = ENV["PLUGIN"]
+default_yml = File.join(root, plugin ? "config/plugins/#{plugin}.yml" : "config/default.yml")
 rubocop = Shellwords.split(ENV.fetch("RUBOCOP", "rubocop"))
 jobs = Integer(ENV.fetch("JOBS", Etc.nprocessors))
 # ponytail: per-variant cap on source files, first N by path (caps 5 variants of the 1.91 specs);
@@ -50,10 +54,10 @@ end
 Dir.mktmpdir("rbcop-spec-corpus") do |tmp|
   extracted = File.join(tmp, "extracted")
   cops = File.join(tmp, "cops.txt")
-  File.write(cops, File.read(File.join(root, "config/default.yml")).scan(%r{^([A-Z]\w+/\w+):$}).join("\n"))
+  File.write(cops, File.read(default_yml).scan(%r{^([A-Z]\w+/\w+):$}).join("\n"))
   log = File.join(tmp, "extract.log")
-  ok = system({ "SPEC" => "1" }, RbConfig.ruby, File.join(root, "scripts/extract_cold_corpus.rb"),
-              File.join(src, "spec/rubocop/cop"), extracted, cops, File.join(root, "config/default.yml"),
+  ok = system({ "SPEC" => "1", "PLUGINS" => plugin }, RbConfig.ruby, File.join(root, "scripts/extract_cold_corpus.rb"),
+              File.join(src, "spec/rubocop/cop"), extracted, cops, default_yml,
               out: File::NULL, err: log)
   abort "extractor failed, see #{log}:\n#{File.read(log)[-2000..]}" unless ok
   unresolved = File.readlines(log).count { |l| !l.include?(" snippets, ") }
@@ -104,7 +108,9 @@ Dir.mktmpdir("rbcop-spec-corpus") do |tmp|
   end
   workers.each(&:join)
 
-  Dir.children(out).each { |c| FileUtils.rm_rf(File.join(out, c)) if File.directory?(File.join(out, c)) }
+  # Only this run's cops are replaced: RuboCop's own and each plugin's are recorded separately.
+  recorded = File.read(cops).split.map { |c| c.tr("/", "_") }
+  Dir.children(out).each { |c| FileUtils.rm_rf(File.join(out, c)) if recorded.include?(c) }
   results.sort.each do |v, (input, expected)|
     FileUtils.mkdir_p(File.join(out, File.dirname(v)))
     File.binwrite(File.join(out, "#{v}.input"), input)
