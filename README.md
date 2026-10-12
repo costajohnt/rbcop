@@ -4,6 +4,14 @@ A reimplementation of [RuboCop](https://github.com/rubocop/rubocop) 1.91.0 in Ru
 
 The target is byte-identical output: same offenses, ranges, messages, `[Correctable]` flags, autocorrections, formatter output and exit status as RuboCop 1.91.0 for the same files and configuration. All 613 cops in RuboCop's `config/default.yml` are implemented. Plugins (rubocop-rails, rubocop-rspec and so on) and custom cops are not.
 
+## Install
+
+- Gemfile: `gem "rbcop", require: false`, then `bundle exec rbcop` where you ran `bundle exec rubocop`. The gem carries a prebuilt binary (macOS arm64/x86_64, Linux x86_64/aarch64 glibc and musl); no Rust toolchain is needed.
+- GitHub Actions: `uses: costajohnt/rbcop@v<version>` downloads and caches the release binary.
+- Homebrew formula and release archives with each release.
+
+[docs/migration.md](docs/migration.md) covers switching a project from RuboCop: Gemfile, binstubs, CI, editors and plugins. None of these is published yet (#298); `docs/releasing.md` describes how they are built.
+
 ## Build
 
 ```sh
