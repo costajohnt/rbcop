@@ -1,0 +1,266 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 196 <==
+RSpec.describe Foo do
+  it 'does something' do
+    pending 'reason'
+    pending "#{reason}"
+    pending `echo #{reason}`
+    skip 'reason'
+    skip "#{reason}"
+    skip `echo #{reason}`
+  end
+end
+
+==> 001/001_spec.rb 77 <==
+RSpec.describe Foo do
+  skip 'does something'
+  pending 'does something'
+end
+
+==> 002/002_spec.rb 120 <==
+RSpec.describe Foo do
+  shared_examples 'something' do
+    pending 'does something'
+    skip 'does something'
+  end
+end
+
+==> 003/003_spec.rb 234 <==
+RSpec.describe Foo do
+  it 'does something', pending: 'reason' do
+  end
+  it 'does something', skip: 'reason' do
+  end
+  it 'does something', pending: 'reason' do
+    _1
+  end
+  it 'does something', skip: 'reason' do
+    _1
+  end
+end
+
+==> 004/004_spec.rb 192 <==
+describe 'something', pending: 'reason' do
+end
+describe 'something', skip: 'reason' do
+end
+describe 'something', pending: 'reason' do
+  _1
+end
+describe 'something', skip: 'reason' do
+  _1
+end
+
+==> 005/005_spec.rb 110 <==
+FactoryBot.define do
+  factory :task do
+    pending
+    skip
+    pending { true }
+    skip { true }
+  end
+end
+
+==> 006/006_spec.rb 144 <==
+RSpec.describe Foo do
+  it 'does something' do
+    Foo.pending
+    Foo.skip
+  end
+  it 'does something' do
+    _1.pending
+    _1.skip
+  end
+end
+
+==> 007/007_spec.rb 290 <==
+RSpec.describe Foo do
+  it 'does something' do
+    expect('foo').to eq(pending)
+    expect('foo').to eq(skip)
+    foo(bar, pending, skip)
+    foo(bar, pending: pending, skip: skip)
+    is_expected.to match_array([foo, pending, skip, bar])
+    list = [skip, pending]
+    foo(list)
+  end
+end
+
+==> 008/008_spec.rb 135 <==
+RSpec.describe Foo do
+  pending 'does something' do
+  end
+  skip 'does something' do
+  end
+  skip 'does something' do
+    _1
+  end
+end
+
+==> 009/009_spec.rb 178 <==
+RSpec.describe Foo do
+  it 'does something' do
+    pending 'does something' do
+      do_something
+    end
+    pending 'does something' do
+      _1.do_something
+    end
+  end
+end
+
+==> 010/010_spec.rb 172 <==
+RSpec.describe Foo do
+  it 'does something' do
+    skip 'does something' do
+      do_something
+    end
+    skip 'does something' do
+      _1.do_something
+    end
+  end
+end
+
+==> 011/011_spec.rb 287 <==
+RSpec.describe Foo do
+  it 'does something', :pending do
+  end
+  it 'does something', :skip do
+  end
+  it 'does something', pending: true do
+  end
+  it 'does something', skip: true do
+  end
+  it 'does something', :pending do
+    _1
+  end
+  it 'does something', :skip do
+    _1
+  end
+end
+
+==> 012/012_spec.rb 239 <==
+describe 'something', :pending do
+end
+describe 'something', :skip do
+end
+describe 'something', pending: true do
+end
+describe 'something', skip: true do
+end
+describe 'something', :pending do
+  _1
+end
+describe 'something', :skip do
+  _1
+end
+
+==> 013/013_spec.rb 271 <==
+RSpec.describe Foo do
+  pending
+  skip
+end
+RSpec.describe Foo do
+  context 'when something' do
+    pending
+  end
+  context 'when something' do
+    skip
+  end
+end
+RSpec.describe Foo do
+  it 'does something' do
+    pending
+  end
+  it 'does something' do
+    skip
+  end
+end
+
+==> 014/014_spec.rb 241 <==
+RSpec.describe Foo do
+  before { buzz! }
+  pending
+  skip
+  context 'when something' do
+    let(:foo) { 'bar' }
+    pending
+    skip
+    it 'does something' do
+      do_something
+      pending
+      skip
+      do_something
+    end
+  end
+end
+
+==> 015/015_spec.rb 140 <==
+RSpec.describe Foo do
+  it 'does something' do
+    pending if RUBY_VERSION < '3.0'
+    if RUBY_VERSION < '3.0'
+      skip
+    end
+  end
+end
+
+==> 016/016_spec.rb 114 <==
+RSpec.describe 'Foo' do
+  xdescribe 'something' do
+  end
+  xdescribe 'something' do
+    _1.do_something
+  end
+end
+
+==> 017/017_spec.rb 88 <==
+RSpec.xdescribe 'something' do
+end
+RSpec.xdescribe 'something' do
+  _1.do_something
+end
+
+==> 018/018_spec.rb 178 <==
+RSpec.describe 'Foo' do
+  skip 'does something' do
+  end
+  xit 'something' do
+  end
+  xit 'something' do
+    _1.do_something
+  end
+  pending 'does something' do
+    _1
+  end
+end
+
+==> 019/019_spec.rb 159 <==
+RSpec.describe Foo do
+  it 'does something' do
+    skip 'does something' do
+      do_something
+    end
+    skip 'does something' do
+      _1
+    end
+  end
+end
+
+==> 020/020_spec.rb 96 <==
+RSpec.describe Foo do
+  shared_examples 'something' do
+    xit 'something' do
+    end
+  end
+end
+

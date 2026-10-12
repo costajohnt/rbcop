@@ -1,0 +1,54 @@
+==> offenses exit=1 1100 <==
+000/000_spec.rb:1:29: C: [Correctable] RSpec/ReceiveCounts: Use `.once` instead of `.exactly(1).times`.
+001/001_spec.rb:1:29: C: [Correctable] RSpec/ReceiveCounts: Use `.twice` instead of `.exactly(2).times`.
+004/004_spec.rb:1:39: C: [Correctable] RSpec/ReceiveCounts: Use `.once` instead of `.exactly(1).times`.
+005/005_spec.rb:1:29: C: [Correctable] RSpec/ReceiveCounts: Use `.once` instead of `.exactly(1).times`.
+006/006_spec.rb:1:29: C: [Correctable] RSpec/ReceiveCounts: Use `.once` instead of `.exactly(1).times`.
+007/007_spec.rb:1:29: C: [Correctable] RSpec/ReceiveCounts: Use `.at_least(:once)` instead of `.at_least(1).times`.
+008/008_spec.rb:1:29: C: [Correctable] RSpec/ReceiveCounts: Use `.at_least(:twice)` instead of `.at_least(2).times`.
+009/009_spec.rb:1:29: C: [Correctable] RSpec/ReceiveCounts: Use `.at_least(:twice)` instead of `.at_least(2).times`.
+010/010_spec.rb:1:29: C: [Correctable] RSpec/ReceiveCounts: Use `.at_most(:once)` instead of `.at_most(1).times`.
+011/011_spec.rb:1:29: C: [Correctable] RSpec/ReceiveCounts: Use `.at_most(:twice)` instead of `.at_most(2).times`.
+
+==> autocorrect exit=0 1080 <==
+000/000_spec.rb:1:29: C: [Corrected] RSpec/ReceiveCounts: Use `.once` instead of `.exactly(1).times`.
+001/001_spec.rb:1:29: C: [Corrected] RSpec/ReceiveCounts: Use `.twice` instead of `.exactly(2).times`.
+004/004_spec.rb:1:39: C: [Corrected] RSpec/ReceiveCounts: Use `.once` instead of `.exactly(1).times`.
+005/005_spec.rb:1:29: C: [Corrected] RSpec/ReceiveCounts: Use `.once` instead of `.exactly(1).times`.
+006/006_spec.rb:1:29: C: [Corrected] RSpec/ReceiveCounts: Use `.once` instead of `.exactly(1).times`.
+007/007_spec.rb:1:29: C: [Corrected] RSpec/ReceiveCounts: Use `.at_least(:once)` instead of `.at_least(1).times`.
+008/008_spec.rb:1:29: C: [Corrected] RSpec/ReceiveCounts: Use `.at_least(:twice)` instead of `.at_least(2).times`.
+009/009_spec.rb:1:29: C: [Corrected] RSpec/ReceiveCounts: Use `.at_least(:twice)` instead of `.at_least(2).times`.
+010/010_spec.rb:1:29: C: [Corrected] RSpec/ReceiveCounts: Use `.at_most(:once)` instead of `.at_most(1).times`.
+011/011_spec.rb:1:29: C: [Corrected] RSpec/ReceiveCounts: Use `.at_most(:twice)` instead of `.at_most(2).times`.
+
+==> corrected/000/000_spec.rb 34 <==
+expect(foo).to receive(:bar).once
+
+==> corrected/001/001_spec.rb 35 <==
+expect(foo).to receive(:bar).twice
+
+==> corrected/004/004_spec.rb 44 <==
+expect(foo).to receive(:bar).with(baz).once
+
+==> corrected/005/005_spec.rb 51 <==
+expect(foo).to receive(:bar).once.and_return(true)
+
+==> corrected/006/006_spec.rb 43 <==
+expect(foo).to receive(:bar).once { true }
+
+==> corrected/007/007_spec.rb 45 <==
+expect(foo).to receive(:bar).at_least(:once)
+
+==> corrected/008/008_spec.rb 46 <==
+expect(foo).to receive(:bar).at_least(:twice)
+
+==> corrected/009/009_spec.rb 55 <==
+expect(foo).to receive(:bar).at_least(:twice) { true }
+
+==> corrected/010/010_spec.rb 44 <==
+expect(foo).to receive(:bar).at_most(:once)
+
+==> corrected/011/011_spec.rb 45 <==
+expect(foo).to receive(:bar).at_most(:twice)
+

@@ -1,0 +1,66 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 59 <==
+RSpec.describe User do
+  let(:a) { a }
+  let(:a) { b }
+end
+
+==> 001/001_spec.rb 64 <==
+RSpec.describe User do
+  subject(:a) { a }
+
+  let(:a) { b }
+end
+
+==> 002/002_spec.rb 66 <==
+RSpec.describe User do
+  subject!(:a) { a }
+
+  let!(:a) { b }
+end
+
+==> 003/003_spec.rb 60 <==
+RSpec.describe User do
+  let(:a) { b }
+  let!(:a) { b }
+end
+
+==> 004/004_spec.rb 93 <==
+RSpec.describe User do
+  let(:a) { a }
+
+  context `different` do
+    let(:a) { b }
+  end
+end
+
+==> 005/005_spec.rb 66 <==
+RSpec.describe User do
+  subject { a }
+
+  let(:subject) { b }
+end
+
+==> 006/006_spec.rb 69 <==
+RSpec.describe User do
+  subject(:name) { a }
+
+  let(name) { b }
+end
+
+==> 007/007_spec.rb 71 <==
+RSpec.describe User do
+  subject(:name) { a }
+
+  let("name") { b }
+end
+
