@@ -11,11 +11,11 @@ impl Cop for ShadowingOuterLocalVariable {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let tree = Tree::build(&node.as_program_node().unwrap(), cx.src);
+        let tree = Tree::shared(&node.as_program_node().unwrap(), cx.src);
         let text = cx.src.text;
         let mut found: Vec<(usize, usize, String)> = Vec::new();
         vf::investigate_with(
-            &tree,
+            tree,
             |tree, var, outer| {
                 let Some(outer) = outer else { return };
                 if var.name.starts_with('_') || ractor_block(tree, text, var.scope.node) {
