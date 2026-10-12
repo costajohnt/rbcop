@@ -48,7 +48,7 @@ impl Cop for RedundantForeignKey {
         }
         let src = cx.src;
         let (ps, pe) = (pair.location().start_offset(), pair.location().end_offset());
-        let (rs, re) = helpers::rails::left_space_and_comma(&src.text, ps, pe);
+        let (rs, re) = helpers::rails::left_space_and_comma(src.text, ps, pe);
         cx.add_fix(ps, pe, "Specifying the default value for `foreign_key` is redundant.", |c| c.remove(rs, re));
     }
 }

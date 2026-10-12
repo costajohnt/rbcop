@@ -27,7 +27,7 @@ impl Cop for RootPublicPath {
         let args = send_args(&call);
         let Some(path) = args.first().and_then(helpers::rails::str_value) else { return };
         let first = match path.strip_prefix("public") {
-            Some(r) if r.is_empty() => String::new(),
+            Some("") => String::new(),
             Some(r) if r.starts_with('/') => r[1..].to_string(),
             _ => return,
         };

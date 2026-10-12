@@ -12,7 +12,8 @@ impl Cop for DuplicateScope {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let class = node.as_class_node().unwrap();
         // (send nil? :scope _ $...): grouped by the arguments after the name (structurally).
-        let mut groups: Vec<(Vec<String>, Vec<(usize, usize)>)> = Vec::new();
+        type Group = (Vec<String>, Vec<(usize, usize)>);
+        let mut groups: Vec<Group> = Vec::new();
         for call in helpers::rails::class_send_nodes(class.body()) {
             if !helpers::rails::is_command(&call, "scope") {
                 continue;

@@ -136,7 +136,7 @@ impl Cop for ActionOrder {
                         end = end.max(src.comments[c].end);
                     }
                 }
-                helpers::whole_lines::range_by_whole_lines(&src.text, start, end, true)
+                helpers::whole_lines::range_by_whole_lines(src.text, start, end, true)
             };
             let current = with_comments(cur.target);
             let previous = with_comments(prev.target);

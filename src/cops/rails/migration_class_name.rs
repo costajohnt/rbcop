@@ -35,7 +35,7 @@ impl Cop for MigrationClassName {
             Some(p) => (p.name_loc().start_offset(), p.name_loc().end_offset()),
             None => (cp.location().start_offset(), cp.location().end_offset()),
         };
-        if cx.src.slice(s, e).to_ascii_lowercase() == camelized.to_ascii_lowercase()
+        if cx.src.slice(s, e).eq_ignore_ascii_case(&camelized)
             && cx.src.slice(s, e).len() == camelized.len()
         {
             return;

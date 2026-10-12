@@ -36,7 +36,7 @@ impl Cop for RedundantTravelBack {
             return;
         }
         let (s, e) = send_range(&call);
-        let (rs, re) = helpers::whole_lines::range_by_whole_lines(&cx.src.text, s, e, true);
+        let (rs, re) = helpers::whole_lines::range_by_whole_lines(cx.src.text, s, e, true);
         cx.add_fix(s, e, "Redundant `travel_back` detected.", |c| c.remove(rs, re));
     }
 }

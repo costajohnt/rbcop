@@ -244,8 +244,8 @@ impl Validator<'_> {
             let (Some(section), Some(default)) = (hash.map(name), self.default.map(name)) else { continue };
             for param in section.keys() {
                 // rubocop-rails appends TargetRailsVersion to ConfigValidator::COMMON_PARAMS.
-                let rails_param = param == "TargetRailsVersion"
-                    && crate::helpers::cop_registry::plugin_loaded("rubocop-rails");
+                let rails_param =
+                    param == "TargetRailsVersion" && crate::helpers::cop_registry::plugin_loaded("rubocop-rails");
                 if COMMON_PARAMS.contains(&param) || rails_param || default.contains(param) {
                     continue;
                 }

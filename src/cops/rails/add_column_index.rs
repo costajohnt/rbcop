@@ -36,7 +36,7 @@ impl Cop for AddColumnIndex {
         };
         let src = cx.src;
         let (ps, pe) = (pair.location().start_offset(), pair.location().end_offset());
-        let (rs, re) = helpers::rails::left_space_and_comma(&src.text, ps, pe);
+        let (rs, re) = helpers::rails::left_space_and_comma(src.text, ps, pe);
         let value = pair.value();
         let mut add_index = format!("add_index {}, {}", node_text(&args[0]), node_text(&args[1]));
         if value.as_hash_node().is_some() {

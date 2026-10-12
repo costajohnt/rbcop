@@ -318,7 +318,6 @@ pub fn parse_for_target<'t>(
     (result, tokens, fake, edits)
 }
 
-#[allow(clippy::too_many_arguments)]
 /// rubocop-rails MigrationFileSkippable (prepended to every cop's add_offense once the gem loads):
 /// a file whose name holds a 14-digit timestamp at or before `AllCops: MigratedSchemaVersion` gets
 /// no offenses (and so no corrections) from any cop.
@@ -337,6 +336,7 @@ fn already_migrated_file(path: &Path, cfg: &Resolved) -> bool {
     stamp.is_some_and(|i| name[i..i + 14] <= *version)
 }
 
+#[allow(clippy::too_many_arguments)]
 fn analyze(
     path: &Path,
     display: &str,
@@ -795,9 +795,9 @@ fn analyze(
         let c = cfg.cop(o.cop);
         // find_severity: the configured Severity, else one the cop passed to add_offense (any
         // but the Convention placeholder), else the department default.
-        o.severity = c.severity.unwrap_or_else(|| {
-            if o.severity == Severity::Convention { default_severity(o.cop) } else { o.severity }
-        });
+        o.severity = c
+            .severity
+            .unwrap_or_else(|| if o.severity == Severity::Convention { default_severity(o.cop) } else { o.severity });
         o.correctable &= autocorrect_allowed(c);
     }
     (out, corrector, disabled)

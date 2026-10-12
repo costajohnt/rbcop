@@ -42,13 +42,12 @@ impl Cop for CreateTableWithTimestamps {
                     if !is_csend(c) {
                         match method_name(c) {
                             "timestamps" => self.0 = true,
-                            "datetime" => {
+                            "datetime"
                                 if send_args(c).first().and_then(helpers::rails::str_or_sym).is_some_and(|v| {
                                     matches!(v.as_str(), "created_at" | "updated_at")
-                                }) {
+                                }) => {
                                     self.0 = true;
                                 }
-                            }
                             _ => {}
                         }
                     }

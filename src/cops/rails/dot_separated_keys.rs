@@ -70,7 +70,7 @@ impl Cop for DotSeparatedKeys {
         }
         let src = cx.src;
         let (ps, pe) = (pair.location().start_offset(), pair.location().end_offset());
-        let (rs, re) = helpers::rails::left_space_and_comma(&src.text, ps, pe);
+        let (rs, re) = helpers::rails::left_space_and_comma(src.text, ps, pe);
         let (ks, ke) = (key.location().start_offset(), key.location().end_offset());
         if !inert {
             // Deliberate difference: key parts that are not plain text are not spliced into a literal.
