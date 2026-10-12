@@ -180,6 +180,9 @@ pub struct Resolved {
     unregistered: Vec<String>,
     /// The options the cops were resolved with (Registry#enabled_cop_name? for other cop names).
     opts: Options,
+    /// for_cop of every cop-like key, built on first use: cops ask for other cops' settings per
+    /// node, and building one takes two linear scans of the whole config and a clone.
+    for_cop_cache: std::sync::OnceLock<HashMap<String, Map>>,
 }
 
 impl Resolved {
@@ -195,6 +198,7 @@ impl Resolved {
             deprecated_warnings: Vec::new(),
             unregistered: Vec::new(),
             opts: opts.clone(),
+            for_cop_cache: std::sync::OnceLock::new(),
         };
         for &name in cop_names {
             let cfg = r.build_cop(name, opts);
@@ -210,8 +214,9 @@ impl Resolved {
         r
     }
 
-    pub fn all_cops(&self) -> Map {
-        self.hash.map("AllCops").cloned().unwrap_or_default()
+    pub fn all_cops(&self) -> &Map {
+        static EMPTY: Map = Map(Vec::new());
+        self.hash.map("AllCops").unwrap_or(&EMPTY)
     }
 
     pub fn cop(&self, name: &str) -> &CopConfig {
@@ -219,7 +224,17 @@ impl Resolved {
     }
 
     /// Any cop's raw parameters (department merged under cop), implemented by rbcop or not.
-    pub fn for_cop(&self, name: &str) -> Map {
+    pub fn for_cop(&self, name: &str) -> std::borrow::Cow<'_, Map> {
+        let cache = self.for_cop_cache.get_or_init(|| {
+            self.hash.keys().filter(|k| k.contains('/')).map(|k| (k.to_string(), self.merged_for_cop(k))).collect()
+        });
+        match cache.get(name) {
+            Some(m) => std::borrow::Cow::Borrowed(m),
+            None => std::borrow::Cow::Owned(self.merged_for_cop(name)),
+        }
+    }
+
+    fn merged_for_cop(&self, name: &str) -> Map {
         let mut params = name.rsplit_once('/').and_then(|(d, _)| self.hash.map(d)).cloned().unwrap_or_default();
         for (k, v) in self.hash.map(name).cloned().unwrap_or_default().0 {
             params.insert(k, v);
@@ -399,14 +414,14 @@ impl Resolved {
     /// Config#file_to_exclude? (AllCops/Exclude against the absolute path).
     pub fn file_to_exclude(&self, file: &Path) -> bool {
         let abs = file.display().to_string();
-        patterns(&self.all_cops(), "Exclude").unwrap_or_default().iter().any(|p| p.matches(&abs))
+        patterns(self.all_cops(), "Exclude").unwrap_or_default().iter().any(|p| p.matches(&abs))
     }
 
     /// Config#file_to_include? (AllCops/Include).
     pub fn file_to_include(&self, file: &Path) -> bool {
         let rel = self.relative(file);
         let abs = file.display().to_string();
-        let include = patterns(&self.all_cops(), "Include").unwrap_or_default();
+        let include = patterns(self.all_cops(), "Include").unwrap_or_default();
         let hidden = rel.starts_with('.') && !rel.starts_with("..");
         let possibly_hidden = include.iter().any(|p| match p {
             Pattern::Regex(_) => true,
