@@ -1,0 +1,36 @@
+==> offenses exit=1 590 <==
+test/000/000.rb:1:26: C: [Correctable] Rails/ActionControllerTestCase: Use `ActionDispatch::IntegrationTest` instead.
+test/001/001.rb:1:26: C: [Correctable] Rails/ActionControllerTestCase: Use `ActionDispatch::IntegrationTest` instead.
+test/002/002.rb:1:28: C: [Correctable] Rails/ActionControllerTestCase: Use `ActionDispatch::IntegrationTest` instead.
+test/003/003.rb:1:26: C: [Correctable] Rails/ActionControllerTestCase: Use `ActionDispatch::IntegrationTest` instead.
+test/004/004.rb:1:36: C: [Correctable] Rails/ActionControllerTestCase: Use `ActionDispatch::IntegrationTest` instead.
+
+==> autocorrect exit=0 580 <==
+test/000/000.rb:1:26: C: [Corrected] Rails/ActionControllerTestCase: Use `ActionDispatch::IntegrationTest` instead.
+test/001/001.rb:1:26: C: [Corrected] Rails/ActionControllerTestCase: Use `ActionDispatch::IntegrationTest` instead.
+test/002/002.rb:1:28: C: [Corrected] Rails/ActionControllerTestCase: Use `ActionDispatch::IntegrationTest` instead.
+test/003/003.rb:1:26: C: [Corrected] Rails/ActionControllerTestCase: Use `ActionDispatch::IntegrationTest` instead.
+test/004/004.rb:1:36: C: [Corrected] Rails/ActionControllerTestCase: Use `ActionDispatch::IntegrationTest` instead.
+
+==> corrected/test/000/000.rb 61 <==
+class MyControllerTest < ActionDispatch::IntegrationTest
+end
+
+==> corrected/test/001/001.rb 61 <==
+class MyControllerTest < ActionDispatch::IntegrationTest
+end
+
+==> corrected/test/002/002.rb 63 <==
+class ::MyControllerTest < ActionDispatch::IntegrationTest
+end
+
+==> corrected/test/003/003.rb 82 <==
+class MyControllerTest < ActionDispatch::IntegrationTest
+  def test_foo
+  end
+end
+
+==> corrected/test/004/004.rb 71 <==
+class Foo::Bar::MyControllerTest < ActionDispatch::IntegrationTest
+end
+

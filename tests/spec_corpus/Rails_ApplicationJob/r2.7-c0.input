@@ -1,0 +1,39 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 4.2
+
+==> 000/000.rb 43 <==
+class ApplicationJob < ActiveJob::Base
+end
+
+==> 001/001.rb 34 <==
+class MyJob < ActiveJob::Base
+end
+
+==> 002/002.rb 34 <==
+class MyJob < ActiveJob::Base; end
+==> 003/003.rb 56 <==
+module Nested
+  class MyJob < ActiveJob::Base
+  end
+end
+
+==> 004/004.rb 42 <==
+class Nested::MyJob < ActiveJob::Base
+end
+
+==> 005/005.rb 34 <==
+MyJob = Class.new(ActiveJob::Base)
+==> 006/006.rb 42 <==
+Nested::MyJob = Class.new(ActiveJob::Base)
+==> 007/007.rb 29 <==
+Class.new(ActiveJob::Base) {}
+==> 008/008.rb 43 <==
+ApplicationJob = Class.new(ActiveJob::Base)

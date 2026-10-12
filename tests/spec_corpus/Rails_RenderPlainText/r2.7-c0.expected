@@ -1,0 +1,9 @@
+==> offenses exit=1 100 <==
+001/001.rb:1:1: C: [Correctable] Rails/RenderPlainText: Prefer `render plain:` over `render text:`.
+
+==> autocorrect exit=0 98 <==
+001/001.rb:1:1: C: [Corrected] Rails/RenderPlainText: Prefer `render plain:` over `render text:`.
+
+==> corrected/001/001.rb 22 <==
+render plain: 'Ruby!'
+

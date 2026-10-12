@@ -1,0 +1,23 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 6.0
+
+==> 000/000.rb 25 <==
+require_dependency 'foo'
+
+==> 001/001.rb 32 <==
+Kernel.require_dependency 'foo'
+
+==> 002/002.rb 34 <==
+::Kernel.require_dependency 'foo'
+
+==> 003/003.rb 37 <==
+Foo::Kernel.require_dependency 'foo'
+

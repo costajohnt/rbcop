@@ -1,0 +1,88 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 6.0
+
+==> 000/000.rb 51 <==
+x.each_with_object({}) { |el, h| h[el] = foo(el) }
+
+==> 001/001.rb 64 <==
+x.each_with_object({}) do |el, memo|
+  memo[el] = el.to_sym
+end
+
+==> 002/002.rb 52 <==
+x&.each_with_object({}) { |el, h| h[el] = foo(el) }
+
+==> 003/003.rb 58 <==
+x.each_with_object({}) { |el, h| h[el.to_sym] = foo(el) }
+
+==> 004/004.rb 45 <==
+x.each_with_object({}) { |el, h| h[el] = el }
+==> 005/005.rb 59 <==
+x.each_with_object({}) { |el, h| other_h[el] = el.to_sym }
+
+==> 006/006.rb 51 <==
+x.each_with_object({}) { |el, h| h[el] = h.count }
+
+==> 007/007.rb 54 <==
+x.map { |el| [el, el.to_sym] }.to_h { |k, v| [v, k] }
+
+==> 008/008.rb 36 <==
+x.map { |el| [el, el.to_sym] }.to_h
+
+==> 009/009.rb 40 <==
+x.map { |el| [el, { value: el }] }.to_h
+
+==> 010/010.rb 36 <==
+x.map { |el| [el, value: el] }.to_h
+
+==> 011/011.rb 30 <==
+x.map { |el| [el, el.to_sym] }
+==> 012/012.rb 63 <==
+wrapping do
+  x.map do |el|
+    [el, el.to_sym]
+  end.to_h
+end
+
+==> 013/013.rb 37 <==
+Hash[x.map { |el| [el, el.to_sym] }]
+
+==> 014/014.rb 39 <==
+::Hash[x.map { |el| [el, el.to_sym] }]
+
+==> 015/015.rb 42 <==
+Foo::Hash[x.map { |el| [el, el.to_sym] }]
+
+==> 016/016.rb 31 <==
+x.map { [_1, _1.to_sym] }.to_h
+
+==> 017/017.rb 36 <==
+x.map { [foo(_1), _1.to_sym] }.to_h
+
+==> 018/018.rb 32 <==
+Hash[x.map { [_1, _1.to_sym] }]
+
+==> 019/019.rb 32 <==
+Hash[x.map { [_2, _1.to_sym] }]
+
+==> 020/020.rb 27 <==
+x.to_h { [_1, _1.to_sym] }
+
+==> 021/021.rb 27 <==
+x.to_h { [_1, _2.to_sym] }
+
+==> 022/022.rb 139 <==
+x.each_with_object({}) do |el, h|
+  h[el] = el.each_with_object({}) do |inner_el, inner_h|
+    inner_h[inner_el] = foo(inner_el)
+  end
+end
+

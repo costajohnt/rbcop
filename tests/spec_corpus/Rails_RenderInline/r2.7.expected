@@ -1,0 +1,8 @@
+==> offenses exit=1 172 <==
+000/000.rb:1:1: C: Rails/RenderInline: Prefer using a template over inline rendering.
+001/001.rb:1:1: C: Rails/RenderInline: Prefer using a template over inline rendering.
+
+==> autocorrect exit=1 172 <==
+000/000.rb:1:1: C: Rails/RenderInline: Prefer using a template over inline rendering.
+001/001.rb:1:1: C: Rails/RenderInline: Prefer using a template over inline rendering.
+

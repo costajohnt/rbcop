@@ -1,0 +1,28 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 88 <==
+class MyModel < ApplicationRecord
+  scope :my_scope, -> { select(arel_table["*"]) }
+end
+
+==> 001/001.rb 16 <==
+arel_table["*"]
+
+==> 002/002.rb 24 <==
+MyModel.arel_table["*"]
+
+==> 003/003.rb 13 <==
+MyModel["*"]
+
+==> 004/004.rb 32 <==
+hsh = { '*' => 'foo' }
+hsh['*']
+

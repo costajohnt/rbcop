@@ -1,0 +1,8 @@
+==> offenses exit=1 207 <==
+app/helpers/000/000.rb:2:12: C: Rails/HelperInstanceVariable: Do not use instance variables in helpers.
+app/helpers/001/001.rb:2:3: C: Rails/HelperInstanceVariable: Do not use instance variables in helpers.
+
+==> autocorrect exit=1 207 <==
+app/helpers/000/000.rb:2:12: C: Rails/HelperInstanceVariable: Do not use instance variables in helpers.
+app/helpers/001/001.rb:2:3: C: Rails/HelperInstanceVariable: Do not use instance variables in helpers.
+

@@ -1,0 +1,12 @@
+==> offenses exit=1 340 <==
+000/000.rb:2:3: W: Rails/DuplicateScope: Multiple scopes share this same expression.
+000/000.rb:3:3: W: Rails/DuplicateScope: Multiple scopes share this same expression.
+001/001.rb:4:3: W: Rails/DuplicateScope: Multiple scopes share this same expression.
+001/001.rb:5:3: W: Rails/DuplicateScope: Multiple scopes share this same expression.
+
+==> autocorrect exit=1 340 <==
+000/000.rb:2:3: W: Rails/DuplicateScope: Multiple scopes share this same expression.
+000/000.rb:3:3: W: Rails/DuplicateScope: Multiple scopes share this same expression.
+001/001.rb:4:3: W: Rails/DuplicateScope: Multiple scopes share this same expression.
+001/001.rb:5:3: W: Rails/DuplicateScope: Multiple scopes share this same expression.
+

@@ -1,0 +1,15 @@
+==> .rubocop.yml 180 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/RequestReferer:
+  EnforcedStyle: referer
+
+==> 000/000.rb 22 <==
+puts request.referrer
+

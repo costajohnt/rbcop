@@ -1,0 +1,82 @@
+==> offenses exit=1 1399 <==
+005/005.rb:2:3: C: [Correctable] Rails/RelativeDateConstant: Do not assign `since` to constants as it will be evaluated only once.
+006/006.rb:2:3: C: [Correctable] Rails/RelativeDateConstant: Do not assign `yesterday` to constants as it will be evaluated only once.
+007/007.rb:2:3: C: [Correctable] Rails/RelativeDateConstant: Do not assign `tomorrow` to constants as it will be evaluated only once.
+008/008.rb:2:3: C: [Correctable] Rails/RelativeDateConstant: Do not assign `ago` to constants as it will be evaluated only once.
+009/009.rb:2:3: C: [Correctable] Rails/RelativeDateConstant: Do not assign `since` to constants as it will be evaluated only once.
+010/010.rb:2:3: C: [Correctable] Rails/RelativeDateConstant: Do not assign `since` to constants as it will be evaluated only once.
+011/011.rb:2:3: C: [Correctable] Rails/RelativeDateConstant: Do not assign `ago` to constants as it will be evaluated only once.
+012/012.rb:2:3: C: [Correctable] Rails/RelativeDateConstant: Do not assign `ago` to constants as it will be evaluated only once.
+013/013.rb:2:3: C: Rails/RelativeDateConstant: Do not assign `since` to constants as it will be evaluated only once.
+014/014.rb:2:3: C: Rails/RelativeDateConstant: Do not assign `ago` to constants as it will be evaluated only once.
+014/014.rb:2:10: C: Rails/RelativeDateConstant: Do not assign `since` to constants as it will be evaluated only once.
+
+==> autocorrect exit=1 1383 <==
+005/005.rb:2:3: C: [Corrected] Rails/RelativeDateConstant: Do not assign `since` to constants as it will be evaluated only once.
+006/006.rb:2:3: C: [Corrected] Rails/RelativeDateConstant: Do not assign `yesterday` to constants as it will be evaluated only once.
+007/007.rb:2:3: C: [Corrected] Rails/RelativeDateConstant: Do not assign `tomorrow` to constants as it will be evaluated only once.
+008/008.rb:2:3: C: [Corrected] Rails/RelativeDateConstant: Do not assign `ago` to constants as it will be evaluated only once.
+009/009.rb:2:3: C: [Corrected] Rails/RelativeDateConstant: Do not assign `since` to constants as it will be evaluated only once.
+010/010.rb:2:3: C: [Corrected] Rails/RelativeDateConstant: Do not assign `since` to constants as it will be evaluated only once.
+011/011.rb:2:3: C: [Corrected] Rails/RelativeDateConstant: Do not assign `ago` to constants as it will be evaluated only once.
+012/012.rb:2:3: C: [Corrected] Rails/RelativeDateConstant: Do not assign `ago` to constants as it will be evaluated only once.
+013/013.rb:2:3: C: Rails/RelativeDateConstant: Do not assign `since` to constants as it will be evaluated only once.
+014/014.rb:2:3: C: Rails/RelativeDateConstant: Do not assign `ago` to constants as it will be evaluated only once.
+014/014.rb:2:10: C: Rails/RelativeDateConstant: Do not assign `since` to constants as it will be evaluated only once.
+
+==> corrected/005/005.rb 65 <==
+class SomeClass
+  def self.expired_at
+    1.week.since
+  end
+end
+
+==> corrected/006/006.rb 68 <==
+class SomeClass
+  def self.recent_date
+    Date.yesterday
+  end
+end
+
+==> corrected/007/007.rb 72 <==
+class SomeClass
+  def self.future_date
+    Time.zone.tomorrow
+  end
+end
+
+==> corrected/008/008.rb 72 <==
+class SomeClass
+  def self.start_date
+    2.weeks.ago.to_date
+  end
+end
+
+==> corrected/009/009.rb 84 <==
+class SomeClass
+  def self.trial_period
+    DateTime.current..1.day.since
+  end
+end
+
+==> corrected/010/010.rb 85 <==
+class SomeClass
+  def self.trial_period
+    DateTime.current...1.day.since
+  end
+end
+
+==> corrected/011/011.rb 82 <==
+class SomeClass
+  def self.trial_period
+    1.day.ago..DateTime.current
+  end
+end
+
+==> corrected/012/012.rb 83 <==
+class SomeClass
+  def self.trial_period
+    1.day.ago...DateTime.current
+  end
+end
+

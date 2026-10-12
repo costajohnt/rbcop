@@ -1,0 +1,109 @@
+==> offenses exit=1 1611 <==
+000/000.rb:1:10: C: [Correctable] Rails/FindEach: Use `find_each` instead of `each`.
+004/004.rb:1:36: C: [Correctable] Rails/FindEach: Use `find_each` instead of `each`.
+008/008.rb:1:34: C: [Correctable] Rails/FindEach: Use `find_each` instead of `each`.
+012/012.rb:1:31: C: [Correctable] Rails/FindEach: Use `find_each` instead of `each`.
+016/016.rb:1:36: C: [Correctable] Rails/FindEach: Use `find_each` instead of `each`.
+020/020.rb:1:42: C: [Correctable] Rails/FindEach: Use `find_each` instead of `each`.
+024/024.rb:1:49: C: [Correctable] Rails/FindEach: Use `find_each` instead of `each`.
+028/028.rb:1:33: C: [Correctable] Rails/FindEach: Use `find_each` instead of `each`.
+032/032.rb:1:36: C: [Correctable] Rails/FindEach: Use `find_each` instead of `each`.
+036/036.rb:1:15: C: [Correctable] Rails/FindEach: Use `find_each` instead of `each`.
+040/040.rb:1:24: C: [Correctable] Rails/FindEach: Use `find_each` instead of `each`.
+044/044.rb:1:28: C: [Correctable] Rails/FindEach: Use `find_each` instead of `each`.
+051/051.rb:2:37: C: [Correctable] Rails/FindEach: Use `find_each` instead of `each`.
+052/052.rb:1:10: C: [Correctable] Rails/FindEach: Use `find_each` instead of `each`.
+053/053.rb:1:19: C: [Correctable] Rails/FindEach: Use `find_each` instead of `each`.
+056/056.rb:2:7: C: [Correctable] Rails/FindEach: Use `find_each` instead of `each`.
+057/057.rb:2:7: C: [Correctable] Rails/FindEach: Use `find_each` instead of `each`.
+058/058.rb:2:7: C: [Correctable] Rails/FindEach: Use `find_each` instead of `each`.
+059/059.rb:2:7: C: [Correctable] Rails/FindEach: Use `find_each` instead of `each`.
+
+==> autocorrect exit=0 1573 <==
+000/000.rb:1:10: C: [Corrected] Rails/FindEach: Use `find_each` instead of `each`.
+004/004.rb:1:36: C: [Corrected] Rails/FindEach: Use `find_each` instead of `each`.
+008/008.rb:1:34: C: [Corrected] Rails/FindEach: Use `find_each` instead of `each`.
+012/012.rb:1:31: C: [Corrected] Rails/FindEach: Use `find_each` instead of `each`.
+016/016.rb:1:36: C: [Corrected] Rails/FindEach: Use `find_each` instead of `each`.
+020/020.rb:1:42: C: [Corrected] Rails/FindEach: Use `find_each` instead of `each`.
+024/024.rb:1:49: C: [Corrected] Rails/FindEach: Use `find_each` instead of `each`.
+028/028.rb:1:33: C: [Corrected] Rails/FindEach: Use `find_each` instead of `each`.
+032/032.rb:1:36: C: [Corrected] Rails/FindEach: Use `find_each` instead of `each`.
+036/036.rb:1:15: C: [Corrected] Rails/FindEach: Use `find_each` instead of `each`.
+040/040.rb:1:24: C: [Corrected] Rails/FindEach: Use `find_each` instead of `each`.
+044/044.rb:1:28: C: [Corrected] Rails/FindEach: Use `find_each` instead of `each`.
+051/051.rb:2:37: C: [Corrected] Rails/FindEach: Use `find_each` instead of `each`.
+052/052.rb:1:10: C: [Corrected] Rails/FindEach: Use `find_each` instead of `each`.
+053/053.rb:1:19: C: [Corrected] Rails/FindEach: Use `find_each` instead of `each`.
+056/056.rb:2:7: C: [Corrected] Rails/FindEach: Use `find_each` instead of `each`.
+057/057.rb:2:7: C: [Corrected] Rails/FindEach: Use `find_each` instead of `each`.
+058/058.rb:2:7: C: [Corrected] Rails/FindEach: Use `find_each` instead of `each`.
+059/059.rb:2:7: C: [Corrected] Rails/FindEach: Use `find_each` instead of `each`.
+
+==> corrected/000/000.rb 39 <==
+User.all.find_each { |u| u.something }
+
+==> corrected/004/004.rb 65 <==
+User.eager_load(:association_name).find_each { |u| u.something }
+
+==> corrected/008/008.rb 63 <==
+User.includes(:association_name).find_each { |u| u.something }
+
+==> corrected/012/012.rb 60 <==
+User.joins(:association_name).find_each { |u| u.something }
+
+==> corrected/016/016.rb 65 <==
+User.left_joins(:association_name).find_each { |u| u.something }
+
+==> corrected/020/020.rb 71 <==
+User.left_outer_joins(:association_name).find_each { |u| u.something }
+
+==> corrected/024/024.rb 78 <==
+User.where(name: name).or(User.where(age: age)).find_each { |u| u.something }
+
+==> corrected/028/028.rb 62 <==
+User.preload(:association_name).find_each { |u| u.something }
+
+==> corrected/032/032.rb 65 <==
+User.references(:association_name).find_each { |u| u.something }
+
+==> corrected/036/036.rb 44 <==
+User.unscoped.find_each { |u| u.something }
+
+==> corrected/040/040.rb 53 <==
+User.where(name: name).find_each { |u| u.something }
+
+==> corrected/044/044.rb 57 <==
+User.where.not(name: name).find_each { |u| u.something }
+
+==> corrected/051/051.rb 91 <==
+class Model < ApplicationRecord
+  where(record: [record1, record2]).find_each(&:touch)
+end
+
+==> corrected/052/052.rb 31 <==
+User.all.find_each { |u| u.x }
+
+==> corrected/053/053.rb 45 <==
+class C; User.all.find_each { |u| u.x }; end
+
+==> corrected/056/056.rb 60 <==
+class C < ApplicationRecord
+  all.find_each { |u| u.x }
+end
+
+==> corrected/057/057.rb 62 <==
+class C < ::ApplicationRecord
+  all.find_each { |u| u.x }
+end
+
+==> corrected/058/058.rb 61 <==
+class C < ActiveRecord::Base
+  all.find_each { |u| u.x }
+end
+
+==> corrected/059/059.rb 63 <==
+class C < ::ActiveRecord::Base
+  all.find_each { |u| u.x }
+end
+

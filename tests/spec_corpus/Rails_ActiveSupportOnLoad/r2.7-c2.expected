@@ -1,0 +1,14 @@
+==> offenses exit=1 410 <==
+000/000.rb:1:1: C: [Correctable] Rails/ActiveSupportOnLoad: Use `ActiveSupport.on_load(:active_record_sqlite3adapter) { include MyClass }` instead of `ActiveRecord::ConnectionAdapters::SQLite3Adapter.include(MyClass)`.
+001/001.rb:1:1: C: [Correctable] Rails/ActiveSupportOnLoad: Use `ActiveSupport.on_load(:active_record_fixtures) { include MyClass }` instead of `ActiveRecord::TestFixtures.include(MyClass)`.
+
+==> autocorrect exit=0 406 <==
+000/000.rb:1:1: C: [Corrected] Rails/ActiveSupportOnLoad: Use `ActiveSupport.on_load(:active_record_sqlite3adapter) { include MyClass }` instead of `ActiveRecord::ConnectionAdapters::SQLite3Adapter.include(MyClass)`.
+001/001.rb:1:1: C: [Corrected] Rails/ActiveSupportOnLoad: Use `ActiveSupport.on_load(:active_record_fixtures) { include MyClass }` instead of `ActiveRecord::TestFixtures.include(MyClass)`.
+
+==> corrected/000/000.rb 73 <==
+ActiveSupport.on_load(:active_record_sqlite3adapter) { include MyClass }
+
+==> corrected/001/001.rb 67 <==
+ActiveSupport.on_load(:active_record_fixtures) { include MyClass }
+

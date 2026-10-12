@@ -1,0 +1,19 @@
+==> offenses exit=1 357 <==
+000/000.rb:1:1: W: [Correctable] Rails/TopLevelHashWithIndifferentAccess: Avoid top-level `HashWithIndifferentAccess`.
+001/001.rb:1:1: W: [Correctable] Rails/TopLevelHashWithIndifferentAccess: Avoid top-level `HashWithIndifferentAccess`.
+002/002.rb:1:1: W: [Correctable] Rails/TopLevelHashWithIndifferentAccess: Avoid top-level `HashWithIndifferentAccess`.
+
+==> autocorrect exit=0 351 <==
+000/000.rb:1:1: W: [Corrected] Rails/TopLevelHashWithIndifferentAccess: Avoid top-level `HashWithIndifferentAccess`.
+001/001.rb:1:1: W: [Corrected] Rails/TopLevelHashWithIndifferentAccess: Avoid top-level `HashWithIndifferentAccess`.
+002/002.rb:1:1: W: [Corrected] Rails/TopLevelHashWithIndifferentAccess: Avoid top-level `HashWithIndifferentAccess`.
+
+==> corrected/000/000.rb 57 <==
+ActiveSupport::HashWithIndifferentAccess.new(foo: 'bar')
+
+==> corrected/001/001.rb 59 <==
+::ActiveSupport::HashWithIndifferentAccess.new(foo: 'bar')
+
+==> corrected/002/002.rb 41 <==
+ActiveSupport::HashWithIndifferentAccess
+

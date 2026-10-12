@@ -1,0 +1,45 @@
+==> offenses exit=1 1120 <==
+db/000/20250101010101_add_column_to_table.rb:1:51: C: [Correctable] Rails/AddColumnIndex: `add_column` does not accept an `index` key, use `add_index` instead.
+db/001/20250101010101_add_column_to_table.rb:1:51: C: [Correctable] Rails/AddColumnIndex: `add_column` does not accept an `index` key, use `add_index` instead.
+db/002/20250101010101_add_column_to_table.rb:1:39: C: [Correctable] Rails/AddColumnIndex: `add_column` does not accept an `index` key, use `add_index` instead.
+db/003/20250101010101_add_column_to_table.rb:1:39: C: [Correctable] Rails/AddColumnIndex: `add_column` does not accept an `index` key, use `add_index` instead.
+db/004/20250101010101_add_column_to_table.rb:2:12: C: [Correctable] Rails/AddColumnIndex: `add_column` does not accept an `index` key, use `add_index` instead.
+db/005/20250101010101_add_column_to_table.rb:1:51: C: [Correctable] Rails/AddColumnIndex: `add_column` does not accept an `index` key, use `add_index` instead.
+db/005/20250101010101_add_column_to_table.rb:2:52: C: [Correctable] Rails/AddColumnIndex: `add_column` does not accept an `index` key, use `add_index` instead.
+
+==> autocorrect exit=0 1106 <==
+db/000/20250101010101_add_column_to_table.rb:1:51: C: [Corrected] Rails/AddColumnIndex: `add_column` does not accept an `index` key, use `add_index` instead.
+db/001/20250101010101_add_column_to_table.rb:1:51: C: [Corrected] Rails/AddColumnIndex: `add_column` does not accept an `index` key, use `add_index` instead.
+db/002/20250101010101_add_column_to_table.rb:1:39: C: [Corrected] Rails/AddColumnIndex: `add_column` does not accept an `index` key, use `add_index` instead.
+db/003/20250101010101_add_column_to_table.rb:1:39: C: [Corrected] Rails/AddColumnIndex: `add_column` does not accept an `index` key, use `add_index` instead.
+db/004/20250101010101_add_column_to_table.rb:2:12: C: [Corrected] Rails/AddColumnIndex: `add_column` does not accept an `index` key, use `add_index` instead.
+db/005/20250101010101_add_column_to_table.rb:1:51: C: [Corrected] Rails/AddColumnIndex: `add_column` does not accept an `index` key, use `add_index` instead.
+db/005/20250101010101_add_column_to_table.rb:2:52: C: [Corrected] Rails/AddColumnIndex: `add_column` does not accept an `index` key, use `add_index` instead.
+
+==> corrected/db/000/20250101010101_add_column_to_table.rb 75 <==
+add_column :table, :column, :integer, default: 0
+add_index :table, :column
+
+==> corrected/db/001/20250101010101_add_column_to_table.rb 114 <==
+add_column :table, :column, :integer, default: 0
+add_index :table, :column, unique: true, name: 'my_unique_index'
+
+==> corrected/db/002/20250101010101_add_column_to_table.rb 75 <==
+add_column :table, :column, :integer, default: 0
+add_index :table, :column
+
+==> corrected/db/003/20250101010101_add_column_to_table.rb 75 <==
+add_column :table, :column, :integer, default: 0
+add_index :table, :column
+
+==> corrected/db/004/20250101010101_add_column_to_table.rb 86 <==
+add_column :table, :column, :integer,
+           default: 0
+add_index :table, :column
+
+==> corrected/db/005/20250101010101_add_column_to_table.rb 152 <==
+add_column :table, :column, :integer, default: 0
+add_index :table, :column
+add_column :table, :column2, :integer, default: 0
+add_index :table, :column2
+

@@ -1,0 +1,6 @@
+==> offenses exit=1 84 <==
+000/000.rb:3:21: C: Rails/ReflectionClassName: Use a string value for `class_name`.
+
+==> autocorrect exit=1 84 <==
+000/000.rb:3:21: C: Rails/ReflectionClassName: Use a string value for `class_name`.
+

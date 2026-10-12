@@ -1,0 +1,75 @@
+==> offenses exit=1 1182 <==
+000/000.rb:1:1: C: [Correctable] Rails/IndexBy: Prefer `index_by` over `each_with_object`.
+001/001.rb:1:1: C: [Correctable] Rails/IndexBy: Prefer `index_by` over `each_with_object`.
+002/002.rb:1:1: C: [Correctable] Rails/IndexBy: Prefer `index_by` over `each_with_object`.
+007/007.rb:1:1: C: [Correctable] Rails/IndexBy: Prefer `index_by` over `map { ... }.to_h`.
+008/008.rb:1:1: C: [Correctable] Rails/IndexBy: Prefer `index_by` over `map { ... }.to_h`.
+009/009.rb:1:1: C: [Correctable] Rails/IndexBy: Prefer `index_by` over `map { ... }.to_h`.
+010/010.rb:1:1: C: [Correctable] Rails/IndexBy: Prefer `index_by` over `map { ... }.to_h`.
+012/012.rb:2:3: C: [Correctable] Rails/IndexBy: Prefer `index_by` over `map { ... }.to_h`.
+013/013.rb:1:1: C: [Correctable] Rails/IndexBy: Prefer `index_by` over `Hash[map { ... }]`.
+014/014.rb:1:1: C: [Correctable] Rails/IndexBy: Prefer `index_by` over `Hash[map { ... }]`.
+016/016.rb:1:1: C: [Correctable] Rails/IndexBy: Prefer `index_by` over `map { ... }.to_h`.
+018/018.rb:1:1: C: [Correctable] Rails/IndexBy: Prefer `index_by` over `Hash[map { ... }]`.
+020/020.rb:1:1: C: [Correctable] Rails/IndexBy: Prefer `index_by` over `to_h { ... }`.
+
+==> autocorrect exit=0 1156 <==
+000/000.rb:1:1: C: [Corrected] Rails/IndexBy: Prefer `index_by` over `each_with_object`.
+001/001.rb:1:1: C: [Corrected] Rails/IndexBy: Prefer `index_by` over `each_with_object`.
+002/002.rb:1:1: C: [Corrected] Rails/IndexBy: Prefer `index_by` over `each_with_object`.
+007/007.rb:1:1: C: [Corrected] Rails/IndexBy: Prefer `index_by` over `map { ... }.to_h`.
+008/008.rb:1:1: C: [Corrected] Rails/IndexBy: Prefer `index_by` over `map { ... }.to_h`.
+009/009.rb:1:1: C: [Corrected] Rails/IndexBy: Prefer `index_by` over `map { ... }.to_h`.
+010/010.rb:1:1: C: [Corrected] Rails/IndexBy: Prefer `index_by` over `map { ... }.to_h`.
+012/012.rb:2:3: C: [Corrected] Rails/IndexBy: Prefer `index_by` over `map { ... }.to_h`.
+013/013.rb:1:1: C: [Corrected] Rails/IndexBy: Prefer `index_by` over `Hash[map { ... }]`.
+014/014.rb:1:1: C: [Corrected] Rails/IndexBy: Prefer `index_by` over `Hash[map { ... }]`.
+016/016.rb:1:1: C: [Corrected] Rails/IndexBy: Prefer `index_by` over `map { ... }.to_h`.
+018/018.rb:1:1: C: [Corrected] Rails/IndexBy: Prefer `index_by` over `Hash[map { ... }]`.
+020/020.rb:1:1: C: [Corrected] Rails/IndexBy: Prefer `index_by` over `to_h { ... }`.
+
+==> corrected/000/000.rb 28 <==
+x.index_by { |el| foo(el) }
+
+==> corrected/001/001.rb 35 <==
+x.index_by do |el|
+  el.to_sym
+end
+
+==> corrected/002/002.rb 29 <==
+x&.index_by { |el| foo(el) }
+
+==> corrected/007/007.rb 53 <==
+x.index_by { |el| el.to_sym }.to_h { |k, v| [v, k] }
+
+==> corrected/008/008.rb 30 <==
+x.index_by { |el| el.to_sym }
+
+==> corrected/009/009.rb 30 <==
+x.index_by { |el| el.to_sym }
+
+==> corrected/010/010.rb 30 <==
+x.index_by { |el| el.to_sym }
+
+==> corrected/012/012.rb 57 <==
+wrapping do
+  x.index_by do |el|
+    el.to_sym
+  end
+end
+
+==> corrected/013/013.rb 30 <==
+x.index_by { |el| el.to_sym }
+
+==> corrected/014/014.rb 30 <==
+x.index_by { |el| el.to_sym }
+
+==> corrected/016/016.rb 25 <==
+x.index_by { _1.to_sym }
+
+==> corrected/018/018.rb 25 <==
+x.index_by { _1.to_sym }
+
+==> corrected/020/020.rb 25 <==
+x.index_by { _1.to_sym }
+

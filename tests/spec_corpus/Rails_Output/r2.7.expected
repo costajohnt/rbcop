@@ -1,0 +1,76 @@
+==> offenses exit=1 1824 <==
+app/000/000.rb:1:1: C: [Correctable] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/001/001.rb:1:1: C: [Correctable] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/002/002.rb:1:1: C: [Correctable] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/003/003.rb:1:1: C: [Correctable] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/004/004.rb:1:1: C: [Correctable] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/005/005.rb:1:1: C: [Correctable] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/006/006.rb:1:1: C: [Correctable] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/007/007.rb:1:1: C: [Correctable] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/008/008.rb:1:1: C: [Correctable] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/009/009.rb:1:1: C: [Correctable] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/011/011.rb:1:1: C: [Correctable] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/011/011.rb:2:1: C: [Correctable] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/011/011.rb:3:1: C: [Correctable] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/011/011.rb:4:1: C: [Correctable] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/011/011.rb:5:1: C: [Correctable] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/012/012.rb:1:1: C: [Correctable] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+
+==> autocorrect exit=0 1792 <==
+app/000/000.rb:1:1: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/001/001.rb:1:1: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/002/002.rb:1:1: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/003/003.rb:1:1: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/004/004.rb:1:1: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/005/005.rb:1:1: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/006/006.rb:1:1: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/007/007.rb:1:1: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/008/008.rb:1:1: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/009/009.rb:1:1: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/011/011.rb:1:1: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/011/011.rb:2:1: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/011/011.rb:3:1: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/011/011.rb:4:1: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/011/011.rb:5:1: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+app/012/012.rb:1:1: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+
+==> corrected/app/000/000.rb 35 <==
+Rails.logger.debug "edmond dantes"
+
+==> corrected/app/001/001.rb 28 <==
+Rails.logger.debug "sinbad"
+
+==> corrected/app/002/002.rb 33 <==
+Rails.logger.debug "abbe busoni"
+
+==> corrected/app/003/003.rb 34 <==
+Rails.logger.debug "monte cristo"
+
+==> corrected/app/004/004.rb 34 <==
+Rails.logger.debug "lord wilmore"
+
+==> corrected/app/005/005.rb 27 <==
+Rails.logger.debug "faria"
+
+==> corrected/app/006/006.rb 31 <==
+Rails.logger.debug "bertuccio"
+
+==> corrected/app/007/007.rb 31 <==
+Rails.logger.debug "bertuccio"
+
+==> corrected/app/008/008.rb 31 <==
+Rails.logger.debug "bertuccio"
+
+==> corrected/app/009/009.rb 31 <==
+Rails.logger.debug "bertuccio"
+
+==> corrected/app/011/011.rb 95 <==
+Rails.logger.debug
+Rails.logger.debug
+Rails.logger.debug
+Rails.logger.debug
+Rails.logger.debug
+
+==> corrected/app/012/012.rb 33 <==
+Rails.logger.debug(do_something)
+

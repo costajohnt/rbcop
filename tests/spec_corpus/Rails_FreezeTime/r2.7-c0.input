@@ -1,0 +1,34 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 5.1
+
+==> 000/000.rb 19 <==
+travel_to(Time.now)
+==> 001/001.rb 19 <==
+travel_to(Time.new)
+==> 002/002.rb 23 <==
+travel_to(DateTime.now)
+==> 003/003.rb 23 <==
+travel_to(Time.current)
+==> 004/004.rb 24 <==
+travel_to(Time.zone.now)
+==> 005/005.rb 42 <==
+travel_to(Time.now) do
+  do_something
+end
+
+==> 006/006.rb 37 <==
+travel_to(Time.now) { do_something }
+
+==> 007/007.rb 60 <==
+around do |example|
+  travel_to(Time.current, &example)
+end
+

@@ -1,0 +1,34 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 24 <==
+User.where(id: 1).take!
+
+==> 001/001.rb 25 <==
+User.where(id: 1)&.take!
+
+==> 002/002.rb 26 <==
+User&.where(id: 1)&.take!
+
+==> 003/003.rb 20 <==
+User.find_by_id!(1)
+
+==> 004/004.rb 21 <==
+User&.find_by_id!(1)
+
+==> 005/005.rb 21 <==
+User.find_by!(id: 1)
+
+==> 006/006.rb 22 <==
+User&.find_by!(id: 1)
+
+==> 007/007.rb 13 <==
+User.find(1)
+

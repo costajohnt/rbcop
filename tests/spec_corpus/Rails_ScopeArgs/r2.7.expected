@@ -1,0 +1,9 @@
+==> offenses exit=1 114 <==
+app/models/000/000.rb:1:16: C: [Correctable] Rails/ScopeArgs: Use `lambda`/`proc` instead of a plain method call.
+
+==> autocorrect exit=0 112 <==
+app/models/000/000.rb:1:16: C: [Corrected] Rails/ScopeArgs: Use `lambda`/`proc` instead of a plain method call.
+
+==> corrected/app/models/000/000.rb 42 <==
+scope :active, -> { where(active: true) }
+

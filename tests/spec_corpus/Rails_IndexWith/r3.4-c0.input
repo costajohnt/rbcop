@@ -1,0 +1,29 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+  TargetRailsVersion: 6.0
+
+==> 000/000.rb 31 <==
+x.map { [it, it.to_sym] }.to_h
+
+==> 001/001.rb 36 <==
+x.map { [foo(it), it.to_sym] }.to_h
+
+==> 002/002.rb 32 <==
+Hash[x.map { [it, it.to_sym] }]
+
+==> 003/003.rb 31 <==
+Hash[x.map { [y, it.to_sym] }]
+
+==> 004/004.rb 27 <==
+x.to_h { [it, it.to_sym] }
+
+==> 005/005.rb 26 <==
+x.to_h { [it, y.to_sym] }
+

@@ -1,0 +1,25 @@
+==> offenses exit=1 349 <==
+000/000.rb:1:20: C: [Correctable] Rails/UniqBeforePluck: Use `distinct` before `pluck`.
+001/001.rb:2:4: C: [Correctable] Rails/UniqBeforePluck: Use `distinct` before `pluck`.
+002/002.rb:2:3: C: [Correctable] Rails/UniqBeforePluck: Use `distinct` before `pluck`.
+003/003.rb:3:4: C: [Correctable] Rails/UniqBeforePluck: Use `distinct` before `pluck`.
+
+==> autocorrect exit=0 341 <==
+000/000.rb:1:20: C: [Corrected] Rails/UniqBeforePluck: Use `distinct` before `pluck`.
+001/001.rb:2:4: C: [Corrected] Rails/UniqBeforePluck: Use `distinct` before `pluck`.
+002/002.rb:2:3: C: [Corrected] Rails/UniqBeforePluck: Use `distinct` before `pluck`.
+003/003.rb:3:4: C: [Corrected] Rails/UniqBeforePluck: Use `distinct` before `pluck`.
+
+==> corrected/000/000.rb 28 <==
+Model.distinct.pluck(:name)
+
+==> corrected/001/001.rb 28 <==
+Model.distinct.pluck(:name)
+
+==> corrected/002/002.rb 28 <==
+Model.distinct.pluck(:name)
+
+==> corrected/003/003.rb 31 <==
+Model
+  .distinct.pluck(:name)
+

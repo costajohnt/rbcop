@@ -1,0 +1,22 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 32 <==
+do_something unless foo&.blank?
+
+==> 001/001.rb 37 <==
+do_something unless foo&.bar&.blank?
+
+==> 002/002.rb 21 <==
+return if foo.blank?
+
+==> 003/003.rb 18 <==
+bar = foo&.blank?
+

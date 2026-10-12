@@ -1,0 +1,85 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/000/000.rb 18 <==
+p "edmond dantes"
+
+==> app/001/001.rb 14 <==
+puts "sinbad"
+
+==> app/002/002.rb 20 <==
+print "abbe busoni"
+
+==> app/003/003.rb 18 <==
+pp "monte cristo"
+
+==> app/004/004.rb 29 <==
+$stdout.write "lord wilmore"
+
+==> app/005/005.rb 25 <==
+$stderr.syswrite "faria"
+
+==> app/006/006.rb 25 <==
+STDOUT.write "bertuccio"
+
+==> app/007/007.rb 27 <==
+::STDOUT.write "bertuccio"
+
+==> app/008/008.rb 25 <==
+STDERR.write "bertuccio"
+
+==> app/009/009.rb 27 <==
+::STDERR.write "bertuccio"
+
+==> app/010/010.rb 33 <==
+obj.print
+something.p
+nothing.pp
+
+==> app/011/011.rb 41 <==
+print
+pp
+puts
+$stdout.write
+STDERR.write
+
+==> app/012/012.rb 16 <==
+p(do_something)
+
+==> app/013/013.rb 15 <==
+p.do_something
+
+==> app/014/014.rb 37 <==
+p(class: 'this `p` method is a DSL')
+
+==> app/015/015.rb 28 <==
+p(&:this_p_method_is_a_dsl)
+
+==> app/016/016.rb 50 <==
+# phlex-rails gem.
+div do
+  p { 'Some text' }
+end
+
+==> app/017/017.rb 26 <==
+obj.write { do_somethig }
+
+==> app/018/018.rb 31 <==
+obj.write { do_something(_1) }
+
+==> app/019/019.rb 16 <==
+p&.do_something
+
+==> app/020/020.rb 53 <==
+# print "test"
+# p
+# $stdout.write
+# STDERR.binwrite
+

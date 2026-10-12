@@ -1,0 +1,53 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 7.1
+
+==> 000/000.rb 84 <==
+Rails.env.development? || Rails.env.test?
+Rails.env.test? || Rails.env.development?
+
+==> 001/001.rb 100 <==
+Rails.env.development? || Rails.env.test? || foo?
+foo? || Rails.env.test? || Rails.env.development?
+
+==> 002/002.rb 88 <==
+!Rails.env.development? && !Rails.env.test?
+!Rails.env.test? && !Rails.env.development?
+
+==> 003/003.rb 104 <==
+!Rails.env.development? && !Rails.env.test? || foo?
+foo? || !Rails.env.test? && !Rails.env.development?
+
+==> 004/004.rb 104 <==
+!Rails.env.development? && !Rails.env.test? && foo?
+foo? && !Rails.env.test? && !Rails.env.development?
+
+==> 005/005.rb 17 <==
+Rails.env.local?
+
+==> 006/006.rb 50 <==
+Rails.env.development? || Rails.env.test? && foo?
+
+==> 007/007.rb 131 <==
+Rails.env.development? || Rails.env.production?
+Rails.env.test? || Rails.env.production?
+Rails.env.production? || Rails.env.other?
+
+==> 008/008.rb 134 <==
+!Rails.env.development? && Rails.env.production?
+!Rails.env.test? && Rails.env.production?
+!Rails.env.production? && Rails.env.other?
+
+==> 009/009.rb 78 <==
+Rails.env.development?
+Rails.env.test?
+Rails.env.production?
+Rails.env.other?
+

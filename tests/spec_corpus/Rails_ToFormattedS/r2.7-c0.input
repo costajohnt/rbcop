@@ -1,0 +1,22 @@
+==> .rubocop.yml 202 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 7.0
+Rails/ToFormattedS:
+  EnforcedStyle: to_fs
+
+==> 000/000.rb 25 <==
+time.to_formatted_s(:db)
+
+==> 001/001.rb 26 <==
+time&.to_formatted_s(:db)
+
+==> 002/002.rb 16 <==
+time.to_fs(:db)
+

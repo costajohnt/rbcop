@@ -1,0 +1,25 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 33 <==
+belongs_to :foo, required: false
+
+==> 001/001.rb 32 <==
+belongs_to :foo, required: true
+
+==> 002/002.rb 45 <==
+belongs_to :foo, -> { bar }, required: false
+
+==> 003/003.rb 31 <==
+belongs_to :foo, optional: true
+==> 004/004.rb 15 <==
+belongs_to :foo
+==> 005/005.rb 34 <==
+belongs_to :foo, polymorphic: true

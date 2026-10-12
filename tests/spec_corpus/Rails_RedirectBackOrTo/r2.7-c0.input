@@ -1,0 +1,32 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 7.0
+
+==> 000/000.rb 44 <==
+redirect_back(fallback_location: root_path)
+
+==> 001/001.rb 81 <==
+redirect_back(fallback_location: root_path, status: 303, allow_other_host: true)
+
+==> 002/002.rb 55 <==
+redirect_back(fallback_location: root_path, **options)
+
+==> 003/003.rb 51 <==
+redirect_back fallback_location: {action: 'index'}
+
+==> 004/004.rb 52 <==
+redirect_back(fallback_location: {action: 'index'})
+
+==> 005/005.rb 31 <==
+redirect_back_or_to(root_path)
+
+==> 006/006.rb 39 <==
+redirect_back(allow_other_host: false)
+

@@ -1,0 +1,68 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/models/000/000.rb 61 <==
+class X < ApplicationRecord
+  def create
+    super
+  end
+end
+
+==> app/models/001/001.rb 62 <==
+class X < ApplicationRecord
+  def destroy
+    super
+  end
+end
+
+==> app/models/002/002.rb 59 <==
+class X < ApplicationRecord
+  def save
+    super
+  end
+end
+
+==> app/models/003/003.rb 80 <==
+class X < ActiveModel::Base
+  module_function
+
+  def update
+    super
+  end
+end
+
+==> app/models/004/004.rb 60 <==
+class X < ApplicationRecord
+  def save
+    @a = 5
+  end
+end
+
+==> app/models/005/005.rb 39 <==
+class X
+  def save
+    super
+  end
+end
+
+==> app/models/006/006.rb 43 <==
+class X < Y
+  def save
+    super
+  end
+end
+
+==> app/models/007/007.rb 51 <==
+class X
+  def initialize; end
+
+  def save; end
+end
+

@@ -1,0 +1,93 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 54 <==
+class SomeClass
+  EXPIRED_AT = 1.week.since(base)
+end
+
+==> 001/001.rb 53 <==
+class SomeClass
+  EXPIRED_AT = -> { 1.year.ago }
+end
+
+==> 002/002.rb 54 <==
+class SomeClass
+  EXPIRED_AT = -> { _1.year.ago }
+end
+
+==> 003/003.rb 59 <==
+class SomeClass
+  EXPIRED_AT = Proc.new { 1.year.ago }
+end
+
+==> 004/004.rb 114 <==
+class SomeClass
+  EXPIRIES = {
+    yearly: Proc.new { 1.year.ago },
+    monthly: Proc.new { 1.month.ago }
+  }
+end
+
+==> 005/005.rb 48 <==
+class SomeClass
+  EXPIRED_AT = 1.week.since
+end
+
+==> 006/006.rb 51 <==
+class SomeClass
+  RECENT_DATE = Date.yesterday
+end
+
+==> 007/007.rb 55 <==
+class SomeClass
+  FUTURE_DATE = Time.zone.tomorrow
+end
+
+==> 008/008.rb 55 <==
+class SomeClass
+  START_DATE = 2.weeks.ago.to_date
+end
+
+==> 009/009.rb 67 <==
+class SomeClass
+  TRIAL_PERIOD = DateTime.current..1.day.since
+end
+
+==> 010/010.rb 68 <==
+class SomeClass
+  TRIAL_PERIOD = DateTime.current...1.day.since
+end
+
+==> 011/011.rb 65 <==
+class SomeClass
+  TRIAL_PERIOD = 1.day.ago..DateTime.current
+end
+
+==> 012/012.rb 66 <==
+class SomeClass
+  TRIAL_PERIOD = 1.day.ago...DateTime.current
+end
+
+==> 013/013.rb 50 <==
+class SomeClass
+  EXPIRED_AT ||= 1.week.since
+end
+
+==> 014/014.rb 65 <==
+class SomeClass
+  START, A, x = 2.weeks.ago, 1.week.since, 5
+end
+
+==> 015/015.rb 47 <==
+class SomeClass
+  FOO, BAR = *do_something
+end
+

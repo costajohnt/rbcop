@@ -1,0 +1,139 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 48 <==
+link_to 'Click here', 'https://www.example.com'
+
+==> 001/001.rb 62 <==
+link_to 'Click here', 'https://www.example.com', class: 'big'
+
+==> 002/002.rb 70 <==
+link_to 'https://www.example.com', class: 'big' do
+  "Click Here"
+end
+
+==> 003/003.rb 66 <==
+link_to 'Click here', 'https://www.example.com', target: '_blank'
+
+==> 004/004.rb 70 <==
+link_to 'Click here', 'https://www.example.com', "target" => '_blank'
+
+==> 005/005.rb 65 <==
+link_to 'Click here', 'https://www.example.com', target: :_blank
+
+==> 006/006.rb 74 <==
+link_to 'https://www.example.com', target: '_blank' do
+  "Click here"
+end
+
+==> 007/007.rb 69 <==
+link_to 'Click here', 'https://www.example.com', { target: :_blank }
+
+==> 008/008.rb 88 <==
+link_to 'Click here', 'https://www.example.com', "target" => '_blank', rel: 'unrelated'
+
+==> 009/009.rb 93 <==
+link_to 'Click here', 'https://www.example.com', target: '_blank', rel: 'noopener unrelated'
+
+==> 010/010.rb 95 <==
+link_to 'Click here', 'https://www.example.com', target: '_blank', rel: 'unrelated noreferrer'
+
+==> 011/011.rb 94 <==
+link_to 'Click here', 'https://www.example.com', target: '_blank', rel: 'noopener noreferrer'
+
+==> 012/012.rb 81 <==
+link_to 'Click here', 'https://www.example.com', target: :_blank, rel: :noopener
+
+==> 013/013.rb 63 <==
+link_to_if condition?, 'Click here', 'https://www.example.com'
+
+==> 014/014.rb 77 <==
+link_to_if condition?, 'Click here', 'https://www.example.com', class: 'big'
+
+==> 015/015.rb 85 <==
+link_to_if condition?, 'https://www.example.com', class: 'big' do
+  "Click Here"
+end
+
+==> 016/016.rb 81 <==
+link_to_if condition?, 'Click here', 'https://www.example.com', target: '_blank'
+
+==> 017/017.rb 85 <==
+link_to_if condition?, 'Click here', 'https://www.example.com', "target" => '_blank'
+
+==> 018/018.rb 80 <==
+link_to_if condition?, 'Click here', 'https://www.example.com', target: :_blank
+
+==> 019/019.rb 89 <==
+link_to_if condition?, 'https://www.example.com', target: '_blank' do
+  "Click here"
+end
+
+==> 020/020.rb 84 <==
+link_to_if condition?, 'Click here', 'https://www.example.com', { target: :_blank }
+
+==> 021/021.rb 103 <==
+link_to_if condition?, 'Click here', 'https://www.example.com', "target" => '_blank', rel: 'unrelated'
+
+==> 022/022.rb 108 <==
+link_to_if condition?, 'Click here', 'https://www.example.com', target: '_blank', rel: 'noopener unrelated'
+
+==> 023/023.rb 110 <==
+link_to_if condition?, 'Click here', 'https://www.example.com', target: '_blank', rel: 'unrelated noreferrer'
+
+==> 024/024.rb 109 <==
+link_to_if condition?, 'Click here', 'https://www.example.com', target: '_blank', rel: 'noopener noreferrer'
+
+==> 025/025.rb 96 <==
+link_to_if condition?, 'Click here', 'https://www.example.com', target: :_blank, rel: :noopener
+
+==> 026/026.rb 67 <==
+link_to_unless condition?, 'Click here', 'https://www.example.com'
+
+==> 027/027.rb 81 <==
+link_to_unless condition?, 'Click here', 'https://www.example.com', class: 'big'
+
+==> 028/028.rb 89 <==
+link_to_unless condition?, 'https://www.example.com', class: 'big' do
+  "Click Here"
+end
+
+==> 029/029.rb 85 <==
+link_to_unless condition?, 'Click here', 'https://www.example.com', target: '_blank'
+
+==> 030/030.rb 89 <==
+link_to_unless condition?, 'Click here', 'https://www.example.com', "target" => '_blank'
+
+==> 031/031.rb 84 <==
+link_to_unless condition?, 'Click here', 'https://www.example.com', target: :_blank
+
+==> 032/032.rb 93 <==
+link_to_unless condition?, 'https://www.example.com', target: '_blank' do
+  "Click here"
+end
+
+==> 033/033.rb 88 <==
+link_to_unless condition?, 'Click here', 'https://www.example.com', { target: :_blank }
+
+==> 034/034.rb 107 <==
+link_to_unless condition?, 'Click here', 'https://www.example.com', "target" => '_blank', rel: 'unrelated'
+
+==> 035/035.rb 112 <==
+link_to_unless condition?, 'Click here', 'https://www.example.com', target: '_blank', rel: 'noopener unrelated'
+
+==> 036/036.rb 114 <==
+link_to_unless condition?, 'Click here', 'https://www.example.com', target: '_blank', rel: 'unrelated noreferrer'
+
+==> 037/037.rb 113 <==
+link_to_unless condition?, 'Click here', 'https://www.example.com', target: '_blank', rel: 'noopener noreferrer'
+
+==> 038/038.rb 100 <==
+link_to_unless condition?, 'Click here', 'https://www.example.com', target: :_blank, rel: :noopener
+

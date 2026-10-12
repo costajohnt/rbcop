@@ -1,0 +1,29 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 5.1
+
+==> 000/000.rb 42 <==
+HashWithIndifferentAccess.new(foo: 'bar')
+
+==> 001/001.rb 44 <==
+::HashWithIndifferentAccess.new(foo: 'bar')
+
+==> 002/002.rb 26 <==
+HashWithIndifferentAccess
+
+==> 003/003.rb 57 <==
+ActiveSupport::HashWithIndifferentAccess.new(foo: 'bar')
+
+==> 004/004.rb 59 <==
+module CoreExt
+  class HashWithIndifferentAccess
+  end
+end
+

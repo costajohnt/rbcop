@@ -1,0 +1,19 @@
+==> offenses exit=1 294 <==
+test/000/000.rb:1:1: C: [Correctable] Rails/RefuteMethods: Prefer `assert_not` over `refute`.
+test/001/001.rb:1:1: C: [Correctable] Rails/RefuteMethods: Prefer `assert_not` over `refute`.
+test/002/002.rb:1:1: C: [Correctable] Rails/RefuteMethods: Prefer `assert_not_empty` over `refute_empty`.
+
+==> autocorrect exit=0 288 <==
+test/000/000.rb:1:1: C: [Corrected] Rails/RefuteMethods: Prefer `assert_not` over `refute`.
+test/001/001.rb:1:1: C: [Corrected] Rails/RefuteMethods: Prefer `assert_not` over `refute`.
+test/002/002.rb:1:1: C: [Corrected] Rails/RefuteMethods: Prefer `assert_not_empty` over `refute_empty`.
+
+==> corrected/test/000/000.rb 15 <==
+assert_not foo
+
+==> corrected/test/001/001.rb 25 <==
+assert_not foo, bar, baz
+
+==> corrected/test/002/002.rb 21 <==
+assert_not_empty foo
+

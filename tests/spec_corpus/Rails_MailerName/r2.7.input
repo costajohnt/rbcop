@@ -1,0 +1,90 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/mailers/000/000.rb 38 <==
+class User < ::ActionMailer::Base
+end
+
+==> app/mailers/001/001.rb 44 <==
+class UserMailer < ::ActionMailer::Base
+end
+
+==> app/mailers/002/002.rb 39 <==
+User = Class.new(::ActionMailer::Base)
+
+==> app/mailers/003/003.rb 45 <==
+UserMailer = Class.new(::ActionMailer::Base)
+
+==> app/mailers/004/004.rb 41 <==
+User = ::Class.new(::ActionMailer::Base)
+
+==> app/mailers/005/005.rb 47 <==
+UserMailer = ::Class.new(::ActionMailer::Base)
+
+==> app/mailers/006/006.rb 37 <==
+class User < ::ApplicationMailer
+end
+
+==> app/mailers/007/007.rb 43 <==
+class UserMailer < ::ApplicationMailer
+end
+
+==> app/mailers/008/008.rb 38 <==
+User = Class.new(::ApplicationMailer)
+
+==> app/mailers/009/009.rb 44 <==
+UserMailer = Class.new(::ApplicationMailer)
+
+==> app/mailers/010/010.rb 40 <==
+User = ::Class.new(::ApplicationMailer)
+
+==> app/mailers/011/011.rb 46 <==
+UserMailer = ::Class.new(::ApplicationMailer)
+
+==> app/mailers/012/012.rb 36 <==
+class User < ActionMailer::Base
+end
+
+==> app/mailers/013/013.rb 42 <==
+class UserMailer < ActionMailer::Base
+end
+
+==> app/mailers/014/014.rb 37 <==
+User = Class.new(ActionMailer::Base)
+
+==> app/mailers/015/015.rb 43 <==
+UserMailer = Class.new(ActionMailer::Base)
+
+==> app/mailers/016/016.rb 39 <==
+User = ::Class.new(ActionMailer::Base)
+
+==> app/mailers/017/017.rb 45 <==
+UserMailer = ::Class.new(ActionMailer::Base)
+
+==> app/mailers/018/018.rb 35 <==
+class User < ApplicationMailer
+end
+
+==> app/mailers/019/019.rb 41 <==
+class UserMailer < ApplicationMailer
+end
+
+==> app/mailers/020/020.rb 36 <==
+User = Class.new(ApplicationMailer)
+
+==> app/mailers/021/021.rb 42 <==
+UserMailer = Class.new(ApplicationMailer)
+
+==> app/mailers/022/022.rb 38 <==
+User = ::Class.new(ApplicationMailer)
+
+==> app/mailers/023/023.rb 44 <==
+UserMailer = ::Class.new(ApplicationMailer)
+

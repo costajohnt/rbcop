@@ -1,0 +1,10 @@
+==> offenses exit=1 307 <==
+000/000.rb:1:7: C: Rails/Inquiry: Prefer Ruby's comparison operators over Active Support's `inquiry`.
+001/001.rb:1:8: C: Rails/Inquiry: Prefer Ruby's comparison operators over Active Support's `inquiry`.
+002/002.rb:1:12: C: Rails/Inquiry: Prefer Ruby's comparison operators over Active Support's `inquiry`.
+
+==> autocorrect exit=1 307 <==
+000/000.rb:1:7: C: Rails/Inquiry: Prefer Ruby's comparison operators over Active Support's `inquiry`.
+001/001.rb:1:8: C: Rails/Inquiry: Prefer Ruby's comparison operators over Active Support's `inquiry`.
+002/002.rb:1:12: C: Rails/Inquiry: Prefer Ruby's comparison operators over Active Support's `inquiry`.
+

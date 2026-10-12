@@ -1,0 +1,15 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000/000.rb 54 <==
+class SomeClass
+  EXPIRED_AT = -> { it.year.ago }
+end
+

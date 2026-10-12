@@ -1,0 +1,52 @@
+==> offenses exit=1 886 <==
+000/000.rb:1:1: C: [Correctable] Rails/ExpandedDateRange: Use `date.all_day` instead.
+001/001.rb:1:1: C: [Correctable] Rails/ExpandedDateRange: Use `date.all_week` instead.
+002/002.rb:1:1: C: [Correctable] Rails/ExpandedDateRange: Use `date.all_month` instead.
+003/003.rb:1:1: C: [Correctable] Rails/ExpandedDateRange: Use `date.all_quarter` instead.
+004/004.rb:1:1: C: [Correctable] Rails/ExpandedDateRange: Use `date.all_week(:sunday)` instead.
+006/006.rb:1:1: C: [Correctable] Rails/ExpandedDateRange: Use `date.all_year` instead.
+007/007.rb:1:28: C: [Correctable] Rails/ExpandedDateRange: Use `date.all_day` instead.
+008/008.rb:1:10: C: [Correctable] Rails/ExpandedDateRange: Use `date.all_day` instead.
+009/009.rb:1:21: C: [Correctable] Rails/ExpandedDateRange: Use `date1.all_week` instead.
+009/009.rb:1:73: C: [Correctable] Rails/ExpandedDateRange: Use `date2.all_year` instead.
+
+==> autocorrect exit=0 866 <==
+000/000.rb:1:1: C: [Corrected] Rails/ExpandedDateRange: Use `date.all_day` instead.
+001/001.rb:1:1: C: [Corrected] Rails/ExpandedDateRange: Use `date.all_week` instead.
+002/002.rb:1:1: C: [Corrected] Rails/ExpandedDateRange: Use `date.all_month` instead.
+003/003.rb:1:1: C: [Corrected] Rails/ExpandedDateRange: Use `date.all_quarter` instead.
+004/004.rb:1:1: C: [Corrected] Rails/ExpandedDateRange: Use `date.all_week(:sunday)` instead.
+006/006.rb:1:1: C: [Corrected] Rails/ExpandedDateRange: Use `date.all_year` instead.
+007/007.rb:1:28: C: [Corrected] Rails/ExpandedDateRange: Use `date.all_day` instead.
+008/008.rb:1:10: C: [Corrected] Rails/ExpandedDateRange: Use `date.all_day` instead.
+009/009.rb:1:21: C: [Corrected] Rails/ExpandedDateRange: Use `date1.all_week` instead.
+009/009.rb:1:73: C: [Corrected] Rails/ExpandedDateRange: Use `date2.all_year` instead.
+
+==> corrected/000/000.rb 13 <==
+date.all_day
+
+==> corrected/001/001.rb 14 <==
+date.all_week
+
+==> corrected/002/002.rb 15 <==
+date.all_month
+
+==> corrected/003/003.rb 17 <==
+date.all_quarter
+
+==> corrected/004/004.rb 23 <==
+date.all_week(:sunday)
+
+==> corrected/006/006.rb 14 <==
+date.all_year
+
+==> corrected/007/007.rb 41 <==
+Model.do_something(foo_at: date.all_day)
+
+==> corrected/008/008.rb 52 <==
+foo_at = date.all_day
+Model.find_by(foo_at: foo_at)
+
+==> corrected/009/009.rb 60 <==
+Model.where(foo_at: date1.all_week, bar_at: date2.all_year)
+

@@ -1,0 +1,8 @@
+==> offenses exit=1 246 <==
+000/000.rb:3:3: C: Rails/AfterCommitOverride: There can only be one `after_*_commit :log_action` hook defined for a model.
+000/000.rb:4:3: C: Rails/AfterCommitOverride: There can only be one `after_*_commit :log_action` hook defined for a model.
+
+==> autocorrect exit=1 246 <==
+000/000.rb:3:3: C: Rails/AfterCommitOverride: There can only be one `after_*_commit :log_action` hook defined for a model.
+000/000.rb:4:3: C: Rails/AfterCommitOverride: There can only be one `after_*_commit :log_action` hook defined for a model.
+

@@ -1,0 +1,41 @@
+==> offenses exit=1 812 <==
+002/002.rb:1:22: C: [Correctable] Rails/ApplicationController: Controllers should subclass `ApplicationController`.
+003/003.rb:1:22: C: [Correctable] Rails/ApplicationController: Controllers should subclass `ApplicationController`.
+004/004.rb:2:24: C: [Correctable] Rails/ApplicationController: Controllers should subclass `ApplicationController`.
+005/005.rb:1:30: C: [Correctable] Rails/ApplicationController: Controllers should subclass `ApplicationController`.
+006/006.rb:1:26: C: [Correctable] Rails/ApplicationController: Controllers should subclass `ApplicationController`.
+007/007.rb:1:34: C: [Correctable] Rails/ApplicationController: Controllers should subclass `ApplicationController`.
+008/008.rb:1:11: C: [Correctable] Rails/ApplicationController: Controllers should subclass `ApplicationController`.
+
+==> autocorrect exit=0 798 <==
+002/002.rb:1:22: C: [Corrected] Rails/ApplicationController: Controllers should subclass `ApplicationController`.
+003/003.rb:1:22: C: [Corrected] Rails/ApplicationController: Controllers should subclass `ApplicationController`.
+004/004.rb:2:24: C: [Corrected] Rails/ApplicationController: Controllers should subclass `ApplicationController`.
+005/005.rb:1:30: C: [Corrected] Rails/ApplicationController: Controllers should subclass `ApplicationController`.
+006/006.rb:1:26: C: [Corrected] Rails/ApplicationController: Controllers should subclass `ApplicationController`.
+007/007.rb:1:34: C: [Corrected] Rails/ApplicationController: Controllers should subclass `ApplicationController`.
+008/008.rb:1:11: C: [Corrected] Rails/ApplicationController: Controllers should subclass `ApplicationController`.
+
+==> corrected/002/002.rb 48 <==
+class MyController < ApplicationController; end
+
+==> corrected/003/003.rb 48 <==
+class MyController < ApplicationController; end
+
+==> corrected/004/004.rb 68 <==
+module Nested
+  class MyController < ApplicationController; end
+end
+
+==> corrected/005/005.rb 56 <==
+class Nested::MyController < ApplicationController; end
+
+==> corrected/006/006.rb 48 <==
+MyController = Class.new(ApplicationController)
+
+==> corrected/007/007.rb 56 <==
+Nested::MyController = Class.new(ApplicationController)
+
+==> corrected/008/008.rb 36 <==
+Class.new(ApplicationController) {}
+

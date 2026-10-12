@@ -1,0 +1,61 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 46 <==
+Model.select(:column_name).map(&:column_name)
+
+==> 001/001.rb 48 <==
+(Model.select(:column_name)).map(&:column_name)
+
+==> 002/002.rb 47 <==
+Model.select('column_name').map(&:column_name)
+
+==> 003/003.rb 50 <==
+Model.select(:column_name).collect(&:column_name)
+
+==> 004/004.rb 64 <==
+Model.select(:column_name).where(conditions).map(&:column_name)
+
+==> 005/005.rb 40 <==
+select(:column_name).map(&:column_name)
+
+==> 006/006.rb 58 <==
+select(:column_name).where(conditions).map(&:column_name)
+
+==> 007/007.rb 51 <==
+relation&.select(:column_name)&.map(&:column_name)
+
+==> 008/008.rb 55 <==
+Model.select(:mismatch_column_name).map(&:column_name)
+
+==> 009/009.rb 66 <==
+Model.select(:column_name, :other_column_name).map(&:column_name)
+
+==> 010/010.rb 46 <==
+Model.select(column_names).map(&:column_name)
+
+==> 011/011.rb 55 <==
+Model.select(:column_name).do_something(&:column_name)
+
+==> 012/012.rb 60 <==
+Model.select { |item| item.column_name }.map(&:column_name)
+
+==> 013/013.rb 61 <==
+Model.select(:column_name).map { |item| do_something(item) }
+
+==> 014/014.rb 73 <==
+(Foo.select(:column_name) + Bar.select(:column_name)).map(&:column_name)
+
+==> 015/015.rb 94 <==
+Model.where(other_table: { column_name: OtherModel.select(:column_name) }).map(&:column_name)
+
+==> 016/016.rb 26 <==
+Model.pluck(:column_name)
+

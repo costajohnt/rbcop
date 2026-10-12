@@ -1,0 +1,29 @@
+==> offenses exit=1 460 <==
+test/000/000.rb:1:1: C: [Correctable] Rails/AssertNot: Prefer `assert_not` over `assert !`.
+test/001/001.rb:1:1: C: [Correctable] Rails/AssertNot: Prefer `assert_not` over `assert !`.
+test/002/002.rb:1:1: C: [Correctable] Rails/AssertNot: Prefer `assert_not` over `assert !`.
+test/003/003.rb:1:1: C: [Correctable] Rails/AssertNot: Prefer `assert_not` over `assert !`.
+test/004/004.rb:1:1: C: [Correctable] Rails/AssertNot: Prefer `assert_not` over `assert !`.
+
+==> autocorrect exit=0 450 <==
+test/000/000.rb:1:1: C: [Corrected] Rails/AssertNot: Prefer `assert_not` over `assert !`.
+test/001/001.rb:1:1: C: [Corrected] Rails/AssertNot: Prefer `assert_not` over `assert !`.
+test/002/002.rb:1:1: C: [Corrected] Rails/AssertNot: Prefer `assert_not` over `assert !`.
+test/003/003.rb:1:1: C: [Corrected] Rails/AssertNot: Prefer `assert_not` over `assert !`.
+test/004/004.rb:1:1: C: [Corrected] Rails/AssertNot: Prefer `assert_not` over `assert !`.
+
+==> corrected/test/000/000.rb 15 <==
+assert_not foo
+
+==> corrected/test/001/001.rb 36 <==
+assert_not foo, 'a failure message'
+
+==> corrected/test/002/002.rb 24 <==
+assert_not foo.bar(baz)
+
+==> corrected/test/003/003.rb 15 <==
+assert_not foo
+
+==> corrected/test/004/004.rb 16 <==
+assert_not(foo)
+

@@ -1,0 +1,34 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 35 <==
+Rails.root.join('db', 'schema.rb')
+
+==> 001/001.rb 47 <==
+::Rails.root.join('db').join('sch' + 'ema.rb')
+
+==> 002/002.rb 52 <==
+::Rails.root.join('db').join('sch' + 'ema.rb').read
+
+==> 003/003.rb 45 <==
+Rails.root.join('db').join('sch' + 'ema.rb')
+
+==> 004/004.rb 75 <==
+Rails.root.join.join.join('db').join(migrate).join.join("migration.#{rb}")
+
+==> 005/005.rb 43 <==
+Rails.public_path.join('path', 'file.pdf')
+
+==> 006/006.rb 53 <==
+Rails.public_path.join('path').join('fi' + 'le.pdf')
+
+==> 007/007.rb 75 <==
+Rails.public_path.join.join.join('path').join(to).join.join("file.#{pdf}")
+

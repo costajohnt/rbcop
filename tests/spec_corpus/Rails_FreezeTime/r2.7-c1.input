@@ -1,0 +1,57 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 5.2
+
+==> 000/000.rb 253 <==
+travel_to(Time.now)
+travel_to(Time.new)
+travel_to(DateTime.now)
+travel_to(Time.current)
+travel_to(Time.zone.now)
+travel_to(Time.now.in_time_zone)
+travel_to(Time.current.to_time)
+travel_to(::Time.now)
+travel_to(::DateTime.now)
+travel_to(::Time.zone.now)
+
+==> 001/001.rb 42 <==
+travel_to(Time.now) do
+  do_something
+end
+
+==> 002/002.rb 37 <==
+travel_to(Time.now) { do_something }
+
+==> 003/003.rb 60 <==
+around do |example|
+  travel_to(Time.current, &example)
+end
+
+==> 004/004.rb 12 <==
+freeze_time
+
+==> 005/005.rb 137 <==
+travel_to(Time.current.yesterday)
+travel_to(Time.zone.tomorrow)
+travel_to(DateTime.next_day)
+travel_to(Time.zone.yesterday.in_time_zone)
+
+==> 006/006.rb 19 <==
+travel_to(current)
+
+==> 007/007.rb 46 <==
+travel_to(DateTime.new(2022, 5, 3, 12, 0, 0))
+
+==> 008/008.rb 53 <==
+travel_to(Time.new(2019, 4, 3, 12, 30).in_time_zone)
+
+==> 009/009.rb 10 <==
+travel_to
+

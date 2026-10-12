@@ -1,0 +1,21 @@
+==> .rubocop.yml 185 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/EnvironmentVariableAccess:
+  AllowReads: true
+
+==> app/000/000.rb 11 <==
+ENV["foo"]
+
+==> app/001/001.rb 17 <==
+ENV.fetch("FOO")
+
+==> app/002/002.rb 19 <==
+::ENV.fetch("FOO")
+

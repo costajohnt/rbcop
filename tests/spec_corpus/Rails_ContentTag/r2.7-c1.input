@@ -1,0 +1,72 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 5.1
+
+==> 000/000.rb 22 <==
+tag.p('Hello world!')
+
+==> 001/001.rb 7 <==
+tag.br
+
+==> 002/002.rb 56 <==
+tag.div("Hello world!", class: ["strong", "highlight"])
+
+==> 003/003.rb 31 <==
+tag.div() { tag.strong('Hi') }
+
+==> 004/004.rb 9 <==
+tag(:br)
+
+==> 005/005.rb 56 <==
+tag(:br, {class: ["strong", "highlight"]}, true, false)
+
+==> 006/006.rb 49 <==
+tag(:br, {class: ["strong", "highlight"]}, true)
+
+==> 007/007.rb 32 <==
+tag('foo-bar', class: 'strong')
+
+==> 008/008.rb 32 <==
+tag('foo_bar', class: 'strong')
+
+==> 009/009.rb 29 <==
+tag('-foo', class: 'strong')
+
+==> 010/010.rb 29 <==
+tag('_foo', class: 'strong')
+
+==> 011/011.rb 62 <==
+name = do_something
+tag(name, class: ["strong", "highlight"])
+
+==> 012/012.rb 43 <==
+tag(@name, class: ["strong", "highlight"])
+
+==> 013/013.rb 44 <==
+tag(@@name, class: ["strong", "highlight"])
+
+==> 014/014.rb 43 <==
+tag($name, class: ["strong", "highlight"])
+
+==> 015/015.rb 11 <==
+tag(*args)
+
+==> 016/016.rb 42 <==
+tag(name, class: ["strong", "highlight"])
+
+==> 017/017.rb 43 <==
+tag(CONST, class: ["strong", "highlight"])
+
+==> 018/018.rb 19 <==
+tag(factory: :tag)
+
+==> 019/019.rb 42 <==
+intercom.tags.tag(foo: 'foo', bar: 'bar')
+

@@ -1,0 +1,26 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 5.0
+
+==> 000/000.rb 39 <==
+date.beginning_of_day..date.end_of_day
+
+==> 001/001.rb 41 <==
+date.beginning_of_week..date.end_of_week
+
+==> 002/002.rb 43 <==
+date.beginning_of_month..date.end_of_month
+
+==> 003/003.rb 47 <==
+date.beginning_of_quarter..date.end_of_quarter
+
+==> 004/004.rb 41 <==
+date.beginning_of_year..date.end_of_year
+

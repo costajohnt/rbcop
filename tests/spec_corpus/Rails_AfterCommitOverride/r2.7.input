@@ -1,0 +1,41 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 144 <==
+class User < ApplicationRecord
+  after_create_commit :log_action
+  after_commit :log_action, on: :update
+  after_destroy_commit :log_action
+end
+
+==> 001/001.rb 119 <==
+class User < ApplicationRecord
+  after_create_commit :log_create_action
+  after_destroy_commit :log_destroy_action
+end
+
+==> 002/002.rb 95 <==
+class User < ApplicationRecord
+  before_save :log_action
+  after_create_commit :log_action
+end
+
+==> 003/003.rb 95 <==
+class User < ApplicationRecord
+  after_commit -> { foo }
+  after_destroy_commit -> { foo }
+end
+
+==> 004/004.rb 73 <==
+class User < ApplicationRecord
+  after_commit
+  after_destroy_commit
+end
+

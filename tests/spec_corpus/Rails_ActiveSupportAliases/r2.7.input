@@ -1,0 +1,42 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 37 <==
+'some_string'.starts_with?('prefix')
+
+==> 001/001.rb 38 <==
+'some_string'&.starts_with?('prefix')
+
+==> 002/002.rb 35 <==
+'some_string'.start_with?('prefix')
+==> 003/003.rb 35 <==
+'some_string'.ends_with?('prefix')
+
+==> 004/004.rb 36 <==
+'some_string'&.ends_with?('prefix')
+
+==> 005/005.rb 33 <==
+'some_string'.end_with?('prefix')
+==> 006/006.rb 30 <==
+[1, 'a', 3].append('element')
+
+==> 007/007.rb 31 <==
+[1, 'a', 3]&.append('element')
+
+==> 008/008.rb 24 <==
+[1, 'a', 3] << 'element'
+==> 009/009.rb 31 <==
+[1, 'a', 3].prepend('element')
+
+==> 010/010.rb 32 <==
+[1, 'a', 3]&.prepend('element')
+
+==> 011/011.rb 30 <==
+[1, 'a', 3].unshift('element')

@@ -1,0 +1,67 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 35 <==
+render status: :ok, plain: 'Ruby!'
+
+==> 001/001.rb 27 <==
+render status: :no_content
+
+==> 002/002.rb 32 <==
+render 'foo', status: :continue
+
+==> 003/003.rb 49 <==
+render(
+  :foo,
+  status: :switching_protocols
+)
+
+==> 004/004.rb 41 <==
+render status: :processing, action: :foo
+
+==> 005/005.rb 41 <==
+render body: 'foo', status: :early_hints
+
+==> 006/006.rb 67 <==
+render status: :no_content, content_type: 'foo', another: 'option'
+
+==> 007/007.rb 43 <==
+render status: :reset_content, file: 'foo'
+
+==> 008/008.rb 42 <==
+render status: :not_modified, html: 'foo'
+
+==> 009/009.rb 34 <==
+render status: 100, inline: 'foo'
+
+==> 010/010.rb 32 <==
+render status: 101, json: 'foo'
+
+==> 011/011.rb 30 <==
+render status: 102, js: 'foo'
+
+==> 012/012.rb 34 <==
+render status: 103, layout: 'foo'
+
+==> 013/013.rb 33 <==
+render status: 204, plain: 'foo'
+
+==> 014/014.rb 31 <==
+render status: 205, raw: 'foo'
+
+==> 015/015.rb 36 <==
+render status: 304, template: 'foo'
+
+==> 016/016.rb 32 <==
+render status: 304, text: 'foo'
+
+==> 017/017.rb 31 <==
+render status: 304, xml: 'foo'
+

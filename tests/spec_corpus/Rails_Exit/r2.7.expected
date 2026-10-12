@@ -1,0 +1,22 @@
+==> offenses exit=1 689 <==
+app/000/000.rb:1:1: C: Rails/Exit: Do not use `exit` in Rails applications.
+app/001/001.rb:1:1: C: Rails/Exit: Do not use `exit!` in Rails applications.
+app/002/002.rb:1:1: C: Rails/Exit: Do not use `abort` in Rails applications.
+app/007/007.rb:1:1: C: Rails/Exit: Do not use `exit` in Rails applications.
+app/009/009.rb:1:1: C: Rails/Exit: Do not use `abort` in Rails applications.
+app/011/011.rb:1:8: C: Rails/Exit: Do not use `exit` in Rails applications.
+app/012/012.rb:1:9: C: Rails/Exit: Do not use `exit` in Rails applications.
+app/013/013.rb:1:8: C: Rails/Exit: Do not use `abort` in Rails applications.
+app/014/014.rb:1:9: C: Rails/Exit: Do not use `abort` in Rails applications.
+
+==> autocorrect exit=1 689 <==
+app/000/000.rb:1:1: C: Rails/Exit: Do not use `exit` in Rails applications.
+app/001/001.rb:1:1: C: Rails/Exit: Do not use `exit!` in Rails applications.
+app/002/002.rb:1:1: C: Rails/Exit: Do not use `abort` in Rails applications.
+app/007/007.rb:1:1: C: Rails/Exit: Do not use `exit` in Rails applications.
+app/009/009.rb:1:1: C: Rails/Exit: Do not use `abort` in Rails applications.
+app/011/011.rb:1:8: C: Rails/Exit: Do not use `exit` in Rails applications.
+app/012/012.rb:1:9: C: Rails/Exit: Do not use `exit` in Rails applications.
+app/013/013.rb:1:8: C: Rails/Exit: Do not use `abort` in Rails applications.
+app/014/014.rb:1:9: C: Rails/Exit: Do not use `abort` in Rails applications.
+

@@ -1,0 +1,54 @@
+==> offenses exit=1 1467 <==
+app/models/000/000.rb:1:15: C: [Correctable] Rails/EnumHash: Enum defined as an array found in `status` enum declaration. Use hash syntax instead.
+app/models/001/001.rb:1:15: C: [Correctable] Rails/EnumHash: Enum defined as an array found in `status` enum declaration. Use hash syntax instead.
+app/models/002/002.rb:1:15: C: [Correctable] Rails/EnumHash: Enum defined as an array found in `status` enum declaration. Use hash syntax instead.
+app/models/003/003.rb:1:15: C: [Correctable] Rails/EnumHash: Enum defined as an array found in `status` enum declaration. Use hash syntax instead.
+app/models/004/004.rb:1:15: C: [Correctable] Rails/EnumHash: Enum defined as an array found in `status` enum declaration. Use hash syntax instead.
+app/models/005/005.rb:1:16: C: [Correctable] Rails/EnumHash: Enum defined as an array found in `status` enum declaration. Use hash syntax instead.
+app/models/006/006.rb:1:11: C: [Correctable] Rails/EnumHash: Enum defined as an array found in `KEY` enum declaration. Use hash syntax instead.
+app/models/007/007.rb:1:15: C: [Correctable] Rails/EnumHash: Enum defined as an array found in `status` enum declaration. Use hash syntax instead.
+app/models/008/008.rb:1:15: C: [Correctable] Rails/EnumHash: Enum defined as an array found in `status` enum declaration. Use hash syntax instead.
+app/models/009/009.rb:1:15: C: [Correctable] Rails/EnumHash: Enum defined as an array found in `status` enum declaration. Use hash syntax instead.
+
+==> autocorrect exit=0 1447 <==
+app/models/000/000.rb:1:15: C: [Corrected] Rails/EnumHash: Enum defined as an array found in `status` enum declaration. Use hash syntax instead.
+app/models/001/001.rb:1:15: C: [Corrected] Rails/EnumHash: Enum defined as an array found in `status` enum declaration. Use hash syntax instead.
+app/models/002/002.rb:1:15: C: [Corrected] Rails/EnumHash: Enum defined as an array found in `status` enum declaration. Use hash syntax instead.
+app/models/003/003.rb:1:15: C: [Corrected] Rails/EnumHash: Enum defined as an array found in `status` enum declaration. Use hash syntax instead.
+app/models/004/004.rb:1:15: C: [Corrected] Rails/EnumHash: Enum defined as an array found in `status` enum declaration. Use hash syntax instead.
+app/models/005/005.rb:1:16: C: [Corrected] Rails/EnumHash: Enum defined as an array found in `status` enum declaration. Use hash syntax instead.
+app/models/006/006.rb:1:11: C: [Corrected] Rails/EnumHash: Enum defined as an array found in `KEY` enum declaration. Use hash syntax instead.
+app/models/007/007.rb:1:15: C: [Corrected] Rails/EnumHash: Enum defined as an array found in `status` enum declaration. Use hash syntax instead.
+app/models/008/008.rb:1:15: C: [Corrected] Rails/EnumHash: Enum defined as an array found in `status` enum declaration. Use hash syntax instead.
+app/models/009/009.rb:1:15: C: [Corrected] Rails/EnumHash: Enum defined as an array found in `status` enum declaration. Use hash syntax instead.
+
+==> corrected/app/models/000/000.rb 45 <==
+enum :status, {:active => 0, :archived => 1}
+
+==> corrected/app/models/001/001.rb 47 <==
+enum :status, {"active" => 0, "archived" => 1}
+
+==> corrected/app/models/002/002.rb 45 <==
+enum :status, {:active => 0, :archived => 1}
+
+==> corrected/app/models/003/003.rb 47 <==
+enum :status, {"active" => 0, "archived" => 1}
+
+==> corrected/app/models/004/004.rb 45 <==
+enum :status, {:active => 0, :archived => 1}
+
+==> corrected/app/models/005/005.rb 46 <==
+enum "status", {:active => 0, :archived => 1}
+
+==> corrected/app/models/006/006.rb 41 <==
+enum KEY, {:active => 0, :archived => 1}
+
+==> corrected/app/models/007/007.rb 76 <==
+enum :status, {:old => 0, :"very active" => 1, "is archived" => 2, 42 => 3}
+
+==> corrected/app/models/008/008.rb 38 <==
+enum :status, {OLD => 0, ACTIVE => 1}
+
+==> corrected/app/models/009/009.rb 54 <==
+enum :status, {STATUS::OLD => 0, STATUS::ACTIVE => 1}
+

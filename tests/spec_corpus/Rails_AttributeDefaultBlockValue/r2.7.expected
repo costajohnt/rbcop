@@ -1,0 +1,63 @@
+==> offenses exit=1 1364 <==
+app/models/000/000.rb:4:35: C: [Correctable] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+app/models/001/001.rb:1:35: C: [Correctable] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+app/models/002/002.rb:1:35: C: [Correctable] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+app/models/003/003.rb:1:50: C: [Correctable] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+app/models/004/004.rb:1:29: C: [Correctable] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+app/models/005/005.rb:1:48: C: [Correctable] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+app/models/006/006.rb:1:26: C: [Correctable] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+app/models/007/007.rb:1:35: C: [Correctable] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+app/models/008/008.rb:2:35: C: [Correctable] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+app/models/022/022.rb:1:48: C: [Correctable] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+app/models/023/023.rb:1:35: C: [Correctable] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+
+==> autocorrect exit=0 1342 <==
+app/models/000/000.rb:4:35: C: [Corrected] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+app/models/001/001.rb:1:35: C: [Corrected] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+app/models/002/002.rb:1:35: C: [Corrected] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+app/models/003/003.rb:1:50: C: [Corrected] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+app/models/004/004.rb:1:29: C: [Corrected] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+app/models/005/005.rb:1:48: C: [Corrected] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+app/models/006/006.rb:1:26: C: [Corrected] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+app/models/007/007.rb:1:35: C: [Corrected] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+app/models/008/008.rb:2:35: C: [Corrected] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+app/models/022/022.rb:1:48: C: [Corrected] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+app/models/023/023.rb:1:35: C: [Corrected] Rails/AttributeDefaultBlockValue: Pass method in a block to `:default` option.
+
+==> corrected/app/models/000/000.rb 58 <==
+def bar
+end
+
+attribute :foo, :string, default: -> { bar }
+
+==> corrected/app/models/001/001.rb 53 <==
+attribute :foo, :string, default: -> { Foo.new.bar }
+
+==> corrected/app/models/002/002.rb 56 <==
+attribute :foo, :string, default: -> { Foo.bar.freeze }
+
+==> corrected/app/models/003/003.rb 83 <==
+attribute :roles, :string, array: true, default: -> { [Foo.default_roles].freeze }
+
+==> corrected/app/models/004/004.rb 52 <==
+attribute :config, default: -> { { a: [] }.freeze }
+
+==> corrected/app/models/005/005.rb 57 <==
+attribute :foo, :string, array: true, default: -> { [] }
+
+==> corrected/app/models/006/006.rb 35 <==
+attribute :foo, default: -> { {} }
+
+==> corrected/app/models/007/007.rb 49 <==
+attribute :foo, :string, default: -> { Foo.bar }
+
+==> corrected/app/models/008/008.rb 84 <==
+attribute :foo, :string, limit: 1,
+                         default: -> { Foo.bar }
+
+==> corrected/app/models/022/022.rb 73 <==
+attribute :foo, :string, range: true, default: -> { Foo.bar }, limit: 10
+
+==> corrected/app/models/023/023.rb 59 <==
+attribute :foo, :string, default: -> { Foo.bar }, limit: 1
+

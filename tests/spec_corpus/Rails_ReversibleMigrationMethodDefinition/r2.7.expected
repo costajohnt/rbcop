@@ -1,0 +1,18 @@
+==> offenses exit=1 1267 <==
+db/001/20250101010101_some_migration.rb:1:1: C: Rails/ReversibleMigrationMethodDefinition: Migrations must contain either a `change` method, or both an `up` and a `down` method.
+db/002/20190101010101_some_migration.rb:1:1: C: Rails/ReversibleMigrationMethodDefinition: Migrations must contain either a `change` method, or both an `up` and a `down` method.
+db/003/20250101010101_some_migration.rb:1:1: C: Rails/ReversibleMigrationMethodDefinition: Migrations must contain either a `change` method, or both an `up` and a `down` method.
+db/004/20250101010101_some_migration.rb:1:1: C: Rails/ReversibleMigrationMethodDefinition: Migrations must contain either a `change` method, or both an `up` and a `down` method.
+db/006/20250101010101_some_migration.rb:1:1: C: Rails/ReversibleMigrationMethodDefinition: Migrations must contain either a `change` method, or both an `up` and a `down` method.
+db/009/20250101010101_some_migration.rb:1:1: C: Rails/ReversibleMigrationMethodDefinition: Migrations must contain either a `change` method, or both an `up` and a `down` method.
+db/animals_migrate/013/20250101010101_add_nice_to_animals.rb:1:1: C: Rails/ReversibleMigrationMethodDefinition: Migrations must contain either a `change` method, or both an `up` and a `down` method.
+
+==> autocorrect exit=1 1267 <==
+db/001/20250101010101_some_migration.rb:1:1: C: Rails/ReversibleMigrationMethodDefinition: Migrations must contain either a `change` method, or both an `up` and a `down` method.
+db/002/20190101010101_some_migration.rb:1:1: C: Rails/ReversibleMigrationMethodDefinition: Migrations must contain either a `change` method, or both an `up` and a `down` method.
+db/003/20250101010101_some_migration.rb:1:1: C: Rails/ReversibleMigrationMethodDefinition: Migrations must contain either a `change` method, or both an `up` and a `down` method.
+db/004/20250101010101_some_migration.rb:1:1: C: Rails/ReversibleMigrationMethodDefinition: Migrations must contain either a `change` method, or both an `up` and a `down` method.
+db/006/20250101010101_some_migration.rb:1:1: C: Rails/ReversibleMigrationMethodDefinition: Migrations must contain either a `change` method, or both an `up` and a `down` method.
+db/009/20250101010101_some_migration.rb:1:1: C: Rails/ReversibleMigrationMethodDefinition: Migrations must contain either a `change` method, or both an `up` and a `down` method.
+db/animals_migrate/013/20250101010101_add_nice_to_animals.rb:1:1: C: Rails/ReversibleMigrationMethodDefinition: Migrations must contain either a `change` method, or both an `up` and a `down` method.
+

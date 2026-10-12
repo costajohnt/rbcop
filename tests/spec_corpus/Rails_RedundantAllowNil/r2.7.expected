@@ -1,0 +1,24 @@
+==> offenses exit=1 532 <==
+app/models/003/003.rb:1:38: C: [Correctable] Rails/RedundantAllowNil: `allow_nil` is redundant when `allow_blank` has the same value.
+app/models/004/004.rb:1:19: C: [Correctable] Rails/RedundantAllowNil: `allow_nil: false` is redundant when `allow_blank` is true.
+app/models/006/006.rb:1:58: C: [Correctable] Rails/RedundantAllowNil: `allow_nil` is redundant when `allow_blank` has the same value.
+app/models/009/009.rb:1:45: C: [Correctable] Rails/RedundantAllowNil: `allow_nil` is redundant when `allow_blank` has the same value.
+
+==> autocorrect exit=0 524 <==
+app/models/003/003.rb:1:38: C: [Corrected] Rails/RedundantAllowNil: `allow_nil` is redundant when `allow_blank` has the same value.
+app/models/004/004.rb:1:19: C: [Corrected] Rails/RedundantAllowNil: `allow_nil: false` is redundant when `allow_blank` is true.
+app/models/006/006.rb:1:58: C: [Corrected] Rails/RedundantAllowNil: `allow_nil` is redundant when `allow_blank` has the same value.
+app/models/009/009.rb:1:45: C: [Corrected] Rails/RedundantAllowNil: `allow_nil` is redundant when `allow_blank` has the same value.
+
+==> corrected/app/models/003/003.rb 55 <==
+validates :title, length: { is: 5 }, allow_blank: true
+
+==> corrected/app/models/004/004.rb 55 <==
+validates :title, allow_blank: true, length: { is: 5 }
+
+==> corrected/app/models/006/006.rb 56 <==
+validates :title, length: { is: 5 }, allow_blank: false
+
+==> corrected/app/models/009/009.rb 64 <==
+validates :email, format: { with: /regexp/, allow_blank: true }
+

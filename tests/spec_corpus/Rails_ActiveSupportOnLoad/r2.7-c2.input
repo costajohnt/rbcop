@@ -1,0 +1,17 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 7.1
+
+==> 000/000.rb 66 <==
+ActiveRecord::ConnectionAdapters::SQLite3Adapter.include(MyClass)
+
+==> 001/001.rb 44 <==
+ActiveRecord::TestFixtures.include(MyClass)
+

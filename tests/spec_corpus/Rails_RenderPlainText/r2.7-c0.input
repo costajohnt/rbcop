@@ -1,0 +1,27 @@
+==> .rubocop.yml 189 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/RenderPlainText:
+  ContentTypeCompatibility: true
+
+==> 000/000.rb 21 <==
+render text: 'Ruby!'
+
+==> 001/001.rb 49 <==
+render text: 'Ruby!', content_type: 'text/plain'
+
+==> 002/002.rb 48 <==
+render text: 'Ruby!', content_type: 'text/html'
+
+==> 003/003.rb 40 <==
+render text: 'Ruby!', content_type: Foo
+
+==> 004/004.rb 22 <==
+render plain: 'Ruby!'
+

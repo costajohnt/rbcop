@@ -1,0 +1,44 @@
+==> offenses exit=1 640 <==
+001/001.rb:1:1: C: [Correctable] Rails/RootPublicPath: Use `Rails.public_path`.
+002/002.rb:1:1: C: [Correctable] Rails/RootPublicPath: Use `Rails.public_path`.
+003/003.rb:1:1: C: [Correctable] Rails/RootPublicPath: Use `Rails.public_path`.
+004/004.rb:1:1: C: [Correctable] Rails/RootPublicPath: Use `Rails.public_path`.
+005/005.rb:1:1: C: [Correctable] Rails/RootPublicPath: Use `Rails.public_path`.
+006/006.rb:1:1: C: [Correctable] Rails/RootPublicPath: Use `Rails.public_path`.
+007/007.rb:1:1: C: [Correctable] Rails/RootPublicPath: Use `Rails.public_path`.
+008/008.rb:1:1: C: [Correctable] Rails/RootPublicPath: Use `Rails.public_path`.
+
+==> autocorrect exit=0 624 <==
+001/001.rb:1:1: C: [Corrected] Rails/RootPublicPath: Use `Rails.public_path`.
+002/002.rb:1:1: C: [Corrected] Rails/RootPublicPath: Use `Rails.public_path`.
+003/003.rb:1:1: C: [Corrected] Rails/RootPublicPath: Use `Rails.public_path`.
+004/004.rb:1:1: C: [Corrected] Rails/RootPublicPath: Use `Rails.public_path`.
+005/005.rb:1:1: C: [Corrected] Rails/RootPublicPath: Use `Rails.public_path`.
+006/006.rb:1:1: C: [Corrected] Rails/RootPublicPath: Use `Rails.public_path`.
+007/007.rb:1:1: C: [Corrected] Rails/RootPublicPath: Use `Rails.public_path`.
+008/008.rb:1:1: C: [Corrected] Rails/RootPublicPath: Use `Rails.public_path`.
+
+==> corrected/001/001.rb 20 <==
+::Rails.public_path
+
+==> corrected/002/002.rb 18 <==
+Rails.public_path
+
+==> corrected/003/003.rb 35 <==
+Rails.public_path.join('file.pdf')
+
+==> corrected/004/004.rb 35 <==
+Rails.public_path.join('file.pdf')
+
+==> corrected/005/005.rb 40 <==
+Rails.public_path.join('path/file.pdf')
+
+==> corrected/006/006.rb 43 <==
+Rails.public_path.join('path', 'file.pdf')
+
+==> corrected/007/007.rb 40 <==
+Rails.public_path.join('path/file.pdf')
+
+==> corrected/008/008.rb 41 <==
+Rails.public_path.join(path, 'file.pdf')
+

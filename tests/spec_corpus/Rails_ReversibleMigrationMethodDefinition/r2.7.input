@@ -1,0 +1,125 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> db/000/000.rb 124 <==
+class SomeMigration < ActiveRecord::Migration[6.0]
+  def change
+    add_column :users, :email, :text, null: false
+  end
+end
+
+==> db/001/20250101010101_some_migration.rb 121 <==
+class SomeMigration < ActiveRecord::Migration[6.0]
+
+  def up
+    add_column :users, :email, :text, null: false
+  end
+end
+
+==> db/002/20190101010101_some_migration.rb 120 <==
+class SomeMigration < ActiveRecord::Migration[6.0]
+  def up
+    add_column :users, :email, :text, null: false
+  end
+end
+
+==> db/003/20250101010101_some_migration.rb 123 <==
+class ::SomeMigration < ActiveRecord::Migration[6.0]
+
+  def up
+    add_column :users, :email, :text, null: false
+  end
+end
+
+==> db/004/20250101010101_some_migration.rb 106 <==
+class SomeMigration < ActiveRecord::Migration[6.0]
+
+  def down
+    remove_column :users, :email
+  end
+end
+
+==> db/005/005.rb 171 <==
+class SomeMigration < ActiveRecord::Migration[6.0]
+  def up
+    add_column :users, :email, :text, null: false
+  end
+
+  def down
+    remove_column :users, :email
+  end
+end
+
+==> db/006/20250101010101_some_migration.rb 124 <==
+class SomeMigration < ActiveRecord::Migration[6.0]
+  def chance
+    add_column :users, :email, :text, null: false
+  end
+end
+
+==> db/007/007.rb 242 <==
+class SomeMigration < ActiveRecord::Migration[6.0]
+  def change
+    add_users_column :email, :text, null: false
+  end
+
+  private
+
+  def add_users_column(column_name, null: false)
+    add_column :users, column_name, type, null: null
+  end
+end
+
+==> db/008/008.rb 143 <==
+class SomeMigration < ActiveRecord::Migration[6.0]
+  class Foo
+  end
+
+  def change
+    add_column :users, :email, :text, null: false
+  end
+end
+
+==> db/009/20250101010101_some_migration.rb 124 <==
+class SomeMigration < ActiveRecord::Migration[5.2]
+  def chance
+    add_column :users, :email, :text, null: false
+  end
+end
+
+==> db/010/010.rb 124 <==
+class SomeMigration < ActiveRecord::Migration[5.2]
+  def change
+    add_column :users, :email, :text, null: false
+  end
+end
+
+==> db/011/011.rb 126 <==
+class SomeMigration < ::ActiveRecord::Migration[5.2]
+  def change
+    add_column :users, :email, :text, null: false
+  end
+end
+
+==> db/animals_migrate/012/20211007000002_add_nice_to_animals.rb 133 <==
+class AddNiceToAnimals < ActiveRecord::Migration[7.0]
+  def change
+    add_column :animals, :nice, :boolean, default: true
+  end
+end
+
+==> db/animals_migrate/013/20250101010101_add_nice_to_animals.rb 130 <==
+class AddNiceToAnimals < ActiveRecord::Migration[7.0]
+
+  def up
+    add_column :animals, :nice, :boolean, default: true
+  end
+end
+
