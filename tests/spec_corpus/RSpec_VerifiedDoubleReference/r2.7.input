@@ -1,0 +1,77 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 23 <==
+class_double(ClassName)
+==> 001/001_spec.rb 83 <==
+class_double('ClassName')
+class_double('Foo::Bar::Baz')
+class_double('::Foo::Bar')
+
+==> 002/002_spec.rb 20 <==
+class_spy(ClassName)
+==> 003/003_spec.rb 74 <==
+class_spy('ClassName')
+class_spy('Foo::Bar::Baz')
+class_spy('::Foo::Bar')
+
+==> 004/004_spec.rb 26 <==
+instance_double(ClassName)
+==> 005/005_spec.rb 92 <==
+instance_double('ClassName')
+instance_double('Foo::Bar::Baz')
+instance_double('::Foo::Bar')
+
+==> 006/006_spec.rb 23 <==
+instance_spy(ClassName)
+==> 007/007_spec.rb 83 <==
+instance_spy('ClassName')
+instance_spy('Foo::Bar::Baz')
+instance_spy('::Foo::Bar')
+
+==> 008/008_spec.rb 21 <==
+mock_model(ClassName)
+==> 009/009_spec.rb 77 <==
+mock_model('ClassName')
+mock_model('Foo::Bar::Baz')
+mock_model('::Foo::Bar')
+
+==> 010/010_spec.rb 24 <==
+object_double(ClassName)
+==> 011/011_spec.rb 86 <==
+object_double('ClassName')
+object_double('Foo::Bar::Baz')
+object_double('::Foo::Bar')
+
+==> 012/012_spec.rb 21 <==
+object_spy(ClassName)
+==> 013/013_spec.rb 77 <==
+object_spy('ClassName')
+object_spy('Foo::Bar::Baz')
+object_spy('::Foo::Bar')
+
+==> 014/014_spec.rb 21 <==
+stub_model(ClassName)
+==> 015/015_spec.rb 77 <==
+stub_model('ClassName')
+stub_model('Foo::Bar::Baz')
+stub_model('::Foo::Bar')
+
+==> 016/016_spec.rb 131 <==
+klass = Array
+instance_double(klass)
+
+@sut = Array
+let(:double) { instance_double(@sut) }
+
+object_double([])
+
+class_double(:Model)
+

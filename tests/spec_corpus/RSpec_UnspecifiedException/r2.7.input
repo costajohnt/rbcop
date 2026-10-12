@@ -1,0 +1,175 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 48 <==
+expect {
+  raise StandardError
+}.to raise_error
+
+==> 001/001_spec.rb 52 <==
+expect {
+  raise StandardError
+}.not_to raise_error
+
+==> 002/002_spec.rb 63 <==
+expect {
+  raise StandardError
+}.to raise_error(StandardError)
+
+==> 003/003_spec.rb 70 <==
+expect {
+  raise StandardError.new('error')
+}.to raise_error('error')
+
+==> 004/004_spec.rb 85 <==
+expect {
+  raise StandardError.new('error')
+}.to raise_error(StandardError, 'error')
+
+==> 005/005_spec.rb 68 <==
+expect {
+  raise StandardError.new('error')
+}.to raise_error(/err/)
+
+==> 006/006_spec.rb 83 <==
+expect {
+  raise StandardError.new('error')
+}.to raise_error(StandardError, /err/)
+
+==> 007/007_spec.rb 80 <==
+expect {
+  raise StandardError.new('error')
+}.to raise_error { |err| err.data }
+
+==> 008/008_spec.rb 89 <==
+expect {
+  raise StandardError.new('error')
+}.to raise_error do |error|
+  error.data
+end
+
+==> 009/009_spec.rb 110 <==
+my_exception = StandardError.new('my exception')
+expect {
+  raise my_exception
+}.to raise_error(my_exception)
+
+==> 010/010_spec.rb 102 <==
+def raise_exception
+  raise StandardError
+end
+
+expect {
+  raise_error
+}.to raise_error(StandardError)
+
+==> 011/011_spec.rb 106 <==
+def raise_exception
+  raise StandardError
+end
+
+expect {
+  raise_exception
+}.to raise_error(StandardError)
+
+==> 012/012_spec.rb 52 <==
+expect {
+  raise StandardError
+}.to raise_exception
+
+==> 013/013_spec.rb 56 <==
+expect {
+  raise StandardError
+}.not_to raise_exception
+
+==> 014/014_spec.rb 67 <==
+expect {
+  raise StandardError
+}.to raise_exception(StandardError)
+
+==> 015/015_spec.rb 74 <==
+expect {
+  raise StandardError.new('error')
+}.to raise_exception('error')
+
+==> 016/016_spec.rb 89 <==
+expect {
+  raise StandardError.new('error')
+}.to raise_exception(StandardError, 'error')
+
+==> 017/017_spec.rb 72 <==
+expect {
+  raise StandardError.new('error')
+}.to raise_exception(/err/)
+
+==> 018/018_spec.rb 87 <==
+expect {
+  raise StandardError.new('error')
+}.to raise_exception(StandardError, /err/)
+
+==> 019/019_spec.rb 84 <==
+expect {
+  raise StandardError.new('error')
+}.to raise_exception { |err| err.data }
+
+==> 020/020_spec.rb 93 <==
+expect {
+  raise StandardError.new('error')
+}.to raise_exception do |error|
+  error.data
+end
+
+==> 021/021_spec.rb 114 <==
+my_exception = StandardError.new('my exception')
+expect {
+  raise my_exception
+}.to raise_exception(my_exception)
+
+==> 022/022_spec.rb 55 <==
+expect {
+  foo
+}.to raise_exception.and change { bar }
+
+==> 023/023_spec.rb 74 <==
+expect {
+  foo
+}.to raise_exception.and change { bar }.and change { baz }
+
+==> 024/024_spec.rb 74 <==
+expect {
+  foo
+}.to change { bar }.and raise_exception.and change { baz }
+
+==> 025/025_spec.rb 79 <==
+expect do
+  expect { foo }.not_to raise_error
+end.to change(Foo, :count).by(3)
+
+==> 026/026_spec.rb 106 <==
+def raise_error
+  raise StandardError
+end
+
+expect {
+  raise_exception
+}.to raise_exception(StandardError)
+
+==> 027/027_spec.rb 102 <==
+def raise_error
+  raise StandardError
+end
+
+expect {
+  raise_error
+}.to raise_exception(StandardError)
+
+==> 028/028_spec.rb 82 <==
+expect { raise 'error' }.to (branch_conditional ? raise_error : handle_exception)
+
