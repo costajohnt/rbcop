@@ -10,8 +10,8 @@
 # Hardening: third-party actions are pinned to commit SHAs; the workflow token is read-only except
 # in the two publishing jobs, which run no project code, use no caches, check the built artifacts
 # against SHA256SUMS and wait for the `release` environment; only tags and manual runs trigger
-# it, never pull requests; no event data is interpolated into scripts; zig is checked against its published SHA-256 and Rust crates
-# against Cargo.lock (--locked).
+# it, never pull requests; no event data is interpolated into scripts; zig is checked against its
+# published SHA-256 and Rust crates against Cargo.lock (--locked).
 name: release
 
 on:
