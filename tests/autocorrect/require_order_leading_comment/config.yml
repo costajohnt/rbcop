@@ -1,0 +1,6 @@
+AllCops:
+  TargetRubyVersion: 3.4
+  NewCops: enable
+  SuggestExtensions: false
+Style/RequireOrder:
+  Enabled: true
