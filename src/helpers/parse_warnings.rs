@@ -4,6 +4,7 @@
 
 use crate::source::Source;
 
+#[derive(Clone)]
 pub struct Warning {
     /// Prism warning type, e.g. `ambiguous_first_argument_plus`.
     pub kind: &'static str,
@@ -12,8 +13,13 @@ pub struct Warning {
 }
 
 /// The file's parse warnings, in Prism's order.
-/// ponytail: one extra parse per cop and file; keep the runner's ParseResult if more cops need this.
+/// ponytail: one extra parse per file, shared by the cops that ask; keep the runner's ParseResult
+/// instead if it ever matters.
 pub fn warnings(src: &Source) -> Vec<Warning> {
+    src.parse_warnings.get_or_init(|| parse(src)).clone()
+}
+
+fn parse(src: &Source) -> Vec<Warning> {
     let result = ruby_prism::parse_with_version(src.text.as_bytes(), src.version, !src.binary);
     result
         .warnings()
