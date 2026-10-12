@@ -1,0 +1,46 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:1:17: F: Lint/Syntax: ordinary parameter is defined (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+b.rb:1:21: F: Lint/Syntax: ordinary parameter is defined (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+c.rb:1:13: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+c.rb:1:14: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `a`. If it's necessary, use `_` or `_a` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `x(*)` if you want the method to accept any arguments but don't care about them.
+c.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+c.rb:1:7: C: [Correctable] Style/SingleLineMethods: Avoid single-line method definitions.
+d.rb:1:13: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+d.rb:1:15: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `k`. If it's necessary, use `_` or `_k` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `x(*)` if you want the method to accept any arguments but don't care about them.
+d.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+d.rb:1:7: C: [Correctable] Style/SingleLineMethods: Avoid single-line method definitions.
+e.rb:1:13: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+e.rb:1:13: C: [Correctable] Naming/BlockForwarding: Use anonymous block forwarding.
+e.rb:1:14: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `b`. If it's necessary, use `_` or `_b` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `x(*)` if you want the method to accept any arguments but don't care about them.
+e.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e.rb:1:7: C: [Correctable] Style/SingleLineMethods: Avoid single-line method definitions.
+f.rb:1:18: F: Lint/Syntax: ordinary parameter is defined (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+g.rb:1:20: F: Lint/Syntax: ordinary parameter is defined (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+h.rb:1:22: F: Lint/Syntax: ordinary parameter is defined (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+i.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+i.rb:1:7: C: [Correctable] Style/SingleLineMethods: Avoid single-line method definitions.
+j.rb:1:12: C: [Correctable] Style/DefWithParentheses: Omit the parentheses in defs when the method doesn't accept any arguments.
+j.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+j.rb:1:7: C: [Correctable] Style/SingleLineMethods: Avoid single-line method definitions.
+k.rb:2:2: F: Lint/Syntax: ordinary parameter is defined (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+l.rb:1:22: F: Lint/Syntax: ordinary parameter is defined (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+m.rb:1:13: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+m.rb:1:13: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `a`. If it's necessary, use `_` or `_a` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `x(*)` if you want the method to accept any arguments but don't care about them.
+m.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+m.rb:1:7: C: [Correctable] Style/SingleLineMethods: Avoid single-line method definitions.
+o.rb:1:17: F: Lint/Syntax: ordinary parameter is defined (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+o.rb:1:21: F: Lint/Syntax: ordinary parameter is defined (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+p.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+p.rb:1:7: C: [Correctable] Style/SingleLineMethods: Avoid single-line method definitions.
+q.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+q.rb:1:7: C: [Correctable] Style/SingleLineMethods: Avoid single-line method definitions.
+r.rb:1:18: F: Lint/Syntax: ordinary parameter is defined (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+s.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+s.rb:1:7: C: Style/Documentation: Missing top-level documentation comment for `class A`.
+s.rb:1:7: W: Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+t3.rb:1:23: F: Lint/Syntax: ordinary parameter is defined (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+t4.rb:1:13: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+t4.rb:1:15: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+t4.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+t4.rb:1:20: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+z.rb:1:21: F: Lint/Syntax: ordinary parameter is defined (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)

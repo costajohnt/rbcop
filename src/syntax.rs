@@ -228,6 +228,12 @@ pub fn numbered_parameter_errors(program: &ruby_prism::Node, target: f64) -> Vec
                 self.scopes[top].max = self.scopes[top].max.max(n);
             }
         }
+        fn declare(&mut self, name: &[u8]) {
+            let top = self.scopes.last_mut().unwrap();
+            if let Some(n) = numparam(name).filter(|n| !top.declared.contains(n)) {
+                top.declared.push(n);
+            }
+        }
         fn write(&mut self, name: &[u8], loc: ruby_prism::Location) {
             let Some(n) = numparam(name) else { return };
             let top = self.scopes.last_mut().unwrap();
@@ -250,8 +256,16 @@ pub fn numbered_parameter_errors(program: &ruby_prism::Node, target: f64) -> Vec
             let ordinary = n.parameters().is_some_and(|p| p.as_block_parameters_node().is_some());
             self.scoped(true, ordinary, |w| ruby_prism::visit_lambda_node(w, n));
         }
+        // A def's `f_norm_arg`s and keyword arguments (not `*`, `**`, `&` or `...`) mark its scope as
+        // having ordinary parameters (#363): a `_1` in it, inside a block, is an error.
         fn visit_def_node(&mut self, n: &ruby_prism::DefNode<'pr>) {
-            self.scoped(false, false, |w| ruby_prism::visit_def_node(w, n));
+            let ordinary = n.parameters().is_some_and(|p| {
+                !(p.requireds().is_empty()
+                    && p.optionals().is_empty()
+                    && p.posts().is_empty()
+                    && p.keywords().is_empty())
+            });
+            self.scoped(false, ordinary, |w| ruby_prism::visit_def_node(w, n));
         }
         fn visit_class_node(&mut self, n: &ruby_prism::ClassNode<'pr>) {
             self.scoped(false, false, |w| ruby_prism::visit_class_node(w, n));
@@ -291,6 +305,18 @@ pub fn numbered_parameter_errors(program: &ruby_prism::Node, target: f64) -> Vec
         }
         fn visit_local_variable_target_node(&mut self, n: &ruby_prism::LocalVariableTargetNode<'pr>) {
             self.write(n.name().as_slice(), n.location());
+        }
+        // A parameter named `_1` (2.7: `foo { |_1| _1 }`) is a declared local, so reads of it are no
+        // numbered parameters; from 3.0 Prism reports the name as reserved.
+        fn visit_required_parameter_node(&mut self, n: &ruby_prism::RequiredParameterNode<'pr>) {
+            self.declare(n.name().as_slice());
+        }
+        fn visit_optional_parameter_node(&mut self, n: &ruby_prism::OptionalParameterNode<'pr>) {
+            self.declare(n.name().as_slice());
+            ruby_prism::visit_optional_parameter_node(self, n);
+        }
+        fn visit_block_local_variable_node(&mut self, n: &ruby_prism::BlockLocalVariableNode<'pr>) {
+            self.declare(n.name().as_slice());
         }
     }
     let mut w = Walk {
