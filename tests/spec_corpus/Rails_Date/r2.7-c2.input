@@ -1,0 +1,27 @@
+==> .rubocop.yml 171 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/Date:
+  EnforcedStyle: flexible
+
+==> 000/000.rb 12 <==
+Date.current
+==> 001/001.rb 14 <==
+Date.yesterday
+==> 002/002.rb 13 <==
+Date.tomorrow
+==> 003/003.rb 11 <==
+Date.today
+
+==> 004/004.rb 13 <==
+::Date.today
+
+==> 005/005.rb 46 <==
+"2016-07-12 14:36:31".to_time_in_current_zone
+

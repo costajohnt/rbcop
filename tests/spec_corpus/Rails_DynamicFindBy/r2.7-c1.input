@@ -1,0 +1,22 @@
+==> .rubocop.yml 197 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/DynamicFindBy:
+  AllowedReceivers:
+  - Gem::Specification
+
+==> 000/000.rb 51 <==
+Gem::Specification.find_by_name("backend").gem_dir
+
+==> 001/001.rb 46 <==
+Specification.find_by_name("backend").gem_dir
+
+==> 002/002.rb 56 <==
+RubyGems::Specification.find_by_name("backend").gem_dir
+

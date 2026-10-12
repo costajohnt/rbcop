@@ -1,0 +1,131 @@
+==> offenses exit=1 2985 <==
+001/001.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+002/002.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+004/004.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.new` without zone. Use `Time.zone.now` instead.
+005/005.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.new` without zone. Use `Time.zone.local` instead.
+006/006.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.new` without zone. Use `Time.zone.parse` instead.
+009/009.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.new` without zone. Use `Time.zone.local` instead.
+011/011.rb:1:8: C: [Correctable] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+013/013.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+014/014.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+015/015.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+016/016.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+017/017.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+018/018.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+019/019.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+020/020.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+021/021.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+022/022.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+023/023.rb:1:23: C: [Correctable] Rails/TimeZone: Do not use `String#to_time` without zone. Use `Time.zone.parse` instead.
+024/024.rb:1:24: C: Rails/TimeZone: Do not use `String#to_time` without zone. Use `Time.zone.parse` instead.
+027/027.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.parse` without zone. Use `Time.zone.parse` instead.
+033/033.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.at` without zone. Use `Time.zone.at` instead.
+034/034.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.at` without zone. Use `Time.zone.at` instead.
+035/035.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.at` without zone. Use `Time.zone.at` instead.
+037/037.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.parse` without zone. Use `Time.zone.parse` instead.
+038/038.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.parse` without zone. Use `Time.zone.parse` instead.
+039/039.rb:1:18: C: [Correctable] Rails/TimeZone: Do not use `Time.parse` without zone. Use `Time.zone.parse` instead.
+
+==> autocorrect exit=1 2935 <==
+001/001.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+002/002.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+004/004.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.new` without zone. Use `Time.zone.now` instead.
+005/005.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.new` without zone. Use `Time.zone.local` instead.
+006/006.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.new` without zone. Use `Time.zone.parse` instead.
+009/009.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.new` without zone. Use `Time.zone.local` instead.
+011/011.rb:1:8: C: [Corrected] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+013/013.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+014/014.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+015/015.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+016/016.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+017/017.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+018/018.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+019/019.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+020/020.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+021/021.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+022/022.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.now` without zone. Use `Time.zone.now` instead.
+023/023.rb:1:23: C: [Corrected] Rails/TimeZone: Do not use `String#to_time` without zone. Use `Time.zone.parse` instead.
+024/024.rb:1:24: C: Rails/TimeZone: Do not use `String#to_time` without zone. Use `Time.zone.parse` instead.
+027/027.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.parse` without zone. Use `Time.zone.parse` instead.
+033/033.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.at` without zone. Use `Time.zone.at` instead.
+034/034.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.at` without zone. Use `Time.zone.at` instead.
+035/035.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.at` without zone. Use `Time.zone.at` instead.
+037/037.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.parse` without zone. Use `Time.zone.parse` instead.
+038/038.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.parse` without zone. Use `Time.zone.parse` instead.
+039/039.rb:1:18: C: [Corrected] Rails/TimeZone: Do not use `Time.parse` without zone. Use `Time.zone.parse` instead.
+
+==> corrected/001/001.rb 14 <==
+Time.zone.now
+
+==> corrected/002/002.rb 23 <==
+Time.zone.now(in: nil)
+
+==> corrected/004/004.rb 14 <==
+Time.zone.now
+
+==> corrected/005/005.rb 37 <==
+Time.zone.local(2012, 6, 10, 12, 00)
+
+==> corrected/006/006.rb 39 <==
+Time.zone.parse("2012-06-10 10:12:00")
+
+==> corrected/009/009.rb 46 <==
+Time.zone.local(2012, 6, 10, 12, 00, in: nil)
+
+==> corrected/011/011.rb 14 <==
+Time.zone.now
+
+==> corrected/013/013.rb 14 <==
+Time.zone.now
+
+==> corrected/014/014.rb 18 <==
+Time.zone.now.utc
+
+==> corrected/015/015.rb 23 <==
+Time.zone.now.getlocal
+
+==> corrected/016/016.rb 24 <==
+Time.zone.now.xmlschema
+
+==> corrected/017/017.rb 22 <==
+Time.zone.now.iso8601
+
+==> corrected/018/018.rb 23 <==
+Time.zone.now.jisx0301
+
+==> corrected/019/019.rb 22 <==
+Time.zone.now.rfc3339
+
+==> corrected/020/020.rb 23 <==
+Time.zone.now.httpdate
+
+==> corrected/021/021.rb 19 <==
+Time.zone.now.to_i
+
+==> corrected/022/022.rb 19 <==
+Time.zone.now.to_f
+
+==> corrected/023/023.rb 39 <==
+Time.zone.parse("2012-03-02 16:05:37")
+
+==> corrected/027/027.rb 39 <==
+Time.zone.parse("2012-03-02 16:05:37")
+
+==> corrected/033/033.rb 17 <==
+Time.zone.at(ts)
+
+==> corrected/034/034.rb 17 <==
+Time.zone.at(ts)
+
+==> corrected/035/035.rb 26 <==
+Time.zone.at(ts, in: nil)
+
+==> corrected/037/037.rb 45 <==
+Time.zone.parse('12:00').localtime('+03:00')
+
+==> corrected/038/038.rb 35 <==
+Time.zone.parse('12:00').localtime
+
+==> corrected/039/039.rb 51 <==
+return Foo, Time.zone.parse("2012-03-02 16:05:37")
+

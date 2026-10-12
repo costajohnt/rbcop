@@ -128,7 +128,7 @@ impl Cop for WhereRange {
                 match hash() {
                     Some(h) => {
                         // `pair.value` raises when no key matches.
-                        let Ok(Some(p)) = find_pair(h, &c[2]) else { return };
+                        let Some(Some(p)) = find_pair(h, &c[2]) else { return };
                         (c[1].to_string(), Some(pair_source(&p)), Some(".."), None)
                     }
                     None => (c[1].to_string(), None, None, None),
@@ -137,7 +137,7 @@ impl Cop for WhereRange {
                 match hash() {
                     Some(h) => {
                         // RuboCop looks the pair up by match 2, the operator, so this finds a key named `<`/`<=`.
-                        let Ok(p) = find_pair(h, &c[2]) else { return };
+                        let Some(p) = find_pair(h, &c[2]) else { return };
                         match p {
                             Some(p) if ruby27 => (c[1].to_string(), None, Some(range_operator(&c[2])), Some(pair_source(&p))),
                             _ => (c[1].to_string(), None, None, None),
@@ -148,8 +148,8 @@ impl Cop for WhereRange {
             } else if let Some(c) = RANGE_NAMED.captures(&t).filter(|c| c[1].eq_ignore_ascii_case(&c[3])) {
                 match hash() {
                     Some(h) => {
-                        let Ok(p1) = find_pair(h, &c[2]) else { return };
-                        let Ok(p2) = find_pair(h, &c[5]) else { return };
+                        let Some(p1) = find_pair(h, &c[2]) else { return };
+                        let Some(p2) = find_pair(h, &c[5]) else { return };
                         match (p1, p2) {
                             (Some(a), Some(b)) => {
                                 (c[1].to_string(), Some(pair_source(&a)), Some(range_operator(&c[4])), Some(pair_source(&b)))

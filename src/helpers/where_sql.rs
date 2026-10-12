@@ -26,19 +26,19 @@ pub fn template<'pr>(call: &CallNode<'pr>, many: bool) -> Option<(String, Vec<No
     Some((t, args.into_iter().skip(1).collect()))
 }
 
-/// `hash_node.pairs.find { |p| p.key.value.to_sym == name.to_sym }`: Ok(None) when no key matches,
-/// Err when a key has no `value` (the cop raises).
-pub fn find_pair<'pr>(hash: &Node<'pr>, name: &str) -> Result<Option<ruby_prism::AssocNode<'pr>>, ()> {
+/// `hash_node.pairs.find { |p| p.key.value.to_sym == name.to_sym }`: Some(None) when no key matches,
+/// None when a key has no `value` (the cop raises).
+pub fn find_pair<'pr>(hash: &Node<'pr>, name: &str) -> Option<Option<ruby_prism::AssocNode<'pr>>> {
     for p in helpers::rails::hash_pairs(hash) {
         let k = p.key();
         match helpers::rails::str_or_sym(&k) {
-            Some(v) if v == name => return Ok(Some(p)),
+            Some(v) if v == name => return Some(Some(p)),
             Some(_) => {}
             // int/float keys: `1.to_sym` raises too.
-            None => return Err(()),
+            None => return None,
         }
     }
-    Ok(None)
+    Some(None)
 }
 
 /// `"#{method}(#{column}: #{value})"`, with `table.column` nested.

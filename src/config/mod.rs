@@ -251,8 +251,12 @@ impl Resolved {
                 let has_path = text.lines().any(|l| l.trim_end_matches('\r') == "PATH");
                 if has_path && std::env::var_os("BUNDLE_GEMFILE").is_none() {
                     let cwd = cwd();
+                    // Bundler.default_bundle_dir ignores the user's ~/.bundle.
+                    let home = std::env::var_os("HOME").map(|h| PathBuf::from(h).join(".bundle"));
                     let root = cwd.ancestors().any(|d| {
-                        d.join("gems.rb").is_file() || d.join("Gemfile").is_file() || d.join(".bundle").is_dir()
+                        d.join("gems.rb").is_file()
+                            || d.join("Gemfile").is_file()
+                            || (d.join(".bundle").is_dir() && home.as_deref() != Some(&d.join(".bundle")))
                     });
                     if !root {
                         return Some(HashMap::new());
@@ -777,6 +781,16 @@ impl Store {
         }
         // Local files are custom cops rbcop cannot load.
         self.custom_cops |= plugins.iter().any(|n| n.starts_with('.') || n.starts_with('/'));
+        // Their class and module names are registry names RuboCop would know (`Style/MiddleDot`
+        // defined in `require: ../lib/linter/rubocop_middle_dot`), as for a plugin gem's lib/.
+        for n in plugins.iter().filter(|n| n.starts_with('.') || n.starts_with('/')) {
+            let base = path.parent().unwrap_or(Path::new("."));
+            let mut file = if n.starts_with('/') { PathBuf::from(n) } else { base.join(n) };
+            if file.extension().is_none_or(|e| e != "rb") {
+                file.set_extension("rb");
+            }
+            ruby_file_constants(&file, &mut self.plugin_constants);
+        }
         self.integrate_plugins(plugins)?;
         crate::helpers::cop_registry::set_open(self.custom_cops, &self.plugin_constants);
         self.emit(&migrate);
@@ -1185,17 +1199,22 @@ fn merge_with_default(base_default: &Map, mut config: Map, unset_nil: bool, opts
 /// need not list, and RuboCop's registry knows them.
 // ponytail: a name match, not a registry; `Dept/Cop` counts as known when both are defined.
 fn ruby_constants(dir: &Path, out: &mut std::collections::HashSet<String>) {
-    static RE: std::sync::LazyLock<Regex> =
-        std::sync::LazyLock::new(|| Regex::new(r"(?m)^\s*(?:class|module)\s+([A-Z]\w*)").unwrap());
     let Ok(entries) = std::fs::read_dir(dir) else { return };
     for path in entries.flatten().map(|e| e.path()) {
         if path.is_dir() {
             ruby_constants(&path, out);
-        } else if path.extension().is_some_and(|e| e == "rb")
-            && let Ok(text) = std::fs::read_to_string(&path)
-        {
-            out.extend(RE.captures_iter(&text).map(|c| c[1].to_string()));
+        } else if path.extension().is_some_and(|e| e == "rb") {
+            ruby_file_constants(&path, out);
         }
+    }
+}
+
+/// Class and module names a Ruby file defines.
+fn ruby_file_constants(path: &Path, out: &mut std::collections::HashSet<String>) {
+    static RE: std::sync::LazyLock<Regex> =
+        std::sync::LazyLock::new(|| Regex::new(r"(?m)^\s*(?:class|module)\s+([A-Z]\w*)").unwrap());
+    if let Ok(text) = std::fs::read_to_string(path) {
+        out.extend(RE.captures_iter(&text).map(|c| c[1].to_string()));
     }
 }
 

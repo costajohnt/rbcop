@@ -1,0 +1,82 @@
+==> .rubocop.yml 175 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/TimeZone:
+  EnforcedStyle: flexible
+
+==> 000/000.rb 40 <==
+Time.new("l\366, 26 maj 2001 00:15:58")
+
+==> 001/001.rb 9 <==
+Time.now
+
+==> 002/002.rb 13 <==
+Time.current
+
+==> 003/003.rb 22 <==
+Time.now.in_time_zone
+
+==> 004/004.rb 13 <==
+Time.now.utc
+
+==> 005/005.rb 18 <==
+Time.now.getlocal
+
+==> 006/006.rb 19 <==
+Time.now.xmlschema
+
+==> 007/007.rb 17 <==
+Time.now.iso8601
+
+==> 008/008.rb 18 <==
+Time.now.jisx0301
+
+==> 009/009.rb 17 <==
+Time.now.rfc3339
+
+==> 010/010.rb 18 <==
+Time.now.httpdate
+
+==> 011/011.rb 14 <==
+Time.now.to_i
+
+==> 012/012.rb 14 <==
+Time.now.to_f
+
+==> 013/013.rb 14 <==
+Time.zone.now
+
+==> 014/014.rb 22 <==
+Time.zone_default.now
+
+==> 015/015.rb 26 <==
+Time.find_zone('EST').now
+
+==> 016/016.rb 27 <==
+Time.find_zone!('EST').now
+
+==> 017/017.rb 17 <==
+Time.current.now
+
+==> 018/018.rb 19 <==
+Time.current.local
+
+==> 019/019.rb 17 <==
+Time.current.new
+
+==> 020/020.rb 19 <==
+Time.current.parse
+
+==> 021/021.rb 16 <==
+Time.current.at
+
+==> 022/022.rb 39 <==
+Time.parse('12:00').localtime('+03:00')
+==> 023/023.rb 1 <==
+A

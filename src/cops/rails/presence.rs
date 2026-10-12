@@ -121,11 +121,7 @@ impl Cop for Presence {
         // redundant_receiver_and_other
         let hit = if let Some(r) = blank.as_ref().filter(|r| !is_begin(&t) && eq(&f, r)) {
             Some((r, &t))
-        } else if let Some(r) = present.as_ref().filter(|r| eq(&t, r) && !is_begin(&f)) {
-            Some((r, &f))
-        } else {
-            None
-        };
+        } else { present.as_ref().filter(|r| eq(&t, r) && !is_begin(&f)).map(|r| (r, &f)) };
         if let Some((recv, other)) = hit {
             let ignored = other.as_ref().is_some_and(|o| {
                 matches!(o, Node::IfNode { .. } | Node::UnlessNode { .. } | Node::RescueModifierNode { .. })
@@ -165,11 +161,7 @@ impl Cop for Presence {
         };
         let hit = if let Some(r) = blank.as_ref().filter(|r| nilish(&t) && chain_of(&f, r)) {
             Some((r, &f))
-        } else if let Some(r) = present.as_ref().filter(|r| chain_of(&t, r) && nilish(&f)) {
-            Some((r, &t))
-        } else {
-            None
-        };
+        } else { present.as_ref().filter(|r| chain_of(&t, r) && nilish(&f)).map(|r| (r, &t)) };
         if let Some((recv, chain)) = hit {
             let chain = helpers::rails::send_node(chain.as_ref().unwrap()).unwrap();
             let name = method_name(&chain);

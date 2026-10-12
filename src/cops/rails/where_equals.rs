@@ -42,7 +42,7 @@ impl Cop for WhereEquals {
         } else if let Some(c) = EQ_NAMED.captures(&t).or_else(|| IN_NAMED.captures(&t)) {
             let Some(h) = value_node.filter(|v| helpers::rails::hash_elements(v).is_some()) else { return };
             // `pair.value.source` raises when no key matches.
-            let Ok(Some(pair)) = find_pair(h, &c[2]) else { return };
+            let Some(Some(pair)) = find_pair(h, &c[2]) else { return };
             (c[1].to_string(), helpers::rails::pair_value_source(&pair).to_string())
         } else if let Some(c) = IS_NULL.captures(&t) {
             (c[1].to_string(), "nil".to_string())

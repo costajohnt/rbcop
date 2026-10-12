@@ -467,7 +467,7 @@ pub fn pair_value_source<'pr>(p: &ruby_prism::AssocNode<'pr>) -> &'pr str {
 /// The nearest parser `any_block` ancestor of the visited node, as the call that owns it (None for
 /// a lambda literal, whose send has no receiver). `Some(None)` when the nearest block is a lambda.
 /// A call with a block counts when the node is inside its block, receiver or arguments.
-pub fn nearest_block_owner<'a, 'pr>(ancestors: &'a [Node<'pr>]) -> Option<Option<CallNode<'pr>>> {
+pub fn nearest_block_owner<'pr>(ancestors: &[Node<'pr>]) -> Option<Option<CallNode<'pr>>> {
     for i in (0..ancestors.len()).rev() {
         match &ancestors[i] {
             Node::BlockNode { .. } => return Some(i.checked_sub(1).and_then(|k| ancestors[k].as_call_node())),
@@ -506,4 +506,86 @@ pub fn if_children<'pr>(node: &Node<'pr>) -> Option<(Node<'pr>, Option<Node<'pr>
     }
     let n = node.as_unless_node()?;
     Some((n.predicate(), els(n.else_clause().map(|e| e.as_node())), body(n.statements())))
+}
+
+/// Rack::Utils::SYMBOL_TO_STATUS_CODE (rack 3.2.7, as installed with rubocop-rails 2.38.0).
+pub const SYMBOL_TO_STATUS_CODE: &[(&str, i64)] = &[
+    ("continue", 100),
+    ("switching_protocols", 101),
+    ("processing", 102),
+    ("early_hints", 103),
+    ("ok", 200),
+    ("created", 201),
+    ("accepted", 202),
+    ("non_authoritative_information", 203),
+    ("no_content", 204),
+    ("reset_content", 205),
+    ("partial_content", 206),
+    ("multi_status", 207),
+    ("already_reported", 208),
+    ("im_used", 226),
+    ("multiple_choices", 300),
+    ("moved_permanently", 301),
+    ("found", 302),
+    ("see_other", 303),
+    ("not_modified", 304),
+    ("use_proxy", 305),
+    ("temporary_redirect", 307),
+    ("permanent_redirect", 308),
+    ("bad_request", 400),
+    ("unauthorized", 401),
+    ("payment_required", 402),
+    ("forbidden", 403),
+    ("not_found", 404),
+    ("method_not_allowed", 405),
+    ("not_acceptable", 406),
+    ("proxy_authentication_required", 407),
+    ("request_timeout", 408),
+    ("conflict", 409),
+    ("gone", 410),
+    ("length_required", 411),
+    ("precondition_failed", 412),
+    ("content_too_large", 413),
+    ("uri_too_long", 414),
+    ("unsupported_media_type", 415),
+    ("range_not_satisfiable", 416),
+    ("expectation_failed", 417),
+    ("misdirected_request", 421),
+    ("unprocessable_content", 422),
+    ("locked", 423),
+    ("failed_dependency", 424),
+    ("too_early", 425),
+    ("upgrade_required", 426),
+    ("precondition_required", 428),
+    ("too_many_requests", 429),
+    ("request_header_fields_too_large", 431),
+    ("unavailable_for_legal_reasons", 451),
+    ("internal_server_error", 500),
+    ("not_implemented", 501),
+    ("bad_gateway", 502),
+    ("service_unavailable", 503),
+    ("gateway_timeout", 504),
+    ("http_version_not_supported", 505),
+    ("variant_also_negotiates", 506),
+    ("insufficient_storage", 507),
+    ("loop_detected", 508),
+    ("network_authentication_required", 511),
+];
+
+/// The parser parent of the visited node when it is a plain `send` that has the node as its
+/// receiver (Date/TimeZone `method_send?`).
+pub fn receiver_send_parent<'pr>(ancestors: &[Node<'pr>], node: &Node) -> Option<(usize, CallNode<'pr>)> {
+    let i = parent_index(ancestors)?;
+    let c = send(&ancestors[i])?;
+    let r = c.receiver()?;
+    (r.location().start_offset() == node.location().start_offset() && r.location().end_offset() == node.location().end_offset())
+        .then_some((i, c))
+}
+
+/// Method names of a send and of every `send` ancestor above it (`[node, *node.each_ancestor(:send)]`),
+/// the send being `ancestors[i]`.
+pub fn send_chain_names(ancestors: &[Node], i: usize, first: &CallNode) -> Vec<String> {
+    let mut out = vec![method_name(first).to_string()];
+    out.extend(call_ancestors(&ancestors[..i]).filter(|c| !is_csend(c)).map(|c| method_name(&c).to_string()));
+    out
 }
