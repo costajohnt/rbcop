@@ -4,6 +4,9 @@ pub const NAME: &str = "Rails/RakeEnvironment";
 pub static COP: RakeEnvironment = RakeEnvironment;
 pub struct RakeEnvironment;
 
+/// A replacement: range and text.
+type Edit = ((usize, usize), String);
+
 static LABEL: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\A[A-Za-z_][A-Za-z0-9_]*\z").unwrap());
 
 /// with_hash_style_dependencies?: the first pair's value is a non-empty array or anything else.
@@ -66,7 +69,7 @@ impl Cop for RakeEnvironment {
         let (s, e) = send_range(&call);
         let range = |n: &Node| (n.location().start_offset(), n.location().end_offset());
         // autocorrect: (range, replacement), None for no edit; Err to withhold (non-label name).
-        let fix: Result<Option<((usize, usize), String)>, ()> = match args.as_slice() {
+        let fix: Result<Option<Edit>, ()> = match args.as_slice() {
             [] => Ok(None),
             [name] => {
                 if helpers::rails::hash_elements(name).is_some() {

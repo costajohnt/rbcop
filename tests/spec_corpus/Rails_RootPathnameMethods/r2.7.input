@@ -1,0 +1,49 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 51 <==
+File.read(Rails.root.join('db').join('schema.rb'))
+
+==> 001/001.rb 51 <==
+File.open(Rails.root.join('db', 'schema.rb')).read
+
+==> 002/002.rb 54 <==
+File.open(Rails.root.join('db', 'schema.rb')).binread
+
+==> 003/003.rb 61 <==
+File.open(Rails.root.join('db', 'schema.rb')).write(content)
+
+==> 004/004.rb 64 <==
+File.open(Rails.root.join('db', 'schema.rb')).binwrite(content)
+
+==> 005/005.rb 66 <==
+files.map { |file| File.open(Rails.root.join('db', file), 'wb') }
+
+==> 006/006.rb 55 <==
+file = File.open Rails.root.join 'docs', 'invoice.pdf'
+
+==> 007/007.rb 41 <==
+File.join(Rails.root, ['app', 'models'])
+
+==> 008/008.rb 51 <==
+File.join(Rails.root, "app", ["models", "goober"])
+
+==> 009/009.rb 51 <==
+File.join(Rails.root, ["app", "models"], "goober")
+
+==> 010/010.rb 38 <==
+File.join(Rails.root, %w[app models])
+
+==> 011/011.rb 48 <==
+File.join(Rails.root, "app", %w[models goober])
+
+==> 012/012.rb 48 <==
+File.join(Rails.root, %w[app models], "goober")
+

@@ -454,7 +454,7 @@ pub fn ruby_split(s: &str, sep: char) -> Vec<&str> {
 /// backslashes, interpolation or line breaks (rbcop withholds the correction otherwise, a
 /// deliberate difference from RuboCop, docs/known-gaps.md).
 pub fn inert_text(s: &str) -> bool {
-    !s.contains(['\'', '"', '\\', '\n', '\r']) && !s.contains("#{") && !s.contains('\0')
+    !s.contains(['\'', '"', '\\', '\n', '\r', '\0']) && !["#{", "#@", "#$"].iter().any(|i| s.contains(i))
 }
 
 /// Source of a pair's value as parser sees it: an omitted value (`key:`) is just `key`.
@@ -626,4 +626,17 @@ pub fn database(cx: &Cx) -> Option<String> {
     } else {
         None
     }
+}
+
+/// rubocop-ast `value` of a node that has one (sym, str, dstr, numbers), as a string.
+pub fn node_value(n: &Node) -> Option<String> {
+    if let Some(v) = sym_value(n).or_else(|| str_value(n)) {
+        return Some(v);
+    }
+    if let Some(d) = n.as_interpolated_string_node() {
+        // DstrNode#value: child values, or source for children without one.
+        return Some(d.parts().iter().map(|p| node_value(&p).unwrap_or_else(|| node_text(&p).to_string())).collect());
+    }
+    // ponytail: Integer#to_s / Float#to_s taken as the source (differs for `1_000`, `0x10`).
+    (n.as_integer_node().is_some() || n.as_float_node().is_some()).then(|| node_text(n).to_string())
 }

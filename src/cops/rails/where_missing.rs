@@ -116,8 +116,7 @@ impl Cop for WhereMissing {
         let anc = cx.ancestors;
         let mut root_idx: Option<usize> = None;
         let mut cur = anc.len();
-        loop {
-            let Some(p) = helpers::parser_parent::parser_parent_index(anc, cur) else { break };
+        while let Some(p) = helpers::parser_parent::parser_parent_index(anc, cur) {
             let ok = helpers::rails::send(&anc[p]).is_some_and(|c| !matches!(method_name(&c), "or" | "and"));
             if !ok {
                 break;

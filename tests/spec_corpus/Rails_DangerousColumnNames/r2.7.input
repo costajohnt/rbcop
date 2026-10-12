@@ -1,0 +1,32 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> db/000/000.rb 34 <==
+add_column :users, :name, :string
+
+==> db/001/001.rb 34 <==
+add_column :users, :save, :string
+
+==> db/002/20190101010101_add_save_to_users.rb 34 <==
+add_column :users, :save, :string
+
+==> db/003/003.rb 35 <==
+rename_column :users, :name, :save
+
+==> db/004/20250101010101_create_users.rb 48 <==
+create_table :users do |t|
+  t.string :save
+end
+
+==> db/005/20250101010101_create_users.rb 55 <==
+create_table :users do |t|
+  t.rename :name, :save
+end
+

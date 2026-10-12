@@ -9,6 +9,7 @@ pub struct RedundantReceiverInWithOptions;
 /// appears in a body.
 struct Scan<'pr> {
     /// (receiver, `.` range) of each send.
+    #[allow(clippy::type_complexity)]
     sends: Vec<(Option<Node<'pr>>, Option<(usize, usize)>)>,
     block: bool,
 }

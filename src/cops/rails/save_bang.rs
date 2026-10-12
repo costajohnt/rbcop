@@ -225,8 +225,7 @@ impl Cop for SaveBang {
         let name = method_name(&call);
         // assignable_node: the call (with its block), widened over enclosing hashes and arrays.
         let mut a = len;
-        loop {
-            let Some(p) = parser_parent_index(anc, a) else { break };
+        while let Some(p) = parser_parent_index(anc, a) {
             if anc[p].as_assoc_node().is_some()
                 && let Some(h) = parser_parent_index(anc, p)
                 && (anc[h].as_hash_node().is_some() || anc[h].as_keyword_hash_node().is_some())

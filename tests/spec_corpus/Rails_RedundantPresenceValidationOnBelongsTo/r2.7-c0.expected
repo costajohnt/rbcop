@@ -1,0 +1,85 @@
+==> offenses exit=1 1813 <==
+000/000.rb:2:18: C: [Correctable] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user`.
+001/001.rb:2:21: C: [Correctable] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user_id`.
+002/002.rb:2:21: C: [Correctable] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user_id`.
+003/003.rb:2:21: C: [Correctable] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user_id`.
+004/004.rb:2:20: C: [Correctable] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `author`.
+005/005.rb:2:18: C: [Correctable] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user`.
+006/006.rb:2:36: C: [Correctable] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user`.
+007/007.rb:2:18: C: [Correctable] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user`.
+008/008.rb:3:25: C: [Correctable] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user`/`book`.
+009/009.rb:2:25: C: [Correctable] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user`.
+010/010.rb:2:25: C: [Correctable] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user`.
+011/011.rb:2:25: C: [Correctable] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user`.
+012/012.rb:3:27: C: [Correctable] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user`.
+014/014.rb:2:21: C: [Correctable] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user_id`.
+
+==> autocorrect exit=0 1785 <==
+000/000.rb:2:18: C: [Corrected] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user`.
+001/001.rb:2:21: C: [Corrected] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user_id`.
+002/002.rb:2:21: C: [Corrected] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user_id`.
+003/003.rb:2:21: C: [Corrected] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user_id`.
+004/004.rb:2:20: C: [Corrected] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `author`.
+005/005.rb:2:18: C: [Corrected] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user`.
+006/006.rb:2:36: C: [Corrected] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user`.
+007/007.rb:2:18: C: [Corrected] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user`.
+008/008.rb:3:25: C: [Corrected] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user`/`book`.
+009/009.rb:2:25: C: [Corrected] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user`.
+010/010.rb:2:25: C: [Corrected] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user`.
+011/011.rb:2:25: C: [Corrected] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user`.
+012/012.rb:3:27: C: [Corrected] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user`.
+014/014.rb:2:21: C: [Corrected] Rails/RedundantPresenceValidationOnBelongsTo: Remove explicit presence validation for `user_id`.
+
+==> corrected/000/000.rb 17 <==
+belongs_to :user
+
+==> corrected/001/001.rb 17 <==
+belongs_to :user
+
+==> corrected/002/002.rb 42 <==
+belongs_to :author, foreign_key: :user_id
+
+==> corrected/003/003.rb 62 <==
+belongs_to :author, class_name: 'User', foreign_key: :user_id
+
+==> corrected/004/004.rb 42 <==
+belongs_to :author, foreign_key: :user_id
+
+==> corrected/005/005.rb 37 <==
+belongs_to :user, -> { not_deleted }
+
+==> corrected/006/006.rb 51 <==
+belongs_to :user
+validates :user, uniqueness: true
+
+==> corrected/007/007.rb 51 <==
+belongs_to :user
+validates :user, uniqueness: true
+
+==> corrected/008/008.rb 34 <==
+belongs_to :user
+belongs_to :book
+
+==> corrected/009/009.rb 49 <==
+belongs_to :user
+validates :name, presence: true
+
+==> corrected/010/010.rb 49 <==
+belongs_to :user
+validates :name, presence: true
+
+==> corrected/011/011.rb 101 <==
+belongs_to :user
+validates :name, presence: true, uniqueness: true
+validates :user, uniqueness: true
+
+==> corrected/012/012.rb 125 <==
+class Profile
+  belongs_to :user
+  validates :name, presence: true, uniqueness: true
+  validates :user, uniqueness: true
+end
+
+==> corrected/014/014.rb 65 <==
+belongs_to :user, -> { where(foo: true) }, inverse_of: :employee
+

@@ -38,10 +38,8 @@ fn first_param_name(b: &ruby_prism::BlockNode) -> Option<Option<String>> {
     let first = parameter_nodes(&ps).into_iter().next()?;
     let name = if let Some(r) = first.as_required_parameter_node() {
         Some(String::from_utf8_lossy(r.name().as_slice()).into_owned())
-    } else if let Some(o) = first.as_optional_parameter_node() {
-        Some(String::from_utf8_lossy(o.name().as_slice()).into_owned())
     } else {
-        None
+        first.as_optional_parameter_node().map(|o| String::from_utf8_lossy(o.name().as_slice()).into_owned())
     };
     Some(name)
 }

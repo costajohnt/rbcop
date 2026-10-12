@@ -77,8 +77,7 @@ impl Cop for DeprecatedActiveModelErrorsMethods {
         } else {
             // offense_range: from the end of the `errors` send to the end of the node.
             let mut r: Node = recv.as_call_node().unwrap().as_node();
-            loop {
-                let Some(c) = helpers::rails::send_node(&r) else { break };
+            while let Some(c) = helpers::rails::send_node(&r) {
                 if method_name(&c) == "errors" {
                     break;
                 }

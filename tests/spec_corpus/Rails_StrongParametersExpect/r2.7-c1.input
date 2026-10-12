@@ -1,0 +1,14 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 7.2
+
+==> app/controllers/000/000.rb 42 <==
+params.require(:user).permit(:name, :age)
+
