@@ -1,0 +1,60 @@
+name: rbcop
+description: Run rbcop, RuboCop 1.91 reimplemented in Rust, from a cached prebuilt binary
+author: John Costa
+branding:
+  icon: check-circle
+  color: red
+
+inputs:
+  version:
+    description: rbcop release to run (default the version of this action's ref, from its Cargo.toml)
+    default: ''
+  args:
+    description: Arguments for rbcop, split on whitespace (empty to only install rbcop on PATH)
+    default: --format github --format progress
+  fallback:
+    description: >-
+      Run cops rbcop does not implement (plugin and custom cops) with RuboCop (RBCOP_FALLBACK=1).
+      RuboCop must be installed, for example by ruby/setup-ruby with bundler-cache.
+    default: 'false'
+  rubocop:
+    description: The RuboCop command for the fallback (RBCOP_RUBOCOP)
+    default: bundle exec rubocop
+
+runs:
+  using: composite
+  steps:
+    - id: version
+      shell: bash
+      env:
+        VERSION: ${{ inputs.version }}
+      run: |
+        if [ -z "$VERSION" ]; then
+          VERSION=$(sed -n 's/^version = "\(.*\)"/\1/p' "$GITHUB_ACTION_PATH/Cargo.toml" | head -1)
+        fi
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        echo "dir=$RUNNER_TOOL_CACHE/rbcop/$VERSION/$RUNNER_OS-$RUNNER_ARCH" >> "$GITHUB_OUTPUT"
+    - id: cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ steps.version.outputs.dir }}
+        key: rbcop-${{ steps.version.outputs.version }}-${{ runner.os }}-${{ runner.arch }}
+    - if: steps.cache.outputs.cache-hit != 'true'
+      shell: bash
+      env:
+        VERSION: ${{ steps.version.outputs.version }}
+        DIR: ${{ steps.version.outputs.dir }}
+      run: sh "$GITHUB_ACTION_PATH/scripts/dist/install.sh" "$VERSION" "$DIR"
+    - shell: bash
+      env:
+        DIR: ${{ steps.version.outputs.dir }}
+      run: echo "$DIR" >> "$GITHUB_PATH"
+    - if: inputs.args != ''
+      shell: bash
+      env:
+        ARGS: ${{ inputs.args }}
+        RBCOP_FALLBACK: ${{ inputs.fallback == 'true' && '1' || '' }}
+        RBCOP_RUBOCOP: ${{ inputs.rubocop }}
+      run: |
+        set -f
+        rbcop $ARGS
