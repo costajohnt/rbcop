@@ -1,0 +1,39 @@
+class Rbcop < Formula
+  desc "RuboCop reimplemented in Rust, aiming for byte-identical output"
+  homepage "https://github.com/costajohnt/rbcop"
+  license "MIT"
+
+  on_macos do
+    on_arm do
+      url "@BASE@/rbcop-@VERSION@-aarch64-apple-darwin.tar.gz"
+      sha256 "@SHA_aarch64-apple-darwin@"
+    end
+    on_intel do
+      url "@BASE@/rbcop-@VERSION@-x86_64-apple-darwin.tar.gz"
+      sha256 "@SHA_x86_64-apple-darwin@"
+    end
+  end
+
+  on_linux do
+    on_arm do
+      url "@BASE@/rbcop-@VERSION@-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "@SHA_aarch64-unknown-linux-gnu@"
+    end
+    on_intel do
+      url "@BASE@/rbcop-@VERSION@-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "@SHA_x86_64-unknown-linux-gnu@"
+    end
+  end
+
+  def install
+    bin.install "rbcop"
+    prefix.install "LICENSE", "README.md", "licenses"
+  end
+
+  test do
+    (testpath/"Gemfile").write ""
+    (testpath/"a.rb").write "x = \"a\"\nputs x\n"
+    assert_equal "1.91.0\n", shell_output("#{bin}/rbcop -v")
+    assert_match "Style/StringLiterals", shell_output("#{bin}/rbcop -f e a.rb", 1)
+  end
+end
