@@ -557,6 +557,28 @@ impl Cop for DuplicateMethods {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
+        // Most calls define nothing: leave before building their parser ancestors. A superset of
+        // the call arms below, which return for everything else.
+        if let Some(call) = node.as_call_node() {
+            let m = call.name();
+            let m = m.as_slice();
+            let defines = matches!(
+                m,
+                b"alias_method"
+                    | b"attr_reader"
+                    | b"attr_writer"
+                    | b"attr_accessor"
+                    | b"attr"
+                    | b"def_delegator"
+                    | b"def_instance_delegator"
+                    | b"def_delegators"
+                    | b"def_instance_delegators"
+            ) || (cx.config.all_cops().truthy("ActiveSupportExtensionsEnabled")
+                && cx.cfg.strings("DelegatingMethods").iter().any(|d| d.as_bytes() == m));
+            if !defines || call.receiver().is_some() || is_csend(&call) {
+                return;
+            }
+        }
         let ctx = Ctx { anc: cx.ancestors, pas: parser_ancestors(cx.ancestors, node) };
         let src = cx.src;
         let loc = node.location();
