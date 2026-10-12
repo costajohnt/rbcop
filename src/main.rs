@@ -1223,23 +1223,35 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     let mut reports: Vec<Option<Linted>> = if lazy {
         jobs.iter().map(|_| None).collect()
     } else {
-        let workers = thread::available_parallelism().map_or(4, |n| n.get());
-        let chunk = jobs.len().div_ceil(workers).max(1);
+        let workers = thread::available_parallelism().map_or(4, |n| n.get()).clamp(1, jobs.len().max(1));
+        // Each worker takes the next file, largest first, so no core idles while another finishes
+        // a long run of big files (fixed chunks of the sorted list did). Results keep file order.
+        let mut order: Vec<usize> = (0..jobs.len()).collect();
+        order.sort_by_cached_key(|&i| std::cmp::Reverse(fs::metadata(&jobs[i].0).map_or(0, |m| m.len())));
+        let next = std::sync::atomic::AtomicUsize::new(0);
+        let mut reports: Vec<Option<Linted>> = jobs.iter().map(|_| None).collect();
         thread::scope(|s| {
-            let handles: Vec<_> = jobs
-                .chunks(chunk)
-                .map(|part| {
+            let handles: Vec<_> = (0..workers)
+                .map(|_| {
                     big_stack()
                         .spawn_scoped(s, || {
-                            part.iter()
-                                .map(|(path, cfg)| Some(lint_one(path, cfg, cli.autocorrect)))
-                                .collect::<Vec<_>>()
+                            let mut done = Vec::new();
+                            while let Some(&i) = order.get(next.fetch_add(1, std::sync::atomic::Ordering::Relaxed)) {
+                                let (path, cfg) = &jobs[i];
+                                done.push((i, lint_one(path, cfg, cli.autocorrect)));
+                            }
+                            done
                         })
                         .expect("spawn worker thread")
                 })
                 .collect();
-            handles.into_iter().flat_map(|h| h.join().unwrap()).collect()
-        })
+            for h in handles {
+                for (i, linted) in h.join().unwrap() {
+                    reports[i] = Some(linted);
+                }
+            }
+        });
+        reports
     };
 
     // Runner#inspect_files
