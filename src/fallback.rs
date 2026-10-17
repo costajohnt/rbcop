@@ -143,6 +143,7 @@ pub fn run(
         // again, a `--format`, `-o` or `--stderr` there would break the output protocol.
         .env_remove("RUBOCOP_OPTS")
         .env("RUBYOPT", rubyopt)
+        .env("RBCOP_REGISTRY", rbcop::helpers::cop_registry::REGISTRY.join(","))
         .stdin(Stdio::null())
         .stderr(Stdio::inherit());
     let o = c.opts;

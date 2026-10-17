@@ -29,8 +29,9 @@ RuboCop::ConfigStore.prepend(Module.new do
   end
 end)
 RuboCop::PendingCopsReporter.singleton_class.prepend(Module.new { def warn_if_needed(_config) = nil })
-# rbcop warns about bare directive names of the cops it implements (the ones --except lists).
-RbcopQuiet::IMPLEMENTED = (ARGV[ARGV.index('--except') + 1].split(',') + ['Lint/Syntax'])
+# rbcop warns about bare directive names of the cops in its registry (RBCOP_REGISTRY: the ones it
+# implements, a plugin's lib/ classes, a `require:`d file's cop classes).
+RbcopQuiet::IMPLEMENTED = (ENV.fetch('RBCOP_REGISTRY', '').split(',') + ['Lint/Syntax'])
                           .to_set { |name| name.split('/').last }
 RuboCop::Cop::Registry.prepend(Module.new do
   private def print_department_missing_warning(name, path)

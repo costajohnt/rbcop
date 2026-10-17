@@ -177,10 +177,11 @@ fn fallback_prints_config_warnings_once() {
     fs::write(dir.join(".rubocop.yml"), format!("{CONFIG}Style/StringLiterals:\n  Foo: 1\n")).unwrap();
     fs::write(dir.join("c.rb"), "# frozen_string_literal: true\n\nfoo(1) # rubocop:disable NoFoo, LineLength\n")
         .unwrap();
-    // Migration/DepartmentName's stdout differs (rbcop cannot qualify a custom cop's name).
+    // The custom cop's class is registered, so Migration/DepartmentName qualifies `NoFoo` too.
     let ours = rbcop(&dir, true, &["-f", "e", "a.rb", "c.rb"]);
     let theirs = rubocop(&dir, &["--cache", "false", "-f", "e", "a.rb", "c.rb"]);
     assert_eq!(text(&ours.stderr), text(&theirs.stderr));
+    assert_eq!(text(&ours.stdout), text(&theirs.stdout));
     assert!(text(&theirs.stderr).contains("no department given for NoFoo"), "{}", text(&theirs.stderr));
     let _ = fs::remove_dir_all(&dir);
 }
