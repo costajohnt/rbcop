@@ -41,10 +41,16 @@ impl Cop for NumericLiterals {
     }
 
     fn kinds(&self) -> &'static [usize] {
-        &[kind::INTEGER_NODE, kind::FLOAT_NODE]
+        &[kind::INTEGER_NODE, kind::FLOAT_NODE, kind::SOURCE_LINE_NODE]
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
+        // `__LINE__` is an int to the parser gem: on_int reads AllowedNumbers (a String raises,
+        // #514), and its integer part is never digits.
+        if node.as_source_line_node().is_some() {
+            cx.cfg.array("AllowedNumbers");
+            return;
+        }
         let Some((start, end)) = literal_range(node, cx.ancestors) else { return };
         let source = cx.src.slice(start, end);
         let int = integer_part(source);
@@ -52,7 +58,7 @@ impl Cop for NumericLiterals {
             return;
         }
         // AllowedPattern, anchored: `/\A#{regexp}\z/`.
-        let patterns = cx.cfg.regexes("AllowedPatterns").into_iter().chain(cx.cfg.regexes("IgnoredPatterns"));
+        let patterns = crate::helpers::allowed::allowed_patterns(cx.cfg);
         if patterns.into_iter().any(|r| {
             crate::config::value::ruby_regex(&format!(r"\A(?:{})\z", r.as_str())).is_some_and(|r| r.is_match(int))
         }) {

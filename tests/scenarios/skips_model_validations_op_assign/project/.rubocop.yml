@@ -1,0 +1,8 @@
+plugins: [rubocop-rails]
+AllCops:
+  SuggestExtensions: false
+  DisabledByDefault: true
+Rails/SkipsModelValidations:
+  Enabled: true
+  ForbiddenMethods: [touch, roles, update_attribute]
+  AllowedMethods: []

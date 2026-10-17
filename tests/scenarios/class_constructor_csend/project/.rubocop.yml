@@ -1,0 +1,16 @@
+AllCops:
+  DisabledByDefault: true
+  SuggestExtensions: false
+Lint/UselessConstantScoping:
+  Enabled: true
+Lint/NestedMethodDefinition:
+  Enabled: true
+Lint/UselessAccessModifier:
+  Enabled: true
+Metrics/BlockLength:
+  Enabled: true
+  Max: 0
+Layout/IndentationWidth:
+  Enabled: true
+Layout/AccessModifierIndentation:
+  Enabled: true

@@ -1,20 +1,10 @@
-use crate::helpers::allowed::{allowed_method, matches_allowed_pattern};
-use crate::helpers::code_length::{Measured, check, global_const};
+use crate::helpers::allowed::{allowed_method, allowed_methods, matches_allowed_pattern};
+use crate::helpers::code_length::{Measured, check};
 use crate::prelude::*;
 
 pub const NAME: &str = "Metrics/BlockLength";
 pub static COP: BlockLength = BlockLength;
 pub struct BlockLength;
-
-/// rubocop-ast `class_constructor?` on a block: `Class/Module/Struct.new` or `Data.define`.
-fn class_constructor(call: &ruby_prism::CallNode) -> bool {
-    let Some(recv) = call.receiver() else { return false };
-    match call.name().as_slice() {
-        b"new" => global_const(&recv, &["Class", "Module", "Struct"]),
-        b"define" => global_const(&recv, &["Data"]),
-        _ => false,
-    }
-}
 
 impl Cop for BlockLength {
     fn kinds(&self) -> &'static [usize] {
@@ -26,7 +16,7 @@ impl Cop for BlockLength {
             kind::CALL_NODE => {
                 let call = node.as_call_node().unwrap();
                 let Some(block) = call.block().and_then(|b| b.as_block_node()) else { return };
-                if class_constructor(&call) {
+                if helpers::macro_scope::class_constructor(&call) {
                     return;
                 }
                 let recv = call.receiver().map(|r| node_text(&r).split_whitespace().collect::<String>());
@@ -48,7 +38,7 @@ impl Cop for BlockLength {
             return;
         }
         // method_receiver_excluded?
-        let excluded = cx.cfg.strings("AllowedMethods").iter().any(|config| {
+        let excluded = allowed_methods(cx.cfg).iter().any(|config| {
             let mut parts = config.split('.');
             let first = parts.next().unwrap_or("");
             match parts.next() {

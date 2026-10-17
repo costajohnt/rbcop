@@ -1,0 +1,2 @@
+a.rb:15:1: C: Style/Documentation: Missing top-level documentation comment for `class Dup`.
+a.rb:18:3: W: Lint/DuplicateMethods: Method `Dup#a` is defined at both a.rb:16 and a.rb:18.

@@ -1,0 +1,6 @@
+a.rb:1:3: C: Rails/SkipsModelValidations: Avoid using `roles` because it skips validations.
+a.rb:2:3: C: Rails/SkipsModelValidations: Avoid using `touch` because it skips validations.
+a.rb:3:3: C: Rails/SkipsModelValidations: Avoid using `roles` because it skips validations.
+a.rb:4:4: C: Rails/SkipsModelValidations: Avoid using `roles` because it skips validations.
+a.rb:6:3: C: Rails/SkipsModelValidations: Avoid using `touch` because it skips validations.
+a.rb:8:7: C: Rails/SkipsModelValidations: Avoid using `touch` because it skips validations.

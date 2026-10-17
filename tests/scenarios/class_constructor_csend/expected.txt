@@ -1,0 +1,8 @@
+a.rb:10:3: W: Lint/UselessConstantScoping: Useless `private` access modifier for constant scope.
+a.rb:11:3: W: Lint/UselessConstantScoping: Useless `private` access modifier for constant scope.
+a.rb:14:5: R: Metrics/BlockLength: Block has too many lines. [2/0]
+a.rb:20:5: R: Metrics/BlockLength: Block has too many lines. [2/0]
+a.rb:21:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+a.rb:2:3: R: Metrics/BlockLength: Block has too many lines. [1/0]
+a.rb:3:5: W: Lint/NestedMethodDefinition: Method definitions must not be nested. Use `lambda` instead.
+a.rb:8:3: W: [Correctable] Lint/UselessAccessModifier: Useless `private` access modifier.

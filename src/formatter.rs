@@ -264,16 +264,30 @@ pub fn annotate(cfg: &Resolved, cop: &str, message: &str, a: Annotate) -> String
     if a.display_style_guide || all.truthy("DisplayStyleGuide") {
         let mut urls = Vec::new();
         if let Some(url) = cop_cfg.str("StyleGuide").filter(|u| !u.is_empty()) {
-            let dept = cop.rsplit_once('/').map_or("", |(d, _)| d);
-            let base = cfg
-                .hash
-                .map(dept)
-                .and_then(|d| d.str("StyleGuideBaseURL").map(String::from))
-                .or_else(|| all.str("StyleGuideBaseURL").map(String::from));
-            urls.push(match base {
-                Some(b) if !b.is_empty() => uri_join(&b, url),
-                _ => url.to_string(),
-            });
+            // MessageAnnotator.style_guide_urls: resolved once per process for each StyleGuide
+            // value, so the first offense with an anchor fixes its base for every cop (#508).
+            // ponytail: filled in report order (files, then sorted offenses); RuboCop fills it as
+            // offenses are added, disabled ones and correcting passes included.
+            static RESOLVED: std::sync::Mutex<Vec<(String, String)>> = std::sync::Mutex::new(Vec::new());
+            let mut resolved = RESOLVED.lock().unwrap_or_else(|e| e.into_inner());
+            let full = match resolved.iter().find(|(k, _)| k == url) {
+                Some((_, full)) => full.clone(),
+                None => {
+                    let dept = cop.rsplit_once('/').map_or("", |(d, _)| d);
+                    let base = cfg
+                        .hash
+                        .map(dept)
+                        .and_then(|d| d.str("StyleGuideBaseURL").map(String::from))
+                        .or_else(|| all.str("StyleGuideBaseURL").map(String::from));
+                    let full = match base {
+                        Some(b) if !b.is_empty() => uri_join(&b, url),
+                        _ => url.to_string(),
+                    };
+                    resolved.push((url.to_string(), full.clone()));
+                    full
+                }
+            };
+            urls.push(full);
         }
         for key in ["References", "Reference"] {
             match cop_cfg.get(key) {

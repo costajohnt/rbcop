@@ -574,7 +574,7 @@ impl Cop for DuplicateMethods {
                     | b"def_delegators"
                     | b"def_instance_delegators"
             ) || (cx.config.all_cops().truthy("ActiveSupportExtensionsEnabled")
-                && std::str::from_utf8(m).is_ok_and(|m| cx.cfg.includes("DelegatingMethods", m)));
+                && std::str::from_utf8(m).is_ok_and(|m| cx.cfg.includes_or("DelegatingMethods", m, &["delegate"])));
             if !defines || call.receiver().is_some() || is_csend(&call) {
                 return;
             }
@@ -677,7 +677,7 @@ impl Cop for DuplicateMethods {
                         }
                     }
                     m if cx.config.all_cops().truthy("ActiveSupportExtensionsEnabled")
-                        && std::str::from_utf8(m).is_ok_and(|m| cx.cfg.includes("DelegatingMethods", m)) =>
+                        && std::str::from_utf8(m).is_ok_and(|m| cx.cfg.includes_or("DelegatingMethods", m, &["delegate"])) =>
                     {
                         let Some(names) = delegate_names(&args) else { return };
                         if ctx.inside_if() {

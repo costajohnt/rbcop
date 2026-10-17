@@ -419,6 +419,19 @@ fn config_load_errors_worded_like_rubocop() {
         ("b: 2020-01-01\n", "Tried to load unspecified class: Date"),
         ("b: 2020-01-01 10:00:00\n", "Tried to load unspecified class: Time"),
         ("a: !ruby/object:Foo {}\n", "Tried to load unspecified class: Foo"),
+        // A list set to `~` is removed by the merge: Naming/PredicatePrefix#validate_config reads nil.
+        (
+            "AllCops:\n  NewCops: disable\nNaming/PredicatePrefix:\n  NamePrefix: ~\n",
+            "undefined method 'include?' for nil",
+        ),
+        (
+            "AllCops:\n  NewCops: disable\nNaming/PredicatePrefix:\n  ForbiddenPrefixes: ~\n",
+            "undefined method 'each' for nil",
+        ),
+        (
+            "AllCops:\n  NewCops: disable\nNaming/PredicatePrefix:\n  NamePrefix: 1\n",
+            "undefined method 'include?' for an instance of Integer",
+        ),
     ];
     let dir = scratch("config-errors");
     fs::write(dir.join("a.rb"), "x = 1\n").unwrap();
@@ -428,6 +441,149 @@ fn config_load_errors_worded_like_rubocop() {
         let stderr = text(&out.stderr);
         assert_eq!(stderr.lines().next(), Some(want.replace("{D}", &dir.display().to_string()).as_str()), "{config:?}");
         assert_eq!(out.status.code(), Some(2), "{config:?}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// libyaml checks no indentation inside a flow collection or on a quoted scalar's lines (#516):
+/// Psych loads each of these, yaml-rust2 0.13.0 called them "invalid indentation".
+#[test]
+fn flow_collections_ignore_indentation_like_libyaml() {
+    let cases: &[(&str, &str)] = &[
+        ("Metrics/BlockLength:\n  AllowedMethods: [\n    \"foo\",\n  ]\n", "\n  - foo\n"),
+        ("Metrics/BlockLength:\n  AllowedMethods: [\n    'foo',\n ]\n", "\n  - foo\n"),
+        ("Metrics/BlockLength:\n  AllowedMethods: [foo,\n  bar]\n", "\n  - foo\n  - bar\n"),
+        ("Metrics/BlockLength:\n  AllowedMethods: [\n\"foo\",\nbar]\n", "\n  - foo\n  - bar\n"),
+        ("Metrics/BlockLength:\n  AllowedMethods: [\"foo\n  bar\"]\n", "\n  - foo bar\n"),
+        ("Metrics/BlockLength:\n  AllowedMethods: \"foo\nbar\"\n", " foo bar\n"),
+    ];
+    let dir = scratch("flow-indent");
+    fs::write(dir.join("a.rb"), "x = 1\n").unwrap();
+    for (config, want) in cases {
+        fs::write(dir.join(".rubocop.yml"), config).unwrap();
+        let out = rbcop(&dir, &["--show-cops", "Metrics/BlockLength"]);
+        assert_eq!(out.status.code(), Some(0), "{config:?}: {}", text(&out.stderr));
+        assert!(text(&out.stdout).contains(&format!("  AllowedMethods:{want}")), "{config:?}: {}", text(&out.stdout));
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// An AmbiguousCopName abort inside rubocop-rspec's TopLevelGroup cops (on_new_investigation in
+/// RuboCop) is a cop error without a location (#511); other RSpec cops keep the node's.
+#[test]
+fn top_level_group_cop_errors_have_no_location() {
+    let dir = scratch("top-level-group");
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "plugins:\n  - rubocop-rspec\nAllCops:\n  NewCops: disable\n  SuggestExtensions: false\n",
+    )
+    .unwrap();
+    fs::create_dir_all(dir.join("spec")).unwrap();
+    let spec = "# rubocop:disable SelfAssignment\ndescribe \"foo\" do\n  it { expect(1).to eq 1 }\nend\ndescribe Bar do\nend\n";
+    fs::write(dir.join("spec/e_spec.rb"), spec).unwrap();
+    let out = rbcop(&dir, &["spec/e_spec.rb"]);
+    let file = dir.join("spec/e_spec.rb").display().to_string();
+    let errors: Vec<String> = text(&out.stderr)
+        .lines()
+        .filter_map(|l| l.strip_prefix("An error occurred while "))
+        .map(|l| l.replace(&file, "F"))
+        .collect();
+    for want in ["RSpec/DescribeClass cop was inspecting F.", "RSpec/MultipleDescribes cop was inspecting F."] {
+        assert!(errors.iter().any(|e| e == want), "{errors:?}");
+    }
+    assert!(errors.iter().any(|e| e == "RSpec/EmptyExampleGroup cop was inspecting F:5:0."), "{errors:?}");
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// RSpec/DiscardedMatcher with a String CustomMatcherMethods (#502): every receiverless send
+/// raises, and a plain block's on_block raises again; a numblock call raises once.
+#[test]
+fn discarded_matcher_string_setting_raises_per_callback() {
+    let dir = scratch("discarded-matcher");
+    let config = "plugins:\n  - rubocop-rspec\nAllCops:\n  NewCops: disable\n  SuggestExtensions: false\n\
+                  RSpec/DiscardedMatcher:\n  CustomMatcherMethods: foo\n";
+    fs::write(dir.join(".rubocop.yml"), config).unwrap();
+    fs::create_dir_all(dir.join("spec")).unwrap();
+    fs::write(dir.join("spec/a_spec.rb"), "describe \"x\" do\nend\nbar { _1 }\nx.y { 1 }\n").unwrap();
+    let out = rbcop(&dir, &["--only", "RSpec/DiscardedMatcher"]);
+    let file = dir.join("spec/a_spec.rb").display().to_string();
+    let stderr = text(&out.stderr);
+    let printed: Vec<String> = stderr
+        .lines()
+        .take_while(|l| !l.is_empty())
+        .filter_map(|l| l.strip_prefix("An error occurred while RSpec/DiscardedMatcher cop was inspecting "))
+        .map(|l| l.replace(&file, "F"))
+        .collect();
+    assert_eq!(printed, ["F:1:0.", "F:1:0.", "F:3:0.", "F:4:0."]);
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// DisplayStyleGuide: the first offense with a StyleGuide anchor fixes its URL for the run, as
+/// RuboCop's per-process MessageAnnotator.style_guide_urls does (#508).
+#[test]
+fn style_guide_urls_are_resolved_once_per_anchor() {
+    let dir = scratch("style-guide-cache");
+    let config = "plugins: [rubocop-rspec]\nAllCops:\n  SuggestExtensions: false\n  DisabledByDefault: true\n  \
+                  DisplayStyleGuide: true\nStyle/ClassCheck:\n  Enabled: true\nRSpec/ClassCheck:\n  Enabled: true\n";
+    fs::write(dir.join(".rubocop.yml"), config).unwrap();
+    fs::write(dir.join("a.rb"), "x.kind_of?(Y)\n").unwrap();
+    fs::create_dir_all(dir.join("spec")).unwrap();
+    fs::write(dir.join("spec/b_spec.rb"), "describe Foo do\n  it { expect(x).to be_a_kind_of(Y) }\nend\n").unwrap();
+    for (first, base) in [("a.rb", "https://rubystyle.guide"), ("spec/b_spec.rb", "https://rspec.rubystyle.guide")] {
+        let other = if first == "a.rb" { "spec/b_spec.rb" } else { "a.rb" };
+        let out = text(&rbcop(&dir, &["-f", "e", first, other]).stdout);
+        let n = out.lines().filter(|l| l.contains(&format!("({base}#is-a-vs-kind-of"))).count();
+        assert_eq!(n, 2, "{out}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// The error summary lists every raise, two at one location too (#501); under -a/-A only the last
+/// (non-correcting) pass runs the cops that do not correct, so their errors are not repeated.
+#[test]
+fn cop_error_summary_keeps_duplicates() {
+    let dir = scratch("error-dups");
+    fs::write(dir.join(".rubocop.yml"), "AllCops:\n  NewCops: disable\nLint/Debugger:\n  DebuggerMethods: x\n")
+        .unwrap();
+    let file = dir.join("a.rb");
+    for (args, lines) in [(&[][..], [1, 1, 3]), (&["-a"][..], [1, 1, 3]), (&["-A"][..], [3, 3, 5])] {
+        fs::write(&file, "binding.pry\nx = \"a\"\nputs  x\n").unwrap();
+        let out = rbcop(&dir, &[args, &["a.rb"]].concat());
+        let stderr = text(&out.stderr);
+        let summary = stderr.split_once("3 errors occurred:\n").map(|s| s.1).unwrap_or_else(|| panic!("{stderr}"));
+        let want: Vec<String> = lines
+            .iter()
+            .map(|l| format!("An error occurred while Lint/Debugger cop was inspecting {}:{l}:0.", file.display()))
+            .collect();
+        assert_eq!(summary.lines().take(3).collect::<Vec<_>>(), want, "{args:?}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// Cop errors printed during the run come in target order, whichever worker finishes first (#507).
+#[test]
+fn cop_errors_print_in_target_order() {
+    let dir = scratch("error-order");
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "AllCops:\n  NewCops: disable\n  SuggestExtensions: false\nNaming/FileName:\n  ExpectMatchingDefinition: true\n  AllowedAcronyms: CLI\n",
+    )
+    .unwrap();
+    fs::create_dir_all(dir.join("lib")).unwrap();
+    let mut want = Vec::new();
+    for i in 0..16 {
+        let name = format!("lib/f{i:02}.rb");
+        // Bigger files first in the worker queue: the last target is the largest.
+        let body = format!("# frozen_string_literal: true\n\n{}class Other; end\n", "x = 1\n".repeat(i * 200));
+        fs::write(dir.join(&name), body).unwrap();
+        want.push(format!("An error occurred while Naming/FileName cop was inspecting {}.", dir.join(&name).display()));
+    }
+    for _ in 0..3 {
+        let out = rbcop(&dir, &["--only", "Naming/FileName"]);
+        let stderr = text(&out.stderr);
+        let printed: Vec<&str> =
+            stderr.lines().take_while(|l| !l.is_empty()).filter(|l| l.starts_with("An error")).collect();
+        assert_eq!(printed, want);
     }
     let _ = fs::remove_dir_all(&dir);
 }
@@ -867,14 +1023,14 @@ fn ambiguous_directive_errors_once_for_the_variable_force() {
     let _ = fs::remove_dir_all(&dir);
 }
 
-/// List settings given as a YAML String (#474): where RuboCop's cop reads them bare and then calls
+/// List settings given as a YAML String (#474) or set to `~` (#500): where RuboCop's cop reads them bare and then calls
 /// an Array-only method (`map`, `any?`, `+`, `-`, `join`, `to_set`), the cop raises at the node it
 /// visits. Cop errors recorded from RuboCop 1.91 on the two scenario projects (their offenses are
 /// in expected.txt).
 #[test]
 fn string_list_settings_raise_where_rubocop_does() {
     let root = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/scenarios");
-    let cases: [(&str, &[&str]); 2] = [
+    let cases: [(&str, &[&str]); 4] = [
         (
             "list_settings_string",
             &["Lint/MissingSuper cop was inspecting a.rb:21:2.", "Style/AsciiComments cop was inspecting a.rb."],
@@ -902,6 +1058,52 @@ fn string_list_settings_raise_where_rubocop_does() {
                 "Style/NumericLiterals cop was inspecting a.rb:34:4.",
                 "Style/NumericLiterals cop was inspecting a.rb:35:4.",
                 "Style/NumericLiterals cop was inspecting a.rb:39:10.",
+            ],
+        ),
+        // `__LINE__` is an int node to RuboCop (#514).
+        (
+            "numeric_literals_source_line",
+            &[
+                "Style/NumericLiterals cop was inspecting a.rb:1:2.",
+                "Style/NumericLiterals cop was inspecting a.rb:2:2.",
+            ],
+        ),
+        // List settings set to `~` (#500): the merge removes the key, so a bare read is nil.
+        (
+            "list_settings_nil",
+            &[
+                "Layout/ClassStructure cop was inspecting a.rb:15:0.",
+                "Layout/ClassStructure cop was inspecting a.rb:7:0.",
+                "Layout/ClassStructure cop was inspecting app/controllers/posts_controller.rb:4:0.",
+                "Layout/MultilineAssignmentLayout cop was inspecting a.rb:11:0.",
+                "Layout/MultilineAssignmentLayout cop was inspecting a.rb:20:0.",
+                "Layout/MultilineAssignmentLayout cop was inspecting a.rb:3:0.",
+                "Layout/MultilineAssignmentLayout cop was inspecting a.rb:5:0.",
+                "Lint/ConstantResolution cop was inspecting a.rb:15:6.",
+                "Lint/ConstantResolution cop was inspecting a.rb:4:0.",
+                "Lint/ConstantResolution cop was inspecting a.rb:5:4.",
+                "Lint/ConstantResolution cop was inspecting a.rb:7:6.",
+                "Lint/ConstantResolution cop was inspecting app/controllers/posts_controller.rb:4:24.",
+                "Lint/ConstantResolution cop was inspecting app/controllers/posts_controller.rb:4:6.",
+                "Naming/ClassAndModuleCamelCase cop was inspecting a.rb:7:0.",
+                "Naming/MethodParameterName cop was inspecting a.rb:8:2.",
+                "Naming/PredicatePrefix cop was inspecting a.rb:14:0.",
+                "Naming/PredicatePrefix cop was inspecting a.rb:18:2.",
+                "Naming/PredicatePrefix cop was inspecting a.rb:23:15.",
+                "Naming/PredicatePrefix cop was inspecting a.rb:24:0.",
+                "Rails/ActionOrder cop was inspecting app/controllers/posts_controller.rb:4:0.",
+                "Style/BlockDelimiters cop was inspecting a.rb:10:0.",
+                "Style/BlockDelimiters cop was inspecting a.rb:14:0.",
+                "Style/BlockDelimiters cop was inspecting a.rb:20:4.",
+                "Style/BlockDelimiters cop was inspecting a.rb:23:0.",
+                "Style/CommentAnnotation cop was inspecting a.rb.",
+                "Style/CommentAnnotation cop was inspecting app/controllers/posts_controller.rb.",
+                "Style/Documentation cop was inspecting a.rb:7:0.",
+                "Style/Documentation cop was inspecting app/controllers/posts_controller.rb:4:0.",
+                "Style/FetchEnvVar cop was inspecting a.rb:4:0.",
+                "Style/GlobalVars cop was inspecting a.rb:3:0.",
+                "Style/SingleLineBlockParams cop was inspecting a.rb:10:0.",
+                "Style/SingleLineBlockParams cop was inspecting a.rb:23:0.",
             ],
         ),
     ];

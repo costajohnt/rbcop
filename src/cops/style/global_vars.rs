@@ -33,7 +33,7 @@ impl Cop for GlobalVars {
             // `#$-1` below 3.3 (see legacy_gvar_interpolations).
             for (start, end) in helpers::string_help::legacy_gvar_interpolations(cx, node) {
                 let name = cx.src.slice(start, end);
-                if !BUILT_IN_VARS.contains(&name) && !cx.cfg.array("AllowedVariables").iter().any(|v| v == name) {
+                if !BUILT_IN_VARS.contains(&name) && !cx.cfg.array_bare("AllowedVariables").iter().any(|v| v == name) {
                     cx.add(start, end, "Do not introduce global variables.");
                 }
             }
@@ -50,7 +50,7 @@ impl Cop for GlobalVars {
             _ => node.location(),
         };
         let name = text(&loc);
-        if BUILT_IN_VARS.contains(&name) || cx.cfg.array("AllowedVariables").iter().any(|v| v == name) {
+        if BUILT_IN_VARS.contains(&name) || cx.cfg.array_bare("AllowedVariables").iter().any(|v| v == name) {
             return;
         }
         cx.add(loc.start_offset(), loc.end_offset(), "Do not introduce global variables.");

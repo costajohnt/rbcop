@@ -9,17 +9,36 @@ use ruby_prism_sys as sys;
 /// `EMBDOC_BEGIN` stands in for it).
 /// Not modelled: parser's `tNL` after every comment and zero-width `tSPACE` closing `%w()`;
 /// Prism's `COMMENT` includes the newline (parser's comment ends before it).
+/// A double-quoted string continued over backslash-newlines is one `tSTRING` starting on its
+/// first line (`T_STRING`, as in `translated`), so Token#line pairs see its first line (#506).
 pub fn sorted_tokens(src: &Source) -> Vec<Token> {
-    src.tokens()
-        .iter()
-        .filter(|t| {
-            !matches!(
-                t.kind,
-                sys::PM_TOKEN_IGNORED_NEWLINE | sys::PM_TOKEN___END__ | sys::PM_TOKEN_EMBDOC_LINE | sys::PM_TOKEN_EMBDOC_END
-            )
-        })
-        .copied()
-        .collect()
+    let raw = src.tokens();
+    let mut out = Vec::with_capacity(raw.len());
+    let mut i = 0;
+    while i < raw.len() {
+        let t = raw[i];
+        i += 1;
+        if matches!(
+            t.kind,
+            sys::PM_TOKEN_IGNORED_NEWLINE | sys::PM_TOKEN___END__ | sys::PM_TOKEN_EMBDOC_LINE | sys::PM_TOKEN_EMBDOC_END
+        ) {
+            continue;
+        }
+        if t.kind == sys::PM_TOKEN_STRING_BEGIN
+            && let [content, end, ..] = &raw[i..]
+            && content.kind == sys::PM_TOKEN_STRING_CONTENT
+            && end.kind == sys::PM_TOKEN_STRING_END
+            && &src.text[t.start..t.end] == "\""
+            && src.line_of(t.start) != src.line_of(end.start)
+            && simplify_string(&src.text.as_bytes()[content.start..content.end], b"\"")
+        {
+            out.push(Token { kind: T_STRING, start: t.start, end: end.end });
+            i += 2;
+            continue;
+        }
+        out.push(t);
+    }
+    out
 }
 
 /// `processed_source.tokens.empty?` (`first_code`: `cx.facts.first_code`). Code or a comment means

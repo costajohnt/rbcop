@@ -1,0 +1,36 @@
+Warning: obsolete parameter `ExcludedMethods` (for `Metrics/BlockLength`) found in .rubocop.yml
+`ExcludedMethods` has been renamed to `AllowedMethods` and/or `AllowedPatterns`.
+Warning: Metrics/BlockLength does not support ExcludedMethods parameter.
+
+Supported parameters are:
+
+  - Enabled
+  - CountComments
+  - Max
+  - CountAsOne
+  - AllowedMethods
+  - AllowedPatterns
+  - Exclude
+Warning: Style/SymbolProc does not support ExcludedMethods parameter.
+
+Supported parameters are:
+
+  - Enabled
+  - AllowMethodsWithArguments
+  - AllowedMethods
+  - AllowedPatterns
+  - AllowComments
+Warning: Layout/LineLength does not support IgnoredMethods parameter.
+
+Supported parameters are:
+
+  - Enabled
+  - Max
+  - AllowHeredoc
+  - AllowURI
+  - AllowQualifiedName
+  - URISchemes
+  - AllowRBSInlineAnnotation
+  - AllowCopDirectives
+  - AllowedPatterns
+  - SplitStrings

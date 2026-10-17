@@ -1009,7 +1009,9 @@ fn qualify_cop_options(cli: &mut Cli) -> (Vec<String>, Option<String>) {
 
 /// One linted file: (report, corrected source to write back, infinite-loop error), or a read error.
 /// One file's result: report, corrected source, loop error, and the warnings its cops raised.
-type Linted = Result<(FileReport, Option<String>, Option<String>, Vec<String>), String>;
+/// The report, the corrected source, the correction loop's error, the cop warnings and the cop
+/// errors printed for the file.
+type Linted = Result<(FileReport, Option<String>, Option<String>, Vec<String>, Vec<String>), String>;
 
 /// Whether two targets are the same file on disk (one of them through a symlink, say).
 fn same_file_twice(jobs: &[(PathBuf, std::sync::Arc<Resolved>)]) -> bool {
@@ -1353,11 +1355,14 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     let lint_one = |path: &PathBuf, cfg: &Resolved, mode: Option<rbcop::autocorrect::Mode>| -> Linted {
         rbcop::config::value::reset_run_budget();
         let view = registry_at.get(path).copied();
-        std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+        let linted = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
             rbcop::helpers::cop_registry::with_view(view, || lint(path, cfg, mode))
         }))
-        .unwrap_or_else(|_| Err(format!("rbcop: internal error while inspecting {}", path.display())))
-        .map(|(report, corrected, loop_error)| (report, corrected, loop_error, runner::take_file_warnings()))
+        .unwrap_or_else(|_| Err(format!("rbcop: internal error while inspecting {}", path.display())));
+        let errors = runner::take_file_errors();
+        linted.map(|(report, corrected, loop_error)| {
+            (report, corrected, loop_error, runner::take_file_warnings(), errors)
+        })
     };
     // Cops recurse over the AST; runner::MAX_AST_DEPTH (1000) needs under 2 MiB, the rest is
     // headroom. Only touched pages are committed.
@@ -1484,7 +1489,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             // working directory and the command-line paths) is not written; it is reported as
             // without -a/-A. write_source checks again right before writing.
             let refused = match &linted {
-                Ok((_, Some(_), _, _)) if stdin_text.is_none() => {
+                Ok((_, Some(_), _, _, _)) if stdin_text.is_none() => {
                     fs::canonicalize(path).ok().filter(|real| rbcop::autocorrect::outside_roots(real, &write_roots))
                 }
                 _ => None,
@@ -1502,7 +1507,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                 }
                 None => linted,
             };
-            let (mut report, corrected, loop_error, warnings) = match linted {
+            let (mut report, corrected, loop_error, warnings, errors) = match linted {
                 Ok(l) => l,
                 Err(e) => {
                     error = Some(e);
@@ -1510,6 +1515,10 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                     break;
                 }
             };
+            // The cop errors, printed as RuboCop's Team prints them while it inspects the file.
+            for e in &errors {
+                eprintln!("{e}");
+            }
             // Registry#print_department_missing_warning, written while the file was inspected.
             for w in &report.warnings {
                 eprintln!("{w}");
@@ -1542,6 +1551,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             // Runner#process_file: `errors << e`, so the summary lists it and the run fails.
             if let Some(e) = loop_error {
                 runner::file_error(e);
+                for e in runner::take_file_errors() {
+                    eprintln!("{e}");
+                }
             }
             report.offenses.extend(fallback_offenses.remove(path).unwrap_or_default());
             let offs = formatter::offenses(&report.text, &report.offenses, |o| {

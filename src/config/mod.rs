@@ -147,8 +147,8 @@ impl CopConfig {
     pub fn strings(&self, key: &str) -> Vec<String> {
         self.params.strings(key)
     }
-    /// A list setting a cop reads bare, `cop_config[key].include?(name)` (or `fetch(key, [])`): on
-    /// a String (`AllowedVariables: FOO_BAR`) Ruby's include? is a substring test, on a Hash a key
+    /// A list setting a cop reads with `cop_config.fetch(key, []).include?(name)` (a missing key
+    /// is empty; `includes_bare` for a bare `cop_config[key]`): on a String (`AllowedVariables: FOO_BAR`) Ruby's include? is a substring test, on a Hash a key
     /// test; nil and other scalars have no include? (a cop error at the visited node).
     pub fn includes(&self, key: &str, name: &str) -> bool {
         match self.params.get(key) {
@@ -159,13 +159,38 @@ impl CopConfig {
             Some(_) => panic!("undefined method 'include?' for {key}"),
         }
     }
+    /// `cop_config[key]` read bare, with no `fetch` default or `|| []`: a key a user config set to
+    /// `~` is gone after the merge, so the read is nil and the cop's first call on it raises (a cop
+    /// error at the visited node). Then as `includes`.
+    pub fn includes_bare(&self, key: &str, name: &str) -> bool {
+        self.bare(key);
+        self.includes(key, name)
+    }
+    /// `cop_config[key]` read bare (see `includes_bare`), then as `array`.
+    pub fn array_bare(&self, key: &str) -> Vec<String> {
+        self.bare(key);
+        self.array(key)
+    }
+    /// Panics on a missing key: nil has none of the list methods the cop calls next.
+    pub fn bare(&self, key: &str) {
+        if self.params.get(key).is_none() {
+            panic!("undefined method for nil ({key})");
+        }
+    }
+    /// `cop_config.fetch(key, default).include?(name)`: a key set to `~` reads the default.
+    pub fn includes_or(&self, key: &str, name: &str, default: &[&str]) -> bool {
+        match self.params.get(key) {
+            None => default.contains(&name),
+            Some(_) => self.includes(key, name),
+        }
+    }
     /// `(cop_config[key] || []).include?(name)`
     pub fn includes_or_empty(&self, key: &str, name: &str) -> bool {
         !matches!(self.params.get(key), Some(Value::Null | Value::Bool(false))) && self.includes(key, name)
     }
-    /// A list setting a cop reads bare and then calls an Array-only method on (`map`, `any?`,
-    /// `each`, `join`, `+`): anything but an Array (a String, nil, a scalar) raises, a cop error at
-    /// the visited node.
+    /// A list setting a cop reads with `cop_config.fetch(key, [])` (`array_bare` for a bare read)
+    /// and then calls an Array-only method on (`map`, `any?`, `each`, `join`, `+`): anything but an
+    /// Array (a String, nil, a scalar) raises, a cop error at the visited node.
     pub fn array(&self, key: &str) -> Vec<String> {
         match self.params.get(key) {
             None => Vec::new(),

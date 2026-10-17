@@ -61,7 +61,9 @@ pub fn check(cx: &mut Cx, args: &[Node], name_type: &str) {
             Some(crate::config::value::Value::Seq(items)) => {
                 items.iter().any(|i| i.as_string().is_some_and(|s| s == name))
             }
-            _ => false,
+            Some(crate::config::value::Value::Map(m)) => m.contains(name),
+            // nil (a key set to `~`) or another scalar: no include?.
+            _ => panic!("undefined method 'include?'"),
         }
     };
     let allowed = list("AllowedNames");

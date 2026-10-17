@@ -64,13 +64,22 @@ impl Cop for DiscardedMatcher {
         if is_csend(&call) {
             return;
         }
-        // on_send, or on_block for a plain block (numblocks have only their send checked, whose
-        // parent is no `block`)
-        if helpers::rspec::block_of(&call).is_some_and(|b| !helpers::rspec::is_plain(&b)) {
-            return;
-        }
         let custom = matches!(cx.cfg.get("CustomMatcherMethods"), None | Some(Value::Seq(_)))
             .then(|| cx.cfg.strings("CustomMatcherMethods"));
+        let block = helpers::rspec::block_of(&call);
+        // A non-Array setting: every receiverless send raises in matcher_call? (the memo is never
+        // stored), and so does on_block for a plain block, at the same start.
+        if custom.is_none() && call.receiver().is_none() {
+            if block.as_ref().is_some_and(helpers::rspec::is_plain) {
+                crate::runner::cop_error_at(cx.cop, cx.src, crate::runner::visiting());
+            }
+            panic!("undefined method 'map' for CustomMatcherMethods");
+        }
+        // on_send, or on_block for a plain block (numblocks have only their send checked, whose
+        // parent is no `block`)
+        if block.is_some_and(|b| !helpers::rspec::is_plain(&b)) {
+            return;
+        }
         if !matcher_call(&call, custom.as_deref()) {
             return;
         }

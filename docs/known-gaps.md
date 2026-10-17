@@ -282,7 +282,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   reproduced, and so are list settings given as a YAML String (#440, #474): each cop reads one as
   its RuboCop counterpart does, a substring test where the cop calls `include?` on the bare
   setting, a cop error where it calls an Array-only method (`map`, `any?`, `each`, `join`, `+`,
-  `-`), a one-element list where it wraps the setting in `Array()`. A String
+  `-`), a one-element list where it wraps the setting in `Array()`. A list set to `~` (#500) is
+  removed by the merge: a cop that reads it bare (`cop_config[key]`) raises on nil, one that reads
+  it with `fetch(key, default)` or `|| []` gets the default. A String
   Naming/PredicatePrefix `ForbiddenPrefixes` ends the run (exit 2) with RuboCop's
   `undefined method 'each' for an instance of String`, without the backtrace. Order of cop errors: rbcop's `N errors occurred:` summary is sorted, RuboCop's is in
   raise order; and errors printed as they happen come from on_file cops (RuboCop's
@@ -413,6 +415,11 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   yaml-rust2's errors; a few differ from libyaml's: an unknown `%` directive, content after a `...`
   document end, and an alias to an unknown anchor followed by more on the line (`a: *x y`) report a
   different problem. The Ruby backtrace RuboCop prints after the message is not reproduced.
+- `DisplayStyleGuide`: the style guide URL is resolved once per run for each `StyleGuide` value,
+  as RuboCop's per-process MessageAnnotator cache does, so the first offense with an anchor fixes
+  its base URL for cops of other departments (#508). rbcop fills the cache in report order (files,
+  then each file's sorted offenses); RuboCop fills it as offenses are added, so a disabled offense
+  or one from a correcting pass can fill it first there.
 - rubocop-rspec family:
   - RSpec/SpecFilePathFormat with `EnforcedInflector: active_support` uses
     ActiveSupport's default inflections; the project's `InflectorPath` file is not evaluated.

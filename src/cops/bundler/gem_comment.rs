@@ -90,7 +90,7 @@ impl Cop for GemComment {
             return;
         }
         // `cop_config['OnlyFor'].any?`: a String raises (a cop error).
-        let only_for = cx.cfg.array("OnlyFor");
+        let only_for = cx.cfg.array_bare("OnlyFor");
         if !only_for.is_empty() && !checked_options_present(&only_for, &args) {
             return;
         }

@@ -147,12 +147,12 @@ fn on_block(cx: &mut Cx, b: &Block) {
             "semantic" => {
                 if braces {
                     // `cop_config['FunctionalMethods'].to_set`: a String raises (a cop error).
-                    cx.cfg.array("FunctionalMethods").contains(&b.method)
+                    cx.cfg.array_bare("FunctionalMethods").contains(&b.method)
                         || return_value_used(ancestors)
                         || return_value_of_scope(src, ancestors, b.range)
                         || (cx.cfg.bool("AllowBracesOnProceduralOneLiners") == Some(true) && !multiline)
                 } else {
-                    cx.cfg.array("ProceduralMethods").contains(&b.method) || !return_value_used(ancestors)
+                    cx.cfg.array_bare("ProceduralMethods").contains(&b.method) || !return_value_used(ancestors)
                 }
             }
             "braces_for_chaining" => {

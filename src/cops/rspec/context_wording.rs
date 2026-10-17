@@ -4,7 +4,7 @@ pub const NAME: &str = "RSpec/ContextWording";
 pub static COP: ContextWording = ContextWording;
 pub struct ContextWording;
 
-/// AllowedPattern#cop_config_patterns_values (strings and regexps as configured).
+/// AllowedPattern#allowed_patterns before `prefix_regexes` (strings and regexps as configured).
 fn configured(cx: &Cx) -> Vec<Value> {
     let mut out = Vec::new();
     for key in ["AllowedPatterns", "IgnoredPatterns"] {
@@ -14,6 +14,7 @@ fn configured(cx: &Cx) -> Vec<Value> {
             Some(v) => out.push(v.clone()),
         }
     }
+    out.extend(crate::helpers::allowed::deprecated_pattern_values(cx.cfg));
     out
 }
 
