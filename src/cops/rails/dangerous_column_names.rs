@@ -81,7 +81,8 @@ impl Cop for DangerousColumnNames {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let Some(call) = node.as_call_node() else { return };
+        // on_send only (no on_csend): `t&.integer :id` is not checked (#449).
+        let Some(call) = node.as_call_node().filter(|c| !is_csend(c)) else { return };
         let args = send_args(&call);
         let name = method_name(&call);
         let column = match name {

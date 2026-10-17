@@ -15,8 +15,9 @@ fn is_call(n: &Node) -> bool {
         && helpers::literal_node::folded_numeric(n).is_none()
 }
 
+/// parser `lvar`, `it` in an `it` block included.
 fn is_lvar(n: &Node) -> bool {
-    n.as_local_variable_read_node().is_some()
+    helpers::node_types::lvar_name(n).is_some()
 }
 
 /// `(send $recv :== $arg)`: the receiver and the single argument.
@@ -127,8 +128,8 @@ impl Cop for MultipleComparison {
             return;
         }
         let elements: Vec<&str> = s.values.iter().map(|&((a, b), _)| &cx.src.text[a..b]).collect();
-        let argument = match var.as_local_variable_read_node() {
-            Some(l) => std::str::from_utf8(l.name().as_slice()).unwrap_or(""),
+        let argument = match helpers::node_types::lvar_name(var) {
+            Some(l) => std::str::from_utf8(l).unwrap_or(""),
             None => node_text(var),
         };
         let repl = format!("[{}].include?({argument})", elements.join(", "));

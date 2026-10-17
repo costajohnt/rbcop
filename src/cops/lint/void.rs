@@ -369,7 +369,7 @@ fn check_void_expression_nodes(cx: &mut Cx, ctx: &Ctx, expr: &Node) {
     if expr.as_self_node().is_some() {
         report(cx, ctx, expr, "`self` used in void context.".to_string(), true);
     }
-    if expr.as_defined_node().is_some() || lambda_or_proc(expr) {
+    if expr.as_defined_node().is_some() || helpers::node_types::lambda_or_proc(expr) {
         let msg = format!("`{}` used in void context.", node_text(expr));
         report(cx, ctx, expr, msg, true);
     }
@@ -446,42 +446,6 @@ fn entirely_literal(node: &Node) -> bool {
                 && c.receiver().is_some_and(|r| entirely_literal(&r))
         }
         _ => helpers::literal_node::literal(node),
-    }
-}
-
-/// `lambda_or_proc?`: `-> {}`, `lambda {}`, `proc {}`, `Proc.new {}` / `Proc.new`.
-fn lambda_or_proc(node: &Node) -> bool {
-    if node.as_lambda_node().is_some() {
-        return true;
-    }
-    let Some(call) = node.as_call_node() else { return false };
-    let block = call.block().and_then(|b| b.as_block_node());
-    let name = method_name(&call);
-    // BlockNode#lambda? (any block, numbered/`it` included): the block's send is named `lambda`,
-    // whatever its receiver or arguments.
-    if block.is_some() && name == "lambda" {
-        return true;
-    }
-    // `proc?` matches a parser `block` only: a block with numbered parameters (`numblock`) or `it`
-    // (`itblock`) is neither `proc { _1 }` nor `Proc.new { it }`.
-    let plain_block = block.as_ref().is_some_and(|b| b.parameters().is_none_or(|p| p.as_block_parameters_node().is_some()));
-    // Its patterns take a bare `send` (no arguments; `&blk` is a parser argument).
-    if is_csend(&call) || call.arguments().is_some() || call.block().is_some_and(|b| b.as_block_argument_node().is_some()) {
-        return false;
-    }
-    match call.receiver() {
-        None => name == "proc" && plain_block,
-        Some(r) => {
-            let proc_const = match &r {
-                Node::ConstantReadNode { .. } => node_text(&r) == "Proc",
-                Node::ConstantPathNode { .. } => {
-                    let p = r.as_constant_path_node().unwrap();
-                    p.parent().is_none() && p.name().is_some_and(|n| n.as_slice() == b"Proc")
-                }
-                _ => false,
-            };
-            proc_const && name == "new" && (block.is_none() || plain_block)
-        }
     }
 }
 
