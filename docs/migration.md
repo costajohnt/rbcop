@@ -121,8 +121,6 @@ Cops from Ruby files the config requires (`require: ./lib/cops/foo.rb`) are name
 
 `RBCOP_FALLBACK=1` runs RuboCop once more, for exactly those cops (`--except` every cop rbcop implements), on the same files with the same configuration and options, and merges its offenses into rbcop's report: one report, one exit status. RuboCop has to be installed (`rubocop` on `PATH`, or set `RBCOP_RUBOCOP`, for example `RBCOP_RUBOCOP="bundle exec rubocop"`). The run is slower than core cops alone, since RuboCop still parses every file, but the core cops no longer run in Ruby. The README lists the fallback's limits.
 
-**Known blocker for plugin projects (#392):** a `# rubocop:disable Rails/...` (or any plugin or custom cop) comment is reported by rbcop as `Lint/CopDirectiveSyntax: Unknown cop name` and `Lint/RedundantCopDisableDirective`, with or without the fallback, and `-a`/`-A` would delete the comment. On mastodon (a clean RuboCop run) a swapped bundle reports exactly those: 197 offenses, nothing else. Until #392 is fixed, a project with such comments can exclude the two cops in CI (`--except Lint/CopDirectiveSyntax,Lint/RedundantCopDisableDirective`) or wait.
-
 ## Editors
 
 - Editors that run the `rubocop` executable with `--stdin` (Vim/ALE, Neovim's nvim-lint, Sublime Text's SublimeLinter-rubocop, Emacs flycheck) work with rbcop: point their executable setting at `rbcop` (or `bundle exec rbcop`, or `bin/rubocop` once the binstub runs rbcop). `--stdin` with `-a`/`-A` prints the corrected source as RuboCop does.
