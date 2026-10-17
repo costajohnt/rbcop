@@ -1,0 +1,11 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+a.rb:1:7: W: Lint/CopDirectiveSyntax: Unknown cop name `Rails/HasAndBelongsToMany`.
+a.rb:1:7: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `Rails/HasAndBelongsToMany` (unknown cop).
+a.rb:2:1: W: Lint/CopDirectiveSyntax: Unknown cop name `Sorbet/ConstantsFromStrings`.
+a.rb:2:1: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `Sorbet/ConstantsFromStrings` (unknown cop).
+a.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+a.rb:4:1: W: Lint/CopDirectiveSyntax: Unknown cop name `Minitest/LiteralAsActualArgument`.
+a.rb:4:1: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `Custom/Nope` (did you mean `Custom/NoPuts`?), `Minitest/LiteralAsActualArgument` (unknown cop).
+a.rb:5:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `z`.

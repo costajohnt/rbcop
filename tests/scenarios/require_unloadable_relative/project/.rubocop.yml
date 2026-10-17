@@ -1,0 +1,5 @@
+require:
+  - custom_cops/no_puts.rb
+AllCops:
+  NewCops: disable
+  SuggestExtensions: false

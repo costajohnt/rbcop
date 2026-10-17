@@ -369,8 +369,11 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   - Cops RuboCop knows from its registry rather than from default configs: a plugin's cops count
     as known when every part of the name is a class or module defined in the plugin gem's `lib/`
     (cops registered without a `config/default.yml` entry, e.g. rubocop-discourse's). A local
-    `require:` file, a required gem without `config/default.yml`, or a plugin gem rbcop cannot
-    find (RuboCop fails to load those) turns unrecognized-cop errors off for the run. Did-you-mean
+    `require:` file, or a required gem with neither `config/default.yml` nor a cop class rbcop
+    can read, turns unrecognized-cop errors
+    off for the run. A `plugins:`/`require:` entry Ruby cannot load stops the run with RuboCop's
+    `cannot load such file -- <feature>` and exit 2 (without the backtrace that follows it there);
+    without a `ruby` on PATH, gems cannot be looked up and only turn those errors off. Did-you-mean
     suggestions use the default config's cop names, so a plugin cop missing from its
     `default.yml` is never suggested.
   - Suggestions with equal Jaro-Winkler scores can come out in a different order: Ruby's
