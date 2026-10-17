@@ -230,7 +230,7 @@ impl Cx<'_, '_> {
     fn push(&mut self, start: usize, end: usize, message: String, correctable: bool, corrected: bool) {
         // Base#add_offense asks the comment config whether the lines are enabled.
         if !crate::directives::ignoring_disable_comments() {
-            crate::runner::poison_raise(true);
+            crate::runner::poison_raise_offense(self.cop, start, &message);
         }
         self.fixes.seen.insert((start, end));
         self.out.push(Offense {

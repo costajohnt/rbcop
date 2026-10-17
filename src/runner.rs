@@ -683,6 +683,7 @@ fn analyze(
     let poison = facts.comment_config.poison.clone().filter(|_| !only_redundant);
     if let Some(p) = &poison {
         POISON.with(|s| *s.borrow_mut() = Some((p.warnings.clone(), Vec::new())));
+        FORCE.with(|f| *f.borrow_mut() = (force_scopes(&program, src.text.len()), None));
     }
     let mut fixes: Vec<Fixes> = active
         .iter()
@@ -730,6 +731,12 @@ fn analyze(
         guarded(a.name, &src, None, || a.cop.on_file(&mut cx));
     }
     if let Some(p) = poison {
+        // The VariableForce investigation ended at its first raising hook: one cop error, for that
+        // joining cop, without a location (Force::HookError), after one comment config analysis.
+        if let Some((_, cop)) = FORCE.with(|f| std::mem::take(&mut *f.borrow_mut()).1) {
+            directives::push_warnings(&p.warnings);
+            cop_error_at(cop, &src, None);
+        }
         // Team#process_errors prints the cop errors after the investigation; then
         // Runner#check_for_redundant_disables? analyzes once more (unless --except names the
         // directive cop) and the AmbiguousCopName ends the run.
@@ -924,6 +931,85 @@ pub fn poison_raise(warn: bool) {
     }
 }
 
+/// The VariableForce joining cops whose offenses come from its hooks, in team (registry) order.
+/// Rails/SaveBang's CREATE_MSG offenses come from its after_leaving_scope; its others, and those
+/// of Style/InfiniteLoop and Style/MapIntoArray, from ordinary callbacks.
+const FORCE_COPS: &[&str] = &[
+    "Lint/ShadowedArgument",
+    "Lint/ShadowingOuterLocalVariable",
+    "Lint/UnderscorePrefixedVariableName",
+    "Lint/UnusedBlockArgument",
+    "Lint/UnusedMethodArgument",
+    "Lint/UselessAssignment",
+    "Rails/SaveBang",
+    "RSpec/LeakyLocalVariable",
+];
+
+/// The unwind payload of a VariableForce hook raising in a poisoned file (no cop error of its own).
+struct ForceHook;
+
+thread_local! {
+    /// In a poisoned file: the VariableForce scopes (start, end), and the first hook to raise as
+    /// (event offset, team order, cop).
+    #[allow(clippy::type_complexity)]
+    static FORCE: std::cell::RefCell<(Vec<(usize, usize)>, Option<((usize, usize), &'static str)>)> =
+        const { std::cell::RefCell::new((Vec::new(), None)) };
+}
+
+/// The scopes VariableForce enters (def, defs, block, lambda, class, module, sclass, the file).
+fn force_scopes(program: &Node, len: usize) -> Vec<(usize, usize)> {
+    struct Scopes(Vec<(usize, usize)>);
+    impl<'pr> Visit<'pr> for Scopes {
+        fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
+            if matches!(
+                node,
+                Node::DefNode { .. }
+                    | Node::BlockNode { .. }
+                    | Node::LambdaNode { .. }
+                    | Node::ClassNode { .. }
+                    | Node::ModuleNode { .. }
+                    | Node::SingletonClassNode { .. }
+            ) {
+                self.0.push((node.location().start_offset(), node.location().end_offset()));
+            }
+        }
+    }
+    let mut s = Scopes(vec![(0, len)]);
+    s.visit(program);
+    s.0
+}
+
+/// Base#add_offense in a poisoned file (see `poison_raise`). RuboCop runs the VariableForce cops
+/// as one force before the AST walk: the first hook whose cop adds an offense raises and ends the
+/// force for the file, so only that cop errors. rbcop runs them as separate cops, so each raise
+/// is a candidate: the earliest force event (a declaration for Lint/ShadowingOuterLocalVariable,
+/// leaving the innermost scope of the offense for the others; ties in team order) wins.
+// ponytail: an offense of a variable declared in an outer scope but flagged inside an inner one
+// is keyed by the inner scope; only the ordering between force cops depends on it.
+pub fn poison_raise_offense(cop: &'static str, at: usize, message: &str) {
+    let force =
+        FORCE_COPS.iter().position(|c| *c == cop).filter(|_| cop != "Rails/SaveBang" || message.contains("persisted?"));
+    let raised = force.is_some_and(|order| {
+        POISON.with(|p| p.borrow().is_some())
+            && FORCE.with(|f| {
+                let mut f = f.borrow_mut();
+                let offset = if cop == "Lint/ShadowingOuterLocalVariable" {
+                    at
+                } else {
+                    f.0.iter().filter(|(s, e)| *s <= at && at < *e).map(|(_, e)| *e).min().unwrap_or(usize::MAX)
+                };
+                if f.1.is_none_or(|(key, _)| (offset, order) < key) {
+                    f.1 = Some(((offset, order), cop));
+                }
+                true
+            })
+    });
+    if raised {
+        std::panic::resume_unwind(Box::new(ForceHook));
+    }
+    poison_raise(true);
+}
+
 /// The error that ends the run at the file just inspected on this thread, if any.
 pub fn take_abort() -> Option<String> {
     ABORT.with(|a| a.borrow_mut().take())
@@ -960,7 +1046,9 @@ fn guarded(cop: &str, src: &Source, at: Option<usize>, f: impl FnOnce()) {
     let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(f));
     IN_COP.with(|c| c.set(false));
     VISITING.with(|v| v.set(None));
-    if result.is_err() {
+    if let Err(payload) = result
+        && !payload.is::<ForceHook>()
+    {
         cop_error_at(cop, src, at);
     }
 }
