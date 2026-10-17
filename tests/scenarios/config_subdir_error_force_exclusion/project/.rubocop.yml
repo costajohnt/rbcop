@@ -1,0 +1,4 @@
+AllCops:
+  NewCops: disable
+  Exclude:
+    - sub/bin/**/*

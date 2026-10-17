@@ -42,11 +42,12 @@ pub fn find(
             }
         } else if abs.exists() {
             // TargetFinder#process_explicit_path: included_file? under either option, then
-            // without_excluded under --force-exclusion.
+            // without_excluded under --force-exclusion. included_file? comes first: for an
+            // extensionless file ruby_executable? loads the file's directory config, excluded or not.
             if force_exclusion || only_recognized {
                 let cfg = store.for_dir(&cwd)?;
-                if (force_exclusion && cfg.file_to_exclude(&abs))
-                    || !(ruby.is(&abs, store)? || cfg.file_to_include(&abs))
+                if !(ruby.is(&abs, store)? || cfg.file_to_include(&abs))
+                    || (force_exclusion && cfg.file_to_exclude(&abs))
                 {
                     continue;
                 }
