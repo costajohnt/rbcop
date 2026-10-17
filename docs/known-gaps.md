@@ -409,6 +409,11 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   yaml-rust2's errors; a few differ from libyaml's: an unknown `%` directive, content after a `...`
   document end, and an alias to an unknown anchor followed by more on the line (`a: *x y`) report a
   different problem. The Ruby backtrace RuboCop prints after the message is not reproduced.
+- `DisplayStyleGuide`: the style guide URL is resolved once per run for each `StyleGuide` value,
+  as RuboCop's per-process MessageAnnotator cache does, so the first offense with an anchor fixes
+  its base URL for cops of other departments (#508). rbcop fills the cache in report order (files,
+  then each file's sorted offenses); RuboCop fills it as offenses are added, so a disabled offense
+  or one from a correcting pass can fill it first there.
 - rubocop-rspec family:
   - RSpec/SpecFilePathFormat with `EnforcedInflector: active_support` uses
     ActiveSupport's default inflections; the project's `InflectorPath` file is not evaluated.

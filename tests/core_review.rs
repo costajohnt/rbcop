@@ -518,6 +518,26 @@ fn discarded_matcher_string_setting_raises_per_callback() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// DisplayStyleGuide: the first offense with a StyleGuide anchor fixes its URL for the run, as
+/// RuboCop's per-process MessageAnnotator.style_guide_urls does (#508).
+#[test]
+fn style_guide_urls_are_resolved_once_per_anchor() {
+    let dir = scratch("style-guide-cache");
+    let config = "plugins: [rubocop-rspec]\nAllCops:\n  SuggestExtensions: false\n  DisabledByDefault: true\n  \
+                  DisplayStyleGuide: true\nStyle/ClassCheck:\n  Enabled: true\nRSpec/ClassCheck:\n  Enabled: true\n";
+    fs::write(dir.join(".rubocop.yml"), config).unwrap();
+    fs::write(dir.join("a.rb"), "x.kind_of?(Y)\n").unwrap();
+    fs::create_dir_all(dir.join("spec")).unwrap();
+    fs::write(dir.join("spec/b_spec.rb"), "describe Foo do\n  it { expect(x).to be_a_kind_of(Y) }\nend\n").unwrap();
+    for (first, base) in [("a.rb", "https://rubystyle.guide"), ("spec/b_spec.rb", "https://rspec.rubystyle.guide")] {
+        let other = if first == "a.rb" { "spec/b_spec.rb" } else { "a.rb" };
+        let out = text(&rbcop(&dir, &["-f", "e", first, other]).stdout);
+        let n = out.lines().filter(|l| l.contains(&format!("({base}#is-a-vs-kind-of"))).count();
+        assert_eq!(n, 2, "{out}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// The error summary lists every raise, two at one location too (#501); under -a/-A only the last
 /// (non-correcting) pass runs the cops that do not correct, so their errors are not repeated.
 #[test]
