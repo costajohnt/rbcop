@@ -30,7 +30,8 @@ impl Cop for ImplicitExpect {
             return;
         }
         let name = method_name(&call);
-        let sel = call.message_loc().unwrap();
+        // `y.()` is a call named `call` with no selector; it never matches.
+        let Some(sel) = call.message_loc() else { return };
         // {(send nil? ${:should :should_not} ...) (send (send nil? $:is_expected) #Runners.all ...)}
         let (s, e) = if matches!(name, "should" | "should_not") && call.receiver().is_none() {
             (sel.start_offset(), sel.end_offset())
