@@ -1,0 +1,6 @@
+AllCops:
+  NewCops: disable
+Naming/MethodParameterName:
+  AllowedNames: e, id, _, ip, to
+Naming/BlockParameterName:
+  ForbiddenNames: foo, bar

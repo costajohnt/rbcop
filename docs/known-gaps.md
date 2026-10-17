@@ -342,7 +342,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   - Configs are resolved before inspection starts, so a subdirectory config's warnings come before
     the `--only`/`--except` name warnings, where RuboCop prints them when it reaches that
     directory's first file. An invalid subdirectory config still stops the run at its first file,
-    after the files before it are reported.
+    after the files before it are reported (as in RuboCop), unless finding the targets loaded it
+    first: an extensionless file there makes TargetFinder#ruby_executable? read its directory's
+    `RubyInterpreters`, and the run ends before anything is reported.
   - RuboCop crashes with a backtrace on a non-Array `Exclude` (NoMethodError in
     `make_excludes_absolute`); rbcop prints the same first line and exits 2. A non-Array
     `Include` crashes RuboCop later (per cop or in `FilePatterns`); rbcop treats it as one pattern.

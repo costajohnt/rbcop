@@ -135,6 +135,21 @@ pub fn register_foreign(names: Vec<String>) {
     OPEN.write().unwrap().foreign = true;
 }
 
+static CUSTOM: RwLock<Vec<String>> = RwLock::new(Vec::new());
+
+/// Registers the cops a `require:`d local Ruby file defines (their classes register in RuboCop when
+/// the file loads), each with whether it supports autocorrect.
+pub fn register_custom(cops: Vec<(String, bool)>) {
+    CUSTOM.write().unwrap().extend(cops.iter().map(|(c, _)| c.clone()));
+    set_foreign_autocorrect(cops.iter().filter(|(_, ac)| *ac).map(|(c, _)| c.clone()));
+    register_foreign(cops.into_iter().map(|(c, _)| c).collect());
+}
+
+/// A cop a `require:`d local Ruby file defines.
+pub fn is_custom(cop: &str) -> bool {
+    CUSTOM.read().unwrap().iter().any(|c| c == cop)
+}
+
 static FOREIGN_AUTOCORRECT: RwLock<Vec<String>> = RwLock::new(Vec::new());
 
 /// The cops of plugins rbcop does not implement that support autocorrect (`extend AutoCorrector`).
