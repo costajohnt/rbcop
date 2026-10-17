@@ -717,7 +717,7 @@ impl Cv<'_> {
             Node::LocalVariableReadNode { .. } => {
                 let name = node.as_local_variable_read_node()?.name();
                 // `_1` below 2.7 is a send for the parser gem
-                if self.src.target_ruby < 2.7 && matches!(name.as_slice(), [b'_', b'1'..=b'9']) {
+                if self.src.numbered_send(node.location().start_offset()) {
                     return Some(n("send", vec![nil(), sym(name)]));
                 }
                 Some(n("lvar", vec![sym(name)]))

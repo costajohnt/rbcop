@@ -52,6 +52,8 @@ pub struct Source<'a> {
     /// The bytes `runner::parse_for_target`'s copy changed (offset, new byte): lexed with them, so
     /// the tokens agree with the parse.
     pub lex_edits: Vec<(usize, u8)>,
+    /// Below 2.7, `syntax::legacy_numbered_sends`.
+    pub numbered_sends: Vec<usize>,
 }
 
 impl<'a> Source<'a> {
@@ -95,6 +97,7 @@ impl<'a> Source<'a> {
             translated_tokens: OnceCell::new(),
             parse_warnings: OnceCell::new(),
             lex_edits: Vec::new(),
+            numbered_sends: Vec::new(),
             lex_end: data_start.filter(|&d| !text[d..].starts_with("__END__")).unwrap_or(text.len()),
         };
         // ProcessedSource#lines stops at `__END__` only after the last token; with no tokens at
@@ -109,6 +112,11 @@ impl<'a> Source<'a> {
         }
         src.lines = lines;
         src
+    }
+
+    /// Whether the `_N` local read at `start` is the parser gem's `(send nil :_N)` (below 2.7).
+    pub fn numbered_send(&self, start: usize) -> bool {
+        self.numbered_sends.binary_search(&start).is_ok()
     }
 
     /// 1-based line containing byte offset.

@@ -582,6 +582,9 @@ fn analyze(
     src.parser_gem = parser_gem;
     src.target_ruby = cfg.target_ruby;
     src.lex_edits = edits;
+    if cfg.target_ruby < 2.7 {
+        src.numbered_sends = crate::syntax::legacy_numbered_sends(&result.node());
+    }
     // From 3.3 the runner's parse is parse_warnings::parse (unedited text, same version and
     // encoding): its warnings save that second parse.
     if !parser_gem {

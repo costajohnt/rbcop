@@ -1,0 +1,8 @@
+AllCops:
+  TargetRubyVersion: 2.4
+  NewCops: enable
+  SuggestExtensions: false
+Metrics/AbcSize:
+  Max: 0
+Naming/VariableName:
+  EnforcedStyle: camelCase

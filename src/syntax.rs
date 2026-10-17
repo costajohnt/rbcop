@@ -334,6 +334,17 @@ pub fn numbered_parameter_errors(program: &ruby_prism::Node, target: f64) -> Vec
 /// The start offsets (sorted) of the `_N` variable calls the parser gem reads as locals: declared
 /// by an assignment or parameter in the same scope, or around a block.
 pub fn assigned_numbered_reads(program: &ruby_prism::Node) -> Vec<usize> {
+    numbered_walk(program, false)
+}
+
+/// Below Ruby 2.7 the start offsets (sorted) of the `_N` local reads (Prism's numbered parameter
+/// reads) no parameter or assignment declares: the parser gem's `(send nil :_1)` (#111, #362).
+/// A declared one (`|_1|`, `_1 = x`, #520) is an `lvar` like any local.
+pub fn legacy_numbered_sends(program: &ruby_prism::Node) -> Vec<usize> {
+    numbered_walk(program, true)
+}
+
+fn numbered_walk(program: &ruby_prism::Node, sends: bool) -> Vec<usize> {
     use ruby_prism::Visit;
     fn numbered(name: &[u8]) -> bool {
         matches!(name, [b'_', b'1'..=b'9'])
@@ -342,6 +353,8 @@ pub fn assigned_numbered_reads(program: &ruby_prism::Node) -> Vec<usize> {
         /// The `_N` names declared in each scope (a block's starts with its parent's).
         scopes: Vec<Vec<Vec<u8>>>,
         out: Vec<usize>,
+        /// Collect undeclared local reads instead of declared variable calls.
+        sends: bool,
     }
     impl Walk {
         fn scoped(&mut self, inherit: bool, f: impl FnOnce(&mut Self)) {
@@ -393,10 +406,20 @@ pub fn assigned_numbered_reads(program: &ruby_prism::Node) -> Vec<usize> {
         }
         fn visit_call_node(&mut self, n: &ruby_prism::CallNode<'pr>) {
             let name = n.name().as_slice();
-            if n.is_variable_call() && numbered(name) && self.scopes.last().unwrap().iter().any(|d| d == name) {
+            if !self.sends
+                && n.is_variable_call()
+                && numbered(name)
+                && self.scopes.last().unwrap().iter().any(|d| d == name)
+            {
                 self.out.push(n.location().start_offset());
             }
             ruby_prism::visit_call_node(self, n);
+        }
+        fn visit_local_variable_read_node(&mut self, n: &ruby_prism::LocalVariableReadNode<'pr>) {
+            let name = n.name().as_slice();
+            if self.sends && numbered(name) && !self.scopes.last().unwrap().iter().any(|d| d == name) {
+                self.out.push(n.location().start_offset());
+            }
         }
         // The target is declared before the value is parsed (`_1 = _1` reads the local).
         fn visit_local_variable_write_node(&mut self, n: &ruby_prism::LocalVariableWriteNode<'pr>) {
@@ -429,7 +452,7 @@ pub fn assigned_numbered_reads(program: &ruby_prism::Node) -> Vec<usize> {
             self.declare(n.name().as_slice());
         }
     }
-    let mut w = Walk { scopes: vec![Vec::new()], out: Vec::new() };
+    let mut w = Walk { scopes: vec![Vec::new()], out: Vec::new(), sends };
     w.visit(program);
     w.out.sort_unstable();
     w.out

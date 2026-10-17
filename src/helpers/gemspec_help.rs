@@ -56,10 +56,10 @@ pub fn enclosing_spec(ancestors: &[Node]) -> Option<usize> {
 
 /// `(lvar name)` receiver name (`it` in an `it` block reads as `(lvar :it)` in parser). Below
 /// Ruby 2.7 a `_1`..`_9` read is `(send nil :_1)` (`node_types::is_legacy_numbered_read`).
-pub fn lvar_name<'pr>(node: &Node<'pr>, target_ruby: f64) -> Option<&'pr [u8]> {
+pub fn lvar_name<'pr>(node: &Node<'pr>, numbered_sends: &[usize]) -> Option<&'pr [u8]> {
     if let Some(l) = node.as_local_variable_read_node() {
-        let name = l.name().as_slice();
-        return (target_ruby >= 2.7 || !matches!(name, [b'_', b'1'..=b'9'])).then_some(name);
+        let send = numbered_sends.binary_search(&l.location().start_offset()).is_ok();
+        return (!send).then_some(l.name().as_slice());
     }
     node.as_it_local_variable_read_node().map(|_| b"it".as_slice())
 }
