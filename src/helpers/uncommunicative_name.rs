@@ -52,8 +52,20 @@ fn name_of(arg: &Node) -> Option<(String, usize)> {
 /// UncommunicativeName#check over the parser `args` children; `name_type` is "block parameter"
 /// or "method parameter".
 pub fn check(cx: &mut Cx, args: &[Node], name_type: &str) {
-    let allowed = cx.cfg.strings("AllowedNames");
-    let forbidden = cx.cfg.strings("ForbiddenNames");
+    // `cop_config['AllowedNames'].include?(name)`: on a String (`AllowedNames: e, id`) a
+    // substring test.
+    let list = |key: &str| {
+        let value = cx.cfg.get(key).cloned();
+        move |name: &str| match &value {
+            Some(crate::config::value::Value::Str(s)) => s.contains(name),
+            Some(crate::config::value::Value::Seq(items)) => {
+                items.iter().any(|i| i.as_string().is_some_and(|s| s == name))
+            }
+            _ => false,
+        }
+    };
+    let allowed = list("AllowedNames");
+    let forbidden = list("ForbiddenNames");
     let allow_nums = cx.cfg.bool("AllowNamesEndingInNumbers").unwrap_or(true);
     let min = cx.cfg.int("MinNameLength").unwrap_or(1).max(0) as usize;
     for arg in args {
@@ -62,7 +74,7 @@ pub fn check(cx: &mut Cx, args: &[Node], name_type: &str) {
             continue;
         }
         let name = full.trim_start_matches('_');
-        if allowed.iter().any(|a| a == name) {
+        if allowed(name) {
             continue;
         }
         // range: `full.size (+1/+2)` characters from the arg's begin (blockarg: from `&`). An
@@ -77,7 +89,7 @@ pub fn check(cx: &mut Cx, args: &[Node], name_type: &str) {
         };
         let nchars = name.chars().count();
         // only the first offense on a range survives
-        let msg = if forbidden.iter().any(|f| f == name) {
+        let msg = if forbidden(name) {
             format!("Do not use {name} as a name for a {name_type}.")
         } else if name.chars().any(char::is_uppercase) {
             format!("Only use lowercase characters for {name_type}.")
