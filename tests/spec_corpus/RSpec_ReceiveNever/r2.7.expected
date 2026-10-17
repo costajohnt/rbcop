@@ -1,0 +1,48 @@
+==> offenses exit=1 799 <==
+000/000_spec.rb:1:30: C: [Correctable] RSpec/ReceiveNever: Use `not_to receive` instead of `never`.
+001/001_spec.rb:1:38: C: [Correctable] RSpec/ReceiveNever: Use `not_to receive` instead of `never`.
+004/004_spec.rb:1:36: C: [Correctable] RSpec/ReceiveNever: Use `not_to receive` instead of `never`.
+006/006_spec.rb:1:46: C: [Correctable] RSpec/ReceiveNever: Use `not_to receive` instead of `never`.
+008/008_spec.rb:1:30: C: [Correctable] RSpec/ReceiveNever: Use `not_to receive` instead of `never`.
+009/009_spec.rb:1:33: C: [Correctable] RSpec/ReceiveNever: Use `not_to receive` instead of `never`.
+013/013_spec.rb:3:4: C: [Correctable] RSpec/ReceiveNever: Use `not_to receive` instead of `never`.
+015/015_spec.rb:2:32: C: [Correctable] RSpec/ReceiveNever: Use `not_to receive` instead of `never`.
+
+==> autocorrect exit=0 783 <==
+000/000_spec.rb:1:30: C: [Corrected] RSpec/ReceiveNever: Use `not_to receive` instead of `never`.
+001/001_spec.rb:1:38: C: [Corrected] RSpec/ReceiveNever: Use `not_to receive` instead of `never`.
+004/004_spec.rb:1:36: C: [Corrected] RSpec/ReceiveNever: Use `not_to receive` instead of `never`.
+006/006_spec.rb:1:46: C: [Corrected] RSpec/ReceiveNever: Use `not_to receive` instead of `never`.
+008/008_spec.rb:1:30: C: [Corrected] RSpec/ReceiveNever: Use `not_to receive` instead of `never`.
+009/009_spec.rb:1:33: C: [Corrected] RSpec/ReceiveNever: Use `not_to receive` instead of `never`.
+013/013_spec.rb:3:4: C: [Corrected] RSpec/ReceiveNever: Use `not_to receive` instead of `never`.
+015/015_spec.rb:2:32: C: [Corrected] RSpec/ReceiveNever: Use `not_to receive` instead of `never`.
+
+==> corrected/000/000_spec.rb 33 <==
+expect(foo).not_to receive(:bar)
+
+==> corrected/001/001_spec.rb 41 <==
+expect(foo).not_to receive(:bar).with(1)
+
+==> corrected/004/004_spec.rb 39 <==
+RSpec.expect(foo).not_to receive(:bar)
+
+==> corrected/006/006_spec.rb 49 <==
+expect_any_instance_of(Foo).not_to receive(:bar)
+
+==> corrected/008/008_spec.rb 33 <==
+is_expected.not_to receive(:bar)
+
+==> corrected/009/009_spec.rb 36 <==
+expect { foo }.not_to receive(:bar)
+
+==> corrected/013/013_spec.rb 39 <==
+expect(foo)
+  .not_to receive(:bar)
+  
+
+==> corrected/015/015_spec.rb 71 <==
+expect(foo).to receive(:bar) do
+  expect(baz).not_to receive(:qux)
+end
+

@@ -1,0 +1,92 @@
+==> offenses exit=1 4488 <==
+001/001_spec.rb:1:14: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+001/001_spec.rb:2:14: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+001/001_spec.rb:3:14: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+003/003_spec.rb:1:11: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+003/003_spec.rb:2:11: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+003/003_spec.rb:3:11: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+005/005_spec.rb:1:17: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+005/005_spec.rb:2:17: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+005/005_spec.rb:3:17: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+007/007_spec.rb:1:14: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+007/007_spec.rb:2:14: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+007/007_spec.rb:3:14: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+009/009_spec.rb:1:12: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+009/009_spec.rb:2:12: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+009/009_spec.rb:3:12: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+011/011_spec.rb:1:15: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+011/011_spec.rb:2:15: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+011/011_spec.rb:3:15: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+013/013_spec.rb:1:12: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+013/013_spec.rb:2:12: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+013/013_spec.rb:3:12: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+015/015_spec.rb:1:12: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+015/015_spec.rb:2:12: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+015/015_spec.rb:3:12: C: [Correctable] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+
+==> autocorrect exit=0 4440 <==
+001/001_spec.rb:1:14: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+001/001_spec.rb:2:14: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+001/001_spec.rb:3:14: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+003/003_spec.rb:1:11: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+003/003_spec.rb:2:11: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+003/003_spec.rb:3:11: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+005/005_spec.rb:1:17: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+005/005_spec.rb:2:17: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+005/005_spec.rb:3:17: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+007/007_spec.rb:1:14: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+007/007_spec.rb:2:14: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+007/007_spec.rb:3:14: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+009/009_spec.rb:1:12: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+009/009_spec.rb:2:12: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+009/009_spec.rb:3:12: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+011/011_spec.rb:1:15: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+011/011_spec.rb:2:15: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+011/011_spec.rb:3:15: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+013/013_spec.rb:1:12: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+013/013_spec.rb:2:12: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+013/013_spec.rb:3:12: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+015/015_spec.rb:1:12: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+015/015_spec.rb:2:12: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+015/015_spec.rb:3:12: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+
+==> corrected/001/001_spec.rb 77 <==
+class_double(ClassName)
+class_double(Foo::Bar::Baz)
+class_double(::Foo::Bar)
+
+==> corrected/003/003_spec.rb 68 <==
+class_spy(ClassName)
+class_spy(Foo::Bar::Baz)
+class_spy(::Foo::Bar)
+
+==> corrected/005/005_spec.rb 86 <==
+instance_double(ClassName)
+instance_double(Foo::Bar::Baz)
+instance_double(::Foo::Bar)
+
+==> corrected/007/007_spec.rb 77 <==
+instance_spy(ClassName)
+instance_spy(Foo::Bar::Baz)
+instance_spy(::Foo::Bar)
+
+==> corrected/009/009_spec.rb 71 <==
+mock_model(ClassName)
+mock_model(Foo::Bar::Baz)
+mock_model(::Foo::Bar)
+
+==> corrected/011/011_spec.rb 80 <==
+object_double(ClassName)
+object_double(Foo::Bar::Baz)
+object_double(::Foo::Bar)
+
+==> corrected/013/013_spec.rb 71 <==
+object_spy(ClassName)
+object_spy(Foo::Bar::Baz)
+object_spy(::Foo::Bar)
+
+==> corrected/015/015_spec.rb 71 <==
+stub_model(ClassName)
+stub_model(Foo::Bar::Baz)
+stub_model(::Foo::Bar)
+

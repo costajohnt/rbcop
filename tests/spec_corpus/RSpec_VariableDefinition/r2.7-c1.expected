@@ -1,0 +1,18 @@
+==> offenses exit=1 192 <==
+000/000_spec.rb:2:7: C: [Correctable] RSpec/VariableDefinition: Use strings for variable names.
+001/001_spec.rb:2:7: C: [Correctable] RSpec/VariableDefinition: Use strings for variable names.
+
+==> autocorrect exit=0 188 <==
+000/000_spec.rb:2:7: C: [Corrected] RSpec/VariableDefinition: Use strings for variable names.
+001/001_spec.rb:2:7: C: [Corrected] RSpec/VariableDefinition: Use strings for variable names.
+
+==> corrected/000/000_spec.rb 56 <==
+RSpec.describe Foo do
+  let("user_name") { 'Adam' }
+end
+
+==> corrected/001/001_spec.rb 57 <==
+RSpec.describe Foo do
+  let("user-#{id}") { 'Adam' }
+end
+

@@ -1,0 +1,12 @@
+==> offenses exit=1 188 <==
+000/000_spec.rb:1:1: C: [Correctable] RSpec/IsExpectedSpecify: Use `it` instead of `specify`.
+000/000_spec.rb:2:1: C: [Correctable] RSpec/IsExpectedSpecify: Use `it` instead of `specify`.
+
+==> autocorrect exit=0 184 <==
+000/000_spec.rb:1:1: C: [Corrected] RSpec/IsExpectedSpecify: Use `it` instead of `specify`.
+000/000_spec.rb:2:1: C: [Corrected] RSpec/IsExpectedSpecify: Use `it` instead of `specify`.
+
+==> corrected/000/000_spec.rb 64 <==
+it { is_expected.to be_truthy }
+it { are_expected.to be_falsy }
+

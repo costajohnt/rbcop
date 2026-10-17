@@ -1,0 +1,39 @@
+==> .rubocop.yml 184 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/MessageSpies:
+  EnforcedStyle: have_received
+
+==> 000/000_spec.rb 29 <==
+expect(foo).to receive(:bar)
+
+==> 001/001_spec.rb 39 <==
+foo = baz
+expect(foo).to receive(:bar)
+
+==> 002/002_spec.rb 30 <==
+expect(@foo).to receive(:bar)
+
+==> 003/003_spec.rb 29 <==
+expect(Foo).to receive(:bar)
+
+==> 004/004_spec.rb 33 <==
+expect(foo).not_to receive(:bar)
+
+==> 005/005_spec.rb 33 <==
+expect(foo).to_not receive(:bar)
+
+==> 006/006_spec.rb 40 <==
+expect(foo).to receive(:bar).with(:baz)
+
+==> 007/007_spec.rb 47 <==
+expect(foo).to receive(:bar).at_most(42).times
+
+==> 008/008_spec.rb 34 <==
+expect(foo).to have_received(:bar)

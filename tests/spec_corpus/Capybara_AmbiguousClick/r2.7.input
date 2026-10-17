@@ -1,0 +1,22 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 28 <==
+click_link_or_button('foo')
+
+==> 001/001_spec.rb 16 <==
+click_on('foo')
+
+==> 002/002_spec.rb 18 <==
+click_link('foo')
+
+==> 003/003_spec.rb 20 <==
+click_button('foo')
+

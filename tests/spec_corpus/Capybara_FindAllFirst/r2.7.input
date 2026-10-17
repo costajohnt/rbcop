@@ -1,0 +1,84 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 15 <==
+all('a').first
+
+==> 001/001_spec.rb 12 <==
+all('a')[0]
+
+==> 002/002_spec.rb 61 <==
+find('a', match: :first)
+find('a', text: 'b', match: :first)
+
+==> 003/003_spec.rb 71 <==
+page.find('a', match: :first)
+page.find('a', text: 'b', match: :first)
+
+==> 004/004_spec.rb 59 <==
+all('a', match: :first)
+all('a', text: 'b', match: :first)
+
+==> 005/005_spec.rb 69 <==
+page.all('a', match: :first)
+page.all('a', text: 'b', match: :first)
+
+==> 006/006_spec.rb 23 <==
+all('a', text: 'b')[0]
+
+==> 007/007_spec.rb 20 <==
+page.all('a').first
+
+==> 008/008_spec.rb 35 <==
+find('a')
+  .all('div')
+    .first
+
+==> 009/009_spec.rb 11 <==
+first('a')
+
+==> 010/010_spec.rb 21 <==
+all('a').map(&:text)
+
+==> 011/011_spec.rb 12 <==
+all('a')[1]
+
+==> 012/012_spec.rb 20 <==
+all('a', text: 'b')
+
+==> 013/013_spec.rb 17 <==
+all.first
+all[0]
+
+==> 014/014_spec.rb 29 <==
+all('a')[0] || all('div')[0]
+
+==> 015/015_spec.rb 35 <==
+all('a').first || all('div').first
+
+==> 016/016_spec.rb 29 <==
+all('a')[0] && all('div')[0]
+
+==> 017/017_spec.rb 35 <==
+all('a').first && all('div').first
+
+==> 018/018_spec.rb 50 <==
+all('a')[0] || all('div').first && all('span')[0]
+
+==> 019/019_spec.rb 52 <==
+(all('a')[0] || all('div')[0]) && all('span').first
+
+==> 020/020_spec.rb 39 <==
+element = all('a')[0] || all('div')[0]
+
+==> 021/021_spec.rb 92 <==
+do_something(all('a')[0] || all('div')[0])
+do_something(all('a').first || all('div').first)
+

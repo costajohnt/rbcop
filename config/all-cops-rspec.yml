@@ -1,0 +1,12 @@
+# config/all-cops.yml plus the rubocop-rspec family (rubocop-rspec, rubocop-rspec_rails,
+# rubocop-factory_bot, rubocop-capybara): the oracle config for plugin parity
+# (scripts/check-plugins.sh). Paths resolve against the current directory, as in all-cops.yml.
+plugins:
+  - rubocop-rspec
+  - rubocop-rspec_rails
+  - rubocop-factory_bot
+  - rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false

@@ -1,0 +1,14 @@
+==> offenses exit=1 392 <==
+000/000_spec.rb:2:7: C: RSpec/VariableName: Use camelCase for variable names.
+002/002_spec.rb:2:8: C: RSpec/VariableName: Use camelCase for variable names.
+004/004_spec.rb:2:11: C: RSpec/VariableName: Use camelCase for variable names.
+006/006_spec.rb:2:12: C: RSpec/VariableName: Use camelCase for variable names.
+008/008_spec.rb:2:7: C: RSpec/VariableName: Use camelCase for variable names.
+
+==> autocorrect exit=1 392 <==
+000/000_spec.rb:2:7: C: RSpec/VariableName: Use camelCase for variable names.
+002/002_spec.rb:2:8: C: RSpec/VariableName: Use camelCase for variable names.
+004/004_spec.rb:2:11: C: RSpec/VariableName: Use camelCase for variable names.
+006/006_spec.rb:2:12: C: RSpec/VariableName: Use camelCase for variable names.
+008/008_spec.rb:2:7: C: RSpec/VariableName: Use camelCase for variable names.
+

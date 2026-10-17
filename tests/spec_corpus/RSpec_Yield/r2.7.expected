@@ -1,0 +1,29 @@
+==> offenses exit=1 350 <==
+000/000_spec.rb:1:29: C: [Correctable] RSpec/Yield: Use `.and_yield`.
+001/001_spec.rb:1:29: C: [Correctable] RSpec/Yield: Use `.and_yield`.
+002/002_spec.rb:1:29: C: [Correctable] RSpec/Yield: Use `.and_yield`.
+003/003_spec.rb:1:29: C: [Correctable] RSpec/Yield: Use `.and_yield`.
+004/004_spec.rb:1:44: C: [Correctable] RSpec/Yield: Use `.and_yield`.
+
+==> autocorrect exit=0 340 <==
+000/000_spec.rb:1:29: C: [Corrected] RSpec/Yield: Use `.and_yield`.
+001/001_spec.rb:1:29: C: [Corrected] RSpec/Yield: Use `.and_yield`.
+002/002_spec.rb:1:29: C: [Corrected] RSpec/Yield: Use `.and_yield`.
+003/003_spec.rb:1:29: C: [Corrected] RSpec/Yield: Use `.and_yield`.
+004/004_spec.rb:1:44: C: [Corrected] RSpec/Yield: Use `.and_yield`.
+
+==> corrected/000/000_spec.rb 38 <==
+allow(foo).to receive(:bar).and_yield
+
+==> corrected/001/001_spec.rb 48 <==
+allow(foo).to receive(:bar).and_yield.and_yield
+
+==> corrected/002/002_spec.rb 44 <==
+allow(foo).to receive(:bar).and_yield(1, 2)
+
+==> corrected/003/003_spec.rb 54 <==
+allow(foo).to receive(:bar).and_yield(1).and_yield(2)
+
+==> corrected/004/004_spec.rb 53 <==
+allow(foo).to receive(:bar).with(anything).and_yield
+

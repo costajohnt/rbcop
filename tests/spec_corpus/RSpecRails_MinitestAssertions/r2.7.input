@@ -1,0 +1,365 @@
+==> .rubocop.yml 155 <==
+---
+plugins:
+- rubocop-rspec
+- rubocop-rspec_rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 19 <==
+assert_equal(a, b)
+
+==> 001/001_spec.rb 18 <==
+assert_equal a, b
+
+==> 002/002_spec.rb 35 <==
+assert_equal a, b, "must be equal"
+
+==> 003/003_spec.rb 64 <==
+assert_equal(a,
+              b,
+              "must be equal")
+
+==> 004/004_spec.rb 22 <==
+assert_not_equal a, b
+
+==> 005/005_spec.rb 18 <==
+refute_equal a, b
+
+==> 006/006_spec.rb 19 <==
+expect(b).to eq(a)
+
+==> 007/007_spec.rb 23 <==
+expect(b).not_to eq(a)
+
+==> 008/008_spec.rb 21 <==
+assert_kind_of(a, b)
+
+==> 009/009_spec.rb 20 <==
+assert_kind_of a, b
+
+==> 010/010_spec.rb 39 <==
+assert_kind_of a, b, "must be kind of"
+
+==> 011/011_spec.rb 68 <==
+assert_kind_of(a,
+              b,
+              "must be kind of")
+
+==> 012/012_spec.rb 24 <==
+assert_not_kind_of a, b
+
+==> 013/013_spec.rb 20 <==
+refute_kind_of a, b
+
+==> 014/014_spec.rb 29 <==
+expect(b).to be_a_kind_of(a)
+
+==> 015/015_spec.rb 33 <==
+expect(b).not_to be_a_kind_of(a)
+
+==> 016/016_spec.rb 27 <==
+expect(b).to be_kind_of(a)
+
+==> 017/017_spec.rb 31 <==
+expect(b).not_to be_kind_of(a)
+
+==> 018/018_spec.rb 25 <==
+assert_instance_of(a, b)
+
+==> 019/019_spec.rb 24 <==
+assert_instance_of a, b
+
+==> 020/020_spec.rb 47 <==
+assert_instance_of a, b, "must be instance of"
+
+==> 021/021_spec.rb 76 <==
+assert_instance_of(a,
+              b,
+              "must be instance of")
+
+==> 022/022_spec.rb 28 <==
+assert_not_instance_of a, b
+
+==> 023/023_spec.rb 24 <==
+refute_instance_of a, b
+
+==> 024/024_spec.rb 34 <==
+expect(b).to be_an_instance_of(a)
+
+==> 025/025_spec.rb 38 <==
+expect(b).not_to be_an_instance_of(a)
+
+==> 026/026_spec.rb 31 <==
+expect(b).to be_instance_of(a)
+
+==> 027/027_spec.rb 35 <==
+expect(b).not_to be_instance_of(a)
+
+==> 028/028_spec.rb 22 <==
+assert_includes(a, b)
+
+==> 029/029_spec.rb 21 <==
+assert_includes a, b
+
+==> 030/030_spec.rb 40 <==
+assert_includes a, b, "must be include"
+
+==> 031/031_spec.rb 69 <==
+assert_includes(a,
+              b,
+              "must be include")
+
+==> 032/032_spec.rb 25 <==
+assert_not_includes a, b
+
+==> 033/033_spec.rb 21 <==
+refute_includes a, b
+
+==> 034/034_spec.rb 24 <==
+expect(a).to include(b)
+
+==> 035/035_spec.rb 28 <==
+expect(a).not_to include(b)
+
+==> 036/036_spec.rb 22 <==
+assert_in_delta(a, b)
+
+==> 037/037_spec.rb 21 <==
+assert_in_delta a, b
+
+==> 038/038_spec.rb 24 <==
+assert_in_delta a, b, 1
+
+==> 039/039_spec.rb 39 <==
+delta = 1
+
+assert_in_delta a, b, delta
+
+==> 040/040_spec.rb 48 <==
+assert_in_delta a, b, 1, "must be within delta"
+
+==> 041/041_spec.rb 53 <==
+assert_in_delta(a,
+              b,
+              1)
+
+==> 042/042_spec.rb 25 <==
+assert_not_in_delta a, b
+
+==> 043/043_spec.rb 21 <==
+refute_in_delta a, b
+
+==> 044/044_spec.rb 32 <==
+expect(b).to be_within(1).of(a)
+
+==> 045/045_spec.rb 36 <==
+expect(b).not_to be_within(1).of(a)
+
+==> 046/046_spec.rb 23 <==
+assert_match(/xyz/, b)
+
+==> 047/047_spec.rb 22 <==
+assert_match /xyz/, b
+
+==> 048/048_spec.rb 36 <==
+assert_match /xyz/, b, "must match"
+
+==> 049/049_spec.rb 65 <==
+assert_match(/xyz/,
+              b,
+              "must match")
+
+==> 050/050_spec.rb 22 <==
+refute_match /xyz/, b
+
+==> 051/051_spec.rb 26 <==
+expect(b).to match(/xyz/)
+
+==> 052/052_spec.rb 30 <==
+expect(b).not_to match(/xyz/)
+
+==> 053/053_spec.rb 14 <==
+assert_nil(a)
+
+==> 054/054_spec.rb 13 <==
+assert_nil a
+
+==> 055/055_spec.rb 28 <==
+assert_nil a, "must be nil"
+
+==> 056/056_spec.rb 43 <==
+assert_nil(a,
+              "must be nil")
+
+==> 057/057_spec.rb 17 <==
+assert_not_nil a
+
+==> 058/058_spec.rb 13 <==
+refute_nil a
+
+==> 059/059_spec.rb 21 <==
+expect(a).to eq(nil)
+
+==> 060/060_spec.rb 25 <==
+expect(a).not_to eq(nil)
+
+==> 061/061_spec.rb 16 <==
+assert_empty(a)
+
+==> 062/062_spec.rb 15 <==
+assert_empty a
+
+==> 063/063_spec.rb 32 <==
+assert_empty a, "must be empty"
+
+==> 064/064_spec.rb 47 <==
+assert_empty(a,
+              "must be empty")
+
+==> 065/065_spec.rb 19 <==
+assert_not_empty a
+
+==> 066/066_spec.rb 15 <==
+refute_empty a
+
+==> 067/067_spec.rb 22 <==
+expect(a).to be_empty
+
+==> 068/068_spec.rb 26 <==
+expect(a).not_to be_empty
+
+==> 069/069_spec.rb 15 <==
+assert_true(a)
+
+==> 070/070_spec.rb 14 <==
+assert_true a
+
+==> 071/071_spec.rb 30 <==
+assert_true a, "must be true"
+
+==> 072/072_spec.rb 43 <==
+assert_true(a,
+            "must be true")
+
+==> 073/073_spec.rb 16 <==
+assert_false(a)
+
+==> 074/074_spec.rb 15 <==
+assert_false a
+
+==> 075/075_spec.rb 32 <==
+assert_false a, "must be false"
+
+==> 076/076_spec.rb 46 <==
+assert_false(a,
+             "must be false")
+
+==> 077/077_spec.rb 29 <==
+assert_predicate(a, :valid?)
+
+==> 078/078_spec.rb 28 <==
+assert_predicate a, :valid?
+
+==> 079/079_spec.rb 30 <==
+assert_predicate a, :"valid?"
+
+==> 080/080_spec.rb 35 <==
+assert_predicate a, :"valid-name?"
+
+==> 081/081_spec.rb 45 <==
+assert_predicate a, :valid?, "must be valid"
+
+==> 082/082_spec.rb 74 <==
+assert_predicate(a,
+              :valid?,
+              "must be valid")
+
+==> 083/083_spec.rb 32 <==
+assert_not_predicate a, :valid?
+
+==> 084/084_spec.rb 28 <==
+refute_predicate a, :valid?
+
+==> 085/085_spec.rb 26 <==
+expect(a).to be_predicate
+
+==> 086/086_spec.rb 30 <==
+expect(a).not_to be_predicate
+
+==> 087/087_spec.rb 36 <==
+assert_predicate foo, :do_something
+
+==> 088/088_spec.rb 40 <==
+assert_not_predicate foo, :do_something
+
+==> 089/089_spec.rb 36 <==
+refute_predicate foo, :do_something
+
+==> 090/090_spec.rb 22 <==
+assert_predicate a, 1
+
+==> 091/091_spec.rb 68 <==
+assert_predicate a, "whoops, we forgot about the actual predicate!"
+
+==> 092/092_spec.rb 37 <==
+foo = :foo?
+
+assert_predicate a, foo
+
+==> 093/093_spec.rb 26 <==
+assert_response :redirect
+
+==> 094/094_spec.rb 20 <==
+assert_response 302
+
+==> 095/095_spec.rb 26 <==
+assert_response(:success)
+
+==> 096/096_spec.rb 52 <==
+assert_response :success, "expected success status"
+
+==> 097/097_spec.rb 71 <==
+assert_response(:redirect,
+                "expected redirect status")
+
+==> 098/098_spec.rb 20 <==
+assert_response 200
+
+==> 099/099_spec.rb 47 <==
+expect(response).to have_http_status(:success)
+
+==> 100/100_spec.rb 42 <==
+expect(response).to have_http_status(200)
+
+==> 101/101_spec.rb 30 <==
+assert_redirected_to '/users'
+
+==> 102/102_spec.rb 31 <==
+assert_redirected_to('/users')
+
+==> 103/103_spec.rb 57 <==
+assert_redirected_to controller: 'users', action: 'show'
+
+==> 104/104_spec.rb 60 <==
+assert_redirected_to '/users', "expected redirect to users"
+
+==> 105/105_spec.rb 82 <==
+assert_redirected_to('/users',
+                     "expected redirect to users")
+
+==> 106/106_spec.rb 48 <==
+assert_redirected_to 'http://example.com/users'
+
+==> 107/107_spec.rb 32 <==
+assert_redirected_to users_path
+
+==> 108/108_spec.rb 42 <==
+expect(response).to redirect_to('/users')
+
+==> 109/109_spec.rb 69 <==
+expect(response).to redirect_to(controller: 'users', action: 'show')
+

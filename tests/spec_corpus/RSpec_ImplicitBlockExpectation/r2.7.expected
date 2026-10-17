@@ -1,0 +1,22 @@
+==> offenses exit=1 820 <==
+000/000_spec.rb:3:8: C: RSpec/ImplicitBlockExpectation: Avoid implicit block expectations.
+002/002_spec.rb:3:8: C: RSpec/ImplicitBlockExpectation: Avoid implicit block expectations.
+003/003_spec.rb:3:8: C: RSpec/ImplicitBlockExpectation: Avoid implicit block expectations.
+004/004_spec.rb:3:8: C: RSpec/ImplicitBlockExpectation: Avoid implicit block expectations.
+005/005_spec.rb:3:8: C: RSpec/ImplicitBlockExpectation: Avoid implicit block expectations.
+006/006_spec.rb:3:8: C: RSpec/ImplicitBlockExpectation: Avoid implicit block expectations.
+007/007_spec.rb:4:10: C: RSpec/ImplicitBlockExpectation: Avoid implicit block expectations.
+010/010_spec.rb:3:8: C: RSpec/ImplicitBlockExpectation: Avoid implicit block expectations.
+011/011_spec.rb:3:8: C: RSpec/ImplicitBlockExpectation: Avoid implicit block expectations.
+
+==> autocorrect exit=1 820 <==
+000/000_spec.rb:3:8: C: RSpec/ImplicitBlockExpectation: Avoid implicit block expectations.
+002/002_spec.rb:3:8: C: RSpec/ImplicitBlockExpectation: Avoid implicit block expectations.
+003/003_spec.rb:3:8: C: RSpec/ImplicitBlockExpectation: Avoid implicit block expectations.
+004/004_spec.rb:3:8: C: RSpec/ImplicitBlockExpectation: Avoid implicit block expectations.
+005/005_spec.rb:3:8: C: RSpec/ImplicitBlockExpectation: Avoid implicit block expectations.
+006/006_spec.rb:3:8: C: RSpec/ImplicitBlockExpectation: Avoid implicit block expectations.
+007/007_spec.rb:4:10: C: RSpec/ImplicitBlockExpectation: Avoid implicit block expectations.
+010/010_spec.rb:3:8: C: RSpec/ImplicitBlockExpectation: Avoid implicit block expectations.
+011/011_spec.rb:3:8: C: RSpec/ImplicitBlockExpectation: Avoid implicit block expectations.
+

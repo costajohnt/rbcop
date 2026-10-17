@@ -1,0 +1,153 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 167 <==
+before do
+  allow(Service).to receive(:foo).and_return(baz)
+  allow(Service).to receive(:bar).and_return(true)
+  allow(Service).to receive(:baz).and_return("foo")
+end
+
+==> 001/001_spec.rb 116 <==
+before do
+  allow(Service).to receive(:foo).and_return(baz)
+  allow(Service).to receive(:foo=).and_return(true)
+end
+
+==> 002/002_spec.rb 113 <==
+before do
+  allow(Service).to receive(:`).and_return(true)
+  allow(Service).to receive(:[]).and_return(true)
+end
+
+==> 003/003_spec.rb 115 <==
+before do
+  allow(Service).to receive(:foo).and_return([1, 2])
+  allow(Service).to receive(:bar).and_return(3)
+end
+
+==> 004/004_spec.rb 182 <==
+before do
+  allow(Service).to receive(:foo).and_return({ a: 1, b: 2 })
+  allow(Service).to receive(:bar).and_return("baz" => qux)
+  allow(Service).to receive(:baz).and_return(3)
+end
+
+==> 005/005_spec.rb 146 <==
+before do
+  allow(Service).to receive(:foo).and_return(<<~SQL)
+    SELECT * FROM users;
+  SQL
+  allow(Service).to receive(:bar).and_return(3)
+end
+
+==> 006/006_spec.rb 186 <==
+before do
+  allow(Service).to receive(:foo).and_return(1).once
+  allow(Service).to receive(:bar).and_return(2).twice
+  allow(Service).to receive(:baz).and_return(3).exactly(3).times
+end
+
+==> 007/007_spec.rb 120 <==
+before do
+  allow(Service).to receive(:foo).and_return(*array)
+  allow(Service).to receive(:bar).and_return(*array)
+end
+
+==> 008/008_spec.rb 116 <==
+before do
+  allow(Service).to receive(:foo).and_return(1, 2)
+  allow(Service).to receive(:bar).and_return(3, 4)
+end
+
+==> 009/009_spec.rb 126 <==
+before do
+  allow(Service).to receive(:foo).and_return(1).ordered
+  allow(Service).to receive(:bar).and_return(2).ordered
+end
+
+==> 010/010_spec.rb 108 <==
+before do
+  allow(user).to receive(:foo).and_return(baz)
+  allow(user).to receive(:bar).and_return(qux)
+end
+
+==> 011/011_spec.rb 157 <==
+before do
+  allow(Service).to receive(:foo).and_return(1)
+  calling_some_method
+  calling_another_method
+  allow(Service).to receive(:bar).and_return(2)
+end
+
+==> 012/012_spec.rb 154 <==
+before do
+  foo = Service.new
+  allow(Service).to receive(:foo).and_return(foo)
+  bar = Service.new
+  allow(Service).to receive(:bar).and_return(bar)
+end
+
+==> 013/013_spec.rb 113 <==
+before do
+  allow(Service).to receive(:foo).and_return(1, 2)
+  allow(Service).to receive(:bar).and_return(3)
+end
+
+==> 014/014_spec.rb 168 <==
+before do
+  allow(Service).to receive(:foo).and_call_original
+  allow(Service).to receive(:bar).and_return(qux)
+  allow(Service).to receive(:baz).and_call_original
+end
+
+==> 015/015_spec.rb 152 <==
+before do
+  allow(Foo).to receive(:foo).and_return(baz)
+  allow(Bar).to receive(:bar).and_return(bar)
+  allow(Baz).to receive(:baz).and_return(foo)
+end
+
+==> 016/016_spec.rb 152 <==
+before do
+  allow(Foo).to receive(:foo).and_return(bar)
+  allow(Foo).to receive(:foo).and_return(baz)
+  allow(Foo).to receive(:bar).and_return(qux)
+end
+
+==> 017/017_spec.rb 98 <==
+before do
+  allow(Service).to receive(:foo) { baz }
+  allow(Service).to receive(:bar) { bar }
+end
+
+==> 018/018_spec.rb 130 <==
+before do
+  allow(Service).to receive(:foo).with(1).and_return(baz)
+  allow(Service).to receive(:bar).with(2).and_return(bar)
+end
+
+==> 019/019_spec.rb 214 <==
+before do
+  allow(Service).to receive(:foo).and_return(bar)
+  allow(Service).to receive(:bar).and_return(qux)
+  allow(Service).to receive(:foo).and_return(qux)
+  allow(Service).to receive(:baz).and_return(qux)
+end
+
+==> 020/020_spec.rb 172 <==
+RSpec.describe do
+  before do
+    allow(X).to receive(:foo).and_return(1)
+    allow(X).to receive(:bar).and_return(2)
+    allow(Y).to receive(:foo).and_return(3)
+  end
+end
+

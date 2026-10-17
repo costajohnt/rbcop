@@ -1,0 +1,118 @@
+==> offenses exit=1 975 <==
+000/000_spec.rb:3:3: C: [Correctable] RSpec/EmptyLineAfterExample: Add an empty line after `it`.
+001/001_spec.rb:2:3: C: [Correctable] RSpec/EmptyLineAfterExample: Add an empty line after `it`.
+002/002_spec.rb:3:3: C: [Correctable] RSpec/EmptyLineAfterExample: Add an empty line after `specify`.
+005/005_spec.rb:3:3: C: [Correctable] RSpec/EmptyLineAfterExample: Add an empty line after `it`.
+005/005_spec.rb:5:3: C: [Correctable] RSpec/EmptyLineAfterExample: Add an empty line after `it`.
+007/007_spec.rb:3:3: C: [Correctable] RSpec/EmptyLineAfterExample: Add an empty line after `it`.
+008/008_spec.rb:3:3: C: [Correctable] RSpec/EmptyLineAfterExample: Add an empty line after `it`.
+009/009_spec.rb:5:3: C: [Correctable] RSpec/EmptyLineAfterExample: Add an empty line after `it`.
+010/010_spec.rb:3:3: C: [Correctable] RSpec/EmptyLineAfterExample: Add an empty line after `it`.
+011/011_spec.rb:5:3: C: [Correctable] RSpec/EmptyLineAfterExample: Add an empty line after `it`.
+
+==> autocorrect exit=0 955 <==
+000/000_spec.rb:3:3: C: [Corrected] RSpec/EmptyLineAfterExample: Add an empty line after `it`.
+001/001_spec.rb:2:3: C: [Corrected] RSpec/EmptyLineAfterExample: Add an empty line after `it`.
+002/002_spec.rb:3:3: C: [Corrected] RSpec/EmptyLineAfterExample: Add an empty line after `specify`.
+005/005_spec.rb:3:3: C: [Corrected] RSpec/EmptyLineAfterExample: Add an empty line after `it`.
+005/005_spec.rb:5:3: C: [Corrected] RSpec/EmptyLineAfterExample: Add an empty line after `it`.
+007/007_spec.rb:3:3: C: [Corrected] RSpec/EmptyLineAfterExample: Add an empty line after `it`.
+008/008_spec.rb:3:3: C: [Corrected] RSpec/EmptyLineAfterExample: Add an empty line after `it`.
+009/009_spec.rb:5:3: C: [Corrected] RSpec/EmptyLineAfterExample: Add an empty line after `it`.
+010/010_spec.rb:3:3: C: [Corrected] RSpec/EmptyLineAfterExample: Add an empty line after `it`.
+011/011_spec.rb:5:3: C: [Corrected] RSpec/EmptyLineAfterExample: Add an empty line after `it`.
+
+==> corrected/000/000_spec.rb 79 <==
+RSpec.describe Foo do
+  it 'does this' do
+  end
+
+  it 'does that' do
+  end
+end
+
+==> corrected/001/001_spec.rb 62 <==
+RSpec.describe Foo do
+  it { }
+
+  it 'does that' do
+  end
+end
+
+==> corrected/002/002_spec.rb 88 <==
+RSpec.context 'foo' do
+  specify do
+  end
+
+  specify 'something gets done' do
+  end
+end
+
+==> corrected/005/005_spec.rb 91 <==
+RSpec.context 'foo' do
+  it { }
+  it { }
+
+  it 'does this' do
+  end
+
+  it { }
+  it { }
+end
+
+==> corrected/007/007_spec.rb 91 <==
+RSpec.describe Foo do
+  it 'does this' do
+  end
+
+  # comment
+  it 'does that' do
+  end
+end
+
+==> corrected/008/008_spec.rb 123 <==
+RSpec.describe Foo do
+  it 'does this' do
+  end
+
+  # multiline comment
+  # multiline comment
+  it 'does that' do
+  end
+end
+
+==> corrected/009/009_spec.rb 138 <==
+RSpec.describe Foo do
+  # rubocop:disable RSpec/Foo
+  it 'does this' do
+  end
+  # rubocop:enable RSpec/Foo
+
+  it 'does that' do
+  end
+end
+
+==> corrected/010/010_spec.rb 138 <==
+RSpec.describe Foo do
+  it 'does this' do
+  end
+
+  # rubocop:disable RSpec/Foo
+  it 'does that' do
+  end
+  # rubocop:enable RSpec/Foo
+end
+
+==> corrected/011/011_spec.rb 197 <==
+RSpec.describe Foo do
+  # rubocop:disable RSpec/Foo
+  it 'does this' do
+  end
+  # rubocop:enable RSpec/Foo
+
+  # rubocop:disable RSpec/Foo
+  it 'does that' do
+  end
+  # rubocop:enable RSpec/Foo
+end
+

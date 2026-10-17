@@ -1,0 +1,123 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 941 <==
+example 'test', meta: true, focus: true do; end
+xit 'test', meta: true, focus: true do; end
+describe 'test', meta: true, focus: true do; end
+RSpec.describe 'test', meta: true, focus: true do; end
+it 'test', meta: true, focus: true do; end
+xspecify 'test', meta: true, focus: true do; end
+specify 'test', meta: true, focus: true do; end
+example_group 'test', meta: true, focus: true do; end
+scenario 'test', meta: true, focus: true do; end
+xexample 'test', meta: true, focus: true do; end
+xdescribe 'test', meta: true, focus: true do; end
+context 'test', meta: true, focus: true do; end
+xcontext 'test', meta: true, focus: true do; end
+feature 'test', meta: true, focus: true do; end
+xfeature 'test', meta: true, focus: true do; end
+xscenario 'test', meta: true, focus: true do; end
+pending 'test', meta: true, focus: true do; end
+shared_examples 'test', meta: true, focus: true do; end
+shared_context 'test', meta: true, focus: true do; end
+
+==> 001/001_spec.rb 618 <==
+example_group 'test', :focus do; end
+feature 'test', :focus do; end
+xexample 'test', :focus do; end
+xdescribe 'test', :focus do; end
+xscenario 'test', :focus do; end
+specify 'test', :focus do; end
+example 'test', :focus do; end
+xfeature 'test', :focus do; end
+xspecify 'test', :focus do; end
+scenario 'test', :focus do; end
+describe 'test', :focus do; end
+RSpec.describe 'test', :focus do; end
+xit 'test', :focus do; end
+context 'test', :focus do; end
+xcontext 'test', :focus do; end
+it 'test', :focus do; end
+pending 'test', :focus do; end
+shared_examples 'test', :focus do; end
+shared_context 'test', :focus do; end
+
+==> 002/002_spec.rb 497 <==
+xcontext      'test' do; end
+xscenario     'test' do; end
+xspecify      'test' do; end
+describe      'test' do; end
+example       'test' do; end
+xexample      'test' do; end
+scenario      'test' do; end
+specify       'test' do; end
+xit           'test' do; end
+feature       'test' do; end
+xfeature      'test' do; end
+context       'test' do; end
+it            'test' do; end
+example_group 'test' do; end
+xdescribe     'test' do; end
+shared_examples 'test' do; end
+shared_context  'test' do; end
+
+==> 003/003_spec.rb 25 <==
+fit "foo", :focus do
+end
+
+==> 004/004_spec.rb 38 <==
+some_method "foo", focus: true do
+end
+
+==> 005/005_spec.rb 217 <==
+fdescribe 'test' do; end
+RSpec.fdescribe 'test' do; end
+ffeature 'test' do; end
+fcontext 'test' do; end
+fit 'test' do; end
+fscenario 'test' do; end
+fexample 'test' do; end
+fspecify 'test' do; end
+focus 'test' do; end
+
+==> 006/006_spec.rb 42 <==
+describe 'test', :focus, js: true do; end
+
+==> 007/007_spec.rb 61 <==
+let(:fit) { Tax.federal_income_tax }
+let(:fit_id) { fit.id }
+
+==> 008/008_spec.rb 192 <==
+context 'test' do
+  def foo
+    fdescribe 'test'
+    ffeature 'test'
+    fcontext 'test'
+    fit 'test'
+    fscenario 'test'
+    fexample 'test'
+    fspecify 'test'
+    focus 'test'
+  end
+end
+
+==> 009/009_spec.rb 155 <==
+def self.foo
+  fdescribe 'test'
+  ffeature 'test'
+  fcontext 'test'
+  fit 'test'
+  fscenario 'test'
+  fexample 'test'
+  fspecify 'test'
+  focus 'test'
+end
+

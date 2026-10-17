@@ -1,0 +1,18 @@
+==> .rubocop.yml 201 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/Dialect:
+  PreferredMethods:
+    raise_exception: raise_error
+
+==> 000/000_spec.rb 83 <==
+it 'raises an error' do
+  expect { subject }.to raise_exception(StandardError)
+end
+

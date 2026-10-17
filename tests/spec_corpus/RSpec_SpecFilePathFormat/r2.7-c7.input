@@ -1,0 +1,16 @@
+==> .rubocop.yml 245 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/SpecFilePathFormat:
+  EnforcedInflector: active_support
+  InflectorPath: "/custom/path/to/inflections.rb"
+
+==> 000/http_client_spec.rb 28 <==
+describe HTTPClient do; end
+

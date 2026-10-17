@@ -1,0 +1,62 @@
+==> .rubocop.yml 182 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/ExpectChange:
+  EnforcedStyle: method_call
+
+==> 000/000_spec.rb 58 <==
+it do
+  expect { run }.to change { User.count }.by(1)
+end
+
+==> 001/001_spec.rb 59 <==
+it do
+  expect { run }.to change { User.sum(:points) }
+end
+
+==> 002/002_spec.rb 41 <==
+it do
+  Record.change { User.count }
+end
+
+==> 003/003_spec.rb 55 <==
+it do
+  expect(run).to change { User.count }.by(1)
+end
+
+==> 004/004_spec.rb 57 <==
+it do
+  expect { run }.to change(User, :count).by(1)
+end
+
+==> 005/005_spec.rb 71 <==
+it do
+  expect { run }.to change { User::Token::Auth.count }.by(1)
+end
+
+==> 006/006_spec.rb 60 <==
+it do
+  expect { run }.to change { ::User.count }.by(1)
+end
+
+==> 007/007_spec.rb 62 <==
+it do
+  expect { run }.to change { user.name }.to('Jack')
+end
+
+==> 008/008_spec.rb 58 <==
+it do
+  expect { run }.to change { user.reload.name }
+end
+
+==> 009/009_spec.rb 56 <==
+it do
+  expect { run }.to change { results }.to([])
+end
+

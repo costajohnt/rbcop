@@ -1,0 +1,28 @@
+==> offenses exit=1 1452 <==
+000/000_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+001/001_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+002/002_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+003/003_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+004/004_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+005/005_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+006/006_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+007/007_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+008/008_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+009/009_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+010/010_spec.rb:1:1: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+027/027_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+
+==> autocorrect exit=1 1452 <==
+000/000_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+001/001_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+002/002_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+003/003_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+004/004_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+005/005_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+006/006_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+007/007_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+008/008_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+009/009_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+010/010_spec.rb:1:1: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+027/027_spec.rb:2:3: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.
+

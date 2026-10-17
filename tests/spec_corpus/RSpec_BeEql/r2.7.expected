@@ -1,0 +1,38 @@
+==> offenses exit=1 608 <==
+000/000_spec.rb:1:21: C: [Correctable] RSpec/BeEql: Prefer `be` over `eql`.
+000/000_spec.rb:2:21: C: [Correctable] RSpec/BeEql: Prefer `be` over `eql`.
+001/001_spec.rb:1:21: C: [Correctable] RSpec/BeEql: Prefer `be` over `eql`.
+001/001_spec.rb:2:21: C: [Correctable] RSpec/BeEql: Prefer `be` over `eql`.
+002/002_spec.rb:1:21: C: [Correctable] RSpec/BeEql: Prefer `be` over `eql`.
+002/002_spec.rb:2:21: C: [Correctable] RSpec/BeEql: Prefer `be` over `eql`.
+003/003_spec.rb:1:21: C: [Correctable] RSpec/BeEql: Prefer `be` over `eql`.
+004/004_spec.rb:1:21: C: [Correctable] RSpec/BeEql: Prefer `be` over `eql`.
+
+==> autocorrect exit=0 592 <==
+000/000_spec.rb:1:21: C: [Corrected] RSpec/BeEql: Prefer `be` over `eql`.
+000/000_spec.rb:2:21: C: [Corrected] RSpec/BeEql: Prefer `be` over `eql`.
+001/001_spec.rb:1:21: C: [Corrected] RSpec/BeEql: Prefer `be` over `eql`.
+001/001_spec.rb:2:21: C: [Corrected] RSpec/BeEql: Prefer `be` over `eql`.
+002/002_spec.rb:1:21: C: [Corrected] RSpec/BeEql: Prefer `be` over `eql`.
+002/002_spec.rb:2:21: C: [Corrected] RSpec/BeEql: Prefer `be` over `eql`.
+003/003_spec.rb:1:21: C: [Corrected] RSpec/BeEql: Prefer `be` over `eql`.
+004/004_spec.rb:1:21: C: [Corrected] RSpec/BeEql: Prefer `be` over `eql`.
+
+==> corrected/000/000_spec.rb 63 <==
+it { expect(foo).to be(true) }
+it { expect(foo).to be(false) }
+
+==> corrected/001/001_spec.rb 58 <==
+it { expect(foo).to be(0) }
+it { expect(foo).to be(123) }
+
+==> corrected/002/002_spec.rb 61 <==
+it { expect(foo).to be(1.0) }
+it { expect(foo).to be(1.23) }
+
+==> corrected/003/003_spec.rb 31 <==
+it { expect(foo).to be(:foo) }
+
+==> corrected/004/004_spec.rb 30 <==
+it { expect(foo).to be(nil) }
+

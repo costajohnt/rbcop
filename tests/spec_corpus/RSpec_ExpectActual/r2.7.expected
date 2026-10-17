@@ -1,0 +1,158 @@
+==> offenses exit=1 3074 <==
+000/000_spec.rb:3:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+000/000_spec.rb:4:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+000/000_spec.rb:5:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+000/000_spec.rb:6:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+001/001_spec.rb:3:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+001/001_spec.rb:4:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+002/002_spec.rb:3:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+002/002_spec.rb:4:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+003/003_spec.rb:3:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+005/005_spec.rb:3:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+005/005_spec.rb:4:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+006/006_spec.rb:3:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+006/006_spec.rb:4:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+007/007_spec.rb:3:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+007/007_spec.rb:4:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+008/008_spec.rb:3:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+008/008_spec.rb:4:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+009/009_spec.rb:3:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+011/011_spec.rb:3:12: C: RSpec/ExpectActual: Test a non-literal value with `expect(...)`.
+012/012_spec.rb:3:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+013/013_spec.rb:3:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+014/014_spec.rb:3:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+015/015_spec.rb:3:12: C: [Correctable] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+016/016_spec.rb:3:12: C: RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+017/017_spec.rb:3:12: C: RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+018/018_spec.rb:3:12: C: RSpec/ExpectActual: Test a non-literal value with `expect(...)`.
+018/018_spec.rb:4:12: C: RSpec/ExpectActual: Test a non-literal value with `expect(...)`.
+
+==> autocorrect exit=1 3030 <==
+000/000_spec.rb:3:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+000/000_spec.rb:4:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+000/000_spec.rb:5:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+000/000_spec.rb:6:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+001/001_spec.rb:3:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+001/001_spec.rb:4:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+002/002_spec.rb:3:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+002/002_spec.rb:4:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+003/003_spec.rb:3:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+005/005_spec.rb:3:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+005/005_spec.rb:4:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+006/006_spec.rb:3:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+006/006_spec.rb:4:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+007/007_spec.rb:3:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+007/007_spec.rb:4:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+008/008_spec.rb:3:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+008/008_spec.rb:4:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+009/009_spec.rb:3:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+011/011_spec.rb:3:12: C: RSpec/ExpectActual: Test a non-literal value with `expect(...)`.
+012/012_spec.rb:3:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+013/013_spec.rb:3:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+014/014_spec.rb:3:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+015/015_spec.rb:3:12: C: [Corrected] RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+016/016_spec.rb:3:12: C: RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+017/017_spec.rb:3:12: C: RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.
+018/018_spec.rb:3:12: C: RSpec/ExpectActual: Test a non-literal value with `expect(...)`.
+018/018_spec.rb:4:12: C: RSpec/ExpectActual: Test a non-literal value with `expect(...)`.
+
+==> corrected/000/000_spec.rb 167 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(bar).to eq(123)
+    expect(bar).to eq(12.3)
+    expect(bar).to eq(1i)
+    expect(bar).to eq(1r)
+  end
+end
+
+==> corrected/001/001_spec.rb 117 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(bar).to eq(true)
+    expect(bar).to eq(false)
+  end
+end
+
+==> corrected/002/002_spec.rb 117 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(bar).to eq("foo")
+    expect(bar).to eq(:foo)
+  end
+end
+
+==> corrected/003/003_spec.rb 87 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(bar).to eq(nil)
+  end
+end
+
+==> corrected/005/005_spec.rb 120 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(bar).to eq([123])
+    expect(bar).to eq([[123]])
+  end
+end
+
+==> corrected/006/006_spec.rb 139 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(bar).to eq(foo: 1, bar: 2)
+    expect(bar).to eq(foo: 1, bar: [{}])
+  end
+end
+
+==> corrected/007/007_spec.rb 140 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(bar).to eq(foo: 1, bar: 2)
+    expect(bar).to eq({ foo: 1, bar: 2 })
+  end
+end
+
+==> corrected/008/008_spec.rb 117 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(bar).to eq(1..2)
+    expect(bar).to eq(1...2)
+  end
+end
+
+==> corrected/009/009_spec.rb 93 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(bar).to eq(/foo|bar/)
+  end
+end
+
+==> corrected/012/012_spec.rb 86 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(a).to be(true)
+  end
+end
+
+==> corrected/013/013_spec.rb 85 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(a).to be == 1
+  end
+end
+
+==> corrected/014/014_spec.rb 86 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(bar).to eql(1)
+  end
+end
+
+==> corrected/015/015_spec.rb 88 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(bar).to equal(1)
+  end
+end
+

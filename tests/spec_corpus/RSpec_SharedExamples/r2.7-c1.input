@@ -1,0 +1,56 @@
+==> .rubocop.yml 179 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/SharedExamples:
+  EnforcedStyle: symbol
+
+==> 000/000_spec.rb 342 <==
+it_behaves_like 'foo bar baz'
+it_should_behave_like 'foo bar baz'
+shared_examples 'foo bar baz'
+shared_examples_for 'foo bar baz'
+include_examples 'foo bar baz'
+include_examples 'Foo Bar Baz'
+include_examples 'foo bar baz', 'foo', 'bar'
+
+shared_examples 'foo bar baz', 'foo', 'bar' do |param|
+  # ...
+end
+
+RSpec.shared_examples 'foo bar baz'
+
+==> 001/001_spec.rb 315 <==
+it_behaves_like :foo_bar_baz
+it_should_behave_like :foo_bar_baz
+shared_examples :foo_bar_baz
+shared_examples_for :foo_bar_baz
+include_examples :foo_bar_baz
+include_examples :foo_bar_baz, :foo, :bar
+
+shared_examples :foo_bar_baz, 'foo', 'bar', 'foo bar', 5 do |param|
+  # ...
+end
+
+RSpec.shared_examples :foo_bar_baz
+
+==> 002/002_spec.rb 260 <==
+it_behaves_like FooBarBaz
+it_should_behave_like FooBarBaz
+shared_examples FooBarBaz
+shared_examples_for FooBarBaz
+include_examples FooBarBaz
+include_examples FooBarBaz, 'foo', 'bar'
+
+shared_examples FooBarBaz, 'foo', 'bar', 'foo bar', 5 do |param|
+  # ...
+end
+
+==> 003/003_spec.rb 10 <==
+run_test!
+

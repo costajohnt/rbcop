@@ -1,0 +1,10 @@
+==> offenses exit=1 264 <==
+000/000_spec.rb:2:3: C: RSpec/ExpectInHook: Do not use `expect` in `around` hook
+000/000_spec.rb:3:3: C: RSpec/ExpectInHook: Do not use `is_expected` in `around` hook
+000/000_spec.rb:4:3: C: RSpec/ExpectInHook: Do not use `expect_any_instance_of` in `around` hook
+
+==> autocorrect exit=1 264 <==
+000/000_spec.rb:2:3: C: RSpec/ExpectInHook: Do not use `expect` in `around` hook
+000/000_spec.rb:3:3: C: RSpec/ExpectInHook: Do not use `is_expected` in `around` hook
+000/000_spec.rb:4:3: C: RSpec/ExpectInHook: Do not use `expect_any_instance_of` in `around` hook
+

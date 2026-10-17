@@ -1,0 +1,391 @@
+==> offenses exit=1 8681 <==
+000/000_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to eq(a)`.
+001/001_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to eq(a)`.
+002/002_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to(eq(a), "must be equal")`.
+003/003_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to(eq(a), "must be equal")`.
+004/004_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).not_to eq(a)`.
+005/005_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).not_to eq(a)`.
+008/008_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to be_a_kind_of(a)`.
+009/009_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to be_a_kind_of(a)`.
+010/010_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to(be_a_kind_of(a), "must be kind of")`.
+011/011_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to(be_a_kind_of(a), "must be kind of")`.
+012/012_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).not_to be_a_kind_of(a)`.
+013/013_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).not_to be_a_kind_of(a)`.
+018/018_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to be_an_instance_of(a)`.
+019/019_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to be_an_instance_of(a)`.
+020/020_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to(be_an_instance_of(a), "must be instance of")`.
+021/021_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to(be_an_instance_of(a), "must be instance of")`.
+022/022_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).not_to be_an_instance_of(a)`.
+023/023_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).not_to be_an_instance_of(a)`.
+028/028_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to include(b)`.
+029/029_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to include(b)`.
+030/030_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to(include(b), "must be include")`.
+031/031_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to(include(b), "must be include")`.
+032/032_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).not_to include(b)`.
+033/033_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).not_to include(b)`.
+036/036_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to be_within(0.001).of(a)`.
+037/037_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to be_within(0.001).of(a)`.
+038/038_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to be_within(1).of(a)`.
+039/039_spec.rb:3:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to be_within(delta).of(a)`.
+040/040_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to(be_within(1).of(a), "must be within delta")`.
+041/041_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to be_within(1).of(a)`.
+042/042_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).not_to be_within(0.001).of(a)`.
+043/043_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).not_to be_within(0.001).of(a)`.
+046/046_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to match(/xyz/)`.
+047/047_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to match(/xyz/)`.
+048/048_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to(match(/xyz/), "must match")`.
+049/049_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).to(match(/xyz/), "must match")`.
+050/050_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(b).not_to match(/xyz/)`.
+053/053_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to eq(nil)`.
+054/054_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to eq(nil)`.
+055/055_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to(eq(nil), "must be nil")`.
+056/056_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to(eq(nil), "must be nil")`.
+057/057_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).not_to eq(nil)`.
+058/058_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).not_to eq(nil)`.
+061/061_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to be_empty`.
+062/062_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to be_empty`.
+063/063_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to(be_empty, "must be empty")`.
+064/064_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to(be_empty, "must be empty")`.
+065/065_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).not_to be_empty`.
+066/066_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).not_to be_empty`.
+069/069_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to be(true)`.
+070/070_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to be(true)`.
+071/071_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to(be(true), "must be true")`.
+072/072_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to(be(true), "must be true")`.
+073/073_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to be(false)`.
+074/074_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to be(false)`.
+075/075_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to(be(false), "must be false")`.
+076/076_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to(be(false), "must be false")`.
+077/077_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to be_valid`.
+078/078_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to be_valid`.
+079/079_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to be_valid`.
+081/081_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to(be_valid, "must be valid")`.
+082/082_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).to(be_valid, "must be valid")`.
+083/083_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).not_to be_valid`.
+084/084_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(a).not_to be_valid`.
+093/093_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(response).to have_http_status(:redirect)`.
+094/094_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(response).to have_http_status(302)`.
+095/095_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(response).to have_http_status(:success)`.
+096/096_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(response).to(have_http_status(:success), "expected success status")`.
+097/097_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(response).to(have_http_status(:redirect), "expected redirect status")`.
+098/098_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(response).to have_http_status(200)`.
+101/101_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(response).to redirect_to('/users')`.
+102/102_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(response).to redirect_to('/users')`.
+103/103_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(response).to redirect_to(controller: 'users', action: 'show')`.
+104/104_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(response).to(redirect_to('/users'), "expected redirect to users")`.
+105/105_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(response).to(redirect_to('/users'), "expected redirect to users")`.
+106/106_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(response).to redirect_to('http://example.com/users')`.
+107/107_spec.rb:1:1: C: [Correctable] RSpecRails/MinitestAssertions: Use `expect(response).to redirect_to(users_path)`.
+
+==> autocorrect exit=0 8527 <==
+000/000_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to eq(a)`.
+001/001_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to eq(a)`.
+002/002_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to(eq(a), "must be equal")`.
+003/003_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to(eq(a), "must be equal")`.
+004/004_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).not_to eq(a)`.
+005/005_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).not_to eq(a)`.
+008/008_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to be_a_kind_of(a)`.
+009/009_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to be_a_kind_of(a)`.
+010/010_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to(be_a_kind_of(a), "must be kind of")`.
+011/011_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to(be_a_kind_of(a), "must be kind of")`.
+012/012_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).not_to be_a_kind_of(a)`.
+013/013_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).not_to be_a_kind_of(a)`.
+018/018_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to be_an_instance_of(a)`.
+019/019_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to be_an_instance_of(a)`.
+020/020_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to(be_an_instance_of(a), "must be instance of")`.
+021/021_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to(be_an_instance_of(a), "must be instance of")`.
+022/022_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).not_to be_an_instance_of(a)`.
+023/023_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).not_to be_an_instance_of(a)`.
+028/028_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to include(b)`.
+029/029_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to include(b)`.
+030/030_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to(include(b), "must be include")`.
+031/031_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to(include(b), "must be include")`.
+032/032_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).not_to include(b)`.
+033/033_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).not_to include(b)`.
+036/036_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to be_within(0.001).of(a)`.
+037/037_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to be_within(0.001).of(a)`.
+038/038_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to be_within(1).of(a)`.
+039/039_spec.rb:3:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to be_within(delta).of(a)`.
+040/040_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to(be_within(1).of(a), "must be within delta")`.
+041/041_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to be_within(1).of(a)`.
+042/042_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).not_to be_within(0.001).of(a)`.
+043/043_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).not_to be_within(0.001).of(a)`.
+046/046_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to match(/xyz/)`.
+047/047_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to match(/xyz/)`.
+048/048_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to(match(/xyz/), "must match")`.
+049/049_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).to(match(/xyz/), "must match")`.
+050/050_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(b).not_to match(/xyz/)`.
+053/053_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to eq(nil)`.
+054/054_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to eq(nil)`.
+055/055_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to(eq(nil), "must be nil")`.
+056/056_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to(eq(nil), "must be nil")`.
+057/057_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).not_to eq(nil)`.
+058/058_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).not_to eq(nil)`.
+061/061_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to be_empty`.
+062/062_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to be_empty`.
+063/063_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to(be_empty, "must be empty")`.
+064/064_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to(be_empty, "must be empty")`.
+065/065_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).not_to be_empty`.
+066/066_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).not_to be_empty`.
+069/069_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to be(true)`.
+070/070_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to be(true)`.
+071/071_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to(be(true), "must be true")`.
+072/072_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to(be(true), "must be true")`.
+073/073_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to be(false)`.
+074/074_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to be(false)`.
+075/075_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to(be(false), "must be false")`.
+076/076_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to(be(false), "must be false")`.
+077/077_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to be_valid`.
+078/078_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to be_valid`.
+079/079_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to be_valid`.
+081/081_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to(be_valid, "must be valid")`.
+082/082_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).to(be_valid, "must be valid")`.
+083/083_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).not_to be_valid`.
+084/084_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(a).not_to be_valid`.
+093/093_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(response).to have_http_status(:redirect)`.
+094/094_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(response).to have_http_status(302)`.
+095/095_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(response).to have_http_status(:success)`.
+096/096_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(response).to(have_http_status(:success), "expected success status")`.
+097/097_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(response).to(have_http_status(:redirect), "expected redirect status")`.
+098/098_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(response).to have_http_status(200)`.
+101/101_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(response).to redirect_to('/users')`.
+102/102_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(response).to redirect_to('/users')`.
+103/103_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(response).to redirect_to(controller: 'users', action: 'show')`.
+104/104_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(response).to(redirect_to('/users'), "expected redirect to users")`.
+105/105_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(response).to(redirect_to('/users'), "expected redirect to users")`.
+106/106_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(response).to redirect_to('http://example.com/users')`.
+107/107_spec.rb:1:1: C: [Corrected] RSpecRails/MinitestAssertions: Use `expect(response).to redirect_to(users_path)`.
+
+==> corrected/000/000_spec.rb 19 <==
+expect(b).to eq(a)
+
+==> corrected/001/001_spec.rb 19 <==
+expect(b).to eq(a)
+
+==> corrected/002/002_spec.rb 37 <==
+expect(b).to(eq(a), "must be equal")
+
+==> corrected/003/003_spec.rb 37 <==
+expect(b).to(eq(a), "must be equal")
+
+==> corrected/004/004_spec.rb 23 <==
+expect(b).not_to eq(a)
+
+==> corrected/005/005_spec.rb 23 <==
+expect(b).not_to eq(a)
+
+==> corrected/008/008_spec.rb 29 <==
+expect(b).to be_a_kind_of(a)
+
+==> corrected/009/009_spec.rb 29 <==
+expect(b).to be_a_kind_of(a)
+
+==> corrected/010/010_spec.rb 49 <==
+expect(b).to(be_a_kind_of(a), "must be kind of")
+
+==> corrected/011/011_spec.rb 49 <==
+expect(b).to(be_a_kind_of(a), "must be kind of")
+
+==> corrected/012/012_spec.rb 33 <==
+expect(b).not_to be_a_kind_of(a)
+
+==> corrected/013/013_spec.rb 33 <==
+expect(b).not_to be_a_kind_of(a)
+
+==> corrected/018/018_spec.rb 34 <==
+expect(b).to be_an_instance_of(a)
+
+==> corrected/019/019_spec.rb 34 <==
+expect(b).to be_an_instance_of(a)
+
+==> corrected/020/020_spec.rb 58 <==
+expect(b).to(be_an_instance_of(a), "must be instance of")
+
+==> corrected/021/021_spec.rb 58 <==
+expect(b).to(be_an_instance_of(a), "must be instance of")
+
+==> corrected/022/022_spec.rb 38 <==
+expect(b).not_to be_an_instance_of(a)
+
+==> corrected/023/023_spec.rb 38 <==
+expect(b).not_to be_an_instance_of(a)
+
+==> corrected/028/028_spec.rb 24 <==
+expect(a).to include(b)
+
+==> corrected/029/029_spec.rb 24 <==
+expect(a).to include(b)
+
+==> corrected/030/030_spec.rb 44 <==
+expect(a).to(include(b), "must be include")
+
+==> corrected/031/031_spec.rb 44 <==
+expect(a).to(include(b), "must be include")
+
+==> corrected/032/032_spec.rb 28 <==
+expect(a).not_to include(b)
+
+==> corrected/033/033_spec.rb 28 <==
+expect(a).not_to include(b)
+
+==> corrected/036/036_spec.rb 36 <==
+expect(b).to be_within(0.001).of(a)
+
+==> corrected/037/037_spec.rb 36 <==
+expect(b).to be_within(0.001).of(a)
+
+==> corrected/038/038_spec.rb 32 <==
+expect(b).to be_within(1).of(a)
+
+==> corrected/039/039_spec.rb 47 <==
+delta = 1
+
+expect(b).to be_within(delta).of(a)
+
+==> corrected/040/040_spec.rb 57 <==
+expect(b).to(be_within(1).of(a), "must be within delta")
+
+==> corrected/041/041_spec.rb 32 <==
+expect(b).to be_within(1).of(a)
+
+==> corrected/042/042_spec.rb 40 <==
+expect(b).not_to be_within(0.001).of(a)
+
+==> corrected/043/043_spec.rb 40 <==
+expect(b).not_to be_within(0.001).of(a)
+
+==> corrected/046/046_spec.rb 26 <==
+expect(b).to match(/xyz/)
+
+==> corrected/047/047_spec.rb 26 <==
+expect(b).to match(/xyz/)
+
+==> corrected/048/048_spec.rb 41 <==
+expect(b).to(match(/xyz/), "must match")
+
+==> corrected/049/049_spec.rb 41 <==
+expect(b).to(match(/xyz/), "must match")
+
+==> corrected/050/050_spec.rb 30 <==
+expect(b).not_to match(/xyz/)
+
+==> corrected/053/053_spec.rb 21 <==
+expect(a).to eq(nil)
+
+==> corrected/054/054_spec.rb 21 <==
+expect(a).to eq(nil)
+
+==> corrected/055/055_spec.rb 37 <==
+expect(a).to(eq(nil), "must be nil")
+
+==> corrected/056/056_spec.rb 37 <==
+expect(a).to(eq(nil), "must be nil")
+
+==> corrected/057/057_spec.rb 25 <==
+expect(a).not_to eq(nil)
+
+==> corrected/058/058_spec.rb 25 <==
+expect(a).not_to eq(nil)
+
+==> corrected/061/061_spec.rb 22 <==
+expect(a).to be_empty
+
+==> corrected/062/062_spec.rb 22 <==
+expect(a).to be_empty
+
+==> corrected/063/063_spec.rb 40 <==
+expect(a).to(be_empty, "must be empty")
+
+==> corrected/064/064_spec.rb 40 <==
+expect(a).to(be_empty, "must be empty")
+
+==> corrected/065/065_spec.rb 26 <==
+expect(a).not_to be_empty
+
+==> corrected/066/066_spec.rb 26 <==
+expect(a).not_to be_empty
+
+==> corrected/069/069_spec.rb 22 <==
+expect(a).to be(true)
+
+==> corrected/070/070_spec.rb 22 <==
+expect(a).to be(true)
+
+==> corrected/071/071_spec.rb 39 <==
+expect(a).to(be(true), "must be true")
+
+==> corrected/072/072_spec.rb 39 <==
+expect(a).to(be(true), "must be true")
+
+==> corrected/073/073_spec.rb 23 <==
+expect(a).to be(false)
+
+==> corrected/074/074_spec.rb 23 <==
+expect(a).to be(false)
+
+==> corrected/075/075_spec.rb 41 <==
+expect(a).to(be(false), "must be false")
+
+==> corrected/076/076_spec.rb 41 <==
+expect(a).to(be(false), "must be false")
+
+==> corrected/077/077_spec.rb 22 <==
+expect(a).to be_valid
+
+==> corrected/078/078_spec.rb 22 <==
+expect(a).to be_valid
+
+==> corrected/079/079_spec.rb 22 <==
+expect(a).to be_valid
+
+==> corrected/081/081_spec.rb 40 <==
+expect(a).to(be_valid, "must be valid")
+
+==> corrected/082/082_spec.rb 40 <==
+expect(a).to(be_valid, "must be valid")
+
+==> corrected/083/083_spec.rb 26 <==
+expect(a).not_to be_valid
+
+==> corrected/084/084_spec.rb 26 <==
+expect(a).not_to be_valid
+
+==> corrected/093/093_spec.rb 48 <==
+expect(response).to have_http_status(:redirect)
+
+==> corrected/094/094_spec.rb 42 <==
+expect(response).to have_http_status(302)
+
+==> corrected/095/095_spec.rb 47 <==
+expect(response).to have_http_status(:success)
+
+==> corrected/096/096_spec.rb 75 <==
+expect(response).to(have_http_status(:success), "expected success status")
+
+==> corrected/097/097_spec.rb 77 <==
+expect(response).to(have_http_status(:redirect), "expected redirect status")
+
+==> corrected/098/098_spec.rb 42 <==
+expect(response).to have_http_status(200)
+
+==> corrected/101/101_spec.rb 42 <==
+expect(response).to redirect_to('/users')
+
+==> corrected/102/102_spec.rb 42 <==
+expect(response).to redirect_to('/users')
+
+==> corrected/103/103_spec.rb 69 <==
+expect(response).to redirect_to(controller: 'users', action: 'show')
+
+==> corrected/104/104_spec.rb 73 <==
+expect(response).to(redirect_to('/users'), "expected redirect to users")
+
+==> corrected/105/105_spec.rb 73 <==
+expect(response).to(redirect_to('/users'), "expected redirect to users")
+
+==> corrected/106/106_spec.rb 60 <==
+expect(response).to redirect_to('http://example.com/users')
+
+==> corrected/107/107_spec.rb 44 <==
+expect(response).to redirect_to(users_path)
+

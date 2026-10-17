@@ -9,11 +9,19 @@ running the pinned plugin version below.
 | rubocop-performance | 1.27.0 | Performance | all 52 | #283 |
 | rubocop-rails | 2.38.0 | Rails | all 138 | #284 |
 | rubocop-minitest | 0.41.0 | Minitest | all 55 | #286 |
+| rubocop-rspec | 3.10.2 | RSpec | all 115 | #285 |
+| rubocop-rspec_rails | 2.33.0 | RSpecRails | all 10 | #285 |
+| rubocop-factory_bot | 2.28.0 | FactoryBot | all 11 | #285 |
+| rubocop-capybara | 3.0.0 | Capybara, Capybara/RSpec | all 15 | #285 |
 
 Each version is the newest release that supports RuboCop 1.91.0 (rubocop-performance 1.27.0
 requires `rubocop >= 1.89.0, < 2.0`, released 2026-08-16; rubocop-rails 2.38.0 requires
 `rubocop >= 1.89.0, < 2.0`, released 2026-09-20;
-rubocop-minitest 0.41.0 requires `rubocop >= 1.89.0, < 2.0`, released 2026-10-02). The gem's `config/default.yml` is vendored
+rubocop-minitest 0.41.0 requires `rubocop >= 1.89.0, < 2.0`, released 2026-10-02;
+rubocop-rspec 3.10.2 requires `rubocop ~> 1.86, >= 1.86.2`; rubocop-rspec_rails 2.33.0 requires
+`rubocop ~> 1.89` and `rubocop-rspec ~> 3.5`, released 2026-10-07; rubocop-factory_bot 2.28.0
+requires `rubocop ~> 1.72, >= 1.72.1`; rubocop-capybara 3.0.0 requires `rubocop ~> 1.81`, released
+2026-06-22). The gem's `config/default.yml` is vendored
 as `config/plugins/<gem>.yml` (MIT, `config/plugins/LICENSE-<gem>`), so the gem need not be
 installed; a different installed version is ignored.
 
@@ -54,6 +62,34 @@ installed; a different installed version is ignored.
 - Some Rails corrections that splice string content into new code are withheld when that content is
   not inert there, where RuboCop writes it unescaped; see the deliberate differences in
   docs/known-gaps.md.
+
+## rubocop-rspec family specifics
+
+- rubocop-rspec, rubocop-rspec_rails, rubocop-factory_bot and rubocop-capybara are four native
+  plugins, each loaded by its own `plugins:` entry. Shared code lives in `src/helpers/rspec.rs`
+  (Language, the ExampleGroup/Example/Hook concepts and the mixins), `src/helpers/factory_bot.rs`
+  and `src/helpers/capybara.rs` (CssSelector, CssAttributesParser, CapybaraHelp).
+- `RSpec: Language` (the DSL names: example groups, examples, hooks, helpers, includes, shared
+  groups, subjects, expectations) is read from the resolved config of each file, once per config,
+  so a project's own aliases (`RSpec: Language: Examples: Regular: [scenario]`, inherited or merged
+  like any department setting) apply to every RSpec and RSpecRails cop.
+- A cop's config is merged with its department's (`RSpec:`, `FactoryBot:`, `Capybara:`,
+  `Capybara/RSpec:`), as RuboCop's `Config#for_badge`: the department `Include` (for RSpec,
+  `**/*_spec.rb` and `**/spec/**/*`) applies to each cop that has none of its own, and department
+  and cop `Exclude` lists are unioned.
+- `Capybara/RSpec` is a nested department: `Capybara/RSpec/HaveSelector` and so on. `--only
+  Capybara` does not select them (RuboCop's department of such a cop is `Capybara/RSpec`).
+- rubocop-rspec_rails requires rubocop-rspec (its cops include rubocop-rspec mixins). RuboCop fails
+  to load it alone; rbcop then runs its cops with rubocop-rspec's default `RSpec/Language`
+  (docs/known-gaps.md).
+- RSpec/SpecFilePathFormat's `EnforcedInflector: active_support` uses ActiveSupport's default
+  inflections (`src/helpers/inflector.rs`); an `InflectorPath` file is not evaluated.
+- rubocop-rspec's obsoletion file is vendored as `config/plugins/rubocop-rspec-obsoletion.yml`.
+- Corrections that would write string or symbol content into new literals are withheld when that
+  content is not inert; see docs/known-gaps.md.
+- The four plugins share one oracle set (`oracle-rspec`, recorded with `config/all-cops-rspec.yml`)
+  and one `scripts/check-plugins.sh` iteration (`rspec`), which also checks Metrics/BlockLength
+  (rubocop-rspec's config adds spec files to its Exclude) and mastodon under its own `.rubocop.yml`.
 
 ## Porting a plugin
 

@@ -1,0 +1,63 @@
+==> .rubocop.yml 178 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/ReturnFromStub:
+  EnforcedStyle: block
+
+==> 000/000_spec.rb 55 <==
+it do
+  allow(Foo).to receive(:bar).and_return(42)
+end
+
+==> 001/001_spec.rb 63 <==
+it do
+  allow(Foo).to receive(:bar).with(1).and_return(42)
+end
+
+==> 002/002_spec.rb 83 <==
+it do
+  allow(Foo).to receive(:bar).and_return(<<-TXT)
+    You called me
+  TXT
+end
+
+==> 003/003_spec.rb 56 <==
+it do
+  allow(Foo).to receive(:bar).and_return(baz)
+end
+
+==> 004/004_spec.rb 83 <==
+it do
+  bar = 42
+  allow(Foo).to receive(:bar).and_return("You called #{bar}")
+end
+
+==> 005/005_spec.rb 63 <==
+it do
+  allow(Foo).to receive(:bar).and_return(42, 43, 44)
+end
+
+==> 006/006_spec.rb 159 <==
+allow(Foo).to receive(:bar).and_return({ foo: 42 })
+allow(Foo).to receive(:bar).and_return(foo: 42)
+allow(Foo).to receive(:bar).and_return(
+  a: 42,
+  b: 43
+)
+
+==> 007/007_spec.rb 44 <==
+allow(Foo).to receive(:bar).and_return(nil)
+
+==> 008/008_spec.rb 63 <==
+allow(Foo).to receive(:bar).and_return('You called ' \
+  'me')
+
+==> 009/009_spec.rb 31 <==
+library.visit.and_return(book)
+

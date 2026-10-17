@@ -35,8 +35,11 @@ pub fn unimplemented<'c>(
         let departments: HashSet<&str> =
             cfg.hash.0.iter().flat_map(|(name, _)| name.match_indices('/').map(|(i, _)| &name[..i])).collect();
         for (name, _) in &cfg.hash.0 {
+            // A nested department key (`Capybara/RSpec`, `I18n/GetText`) is not a cop: a native
+            // plugin's are listed, any other is a key other keys sit under.
             if name.contains('/')
                 && !departments.contains(name.as_str())
+                && !rbcop::helpers::cop_registry::NATIVE_PLUGINS.iter().any(|p| p.departments.contains(&name.as_str()))
                 && !implemented.contains(name.as_str())
                 && !out.contains(name)
                 && cfg.registered(name)

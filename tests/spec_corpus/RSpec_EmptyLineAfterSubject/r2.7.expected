@@ -1,0 +1,83 @@
+==> offenses exit=1 715 <==
+000/000_spec.rb:2:3: C: [Correctable] RSpec/EmptyLineAfterSubject: Add an empty line after `subject`.
+002/002_spec.rb:2:3: C: [Correctable] RSpec/EmptyLineAfterSubject: Add an empty line after `subject!`.
+008/008_spec.rb:2:3: C: [Correctable] RSpec/EmptyLineAfterSubject: Add an empty line after `subject`.
+009/009_spec.rb:2:3: C: [Correctable] RSpec/EmptyLineAfterSubject: Add an empty line after `subject`.
+010/010_spec.rb:4:3: C: [Correctable] RSpec/EmptyLineAfterSubject: Add an empty line after `subject`.
+011/011_spec.rb:2:3: C: [Correctable] RSpec/EmptyLineAfterSubject: Add an empty line after `subject`.
+012/012_spec.rb:4:3: C: [Correctable] RSpec/EmptyLineAfterSubject: Add an empty line after `subject`.
+
+==> autocorrect exit=0 701 <==
+000/000_spec.rb:2:3: C: [Corrected] RSpec/EmptyLineAfterSubject: Add an empty line after `subject`.
+002/002_spec.rb:2:3: C: [Corrected] RSpec/EmptyLineAfterSubject: Add an empty line after `subject!`.
+008/008_spec.rb:2:3: C: [Corrected] RSpec/EmptyLineAfterSubject: Add an empty line after `subject`.
+009/009_spec.rb:2:3: C: [Corrected] RSpec/EmptyLineAfterSubject: Add an empty line after `subject`.
+010/010_spec.rb:4:3: C: [Corrected] RSpec/EmptyLineAfterSubject: Add an empty line after `subject`.
+011/011_spec.rb:2:3: C: [Corrected] RSpec/EmptyLineAfterSubject: Add an empty line after `subject`.
+012/012_spec.rb:4:3: C: [Corrected] RSpec/EmptyLineAfterSubject: Add an empty line after `subject`.
+
+==> corrected/000/000_spec.rb 85 <==
+RSpec.describe User do
+  subject { described_class.new }
+
+  let(:params) { foo }
+end
+
+==> corrected/002/002_spec.rb 86 <==
+RSpec.describe User do
+  subject! { described_class.new }
+
+  let(:params) { foo }
+end
+
+==> corrected/008/008_spec.rb 94 <==
+RSpec.describe Foo do
+  subject { described_user }
+
+  # comment
+  describe 'bar' do
+  end
+end
+
+==> corrected/009/009_spec.rb 126 <==
+RSpec.describe Foo do
+  subject { described_user }
+
+  # multiline comment
+  # multiline comment
+  describe 'bar' do
+  end
+end
+
+==> corrected/010/010_spec.rb 142 <==
+RSpec.describe User do
+  # rubocop:disable RSpec/Foo
+  subject { described_user }
+  # rubocop:enable RSpec/Foo
+
+  describe 'bar' do
+  end
+end
+
+==> corrected/011/011_spec.rb 141 <==
+RSpec.describe Foo do
+  subject { described_user }
+
+  # rubocop:disable RSpec/Foo
+  describe 'bar' do
+  end
+  # rubocop:enable RSpec/Foo
+end
+
+==> corrected/012/012_spec.rb 201 <==
+RSpec.describe User do
+  # rubocop:disable RSpec/Foo
+  subject { described_user }
+  # rubocop:enable RSpec/Foo
+
+  # rubocop:disable RSpec/Foo
+  describe 'bar' do
+  end
+  # rubocop:enable RSpec/Foo
+end
+

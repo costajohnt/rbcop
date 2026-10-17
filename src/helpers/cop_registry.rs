@@ -35,6 +35,30 @@ pub const NATIVE_PLUGINS: &[NativePlugin] = &[
         default_yml: include_str!("../../config/plugins/rubocop-minitest.yml"),
         obsoletion: None,
     },
+    NativePlugin {
+        gem: "rubocop-rspec",
+        departments: &["RSpec"],
+        default_yml: include_str!("../../config/plugins/rubocop-rspec.yml"),
+        obsoletion: Some(include_str!("../../config/plugins/rubocop-rspec-obsoletion.yml")),
+    },
+    NativePlugin {
+        gem: "rubocop-rspec_rails",
+        departments: &["RSpecRails"],
+        default_yml: include_str!("../../config/plugins/rubocop-rspec_rails.yml"),
+        obsoletion: None,
+    },
+    NativePlugin {
+        gem: "rubocop-factory_bot",
+        departments: &["FactoryBot"],
+        default_yml: include_str!("../../config/plugins/rubocop-factory_bot.yml"),
+        obsoletion: None,
+    },
+    NativePlugin {
+        gem: "rubocop-capybara",
+        departments: &["Capybara", "Capybara/RSpec"],
+        default_yml: include_str!("../../config/plugins/rubocop-capybara.yml"),
+        obsoletion: None,
+    },
 ];
 
 pub fn native_plugin(gem: &str) -> Option<&'static NativePlugin> {

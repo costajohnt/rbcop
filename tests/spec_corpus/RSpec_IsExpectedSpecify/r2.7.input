@@ -1,0 +1,28 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 74 <==
+specify { is_expected.to be_truthy }
+specify { are_expected.to be_falsy }
+
+==> 001/001_spec.rb 37 <==
+specify { expect(sqrt(4)).to eq(2) }
+
+==> 002/002_spec.rb 42 <==
+specify do
+  is_expected.to be_truthy
+end
+
+==> 003/003_spec.rb 32 <==
+it { is_expected.to be_truthy }
+
+==> 004/004_spec.rb 28 <==
+specify "pending", :pending
+

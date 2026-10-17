@@ -1,0 +1,194 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 87 <==
+RSpec.describe User do
+  let(:a) { a }
+  let(:b) { b }
+  it { expect(a).to eq(b) }
+end
+
+==> 001/001_spec.rb 147 <==
+RSpec.describe User do
+  shared_examples_for 'some shared behavior' do
+    let(:a) { a }
+    let(:b) { b }
+    it { expect(a).to eq(b) }
+  end
+end
+
+==> 002/002_spec.rb 143 <==
+RSpec.describe User do
+  it_behaves_like 'some shared behavior' do
+    let(:a) { a }
+    let(:b) { b }
+    it { expect(a).to eq(b) }
+  end
+end
+
+==> 003/003_spec.rb 97 <==
+RSpec.describe User do
+  let(:a) { a }
+  let!(:b) do
+    b
+  end
+  it { expect(a).to eq(b) }
+end
+
+==> 004/004_spec.rb 104 <==
+RSpec.describe User do
+  let(:a) { a }
+  let(:user, &args[:build_user])
+  it { expect(a).to eq(b) }
+end
+
+==> 005/005_spec.rb 88 <==
+RSpec.describe User do
+  let(:a) { a }
+  let(:b) { b }
+
+  it { expect(a).to eq(b) }
+end
+
+==> 006/006_spec.rb 105 <==
+RSpec.describe User do
+  let(:a) { a }
+  let(:b) { b }
+  # end of setup
+
+  it { expect(a).to eq(b) }
+end
+
+==> 007/007_spec.rb 99 <==
+RSpec.describe User do
+  let(:a) { a }
+  let(:b) { b }
+  # comment
+  it { expect(a).to eq(b) }
+end
+
+==> 008/008_spec.rb 131 <==
+RSpec.describe User do
+  let(:a) { a }
+  let(:b) { b }
+  # multiline comment
+  # multiline comment
+  it { expect(a).to eq(b) }
+end
+
+==> 009/009_spec.rb 146 <==
+RSpec.describe User do
+  # rubocop:disable RSpec/Foo
+  let(:a) { a }
+  let(:b) { b }
+  # rubocop:enable RSpec/Foo
+  it { expect(a).to eq(b) }
+end
+
+==> 010/010_spec.rb 146 <==
+RSpec.describe User do
+  let(:a) { a }
+  let(:b) { b }
+  # rubocop:disable RSpec/Foo
+  it { expect(a).to eq(b) }
+  # rubocop:enable RSpec/Foo
+end
+
+==> 011/011_spec.rb 205 <==
+RSpec.describe User do
+  # rubocop:disable RSpec/Foo
+  let(:a) { a }
+  let(:b) { b }
+  # rubocop:enable RSpec/Foo
+  # rubocop:disable RSpec/Foo
+  it { expect(a).to eq(b) }
+  # rubocop:enable RSpec/Foo
+end
+
+==> 012/012_spec.rb 121 <==
+RSpec.describe User do
+  let(:a) { a }
+
+  subject { described_class }
+
+  let!(:b) { b }
+
+  it { expect(a).to eq(b) }
+end
+
+==> 013/013_spec.rb 235 <==
+RSpec.describe User do
+  # This shouldn't really ever happen in a sane codebase but I still
+  # want to avoid false positives
+  it "doesn't mind me calling a method called let in the test" do
+    let(foo)
+    subject { bar }
+  end
+end
+
+==> 014/014_spec.rb 97 <==
+RSpec.describe User do
+  let(:a) { a }
+  let(:b) do
+    b
+  end
+
+  it { expect(a).to eq(b) }
+end
+
+==> 015/015_spec.rb 59 <==
+RSpec.describe User do
+  let(:a) { a }
+  let(:b) { b }
+end
+
+==> 016/016_spec.rb 160 <==
+RSpec.describe User do
+  let(:foo) do
+    <<-BAR
+    hello
+    world
+    BAR
+  end
+
+  it 'uses heredoc' do
+    expect(foo).to eql("  hello
+  world
+")
+  end
+end
+
+==> 017/017_spec.rb 168 <==
+RSpec.describe 'silly heredoc syntax' do
+  let(:foo) { <<-BAR }
+  hello
+  world
+  BAR
+
+  it 'has tricky syntax' do
+    expect(foo).to eql("  hello
+  world
+")
+  end
+end
+
+==> 018/018_spec.rb 167 <==
+RSpec.describe 'silly heredoc syntax' do
+  let(:foo) { <<-BAR }
+  hello
+  world
+  BAR
+  it 'has tricky syntax' do
+    expect(foo).to eql("  hello
+  world
+")
+  end
+end
+

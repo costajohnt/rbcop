@@ -1,0 +1,423 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 193 <==
+describe Foo do
+  subject(:foo) { described_class.new }
+
+  before do
+    allow(foo).to receive(:bar).and_return(baz)
+  end
+
+  it 'uses expect twice' do
+    expect(foo.bar).to eq(baz)
+  end
+end
+
+==> 001/001_spec.rb 273 <==
+describe Foo do
+  subject(:foo) { described_class.new }
+  subject(:bar) { described_class.new }
+  subject(:baz) { described_class.new }
+
+  before do
+    allow(bar).to receive(:bar).and_return(baz)
+  end
+
+  it 'uses expect twice' do
+    expect(foo.bar).to eq(baz)
+  end
+end
+
+==> 002/002_spec.rb 323 <==
+describe Foo do
+  subject(:foo) { described_class.new }
+
+  before do
+    expect(foo).to receive(:bar).and_return(baz)
+    expect(foo).to receive(:bar)
+    expect(foo).to receive(:bar).with(1)
+    expect(foo).to receive(:bar).with(1).and_return(2)
+  end
+
+  it 'uses expect twice' do
+    expect(foo.bar).to eq(baz)
+  end
+end
+
+==> 003/003_spec.rb 129 <==
+describe Foo do
+  subject { described_class.new }
+
+  it 'uses unnamed subject' do
+    expect(subject).to receive(:bar)
+  end
+end
+
+==> 004/004_spec.rb 134 <==
+describe Foo do
+  subject!(:foo) { described_class.new }
+
+  it 'uses bang subject!' do
+    expect(subject).to receive(:bar)
+  end
+end
+
+==> 005/005_spec.rb 138 <==
+describe Foo do
+  subject!(:foo) { described_class.new }
+
+  it 'uses bang subject! by name' do
+    expect(foo).to receive(:bar)
+  end
+end
+
+==> 006/006_spec.rb 128 <==
+describe Foo do
+  subject! { described_class.new }
+
+  it 'uses bang subject!' do
+    expect(subject).to receive(:bar)
+  end
+end
+
+==> 007/007_spec.rb 135 <==
+describe Foo do
+  subject(:foo) { described_class.new }
+
+  it 'uses unnamed subject' do
+    expect(subject).to receive(:bar)
+  end
+end
+
+==> 008/008_spec.rb 143 <==
+describe Foo do
+  subject(:foo) { described_class.new }
+
+  it 'uses one-line expectation syntax' do
+    is_expected.to receive(:bar)
+  end
+end
+
+==> 009/009_spec.rb 231 <==
+describe Foo do
+  subject(:foo) { described_class.new }
+
+  context 'when I shake things up' do
+    subject(:bar) { described_class.new }
+
+    it 'tries to trick rubocop-rspec' do
+      allow(foo).to receive(:baz)
+    end
+  end
+end
+
+==> 010/010_spec.rb 136 <==
+describe Foo do
+  subject(:foo) { [Object.new] }
+  it 'tries to trick rubocop-rspec' do
+    expect(foo).to all(receive(:baz))
+  end
+end
+
+==> 011/011_spec.rb 286 <==
+describe Foo do
+  subject(:foo) { described_class.new }
+
+  context 'when I shake things up' do
+    subject(:foo) { described_class.new }
+
+    before do
+      allow(foo).to receive(:wow)
+    end
+
+    it 'tries to trick rubocop-rspec' do
+      expect(foo).to eql(:neat)
+    end
+  end
+end
+
+==> 012/012_spec.rb 280 <==
+describe Foo do
+  subject(:foo) { described_class.new }
+
+  context 'when I shake things up' do
+    subject { described_class.new }
+
+    before do
+      allow(foo).to receive(:wow)
+    end
+
+    it 'tries to trick rubocop-rspec' do
+      expect(foo).to eql(:neat)
+    end
+  end
+end
+
+==> 013/013_spec.rb 243 <==
+describe Foo do
+  subject(:foo) { described_class.new }
+
+  context 'when I shake things up' do
+    before do
+      allow(foo).to receive(:wow)
+    end
+
+    it 'tries to trick rubocop-rspec' do
+      expect(foo).to eql(:neat)
+    end
+  end
+end
+
+==> 014/014_spec.rb 318 <==
+describe Foo do
+  subject(:foo) { described_class.new }
+
+  context 'when I shake things up' do
+    subject(:bar) { described_class.new }
+
+    before do
+      allow(foo).to receive(:wow)
+      allow(bar).to receive(:wow)
+    end
+
+    it 'tries to trick rubocop-rspec' do
+      expect(bar).to eql(foo)
+    end
+  end
+end
+
+==> 015/015_spec.rb 208 <==
+describe Foo do
+  subject(:foo) { described_class.new }
+
+  context 'when I do something in a context' do
+    subject { blah }
+  end
+
+  it 'still flags this test' do
+    allow(foo).to receive(:blah)
+  end
+end
+
+==> 016/016_spec.rb 345 <==
+describe Foo do
+  subject(:foo) { described_class.new }
+
+  context 'level 1' do
+    subject(:bar) { described_class.new }
+
+    context 'level 2' do
+      subject(:baz) { described_class.new }
+
+      before do
+        allow(foo).to receive(:wow)
+        allow(bar).to receive(:wow)
+        allow(baz).to receive(:wow)
+      end
+    end
+  end
+end
+
+==> 017/017_spec.rb 185 <==
+describe Foo do
+  subject(:foo) { described_class.new }
+
+  specify do
+    expect(foo).not_to receive(:bar)
+    expect(foo).to_not receive(:bar)
+    expect(foo.bar).to eq(baz)
+  end
+end
+
+==> 018/018_spec.rb 169 <==
+describe Foo do
+  subject(:foo) { described_class.new }
+
+  specify do
+    expect(foo).to receive_messages(bar: :baz, baz: :baz)
+    expect(foo.bar).to eq(baz)
+  end
+end
+
+==> 019/019_spec.rb 173 <==
+describe Foo do
+  subject(:foo) { described_class.new }
+
+  specify do
+    expect(foo).to receive_message_chain(:bar, baz: :baz)
+    expect(foo.bar.baz).to eq(baz)
+  end
+end
+
+==> 020/020_spec.rb 207 <==
+describe Foo do
+  subject(:foo) { described_class.new }
+
+  specify do
+    allow(foo).to some_matcher_that_allows_a_bar_message
+    expect(foo.bar).to eq(baz)
+    expect(foo).to have_received(:bar)
+  end
+end
+
+==> 021/021_spec.rb 114 <==
+describe Foo do
+  it 'uses an implicit subject' do
+    expect(subject).to receive(:bar).and_return(baz)
+  end
+end
+
+==> 022/022_spec.rb 232 <==
+RSpec.describe Foo do
+  subject(:foo) { described_class.new }
+
+  specify do
+    expect(foo).to eq(foo)
+  end
+end
+
+RSpec.describe Bar do
+  subject(:bar) { described_class.new }
+
+  specify do
+    allow(bar).to receive(:bar)
+  end
+end
+
+==> 023/023_spec.rb 140 <==
+RSpec.describe Bar do
+  subject(:bar) { described_class.new }
+
+  def allow_subject_to_receive_bar
+    allow(bar).to receive(:bar)
+  end
+end
+
+==> 024/024_spec.rb 176 <==
+RSpec.describe Foo do
+  describe '#bar' do
+    subject(:bar) { :bar }
+    it { }
+  end
+
+  describe '#baz' do
+    specify do
+      allow(bar).to receive(:bar)
+    end
+  end
+end
+
+==> 025/025_spec.rb 240 <==
+RSpec.describe Foo do
+  subject(:foo) { described_class.new }
+
+  context '#bar' do
+    subject(:bar) { foo.bar }
+
+    let(:foo) { described_class.new }
+
+    before do
+      allow(foo).to receive(:active?).and_return(true)
+    end
+  end
+end
+
+==> 026/026_spec.rb 111 <==
+RSpec.describe 'describe' do
+  it 'uses an implicit subject' do
+    expect(subject).to receive(:bar)
+  end
+end
+
+==> 027/027_spec.rb 113 <==
+RSpec.xdescribe 'xdescribe' do
+  it 'uses an implicit subject' do
+    expect(subject).to receive(:bar)
+  end
+end
+
+==> 028/028_spec.rb 113 <==
+RSpec.fdescribe 'fdescribe' do
+  it 'uses an implicit subject' do
+    expect(subject).to receive(:bar)
+  end
+end
+
+==> 029/029_spec.rb 109 <==
+RSpec.context 'context' do
+  it 'uses an implicit subject' do
+    expect(subject).to receive(:bar)
+  end
+end
+
+==> 030/030_spec.rb 111 <==
+RSpec.xcontext 'xcontext' do
+  it 'uses an implicit subject' do
+    expect(subject).to receive(:bar)
+  end
+end
+
+==> 031/031_spec.rb 111 <==
+RSpec.fcontext 'fcontext' do
+  it 'uses an implicit subject' do
+    expect(subject).to receive(:bar)
+  end
+end
+
+==> 032/032_spec.rb 109 <==
+RSpec.feature 'feature' do
+  it 'uses an implicit subject' do
+    expect(subject).to receive(:bar)
+  end
+end
+
+==> 033/033_spec.rb 111 <==
+RSpec.xfeature 'xfeature' do
+  it 'uses an implicit subject' do
+    expect(subject).to receive(:bar)
+  end
+end
+
+==> 034/034_spec.rb 111 <==
+RSpec.ffeature 'ffeature' do
+  it 'uses an implicit subject' do
+    expect(subject).to receive(:bar)
+  end
+end
+
+==> 035/035_spec.rb 121 <==
+RSpec.example_group 'example_group' do
+  it 'uses an implicit subject' do
+    expect(subject).to receive(:bar)
+  end
+end
+
+==> 036/036_spec.rb 125 <==
+RSpec.shared_examples 'shared_examples' do
+  it 'uses an implicit subject' do
+    expect(subject).to receive(:bar)
+  end
+end
+
+==> 037/037_spec.rb 133 <==
+RSpec.shared_examples_for 'shared_examples_for' do
+  it 'uses an implicit subject' do
+    expect(subject).to receive(:bar)
+  end
+end
+
+==> 038/038_spec.rb 123 <==
+RSpec.shared_context 'shared_context' do
+  it 'uses an implicit subject' do
+    expect(subject).to receive(:bar)
+  end
+end
+

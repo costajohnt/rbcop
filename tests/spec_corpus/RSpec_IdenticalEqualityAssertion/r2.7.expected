@@ -1,0 +1,16 @@
+==> offenses exit=1 828 <==
+000/000_spec.rb:1:1: C: RSpec/IdenticalEqualityAssertion: Identical expressions on both sides of the equality may indicate a flawed test.
+001/001_spec.rb:1:1: C: RSpec/IdenticalEqualityAssertion: Identical expressions on both sides of the equality may indicate a flawed test.
+002/002_spec.rb:1:1: C: RSpec/IdenticalEqualityAssertion: Identical expressions on both sides of the equality may indicate a flawed test.
+003/003_spec.rb:1:1: C: RSpec/IdenticalEqualityAssertion: Identical expressions on both sides of the equality may indicate a flawed test.
+004/004_spec.rb:1:1: C: RSpec/IdenticalEqualityAssertion: Identical expressions on both sides of the equality may indicate a flawed test.
+005/005_spec.rb:1:1: C: RSpec/IdenticalEqualityAssertion: Identical expressions on both sides of the equality may indicate a flawed test.
+
+==> autocorrect exit=1 828 <==
+000/000_spec.rb:1:1: C: RSpec/IdenticalEqualityAssertion: Identical expressions on both sides of the equality may indicate a flawed test.
+001/001_spec.rb:1:1: C: RSpec/IdenticalEqualityAssertion: Identical expressions on both sides of the equality may indicate a flawed test.
+002/002_spec.rb:1:1: C: RSpec/IdenticalEqualityAssertion: Identical expressions on both sides of the equality may indicate a flawed test.
+003/003_spec.rb:1:1: C: RSpec/IdenticalEqualityAssertion: Identical expressions on both sides of the equality may indicate a flawed test.
+004/004_spec.rb:1:1: C: RSpec/IdenticalEqualityAssertion: Identical expressions on both sides of the equality may indicate a flawed test.
+005/005_spec.rb:1:1: C: RSpec/IdenticalEqualityAssertion: Identical expressions on both sides of the equality may indicate a flawed test.
+

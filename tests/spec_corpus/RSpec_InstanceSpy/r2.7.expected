@@ -1,0 +1,20 @@
+==> offenses exit=1 250 <==
+000/000_spec.rb:2:9: C: [Correctable] RSpec/InstanceSpy: Use `instance_spy` when you check your double with `have_received`.
+001/001_spec.rb:2:9: C: [Correctable] RSpec/InstanceSpy: Use `instance_spy` when you check your double with `have_received`.
+
+==> autocorrect exit=0 246 <==
+000/000_spec.rb:2:9: C: [Corrected] RSpec/InstanceSpy: Use `instance_spy` when you check your double with `have_received`.
+001/001_spec.rb:2:9: C: [Corrected] RSpec/InstanceSpy: Use `instance_spy` when you check your double with `have_received`.
+
+==> corrected/000/000_spec.rb 73 <==
+it do
+  foo = instance_spy(Foo)
+  expect(foo).to have_received(:bar)
+end
+
+==> corrected/001/001_spec.rb 80 <==
+it do
+  foo = instance_spy(Foo, :name)
+  expect(foo).to have_received(:bar)
+end
+

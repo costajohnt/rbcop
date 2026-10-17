@@ -1,0 +1,122 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 103 <==
+RSpec.describe Foo do
+  it do
+    subject
+    expect { subject }.to not_change { Foo.count }
+  end
+end
+
+==> 001/001_spec.rb 138 <==
+RSpec.describe Foo do
+  it do
+    expect { subject }.to change { Foo.count }
+    expect { subject }.to not_change { Foo.count }
+  end
+end
+
+==> 002/002_spec.rb 174 <==
+RSpec.describe Foo do
+  it do
+    expect(subject.a).to eq(3)
+    nested_block do
+      expect { on_shard(:europe) { subject } }.to not_change { Foo.count }
+    end
+  end
+end
+
+==> 003/003_spec.rb 129 <==
+RSpec.describe Foo do
+  subject(:bar) { do_something }
+
+  it do
+    bar
+    expect { bar }.to not_change { Foo.count }
+  end
+end
+
+==> 004/004_spec.rb 102 <==
+RSpec.describe Foo do
+  it do
+    expect(subject.a).to eq(3)
+    expect(subject.b).to eq(4)
+  end
+end
+
+==> 005/005_spec.rb 118 <==
+RSpec.describe Foo do
+  it do
+    expect { subject }.to change { Foo.count }
+    expect(subject.b).to eq(4)
+  end
+end
+
+==> 006/006_spec.rb 204 <==
+RSpec.describe Foo do
+  subject { do_something_else }
+  subject(:bar) { do_something }
+
+  it do
+    expect { bar }.to not_change { Foo.count }
+    expect { subject }.to not_change { Foo.count }
+  end
+end
+
+==> 007/007_spec.rb 133 <==
+RSpec.describe Foo do
+  it do
+    expect { subject }.to change { Foo.count }
+  end
+
+  it do
+    expect(subject.b).to eq(4)
+  end
+end
+
+==> 008/008_spec.rb 138 <==
+RSpec.describe Foo do
+  it do
+    expect { subject.a }.to change { A.count }
+    expect { subject.b }.to not_change { A.count }
+  end
+end
+
+==> 009/009_spec.rb 167 <==
+RSpec.describe Foo do
+  it do
+    expect { create(:bar, baz: subject) }.to change { A.count }
+    expect { create(:bar, subject) }.to not_change { A.count }
+  end
+end
+
+==> 010/010_spec.rb 136 <==
+RSpec.describe Foo do
+  it do
+    allow(Foo).to receive(:bar).and_return(subject)
+    allow(Foo).to receive(:bar) { subject }
+  end
+end
+
+==> 011/011_spec.rb 115 <==
+RSpec.describe Foo do
+  subject { do_something }
+
+  it do
+    expect { subject }.to change { Foo.count }
+  end
+end
+
+==> 012/012_spec.rb 40 <==
+Foo.subject(:bar)
+subject(:bar)
+subject
+

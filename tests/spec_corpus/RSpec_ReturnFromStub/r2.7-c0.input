@@ -1,0 +1,102 @@
+==> .rubocop.yml 183 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/ReturnFromStub:
+  EnforcedStyle: and_return
+
+==> 000/000_spec.rb 47 <==
+it do
+  allow(Foo).to receive(:bar) { 42 }
+end
+
+==> 001/001_spec.rb 43 <==
+it do
+  allow(Foo).to receive(:bar) {}
+end
+
+==> 002/002_spec.rb 53 <==
+it do
+  allow(Foo).to receive(:bar) { [42, 43] }
+end
+
+==> 003/003_spec.rb 59 <==
+it do
+  allow(Foo).to receive(:bar) { {a: 42, b: 43} }
+end
+
+==> 004/004_spec.rb 72 <==
+it do
+  allow(Question).to receive(:meaning).with(:universe) { 42 }
+end
+
+==> 005/005_spec.rb 58 <==
+it do
+  allow(Foo).to receive(:bar) { Life::MEANING }
+end
+
+==> 006/006_spec.rb 66 <==
+it do
+  allow(Foo).to receive(:bar) { {Life::MEANING => 42} }
+end
+
+==> 007/007_spec.rb 48 <==
+it do
+  allow(Foo).to receive(:bar) { baz }
+end
+
+==> 008/008_spec.rb 111 <==
+it do
+  $bar = 42
+  baz = 123
+  allow(Foo).to receive(:bar) { $bar }
+  allow(Foo).to receive(:baz) { baz }
+end
+
+==> 009/009_spec.rb 54 <==
+it do
+  allow(Foo).to receive(:bar) { [42, baz] }
+end
+
+==> 010/010_spec.rb 60 <==
+it do
+  allow(Foo).to receive(:bar) { {a: 42, b: baz} }
+end
+
+==> 011/011_spec.rb 75 <==
+it do
+  bar = 42
+  allow(Foo).to receive(:bar) { "You called #{bar}" }
+end
+
+==> 012/012_spec.rb 75 <==
+it do
+  allow(Foo).to receive(:bar) do
+    "You called"     "me"
+  end
+end
+
+==> 013/013_spec.rb 88 <==
+it do
+  allow(Foo).to receive(:bar) do
+    <<-TXT
+      You called me
+    TXT
+  end
+end
+
+==> 014/014_spec.rb 40 <==
+it do
+  allow(Foo).to receive(:bar)
+end
+
+==> 015/015_spec.rb 47 <==
+def stub_foo
+  allow(Foo).to receive(:bar)
+end
+

@@ -1,0 +1,30 @@
+==> offenses exit=1 1547 <==
+000/000_spec.rb:2:3: C: RSpec/IndexedLet: This `let` statement uses `1` in its name. Please give it a meaningful name.
+000/000_spec.rb:3:3: C: RSpec/IndexedLet: This `let` statement uses `2` in its name. Please give it a meaningful name.
+001/001_spec.rb:2:3: C: RSpec/IndexedLet: This `let` statement uses `1` in its name. Please give it a meaningful name.
+001/001_spec.rb:3:3: C: RSpec/IndexedLet: This `let` statement uses `2` in its name. Please give it a meaningful name.
+002/002_spec.rb:2:3: C: RSpec/IndexedLet: This `let` statement uses `1` in its name. Please give it a meaningful name.
+002/002_spec.rb:3:3: C: RSpec/IndexedLet: This `let` statement uses `2` in its name. Please give it a meaningful name.
+003/003_spec.rb:2:3: C: RSpec/IndexedLet: This `let` statement uses `1` in its name. Please give it a meaningful name.
+003/003_spec.rb:3:3: C: RSpec/IndexedLet: This `let` statement uses `2` in its name. Please give it a meaningful name.
+005/005_spec.rb:2:3: C: RSpec/IndexedLet: This `let` statement uses `1` in its name. Please give it a meaningful name.
+005/005_spec.rb:3:3: C: RSpec/IndexedLet: This `let` statement uses `1` in its name. Please give it a meaningful name.
+005/005_spec.rb:4:3: C: RSpec/IndexedLet: This `let` statement uses `2` in its name. Please give it a meaningful name.
+009/009_spec.rb:2:3: C: RSpec/IndexedLet: This `let` statement uses `1` in its name. Please give it a meaningful name.
+009/009_spec.rb:3:3: C: RSpec/IndexedLet: This `let` statement uses `2` in its name. Please give it a meaningful name.
+
+==> autocorrect exit=1 1547 <==
+000/000_spec.rb:2:3: C: RSpec/IndexedLet: This `let` statement uses `1` in its name. Please give it a meaningful name.
+000/000_spec.rb:3:3: C: RSpec/IndexedLet: This `let` statement uses `2` in its name. Please give it a meaningful name.
+001/001_spec.rb:2:3: C: RSpec/IndexedLet: This `let` statement uses `1` in its name. Please give it a meaningful name.
+001/001_spec.rb:3:3: C: RSpec/IndexedLet: This `let` statement uses `2` in its name. Please give it a meaningful name.
+002/002_spec.rb:2:3: C: RSpec/IndexedLet: This `let` statement uses `1` in its name. Please give it a meaningful name.
+002/002_spec.rb:3:3: C: RSpec/IndexedLet: This `let` statement uses `2` in its name. Please give it a meaningful name.
+003/003_spec.rb:2:3: C: RSpec/IndexedLet: This `let` statement uses `1` in its name. Please give it a meaningful name.
+003/003_spec.rb:3:3: C: RSpec/IndexedLet: This `let` statement uses `2` in its name. Please give it a meaningful name.
+005/005_spec.rb:2:3: C: RSpec/IndexedLet: This `let` statement uses `1` in its name. Please give it a meaningful name.
+005/005_spec.rb:3:3: C: RSpec/IndexedLet: This `let` statement uses `1` in its name. Please give it a meaningful name.
+005/005_spec.rb:4:3: C: RSpec/IndexedLet: This `let` statement uses `2` in its name. Please give it a meaningful name.
+009/009_spec.rb:2:3: C: RSpec/IndexedLet: This `let` statement uses `1` in its name. Please give it a meaningful name.
+009/009_spec.rb:3:3: C: RSpec/IndexedLet: This `let` statement uses `2` in its name. Please give it a meaningful name.
+

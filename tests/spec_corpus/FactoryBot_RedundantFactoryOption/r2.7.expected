@@ -1,0 +1,19 @@
+==> offenses exit=1 327 <==
+004/004_spec.rb:1:20: C: [Correctable] FactoryBot/RedundantFactoryOption: Remove redundant `factory` option.
+005/005_spec.rb:1:20: C: [Correctable] FactoryBot/RedundantFactoryOption: Remove redundant `factory` option.
+006/006_spec.rb:1:28: C: [Correctable] FactoryBot/RedundantFactoryOption: Remove redundant `factory` option.
+
+==> autocorrect exit=0 321 <==
+004/004_spec.rb:1:20: C: [Corrected] FactoryBot/RedundantFactoryOption: Remove redundant `factory` option.
+005/005_spec.rb:1:20: C: [Corrected] FactoryBot/RedundantFactoryOption: Remove redundant `factory` option.
+006/006_spec.rb:1:28: C: [Corrected] FactoryBot/RedundantFactoryOption: Remove redundant `factory` option.
+
+==> corrected/004/004_spec.rb 18 <==
+association :user
+
+==> corrected/005/005_spec.rb 18 <==
+association :user
+
+==> corrected/006/006_spec.rb 26 <==
+association :user, :admin
+

@@ -1,0 +1,32 @@
+==> .rubocop.yml 235 <==
+---
+plugins:
+- rubocop-factory_bot
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+FactoryBot/ConsistentParenthesesStyle:
+  EnforcedStyle: :omit_parentheses
+  ExplicitOnly: false
+
+==> 000/000_spec.rb 89 <==
+create(:user, name:)
+create(:user, name:, client:)
+create(:user, :trait, name:, client:)
+
+==> 001/001_spec.rb 160 <==
+create(:user, client:, name: 'foo')
+create(:user, client: 'foo', name:)
+create(:user, :trait, client:, name: 'foo')
+create(:user, :trait, client: 'foo', name:)
+
+==> 002/002_spec.rb 62 <==
+create(:user, name: 'foo')
+create(:user, :trait, name: 'foo')
+
+==> 003/003_spec.rb 60 <==
+create(:user, foo(name:))
+create(:user, :trait, foo(name:))
+

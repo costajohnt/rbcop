@@ -1,0 +1,27 @@
+==> offenses exit=1 486 <==
+000/spec/factories.rb:1:22: C: [Correctable] FactoryBot/FactoryClassName: Pass 'Foo' string instead of `Foo` constant.
+001/spec/factories.rb:1:22: C: [Correctable] FactoryBot/FactoryClassName: Pass 'Foo' string instead of `Foo` constant.
+002/spec/factories.rb:1:22: C: [Correctable] FactoryBot/FactoryClassName: Pass 'Foo::Bar' string instead of `Foo::Bar` constant.
+006/spec/factories.rb:1:22: C: [Correctable] FactoryBot/FactoryClassName: Pass 'Foo' string instead of `Foo` constant.
+
+==> autocorrect exit=0 478 <==
+000/spec/factories.rb:1:22: C: [Corrected] FactoryBot/FactoryClassName: Pass 'Foo' string instead of `Foo` constant.
+001/spec/factories.rb:1:22: C: [Corrected] FactoryBot/FactoryClassName: Pass 'Foo' string instead of `Foo` constant.
+002/spec/factories.rb:1:22: C: [Corrected] FactoryBot/FactoryClassName: Pass 'Foo::Bar' string instead of `Foo::Bar` constant.
+006/spec/factories.rb:1:22: C: [Corrected] FactoryBot/FactoryClassName: Pass 'Foo' string instead of `Foo` constant.
+
+==> corrected/000/spec/factories.rb 34 <==
+factory :foo, class: 'Foo' do
+end
+
+==> corrected/001/spec/factories.rb 36 <==
+factory :foo, class: '::Foo' do
+end
+
+==> corrected/002/spec/factories.rb 39 <==
+factory :foo, class: 'Foo::Bar' do
+end
+
+==> corrected/006/spec/factories.rb 27 <==
+factory :foo, class: 'Foo'
+

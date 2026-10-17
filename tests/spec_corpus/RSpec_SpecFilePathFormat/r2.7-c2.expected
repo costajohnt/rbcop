@@ -1,0 +1,6 @@
+==> offenses exit=1 120 <==
+001/wrong/path_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `actions/api/auth/current*_spec.rb`.
+
+==> autocorrect exit=1 120 <==
+001/wrong/path_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `actions/api/auth/current*_spec.rb`.
+

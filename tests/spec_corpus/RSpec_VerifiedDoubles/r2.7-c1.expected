@@ -1,0 +1,6 @@
+==> offenses exit=1 99 <==
+001/001_spec.rb:2:9: C: RSpec/VerifiedDoubles: Prefer using verifying doubles over normal doubles.
+
+==> autocorrect exit=1 99 <==
+001/001_spec.rb:2:9: C: RSpec/VerifiedDoubles: Prefer using verifying doubles over normal doubles.
+

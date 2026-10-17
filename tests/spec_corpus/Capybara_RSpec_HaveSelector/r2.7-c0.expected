@@ -1,0 +1,29 @@
+==> offenses exit=1 557 <==
+000/000_spec.rb:1:16: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+001/001_spec.rb:1:16: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+002/002_spec.rb:1:16: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_xpath` instead of `have_selector`.
+005/005_spec.rb:1:16: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+006/006_spec.rb:1:16: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+
+==> autocorrect exit=0 547 <==
+000/000_spec.rb:1:16: C: [Corrected] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+001/001_spec.rb:1:16: C: [Corrected] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+002/002_spec.rb:1:16: C: [Corrected] Capybara/RSpec/HaveSelector: Use `have_xpath` instead of `have_selector`.
+005/005_spec.rb:1:16: C: [Corrected] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+006/006_spec.rb:1:16: C: [Corrected] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+
+==> corrected/000/000_spec.rb 31 <==
+expect(foo).to have_css('bar')
+
+==> corrected/001/001_spec.rb 31 <==
+expect(foo).to have_css('bar')
+
+==> corrected/002/002_spec.rb 33 <==
+expect(foo).to have_xpath('bar')
+
+==> corrected/005/005_spec.rb 34 <==
+expect(foo).to have_css("#{bar}")
+
+==> corrected/006/006_spec.rb 50 <==
+expect(foo).to have_css("input[name='#{title}']")
+

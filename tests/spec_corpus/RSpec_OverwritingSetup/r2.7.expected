@@ -1,0 +1,16 @@
+==> offenses exit=1 441 <==
+000/000_spec.rb:3:3: C: RSpec/OverwritingSetup: `a` is already defined.
+001/001_spec.rb:4:3: C: RSpec/OverwritingSetup: `a` is already defined.
+002/002_spec.rb:4:3: C: RSpec/OverwritingSetup: `a` is already defined.
+003/003_spec.rb:3:3: C: RSpec/OverwritingSetup: `a` is already defined.
+005/005_spec.rb:4:3: C: RSpec/OverwritingSetup: `subject` is already defined.
+007/007_spec.rb:4:3: C: RSpec/OverwritingSetup: `name` is already defined.
+
+==> autocorrect exit=1 441 <==
+000/000_spec.rb:3:3: C: RSpec/OverwritingSetup: `a` is already defined.
+001/001_spec.rb:4:3: C: RSpec/OverwritingSetup: `a` is already defined.
+002/002_spec.rb:4:3: C: RSpec/OverwritingSetup: `a` is already defined.
+003/003_spec.rb:3:3: C: RSpec/OverwritingSetup: `a` is already defined.
+005/005_spec.rb:4:3: C: RSpec/OverwritingSetup: `subject` is already defined.
+007/007_spec.rb:4:3: C: RSpec/OverwritingSetup: `name` is already defined.
+

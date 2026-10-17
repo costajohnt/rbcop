@@ -1,0 +1,24 @@
+==> offenses exit=1 657 <==
+000/000_spec.rb:1:6: C: [Correctable] RSpecRails/HaveHttpStatus: Prefer `expect(response).to have_http_status(200)` over `expect(response.status).to be(200)`.
+001/001_spec.rb:1:6: C: [Correctable] RSpecRails/HaveHttpStatus: Prefer `expect(response).not_to have_http_status(404)` over `expect(response.status).not_to eq(404)`.
+002/002_spec.rb:1:6: C: [Correctable] RSpecRails/HaveHttpStatus: Prefer `expect(response).to have_http_status(200)` over `expect(response.code).to eq("200")`.
+003/003_spec.rb:1:6: C: [Correctable] RSpecRails/HaveHttpStatus: Prefer `expect(last_response).to have_http_status(200)` over `expect(last_response.status).to eql("200")`.
+
+==> autocorrect exit=0 649 <==
+000/000_spec.rb:1:6: C: [Corrected] RSpecRails/HaveHttpStatus: Prefer `expect(response).to have_http_status(200)` over `expect(response.status).to be(200)`.
+001/001_spec.rb:1:6: C: [Corrected] RSpecRails/HaveHttpStatus: Prefer `expect(response).not_to have_http_status(404)` over `expect(response.status).not_to eq(404)`.
+002/002_spec.rb:1:6: C: [Corrected] RSpecRails/HaveHttpStatus: Prefer `expect(response).to have_http_status(200)` over `expect(response.code).to eq("200")`.
+003/003_spec.rb:1:6: C: [Corrected] RSpecRails/HaveHttpStatus: Prefer `expect(last_response).to have_http_status(200)` over `expect(last_response.status).to eql("200")`.
+
+==> corrected/000/000_spec.rb 49 <==
+it { expect(response).to have_http_status(200) }
+
+==> corrected/001/001_spec.rb 53 <==
+it { expect(response).not_to have_http_status(404) }
+
+==> corrected/002/002_spec.rb 49 <==
+it { expect(response).to have_http_status(200) }
+
+==> corrected/003/003_spec.rb 54 <==
+it { expect(last_response).to have_http_status(200) }
+

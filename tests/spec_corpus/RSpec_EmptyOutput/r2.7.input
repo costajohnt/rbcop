@@ -1,0 +1,39 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 78 <==
+expect { foo }.to output('').to_stderr
+expect { foo }.to output('').to_stdout
+
+==> 001/001_spec.rb 86 <==
+expect { foo }.not_to output('').to_stderr
+expect { foo }.to_not output('').to_stdout
+
+==> 002/002_spec.rb 68 <==
+expect {
+  :noop
+}.to output('').to_stdout.and output('').to_stderr
+
+==> 003/003_spec.rb 93 <==
+expect {
+  warn "foo"
+  puts "bar"
+}.to output("bar
+").to_stdout.and output(/foo/).to_stderr
+
+==> 004/004_spec.rb 134 <==
+expect { foo }.to output('foo').to_stderr
+expect { foo }.not_to output('foo').to_stderr
+expect { foo }.to_not output('foo').to_stderr
+
+==> 005/005_spec.rb 78 <==
+expect { foo }.not_to output.to_stderr
+expect { foo }.to_not output.to_stderr
+

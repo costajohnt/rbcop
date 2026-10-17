@@ -1,0 +1,36 @@
+==> offenses exit=1 1850 <==
+000/wrong_path_foo_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `my_class*foo*_spec.rb`.
+001/wrong_path_foo_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `my_class*foo*_spec.rb`.
+002/wrong_class_foo_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `my_class*foo*_spec.rb`.
+003/wrong_class_foo_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `my_class*foo*_spec.rb`.
+004/wrong_class_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `my_class*_spec.rb`.
+005/spec/models/random/userx_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `user*_spec.rb`.
+006/spec/models/my_user_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `user*_spec.rb`.
+007/some/classy_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `some/class*_spec.rb`.
+008/wrong_class_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `my_class*_spec.rb`.
+009/wrong_class_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `my_class*_spec.rb`.
+010/wrong_class_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `my_class*via_local_failures*_spec.rb`.
+022/some/classx/inst_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `some/class*inst*_spec.rb`.
+032/home/foo/spec/models/bar_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `foo*_spec.rb`.
+033/home/foo/spec/very/my_class_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `very/long/namespace/my_class*_spec.rb`.
+034/home/foo/spec/very/long/my_class_spec.rb:3:5: C: RSpec/SpecFilePathFormat: Spec path should end with `very/medium/my_class*_spec.rb`.
+035/my_class_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `very/long/namespace/my_class*_spec.rb`.
+
+==> autocorrect exit=1 1850 <==
+000/wrong_path_foo_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `my_class*foo*_spec.rb`.
+001/wrong_path_foo_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `my_class*foo*_spec.rb`.
+002/wrong_class_foo_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `my_class*foo*_spec.rb`.
+003/wrong_class_foo_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `my_class*foo*_spec.rb`.
+004/wrong_class_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `my_class*_spec.rb`.
+005/spec/models/random/userx_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `user*_spec.rb`.
+006/spec/models/my_user_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `user*_spec.rb`.
+007/some/classy_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `some/class*_spec.rb`.
+008/wrong_class_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `my_class*_spec.rb`.
+009/wrong_class_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `my_class*_spec.rb`.
+010/wrong_class_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `my_class*via_local_failures*_spec.rb`.
+022/some/classx/inst_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `some/class*inst*_spec.rb`.
+032/home/foo/spec/models/bar_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `foo*_spec.rb`.
+033/home/foo/spec/very/my_class_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `very/long/namespace/my_class*_spec.rb`.
+034/home/foo/spec/very/long/my_class_spec.rb:3:5: C: RSpec/SpecFilePathFormat: Spec path should end with `very/medium/my_class*_spec.rb`.
+035/my_class_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `very/long/namespace/my_class*_spec.rb`.
+

@@ -1,0 +1,45 @@
+==> .rubocop.yml 155 <==
+---
+plugins:
+- rubocop-rspec
+- rubocop-rspec_rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 41 <==
+RSpec.describe User, type: :model do
+end
+
+==> 001/path/to/project/spec/models/user_spec.rb 41 <==
+RSpec.describe User, type: :model do
+end
+
+==> 002/path/to/project/spec/models/user_spec.rb 45 <==
+RSpec.describe User, { type: :model } do
+end
+
+==> 003/path/to/project/spec/models/user_spec.rb 54 <==
+RSpec.describe User, type: :model, other: true do
+end
+
+==> 004/path/to/project/spec/models/user_spec.rb 54 <==
+RSpec.describe User, other: true, type: :model do
+end
+
+==> 005/path/to/project/spec/models/user_spec.rb 49 <==
+RSpec.describe User, :other, type: :model do
+end
+
+==> 006/path/to/project/spec/models/user_spec.rb 35 <==
+describe User, type: :model do
+end
+
+==> 007/path/to/project/spec/models/user_spec.rb 69 <==
+RSpec.describe User do
+  describe 'inner', type: :model do
+  end
+end
+

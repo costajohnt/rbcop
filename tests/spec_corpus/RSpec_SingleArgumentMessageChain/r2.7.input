@@ -1,0 +1,83 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 67 <==
+before do
+  allow(foo).to receive_message_chain(:one) { :two }
+end
+
+==> 001/001_spec.rb 75 <==
+before do
+  allow(foo).to receive_message_chain(:one, :two) { :three }
+end
+
+==> 002/002_spec.rb 68 <==
+before do
+  allow(foo).to receive_message_chain("one") { :two }
+end
+
+==> 003/003_spec.rb 74 <==
+before do
+  allow(foo).to receive_message_chain("one.two") { :three }
+end
+
+==> 004/004_spec.rb 89 <==
+before do
+  foo = %i[:one :two]
+  allow(foo).to receive_message_chain(foo) { :many }
+end
+
+==> 005/005_spec.rb 67 <==
+before do
+  allow(foo).to receive_message_chain(foo) { :many }
+end
+
+==> 006/006_spec.rb 69 <==
+before do
+  allow(foo).to receive_message_chain([:one]) { :two }
+end
+
+==> 007/007_spec.rb 76 <==
+before do
+  allow(foo).to receive_message_chain([:one, :two]) { :many }
+end
+
+==> 008/008_spec.rb 167 <==
+before do
+  allow(foo).to receive_message_chain(bar: 42)
+  allow(foo).to receive_message_chain("bar" => 42)
+  allow(foo).to receive_message_chain(:"#{foo}" => 42)
+end
+
+==> 009/009_spec.rb 70 <==
+before do
+  allow(foo).to receive_message_chain(bar: 42, baz: 42)
+end
+
+==> 010/010_spec.rb 46 <==
+before do
+  foo.stub_chain(:one) { :two }
+end
+
+==> 011/011_spec.rb 54 <==
+before do
+  foo.stub_chain(:one, :two) { :three }
+end
+
+==> 012/012_spec.rb 47 <==
+before do
+  foo.stub_chain("one") { :two }
+end
+
+==> 013/013_spec.rb 53 <==
+before do
+  foo.stub_chain("one.two") { :three }
+end
+

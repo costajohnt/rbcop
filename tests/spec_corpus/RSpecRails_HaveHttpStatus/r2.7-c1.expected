@@ -1,0 +1,9 @@
+==> offenses exit=1 167 <==
+000/000_spec.rb:1:6: C: [Correctable] RSpecRails/HaveHttpStatus: Prefer `expect(foo_response).to have_http_status(200)` over `expect(foo_response.status).to be(200)`.
+
+==> autocorrect exit=0 165 <==
+000/000_spec.rb:1:6: C: [Corrected] RSpecRails/HaveHttpStatus: Prefer `expect(foo_response).to have_http_status(200)` over `expect(foo_response.status).to be(200)`.
+
+==> corrected/000/000_spec.rb 53 <==
+it { expect(foo_response).to have_http_status(200) }
+

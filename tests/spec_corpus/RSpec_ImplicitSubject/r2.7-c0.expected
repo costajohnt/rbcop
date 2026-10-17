@@ -1,0 +1,28 @@
+==> offenses exit=1 357 <==
+000/000_spec.rb:2:3: C: [Correctable] RSpec/ImplicitSubject: Don't use implicit subject.
+002/002_spec.rb:2:3: C: [Correctable] RSpec/ImplicitSubject: Don't use implicit subject.
+002/002_spec.rb:3:3: C: [Correctable] RSpec/ImplicitSubject: Don't use implicit subject.
+006/006_spec.rb:2:27: C: [Correctable] RSpec/ImplicitSubject: Don't use implicit subject.
+
+==> autocorrect exit=0 349 <==
+000/000_spec.rb:2:3: C: [Corrected] RSpec/ImplicitSubject: Don't use implicit subject.
+002/002_spec.rb:2:3: C: [Corrected] RSpec/ImplicitSubject: Don't use implicit subject.
+002/002_spec.rb:3:3: C: [Corrected] RSpec/ImplicitSubject: Don't use implicit subject.
+006/006_spec.rb:2:27: C: [Corrected] RSpec/ImplicitSubject: Don't use implicit subject.
+
+==> corrected/000/000_spec.rb 67 <==
+it 'expect subject to be used' do
+  expect(subject).to be_good
+end
+
+==> corrected/002/002_spec.rb 99 <==
+it 'expect subject to be used' do
+  expect(subject).to be_good
+  expect(subject).not_to be_bad
+end
+
+==> corrected/006/006_spec.rb 94 <==
+def permits(actions)
+  actions.each { |action| expect(subject).to permit_action(action) }
+end
+

@@ -1,0 +1,82 @@
+==> offenses exit=1 1157 <==
+001/001_spec.rb:1:23: C: [Correctable] RSpec/SortMetadata: Sort metadata alphabetically.
+003/003_spec.rb:1:41: C: [Correctable] RSpec/SortMetadata: Sort metadata alphabetically.
+004/004_spec.rb:1:23: C: [Correctable] RSpec/SortMetadata: Sort metadata alphabetically.
+006/006_spec.rb:1:43: C: [Correctable] RSpec/SortMetadata: Sort metadata alphabetically.
+008/008_spec.rb:1:22: C: [Correctable] RSpec/SortMetadata: Sort metadata alphabetically.
+010/010_spec.rb:1:17: C: [Correctable] RSpec/SortMetadata: Sort metadata alphabetically.
+011/011_spec.rb:1:17: C: [Correctable] RSpec/SortMetadata: Sort metadata alphabetically.
+012/012_spec.rb:1:17: C: [Correctable] RSpec/SortMetadata: Sort metadata alphabetically.
+013/013_spec.rb:1:32: C: [Correctable] RSpec/SortMetadata: Sort metadata alphabetically.
+014/014_spec.rb:1:47: C: [Correctable] RSpec/SortMetadata: Sort metadata alphabetically.
+015/015_spec.rb:1:23: C: [Correctable] RSpec/SortMetadata: Sort metadata alphabetically.
+016/016_spec.rb:2:19: C: [Correctable] RSpec/SortMetadata: Sort metadata alphabetically.
+016/016_spec.rb:3:18: C: [Correctable] RSpec/SortMetadata: Sort metadata alphabetically.
+
+==> autocorrect exit=0 1131 <==
+001/001_spec.rb:1:23: C: [Corrected] RSpec/SortMetadata: Sort metadata alphabetically.
+003/003_spec.rb:1:41: C: [Corrected] RSpec/SortMetadata: Sort metadata alphabetically.
+004/004_spec.rb:1:23: C: [Corrected] RSpec/SortMetadata: Sort metadata alphabetically.
+006/006_spec.rb:1:43: C: [Corrected] RSpec/SortMetadata: Sort metadata alphabetically.
+008/008_spec.rb:1:22: C: [Corrected] RSpec/SortMetadata: Sort metadata alphabetically.
+010/010_spec.rb:1:17: C: [Corrected] RSpec/SortMetadata: Sort metadata alphabetically.
+011/011_spec.rb:1:17: C: [Corrected] RSpec/SortMetadata: Sort metadata alphabetically.
+012/012_spec.rb:1:17: C: [Corrected] RSpec/SortMetadata: Sort metadata alphabetically.
+013/013_spec.rb:1:32: C: [Corrected] RSpec/SortMetadata: Sort metadata alphabetically.
+014/014_spec.rb:1:47: C: [Corrected] RSpec/SortMetadata: Sort metadata alphabetically.
+015/015_spec.rb:1:23: C: [Corrected] RSpec/SortMetadata: Sort metadata alphabetically.
+016/016_spec.rb:2:19: C: [Corrected] RSpec/SortMetadata: Sort metadata alphabetically.
+016/016_spec.rb:3:18: C: [Corrected] RSpec/SortMetadata: Sort metadata alphabetically.
+
+==> corrected/001/001_spec.rb 36 <==
+describe 'Something', :a, :b do
+end
+
+==> corrected/003/003_spec.rb 54 <==
+describe 'Something', :z, :a, variable, :b, :c do
+end
+
+==> corrected/004/004_spec.rb 47 <==
+describe 'Something', :a, :z, some_hash do
+end
+
+==> corrected/006/006_spec.rb 56 <==
+describe 'Something', 'second docstring', :a, :b do
+end
+
+==> corrected/008/008_spec.rb 50 <==
+context 'Something', baz: true, foo: 'bar' do
+end
+
+==> corrected/010/010_spec.rb 53 <==
+it 'Something', :a, :b, baz: true, foo: 'bar' do
+end
+
+==> corrected/011/011_spec.rb 53 <==
+it 'Something', :a, :b, baz: true, foo: 'bar' do
+end
+
+==> corrected/012/012_spec.rb 53 <==
+it 'Something', :a, :b, baz: true, foo: 'bar' do
+end
+
+==> corrected/013/013_spec.rb 118 <==
+it 'Something', variable, 'B', :a, baz: Snafu.new, foo: ->(x) { bar(x) }, Identifier.sample => true, key => {} do
+end
+
+==> corrected/014/014_spec.rb 135 <==
+shared_examples 'a difficult situation', 'B', :a, :z do |x, y|
+end
+
+include_examples 'a difficult situation', 'value', 'another value'
+
+==> corrected/015/015_spec.rb 52 <==
+describe 'Something', :bar, :foo, baz: 'goo' do
+end
+
+==> corrected/016/016_spec.rb 125 <==
+RSpec.configure do |c|
+  c.before(:each, :a, :b) { freeze_time }
+  c.after(:each, baz: true, foo: 'bar') { travel_back }
+end
+

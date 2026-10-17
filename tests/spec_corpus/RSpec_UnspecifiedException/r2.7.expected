@@ -1,0 +1,16 @@
+==> offenses exit=1 536 <==
+000/000_spec.rb:3:6: C: RSpec/UnspecifiedException: Specify the exception being captured
+012/012_spec.rb:3:6: C: RSpec/UnspecifiedException: Specify the exception being captured
+022/022_spec.rb:3:6: C: RSpec/UnspecifiedException: Specify the exception being captured
+023/023_spec.rb:3:6: C: RSpec/UnspecifiedException: Specify the exception being captured
+024/024_spec.rb:3:25: C: RSpec/UnspecifiedException: Specify the exception being captured
+028/028_spec.rb:1:51: C: RSpec/UnspecifiedException: Specify the exception being captured
+
+==> autocorrect exit=1 536 <==
+000/000_spec.rb:3:6: C: RSpec/UnspecifiedException: Specify the exception being captured
+012/012_spec.rb:3:6: C: RSpec/UnspecifiedException: Specify the exception being captured
+022/022_spec.rb:3:6: C: RSpec/UnspecifiedException: Specify the exception being captured
+023/023_spec.rb:3:6: C: RSpec/UnspecifiedException: Specify the exception being captured
+024/024_spec.rb:3:25: C: RSpec/UnspecifiedException: Specify the exception being captured
+028/028_spec.rb:1:51: C: RSpec/UnspecifiedException: Specify the exception being captured
+

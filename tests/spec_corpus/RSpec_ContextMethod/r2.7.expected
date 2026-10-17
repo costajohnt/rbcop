@@ -1,0 +1,23 @@
+==> offenses exit=1 285 <==
+002/002_spec.rb:1:9: C: [Correctable] RSpec/ContextMethod: Use `describe` for testing methods.
+003/003_spec.rb:1:9: C: [Correctable] RSpec/ContextMethod: Use `describe` for testing methods.
+004/004_spec.rb:1:9: C: [Correctable] RSpec/ContextMethod: Use `describe` for testing methods.
+
+==> autocorrect exit=0 279 <==
+002/002_spec.rb:1:9: C: [Corrected] RSpec/ContextMethod: Use `describe` for testing methods.
+003/003_spec.rb:1:9: C: [Corrected] RSpec/ContextMethod: Use `describe` for testing methods.
+004/004_spec.rb:1:9: C: [Corrected] RSpec/ContextMethod: Use `describe` for testing methods.
+
+==> corrected/002/002_spec.rb 27 <==
+describe '.foo_bar' do
+end
+
+==> corrected/003/003_spec.rb 27 <==
+describe '#foo_bar' do
+end
+
+==> corrected/004/004_spec.rb 43 <==
+describe '#foo_bar' \
+        '.baz'do
+end
+

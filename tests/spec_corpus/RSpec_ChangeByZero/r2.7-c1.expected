@@ -1,0 +1,82 @@
+==> offenses exit=1 2281 <==
+000/000_spec.rb:2:21: C: [Correctable] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+000/000_spec.rb:2:49: C: [Correctable] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+000/000_spec.rb:3:21: C: [Correctable] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+000/000_spec.rb:3:50: C: [Correctable] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+001/001_spec.rb:3:9: C: [Correctable] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+001/001_spec.rb:4:10: C: [Correctable] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+001/001_spec.rb:6:9: C: [Correctable] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+001/001_spec.rb:7:10: C: [Correctable] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+001/001_spec.rb:10:10: C: [Correctable] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+001/001_spec.rb:13:10: C: [Correctable] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+002/002_spec.rb:3:9: C: [Correctable] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+002/002_spec.rb:5:10: C: [Correctable] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+002/002_spec.rb:8:9: C: [Correctable] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+002/002_spec.rb:10:9: C: [Correctable] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+003/003_spec.rb:3:9: C: [Correctable] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+003/003_spec.rb:5:5: C: [Correctable] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+003/003_spec.rb:8:9: C: [Correctable] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+003/003_spec.rb:10:5: C: [Correctable] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+
+==> autocorrect exit=0 2245 <==
+000/000_spec.rb:2:21: C: [Corrected] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+000/000_spec.rb:2:49: C: [Corrected] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+000/000_spec.rb:3:21: C: [Corrected] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+000/000_spec.rb:3:50: C: [Corrected] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+001/001_spec.rb:3:9: C: [Corrected] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+001/001_spec.rb:4:10: C: [Corrected] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+001/001_spec.rb:6:9: C: [Corrected] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+001/001_spec.rb:7:10: C: [Corrected] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+001/001_spec.rb:10:10: C: [Corrected] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+001/001_spec.rb:13:10: C: [Corrected] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+002/002_spec.rb:3:9: C: [Corrected] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+002/002_spec.rb:5:10: C: [Corrected] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+002/002_spec.rb:8:9: C: [Corrected] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+002/002_spec.rb:10:9: C: [Corrected] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+003/003_spec.rb:3:9: C: [Corrected] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+003/003_spec.rb:5:5: C: [Corrected] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+003/003_spec.rb:8:9: C: [Corrected] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+003/003_spec.rb:10:5: C: [Corrected] RSpec/ChangeByZero: Prefer `not_change` with compound expectations over `change.by(0)`.
+
+==> corrected/000/000_spec.rb 148 <==
+it do
+  expect { foo }.to not_change(Foo, :bar).and not_change(Foo, :baz)
+  expect { foo }.to not_change { Foo.bar }.and not_change { Foo.baz }
+end
+
+==> corrected/001/001_spec.rb 318 <==
+it do
+  expect { foo }
+    .to not_change(Foo, :bar)
+    .and not_change(Foo, :baz)
+  expect { foo }
+    .to not_change { Foo.bar }
+    .and not_change { Foo.baz }
+  expect { foo }
+    .to change(Foo, :bar)
+    .and not_change(Foo, :baz)
+  expect { foo }
+    .to change { Foo.bar }
+    .and not_change { Foo.baz }
+end
+
+==> corrected/002/002_spec.rb 167 <==
+it do
+  expect { foo }
+    .to not_change(Foo, :bar)
+    .and not_change(Foo, :baz)
+  expect { foo }
+    .to not_change { Foo.bar }
+    .or not_change { Foo.baz }
+end
+
+==> corrected/003/003_spec.rb 162 <==
+it do
+  expect { foo }
+    .to not_change(Foo, :bar) &
+    not_change(Foo, :baz)
+  expect { foo }
+    .to not_change { Foo.bar } |
+    not_change { Foo.baz }
+end
+

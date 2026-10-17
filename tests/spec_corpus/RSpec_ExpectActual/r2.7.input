@@ -1,0 +1,171 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 167 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(123).to eq(bar)
+    expect(12.3).to eq(bar)
+    expect(1i).to eq(bar)
+    expect(1r).to eq(bar)
+  end
+end
+
+==> 001/001_spec.rb 117 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(true).to eq(bar)
+    expect(false).to eq(bar)
+  end
+end
+
+==> 002/002_spec.rb 117 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect("foo").to eq(bar)
+    expect(:foo).to eq(bar)
+  end
+end
+
+==> 003/003_spec.rb 87 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(nil).to eq(bar)
+  end
+end
+
+==> 004/004_spec.rb 157 <==
+describe Foo do
+  it 'uses expect correctly' do
+    expect(foo).to eq(bar)
+    expect("foo#{baz}").to eq(bar)
+    expect(:"foo#{baz}").to  eq(bar)
+  end
+end
+
+==> 005/005_spec.rb 120 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect([123]).to eq(bar)
+    expect([[123]]).to eq(bar)
+  end
+end
+
+==> 006/006_spec.rb 139 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(foo: 1, bar: 2).to eq(bar)
+    expect(foo: 1, bar: [{}]).to eq(bar)
+  end
+end
+
+==> 007/007_spec.rb 138 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(foo: 1, bar: 2).to eq bar
+    expect({ foo: 1, bar: 2 }).to eq bar
+  end
+end
+
+==> 008/008_spec.rb 117 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(1..2).to eq(bar)
+    expect(1...2).to eq(bar)
+  end
+end
+
+==> 009/009_spec.rb 93 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(/foo|bar/).to eq(bar)
+  end
+end
+
+==> 010/010_spec.rb 279 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect.to eq(bar)
+    expect([foo]).to eq(bar)
+    expect([[foo]]).to eq(bar)
+    expect(foo: 1, bar: foo).to eq(bar)
+    expect(1..foo).to eq(bar)
+    expect(1...foo).to eq(bar)
+    expect(/foo|#{bar}/).to eq(bar)
+  end
+end
+
+==> 011/011_spec.rb 80 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(1).to be
+  end
+end
+
+==> 012/012_spec.rb 86 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(true).to be(a)
+  end
+end
+
+==> 013/013_spec.rb 85 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(1).to be == a
+  end
+end
+
+==> 014/014_spec.rb 86 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(1).to eql(bar)
+  end
+end
+
+==> 015/015_spec.rb 88 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect(1).to equal(bar)
+  end
+end
+
+==> 016/016_spec.rb 94 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect([1,2,3]).to include(a)
+  end
+end
+
+==> 017/017_spec.rb 97 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect([1,2,3]).to eq([1, 2, 3])
+  end
+end
+
+==> 018/018_spec.rb 120 <==
+describe Foo do
+  it 'uses expect incorrectly' do
+    expect("user").to be_present
+    expect([]).to be_empty
+  end
+end
+
+==> 019/019_spec.rb 147 <==
+describe Foo do
+  it 'routes correctly' do
+    expect({:get => "foo"}).to be_routable
+    expect({:get => "foo"}).to route_to("bar#baz")
+  end
+end
+
+==> 020/spec/routing/foo_spec.rb 34 <==
+expect(get: "/foo").to be_routable

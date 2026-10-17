@@ -1,0 +1,14 @@
+==> offenses exit=1 206 <==
+000/000_spec.rb:1:6: C: [Correctable] RSpec/ImplicitExpect: Prefer `is_expected.to` over `should`.
+001/001_spec.rb:1:6: C: [Correctable] RSpec/ImplicitExpect: Prefer `is_expected.to_not` over `should_not`.
+
+==> autocorrect exit=0 202 <==
+000/000_spec.rb:1:6: C: [Corrected] RSpec/ImplicitExpect: Prefer `is_expected.to` over `should`.
+001/001_spec.rb:1:6: C: [Corrected] RSpec/ImplicitExpect: Prefer `is_expected.to_not` over `should_not`.
+
+==> corrected/000/000_spec.rb 32 <==
+it { is_expected.to be_truthy }
+
+==> corrected/001/001_spec.rb 36 <==
+it { is_expected.to_not be_truthy }
+

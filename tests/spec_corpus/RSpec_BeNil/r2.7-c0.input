@@ -1,0 +1,25 @@
+==> .rubocop.yml 170 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/BeNil:
+  EnforcedStyle: be_nil
+
+==> 000/000_spec.rb 23 <==
+expect(foo).to be(nil)
+
+==> 001/001_spec.rb 22 <==
+expect(foo).to be_nil
+
+==> 002/002_spec.rb 124 <==
+expect(foo).to be(true)
+expect(foo).to be(false)
+expect(foo).to be(1)
+expect(foo).to be("yes")
+expect(foo).to be(Class.new)
+
