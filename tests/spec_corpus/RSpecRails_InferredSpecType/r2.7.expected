@@ -1,0 +1,48 @@
+==> offenses exit=1 875 <==
+001/path/to/project/spec/models/user_spec.rb:1:22: C: [Correctable] RSpecRails/InferredSpecType: Remove redundant spec type.
+002/path/to/project/spec/models/user_spec.rb:1:22: C: [Correctable] RSpecRails/InferredSpecType: Remove redundant spec type.
+003/path/to/project/spec/models/user_spec.rb:1:22: C: [Correctable] RSpecRails/InferredSpecType: Remove redundant spec type.
+004/path/to/project/spec/models/user_spec.rb:1:35: C: [Correctable] RSpecRails/InferredSpecType: Remove redundant spec type.
+005/path/to/project/spec/models/user_spec.rb:1:30: C: [Correctable] RSpecRails/InferredSpecType: Remove redundant spec type.
+006/path/to/project/spec/models/user_spec.rb:1:16: C: [Correctable] RSpecRails/InferredSpecType: Remove redundant spec type.
+007/path/to/project/spec/models/user_spec.rb:2:21: C: [Correctable] RSpecRails/InferredSpecType: Remove redundant spec type.
+
+==> autocorrect exit=0 861 <==
+001/path/to/project/spec/models/user_spec.rb:1:22: C: [Corrected] RSpecRails/InferredSpecType: Remove redundant spec type.
+002/path/to/project/spec/models/user_spec.rb:1:22: C: [Corrected] RSpecRails/InferredSpecType: Remove redundant spec type.
+003/path/to/project/spec/models/user_spec.rb:1:22: C: [Corrected] RSpecRails/InferredSpecType: Remove redundant spec type.
+004/path/to/project/spec/models/user_spec.rb:1:35: C: [Corrected] RSpecRails/InferredSpecType: Remove redundant spec type.
+005/path/to/project/spec/models/user_spec.rb:1:30: C: [Corrected] RSpecRails/InferredSpecType: Remove redundant spec type.
+006/path/to/project/spec/models/user_spec.rb:1:16: C: [Corrected] RSpecRails/InferredSpecType: Remove redundant spec type.
+007/path/to/project/spec/models/user_spec.rb:2:21: C: [Corrected] RSpecRails/InferredSpecType: Remove redundant spec type.
+
+==> corrected/001/path/to/project/spec/models/user_spec.rb 27 <==
+RSpec.describe User do
+end
+
+==> corrected/002/path/to/project/spec/models/user_spec.rb 27 <==
+RSpec.describe User do
+end
+
+==> corrected/003/path/to/project/spec/models/user_spec.rb 40 <==
+RSpec.describe User, other: true do
+end
+
+==> corrected/004/path/to/project/spec/models/user_spec.rb 40 <==
+RSpec.describe User, other: true do
+end
+
+==> corrected/005/path/to/project/spec/models/user_spec.rb 35 <==
+RSpec.describe User, :other do
+end
+
+==> corrected/006/path/to/project/spec/models/user_spec.rb 21 <==
+describe User do
+end
+
+==> corrected/007/path/to/project/spec/models/user_spec.rb 55 <==
+RSpec.describe User do
+  describe 'inner' do
+  end
+end
+

@@ -1,0 +1,88 @@
+others.rb:1:1: C: [Correctable] Rails/RootPublicPath: Use `Rails.public_path`.
+others.rb:3:1: C: [Corrected] Rails/RootPublicPath: Use `Rails.public_path`.
+others.rb:4:14: C: [Corrected] Rails/EnumHash: Enum defined as an array found in `status` enum declaration. Use hash syntax instead.
+others.rb:5:12: C: [Corrected] Rails/EnumHash: Enum defined as an array found in `kind` enum declaration. Use hash syntax instead.
+others.rb:10:18: C: [Corrected] Rails/ReflectionClassName: Use a string value for `class_name`.
+others.rb:12:19: C: Rails/ReflectionClassName: Use a string value for `class_name`.
+others.rb:13:6: C: [Corrected] Rails/FindById: Use `find("1'); system('x')")` instead of `where(id: "1'); system('x')").take!`.
+others.rb:14:6: C: [Corrected] Rails/FindById: Use `find("a\nb")` instead of `find_by!(id: "a\nb")`.
+others.rb:15:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+others.rb:15:1: C: [Corrected] Rails/RootJoinChain: Use `Rails.root.join(...)` instead of chaining `#join` calls.
+others.rb:16:1: C: [Corrected] Rails/FreezeTime: Use `freeze_time` instead of `travel_to`.
+others.rb:19:20: C: [Corrected] Rails/EagerEvaluationLogMessage: Pass a block to `Rails.logger.debug`.
+others.rb:20:19: C: [Corrected] Rails/EagerEvaluationLogMessage: Pass a block to `Rails.logger.debug`.
+others.rb:21:1: C: [Corrected] Rails/ActiveSupportOnLoad: Use `ActiveSupport.on_load(:active_record) { include Module.new { system("x") } }` instead of `ActiveRecord::Base.include(Module.new { system("x") })`.
+others.rb:22:36: C: [Corrected] Rails/AddColumnIndex: `add_column` does not accept an `index` key, use `add_index` instead.
+others.rb:23:1: W: [Corrected] Rails/RedirectBackOrTo: Use `redirect_back_or_to` instead of `redirect_back` with `:fallback_location` keyword argument.
+others.rb:24:6: C: [Corrected] Rails/SelectMap: Use `pluck(:"a'b")` instead of `select` with `map`.
+others.rb:25:6: C: [Corrected] Rails/Pick: Prefer `pick(:"a b")` over `pluck(:"a b").first`.
+others.rb:27:1: C: [Corrected] Rails/RelativeDateConstant: Do not assign `since` to constants as it will be evaluated only once.
+params.rb:1:8: C: [Correctable] Rails/StrongParametersExpect: Use `expect(a b: [:name])` instead.
+params.rb:2:8: C: [Correctable] Rails/StrongParametersExpect: Use `expect(x: 1, y: [:name])` instead.
+params.rb:3:8: C: [Correctable] Rails/StrongParametersExpect: Use `expect(a'b: [:name])` instead.
+params.rb:4:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob("app/a'b")`.
+params.rb:4:10: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+params.rb:5:1: C: [Correctable] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob('app/#@x')`.
+params.rb:5:10: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+params.rb:6:1: C: [Correctable] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob("app/a\b/#{dir}")`.
+paths.rb:1:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:2:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:3:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:4:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:5:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to').to_s`.
+paths.rb:5:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join("a'b")`.
+paths.rb:6:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:7:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:8:5: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:11:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:12:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+paths.rb:13:1: C: [Corrected] Rails/EnvironmentComparison: Favor `Rails.env.production?` over `Rails.env == 'production'`.
+paths.rb:14:1: C: [Correctable] Rails/EnvironmentComparison: Favor `Rails.env.pro duction?` over `Rails.env == "pro duction"`.
+paths.rb:15:1: C: [Correctable] Rails/EnvironmentComparison: Favor `Rails.env.a; system('x')?` over `Rails.env == "a; system('x')"`.
+paths.rb:16:1: C: [Corrected] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+paths.rb:18:1: C: [Correctable] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+paths.rb:20:1: C: [Corrected] Rails/RakeEnvironment: Include `:environment` task as a dependency for all Rake tasks.
+paths.rb:24:7: C: [Correctable] Rails/I18nLazyLookup: Use lazy lookup for the text used in controllers.
+paths.rb:25:7: C: [Corrected] Rails/I18nLazyLookup: Use lazy lookup for the text used in controllers.
+paths.rb:28:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+safe.rb:2:8: C: [Corrected] Rails/StrongParametersExpect: Use `expect(user: [:name, :age])` instead.
+safe.rb:3:8: C: [Corrected] Rails/StrongParametersExpect: Use `expect(user: [:name])` instead.
+safe.rb:4:8: C: [Corrected] Rails/StrongParametersExpect: Use `expect(key => [:name])` instead.
+safe.rb:5:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob("app/**/*.rb")`.
+safe.rb:5:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob('app/**/*.rb')`.
+safe.rb:5:10: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+safe.rb:6:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob("config/*.yml")`.
+safe.rb:6:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.glob('config/*.yml')`.
+safe.rb:6:5: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+safe.rb:7:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join("config/a'b").read`.
+safe.rb:7:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join('config', "a'b").read`.
+safe.rb:7:11: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+safe.rb:8:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+safe.rb:9:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+safe.rb:10:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to').to_s`.
+safe.rb:10:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join("a'b")`.
+safe.rb:11:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+safe.rb:12:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+safe.rb:13:1: C: [Corrected] Rails/EnvironmentComparison: Favor `Rails.env.production?` over `Rails.env == 'production'`.
+safe.rb:14:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path/to')`.
+t.rb:1:1: C: [Correctable] Rails/ContentTag: Use `tag.div system('x')` instead of `tag("div\nsystem('x')")`.
+t.rb:5:1: C: [Correctable] Rails/ContentTag: Use `tag.x#{y}` instead of `tag("x#{y}")`.
+t.rb:8:1: C: [Correctable] Rails/ContentTag: Use `tag.div ` instead of `tag(<<~X)`.
+t.rb:11:1: C: [Corrected] Rails/ContentTag: Use `tag.div` instead of `tag(%q(div))`.
+t.rb:13:1: C: [Corrected] Rails/ContentTag: Use `tag.foo_bar` instead of `tag('foo-bar')`.
+t.rb:14:1: C: [Correctable] Rails/ContentTag: Use `tag.div exit!` instead of `tag(:"div\nexit!")`.
+t.rb:15:10: C: [Correctable] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+t.rb:16:9: C: [Correctable] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+t.rb:17:11: C: [Correctable] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+t.rb:20:12: C: [Corrected] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+t.rb:21:13: C: [Correctable] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+t.rb:22:9: C: [Correctable] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+t.rb:25:19: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+t.rb:26:19: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+t.rb:27:19: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+t.rb:28:19: C: [Corrected] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+t.rb:29:19: C: [Corrected] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+t.rb:30:19: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+t.rb:31:19: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+t.rb:32:19: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+t.rb:35:19: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.

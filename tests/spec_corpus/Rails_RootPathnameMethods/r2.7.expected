@@ -1,0 +1,44 @@
+==> offenses exit=1 1195 <==
+005/005.rb:1:20: C: [Correctable] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join('db', file).open('wb')`.
+006/006.rb:1:8: C: [Correctable] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join('docs', 'invoice.pdf').open`.
+007/007.rb:1:1: C: [Correctable] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join(*['app', 'models'])`.
+008/008.rb:1:1: C: [Correctable] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join("app", *["models", "goober"])`.
+009/009.rb:1:1: C: [Correctable] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join(*["app", "models"], "goober")`.
+010/010.rb:1:1: C: [Correctable] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join(*%w[app models])`.
+011/011.rb:1:1: C: [Correctable] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join("app", *%w[models goober])`.
+012/012.rb:1:1: C: [Correctable] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join(*%w[app models], "goober")`.
+
+==> autocorrect exit=0 1179 <==
+005/005.rb:1:20: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join('db', file).open('wb')`.
+006/006.rb:1:8: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join('docs', 'invoice.pdf').open`.
+007/007.rb:1:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join(*['app', 'models'])`.
+008/008.rb:1:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join("app", *["models", "goober"])`.
+009/009.rb:1:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join(*["app", "models"], "goober")`.
+010/010.rb:1:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join(*%w[app models])`.
+011/011.rb:1:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join("app", *%w[models goober])`.
+012/012.rb:1:1: C: [Corrected] Rails/RootPathnameMethods: `Rails.root` is a `Pathname`, so you can use `Rails.root.join(*%w[app models], "goober")`.
+
+==> corrected/005/005.rb 60 <==
+files.map { |file| Rails.root.join('db', file).open('wb') }
+
+==> corrected/006/006.rb 51 <==
+file = Rails.root.join('docs', 'invoice.pdf').open
+
+==> corrected/007/007.rb 36 <==
+Rails.root.join(*['app', 'models'])
+
+==> corrected/008/008.rb 46 <==
+Rails.root.join("app", *["models", "goober"])
+
+==> corrected/009/009.rb 46 <==
+Rails.root.join(*["app", "models"], "goober")
+
+==> corrected/010/010.rb 33 <==
+Rails.root.join(*%w[app models])
+
+==> corrected/011/011.rb 43 <==
+Rails.root.join("app", *%w[models goober])
+
+==> corrected/012/012.rb 43 <==
+Rails.root.join(*%w[app models], "goober")
+

@@ -1,0 +1,99 @@
+==> offenses exit=1 2066 <==
+000/000_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_selector`.
+003/003_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_css`.
+006/006_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_xpath`.
+009/009_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_text`.
+012/012_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_title`.
+015/015_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_current_path`.
+018/018_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_link`.
+021/021_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_button`.
+024/024_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_field`.
+027/027_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_checked_field`.
+030/030_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_unchecked_field`.
+033/033_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_select`.
+036/036_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_table`.
+039/039_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_sibling`.
+042/042_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_ancestor`.
+045/045_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_content`.
+048/048_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_selector`.
+048/048_spec.rb:2:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_css`.
+049/049_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_text`.
+
+==> autocorrect exit=0 2028 <==
+000/000_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_selector`.
+003/003_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_css`.
+006/006_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_xpath`.
+009/009_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_text`.
+012/012_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_title`.
+015/015_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_current_path`.
+018/018_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_link`.
+021/021_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_button`.
+024/024_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_field`.
+027/027_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_checked_field`.
+030/030_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_unchecked_field`.
+033/033_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_select`.
+036/036_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_table`.
+039/039_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_sibling`.
+042/042_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_ancestor`.
+045/045_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_content`.
+048/048_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_selector`.
+048/048_spec.rb:2:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_css`.
+049/049_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_text`.
+
+==> corrected/000/000_spec.rb 38 <==
+expect(page).to have_no_selector('a')
+
+==> corrected/003/003_spec.rb 33 <==
+expect(page).to have_no_css('a')
+
+==> corrected/006/006_spec.rb 35 <==
+expect(page).to have_no_xpath('a')
+
+==> corrected/009/009_spec.rb 34 <==
+expect(page).to have_no_text('a')
+
+==> corrected/012/012_spec.rb 35 <==
+expect(page).to have_no_title('a')
+
+==> corrected/015/015_spec.rb 42 <==
+expect(page).to have_no_current_path('a')
+
+==> corrected/018/018_spec.rb 34 <==
+expect(page).to have_no_link('a')
+
+==> corrected/021/021_spec.rb 36 <==
+expect(page).to have_no_button('a')
+
+==> corrected/024/024_spec.rb 35 <==
+expect(page).to have_no_field('a')
+
+==> corrected/027/027_spec.rb 43 <==
+expect(page).to have_no_checked_field('a')
+
+==> corrected/030/030_spec.rb 45 <==
+expect(page).to have_no_unchecked_field('a')
+
+==> corrected/033/033_spec.rb 36 <==
+expect(page).to have_no_select('a')
+
+==> corrected/036/036_spec.rb 35 <==
+expect(page).to have_no_table('a')
+
+==> corrected/039/039_spec.rb 37 <==
+expect(page).to have_no_sibling('a')
+
+==> corrected/042/042_spec.rb 38 <==
+expect(page).to have_no_ancestor('a')
+
+==> corrected/045/045_spec.rb 37 <==
+expect(page).to have_no_content('a')
+
+==> corrected/048/048_spec.rb 70 <==
+expect(page).to have_no_selector 'a'
+expect(page).to have_no_css('a')
+
+==> corrected/049/049_spec.rb 61 <==
+expect(page).to have_no_text(exact_text: <<~TEXT)
+  foo
+TEXT
+

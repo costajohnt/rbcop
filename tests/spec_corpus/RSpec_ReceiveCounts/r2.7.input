@@ -1,0 +1,49 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 46 <==
+expect(foo).to receive(:bar).exactly(1).times
+
+==> 001/001_spec.rb 46 <==
+expect(foo).to receive(:bar).exactly(2).times
+
+==> 002/002_spec.rb 46 <==
+expect(foo).to receive(:bar).exactly(3).times
+
+==> 003/003_spec.rb 46 <==
+expect(foo).to receive(:bar).exactly(n).times
+
+==> 004/004_spec.rb 56 <==
+expect(foo).to receive(:bar).with(baz).exactly(1).times
+
+==> 005/005_spec.rb 63 <==
+expect(foo).to receive(:bar).exactly(1).times.and_return(true)
+
+==> 006/006_spec.rb 55 <==
+expect(foo).to receive(:bar).exactly(1).times { true }
+
+==> 007/007_spec.rb 47 <==
+expect(foo).to receive(:bar).at_least(1).times
+
+==> 008/008_spec.rb 47 <==
+expect(foo).to receive(:bar).at_least(2).times
+
+==> 009/009_spec.rb 56 <==
+expect(foo).to receive(:bar).at_least(2).times { true }
+
+==> 010/010_spec.rb 46 <==
+expect(foo).to receive(:bar).at_most(1).times
+
+==> 011/011_spec.rb 46 <==
+expect(foo).to receive(:bar).at_most(2).times
+
+==> 012/012_spec.rb 56 <==
+expect(action).to have_published_event.exactly(1).times
+

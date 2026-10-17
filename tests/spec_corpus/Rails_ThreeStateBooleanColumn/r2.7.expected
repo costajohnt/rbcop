@@ -1,0 +1,34 @@
+==> offenses exit=1 2429 <==
+db/000/20250101010101_add_active_to_users.rb:1:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/000/20250101010101_add_active_to_users.rb:2:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/000/20250101010101_add_active_to_users.rb:3:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/001/20190101010101_add_active_to_users.rb:1:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/001/20190101010101_add_active_to_users.rb:2:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/001/20190101010101_add_active_to_users.rb:3:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/006/20250101010101_add_active_to_users.rb:2:3: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/007/20250101010101_add_active_to_users.rb:1:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/007/20250101010101_add_active_to_users.rb:2:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/007/20250101010101_add_active_to_users.rb:3:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/012/012.rb:3:5: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/013/20250101010101_add_active_to_users.rb:1:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/013/20250101010101_add_active_to_users.rb:2:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/013/20250101010101_add_active_to_users.rb:3:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/018/20250101010101_add_active_to_users.rb:3:5: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+
+==> autocorrect exit=1 2429 <==
+db/000/20250101010101_add_active_to_users.rb:1:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/000/20250101010101_add_active_to_users.rb:2:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/000/20250101010101_add_active_to_users.rb:3:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/001/20190101010101_add_active_to_users.rb:1:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/001/20190101010101_add_active_to_users.rb:2:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/001/20190101010101_add_active_to_users.rb:3:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/006/20250101010101_add_active_to_users.rb:2:3: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/007/20250101010101_add_active_to_users.rb:1:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/007/20250101010101_add_active_to_users.rb:2:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/007/20250101010101_add_active_to_users.rb:3:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/012/012.rb:3:5: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/013/20250101010101_add_active_to_users.rb:1:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/013/20250101010101_add_active_to_users.rb:2:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/013/20250101010101_add_active_to_users.rb:3:1: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+db/018/20250101010101_add_active_to_users.rb:3:5: C: Rails/ThreeStateBooleanColumn: Boolean columns should always have a default value and a `NOT NULL` constraint.
+

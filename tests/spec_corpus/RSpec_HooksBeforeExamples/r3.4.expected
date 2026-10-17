@@ -1,0 +1,32 @@
+==> offenses exit=1 336 <==
+000/000_spec.rb:3:3: C: [Correctable] RSpec/HooksBeforeExamples: Move `around` above the examples in the group.
+001/001_spec.rb:6:3: C: [Correctable] RSpec/HooksBeforeExamples: Move `around` above the examples in the group.
+002/002_spec.rb:4:3: C: [Correctable] RSpec/HooksBeforeExamples: Move `around` above the examples in the group.
+
+==> autocorrect exit=0 330 <==
+000/000_spec.rb:3:3: C: [Corrected] RSpec/HooksBeforeExamples: Move `around` above the examples in the group.
+001/001_spec.rb:6:3: C: [Corrected] RSpec/HooksBeforeExamples: Move `around` above the examples in the group.
+002/002_spec.rb:4:3: C: [Corrected] RSpec/HooksBeforeExamples: Move `around` above the examples in the group.
+
+==> corrected/000/000_spec.rb 88 <==
+RSpec.describe User do
+  around { it }
+  it { is_expected.to be_after_around_hook }
+end
+
+==> corrected/001/001_spec.rb 122 <==
+RSpec.describe User do
+  around { it }
+  context 'a context' do
+    it { is_expected.to be_after_around_hook }
+  end
+
+end
+
+==> corrected/002/002_spec.rb 94 <==
+RSpec.describe User do
+  around { it }
+  include_examples('should be after around-hook')
+
+end
+

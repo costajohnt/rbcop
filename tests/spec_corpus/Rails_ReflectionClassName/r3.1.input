@@ -1,0 +1,23 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+
+==> 000/000.rb 54 <==
+class_name = Account
+
+has_many :accounts, class_name:
+
+==> 001/001.rb 56 <==
+class_name = 'Account'
+
+has_many :accounts, class_name:
+
+==> 002/002.rb 32 <==
+has_many :accounts, class_name:
+

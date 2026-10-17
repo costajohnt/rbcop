@@ -1,0 +1,48 @@
+==> offenses exit=1 1580 <==
+000/000.rb:1:22: C: [Correctable] Rails/HttpStatus: Prefer `200` over `:ok` to define HTTP status code.
+000/000.rb:2:38: C: [Correctable] Rails/HttpStatus: Prefer `404` over `:not_found` to define HTTP status code.
+000/000.rb:3:16: C: [Correctable] Rails/HttpStatus: Prefer `404` over `:not_found` to define HTTP status code.
+000/000.rb:4:34: C: [Correctable] Rails/HttpStatus: Prefer `304` over `:not_modified` to define HTTP status code.
+000/000.rb:5:31: C: [Correctable] Rails/HttpStatus: Prefer `301` over `:moved_permanently` to define HTTP status code.
+000/000.rb:6:38: C: [Correctable] Rails/HttpStatus: Prefer `301` over `:moved_permanently` to define HTTP status code.
+000/000.rb:7:67: C: [Correctable] Rails/HttpStatus: Prefer `301` over `:moved_permanently` to define HTTP status code.
+000/000.rb:8:6: C: [Correctable] Rails/HttpStatus: Prefer `200` over `:ok` to define HTTP status code.
+000/000.rb:9:6: C: [Correctable] Rails/HttpStatus: Prefer `200` over `:ok` to define HTTP status code.
+000/000.rb:10:17: C: [Correctable] Rails/HttpStatus: Prefer `200` over `:ok` to define HTTP status code.
+000/000.rb:11:17: C: [Correctable] Rails/HttpStatus: Prefer `404` over `:not_found` to define HTTP status code.
+000/000.rb:12:44: C: [Correctable] Rails/HttpStatus: Prefer `301` over `:moved_permanently` to define HTTP status code.
+000/000.rb:13:47: C: [Correctable] Rails/HttpStatus: Prefer `301` over `:moved_permanently` to define HTTP status code.
+000/000.rb:14:46: C: [Correctable] Rails/HttpStatus: Prefer `301` over `:moved_permanently` to define HTTP status code.
+
+==> autocorrect exit=0 1552 <==
+000/000.rb:1:22: C: [Corrected] Rails/HttpStatus: Prefer `200` over `:ok` to define HTTP status code.
+000/000.rb:2:38: C: [Corrected] Rails/HttpStatus: Prefer `404` over `:not_found` to define HTTP status code.
+000/000.rb:3:16: C: [Corrected] Rails/HttpStatus: Prefer `404` over `:not_found` to define HTTP status code.
+000/000.rb:4:34: C: [Corrected] Rails/HttpStatus: Prefer `304` over `:not_modified` to define HTTP status code.
+000/000.rb:5:31: C: [Corrected] Rails/HttpStatus: Prefer `301` over `:moved_permanently` to define HTTP status code.
+000/000.rb:6:38: C: [Corrected] Rails/HttpStatus: Prefer `301` over `:moved_permanently` to define HTTP status code.
+000/000.rb:7:67: C: [Corrected] Rails/HttpStatus: Prefer `301` over `:moved_permanently` to define HTTP status code.
+000/000.rb:8:6: C: [Corrected] Rails/HttpStatus: Prefer `200` over `:ok` to define HTTP status code.
+000/000.rb:9:6: C: [Corrected] Rails/HttpStatus: Prefer `200` over `:ok` to define HTTP status code.
+000/000.rb:10:17: C: [Corrected] Rails/HttpStatus: Prefer `200` over `:ok` to define HTTP status code.
+000/000.rb:11:17: C: [Corrected] Rails/HttpStatus: Prefer `404` over `:not_found` to define HTTP status code.
+000/000.rb:12:44: C: [Corrected] Rails/HttpStatus: Prefer `301` over `:moved_permanently` to define HTTP status code.
+000/000.rb:13:47: C: [Corrected] Rails/HttpStatus: Prefer `301` over `:moved_permanently` to define HTTP status code.
+000/000.rb:14:46: C: [Corrected] Rails/HttpStatus: Prefer `301` over `:moved_permanently` to define HTTP status code.
+
+==> corrected/000/000.rb 539 <==
+render :foo, status: 200
+render json: { foo: 'bar' }, status: 404
+render status: 404, json: { foo: 'bar' }
+render plain: 'foo/bar', status: 304
+redirect_to root_url, status: 301
+redirect_to action: 'index', status: 301
+redirect_to root_path(utm_source: :pr, utm_medium: :web), status: 301
+head 200
+head 200, location: 'accounts'
+assert_response 200
+assert_response 404, 'message'
+assert_redirected_to '/some/path', status: 301
+assert_redirected_to action: 'index', status: 301
+assert_redirected_to '/some/path', { status: 301 }, 'message'
+

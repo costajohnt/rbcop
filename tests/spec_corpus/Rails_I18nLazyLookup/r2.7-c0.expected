@@ -1,0 +1,28 @@
+==> offenses exit=1 364 <==
+app/controllers/000/000.rb:3:7: C: [Correctable] Rails/I18nLazyLookup: Use lazy lookup for the text used in controllers.
+app/controllers/000/000.rb:4:15: C: [Correctable] Rails/I18nLazyLookup: Use lazy lookup for the text used in controllers.
+app/controllers/007/007.rb:4:9: C: [Correctable] Rails/I18nLazyLookup: Use lazy lookup for the text used in controllers.
+
+==> autocorrect exit=0 358 <==
+app/controllers/000/000.rb:3:7: C: [Corrected] Rails/I18nLazyLookup: Use lazy lookup for the text used in controllers.
+app/controllers/000/000.rb:4:15: C: [Corrected] Rails/I18nLazyLookup: Use lazy lookup for the text used in controllers.
+app/controllers/007/007.rb:4:9: C: [Corrected] Rails/I18nLazyLookup: Use lazy lookup for the text used in controllers.
+
+==> corrected/app/controllers/000/000.rb 77 <==
+class FooController
+  def action
+    t '.key'
+    translate '.key'
+  end
+end
+
+==> corrected/app/controllers/007/007.rb 106 <==
+module Bar
+  class FooController
+    def action
+      t '.key'
+      t 'foo.action.key'
+    end
+  end
+end
+

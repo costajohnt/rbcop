@@ -1,0 +1,97 @@
+==> offenses exit=1 3976 <==
+000/000_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+001/001_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+002/002_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+003/003_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+004/004_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+005/005_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+006/006_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+007/007_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+008/008_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+009/009_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+010/010_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+011/011_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+012/012_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+013/013_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+014/014_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+015/015_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+016/016_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+017/017_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+020/020_spec.rb:1:1: C: Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+
+==> autocorrect exit=1 3940 <==
+000/000_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+001/001_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+002/002_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+003/003_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+004/004_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+005/005_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+006/006_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+007/007_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+008/008_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+009/009_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+010/010_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+011/011_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+012/012_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+013/013_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+014/014_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+015/015_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+016/016_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+017/017_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+020/020_spec.rb:1:1: C: Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+
+==> corrected/000/000_spec.rb 66 <==
+expect(page).to have_current_path "/callback", ignore_query: true
+
+==> corrected/001/001_spec.rb 103 <==
+expect(page).to have_current_path "/callback" \
+                            "/foo", ignore_query: true
+
+==> corrected/002/002_spec.rb 60 <==
+expect(page).to have_current_path `pwd`, ignore_query: true
+
+==> corrected/003/003_spec.rb 67 <==
+expect(page).to have_current_path("/callback", ignore_query: true)
+
+==> corrected/004/004_spec.rb 68 <==
+expect(page).to have_current_path expected_path, ignore_query: true
+
+==> corrected/005/005_spec.rb 65 <==
+expect(page).to have_current_path(foo( bar), ignore_query: true)
+
+==> corrected/006/006_spec.rb 70 <==
+expect(page).to have_current_path(foo( bar, baz), ignore_query: true)
+
+==> corrected/007/007_spec.rb 64 <==
+expect(page).to have_current_path(foo(bar), ignore_query: true)
+
+==> corrected/008/008_spec.rb 70 <==
+expect(page).to have_current_path(foo( bar(baz)), ignore_query: true)
+
+==> corrected/009/009_spec.rb 69 <==
+expect(page).to have_current_path(expected_path, ignore_query: true)
+
+==> corrected/010/010_spec.rb 76 <==
+expect(page).to have_current_path(expected_path(f: :b), ignore_query: true)
+
+==> corrected/011/011_spec.rb 69 <==
+expect(page).to have_current_path(foo(bar).path, ignore_query: true)
+
+==> corrected/012/012_spec.rb 71 <==
+expect(page).to have_no_current_path expected_path, ignore_query: true
+
+==> corrected/013/013_spec.rb 71 <==
+expect(page).to have_no_current_path expected_path, ignore_query: true
+
+==> corrected/014/014_spec.rb 45 <==
+expect(page).to have_current_path(/regexp/i)
+
+==> corrected/015/015_spec.rb 46 <==
+expect(page).to have_current_path(/string\//)
+
+==> corrected/016/016_spec.rb 51 <==
+expect(page).to have_current_path(/string\/foo\//)
+
+==> corrected/017/017_spec.rb 46 <==
+expect(page).to have_current_path(/#{`pwd`}/)
+

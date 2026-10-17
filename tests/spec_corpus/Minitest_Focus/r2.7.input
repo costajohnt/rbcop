@@ -1,0 +1,29 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 57 <==
+class FooTest < Minitest::Test
+  test 'foo' do
+  end
+end
+
+==> test/001_test.rb 65 <==
+class FooTest < Minitest::Test
+  focus
+  test 'foo' do
+  end
+end
+
+==> test/002_test.rb 63 <==
+class FooTest < Minitest::Test
+  focus test 'foo' do
+  end
+end
+

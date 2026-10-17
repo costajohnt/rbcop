@@ -1,0 +1,38 @@
+==> offenses exit=1 1278 <==
+000/000.rb:1:14: C: [Correctable] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+000/000.rb:2:22: C: [Correctable] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+000/000.rb:3:9: C: [Correctable] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+000/000.rb:4:17: C: [Correctable] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+000/000.rb:5:9: C: [Correctable] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+000/000.rb:6:14: C: [Correctable] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+000/000.rb:7:15: C: [Correctable] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+000/000.rb:8:14: C: [Correctable] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+000/000.rb:9:16: C: [Correctable] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+001/001.rb:1:16: C: [Correctable] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+
+==> autocorrect exit=0 1258 <==
+000/000.rb:1:14: C: [Corrected] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+000/000.rb:2:22: C: [Corrected] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+000/000.rb:3:9: C: [Corrected] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+000/000.rb:4:17: C: [Corrected] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+000/000.rb:5:9: C: [Corrected] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+000/000.rb:6:14: C: [Corrected] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+000/000.rb:7:15: C: [Corrected] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+000/000.rb:8:14: C: [Corrected] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+000/000.rb:9:16: C: [Corrected] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+001/001.rb:1:16: C: [Corrected] Rails/DotSeparatedKeys: Use the dot-separated keys instead of specifying the `:scope` option.
+
+==> corrected/000/000.rb 203 <==
+I18n.t 'one.two.key'
+I18n.translate 'one.two.key'
+t 'one.two.key'
+translate 'one.two.key'
+t 'one.two.key', default: 'Not here'
+I18n.t 'one.two.key'
+I18n.t 'one.two.key'
+I18n.t 'one.key'
+I18n.t 'one.key'
+
+==> corrected/001/001.rb 23 <==
+::I18n.t 'one.two.key'
+

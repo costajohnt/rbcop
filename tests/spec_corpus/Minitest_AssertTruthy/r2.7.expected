@@ -1,0 +1,43 @@
+==> offenses exit=1 434 <==
+test/000_test.rb:3:5: C: [Correctable] Minitest/AssertTruthy: Prefer using `assert(somestuff)`.
+test/001_test.rb:3:5: C: [Correctable] Minitest/AssertTruthy: Prefer using `assert(obj.is_something?, 'message')`.
+test/002_test.rb:3:5: C: [Correctable] Minitest/AssertTruthy: Prefer using `assert(somestuff, 'message')`.
+test/004_test.rb:3:5: C: [Correctable] Minitest/AssertTruthy: Prefer using `assert(obj.is_something?, <<~MESSAGE)`.
+
+==> autocorrect exit=0 426 <==
+test/000_test.rb:3:5: C: [Corrected] Minitest/AssertTruthy: Prefer using `assert(somestuff)`.
+test/001_test.rb:3:5: C: [Corrected] Minitest/AssertTruthy: Prefer using `assert(obj.is_something?, 'message')`.
+test/002_test.rb:3:5: C: [Corrected] Minitest/AssertTruthy: Prefer using `assert(somestuff, 'message')`.
+test/004_test.rb:3:5: C: [Corrected] Minitest/AssertTruthy: Prefer using `assert(obj.is_something?, <<~MESSAGE)`.
+
+==> corrected/test/000_test.rb 87 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(somestuff)
+  end
+end
+
+==> corrected/test/001_test.rb 106 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(obj.is_something?, 'message')
+  end
+end
+
+==> corrected/test/002_test.rb 98 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(somestuff, 'message')
+  end
+end
+
+==> corrected/test/004_test.rb 138 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(obj.is_something?, <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+

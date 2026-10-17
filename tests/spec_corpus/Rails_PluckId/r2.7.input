@@ -1,0 +1,33 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 16 <==
+User.pluck(:id)
+
+==> 001/001.rb 17 <==
+User&.pluck(:id)
+
+==> 002/002.rb 43 <==
+def self.user_ids
+  pluck(primary_key)
+end
+
+==> 003/003.rb 25 <==
+user.posts.pluck(:votes)
+
+==> 004/004.rb 30 <==
+user.posts.pluck(:id, :votes)
+
+==> 005/005.rb 37 <==
+Post.where(user_id: User.pluck(:id))
+
+==> 006/006.rb 33 <==
+Post.pluck(:id).where(id: 1..10)
+

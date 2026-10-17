@@ -1,0 +1,41 @@
+==> offenses exit=1 665 <==
+001/001.rb:1:15: C: [Correctable] Rails/ApplicationJob: Jobs should subclass `ApplicationJob`.
+002/002.rb:1:15: C: [Correctable] Rails/ApplicationJob: Jobs should subclass `ApplicationJob`.
+003/003.rb:2:17: C: [Correctable] Rails/ApplicationJob: Jobs should subclass `ApplicationJob`.
+004/004.rb:1:23: C: [Correctable] Rails/ApplicationJob: Jobs should subclass `ApplicationJob`.
+005/005.rb:1:19: C: [Correctable] Rails/ApplicationJob: Jobs should subclass `ApplicationJob`.
+006/006.rb:1:27: C: [Correctable] Rails/ApplicationJob: Jobs should subclass `ApplicationJob`.
+007/007.rb:1:11: C: [Correctable] Rails/ApplicationJob: Jobs should subclass `ApplicationJob`.
+
+==> autocorrect exit=0 651 <==
+001/001.rb:1:15: C: [Corrected] Rails/ApplicationJob: Jobs should subclass `ApplicationJob`.
+002/002.rb:1:15: C: [Corrected] Rails/ApplicationJob: Jobs should subclass `ApplicationJob`.
+003/003.rb:2:17: C: [Corrected] Rails/ApplicationJob: Jobs should subclass `ApplicationJob`.
+004/004.rb:1:23: C: [Corrected] Rails/ApplicationJob: Jobs should subclass `ApplicationJob`.
+005/005.rb:1:19: C: [Corrected] Rails/ApplicationJob: Jobs should subclass `ApplicationJob`.
+006/006.rb:1:27: C: [Corrected] Rails/ApplicationJob: Jobs should subclass `ApplicationJob`.
+007/007.rb:1:11: C: [Corrected] Rails/ApplicationJob: Jobs should subclass `ApplicationJob`.
+
+==> corrected/001/001.rb 34 <==
+class MyJob < ApplicationJob; end
+
+==> corrected/002/002.rb 34 <==
+class MyJob < ApplicationJob; end
+
+==> corrected/003/003.rb 54 <==
+module Nested
+  class MyJob < ApplicationJob; end
+end
+
+==> corrected/004/004.rb 42 <==
+class Nested::MyJob < ApplicationJob; end
+
+==> corrected/005/005.rb 34 <==
+MyJob = Class.new(ApplicationJob)
+
+==> corrected/006/006.rb 42 <==
+Nested::MyJob = Class.new(ApplicationJob)
+
+==> corrected/007/007.rb 29 <==
+Class.new(ApplicationJob) {}
+

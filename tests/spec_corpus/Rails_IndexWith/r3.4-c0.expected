@@ -1,0 +1,24 @@
+==> offenses exit=1 373 <==
+000/000.rb:1:1: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `map { ... }.to_h`.
+002/002.rb:1:1: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `Hash[map { ... }]`.
+004/004.rb:1:1: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `to_h { ... }`.
+005/005.rb:1:1: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `to_h { ... }`.
+
+==> autocorrect exit=0 365 <==
+000/000.rb:1:1: C: [Corrected] Rails/IndexWith: Prefer `index_with` over `map { ... }.to_h`.
+002/002.rb:1:1: C: [Corrected] Rails/IndexWith: Prefer `index_with` over `Hash[map { ... }]`.
+004/004.rb:1:1: C: [Corrected] Rails/IndexWith: Prefer `index_with` over `to_h { ... }`.
+005/005.rb:1:1: C: [Corrected] Rails/IndexWith: Prefer `index_with` over `to_h { ... }`.
+
+==> corrected/000/000.rb 27 <==
+x.index_with { it.to_sym }
+
+==> corrected/002/002.rb 27 <==
+x.index_with { it.to_sym }
+
+==> corrected/004/004.rb 27 <==
+x.index_with { it.to_sym }
+
+==> corrected/005/005.rb 26 <==
+x.index_with { y.to_sym }
+

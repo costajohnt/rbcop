@@ -1,0 +1,18 @@
+==> offenses exit=1 198 <==
+spec/000/000.rb:3:3: C: [Correctable] Rails/RedundantTravelBack: Redundant `travel_back` detected.
+spec/001/001.rb:3:3: C: [Correctable] Rails/RedundantTravelBack: Redundant `travel_back` detected.
+
+==> autocorrect exit=0 194 <==
+spec/000/000.rb:3:3: C: [Corrected] Rails/RedundantTravelBack: Redundant `travel_back` detected.
+spec/001/001.rb:3:3: C: [Corrected] Rails/RedundantTravelBack: Redundant `travel_back` detected.
+
+==> corrected/spec/000/000.rb 32 <==
+def teardown
+  do_something
+end
+
+==> corrected/spec/001/001.rb 28 <==
+after do
+  do_something
+end
+

@@ -1,0 +1,13 @@
+==> offenses exit=1 98 <==
+000/000_spec.rb:2:3: C: [Correctable] RSpecRails/AvoidSetupHook: Use `before` instead of `setup`.
+
+==> autocorrect exit=0 96 <==
+000/000_spec.rb:2:3: C: [Corrected] RSpecRails/AvoidSetupHook: Use `before` instead of `setup`.
+
+==> corrected/000/000_spec.rb 76 <==
+RSpec.describe Foo do
+  before do
+    allow(foo).to receive(:bar)
+  end
+end
+

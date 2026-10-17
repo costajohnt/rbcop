@@ -1,0 +1,66 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 5.1
+
+==> 000/000.rb 39 <==
+date.beginning_of_day..date.end_of_day
+
+==> 001/001.rb 41 <==
+date.beginning_of_week..date.end_of_week
+
+==> 002/002.rb 43 <==
+date.beginning_of_month..date.end_of_month
+
+==> 003/003.rb 47 <==
+date.beginning_of_quarter..date.end_of_quarter
+
+==> 004/004.rb 59 <==
+date.beginning_of_week(:sunday)..date.end_of_week(:sunday)
+
+==> 005/005.rb 50 <==
+date.beginning_of_week(:sunday)..date.end_of_week
+
+==> 006/006.rb 41 <==
+date.beginning_of_year..date.end_of_year
+
+==> 007/007.rb 67 <==
+Model.do_something(foo_at: date.beginning_of_day..date.end_of_day)
+
+==> 008/008.rb 78 <==
+foo_at = date.beginning_of_day..date.end_of_day
+Model.find_by(foo_at: foo_at)
+
+==> 009/009.rb 116 <==
+Model.where(foo_at: date1.beginning_of_week..date1.end_of_week, bar_at: date2.beginning_of_year..date2.end_of_year)
+
+==> 010/010.rb 40 <==
+date.beginning_of_day...date.end_of_day
+
+==> 011/011.rb 41 <==
+date1.beginning_of_day..date2.end_of_day
+
+==> 012/012.rb 40 <==
+date.beginning_of_day..date.end_of_year
+
+==> 013/013.rb 61 <==
+date.beginning_of_week(:sunday)..date.end_of_week(:saturday)
+
+==> 014/014.rb 49 <==
+date.beginning_of_day(arg)..date.end_of_day(arg)
+
+==> 015/015.rb 29 <==
+beginning_of_day..end_of_day
+
+==> 016/016.rb 34 <==
+beginning_of_day..date.end_of_day
+
+==> 017/017.rb 34 <==
+date.beginning_of_day..end_of_day
+

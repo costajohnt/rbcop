@@ -2,11 +2,12 @@
 # Record RuboCop's output on a corpus with EVERY cop enabled, for cop-by-cop comparison
 # without re-running RuboCop (see scripts/check-cops.sh).
 # usage: scripts/oracle.sh <corpus-dir> <out-file>   (RuboCop from $RUBOCOP, see scripts/rubocop.sh)
+#   env: CONFIG (default config/all-cops.yml; config/all-cops-performance.yml for plugin oracles)
 set -eu
 . "$(dirname "$0")/rubocop.sh"
 dir=$(cd "$1" && pwd)
 out=$2
-cfg=$(cd "$(dirname "$0")/.." && pwd)/config/all-cops.yml
+cfg=${CONFIG:-$(cd "$(dirname "$0")/.." && pwd)/config/all-cops.yml}
 fmt=$(cd "$(dirname "$0")" && pwd)/oracle_formatter.rb
 # RuboCop rejects cache paths under a symlink (macOS /var), and --parallel then silently drops
 # results, so keep the cache next to the output.

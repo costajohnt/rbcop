@@ -1,0 +1,39 @@
+==> .rubocop.yml 155 <==
+---
+plugins:
+- rubocop-rspec
+- rubocop-rspec_rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 75 <==
+RSpec.describe Foo do
+  setup do
+    allow(foo).to receive(:bar)
+  end
+end
+
+==> 001/001_spec.rb 76 <==
+RSpec.describe Foo do
+  before do
+    allow(foo).to receive(:bar)
+  end
+end
+
+==> 002/002_spec.rb 54 <==
+SomeDSL.configure do
+  setup do
+    prepare
+  end
+end
+
+==> 003/003_spec.rb 83 <==
+RSpec.describe Foo do
+  navigation.setup do
+    direction 'to infinity!'
+  end
+end
+

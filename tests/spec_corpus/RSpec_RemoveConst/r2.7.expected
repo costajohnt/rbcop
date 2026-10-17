@@ -1,0 +1,10 @@
+==> offenses exit=1 333 <==
+000/000_spec.rb:2:3: C: RSpec/RemoveConst: Do not use remove_const in specs. Consider using e.g. `stub_const`.
+001/001_spec.rb:2:3: C: RSpec/RemoveConst: Do not use remove_const in specs. Consider using e.g. `stub_const`.
+002/002_spec.rb:2:3: C: RSpec/RemoveConst: Do not use remove_const in specs. Consider using e.g. `stub_const`.
+
+==> autocorrect exit=1 333 <==
+000/000_spec.rb:2:3: C: RSpec/RemoveConst: Do not use remove_const in specs. Consider using e.g. `stub_const`.
+001/001_spec.rb:2:3: C: RSpec/RemoveConst: Do not use remove_const in specs. Consider using e.g. `stub_const`.
+002/002_spec.rb:2:3: C: RSpec/RemoveConst: Do not use remove_const in specs. Consider using e.g. `stub_const`.
+

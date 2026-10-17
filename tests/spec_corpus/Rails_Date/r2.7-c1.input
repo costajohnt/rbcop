@@ -1,0 +1,26 @@
+==> .rubocop.yml 190 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/Date:
+  EnforcedStyle: strict
+  AllowToTime: false
+
+==> 000/000.rb 13 <==
+date.to_time
+
+==> 001/001.rb 14 <==
+date&.to_time
+
+==> 002/002.rb 11 <==
+to_time = 1
+==> 003/003.rb 13 <==
+date..to_time
+==> 004/004.rb 36 <==
+"2016-07-12 14:36:31".to_time(:utc)
+

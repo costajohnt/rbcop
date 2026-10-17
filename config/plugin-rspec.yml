@@ -1,0 +1,9 @@
+# The defaults plus the rubocop-rspec family: the autocorrect gate config for plugin cops
+# (scripts/check-plugins.sh), the plugin counterpart of --force-default-config.
+plugins:
+  - rubocop-rspec
+  - rubocop-rspec_rails
+  - rubocop-factory_bot
+  - rubocop-capybara
+AllCops:
+  SuggestExtensions: false

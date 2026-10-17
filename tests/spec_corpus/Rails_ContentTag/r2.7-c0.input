@@ -1,0 +1,29 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 5.0
+
+==> 000/000.rb 7 <==
+tag.br
+
+==> 001/001.rb 22 <==
+tag.p('Hello world!')
+
+==> 002/002.rb 56 <==
+tag.div("Hello world!", class: ["strong", "highlight"])
+
+==> 003/003.rb 31 <==
+tag.div() { tag.strong('Hi') }
+
+==> 004/004.rb 9 <==
+tag(:br)
+
+==> 005/005.rb 56 <==
+tag(:br, {class: ["strong", "highlight"]}, true, false)
+

@@ -1,0 +1,136 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 33 <==
+foo "should do something" do; end
+==> 001/001_spec.rb 32 <==
+it 'should do something' do
+end
+
+==> 002/002_spec.rb 32 <==
+it "should do #{:stuff}" do
+end
+
+==> 003/003_spec.rb 32 <==
+it 'Should do something' do
+end
+
+==> 004/004_spec.rb 35 <==
+it "shouldn't do something" do
+end
+
+==> 005/005_spec.rb 35 <==
+it "SHOULDN'T do something" do
+end
+
+==> 006/006_spec.rb 19 <==
+it 'should' do
+end
+
+==> 007/007_spec.rb 23 <==
+it 'should not' do
+end
+
+==> 008/008_spec.rb 30 <==
+it 'will do something' do
+end
+
+==> 009/009_spec.rb 30 <==
+it "will do #{:stuff}" do
+end
+
+==> 010/010_spec.rb 30 <==
+it 'Will do something' do
+end
+
+==> 011/011_spec.rb 31 <==
+it "won't do something" do
+end
+
+==> 012/012_spec.rb 33 <==
+it "won’t do something" do
+end
+
+==> 013/013_spec.rb 31 <==
+it "WON'T do something" do
+end
+
+==> 014/014_spec.rb 33 <==
+it "WON’T do something" do
+end
+
+==> 015/015_spec.rb 17 <==
+it 'will' do
+end
+
+==> 016/016_spec.rb 21 <==
+it 'will not' do
+end
+
+==> 017/017_spec.rb 18 <==
+it "won't" do
+end
+
+==> 018/018_spec.rb 20 <==
+it "won’t" do
+end
+
+==> 019/019_spec.rb 30 <==
+it "it does something" do
+end
+
+==> 020/020_spec.rb 30 <==
+it "it does #{action}" do
+end
+
+==> 021/021_spec.rb 27 <==
+it 'itemizes items' do
+end
+
+==> 022/022_spec.rb 33 <==
+it 'finds no should here' do
+end
+
+==> 023/023_spec.rb 33 <==
+it 'shoulders the burden' do
+end
+
+==> 024/024_spec.rb 34 <==
+it "#{should} not be here" do
+end
+
+==> 025/025_spec.rb 59 <==
+it 'should do something ' \
+    'and correctly fix' do
+end
+
+==> 026/026_spec.rb 56 <==
+it "should do something " \
+    "with #{object}" do
+end
+
+==> 027/027_spec.rb 57 <==
+it <<~DESC do
+  should not start with this word
+DESC
+end
+
+==> 028/028_spec.rb 18 <==
+it "works" do
+end
+
+==> 029/029_spec.rb 24 <==
+it "  works    " do
+end
+
+==> 030/030_spec.rb 19 <==
+it "WOrKs " do
+end
+

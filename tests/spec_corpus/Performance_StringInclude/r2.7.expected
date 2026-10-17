@@ -1,0 +1,654 @@
+==> offenses exit=1 16901 <==
+000.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+001.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+002.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+003.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+004.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+005.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+006.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+007.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+008.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+009.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+010.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+011.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+012.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+013.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+014.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+015.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+018.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+019.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+022.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+023.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+026.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+027.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+030.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+031.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+034.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+035.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+070.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+071.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+072.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+073.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+074.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+075.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+076.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+077.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+078.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+079.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+080.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+081.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+082.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+083.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+084.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+085.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+086.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+087.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+088.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+089.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+090.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+091.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+092.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+093.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+094.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+095.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+096.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+097.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+098.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+099.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+100.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+101.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+104.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+105.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+108.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+109.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+112.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+113.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+116.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+117.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+120.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+121.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+156.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+157.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+158.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+159.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+160.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+161.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+162.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+163.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+164.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+165.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+166.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+167.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+168.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+169.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+170.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+171.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+172.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+173.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+174.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+175.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+176.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+177.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+178.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+179.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+180.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+181.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+182.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+183.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+184.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+185.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+186.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+187.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+190.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+191.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+194.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+195.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+198.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+199.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+202.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+203.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+206.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+207.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+242.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+243.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+244.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+245.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+246.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+247.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+248.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+249.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+250.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+251.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+252.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+253.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+254.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+255.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+256.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+257.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+258.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+262.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+263.rb:1:1: C: [Correctable] Performance/StringInclude: Use `!String#include?` instead of a regex match with literal-only pattern.
+264.rb:1:1: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+
+==> autocorrect exit=0 16641 <==
+000.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+001.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+002.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+003.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+004.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+005.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+006.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+007.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+008.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+009.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+010.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+011.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+012.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+013.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+014.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+015.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+018.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+019.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+022.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+023.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+026.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+027.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+030.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+031.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+034.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+035.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+070.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+071.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+072.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+073.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+074.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+075.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+076.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+077.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+078.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+079.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+080.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+081.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+082.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+083.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+084.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+085.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+086.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+087.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+088.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+089.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+090.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+091.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+092.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+093.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+094.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+095.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+096.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+097.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+098.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+099.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+100.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+101.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+104.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+105.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+108.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+109.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+112.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+113.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+116.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+117.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+120.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+121.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+156.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+157.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+158.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+159.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+160.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+161.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+162.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+163.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+164.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+165.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+166.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+167.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+168.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+169.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+170.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+171.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+172.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+173.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+174.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+175.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+176.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+177.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+178.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+179.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+180.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+181.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+182.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+183.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+184.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+185.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+186.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+187.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+190.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+191.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+194.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+195.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+198.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+199.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+202.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+203.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+206.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+207.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+242.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+243.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+244.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+245.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+246.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+247.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+248.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+249.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+250.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+251.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+252.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+253.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+254.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+255.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+256.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+257.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+258.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+262.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+263.rb:1:1: C: [Corrected] Performance/StringInclude: Use `!String#include?` instead of a regex match with literal-only pattern.
+264.rb:1:1: C: [Corrected] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+
+==> corrected/000.rb 20 <==
+str.include?('abc')
+
+==> corrected/001.rb 22 <==
+'str'.include?('abc')
+
+==> corrected/002.rb 19 <==
+str.include?("\a")
+
+==> corrected/003.rb 21 <==
+'str'.include?("\a")
+
+==> corrected/004.rb 19 <==
+str.include?("\e")
+
+==> corrected/005.rb 21 <==
+'str'.include?("\e")
+
+==> corrected/006.rb 19 <==
+str.include?("\f")
+
+==> corrected/007.rb 21 <==
+'str'.include?("\f")
+
+==> corrected/008.rb 19 <==
+str.include?("\r")
+
+==> corrected/009.rb 21 <==
+'str'.include?("\r")
+
+==> corrected/010.rb 19 <==
+str.include?("\t")
+
+==> corrected/011.rb 21 <==
+'str'.include?("\t")
+
+==> corrected/012.rb 19 <==
+str.include?("\v")
+
+==> corrected/013.rb 21 <==
+'str'.include?("\v")
+
+==> corrected/014.rb 18 <==
+str.include?('.')
+
+==> corrected/015.rb 20 <==
+'str'.include?('.')
+
+==> corrected/018.rb 18 <==
+str.include?('*')
+
+==> corrected/019.rb 20 <==
+'str'.include?('*')
+
+==> corrected/022.rb 18 <==
+str.include?('?')
+
+==> corrected/023.rb 20 <==
+'str'.include?('?')
+
+==> corrected/026.rb 18 <==
+str.include?('$')
+
+==> corrected/027.rb 20 <==
+'str'.include?('$')
+
+==> corrected/030.rb 18 <==
+str.include?('^')
+
+==> corrected/031.rb 20 <==
+'str'.include?('^')
+
+==> corrected/034.rb 18 <==
+str.include?('|')
+
+==> corrected/035.rb 20 <==
+'str'.include?('|')
+
+==> corrected/070.rb 18 <==
+str.include?('i')
+
+==> corrected/071.rb 20 <==
+'str'.include?('i')
+
+==> corrected/072.rb 18 <==
+str.include?('j')
+
+==> corrected/073.rb 20 <==
+'str'.include?('j')
+
+==> corrected/074.rb 18 <==
+str.include?('l')
+
+==> corrected/075.rb 20 <==
+'str'.include?('l')
+
+==> corrected/076.rb 18 <==
+str.include?('m')
+
+==> corrected/077.rb 20 <==
+'str'.include?('m')
+
+==> corrected/078.rb 18 <==
+str.include?('o')
+
+==> corrected/079.rb 20 <==
+'str'.include?('o')
+
+==> corrected/080.rb 18 <==
+str.include?('q')
+
+==> corrected/081.rb 20 <==
+'str'.include?('q')
+
+==> corrected/082.rb 18 <==
+str.include?('y')
+
+==> corrected/083.rb 20 <==
+'str'.include?('y')
+
+==> corrected/084.rb 19 <==
+str.include?('\\')
+
+==> corrected/085.rb 21 <==
+'str'.include?('\\')
+
+==> corrected/086.rb 20 <==
+str.include?('abc')
+
+==> corrected/087.rb 22 <==
+'str'.include?('abc')
+
+==> corrected/088.rb 19 <==
+str.include?("\a")
+
+==> corrected/089.rb 21 <==
+'str'.include?("\a")
+
+==> corrected/090.rb 19 <==
+str.include?("\e")
+
+==> corrected/091.rb 21 <==
+'str'.include?("\e")
+
+==> corrected/092.rb 19 <==
+str.include?("\f")
+
+==> corrected/093.rb 21 <==
+'str'.include?("\f")
+
+==> corrected/094.rb 19 <==
+str.include?("\r")
+
+==> corrected/095.rb 21 <==
+'str'.include?("\r")
+
+==> corrected/096.rb 19 <==
+str.include?("\t")
+
+==> corrected/097.rb 21 <==
+'str'.include?("\t")
+
+==> corrected/098.rb 19 <==
+str.include?("\v")
+
+==> corrected/099.rb 21 <==
+'str'.include?("\v")
+
+==> corrected/100.rb 18 <==
+str.include?('.')
+
+==> corrected/101.rb 20 <==
+'str'.include?('.')
+
+==> corrected/104.rb 18 <==
+str.include?('*')
+
+==> corrected/105.rb 20 <==
+'str'.include?('*')
+
+==> corrected/108.rb 18 <==
+str.include?('?')
+
+==> corrected/109.rb 20 <==
+'str'.include?('?')
+
+==> corrected/112.rb 18 <==
+str.include?('$')
+
+==> corrected/113.rb 20 <==
+'str'.include?('$')
+
+==> corrected/116.rb 18 <==
+str.include?('^')
+
+==> corrected/117.rb 20 <==
+'str'.include?('^')
+
+==> corrected/120.rb 18 <==
+str.include?('|')
+
+==> corrected/121.rb 20 <==
+'str'.include?('|')
+
+==> corrected/156.rb 18 <==
+str.include?('i')
+
+==> corrected/157.rb 20 <==
+'str'.include?('i')
+
+==> corrected/158.rb 18 <==
+str.include?('j')
+
+==> corrected/159.rb 20 <==
+'str'.include?('j')
+
+==> corrected/160.rb 18 <==
+str.include?('l')
+
+==> corrected/161.rb 20 <==
+'str'.include?('l')
+
+==> corrected/162.rb 18 <==
+str.include?('m')
+
+==> corrected/163.rb 20 <==
+'str'.include?('m')
+
+==> corrected/164.rb 18 <==
+str.include?('o')
+
+==> corrected/165.rb 20 <==
+'str'.include?('o')
+
+==> corrected/166.rb 18 <==
+str.include?('q')
+
+==> corrected/167.rb 20 <==
+'str'.include?('q')
+
+==> corrected/168.rb 18 <==
+str.include?('y')
+
+==> corrected/169.rb 20 <==
+'str'.include?('y')
+
+==> corrected/170.rb 19 <==
+str.include?('\\')
+
+==> corrected/171.rb 21 <==
+'str'.include?('\\')
+
+==> corrected/172.rb 20 <==
+str.include?('abc')
+
+==> corrected/173.rb 22 <==
+'str'.include?('abc')
+
+==> corrected/174.rb 19 <==
+str.include?("\a")
+
+==> corrected/175.rb 21 <==
+'str'.include?("\a")
+
+==> corrected/176.rb 19 <==
+str.include?("\e")
+
+==> corrected/177.rb 21 <==
+'str'.include?("\e")
+
+==> corrected/178.rb 19 <==
+str.include?("\f")
+
+==> corrected/179.rb 21 <==
+'str'.include?("\f")
+
+==> corrected/180.rb 19 <==
+str.include?("\r")
+
+==> corrected/181.rb 21 <==
+'str'.include?("\r")
+
+==> corrected/182.rb 19 <==
+str.include?("\t")
+
+==> corrected/183.rb 21 <==
+'str'.include?("\t")
+
+==> corrected/184.rb 19 <==
+str.include?("\v")
+
+==> corrected/185.rb 21 <==
+'str'.include?("\v")
+
+==> corrected/186.rb 18 <==
+str.include?('.')
+
+==> corrected/187.rb 20 <==
+'str'.include?('.')
+
+==> corrected/190.rb 18 <==
+str.include?('*')
+
+==> corrected/191.rb 20 <==
+'str'.include?('*')
+
+==> corrected/194.rb 18 <==
+str.include?('?')
+
+==> corrected/195.rb 20 <==
+'str'.include?('?')
+
+==> corrected/198.rb 18 <==
+str.include?('$')
+
+==> corrected/199.rb 20 <==
+'str'.include?('$')
+
+==> corrected/202.rb 18 <==
+str.include?('^')
+
+==> corrected/203.rb 20 <==
+'str'.include?('^')
+
+==> corrected/206.rb 18 <==
+str.include?('|')
+
+==> corrected/207.rb 20 <==
+'str'.include?('|')
+
+==> corrected/242.rb 18 <==
+str.include?('i')
+
+==> corrected/243.rb 20 <==
+'str'.include?('i')
+
+==> corrected/244.rb 18 <==
+str.include?('j')
+
+==> corrected/245.rb 20 <==
+'str'.include?('j')
+
+==> corrected/246.rb 18 <==
+str.include?('l')
+
+==> corrected/247.rb 20 <==
+'str'.include?('l')
+
+==> corrected/248.rb 18 <==
+str.include?('m')
+
+==> corrected/249.rb 20 <==
+'str'.include?('m')
+
+==> corrected/250.rb 18 <==
+str.include?('o')
+
+==> corrected/251.rb 20 <==
+'str'.include?('o')
+
+==> corrected/252.rb 18 <==
+str.include?('q')
+
+==> corrected/253.rb 20 <==
+'str'.include?('q')
+
+==> corrected/254.rb 18 <==
+str.include?('y')
+
+==> corrected/255.rb 20 <==
+'str'.include?('y')
+
+==> corrected/256.rb 19 <==
+str.include?('\\')
+
+==> corrected/257.rb 21 <==
+'str'.include?('\\')
+
+==> corrected/258.rb 22 <==
+'str'.include?('abc')
+
+==> corrected/262.rb 22 <==
+content.include?(' ')
+
+==> corrected/263.rb 21 <==
+!str.include?('abc')
+
+==> corrected/264.rb 21 <==
+str&.include?('abc')
+

@@ -1,0 +1,17 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000/000_spec.rb 72 <==
+it 'does something' do
+  skip 'not yet implemented' do
+    it
+  end
+end
+

@@ -1,0 +1,24 @@
+==> offenses exit=1 357 <==
+000/000.rb:1:1: C: [Correctable] Rails/IndexBy: Prefer `index_by` over `map { ... }.to_h`.
+002/002.rb:1:1: C: [Correctable] Rails/IndexBy: Prefer `index_by` over `Hash[map { ... }]`.
+004/004.rb:1:1: C: [Correctable] Rails/IndexBy: Prefer `index_by` over `to_h { ... }`.
+005/005.rb:1:1: C: [Correctable] Rails/IndexBy: Prefer `index_by` over `to_h { ... }`.
+
+==> autocorrect exit=0 349 <==
+000/000.rb:1:1: C: [Corrected] Rails/IndexBy: Prefer `index_by` over `map { ... }.to_h`.
+002/002.rb:1:1: C: [Corrected] Rails/IndexBy: Prefer `index_by` over `Hash[map { ... }]`.
+004/004.rb:1:1: C: [Corrected] Rails/IndexBy: Prefer `index_by` over `to_h { ... }`.
+005/005.rb:1:1: C: [Corrected] Rails/IndexBy: Prefer `index_by` over `to_h { ... }`.
+
+==> corrected/000/000.rb 25 <==
+x.index_by { it.to_sym }
+
+==> corrected/002/002.rb 25 <==
+x.index_by { it.to_sym }
+
+==> corrected/004/004.rb 25 <==
+x.index_by { it.to_sym }
+
+==> corrected/005/005.rb 24 <==
+x.index_by { y.to_sym }
+

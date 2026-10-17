@@ -1,0 +1,37 @@
+==> offenses exit=1 1189 <==
+000/000_spec.rb:1:17: C: [Correctable] RSpec/SharedExamples: Prefer :foo_bar_baz over `"foo bar baz"` to symbolize shared examples.
+000/000_spec.rb:2:23: C: [Correctable] RSpec/SharedExamples: Prefer :foo_bar_baz over `"foo bar baz"` to symbolize shared examples.
+000/000_spec.rb:3:17: C: [Correctable] RSpec/SharedExamples: Prefer :foo_bar_baz over `"foo bar baz"` to symbolize shared examples.
+000/000_spec.rb:4:21: C: [Correctable] RSpec/SharedExamples: Prefer :foo_bar_baz over `"foo bar baz"` to symbolize shared examples.
+000/000_spec.rb:5:18: C: [Correctable] RSpec/SharedExamples: Prefer :foo_bar_baz over `"foo bar baz"` to symbolize shared examples.
+000/000_spec.rb:6:18: C: [Correctable] RSpec/SharedExamples: Prefer :foo_bar_baz over `"Foo Bar Baz"` to symbolize shared examples.
+000/000_spec.rb:7:18: C: [Correctable] RSpec/SharedExamples: Prefer :foo_bar_baz over `"foo bar baz"` to symbolize shared examples.
+000/000_spec.rb:9:17: C: [Correctable] RSpec/SharedExamples: Prefer :foo_bar_baz over `"foo bar baz"` to symbolize shared examples.
+000/000_spec.rb:13:23: C: [Correctable] RSpec/SharedExamples: Prefer :foo_bar_baz over `"foo bar baz"` to symbolize shared examples.
+
+==> autocorrect exit=0 1171 <==
+000/000_spec.rb:1:17: C: [Corrected] RSpec/SharedExamples: Prefer :foo_bar_baz over `"foo bar baz"` to symbolize shared examples.
+000/000_spec.rb:2:23: C: [Corrected] RSpec/SharedExamples: Prefer :foo_bar_baz over `"foo bar baz"` to symbolize shared examples.
+000/000_spec.rb:3:17: C: [Corrected] RSpec/SharedExamples: Prefer :foo_bar_baz over `"foo bar baz"` to symbolize shared examples.
+000/000_spec.rb:4:21: C: [Corrected] RSpec/SharedExamples: Prefer :foo_bar_baz over `"foo bar baz"` to symbolize shared examples.
+000/000_spec.rb:5:18: C: [Corrected] RSpec/SharedExamples: Prefer :foo_bar_baz over `"foo bar baz"` to symbolize shared examples.
+000/000_spec.rb:6:18: C: [Corrected] RSpec/SharedExamples: Prefer :foo_bar_baz over `"Foo Bar Baz"` to symbolize shared examples.
+000/000_spec.rb:7:18: C: [Corrected] RSpec/SharedExamples: Prefer :foo_bar_baz over `"foo bar baz"` to symbolize shared examples.
+000/000_spec.rb:9:17: C: [Corrected] RSpec/SharedExamples: Prefer :foo_bar_baz over `"foo bar baz"` to symbolize shared examples.
+000/000_spec.rb:13:23: C: [Corrected] RSpec/SharedExamples: Prefer :foo_bar_baz over `"foo bar baz"` to symbolize shared examples.
+
+==> corrected/000/000_spec.rb 333 <==
+it_behaves_like :foo_bar_baz
+it_should_behave_like :foo_bar_baz
+shared_examples :foo_bar_baz
+shared_examples_for :foo_bar_baz
+include_examples :foo_bar_baz
+include_examples :foo_bar_baz
+include_examples :foo_bar_baz, 'foo', 'bar'
+
+shared_examples :foo_bar_baz, 'foo', 'bar' do |param|
+  # ...
+end
+
+RSpec.shared_examples :foo_bar_baz
+

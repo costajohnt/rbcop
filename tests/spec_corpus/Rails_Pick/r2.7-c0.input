@@ -1,0 +1,23 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 6.0
+
+==> 000/000.rb 18 <==
+x.pluck(:a).first
+
+==> 001/001.rb 19 <==
+x.pluck(:a)&.first
+
+==> 002/002.rb 20 <==
+x&.pluck(:a)&.first
+
+==> 003/003.rb 22 <==
+x.pluck(:a, :b).first
+

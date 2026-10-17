@@ -1,0 +1,32 @@
+==> offenses exit=1 1429 <==
+000/000_spec.rb:2:3: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+000/000_spec.rb:5:3: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+001/001_spec.rb:2:3: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+001/001_spec.rb:11:3: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+007/007_spec.rb:2:3: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+007/007_spec.rb:6:3: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+009/009_spec.rb:3:5: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+009/009_spec.rb:6:5: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+010/010_spec.rb:3:5: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+010/010_spec.rb:8:5: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+012/012_spec.rb:2:3: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+012/012_spec.rb:6:3: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+014/014_spec.rb:2:3: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+014/014_spec.rb:3:3: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+
+==> autocorrect exit=1 1429 <==
+000/000_spec.rb:2:3: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+000/000_spec.rb:5:3: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+001/001_spec.rb:2:3: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+001/001_spec.rb:11:3: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+007/007_spec.rb:2:3: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+007/007_spec.rb:6:3: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+009/009_spec.rb:3:5: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+009/009_spec.rb:6:5: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+010/010_spec.rb:3:5: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+010/010_spec.rb:8:5: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+012/012_spec.rb:2:3: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+012/012_spec.rb:6:3: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+014/014_spec.rb:2:3: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+014/014_spec.rb:3:3: C: RSpec/RepeatedDescription: Don't repeat descriptions within an example group.
+

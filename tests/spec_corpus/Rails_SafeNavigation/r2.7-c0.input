@@ -1,0 +1,27 @@
+==> .rubocop.yml 175 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/SafeNavigation:
+  ConvertTry: false
+
+==> 000/000.rb 11 <==
+[1, 2].join
+==> 001/001.rb 17 <==
+[1, 2].try(:join)
+==> 002/002.rb 22 <==
+[1, 2].try(:join, ",")
+==> 003/003.rb 38 <==
+[1, 2].try(:map) { |e| e.some_method }
+==> 004/004.rb 72 <==
+[1, 2].try(:each_with_object, []) do |e, acc|
+  acc << e.some_method
+end
+==> 005/005.rb 35 <==
+foo.try!(:[], bar.try!(:[], :baz))
+

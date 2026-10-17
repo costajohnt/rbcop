@@ -1,0 +1,43 @@
+==> offenses exit=1 507 <==
+test/000_test.rb:3:5: C: [Correctable] Minitest/RefuteRespondTo: Prefer using `refute_respond_to(object, :do_something)`.
+test/002_test.rb:3:5: C: [Correctable] Minitest/RefuteRespondTo: Prefer using `refute_respond_to(object, :do_something, 'message')`.
+test/004_test.rb:3:5: C: [Correctable] Minitest/RefuteRespondTo: Prefer using `refute_respond_to(self, :do_something, <<~MESSAGE)`.
+test/005_test.rb:3:5: C: [Correctable] Minitest/RefuteRespondTo: Prefer using `refute_respond_to(self, :do_something)`.
+
+==> autocorrect exit=0 499 <==
+test/000_test.rb:3:5: C: [Corrected] Minitest/RefuteRespondTo: Prefer using `refute_respond_to(object, :do_something)`.
+test/002_test.rb:3:5: C: [Corrected] Minitest/RefuteRespondTo: Prefer using `refute_respond_to(object, :do_something, 'message')`.
+test/004_test.rb:3:5: C: [Corrected] Minitest/RefuteRespondTo: Prefer using `refute_respond_to(self, :do_something, <<~MESSAGE)`.
+test/005_test.rb:3:5: C: [Corrected] Minitest/RefuteRespondTo: Prefer using `refute_respond_to(self, :do_something)`.
+
+==> corrected/test/000_test.rb 110 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_respond_to(object, :do_something)
+  end
+end
+
+==> corrected/test/002_test.rb 121 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_respond_to(object, :do_something, 'message')
+  end
+end
+
+==> corrected/test/004_test.rb 151 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_respond_to(self, :do_something, <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+
+==> corrected/test/005_test.rb 108 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_respond_to(self, :do_something)
+  end
+end
+

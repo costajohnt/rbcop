@@ -1,0 +1,40 @@
+==> offenses exit=1 550 <==
+000/000.rb:1:1: C: [Correctable] Rails/StripHeredoc: Use squiggly heredoc (`<<~`) instead of `strip_heredoc`.
+001/001.rb:1:1: C: [Correctable] Rails/StripHeredoc: Use squiggly heredoc (`<<~`) instead of `strip_heredoc`.
+002/002.rb:1:1: C: [Correctable] Rails/StripHeredoc: Use squiggly heredoc (`<<~`) instead of `strip_heredoc`.
+003/003.rb:1:1: C: [Correctable] Rails/StripHeredoc: Use squiggly heredoc (`<<~`) instead of `strip_heredoc`.
+004/004.rb:1:1: C: [Correctable] Rails/StripHeredoc: Use squiggly heredoc (`<<~`) instead of `strip_heredoc`.
+
+==> autocorrect exit=0 540 <==
+000/000.rb:1:1: C: [Corrected] Rails/StripHeredoc: Use squiggly heredoc (`<<~`) instead of `strip_heredoc`.
+001/001.rb:1:1: C: [Corrected] Rails/StripHeredoc: Use squiggly heredoc (`<<~`) instead of `strip_heredoc`.
+002/002.rb:1:1: C: [Corrected] Rails/StripHeredoc: Use squiggly heredoc (`<<~`) instead of `strip_heredoc`.
+003/003.rb:1:1: C: [Corrected] Rails/StripHeredoc: Use squiggly heredoc (`<<~`) instead of `strip_heredoc`.
+004/004.rb:1:1: C: [Corrected] Rails/StripHeredoc: Use squiggly heredoc (`<<~`) instead of `strip_heredoc`.
+
+==> corrected/000/000.rb 23 <==
+<<~EOS
+  some text
+EOS
+
+==> corrected/001/001.rb 23 <==
+<<~EOS
+  some text
+EOS
+
+==> corrected/002/002.rb 36 <==
+<<~EOS.do_something
+  some text
+EOS
+
+==> corrected/003/003.rb 35 <==
+<<~EOS
+  some text
+  some text
+EOS
+
+==> corrected/004/004.rb 23 <==
+<<~EOS
+  some text
+EOS
+

@@ -1,0 +1,170 @@
+==> .rubocop.yml 465 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/SkipsModelValidations:
+  ForbiddenMethods:
+  - decrement!
+  - decrement_counter
+  - increment!
+  - increment_counter
+  - insert
+  - insert!
+  - insert_all
+  - insert_all!
+  - toggle!
+  - touch
+  - touch_all
+  - update_all
+  - update_attribute
+  - update_column
+  - update_columns
+  - update_counters
+  - upsert
+  - upsert_all
+
+==> 000/000.rb 23 <==
+User.decrement!(:attr)
+
+==> 001/001.rb 30 <==
+User.decrement_counter(:attr)
+
+==> 002/002.rb 23 <==
+User.increment!(:attr)
+
+==> 003/003.rb 30 <==
+User.increment_counter(:attr)
+
+==> 004/004.rb 19 <==
+User.insert(:attr)
+
+==> 005/005.rb 20 <==
+User.insert!(:attr)
+
+==> 006/006.rb 23 <==
+User.insert_all(:attr)
+
+==> 007/007.rb 24 <==
+User.insert_all!(:attr)
+
+==> 008/008.rb 20 <==
+User.toggle!(:attr)
+
+==> 009/009.rb 18 <==
+User.touch(:attr)
+
+==> 010/010.rb 22 <==
+User.touch_all(:attr)
+
+==> 011/011.rb 23 <==
+User.update_all(:attr)
+
+==> 012/012.rb 29 <==
+User.update_attribute(:attr)
+
+==> 013/013.rb 26 <==
+User.update_column(:attr)
+
+==> 014/014.rb 27 <==
+User.update_columns(:attr)
+
+==> 015/015.rb 28 <==
+User.update_counters(:attr)
+
+==> 016/016.rb 19 <==
+User.upsert(:attr)
+
+==> 017/017.rb 23 <==
+User.upsert_all(:attr)
+
+==> 018/018.rb 23 <==
+FileUtils.touch('file')
+==> 019/019.rb 25 <==
+::FileUtils.touch('file')
+==> 020/020.rb 29 <==
+belongs_to(:user).touch(true)
+==> 021/021.rb 30 <==
+belongs_to(:user).touch(false)
+==> 022/022.rb 45 <==
+string.insert(0, 'b')
+string&.insert(0, 'b')
+
+==> 023/023.rb 49 <==
+array.insert(1, :a, :b)
+array&.insert(1, :a, :b)
+
+==> 024/024.rb 37 <==
+insert(attributes, returning: false)
+
+==> 025/025.rb 41 <==
+insert(attributes, unique_by: :username)
+
+==> 026/026.rb 59 <==
+insert(attributes, returning: false, unique_by: :username)
+
+==> 027/027.rb 41 <==
+insert(attributes, something_else: true)
+
+==> 028/028.rb 59 <==
+insert(attributes, returning: false, something_else: true)
+
+==> 029/029.rb 47 <==
+string.insert!(0, 'b')
+string&.insert!(0, 'b')
+
+==> 030/030.rb 51 <==
+array.insert!(1, :a, :b)
+array&.insert!(1, :a, :b)
+
+==> 031/031.rb 38 <==
+insert!(attributes, returning: false)
+
+==> 032/032.rb 42 <==
+insert!(attributes, unique_by: :username)
+
+==> 033/033.rb 60 <==
+insert!(attributes, returning: false, unique_by: :username)
+
+==> 034/034.rb 15 <==
+User.decrement!
+==> 035/035.rb 22 <==
+User.decrement_counter
+==> 036/036.rb 15 <==
+User.increment!
+==> 037/037.rb 22 <==
+User.increment_counter
+==> 038/038.rb 11 <==
+User.insert
+==> 039/039.rb 12 <==
+User.insert!
+==> 040/040.rb 15 <==
+User.insert_all
+==> 041/041.rb 16 <==
+User.insert_all!
+==> 042/042.rb 12 <==
+User.toggle!
+==> 043/043.rb 15 <==
+User.update_all
+==> 044/044.rb 21 <==
+User.update_attribute
+==> 045/045.rb 18 <==
+User.update_column
+==> 046/046.rb 19 <==
+User.update_columns
+==> 047/047.rb 20 <==
+User.update_counters
+==> 048/048.rb 11 <==
+User.upsert
+==> 049/049.rb 15 <==
+User.upsert_all
+==> 050/050.rb 11 <==
+User.touch
+
+==> 051/051.rb 15 <==
+User.touch_all
+

@@ -1,0 +1,30 @@
+==> .rubocop.yml 227 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/RefuteMethods:
+  EnforcedStyle: assert_not
+  SupportedStyles:
+  - assert_not
+  - refute
+
+==> test/000/000.rb 11 <==
+refute foo
+
+==> test/001/001.rb 21 <==
+refute foo, bar, baz
+
+==> test/002/002.rb 17 <==
+refute_empty foo
+
+==> test/003/003.rb 15 <==
+assert_not foo
+
+==> test/004/004.rb 25 <==
+assert_not foo, bar, baz
+

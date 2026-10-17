@@ -1,0 +1,40 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/models/000/000.rb 33 <==
+validates :email, presence: true
+
+==> app/models/001/001.rb 34 <==
+validates :email, allow_nil: true
+
+==> app/models/002/002.rb 36 <==
+validates :email, allow_blank: true
+
+==> app/models/003/003.rb 72 <==
+validates :title, length: { is: 5 }, allow_nil: true, allow_blank: true
+
+==> app/models/004/004.rb 73 <==
+validates :title, allow_nil: false, allow_blank: true, length: { is: 5 }
+
+==> app/models/005/005.rb 73 <==
+validates :title, length: { is: 5 }, allow_nil: true, allow_blank: false
+
+==> app/models/006/006.rb 74 <==
+validates :title, length: { is: 5 }, allow_blank: false, allow_nil: false
+
+==> app/models/007/007.rb 77 <==
+validates :details, "path_to_dynamic_validation/#{with_interpolation}": true
+
+==> app/models/008/008.rb 95 <==
+validates :email, format: { with: /regexp/, allow_blank: true }, presence: { allow_nil: true }
+
+==> app/models/009/009.rb 81 <==
+validates :email, format: { with: /regexp/, allow_nil: true, allow_blank: true }
+

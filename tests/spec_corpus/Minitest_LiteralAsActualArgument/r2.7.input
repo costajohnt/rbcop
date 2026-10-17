@@ -1,0 +1,80 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 88 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(*foo)
+  end
+end
+
+==> test/001_test.rb 112 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(foo, [1, 2, { key: :value }])
+  end
+end
+
+==> test/002_test.rb 89 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal foo, 2
+  end
+end
+
+==> test/003_test.rb 89 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal 2, foo
+  end
+end
+
+==> test/004_test.rb 92 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(foo, bar)
+  end
+end
+
+==> test/005_test.rb 90 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(2, foo)
+  end
+end
+
+==> test/006_test.rb 98 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal 0, 1, 'message'
+  end
+end
+
+==> test/007_test.rb 90 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal foo, {}
+  end
+end
+
+==> test/008_test.rb 100 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(foo, key: :value)
+  end
+end
+
+==> test/009_test.rb 90 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_equal(foo, 2)
+  end
+end
+

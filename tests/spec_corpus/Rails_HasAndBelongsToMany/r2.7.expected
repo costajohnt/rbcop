@@ -1,0 +1,6 @@
+==> offenses exit=1 114 <==
+app/models/000/000.rb:1:1: C: Rails/HasAndBelongsToMany: Prefer `has_many :through` to `has_and_belongs_to_many`.
+
+==> autocorrect exit=1 114 <==
+app/models/000/000.rb:1:1: C: Rails/HasAndBelongsToMany: Prefer `has_many :through` to `has_and_belongs_to_many`.
+

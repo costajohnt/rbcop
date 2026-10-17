@@ -1,0 +1,44 @@
+==> offenses exit=1 816 <==
+000/000.rb:1:1: C: [Correctable] Rails/EnvLocal: Use `Rails.env.local?` instead.
+000/000.rb:2:1: C: [Correctable] Rails/EnvLocal: Use `Rails.env.local?` instead.
+001/001.rb:1:1: C: [Correctable] Rails/EnvLocal: Use `Rails.env.local?` instead.
+001/001.rb:2:9: C: [Correctable] Rails/EnvLocal: Use `Rails.env.local?` instead.
+002/002.rb:1:1: C: [Correctable] Rails/EnvLocal: Use `!Rails.env.local?` instead.
+002/002.rb:2:1: C: [Correctable] Rails/EnvLocal: Use `!Rails.env.local?` instead.
+003/003.rb:1:1: C: [Correctable] Rails/EnvLocal: Use `!Rails.env.local?` instead.
+003/003.rb:2:9: C: [Correctable] Rails/EnvLocal: Use `!Rails.env.local?` instead.
+004/004.rb:1:1: C: [Correctable] Rails/EnvLocal: Use `!Rails.env.local?` instead.
+004/004.rb:2:9: C: [Correctable] Rails/EnvLocal: Use `!Rails.env.local?` instead.
+
+==> autocorrect exit=0 796 <==
+000/000.rb:1:1: C: [Corrected] Rails/EnvLocal: Use `Rails.env.local?` instead.
+000/000.rb:2:1: C: [Corrected] Rails/EnvLocal: Use `Rails.env.local?` instead.
+001/001.rb:1:1: C: [Corrected] Rails/EnvLocal: Use `Rails.env.local?` instead.
+001/001.rb:2:9: C: [Corrected] Rails/EnvLocal: Use `Rails.env.local?` instead.
+002/002.rb:1:1: C: [Corrected] Rails/EnvLocal: Use `!Rails.env.local?` instead.
+002/002.rb:2:1: C: [Corrected] Rails/EnvLocal: Use `!Rails.env.local?` instead.
+003/003.rb:1:1: C: [Corrected] Rails/EnvLocal: Use `!Rails.env.local?` instead.
+003/003.rb:2:9: C: [Corrected] Rails/EnvLocal: Use `!Rails.env.local?` instead.
+004/004.rb:1:1: C: [Corrected] Rails/EnvLocal: Use `!Rails.env.local?` instead.
+004/004.rb:2:9: C: [Corrected] Rails/EnvLocal: Use `!Rails.env.local?` instead.
+
+==> corrected/000/000.rb 34 <==
+Rails.env.local?
+Rails.env.local?
+
+==> corrected/001/001.rb 50 <==
+Rails.env.local? || foo?
+foo? || Rails.env.local?
+
+==> corrected/002/002.rb 36 <==
+!Rails.env.local?
+!Rails.env.local?
+
+==> corrected/003/003.rb 52 <==
+!Rails.env.local? || foo?
+foo? || !Rails.env.local?
+
+==> corrected/004/004.rb 52 <==
+!Rails.env.local? && foo?
+foo? && !Rails.env.local?
+

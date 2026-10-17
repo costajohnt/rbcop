@@ -1,0 +1,20 @@
+==> offenses exit=1 440 <==
+000/000_spec.rb:1:21: C: [Correctable] RSpec/ContainExactly: Prefer `match_array` when matching array values.
+000/000_spec.rb:2:21: C: [Correctable] RSpec/ContainExactly: Prefer `match_array` when matching array values.
+000/000_spec.rb:3:21: C: [Correctable] RSpec/ContainExactly: Prefer `match_array` when matching array values.
+001/001_spec.rb:1:21: C: [Correctable] RSpec/ContainExactly: Prefer `match_array` when matching array values.
+
+==> autocorrect exit=0 432 <==
+000/000_spec.rb:1:21: C: [Corrected] RSpec/ContainExactly: Prefer `match_array` when matching array values.
+000/000_spec.rb:2:21: C: [Corrected] RSpec/ContainExactly: Prefer `match_array` when matching array values.
+000/000_spec.rb:3:21: C: [Corrected] RSpec/ContainExactly: Prefer `match_array` when matching array values.
+001/001_spec.rb:1:21: C: [Corrected] RSpec/ContainExactly: Prefer `match_array` when matching array values.
+
+==> corrected/000/000_spec.rb 132 <==
+it { is_expected.to match_array([1,2,3]) }
+it { is_expected.to match_array(a.merge(b)) }
+it { is_expected.to match_array((a + b)) }
+
+==> corrected/001/001_spec.rb 43 <==
+it { is_expected.to match_array(%w(a b)) }
+

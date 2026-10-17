@@ -1,0 +1,6 @@
+==> offenses exit=1 73 <==
+000/000.rb:1:6: C: Rails/FindBy: Use `find_by` instead of `where.first`.
+
+==> autocorrect exit=1 73 <==
+000/000.rb:1:6: C: Rails/FindBy: Use `find_by` instead of `where.first`.
+

@@ -1,0 +1,62 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 60 <==
+expect(page).to have_selector('.my_element', visible: true)
+
+==> 001/001_spec.rb 61 <==
+expect(page).to have_selector('.my_element', visible: false)
+
+==> 002/002_spec.rb 490 <==
+expect(page).to have_css('.profile', visible: false)
+expect(page).to have_xpath('.//profile', visible: false)
+expect(page).to have_link('news', visible: false)
+expect(page).to have_button('login', visible: false)
+expect(page).to have_field('name', visible: false)
+expect(page).to have_select('sauce', visible: false)
+expect(page).to have_table('arrivals', visible: false)
+expect(page).to have_checked_field('cat', visible: false)
+expect(page).to have_unchecked_field('cat', visible: false)
+
+==> 003/003_spec.rb 517 <==
+expect(page).to have_no_css('.profile', visible: false)
+expect(page).to have_no_xpath('.//profile', visible: false)
+expect(page).to have_no_link('news', visible: false)
+expect(page).to have_no_button('login', visible: false)
+expect(page).to have_no_field('name', visible: false)
+expect(page).to have_no_select('sauce', visible: false)
+expect(page).to have_no_table('arrivals', visible: false)
+expect(page).to have_no_checked_field('cat', visible: false)
+expect(page).to have_no_unchecked_field('cat', visible: false)
+
+==> 004/004_spec.rb 67 <==
+expect(page).to have_selector(:css, '.my_element', visible: false)
+
+==> 005/005_spec.rb 91 <==
+expect(page).to have_selector('.my_element', count: 1, visible: false, normalize_ws: true)
+
+==> 006/006_spec.rb 45 <==
+expect(page).to have_selector('.my_element')
+
+==> 007/007_spec.rb 60 <==
+expect(page).to have_selector('.my_element', visible: :all)
+
+==> 008/008_spec.rb 64 <==
+expect(page).to have_selector('.my_element', visible: :visible)
+
+==> 009/009_spec.rb 63 <==
+expect(page).to have_selector('.my_element', visible: :hidden)
+
+==> 010/010_spec.rb 65 <==
+expect(page).to have_selector('.my_element', normalize_ws: true)
+
+==> 011/011_spec.rb 75 <==
+expect(page).to have_selector('.my_element', count: 1, normalize_ws: true)
+

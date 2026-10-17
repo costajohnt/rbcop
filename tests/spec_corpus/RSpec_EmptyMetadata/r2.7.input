@@ -1,0 +1,26 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 28 <==
+describe 'Something' do
+end
+
+==> 001/001_spec.rb 38 <==
+describe 'Something', { a: b } do
+end
+
+==> 002/002_spec.rb 32 <==
+describe 'Something', {} do
+end
+
+==> 003/003_spec.rb 40 <==
+describe 'Something', **{ a: b } do
+end
+

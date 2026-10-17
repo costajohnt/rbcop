@@ -1,0 +1,18 @@
+==> offenses exit=1 779 <==
+004/config/initializers/foo.rb:1:16: C: Rails/EnvironmentVariableAccess: Do not read from `ENV` directly post initialization.
+app/000/000.rb:1:1: C: Rails/EnvironmentVariableAccess: Do not read from `ENV` directly post initialization.
+app/001/001.rb:1:1: C: Rails/EnvironmentVariableAccess: Do not read from `ENV` directly post initialization.
+app/002/002.rb:1:1: C: Rails/EnvironmentVariableAccess: Do not read from `ENV` directly post initialization.
+app/005/foo.rb:1:16: C: Rails/EnvironmentVariableAccess: Do not read from `ENV` directly post initialization.
+app/006/006.rb:1:1: C: Rails/EnvironmentVariableAccess: Do not write to `ENV` directly post initialization.
+app/007/007.rb:1:1: C: Rails/EnvironmentVariableAccess: Do not write to `ENV` directly post initialization.
+
+==> autocorrect exit=1 779 <==
+004/config/initializers/foo.rb:1:16: C: Rails/EnvironmentVariableAccess: Do not read from `ENV` directly post initialization.
+app/000/000.rb:1:1: C: Rails/EnvironmentVariableAccess: Do not read from `ENV` directly post initialization.
+app/001/001.rb:1:1: C: Rails/EnvironmentVariableAccess: Do not read from `ENV` directly post initialization.
+app/002/002.rb:1:1: C: Rails/EnvironmentVariableAccess: Do not read from `ENV` directly post initialization.
+app/005/foo.rb:1:16: C: Rails/EnvironmentVariableAccess: Do not read from `ENV` directly post initialization.
+app/006/006.rb:1:1: C: Rails/EnvironmentVariableAccess: Do not write to `ENV` directly post initialization.
+app/007/007.rb:1:1: C: Rails/EnvironmentVariableAccess: Do not write to `ENV` directly post initialization.
+

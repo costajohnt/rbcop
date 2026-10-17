@@ -39,9 +39,14 @@ static REGISTRY: LazyLock<Registry> = LazyLock::new(|| {
     r
 });
 
-/// A cop's position in RuboCop's registry (load) order; unknown names sort last.
-pub fn registry_index(name: &str) -> usize {
-    REGISTRY.order.get(name).copied().unwrap_or(usize::MAX)
+/// A cop's position in RuboCop's registry (load) order: RuboCop's own cops, then each native
+/// plugin's in the order the plugins were loaded (registry.tsv keeps the order within one plugin);
+/// unknown names sort last.
+pub fn registry_index(name: &str) -> (usize, usize) {
+    let plugin = crate::helpers::cop_registry::plugin_of(name).map_or(0, |p| {
+        crate::helpers::cop_registry::loaded_plugins().iter().position(|l| l.gem == p.gem).map_or(usize::MAX, |i| i + 1)
+    });
+    (plugin, REGISTRY.order.get(name).copied().unwrap_or(usize::MAX))
 }
 
 /// Cop::AutocorrectLogic#autocorrect? for a cop that supports autocorrection (`Cop::correctable`).
@@ -96,13 +101,15 @@ pub fn correct(
     mode: Mode,
 ) -> Corrected {
     crate::directives::take_warnings();
+    runner::take_abort();
     let (mut offenses, mut current, changed, error, disabled) =
         inspection_loop(path, display, Arc::from(text), cfg, selected, mode);
     let mut changed = changed;
     // Runner#add_redundant_disables (skipped when the loop raised): Lint/RedundantCopDisableDirective
     // judges the final source against every offense found, and when it removed directives the
     // whole loop runs once more; both offense lists are kept (`offenses |= new_offenses`).
-    if error.is_none() {
+    // (Nor when the file ends the run: Runner#check_for_redundant_disables? raised.)
+    if error.is_none() && !runner::aborting() {
         let mut lines = Lines::default();
         let span = |o: &Offense| (o.cop, lines.line_col(o, o.start).0, lines.line_col(o, o.end.max(o.start)).0);
         let checked: Vec<runner::Span> = offenses.iter().map(span).chain(disabled).collect();
@@ -127,6 +134,7 @@ pub fn correct(
         offenses: uniq_sorted(offenses),
         text: normalise(&current).to_string(),
         warnings: crate::directives::take_warnings(),
+        abort: runner::take_abort(),
     };
     Corrected { source: changed.then(|| current.to_string()), report, error }
 }

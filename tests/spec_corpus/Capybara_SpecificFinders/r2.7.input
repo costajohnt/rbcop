@@ -1,0 +1,109 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 17 <==
+find('#some-id')
+
+==> 001/001_spec.rb 23 <==
+find(:css, '#some-id')
+
+==> 002/002_spec.rb 42 <==
+find(:css, '#some-id', class: 'some-cls')
+
+==> 003/003_spec.rb 21 <==
+find(:id, 'some-id')
+
+==> 004/004_spec.rb 40 <==
+find(:id, 'some-id', class: 'some-cls')
+
+==> 005/005_spec.rb 16 <==
+find "#some-id"
+
+==> 006/006_spec.rb 26 <==
+find('#some-id.some-cls')
+
+==> 007/007_spec.rb 135 <==
+find('#some-id\.some-cls')
+find('#some-id\>some-cls')
+find('#some-id\,some-cls')
+find('#some-id\+some-cls')
+find('#some-id\~some-cls')
+
+==> 008/008_spec.rb 36 <==
+find('#some-id.some-cls.other-cls')
+
+==> 009/009_spec.rb 46 <==
+find('#some-id.some-cls', class: 'other-cls')
+
+==> 010/010_spec.rb 63 <==
+find('#some-id.some-cls', class: ['other-cls1', 'other-cls2'])
+
+==> 011/011_spec.rb 65 <==
+find('#some-id.some-cls', exact_text: 'foo', class: 'other-cls')
+
+==> 012/012_spec.rb 36 <==
+find('#some-id', exact_text: 'foo')
+
+==> 013/013_spec.rb 35 <==
+find '#some-id', exact_text: 'foo'
+
+==> 014/014_spec.rb 55 <==
+find('#some-id').find('#other-id').find('#another-id')
+
+==> 015/015_spec.rb 21 <==
+find('[id=some-id]')
+
+==> 016/016_spec.rb 27 <==
+find(:css, '[id=some-id]')
+
+==> 017/017_spec.rb 46 <==
+find(:css, '[id=some-id]', class: 'some-cls')
+
+==> 018/018_spec.rb 43 <==
+find('[id="foo"]')
+find('[id="foo[bar]"]')
+
+==> 019/019_spec.rb 72 <==
+find('[id]')
+find('[disabled=true]')
+find('[class=some-cls][disabled]')
+
+==> 020/020_spec.rb 84 <==
+find('[class=some-cls][id=some-id]')
+find('[id=some-id][disabled][class=some-cls]')
+
+==> 021/021_spec.rb 19 <==
+find('h1#some-id')
+
+==> 022/022_spec.rb 23 <==
+find('h1[id=some-id]')
+
+==> 023/023_spec.rb 35 <==
+find('a.some-id')
+find('.some-id')
+
+==> 024/024_spec.rb 22 <==
+find_by_id('some-id')
+
+==> 025/025_spec.rb 86 <==
+find('#some-id body')
+find('#some-id>h1')
+find('#some-id,h2')
+find('#some-id+option')
+
+==> 026/026_spec.rb 52 <==
+find('#foo[hidden]')
+find('#foo[class="some-cls"]')
+
+==> 027/027_spec.rb 84 <==
+find('#foo:enabled')
+find('#foo:not(:disabled)')
+find('#foo:is(:enabled,:checked)')
+

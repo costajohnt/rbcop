@@ -1,0 +1,16 @@
+==> .rubocop.yml 212 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/Present:
+  NotNilAndNotEmpty: true
+  NotBlank: true
+  UnlessBlank: false
+
+==> 000/000.rb 27 <==
+something unless foo.blank?

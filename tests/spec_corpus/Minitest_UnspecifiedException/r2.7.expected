@@ -1,0 +1,8 @@
+==> offenses exit=1 188 <==
+test/001_test.rb:3:5: C: Minitest/UnspecifiedException: Specify the exception being captured.
+test/002_test.rb:3:5: C: Minitest/UnspecifiedException: Specify the exception being captured.
+
+==> autocorrect exit=1 188 <==
+test/001_test.rb:3:5: C: Minitest/UnspecifiedException: Specify the exception being captured.
+test/002_test.rb:3:5: C: Minitest/UnspecifiedException: Specify the exception being captured.
+

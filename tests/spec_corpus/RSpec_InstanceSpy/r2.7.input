@@ -1,0 +1,41 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 91 <==
+it do
+  foo = instance_double(Foo).as_null_object
+  expect(foo).to have_received(:bar)
+end
+
+==> 001/001_spec.rb 98 <==
+it do
+  foo = instance_double(Foo, :name).as_null_object
+  expect(foo).to have_received(:bar)
+end
+
+==> 002/002_spec.rb 76 <==
+it do
+  foo = instance_double(Foo)
+  expect(bar).to have_received(:bar)
+end
+
+==> 003/003_spec.rb 132 <==
+it do
+  foo = instance_double(Foo).as_null_object
+  bar = instance_spy(Bar).as_null_object
+  expect(bar).to have_received(:baz)
+end
+
+==> 004/004_spec.rb 91 <==
+it do
+  foo = instance_double(Foo).as_null_object
+  expect(bar).to have_received(:bar)
+end
+

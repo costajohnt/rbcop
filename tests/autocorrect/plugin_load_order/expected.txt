@@ -1,0 +1,10 @@
+bar_test.rb:2:3: C: Minitest/MultipleAssertions: Test case has too many assertions [4/3].
+bar_test.rb:3:5: C: [Corrected] Minitest/RefutePathExists: Prefer using `refute_path_exists path`.
+bar_test.rb:3:5: C: [Corrected] Rails/RefuteMethods: Prefer `assert_not` over `refute`.
+bar_test.rb:4:5: C: [Corrected] Minitest/RefuteMatch: Prefer using `refute_match(x, y)`.
+bar_test.rb:4:5: C: [Corrected] Rails/RefuteMethods: Prefer `assert_no_match` over `refute_match`.
+bar_test.rb:4:5: C: [Corrected] Rails/RefuteMethods: Prefer `assert_not` over `refute`.
+bar_test.rb:5:5: C: [Corrected] Minitest/RefuteNil: Prefer using `refute_nil(x)`.
+bar_test.rb:5:5: C: [Corrected] Rails/RefuteMethods: Prefer `assert_not_equal` over `refute_equal`.
+bar_test.rb:5:5: C: [Corrected] Rails/RefuteMethods: Prefer `assert_not_nil` over `refute_nil`.
+bar_test.rb:6:5: C: [Corrected] Rails/RefuteMethods: Prefer `assert_not_includes` over `refute_includes`.

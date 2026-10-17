@@ -1,0 +1,34 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 24 <==
+str.match?(/A#{CONST}/)
+
+==> 001.rb 44 <==
+str.match?(/A#{CONST1}something#{CONST2}z/)
+
+==> 002.rb 59 <==
+str.match?(/A#{CONST1}something#{Regexp.escape(CONST2)}z/)
+
+==> 003.rb 18 <==
+str.match?(/foo/)
+
+==> 004.rb 39 <==
+CONST = str.match?(/#{ANOTHER_CONST}/)
+
+==> 005.rb 31 <==
+@regexp ||= /#{ANOTHER_CONST}/
+
+==> 006.rb 24 <==
+str.match?(/#{CONST}/o)
+
+==> 007.rb 41 <==
+str.match?(/#{CONST}#{do_something(1)}/)
+

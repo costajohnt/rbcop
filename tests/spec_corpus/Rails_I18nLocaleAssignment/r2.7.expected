@@ -1,0 +1,8 @@
+==> offenses exit=1 226 <==
+spec/000/000.rb:1:1: C: Rails/I18nLocaleAssignment: Use `I18n.with_locale` with block instead of `I18n.locale=`.
+spec/001/001.rb:1:1: C: Rails/I18nLocaleAssignment: Use `I18n.with_locale` with block instead of `I18n.locale=`.
+
+==> autocorrect exit=1 226 <==
+spec/000/000.rb:1:1: C: Rails/I18nLocaleAssignment: Use `I18n.with_locale` with block instead of `I18n.locale=`.
+spec/001/001.rb:1:1: C: Rails/I18nLocaleAssignment: Use `I18n.with_locale` with block instead of `I18n.locale=`.
+

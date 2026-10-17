@@ -1,0 +1,19 @@
+==> offenses exit=1 512 <==
+000.rb:1:1: C: [Correctable] Performance/ConcurrentMonotonicTime: Use `Process.clock_gettime(Process::CLOCK_MONOTONIC)` instead of `Concurrent.monotonic_time`.
+001.rb:1:1: C: [Correctable] Performance/ConcurrentMonotonicTime: Use `Process.clock_gettime(Process::CLOCK_MONOTONIC)` instead of `::Concurrent.monotonic_time`.
+002.rb:1:1: C: [Correctable] Performance/ConcurrentMonotonicTime: Use `Process.clock_gettime(Process::CLOCK_MONOTONIC, :float_second)` instead of `Concurrent.monotonic_time(:float_second)`.
+
+==> autocorrect exit=0 506 <==
+000.rb:1:1: C: [Corrected] Performance/ConcurrentMonotonicTime: Use `Process.clock_gettime(Process::CLOCK_MONOTONIC)` instead of `Concurrent.monotonic_time`.
+001.rb:1:1: C: [Corrected] Performance/ConcurrentMonotonicTime: Use `Process.clock_gettime(Process::CLOCK_MONOTONIC)` instead of `::Concurrent.monotonic_time`.
+002.rb:1:1: C: [Corrected] Performance/ConcurrentMonotonicTime: Use `Process.clock_gettime(Process::CLOCK_MONOTONIC, :float_second)` instead of `Concurrent.monotonic_time(:float_second)`.
+
+==> corrected/000.rb 48 <==
+Process.clock_gettime(Process::CLOCK_MONOTONIC)
+
+==> corrected/001.rb 48 <==
+Process.clock_gettime(Process::CLOCK_MONOTONIC)
+
+==> corrected/002.rb 63 <==
+Process.clock_gettime(Process::CLOCK_MONOTONIC, :float_second)
+

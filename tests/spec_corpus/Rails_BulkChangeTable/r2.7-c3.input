@@ -1,0 +1,74 @@
+==> .rubocop.yml 224 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 5.1
+Rails/BulkChangeTable:
+  Database: postgresql
+  Include:
+  - "*"
+
+==> 000/000.rb 116 <==
+def change
+  change_table :users do |t|
+    t.string :name, null: false
+    t.string :address, null: true
+  end
+end
+
+==> 001/001.rb 98 <==
+def change
+  add_column :users, :name, :string, null: false
+  remove_column :users, :nickname
+end
+
+==> 002/002.rb 34 <==
+def up
+  change_table(:users)
+end
+
+==> 003/003.rb 43 <==
+def up
+  change_table(:users) do
+  end
+end
+
+==> 004/004.rb 89 <==
+def change
+  change_table :users do |t|
+    t.index :name
+    t.index :address
+  end
+end
+
+==> 005/005.rb 76 <==
+def change
+  remove_index :users, :name
+  remove_index :users, :address
+end
+
+==> 006/006.rb 123 <==
+def change
+  change_table :users do |t|
+    t.change_default :name, 'unknown'
+    t.change_default :address, nil
+  end
+end
+
+==> 007/007.rb 108 <==
+def change
+  change_column_default :users, :name, false
+  change_column_default :users, :address, false
+end
+
+==> 008/008.rb 102 <==
+def change
+  change_column_null :users, :name, false
+  change_column_null :users, :address, false
+end
+

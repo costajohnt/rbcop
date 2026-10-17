@@ -1,0 +1,6 @@
+==> offenses exit=1 67 <==
+000/000.rb:1:14: W: Rails/UnknownEnv: Unknown environment `local`.
+
+==> autocorrect exit=1 67 <==
+000/000.rb:1:14: W: Rails/UnknownEnv: Unknown environment `local`.
+

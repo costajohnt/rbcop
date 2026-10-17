@@ -1,0 +1,37 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 32 <==
+Rails.root.join('public_stuff')
+
+==> 001/001.rb 28 <==
+::Rails.root.join('public')
+
+==> 002/002.rb 26 <==
+Rails.root.join('public')
+
+==> 003/003.rb 35 <==
+Rails.root.join('public/file.pdf')
+
+==> 004/004.rb 38 <==
+Rails.root.join('public', 'file.pdf')
+
+==> 005/005.rb 40 <==
+Rails.root.join('public/path/file.pdf')
+
+==> 006/006.rb 43 <==
+Rails.root.join('public/path', 'file.pdf')
+
+==> 007/007.rb 43 <==
+Rails.root.join('public', 'path/file.pdf')
+
+==> 008/008.rb 44 <==
+Rails.root.join('public', path, 'file.pdf')
+

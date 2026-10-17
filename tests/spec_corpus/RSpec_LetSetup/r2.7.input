@@ -1,0 +1,206 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 102 <==
+describe Foo do
+  let!(:foo) { bar }
+
+  it 'does not use foo' do
+    expect(baz).to eq(qux)
+  end
+end
+
+==> 001/001_spec.rb 129 <==
+describe Foo do
+  let!(:foo) { bar }
+
+  before do
+    foo
+  end
+
+  it 'does not use foo' do
+    expect(baz).to eq(qux)
+  end
+end
+
+==> 002/002_spec.rb 102 <==
+describe Foo do
+  let!(:foo) { bar }
+
+  it 'uses foo' do
+    foo
+    expect(baz).to eq(qux)
+  end
+end
+
+==> 003/003_spec.rb 213 <==
+describe Foo do
+  context 'when something special happens' do
+    let!(:foo) { bar }
+
+    it 'does not use foo' do
+      expect(baz).to eq(qux)
+    end
+  end
+
+  it 'references some other foo' do
+    foo
+  end
+end
+
+==> 004/004_spec.rb 110 <==
+shared_context 'foo' do
+  let!(:bar) { baz }
+
+  it 'does not use bar' do
+    expect(baz).to eq(qux)
+  end
+end
+
+==> 005/005_spec.rb 97 <==
+describe Foo do
+  it_behaves_like 'bar' do
+    let!(:baz) { foobar }
+    let(:a) { b }
+  end
+end
+
+==> 006/006_spec.rb 41 <==
+describe Foo do
+  let!(:bar) { baz }
+end
+
+==> 007/007_spec.rb 42 <==
+describe Foo do
+  let!('bar') { baz }
+end
+
+==> 008/008_spec.rb 74 <==
+describe Foo do
+  let!('bar') { baz }
+  it { expect(bar).to be_near }
+end
+
+==> 009/009_spec.rb 56 <==
+shared_context Foo do |&block|
+  let!(:bar, &block)
+end
+
+==> 010/010_spec.rb 131 <==
+describe Foo do
+  [].each do |i|
+    let!(:bar) { i }
+
+    it 'does not use bar' do
+      expect(baz).to eq(qux)
+    end
+  end
+end
+
+==> 011/011_spec.rb 287 <==
+describe User, type: :model do
+  let!(:user) { create(:user) }
+
+  it 'is valid' do
+    expect(user).to be_valid
+  end
+
+  context 'with no direct usage' do
+    let!(:user) { create(:user, :special) }
+
+    it 'creates something' do
+      expect(SomeModel.count).to eq(2)
+    end
+  end
+end
+
+==> 012/012_spec.rb 296 <==
+describe User do
+  let!(:user) { create(:user) }
+
+  it 'uses user' do
+    expect(user).to be_valid
+  end
+
+  context 'level 1' do
+    context 'level 2' do
+      let!(:user) { create(:user, :admin) }
+
+      it 'creates admin user' do
+        expect(User.count).to eq(2)
+      end
+    end
+  end
+end
+
+==> 013/013_spec.rb 267 <==
+describe User do
+  let!(:user) { create(:user) }
+
+  it 'uses user' do
+    expect(user).to be_valid
+  end
+
+  context 'different variable' do
+    let!(:admin) { create(:user, :admin) }
+
+    it 'creates admin user' do
+      expect(User.count).to eq(2)
+    end
+  end
+end
+
+==> 014/014_spec.rb 254 <==
+describe User do
+  let!(:user) { create(:user) }
+
+  it 'uses user' do
+    expect(user).to be_valid
+  end
+
+  context 'special case' do
+    let!(:user) { create(:user, :special) }
+
+    it 'setup only' do
+      expect(User.count).to eq(2)
+    end
+  end
+end
+
+==> 015/015_spec.rb 160 <==
+describe User do
+  [1, 2, 3].each do |i|
+    let!(:user) { create(:user, id: i) }
+
+    it 'creates user' do
+      expect(User.count).to eq(3)
+    end
+  end
+end
+
+==> 016/016_spec.rb 314 <==
+describe User do
+  let!(:user) { create(:user) }
+
+  it 'uses user' do
+    expect(user).to be_valid
+  end
+
+  [true, false].each do |flag|
+    context "when flag is #{flag}" do
+      let!(:user) { create(:user, flag: flag) }
+
+      it 'setup only' do
+        expect(User.count).to be > 0
+      end
+    end
+  end
+end
+

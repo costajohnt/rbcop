@@ -1,0 +1,37 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 18 <==
+string.bytes.size
+
+==> 001.rb 20 <==
+string.bytes.length
+
+==> 002.rb 19 <==
+string.bytes.count
+
+==> 003.rb 21 <==
+"foobar".bytes.count
+
+==> 004.rb 21 <==
+string&.bytes&.count
+
+==> 005.rb 20 <==
+string&.bytes.count
+
+==> 006.rb 13 <==
+string.bytes
+
+==> 007.rb 11 <==
+bytes.size
+
+==> 008.rb 13 <==
+3.bytes.size
+

@@ -1,0 +1,6 @@
+params.expect(a b: [:name])
+params.expect(x: 1, y: [:name])
+params.expect(a'b: [:name])
+Dir.glob(Rails.root.join("app/a'b"))
+Dir.glob(Rails.root.join("app/#@x"))
+Dir.glob(Rails.root.join('app', "a\\b", dir))

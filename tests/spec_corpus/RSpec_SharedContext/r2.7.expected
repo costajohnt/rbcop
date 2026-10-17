@@ -1,0 +1,49 @@
+==> offenses exit=1 672 <==
+001/001_spec.rb:1:1: C: [Correctable] RSpec/SharedContext: Use `shared_examples` when you don't define context.
+006/006_spec.rb:1:1: C: [Correctable] RSpec/SharedContext: Use `shared_examples` when you don't define context.
+007/007_spec.rb:1:1: C: [Correctable] RSpec/SharedContext: Use `shared_examples` when you don't define context.
+009/009_spec.rb:1:1: C: [Correctable] RSpec/SharedContext: Use `shared_context` when you don't define examples.
+010/010_spec.rb:1:1: C: [Correctable] RSpec/SharedContext: Use `shared_context` when you don't define examples.
+011/011_spec.rb:1:1: C: [Correctable] RSpec/SharedContext: Use `shared_context` when you don't define examples.
+
+==> autocorrect exit=0 660 <==
+001/001_spec.rb:1:1: C: [Corrected] RSpec/SharedContext: Use `shared_examples` when you don't define context.
+006/006_spec.rb:1:1: C: [Corrected] RSpec/SharedContext: Use `shared_examples` when you don't define context.
+007/007_spec.rb:1:1: C: [Corrected] RSpec/SharedContext: Use `shared_examples` when you don't define context.
+009/009_spec.rb:1:1: C: [Corrected] RSpec/SharedContext: Use `shared_context` when you don't define examples.
+010/010_spec.rb:1:1: C: [Corrected] RSpec/SharedContext: Use `shared_context` when you don't define examples.
+011/011_spec.rb:1:1: C: [Corrected] RSpec/SharedContext: Use `shared_context` when you don't define examples.
+
+==> corrected/001/001_spec.rb 62 <==
+shared_examples 'foo' do
+  it 'performs actions' do
+  end
+end
+
+==> corrected/006/006_spec.rb 54 <==
+shared_examples 'foo' do
+  include_examples 'bar'
+end
+
+==> corrected/007/007_spec.rb 53 <==
+shared_examples 'foo' do
+  it_behaves_like 'bar'
+end
+
+==> corrected/009/009_spec.rb 49 <==
+shared_context 'foo' do
+  let(:foo) { :bar }
+end
+
+==> corrected/010/010_spec.rb 53 <==
+shared_context 'foo' do
+  subject(:foo) { :bar }
+end
+
+==> corrected/011/011_spec.rb 54 <==
+shared_context 'foo' do
+  before do
+    foo
+  end
+end
+

@@ -1,0 +1,39 @@
+==> offenses exit=1 545 <==
+000/config/routes.rb:2:3: C: [Correctable] Rails/MatchRoute: Use `get` instead of `match` to define a route.
+001/config/routes.rb:2:3: C: [Correctable] Rails/MatchRoute: Use `get` instead of `match` to define a route.
+002/config/routes.rb:2:3: C: [Correctable] Rails/MatchRoute: Use `get` instead of `match` to define a route.
+003/config/routes.rb:2:3: C: [Correctable] Rails/MatchRoute: Use `get` instead of `match` to define a route.
+004/config/routes.rb:2:3: C: [Correctable] Rails/MatchRoute: Use `put` instead of `match` to define a route.
+
+==> autocorrect exit=0 535 <==
+000/config/routes.rb:2:3: C: [Corrected] Rails/MatchRoute: Use `get` instead of `match` to define a route.
+001/config/routes.rb:2:3: C: [Corrected] Rails/MatchRoute: Use `get` instead of `match` to define a route.
+002/config/routes.rb:2:3: C: [Corrected] Rails/MatchRoute: Use `get` instead of `match` to define a route.
+003/config/routes.rb:2:3: C: [Corrected] Rails/MatchRoute: Use `get` instead of `match` to define a route.
+004/config/routes.rb:2:3: C: [Corrected] Rails/MatchRoute: Use `put` instead of `match` to define a route.
+
+==> corrected/000/config/routes.rb 51 <==
+routes.draw do
+  get ':controller/:action/:id'
+end
+
+==> corrected/001/config/routes.rb 57 <==
+routes.draw do
+  get 'photos/:id', to: 'photos#show'
+end
+
+==> corrected/002/config/routes.rb 57 <==
+routes.draw do
+  get 'photos/:id', to: 'photos#show'
+end
+
+==> corrected/003/config/routes.rb 55 <==
+routes.draw do
+  get 'photos/:id' => 'photos#show'
+end
+
+==> corrected/004/config/routes.rb 51 <==
+routes.draw do
+  put "#{resource}/:action/:id"
+end
+

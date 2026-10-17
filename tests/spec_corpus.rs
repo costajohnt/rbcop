@@ -76,7 +76,7 @@ fn run(dir: &Path, cop: &str, autocorrect: bool) -> (String, String) {
 
 /// Every mismatch in one variant (`Dept_Cop/variant`), empty if it matches.
 fn check(root: &Path, variant: &str, work: &Path) -> Vec<String> {
-    let cop = variant.split('/').next().unwrap().replacen('_', "/", 1);
+    let cop = variant.split('/').next().unwrap().replace('_', "/");
     let input = sections(&root.join(format!("{variant}.input")));
     let expected = sections(&root.join(format!("{variant}.expected")));
     let _ = fs::remove_dir_all(work);
@@ -119,6 +119,10 @@ fn spec_corpus_matches_rubocop() {
     }
     variants.sort();
     assert!(variants.len() > 1000, "spec corpus missing: {} variants", variants.len());
+    // SPEC_CORPUS_ONLY=<prefix> (e.g. `Performance_`): check those variants only, for quick loops.
+    if let Ok(prefix) = std::env::var("SPEC_CORPUS_ONLY") {
+        variants.retain(|v| v.starts_with(&prefix));
+    }
 
     let tmp = std::env::temp_dir().join(format!("rbcop-spec-corpus-{}", std::process::id()));
     let next = AtomicUsize::new(0);

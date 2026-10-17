@@ -1,0 +1,170 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 61 <==
+class Comment
+  belongs_to :post, foreign_key: 'post_id'
+end
+
+==> 001/001.rb 63 <==
+class Comment
+  belongs_to :author, foreign_key: 'user_id'
+end
+
+==> 002/002.rb 39 <==
+class Comment
+  belongs_to :author
+end
+
+==> 003/003.rb 109 <==
+class Comment
+  belongs_to :post, class_name: 'SpecialPost', foreign_key: 'post_id', dependent: :destroy
+end
+
+==> 004/004.rb 64 <==
+class_methods do
+  belongs_to :post, foreign_key: 'post_id'
+end
+
+==> 005/005.rb 58 <==
+class Book
+  has_one :chapter, foreign_key: 'book_id'
+end
+
+==> 006/006.rb 65 <==
+class Book
+  has_one :chapter, foreign_key: 'publication_id'
+end
+
+==> 007/007.rb 34 <==
+class Book
+  has_one :chapter
+end
+
+==> 008/008.rb 109 <==
+class Book
+  has_one :chapter, class_name: 'SpecialChapter', foreign_key: 'book_id', dependent: :destroy
+end
+
+==> 009/009.rb 80 <==
+class Book
+  belongs_to :series
+
+  has_one :chapter, foreign_key: 'book_id'
+end
+
+==> 010/010.rb 64 <==
+class_methods do
+  has_one :chapter, foreign_key: 'book_id'
+end
+
+==> 011/011.rb 83 <==
+class Book
+  has_one :chapter, as: :publishable, foreign_key: 'publishable_id'
+end
+
+==> 012/012.rb 76 <==
+class Book
+  has_one :chapter, as: :publishable, foreign_key: 'book_id'
+end
+
+==> 013/013.rb 41 <==
+has_one :chapter, foreign_key: 'book_id'
+
+==> 014/014.rb 59 <==
+class Book
+  has_many :chapter, foreign_key: 'book_id'
+end
+
+==> 015/015.rb 66 <==
+class Book
+  has_many :chapter, foreign_key: 'publication_id'
+end
+
+==> 016/016.rb 35 <==
+class Book
+  has_many :chapter
+end
+
+==> 017/017.rb 110 <==
+class Book
+  has_many :chapter, class_name: 'SpecialChapter', foreign_key: 'book_id', dependent: :destroy
+end
+
+==> 018/018.rb 81 <==
+class Book
+  belongs_to :series
+
+  has_many :chapter, foreign_key: 'book_id'
+end
+
+==> 019/019.rb 65 <==
+class_methods do
+  has_many :chapter, foreign_key: 'book_id'
+end
+
+==> 020/020.rb 84 <==
+class Book
+  has_many :chapter, as: :publishable, foreign_key: 'publishable_id'
+end
+
+==> 021/021.rb 77 <==
+class Book
+  has_many :chapter, as: :publishable, foreign_key: 'book_id'
+end
+
+==> 022/022.rb 42 <==
+has_many :chapter, foreign_key: 'book_id'
+
+==> 023/023.rb 74 <==
+class Book
+  has_and_belongs_to_many :chapter, foreign_key: 'book_id'
+end
+
+==> 024/024.rb 81 <==
+class Book
+  has_and_belongs_to_many :chapter, foreign_key: 'publication_id'
+end
+
+==> 025/025.rb 50 <==
+class Book
+  has_and_belongs_to_many :chapter
+end
+
+==> 026/026.rb 125 <==
+class Book
+  has_and_belongs_to_many :chapter, class_name: 'SpecialChapter', foreign_key: 'book_id', dependent: :destroy
+end
+
+==> 027/027.rb 96 <==
+class Book
+  belongs_to :series
+
+  has_and_belongs_to_many :chapter, foreign_key: 'book_id'
+end
+
+==> 028/028.rb 80 <==
+class_methods do
+  has_and_belongs_to_many :chapter, foreign_key: 'book_id'
+end
+
+==> 029/029.rb 99 <==
+class Book
+  has_and_belongs_to_many :chapter, as: :publishable, foreign_key: 'publishable_id'
+end
+
+==> 030/030.rb 92 <==
+class Book
+  has_and_belongs_to_many :chapter, as: :publishable, foreign_key: 'book_id'
+end
+
+==> 031/031.rb 57 <==
+has_and_belongs_to_many :chapter, foreign_key: 'book_id'
+

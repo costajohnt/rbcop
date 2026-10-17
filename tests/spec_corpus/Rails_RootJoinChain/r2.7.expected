@@ -1,0 +1,34 @@
+==> offenses exit=1 714 <==
+001/001.rb:1:1: C: [Correctable] Rails/RootJoinChain: Use `::Rails.root.join(...)` instead of chaining `#join` calls.
+002/002.rb:1:1: C: [Correctable] Rails/RootJoinChain: Use `::Rails.root.join(...)` instead of chaining `#join` calls.
+003/003.rb:1:1: C: [Correctable] Rails/RootJoinChain: Use `Rails.root.join(...)` instead of chaining `#join` calls.
+004/004.rb:1:1: C: [Correctable] Rails/RootJoinChain: Use `Rails.root.join(...)` instead of chaining `#join` calls.
+006/006.rb:1:1: C: [Correctable] Rails/RootJoinChain: Use `Rails.public_path.join(...)` instead of chaining `#join` calls.
+007/007.rb:1:1: C: [Correctable] Rails/RootJoinChain: Use `Rails.public_path.join(...)` instead of chaining `#join` calls.
+
+==> autocorrect exit=0 702 <==
+001/001.rb:1:1: C: [Corrected] Rails/RootJoinChain: Use `::Rails.root.join(...)` instead of chaining `#join` calls.
+002/002.rb:1:1: C: [Corrected] Rails/RootJoinChain: Use `::Rails.root.join(...)` instead of chaining `#join` calls.
+003/003.rb:1:1: C: [Corrected] Rails/RootJoinChain: Use `Rails.root.join(...)` instead of chaining `#join` calls.
+004/004.rb:1:1: C: [Corrected] Rails/RootJoinChain: Use `Rails.root.join(...)` instead of chaining `#join` calls.
+006/006.rb:1:1: C: [Corrected] Rails/RootJoinChain: Use `Rails.public_path.join(...)` instead of chaining `#join` calls.
+007/007.rb:1:1: C: [Corrected] Rails/RootJoinChain: Use `Rails.public_path.join(...)` instead of chaining `#join` calls.
+
+==> corrected/001/001.rb 42 <==
+::Rails.root.join('db', 'sch' + 'ema.rb')
+
+==> corrected/002/002.rb 47 <==
+::Rails.root.join('db', 'sch' + 'ema.rb').read
+
+==> corrected/003/003.rb 40 <==
+Rails.root.join('db', 'sch' + 'ema.rb')
+
+==> corrected/004/004.rb 50 <==
+Rails.root.join('db', migrate, "migration.#{rb}")
+
+==> corrected/006/006.rb 48 <==
+Rails.public_path.join('path', 'fi' + 'le.pdf')
+
+==> corrected/007/007.rb 50 <==
+Rails.public_path.join('path', to, "file.#{pdf}")
+

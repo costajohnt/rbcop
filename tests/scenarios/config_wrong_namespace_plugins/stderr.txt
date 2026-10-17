@@ -1,0 +1,3 @@
+.rubocop.yml: Warning: RSpec/FactoryBot/CreateList has the wrong namespace - replace it with FactoryBot/CreateList
+.rubocop.yml: Warning: RSpec/Capybara/CurrentPathExpectation has the wrong namespace - replace it with Capybara/RSpec/CurrentPathExpectation
+.rubocop.yml: Warning: RSpec/Rails/HttpStatus has the wrong namespace - replace it with RSpecRails/HttpStatus

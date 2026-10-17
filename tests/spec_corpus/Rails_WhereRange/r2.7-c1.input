@@ -1,0 +1,14 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 5.1
+
+==> 000/000.rb 34 <==
+Model.where('column >= ?', value)
+

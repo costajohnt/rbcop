@@ -1,0 +1,49 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 38 <==
+assert_raises(MyError) do
+  (foo)
+end
+
+==> test/001_test.rb 57 <==
+assert_raises(MyError) do
+  # nothing to see here...
+end
+
+==> test/002_test.rb 36 <==
+assert_raises(MyError) do
+  foo
+end
+
+==> test/003_test.rb 77 <==
+assert_raises(MyError) do
+  begin
+    foo
+    bar
+  rescue
+    baz
+  end
+end
+
+==> test/004_test.rb 61 <==
+assert_raises(MyError) do
+  foo do
+    bar
+    baz
+  end
+end
+
+==> test/005_test.rb 42 <==
+assert_raises(MyError) do
+  foo
+  bar
+end
+

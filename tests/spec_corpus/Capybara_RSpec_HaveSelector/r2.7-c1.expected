@@ -1,0 +1,19 @@
+==> offenses exit=1 337 <==
+000/000_spec.rb:1:16: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_xpath` instead of `have_selector`.
+001/001_spec.rb:1:16: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_xpath` instead of `have_selector`.
+002/002_spec.rb:1:16: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+
+==> autocorrect exit=0 331 <==
+000/000_spec.rb:1:16: C: [Corrected] Capybara/RSpec/HaveSelector: Use `have_xpath` instead of `have_selector`.
+001/001_spec.rb:1:16: C: [Corrected] Capybara/RSpec/HaveSelector: Use `have_xpath` instead of `have_selector`.
+002/002_spec.rb:1:16: C: [Corrected] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+
+==> corrected/000/000_spec.rb 33 <==
+expect(foo).to have_xpath('bar')
+
+==> corrected/001/001_spec.rb 33 <==
+expect(foo).to have_xpath('bar')
+
+==> corrected/002/002_spec.rb 31 <==
+expect(foo).to have_css('bar')
+

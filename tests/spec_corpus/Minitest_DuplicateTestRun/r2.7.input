@@ -1,0 +1,112 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 316 <==
+class ParentTest < Minitest::Test
+  def test_parent
+  end
+end
+
+class Child1Test < ParentTest
+  def test_parent
+  end
+end
+
+class Child2Test < ParentTest
+end
+
+class Child3Test < ParentTest
+  def test_1_child_2_asserts_twice
+  end
+
+  def test_2_child_2_asserts_twice
+  end
+
+  def test_3_child_2_asserts_twice
+  end
+end
+
+==> test/001_test.rb 191 <==
+class ParentTest < ExampleClass
+  def test_child_asserts_twice
+    assert_equal(1, 1)
+  end
+end
+
+class ChildClass < ParentTest
+  def test_child_asserts_twice
+    assert_equal(1, 1)
+  end
+end
+
+==> test/002_test.rb 131 <==
+class ParentTest < Minitest::Test
+  def test_child_asserts_twice
+    assert_equal(1, 1)
+  end
+end
+
+class ClassTwo < ParentTest
+end
+
+==> test/003_test.rb 156 <==
+class ParentTest < Minitest::Test
+  def test_parent
+  end
+end
+
+class ChildTest < ParentTest
+  def test_child_asserts_twice
+    assert_equal(1, 1)
+  end
+end
+
+==> test/004_test.rb 132 <==
+class ParentTest < Minitest::Test
+  def test_child_asserts_twice
+    assert_equal(1, 1)
+  end
+end
+
+class ChildTest < ParentTest
+end
+
+==> test/005_test.rb 163 <==
+class ParentTest < Minitest::Test
+  def test_parent
+  end
+end
+
+class ChildTest < ParentTest
+  def build_matrix(name)
+    it(name) { assert_equal(1, 1) }
+  end
+end
+
+==> test/006_test.rb 132 <==
+class ParentTest < Minitest::Test
+end
+
+class ChildTest < ParentTest
+  def test_child_asserts_twice
+    assert_equal(1, 1)
+  end
+end
+
+==> test/007_test.rb 317 <==
+class PostmarkAccountServiceTest < ActionDispatch::IntegrationTest
+  test "it handles missing payloads from Postmark Account API errors" do
+    Postmark::AccountApiClient.any_instance.stubs(:create_server).raises(StandardError)
+
+    Rails.logger.expects(:error)
+    PostmarkAccountService.create_server({})
+  end
+end
+

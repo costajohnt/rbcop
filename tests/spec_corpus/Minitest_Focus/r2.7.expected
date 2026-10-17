@@ -1,0 +1,20 @@
+==> offenses exit=1 164 <==
+test/001_test.rb:2:3: C: [Correctable] Minitest/Focus: Remove `focus` from tests.
+test/002_test.rb:2:3: C: [Correctable] Minitest/Focus: Remove `focus` from tests.
+
+==> autocorrect exit=0 160 <==
+test/001_test.rb:2:3: C: [Corrected] Minitest/Focus: Remove `focus` from tests.
+test/002_test.rb:2:3: C: [Corrected] Minitest/Focus: Remove `focus` from tests.
+
+==> corrected/test/001_test.rb 57 <==
+class FooTest < Minitest::Test
+  test 'foo' do
+  end
+end
+
+==> corrected/test/002_test.rb 57 <==
+class FooTest < Minitest::Test
+  test 'foo' do
+  end
+end
+

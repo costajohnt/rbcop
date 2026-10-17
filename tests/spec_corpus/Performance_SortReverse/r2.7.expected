@@ -1,0 +1,19 @@
+==> offenses exit=1 247 <==
+000.rb:1:7: C: [Correctable] Performance/SortReverse: Use `sort.reverse` instead.
+001.rb:1:8: C: [Correctable] Performance/SortReverse: Use `sort&.reverse` instead.
+002.rb:1:7: C: [Correctable] Performance/SortReverse: Use `sort.reverse` instead.
+
+==> autocorrect exit=0 241 <==
+000.rb:1:7: C: [Corrected] Performance/SortReverse: Use `sort.reverse` instead.
+001.rb:1:8: C: [Corrected] Performance/SortReverse: Use `sort&.reverse` instead.
+002.rb:1:7: C: [Corrected] Performance/SortReverse: Use `sort.reverse` instead.
+
+==> corrected/000.rb 19 <==
+array.sort.reverse
+
+==> corrected/001.rb 21 <==
+array&.sort&.reverse
+
+==> corrected/002.rb 19 <==
+array.sort.reverse
+

@@ -51,7 +51,7 @@ fn smart_path(display: &str) -> String {
     if !display.starts_with("../") {
         return display.to_string();
     }
-    let mut abs = std::env::current_dir().unwrap_or_default();
+    let mut abs = crate::config::cwd();
     for part in std::path::Path::new(display).components() {
         match part {
             std::path::Component::ParentDir => {
@@ -329,6 +329,10 @@ fn parent_module_name(anc: &[Node], pas: &[PA]) -> Option<String> {
 fn humanize_scope(scope: &str) -> String {
     let s = scope.as_bytes();
     let tag = "#<Class:";
+    // Both patterns need the tag; most scopes (plain `Foo::Bar`) skip the quadratic scan.
+    if !scope.contains(tag) {
+        return finish(scope.to_string());
+    }
     for p in 0..=s.len() {
         if !scope.is_char_boundary(p) {
             continue;
@@ -337,6 +341,9 @@ fn humanize_scope(scope: &str) -> String {
         let line_end = scope[p..].find('\n').map_or(scope.len(), |e| p + e);
         for q in (p..=line_end).rev() {
             if !scope.is_char_boundary(q) {
+                continue;
+            }
+            if !scope[q..].starts_with("::#<Class:") {
                 continue;
             }
             let name = &scope[p..q];
@@ -550,6 +557,28 @@ impl Cop for DuplicateMethods {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
+        // Most calls define nothing: leave before building their parser ancestors. A superset of
+        // the call arms below, which return for everything else.
+        if let Some(call) = node.as_call_node() {
+            let m = call.name();
+            let m = m.as_slice();
+            let defines = matches!(
+                m,
+                b"alias_method"
+                    | b"attr_reader"
+                    | b"attr_writer"
+                    | b"attr_accessor"
+                    | b"attr"
+                    | b"def_delegator"
+                    | b"def_instance_delegator"
+                    | b"def_delegators"
+                    | b"def_instance_delegators"
+            ) || (cx.config.all_cops().truthy("ActiveSupportExtensionsEnabled")
+                && cx.cfg.strings("DelegatingMethods").iter().any(|d| d.as_bytes() == m));
+            if !defines || call.receiver().is_some() || is_csend(&call) {
+                return;
+            }
+        }
         let ctx = Ctx { anc: cx.ancestors, pas: parser_ancestors(cx.ancestors, node) };
         let src = cx.src;
         let loc = node.location();

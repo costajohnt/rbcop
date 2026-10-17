@@ -1,0 +1,16 @@
+==> offenses exit=1 540 <==
+000/000_spec.rb:4:7: C: RSpec/NestedGroups: Maximum example group nesting exceeded [4/3].
+001/001_spec.rb:4:7: C: RSpec/NestedGroups: Maximum example group nesting exceeded [4/3].
+002/002_spec.rb:5:9: C: RSpec/NestedGroups: Maximum example group nesting exceeded [4/3].
+003/003_spec.rb:5:9: C: RSpec/NestedGroups: Maximum example group nesting exceeded [4/3].
+004/004_spec.rb:5:9: C: RSpec/NestedGroups: Maximum example group nesting exceeded [4/3].
+005/005_spec.rb:5:9: C: RSpec/NestedGroups: Maximum example group nesting exceeded [4/3].
+
+==> autocorrect exit=1 540 <==
+000/000_spec.rb:4:7: C: RSpec/NestedGroups: Maximum example group nesting exceeded [4/3].
+001/001_spec.rb:4:7: C: RSpec/NestedGroups: Maximum example group nesting exceeded [4/3].
+002/002_spec.rb:5:9: C: RSpec/NestedGroups: Maximum example group nesting exceeded [4/3].
+003/003_spec.rb:5:9: C: RSpec/NestedGroups: Maximum example group nesting exceeded [4/3].
+004/004_spec.rb:5:9: C: RSpec/NestedGroups: Maximum example group nesting exceeded [4/3].
+005/005_spec.rb:5:9: C: RSpec/NestedGroups: Maximum example group nesting exceeded [4/3].
+

@@ -1,0 +1,323 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 38 <==
+[1, 2, 3].select { |e| e.even? }.size
+
+==> 001.rb 40 <==
+[1, 2, 3]&.select { |e| e.even? }&.size
+
+==> 002.rb 47 <==
+{a: 1, b: 2, c: 3}.select { |e| e == :a }.size
+
+==> 003.rb 40 <==
+[1, 2, 3].select { |e| e.even? }.length
+
+==> 004.rb 43 <==
+{a: 1, b: 2}.select { |e| e == :a }.length
+
+==> 005.rb 39 <==
+[1, 2, 3].select { |e| e.even? }.count
+
+==> 006.rb 42 <==
+{a: 1, b: 2}.select { |e| e == :a }.count
+
+==> 007.rb 52 <==
+[1, 2, 3].select { |e| e.odd? }.count { |e| e > 2 }
+
+==> 008.rb 56 <==
+{a: 1, b: 2}.select { |e| e == :a }.count { |e| e > 2 }
+
+==> 009.rb 107 <==
+Data = Struct.new(:value)
+array = [Data.new(2), Data.new(3), Data.new(2)]
+puts array.select(&:value).count
+
+==> 010.rb 30 <==
+foo.select(&:something).count
+
+==> 011.rb 49 <==
+foo
+  .select(&:something)
+  .count
+  .positive?
+
+==> 012.rb 32 <==
+foo&.select(&:something)&.count
+
+==> 013.rb 71 <==
+class A < Array
+  def count(&block)
+    select(&block).count
+  end
+end
+
+==> 014.rb 32 <==
+[1, 2, 3].select { |e| e.even? }
+==> 015.rb 37 <==
+[1, 2, 3].select! { |e| e.odd? }.size
+==> 016.rb 38 <==
+[1, 2, 3].select! { |e| e.odd? }.count
+==> 017.rb 39 <==
+[1, 2, 3].select! { |e| e.odd? }.length
+==> 018.rb 40 <==
+[1, 2, 3].find_all { |e| e.even? }.size
+
+==> 019.rb 42 <==
+[1, 2, 3]&.find_all { |e| e.even? }&.size
+
+==> 020.rb 49 <==
+{a: 1, b: 2, c: 3}.find_all { |e| e == :a }.size
+
+==> 021.rb 42 <==
+[1, 2, 3].find_all { |e| e.even? }.length
+
+==> 022.rb 45 <==
+{a: 1, b: 2}.find_all { |e| e == :a }.length
+
+==> 023.rb 41 <==
+[1, 2, 3].find_all { |e| e.even? }.count
+
+==> 024.rb 44 <==
+{a: 1, b: 2}.find_all { |e| e == :a }.count
+
+==> 025.rb 54 <==
+[1, 2, 3].find_all { |e| e.odd? }.count { |e| e > 2 }
+
+==> 026.rb 58 <==
+{a: 1, b: 2}.find_all { |e| e == :a }.count { |e| e > 2 }
+
+==> 027.rb 109 <==
+Data = Struct.new(:value)
+array = [Data.new(2), Data.new(3), Data.new(2)]
+puts array.find_all(&:value).count
+
+==> 028.rb 32 <==
+foo.find_all(&:something).count
+
+==> 029.rb 51 <==
+foo
+  .find_all(&:something)
+  .count
+  .positive?
+
+==> 030.rb 34 <==
+foo&.find_all(&:something)&.count
+
+==> 031.rb 73 <==
+class A < Array
+  def count(&block)
+    find_all(&block).count
+  end
+end
+
+==> 032.rb 34 <==
+[1, 2, 3].find_all { |e| e.even? }
+==> 033.rb 39 <==
+[1, 2, 3].find_all! { |e| e.odd? }.size
+==> 034.rb 40 <==
+[1, 2, 3].find_all! { |e| e.odd? }.count
+==> 035.rb 41 <==
+[1, 2, 3].find_all! { |e| e.odd? }.length
+==> 036.rb 38 <==
+[1, 2, 3].filter { |e| e.even? }.size
+
+==> 037.rb 40 <==
+[1, 2, 3]&.filter { |e| e.even? }&.size
+
+==> 038.rb 47 <==
+{a: 1, b: 2, c: 3}.filter { |e| e == :a }.size
+
+==> 039.rb 40 <==
+[1, 2, 3].filter { |e| e.even? }.length
+
+==> 040.rb 43 <==
+{a: 1, b: 2}.filter { |e| e == :a }.length
+
+==> 041.rb 39 <==
+[1, 2, 3].filter { |e| e.even? }.count
+
+==> 042.rb 42 <==
+{a: 1, b: 2}.filter { |e| e == :a }.count
+
+==> 043.rb 52 <==
+[1, 2, 3].filter { |e| e.odd? }.count { |e| e > 2 }
+
+==> 044.rb 56 <==
+{a: 1, b: 2}.filter { |e| e == :a }.count { |e| e > 2 }
+
+==> 045.rb 107 <==
+Data = Struct.new(:value)
+array = [Data.new(2), Data.new(3), Data.new(2)]
+puts array.filter(&:value).count
+
+==> 046.rb 30 <==
+foo.filter(&:something).count
+
+==> 047.rb 49 <==
+foo
+  .filter(&:something)
+  .count
+  .positive?
+
+==> 048.rb 32 <==
+foo&.filter(&:something)&.count
+
+==> 049.rb 71 <==
+class A < Array
+  def count(&block)
+    filter(&block).count
+  end
+end
+
+==> 050.rb 32 <==
+[1, 2, 3].filter { |e| e.even? }
+==> 051.rb 37 <==
+[1, 2, 3].filter! { |e| e.odd? }.size
+==> 052.rb 38 <==
+[1, 2, 3].filter! { |e| e.odd? }.count
+==> 053.rb 39 <==
+[1, 2, 3].filter! { |e| e.odd? }.length
+==> 054.rb 38 <==
+[1, 2, 3].reject { |e| e.even? }.size
+
+==> 055.rb 40 <==
+[1, 2, 3]&.reject { |e| e.even? }&.size
+
+==> 056.rb 47 <==
+{a: 1, b: 2, c: 3}.reject { |e| e == :a }.size
+
+==> 057.rb 40 <==
+[1, 2, 3].reject { |e| e.even? }.length
+
+==> 058.rb 43 <==
+{a: 1, b: 2}.reject { |e| e == :a }.length
+
+==> 059.rb 39 <==
+[1, 2, 3].reject { |e| e.even? }.count
+
+==> 060.rb 42 <==
+{a: 1, b: 2}.reject { |e| e == :a }.count
+
+==> 061.rb 52 <==
+[1, 2, 3].reject { |e| e.odd? }.count { |e| e > 2 }
+
+==> 062.rb 56 <==
+{a: 1, b: 2}.reject { |e| e == :a }.count { |e| e > 2 }
+
+==> 063.rb 107 <==
+Data = Struct.new(:value)
+array = [Data.new(2), Data.new(3), Data.new(2)]
+puts array.reject(&:value).count
+
+==> 064.rb 30 <==
+foo.reject(&:something).count
+
+==> 065.rb 49 <==
+foo
+  .reject(&:something)
+  .count
+  .positive?
+
+==> 066.rb 32 <==
+foo&.reject(&:something)&.count
+
+==> 067.rb 71 <==
+class A < Array
+  def count(&block)
+    reject(&block).count
+  end
+end
+
+==> 068.rb 32 <==
+[1, 2, 3].reject { |e| e.even? }
+==> 069.rb 37 <==
+[1, 2, 3].reject! { |e| e.odd? }.size
+==> 070.rb 38 <==
+[1, 2, 3].reject! { |e| e.odd? }.count
+==> 071.rb 39 <==
+[1, 2, 3].reject! { |e| e.odd? }.length
+==> 072.rb 40 <==
+Model.select('field AS field_one').count
+==> 073.rb 63 <==
+Model.select('field AS field_one', 'other AS field_two').count
+
+==> 074.rb 26 <==
+Model.select(:field).count
+==> 075.rb 40 <==
+Model.select(:field, :other_field).count
+==> 076.rb 32 <==
+[1, 2, 3].map { |e| e + 1 }.size
+==> 077.rb 14 <==
+[1, 2, 3].size
+==> 078.rb 15 <==
+[1, 2, 3].count
+==> 079.rb 112 <==
+Data = Struct.new(:value)
+array = [Data.new(2), Data.new(3), Data.new(2)]
+puts array.select(&:value).uniq.count
+
+==> 080.rb 121 <==
+Data = Struct.new(:value)
+array = [Data.new(2), Data.new(3), Data.new(2)]
+array.select(&:value).uniq { |v| v > 2 }.count
+
+==> 081.rb 23 <==
+nodes = [1]
+nodes.size
+
+==> 082.rb 17 <==
+shorter.size.to_f
+==> 083.rb 32 <==
+array.select { |e| e > 2 }.size
+
+==> 084.rb 33 <==
+array.select { |e| e > 2 }.count
+
+==> 085.rb 34 <==
+array.select { |e| e > 2 }.length
+
+==> 086.rb 27 <==
+array.select(&:value).size
+
+==> 087.rb 32 <==
+array.reject { |e| e > 2 }.size
+
+==> 088.rb 33 <==
+array.reject { |e| e > 2 }.count
+
+==> 089.rb 34 <==
+array.reject { |e| e > 2 }.length
+
+==> 090.rb 27 <==
+array.reject(&:value).size
+
+==> 091.rb 26 <==
+array.reject(&block).size
+
+==> 092.rb 36 <==
+array.reject {
+  foo
+  bar
+}.length
+
+==> 093.rb 68 <==
+array.reject {
+  foo
+  if bar
+    baz
+  else
+    qux
+  end
+}.length
+
+==> 094.rb 21 <==
+array.reject {}.size
+

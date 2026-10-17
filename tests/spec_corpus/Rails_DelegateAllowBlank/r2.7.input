@@ -1,0 +1,17 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 43 <==
+delegate :foo, to: :bar, allow_blank: true
+
+==> 001/001.rb 40 <==
+delegate :foo, to: :bar, allow_nil: true
+==> 002/002.rb 23 <==
+delegate :foo, to: :bar

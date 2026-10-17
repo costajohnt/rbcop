@@ -1,0 +1,6 @@
+==> offenses exit=1 156 <==
+test/001_test.rb:1:1: W: Minitest/AssertRaisesWithRegexpArgument: Do not pass regular expression literals to `assert_raises`. Test the resulting exception.
+
+==> autocorrect exit=1 156 <==
+test/001_test.rb:1:1: W: Minitest/AssertRaisesWithRegexpArgument: Do not pass regular expression literals to `assert_raises`. Test the resulting exception.
+

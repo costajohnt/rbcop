@@ -1,0 +1,12 @@
+==> offenses exit=1 536 <==
+000/000.rb:3:3: C: Rails/TransactionExitStatement: Exit statement `return` is not allowed. Use `raise` (rollback) or `next` (commit).
+001/001.rb:3:5: C: Rails/TransactionExitStatement: Exit statement `return` is not allowed. Use `raise` (rollback) or `next` (commit).
+003/003.rb:3:3: C: Rails/TransactionExitStatement: Exit statement `return` is not allowed. Use `raise` (rollback) or `next` (commit).
+004/004.rb:3:5: C: Rails/TransactionExitStatement: Exit statement `return` is not allowed. Use `raise` (rollback) or `next` (commit).
+
+==> autocorrect exit=1 536 <==
+000/000.rb:3:3: C: Rails/TransactionExitStatement: Exit statement `return` is not allowed. Use `raise` (rollback) or `next` (commit).
+001/001.rb:3:5: C: Rails/TransactionExitStatement: Exit statement `return` is not allowed. Use `raise` (rollback) or `next` (commit).
+003/003.rb:3:3: C: Rails/TransactionExitStatement: Exit statement `return` is not allowed. Use `raise` (rollback) or `next` (commit).
+004/004.rb:3:5: C: Rails/TransactionExitStatement: Exit statement `return` is not allowed. Use `raise` (rollback) or `next` (commit).
+

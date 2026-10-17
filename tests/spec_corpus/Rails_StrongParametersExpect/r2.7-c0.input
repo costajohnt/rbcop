@@ -1,0 +1,265 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 8.0
+
+==> app/controllers/000/000.rb 26 <==
+params[:key].do_something
+
+==> app/controllers/001/001.rb 13 <==
+params[:key]
+
+==> app/controllers/002/002.rb 18 <==
+params[:key].nil?
+
+==> app/controllers/003/003.rb 18 <==
+params[:key].to_i
+
+==> app/controllers/004/004.rb 18 <==
+params[:key].to_s
+
+==> app/controllers/005/005.rb 21 <==
+params[:key].inspect
+
+==> app/controllers/006/006.rb 18 <==
+params[:key].to_a
+
+==> app/controllers/007/007.rb 18 <==
+params[:key].to_f
+
+==> app/controllers/008/008.rb 18 <==
+params[:key].to_h
+
+==> app/controllers/009/009.rb 27 <==
+params[:key].is_a?(String)
+
+==> app/controllers/010/010.rb 30 <==
+params[:key].kind_of?(String)
+
+==> app/controllers/011/011.rb 34 <==
+params[:key].instance_of?(String)
+
+==> app/controllers/012/012.rb 26 <==
+params[:key].try(:method)
+
+==> app/controllers/013/013.rb 27 <==
+params[:key].try!(:method)
+
+==> app/controllers/014/014.rb 26 <==
+params[:key].key?(:inner)
+
+==> app/controllers/015/015.rb 30 <==
+params[:key].has_key?(:inner)
+
+==> app/controllers/016/016.rb 30 <==
+params[:key].include?(:inner)
+
+==> app/controllers/017/017.rb 29 <==
+params[:key].member?(:inner)
+
+==> app/controllers/018/018.rb 28 <==
+params[:key].delete(:inner)
+
+==> app/controllers/019/019.rb 71 <==
+params[:key].each do |_index, subparams|
+  do_something(subparams)
+end
+
+==> app/controllers/020/020.rb 38 <==
+params[:key].map { |item| item[:id] }
+
+==> app/controllers/021/021.rb 32 <==
+params[:key].select(&:present?)
+
+==> app/controllers/022/022.rb 41 <==
+params[:key].reject { |_k, v| v.blank? }
+
+==> app/controllers/023/023.rb 18 <==
+params[:key].keys
+
+==> app/controllers/024/024.rb 20 <==
+params[:key].values
+
+==> app/controllers/025/025.rb 27 <==
+params[:key].slice(:a, :b)
+
+==> app/controllers/026/026.rb 24 <==
+params[:key].except(:a)
+
+==> app/controllers/027/027.rb 26 <==
+params[:key].merge(other)
+
+==> app/controllers/028/028.rb 25 <==
+params[:key].dig(:a, :b)
+
+==> app/controllers/029/029.rb 27 <==
+params[:key].fetch(:inner)
+
+==> app/controllers/030/030.rb 21 <==
+params[:key].compact
+
+==> app/controllers/031/031.rb 38 <==
+params[:key].transform_values(&:to_s)
+
+==> app/controllers/032/032.rb 25 <==
+params[:key].to_unsafe_h
+
+==> app/controllers/033/033.rb 24 <==
+params[:key] == 'value'
+
+==> app/controllers/034/034.rb 14 <==
+!params[:key]
+
+==> app/controllers/035/035.rb 27 <==
+condition && !params[:key]
+
+==> app/controllers/036/036.rb 20 <==
+params[:key].blank?
+
+==> app/controllers/037/037.rb 22 <==
+params[:key].present?
+
+==> app/controllers/038/038.rb 33 <==
+params[:key].presence || default
+
+==> app/controllers/039/039.rb 51 <==
+sort_direction = params[:sort_direction]&.downcase
+
+==> app/controllers/040/040.rb 57 <==
+if params[:query]&.present?
+  filter(params[:query])
+end
+
+==> app/controllers/041/041.rb 72 <==
+direction = (params[:sort_direction]&.downcase == "asc") ? :asc : :desc
+
+==> app/controllers/042/042.rb 24 <==
+Model.find(params[:id])
+
+==> app/controllers/043/043.rb 25 <==
+Model&.find(params[:id])
+
+==> app/controllers/044/044.rb 41 <==
+Model.find(params[:id] || DEFAULT_VALUE)
+
+==> app/controllers/045/045.rb 33 <==
+Model.find_by(key: params[:key])
+
+==> app/controllers/046/046.rb 34 <==
+Model.find_by!(key: params[:key])
+
+==> app/controllers/047/047.rb 47 <==
+Model.find_or_initialize_by(key: params[:key])
+
+==> app/controllers/048/048.rb 48 <==
+Model&.find_or_initialize_by(key: params[:key])
+
+==> app/controllers/049/049.rb 43 <==
+Model.find_or_create_by(key: params[:key])
+
+==> app/controllers/050/050.rb 44 <==
+Model.find_or_create_by!(key: params[:key])
+
+==> app/controllers/051/051.rb 38 <==
+Model.find_sole_by(key: params[:key])
+
+==> app/controllers/052/052.rb 29 <==
+Model.find(non_params[:key])
+
+==> app/controllers/053/053.rb 28 <==
+Model.findxxx(params[:key])
+
+==> app/controllers/054/054.rb 31 <==
+Model.where(key: params[:key])
+
+==> app/controllers/055/055.rb 26 <==
+Model.delete(params[:id])
+
+==> app/controllers/056/056.rb 27 <==
+Model.destroy(params[:id])
+
+==> app/controllers/057/057.rb 35 <==
+Model.delete_by(key: params[:key])
+
+==> app/controllers/058/058.rb 36 <==
+Model.destroy_by(key: params[:key])
+
+==> app/controllers/059/059.rb 41 <==
+Model.delete_custom_method(params[:key])
+
+==> app/controllers/060/060.rb 42 <==
+Model.destroy_custom_method(params[:key])
+
+==> app/controllers/061/061.rb 42 <==
+params.require(:user).permit(:name, :age)
+
+==> app/controllers/062/062.rb 44 <==
+params&.require(:user)&.permit(:name, :age)
+
+==> app/controllers/063/063.rb 50 <==
+params.permit(user: [:name, :age]).require(:user)
+
+==> app/controllers/064/064.rb 52 <==
+params&.permit(user: [:name, :age])&.require(:user)
+
+==> app/controllers/065/065.rb 50 <==
+params.require(:user).permit(:name, some_ids: [])
+
+==> app/controllers/066/066.rb 56 <==
+params.require(:user).permit(*parameters, some_ids: [])
+
+==> app/controllers/067/067.rb 60 <==
+var = :user
+params.require(var).permit(:name, some_ids: [])
+
+==> app/controllers/068/068.rb 68 <==
+params.require(:user).permit(
+  :name, # comment
+  :age # comment
+)
+
+==> app/controllers/069/069.rb 48 <==
+params
+  .require(:user)
+  .permit(:name, :age)
+
+==> app/controllers/070/070.rb 35 <==
+params.expect(user: [:name, :age])
+
+==> app/controllers/071/071.rb 102 <==
+params.require(:moderation_comment).permit(policy(ModerationComment).permitted_attributes_for_create)
+
+==> app/controllers/072/072.rb 75 <==
+permitted_keys = %i[name age]
+params.require(:user).permit(permitted_keys)
+
+==> app/controllers/073/073.rb 67 <==
+params.permit(unmatch_require_param: [:name, :age]).require(:user)
+
+==> app/controllers/074/074.rb 42 <==
+params.require([:foo, :bar]).permit(:baz)
+
+==> app/controllers/075/075.rb 22 <==
+params.require(:name)
+
+==> app/controllers/076/076.rb 21 <==
+params.permit(:name)
+
+==> app/controllers/077/077.rb 31 <==
+params.require(:target).permit
+
+==> app/controllers/078/078.rb 14 <==
+params[:name]
+
+==> app/controllers/079/079.rb 20 <==
+params.fetch(:name)
+
+==> app/controllers/080/080.rb 21 <==
+params[:user][:name]
+

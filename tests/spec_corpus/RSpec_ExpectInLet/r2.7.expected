@@ -1,0 +1,14 @@
+==> offenses exit=1 376 <==
+000/000_spec.rb:2:3: C: RSpec/ExpectInLet: Do not use `expect` in let
+001/001_spec.rb:2:3: C: RSpec/ExpectInLet: Do not use `is_expected` in let
+002/002_spec.rb:2:3: C: RSpec/ExpectInLet: Do not use `expect_any_instance_of` in let
+003/003_spec.rb:2:3: C: RSpec/ExpectInLet: Do not use `expect` in let
+003/003_spec.rb:3:3: C: RSpec/ExpectInLet: Do not use `is_expected` in let
+
+==> autocorrect exit=1 376 <==
+000/000_spec.rb:2:3: C: RSpec/ExpectInLet: Do not use `expect` in let
+001/001_spec.rb:2:3: C: RSpec/ExpectInLet: Do not use `is_expected` in let
+002/002_spec.rb:2:3: C: RSpec/ExpectInLet: Do not use `expect_any_instance_of` in let
+003/003_spec.rb:2:3: C: RSpec/ExpectInLet: Do not use `expect` in let
+003/003_spec.rb:3:3: C: RSpec/ExpectInLet: Do not use `is_expected` in let
+

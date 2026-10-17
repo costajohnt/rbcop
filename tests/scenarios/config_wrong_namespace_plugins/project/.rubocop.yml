@@ -1,0 +1,14 @@
+plugins:
+  - rubocop-rspec
+  - rubocop-rspec_rails
+  - rubocop-factory_bot
+  - rubocop-capybara
+RSpec/FactoryBot/CreateList:
+  Enabled: false
+RSpec/Capybara/CurrentPathExpectation:
+  Enabled: false
+RSpec/Rails/HttpStatus:
+  EnforcedStyle: numeric
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false

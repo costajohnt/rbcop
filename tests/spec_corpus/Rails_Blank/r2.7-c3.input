@@ -1,0 +1,16 @@
+==> .rubocop.yml 207 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/Blank:
+  NilOrEmpty: false
+  NotPresent: true
+  UnlessPresent: true
+
+==> 000/000.rb 22 <==
+foo.nil? || foo.empty?

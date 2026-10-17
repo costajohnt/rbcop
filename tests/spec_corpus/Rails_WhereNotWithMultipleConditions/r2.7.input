@@ -1,0 +1,37 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 30 <==
+User.where.not(trashed: true)
+
+==> 001/001.rb 45 <==
+User.where.not(trashed: true, role: 'admin')
+
+==> 002/002.rb 75 <==
+User.joins(:posts).where.not({ posts: { trashed: true, title: 'Rails' } })
+
+==> 003/003.rb 42 <==
+User.where(trashed: false, role: 'admin')
+
+==> 004/004.rb 57 <==
+User.where.not('trashed = ? OR role = ?', true, 'admin')
+
+==> 005/005.rb 45 <==
+User.where.not(role: ['moderator', 'admin'])
+
+==> 006/006.rb 55 <==
+User.where.not(trashed: true).where.not(role: 'admin')
+
+==> 007/007.rb 25 <==
+User.where.not(data: {})
+
+==> 008/008.rb 29 <==
+User.where.not.lt(condition)
+

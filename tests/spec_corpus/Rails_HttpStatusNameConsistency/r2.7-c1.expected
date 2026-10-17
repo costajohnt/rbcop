@@ -1,0 +1,72 @@
+==> offenses exit=1 1977 <==
+app/controllers/000/000.rb:1:49: W: [Correctable] Rails/HttpStatusNameConsistency: Prefer `:unprocessable_content` over `:unprocessable_entity`.
+app/controllers/001/001.rb:1:6: W: [Correctable] Rails/HttpStatusNameConsistency: Prefer `:unprocessable_content` over `:unprocessable_entity`.
+app/controllers/002/002.rb:1:32: W: [Correctable] Rails/HttpStatusNameConsistency: Prefer `:unprocessable_content` over `:unprocessable_entity`.
+app/controllers/003/003.rb:1:17: W: [Correctable] Rails/HttpStatusNameConsistency: Prefer `:unprocessable_content` over `:unprocessable_entity`.
+app/controllers/004/004.rb:1:41: W: [Correctable] Rails/HttpStatusNameConsistency: Prefer `:unprocessable_content` over `:unprocessable_entity`.
+app/controllers/005/005.rb:1:66: W: [Correctable] Rails/HttpStatusNameConsistency: Prefer `:unprocessable_content` over `:unprocessable_entity`.
+app/controllers/010/010.rb:1:49: W: [Correctable] Rails/HttpStatusNameConsistency: Prefer `:content_too_large` over `:payload_too_large`.
+app/controllers/011/011.rb:1:6: W: [Correctable] Rails/HttpStatusNameConsistency: Prefer `:content_too_large` over `:payload_too_large`.
+app/controllers/012/012.rb:1:32: W: [Correctable] Rails/HttpStatusNameConsistency: Prefer `:content_too_large` over `:payload_too_large`.
+app/controllers/013/013.rb:1:17: W: [Correctable] Rails/HttpStatusNameConsistency: Prefer `:content_too_large` over `:payload_too_large`.
+app/controllers/014/014.rb:1:41: W: [Correctable] Rails/HttpStatusNameConsistency: Prefer `:content_too_large` over `:payload_too_large`.
+app/controllers/015/015.rb:1:66: W: [Correctable] Rails/HttpStatusNameConsistency: Prefer `:content_too_large` over `:payload_too_large`.
+app/controllers/019/019.rb:1:6: W: [Correctable] Rails/HttpStatusNameConsistency: Prefer `:unprocessable_content` over `:unprocessable_entity`.
+app/controllers/019/019.rb:2:6: W: [Correctable] Rails/HttpStatusNameConsistency: Prefer `:content_too_large` over `:payload_too_large`.
+
+==> autocorrect exit=0 1949 <==
+app/controllers/000/000.rb:1:49: W: [Corrected] Rails/HttpStatusNameConsistency: Prefer `:unprocessable_content` over `:unprocessable_entity`.
+app/controllers/001/001.rb:1:6: W: [Corrected] Rails/HttpStatusNameConsistency: Prefer `:unprocessable_content` over `:unprocessable_entity`.
+app/controllers/002/002.rb:1:32: W: [Corrected] Rails/HttpStatusNameConsistency: Prefer `:unprocessable_content` over `:unprocessable_entity`.
+app/controllers/003/003.rb:1:17: W: [Corrected] Rails/HttpStatusNameConsistency: Prefer `:unprocessable_content` over `:unprocessable_entity`.
+app/controllers/004/004.rb:1:41: W: [Corrected] Rails/HttpStatusNameConsistency: Prefer `:unprocessable_content` over `:unprocessable_entity`.
+app/controllers/005/005.rb:1:66: W: [Corrected] Rails/HttpStatusNameConsistency: Prefer `:unprocessable_content` over `:unprocessable_entity`.
+app/controllers/010/010.rb:1:49: W: [Corrected] Rails/HttpStatusNameConsistency: Prefer `:content_too_large` over `:payload_too_large`.
+app/controllers/011/011.rb:1:6: W: [Corrected] Rails/HttpStatusNameConsistency: Prefer `:content_too_large` over `:payload_too_large`.
+app/controllers/012/012.rb:1:32: W: [Corrected] Rails/HttpStatusNameConsistency: Prefer `:content_too_large` over `:payload_too_large`.
+app/controllers/013/013.rb:1:17: W: [Corrected] Rails/HttpStatusNameConsistency: Prefer `:content_too_large` over `:payload_too_large`.
+app/controllers/014/014.rb:1:41: W: [Corrected] Rails/HttpStatusNameConsistency: Prefer `:content_too_large` over `:payload_too_large`.
+app/controllers/015/015.rb:1:66: W: [Corrected] Rails/HttpStatusNameConsistency: Prefer `:content_too_large` over `:payload_too_large`.
+app/controllers/019/019.rb:1:6: W: [Corrected] Rails/HttpStatusNameConsistency: Prefer `:unprocessable_content` over `:unprocessable_entity`.
+app/controllers/019/019.rb:2:6: W: [Corrected] Rails/HttpStatusNameConsistency: Prefer `:content_too_large` over `:payload_too_large`.
+
+==> corrected/app/controllers/000/000.rb 71 <==
+render json: { error: 'Invalid data' }, status: :unprocessable_content
+
+==> corrected/app/controllers/001/001.rb 28 <==
+head :unprocessable_content
+
+==> corrected/app/controllers/002/002.rb 54 <==
+redirect_to some_path, status: :unprocessable_content
+
+==> corrected/app/controllers/003/003.rb 39 <==
+assert_response :unprocessable_content
+
+==> corrected/app/controllers/004/004.rb 63 <==
+assert_redirected_to some_path, status: :unprocessable_content
+
+==> corrected/app/controllers/005/005.rb 94 <==
+render json: { error: 'Invalid data' }, status: some_condition ? :unprocessable_content : :ok
+
+==> corrected/app/controllers/010/010.rb 67 <==
+render json: { error: 'File too big' }, status: :content_too_large
+
+==> corrected/app/controllers/011/011.rb 24 <==
+head :content_too_large
+
+==> corrected/app/controllers/012/012.rb 50 <==
+redirect_to some_path, status: :content_too_large
+
+==> corrected/app/controllers/013/013.rb 35 <==
+assert_response :content_too_large
+
+==> corrected/app/controllers/014/014.rb 59 <==
+assert_redirected_to some_path, status: :content_too_large
+
+==> corrected/app/controllers/015/015.rb 90 <==
+render json: { error: 'File too big' }, status: some_condition ? :content_too_large : :ok
+
+==> corrected/app/controllers/019/019.rb 52 <==
+head :unprocessable_content
+head :content_too_large
+

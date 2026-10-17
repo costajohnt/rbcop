@@ -1,0 +1,64 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 35 <==
+ary.select(&:present?).map(&:to_i)
+
+==> 001.rb 37 <==
+ary&.select(&:present?)&.map(&:to_i)
+
+==> 002.rb 35 <==
+ary.filter(&:present?).map(&:to_i)
+
+==> 003.rb 36 <==
+ary&.select(&:present?).map(&:to_i)
+
+==> 004.rb 36 <==
+ary&.filter(&:present?).map(&:to_i)
+
+==> 005.rb 49 <==
+ary.select { |o| o.present? }.map { |o| o.to_i }
+
+==> 006.rb 51 <==
+ary&.select { |o| o.present? }&.map { |o| o.to_i }
+
+==> 007.rb 42 <==
+ary.select { |o| o.present? }.map(&:to_i)
+
+==> 008.rb 42 <==
+ary.select(&:present?).map { |o| o.to_i }
+
+==> 009.rb 52 <==
+ary.do_something.select(&:present?).map(&:to_i).max
+
+==> 010.rb 31 <==
+select(&:present?).map(&:to_i)
+
+==> 011.rb 44 <==
+ary.filter_map { |o| o.to_i if o.present? }
+
+==> 012.rb 23 <==
+ary.select(&:present?)
+
+==> 013.rb 48 <==
+ary.do_something.select(key: value).map(&:to_i)
+
+==> 014.rb 13 <==
+ret = select
+
+==> 015.rb 61 <==
+ary.do_something.select(&:present?).stranger.map(&:to_i).max
+
+==> 016.rb 58 <==
+ary.select { |o| o.present? }.stranger.map { |o| o.to_i }
+
+==> 017.rb 24 <==
+ary.map(&:to_i).compact
+

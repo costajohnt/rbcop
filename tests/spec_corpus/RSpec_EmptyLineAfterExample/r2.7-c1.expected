@@ -1,0 +1,13 @@
+==> offenses exit=1 97 <==
+000/000_spec.rb:2:3: C: [Correctable] RSpec/EmptyLineAfterExample: Add an empty line after `it`.
+
+==> autocorrect exit=0 95 <==
+000/000_spec.rb:2:3: C: [Corrected] RSpec/EmptyLineAfterExample: Add an empty line after `it`.
+
+==> corrected/000/000_spec.rb 53 <==
+RSpec.describe Foo do
+  it { one }
+
+  it { two }
+end
+

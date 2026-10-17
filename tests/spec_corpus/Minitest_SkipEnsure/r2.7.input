@@ -1,0 +1,103 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 129 <==
+def test_skip_is_used_in_rescue
+  do_setup
+
+  assert do_something
+rescue
+  skip 'This test is skipped.'
+ensure
+  do_teardown
+end
+
+==> test/001_test.rb 114 <==
+def test_skip_with_receiver
+  obj.skip 'This test is skipped.'
+
+  assert 'foo'.present?
+ensure
+  do_something
+end
+
+==> test/002_test.rb 141 <==
+def test_conditional_skip
+  skip 'This test is skipped.' if condition
+
+  assert do_something
+ensure
+  if condition
+    do_teardown
+  end
+end
+
+==> test/003_test.rb 116 <==
+def test_skip
+  skip 'This test is skipped.'
+
+  begin
+    assert 'foo'.present?
+  ensure
+    do_something
+  end
+end
+
+==> test/004_test.rb 90 <==
+def test_skip
+  skip 'This test is skipped.'
+
+  assert 'foo'.present?
+
+  do_something
+end
+
+==> test/005_test.rb 47 <==
+def test_ensure_only
+ensure
+  do_something
+end
+
+==> test/006_test.rb 64 <==
+def test_skip
+  assert 'foo'.present?
+ensure
+  do_something
+end
+
+==> test/007_test.rb 145 <==
+def test_conditional_skip
+  skip 'This test is skipped.' if condition
+
+  assert do_something
+ensure
+  unless condition
+    do_teardown
+  end
+end
+
+==> test/008_test.rb 118 <==
+def test_conditional_skip
+  skip 'This test is skipped.' if condition
+
+  assert do_something
+ensure
+  do_teardown
+end
+
+==> test/009_test.rb 96 <==
+def test_skip
+  skip 'This test is skipped.'
+
+  assert 'foo'.present?
+ensure
+  do_something
+end
+

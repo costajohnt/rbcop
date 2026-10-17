@@ -1,0 +1,6 @@
+params.require('a b').permit(:name)
+params.require("x: 1, y").permit(:name)
+params.require(:"a'b").permit(:name)
+Dir.glob(Rails.root.join('app', "a'b"))
+Dir.glob(Rails.root.join('app', "\#@x"))
+Dir.glob(Rails.root.join('app', "a\\b", dir))

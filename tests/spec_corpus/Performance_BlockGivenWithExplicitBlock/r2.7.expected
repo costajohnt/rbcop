@@ -1,0 +1,25 @@
+==> offenses exit=1 408 <==
+000.rb:2:19: C: [Correctable] Performance/BlockGivenWithExplicitBlock: Check block argument explicitly instead of using `block_given?`.
+001.rb:2:19: C: [Correctable] Performance/BlockGivenWithExplicitBlock: Check block argument explicitly instead of using `block_given?`.
+002.rb:2:19: C: [Correctable] Performance/BlockGivenWithExplicitBlock: Check block argument explicitly instead of using `block_given?`.
+
+==> autocorrect exit=0 402 <==
+000.rb:2:19: C: [Corrected] Performance/BlockGivenWithExplicitBlock: Check block argument explicitly instead of using `block_given?`.
+001.rb:2:19: C: [Corrected] Performance/BlockGivenWithExplicitBlock: Check block argument explicitly instead of using `block_given?`.
+002.rb:2:19: C: [Corrected] Performance/BlockGivenWithExplicitBlock: Check block argument explicitly instead of using `block_given?`.
+
+==> corrected/000.rb 50 <==
+def method(x, &block)
+  do_something if block
+end
+
+==> corrected/001.rb 55 <==
+def self.method(x, &block)
+  do_something if block
+end
+
+==> corrected/002.rb 54 <==
+def method(x, &myblock)
+  do_something if myblock
+end
+

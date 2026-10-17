@@ -1,0 +1,60 @@
+==> .rubocop.yml 180 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/VariableName:
+  EnforcedStyle: camelCase
+
+==> 000/000_spec.rb 55 <==
+RSpec.describe Foo do
+  let(:user_name) { 'Adam' }
+end
+
+==> 001/001_spec.rb 54 <==
+RSpec.describe Foo do
+  let(:userName) { 'Adam' }
+end
+
+==> 002/002_spec.rb 56 <==
+RSpec.describe Foo do
+  let!(:user_name) { 'Adam' }
+end
+
+==> 003/003_spec.rb 55 <==
+RSpec.describe Foo do
+  let!(:userName) { 'Adam' }
+end
+
+==> 004/004_spec.rb 59 <==
+RSpec.describe Foo do
+  subject(:user_name) { 'Adam' }
+end
+
+==> 005/005_spec.rb 58 <==
+RSpec.describe Foo do
+  subject(:userName) { 'Adam' }
+end
+
+==> 006/006_spec.rb 60 <==
+RSpec.describe Foo do
+  subject!(:user_name) { 'Adam' }
+end
+
+==> 007/007_spec.rb 59 <==
+RSpec.describe Foo do
+  subject!(:userName) { 'Adam' }
+end
+
+==> 008/008_spec.rb 72 <==
+RSpec.shared_examples 'foo example' do
+  let(:user_name) { 'Adam' }
+end
+
+==> 009/009_spec.rb 27 <==
+let(:user_name) { 'Adam' }
+

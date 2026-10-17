@@ -1,0 +1,42 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 307 <==
+I18n.t :key, scope: [:one, :two]
+I18n.translate :key, scope: [:one, :two]
+t :key, scope: [:one, :two]
+translate :key, scope: [:one, :two]
+t :key, scope: [:one, :two], default: 'Not here'
+I18n.t :key, scope: ['one', :two]
+I18n.t 'key', scope: [:one, :two]
+I18n.t :key, scope: :one
+I18n.t '.key', scope: :one
+
+==> 001/001.rb 35 <==
+::I18n.t :key, scope: [:one, :two]
+
+==> 002/002.rb 30 <==
+t [:key1, :key2], scope: :one
+
+==> 003/003.rb 20 <==
+t key1, scope: :one
+
+==> 004/004.rb 27 <==
+t :key, scope: [:one, two]
+
+==> 005/005.rb 21 <==
+t :key, scope: 'one'
+
+==> 006/006.rb 25 <==
+t :key, scope: something
+
+==> 007/007.rb 7 <==
+t :key
+

@@ -1,0 +1,62 @@
+==> .rubocop.yml 176 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/ExpectChange:
+  EnforcedStyle: block
+
+==> 000/000_spec.rb 57 <==
+it do
+  expect { run }.to change(User, :count).by(1)
+end
+
+==> 001/001_spec.rb 70 <==
+it do
+  expect { run }.to change(User::Token::Auth, :count).by(1)
+end
+
+==> 002/002_spec.rb 51 <==
+it do
+  expect { run }.to change(user, :count)
+end
+
+==> 003/003_spec.rb 53 <==
+it do
+  expect { run }.to change(user, 'status')
+end
+
+==> 004/004_spec.rb 73 <==
+it do
+  expect { paint_users! }.to change(users.green, :count).by(1)
+end
+
+==> 005/005_spec.rb 53 <==
+it do
+  expect { run }.to change(::User, :count)
+end
+
+==> 006/006_spec.rb 71 <==
+it do
+  expect { paint_users! }.to change(@food, :taste).to(:sour)
+end
+
+==> 007/007_spec.rb 70 <==
+it do
+  expect { paint_users! }.to change($token, :value).to(nil)
+end
+
+==> 008/008_spec.rb 40 <==
+it do
+  record.change(user, :count)
+end
+
+==> 009/009_spec.rb 54 <==
+it do
+  expect(run).to change(User, :count).by(1)
+end
+

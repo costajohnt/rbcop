@@ -1,0 +1,139 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 5.0
+
+==> 000/000.rb 22 <==
+x.map { |a| a[:foo] }
+
+==> 001/001.rb 23 <==
+x&.map { |a| a[:foo] }
+
+==> 002/002.rb 23 <==
+x.map { |a| a['foo'] }
+
+==> 003/003.rb 34 <==
+x.map { |a| a[obj.do_something] }
+
+==> 004/004.rb 22 <==
+x.map { |a| b[:foo] }
+
+==> 005/005.rb 38 <==
+x.map { |a| a[foo...a.to_something] }
+
+==> 006/006.rb 44 <==
+lvar = do_something
+x.map { |id| lvar[id] }
+
+==> 007/007.rb 29 <==
+x.map { |_, obj| obj['id'] }
+
+==> 008/008.rb 26 <==
+x.map { |a| a[/regexp/] }
+
+==> 009/009.rb 19 <==
+x.map { _1[:foo] }
+
+==> 010/010.rb 36 <==
+x.map { _1[foo..._1.to_something] }
+
+==> 011/011.rb 19 <==
+x.map { _2['id'] }
+
+==> 012/012.rb 35 <==
+foo do
+  x.map { |a| a[:foo] }
+end
+
+==> 013/013.rb 42 <==
+n.each do |x|
+  x.map { |a| a[:foo] }
+end
+
+==> 014/014.rb 57 <==
+n.each do |x|
+  do_something
+  x.map { |a| a[:foo] }
+end
+
+==> 015/015.rb 39 <==
+n.each do
+  _1.map { |a| a[:foo] }
+end
+
+==> 016/016.rb 54 <==
+n.each do
+  do_something
+  _1.map { |a| a[:foo] }
+end
+
+==> 017/017.rb 26 <==
+x.collect { |a| a[:foo] }
+
+==> 018/018.rb 27 <==
+x&.collect { |a| a[:foo] }
+
+==> 019/019.rb 27 <==
+x.collect { |a| a['foo'] }
+
+==> 020/020.rb 38 <==
+x.collect { |a| a[obj.do_something] }
+
+==> 021/021.rb 26 <==
+x.collect { |a| b[:foo] }
+
+==> 022/022.rb 42 <==
+x.collect { |a| a[foo...a.to_something] }
+
+==> 023/023.rb 48 <==
+lvar = do_something
+x.collect { |id| lvar[id] }
+
+==> 024/024.rb 33 <==
+x.collect { |_, obj| obj['id'] }
+
+==> 025/025.rb 30 <==
+x.collect { |a| a[/regexp/] }
+
+==> 026/026.rb 23 <==
+x.collect { _1[:foo] }
+
+==> 027/027.rb 40 <==
+x.collect { _1[foo..._1.to_something] }
+
+==> 028/028.rb 23 <==
+x.collect { _2['id'] }
+
+==> 029/029.rb 39 <==
+foo do
+  x.collect { |a| a[:foo] }
+end
+
+==> 030/030.rb 46 <==
+n.each do |x|
+  x.collect { |a| a[:foo] }
+end
+
+==> 031/031.rb 61 <==
+n.each do |x|
+  do_something
+  x.collect { |a| a[:foo] }
+end
+
+==> 032/032.rb 43 <==
+n.each do
+  _1.collect { |a| a[:foo] }
+end
+
+==> 033/033.rb 58 <==
+n.each do
+  do_something
+  _1.collect { |a| a[:foo] }
+end
+

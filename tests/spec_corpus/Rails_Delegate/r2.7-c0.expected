@@ -1,0 +1,80 @@
+==> offenses exit=1 1132 <==
+000/000.rb:1:1: C: [Correctable] Rails/Delegate: Use `delegate` to define delegations.
+001/001.rb:1:1: C: [Correctable] Rails/Delegate: Use `delegate` to define delegations.
+002/002.rb:1:1: C: [Correctable] Rails/Delegate: Use `delegate` to define delegations.
+005/005.rb:1:1: C: [Correctable] Rails/Delegate: Use `delegate` to define delegations.
+006/006.rb:1:1: C: [Correctable] Rails/Delegate: Use `delegate` to define delegations.
+018/018.rb:11:3: C: [Correctable] Rails/Delegate: Use `delegate` to define delegations.
+022/022.rb:1:1: C: [Correctable] Rails/Delegate: Use `delegate` to define delegations.
+023/023.rb:1:1: C: [Correctable] Rails/Delegate: Use `delegate` to define delegations.
+024/024.rb:1:1: C: [Correctable] Rails/Delegate: Use `delegate` to define delegations.
+025/025.rb:1:1: C: [Correctable] Rails/Delegate: Use `delegate` to define delegations.
+026/026.rb:1:1: C: [Correctable] Rails/Delegate: Use `delegate` to define delegations.
+027/027.rb:1:1: C: [Correctable] Rails/Delegate: Use `delegate` to define delegations.
+028/028.rb:1:1: C: [Correctable] Rails/Delegate: Use `delegate` to define delegations.
+
+==> autocorrect exit=0 1106 <==
+000/000.rb:1:1: C: [Corrected] Rails/Delegate: Use `delegate` to define delegations.
+001/001.rb:1:1: C: [Corrected] Rails/Delegate: Use `delegate` to define delegations.
+002/002.rb:1:1: C: [Corrected] Rails/Delegate: Use `delegate` to define delegations.
+005/005.rb:1:1: C: [Corrected] Rails/Delegate: Use `delegate` to define delegations.
+006/006.rb:1:1: C: [Corrected] Rails/Delegate: Use `delegate` to define delegations.
+018/018.rb:11:3: C: [Corrected] Rails/Delegate: Use `delegate` to define delegations.
+022/022.rb:1:1: C: [Corrected] Rails/Delegate: Use `delegate` to define delegations.
+023/023.rb:1:1: C: [Corrected] Rails/Delegate: Use `delegate` to define delegations.
+024/024.rb:1:1: C: [Corrected] Rails/Delegate: Use `delegate` to define delegations.
+025/025.rb:1:1: C: [Corrected] Rails/Delegate: Use `delegate` to define delegations.
+026/026.rb:1:1: C: [Corrected] Rails/Delegate: Use `delegate` to define delegations.
+027/027.rb:1:1: C: [Corrected] Rails/Delegate: Use `delegate` to define delegations.
+028/028.rb:1:1: C: [Corrected] Rails/Delegate: Use `delegate` to define delegations.
+
+==> corrected/000/000.rb 24 <==
+delegate :foo, to: :bar
+
+==> corrected/001/001.rb 24 <==
+delegate :foo, to: :bar
+
+==> corrected/002/002.rb 24 <==
+delegate :foo, to: self
+
+==> corrected/005/005.rb 38 <==
+delegate :foo, to: :bar, prefix: true
+
+==> corrected/006/006.rb 28 <==
+delegate :bar_foo, to: self
+
+==> corrected/018/018.rb 103 <==
+class A
+  class B
+
+    private
+
+    def foo
+      bar.foo
+    end
+  end
+
+  delegate :baz, to: :foo
+end
+
+==> corrected/022/022.rb 26 <==
+delegate :foo, to: :class
+
+==> corrected/023/023.rb 26 <==
+delegate :foo, to: :CONST
+
+==> corrected/024/024.rb 40 <==
+delegate :foo, to: :'SomeModule::CONST'
+
+==> corrected/025/025.rb 42 <==
+delegate :foo, to: :'::SomeModule::CONST'
+
+==> corrected/026/026.rb 39 <==
+delegate :foo, to: :@instance_variable
+
+==> corrected/027/027.rb 37 <==
+delegate :foo, to: :@@class_variable
+
+==> corrected/028/028.rb 37 <==
+delegate :foo, to: :$global_variable
+

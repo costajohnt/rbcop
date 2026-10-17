@@ -1,0 +1,104 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-minitest
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 150 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(!'rubocop-minitest' == actual, <<~MESSAGE
+      message
+    MESSAGE
+    )
+  end
+end
+
+==> test/001_test.rb 117 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert('rubocop-minitest' != actual, 'message')
+  end
+end
+
+==> test/002_test.rb 106 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert('rubocop-minitest' != actual)
+  end
+end
+
+==> test/003_test.rb 110 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_equal('rubocop-minitest', actual)
+  end
+end
+
+==> test/004_test.rb 118 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_operator('rubocop-minitest', :!=, actual)
+  end
+end
+
+==> test/005_test.rb 110 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(obj.expected != other_obj.actual)
+  end
+end
+
+==> test/006_test.rb 118 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(!'rubocop-minitest' == object, 'message')
+  end
+end
+
+==> test/007_test.rb 118 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_operator('rubocop-minitest', :==, actual)
+  end
+end
+
+==> test/008_test.rb 107 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(!'rubocop-minitest' == object)
+  end
+end
+
+==> test/009_test.rb 118 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_operator('rubocop-minitest', :!=, actual)
+  end
+end
+
+==> test/010_test.rb 127 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    refute_operator('rubocop-minitest', :==, actual, message)
+  end
+end
+
+==> test/011_test.rb 118 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_operator('rubocop-minitest', :==, actual)
+  end
+end
+
+==> test/012_test.rb 96 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert(expected != actual)
+  end
+end
+

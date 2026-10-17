@@ -1,0 +1,19 @@
+==> offenses exit=1 174 <==
+002/002_spec.rb:1:1: C: [Correctable] RSpec/Dialect: Prefer `describe` over `context`.
+003/003_spec.rb:1:1: C: [Correctable] RSpec/Dialect: Prefer `describe` over `context`.
+
+==> autocorrect exit=0 170 <==
+002/002_spec.rb:1:1: C: [Corrected] RSpec/Dialect: Prefer `describe` over `context`.
+003/003_spec.rb:1:1: C: [Corrected] RSpec/Dialect: Prefer `describe` over `context`.
+
+==> corrected/002/002_spec.rb 40 <==
+describe 'display name presence' do
+end
+
+==> corrected/003/003_spec.rb 122 <==
+RSpec.describe 'context' do
+  it 'tests common context invocations' do
+    expect(request.context).to be_empty?
+  end
+end
+

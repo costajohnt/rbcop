@@ -1,0 +1,84 @@
+==> offenses exit=1 1500 <==
+000.rb:1:7: C: [Correctable] Performance/Sum: Use `sum(10)` instead of `inject(10, :+)`.
+001.rb:1:7: C: [Correctable] Performance/Sum: Use `sum(10)` instead of `inject(10) { |acc, elem| acc + elem }`.
+002.rb:1:7: C: [Correctable] Performance/Sum: Use `sum(10)` instead of `inject(10) { |acc, elem| elem + acc }`.
+003.rb:1:7: C: [Correctable] Performance/Sum: Use `sum` instead of `inject(0, :+)`.
+004.rb:1:7: C: [Correctable] Performance/Sum: Use `sum` instead of `inject(0, :+)`.
+005.rb:1:7: C: [Correctable] Performance/Sum: Use `sum(0.0)` instead of `inject(0.0, :+)`.
+006.rb:1:7: C: [Correctable] Performance/Sum: Use `sum(init)` instead of `inject(init, :+)`.
+007.rb:1:7: C: [Correctable] Performance/Sum: Use `sum` instead of `inject(0, &:+)`.
+013.rb:1:7: C: [Correctable] Performance/Sum: Use `sum(10)` instead of `reduce(10, :+)`.
+014.rb:1:7: C: [Correctable] Performance/Sum: Use `sum(10)` instead of `reduce(10) { |acc, elem| acc + elem }`.
+015.rb:1:7: C: [Correctable] Performance/Sum: Use `sum(10)` instead of `reduce(10) { |acc, elem| elem + acc }`.
+016.rb:1:7: C: [Correctable] Performance/Sum: Use `sum` instead of `reduce(0, :+)`.
+017.rb:1:7: C: [Correctable] Performance/Sum: Use `sum` instead of `reduce(0, :+)`.
+018.rb:1:7: C: [Correctable] Performance/Sum: Use `sum(0.0)` instead of `reduce(0.0, :+)`.
+019.rb:1:7: C: [Correctable] Performance/Sum: Use `sum(init)` instead of `reduce(init, :+)`.
+020.rb:1:7: C: [Correctable] Performance/Sum: Use `sum` instead of `reduce(0, &:+)`.
+
+==> autocorrect exit=0 1468 <==
+000.rb:1:7: C: [Corrected] Performance/Sum: Use `sum(10)` instead of `inject(10, :+)`.
+001.rb:1:7: C: [Corrected] Performance/Sum: Use `sum(10)` instead of `inject(10) { |acc, elem| acc + elem }`.
+002.rb:1:7: C: [Corrected] Performance/Sum: Use `sum(10)` instead of `inject(10) { |acc, elem| elem + acc }`.
+003.rb:1:7: C: [Corrected] Performance/Sum: Use `sum` instead of `inject(0, :+)`.
+004.rb:1:7: C: [Corrected] Performance/Sum: Use `sum` instead of `inject(0, :+)`.
+005.rb:1:7: C: [Corrected] Performance/Sum: Use `sum(0.0)` instead of `inject(0.0, :+)`.
+006.rb:1:7: C: [Corrected] Performance/Sum: Use `sum(init)` instead of `inject(init, :+)`.
+007.rb:1:7: C: [Corrected] Performance/Sum: Use `sum` instead of `inject(0, &:+)`.
+013.rb:1:7: C: [Corrected] Performance/Sum: Use `sum(10)` instead of `reduce(10, :+)`.
+014.rb:1:7: C: [Corrected] Performance/Sum: Use `sum(10)` instead of `reduce(10) { |acc, elem| acc + elem }`.
+015.rb:1:7: C: [Corrected] Performance/Sum: Use `sum(10)` instead of `reduce(10) { |acc, elem| elem + acc }`.
+016.rb:1:7: C: [Corrected] Performance/Sum: Use `sum` instead of `reduce(0, :+)`.
+017.rb:1:7: C: [Corrected] Performance/Sum: Use `sum` instead of `reduce(0, :+)`.
+018.rb:1:7: C: [Corrected] Performance/Sum: Use `sum(0.0)` instead of `reduce(0.0, :+)`.
+019.rb:1:7: C: [Corrected] Performance/Sum: Use `sum(init)` instead of `reduce(init, :+)`.
+020.rb:1:7: C: [Corrected] Performance/Sum: Use `sum` instead of `reduce(0, &:+)`.
+
+==> corrected/000.rb 14 <==
+array.sum(10)
+
+==> corrected/001.rb 14 <==
+array.sum(10)
+
+==> corrected/002.rb 14 <==
+array.sum(10)
+
+==> corrected/003.rb 10 <==
+array.sum
+
+==> corrected/004.rb 10 <==
+array.sum
+
+==> corrected/005.rb 15 <==
+array.sum(0.0)
+
+==> corrected/006.rb 16 <==
+array.sum(init)
+
+==> corrected/007.rb 10 <==
+array.sum
+
+==> corrected/013.rb 14 <==
+array.sum(10)
+
+==> corrected/014.rb 14 <==
+array.sum(10)
+
+==> corrected/015.rb 14 <==
+array.sum(10)
+
+==> corrected/016.rb 10 <==
+array.sum
+
+==> corrected/017.rb 10 <==
+array.sum
+
+==> corrected/018.rb 15 <==
+array.sum(0.0)
+
+==> corrected/019.rb 16 <==
+array.sum(init)
+
+==> corrected/020.rb 10 <==
+array.sum
+

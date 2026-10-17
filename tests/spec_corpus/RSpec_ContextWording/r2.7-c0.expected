@@ -1,0 +1,20 @@
+==> offenses exit=1 945 <==
+001/001_spec.rb:1:9: C: RSpec/ContextWording: Context description should match /^when\b/, /^with\b/, or /^without\b/.
+002/002_spec.rb:1:9: C: RSpec/ContextWording: Context description should match /^when\b/, /^with\b/, or /^without\b/.
+003/003_spec.rb:1:9: C: RSpec/ContextWording: Context description should match /^when\b/, /^with\b/, or /^without\b/.
+004/004_spec.rb:1:16: C: RSpec/ContextWording: Context description should match /^when\b/, /^with\b/, or /^without\b/.
+007/007_spec.rb:1:9: C: RSpec/ContextWording: Context description should match /^when\b/, /^with\b/, or /^without\b/.
+008/008_spec.rb:1:9: C: RSpec/ContextWording: Context description should match /^when\b/, /^with\b/, or /^without\b/.
+009/009_spec.rb:1:9: C: RSpec/ContextWording: Context description should match /^when\b/, /^with\b/, or /^without\b/.
+010/010_spec.rb:1:9: C: RSpec/ContextWording: Context description should match /^when\b/, /^with\b/, or /^without\b/.
+
+==> autocorrect exit=1 945 <==
+001/001_spec.rb:1:9: C: RSpec/ContextWording: Context description should match /^when\b/, /^with\b/, or /^without\b/.
+002/002_spec.rb:1:9: C: RSpec/ContextWording: Context description should match /^when\b/, /^with\b/, or /^without\b/.
+003/003_spec.rb:1:9: C: RSpec/ContextWording: Context description should match /^when\b/, /^with\b/, or /^without\b/.
+004/004_spec.rb:1:16: C: RSpec/ContextWording: Context description should match /^when\b/, /^with\b/, or /^without\b/.
+007/007_spec.rb:1:9: C: RSpec/ContextWording: Context description should match /^when\b/, /^with\b/, or /^without\b/.
+008/008_spec.rb:1:9: C: RSpec/ContextWording: Context description should match /^when\b/, /^with\b/, or /^without\b/.
+009/009_spec.rb:1:9: C: RSpec/ContextWording: Context description should match /^when\b/, /^with\b/, or /^without\b/.
+010/010_spec.rb:1:9: C: RSpec/ContextWording: Context description should match /^when\b/, /^with\b/, or /^without\b/.
+

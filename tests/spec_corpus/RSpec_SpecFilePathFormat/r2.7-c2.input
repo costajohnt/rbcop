@@ -1,0 +1,19 @@
+==> .rubocop.yml 192 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/SpecFilePathFormat:
+  CustomTransform:
+    MyApp: ''
+
+==> 000/actions/api/auth/current_spec.rb 52 <==
+describe MyApp::Actions::API::Auth::Current do; end
+
+==> 001/wrong/path_spec.rb 52 <==
+describe MyApp::Actions::API::Auth::Current do; end
+

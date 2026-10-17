@@ -1,0 +1,51 @@
+==> .rubocop.yml 175 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/WhereExists:
+  EnforcedStyle: where
+
+==> 000/000.rb 27 <==
+User.exists?(name: 'john')
+
+==> 001/001.rb 28 <==
+User&.exists?(name: 'john')
+
+==> 002/002.rb 35 <==
+User.exists?(['name = ?', 'john'])
+
+==> 003/003.rb 33 <==
+User.exists?('name = ?', 'john')
+
+==> 004/004.rb 26 <==
+User.exists?(*conditions)
+
+==> 005/005.rb 30 <==
+exists?(['name = ?', 'john'])
+
+==> 006/006.rb 36 <==
+user.posts.exists?(published: true)
+
+==> 007/007.rb 33 <==
+User.where(name: 'john').exists?
+
+==> 008/008.rb 41 <==
+User.where(['name = ?', 'john']).exists?
+
+==> 009/009.rb 39 <==
+User.where('name = ?', 'john').exists?
+
+==> 010/010.rb 36 <==
+User.where("name = 'john'").exists?
+
+==> 011/011.rb 42 <==
+user.posts.where(published: true).exists?
+
+==> 012/012.rb 13 <==
+User.exists?
+

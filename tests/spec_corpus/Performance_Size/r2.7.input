@@ -1,0 +1,67 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 12 <==
+count(items)
+==> 001.rb 19 <==
+object.count(items)
+==> 002.rb 16 <==
+[1, 2, 3].count
+
+==> 003.rb 17 <==
+[1, 2, 3]&.count
+
+==> 004.rb 18 <==
+(1..3).to_a.count
+
+==> 005.rb 20 <==
+(1..3)&.to_a&.count
+
+==> 006.rb 19 <==
+Array[*1..5].count
+
+==> 007.rb 18 <==
+Array(1..5).count
+
+==> 008.rb 14 <==
+[1, 2, 3].size
+==> 009.rb 14 <==
+[1, 2, 3].each
+==> 010.rb 29 <==
+[1, 2, 3].count { |e| e > 3 }
+==> 011.rb 23 <==
+[1, 2, 3].count(&:nil?)
+==> 012.rb 18 <==
+[1, 2, 3].count(1)
+==> 013.rb 25 <==
+{a: 1, b: 2, c: 3}.count
+
+==> 014.rb 34 <==
+[[:foo, :bar], [1, 2]].to_h.count
+
+==> 015.rb 36 <==
+[[:foo, :bar], [1, 2]]&.to_h&.count
+
+==> 016.rb 24 <==
+Hash[*('a'..'z')].count
+
+==> 017.rb 24 <==
+Hash(key: :value).count
+
+==> 018.rb 23 <==
+{a: 1, b: 2, c: 3}.size
+==> 019.rb 23 <==
+{a: 1, b: 2, c: 3}.each
+==> 020.rb 38 <==
+{a: 1, b: 2, c: 3}.count { |e| e > 3 }
+==> 021.rb 32 <==
+{a: 1, b: 2, c: 3}.count(&:nil?)
+==> 022.rb 27 <==
+{a: 1, b: 2, c: 3}.count(1)

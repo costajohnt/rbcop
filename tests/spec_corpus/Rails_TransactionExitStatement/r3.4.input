@@ -1,0 +1,50 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000/000.rb 84 <==
+ApplicationRecord.transaction do
+  it.after_commit { }
+  return if user.active?
+end
+
+==> 001/001.rb 74 <==
+ApplicationRecord.transaction do
+  foo.each do
+    return if it
+  end
+end
+
+==> 002/002.rb 73 <==
+ApplicationRecord.transaction do
+  foo.each do
+    break if it
+  end
+end
+
+==> 003/003.rb 82 <==
+ApplicationRecord.with_lock do
+  it.after_commit { }
+  return if user.active?
+end
+
+==> 004/004.rb 72 <==
+ApplicationRecord.with_lock do
+  foo.each do
+    return if it
+  end
+end
+
+==> 005/005.rb 71 <==
+ApplicationRecord.with_lock do
+  foo.each do
+    break if it
+  end
+end
+

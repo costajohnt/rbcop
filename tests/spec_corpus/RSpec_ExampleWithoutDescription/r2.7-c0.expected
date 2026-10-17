@@ -1,0 +1,8 @@
+==> offenses exit=1 250 <==
+000/000_spec.rb:1:4: C: RSpec/ExampleWithoutDescription: Omit the argument when you want to have auto-generated description.
+003/003_spec.rb:1:9: C: RSpec/ExampleWithoutDescription: Omit the argument when you want to have auto-generated description.
+
+==> autocorrect exit=1 250 <==
+000/000_spec.rb:1:4: C: RSpec/ExampleWithoutDescription: Omit the argument when you want to have auto-generated description.
+003/003_spec.rb:1:9: C: RSpec/ExampleWithoutDescription: Omit the argument when you want to have auto-generated description.
+

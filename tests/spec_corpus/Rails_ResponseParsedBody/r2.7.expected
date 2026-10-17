@@ -1,0 +1,14 @@
+==> offenses exit=1 214 <==
+spec/controllers/001/001.rb:1:8: C: [Correctable] Rails/ResponseParsedBody: Prefer `response.parsed_body`.
+spec/controllers/002/002.rb:1:8: C: [Correctable] Rails/ResponseParsedBody: Prefer `response.parsed_body`.
+
+==> autocorrect exit=0 210 <==
+spec/controllers/001/001.rb:1:8: C: [Corrected] Rails/ResponseParsedBody: Prefer `response.parsed_body`.
+spec/controllers/002/002.rb:1:8: C: [Corrected] Rails/ResponseParsedBody: Prefer `response.parsed_body`.
+
+==> corrected/spec/controllers/001/001.rb 51 <==
+expect(response.parsed_body).to eq('foo' => 'bar')
+
+==> corrected/spec/controllers/002/002.rb 51 <==
+expect(response.parsed_body).to eq('foo' => 'bar')
+

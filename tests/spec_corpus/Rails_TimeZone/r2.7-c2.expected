@@ -1,0 +1,9 @@
+==> offenses exit=1 337 <==
+001/001.rb:1:6: C: [Correctable] Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
+
+==> autocorrect exit=0 335 <==
+001/001.rb:1:6: C: [Corrected] Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
+
+==> corrected/001/001.rb 14 <==
+Time.zone.now
+

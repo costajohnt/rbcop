@@ -1,0 +1,14 @@
+==> offenses exit=1 205 <==
+000.rb:1:8: C: [Correctable] Performance/RangeInclude: Use `Range#cover?` instead of `Range#include?`.
+001.rb:1:8: C: [Correctable] Performance/RangeInclude: Use `Range#cover?` instead of `Range#member?`.
+
+==> autocorrect exit=0 201 <==
+000.rb:1:8: C: [Corrected] Performance/RangeInclude: Use `Range#cover?` instead of `Range#include?`.
+001.rb:1:8: C: [Corrected] Performance/RangeInclude: Use `Range#cover?` instead of `Range#member?`.
+
+==> corrected/000.rb 16 <==
+(a..b).cover? 1
+
+==> corrected/001.rb 16 <==
+(a..b).cover? 1
+

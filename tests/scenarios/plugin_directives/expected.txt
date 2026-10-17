@@ -1,0 +1,8 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:10:1: C: [Correctable] Style/DirectiveScope: Use `disable-next` instead of a `disable`/`enable` pair around a single statement.
+a.rb:5:33: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Performance/Detect`.
+a.rb:8:7: W: Lint/CopDirectiveSyntax: Unknown cop name `Performance/Bogus` (did you mean `Performance/Count`?).
+a.rb:8:7: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `Performance/Bogus` (did you mean `Performance/Count`?).
+no_foo.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+no_foo.rb:4:7: C: Style/Documentation: Missing top-level documentation comment for `class RuboCop::Cop::Custom::NoFoo`.
+no_foo.rb:6:38: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.

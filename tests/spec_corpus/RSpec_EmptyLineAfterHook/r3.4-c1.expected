@@ -1,0 +1,13 @@
+==> offenses exit=1 98 <==
+000/000_spec.rb:2:3: C: [Correctable] RSpec/EmptyLineAfterHook: Add an empty line after `around`.
+
+==> autocorrect exit=0 96 <==
+000/000_spec.rb:2:3: C: [Corrected] RSpec/EmptyLineAfterHook: Add an empty line after `around`.
+
+==> corrected/000/000_spec.rb 72 <==
+RSpec.describe User do
+  around { it.run }
+
+  it { does_something }
+end
+

@@ -1,0 +1,17 @@
+==> .rubocop.yml 177 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/Delegate:
+  EnforceForPrefixed: false
+
+==> 000/000.rb 26 <==
+def bar_foo
+  bar.foo
+end
+

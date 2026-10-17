@@ -1,0 +1,24 @@
+==> .rubocop.yml 187 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.4
+Performance/DeleteSuffix:
+  SafeMultiline: true
+
+==> 000.rb 25 <==
+str.gsub(/suffix\z/, '')
+
+==> 001.rb 26 <==
+str.gsub!(/suffix\z/, '')
+
+==> 002.rb 24 <==
+str.sub(/suffix\z/, '')
+
+==> 003.rb 25 <==
+str.sub!(/suffix\z/, '')
+

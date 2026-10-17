@@ -1,0 +1,18 @@
+==> offenses exit=1 757 <==
+000/000_spec.rb:5:12: C: RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
+000/000_spec.rb:9:12: C: RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
+001/001_spec.rb:5:23: C: RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
+001/001_spec.rb:9:23: C: RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
+002/002_spec.rb:5:23: C: RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
+004/004_spec.rb:6:14: C: RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
+004/004_spec.rb:10:14: C: RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
+
+==> autocorrect exit=1 757 <==
+000/000_spec.rb:5:12: C: RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
+000/000_spec.rb:9:12: C: RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
+001/001_spec.rb:5:23: C: RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
+001/001_spec.rb:9:23: C: RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
+002/002_spec.rb:5:23: C: RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
+004/004_spec.rb:6:14: C: RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
+004/004_spec.rb:10:14: C: RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
+

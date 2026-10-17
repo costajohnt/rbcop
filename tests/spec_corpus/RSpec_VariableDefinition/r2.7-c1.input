@@ -1,0 +1,30 @@
+==> .rubocop.yml 184 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/VariableDefinition:
+  EnforcedStyle: strings
+
+==> 000/000_spec.rb 55 <==
+RSpec.describe Foo do
+  let(:user_name) { 'Adam' }
+end
+
+==> 001/001_spec.rb 58 <==
+RSpec.describe Foo do
+  let(:"user-#{id}") { 'Adam' }
+end
+
+==> 002/002_spec.rb 56 <==
+RSpec.describe Foo do
+  let('user_name') { 'Adam' }
+end
+
+==> 003/003_spec.rb 27 <==
+let(:user_name) { 'Adam' }
+

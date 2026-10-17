@@ -1,0 +1,49 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/000/000.rb 5 <==
+exit
+
+==> app/001/001.rb 6 <==
+exit!
+
+==> app/002/002.rb 6 <==
+abort
+
+==> app/003/003.rb 15 <==
+Object.new.exit
+==> app/004/004.rb 18 <==
+Object.new.exit(0)
+==> app/005/005.rb 19 <==
+Object.new.exit!(0)
+==> app/006/006.rb 26 <==
+Object.new.abort("failed")
+==> app/007/007.rb 8 <==
+exit(0)
+
+==> app/008/008.rb 10 <==
+exit(1, 2)
+==> app/009/009.rb 17 <==
+abort("message")
+
+==> app/010/010.rb 35 <==
+abort("message", "another message")
+==> app/011/011.rb 12 <==
+Kernel.exit
+
+==> app/012/012.rb 13 <==
+Process.exit
+
+==> app/013/013.rb 13 <==
+Kernel.abort
+
+==> app/014/014.rb 14 <==
+Process.abort
+

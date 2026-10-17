@@ -1,0 +1,13 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.5
+
+==> 000/000.rb 32 <==
+x.to_h { |el| [el.to_sym, el] }
+

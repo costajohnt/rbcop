@@ -1,0 +1,71 @@
+==> offenses exit=1 2203 <==
+000/000_spec.rb:2:3: C: RSpec/ScatteredSetup: Do not define multiple `before` hooks in the same example group (also defined on line 3).
+000/000_spec.rb:3:3: C: [Correctable] RSpec/ScatteredSetup: Do not define multiple `before` hooks in the same example group (also defined on line 2).
+001/001_spec.rb:2:3: C: RSpec/ScatteredSetup: Do not define multiple `after` hooks in the same example group (also defined on lines 3, 4).
+001/001_spec.rb:3:3: C: [Correctable] RSpec/ScatteredSetup: Do not define multiple `after` hooks in the same example group (also defined on lines 2, 4).
+001/001_spec.rb:4:3: C: [Correctable] RSpec/ScatteredSetup: Do not define multiple `after` hooks in the same example group (also defined on lines 2, 3).
+002/002_spec.rb:2:3: C: RSpec/ScatteredSetup: Do not define multiple `before` hooks in the same example group (also defined on line 3).
+002/002_spec.rb:3:3: C: [Correctable] RSpec/ScatteredSetup: Do not define multiple `before` hooks in the same example group (also defined on line 2).
+010/010_spec.rb:2:3: C: RSpec/ScatteredSetup: Do not define multiple `before` hooks in the same example group (also defined on lines 3, 4, 5).
+010/010_spec.rb:3:3: C: [Correctable] RSpec/ScatteredSetup: Do not define multiple `before` hooks in the same example group (also defined on lines 2, 4, 5).
+010/010_spec.rb:4:3: C: [Correctable] RSpec/ScatteredSetup: Do not define multiple `before` hooks in the same example group (also defined on lines 2, 3, 5).
+010/010_spec.rb:5:3: C: [Correctable] RSpec/ScatteredSetup: Do not define multiple `before` hooks in the same example group (also defined on lines 2, 3, 4).
+011/011_spec.rb:2:3: C: RSpec/ScatteredSetup: Do not define multiple `before` hooks in the same example group (also defined on line 3).
+011/011_spec.rb:3:3: C: [Correctable] RSpec/ScatteredSetup: Do not define multiple `before` hooks in the same example group (also defined on line 2).
+012/012_spec.rb:2:3: C: RSpec/ScatteredSetup: Do not define multiple `before` hooks in the same example group (also defined on line 3).
+012/012_spec.rb:3:3: C: [Correctable] RSpec/ScatteredSetup: Do not define multiple `before` hooks in the same example group (also defined on line 2).
+
+==> autocorrect exit=0 1359 <==
+000/000_spec.rb:3:3: C: [Corrected] RSpec/ScatteredSetup: Do not define multiple `before` hooks in the same example group (also defined on line 2).
+001/001_spec.rb:3:3: C: [Corrected] RSpec/ScatteredSetup: Do not define multiple `after` hooks in the same example group (also defined on lines 2, 4).
+001/001_spec.rb:4:3: C: [Corrected] RSpec/ScatteredSetup: Do not define multiple `after` hooks in the same example group (also defined on lines 2, 3).
+002/002_spec.rb:3:3: C: [Corrected] RSpec/ScatteredSetup: Do not define multiple `before` hooks in the same example group (also defined on line 2).
+010/010_spec.rb:3:3: C: [Corrected] RSpec/ScatteredSetup: Do not define multiple `before` hooks in the same example group (also defined on lines 2, 4, 5).
+010/010_spec.rb:4:3: C: [Corrected] RSpec/ScatteredSetup: Do not define multiple `before` hooks in the same example group (also defined on lines 2, 3, 5).
+010/010_spec.rb:5:3: C: [Corrected] RSpec/ScatteredSetup: Do not define multiple `before` hooks in the same example group (also defined on lines 2, 3, 4).
+011/011_spec.rb:3:3: C: [Corrected] RSpec/ScatteredSetup: Do not define multiple `before` hooks in the same example group (also defined on line 2).
+012/012_spec.rb:3:3: C: [Corrected] RSpec/ScatteredSetup: Do not define multiple `before` hooks in the same example group (also defined on line 2).
+
+==> corrected/000/000_spec.rb 42 <==
+describe Foo do
+  before { bar
+baz  }
+end
+
+==> corrected/001/001_spec.rb 46 <==
+describe Foo do
+  after { bar
+baz 
+baz  }
+end
+
+==> corrected/002/002_spec.rb 48 <==
+describe Foo do
+  before(:all) { bar
+baz  }
+end
+
+==> corrected/010/010_spec.rb 122 <==
+describe Foo do
+  before(:each, :special_case) { foo
+bar 
+bar 
+bar  }
+  before(:example, special_case: false) { bar }
+end
+
+==> corrected/011/011_spec.rb 47 <==
+describe Foo do
+  before { do_something
+ }
+end
+
+==> corrected/012/012_spec.rb 83 <==
+describe Foo do
+  before { foo
+bar(<<~'TEXT')
+      Hello World!
+    TEXT
+   }
+end
+

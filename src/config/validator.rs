@@ -48,6 +48,25 @@ static OBSOLETION: LazyLock<Map> = LazyLock::new(|| match parse_yaml(include_str
     _ => Map::default(),
 });
 
+/// ConfigObsoletion#legacy_cop_names: the old names of the cop rules (renamed, removed, split,
+/// extracted) of RuboCop and of the plugins loaded so far.
+pub fn legacy_cop_names() -> Vec<String> {
+    let plugins: Vec<Map> = crate::helpers::cop_registry::loaded_plugins()
+        .iter()
+        .filter_map(|p| match p.obsoletion.map(parse_yaml) {
+            Some(Ok(Value::Map(m))) => Some(Arc::unwrap_or_clone(m)),
+            _ => None,
+        })
+        .collect();
+    let mut out = Vec::new();
+    for kind in ["renamed", "removed", "split", "extracted"] {
+        for rules in std::iter::once(&*OBSOLETION).chain(plugins.iter()) {
+            out.extend(rules.map(kind).into_iter().flat_map(|m| m.keys().map(String::from)));
+        }
+    }
+    out
+}
+
 /// ConfigObsoletion.deprecated_names_for: the old names of cops renamed to `cop`.
 pub fn deprecated_names_for(cop: &str) -> Vec<String> {
     static RENAMED: LazyLock<Vec<(String, String)>> = LazyLock::new(|| {
@@ -243,7 +262,10 @@ impl Validator<'_> {
         for name in &valid {
             let (Some(section), Some(default)) = (hash.map(name), self.default.map(name)) else { continue };
             for param in section.keys() {
-                if COMMON_PARAMS.contains(&param) || default.contains(param) {
+                // rubocop-rails appends TargetRailsVersion to ConfigValidator::COMMON_PARAMS.
+                let rails_param =
+                    param == "TargetRailsVersion" && crate::helpers::cop_registry::plugin_loaded("rubocop-rails");
+                if COMMON_PARAMS.contains(&param) || rails_param || default.contains(param) {
                     continue;
                 }
                 if param == "NewCops" && self.is_department(name) {
@@ -341,7 +363,20 @@ impl Validator<'_> {
         // CopRule#violated?: the old name, or its bare cop name.
         let has = |old: &str| hash.contains(old) || hash.contains(old.rsplit('/').next().unwrap_or(old));
         let empty = Map::default();
-        let rules = |kind: &str| OBSOLETION.map(kind).map(|m| m.0.clone()).unwrap_or_default();
+        // ConfigObsoletion.files: RuboCop's rules, then each loaded plugin's (later keys win).
+        let rules = |kind: &str| {
+            let mut all = OBSOLETION.map(kind).cloned().unwrap_or_default();
+            for plugin in crate::helpers::cop_registry::loaded_plugins() {
+                if let Some(Ok(Value::Map(m))) = plugin.obsoletion.map(parse_yaml)
+                    && let Some(Value::Map(rules)) = m.get(kind)
+                {
+                    for (k, v) in rules.0.iter() {
+                        all.insert(k.clone(), v.clone());
+                    }
+                }
+            }
+            all.0
+        };
         for (old, v) in rules("renamed") {
             if v == Value::Null || !has(&old) {
                 continue;
@@ -397,7 +432,18 @@ impl Validator<'_> {
         }
         let mut target = None;
         for kind in ["changed_parameters", "changed_enforced_styles"] {
-            let Some(Value::Seq(entries)) = OBSOLETION.get(kind) else { continue };
+            // ConfigObsoletion.files: RuboCop's rules, then each loaded plugin's (arrays concatenate).
+            let mut entries: Vec<Value> = match OBSOLETION.get(kind) {
+                Some(Value::Seq(e)) => e.to_vec(),
+                _ => Vec::new(),
+            };
+            for plugin in crate::helpers::cop_registry::loaded_plugins() {
+                if let Some(Ok(Value::Map(m))) = plugin.obsoletion.map(parse_yaml)
+                    && let Some(Value::Seq(e)) = m.get(kind)
+                {
+                    entries.extend(e.iter().cloned());
+                }
+            }
             for entry in entries.iter() {
                 let Value::Map(meta) = entry else { continue };
                 for cop in strings(meta.get("cops")) {

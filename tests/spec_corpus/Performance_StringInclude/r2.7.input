@@ -1,0 +1,672 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 17 <==
+str.match? /abc/
+
+==> 001.rb 19 <==
+/abc/.match? 'str'
+
+==> 002.rb 16 <==
+str.match? /\a/
+
+==> 003.rb 18 <==
+/\a/.match? 'str'
+
+==> 004.rb 16 <==
+str.match? /\e/
+
+==> 005.rb 18 <==
+/\e/.match? 'str'
+
+==> 006.rb 16 <==
+str.match? /\f/
+
+==> 007.rb 18 <==
+/\f/.match? 'str'
+
+==> 008.rb 16 <==
+str.match? /\r/
+
+==> 009.rb 18 <==
+/\r/.match? 'str'
+
+==> 010.rb 16 <==
+str.match? /\t/
+
+==> 011.rb 18 <==
+/\t/.match? 'str'
+
+==> 012.rb 16 <==
+str.match? /\v/
+
+==> 013.rb 18 <==
+/\v/.match? 'str'
+
+==> 014.rb 16 <==
+str.match? /\./
+
+==> 015.rb 18 <==
+/\./.match? 'str'
+
+==> 016.rb 20 <==
+str.match? /prefix./
+==> 017.rb 20 <==
+/prefix./.match? str
+==> 018.rb 16 <==
+str.match? /\*/
+
+==> 019.rb 18 <==
+/\*/.match? 'str'
+
+==> 020.rb 20 <==
+str.match? /prefix*/
+==> 021.rb 20 <==
+/prefix*/.match? str
+==> 022.rb 16 <==
+str.match? /\?/
+
+==> 023.rb 18 <==
+/\?/.match? 'str'
+
+==> 024.rb 20 <==
+str.match? /prefix?/
+==> 025.rb 20 <==
+/prefix?/.match? str
+==> 026.rb 16 <==
+str.match? /\$/
+
+==> 027.rb 18 <==
+/\$/.match? 'str'
+
+==> 028.rb 20 <==
+str.match? /prefix$/
+==> 029.rb 20 <==
+/prefix$/.match? str
+==> 030.rb 16 <==
+str.match? /\^/
+
+==> 031.rb 18 <==
+/\^/.match? 'str'
+
+==> 032.rb 20 <==
+str.match? /prefix^/
+==> 033.rb 20 <==
+/prefix^/.match? str
+==> 034.rb 16 <==
+str.match? /\|/
+
+==> 035.rb 18 <==
+/\|/.match? 'str'
+
+==> 036.rb 20 <==
+str.match? /prefix|/
+==> 037.rb 20 <==
+/prefix|/.match? str
+==> 038.rb 15 <==
+str.match? /\w/
+==> 039.rb 15 <==
+/\w/.match? str
+==> 040.rb 15 <==
+str.match? /\W/
+==> 041.rb 15 <==
+/\W/.match? str
+==> 042.rb 15 <==
+str.match? /\s/
+==> 043.rb 15 <==
+/\s/.match? str
+==> 044.rb 15 <==
+str.match? /\S/
+==> 045.rb 15 <==
+/\S/.match? str
+==> 046.rb 15 <==
+str.match? /\d/
+==> 047.rb 15 <==
+/\d/.match? str
+==> 048.rb 15 <==
+str.match? /\D/
+==> 049.rb 15 <==
+/\D/.match? str
+==> 050.rb 15 <==
+str.match? /\A/
+==> 051.rb 15 <==
+/\A/.match? str
+==> 052.rb 15 <==
+str.match? /\Z/
+==> 053.rb 15 <==
+/\Z/.match? str
+==> 054.rb 15 <==
+str.match? /\z/
+==> 055.rb 15 <==
+/\z/.match? str
+==> 056.rb 15 <==
+str.match? /\G/
+==> 057.rb 15 <==
+/\G/.match? str
+==> 058.rb 15 <==
+str.match? /\b/
+==> 059.rb 15 <==
+/\b/.match? str
+==> 060.rb 15 <==
+str.match? /\B/
+==> 061.rb 15 <==
+/\B/.match? str
+==> 062.rb 15 <==
+str.match? /\h/
+==> 063.rb 15 <==
+/\h/.match? str
+==> 064.rb 15 <==
+str.match? /\H/
+==> 065.rb 15 <==
+/\H/.match? str
+==> 066.rb 15 <==
+str.match? /\R/
+==> 067.rb 15 <==
+/\R/.match? str
+==> 068.rb 15 <==
+str.match? /\X/
+==> 069.rb 15 <==
+/\X/.match? str
+==> 070.rb 16 <==
+str.match? /\i/
+
+==> 071.rb 18 <==
+/\i/.match? 'str'
+
+==> 072.rb 16 <==
+str.match? /\j/
+
+==> 073.rb 18 <==
+/\j/.match? 'str'
+
+==> 074.rb 16 <==
+str.match? /\l/
+
+==> 075.rb 18 <==
+/\l/.match? 'str'
+
+==> 076.rb 16 <==
+str.match? /\m/
+
+==> 077.rb 18 <==
+/\m/.match? 'str'
+
+==> 078.rb 16 <==
+str.match? /\o/
+
+==> 079.rb 18 <==
+/\o/.match? 'str'
+
+==> 080.rb 16 <==
+str.match? /\q/
+
+==> 081.rb 18 <==
+/\q/.match? 'str'
+
+==> 082.rb 16 <==
+str.match? /\y/
+
+==> 083.rb 18 <==
+/\y/.match? 'str'
+
+==> 084.rb 16 <==
+str.match? /\\/
+
+==> 085.rb 18 <==
+/\\/.match? 'str'
+
+==> 086.rb 13 <==
+str =~ /abc/
+
+==> 087.rb 15 <==
+/abc/ =~ 'str'
+
+==> 088.rb 12 <==
+str =~ /\a/
+
+==> 089.rb 14 <==
+/\a/ =~ 'str'
+
+==> 090.rb 12 <==
+str =~ /\e/
+
+==> 091.rb 14 <==
+/\e/ =~ 'str'
+
+==> 092.rb 12 <==
+str =~ /\f/
+
+==> 093.rb 14 <==
+/\f/ =~ 'str'
+
+==> 094.rb 12 <==
+str =~ /\r/
+
+==> 095.rb 14 <==
+/\r/ =~ 'str'
+
+==> 096.rb 12 <==
+str =~ /\t/
+
+==> 097.rb 14 <==
+/\t/ =~ 'str'
+
+==> 098.rb 12 <==
+str =~ /\v/
+
+==> 099.rb 14 <==
+/\v/ =~ 'str'
+
+==> 100.rb 12 <==
+str =~ /\./
+
+==> 101.rb 14 <==
+/\./ =~ 'str'
+
+==> 102.rb 16 <==
+str =~ /prefix./
+==> 103.rb 16 <==
+/prefix./ =~ str
+==> 104.rb 12 <==
+str =~ /\*/
+
+==> 105.rb 14 <==
+/\*/ =~ 'str'
+
+==> 106.rb 16 <==
+str =~ /prefix*/
+==> 107.rb 16 <==
+/prefix*/ =~ str
+==> 108.rb 12 <==
+str =~ /\?/
+
+==> 109.rb 14 <==
+/\?/ =~ 'str'
+
+==> 110.rb 16 <==
+str =~ /prefix?/
+==> 111.rb 16 <==
+/prefix?/ =~ str
+==> 112.rb 12 <==
+str =~ /\$/
+
+==> 113.rb 14 <==
+/\$/ =~ 'str'
+
+==> 114.rb 16 <==
+str =~ /prefix$/
+==> 115.rb 16 <==
+/prefix$/ =~ str
+==> 116.rb 12 <==
+str =~ /\^/
+
+==> 117.rb 14 <==
+/\^/ =~ 'str'
+
+==> 118.rb 16 <==
+str =~ /prefix^/
+==> 119.rb 16 <==
+/prefix^/ =~ str
+==> 120.rb 12 <==
+str =~ /\|/
+
+==> 121.rb 14 <==
+/\|/ =~ 'str'
+
+==> 122.rb 16 <==
+str =~ /prefix|/
+==> 123.rb 16 <==
+/prefix|/ =~ str
+==> 124.rb 11 <==
+str =~ /\w/
+==> 125.rb 11 <==
+/\w/ =~ str
+==> 126.rb 11 <==
+str =~ /\W/
+==> 127.rb 11 <==
+/\W/ =~ str
+==> 128.rb 11 <==
+str =~ /\s/
+==> 129.rb 11 <==
+/\s/ =~ str
+==> 130.rb 11 <==
+str =~ /\S/
+==> 131.rb 11 <==
+/\S/ =~ str
+==> 132.rb 11 <==
+str =~ /\d/
+==> 133.rb 11 <==
+/\d/ =~ str
+==> 134.rb 11 <==
+str =~ /\D/
+==> 135.rb 11 <==
+/\D/ =~ str
+==> 136.rb 11 <==
+str =~ /\A/
+==> 137.rb 11 <==
+/\A/ =~ str
+==> 138.rb 11 <==
+str =~ /\Z/
+==> 139.rb 11 <==
+/\Z/ =~ str
+==> 140.rb 11 <==
+str =~ /\z/
+==> 141.rb 11 <==
+/\z/ =~ str
+==> 142.rb 11 <==
+str =~ /\G/
+==> 143.rb 11 <==
+/\G/ =~ str
+==> 144.rb 11 <==
+str =~ /\b/
+==> 145.rb 11 <==
+/\b/ =~ str
+==> 146.rb 11 <==
+str =~ /\B/
+==> 147.rb 11 <==
+/\B/ =~ str
+==> 148.rb 11 <==
+str =~ /\h/
+==> 149.rb 11 <==
+/\h/ =~ str
+==> 150.rb 11 <==
+str =~ /\H/
+==> 151.rb 11 <==
+/\H/ =~ str
+==> 152.rb 11 <==
+str =~ /\R/
+==> 153.rb 11 <==
+/\R/ =~ str
+==> 154.rb 11 <==
+str =~ /\X/
+==> 155.rb 11 <==
+/\X/ =~ str
+==> 156.rb 12 <==
+str =~ /\i/
+
+==> 157.rb 14 <==
+/\i/ =~ 'str'
+
+==> 158.rb 12 <==
+str =~ /\j/
+
+==> 159.rb 14 <==
+/\j/ =~ 'str'
+
+==> 160.rb 12 <==
+str =~ /\l/
+
+==> 161.rb 14 <==
+/\l/ =~ 'str'
+
+==> 162.rb 12 <==
+str =~ /\m/
+
+==> 163.rb 14 <==
+/\m/ =~ 'str'
+
+==> 164.rb 12 <==
+str =~ /\o/
+
+==> 165.rb 14 <==
+/\o/ =~ 'str'
+
+==> 166.rb 12 <==
+str =~ /\q/
+
+==> 167.rb 14 <==
+/\q/ =~ 'str'
+
+==> 168.rb 12 <==
+str =~ /\y/
+
+==> 169.rb 14 <==
+/\y/ =~ 'str'
+
+==> 170.rb 12 <==
+str =~ /\\/
+
+==> 171.rb 14 <==
+/\\/ =~ 'str'
+
+==> 172.rb 16 <==
+str.match /abc/
+
+==> 173.rb 18 <==
+/abc/.match 'str'
+
+==> 174.rb 15 <==
+str.match /\a/
+
+==> 175.rb 17 <==
+/\a/.match 'str'
+
+==> 176.rb 15 <==
+str.match /\e/
+
+==> 177.rb 17 <==
+/\e/.match 'str'
+
+==> 178.rb 15 <==
+str.match /\f/
+
+==> 179.rb 17 <==
+/\f/.match 'str'
+
+==> 180.rb 15 <==
+str.match /\r/
+
+==> 181.rb 17 <==
+/\r/.match 'str'
+
+==> 182.rb 15 <==
+str.match /\t/
+
+==> 183.rb 17 <==
+/\t/.match 'str'
+
+==> 184.rb 15 <==
+str.match /\v/
+
+==> 185.rb 17 <==
+/\v/.match 'str'
+
+==> 186.rb 15 <==
+str.match /\./
+
+==> 187.rb 17 <==
+/\./.match 'str'
+
+==> 188.rb 19 <==
+str.match /prefix./
+==> 189.rb 19 <==
+/prefix./.match str
+==> 190.rb 15 <==
+str.match /\*/
+
+==> 191.rb 17 <==
+/\*/.match 'str'
+
+==> 192.rb 19 <==
+str.match /prefix*/
+==> 193.rb 19 <==
+/prefix*/.match str
+==> 194.rb 15 <==
+str.match /\?/
+
+==> 195.rb 17 <==
+/\?/.match 'str'
+
+==> 196.rb 19 <==
+str.match /prefix?/
+==> 197.rb 19 <==
+/prefix?/.match str
+==> 198.rb 15 <==
+str.match /\$/
+
+==> 199.rb 17 <==
+/\$/.match 'str'
+
+==> 200.rb 19 <==
+str.match /prefix$/
+==> 201.rb 19 <==
+/prefix$/.match str
+==> 202.rb 15 <==
+str.match /\^/
+
+==> 203.rb 17 <==
+/\^/.match 'str'
+
+==> 204.rb 19 <==
+str.match /prefix^/
+==> 205.rb 19 <==
+/prefix^/.match str
+==> 206.rb 15 <==
+str.match /\|/
+
+==> 207.rb 17 <==
+/\|/.match 'str'
+
+==> 208.rb 19 <==
+str.match /prefix|/
+==> 209.rb 19 <==
+/prefix|/.match str
+==> 210.rb 14 <==
+str.match /\w/
+==> 211.rb 14 <==
+/\w/.match str
+==> 212.rb 14 <==
+str.match /\W/
+==> 213.rb 14 <==
+/\W/.match str
+==> 214.rb 14 <==
+str.match /\s/
+==> 215.rb 14 <==
+/\s/.match str
+==> 216.rb 14 <==
+str.match /\S/
+==> 217.rb 14 <==
+/\S/.match str
+==> 218.rb 14 <==
+str.match /\d/
+==> 219.rb 14 <==
+/\d/.match str
+==> 220.rb 14 <==
+str.match /\D/
+==> 221.rb 14 <==
+/\D/.match str
+==> 222.rb 14 <==
+str.match /\A/
+==> 223.rb 14 <==
+/\A/.match str
+==> 224.rb 14 <==
+str.match /\Z/
+==> 225.rb 14 <==
+/\Z/.match str
+==> 226.rb 14 <==
+str.match /\z/
+==> 227.rb 14 <==
+/\z/.match str
+==> 228.rb 14 <==
+str.match /\G/
+==> 229.rb 14 <==
+/\G/.match str
+==> 230.rb 14 <==
+str.match /\b/
+==> 231.rb 14 <==
+/\b/.match str
+==> 232.rb 14 <==
+str.match /\B/
+==> 233.rb 14 <==
+/\B/.match str
+==> 234.rb 14 <==
+str.match /\h/
+==> 235.rb 14 <==
+/\h/.match str
+==> 236.rb 14 <==
+str.match /\H/
+==> 237.rb 14 <==
+/\H/.match str
+==> 238.rb 14 <==
+str.match /\R/
+==> 239.rb 14 <==
+/\R/.match str
+==> 240.rb 14 <==
+str.match /\X/
+==> 241.rb 14 <==
+/\X/.match str
+==> 242.rb 15 <==
+str.match /\i/
+
+==> 243.rb 17 <==
+/\i/.match 'str'
+
+==> 244.rb 15 <==
+str.match /\j/
+
+==> 245.rb 17 <==
+/\j/.match 'str'
+
+==> 246.rb 15 <==
+str.match /\l/
+
+==> 247.rb 17 <==
+/\l/.match 'str'
+
+==> 248.rb 15 <==
+str.match /\m/
+
+==> 249.rb 17 <==
+/\m/.match 'str'
+
+==> 250.rb 15 <==
+str.match /\o/
+
+==> 251.rb 17 <==
+/\o/.match 'str'
+
+==> 252.rb 15 <==
+str.match /\q/
+
+==> 253.rb 17 <==
+/\q/.match 'str'
+
+==> 254.rb 15 <==
+str.match /\y/
+
+==> 255.rb 17 <==
+/\y/.match 'str'
+
+==> 256.rb 15 <==
+str.match /\\/
+
+==> 257.rb 17 <==
+/\\/.match 'str'
+
+==> 258.rb 16 <==
+/abc/ === 'str'
+
+==> 259.rb 14 <==
+str === /abc/
+
+==> 260.rb 18 <==
+/abc[de]/ === str
+
+==> 261.rb 37 <==
+expect(subject.spin).to match(/\A\n/)
+==> 262.rb 20 <==
+/ /.match?(content)
+
+==> 263.rb 13 <==
+str !~ /abc/
+
+==> 264.rb 19 <==
+str&.match?(/abc/)
+

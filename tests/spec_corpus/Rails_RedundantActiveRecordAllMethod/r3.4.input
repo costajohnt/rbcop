@@ -1,0 +1,31 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000/000.rb 34 <==
+User.all.any? { it.do_something }
+
+==> 001/001.rb 35 <==
+User.all.count { it.do_something }
+
+==> 002/002.rb 34 <==
+User.all.find { it.do_something }
+
+==> 003/003.rb 35 <==
+User.all.none? { it.do_something }
+
+==> 004/004.rb 34 <==
+User.all.one? { it.do_something }
+
+==> 005/005.rb 36 <==
+User.all.select { it.do_something }
+
+==> 006/006.rb 33 <==
+User.all.sum { it.do_something }
+

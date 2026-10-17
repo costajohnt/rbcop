@@ -1,0 +1,26 @@
+==> offenses exit=1 340 <==
+000/000.rb:1:6: C: [Correctable] Rails/PluckId: Use `ids` instead of `pluck(:id)`.
+001/001.rb:1:7: C: [Correctable] Rails/PluckId: Use `ids` instead of `pluck(:id)`.
+002/002.rb:2:3: C: [Correctable] Rails/PluckId: Use `ids` instead of `pluck(primary_key)`.
+006/006.rb:1:6: C: [Correctable] Rails/PluckId: Use `ids` instead of `pluck(:id)`.
+
+==> autocorrect exit=0 332 <==
+000/000.rb:1:6: C: [Corrected] Rails/PluckId: Use `ids` instead of `pluck(:id)`.
+001/001.rb:1:7: C: [Corrected] Rails/PluckId: Use `ids` instead of `pluck(:id)`.
+002/002.rb:2:3: C: [Corrected] Rails/PluckId: Use `ids` instead of `pluck(primary_key)`.
+006/006.rb:1:6: C: [Corrected] Rails/PluckId: Use `ids` instead of `pluck(:id)`.
+
+==> corrected/000/000.rb 9 <==
+User.ids
+
+==> corrected/001/001.rb 10 <==
+User&.ids
+
+==> corrected/002/002.rb 28 <==
+def self.user_ids
+  ids
+end
+
+==> corrected/006/006.rb 26 <==
+Post.ids.where(id: 1..10)
+

@@ -1,0 +1,74 @@
+==> offenses exit=1 1532 <==
+004/004.rb:1:1: C: [Correctable] Rails/Present: Use `foo.present?` instead of `foo && !foo.empty?`.
+005/005.rb:1:1: C: [Correctable] Rails/Present: Use `foo.present?` instead of `!foo.nil? && !foo.empty?`.
+006/006.rb:1:1: C: [Correctable] Rails/Present: Use `present?` instead of `!nil? && !empty?`.
+007/007.rb:1:1: C: [Correctable] Rails/Present: Use `foo.present?` instead of `foo != nil && !foo.empty?`.
+008/008.rb:1:1: C: [Correctable] Rails/Present: Use `foo.present?` instead of `!!foo && !foo.empty?`.
+009/009.rb:1:1: C: [Correctable] Rails/Present: Use `foo.bar.present?` instead of `!foo.bar.nil? && !foo.bar.empty?`.
+010/010.rb:1:1: C: [Correctable] Rails/Present: Use `FOO.present?` instead of `!FOO.nil? && !FOO.empty?`.
+011/011.rb:1:1: C: [Correctable] Rails/Present: Use `Foo.present?` instead of `!Foo.nil? && !Foo.empty?`.
+012/012.rb:1:1: C: [Correctable] Rails/Present: Use `@foo.present?` instead of `!@foo.nil? && !@foo.empty?`.
+013/013.rb:1:1: C: [Correctable] Rails/Present: Use `$foo.present?` instead of `!$foo.nil? && !$foo.empty?`.
+014/014.rb:1:1: C: [Correctable] Rails/Present: Use `@@foo.present?` instead of `!@@foo.nil? && !@@foo.empty?`.
+015/015.rb:1:1: C: [Correctable] Rails/Present: Use `foo[bar].present?` instead of `!foo[bar].nil? && !foo[bar].empty?`.
+016/016.rb:1:1: C: [Correctable] Rails/Present: Use `Foo::Bar.present?` instead of `!Foo::Bar.nil? && !Foo::Bar.empty?`.
+017/017.rb:1:1: C: [Correctable] Rails/Present: Use `foo(bar).present?` instead of `!foo(bar).nil? && !foo(bar).empty?`.
+
+==> autocorrect exit=0 1504 <==
+004/004.rb:1:1: C: [Corrected] Rails/Present: Use `foo.present?` instead of `foo && !foo.empty?`.
+005/005.rb:1:1: C: [Corrected] Rails/Present: Use `foo.present?` instead of `!foo.nil? && !foo.empty?`.
+006/006.rb:1:1: C: [Corrected] Rails/Present: Use `present?` instead of `!nil? && !empty?`.
+007/007.rb:1:1: C: [Corrected] Rails/Present: Use `foo.present?` instead of `foo != nil && !foo.empty?`.
+008/008.rb:1:1: C: [Corrected] Rails/Present: Use `foo.present?` instead of `!!foo && !foo.empty?`.
+009/009.rb:1:1: C: [Corrected] Rails/Present: Use `foo.bar.present?` instead of `!foo.bar.nil? && !foo.bar.empty?`.
+010/010.rb:1:1: C: [Corrected] Rails/Present: Use `FOO.present?` instead of `!FOO.nil? && !FOO.empty?`.
+011/011.rb:1:1: C: [Corrected] Rails/Present: Use `Foo.present?` instead of `!Foo.nil? && !Foo.empty?`.
+012/012.rb:1:1: C: [Corrected] Rails/Present: Use `@foo.present?` instead of `!@foo.nil? && !@foo.empty?`.
+013/013.rb:1:1: C: [Corrected] Rails/Present: Use `$foo.present?` instead of `!$foo.nil? && !$foo.empty?`.
+014/014.rb:1:1: C: [Corrected] Rails/Present: Use `@@foo.present?` instead of `!@@foo.nil? && !@@foo.empty?`.
+015/015.rb:1:1: C: [Corrected] Rails/Present: Use `foo[bar].present?` instead of `!foo[bar].nil? && !foo[bar].empty?`.
+016/016.rb:1:1: C: [Corrected] Rails/Present: Use `Foo::Bar.present?` instead of `!Foo::Bar.nil? && !Foo::Bar.empty?`.
+017/017.rb:1:1: C: [Corrected] Rails/Present: Use `foo(bar).present?` instead of `!foo(bar).nil? && !foo(bar).empty?`.
+
+==> corrected/004/004.rb 13 <==
+foo.present?
+
+==> corrected/005/005.rb 13 <==
+foo.present?
+
+==> corrected/006/006.rb 9 <==
+present?
+
+==> corrected/007/007.rb 13 <==
+foo.present?
+
+==> corrected/008/008.rb 13 <==
+foo.present?
+
+==> corrected/009/009.rb 17 <==
+foo.bar.present?
+
+==> corrected/010/010.rb 13 <==
+FOO.present?
+
+==> corrected/011/011.rb 13 <==
+Foo.present?
+
+==> corrected/012/012.rb 14 <==
+@foo.present?
+
+==> corrected/013/013.rb 14 <==
+$foo.present?
+
+==> corrected/014/014.rb 15 <==
+@@foo.present?
+
+==> corrected/015/015.rb 18 <==
+foo[bar].present?
+
+==> corrected/016/016.rb 18 <==
+Foo::Bar.present?
+
+==> corrected/017/017.rb 18 <==
+foo(bar).present?
+

@@ -68,10 +68,10 @@ impl Pattern {
             // `pattern == path` first: a file named `[x].rb` matches itself.
             Pattern::Glob(p) if p == path => true,
             Pattern::Glob(p) => {
-                let p = if p.starts_with("..") {
-                    expand_path(Path::new(p), &cwd()).display().to_string()
+                let p: std::borrow::Cow<str> = if p.starts_with("..") {
+                    expand_path(Path::new(p), &cwd()).display().to_string().into()
                 } else {
-                    p.clone()
+                    p.into()
                 };
                 glob::fnmatch(&p, path, false) || hidden_file_in_not_hidden_dir(&p, path)
             }
@@ -165,14 +165,33 @@ impl CopConfig {
     }
 }
 
+/// FNV-1a: SipHash's DoS resistance buys nothing for cop names, and its cost showed up per file.
+#[derive(Default)]
+struct Fnv(u64);
+
+impl std::hash::Hasher for Fnv {
+    fn finish(&self) -> u64 {
+        self.0
+    }
+    fn write(&mut self, bytes: &[u8]) {
+        let mut h = if self.0 == 0 { 0xcbf2_9ce4_8422_2325 } else { self.0 };
+        for &b in bytes {
+            h = (h ^ u64::from(b)).wrapping_mul(0x0100_0000_01b3);
+        }
+        self.0 = h;
+    }
+}
+
 /// A fully merged config (one per `.rubocop.yml`, or the default).
+#[derive(Clone)]
 pub struct Resolved {
     pub hash: Map,
     /// Base for relative Include patterns (base_dir_for_path_parameters of the loaded file).
     pub base_dir: PathBuf,
     /// TargetRuby#version (e.g. 3.4).
     pub target_ruby: f64,
-    cops: HashMap<String, CopConfig>,
+    /// Looked up twice per cop and file, so with a cheap hash (the keys are cop names).
+    cops: HashMap<String, CopConfig, std::hash::BuildHasherDefault<Fnv>>,
     /// (cop, warning) for configuration under a cop's deprecated name, which Config#for_cop warns
     /// about the first time the cop's config is asked for.
     pub deprecated_warnings: Vec<(&'static str, String)>,
@@ -180,9 +199,38 @@ pub struct Resolved {
     unregistered: Vec<String>,
     /// The options the cops were resolved with (Registry#enabled_cop_name? for other cop names).
     opts: Options,
+    /// for_cop of every cop-like key, built on first use: cops ask for other cops' settings per
+    /// node, and building one takes two linear scans of the whole config and a clone.
+    for_cop_cache: std::sync::OnceLock<HashMap<String, Map>>,
+    /// Config#gem_versions_in_target, read on first use.
+    gem_versions: std::sync::OnceLock<Option<HashMap<String, String>>>,
+    /// rubocop-rspec `RSpec: Language` (RuboCop::RSpec::Language.config), read on first use.
+    pub rspec_language: std::sync::OnceLock<std::sync::Arc<crate::helpers::rspec::Language>>,
+    /// The native plugins loaded (by any config) when this config's first file was inspected:
+    /// Runner caches each config's team from then, so plugins loaded later add no cops to it.
+    pub team_plugins: std::sync::OnceLock<Vec<&'static str>>,
 }
 
 impl Resolved {
+    /// Whether a cop is in this config's team (Runner#mobilized_cop_classes): RuboCop's own always,
+    /// a native plugin's when the plugin was loaded before the team was mobilized (see
+    /// `team_plugins`; until then, when it is loaded at all).
+    pub fn team_has(&self, cop: &str) -> bool {
+        match crate::helpers::cop_registry::plugin_of(cop) {
+            None => true,
+            Some(p) => self
+                .team_plugins
+                .get()
+                .map_or_else(|| crate::helpers::cop_registry::plugin_loaded(p.gem), |gems| gems.contains(&p.gem)),
+        }
+    }
+
+    /// Fixes this config's team at the plugins loaded now (its first file is about to be inspected).
+    pub fn mobilize_team(&self) {
+        self.team_plugins
+            .get_or_init(|| crate::helpers::cop_registry::loaded_plugins().iter().map(|p| p.gem).collect());
+    }
+
     fn new(hash: Map, loaded_path: Option<&Path>, opts: &Options, cop_names: &[&'static str]) -> Self {
         let base_dir = base_dir_for(loaded_path);
         let all_cops = hash.map("AllCops").cloned().unwrap_or_default();
@@ -191,10 +239,14 @@ impl Resolved {
             hash,
             base_dir,
             target_ruby,
-            cops: HashMap::new(),
+            cops: HashMap::default(),
             deprecated_warnings: Vec::new(),
             unregistered: Vec::new(),
             opts: opts.clone(),
+            for_cop_cache: std::sync::OnceLock::new(),
+            gem_versions: std::sync::OnceLock::new(),
+            rspec_language: std::sync::OnceLock::new(),
+            team_plugins: std::sync::OnceLock::new(),
         };
         for &name in cop_names {
             let cfg = r.build_cop(name, opts);
@@ -210,8 +262,64 @@ impl Resolved {
         r
     }
 
-    pub fn all_cops(&self) -> Map {
-        self.hash.map("AllCops").cloned().unwrap_or_default()
+    /// Config#gem_versions_in_target: the locked version of each gem in the Gemfile.lock (or
+    /// gems.locked) found upwards from the base dir, or None without a lockfile.
+    pub fn gem_versions_in_target(&self) -> Option<&HashMap<String, String>> {
+        self.gem_versions
+            .get_or_init(|| {
+                let file = ["Gemfile.lock", "gems.locked"]
+                    .iter()
+                    .find_map(|n| self.base_dir.ancestors().map(|d| d.join(n)).find(|f| f.is_file()))?;
+                let text = std::fs::read_to_string(file).unwrap_or_default();
+                // Bundler::LockfileParser resolves PATH sources against Bundler.root, which needs a
+                // Gemfile, gems.rb or .bundle upwards from the working directory; without one it
+                // raises GemfileNotFound and RuboCop's Lockfile reports no gems.
+                let has_path = text.lines().any(|l| l.trim_end_matches('\r') == "PATH");
+                if has_path && std::env::var_os("BUNDLE_GEMFILE").is_none() {
+                    let cwd = cwd();
+                    // Bundler.default_bundle_dir ignores the user's ~/.bundle.
+                    let home = std::env::var_os("HOME").map(|h| PathBuf::from(h).join(".bundle"));
+                    let root = cwd.ancestors().any(|d| {
+                        d.join("gems.rb").is_file()
+                            || d.join("Gemfile").is_file()
+                            || (d.join(".bundle").is_dir() && home.as_deref() != Some(&d.join(".bundle")))
+                    });
+                    if !root {
+                        return Some(HashMap::new());
+                    }
+                }
+                Some(locked_gem_versions(&text))
+            })
+            .as_ref()
+    }
+
+    /// Whether the target locks `gem` at a version `>= min` (Base#target_satisfies_all_gem_version_requirements?).
+    pub fn gem_at_least(&self, gem: &str, min: &str) -> bool {
+        let locked = self.gem_versions_in_target().and_then(|v| v.get(gem)).and_then(|v| gem_version(v));
+        locked.is_some_and(|v| Some(v) >= gem_version(min))
+    }
+
+    /// TargetRailsVersion.resolve: `AllCops: TargetRailsVersion`, else the locked `railties`
+    /// major.minor, else 5.0.
+    pub fn target_rails_version(&self) -> f64 {
+        match self.all_cops().get("TargetRailsVersion") {
+            Some(Value::Float(f)) => return *f,
+            Some(Value::Int(i)) => return *i as f64,
+            Some(Value::Str(s)) => return ruby_to_f(s),
+            Some(Value::Null) | None => {}
+            // ponytail: `true.to_f` raises in Ruby; other scalars are not valid configs.
+            Some(_) => return 0.0,
+        }
+        let Some(v) = self.gem_versions_in_target().and_then(|v| v.get("railties")) else { return 5.0 };
+        let mut parts = v.split('.');
+        let major = parts.next().unwrap_or("0");
+        let minor = parts.next().filter(|m| m.bytes().all(|b| b.is_ascii_digit())).unwrap_or("0");
+        format!("{major}.{minor}").parse().unwrap_or(5.0)
+    }
+
+    pub fn all_cops(&self) -> &Map {
+        static EMPTY: Map = Map(Vec::new());
+        self.hash.map("AllCops").unwrap_or(&EMPTY)
     }
 
     pub fn cop(&self, name: &str) -> &CopConfig {
@@ -219,7 +327,17 @@ impl Resolved {
     }
 
     /// Any cop's raw parameters (department merged under cop), implemented by rbcop or not.
-    pub fn for_cop(&self, name: &str) -> Map {
+    pub fn for_cop(&self, name: &str) -> std::borrow::Cow<'_, Map> {
+        let cache = self.for_cop_cache.get_or_init(|| {
+            self.hash.keys().filter(|k| k.contains('/')).map(|k| (k.to_string(), self.merged_for_cop(k))).collect()
+        });
+        match cache.get(name) {
+            Some(m) => std::borrow::Cow::Borrowed(m),
+            None => std::borrow::Cow::Owned(self.merged_for_cop(name)),
+        }
+    }
+
+    fn merged_for_cop(&self, name: &str) -> Map {
         let mut params = name.rsplit_once('/').and_then(|(d, _)| self.hash.map(d)).cloned().unwrap_or_default();
         for (k, v) in self.hash.map(name).cloned().unwrap_or_default().0 {
             params.insert(k, v);
@@ -276,6 +394,12 @@ impl Resolved {
     /// Config#enabled_new_cop?
     pub fn enabled_new_cop(&self, name: &str) -> bool {
         self.new_cops(name, false)
+    }
+
+    /// A cop name some registered cop has: in the defaults (core and integrated plugins) or, as
+    /// Store::unregistered decides, defined by a loaded plugin.
+    pub fn registered(&self, name: &str) -> bool {
+        !self.unregistered.iter().any(|n| n == name)
     }
 
     /// Config#pending_cops (only registered cops, as PendingCopsReporter keeps them): every
@@ -335,8 +459,9 @@ impl Resolved {
         match self.cops.get(name) {
             Some(c) => c.enabled,
             None => {
-                let cop = self.hash.map(name).cloned().unwrap_or_default();
-                self.enabled_cop_name(name, &self.enable_cop(name), &cop, &self.opts)
+                static EMPTY: Map = Map(Vec::new());
+                let cop = self.hash.map(name).unwrap_or(&EMPTY);
+                self.enabled_cop_name(name, &self.enable_cop(name), cop, &self.opts)
             }
         }
     }
@@ -358,9 +483,21 @@ impl Resolved {
             }
         }
         let enabled = self.enabled_cop_name(name, &effective, &cop, opts);
+        // Config#for_badge: the department's Exclude and the cop's are unioned.
+        let union = match (dept_map.get("Exclude"), cop.get("Exclude")) {
+            (Some(Value::Seq(d)), Some(Value::Seq(c))) if department.is_some() => {
+                let mut all = d.to_vec();
+                all.extend(c.iter().filter(|v| !d.contains(v)).cloned());
+                Some(Value::Seq(all.into()))
+            }
+            _ => None,
+        };
         let mut params = dept_map;
         for (k, v) in cop.0 {
             params.insert(k, v);
+        }
+        if let Some(u) = union {
+            params.insert("Exclude", u);
         }
         let severity = params.str("Severity").and_then(Severity::parse);
         CopConfig {
@@ -399,14 +536,14 @@ impl Resolved {
     /// Config#file_to_exclude? (AllCops/Exclude against the absolute path).
     pub fn file_to_exclude(&self, file: &Path) -> bool {
         let abs = file.display().to_string();
-        patterns(&self.all_cops(), "Exclude").unwrap_or_default().iter().any(|p| p.matches(&abs))
+        patterns(self.all_cops(), "Exclude").unwrap_or_default().iter().any(|p| p.matches(&abs))
     }
 
     /// Config#file_to_include? (AllCops/Include).
     pub fn file_to_include(&self, file: &Path) -> bool {
         let rel = self.relative(file);
         let abs = file.display().to_string();
-        let include = patterns(&self.all_cops(), "Include").unwrap_or_default();
+        let include = patterns(self.all_cops(), "Include").unwrap_or_default();
         let hidden = rel.starts_with('.') && !rel.starts_with("..");
         let possibly_hidden = include.iter().any(|p| match p {
             Pattern::Regex(_) => true,
@@ -448,7 +585,6 @@ pub struct Store {
     project_root: Option<PathBuf>,
     cop_names: Vec<&'static str>,
     default: Map,
-    known_cops: Vec<String>,
     /// Each loaded file with what loading it wrote to stderr: ConfigLoader.load_file is not
     /// cached, so every later load of the file repeats its validation warnings.
     files: HashMap<PathBuf, (Map, validator::Output)>,
@@ -476,7 +612,6 @@ impl Store {
         let Value::Map(default) = parse_yaml(default_text)? else { return Err("bad default.yml".into()) };
         let mut default = Arc::unwrap_or_clone(default);
         make_excludes_absolute(&mut default, &cwd);
-        let known_cops = default.keys().filter(|k| k.contains('/')).map(String::from).collect();
         let project_root = find_last_upwards(&["Gemfile"], &cwd).or_else(|| find_last_upwards(&["gems.rb"], &cwd));
         let mut store = Store {
             opts,
@@ -484,7 +619,6 @@ impl Store {
             project_root: project_root.map(|p| p.parent().unwrap().to_path_buf()),
             cop_names,
             default,
-            known_cops,
             files: HashMap::new(),
             emitted: Vec::new(),
             gem_dirs: HashMap::new(),
@@ -529,6 +663,40 @@ impl Store {
 
     pub fn cwd(&self) -> &Path {
         &self.cwd
+    }
+
+    /// A config so far loaded `require:`s Ruby code rbcop cannot load (custom cops, or a plugin
+    /// gem it could not integrate).
+    /// ConfigLoader.loaded_plugins and loaded_features: every `plugins:`/`require:` name loaded so far.
+    pub fn loaded_plugins(&self) -> &[String] {
+        &self.loaded_plugins
+    }
+
+    pub fn requires_ruby_code(&self) -> bool {
+        self.custom_cops
+    }
+
+    /// The qualified `--only` list, known once configs (and so plugins) have loaded: Registry#enabled?
+    /// enables those cops outright, so every config resolved so far is re-resolved with it.
+    pub fn set_only(&mut self, only: Vec<String>) {
+        if self.opts.only == only {
+            return;
+        }
+        self.opts.only = only;
+        for r in self.resolved.values_mut().chain(self.forced.iter_mut()) {
+            let r = Arc::make_mut(r);
+            r.opts = self.opts.clone();
+            for &name in &self.cop_names {
+                let cfg = r.build_cop(name, &self.opts);
+                r.cops.insert(name.to_string(), cfg);
+            }
+        }
+    }
+
+    /// ConfigLoader.default_configuration: default.yml with the plugins loaded so far merged in.
+    pub fn default_config(&self) -> Arc<Resolved> {
+        let opts = Options { force_default_config: true, ..Options::default() };
+        Arc::new(Resolved::new(apply_default_overrides(&self.default, &opts), None, &opts, &self.cop_names))
     }
 
     /// The CLI applies `--color`/`--no-color` once the pwd config has loaded.
@@ -631,10 +799,21 @@ impl Store {
         };
         // Plugins (and plugin-capable `require:` gems) only matter here for their default configs.
         let mut plugins = Vec::new();
+        let mut migrate = Vec::new();
         for key in ["plugins", "require"] {
             for entry in seq(hash.remove(key)) {
                 match entry {
-                    Value::Str(s) => plugins.push(s),
+                    Value::Str(s) => {
+                        // ConfigLoaderResolver#resolve_requires: a plugin-capable gem under
+                        // `require:` (known here for native plugins) warns, then loads as a plugin.
+                        if key == "require" && crate::helpers::cop_registry::native_plugin(&s).is_some() {
+                            migrate.push((true, format!(
+                                "{s} extension supports plugin, specify `plugins: {s}` instead of `require: {s}` in {}.\nFor more information, see https://docs.rubocop.org/rubocop/plugin_migration_guide.html.\n",
+                                path.display()
+                            )));
+                        }
+                        plugins.push(s)
+                    }
                     Value::Map(m) => plugins.extend(m.keys().map(String::from)),
                     _ => {}
                 }
@@ -642,7 +821,28 @@ impl Store {
         }
         // Local files are custom cops rbcop cannot load.
         self.custom_cops |= plugins.iter().any(|n| n.starts_with('.') || n.starts_with('/'));
+        // Their class and module names are registry names RuboCop would know (`Style/MiddleDot`
+        // defined in `require: ../lib/linter/rubocop_middle_dot`), as for a plugin gem's lib/.
+        let mut local = Vec::new();
+        for n in plugins.iter().filter(|n| n.starts_with('.') || n.starts_with('/')) {
+            let base = path.parent().unwrap_or(Path::new("."));
+            let mut file = if n.starts_with('/') { PathBuf::from(n) } else { base.join(n) };
+            if file.extension().is_none_or(|e| e != "rb") {
+                file.set_extension("rb");
+            }
+            ruby_file_constants(&file, &mut self.plugin_constants);
+            local.push(file);
+        }
         self.integrate_plugins(plugins)?;
+        // ConfigLoader#load_file resolves `plugins:` and then `require:`: the cop classes a local
+        // file defines register once it loads.
+        // ponytail: every local file registers after every gem of this config file, not at its place
+        // in `require:`; that order only matters for a cop name two departments share.
+        for file in local {
+            crate::helpers::cop_registry::register_custom(ruby_cops(&file));
+        }
+        crate::helpers::cop_registry::set_open(self.custom_cops, &self.plugin_constants);
+        self.emit(&migrate);
         if let Some(Value::Map(gems)) = hash.remove("inherit_gem") {
             let mut inherit = seq(hash.remove("inherit_from"));
             for (gem, paths) in Arc::unwrap_or_clone(gems).0 {
@@ -661,7 +861,7 @@ impl Store {
         }
         self.resolve_inheritance(path, &mut hash)?;
         hash.remove("inherit_from");
-        self.add_missing_namespaces(&mut hash);
+        self.add_missing_namespaces(path, &mut hash)?;
         if check {
             let mut out = Vec::new();
             let checked = validator::Validator {
@@ -763,18 +963,34 @@ impl Store {
         Ok(())
     }
 
-    /// Qualify bare cop names (`Debugger:` to `Lint/Debugger:`) when exactly one known cop matches.
-    fn add_missing_namespaces(&self, hash: &mut Map) {
-        for (key, _) in hash.0.iter_mut() {
-            if key.contains('/') || key == "AllCops" {
-                continue;
-            }
-            let suffix = format!("/{key}");
-            let mut matches = self.known_cops.iter().filter(|c| c.ends_with(&suffix));
-            if let (Some(only), None) = (matches.next(), matches.next()) {
-                *key = only.clone();
+    /// ConfigLoader.add_missing_namespaces: every key but an obsolete cop name goes through
+    /// Registry.qualified_cop_name(key, path), which warns about a bare cop name (`Debugger:`
+    /// becomes `Lint/Debugger:`) and a wrong department (`Style/LineLength:` becomes
+    /// `Layout/LineLength:`) and raises AmbiguousCopName for a bare name two departments share.
+    /// A requalified key moves to the end (`hash[q] = hash.delete(key)`).
+    fn add_missing_namespaces(&mut self, path: &Path, hash: &mut Map) -> Result<(), String> {
+        let legacy = validator::legacy_cop_names();
+        let shown = validator::smart_path(path, &self.cwd);
+        let origin = path.display().to_string();
+        let keys: Vec<String> = hash.keys().filter(|k| !legacy.contains(&k.to_string())).map(String::from).collect();
+        let mut warnings = Vec::new();
+        let mut result = Ok(());
+        for key in keys {
+            match crate::helpers::cop_registry::qualify(&key, &origin, Some(&shown), true, &mut warnings) {
+                Ok(q) if q != key => {
+                    let value = hash.remove(&key).unwrap_or(Value::Null);
+                    hash.insert(q, value);
+                }
+                Ok(_) => {}
+                Err(e) => {
+                    result = Err(format!("Error: {e}"));
+                    break;
+                }
             }
         }
+        let out: validator::Output = warnings.into_iter().map(|w| (false, w)).collect();
+        self.emit(&out);
+        result
     }
 
     /// ConfigLoader.add_excludes_from_files (§1).
@@ -827,23 +1043,52 @@ impl Store {
         let mut configured: Vec<String> = Vec::new();
         for name in names {
             self.loaded_plugins.push(name.clone());
-            let dir = match self.gem_dir(&name) {
-                Ok(d) => d,
-                Err(e) => {
-                    self.warnings.push(e);
-                    // Its cops are unknown here.
+            let mut plugin = if let Some(native) = crate::helpers::cop_registry::native_plugin(&name) {
+                // A plugin rbcop implements: its cops register and its vendored default.yml merges,
+                // so the gem need not be installed. Path parameters there resolve against the
+                // working directory, as for any config file not named .rubocop*.
+                crate::helpers::cop_registry::register_plugin(native);
+                let label = format!("{name}/config/default.yml");
+                let Value::Map(m) = parse_yaml_file(native.default_yml, &label)? else { continue };
+                let mut m = Arc::unwrap_or_clone(m);
+                make_excludes_absolute(&mut m, &self.cwd);
+                m
+            } else {
+                let dir = match self.gem_dir(&name) {
+                    Ok(d) => d,
+                    Err(e) => {
+                        self.warnings.push(e);
+                        // Its cops are unknown here.
+                        self.custom_cops = true;
+                        continue;
+                    }
+                };
+                ruby_constants(&dir.join("lib"), &mut self.plugin_constants);
+                let path = dir.join("config/default.yml");
+                if !path.is_file() {
+                    // An extension without config/default.yml may still register cops.
                     self.custom_cops = true;
                     continue;
                 }
+                let m = self.load_file(&path, false)?;
+                // RuboCop's registry holds the cop classes the gem defines, whether or not its
+                // default.yml configures them (and not the entries without a class). Classes
+                // configured there come in that order, then the others.
+                let cops = ruby_cops(&dir.join("lib"));
+                let names: Vec<String> = if cops.is_empty() {
+                    m.keys().filter(|k| k.contains('/')).map(String::from).collect()
+                } else {
+                    let mut names: Vec<String> =
+                        m.keys().filter(|k| cops.iter().any(|(c, _)| c == k)).map(String::from).collect();
+                    names.extend(cops.iter().map(|(c, _)| c.clone()).filter(|c| !m.contains(c)));
+                    names
+                };
+                crate::helpers::cop_registry::register_foreign(names);
+                crate::helpers::cop_registry::set_foreign_autocorrect(
+                    cops.into_iter().filter_map(|(c, ac)| ac.then_some(c)),
+                );
+                m
             };
-            ruby_constants(&dir.join("lib"), &mut self.plugin_constants);
-            let path = dir.join("config/default.yml");
-            if !path.is_file() {
-                // An extension without config/default.yml may still register cops.
-                self.custom_cops = true;
-                continue;
-            }
-            let mut plugin = self.load_file(&path, false)?;
             if let Some(Value::Map(new_all)) = plugin.get("AllCops").cloned() {
                 let mut all = combined.map("AllCops").cloned().unwrap_or_default();
                 for (key, value) in Arc::unwrap_or_clone(new_all).0 {
@@ -1032,18 +1277,131 @@ fn merge_with_default(base_default: &Map, mut config: Map, unset_nil: bool, opts
 /// need not list, and RuboCop's registry knows them.
 // ponytail: a name match, not a registry; `Dept/Cop` counts as known when both are defined.
 fn ruby_constants(dir: &Path, out: &mut std::collections::HashSet<String>) {
-    static RE: std::sync::LazyLock<Regex> =
-        std::sync::LazyLock::new(|| Regex::new(r"(?m)^\s*(?:class|module)\s+([A-Z]\w*)").unwrap());
     let Ok(entries) = std::fs::read_dir(dir) else { return };
     for path in entries.flatten().map(|e| e.path()) {
         if path.is_dir() {
             ruby_constants(&path, out);
-        } else if path.extension().is_some_and(|e| e == "rb")
-            && let Ok(text) = std::fs::read_to_string(&path)
-        {
-            out.extend(RE.captures_iter(&text).map(|c| c[1].to_string()));
+        } else if path.extension().is_some_and(|e| e == "rb") {
+            ruby_file_constants(&path, out);
         }
     }
+}
+
+/// Class and module names a Ruby file defines.
+fn ruby_file_constants(path: &Path, out: &mut std::collections::HashSet<String>) {
+    static RE: std::sync::LazyLock<Regex> =
+        std::sync::LazyLock::new(|| Regex::new(r"(?m)^\s*(?:class|module)\s+([A-Z]\w*)").unwrap());
+    if let Ok(text) = std::fs::read_to_string(path) {
+        out.extend(RE.captures_iter(&text).map(|c| c[1].to_string()));
+    }
+}
+
+/// The cops a plugin gem's lib/ (or one Ruby file) defines (Badge.for of each class under RuboCop::Cop that descends
+/// from a cop base class and does not call `exclude_from_registry`), sorted, each with whether it
+/// supports autocorrect (`extend AutoCorrector`, its own or a superclass's).
+// ponytail: reads nesting from `module`/`class` lines and the `end` at the same indentation, as
+// every rubocop-* gem is formatted; classes opened by metaprogramming are not seen.
+fn ruby_cops(dir: &Path) -> Vec<(String, bool)> {
+    struct Class {
+        path: Vec<String>,
+        superclass: String,
+        autocorrect: bool,
+        excluded: bool,
+    }
+    fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
+        let Ok(entries) = std::fs::read_dir(dir) else { return };
+        for path in entries.flatten().map(|e| e.path()) {
+            if path.is_dir() {
+                walk(&path, out);
+            } else if path.extension().is_some_and(|e| e == "rb") {
+                out.push(path);
+            }
+        }
+    }
+    static OPEN: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| {
+        Regex::new(r"^(\s*)(module|class)\s+((?:::)?[A-Z]\w*(?:::[A-Z]\w*)*)\s*(?:<\s*((?:::)?[A-Z][\w:]*))?\s*(;.*)?(?:#.*)?$")
+            .unwrap()
+    });
+    static END: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| Regex::new(r"^(\s*)end\b").unwrap());
+    let mut files = Vec::new();
+    if dir.is_file() {
+        files.push(dir.to_path_buf());
+    }
+    walk(dir, &mut files);
+    files.sort();
+    let mut classes: Vec<Class> = Vec::new();
+    for file in files {
+        let Ok(text) = std::fs::read_to_string(&file) else { continue };
+        // (indent, path of this scope, index in `classes` for a class)
+        let mut stack: Vec<(usize, Vec<String>, Option<usize>)> = Vec::new();
+        for line in text.lines() {
+            if let Some(m) = OPEN.captures(line) {
+                // A one-line `class Foo < Bar; end` opens nothing.
+                if m.get(5).is_some_and(|t| t.as_str().contains("end")) {
+                    continue;
+                }
+                let indent = m[1].len();
+                let mut path = stack.last().map(|s| s.1.clone()).unwrap_or_default();
+                let name = m[3].trim_start_matches("::");
+                if m[3].starts_with("::") {
+                    path.clear();
+                }
+                path.extend(name.split("::").map(String::from));
+                let class = (&m[2] == "class").then(|| {
+                    classes.push(Class {
+                        path: path.clone(),
+                        superclass: m.get(4).map_or(String::new(), |s| s.as_str().trim_start_matches("::").to_string()),
+                        autocorrect: false,
+                        excluded: false,
+                    });
+                    classes.len() - 1
+                });
+                stack.push((indent, path, class));
+            } else if let Some(m) = END.captures(line) {
+                if stack.last().is_some_and(|s| s.0 == m[1].len()) {
+                    stack.pop();
+                }
+            } else if let Some(&(_, _, Some(i))) = stack.last() {
+                let body = line.trim();
+                classes[i].autocorrect |= body.starts_with("extend AutoCorrector");
+                classes[i].excluded |= body.starts_with("exclude_from_registry");
+            }
+        }
+    }
+    // A cop descends from RuboCop::Cop::Base (or ::Cop), directly or through classes found here.
+    // The superclass constant resolves lexically: the class's enclosing scopes, innermost first.
+    let find = |at: usize| {
+        let c = &classes[at];
+        let name: Vec<String> = c.superclass.split("::").map(String::from).collect();
+        (0..c.path.len()).rev().find_map(|n| {
+            let mut full = c.path[..n].to_vec();
+            full.extend(name.iter().cloned());
+            classes.iter().position(|o| o.path == full).filter(|&j| j != at)
+        })
+    };
+    let root =
+        |s: &str| matches!(s, "Base" | "Cop" | "Cop::Base" | "Cop::Cop" | "RuboCop::Cop::Base" | "RuboCop::Cop::Cop");
+    let lineage = |i: usize| -> Option<bool> {
+        // Some(autocorrect) when `classes[i]` is a cop class.
+        let (mut at, mut autocorrect) = (i, false);
+        for _ in 0..32 {
+            autocorrect |= classes[at].autocorrect;
+            match find(at) {
+                Some(j) => at = j,
+                None => return root(&classes[at].superclass).then_some(autocorrect),
+            }
+        }
+        None
+    };
+    let mut out: Vec<(String, bool)> = classes
+        .iter()
+        .enumerate()
+        .filter(|(_, c)| !c.excluded && c.path.len() >= 4 && c.path[0] == "RuboCop" && c.path[1] == "Cop")
+        .filter_map(|(i, c)| lineage(i).map(|ac| (c.path[2..].join("/"), ac)))
+        .collect();
+    out.sort();
+    out.dedup_by(|a, b| a.0 == b.0);
+    out
 }
 
 /// `Array(value)` for YAML values.
@@ -1201,6 +1559,34 @@ fn gem_version(s: &str) -> Option<Vec<u64>> {
     Some(out)
 }
 
+/// Ruby's String#to_f.
+fn ruby_to_f(s: &str) -> f64 {
+    static RE: std::sync::LazyLock<regex::Regex> =
+        std::sync::LazyLock::new(|| regex::Regex::new(r"^\s*[-+]?\d+(?:\.\d+)?").unwrap());
+    RE.find(s).and_then(|m| m.as_str().trim().parse().ok()).unwrap_or(0.0)
+}
+
+/// Bundler::LockfileParser specs as `Lockfile#gem_versions` returns them: every `    name (version)`
+/// spec line (4-space indent) of a GEM/GIT/PATH section, platform suffix dropped, last one wins.
+fn locked_gem_versions(text: &str) -> HashMap<String, String> {
+    static RE: std::sync::LazyLock<regex::Regex> =
+        std::sync::LazyLock::new(|| regex::Regex::new(r"^ {4}([^ (]\S*) \(([^-)]*)(?:-[^)]*)?\)!?$").unwrap());
+    text.lines()
+        .filter_map(|l| RE.captures(l.trim_end_matches('\r')))
+        .map(|c| (c[1].to_string(), c[2].to_string()))
+        .collect()
+}
+
+#[test]
+fn lockfile_gem_versions() {
+    let v = locked_gem_versions(
+        "GEM\n  remote: x\n  specs:\n    railties (8.1.4)\n      actionpack (= 8.1.4)\n    nokogiri (1.18.0-x86_64-linux)\n\nDEPENDENCIES\n  rails (~> 8.1)\n",
+    );
+    assert_eq!(v.get("railties").map(String::as_str), Some("8.1.4"));
+    assert_eq!(v.get("nokogiri").map(String::as_str), Some("1.18.0"));
+    assert!(!v.contains_key("actionpack") && !v.contains_key("rails"));
+}
+
 #[test]
 fn gem_versions_compare_like_rubygems() {
     assert!(gem_version("1.65") > gem_version("1.7"));
@@ -1214,7 +1600,9 @@ fn gem_versions_compare_like_rubygems() {
 /// Dir.pwd (no symlink resolution, like Ruby).
 pub fn cwd() -> PathBuf {
     // Ruby's Dir.pwd is getcwd(3), the physical path (/private/tmp, not /tmp); so is current_dir.
-    std::env::current_dir().unwrap_or_default()
+    // Read once: cops ask per file, getcwd is slow on macOS, and rbcop never changes directory.
+    static CWD: std::sync::OnceLock<PathBuf> = std::sync::OnceLock::new();
+    CWD.get_or_init(|| std::env::current_dir().unwrap_or_default()).clone()
 }
 
 /// File.expand_path(path, base): absolute, with `.` and `..` folded, symlinks untouched.

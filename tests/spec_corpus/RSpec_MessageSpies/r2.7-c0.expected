@@ -1,0 +1,20 @@
+==> offenses exit=1 1249 <==
+000/000_spec.rb:1:16: C: RSpec/MessageSpies: Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.
+001/001_spec.rb:2:16: C: RSpec/MessageSpies: Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.
+002/002_spec.rb:1:17: C: RSpec/MessageSpies: Prefer `have_received` for setting message expectations. Setup `@foo` as a spy using `allow` or `instance_spy`.
+003/003_spec.rb:1:16: C: RSpec/MessageSpies: Prefer `have_received` for setting message expectations. Setup `Foo` as a spy using `allow` or `instance_spy`.
+004/004_spec.rb:1:20: C: RSpec/MessageSpies: Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.
+005/005_spec.rb:1:20: C: RSpec/MessageSpies: Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.
+006/006_spec.rb:1:16: C: RSpec/MessageSpies: Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.
+007/007_spec.rb:1:16: C: RSpec/MessageSpies: Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.
+
+==> autocorrect exit=1 1249 <==
+000/000_spec.rb:1:16: C: RSpec/MessageSpies: Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.
+001/001_spec.rb:2:16: C: RSpec/MessageSpies: Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.
+002/002_spec.rb:1:17: C: RSpec/MessageSpies: Prefer `have_received` for setting message expectations. Setup `@foo` as a spy using `allow` or `instance_spy`.
+003/003_spec.rb:1:16: C: RSpec/MessageSpies: Prefer `have_received` for setting message expectations. Setup `Foo` as a spy using `allow` or `instance_spy`.
+004/004_spec.rb:1:20: C: RSpec/MessageSpies: Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.
+005/005_spec.rb:1:20: C: RSpec/MessageSpies: Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.
+006/006_spec.rb:1:16: C: RSpec/MessageSpies: Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.
+007/007_spec.rb:1:16: C: RSpec/MessageSpies: Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.
+

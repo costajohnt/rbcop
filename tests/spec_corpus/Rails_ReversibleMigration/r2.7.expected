@@ -1,0 +1,10 @@
+==> offenses exit=1 400 <==
+db/animals_migrate/030/20250101010101_remove_animals.rb:3:5: C: Rails/ReversibleMigration: drop_table(without block) is not reversible.
+db/animals_migrate/031/20190101010101_remove_animals.rb:3:5: C: Rails/ReversibleMigration: drop_table(without block) is not reversible.
+db/migrate/032/20250101010101_remove_animals.rb:3:5: C: Rails/ReversibleMigration: drop_table(without block) is not reversible.
+
+==> autocorrect exit=1 400 <==
+db/animals_migrate/030/20250101010101_remove_animals.rb:3:5: C: Rails/ReversibleMigration: drop_table(without block) is not reversible.
+db/animals_migrate/031/20190101010101_remove_animals.rb:3:5: C: Rails/ReversibleMigration: drop_table(without block) is not reversible.
+db/migrate/032/20250101010101_remove_animals.rb:3:5: C: Rails/ReversibleMigration: drop_table(without block) is not reversible.
+

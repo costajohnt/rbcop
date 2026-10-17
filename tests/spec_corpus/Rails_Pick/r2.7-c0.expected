@@ -1,0 +1,24 @@
+==> offenses exit=1 358 <==
+000/000.rb:1:3: C: [Correctable] Rails/Pick: Prefer `pick(:a)` over `pluck(:a).first`.
+001/001.rb:1:3: C: [Correctable] Rails/Pick: Prefer `pick(:a)` over `pluck(:a)&.first`.
+002/002.rb:1:4: C: [Correctable] Rails/Pick: Prefer `pick(:a)` over `pluck(:a)&.first`.
+003/003.rb:1:3: C: [Correctable] Rails/Pick: Prefer `pick(:a, :b)` over `pluck(:a, :b).first`.
+
+==> autocorrect exit=0 350 <==
+000/000.rb:1:3: C: [Corrected] Rails/Pick: Prefer `pick(:a)` over `pluck(:a).first`.
+001/001.rb:1:3: C: [Corrected] Rails/Pick: Prefer `pick(:a)` over `pluck(:a)&.first`.
+002/002.rb:1:4: C: [Corrected] Rails/Pick: Prefer `pick(:a)` over `pluck(:a)&.first`.
+003/003.rb:1:3: C: [Corrected] Rails/Pick: Prefer `pick(:a, :b)` over `pluck(:a, :b).first`.
+
+==> corrected/000/000.rb 11 <==
+x.pick(:a)
+
+==> corrected/001/001.rb 11 <==
+x.pick(:a)
+
+==> corrected/002/002.rb 12 <==
+x&.pick(:a)
+
+==> corrected/003/003.rb 15 <==
+x.pick(:a, :b)
+

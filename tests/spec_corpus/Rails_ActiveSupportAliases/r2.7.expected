@@ -1,0 +1,38 @@
+==> offenses exit=1 772 <==
+000/000.rb:1:15: C: [Correctable] Rails/ActiveSupportAliases: Use `start_with?` instead of `starts_with?`.
+001/001.rb:1:16: C: [Correctable] Rails/ActiveSupportAliases: Use `start_with?` instead of `starts_with?`.
+003/003.rb:1:15: C: [Correctable] Rails/ActiveSupportAliases: Use `end_with?` instead of `ends_with?`.
+004/004.rb:1:16: C: [Correctable] Rails/ActiveSupportAliases: Use `end_with?` instead of `ends_with?`.
+006/006.rb:1:13: C: Rails/ActiveSupportAliases: Use `<<` instead of `append`.
+007/007.rb:1:14: C: Rails/ActiveSupportAliases: Use `<<` instead of `append`.
+009/009.rb:1:13: C: [Correctable] Rails/ActiveSupportAliases: Use `unshift` instead of `prepend`.
+010/010.rb:1:14: C: [Correctable] Rails/ActiveSupportAliases: Use `unshift` instead of `prepend`.
+
+==> autocorrect exit=1 760 <==
+000/000.rb:1:15: C: [Corrected] Rails/ActiveSupportAliases: Use `start_with?` instead of `starts_with?`.
+001/001.rb:1:16: C: [Corrected] Rails/ActiveSupportAliases: Use `start_with?` instead of `starts_with?`.
+003/003.rb:1:15: C: [Corrected] Rails/ActiveSupportAliases: Use `end_with?` instead of `ends_with?`.
+004/004.rb:1:16: C: [Corrected] Rails/ActiveSupportAliases: Use `end_with?` instead of `ends_with?`.
+006/006.rb:1:13: C: Rails/ActiveSupportAliases: Use `<<` instead of `append`.
+007/007.rb:1:14: C: Rails/ActiveSupportAliases: Use `<<` instead of `append`.
+009/009.rb:1:13: C: [Corrected] Rails/ActiveSupportAliases: Use `unshift` instead of `prepend`.
+010/010.rb:1:14: C: [Corrected] Rails/ActiveSupportAliases: Use `unshift` instead of `prepend`.
+
+==> corrected/000/000.rb 36 <==
+'some_string'.start_with?('prefix')
+
+==> corrected/001/001.rb 37 <==
+'some_string'&.start_with?('prefix')
+
+==> corrected/003/003.rb 34 <==
+'some_string'.end_with?('prefix')
+
+==> corrected/004/004.rb 35 <==
+'some_string'&.end_with?('prefix')
+
+==> corrected/009/009.rb 31 <==
+[1, 'a', 3].unshift('element')
+
+==> corrected/010/010.rb 32 <==
+[1, 'a', 3]&.unshift('element')
+

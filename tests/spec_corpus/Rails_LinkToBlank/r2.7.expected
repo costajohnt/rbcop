@@ -1,0 +1,100 @@
+==> offenses exit=1 1764 <==
+003/003.rb:1:50: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+004/004.rb:1:50: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+005/005.rb:1:50: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+006/006.rb:1:36: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+007/007.rb:1:52: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+008/008.rb:1:50: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+016/016.rb:1:65: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+017/017.rb:1:65: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+018/018.rb:1:65: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+019/019.rb:1:51: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+020/020.rb:1:67: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+021/021.rb:1:65: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+029/029.rb:1:69: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+030/030.rb:1:69: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+031/031.rb:1:69: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+032/032.rb:1:55: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+033/033.rb:1:71: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+034/034.rb:1:69: C: [Correctable] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+
+==> autocorrect exit=0 1728 <==
+003/003.rb:1:50: C: [Corrected] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+004/004.rb:1:50: C: [Corrected] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+005/005.rb:1:50: C: [Corrected] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+006/006.rb:1:36: C: [Corrected] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+007/007.rb:1:52: C: [Corrected] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+008/008.rb:1:50: C: [Corrected] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+016/016.rb:1:65: C: [Corrected] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+017/017.rb:1:65: C: [Corrected] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+018/018.rb:1:65: C: [Corrected] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+019/019.rb:1:51: C: [Corrected] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+020/020.rb:1:67: C: [Corrected] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+021/021.rb:1:65: C: [Corrected] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+029/029.rb:1:69: C: [Corrected] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+030/030.rb:1:69: C: [Corrected] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+031/031.rb:1:69: C: [Corrected] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+032/032.rb:1:55: C: [Corrected] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+033/033.rb:1:71: C: [Corrected] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+034/034.rb:1:69: C: [Corrected] Rails/LinkToBlank: Specify a `:rel` option containing noopener.
+
+==> corrected/003/003.rb 83 <==
+link_to 'Click here', 'https://www.example.com', target: '_blank', rel: 'noopener'
+
+==> corrected/004/004.rb 87 <==
+link_to 'Click here', 'https://www.example.com', "target" => '_blank', rel: 'noopener'
+
+==> corrected/005/005.rb 81 <==
+link_to 'Click here', 'https://www.example.com', target: :_blank, rel: :noopener
+
+==> corrected/006/006.rb 91 <==
+link_to 'https://www.example.com', target: '_blank', rel: 'noopener' do
+  "Click here"
+end
+
+==> corrected/007/007.rb 85 <==
+link_to 'Click here', 'https://www.example.com', { target: :_blank, rel: :noopener }
+
+==> corrected/008/008.rb 97 <==
+link_to 'Click here', 'https://www.example.com', "target" => '_blank', rel: 'unrelated noopener'
+
+==> corrected/016/016.rb 98 <==
+link_to_if condition?, 'Click here', 'https://www.example.com', target: '_blank', rel: 'noopener'
+
+==> corrected/017/017.rb 102 <==
+link_to_if condition?, 'Click here', 'https://www.example.com', "target" => '_blank', rel: 'noopener'
+
+==> corrected/018/018.rb 96 <==
+link_to_if condition?, 'Click here', 'https://www.example.com', target: :_blank, rel: :noopener
+
+==> corrected/019/019.rb 106 <==
+link_to_if condition?, 'https://www.example.com', target: '_blank', rel: 'noopener' do
+  "Click here"
+end
+
+==> corrected/020/020.rb 100 <==
+link_to_if condition?, 'Click here', 'https://www.example.com', { target: :_blank, rel: :noopener }
+
+==> corrected/021/021.rb 112 <==
+link_to_if condition?, 'Click here', 'https://www.example.com', "target" => '_blank', rel: 'unrelated noopener'
+
+==> corrected/029/029.rb 102 <==
+link_to_unless condition?, 'Click here', 'https://www.example.com', target: '_blank', rel: 'noopener'
+
+==> corrected/030/030.rb 106 <==
+link_to_unless condition?, 'Click here', 'https://www.example.com', "target" => '_blank', rel: 'noopener'
+
+==> corrected/031/031.rb 100 <==
+link_to_unless condition?, 'Click here', 'https://www.example.com', target: :_blank, rel: :noopener
+
+==> corrected/032/032.rb 110 <==
+link_to_unless condition?, 'https://www.example.com', target: '_blank', rel: 'noopener' do
+  "Click here"
+end
+
+==> corrected/033/033.rb 104 <==
+link_to_unless condition?, 'Click here', 'https://www.example.com', { target: :_blank, rel: :noopener }
+
+==> corrected/034/034.rb 116 <==
+link_to_unless condition?, 'Click here', 'https://www.example.com', "target" => '_blank', rel: 'unrelated noopener'
+

@@ -1,0 +1,154 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 37 <==
+case foo
+when 1
+  bar
+else
+  baz
+end
+
+==> 001.rb 57 <==
+case foo
+when 4
+  foobar
+when *cond
+  bar
+else
+  baz
+end
+
+==> 002.rb 76 <==
+case foo
+when 4
+  foobar
+when *cond1
+  bar
+when *cond2
+  doo
+else
+  baz
+end
+
+==> 003.rb 57 <==
+case foo
+when *cond
+  bar
+when 4
+  foobar
+else
+  baz
+end
+
+==> 004.rb 63 <==
+case foo
+when *cond
+  # bar
+  # bar
+    # bar
+when 3
+  baz
+end
+
+==> 005.rb 45 <==
+case foo
+when *baz
+  bar
+when 4
+  foobar
+end
+
+==> 006.rb 49 <==
+case foo
+when *cond then bar
+when 4 then baz
+end
+
+==> 007.rb 34 <==
+case foo
+when *Foo, Bar
+  nil
+end
+
+==> 008.rb 76 <==
+case foo
+when *cond1
+  bar
+when *cond2
+  doo
+when 4
+  foobar
+else
+  baz
+end
+
+==> 009.rb 100 <==
+case foo
+when *cond1
+  bar
+when 8
+  barfoo
+when *SOME_CONSTANT
+  doo
+when 4
+  foobar
+else
+  baz
+end
+
+==> 010.rb 113 <==
+case foo
+when *cond1
+  bar
+when 8
+  barfoo
+when *cond2
+  doo
+when 4
+  foobar
+when *cond3
+  doofoo
+else
+  baz
+end
+
+==> 011.rb 64 <==
+case foo
+when *[1, 2]
+  bar
+when *[3, 4]
+  bar
+when 5
+  baz
+end
+
+==> 012.rb 32 <==
+case foo
+when *[1, 2]
+  bar
+end
+
+==> 013.rb 49 <==
+case foo
+when *cond
+  bar
+when *[1, 2]
+  baz
+end
+
+==> 014.rb 55 <==
+case foo
+when cond1, *cond2
+  bar
+when cond3
+  baz
+end
+

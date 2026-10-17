@@ -20,6 +20,14 @@ ruby-prism-sys = "1.9.0"
 unicode-width = "0.2"
 yaml-rust2 = "0.13.0"
 
+# musl's allocator serializes rbcop's worker threads (several times slower than glibc's).
+[target.'cfg(target_env = "musl")'.dependencies]
+mimalloc = { version = "0.1", default-features = false }
+
 # Vendored with an added parse_with_version (see vendor/ruby-prism/src/lib.rs, "rbcop patch").
 [patch.crates-io]
 ruby-prism = { path = "vendor/ruby-prism" }
+
+# Thin LTO: ~9% fewer cycles linting discourse (#388), for ~5 s more per release rebuild.
+[profile.release]
+lto = "thin"

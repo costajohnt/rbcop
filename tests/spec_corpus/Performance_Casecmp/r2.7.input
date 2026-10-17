@@ -1,0 +1,124 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 23 <==
+str.upcase == 'string'
+
+==> 001.rb 25 <==
+str.upcase == ('string')
+
+==> 002.rb 23 <==
+str.upcase != 'string'
+
+==> 003.rb 25 <==
+str.upcase != ('string')
+
+==> 004.rb 25 <==
+str.upcase.eql? 'string'
+
+==> 005.rb 26 <==
+str.upcase.eql?('string')
+
+==> 006.rb 29 <==
+str.upcase.eql? ( 'string' )
+
+==> 007.rb 23 <==
+'string' == str.upcase
+
+==> 008.rb 25 <==
+('string') == str.upcase
+
+==> 009.rb 23 <==
+'string' != str.upcase
+
+==> 010.rb 29 <==
+( 'string' ).eql? str.upcase
+
+==> 011.rb 25 <==
+'string'.eql? str.upcase
+
+==> 012.rb 26 <==
+'string'.eql?(str.upcase)
+
+==> 013.rb 25 <==
+obj.upcase == str.upcase
+
+==> 014.rb 27 <==
+obj.upcase.eql? str.upcase
+
+==> 015.rb 28 <==
+var = "a"
+var == str.upcase
+
+==> 016.rb 28 <==
+var = "a"
+str.upcase == var
+
+==> 017.rb 24 <==
+obj.method == str.upcase
+==> 018.rb 24 <==
+str.upcase == obj.method
+==> 019.rb 25 <==
+str.downcase == 'string'
+
+==> 020.rb 27 <==
+str.downcase == ('string')
+
+==> 021.rb 25 <==
+str.downcase != 'string'
+
+==> 022.rb 27 <==
+str.downcase != ('string')
+
+==> 023.rb 27 <==
+str.downcase.eql? 'string'
+
+==> 024.rb 28 <==
+str.downcase.eql?('string')
+
+==> 025.rb 31 <==
+str.downcase.eql? ( 'string' )
+
+==> 026.rb 25 <==
+'string' == str.downcase
+
+==> 027.rb 27 <==
+('string') == str.downcase
+
+==> 028.rb 25 <==
+'string' != str.downcase
+
+==> 029.rb 31 <==
+( 'string' ).eql? str.downcase
+
+==> 030.rb 27 <==
+'string'.eql? str.downcase
+
+==> 031.rb 28 <==
+'string'.eql?(str.downcase)
+
+==> 032.rb 29 <==
+obj.downcase == str.downcase
+
+==> 033.rb 31 <==
+obj.downcase.eql? str.downcase
+
+==> 034.rb 30 <==
+var = "a"
+var == str.downcase
+
+==> 035.rb 30 <==
+var = "a"
+str.downcase == var
+
+==> 036.rb 26 <==
+obj.method == str.downcase
+==> 037.rb 26 <==
+str.downcase == obj.method

@@ -1,0 +1,116 @@
+==> .rubocop.yml 212 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/TransactionExitStatement:
+  TransactionMethods:
+  - writable_transaction
+
+==> 000/000.rb 71 <==
+ApplicationRecord.writable_transaction do
+  return if user.active?
+end
+
+==> 001/001.rb 93 <==
+ApplicationRecord.writable_transaction do
+  _1.after_commit { }
+  return if user.active?
+end
+
+==> 002/002.rb 70 <==
+ApplicationRecord.writable_transaction do
+  break if user.active?
+end
+
+==> 003/003.rb 70 <==
+ApplicationRecord.writable_transaction do
+  throw if user.active?
+end
+
+==> 004/004.rb 69 <==
+ApplicationRecord.writable_transaction do
+  next if user.active?
+end
+
+==> 005/005.rb 70 <==
+ApplicationRecord.writable_transaction do
+  raise if user.active?
+end
+
+==> 006/006.rb 86 <==
+ApplicationRecord.writable_transaction do
+  loop do
+    return if condition
+  end
+end
+
+==> 007/007.rb 83 <==
+ApplicationRecord.writable_transaction do
+  foo.each do
+    return if _1
+  end
+end
+
+==> 008/008.rb 85 <==
+ApplicationRecord.writable_transaction do
+  loop do
+    throw if condition
+  end
+end
+
+==> 009/009.rb 85 <==
+ApplicationRecord.writable_transaction do
+  loop do
+    break if condition
+  end
+end
+
+==> 010/010.rb 103 <==
+ApplicationRecord.writable_transaction do
+  while proceed_looping? do
+    break if condition
+  end
+end
+
+==> 011/011.rb 100 <==
+ApplicationRecord.writable_transaction do
+  until stop_looping? do
+    break if condition
+  end
+end
+
+==> 012/012.rb 82 <==
+ApplicationRecord.writable_transaction do
+  foo.each do
+    break if _1
+  end
+end
+
+==> 013/013.rb 75 <==
+ApplicationRecord.writable_transaction do
+rescue
+  return do_something
+end
+
+==> 014/014.rb 85 <==
+ApplicationRecord.writable_transaction do
+  return if user.active?
+rescue
+  pass
+end
+
+==> 015/015.rb 46 <==
+ApplicationRecord.writable_transaction do
+end
+
+==> 016/016.rb 25 <==
+writable_transaction.foo
+
+==> 017/017.rb 21 <==
+writable_transaction
+

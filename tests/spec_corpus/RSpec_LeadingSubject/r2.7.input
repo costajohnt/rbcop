@@ -1,0 +1,142 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 85 <==
+RSpec.describe User do
+  let(:params) { foo }
+
+  subject { described_class.new }
+end
+
+==> 001/001_spec.rb 86 <==
+RSpec.describe User do
+  let!(:params) { foo }
+
+  subject { described_class.new }
+end
+
+==> 002/002_spec.rb 95 <==
+RSpec.describe User do
+  let(:user, &args[:build_user])
+
+  subject { described_class.new }
+end
+
+==> 003/003_spec.rb 112 <==
+RSpec.describe User do
+  subject { described_class.new }
+
+  let(:params) { foo }
+
+  context 'blah' do
+  end
+end
+
+==> 004/004_spec.rb 131 <==
+RSpec.describe User do
+  let(:params) { foo }
+
+  context "when something happens" do
+    subject { described_class.new }
+  end
+end
+
+==> 005/005_spec.rb 239 <==
+RSpec.describe User do
+  # This shouldn't really ever happen in a sane codebase but I still
+  # want to avoid false positives
+  it "doesn't mind me calling a method called subject in the test" do
+    let(foo)
+    subject { bar }
+  end
+end
+
+==> 006/006_spec.rb 103 <==
+RSpec.describe User do
+  before { allow(Foo).to receive(:bar) }
+
+  subject { described_class.new }
+end
+
+==> 007/007_spec.rb 97 <==
+RSpec.describe User do
+  it { is_expected.to be_present }
+
+  subject { described_class.new }
+end
+
+==> 008/008_spec.rb 119 <==
+RSpec.describe do
+  def helper_method
+  end
+
+  it { is_expected.to be_present }
+
+  subject { described_class.new }
+end
+
+==> 009/009_spec.rb 119 <==
+RSpec.describe User do
+  describe do
+    it { is_expected.to be_present }
+  end
+
+  subject { described_class.new }
+end
+
+==> 010/010_spec.rb 143 <==
+RSpec.describe User do
+  shared_examples_for 'used later' do
+    it { is_expected.to be_present }
+  end
+
+  subject { described_class.new }
+end
+
+==> 011/011_spec.rb 97 <==
+RSpec.describe User do
+  it_behaves_like 'a good citizen'
+
+  subject { described_class.new }
+end
+
+==> 012/012_spec.rb 156 <==
+RSpec.describe User do
+  it_behaves_like 'a good citizen' do
+    let(:used_in_shared_examples) { 'something' }
+  end
+
+  subject { described_class.new }
+end
+
+==> 013/013_spec.rb 121 <==
+RSpec.describe User do
+  block = ->{ }
+  it_behaves_like 'a good citizen', &block
+
+  subject { described_class.new }
+end
+
+==> 014/014_spec.rb 130 <==
+RSpec.describe User do
+  let(:foo) { 'bar' }
+
+  it_behaves_like 'a good citizen' do
+    subject { described_class.new }
+  end
+end
+
+==> 015/015_spec.rb 47 <==
+module Support
+  subject do
+    test
+  end
+end
+

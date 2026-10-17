@@ -1,0 +1,57 @@
+==> .rubocop.yml 183 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/PluckInWhere:
+  EnforcedStyle: conservative
+
+==> 000/000.rb 44 <==
+Post.where(user_id: User.active.pluck(:id))
+
+==> 001/001.rb 37 <==
+Post.where(user_id: User.active.ids)
+
+==> 002/002.rb 48 <==
+Post.where.not(user_id: User.active.pluck(:id))
+
+==> 003/003.rb 41 <==
+Post.where.not(user_id: User.active.ids)
+
+==> 004/004.rb 47 <==
+Post&.where(user_id: User&.active&.pluck(:id))
+
+==> 005/005.rb 55 <==
+Post.rewhere('user_id IN (?)', User.active.pluck(:id))
+
+==> 006/006.rb 48 <==
+Post.rewhere('user_id IN (?)', User.active.ids)
+
+==> 007/007.rb 45 <==
+Post.where(user_id: User.active.select(:id))
+
+==> 008/008.rb 49 <==
+Post.where(user_id: User.pluck(:id).map(&:to_i))
+
+==> 009/009.rb 42 <==
+Post.where(user_id: User.ids.map(&:to_i))
+
+==> 010/010.rb 33 <==
+Post.order(columns.pluck(:name))
+
+==> 011/011.rb 24 <==
+Post.order(columns.ids)
+
+==> 012/012.rb 45 <==
+Post.where(user_id: users.active.pluck(:id))
+
+==> 013/013.rb 38 <==
+Post.where(user_id: users.active.ids)
+
+==> 014/014.rb 33 <==
+Post.pluck(:id).where(id: 1..10)
+

@@ -1,0 +1,13 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.4
+
+==> 000.rb 40 <==
+items.all? { |item| item.is_a?(Klass) }
+

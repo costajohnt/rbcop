@@ -1,0 +1,28 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 14 <==
+'two'.inquiry
+
+==> 001/001.rb 15 <==
+'two'&.inquiry
+
+==> 002/002.rb 19 <==
+[foo, bar].inquiry
+
+==> 003/003.rb 8 <==
+inquiry
+
+==> 004/004.rb 12 <==
+foo.inquiry
+
+==> 005/005.rb 19 <==
+'foo'.inquiry(bar)
+

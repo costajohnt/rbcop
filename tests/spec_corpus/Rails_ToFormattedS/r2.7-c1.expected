@@ -1,0 +1,14 @@
+==> offenses exit=1 166 <==
+000/000.rb:1:6: C: [Correctable] Rails/ToFormattedS: Use `to_formatted_s` instead.
+001/001.rb:1:7: C: [Correctable] Rails/ToFormattedS: Use `to_formatted_s` instead.
+
+==> autocorrect exit=0 162 <==
+000/000.rb:1:6: C: [Corrected] Rails/ToFormattedS: Use `to_formatted_s` instead.
+001/001.rb:1:7: C: [Corrected] Rails/ToFormattedS: Use `to_formatted_s` instead.
+
+==> corrected/000/000.rb 25 <==
+time.to_formatted_s(:db)
+
+==> corrected/001/001.rb 26 <==
+time&.to_formatted_s(:db)
+

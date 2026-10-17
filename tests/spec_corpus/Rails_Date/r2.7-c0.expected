@@ -1,0 +1,19 @@
+==> offenses exit=1 343 <==
+004/004.rb:1:6: C: [Correctable] Rails/Date: `to_time_in_current_zone` is deprecated. Use `in_time_zone` instead.
+005/005.rb:1:7: C: [Correctable] Rails/Date: `to_time_in_current_zone` is deprecated. Use `in_time_zone` instead.
+017/017.rb:1:23: C: [Correctable] Rails/Date: `to_time_in_current_zone` is deprecated. Use `in_time_zone` instead.
+
+==> autocorrect exit=0 337 <==
+004/004.rb:1:6: C: [Corrected] Rails/Date: `to_time_in_current_zone` is deprecated. Use `in_time_zone` instead.
+005/005.rb:1:7: C: [Corrected] Rails/Date: `to_time_in_current_zone` is deprecated. Use `in_time_zone` instead.
+017/017.rb:1:23: C: [Corrected] Rails/Date: `to_time_in_current_zone` is deprecated. Use `in_time_zone` instead.
+
+==> corrected/004/004.rb 18 <==
+date.in_time_zone
+
+==> corrected/005/005.rb 19 <==
+date&.in_time_zone
+
+==> corrected/017/017.rb 35 <==
+"2016-07-12 14:36:31".in_time_zone
+

@@ -1,0 +1,84 @@
+==> offenses exit=1 1316 <==
+000/000.rb:1:1: C: [Correctable] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name`.
+001/001.rb:1:1: C: [Correctable] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name_and_email`.
+002/002.rb:1:1: C: [Correctable] Rails/DynamicFindBy: Use `find_by!` instead of dynamic `find_by_name!`.
+003/003.rb:1:1: C: [Correctable] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name_and_email_and_token`.
+004/004.rb:1:1: C: [Correctable] Rails/DynamicFindBy: Use `find_by!` instead of dynamic `find_by_name_and_email_and_token!`.
+005/005.rb:1:1: C: [Correctable] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name_and_email_and_token`.
+006/006.rb:1:1: C: [Correctable] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_first_name`.
+017/017.rb:3:5: C: [Correctable] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name`.
+018/018.rb:3:5: C: [Correctable] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name`.
+019/019.rb:3:5: C: [Correctable] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name`.
+020/020.rb:3:5: C: [Correctable] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name`.
+021/021.rb:1:1: C: [Correctable] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name`.
+
+==> autocorrect exit=0 1292 <==
+000/000.rb:1:1: C: [Corrected] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name`.
+001/001.rb:1:1: C: [Corrected] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name_and_email`.
+002/002.rb:1:1: C: [Corrected] Rails/DynamicFindBy: Use `find_by!` instead of dynamic `find_by_name!`.
+003/003.rb:1:1: C: [Corrected] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name_and_email_and_token`.
+004/004.rb:1:1: C: [Corrected] Rails/DynamicFindBy: Use `find_by!` instead of dynamic `find_by_name_and_email_and_token!`.
+005/005.rb:1:1: C: [Corrected] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name_and_email_and_token`.
+006/006.rb:1:1: C: [Corrected] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_first_name`.
+017/017.rb:3:5: C: [Corrected] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name`.
+018/018.rb:3:5: C: [Corrected] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name`.
+019/019.rb:3:5: C: [Corrected] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name`.
+020/020.rb:3:5: C: [Corrected] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name`.
+021/021.rb:1:1: C: [Corrected] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name`.
+
+==> corrected/000/000.rb 25 <==
+User.find_by(name: name)
+
+==> corrected/001/001.rb 39 <==
+User.find_by(name: name, email: email)
+
+==> corrected/002/002.rb 26 <==
+User.find_by!(name: name)
+
+==> corrected/003/003.rb 53 <==
+User.find_by(name: name, email: email, token: token)
+
+==> corrected/004/004.rb 54 <==
+User.find_by!(name: name, email: email, token: token)
+
+==> corrected/005/005.rb 61 <==
+User.find_by(
+  name: name,
+  email: email,
+  token: token
+)
+
+==> corrected/006/006.rb 31 <==
+User.find_by(first_name: name)
+
+==> corrected/017/017.rb 81 <==
+class C < ApplicationRecord
+  def do_something
+    find_by(name: name)
+  end
+end
+
+==> corrected/018/018.rb 83 <==
+class C < ::ApplicationRecord
+  def do_something
+    find_by(name: name)
+  end
+end
+
+==> corrected/019/019.rb 82 <==
+class C < ActiveRecord::Base
+  def do_something
+    find_by(name: name)
+  end
+end
+
+==> corrected/020/020.rb 84 <==
+class C < ::ActiveRecord::Base
+  def do_something
+    find_by(name: name)
+  end
+end
+
+==> corrected/021/021.rb 26 <==
+user&.find_by(name: name)
+

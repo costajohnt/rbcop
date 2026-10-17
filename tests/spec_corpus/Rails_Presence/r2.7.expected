@@ -1,0 +1,215 @@
+==> offenses exit=1 4779 <==
+000/000.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence` instead of `a.present? ? a : nil`.
+001/001.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence` instead of `!a.present? ? nil: a`.
+002/002.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence` instead of `a.blank? ? nil : a`.
+003/003.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence` instead of `!a.blank? ? a : nil`.
+004/004.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence || b` instead of `a.present? ? a : b`.
+005/005.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence || b` instead of `!a.present? ? b : a`.
+006/006.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence || b` instead of `a.blank? ? b : a`.
+007/007.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence || b` instead of `!a.blank? ? a : b`.
+008/008.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence || 1` instead of `a.present? ? a : 1`.
+009/009.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence || 1` instead of `a.blank? ? 1 : a`.
+010/010.rb:1:1: C: [Correctable] Rails/Presence: Use `a(:bar).map(&:baz).presence` instead of `a(:bar).map(&:baz).present? ? a(:bar).map(&:baz) : nil`.
+011/011.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence || b[:c]` instead of `a.present? ? a : b[:c]`.
+012/012.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence` instead of `if a.present? ... end`.
+013/013.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence` instead of `unless a.present? ... end`.
+014/014.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence || b.to_f + 12.0` instead of `if a.present? ... end`.
+015/015.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence || b.to_f * 12.0` instead of `if a.present? ... end`.
+016/016.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence` instead of `a if a.present?`.
+017/017.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence` instead of `a unless a.blank?`.
+018/018.rb:1:1: C: [Correctable] Rails/Presence: Use `[1, 2, 3].map { |num| num + 1 }.map { |num| num + 2 }.presence || b` instead of `if [1, 2, 3].map { |num| num + 1 }.map { |num| num + 2 }.present? ... end`.
+019/019.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence&.foo` instead of `a.present? ? a.foo : nil`.
+020/020.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence&.foo` instead of `a.blank? ? nil : a.foo`.
+021/021.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence&.foo` instead of `a.foo if a.present?`.
+022/022.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence&.foo` instead of `a.foo unless a.blank?`.
+023/023.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence&.foo(42, key: :value)` instead of `a.present? ? a.foo(42, key: :value) : nil`.
+033/033.rb:1:5: C: [Correctable] Rails/Presence: Use `a.presence&.foo` instead of `a.present? ? a.foo : nil`.
+034/034.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence` instead of `a.present? ? a : nil`.
+035/035.rb:1:1: C: [Correctable] Rails/Presence: Use `value.presence || do_something(value)` instead of `if value.present? ... end`.
+036/036.rb:1:1: C: [Correctable] Rails/Presence: Use `value.presence || do_something(value)` instead of `if value.present? ... end`.
+037/037.rb:1:1: C: [Correctable] Rails/Presence: Use `value.presence || do_something(arg1, arg2)` instead of `if value.present? ... end`.
+038/038.rb:1:1: C: [Correctable] Rails/Presence: Use `value.presence || foo.do_something(value)` instead of `if value.present? ... end`.
+039/039.rb:1:5: C: [Correctable] Rails/Presence: Use `(b.presence || c)` instead of `if b.present? ... end`.
+040/040.rb:1:5: C: [Correctable] Rails/Presence: Use `(b.presence || c)` instead of `if b.present? ... end`.
+041/041.rb:1:6: C: [Correctable] Rails/Presence: Use `(b.presence || c)` instead of `if b.present? ... end`.
+042/042.rb:1:6: C: [Correctable] Rails/Presence: Use `(b.presence || c)` instead of `if b.present? ... end`.
+043/043.rb:1:6: C: [Correctable] Rails/Presence: Use `(b.presence || c)` instead of `if b.present? ... end`.
+044/044.rb:1:6: C: [Correctable] Rails/Presence: Use `(b.presence || c)` instead of `if b.present? ... end`.
+045/045.rb:1:6: C: [Correctable] Rails/Presence: Use `(b.presence || c)` instead of `if b.present? ... end`.
+046/046.rb:1:5: C: [Correctable] Rails/Presence: Use `a.presence || b` instead of `a.present? ? a : b`.
+047/047.rb:1:10: C: [Correctable] Rails/Presence: Use `(a.presence || b)` instead of `a.present? ? a : b`.
+048/048.rb:1:6: C: [Correctable] Rails/Presence: Use `b.presence || c` instead of `if b.present? ... end`.
+049/049.rb:1:5: C: [Correctable] Rails/Presence: Use `a.presence || b` instead of `a.present? ? a : b`.
+064/20190101010101_add_column_to_table.rb:1:1: C: [Correctable] Rails/Presence: Use `a.presence` instead of `a.present? ? a : nil`.
+
+==> autocorrect exit=0 4695 <==
+000/000.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence` instead of `a.present? ? a : nil`.
+001/001.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence` instead of `!a.present? ? nil: a`.
+002/002.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence` instead of `a.blank? ? nil : a`.
+003/003.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence` instead of `!a.blank? ? a : nil`.
+004/004.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence || b` instead of `a.present? ? a : b`.
+005/005.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence || b` instead of `!a.present? ? b : a`.
+006/006.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence || b` instead of `a.blank? ? b : a`.
+007/007.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence || b` instead of `!a.blank? ? a : b`.
+008/008.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence || 1` instead of `a.present? ? a : 1`.
+009/009.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence || 1` instead of `a.blank? ? 1 : a`.
+010/010.rb:1:1: C: [Corrected] Rails/Presence: Use `a(:bar).map(&:baz).presence` instead of `a(:bar).map(&:baz).present? ? a(:bar).map(&:baz) : nil`.
+011/011.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence || b[:c]` instead of `a.present? ? a : b[:c]`.
+012/012.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence` instead of `if a.present? ... end`.
+013/013.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence` instead of `unless a.present? ... end`.
+014/014.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence || b.to_f + 12.0` instead of `if a.present? ... end`.
+015/015.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence || b.to_f * 12.0` instead of `if a.present? ... end`.
+016/016.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence` instead of `a if a.present?`.
+017/017.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence` instead of `a unless a.blank?`.
+018/018.rb:1:1: C: [Corrected] Rails/Presence: Use `[1, 2, 3].map { |num| num + 1 }.map { |num| num + 2 }.presence || b` instead of `if [1, 2, 3].map { |num| num + 1 }.map { |num| num + 2 }.present? ... end`.
+019/019.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence&.foo` instead of `a.present? ? a.foo : nil`.
+020/020.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence&.foo` instead of `a.blank? ? nil : a.foo`.
+021/021.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence&.foo` instead of `a.foo if a.present?`.
+022/022.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence&.foo` instead of `a.foo unless a.blank?`.
+023/023.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence&.foo(42, key: :value)` instead of `a.present? ? a.foo(42, key: :value) : nil`.
+033/033.rb:1:5: C: [Corrected] Rails/Presence: Use `a.presence&.foo` instead of `a.present? ? a.foo : nil`.
+034/034.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence` instead of `a.present? ? a : nil`.
+035/035.rb:1:1: C: [Corrected] Rails/Presence: Use `value.presence || do_something(value)` instead of `if value.present? ... end`.
+036/036.rb:1:1: C: [Corrected] Rails/Presence: Use `value.presence || do_something(value)` instead of `if value.present? ... end`.
+037/037.rb:1:1: C: [Corrected] Rails/Presence: Use `value.presence || do_something(arg1, arg2)` instead of `if value.present? ... end`.
+038/038.rb:1:1: C: [Corrected] Rails/Presence: Use `value.presence || foo.do_something(value)` instead of `if value.present? ... end`.
+039/039.rb:1:5: C: [Corrected] Rails/Presence: Use `(b.presence || c)` instead of `if b.present? ... end`.
+040/040.rb:1:5: C: [Corrected] Rails/Presence: Use `(b.presence || c)` instead of `if b.present? ... end`.
+041/041.rb:1:6: C: [Corrected] Rails/Presence: Use `(b.presence || c)` instead of `if b.present? ... end`.
+042/042.rb:1:6: C: [Corrected] Rails/Presence: Use `(b.presence || c)` instead of `if b.present? ... end`.
+043/043.rb:1:6: C: [Corrected] Rails/Presence: Use `(b.presence || c)` instead of `if b.present? ... end`.
+044/044.rb:1:6: C: [Corrected] Rails/Presence: Use `(b.presence || c)` instead of `if b.present? ... end`.
+045/045.rb:1:6: C: [Corrected] Rails/Presence: Use `(b.presence || c)` instead of `if b.present? ... end`.
+046/046.rb:1:5: C: [Corrected] Rails/Presence: Use `a.presence || b` instead of `a.present? ? a : b`.
+047/047.rb:1:10: C: [Corrected] Rails/Presence: Use `(a.presence || b)` instead of `a.present? ? a : b`.
+048/048.rb:1:6: C: [Corrected] Rails/Presence: Use `b.presence || c` instead of `if b.present? ... end`.
+049/049.rb:1:5: C: [Corrected] Rails/Presence: Use `a.presence || b` instead of `a.present? ? a : b`.
+064/20190101010101_add_column_to_table.rb:1:1: C: [Corrected] Rails/Presence: Use `a.presence` instead of `a.present? ? a : nil`.
+
+==> corrected/000/000.rb 11 <==
+a.presence
+
+==> corrected/001/001.rb 11 <==
+a.presence
+
+==> corrected/002/002.rb 11 <==
+a.presence
+
+==> corrected/003/003.rb 11 <==
+a.presence
+
+==> corrected/004/004.rb 16 <==
+a.presence || b
+
+==> corrected/005/005.rb 16 <==
+a.presence || b
+
+==> corrected/006/006.rb 16 <==
+a.presence || b
+
+==> corrected/007/007.rb 16 <==
+a.presence || b
+
+==> corrected/008/008.rb 16 <==
+a.presence || 1
+
+==> corrected/009/009.rb 16 <==
+a.presence || 1
+
+==> corrected/010/010.rb 28 <==
+a(:bar).map(&:baz).presence
+
+==> corrected/011/011.rb 20 <==
+a.presence || b[:c]
+
+==> corrected/012/012.rb 11 <==
+a.presence
+
+==> corrected/013/013.rb 11 <==
+a.presence
+
+==> corrected/014/014.rb 28 <==
+a.presence || b.to_f + 12.0
+
+==> corrected/015/015.rb 28 <==
+a.presence || b.to_f * 12.0
+
+==> corrected/016/016.rb 11 <==
+a.presence
+
+==> corrected/017/017.rb 11 <==
+a.presence
+
+==> corrected/018/018.rb 81 <==
+[1, 2, 3].map { |num| num + 1 }
+            .map { |num| num + 2 }.presence || b
+
+==> corrected/019/019.rb 16 <==
+a.presence&.foo
+
+==> corrected/020/020.rb 16 <==
+a.presence&.foo
+
+==> corrected/021/021.rb 16 <==
+a.presence&.foo
+
+==> corrected/022/022.rb 16 <==
+a.presence&.foo
+
+==> corrected/023/023.rb 33 <==
+a.presence&.foo(42, key: :value)
+
+==> corrected/033/033.rb 20 <==
+x = a.presence&.foo
+
+==> corrected/034/034.rb 11 <==
+a.presence
+
+==> corrected/035/035.rb 38 <==
+value.presence || do_something(value)
+
+==> corrected/036/036.rb 38 <==
+value.presence || do_something(value)
+
+==> corrected/037/037.rb 43 <==
+value.presence || do_something(arg1, arg2)
+
+==> corrected/038/038.rb 42 <==
+value.presence || foo.do_something(value)
+
+==> corrected/039/039.rb 22 <==
+a < (b.presence || c)
+
+==> corrected/040/040.rb 22 <==
+a > (b.presence || c)
+
+==> corrected/041/041.rb 23 <==
+a <= (b.presence || c)
+
+==> corrected/042/042.rb 23 <==
+a >= (b.presence || c)
+
+==> corrected/043/043.rb 23 <==
+a == (b.presence || c)
+
+==> corrected/044/044.rb 23 <==
+a != (b.presence || c)
+
+==> corrected/045/045.rb 23 <==
+a && (b.presence || c)
+
+==> corrected/046/046.rb 21 <==
+foo(a.presence || b)
+
+==> corrected/047/047.rb 27 <==
+foo bar, (a.presence || b)
+
+==> corrected/048/048.rb 21 <==
+a || b.presence || c
+
+==> corrected/049/049.rb 20 <==
+x = a.presence || b
+
+==> corrected/064/20190101010101_add_column_to_table.rb 11 <==
+a.presence
+

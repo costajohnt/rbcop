@@ -1,0 +1,9 @@
+==> offenses exit=1 85 <==
+003/003.rb:1:20: C: [Correctable] Rails/FindEach: Use `find_each` instead of `each`.
+
+==> autocorrect exit=0 83 <==
+003/003.rb:1:20: C: [Corrected] Rails/FindEach: Use `find_each` instead of `each`.
+
+==> corrected/003/003.rb 49 <==
+User.joins(:posts).find_each { |u| u.something }
+

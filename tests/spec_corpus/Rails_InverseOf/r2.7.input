@@ -1,0 +1,143 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/models/000/000.rb 60 <==
+class Person
+  has_one :foo, -> () { where(bar: true) }
+end
+
+==> app/models/001/001.rb 60 <==
+has_many :foo, -> () { where(bar: true) }, inverse_of: false
+==> app/models/002/002.rb 78 <==
+class Person
+  has_many :foo, -> () { where(bar: true) }, inverse_of: nil
+end
+
+==> app/models/003/003.rb 133 <==
+class Person
+  def define_association(**options)
+    has_many :foo, -> () { where(bar: true) }, inverse_of: nil, **options
+  end
+end
+
+==> app/models/004/004.rb 58 <==
+class Person
+  belongs_to :foo, foreign_key: 'foo_id'
+end
+
+==> app/models/005/005.rb 53 <==
+has_one :foo, foreign_key: 'foo_id', inverse_of: :bar
+==> app/models/006/006.rb 53 <==
+has_one :foo, inverse_of: :bar, foreign_key: 'foo_id'
+==> app/models/007/007.rb 77 <==
+class Person
+  has_many :foo, dependent: :destroy, foreign_key: 'foo_id'
+end
+
+==> app/models/008/008.rb 70 <==
+class Person
+  has_many :foo, conditions: -> { where(bar: true) }
+end
+
+==> app/models/009/009.rb 125 <==
+class Person
+  def define_association(**options)
+    has_many :foo, conditions: -> { where(bar: true) }, **options
+  end
+end
+
+==> app/models/010/010.rb 72 <==
+class Person
+  has_many :foo, -> { group 'x' }, dependent: :destroy
+end
+
+==> app/models/011/011.rb 128 <==
+class Person
+  def define_association(**options)
+    has_many(:foo, -> { group 'x' }, dependent: :destroy, **options)
+  end
+end
+
+==> app/models/012/012.rb 70 <==
+has_many :foo, -> { group 'x' }, dependent: :destroy, inverse_of: :baz
+==> app/models/013/013.rb 12 <==
+has_one :foo
+==> app/models/014/014.rb 33 <==
+has_one :foo, dependent: :nullify
+==> app/models/015/015.rb 138 <==
+class Physician < ApplicationRecord
+  has_many :appointments
+  has_many :patients, -> () { where(bar: true) }, through: :appointments
+end
+
+==> app/models/016/016.rb 109 <==
+class Picture < ApplicationRecord
+  belongs_to :imageable, -> () { where(bar: true) }, polymorphic: true
+end
+
+==> app/models/017/017.rb 104 <==
+class Person
+  with_options inverse_of: false do
+    has_one :foo, -> () { where(bar: true) }
+  end
+end
+
+==> app/models/018/018.rb 115 <==
+class Person
+  with_options inverse_of: :bar do |assoc|
+    assoc.belongs_to :foo, foreign_key: 'foo_id'
+  end
+end
+
+==> app/models/019/019.rb 115 <==
+class Person
+  with_options inverse_of: :bar do |_assoc|
+    belongs_to :foo, -> () { where(baz: true) }
+  end
+end
+
+==> app/models/020/020.rb 221 <==
+class Book < ApplicationRecord
+  with_options inverse_of: :book do
+    with_helper do |helper|
+      helper.define_assoc
+      with_options foreign_key: 'book_id' do
+        belongs_to :author
+      end
+    end
+  end
+end
+
+==> app/models/021/021.rb 80 <==
+class Person
+  with_options foreign_key: 'foo_id' do
+    has_one :foo
+  end
+end
+
+==> app/models/022/022.rb 125 <==
+class Person
+  with_options foreign_key: 'foo_id' do |assoc|
+    assoc.belongs_to :foo, -> () { where(baz: true) }
+  end
+end
+
+==> app/models/023/023.rb 247 <==
+class Book < ApplicationRecord
+  with_options conditions: -> () { where(famous: true) } do
+    with_helper do |helper|
+      helper.define_assoc
+      with_options foreign_key: "patron_id" do
+        belongs_to :author
+      end
+    end
+  end
+end
+

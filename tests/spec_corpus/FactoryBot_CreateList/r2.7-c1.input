@@ -1,0 +1,19 @@
+==> .rubocop.yml 213 <==
+---
+plugins:
+- rubocop-factory_bot
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+FactoryBot/CreateList:
+  EnforcedStyle: :create_list
+  ExplicitOnly: true
+
+==> 000/000_spec.rb 36 <==
+3.times { FactoryBot.create :user }
+
+==> 001/001_spec.rb 25 <==
+3.times { create :user }
+

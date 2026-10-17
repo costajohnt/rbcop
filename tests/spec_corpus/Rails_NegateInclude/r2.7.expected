@@ -1,0 +1,9 @@
+==> offenses exit=1 100 <==
+000/000.rb:1:1: C: [Correctable] Rails/NegateInclude: Use `.exclude?` and remove the negation part.
+
+==> autocorrect exit=0 98 <==
+000/000.rb:1:1: C: [Corrected] Rails/NegateInclude: Use `.exclude?` and remove the negation part.
+
+==> corrected/000/000.rb 18 <==
+array.exclude?(2)
+

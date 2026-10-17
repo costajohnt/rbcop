@@ -1,0 +1,52 @@
+==> .rubocop.yml 184 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/UniqBeforePluck:
+  EnforcedStyle: aggressive
+
+==> 000/000.rb 24 <==
+Model.pluck(:name).uniq
+
+==> 001/001.rb 27 <==
+Model.pluck(:name)
+  .uniq
+
+==> 002/002.rb 27 <==
+Model.pluck(:name).
+  uniq
+
+==> 003/003.rb 30 <==
+Model
+  .pluck(:name)
+  .uniq
+
+==> 004/004.rb 43 <==
+Model.where(foo: 1).uniq.pluck(:something)
+
+==> 005/005.rb 15 <==
+uniq.something
+
+==> 006/006.rb 11 <==
+Model.uniq
+
+==> 007/007.rb 51 <==
+Model.where(foo: 1).pluck(:name).uniq { |k| k[0] }
+
+==> 008/008.rb 48 <==
+Model.where(foo: 1).pluck(:name).uniq { _1[0] }
+
+==> 009/009.rb 30 <==
+Model.scope.pluck(:name).uniq
+
+==> 010/010.rb 33 <==
+instance.assoc.pluck(:name).uniq
+
+==> 011/011.rb 18 <==
+pluck(:name).uniq
+

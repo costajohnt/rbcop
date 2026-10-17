@@ -1,0 +1,18 @@
+==> offenses exit=1 518 <==
+000/000_spec.rb:1:1: C: [Correctable] Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
+000/000_spec.rb:2:1: C: [Correctable] Capybara/RSpec/PredicateMatcher: Prefer using `matches_selector?` over `match_selector` matcher.
+000/000_spec.rb:3:1: C: [Correctable] Capybara/RSpec/PredicateMatcher: Prefer using `matches_style?` over `match_style` matcher.
+000/000_spec.rb:4:1: C: [Correctable] Capybara/RSpec/PredicateMatcher: Prefer using `matches_xpath?` over `match_xpath` matcher.
+
+==> autocorrect exit=0 510 <==
+000/000_spec.rb:1:1: C: [Corrected] Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
+000/000_spec.rb:2:1: C: [Corrected] Capybara/RSpec/PredicateMatcher: Prefer using `matches_selector?` over `match_selector` matcher.
+000/000_spec.rb:3:1: C: [Corrected] Capybara/RSpec/PredicateMatcher: Prefer using `matches_style?` over `match_style` matcher.
+000/000_spec.rb:4:1: C: [Corrected] Capybara/RSpec/PredicateMatcher: Prefer using `matches_xpath?` over `match_xpath` matcher.
+
+==> corrected/000/000_spec.rb 221 <==
+expect(foo.matches_css?(bar: 'baz')).to be_truthy
+expect(foo.matches_selector?(bar: 'baz')).to be_falsey
+expect(foo.matches_style?(bar: 'baz')).to be_falsey
+expect(foo.matches_xpath?(bar: 'baz', foo: 'bar')).to be_truthy
+

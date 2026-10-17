@@ -1,0 +1,86 @@
+==> offenses exit=1 1411 <==
+000/000.rb:1:1: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `each_with_object`.
+001/001.rb:1:1: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `each_with_object`.
+002/002.rb:1:1: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `each_with_object`.
+007/007.rb:1:1: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `map { ... }.to_h`.
+008/008.rb:1:1: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `map { ... }.to_h`.
+009/009.rb:1:1: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `map { ... }.to_h`.
+010/010.rb:1:1: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `map { ... }.to_h`.
+012/012.rb:2:3: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `map { ... }.to_h`.
+013/013.rb:1:1: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `Hash[map { ... }]`.
+014/014.rb:1:1: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `Hash[map { ... }]`.
+016/016.rb:1:1: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `map { ... }.to_h`.
+018/018.rb:1:1: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `Hash[map { ... }]`.
+020/020.rb:1:1: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `to_h { ... }`.
+022/022.rb:1:1: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `each_with_object`.
+022/022.rb:2:11: C: Rails/IndexWith: Prefer `index_with` over `each_with_object`.
+
+==> autocorrect exit=0 1394 <==
+000/000.rb:1:1: C: [Corrected] Rails/IndexWith: Prefer `index_with` over `each_with_object`.
+001/001.rb:1:1: C: [Corrected] Rails/IndexWith: Prefer `index_with` over `each_with_object`.
+002/002.rb:1:1: C: [Corrected] Rails/IndexWith: Prefer `index_with` over `each_with_object`.
+007/007.rb:1:1: C: [Corrected] Rails/IndexWith: Prefer `index_with` over `map { ... }.to_h`.
+008/008.rb:1:1: C: [Corrected] Rails/IndexWith: Prefer `index_with` over `map { ... }.to_h`.
+009/009.rb:1:1: C: [Corrected] Rails/IndexWith: Prefer `index_with` over `map { ... }.to_h`.
+010/010.rb:1:1: C: [Corrected] Rails/IndexWith: Prefer `index_with` over `map { ... }.to_h`.
+012/012.rb:2:3: C: [Corrected] Rails/IndexWith: Prefer `index_with` over `map { ... }.to_h`.
+013/013.rb:1:1: C: [Corrected] Rails/IndexWith: Prefer `index_with` over `Hash[map { ... }]`.
+014/014.rb:1:1: C: [Corrected] Rails/IndexWith: Prefer `index_with` over `Hash[map { ... }]`.
+016/016.rb:1:1: C: [Corrected] Rails/IndexWith: Prefer `index_with` over `map { ... }.to_h`.
+018/018.rb:1:1: C: [Corrected] Rails/IndexWith: Prefer `index_with` over `Hash[map { ... }]`.
+020/020.rb:1:1: C: [Corrected] Rails/IndexWith: Prefer `index_with` over `to_h { ... }`.
+022/022.rb:1:1: C: [Corrected] Rails/IndexWith: Prefer `index_with` over `each_with_object`.
+022/022.rb:2:3: C: [Corrected] Rails/IndexWith: Prefer `index_with` over `each_with_object`.
+
+==> corrected/000/000.rb 30 <==
+x.index_with { |el| foo(el) }
+
+==> corrected/001/001.rb 37 <==
+x.index_with do |el|
+  el.to_sym
+end
+
+==> corrected/002/002.rb 31 <==
+x&.index_with { |el| foo(el) }
+
+==> corrected/007/007.rb 55 <==
+x.index_with { |el| el.to_sym }.to_h { |k, v| [v, k] }
+
+==> corrected/008/008.rb 32 <==
+x.index_with { |el| el.to_sym }
+
+==> corrected/009/009.rb 36 <==
+x.index_with { |el| { value: el } }
+
+==> corrected/010/010.rb 36 <==
+x.index_with { |el| { value: el } }
+
+==> corrected/012/012.rb 59 <==
+wrapping do
+  x.index_with do |el|
+    el.to_sym
+  end
+end
+
+==> corrected/013/013.rb 32 <==
+x.index_with { |el| el.to_sym }
+
+==> corrected/014/014.rb 32 <==
+x.index_with { |el| el.to_sym }
+
+==> corrected/016/016.rb 27 <==
+x.index_with { _1.to_sym }
+
+==> corrected/018/018.rb 27 <==
+x.index_with { _1.to_sym }
+
+==> corrected/020/020.rb 27 <==
+x.index_with { _1.to_sym }
+
+==> corrected/022/022.rb 79 <==
+x.index_with do |el|
+  el.index_with do |inner_el|
+    foo(inner_el)
+  end
+end
+

@@ -1,0 +1,40 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000/000.rb 56 <==
+class MyControllerTest < ActionController::TestCase
+end
+
+==> test/001/001.rb 58 <==
+class MyControllerTest < ::ActionController::TestCase
+end
+
+==> test/002/002.rb 58 <==
+class ::MyControllerTest < ActionController::TestCase
+end
+
+==> test/003/003.rb 77 <==
+class MyControllerTest < ActionController::TestCase
+  def test_foo
+  end
+end
+
+==> test/004/004.rb 66 <==
+class Foo::Bar::MyControllerTest < ActionController::TestCase
+end
+
+==> test/005/005.rb 61 <==
+class MyControllerTest < ActionDispatch::IntegrationTest
+end
+
+==> test/006/006.rb 49 <==
+class MyControllerTest < SuperControllerTest
+end
+

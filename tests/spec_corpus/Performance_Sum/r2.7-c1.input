@@ -1,0 +1,87 @@
+==> .rubocop.yml 190 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Performance/Sum:
+  OnlySumOrWithInitialValue: true
+
+==> 000.rb 21 <==
+array.inject(10, :+)
+
+==> 001.rb 44 <==
+array.inject(10) { |acc, elem| acc + elem }
+
+==> 002.rb 44 <==
+array.inject(10) { |acc, elem| elem + acc }
+
+==> 003.rb 20 <==
+array.inject(0, :+)
+
+==> 004.rb 19 <==
+array.inject 0, :+
+
+==> 005.rb 22 <==
+array.inject(0.0, :+)
+
+==> 006.rb 23 <==
+array.inject(init, :+)
+
+==> 007.rb 21 <==
+array.inject(0, &:+)
+
+==> 008.rb 18 <==
+array.inject(&:+)
+
+==> 009.rb 21 <==
+[1, 2, 3].inject(:+)
+
+==> 010.rb 14 <==
+[].inject(:+)
+
+==> 011.rb 38 <==
+array.inject { |acc, elem| elem * 2 }
+
+==> 012.rb 10 <==
+array.sum
+
+==> 013.rb 21 <==
+array.reduce(10, :+)
+
+==> 014.rb 44 <==
+array.reduce(10) { |acc, elem| acc + elem }
+
+==> 015.rb 44 <==
+array.reduce(10) { |acc, elem| elem + acc }
+
+==> 016.rb 20 <==
+array.reduce(0, :+)
+
+==> 017.rb 19 <==
+array.reduce 0, :+
+
+==> 018.rb 22 <==
+array.reduce(0.0, :+)
+
+==> 019.rb 23 <==
+array.reduce(init, :+)
+
+==> 020.rb 21 <==
+array.reduce(0, &:+)
+
+==> 021.rb 18 <==
+array.reduce(&:+)
+
+==> 022.rb 21 <==
+[1, 2, 3].reduce(:+)
+
+==> 023.rb 14 <==
+[].reduce(:+)
+
+==> 024.rb 38 <==
+array.reduce { |acc, elem| elem * 2 }
+

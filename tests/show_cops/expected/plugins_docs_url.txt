@@ -1,0 +1,4 @@
+https://docs.rubocop.org/rubocop-capybara/cops_capybara.html#capybaraassertstyle
+https://docs.rubocop.org/rubocop-rspec/cops_rspec.html#rspecfocus
+https://docs.rubocop.org/rubocop/cops_style.html#stylenot
+

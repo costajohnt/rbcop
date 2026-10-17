@@ -1,0 +1,145 @@
+==> .rubocop.yml 174 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/FilePath:
+  EnforcedStyle: slashes
+
+==> 000/000.rb 44 <==
+Rails.root.join('app', 'models', 'user.rb')
+
+==> 001/001.rb 49 <==
+File.join(Rails.root, '/app/models', '/user.rb')
+
+==> 002/002.rb 46 <==
+::Rails.root.join('app', 'models', 'user.rb')
+
+==> 003/003.rb 49 <==
+system "rm -rf #{Rails.root.join('a', 'b.png')}"
+
+==> 004/004.rb 43 <==
+"#{Rails.root.join('log/production.log')}"
+
+==> 005/005.rb 27 <==
+"#{Rails.root}. a message"
+
+==> 006/006.rb 71 <==
+repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
+
+==> 007/007.rb 9 <==
+"#{42}/"
+
+==> 008/008.rb 39 <==
+File.join(Rails.root, 'app', 'models')
+
+==> 009/009.rb 41 <==
+::File.join(Rails.root, 'app', 'models')
+
+==> 010/010.rb 31 <==
+File.join([Rails.root, 'foo'])
+
+==> 011/011.rb 40 <==
+File.join([Rails.root, 'foo', ['bar']])
+
+==> 012/012.rb 36 <==
+Rails.root.join('app/models/goober')
+==> 013/013.rb 34 <==
+"#{Rails.root}/app/models/goober"
+
+==> 014/014.rb 23 <==
+"#{Rails.root}/a/#{b}"
+
+==> 015/015.rb 38 <==
+system "rm -rf #{Rails.root}/foo/bar"
+
+==> 016/016.rb 49 <==
+"#{Rails.root.join('tmp', user.id, 'icon')}.png"
+
+==> 017/017.rb 49 <==
+foo(bar(File.join(Rails.root, "app", "models")))
+
+==> 018/018.rb 35 <==
+foo(Rails.root.join('app/models'))
+
+==> 019/019.rb 52 <==
+Rails.root.join("tmp", "data", index/3, "data.csv")
+
+==> 020/020.rb 25 <==
+puts "test #{123}. Hey!"
+
+==> 021/021.rb 25 <==
+"#{Rails.root}:/foo/bar"
+
+==> 022/022.rb 23 <==
+join(Rails.root, path)
+
+==> 023/023.rb 41 <==
+File.join(Rails.root, ['app', 'models'])
+
+==> 024/024.rb 51 <==
+File.join(Rails.root, "app", ["models", "goober"])
+
+==> 025/025.rb 51 <==
+File.join(Rails.root, ["app", "models"], "goober")
+
+==> 026/026.rb 38 <==
+File.join(Rails.root, %w[app models])
+
+==> 027/027.rb 48 <==
+File.join(Rails.root, "app", %w[models goober])
+
+==> 028/028.rb 48 <==
+File.join(Rails.root, %w[app models], "goober")
+
+==> 029/029.rb 68 <==
+default_path = '/models'
+File.join(Rails.root, 'app', default_path)
+
+==> 030/030.rb 44 <==
+File.join(Rails.root, 'app', @default_path)
+
+==> 031/031.rb 45 <==
+File.join(Rails.root, 'app', @@default_path)
+
+==> 032/032.rb 44 <==
+File.join(Rails.root, 'app', $default_path)
+
+==> 033/033.rb 43 <==
+File.join(Rails.root, 'app', DEFAULT_PATH)
+
+==> 034/034.rb 74 <==
+default_path = '/models'
+Rails.root.join(Rails.root, 'app', default_path)
+
+==> 035/035.rb 50 <==
+Rails.root.join(Rails.root, 'app', @default_path)
+
+==> 036/036.rb 51 <==
+Rails.root.join(Rails.root, 'app', @@default_path)
+
+==> 037/037.rb 50 <==
+Rails.root.join(Rails.root, 'app', $default_path)
+
+==> 038/038.rb 49 <==
+Rails.root.join(Rails.root, 'app', DEFAULT_PATH)
+
+==> 039/039.rb 31 <==
+Rails.root.join('/app/models')
+
+==> 040/040.rb 34 <==
+Rails.root.join('/app', 'models')
+
+==> 041/041.rb 34 <==
+Rails.root.join('app', '/models')
+
+==> 042/042.rb 38 <==
+Rails.root.join('public//', 'assets')
+
+==> 043/043.rb 44 <==
+File.join(Rails.root, 'public//', 'assets')
+

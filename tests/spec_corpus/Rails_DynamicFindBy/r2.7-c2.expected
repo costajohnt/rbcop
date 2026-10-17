@@ -1,0 +1,9 @@
+==> offenses exit=1 103 <==
+000/000.rb:1:1: C: [Correctable] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name`.
+
+==> autocorrect exit=0 101 <==
+000/000.rb:1:1: C: [Corrected] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name`.
+
+==> corrected/000/000.rb 47 <==
+Specification.find_by(name: "backend").gem_dir
+

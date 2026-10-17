@@ -1,0 +1,61 @@
+==> offenses exit=1 1214 <==
+000/000_spec.rb:2:3: C: [Correctable] RSpec/EmptyExampleGroup: Empty example group detected.
+001/001_spec.rb:1:1: C: [Correctable] RSpec/EmptyExampleGroup: Empty example group detected.
+002/002_spec.rb:1:1: C: [Correctable] RSpec/EmptyExampleGroup: Empty example group detected.
+002/002_spec.rb:7:1: C: [Correctable] RSpec/EmptyExampleGroup: Empty example group detected.
+002/002_spec.rb:13:1: C: [Correctable] RSpec/EmptyExampleGroup: Empty example group detected.
+005/005_spec.rb:1:1: C: [Correctable] RSpec/EmptyExampleGroup: Empty example group detected.
+005/005_spec.rb:11:1: C: [Correctable] RSpec/EmptyExampleGroup: Empty example group detected.
+005/005_spec.rb:17:1: C: [Correctable] RSpec/EmptyExampleGroup: Empty example group detected.
+008/008_spec.rb:1:1: C: [Correctable] RSpec/EmptyExampleGroup: Empty example group detected.
+008/008_spec.rb:10:1: C: [Correctable] RSpec/EmptyExampleGroup: Empty example group detected.
+008/008_spec.rb:17:1: C: [Correctable] RSpec/EmptyExampleGroup: Empty example group detected.
+011/011_spec.rb:1:1: C: [Correctable] RSpec/EmptyExampleGroup: Empty example group detected.
+021/021_spec.rb:2:3: C: [Correctable] RSpec/EmptyExampleGroup: Empty example group detected.
+
+==> autocorrect exit=0 1279 <==
+000/000_spec.rb:2:3: C: [Corrected] RSpec/EmptyExampleGroup: Empty example group detected.
+001/001_spec.rb:1:1: C: [Corrected] RSpec/EmptyExampleGroup: Empty example group detected.
+002/002_spec.rb:1:1: C: [Corrected] RSpec/EmptyExampleGroup: Empty example group detected.
+002/002_spec.rb:7:1: C: [Corrected] RSpec/EmptyExampleGroup: Empty example group detected.
+002/002_spec.rb:13:1: C: [Corrected] RSpec/EmptyExampleGroup: Empty example group detected.
+005/005_spec.rb:1:1: C: [Corrected] RSpec/EmptyExampleGroup: Empty example group detected.
+005/005_spec.rb:11:1: C: [Corrected] RSpec/EmptyExampleGroup: Empty example group detected.
+005/005_spec.rb:17:1: C: [Corrected] RSpec/EmptyExampleGroup: Empty example group detected.
+008/008_spec.rb:1:1: C: [Corrected] RSpec/EmptyExampleGroup: Empty example group detected.
+008/008_spec.rb:10:1: C: [Corrected] RSpec/EmptyExampleGroup: Empty example group detected.
+008/008_spec.rb:17:1: C: [Corrected] RSpec/EmptyExampleGroup: Empty example group detected.
+011/011_spec.rb:1:1: C: [Corrected] RSpec/EmptyExampleGroup: Empty example group detected.
+021/021_spec.rb:1:1: C: [Corrected] RSpec/EmptyExampleGroup: Empty example group detected.
+021/021_spec.rb:2:3: C: [Corrected] RSpec/EmptyExampleGroup: Empty example group detected.
+
+==> corrected/000/000_spec.rb 143 <==
+describe Foo do
+
+  describe '#thingy?' do
+    specify do
+      expect(whatever.thingy?).to be(true)
+    end
+  end
+
+  it { should be_true }
+end
+
+==> corrected/001/001_spec.rb 0 <==
+
+==> corrected/002/002_spec.rb 2 <==
+
+
+
+==> corrected/005/005_spec.rb 2 <==
+
+
+
+==> corrected/008/008_spec.rb 2 <==
+
+
+
+==> corrected/011/011_spec.rb 0 <==
+
+==> corrected/021/021_spec.rb 0 <==
+

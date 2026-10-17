@@ -1,0 +1,28 @@
+==> offenses exit=1 1445 <==
+db/000/20250101010101_add_name_to_users.rb:1:36: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/001/20190101010101_add_name_to_users.rb:1:36: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/004/20250101010101_add_name_to_users.rb:1:36: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/011/20250101010101_create_users.rb:3:21: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/012/20250101010101_create_users.rb:3:21: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/012/20250101010101_create_users.rb:4:24: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/015/20250101010101_create_users.rb:3:30: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/018/20250101010101_create_users.rb:3:28: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/020/20250101010101_create_products.rb:1:37: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/023/023.rb:2:42: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/024/024.rb:2:43: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/025/20250101010101_add_content_to_articles.rb:2:42: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+
+==> autocorrect exit=1 1445 <==
+db/000/20250101010101_add_name_to_users.rb:1:36: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/001/20190101010101_add_name_to_users.rb:1:36: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/004/20250101010101_add_name_to_users.rb:1:36: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/011/20250101010101_create_users.rb:3:21: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/012/20250101010101_create_users.rb:3:21: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/012/20250101010101_create_users.rb:4:24: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/015/20250101010101_create_users.rb:3:30: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/018/20250101010101_create_users.rb:3:28: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/020/20250101010101_create_products.rb:1:37: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/023/023.rb:2:42: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/024/024.rb:2:43: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+db/025/20250101010101_add_content_to_articles.rb:2:42: C: Rails/NotNullColumn: Do not add a NOT NULL column without a default value.
+

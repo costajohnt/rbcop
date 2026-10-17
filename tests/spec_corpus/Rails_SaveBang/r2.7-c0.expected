@@ -1,0 +1,1056 @@
+==> offenses exit=1 30963 <==
+000/000.rb:1:1: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+001/001.rb:1:9: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+005/005.rb:1:8: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+006/006.rb:4:10: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+016/016.rb:2:9: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+016/016.rb:3:9: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+016/016.rb:6:18: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+016/016.rb:7:18: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+017/017.rb:1:10: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+017/017.rb:2:19: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+017/017.rb:3:16: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+017/017.rb:4:25: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+017/017.rb:5:10: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+017/017.rb:6:19: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+018/018.rb:1:17: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+018/018.rb:2:28: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+018/018.rb:3:19: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+018/018.rb:4:18: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+019/019.rb:1:28: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+019/019.rb:2:30: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+019/019.rb:3:29: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+020/020.rb:1:17: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+021/021.rb:1:28: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+022/022.rb:1:18: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+023/023.rb:1:9: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+024/024.rb:1:23: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+024/024.rb:2:26: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+025/025.rb:1:12: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+026/026.rb:2:10: C: [Correctable] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+027/027.rb:1:1: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+028/028.rb:1:9: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+032/032.rb:1:8: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+033/033.rb:4:10: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+043/043.rb:2:9: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+043/043.rb:3:9: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+043/043.rb:6:18: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+043/043.rb:7:18: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+044/044.rb:1:10: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+044/044.rb:2:19: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+044/044.rb:3:16: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+044/044.rb:4:25: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+044/044.rb:5:10: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+044/044.rb:6:19: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+045/045.rb:1:17: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+045/045.rb:2:28: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+045/045.rb:3:19: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+045/045.rb:4:18: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+046/046.rb:1:28: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+046/046.rb:2:30: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+046/046.rb:3:29: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+047/047.rb:1:17: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+048/048.rb:1:28: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+049/049.rb:1:18: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+050/050.rb:1:9: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+051/051.rb:1:23: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+051/051.rb:2:26: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+052/052.rb:1:12: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+053/053.rb:2:10: C: [Correctable] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+054/054.rb:1:1: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+055/055.rb:1:9: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+059/059.rb:1:8: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+060/060.rb:4:10: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+070/070.rb:2:9: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+070/070.rb:3:9: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+070/070.rb:6:18: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+070/070.rb:7:18: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+071/071.rb:1:10: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+071/071.rb:2:19: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+071/071.rb:3:16: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+071/071.rb:4:25: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+071/071.rb:5:10: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+071/071.rb:6:19: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+072/072.rb:1:17: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+072/072.rb:2:28: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+072/072.rb:3:19: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+072/072.rb:4:18: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+073/073.rb:1:28: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+073/073.rb:2:30: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+073/073.rb:3:29: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+074/074.rb:1:17: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+075/075.rb:1:28: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+076/076.rb:1:18: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+077/077.rb:1:9: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+078/078.rb:1:23: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+078/078.rb:2:26: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+079/079.rb:1:12: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+080/080.rb:2:10: C: [Correctable] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+081/081.rb:1:1: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+082/082.rb:1:9: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+086/086.rb:1:8: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+087/087.rb:4:10: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+097/097.rb:2:9: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+097/097.rb:3:9: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+097/097.rb:6:18: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+097/097.rb:7:18: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+098/098.rb:1:10: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+098/098.rb:2:19: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+098/098.rb:3:16: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+098/098.rb:4:25: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+098/098.rb:5:10: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+098/098.rb:6:19: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+099/099.rb:1:17: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+099/099.rb:2:28: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+099/099.rb:3:19: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+099/099.rb:4:18: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+100/100.rb:1:28: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+100/100.rb:2:30: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+100/100.rb:3:29: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+101/101.rb:1:17: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+102/102.rb:1:28: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+103/103.rb:1:18: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+104/104.rb:1:9: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+105/105.rb:1:23: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+105/105.rb:2:26: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+106/106.rb:1:12: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+107/107.rb:2:10: C: [Correctable] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+108/108.rb:1:1: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+109/109.rb:1:9: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+113/113.rb:1:8: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+114/114.rb:4:10: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+124/124.rb:2:9: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+124/124.rb:3:9: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+124/124.rb:6:18: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+124/124.rb:7:18: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+125/125.rb:1:10: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+125/125.rb:2:19: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+125/125.rb:3:16: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+125/125.rb:4:25: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+125/125.rb:5:10: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+125/125.rb:6:19: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+126/126.rb:1:17: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+126/126.rb:2:28: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+126/126.rb:3:19: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+126/126.rb:4:18: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+127/127.rb:1:28: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+127/127.rb:2:30: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+127/127.rb:3:29: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+128/128.rb:1:17: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+129/129.rb:1:28: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+130/130.rb:1:18: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+131/131.rb:1:9: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+132/132.rb:1:23: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+132/132.rb:2:26: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+133/133.rb:1:12: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+139/139.rb:1:17: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked. Or check `persisted?` on model returned from `create`.
+147/147.rb:2:10: C: [Correctable] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+148/148.rb:1:1: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+149/149.rb:1:9: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+153/153.rb:1:8: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+154/154.rb:4:10: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+164/164.rb:2:9: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+164/164.rb:3:9: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+164/164.rb:6:18: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+164/164.rb:7:18: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+165/165.rb:1:10: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+165/165.rb:2:19: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+165/165.rb:3:16: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+165/165.rb:4:25: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+165/165.rb:5:10: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+165/165.rb:6:19: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+166/166.rb:1:17: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+166/166.rb:2:28: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+166/166.rb:3:19: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+166/166.rb:4:18: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+167/167.rb:1:28: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+167/167.rb:2:30: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+167/167.rb:3:29: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+168/168.rb:1:17: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+169/169.rb:1:28: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+170/170.rb:1:18: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+171/171.rb:1:9: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+172/172.rb:1:23: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+172/172.rb:2:26: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+173/173.rb:1:12: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+179/179.rb:1:17: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked. Or check `persisted?` on model returned from `create_or_find_by`.
+187/187.rb:2:10: C: [Correctable] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+188/188.rb:1:1: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+189/189.rb:1:9: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+193/193.rb:1:8: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+194/194.rb:4:10: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+204/204.rb:2:9: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+204/204.rb:3:9: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+204/204.rb:6:18: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+204/204.rb:7:18: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+205/205.rb:1:10: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+205/205.rb:2:19: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+205/205.rb:3:16: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+205/205.rb:4:25: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+205/205.rb:5:10: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+205/205.rb:6:19: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+206/206.rb:1:17: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+206/206.rb:2:28: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+206/206.rb:3:19: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+206/206.rb:4:18: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+207/207.rb:1:28: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+207/207.rb:2:30: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+207/207.rb:3:29: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+208/208.rb:1:17: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+209/209.rb:1:28: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+210/210.rb:1:18: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+211/211.rb:1:9: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+212/212.rb:1:23: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+212/212.rb:2:26: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+213/213.rb:1:12: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+219/219.rb:1:17: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked. Or check `persisted?` on model returned from `first_or_create`.
+227/227.rb:2:10: C: [Correctable] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+228/228.rb:1:1: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+229/229.rb:1:9: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+233/233.rb:1:8: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+234/234.rb:4:10: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+244/244.rb:2:9: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+244/244.rb:3:9: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+244/244.rb:6:18: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+244/244.rb:7:18: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+245/245.rb:1:10: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+245/245.rb:2:19: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+245/245.rb:3:16: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+245/245.rb:4:25: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+245/245.rb:5:10: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+245/245.rb:6:19: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+246/246.rb:1:17: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+246/246.rb:2:28: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+246/246.rb:3:19: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+246/246.rb:4:18: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+247/247.rb:1:28: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+247/247.rb:2:30: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+247/247.rb:3:29: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+248/248.rb:1:17: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+249/249.rb:1:28: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+250/250.rb:1:18: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+251/251.rb:1:9: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+252/252.rb:1:23: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+252/252.rb:2:26: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+253/253.rb:1:12: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+259/259.rb:1:17: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked. Or check `persisted?` on model returned from `find_or_create_by`.
+267/267.rb:2:10: C: [Correctable] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+
+==> autocorrect exit=0 30491 <==
+000/000.rb:1:1: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+001/001.rb:1:9: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+005/005.rb:1:8: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+006/006.rb:4:10: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+016/016.rb:2:9: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+016/016.rb:3:9: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+016/016.rb:6:18: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+016/016.rb:7:18: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+017/017.rb:1:10: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+017/017.rb:2:19: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+017/017.rb:3:16: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+017/017.rb:4:25: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+017/017.rb:5:10: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+017/017.rb:6:19: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+018/018.rb:1:17: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+018/018.rb:2:28: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+018/018.rb:3:19: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+018/018.rb:4:18: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+019/019.rb:1:28: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+019/019.rb:2:30: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+019/019.rb:3:29: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+020/020.rb:1:17: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+021/021.rb:1:28: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+022/022.rb:1:18: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+023/023.rb:1:9: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+024/024.rb:1:23: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+024/024.rb:2:26: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+025/025.rb:1:12: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+026/026.rb:2:10: C: [Corrected] Rails/SaveBang: Use `save!` instead of `save` if the return value is not checked.
+027/027.rb:1:1: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+028/028.rb:1:9: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+032/032.rb:1:8: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+033/033.rb:4:10: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+043/043.rb:2:9: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+043/043.rb:3:9: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+043/043.rb:6:18: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+043/043.rb:7:18: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+044/044.rb:1:10: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+044/044.rb:2:19: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+044/044.rb:3:16: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+044/044.rb:4:25: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+044/044.rb:5:10: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+044/044.rb:6:19: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+045/045.rb:1:17: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+045/045.rb:2:28: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+045/045.rb:3:19: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+045/045.rb:4:18: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+046/046.rb:1:28: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+046/046.rb:2:30: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+046/046.rb:3:29: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+047/047.rb:1:17: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+048/048.rb:1:28: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+049/049.rb:1:18: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+050/050.rb:1:9: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+051/051.rb:1:23: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+051/051.rb:2:26: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+052/052.rb:1:12: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+053/053.rb:2:10: C: [Corrected] Rails/SaveBang: Use `update!` instead of `update` if the return value is not checked.
+054/054.rb:1:1: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+055/055.rb:1:9: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+059/059.rb:1:8: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+060/060.rb:4:10: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+070/070.rb:2:9: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+070/070.rb:3:9: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+070/070.rb:6:18: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+070/070.rb:7:18: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+071/071.rb:1:10: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+071/071.rb:2:19: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+071/071.rb:3:16: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+071/071.rb:4:25: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+071/071.rb:5:10: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+071/071.rb:6:19: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+072/072.rb:1:17: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+072/072.rb:2:28: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+072/072.rb:3:19: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+072/072.rb:4:18: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+073/073.rb:1:28: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+073/073.rb:2:30: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+073/073.rb:3:29: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+074/074.rb:1:17: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+075/075.rb:1:28: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+076/076.rb:1:18: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+077/077.rb:1:9: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+078/078.rb:1:23: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+078/078.rb:2:26: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+079/079.rb:1:12: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+080/080.rb:2:10: C: [Corrected] Rails/SaveBang: Use `update_attributes!` instead of `update_attributes` if the return value is not checked.
+081/081.rb:1:1: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+082/082.rb:1:9: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+086/086.rb:1:8: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+087/087.rb:4:10: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+097/097.rb:2:9: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+097/097.rb:3:9: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+097/097.rb:6:18: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+097/097.rb:7:18: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+098/098.rb:1:10: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+098/098.rb:2:19: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+098/098.rb:3:16: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+098/098.rb:4:25: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+098/098.rb:5:10: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+098/098.rb:6:19: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+099/099.rb:1:17: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+099/099.rb:2:28: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+099/099.rb:3:19: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+099/099.rb:4:18: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+100/100.rb:1:28: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+100/100.rb:2:30: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+100/100.rb:3:29: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+101/101.rb:1:17: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+102/102.rb:1:28: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+103/103.rb:1:18: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+104/104.rb:1:9: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+105/105.rb:1:23: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+105/105.rb:2:26: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+106/106.rb:1:12: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+107/107.rb:2:10: C: [Corrected] Rails/SaveBang: Use `destroy!` instead of `destroy` if the return value is not checked.
+108/108.rb:1:1: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+109/109.rb:1:9: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+113/113.rb:1:8: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+114/114.rb:4:10: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+124/124.rb:2:9: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+124/124.rb:3:9: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+124/124.rb:6:18: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+124/124.rb:7:18: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+125/125.rb:1:10: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+125/125.rb:2:19: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+125/125.rb:3:16: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+125/125.rb:4:25: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+125/125.rb:5:10: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+125/125.rb:6:19: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+126/126.rb:1:17: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+126/126.rb:2:28: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+126/126.rb:3:19: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+126/126.rb:4:18: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+127/127.rb:1:28: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+127/127.rb:2:30: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+127/127.rb:3:29: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+128/128.rb:1:17: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+129/129.rb:1:28: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+130/130.rb:1:18: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+131/131.rb:1:9: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+132/132.rb:1:23: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+132/132.rb:2:26: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+133/133.rb:1:12: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+139/139.rb:1:17: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked. Or check `persisted?` on model returned from `create`.
+147/147.rb:2:10: C: [Corrected] Rails/SaveBang: Use `create!` instead of `create` if the return value is not checked.
+148/148.rb:1:1: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+149/149.rb:1:9: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+153/153.rb:1:8: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+154/154.rb:4:10: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+164/164.rb:2:9: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+164/164.rb:3:9: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+164/164.rb:6:18: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+164/164.rb:7:18: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+165/165.rb:1:10: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+165/165.rb:2:19: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+165/165.rb:3:16: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+165/165.rb:4:25: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+165/165.rb:5:10: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+165/165.rb:6:19: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+166/166.rb:1:17: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+166/166.rb:2:28: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+166/166.rb:3:19: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+166/166.rb:4:18: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+167/167.rb:1:28: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+167/167.rb:2:30: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+167/167.rb:3:29: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+168/168.rb:1:17: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+169/169.rb:1:28: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+170/170.rb:1:18: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+171/171.rb:1:9: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+172/172.rb:1:23: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+172/172.rb:2:26: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+173/173.rb:1:12: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+179/179.rb:1:17: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked. Or check `persisted?` on model returned from `create_or_find_by`.
+187/187.rb:2:10: C: [Corrected] Rails/SaveBang: Use `create_or_find_by!` instead of `create_or_find_by` if the return value is not checked.
+188/188.rb:1:1: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+189/189.rb:1:9: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+193/193.rb:1:8: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+194/194.rb:4:10: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+204/204.rb:2:9: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+204/204.rb:3:9: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+204/204.rb:6:18: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+204/204.rb:7:18: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+205/205.rb:1:10: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+205/205.rb:2:19: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+205/205.rb:3:16: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+205/205.rb:4:25: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+205/205.rb:5:10: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+205/205.rb:6:19: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+206/206.rb:1:17: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+206/206.rb:2:28: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+206/206.rb:3:19: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+206/206.rb:4:18: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+207/207.rb:1:28: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+207/207.rb:2:30: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+207/207.rb:3:29: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+208/208.rb:1:17: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+209/209.rb:1:28: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+210/210.rb:1:18: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+211/211.rb:1:9: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+212/212.rb:1:23: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+212/212.rb:2:26: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+213/213.rb:1:12: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+219/219.rb:1:17: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked. Or check `persisted?` on model returned from `first_or_create`.
+227/227.rb:2:10: C: [Corrected] Rails/SaveBang: Use `first_or_create!` instead of `first_or_create` if the return value is not checked.
+228/228.rb:1:1: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+229/229.rb:1:9: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+233/233.rb:1:8: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+234/234.rb:4:10: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+244/244.rb:2:9: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+244/244.rb:3:9: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+244/244.rb:6:18: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+244/244.rb:7:18: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+245/245.rb:1:10: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+245/245.rb:2:19: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+245/245.rb:3:16: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+245/245.rb:4:25: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+245/245.rb:5:10: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+245/245.rb:6:19: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+246/246.rb:1:17: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+246/246.rb:2:28: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+246/246.rb:3:19: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+246/246.rb:4:18: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+247/247.rb:1:28: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+247/247.rb:2:30: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+247/247.rb:3:29: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+248/248.rb:1:17: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+249/249.rb:1:28: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+250/250.rb:1:18: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+251/251.rb:1:9: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+252/252.rb:1:23: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+252/252.rb:2:26: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+253/253.rb:1:12: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+259/259.rb:1:17: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked. Or check `persisted?` on model returned from `find_or_create_by`.
+267/267.rb:2:10: C: [Corrected] Rails/SaveBang: Use `find_or_create_by!` instead of `find_or_create_by` if the return value is not checked.
+
+==> corrected/000/000.rb 6 <==
+save!
+
+==> corrected/001/001.rb 14 <==
+object&.save!
+
+==> corrected/005/005.rb 22 <==
+object.save! if false
+
+==> corrected/006/006.rb 51 <==
+if condition
+  puts "true"
+else
+  object.save!
+end
+
+==> corrected/016/016.rb 160 <==
+gateway = true
+gateway.save!
+gateway.save! { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.save!
+merchant.gateway.save! { |t| t.name = 'Tom' }
+
+==> corrected/017/017.rb 175 <==
+customer.save!
+merchant.customer.save!
+customer(true).save!
+merchant.customer(true).save!
+customer.save! { |t| t.name = 'Tom' }
+merchant.customer.save! { |t| t.name = 'Tom' }
+
+==> corrected/018/018.rb 102 <==
+NonActiveRecord.save!
+NameSpace::NonActiveRecord.save!
+::NonActiveRecord.save!
+NonActiveRecord::save!
+
+==> corrected/019/019.rb 102 <==
+NameSpace::NonActiveRecord.save!
+::NameSpace::NonActiveRecord.save!
+NameSpace::NonActiveRecord::save!
+
+==> corrected/020/020.rb 22 <==
+NonActiveRecord.save!
+
+==> corrected/021/021.rb 33 <==
+NameSpace::NonActiveRecord.save!
+
+==> corrected/022/022.rb 23 <==
+merchant.gateway.save!
+
+==> corrected/023/023.rb 14 <==
+gateway.save!
+
+==> corrected/024/024.rb 59 <==
+A::B.merchant.gateway.save!
+A::B::merchant::gateway::save!
+
+==> corrected/025/025.rb 17 <==
+B.merchant.save!
+
+==> corrected/026/026.rb 33 <==
+def foo
+  object.save!
+  bar
+end
+
+==> corrected/027/027.rb 8 <==
+update!
+
+==> corrected/028/028.rb 16 <==
+object&.update!
+
+==> corrected/032/032.rb 24 <==
+object.update! if false
+
+==> corrected/033/033.rb 53 <==
+if condition
+  puts "true"
+else
+  object.update!
+end
+
+==> corrected/043/043.rb 168 <==
+gateway = true
+gateway.update!
+gateway.update! { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.update!
+merchant.gateway.update! { |t| t.name = 'Tom' }
+
+==> corrected/044/044.rb 187 <==
+customer.update!
+merchant.customer.update!
+customer(true).update!
+merchant.customer(true).update!
+customer.update! { |t| t.name = 'Tom' }
+merchant.customer.update! { |t| t.name = 'Tom' }
+
+==> corrected/045/045.rb 110 <==
+NonActiveRecord.update!
+NameSpace::NonActiveRecord.update!
+::NonActiveRecord.update!
+NonActiveRecord::update!
+
+==> corrected/046/046.rb 108 <==
+NameSpace::NonActiveRecord.update!
+::NameSpace::NonActiveRecord.update!
+NameSpace::NonActiveRecord::update!
+
+==> corrected/047/047.rb 24 <==
+NonActiveRecord.update!
+
+==> corrected/048/048.rb 35 <==
+NameSpace::NonActiveRecord.update!
+
+==> corrected/049/049.rb 25 <==
+merchant.gateway.update!
+
+==> corrected/050/050.rb 16 <==
+gateway.update!
+
+==> corrected/051/051.rb 63 <==
+A::B.merchant.gateway.update!
+A::B::merchant::gateway::update!
+
+==> corrected/052/052.rb 19 <==
+B.merchant.update!
+
+==> corrected/053/053.rb 35 <==
+def foo
+  object.update!
+  bar
+end
+
+==> corrected/054/054.rb 19 <==
+update_attributes!
+
+==> corrected/055/055.rb 27 <==
+object&.update_attributes!
+
+==> corrected/059/059.rb 35 <==
+object.update_attributes! if false
+
+==> corrected/060/060.rb 64 <==
+if condition
+  puts "true"
+else
+  object.update_attributes!
+end
+
+==> corrected/070/070.rb 212 <==
+gateway = true
+gateway.update_attributes!
+gateway.update_attributes! { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.update_attributes!
+merchant.gateway.update_attributes! { |t| t.name = 'Tom' }
+
+==> corrected/071/071.rb 253 <==
+customer.update_attributes!
+merchant.customer.update_attributes!
+customer(true).update_attributes!
+merchant.customer(true).update_attributes!
+customer.update_attributes! { |t| t.name = 'Tom' }
+merchant.customer.update_attributes! { |t| t.name = 'Tom' }
+
+==> corrected/072/072.rb 154 <==
+NonActiveRecord.update_attributes!
+NameSpace::NonActiveRecord.update_attributes!
+::NonActiveRecord.update_attributes!
+NonActiveRecord::update_attributes!
+
+==> corrected/073/073.rb 141 <==
+NameSpace::NonActiveRecord.update_attributes!
+::NameSpace::NonActiveRecord.update_attributes!
+NameSpace::NonActiveRecord::update_attributes!
+
+==> corrected/074/074.rb 35 <==
+NonActiveRecord.update_attributes!
+
+==> corrected/075/075.rb 46 <==
+NameSpace::NonActiveRecord.update_attributes!
+
+==> corrected/076/076.rb 36 <==
+merchant.gateway.update_attributes!
+
+==> corrected/077/077.rb 27 <==
+gateway.update_attributes!
+
+==> corrected/078/078.rb 85 <==
+A::B.merchant.gateway.update_attributes!
+A::B::merchant::gateway::update_attributes!
+
+==> corrected/079/079.rb 30 <==
+B.merchant.update_attributes!
+
+==> corrected/080/080.rb 46 <==
+def foo
+  object.update_attributes!
+  bar
+end
+
+==> corrected/081/081.rb 9 <==
+destroy!
+
+==> corrected/082/082.rb 17 <==
+object&.destroy!
+
+==> corrected/086/086.rb 25 <==
+object.destroy! if false
+
+==> corrected/087/087.rb 54 <==
+if condition
+  puts "true"
+else
+  object.destroy!
+end
+
+==> corrected/097/097.rb 172 <==
+gateway = true
+gateway.destroy!
+gateway.destroy! { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.destroy!
+merchant.gateway.destroy! { |t| t.name = 'Tom' }
+
+==> corrected/098/098.rb 193 <==
+customer.destroy!
+merchant.customer.destroy!
+customer(true).destroy!
+merchant.customer(true).destroy!
+customer.destroy! { |t| t.name = 'Tom' }
+merchant.customer.destroy! { |t| t.name = 'Tom' }
+
+==> corrected/099/099.rb 114 <==
+NonActiveRecord.destroy!
+NameSpace::NonActiveRecord.destroy!
+::NonActiveRecord.destroy!
+NonActiveRecord::destroy!
+
+==> corrected/100/100.rb 111 <==
+NameSpace::NonActiveRecord.destroy!
+::NameSpace::NonActiveRecord.destroy!
+NameSpace::NonActiveRecord::destroy!
+
+==> corrected/101/101.rb 25 <==
+NonActiveRecord.destroy!
+
+==> corrected/102/102.rb 36 <==
+NameSpace::NonActiveRecord.destroy!
+
+==> corrected/103/103.rb 26 <==
+merchant.gateway.destroy!
+
+==> corrected/104/104.rb 17 <==
+gateway.destroy!
+
+==> corrected/105/105.rb 65 <==
+A::B.merchant.gateway.destroy!
+A::B::merchant::gateway::destroy!
+
+==> corrected/106/106.rb 20 <==
+B.merchant.destroy!
+
+==> corrected/107/107.rb 36 <==
+def foo
+  object.destroy!
+  bar
+end
+
+==> corrected/108/108.rb 8 <==
+create!
+
+==> corrected/109/109.rb 16 <==
+object&.create!
+
+==> corrected/113/113.rb 24 <==
+object.create! if false
+
+==> corrected/114/114.rb 53 <==
+if condition
+  puts "true"
+else
+  object.create!
+end
+
+==> corrected/124/124.rb 168 <==
+gateway = true
+gateway.create!
+gateway.create! { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.create!
+merchant.gateway.create! { |t| t.name = 'Tom' }
+
+==> corrected/125/125.rb 187 <==
+customer.create!
+merchant.customer.create!
+customer(true).create!
+merchant.customer(true).create!
+customer.create! { |t| t.name = 'Tom' }
+merchant.customer.create! { |t| t.name = 'Tom' }
+
+==> corrected/126/126.rb 110 <==
+NonActiveRecord.create!
+NameSpace::NonActiveRecord.create!
+::NonActiveRecord.create!
+NonActiveRecord::create!
+
+==> corrected/127/127.rb 108 <==
+NameSpace::NonActiveRecord.create!
+::NameSpace::NonActiveRecord.create!
+NameSpace::NonActiveRecord::create!
+
+==> corrected/128/128.rb 24 <==
+NonActiveRecord.create!
+
+==> corrected/129/129.rb 35 <==
+NameSpace::NonActiveRecord.create!
+
+==> corrected/130/130.rb 25 <==
+merchant.gateway.create!
+
+==> corrected/131/131.rb 16 <==
+gateway.create!
+
+==> corrected/132/132.rb 63 <==
+A::B.merchant.gateway.create!
+A::B::merchant::gateway::create!
+
+==> corrected/133/133.rb 19 <==
+B.merchant.create!
+
+==> corrected/139/139.rb 58 <==
+if (user = User.create!)
+  foo(user)
+else
+  bar(user)
+end
+
+==> corrected/147/147.rb 35 <==
+def foo
+  object.create!
+  bar
+end
+
+==> corrected/148/148.rb 19 <==
+create_or_find_by!
+
+==> corrected/149/149.rb 27 <==
+object&.create_or_find_by!
+
+==> corrected/153/153.rb 35 <==
+object.create_or_find_by! if false
+
+==> corrected/154/154.rb 64 <==
+if condition
+  puts "true"
+else
+  object.create_or_find_by!
+end
+
+==> corrected/164/164.rb 212 <==
+gateway = true
+gateway.create_or_find_by!
+gateway.create_or_find_by! { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.create_or_find_by!
+merchant.gateway.create_or_find_by! { |t| t.name = 'Tom' }
+
+==> corrected/165/165.rb 253 <==
+customer.create_or_find_by!
+merchant.customer.create_or_find_by!
+customer(true).create_or_find_by!
+merchant.customer(true).create_or_find_by!
+customer.create_or_find_by! { |t| t.name = 'Tom' }
+merchant.customer.create_or_find_by! { |t| t.name = 'Tom' }
+
+==> corrected/166/166.rb 154 <==
+NonActiveRecord.create_or_find_by!
+NameSpace::NonActiveRecord.create_or_find_by!
+::NonActiveRecord.create_or_find_by!
+NonActiveRecord::create_or_find_by!
+
+==> corrected/167/167.rb 141 <==
+NameSpace::NonActiveRecord.create_or_find_by!
+::NameSpace::NonActiveRecord.create_or_find_by!
+NameSpace::NonActiveRecord::create_or_find_by!
+
+==> corrected/168/168.rb 35 <==
+NonActiveRecord.create_or_find_by!
+
+==> corrected/169/169.rb 46 <==
+NameSpace::NonActiveRecord.create_or_find_by!
+
+==> corrected/170/170.rb 36 <==
+merchant.gateway.create_or_find_by!
+
+==> corrected/171/171.rb 27 <==
+gateway.create_or_find_by!
+
+==> corrected/172/172.rb 85 <==
+A::B.merchant.gateway.create_or_find_by!
+A::B::merchant::gateway::create_or_find_by!
+
+==> corrected/173/173.rb 30 <==
+B.merchant.create_or_find_by!
+
+==> corrected/179/179.rb 69 <==
+if (user = User.create_or_find_by!)
+  foo(user)
+else
+  bar(user)
+end
+
+==> corrected/187/187.rb 46 <==
+def foo
+  object.create_or_find_by!
+  bar
+end
+
+==> corrected/188/188.rb 17 <==
+first_or_create!
+
+==> corrected/189/189.rb 25 <==
+object&.first_or_create!
+
+==> corrected/193/193.rb 33 <==
+object.first_or_create! if false
+
+==> corrected/194/194.rb 62 <==
+if condition
+  puts "true"
+else
+  object.first_or_create!
+end
+
+==> corrected/204/204.rb 204 <==
+gateway = true
+gateway.first_or_create!
+gateway.first_or_create! { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.first_or_create!
+merchant.gateway.first_or_create! { |t| t.name = 'Tom' }
+
+==> corrected/205/205.rb 241 <==
+customer.first_or_create!
+merchant.customer.first_or_create!
+customer(true).first_or_create!
+merchant.customer(true).first_or_create!
+customer.first_or_create! { |t| t.name = 'Tom' }
+merchant.customer.first_or_create! { |t| t.name = 'Tom' }
+
+==> corrected/206/206.rb 146 <==
+NonActiveRecord.first_or_create!
+NameSpace::NonActiveRecord.first_or_create!
+::NonActiveRecord.first_or_create!
+NonActiveRecord::first_or_create!
+
+==> corrected/207/207.rb 135 <==
+NameSpace::NonActiveRecord.first_or_create!
+::NameSpace::NonActiveRecord.first_or_create!
+NameSpace::NonActiveRecord::first_or_create!
+
+==> corrected/208/208.rb 33 <==
+NonActiveRecord.first_or_create!
+
+==> corrected/209/209.rb 44 <==
+NameSpace::NonActiveRecord.first_or_create!
+
+==> corrected/210/210.rb 34 <==
+merchant.gateway.first_or_create!
+
+==> corrected/211/211.rb 25 <==
+gateway.first_or_create!
+
+==> corrected/212/212.rb 81 <==
+A::B.merchant.gateway.first_or_create!
+A::B::merchant::gateway::first_or_create!
+
+==> corrected/213/213.rb 28 <==
+B.merchant.first_or_create!
+
+==> corrected/219/219.rb 67 <==
+if (user = User.first_or_create!)
+  foo(user)
+else
+  bar(user)
+end
+
+==> corrected/227/227.rb 44 <==
+def foo
+  object.first_or_create!
+  bar
+end
+
+==> corrected/228/228.rb 19 <==
+find_or_create_by!
+
+==> corrected/229/229.rb 27 <==
+object&.find_or_create_by!
+
+==> corrected/233/233.rb 35 <==
+object.find_or_create_by! if false
+
+==> corrected/234/234.rb 64 <==
+if condition
+  puts "true"
+else
+  object.find_or_create_by!
+end
+
+==> corrected/244/244.rb 212 <==
+gateway = true
+gateway.find_or_create_by!
+gateway.find_or_create_by! { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.find_or_create_by!
+merchant.gateway.find_or_create_by! { |t| t.name = 'Tom' }
+
+==> corrected/245/245.rb 253 <==
+customer.find_or_create_by!
+merchant.customer.find_or_create_by!
+customer(true).find_or_create_by!
+merchant.customer(true).find_or_create_by!
+customer.find_or_create_by! { |t| t.name = 'Tom' }
+merchant.customer.find_or_create_by! { |t| t.name = 'Tom' }
+
+==> corrected/246/246.rb 154 <==
+NonActiveRecord.find_or_create_by!
+NameSpace::NonActiveRecord.find_or_create_by!
+::NonActiveRecord.find_or_create_by!
+NonActiveRecord::find_or_create_by!
+
+==> corrected/247/247.rb 141 <==
+NameSpace::NonActiveRecord.find_or_create_by!
+::NameSpace::NonActiveRecord.find_or_create_by!
+NameSpace::NonActiveRecord::find_or_create_by!
+
+==> corrected/248/248.rb 35 <==
+NonActiveRecord.find_or_create_by!
+
+==> corrected/249/249.rb 46 <==
+NameSpace::NonActiveRecord.find_or_create_by!
+
+==> corrected/250/250.rb 36 <==
+merchant.gateway.find_or_create_by!
+
+==> corrected/251/251.rb 27 <==
+gateway.find_or_create_by!
+
+==> corrected/252/252.rb 85 <==
+A::B.merchant.gateway.find_or_create_by!
+A::B::merchant::gateway::find_or_create_by!
+
+==> corrected/253/253.rb 30 <==
+B.merchant.find_or_create_by!
+
+==> corrected/259/259.rb 69 <==
+if (user = User.find_or_create_by!)
+  foo(user)
+else
+  bar(user)
+end
+
+==> corrected/267/267.rb 46 <==
+def foo
+  object.find_or_create_by!
+  bar
+end
+

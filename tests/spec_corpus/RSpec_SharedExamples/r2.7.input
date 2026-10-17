@@ -1,0 +1,48 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 316 <==
+it_behaves_like :foo_bar_baz
+it_should_behave_like :foo_bar_baz
+shared_examples :foo_bar_baz
+shared_examples_for :foo_bar_baz
+include_examples :foo_bar_baz
+include_examples :foo_bar_baz, 'foo', 'bar'
+
+shared_examples :foo_bar_baz, 'foo', 'bar', :foo_bar, 5 do |param|
+  # ...
+end
+
+RSpec.shared_examples :foo_bar_baz
+
+==> 001/001_spec.rb 274 <==
+it_behaves_like 'foo bar baz'
+it_should_behave_like 'foo bar baz'
+shared_examples 'foo bar baz'
+shared_examples_for 'foo bar baz'
+include_examples 'foo bar baz'
+include_examples 'foo bar baz', 'foo', 'bar'
+
+shared_examples 'foo bar baz', 'foo', 'bar' do |param|
+  # ...
+end
+
+==> 002/002_spec.rb 246 <==
+it_behaves_like FooBarBaz
+it_should_behave_like FooBarBaz
+shared_examples FooBarBaz
+shared_examples_for FooBarBaz
+include_examples FooBarBaz
+include_examples FooBarBaz, 'foo', 'bar'
+
+shared_examples FooBarBaz, 'foo', 'bar' do |param|
+  # ...
+end
+

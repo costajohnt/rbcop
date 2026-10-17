@@ -1,0 +1,23 @@
+==> .rubocop.yml 173 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/NotToNot:
+  EnforcedStyle: not_to
+
+==> 000/000_spec.rb 36 <==
+it { expect(false).to_not be_true }
+
+==> 001/001_spec.rb 38 <==
+expect {
+  2 + 2
+}.to_not raise_error
+
+==> 002/002_spec.rb 36 <==
+it { expect(false).not_to be_true }
+

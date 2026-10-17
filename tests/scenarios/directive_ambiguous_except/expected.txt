@@ -1,0 +1,5 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+lib/0.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+lib/0.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+lib/b.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+lib/b.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.

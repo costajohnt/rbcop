@@ -1,0 +1,780 @@
+==> .rubocop.yml 178 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/SaveBang:
+  AllowImplicitReturn: false
+
+==> 000/000.rb 21 <==
+object.save if false
+
+==> 001/001.rb 50 <==
+if condition
+  puts "true"
+else
+  object.save
+end
+
+==> 002/002.rb 40 <==
+return [{ success: object.save }, true]
+
+==> 003/003.rb 24 <==
+handle_save(object.save)
+==> 004/004.rb 30 <==
+handle_save(object.save, true)
+==> 005/005.rb 33 <==
+handle_save(success: object.save)
+==> 006/006.rb 33 <==
+result = { success: object.save }
+==> 007/007.rb 65 <==
+def foo
+  return foo.save if do_the_save
+  do_something_else
+end
+
+==> 008/008.rb 30 <==
+def foo
+  return foo.save
+end
+
+==> 009/009.rb 83 <==
+objects.each do |object|
+  next object.save if do_the_save
+  do_something_else
+end
+
+==> 010/010.rb 45 <==
+objects.each do |object|
+  next foo.save
+end
+
+==> 011/011.rb 156 <==
+gateway = true
+gateway.save
+gateway.save { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.save
+merchant.gateway.save { |t| t.name = 'Tom' }
+
+==> 012/012.rb 169 <==
+customer.save
+merchant.customer.save
+customer(true).save
+merchant.customer(true).save
+customer.save { |t| t.name = 'Tom' }
+merchant.customer.save { |t| t.name = 'Tom' }
+
+==> 013/013.rb 98 <==
+NonActiveRecord.save
+NameSpace::NonActiveRecord.save
+::NonActiveRecord.save
+NonActiveRecord::save
+
+==> 014/014.rb 99 <==
+NameSpace::NonActiveRecord.save
+::NameSpace::NonActiveRecord.save
+NameSpace::NonActiveRecord::save
+
+==> 015/015.rb 21 <==
+NonActiveRecord.save
+
+==> 016/016.rb 32 <==
+NameSpace::NonActiveRecord.save
+
+==> 017/017.rb 22 <==
+merchant.gateway.save
+
+==> 018/018.rb 13 <==
+gateway.save
+
+==> 019/019.rb 57 <==
+A::B.merchant.gateway.save
+A::B::merchant::gateway::save
+
+==> 020/020.rb 16 <==
+B.merchant.save
+
+==> 021/021.rb 32 <==
+def foo
+  object.save
+  bar
+end
+
+==> 022/022.rb 23 <==
+object.update if false
+
+==> 023/023.rb 52 <==
+if condition
+  puts "true"
+else
+  object.update
+end
+
+==> 024/024.rb 42 <==
+return [{ success: object.update }, true]
+
+==> 025/025.rb 26 <==
+handle_save(object.update)
+==> 026/026.rb 32 <==
+handle_save(object.update, true)
+==> 027/027.rb 35 <==
+handle_save(success: object.update)
+==> 028/028.rb 35 <==
+result = { success: object.update }
+==> 029/029.rb 67 <==
+def foo
+  return foo.update if do_the_save
+  do_something_else
+end
+
+==> 030/030.rb 32 <==
+def foo
+  return foo.update
+end
+
+==> 031/031.rb 85 <==
+objects.each do |object|
+  next object.update if do_the_save
+  do_something_else
+end
+
+==> 032/032.rb 47 <==
+objects.each do |object|
+  next foo.update
+end
+
+==> 033/033.rb 164 <==
+gateway = true
+gateway.update
+gateway.update { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.update
+merchant.gateway.update { |t| t.name = 'Tom' }
+
+==> 034/034.rb 181 <==
+customer.update
+merchant.customer.update
+customer(true).update
+merchant.customer(true).update
+customer.update { |t| t.name = 'Tom' }
+merchant.customer.update { |t| t.name = 'Tom' }
+
+==> 035/035.rb 106 <==
+NonActiveRecord.update
+NameSpace::NonActiveRecord.update
+::NonActiveRecord.update
+NonActiveRecord::update
+
+==> 036/036.rb 105 <==
+NameSpace::NonActiveRecord.update
+::NameSpace::NonActiveRecord.update
+NameSpace::NonActiveRecord::update
+
+==> 037/037.rb 23 <==
+NonActiveRecord.update
+
+==> 038/038.rb 34 <==
+NameSpace::NonActiveRecord.update
+
+==> 039/039.rb 24 <==
+merchant.gateway.update
+
+==> 040/040.rb 15 <==
+gateway.update
+
+==> 041/041.rb 61 <==
+A::B.merchant.gateway.update
+A::B::merchant::gateway::update
+
+==> 042/042.rb 18 <==
+B.merchant.update
+
+==> 043/043.rb 34 <==
+def foo
+  object.update
+  bar
+end
+
+==> 044/044.rb 34 <==
+object.update_attributes if false
+
+==> 045/045.rb 63 <==
+if condition
+  puts "true"
+else
+  object.update_attributes
+end
+
+==> 046/046.rb 53 <==
+return [{ success: object.update_attributes }, true]
+
+==> 047/047.rb 37 <==
+handle_save(object.update_attributes)
+==> 048/048.rb 43 <==
+handle_save(object.update_attributes, true)
+==> 049/049.rb 46 <==
+handle_save(success: object.update_attributes)
+==> 050/050.rb 46 <==
+result = { success: object.update_attributes }
+==> 051/051.rb 78 <==
+def foo
+  return foo.update_attributes if do_the_save
+  do_something_else
+end
+
+==> 052/052.rb 43 <==
+def foo
+  return foo.update_attributes
+end
+
+==> 053/053.rb 96 <==
+objects.each do |object|
+  next object.update_attributes if do_the_save
+  do_something_else
+end
+
+==> 054/054.rb 58 <==
+objects.each do |object|
+  next foo.update_attributes
+end
+
+==> 055/055.rb 208 <==
+gateway = true
+gateway.update_attributes
+gateway.update_attributes { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.update_attributes
+merchant.gateway.update_attributes { |t| t.name = 'Tom' }
+
+==> 056/056.rb 247 <==
+customer.update_attributes
+merchant.customer.update_attributes
+customer(true).update_attributes
+merchant.customer(true).update_attributes
+customer.update_attributes { |t| t.name = 'Tom' }
+merchant.customer.update_attributes { |t| t.name = 'Tom' }
+
+==> 057/057.rb 150 <==
+NonActiveRecord.update_attributes
+NameSpace::NonActiveRecord.update_attributes
+::NonActiveRecord.update_attributes
+NonActiveRecord::update_attributes
+
+==> 058/058.rb 138 <==
+NameSpace::NonActiveRecord.update_attributes
+::NameSpace::NonActiveRecord.update_attributes
+NameSpace::NonActiveRecord::update_attributes
+
+==> 059/059.rb 34 <==
+NonActiveRecord.update_attributes
+
+==> 060/060.rb 45 <==
+NameSpace::NonActiveRecord.update_attributes
+
+==> 061/061.rb 35 <==
+merchant.gateway.update_attributes
+
+==> 062/062.rb 26 <==
+gateway.update_attributes
+
+==> 063/063.rb 83 <==
+A::B.merchant.gateway.update_attributes
+A::B::merchant::gateway::update_attributes
+
+==> 064/064.rb 29 <==
+B.merchant.update_attributes
+
+==> 065/065.rb 45 <==
+def foo
+  object.update_attributes
+  bar
+end
+
+==> 066/066.rb 24 <==
+object.destroy if false
+
+==> 067/067.rb 53 <==
+if condition
+  puts "true"
+else
+  object.destroy
+end
+
+==> 068/068.rb 43 <==
+return [{ success: object.destroy }, true]
+
+==> 069/069.rb 27 <==
+handle_save(object.destroy)
+==> 070/070.rb 33 <==
+handle_save(object.destroy, true)
+==> 071/071.rb 36 <==
+handle_save(success: object.destroy)
+==> 072/072.rb 36 <==
+result = { success: object.destroy }
+==> 073/073.rb 68 <==
+def foo
+  return foo.destroy if do_the_save
+  do_something_else
+end
+
+==> 074/074.rb 33 <==
+def foo
+  return foo.destroy
+end
+
+==> 075/075.rb 86 <==
+objects.each do |object|
+  next object.destroy if do_the_save
+  do_something_else
+end
+
+==> 076/076.rb 48 <==
+objects.each do |object|
+  next foo.destroy
+end
+
+==> 077/077.rb 168 <==
+gateway = true
+gateway.destroy
+gateway.destroy { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.destroy
+merchant.gateway.destroy { |t| t.name = 'Tom' }
+
+==> 078/078.rb 187 <==
+customer.destroy
+merchant.customer.destroy
+customer(true).destroy
+merchant.customer(true).destroy
+customer.destroy { |t| t.name = 'Tom' }
+merchant.customer.destroy { |t| t.name = 'Tom' }
+
+==> 079/079.rb 110 <==
+NonActiveRecord.destroy
+NameSpace::NonActiveRecord.destroy
+::NonActiveRecord.destroy
+NonActiveRecord::destroy
+
+==> 080/080.rb 108 <==
+NameSpace::NonActiveRecord.destroy
+::NameSpace::NonActiveRecord.destroy
+NameSpace::NonActiveRecord::destroy
+
+==> 081/081.rb 24 <==
+NonActiveRecord.destroy
+
+==> 082/082.rb 35 <==
+NameSpace::NonActiveRecord.destroy
+
+==> 083/083.rb 25 <==
+merchant.gateway.destroy
+
+==> 084/084.rb 16 <==
+gateway.destroy
+
+==> 085/085.rb 63 <==
+A::B.merchant.gateway.destroy
+A::B::merchant::gateway::destroy
+
+==> 086/086.rb 19 <==
+B.merchant.destroy
+
+==> 087/087.rb 35 <==
+def foo
+  object.destroy
+  bar
+end
+
+==> 088/088.rb 23 <==
+object.create if false
+
+==> 089/089.rb 52 <==
+if condition
+  puts "true"
+else
+  object.create
+end
+
+==> 090/090.rb 42 <==
+return [{ success: object.create }, true]
+
+==> 091/091.rb 26 <==
+handle_save(object.create)
+==> 092/092.rb 32 <==
+handle_save(object.create, true)
+==> 093/093.rb 35 <==
+handle_save(success: object.create)
+==> 094/094.rb 35 <==
+result = { success: object.create }
+==> 095/095.rb 67 <==
+def foo
+  return foo.create if do_the_save
+  do_something_else
+end
+
+==> 096/096.rb 32 <==
+def foo
+  return foo.create
+end
+
+==> 097/097.rb 85 <==
+objects.each do |object|
+  next object.create if do_the_save
+  do_something_else
+end
+
+==> 098/098.rb 47 <==
+objects.each do |object|
+  next foo.create
+end
+
+==> 099/099.rb 164 <==
+gateway = true
+gateway.create
+gateway.create { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.create
+merchant.gateway.create { |t| t.name = 'Tom' }
+
+==> 100/100.rb 181 <==
+customer.create
+merchant.customer.create
+customer(true).create
+merchant.customer(true).create
+customer.create { |t| t.name = 'Tom' }
+merchant.customer.create { |t| t.name = 'Tom' }
+
+==> 101/101.rb 106 <==
+NonActiveRecord.create
+NameSpace::NonActiveRecord.create
+::NonActiveRecord.create
+NonActiveRecord::create
+
+==> 102/102.rb 105 <==
+NameSpace::NonActiveRecord.create
+::NameSpace::NonActiveRecord.create
+NameSpace::NonActiveRecord::create
+
+==> 103/103.rb 23 <==
+NonActiveRecord.create
+
+==> 104/104.rb 34 <==
+NameSpace::NonActiveRecord.create
+
+==> 105/105.rb 24 <==
+merchant.gateway.create
+
+==> 106/106.rb 15 <==
+gateway.create
+
+==> 107/107.rb 61 <==
+A::B.merchant.gateway.create
+A::B::merchant::gateway::create
+
+==> 108/108.rb 18 <==
+B.merchant.create
+
+==> 109/109.rb 34 <==
+def foo
+  object.create
+  bar
+end
+
+==> 110/110.rb 34 <==
+object.create_or_find_by if false
+
+==> 111/111.rb 63 <==
+if condition
+  puts "true"
+else
+  object.create_or_find_by
+end
+
+==> 112/112.rb 53 <==
+return [{ success: object.create_or_find_by }, true]
+
+==> 113/113.rb 37 <==
+handle_save(object.create_or_find_by)
+==> 114/114.rb 43 <==
+handle_save(object.create_or_find_by, true)
+==> 115/115.rb 46 <==
+handle_save(success: object.create_or_find_by)
+==> 116/116.rb 46 <==
+result = { success: object.create_or_find_by }
+==> 117/117.rb 78 <==
+def foo
+  return foo.create_or_find_by if do_the_save
+  do_something_else
+end
+
+==> 118/118.rb 43 <==
+def foo
+  return foo.create_or_find_by
+end
+
+==> 119/119.rb 96 <==
+objects.each do |object|
+  next object.create_or_find_by if do_the_save
+  do_something_else
+end
+
+==> 120/120.rb 58 <==
+objects.each do |object|
+  next foo.create_or_find_by
+end
+
+==> 121/121.rb 208 <==
+gateway = true
+gateway.create_or_find_by
+gateway.create_or_find_by { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.create_or_find_by
+merchant.gateway.create_or_find_by { |t| t.name = 'Tom' }
+
+==> 122/122.rb 247 <==
+customer.create_or_find_by
+merchant.customer.create_or_find_by
+customer(true).create_or_find_by
+merchant.customer(true).create_or_find_by
+customer.create_or_find_by { |t| t.name = 'Tom' }
+merchant.customer.create_or_find_by { |t| t.name = 'Tom' }
+
+==> 123/123.rb 150 <==
+NonActiveRecord.create_or_find_by
+NameSpace::NonActiveRecord.create_or_find_by
+::NonActiveRecord.create_or_find_by
+NonActiveRecord::create_or_find_by
+
+==> 124/124.rb 138 <==
+NameSpace::NonActiveRecord.create_or_find_by
+::NameSpace::NonActiveRecord.create_or_find_by
+NameSpace::NonActiveRecord::create_or_find_by
+
+==> 125/125.rb 34 <==
+NonActiveRecord.create_or_find_by
+
+==> 126/126.rb 45 <==
+NameSpace::NonActiveRecord.create_or_find_by
+
+==> 127/127.rb 35 <==
+merchant.gateway.create_or_find_by
+
+==> 128/128.rb 26 <==
+gateway.create_or_find_by
+
+==> 129/129.rb 83 <==
+A::B.merchant.gateway.create_or_find_by
+A::B::merchant::gateway::create_or_find_by
+
+==> 130/130.rb 29 <==
+B.merchant.create_or_find_by
+
+==> 131/131.rb 45 <==
+def foo
+  object.create_or_find_by
+  bar
+end
+
+==> 132/132.rb 32 <==
+object.first_or_create if false
+
+==> 133/133.rb 61 <==
+if condition
+  puts "true"
+else
+  object.first_or_create
+end
+
+==> 134/134.rb 51 <==
+return [{ success: object.first_or_create }, true]
+
+==> 135/135.rb 35 <==
+handle_save(object.first_or_create)
+==> 136/136.rb 41 <==
+handle_save(object.first_or_create, true)
+==> 137/137.rb 44 <==
+handle_save(success: object.first_or_create)
+==> 138/138.rb 44 <==
+result = { success: object.first_or_create }
+==> 139/139.rb 76 <==
+def foo
+  return foo.first_or_create if do_the_save
+  do_something_else
+end
+
+==> 140/140.rb 41 <==
+def foo
+  return foo.first_or_create
+end
+
+==> 141/141.rb 94 <==
+objects.each do |object|
+  next object.first_or_create if do_the_save
+  do_something_else
+end
+
+==> 142/142.rb 56 <==
+objects.each do |object|
+  next foo.first_or_create
+end
+
+==> 143/143.rb 200 <==
+gateway = true
+gateway.first_or_create
+gateway.first_or_create { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.first_or_create
+merchant.gateway.first_or_create { |t| t.name = 'Tom' }
+
+==> 144/144.rb 235 <==
+customer.first_or_create
+merchant.customer.first_or_create
+customer(true).first_or_create
+merchant.customer(true).first_or_create
+customer.first_or_create { |t| t.name = 'Tom' }
+merchant.customer.first_or_create { |t| t.name = 'Tom' }
+
+==> 145/145.rb 142 <==
+NonActiveRecord.first_or_create
+NameSpace::NonActiveRecord.first_or_create
+::NonActiveRecord.first_or_create
+NonActiveRecord::first_or_create
+
+==> 146/146.rb 132 <==
+NameSpace::NonActiveRecord.first_or_create
+::NameSpace::NonActiveRecord.first_or_create
+NameSpace::NonActiveRecord::first_or_create
+
+==> 147/147.rb 32 <==
+NonActiveRecord.first_or_create
+
+==> 148/148.rb 43 <==
+NameSpace::NonActiveRecord.first_or_create
+
+==> 149/149.rb 33 <==
+merchant.gateway.first_or_create
+
+==> 150/150.rb 24 <==
+gateway.first_or_create
+
+==> 151/151.rb 79 <==
+A::B.merchant.gateway.first_or_create
+A::B::merchant::gateway::first_or_create
+
+==> 152/152.rb 27 <==
+B.merchant.first_or_create
+
+==> 153/153.rb 43 <==
+def foo
+  object.first_or_create
+  bar
+end
+
+==> 154/154.rb 34 <==
+object.find_or_create_by if false
+
+==> 155/155.rb 63 <==
+if condition
+  puts "true"
+else
+  object.find_or_create_by
+end
+
+==> 156/156.rb 53 <==
+return [{ success: object.find_or_create_by }, true]
+
+==> 157/157.rb 37 <==
+handle_save(object.find_or_create_by)
+==> 158/158.rb 43 <==
+handle_save(object.find_or_create_by, true)
+==> 159/159.rb 46 <==
+handle_save(success: object.find_or_create_by)
+==> 160/160.rb 46 <==
+result = { success: object.find_or_create_by }
+==> 161/161.rb 78 <==
+def foo
+  return foo.find_or_create_by if do_the_save
+  do_something_else
+end
+
+==> 162/162.rb 43 <==
+def foo
+  return foo.find_or_create_by
+end
+
+==> 163/163.rb 96 <==
+objects.each do |object|
+  next object.find_or_create_by if do_the_save
+  do_something_else
+end
+
+==> 164/164.rb 58 <==
+objects.each do |object|
+  next foo.find_or_create_by
+end
+
+==> 165/165.rb 208 <==
+gateway = true
+gateway.find_or_create_by
+gateway.find_or_create_by { |t| t.name = 'Tom' }
+
+merchant.gateway = true
+merchant.gateway.find_or_create_by
+merchant.gateway.find_or_create_by { |t| t.name = 'Tom' }
+
+==> 166/166.rb 247 <==
+customer.find_or_create_by
+merchant.customer.find_or_create_by
+customer(true).find_or_create_by
+merchant.customer(true).find_or_create_by
+customer.find_or_create_by { |t| t.name = 'Tom' }
+merchant.customer.find_or_create_by { |t| t.name = 'Tom' }
+
+==> 167/167.rb 150 <==
+NonActiveRecord.find_or_create_by
+NameSpace::NonActiveRecord.find_or_create_by
+::NonActiveRecord.find_or_create_by
+NonActiveRecord::find_or_create_by
+
+==> 168/168.rb 138 <==
+NameSpace::NonActiveRecord.find_or_create_by
+::NameSpace::NonActiveRecord.find_or_create_by
+NameSpace::NonActiveRecord::find_or_create_by
+
+==> 169/169.rb 34 <==
+NonActiveRecord.find_or_create_by
+
+==> 170/170.rb 45 <==
+NameSpace::NonActiveRecord.find_or_create_by
+
+==> 171/171.rb 35 <==
+merchant.gateway.find_or_create_by
+
+==> 172/172.rb 26 <==
+gateway.find_or_create_by
+
+==> 173/173.rb 83 <==
+A::B.merchant.gateway.find_or_create_by
+A::B::merchant::gateway::find_or_create_by
+
+==> 174/174.rb 29 <==
+B.merchant.find_or_create_by
+
+==> 175/175.rb 45 <==
+def foo
+  object.find_or_create_by
+  bar
+end
+

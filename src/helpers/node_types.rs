@@ -50,6 +50,16 @@ const OPERATOR_METHODS: &[&str] = &[
     "+@", "-@", "!@", "~@", "[]", "[]=", "!", "!=", "!~", "`",
 ];
 
+/// The name of a parser `lvar`: a local variable read, or `it` in an `it` block (Prism's
+/// ItLocalVariableReadNode is the parser gem's `(lvar :it)`).
+pub fn lvar_name<'pr>(node: &Node<'pr>) -> Option<&'pr [u8]> {
+    match node {
+        Node::LocalVariableReadNode { .. } => Some(node.as_local_variable_read_node().unwrap().name().as_slice()),
+        Node::ItLocalVariableReadNode { .. } => Some(b"it"),
+        _ => None,
+    }
+}
+
 /// A `_1`..`_9` read below Ruby 2.7: Prism's LocalVariableReadNode is the parser gem's
 /// `(send nil :_1)` there (the runner already dropped the blocks' numbered parameters).
 pub fn is_legacy_numbered_read(cx: &Cx, node: &Node) -> bool {
@@ -89,4 +99,46 @@ pub fn literal_block<'pr>(node: &Node<'pr>) -> Option<ruby_prism::BlockNode<'pr>
         _ => None,
     };
     block.and_then(|b| b.as_block_node())
+}
+
+/// A block's or lambda's parameters make it a parser `block`: not numbered (`numblock`) or `it`
+/// (`itblock`).
+pub fn plain_block_params(params: Option<Node>) -> bool {
+    !matches!(params.map(|p| kind::of(&p)), Some(kind::NUMBERED_PARAMETERS_NODE | kind::IT_PARAMETERS_NODE))
+}
+
+/// `lambda_or_proc?`: `-> {}`, `lambda {}`, `proc {}`, `Proc.new {}` / `Proc.new`.
+pub fn lambda_or_proc(node: &Node) -> bool {
+    if node.as_lambda_node().is_some() {
+        return true;
+    }
+    let Some(call) = node.as_call_node() else { return false };
+    let block = call.block().and_then(|b| b.as_block_node());
+    let name = method_name(&call);
+    // BlockNode#lambda? (any block, numbered/`it` included): the block's send is named `lambda`,
+    // whatever its receiver or arguments.
+    if block.is_some() && name == "lambda" {
+        return true;
+    }
+    // `proc?` matches a parser `block` only: a block with numbered parameters (`numblock`) or `it`
+    // (`itblock`) is neither `proc { _1 }` nor `Proc.new { it }`.
+    let plain_block = block.as_ref().is_some_and(|b| plain_block_params(b.parameters()));
+    // Its patterns take a bare `send` (no arguments; `&blk` is a parser argument).
+    if is_csend(&call) || call.arguments().is_some() || call.block().is_some_and(|b| b.as_block_argument_node().is_some()) {
+        return false;
+    }
+    match call.receiver() {
+        None => name == "proc" && plain_block,
+        Some(r) => {
+            let proc_const = match &r {
+                Node::ConstantReadNode { .. } => node_text(&r) == "Proc",
+                Node::ConstantPathNode { .. } => {
+                    let p = r.as_constant_path_node().unwrap();
+                    p.parent().is_none() && p.name().is_some_and(|n| n.as_slice() == b"Proc")
+                }
+                _ => false,
+            };
+            proc_const && name == "new" && (block.is_none() || plain_block)
+        }
+    }
 }

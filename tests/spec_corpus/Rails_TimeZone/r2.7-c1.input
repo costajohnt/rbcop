@@ -1,0 +1,28 @@
+==> .rubocop.yml 195 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/TimeZone:
+  AutoCorrect: 'true'
+  EnforcedStyle: strict
+
+==> 000/000.rb 22 <==
+Time.now.in_time_zone
+
+==> 001/001.rb 9 <==
+Time.now
+
+==> 002/002.rb 11 <==
+Time.local
+
+==> 003/003.rb 11 <==
+Time.parse
+
+==> 004/004.rb 8 <==
+Time.at
+

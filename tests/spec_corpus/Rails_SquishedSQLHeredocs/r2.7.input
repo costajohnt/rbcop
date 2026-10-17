@@ -1,0 +1,82 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 50 <==
+<<~SQL
+  SELECT * FROM posts
+    WHERE id = 1
+SQL
+
+==> 001/001.rb 153 <==
+<<~SQL
+  SELECT * FROM posts
+    WHERE [--another identifier!] = 1
+    AND "-- this is a name, not a comment" = '-- this is a string, not a comment'
+SQL
+
+==> 002/002.rb 57 <==
+<<-SQL.squish
+  SELECT * FROM posts
+    WHERE id = 1
+SQL
+
+==> 003/003.rb 100 <==
+<<-SQL
+  SELECT * FROM posts
+    -- This is a comment, so squish can't be used
+    WHERE id = 1
+SQL
+
+==> 004/004.rb 34 <==
+<<-SQL
+  SELECT * FROM posts;
+SQL
+
+==> 005/005.rb 146 <==
+<<~SQL
+  SELECT * FROM posts WHERE [--another identifier!] = 1 AND "-- this is a name, not a comment" = '-- this is a string, not a comment';
+SQL
+
+==> 006/006.rb 41 <==
+<<-SQL.squish
+  SELECT * FROM posts;
+SQL
+
+==> 007/007.rb 59 <==
+<<-SQL
+  -- This is a comment, so squish can't be used
+SQL
+
+==> 008/008.rb 77 <==
+execute(<<~SQL, "Post Load")
+  SELECT * FROM posts
+    WHERE post_id = 1
+SQL
+
+==> 009/009.rb 175 <==
+execute(<<~SQL, "Post Load")
+  SELECT * FROM posts
+    WHERE [--another identifier!] = 1
+    AND "-- this is a name, not a comment" = '-- this is a string, not a comment'
+SQL
+
+==> 010/010.rb 84 <==
+execute(<<~SQL.squish, "Post Load")
+  SELECT * FROM posts
+    WHERE post_id = 1
+SQL
+
+==> 011/011.rb 125 <==
+execute(<<-SQL, "Post Load")
+  SELECT * FROM posts
+  -- This is a comment, so squish can't be used
+    WHERE post_id = 1
+SQL
+

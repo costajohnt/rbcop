@@ -1,0 +1,42 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 22 <==
+hash&.keys.include? 1
+
+==> 001.rb 24 <==
+hash&.values.include? 1
+
+==> 002.rb 25 <==
+{ a: 1 }.keys.include? 1
+
+==> 003.rb 27 <==
+{ a: 1 }&.keys&.include? 1
+
+==> 004.rb 32 <==
+h = { a: 1 }; h.keys.include? 1
+
+==> 005.rb 27 <==
+{ a: 1 }.values.include? 1
+
+==> 006.rb 34 <==
+h = { a: 1 }; h.values.include? 1
+
+==> 007.rb 46 <==
+h = { a: 1 }; keys = h.keys ; keys.include? 1
+
+==> 008.rb 52 <==
+h = { a: 1 }; values = h.values ; values.include? 1
+
+==> 009.rb 46 <==
+def my_include?(key)
+  keys.include?(key)
+end
+

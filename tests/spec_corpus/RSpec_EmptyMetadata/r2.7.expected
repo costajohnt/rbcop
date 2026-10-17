@@ -1,0 +1,10 @@
+==> offenses exit=1 87 <==
+002/002_spec.rb:1:23: C: [Correctable] RSpec/EmptyMetadata: Avoid empty metadata hash.
+
+==> autocorrect exit=0 85 <==
+002/002_spec.rb:1:23: C: [Corrected] RSpec/EmptyMetadata: Avoid empty metadata hash.
+
+==> corrected/002/002_spec.rb 28 <==
+describe 'Something' do
+end
+

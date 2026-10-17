@@ -1,0 +1,164 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 5.0
+
+==> spec/000/000.rb 31 <==
+get :create, user_id: @user.id
+
+==> spec/001/001.rb 36 <==
+get '/test', to: 'admin/admin#test'
+
+==> spec/002/002.rb 32 <==
+post :create, user_id: @user.id
+
+==> spec/003/003.rb 33 <==
+patch :update, user_id: @user.id
+
+==> spec/004/004.rb 31 <==
+put :create, user_id: @user.id
+
+==> spec/005/005.rb 34 <==
+delete :create, user_id: @user.id
+
+==> spec/006/006.rb 32 <==
+head :create, user_id: @user.id
+
+==> spec/007/007.rb 31 <==
+puts :create, user_id: @user.id
+==> spec/008/008.rb 58 <==
+process :new, method: :get, params: { user_id: @user.id }
+
+==> spec/009/009.rb 22 <==
+get :new, method: :get
+==> spec/010/010.rb 39 <==
+get :new, params: { user_id: @user.id }
+==> spec/011/011.rb 19 <==
+get :new, xhr: true
+==> spec/012/012.rb 33 <==
+get :new, session: { foo: 'bar' }
+==> spec/013/013.rb 23 <==
+get :new, format: :json
+==> spec/014/014.rb 21 <==
+get :new, headers: {}
+==> spec/015/015.rb 21 <==
+get :new, body: "foo"
+==> spec/016/016.rb 19 <==
+get :new, flash: {}
+==> spec/017/017.rb 19 <==
+get :new, as: :json
+==> spec/018/018.rb 21 <==
+get :new, env: "test"
+==> spec/019/019.rb 28 <==
+get :new, user_id: @user.id
+
+==> spec/020/020.rb 8 <==
+get :new
+==> spec/021/021.rb 152 <==
+patch :update,
+      id: @user.id,
+      ac: {
+        article_id: @article1.id,
+        profile_id: @profile1.id,
+        content: 'Some Text'
+      }
+
+==> spec/022/022.rb 145 <==
+post :create,
+     id: @user.id,
+     ac: {
+       article_id: @article1.id,
+       profile_id: @profile1.id,
+       content: 'Some Text'
+     }
+
+==> spec/023/023.rb 18 <==
+@user.head.id = ''
+==> spec/024/024.rb 18 <==
+@user.post.id = ''
+==> spec/025/025.rb 17 <==
+@user.get.id = ''
+==> spec/026/026.rb 19 <==
+@user.patch.id = ''
+==> spec/027/027.rb 17 <==
+@user.put.id = ''
+==> spec/028/028.rb 20 <==
+@user.delete.id = ''
+==> spec/029/029.rb 23 <==
+post user_attrs, id: 1
+
+==> spec/030/030.rb 24 <==
+post :user_attrs, id: 1
+
+==> spec/031/031.rb 25 <==
+post(:user_attrs, id: 1)
+
+==> spec/032/032.rb 37 <==
+get '/auth/linkedin/callback', id: 1
+
+==> spec/033/033.rb 66 <==
+get some_path(profile.id), {}, 'HTTP_REFERER' => p_url(p.id).to_s
+
+==> spec/034/034.rb 103 <==
+get some_path(profile.id), { user_id: @user.id, profile_id: p.id }, 'HTTP_REFERER' => p_url(p.id).to_s
+
+==> spec/035/035.rb 32 <==
+post :create, confirmation_data
+
+==> spec/036/036.rb 46 <==
+post :create, id: 7, comment: { body: "hei" }
+
+==> spec/037/037.rb 34 <==
+post :create, id: 7, format: :rss
+
+==> spec/038/038.rb 43 <==
+params = { id: 1 }
+post user_attrs, params
+
+==> spec/039/039.rb 24 <==
+post user_attrs, params
+
+==> spec/040/040.rb 40 <==
+post user_attrs, params.merge(foo: bar)
+
+==> spec/041/041.rb 81 <==
+[{ format: :json }, { format: :html }].each do |args|
+  get :nothing, **args
+end
+
+==> spec/042/042.rb 43 <==
+routes do
+  get :list, on: :collection
+end
+
+==> spec/043/043.rb 66 <==
+Rails.application.routes.draw do
+  get :list, on: :collection
+end
+
+==> spec/044/044.rb 47 <==
+def perform_request(...)
+  get(:list, ...)
+end
+
+==> spec/045/045.rb 59 <==
+def perform_request(**options)
+  get(:list, **options)
+end
+
+==> spec/046/046.rb 60 <==
+include Rack::Test::Methods
+
+get :create, user_id: @user.id
+
+==> spec/047/047.rb 62 <==
+include ::Rack::Test::Methods
+
+get :create, user_id: @user.id
+

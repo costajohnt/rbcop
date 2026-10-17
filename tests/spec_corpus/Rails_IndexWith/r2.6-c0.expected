@@ -1,0 +1,9 @@
+==> offenses exit=1 91 <==
+000/000.rb:1:1: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `to_h { ... }`.
+
+==> autocorrect exit=0 89 <==
+000/000.rb:1:1: C: [Corrected] Rails/IndexWith: Prefer `index_with` over `to_h { ... }`.
+
+==> corrected/000/000.rb 32 <==
+x.index_with { |el| el.to_sym }
+

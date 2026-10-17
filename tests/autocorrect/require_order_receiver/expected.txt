@@ -1,0 +1,6 @@
+a.rb:2:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+a.rb:4:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+b.rb:2:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+c.rb:3:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+c.rb:5:1: C: [Corrected] Style/RequireOrder: Sort `require_relative` in alphabetical order.
+c.rb:6:121: C: Layout/LineLength: Line is too long. [129/120]

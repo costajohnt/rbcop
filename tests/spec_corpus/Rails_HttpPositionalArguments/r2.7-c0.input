@@ -1,0 +1,68 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 4.2
+
+==> spec/000/000.rb 30 <==
+get :create, user_id: @user.id
+==> spec/001/001.rb 31 <==
+post :create, user_id: @user.id
+==> spec/002/002.rb 32 <==
+patch :update, user_id: @user.id
+==> spec/003/003.rb 30 <==
+put :update, user_id: @user.id
+==> spec/004/004.rb 29 <==
+delete :destroy, id: @user.id
+==> spec/005/005.rb 27 <==
+head :destroy, id: @user.id
+==> spec/006/006.rb 58 <==
+process :new, method: :get, params: { user_id: @user.id }
+
+==> spec/007/007.rb 39 <==
+get :new, params: { user_id: @user.id }
+==> spec/008/008.rb 19 <==
+get :new, xhr: true
+==> spec/009/009.rb 33 <==
+get :new, session: { foo: 'bar' }
+==> spec/010/010.rb 23 <==
+get :new, format: :json
+==> spec/011/011.rb 27 <==
+get :new, user_id: @user.id
+==> spec/012/012.rb 8 <==
+get :new
+==> spec/013/013.rb 152 <==
+patch :update,
+      id: @user.id,
+      ac: {
+        article_id: @article1.id,
+        profile_id: @profile1.id,
+        content: 'Some Text'
+      }
+
+==> spec/014/014.rb 145 <==
+post :create,
+     id: @user.id,
+     ac: {
+       article_id: @article1.id,
+       profile_id: @profile1.id,
+       content: 'Some Text'
+     }
+
+==> spec/015/015.rb 17 <==
+@user.get.id = ''
+==> spec/016/016.rb 18 <==
+@user.post.id = ''
+==> spec/017/017.rb 19 <==
+@user.patch.id = ''
+==> spec/018/018.rb 17 <==
+@user.put.id = ''
+==> spec/019/019.rb 18 <==
+@user.head.id = ''
+==> spec/020/020.rb 20 <==
+@user.delete.id = ''

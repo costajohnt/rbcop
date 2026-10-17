@@ -1,0 +1,29 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 6.1
+
+==> db/000/000.rb 145 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    change_table :users do |t|
+  t.remove(:posts, type: :text)
+end
+
+  end
+end
+
+==> db/001/001.rb 133 <==
+class ExampleMigration < ActiveRecord::Migration[7.0]
+  def change
+    remove_columns(:posts, :title, :body, type: :text)
+
+  end
+end
+

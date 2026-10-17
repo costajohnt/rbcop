@@ -1,0 +1,34 @@
+==> .rubocop.yml 189 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Performance/RedundantMerge:
+  MaxKeyValuePairs: 2
+
+==> 000.rb 18 <==
+foo.merge!(**bar)
+
+==> 001.rb 28 <==
+foo.merge!(baz: qux, **bar)
+
+==> 002.rb 104 <==
+foo.each_with_object({}) do |f, hash|
+  changes = hash.merge!(a: 1, b: 2)
+  why_are_you_doing_this?
+end
+
+==> 003.rb 15 <==
+foo.merge!({})
+
+==> 004.rb 43 <==
+variable = hash.merge!(a: 1)
+puts variable
+
+==> 005.rb 18 <==
+hash.merge!(a: 1)
+

@@ -1,0 +1,16 @@
+plugins:
+  - rubocop-rails
+  - rubocop-performance
+  - rubocop-rspec
+  - rubocop-factory_bot
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+  TargetRailsVersion: 8.0
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/ItBlockParameter:
+  Enabled: false

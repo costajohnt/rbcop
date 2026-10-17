@@ -1,0 +1,101 @@
+==> .rubocop.yml 176 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/FilePath:
+  EnforcedStyle: arguments
+
+==> 000/000.rb 43 <==
+Rails.root.join('app', 'models', 'user.rb')
+==> 001/001.rb 55 <==
+'system "rm -rf #{Rails.root.join(\'a\', \'b.png\')}"'
+
+==> 002/002.rb 46 <==
+"#{Rails.root.join('log', 'production.log')}"
+
+==> 003/003.rb 71 <==
+repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
+
+==> 004/004.rb 9 <==
+"#{42}/"
+
+==> 005/005.rb 39 <==
+File.join(Rails.root, 'app', 'models')
+
+==> 006/006.rb 49 <==
+File.join(Rails.root, '/app/models', '/user.rb')
+
+==> 007/007.rb 37 <==
+Rails.root.join('app/models/goober')
+
+==> 008/008.rb 34 <==
+"#{Rails.root}/app/models/goober"
+
+==> 009/009.rb 38 <==
+system "rm -rf #{Rails.root}/foo/bar"
+
+==> 010/010.rb 49 <==
+"#{Rails.root.join('tmp', user.id, 'icon')}.png"
+
+==> 011/011.rb 49 <==
+foo(bar(File.join(Rails.root, "app", "models")))
+
+==> 012/012.rb 35 <==
+foo(Rails.root.join("app/models"))
+
+==> 013/013.rb 52 <==
+Rails.root.join("tmp", "data", index/3, "data.csv")
+
+==> 014/014.rb 25 <==
+puts "test #{123}. Hey!"
+
+==> 015/015.rb 25 <==
+"#{Rails.root}:/foo/bar"
+
+==> 016/016.rb 30 <==
+"#{Rails.root || '.'}/config"
+
+==> 017/017.rb 34 <==
+"#{Rails.root rescue '.'}/config"
+
+==> 018/018.rb 23 <==
+join(Rails.root, path)
+
+==> 019/019.rb 41 <==
+File.join(Rails.root, ['app', 'models'])
+
+==> 020/020.rb 51 <==
+File.join(Rails.root, "app", ["models", "goober"])
+
+==> 021/021.rb 51 <==
+File.join(Rails.root, ["app", "models"], "goober")
+
+==> 022/022.rb 38 <==
+File.join(Rails.root, %w[app models])
+
+==> 023/023.rb 48 <==
+File.join(Rails.root, "app", %w[models goober])
+
+==> 024/024.rb 48 <==
+File.join(Rails.root, %w[app models], "goober")
+
+==> 025/025.rb 31 <==
+Rails.root.join('/app/models')
+
+==> 026/026.rb 34 <==
+Rails.root.join('/app', 'models')
+
+==> 027/027.rb 34 <==
+Rails.root.join('app', '/models')
+
+==> 028/028.rb 38 <==
+Rails.root.join('public//', 'assets')
+
+==> 029/029.rb 44 <==
+File.join(Rails.root, 'public//', 'assets')
+

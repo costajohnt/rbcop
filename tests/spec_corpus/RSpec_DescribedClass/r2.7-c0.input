@@ -1,0 +1,44 @@
+==> .rubocop.yml 174 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/DescribedClass:
+  SkipBlocks: true
+
+==> 000/000_spec.rb 170 <==
+describe MyClass do
+  controller(ApplicationController) do
+    self.bar = MyClass
+  end
+
+  before do
+    MyClass
+
+    Foo.custom_block do
+      MyClass
+    end
+  end
+end
+
+==> 001/001_spec.rb 214 <==
+describe MyClass do
+  controller(ApplicationController) do
+    do_some_work(_1)
+    self.bar = MyClass
+  end
+
+  before do
+    MyClass
+
+    Foo.custom_block do
+      do_some_work(_1)
+      MyClass
+    end
+  end
+end
+

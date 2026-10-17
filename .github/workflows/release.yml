@@ -1,0 +1,195 @@
+# Release, in two manual runs (docs/releasing.md). Not run while the repository is private (hosted
+# minutes); the same steps run by hand with scripts/dist/*.sh.
+#
+#   stage `build`: build the archives, gems and Homebrew formula and attach them, with SHA256SUMS,
+#     to a draft release v<Cargo.toml version>. A maintainer then commits that SHA256SUMS as
+#     packaging/checksums/<version>.sha256 (the GitHub Action and scripts/dist/install.sh only run
+#     archives listed there) and publishes the draft on that commit, which creates the tag.
+#   stage `publish-gems` (run on the tag): download the gems from the published release, check them
+#     against the committed packaging/checksums file, and push them with RubyGems trusted
+#     publishing (OIDC, no API key secret).
+#
+# Hardening: third-party actions are pinned to commit SHAs; the workflow token is read-only except
+# in the two publishing jobs, which run no project code (no build scripts, no Bundler, no caches),
+# check what they publish against checksums first, and wait for the `release` environment (give
+# it a required reviewer); only manual runs trigger the workflow, never pushes or pull requests;
+# no event data is interpolated into scripts; zig is checked against its published SHA-256 and
+# Rust crates against Cargo.lock (--locked).
+name: release
+
+on:
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: build (draft release) or publish-gems (run on the published tag)
+        type: choice
+        options: [build, publish-gems]
+        default: build
+
+permissions:
+  contents: read
+
+env:
+  ZIG_VERSION: 0.13.0
+  ZIG_SHA256: d45312e61ebcc48032b77bc4cf7fd6915c11fa16e4aad116b66c9468211230ea
+  CARGO_ZIGBUILD_VERSION: 0.23.4
+  RELEASE_TARGETS: >-
+    aarch64-apple-darwin x86_64-apple-darwin x86_64-unknown-linux-gnu aarch64-unknown-linux-gnu
+    x86_64-unknown-linux-musl aarch64-unknown-linux-musl
+  GEM_PLATFORMS: arm64-darwin x86_64-darwin x86_64-linux-gnu aarch64-linux-gnu x86_64-linux-musl aarch64-linux-musl
+
+jobs:
+  linux:
+    if: inputs.stage == 'build'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Toolchain
+        run: |
+          sudo apt-get install -y libclang-dev
+          rustup target add x86_64-unknown-linux-gnu aarch64-unknown-linux-gnu x86_64-unknown-linux-musl aarch64-unknown-linux-musl
+          curl -fsSL -o zig.tar.xz "https://ziglang.org/download/$ZIG_VERSION/zig-linux-x86_64-$ZIG_VERSION.tar.xz"
+          echo "$ZIG_SHA256  zig.tar.xz" | sha256sum -c -
+          mkdir -p "$RUNNER_TEMP/zig" && tar -C "$RUNNER_TEMP/zig" --strip-components=1 -xf zig.tar.xz
+          echo "$RUNNER_TEMP/zig" >> "$GITHUB_PATH"
+          cargo install --locked "cargo-zigbuild@$CARGO_ZIGBUILD_VERSION"
+      - run: sh scripts/dist/build.sh
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: linux
+          path: dist/
+
+  macos:
+    if: inputs.stage == 'build'
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: rustup target add aarch64-apple-darwin x86_64-apple-darwin
+      - run: sh scripts/dist/build.sh
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: macos
+          path: dist/
+
+  package:
+    needs: [linux, macos]
+    runs-on: ubuntu-24.04
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          path: dist
+          merge-multiple: true
+      - uses: ruby/setup-ruby@762794c140bbeda0f1224786aa33b4b46783a6c1 # v1.326.0
+        with:
+          ruby-version: '3.4'
+      - id: version
+        run: echo "version=$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)" >> "$GITHUB_OUTPUT"
+      - run: sh scripts/dist/gem.sh
+      - run: sh scripts/dist/homebrew.sh > dist/rbcop.rb
+      # The x86_64 platform gem and the `ruby` gem install and run without a Rust toolchain.
+      - run: |
+          for gem in dist/gems/rbcop-*-x86_64-linux-gnu.gem dist/gems/rbcop-[0-9]*[0-9].gem; do
+            rm -rf "$RUNNER_TEMP/gems"
+            gem install --local --no-document --install-dir "$RUNNER_TEMP/gems" "$gem"
+            GEM_HOME="$RUNNER_TEMP/gems" "$RUNNER_TEMP/gems/bin/rbcop" -v
+          done
+      # Everything published, by file name; committed later as packaging/checksums/<version>.sha256.
+      - run: |
+          mkdir release
+          cp dist/*.tar.gz dist/rbcop.rb dist/gems/*.gem release/
+          cd release && sha256sum -- * > SHA256SUMS
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release
+          path: release/
+
+  # The publishing jobs check an explicit allowlist (RELEASE_TARGETS, GEM_PLATFORMS and the
+  # version): the directory holds exactly those files, the checksum file has exactly one
+  # `<64 hex>  <bare name>` line for each and nothing else, every file matches, and the upload
+  # names the files one by one, never a glob.
+  draft-release:
+    needs: package
+    runs-on: ubuntu-24.04
+    environment: release
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: release
+          path: release
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.package.outputs.version }}
+        run: |
+          set -euo pipefail
+          printf '%s' "$VERSION" | grep -Eqx '[0-9]+\.[0-9]+\.[0-9]+'
+          expected=$({
+            for t in $RELEASE_TARGETS; do echo "rbcop-$VERSION-$t.tar.gz"; done
+            for p in $GEM_PLATFORMS; do echo "rbcop-$VERSION-$p.gem"; done
+            echo "rbcop-$VERSION.gem"
+            echo rbcop.rb
+          } | LC_ALL=C sort)
+          cd release
+          # Exactly the expected files plus SHA256SUMS (a name with a newline or space fails here).
+          test "$(find . -mindepth 1 | wc -l)" -eq "$(( $(printf '%s\n' "$expected" | wc -l) + 1 ))"
+          test "$(find . -mindepth 1 -type f ! -name SHA256SUMS -printf '%f\n' | LC_ALL=C sort)" = "$expected"
+          # One well-formed line per expected file, nothing else, no duplicates.
+          if grep -Evx '[0-9a-f]{64}  [A-Za-z0-9._-]+' SHA256SUMS; then echo "malformed SHA256SUMS" >&2; exit 1; fi
+          test "$(cut -c67- SHA256SUMS | LC_ALL=C sort)" = "$expected"
+          sha256sum --strict -c SHA256SUMS
+          mapfile -t files < <(printf '%s\n' "$expected")
+          gh release create "v$VERSION" --repo "$GITHUB_REPOSITORY" --draft --title "rbcop $VERSION" \
+            "${files[@]}" SHA256SUMS
+
+  publish-gems:
+    if: inputs.stage == 'publish-gems' && startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-24.04
+    environment: release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      # Only for packaging/checksums; nothing from the checkout is run.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: packaging/checksums
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          version=${TAG#v}
+          printf '%s' "$version" | grep -Eqx '[0-9]+\.[0-9]+\.[0-9]+'
+          sums="$PWD/packaging/checksums/$version.sha256"
+          # The pinned file: only well-formed lines, no duplicate names.
+          if grep -Evx '[0-9a-f]{64}  [A-Za-z0-9._-]+' "$sums"; then echo "malformed $sums" >&2; exit 1; fi
+          test -z "$(cut -c67- "$sums" | LC_ALL=C sort | uniq -d)"
+          gems=$({
+            for p in $GEM_PLATFORMS; do echo "rbcop-$version-$p.gem"; done
+            echo "rbcop-$version.gem"
+          } | LC_ALL=C sort)
+          mkdir gems && cd gems
+          while read -r gem; do
+            gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "$gem" --dir .
+            line=$(awk -v f="$gem" 'substr($0, 67) == f' "$sums")
+            test -n "$line"
+            printf '%s\n' "$line" | sha256sum --strict -c -
+          done <<< "$gems"
+          test "$(find . -mindepth 1 -printf '%f\n' | LC_ALL=C sort)" = "$gems"
+          printf '%s\n' "$gems" > ../gems.txt
+      - uses: rubygems/configure-rubygems-credentials@dc5a8d8553e6ee01fc26761a49e99e733d17954a # v2.1.0
+      # The runner image's RubyGems; no setup-ruby or Bundler in this job.
+      - run: |
+          set -euo pipefail
+          while read -r gem; do gem push "gems/$gem"; done < gems.txt

@@ -1,0 +1,87 @@
+==> offenses exit=1 1007 <==
+app/controllers/000/000.rb:3:3: C: [Correctable] Rails/ActionOrder: Action `index` should appear before `show`.
+app/controllers/001/001.rb:3:3: C: [Correctable] Rails/ActionOrder: Action `edit` should appear before `create`.
+app/controllers/001/001.rb:4:3: C: [Correctable] Rails/ActionOrder: Action `show` should appear before `edit`.
+app/controllers/002/002.rb:6:3: C: [Correctable] Rails/ActionOrder: Action `index` should appear before `show`.
+app/controllers/003/003.rb:3:3: C: [Correctable] Rails/ActionOrder: Action `index` should appear before `edit`.
+app/controllers/003/003.rb:6:3: C: [Correctable] Rails/ActionOrder: Action `index` should appear before `show`.
+app/controllers/009/009.rb:8:5: C: [Correctable] Rails/ActionOrder: Action `index` should appear before `edit`.
+app/controllers/011/011.rb:4:3: C: [Correctable] Rails/ActionOrder: Action `show` should appear before `edit`.
+app/controllers/012/012.rb:6:3: C: [Correctable] Rails/ActionOrder: Action `index` should appear before `show`.
+
+==> autocorrect exit=0 1428 <==
+app/controllers/000/000.rb:3:3: C: [Corrected] Rails/ActionOrder: Action `index` should appear before `show`.
+app/controllers/001/001.rb:3:3: C: [Corrected] Rails/ActionOrder: Action `edit` should appear before `create`.
+app/controllers/001/001.rb:3:3: C: [Corrected] Rails/ActionOrder: Action `show` should appear before `edit`.
+app/controllers/001/001.rb:4:3: C: [Corrected] Rails/ActionOrder: Action `show` should appear before `create`.
+app/controllers/001/001.rb:4:3: C: [Corrected] Rails/ActionOrder: Action `show` should appear before `edit`.
+app/controllers/002/002.rb:6:3: C: [Corrected] Rails/ActionOrder: Action `index` should appear before `show`.
+app/controllers/003/003.rb:3:3: C: [Corrected] Rails/ActionOrder: Action `index` should appear before `edit`.
+app/controllers/003/003.rb:5:3: C: [Corrected] Rails/ActionOrder: Action `index` should appear before `edit`.
+app/controllers/003/003.rb:6:3: C: [Corrected] Rails/ActionOrder: Action `index` should appear before `show`.
+app/controllers/003/003.rb:7:3: C: [Corrected] Rails/ActionOrder: Action `show` should appear before `edit`.
+app/controllers/009/009.rb:8:5: C: [Corrected] Rails/ActionOrder: Action `index` should appear before `edit`.
+app/controllers/011/011.rb:4:3: C: [Corrected] Rails/ActionOrder: Action `show` should appear before `edit`.
+app/controllers/012/012.rb:6:3: C: [Corrected] Rails/ActionOrder: Action `index` should appear before `show`.
+
+==> corrected/app/controllers/000/000.rb 82 <==
+class UserController < ApplicationController
+  def index; end
+  def show; end
+end
+
+==> corrected/app/controllers/001/001.rb 99 <==
+class UserController < ApplicationController
+  def show; end
+  def edit; end
+  def create; end
+end
+
+==> corrected/app/controllers/002/002.rb 119 <==
+class UserController < ApplicationController
+  def index; end
+  def show
+    @user = User.find(params[:id])
+  end
+
+end
+
+==> corrected/app/controllers/003/003.rb 134 <==
+class UserController < ApplicationController
+  def index # first
+  end
+  def index # second
+  end
+  def show; end
+  def edit; end
+end
+
+==> corrected/app/controllers/009/009.rb 158 <==
+class TestController < BaseController
+  if Rails.env.development?
+    def index
+    end
+  end
+  unless Rails.env.development?
+    def edit
+    end
+  end
+
+end
+
+==> corrected/app/controllers/011/011.rb 98 <==
+class UserController < ApplicationController
+  def index; end
+  def show; end
+  def edit; end
+end
+
+==> corrected/app/controllers/012/012.rb 102 <==
+class UserController < ApplicationController
+  # index
+  def index; end
+  # show
+  def show; end
+
+end
+

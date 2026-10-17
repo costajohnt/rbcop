@@ -1,0 +1,16 @@
+==> .rubocop.yml 187 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Performance/RedundantMerge:
+  MaxKeyValuePairs:
+
+==> 000.rb 34 <==
+hash = {}
+hash.merge!(a: 1, b: 2)
+

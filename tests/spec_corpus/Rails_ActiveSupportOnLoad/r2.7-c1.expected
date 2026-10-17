@@ -1,0 +1,9 @@
+==> offenses exit=1 219 <==
+000/000.rb:1:1: C: [Correctable] Rails/ActiveSupportOnLoad: Use `ActiveSupport.on_load(:active_record_sqlite3adapter) { include MyClass }` instead of `ActiveRecord::ConnectionAdapters::SQLite3Adapter.include(MyClass)`.
+
+==> autocorrect exit=0 217 <==
+000/000.rb:1:1: C: [Corrected] Rails/ActiveSupportOnLoad: Use `ActiveSupport.on_load(:active_record_sqlite3adapter) { include MyClass }` instead of `ActiveRecord::ConnectionAdapters::SQLite3Adapter.include(MyClass)`.
+
+==> corrected/000/000.rb 73 <==
+ActiveSupport.on_load(:active_record_sqlite3adapter) { include MyClass }
+

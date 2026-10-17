@@ -15,7 +15,7 @@ require "fileutils"
 spec_root, out_root, cops_file, default_yml = ARGV
 abort "usage: #{$0} <spec/rubocop/cop> <out-dir> <cops-file> <default.yml>" unless default_yml
 
-DEFAULTS = YAML.safe_load_file(default_yml, permitted_classes: [Regexp, Symbol])
+DEFAULTS = YAML.safe_load_file(default_yml, permitted_classes: [Regexp, Symbol], aliases: true)
 ANNOTATION = /\A\s*((?<!\\)\^+|\^{}) ?/
 GROUPS = %i[describe context].freeze
 EXAMPLES = %i[it specify example].freeze
@@ -38,9 +38,9 @@ UNTAGGED_RUBIES = SPEC_MODE ? ["2.7"] : ["2.7", "3.4"]
 
 class Unresolved < StandardError; end
 
-Ctx = Struct.new(:env, :lets, :shared, :ruby, :tagged) do
+Ctx = Struct.new(:env, :lets, :shared, :ruby, :tagged, :rails) do
   def child
-    Ctx.new(env.dup, lets.dup, shared.dup, ruby, tagged)
+    Ctx.new(env.dup, lets.dup, shared.dup, ruby, tagged, rails)
   end
 end
 
@@ -55,7 +55,7 @@ class Extractor
   end
 
   def run
-    ctx = Ctx.new({}, {}, {}, nil, false)
+    ctx = Ctx.new({}, {}, {}, nil, false, nil)
     # `RSpec.shared_examples` from spec/support, available to every spec.
     Dir[File.join(@file[%r{\A.*/spec/}], "support", "*.rb")].sort.each do |f|
       Prism.parse_file(f).value.statements.body.each { |n| prescan(n, ctx) }
@@ -133,7 +133,11 @@ class Extractor
 
   def tags(node, ctx)
     (node.arguments&.arguments || []).each do |a|
-      next unless a.is_a?(Prism::SymbolNode) && a.unescaped =~ /\Aruby(\d)(\d)\z/
+      next unless a.is_a?(Prism::SymbolNode)
+
+      # rubocop-rails' `:railsNN` metadata: TargetRailsVersion N.N.
+      ctx.rails = "#{$1}.#{$2}" if a.unescaped =~ /\Arails(\d)(\d)\z/
+      next unless a.unescaped =~ /\Aruby(\d)(\d)\z/
 
       ctx.ruby = "#{$1}.#{$2}"
       ctx.tagged = true
@@ -208,6 +212,7 @@ class Extractor
     raise Unresolved, "source is #{text.class}" unless text.is_a?(String)
 
     filename = pos[1] && value(pos[1], ctx)
+    raise Unresolved, "unresolved interpolation in file name" if filename.is_a?(String) && filename.include?(HOLE)
     if node.name == :expect_offense
       kw.each do |k, v|
         next if k == :loop
@@ -226,8 +231,19 @@ class Extractor
     raise Unresolved, "invalid UTF-8 in cop_config" unless valid_utf8?([cop_config, other])
     ruby = ctx.ruby || (let_value("ruby_version", ctx)&.to_s)
     rubies = ruby ? [ruby] : UNTAGGED_RUBIES
+    # rubocop-rails specs: `let(:rails_version)` (the 'with Rails N.N' contexts) and the
+    # 'with SchemaLoader' context's `let(:schema)` (written to db/schema.rb).
+    rails = ctx.rails || let_value("rails_version", ctx)&.to_s
+    schema = let_value("schema", ctx) if ctx.lets.key?("schema")
+    raise Unresolved, "schema is #{schema.class}" unless schema.nil? || schema.is_a?(String)
+
+    # `let(:gem_versions)` stubs Config#gem_versions_in_target: written to a Gemfile.lock.
+    gems = let_value("gem_versions", ctx) if ctx.lets.key?("gem_versions")
+    raise Unresolved, "gem_versions is #{gems.class}" unless gems.nil? || gems.is_a?(Hash)
+
     rubies.each do |r|
-      @snippets << { ruby: r, config: { @cop => cop_config }.merge(other), filename: filename, text: text }
+      @snippets << { ruby: r, config: { @cop => cop_config }.merge(other), filename: filename, text: text,
+                     rails: rails, schema: schema, gems: gems }
     end
   rescue Unresolved => e
     fail_at(node, e.message)
@@ -395,8 +411,38 @@ def default_filename(cop, config, idx)
   base.start_with?("*") ? format("%03d", idx) + base.delete_prefix("*") : File.join(format("%03d", idx), base)
 end
 
+# PLUGINS mode: a cop spec runs its source whatever the file name, but the recorded corpus runs
+# RuboCop on real paths, so each file goes where the cop's first Include pattern matches.
+def plugin_path(cop, config, idx, file)
+  # Config#for_badge: a cop without its own Include takes its department's (RSpec, FactoryBot, ...).
+  dept = cop.rpartition("/").first
+  include = config.dig(cop, "Include") || DEFAULTS.dig(cop, "Include") || config.dig(dept, "Include") ||
+            DEFAULTS.dig(dept, "Include")
+  file = file&.delete_prefix("/")
+  num = format("%03d", idx)
+  return File.join(num, file || "#{num}.rb") unless include
+
+  flags = File::FNM_PATHNAME | File::FNM_EXTGLOB
+  ok = ->(path) { include.any? { |p| File.fnmatch?(p, path, flags) } }
+  if file
+    # Keep the spec's name; a numbered directory keeps names unique where the pattern allows.
+    found = [File.join(num, file), File.join(File.dirname(file), num, File.basename(file)), file].find(&ok)
+    return found if found
+  end
+  pat = include.first.gsub("**/", "")
+  base = File.basename(pat)
+  return File.join(num, pat) unless base.include?("*")
+
+  base = file ? File.basename(file) : base.sub("*", num).tr("*", "x")
+  base += ".rb" if File.extname(base).empty?
+  dir = File.dirname(pat)
+  dir = dir == "." ? num : File.join(dir.tr("*", "x"), num)
+  File.join(dir, base)
+end
+
 def snippet_path(cop, snip, idx)
   f = snip[:filename]
+  return plugin_path(cop, snip[:config], idx, f) if ENV["PLUGINS"]
   return default_filename(cop, snip[:config], idx) unless f
 
   f = File.basename(f) if f.start_with?("/")
@@ -406,6 +452,9 @@ end
 def rubocop_yml(snip)
   all = { "AllCops" => { "EnabledByDefault" => true, "NewCops" => "enable", "SuggestExtensions" => false,
                          "TargetRubyVersion" => snip[:ruby].to_f } }
+  # PLUGINS=gem[,gem]: a plugin's specs run with the plugin loaded.
+  all = { "plugins" => ENV["PLUGINS"].split(",") }.merge(all) if ENV["PLUGINS"]
+  all["AllCops"]["TargetRailsVersion"] = snip[:rails].to_f if snip[:rails]
   overrides = snip[:config].reject { |_, v| v.empty? }
   # `--only` refuses Lint/RedundantCopDisableDirective, so the spec corpus runs it alone this way.
   if SPEC_MODE && snip[:config].key?("Lint/RedundantCopDisableDirective")
@@ -430,11 +479,14 @@ if cops.include?("Bundler/GemFilename")
   end
 end
 cops.each do |cop|
-  dept, name = cop.split("/")
-  snake = name.gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2').gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
-  spec = File.join(spec_root, dept.downcase, "#{snake}_spec.rb")
+  dept, _, name = cop.rpartition("/")
+  underscore = ->(s) { s.gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2').gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase }
+  snake = underscore.call(name)
+  # Plugin departments: RSpecRails -> rspec_rails, Capybara/RSpec -> capybara/rspec.
+  dept_dir = dept.split("/").map { |d| underscore.call(d.sub("RSpec", "Rspec")) }.join("/")
+  spec = File.join(spec_root, dept_dir, "#{snake}_spec.rb")
   # Some cops split their spec (conditional_assignment_assign_in_condition_spec.rb, ...).
-  specs = File.exist?(spec) ? [spec] : Dir[File.join(spec_root, dept.downcase, "#{snake}_*_spec.rb")].sort
+  specs = File.exist?(spec) ? [spec] : Dir[File.join(spec_root, dept_dir, "#{snake}_*_spec.rb")].sort
   if specs.empty?
     warn "#{cop}: no spec #{spec}"
     next
@@ -444,13 +496,24 @@ cops.each do |cop|
   failures = exs.flat_map(&:failures)
   snippets = exs.flat_map(&:snippets)
   failures.each { |f| warn "#{cop}: #{f}" }
-  variants = snippets.group_by { |s| [s[:ruby], s[:config]] }
+  # Variant key: cop config, then (rubocop-rails) target Rails and db/schema.rb.
+  variants = snippets.group_by { |s| [s[:ruby], [s[:config], s[:rails], s[:schema], s[:gems]]] }
   configs = variants.keys.map(&:last).uniq
   variants.each do |(ruby, config), snips|
-    tag = configs.index(config).zero? && config.values.all?(&:empty?) ? "" : "-c#{configs.index(config)}"
+    plain = config[0].values.all?(&:empty?) && config.drop(1).all?(&:nil?)
+    tag = configs.index(config).zero? && plain ? "" : "-c#{configs.index(config)}"
     dir = File.join(out_root, cop.tr("/", "_"), "r#{ruby}#{tag}")
     FileUtils.mkdir_p(dir)
     File.write(File.join(dir, ".rubocop.yml"), rubocop_yml(snips.first))
+    if snips.first[:schema]
+      FileUtils.mkdir_p(File.join(dir, "db"))
+      File.write(File.join(dir, "db", "schema.rb"), snips.first[:schema])
+    end
+    if (gems = snips.first[:gems])
+      specs = gems.sort.map { |g, v| "    #{g} (#{v})\n" }.join
+      File.write(File.join(dir, "Gemfile.lock"), "GEM\n  remote: https://rubygems.org/\n  specs:\n#{specs}\n" \
+                                                 "PLATFORMS\n  ruby\n\nDEPENDENCIES\n#{gems.keys.sort.map { |g| "  #{g}\n" }.join}")
+    end
     snips.uniq { |s| [s[:filename], s[:text]] }.each_with_index do |s, i|
       path = File.join(dir, snippet_path(cop, s, i))
       FileUtils.mkdir_p(File.dirname(path))

@@ -1,0 +1,87 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/20250101010101_add_column_to_table.rb 37 <==
+add_column :table, :column, :integer
+
+==> 001/20190101010101_add_column_to_table.rb 37 <==
+add_column :table, :column, :integer
+
+==> 002/20250101010101_add_column_to_table.rb 49 <==
+add_column :table, :column, :integer, default: 0
+
+==> 003/20250101010101_add_column_to_table.rb 51 <==
+add_column :table, :column, :integer, comment: nil
+
+==> 004/20250101010101_add_column_to_table.rb 50 <==
+add_column :table, :column, :integer, comment: ''
+
+==> 005/005.rb 66 <==
+add_column :table, :column, :integer, comment: 'An integer field'
+
+==> 006/006.rb 91 <==
+add_column :table, :column, :integer, null: false, comment: 'An integer field', default: 0
+
+==> 007/20250101010101_create_users.rb 31 <==
+create_table :users do |t|
+end
+
+==> 008/20250101010101_create_users.rb 45 <==
+create_table :users, comment: nil do |t|
+end
+
+==> 009/20250101010101_create_users.rb 45 <==
+create_table :users, comment: '' do |t|
+
+end
+
+==> 010/20250101010101_create_users.rb 78 <==
+create_table :users, comment: 'Table' do |t|
+  t.column :column, :integer
+end
+
+==> 011/20250101010101_create_users.rb 69 <==
+create_table :users, comment: 'Table' do |t|
+  t.integer :column
+end
+
+==> 012/20250101010101_create_users.rb 109 <==
+create_table :users, comment: 'Table' do |t|
+  t.column :column1, :integer
+  t.column :column2, :integer
+end
+
+==> 013/20250101010101_create_users.rb 91 <==
+create_table :users, comment: 'Table' do |t|
+  t.integer :column1
+  t.integer :column2
+end
+
+==> 014/014.rb 104 <==
+create_table :users, comment: 'Table' do |t|
+  t.column :column, :integer, comment: 'I am a column'
+end
+
+==> 015/015.rb 130 <==
+create_table :users, comment: 'Table' do |t|
+  t.column :column, :integer, default: nil, comment: 'I am a column', null: true
+end
+
+==> 016/016.rb 121 <==
+create_table :users, comment: 'Table' do |t|
+  t.integer :column, default: nil, comment: 'I am a column', null: true
+end
+
+==> 017/017.rb 129 <==
+create_table :users, comment: 'Table' do |t|
+  i_am_a_comment = 'I am a column'
+  t.integer :column, comment: i_am_a_comment
+end
+

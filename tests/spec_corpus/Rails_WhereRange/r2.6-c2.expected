@@ -1,0 +1,68 @@
+==> offenses exit=1 1717 <==
+000/000.rb:1:7: C: [Correctable] Rails/WhereRange: Use `where(column: value..)` instead of manually constructing SQL.
+001/001.rb:1:7: C: [Correctable] Rails/WhereRange: Use `where(column: value..)` instead of manually constructing SQL.
+002/002.rb:1:7: C: [Correctable] Rails/WhereRange: Use `where(table: { column: value.. })` instead of manually constructing SQL.
+004/004.rb:1:7: C: [Correctable] Rails/WhereRange: Use `where(column: value1...value2)` instead of manually constructing SQL.
+005/005.rb:1:7: C: [Correctable] Rails/WhereRange: Use `where(column: value1..value2)` instead of manually constructing SQL.
+006/006.rb:1:7: C: [Correctable] Rails/WhereRange: Use `where(column: value1...value2)` instead of manually constructing SQL.
+009/009.rb:1:7: C: [Correctable] Rails/WhereRange: Use `where(column: value..)` instead of manually constructing SQL.
+010/010.rb:1:7: C: [Correctable] Rails/WhereRange: Use `where(column: value1..value2)` instead of manually constructing SQL.
+011/011.rb:1:13: C: [Correctable] Rails/WhereRange: Use `not(column: value..)` instead of manually constructing SQL.
+012/012.rb:1:7: C: [Correctable] Rails/WhereRange: Use `where(column: value..)` instead of manually constructing SQL.
+012/012.rb:2:7: C: [Correctable] Rails/WhereRange: Use `where(column: value..)` instead of manually constructing SQL.
+012/012.rb:3:7: C: [Correctable] Rails/WhereRange: Use `where(column: value1...value2)` instead of manually constructing SQL.
+012/012.rb:4:7: C: [Correctable] Rails/WhereRange: Use `where(column: value1...value2)` instead of manually constructing SQL.
+016/016.rb:1:7: C: [Correctable] Rails/WhereRange: Use `where(column: (true ? 1 : 2)..)` instead of manually constructing SQL.
+
+==> autocorrect exit=0 1689 <==
+000/000.rb:1:7: C: [Corrected] Rails/WhereRange: Use `where(column: value..)` instead of manually constructing SQL.
+001/001.rb:1:7: C: [Corrected] Rails/WhereRange: Use `where(column: value..)` instead of manually constructing SQL.
+002/002.rb:1:7: C: [Corrected] Rails/WhereRange: Use `where(table: { column: value.. })` instead of manually constructing SQL.
+004/004.rb:1:7: C: [Corrected] Rails/WhereRange: Use `where(column: value1...value2)` instead of manually constructing SQL.
+005/005.rb:1:7: C: [Corrected] Rails/WhereRange: Use `where(column: value1..value2)` instead of manually constructing SQL.
+006/006.rb:1:7: C: [Corrected] Rails/WhereRange: Use `where(column: value1...value2)` instead of manually constructing SQL.
+009/009.rb:1:7: C: [Corrected] Rails/WhereRange: Use `where(column: value..)` instead of manually constructing SQL.
+010/010.rb:1:7: C: [Corrected] Rails/WhereRange: Use `where(column: value1..value2)` instead of manually constructing SQL.
+011/011.rb:1:13: C: [Corrected] Rails/WhereRange: Use `not(column: value..)` instead of manually constructing SQL.
+012/012.rb:1:7: C: [Corrected] Rails/WhereRange: Use `where(column: value..)` instead of manually constructing SQL.
+012/012.rb:2:7: C: [Corrected] Rails/WhereRange: Use `where(column: value..)` instead of manually constructing SQL.
+012/012.rb:3:7: C: [Corrected] Rails/WhereRange: Use `where(column: value1...value2)` instead of manually constructing SQL.
+012/012.rb:4:7: C: [Corrected] Rails/WhereRange: Use `where(column: value1...value2)` instead of manually constructing SQL.
+016/016.rb:1:7: C: [Corrected] Rails/WhereRange: Use `where(column: (true ? 1 : 2)..)` instead of manually constructing SQL.
+
+==> corrected/000/000.rb 29 <==
+Model.where(column: value..)
+
+==> corrected/001/001.rb 29 <==
+Model.where(column: value..)
+
+==> corrected/002/002.rb 40 <==
+Model.where(table: { column: value.. })
+
+==> corrected/004/004.rb 37 <==
+Model.where(column: value1...value2)
+
+==> corrected/005/005.rb 36 <==
+Model.where(column: value1..value2)
+
+==> corrected/006/006.rb 37 <==
+Model.where(column: value1...value2)
+
+==> corrected/009/009.rb 29 <==
+Model.where(column: value..)
+
+==> corrected/010/010.rb 36 <==
+Model.where(column: value1..value2)
+
+==> corrected/011/011.rb 33 <==
+Model.where.not(column: value..)
+
+==> corrected/012/012.rb 132 <==
+Model.where(column: value..)
+Model.where(column: value..)
+Model.where(column: value1...value2)
+Model.where(column: value1...value2)
+
+==> corrected/016/016.rb 38 <==
+Model.where(column: (true ? 1 : 2)..)
+

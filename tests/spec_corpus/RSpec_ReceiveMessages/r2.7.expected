@@ -1,0 +1,107 @@
+==> offenses exit=1 2746 <==
+000/000_spec.rb:2:3: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [3, 4].
+000/000_spec.rb:3:3: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [2, 4].
+000/000_spec.rb:4:3: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [2, 3].
+001/001_spec.rb:2:3: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [3].
+001/001_spec.rb:3:3: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [2].
+002/002_spec.rb:2:3: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [3].
+002/002_spec.rb:3:3: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [2].
+003/003_spec.rb:2:3: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [3].
+003/003_spec.rb:3:3: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [2].
+004/004_spec.rb:2:3: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [3, 4].
+004/004_spec.rb:3:3: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [2, 4].
+004/004_spec.rb:4:3: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [2, 3].
+010/010_spec.rb:2:3: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [3].
+010/010_spec.rb:3:3: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [2].
+011/011_spec.rb:2:3: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [5].
+011/011_spec.rb:5:3: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [2].
+012/012_spec.rb:3:3: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [5].
+012/012_spec.rb:5:3: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [3].
+019/019_spec.rb:3:3: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [5].
+019/019_spec.rb:5:3: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [3].
+020/020_spec.rb:3:5: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [4].
+020/020_spec.rb:4:5: C: [Correctable] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [3].
+
+==> autocorrect exit=0 2702 <==
+000/000_spec.rb:2:3: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [3, 4].
+000/000_spec.rb:3:3: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [2, 4].
+000/000_spec.rb:4:3: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [2, 3].
+001/001_spec.rb:2:3: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [3].
+001/001_spec.rb:3:3: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [2].
+002/002_spec.rb:2:3: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [3].
+002/002_spec.rb:3:3: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [2].
+003/003_spec.rb:2:3: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [3].
+003/003_spec.rb:3:3: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [2].
+004/004_spec.rb:2:3: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [3, 4].
+004/004_spec.rb:3:3: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [2, 4].
+004/004_spec.rb:4:3: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [2, 3].
+010/010_spec.rb:2:3: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [3].
+010/010_spec.rb:3:3: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [2].
+011/011_spec.rb:2:3: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [5].
+011/011_spec.rb:5:3: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [2].
+012/012_spec.rb:3:3: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [5].
+012/012_spec.rb:5:3: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [3].
+019/019_spec.rb:3:3: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [5].
+019/019_spec.rb:5:3: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [3].
+020/020_spec.rb:3:5: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [4].
+020/020_spec.rb:4:5: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [3].
+
+==> corrected/000/000_spec.rb 84 <==
+before do
+  allow(Service).to receive_messages(foo: baz, bar: true, baz: "foo")
+end
+
+==> corrected/001/001_spec.rb 75 <==
+before do
+  allow(Service).to receive_messages(foo: baz, 'foo=': true)
+end
+
+==> corrected/002/002_spec.rb 74 <==
+before do
+  allow(Service).to receive_messages('`': true, '[]': true)
+end
+
+==> corrected/003/003_spec.rb 72 <==
+before do
+  allow(Service).to receive_messages(foo: [1, 2], bar: 3)
+end
+
+==> corrected/004/004_spec.rb 103 <==
+before do
+  allow(Service).to receive_messages(foo: { a: 1, b: 2 }, bar: { "baz" => qux }, baz: 3)
+end
+
+==> corrected/010/010_spec.rb 68 <==
+before do
+  allow(user).to receive_messages(foo: baz, bar: qux)
+end
+
+==> corrected/011/011_spec.rb 114 <==
+before do
+  calling_some_method
+  calling_another_method
+  allow(Service).to receive_messages(foo: 1, bar: 2)
+end
+
+==> corrected/012/012_spec.rb 111 <==
+before do
+  foo = Service.new
+  bar = Service.new
+  allow(Service).to receive_messages(foo: foo, bar: bar)
+end
+
+==> corrected/019/019_spec.rb 171 <==
+before do
+  allow(Service).to receive(:foo).and_return(bar)
+  allow(Service).to receive(:foo).and_return(qux)
+  allow(Service).to receive_messages(bar: qux, baz: qux)
+end
+
+==> corrected/020/020_spec.rb 133 <==
+RSpec.describe do
+  before do
+    allow(X).to receive_messages(foo: 1, bar: 2)
+    allow(Y).to receive(:foo).and_return(3)
+  end
+end
+

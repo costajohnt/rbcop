@@ -1,0 +1,29 @@
+==> offenses exit=1 516 <==
+000.rb:1:7: C: [Correctable] Performance/ReverseFirst: Use `last(5).reverse` instead of `reverse.first(5)`.
+001.rb:1:7: C: [Correctable] Performance/ReverseFirst: Use `last(5)&.reverse` instead of `reverse&.first(5)`.
+002.rb:1:8: C: [Correctable] Performance/ReverseFirst: Use `last(5)&.reverse` instead of `reverse&.first(5)`.
+003.rb:1:7: C: [Correctable] Performance/ReverseFirst: Use `last` instead of `reverse.first`.
+004.rb:1:8: C: [Correctable] Performance/ReverseFirst: Use `last` instead of `reverse.first`.
+
+==> autocorrect exit=0 506 <==
+000.rb:1:7: C: [Corrected] Performance/ReverseFirst: Use `last(5).reverse` instead of `reverse.first(5)`.
+001.rb:1:7: C: [Corrected] Performance/ReverseFirst: Use `last(5)&.reverse` instead of `reverse&.first(5)`.
+002.rb:1:8: C: [Corrected] Performance/ReverseFirst: Use `last(5)&.reverse` instead of `reverse&.first(5)`.
+003.rb:1:7: C: [Corrected] Performance/ReverseFirst: Use `last` instead of `reverse.first`.
+004.rb:1:8: C: [Corrected] Performance/ReverseFirst: Use `last` instead of `reverse.first`.
+
+==> corrected/000.rb 22 <==
+array.last(5).reverse
+
+==> corrected/001.rb 23 <==
+array.last(5)&.reverse
+
+==> corrected/002.rb 24 <==
+array&.last(5)&.reverse
+
+==> corrected/003.rb 11 <==
+array.last
+
+==> corrected/004.rb 12 <==
+array&.last
+

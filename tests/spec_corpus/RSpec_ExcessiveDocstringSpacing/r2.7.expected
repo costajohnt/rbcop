@@ -1,0 +1,290 @@
+==> offenses exit=1 4494 <==
+002/002_spec.rb:1:11: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+003/003_spec.rb:1:11: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+004/004_spec.rb:1:11: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+005/005_spec.rb:1:11: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+006/006_spec.rb:1:11: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+007/007_spec.rb:1:11: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+008/008_spec.rb:1:11: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+009/009_spec.rb:1:11: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+010/010_spec.rb:1:11: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+011/011_spec.rb:1:11: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+014/014_spec.rb:1:11: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+015/015_spec.rb:1:11: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+017/017_spec.rb:1:11: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+018/018_spec.rb:1:11: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+020/020_spec.rb:1:10: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+021/021_spec.rb:1:10: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+022/022_spec.rb:1:10: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+023/023_spec.rb:1:10: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+024/024_spec.rb:1:10: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+025/025_spec.rb:1:10: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+026/026_spec.rb:1:10: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+027/027_spec.rb:1:10: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+028/028_spec.rb:1:10: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+031/031_spec.rb:1:10: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+032/032_spec.rb:1:10: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+034/034_spec.rb:1:10: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+035/035_spec.rb:1:10: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+037/037_spec.rb:1:5: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+038/038_spec.rb:1:5: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+039/039_spec.rb:1:5: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+040/040_spec.rb:1:5: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+041/041_spec.rb:1:5: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+042/042_spec.rb:1:5: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+043/043_spec.rb:1:5: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+044/044_spec.rb:1:5: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+045/045_spec.rb:1:5: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+046/046_spec.rb:1:5: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+047/047_spec.rb:1:5: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+050/050_spec.rb:1:5: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+051/051_spec.rb:1:5: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+053/053_spec.rb:1:5: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+054/054_spec.rb:1:5: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+055/055_spec.rb:1:11: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+056/056_spec.rb:1:10: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+057/057_spec.rb:1:6: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+058/058_spec.rb:1:7: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+059/059_spec.rb:1:7: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+062/062_spec.rb:1:11: C: [Correctable] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+
+==> autocorrect exit=0 4398 <==
+002/002_spec.rb:1:11: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+003/003_spec.rb:1:11: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+004/004_spec.rb:1:11: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+005/005_spec.rb:1:11: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+006/006_spec.rb:1:11: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+007/007_spec.rb:1:11: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+008/008_spec.rb:1:11: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+009/009_spec.rb:1:11: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+010/010_spec.rb:1:11: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+011/011_spec.rb:1:11: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+014/014_spec.rb:1:11: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+015/015_spec.rb:1:11: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+017/017_spec.rb:1:11: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+018/018_spec.rb:1:11: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+020/020_spec.rb:1:10: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+021/021_spec.rb:1:10: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+022/022_spec.rb:1:10: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+023/023_spec.rb:1:10: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+024/024_spec.rb:1:10: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+025/025_spec.rb:1:10: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+026/026_spec.rb:1:10: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+027/027_spec.rb:1:10: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+028/028_spec.rb:1:10: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+031/031_spec.rb:1:10: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+032/032_spec.rb:1:10: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+034/034_spec.rb:1:10: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+035/035_spec.rb:1:10: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+037/037_spec.rb:1:5: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+038/038_spec.rb:1:5: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+039/039_spec.rb:1:5: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+040/040_spec.rb:1:5: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+041/041_spec.rb:1:5: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+042/042_spec.rb:1:5: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+043/043_spec.rb:1:5: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+044/044_spec.rb:1:5: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+045/045_spec.rb:1:5: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+046/046_spec.rb:1:5: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+047/047_spec.rb:1:5: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+050/050_spec.rb:1:5: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+051/051_spec.rb:1:5: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+053/053_spec.rb:1:5: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+054/054_spec.rb:1:5: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+055/055_spec.rb:1:11: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+056/056_spec.rb:1:10: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+057/057_spec.rb:1:6: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+058/058_spec.rb:1:7: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+059/059_spec.rb:1:7: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+062/062_spec.rb:1:11: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+
+==> corrected/002/002_spec.rb 28 <==
+describe '#mymethod' do
+end
+
+==> corrected/003/003_spec.rb 28 <==
+describe '#mymethod' do
+end
+
+==> corrected/004/004_spec.rb 28 <==
+describe '#mymethod' do
+end
+
+==> corrected/005/005_spec.rb 29 <==
+describe "##{:stuff}" do
+end
+
+==> corrected/006/006_spec.rb 28 <==
+describe '#mymethod' do
+end
+
+==> corrected/007/007_spec.rb 28 <==
+describe '#mymethod' do
+end
+
+==> corrected/008/008_spec.rb 28 <==
+describe '#mymethod' do
+end
+
+==> corrected/009/009_spec.rb 28 <==
+describe '#mymethod' do
+end
+
+==> corrected/010/010_spec.rb 29 <==
+describe "##{:stuff}" do
+end
+
+==> corrected/011/011_spec.rb 19 <==
+describe '' do
+end
+
+==> corrected/014/014_spec.rb 38 <==
+describe '#mymethod (is cool)' do
+end
+
+==> corrected/015/015_spec.rb 40 <==
+describe '#mymethod ( is cool )' do
+end
+
+==> corrected/017/017_spec.rb 38 <==
+describe '#mymethod (is cool)' do
+end
+
+==> corrected/018/018_spec.rb 39 <==
+describe "##{object} (is cool)" do
+end
+
+==> corrected/020/020_spec.rb 38 <==
+context 'when doing something' do
+end
+
+==> corrected/021/021_spec.rb 27 <==
+context '#mymethod' do
+end
+
+==> corrected/022/022_spec.rb 48 <==
+context "when doing something #{:stuff}" do
+end
+
+==> corrected/023/023_spec.rb 38 <==
+context 'when doing something' do
+end
+
+==> corrected/024/024_spec.rb 27 <==
+context '#mymethod' do
+end
+
+==> corrected/025/025_spec.rb 27 <==
+context '#mymethod' do
+end
+
+==> corrected/026/026_spec.rb 38 <==
+context "when doing #{:stuff}" do
+end
+
+==> corrected/027/027_spec.rb 38 <==
+context "when doing #{:stuff}" do
+end
+
+==> corrected/028/028_spec.rb 18 <==
+context '' do
+end
+
+==> corrected/031/031_spec.rb 32 <==
+context 'when something' do
+end
+
+==> corrected/032/032_spec.rb 46 <==
+context 'when something cool happens!' do
+end
+
+==> corrected/034/034_spec.rb 48 <==
+context 'when doing something like this' do
+end
+
+==> corrected/035/035_spec.rb 53 <==
+context "when doing something like #{object}" do
+end
+
+==> corrected/037/037_spec.rb 27 <==
+it 'does something' do
+end
+
+==> corrected/038/038_spec.rb 27 <==
+it 'does something' do
+end
+
+==> corrected/039/039_spec.rb 37 <==
+it "does something #{:stuff}" do
+end
+
+==> corrected/040/040_spec.rb 27 <==
+it 'does something' do
+end
+
+==> corrected/041/041_spec.rb 27 <==
+it 'does something' do
+end
+
+==> corrected/042/042_spec.rb 27 <==
+it 'does something' do
+end
+
+==> corrected/043/043_spec.rb 37 <==
+it "does something #{:stuff}" do
+end
+
+==> corrected/044/044_spec.rb 18 <==
+it "tests" do
+end
+
+==> corrected/045/045_spec.rb 22 <==
+it "#{:stuff}" do
+end
+
+==> corrected/046/046_spec.rb 32 <==
+it "#{:stuff} something" do
+end
+
+==> corrected/047/047_spec.rb 13 <==
+it '' do
+end
+
+==> corrected/050/050_spec.rb 27 <==
+it 'does something' do
+end
+
+==> corrected/051/051_spec.rb 33 <==
+it 'does something cool!' do
+end
+
+==> corrected/053/053_spec.rb 45 <==
+it 'does something and correctly fix' do
+end
+
+==> corrected/054/054_spec.rb 42 <==
+it "does something with #{object}" do
+end
+
+==> corrected/055/055_spec.rb 31 <==
+xcontext "when testing" do
+end
+
+==> corrected/056/056_spec.rb 27 <==
+feature "#{:stuff}" do
+end
+
+==> corrected/057/057_spec.rb 31 <==
+its("length") { should eq(1) }
+
+==> corrected/058/058_spec.rb 42 <==
+skip 'this please and thank you !' do
+end
+
+==> corrected/059/059_spec.rb 35 <==
+skip 'this please and thank you !'
+
+==> corrected/062/062_spec.rb 39 <==
+describe "##{object} (is cool)" do
+end
+

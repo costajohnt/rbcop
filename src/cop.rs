@@ -159,6 +159,10 @@ impl Cx<'_, '_> {
 
     /// Report an offense with no location (RuboCop's `add_global_offense`), e.g. a file name problem.
     pub fn add_global(&mut self, message: impl Into<String>) {
+        // Base#add_global_offense asks the comment config too (enabled_line?).
+        if !crate::directives::ignoring_disable_comments() {
+            crate::runner::poison_raise(true);
+        }
         let message = message.into();
         self.out.push(Offense {
             start: 0,
@@ -205,6 +209,18 @@ impl Cx<'_, '_> {
         self.push(start, end, message.into(), true, true);
     }
 
+    /// An offense RuboCop corrects (so `[Correctable]`) whose correction rbcop deliberately withholds:
+    /// the text it would insert comes from string/symbol content that is not inert Ruby
+    /// (docs/known-gaps.md, "Deliberate differences"). The source is left untouched.
+    pub fn add_withheld_fix(&mut self, start: usize, end: usize, message: impl Into<String>) {
+        if !self.fixes.seen.insert((start, end)) {
+            return;
+        }
+        let (first, last) = (self.src.line_of(start), self.src.line_of(end));
+        let correctable = !crate::directives::suppressed(&self.facts.disabled, self.cop, first, last);
+        self.push(start, end, message.into(), correctable, false);
+    }
+
     /// A corrector raised ClobberingError: RuboCop reports the cop error (at the node the cop was
     /// visiting, not the offense) and loses the offense.
     fn cop_error(&self) {
@@ -212,6 +228,10 @@ impl Cx<'_, '_> {
     }
 
     fn push(&mut self, start: usize, end: usize, message: String, correctable: bool, corrected: bool) {
+        // Base#add_offense asks the comment config whether the lines are enabled.
+        if !crate::directives::ignoring_disable_comments() {
+            crate::runner::poison_raise(true);
+        }
         self.fixes.seen.insert((start, end));
         self.out.push(Offense {
             start,
@@ -253,6 +273,12 @@ pub trait Cop: Send + Sync {
     /// target Ruby (TargetRubyVersion) is within this inclusive range.
     fn ruby_range(&self) -> (f64, f64) {
         (0.0, f64::MAX)
+    }
+
+    /// rubocop-rails `minimum_target_rails_version`: the cop only runs when the target Rails
+    /// (`Resolved::target_rails_version`) is at least this.
+    fn min_rails(&self) -> f64 {
+        0.0
     }
 }
 

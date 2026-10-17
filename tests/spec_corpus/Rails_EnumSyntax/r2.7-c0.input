@@ -1,0 +1,14 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 7.0
+
+==> app/models/000/000.rb 48 <==
+enum status: %i[active archived], _prefix: true
+

@@ -1,0 +1,29 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 6.1
+
+==> app/models/000/000.rb 55 <==
+enum status: { active: 0, archived: 1 }, _prefix: true
+
+==> app/models/001/001.rb 71 <==
+enum :status, { active: 0, archived: 1 }, _prefix: true, _suffix: true
+
+==> app/models/002/002.rb 44 <==
+enum "status" => { active: 0, archived: 1 }
+
+==> app/models/003/003.rb 39 <==
+enum KEY => { active: 0, archived: 1 }
+
+==> app/models/004/004.rb 40 <==
+enum status: { active: 0, archived: 1 }
+
+==> app/models/005/005.rb 70 <==
+enum status: { active: 0, archived: 1 }, _prefix: true, _suffix: true
+

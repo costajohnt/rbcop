@@ -1,0 +1,102 @@
+==> .rubocop.yml 181 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/VariableName:
+  EnforcedStyle: snake_case
+
+==> 000/000_spec.rb 54 <==
+RSpec.describe Foo do
+  let(:userName) { 'Adam' }
+end
+
+==> 001/001_spec.rb 54 <==
+RSpec.describe Foo do
+  let(:UserName) { 'Adam' }
+end
+
+==> 002/002_spec.rb 119 <==
+RSpec.describe Foo do
+  let(:userName) { 'Adam' }
+  let(:user_email) { 'adam@example.com' }
+  let(:userAge) { 20 }
+end
+
+==> 003/003_spec.rb 55 <==
+RSpec.describe Foo do
+  let(:user_name) { 'Adam' }
+end
+
+==> 004/004_spec.rb 59 <==
+RSpec.describe Foo do
+  let(:"user#{name}") { 'Adam' }
+end
+
+==> 005/005_spec.rb 55 <==
+RSpec.describe Foo do
+  let('userName') { 'Adam' }
+end
+
+==> 006/006_spec.rb 56 <==
+RSpec.describe Foo do
+  let('user-name') { 'Adam' }
+end
+
+==> 007/007_spec.rb 56 <==
+RSpec.describe Foo do
+  let('user_name') { 'Adam' }
+end
+
+==> 008/008_spec.rb 58 <==
+RSpec.describe Foo do
+  let("user#{name}") { 'Adam' }
+end
+
+==> 009/009_spec.rb 57 <==
+RSpec.describe Foo do
+  let(:userName, &create_user)
+end
+
+==> 010/010_spec.rb 55 <==
+RSpec.describe Foo do
+  let!(:userName) { 'Adam' }
+end
+
+==> 011/011_spec.rb 56 <==
+RSpec.describe Foo do
+  let!(:user_name) { 'Adam' }
+end
+
+==> 012/012_spec.rb 58 <==
+RSpec.describe Foo do
+  subject(:userName) { 'Adam' }
+end
+
+==> 013/013_spec.rb 59 <==
+RSpec.describe Foo do
+  subject(:user_name) { 'Adam' }
+end
+
+==> 014/014_spec.rb 59 <==
+RSpec.describe Foo do
+  subject!(:userName) { 'Adam' }
+end
+
+==> 015/015_spec.rb 60 <==
+RSpec.describe Foo do
+  subject!(:user_name) { 'Adam' }
+end
+
+==> 016/016_spec.rb 71 <==
+RSpec.shared_examples 'foo example' do
+  let(:userName) { 'Adam' }
+end
+
+==> 017/017_spec.rb 26 <==
+let(:userName) { 'Adam' }
+

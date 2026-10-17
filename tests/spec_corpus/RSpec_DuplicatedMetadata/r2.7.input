@@ -1,0 +1,40 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 28 <==
+describe 'Something' do
+end
+
+==> 001/001_spec.rb 36 <==
+describe 'Something', :a, :b do
+end
+
+==> 002/002_spec.rb 36 <==
+describe 'Something', :a, :a do
+end
+
+==> 003/003_spec.rb 40 <==
+describe 'Something', :a, :b, :a do
+end
+
+==> 004/004_spec.rb 35 <==
+it 'does something', :a, :a do
+end
+
+==> 005/005_spec.rb 43 <==
+shared_examples 'something', :a, :a do
+end
+
+==> 006/006_spec.rb 86 <==
+RSpec.configure do |configuration|
+  configuration.before(:each, :a, :a) do
+  end
+end
+

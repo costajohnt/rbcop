@@ -178,7 +178,12 @@ pub const T_REGEXP_OPT: u32 = 1003;
 /// content split per line, `tSPACE` in percent arrays, `tUNARY_NUM` for `+1`.
 /// Not ported: token type changes that need the lexer state (`tLBRACE` vs `tLCURLY`,
 /// `tLPAREN` vs `tLPAREN2`, `kDO_LAMBDA`), and joining of continued single-line heredoc content.
+/// Built once per source; callers get a copy.
 pub fn translated(src: &Source) -> Vec<Token> {
+    src.translated_tokens.get_or_init(|| translate(src)).clone()
+}
+
+fn translate(src: &Source) -> Vec<Token> {
     use sys::*;
     let raw = src.tokens();
     let text = src.text.as_bytes();

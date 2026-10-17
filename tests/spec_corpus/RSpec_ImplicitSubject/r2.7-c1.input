@@ -1,0 +1,31 @@
+==> .rubocop.yml 195 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/ImplicitSubject:
+  EnforcedStyle: single_statement_only
+
+==> 000/000_spec.rb 63 <==
+it 'expect subject to be used' do
+  is_expected.to be_good
+end
+
+==> 001/001_spec.rb 83 <==
+it 'expect subject to be used' do
+  subject.age = 18
+  is_expected.to be_valid
+end
+
+==> 002/002_spec.rb 54 <==
+describe 'something' do
+  is_expected.to be_valid
+end
+
+==> 003/003_spec.rb 19 <==
+it('is valid') { }
+

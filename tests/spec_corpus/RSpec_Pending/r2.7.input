@@ -1,0 +1,129 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 10 <==
+it 'test'
+
+==> 001/001_spec.rb 35 <==
+describe 'test' do
+  it 'test'
+end
+
+==> 002/002_spec.rb 23 <==
+xcontext 'test' do
+end
+
+==> 003/003_spec.rb 24 <==
+xdescribe 'test' do
+end
+
+==> 004/004_spec.rb 23 <==
+xexample 'test' do
+end
+
+==> 005/005_spec.rb 23 <==
+xfeature 'test' do
+end
+
+==> 006/006_spec.rb 18 <==
+xit 'test' do
+end
+
+==> 007/007_spec.rb 24 <==
+xscenario 'test' do
+end
+
+==> 008/008_spec.rb 23 <==
+xspecify 'test' do
+end
+
+==> 009/009_spec.rb 24 <==
+it 'test' do
+  skip
+end
+
+==> 010/010_spec.rb 19 <==
+skip 'test' do
+end
+
+==> 011/011_spec.rb 24 <==
+it 'test', :skip do
+end
+
+==> 012/012_spec.rb 36 <==
+RSpec.describe 'test', :skip do
+end
+
+==> 013/013_spec.rb 27 <==
+it 'test', :pending do
+end
+
+==> 014/014_spec.rb 62 <==
+it "test", pending: 'test' \
+                    'foo' do
+end
+
+==> 015/015_spec.rb 60 <==
+it "test", pending: 'test ,
+                    foo' do
+end
+
+==> 016/016_spec.rb 61 <==
+it "test", pending: %(test ,
+                    foo) do
+end
+
+==> 017/017_spec.rb 29 <==
+it 'test', skip: true do
+end
+
+==> 018/018_spec.rb 56 <==
+it 'test', skip: 'skipped because of being slow' do
+end
+
+==> 019/019_spec.rb 22 <==
+pending 'test' do
+end
+
+==> 020/020_spec.rb 24 <==
+describe 'test' do; end
+
+==> 021/021_spec.rb 23 <==
+example 'test' do; end
+
+==> 022/022_spec.rb 24 <==
+scenario 'test' do; end
+
+==> 023/023_spec.rb 16 <==
+specify do; end
+
+==> 024/024_spec.rb 23 <==
+feature 'test' do; end
+
+==> 025/025_spec.rb 23 <==
+context 'test' do; end
+
+==> 026/026_spec.rb 18 <==
+it 'test' do; end
+
+==> 027/027_spec.rb 31 <==
+it 'test', skip: false do; end
+
+==> 028/028_spec.rb 29 <==
+example_group 'test' do; end
+
+==> 029/029_spec.rb 28 <==
+subject { Project.pending }
+
+==> 030/030_spec.rb 52 <==
+expect(
+  foo.map { it.reverse }
+).to include(:bar)
+

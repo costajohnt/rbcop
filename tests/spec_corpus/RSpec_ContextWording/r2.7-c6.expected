@@ -1,0 +1,6 @@
+==> offenses exit=1 155 <==
+000/000_spec.rb:1:9: C: RSpec/ContextWording: Current settings will always report an offense. Please add allowed words to `Prefixes` or `AllowedPatterns`.
+
+==> autocorrect exit=1 155 <==
+000/000_spec.rb:1:9: C: RSpec/ContextWording: Current settings will always report an offense. Please add allowed words to `Prefixes` or `AllowedPatterns`.
+

@@ -1,0 +1,88 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/Rakefile 17 <==
+task :foo do
+end
+
+==> 001/Rakefile 18 <==
+task 'bar' do
+end
+
+==> 002/Rakefile 26 <==
+task 'foo:bar:baz' do
+end
+
+==> 003/Rakefile 25 <==
+task :foo, [:arg] do
+end
+
+==> 004/Rakefile 23 <==
+task :foo, :arg do
+end
+
+==> 005/Rakefile 32 <==
+task :foo, :arg1, 'arg2' do
+end
+
+==> 006/Rakefile 24 <==
+task :foo, *args do
+end
+
+==> 007/Rakefile 20 <==
+task foo: [] do
+end
+
+==> 008/Rakefile 31 <==
+task :foo, [:arg] => [] do
+end
+
+==> 009/Rakefile 40 <==
+task foo: [:bar, `:environment`] do
+end
+
+==> 010/Rakefile 22 <==
+task foo: :bar do
+end
+
+==> 011/Rakefile 30 <==
+task foo: [:foo, :bar] do
+end
+
+==> 012/Rakefile 22 <==
+task foo: [:bar, dep]
+
+==> 013/Rakefile 32 <==
+task foo: `:environment` do
+end
+
+==> 014/Rakefile 40 <==
+task foo: [`:environment`, :bar] do
+end
+
+==> 015/Rakefile 43 <==
+task :foo, [:arg] => `:environment` do
+end
+
+==> 016/Rakefile 14 <==
+task foo: dep
+
+==> 017/Rakefile 22 <==
+task foo: [dep, :bar]
+
+==> 018/Rakefile 20 <==
+task default: :spec
+
+==> 019/Rakefile 24 <==
+task(:foo).do_something
+
+==> 020/Rakefile 26 <==
+task 'foo' => [dep, :bar]
+

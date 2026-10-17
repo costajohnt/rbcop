@@ -1,0 +1,54 @@
+==> offenses exit=1 927 <==
+000/000.rb:1:12: C: [Correctable] Rails/OrderArguments: Prefer `:first_name` instead.
+001/001.rb:1:12: C: [Correctable] Rails/OrderArguments: Prefer `:first_name, :last_name` instead.
+002/002.rb:1:12: C: [Correctable] Rails/OrderArguments: Prefer `name: :desc` instead.
+003/003.rb:1:12: C: [Correctable] Rails/OrderArguments: Prefer `:name` instead.
+004/004.rb:1:12: C: [Correctable] Rails/OrderArguments: Prefer `first_name: :desc, last_name: :asc` instead.
+005/005.rb:1:12: C: [Correctable] Rails/OrderArguments: Prefer `:first_name, :last_name` instead.
+006/006.rb:1:13: C: [Correctable] Rails/OrderArguments: Prefer `:first_name` instead.
+007/007.rb:1:12: C: [Correctable] Rails/OrderArguments: Prefer `:first_name, :middle_name, :last_name` instead.
+008/008.rb:1:12: C: [Correctable] Rails/OrderArguments: Prefer `name: :desc` instead.
+009/009.rb:1:12: C: [Correctable] Rails/OrderArguments: Prefer `name: :desc` instead.
+
+==> autocorrect exit=0 907 <==
+000/000.rb:1:12: C: [Corrected] Rails/OrderArguments: Prefer `:first_name` instead.
+001/001.rb:1:12: C: [Corrected] Rails/OrderArguments: Prefer `:first_name, :last_name` instead.
+002/002.rb:1:12: C: [Corrected] Rails/OrderArguments: Prefer `name: :desc` instead.
+003/003.rb:1:12: C: [Corrected] Rails/OrderArguments: Prefer `:name` instead.
+004/004.rb:1:12: C: [Corrected] Rails/OrderArguments: Prefer `first_name: :desc, last_name: :asc` instead.
+005/005.rb:1:12: C: [Corrected] Rails/OrderArguments: Prefer `:first_name, :last_name` instead.
+006/006.rb:1:13: C: [Corrected] Rails/OrderArguments: Prefer `:first_name` instead.
+007/007.rb:1:12: C: [Corrected] Rails/OrderArguments: Prefer `:first_name, :middle_name, :last_name` instead.
+008/008.rb:1:12: C: [Corrected] Rails/OrderArguments: Prefer `name: :desc` instead.
+009/009.rb:1:12: C: [Corrected] Rails/OrderArguments: Prefer `name: :desc` instead.
+
+==> corrected/000/000.rb 24 <==
+User.order(:first_name)
+
+==> corrected/001/001.rb 36 <==
+User.order(:first_name, :last_name)
+
+==> corrected/002/002.rb 24 <==
+User.order(name: :desc)
+
+==> corrected/003/003.rb 18 <==
+User.order(:name)
+
+==> corrected/004/004.rb 47 <==
+User.order(first_name: :desc, last_name: :asc)
+
+==> corrected/005/005.rb 36 <==
+User.order(:first_name, :last_name)
+
+==> corrected/006/006.rb 25 <==
+User&.order(:first_name)
+
+==> corrected/007/007.rb 50 <==
+User.order(:first_name, :middle_name, :last_name)
+
+==> corrected/008/008.rb 24 <==
+User.order(name: :desc)
+
+==> corrected/009/009.rb 24 <==
+User.order(name: :desc)
+

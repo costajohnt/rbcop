@@ -1,0 +1,8 @@
+==> offenses exit=1 212 <==
+spec/000/000.rb:1:1: C: Rails/TimeZoneAssignment: Use `Time.use_zone` with block instead of `Time.zone=`.
+spec/001/001.rb:1:1: C: Rails/TimeZoneAssignment: Use `Time.use_zone` with block instead of `Time.zone=`.
+
+==> autocorrect exit=1 212 <==
+spec/000/000.rb:1:1: C: Rails/TimeZoneAssignment: Use `Time.use_zone` with block instead of `Time.zone=`.
+spec/001/001.rb:1:1: C: Rails/TimeZoneAssignment: Use `Time.use_zone` with block instead of `Time.zone=`.
+

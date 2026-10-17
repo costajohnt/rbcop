@@ -1,0 +1,79 @@
+==> offenses exit=1 1827 <==
+000/000.rb:1:6: C: [Correctable] Rails/WhereEquals: Use `where(name: 'Gabe')` instead of manually constructing SQL.
+001/001.rb:1:12: C: [Correctable] Rails/WhereEquals: Use `not(name: 'Gabe')` instead of manually constructing SQL.
+002/002.rb:1:7: C: [Correctable] Rails/WhereEquals: Use `where(name: 'Gabe')` instead of manually constructing SQL.
+003/003.rb:1:6: C: [Correctable] Rails/WhereEquals: Use `where(name: 'Gabe')` instead of manually constructing SQL.
+004/004.rb:1:6: C: [Correctable] Rails/WhereEquals: Use `where(name: nil)` instead of manually constructing SQL.
+005/005.rb:1:6: C: [Correctable] Rails/WhereEquals: Use `where(name: ['john', 'jane'])` instead of manually constructing SQL.
+006/006.rb:1:6: C: [Correctable] Rails/WhereEquals: Use `where(name: ['john', 'jane'])` instead of manually constructing SQL.
+007/007.rb:1:8: C: [Correctable] Rails/WhereEquals: Use `where(enrollments: { student_id: student.id })` instead of manually constructing SQL.
+008/008.rb:1:6: C: [Correctable] Rails/WhereEquals: Use `where(name: 'Gabe')` instead of manually constructing SQL.
+009/009.rb:1:7: C: [Correctable] Rails/WhereEquals: Use `where(name: 'Gabe')` instead of manually constructing SQL.
+010/010.rb:1:6: C: [Correctable] Rails/WhereEquals: Use `where(name: 'Gabe')` instead of manually constructing SQL.
+011/011.rb:1:6: C: [Correctable] Rails/WhereEquals: Use `where(name: nil)` instead of manually constructing SQL.
+012/012.rb:1:6: C: [Correctable] Rails/WhereEquals: Use `where(name: ['john', 'jane'])` instead of manually constructing SQL.
+013/013.rb:1:6: C: [Correctable] Rails/WhereEquals: Use `where(name: ['john', 'jane'])` instead of manually constructing SQL.
+014/014.rb:1:8: C: [Correctable] Rails/WhereEquals: Use `where(enrollments: { student_id: student.id })` instead of manually constructing SQL.
+
+==> autocorrect exit=0 1797 <==
+000/000.rb:1:6: C: [Corrected] Rails/WhereEquals: Use `where(name: 'Gabe')` instead of manually constructing SQL.
+001/001.rb:1:12: C: [Corrected] Rails/WhereEquals: Use `not(name: 'Gabe')` instead of manually constructing SQL.
+002/002.rb:1:7: C: [Corrected] Rails/WhereEquals: Use `where(name: 'Gabe')` instead of manually constructing SQL.
+003/003.rb:1:6: C: [Corrected] Rails/WhereEquals: Use `where(name: 'Gabe')` instead of manually constructing SQL.
+004/004.rb:1:6: C: [Corrected] Rails/WhereEquals: Use `where(name: nil)` instead of manually constructing SQL.
+005/005.rb:1:6: C: [Corrected] Rails/WhereEquals: Use `where(name: ['john', 'jane'])` instead of manually constructing SQL.
+006/006.rb:1:6: C: [Corrected] Rails/WhereEquals: Use `where(name: ['john', 'jane'])` instead of manually constructing SQL.
+007/007.rb:1:8: C: [Corrected] Rails/WhereEquals: Use `where(enrollments: { student_id: student.id })` instead of manually constructing SQL.
+008/008.rb:1:6: C: [Corrected] Rails/WhereEquals: Use `where(name: 'Gabe')` instead of manually constructing SQL.
+009/009.rb:1:7: C: [Corrected] Rails/WhereEquals: Use `where(name: 'Gabe')` instead of manually constructing SQL.
+010/010.rb:1:6: C: [Corrected] Rails/WhereEquals: Use `where(name: 'Gabe')` instead of manually constructing SQL.
+011/011.rb:1:6: C: [Corrected] Rails/WhereEquals: Use `where(name: nil)` instead of manually constructing SQL.
+012/012.rb:1:6: C: [Corrected] Rails/WhereEquals: Use `where(name: ['john', 'jane'])` instead of manually constructing SQL.
+013/013.rb:1:6: C: [Corrected] Rails/WhereEquals: Use `where(name: ['john', 'jane'])` instead of manually constructing SQL.
+014/014.rb:1:8: C: [Corrected] Rails/WhereEquals: Use `where(enrollments: { student_id: student.id })` instead of manually constructing SQL.
+
+==> corrected/000/000.rb 25 <==
+User.where(name: 'Gabe')
+
+==> corrected/001/001.rb 29 <==
+User.where.not(name: 'Gabe')
+
+==> corrected/002/002.rb 26 <==
+User&.where(name: 'Gabe')
+
+==> corrected/003/003.rb 25 <==
+User.where(name: 'Gabe')
+
+==> corrected/004/004.rb 22 <==
+User.where(name: nil)
+
+==> corrected/005/005.rb 35 <==
+User.where(name: ['john', 'jane'])
+
+==> corrected/006/006.rb 35 <==
+User.where(name: ['john', 'jane'])
+
+==> corrected/007/007.rb 54 <==
+Course.where(enrollments: { student_id: student.id })
+
+==> corrected/008/008.rb 25 <==
+User.where(name: 'Gabe')
+
+==> corrected/009/009.rb 26 <==
+User&.where(name: 'Gabe')
+
+==> corrected/010/010.rb 25 <==
+User.where(name: 'Gabe')
+
+==> corrected/011/011.rb 22 <==
+User.where(name: nil)
+
+==> corrected/012/012.rb 35 <==
+User.where(name: ['john', 'jane'])
+
+==> corrected/013/013.rb 35 <==
+User.where(name: ['john', 'jane'])
+
+==> corrected/014/014.rb 54 <==
+Course.where(enrollments: { student_id: student.id })
+

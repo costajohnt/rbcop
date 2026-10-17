@@ -1,0 +1,11 @@
+==> offenses exit=1 99 <==
+000/000_spec.rb:2:25: C: [Correctable] RSpec/Dialect: Prefer `raise_error` over `raise_exception`.
+
+==> autocorrect exit=0 97 <==
+000/000_spec.rb:2:25: C: [Corrected] RSpec/Dialect: Prefer `raise_error` over `raise_exception`.
+
+==> corrected/000/000_spec.rb 79 <==
+it 'raises an error' do
+  expect { subject }.to raise_error(StandardError)
+end
+

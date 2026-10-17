@@ -1,0 +1,8 @@
+==> offenses exit=1 278 <==
+app/models/000/000.rb:3:3: C: Rails/UniqueValidationWithoutIndex: Uniqueness validation should have a unique index on the database column.
+app/models/001/001.rb:3:3: C: Rails/UniqueValidationWithoutIndex: Uniqueness validation should have a unique index on the database column.
+
+==> autocorrect exit=1 278 <==
+app/models/000/000.rb:3:3: C: Rails/UniqueValidationWithoutIndex: Uniqueness validation should have a unique index on the database column.
+app/models/001/001.rb:3:3: C: Rails/UniqueValidationWithoutIndex: Uniqueness validation should have a unique index on the database column.
+

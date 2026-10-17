@@ -1,0 +1,26 @@
+==> offenses exit=1 871 <==
+000/000_spec.rb:2:7: C: RSpec/VariableName: Use snake_case for variable names.
+001/001_spec.rb:2:7: C: RSpec/VariableName: Use snake_case for variable names.
+002/002_spec.rb:2:7: C: RSpec/VariableName: Use snake_case for variable names.
+002/002_spec.rb:4:7: C: RSpec/VariableName: Use snake_case for variable names.
+005/005_spec.rb:2:7: C: RSpec/VariableName: Use snake_case for variable names.
+006/006_spec.rb:2:7: C: RSpec/VariableName: Use snake_case for variable names.
+009/009_spec.rb:2:7: C: RSpec/VariableName: Use snake_case for variable names.
+010/010_spec.rb:2:8: C: RSpec/VariableName: Use snake_case for variable names.
+012/012_spec.rb:2:11: C: RSpec/VariableName: Use snake_case for variable names.
+014/014_spec.rb:2:12: C: RSpec/VariableName: Use snake_case for variable names.
+016/016_spec.rb:2:7: C: RSpec/VariableName: Use snake_case for variable names.
+
+==> autocorrect exit=1 871 <==
+000/000_spec.rb:2:7: C: RSpec/VariableName: Use snake_case for variable names.
+001/001_spec.rb:2:7: C: RSpec/VariableName: Use snake_case for variable names.
+002/002_spec.rb:2:7: C: RSpec/VariableName: Use snake_case for variable names.
+002/002_spec.rb:4:7: C: RSpec/VariableName: Use snake_case for variable names.
+005/005_spec.rb:2:7: C: RSpec/VariableName: Use snake_case for variable names.
+006/006_spec.rb:2:7: C: RSpec/VariableName: Use snake_case for variable names.
+009/009_spec.rb:2:7: C: RSpec/VariableName: Use snake_case for variable names.
+010/010_spec.rb:2:8: C: RSpec/VariableName: Use snake_case for variable names.
+012/012_spec.rb:2:11: C: RSpec/VariableName: Use snake_case for variable names.
+014/014_spec.rb:2:12: C: RSpec/VariableName: Use snake_case for variable names.
+016/016_spec.rb:2:7: C: RSpec/VariableName: Use snake_case for variable names.
+

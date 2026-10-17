@@ -1,0 +1,77 @@
+==> offenses exit=1 1291 <==
+005/005.rb:1:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path', 'to').to_s`.
+006/006.rb:1:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path', 'to').to_s`.
+007/007.rb:1:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path', 'to')`.
+008/008.rb:1:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path', 'to')`.
+009/009.rb:1:8: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path', 'to')`.
+010/010.rb:1:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path', 'to')`.
+011/011.rb:1:9: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path', 'to').to_s`.
+012/012.rb:1:5: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path', 'to')`.
+019/019.rb:1:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path', 'to').to_s`.
+020/020.rb:1:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path', 'to').to_s`.
+021/021.rb:1:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path', 'to').to_s`.
+022/022.rb:1:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path', 'to').to_s`.
+023/023.rb:1:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path', 'to').to_s`.
+024/024.rb:1:1: C: [Correctable] Rails/FilePath: Prefer `Rails.root.join('path', 'to').to_s`.
+
+==> autocorrect exit=0 1525 <==
+005/005.rb:1:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path', 'to').to_s`.
+006/006.rb:1:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path', 'to').to_s`.
+006/006.rb:1:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path', 'to')`.
+007/007.rb:1:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path', 'to')`.
+008/008.rb:1:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path', 'to')`.
+008/008.rb:1:4: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path', 'to')`.
+009/009.rb:1:8: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path', 'to')`.
+009/009.rb:1:18: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path', 'to')`.
+010/010.rb:1:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path', 'to')`.
+011/011.rb:1:9: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path', 'to').to_s`.
+012/012.rb:1:5: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path', 'to')`.
+019/019.rb:1:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path', 'to').to_s`.
+020/020.rb:1:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path', 'to').to_s`.
+021/021.rb:1:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path', 'to').to_s`.
+022/022.rb:1:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path', 'to').to_s`.
+023/023.rb:1:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path', 'to').to_s`.
+024/024.rb:1:1: C: [Corrected] Rails/FilePath: Prefer `Rails.root.join('path', 'to').to_s`.
+
+==> corrected/005/005.rb 38 <==
+Rails.root.join("app", "models").to_s
+
+==> corrected/006/006.rb 49 <==
+Rails.root.join("app", "models", "user.rb").to_s
+
+==> corrected/007/007.rb 43 <==
+Rails.root.join('app', "models", "goober")
+
+==> corrected/008/008.rb 48 <==
+"#{Rails.root.join("app", "models", "goober")}"
+
+==> corrected/009/009.rb 49 <==
+system "rm -rf #{Rails.root.join("foo", "bar")}"
+
+==> corrected/010/010.rb 49 <==
+"#{Rails.root.join('tmp', user.id, 'icon.png')}"
+
+==> corrected/011/011.rb 48 <==
+foo(bar(Rails.root.join("app", "models").to_s))
+
+==> corrected/012/012.rb 38 <==
+foo(Rails.root.join("app", "models"))
+
+==> corrected/019/019.rb 41 <==
+Rails.root.join(*['app', 'models']).to_s
+
+==> corrected/020/020.rb 51 <==
+Rails.root.join("app", *["models", "goober"]).to_s
+
+==> corrected/021/021.rb 51 <==
+Rails.root.join(*["app", "models"], "goober").to_s
+
+==> corrected/022/022.rb 38 <==
+Rails.root.join(*%w[app models]).to_s
+
+==> corrected/023/023.rb 48 <==
+Rails.root.join("app", *%w[models goober]).to_s
+
+==> corrected/024/024.rb 48 <==
+Rails.root.join(*%w[app models], "goober").to_s
+

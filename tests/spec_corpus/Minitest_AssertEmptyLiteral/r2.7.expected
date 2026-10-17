@@ -1,0 +1,22 @@
+==> offenses exit=1 216 <==
+test/002_test.rb:3:5: C: [Correctable] Minitest/AssertEmptyLiteral: Prefer using `assert_empty(somestuff)`.
+test/004_test.rb:3:5: C: [Correctable] Minitest/AssertEmptyLiteral: Prefer using `assert_empty(somestuff)`.
+
+==> autocorrect exit=0 212 <==
+test/002_test.rb:3:5: C: [Corrected] Minitest/AssertEmptyLiteral: Prefer using `assert_empty(somestuff)`.
+test/004_test.rb:3:5: C: [Corrected] Minitest/AssertEmptyLiteral: Prefer using `assert_empty(somestuff)`.
+
+==> corrected/test/002_test.rb 93 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_empty(somestuff)
+  end
+end
+
+==> corrected/test/004_test.rb 93 <==
+class FooTest < Minitest::Test
+  def test_do_something
+    assert_empty(somestuff)
+  end
+end
+

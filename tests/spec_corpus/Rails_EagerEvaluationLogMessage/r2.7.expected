@@ -1,0 +1,31 @@
+==> offenses exit=1 420 <==
+000/000.rb:1:20: C: [Correctable] Rails/EagerEvaluationLogMessage: Pass a block to `Rails.logger.debug`.
+004/004.rb:2:22: C: [Correctable] Rails/EagerEvaluationLogMessage: Pass a block to `Rails.logger.debug`.
+005/005.rb:2:21: C: [Correctable] Rails/EagerEvaluationLogMessage: Pass a block to `Rails.logger.debug`.
+006/006.rb:3:22: C: [Correctable] Rails/EagerEvaluationLogMessage: Pass a block to `Rails.logger.debug`.
+
+==> autocorrect exit=0 412 <==
+000/000.rb:1:20: C: [Corrected] Rails/EagerEvaluationLogMessage: Pass a block to `Rails.logger.debug`.
+004/004.rb:2:22: C: [Corrected] Rails/EagerEvaluationLogMessage: Pass a block to `Rails.logger.debug`.
+005/005.rb:2:21: C: [Corrected] Rails/EagerEvaluationLogMessage: Pass a block to `Rails.logger.debug`.
+006/006.rb:3:22: C: [Corrected] Rails/EagerEvaluationLogMessage: Pass a block to `Rails.logger.debug`.
+
+==> corrected/000/000.rb 49 <==
+Rails.logger.debug { "The time is #{Time.now}" }
+
+==> corrected/004/004.rb 72 <==
+names.each do |name|
+  Rails.logger.debug { "The name is #{name}" }
+end
+
+==> corrected/005/005.rb 72 <==
+names.each do |name|
+  Rails.logger.debug { "The name is #{name}" }
+end
+
+==> corrected/006/006.rb 88 <==
+names.each do |name|
+  process(name)
+  Rails.logger.debug { "The name is #{name}" }
+end
+

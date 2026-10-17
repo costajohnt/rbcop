@@ -1,0 +1,31 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 33 <==
+umethod.bind(obj).call(foo, bar)
+
+==> 001.rb 32 <==
+Foo.do_something.bind(obj).call
+
+==> 002.rb 24 <==
+CONSTANT.bind(obj).call
+
+==> 003.rb 21 <==
+umethod.bind(obj).()
+
+==> 004.rb 35 <==
+umethod.bind('obj').call(foo, bar)
+
+==> 005.rb 35 <==
+umethod.bind(obj).call('foo', bar)
+
+==> 006.rb 33 <==
+umethod.bind_call(obj, foo, bar)
+

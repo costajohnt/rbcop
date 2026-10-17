@@ -1,0 +1,17 @@
+# A native plugin (rubocop-performance) and a local custom cop: directives naming their cops (#392).
+plugins:
+  - rubocop-performance
+require:
+  - ./no_foo.rb
+AllCops:
+  TargetRubyVersion: 3.4
+  SuggestExtensions: false
+  DisabledByDefault: true
+Lint/CopDirectiveSyntax:
+  Enabled: true
+Lint/RedundantCopDisableDirective:
+  Enabled: true
+Performance/Detect:
+  Enabled: true
+Custom/NoFoo:
+  Enabled: true

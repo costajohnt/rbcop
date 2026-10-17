@@ -1,0 +1,95 @@
+==> .rubocop.yml 195 <==
+---
+plugins:
+- rubocop-factory_bot
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+FactoryBot/AssociationStyle:
+  EnforcedStyle: :implicit
+
+==> 000/spec/factories.rb 50 <==
+FactoryBot.define do
+  factory :user do
+  end
+end
+
+==> 001/spec/factories.rb 78 <==
+FactoryBot.define do
+  factory :user
+  factory :admin_user, parent: :user
+end
+
+==> 002/spec/factories.rb 62 <==
+FactoryBot.define do
+  factory :article do
+    user
+  end
+end
+
+==> 003/spec/factories.rb 64 <==
+factory :article do
+  author do
+    association :user
+  end
+end
+
+==> 004/spec/factories.rb 44 <==
+factory :article do
+  association :user
+end
+
+==> 005/spec/factories.rb 74 <==
+factory :article do
+  trait :with_user do
+    association :user
+  end
+end
+
+==> 006/spec/factories.rb 52 <==
+factory :article do
+  association :user, :admin
+end
+
+==> 007/spec/factories.rb 62 <==
+factory :article do
+  association :author, factory: :user
+end
+
+==> 008/spec/factories.rb 65 <==
+factory :article do
+  association :author, factory: %i[user]
+end
+
+==> 009/spec/factories.rb 70 <==
+factory :article do
+  association :author, :admin, factory: :user
+end
+
+==> 010/spec/factories.rb 163 <==
+factory :article do
+  association :user, strategy: :build
+  association :reviewer, factory: :user, strategy: :build
+  association :tag, :pop, strategy: :build
+end
+
+==> 011/spec/factories.rb 145 <==
+factory :article do
+  trait :with_class do
+    association :alias
+    association :and, factory: :user
+    association :foo, :__FILE__
+  end
+end
+
+==> 012/spec/factories.rb 168 <==
+factory :article do
+  trait :with_class do
+    association :foo, factory: :alias
+    association :bar, factory: :and
+    association :baz, factory: :__FILE__
+  end
+end
+

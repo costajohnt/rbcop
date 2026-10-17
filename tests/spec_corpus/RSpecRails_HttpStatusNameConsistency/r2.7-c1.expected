@@ -1,0 +1,14 @@
+==> offenses exit=1 271 <==
+000/000_spec.rb:1:38: C: [Correctable] RSpecRails/HttpStatusNameConsistency: Prefer `:unprocessable_content` over `:unprocessable_entity`.
+002/002_spec.rb:1:38: C: [Correctable] RSpecRails/HttpStatusNameConsistency: Prefer `:content_too_large` over `:payload_too_large`.
+
+==> autocorrect exit=0 267 <==
+000/000_spec.rb:1:38: C: [Corrected] RSpecRails/HttpStatusNameConsistency: Prefer `:unprocessable_content` over `:unprocessable_entity`.
+002/002_spec.rb:1:38: C: [Corrected] RSpecRails/HttpStatusNameConsistency: Prefer `:content_too_large` over `:payload_too_large`.
+
+==> corrected/000/000_spec.rb 62 <==
+it { is_expected.to have_http_status :unprocessable_content }
+
+==> corrected/002/002_spec.rb 58 <==
+it { is_expected.to have_http_status :content_too_large }
+

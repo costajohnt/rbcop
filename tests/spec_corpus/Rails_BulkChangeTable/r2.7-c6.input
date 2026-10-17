@@ -1,0 +1,42 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 5.1
+
+==> db/000/000.rb 123 <==
+def change
+  change_table :users do |t|
+    t.change_default :name, 'unknown'
+    t.change_default :address, nil
+  end
+end
+
+==> db/001/001.rb 108 <==
+def change
+  change_column_default :users, :name, false
+  change_column_default :users, :address, false
+end
+
+==> db/002/002.rb 102 <==
+def change
+  change_column_null :users, :name, false
+  change_column_null :users, :address, false
+end
+
+==> db/003/003.rb 34 <==
+def up
+  change_table(:users)
+end
+
+==> db/004/004.rb 43 <==
+def up
+  change_table(:users) do
+  end
+end
+

@@ -1,0 +1,54 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 102 <==
+Time.zone.now - 1.second
+Time.zone.now - 2.seconds
+Time.zone.now + 1.second
+Time.zone.now + 2.seconds
+
+==> 001/001.rb 427 <==
+Time.current - 1.second
+Time.current - 2.seconds
+Time.current + 1.second
+Time.current + 2.seconds
+Time.current + 1.minute
+Time.current + 2.minutes
+Time.current + 1.hour
+Time.current + 2.hours
+Time.current + 1.day
+Time.current + 2.days
+Time.current + 1.week
+Time.current + 2.weeks
+Time.current + 1.fortnight
+Time.current + 2.fortnights
+Time.current + 1.month
+Time.current + 2.months
+Time.current + 1.year
+Time.current + 2.years
+
+==> 002/002.rb 32 <==
+3.days - 1.hour
+3.days + 1.hour
+
+==> 003/003.rb 82 <==
+5.hours + Time.current # will raise
+Date.yesterday + 3.days
+created_at - 1.minute
+
+==> 004/004.rb 27 <==
+Foo::Time.current + 1.hour
+
+==> 005/005.rb 24 <==
+::Time.current + 1.hour
+
+==> 006/006.rb 25 <==
+::Time.zone.now + 1.hour
+

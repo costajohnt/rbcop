@@ -1,0 +1,34 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 30 <==
+array.sort { |a, b| b <=> a }
+
+==> 001.rb 31 <==
+array&.sort { |a, b| b <=> a }
+
+==> 002.rb 25 <==
+array.sort { _2 <=> _1 }
+
+==> 003.rb 25 <==
+array.sort { _1 <=> _2 }
+
+==> 004.rb 29 <==
+array.sort { _2.x <=> _1.x }
+
+==> 005.rb 30 <==
+array.sort { |a, b| a <=> b }
+
+==> 006.rb 34 <==
+array.sort { |a, b| b.x <=> a.x }
+
+==> 007.rb 19 <==
+array.sort.reverse
+

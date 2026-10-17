@@ -1,0 +1,14 @@
+==> offenses exit=1 485 <==
+db/000/000.rb:1:1: C: Rails/CreateTableWithTimestamps: Add timestamps when creating a new table.
+db/001/001.rb:1:1: C: Rails/CreateTableWithTimestamps: Add timestamps when creating a new table.
+db/002/002.rb:1:1: C: Rails/CreateTableWithTimestamps: Add timestamps when creating a new table.
+db/003/003.rb:1:1: C: Rails/CreateTableWithTimestamps: Add timestamps when creating a new table.
+db/004/004.rb:1:1: C: Rails/CreateTableWithTimestamps: Add timestamps when creating a new table.
+
+==> autocorrect exit=1 485 <==
+db/000/000.rb:1:1: C: Rails/CreateTableWithTimestamps: Add timestamps when creating a new table.
+db/001/001.rb:1:1: C: Rails/CreateTableWithTimestamps: Add timestamps when creating a new table.
+db/002/002.rb:1:1: C: Rails/CreateTableWithTimestamps: Add timestamps when creating a new table.
+db/003/003.rb:1:1: C: Rails/CreateTableWithTimestamps: Add timestamps when creating a new table.
+db/004/004.rb:1:1: C: Rails/CreateTableWithTimestamps: Add timestamps when creating a new table.
+

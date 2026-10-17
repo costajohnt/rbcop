@@ -1,0 +1,23 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+db/migrate/20240101000000_create_x.rb:10:9: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+db/migrate/20240101000000_create_x.rb:11:9: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+db/migrate/20240101000000_create_x.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for `class CreateX`.
+db/migrate/20240101000000_create_x.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+db/migrate/20240101000000_create_x.rb:3:5: C: Rails/CreateTableWithTimestamps: Add timestamps when creating a new table.
+db/migrate/20240101000000_create_x.rb:5:17: W: Rails/DangerousColumnNames: Avoid dangerous column names.
+db/migrate/20240101000000_create_x.rb:9:20: W: Rails/DangerousColumnNames: Avoid dangerous column names.
+module_inclusion.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+module_inclusion.rb:1:4: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+module_inclusion.rb:2:17: C: [Correctable] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+module_inclusion.rb:3:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+module_inclusion.rb:3:3: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+module_inclusion.rb:6:4: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+module_inclusion.rb:8:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+module_inclusion.rb:8:3: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+spec/foo_spec.rb:10:3: C: [Correctable] RSpec/EmptyExampleGroup: Empty example group detected.
+spec/foo_spec.rb:14:3: C: [Correctable] RSpec/EmptyExampleGroup: Empty example group detected.
+spec/foo_spec.rb:15:9: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+spec/foo_spec.rb:19:20: C: RSpec/NoExpectationExample: No expectation found in this example.
+spec/foo_spec.rb:19:9: W: [Correctable] Lint/RedundantSafeNavigation: Redundant safe navigation detected, use `.` instead.
+spec/foo_spec.rb:22:3: C: [Correctable] RSpec/EmptyExampleGroup: Empty example group detected.
+spec/foo_spec.rb:23:31: C: [Correctable] Style/ItBlockParameter: Use `it` block parameter.

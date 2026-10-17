@@ -1,0 +1,43 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 45 <==
+Rails.logger.debug "The time is #{Time.now}"
+
+==> 001/001.rb 89 <==
+Rails.logger.info("The time is #{Time.now}")
+Rails.logger.info "The time is #{Time.now}"
+
+==> 002/002.rb 71 <==
+Rails.logger.debug('A log message')
+Rails.logger.debug 'A log message'
+
+==> 003/003.rb 103 <==
+Rails.logger.debug { "The time is #{Time.now}" }
+Rails.logger.debug do
+  "The time is #{Time.now}"
+end
+
+==> 004/004.rb 68 <==
+names.each do |name|
+  Rails.logger.debug "The name is #{name}"
+end
+
+==> 005/005.rb 69 <==
+names.each do |name|
+  Rails.logger.debug("The name is #{name}")
+end
+
+==> 006/006.rb 84 <==
+names.each do |name|
+  process(name)
+  Rails.logger.debug "The name is #{name}"
+end
+

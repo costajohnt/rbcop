@@ -1,0 +1,32 @@
+==> offenses exit=1 1474 <==
+000/20250101010101_add_column_to_table.rb:1:1: C: Rails/SchemaComment: New database column without `comment`.
+001/20190101010101_add_column_to_table.rb:1:1: C: Rails/SchemaComment: New database column without `comment`.
+002/20250101010101_add_column_to_table.rb:1:1: C: Rails/SchemaComment: New database column without `comment`.
+003/20250101010101_add_column_to_table.rb:1:1: C: Rails/SchemaComment: New database column without `comment`.
+004/20250101010101_add_column_to_table.rb:1:1: C: Rails/SchemaComment: New database column without `comment`.
+007/20250101010101_create_users.rb:1:1: C: Rails/SchemaComment: New database table without `comment`.
+008/20250101010101_create_users.rb:1:1: C: Rails/SchemaComment: New database table without `comment`.
+009/20250101010101_create_users.rb:1:1: C: Rails/SchemaComment: New database table without `comment`.
+010/20250101010101_create_users.rb:2:3: C: Rails/SchemaComment: New database column without `comment`.
+011/20250101010101_create_users.rb:2:3: C: Rails/SchemaComment: New database column without `comment`.
+012/20250101010101_create_users.rb:2:3: C: Rails/SchemaComment: New database column without `comment`.
+012/20250101010101_create_users.rb:3:3: C: Rails/SchemaComment: New database column without `comment`.
+013/20250101010101_create_users.rb:2:3: C: Rails/SchemaComment: New database column without `comment`.
+013/20250101010101_create_users.rb:3:3: C: Rails/SchemaComment: New database column without `comment`.
+
+==> autocorrect exit=1 1474 <==
+000/20250101010101_add_column_to_table.rb:1:1: C: Rails/SchemaComment: New database column without `comment`.
+001/20190101010101_add_column_to_table.rb:1:1: C: Rails/SchemaComment: New database column without `comment`.
+002/20250101010101_add_column_to_table.rb:1:1: C: Rails/SchemaComment: New database column without `comment`.
+003/20250101010101_add_column_to_table.rb:1:1: C: Rails/SchemaComment: New database column without `comment`.
+004/20250101010101_add_column_to_table.rb:1:1: C: Rails/SchemaComment: New database column without `comment`.
+007/20250101010101_create_users.rb:1:1: C: Rails/SchemaComment: New database table without `comment`.
+008/20250101010101_create_users.rb:1:1: C: Rails/SchemaComment: New database table without `comment`.
+009/20250101010101_create_users.rb:1:1: C: Rails/SchemaComment: New database table without `comment`.
+010/20250101010101_create_users.rb:2:3: C: Rails/SchemaComment: New database column without `comment`.
+011/20250101010101_create_users.rb:2:3: C: Rails/SchemaComment: New database column without `comment`.
+012/20250101010101_create_users.rb:2:3: C: Rails/SchemaComment: New database column without `comment`.
+012/20250101010101_create_users.rb:3:3: C: Rails/SchemaComment: New database column without `comment`.
+013/20250101010101_create_users.rb:2:3: C: Rails/SchemaComment: New database column without `comment`.
+013/20250101010101_create_users.rb:3:3: C: Rails/SchemaComment: New database column without `comment`.
+

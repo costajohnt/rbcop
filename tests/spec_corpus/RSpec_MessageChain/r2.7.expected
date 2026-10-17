@@ -1,0 +1,8 @@
+==> offenses exit=1 170 <==
+000/000_spec.rb:2:17: C: RSpec/MessageChain: Avoid stubbing using `receive_message_chain`.
+001/001_spec.rb:2:7: C: RSpec/MessageChain: Avoid stubbing using `stub_chain`.
+
+==> autocorrect exit=1 170 <==
+000/000_spec.rb:2:17: C: RSpec/MessageChain: Avoid stubbing using `receive_message_chain`.
+001/001_spec.rb:2:7: C: RSpec/MessageChain: Avoid stubbing using `stub_chain`.
+

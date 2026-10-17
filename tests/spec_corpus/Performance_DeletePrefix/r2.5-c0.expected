@@ -1,0 +1,29 @@
+==> offenses exit=1 472 <==
+000.rb:1:5: C: [Correctable] Performance/DeletePrefix: Use `delete_prefix` instead of `gsub`.
+001.rb:1:6: C: [Correctable] Performance/DeletePrefix: Use `delete_prefix` instead of `gsub`.
+002.rb:1:5: C: [Correctable] Performance/DeletePrefix: Use `delete_prefix!` instead of `gsub!`.
+003.rb:1:5: C: [Correctable] Performance/DeletePrefix: Use `delete_prefix` instead of `sub`.
+004.rb:1:5: C: [Correctable] Performance/DeletePrefix: Use `delete_prefix!` instead of `sub!`.
+
+==> autocorrect exit=0 462 <==
+000.rb:1:5: C: [Corrected] Performance/DeletePrefix: Use `delete_prefix` instead of `gsub`.
+001.rb:1:6: C: [Corrected] Performance/DeletePrefix: Use `delete_prefix` instead of `gsub`.
+002.rb:1:5: C: [Corrected] Performance/DeletePrefix: Use `delete_prefix!` instead of `gsub!`.
+003.rb:1:5: C: [Corrected] Performance/DeletePrefix: Use `delete_prefix` instead of `sub`.
+004.rb:1:5: C: [Corrected] Performance/DeletePrefix: Use `delete_prefix!` instead of `sub!`.
+
+==> corrected/000.rb 28 <==
+str.delete_prefix('prefix')
+
+==> corrected/001.rb 29 <==
+str&.delete_prefix('prefix')
+
+==> corrected/002.rb 29 <==
+str.delete_prefix!('prefix')
+
+==> corrected/003.rb 28 <==
+str.delete_prefix('prefix')
+
+==> corrected/004.rb 29 <==
+str.delete_prefix!('prefix')
+

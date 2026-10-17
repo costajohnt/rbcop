@@ -1,0 +1,10 @@
+==> offenses exit=1 264 <==
+001/001_spec.rb:1:5: C: RSpec/ExampleWording: Your example description is insufficient.
+002/002_spec.rb:1:5: C: RSpec/ExampleWording: Your example description is insufficient.
+003/003_spec.rb:1:5: C: RSpec/ExampleWording: Your example description is insufficient.
+
+==> autocorrect exit=1 264 <==
+001/001_spec.rb:1:5: C: RSpec/ExampleWording: Your example description is insufficient.
+002/002_spec.rb:1:5: C: RSpec/ExampleWording: Your example description is insufficient.
+003/003_spec.rb:1:5: C: RSpec/ExampleWording: Your example description is insufficient.
+

@@ -1,0 +1,106 @@
+==> offenses exit=1 1140 <==
+004/004_spec.rb:2:3: C: [Correctable] RSpecRails/TravelAround: Prefer to travel in `before` rather than `around`.
+009/009_spec.rb:2:3: C: [Correctable] RSpecRails/TravelAround: Prefer to travel in `before` rather than `around`.
+010/010_spec.rb:2:3: C: [Correctable] RSpecRails/TravelAround: Prefer to travel in `before` rather than `around`.
+012/012_spec.rb:2:3: C: [Correctable] RSpecRails/TravelAround: Prefer to travel in `before` rather than `around`.
+013/013_spec.rb:4:3: C: [Correctable] RSpecRails/TravelAround: Prefer to travel in `before` rather than `around`.
+014/014_spec.rb:4:3: C: [Correctable] RSpecRails/TravelAround: Prefer to travel in `before` rather than `around`.
+015/015_spec.rb:2:3: C: [Correctable] RSpecRails/TravelAround: Prefer to travel in `before` rather than `around`.
+016/016_spec.rb:2:3: C: [Correctable] RSpecRails/TravelAround: Prefer to travel in `before` rather than `around`.
+017/017_spec.rb:4:7: C: [Correctable] RSpecRails/TravelAround: Prefer to travel in `before` rather than `around`.
+018/018_spec.rb:4:7: C: [Correctable] RSpecRails/TravelAround: Prefer to travel in `before` rather than `around`.
+
+==> autocorrect exit=0 1120 <==
+004/004_spec.rb:2:3: C: [Corrected] RSpecRails/TravelAround: Prefer to travel in `before` rather than `around`.
+009/009_spec.rb:2:3: C: [Corrected] RSpecRails/TravelAround: Prefer to travel in `before` rather than `around`.
+010/010_spec.rb:2:3: C: [Corrected] RSpecRails/TravelAround: Prefer to travel in `before` rather than `around`.
+012/012_spec.rb:2:3: C: [Corrected] RSpecRails/TravelAround: Prefer to travel in `before` rather than `around`.
+013/013_spec.rb:4:3: C: [Corrected] RSpecRails/TravelAround: Prefer to travel in `before` rather than `around`.
+014/014_spec.rb:4:3: C: [Corrected] RSpecRails/TravelAround: Prefer to travel in `before` rather than `around`.
+015/015_spec.rb:2:3: C: [Corrected] RSpecRails/TravelAround: Prefer to travel in `before` rather than `around`.
+016/016_spec.rb:2:3: C: [Corrected] RSpecRails/TravelAround: Prefer to travel in `before` rather than `around`.
+017/017_spec.rb:4:7: C: [Corrected] RSpecRails/TravelAround: Prefer to travel in `before` rather than `around`.
+018/018_spec.rb:4:7: C: [Corrected] RSpecRails/TravelAround: Prefer to travel in `before` rather than `around`.
+
+==> corrected/004/004_spec.rb 62 <==
+before { freeze_time }
+
+around do |example|
+  example.run
+end
+
+==> corrected/009/009_spec.rb 66 <==
+before { freeze_time }
+
+around do |test_case|
+  test_case.run
+end
+
+==> corrected/010/010_spec.rb 62 <==
+before { freeze_time }
+
+around do |example|
+  example.run
+end
+
+==> corrected/012/012_spec.rb 69 <==
+before { freeze_time }
+
+around(:each) do |example|
+  example.run
+end
+
+==> corrected/013/013_spec.rb 69 <==
+before { freeze_time }
+
+around do |example|
+  foo
+
+  example.run
+end
+
+==> corrected/014/014_spec.rb 69 <==
+before { freeze_time }
+
+around do |example|
+  foo
+
+  example.run
+end
+
+==> corrected/015/015_spec.rb 67 <==
+before { travel(duration) }
+
+around do |example|
+  example.run
+end
+
+==> corrected/016/016_spec.rb 66 <==
+before { travel_to(time) }
+
+around do |example|
+  example.run
+end
+
+==> corrected/017/017_spec.rb 128 <==
+describe Foo do
+  context 'when bar' do
+    before { freeze_time }
+
+    around do |example|
+      example.run
+    end
+  end
+end
+
+==> corrected/018/018_spec.rb 128 <==
+describe Foo do
+  context 'when bar' do
+    before { freeze_time }
+
+    around do |example|
+      example.run
+    end
+  end
+end
+

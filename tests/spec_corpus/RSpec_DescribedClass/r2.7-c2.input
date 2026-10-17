@@ -1,0 +1,188 @@
+==> .rubocop.yml 189 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/DescribedClass:
+  EnforcedStyle: :described_class
+
+==> 000/000_spec.rb 113 <==
+describe MyClass do
+  include MyClass
+
+  subject { MyClass.do_something }
+
+  before { MyClass.do_something }
+end
+
+==> 001/001_spec.rb 100 <==
+module Foo
+  describe MyClass do
+    let(:foo) { SomeClass }
+    let(:baz) { foo::CONST }
+  end
+end
+
+==> 002/002_spec.rb 63 <==
+describe MyClass, some: :metadata do
+  subject { MyClass }
+end
+
+==> 003/003_spec.rb 48 <==
+describe MyClass do
+  subject { "MyClass" }
+end
+
+==> 004/004_spec.rb 50 <==
+describe "MyClass" do
+  subject { "MyClass" }
+end
+
+==> 005/005_spec.rb 280 <==
+describe MyClass do
+  Class.new  { foo = MyClass }
+  Module.new { bar = MyClass }
+  Struct.new { lol = MyClass }
+  Data.define { dat = MyClass }
+
+  def method
+    include MyClass
+  end
+
+  class OtherClass
+    include MyClass
+  end
+
+  module MyModule
+    include MyClass
+  end
+end
+
+==> 006/006_spec.rb 408 <==
+RSpec.describe Foo do
+  before do
+    stub_const('Dummy', Class.new).class_eval do
+      Foo.new
+    end
+
+    stub_const('Dummy', Class.new).module_eval do
+      Foo.new
+    end
+
+    stub_const('Dummy', Class.new).instance_eval do
+      Foo.new
+    end
+
+    stub_const('Dummy', Class.new).class_exec do
+      Foo.new
+    end
+
+    stub_const('Dummy', Class.new).module_exec do
+      Foo.new
+    end
+  end
+end
+
+==> 007/007_spec.rb 113 <==
+describe MyClass do
+  describe MyClass::Foo do
+    subject { MyClass::Foo }
+
+    let(:foo) { MyClass }
+  end
+end
+
+==> 008/008_spec.rb 85 <==
+describe MyNamespace::MyClass do
+  subject { ::MyClass }
+  let(:foo) { MyClass }
+end
+
+==> 009/009_spec.rb 77 <==
+module MyNamespace
+  describe MyClass do
+    subject { ::MyClass }
+  end
+end
+
+==> 010/010_spec.rb 72 <==
+describe MyNamespace::MyClass do
+  subject { MyNamespace::MyClass }
+end
+
+==> 011/011_spec.rb 95 <==
+module UnrelatedNamespace
+  describe MyClass do
+    subject { MyNamespace::MyClass }
+  end
+end
+
+==> 012/012_spec.rb 116 <==
+describe MyNamespace::MyClass do
+  before do
+    class Foo
+      thing = MyNamespace::MyClass.new
+    end
+  end
+end
+
+==> 013/013_spec.rb 63 <==
+describe do
+  before do
+    MyNamespace::MyClass.new
+  end
+end
+
+==> 014/014_spec.rb 88 <==
+module MyNamespace
+  describe MyClass do
+    subject { MyNamespace::MyClass }
+  end
+end
+
+==> 015/015_spec.rb 231 <==
+module A
+  class B::C
+    module D
+      describe E do
+        subject { A::B::C::D::E }
+        let(:one) { B::C::D::E }
+        let(:two) { C::D::E }
+        let(:six) { D::E }
+        let(:ten) { E }
+      end
+    end
+  end
+end
+
+==> 016/016_spec.rb 24 <==
+describe MyClass do
+end
+
+==> 017/017_spec.rb 111 <==
+describe Broken do
+  [Foo, Bar].each do |klass|
+    describe klass::Baz.name do
+      it { }
+    end
+  end
+end
+
+==> 018/018_spec.rb 150 <==
+module SomeGem
+  describe VERSION do
+    it 'returns proper version string' do
+      expect(described_class::STRING).to eq('1.1.1')
+    end
+  end
+end
+
+==> 019/019_spec.rb 61 <==
+describe MyClass do
+  subject { (MyNamespace)::MyClass }
+end
+

@@ -206,9 +206,9 @@ impl Cop for UselessAccessModifier {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let tree = Tree::build(&node.as_program_node().unwrap(), cx.src);
+        let tree = Tree::shared(&node.as_program_node().unwrap(), cx.src);
         let mut ctx = Ctx {
-            tree: &tree,
+            tree,
             text: cx.src.text,
             active_support: cx.config.all_cops().truthy("ActiveSupportExtensionsEnabled"),
             method_creating: cx.cfg.strings("MethodCreatingMethods"),

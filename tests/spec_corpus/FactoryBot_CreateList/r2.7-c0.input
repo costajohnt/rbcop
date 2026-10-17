@@ -1,0 +1,112 @@
+==> .rubocop.yml 214 <==
+---
+plugins:
+- rubocop-factory_bot
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+FactoryBot/CreateList:
+  EnforcedStyle: :create_list
+  ExplicitOnly: false
+
+==> 000/000_spec.rb 25 <==
+3.times { create :user }
+
+==> 001/001_spec.rb 25 <==
+1.times { create :user }
+
+==> 002/002_spec.rb 37 <==
+3.times { FactoryGirl.create :user }
+
+==> 003/003_spec.rb 36 <==
+3.times { FactoryBot.create :user }
+
+==> 004/004_spec.rb 37 <==
+3.times { SomeFactory.create :user }
+
+==> 005/005_spec.rb 49 <==
+allow(User).to receive(:create) { create :user }
+
+==> 006/006_spec.rb 42 <==
+3.times { |n| create :user, position: n }
+
+==> 007/007_spec.rb 139 <==
+3.times { |n| create :user, :active }
+3.times { |n| create :user, password: '123' }
+3.times { |n| create :user, :active, password: '123' }
+
+==> 008/008_spec.rb 55 <==
+3.times { |n| create :user, repositories_count: rand }
+
+==> 009/009_spec.rb 63 <==
+3.times { |n| create :user, :admin, repositories_count: rand }
+
+==> 010/010_spec.rb 55 <==
+1.times { |n| create :user, repositories_count: rand }
+
+==> 011/011_spec.rb 25 <==
+3.times { do_something }
+
+==> 012/012_spec.rb 11 <==
+3.times {}
+
+==> 013/013_spec.rb 137 <==
+used_passwords = []
+3.times do
+  u = create :user
+  expect(used_passwords).not_to include(u.password)
+  used_passwords << u.password
+end
+
+==> 014/014_spec.rb 70 <==
+3.times do
+  create(:user) { |user| create :account, user: user }
+end
+
+==> 015/015_spec.rb 34 <==
+5.times { create(:user, :trait) }
+
+==> 016/016_spec.rb 78 <==
+3.times do
+  create(:user, :trait) { |user| create :account, user: user }
+end
+
+==> 017/017_spec.rb 119 <==
+3.times do
+  create(:user, :trait) do |user|
+    create :account, user: user
+    create :profile, user: user
+  end
+end
+
+==> 018/018_spec.rb 29 <==
+3.times.map { create :user }
+
+==> 019/019_spec.rb 55 <==
+3.times.map { create :user, repositories_count: rand }
+
+==> 020/020_spec.rb 31 <==
+Array.new(3) { create(:user) }
+
+==> 021/021_spec.rb 76 <==
+Array.new(3) do
+  create(:user) { |user| create(:account, user: user) }
+end
+
+==> 022/022_spec.rb 3 <==
+[]
+
+==> 023/023_spec.rb 40 <==
+[create(:user), create(:user, age: 18)]
+
+==> 024/024_spec.rb 16 <==
+[create(:user)]
+
+==> 025/025_spec.rb 31 <==
+[create(:user), create(:user)]
+
+==> 026/026_spec.rb 57 <==
+[create(:user, point: rand), create(:user, point: rand)]
+

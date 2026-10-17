@@ -1,0 +1,9 @@
+==> offenses exit=1 108 <==
+000/000.rb:1:6: C: [Correctable] Rails/RequestReferer: Use `request.referrer` instead of `request.referer`.
+
+==> autocorrect exit=0 106 <==
+000/000.rb:1:6: C: [Corrected] Rails/RequestReferer: Use `request.referrer` instead of `request.referer`.
+
+==> corrected/000/000.rb 22 <==
+puts request.referrer
+

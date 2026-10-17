@@ -1,0 +1,97 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-performance
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.5
+
+==> 000.rb 39 <==
+items.all? { |item| pattern === item }
+
+==> 001.rb 36 <==
+items.all? { |item| item == other }
+
+==> 002.rb 40 <==
+items.all? { |item| item.is_a?(Klass) }
+
+==> 003.rb 43 <==
+items.all? { |item| item.kind_of?(Klass) }
+
+==> 004.rb 39 <==
+items.all? { |item| item === pattern }
+
+==> 005.rb 39 <==
+items.any? { |item| pattern === item }
+
+==> 006.rb 36 <==
+items.any? { |item| item == other }
+
+==> 007.rb 40 <==
+items.any? { |item| item.is_a?(Klass) }
+
+==> 008.rb 43 <==
+items.any? { |item| item.kind_of?(Klass) }
+
+==> 009.rb 39 <==
+items.any? { |item| item === pattern }
+
+==> 010.rb 39 <==
+items.one? { |item| pattern === item }
+
+==> 011.rb 36 <==
+items.one? { |item| item == other }
+
+==> 012.rb 40 <==
+items.one? { |item| item.is_a?(Klass) }
+
+==> 013.rb 43 <==
+items.one? { |item| item.kind_of?(Klass) }
+
+==> 014.rb 39 <==
+items.one? { |item| item === pattern }
+
+==> 015.rb 40 <==
+items.none? { |item| pattern === item }
+
+==> 016.rb 37 <==
+items.none? { |item| item == other }
+
+==> 017.rb 41 <==
+items.none? { |item| item.is_a?(Klass) }
+
+==> 018.rb 44 <==
+items.none? { |item| item.kind_of?(Klass) }
+
+==> 019.rb 40 <==
+items.none? { |item| item === pattern }
+
+==> 020.rb 49 <==
+items.do_something.all? { |item| item == other }
+
+==> 021.rb 18 <==
+items.all?(other)
+
+==> 022.rb 42 <==
+items.all? { |key, _value| key == other }
+
+==> 023.rb 43 <==
+klasses.all? { |klass| item.is_a?(klass) }
+
+==> 024.rb 46 <==
+klasses.all? { |klass| item.kind_of?(klass) }
+
+==> 025.rb 49 <==
+items.all? { |item| item.do_something == other }
+
+==> 026.rb 37 <==
+items.all? { |item,| item == other }
+
+==> 027.rb 48 <==
+items.all? { |item| item == item.do_something }
+
+==> 028.rb 44 <==
+items.do_something { |item| item == other }
+

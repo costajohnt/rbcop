@@ -1,0 +1,26 @@
+==> offenses exit=1 439 <==
+000/000.rb:2:43: C: [Correctable] Rails/ArelStar: Use `Arel.star` instead of `"*"` for expanded column lists.
+001/001.rb:1:12: C: [Correctable] Rails/ArelStar: Use `Arel.star` instead of `"*"` for expanded column lists.
+002/002.rb:1:20: C: [Correctable] Rails/ArelStar: Use `Arel.star` instead of `"*"` for expanded column lists.
+003/003.rb:1:9: C: [Correctable] Rails/ArelStar: Use `Arel.star` instead of `"*"` for expanded column lists.
+
+==> autocorrect exit=0 431 <==
+000/000.rb:2:43: C: [Corrected] Rails/ArelStar: Use `Arel.star` instead of `"*"` for expanded column lists.
+001/001.rb:1:12: C: [Corrected] Rails/ArelStar: Use `Arel.star` instead of `"*"` for expanded column lists.
+002/002.rb:1:20: C: [Corrected] Rails/ArelStar: Use `Arel.star` instead of `"*"` for expanded column lists.
+003/003.rb:1:9: C: [Corrected] Rails/ArelStar: Use `Arel.star` instead of `"*"` for expanded column lists.
+
+==> corrected/000/000.rb 94 <==
+class MyModel < ApplicationRecord
+  scope :my_scope, -> { select(arel_table[Arel.star]) }
+end
+
+==> corrected/001/001.rb 22 <==
+arel_table[Arel.star]
+
+==> corrected/002/002.rb 30 <==
+MyModel.arel_table[Arel.star]
+
+==> corrected/003/003.rb 19 <==
+MyModel[Arel.star]
+

@@ -1,0 +1,98 @@
+==> .rubocop.yml 195 <==
+---
+plugins:
+- rubocop-factory_bot
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+FactoryBot/AssociationStyle:
+  EnforcedStyle: :explicit
+
+==> 000/spec/factories.rb 44 <==
+factory :article do
+  association :user
+end
+
+==> 001/spec/factories.rb 31 <==
+factory :article do
+  user
+end
+
+==> 002/spec/factories.rb 48 <==
+factory :article do
+  author factory: :user
+end
+
+==> 003/spec/factories.rb 57 <==
+factory :article do
+  author factory: %i[user admin]
+end
+
+==> 004/spec/factories.rb 38 <==
+factory :article do
+  skip_create
+end
+
+==> 005/spec/factories.rb 31 <==
+trait :with_user do
+  user
+end
+
+==> 006/spec/factories.rb 61 <==
+factory :article do
+  trait :with_user do
+    user
+  end
+end
+
+==> 007/spec/factories.rb 154 <==
+factory :order do
+  trait :completed do
+    completed_at { 3.days.ago }
+  end
+
+  trait :refunded do
+    completed
+    refunded_at { 1.day.ago }
+  end
+end
+
+==> 008/spec/factories.rb 200 <==
+factory :order do
+  trait :completed do
+    completed_at { 3.days.ago }
+  end
+
+  factory :order_with_refund do
+    trait :refunded do
+      completed
+      refunded_at { 1.day.ago }
+    end
+  end
+end
+
+==> 009/spec/factories.rb 188 <==
+factory :order do
+  trait :completed do
+    completed_at { 3.days.ago }
+  end
+end
+
+factory :order_with_refund do
+  trait :refunded do
+    completed
+    refunded_at { 1.day.ago }
+  end
+end
+
+==> 010/spec/factories.rb 133 <==
+factory :order do
+  traits :completed do
+    completed_at { 3.days.ago }
+  end
+
+  factory :order_completed, traits: [:completed]
+end
+

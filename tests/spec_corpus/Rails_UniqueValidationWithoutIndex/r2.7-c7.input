@@ -1,0 +1,38 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/models/000/000.rb 117 <==
+class WrittenArticles
+  belongs_to :author, polymorphic: true
+  validates :title, uniqueness: { scope: :author }
+end
+
+==> app/models/001/001.rb 118 <==
+class WrittenArticles
+  belongs_to :author, polymorphic: false
+  validates :title, uniqueness: { scope: :author }
+end
+
+==> app/models/002/002.rb 98 <==
+class WrittenArticles
+  belongs_to :author
+  validates :title, uniqueness: { scope: :author }
+end
+
+==> db/schema.rb 305 <==
+ActiveRecord::Schema.define(version: 2020_02_02_075409) do
+  create_table "written_articles", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "author_type", null: false
+    t.bigint "author_id", null: false
+    t.index ["title", "author_id"], name: "idx_aid", unique: true
+  end
+end
+

@@ -1,0 +1,19 @@
+==> .rubocop.yml 203 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/SkipsModelValidations:
+  ForbiddenMethods:
+  - update_attribute
+
+==> 000/000.rb 47 <==
+user.update_attribute(:website, 'example.com')
+
+==> 001/001.rb 48 <==
+user&.update_attribute(:website, 'example.com')
+

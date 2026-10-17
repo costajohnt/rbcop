@@ -22,6 +22,8 @@ pub struct FileReport {
     pub text: String,
     /// Warnings printed when the file is reported (`no department given` for directive names).
     pub warnings: Vec<String>,
+    /// The error that ends the run at this file, before it is reported (see `poison_raise`).
+    pub abort: Option<String>,
 }
 
 impl FileReport {
@@ -50,8 +52,9 @@ pub fn inspect(
     let (text, raw) = if text.contains("\r\n") { (text.replace("\r\n", "\n"), Some(text)) } else { (text, None) };
     let shared: Arc<str> = Arc::from(text.as_str());
     directives::take_warnings();
+    take_abort();
     let (offenses, _, _) = analyze(path, display, &shared, raw.as_deref(), cfg, selected, None, Redundant::Own);
-    FileReport { offenses, text, warnings: directives::take_warnings() }
+    FileReport { offenses, text, warnings: directives::take_warnings(), abort: take_abort() }
 }
 
 /// Inspect a file's bytes as read. A source that must be UTF-8 (`source::must_be_utf8`) but is not
@@ -88,7 +91,7 @@ pub fn inspect_bytes(
 fn encoding_error_report(text: String, message: String, selected: &dyn Fn(&str) -> bool) -> FileReport {
     // Lint/Syntax is not mobilized under -x, --only-guide-cops or `StyleGuideCopsOnly`.
     if !selected("Lint/Syntax") {
-        return FileReport { offenses: Vec::new(), text, warnings: Vec::new() };
+        return FileReport { offenses: Vec::new(), text, warnings: Vec::new(), abort: None };
     }
     let offense = Offense {
         start: 0,
@@ -101,7 +104,7 @@ fn encoding_error_report(text: String, message: String, selected: &dyn Fn(&str) 
         corrected: false,
         source: None,
     };
-    FileReport { offenses: vec![offense], text, warnings: Vec::new() }
+    FileReport { offenses: vec![offense], text, warnings: Vec::new(), abort: None }
 }
 
 /// How Ruby words a failed `File.read`/`File.open` of `path` (RuboCop raises its own error for a
@@ -318,6 +321,24 @@ pub fn parse_for_target<'t>(
     (result, tokens, fake, edits)
 }
 
+/// rubocop-rails MigrationFileSkippable (prepended to every cop's add_offense once the gem loads):
+/// a file whose name holds a 14-digit timestamp at or before `AllCops: MigratedSchemaVersion` gets
+/// no offenses (and so no corrections) from any cop.
+fn already_migrated_file(path: &Path, cfg: &Resolved) -> bool {
+    use crate::config::value::Value;
+    let version = match cfg.all_cops().get("MigratedSchemaVersion") {
+        None | Some(Value::Null) => return false,
+        Some(Value::Str(s)) => s.clone(),
+        Some(Value::Int(i)) => i.to_string(),
+        Some(v) => v.as_string().unwrap_or_default(),
+    };
+    let name = path.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default();
+    let bytes = name.as_bytes();
+    let stamp = (0..bytes.len().saturating_sub(13)).find(|&i| bytes[i..i + 14].iter().all(u8::is_ascii_digit));
+    // `schema_version <= migrated_schema_version.to_s`: a String comparison.
+    stamp.is_some_and(|i| name[i..i + 14] <= *version)
+}
+
 #[allow(clippy::too_many_arguments)]
 fn analyze(
     path: &Path,
@@ -329,6 +350,10 @@ fn analyze(
     mode: Option<Mode>,
     redundant: Redundant,
 ) -> (Vec<Offense>, Option<Corrector>, Vec<Span>) {
+    let rails = crate::helpers::cop_registry::plugin_loaded("rubocop-rails");
+    if rails && already_migrated_file(path, cfg) {
+        return (Vec::new(), None, Vec::new());
+    }
     let text: &str = shared;
     let raw_text = raw_text.unwrap_or(text);
     let version = target_ruby::prism_version(cfg.target_ruby);
@@ -544,6 +569,11 @@ fn analyze(
     src.parser_gem = parser_gem;
     src.target_ruby = cfg.target_ruby;
     src.lex_edits = edits;
+    // From 3.3 the runner's parse is parse_warnings::parse (unedited text, same version and
+    // encoding): its warnings save that second parse.
+    if !parser_gem {
+        let _ = src.parse_warnings.set(crate::helpers::parse_warnings::from_result(&result));
+    }
 
     // CommentConfig is analyzed once per investigation, not again for the redundant-directive pass
     // (it reuses the processed source).
@@ -599,13 +629,19 @@ fn analyze(
     let only_redundant = matches!(redundant, Redundant::Only(_));
     let active: Vec<Active> = crate::cops::ALL
         .iter()
-        .filter(|r| selected(r.name) && !only_redundant)
+        .filter(|r| selected(r.name) && !only_redundant && cfg.team_has(r.name))
         .filter_map(|r| {
             let c = cfg.cop(r.name);
             let on = c.enabled || opted_in.contains(&r.name);
-            let (min, max) = r.cop.ruby_range();
+            let (mut min, max) = r.cop.ruby_range();
+            // rubocop-rails: `Style::HashExcept.minimum_target_ruby_version(2.0)` once it is loaded.
+            if r.name == "Style/HashExcept" && rails {
+                min = 2.0;
+            }
             let ruby_ok = min <= cfg.target_ruby && cfg.target_ruby <= max;
-            (on && ruby_ok && cfg.relevant(c, path)).then_some(Active { name: r.name, cop: r.cop, cfg: c })
+            // Base#relevant_file?: target_satisfies_all_gem_version_requirements? (railties).
+            let rails_ok = r.cop.min_rails() == 0.0 || cfg.target_rails_version() >= r.cop.min_rails();
+            (on && ruby_ok && rails_ok && cfg.relevant(c, path)).then_some(Active { name: r.name, cop: r.cop, cfg: c })
         })
         .collect();
 
@@ -643,6 +679,11 @@ fn analyze(
         facts.config_disabled = config_disabled;
     }
     facts.text = shared.clone();
+    // Directives naming an ambiguous cop: see poison_raise.
+    let poison = facts.comment_config.poison.clone().filter(|_| !only_redundant);
+    if let Some(p) = &poison {
+        POISON.with(|s| *s.borrow_mut() = Some((p.warnings.clone(), Vec::new())));
+    }
     let mut fixes: Vec<Fixes> = active
         .iter()
         .map(|a| Fixes {
@@ -687,6 +728,18 @@ fn analyze(
             fixes,
         };
         guarded(a.name, &src, None, || a.cop.on_file(&mut cx));
+    }
+    if let Some(p) = poison {
+        // Team#process_errors prints the cop errors after the investigation; then
+        // Runner#check_for_redundant_disables? analyzes once more (unless --except names the
+        // directive cop) and the AmbiguousCopName ends the run.
+        let errors = POISON.with(|s| s.borrow_mut().take()).map(|(_, e)| e).unwrap_or_default();
+        directives::push_warnings(&errors);
+        if !EXCEPT_REDUNDANT.load(std::sync::atomic::Ordering::Relaxed) {
+            directives::push_warnings(&p.warnings);
+            ABORT.with(|a| *a.borrow_mut() = Some(format!("Error: {}", p.message)));
+        }
+        return (Vec::new(), None, Vec::new());
     }
 
     dedup(&mut out);
@@ -760,7 +813,11 @@ fn analyze(
     }
     for o in out.iter_mut() {
         let c = cfg.cop(o.cop);
-        o.severity = c.severity.unwrap_or_else(|| default_severity(o.cop));
+        // find_severity: the configured Severity, else one the cop passed to add_offense (any
+        // but the Convention placeholder), else the department default.
+        o.severity = c
+            .severity
+            .unwrap_or_else(|| if o.severity == Severity::Convention { default_severity(o.cop) } else { o.severity });
         o.correctable &= autocorrect_allowed(c);
     }
     (out, corrector, disabled)
@@ -817,10 +874,64 @@ pub fn take_file_warnings() -> Vec<String> {
     FILE_WARNINGS.with(|w| std::mem::take(&mut *w.borrow_mut()))
 }
 
-/// Print an error now and keep it for the summary (it makes the run fail).
+/// Print an error now and keep it for the summary (it makes the run fail). In a poisoned file
+/// (see `poison_raise`) cop errors wait for the end of the investigation, as Team prints them.
 pub fn file_error(msg: String) {
-    eprintln!("{msg}");
+    let deferred = POISON.with(|p| match &mut *p.borrow_mut() {
+        Some((_, errors)) => {
+            errors.push(msg.clone());
+            true
+        }
+        None => false,
+    });
+    if !deferred {
+        eprintln!("{msg}");
+    }
     ERRORS.lock().unwrap_or_else(|e| e.into_inner()).push(msg);
+}
+
+thread_local! {
+    /// The file being inspected names an ambiguous cop in a directive: the warnings each comment
+    /// config analysis prints, and the cop errors so far.
+    static POISON: std::cell::RefCell<Option<(Vec<String>, Vec<String>)>> = const { std::cell::RefCell::new(None) };
+    /// The error that ends the run at the file this thread inspected last.
+    static ABORT: std::cell::RefCell<Option<String>> = const { std::cell::RefCell::new(None) };
+}
+
+/// `--except` names Lint/RedundantCopDisableDirective or Lint (Runner#except_redundant_cop_disable_directive?).
+static EXCEPT_REDUNDANT: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+
+pub fn set_except_redundant(on: bool) {
+    EXCEPT_REDUNDANT.store(on, std::sync::atomic::Ordering::Relaxed);
+}
+
+/// CommentConfig#analyze raising AmbiguousCopName (directives::Poison): a cop that reaches the
+/// comment config (Base#add_offense, Lint/MissingCopEnableDirective, Lint/CopDirectiveSyntax)
+/// raises inside its callback, after the analysis' warnings when `warn`. A no-op elsewhere.
+pub fn poison_raise(warn: bool) {
+    let poisoned = POISON.with(|p| match &*p.borrow() {
+        Some((warnings, _)) => {
+            if warn {
+                directives::push_warnings(warnings);
+            }
+            true
+        }
+        None => false,
+    });
+    if poisoned {
+        // Unwinds to `guarded` (a cop error) without running the panic hook.
+        std::panic::resume_unwind(Box::new(()));
+    }
+}
+
+/// The error that ends the run at the file just inspected on this thread, if any.
+pub fn take_abort() -> Option<String> {
+    ABORT.with(|a| a.borrow_mut().take())
+}
+
+/// Whether the file just inspected on this thread ends the run.
+pub fn aborting() -> bool {
+    ABORT.with(|a| a.borrow().is_some())
 }
 
 /// AST depth beyond which a file is not inspected. Real code stays under 50 (the deepest of the

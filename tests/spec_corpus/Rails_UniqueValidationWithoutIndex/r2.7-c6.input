@@ -1,0 +1,24 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/models/000/000.rb 83 <==
+class WrittenArticles
+  validates :user_id, uniqueness: { scope: :article_id }
+end
+
+==> db/schema.rb 275 <==
+ActiveRecord::Schema.define(version: 2020_02_02_075409) do
+  create_table "written_articles", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "article_id", null: false
+    t.index ["user_id", "article_id"], name: "idx_uid_aid", unique: true
+  end
+end
+

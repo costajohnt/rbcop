@@ -1,0 +1,44 @@
+==> offenses exit=1 848 <==
+003.rb:1:1: C: [Correctable] Performance/Caller: Use `caller(1..1).first` instead of `caller.first`.
+004.rb:1:1: C: [Correctable] Performance/Caller: Use `caller(1..1).first` instead of `caller(1).first`.
+005.rb:1:1: C: [Correctable] Performance/Caller: Use `caller(2..2).first` instead of `caller(2).first`.
+006.rb:1:1: C: [Correctable] Performance/Caller: Use `caller(2..2).first` instead of `caller[1]`.
+007.rb:1:1: C: [Correctable] Performance/Caller: Use `caller(2..2).first` instead of `caller(1)[1]`.
+008.rb:1:1: C: [Correctable] Performance/Caller: Use `caller(3..3).first` instead of `caller(2)[1]`.
+009.rb:1:1: C: [Correctable] Performance/Caller: Use `caller_locations(1..1).first` instead of `caller_locations.first`.
+010.rb:1:1: C: [Correctable] Performance/Caller: Use `caller_locations(2..2).first` instead of `caller_locations[1]`.
+
+==> autocorrect exit=0 832 <==
+003.rb:1:1: C: [Corrected] Performance/Caller: Use `caller(1..1).first` instead of `caller.first`.
+004.rb:1:1: C: [Corrected] Performance/Caller: Use `caller(1..1).first` instead of `caller(1).first`.
+005.rb:1:1: C: [Corrected] Performance/Caller: Use `caller(2..2).first` instead of `caller(2).first`.
+006.rb:1:1: C: [Corrected] Performance/Caller: Use `caller(2..2).first` instead of `caller[1]`.
+007.rb:1:1: C: [Corrected] Performance/Caller: Use `caller(2..2).first` instead of `caller(1)[1]`.
+008.rb:1:1: C: [Corrected] Performance/Caller: Use `caller(3..3).first` instead of `caller(2)[1]`.
+009.rb:1:1: C: [Corrected] Performance/Caller: Use `caller_locations(1..1).first` instead of `caller_locations.first`.
+010.rb:1:1: C: [Corrected] Performance/Caller: Use `caller_locations(2..2).first` instead of `caller_locations[1]`.
+
+==> corrected/003.rb 19 <==
+caller(1..1).first
+
+==> corrected/004.rb 19 <==
+caller(1..1).first
+
+==> corrected/005.rb 19 <==
+caller(2..2).first
+
+==> corrected/006.rb 19 <==
+caller(2..2).first
+
+==> corrected/007.rb 19 <==
+caller(2..2).first
+
+==> corrected/008.rb 19 <==
+caller(3..3).first
+
+==> corrected/009.rb 29 <==
+caller_locations(1..1).first
+
+==> corrected/010.rb 29 <==
+caller_locations(2..2).first
+

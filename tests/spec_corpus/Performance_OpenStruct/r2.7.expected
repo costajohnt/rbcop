@@ -1,0 +1,8 @@
+==> offenses exit=1 222 <==
+000.rb:1:12: C: Performance/OpenStruct: Consider using `Struct` over `OpenStruct` to optimize the performance.
+001.rb:1:14: C: Performance/OpenStruct: Consider using `Struct` over `OpenStruct` to optimize the performance.
+
+==> autocorrect exit=1 222 <==
+000.rb:1:12: C: Performance/OpenStruct: Consider using `Struct` over `OpenStruct` to optimize the performance.
+001.rb:1:14: C: Performance/OpenStruct: Consider using `Struct` over `OpenStruct` to optimize the performance.
+

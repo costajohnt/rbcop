@@ -1,0 +1,6 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:3:17: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+a.rb:3:20: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+a.rb:7:13: C: Naming/BlockParameterName: Do not use fo as a name for a block parameter.
+a.rb:8:13: C: Naming/BlockParameterName: Do not use foo as a name for a block parameter.
+a.rb:8:1: C: Style/CombinableLoops: Combine this loop with the previous loop.

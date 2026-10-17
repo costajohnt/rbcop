@@ -1,0 +1,149 @@
+==> offenses exit=1 4002 <==
+005.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+006.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+007.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+008.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+009.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+010.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+011.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+012.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+013.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+014.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+015.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+016.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+017.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+018.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+019.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+020.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+021.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+022.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+023.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+024.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+025.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+026.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+027.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+028.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+029.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+030.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+031.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+032.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+033.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+
+==> autocorrect exit=0 3944 <==
+005.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+006.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+007.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+008.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+009.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+010.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+011.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+012.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+013.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+014.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+015.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+016.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+017.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+018.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+019.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+020.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+021.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+022.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+023.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+024.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+025.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+026.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+027.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+028.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+029.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+030.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+031.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+032.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+033.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+
+==> corrected/005.rb 28 <==
+something if str =~ /regex/
+
+==> corrected/006.rb 28 <==
+something if /regex/ =~ str
+
+==> corrected/007.rb 36 <==
+something if /regex/ =~ (a ? b : c)
+
+==> corrected/008.rb 33 <==
+something if /regex/ =~ (a && b)
+
+==> corrected/009.rb 33 <==
+something if /regex/ =~ (a || b)
+
+==> corrected/010.rb 31 <==
+something if /regex/ =~ (a..b)
+
+==> corrected/011.rb 35 <==
+something if /regex/ =~ (method a)
+
+==> corrected/012.rb 34 <==
+something if /regex/ =~ (super a)
+
+==> corrected/013.rb 33 <==
+something if /regex/ =~ (a == b)
+
+==> corrected/014.rb 47 <==
+something if /regex/ =~ if a then b else c end
+
+==> corrected/015.rb 34 <==
+something if /regex/ =~ method(a)
+
+==> corrected/016.rb 31 <==
+something if /regex/ =~ method
+
+==> corrected/017.rb 30 <==
+something if /regex/ =~ super
+
+==> corrected/018.rb 32 <==
+something if /regex/ =~ a.==(b)
+
+==> corrected/019.rb 30 <==
+something if /regex/ =~ a | b
+
+==> corrected/020.rb 30 <==
+something if /regex/ =~ a ^ b
+
+==> corrected/021.rb 30 <==
+something if /regex/ =~ a & b
+
+==> corrected/022.rb 30 <==
+something if /regex/ =~ a + b
+
+==> corrected/023.rb 30 <==
+something if /regex/ =~ a - b
+
+==> corrected/024.rb 30 <==
+something if /regex/ =~ a * b
+
+==> corrected/025.rb 30 <==
+something if /regex/ =~ a / b
+
+==> corrected/026.rb 30 <==
+something if /regex/ =~ a % b
+
+==> corrected/027.rb 31 <==
+something if /regex/ =~ a ** b
+
+==> corrected/028.rb 30 <==
+something if /regex/ =~ a > b
+
+==> corrected/029.rb 31 <==
+something if /regex/ =~ a >= b
+
+==> corrected/030.rb 30 <==
+something if /regex/ =~ a < b
+
+==> corrected/031.rb 31 <==
+something if /regex/ =~ a <= b
+
+==> corrected/032.rb 31 <==
+something if /regex/ =~ a << b
+
+==> corrected/033.rb 31 <==
+something if /regex/ =~ a >> b
+

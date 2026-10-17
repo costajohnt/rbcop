@@ -1,0 +1,58 @@
+==> .rubocop.yml 177 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Rails/HttpStatus:
+  EnforcedStyle: symbolic
+
+==> 000/000.rb 539 <==
+render :foo, status: 200
+render json: { foo: 'bar' }, status: 404
+render status: 404, json: { foo: 'bar' }
+render plain: 'foo/bar', status: 304
+redirect_to root_url, status: 301
+redirect_to action: 'index', status: 301
+redirect_to root_path(utm_source: :pr, utm_medium: :web), status: 301
+head 200
+head 200, location: 'accounts'
+assert_response 200
+assert_response 404, 'message'
+assert_redirected_to '/some/path', status: 301
+assert_redirected_to action: 'index', status: 301
+assert_redirected_to '/some/path', { status: 301 }, 'message'
+
+==> 001/001.rb 27 <==
+render :foo, status: '200'
+
+==> 002/002.rb 446 <==
+render :foo, status: :ok
+render json: { foo: bar }, status: :not_found
+render plain: 'foo/bar', status: :not_modified
+redirect_to root_url, status: :moved_permanently
+redirect_to root_path(utm_source: :pr, utm_medium: :web), status: :moved_permanently
+head :ok
+assert_response :ok
+assert_response :not_found, 'message'
+assert_redirected_to '/some/path', status: :moved_permanently
+assert_redirected_to action: 'index', status: :moved_permanently
+
+==> 003/003.rb 362 <==
+render :foo, status: 550
+render json: { foo: bar }, status: 550
+render plain: 'foo/bar', status: 550
+redirect_to root_url, status: 550
+redirect_to root_path(utm_source: :pr, utm_medium: :web), status: 550
+head 550
+assert_response 550
+assert_response 550, 'message'
+assert_redirected_to '/some/path', status: 550
+assert_redirected_to action: 'index', status: 550
+
+==> 004/004.rb 56 <==
+get '/foobar', to: redirect('/foobar/baz', status: 301)
+

@@ -1,0 +1,12 @@
+==> offenses exit=1 356 <==
+app/models/000/000.rb:2:3: C: Rails/TableNameAssignment: Do not use `self.table_name =`.
+app/models/001/001.rb:2:3: C: Rails/TableNameAssignment: Do not use `self.table_name =`.
+app/models/002/002.rb:2:3: C: Rails/TableNameAssignment: Do not use `self.table_name =`.
+app/models/003/003.rb:2:3: C: Rails/TableNameAssignment: Do not use `self.table_name =`.
+
+==> autocorrect exit=1 356 <==
+app/models/000/000.rb:2:3: C: Rails/TableNameAssignment: Do not use `self.table_name =`.
+app/models/001/001.rb:2:3: C: Rails/TableNameAssignment: Do not use `self.table_name =`.
+app/models/002/002.rb:2:3: C: Rails/TableNameAssignment: Do not use `self.table_name =`.
+app/models/003/003.rb:2:3: C: Rails/TableNameAssignment: Do not use `self.table_name =`.
+

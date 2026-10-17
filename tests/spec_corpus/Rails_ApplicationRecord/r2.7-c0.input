@@ -1,0 +1,35 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 4.2
+
+==> 000/000.rb 50 <==
+class ApplicationRecord < ActiveRecord::Base; end
+
+==> 001/001.rb 40 <==
+class MyModel < ActiveRecord::Base; end
+
+==> 002/002.rb 39 <==
+class MyModel < ActiveRecord::Base; end
+==> 003/003.rb 60 <==
+module Nested
+  class MyModel < ActiveRecord::Base; end
+end
+
+==> 004/004.rb 48 <==
+class Nested::MyModel < ActiveRecord::Base; end
+
+==> 005/005.rb 39 <==
+MyModel = Class.new(ActiveRecord::Base)
+==> 006/006.rb 47 <==
+Nested::MyModel = Class.new(ActiveRecord::Base)
+==> 007/007.rb 32 <==
+Class.new(ActiveRecord::Base) {}
+==> 008/008.rb 49 <==
+ApplicationRecord = Class.new(ActiveRecord::Base)

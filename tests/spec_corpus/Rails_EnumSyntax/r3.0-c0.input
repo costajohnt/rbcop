@@ -1,0 +1,48 @@
+==> .rubocop.yml 159 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+  TargetRailsVersion: 7.0
+
+==> app/models/000/000.rb 48 <==
+enum status: %i[active archived], _prefix: true
+
+==> app/models/001/001.rb 36 <==
+enum x: %i[foo bar], y: %i[baz qux]
+
+==> app/models/002/002.rb 55 <==
+enum status: { active: 0, archived: 1 }, _prefix: true
+
+==> app/models/003/003.rb 71 <==
+enum :status, { active: 0, archived: 1 }, _prefix: true, _suffix: true
+
+==> app/models/004/004.rb 44 <==
+enum "status" => { active: 0, archived: 1 }
+
+==> app/models/005/005.rb 39 <==
+enum KEY => { active: 0, archived: 1 }
+
+==> app/models/006/006.rb 56 <==
+enum :_key => { active: 0, archived: 1 }, _prefix: true
+
+==> app/models/007/007.rb 60 <==
+enum key: %i[foo bar].map.with_index { |v, i| [v, i] }.to_h
+
+==> app/models/008/008.rb 40 <==
+enum status: { active: 0, archived: 1 }
+
+==> app/models/009/009.rb 129 <==
+enum status: { active: 0, archived: 1 }, _prefix: true, _suffix: true, _default: :active, _scopes: true, _instance_methods: true
+
+==> app/models/010/010.rb 54 <==
+enum :status, { active: 0, archived: 1 }, prefix: true
+==> app/models/011/011.rb 4 <==
+enum
+==> app/models/012/012.rb 49 <==
+enum :status, { active: 0, archived: 1 }, prefix
+

@@ -1,0 +1,14 @@
+==> offenses exit=1 276 <==
+000.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+001.rb:1:14: C: [Correctable] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+
+==> autocorrect exit=0 272 <==
+000.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+001.rb:1:14: C: [Corrected] Performance/RedundantMatch: Use `=~` in places where the `MatchData` returned by `#match` will not be used.
+
+==> corrected/000.rb 34 <==
+something if /regex/ =~ (yield a)
+
+==> corrected/001.rb 30 <==
+something if /regex/ =~ yield
+

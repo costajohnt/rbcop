@@ -1,0 +1,9 @@
+==> offenses exit=1 103 <==
+000.rb:1:11: C: [Correctable] Performance/ZipWithoutBlock: Use `zip` without a block argument instead.
+
+==> autocorrect exit=0 101 <==
+000.rb:1:11: C: [Corrected] Performance/ZipWithoutBlock: Use `zip` without a block argument instead.
+
+==> corrected/000.rb 14 <==
+[1, 2, 3].zip
+

@@ -1,0 +1,7 @@
+plugins:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-rspec_rails
+  - rubocop-minitest
+AllCops:
+  SuggestExtensions: false

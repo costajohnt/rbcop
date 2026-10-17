@@ -1,0 +1,14 @@
+==> offenses exit=1 181 <==
+002/002_spec.rb:1:14: C: [Correctable] RSpec/ClassCheck: Prefer `be_kind_of` over `be_a`.
+003/003_spec.rb:1:14: C: [Correctable] RSpec/ClassCheck: Prefer `be_kind_of` over `be_an`.
+
+==> autocorrect exit=0 177 <==
+002/002_spec.rb:1:14: C: [Corrected] RSpec/ClassCheck: Prefer `be_kind_of` over `be_a`.
+003/003_spec.rb:1:14: C: [Corrected] RSpec/ClassCheck: Prefer `be_kind_of` over `be_an`.
+
+==> corrected/002/002_spec.rb 27 <==
+expect(a).to be_kind_of(b)
+
+==> corrected/003/003_spec.rb 27 <==
+expect(a).to be_kind_of(b)
+

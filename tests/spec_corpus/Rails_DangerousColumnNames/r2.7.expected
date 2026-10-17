@@ -1,0 +1,14 @@
+==> offenses exit=1 482 <==
+db/001/001.rb:1:20: W: Rails/DangerousColumnNames: Avoid dangerous column names.
+db/002/20190101010101_add_save_to_users.rb:1:20: W: Rails/DangerousColumnNames: Avoid dangerous column names.
+db/003/003.rb:1:30: W: Rails/DangerousColumnNames: Avoid dangerous column names.
+db/004/20250101010101_create_users.rb:2:12: W: Rails/DangerousColumnNames: Avoid dangerous column names.
+db/005/20250101010101_create_users.rb:2:19: W: Rails/DangerousColumnNames: Avoid dangerous column names.
+
+==> autocorrect exit=1 482 <==
+db/001/001.rb:1:20: W: Rails/DangerousColumnNames: Avoid dangerous column names.
+db/002/20190101010101_add_save_to_users.rb:1:20: W: Rails/DangerousColumnNames: Avoid dangerous column names.
+db/003/003.rb:1:30: W: Rails/DangerousColumnNames: Avoid dangerous column names.
+db/004/20250101010101_create_users.rb:2:12: W: Rails/DangerousColumnNames: Avoid dangerous column names.
+db/005/20250101010101_create_users.rb:2:19: W: Rails/DangerousColumnNames: Avoid dangerous column names.
+

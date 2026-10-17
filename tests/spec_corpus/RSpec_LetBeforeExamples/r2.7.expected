@@ -1,0 +1,54 @@
+==> offenses exit=1 634 <==
+000/000_spec.rb:3:3: C: [Correctable] RSpec/LetBeforeExamples: Move `let` before the examples in the group.
+001/001_spec.rb:6:3: C: [Correctable] RSpec/LetBeforeExamples: Move `let` before the examples in the group.
+002/002_spec.rb:4:3: C: RSpec/LetBeforeExamples: Move `let` before the examples in the group.
+003/003_spec.rb:4:3: C: [Correctable] RSpec/LetBeforeExamples: Move `let` before the examples in the group.
+004/004_spec.rb:4:3: C: [Correctable] RSpec/LetBeforeExamples: Move `let` before the examples in the group.
+005/005_spec.rb:4:3: C: [Correctable] RSpec/LetBeforeExamples: Move `let` before the examples in the group.
+
+==> autocorrect exit=1 624 <==
+000/000_spec.rb:3:3: C: [Corrected] RSpec/LetBeforeExamples: Move `let` before the examples in the group.
+001/001_spec.rb:6:3: C: [Corrected] RSpec/LetBeforeExamples: Move `let` before the examples in the group.
+002/002_spec.rb:4:3: C: RSpec/LetBeforeExamples: Move `let` before the examples in the group.
+003/003_spec.rb:4:3: C: [Corrected] RSpec/LetBeforeExamples: Move `let` before the examples in the group.
+004/004_spec.rb:4:3: C: [Corrected] RSpec/LetBeforeExamples: Move `let` before the examples in the group.
+005/005_spec.rb:4:3: C: [Corrected] RSpec/LetBeforeExamples: Move `let` before the examples in the group.
+
+==> corrected/000/000_spec.rb 84 <==
+RSpec.describe User do
+  let(:foo) { bar }
+  it { is_expected.to be_after_let }
+end
+
+==> corrected/001/001_spec.rb 118 <==
+RSpec.describe User do
+  let(:foo) { bar }
+  context 'a context' do
+    it { is_expected.to be_after_let }
+  end
+
+end
+
+==> corrected/003/003_spec.rb 89 <==
+RSpec.describe User do
+  let(:foo) { bar }
+  it_behaves_like('should be after let')
+
+end
+
+==> corrected/004/004_spec.rb 102 <==
+RSpec.describe User do
+  let(:user, &args[:build_user])
+  it_behaves_like('should be after let')
+
+end
+
+==> corrected/005/005_spec.rb 128 <==
+RSpec.describe User do
+  let(:foo) { (<<-SOURCE) }
+  some long text here
+  SOURCE
+  it_behaves_like('should be after let')
+
+end
+

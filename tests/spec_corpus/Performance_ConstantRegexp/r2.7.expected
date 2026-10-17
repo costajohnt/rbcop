@@ -1,0 +1,19 @@
+==> offenses exit=1 444 <==
+000.rb:1:12: C: [Correctable] Performance/ConstantRegexp: Extract this regexp into a constant, memoize it, or append an `/o` option to its options.
+001.rb:1:12: C: [Correctable] Performance/ConstantRegexp: Extract this regexp into a constant, memoize it, or append an `/o` option to its options.
+002.rb:1:12: C: [Correctable] Performance/ConstantRegexp: Extract this regexp into a constant, memoize it, or append an `/o` option to its options.
+
+==> autocorrect exit=0 438 <==
+000.rb:1:12: C: [Corrected] Performance/ConstantRegexp: Extract this regexp into a constant, memoize it, or append an `/o` option to its options.
+001.rb:1:12: C: [Corrected] Performance/ConstantRegexp: Extract this regexp into a constant, memoize it, or append an `/o` option to its options.
+002.rb:1:12: C: [Corrected] Performance/ConstantRegexp: Extract this regexp into a constant, memoize it, or append an `/o` option to its options.
+
+==> corrected/000.rb 25 <==
+str.match?(/A#{CONST}/o)
+
+==> corrected/001.rb 45 <==
+str.match?(/A#{CONST1}something#{CONST2}z/o)
+
+==> corrected/002.rb 60 <==
+str.match?(/A#{CONST1}something#{Regexp.escape(CONST2)}z/o)
+

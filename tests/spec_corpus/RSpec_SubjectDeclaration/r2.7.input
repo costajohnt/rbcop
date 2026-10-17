@@ -1,0 +1,97 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 34 <==
+let!(:subject) { 'some subject' }
+
+==> 001/001_spec.rb 23 <==
+let!(:subject, &block)
+
+==> 002/002_spec.rb 33 <==
+let(:subject) { 'some subject' }
+
+==> 003/003_spec.rb 22 <==
+let(:subject, &block)
+
+==> 004/004_spec.rb 37 <==
+subject(:subject) { 'some subject' }
+
+==> 005/005_spec.rb 38 <==
+subject!(:subject) { 'some subject' }
+
+==> 006/006_spec.rb 35 <==
+let!("subject") { 'some subject' }
+
+==> 007/007_spec.rb 24 <==
+let!("subject", &block)
+
+==> 008/008_spec.rb 34 <==
+let("subject") { 'some subject' }
+
+==> 009/009_spec.rb 23 <==
+let("subject", &block)
+
+==> 010/010_spec.rb 38 <==
+subject("subject") { 'some subject' }
+
+==> 011/011_spec.rb 39 <==
+subject!("subject") { 'some subject' }
+
+==> 012/012_spec.rb 35 <==
+let!(:subject!) { 'some subject' }
+
+==> 013/013_spec.rb 24 <==
+let!(:subject!, &block)
+
+==> 014/014_spec.rb 34 <==
+let(:subject!) { 'some subject' }
+
+==> 015/015_spec.rb 23 <==
+let(:subject!, &block)
+
+==> 016/016_spec.rb 38 <==
+subject(:subject!) { 'some subject' }
+
+==> 017/017_spec.rb 39 <==
+subject!(:subject!) { 'some subject' }
+
+==> 018/018_spec.rb 36 <==
+let!("subject!") { 'some subject' }
+
+==> 019/019_spec.rb 25 <==
+let!("subject!", &block)
+
+==> 020/020_spec.rb 35 <==
+let("subject!") { 'some subject' }
+
+==> 021/021_spec.rb 24 <==
+let("subject!", &block)
+
+==> 022/022_spec.rb 39 <==
+subject("subject!") { 'some subject' }
+
+==> 023/023_spec.rb 40 <==
+subject!("subject!") { 'some subject' }
+
+==> 024/024_spec.rb 24 <==
+subject(:foo) { 'bar' }
+
+==> 025/025_spec.rb 25 <==
+subject!(:foo) { 'bar' }
+
+==> 026/026_spec.rb 27 <==
+subject { 'some subject' }
+
+==> 027/027_spec.rb 20 <==
+let(:foo) { 'bar' }
+
+==> 028/028_spec.rb 21 <==
+let!(:foo) { 'bar' }
+

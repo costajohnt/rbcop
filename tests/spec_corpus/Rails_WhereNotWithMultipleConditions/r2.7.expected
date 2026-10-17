@@ -1,0 +1,8 @@
+==> offenses exit=1 253 <==
+001/001.rb:1:6: W: Rails/WhereNotWithMultipleConditions: Use a SQL statement instead of `where.not` with multiple conditions.
+002/002.rb:1:20: W: Rails/WhereNotWithMultipleConditions: Use a SQL statement instead of `where.not` with multiple conditions.
+
+==> autocorrect exit=1 253 <==
+001/001.rb:1:6: W: Rails/WhereNotWithMultipleConditions: Use a SQL statement instead of `where.not` with multiple conditions.
+002/002.rb:1:20: W: Rails/WhereNotWithMultipleConditions: Use a SQL statement instead of `where.not` with multiple conditions.
+

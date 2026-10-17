@@ -1,0 +1,33 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.5
+
+==> 000/000.rb 37 <==
+Dir.glob(Rails.root.join('**/*.rb'))
+
+==> 001/001.rb 39 <==
+::Dir.glob(Rails.root.join('**/*.rb'))
+
+==> 002/002.rb 45 <==
+Dir.glob(Rails.root.join("**/#{path}/*.rb"))
+
+==> 003/003.rb 40 <==
+Dir.glob(Rails.root.join('**', '*.rb'))
+
+==> 004/004.rb 51 <==
+Dir.glob(Rails.root.join('**', "#{path}", '*.rb'))
+
+==> 005/005.rb 96 <==
+Dir.glob(Rails.root.join("db", "seeds", Rails.env, "*.rb")).sort.each do |file|
+  load file
+end
+
+==> 006/006.rb 45 <==
+Dir[Rails.root.join('spec/support/**/*.rb')]
+

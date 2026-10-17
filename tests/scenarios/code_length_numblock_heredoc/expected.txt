@@ -1,0 +1,74 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:10:3: C: Style/NumberedParameters: Avoid using numbered parameters for multi-line blocks.
+a.rb:10:3: R: Metrics/BlockLength: Block has too many lines. [4/1]
+a.rb:10:3: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+a.rb:12:10: C: [Correctable] Style/ItBlockParameter: Use `it` block parameter.
+a.rb:14:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+a.rb:17:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+a.rb:17:1: R: Metrics/MethodLength: Method has too many lines. [5/1]
+a.rb:18:3: R: Metrics/BlockLength: Block has too many lines. [4/1]
+a.rb:18:3: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+a.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a.rb:1:1: R: Metrics/MethodLength: Method has too many lines. [5/1]
+a.rb:22:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+a.rb:25:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+a.rb:25:1: R: Metrics/MethodLength: Method has too many lines. [6/1]
+a.rb:26:3: C: Style/ItBlockParameter: Avoid using `it` block parameter for multi-line blocks.
+a.rb:26:3: R: Metrics/BlockLength: Block has too many lines. [5/1]
+a.rb:26:3: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+a.rb:2:3: C: Style/ItBlockParameter: Avoid using `it` block parameter for multi-line blocks.
+a.rb:2:3: R: Metrics/BlockLength: Block has too many lines. [4/1]
+a.rb:2:3: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+a.rb:30:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+a.rb:31:5: W: Lint/UnreachableCode: Unreachable code detected.
+a.rb:34:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+a.rb:34:1: R: Metrics/MethodLength: Method has too many lines. [3/1]
+a.rb:35:3: C: Style/NumberedParameters: Avoid using numbered parameters for multi-line blocks.
+a.rb:35:3: R: Metrics/BlockLength: Block has too many lines. [2/1]
+a.rb:35:3: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+a.rb:37:9: C: [Correctable] Style/ItBlockParameter: Use `it` block parameter.
+a.rb:38:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+a.rb:6:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+a.rb:9:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+a.rb:9:1: R: Metrics/MethodLength: Method has too many lines. [5/1]
+spec/a_spec.rb:11:3: C: RSpec/ExampleLength: Example has too many lines. [5/1]
+spec/a_spec.rb:11:3: C: RSpec/NoExpectationExample: No expectation found in this example.
+spec/a_spec.rb:12:5: C: Style/NumberedParameters: Avoid using numbered parameters for multi-line blocks.
+spec/a_spec.rb:12:5: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+spec/a_spec.rb:14:12: C: [Correctable] Style/ItBlockParameter: Use `it` block parameter.
+spec/a_spec.rb:16:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+spec/a_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `foo*_spec.rb`.
+spec/a_spec.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+spec/a_spec.rb:20:3: C: RSpec/ExampleLength: Example has too many lines. [5/1]
+spec/a_spec.rb:20:3: C: RSpec/NoExpectationExample: No expectation found in this example.
+spec/a_spec.rb:21:5: C: Style/ItBlockParameter: Avoid using `it` block parameter for multi-line blocks.
+spec/a_spec.rb:21:5: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+spec/a_spec.rb:24:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+spec/a_spec.rb:25:7: W: Lint/UnreachableCode: Unreachable code detected.
+spec/a_spec.rb:29:3: C: RSpec/ExampleLength: Example has too many lines. [4/1]
+spec/a_spec.rb:29:3: C: RSpec/NoExpectationExample: No expectation found in this example.
+spec/a_spec.rb:2:3: C: RSpec/ExampleLength: Example has too many lines. [5/1]
+spec/a_spec.rb:2:3: C: RSpec/NoExpectationExample: No expectation found in this example.
+spec/a_spec.rb:30:5: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+spec/a_spec.rb:33:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+spec/a_spec.rb:38:1: R: Metrics/ClassLength: Class has too many lines. [5/1]
+spec/a_spec.rb:39:3: C: Style/NumberedParameters: Avoid using numbered parameters for multi-line blocks.
+spec/a_spec.rb:39:3: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+spec/a_spec.rb:3:5: C: Style/ItBlockParameter: Avoid using `it` block parameter for multi-line blocks.
+spec/a_spec.rb:3:5: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+spec/a_spec.rb:41:10: C: [Correctable] Style/ItBlockParameter: Use `it` block parameter.
+spec/a_spec.rb:42:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+spec/a_spec.rb:46:1: R: Metrics/ModuleLength: Module has too many lines. [5/1]
+spec/a_spec.rb:47:3: C: Style/ItBlockParameter: Avoid using `it` block parameter for multi-line blocks.
+spec/a_spec.rb:47:3: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+spec/a_spec.rb:50:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+spec/a_spec.rb:54:1: R: Metrics/MethodLength: Method has too many lines. [4/1]
+spec/a_spec.rb:55:3: C: Style/NumberedParameters: Avoid using numbered parameters for multi-line blocks.
+spec/a_spec.rb:55:3: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+spec/a_spec.rb:57:10: C: [Correctable] Style/ItBlockParameter: Use `it` block parameter.
+spec/a_spec.rb:58:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+spec/a_spec.rb:62:1: R: Metrics/MethodLength: Method has too many lines. [3/1]
+spec/a_spec.rb:63:3: C: Style/ItBlockParameter: Avoid using `it` block parameter for multi-line blocks.
+spec/a_spec.rb:63:3: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+spec/a_spec.rb:66:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.
+spec/a_spec.rb:7:1: C: Naming/HeredocDelimiterNaming: Use meaningful heredoc delimiters.

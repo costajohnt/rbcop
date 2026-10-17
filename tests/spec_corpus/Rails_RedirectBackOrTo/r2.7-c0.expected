@@ -1,0 +1,29 @@
+==> offenses exit=1 770 <==
+000/000.rb:1:1: W: [Correctable] Rails/RedirectBackOrTo: Use `redirect_back_or_to` instead of `redirect_back` with `:fallback_location` keyword argument.
+001/001.rb:1:1: W: [Correctable] Rails/RedirectBackOrTo: Use `redirect_back_or_to` instead of `redirect_back` with `:fallback_location` keyword argument.
+002/002.rb:1:1: W: [Correctable] Rails/RedirectBackOrTo: Use `redirect_back_or_to` instead of `redirect_back` with `:fallback_location` keyword argument.
+003/003.rb:1:1: W: [Correctable] Rails/RedirectBackOrTo: Use `redirect_back_or_to` instead of `redirect_back` with `:fallback_location` keyword argument.
+004/004.rb:1:1: W: [Correctable] Rails/RedirectBackOrTo: Use `redirect_back_or_to` instead of `redirect_back` with `:fallback_location` keyword argument.
+
+==> autocorrect exit=0 760 <==
+000/000.rb:1:1: W: [Corrected] Rails/RedirectBackOrTo: Use `redirect_back_or_to` instead of `redirect_back` with `:fallback_location` keyword argument.
+001/001.rb:1:1: W: [Corrected] Rails/RedirectBackOrTo: Use `redirect_back_or_to` instead of `redirect_back` with `:fallback_location` keyword argument.
+002/002.rb:1:1: W: [Corrected] Rails/RedirectBackOrTo: Use `redirect_back_or_to` instead of `redirect_back` with `:fallback_location` keyword argument.
+003/003.rb:1:1: W: [Corrected] Rails/RedirectBackOrTo: Use `redirect_back_or_to` instead of `redirect_back` with `:fallback_location` keyword argument.
+004/004.rb:1:1: W: [Corrected] Rails/RedirectBackOrTo: Use `redirect_back_or_to` instead of `redirect_back` with `:fallback_location` keyword argument.
+
+==> corrected/000/000.rb 31 <==
+redirect_back_or_to(root_path)
+
+==> corrected/001/001.rb 68 <==
+redirect_back_or_to(root_path, status: 303, allow_other_host: true)
+
+==> corrected/002/002.rb 42 <==
+redirect_back_or_to(root_path, **options)
+
+==> corrected/003/003.rb 39 <==
+redirect_back_or_to({action: 'index'})
+
+==> corrected/004/004.rb 39 <==
+redirect_back_or_to({action: 'index'})
+

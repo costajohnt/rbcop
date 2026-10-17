@@ -1,0 +1,6 @@
+==> offenses exit=1 90 <==
+004/004_spec.rb:1:1: C: RSpec/NoExpectationExample: No expectation found in this example.
+
+==> autocorrect exit=1 90 <==
+004/004_spec.rb:1:1: C: RSpec/NoExpectationExample: No expectation found in this example.
+

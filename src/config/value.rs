@@ -681,6 +681,28 @@ impl RubyRegex {
 // ponytail: syntax neither engine knows (`\h` inside classes, `(?<name>` quirks, `\G`, `\K`)
 // fails to compile and the pattern is skipped.
 pub fn ruby_regex(literal: &str) -> Option<RubyRegex> {
+    // Cops compile their config's patterns per file (or per node); compiling is far slower than
+    // matching, so each thread keeps what it compiled. Clones share the compiled program.
+    // ponytail: cleared when full; patterns come from config, so it never fills in practice.
+    thread_local! {
+        static COMPILED: std::cell::RefCell<std::collections::HashMap<String, Option<RubyRegex>>> =
+            std::cell::RefCell::new(std::collections::HashMap::new());
+    }
+    if let Some(hit) = COMPILED.with(|c| c.borrow().get(literal).cloned()) {
+        return hit;
+    }
+    let re = compile_ruby_regex(literal);
+    COMPILED.with(|c| {
+        let mut c = c.borrow_mut();
+        if c.len() >= 4096 {
+            c.clear();
+        }
+        c.insert(literal.to_string(), re.clone());
+    });
+    re
+}
+
+fn compile_ruby_regex(literal: &str) -> Option<RubyRegex> {
     let (source, flags) = match literal.strip_prefix('/').and_then(|r| r.rsplit_once('/')) {
         Some((src, flags)) => (src, flags),
         None => (literal, ""),
@@ -733,16 +755,15 @@ mod tests {
     }
 
     // A pattern that gives up on every call stops being searched once it has spent RUN_BUDGET:
-    // 200 calls cost 32 budgets, not 200 (about 70 ms each on a 60-character line).
+    // 200 calls cost 32 budgets, not 200 (about 70 ms each on a 60-character line). No wall-clock
+    // assert: it failed on a loaded machine; the exhausted-pattern checks below prove the budget.
     #[test]
     fn backtracking_regex_past_the_run_budget() {
         let re = ruby_regex("(a|aa)+(?=d)|B").unwrap();
         let line = format!("# {} 1", "a".repeat(60));
-        let t0 = std::time::Instant::now();
         for _ in 0..200 {
             assert!(!re.is_match(&line));
         }
-        assert!(t0.elapsed() < std::time::Duration::from_secs(10), "took {:?}", t0.elapsed());
         // The ceiling: a cheap match of the exhausted pattern is no longer found.
         assert!(!re.is_match("B"));
         // Until the next file.

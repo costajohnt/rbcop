@@ -1,0 +1,32 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 42 <==
+Rails.env.development? || Rails.env.test?
+
+==> 001/001.rb 22 <==
+Rails.env.production?
+
+==> 002/002.rb 10 <==
+Rails.env
+
+==> 003/003.rb 22 <==
+rails_env = Rails.env
+
+==> 004/004.rb 38 <==
+Rails.env.capitalize
+Rails.env.empty?
+
+==> 005/005.rb 17 <==
+Rails.env.local?
+
+==> 006/006.rb 18 <==
+Rails.environment
+

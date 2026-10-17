@@ -1,0 +1,9 @@
+==> offenses exit=1 114 <==
+000/000.rb:1:26: C: [Correctable] Rails/DelegateAllowBlank: `allow_blank` is not a valid option, use `allow_nil`.
+
+==> autocorrect exit=0 112 <==
+000/000.rb:1:26: C: [Corrected] Rails/DelegateAllowBlank: `allow_blank` is not a valid option, use `allow_nil`.
+
+==> corrected/000/000.rb 41 <==
+delegate :foo, to: :bar, allow_nil: true
+

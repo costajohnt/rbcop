@@ -1,0 +1,57 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 136 <==
+validates :email, presence: { message: "must be present" },
+  format: { with: /@/, message: "not an email" },
+  length: { maximum: 64 }
+
+==> 001/001.rb 141 <==
+validates :email, presence: { message: :email_missing },
+  format: { with: /@/, message: I18n.t('email_format') },
+  length: { maximum: 64 }
+
+==> 002/002.rb 47 <==
+redirect_to root_path, notice: "Post created!"
+
+==> 003/003.rb 68 <==
+redirect_back fallback_location: root_path, notice: "Post created!"
+
+==> 004/004.rb 55 <==
+redirect_back_or_to root_path, notice: "Post created!"
+
+==> 005/005.rb 58 <==
+redirect_back_or_to root_path, alert: "Failed to update!"
+
+==> 006/006.rb 53 <==
+redirect_back_or_to root_path, notice: t(".success")
+
+==> 007/007.rb 45 <==
+redirect_to root_path, notice: t(".success")
+
+==> 008/008.rb 33 <==
+flash[:notice] = "Post created!"
+
+==> 009/009.rb 31 <==
+flash[:notice] = t(".success")
+
+==> 010/010.rb 37 <==
+flash.now[:notice] = "Post created!"
+
+==> 011/011.rb 35 <==
+flash.now[:notice] = t(".success")
+
+==> 012/012.rb 60 <==
+mail(to: user.email, subject: "Welcome to My Awesome Site")
+
+==> 013/013.rb 79 <==
+mail(to: user.email)
+mail(to: user.email, subject: t("mailers.users.welcome"))
+

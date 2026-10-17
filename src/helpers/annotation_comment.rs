@@ -11,8 +11,24 @@ pub struct Annotation<'a> {
     pub note: Option<&'a str>,
 }
 
-/// The annotation regex for a keyword list (build once per file, not per comment).
+/// The annotation regex for a keyword list. Each thread compiles a keyword list once (compiling
+/// cost more than every file's matching), and clones share the compiled program.
 pub fn regex(keywords: &[String]) -> Regex {
+    // ponytail: a linear list; a run has one keyword list per config, so it stays tiny.
+    thread_local! {
+        static COMPILED: std::cell::RefCell<Vec<(Vec<String>, Regex)>> = const { std::cell::RefCell::new(Vec::new()) };
+    }
+    COMPILED.with(|c| {
+        if let Some((_, re)) = c.borrow().iter().find(|(k, _)| k == keywords) {
+            return re.clone();
+        }
+        let re = compile(keywords);
+        c.borrow_mut().push((keywords.to_vec(), re.clone()));
+        re
+    })
+}
+
+fn compile(keywords: &[String]) -> Regex {
     let mut kws: Vec<&String> = keywords.iter().collect();
     kws.sort_by_key(|k| std::cmp::Reverse(k.chars().count()));
     let union = kws.iter().map(|k| regex::escape(k)).collect::<Vec<_>>().join("|");

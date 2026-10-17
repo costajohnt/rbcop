@@ -1,0 +1,10 @@
+==> offenses exit=1 213 <==
+000/000_spec.rb:1:21: C: RSpec/Be: Don't use `be` without an argument.
+001/001_spec.rb:1:25: C: RSpec/Be: Don't use `be` without an argument.
+001/001_spec.rb:2:25: C: RSpec/Be: Don't use `be` without an argument.
+
+==> autocorrect exit=1 213 <==
+000/000_spec.rb:1:21: C: RSpec/Be: Don't use `be` without an argument.
+001/001_spec.rb:1:25: C: RSpec/Be: Don't use `be` without an argument.
+001/001_spec.rb:2:25: C: RSpec/Be: Don't use `be` without an argument.
+
