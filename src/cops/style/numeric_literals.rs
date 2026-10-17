@@ -41,10 +41,16 @@ impl Cop for NumericLiterals {
     }
 
     fn kinds(&self) -> &'static [usize] {
-        &[kind::INTEGER_NODE, kind::FLOAT_NODE]
+        &[kind::INTEGER_NODE, kind::FLOAT_NODE, kind::SOURCE_LINE_NODE]
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
+        // `__LINE__` is an int to the parser gem: on_int reads AllowedNumbers (a String raises,
+        // #514), and its integer part is never digits.
+        if node.as_source_line_node().is_some() {
+            cx.cfg.array("AllowedNumbers");
+            return;
+        }
         let Some((start, end)) = literal_range(node, cx.ancestors) else { return };
         let source = cx.src.slice(start, end);
         let int = integer_part(source);

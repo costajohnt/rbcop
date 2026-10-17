@@ -1,0 +1,6 @@
+AllCops:
+  SuggestExtensions: false
+  DisabledByDefault: true
+Style/NumericLiterals:
+  Enabled: true
+  AllowedNumbers: Base

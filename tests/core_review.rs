@@ -1030,7 +1030,7 @@ fn ambiguous_directive_errors_once_for_the_variable_force() {
 #[test]
 fn string_list_settings_raise_where_rubocop_does() {
     let root = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/scenarios");
-    let cases: [(&str, &[&str]); 3] = [
+    let cases: [(&str, &[&str]); 4] = [
         (
             "list_settings_string",
             &["Lint/MissingSuper cop was inspecting a.rb:21:2.", "Style/AsciiComments cop was inspecting a.rb."],
@@ -1058,6 +1058,14 @@ fn string_list_settings_raise_where_rubocop_does() {
                 "Style/NumericLiterals cop was inspecting a.rb:34:4.",
                 "Style/NumericLiterals cop was inspecting a.rb:35:4.",
                 "Style/NumericLiterals cop was inspecting a.rb:39:10.",
+            ],
+        ),
+        // `__LINE__` is an int node to RuboCop (#514).
+        (
+            "numeric_literals_source_line",
+            &[
+                "Style/NumericLiterals cop was inspecting a.rb:1:2.",
+                "Style/NumericLiterals cop was inspecting a.rb:2:2.",
             ],
         ),
         // List settings set to `~` (#500): the merge removes the key, so a bare read is nil.
