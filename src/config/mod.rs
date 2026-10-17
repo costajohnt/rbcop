@@ -631,6 +631,9 @@ pub struct Store {
     /// Everything config loading has written to stderr so far.
     emitted: validator::Output,
     gem_dirs: HashMap<String, PathBuf>,
+    features: HashMap<String, Result<Feature, String>>,
+    /// The `plugins:`/`require:` entry whose loading failed (integrate_plugins).
+    failed_entry: Option<String>,
     loaded_plugins: Vec<String>,
     /// A `require:` rbcop cannot load (see validator::Validator::custom_cops).
     custom_cops: bool,
@@ -670,6 +673,8 @@ impl Store {
             files: HashMap::new(),
             emitted: Vec::new(),
             gem_dirs: HashMap::new(),
+            features: HashMap::new(),
+            failed_entry: None,
             loaded_plugins: Vec::new(),
             custom_cops: false,
             copless_plugins: Vec::new(),
@@ -864,18 +869,24 @@ impl Store {
             _ => return Err(format!("Error: Malformed configuration in {}", path.display())),
         };
         // Plugins (and plugin-capable `require:` gems) only matter here for their default configs.
-        let mut plugins = Vec::new();
+        let mut plugins: Vec<(String, Load)> = Vec::new();
         let mut migrate = Vec::new();
         for key in ["plugins", "require"] {
             for entry in seq(hash.remove(key)) {
                 match entry {
                     Value::Str(mut s) => {
-                        // ConfigLoaderResolver#resolve_requires: a plugin-capable gem under
-                        // `require:` (known here for native plugins and RuboCop's built-in one)
-                        // warns, then loads as a plugin.
+                        // ConfigLoaderResolver#resolve_requires: a plugin-capable `require:`
+                        // entry (Plugin.plugin_capable?: RuboCop's built-in plugin, or a gem of
+                        // that name whose gemspec names a `default_lint_roller_plugin`) warns, then
+                        // loads as a plugin; any other entry is a plain `require` (FeatureLoader).
                         let builtin = s == INTERNAL_AFFAIRS || s == OBSOLETE_INTERNAL_AFFAIRS;
-                        if key == "require" && (builtin || crate::helpers::cop_registry::native_plugin(&s).is_some()) {
-                            migrate.push((true, format!(
+                        let local = s.starts_with('.') || s.starts_with('/');
+                        let capable = key == "plugins"
+                            || builtin
+                            || crate::helpers::cop_registry::native_plugin(&s).is_some()
+                            || (!local && self.feature(&s).is_ok_and(|f| f.plugin));
+                        if key == "require" && capable {
+                            migrate.push((plugins.len(), true, format!(
                                 "{s} extension supports plugin, specify `plugins: {s}` instead of `require: {s}` in {}.\nFor more information, see https://docs.rubocop.org/rubocop/plugin_migration_guide.html.\n",
                                 path.display()
                             )));
@@ -883,6 +894,7 @@ impl Store {
                         // Plugin::Loader.normalize
                         if s == OBSOLETE_INTERNAL_AFFAIRS {
                             migrate.push((
+                                plugins.len(),
                                 true,
                                 format!(
                                     "Specify `{INTERNAL_AFFAIRS}` instead of `{OBSOLETE_INTERNAL_AFFAIRS}` in your configuration.\n"
@@ -890,20 +902,31 @@ impl Store {
                             ));
                             s = INTERNAL_AFFAIRS.to_string();
                         }
-                        plugins.push(s)
+                        plugins.push((s, if capable { Load::Plugin } else { Load::Require }))
                     }
-                    Value::Map(m) => plugins.extend(m.keys().map(String::from)),
+                    // Plugin::Loader.normalize: `{name => {enabled:, plugin_class_name:}}`.
+                    Value::Map(m) => {
+                        for (name, config) in &m.0 {
+                            let config = config.as_map();
+                            if config.and_then(|c| c.get("enabled")) == Some(&Value::Bool(false)) {
+                                continue;
+                            }
+                            let named =
+                                config.and_then(|c| c.get("plugin_class_name")).is_some_and(|v| *v != Value::Null);
+                            plugins.push((name.clone(), if named { Load::NamedPlugin } else { Load::Plugin }));
+                        }
+                    }
                     _ => {}
                 }
             }
         }
         // Local files are custom cops rbcop cannot load.
-        self.custom_cops |= plugins.iter().any(|n| n.starts_with('.') || n.starts_with('/'));
+        self.custom_cops |= plugins.iter().any(|(n, _)| n.starts_with('.') || n.starts_with('/'));
         // Config validation knows their class and module names (`Style/MiddleDot` defined in
         // `require: ../lib/linter/rubocop_middle_dot`), as a plugin gem's lib/.
         let mut local = Vec::new();
         let mut missing = None;
-        for n in plugins.iter().filter(|n| n.starts_with('.') || n.starts_with('/')) {
+        for (i, (n, _)) in plugins.iter().enumerate().filter(|(_, (n, _))| n.starts_with('.') || n.starts_with('/')) {
             // FeatureLoader#load: `require` of the path (`.rb` added unless given), then of the
             // path with `-` as `/`; the LoadError names the first.
             let base = path.parent().unwrap_or(Path::new("."));
@@ -913,18 +936,35 @@ impl Store {
                 _ => PathBuf::from(format!("{}.rb", p.display())),
             };
             let Some(file) = [rb(at(n)), rb(at(&n.replace('-', "/")))].into_iter().find(|f| f.is_file()) else {
-                missing.get_or_insert_with(|| format!("cannot load such file -- {}", at(n).display()));
+                missing.get_or_insert_with(|| (i, format!("cannot load such file -- {}", at(n).display())));
                 continue;
             };
             ruby_file_constants(&file, &mut self.plugin_constants);
             local.push(file);
         }
-        self.integrate_plugins(plugins)?;
-        // ponytail: a missing local file fails once the config's gems have loaded, not at its place
-        // in `require:`; only which of two failing entries gets named can differ.
-        if let Some(e) = missing {
-            return Err(e);
-        }
+        // The first entry that fails to load ends the run, after the warnings of the entries
+        // before it.
+        let names: Vec<String> = plugins.iter().map(|(n, _)| n.clone()).collect();
+        let failed = match self.integrate_plugins(plugins) {
+            Err(e) => {
+                let at = self.failed_entry.take().and_then(|f| names.iter().position(|n| *n == f));
+                match (at, missing) {
+                    (Some(at), Some((m, local))) if m < at => Some((m, local)),
+                    (at, _) => Some((at.unwrap_or(0), e)),
+                }
+            }
+            Ok(()) => missing,
+        };
+        // ponytail: a gem listed after a missing local file still integrates before the error.
+        let migrate: validator::Output = match failed {
+            Some((at, e)) => {
+                let out: validator::Output =
+                    migrate.into_iter().filter(|(i, ..)| *i < at).map(|(_, b, s)| (b, s)).collect();
+                self.emit(&out);
+                return Err(e);
+            }
+            None => migrate.into_iter().map(|(_, b, s)| (b, s)).collect(),
+        };
         // ConfigLoader#load_file resolves `plugins:` and then `require:`: the cop classes a local
         // file defines register once it loads.
         // ponytail: every local file registers after every gem of this config file, not at its place
@@ -933,7 +973,7 @@ impl Store {
         // (ruby_cops). Only a file in which none is found leaves the registry open.
         // ponytail: files the local file itself requires are not read.
         for file in local {
-            let cops = ruby_cops(&file);
+            let cops = ruby_cops_in(vec![file.clone()]);
             if cops.is_empty() {
                 self.open_custom = true;
                 ruby_file_constants(&file, &mut self.open_constants);
@@ -1130,10 +1170,10 @@ impl Store {
     /// Plugin::ConfigurationIntegrator: fold each plugin gem's config/default.yml into the defaults.
     // ponytail: assumes the LintRoller rules path is <gem>/config/default.yml, which every
     // rubocop-* plugin checked so far uses; local `require: ./file` entries (custom cops) are skipped.
-    fn integrate_plugins(&mut self, names: Vec<String>) -> Result<(), String> {
-        let names: Vec<String> = names
+    fn integrate_plugins(&mut self, names: Vec<(String, Load)>) -> Result<(), String> {
+        let names: Vec<(String, Load)> = names
             .into_iter()
-            .filter(|n| !n.starts_with('.') && !n.starts_with('/') && !self.loaded_plugins.contains(n))
+            .filter(|(n, _)| !n.starts_with('.') && !n.starts_with('/') && !self.loaded_plugins.contains(n))
             .collect();
         if names.is_empty() {
             return Ok(());
@@ -1144,7 +1184,7 @@ impl Store {
         // ponytail: a config's `plugins:` and plugin-capable `require:` gems load as one batch;
         // RuboCop integrates each such `require:` on its own, after `plugins:`.
         let mut configs: Vec<Result<&'static crate::helpers::cop_registry::NativePlugin, PathBuf>> = Vec::new();
-        for name in names {
+        for (name, load) in names {
             self.loaded_plugins.push(name.clone());
             if let Some(native) = crate::helpers::cop_registry::native_plugin(&name) {
                 // A plugin rbcop implements: its cops register and its vendored default.yml merges,
@@ -1157,15 +1197,17 @@ impl Store {
             // gem: its cops in lib/rubocop/cop/internal_affairs/, its config in
             // config/internal_affairs.yml.
             let (found, config, lib) = if name == INTERNAL_AFFAIRS {
-                (self.gem_dir("rubocop").map(Some), "config/internal_affairs.yml", "lib/rubocop/cop/internal_affairs")
+                let rubocop = self.gem_dir("rubocop").map(|d| Feature { dir: Some(d), file: None, plugin: true });
+                (rubocop, "config/internal_affairs.yml", "lib/rubocop/cop/internal_affairs")
             } else {
-                (self.feature_gem_dir(&name), "config/default.yml", "lib")
+                (self.feature(&name), "config/default.yml", "lib")
             };
-            let dir = match found {
-                Ok(Some(d)) => d,
-                // A Ruby library outside any gem (`require: set`): no cops.
-                Ok(None) => continue,
-                Err(e) if e.starts_with("cannot load such file") => return Err(e),
+            let feature = match found {
+                Ok(f) => f,
+                Err(e) if e.starts_with("cannot load such file") => {
+                    self.failed_entry = Some(name);
+                    return Err(e);
+                }
                 Err(e) => {
                     self.warnings.push(e);
                     // Its cops are unknown here.
@@ -1174,22 +1216,58 @@ impl Store {
                     continue;
                 }
             };
+            // Plugin::Loader.constantize: once its feature loads, a plugin's class comes from a
+            // Hash entry's `plugin_class_name` or from the `default_lint_roller_plugin` metadata
+            // of the gem of that name; without either the run fails (Plugin::LoadError).
+            if load == Load::Plugin && !feature.plugin {
+                self.failed_entry = Some(name.clone());
+                return Err(format!(
+                    "Error: Failed to load plugin `{name}` because the corresponding plugin class could not be determined \
+                     for instantiation.\nTry upgrading it first (e.g., `bundle update {name}`).\nIf `{name}` is not yet \
+                     a plugin, use `require: {name}` instead of `plugins: {name}` in your configuration.\n\nFor further \
+                     assistance, check with the developer regarding the following points:\n\
+                     https://docs.rubocop.org/rubocop/plugin_migration_guide.html"
+                ));
+            }
+            // A Ruby library outside any gem (`require: set`): no cops.
+            let Some(dir) = feature.dir else { continue };
             let lib = dir.join(lib);
-            ruby_constants(&lib, &mut self.plugin_constants);
             let path = dir.join(config);
-            let cops = ruby_cops(&lib);
-            if !path.is_file() && cops.is_empty() {
-                // An extension without config/default.yml may still register cops.
-                self.custom_cops = true;
-                self.open_custom = true;
-                ruby_constants(&lib, &mut self.open_constants);
+            // A plugin loads its gem (its cops, its config); a plain `require` loads the files
+            // it reaches, and the gem's config/default.yml only when that code injects it into
+            // the default configuration (an extension's Inject.defaults!).
+            let (files, merge) = if load == Load::Require {
+                let rubocop = self.gem_dir("rubocop").ok();
+                let files = match &feature.file {
+                    Some(file) => required_files(&lib, file, rubocop.as_deref()),
+                    None => ruby_files(&lib),
+                };
+                let inject = path.is_file() && injects_defaults(&files);
+                (files, inject)
+            } else {
+                (ruby_files(&lib), path.is_file())
+            };
+            for file in &files {
+                ruby_file_constants(file, &mut self.plugin_constants);
+            }
+            let cops = ruby_cops_in(files.clone());
+            if !merge && cops.is_empty() {
+                // A plugin without config/default.yml may still register cops; the files a plain
+                // `require` reaches were read, and define none.
+                if load != Load::Require && !path.is_file() {
+                    self.custom_cops = true;
+                    self.open_custom = true;
+                    for file in &files {
+                        ruby_file_constants(file, &mut self.open_constants);
+                    }
+                }
                 continue;
             }
             // RuboCop's registry holds the cop classes the gem defines, whether or not its
             // default.yml configures them (and not the entries without a class). Classes
             // configured there come in that order, then the others. Other class and module
             // names (helpers, the plugin class, namespaces) are not cops.
-            let config = if path.is_file() {
+            let config = if merge {
                 let text = std::fs::read_to_string(&path).map_err(|e| format!("{}: {e}", path.display()))?;
                 match parse_yaml_file(&text, &path.display().to_string())? {
                     Value::Map(m) => Arc::unwrap_or_clone(m),
@@ -1200,7 +1278,9 @@ impl Store {
             };
             let keys: Vec<String> = config.keys().map(String::from).collect();
             if cops.is_empty() {
-                ruby_constants(&lib, &mut self.open_constants);
+                for file in &files {
+                    ruby_file_constants(file, &mut self.open_constants);
+                }
             }
             let names: Vec<String> = if cops.is_empty() {
                 keys.into_iter().filter(|k| k.contains('/')).collect()
@@ -1212,14 +1292,16 @@ impl Store {
             };
             let before = crate::helpers::cop_registry::REGISTRY.len();
             crate::helpers::cop_registry::register_foreign(names);
-            if cops.is_empty() && crate::helpers::cop_registry::REGISTRY.len() == before {
+            // A plugin with no cops of its own (rubocop-erb) acts through its Ruby code; a plain
+            // `require` never counts as one.
+            if load != Load::Require && cops.is_empty() && crate::helpers::cop_registry::REGISTRY.len() == before {
                 let include = config.map("AllCops").and_then(|a| patterns(a, "Include")).unwrap_or_default();
                 self.copless_plugins.push((name.clone(), include));
             }
             crate::helpers::cop_registry::set_foreign_autocorrect(
                 cops.into_iter().filter_map(|(c, ac)| ac.then_some(c)),
             );
-            if path.is_file() {
+            if merge {
                 configs.push(Err(path));
             }
         }
@@ -1324,11 +1406,19 @@ impl Store {
         Ok(dir)
     }
 
-    /// The gem a `plugins:`/`require:` feature loads from: FeatureLoader#load's `require` of the
-    /// feature, then of it with `-` as `/` (`rubocop/require_tools` is in rubocop-require_tools).
-    /// None for a library outside any installed gem (the standard library); Err `cannot load such
-    /// file -- <feature>` (RuboCop's LoadError) when Ruby finds neither.
-    fn feature_gem_dir(&mut self, feature: &str) -> Result<Option<PathBuf>, String> {
+    /// What a `plugins:`/`require:` feature loads: FeatureLoader#load's `require` of the feature,
+    /// then of it with `-` as `/` (`rubocop/require_tools` is in rubocop-require_tools). Err
+    /// `cannot load such file -- <feature>` (RuboCop's LoadError) when Ruby finds neither.
+    fn feature(&mut self, feature: &str) -> Result<Feature, String> {
+        if let Some(f) = self.features.get(feature) {
+            return f.clone();
+        }
+        let found = self.find_feature(feature);
+        self.features.insert(feature.to_string(), found.clone());
+        found
+    }
+
+    fn find_feature(&self, feature: &str) -> Result<Feature, String> {
         // Features come from config files; anything else must never reach the ruby command line.
         if feature.is_empty()
             || feature.starts_with('-')
@@ -1336,13 +1426,17 @@ impl Store {
         {
             return Err(format!("cannot load such file -- {feature}"));
         }
+        // Prints whether the gem named `f` is a lint_roller plugin, then the gem dir and the
+        // file the feature resolves to (none for the standard library).
         let out = std::process::Command::new("ruby")
             .args([
                 "-e",
-                "f = ARGV[0]; [f, f.tr('-', '/')].uniq.each do |t| \
+                "f = ARGV[0]; plugin = begin; !!Gem::Specification.find_by_name(f).metadata['default_lint_roller_plugin']; \
+                 rescue Gem::LoadError, StandardError; false; end; \
+                 [f, f.tr('-', '/')].uniq.each do |t| \
                  spec = Gem::Specification.find_by_path(t); \
-                 (print spec.gem_dir; exit) if spec && !spec.default_gem?; \
-                 exit if spec || $LOADED_FEATURES.include?(t) || $LOADED_FEATURES.include?(\"#{t}.rb\") || \
+                 (puts plugin, spec.gem_dir, spec.full_require_paths.flat_map { |d| [\"#{d}/#{t}.rb\", \"#{d}/#{t}\"] }.find { |p| File.file?(p) }; exit) if spec && !spec.default_gem?; \
+                 (puts plugin; exit) if spec || $LOADED_FEATURES.include?(t) || $LOADED_FEATURES.include?(\"#{t}.rb\") || \
                  (($LOAD_PATH.resolve_feature_path(t) rescue nil)); \
                  end; $stderr.print \"cannot load such file -- #{f}\"; exit 1",
                 "--",
@@ -1354,9 +1448,86 @@ impl Store {
         if !out.status.success() {
             return Err(String::from_utf8_lossy(&out.stderr).trim_end().to_string());
         }
-        let dir = String::from_utf8_lossy(&out.stdout).into_owned();
-        Ok((!dir.is_empty()).then(|| PathBuf::from(dir)))
+        let out = String::from_utf8_lossy(&out.stdout);
+        let mut lines = out.lines();
+        let plugin = lines.next() == Some("true");
+        let mut path = || lines.next().filter(|l| !l.is_empty()).map(PathBuf::from);
+        Ok(Feature { plugin, dir: path(), file: path() })
     }
+}
+
+/// How a `plugins:`/`require:` entry loads.
+#[derive(Clone, Copy, PartialEq)]
+enum Load {
+    /// Plugin::Loader, with the plugin class from the gemspec metadata.
+    Plugin,
+    /// Plugin::Loader, with a `plugin_class_name` given.
+    NamedPlugin,
+    /// FeatureLoader: a plain `require`.
+    Require,
+}
+
+/// A feature found by Store::feature.
+#[derive(Clone)]
+struct Feature {
+    /// The gem of the feature's name is a lint_roller plugin (`default_lint_roller_plugin`).
+    plugin: bool,
+    /// The installed gem it is in; None for the standard library (or a default gem).
+    dir: Option<PathBuf>,
+    /// The Ruby file it resolves to.
+    file: Option<PathBuf>,
+}
+
+/// The Ruby files a plain `require` of `file` loads: the file and, transitively, those its
+/// literal `require_relative`s and its `require`s of features under the gem's `lib` name. Files
+/// of the rubocop gem itself (`loaded`) are loaded before any config is read, so requiring them
+/// again does nothing. A `require` of a computed path (`Dir[...].each { |f| require f }`) is taken
+/// to load every file under `lib`.
+// ponytail: only literal require lines are followed; conditions on them (`if defined?(...)`) and
+// requires into other gems are not.
+fn required_files(lib: &Path, file: &Path, loaded: Option<&Path>) -> Vec<PathBuf> {
+    static LITERAL: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| {
+        Regex::new(r##"^\s*(require|require_relative)\b[\s(]*['"]([^'"#]+)['"]"##).unwrap()
+    });
+    static COMPUTED: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| {
+        Regex::new(r##"^[^#]*\brequire(?:_relative)?\b[\s(]*(?:[a-z_]\w*\s*(?:[)};]|$)|File\.|"[^"]*#\{)"##).unwrap()
+    });
+    let rb = |p: PathBuf| match p.extension() {
+        Some(e) if e == "rb" => p,
+        _ => PathBuf::from(format!("{}.rb", p.display())),
+    };
+    let mut seen: Vec<PathBuf> = Vec::new();
+    let mut todo = vec![file.to_path_buf()];
+    while let Some(f) = todo.pop() {
+        if seen.contains(&f) || loaded.is_some_and(|l| f.starts_with(l)) {
+            continue;
+        }
+        let Ok(text) = std::fs::read_to_string(&f) else { continue };
+        for line in text.lines() {
+            if let Some(m) = LITERAL.captures(line) {
+                let target =
+                    if &m[1] == "require_relative" { f.parent().unwrap().join(&m[2]) } else { lib.join(&m[2]) };
+                todo.push(rb(normalize(&target)));
+            } else if COMPUTED.is_match(line) {
+                return ruby_files(lib).into_iter().filter(|f| !loaded.is_some_and(|l| f.starts_with(l))).collect();
+            }
+        }
+        seen.push(f);
+    }
+    seen
+}
+
+/// Loading these files sets ConfigLoader's default configuration: one of them calls an
+/// extension's `Inject.defaults!` at the top level, and one sets the default configuration.
+/// (Code that sets it only from a method RuboCop calls later, as standard's plugin, does not.)
+// ponytail: a name match for the call and the assignment, not a trace of which method is called.
+fn injects_defaults(files: &[PathBuf]) -> bool {
+    static CALL: std::sync::LazyLock<Regex> =
+        std::sync::LazyLock::new(|| Regex::new(r"(?m)^[A-Z][\w:]*\.(?:inject_)?defaults!").unwrap());
+    static SET: std::sync::LazyLock<Regex> =
+        std::sync::LazyLock::new(|| Regex::new(r"@default_configuration\b|\bdefault_configuration\s*=[^=]").unwrap());
+    let texts: Vec<String> = files.iter().filter_map(|f| std::fs::read_to_string(f).ok()).collect();
+    texts.iter().any(|t| CALL.is_match(t)) && texts.iter().any(|t| SET.is_match(t))
 }
 
 /// Plugin::INTERNAL_AFFAIRS_PLUGIN_NAME, RuboCop's built-in plugin, and the obsolete name it
@@ -1466,41 +1637,8 @@ fn merge_with_default(base_default: &Map, mut config: Map, unset_nil: bool, opts
     merge(&default, &config, &mode, unset_nil)
 }
 
-/// Class and module names defined in a gem's lib/: a plugin registers cops its config/default.yml
-/// need not list, and RuboCop's registry knows them.
-// ponytail: a name match, not a registry; `Dept/Cop` counts as known when both are defined.
-fn ruby_constants(dir: &Path, out: &mut std::collections::HashSet<String>) {
-    let Ok(entries) = std::fs::read_dir(dir) else { return };
-    for path in entries.flatten().map(|e| e.path()) {
-        if path.is_dir() {
-            ruby_constants(&path, out);
-        } else if path.extension().is_some_and(|e| e == "rb") {
-            ruby_file_constants(&path, out);
-        }
-    }
-}
-
-/// Class and module names a Ruby file defines.
-fn ruby_file_constants(path: &Path, out: &mut std::collections::HashSet<String>) {
-    static RE: std::sync::LazyLock<Regex> =
-        std::sync::LazyLock::new(|| Regex::new(r"(?m)^\s*(?:class|module)\s+([A-Z]\w*)").unwrap());
-    if let Ok(text) = std::fs::read_to_string(path) {
-        out.extend(RE.captures_iter(&text).map(|c| c[1].to_string()));
-    }
-}
-
-/// The cops a plugin gem's lib/ (or one Ruby file) defines (Badge.for of each class under RuboCop::Cop that descends
-/// from a cop base class and does not call `exclude_from_registry`), sorted, each with whether it
-/// supports autocorrect (`extend AutoCorrector`, its own or a superclass's).
-// ponytail: reads nesting from `module`/`class` lines and the `end` at the same indentation, as
-// every rubocop-* gem is formatted; classes opened by metaprogramming are not seen.
-fn ruby_cops(dir: &Path) -> Vec<(String, bool)> {
-    struct Class {
-        path: Vec<String>,
-        superclass: String,
-        autocorrect: bool,
-        excluded: bool,
-    }
+/// The Ruby files under a gem's lib/, sorted.
+fn ruby_files(dir: &Path) -> Vec<PathBuf> {
     fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
         let Ok(entries) = std::fs::read_dir(dir) else { return };
         for path in entries.flatten().map(|e| e.path()) {
@@ -1511,17 +1649,40 @@ fn ruby_cops(dir: &Path) -> Vec<(String, bool)> {
             }
         }
     }
+    let mut files = Vec::new();
+    walk(dir, &mut files);
+    files.sort();
+    files
+}
+
+/// Class and module names a Ruby file defines: a plugin registers cops its config/default.yml
+/// need not list, and RuboCop's registry knows them.
+// ponytail: a name match, not a registry; `Dept/Cop` counts as known when both are defined.
+fn ruby_file_constants(path: &Path, out: &mut std::collections::HashSet<String>) {
+    static RE: std::sync::LazyLock<Regex> =
+        std::sync::LazyLock::new(|| Regex::new(r"(?m)^\s*(?:class|module)\s+([A-Z]\w*)").unwrap());
+    if let Ok(text) = std::fs::read_to_string(path) {
+        out.extend(RE.captures_iter(&text).map(|c| c[1].to_string()));
+    }
+}
+
+/// The cops some Ruby files define (Badge.for of each class under RuboCop::Cop that descends
+/// from a cop base class and does not call `exclude_from_registry`), sorted, each with whether it
+/// supports autocorrect (`extend AutoCorrector`, its own or a superclass's).
+// ponytail: reads nesting from `module`/`class` lines and the `end` at the same indentation, as
+// every rubocop-* gem is formatted; classes opened by metaprogramming are not seen.
+fn ruby_cops_in(files: Vec<PathBuf>) -> Vec<(String, bool)> {
+    struct Class {
+        path: Vec<String>,
+        superclass: String,
+        autocorrect: bool,
+        excluded: bool,
+    }
     static OPEN: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| {
         Regex::new(r"^(\s*)(module|class)\s+((?:::)?[A-Z]\w*(?:::[A-Z]\w*)*)\s*(?:<\s*((?:::)?[A-Z][\w:]*))?\s*(;.*)?(?:#.*)?$")
             .unwrap()
     });
     static END: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| Regex::new(r"^(\s*)end\b").unwrap());
-    let mut files = Vec::new();
-    if dir.is_file() {
-        files.push(dir.to_path_buf());
-    }
-    walk(dir, &mut files);
-    files.sort();
     let mut classes: Vec<Class> = Vec::new();
     for file in files {
         let Ok(text) = std::fs::read_to_string(&file) else { continue };

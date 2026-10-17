@@ -1,0 +1,30 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:3:7: W: Lint/CopDirectiveSyntax: Unknown cop name `Performance/Detect`.
+a.rb:3:7: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `Performance/Detect` (unknown cop).
+spec/a_spec.rb:10:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x7`.
+spec/a_spec.rb:11:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x8`.
+spec/a_spec.rb:12:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x9`.
+spec/a_spec.rb:13:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x10`. Did you mean `x1`?
+spec/a_spec.rb:14:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x11`. Did you mean `x1`?
+spec/a_spec.rb:15:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x12`. Did you mean `x1`?
+spec/a_spec.rb:16:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x13`. Did you mean `x1`?
+spec/a_spec.rb:17:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x14`. Did you mean `x1`?
+spec/a_spec.rb:18:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x15`. Did you mean `x1`?
+spec/a_spec.rb:19:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x16`. Did you mean `x1`?
+spec/a_spec.rb:20:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x17`. Did you mean `x1`?
+spec/a_spec.rb:21:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x18`. Did you mean `x1`?
+spec/a_spec.rb:22:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x19`. Did you mean `x1`?
+spec/a_spec.rb:23:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x20`. Did you mean `x2`?
+spec/a_spec.rb:24:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x21`. Did you mean `x2`?
+spec/a_spec.rb:25:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x22`. Did you mean `x2`?
+spec/a_spec.rb:26:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x23`. Did you mean `x2`?
+spec/a_spec.rb:27:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x24`. Did you mean `x2`?
+spec/a_spec.rb:28:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x25`. Did you mean `x2`?
+spec/a_spec.rb:29:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x26`. Did you mean `x2`?
+spec/a_spec.rb:3:1: R: Metrics/BlockLength: Block has too many lines. [26/25]
+spec/a_spec.rb:4:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x1`. Did you mean `x19`?
+spec/a_spec.rb:5:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x2`. Did you mean `x26`?
+spec/a_spec.rb:6:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x3`.
+spec/a_spec.rb:7:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x4`.
+spec/a_spec.rb:8:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x5`.
+spec/a_spec.rb:9:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x6`.
