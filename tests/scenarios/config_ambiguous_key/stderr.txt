@@ -1,0 +1,2 @@
+.rubocop.yml: Warning: no department given for SelfAssignment.
+Error: Ambiguous cop name `SelfAssignment` used in .rubocop.yml needs department qualifier. Did you mean Lint/SelfAssignment or Style/SelfAssignment?

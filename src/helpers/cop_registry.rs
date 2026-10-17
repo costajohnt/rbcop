@@ -265,20 +265,59 @@ fn camel_case(part: &str) -> String {
 
 /// Registry#qualified_cop_name(name, nil, warn: false); None on AmbiguousCopName.
 pub fn qualified_cop_name(name: &str) -> Option<String> {
+    qualify(name, "", None, true, &mut Vec::new()).ok()
+}
+
+/// Registry#qualified_cop_name(name, origin, warn:, correct_namespace:). With `warn` (the path as
+/// PathUtil.smart_path shows it) the `no department given` and `wrong namespace` warnings are
+/// pushed as the lines Registry#emit_warning writes. Err is AmbiguousCopName's message.
+pub fn qualify(
+    name: &str,
+    origin: &str,
+    warn: Option<&str>,
+    correct_namespace: bool,
+    warnings: &mut Vec<String>,
+) -> Result<String, String> {
+    // Badge.parse: Ruby's split drops trailing empty fields.
     let mut parts: Vec<String> = name.split('/').map(camel_case).collect();
     while parts.last().is_some_and(|p| p.is_empty()) {
         parts.pop();
     }
-    let Some(cop) = parts.pop() else { return Some(name.to_string()) };
+    let Some(cop) = parts.pop() else { return Ok(name.to_string()) };
+    let qualified = !parts.is_empty();
     let dept = parts.join("/");
     let registered = |d: &str| REGISTRY.iter().any(|c| department_of(c) == d && c.rsplit('/').next() == Some(cop.as_str()));
-    if !parts.is_empty() && registered(&dept) {
-        return Some(name.to_string());
+    // department_missing?: unqualified_cop_names holds every cop's basename (and
+    // RedundantCopDisableDirective), compared with the name as given.
+    if let Some(shown) = warn
+        && !qualified
+        && (name == "RedundantCopDisableDirective" || REGISTRY.iter().any(|c| c.rsplit('/').next() == Some(name)))
+    {
+        let fix = if origin.ends_with(".rb") { " Run `rubocop -a --only Migration/DepartmentName` to fix." } else { "" };
+        warnings.push(format!("{shown}: Warning: no department given for {name}.{fix}"));
     }
-    let hits: Vec<&str> = departments().into_iter().filter(|d| registered(d)).collect();
+    if qualified && registered(&dept) {
+        return Ok(name.to_string());
+    }
+    if qualified && !correct_namespace {
+        return Ok(name.to_string());
+    }
+    let given = if qualified { format!("{dept}/{cop}") } else { cop.clone() };
+    let hits: Vec<String> =
+        departments().into_iter().filter(|d| registered(d)).map(|d| format!("{d}/{cop}")).collect();
     match hits.as_slice() {
-        [] => Some(name.to_string()),
-        [d] => Some(format!("{d}/{cop}")),
-        _ => None,
+        [] => Ok(name.to_string()),
+        [real] => {
+            if let Some(shown) = warn
+                && qualified
+            {
+                warnings.push(format!("{shown}: Warning: {given} has the wrong namespace - replace it with {real}"));
+            }
+            Ok(real.clone())
+        }
+        many => Err(format!(
+            "Ambiguous cop name `{given}` used in {origin} needs department qualifier. Did you mean {}?",
+            many.join(" or ")
+        )),
     }
 }

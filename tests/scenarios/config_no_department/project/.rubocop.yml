@@ -1,0 +1,4 @@
+AllCops:
+  NewCops: disable
+LineLength:
+  Max: 10

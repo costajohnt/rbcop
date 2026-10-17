@@ -162,19 +162,46 @@ pub fn all_cop_names(src: &Source, d: &Directive, mut f: impl FnMut(&str) -> boo
     })
 }
 
-/// Registry.qualified_cop_name: a bare name becomes the unique cop with that name; anything else
-/// is returned unchanged.
+/// CommentConfig#qualified_cop_name (`correct_namespace: false`): a bare name becomes the unique
+/// cop with that name; anything else is returned unchanged. An ambiguous bare name (where
+/// RuboCop raises, see `ambiguity`) is returned unchanged too.
 fn qualify(name: &str) -> String {
     let name = name.trim();
-    if name.contains('/') {
-        return name.to_string();
+    crate::helpers::cop_registry::qualify(name, "", None, false, &mut Vec::new()).unwrap_or_else(|_| name.to_string())
+}
+
+/// What CommentConfig#analyze does on a directive naming a bare cop name that two departments
+/// share: Registry#qualified_cop_name raises AmbiguousCopName, after warning about the bare names
+/// reached so far, every time the analysis runs (it is memoized only once it succeeds).
+#[derive(Clone, Debug)]
+pub struct Poison {
+    /// The warnings one analysis prints before it raises.
+    pub warnings: Vec<String>,
+    /// AmbiguousCopName's message.
+    pub message: String,
+}
+
+/// The names of `d` CommentConfig qualifies, in order (departments are expanded, not qualified).
+fn qualified_names(d: &Directive) -> Vec<&str> {
+    if d.cops.as_deref() == Some("all") {
+        return Vec::new();
     }
-    let suffix = format!("/{name}");
-    let mut hits = known().filter(|c| c.ends_with(&suffix));
-    match (hits.next(), hits.next()) {
-        (Some(one), None) => one.to_string(),
-        _ => name.to_string(),
-    }
+    let names = if d.signed() { d.signed_args().into_iter().map(|(_, n)| n).collect() } else { d.raw_names() };
+    names.into_iter().filter(|raw| !is_department(raw) && *raw != LINT_SYNTAX).collect()
+}
+
+/// The first name of `d` Registry#qualified_cop_name finds ambiguous: its index in
+/// `qualified_names(d)` and AmbiguousCopName's message.
+fn ambiguity(src: &Source, d: &Directive) -> Option<(usize, String)> {
+    let origin = src.absolute_path();
+    qualified_names(d).into_iter().enumerate().find_map(|(i, raw)| {
+        crate::helpers::cop_registry::qualify(raw.trim(), &origin, None, false, &mut Vec::new()).err().map(|e| (i, e))
+    })
+}
+
+/// Pushes warnings (as `warn_unqualified` would have) for the file being inspected.
+pub fn push_warnings(warnings: &[String]) {
+    WARNINGS.with(|w| w.borrow_mut().extend_from_slice(warnings));
 }
 
 /// DirectiveComment#cop_names (departments expanded, Lint/Syntax dropped; `all` = every cop
@@ -296,6 +323,8 @@ pub struct CommentConfig {
     /// DisableNext#detached_next_directives: comment indexes of next-statement directives that
     /// attach to no statement.
     pub detached: Vec<usize>,
+    /// The analysis raised AmbiguousCopName (everything else is then empty).
+    pub poison: Option<Poison>,
 }
 
 /// CommentConfig#analyze. `config_disabled` are cops off in config (they start disabled from
@@ -330,9 +359,21 @@ pub fn analyze(
         analyses.entry(cop).or_default()
     }
     let mut stack: Vec<HashMap<String, Analysis>> = Vec::new();
+    let warned_before = WARNINGS.with(|w| w.borrow().len());
     for (index, c) in src.comments.iter().enumerate() {
         let Some(d) = parse(src.slice(c.start, c.end)) else { continue };
         let line = src.line_of(c.start) as i64;
+        if d.mode != "pop"
+            && let Some((at, message)) = ambiguity(src, &d)
+        {
+            // The analysis raises here: what it warned about so far, then this directive's bare
+            // names up to the ambiguous one, are what every (re)analysis prints.
+            for raw in qualified_names(&d).into_iter().take(at + 1) {
+                warn_name(src, raw);
+            }
+            let warnings = WARNINGS.with(|w| w.borrow_mut().split_off(warned_before));
+            return CommentConfig { poison: Some(Poison { warnings, message }), ..CommentConfig::default() };
+        }
         match d.mode.as_str() {
             "push" => {
                 if warn {
@@ -413,7 +454,7 @@ pub fn analyze(
     let keep = |cop: &String| !(prevent_style && cop == STYLE_DISABLE_COPS);
     order.retain(keep);
     let ranges = analyses.into_iter().filter(|(cop, _)| keep(cop)).map(|(cop, a)| (cop, a.close(i64::MAX))).collect();
-    CommentConfig { ranges, order, detached }
+    CommentConfig { ranges, order, detached, poison: None }
 }
 
 /// DisableNext#statement_scope_after: the statement right below a comment-only directive line.
@@ -438,6 +479,11 @@ static IGNORE_COMMENTS: std::sync::atomic::AtomicBool = std::sync::atomic::Atomi
 /// `--ignore-disable-comments`: Cop::Base#enabled_line(s)? is true everywhere for the run.
 pub fn ignore_disable_comments() {
     IGNORE_COMMENTS.store(true, std::sync::atomic::Ordering::Relaxed);
+}
+
+/// Whether `--ignore-disable-comments` was given.
+pub fn ignoring_disable_comments() -> bool {
+    IGNORE_COMMENTS.load(std::sync::atomic::Ordering::Relaxed)
 }
 
 /// Cop::Base#enabled_lines? negated: whether a directive suppresses an offense on these lines

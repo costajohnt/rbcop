@@ -159,6 +159,10 @@ impl Cx<'_, '_> {
 
     /// Report an offense with no location (RuboCop's `add_global_offense`), e.g. a file name problem.
     pub fn add_global(&mut self, message: impl Into<String>) {
+        // Base#add_global_offense asks the comment config too (enabled_line?).
+        if !crate::directives::ignoring_disable_comments() {
+            crate::runner::poison_raise(true);
+        }
         let message = message.into();
         self.out.push(Offense {
             start: 0,
@@ -224,6 +228,10 @@ impl Cx<'_, '_> {
     }
 
     fn push(&mut self, start: usize, end: usize, message: String, correctable: bool, corrected: bool) {
+        // Base#add_offense asks the comment config whether the lines are enabled.
+        if !crate::directives::ignoring_disable_comments() {
+            crate::runner::poison_raise(true);
+        }
         self.fixes.seen.insert((start, end));
         self.out.push(Offense {
             start,

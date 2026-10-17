@@ -18,6 +18,8 @@ fn as_f64(line: i64) -> f64 {
 
 impl Cop for MissingCopEnableDirective {
     fn on_file(&self, cx: &mut Cx) {
+        // processed_source.disabled_line_ranges analyzes the comment config.
+        crate::runner::poison_raise(true);
         let src = cx.src;
         let cc = &cx.facts.comment_config;
         let max_range = match cx.cfg.get("MaxRangeSize") {
