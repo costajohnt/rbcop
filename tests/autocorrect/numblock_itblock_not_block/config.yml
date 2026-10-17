@@ -1,0 +1,5 @@
+# numblock / itblock are not parser `block` nodes (#429, #442).
+AllCops:
+  TargetRubyVersion: 3.4
+  NewCops: enable
+  SuggestExtensions: false
