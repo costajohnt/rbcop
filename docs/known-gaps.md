@@ -364,8 +364,18 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   different problem. The Ruby backtrace RuboCop prints after the message is not reproduced.
 - rubocop-rspec family:
   - RSpec/SpecFilePathFormat with `EnforcedInflector: active_support` uses
-    ActiveSupport's default inflections; the project's `InflectorPath` file is not evaluated (a
-    missing one is a cop error, as in RuboCop).
+    ActiveSupport's default inflections; the project's `InflectorPath` file is not evaluated.
+    A missing `InflectorPath` file is a cop error on every spec file that reaches the inflector
+    (one top-level example group on a constant, not skipped by `IgnoreMetadata`). RuboCop raises
+    it once per process: `ActiveSupportInflector.prepare_availability` sets `@prepared` before it
+    raises, so only the first such file in inspection order gets the error. When rubocop-rails is
+    also loaded (it requires `active_support/inflector`), RuboCop checks the later files with
+    ActiveSupport's default inflections and reports their offenses; without it, every such file
+    errors, as in rbcop. Which file RuboCop errors on depends on its process state (the order it
+    inspects files in, one process), and rbcop lints files in parallel, so rbcop keeps the
+    per-file error: with rubocop-rails loaded it reports N cop errors where RuboCop reports one
+    error and the other files' offenses (checked with RuboCop 1.91, rubocop-rspec 3.10.2 and
+    rubocop-rails 2.38.0, #451).
   - rubocop-rspec_rails loaded without rubocop-rspec: RuboCop fails to load the plugin
     (`uninitialized constant RuboCop::Cop::RSpec::InsideExampleGroup`); rbcop runs the RSpecRails
     cops with rubocop-rspec's default `RSpec/Language`.
