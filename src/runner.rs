@@ -864,6 +864,20 @@ pub fn cop_error(cop: &str, src: &Source, at: usize) {
 /// A cop error at the node being visited (Team#process_errors: `path:line:column`, or the bare
 /// path for a callback without a node, such as on_new_investigation).
 pub fn cop_error_at(cop: &str, src: &Source, at: Option<usize>) {
+    // rubocop-rspec's TopLevelGroup cops run from on_new_investigation, whose errors Team reports
+    // without a location; rbcop runs them as node cops.
+    const TOP_LEVEL_GROUP: &[&str] = &[
+        "RSpec/DescribeClass",
+        "RSpec/DescribeMethod",
+        "RSpec/InstanceVariable",
+        "RSpec/MultipleDescribes",
+        "RSpec/NestedGroups",
+        "RSpec/RepeatedSubjectCall",
+        "RSpec/SpecFilePathFormat",
+        "RSpec/SpecFilePathSuffix",
+        "RSpec/SubjectStub",
+    ];
+    let at = at.filter(|_| !TOP_LEVEL_GROUP.contains(&cop));
     let location = match at {
         // Range#line and the 0-based Range#column.
         Some(at) => {

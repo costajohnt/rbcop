@@ -468,6 +468,33 @@ fn flow_collections_ignore_indentation_like_libyaml() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// An AmbiguousCopName abort inside rubocop-rspec's TopLevelGroup cops (on_new_investigation in
+/// RuboCop) is a cop error without a location (#511); other RSpec cops keep the node's.
+#[test]
+fn top_level_group_cop_errors_have_no_location() {
+    let dir = scratch("top-level-group");
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "plugins:\n  - rubocop-rspec\nAllCops:\n  NewCops: disable\n  SuggestExtensions: false\n",
+    )
+    .unwrap();
+    fs::create_dir_all(dir.join("spec")).unwrap();
+    let spec = "# rubocop:disable SelfAssignment\ndescribe \"foo\" do\n  it { expect(1).to eq 1 }\nend\ndescribe Bar do\nend\n";
+    fs::write(dir.join("spec/e_spec.rb"), spec).unwrap();
+    let out = rbcop(&dir, &["spec/e_spec.rb"]);
+    let file = dir.join("spec/e_spec.rb").display().to_string();
+    let errors: Vec<String> = text(&out.stderr)
+        .lines()
+        .filter_map(|l| l.strip_prefix("An error occurred while "))
+        .map(|l| l.replace(&file, "F"))
+        .collect();
+    for want in ["RSpec/DescribeClass cop was inspecting F.", "RSpec/MultipleDescribes cop was inspecting F."] {
+        assert!(errors.iter().any(|e| e == want), "{errors:?}");
+    }
+    assert!(errors.iter().any(|e| e == "RSpec/EmptyExampleGroup cop was inspecting F:5:0."), "{errors:?}");
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// The error summary lists every raise, two at one location too (#501); under -a/-A only the last
 /// (non-correcting) pass runs the cops that do not correct, so their errors are not repeated.
 #[test]
