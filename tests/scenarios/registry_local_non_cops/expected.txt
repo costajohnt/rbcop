@@ -1,0 +1,8 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:3:7: W: Lint/CopDirectiveSyntax: Unknown cop name `Custom/Abstract` (did you mean `Custom/NoPuts`?).
+a.rb:3:7: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `Custom/Abstract` (did you mean `Custom/NoPuts`?).
+a.rb:4:7: W: Lint/CopDirectiveSyntax: Unknown cop name `Custom/Helper` (did you mean `Custom2/Thing`?).
+a.rb:4:7: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `Custom/Helper` (did you mean `Custom2/Thing`?).
+a.rb:5:7: W: Lint/CopDirectiveSyntax: Unknown cop name `RuboCop/Cop`.
+a.rb:5:7: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `RuboCop/Cop` (unknown cop).
+a.rb:6:7: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `Custom/Thing` (did you mean `Custom2/Thing`?).

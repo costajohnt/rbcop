@@ -1,0 +1,5 @@
+require:
+  - ./lib/my_cops.rb
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false

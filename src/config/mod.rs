@@ -596,6 +596,11 @@ pub struct Store {
     custom_cops: bool,
     /// Class and module names in loaded plugins' lib/ (see ruby_constants).
     plugin_constants: std::collections::HashSet<String>,
+    /// What directives and `--only` cannot enumerate (cop_registry::set_open): a `require:`
+    /// whose cops rbcop cannot read, and the class names of a gem (or local file) in which no cop
+    /// class was found. Where cop classes were found, they are the registry.
+    open_custom: bool,
+    open_constants: std::collections::HashSet<String>,
     dir_to_file: HashMap<PathBuf, Option<PathBuf>>,
     /// inherit_from files being loaded (outermost first), to detect cycles.
     loading: Vec<PathBuf>,
@@ -625,6 +630,8 @@ impl Store {
             loaded_plugins: Vec::new(),
             custom_cops: false,
             plugin_constants: Default::default(),
+            open_custom: false,
+            open_constants: Default::default(),
             dir_to_file: HashMap::new(),
             loading: Vec::new(),
             resolved: HashMap::new(),
@@ -821,8 +828,8 @@ impl Store {
         }
         // Local files are custom cops rbcop cannot load.
         self.custom_cops |= plugins.iter().any(|n| n.starts_with('.') || n.starts_with('/'));
-        // Their class and module names are registry names RuboCop would know (`Style/MiddleDot`
-        // defined in `require: ../lib/linter/rubocop_middle_dot`), as for a plugin gem's lib/.
+        // Config validation knows their class and module names (`Style/MiddleDot` defined in
+        // `require: ../lib/linter/rubocop_middle_dot`), as a plugin gem's lib/.
         let mut local = Vec::new();
         for n in plugins.iter().filter(|n| n.starts_with('.') || n.starts_with('/')) {
             let base = path.parent().unwrap_or(Path::new("."));
@@ -838,10 +845,18 @@ impl Store {
         // file defines register once it loads.
         // ponytail: every local file registers after every gem of this config file, not at its place
         // in `require:`; that order only matters for a cop name two departments share.
+        // Registry: a cop is a class descending from a cop base, not excluded from the registry
+        // (ruby_cops). Only a file in which none is found leaves the registry open.
+        // ponytail: files the local file itself requires are not read.
         for file in local {
-            crate::helpers::cop_registry::register_custom(ruby_cops(&file));
+            let cops = ruby_cops(&file);
+            if cops.is_empty() {
+                self.open_custom = true;
+                ruby_file_constants(&file, &mut self.open_constants);
+            }
+            crate::helpers::cop_registry::register_custom(cops);
         }
-        crate::helpers::cop_registry::set_open(self.custom_cops, &self.plugin_constants);
+        crate::helpers::cop_registry::set_open(self.open_custom, &self.open_constants);
         self.emit(&migrate);
         if let Some(Value::Map(gems)) = hash.remove("inherit_gem") {
             let mut inherit = seq(hash.remove("inherit_from"));
@@ -1060,6 +1075,7 @@ impl Store {
                         self.warnings.push(e);
                         // Its cops are unknown here.
                         self.custom_cops = true;
+                        self.open_custom = true;
                         continue;
                     }
                 };
@@ -1068,13 +1084,19 @@ impl Store {
                 if !path.is_file() {
                     // An extension without config/default.yml may still register cops.
                     self.custom_cops = true;
+                    self.open_custom = true;
+                    ruby_constants(&dir.join("lib"), &mut self.open_constants);
                     continue;
                 }
                 let m = self.load_file(&path, false)?;
                 // RuboCop's registry holds the cop classes the gem defines, whether or not its
                 // default.yml configures them (and not the entries without a class). Classes
-                // configured there come in that order, then the others.
+                // configured there come in that order, then the others. Other class and module
+                // names (helpers, the plugin class, namespaces) are not cops.
                 let cops = ruby_cops(&dir.join("lib"));
+                if cops.is_empty() {
+                    ruby_constants(&dir.join("lib"), &mut self.open_constants);
+                }
                 let names: Vec<String> = if cops.is_empty() {
                     m.keys().filter(|k| k.contains('/')).map(String::from).collect()
                 } else {

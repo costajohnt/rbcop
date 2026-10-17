@@ -162,9 +162,9 @@ pub fn foreign_autocorrect(cop: &str) -> bool {
     FOREIGN_AUTOCORRECT.read().unwrap().iter().any(|c| c == cop)
 }
 
-/// What rbcop cannot enumerate of RuboCop's registry: cops a `require:`d local file or an unfound
-/// gem defines (`custom`), and class names in loaded plugins' lib/ (cops registered without a
-/// default.yml entry).
+/// What rbcop cannot enumerate of RuboCop's registry: cops an unfound gem, a gem without
+/// config/default.yml, or a `require:`d local file with no cop class rbcop can read defines
+/// (`custom`), and the class names of a gem or local file in which no cop class was found.
 struct Open {
     custom: bool,
     foreign: bool,
@@ -180,8 +180,9 @@ pub fn set_open(custom: bool, constants: &std::collections::HashSet<String>) {
     open.constants = constants.iter().cloned().collect();
 }
 
-/// Whether RuboCop's registry would know `cop` (a qualified name): a registered name, a name made
-/// of plugin class names, or, with custom cops loaded, any name outside the known departments.
+/// Whether RuboCop's registry would know `cop` (a qualified name): a registered name, or, where
+/// rbcop cannot read the cop classes (`Open`), a name made of their class names or any name
+/// outside the known departments.
 pub fn is_known(cop: &str) -> bool {
     if REGISTRY.contains(&cop) {
         return true;

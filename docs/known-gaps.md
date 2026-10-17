@@ -212,7 +212,10 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   `lib/` defines, found by reading the `module`/`class` nesting (`RuboCop::Cop::<Dept>::<Name>`
   descending from a cop base class, without `exclude_from_registry`; `extend AutoCorrector` marks
   `# Supports --autocorrect`). A cop class defined by metaprogramming is not seen; a gem whose
-  `lib/` yields no cop class falls back to its default.yml cop names.
+  `lib/` yields no cop class falls back to its default.yml cop names, and then also counts any
+  `Dept/Name` made of class or module names in its `lib/` as known. The same goes for a local
+  `require:` file (the files it requires in turn are not read); one with no cop class rbcop can
+  read leaves every name outside the known departments known.
 - Custom formatter classes and `require:` of local Ruby files (custom cops) are not supported. rbcop names
   the cops it skips on stderr, and `RBCOP_FALLBACK=1` runs them with RuboCop (README, "Plugins and custom cops").
 - Cops rbcop cannot run (a non-native plugin's, custom cops): Lint/RedundantCopDisableDirective
