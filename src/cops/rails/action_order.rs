@@ -101,7 +101,8 @@ impl Cop for ActionOrder {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let expected = cx.cfg.strings("ExpectedOrder");
+        // `cop_config['ExpectedOrder'].map`: a String raises (a cop error).
+        let expected = cx.cfg.array("ExpectedOrder");
         let class = node.as_class_node().unwrap();
         let ifs: Vec<(usize, usize)> = cx
             .ancestors

@@ -48,7 +48,7 @@ impl Cop for NumericLiterals {
         let Some((start, end)) = literal_range(node, cx.ancestors) else { return };
         let source = cx.src.slice(start, end);
         let int = integer_part(source);
-        if int.starts_with('0') || cx.cfg.strings("AllowedNumbers").iter().any(|n| n == int) {
+        if int.starts_with('0') || cx.cfg.array("AllowedNumbers").iter().any(|n| n == int) {
             return;
         }
         // AllowedPattern, anchored: `/\A#{regexp}\z/`.

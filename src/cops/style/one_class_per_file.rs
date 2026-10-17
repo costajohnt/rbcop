@@ -37,7 +37,7 @@ impl Cop for OneClassPerFile {
             (_, Some(p)) => p.name().map_or(&b""[..], |n| n.as_slice()),
             _ => b"",
         };
-        if cx.cfg.strings("AllowedClasses").iter().any(|a| a.as_bytes() == short) {
+        if cx.cfg.array("AllowedClasses").iter().any(|a| a.as_bytes() == short) {
             return;
         }
         let count = cx.state::<usize>();

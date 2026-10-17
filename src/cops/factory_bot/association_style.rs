@@ -42,7 +42,8 @@ impl Cop for AssociationStyle {
             if explicit {
                 // implicit_association?: a receiver-less call that is not a reserved method
                 let mut non_implicit: Vec<String> = helpers::factory_bot::RESERVED_METHODS.iter().map(|s| s.to_string()).collect();
-                non_implicit.extend(cx.cfg.strings("NonImplicitAssociationMethodNames"));
+                // `reserved + (cop_config[key] || [])`: a String raises (TypeError, a cop error).
+                non_implicit.extend(cx.cfg.array_or_empty("NonImplicitAssociationMethodNames"));
                 if non_implicit.iter().any(|n| n == name) {
                     continue;
                 }

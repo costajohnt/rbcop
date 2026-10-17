@@ -56,10 +56,10 @@ impl Cop for OptionHash {
             return;
         }
         let name = String::from_utf8_lossy(opt.name().as_slice()).into_owned();
-        if cx.cfg.get("SuspiciousParamNames").is_none() || !cx.cfg.strings("SuspiciousParamNames").contains(&name) {
+        if cx.cfg.get("SuspiciousParamNames").is_none() || !cx.cfg.includes("SuspiciousParamNames", &name) {
             return;
         }
-        if cx.cfg.strings("Allowlist").contains(&parent_name) {
+        if cx.cfg.includes_or_empty("Allowlist", &parent_name) {
             return;
         }
         // super_used?: node.parent.each_node(:zsuper, :super)

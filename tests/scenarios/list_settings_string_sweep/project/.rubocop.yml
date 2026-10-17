@@ -1,0 +1,58 @@
+AllCops:
+  TargetRubyVersion: 3.4
+  SuggestExtensions: false
+  DisabledByDefault: true
+  ActiveSupportExtensionsEnabled: true
+Lint/ConstantResolution:
+  Enabled: true
+  Ignore: FooBar
+Lint/DuplicateMethods:
+  Enabled: true
+  DelegatingMethods: delegate_to
+Lint/NumberConversion:
+  Enabled: true
+  AllowedClasses: TimeX
+Lint/RaiseException:
+  Enabled: true
+  AllowedImplicitNamespaces: GatewayX
+Lint/UselessAccessModifier:
+  Enabled: true
+  ContextCreatingMethods: concerning
+Style/CollectionCompact:
+  Enabled: true
+  AllowedReceivers: paramsX
+Naming/ClassAndModuleCamelCase:
+  Enabled: true
+  AllowedNames: module_parent
+Naming/HeredocDelimiterNaming:
+  Enabled: true
+  ForbiddenDelimiters: END
+Naming/MethodName:
+  Enabled: true
+  ForbiddenIdentifiers: foo_bar
+Style/ArgumentsForwarding:
+  Enabled: true
+  RedundantRestArgumentNames: args
+Style/BlockDelimiters:
+  Enabled: true
+  BracesRequiredMethods: sigx
+Style/CommentAnnotation:
+  Enabled: true
+  Keywords: TODO
+Style/GlobalVars:
+  Enabled: true
+  AllowedVariables: $foo
+Style/NumericLiterals:
+  Enabled: true
+  AllowedNumbers: "123456"
+Style/EmptyClassDefinition:
+  Enabled: true
+  AllowedParentClasses: StandardErrorX
+Layout/ClassStructure:
+  Enabled: true
+  ExpectedOrder: constants,public_methods
+Layout/LineLength:
+  Max: 40
+  AllowedPatterns: foo_pattern
+Style/IfUnlessModifier:
+  Enabled: true

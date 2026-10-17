@@ -1,0 +1,8 @@
+a.rb:11:11: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.
+a.rb:30:5: C: [Correctable] Style/BlockDelimiters: Brace delimiters `{...}` required for 'sig' method.
+a.rb:36:15: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.
+a.rb:36:5: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.
+a.rb:39:3: C: [Correctable] Layout/ClassStructure: `constants` is supposed to appear before `p`.
+a.rb:41:41: C: Layout/LineLength: Line is too long. [51/40]
+a.rb:6:3: W: Lint/DuplicateMethods: Method `A#foo` is defined at both a.rb:5 and a.rb:6.
+a.rb:8:1: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.

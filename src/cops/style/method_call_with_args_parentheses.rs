@@ -655,8 +655,9 @@ fn ignored_macro(cx: &Cx, node: &Node, d: &Dispatch) -> bool {
     if !in_macro_scope(cx.ancestors, (loc.start_offset(), loc.end_offset())) {
         return false;
     }
-    if cx.cfg.strings("IncludedMacros").iter().any(|m| m == d.name) {
+    // `cop_config.fetch(key, []).map`: a String raises (a cop error).
+    if cx.cfg.array("IncludedMacros").iter().any(|m| m == d.name) {
         return false;
     }
-    !cx.cfg.regexes("IncludedMacroPatterns").iter().any(|r| r.is_match(d.name))
+    !cx.cfg.regexes_array("IncludedMacroPatterns").iter().any(|r| r.is_match(d.name))
 }

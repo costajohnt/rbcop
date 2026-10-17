@@ -48,7 +48,8 @@ impl Cop for EmptyClassDefinition {
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let style = cx.cfg.str("EnforcedStyle").unwrap_or("");
-        let allowed = cx.cfg.strings("AllowedParentClasses");
+        // `cop_config.fetch('AllowedParentClasses', []).include?`: a substring test on a String.
+        let allowed = |name: &str| cx.cfg.includes("AllowedParentClasses", name);
         if let Some(class) = node.as_class_node() {
             if style != "class_new" {
                 return;
@@ -64,7 +65,7 @@ impl Cop for EmptyClassDefinition {
                 return;
             }
             let parent_src = node_text(&parent);
-            if allowed.iter().any(|a| a == parent_src) {
+            if allowed(parent_src) {
                 return;
             }
             let replacement = format!("{} = Class.new({parent_src})", node_text(&class.constant_path()));
@@ -109,7 +110,7 @@ impl Cop for EmptyClassDefinition {
             return;
         }
         let parent_src = node_text(arg);
-        if allowed.iter().any(|a| a == parent_src) {
+        if allowed(parent_src) {
             return;
         }
         let loc = node.location();

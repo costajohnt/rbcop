@@ -5,11 +5,15 @@ pub const NAME: &str = "RSpec/DiscardedMatcher";
 pub static COP: DiscardedMatcher = DiscardedMatcher;
 pub struct DiscardedMatcher;
 
-fn matcher_call(call: &CallNode, custom: &[String]) -> bool {
+/// `custom`: None when CustomMatcherMethods is not an Array (`.map` raises, a cop error, once a
+/// receiverless send asks).
+fn matcher_call(call: &CallNode, custom: Option<&[String]>) -> bool {
     let n = method_name(call);
-    call.receiver().is_none()
-        && (matches!(n, "change" | "have_received" | "output" | "receive" | "receive_messages" | "receive_message_chain")
-            || custom.iter().any(|c| c == n))
+    call.receiver().is_none() && {
+        let custom = custom.unwrap_or_else(|| panic!("undefined method 'map' for CustomMatcherMethods"));
+        matches!(n, "change" | "have_received" | "output" | "receive" | "receive_messages" | "receive_message_chain")
+            || custom.iter().any(|c| c == n)
+    }
 }
 
 /// example_with_matcher_expectation?: a `to`/`not_to`/`to_not` send in the example with a matcher
@@ -18,7 +22,7 @@ fn has_expectation(example: &Node, custom: &[String]) -> bool {
     struct Inner<'a>(&'a [String], bool);
     impl<'pr> Visit<'pr> for Inner<'_> {
         fn visit_call_node(&mut self, n: &CallNode<'pr>) {
-            self.1 |= !is_csend(n) && matcher_call(n, self.0);
+            self.1 |= !is_csend(n) && matcher_call(n, Some(self.0));
             ruby_prism::visit_call_node(self, n);
         }
     }
@@ -65,15 +69,16 @@ impl Cop for DiscardedMatcher {
         if helpers::rspec::block_of(&call).is_some_and(|b| !helpers::rspec::is_plain(&b)) {
             return;
         }
-        let custom = cx.cfg.strings("CustomMatcherMethods");
-        if !matcher_call(&call, &custom) {
+        let custom = matches!(cx.cfg.get("CustomMatcherMethods"), None | Some(Value::Seq(_)))
+            .then(|| cx.cfg.strings("CustomMatcherMethods"));
+        if !matcher_call(&call, custom.as_deref()) {
             return;
         }
         let l = helpers::rspec::lang(cx);
         let anc = cx.ancestors;
         // inside_example?: the nearest example block around
         let Some(example) = anc.iter().rev().find(|a| helpers::rspec::example(&l, a)) else { return };
-        if !has_expectation(example, &custom) {
+        if !has_expectation(example, custom.as_deref().unwrap_or_default()) {
             return;
         }
         // find_outermost_chain: up while the node is its parent's receiver

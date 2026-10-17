@@ -28,7 +28,11 @@ impl Cop for UnknownEnv {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let envs = cx.cfg.strings("Environments");
+        // `cop_config['Environments'] || []`: `include?` is a substring test on a String; `+
+        // ['local']` and the DidYouMean dictionary need an Array (a String raises, a cop error).
+        let cfg = cx.cfg;
+        let known = |name: &str| cfg.includes_or_empty("Environments", name);
+        let envs = || cfg.array_or_empty("Environments");
         if let Some(case) = node.as_case_node() {
             if !case.predicate().is_some_and(|p| rails_env(&p)) {
                 return;
@@ -37,8 +41,8 @@ impl Cop for UnknownEnv {
                 let Some(w) = w.as_when_node() else { continue };
                 for c in w.conditions().iter() {
                     let Some(v) = helpers::rails::str_value(&c) else { continue };
-                    if !envs.contains(&v) {
-                        cx.add(c.location().start_offset(), c.location().end_offset(), message(&v, &envs));
+                    if !known(&v) {
+                        cx.add(c.location().start_offset(), c.location().end_offset(), message(&v, &envs()));
                     }
                 }
             }
@@ -48,13 +52,15 @@ impl Cop for UnknownEnv {
         let name = method_name(&call);
         // (send #rails_env? $#unknown_env_predicate?)
         if send_args(&call).is_empty() && call.receiver().is_some_and(|r| rails_env(&r)) && name.ends_with('?') {
-            let mut with_local = envs.clone();
-            if cx.config.target_rails_version() >= 7.1 {
-                with_local.push("local".to_string());
-            }
-            if !with_local.iter().any(|e| *e == name[..name.len() - 1]) {
+            let bare = &name[..name.len() - 1];
+            let known_here = if cx.config.target_rails_version() >= 7.1 {
+                envs().iter().chain(["local".to_string()].iter()).any(|e| e == bare)
+            } else {
+                known(bare)
+            };
+            if !known_here {
                 let sel = call.message_loc().unwrap();
-                cx.add(sel.start_offset(), sel.end_offset(), message(name, &envs));
+                cx.add(sel.start_offset(), sel.end_offset(), message(name, &envs()));
             }
         }
         // {(send #rails_env? {:== :=== :!=} $(str #unknown_env_name?)) (send $(str ...) {...} #rails_env?)}
@@ -71,8 +77,8 @@ impl Cop for UnknownEnv {
             };
             if let Some(t) = target {
                 let v = helpers::rails::str_value(t).unwrap();
-                if !envs.contains(&v) {
-                    cx.add(t.location().start_offset(), t.location().end_offset(), message(&v, &envs));
+                if !known(&v) {
+                    cx.add(t.location().start_offset(), t.location().end_offset(), message(&v, &envs()));
                 }
             }
         }

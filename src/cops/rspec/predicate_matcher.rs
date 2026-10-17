@@ -118,7 +118,8 @@ impl PredicateMatcher {
     }
 
     fn matcher_name_ok(cx: &Cx, name: &str) -> bool {
-        let allowed = cx.cfg.strings("AllowedExplicitMatchers");
+        // `cop_config.fetch('AllowedExplicitMatchers', []) + BUILT_IN_MATCHERS`: a String raises.
+        let allowed = cx.cfg.array("AllowedExplicitMatchers");
         if allowed.iter().any(|a| a == name) || BUILT_IN_MATCHERS.contains(&name) {
             return false;
         }

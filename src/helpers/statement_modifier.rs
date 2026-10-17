@@ -288,8 +288,11 @@ pub fn acceptable_line_length(cx: &Cx, line: &str, line_number: usize) -> bool {
         return true;
     }
     let ll = cx.config.for_cop("Layout/LineLength");
-    let key = if ll.get("AllowedPatterns").is_some() { "AllowedPatterns" } else { "IgnoredPatterns" };
-    let patterns: Vec<crate::config::value::RubyRegex> = match ll.get(key) {
+    // `ll['AllowedPatterns'] || ll['IgnoredPatterns'] || []`, then `.map`: a String raises (a
+    // cop error).
+    let truthy = |k: &str| ll.get(k).filter(|v| !matches!(v, Value::Null | Value::Bool(false)));
+    let patterns: Vec<crate::config::value::RubyRegex> = match truthy("AllowedPatterns").or_else(|| truthy("IgnoredPatterns")) {
+        None => Vec::new(),
         Some(Value::Seq(items)) => items
             .iter()
             .filter_map(|v| match v {
@@ -297,7 +300,7 @@ pub fn acceptable_line_length(cx: &Cx, line: &str, line_number: usize) -> bool {
                 v => v.as_string().and_then(|s| crate::config::value::ruby_regex(&s)),
             })
             .collect(),
-        _ => Vec::new(),
+        Some(_) => panic!("undefined method 'map' for Layout/LineLength AllowedPatterns"),
     };
     if patterns.iter().any(|r| r.is_match(line)) {
         return true;

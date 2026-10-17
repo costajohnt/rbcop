@@ -35,7 +35,9 @@ fn on_csend(cx: &mut Cx, call: &ruby_prism::CallNode) {
     let (s, e) = (dot.start_offset(), dot.end_offset());
     let Some(receiver) = call.receiver() else { return };
     if cx.cfg.bool("InferNonNilReceiver").unwrap_or(false) {
-        let additional = cx.cfg.strings("AdditionalNilMethods");
+        // `Array(cop_config.fetch('AdditionalNilMethods', []).map(&:to_sym))`: `map` on a String
+        // raises (a cop error).
+        let additional = cx.cfg.array("AdditionalNilMethods");
         if helpers::nil_receiver_checker::cant_be_nil(cx.src, cx.ancestors, call, &additional) {
             cx.add_fix(s, e, MSG_NON_NIL, |c| c.replace(s, e, "."));
             return;

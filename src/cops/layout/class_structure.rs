@@ -11,13 +11,31 @@ pub struct ClassStructure;
 const VISIBILITY_SCOPES: [&str; 3] = ["private", "protected", "public"];
 
 struct Conf {
-    order: Vec<String>,
+    order: Order,
     categories: Vec<(String, Vec<String>)>,
+}
+
+/// `cop_config['ExpectedOrder']`, read bare: on a String, `index`/`include?` find substrings
+/// (character offsets) and `expected_order[i]` is one character.
+enum Order {
+    List(Vec<String>),
+    Str(String),
 }
 
 impl Conf {
     fn index(&self, c: &str) -> Option<usize> {
-        self.order.iter().position(|o| o == c)
+        match &self.order {
+            Order::List(order) => order.iter().position(|o| o == c),
+            Order::Str(s) => s.find(c).map(|b| s[..b].chars().count()),
+        }
+    }
+
+    /// `expected_order[i]`
+    fn at(&self, i: usize) -> String {
+        match &self.order {
+            Order::List(order) => order[i].clone(),
+            Order::Str(s) => s.chars().nth(i).map(String::from).unwrap_or_default(),
+        }
     }
 
     fn find_category(&self, name: &str) -> Option<&str> {
@@ -305,7 +323,10 @@ impl Cop for ClassStructure {
         // A body with rescue/ensure is one (ignored) element.
         let Some(stmts) = body.as_ref().and_then(Node::as_statements_node) else { return };
         let conf = Conf {
-            order: cx.cfg.strings("ExpectedOrder"),
+            order: match cx.cfg.get("ExpectedOrder") {
+                Some(Value::Str(s)) => Order::Str(s.clone()),
+                _ => Order::List(cx.cfg.array("ExpectedOrder")),
+            },
             // ponytail: category members as an Array (the documented form).
             categories: match cx.cfg.get("Categories") {
                 Some(Value::Map(m)) => m
@@ -338,7 +359,7 @@ impl Cop for ClassStructure {
                 && index < max
                 && previous != Some(category)
             {
-                out.push((bi, i, format!("`{category}` is supposed to appear before `{}`.", conf.order[max])));
+                out.push((bi, i, format!("`{category}` is supposed to appear before `{}`.", conf.at(max))));
             }
             max_index = max_index.max(Some(index));
             previous = Some(category);

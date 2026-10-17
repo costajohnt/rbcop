@@ -122,7 +122,8 @@ fn allow_receiver(cx: &Cx, receiver: &Node) -> bool {
             return true;
         }
     }
-    top_const_name(receiver).is_some_and(|n| cx.cfg.strings("AllowedClasses").contains(&n))
+    // `cop_config.fetch('AllowedClasses', []).include?`: a substring test on a String.
+    top_const_name(receiver).is_some_and(|n| cx.cfg.includes("AllowedClasses", &n))
 }
 
 /// `top_receiver(node)` (`receiver = receiver.receiver until receiver.receiver.nil?`, over

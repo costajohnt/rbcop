@@ -84,8 +84,9 @@ impl Cop for TransactionExitStatement {
             return;
         }
         let Some(call) = helpers::rails::send(node) else { return };
-        let extra = cx.cfg.strings("TransactionMethods");
-        let is_tx = |m: &str| matches!(m, "transaction" | "with_lock") || extra.iter().any(|x| x == m);
+        // `cop_config.fetch('TransactionMethods', []).include?`: a substring test on a String.
+        let cfg = cx.cfg;
+        let is_tx = |m: &str| matches!(m, "transaction" | "with_lock") || cfg.includes("TransactionMethods", m);
         if !is_tx(method_name(&call)) {
             return;
         }

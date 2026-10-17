@@ -18,16 +18,15 @@ impl Cop for SkipsModelValidations {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         let name = method_name(&call);
-        let list = |obsolete: &str, key: &str| -> Vec<String> {
-            match cx.cfg.get(obsolete) {
-                Some(v) if !matches!(v, Value::Null | Value::Bool(false)) => cx.cfg.strings(obsolete),
-                _ => cx.cfg.strings(key),
-            }
+        // `(obsolete || cop_config[key] || []).include?(name)`: a substring test on a String.
+        let listed = |obsolete: &str, key: &str| match cx.cfg.get(obsolete) {
+            Some(v) if !matches!(v, Value::Null | Value::Bool(false)) => cx.cfg.includes(obsolete, name),
+            _ => cx.cfg.includes_or_empty(key, name),
         };
-        if list("Whitelist", "AllowedMethods").iter().any(|m| m == name) {
+        if listed("Whitelist", "AllowedMethods") {
             return;
         }
-        if !list("Blacklist", "ForbiddenMethods").iter().any(|m| m == name) {
+        if !listed("Blacklist", "ForbiddenMethods") {
             return;
         }
         let args = send_args(&call);

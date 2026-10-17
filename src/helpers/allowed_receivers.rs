@@ -26,5 +26,6 @@ pub fn receiver_name(node: &Node) -> String {
 
 /// `allowed_receiver?(receiver)` against the cop's `AllowedReceivers`.
 pub fn allowed_receiver(cx: &Cx, receiver: &Node) -> bool {
-    cx.cfg.strings("AllowedReceivers").contains(&receiver_name(receiver))
+    // `cop_config.fetch('AllowedReceivers', []).include?`: a substring test on a String.
+    cx.cfg.includes("AllowedReceivers", &receiver_name(receiver))
 }

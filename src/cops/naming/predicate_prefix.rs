@@ -5,7 +5,8 @@ pub static COP: PredicatePrefix = PredicatePrefix;
 pub struct PredicatePrefix;
 
 fn expected_name(cx: &Cx, name: &str, prefix: &str) -> String {
-    let forbidden = cx.cfg.strings("ForbiddenPrefixes").iter().any(|p| p == prefix);
+    // `forbidden_prefixes.include?(prefix)`: a substring test on a String.
+    let forbidden = cx.cfg.includes("ForbiddenPrefixes", prefix);
     let mut out = if forbidden { name.replacen(prefix, "", 1) } else { name.to_string() };
     if !name.ends_with('?') {
         out.push('?');
@@ -64,17 +65,17 @@ impl Cop for PredicatePrefix {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let prefixes = cx.cfg.strings("NamePrefix");
         if let Some(call) = node.as_call_node() {
             let name = method_name(&call);
-            if call.receiver().is_some() || !cx.cfg.strings("MethodDefinitionMacros").iter().any(|m| m == name) {
+            if call.receiver().is_some() || !cx.cfg.includes("MethodDefinitionMacros", name) {
                 return;
             }
             let Some(first) = call_args(&call).into_iter().next() else { return };
             let Some(sym) = first.as_symbol_node() else { return };
             let name = String::from_utf8_lossy(sym.unescaped()).into_owned();
             let (s, e) = (first.location().start_offset(), first.location().end_offset());
-            for prefix in &prefixes {
+            // `predicate_prefixes.each`: a String NamePrefix raises (a cop error).
+            for prefix in &cx.cfg.array("NamePrefix") {
                 if !allowed_method_name(cx, &name, prefix) {
                     let msg = message(cx, &name, prefix);
                     cx.add(s, e, msg);
@@ -86,7 +87,7 @@ impl Cop for PredicatePrefix {
         let name = String::from_utf8_lossy(def.name().as_slice()).into_owned();
         let sorbet = cx.cfg.bool("UseSorbetSigs").unwrap_or(false);
         let loc = def.name_loc();
-        for prefix in &prefixes {
+        for prefix in &cx.cfg.array("NamePrefix") {
             if allowed_method_name(cx, &name, prefix) || (sorbet && !sorbet_sig(cx, node)) {
                 continue;
             }

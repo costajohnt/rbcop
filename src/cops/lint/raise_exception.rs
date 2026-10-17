@@ -45,9 +45,10 @@ impl Cop for RaiseException {
         let Some((loc, cbase)) = hit else { return };
         if !cbase {
             // implicit_namespace?: some enclosing `module` is an allowed namespace.
-            let allowed = cx.cfg.strings("AllowedImplicitNamespaces");
+            // `(cop_config['AllowedImplicitNamespaces'] || []).include?`: a substring test on a String.
             let implicit = cx.ancestors.iter().any(|a| {
-                a.as_module_node().is_some_and(|m| allowed.iter().any(|n| n == node_text(&m.constant_path())))
+                a.as_module_node()
+                    .is_some_and(|m| cx.cfg.includes_or_empty("AllowedImplicitNamespaces", node_text(&m.constant_path())))
             });
             if implicit {
                 return;

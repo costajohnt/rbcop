@@ -110,7 +110,7 @@ impl Cop for FetchEnvVar {
         // allowed_var?
         if let Some(s) = name_node.as_string_node()
             && !is_parser_dstr(name_node)
-            && cx.cfg.strings("AllowedVariables").iter().any(|v| v.as_bytes() == s.unescaped())
+            && std::str::from_utf8(s.unescaped()).is_ok_and(|v| cx.cfg.includes("AllowedVariables", v))
         {
             return;
         }

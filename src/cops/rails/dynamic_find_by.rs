@@ -29,15 +29,16 @@ impl Cop for DynamicFindBy {
             return;
         }
         let listed = |key: &str| cx.cfg.get(key).is_some_and(|v| !matches!(v, Value::Null | Value::Bool(false)));
-        if listed("AllowedMethods") && cx.cfg.strings("AllowedMethods").iter().any(|m| m == name) {
+        // `cop_config[key].include?`: a substring test on a String.
+        if listed("AllowedMethods") && cx.cfg.includes("AllowedMethods", name) {
             return;
         }
         if listed("AllowedReceivers")
-            && call.receiver().is_some_and(|r| cx.cfg.strings("AllowedReceivers").iter().any(|m| m == node_text(&r)))
+            && call.receiver().is_some_and(|r| cx.cfg.includes("AllowedReceivers", node_text(&r)))
         {
             return;
         }
-        if listed("Whitelist") && cx.cfg.strings("Whitelist").iter().any(|m| m == name) {
+        if listed("Whitelist") && cx.cfg.includes("Whitelist", name) {
             return;
         }
         let keywords: Vec<String> = cols.split("_and_").map(|k| format!("{k}: ")).collect();

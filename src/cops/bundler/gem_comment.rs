@@ -89,7 +89,8 @@ impl Cop for GemComment {
         if commented_any_descendant(cx.src, &call, cx.ancestors) {
             return;
         }
-        let only_for = cx.cfg.strings("OnlyFor");
+        // `cop_config['OnlyFor'].any?`: a String raises (a cop error).
+        let only_for = cx.cfg.array("OnlyFor");
         if !only_for.is_empty() && !checked_options_present(&only_for, &args) {
             return;
         }

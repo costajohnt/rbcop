@@ -28,8 +28,11 @@ impl Cop for HaveHttpStatus {
             return;
         }
         let Some(response) = status_call.receiver().and_then(|r| helpers::rspec::send_call(&r)) else { return };
-        let methods = cx.cfg.strings("ResponseMethods");
-        if response.receiver().is_some() || !send_args(&response).is_empty() || !methods.iter().any(|m| m == method_name(&response)) {
+        // `response_methods.include?`: a substring test on a String.
+        if response.receiver().is_some()
+            || !send_args(&response).is_empty()
+            || !cx.cfg.includes("ResponseMethods", method_name(&response))
+        {
             return;
         }
         let [matcher] = &send_args(&call)[..] else { return };
