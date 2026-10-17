@@ -49,7 +49,7 @@ With `RBCOP_FALLBACK=1`, rbcop runs RuboCop once more for exactly those cops (`-
 
 - With `-a`/`-A`, RuboCop corrects its cops first, then rbcop corrects the result; the two never iterate together, so a correction that triggers the other side's cop is fixed on the next run.
 - `--stdin` does not use the fallback (the notice is printed instead).
-- Directives naming plugin or custom cops are reported as unknown or redundant by rbcop's directive cops (#392), with or without the fallback.
+- `Lint/RedundantCopDisableDirective` never reports a directive naming a plugin or custom cop rbcop does not implement (nor a `disable all` while one is loaded), with or without the fallback; RuboCop reports those that turn out redundant (docs/known-gaps.md).
 - The `offenses` formatter does not mark plugin cops `[Safe Correctable]`, and `--display-only-safe-correctable` leaves them out.
 
 ## Parity
