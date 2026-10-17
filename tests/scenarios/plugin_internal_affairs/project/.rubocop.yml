@@ -1,0 +1,5 @@
+plugins:
+  - rubocop-internal_affairs
+AllCops:
+  NewCops: disable
+  SuggestExtensions: false

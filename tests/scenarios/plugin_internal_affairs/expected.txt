@@ -1,0 +1,4 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:7:1: W: Lint/CopDirectiveSyntax: Unknown cop name `InternalAffairs/Nope` (did you mean `InternalAffairs/CopEnabled`?).
+a.rb:7:1: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `InternalAffairs/Nope` (did you mean `InternalAffairs/CopEnabled`?).
+a.rb:9:1: W: Lint/CopDirectiveSyntax: Unknown cop name `InternalAffairs/Nope` (did you mean `InternalAffairs/CopEnabled`?).
