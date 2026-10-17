@@ -57,7 +57,12 @@ impl Cop for VoidExpect {
                     });
                 p.as_parentheses_node().is_some()
                     || (p.as_statements_node().is_some_and(|s| s.body().iter().count() > 1) && !kwbegin)
-                    || matches!(kind::of(p), kind::BLOCK_NODE | kind::LAMBDA_NODE)
+                    // `parent.block_type?`: not a numblock / itblock
+                    || match p {
+                        Node::BlockNode { .. } => helpers::node_types::plain_block_params(p.as_block_node().unwrap().parameters()),
+                        Node::LambdaNode { .. } => helpers::node_types::plain_block_params(p.as_lambda_node().unwrap().parameters()),
+                        _ => false,
+                    }
             }
             None => false,
         };

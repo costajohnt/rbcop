@@ -226,21 +226,6 @@ fn parenthesized(n: &Node) -> bool {
     }
 }
 
-fn lambda_or_proc(n: &Node) -> bool {
-    if n.as_lambda_node().is_some() {
-        return true;
-    }
-    let Some(c) = n.as_call_node() else { return false };
-    if c.block().is_none_or(|b| b.as_block_node().is_none()) || is_csend(&c) {
-        return false;
-    }
-    let name = method_name(&c);
-    match c.receiver() {
-        None => name == "lambda" || name == "proc",
-        Some(r) => name == "new" && helpers::parser_parent::is_top_const(&r, "Proc"),
-    }
-}
-
 /// `braces?` of a block.
 fn braces(n: &Node) -> bool {
     match kind::of(n) {
@@ -486,7 +471,7 @@ impl<'pr> Check<'_, 'pr> {
         if is_assignment(node) && (self.parent().is_none() || self.parent_begin()) {
             return Some("an assignment");
         }
-        if lambda_or_proc(node) && (braces(node) || node.as_lambda_node().is_some()) {
+        if helpers::node_types::lambda_or_proc(node) && (braces(node) || node.as_lambda_node().is_some()) {
             return Some("an expression");
         }
         if self.disallowed_one_line_pattern_matching(node) {
@@ -605,7 +590,7 @@ impl<'pr> Check<'_, 'pr> {
 
     /// check_send / check_unary: the message, if any.
     fn check_send(&self, node: &Node) -> Option<&'static str> {
-        let call_node = call_type(node) || (is_block(node) && braces(node) && !lambda_or_proc(node));
+        let call_node = call_type(node) || (is_block(node) && braces(node) && !helpers::node_types::lambda_or_proc(node));
         if !call_node {
             return None;
         }

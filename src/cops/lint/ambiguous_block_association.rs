@@ -34,29 +34,6 @@ fn block_of<'pr>(node: &Node<'pr>) -> Option<(ruby_prism::CallNode<'pr>, ruby_pr
     Some((call, block))
 }
 
-/// `lambda_or_proc?` on a block-ish argument: `->`, `lambda {}`, `proc {}`, `Proc.new {}`.
-fn lambda_or_proc(node: &Node) -> bool {
-    if node.as_lambda_node().is_some() {
-        return true;
-    }
-    let Some((call, _)) = block_of(node) else { return false };
-    let name = method_name(&call);
-    match call.receiver() {
-        None => name == "lambda" || name == "proc",
-        Some(r) => {
-            let proc_const = match &r {
-                Node::ConstantReadNode { .. } => node_text(&r) == "Proc",
-                Node::ConstantPathNode { .. } => {
-                    let p = r.as_constant_path_node().unwrap();
-                    p.parent().is_none() && p.name().is_some_and(|n| n.as_slice() == b"Proc")
-                }
-                _ => false,
-            };
-            proc_const && name == "new" && !is_csend(&call)
-        }
-    }
-}
-
 fn on_send(cx: &mut Cx, call: &ruby_prism::CallNode) {
     // A `&blk` argument is parser's last argument.
     if call.block().is_some_and(|b| b.as_block_argument_node().is_some()) {
@@ -69,7 +46,7 @@ fn on_send(cx: &mut Cx, call: &ruby_prism::CallNode) {
         Node::LambdaNode { .. } => true,
         _ => block_of(last).is_some_and(|(c, _)| send_args(&c).is_empty()),
     };
-    if !ambiguous || call.opening_loc().is_some() || lambda_or_proc(last) {
+    if !ambiguous || call.opening_loc().is_some() || helpers::node_types::lambda_or_proc(last) {
         return;
     }
     let name = method_name(call);
