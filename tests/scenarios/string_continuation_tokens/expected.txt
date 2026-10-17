@@ -1,0 +1,4 @@
+a.rb:10:3: C: [Correctable] Layout/SpaceBeforeComma: Space found before comma.
+a.rb:12:6: C: [Correctable] Layout/SpaceBeforeComma: Space found before comma.
+a.rb:16:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+a.rb:5:5: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.

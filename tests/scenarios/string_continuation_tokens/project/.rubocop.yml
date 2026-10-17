@@ -1,0 +1,15 @@
+AllCops:
+  SuggestExtensions: false
+  DisabledByDefault: true
+Layout/SpaceInsideParens:
+  Enabled: true
+Layout/SpaceBeforeComma:
+  Enabled: true
+Layout/SpaceAfterComma:
+  Enabled: true
+Layout/SpaceInsideReferenceBrackets:
+  Enabled: true
+Layout/EmptyLines:
+  Enabled: true
+Layout/SpaceBeforeComment:
+  Enabled: true
