@@ -163,6 +163,12 @@ impl<'a> Source<'a> {
                         t.kind = ruby_prism_sys::PM_TOKEN_IDENTIFIER;
                     }
                 }
+                // `def self&.foo`, parsed as `def self .foo` (#492): the `&.` token.
+                for t in tokens.iter_mut().filter(|t| t.kind == ruby_prism_sys::PM_TOKEN_DOT && t.start > 0) {
+                    if self.lex_edits.contains(&(t.start - 1, b' ')) && self.text.as_bytes()[t.start - 1] == b'&' {
+                        (t.start, t.kind) = (t.start - 1, ruby_prism_sys::PM_TOKEN_AMPERSAND_DOT);
+                    }
+                }
             }
             tokens
         })

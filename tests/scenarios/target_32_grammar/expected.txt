@@ -1,4 +1,8 @@
 Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+defs_anddot.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for `class A`.
+defs_anddot.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+defs_anddot.rb:6:18: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+defs_anddot.rb:6:3: C: [Correctable] Style/SingleLineMethods: Avoid single-line method definitions.
 f1.rb:2:11: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 f2.rb:2:8: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 lparen_arg_semi.rb:1:9: F: Lint/Syntax: unexpected token tSEMI (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)

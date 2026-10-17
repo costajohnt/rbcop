@@ -233,6 +233,46 @@ pub fn identifier_data_marker(text: &str, tokens: &[Token]) -> Option<usize> {
     (!line_begin(text, tokens, i)).then_some(tokens[i].start)
 }
 
+/// The `&` of each `&.` after a singleton method's receiver (`def self&.foo`, `def (x)&.foo`): the
+/// parser gem's `defs_head` takes `&.` there like `.`, Prism rejects it (#492). Parse a copy with
+/// ` .` instead.
+pub fn defs_and_dots(tokens: &[Token]) -> Vec<usize> {
+    let receiver_start = |i: usize| -> Option<usize> {
+        if tokens[i].kind != "PARENTHESIS_RIGHT" {
+            return matches!(
+                tokens[i].kind,
+                "IDENTIFIER"
+                    | "CONSTANT"
+                    | "INSTANCE_VARIABLE"
+                    | "GLOBAL_VARIABLE"
+                    | "CLASS_VARIABLE"
+                    | "KEYWORD_SELF"
+                    | "KEYWORD_NIL"
+                    | "KEYWORD_TRUE"
+                    | "KEYWORD_FALSE"
+                    | "KEYWORD___FILE__"
+                    | "KEYWORD___LINE__"
+                    | "KEYWORD___ENCODING__"
+            )
+            .then_some(i);
+        }
+        let mut depth = 0;
+        (0..=i).rev().find(|&j| {
+            match tokens[j].kind {
+                "PARENTHESIS_RIGHT" => depth += 1,
+                k if k.starts_with("PARENTHESIS_LEFT") => depth -= 1,
+                _ => {}
+            }
+            depth == 0
+        })
+    };
+    (2..tokens.len())
+        .filter(|&i| tokens[i].kind == "AMPERSAND_DOT")
+        .filter(|&i| receiver_start(i - 1).is_some_and(|r| r > 0 && tokens[r - 1].kind == "KEYWORD_DEF"))
+        .map(|i| tokens[i].start)
+        .collect()
+}
+
 /// A 7-byte identifier for an `__END__` the parser gem reads as one (`identifier_data_marker`),
 /// used nowhere in `text`.
 pub fn end_stand_in(text: &str) -> Option<String> {
