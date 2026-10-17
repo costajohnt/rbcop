@@ -350,6 +350,86 @@ fn fallback_output_matches_rubocop() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// A plugin rbcop does not implement that defines no cops (rubocop-erb): rbcop honors its
+/// default.yml (its `AllCops: Include` brings in the .erb files, its Lint/Syntax Exclude applies),
+/// runs no cops on the files it brings in, names it on stderr, and under RBCOP_FALLBACK=1 hands
+/// those files whole to RuboCop (#484).
+#[test]
+fn copless_plugin_files_go_to_rubocop() {
+    let dir = project("copless");
+    // Outside the project, so its lib/ is not inspected.
+    let gems = dir.with_extension("gems");
+    let _ = fs::remove_dir_all(&gems);
+    let gem = gems.join("gems/rubocop-fakeerb-0.1.0");
+    fs::create_dir_all(gems.join("specifications")).unwrap();
+    fs::create_dir_all(gem.join("config")).unwrap();
+    fs::create_dir_all(gem.join("lib/rubocop/fakeerb")).unwrap();
+    fs::write(
+        gems.join("specifications/rubocop-fakeerb-0.1.0.gemspec"),
+        "Gem::Specification.new { |s| s.name = 'rubocop-fakeerb'; s.version = '0.1.0' }\n",
+    )
+    .unwrap();
+    fs::write(
+        gem.join("config/default.yml"),
+        "inherit_mode:\n  merge:\n    - Exclude\n    - Include\n\nAllCops:\n  Include:\n    - '**/*.erb'\n\n\
+         Lint/Syntax:\n  Exclude:\n    - '**/*.erb'\n    - 'skip/*.rb'\n",
+    )
+    .unwrap();
+    fs::write(gem.join("lib/rubocop-fakeerb.rb"), "").unwrap();
+    fs::write(
+        gem.join("lib/rubocop/fakeerb/plugin.rb"),
+        "module RuboCop\n  module Fakeerb\n    class Plugin\n    end\n  end\nend\n",
+    )
+    .unwrap();
+    fs::write(dir.join(".rubocop.yml"), "plugins:\n  - rubocop-fakeerb\nAllCops:\n  NewCops: enable\n").unwrap();
+    fs::remove_file(dir.join("a.rb")).unwrap();
+    fs::remove_file(dir.join("no_foo.rb")).unwrap();
+    fs::write(dir.join("b.rb"), "# frozen_string_literal: true\n\nx = 1\n").unwrap();
+    fs::write(dir.join("v.erb"), "<p><%= foo(1,2) %></p>\nhello world\n").unwrap();
+    fs::create_dir_all(dir.join("skip")).unwrap();
+    fs::write(dir.join("skip/bad.rb"), "def (\n").unwrap();
+    // A stand-in RuboCop: records how it was run and reports one offense on the last file.
+    let child = dir.join("child.sh");
+    fs::write(
+        &child,
+        "#!/bin/sh\necho \"$RBCOP_FALLBACK_SYNTAX $*\" >> \"$(dirname \"$0\")/child.log\"\nfor a; do f=$a; done\n\
+         printf '%s\\t3\\t4\\tconvention\\t0\\t0\\t0\\tFake/Cop\\tFrom RuboCop.\\n' \"$f\"\n",
+    )
+    .unwrap();
+    Command::new("chmod").arg("755").arg(&child).status().unwrap();
+    let run = |fallback: bool| {
+        let mut cmd = common::command(env!("CARGO_BIN_EXE_rbcop"));
+        cmd.env("GEM_PATH", &gems).env("RBCOP_RUBOCOP", &child);
+        if fallback {
+            cmd.env("RBCOP_FALLBACK", "1");
+        }
+        cmd.args(["-f", "e"]).current_dir(&dir).output().unwrap()
+    };
+    let out = run(false);
+    // Without a ruby on PATH the gem cannot be found.
+    if !text(&out.stderr).contains("cannot run ruby") {
+        assert_eq!(
+            text(&out.stderr),
+            "rbcop: not running the Ruby code of plugin rubocop-fakeerb; set RBCOP_FALLBACK=1 to run them with \
+             RuboCop\n"
+        );
+        // b.rb's offenses only: v.erb runs no cops, skip/bad.rb's Lint/Syntax is excluded.
+        let stdout = text(&out.stdout);
+        assert!(stdout.contains("b.rb:3:1"), "{stdout}");
+        assert!(!stdout.contains("v.erb") && !stdout.contains("bad.rb"), "{stdout}");
+        let out = run(true);
+        assert_eq!(text(&out.stderr), "");
+        let stdout = text(&out.stdout);
+        assert!(stdout.contains("v.erb:1:4: C: Fake/Cop: From RuboCop."), "{stdout}");
+        // One child, for v.erb alone, with every cop (no --except) and Lint/Syntax kept.
+        let log = fs::read_to_string(dir.join("child.log")).unwrap();
+        assert_eq!(log.lines().count(), 1, "{log}");
+        assert!(log.starts_with("1 ") && !log.contains("--except") && log.trim_end().ends_with("v.erb"), "{log}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+    let _ = fs::remove_dir_all(&gems);
+}
+
 #[test]
 fn fallback_autocorrect_matches_rubocop() {
     if !have_rubocop() {

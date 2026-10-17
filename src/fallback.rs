@@ -47,7 +47,7 @@ pub fn unimplemented<'c>(
 }
 
 /// `rbcop: not running 3 cops it does not implement (Rails: 2, RSpec: 1); set RBCOP_FALLBACK=1 ...`
-pub fn notice(skipped: &BTreeSet<String>, required_code: bool) -> String {
+pub fn notice(skipped: &BTreeSet<String>, required_code: bool, copless_plugins: &[&str]) -> String {
     let mut parts = Vec::new();
     if !skipped.is_empty() {
         let mut depts: BTreeMap<&str, usize> = BTreeMap::new();
@@ -60,6 +60,10 @@ pub fn notice(skipped: &BTreeSet<String>, required_code: bool) -> String {
     }
     if required_code {
         parts.push("cops from Ruby code the config requires".into());
+    }
+    if !copless_plugins.is_empty() {
+        let s = if copless_plugins.len() == 1 { "" } else { "s" };
+        parts.push(format!("the Ruby code of plugin{s} {}", copless_plugins.join(", ")));
     }
     format!("rbcop: not running {}; set RBCOP_FALLBACK=1 to run them with RuboCop", parts.join(" or "))
 }
@@ -75,7 +79,8 @@ pub struct Child<'a> {
 }
 
 /// Runs RuboCop (`RBCOP_RUBOCOP`, default `rubocop`) on `files` with every cop rbcop implements
-/// excluded, and returns its offenses by file. Under -a/-A RuboCop corrects (and writes) first, so
+/// excluded, and returns its offenses by file. With `implemented` empty RuboCop runs every cop,
+/// Lint/Syntax included: the files rbcop leaves wholly to it (Store::copless_plugin_file). Under -a/-A RuboCop corrects (and writes) first, so
 /// rbcop then inspects the result; its offenses refer to the source before correction.
 pub fn run(
     files: &[PathBuf],
@@ -126,11 +131,14 @@ pub fn run(
         .chain(c.except.iter().map(String::as_str))
         .collect();
     let mut cmd = Command::new(bin);
-    cmd.args(words)
-        .args(["--cache", "false", "--require"])
-        .arg(&fmt)
-        .args(["--format", "RbcopFallbackFormatter", "--except", &except.join(",")])
-        .current_dir(cwd)
+    cmd.args(words).args(["--cache", "false", "--require"]).arg(&fmt).args(["--format", "RbcopFallbackFormatter"]);
+    if !except.is_empty() {
+        cmd.args(["--except", &except.join(",")]);
+    }
+    if implemented.is_empty() {
+        cmd.env("RBCOP_FALLBACK_SYNTAX", "1");
+    }
+    cmd.current_dir(cwd)
         .env_remove("RBCOP_FALLBACK")
         // rbcop has applied `.rubocop` and RUBOCOP_OPTS and forwards what the child needs. Read
         // again, a `--format`, `-o` or `--stderr` there would break the output protocol.
@@ -240,13 +248,17 @@ mod tests {
     fn notice_groups_by_department() {
         let cops: BTreeSet<String> = ["Rails/A", "Rails/B", "RSpec/C"].iter().map(|s| s.to_string()).collect();
         assert_eq!(
-            notice(&cops, true),
+            notice(&cops, true, &[]),
             "rbcop: not running 3 cops it does not implement (RSpec: 1, Rails: 2) or cops from Ruby code the \
              config requires; set RBCOP_FALLBACK=1 to run them with RuboCop"
         );
         assert_eq!(
-            notice(&BTreeSet::new(), true),
+            notice(&BTreeSet::new(), true, &[]),
             "rbcop: not running cops from Ruby code the config requires; set RBCOP_FALLBACK=1 to run them with RuboCop"
+        );
+        assert_eq!(
+            notice(&BTreeSet::new(), false, &["rubocop-erb"]),
+            "rbcop: not running the Ruby code of plugin rubocop-erb; set RBCOP_FALLBACK=1 to run them with RuboCop"
         );
     }
 

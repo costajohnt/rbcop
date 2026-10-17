@@ -68,6 +68,9 @@ pub fn inspect_bytes(
     cfg: &Resolved,
     selected: &dyn Fn(&str) -> bool,
 ) -> FileReport {
+    // Team#roundup_relevant_cops drops an excluded Lint/Syntax too: a project config cannot
+    // exclude it, but a plugin's default.yml can (rubocop-erb's `**/*.erb`).
+    let selected = &|cop: &str| selected(cop) && (cop != "Lint/Syntax" || cfg.relevant(cfg.cop(cop), path));
     let error = crate::source::encoding_error(&bytes);
     match String::from_utf8(bytes) {
         Ok(text) => match error {
@@ -591,7 +594,7 @@ fn analyze(
         // RuboCop runs only Lint/Syntax on a file that does not parse, one offense per diagnostic,
         // and does so even under --only (which always lists it); not under -x or the style-guide
         // filter, which leave it out.
-        if !selected("Lint/Syntax") {
+        if !selected("Lint/Syntax") || !cfg.relevant(cfg.cop("Lint/Syntax"), path) {
             return (Vec::new(), None, Vec::new());
         }
         let ruby = format_ruby_version(cfg.target_ruby);
