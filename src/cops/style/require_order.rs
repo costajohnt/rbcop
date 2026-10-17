@@ -62,7 +62,9 @@ impl Cop for RequireOrder {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let Some(call) = plain_send(node) else { return };
         let method = method_name(&call);
-        if call.receiver().is_some() || !matches!(method, "require" | "require_relative") {
+        // on_send does not check the receiver: `self.require 'a'` is compared too; only the
+        // sibling must be receiverless (#434).
+        if !matches!(method, "require" | "require_relative") {
             return;
         }
         let args = arguments(&call);

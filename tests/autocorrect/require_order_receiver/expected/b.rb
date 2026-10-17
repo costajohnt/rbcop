@@ -1,0 +1,5 @@
+require 'a'
+require 'b'
+self.require 'c'
+require 'a0'
+foo&.require 'a1'
