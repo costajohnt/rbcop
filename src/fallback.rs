@@ -30,7 +30,12 @@ pub fn unimplemented<'c>(
     let mut out = BTreeSet::new();
     for cfg in configs {
         for &name in &registry {
-            if !implemented.contains(name) && !out.contains(name) && selected(name, cfg) && cfg.cop_enabled(name) {
+            if !implemented.contains(name)
+                && !rbcop::helpers::cop_registry::is_custom(name)
+                && !out.contains(name)
+                && selected(name, cfg)
+                && cfg.cop_enabled(name)
+            {
                 out.insert(name.to_string());
             }
         }

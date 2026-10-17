@@ -823,6 +823,7 @@ impl Store {
         self.custom_cops |= plugins.iter().any(|n| n.starts_with('.') || n.starts_with('/'));
         // Their class and module names are registry names RuboCop would know (`Style/MiddleDot`
         // defined in `require: ../lib/linter/rubocop_middle_dot`), as for a plugin gem's lib/.
+        let mut local = Vec::new();
         for n in plugins.iter().filter(|n| n.starts_with('.') || n.starts_with('/')) {
             let base = path.parent().unwrap_or(Path::new("."));
             let mut file = if n.starts_with('/') { PathBuf::from(n) } else { base.join(n) };
@@ -830,8 +831,16 @@ impl Store {
                 file.set_extension("rb");
             }
             ruby_file_constants(&file, &mut self.plugin_constants);
+            local.push(file);
         }
         self.integrate_plugins(plugins)?;
+        // ConfigLoader#load_file resolves `plugins:` and then `require:`: the cop classes a local
+        // file defines register once it loads.
+        // ponytail: every local file registers after every gem of this config file, not at its place
+        // in `require:`; that order only matters for a cop name two departments share.
+        for file in local {
+            crate::helpers::cop_registry::register_custom(ruby_cops(&file));
+        }
         crate::helpers::cop_registry::set_open(self.custom_cops, &self.plugin_constants);
         self.emit(&migrate);
         if let Some(Value::Map(gems)) = hash.remove("inherit_gem") {
@@ -1287,7 +1296,7 @@ fn ruby_file_constants(path: &Path, out: &mut std::collections::HashSet<String>)
     }
 }
 
-/// The cops a plugin gem's lib/ defines (Badge.for of each class under RuboCop::Cop that descends
+/// The cops a plugin gem's lib/ (or one Ruby file) defines (Badge.for of each class under RuboCop::Cop that descends
 /// from a cop base class and does not call `exclude_from_registry`), sorted, each with whether it
 /// supports autocorrect (`extend AutoCorrector`, its own or a superclass's).
 // ponytail: reads nesting from `module`/`class` lines and the `end` at the same indentation, as
@@ -1315,6 +1324,9 @@ fn ruby_cops(dir: &Path) -> Vec<(String, bool)> {
     });
     static END: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| Regex::new(r"^(\s*)end\b").unwrap());
     let mut files = Vec::new();
+    if dir.is_file() {
+        files.push(dir.to_path_buf());
+    }
     walk(dir, &mut files);
     files.sort();
     let mut classes: Vec<Class> = Vec::new();

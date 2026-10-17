@@ -1,0 +1,6 @@
+require:
+  - ./lib/no_foo
+AllCops:
+  SuggestExtensions: false
+Custom/NoFoo:
+  Enabled: pending
