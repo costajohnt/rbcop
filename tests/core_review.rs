@@ -495,6 +495,29 @@ fn top_level_group_cop_errors_have_no_location() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// RSpec/DiscardedMatcher with a String CustomMatcherMethods (#502): every receiverless send
+/// raises, and a plain block's on_block raises again; a numblock call raises once.
+#[test]
+fn discarded_matcher_string_setting_raises_per_callback() {
+    let dir = scratch("discarded-matcher");
+    let config = "plugins:\n  - rubocop-rspec\nAllCops:\n  NewCops: disable\n  SuggestExtensions: false\n\
+                  RSpec/DiscardedMatcher:\n  CustomMatcherMethods: foo\n";
+    fs::write(dir.join(".rubocop.yml"), config).unwrap();
+    fs::create_dir_all(dir.join("spec")).unwrap();
+    fs::write(dir.join("spec/a_spec.rb"), "describe \"x\" do\nend\nbar { _1 }\nx.y { 1 }\n").unwrap();
+    let out = rbcop(&dir, &["--only", "RSpec/DiscardedMatcher"]);
+    let file = dir.join("spec/a_spec.rb").display().to_string();
+    let stderr = text(&out.stderr);
+    let printed: Vec<String> = stderr
+        .lines()
+        .take_while(|l| !l.is_empty())
+        .filter_map(|l| l.strip_prefix("An error occurred while RSpec/DiscardedMatcher cop was inspecting "))
+        .map(|l| l.replace(&file, "F"))
+        .collect();
+    assert_eq!(printed, ["F:1:0.", "F:1:0.", "F:3:0.", "F:4:0."]);
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// The error summary lists every raise, two at one location too (#501); under -a/-A only the last
 /// (non-correcting) pass runs the cops that do not correct, so their errors are not repeated.
 #[test]
