@@ -1,0 +1,11 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+aa.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+aa.rb:3:12: W: [Correctable] Lint/Void: Operator `==` used in void context.
+aa.rb:3:15: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+sub/a.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+sub/a.rb:3:12: W: [Correctable] Lint/Void: Operator `==` used in void context.
+sub/a.rb:3:15: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+sub/a.rb:4:3: C: [Correctable] Performance/Detect: Use `find` instead of `select.first`.
+zz.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+zz.rb:3:12: W: [Correctable] Lint/Void: Operator `==` used in void context.
+zz.rb:3:15: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.

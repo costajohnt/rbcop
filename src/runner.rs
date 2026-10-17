@@ -629,7 +629,7 @@ fn analyze(
     let only_redundant = matches!(redundant, Redundant::Only(_));
     let active: Vec<Active> = crate::cops::ALL
         .iter()
-        .filter(|r| selected(r.name) && !only_redundant && crate::helpers::cop_registry::is_registered(r.name))
+        .filter(|r| selected(r.name) && !only_redundant && cfg.team_has(r.name))
         .filter_map(|r| {
             let c = cfg.cop(r.name);
             let on = c.enabled || opted_in.contains(&r.name);

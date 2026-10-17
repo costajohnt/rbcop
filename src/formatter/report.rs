@@ -270,7 +270,7 @@ fn known_cops() -> Vec<&'static str> {
     let mut v: Vec<&'static str> =
         crate::cops::ALL.iter().map(|r| r.name).filter(|n| crate::helpers::cop_registry::is_registered(n)).collect();
     v.push("Lint/Syntax");
-    v.sort_by_key(|c| crate::autocorrect::registry_index(c));
+    v.sort_by_cached_key(|c| crate::autocorrect::registry_index(c));
     v
 }
 

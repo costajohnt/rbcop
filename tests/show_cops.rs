@@ -27,6 +27,8 @@ const CASES: &[(&str, &str, &[&str])] = &[
         "plugins",
         &["--show-docs-url", "Capybara/RSpec/HaveContent,Capybara/AssertStyle,Capybara/RSpec,RSpec/Focus,Style/Not"],
     ),
+    // junit lists a file's testcases in registry order: plugins in load order (rails first here).
+    ("junit_order", "junit_order", &["-f", "junit", "a.rb"]),
 ];
 
 #[test]

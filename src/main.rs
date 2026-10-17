@@ -1114,6 +1114,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     for f in &files {
         match store.for_file(f) {
             Ok(c) => {
+                c.mobilize_team();
                 let valid = rbcop::config::validator::cop_validate_config(&c, |cop| {
                     badge_selected(cop, &c) && c.cop_enabled(cop)
                 });

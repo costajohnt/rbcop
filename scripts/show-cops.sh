@@ -19,3 +19,4 @@ record default project --force-default-config --show-cops 'Layout/*,Lint/Missing
 record plugins_all plugins --show-cops
 record plugins_list_enabled plugins --list-enabled-cops-for spec/a_spec.rb
 record plugins_docs_url plugins --show-docs-url 'Capybara/RSpec/HaveContent,Capybara/AssertStyle,Capybara/RSpec,RSpec/Focus,Style/Not'
+record junit_order junit_order -f junit a.rb

@@ -39,9 +39,14 @@ static REGISTRY: LazyLock<Registry> = LazyLock::new(|| {
     r
 });
 
-/// A cop's position in RuboCop's registry (load) order; unknown names sort last.
-pub fn registry_index(name: &str) -> usize {
-    REGISTRY.order.get(name).copied().unwrap_or(usize::MAX)
+/// A cop's position in RuboCop's registry (load) order: RuboCop's own cops, then each native
+/// plugin's in the order the plugins were loaded (registry.tsv keeps the order within one plugin);
+/// unknown names sort last.
+pub fn registry_index(name: &str) -> (usize, usize) {
+    let plugin = crate::helpers::cop_registry::plugin_of(name).map_or(0, |p| {
+        crate::helpers::cop_registry::loaded_plugins().iter().position(|l| l.gem == p.gem).map_or(usize::MAX, |i| i + 1)
+    });
+    (plugin, REGISTRY.order.get(name).copied().unwrap_or(usize::MAX))
 }
 
 /// Cop::AutocorrectLogic#autocorrect? for a cop that supports autocorrection (`Cop::correctable`).

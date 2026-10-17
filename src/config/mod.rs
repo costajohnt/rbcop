@@ -206,9 +206,31 @@ pub struct Resolved {
     gem_versions: std::sync::OnceLock<Option<HashMap<String, String>>>,
     /// rubocop-rspec `RSpec: Language` (RuboCop::RSpec::Language.config), read on first use.
     pub rspec_language: std::sync::OnceLock<std::sync::Arc<crate::helpers::rspec::Language>>,
+    /// The native plugins loaded (by any config) when this config's first file was inspected:
+    /// Runner caches each config's team from then, so plugins loaded later add no cops to it.
+    pub team_plugins: std::sync::OnceLock<Vec<&'static str>>,
 }
 
 impl Resolved {
+    /// Whether a cop is in this config's team (Runner#mobilized_cop_classes): RuboCop's own always,
+    /// a native plugin's when the plugin was loaded before the team was mobilized (see
+    /// `team_plugins`; until then, when it is loaded at all).
+    pub fn team_has(&self, cop: &str) -> bool {
+        match crate::helpers::cop_registry::plugin_of(cop) {
+            None => true,
+            Some(p) => self
+                .team_plugins
+                .get()
+                .map_or_else(|| crate::helpers::cop_registry::plugin_loaded(p.gem), |gems| gems.contains(&p.gem)),
+        }
+    }
+
+    /// Fixes this config's team at the plugins loaded now (its first file is about to be inspected).
+    pub fn mobilize_team(&self) {
+        self.team_plugins
+            .get_or_init(|| crate::helpers::cop_registry::loaded_plugins().iter().map(|p| p.gem).collect());
+    }
+
     fn new(hash: Map, loaded_path: Option<&Path>, opts: &Options, cop_names: &[&'static str]) -> Self {
         let base_dir = base_dir_for(loaded_path);
         let all_cops = hash.map("AllCops").cloned().unwrap_or_default();
@@ -224,6 +246,7 @@ impl Resolved {
             for_cop_cache: std::sync::OnceLock::new(),
             gem_versions: std::sync::OnceLock::new(),
             rspec_language: std::sync::OnceLock::new(),
+            team_plugins: std::sync::OnceLock::new(),
         };
         for &name in cop_names {
             let cfg = r.build_cop(name, opts);
