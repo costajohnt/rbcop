@@ -80,7 +80,8 @@ fn required_ruby_code_is_named_on_stderr() {
     fs::write(gems.join("gems/rubocop-fake-0.1.0/lib/rubocop-fake.rb"), "").unwrap();
     fs::write(
         gems.join("specifications/rubocop-fake-0.1.0.gemspec"),
-        "Gem::Specification.new { |s| s.name = 'rubocop-fake'; s.version = '0.1.0' }\n",
+        "Gem::Specification.new { |s| s.name = 'rubocop-fake'; s.version = '0.1.0'; \
+         s.metadata = { 'default_lint_roller_plugin' => 'RuboCop::Fake::Plugin' } }\n",
     )
     .unwrap();
     fs::write(
@@ -175,6 +176,99 @@ fn required_feature_path_registers_its_gems_cops() {
         assert!(text(&out.stdout).contains("Unknown cop name `FakeTools/Nope`"), "{}", text(&out.stdout));
     }
     let _ = fs::remove_dir_all(&dir);
+}
+
+/// A plain `require:` (a gem that is not a lint_roller plugin) loads only the files the feature
+/// reaches: a namespace-only file registers no cops and merges no config (#499), the gem's main
+/// file registers its cops and, through its Inject.defaults!, its config. Under `plugins:` such a
+/// gem fails to load as a plugin, exit 2 (#498).
+#[test]
+fn plain_require_loads_what_the_feature_requires() {
+    let dir = project("plain-require");
+    let gems = dir.with_extension("gems");
+    let _ = fs::remove_dir_all(&gems);
+    let gem = gems.join("gems/rubocop-fake_ns-0.1.0");
+    fs::create_dir_all(gems.join("specifications")).unwrap();
+    fs::create_dir_all(gem.join("config")).unwrap();
+    fs::create_dir_all(gem.join("lib/rubocop/fake_ns")).unwrap();
+    fs::create_dir_all(gem.join("lib/rubocop/cop/fake_ns")).unwrap();
+    fs::write(
+        gems.join("specifications/rubocop-fake_ns-0.1.0.gemspec"),
+        "Gem::Specification.new { |s| s.name = 'rubocop-fake_ns'; s.version = '0.1.0' }\n",
+    )
+    .unwrap();
+    fs::write(
+        gem.join("config/default.yml"),
+        "FakeNs/One:\n  Enabled: true\nStyle/StringLiterals:\n  Enabled: false\n",
+    )
+    .unwrap();
+    fs::write(gem.join("lib/rubocop/fake_ns.rb"), "module RuboCop\n  module FakeNs\n  end\nend\n").unwrap();
+    // Sets the default configuration only from a method RuboCop would call later (standard's
+    // plugin, #518): requiring it merges nothing.
+    fs::write(
+        gem.join("lib/rubocop/fake_ns/later.rb"),
+        "require_relative 'inject'\nmodule RuboCop\n  module FakeNs\n    def self.later\n      \
+         ConfigLoader.instance_variable_set(:@default_configuration, nil)\n    end\n  end\nend\n",
+    )
+    .unwrap();
+    fs::write(
+        gem.join("lib/rubocop-fake_ns.rb"),
+        "require 'rubocop'\nrequire_relative 'rubocop/fake_ns'\nrequire_relative 'rubocop/fake_ns/inject'\n\
+         RuboCop::FakeNs::Inject.defaults!\nrequire 'rubocop/cop/fake_ns/one'\n",
+    )
+    .unwrap();
+    fs::write(
+        gem.join("lib/rubocop/fake_ns/inject.rb"),
+        "module RuboCop\n  module FakeNs\n    module Inject\n      def self.defaults!\n        \
+         ConfigLoader.instance_variable_set(:@default_configuration, nil)\n      end\n    end\n  end\nend\n",
+    )
+    .unwrap();
+    fs::write(
+        gem.join("lib/rubocop/cop/fake_ns/one.rb"),
+        "module RuboCop\n  module Cop\n    module FakeNs\n      class One < Base\n      end\n    end\n  end\nend\n",
+    )
+    .unwrap();
+    fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\nputs 1 # rubocop:disable FakeNs/One\nputs \"x\"\n")
+        .unwrap();
+    let run = |config: &str| {
+        fs::write(dir.join(".rubocop.yml"), format!("{config}AllCops:\n  NewCops: enable\n")).unwrap();
+        let mut cmd = common::command(env!("CARGO_BIN_EXE_rbcop"));
+        cmd.env("GEM_PATH", &gems).args(["-f", "e", "a.rb"]).current_dir(&dir).output().unwrap()
+    };
+    let out = run("require:\n  - rubocop/fake_ns\n");
+    // Without a ruby on PATH the gem cannot be found.
+    if !text(&out.stderr).contains("cannot run ruby") {
+        assert_eq!(text(&out.stderr), "");
+        assert!(text(&out.stdout).contains("Unknown cop name `FakeNs/One`"), "{}", text(&out.stdout));
+        assert!(text(&out.stdout).contains("Style/StringLiterals"), "{}", text(&out.stdout));
+        let out = run("require:\n  - rubocop/fake_ns/later\n");
+        assert_eq!(text(&out.stderr), "");
+        assert!(text(&out.stdout).contains("Style/StringLiterals"), "{}", text(&out.stdout));
+        let out = run("require:\n  - rubocop-fake_ns\n");
+        assert_eq!(
+            text(&out.stderr),
+            "rbcop: not running 1 cop it does not implement (FakeNs: 1); set RBCOP_FALLBACK=1 to run them with \
+             RuboCop\n"
+        );
+        assert!(!text(&out.stdout).contains("Unknown cop name"), "{}", text(&out.stdout));
+        assert!(!text(&out.stdout).contains("Style/StringLiterals"), "{}", text(&out.stdout));
+        let out = run("plugins:\n  - rubocop-fake_ns\n");
+        assert_eq!(
+            text(&out.stderr),
+            "Error: Failed to load plugin `rubocop-fake_ns` because the corresponding plugin class could not be \
+             determined for instantiation.\nTry upgrading it first (e.g., `bundle update rubocop-fake_ns`).\nIf \
+             `rubocop-fake_ns` is not yet a plugin, use `require: rubocop-fake_ns` instead of `plugins: \
+             rubocop-fake_ns` in your configuration.\n\nFor further assistance, check with the developer regarding \
+             the following points:\nhttps://docs.rubocop.org/rubocop/plugin_migration_guide.html\n"
+        );
+        assert_eq!(text(&out.stdout), "");
+        assert_eq!(out.status.code(), Some(2));
+        // Named with its plugin class, it loads.
+        let out = run("plugins:\n  - rubocop-fake_ns:\n      plugin_class_name: RuboCop::FakeNs::Plugin\n");
+        assert!(text(&out.stderr).contains("not running 1 cop it does not implement"), "{}", text(&out.stderr));
+    }
+    let _ = fs::remove_dir_all(&dir);
+    let _ = fs::remove_dir_all(&gems);
 }
 
 /// rbcop under RBCOP_FALLBACK=1 and RuboCop print the same stdout and stderr and exit alike.
@@ -288,7 +382,8 @@ fn plugin_cops_come_from_lib_classes() {
     fs::write(gem.join("lib/rubocop-fake.rb"), "").unwrap();
     fs::write(
         gems.join("specifications/rubocop-fake-0.1.0.gemspec"),
-        "Gem::Specification.new { |s| s.name = 'rubocop-fake'; s.version = '0.1.0' }\n",
+        "Gem::Specification.new { |s| s.name = 'rubocop-fake'; s.version = '0.1.0'; \
+         s.metadata = { 'default_lint_roller_plugin' => 'RuboCop::Fake::Plugin' } }\n",
     )
     .unwrap();
     fs::write(gem.join("config/default.yml"), "Fake/One:\n  Enabled: true\nFake/Phantom:\n  Enabled: true\n").unwrap();
@@ -366,7 +461,8 @@ fn copless_plugin_files_go_to_rubocop() {
     fs::create_dir_all(gem.join("lib/rubocop/fakeerb")).unwrap();
     fs::write(
         gems.join("specifications/rubocop-fakeerb-0.1.0.gemspec"),
-        "Gem::Specification.new { |s| s.name = 'rubocop-fakeerb'; s.version = '0.1.0' }\n",
+        "Gem::Specification.new { |s| s.name = 'rubocop-fakeerb'; s.version = '0.1.0'; \
+         s.metadata = { 'default_lint_roller_plugin' => 'RuboCop::Fakeerb::Plugin' } }\n",
     )
     .unwrap();
     fs::write(

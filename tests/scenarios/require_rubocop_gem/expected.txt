@@ -1,0 +1,2 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.

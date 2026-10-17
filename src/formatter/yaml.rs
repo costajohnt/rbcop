@@ -97,7 +97,15 @@ fn scalar(v: &Value, col: usize, cont: usize) -> String {
 fn string(s: &str, col: usize, cont: usize) -> String {
     static NON_WORD_START: LazyLock<Regex> = LazyLock::new(|| Regex::new(r#"^[^\w][^"]*$"#).unwrap());
     static OCTALISH: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\A0[0-7]*[89]").unwrap());
-    let style = if s.trim_end_matches('\n').contains('\n') || s.chars().any(|c| c.is_control() && c != '\n') {
+    // Psych asks for a literal block for a line break not ending the string (`/\n(?!\Z)/`);
+    // libyaml writes one unless a line or the string ends in a space or a character is not
+    // printable, and then double-quotes it.
+    let special = s.chars().any(|c| c.is_control() && c != '\n');
+    let literal = s.char_indices().any(|(i, c)| c == '\n' && !matches!(&s[i + 1..], "" | "\n"));
+    if literal && !special && !s.ends_with(' ') && !s.contains(" \n") {
+        return block(s, cont);
+    }
+    let style = if literal || special {
         Style::Double
     } else if s == "<<" {
         Style::Single
@@ -113,6 +121,30 @@ fn string(s: &str, col: usize, cont: usize) -> String {
         Style::Single => format!("'{}'", fold(&s.replace('\'', "''"), col + 1, cont)),
         Style::Double => double(s, col, cont),
     }
+}
+
+/// libyaml's yaml_emitter_write_literal_scalar: `|`, an indentation indicator when the text
+/// starts with a space or break, `-` (no final break) or `+` (more than one), then each line at
+/// `cont` (empty lines bare). The final break is left to the caller.
+// ponytail: the `...` document end libyaml adds after a `|+` block ending a document is not written.
+fn block(s: &str, cont: usize) -> String {
+    let mut out = String::from("|");
+    if s.starts_with([' ', '\n']) {
+        out.push('2');
+    }
+    if !s.ends_with('\n') {
+        out.push('-');
+    } else if s[..s.len() - 1].ends_with('\n') {
+        out.push('+');
+    }
+    for line in s.strip_suffix('\n').unwrap_or(s).split('\n') {
+        out.push('\n');
+        if !line.is_empty() {
+            out.push_str(&" ".repeat(cont));
+            out.push_str(line);
+        }
+    }
+    out
 }
 
 /// libyaml's yaml_emitter_write_double_quoted: escapes, and a break at a space past column 80
@@ -286,6 +318,33 @@ mod tests {
         let expected = "a:\nb: 'yes'\nc: '1.0'\ne: 'foo: bar'\ng: \" lead\"\nh: 'trail '\ni: ''\nj: \"~\"\nl: []\n\"n\": \
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\nr: \"- a\"\ns: a,b\n\
             w: 0o17\nx: '1_000'\n\"y\": \"y\"\naa: '2024-01-01'\nad: 1e3\n";
+        assert_eq!(dump(&map), expected);
+    }
+
+    // Ruby 4.0.6 `{"a" => {...}, "z" => 1}.to_yaml` (#510).
+    #[test]
+    fn multi_line_strings_as_psych_dumps_them() {
+        let m = |pairs: Vec<(&str, Value)>| {
+            Value::Map(Map(pairs.into_iter().map(|(k, v)| (k.to_string(), v)).collect()).into())
+        };
+        let s = |v: &str| Value::Str(v.into());
+        let inner = m(vec![
+            ("D", s("x\ny")),
+            ("E", s("x \ny")),
+            ("F", s("x\ny ")),
+            ("G", s(" x\ny")),
+            ("H", s("x\ny\n")),
+            ("I", s("x\ny\n\n")),
+            ("J", s("x\n\n\n")),
+            ("K", s("\nx\ny")),
+            ("L", s("x\n\ny")),
+            ("M", Value::Seq(vec![s("p\nq"), Value::Int(1)].into())),
+            ("O", s("x\ty\nz")),
+        ]);
+        let Value::Map(map) = m(vec![("a", inner), ("z", Value::Int(1))]) else { unreachable!() };
+        let expected = "a:\n  D: |-\n    x\n    y\n  E: \"x \\ny\"\n  F: \"x\\ny \"\n  G: |2-\n     x\n    y\n  H: |\n    x\n    \
+            y\n  I: |+\n    x\n    y\n\n  J: |+\n    x\n\n\n  K: |2-\n\n    x\n    y\n  L: |-\n    x\n\n    y\n  M:\n  - |-\n    \
+            p\n    q\n  - 1\n  O: \"x\\ty\\nz\"\nz: 1\n";
         assert_eq!(dump(&map), expected);
     }
 

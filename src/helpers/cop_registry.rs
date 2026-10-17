@@ -330,11 +330,12 @@ pub fn qualified_cop_name(name: &str) -> Option<String> {
 /// PathUtil.smart_path shows it) the `no department given` and `wrong namespace` warnings are
 /// pushed as the lines Registry#emit_warning writes. Err is AmbiguousCopName's message.
 /// Registry#unqualified_cop_names: every cop's basename, and RedundantCopDisableDirective. RuboCop
-/// memoizes it at its first use, the first config file's add_missing_namespaces (its `AllCops`
-/// key goes through qualified_cop_name): the cops of a plugin that loads later (one only a
-/// subdirectory config names) never get the `no department given` warning.
-/// Loading ConfigLoader.default_configuration (on the first plugin integration) memoizes it too:
-/// cops of a local file required after a plugin never get the warning (`fill_unqualified_cop_names`).
+/// memoizes it at its first use: a bare key of the first config file (add_missing_namespaces),
+/// or else loading ConfigLoader.default_configuration, whose `AllCops` key goes through
+/// qualified_cop_name (`fill_unqualified_cop_names`), on the first plugin integration or once the
+/// first config file merges with the defaults. The cops of a plugin that loads later (one only a
+/// subdirectory config names), or of a local file required after a plugin, never get the
+/// `no department given` warning.
 pub fn is_unqualified_cop_name(name: &str) -> bool {
     UNQUALIFIED_COP_NAMES
         .get_or_init(|| {

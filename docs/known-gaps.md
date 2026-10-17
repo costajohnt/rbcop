@@ -215,7 +215,13 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     `--no-detach`, `--lsp`, `--mcp`: long-running server modes (`--no-server` is accepted).
   - `-r/--require`, `--plugin`: load Ruby code. In a config file, `plugins:` / `require:` of a
     plugin rbcop implements natively (docs/plugins.md) runs its cops; any other gem only merges its
-    default configuration and its cops do not run.
+    default configuration and its cops do not run. A `require:` of a gem that is not a lint_roller
+    plugin is a plain `require`: rbcop reads the files that feature reaches through literal
+    `require`/`require_relative` lines inside its gem (every file under `lib/` when one requires a
+    computed path; none of the rubocop gem's own, which RuboCop has loaded already), registers the
+    cop classes found there, and merges the gem's `config/default.yml` only when one of those files
+    sets the default configuration (an extension's `Inject.defaults!`). Conditions on a require
+    line are not evaluated.
   - `-d/--debug`, `--profile`, `--memory`: Ruby-level diagnostics (backtraces, stackprof).
   - `-C/--cache`, `--cache-root`, `-P/--[no-]parallel`, `--raise-cop-error` are accepted and have
     no effect (rbcop keeps no result cache and always lints in parallel).
@@ -372,7 +378,7 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   - Cops RuboCop knows from its registry rather than from default configs: a plugin's cops count
     as known when every part of the name is a class or module defined in the plugin gem's `lib/`
     (cops registered without a `config/default.yml` entry, e.g. rubocop-discourse's). A local
-    `require:` file, or a required gem with neither `config/default.yml` nor a cop class rbcop
+    `require:` file, or a plugin gem with neither `config/default.yml` nor a cop class rbcop
     can read, turns unrecognized-cop errors
     off for the run. A `plugins:`/`require:` entry Ruby cannot load stops the run with RuboCop's
     `cannot load such file -- <feature>` and exit 2 (without the backtrace that follows it there);
@@ -395,8 +401,7 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     `Include` crashes RuboCop later (per cop or in `FilePatterns`); rbcop treats it as one pattern.
     Other values RuboCop crashes on (a non-String `FailLevel`, `TargetRubyVersion: true`, a
     non-Hash section under an unknown name) are not reproduced.
-  - The `extension supports plugin, specify plugins:` warning for `require:` of a plugin gem rbcop
-    does not implement, and RuboCop's backtrace for a bogus `-f` formatter, are not printed.
+  - RuboCop's backtrace for a bogus `-f` formatter is not printed.
   - `-c FILE`: the `Using ... configuration` warning for a deprecated cop name shows the expanded
     path; RuboCop shows the argument as given.
 - YAML: a plain `:name` value loads as a Symbol (`Value::Sym`) and a quoted `':name'` as a String,
