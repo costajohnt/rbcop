@@ -75,6 +75,9 @@ fn required_ruby_code_is_named_on_stderr() {
     let gems = dir.join("gems");
     fs::create_dir_all(gems.join("specifications")).unwrap();
     fs::create_dir_all(gems.join("gems/rubocop-fake-0.1.0/config")).unwrap();
+    // The feature `plugins:` requires.
+    fs::create_dir_all(gems.join("gems/rubocop-fake-0.1.0/lib")).unwrap();
+    fs::write(gems.join("gems/rubocop-fake-0.1.0/lib/rubocop-fake.rb"), "").unwrap();
     fs::write(
         gems.join("specifications/rubocop-fake-0.1.0.gemspec"),
         "Gem::Specification.new { |s| s.name = 'rubocop-fake'; s.version = '0.1.0' }\n",
@@ -109,6 +112,67 @@ fn required_ruby_code_is_named_on_stderr() {
         assert!(text(&out.stderr).contains("(Fake: 1, Fake/Sub: 1)"), "{}", text(&out.stderr));
         let out = run(&["-f", "e", "--only", "Style/StringLiterals", "a.rb"]);
         assert_eq!(text(&out.stderr), "");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// A `require:` entry RuboCop cannot load (FeatureLoader's LoadError) stops the run with exit 2
+/// before anything is inspected, whether a gem, a `./` path or a bare relative path (a $LOAD_PATH
+/// feature, not a project file).
+#[test]
+fn unloadable_requires_abort() {
+    let dir = project("unloadable");
+    for (entry, message) in [
+        ("./nope.rb", format!("{}/./nope.rb", dir.canonicalize().unwrap().display())),
+        ("no_foo.rb", "no_foo.rb".to_string()),
+        ("rbcop_no_such_gem_x", "rbcop_no_such_gem_x".to_string()),
+    ] {
+        fs::write(dir.join(".rubocop.yml"), format!("require:\n  - {entry}\n")).unwrap();
+        let out = rbcop(&dir, false, &["-f", "e"]);
+        if text(&out.stderr).contains("cannot run ruby") {
+            continue;
+        }
+        assert_eq!(text(&out.stderr), format!("cannot load such file -- {message}\n"), "{entry}");
+        assert_eq!(text(&out.stdout), "", "{entry}");
+        assert_eq!(out.status.code(), Some(2), "{entry}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// `require:` of a feature path inside a gem (`rubocop/require_tools`) loads that gem, whose cop
+/// classes register even without a config/default.yml.
+#[test]
+fn required_feature_path_registers_its_gems_cops() {
+    let dir = project("feature-path");
+    let gems = dir.join("gems");
+    let gem = gems.join("gems/rubocop-fake_tools-0.1.0");
+    fs::create_dir_all(gems.join("specifications")).unwrap();
+    fs::create_dir_all(gem.join("lib/rubocop/cop/fake_tools")).unwrap();
+    fs::write(
+        gems.join("specifications/rubocop-fake_tools-0.1.0.gemspec"),
+        "Gem::Specification.new { |s| s.name = 'rubocop-fake_tools'; s.version = '0.1.0' }\n",
+    )
+    .unwrap();
+    fs::write(gem.join("lib/rubocop/fake_tools.rb"), "require_relative 'cop/fake_tools/one'\n").unwrap();
+    fs::write(
+        gem.join("lib/rubocop/cop/fake_tools/one.rb"),
+        "module RuboCop\n  module Cop\n    module FakeTools\n      class One < Base\n      end\n    end\n  end\nend\n",
+    )
+    .unwrap();
+    fs::write(dir.join(".rubocop.yml"), "require:\n  - rubocop/fake_tools\nAllCops:\n  NewCops: enable\n").unwrap();
+    fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\nputs 1 # rubocop:disable FakeTools/Nope\n").unwrap();
+    let run = |args: &[&str]| {
+        let mut cmd = common::command(env!("CARGO_BIN_EXE_rbcop"));
+        cmd.env("GEM_PATH", &gems).args(args).current_dir(&dir).output().unwrap()
+    };
+    let out = run(&["-f", "e", "a.rb"]);
+    if !text(&out.stderr).contains("cannot run ruby") {
+        assert_eq!(
+            text(&out.stderr),
+            "rbcop: not running 1 cop it does not implement (FakeTools: 1); set RBCOP_FALLBACK=1 to run them with \
+             RuboCop\n"
+        );
+        assert!(text(&out.stdout).contains("Unknown cop name `FakeTools/Nope`"), "{}", text(&out.stdout));
     }
     let _ = fs::remove_dir_all(&dir);
 }
@@ -221,6 +285,7 @@ fn plugin_cops_come_from_lib_classes() {
     fs::create_dir_all(gems.join("specifications")).unwrap();
     fs::create_dir_all(gem.join("config")).unwrap();
     fs::create_dir_all(gem.join("lib/rubocop/cop/fake")).unwrap();
+    fs::write(gem.join("lib/rubocop-fake.rb"), "").unwrap();
     fs::write(
         gems.join("specifications/rubocop-fake-0.1.0.gemspec"),
         "Gem::Specification.new { |s| s.name = 'rubocop-fake'; s.version = '0.1.0' }\n",
