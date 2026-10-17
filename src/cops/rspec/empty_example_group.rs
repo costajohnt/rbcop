@@ -22,7 +22,8 @@ fn example_or_group_or_include(l: &Language, node: &Node) -> bool {
 /// `(block !(send nil? #Hooks.all ...) _ #examples?)`
 fn examples_inside_block(l: &Language, node: &Node) -> bool {
     let Some(c) = helpers::rspec::plain_block_call(node) else { return false };
-    if is_csend(&c) || (c.receiver().is_none() && l.hook(method_name(&c))) {
+    // `!(send nil? #Hooks.all ...)`: a csend block call is not that send, so it counts (#426).
+    if c.receiver().is_none() && l.hook(method_name(&c)) {
         return false;
     }
     helpers::rspec::parser_body(helpers::rspec::block_body(&c)).is_some_and(|b| examples(l, &b))

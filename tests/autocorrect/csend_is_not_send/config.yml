@@ -1,0 +1,7 @@
+# A csend is not a parser send (#426, #450).
+plugins:
+  - rubocop-rspec
+AllCops:
+  TargetRubyVersion: 3.4
+  NewCops: enable
+  SuggestExtensions: false

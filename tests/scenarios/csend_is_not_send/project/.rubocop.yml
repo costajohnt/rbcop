@@ -1,0 +1,10 @@
+plugins:
+  - rubocop-rails
+  - rubocop-rspec
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+  TargetRailsVersion: 8.0
+RSpec/IteratedExpectation:
+  Enabled: false
