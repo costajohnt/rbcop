@@ -1,0 +1,2 @@
+.rubocop.yml: Warning: Style/LineLength has the wrong namespace - replace it with Layout/LineLength
+.rubocop.yml: Warning: Lint/HashSyntax has the wrong namespace - replace it with Style/HashSyntax

@@ -736,7 +736,7 @@ fn print_help(color: bool) {
 fn list_enabled_cops_for(cfg: &Resolved) {
     use rbcop::config::value::Value;
     let mut names: Vec<&str> = rbcop::helpers::cop_registry::REGISTRY.to_vec();
-    names.sort_unstable();
+    rbcop::helpers::cop_registry::sort_by_department(&mut names);
     let mut out = String::new();
     for name in names {
         if !matches!(cfg.enable_cop(name), Value::Null | Value::Bool(false)) {
@@ -754,8 +754,10 @@ fn show_docs_url(cops: &[String], cfg: &Resolved) {
         out.push_str("https://docs.rubocop.org/rubocop\n");
     }
     for cop in cops {
-        if let Some(name) = rbcop::helpers::cop_registry::REGISTRY.iter().find(|c| **c == cop.as_str()) {
-            out.push_str(&formatter::docs_url(cfg, name));
+        if let Some(name) = rbcop::helpers::cop_registry::REGISTRY.iter().find(|c| **c == cop.as_str())
+            && let Some(url) = formatter::docs_url(cfg, name)
+        {
+            out.push_str(&url);
             out.push('\n');
         }
     }
@@ -770,11 +772,9 @@ fn ruby_version_string(v: f64) -> String {
 
 /// `--show-cops`: CLI::Command::ShowCops for the cops rbcop implements.
 fn show_cops(patterns: &[String], cfg: &Resolved, pwd: &str) {
-    let mut names: Vec<&'static str> =
-        cops::ALL.iter().map(|r| r.name).filter(|n| rbcop::helpers::cop_registry::is_registered(n)).collect();
-    // Lint/Syntax lives in the runner, not in cops::ALL, but RuboCop's registry lists it.
-    names.push("Lint/Syntax");
-    names.sort_unstable();
+    // Registry.global: RuboCop's cops and every loaded plugin's, those rbcop does not implement too.
+    let mut names: Vec<&'static str> = rbcop::helpers::cop_registry::REGISTRY.to_vec();
+    rbcop::helpers::cop_registry::sort_by_department(&mut names);
     let show_all = patterns.is_empty();
     let selected = |name: &str| {
         show_all
@@ -787,6 +787,7 @@ fn show_cops(patterns: &[String], cfg: &Resolved, pwd: &str) {
         out.push_str(&format!("# Available cops ({}) + config for {pwd}: \n", names.len()));
     }
     let mut depts: Vec<&str> = names.iter().filter_map(|n| n.rsplit_once('/').map(|(d, _)| d)).collect();
+    // Sorted by department, so each one's cops are adjacent.
     depts.dedup();
     for dept in depts {
         let in_dept: Vec<&str> =
@@ -816,13 +817,124 @@ fn show_cops(patterns: &[String], cfg: &Resolved, pwd: &str) {
     print!("{out}");
 }
 
+/// RuboCop::Lockfile as Bundler reads it: the lockfile next to the Gemfile (`gems.rb` →
+/// `gems.locked`, else `Gemfile` → `Gemfile.lock`) found upwards from the working directory
+/// (`BUNDLE_GEMFILE` overrides), as (DEPENDENCIES names, those plus every locked spec's
+/// dependency names). None without one.
+fn lockfile_gems(cwd: &Path) -> Option<(Vec<String>, Vec<String>)> {
+    let gemfile = match env::var_os("BUNDLE_GEMFILE").filter(|g| !g.is_empty()) {
+        Some(g) => PathBuf::from(g),
+        None => cwd.ancestors().find_map(|d| ["gems.rb", "Gemfile"].iter().map(|n| d.join(n)).find(|f| f.is_file()))?,
+    };
+    let lockfile = if gemfile.file_name().is_some_and(|n| n == "gems.rb") {
+        gemfile.with_file_name("gems.locked")
+    } else {
+        PathBuf::from(format!("{}.lock", gemfile.display()))
+    };
+    let text = fs::read_to_string(lockfile).ok()?;
+    let name = |l: &str| l.trim().split([' ', '!']).next().unwrap_or("").to_string();
+    let (mut deps, mut spec_deps) = (Vec::new(), Vec::new());
+    let mut section = "";
+    for line in text.lines() {
+        if !line.starts_with(' ') {
+            section = line.trim_end();
+            continue;
+        }
+        let indent = line.len() - line.trim_start().len();
+        if section == "DEPENDENCIES" && indent == 2 {
+            deps.push(name(line));
+        } else if matches!(section, "GEM" | "PATH" | "GIT" | "PLUGIN SOURCE") && indent == 6 {
+            spec_deps.push(name(line));
+        }
+    }
+    let mut gems = deps.clone();
+    gems.extend(spec_deps);
+    Some((deps, gems))
+}
+
+/// CLI::Command::SuggestExtensions, run after the report: the RuboCop extensions the lockfile's
+/// gems suggest that the config does not load.
+fn suggest_extensions(cli: &Cli, pwd_config: &Resolved, default_config: &Resolved, loaded: &[String]) -> String {
+    use rbcop::config::value::Value;
+    let formatter = cli
+        .format
+        .clone()
+        .or_else(|| pwd_config.all_cops().str("DefaultFormatter").map(String::from))
+        .unwrap_or_else(|| "p".into());
+    let out = cli.output_path.is_some() || cli.formatters.iter().any(|(_, o)| o.is_some());
+    if env::var_os("CI").is_some()
+        || cli.only.is_some()
+        || cli.list_targets
+        || out
+        || cli.stdin.is_some()
+        || !["p", "progress", "fu", "fuubar", "pa", "pacman"].contains(&formatter.as_str())
+    {
+        return String::new();
+    }
+    let Some((deps, gems)) = lockfile_gems(&rbcop::config::cwd()) else { return String::new() };
+    if deps.is_empty() {
+        return String::new();
+    }
+    let map = match pwd_config.all_cops().get("SuggestExtensions") {
+        Some(Value::Bool(true)) => default_config.all_cops().get("SuggestExtensions").and_then(Value::as_map).cloned(),
+        Some(Value::Map(m)) => Some((**m).clone()),
+        _ => None,
+    }
+    .unwrap_or_default();
+    // all_extensions: those with a gem among the lockfile's dependencies.
+    let all: Vec<&str> = map
+        .0
+        .iter()
+        .filter(|(_, v)| {
+            let wanted: Vec<String> = match v {
+                Value::Seq(items) => items.iter().filter_map(Value::as_string).collect(),
+                v => v.as_string().into_iter().collect(),
+            };
+            wanted.iter().any(|g| deps.contains(g))
+        })
+        .map(|(k, _)| k.as_str())
+        .collect();
+    let mut not_installed: Vec<&str> = all.iter().copied().filter(|e| !gems.iter().any(|g| g == e)).collect();
+    let mut not_loaded: Vec<&str> =
+        all.iter().copied().filter(|e| gems.iter().any(|g| g == e) && !loaded.iter().any(|l| l == e)).collect();
+    if not_installed.is_empty() && not_loaded.is_empty() {
+        return String::new();
+    }
+    not_installed.sort_unstable();
+    not_loaded.sort_unstable();
+    let mut s = String::new();
+    if !not_installed.is_empty() {
+        s.push_str("\nTip: Based on detected gems, the following RuboCop extension libraries might be helpful:\n");
+        for e in &not_installed {
+            s.push_str(&format!("  * {e} (https://rubygems.org/gems/{e})\n"));
+        }
+    }
+    if !not_loaded.is_empty() {
+        s.push_str("\nThe following RuboCop extension libraries are installed but not loaded in config:\n");
+        for e in &not_loaded {
+            s.push_str(&format!("  * {e}\n"));
+        }
+    }
+    s.push_str(
+        "\nYou can opt out of this message by adding the following to your config (see \
+         https://docs.rubocop.org/rubocop/plugins.html#plugin-suggestions for more options):\n  AllCops:\n    \
+         SuggestExtensions: false\n",
+    );
+    if cli.display_time {
+        s.push('\n');
+    }
+    s
+}
+
 /// CLI#report_pending_cops (PendingCopsReporter): on stderr, before any formatter output.
 fn report_pending_cops(cfg: &Resolved, global: bool) {
     const BANNER: &str = "The following cops were added to RuboCop, but are not configured. Please set Enabled to \
                           either `true` or `false` in your `.rubocop.yml` file.\n\nPlease also note that you can \
                           opt-in to new cops by default by adding this to your config:\n  AllCops:\n    NewCops: \
                           enable\n";
-    let pending = cfg.pending_cops();
+    // pending_cops_only_qualified
+    let mut pending = cfg.pending_cops();
+    pending.retain(|(name, _)| rbcop::helpers::cop_registry::is_qualified_cop(name));
     if pending.is_empty() {
         return;
     }
@@ -854,66 +966,9 @@ fn verbose_version(cfg: &Resolved) -> String {
     )
 }
 
-/// Badge.camel_case
-fn badge_camel_case(part: &str) -> String {
-    if part == "rspec" {
-        return "RSpec".into();
-    }
-    // gsub(/^[a-z]|_[a-z]/) { |m| m[-1].upcase }
-    let chars: Vec<char> = part.chars().collect();
-    let mut out = String::new();
-    let mut i = 0;
-    while i < chars.len() {
-        let c = chars[i];
-        if i == 0 && c.is_ascii_lowercase() {
-            out.push(c.to_ascii_uppercase());
-        } else if c == '_' && chars.get(i + 1).is_some_and(|n| n.is_ascii_lowercase()) {
-            out.push(chars[i + 1].to_ascii_uppercase());
-            i += 1;
-        } else {
-            out.push(c);
-        }
-        i += 1;
-    }
-    out
-}
-
 /// Registry#qualified_cop_name(name, origin) with its warnings; Err is AmbiguousCopName.
 fn qualify_option_name(name: &str, origin: &str, warnings: &mut Vec<String>) -> Result<String, String> {
-    use rbcop::helpers::cop_registry::REGISTRY;
-    // Badge.parse: Ruby's split drops trailing empty fields.
-    let mut parts: Vec<String> = name.split('/').map(badge_camel_case).collect();
-    while parts.len() > 1 && parts.last().is_some_and(|p| p.is_empty()) {
-        parts.pop();
-    }
-    let cop = parts.pop().unwrap_or_default();
-    let dept = parts.join("/");
-    let qualified = !parts.is_empty();
-    let basename = |c: &str| c.rsplit('/').next().unwrap_or(c).to_string();
-    if !qualified && REGISTRY.iter().any(|c| basename(c) == name) {
-        warnings.push(format!("{origin}: Warning: no department given for {name}."));
-    }
-    if qualified && REGISTRY.contains(&format!("{dept}/{cop}").as_str()) {
-        return Ok(name.to_string());
-    }
-    let mut depts: Vec<&str> = REGISTRY.iter().filter_map(|c| c.rsplit_once('/').map(|(d, _)| d)).collect();
-    depts.dedup();
-    let hits: Vec<String> =
-        depts.into_iter().map(|d| format!("{d}/{cop}")).filter(|q| REGISTRY.contains(&q.as_str())).collect();
-    let given = if qualified { format!("{dept}/{cop}") } else { cop.clone() };
-    match hits.as_slice() {
-        [] => Ok(name.to_string()),
-        [real] => {
-            if qualified && *real != given {
-                warnings.push(format!("{origin}: Warning: {given} has the wrong namespace - replace it with {real}"));
-            }
-            Ok(real.clone())
-        }
-        many => Err(format!(
-            "Error: Ambiguous cop name `{given}` used in {origin} needs department qualifier. Did you mean {}?",
-            many.join(" or ")
-        )),
-    }
+    rbcop::helpers::cop_registry::qualify(name, origin, Some(origin), true, warnings).map_err(|e| format!("Error: {e}"))
 }
 
 /// Runner#qualify_option_cop_names, then OptionsValidator.validate_cop_list. RuboCop does this when
@@ -1082,6 +1137,11 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     // Runner#qualify_option_cop_names runs when the first team mobilizes, after the configs (and
     // the plugins they load, whose cops join the registry) are loaded.
     let (cop_warnings, cop_error) = qualify_cop_options(&mut cli);
+    runner::set_except_redundant(
+        cli.except.iter().any(|n| {
+            matches!(n.as_str(), "Lint/RedundantCopDisableDirective" | "RedundantCopDisableDirective" | "Lint")
+        }),
+    );
     store.set_only(cli.opts.only.clone());
     pwd_config = store.for_dir(&cwd)?;
 
@@ -1165,6 +1225,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     for f in &files {
         match store.for_file(f) {
             Ok(c) => {
+                c.mobilize_team();
                 let valid = rbcop::config::validator::cop_validate_config(&c, |cop| {
                     badge_selected(cop, &c) && c.cop_enabled(cop)
                 });
@@ -1320,6 +1381,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     let mut inspected: Vec<PathBuf> = Vec::new();
     let mut config_failure = None;
     let mut cop_warnings_raised: Vec<String> = Vec::new();
+    let mut aborted = false;
     if error.is_none() {
         let mut cop_notes = Some((cop_warnings, cop_error));
         let mut stopped = false;
@@ -1392,6 +1454,14 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             for w in &report.warnings {
                 eprintln!("{w}");
             }
+            // An error raised while the file was inspected ends the run before it is reported
+            // (nothing written, no summaries).
+            if let Some(e) = report.abort.take() {
+                error = Some(e);
+                aborted = true;
+                stopped = true;
+                break;
+            }
             // Team#handle_warning prints each cop warning as the file is inspected; Runner#warnings
             // keeps them for the summary, in the same order.
             for w in &warnings {
@@ -1447,6 +1517,11 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         warn_red(global, &e);
         return Ok(ERROR);
     }
+    // An error raised out of Runner#run skips ExecuteRunner#display_summary.
+    if aborted && let Some(e) = error {
+        eprintln!("{}", red(global, e.trim_end()));
+        return Ok(ERROR);
+    }
     // ExecuteRunner#display_warning_summary, before the error summary.
     if !cop_warnings_raised.is_empty() {
         let n = cop_warnings_raised.len();
@@ -1490,6 +1565,13 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             Some(corrected) => print!("{corrected}"),
             None => std::io::Write::write_all(&mut std::io::stdout(), original).map_err(|e| e.to_string())?,
         }
+    }
+    // CLI#execute_runners: SuggestExtensions follows ExecuteRunner.
+    let suggestions = suggest_extensions(&cli, &pwd_config, &store.default_config(), store.loaded_plugins());
+    if cli.stderr {
+        eprint!("{suggestions}");
+    } else {
+        print!("{suggestions}");
     }
     Ok(if all_passed && cop_errors.is_empty() { 0 } else { OFFENSES })
 }

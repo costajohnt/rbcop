@@ -18,27 +18,25 @@ pub fn enabled() -> bool {
     std::env::var_os("RBCOP_FALLBACK").is_some_and(|v| v == "1")
 }
 
-/// Registered cops enabled (and selected) in any of `configs` that rbcop does not implement. A
-/// renamed cop's old name or a custom cop's config is not registered: custom cops are counted as
+/// Registered cops (Registry.global, a plugin's cops with or without a default.yml entry) enabled
+/// and selected in any of `configs` that rbcop does not implement. Custom cops are counted as
 /// required code.
 pub fn unimplemented<'c>(
     configs: impl IntoIterator<Item = &'c Resolved>,
     implemented: &HashSet<&str>,
     selected: impl Fn(&str, &Resolved) -> bool,
 ) -> BTreeSet<String> {
+    let registry = rbcop::helpers::cop_registry::REGISTRY.to_vec();
     let mut out = BTreeSet::new();
     for cfg in configs {
-        for (name, _) in &cfg.hash.0 {
-            // A nested department key (`Capybara/RSpec`) is not a cop.
-            if name.contains('/')
-                && !rbcop::helpers::cop_registry::NATIVE_PLUGINS.iter().any(|p| p.departments.contains(&name.as_str()))
-                && !implemented.contains(name.as_str())
+        for &name in &registry {
+            if !implemented.contains(name)
+                && !rbcop::helpers::cop_registry::is_custom(name)
                 && !out.contains(name)
-                && cfg.registered(name)
                 && selected(name, cfg)
                 && cfg.cop_enabled(name)
             {
-                out.insert(name.clone());
+                out.insert(name.to_string());
             }
         }
     }

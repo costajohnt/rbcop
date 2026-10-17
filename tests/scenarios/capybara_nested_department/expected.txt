@@ -1,0 +1,14 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+spec/focus_spec.rb:3:1: C: RSpec/SpecFilePathFormat: Spec path should end with `foo*_spec.rb`.
+spec/focus_spec.rb:4:25: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+spec/focus_spec.rb:5:25: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+spec/focus_spec.rb:5:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 4, 6.
+spec/focus_spec.rb:6:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 4, 5.
+spec/focus_spec.rb:6:3: C: [Correctable] RSpec/Focus: Focused spec found.
+spec/foo_spec.rb:10:24: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+spec/foo_spec.rb:12:24: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+spec/foo_spec.rb:12:45: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `RSpec` department.
+spec/foo_spec.rb:4:24: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+spec/foo_spec.rb:6:63: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Capybara/RSpec/HaveSelector`.
+spec/foo_spec.rb:8:24: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+spec/foo_spec.rb:9:20: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Capybara.

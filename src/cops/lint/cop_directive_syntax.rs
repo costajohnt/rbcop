@@ -61,6 +61,8 @@ impl Cop for CopDirectiveSyntax {
             let (start, end) = (c.start, c.start + text.len());
             if MARKER_START.is_match(text) {
                 if check_directive(cx, start, end, text).is_err() {
+                    // qualified_cop_name(name, nil, warn: false) raised: a cop error.
+                    crate::runner::poison_raise(false);
                     return;
                 }
             } else if let Some(k) = NEAR_MISS_KEYWORD.captures(text) {

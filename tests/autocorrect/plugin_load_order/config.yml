@@ -1,0 +1,11 @@
+plugins:
+  - rubocop-minitest
+  - rubocop-rails
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.3
+  TargetRailsVersion: 7.1
+  SuggestExtensions: false
+Rails/RefuteMethods:
+  Include:
+    - '**/*_test.rb'

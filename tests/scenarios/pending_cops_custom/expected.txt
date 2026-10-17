@@ -1,0 +1,5 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:3:26: C: [Correctable] Migration/DepartmentName: Department name is missing.
+lib/no_foo.rb:10:11: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+lib/no_foo.rb:6:7: C: Style/Documentation: Missing top-level documentation comment for `class RuboCop::Cop::Custom::NoFoo`.
+lib/no_foo.rb:8:15: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.

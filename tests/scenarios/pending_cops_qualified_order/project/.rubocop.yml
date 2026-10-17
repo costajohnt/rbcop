@@ -1,0 +1,5 @@
+plugins:
+  - rubocop-performance
+  - rubocop-rails
+AllCops:
+  SuggestExtensions: false

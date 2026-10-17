@@ -32,17 +32,24 @@ installed; a different installed version is ignored.
 - When a config's `plugins:` / `require:` names one, `Store::integrate_plugins` registers its cops
   (`register_plugin`) and merges its default.yml as RuboCop's ConfigurationIntegrator does.
 - Its cops are ordinary cops in `src/cops/<department>/` (same `Cop` trait, dispatch and helpers).
-  The runner, `--show-cops`, `--only`/`--except` and the junit formatter skip a native plugin's cops
-  until it is loaded (`cop_registry::is_registered`), as RuboCop's registry only holds them then.
+  `--show-cops`, `--only`/`--except` and the junit formatter skip a native plugin's cops until it is
+  loaded (`cop_registry::is_registered`), as RuboCop's registry only holds them then. The runner
+  goes by each config's team (`Resolved::team_has`): Runner caches a config's cops when its first
+  file is inspected, so a plugin that only a later config loads (`plugins:` in a subdirectory's
+  `.rubocop.yml`) adds no cops to the configs whose files came before, while a config mobilized
+  after it runs the plugin's cops, enabled by default where that config has no entry for them.
 - `REGISTRY` (directives, the validator, `--only`, `--list-enabled-cops-for`, `--show-docs-url`)
-  holds RuboCop's cops, then each loaded plugin's. Plugins rbcop does not implement still add their
-  default.yml cop names (`register_foreign`), so directives naming them are not "unknown"; since rbcop
+  holds RuboCop's cops, then each loaded plugin's. Plugins rbcop does not implement still add the
+  cop classes their gem's `lib/` defines (`register_foreign`, `ruby_cops` in `src/config/mod.rs`),
+  so directives naming them are not "unknown" and `--show-cops` lists them; since rbcop
   cannot run those cops (nor custom cops from a `require:`d Ruby file), a directive naming one is
   never reported as redundant, and neither is a `disable all` while such cops are loaded.
 - `--only` names are qualified once configs have loaded (plugins add departments and cop names);
   `Store::set_only` then re-resolves the configs already loaded.
 - Autocorrect order and `autocorrect_incompatible_with` come from `src/autocorrect/registry.tsv`
-  (`scripts/autocorrect_registry.rb` requires each native plugin).
+  (`scripts/autocorrect_registry.rb` requires each native plugin): RuboCop's cops, then each native
+  plugin's in the order the plugins were loaded (`plugins:` order), as the registry (and the junit
+  formatter's testcases) list them.
 
 ## rubocop-rails specifics
 

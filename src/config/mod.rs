@@ -206,9 +206,31 @@ pub struct Resolved {
     gem_versions: std::sync::OnceLock<Option<HashMap<String, String>>>,
     /// rubocop-rspec `RSpec: Language` (RuboCop::RSpec::Language.config), read on first use.
     pub rspec_language: std::sync::OnceLock<std::sync::Arc<crate::helpers::rspec::Language>>,
+    /// The native plugins loaded (by any config) when this config's first file was inspected:
+    /// Runner caches each config's team from then, so plugins loaded later add no cops to it.
+    pub team_plugins: std::sync::OnceLock<Vec<&'static str>>,
 }
 
 impl Resolved {
+    /// Whether a cop is in this config's team (Runner#mobilized_cop_classes): RuboCop's own always,
+    /// a native plugin's when the plugin was loaded before the team was mobilized (see
+    /// `team_plugins`; until then, when it is loaded at all).
+    pub fn team_has(&self, cop: &str) -> bool {
+        match crate::helpers::cop_registry::plugin_of(cop) {
+            None => true,
+            Some(p) => self
+                .team_plugins
+                .get()
+                .map_or_else(|| crate::helpers::cop_registry::plugin_loaded(p.gem), |gems| gems.contains(&p.gem)),
+        }
+    }
+
+    /// Fixes this config's team at the plugins loaded now (its first file is about to be inspected).
+    pub fn mobilize_team(&self) {
+        self.team_plugins
+            .get_or_init(|| crate::helpers::cop_registry::loaded_plugins().iter().map(|p| p.gem).collect());
+    }
+
     fn new(hash: Map, loaded_path: Option<&Path>, opts: &Options, cop_names: &[&'static str]) -> Self {
         let base_dir = base_dir_for(loaded_path);
         let all_cops = hash.map("AllCops").cloned().unwrap_or_default();
@@ -224,6 +246,7 @@ impl Resolved {
             for_cop_cache: std::sync::OnceLock::new(),
             gem_versions: std::sync::OnceLock::new(),
             rspec_language: std::sync::OnceLock::new(),
+            team_plugins: std::sync::OnceLock::new(),
         };
         for &name in cop_names {
             let cfg = r.build_cop(name, opts);
@@ -562,7 +585,6 @@ pub struct Store {
     project_root: Option<PathBuf>,
     cop_names: Vec<&'static str>,
     default: Map,
-    known_cops: Vec<String>,
     /// Each loaded file with what loading it wrote to stderr: ConfigLoader.load_file is not
     /// cached, so every later load of the file repeats its validation warnings.
     files: HashMap<PathBuf, (Map, validator::Output)>,
@@ -590,7 +612,6 @@ impl Store {
         let Value::Map(default) = parse_yaml(default_text)? else { return Err("bad default.yml".into()) };
         let mut default = Arc::unwrap_or_clone(default);
         make_excludes_absolute(&mut default, &cwd);
-        let known_cops = default.keys().filter(|k| k.contains('/')).map(String::from).collect();
         let project_root = find_last_upwards(&["Gemfile"], &cwd).or_else(|| find_last_upwards(&["gems.rb"], &cwd));
         let mut store = Store {
             opts,
@@ -598,7 +619,6 @@ impl Store {
             project_root: project_root.map(|p| p.parent().unwrap().to_path_buf()),
             cop_names,
             default,
-            known_cops,
             files: HashMap::new(),
             emitted: Vec::new(),
             gem_dirs: HashMap::new(),
@@ -647,6 +667,11 @@ impl Store {
 
     /// A config so far loaded `require:`s Ruby code rbcop cannot load (custom cops, or a plugin
     /// gem it could not integrate).
+    /// ConfigLoader.loaded_plugins and loaded_features: every `plugins:`/`require:` name loaded so far.
+    pub fn loaded_plugins(&self) -> &[String] {
+        &self.loaded_plugins
+    }
+
     pub fn requires_ruby_code(&self) -> bool {
         self.custom_cops
     }
@@ -798,6 +823,7 @@ impl Store {
         self.custom_cops |= plugins.iter().any(|n| n.starts_with('.') || n.starts_with('/'));
         // Their class and module names are registry names RuboCop would know (`Style/MiddleDot`
         // defined in `require: ../lib/linter/rubocop_middle_dot`), as for a plugin gem's lib/.
+        let mut local = Vec::new();
         for n in plugins.iter().filter(|n| n.starts_with('.') || n.starts_with('/')) {
             let base = path.parent().unwrap_or(Path::new("."));
             let mut file = if n.starts_with('/') { PathBuf::from(n) } else { base.join(n) };
@@ -805,8 +831,16 @@ impl Store {
                 file.set_extension("rb");
             }
             ruby_file_constants(&file, &mut self.plugin_constants);
+            local.push(file);
         }
         self.integrate_plugins(plugins)?;
+        // ConfigLoader#load_file resolves `plugins:` and then `require:`: the cop classes a local
+        // file defines register once it loads.
+        // ponytail: every local file registers after every gem of this config file, not at its place
+        // in `require:`; that order only matters for a cop name two departments share.
+        for file in local {
+            crate::helpers::cop_registry::register_custom(ruby_cops(&file));
+        }
         crate::helpers::cop_registry::set_open(self.custom_cops, &self.plugin_constants);
         self.emit(&migrate);
         if let Some(Value::Map(gems)) = hash.remove("inherit_gem") {
@@ -827,7 +861,7 @@ impl Store {
         }
         self.resolve_inheritance(path, &mut hash)?;
         hash.remove("inherit_from");
-        self.add_missing_namespaces(&mut hash);
+        self.add_missing_namespaces(path, &mut hash)?;
         if check {
             let mut out = Vec::new();
             let checked = validator::Validator {
@@ -929,18 +963,34 @@ impl Store {
         Ok(())
     }
 
-    /// Qualify bare cop names (`Debugger:` to `Lint/Debugger:`) when exactly one known cop matches.
-    fn add_missing_namespaces(&self, hash: &mut Map) {
-        for (key, _) in hash.0.iter_mut() {
-            if key.contains('/') || key == "AllCops" {
-                continue;
-            }
-            let suffix = format!("/{key}");
-            let mut matches = self.known_cops.iter().filter(|c| c.ends_with(&suffix));
-            if let (Some(only), None) = (matches.next(), matches.next()) {
-                *key = only.clone();
+    /// ConfigLoader.add_missing_namespaces: every key but an obsolete cop name goes through
+    /// Registry.qualified_cop_name(key, path), which warns about a bare cop name (`Debugger:`
+    /// becomes `Lint/Debugger:`) and a wrong department (`Style/LineLength:` becomes
+    /// `Layout/LineLength:`) and raises AmbiguousCopName for a bare name two departments share.
+    /// A requalified key moves to the end (`hash[q] = hash.delete(key)`).
+    fn add_missing_namespaces(&mut self, path: &Path, hash: &mut Map) -> Result<(), String> {
+        let legacy = validator::legacy_cop_names();
+        let shown = validator::smart_path(path, &self.cwd);
+        let origin = path.display().to_string();
+        let keys: Vec<String> = hash.keys().filter(|k| !legacy.contains(&k.to_string())).map(String::from).collect();
+        let mut warnings = Vec::new();
+        let mut result = Ok(());
+        for key in keys {
+            match crate::helpers::cop_registry::qualify(&key, &origin, Some(&shown), true, &mut warnings) {
+                Ok(q) if q != key => {
+                    let value = hash.remove(&key).unwrap_or(Value::Null);
+                    hash.insert(q, value);
+                }
+                Ok(_) => {}
+                Err(e) => {
+                    result = Err(format!("Error: {e}"));
+                    break;
+                }
             }
         }
+        let out: validator::Output = warnings.into_iter().map(|w| (false, w)).collect();
+        self.emit(&out);
+        result
     }
 
     /// ConfigLoader.add_excludes_from_files (§1).
@@ -1021,8 +1071,21 @@ impl Store {
                     continue;
                 }
                 let m = self.load_file(&path, false)?;
-                crate::helpers::cop_registry::register_foreign(
-                    m.keys().filter(|k| k.contains('/')).map(String::from).collect(),
+                // RuboCop's registry holds the cop classes the gem defines, whether or not its
+                // default.yml configures them (and not the entries without a class). Classes
+                // configured there come in that order, then the others.
+                let cops = ruby_cops(&dir.join("lib"));
+                let names: Vec<String> = if cops.is_empty() {
+                    m.keys().filter(|k| k.contains('/')).map(String::from).collect()
+                } else {
+                    let mut names: Vec<String> =
+                        m.keys().filter(|k| cops.iter().any(|(c, _)| c == k)).map(String::from).collect();
+                    names.extend(cops.iter().map(|(c, _)| c.clone()).filter(|c| !m.contains(c)));
+                    names
+                };
+                crate::helpers::cop_registry::register_foreign(names);
+                crate::helpers::cop_registry::set_foreign_autocorrect(
+                    cops.into_iter().filter_map(|(c, ac)| ac.then_some(c)),
                 );
                 m
             };
@@ -1231,6 +1294,114 @@ fn ruby_file_constants(path: &Path, out: &mut std::collections::HashSet<String>)
     if let Ok(text) = std::fs::read_to_string(path) {
         out.extend(RE.captures_iter(&text).map(|c| c[1].to_string()));
     }
+}
+
+/// The cops a plugin gem's lib/ (or one Ruby file) defines (Badge.for of each class under RuboCop::Cop that descends
+/// from a cop base class and does not call `exclude_from_registry`), sorted, each with whether it
+/// supports autocorrect (`extend AutoCorrector`, its own or a superclass's).
+// ponytail: reads nesting from `module`/`class` lines and the `end` at the same indentation, as
+// every rubocop-* gem is formatted; classes opened by metaprogramming are not seen.
+fn ruby_cops(dir: &Path) -> Vec<(String, bool)> {
+    struct Class {
+        path: Vec<String>,
+        superclass: String,
+        autocorrect: bool,
+        excluded: bool,
+    }
+    fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
+        let Ok(entries) = std::fs::read_dir(dir) else { return };
+        for path in entries.flatten().map(|e| e.path()) {
+            if path.is_dir() {
+                walk(&path, out);
+            } else if path.extension().is_some_and(|e| e == "rb") {
+                out.push(path);
+            }
+        }
+    }
+    static OPEN: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| {
+        Regex::new(r"^(\s*)(module|class)\s+((?:::)?[A-Z]\w*(?:::[A-Z]\w*)*)\s*(?:<\s*((?:::)?[A-Z][\w:]*))?\s*(;.*)?(?:#.*)?$")
+            .unwrap()
+    });
+    static END: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| Regex::new(r"^(\s*)end\b").unwrap());
+    let mut files = Vec::new();
+    if dir.is_file() {
+        files.push(dir.to_path_buf());
+    }
+    walk(dir, &mut files);
+    files.sort();
+    let mut classes: Vec<Class> = Vec::new();
+    for file in files {
+        let Ok(text) = std::fs::read_to_string(&file) else { continue };
+        // (indent, path of this scope, index in `classes` for a class)
+        let mut stack: Vec<(usize, Vec<String>, Option<usize>)> = Vec::new();
+        for line in text.lines() {
+            if let Some(m) = OPEN.captures(line) {
+                // A one-line `class Foo < Bar; end` opens nothing.
+                if m.get(5).is_some_and(|t| t.as_str().contains("end")) {
+                    continue;
+                }
+                let indent = m[1].len();
+                let mut path = stack.last().map(|s| s.1.clone()).unwrap_or_default();
+                let name = m[3].trim_start_matches("::");
+                if m[3].starts_with("::") {
+                    path.clear();
+                }
+                path.extend(name.split("::").map(String::from));
+                let class = (&m[2] == "class").then(|| {
+                    classes.push(Class {
+                        path: path.clone(),
+                        superclass: m.get(4).map_or(String::new(), |s| s.as_str().trim_start_matches("::").to_string()),
+                        autocorrect: false,
+                        excluded: false,
+                    });
+                    classes.len() - 1
+                });
+                stack.push((indent, path, class));
+            } else if let Some(m) = END.captures(line) {
+                if stack.last().is_some_and(|s| s.0 == m[1].len()) {
+                    stack.pop();
+                }
+            } else if let Some(&(_, _, Some(i))) = stack.last() {
+                let body = line.trim();
+                classes[i].autocorrect |= body.starts_with("extend AutoCorrector");
+                classes[i].excluded |= body.starts_with("exclude_from_registry");
+            }
+        }
+    }
+    // A cop descends from RuboCop::Cop::Base (or ::Cop), directly or through classes found here.
+    // The superclass constant resolves lexically: the class's enclosing scopes, innermost first.
+    let find = |at: usize| {
+        let c = &classes[at];
+        let name: Vec<String> = c.superclass.split("::").map(String::from).collect();
+        (0..c.path.len()).rev().find_map(|n| {
+            let mut full = c.path[..n].to_vec();
+            full.extend(name.iter().cloned());
+            classes.iter().position(|o| o.path == full).filter(|&j| j != at)
+        })
+    };
+    let root =
+        |s: &str| matches!(s, "Base" | "Cop" | "Cop::Base" | "Cop::Cop" | "RuboCop::Cop::Base" | "RuboCop::Cop::Cop");
+    let lineage = |i: usize| -> Option<bool> {
+        // Some(autocorrect) when `classes[i]` is a cop class.
+        let (mut at, mut autocorrect) = (i, false);
+        for _ in 0..32 {
+            autocorrect |= classes[at].autocorrect;
+            match find(at) {
+                Some(j) => at = j,
+                None => return root(&classes[at].superclass).then_some(autocorrect),
+            }
+        }
+        None
+    };
+    let mut out: Vec<(String, bool)> = classes
+        .iter()
+        .enumerate()
+        .filter(|(_, c)| !c.excluded && c.path.len() >= 4 && c.path[0] == "RuboCop" && c.path[1] == "Cop")
+        .filter_map(|(i, c)| lineage(i).map(|ac| (c.path[2..].join("/"), ac)))
+        .collect();
+    out.sort();
+    out.dedup_by(|a, b| a.0 == b.0);
+    out
 }
 
 /// `Array(value)` for YAML values.

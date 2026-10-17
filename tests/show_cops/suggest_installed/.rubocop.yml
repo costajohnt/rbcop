@@ -1,0 +1,6 @@
+AllCops:
+  NewCops: disable
+  SuggestExtensions:
+    rubocop-rspec: rspec-rails
+    rubocop-rails: [rails]
+    rubocop-foo: [foo]
