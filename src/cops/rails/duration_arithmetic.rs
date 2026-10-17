@@ -25,7 +25,9 @@ fn time_current(n: &Node) -> bool {
     }
 }
 
-/// (send { int float (send nil _) } DURATIONS)
+/// (send { int float (send nil _) } DURATIONS). In NodePattern a bare `nil` is the node type (a
+/// `nil` literal), not a missing receiver (that is `nil?`): `nil.foo.days` matches, a receiverless
+/// `months.months` does not.
 fn duration(n: &Node) -> bool {
     let Some(c) = helpers::rails::send_node(n) else { return false };
     if !DURATIONS.contains(&method_name(&c)) || !send_args(&c).is_empty() {
@@ -34,7 +36,9 @@ fn duration(n: &Node) -> bool {
     c.receiver().is_some_and(|r| {
         r.as_integer_node().is_some()
             || r.as_float_node().is_some()
-            || helpers::rails::send_node(&r).is_some_and(|x| x.receiver().is_none() && send_args(&x).is_empty())
+            || helpers::rails::send_node(&r).is_some_and(|x| {
+                x.receiver().is_some_and(|n| n.as_nil_node().is_some()) && send_args(&x).is_empty()
+            })
     })
 }
 

@@ -228,6 +228,14 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   `Dept/Name` made of class or module names in its `lib/` as known. The same goes for a local
   `require:` file (the files it requires in turn are not read); one with no cop class rbcop can
   read leaves every name outside the known departments known.
+- A loaded plugin rbcop does not implement that defines no cops (rubocop-erb, rubocop-md) acts
+  through Ruby code run inside RuboCop (rubocop-erb extracts the Ruby from each ERB template;
+  rubocop-md adds Markdown files to the targets). rbcop merges its default.yml (rubocop-erb's
+  `**/*.erb` Include and its Exclude lists, Lint/Syntax's included), names the plugin in the
+  not-running notice, and runs none of its cops on the files the plugin's `AllCops: Include`
+  brings in: they count as inspected, with no offenses. With `RBCOP_FALLBACK=1` RuboCop runs every
+  cop on those files instead. Files a plugin adds from Ruby (rubocop-md's `.md` files) are not
+  inspected at all.
 - Custom formatter classes and `require:` of local Ruby files (custom cops) are not supported. rbcop names
   the cops it skips on stderr, and `RBCOP_FALLBACK=1` runs them with RuboCop (README, "Plugins and custom cops").
 - Cops rbcop cannot run (a non-native plugin's, custom cops): Lint/RedundantCopDisableDirective

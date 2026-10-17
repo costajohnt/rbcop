@@ -634,6 +634,9 @@ pub struct Store {
     loaded_plugins: Vec<String>,
     /// A `require:` rbcop cannot load (see validator::Validator::custom_cops).
     custom_cops: bool,
+    /// Loaded plugins rbcop does not implement that define no cops (rubocop-erb, rubocop-md):
+    /// their effect is Ruby code run inside RuboCop. Each with its default.yml `AllCops: Include`.
+    copless_plugins: Vec<(String, Vec<Pattern>)>,
     /// Class and module names in loaded plugins' lib/ (see ruby_constants).
     plugin_constants: std::collections::HashSet<String>,
     /// What directives and `--only` cannot enumerate (cop_registry::set_open): a `require:`
@@ -669,6 +672,7 @@ impl Store {
             gem_dirs: HashMap::new(),
             loaded_plugins: Vec::new(),
             custom_cops: false,
+            copless_plugins: Vec::new(),
             plugin_constants: Default::default(),
             open_custom: false,
             open_constants: Default::default(),
@@ -721,6 +725,21 @@ impl Store {
 
     pub fn requires_ruby_code(&self) -> bool {
         self.custom_cops
+    }
+
+    /// The loaded plugins rbcop does not implement that define no cops.
+    pub fn copless_plugins(&self) -> Vec<&str> {
+        self.copless_plugins.iter().map(|(n, _)| n.as_str()).collect()
+    }
+
+    /// A file one of those plugins brings in (its `AllCops: Include` matches it, as rubocop-erb's
+    /// `**/*.erb`): what RuboCop inspects there comes from the plugin's Ruby code (ERB extraction),
+    /// so rbcop runs none of its cops on it.
+    // ponytail: the Include patterns stand in for the plugin's own test (rubocop-erb: the `.erb`
+    // extension), which is Ruby code rbcop cannot read.
+    pub fn copless_plugin_file(&self, cfg: &Resolved, file: &Path) -> bool {
+        let (rel, abs) = (cfg.relative(file), file.display().to_string());
+        self.copless_plugins.iter().flat_map(|(_, pats)| pats).any(|p| p.matches(&rel) || p.matches(&abs))
     }
 
     /// The qualified `--only` list, known once configs (and so plugins) have loaded: Registry#enabled?
@@ -1145,7 +1164,12 @@ impl Store {
                     names.extend(cops.iter().map(|(c, _)| c.clone()).filter(|c| !m.contains(c)));
                     names
                 };
+                let before = crate::helpers::cop_registry::REGISTRY.len();
                 crate::helpers::cop_registry::register_foreign(names);
+                if cops.is_empty() && crate::helpers::cop_registry::REGISTRY.len() == before {
+                    let include = m.map("AllCops").and_then(|a| patterns(a, "Include")).unwrap_or_default();
+                    self.copless_plugins.push((name.clone(), include));
+                }
                 crate::helpers::cop_registry::set_foreign_autocorrect(
                     cops.into_iter().filter_map(|(c, ac)| ac.then_some(c)),
                 );
