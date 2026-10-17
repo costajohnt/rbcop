@@ -1198,6 +1198,11 @@ impl Store {
                 configs.push(Err(path));
             }
         }
+        // (A gem with a config is a plugin, or an older extension whose inject_defaults! loads
+        // the default configuration as well.)
+        if !configs.is_empty() {
+            crate::helpers::cop_registry::fill_unqualified_cop_names();
+        }
         let mut combined = self.default.clone();
         let mut configured: Vec<String> = Vec::new();
         for config in configs {

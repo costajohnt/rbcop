@@ -333,13 +333,22 @@ pub fn qualified_cop_name(name: &str) -> Option<String> {
 /// memoizes it at its first use, the first config file's add_missing_namespaces (its `AllCops`
 /// key goes through qualified_cop_name): the cops of a plugin that loads later (one only a
 /// subdirectory config names) never get the `no department given` warning.
+/// Loading ConfigLoader.default_configuration (on the first plugin integration) memoizes it too:
+/// cops of a local file required after a plugin never get the warning (`fill_unqualified_cop_names`).
 pub fn is_unqualified_cop_name(name: &str) -> bool {
-    static NAMES: std::sync::OnceLock<std::collections::HashSet<&'static str>> = std::sync::OnceLock::new();
-    NAMES
+    UNQUALIFIED_COP_NAMES
         .get_or_init(|| {
             REGISTRY.iter().map(|c| c.rsplit('/').next().unwrap_or(c)).chain(["RedundantCopDisableDirective"]).collect()
         })
         .contains(name)
+}
+
+static UNQUALIFIED_COP_NAMES: std::sync::OnceLock<std::collections::HashSet<&'static str>> =
+    std::sync::OnceLock::new();
+
+/// Memoizes Registry#unqualified_cop_names now, if nothing has yet.
+pub fn fill_unqualified_cop_names() {
+    is_unqualified_cop_name("");
 }
 
 pub fn qualify(
