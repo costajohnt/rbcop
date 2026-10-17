@@ -379,8 +379,12 @@ impl<'pr> Check<'_, 'pr> {
             _ => false,
         };
         let Some(p) = self.pi else { return false };
+        // A call owning a literal block is two parser levels when we are in its send part
+        // (`(logger).error { }` is `(block (send (begin ...) :error) ...)`): the grandparent is
+        // the block, never a resbody (#432).
+        let owns_block = self.anc[p].as_call_node().is_some_and(|c| c.block().is_some_and(|b| b.as_block_node().is_some()));
         resbody_of(p, self.me())
-            || parser_parent_index(self.anc, p).is_some_and(|g| resbody_of(g, range(&self.anc[p])))
+            || (!owns_block && parser_parent_index(self.anc, p).is_some_and(|g| resbody_of(g, range(&self.anc[p]))))
     }
 
     fn parens_required(&self) -> bool {

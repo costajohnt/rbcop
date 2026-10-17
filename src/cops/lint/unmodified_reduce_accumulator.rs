@@ -79,7 +79,9 @@ fn variable_or_send(node: &Node) -> bool {
 fn element_modified(body: &Node, el: Option<&[u8]>) -> bool {
     let Some(name) = el else { return false };
     each_node(body).iter().any(|n| {
-        if let Some(c) = send(n) {
+        // def_node_search also visits the `send` child of `(block (send ...) args body)`: a call
+        // with a literal block is matched on its send part (#439).
+        if let Some(c) = n.as_call_node().filter(|c| !is_csend(c)) {
             let args = send_args(&c);
             let m = method_name(&c);
             if m != "[]" && m != "[]=" && args.len() >= 2 && args.iter().any(|a| each_node(a).iter().any(|d| is_lvar(d, el))) {
