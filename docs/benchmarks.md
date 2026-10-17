@@ -6,7 +6,100 @@ Tracking issue: #388.
 
 ## CI-shaped runs (CT 440)
 
-PENDING_CT
+rbcop at 4b08150 against RuboCop 1.91.0, each corpus linted with its own `.rubocop.yml` (brew: default config), pinned to
+2 and 4 vCPUs, RuboCop with an empty result cache. Median of 3 runs, wall seconds. Raw rows:
+[benchmarks/ci.tsv](benchmarks/ci.tsv), [benchmarks/boot.tsv](benchmarks/boot.tsv),
+[benchmarks/file.tsv](benchmarks/file.tsv).
+
+| corpus | files | RuboCop, 1 process, 2 vCPU | RuboCop `--parallel`, 2 vCPU | rbcop, 2 vCPU | speedup, 2 vCPU | RuboCop `--parallel`, 4 vCPU | rbcop, 4 vCPU | speedup, 4 vCPU |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| rails | 3,476 | 109.3 | 98.7 | 4.89 | 20.2x | 50.6 | 2.64 | 19.2x |
+| discourse | 12,441 | 303.9 | 273.7 | 19.31 | 14.2x | 140.6 | 10.16 | 13.8x |
+| mastodon | 3,297 | 137.2 | 116.0 | 12.11 | 9.6x | 61.2 | 6.10 | 10.0x |
+| brew (default config) | 1,977 | 153.5 | 134.0 | 8.26 | 16.2x | 69.0 | 4.39 | 15.7x |
+| solidus | 2,171 | 59.9 | 53.4 | 4.05 | 13.2x | 28.3 | 2.12 | 13.3x |
+| fastlane | 1,355 | 66.0 | 58.6 | 3.91 | 15.0x | 30.3 | 2.02 | 15.0x |
+
+Speedup is RuboCop `--parallel` over rbcop at the same vCPU count. Against single-process RuboCop
+at 2 vCPUs it is 11.3x (mastodon) to 22.3x (rails). Files are those `rubocop -L` lists.
+
+CPU time (user) per run, which does not depend on the pinning: rails 193 s RuboCop `--parallel` vs
+9.3 s rbcop, discourse 536 s vs 36 s, mastodon 228 s vs 23 s, brew 264 s vs 16 s, solidus 103 s
+vs 7.8 s, fastlane 114 s vs 7.6 s (2 vCPU rows). RuboCop's `--parallel` user time is about 1.8x its
+single-process time because its two workers share one physical core; wall time improves 10 to 15%
+over a single process at 2 vCPUs.
+
+Start-up and one file (2 vCPUs, median of 3):
+
+| run | wall s |
+|---|---:|
+| `rubocop --version` | 0.72 |
+| `bundle exec rubocop --version` (Gemfile with rubocop, -performance, -rails, -rspec) | 0.85 |
+| `rbcop --version` | 0.02 |
+| RuboCop on mastodon's `app/models/account.rb` (607 lines, mastodon's config, 6 plugins), empty cache | 2.39 |
+| rbcop on the same file | 0.23 |
+
+### Method
+
+- Machine: CT 440 rbcop-ci, an LXC container on the Proxmox host claude-mbp (Intel Core
+  i9-8950HK, 6 cores / 12 threads), Debian 13.6, kernel 7.0.14-22-pve, x86_64. Ruby 4.0.6 with
+  RuboCop 1.91.0, rubocop-performance 1.27.0, rubocop-rails 2.38.0, rubocop-rspec 3.10.2,
+  rubocop-rspec_rails 2.33.0, rubocop-capybara 3.0.0, rubocop-factory_bot 2.28.0,
+  rubocop-minitest 0.41.0, rubocop-i18n 3.3.0, rubocop-packaging 0.6.0, rubocop-discourse 3.20.0.
+  rbcop release build of 4b08150.
+- `scripts/bench-ci.sh` with `PROJECT_CONFIG=1` (brew without it), 3 reps. Each rep runs every
+  corpus and tool in turn, so slow drift spreads over all rows. 2 vCPUs are CPUs 1,7 (one
+  physical core, both hyperthreads), 4 vCPUs are 1,7,2,8 (two cores), on the assumption that a
+  hosted runner's vCPUs are hyperthreads. Single-process RuboCop ran at 2 vCPUs only; it uses one
+  thread, so 4 vCPUs would not change it.
+- RuboCop `--parallel` got a fresh `--cache-root` per run (cold cache, as on a runner without a
+  restored cache); single-process RuboCop ran with `--cache false`. rbcop has no cache. The
+  corpus files were in the OS page cache for every run.
+- Plugins each config loads: rails: minitest, packaging, performance, rails (`DisabledByDefault`,
+  so only the cops it lists run). discourse: rubocop-discourse's `stree-compat.yml`, which loads
+  capybara, factory_bot, rspec, rails and rubocop-discourse's own cops (`DisabledByDefault`).
+  mastodon: capybara, i18n, performance, rails, rspec, rspec_rails, plus a local cop
+  (Style/MiddleDot). solidus: performance, rails, plus a local cop. fastlane: performance, plus
+  three local cops. brew ran with the default config (see below).
+- The corpora were copied, and four configs edited so that RuboCop loads them on this box:
+  rails without rubocop-md (not installed; rbcop does not lint Markdown) and its `Markdown:`
+  section; fastlane without rubocop-require_tools (not installed) and its
+  `Require/MissingRequireStatement` section; solidus without `storefront/.rubocop.yml`, which
+  RuboCop 1.91 rejects (`Metrics/LineLength` moved to `Layout/LineLength`); brew is
+  `Library/Homebrew` only, whose config inherits `../.rubocop.yml`, which the corpus does not have,
+  so it ran with `--force-default-config`.
+- RuboCop ran cops rbcop does not implement, and rbcop skipped them (no `RBCOP_FALLBACK`): 21
+  rubocop-discourse cops on discourse, I18n/RailsI18n and Style/MiddleDot on mastodon, the local
+  cops on solidus and fastlane. On those four corpora RuboCop does that much more work; the cost
+  of `RBCOP_FALLBACK=1` was not measured.
+- Output was compared before timing: each corpus linted once by both tools with the same config
+  (`--format emacs`). Offenses were identical (rails 0, discourse 57, mastodon 5, brew 113,541,
+  solidus 4,172, fastlane 0) and so were the exit statuses; every timed run's exit status also
+  matches between the tools (see the TSVs).
+- Spread: the 3 runs of each corpus row were within 4% of each other, except fastlane rbcop at 4
+  vCPUs (2.02 to 2.18 s, 8%); `bundle exec rubocop --version` ranged 0.85 to 1.00 s.
+
+### Load and contamination
+
+The box was reserved for this benchmark. No gate (`ci-run.sh`) ran during any run: the
+contaminated column is 0 in all 105 rows. The load average recorded before each run (0.41 to 5.61)
+is mostly the previous run decaying, since runs follow each other; the container sees the host's
+load average. To check the rest of the host, CPU counters of the other containers on claude-mbp
+(CTs 313, 410, 420, 430) were sampled every 5 s through the runs: together they used at most 0.14
+CPU-seconds per second during any run, and a `top` on the host during a run showed only the benchmark busy.
+
+### Caveats
+
+- This is not a GitHub runner. It is a container on a 2018 laptop CPU; hosted runners use other
+  (server) CPUs, so absolute times there will differ. The ratios are more likely to carry over,
+  but that is not verified.
+- The 2- and 4-vCPU shapes assume a vCPU is one hyperthread and that a runner's vCPUs pair up on
+  physical cores. If a runner's vCPUs are on separate cores, RuboCop `--parallel` gains more from
+  its second worker than it does here (10 to 15%), and the 2-vCPU speedups shrink.
+- Only lint time is measured: not checkout, Ruby setup or `bundle install`, which a CI job pays
+  for RuboCop and its plugins and which the rbcop binary (action or gem) does not need.
+- RuboCop's cache is cold, as on a runner without a restored cache. A workflow that restores
+  RuboCop's cache from an earlier run on the same files is not what this measures.
 
 ## Where rbcop's time went (#388)
 
@@ -77,11 +170,14 @@ by default) reparses and re-serializes the enclosing scope per offense and domin
 
 CI-shaped runs (Linux, needs `taskset` and RuboCop 1.91 on `PATH`):
 
-    scripts/bench-ci.sh results.tsv 3 rubocop-single,rubocop-par,rbcop <corpus dir>...
+    PROJECT_CONFIG=1 scripts/bench-ci.sh ci.tsv 3 rubocop-par,rbcop,rubocop-single <corpus dir>...
+    scripts/bench-ci.sh boot.tsv 3 boot <dir with a Gemfile that has rubocop>
+    PROJECT_CONFIG=1 FILE=app/models/account.rb scripts/bench-ci.sh file.tsv 3 file <mastodon>
 
-It times each tool pinned to an emulated runner (`CPUS_2`, `CPUS_4`, `CPUS_1` override the CPU
-lists), with a fresh RuboCop cache root per run, and redoes a run when a CI gate ran meanwhile.
-Rows are rep, corpus, vCPUs, tool, wall, user, sys, exit status, load average, contaminated.
+It times each tool pinned to an emulated runner (`CPUS_2`, `CPUS_4` override the CPU lists), with
+a fresh RuboCop cache root per run, and redoes a run when a CI gate ran meanwhile. Without
+`PROJECT_CONFIG=1` both tools run with `--force-default-config`. Rows are rep, corpus, vCPUs,
+tool, wall, user, sys, exit status, load average, contaminated, start time (epoch seconds).
 
 Per-PR comparisons used `/usr/bin/time -l` on macOS (instructions retired, cycles elapsed) with
 the builds run round-robin, default config (`--force-default-config`) and all cops
