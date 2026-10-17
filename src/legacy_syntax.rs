@@ -215,7 +215,11 @@ pub fn indented_data_marker(text: &str, tokens: &[Token]) -> Option<(usize, usiz
     tokens.iter().enumerate().filter(|(_, t)| t.kind == "IDENTIFIER" && &text[t.start..t.end] == "__END__").find_map(
         |(i, t)| {
             // Only the indentation is walked: an rfind per token is quadratic on one long line (#316).
-            let line = text[..t.start].trim_end_matches([' ', '\t', '\x0b', '\x0c']).len();
+            let mut line = text[..t.start].trim_end_matches([' ', '\t', '\x0b', '\x0c']).len();
+            // The parser gem's buffer has no BOM: it counts as indentation of the first line (#493).
+            if text[..line] == *"\u{feff}" {
+                line = 0;
+            }
             let indent = &text[line..t.start];
             if !(line == 0 || text.as_bytes()[line - 1] == b'\n') {
                 return None;
