@@ -50,6 +50,16 @@ const OPERATOR_METHODS: &[&str] = &[
     "+@", "-@", "!@", "~@", "[]", "[]=", "!", "!=", "!~", "`",
 ];
 
+/// The name of a parser `lvar`: a local variable read, or `it` in an `it` block (Prism's
+/// ItLocalVariableReadNode is the parser gem's `(lvar :it)`).
+pub fn lvar_name<'pr>(node: &Node<'pr>) -> Option<&'pr [u8]> {
+    match node {
+        Node::LocalVariableReadNode { .. } => Some(node.as_local_variable_read_node().unwrap().name().as_slice()),
+        Node::ItLocalVariableReadNode { .. } => Some(b"it"),
+        _ => None,
+    }
+}
+
 /// A `_1`..`_9` read below Ruby 2.7: Prism's LocalVariableReadNode is the parser gem's
 /// `(send nil :_1)` there (the runner already dropped the blocks' numbered parameters).
 pub fn is_legacy_numbered_read(cx: &Cx, node: &Node) -> bool {

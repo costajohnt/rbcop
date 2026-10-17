@@ -181,14 +181,16 @@ fn array_block<'pr>(node: &Node<'pr>, methods: &[&str], kind: Kind) -> Option<Ma
     let body = pair_body(&single_body(&block)?, &p, kind)?;
     let argname = match &p {
         Param::Named(n) => Some(n.clone()),
-        _ => None,
+        // itblock captures `:it` (a numblock captures the integer 1, never an lvar name)
+        Param::It => Some("it".to_string()),
+        Param::Numbered => None,
     };
     Some(Match { call, block, argname, body })
 }
 
 /// Captures#noop_transformation?: the body is just the element.
 fn noop(m: &Match) -> bool {
-    m.argname.as_ref().is_some_and(|a| m.body.as_local_variable_read_node().is_some_and(|l| l.name().as_slice() == a.as_bytes()))
+    m.argname.as_ref().is_some_and(|a| helpers::node_types::lvar_name(&m.body) == Some(a.as_bytes()))
 }
 
 /// Ranges an earlier offense of this cop ignored (`ignore_node`); a nested offense's corrector
