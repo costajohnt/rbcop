@@ -208,14 +208,15 @@ pub fn stand_in(c: char, present: &std::collections::HashSet<char>, taken: &[(ch
 }
 
 /// The parser gem's lexer ends the input at `__END__` alone on a line it reads in its line_begin
-/// state, after leading whitespace too; Prism (and Ruby) only at column 0, so for an indented one
-/// returns its line start and indentation length (#228). Parse a copy with that line rewritten to
-/// `__END__\n` + the indentation (same length), which Prism takes as the data marker.
+/// state, after leading whitespace too, and before a NUL, ^D or ^Z (lexer.rl's `'__END__' ( c_eol -
+/// zlen )`); Prism (and Ruby) only at column 0 before a newline or the end, so for another one
+/// returns its line start and indentation length (#228, #505). Parse a copy with that line
+/// rewritten to `__END__\n` + the indentation (same length), which Prism takes as the data marker.
 pub fn indented_data_marker(text: &str, tokens: &[Token]) -> Option<(usize, usize)> {
     tokens.iter().enumerate().filter(|(_, t)| t.kind == "IDENTIFIER" && &text[t.start..t.end] == "__END__").find_map(
         |(i, t)| {
             // Only the indentation is walked: an rfind per token is quadratic on one long line (#316).
-            let mut line = text[..t.start].trim_end_matches([' ', '\t', '\x0b', '\x0c']).len();
+            let mut line = text[..t.start].trim_end_matches([' ', '\t', '\r', '\x0b', '\x0c']).len();
             // The parser gem's buffer has no BOM: it counts as indentation of the first line (#493).
             if text[..line] == *"\u{feff}" {
                 line = 0;
@@ -224,8 +225,11 @@ pub fn indented_data_marker(text: &str, tokens: &[Token]) -> Option<(usize, usiz
             if !(line == 0 || text.as_bytes()[line - 1] == b'\n') {
                 return None;
             }
-            (!indent.is_empty() && text[t.end..].starts_with('\n') && line_begin(text, tokens, i))
-                .then_some((line, indent.len()))
+            // The parser gem's buffer has CRLF made LF; its input ends with a NUL.
+            let after = &text.as_bytes()[t.end..];
+            let eol = matches!(after, [] | [b'\n' | b'\0' | b'\x04' | b'\x1a', ..] | [b'\r', b'\n', ..]);
+            let prism = indent.is_empty() && matches!(after, [] | [b'\n', ..] | [b'\r', b'\n', ..]);
+            (eol && !prism && line_begin(text, tokens, i)).then_some((line, indent.len()))
         },
     )
 }

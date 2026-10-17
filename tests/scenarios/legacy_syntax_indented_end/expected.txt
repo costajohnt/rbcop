@@ -18,6 +18,7 @@ identifier_in_call.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Mi
 identifier_in_call.rb:2:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
 identifier_in_call.rb:3:1: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument when opening brace is on the same line as the first argument.
 in_def.rb:3:4: F: Lint/Syntax: unexpected token $end (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+indented_ctrl_z.rb:1:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
 lines_after.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 lines_after.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
 lines_after.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.

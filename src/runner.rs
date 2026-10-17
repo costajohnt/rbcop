@@ -223,12 +223,13 @@ pub fn parse_for_target<'t>(
             let mut enc = [0u8; 4];
             round.extend((t.start..).zip(l.encode_utf8(&mut enc).bytes()));
         }
-        // An indented `__END__` ends the input for the parser gem (#228): the copy has it start its
-        // line (`__END__\n` + the indentation, same length).
+        // An indented `__END__` ends the input for the parser gem (#228), also before a NUL, ^D or ^Z
+        // (#505): the copy has it start its line (`__END__\n` + the indentation, same length, cut at
+        // the end of the file).
         if cur.contains("__END__")
             && let Some((line, indent)) = crate::legacy_syntax::indented_data_marker(cur, &tokens)
         {
-            round.extend((line..).zip(b"__END__\n".iter().copied().chain(std::iter::repeat_n(b' ', indent))));
+            round.extend((line..cur.len()).zip(b"__END__\n".iter().copied().chain(std::iter::repeat_n(b' ', indent))));
         }
         // A column-0 `__END__` the parser gem reads as an identifier (after `=`, `(`, `,`, `.`, a
         // `\` continuation, ...) is an identifier the file does not use, so Prism lexes on (#337).
