@@ -35,7 +35,7 @@ pub fn diagnostics(
 ) -> Vec<(usize, usize, String)> {
     let toks = convert(prism_tokens, text, target);
     let sorted = by_start(&toks);
-    let mut w = Walk { target, toks: &sorted, ..Walk::default() };
+    let mut w = Walk { target, text, toks: &sorted, ..Walk::default() };
     w.visit(root);
     // Before 2.7 a comment line ends the statement before a leading `.`/`&.` (`convert`), which
     // then cannot start one; Prism accepts the call, so there is no seed for it.
@@ -514,7 +514,7 @@ fn first_error_after(
     let (result, tokens) =
         ruby_prism::parse_with_version_and_tokens(src.as_bytes(), version, !crate::source::binary_encoding(text));
     let sorted = by_start(&convert(&tokens, &src, target));
-    let mut w = Walk { target, toks: &sorted, ..Walk::default() };
+    let mut w = Walk { target, text: &src, toks: &sorted, ..Walk::default() };
     w.visit(&result.node());
     let p = prefix.len();
     // `return` directly in the class body recovery left open: the builder's error (and yyerror).
@@ -1147,6 +1147,7 @@ fn is_closer(name: &str) -> bool {
 #[derive(Default)]
 struct Walk<'t> {
     target: f64,
+    text: &'t str,
     toks: &'t [Tok],
     /// Start offsets of the tokens the target's grammar fails on -> start of the construct that
     /// makes them fail (after error recovery resumes inside it, the parse differs and they do not).
@@ -1257,6 +1258,55 @@ impl Walk<'_> {
         } else if let Some(r) = cond.as_call_node().filter(|c| c.name().as_slice() == b"!").and_then(|c| c.receiver()) {
             self.check_condition(&r);
         }
+    }
+    /// Where ruby23.y's `stmt` rules that are no `expr` fail when an `expr` is expected (`foo (...)`,
+    /// #488): a modifier's keyword (after its own statement's), `alias`/`undef`/`END`, a command
+    /// assignment's first argument, a multiple assignment's or `lhs = mrhs`'s first `,` or `*`.
+    fn stmt_only<'a>(&self, x: &Node<'a>) -> Option<usize> {
+        let first_stmt = |s: Option<ruby_prism::StatementsNode<'a>>| s.and_then(|s| s.body().iter().next());
+        let modifier = |kw: ruby_prism::Location, stmt: Option<Node>| {
+            let kw = kw.start_offset();
+            (kw > x.location().start_offset()).then(|| stmt.and_then(|s| self.stmt_only(&s)).unwrap_or(kw))
+        };
+        // The `,` after a list's first item, or the item when it is a splat.
+        let list = |first: Option<Node>| {
+            let first = first?;
+            if first.as_splat_node().is_some() {
+                return Some(first.location().start_offset());
+            }
+            self.toks.get(self.toks.partition_point(|t| t.start < first.location().end_offset())).map(|t| t.start)
+        };
+        if let Some(n) = x.as_if_node() {
+            return modifier(n.if_keyword_loc()?, first_stmt(n.statements()));
+        }
+        if let Some(n) = x.as_unless_node() {
+            return modifier(n.keyword_loc(), first_stmt(n.statements()));
+        }
+        if let Some(n) = x.as_while_node() {
+            return modifier(n.keyword_loc(), first_stmt(n.statements()));
+        }
+        if let Some(n) = x.as_until_node() {
+            return modifier(n.keyword_loc(), first_stmt(n.statements()));
+        }
+        if let Some(n) = x.as_rescue_modifier_node() {
+            return modifier(n.keyword_loc(), Some(n.expression()));
+        }
+        if x.as_alias_method_node().is_some()
+            || x.as_alias_global_variable_node().is_some()
+            || x.as_undef_node().is_some()
+            || x.as_post_execution_node().is_some()
+        {
+            return Some(x.location().start_offset());
+        }
+        if let Some(m) = x.as_multi_write_node() {
+            return list(m.lefts().iter().next().or_else(|| m.rest()));
+        }
+        if let Some(at) = command_asgn_arg(x) {
+            return Some(at);
+        }
+        let value = crate::ast::assignment_parts(x).map(|(_, v)| v).or_else(|| setter_value(x))?;
+        let mrhs = value.as_array_node().filter(|a| a.opening_loc().is_none())?;
+        list(mrhs.elements().iter().next())
     }
     fn in_ctx(&mut self, start: usize, f: impl FnOnce(&mut Self)) {
         self.ctx.push(start);
@@ -1761,15 +1811,39 @@ impl<'pr> Visit<'pr> for Walk<'_> {
     }
 
     fn visit_parentheses_node(&mut self, n: &ruby_prism::ParenthesesNode<'pr>) {
-        self.body.insert(n.opening_loc().start_offset(), n.opening_loc().end_offset());
-        // `tLPAREN_ARG expr rparen` up to 2.3 (stmt from 2.4): no rescue modifier directly inside.
-        if self.token_at(n.opening_loc().start_offset()).is_some_and(|t| t.name == "tLPAREN_ARG")
-            && let Some(r) = n.body().and_then(|b| b.as_statements_node()).and_then(|b| {
-                let body = b.body();
-                (body.len() == 1).then(|| body.iter().next().unwrap()).and_then(|x| x.as_rescue_modifier_node())
-            })
+        // `tLPAREN_ARG stmt rparen` has no `error` rule inside: recovery from an error in it pops it.
+        let arg = self.token_at(n.opening_loc().start_offset()).is_some_and(|t| t.name == "tLPAREN_ARG");
+        if !arg {
+            self.body.insert(n.opening_loc().start_offset(), n.opening_loc().end_offset());
+        }
+        // `tLPAREN_ARG stmt rparen` (`expr` up to 2.3, #140, #488): one statement, newlines
+        // around it (`rparen: opt_nl tRPAREN`; the lexer skips those after the paren).
+        if arg
+            && let Some(body) = n.body().and_then(|b| b.as_statements_node()).map(|b| b.body())
+            && let Some(first) = body.iter().next()
         {
-            self.violation(r.keyword_loc().start_offset(), 2.4);
+            // A `;` before or after the statement, or a second statement after a newline.
+            let open = self.toks.partition_point(|t| t.start < n.opening_loc().end_offset());
+            let lead = self.toks[open..].iter().find(|t| t.name != "tNL").filter(|t| t.name == "tSEMI");
+            let after = self.toks.get(self.toks.partition_point(|t| t.start < first.location().end_offset()));
+            // A blank line before the `)` is a second newline: the parser gem fails at its tNL, which
+            // `toks` lacks (Prism ignores it), so at the `)`.
+            let close = n.closing_loc().start_offset();
+            let blank = after
+                .filter(|t| t.name == "tNL")
+                .and_then(|t| self.text.get(t.end..close))
+                .is_some_and(|gap| gap.contains('\n') && gap.bytes().all(|b| b.is_ascii_whitespace()));
+            let at = lead
+                .or(after.filter(|t| t.name == "tSEMI"))
+                .map(|t| t.start)
+                .or_else(|| body.iter().nth(1).map(|s| s.location().start_offset()))
+                .or(blank.then_some(close));
+            if let Some(at) = at {
+                self.violation(at, 3.3);
+            }
+            if let Some(at) = self.stmt_only(&first) {
+                self.violation(at, 2.4);
+            }
         }
         ruby_prism::visit_parentheses_node(self, n);
     }

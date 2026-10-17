@@ -1,6 +1,7 @@
 Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 f1.rb:2:11: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 f2.rb:2:8: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+lparen_arg_semi.rb:1:9: F: Lint/Syntax: unexpected token tSEMI (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 mc130.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 mc130.rb:5:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `value`.
 o1.rb:2:13: F: Lint/Syntax: unexpected token kOR (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)

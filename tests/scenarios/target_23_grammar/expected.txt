@@ -1,4 +1,13 @@
 Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+lparen_arg_modifiers.rb:1:13: F: Lint/Syntax: unexpected token kIF_MOD (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+lparen_arg_modifiers.rb:2:10: F: Lint/Syntax: unexpected token kUNLESS_MOD (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+lparen_arg_modifiers.rb:3:10: F: Lint/Syntax: unexpected token kWHILE_MOD (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+lparen_arg_modifiers.rb:5:10: F: Lint/Syntax: unexpected token kRESCUE_MOD (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+lparen_arg_modifiers.rb:6:9: F: Lint/Syntax: unexpected token tSEMI (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+lparen_arg_modifiers.rb:7:9: F: Lint/Syntax: unexpected token kIF_MOD (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+lparen_arg_stmts.rb:1:12: F: Lint/Syntax: unexpected token tINTEGER (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+lparen_arg_stmts.rb:2:11: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+lparen_arg_stmts.rb:3:7: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 m1.rb:3:5: F: Lint/Syntax: multiple assignment in conditional context (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 m2.rb:2:7: F: Lint/Syntax: multiple assignment in conditional context (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 m2.rb:6:1: F: Lint/Syntax: class definition in method body (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)

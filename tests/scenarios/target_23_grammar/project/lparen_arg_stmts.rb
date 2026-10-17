@@ -1,0 +1,5 @@
+foo (a = b 1)
+foo (a = 1, 2)
+foo (a, = 1)
+foo (undef a)
+foo (a = b rescue c)
