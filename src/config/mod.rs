@@ -1370,6 +1370,9 @@ impl Store {
 
     /// ConfigLoaderResolver#merge_with_default (§4) against the current defaults.
     fn merge_with_default(&self, config: Map) -> Map {
+        // It loads ConfigLoader.default_configuration, whose `AllCops` key memoizes
+        // Registry#unqualified_cop_names (before any subdirectory config loads its plugins).
+        crate::helpers::cop_registry::fill_unqualified_cop_names();
         merge_with_default(&self.default, config, true, &self.opts)
     }
 
@@ -1576,6 +1579,8 @@ fn with_preview_exclude_merge(mut mode: Map, config: &Map, cli: Option<bool>) ->
 /// ConfigLoader.apply_default_overrides: the default configuration used as is (no config file, or
 /// --force-default-config), with --preview and --enable-all-cops / --disable-all-cops applied.
 fn apply_default_overrides(default: &Map, opts: &Options) -> Map {
+    // ConfigLoader.default_configuration memoizes Registry#unqualified_cop_names (merge_with_default).
+    crate::helpers::cop_registry::fill_unqualified_cop_names();
     let mut hash = apply_preview_defaults(default, opts.preview == Some(true));
     if let Some(enable) = opts.all_cops {
         for (_, v) in hash.0.iter_mut() {
