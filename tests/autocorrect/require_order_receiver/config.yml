@@ -1,0 +1,4 @@
+# A require with a receiver is compared with earlier receiverless siblings (#434).
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
