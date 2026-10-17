@@ -890,6 +890,16 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
             {
                 name = "tLPAREN"
             }
+            // After a label the parser gem's lexer is in expr_labelarg/expr_beg: a spaced `(` is
+            // tLPAREN, not a command argument's, also on a later line (#519).
+            "tLPAREN_ARG"
+                if tokens[..i - 1]
+                    .iter()
+                    .rfind(|p| !matches!(p.kind, "IGNORED_NEWLINE" | "COMMENT"))
+                    .is_some_and(|p| matches!(p.kind, "LABEL" | "LABEL_END")) =>
+            {
+                name = "tLPAREN"
+            }
             "tFID" if out.last().is_some_and(|p| p.name == "kDEF") => name = "tIDENTIFIER",
             // A method name (`def for`, `x.class`, `A::end`): it opens or closes nothing.
             // ponytail: the parser gem keeps the keyword token after `def` (`fname: reswords`).
