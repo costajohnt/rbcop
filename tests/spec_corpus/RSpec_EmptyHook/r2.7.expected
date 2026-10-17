@@ -1,0 +1,78 @@
+==> offenses exit=1 1064 <==
+000/000_spec.rb:1:1: C: [Correctable] RSpec/EmptyHook: Empty hook detected.
+001/001_spec.rb:1:1: C: [Correctable] RSpec/EmptyHook: Empty hook detected.
+002/002_spec.rb:1:1: C: [Correctable] RSpec/EmptyHook: Empty hook detected.
+003/003_spec.rb:1:1: C: [Correctable] RSpec/EmptyHook: Empty hook detected.
+004/004_spec.rb:1:1: C: [Correctable] RSpec/EmptyHook: Empty hook detected.
+005/005_spec.rb:1:1: C: [Correctable] RSpec/EmptyHook: Empty hook detected.
+008/008_spec.rb:1:1: C: [Correctable] RSpec/EmptyHook: Empty hook detected.
+009/009_spec.rb:1:1: C: [Correctable] RSpec/EmptyHook: Empty hook detected.
+012/012_spec.rb:1:1: C: [Correctable] RSpec/EmptyHook: Empty hook detected.
+015/015_spec.rb:1:1: C: [Correctable] RSpec/EmptyHook: Empty hook detected.
+018/018_spec.rb:1:1: C: [Correctable] RSpec/EmptyHook: Empty hook detected.
+021/021_spec.rb:1:1: C: [Correctable] RSpec/EmptyHook: Empty hook detected.
+024/024_spec.rb:1:1: C: [Correctable] RSpec/EmptyHook: Empty hook detected.
+027/027_spec.rb:3:1: C: [Correctable] RSpec/EmptyHook: Empty hook detected.
+
+==> autocorrect exit=0 1036 <==
+000/000_spec.rb:1:1: C: [Corrected] RSpec/EmptyHook: Empty hook detected.
+001/001_spec.rb:1:1: C: [Corrected] RSpec/EmptyHook: Empty hook detected.
+002/002_spec.rb:1:1: C: [Corrected] RSpec/EmptyHook: Empty hook detected.
+003/003_spec.rb:1:1: C: [Corrected] RSpec/EmptyHook: Empty hook detected.
+004/004_spec.rb:1:1: C: [Corrected] RSpec/EmptyHook: Empty hook detected.
+005/005_spec.rb:1:1: C: [Corrected] RSpec/EmptyHook: Empty hook detected.
+008/008_spec.rb:1:1: C: [Corrected] RSpec/EmptyHook: Empty hook detected.
+009/009_spec.rb:1:1: C: [Corrected] RSpec/EmptyHook: Empty hook detected.
+012/012_spec.rb:1:1: C: [Corrected] RSpec/EmptyHook: Empty hook detected.
+015/015_spec.rb:1:1: C: [Corrected] RSpec/EmptyHook: Empty hook detected.
+018/018_spec.rb:1:1: C: [Corrected] RSpec/EmptyHook: Empty hook detected.
+021/021_spec.rb:1:1: C: [Corrected] RSpec/EmptyHook: Empty hook detected.
+024/024_spec.rb:1:1: C: [Corrected] RSpec/EmptyHook: Empty hook detected.
+027/027_spec.rb:3:1: C: [Corrected] RSpec/EmptyHook: Empty hook detected.
+
+==> corrected/000/000_spec.rb 1 <==
+
+
+==> corrected/001/001_spec.rb 1 <==
+
+
+==> corrected/002/002_spec.rb 1 <==
+
+
+==> corrected/003/003_spec.rb 1 <==
+
+
+==> corrected/004/004_spec.rb 1 <==
+
+
+==> corrected/005/005_spec.rb 1 <==
+
+
+==> corrected/008/008_spec.rb 27 <==
+; after { clean_up(:foo) }
+
+==> corrected/009/009_spec.rb 1 <==
+
+
+==> corrected/012/012_spec.rb 1 <==
+
+
+==> corrected/015/015_spec.rb 1 <==
+
+
+==> corrected/018/018_spec.rb 1 <==
+
+
+==> corrected/021/021_spec.rb 1 <==
+
+
+==> corrected/024/024_spec.rb 1 <==
+
+
+==> corrected/027/027_spec.rb 58 <==
+let(:foo) { 'bar' }
+
+it do
+  expect(foo).to eq('bar')
+end
+

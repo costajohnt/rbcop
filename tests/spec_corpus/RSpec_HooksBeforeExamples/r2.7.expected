@@ -1,0 +1,86 @@
+==> offenses exit=1 1007 <==
+000/000_spec.rb:3:3: C: [Correctable] RSpec/HooksBeforeExamples: Move `before` above the examples in the group.
+001/001_spec.rb:6:3: C: [Correctable] RSpec/HooksBeforeExamples: Move `before` above the examples in the group.
+002/002_spec.rb:4:3: C: [Correctable] RSpec/HooksBeforeExamples: Move `before` above the examples in the group.
+003/003_spec.rb:3:3: C: [Correctable] RSpec/HooksBeforeExamples: Move `after` above the examples in the group.
+004/004_spec.rb:3:3: C: [Correctable] RSpec/HooksBeforeExamples: Move `before` above the examples in the group.
+005/005_spec.rb:5:3: C: [Correctable] RSpec/HooksBeforeExamples: Move `before` above the examples in the group.
+010/010_spec.rb:3:3: C: [Correctable] RSpec/HooksBeforeExamples: Move `around` above the examples in the group.
+011/011_spec.rb:6:3: C: [Correctable] RSpec/HooksBeforeExamples: Move `around` above the examples in the group.
+012/012_spec.rb:4:3: C: [Correctable] RSpec/HooksBeforeExamples: Move `around` above the examples in the group.
+
+==> autocorrect exit=0 989 <==
+000/000_spec.rb:3:3: C: [Corrected] RSpec/HooksBeforeExamples: Move `before` above the examples in the group.
+001/001_spec.rb:6:3: C: [Corrected] RSpec/HooksBeforeExamples: Move `before` above the examples in the group.
+002/002_spec.rb:4:3: C: [Corrected] RSpec/HooksBeforeExamples: Move `before` above the examples in the group.
+003/003_spec.rb:3:3: C: [Corrected] RSpec/HooksBeforeExamples: Move `after` above the examples in the group.
+004/004_spec.rb:3:3: C: [Corrected] RSpec/HooksBeforeExamples: Move `before` above the examples in the group.
+005/005_spec.rb:5:3: C: [Corrected] RSpec/HooksBeforeExamples: Move `before` above the examples in the group.
+010/010_spec.rb:3:3: C: [Corrected] RSpec/HooksBeforeExamples: Move `around` above the examples in the group.
+011/011_spec.rb:6:3: C: [Corrected] RSpec/HooksBeforeExamples: Move `around` above the examples in the group.
+012/012_spec.rb:4:3: C: [Corrected] RSpec/HooksBeforeExamples: Move `around` above the examples in the group.
+
+==> corrected/000/000_spec.rb 91 <==
+RSpec.describe User do
+  before { setup }
+  it { is_expected.to be_after_before_hook }
+end
+
+==> corrected/001/001_spec.rb 125 <==
+RSpec.describe User do
+  before { setup }
+  context 'a context' do
+    it { is_expected.to be_after_before_hook }
+  end
+
+end
+
+==> corrected/002/002_spec.rb 97 <==
+RSpec.describe User do
+  before { setup }
+  include_examples('should be after before-hook')
+
+end
+
+==> corrected/003/003_spec.rb 91 <==
+RSpec.describe User do
+  after { cleanup }
+  it { is_expected.to be_after_after_hook }
+end
+
+==> corrected/004/004_spec.rb 100 <==
+RSpec.describe User do
+  before(:each) { cleanup }
+  it { is_expected.to be_after_before_hook }
+end
+
+==> corrected/005/005_spec.rb 156 <==
+RSpec.describe User do
+  # setup the system
+  # with multiline comment
+  before { setup } # some setup
+  it { is_expected.to be_after_before_hook } # h
+end
+
+==> corrected/010/010_spec.rb 88 <==
+RSpec.describe User do
+  around { _1 }
+  it { is_expected.to be_after_around_hook }
+end
+
+==> corrected/011/011_spec.rb 122 <==
+RSpec.describe User do
+  around { _1 }
+  context 'a context' do
+    it { is_expected.to be_after_around_hook }
+  end
+
+end
+
+==> corrected/012/012_spec.rb 94 <==
+RSpec.describe User do
+  around { _1 }
+  include_examples('should be after around-hook')
+
+end
+

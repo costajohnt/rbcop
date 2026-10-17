@@ -1,0 +1,60 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000/000_spec.rb 84 <==
+it 'validates users' do
+  [user1, user2, user3].each { expect(it).to be_valid }
+end
+
+==> 001/001_spec.rb 86 <==
+it 'validates users' do
+  [user1, user2, user3].each { expect(it).to be_a(User) }
+end
+
+==> 002/002_spec.rb 91 <==
+it 'validates users' do
+  [user1, user2, user3].each { allow(it).to receive(:method) }
+end
+
+==> 003/003_spec.rb 142 <==
+it 'validates users' do
+  [user1, user2, user3].each do
+    expect(it).to receive(:method)
+    expect(it).to receive(:other_method)
+  end
+end
+
+==> 004/004_spec.rb 198 <==
+it 'validates users' do
+  [user1, user2, user3].each do
+    allow(Something).to receive(:method).and_return(it)
+    expect(it).to receive(:method)
+    expect(it).to receive(:other_method)
+  end
+end
+
+==> 005/005_spec.rb 83 <==
+it 'validates users' do
+  [user1, user2, user3].each { expect(it.name).to be }
+end
+
+==> 006/006_spec.rb 86 <==
+it 'validates users' do
+  [user1, user2, user3].each { array = array.concat(it) }
+end
+
+==> 007/007_spec.rb 146 <==
+it 'validates users' do
+  [user1, user2, user3].each do
+    expect(it).not_to receive(:method)
+    expect(it).to receive(:other_method)
+  end
+end
+

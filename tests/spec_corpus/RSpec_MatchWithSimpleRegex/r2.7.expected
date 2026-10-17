@@ -1,0 +1,25 @@
+==> offenses exit=1 594 <==
+000/000_spec.rb:1:21: C: [Correctable] RSpec/MatchWithSimpleRegex: Prefer using `include('foo')` when the regex is a simple string literal.
+001/001_spec.rb:1:26: C: [Correctable] RSpec/MatchWithSimpleRegex: Prefer using `include('http://example.com')` when the regex is a simple string literal.
+002/002_spec.rb:1:21: C: [Correctable] RSpec/MatchWithSimpleRegex: Prefer using `include("it's \"working\"")` when the regex is a simple string literal.
+003/003_spec.rb:1:21: C: [Correctable] RSpec/MatchWithSimpleRegex: Prefer using `include('foo   bar')` when the regex is a simple string literal.
+
+==> autocorrect exit=0 586 <==
+000/000_spec.rb:1:21: C: [Corrected] RSpec/MatchWithSimpleRegex: Prefer using `include('foo')` when the regex is a simple string literal.
+001/001_spec.rb:1:26: C: [Corrected] RSpec/MatchWithSimpleRegex: Prefer using `include('http://example.com')` when the regex is a simple string literal.
+002/002_spec.rb:1:21: C: [Corrected] RSpec/MatchWithSimpleRegex: Prefer using `include("it's \"working\"")` when the regex is a simple string literal.
+003/003_spec.rb:1:21: C: [Corrected] RSpec/MatchWithSimpleRegex: Prefer using `include('foo   bar')` when the regex is a simple string literal.
+
+==> corrected/000/000_spec.rb 35 <==
+expect('foobar').to include('foo')
+
+==> corrected/001/001_spec.rb 55 <==
+expect(response.body).to include('http://example.com')
+
+==> corrected/002/002_spec.rb 48 <==
+expect(response).to include("it's \"working\"")
+
+==> corrected/003/003_spec.rb 41 <==
+expect(response).to include('foo
+  bar')
+

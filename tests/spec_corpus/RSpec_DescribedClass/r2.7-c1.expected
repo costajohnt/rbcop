@@ -1,0 +1,25 @@
+==> offenses exit=1 314 <==
+000/000_spec.rb:3:11: C: [Correctable] RSpec/DescribedClass: Use `described_class` instead of `MyClass`.
+000/000_spec.rb:7:5: C: [Correctable] RSpec/DescribedClass: Use `described_class` instead of `MyClass`.
+000/000_spec.rb:10:7: C: [Correctable] RSpec/DescribedClass: Use `described_class` instead of `MyClass`.
+
+==> autocorrect exit=0 308 <==
+000/000_spec.rb:3:11: C: [Corrected] RSpec/DescribedClass: Use `described_class` instead of `MyClass`.
+000/000_spec.rb:7:5: C: [Corrected] RSpec/DescribedClass: Use `described_class` instead of `MyClass`.
+000/000_spec.rb:10:7: C: [Corrected] RSpec/DescribedClass: Use `described_class` instead of `MyClass`.
+
+==> corrected/000/000_spec.rb 189 <==
+describe MyClass do
+  controller(ApplicationController) do
+    bar = described_class
+  end
+
+  before do
+    described_class
+
+    Foo.custom_block do
+      described_class
+    end
+  end
+end
+

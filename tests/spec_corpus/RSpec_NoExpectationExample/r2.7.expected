@@ -1,0 +1,16 @@
+==> offenses exit=1 540 <==
+000/000_spec.rb:2:3: C: RSpec/NoExpectationExample: No expectation found in this example.
+001/001_spec.rb:1:1: C: RSpec/NoExpectationExample: No expectation found in this example.
+003/003_spec.rb:1:1: C: RSpec/NoExpectationExample: No expectation found in this example.
+003/003_spec.rb:2:1: C: RSpec/NoExpectationExample: No expectation found in this example.
+004/004_spec.rb:1:1: C: RSpec/NoExpectationExample: No expectation found in this example.
+012/012_spec.rb:2:3: C: RSpec/NoExpectationExample: No expectation found in this example.
+
+==> autocorrect exit=1 540 <==
+000/000_spec.rb:2:3: C: RSpec/NoExpectationExample: No expectation found in this example.
+001/001_spec.rb:1:1: C: RSpec/NoExpectationExample: No expectation found in this example.
+003/003_spec.rb:1:1: C: RSpec/NoExpectationExample: No expectation found in this example.
+003/003_spec.rb:2:1: C: RSpec/NoExpectationExample: No expectation found in this example.
+004/004_spec.rb:1:1: C: RSpec/NoExpectationExample: No expectation found in this example.
+012/012_spec.rb:2:3: C: RSpec/NoExpectationExample: No expectation found in this example.
+

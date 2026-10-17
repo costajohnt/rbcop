@@ -1,0 +1,14 @@
+==> offenses exit=1 528 <==
+000/000_spec.rb:2:3: C: RSpec/LeakyConstantDeclaration: Stub constant instead of declaring explicitly.
+001/001_spec.rb:2:3: C: RSpec/LeakyConstantDeclaration: Stub constant instead of declaring explicitly.
+002/002_spec.rb:3:5: C: RSpec/LeakyConstantDeclaration: Stub constant instead of declaring explicitly.
+007/007_spec.rb:2:3: C: RSpec/LeakyConstantDeclaration: Stub class constant instead of declaring explicitly.
+013/013_spec.rb:2:3: C: RSpec/LeakyConstantDeclaration: Stub module constant instead of declaring explicitly.
+
+==> autocorrect exit=1 528 <==
+000/000_spec.rb:2:3: C: RSpec/LeakyConstantDeclaration: Stub constant instead of declaring explicitly.
+001/001_spec.rb:2:3: C: RSpec/LeakyConstantDeclaration: Stub constant instead of declaring explicitly.
+002/002_spec.rb:3:5: C: RSpec/LeakyConstantDeclaration: Stub constant instead of declaring explicitly.
+007/007_spec.rb:2:3: C: RSpec/LeakyConstantDeclaration: Stub class constant instead of declaring explicitly.
+013/013_spec.rb:2:3: C: RSpec/LeakyConstantDeclaration: Stub module constant instead of declaring explicitly.
+

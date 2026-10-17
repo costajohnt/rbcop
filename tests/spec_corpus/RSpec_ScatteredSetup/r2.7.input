@@ -1,0 +1,128 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 54 <==
+describe Foo do
+  before { bar }
+  before { baz }
+end
+
+==> 001/001_spec.rb 85 <==
+describe Foo do
+  after { bar }
+  after(:each) { baz }
+  after(:example) { baz }
+end
+
+==> 002/002_spec.rb 66 <==
+describe Foo do
+  before(:all) { bar }
+  before(:all) { baz }
+end
+
+==> 003/003_spec.rb 54 <==
+describe Foo do
+  around { bar }
+  around { baz }
+end
+
+==> 004/004_spec.rb 70 <==
+describe Foo do
+  before { bar }
+  after { baz }
+  around { qux }
+end
+
+==> 005/005_spec.rb 85 <==
+describe Foo do
+  before { bar }
+  before(:all) { baz }
+  before(:suite) { baz }
+end
+
+==> 006/006_spec.rb 84 <==
+describe Foo do
+  before { bar }
+
+  describe '.baz' do
+    before { baz }
+  end
+end
+
+==> 007/007_spec.rb 123 <==
+describe Foo do
+  shared_context 'one' do
+    before { bar }
+  end
+
+  shared_context 'two' do
+    before { baz }
+  end
+end
+
+==> 008/008_spec.rb 151 <==
+describe Foo do
+  before { bar }
+
+  it 'uses an instance method called before' do
+    expect(before { tricky }).to_not confuse_rubocop_rspec
+  end
+end
+
+==> 009/009_spec.rb 89 <==
+describe Foo do
+  before(:example) { foo }
+  before(:example, :special_case) { bar }
+end
+
+==> 010/010_spec.rb 233 <==
+describe Foo do
+  before(:each, :special_case) { foo }
+  before(:example, :special_case) { bar }
+  before(:example, special_case: true) { bar }
+  before(special_case: true) { bar }
+  before(:example, special_case: false) { bar }
+end
+
+==> 011/011_spec.rb 59 <==
+describe Foo do
+  before { do_something }
+  before { }
+end
+
+==> 012/012_spec.rb 102 <==
+describe Foo do
+  before { foo }
+  before do
+    bar(<<~'TEXT')
+      Hello World!
+    TEXT
+  end
+end
+
+==> 013/013_spec.rb 87 <==
+describe Foo do
+  before { bar }
+  def self.setup
+    before { baz }
+  end
+  setup
+end
+
+==> 014/014_spec.rb 102 <==
+describe Foo do
+  before { bar }
+  class << self
+    def setup
+      before { baz }
+    end
+  end
+end
+

@@ -1,0 +1,25 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 25 <==
+it { expect(foo).to be }
+
+==> 001/001_spec.rb 58 <==
+it { expect(foo).not_to be }
+it { expect(foo).to_not be }
+
+==> 002/002_spec.rb 60 <==
+it { expect(foo).to be(1) }
+it { expect(foo).not_to be(0) }
+
+==> 003/003_spec.rb 67 <==
+it { expect(foo).to be_truthy }
+it { expect(foo).not_to be_falsy }
+

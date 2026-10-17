@@ -1,0 +1,99 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 81 <==
+describe MyClass do
+  before { @foo = [] }
+  it { expect(@foo).to be_empty }
+end
+
+==> 001/001_spec.rb 74 <==
+not_rspec do
+  before { @foo = [] }
+  it { expect(@foo).to be_empty }
+end
+
+==> 002/002_spec.rb 74 <==
+shared_examples 'shared example' do
+  it { expect(@foo).to be_empty }
+end
+
+==> 003/003_spec.rb 115 <==
+describe MyClass do
+  before { @foo = [] }
+  it { expect(@foo).to be_empty }
+  it { expect(@bar).to be_empty }
+end
+
+==> 004/004_spec.rb 22 <==
+@foo = []
+@foo.empty?
+
+==> 005/005_spec.rb 212 <==
+describe MyClass do
+  let(:object) do
+    Class.new(OtherClass) do
+      def initialize(resource)
+        @resource = resource
+      end
+
+      def serialize
+        @resource.to_json
+      end
+    end
+  end
+end
+
+==> 006/source_code.rb 36 <==
+feature do
+  @foo = bar
+
+  @foo
+end
+
+==> 007/007_spec.rb 230 <==
+describe MyClass do
+  matcher :have_color do
+    match do |object|
+      @matcher = have_attributes(color: anything)
+      @matcher.matches?(object)
+    end
+
+    failure_message do
+      @matcher.failure_message
+    end
+  end
+end
+
+==> 008/008_spec.rb 206 <==
+describe MyClass do
+  matcher :have_color do
+    match do |object|
+      @matcher = have_attributes(color: anything)
+      @matcher.matches?(object)
+    end
+  end
+
+  it { expect(color: 1).to @matcher }
+end
+
+==> 009/009_spec.rb 229 <==
+describe MyClass do
+  RSpec::Matchers.define :be_bigger_than do |first|
+    match do |actual|
+      (actual > first) && (actual < @second)
+    end
+
+    chain :and_smaller_than do |second|
+      @second = second
+    end
+  end
+end
+

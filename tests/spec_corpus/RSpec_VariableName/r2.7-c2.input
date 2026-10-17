@@ -1,0 +1,25 @@
+==> .rubocop.yml 233 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/VariableName:
+  EnforcedStyle: snake_case
+  IgnoredPatterns:
+  - "^userFood$"
+  - "^userPet$"
+
+==> 000/000_spec.rb 54 <==
+RSpec.describe Foo do
+  let(:userName) { 'Adam' }
+end
+
+==> 001/001_spec.rb 54 <==
+RSpec.describe Foo do
+  let(:userFood) { 'Adam' }
+end
+

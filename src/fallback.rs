@@ -29,7 +29,9 @@ pub fn unimplemented<'c>(
     let mut out = BTreeSet::new();
     for cfg in configs {
         for (name, _) in &cfg.hash.0 {
+            // A nested department key (`Capybara/RSpec`) is not a cop.
             if name.contains('/')
+                && !rbcop::helpers::cop_registry::NATIVE_PLUGINS.iter().any(|p| p.departments.contains(&name.as_str()))
                 && !implemented.contains(name.as_str())
                 && !out.contains(name)
                 && cfg.registered(name)

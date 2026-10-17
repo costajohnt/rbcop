@@ -1,0 +1,6 @@
+==> offenses exit=1 99 <==
+000/000_spec.rb:1:1: C: RSpec/MessageExpectation: Prefer `allow` for setting message expectations.
+
+==> autocorrect exit=1 99 <==
+000/000_spec.rb:1:1: C: RSpec/MessageExpectation: Prefer `allow` for setting message expectations.
+

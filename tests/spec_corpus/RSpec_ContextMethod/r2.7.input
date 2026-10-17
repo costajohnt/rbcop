@@ -1,0 +1,34 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 55 <==
+describe '.foo_bar' do
+end
+
+describe '#foo_bar' do
+end
+
+==> 001/001_spec.rb 33 <==
+context "when it's sunny" do
+end
+
+==> 002/002_spec.rb 26 <==
+context '.foo_bar' do
+end
+
+==> 003/003_spec.rb 26 <==
+context '#foo_bar' do
+end
+
+==> 004/004_spec.rb 42 <==
+context '#foo_bar' \
+        '.baz'do
+end
+

@@ -1,0 +1,40 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-factory_bot
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/spec/factories.rb 32 <==
+factory :foo, class: Foo do
+end
+
+==> 001/spec/factories.rb 34 <==
+factory :foo, class: ::Foo do
+end
+
+==> 002/spec/factories.rb 37 <==
+factory :foo, class: Foo::Bar do
+end
+
+==> 003/spec/factories.rb 34 <==
+factory :foo, class: 'Foo' do
+end
+
+==> 004/spec/factories.rb 33 <==
+factory :foo, class: Hash do
+end
+
+==> 005/spec/factories.rb 39 <==
+factory :foo, class: OpenStruct do
+end
+
+==> 006/spec/factories.rb 25 <==
+factory :foo, class: Foo
+
+==> 007/spec/factories.rb 27 <==
+factory :foo, class: 'Foo'
+

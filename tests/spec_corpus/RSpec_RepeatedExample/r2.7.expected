@@ -1,0 +1,54 @@
+==> offenses exit=1 2981 <==
+000/000_spec.rb:2:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 6.
+000/000_spec.rb:6:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2.
+003/003_spec.rb:2:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 3.
+003/003_spec.rb:3:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2.
+007/007_spec.rb:2:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 6, 10.
+007/007_spec.rb:6:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2, 10.
+007/007_spec.rb:10:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2, 6.
+008/008_spec.rb:2:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 5, 8, 11.
+008/008_spec.rb:5:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2, 8, 11.
+008/008_spec.rb:8:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2, 5, 11.
+008/008_spec.rb:11:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2, 5, 8.
+009/009_spec.rb:4:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 5.
+009/009_spec.rb:5:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 4.
+011/011_spec.rb:2:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 3, 4.
+011/011_spec.rb:3:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2, 4.
+011/011_spec.rb:4:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2, 3.
+012/012_spec.rb:2:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 5.
+012/012_spec.rb:5:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2.
+013/013_spec.rb:2:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 5.
+013/013_spec.rb:5:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2.
+014/014_spec.rb:2:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 5.
+014/014_spec.rb:5:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2, 5.
+014/014_spec.rb:5:44: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2, 5.
+016/016_spec.rb:2:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 5.
+016/016_spec.rb:5:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2.
+
+==> autocorrect exit=1 2981 <==
+000/000_spec.rb:2:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 6.
+000/000_spec.rb:6:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2.
+003/003_spec.rb:2:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 3.
+003/003_spec.rb:3:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2.
+007/007_spec.rb:2:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 6, 10.
+007/007_spec.rb:6:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2, 10.
+007/007_spec.rb:10:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2, 6.
+008/008_spec.rb:2:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 5, 8, 11.
+008/008_spec.rb:5:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2, 8, 11.
+008/008_spec.rb:8:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2, 5, 11.
+008/008_spec.rb:11:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2, 5, 8.
+009/009_spec.rb:4:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 5.
+009/009_spec.rb:5:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 4.
+011/011_spec.rb:2:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 3, 4.
+011/011_spec.rb:3:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2, 4.
+011/011_spec.rb:4:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2, 3.
+012/012_spec.rb:2:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 5.
+012/012_spec.rb:5:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2.
+013/013_spec.rb:2:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 5.
+013/013_spec.rb:5:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2.
+014/014_spec.rb:2:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 5.
+014/014_spec.rb:5:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2, 5.
+014/014_spec.rb:5:44: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2, 5.
+016/016_spec.rb:2:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 5.
+016/016_spec.rb:5:3: C: RSpec/RepeatedExample: Don't repeat examples within an example group. Repeated on line(s) 2.
+

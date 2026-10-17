@@ -1,0 +1,21 @@
+==> .rubocop.yml 190 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Capybara/RSpec/HaveSelector:
+  DefaultSelector: xpath
+
+==> 000/000_spec.rb 36 <==
+expect(foo).to have_selector('bar')
+
+==> 001/001_spec.rb 44 <==
+expect(foo).to have_selector(:xpath, 'bar')
+
+==> 002/002_spec.rb 42 <==
+expect(foo).to have_selector(:css, 'bar')
+

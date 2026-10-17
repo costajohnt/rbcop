@@ -1,0 +1,14 @@
+==> offenses exit=1 228 <==
+000/000_spec.rb:1:21: C: [Correctable] RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
+001/001_spec.rb:1:21: C: [Correctable] RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
+
+==> autocorrect exit=0 224 <==
+000/000_spec.rb:1:21: C: [Corrected] RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
+001/001_spec.rb:1:21: C: [Corrected] RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
+
+==> corrected/000/000_spec.rb 58 <==
+it { is_expected.to contain_exactly(content1, content2) }
+
+==> corrected/001/001_spec.rb 59 <==
+it { is_expected.to contain_exactly(*content1, content2) }
+

@@ -1,0 +1,11 @@
+==> offenses exit=1 96 <==
+000/000_spec.rb:2:7: C: [Correctable] RSpec/VariableDefinition: Use symbols for variable names.
+
+==> autocorrect exit=0 94 <==
+000/000_spec.rb:2:7: C: [Corrected] RSpec/VariableDefinition: Use symbols for variable names.
+
+==> corrected/000/000_spec.rb 55 <==
+RSpec.describe Foo do
+  let(:user_name) { 'Adam' }
+end
+

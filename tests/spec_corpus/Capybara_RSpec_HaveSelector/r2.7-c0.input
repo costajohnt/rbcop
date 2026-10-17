@@ -1,0 +1,39 @@
+==> .rubocop.yml 188 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Capybara/RSpec/HaveSelector:
+  DefaultSelector: css
+
+==> 000/000_spec.rb 36 <==
+expect(foo).to have_selector('bar')
+
+==> 001/001_spec.rb 42 <==
+expect(foo).to have_selector(:css, 'bar')
+
+==> 002/002_spec.rb 44 <==
+expect(foo).to have_selector(:xpath, 'bar')
+
+==> 003/003_spec.rb 31 <==
+expect(foo).to have_css('bar')
+
+==> 004/004_spec.rb 42 <==
+expect(foo).to have_selector(:foo, 'bar')
+
+==> 005/005_spec.rb 45 <==
+expect(foo).to have_selector(:css, "#{bar}")
+
+==> 006/006_spec.rb 55 <==
+expect(foo).to have_selector("input[name='#{title}']")
+
+==> 007/007_spec.rb 29 <==
+expect(foo).to have_selector
+
+==> 008/008_spec.rb 35 <==
+expect(foo).to have_selector(:css)
+

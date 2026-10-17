@@ -1,0 +1,287 @@
+==> .rubocop.yml 155 <==
+---
+plugins:
+- rubocop-rspec
+- rubocop-rspec_rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 85 <==
+it 'enqueues a job' do
+  expect(MyJob).to receive(:perform_later)
+  do_something
+end
+
+==> 001/001_spec.rb 107 <==
+it 'enqueues the described job' do
+  expect(described_class).to receive(:perform_later)
+  do_something
+end
+
+==> 002/002_spec.rb 97 <==
+it 'does not enqueue a job' do
+  expect(MyJob).not_to receive(:perform_later)
+  do_something
+end
+
+==> 003/003_spec.rb 97 <==
+it 'does not enqueue a job' do
+  expect(MyJob).to_not receive(:perform_later)
+  do_something
+end
+
+==> 004/004_spec.rb 118 <==
+it 'enqueues a job with arguments' do
+  expect(MyJob).to receive(:perform_later).with(user, order)
+  do_something
+end
+
+==> 005/005_spec.rb 125 <==
+it 'enqueues a job with keyword arguments' do
+  expect(MyJob).to receive(:perform_later).with(user_id: 1)
+  do_something
+end
+
+==> 006/006_spec.rb 134 <==
+it 'enqueues a job with chained methods' do
+  expect(MyJob).to receive(:perform_later).with(user).and_return(true)
+  do_something
+end
+
+==> 007/007_spec.rb 133 <==
+it 'enqueues a job' do
+  allow(MyJob).to receive(:perform_later)
+  do_something
+  expect(MyJob).to have_received(:perform_later)
+end
+
+==> 008/008_spec.rb 165 <==
+it 'enqueues the described job' do
+  allow(described_class).to receive(:perform_later)
+  do_something
+  expect(described_class).to have_received(:perform_later)
+end
+
+==> 009/009_spec.rb 159 <==
+it 'enqueues a job with arguments' do
+  allow(MyJob).to receive(:perform_later)
+  do_something
+  expect(MyJob).to have_received(:perform_later).with(user)
+end
+
+==> 010/010_spec.rb 145 <==
+it 'does not enqueue a job' do
+  allow(MyJob).to receive(:perform_later)
+  do_something
+  expect(MyJob).not_to have_received(:perform_later)
+end
+
+==> 011/011_spec.rb 145 <==
+it 'does not enqueue a job' do
+  allow(MyJob).to receive(:perform_later)
+  do_something
+  expect(MyJob).to_not have_received(:perform_later)
+end
+
+==> 012/012_spec.rb 90 <==
+it 'allows job enqueuing' do
+  allow(MyJob).to receive(:perform_later)
+  do_something
+end
+
+==> 013/013_spec.rb 111 <==
+it 'allows job enqueuing with args' do
+  allow(MyJob).to receive(:perform_later).with(user)
+  do_something
+end
+
+==> 014/014_spec.rb 133 <==
+it 'allows job enqueuing with return value' do
+  allow(MyJob).to receive(:perform_later).and_return(job_instance)
+  do_something
+end
+
+==> 015/015_spec.rb 81 <==
+it 'enqueues a job' do
+  expect { do_something }.to have_enqueued_job(MyJob)
+end
+
+==> 016/016_spec.rb 114 <==
+it 'enqueues a job with arguments' do
+  expect { do_something }.to have_enqueued_job(MyJob).with(user, order)
+end
+
+==> 017/017_spec.rb 152 <==
+it 'enqueues a job with options' do
+  expect { do_something }
+    .to have_enqueued_job(MyJob)
+    .on_queue('mailers')
+    .at(Date.tomorrow.noon)
+end
+
+==> 018/018_spec.rb 93 <==
+it 'does not enqueue a job' do
+  expect { do_something }.not_to have_enqueued_job(MyJob)
+end
+
+==> 019/019_spec.rb 93 <==
+it 'does not enqueue a job' do
+  expect { do_something }.to_not have_enqueued_job(MyJob)
+end
+
+==> 020/020_spec.rb 83 <==
+it 'performs a job' do
+  expect(MyJob).to receive(:perform_now)
+  do_something
+end
+
+==> 021/021_spec.rb 86 <==
+it 'calls some method' do
+  expect(MyJob).to receive(:some_method)
+  do_something
+end
+
+==> 022/022_spec.rb 141 <==
+it 'has received some method' do
+  allow(MyJob).to receive(:other_method)
+  do_something
+  expect(MyJob).to have_received(:other_method)
+end
+
+==> 023/023_spec.rb 121 <==
+it 'uses receive perform_later inside another matcher' do
+  expect(MyJob).to custom_matcher(receive(:perform_later))
+end
+
+==> 024/024_spec.rb 101 <==
+it 'receives a method' do
+  expect(instance).to receive(:perform_later)
+  instance.perform_later
+end
+
+==> 025/025_spec.rb 121 <==
+it 'receives a method on variable' do
+  job = MyJob.new
+  expect(job).to receive(:perform_later)
+  job.perform_later
+end
+
+==> 026/026_spec.rb 102 <==
+it 'enqueues a namespaced job' do
+  expect(Jobs::MyJob).to receive(:perform_later)
+  do_something
+end
+
+==> 027/027_spec.rb 114 <==
+it 'enqueues a deeply nested job' do
+  expect(Company::Jobs::MyJob).to receive(:perform_later)
+  do_something
+end
+
+==> 028/028_spec.rb 62 <==
+it 'handles non-send parent' do
+  receive(:perform_later)
+end
+
+==> 029/029_spec.rb 66 <==
+it 'handles missing receiver' do
+  to receive(:perform_later)
+end
+
+==> 030/030_spec.rb 78 <==
+it 'handles expect without args' do
+  expect().to receive(:perform_later)
+end
+
+==> 031/031_spec.rb 110 <==
+it 'handles non-constant job class' do
+  job_class = MyJob
+  expect(job_class).to receive(:perform_later)
+end
+
+==> 032/032_spec.rb 74 <==
+it 'uses expect and to' do
+  expect(MyJob).to receive(:perform_later)
+end
+
+==> 033/033_spec.rb 82 <==
+it 'uses expect and not_to' do
+  expect(MyJob).not_to receive(:perform_later)
+end
+
+==> 034/034_spec.rb 82 <==
+it 'uses expect and to_not' do
+  expect(MyJob).to_not receive(:perform_later)
+end
+
+==> 035/035_spec.rb 154 <==
+it 'uses allow and have_received' do
+  allow(MyJob).to receive(:perform_later)
+  MyJob.perform_later
+  expect(MyJob).to have_received(:perform_later)
+end
+
+==> 036/036_spec.rb 104 <==
+it 'uses allow and receive only' do
+  allow(MyJob).to receive(:perform_later)
+  MyJob.perform_later
+end
+
+==> 037/037_spec.rb 143 <==
+it 'enqueues multiple jobs' do
+  expect(FirstJob).to receive(:perform_later)
+  expect(SecondJob).to receive(:perform_later)
+  do_something
+end
+
+==> 038/038_spec.rb 99 <==
+it 'handles case where no runner is found' do
+  SomeClass.method_chain.receive(:perform_later)
+end
+
+==> 039/039_spec.rb 62 <==
+it 'handles nil parent case' do
+  receive(:perform_later)
+end
+
+==> 040/040_spec.rb 67 <==
+it 'simple case' do
+  expect(MyJob).to receive(:perform_later)
+end
+
+==> 041/041_spec.rb 87 <==
+it 'parent not send type' do
+  result = (expect(MyJob).to receive(:perform_later))
+end
+
+==> 042/042_spec.rb 116 <==
+it 'multi level chaining' do
+  expect(MyJob).to receive(:perform_later).with(arg1).with(arg2).and_return(value)
+end
+
+==> 043/043_spec.rb 88 <==
+it 'assignment context' do
+  expectation = expect(MyJob).to receive(:perform_later)
+end
+
+==> 044/044_spec.rb 113 <==
+it 'tests parent.receiver != current early exit' do
+  other_method(expect(MyJob).to receive(:perform_later))
+end
+
+==> 045/045_spec.rb 120 <==
+it 'parent not send type in find_offense_node' do
+  result = (expect(MyJob).to receive(:perform_later); other_code)
+end
+
+==> 046/046_spec.rb 97 <==
+it 'chaining after to' do
+  result = expect(MyJob).to(receive(:perform_later)).tap { |x| x }
+end
+
+==> 047/047_spec.rb 54 <==
+expect(MyJob).to(receive(:perform_later)).foo.bar.baz
+

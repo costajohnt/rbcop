@@ -1,0 +1,20 @@
+==> offenses exit=1 382 <==
+000/000_spec.rb:2:3: C: [Correctable] RSpec/IteratedExpectation: Prefer using the `all` matcher instead of iterating over an array.
+001/001_spec.rb:2:3: C: [Correctable] RSpec/IteratedExpectation: Prefer using the `all` matcher instead of iterating over an array.
+003/003_spec.rb:2:3: C: RSpec/IteratedExpectation: Prefer using the `all` matcher instead of iterating over an array.
+
+==> autocorrect exit=1 378 <==
+000/000_spec.rb:2:3: C: [Corrected] RSpec/IteratedExpectation: Prefer using the `all` matcher instead of iterating over an array.
+001/001_spec.rb:2:3: C: [Corrected] RSpec/IteratedExpectation: Prefer using the `all` matcher instead of iterating over an array.
+003/003_spec.rb:2:3: C: RSpec/IteratedExpectation: Prefer using the `all` matcher instead of iterating over an array.
+
+==> corrected/000/000_spec.rb 77 <==
+it 'validates users' do
+  expect([user1, user2, user3]).to all(be_valid)
+end
+
+==> corrected/001/001_spec.rb 79 <==
+it 'validates users' do
+  expect([user1, user2, user3]).to all(be_a(User))
+end
+

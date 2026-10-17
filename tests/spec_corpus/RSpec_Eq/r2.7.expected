@@ -1,0 +1,12 @@
+==> offenses exit=1 194 <==
+000/000_spec.rb:1:21: C: [Correctable] RSpec/Eq: Use `eq` instead of `be ==` to compare objects.
+000/000_spec.rb:2:25: C: [Correctable] RSpec/Eq: Use `eq` instead of `be ==` to compare objects.
+
+==> autocorrect exit=0 190 <==
+000/000_spec.rb:1:21: C: [Corrected] RSpec/Eq: Use `eq` instead of `be ==` to compare objects.
+000/000_spec.rb:2:25: C: [Corrected] RSpec/Eq: Use `eq` instead of `be ==` to compare objects.
+
+==> corrected/000/000_spec.rb 61 <==
+it { expect(foo).to eq true }
+it { expect(bar).not_to eq 1 }
+

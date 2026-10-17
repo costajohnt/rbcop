@@ -1,0 +1,43 @@
+==> offenses exit=1 706 <==
+000/000_spec.rb:2:31: C: [Correctable] RSpec/ReturnFromStub: Use block for static values.
+001/001_spec.rb:2:39: C: [Correctable] RSpec/ReturnFromStub: Use block for static values.
+002/002_spec.rb:2:31: C: RSpec/ReturnFromStub: Use block for static values.
+006/006_spec.rb:1:29: C: [Correctable] RSpec/ReturnFromStub: Use block for static values.
+006/006_spec.rb:2:29: C: [Correctable] RSpec/ReturnFromStub: Use block for static values.
+006/006_spec.rb:3:29: C: [Correctable] RSpec/ReturnFromStub: Use block for static values.
+007/007_spec.rb:1:29: C: [Correctable] RSpec/ReturnFromStub: Use block for static values.
+008/008_spec.rb:1:29: C: [Correctable] RSpec/ReturnFromStub: Use block for static values.
+
+==> autocorrect exit=1 692 <==
+000/000_spec.rb:2:31: C: [Corrected] RSpec/ReturnFromStub: Use block for static values.
+001/001_spec.rb:2:39: C: [Corrected] RSpec/ReturnFromStub: Use block for static values.
+002/002_spec.rb:2:31: C: RSpec/ReturnFromStub: Use block for static values.
+006/006_spec.rb:1:29: C: [Corrected] RSpec/ReturnFromStub: Use block for static values.
+006/006_spec.rb:2:29: C: [Corrected] RSpec/ReturnFromStub: Use block for static values.
+006/006_spec.rb:3:29: C: [Corrected] RSpec/ReturnFromStub: Use block for static values.
+007/007_spec.rb:1:29: C: [Corrected] RSpec/ReturnFromStub: Use block for static values.
+008/008_spec.rb:1:29: C: [Corrected] RSpec/ReturnFromStub: Use block for static values.
+
+==> corrected/000/000_spec.rb 47 <==
+it do
+  allow(Foo).to receive(:bar) { 42 }
+end
+
+==> corrected/001/001_spec.rb 55 <==
+it do
+  allow(Foo).to receive(:bar).with(1) { 42 }
+end
+
+==> corrected/006/006_spec.rb 139 <==
+allow(Foo).to receive(:bar) { { foo: 42 } }
+allow(Foo).to receive(:bar) { { foo: 42 } }
+allow(Foo).to receive(:bar) { { a: 42,
+  b: 43 } }
+
+==> corrected/007/007_spec.rb 36 <==
+allow(Foo).to receive(:bar) { nil }
+
+==> corrected/008/008_spec.rb 55 <==
+allow(Foo).to receive(:bar) { 'You called ' \
+  'me' }
+

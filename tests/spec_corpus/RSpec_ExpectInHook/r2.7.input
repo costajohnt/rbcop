@@ -1,0 +1,61 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 127 <==
+before do
+  expect(something).to eq('foo')
+  is_expected.to eq('foo')
+  expect_any_instance_of(Something).to receive(:foo)
+end
+
+==> 001/001_spec.rb 126 <==
+after do
+  expect(something).to eq('foo')
+  is_expected.to eq('foo')
+  expect_any_instance_of(Something).to receive(:foo)
+end
+
+==> 002/002_spec.rb 138 <==
+around do
+  expect(something).to eq('foo')
+  is_expected(something).to eq('foo')
+  expect_any_instance_of(Something).to receive(:foo)
+end
+
+==> 003/003_spec.rb 50 <==
+before do
+  expect { something }.to eq('foo')
+end
+
+==> 004/004_spec.rb 14 <==
+before do
+end
+
+==> 005/005_spec.rb 102 <==
+before do
+  allow(something).to receive(:foo)
+  allow_any_instance_of(something).to receive(:foo)
+end
+
+==> 006/006_spec.rb 123 <==
+it do
+  expect(something).to eq('foo')
+  is_expected.to eq('foo')
+  expect_any_instance_of(something).to receive(:foo)
+end
+
+==> 007/007_spec.rb 147 <==
+around do
+  expect(something).to eq('foo')
+  is_expected(something).to eq('foo')
+  expect_any_instance_of(Something).to receive(:foo)
+  _1.run
+end
+

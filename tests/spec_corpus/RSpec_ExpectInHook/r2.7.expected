@@ -1,0 +1,30 @@
+==> offenses exit=1 1134 <==
+000/000_spec.rb:2:3: C: RSpec/ExpectInHook: Do not use `expect` in `before` hook
+000/000_spec.rb:3:3: C: RSpec/ExpectInHook: Do not use `is_expected` in `before` hook
+000/000_spec.rb:4:3: C: RSpec/ExpectInHook: Do not use `expect_any_instance_of` in `before` hook
+001/001_spec.rb:2:3: C: RSpec/ExpectInHook: Do not use `expect` in `after` hook
+001/001_spec.rb:3:3: C: RSpec/ExpectInHook: Do not use `is_expected` in `after` hook
+001/001_spec.rb:4:3: C: RSpec/ExpectInHook: Do not use `expect_any_instance_of` in `after` hook
+002/002_spec.rb:2:3: C: RSpec/ExpectInHook: Do not use `expect` in `around` hook
+002/002_spec.rb:3:3: C: RSpec/ExpectInHook: Do not use `is_expected` in `around` hook
+002/002_spec.rb:4:3: C: RSpec/ExpectInHook: Do not use `expect_any_instance_of` in `around` hook
+003/003_spec.rb:2:3: C: RSpec/ExpectInHook: Do not use `expect` in `before` hook
+007/007_spec.rb:2:3: C: RSpec/ExpectInHook: Do not use `expect` in `around` hook
+007/007_spec.rb:3:3: C: RSpec/ExpectInHook: Do not use `is_expected` in `around` hook
+007/007_spec.rb:4:3: C: RSpec/ExpectInHook: Do not use `expect_any_instance_of` in `around` hook
+
+==> autocorrect exit=1 1134 <==
+000/000_spec.rb:2:3: C: RSpec/ExpectInHook: Do not use `expect` in `before` hook
+000/000_spec.rb:3:3: C: RSpec/ExpectInHook: Do not use `is_expected` in `before` hook
+000/000_spec.rb:4:3: C: RSpec/ExpectInHook: Do not use `expect_any_instance_of` in `before` hook
+001/001_spec.rb:2:3: C: RSpec/ExpectInHook: Do not use `expect` in `after` hook
+001/001_spec.rb:3:3: C: RSpec/ExpectInHook: Do not use `is_expected` in `after` hook
+001/001_spec.rb:4:3: C: RSpec/ExpectInHook: Do not use `expect_any_instance_of` in `after` hook
+002/002_spec.rb:2:3: C: RSpec/ExpectInHook: Do not use `expect` in `around` hook
+002/002_spec.rb:3:3: C: RSpec/ExpectInHook: Do not use `is_expected` in `around` hook
+002/002_spec.rb:4:3: C: RSpec/ExpectInHook: Do not use `expect_any_instance_of` in `around` hook
+003/003_spec.rb:2:3: C: RSpec/ExpectInHook: Do not use `expect` in `before` hook
+007/007_spec.rb:2:3: C: RSpec/ExpectInHook: Do not use `expect` in `around` hook
+007/007_spec.rb:3:3: C: RSpec/ExpectInHook: Do not use `is_expected` in `around` hook
+007/007_spec.rb:4:3: C: RSpec/ExpectInHook: Do not use `expect_any_instance_of` in `around` hook
+

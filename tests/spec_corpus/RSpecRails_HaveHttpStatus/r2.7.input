@@ -1,0 +1,32 @@
+==> .rubocop.yml 155 <==
+---
+plugins:
+- rubocop-rspec
+- rubocop-rspec_rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 42 <==
+it { expect(response.status).to be(200) }
+
+==> 001/001_spec.rb 46 <==
+it { expect(response.status).not_to eq(404) }
+
+==> 002/002_spec.rb 42 <==
+it { expect(response.code).to eq("200") }
+
+==> 003/003_spec.rb 50 <==
+it { expect(last_response.status).to eql("200") }
+
+==> 004/004_spec.rb 30 <==
+it { is_expected.to be(200) }
+
+==> 005/005_spec.rb 37 <==
+it { expect(res.status).to be(200) }
+
+==> 006/006_spec.rb 54 <==
+it { expect(response.status).to eq("404 Not Found") }
+

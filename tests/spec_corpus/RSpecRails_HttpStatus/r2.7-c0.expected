@@ -1,0 +1,33 @@
+==> offenses exit=1 732 <==
+000/000_spec.rb:1:38: C: [Correctable] RSpecRails/HttpStatus: Prefer `:ok` over `200` to describe HTTP status code.
+001/001_spec.rb:1:38: C: [Correctable] RSpecRails/HttpStatus: Prefer `:ok` over `"200"` to describe HTTP status code.
+002/002_spec.rb:1:38: C: [Correctable] RSpecRails/HttpStatus: Prefer `:ok` over `'200'` to describe HTTP status code.
+003/003_spec.rb:1:38: C: [Correctable] RSpecRails/HttpStatus: Prefer `:ok` over `%[200]` to describe HTTP status code.
+006/006_spec.rb:1:38: C: RSpecRails/HttpStatus: Unknown status code.
+008/008_spec.rb:1:38: C: [Correctable] RSpecRails/HttpStatus: Prefer `:not_found` over `404` to describe HTTP status code.
+009/009_spec.rb:1:38: C: RSpecRails/HttpStatus: Unknown status code.
+
+==> autocorrect exit=1 722 <==
+000/000_spec.rb:1:38: C: [Corrected] RSpecRails/HttpStatus: Prefer `:ok` over `200` to describe HTTP status code.
+001/001_spec.rb:1:38: C: [Corrected] RSpecRails/HttpStatus: Prefer `:ok` over `"200"` to describe HTTP status code.
+002/002_spec.rb:1:38: C: [Corrected] RSpecRails/HttpStatus: Prefer `:ok` over `'200'` to describe HTTP status code.
+003/003_spec.rb:1:38: C: [Corrected] RSpecRails/HttpStatus: Prefer `:ok` over `%[200]` to describe HTTP status code.
+006/006_spec.rb:1:38: C: RSpecRails/HttpStatus: Unknown status code.
+008/008_spec.rb:1:38: C: [Corrected] RSpecRails/HttpStatus: Prefer `:not_found` over `404` to describe HTTP status code.
+009/009_spec.rb:1:38: C: RSpecRails/HttpStatus: Unknown status code.
+
+==> corrected/000/000_spec.rb 43 <==
+it { is_expected.to have_http_status :ok }
+
+==> corrected/001/001_spec.rb 43 <==
+it { is_expected.to have_http_status :ok }
+
+==> corrected/002/002_spec.rb 43 <==
+it { is_expected.to have_http_status :ok }
+
+==> corrected/003/003_spec.rb 43 <==
+it { is_expected.to have_http_status :ok }
+
+==> corrected/008/008_spec.rb 51 <==
+it { is_expected.to have_http_status(:not_found) }
+

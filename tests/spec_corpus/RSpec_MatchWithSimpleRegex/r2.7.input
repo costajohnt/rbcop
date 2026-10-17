@@ -1,0 +1,58 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 33 <==
+expect('foobar').to match(/foo/)
+
+==> 001/001_spec.rb 56 <==
+expect(response.body).to match(/http:\/\/example\.com/)
+
+==> 002/002_spec.rb 44 <==
+expect(response).to match(/it's "working"/)
+
+==> 003/003_spec.rb 39 <==
+expect(response).to match(/foo
+  bar/)
+
+==> 004/004_spec.rb 34 <==
+expect('foobar').to match(/^foo/)
+
+==> 005/005_spec.rb 34 <==
+expect('foobar').to match(/foo$/)
+
+==> 006/006_spec.rb 37 <==
+expect('foobar').to match(/foo[ob]/)
+
+==> 007/007_spec.rb 34 <==
+expect('foobar').to match(/foo+/)
+
+==> 008/008_spec.rb 37 <==
+expect('foobar').to match(/foo|bar/)
+
+==> 009/009_spec.rb 37 <==
+expect('foobar').to match(/foo.bar/)
+
+==> 010/010_spec.rb 40 <==
+expect('foobar').to match(/foo-#{bar}/)
+
+==> 011/011_spec.rb 204 <==
+expect('foobar').to match(/foo/x)
+expect('foobar').to match(/foo/i)
+expect('foobar').to match(/foo/m)
+expect('foobar').to match(/foo/n)
+expect('foobar').to match(/foo/u)
+expect('foobar').to match(/foo/o)
+
+==> 012/012_spec.rb 33 <==
+expect('foobar').to match('foo')
+
+==> 013/013_spec.rb 35 <==
+expect('foobar').to match(pattern)
+

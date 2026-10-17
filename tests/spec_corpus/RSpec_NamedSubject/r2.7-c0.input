@@ -1,0 +1,91 @@
+==> .rubocop.yml 182 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/NamedSubject:
+  EnforcedStyle: :named_only
+
+==> 000/000_spec.rb 187 <==
+RSpec.describe User do
+  subject { described_class.new }
+
+  it "is a User" do
+    expect(subject).to be_a(User)
+  end
+
+  it "is valid" do
+    expect(subject.valid?).to be(true)
+  end
+end
+
+==> 001/001_spec.rb 188 <==
+RSpec.describe User do
+  subject! { described_class.new }
+
+  it "is a User" do
+    expect(subject).to be_a(User)
+  end
+
+  it "is valid" do
+    expect(subject.valid?).to be(true)
+  end
+end
+
+==> 002/002_spec.rb 198 <==
+RSpec.describe User do
+  subject(:new_user) { described_class.new }
+
+  it "is a User" do
+    expect(subject).to be_a(User)
+  end
+
+  it "is valid" do
+    expect(subject.valid?).to be(true)
+  end
+end
+
+==> 003/003_spec.rb 199 <==
+RSpec.describe User do
+  subject!(:new_user) { described_class.new }
+
+  it "is a User" do
+    expect(subject).to be_a(User)
+  end
+
+  it "is valid" do
+    expect(subject.valid?).to be(true)
+  end
+end
+
+==> 004/004_spec.rb 353 <==
+RSpec.describe User do
+  subject(:user) { described_class.new }
+
+  describe 'valid' do
+    subject(:valid) { described_class.new.valid? }
+
+    it 'is valid' do
+      expect(valid).to be(true)
+    end
+  end
+
+  describe 'age' do
+    subject { user.age }
+    it 'allows driving a car' do
+      expect(subject.can_drive_a_car).to be(true)
+    end
+  end
+end
+
+==> 005/005_spec.rb 63 <==
+it "is a User" do
+  subject.each do
+    # empty body
+  end
+end
+

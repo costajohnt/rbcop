@@ -1,0 +1,61 @@
+==> .rubocop.yml 205 <==
+---
+plugins:
+- rubocop-rspec
+- rubocop-rspec_rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpecRails/HttpStatus:
+  EnforcedStyle: be_status
+
+==> 000/000_spec.rb 43 <==
+it { is_expected.to have_http_status 200 }
+
+==> 001/001_spec.rb 43 <==
+it { is_expected.to have_http_status :ok }
+
+==> 002/002_spec.rb 89 <==
+it { is_expected.to have_http_status "200" }
+it { is_expected.to have_http_status "ok" }
+
+==> 003/003_spec.rb 89 <==
+it { is_expected.to have_http_status '200' }
+it { is_expected.to have_http_status 'ok' }
+
+==> 004/004_spec.rb 91 <==
+it { is_expected.to have_http_status %[200] }
+it { is_expected.to have_http_status %[ok] }
+
+==> 005/005_spec.rb 58 <==
+it { is_expected.to have_http_status <<~HTTP }
+  200
+HTTP
+
+==> 006/006_spec.rb 28 <==
+it { is_expected.to be_ok }
+
+==> 007/007_spec.rb 88 <==
+it { is_expected.to have_http_status 550 }
+it { is_expected.to have_http_status "550" }
+
+==> 008/008_spec.rb 191 <==
+it { is_expected.to have_http_status :error }
+it { is_expected.to have_http_status :success }
+it { is_expected.to have_http_status :missing }
+it { is_expected.to have_http_status :redirect }
+
+==> 009/009_spec.rb 61 <==
+it { is_expected.to have_http_status("some-custom-string") }
+
+==> 010/010_spec.rb 49 <==
+it { is_expected.to have_http_status :oki_doki }
+
+==> 011/011_spec.rb 44 <==
+it { is_expected.to have_http_status(404) }
+
+==> 012/012_spec.rb 51 <==
+it { is_expected.to have_http_status(:not_found) }
+

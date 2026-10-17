@@ -1,0 +1,19 @@
+==> .rubocop.yml 171 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/Dialect:
+  PreferredMethods: {}
+
+==> 000/000_spec.rb 108 <==
+context 'is important' do
+  specify 'for someone to work' do
+    everyone.should have_some_leeway
+  end
+end
+

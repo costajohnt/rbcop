@@ -1,0 +1,64 @@
+==> .rubocop.yml 176 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/MetadataStyle:
+  EnforcedStyle: hash
+
+==> 000/000_spec.rb 37 <==
+describe 'Something', a: true do
+end
+
+==> 001/001_spec.rb 41 <==
+describe 'Something', { a: true } do
+end
+
+==> 002/002_spec.rb 59 <==
+describe 'Something', 'Something else', { a: true } do
+end
+
+==> 003/003_spec.rb 32 <==
+describe 'Something', :a do
+end
+
+==> 004/004_spec.rb 36 <==
+describe 'Something', :a, :b do
+end
+
+==> 005/005_spec.rb 34 <==
+describe 'Something', a, b do
+end
+
+==> 006/006_spec.rb 50 <==
+describe 'Something', 'Something else', :a do
+end
+
+==> 007/007_spec.rb 35 <==
+describe 'Something', a, :b do
+end
+
+==> 008/008_spec.rb 33 <==
+describe('Something', :a) do
+end
+
+==> 009/009_spec.rb 38 <==
+describe 'Something', :a, b: 1 do
+end
+
+==> 010/010_spec.rb 42 <==
+describe 'Something', :a, { b: 1 } do
+end
+
+==> 011/011_spec.rb 36 <==
+describe 'Something', :a, {} do
+end
+
+==> 012/012_spec.rb 35 <==
+describe 'Something', :a, b do
+end
+

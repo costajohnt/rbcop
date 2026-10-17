@@ -1,0 +1,46 @@
+==> .rubocop.yml 210 <==
+---
+plugins:
+- rubocop-factory_bot
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+FactoryBot/CreateList:
+  EnforcedStyle: :n_times
+  ExplicitOnly: false
+
+==> 000/000_spec.rb 21 <==
+create_list :user, 3
+
+==> 001/001_spec.rb 21 <==
+create_list :user, 1
+
+==> 002/002_spec.rb 30 <==
+create_list(:user, 3, :trait)
+
+==> 003/003_spec.rb 39 <==
+create_list :user, 3, :trait, key: val
+
+==> 004/004_spec.rb 33 <==
+FactoryGirl.create_list :user, 3
+
+==> 005/005_spec.rb 70 <==
+FactoryGirl.create_list(:user, 3) { |user| user.points = rand(1000) }
+
+==> 006/006_spec.rb 33 <==
+SomeFactory.create_list :user, 3
+
+==> 007/007_spec.rb 32 <==
+FactoryBot.create_list :user, 3
+
+==> 008/008_spec.rb 39 <==
+3.times { create :user, position: _1 }
+
+==> 009/009_spec.rb 31 <==
+[create(:user), create(:user)]
+
+==> 010/010_spec.rb 57 <==
+[create(:user, point: rand), create(:user, point: rand)]
+

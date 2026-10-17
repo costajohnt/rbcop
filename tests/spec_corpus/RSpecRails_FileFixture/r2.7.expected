@@ -1,0 +1,8 @@
+==> offenses exit=1 208 <==
+000/000_spec.rb:1:12: C: RSpecRails/FileFixture: Prefer `file_fixture` for files under `spec/fixtures`.
+001/001_spec.rb:1:12: C: RSpecRails/FileFixture: Prefer `file_fixture` for files under `spec/fixtures`.
+
+==> autocorrect exit=1 208 <==
+000/000_spec.rb:1:12: C: RSpecRails/FileFixture: Prefer `file_fixture` for files under `spec/fixtures`.
+001/001_spec.rb:1:12: C: RSpecRails/FileFixture: Prefer `file_fixture` for files under `spec/fixtures`.
+

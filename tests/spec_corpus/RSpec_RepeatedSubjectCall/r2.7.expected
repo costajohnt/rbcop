@@ -1,0 +1,12 @@
+==> offenses exit=1 428 <==
+000/000_spec.rb:4:5: C: RSpec/RepeatedSubjectCall: Calls to subject are memoized, this block is misleading
+001/001_spec.rb:4:5: C: RSpec/RepeatedSubjectCall: Calls to subject are memoized, this block is misleading
+002/002_spec.rb:5:7: C: RSpec/RepeatedSubjectCall: Calls to subject are memoized, this block is misleading
+003/003_spec.rb:6:5: C: RSpec/RepeatedSubjectCall: Calls to subject are memoized, this block is misleading
+
+==> autocorrect exit=1 428 <==
+000/000_spec.rb:4:5: C: RSpec/RepeatedSubjectCall: Calls to subject are memoized, this block is misleading
+001/001_spec.rb:4:5: C: RSpec/RepeatedSubjectCall: Calls to subject are memoized, this block is misleading
+002/002_spec.rb:5:7: C: RSpec/RepeatedSubjectCall: Calls to subject are memoized, this block is misleading
+003/003_spec.rb:6:5: C: RSpec/RepeatedSubjectCall: Calls to subject are memoized, this block is misleading
+

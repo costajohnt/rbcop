@@ -1,0 +1,113 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 73 <==
+describe SomeClass do
+  CONSTANT = "Accessible as ::CONSTANT".freeze
+end
+
+==> 001/001_spec.rb 93 <==
+RSpec.shared_examples 'shared example' do
+  CONSTANT = "Accessible as ::CONSTANT".freeze
+end
+
+==> 002/002_spec.rb 94 <==
+describe SomeClass do
+  specify do
+    CONSTANT = "Accessible as ::CONSTANT".freeze
+  end
+end
+
+==> 003/003_spec.rb 89 <==
+describe SomeClass do
+  self::CONSTANT = "Accessible as self.class::CONSTANT".freeze
+end
+
+==> 004/004_spec.rb 81 <==
+describe SomeClass do
+  Foo::CONSTANT = "Accessible as Foo::CONSTANT".freeze
+end
+
+==> 005/005_spec.rb 75 <==
+describe SomeClass do
+  ::CONSTANT = "Accessible as ::CONSTANT".freeze
+end
+
+==> 006/006_spec.rb 74 <==
+factory :some_class do
+  CONSTANT = "Accessible as ::CONSTANT".freeze
+end
+
+==> 007/007_spec.rb 69 <==
+describe SomeClass do
+  class DummyClass < described_class
+  end
+end
+
+==> 008/008_spec.rb 110 <==
+describe SomeClass do
+  let(:dummy_playbook) do
+    Class.new do
+      def method
+      end
+    end
+  end
+end
+
+==> 009/009_spec.rb 57 <==
+describe SomeClass do
+  class self::DummyClass
+  end
+end
+
+==> 010/010_spec.rb 56 <==
+describe SomeClass do
+  class Foo::DummyClass
+  end
+end
+
+==> 011/011_spec.rb 53 <==
+describe SomeClass do
+  class ::DummyClass
+  end
+end
+
+==> 012/012_spec.rb 21 <==
+class DummyClass
+end
+
+==> 013/013_spec.rb 53 <==
+describe SomeClass do
+  module DummyModule
+  end
+end
+
+==> 014/014_spec.rb 59 <==
+describe SomeClass do
+  module self::DummyModule
+  end
+end
+
+==> 015/015_spec.rb 58 <==
+describe SomeClass do
+  module Foo::DummyModule
+  end
+end
+
+==> 016/016_spec.rb 55 <==
+describe SomeClass do
+  module ::DummyModule
+  end
+end
+
+==> 017/017_spec.rb 23 <==
+module Dummymodule
+end
+

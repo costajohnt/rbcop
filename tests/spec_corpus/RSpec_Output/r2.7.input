@@ -1,0 +1,85 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 18 <==
+p "edmond dantes"
+
+==> 001/001_spec.rb 14 <==
+puts "sinbad"
+
+==> 002/002_spec.rb 20 <==
+print "abbe busoni"
+
+==> 003/003_spec.rb 18 <==
+pp "monte cristo"
+
+==> 004/004_spec.rb 29 <==
+$stdout.write "lord wilmore"
+
+==> 005/005_spec.rb 25 <==
+$stderr.syswrite "faria"
+
+==> 006/006_spec.rb 25 <==
+STDOUT.write "bertuccio"
+
+==> 007/007_spec.rb 27 <==
+::STDOUT.write "bertuccio"
+
+==> 008/008_spec.rb 25 <==
+STDERR.write "bertuccio"
+
+==> 009/009_spec.rb 27 <==
+::STDERR.write "bertuccio"
+
+==> 010/010_spec.rb 33 <==
+obj.print
+something.p
+nothing.pp
+
+==> 011/011_spec.rb 41 <==
+print
+pp
+puts
+$stdout.write
+STDERR.write
+
+==> 012/012_spec.rb 16 <==
+p(do_something)
+
+==> 013/013_spec.rb 15 <==
+p.do_something
+
+==> 014/014_spec.rb 37 <==
+p(class: 'this `p` method is a DSL')
+
+==> 015/015_spec.rb 28 <==
+p(&:this_p_method_is_a_dsl)
+
+==> 016/016_spec.rb 50 <==
+# phlex-rails gem.
+div do
+  p { 'Some text' }
+end
+
+==> 017/017_spec.rb 26 <==
+obj.write { do_somethig }
+
+==> 018/018_spec.rb 31 <==
+obj.write { do_something(_1) }
+
+==> 019/019_spec.rb 16 <==
+p&.do_something
+
+==> 020/020_spec.rb 53 <==
+# print "test"
+# p
+# $stdout.write
+# STDERR.binwrite
+

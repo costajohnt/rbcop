@@ -1,0 +1,6 @@
+==> offenses exit=1 121 <==
+000/my_class_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `my_class*look_here_a_method*_spec.rb`.
+
+==> autocorrect exit=1 121 <==
+000/my_class_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `my_class*look_here_a_method*_spec.rb`.
+

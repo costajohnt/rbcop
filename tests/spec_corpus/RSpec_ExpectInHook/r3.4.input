@@ -1,0 +1,18 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000/000_spec.rb 147 <==
+around do
+  expect(something).to eq('foo')
+  is_expected(something).to eq('foo')
+  expect_any_instance_of(Something).to receive(:foo)
+  it.run
+end
+

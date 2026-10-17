@@ -1,0 +1,78 @@
+==> .rubocop.yml 173 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/MultipleMemoizedHelpers:
+  Max: 1
+
+==> 000/000_spec.rb 68 <==
+describe Foo do
+  let(:foo) { Foo.new }
+  let(:bar) { Bar.new }
+end
+
+==> 001/001_spec.rb 69 <==
+describe Foo do
+  let(:foo) { Foo.new }
+  let!(:bar) { Bar.new }
+end
+
+==> 002/002_spec.rb 44 <==
+describe Foo do
+  let(:foo) { Foo.new }
+end
+
+==> 003/003_spec.rb 149 <==
+describe Foo do
+  let(:foo) { Foo.new }
+  context do
+    let(:foo) { Foo.new(1) }
+    context do
+      let(:foo) { Foo.new(1, 2) }
+    end
+  end
+end
+
+==> 004/004_spec.rb 72 <==
+describe Foo do
+  subject(:bar) { Bar.new }
+  let(:foo) { Foo.new }
+end
+
+==> 005/005_spec.rb 73 <==
+describe Foo do
+  subject!(:bar) { Bar.new }
+  let(:foo) { Foo.new }
+end
+
+==> 006/006_spec.rb 66 <==
+describe Foo do
+  subject { Foo.new }
+  let(:bar) { Bar.new }
+end
+
+==> 007/007_spec.rb 102 <==
+describe Foo do
+  let(:foo) { Foo.new }
+
+  context 'when blah' do
+    let(:bar) { Bar.new }
+  end
+end
+
+==> 008/008_spec.rb 135 <==
+describe Foo do
+  context 'when bloo' do
+    let(:foo) { Foo.new }
+  end
+
+  context 'when blah' do
+    let(:bar) { Bar.new }
+  end
+end
+

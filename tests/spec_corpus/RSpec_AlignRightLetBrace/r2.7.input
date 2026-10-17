@@ -1,0 +1,31 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 226 <==
+let(:foo)      { a }
+let(:hi)       { ab }
+let(:blahblah) { abcd }
+
+let(:thing) { ignore_this }
+let(:other) {
+  ignore_this_too
+}
+
+describe 'blah' do
+  let(:blahblah) { a }
+  let(:blah)     { bc }
+  let(:a)        { abc }
+end
+
+==> 001/001_spec.rb 31 <==
+let(:user, &args[:build_user])
+
+==> 002/002_spec.rb 0 <==
+

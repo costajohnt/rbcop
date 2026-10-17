@@ -2,7 +2,7 @@
 
 A reimplementation of [RuboCop](https://github.com/rubocop/rubocop) 1.91.0 in Rust, built on [Prism](https://github.com/ruby/prism) (`ruby-prism` crate).
 
-The target is byte-identical output: same offenses, ranges, messages, `[Correctable]` flags, autocorrections, formatter output and exit status as RuboCop 1.91.0 for the same files and configuration. All 613 cops in RuboCop's `config/default.yml` are implemented. rubocop-performance and rubocop-rails run natively ([docs/plugins.md](docs/plugins.md)). Other plugins (rubocop-rspec and so on) and custom cops do not; rbcop says which cops it skips and can hand them to RuboCop (see [Plugins and custom cops](#plugins-and-custom-cops)).
+The target is byte-identical output: same offenses, ranges, messages, `[Correctable]` flags, autocorrections, formatter output and exit status as RuboCop 1.91.0 for the same files and configuration. All 613 cops in RuboCop's `config/default.yml` are implemented. rubocop-performance, rubocop-rails, rubocop-minitest, rubocop-rspec, rubocop-rspec_rails, rubocop-factory_bot and rubocop-capybara run natively ([docs/plugins.md](docs/plugins.md)). Other plugins (rubocop-sorbet and so on) and custom cops do not; rbcop says which cops it skips and can hand them to RuboCop (see [Plugins and custom cops](#plugins-and-custom-cops)).
 
 ## Install
 
@@ -37,10 +37,10 @@ Not supported: `--auto-gen-config`, `--regenerate-todo`, `--disable-uncorrectabl
 
 ## Plugins and custom cops
 
-rbcop reads plugin configuration (`plugins:` and `require:` gems contribute their `config/default.yml`), but it only runs the cops it implements: RuboCop's own and those of the plugins in [docs/plugins.md](docs/plugins.md) (rubocop-performance, rubocop-rails). When the configuration enables cops rbcop cannot run, it says so on stderr instead of silently skipping them:
+rbcop reads plugin configuration (`plugins:` and `require:` gems contribute their `config/default.yml`), but it only runs the cops it implements: RuboCop's own and those of the plugins in [docs/plugins.md](docs/plugins.md) (rubocop-performance, rubocop-rails, rubocop-minitest, rubocop-rspec, rubocop-rspec_rails, rubocop-factory_bot, rubocop-capybara). When the configuration enables cops rbcop cannot run, it says so on stderr instead of silently skipping them:
 
 ```
-rbcop: not running 52 cops it does not implement (RSpec: 43, Capybara: 9); set RBCOP_FALLBACK=1 to run them with RuboCop
+rbcop: not running 45 cops it does not implement (Sorbet: 41, ThreadSafety: 4); set RBCOP_FALLBACK=1 to run them with RuboCop
 ```
 
 Cops defined by Ruby code the config requires (`require: ./lib/cops/my_cop.rb`, or a plugin gem rbcop could not load) are named the same way ("cops from Ruby code the config requires"), since rbcop cannot know their names.

@@ -1,0 +1,109 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 84 <==
+RSpec.describe User do
+  subject { described_class.new }
+  let(:params) { foo }
+end
+
+==> 001/001_spec.rb 20 <==
+subject { foo }
+bar
+
+==> 002/002_spec.rb 85 <==
+RSpec.describe User do
+  subject! { described_class.new }
+  let(:params) { foo }
+end
+
+==> 003/003_spec.rb 85 <==
+RSpec.describe User do
+  subject { described_class.new }
+
+  let(:params) { foo }
+end
+
+==> 004/004_spec.rb 86 <==
+RSpec.describe User do
+  subject! { described_class.new }
+
+  let(:params) { foo }
+end
+
+==> 005/005_spec.rb 94 <==
+RSpec.describe User do
+  subject do
+    described_class.new
+  end
+
+  let(:params) { foo }
+end
+
+==> 006/006_spec.rb 56 <==
+RSpec.describe User do
+  subject { described_user }
+end
+
+==> 007/007_spec.rb 94 <==
+RSpec.describe Foo do
+  subject { described_user }
+  # comment
+
+  describe 'bar' do
+  end
+end
+
+==> 008/008_spec.rb 93 <==
+RSpec.describe Foo do
+  subject { described_user }
+  # comment
+  describe 'bar' do
+  end
+end
+
+==> 009/009_spec.rb 125 <==
+RSpec.describe Foo do
+  subject { described_user }
+  # multiline comment
+  # multiline comment
+  describe 'bar' do
+  end
+end
+
+==> 010/010_spec.rb 141 <==
+RSpec.describe User do
+  # rubocop:disable RSpec/Foo
+  subject { described_user }
+  # rubocop:enable RSpec/Foo
+  describe 'bar' do
+  end
+end
+
+==> 011/011_spec.rb 140 <==
+RSpec.describe Foo do
+  subject { described_user }
+  # rubocop:disable RSpec/Foo
+  describe 'bar' do
+  end
+  # rubocop:enable RSpec/Foo
+end
+
+==> 012/012_spec.rb 200 <==
+RSpec.describe User do
+  # rubocop:disable RSpec/Foo
+  subject { described_user }
+  # rubocop:enable RSpec/Foo
+  # rubocop:disable RSpec/Foo
+  describe 'bar' do
+  end
+  # rubocop:enable RSpec/Foo
+end
+

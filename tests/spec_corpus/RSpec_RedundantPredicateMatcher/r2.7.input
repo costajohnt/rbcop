@@ -1,0 +1,64 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 79 <==
+expect(foo).to be_all be_odd
+expect(foo).to be_all(expected_foo_element_value)
+
+==> 001/001_spec.rb 43 <==
+expect(foo).to be_all { |bar| bar == baz }
+
+==> 002/002_spec.rb 48 <==
+expect(foo).to be_all do |bar|
+  bar == baz
+end
+
+==> 003/003_spec.rb 54 <==
+expect(foo).to be_all(false)
+expect(foo).to be_all(1)
+
+==> 004/004_spec.rb 24 <==
+expect(foo).to be_match
+
+==> 005/005_spec.rb 34 <==
+expect(foo).to be_cover(bar, baz)
+
+==> 006/006_spec.rb 32 <==
+expect(foo).to be_end_with('?')
+
+==> 007/007_spec.rb 27 <==
+expect(foo).to be_eql(bar)
+
+==> 008/008_spec.rb 29 <==
+expect(foo).to be_equal(bar)
+
+==> 009/009_spec.rb 35 <==
+expect(foo).to be_exist("bar.txt")
+
+==> 010/010_spec.rb 36 <==
+expect(foo).to be_exists("bar.txt")
+
+==> 011/011_spec.rb 36 <==
+expect(foo).to be_include(bar, baz)
+
+==> 012/012_spec.rb 31 <==
+expect(foo).to be_match(/bar/)
+
+==> 013/013_spec.rb 43 <==
+expect("string").to be_respond_to(:length)
+
+==> 014/014_spec.rb 34 <==
+expect(foo).to be_start_with("A")
+
+==> 015/015_spec.rb 79 <==
+expect(foo).to all(bar)
+expect(foo).to cover(bar)
+expect(foo).to end_with(bar)
+

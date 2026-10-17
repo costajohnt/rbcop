@@ -1,0 +1,49 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 52 <==
+allow(foo).to receive(:bar) { |&block| block.call }
+
+==> 001/001_spec.rb 70 <==
+allow(foo).to receive(:bar) do |&block|
+  block.call
+  block.call
+end
+
+==> 002/002_spec.rb 58 <==
+allow(foo).to receive(:bar) { |&block| block.call(1, 2) }
+
+==> 003/003_spec.rb 79 <==
+allow(foo).to receive(:bar) do |&block|
+   block.call(1)
+   block.call(2)
+ end
+
+==> 004/004_spec.rb 67 <==
+allow(foo).to receive(:bar).with(anything) { |&block| block.call }
+
+==> 005/005_spec.rb 51 <==
+allow(foo).to receive(:bar) { |block| block.call }
+
+==> 006/006_spec.rb 86 <==
+allow(foo).to receive(:bar) do |&block|
+  result = block.call
+  transform(result)
+end
+
+==> 007/007_spec.rb 40 <==
+allow(foo).to receive(:bar) { _1.call }
+
+==> 008/008_spec.rb 74 <==
+allow(foo).to receive(:bar) do
+  result = _1.call
+  transform(result)
+end
+

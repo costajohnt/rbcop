@@ -1,0 +1,6 @@
+==> offenses exit=1 93 <==
+001/001_spec.rb:2:3: C: RSpec/MultipleExpectations: Example has too many expectations [3/2].
+
+==> autocorrect exit=1 93 <==
+001/001_spec.rb:2:3: C: RSpec/MultipleExpectations: Example has too many expectations [3/2].
+

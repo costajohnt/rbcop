@@ -1,0 +1,8 @@
+==> offenses exit=1 159 <==
+004/004_spec.rb:1:1: C: RSpec/ExampleLength: Example has too many lines. [4/3]
+005/005_spec.rb:1:1: C: RSpec/ExampleLength: Example has too many lines. [11/3]
+
+==> autocorrect exit=1 159 <==
+004/004_spec.rb:1:1: C: RSpec/ExampleLength: Example has too many lines. [4/3]
+005/005_spec.rb:1:1: C: RSpec/ExampleLength: Example has too many lines. [11/3]
+

@@ -1,0 +1,62 @@
+==> offenses exit=1 1084 <==
+000/000_spec.rb:1:1: C: [Correctable] Capybara/FindAllFirst: Use `first('a')`.
+001/001_spec.rb:1:1: C: [Correctable] Capybara/FindAllFirst: Use `first('a')`.
+002/002_spec.rb:1:1: C: [Correctable] Capybara/FindAllFirst: Use `first('a')`.
+002/002_spec.rb:2:1: C: [Correctable] Capybara/FindAllFirst: Use `first('a', text: 'b')`.
+003/003_spec.rb:1:6: C: [Correctable] Capybara/FindAllFirst: Use `first('a')`.
+003/003_spec.rb:2:6: C: [Correctable] Capybara/FindAllFirst: Use `first('a', text: 'b')`.
+004/004_spec.rb:1:1: C: [Correctable] Capybara/FindAllFirst: Use `first('a')`.
+004/004_spec.rb:2:1: C: [Correctable] Capybara/FindAllFirst: Use `first('a', text: 'b')`.
+005/005_spec.rb:1:6: C: [Correctable] Capybara/FindAllFirst: Use `first('a')`.
+005/005_spec.rb:2:6: C: [Correctable] Capybara/FindAllFirst: Use `first('a', text: 'b')`.
+006/006_spec.rb:1:1: C: [Correctable] Capybara/FindAllFirst: Use `first('a', text: 'b')`.
+007/007_spec.rb:1:6: C: [Correctable] Capybara/FindAllFirst: Use `first('a')`.
+008/008_spec.rb:2:4: C: [Correctable] Capybara/FindAllFirst: Use `first('div')`.
+
+==> autocorrect exit=0 1058 <==
+000/000_spec.rb:1:1: C: [Corrected] Capybara/FindAllFirst: Use `first('a')`.
+001/001_spec.rb:1:1: C: [Corrected] Capybara/FindAllFirst: Use `first('a')`.
+002/002_spec.rb:1:1: C: [Corrected] Capybara/FindAllFirst: Use `first('a')`.
+002/002_spec.rb:2:1: C: [Corrected] Capybara/FindAllFirst: Use `first('a', text: 'b')`.
+003/003_spec.rb:1:6: C: [Corrected] Capybara/FindAllFirst: Use `first('a')`.
+003/003_spec.rb:2:6: C: [Corrected] Capybara/FindAllFirst: Use `first('a', text: 'b')`.
+004/004_spec.rb:1:1: C: [Corrected] Capybara/FindAllFirst: Use `first('a')`.
+004/004_spec.rb:2:1: C: [Corrected] Capybara/FindAllFirst: Use `first('a', text: 'b')`.
+005/005_spec.rb:1:6: C: [Corrected] Capybara/FindAllFirst: Use `first('a')`.
+005/005_spec.rb:2:6: C: [Corrected] Capybara/FindAllFirst: Use `first('a', text: 'b')`.
+006/006_spec.rb:1:1: C: [Corrected] Capybara/FindAllFirst: Use `first('a', text: 'b')`.
+007/007_spec.rb:1:6: C: [Corrected] Capybara/FindAllFirst: Use `first('a')`.
+008/008_spec.rb:2:4: C: [Corrected] Capybara/FindAllFirst: Use `first('div')`.
+
+==> corrected/000/000_spec.rb 11 <==
+first('a')
+
+==> corrected/001/001_spec.rb 11 <==
+first('a')
+
+==> corrected/002/002_spec.rb 33 <==
+first('a')
+first('a', text: 'b')
+
+==> corrected/003/003_spec.rb 43 <==
+page.first('a')
+page.first('a', text: 'b')
+
+==> corrected/004/004_spec.rb 33 <==
+first('a')
+first('a', text: 'b')
+
+==> corrected/005/005_spec.rb 43 <==
+page.first('a')
+page.first('a', text: 'b')
+
+==> corrected/006/006_spec.rb 22 <==
+first('a', text: 'b')
+
+==> corrected/007/007_spec.rb 16 <==
+page.first('a')
+
+==> corrected/008/008_spec.rb 26 <==
+find('a')
+  .first('div')
+

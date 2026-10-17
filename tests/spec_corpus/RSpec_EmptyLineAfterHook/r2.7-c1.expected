@@ -1,0 +1,166 @@
+==> offenses exit=1 1860 <==
+000/000_spec.rb:2:3: C: [Correctable] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+000/000_spec.rb:5:3: C: [Correctable] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+001/001_spec.rb:2:3: C: [Correctable] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+002/002_spec.rb:2:3: C: [Correctable] RSpec/EmptyLineAfterHook: Add an empty line after `after`.
+003/003_spec.rb:2:3: C: [Correctable] RSpec/EmptyLineAfterHook: Add an empty line after `around`.
+012/012_spec.rb:2:3: C: [Correctable] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+013/013_spec.rb:2:3: C: [Correctable] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+014/014_spec.rb:4:3: C: [Correctable] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+015/015_spec.rb:2:3: C: [Correctable] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+016/016_spec.rb:4:3: C: [Correctable] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+017/017_spec.rb:4:3: C: [Correctable] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+017/017_spec.rb:5:3: C: [Correctable] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+018/018_spec.rb:2:3: C: [Correctable] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+018/018_spec.rb:3:3: C: [Correctable] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+019/019_spec.rb:2:3: C: [Correctable] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+019/019_spec.rb:4:3: C: [Correctable] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+020/020_spec.rb:2:3: C: [Correctable] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+020/020_spec.rb:3:3: C: [Correctable] RSpec/EmptyLineAfterHook: Add an empty line after `after`.
+021/021_spec.rb:2:3: C: [Correctable] RSpec/EmptyLineAfterHook: Add an empty line after `around`.
+
+==> autocorrect exit=0 1822 <==
+000/000_spec.rb:2:3: C: [Corrected] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+000/000_spec.rb:5:3: C: [Corrected] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+001/001_spec.rb:2:3: C: [Corrected] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+002/002_spec.rb:2:3: C: [Corrected] RSpec/EmptyLineAfterHook: Add an empty line after `after`.
+003/003_spec.rb:2:3: C: [Corrected] RSpec/EmptyLineAfterHook: Add an empty line after `around`.
+012/012_spec.rb:2:3: C: [Corrected] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+013/013_spec.rb:2:3: C: [Corrected] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+014/014_spec.rb:4:3: C: [Corrected] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+015/015_spec.rb:2:3: C: [Corrected] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+016/016_spec.rb:4:3: C: [Corrected] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+017/017_spec.rb:4:3: C: [Corrected] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+017/017_spec.rb:5:3: C: [Corrected] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+018/018_spec.rb:2:3: C: [Corrected] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+018/018_spec.rb:3:3: C: [Corrected] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+019/019_spec.rb:2:3: C: [Corrected] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+019/019_spec.rb:4:3: C: [Corrected] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+020/020_spec.rb:2:3: C: [Corrected] RSpec/EmptyLineAfterHook: Add an empty line after `before`.
+020/020_spec.rb:3:3: C: [Corrected] RSpec/EmptyLineAfterHook: Add an empty line after `after`.
+021/021_spec.rb:2:3: C: [Corrected] RSpec/EmptyLineAfterHook: Add an empty line after `around`.
+
+==> corrected/000/000_spec.rb 119 <==
+RSpec.describe User do
+  before { do_something_else }
+
+  before do
+    do_something
+  end
+
+  it { does_something }
+end
+
+==> corrected/001/001_spec.rb 78 <==
+RSpec.describe User do
+  before { do_something }
+
+  it { does_something }
+end
+
+==> corrected/002/002_spec.rb 77 <==
+RSpec.describe User do
+  after { do_something }
+
+  it { does_something }
+end
+
+==> corrected/003/003_spec.rb 81 <==
+RSpec.describe User do
+  around { |test| test.run }
+
+  it { does_something }
+end
+
+==> corrected/012/012_spec.rb 90 <==
+RSpec.describe User do
+  before { do_something }
+
+  # comment
+  it { does_something }
+end
+
+==> corrected/013/013_spec.rb 122 <==
+RSpec.describe User do
+  before { do_something }
+
+  # multiline comment
+  # multiline comment
+  it { does_something }
+end
+
+==> corrected/014/014_spec.rb 137 <==
+RSpec.describe User do
+  # rubocop:disable RSpec/Foo
+  before { do_something }
+  # rubocop:enable RSpec/Foo
+
+  it { does_something }
+end
+
+==> corrected/015/015_spec.rb 137 <==
+RSpec.describe User do
+  before { do_something }
+
+  # rubocop:disable RSpec/Foo
+  it { does_something }
+  # rubocop:enable RSpec/Foo
+end
+
+==> corrected/016/016_spec.rb 196 <==
+RSpec.describe User do
+  # rubocop:disable RSpec/Foo
+  before { do_something }
+  # rubocop:enable RSpec/Foo
+
+  # rubocop:disable RSpec/Foo
+  it { does_something }
+  # rubocop:enable RSpec/Foo
+end
+
+==> corrected/017/017_spec.rb 119 <==
+RSpec.describe User do
+  before do
+    do_something
+  end
+
+  before { do_something_else }
+
+  it { does_something }
+end
+
+==> corrected/018/018_spec.rb 110 <==
+RSpec.describe User do
+  before { do_something }
+
+  before { do_something_else }
+
+  it { does_something }
+end
+
+==> corrected/019/019_spec.rb 132 <==
+RSpec.describe User do
+  before { do_something }
+
+  # this is a comment
+  before { do_something_else }
+
+  it { does_something }
+end
+
+==> corrected/020/020_spec.rb 109 <==
+RSpec.describe User do
+  before { do_something }
+
+  after { do_something_else }
+
+  it { does_something }
+end
+
+==> corrected/021/021_spec.rb 72 <==
+RSpec.describe User do
+  around { _1.run }
+
+  it { does_something }
+end
+

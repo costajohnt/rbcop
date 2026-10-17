@@ -1,0 +1,16 @@
+==> .rubocop.yml 197 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/SpecFilePathFormat:
+  CustomTransform:
+    FooFoo: foofoo
+
+==> 000/foofoo/some/class/bar_spec.rb 45 <==
+describe FooFoo::Some::Class, '#bar' do; end
+

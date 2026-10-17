@@ -1,0 +1,26 @@
+==> .rubocop.yml 201 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/ContextWording:
+  Prefixes: []
+  AllowedPatterns:
+  - とき$
+
+==> 000/000_spec.rb 36 <==
+context '条件を満たす' do
+end
+
+==> 001/001_spec.rb 43 <==
+shared_context '条件を満たす' do
+end
+
+==> 002/002_spec.rb 42 <==
+context '条件を満たすとき' do
+end
+

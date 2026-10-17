@@ -1,0 +1,62 @@
+==> .rubocop.yml 163 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/ExampleLength:
+  Max: 3
+
+==> 000/000_spec.rb 47 <==
+foo do
+  line 1
+  line 2
+  line 3
+  line 4
+end
+
+==> 001/001_spec.rb 10 <==
+it do
+end
+
+==> 002/002_spec.rb 37 <==
+it do
+  line 1
+  line 2
+  line 3
+end
+
+==> 003/003_spec.rb 49 <==
+it do
+  line 1
+  line 2
+  # comment
+  line 3
+end
+
+==> 004/004_spec.rb 46 <==
+it do
+  line 1
+  line 2
+  line 3
+  line 4
+end
+
+==> 005/005_spec.rb 85 <==
+it do
+  a = 1
+  a = [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ]
+end
+

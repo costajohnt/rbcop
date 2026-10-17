@@ -1,0 +1,34 @@
+==> offenses exit=1 1049 <==
+000/000_spec.rb:1:17: C: [Correctable] RSpec/SharedExamples: Prefer 'foo bar baz' over `:foo_bar_baz` to titleize shared examples.
+000/000_spec.rb:2:23: C: [Correctable] RSpec/SharedExamples: Prefer 'foo bar baz' over `:foo_bar_baz` to titleize shared examples.
+000/000_spec.rb:3:17: C: [Correctable] RSpec/SharedExamples: Prefer 'foo bar baz' over `:foo_bar_baz` to titleize shared examples.
+000/000_spec.rb:4:21: C: [Correctable] RSpec/SharedExamples: Prefer 'foo bar baz' over `:foo_bar_baz` to titleize shared examples.
+000/000_spec.rb:5:18: C: [Correctable] RSpec/SharedExamples: Prefer 'foo bar baz' over `:foo_bar_baz` to titleize shared examples.
+000/000_spec.rb:6:18: C: [Correctable] RSpec/SharedExamples: Prefer 'foo bar baz' over `:foo_bar_baz` to titleize shared examples.
+000/000_spec.rb:8:17: C: [Correctable] RSpec/SharedExamples: Prefer 'foo bar baz' over `:foo_bar_baz` to titleize shared examples.
+000/000_spec.rb:12:23: C: [Correctable] RSpec/SharedExamples: Prefer 'foo bar baz' over `:foo_bar_baz` to titleize shared examples.
+
+==> autocorrect exit=0 1033 <==
+000/000_spec.rb:1:17: C: [Corrected] RSpec/SharedExamples: Prefer 'foo bar baz' over `:foo_bar_baz` to titleize shared examples.
+000/000_spec.rb:2:23: C: [Corrected] RSpec/SharedExamples: Prefer 'foo bar baz' over `:foo_bar_baz` to titleize shared examples.
+000/000_spec.rb:3:17: C: [Corrected] RSpec/SharedExamples: Prefer 'foo bar baz' over `:foo_bar_baz` to titleize shared examples.
+000/000_spec.rb:4:21: C: [Corrected] RSpec/SharedExamples: Prefer 'foo bar baz' over `:foo_bar_baz` to titleize shared examples.
+000/000_spec.rb:5:18: C: [Corrected] RSpec/SharedExamples: Prefer 'foo bar baz' over `:foo_bar_baz` to titleize shared examples.
+000/000_spec.rb:6:18: C: [Corrected] RSpec/SharedExamples: Prefer 'foo bar baz' over `:foo_bar_baz` to titleize shared examples.
+000/000_spec.rb:8:17: C: [Corrected] RSpec/SharedExamples: Prefer 'foo bar baz' over `:foo_bar_baz` to titleize shared examples.
+000/000_spec.rb:12:23: C: [Corrected] RSpec/SharedExamples: Prefer 'foo bar baz' over `:foo_bar_baz` to titleize shared examples.
+
+==> corrected/000/000_spec.rb 324 <==
+it_behaves_like 'foo bar baz'
+it_should_behave_like 'foo bar baz'
+shared_examples 'foo bar baz'
+shared_examples_for 'foo bar baz'
+include_examples 'foo bar baz'
+include_examples 'foo bar baz', 'foo', 'bar'
+
+shared_examples 'foo bar baz', 'foo', 'bar', :foo_bar, 5 do |param|
+  # ...
+end
+
+RSpec.shared_examples 'foo bar baz'
+

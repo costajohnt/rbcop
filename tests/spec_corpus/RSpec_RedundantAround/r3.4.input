@@ -1,0 +1,22 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000/000_spec.rb 30 <==
+around do
+  it.run
+
+  foo
+end
+
+==> 001/001_spec.rb 23 <==
+around do
+  it.run
+end
+

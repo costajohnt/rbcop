@@ -1,0 +1,91 @@
+==> offenses exit=1 1036 <==
+000/000_spec.rb:4:3: C: [Correctable] RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
+001/001_spec.rb:7:3: C: [Correctable] RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
+002/002_spec.rb:8:3: C: [Correctable] RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
+003/003_spec.rb:10:5: C: [Correctable] RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
+005/005_spec.rb:4:3: C: [Correctable] RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
+006/006_spec.rb:4:3: C: [Correctable] RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
+007/007_spec.rb:5:3: C: [Correctable] RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
+007/007_spec.rb:6:3: C: [Correctable] RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
+007/007_spec.rb:8:3: C: [Correctable] RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
+
+==> autocorrect exit=0 1018 <==
+000/000_spec.rb:4:3: C: [Corrected] RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
+001/001_spec.rb:7:3: C: [Corrected] RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
+002/002_spec.rb:8:3: C: [Corrected] RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
+003/003_spec.rb:10:5: C: [Corrected] RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
+005/005_spec.rb:4:3: C: [Corrected] RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
+006/006_spec.rb:4:3: C: [Corrected] RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
+007/007_spec.rb:5:3: C: [Corrected] RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
+007/007_spec.rb:6:3: C: [Corrected] RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
+007/007_spec.rb:8:3: C: [Corrected] RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
+
+==> corrected/000/000_spec.rb 97 <==
+RSpec.describe User do
+  let(:a) { a }
+  let(:b) { b }
+  it { expect(subject.foo).to eq(a) }
+end
+
+==> corrected/001/001_spec.rb 143 <==
+describe User do
+  let(:a) { <<-BAR }
+    hello
+    world
+  BAR
+  let(:b) { <<-BAZ }
+    again
+  BAZ
+  it { expect(subject.foo).to eq(a) }
+end
+
+==> corrected/002/002_spec.rb 283 <==
+RSpec.describe User do
+  let(:a) { a } # a comment
+  # define the second letter
+  # with a multi-line description
+  let(:b) { b } # inline explanation as well
+  # example comment
+  it { expect(subject.foo).to eq(a) }
+  it { expect(subject.fu).to eq(b) } # inline example comment
+end
+
+==> corrected/003/003_spec.rb 190 <==
+describe User do
+  let(:a) { a }
+  it { expect(subject.foo).to eq(a) }
+
+  describe '#property' do
+    let(:c) { c }
+    let(:d) { d }
+
+    it { expect(subject.property).to eq c }
+
+  end
+end
+
+==> corrected/005/005_spec.rb 93 <==
+describe User do
+  let!(:a) { a }
+  let!(:c) { c }
+  it { expect(subject.foo).to eq(a) }
+end
+
+==> corrected/006/006_spec.rb 108 <==
+describe User do
+  let(:a) { a }
+  let(:user, &args[:build_user])
+  it { expect(subject.foo).to eq(a) }
+end
+
+==> corrected/007/007_spec.rb 177 <==
+describe User do
+  let(:a) { a }
+  let(:b) { b }
+  let(:c) { c }
+  let(:d) { d }
+  let(:e) { e }
+  it { expect(subject.foo).to eq(a) }
+  it { expect(subject.bar).to eq(d) }
+end
+

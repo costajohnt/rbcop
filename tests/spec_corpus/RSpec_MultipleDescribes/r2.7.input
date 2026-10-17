@@ -1,0 +1,38 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 89 <==
+describe MyClass, '.do_something' do; end
+describe MyClass, '.do_something_else' do; end
+
+==> 001/001_spec.rb 55 <==
+describe MyClass do; end
+describe MyOtherClass do; end
+
+==> 002/002_spec.rb 59 <==
+describe 'MyClass' do; end
+describe 'MyOtherClass' do; end
+
+==> 003/003_spec.rb 59 <==
+example_group MyClass do; end
+feature MyOtherClass do; end
+
+==> 004/004_spec.rb 24 <==
+describe MyClass do
+end
+
+==> 005/005_spec.rb 101 <==
+shared_examples_for 'behaves' do
+end
+shared_examples_for 'misbehaves' do
+end
+describe MyClass do
+end
+

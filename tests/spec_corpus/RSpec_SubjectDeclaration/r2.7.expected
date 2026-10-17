@@ -1,0 +1,124 @@
+==> offenses exit=1 2520 <==
+000/000_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+001/001_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+002/002_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+003/003_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+004/004_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Ambiguous declaration of subject
+005/005_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Ambiguous declaration of subject
+006/006_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+007/007_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+008/008_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+009/009_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+010/010_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Ambiguous declaration of subject
+011/011_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Ambiguous declaration of subject
+012/012_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+013/013_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+014/014_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+015/015_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+016/016_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Ambiguous declaration of subject
+017/017_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Ambiguous declaration of subject
+018/018_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+019/019_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+020/020_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+021/021_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+022/022_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Ambiguous declaration of subject
+023/023_spec.rb:1:1: C: [Correctable] RSpec/SubjectDeclaration: Ambiguous declaration of subject
+
+==> autocorrect exit=0 2472 <==
+000/000_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+001/001_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+002/002_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+003/003_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+004/004_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Ambiguous declaration of subject
+005/005_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Ambiguous declaration of subject
+006/006_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+007/007_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+008/008_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+009/009_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+010/010_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Ambiguous declaration of subject
+011/011_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Ambiguous declaration of subject
+012/012_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+013/013_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+014/014_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+015/015_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+016/016_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Ambiguous declaration of subject
+017/017_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Ambiguous declaration of subject
+018/018_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+019/019_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+020/020_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+021/021_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Use subject explicitly rather than using let
+022/022_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Ambiguous declaration of subject
+023/023_spec.rb:1:1: C: [Corrected] RSpec/SubjectDeclaration: Ambiguous declaration of subject
+
+==> corrected/000/000_spec.rb 28 <==
+subject! { 'some subject' }
+
+==> corrected/001/001_spec.rb 17 <==
+subject!(&block)
+
+==> corrected/002/002_spec.rb 27 <==
+subject { 'some subject' }
+
+==> corrected/003/003_spec.rb 16 <==
+subject(&block)
+
+==> corrected/004/004_spec.rb 27 <==
+subject { 'some subject' }
+
+==> corrected/005/005_spec.rb 28 <==
+subject! { 'some subject' }
+
+==> corrected/006/006_spec.rb 28 <==
+subject! { 'some subject' }
+
+==> corrected/007/007_spec.rb 17 <==
+subject!(&block)
+
+==> corrected/008/008_spec.rb 27 <==
+subject { 'some subject' }
+
+==> corrected/009/009_spec.rb 16 <==
+subject(&block)
+
+==> corrected/010/010_spec.rb 27 <==
+subject { 'some subject' }
+
+==> corrected/011/011_spec.rb 28 <==
+subject! { 'some subject' }
+
+==> corrected/012/012_spec.rb 28 <==
+subject! { 'some subject' }
+
+==> corrected/013/013_spec.rb 17 <==
+subject!(&block)
+
+==> corrected/014/014_spec.rb 27 <==
+subject { 'some subject' }
+
+==> corrected/015/015_spec.rb 16 <==
+subject(&block)
+
+==> corrected/016/016_spec.rb 27 <==
+subject { 'some subject' }
+
+==> corrected/017/017_spec.rb 28 <==
+subject! { 'some subject' }
+
+==> corrected/018/018_spec.rb 28 <==
+subject! { 'some subject' }
+
+==> corrected/019/019_spec.rb 17 <==
+subject!(&block)
+
+==> corrected/020/020_spec.rb 27 <==
+subject { 'some subject' }
+
+==> corrected/021/021_spec.rb 16 <==
+subject(&block)
+
+==> corrected/022/022_spec.rb 27 <==
+subject { 'some subject' }
+
+==> corrected/023/023_spec.rb 28 <==
+subject! { 'some subject' }
+

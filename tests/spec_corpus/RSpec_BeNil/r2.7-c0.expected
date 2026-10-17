@@ -1,0 +1,9 @@
+==> offenses exit=1 84 <==
+000/000_spec.rb:1:16: C: [Correctable] RSpec/BeNil: Prefer `be_nil` over `be(nil)`.
+
+==> autocorrect exit=0 82 <==
+000/000_spec.rb:1:16: C: [Corrected] RSpec/BeNil: Prefer `be_nil` over `be(nil)`.
+
+==> corrected/000/000_spec.rb 22 <==
+expect(foo).to be_nil
+

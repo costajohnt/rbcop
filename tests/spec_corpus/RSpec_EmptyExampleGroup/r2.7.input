@@ -1,0 +1,379 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 196 <==
+describe Foo do
+  context 'when bar' do
+
+    let(:foo) { bar }
+  end
+
+  describe '#thingy?' do
+    specify do
+      expect(whatever.thingy?).to be(true)
+    end
+  end
+
+  it { should be_true }
+end
+
+==> 001/001_spec.rb 20 <==
+describe Foo do
+end
+
+==> 002/002_spec.rb 341 <==
+context 'hook with implicit scope' do
+  before do
+    it { is_expected.to never_run }
+  end
+end
+
+context 'hook with explicit scope' do
+  around(:example) do
+    it { is_expected.to never_run }
+  end
+end
+
+context 'hook with explicit scope and metadata' do
+  after(:each, :corrupt, type: :cop) do
+    it { is_expected.to never_run }
+  end
+end
+
+==> 003/003_spec.rb 247 <==
+describe 'Ruby 2.3 syntax' do
+  version = 2.3
+
+  if RUBY_VERSION >= version
+    it { expect(use_safe_navigation_operator?(code)).to be(true) }
+  else
+    warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'
+  end
+end
+
+==> 004/004_spec.rb 218 <==
+describe 'Ruby 2.3 syntax' do
+  version = 2.3
+
+  if RUBY_VERSION < version
+    warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'
+  end
+
+  it { expect(newspaper(page)).to have_ads }
+end
+
+==> 005/005_spec.rb 353 <==
+describe 'Ruby 2.3 syntax' do
+  version = 2.3
+
+  if RUBY_VERSION >= version
+    warn 'Ruby > 2.3 is supported'
+  else
+    warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'
+  end
+end
+
+describe 'Ruby 2.3 syntax' do
+  if RUBY_VERSION < 2.3
+  else
+  end
+end
+
+describe 'Ruby 2.3 syntax' do
+  if RUBY_VERSION >= 2.3
+  end
+end
+
+==> 006/006_spec.rb 221 <==
+describe Foo do
+  case bar
+  when baz
+    it { expect(result).to be(true) }
+  end
+end
+
+describe Foo do
+  case bar
+  when baz
+    it { expect(result).to be(true) }
+  else
+    warn 'Enforce appropriate warnings.'
+  end
+end
+
+==> 007/007_spec.rb 126 <==
+describe Foo do
+  case bar
+  when baz
+    warn 'Enforce appropriate warnings.'
+  end
+
+  it { expect(result).to have_ads }
+end
+
+==> 008/008_spec.rb 242 <==
+describe Foo do
+  case bar
+  when baz
+    warn 'Enforce appropriate warnings.'
+  else
+    warn 'Enforce appropriate warnings.'
+  end
+end
+
+describe Foo do
+  case bar
+  when baz
+  else
+  end
+end
+
+describe Foo do
+  case bar
+  when baz
+  end
+end
+
+==> 009/009_spec.rb 114 <==
+describe 'RuboCop monthly' do
+  [1, 2, 3].each do |page|
+    it { expect(newspaper(page)).to have_ads }
+  end
+end
+
+==> 010/010_spec.rb 147 <==
+describe 'RuboCop weekly' do
+  some_method
+  [1, 2, 3].each do |page|
+    it { expect(newspaper(page)).to have_ads }
+  end
+  more_surroundings
+end
+
+==> 011/011_spec.rb 143 <==
+describe 'RuboCop Sunday' do
+  some_method
+  [1, 2, 3].each do |page|
+    no_examples_here
+    and_no_ads_either
+  end
+  more_surroundings
+end
+
+==> 012/012_spec.rb 272 <==
+describe 'RuboCop monthly' do
+  [1, 2, 3].each do |page|
+    version = 2.3
+
+    if RUBY_VERSION >= version
+      it { expect(newspaper(page)).to have_ads }
+    else
+      warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'
+    end
+  end
+end
+
+==> 013/013_spec.rb 249 <==
+describe 'RuboCop monthly' do
+  [1, 2, 3].each do |page|
+    if RUBY_VERSION >= 2.3
+      it { expect(newspaper(page)).to have_ads }
+    else
+      warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'
+    end
+  end
+end
+
+==> 014/014_spec.rb 187 <==
+describe 'RuboCop weekly' do
+  some_method
+  [1, 2, 3].each do |page|
+    [4, 5, 6].each do |index|
+      it { expect(newspaper(page)).to have_ads }
+    end
+  end
+  more_surroundings
+end
+
+==> 015/015_spec.rb 382 <==
+describe 'RuboCop monthly' do
+  version = 2.3
+
+  if RUBY_VERSION >= version
+    if RUBY_VERSION <= 3.1
+      it { expect(use_safe_navigation_operator?(code)).to be(true) }
+    else
+      warn 'Ruby > 3.1 is barely supported, please use a newer version for development.'
+    end
+  else
+    warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'
+  end
+end
+
+==> 016/016_spec.rb 389 <==
+context 'without arguments' do
+  mute_warnings do
+    it { expect(newspaper(page)).to have_a_lot_of_ads }
+  end
+end
+
+context 'with an argument' do
+  with_role :reader do
+    it { expect(newspaper(page)).to have_a_lot_of_ads }
+  end
+end
+
+context 'with a block argument' do
+  for_all_species_coming_from(:fish) do |creature|
+    it { expect(newspaper(page)).to have_a_lot_of_ads }
+  end
+end
+
+==> 017/017_spec.rb 587 <==
+describe 'RuboCop Friday night' do
+  context 'with each.with_object' do
+    [1, 2, 3].each.with_object(0) do |page, price|
+      it { expect(newspaper(page)).to have_ads }
+    end
+  end
+
+  context 'with each_with_index' do
+    [1, 2, 3].each_with_index do |page, index|
+      it { expect(newspaper(page)).to have_ads }
+    end
+  end
+
+  context 'with map' do
+    [1, 2, 3].map do |page, index|
+      it { expect(newspaper(page)).to have_ads }
+    end
+  end
+
+  context 'with count' do
+    [1, 2, 3].count do |page, index|
+      it { expect(newspaper(page)).to have_ads }
+    end
+  end
+end
+
+==> 018/018_spec.rb 239 <==
+describe 'RuboCop daily' do
+  some_method
+  [1, 2, 3].each do |page|
+    some_method
+    [1, 2, 3].each do |paragraph|
+      it { expect(newspaper(page, paragraph)).to have_ads }
+    end
+    more_surroundings
+  end
+  more_surroundings
+end
+
+==> 019/019_spec.rb 494 <==
+describe Foo do
+  context "when something is true" do
+    include_examples "some expectations"
+  end
+
+  context "when something else is true" do
+    include_context "some expectations"
+  end
+
+  context "when the third thing is true" do
+    it_behaves_like "some thingy"
+  end
+
+  context "when the fourth thing is true" do
+    it_behaves_like "some thingy" do
+      let(:a) { 'foo' }
+    end
+  end
+
+  context "when the fifth thing is true" do
+    it_behaves_like "some thingy", &block
+  end
+end
+
+==> 020/020_spec.rb 150 <==
+describe Foo do
+  it 'yields a block when given' do
+    value = nil
+
+    helper.feature('whatevs') { value = 5 }
+
+    expect(value).to be 5
+  end
+end
+
+==> 021/021_spec.rb 96 <==
+describe Foo do
+  context "when I do something clever" do
+    it_has_special_behavior
+  end
+end
+
+==> 022/022_spec.rb 309 <==
+describe Foo do
+  it 'will be implemented later'
+end
+
+describe Foo do
+  it 'will be implemented later', year: 2030
+end
+
+describe Foo do
+  pending
+end
+
+describe Foo do
+  pending 'too hard to specify'
+end
+
+describe Foo do
+  skip
+end
+
+describe Foo do
+  skip 'undefined behavior'
+end
+
+xdescribe Foo
+
+describe Foo
+
+==> 023/023_spec.rb 357 <==
+RSpec.describe Foo do
+  def self.with_yaml_loaded(&block)
+    context 'with YAML loaded' do
+      module_exec(&block)
+    end
+  end
+
+  class << self
+    def without_yaml_loaded(&block)
+      context 'without YAML loaded' do
+        module_exec(&block)
+      end
+    end
+  end
+
+  with_yaml_loaded do
+    it_behaves_like 'normal YAML serialization'
+  end
+end
+
+==> 024/024_spec.rb 118 <==
+RSpec.describe 'rspec-core' do
+  it 'runs an example group' do
+    group = RSpec.describe { }
+    group.run
+  end
+end
+

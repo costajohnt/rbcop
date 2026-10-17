@@ -1,0 +1,41 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 49 <==
+let(:foo) do
+  expect(something).to eq 'foo'
+end
+
+==> 001/001_spec.rb 43 <==
+let(:foo) do
+  is_expected.to eq 'foo'
+end
+
+==> 002/002_spec.rb 69 <==
+let(:foo) do
+  expect_any_instance_of(Something).to receive :foo
+end
+
+==> 003/003_spec.rb 75 <==
+let(:foo) do
+  expect(something).to eq 'foo'
+  is_expected.to eq 'foo'
+end
+
+==> 004/004_spec.rb 13 <==
+let(:foo) {}
+
+==> 005/005_spec.rb 120 <==
+it do
+  expect(something).to eq 'foo'
+  is_expected.to eq 'foo'
+  expect_any_instance_of(Something).to receive :foo
+end
+

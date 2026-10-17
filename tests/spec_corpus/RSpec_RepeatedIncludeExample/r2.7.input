@@ -1,0 +1,377 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 110 <==
+describe 'foo' do
+  include_examples 'an x'
+  include_examples 'something else'
+  include_examples 'an x'
+end
+
+==> 001/001_spec.rb 76 <==
+describe 'foo' do
+  include_examples('an x')
+  include_examples('an x')
+end
+
+==> 002/002_spec.rb 73 <==
+describe 'foo' do
+  include_examples 'an x'
+  include_examples 'a y'
+end
+
+==> 003/003_spec.rb 97 <==
+describe 'foo' do
+  include_examples 'an x'
+end
+
+describe 'bar' do
+  include_examples 'an x'
+end
+
+==> 004/004_spec.rb 119 <==
+describe 'foo' do
+  include_examples 'an x', 'y'
+  include_examples 'an x', 'other'
+  include_examples 'an x', 'y'
+end
+
+==> 005/005_spec.rb 86 <==
+describe 'foo' do
+  include_examples('an x', 'y')
+  include_examples('an x', 'y')
+end
+
+==> 006/006_spec.rb 152 <==
+describe 'foo' do
+  include_examples('something', [1, 'b', :c, D, { e: :f }, nil])
+  include_examples('something', [1, 'b', :c, D, { e: :f }, nil])
+end
+
+==> 007/007_spec.rb 146 <==
+describe 'foo' do
+  include_examples 'an x', 'y'
+  include_examples 'an x', 'z'
+  include_examples 'an x'
+  include_examples 'an x', 'y', 'z'
+end
+
+==> 008/008_spec.rb 150 <==
+describe 'foo' do
+  include_examples('an x', 'y')
+  include_examples('an x', 'z')
+  include_examples('an x')
+  include_examples('an x', 'y', 'z')
+end
+
+==> 009/009_spec.rb 273 <==
+describe 'foo' do
+  include_examples 'one', foo
+  include_examples 'one', foo
+
+  include_examples 'two', @foo
+  include_examples 'two', @foo
+
+  include_examples 'two', @@foo
+  include_examples 'two', @@foo
+
+  include_examples 'two', $foo
+  include_examples 'two', $foo
+end
+
+==> 010/010_spec.rb 193 <==
+describe 'foo' do
+  include_examples 'one' do
+    'something'
+  end
+  include_examples 'one' do
+    'something'
+  end
+
+  include_examples('two') { rand }
+  include_examples('two') { rand }
+end
+
+==> 011/011_spec.rb 163 <==
+describe 'foo' do
+  include_examples('one', &block)
+  include_examples('one', &block)
+
+  include_examples('two', &:method)
+  include_examples('two', &:method)
+end
+
+==> 012/012_spec.rb 107 <==
+describe 'foo' do
+  include_examples 'an x', 'y'
+end
+
+describe 'bar' do
+  include_examples 'an x', 'y'
+end
+
+==> 013/013_spec.rb 107 <==
+describe 'foo' do
+  it_behaves_like 'an x'
+  it_behaves_like 'something else'
+  it_behaves_like 'an x'
+end
+
+==> 014/014_spec.rb 74 <==
+describe 'foo' do
+  it_behaves_like('an x')
+  it_behaves_like('an x')
+end
+
+==> 015/015_spec.rb 71 <==
+describe 'foo' do
+  it_behaves_like 'an x'
+  it_behaves_like 'a y'
+end
+
+==> 016/016_spec.rb 95 <==
+describe 'foo' do
+  it_behaves_like 'an x'
+end
+
+describe 'bar' do
+  it_behaves_like 'an x'
+end
+
+==> 017/017_spec.rb 116 <==
+describe 'foo' do
+  it_behaves_like 'an x', 'y'
+  it_behaves_like 'an x', 'other'
+  it_behaves_like 'an x', 'y'
+end
+
+==> 018/018_spec.rb 84 <==
+describe 'foo' do
+  it_behaves_like('an x', 'y')
+  it_behaves_like('an x', 'y')
+end
+
+==> 019/019_spec.rb 150 <==
+describe 'foo' do
+  it_behaves_like('something', [1, 'b', :c, D, { e: :f }, nil])
+  it_behaves_like('something', [1, 'b', :c, D, { e: :f }, nil])
+end
+
+==> 020/020_spec.rb 142 <==
+describe 'foo' do
+  it_behaves_like 'an x', 'y'
+  it_behaves_like 'an x', 'z'
+  it_behaves_like 'an x'
+  it_behaves_like 'an x', 'y', 'z'
+end
+
+==> 021/021_spec.rb 146 <==
+describe 'foo' do
+  it_behaves_like('an x', 'y')
+  it_behaves_like('an x', 'z')
+  it_behaves_like('an x')
+  it_behaves_like('an x', 'y', 'z')
+end
+
+==> 022/022_spec.rb 265 <==
+describe 'foo' do
+  it_behaves_like 'one', foo
+  it_behaves_like 'one', foo
+
+  it_behaves_like 'two', @foo
+  it_behaves_like 'two', @foo
+
+  it_behaves_like 'two', @@foo
+  it_behaves_like 'two', @@foo
+
+  it_behaves_like 'two', $foo
+  it_behaves_like 'two', $foo
+end
+
+==> 023/023_spec.rb 189 <==
+describe 'foo' do
+  it_behaves_like 'one' do
+    'something'
+  end
+  it_behaves_like 'one' do
+    'something'
+  end
+
+  it_behaves_like('two') { rand }
+  it_behaves_like('two') { rand }
+end
+
+==> 024/024_spec.rb 159 <==
+describe 'foo' do
+  it_behaves_like('one', &block)
+  it_behaves_like('one', &block)
+
+  it_behaves_like('two', &:method)
+  it_behaves_like('two', &:method)
+end
+
+==> 025/025_spec.rb 105 <==
+describe 'foo' do
+  it_behaves_like 'an x', 'y'
+end
+
+describe 'bar' do
+  it_behaves_like 'an x', 'y'
+end
+
+==> 026/026_spec.rb 125 <==
+describe 'foo' do
+  it_should_behave_like 'an x'
+  it_should_behave_like 'something else'
+  it_should_behave_like 'an x'
+end
+
+==> 027/027_spec.rb 86 <==
+describe 'foo' do
+  it_should_behave_like('an x')
+  it_should_behave_like('an x')
+end
+
+==> 028/028_spec.rb 83 <==
+describe 'foo' do
+  it_should_behave_like 'an x'
+  it_should_behave_like 'a y'
+end
+
+==> 029/029_spec.rb 107 <==
+describe 'foo' do
+  it_should_behave_like 'an x'
+end
+
+describe 'bar' do
+  it_should_behave_like 'an x'
+end
+
+==> 030/030_spec.rb 134 <==
+describe 'foo' do
+  it_should_behave_like 'an x', 'y'
+  it_should_behave_like 'an x', 'other'
+  it_should_behave_like 'an x', 'y'
+end
+
+==> 031/031_spec.rb 96 <==
+describe 'foo' do
+  it_should_behave_like('an x', 'y')
+  it_should_behave_like('an x', 'y')
+end
+
+==> 032/032_spec.rb 162 <==
+describe 'foo' do
+  it_should_behave_like('something', [1, 'b', :c, D, { e: :f }, nil])
+  it_should_behave_like('something', [1, 'b', :c, D, { e: :f }, nil])
+end
+
+==> 033/033_spec.rb 166 <==
+describe 'foo' do
+  it_should_behave_like 'an x', 'y'
+  it_should_behave_like 'an x', 'z'
+  it_should_behave_like 'an x'
+  it_should_behave_like 'an x', 'y', 'z'
+end
+
+==> 034/034_spec.rb 170 <==
+describe 'foo' do
+  it_should_behave_like('an x', 'y')
+  it_should_behave_like('an x', 'z')
+  it_should_behave_like('an x')
+  it_should_behave_like('an x', 'y', 'z')
+end
+
+==> 035/035_spec.rb 313 <==
+describe 'foo' do
+  it_should_behave_like 'one', foo
+  it_should_behave_like 'one', foo
+
+  it_should_behave_like 'two', @foo
+  it_should_behave_like 'two', @foo
+
+  it_should_behave_like 'two', @@foo
+  it_should_behave_like 'two', @@foo
+
+  it_should_behave_like 'two', $foo
+  it_should_behave_like 'two', $foo
+end
+
+==> 036/036_spec.rb 213 <==
+describe 'foo' do
+  it_should_behave_like 'one' do
+    'something'
+  end
+  it_should_behave_like 'one' do
+    'something'
+  end
+
+  it_should_behave_like('two') { rand }
+  it_should_behave_like('two') { rand }
+end
+
+==> 037/037_spec.rb 183 <==
+describe 'foo' do
+  it_should_behave_like('one', &block)
+  it_should_behave_like('one', &block)
+
+  it_should_behave_like('two', &:method)
+  it_should_behave_like('two', &:method)
+end
+
+==> 038/038_spec.rb 117 <==
+describe 'foo' do
+  it_should_behave_like 'an x', 'y'
+end
+
+describe 'bar' do
+  it_should_behave_like 'an x', 'y'
+end
+
+==> 039/039_spec.rb 105 <==
+describe 'foo' do
+  include_examples 'an x'
+  it_behaves_like 'an x'
+  it_should_behave_like('an x')
+end
+
+==> 040/040_spec.rb 103 <==
+describe 'foo' do
+  include_examples 'one'
+  it_behaves_like 'two'
+  it_should_behave_like 'three'
+end
+
+==> 041/041_spec.rb 120 <==
+describe 'foo' do
+  include_examples 'an x', 'y'
+  it_behaves_like 'an x', 'y'
+  it_should_behave_like('an x', 'y')
+end
+
+==> 042/042_spec.rb 133 <==
+describe 'foo' do
+  include_examples 'something', 'x'
+  it_behaves_like 'something', 'y'
+  it_should_behave_like 'something', 42
+end
+
+==> 043/043_spec.rb 87 <==
+describe 'foo' do
+  include_examples 'irange', ..1
+  it_behaves_like 'irange', ..2
+end
+
+==> 044/044_spec.rb 91 <==
+describe 'foo' do
+  include_examples 'erange', (1..)
+  it_behaves_like 'erange', (2..)
+end
+

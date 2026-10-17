@@ -15,7 +15,7 @@ require "fileutils"
 spec_root, out_root, cops_file, default_yml = ARGV
 abort "usage: #{$0} <spec/rubocop/cop> <out-dir> <cops-file> <default.yml>" unless default_yml
 
-DEFAULTS = YAML.safe_load_file(default_yml, permitted_classes: [Regexp, Symbol])
+DEFAULTS = YAML.safe_load_file(default_yml, permitted_classes: [Regexp, Symbol], aliases: true)
 ANNOTATION = /\A\s*((?<!\\)\^+|\^{}) ?/
 GROUPS = %i[describe context].freeze
 EXAMPLES = %i[it specify example].freeze
@@ -414,7 +414,10 @@ end
 # PLUGINS mode: a cop spec runs its source whatever the file name, but the recorded corpus runs
 # RuboCop on real paths, so each file goes where the cop's first Include pattern matches.
 def plugin_path(cop, config, idx, file)
-  include = config.dig(cop, "Include") || DEFAULTS.dig(cop, "Include")
+  # Config#for_badge: a cop without its own Include takes its department's (RSpec, FactoryBot, ...).
+  dept = cop.rpartition("/").first
+  include = config.dig(cop, "Include") || DEFAULTS.dig(cop, "Include") || config.dig(dept, "Include") ||
+            DEFAULTS.dig(dept, "Include")
   file = file&.delete_prefix("/")
   num = format("%03d", idx)
   return File.join(num, file || "#{num}.rb") unless include
@@ -476,11 +479,14 @@ if cops.include?("Bundler/GemFilename")
   end
 end
 cops.each do |cop|
-  dept, name = cop.split("/")
-  snake = name.gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2').gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
-  spec = File.join(spec_root, dept.downcase, "#{snake}_spec.rb")
+  dept, _, name = cop.rpartition("/")
+  underscore = ->(s) { s.gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2').gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase }
+  snake = underscore.call(name)
+  # Plugin departments: RSpecRails -> rspec_rails, Capybara/RSpec -> capybara/rspec.
+  dept_dir = dept.split("/").map { |d| underscore.call(d.sub("RSpec", "Rspec")) }.join("/")
+  spec = File.join(spec_root, dept_dir, "#{snake}_spec.rb")
   # Some cops split their spec (conditional_assignment_assign_in_condition_spec.rb, ...).
-  specs = File.exist?(spec) ? [spec] : Dir[File.join(spec_root, dept.downcase, "#{snake}_*_spec.rb")].sort
+  specs = File.exist?(spec) ? [spec] : Dir[File.join(spec_root, dept_dir, "#{snake}_*_spec.rb")].sort
   if specs.empty?
     warn "#{cop}: no spec #{spec}"
     next

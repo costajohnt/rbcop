@@ -1,0 +1,51 @@
+==> .rubocop.yml 179 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/HookArgument:
+  EnforcedStyle: :example
+
+==> 000/000_spec.rb 110 <==
+before(:example) { true }
+after(:example) { true }
+around(:example) { true }
+config.before(:example) { true }
+
+==> 001/001_spec.rb 98 <==
+before(:each) { true }
+after(:each) { true }
+around(:each) { true }
+config.before(:each) { true }
+
+==> 002/002_spec.rb 70 <==
+before { true }
+after { true }
+around { true }
+config.before { true }
+
+==> 003/003_spec.rb 98 <==
+before(:suite) { true }
+after(:suite) { true }
+before(:context) { true }
+after(:context) { true }
+
+==> 004/004_spec.rb 42 <==
+before(:each, :something_custom) { true }
+
+==> 005/005_spec.rb 22 <==
+setup(:each) { true }
+
+==> 006/006_spec.rb 24 <==
+around(:example) { _1 }
+
+==> 007/007_spec.rb 21 <==
+around(:each) { _1 }
+
+==> 008/008_spec.rb 14 <==
+around { _1 }
+

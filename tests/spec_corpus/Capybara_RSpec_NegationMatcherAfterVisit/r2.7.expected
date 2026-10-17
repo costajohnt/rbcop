@@ -1,0 +1,8 @@
+==> offenses exit=1 238 <==
+000/000_spec.rb:2:1: C: Capybara/RSpec/NegationMatcherAfterVisit: Do not use negation matcher immediately after visit.
+001/001_spec.rb:2:1: C: Capybara/RSpec/NegationMatcherAfterVisit: Do not use negation matcher immediately after visit.
+
+==> autocorrect exit=1 238 <==
+000/000_spec.rb:2:1: C: Capybara/RSpec/NegationMatcherAfterVisit: Do not use negation matcher immediately after visit.
+001/001_spec.rb:2:1: C: Capybara/RSpec/NegationMatcherAfterVisit: Do not use negation matcher immediately after visit.
+

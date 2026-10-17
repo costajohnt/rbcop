@@ -1,0 +1,34 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 31 <==
+expect(foo.bar).to eq(foo.bar)
+
+==> 001/001_spec.rb 40 <==
+expect(foo.bar.baz).to eql(foo.bar.baz)
+
+==> 002/002_spec.rb 21 <==
+expect(42).to eq(42)
+
+==> 003/003_spec.rb 44 <==
+expect({a: 1, b: :b}).to eql({a: 1, b: :b})
+
+==> 004/004_spec.rb 31 <==
+expect(foo.bar).to be(foo.bar)
+
+==> 005/005_spec.rb 33 <==
+expect(foo.bar).to be == foo.bar
+
+==> 006/006_spec.rb 31 <==
+expect(foo.bar).to eq(bar.foo)
+
+==> 007/007_spec.rb 46 <==
+expect(Foo.new(1).foo).to eql(Foo.new(2).bar)
+

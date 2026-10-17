@@ -1,0 +1,12 @@
+==> offenses exit=1 89 <==
+001/001_spec.rb:3:3: C: [Correctable] RSpec/ImplicitSubject: Don't use implicit subject.
+
+==> autocorrect exit=0 87 <==
+001/001_spec.rb:3:3: C: [Corrected] RSpec/ImplicitSubject: Don't use implicit subject.
+
+==> corrected/001/001_spec.rb 87 <==
+it 'expect subject to be used' do
+  subject.age = 18
+  expect(subject).to be_valid
+end
+

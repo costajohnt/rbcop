@@ -1,0 +1,38 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> 000/000_spec.rb 14 <==
+around { it }
+
+==> 001/001_spec.rb 27 <==
+around do
+  it.inspect
+end
+
+==> 002/002_spec.rb 23 <==
+around do
+  it.run
+end
+
+==> 003/003_spec.rb 24 <==
+around do
+  it.call
+end
+
+==> 004/004_spec.rb 29 <==
+around do
+  1.times(&it)
+end
+
+==> 005/005_spec.rb 63 <==
+around do
+  something_that_might_run_test(it, another_arg)
+end
+

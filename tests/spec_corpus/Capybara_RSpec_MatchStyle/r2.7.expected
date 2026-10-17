@@ -1,0 +1,15 @@
+==> offenses exit=1 220 <==
+000/000_spec.rb:2:4: C: [Correctable] Capybara/RSpec/MatchStyle: Use `matches_style?` instead of `has_style?`.
+001/001_spec.rb:1:17: C: [Correctable] Capybara/RSpec/MatchStyle: Use `match_style` instead of `have_style`.
+
+==> autocorrect exit=0 216 <==
+000/000_spec.rb:2:4: C: [Corrected] Capybara/RSpec/MatchStyle: Use `matches_style?` instead of `has_style?`.
+001/001_spec.rb:1:17: C: [Corrected] Capybara/RSpec/MatchStyle: Use `match_style` instead of `have_style`.
+
+==> corrected/000/000_spec.rb 80 <==
+expect(page.find(:css, 'first')
+  .matches_style?(display: 'block')).to be true
+
+==> corrected/001/001_spec.rb 46 <==
+expect(page).to match_style(display: 'block')
+
