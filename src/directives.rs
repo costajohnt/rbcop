@@ -490,7 +490,7 @@ pub fn ignoring_disable_comments() -> bool {
 /// (never under `--ignore-disable-comments`). Code that reads the comment config itself
 /// (`comment_config.cop_enabled_at_line?`) calls `is_disabled`.
 pub fn suppressed(ranges: &HashMap<String, Vec<(i64, i64)>>, cop: &str, first: usize, last: usize) -> bool {
-    !IGNORE_COMMENTS.load(std::sync::atomic::Ordering::Relaxed) && is_disabled(ranges, cop, first, last)
+    !ignoring_disable_comments() && is_disabled(ranges, cop, first, last)
 }
 
 /// An offense on these lines falls in a range where `cop` is disabled by a comment.
