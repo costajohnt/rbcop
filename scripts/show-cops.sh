@@ -20,3 +20,8 @@ record plugins_all plugins --show-cops
 record plugins_list_enabled plugins --list-enabled-cops-for spec/a_spec.rb
 record plugins_docs_url plugins --show-docs-url 'Capybara/RSpec/HaveContent,Capybara/AssertStyle,Capybara/RSpec,RSpec/Focus,Style/Not'
 record junit_order junit_order -f junit a.rb
+unset CI
+record suggest suggest
+record suggest_loaded suggest_loaded
+record suggest_installed suggest_installed -f p
+record suggest_emacs suggest -f emacs

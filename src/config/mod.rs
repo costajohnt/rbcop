@@ -667,6 +667,11 @@ impl Store {
 
     /// A config so far loaded `require:`s Ruby code rbcop cannot load (custom cops, or a plugin
     /// gem it could not integrate).
+    /// ConfigLoader.loaded_plugins and loaded_features: every `plugins:`/`require:` name loaded so far.
+    pub fn loaded_plugins(&self) -> &[String] {
+        &self.loaded_plugins
+    }
+
     pub fn requires_ruby_code(&self) -> bool {
         self.custom_cops
     }

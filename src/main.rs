@@ -817,13 +817,124 @@ fn show_cops(patterns: &[String], cfg: &Resolved, pwd: &str) {
     print!("{out}");
 }
 
+/// RuboCop::Lockfile as Bundler reads it: the lockfile next to the Gemfile (`gems.rb` →
+/// `gems.locked`, else `Gemfile` → `Gemfile.lock`) found upwards from the working directory
+/// (`BUNDLE_GEMFILE` overrides), as (DEPENDENCIES names, those plus every locked spec's
+/// dependency names). None without one.
+fn lockfile_gems(cwd: &Path) -> Option<(Vec<String>, Vec<String>)> {
+    let gemfile = match env::var_os("BUNDLE_GEMFILE").filter(|g| !g.is_empty()) {
+        Some(g) => PathBuf::from(g),
+        None => cwd.ancestors().find_map(|d| ["gems.rb", "Gemfile"].iter().map(|n| d.join(n)).find(|f| f.is_file()))?,
+    };
+    let lockfile = if gemfile.file_name().is_some_and(|n| n == "gems.rb") {
+        gemfile.with_file_name("gems.locked")
+    } else {
+        PathBuf::from(format!("{}.lock", gemfile.display()))
+    };
+    let text = fs::read_to_string(lockfile).ok()?;
+    let name = |l: &str| l.trim().split([' ', '!']).next().unwrap_or("").to_string();
+    let (mut deps, mut spec_deps) = (Vec::new(), Vec::new());
+    let mut section = "";
+    for line in text.lines() {
+        if !line.starts_with(' ') {
+            section = line.trim_end();
+            continue;
+        }
+        let indent = line.len() - line.trim_start().len();
+        if section == "DEPENDENCIES" && indent == 2 {
+            deps.push(name(line));
+        } else if matches!(section, "GEM" | "PATH" | "GIT" | "PLUGIN SOURCE") && indent == 6 {
+            spec_deps.push(name(line));
+        }
+    }
+    let mut gems = deps.clone();
+    gems.extend(spec_deps);
+    Some((deps, gems))
+}
+
+/// CLI::Command::SuggestExtensions, run after the report: the RuboCop extensions the lockfile's
+/// gems suggest that the config does not load.
+fn suggest_extensions(cli: &Cli, pwd_config: &Resolved, default_config: &Resolved, loaded: &[String]) -> String {
+    use rbcop::config::value::Value;
+    let formatter = cli
+        .format
+        .clone()
+        .or_else(|| pwd_config.all_cops().str("DefaultFormatter").map(String::from))
+        .unwrap_or_else(|| "p".into());
+    let out = cli.output_path.is_some() || cli.formatters.iter().any(|(_, o)| o.is_some());
+    if env::var_os("CI").is_some()
+        || cli.only.is_some()
+        || cli.list_targets
+        || out
+        || cli.stdin.is_some()
+        || !["p", "progress", "fu", "fuubar", "pa", "pacman"].contains(&formatter.as_str())
+    {
+        return String::new();
+    }
+    let Some((deps, gems)) = lockfile_gems(&rbcop::config::cwd()) else { return String::new() };
+    if deps.is_empty() {
+        return String::new();
+    }
+    let map = match pwd_config.all_cops().get("SuggestExtensions") {
+        Some(Value::Bool(true)) => default_config.all_cops().get("SuggestExtensions").and_then(Value::as_map).cloned(),
+        Some(Value::Map(m)) => Some((**m).clone()),
+        _ => None,
+    }
+    .unwrap_or_default();
+    // all_extensions: those with a gem among the lockfile's dependencies.
+    let all: Vec<&str> = map
+        .0
+        .iter()
+        .filter(|(_, v)| {
+            let wanted: Vec<String> = match v {
+                Value::Seq(items) => items.iter().filter_map(Value::as_string).collect(),
+                v => v.as_string().into_iter().collect(),
+            };
+            wanted.iter().any(|g| deps.contains(g))
+        })
+        .map(|(k, _)| k.as_str())
+        .collect();
+    let mut not_installed: Vec<&str> = all.iter().copied().filter(|e| !gems.iter().any(|g| g == e)).collect();
+    let mut not_loaded: Vec<&str> =
+        all.iter().copied().filter(|e| gems.iter().any(|g| g == e) && !loaded.iter().any(|l| l == e)).collect();
+    if not_installed.is_empty() && not_loaded.is_empty() {
+        return String::new();
+    }
+    not_installed.sort_unstable();
+    not_loaded.sort_unstable();
+    let mut s = String::new();
+    if !not_installed.is_empty() {
+        s.push_str("\nTip: Based on detected gems, the following RuboCop extension libraries might be helpful:\n");
+        for e in &not_installed {
+            s.push_str(&format!("  * {e} (https://rubygems.org/gems/{e})\n"));
+        }
+    }
+    if !not_loaded.is_empty() {
+        s.push_str("\nThe following RuboCop extension libraries are installed but not loaded in config:\n");
+        for e in &not_loaded {
+            s.push_str(&format!("  * {e}\n"));
+        }
+    }
+    s.push_str(
+        "\nYou can opt out of this message by adding the following to your config (see \
+         https://docs.rubocop.org/rubocop/plugins.html#plugin-suggestions for more options):\n  AllCops:\n    \
+         SuggestExtensions: false\n",
+    );
+    if cli.display_time {
+        s.push('\n');
+    }
+    s
+}
+
 /// CLI#report_pending_cops (PendingCopsReporter): on stderr, before any formatter output.
 fn report_pending_cops(cfg: &Resolved, global: bool) {
     const BANNER: &str = "The following cops were added to RuboCop, but are not configured. Please set Enabled to \
                           either `true` or `false` in your `.rubocop.yml` file.\n\nPlease also note that you can \
                           opt-in to new cops by default by adding this to your config:\n  AllCops:\n    NewCops: \
                           enable\n";
-    let pending = cfg.pending_cops();
+    // pending_cops_only_qualified
+    let mut pending = cfg.pending_cops();
+    pending.retain(|(name, _)| rbcop::helpers::cop_registry::is_qualified_cop(name));
     if pending.is_empty() {
         return;
     }
@@ -1454,6 +1565,13 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             Some(corrected) => print!("{corrected}"),
             None => std::io::Write::write_all(&mut std::io::stdout(), original).map_err(|e| e.to_string())?,
         }
+    }
+    // CLI#execute_runners: SuggestExtensions follows ExecuteRunner.
+    let suggestions = suggest_extensions(&cli, &pwd_config, &store.default_config(), store.loaded_plugins());
+    if cli.stderr {
+        eprint!("{suggestions}");
+    } else {
+        print!("{suggestions}");
     }
     Ok(if all_passed && cop_errors.is_empty() { 0 } else { OFFENSES })
 }

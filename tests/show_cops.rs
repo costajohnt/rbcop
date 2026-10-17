@@ -29,6 +29,11 @@ const CASES: &[(&str, &str, &[&str])] = &[
     ),
     // junit lists a file's testcases in registry order: plugins in load order (rails first here).
     ("junit_order", "junit_order", &["-f", "junit", "a.rb"]),
+    // SuggestExtensions after the report, from the project's Gemfile.lock (CI unset).
+    ("suggest", "suggest", &[]),
+    ("suggest_loaded", "suggest_loaded", &[]),
+    ("suggest_installed", "suggest_installed", &["-f", "p"]),
+    ("suggest_emacs", "suggest", &["-f", "emacs"]),
 ];
 
 #[test]
@@ -41,6 +46,7 @@ fn show_cops_matches_rubocop() {
             .args(*args)
             .current_dir(&project)
             .env("PWD", &project)
+            .env_remove("CI")
             .output()
             .unwrap();
         let actual = String::from_utf8(out.stdout).unwrap().replace(&project.display().to_string(), "<project>");
