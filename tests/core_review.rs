@@ -419,6 +419,19 @@ fn config_load_errors_worded_like_rubocop() {
         ("b: 2020-01-01\n", "Tried to load unspecified class: Date"),
         ("b: 2020-01-01 10:00:00\n", "Tried to load unspecified class: Time"),
         ("a: !ruby/object:Foo {}\n", "Tried to load unspecified class: Foo"),
+        // A list set to `~` is removed by the merge: Naming/PredicatePrefix#validate_config reads nil.
+        (
+            "AllCops:\n  NewCops: disable\nNaming/PredicatePrefix:\n  NamePrefix: ~\n",
+            "undefined method 'include?' for nil",
+        ),
+        (
+            "AllCops:\n  NewCops: disable\nNaming/PredicatePrefix:\n  ForbiddenPrefixes: ~\n",
+            "undefined method 'each' for nil",
+        ),
+        (
+            "AllCops:\n  NewCops: disable\nNaming/PredicatePrefix:\n  NamePrefix: 1\n",
+            "undefined method 'include?' for an instance of Integer",
+        ),
     ];
     let dir = scratch("config-errors");
     fs::write(dir.join("a.rb"), "x = 1\n").unwrap();
@@ -890,14 +903,14 @@ fn ambiguous_directive_errors_once_for_the_variable_force() {
     let _ = fs::remove_dir_all(&dir);
 }
 
-/// List settings given as a YAML String (#474): where RuboCop's cop reads them bare and then calls
+/// List settings given as a YAML String (#474) or set to `~` (#500): where RuboCop's cop reads them bare and then calls
 /// an Array-only method (`map`, `any?`, `+`, `-`, `join`, `to_set`), the cop raises at the node it
 /// visits. Cop errors recorded from RuboCop 1.91 on the two scenario projects (their offenses are
 /// in expected.txt).
 #[test]
 fn string_list_settings_raise_where_rubocop_does() {
     let root = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/scenarios");
-    let cases: [(&str, &[&str]); 2] = [
+    let cases: [(&str, &[&str]); 3] = [
         (
             "list_settings_string",
             &["Lint/MissingSuper cop was inspecting a.rb:21:2.", "Style/AsciiComments cop was inspecting a.rb."],
@@ -925,6 +938,44 @@ fn string_list_settings_raise_where_rubocop_does() {
                 "Style/NumericLiterals cop was inspecting a.rb:34:4.",
                 "Style/NumericLiterals cop was inspecting a.rb:35:4.",
                 "Style/NumericLiterals cop was inspecting a.rb:39:10.",
+            ],
+        ),
+        // List settings set to `~` (#500): the merge removes the key, so a bare read is nil.
+        (
+            "list_settings_nil",
+            &[
+                "Layout/ClassStructure cop was inspecting a.rb:15:0.",
+                "Layout/ClassStructure cop was inspecting a.rb:7:0.",
+                "Layout/ClassStructure cop was inspecting app/controllers/posts_controller.rb:4:0.",
+                "Layout/MultilineAssignmentLayout cop was inspecting a.rb:11:0.",
+                "Layout/MultilineAssignmentLayout cop was inspecting a.rb:20:0.",
+                "Layout/MultilineAssignmentLayout cop was inspecting a.rb:3:0.",
+                "Layout/MultilineAssignmentLayout cop was inspecting a.rb:5:0.",
+                "Lint/ConstantResolution cop was inspecting a.rb:15:6.",
+                "Lint/ConstantResolution cop was inspecting a.rb:4:0.",
+                "Lint/ConstantResolution cop was inspecting a.rb:5:4.",
+                "Lint/ConstantResolution cop was inspecting a.rb:7:6.",
+                "Lint/ConstantResolution cop was inspecting app/controllers/posts_controller.rb:4:24.",
+                "Lint/ConstantResolution cop was inspecting app/controllers/posts_controller.rb:4:6.",
+                "Naming/ClassAndModuleCamelCase cop was inspecting a.rb:7:0.",
+                "Naming/MethodParameterName cop was inspecting a.rb:8:2.",
+                "Naming/PredicatePrefix cop was inspecting a.rb:14:0.",
+                "Naming/PredicatePrefix cop was inspecting a.rb:18:2.",
+                "Naming/PredicatePrefix cop was inspecting a.rb:23:15.",
+                "Naming/PredicatePrefix cop was inspecting a.rb:24:0.",
+                "Rails/ActionOrder cop was inspecting app/controllers/posts_controller.rb:4:0.",
+                "Style/BlockDelimiters cop was inspecting a.rb:10:0.",
+                "Style/BlockDelimiters cop was inspecting a.rb:14:0.",
+                "Style/BlockDelimiters cop was inspecting a.rb:20:4.",
+                "Style/BlockDelimiters cop was inspecting a.rb:23:0.",
+                "Style/CommentAnnotation cop was inspecting a.rb.",
+                "Style/CommentAnnotation cop was inspecting app/controllers/posts_controller.rb.",
+                "Style/Documentation cop was inspecting a.rb:7:0.",
+                "Style/Documentation cop was inspecting app/controllers/posts_controller.rb:4:0.",
+                "Style/FetchEnvVar cop was inspecting a.rb:4:0.",
+                "Style/GlobalVars cop was inspecting a.rb:3:0.",
+                "Style/SingleLineBlockParams cop was inspecting a.rb:10:0.",
+                "Style/SingleLineBlockParams cop was inspecting a.rb:23:0.",
             ],
         ),
     ];

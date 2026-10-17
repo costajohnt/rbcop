@@ -275,7 +275,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   reproduced, and so are list settings given as a YAML String (#440, #474): each cop reads one as
   its RuboCop counterpart does, a substring test where the cop calls `include?` on the bare
   setting, a cop error where it calls an Array-only method (`map`, `any?`, `each`, `join`, `+`,
-  `-`), a one-element list where it wraps the setting in `Array()`. A String
+  `-`), a one-element list where it wraps the setting in `Array()`. A list set to `~` (#500) is
+  removed by the merge: a cop that reads it bare (`cop_config[key]`) raises on nil, one that reads
+  it with `fetch(key, default)` or `|| []` gets the default. A String
   Naming/PredicatePrefix `ForbiddenPrefixes` ends the run (exit 2) with RuboCop's
   `undefined method 'each' for an instance of String`, without the backtrace. Order of cop errors: rbcop's `N errors occurred:` summary is sorted, RuboCop's is in
   raise order; and errors printed as they happen come from on_file cops (RuboCop's

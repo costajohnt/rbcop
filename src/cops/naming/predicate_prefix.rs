@@ -6,7 +6,7 @@ pub struct PredicatePrefix;
 
 fn expected_name(cx: &Cx, name: &str, prefix: &str) -> String {
     // `forbidden_prefixes.include?(prefix)`: a substring test on a String.
-    let forbidden = cx.cfg.includes("ForbiddenPrefixes", prefix);
+    let forbidden = cx.cfg.includes_bare("ForbiddenPrefixes", prefix);
     let mut out = if forbidden { name.replacen(prefix, "", 1) } else { name.to_string() };
     if !name.ends_with('?') {
         out.push('?');
@@ -67,7 +67,11 @@ impl Cop for PredicatePrefix {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         if let Some(call) = node.as_call_node() {
             let name = method_name(&call);
-            if call.receiver().is_some() || !cx.cfg.includes("MethodDefinitionMacros", name) {
+            // The pattern checks the arity before `#method_definition_macro?` (which reads the
+            // setting bare): a call without arguments never reads it.
+            let no_args =
+                call.arguments().is_none() && !call.block().is_some_and(|b| b.as_block_argument_node().is_some());
+            if call.receiver().is_some() || no_args || !cx.cfg.includes_bare("MethodDefinitionMacros", name) {
                 return;
             }
             let Some(first) = call_args(&call).into_iter().next() else { return };
@@ -75,7 +79,7 @@ impl Cop for PredicatePrefix {
             let name = String::from_utf8_lossy(sym.unescaped()).into_owned();
             let (s, e) = (first.location().start_offset(), first.location().end_offset());
             // `predicate_prefixes.each`: a String NamePrefix raises (a cop error).
-            for prefix in &cx.cfg.array("NamePrefix") {
+            for prefix in &cx.cfg.array_bare("NamePrefix") {
                 if !allowed_method_name(cx, &name, prefix) {
                     let msg = message(cx, &name, prefix);
                     cx.add(s, e, msg);
@@ -87,7 +91,7 @@ impl Cop for PredicatePrefix {
         let name = String::from_utf8_lossy(def.name().as_slice()).into_owned();
         let sorbet = cx.cfg.bool("UseSorbetSigs").unwrap_or(false);
         let loc = def.name_loc();
-        for prefix in &cx.cfg.array("NamePrefix") {
+        for prefix in &cx.cfg.array_bare("NamePrefix") {
             if allowed_method_name(cx, &name, prefix) || (sorbet && !sorbet_sig(cx, node)) {
                 continue;
             }

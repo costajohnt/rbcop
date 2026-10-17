@@ -656,32 +656,39 @@ pub fn cop_validate_config(cfg: &super::Resolved, team: impl Fn(&str) -> bool) -
         // `forbidden_prefixes.each`: on a scalar a NoMethodError ends the run (exit 2; rbcop prints
         // the message without the backtrace). `predicate_prefixes.include?` is a substring test on
         // a String NamePrefix.
-        let class = match p.get("ForbiddenPrefixes") {
+        // A key set to `~` is gone after the merge: nil.
+        let class = |v: Option<&Value>| match v {
             Some(Value::Str(_)) => Some("an instance of String"),
             Some(Value::Sym(_)) => Some("an instance of Symbol"),
             Some(Value::Int(_)) => Some("an instance of Integer"),
             Some(Value::Float(_)) => Some("an instance of Float"),
-            Some(Value::Null) => Some("nil"),
+            Some(Value::Null) | None => Some("nil"),
             Some(Value::Bool(true)) => Some("true"),
             Some(Value::Bool(false)) => Some("false"),
-            _ => None,
+            Some(Value::Seq(_) | Value::Map(_) | Value::Regex(_)) => None,
         };
-        if let Some(class) = class {
+        if let Some(class) = class(p.get("ForbiddenPrefixes")) {
             return Err(format!("undefined method 'each' for {class}"));
         }
         let included = |f: &Value| match p.get("NamePrefix") {
-            Some(Value::Seq(names)) => names.contains(f),
-            Some(Value::Str(names)) => f.as_string().is_some_and(|f| names.contains(f.as_str())),
-            _ => true,
+            Some(Value::Seq(names)) => Ok(names.contains(f)),
+            Some(Value::Str(names)) => Ok(f.as_string().is_some_and(|f| names.contains(f.as_str()))),
+            Some(Value::Map(names)) => Ok(f.as_string().is_some_and(|f| names.contains(&f))),
+            v => match class(v) {
+                Some(class) => Err(format!("undefined method 'include?' for {class}")),
+                None => Ok(true),
+            },
         };
-        if let Some(Value::Seq(forbidden)) = p.get("ForbiddenPrefixes")
-            && let Some(f) = forbidden.iter().find(|f| !included(f))
-        {
-            return Err(format!(
-                "Error: The `{PREDICATE}` cop is misconfigured. Prefix {} must be included in NamePrefix because it is \
-                 included in ForbiddenPrefixes.",
-                to_s(f)
-            ));
+        if let Some(Value::Seq(forbidden)) = p.get("ForbiddenPrefixes") {
+            for f in forbidden.iter() {
+                if !included(f)? {
+                    return Err(format!(
+                        "Error: The `{PREDICATE}` cop is misconfigured. Prefix {} must be included in NamePrefix because \
+                         it is included in ForbiddenPrefixes.",
+                        to_s(f)
+                    ));
+                }
+            }
         }
     }
     Ok(())

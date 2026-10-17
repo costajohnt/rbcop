@@ -1,0 +1,50 @@
+plugins:
+  - rubocop-rails
+AllCops:
+  TargetRubyVersion: 3.4
+  SuggestExtensions: false
+  DisabledByDefault: true
+  ActiveSupportExtensionsEnabled: true
+Style/GlobalVars:
+  Enabled: true
+  AllowedVariables: ~
+Style/FetchEnvVar:
+  Enabled: true
+  AllowedVariables: ~
+Lint/ConstantResolution:
+  Enabled: true
+  Only: ~
+Naming/ClassAndModuleCamelCase:
+  Enabled: true
+  AllowedNames: ~
+Style/CommentAnnotation:
+  Enabled: true
+  Keywords: ~
+Style/Documentation:
+  Enabled: true
+Style/SingleLineBlockParams:
+  Enabled: true
+  Methods: ~
+Layout/MultilineAssignmentLayout:
+  Enabled: true
+  SupportedTypes: ~
+Layout/ClassStructure:
+  Enabled: true
+  ExpectedOrder: ~
+Naming/PredicatePrefix:
+  Enabled: true
+  MethodDefinitionMacros: ~
+Naming/MethodParameterName:
+  Enabled: true
+  AllowedNames: ~
+Lint/DuplicateMethods:
+  Enabled: true
+  DelegatingMethods: ~
+Rails/ActionOrder:
+  Enabled: true
+  ExpectedOrder: ~
+Style/BlockDelimiters:
+  Enabled: true
+  EnforcedStyle: semantic
+  FunctionalMethods: ~
+  ProceduralMethods: ~

@@ -22,8 +22,7 @@ fn target_args(cx: &Cx, method: &str) -> Option<Vec<String>> {
     // `methods.map`: a String raises (a cop error).
     let methods = match cx.cfg.get("Methods") {
         Some(Value::Seq(methods)) => methods,
-        None => return None,
-        Some(_) => panic!("undefined method 'map' for Methods"),
+        Some(_) | None => panic!("undefined method 'map' for Methods"),
     };
     methods.iter().filter_map(Value::as_map).find_map(|m| {
         let (k, v) = m.0.first()?;

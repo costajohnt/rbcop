@@ -325,7 +325,7 @@ impl Cop for ClassStructure {
         let conf = Conf {
             order: match cx.cfg.get("ExpectedOrder") {
                 Some(Value::Str(s)) => Order::Str(s.clone()),
-                _ => Order::List(cx.cfg.array("ExpectedOrder")),
+                _ => Order::List(cx.cfg.array_bare("ExpectedOrder")),
             },
             // ponytail: category members as an Array (the documented form).
             categories: match cx.cfg.get("Categories") {

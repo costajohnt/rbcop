@@ -16,13 +16,13 @@ impl Cop for ConstantResolution {
         // `(allowed_names.empty? || allowed_names.include?(name)) && !ignored_names.include?(name)`
         // on the bare settings: a String is a substring test.
         let only_empty = match cx.cfg.get("Only") {
-            None => true,
+            None => panic!("undefined method 'empty?' for nil"),
             Some(Value::Str(s)) => s.is_empty(),
             Some(Value::Seq(items)) => items.is_empty(),
             Some(Value::Map(m)) => m.keys().next().is_none(),
             Some(_) => panic!("undefined method 'empty?' for Only"),
         };
-        if !(only_empty || cx.cfg.includes("Only", &name)) || cx.cfg.includes("Ignore", &name) {
+        if !(only_empty || cx.cfg.includes("Only", &name)) || cx.cfg.includes_bare("Ignore", &name) {
             return;
         }
         if defines_module(cx.ancestors) {

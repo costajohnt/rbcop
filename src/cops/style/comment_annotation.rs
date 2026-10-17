@@ -28,7 +28,7 @@ impl Cop for CommentAnnotation {
                 continue;
             }
             let text = src.slice(c.start, c.end);
-            let re = re.get_or_insert_with(|| regex(&cx.cfg.array("Keywords")));
+            let re = re.get_or_insert_with(|| regex(&cx.cfg.array_bare("Keywords")));
             let a = Annotation::new(text, re);
             if !a.annotation() || a.correct(colon) {
                 continue;

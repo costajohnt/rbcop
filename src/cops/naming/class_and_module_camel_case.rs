@@ -20,7 +20,7 @@ impl Cop for ClassAndModuleCamelCase {
             return;
         }
         // /#{AllowedNames.join('|')}/: a String has no join (a cop error).
-        let allowed = cx.cfg.array("AllowedNames").join("|");
+        let allowed = cx.cfg.array_bare("AllowedNames").join("|");
         let stripped = match crate::config::value::ruby_regex(&allowed) {
             Some(re) => re.replace_all(name, "").into_owned(),
             None => name.to_string(),

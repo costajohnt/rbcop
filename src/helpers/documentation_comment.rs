@@ -51,8 +51,9 @@ pub fn documentation_comment(cx: &Cx, ends: &[usize], start: usize, enclosing: u
     // AnnotationComment.new sorts the keywords: a String raises (a cop error).
     let annotation = cx.config.for_cop("Style/CommentAnnotation");
     let keywords = match annotation.get("Keywords") {
-        None | Some(crate::config::value::Value::Seq(_)) => annotation.strings("Keywords"),
-        Some(_) => panic!("undefined method 'sort_by' for Keywords"),
+        Some(crate::config::value::Value::Seq(_)) => annotation.strings("Keywords"),
+        // A String, or nil (a key set to `~`).
+        _ => panic!("undefined method 'sort_by' for Keywords"),
     };
     let re = annotation_regex(&keywords);
     preceding.iter().any(|c| {
