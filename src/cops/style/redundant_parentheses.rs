@@ -355,9 +355,14 @@ impl<'pr> Check<'_, 'pr> {
 
     /// `rescue?`: `{^resbody ^^resbody}`, the parser parent or grandparent is a resbody (#327).
     /// A RescueNode is one; a modifier rescue's implicit resbody holds its rescue expression.
+    /// The exception classes sit in a parser `array` (`(resbody (array exc...) var body)`): a
+    /// list element has the resbody as grandparent, a node inside an element does not (#473).
     fn rescue(&self) -> bool {
+        let in_exceptions = |i: usize, child: (usize, usize)| {
+            self.anc[i].as_rescue_node().is_some_and(|r| r.exceptions().iter().any(|e| range(&e) == child))
+        };
         let resbody_of = |i: usize, child: (usize, usize)| match &self.anc[i] {
-            Node::RescueNode { .. } => true,
+            Node::RescueNode { .. } => !in_exceptions(i, child),
             Node::RescueModifierNode { .. } => {
                 range(&self.anc[i].as_rescue_modifier_node().unwrap().rescue_expression()) == child
             }
@@ -369,6 +374,7 @@ impl<'pr> Check<'_, 'pr> {
         // the block, never a resbody (#432).
         let owns_block = self.anc[p].as_call_node().is_some_and(|c| c.block().is_some_and(|b| b.as_block_node().is_some()));
         resbody_of(p, self.me())
+            || in_exceptions(p, self.me())
             || (!owns_block && parser_parent_index(self.anc, p).is_some_and(|g| resbody_of(g, range(&self.anc[p]))))
     }
 

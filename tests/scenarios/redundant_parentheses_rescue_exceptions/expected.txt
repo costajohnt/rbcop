@@ -1,0 +1,7 @@
+a.rb:13:8: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+a.rb:18:9: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+a.rb:23:13: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+a.rb:33:14: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+a.rb:38:9: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+a.rb:3:8: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+a.rb:8:10: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method argument.
