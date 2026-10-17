@@ -1,0 +1,6 @@
+a.rb:11:1: C: Naming/VariableName: Use snake_case for variable names.
+a.rb:13:1: C: [Correctable] Rails/DynamicFindBy: Use `find_by` instead of dynamic `find_by_name`.
+a.rb:3:1: C: [Correctable] Style/FetchEnvVar: Use `ENV.fetch('X', nil)` instead of `ENV['X']`.
+a.rb:5:21: C: Style/OptionHash: Prefer keyword arguments to options hashes.
+a.rb:7:17: C: Naming/PredicatePrefix: Rename `is_ok` to `ok?`.
+a.rb:8:15: C: Naming/PredicatePrefix: Rename `is_ok2` to `ok2?`.

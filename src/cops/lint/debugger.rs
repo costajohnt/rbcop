@@ -48,10 +48,17 @@ impl Cop for Debugger {
         }
         let name = method_name(&call);
         let args = call_args(&call);
+        // `config.is_a?(Array) ? config : config.values.flatten`: a String (or other scalar) has
+        // no `values` (a cop error); debugger_method? asks for every send.
+        let listed = |key: &str| match cx.cfg.get(key) {
+            v @ (None | Some(Value::Seq(_) | Value::Map(_))) => v,
+            Some(_) => panic!("undefined method 'values' for {key}"),
+        };
+        listed("DebuggerMethods");
         let hit = if name == "require" {
             args.len() == 1
                 && args[0].as_string_node().is_some_and(|s| {
-                    any_entry(cx.cfg.get("DebuggerRequires"), &mut |r| r.as_bytes() == s.unescaped())
+                    any_entry(listed("DebuggerRequires"), &mut |r| r.as_bytes() == s.unescaped())
                 })
         } else {
             let methods = cx.cfg.get("DebuggerMethods");

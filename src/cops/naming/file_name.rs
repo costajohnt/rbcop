@@ -16,6 +16,19 @@ impl Cop for FileName {
     }
 
     fn on_node(&self, cx: &mut Cx, program: &Node) {
+        // RuboCop checks in on_new_investigation: a raise is a cop error without a location.
+        let checked = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| check(cx, program)));
+        if let Err(payload) = checked {
+            if !(payload.is::<String>() || payload.is::<&str>()) {
+                std::panic::resume_unwind(payload);
+            }
+            crate::runner::cop_error_at(NAME, cx.src, None);
+        }
+    }
+}
+
+fn check(cx: &mut Cx, program: &Node) {
+    {
         let file = crate::config::expand_path(Path::new(cx.src.path), &crate::config::cwd());
         if cx.config.file_to_exclude(&file) || allowed_camel_case_file(cx.config, &file) {
             return;
@@ -31,16 +44,20 @@ impl Cop for FileName {
             if !cx.cfg.bool("ExpectMatchingDefinition").unwrap_or(false) {
                 return;
             }
-            let roots = cx.cfg.strings("CheckDefinitionPathHierarchyRoots");
-            let acronyms = cx.cfg.strings("AllowedAcronyms");
-            let finder = Finder { acronyms: &acronyms };
+            let roots = cx.cfg;
+            // `(cop_config['AllowedAcronyms'] || []).reduce`: a String raises once it is reached.
+            let acronyms = match cx.cfg.get("AllowedAcronyms") {
+                None | Some(Value::Null | Value::Bool(false) | Value::Seq(_)) => Some(cx.cfg.strings("AllowedAcronyms")),
+                _ => None,
+            };
+            let finder = Finder { acronyms: acronyms.as_deref() };
             let path = file.to_string_lossy();
             if cx.cfg.bool("CheckDefinitionPathHierarchy").unwrap_or(false)
-                && !finder.find(program, to_namespace(&path, &roots))
+                && !finder.find(program, to_namespace(&path, roots))
             {
-                no_definition_message(&basename, &to_namespace(&path, &roots))
-            } else if !finder.find(program, to_namespace(&basename, &roots)) {
-                no_definition_message(&basename, &to_namespace(&basename, &roots))
+                no_definition_message(&basename, &to_namespace(&path, roots))
+            } else if !finder.find(program, to_namespace(&basename, roots)) {
+                no_definition_message(&basename, &to_namespace(&basename, roots))
             } else {
                 return;
             }
@@ -110,9 +127,11 @@ fn allowed_camel_case_file(config: &Resolved, file: &Path) -> bool {
 }
 
 /// to_namespace: path components after the last hierarchy root, as module names.
-fn to_namespace(path: &str, roots: &[String]) -> Vec<String> {
+/// `start.include?(c)` on `cop_config['CheckDefinitionPathHierarchyRoots'] || []`: a substring
+/// test on a String.
+fn to_namespace(path: &str, roots: &crate::config::CopConfig) -> Vec<String> {
     let components: Vec<&str> = path.split('/').filter(|c| !c.is_empty()).collect();
-    match components.iter().rposition(|c| roots.iter().any(|r| r == c)) {
+    match components.iter().rposition(|c| roots.includes_or_empty("CheckDefinitionPathHierarchyRoots", c)) {
         Some(i) => components[i + 1..].iter().map(|c| to_module_name(c)).collect(),
         None => components.last().map(|c| vec![to_module_name(c)]).unwrap_or_default(),
     }
@@ -206,12 +225,14 @@ fn const_parts<'pr>(node: &Node<'pr>) -> Option<(Ns<'pr>, String)> {
 }
 
 struct Finder<'a> {
-    acronyms: &'a [String],
+    /// None: not an Array (`reduce` raises).
+    acronyms: Option<&'a [String]>,
 }
 
 impl Finder<'_> {
     fn match_acronym(&self, expected: &str, name: &str) -> bool {
-        let name = self.acronyms.iter().fold(name.to_string(), |r, a| r.replace(a.as_str(), &capitalize(a)));
+        let acronyms = self.acronyms.unwrap_or_else(|| panic!("undefined method 'reduce' for AllowedAcronyms"));
+        let name = acronyms.iter().fold(name.to_string(), |r, a| r.replace(a.as_str(), &capitalize(a)));
         expected == name
     }
 

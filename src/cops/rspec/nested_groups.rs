@@ -7,7 +7,8 @@ pub struct NestedGroups;
 struct Ctx<'a> {
     l: &'a helpers::rspec::Language,
     max: i64,
-    allowed: Vec<String>,
+    /// AllowedGroups, read with a bare `include?` (a substring test on a String).
+    allowed: &'a crate::config::CopConfig,
     found: Vec<((usize, usize), i64)>,
 }
 
@@ -19,7 +20,7 @@ fn walk(cx: &mut Ctx, node: &Node, nesting: i64) {
         cx.found.push((send_range(&node.as_call_node().unwrap()), nesting));
     }
     let plain = helpers::rspec::plain_block_call(node);
-    let next = if group && plain.as_ref().is_some_and(|c| !cx.allowed.iter().any(|a| a == method_name(c))) {
+    let next = if group && plain.as_ref().is_some_and(|c| !cx.allowed.includes("AllowedGroups", method_name(c))) {
         nesting + 1
     } else {
         nesting
@@ -48,7 +49,7 @@ impl Cop for NestedGroups {
             Some(v) => helpers::rspec::config_integer(Some(v)).unwrap_or(3),
             None => helpers::rspec::config_integer(cx.cfg.get("Max")).unwrap_or(3),
         };
-        let mut c = Ctx { l: &l, max, allowed: cx.cfg.strings("AllowedGroups"), found: Vec::new() };
+        let mut c = Ctx { l: &l, max, allowed: cx.cfg, found: Vec::new() };
         for group in helpers::rspec::top_level_groups(&l, node) {
             walk(&mut c, &group, 1);
         }

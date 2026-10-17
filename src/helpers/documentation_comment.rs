@@ -48,7 +48,12 @@ pub fn documentation_comment(cx: &Cx, ends: &[usize], start: usize, enclosing: u
     if line - src.line_of(last.start) != 1 || !COMMENT_LINE.is_match(src.slice(last.start, last.end)) {
         return false;
     }
-    let keywords = cx.config.for_cop("Style/CommentAnnotation").strings("Keywords");
+    // AnnotationComment.new sorts the keywords: a String raises (a cop error).
+    let annotation = cx.config.for_cop("Style/CommentAnnotation");
+    let keywords = match annotation.get("Keywords") {
+        None | Some(crate::config::value::Value::Seq(_)) => annotation.strings("Keywords"),
+        Some(_) => panic!("undefined method 'sort_by' for Keywords"),
+    };
     let re = annotation_regex(&keywords);
     preceding.iter().any(|c| {
         let text = src.slice(c.start, c.end);

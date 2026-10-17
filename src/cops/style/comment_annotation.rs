@@ -14,7 +14,9 @@ impl Cop for CommentAnnotation {
 
     fn on_file(&self, cx: &mut Cx) {
         let src = cx.src;
-        let re = regex(&cx.cfg.strings("Keywords"));
+        // AnnotationComment.new sorts `keywords` for its regexp: a String raises (a cop error) at
+        // the first comment that gets there.
+        let mut re = None;
         let colon = cx.cfg.bool("RequireColon").unwrap_or(true);
         for (i, c) in src.comments.iter().enumerate() {
             let line = src.line_of(c.start);
@@ -26,7 +28,8 @@ impl Cop for CommentAnnotation {
                 continue;
             }
             let text = src.slice(c.start, c.end);
-            let a = Annotation::new(text, &re);
+            let re = re.get_or_insert_with(|| regex(&cx.cfg.array("Keywords")));
+            let a = Annotation::new(text, re);
             if !a.annotation() || a.correct(colon) {
                 continue;
             }

@@ -19,7 +19,12 @@ impl<'pr> Visit<'pr> for Lvars {
 
 /// The configured argument names for `method` (`Methods: [{reduce: [acc, elem]}, ...]`).
 fn target_args(cx: &Cx, method: &str) -> Option<Vec<String>> {
-    let Some(Value::Seq(methods)) = cx.cfg.get("Methods") else { return None };
+    // `methods.map`: a String raises (a cop error).
+    let methods = match cx.cfg.get("Methods") {
+        Some(Value::Seq(methods)) => methods,
+        None => return None,
+        Some(_) => panic!("undefined method 'map' for Methods"),
+    };
     methods.iter().filter_map(Value::as_map).find_map(|m| {
         let (k, v) = m.0.first()?;
         (k == method).then(|| match v {

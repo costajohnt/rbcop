@@ -1,0 +1,27 @@
+plugins:
+  - rubocop-rails
+AllCops:
+  TargetRubyVersion: 3.4
+  SuggestExtensions: false
+  DisabledByDefault: true
+Style/FetchEnvVar:
+  Enabled: true
+  AllowedVariables: FOO_BAR_BAZ
+Style/OptionHash:
+  Enabled: true
+  SuspiciousParamNames: options_hash
+Naming/PredicatePrefix:
+  Enabled: true
+  MethodDefinitionMacros: define_method_x
+Naming/VariableName:
+  Enabled: true
+  AllowedIdentifiers: fooBarBaz
+Rails/DynamicFindBy:
+  Enabled: true
+  AllowedReceivers: Gem::Specification
+Style/AsciiComments:
+  Enabled: true
+  AllowedChars: "©é"
+Lint/MissingSuper:
+  Enabled: true
+  AllowedParentClasses: BaseX

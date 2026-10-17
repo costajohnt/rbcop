@@ -15,7 +15,11 @@ impl Cop for HeredocDelimiterNaming {
         let delim = heredoc::delimiter_string(&cx.src.text[open.0..open.1]);
         // Ruby `\w` is ASCII-only
         let meaningful = delim.bytes().any(|b| b.is_ascii_alphanumeric() || b == b'_')
-            && !cx.cfg.regexes("ForbiddenDelimiters").iter().any(|r| r.is_match(delim));
+            // `(cop_config['ForbiddenDelimiters'] || []).none?`: a String raises (a cop error).
+            && !match cx.cfg.get("ForbiddenDelimiters") {
+                None | Some(Value::Null | Value::Bool(false)) => false,
+                _ => cx.cfg.regexes_array("ForbiddenDelimiters").iter().any(|r| r.is_match(delim)),
+            };
         if !meaningful {
             let (s, e) = if empty { open } else { end };
             cx.add(s, e, "Use meaningful heredoc delimiters.");

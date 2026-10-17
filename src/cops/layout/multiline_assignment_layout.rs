@@ -77,8 +77,9 @@ impl Cop for MultilineAssignmentLayout {
             },
         };
         let Some(rhs) = check_assignment::extract_rhs(node, false) else { return };
+        // `cop_config['SupportedTypes'].flat_map`: a String raises (a cop error).
+        let supported = cx.cfg.array("SupportedTypes");
         let Some((ty, block)) = rhs_type(&rhs) else { return };
-        let supported = cx.cfg.strings("SupportedTypes");
         if !supported.iter().any(|t| t == ty || (t == "block" && matches!(ty, "numblock" | "itblock"))) {
             return;
         }

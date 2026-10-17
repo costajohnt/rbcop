@@ -147,20 +147,60 @@ impl CopConfig {
     pub fn strings(&self, key: &str) -> Vec<String> {
         self.params.strings(key)
     }
+    /// A list setting a cop reads bare, `cop_config[key].include?(name)` (or `fetch(key, [])`): on
+    /// a String (`AllowedVariables: FOO_BAR`) Ruby's include? is a substring test, on a Hash a key
+    /// test; nil and other scalars have no include? (a cop error at the visited node).
+    pub fn includes(&self, key: &str, name: &str) -> bool {
+        match self.params.get(key) {
+            None => false,
+            Some(Value::Str(s)) => s.contains(name),
+            Some(Value::Seq(items)) => items.iter().any(|i| i.as_string().is_some_and(|s| s == name)),
+            Some(Value::Map(m)) => m.contains(name),
+            Some(_) => panic!("undefined method 'include?' for {key}"),
+        }
+    }
+    /// `(cop_config[key] || []).include?(name)`
+    pub fn includes_or_empty(&self, key: &str, name: &str) -> bool {
+        !matches!(self.params.get(key), Some(Value::Null | Value::Bool(false))) && self.includes(key, name)
+    }
+    /// A list setting a cop reads bare and then calls an Array-only method on (`map`, `any?`,
+    /// `each`, `join`, `+`): anything but an Array (a String, nil, a scalar) raises, a cop error at
+    /// the visited node.
+    pub fn array(&self, key: &str) -> Vec<String> {
+        match self.params.get(key) {
+            None => Vec::new(),
+            Some(Value::Seq(items)) => items.iter().filter_map(Value::as_string).collect(),
+            Some(_) => panic!("{key} is not an Array"),
+        }
+    }
+    /// `(cop_config[key] || [])`, then an Array-only method.
+    pub fn array_or_empty(&self, key: &str) -> Vec<String> {
+        match self.params.get(key) {
+            Some(Value::Null | Value::Bool(false)) => Vec::new(),
+            _ => self.array(key),
+        }
+    }
     pub fn get(&self, key: &str) -> Option<&Value> {
         self.params.get(key)
     }
-    /// `cop_config[key]` as a list of Regex (AllowedPatterns style: strings become regexps).
+    /// `Array(cop_config[key])` as a list of Regex (AllowedPatterns style: strings become regexps).
     pub fn regexes(&self, key: &str) -> Vec<value::RubyRegex> {
+        let one = |v: &Value| match v {
+            Value::Regex(r) => ruby_regex(r),
+            v => v.as_string().and_then(|s| ruby_regex(&s)),
+        };
         match self.params.get(key) {
-            Some(Value::Seq(items)) => items
-                .iter()
-                .filter_map(|v| match v {
-                    Value::Regex(r) => ruby_regex(r),
-                    v => v.as_string().and_then(|s| ruby_regex(&s)),
-                })
-                .collect(),
-            _ => Vec::new(),
+            Some(Value::Seq(items)) => items.iter().filter_map(one).collect(),
+            None | Some(Value::Null | Value::Map(_)) => Vec::new(),
+            Some(v) => one(v).into_iter().collect(),
+        }
+    }
+    /// A pattern list read bare and mapped (`cop_config.fetch(key, []).map { Regexp.new(_1) }`):
+    /// anything but an Array raises, a cop error at the visited node.
+    pub fn regexes_array(&self, key: &str) -> Vec<value::RubyRegex> {
+        match self.params.get(key) {
+            None | Some(Value::Seq(_)) => self.regexes(key),
+            Some(_) => panic!("{key} is not an Array"),
         }
     }
 }

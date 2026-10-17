@@ -40,8 +40,9 @@ fn candidate(cx: &Cx, node: &Node, parents: &[&Node]) -> Option<Candidate> {
         }
         kind::CALL_NODE => {
             let call = node.as_call_node().unwrap();
-            let macros = cx.cfg.strings("DefLikeMacros");
-            if !macros.iter().any(|m| m == method_name(&call)) || !is_macro(&call, parents) {
+            // `macro? && cop_config.fetch('DefLikeMacros', []).map(...)`: a String raises (a cop
+            // error) once a macro is a candidate.
+            if !is_macro(&call, parents) || !cx.cfg.array("DefLikeMacros").iter().any(|m| m == method_name(&call)) {
                 return None;
             }
             let send = send_range(&call);

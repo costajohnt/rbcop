@@ -319,7 +319,7 @@ impl Documentation {
             Node::ConstantReadNode { .. } => name.as_constant_read_node().unwrap().name().as_slice().to_vec(),
             _ => name.as_constant_path_node().and_then(|p| p.name()).map(|n| n.as_slice().to_vec()).unwrap_or_default(),
         };
-        if cx.cfg.strings("AllowedConstants").iter().any(|c| c.as_bytes() == short.as_slice()) {
+        if cx.cfg.array("AllowedConstants").iter().any(|c| c.as_bytes() == short.as_slice()) {
             return None;
         }
         // nodoc_self_or_outer_module?

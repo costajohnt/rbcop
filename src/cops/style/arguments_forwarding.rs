@@ -305,7 +305,9 @@ fn classify(d: &DefInfo, s: &Send, refs: &HashSet<&[u8]>, ruby: f64, allow_only_
 fn redundant_named_arg<'pr>(cx: &Cx, n: Option<&Node<'pr>>, key: &str, keyword: &str) -> Option<Fwd<'pr>> {
     let n = n?;
     let src = node_text(n);
-    if src != keyword && !cx.cfg.strings(key).iter().any(|s| format!("{keyword}{s}") == src) {
+    // `cop_config.fetch(key, []).map`: a String raises (a cop error).
+    let names = cx.cfg.array(key);
+    if src != keyword && !names.iter().any(|s| format!("{keyword}{s}") == src) {
         return None;
     }
     let name = match n {

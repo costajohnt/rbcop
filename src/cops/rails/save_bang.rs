@@ -104,7 +104,8 @@ fn persist_method(cx: &Cx, call: &CallNode, methods: &[&str]) -> bool {
             return false;
         }
         if cx.cfg.get("AllowedReceivers").is_some_and(|v| !matches!(v, Value::Null | Value::Bool(false)))
-            && cx.cfg.strings("AllowedReceivers").iter().any(|a| receiver_chain_matches(call, a))
+            // `.any?`: a String raises (a cop error).
+            && cx.cfg.array("AllowedReceivers").iter().any(|a| receiver_chain_matches(call, a))
         {
             return false;
         }

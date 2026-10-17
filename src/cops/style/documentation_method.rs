@@ -20,7 +20,7 @@ impl Cop for DocumentationMethod {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let def = node.as_def_node().unwrap();
         let name = std::str::from_utf8(def.name().as_slice()).unwrap_or("");
-        if name == "initialize" || cx.cfg.strings("AllowedMethods").iter().any(|m| m == name) {
+        if name == "initialize" || cx.cfg.array("AllowedMethods").iter().any(|m| m == name) {
             return;
         }
         let anc = cx.ancestors;

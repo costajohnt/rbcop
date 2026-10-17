@@ -19,8 +19,8 @@ impl Cop for ClassAndModuleCamelCase {
         if !name.contains('_') {
             return;
         }
-        // /#{AllowedNames.join('|')}/
-        let allowed = cx.cfg.strings("AllowedNames").join("|");
+        // /#{AllowedNames.join('|')}/: a String has no join (a cop error).
+        let allowed = cx.cfg.array("AllowedNames").join("|");
         let stripped = match crate::config::value::ruby_regex(&allowed) {
             Some(re) => re.replace_all(name, "").into_owned(),
             None => name.to_string(),

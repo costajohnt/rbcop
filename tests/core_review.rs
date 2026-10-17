@@ -866,3 +866,57 @@ fn ambiguous_directive_errors_once_for_the_variable_force() {
     }
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// List settings given as a YAML String (#474): where RuboCop's cop reads them bare and then calls
+/// an Array-only method (`map`, `any?`, `+`, `-`, `join`, `to_set`), the cop raises at the node it
+/// visits. Cop errors recorded from RuboCop 1.91 on the two scenario projects (their offenses are
+/// in expected.txt).
+#[test]
+fn string_list_settings_raise_where_rubocop_does() {
+    let root = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/scenarios");
+    let cases: [(&str, &[&str]); 2] = [
+        (
+            "list_settings_string",
+            &["Lint/MissingSuper cop was inspecting a.rb:21:2.", "Style/AsciiComments cop was inspecting a.rb."],
+        ),
+        (
+            "list_settings_string_sweep",
+            &[
+                "Lint/UselessAccessModifier cop was inspecting a.rb:15:2.",
+                "Lint/UselessAccessModifier cop was inspecting a.rb:30:0.",
+                "Lint/UselessAccessModifier cop was inspecting a.rb:37:0.",
+                "Lint/UselessAccessModifier cop was inspecting a.rb:4:0.",
+                "Naming/ClassAndModuleCamelCase cop was inspecting a.rb:22:0.",
+                "Naming/HeredocDelimiterNaming cop was inspecting a.rb:23:4.",
+                "Naming/MethodName cop was inspecting a.rb:10:2.",
+                "Naming/MethodName cop was inspecting a.rb:18:4.",
+                "Naming/MethodName cop was inspecting a.rb:26:0.",
+                "Naming/MethodName cop was inspecting a.rb:27:0.",
+                "Naming/MethodName cop was inspecting a.rb:38:2.",
+                "Naming/MethodName cop was inspecting a.rb:6:2.",
+                "Style/ArgumentsForwarding cop was inspecting a.rb:27:0.",
+                "Style/CommentAnnotation cop was inspecting a.rb.",
+                "Style/GlobalVars cop was inspecting a.rb:33:0.",
+                "Style/IfUnlessModifier cop was inspecting a.rb:41:0.",
+                "Style/NumericLiterals cop was inspecting a.rb:33:7.",
+                "Style/NumericLiterals cop was inspecting a.rb:34:4.",
+                "Style/NumericLiterals cop was inspecting a.rb:35:4.",
+                "Style/NumericLiterals cop was inspecting a.rb:39:10.",
+            ],
+        ),
+    ];
+    for (name, want) in cases {
+        let project = root.join(name).join("project");
+        let out = rbcop(&project, &["-f", "e"]);
+        let dir = format!("{}/", project.canonicalize().unwrap().display());
+        // Each error is printed as it happens and again in the summary.
+        let mut errors: Vec<String> = text(&out.stderr)
+            .lines()
+            .filter_map(|l| l.strip_prefix("An error occurred while "))
+            .map(|l| l.replace(&dir, ""))
+            .collect();
+        errors.sort();
+        errors.dedup();
+        assert_eq!(errors, want, "{name}");
+    }
+}

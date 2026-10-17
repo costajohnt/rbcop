@@ -98,7 +98,8 @@ impl Cop for PredicateMatcher {
                 }
                 let Some(m) = send_or_block_send(matcher).filter(|m| m.receiver().is_none()) else { return };
                 let mname = method_name(&m);
-                let mut allowed = cx.cfg.strings("AllowedExplicitMatchers");
+                // `cop_config.fetch(...) + BUILT_IN_MATCHERS`: a String raises (a cop error).
+                let mut allowed = cx.cfg.array("AllowedExplicitMatchers");
                 allowed.extend(BUILT_IN_MATCHERS.iter().map(|s| s.to_string()));
                 let inflected = mname.strip_prefix("match_").is_some_and(|n| SUFFIXES.contains(&n));
                 if allowed.iter().any(|a| a == mname) || !inflected {

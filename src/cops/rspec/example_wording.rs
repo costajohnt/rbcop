@@ -19,7 +19,8 @@ fn uppercase(word: &str) -> bool {
 }
 
 /// RuboCop::RSpec::Wording#rewrite
-fn rewrite(text: &str, ignores: &[String], replacements: &Map) -> String {
+/// `ignores`: None when IgnoredWords is not an Array (`ignores.any?` raises once a word is reached).
+fn rewrite(text: &str, ignores: Option<&[String]>, replacements: &Map) -> String {
     for (re, replacement) in [(&*SHOULDNT_BE, "is not"), (&*SHOULDNT, "does not"), (&*WILL_NOT, "does not"), (&*WONT, "does not")] {
         if let Some(m) = re.find(text) {
             let r = if uppercase(m.as_str()) { replacement.to_uppercase() } else { replacement.to_string() };
@@ -29,6 +30,7 @@ fn rewrite(text: &str, ignores: &[String], replacements: &Map) -> String {
     // remove_should_and_pluralize
     let mut words: Vec<String> = text.split([' ', '\t', '\n', '\x0b', '\x0c', '\r']).filter(|w| !w.is_empty()).map(String::from).skip(1).collect();
     for word in words.iter_mut() {
+        let ignores = ignores.unwrap_or_else(|| panic!("undefined method 'any?' for IgnoredWords"));
         if ignores.iter().any(|i| i.eq_ignore_ascii_case(word)) {
             continue;
         }
@@ -104,7 +106,9 @@ impl Cop for ExampleWording {
             let text = helpers::rspec::dstr_value(&desc);
             let disallowed = match cx.cfg.get("DisallowedExamples") {
                 Some(Value::Seq(items)) => items.iter().filter_map(|v| v.as_string()).any(|e| preprocess(&e) == preprocess(&text)),
-                _ => false,
+                None => false,
+                // `examples.map!`: a String raises (a cop error).
+                Some(_) => panic!("undefined method 'map!' for DisallowedExamples"),
             };
             if disallowed {
                 cx.add_with(ds, de, "Your example description is insufficient.", false);
@@ -117,9 +121,9 @@ impl Cop for ExampleWording {
         }
         let text = helpers::rspec::dstr_value(&desc);
         let replacement = if SHOULD_PREFIX.is_match(&text) || WILL_PREFIX.is_match(&text) {
-            let ignores = cx.cfg.strings("IgnoredWords");
+            let ignores = matches!(cx.cfg.get("IgnoredWords"), None | Some(Value::Seq(_))).then(|| cx.cfg.strings("IgnoredWords"));
             let custom = cx.cfg.get("CustomTransform").and_then(Value::as_map).cloned().unwrap_or_default();
-            rewrite(&text, &ignores, &custom)
+            rewrite(&text, ignores.as_deref(), &custom)
         } else {
             IT_PREFIX.replace(&text, "").into_owned()
         };

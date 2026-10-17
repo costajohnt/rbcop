@@ -37,28 +37,31 @@ fn strip_sigils(name: &str) -> std::borrow::Cow<'_, str> {
     if name.contains(['@', '$']) { name.chars().filter(|&c| c != '@' && c != '$').collect() } else { name.into() }
 }
 
-/// `cfg.strings(key).contains(name)` without collecting the list: the Naming cops ask per identifier.
-fn listed(cfg: &CopConfig, key: &str, name: &str) -> bool {
-    let is = |v: &Value| match v {
-        Value::Str(s) | Value::Sym(s) | Value::Regex(s) => s == name,
-        v => v.as_string().as_deref() == Some(name),
-    };
-    match cfg.get(key) {
-        Some(Value::Seq(items)) => items.iter().any(is),
-        Some(v) => is(v),
-        None => false,
-    }
-}
-
-/// AllowedIdentifiers#allowed_identifier? (sigils `@`/`$` removed first).
+/// AllowedIdentifiers#allowed_identifier? (sigils `@`/`$` removed first):
+/// `!allowed_identifiers.empty? && allowed_identifiers.include?(name)`, a substring test on a
+/// String.
 pub fn allowed_identifier(cfg: &CopConfig, name: &str) -> bool {
-    listed(cfg, "AllowedIdentifiers", &strip_sigils(name))
+    let empty = match cfg.get("AllowedIdentifiers") {
+        None => true,
+        Some(Value::Str(s)) => s.is_empty(),
+        Some(Value::Seq(items)) => items.is_empty(),
+        Some(Value::Map(m)) => m.keys().next().is_none(),
+        Some(_) => panic!("undefined method 'empty?' for AllowedIdentifiers"),
+    };
+    !empty && cfg.includes("AllowedIdentifiers", &strip_sigils(name))
 }
 
 /// ForbiddenIdentifiers#forbidden_identifier? || ForbiddenPattern#forbidden_pattern?
+/// (`forbidden_identifiers.any? && ...include?(name)`, `forbidden_patterns.map`): anything but an
+/// Array raises, a cop error.
 pub fn forbidden_name(cfg: &CopConfig, name: &str) -> bool {
-    listed(cfg, "ForbiddenIdentifiers", &strip_sigils(name))
-        || cfg.regexes("ForbiddenPatterns").iter().any(|r| r.is_match(name))
+    let any = match cfg.get("ForbiddenIdentifiers") {
+        None => false,
+        Some(Value::Seq(items)) => items.iter().any(|i| !matches!(i, Value::Null | Value::Bool(false))),
+        Some(_) => panic!("undefined method 'any?' for ForbiddenIdentifiers"),
+    };
+    (any && cfg.includes("ForbiddenIdentifiers", &strip_sigils(name)))
+        || cfg.regexes_array("ForbiddenPatterns").iter().any(|r| r.is_match(name))
 }
 
 #[cfg(test)]

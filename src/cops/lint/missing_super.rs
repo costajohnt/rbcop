@@ -50,8 +50,11 @@ impl Cop for MissingSuper {
         if sup.0 {
             return;
         }
+        // `STATELESS_CLASSES + cop_config.fetch('AllowedParentClasses', [])`: a String raises
+        // (TypeError), a cop error.
         let allowed = |n: &Node| {
-            const_name(n).is_some_and(|c| c == "BasicObject" || c == "Object" || cx.cfg.strings("AllowedParentClasses").contains(&c))
+            let extra = cx.cfg.array("AllowedParentClasses");
+            const_name(n).is_some_and(|c| c == "BasicObject" || c == "Object" || extra.contains(&c))
         };
         let msg = if initialize && stateful_parent(cx.ancestors, &allowed) {
             CONSTRUCTOR_MSG

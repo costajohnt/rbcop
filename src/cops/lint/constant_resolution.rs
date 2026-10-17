@@ -13,8 +13,16 @@ impl Cop for ConstantResolution {
     }
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let name = String::from_utf8_lossy(node.as_constant_read_node().unwrap().name().as_slice()).into_owned();
-        let only = cx.cfg.strings("Only");
-        if !(only.is_empty() || only.contains(&name)) || cx.cfg.strings("Ignore").contains(&name) {
+        // `(allowed_names.empty? || allowed_names.include?(name)) && !ignored_names.include?(name)`
+        // on the bare settings: a String is a substring test.
+        let only_empty = match cx.cfg.get("Only") {
+            None => true,
+            Some(Value::Str(s)) => s.is_empty(),
+            Some(Value::Seq(items)) => items.is_empty(),
+            Some(Value::Map(m)) => m.keys().next().is_none(),
+            Some(_) => panic!("undefined method 'empty?' for Only"),
+        };
+        if !(only_empty || cx.cfg.includes("Only", &name)) || cx.cfg.includes("Ignore", &name) {
             return;
         }
         if defines_module(cx.ancestors) {

@@ -15,8 +15,9 @@ struct Ctx<'a> {
     tree: &'a Tree,
     text: &'a str,
     active_support: bool,
-    method_creating: Vec<String>,
-    context_creating: Vec<String>,
+    /// None: the setting is not an Array, and `.any?` on it raises (a cop error).
+    method_creating: Option<Vec<String>>,
+    context_creating: Option<Vec<String>>,
     /// (start, end, message, removal range)
     hits: Vec<(usize, usize, String, (usize, usize))>,
 }
@@ -106,7 +107,7 @@ impl Ctx<'_> {
             || self.bare_send(n, &["attr", "attr_reader", "attr_writer", "attr_accessor"])
             || self.bare_send(n, &["define_method"])
             || (any_block(t) && self.tree.child(n, 0).is_some_and(|s| self.bare_send(s, &["define_method"])))
-            || self.method_creating.iter().any(|m| m != "included" && self.bare_send(n, &[m.as_str()]))
+            || raising(&self.method_creating).iter().any(|m| m != "included" && self.bare_send(n, &[m.as_str()]))
     }
 
     fn eval_call(&self, n: Id) -> bool {
@@ -117,15 +118,15 @@ impl Ctx<'_> {
             });
         class_or_instance_eval
             || self.class_constructor(n)
-            || (any_block(t.t(n))
-                && self.context_creating.iter().any(|m| {
-                    m != "included"
-                        && t.child(n, 0).is_some_and(|s| {
+            || raising(&self.context_creating).iter().any(|m| {
+                m != "included"
+                    && any_block(t.t(n))
+                    && t.child(n, 0).is_some_and(|s| {
                             self.send(s)
                                 && self.receiver(s).is_none_or(|r| self.is_const(r))
                                 && self.name(s) == m
                         })
-                }))
+                })
     }
 
     fn start_of_new_scope(&self, n: Id) -> bool {
@@ -196,6 +197,16 @@ impl Ctx<'_> {
     }
 }
 
+/// `cop_config.fetch(key, [])` when it is an Array.
+fn array(cfg: &crate::config::CopConfig, key: &str) -> Option<Vec<String>> {
+    matches!(cfg.get(key), None | Some(Value::Seq(_))).then(|| cfg.array(key))
+}
+
+/// `list.any?`: raises unless the setting is an Array.
+fn raising(list: &Option<Vec<String>>) -> &[String] {
+    list.as_deref().unwrap_or_else(|| panic!("undefined method 'any?' for a non-Array setting"))
+}
+
 impl Cop for UselessAccessModifier {
     fn correctable(&self) -> bool {
         true
@@ -211,15 +222,17 @@ impl Cop for UselessAccessModifier {
             tree,
             text: cx.src.text,
             active_support: cx.config.all_cops().truthy("ActiveSupportExtensionsEnabled"),
-            method_creating: cx.cfg.strings("MethodCreatingMethods"),
-            context_creating: cx.cfg.strings("ContextCreatingMethods"),
+            method_creating: array(cx.cfg, "MethodCreatingMethods"),
+            context_creating: array(cx.cfg, "ContextCreatingMethods"),
             hits: Vec::new(),
         };
         let Some(root) = tree.root else { return };
         let mut all = Vec::new();
         tree.each_node(root, &mut |n| all.push(n));
         for n in all {
-            match tree.t(n) {
+            // Each node is its own callback in RuboCop (on_class, on_block, ...): a raise there is a
+            // cop error at that node.
+            let visited = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| match tree.t(n) {
                 T::Class => ctx.check_node(tree.child(n, 2)),
                 T::Module | T::Sclass => ctx.check_node(tree.child(n, 1)),
                 t if any_block(t) => {
@@ -237,6 +250,12 @@ impl Cop for UselessAccessModifier {
                     }
                 }
                 _ => {}
+            }));
+            if let Err(payload) = visited {
+                if !(payload.is::<String>() || payload.is::<&str>()) {
+                    std::panic::resume_unwind(payload);
+                }
+                crate::runner::cop_error(NAME, cx.src, tree.range(n).0);
             }
         }
         for (s, e, msg, (rs, re)) in std::mem::take(&mut ctx.hits) {

@@ -653,10 +653,29 @@ pub fn cop_validate_config(cfg: &super::Resolved, team: impl Fn(&str) -> bool) -
     const PREDICATE: &str = "Naming/PredicatePrefix";
     if team(PREDICATE) {
         let p = &cfg.cop(PREDICATE).params;
-        // ponytail: a non-Array ForbiddenPrefixes crashes RuboCop (NoMethodError); not reproduced.
-        if let (Some(Value::Seq(forbidden)), Some(Value::Seq(names))) =
-            (p.get("ForbiddenPrefixes"), p.get("NamePrefix"))
-            && let Some(f) = forbidden.iter().find(|f| !names.contains(f))
+        // `forbidden_prefixes.each`: on a scalar a NoMethodError ends the run (exit 2; rbcop prints
+        // the message without the backtrace). `predicate_prefixes.include?` is a substring test on
+        // a String NamePrefix.
+        let class = match p.get("ForbiddenPrefixes") {
+            Some(Value::Str(_)) => Some("an instance of String"),
+            Some(Value::Sym(_)) => Some("an instance of Symbol"),
+            Some(Value::Int(_)) => Some("an instance of Integer"),
+            Some(Value::Float(_)) => Some("an instance of Float"),
+            Some(Value::Null) => Some("nil"),
+            Some(Value::Bool(true)) => Some("true"),
+            Some(Value::Bool(false)) => Some("false"),
+            _ => None,
+        };
+        if let Some(class) = class {
+            return Err(format!("undefined method 'each' for {class}"));
+        }
+        let included = |f: &Value| match p.get("NamePrefix") {
+            Some(Value::Seq(names)) => names.contains(f),
+            Some(Value::Str(names)) => f.as_string().is_some_and(|f| names.contains(f.as_str())),
+            _ => true,
+        };
+        if let Some(Value::Seq(forbidden)) = p.get("ForbiddenPrefixes")
+            && let Some(f) = forbidden.iter().find(|f| !included(f))
         {
             return Err(format!(
                 "Error: The `{PREDICATE}` cop is misconfigured. Prefix {} must be included in NamePrefix because it is \

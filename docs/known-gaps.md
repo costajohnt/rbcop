@@ -263,7 +263,12 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   on `def foo(bar` / `    )end`, Style/NegativeArrayIndex, Style/HashConversion, Style/RequireOrder).
   Cop errors from config values (MinBodyLength / MinBranchesCount not a positive Integer,
   SafeNavigationChainLength `Max` 0 or less, a zero indentation width with tabs, #114) are
-  reproduced. Order of cop errors: rbcop's `N errors occurred:` summary is sorted, RuboCop's is in
+  reproduced, and so are list settings given as a YAML String (#440, #474): each cop reads one as
+  its RuboCop counterpart does, a substring test where the cop calls `include?` on the bare
+  setting, a cop error where it calls an Array-only method (`map`, `any?`, `each`, `join`, `+`,
+  `-`), a one-element list where it wraps the setting in `Array()`. A String
+  Naming/PredicatePrefix `ForbiddenPrefixes` ends the run (exit 2) with RuboCop's
+  `undefined method 'each' for an instance of String`, without the backtrace. Order of cop errors: rbcop's `N errors occurred:` summary is sorted, RuboCop's is in
   raise order; and errors printed as they happen come from on_file cops (RuboCop's
   on_new_investigation) after the node walk's, where RuboCop prints them first. A directive naming
   a bare cop name two departments share (AmbiguousCopName) ends the run at its file as in RuboCop;
