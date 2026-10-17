@@ -38,9 +38,15 @@ impl Cop for RedundantActiveRecordAllMethod {
         let anc = cx.ancestors;
         let Some(pi) = helpers::rails::parent_index(anc) else { return };
         let Some(parent) = helpers::rails::send(&anc[pi]) else { return };
-        let is_recv = parent.receiver().is_some_and(|r| r.location().start_offset() == node.location().start_offset() && r.location().end_offset() == node.location().end_offset());
+        // The pattern asks only that the parent's receiver is some `all` send, so the `all` argument
+        // of `Foo.all.merge(Bar.all)` is reported too (#443).
+        let Some(recv) = parent.receiver() else { return };
+        let all_recv = helpers::rails::send(&recv)
+            .is_some_and(|r| method_name(&r) == "all" && send_args(&r).is_empty() && r.block().is_none());
+        let is_recv = recv.location().start_offset() == node.location().start_offset()
+            && recv.location().end_offset() == node.location().end_offset();
         let pname = method_name(&parent);
-        if !is_recv || !QUERYING.contains(&pname) {
+        if !all_recv || !QUERYING.contains(&pname) {
             return;
         }
         // possible_enumerable_block_method?
@@ -70,6 +76,11 @@ impl Cop for RedundantActiveRecordAllMethod {
         let sel = call.message_loc().unwrap();
         let (s, e) = (sel.start_offset(), send_range(&call).1);
         let dot = parent.call_operator_loc().map(|d| (d.start_offset(), d.end_offset()));
+        // For an argument `all`, RuboCop's correction removes its selector and the parent's dot and
+        // writes `Foo.merge(Bar.)`, a syntax error: withheld (docs/known-gaps.md).
+        if !is_recv {
+            return cx.add_withheld_fix(s, e, "Redundant `all` detected.");
+        }
         cx.add_fix(s, e, "Redundant `all` detected.", |c| {
             c.remove(s, e);
             if let Some((a, b)) = dot {

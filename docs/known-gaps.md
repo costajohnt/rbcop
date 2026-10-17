@@ -96,6 +96,13 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   Other Rails corrections insert source text or escaped literals (`inspect`/`dump`) and are not
   changed. Fixture: tests/autocorrect/rails_untrusted_text (RuboCop's output is kept in
   `rubocop-output/`).
+- Rails/RedundantActiveRecordAllMethod reports an `all` that is an argument of a querying method
+  whose receiver is also `.all` (`Foo.all.merge(Bar.all)`), as RuboCop does, but withholds that
+  correction: RuboCop removes the argument's `all` and the parent's dot and writes
+  `Foo.merge(Bar.)` (a syntax error), or `where()` for `all.where(all)`. The receiver's `all` is
+  corrected as usual; once it is, the argument is no longer reported (its parent's receiver is not
+  `.all` any more), so under `-a`/`-A` rbcop reports only offenses that remain. Fixture:
+  tests/autocorrect/rails_all_argument (RuboCop's output in `rubocop-output/`).
 - rubocop-minitest corrections were checked against the same rule: none splices string or symbol
   content into new source (they move the source of whole arguments and receivers, and write method
   names and operators, which are identifiers), so none is withheld.
