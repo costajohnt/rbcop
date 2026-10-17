@@ -772,10 +772,8 @@ fn ruby_version_string(v: f64) -> String {
 
 /// `--show-cops`: CLI::Command::ShowCops for the cops rbcop implements.
 fn show_cops(patterns: &[String], cfg: &Resolved, pwd: &str) {
-    let mut names: Vec<&'static str> =
-        cops::ALL.iter().map(|r| r.name).filter(|n| rbcop::helpers::cop_registry::is_registered(n)).collect();
-    // Lint/Syntax lives in the runner, not in cops::ALL, but RuboCop's registry lists it.
-    names.push("Lint/Syntax");
+    // Registry.global: RuboCop's cops and every loaded plugin's, those rbcop does not implement too.
+    let mut names: Vec<&'static str> = rbcop::helpers::cop_registry::REGISTRY.to_vec();
     rbcop::helpers::cop_registry::sort_by_department(&mut names);
     let show_all = patterns.is_empty();
     let selected = |name: &str| {

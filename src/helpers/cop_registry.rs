@@ -135,6 +135,18 @@ pub fn register_foreign(names: Vec<String>) {
     OPEN.write().unwrap().foreign = true;
 }
 
+static FOREIGN_AUTOCORRECT: RwLock<Vec<String>> = RwLock::new(Vec::new());
+
+/// The cops of plugins rbcop does not implement that support autocorrect (`extend AutoCorrector`).
+pub fn set_foreign_autocorrect(names: impl IntoIterator<Item = String>) {
+    FOREIGN_AUTOCORRECT.write().unwrap().extend(names);
+}
+
+/// Cop.support_autocorrect? for a foreign plugin's cop.
+pub fn foreign_autocorrect(cop: &str) -> bool {
+    FOREIGN_AUTOCORRECT.read().unwrap().iter().any(|c| c == cop)
+}
+
 /// What rbcop cannot enumerate of RuboCop's registry: cops a `require:`d local file or an unfound
 /// gem defines (`custom`), and class names in loaded plugins' lib/ (cops registered without a
 /// default.yml entry).

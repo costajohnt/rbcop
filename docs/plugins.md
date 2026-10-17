@@ -35,8 +35,9 @@ installed; a different installed version is ignored.
   The runner, `--show-cops`, `--only`/`--except` and the junit formatter skip a native plugin's cops
   until it is loaded (`cop_registry::is_registered`), as RuboCop's registry only holds them then.
 - `REGISTRY` (directives, the validator, `--only`, `--list-enabled-cops-for`, `--show-docs-url`)
-  holds RuboCop's cops, then each loaded plugin's. Plugins rbcop does not implement still add their
-  default.yml cop names (`register_foreign`), so directives naming them are not "unknown"; since rbcop
+  holds RuboCop's cops, then each loaded plugin's. Plugins rbcop does not implement still add the
+  cop classes their gem's `lib/` defines (`register_foreign`, `ruby_cops` in `src/config/mod.rs`),
+  so directives naming them are not "unknown" and `--show-cops` lists them; since rbcop
   cannot run those cops (nor custom cops from a `require:`d Ruby file), a directive naming one is
   never reported as redundant, and neither is a `disable all` while such cops are loaded.
 - `--only` names are qualified once configs have loaded (plugins add departments and cop names);

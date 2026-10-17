@@ -389,6 +389,7 @@ pub fn supports_autocorrect(cop: &str) -> bool {
         .lines()
         .any(|l| l.split('\t').next() == Some(cop) && l.split('\t').nth(3).is_some_and(|m| m.contains("AutoCorrector")))
         || crate::cops::ALL.iter().any(|r| r.name == cop && r.cop.correctable())
+        || crate::helpers::cop_registry::foreign_autocorrect(cop)
 }
 
 /// One inspected file.
