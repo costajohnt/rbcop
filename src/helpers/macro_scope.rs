@@ -11,8 +11,12 @@ fn span(n: &Node) -> (usize, usize) {
 }
 
 /// `class_constructor?` on a call (or the call owning a block): `Class.new`, `Module.new`,
-/// `Struct.new`, `Data.define` with a global (`X` or `::X`) constant receiver.
+/// `Struct.new`, `Data.define` with a global (`X` or `::X`) constant receiver; a `send`, so not
+/// `Class&.new`.
 pub fn class_constructor(call: &CallNode) -> bool {
+    if crate::ast::is_csend(call) {
+        return false;
+    }
     let Some(r) = call.receiver() else { return false };
     let name = match kind::of(&r) {
         kind::CONSTANT_READ_NODE => r.as_constant_read_node().unwrap().name(),
