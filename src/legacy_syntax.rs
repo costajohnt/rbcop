@@ -240,7 +240,7 @@ pub fn identifier_data_marker(text: &str, tokens: &[Token]) -> Option<usize> {
 /// The `&` of each `&.` after a singleton method's receiver (`def self&.foo`, `def (x)&.foo`): the
 /// parser gem's `defs_head` takes `&.` there like `.`, Prism rejects it (#492). Parse a copy with
 /// ` .` instead.
-pub fn defs_and_dots(tokens: &[Token]) -> Vec<usize> {
+pub fn defs_and_dots(text: &str, tokens: &[Token], target: f64) -> Vec<usize> {
     let receiver_start = |i: usize| -> Option<usize> {
         if tokens[i].kind != "PARENTHESIS_RIGHT" {
             return matches!(
@@ -270,9 +270,16 @@ pub fn defs_and_dots(tokens: &[Token]) -> Vec<usize> {
             depth == 0
         })
     };
+    // Also on the next line, when the lexer joins it as for a leading `.` (#504).
+    let trivia = |k: &str| matches!(k, "NEWLINE" | "IGNORED_NEWLINE" | "COMMENT");
     (2..tokens.len())
         .filter(|&i| tokens[i].kind == "AMPERSAND_DOT")
-        .filter(|&i| receiver_start(i - 1).is_some_and(|r| r > 0 && tokens[r - 1].kind == "KEYWORD_DEF"))
+        .filter(|&i| {
+            tokens[..i].iter().rposition(|t| !trivia(t.kind)).is_some_and(|j| {
+                receiver_start(j).is_some_and(|r| r > 0 && tokens[r - 1].kind == "KEYWORD_DEF")
+                    && joins_leading_dot(text, tokens[j].end, tokens[i].start, target)
+            })
+        })
         .map(|i| tokens[i].start)
         .collect()
 }
@@ -332,6 +339,25 @@ fn paren_arg_term(text: &str, from: usize, resume: Option<usize>, target: f64) -
         i = end;
     }
     term(skip_trivia(b, i)).map(|i| from + i)
+}
+
+/// Whether the parser gem's lexer continues the expression ending at `from` with the leading `.`
+/// or `&.` at `dot` (lexer.rl's leading_dot).
+fn joins_leading_dot(text: &str, from: usize, dot: usize, target: f64) -> bool {
+    let b = &text.as_bytes()[from..dot];
+    let i = skip_trivia(b, 0);
+    if i == b.len() {
+        return true;
+    }
+    if b[i] != b'\n' {
+        return false;
+    }
+    let i = match leading_dot_lines(b, i + 1) {
+        Some(_) if target < 2.7 => return false,
+        Some(end) => end,
+        None => i + 1,
+    };
+    b[i..].iter().all(|c| LEX_SPACE.contains(c))
 }
 
 /// A 7-byte identifier for an `__END__` the parser gem reads as one (`identifier_data_marker`),

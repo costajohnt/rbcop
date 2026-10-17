@@ -3,6 +3,14 @@ defs_anddot.rb:1:1: C: Style/Documentation: Missing top-level documentation comm
 defs_anddot.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 defs_anddot.rb:6:18: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 defs_anddot.rb:6:3: C: [Correctable] Style/SingleLineMethods: Avoid single-line method definitions.
+defs_anddot_newline.rb:10:10: W: [Correctable] Layout/DefEndAlignment: `end` at 10, 9 is not aligned with `def` at 8, 2.
+defs_anddot_newline.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for `class A`.
+defs_anddot_newline.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+defs_anddot_newline.rb:2:3: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+defs_anddot_newline.rb:3:10: W: [Correctable] Layout/DefEndAlignment: `end` at 3, 9 is not aligned with `def` at 2, 2.
+defs_anddot_newline.rb:5:3: C: [Correctable] Style/EmptyMethod: Put empty method definitions on a single line.
+defs_anddot_newline.rb:6:10: W: [Correctable] Layout/DefEndAlignment: `end` at 6, 9 is not aligned with `def` at 5, 2.
+defs_anddot_newline.rb:8:12: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `def` keyword.
 f1.rb:2:11: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 f2.rb:2:8: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 lparen_arg_backslash_line.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.

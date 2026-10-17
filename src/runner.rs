@@ -240,7 +240,7 @@ pub fn parse_for_target<'t>(
         }
         // `def self&.foo` is a singleton method for the parser gem: the copy has `def self .foo` (#492).
         if errors {
-            round.extend(crate::legacy_syntax::defs_and_dots(&tokens).into_iter().map(|o| (o, b' ')));
+            round.extend(crate::legacy_syntax::defs_and_dots(cur, &tokens, target_ruby).into_iter().map(|o| (o, b' ')));
         }
         // A NUL ends a heredoc line for the parser gem's lexer: the NULs that make a terminator line
         // become newlines (#247).

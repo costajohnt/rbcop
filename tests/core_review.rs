@@ -920,3 +920,38 @@ fn string_list_settings_raise_where_rubocop_does() {
         assert_eq!(errors, want, "{name}");
     }
 }
+
+/// Below 3.3, whether the parser gem rejects a file where only the Lint/Syntax wording differs
+/// (a documented gap), so the scenarios cannot record it: `foo (stmt ...)` with a second tNL or a
+/// `;` after a newline before its `)` (#503), a leading `&.` on the line after `def recv` (#504).
+/// Each row checked against RuboCop 1.91.0.
+#[test]
+fn legacy_lexer_newlines_reject_as_the_parser_gem() {
+    let rows: &[(&str, &str, bool)] = &[
+        ("3.2", "foo (a #c\n\n)\n", true),
+        ("3.2", "foo (a\n#c\n\n)\n", true),
+        ("2.6", "foo (a\n#c\n)\n", true),
+        ("3.2", "foo (a\n#c\n)\n", false),
+        ("3.2", "foo (a\n;)\n", true),
+        ("3.2", "foo (a\n \n)\n", false),
+        ("2.6", "foo (a\n \n)\n", true),
+        ("3.2", "foo (a\n\\\n\n)\n", false),
+        ("3.2", "foo (<<X\nb\n\nX\n)\n", false),
+        ("3.2", "foo (<<X\nb\nX\n\n)\n", true),
+        ("3.2", "def self\n&.foo; end\n", false),
+        ("2.6", "def (x)\n&.foo; end\n", false),
+        ("3.2", "def self # c\n&.foo; end\n", false),
+        ("3.2", "def self\n# c\n&.foo; end\n", false),
+        ("2.6", "def self\n# c\n&.foo; end\n", true),
+        ("3.2", "def self\n\n&.foo; end\n", true),
+    ];
+    let dir = scratch("legacylexer");
+    for &(target, src, rejects) in rows {
+        let cfg = format!("AllCops:\n  NewCops: disable\n  SuggestExtensions: false\n  TargetRubyVersion: {target}\n");
+        fs::write(dir.join(".rubocop.yml"), cfg).unwrap();
+        fs::write(dir.join("t.rb"), src).unwrap();
+        let out = text(&rbcop(&dir, &["--only", "Lint/Syntax", "-f", "e", "t.rb"]).stdout);
+        assert_eq!(out.contains("Lint/Syntax"), rejects, "{target} {src:?}: {out}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}

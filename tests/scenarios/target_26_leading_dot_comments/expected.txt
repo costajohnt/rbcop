@@ -3,6 +3,9 @@ anddot.rb:3:3: F: Lint/Syntax: unexpected token tAMPER (Using Ruby 2.6 parser; c
 blank.rb:3:3: F: Lint/Syntax: unexpected token tAMPER (Using Ruby 2.6 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 chain.rb:4:3: F: Lint/Syntax: unexpected token tDOT (Using Ruby 2.6 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 chain.rb:6:3: F: Lint/Syntax: unexpected token tDOT (Using Ruby 2.6 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+defs_anddot_newline.rb:1:10: C: [Correctable] Style/CommentedKeyword: Do not place comments on the same line as the `def` keyword.
+defs_anddot_newline.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+defs_anddot_newline.rb:2:8: W: [Correctable] Layout/DefEndAlignment: `end` at 2, 7 is not aligned with `def` at 1, 0.
 dot.rb:3:3: F: Lint/Syntax: unexpected token tDOT (Using Ruby 2.6 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 ok.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 trailing.rb:3:3: F: Lint/Syntax: unexpected token tDOT (Using Ruby 2.6 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
