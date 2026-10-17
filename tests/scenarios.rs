@@ -11,17 +11,22 @@ fn bin() -> &'static str {
 }
 
 fn implemented() -> BTreeSet<String> {
-    // With the native plugins loaded, so their cops are listed too.
-    let config = concat!(env!("CARGO_MANIFEST_DIR"), "/config/all-cops-performance.yml");
-    let out = common::command(bin()).args(["--show-cops", "--config", config]).output().unwrap();
-    // `--show-cops` prints RuboCop's YAML; cop names are the unindented keys.
-    String::from_utf8(out.stdout)
-        .unwrap()
-        .lines()
-        .filter(|l| !l.starts_with([' ', '#']))
-        .filter_map(|l| l.strip_suffix(':'))
-        .map(String::from)
-        .collect()
+    // With each native plugin loaded, so their cops are listed too.
+    let mut cops = BTreeSet::new();
+    for plugin in ["performance", "rails", "minitest", "rspec"] {
+        let config = format!("{}/config/all-cops-{plugin}.yml", env!("CARGO_MANIFEST_DIR"));
+        let out = common::command(bin()).args(["--show-cops", "--config", &config]).output().unwrap();
+        // `--show-cops` prints RuboCop's YAML; cop names are the unindented keys.
+        cops.extend(
+            String::from_utf8(out.stdout)
+                .unwrap()
+                .lines()
+                .filter(|l| !l.starts_with([' ', '#']))
+                .filter_map(|l| l.strip_suffix(':'))
+                .map(String::from),
+        );
+    }
+    cops
 }
 
 /// Cop name from an emacs-format line: `path:l:c: C: [Correctable] Cop/Name: message`.
