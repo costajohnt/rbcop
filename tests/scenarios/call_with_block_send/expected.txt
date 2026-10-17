@@ -1,0 +1,43 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+more.rb:11:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+more.rb:13:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+more.rb:18:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+more.rb:1:10: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+more.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+more.rb:1:1: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+more.rb:21:4: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+more.rb:23:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+more.rb:26:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+more.rb:27:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+more.rb:2:1: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+more.rb:6:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+more.rb:8:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+parens.rb:13:1: C: [Correctable] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+parens.rb:14:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+parens.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+parens.rb:21:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+parens.rb:23:15: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `e`.
+parens.rb:24:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+parens.rb:26:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+parens.rb:28:15: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `e`.
+parens.rb:29:18: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+parens.rb:29:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+parens.rb:29:3: C: [Correctable] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+parens.rb:31:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+parens.rb:4:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+parens.rb:6:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1 empty line between method definitions; found 0.
+parens.rb:9:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method call.
+reduce.rb:13:5: C: [Correctable] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+reduce.rb:23:5: C: [Correctable] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+reduce.rb:25:12: W: [Correctable] Lint/RedundantWithObject: Use `each` instead of `each_with_object`.
+reduce.rb:25:5: W: Lint/UnexpectedBlockArity: `each_with_object` expects at least 2 positional arguments, got 1.
+reduce.rb:31:5: C: [Correctable] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+reduce.rb:33:27: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for single-line blocks.
+reduce.rb:33:5: C: [Correctable] Style/SingleLineDoEndBlock: Prefer multiline `do`...`end` block.
+reduce.rb:39:5: C: [Correctable] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+reduce.rb:41:16: W: [Correctable] Lint/RedundantWithObject: Use `each` instead of `each_with_object`.
+reduce.rb:41:9: W: Lint/UnexpectedBlockArity: `each_with_object` expects at least 2 positional arguments, got 1.
+reduce.rb:48:5: C: [Correctable] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+reduce.rb:56:10: W: Lint/UnmodifiedReduceAccumulator: Ensure the accumulator `merged` will be modified by `reduce`.
+reduce.rb:56:5: C: [Correctable] Style/NegatedIf: Favor `unless` over `if` for negative conditions.
+reduce.rb:5:5: C: [Correctable] Style/NegatedIf: Favor `unless` over `if` for negative conditions.

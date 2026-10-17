@@ -25,13 +25,12 @@ impl Cop for ThreeStateBooleanColumn {
             ("boolean", [col, rest @ ..]) if has_recv && rest.len() <= 1 => (col, rest.first()),
             _ => return,
         };
-        // (hash <(pair (sym :default) !nil?) (pair (sym :null) false) ...>)
+        // (hash <(pair (sym :default) !nil?) (pair (sym :null) false) ...>): `nil?` is Object#nil?
+        // on the value node, false for a `nil` literal too, so any `default:` pair counts.
         let required = options.is_some_and(|o| {
             let Some(elems) = helpers::rails::hash_elements(o) else { return false };
             let pairs: Vec<ruby_prism::AssocNode> = elems.iter().filter_map(|e| e.as_assoc_node()).collect();
-            let default = pairs.iter().any(|p| {
-                helpers::rails::sym_value(&p.key()).as_deref() == Some("default") && p.value().as_nil_node().is_none()
-            });
+            let default = pairs.iter().any(|p| helpers::rails::sym_value(&p.key()).as_deref() == Some("default"));
             let null = pairs.iter().any(|p| {
                 helpers::rails::sym_value(&p.key()).as_deref() == Some("null") && p.value().as_false_node().is_some()
             });

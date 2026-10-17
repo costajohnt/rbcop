@@ -1,0 +1,1 @@
+Lint/AmbiguousBlockAssociation,Layout/LineEndStringConcatenationIndentation,Layout/LineLength

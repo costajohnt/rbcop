@@ -1,0 +1,5 @@
+# A parenthesized receiver of a block call as the sole rescue-body statement (#432).
+AllCops:
+  TargetRubyVersion: 3.4
+  NewCops: enable
+  SuggestExtensions: false

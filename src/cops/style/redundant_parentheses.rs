@@ -226,21 +226,6 @@ fn parenthesized(n: &Node) -> bool {
     }
 }
 
-fn lambda_or_proc(n: &Node) -> bool {
-    if n.as_lambda_node().is_some() {
-        return true;
-    }
-    let Some(c) = n.as_call_node() else { return false };
-    if c.block().is_none_or(|b| b.as_block_node().is_none()) || is_csend(&c) {
-        return false;
-    }
-    let name = method_name(&c);
-    match c.receiver() {
-        None => name == "lambda" || name == "proc",
-        Some(r) => name == "new" && helpers::parser_parent::is_top_const(&r, "Proc"),
-    }
-}
-
 /// `braces?` of a block.
 fn braces(n: &Node) -> bool {
     match kind::of(n) {
@@ -379,8 +364,12 @@ impl<'pr> Check<'_, 'pr> {
             _ => false,
         };
         let Some(p) = self.pi else { return false };
+        // A call owning a literal block is two parser levels when we are in its send part
+        // (`(logger).error { }` is `(block (send (begin ...) :error) ...)`): the grandparent is
+        // the block, never a resbody (#432).
+        let owns_block = self.anc[p].as_call_node().is_some_and(|c| c.block().is_some_and(|b| b.as_block_node().is_some()));
         resbody_of(p, self.me())
-            || parser_parent_index(self.anc, p).is_some_and(|g| resbody_of(g, range(&self.anc[p])))
+            || (!owns_block && parser_parent_index(self.anc, p).is_some_and(|g| resbody_of(g, range(&self.anc[p]))))
     }
 
     fn parens_required(&self) -> bool {
@@ -486,7 +475,7 @@ impl<'pr> Check<'_, 'pr> {
         if is_assignment(node) && (self.parent().is_none() || self.parent_begin()) {
             return Some("an assignment");
         }
-        if lambda_or_proc(node) && (braces(node) || node.as_lambda_node().is_some()) {
+        if helpers::node_types::lambda_or_proc(node) && (braces(node) || node.as_lambda_node().is_some()) {
             return Some("an expression");
         }
         if self.disallowed_one_line_pattern_matching(node) {
@@ -605,7 +594,7 @@ impl<'pr> Check<'_, 'pr> {
 
     /// check_send / check_unary: the message, if any.
     fn check_send(&self, node: &Node) -> Option<&'static str> {
-        let call_node = call_type(node) || (is_block(node) && braces(node) && !lambda_or_proc(node));
+        let call_node = call_type(node) || (is_block(node) && braces(node) && !helpers::node_types::lambda_or_proc(node));
         if !call_node {
             return None;
         }

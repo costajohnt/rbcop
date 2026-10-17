@@ -12,12 +12,12 @@ fn bin() -> &'static str {
 
 fn implemented() -> BTreeSet<String> {
     // With each native plugin loaded, so their cops are listed too.
-    let mut names = BTreeSet::new();
+    let mut cops = BTreeSet::new();
     for plugin in ["performance", "rails", "minitest", "rspec"] {
         let config = format!("{}/config/all-cops-{plugin}.yml", env!("CARGO_MANIFEST_DIR"));
         let out = common::command(bin()).args(["--show-cops", "--config", &config]).output().unwrap();
         // `--show-cops` prints RuboCop's YAML; cop names are the unindented keys.
-        names.extend(
+        cops.extend(
             String::from_utf8(out.stdout)
                 .unwrap()
                 .lines()
@@ -26,7 +26,7 @@ fn implemented() -> BTreeSet<String> {
                 .map(String::from),
         );
     }
-    names
+    cops
 }
 
 /// Cop name from an emacs-format line: `path:l:c: C: [Correctable] Cop/Name: message`.

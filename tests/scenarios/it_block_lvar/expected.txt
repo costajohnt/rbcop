@@ -1,0 +1,160 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:12:13: C: [Correctable] Performance/MapCompact: Use `filter_map` instead.
+a.rb:12:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:13:10: C: [Correctable] Style/SymbolProc: Pass `&:blank?` as an argument to `reject` instead of a block.
+a.rb:14:10: W: [Correctable] Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+a.rb:15:10: W: [Correctable] Rails/DeprecatedActiveModelErrorsMethods: Avoid manipulating ActiveModel errors as hash directly.
+a.rb:15:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:16:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:17:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:18:10: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+a.rb:18:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:19:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:1:10: W: [Correctable] Lint/UselessNumericOperation: Do not apply inconsequential numeric operations to variables.
+a.rb:20:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:20:20: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `select` instead of a block.
+a.rb:21:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:22:13: C: [Correctable] Style/RedundantSort: Use `min` instead of `sort...first`.
+a.rb:22:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:23:13: C: [Correctable] Performance/StringReplacement: Use `tr` instead of `gsub`.
+a.rb:23:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:24:18: W: [Correctable] Lint/RedundantTypeConversion: Redundant `to_s` detected.
+a.rb:24:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:25:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:26:10: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+a.rb:26:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:27:13: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+a.rb:27:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:28:10: C: [Correctable] Rails/Presence: Use `it.presence` instead of `it.present? ? it : nil`.
+a.rb:28:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:29:10: C: [Correctable] Rails/Presence: Use `it.presence` instead of `it.blank? ? nil : it`.
+a.rb:29:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:2:18: W: [Correctable] Lint/DuplicateSetElement: Remove the duplicate element in Set.
+a.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:30:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:31:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:32:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:33:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:34:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:35:10: C: [Correctable] Style/SelectByRegexp: Prefer `grep` to `select` with a regexp match.
+a.rb:35:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:35:22: C: [Correctable] Performance/StringInclude: Use `String#include?` instead of a regex match with literal-only pattern.
+a.rb:36:13: C: [Correctable] Style/CollectionCompact: Use `compact` instead of `reject { it.nil? }`.
+a.rb:36:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:36:20: C: [Correctable] Style/SymbolProc: Pass `&:nil?` as an argument to `reject` instead of a block.
+a.rb:37:13: C: [Correctable] Performance/Sum: Use `sum` instead of `inject(0) { |s, e| s + e }`.
+a.rb:37:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:38:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:39:18: W: [Correctable] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in `puts`.
+a.rb:39:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:3:14: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a variable.
+a.rb:3:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:40:10: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+a.rb:40:10: C: [Correctable] Style/RedundantCondition: This condition is not needed.
+a.rb:40:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:41:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:42:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:43:10: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+a.rb:43:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:44:10: C: [Correctable] Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+a.rb:44:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:45:10: C: Style/ItAssignment: `it` is the default block parameter; consider another name.
+a.rb:45:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:45:20: W: [Correctable] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+a.rb:45:25: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+a.rb:46:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:47:10: C: [Correctable] Performance/DoubleStartEndWith: Use `it.start_with?('a', 'b')` instead of `it.start_with?('a') || it.start_with?('b')`.
+a.rb:47:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:48:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:49:13: C: [Correctable] Style/ZeroLengthPredicate: Use `empty?` instead of `length.zero?`.
+a.rb:49:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:4:10: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a variable.
+a.rb:4:10: C: [Correctable] Style/TernaryParentheses: Omit parentheses for ternary conditions.
+a.rb:4:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:50:10: C: [Correctable] Style/NumericPredicate: Use `it.size.positive?` instead of `it.size > 0`.
+a.rb:50:10: C: [Correctable] Style/ZeroLengthPredicate: Use `!empty?` instead of `size > 0`.
+a.rb:50:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:51:10: C: [Correctable] Style/NumericPredicate: Use `it.count.positive?` instead of `it.count > 0`.
+a.rb:51:13: C: [Correctable] Style/CollectionQuerying: Use `any?` instead.
+a.rb:51:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:52:13: C: [Correctable] Style/HashEachMethods: Use `each_key` instead of `keys.each`.
+a.rb:52:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:53:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:54:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:55:15: C: [Correctable] Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
+a.rb:55:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:56:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:56:8: C: [Correctable] Style/SymbolProc: Pass `&:freeze` as an argument to `each` instead of a block.
+a.rb:57:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:58:10: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+a.rb:58:10: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:58:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:59:10: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+a.rb:59:15: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:59:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:5:15: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
+a.rb:5:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:60:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:61:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:62:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:63:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:64:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:64:1: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+a.rb:65:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:66:10: C: [Correctable] Rails/SafeNavigation: Use safe navigation (`&.`) instead of `try!`.
+a.rb:66:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:67:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:68:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:69:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:6:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:70:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:7:10: W: Security/Eval: The use of `eval` is a serious security risk.
+a.rb:7:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:8:13: C: [Correctable] Style/ClassEqualityComparison: Use `instance_of?(Foo)` instead of comparing classes.
+a.rb:8:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+a.rb:9:13: C: [Correctable] Style/ClassEqualityComparison: Use `instance_of?(Foo)` instead of comparing classes.
+a.rb:9:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+b.rb:22:55: F: Lint/Syntax: 'it' is not allowed when an ordinary parameter is defined (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+b.rb:41:40: F: Lint/Syntax: 'it' is not allowed when an ordinary parameter is defined (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+index_by.rb:1:1: C: [Correctable] Style/HashConversion: Prefer `ary.to_h` to `Hash[ary]`.
+index_by.rb:2:3: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+index_by.rb:4:1: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `to_h { ... }`.
+index_by.rb:5:1: C: [Correctable] Rails/IndexBy: Prefer `index_by` over `to_h { ... }`.
+index_by.rb:6:3: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+index_by.rb:7:1: C: [Correctable] Rails/IndexBy: Prefer `index_by` over `map { ... }.to_h`.
+index_by.rb:7:1: C: [Correctable] Rails/IndexWith: Prefer `index_with` over `map { ... }.to_h`.
+index_by.rb:7:3: C: [Correctable] Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+multiple_comparison.rb:11:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+multiple_comparison.rb:11:1: C: Style/NumberedParameters: Avoid using numbered parameters for multi-line blocks.
+multiple_comparison.rb:12:21: C: [Correctable] Style/NumericPredicate: Use `_1.zero?` instead of `_1 == 0`.
+multiple_comparison.rb:12:3: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+multiple_comparison.rb:12:6: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+multiple_comparison.rb:16:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+multiple_comparison.rb:17:21: C: [Correctable] Style/NumericPredicate: Use `it.zero?` instead of `it == 0`.
+multiple_comparison.rb:17:3: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+multiple_comparison.rb:17:6: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+multiple_comparison.rb:17:6: C: [Correctable] Style/YodaCondition: Reverse the order of the operands `false == it`.
+multiple_comparison.rb:2:21: C: [Correctable] Style/NumericPredicate: Use `it.zero?` instead of `it == 0`.
+multiple_comparison.rb:2:3: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+multiple_comparison.rb:2:6: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+multiple_comparison.rb:6:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+multiple_comparison.rb:7:20: C: [Correctable] Style/NumericPredicate: Use `v.zero?` instead of `v == 0`.
+multiple_comparison.rb:7:3: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+multiple_comparison.rb:7:6: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
+spec/a_spec.rb:10:3: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+spec/a_spec.rb:11:3: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+spec/a_spec.rb:12:17: C: [Correctable] RSpec/ImplicitSubject: Don't use implicit subject.
+spec/a_spec.rb:12:3: C: Style/CombinableLoops: Combine this loop with the previous loop.
+spec/a_spec.rb:13:12: C: [Correctable] RSpec/IncludeExamples: Prefer `it_behaves_like` over `include_examples`.
+spec/a_spec.rb:13:3: C: Style/CombinableLoops: Combine this loop with the previous loop.
+spec/a_spec.rb:14:3: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+spec/a_spec.rb:15:3: C: [Correctable] RSpec/IteratedExpectation: Prefer using the `all` matcher instead of iterating over an array.
+spec/a_spec.rb:15:3: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+spec/a_spec.rb:16:3: C: [Correctable] RSpec/IteratedExpectation: Prefer using the `all` matcher instead of iterating over an array.
+spec/a_spec.rb:16:3: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+spec/a_spec.rb:17:3: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+spec/a_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `foo*_spec.rb`.
+spec/a_spec.rb:1:1: C: [Correctable] RSpec/EmptyExampleGroup: Empty example group detected.
+spec/a_spec.rb:8:12: C: [Correctable] FactoryBot/ConsistentParenthesesStyle: Prefer method call with parentheses
+spec/a_spec.rb:8:3: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+spec/a_spec.rb:9:3: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.

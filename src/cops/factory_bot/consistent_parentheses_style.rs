@@ -41,7 +41,7 @@ impl Cop for ConsistentParenthesesStyle {
         let first_ok = helpers::rspec::is_sym(cx, first)
             || helpers::rspec::is_str(first)
             || helpers::rspec::send_call(first).is_some_and(|c| !is_csend(&c))
-            || first.as_local_variable_read_node().is_some();
+            || helpers::node_types::lvar_name(first).is_some();
         if !first_ok {
             return;
         }
