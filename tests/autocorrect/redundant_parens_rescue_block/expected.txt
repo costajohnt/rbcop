@@ -1,0 +1,12 @@
+more.rb:1:10: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+more.rb:6:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+more.rb:11:5: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+more.rb:21:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+more.rb:21:4: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+more.rb:27:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+more.rb:56:121: C: Layout/LineLength: Line is too long. [129/120]
+parens.rb:4:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+parens.rb:9:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+parens.rb:14:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+parens.rb:24:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
+parens.rb:29:3: C: [Corrected] Style/RedundantParentheses: Don't use parentheses around a method call.
