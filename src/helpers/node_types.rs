@@ -60,13 +60,10 @@ pub fn lvar_name<'pr>(node: &Node<'pr>) -> Option<&'pr [u8]> {
     }
 }
 
-/// A `_1`..`_9` read below Ruby 2.7: Prism's LocalVariableReadNode is the parser gem's
-/// `(send nil :_1)` there (the runner already dropped the blocks' numbered parameters).
+/// An undeclared `_1`..`_9` read below Ruby 2.7: Prism's LocalVariableReadNode is the parser
+/// gem's `(send nil :_1)` there (`syntax::legacy_numbered_sends`).
 pub fn is_legacy_numbered_read(cx: &Cx, node: &Node) -> bool {
-    cx.config.target_ruby < 2.7
-        && node.as_local_variable_read_node().is_some_and(|l| {
-            matches!(l.name().as_slice(), [b'_', b'1'..=b'9'])
-        })
+    node.as_local_variable_read_node().is_some_and(|l| cx.src.numbered_send(l.location().start_offset()))
 }
 
 /// `operator_method?`

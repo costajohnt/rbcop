@@ -179,8 +179,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     file: rbcop parses with Prism and maps its errors onto the parser gem's racc messages, but the
     two lexers and grammars fail at different places on arbitrary broken input (an unclosed `{`
     or `[` pattern, `BEGIN` inside a def, `a.{}`, `x.0`, a stray `:`, doubled or trailing commas,
-    unary `+`/`-` at end of file, `class ::foo`, Prism's anonymous-parameter errors, a blank line
-    before the `)` of `foo (a` (the parser gem's second tNL, reported at the `)`)). Both tools
+    unary `+`/`-` at end of file, `class ::foo`, Prism's anonymous-parameter errors, a blank or
+    comment line before the `)` of `foo (a` (the parser gem's second tNL, which Prism has no
+    token for: reported at the next token)). Both tools
     report the file as unparseable and run no other cop on it, so the outcome is the same; only
     the Lint/Syntax message text or column differs. Differences in WHETHER code parses (rbcop
     accepting what the parser gem rejects, or the reverse) are bugs, not part of this gap.

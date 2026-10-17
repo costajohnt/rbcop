@@ -26,7 +26,7 @@ impl Cop for DependencyVersion {
         {
             return;
         }
-        let Some(recv) = call.receiver().and_then(|r| lvar_name(&r, cx.config.target_ruby)) else { return };
+        let Some(recv) = call.receiver().and_then(|r| lvar_name(&r, &cx.src.numbered_sends)) else { return };
         if cx.state::<State>().0.as_deref() != Some(recv) {
             return;
         }

@@ -223,12 +223,18 @@ pub fn parse_for_target<'t>(
             let mut enc = [0u8; 4];
             round.extend((t.start..).zip(l.encode_utf8(&mut enc).bytes()));
         }
-        // An indented `__END__` ends the input for the parser gem (#228): the copy has it start its
-        // line (`__END__\n` + the indentation, same length).
+        // An indented `__END__` ends the input for the parser gem (#228), also before a NUL, ^D or ^Z
+        // (#505): the copy has it start its line (`__END__\n` + the indentation, same length, cut at
+        // the end of the file).
         if cur.contains("__END__")
             && let Some((line, indent)) = crate::legacy_syntax::indented_data_marker(cur, &tokens)
         {
-            round.extend((line..).zip(b"__END__\n".iter().copied().chain(std::iter::repeat_n(b' ', indent))));
+            round.extend((line..cur.len()).zip(b"__END__\n".iter().copied().chain(std::iter::repeat_n(b' ', indent))));
+        }
+        // Embedded documents the parser gem's lexer starts or ends where Prism does not (after a
+        // BOM, #512; indented; `=beginx`, `=endx`).
+        if cur.contains("=begin") {
+            round.extend(crate::legacy_syntax::embdoc_fixups(cur, &tokens));
         }
         // A column-0 `__END__` the parser gem reads as an identifier (after `=`, `(`, `,`, `.`, a
         // `\` continuation, ...) is an identifier the file does not use, so Prism lexes on (#337).
@@ -240,7 +246,7 @@ pub fn parse_for_target<'t>(
         }
         // `def self&.foo` is a singleton method for the parser gem: the copy has `def self .foo` (#492).
         if errors {
-            round.extend(crate::legacy_syntax::defs_and_dots(&tokens).into_iter().map(|o| (o, b' ')));
+            round.extend(crate::legacy_syntax::defs_and_dots(cur, &tokens, target_ruby).into_iter().map(|o| (o, b' ')));
         }
         // A NUL ends a heredoc line for the parser gem's lexer: the NULs that make a terminator line
         // become newlines (#247).
@@ -577,6 +583,9 @@ fn analyze(
     src.parser_gem = parser_gem;
     src.target_ruby = cfg.target_ruby;
     src.lex_edits = edits;
+    if cfg.target_ruby < 2.7 {
+        src.numbered_sends = crate::syntax::legacy_numbered_sends(&result.node());
+    }
     // From 3.3 the runner's parse is parse_warnings::parse (unedited text, same version and
     // encoding): its warnings save that second parse.
     if !parser_gem {

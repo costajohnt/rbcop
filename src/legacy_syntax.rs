@@ -208,14 +208,15 @@ pub fn stand_in(c: char, present: &std::collections::HashSet<char>, taken: &[(ch
 }
 
 /// The parser gem's lexer ends the input at `__END__` alone on a line it reads in its line_begin
-/// state, after leading whitespace too; Prism (and Ruby) only at column 0, so for an indented one
-/// returns its line start and indentation length (#228). Parse a copy with that line rewritten to
-/// `__END__\n` + the indentation (same length), which Prism takes as the data marker.
+/// state, after leading whitespace too, and before a NUL, ^D or ^Z (lexer.rl's `'__END__' ( c_eol -
+/// zlen )`); Prism (and Ruby) only at column 0 before a newline or the end, so for another one
+/// returns its line start and indentation length (#228, #505). Parse a copy with that line
+/// rewritten to `__END__\n` + the indentation (same length), which Prism takes as the data marker.
 pub fn indented_data_marker(text: &str, tokens: &[Token]) -> Option<(usize, usize)> {
     tokens.iter().enumerate().filter(|(_, t)| t.kind == "IDENTIFIER" && &text[t.start..t.end] == "__END__").find_map(
         |(i, t)| {
             // Only the indentation is walked: an rfind per token is quadratic on one long line (#316).
-            let mut line = text[..t.start].trim_end_matches([' ', '\t', '\x0b', '\x0c']).len();
+            let mut line = text[..t.start].trim_end_matches([' ', '\t', '\r', '\x0b', '\x0c']).len();
             // The parser gem's buffer has no BOM: it counts as indentation of the first line (#493).
             if text[..line] == *"\u{feff}" {
                 line = 0;
@@ -224,10 +225,54 @@ pub fn indented_data_marker(text: &str, tokens: &[Token]) -> Option<(usize, usiz
             if !(line == 0 || text.as_bytes()[line - 1] == b'\n') {
                 return None;
             }
-            (!indent.is_empty() && text[t.end..].starts_with('\n') && line_begin(text, tokens, i))
-                .then_some((line, indent.len()))
+            // The parser gem's buffer has CRLF made LF; its input ends with a NUL.
+            let after = &text.as_bytes()[t.end..];
+            let eol = matches!(after, [] | [b'\n' | b'\0' | b'\x04' | b'\x1a', ..] | [b'\r', b'\n', ..]);
+            let prism = indent.is_empty() && matches!(after, [] | [b'\n', ..] | [b'\r', b'\n', ..]);
+            (eol && !prism && line_begin(text, tokens, i)).then_some((line, indent.len()))
         },
     )
+}
+
+/// The parser gem's lexer starts an embedded document at `=begin` followed by anything, also after
+/// leading whitespace when it reads the line in its line_begin state (and after a BOM, which its
+/// buffer drops, #512), and ends one at a column-0 `=end` followed by anything; Prism only at
+/// column 0 and before a space or a newline. Byte rewrites for a copy Prism reads the same way:
+/// the indentation's last byte (a lone BOM: its three) ends a line, so `=begin` keeps its offset at
+/// a line start, and a character after `=begin`/`=end` other than a space becomes spaces.
+pub fn embdoc_fixups(text: &str, tokens: &[Token]) -> Vec<(usize, u8)> {
+    let mut out = Vec::new();
+    let spaced = |at: usize, out: &mut Vec<(usize, u8)>| {
+        if let Some(c) = text.get(at..).and_then(|r| r.chars().next())
+            && !matches!(c, ' ' | '\t' | '\r' | '\n' | '\x0b' | '\x0c')
+        {
+            out.extend((at..at + c.len_utf8()).map(|o| (o, b' ')));
+        }
+    };
+    for (i, t) in tokens.iter().enumerate() {
+        match t.kind {
+            "EQUAL" if text[t.end..].starts_with("begin") && tokens.get(i + 1).is_some_and(|n| n.start == t.end) => {
+                let mut line = text[..t.start].trim_end_matches([' ', '\t', '\r', '\x0b', '\x0c']).len();
+                if text[..line] == *"\u{feff}" {
+                    line = 0;
+                }
+                // At column 0 in any lexer state (lexer.rl's `e_nl '=begin'`), indented in line_begin.
+                if !(line == 0 || text.as_bytes()[line - 1] == b'\n') || t.start > line && !line_begin(text, tokens, i)
+                {
+                    continue;
+                }
+                if text[line..t.start] == *"\u{feff}" {
+                    out.extend((0..).zip(*b"  \n"));
+                } else if t.start > line {
+                    out.push((t.start - 1, b'\n'));
+                }
+                spaced(t.end + 5, &mut out);
+            }
+            "EMBDOC_LINE" if text[t.start..].starts_with("=end") => spaced(t.start + 4, &mut out),
+            _ => {}
+        }
+    }
+    out
 }
 
 /// Prism's column-0 data marker (its `__END__` token, where it stops lexing) when the parser gem's
@@ -240,7 +285,7 @@ pub fn identifier_data_marker(text: &str, tokens: &[Token]) -> Option<usize> {
 /// The `&` of each `&.` after a singleton method's receiver (`def self&.foo`, `def (x)&.foo`): the
 /// parser gem's `defs_head` takes `&.` there like `.`, Prism rejects it (#492). Parse a copy with
 /// ` .` instead.
-pub fn defs_and_dots(tokens: &[Token]) -> Vec<usize> {
+pub fn defs_and_dots(text: &str, tokens: &[Token], target: f64) -> Vec<usize> {
     let receiver_start = |i: usize| -> Option<usize> {
         if tokens[i].kind != "PARENTHESIS_RIGHT" {
             return matches!(
@@ -270,11 +315,94 @@ pub fn defs_and_dots(tokens: &[Token]) -> Vec<usize> {
             depth == 0
         })
     };
+    // Also on the next line, when the lexer joins it as for a leading `.` (#504).
+    let trivia = |k: &str| matches!(k, "NEWLINE" | "IGNORED_NEWLINE" | "COMMENT");
     (2..tokens.len())
         .filter(|&i| tokens[i].kind == "AMPERSAND_DOT")
-        .filter(|&i| receiver_start(i - 1).is_some_and(|r| r > 0 && tokens[r - 1].kind == "KEYWORD_DEF"))
+        .filter(|&i| {
+            tokens[..i].iter().rposition(|t| !trivia(t.kind)).is_some_and(|j| {
+                receiver_start(j).is_some_and(|r| r > 0 && tokens[r - 1].kind == "KEYWORD_DEF")
+                    && joins_leading_dot(text, tokens[j].end, tokens[i].start, target)
+            })
+        })
         .map(|i| tokens[i].start)
         .collect()
+}
+
+const LEX_SPACE: &[u8] = b" \t\r\x0b\x0c";
+
+/// lexer.rl after an expression: the offset in `b` past spaces, `\` newlines and a comment.
+fn skip_trivia(b: &[u8], mut i: usize) -> usize {
+    loop {
+        match b.get(i) {
+            Some(c) if LEX_SPACE.contains(c) => i += 1,
+            Some(b'\\') if b.get(i + 1) == Some(&b'\n') => i += 2,
+            Some(b'#') => i += b[i..].iter().position(|&c| c == b'\n').unwrap_or(b.len() - i),
+            _ => return i,
+        }
+    }
+}
+
+/// lexer.rl's leading_dot scan from the line start `i` in `b`: the end of the lines it skips
+/// (`(c_space* w_space_comment '\n')+`: spaces, a `\` newline or a comment, then the newline; not
+/// an empty line), if any. Before 2.7 such lines end the expression (a tNL, and the last newline
+/// is lexed again).
+fn leading_dot_lines(b: &[u8], mut i: usize) -> Option<usize> {
+    let start = i;
+    loop {
+        let j = i + b[i..].iter().take_while(|c| LEX_SPACE.contains(c)).count();
+        i = match &b[j..] {
+            [b'\\', b'\n', b'\n', ..] => j + 3,
+            [b'#', rest @ ..] => match rest.iter().position(|&c| c == b'\n') {
+                Some(n) => j + n + 2,
+                None => break,
+            },
+            [b'\n', ..] if j > i => j + 1,
+            _ => break,
+        };
+    }
+    (i > start).then_some(i)
+}
+
+/// Where the parser gem fails after the statement of `foo (stmt ...)` (`tLPAREN_ARG stmt opt_nl
+/// tRPAREN`) at a `;` or a second tNL, from lexer.rl (#496, #503): its offset. `resume`: the end of
+/// a heredoc body the statement opens, where the lexer goes on after the first newline. After that
+/// newline (the tNL) the parser sets expr_endarg, which skips trivia as after the statement: a
+/// newline there is a second tNL.
+fn paren_arg_term(text: &str, from: usize, resume: Option<usize>, target: f64) -> Option<usize> {
+    let b = &text.as_bytes()[from..];
+    let term = |i: usize| matches!(b.get(i), Some(b'\n' | b';')).then_some(i);
+    let nl = term(skip_trivia(b, 0))?;
+    if b[nl] == b';' {
+        return Some(from + nl);
+    }
+    let mut i = resume.map_or(nl + 1, |r| r.max(from + nl + 1) - from);
+    if let Some(end) = leading_dot_lines(b, i) {
+        if target < 2.7 {
+            return Some(from + end - 1);
+        }
+        i = end;
+    }
+    term(skip_trivia(b, i)).map(|i| from + i)
+}
+
+/// Whether the parser gem's lexer continues the expression ending at `from` with the leading `.`
+/// or `&.` at `dot` (lexer.rl's leading_dot).
+fn joins_leading_dot(text: &str, from: usize, dot: usize, target: f64) -> bool {
+    let b = &text.as_bytes()[from..dot];
+    let i = skip_trivia(b, 0);
+    if i == b.len() {
+        return true;
+    }
+    if b[i] != b'\n' {
+        return false;
+    }
+    let i = match leading_dot_lines(b, i + 1) {
+        Some(_) if target < 2.7 => return false,
+        Some(end) => end,
+        None => i + 1,
+    };
+    b[i..].iter().all(|c| LEX_SPACE.contains(c))
 }
 
 /// A 7-byte identifier for an `__END__` the parser gem reads as one (`identifier_data_marker`),
@@ -887,6 +1015,16 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
             // gives tLPAREN as well.
             "tLPAREN2"
                 if out.last().is_none_or(|p| LPAREN_AFTER.contains(&p.name)) || state_before & EXPR_BEG_ANY != 0 =>
+            {
+                name = "tLPAREN"
+            }
+            // After a label the parser gem's lexer is in expr_labelarg/expr_beg: a spaced `(` is
+            // tLPAREN, not a command argument's, also on a later line (#519).
+            "tLPAREN_ARG"
+                if tokens[..i - 1]
+                    .iter()
+                    .rfind(|p| !matches!(p.kind, "IGNORED_NEWLINE" | "COMMENT"))
+                    .is_some_and(|p| matches!(p.kind, "LABEL" | "LABEL_END")) =>
             {
                 name = "tLPAREN"
             }
@@ -1860,6 +1998,8 @@ impl<'pr> Visit<'pr> for Walk<'_> {
         if !arg {
             self.body.insert(n.opening_loc().start_offset(), n.opening_loc().end_offset());
         }
+        // Visited first, for the heredocs in it.
+        ruby_prism::visit_parentheses_node(self, n);
         // `tLPAREN_ARG stmt rparen` (`expr` up to 2.3, #140, #488): one statement, newlines
         // around it (`rparen: opt_nl tRPAREN`; the lexer skips those after the paren).
         if arg
@@ -1869,19 +2009,18 @@ impl<'pr> Visit<'pr> for Walk<'_> {
             // A `;` before or after the statement, or a second statement after a newline.
             let open = self.toks.partition_point(|t| t.start < n.opening_loc().end_offset());
             let lead = self.toks[open..].iter().find(|t| t.name != "tNL").filter(|t| t.name == "tSEMI");
-            let after = self.toks.get(self.toks.partition_point(|t| t.start < first.location().end_offset()));
-            // A blank line before the `)` is a second newline: the parser gem fails at its tNL, which
-            // `toks` lacks (Prism ignores it), so at the `)`.
-            let close = n.closing_loc().start_offset();
-            let blank = after
-                .filter(|t| t.name == "tNL")
-                .and_then(|t| self.text.get(t.end..close))
-                .is_some_and(|gap| gap.contains('\n') && gap.bytes().all(|b| b.is_ascii_whitespace()));
+            // The lexer goes on after the body of a heredoc the statement opens (lexed at its newline).
+            let end = first.location().end_offset();
+            let open = n.opening_loc().start_offset();
+            let resume = self.heredocs.iter().filter(|h| h.0 > open && h.0 < end).map(|h| h.1.1).max();
             let at = lead
-                .or(after.filter(|t| t.name == "tSEMI"))
                 .map(|t| t.start)
-                .or_else(|| body.iter().nth(1).map(|s| s.location().start_offset()))
-                .or(blank.then_some(close));
+                // A second tNL Prism ignores (no token) fails at the token after it.
+                .or_else(|| {
+                    let at = paren_arg_term(self.text, end, resume, self.target)?;
+                    self.toks.get(self.toks.partition_point(|t| t.start < at)).map(|t| t.start)
+                })
+                .or_else(|| body.iter().nth(1).map(|s| s.location().start_offset()));
             if let Some(at) = at {
                 self.violation(at, 3.3);
             }
@@ -1889,7 +2028,6 @@ impl<'pr> Visit<'pr> for Walk<'_> {
                 self.violation(at, 2.4);
             }
         }
-        ruby_prism::visit_parentheses_node(self, n);
     }
 
     fn visit_embedded_statements_node(&mut self, n: &ruby_prism::EmbeddedStatementsNode<'pr>) {

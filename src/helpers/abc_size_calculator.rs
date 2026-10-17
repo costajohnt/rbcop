@@ -10,8 +10,8 @@ use ruby_prism::{CallNode, Node, Visit};
 use std::collections::HashSet;
 
 /// `[abc size rounded to 2 places, "<A, B, C>"]`
-/// `legacy_numbered`: target below 2.7, where the parser gem reads `_1` as a method call.
-pub fn calculate(body: &Node, discount_repeated_attributes: bool, legacy_numbered: bool) -> (f64, String) {
+/// `legacy_numbered`: `Source::numbered_sends`, the `_1` reads the parser gem reads as method calls.
+pub fn calculate(body: &Node, discount_repeated_attributes: bool, legacy_numbered: &[usize]) -> (f64, String) {
     let mut v = Abc {
         a: 0,
         b: 0,
@@ -20,7 +20,7 @@ pub fn calculate(body: &Node, discount_repeated_attributes: bool, legacy_numbere
         attrs: discount_repeated_attributes.then(|| HashSet::from([vec!["self".to_string()]])),
         pattern: 0,
         guard: None,
-        legacy_numbered,
+        legacy_numbered: legacy_numbered.to_vec(),
     };
     v.visit(body);
     let size = ((v.a * v.a + v.b * v.b + v.c * v.c) as f64).sqrt();
@@ -46,7 +46,7 @@ struct Abc {
     attrs: Option<HashSet<Vec<String>>>,
     pattern: usize,
     guard: Option<(usize, usize)>,
-    legacy_numbered: bool,
+    legacy_numbered: Vec<usize>,
 }
 
 fn range(node: &Node) -> (usize, usize) {
@@ -276,7 +276,7 @@ impl<'pr> Visit<'pr> for Abc {
     /// Below 2.7 `_1` is `(send nil :_1)`: a branch.
     fn visit_local_variable_read_node(&mut self, node: &ruby_prism::LocalVariableReadNode<'pr>) {
         let name = node.name();
-        if self.legacy_numbered && matches!(name.as_slice(), [b'_', b'1'..=b'9']) {
+        if self.legacy_numbered.binary_search(&node.location().start_offset()).is_ok() {
             let name = String::from_utf8_lossy(name.as_slice()).into_owned();
             self.send(None, &name, false, false, false, node.location().start_offset());
         }

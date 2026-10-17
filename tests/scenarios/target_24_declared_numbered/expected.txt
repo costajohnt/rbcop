@@ -1,0 +1,21 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+declared.rb:11:1: R: Metrics/AbcSize: Assignment Branch Condition size for `o` is too high. [<0, 2, 1> 2.24/0]
+declared.rb:11:7: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+declared.rb:16:3: C: Naming/VariableName: Use camelCase for variable names.
+declared.rb:16:3: C: [Correctable] Style/RedundantAssignment: Redundant assignment before returning detected.
+declared.rb:16:3: W: Lint/NumberedParameterAssignment: `_1` is reserved for numbered parameter; consider another name.
+declared.rb:16:3: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+declared.rb:17:3: C: Naming/VariableName: Use camelCase for variable names.
+declared.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+declared.rb:1:1: R: Metrics/AbcSize: Assignment Branch Condition size for `m` is too high. [<0, 2, 1> 2.24/0]
+declared.rb:1:7: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+declared.rb:2:14: C: Naming/VariableName: Use camelCase for variable names.
+declared.rb:2:14: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+declared.rb:3:10: C: Naming/VariableName: Use camelCase for variable names.
+declared.rb:3:5: C: Naming/VariableName: Use camelCase for variable names.
+declared.rb:7:1: R: Metrics/AbcSize: Assignment Branch Condition size for `n` is too high. [<0, 1, 1> 1.41/0]
+declared.rb:7:7: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+declared.rb:8:13: C: Naming/VariableName: Use camelCase for variable names.
+declared.rb:8:17: C: Naming/VariableName: Use camelCase for variable names.
+declared.rb:8:17: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+declared.rb:8:21: C: Naming/VariableName: Use camelCase for variable names.
