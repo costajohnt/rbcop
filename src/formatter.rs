@@ -686,14 +686,20 @@ impl Set {
     }
 }
 
-/// Cop::Documentation.url_for with the department's DocumentationBaseURL / DocumentationExtension.
-pub fn docs_url(config: &crate::config::Resolved, cop: &str) -> String {
+/// Cop::Documentation.url_for with the department's DocumentationBaseURL / DocumentationExtension;
+/// None for a plugin cop whose department sets no base URL (only RuboCop's own cops fall back to
+/// docs.rubocop.org/rubocop).
+pub fn docs_url(config: &crate::config::Resolved, cop: &str) -> Option<String> {
     let dept = cop.rsplit_once('/').map_or("", |(d, _)| d);
     let dept_cfg = config.hash.map(dept).cloned().unwrap_or_default();
-    let base = dept_cfg.str("DocumentationBaseURL").unwrap_or("https://docs.rubocop.org/rubocop");
+    let base = match dept_cfg.str("DocumentationBaseURL") {
+        Some(b) => b,
+        None if crate::helpers::cop_registry::is_builtin(cop) => "https://docs.rubocop.org/rubocop",
+        None => return None,
+    };
     let ext = dept_cfg.str("DocumentationExtension").unwrap_or(".html");
     let fragment: String = cop.to_lowercase().chars().filter(char::is_ascii_lowercase).collect();
-    format!("{base}/cops_{}{ext}#{fragment}", dept.to_lowercase().replace('/', "_"))
+    Some(format!("{base}/cops_{}{ext}#{fragment}", dept.to_lowercase().replace('/', "_")))
 }
 
 #[cfg(test)]

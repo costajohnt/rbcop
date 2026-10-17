@@ -5,26 +5,36 @@ mod common;
 
 use std::path::Path;
 
-/// Keep in sync with scripts/show-cops.sh.
-const CASES: &[(&str, &[&str])] = &[
-    ("all", &["--show-cops"]),
+/// Keep in sync with scripts/show-cops.sh. (name, project dir, args); `plugins` loads rubocop-rspec
+/// and rubocop-capybara (the nested department Capybara/RSpec).
+const CASES: &[(&str, &str, &[&str])] = &[
+    ("all", "project", &["--show-cops"]),
     (
         "patterns",
+        "project",
         &["--show-cops", "Lint/*,Style/StringLiterals,Style/InverseMethods,Metrics/MethodLength,Naming/MethodName"],
     ),
-    ("preview", &["--preview", "--show-cops", "Layout/*,Bundler/OrderedGems,Metrics/BlockLength"]),
+    ("preview", "project", &["--preview", "--show-cops", "Layout/*,Bundler/OrderedGems,Metrics/BlockLength"]),
     (
         "default",
+        "project",
         &["--force-default-config", "--show-cops", "Layout/*,Lint/MissingCopEnableDirective,Lint/UriEscapeUnescape"],
+    ),
+    ("plugins_all", "plugins", &["--show-cops"]),
+    ("plugins_list_enabled", "plugins", &["--list-enabled-cops-for", "spec/a_spec.rb"]),
+    (
+        "plugins_docs_url",
+        "plugins",
+        &["--show-docs-url", "Capybara/RSpec/HaveContent,Capybara/AssertStyle,Capybara/RSpec,RSpec/Focus,Style/Not"],
     ),
 ];
 
 #[test]
 fn show_cops_matches_rubocop() {
     let dir = Path::new(env!("CARGO_MANIFEST_DIR")).canonicalize().unwrap().join("tests/show_cops");
-    let project = dir.join("project");
     let mut failures = Vec::new();
-    for (name, args) in CASES {
+    for (name, project, args) in CASES {
+        let project = dir.join(project);
         let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
             .args(*args)
             .current_dir(&project)

@@ -736,7 +736,7 @@ fn print_help(color: bool) {
 fn list_enabled_cops_for(cfg: &Resolved) {
     use rbcop::config::value::Value;
     let mut names: Vec<&str> = rbcop::helpers::cop_registry::REGISTRY.to_vec();
-    names.sort_unstable();
+    rbcop::helpers::cop_registry::sort_by_department(&mut names);
     let mut out = String::new();
     for name in names {
         if !matches!(cfg.enable_cop(name), Value::Null | Value::Bool(false)) {
@@ -754,8 +754,10 @@ fn show_docs_url(cops: &[String], cfg: &Resolved) {
         out.push_str("https://docs.rubocop.org/rubocop\n");
     }
     for cop in cops {
-        if let Some(name) = rbcop::helpers::cop_registry::REGISTRY.iter().find(|c| **c == cop.as_str()) {
-            out.push_str(&formatter::docs_url(cfg, name));
+        if let Some(name) = rbcop::helpers::cop_registry::REGISTRY.iter().find(|c| **c == cop.as_str())
+            && let Some(url) = formatter::docs_url(cfg, name)
+        {
+            out.push_str(&url);
             out.push('\n');
         }
     }
@@ -774,7 +776,7 @@ fn show_cops(patterns: &[String], cfg: &Resolved, pwd: &str) {
         cops::ALL.iter().map(|r| r.name).filter(|n| rbcop::helpers::cop_registry::is_registered(n)).collect();
     // Lint/Syntax lives in the runner, not in cops::ALL, but RuboCop's registry lists it.
     names.push("Lint/Syntax");
-    names.sort_unstable();
+    rbcop::helpers::cop_registry::sort_by_department(&mut names);
     let show_all = patterns.is_empty();
     let selected = |name: &str| {
         show_all
@@ -787,6 +789,7 @@ fn show_cops(patterns: &[String], cfg: &Resolved, pwd: &str) {
         out.push_str(&format!("# Available cops ({}) + config for {pwd}: \n", names.len()));
     }
     let mut depts: Vec<&str> = names.iter().filter_map(|n| n.rsplit_once('/').map(|(d, _)| d)).collect();
+    // Sorted by department, so each one's cops are adjacent.
     depts.dedup();
     for dept in depts {
         let in_dept: Vec<&str> =

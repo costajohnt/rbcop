@@ -94,14 +94,14 @@ fn known() -> impl Iterator<Item = &'static str> {
 }
 
 fn is_department(name: &str) -> bool {
-    let prefix = format!("{name}/");
-    known().any(|c| c.starts_with(&prefix))
+    crate::helpers::cop_registry::is_department(name)
 }
 
+/// Registry#names_for_department: the cops of exactly that department (`Capybara` does not
+/// cover `Capybara/RSpec/*`).
 fn department_cops(dept: &str) -> Vec<&'static str> {
-    let prefix = format!("{dept}/");
-    known()
-        .filter(|c| c.starts_with(&prefix))
+    crate::helpers::cop_registry::names_for_department(dept)
+        .into_iter()
         .filter(|c| dept != "Lint" || (*c != LINT_SYNTAX && *c != LINT_REDUNDANT))
         .collect()
 }

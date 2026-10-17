@@ -1,5 +1,5 @@
 use crate::directives::{self, Directive};
-use crate::helpers::cop_registry::{REGISTRY, is_department};
+use crate::helpers::cop_registry::{REGISTRY, is_department, names_for_department};
 use crate::helpers::range_help::{Side, Surrounding, range_with_surrounding_space};
 use crate::prelude::*;
 use std::collections::HashMap;
@@ -107,9 +107,8 @@ fn parsed_cop_names(d: &Directive) -> Vec<String> {
     let mut out = Vec::new();
     for raw in d.raw_names() {
         if is_department(raw) {
-            let prefix = format!("{raw}/");
             out.extend(
-                REGISTRY.iter().copied().filter(|c| c.starts_with(&prefix)).filter(|c| raw != "Lint" || lint_excluded(c)).map(String::from),
+                names_for_department(raw).into_iter().filter(|c| raw != "Lint" || lint_excluded(c)).map(String::from),
             );
         } else {
             out.push(raw.to_string());

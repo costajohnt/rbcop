@@ -74,7 +74,15 @@ pub fn plugin_of(cop: &str) -> Option<&'static NativePlugin> {
 /// Cop names in a default.yml, in file order.
 fn cop_names(yml: &'static str) -> Vec<&'static str> {
     static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)^([A-Z]\w*(?:/\w+)+):").unwrap());
-    RE.captures_iter(yml).map(|c| c.get(1).unwrap().as_str()).collect()
+    without_departments(RE.captures_iter(yml).map(|c| c.get(1).unwrap().as_str()).collect())
+}
+
+/// Drops the keys of nested departments (rubocop-capybara's `Capybara/RSpec:` configures the
+/// department of `Capybara/RSpec/*`): the registry holds cops only.
+fn without_departments<S: AsRef<str>>(names: Vec<S>) -> Vec<S> {
+    let is_dept = |n: &str| names.iter().any(|o| o.as_ref().strip_prefix(n).is_some_and(|r| r.starts_with('/')));
+    let keep: Vec<bool> = names.iter().map(|n| !is_dept(n.as_ref())).collect();
+    names.into_iter().zip(keep).filter_map(|(n, k)| k.then_some(n)).collect()
 }
 
 /// The registry: RuboCop's own cops, then those of each native plugin in load order. Plugins load
@@ -117,7 +125,7 @@ pub fn register_plugin(plugin: &'static NativePlugin) {
 pub fn register_foreign(names: Vec<String>) {
     let mut reg = REGISTRY.plugins.write().unwrap();
     let mut all = reg.0.unwrap_or_else(|| REGISTRY.core.as_slice()).to_vec();
-    let new: Vec<String> = names.into_iter().filter(|n| !all.contains(&n.as_str())).collect();
+    let new: Vec<String> = without_departments(names).into_iter().filter(|n| !all.contains(&n.as_str())).collect();
     if new.is_empty() {
         return;
     }
@@ -170,6 +178,11 @@ pub fn has_unrunnable() -> bool {
     open.custom || open.foreign || !open.constants.is_empty()
 }
 
+/// Documentation.builtin?: one of RuboCop's own cops.
+pub fn is_builtin(cop: &str) -> bool {
+    REGISTRY.core.contains(&cop)
+}
+
 /// Whether a native plugin's gem has been loaded (required) in this process.
 pub fn plugin_loaded(gem: &str) -> bool {
     REGISTRY.plugins.read().unwrap().1.contains(&gem)
@@ -208,13 +221,37 @@ pub const LEGACY_COP_NAMES: &[&str] = &[
     "Performance/*", "Rails/*",
 ];
 
-fn department_of(name: &str) -> &str {
+/// A cop's department (everything before the last `/`).
+pub fn department_of(name: &str) -> &str {
     name.rsplit_once('/').map_or("", |(d, _)| d)
 }
 
 /// Registry#department?
 pub fn is_department(name: &str) -> bool {
     REGISTRY.iter().any(|c| department_of(c) == name)
+}
+
+/// Registry#departments: each department once, in registration order.
+pub fn departments() -> Vec<&'static str> {
+    let mut out: Vec<&'static str> = Vec::new();
+    for c in REGISTRY.iter() {
+        let d = department_of(c);
+        if !out.contains(&d) {
+            out.push(d);
+        }
+    }
+    out
+}
+
+/// Registry#names_for_department: the cops whose department is exactly `dept`.
+pub fn names_for_department(dept: &str) -> Vec<&'static str> {
+    REGISTRY.iter().copied().filter(|c| department_of(c) == dept).collect()
+}
+
+/// Names ordered as `registry.departments.sort.each { with_department(d).sort }`: by department,
+/// then by name (`--show-cops`, `--list-enabled-cops-for`).
+pub fn sort_by_department(names: &mut [&str]) {
+    names.sort_by(|a, b| (department_of(a), *a).cmp(&(department_of(b), *b)));
 }
 
 /// Badge.camel_case
@@ -238,9 +275,7 @@ pub fn qualified_cop_name(name: &str) -> Option<String> {
     if !parts.is_empty() && registered(&dept) {
         return Some(name.to_string());
     }
-    let mut depts: Vec<&str> = REGISTRY.iter().map(|c| department_of(c)).collect();
-    depts.dedup();
-    let hits: Vec<&str> = depts.into_iter().filter(|d| registered(d)).collect();
+    let hits: Vec<&str> = departments().into_iter().filter(|d| registered(d)).collect();
     match hits.as_slice() {
         [] => Some(name.to_string()),
         [d] => Some(format!("{d}/{cop}")),
