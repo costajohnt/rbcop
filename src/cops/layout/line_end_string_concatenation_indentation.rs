@@ -42,7 +42,10 @@ impl Cop for LineEndStringConcatenationIndentation {
         let always_indented = parent.is_none_or(|i| {
             let p = &cx.ancestors[i];
             match kind::of(p) {
-                kind::BLOCK_NODE | kind::LAMBDA_NODE | kind::DEF_NODE | kind::IF_NODE | kind::UNLESS_NODE => true,
+                // PARENT_TYPES_FOR_INDENTED has `block` only: not a numblock / itblock.
+                kind::BLOCK_NODE => helpers::node_types::plain_block_params(p.as_block_node().unwrap().parameters()),
+                kind::LAMBDA_NODE => helpers::node_types::plain_block_params(p.as_lambda_node().unwrap().parameters()),
+                kind::DEF_NODE | kind::IF_NODE | kind::UNLESS_NODE => true,
                 kind::PARENTHESES_NODE | kind::EMBEDDED_STATEMENTS_NODE => true,
                 // A 2+ statement list is a parser `begin`, except directly in a plain `begin..end`.
                 kind::STATEMENTS_NODE => !cx.ancestors.get(i.wrapping_sub(1)).and_then(|g| g.as_begin_node()).is_some_and(

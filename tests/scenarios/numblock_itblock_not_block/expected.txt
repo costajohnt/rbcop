@@ -1,0 +1,47 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+ambiguous.rb:1:1: W: [Correctable] Lint/AmbiguousBlockAssociation: Parenthesize the param `proc { it.history << 1 }` to make sure that the block will be associated with the `proc` method call.
+ambiguous.rb:2:1: W: [Correctable] Lint/AmbiguousBlockAssociation: Parenthesize the param `proc { _1.history << 1 }` to make sure that the block will be associated with the `proc` method call.
+ambiguous.rb:4:1: W: [Correctable] Lint/AmbiguousBlockAssociation: Parenthesize the param `Proc.new { it }` to make sure that the block will be associated with the `Proc.new` method call.
+ambiguous.rb:4:5: C: [Correctable] Style/Proc: Use `proc` instead of `Proc.new`.
+ambiguous.rb:5:5: C: [Correctable] Style/Lambda: Use the `-> { ... }` lambda literal syntax for single line lambdas.
+ambiguous.rb:6:5: C: [Correctable] Style/Lambda: Use the `-> { ... }` lambda literal syntax for single line lambdas.
+ambiguous.rb:9:1: W: [Correctable] Lint/AmbiguousBlockAssociation: Parenthesize the param `Proc.new { _1 }` to make sure that the block will be associated with the `Proc.new` method call.
+ambiguous.rb:9:5: C: [Correctable] Style/Proc: Use `proc` instead of `Proc.new`.
+line_end.rb:11:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+line_end.rb:14:3: W: [Correctable] Lint/Void: Literal `"expected #{it} to be " \     "x"` used in void context.
+line_end.rb:15:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+line_end.rb:18:5: C: [Correctable] Style/Lambda: Use the `lambda` method for multiline lambdas.
+line_end.rb:19:3: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+line_end.rb:20:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+line_end.rb:3:5: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
+line_end.rb:3:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+line_end.rb:5:1: C: Style/NumberedParameters: Avoid using numbered parameters for multi-line blocks.
+line_end.rb:7:5: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
+line_end.rb:7:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+parens.rb:24:16: F: Lint/Syntax: unexpected '{', expecting end-of-input (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+parens.rb:24:19: F: Lint/Syntax: expected a `=>` between the hash key and value (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+parens.rb:24:20: F: Lint/Syntax: unexpected '}'; expected a value in the hash literal (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+parens.rb:25:19: F: Lint/Syntax: unexpected '{', expecting end-of-input (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+parens.rb:25:22: F: Lint/Syntax: expected a `=>` between the hash key and value (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+parens.rb:25:23: F: Lint/Syntax: unexpected '}'; expected a value in the hash literal (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+parens.rb:26:16: F: Lint/Syntax: unexpected '{', expecting end-of-input (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+parens.rb:26:20: F: Lint/Syntax: expected a `=>` between the hash key and value (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+parens.rb:26:21: F: Lint/Syntax: unexpected '}'; expected a value in the hash literal (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+parens.rb:27:16: F: Lint/Syntax: unexpected '{', expecting end-of-input (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+parens.rb:27:20: F: Lint/Syntax: expected a `=>` between the hash key and value (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+parens.rb:27:21: F: Lint/Syntax: unexpected '}'; expected a value in the hash literal (Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+spec/a_spec.rb:10:14: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+spec/a_spec.rb:10:39: C: RSpec/UnspecifiedException: Specify the exception being captured
+spec/a_spec.rb:11:14: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+spec/a_spec.rb:11:39: C: RSpec/UnspecifiedException: Specify the exception being captured
+spec/a_spec.rb:12:14: W: Lint/UnreachableLoop: This loop will have at most one iteration.
+spec/a_spec.rb:12:42: C: RSpec/UnspecifiedException: Specify the exception being captured
+spec/a_spec.rb:14:5: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+spec/a_spec.rb:17:3: C: RSpec/MultipleExpectations: Example has too many expectations [3/1].
+spec/a_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `foo*_spec.rb`.
+spec/a_spec.rb:2:3: C: RSpec/MultipleExpectations: Example has too many expectations [4/1].
+spec/a_spec.rb:4:5: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+spec/a_spec.rb:5:18: C: RSpec/VoidExpect: Do not use `expect()` without `.to` or `.not_to`. Chain the methods or remove it.
+spec/a_spec.rb:5:5: C: Style/CombinableLoops: Combine this loop with the previous loop.
+spec/a_spec.rb:6:5: C: Style/CombinableLoops: Combine this loop with the previous loop.
+spec/a_spec.rb:9:3: C: RSpec/MultipleExpectations: Example has too many expectations [5/1].

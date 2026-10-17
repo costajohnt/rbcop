@@ -13,6 +13,7 @@ fn is_variable(node: &Node) -> bool {
     matches!(
         kind::of(node),
         kind::LOCAL_VARIABLE_READ_NODE
+            | kind::IT_LOCAL_VARIABLE_READ_NODE
             | kind::INSTANCE_VARIABLE_READ_NODE
             | kind::CLASS_VARIABLE_READ_NODE
             | kind::GLOBAL_VARIABLE_READ_NODE

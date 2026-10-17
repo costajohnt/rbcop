@@ -270,7 +270,7 @@ fn known_cops() -> Vec<&'static str> {
     let mut v: Vec<&'static str> =
         crate::cops::ALL.iter().map(|r| r.name).filter(|n| crate::helpers::cop_registry::is_registered(n)).collect();
     v.push("Lint/Syntax");
-    v.sort_by_key(|c| crate::autocorrect::registry_index(c));
+    v.sort_by_cached_key(|c| crate::autocorrect::registry_index(c));
     v
 }
 
@@ -634,13 +634,19 @@ fn sarif_rule(f: &FileOut, cop: &str) -> String {
     let default_sev = if dept == "Lint" { "warning" } else { "convention" };
     let level = sarif_level(cfg.str("Severity").unwrap_or(default_sev));
     let tag = cop.split('/').next().unwrap_or(cop);
+    // help_for / rule[:helpUri]: both only with a documentation URL.
+    let (markdown, help_uri) = match &uri {
+        Some(uri) => (
+            format!(",\"markdown\":{}", json(&format!("{desc}\n\n[Documentation]({uri})"))),
+            format!(",\"helpUri\":{}", json(uri)),
+        ),
+        None => (String::new(), String::new()),
+    };
     format!(
         "{{\"id\":{c},\"name\":{c},\"shortDescription\":{{\"text\":{d}}},\"fullDescription\":{{\"text\":{d}}},\
-         \"help\":{{\"text\":{d},\"markdown\":{}}},\"defaultConfiguration\":{{\"level\":\"{level}\"}},\
-         \"properties\":{{\"tags\":[{}]}},\"helpUri\":{}}}",
-        json(&format!("{desc}\n\n[Documentation]({uri})")),
+         \"help\":{{\"text\":{d}{markdown}}},\"defaultConfiguration\":{{\"level\":\"{level}\"}},\
+         \"properties\":{{\"tags\":[{}]}}{help_uri}}}",
         json(tag),
-        json(&uri),
         c = json(cop),
         d = json(&desc)
     )

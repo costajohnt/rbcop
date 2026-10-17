@@ -21,7 +21,7 @@ fn errors(n: &Node, model: bool) -> bool {
         Some(r) => {
             helpers::rails::send_node(&r).is_some()
                 || r.as_instance_variable_read_node().is_some()
-                || r.as_local_variable_read_node().is_some()
+                || helpers::node_types::lvar_name(&r).is_some()
         }
     }
 }

@@ -5,30 +5,48 @@ mod common;
 
 use std::path::Path;
 
-/// Keep in sync with scripts/show-cops.sh.
-const CASES: &[(&str, &[&str])] = &[
-    ("all", &["--show-cops"]),
+/// Keep in sync with scripts/show-cops.sh. (name, project dir, args); `plugins` loads rubocop-rspec
+/// and rubocop-capybara (the nested department Capybara/RSpec).
+const CASES: &[(&str, &str, &[&str])] = &[
+    ("all", "project", &["--show-cops"]),
     (
         "patterns",
+        "project",
         &["--show-cops", "Lint/*,Style/StringLiterals,Style/InverseMethods,Metrics/MethodLength,Naming/MethodName"],
     ),
-    ("preview", &["--preview", "--show-cops", "Layout/*,Bundler/OrderedGems,Metrics/BlockLength"]),
+    ("preview", "project", &["--preview", "--show-cops", "Layout/*,Bundler/OrderedGems,Metrics/BlockLength"]),
     (
         "default",
+        "project",
         &["--force-default-config", "--show-cops", "Layout/*,Lint/MissingCopEnableDirective,Lint/UriEscapeUnescape"],
     ),
+    ("plugins_all", "plugins", &["--show-cops"]),
+    ("plugins_list_enabled", "plugins", &["--list-enabled-cops-for", "spec/a_spec.rb"]),
+    (
+        "plugins_docs_url",
+        "plugins",
+        &["--show-docs-url", "Capybara/RSpec/HaveContent,Capybara/AssertStyle,Capybara/RSpec,RSpec/Focus,Style/Not"],
+    ),
+    // junit lists a file's testcases in registry order: plugins in load order (rails first here).
+    ("junit_order", "junit_order", &["-f", "junit", "a.rb"]),
+    // SuggestExtensions after the report, from the project's Gemfile.lock (CI unset).
+    ("suggest", "suggest", &[]),
+    ("suggest_loaded", "suggest_loaded", &[]),
+    ("suggest_installed", "suggest_installed", &["-f", "p"]),
+    ("suggest_emacs", "suggest", &["-f", "emacs"]),
 ];
 
 #[test]
 fn show_cops_matches_rubocop() {
     let dir = Path::new(env!("CARGO_MANIFEST_DIR")).canonicalize().unwrap().join("tests/show_cops");
-    let project = dir.join("project");
     let mut failures = Vec::new();
-    for (name, args) in CASES {
+    for (name, project, args) in CASES {
+        let project = dir.join(project);
         let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
             .args(*args)
             .current_dir(&project)
             .env("PWD", &project)
+            .env_remove("CI")
             .output()
             .unwrap();
         let actual = String::from_utf8(out.stdout).unwrap().replace(&project.display().to_string(), "<project>");

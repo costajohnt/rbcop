@@ -210,6 +210,64 @@ fn fallback_fail_fast_autocorrect_stops_correcting() {
     let _ = fs::remove_dir_all(&theirs);
 }
 
+/// RuboCop's registry holds a plugin's cop classes: one without a default.yml entry is a cop
+/// (enabled), a default.yml entry without a class is not (an unknown name), and --show-cops lists
+/// them with `# Supports --autocorrect` for the cops that extend AutoCorrector.
+#[test]
+fn plugin_cops_come_from_lib_classes() {
+    let dir = project("lib-classes");
+    let gems = dir.join("gems");
+    let gem = gems.join("gems/rubocop-fake-0.1.0");
+    fs::create_dir_all(gems.join("specifications")).unwrap();
+    fs::create_dir_all(gem.join("config")).unwrap();
+    fs::create_dir_all(gem.join("lib/rubocop/cop/fake")).unwrap();
+    fs::write(
+        gems.join("specifications/rubocop-fake-0.1.0.gemspec"),
+        "Gem::Specification.new { |s| s.name = 'rubocop-fake'; s.version = '0.1.0' }\n",
+    )
+    .unwrap();
+    fs::write(gem.join("config/default.yml"), "Fake/One:\n  Enabled: true\nFake/Phantom:\n  Enabled: true\n").unwrap();
+    fs::write(
+        gem.join("lib/rubocop/cop/fake/base.rb"),
+        "module RuboCop # :nodoc:\n  module Cop\n    module Fake\n      class Base < ::RuboCop::Cop::Base\n        \
+         exclude_from_registry\n        extend AutoCorrector\n      end\n    end\n  end\nend\n",
+    )
+    .unwrap();
+    fs::write(
+        gem.join("lib/rubocop/cop/fake/one.rb"),
+        "module RuboCop\n  module Cop\n    module Fake\n      class One < Base # :nodoc:\n        def on_send(node)\n        \
+         end\n      end\n\n      class Helper < Struct.new(:a); end\n    end\n  end\nend\n",
+    )
+    .unwrap();
+    fs::write(
+        gem.join("lib/rubocop/cop/fake/extra.rb"),
+        "module RuboCop::Cop::Fake\n  class Extra < RuboCop::Cop::Base\n  end\nend\n",
+    )
+    .unwrap();
+    fs::write(dir.join(".rubocop.yml"), "plugins:\n  - rubocop-fake\nAllCops:\n  NewCops: enable\n").unwrap();
+    fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\nputs 1 # rubocop:disable Fake/Phantom\n").unwrap();
+    let run = |args: &[&str]| {
+        let mut cmd = common::command(env!("CARGO_BIN_EXE_rbcop"));
+        cmd.env("GEM_PATH", &gems).args(args).current_dir(&dir).output().unwrap()
+    };
+    let out = run(&["-f", "e", "a.rb"]);
+    // Without a ruby on PATH the gem cannot be found.
+    if !text(&out.stderr).contains("cannot run ruby") {
+        assert!(
+            text(&out.stderr).contains("not running 2 cops it does not implement (Fake: 2)"),
+            "{}",
+            text(&out.stderr)
+        );
+        assert!(text(&out.stdout).contains("Unknown cop name `Fake/Phantom`"), "{}", text(&out.stdout));
+        let out = run(&["--show-cops", "Fake/*"]);
+        assert_eq!(
+            text(&out.stdout),
+            "Fake/Extra:\n  Enabled: true\n\n# Supports --autocorrect\nFake/One:\n  Enabled: true\n\n"
+        );
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
 #[test]
 fn fallback_output_matches_rubocop() {
     if !have_rubocop() {

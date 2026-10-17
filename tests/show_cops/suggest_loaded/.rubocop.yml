@@ -1,0 +1,5 @@
+plugins:
+  - rubocop-rails
+  - rubocop-rspec
+AllCops:
+  NewCops: disable

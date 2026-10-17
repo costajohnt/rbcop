@@ -1,0 +1,5 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+spec/focus_spec.rb:4:25: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+spec/focus_spec.rb:4:46: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `RSpec` department.
+spec/focus_spec.rb:5:25: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+spec/focus_spec.rb:5:46: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `RSpec/Focus`.

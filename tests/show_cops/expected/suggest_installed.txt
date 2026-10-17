@@ -1,0 +1,15 @@
+Inspecting 2 files
+..
+
+2 files inspected, no offenses detected
+
+Tip: Based on detected gems, the following RuboCop extension libraries might be helpful:
+  * rubocop-rails (https://rubygems.org/gems/rubocop-rails)
+  * rubocop-rspec_rails (https://rubygems.org/gems/rubocop-rspec_rails)
+
+The following RuboCop extension libraries are installed but not loaded in config:
+  * rubocop-rspec
+
+You can opt out of this message by adding the following to your config (see https://docs.rubocop.org/rubocop/plugins.html#plugin-suggestions for more options):
+  AllCops:
+    SuggestExtensions: false

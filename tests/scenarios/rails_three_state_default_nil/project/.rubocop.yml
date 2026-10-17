@@ -1,0 +1,7 @@
+plugins:
+  - rubocop-rails
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+  TargetRailsVersion: 8.0

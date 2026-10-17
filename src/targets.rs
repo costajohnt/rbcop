@@ -16,7 +16,7 @@ pub fn find(
     let cwd = store.cwd().to_path_buf();
     let pwd_cfg = store.for_dir(&cwd)?;
     let (exts, names) = pwd_cfg.ruby_extensions_and_names();
-    let ruby = RubyFile { exts, names, interpreters: pwd_cfg.ruby_interpreters() };
+    let ruby = RubyFile { exts, names };
     let mut files = Vec::new();
     let args: Vec<PathBuf> = if args.is_empty() { vec![cwd.clone()] } else { args.to_vec() };
     for arg in args {
@@ -31,9 +31,10 @@ pub fn find(
             let hidden_base = is_hidden_dir(&abs);
             for f in all {
                 let keep = if hidden_base {
-                    ruby.is(&f)
+                    ruby.is(&f, store)?
                 } else {
-                    !cfg.file_to_exclude(&f) && ((!hidden_in(&f, &abs) && ruby.is(&f)) || cfg.file_to_include(&f))
+                    !cfg.file_to_exclude(&f)
+                        && ((!hidden_in(&f, &abs) && ruby.is(&f, store)?) || cfg.file_to_include(&f))
                 };
                 if keep {
                     files.push(f);
@@ -44,7 +45,9 @@ pub fn find(
             // without_excluded under --force-exclusion.
             if force_exclusion || only_recognized {
                 let cfg = store.for_dir(&cwd)?;
-                if (force_exclusion && cfg.file_to_exclude(&abs)) || !(ruby.is(&abs) || cfg.file_to_include(&abs)) {
+                if (force_exclusion && cfg.file_to_exclude(&abs))
+                    || !(ruby.is(&abs, store)? || cfg.file_to_include(&abs))
+                {
                     continue;
                 }
             }
@@ -61,29 +64,38 @@ pub fn find(
 struct RubyFile {
     exts: Vec<String>,
     names: Vec<String>,
-    interpreters: Vec<String>,
 }
 
 impl RubyFile {
     /// TargetFinder#ruby_file?
-    fn is(&self, f: &Path) -> bool {
+    fn is(&self, f: &Path, store: &mut Store) -> Result<bool, String> {
         let name = f.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default();
         let ext = f.extension().map(|e| format!(".{}", e.to_string_lossy()));
-        ext.as_ref().is_some_and(|e| self.exts.contains(e))
+        Ok(ext.as_ref().is_some_and(|e| self.exts.contains(e))
             // ruby_filename?: `ruby_filenames.include?(File.basename(file))`, a literal compare.
             || self.names.contains(&name)
-            || (ext.is_none() && self.executable(f))
+            || (ext.is_none() && executable(f, store)?))
     }
+}
 
-    /// Extensionless, non-empty, first line `#!.*(ruby|rake|jruby)`.
-    fn executable(&self, f: &Path) -> bool {
-        let Ok(file) = fs::File::open(f) else { return false };
-        let mut first = String::new();
-        if BufReader::new(file).read_line(&mut first).is_err() || !first.starts_with("#!") {
-            return false;
-        }
-        self.interpreters.iter().any(|i| first.contains(i.as_str()))
+/// TargetFinder#ruby_executable?: an extensionless, non-empty file whose first line matches
+/// `#!.*(<RubyInterpreters>)`, the interpreters coming from the file's own directory config
+/// (ConfigStore#for(file)), which is loaded (and validated, so an invalid one ends the run before
+/// anything is reported) for every such file.
+fn executable(f: &Path, store: &mut Store) -> Result<bool, String> {
+    let Ok(file) = fs::File::open(f) else { return Ok(false) };
+    let mut first = Vec::new();
+    if BufReader::new(file).read_until(b'\n', &mut first).is_err() || first.is_empty() {
+        return Ok(false);
     }
+    // readline raises ArgumentError on an invalid byte sequence (rescued: not Ruby).
+    let Ok(first) = String::from_utf8(first) else { return Ok(false) };
+    let interpreters = store.for_dir(f.parent().unwrap_or(Path::new("/")))?.ruby_interpreters();
+    let line = first.trim_end_matches('\n');
+    Ok(line.find("#!").is_some_and(|i| {
+        let rest = &line[i + 2..];
+        interpreters.is_empty() || interpreters.iter().any(|x| rest.contains(x.as_str()))
+    }))
 }
 
 /// Every file under `dir` (dotfiles included), pruning directories excluded by `.../**/*`

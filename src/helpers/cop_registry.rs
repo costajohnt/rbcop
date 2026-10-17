@@ -74,7 +74,15 @@ pub fn plugin_of(cop: &str) -> Option<&'static NativePlugin> {
 /// Cop names in a default.yml, in file order.
 fn cop_names(yml: &'static str) -> Vec<&'static str> {
     static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)^([A-Z]\w*(?:/\w+)+):").unwrap());
-    RE.captures_iter(yml).map(|c| c.get(1).unwrap().as_str()).collect()
+    without_departments(RE.captures_iter(yml).map(|c| c.get(1).unwrap().as_str()).collect())
+}
+
+/// Drops the keys of nested departments (rubocop-capybara's `Capybara/RSpec:` configures the
+/// department of `Capybara/RSpec/*`): the registry holds cops only.
+fn without_departments<S: AsRef<str>>(names: Vec<S>) -> Vec<S> {
+    let is_dept = |n: &str| names.iter().any(|o| o.as_ref().strip_prefix(n).is_some_and(|r| r.starts_with('/')));
+    let keep: Vec<bool> = names.iter().map(|n| !is_dept(n.as_ref())).collect();
+    names.into_iter().zip(keep).filter_map(|(n, k)| k.then_some(n)).collect()
 }
 
 /// The registry: RuboCop's own cops, then those of each native plugin in load order. Plugins load
@@ -117,7 +125,7 @@ pub fn register_plugin(plugin: &'static NativePlugin) {
 pub fn register_foreign(names: Vec<String>) {
     let mut reg = REGISTRY.plugins.write().unwrap();
     let mut all = reg.0.unwrap_or_else(|| REGISTRY.core.as_slice()).to_vec();
-    let new: Vec<String> = names.into_iter().filter(|n| !all.contains(&n.as_str())).collect();
+    let new: Vec<String> = without_departments(names).into_iter().filter(|n| !all.contains(&n.as_str())).collect();
     if new.is_empty() {
         return;
     }
@@ -125,6 +133,33 @@ pub fn register_foreign(names: Vec<String>) {
     reg.0 = Some(Vec::leak(all));
     drop(reg);
     OPEN.write().unwrap().foreign = true;
+}
+
+static CUSTOM: RwLock<Vec<String>> = RwLock::new(Vec::new());
+
+/// Registers the cops a `require:`d local Ruby file defines (their classes register in RuboCop when
+/// the file loads), each with whether it supports autocorrect.
+pub fn register_custom(cops: Vec<(String, bool)>) {
+    CUSTOM.write().unwrap().extend(cops.iter().map(|(c, _)| c.clone()));
+    set_foreign_autocorrect(cops.iter().filter(|(_, ac)| *ac).map(|(c, _)| c.clone()));
+    register_foreign(cops.into_iter().map(|(c, _)| c).collect());
+}
+
+/// A cop a `require:`d local Ruby file defines.
+pub fn is_custom(cop: &str) -> bool {
+    CUSTOM.read().unwrap().iter().any(|c| c == cop)
+}
+
+static FOREIGN_AUTOCORRECT: RwLock<Vec<String>> = RwLock::new(Vec::new());
+
+/// The cops of plugins rbcop does not implement that support autocorrect (`extend AutoCorrector`).
+pub fn set_foreign_autocorrect(names: impl IntoIterator<Item = String>) {
+    FOREIGN_AUTOCORRECT.write().unwrap().extend(names);
+}
+
+/// Cop.support_autocorrect? for a foreign plugin's cop.
+pub fn foreign_autocorrect(cop: &str) -> bool {
+    FOREIGN_AUTOCORRECT.read().unwrap().iter().any(|c| c == cop)
 }
 
 /// What rbcop cannot enumerate of RuboCop's registry: cops a `require:`d local file or an unfound
@@ -170,6 +205,11 @@ pub fn has_unrunnable() -> bool {
     open.custom || open.foreign || !open.constants.is_empty()
 }
 
+/// Documentation.builtin?: one of RuboCop's own cops.
+pub fn is_builtin(cop: &str) -> bool {
+    REGISTRY.core.contains(&cop)
+}
+
 /// Whether a native plugin's gem has been loaded (required) in this process.
 pub fn plugin_loaded(gem: &str) -> bool {
     REGISTRY.plugins.read().unwrap().1.contains(&gem)
@@ -208,13 +248,37 @@ pub const LEGACY_COP_NAMES: &[&str] = &[
     "Performance/*", "Rails/*",
 ];
 
-fn department_of(name: &str) -> &str {
+/// A cop's department (everything before the last `/`).
+pub fn department_of(name: &str) -> &str {
     name.rsplit_once('/').map_or("", |(d, _)| d)
 }
 
 /// Registry#department?
 pub fn is_department(name: &str) -> bool {
     REGISTRY.iter().any(|c| department_of(c) == name)
+}
+
+/// Registry#departments: each department once, in registration order.
+pub fn departments() -> Vec<&'static str> {
+    let mut out: Vec<&'static str> = Vec::new();
+    for c in REGISTRY.iter() {
+        let d = department_of(c);
+        if !out.contains(&d) {
+            out.push(d);
+        }
+    }
+    out
+}
+
+/// Registry#names_for_department: the cops whose department is exactly `dept`.
+pub fn names_for_department(dept: &str) -> Vec<&'static str> {
+    REGISTRY.iter().copied().filter(|c| department_of(c) == dept).collect()
+}
+
+/// Names ordered as `registry.departments.sort.each { with_department(d).sort }`: by department,
+/// then by name (`--show-cops`, `--list-enabled-cops-for`).
+pub fn sort_by_department(names: &mut [&str]) {
+    names.sort_by(|a, b| (department_of(a), *a).cmp(&(department_of(b), *b)));
 }
 
 /// Badge.camel_case
@@ -226,24 +290,69 @@ fn camel_case(part: &str) -> String {
     RE.replace_all(part, |c: &regex::Captures| c[0][c[0].len() - 1..].to_uppercase()).into_owned()
 }
 
+/// Registry.qualified_cop?: the first department (in registration order) with a cop of this
+/// name is the name's own (`RSpec/Output` is not, once rubocop-rails registered Rails/Output).
+pub fn is_qualified_cop(name: &str) -> bool {
+    let (dept, cop) = (department_of(name), name.rsplit('/').next().unwrap_or(name));
+    let registered = |d: &str| REGISTRY.iter().any(|c| department_of(c) == d && c.rsplit('/').next() == Some(cop));
+    departments().into_iter().find(|d| registered(d)) == Some(dept)
+}
+
 /// Registry#qualified_cop_name(name, nil, warn: false); None on AmbiguousCopName.
 pub fn qualified_cop_name(name: &str) -> Option<String> {
+    qualify(name, "", None, true, &mut Vec::new()).ok()
+}
+
+/// Registry#qualified_cop_name(name, origin, warn:, correct_namespace:). With `warn` (the path as
+/// PathUtil.smart_path shows it) the `no department given` and `wrong namespace` warnings are
+/// pushed as the lines Registry#emit_warning writes. Err is AmbiguousCopName's message.
+pub fn qualify(
+    name: &str,
+    origin: &str,
+    warn: Option<&str>,
+    correct_namespace: bool,
+    warnings: &mut Vec<String>,
+) -> Result<String, String> {
+    // Badge.parse: Ruby's split drops trailing empty fields.
     let mut parts: Vec<String> = name.split('/').map(camel_case).collect();
     while parts.last().is_some_and(|p| p.is_empty()) {
         parts.pop();
     }
-    let Some(cop) = parts.pop() else { return Some(name.to_string()) };
+    let Some(cop) = parts.pop() else { return Ok(name.to_string()) };
+    let qualified = !parts.is_empty();
     let dept = parts.join("/");
     let registered = |d: &str| REGISTRY.iter().any(|c| department_of(c) == d && c.rsplit('/').next() == Some(cop.as_str()));
-    if !parts.is_empty() && registered(&dept) {
-        return Some(name.to_string());
+    // department_missing?: unqualified_cop_names holds every cop's basename (and
+    // RedundantCopDisableDirective), compared with the name as given.
+    if let Some(shown) = warn
+        && !qualified
+        && (name == "RedundantCopDisableDirective" || REGISTRY.iter().any(|c| c.rsplit('/').next() == Some(name)))
+    {
+        let fix = if origin.ends_with(".rb") { " Run `rubocop -a --only Migration/DepartmentName` to fix." } else { "" };
+        warnings.push(format!("{shown}: Warning: no department given for {name}.{fix}"));
     }
-    let mut depts: Vec<&str> = REGISTRY.iter().map(|c| department_of(c)).collect();
-    depts.dedup();
-    let hits: Vec<&str> = depts.into_iter().filter(|d| registered(d)).collect();
+    if qualified && registered(&dept) {
+        return Ok(name.to_string());
+    }
+    if qualified && !correct_namespace {
+        return Ok(name.to_string());
+    }
+    let given = if qualified { format!("{dept}/{cop}") } else { cop.clone() };
+    let hits: Vec<String> =
+        departments().into_iter().filter(|d| registered(d)).map(|d| format!("{d}/{cop}")).collect();
     match hits.as_slice() {
-        [] => Some(name.to_string()),
-        [d] => Some(format!("{d}/{cop}")),
-        _ => None,
+        [] => Ok(name.to_string()),
+        [real] => {
+            if let Some(shown) = warn
+                && qualified
+            {
+                warnings.push(format!("{shown}: Warning: {given} has the wrong namespace - replace it with {real}"));
+            }
+            Ok(real.clone())
+        }
+        many => Err(format!(
+            "Ambiguous cop name `{given}` used in {origin} needs department qualifier. Did you mean {}?",
+            many.join(" or ")
+        )),
     }
 }

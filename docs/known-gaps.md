@@ -96,6 +96,13 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   Other Rails corrections insert source text or escaped literals (`inspect`/`dump`) and are not
   changed. Fixture: tests/autocorrect/rails_untrusted_text (RuboCop's output is kept in
   `rubocop-output/`).
+- Rails/RedundantActiveRecordAllMethod reports an `all` that is an argument of a querying method
+  whose receiver is also `.all` (`Foo.all.merge(Bar.all)`), as RuboCop does, but withholds that
+  correction: RuboCop removes the argument's `all` and the parent's dot and writes
+  `Foo.merge(Bar.)` (a syntax error), or `where()` for `all.where(all)`. The receiver's `all` is
+  corrected as usual; once it is, the argument is no longer reported (its parent's receiver is not
+  `.all` any more), so under `-a`/`-A` rbcop reports only offenses that remain. Fixture:
+  tests/autocorrect/rails_all_argument (RuboCop's output in `rubocop-output/`).
 - rubocop-minitest corrections were checked against the same rule: none splices string or symbol
   content into new source (they move the source of whole arguments and receivers, and write method
   names and operators, which are identifiers), so none is withheld.
@@ -200,9 +207,12 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   - `-d/--debug`, `--profile`, `--memory`: Ruby-level diagnostics (backtraces, stackprof).
   - `-C/--cache`, `--cache-root`, `-P/--[no-]parallel`, `--raise-cop-error` are accepted and have
     no effect (rbcop keeps no result cache and always lints in parallel).
-- `--list-enabled-cops-for` and `--show-docs-url` know RuboCop's cops, those of native plugins and
-  the default.yml cops of other loaded plugins; cops a plugin registers without a default.yml entry
-  are not listed and get no URL.
+- The cops of a loaded plugin rbcop does not implement (`--show-cops`, `--list-enabled-cops-for`,
+  `--show-docs-url`, `--only`, directives, the skipped-cops notice) are the cop classes its gem's
+  `lib/` defines, found by reading the `module`/`class` nesting (`RuboCop::Cop::<Dept>::<Name>`
+  descending from a cop base class, without `exclude_from_registry`; `extend AutoCorrector` marks
+  `# Supports --autocorrect`). A cop class defined by metaprogramming is not seen; a gem whose
+  `lib/` yields no cop class falls back to its default.yml cop names.
 - Custom formatter classes and `require:` of local Ruby files (custom cops) are not supported. rbcop names
   the cops it skips on stderr, and `RBCOP_FALLBACK=1` runs them with RuboCop (README, "Plugins and custom cops").
 - Cops rbcop cannot run (a non-native plugin's, custom cops): Lint/RedundantCopDisableDirective
@@ -241,7 +251,11 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   SafeNavigationChainLength `Max` 0 or less, a zero indentation width with tabs, #114) are
   reproduced. Order of cop errors: rbcop's `N errors occurred:` summary is sorted, RuboCop's is in
   raise order; and errors printed as they happen come from on_file cops (RuboCop's
-  on_new_investigation) after the node walk's, where RuboCop prints them first.
+  on_new_investigation) after the node walk's, where RuboCop prints them first. A directive naming
+  a bare cop name two departments share (AmbiguousCopName) ends the run at its file as in RuboCop;
+  the cop errors there come from the cops that add an offense, Lint/MissingCopEnableDirective and
+  Lint/CopDirectiveSyntax, not from cops that read the comment config otherwise (Style/DirectiveScope,
+  the modifier cops asking whether Layout/LineLength is enabled).
 - Deliberate: Style/WordArray correcting a `%W[...]` whose value is invalid UTF-8 (`%W[\xff]`)
   writes the escaped form (`["\xFF"]`); RuboCop writes the raw bytes and then crashes re-parsing
   its own output. The offense message matches RuboCop.
@@ -335,7 +349,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   - Configs are resolved before inspection starts, so a subdirectory config's warnings come before
     the `--only`/`--except` name warnings, where RuboCop prints them when it reaches that
     directory's first file. An invalid subdirectory config still stops the run at its first file,
-    after the files before it are reported.
+    after the files before it are reported (as in RuboCop), unless finding the targets loaded it
+    first: an extensionless file there makes TargetFinder#ruby_executable? read its directory's
+    `RubyInterpreters`, and the run ends before anything is reported.
   - RuboCop crashes with a backtrace on a non-Array `Exclude` (NoMethodError in
     `make_excludes_absolute`); rbcop prints the same first line and exits 2. A non-Array
     `Include` crashes RuboCop later (per cop or in `FilePatterns`); rbcop treats it as one pattern.
@@ -357,8 +373,18 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   different problem. The Ruby backtrace RuboCop prints after the message is not reproduced.
 - rubocop-rspec family:
   - RSpec/SpecFilePathFormat with `EnforcedInflector: active_support` uses
-    ActiveSupport's default inflections; the project's `InflectorPath` file is not evaluated (a
-    missing one is a cop error, as in RuboCop).
+    ActiveSupport's default inflections; the project's `InflectorPath` file is not evaluated.
+    A missing `InflectorPath` file is a cop error on every spec file that reaches the inflector
+    (one top-level example group on a constant, not skipped by `IgnoreMetadata`). RuboCop raises
+    it once per process: `ActiveSupportInflector.prepare_availability` sets `@prepared` before it
+    raises, so only the first such file in inspection order gets the error. When rubocop-rails is
+    also loaded (it requires `active_support/inflector`), RuboCop checks the later files with
+    ActiveSupport's default inflections and reports their offenses; without it, every such file
+    errors, as in rbcop. Which file RuboCop errors on depends on its process state (the order it
+    inspects files in, one process), and rbcop lints files in parallel, so rbcop keeps the
+    per-file error: with rubocop-rails loaded it reports N cop errors where RuboCop reports one
+    error and the other files' offenses (checked with RuboCop 1.91, rubocop-rspec 3.10.2 and
+    rubocop-rails 2.38.0, #451).
   - rubocop-rspec_rails loaded without rubocop-rspec: RuboCop fails to load the plugin
     (`uninitialized constant RuboCop::Cop::RSpec::InsideExampleGroup`); rbcop runs the RSpecRails
     cops with rubocop-rspec's default `RSpec/Language`.

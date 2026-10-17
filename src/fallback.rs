@@ -21,32 +21,25 @@ pub fn enabled() -> bool {
     std::env::var_os("RBCOP_FALLBACK").is_some_and(|v| v == "1")
 }
 
-/// Registered cops enabled (and selected) in any of `configs` that rbcop does not implement. A
-/// renamed cop's old name or a custom cop's config is not registered: custom cops are counted as
-/// required code. A nested department (rubocop-i18n's `I18n/GetText`) is a key other keys sit
-/// under, not a cop.
+/// Registered cops (Registry.global, a plugin's cops with or without a default.yml entry) enabled
+/// and selected in any of `configs` that rbcop does not implement. Custom cops are counted as
+/// required code.
 pub fn unimplemented<'c>(
     configs: impl IntoIterator<Item = &'c Resolved>,
     implemented: &HashSet<&str>,
     selected: impl Fn(&str, &Resolved) -> bool,
 ) -> BTreeSet<String> {
+    let registry = rbcop::helpers::cop_registry::REGISTRY.to_vec();
     let mut out = BTreeSet::new();
     for cfg in configs {
-        let departments: HashSet<&str> =
-            cfg.hash.0.iter().flat_map(|(name, _)| name.match_indices('/').map(|(i, _)| &name[..i])).collect();
-        for (name, _) in &cfg.hash.0 {
-            // A nested department key (`Capybara/RSpec`, `I18n/GetText`) is not a cop: a native
-            // plugin's are listed, any other is a key other keys sit under.
-            if name.contains('/')
-                && !departments.contains(name.as_str())
-                && !rbcop::helpers::cop_registry::NATIVE_PLUGINS.iter().any(|p| p.departments.contains(&name.as_str()))
-                && !implemented.contains(name.as_str())
+        for &name in &registry {
+            if !implemented.contains(name)
+                && !rbcop::helpers::cop_registry::is_custom(name)
                 && !out.contains(name)
-                && cfg.registered(name)
                 && selected(name, cfg)
                 && cfg.cop_enabled(name)
             {
-                out.insert(name.clone());
+                out.insert(name.to_string());
             }
         }
     }
@@ -160,7 +153,7 @@ pub fn run(
         (o.enable_pending_cops, "--enable-pending-cops"),
         (o.disable_pending_cops, "--disable-pending-cops"),
         (o.force_default_config, "--force-default-config"),
-        (rbcop::directives::disable_comments_ignored(), "--ignore-disable-comments"),
+        (rbcop::directives::ignoring_disable_comments(), "--ignore-disable-comments"),
         (rbcop::helpers::lsp::enabled(), "--editor-mode"),
         (o.ignore_parent_exclusion, "--ignore-parent-exclusion"),
         (o.ignore_unrecognized_cops, "--ignore-unrecognized-cops"),

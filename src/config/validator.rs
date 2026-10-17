@@ -48,6 +48,25 @@ static OBSOLETION: LazyLock<Map> = LazyLock::new(|| match parse_yaml(include_str
     _ => Map::default(),
 });
 
+/// ConfigObsoletion#legacy_cop_names: the old names of the cop rules (renamed, removed, split,
+/// extracted) of RuboCop and of the plugins loaded so far.
+pub fn legacy_cop_names() -> Vec<String> {
+    let plugins: Vec<Map> = crate::helpers::cop_registry::loaded_plugins()
+        .iter()
+        .filter_map(|p| match p.obsoletion.map(parse_yaml) {
+            Some(Ok(Value::Map(m))) => Some(Arc::unwrap_or_clone(m)),
+            _ => None,
+        })
+        .collect();
+    let mut out = Vec::new();
+    for kind in ["renamed", "removed", "split", "extracted"] {
+        for rules in std::iter::once(&*OBSOLETION).chain(plugins.iter()) {
+            out.extend(rules.map(kind).into_iter().flat_map(|m| m.keys().map(String::from)));
+        }
+    }
+    out
+}
+
 /// ConfigObsoletion.deprecated_names_for: the old names of cops renamed to `cop`.
 pub fn deprecated_names_for(cop: &str) -> Vec<String> {
     static RENAMED: LazyLock<Vec<(String, String)>> = LazyLock::new(|| {

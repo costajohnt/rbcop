@@ -1,0 +1,8 @@
+Style/LineLength:
+  Max: 20
+Lint/HashSyntax:
+  Enabled: true
+  EnforcedStyle: hash_rockets
+AllCops:
+  SuggestExtensions: false
+  NewCops: enable

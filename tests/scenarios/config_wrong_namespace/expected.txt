@@ -1,0 +1,5 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:1:21: C: Layout/LineLength: Line is too long. [29/20]
+a.rb:3:13: C: [Correctable] Style/HashSyntax: Use hash rockets syntax.
+a.rb:3:7: C: [Correctable] Style/HashSyntax: Use hash rockets syntax.
+a.rb:4:21: C: [Correctable] Layout/LineLength: Line is too long. [35/20]

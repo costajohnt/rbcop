@@ -1,0 +1,23 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+spec/b_spec.rb:10:3: C: RSpec/ExampleLength: Example has too many lines. [12/5]
+spec/b_spec.rb:10:3: C: RSpec/MultipleExpectations: Example has too many expectations [2/1].
+spec/b_spec.rb:11:5: C: [Correctable] Style/LambdaCall: Prefer the use of `y.call` over `y.()`.
+spec/b_spec.rb:12:12: C: [Correctable] Style/LambdaCall: Prefer the use of `y.call` over `y.()`.
+spec/b_spec.rb:14:7: C: [Correctable] Style/LambdaCall: Prefer the use of `y.call` over `y.()`.
+spec/b_spec.rb:16:5: C: [Correctable] Style/LambdaCall: Prefer the use of `instance.summable.call(query, true)` over `instance.summable.(query, true)`.
+spec/b_spec.rb:17:5: C: [Correctable] Style/LambdaCall: Prefer the use of `x&.call` over `x&.()`.
+spec/b_spec.rb:18:5: C: [Correctable] Style/LambdaCall: Prefer the use of `y.call` over `y.()`.
+spec/b_spec.rb:19:5: C: [Correctable] Style/LambdaCall: Prefer the use of `y.call` over `y.()`.
+spec/b_spec.rb:22:5: C: [Correctable] RSpec/ImplicitExpect: Prefer `is_expected.to` over `should`.
+spec/b_spec.rb:22:5: C: [Correctable] RSpec/ImplicitSubject: Don't use implicit subject.
+spec/b_spec.rb:25:15: C: [Correctable] Style/LambdaCall: Prefer the use of `y.call` over `y.()`.
+spec/b_spec.rb:28:10: C: Style/LambdaCall: Prefer the use of `y.().call` over `y.().()`.
+spec/b_spec.rb:28:10: C: Style/LambdaCall: Prefer the use of `y.call` over `y.()`.
+spec/b_spec.rb:28:10: C: [Correctable] Style/LambdaCall: Prefer the use of `y.().().call(&b)` over `y.().().(&b)`.
+spec/b_spec.rb:28:5: C: RSpec/NoExpectationExample: No expectation found in this example.
+spec/b_spec.rb:29:3: C: [Correctable] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `describe`.
+spec/b_spec.rb:30:3: C: [Correctable] Style/LambdaCall: Prefer the use of `y.call` over `y.()`.
+spec/b_spec.rb:3:1: C: RSpec/SpecFilePathFormat: Spec path should end with `foo*_spec.rb`.
+spec/b_spec.rb:4:13: C: [Correctable] Style/LambdaCall: Prefer the use of `y.call` over `y.()`.
+spec/b_spec.rb:6:13: C: [Correctable] Style/LambdaCall: Prefer the use of `y.call(1)` over `y.(1)`.
+spec/b_spec.rb:8:12: C: [Correctable] Style/LambdaCall: Prefer the use of `y.call` over `y.()`.
