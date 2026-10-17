@@ -363,6 +363,7 @@ fn analyze(
     }
     let text: &str = shared;
     let raw_text = raw_text.unwrap_or(text);
+    let errors_before = file_errors_len();
     let version = target_ruby::prism_version(cfg.target_ruby);
     // Below 3.3 RuboCop parses with the parser gem, which accepts some things Prism rejects.
     let parser_gem = cfg.target_ruby < 3.3;
@@ -823,6 +824,14 @@ fn analyze(
                 .map(|a| a.name)
                 .collect();
             out.retain(|o| correcting.contains(&o.cop));
+            // Nor do they raise there: only the correcting cops' errors count for this pass.
+            FILE_ERRORS.with(|e| {
+                let mut i = 0;
+                e.borrow_mut().retain(|(cop, _)| {
+                    i += 1;
+                    i <= errors_before || cop.as_deref().is_none_or(|c| correcting.contains(&c))
+                })
+            });
         }
     }
     for o in out.iter_mut() {
@@ -863,7 +872,7 @@ pub fn cop_error_at(cop: &str, src: &Source, at: Option<usize>) {
         }
         None => src.absolute_path(),
     };
-    file_error(format!("An error occurred while {cop} cop was inspecting {location}."));
+    record_error(Some(cop), format!("An error occurred while {cop} cop was inspecting {location}."));
 }
 
 /// The node the running cop callback was given (see VISITING).
@@ -892,18 +901,31 @@ thread_local! {
     /// The cop errors of the file this thread is linting, printed by the reporting loop when it
     /// reaches the file: RuboCop prints them as it inspects, in target order, and rbcop's workers
     /// finish files in any order.
-    static FILE_ERRORS: std::cell::RefCell<Vec<String>> = const { std::cell::RefCell::new(Vec::new()) };
+    /// With the cop that raised, if a cop did.
+    static FILE_ERRORS: std::cell::RefCell<Vec<(Option<String>, String)>> = const { std::cell::RefCell::new(Vec::new()) };
 }
 
-/// The errors `file_error` recorded on this thread since the last call (one file's, in order).
+/// The errors `file_error` recorded on this thread since the last call (one file's, in order),
+/// now kept for the summary.
 pub fn take_file_errors() -> Vec<String> {
-    FILE_ERRORS.with(|e| std::mem::take(&mut *e.borrow_mut()))
+    let errors: Vec<String> =
+        FILE_ERRORS.with(|e| std::mem::take(&mut *e.borrow_mut())).into_iter().map(|e| e.1).collect();
+    ERRORS.lock().unwrap_or_else(|e| e.into_inner()).extend(errors.iter().cloned());
+    errors
+}
+
+fn file_errors_len() -> usize {
+    FILE_ERRORS.with(|e| e.borrow().len())
 }
 
 /// Record an error for printing with its file (`take_file_errors`) and keep it for the summary
 /// (it makes the run fail). In a poisoned file (see `poison_raise`) cop errors wait for the end
 /// of the investigation, as Team prints them.
 pub fn file_error(msg: String) {
+    record_error(None, msg);
+}
+
+fn record_error(cop: Option<&str>, msg: String) {
     let deferred = POISON.with(|p| match &mut *p.borrow_mut() {
         Some((_, errors)) => {
             errors.push(msg.clone());
@@ -911,10 +933,11 @@ pub fn file_error(msg: String) {
         }
         None => false,
     });
-    if !deferred {
-        FILE_ERRORS.with(|e| e.borrow_mut().push(msg.clone()));
+    if deferred {
+        ERRORS.lock().unwrap_or_else(|e| e.into_inner()).push(msg);
+    } else {
+        FILE_ERRORS.with(|e| e.borrow_mut().push((cop.map(String::from), msg)));
     }
-    ERRORS.lock().unwrap_or_else(|e| e.into_inner()).push(msg);
 }
 
 thread_local! {
@@ -1048,8 +1071,8 @@ pub const MAX_AST_DEPTH: usize = 1000;
 /// The run's cop errors, in file order.
 pub fn take_errors() -> Vec<String> {
     let mut errors = std::mem::take(&mut *ERRORS.lock().unwrap_or_else(|e| e.into_inner()));
+    // ExecuteRunner#display_error_summary lists one entry per raise, duplicates included.
     errors.sort();
-    errors.dedup();
     errors
 }
 

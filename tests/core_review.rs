@@ -468,6 +468,28 @@ fn flow_collections_ignore_indentation_like_libyaml() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// The error summary lists every raise, two at one location too (#501); under -a/-A only the last
+/// (non-correcting) pass runs the cops that do not correct, so their errors are not repeated.
+#[test]
+fn cop_error_summary_keeps_duplicates() {
+    let dir = scratch("error-dups");
+    fs::write(dir.join(".rubocop.yml"), "AllCops:\n  NewCops: disable\nLint/Debugger:\n  DebuggerMethods: x\n")
+        .unwrap();
+    let file = dir.join("a.rb");
+    for (args, lines) in [(&[][..], [1, 1, 3]), (&["-a"][..], [1, 1, 3]), (&["-A"][..], [3, 3, 5])] {
+        fs::write(&file, "binding.pry\nx = \"a\"\nputs  x\n").unwrap();
+        let out = rbcop(&dir, &[args, &["a.rb"]].concat());
+        let stderr = text(&out.stderr);
+        let summary = stderr.split_once("3 errors occurred:\n").map(|s| s.1).unwrap_or_else(|| panic!("{stderr}"));
+        let want: Vec<String> = lines
+            .iter()
+            .map(|l| format!("An error occurred while Lint/Debugger cop was inspecting {}:{l}:0.", file.display()))
+            .collect();
+        assert_eq!(summary.lines().take(3).collect::<Vec<_>>(), want, "{args:?}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// Cop errors printed during the run come in target order, whichever worker finishes first (#507).
 #[test]
 fn cop_errors_print_in_target_order() {
