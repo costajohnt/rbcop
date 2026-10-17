@@ -829,3 +829,40 @@ fn autocorrect_writes_explicit_and_inside_paths() {
     let _ = fs::remove_dir_all(&dir);
     let _ = fs::remove_dir_all(&outside);
 }
+
+/// A directive naming an ambiguous bare cop (AmbiguousCopName) makes every add_offense raise.
+/// RuboCop's VariableForce cops run as one force, so only the first hook to add an offense errors,
+/// without a location (#471). Expected cops recorded from RuboCop 1.91.
+#[test]
+fn ambiguous_directive_errors_once_for_the_variable_force() {
+    let dir = scratch("forceerror");
+    fs::write(dir.join(".rubocop.yml"), "AllCops:\n  NewCops: enable\n  SuggestExtensions: false\n").unwrap();
+    let head = "# frozen_string_literal: true\n\n# rubocop:disable SelfAssignment\n";
+    let cases = [
+        ("a.rb", format!("{head}def f(a)\n  x = 1\n  [1].each {{ |b| 1 }}\nend\n"), "Lint/UnusedBlockArgument"),
+        ("b.rb", "x = 1 # rubocop:disable SelfAssignment\n".to_string(), "Lint/UselessAssignment"),
+        (
+            "c.rb",
+            format!("{head}def g(a, _b)\n  _b\nend\n\ndef h(c)\n  d = 1\n  [1].each do |d|\n    e = 2\n  end\nend\n"),
+            "Lint/UnderscorePrefixedVariableName",
+        ),
+        ("d.rb", format!("{head}def m\n  y = 1\n  [1].each {{ |y| p y }}\n  z = 2\nend\n"), "Lint/UselessAssignment"),
+    ];
+    for (name, source, cop) in cases {
+        fs::write(dir.join(name), source).unwrap();
+        let out = rbcop(&dir, &[name]);
+        let force: Vec<String> = text(&out.stderr)
+            .lines()
+            .filter(|l| {
+                l.starts_with("An error occurred while ")
+                    && ["Lint/Shadow", "Lint/Underscore", "Lint/Unused", "Lint/Useless"].iter().any(|c| l.contains(c))
+            })
+            .map(String::from)
+            .collect();
+        let want = format!("An error occurred while {cop} cop was inspecting {}.", dir.join(name).display());
+        // The run ends at the file: no error summary.
+        assert_eq!(force, [want], "{name}");
+        assert_eq!(out.status.code(), Some(2), "{name}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}

@@ -67,6 +67,17 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   until SystemStackError.
 - A panic outside a cop (cop panics are reported as cop errors) ends the run at that file with
   `rbcop: internal error while inspecting <file>` (exit 2).
+- Cop errors (every kind rbcop reproduces: config values, AmbiguousCopName directives, the
+  InflectorPath file, crashes) print only the `An error occurred while <Cop> cop was inspecting
+  <location>.` line. RuboCop's Team#handle_error follows it with `To see the complete backtrace run
+  rubocop -d.` (the backtrace under `-d`, which rbcop does not have). After the `N error(s)
+  occurred:` list at the end of the run rbcop prints its own text,
+  `Errors are usually caused by rbcop bugs.`, `Please report a bug with the file and configuration
+  that triggered it.`, `Mention the following information in the issue report:`, `rbcop <version>`,
+  where RuboCop prints `Errors are usually caused by RuboCop bugs.`, `Please, update to the latest
+  RuboCop version if not already in use, and report a bug if the issue still occurs on this
+  version.`, its issues URL, a blank line, `Mention the following information in the issue report:`
+  and its `-V` line: bugs in rbcop's output belong to rbcop.
 - Error wording for I/O failures follows Ruby's (`Permission denied @ rb_sysopen - <file>`,
   `... @ rb_sys_fail_on_write - <out file>`) but without the backtrace; a failed `-o` directory or
   file creation is worded `<path>: <reason>`.
@@ -255,7 +266,12 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   a bare cop name two departments share (AmbiguousCopName) ends the run at its file as in RuboCop;
   the cop errors there come from the cops that add an offense, Lint/MissingCopEnableDirective and
   Lint/CopDirectiveSyntax, not from cops that read the comment config otherwise (Style/DirectiveScope,
-  the modifier cops asking whether Layout/LineLength is enabled).
+  the modifier cops asking whether Layout/LineLength is enabled; so one `no department given`
+  warning fewer for each). The VariableForce cops (Lint/UselessAssignment, the unused-argument cops,
+  ...) run as one force in RuboCop, so only the first hook to add an offense errors, without a
+  location: rbcop picks that cop by the earliest force event (a declaration for
+  Lint/ShadowingOuterLocalVariable, leaving the innermost scope around the offense for the others,
+  then team order), which can pick another cop when the flagged variable belongs to an outer scope.
 - Deliberate: Style/WordArray correcting a `%W[...]` whose value is invalid UTF-8 (`%W[\xff]`)
   writes the escaped form (`["\xFF"]`); RuboCop writes the raw bytes and then crashes re-parsing
   its own output. The offense message matches RuboCop.
