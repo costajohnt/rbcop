@@ -1196,9 +1196,11 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         configs.iter().flat_map(|c| c.hash.0.iter().map(|(k, _)| k.as_str())).collect();
     let names: Vec<&'static str> = names.into_iter().filter(|&n| n == "Lint/Syntax" || known.contains(n)).collect();
     let mut fallback_offenses = std::collections::HashMap::new();
+    // -F with -a/-A: RuboCop corrects no file after the first failing one, so the child corrects
+    // one file at a time, as each is reached (in the loop below).
+    let mut fallback_per_file = None;
     if !skipped.is_empty() || store.requires_ruby_code() {
         if fallback::enabled() && stdin_text.is_none() && config_error.is_none() && team_error.is_none() {
-            let files: Vec<PathBuf> = jobs.iter().map(|(p, _)| p.clone()).collect();
             let child = fallback::Child {
                 opts: &cli.opts,
                 except,
@@ -1206,7 +1208,12 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                 force_exclusion: cli.force_exclusion,
                 autocorrect: cli.autocorrect,
             };
-            fallback_offenses = fallback::run(&files, &cwd, &names, child)?;
+            if cli.fail_fast && cli.autocorrect.is_some() {
+                fallback_per_file = Some(child);
+            } else {
+                let files: Vec<PathBuf> = jobs.iter().map(|(p, _)| p.clone()).collect();
+                fallback_offenses = fallback::run(&files, &cwd, &names, child)?;
+            }
         } else {
             eprintln!("{}", fallback::notice(&skipped, store.requires_ruby_code()));
         }
@@ -1351,6 +1358,10 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                 config_failure = Some(e);
                 stopped = true;
                 break;
+            }
+            // ponytail: one RuboCop start per file; only under -F with -a/-A.
+            if let Some(child) = fallback_per_file {
+                fallback_offenses.extend(fallback::run(std::slice::from_ref(path), &cwd, &names, child)?);
             }
             let linted = match linted.take() {
                 Some(l) => l,

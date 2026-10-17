@@ -6,12 +6,15 @@ use rbcop::autocorrect::Mode;
 use rbcop::config::{Options, Resolved};
 use rbcop::cop::{Offense, Severity};
 use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
-use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use std::sync::Arc;
 
 const FORMATTER: &str = include_str!("fallback_formatter.rb");
+
+/// Loaded through RUBYOPT before RuboCop: the child reads no `.rubocop` arguments file (the prepend
+/// on the singleton class outlives RuboCop's own `def self.read_as_arguments`).
+const PRELOAD: &str = "module RuboCop\n  class ArgumentsFile\n    singleton_class.prepend(Module.new { def read_as_arguments = [] })\n  end\nend\n";
 
 /// RBCOP_FALLBACK=1 asks for the RuboCop subprocess.
 pub fn enabled() -> bool {
@@ -20,7 +23,8 @@ pub fn enabled() -> bool {
 
 /// Registered cops enabled (and selected) in any of `configs` that rbcop does not implement. A
 /// renamed cop's old name or a custom cop's config is not registered: custom cops are counted as
-/// required code.
+/// required code. A nested department (rubocop-i18n's `I18n/GetText`) is a key other keys sit
+/// under, not a cop.
 pub fn unimplemented<'c>(
     configs: impl IntoIterator<Item = &'c Resolved>,
     implemented: &HashSet<&str>,
@@ -28,8 +32,11 @@ pub fn unimplemented<'c>(
 ) -> BTreeSet<String> {
     let mut out = BTreeSet::new();
     for cfg in configs {
+        let departments: HashSet<&str> =
+            cfg.hash.0.iter().flat_map(|(name, _)| name.match_indices('/').map(|(i, _)| &name[..i])).collect();
         for (name, _) in &cfg.hash.0 {
             if name.contains('/')
+                && !departments.contains(name.as_str())
                 && !implemented.contains(name.as_str())
                 && !out.contains(name)
                 && cfg.registered(name)
@@ -62,6 +69,7 @@ pub fn notice(skipped: &BTreeSet<String>, required_code: bool) -> String {
 }
 
 /// What the RuboCop subprocess needs from the command line.
+#[derive(Clone, Copy)]
 pub struct Child<'a> {
     pub opts: &'a Options,
     pub except: &'a [String],
@@ -86,16 +94,33 @@ pub fn run(
     let program = std::env::var("RBCOP_RUBOCOP").unwrap_or_else(|_| "rubocop".into());
     let mut words = program.split_whitespace();
     let Some(bin) = words.next() else { return Err("rbcop: RBCOP_RUBOCOP is empty".into()) };
-    // A fresh file (create_new) so nothing else in the temp dir can choose the Ruby that runs.
+    // A fresh directory (create_dir fails if it exists) so nothing else in the temp dir can choose
+    // the Ruby that runs.
     let nanos = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map_or(0, |d| d.as_nanos());
-    let fmt = std::env::temp_dir().join(format!("rbcop-fallback-{}-{nanos}.rb", std::process::id()));
-    let mut f = std::fs::File::options()
-        .write(true)
-        .create_new(true)
-        .open(&fmt)
-        .map_err(|e| format!("rbcop: RBCOP_FALLBACK: {}: {e}", fmt.display()))?;
-    f.write_all(FORMATTER.as_bytes()).map_err(|e| e.to_string())?;
-    drop(f);
+    let dir = std::env::temp_dir().join(format!("rbcop-fallback-{}-{nanos}", std::process::id()));
+    std::fs::create_dir(&dir).map_err(|e| format!("rbcop: RBCOP_FALLBACK: {}: {e}", dir.display()))?;
+    struct Remove(PathBuf);
+    impl Drop for Remove {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.0);
+        }
+    }
+    let dir = Remove(dir);
+    let write = |name: &str, text: &str| -> Result<PathBuf, String> {
+        let path = dir.0.join(name);
+        std::fs::write(&path, text).map_err(|e| format!("rbcop: RBCOP_FALLBACK: {}: {e}", path.display()))?;
+        Ok(path)
+    };
+    let fmt = write("formatter.rb", FORMATTER)?;
+    let pre = write("preload.rb", PRELOAD)?.display().to_string();
+    // RUBYOPT is split on whitespace, with no quoting.
+    if pre.contains(char::is_whitespace) {
+        return Err(format!("rbcop: RBCOP_FALLBACK: the temp directory's path has whitespace: {pre}"));
+    }
+    let rubyopt = match std::env::var("RUBYOPT") {
+        Ok(v) if !v.is_empty() => format!("-r{pre} {v}"),
+        _ => format!("-r{pre}"),
+    };
 
     // Lint/Syntax cannot be excluded; the formatter drops its offenses.
     let except: Vec<&str> = implemented
@@ -111,6 +136,10 @@ pub fn run(
         .args(["--format", "RbcopFallbackFormatter", "--except", &except.join(",")])
         .current_dir(cwd)
         .env_remove("RBCOP_FALLBACK")
+        // rbcop has applied `.rubocop` and RUBOCOP_OPTS and forwards what the child needs. Read
+        // again, a `--format`, `-o` or `--stderr` there would break the output protocol.
+        .env_remove("RUBOCOP_OPTS")
+        .env("RUBYOPT", rubyopt)
         .stdin(Stdio::null())
         .stderr(Stdio::inherit());
     let o = c.opts;
@@ -120,9 +149,15 @@ pub fn run(
     if !o.only.is_empty() {
         cmd.args(["--only", &o.only.join(",")]);
     }
-    // The pending-cops banner is rbcop's to print; pending cops stay disabled either way.
-    cmd.arg(if o.enable_pending_cops { "--enable-pending-cops" } else { "--disable-pending-cops" });
+    // The pending flags are forwarded only as given: --disable-pending-cops wins over `NewCops:
+    // enable` (Registry#enabled_pending_cop?). The child's pending-cops banner is silenced by the
+    // formatter file; rbcop prints its own.
     for (on, flag) in [
+        (o.enable_pending_cops, "--enable-pending-cops"),
+        (o.disable_pending_cops, "--disable-pending-cops"),
+        (o.force_default_config, "--force-default-config"),
+        (rbcop::directives::disable_comments_ignored(), "--ignore-disable-comments"),
+        (rbcop::helpers::lsp::enabled(), "--editor-mode"),
         (o.ignore_parent_exclusion, "--ignore-parent-exclusion"),
         (o.ignore_unrecognized_cops, "--ignore-unrecognized-cops"),
         (o.safe, "--safe"),
@@ -151,7 +186,7 @@ pub fn run(
         HashMap::new()
     };
     let result = cmd.output();
-    let _ = std::fs::remove_file(&fmt);
+    drop(dir);
     let result = result.map_err(|e| format!("rbcop: RBCOP_FALLBACK: cannot run {program}: {e}"))?;
     // 0: no offenses, 1: offenses; anything else is RuboCop failing (its stderr was passed through).
     if !matches!(result.status.code(), Some(0 | 1)) {

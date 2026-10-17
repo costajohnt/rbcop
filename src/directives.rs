@@ -440,11 +440,16 @@ pub fn ignore_disable_comments() {
     IGNORE_COMMENTS.store(true, std::sync::atomic::Ordering::Relaxed);
 }
 
+/// Whether `--ignore-disable-comments` was given.
+pub fn disable_comments_ignored() -> bool {
+    IGNORE_COMMENTS.load(std::sync::atomic::Ordering::Relaxed)
+}
+
 /// Cop::Base#enabled_lines? negated: whether a directive suppresses an offense on these lines
 /// (never under `--ignore-disable-comments`). Code that reads the comment config itself
 /// (`comment_config.cop_enabled_at_line?`) calls `is_disabled`.
 pub fn suppressed(ranges: &HashMap<String, Vec<(i64, i64)>>, cop: &str, first: usize, last: usize) -> bool {
-    !IGNORE_COMMENTS.load(std::sync::atomic::Ordering::Relaxed) && is_disabled(ranges, cop, first, last)
+    !disable_comments_ignored() && is_disabled(ranges, cop, first, last)
 }
 
 /// An offense on these lines falls in a range where `cop` is disabled by a comment.
