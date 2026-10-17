@@ -43,7 +43,7 @@ rbcop reads plugin configuration (`plugins:` and `require:` gems contribute thei
 rbcop: not running 45 cops it does not implement (Sorbet: 41, ThreadSafety: 4); set RBCOP_FALLBACK=1 to run them with RuboCop
 ```
 
-Cops defined by Ruby code the config requires (`require: ./lib/cops/my_cop.rb`, or a plugin gem rbcop could not load) are named the same way ("cops from Ruby code the config requires"), since rbcop cannot know their names.
+Cops defined by Ruby code the config requires (`require: ./lib/cops/my_cop.rb`, or a plugin gem rbcop could not load) are named the same way ("cops from Ruby code the config requires"), since rbcop cannot know their names. A plugin that defines no cops but works through Ruby code (rubocop-erb's ERB extraction) is named as "the Ruby code of plugin rubocop-erb": rbcop runs no cops on the files its `AllCops: Include` brings in (the `.erb` views), and with the fallback RuboCop runs every cop on them.
 
 With `RBCOP_FALLBACK=1`, rbcop runs RuboCop once more for exactly those cops (`--except` every cop rbcop implements) on the same files with the same configuration and options, and merges its offenses into its own report, so formatters, `--fail-level` and the exit status see one run. RuboCop must be installed: `rubocop` on `PATH`, or the command in `RBCOP_RUBOCOP` (for example `RBCOP_RUBOCOP="bundle exec rubocop"`). The saving is smaller, since RuboCop still parses every file, but core cops no longer run in Ruby. Limits:
 

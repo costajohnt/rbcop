@@ -42,8 +42,9 @@ end)
 class RbcopFallbackFormatter < RuboCop::Formatter::BaseFormatter
   def file_finished(file, offenses)
     offenses.each do |o|
-      # rbcop reports syntax errors itself (and Lint/Syntax cannot be excluded).
-      next if o.cop_name == 'Lint/Syntax'
+      # rbcop reports syntax errors itself (and Lint/Syntax cannot be excluded), except in the
+      # files it leaves wholly to RuboCop.
+      next if o.cop_name == 'Lint/Syntax' && !ENV['RBCOP_FALLBACK_SYNTAX']
 
       loc = o.location
       if loc.is_a?(Parser::Source::Range)

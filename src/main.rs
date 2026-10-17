@@ -1290,7 +1290,13 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     // -F with -a/-A: RuboCop corrects no file after the first failing one, so the child corrects
     // one file at a time, as each is reached (in the loop below).
     let mut fallback_per_file = None;
-    if !skipped.is_empty() || store.requires_ruby_code() {
+    // Files a cop-less plugin rbcop does not implement brings in (rubocop-erb's ERB views): rbcop
+    // runs no cops on them, and the fallback runs every cop there.
+    let copless = store.copless_plugins();
+    let plugin_files: std::collections::HashSet<PathBuf> =
+        jobs.iter().filter(|(p, c)| store.copless_plugin_file(c, p)).map(|(p, _)| p.clone()).collect();
+    let unrunnable = !skipped.is_empty() || store.requires_ruby_code();
+    if unrunnable || !copless.is_empty() {
         if fallback::enabled() && stdin_text.is_none() && config_error.is_none() && team_error.is_none() {
             let child = fallback::Child {
                 opts: &cli.opts,
@@ -1302,11 +1308,15 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             if cli.fail_fast && cli.autocorrect.is_some() {
                 fallback_per_file = Some(child);
             } else {
-                let files: Vec<PathBuf> = jobs.iter().map(|(p, _)| p.clone()).collect();
-                fallback_offenses = fallback::run(&files, &cwd, &names, child)?;
+                let (whole, rest): (Vec<PathBuf>, Vec<PathBuf>) =
+                    jobs.iter().map(|(p, _)| p.clone()).partition(|p| plugin_files.contains(p));
+                if unrunnable {
+                    fallback_offenses = fallback::run(&rest, &cwd, &names, child)?;
+                }
+                fallback_offenses.extend(fallback::run(&whole, &cwd, &[], child)?);
             }
         } else {
-            eprintln!("{}", fallback::notice(&skipped, store.requires_ruby_code()));
+            eprintln!("{}", fallback::notice(&skipped, store.requires_ruby_code(), &copless));
         }
     }
     let stdin_text = &stdin_text;
@@ -1321,7 +1331,8 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                 mode: Option<rbcop::autocorrect::Mode>|
      -> Result<(FileReport, Option<String>, Option<String>), String> {
         let display = rbcop::config::relative_path(path, &cwd);
-        let selected = |cop: &str| badge_selected(cop, cfg);
+        let plugin_file = plugin_files.contains(path);
+        let selected = |cop: &str| !plugin_file && badge_selected(cop, cfg);
         if let Some(bytes) = stdin_text {
             // --stdin with -a/-A: the corrected source is printed after the report (@options[:stdin]).
             if let Some(mode) = mode {
@@ -1456,7 +1467,12 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             }
             // ponytail: one RuboCop start per file; only under -F with -a/-A.
             if let Some(child) = fallback_per_file {
-                fallback_offenses.extend(fallback::run(std::slice::from_ref(path), &cwd, &names, child)?);
+                let one = std::slice::from_ref(path);
+                if plugin_files.contains(path) {
+                    fallback_offenses.extend(fallback::run(one, &cwd, &[], child)?);
+                } else if unrunnable {
+                    fallback_offenses.extend(fallback::run(one, &cwd, &names, child)?);
+                }
             }
             let linted = match linted.take() {
                 Some(l) => l,
