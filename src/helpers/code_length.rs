@@ -261,7 +261,10 @@ impl Descendants<'_> {
             | kind::ENSURE_NODE
             | kind::BLOCK_NODE
             | kind::RESCUE_NODE
-            | kind::PARAMETERS_NODE => true,
+            | kind::PARAMETERS_NODE
+            // numblock / itblock parameters: no parser node (Prism's spans the whole block)
+            | kind::NUMBERED_PARAMETERS_NODE
+            | kind::IT_PARAMETERS_NODE => true,
             kind::BEGIN_NODE => node.as_begin_node().unwrap().begin_keyword_loc().is_none(),
             kind::IF_NODE => node.as_if_node().unwrap().if_keyword_loc().is_some_and(|l| l.as_slice() == b"elsif"),
             _ => false,

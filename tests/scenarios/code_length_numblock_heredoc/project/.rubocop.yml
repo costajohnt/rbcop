@@ -1,0 +1,16 @@
+plugins:
+  - rubocop-rspec
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.4
+  SuggestExtensions: false
+Metrics/MethodLength:
+  Max: 1
+Metrics/BlockLength:
+  Max: 1
+Metrics/ClassLength:
+  Max: 1
+Metrics/ModuleLength:
+  Max: 1
+RSpec/ExampleLength:
+  Max: 1
