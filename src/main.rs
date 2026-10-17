@@ -1133,6 +1133,15 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             None
         }
     };
+    // Runner#build_project_index: rbcop has no rubydex, so it is ProjectIndexLoader.warn_unavailable.
+    if pwd_config.all_cops().truthy("UseProjectIndex") {
+        let s = formatter::Paint(global).yellow(
+            "`AllCops/UseProjectIndex` is enabled but the `rubydex` gem is not installed.\nAnalyses that use the \
+             project index will be skipped. Add `gem 'rubydex'` to your Gemfile.\n",
+        );
+        // Kernel#warn adds a newline unless the (painted) text already ends with one.
+        eprintln!("{}", s.strip_suffix('\n').unwrap_or(&s));
+    }
 
     // Runner#qualify_option_cop_names runs when the first team mobilizes: after the configs of the
     // files up to the first one read have loaded (and the plugins they name, whose cops join the

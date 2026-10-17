@@ -1,0 +1,2 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
