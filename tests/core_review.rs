@@ -432,6 +432,29 @@ fn config_load_errors_worded_like_rubocop() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// libyaml checks no indentation inside a flow collection or on a quoted scalar's lines (#516):
+/// Psych loads each of these, yaml-rust2 0.13.0 called them "invalid indentation".
+#[test]
+fn flow_collections_ignore_indentation_like_libyaml() {
+    let cases: &[(&str, &str)] = &[
+        ("Metrics/BlockLength:\n  AllowedMethods: [\n    \"foo\",\n  ]\n", "\n  - foo\n"),
+        ("Metrics/BlockLength:\n  AllowedMethods: [\n    'foo',\n ]\n", "\n  - foo\n"),
+        ("Metrics/BlockLength:\n  AllowedMethods: [foo,\n  bar]\n", "\n  - foo\n  - bar\n"),
+        ("Metrics/BlockLength:\n  AllowedMethods: [\n\"foo\",\nbar]\n", "\n  - foo\n  - bar\n"),
+        ("Metrics/BlockLength:\n  AllowedMethods: [\"foo\n  bar\"]\n", "\n  - foo bar\n"),
+        ("Metrics/BlockLength:\n  AllowedMethods: \"foo\nbar\"\n", " foo bar\n"),
+    ];
+    let dir = scratch("flow-indent");
+    fs::write(dir.join("a.rb"), "x = 1\n").unwrap();
+    for (config, want) in cases {
+        fs::write(dir.join(".rubocop.yml"), config).unwrap();
+        let out = rbcop(&dir, &["--show-cops", "Metrics/BlockLength"]);
+        assert_eq!(out.status.code(), Some(0), "{config:?}: {}", text(&out.stderr));
+        assert!(text(&out.stdout).contains(&format!("  AllowedMethods:{want}")), "{config:?}: {}", text(&out.stdout));
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// A corrector that clobbers (Style/IfInsideElse on a one-line nested if) is a cop error located
 /// at the node the cop was visiting (the outer `if`, 1:0), not at the offense (the inner `if`).
 #[test]
