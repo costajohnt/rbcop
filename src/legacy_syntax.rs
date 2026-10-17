@@ -234,6 +234,47 @@ pub fn indented_data_marker(text: &str, tokens: &[Token]) -> Option<(usize, usiz
     )
 }
 
+/// The parser gem's lexer starts an embedded document at `=begin` followed by anything, also after
+/// leading whitespace when it reads the line in its line_begin state (and after a BOM, which its
+/// buffer drops, #512), and ends one at a column-0 `=end` followed by anything; Prism only at
+/// column 0 and before a space or a newline. Byte rewrites for a copy Prism reads the same way:
+/// the indentation's last byte (a lone BOM: its three) ends a line, so `=begin` keeps its offset at
+/// a line start, and a character after `=begin`/`=end` other than a space becomes spaces.
+pub fn embdoc_fixups(text: &str, tokens: &[Token]) -> Vec<(usize, u8)> {
+    let mut out = Vec::new();
+    let spaced = |at: usize, out: &mut Vec<(usize, u8)>| {
+        if let Some(c) = text.get(at..).and_then(|r| r.chars().next())
+            && !matches!(c, ' ' | '\t' | '\r' | '\n' | '\x0b' | '\x0c')
+        {
+            out.extend((at..at + c.len_utf8()).map(|o| (o, b' ')));
+        }
+    };
+    for (i, t) in tokens.iter().enumerate() {
+        match t.kind {
+            "EQUAL" if text[t.end..].starts_with("begin") && tokens.get(i + 1).is_some_and(|n| n.start == t.end) => {
+                let mut line = text[..t.start].trim_end_matches([' ', '\t', '\r', '\x0b', '\x0c']).len();
+                if text[..line] == *"\u{feff}" {
+                    line = 0;
+                }
+                // At column 0 in any lexer state (lexer.rl's `e_nl '=begin'`), indented in line_begin.
+                if !(line == 0 || text.as_bytes()[line - 1] == b'\n') || t.start > line && !line_begin(text, tokens, i)
+                {
+                    continue;
+                }
+                if text[line..t.start] == *"\u{feff}" {
+                    out.extend((0..).zip(*b"  \n"));
+                } else if t.start > line {
+                    out.push((t.start - 1, b'\n'));
+                }
+                spaced(t.end + 5, &mut out);
+            }
+            "EMBDOC_LINE" if text[t.start..].starts_with("=end") => spaced(t.start + 4, &mut out),
+            _ => {}
+        }
+    }
+    out
+}
+
 /// Prism's column-0 data marker (its `__END__` token, where it stops lexing) when the parser gem's
 /// lexer is not in its line_begin state there and reads an identifier instead (#337): its offset.
 pub fn identifier_data_marker(text: &str, tokens: &[Token]) -> Option<usize> {

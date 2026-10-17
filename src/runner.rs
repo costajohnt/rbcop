@@ -231,6 +231,11 @@ pub fn parse_for_target<'t>(
         {
             round.extend((line..cur.len()).zip(b"__END__\n".iter().copied().chain(std::iter::repeat_n(b' ', indent))));
         }
+        // Embedded documents the parser gem's lexer starts or ends where Prism does not (after a
+        // BOM, #512; indented; `=beginx`, `=endx`).
+        if cur.contains("=begin") {
+            round.extend(crate::legacy_syntax::embdoc_fixups(cur, &tokens));
+        }
         // A column-0 `__END__` the parser gem reads as an identifier (after `=`, `(`, `,`, `.`, a
         // `\` continuation, ...) is an identifier the file does not use, so Prism lexes on (#337).
         if cur.contains("__END__")
