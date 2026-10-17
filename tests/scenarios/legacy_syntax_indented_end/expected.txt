@@ -5,6 +5,16 @@ after_do.rb:3:4: F: Lint/Syntax: unexpected token $end (Using Ruby 2.7 parser; c
 after_operator.rb:2:10: F: Lint/Syntax: unexpected token $end (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 after_statement.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 after_statement.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+begin_multibyte.rb:1:1: C: [Correctable] Style/BlockComments: Do not use block comments.
+begin_multibyte.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+begin_suffix.rb:1:1: C: [Correctable] Style/BlockComments: Do not use block comments.
+begin_suffix.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+begin_suffix.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `z`.
+bom_begin.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+bom_begin.rb:1:2: C: [Correctable] Style/BlockComments: Do not use block comments.
+bom_begin.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+bom_blank_crlf.rb:2:1: C: Layout/EndOfLine: Carriage return character detected.
+bom_blank_data.rb:3:121: C: Layout/LineLength: Line is too long. [130/120]
 identifier_after_assign.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 identifier_after_assign.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
 identifier_after_op_assign.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
@@ -18,6 +28,11 @@ identifier_in_call.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Mi
 identifier_in_call.rb:2:3: C: [Correctable] Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
 identifier_in_call.rb:3:1: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument when opening brace is on the same line as the first argument.
 in_def.rb:3:4: F: Lint/Syntax: unexpected token $end (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+indented_begin.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+indented_begin.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+indented_begin.rb:2:3: C: [Correctable] Style/BlockComments: Do not use block comments.
+indented_begin.rb:5:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+indented_ctrl_z.rb:1:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
 lines_after.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 lines_after.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
 lines_after.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.

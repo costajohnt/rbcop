@@ -1,0 +1,3 @@
+=beginé
+doc
+=end

@@ -1,4 +1,9 @@
 Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+lparen_after_label.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+lparen_after_label.rb:2:10: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+lparen_after_label.rb:5:11: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+lparen_after_label.rb:5:5: C: [Correctable] Style/QuotedSymbols: Prefer single-quoted symbols when you don't need string interpolation or special symbols.
+lparen_after_label.rb:5:5: W: [Correctable] Lint/SymbolConversion: Unnecessary symbol conversion; use `a:` instead.
 lparen_arg_modifiers.rb:1:13: F: Lint/Syntax: unexpected token kIF_MOD (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 lparen_arg_modifiers.rb:2:10: F: Lint/Syntax: unexpected token kUNLESS_MOD (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 lparen_arg_modifiers.rb:3:10: F: Lint/Syntax: unexpected token kWHILE_MOD (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
