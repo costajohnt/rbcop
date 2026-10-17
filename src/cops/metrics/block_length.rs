@@ -1,4 +1,4 @@
-use crate::helpers::allowed::{allowed_method, matches_allowed_pattern};
+use crate::helpers::allowed::{allowed_method, allowed_methods, matches_allowed_pattern};
 use crate::helpers::code_length::{Measured, check, global_const};
 use crate::prelude::*;
 
@@ -48,7 +48,7 @@ impl Cop for BlockLength {
             return;
         }
         // method_receiver_excluded?
-        let excluded = cx.cfg.strings("AllowedMethods").iter().any(|config| {
+        let excluded = allowed_methods(cx.cfg).iter().any(|config| {
             let mut parts = config.split('.');
             let first = parts.next().unwrap_or("");
             match parts.next() {

@@ -52,7 +52,7 @@ impl Cop for NumericLiterals {
             return;
         }
         // AllowedPattern, anchored: `/\A#{regexp}\z/`.
-        let patterns = cx.cfg.regexes("AllowedPatterns").into_iter().chain(cx.cfg.regexes("IgnoredPatterns"));
+        let patterns = crate::helpers::allowed::allowed_patterns(cx.cfg);
         if patterns.into_iter().any(|r| {
             crate::config::value::ruby_regex(&format!(r"\A(?:{})\z", r.as_str())).is_some_and(|r| r.is_match(int))
         }) {

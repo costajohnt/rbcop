@@ -1,0 +1,11 @@
+AllCops:
+  NewCops: disable
+  SuggestExtensions: false
+Metrics/BlockLength:
+  Max: 1
+  ExcludedMethods: [included]
+Style/SymbolProc:
+  ExcludedMethods: [foo]
+Layout/LineLength:
+  Max: 20
+  IgnoredMethods: [!ruby/regexp /\A\s*long_/]

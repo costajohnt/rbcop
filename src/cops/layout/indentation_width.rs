@@ -157,7 +157,7 @@ fn allowed_line(cx: &mut Cx, base: usize) -> bool {
     let cfg = cx.cfg;
     let st = cx.state::<State>();
     let pats = st.patterns.get_or_insert_with(|| {
-        cfg.regexes("AllowedPatterns").into_iter().chain(cfg.regexes("IgnoredPatterns")).collect()
+        crate::helpers::allowed::allowed_patterns(cfg)
     });
     pats.iter().any(|r| r.is_match(line))
 }

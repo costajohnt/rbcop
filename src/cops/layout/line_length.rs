@@ -459,8 +459,7 @@ impl Cop for LineLength {
             None => cfg.bool("AllowCopDirectives").unwrap_or(true),
         };
         let allow_rbs = cfg.bool("AllowRBSInlineAnnotation").unwrap_or(false);
-        let mut allowed = cfg.regexes("AllowedPatterns");
-        allowed.extend(cfg.regexes("IgnoredPatterns"));
+        let allowed = crate::helpers::allowed::allowed_patterns(cfg);
         let heredoc_ok = |delim: &str| match cfg.get("AllowHeredoc") {
             Some(Value::Bool(b)) => *b,
             Some(Value::Seq(list)) => list.iter().any(|v| v.as_string().as_deref() == Some(delim)),

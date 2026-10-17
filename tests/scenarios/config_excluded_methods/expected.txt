@@ -1,0 +1,3 @@
+a.rb:10:21: C: [Correctable] Layout/LineLength: Line is too long. [39/20]
+a.rb:1:21: C: Layout/LineLength: Line is too long. [29/20]
+a.rb:8:5: C: [Correctable] Style/SymbolProc: Pass `&:bar` as an argument to `baz` instead of a block.
