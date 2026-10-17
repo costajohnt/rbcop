@@ -1,0 +1,2 @@
+aa.rb:4:3: C: [Correctable] Performance/Detect: Use `find` instead of `select.first`.
+sub/a.rb:4:3: C: [Correctable] Performance/Detect: Use `find` instead of `select.first`.

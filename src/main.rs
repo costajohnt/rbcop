@@ -1134,9 +1134,23 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         }
     };
 
-    // Runner#qualify_option_cop_names runs when the first team mobilizes, after the configs (and
-    // the plugins they load, whose cops join the registry) are loaded.
-    let (cop_warnings, cop_error) = qualify_cop_options(&mut cli);
+    // Runner#qualify_option_cop_names runs when the first team mobilizes: after the configs of the
+    // files up to the first one read have loaded (and the plugins they name, whose cops join the
+    // registry), not those of later files. A config error before that ends the run first.
+    let mut early_config_error = None;
+    let first_read = files.iter().position(|f| stdin_text.is_some() || f.is_file());
+    if !cli.list_targets
+        && let Some(k) = first_read
+    {
+        for (i, f) in files[..=k].iter().enumerate() {
+            if let Err(e) = store.for_file(f) {
+                early_config_error = Some((i, e));
+                break;
+            }
+        }
+    }
+    let (cop_warnings, cop_error) =
+        if early_config_error.is_some() { (Vec::new(), None) } else { qualify_cop_options(&mut cli) };
     runner::set_except_redundant(
         cli.except.iter().any(|n| {
             matches!(n.as_str(), "Lint/RedundantCopDisableDirective" | "RedundantCopDisableDirective" | "Lint")
@@ -1222,9 +1236,16 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     // Team#validate_config fails the same way, but later: when the file's team is mobilized, after
     // the --only/--except warnings and Config#for_cop's. (index in jobs, error)
     let mut team_error = None;
-    for f in &files {
-        match store.for_file(f) {
+    // The registry's length once each file's config has loaded: what that file's directives see.
+    let mut registry_at = std::collections::HashMap::new();
+    for (i, f) in files.iter().enumerate() {
+        let loaded = match early_config_error.take_if(|(at, _)| *at == i) {
+            Some((_, e)) => Err(e),
+            None => store.for_file(f),
+        };
+        match loaded {
             Ok(c) => {
+                registry_at.insert(f.clone(), rbcop::helpers::cop_registry::REGISTRY.len());
                 c.mobilize_team();
                 let valid = rbcop::config::validator::cop_validate_config(&c, |cop| {
                     badge_selected(cop, &c) && c.cop_enabled(cop)
@@ -1311,9 +1332,12 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     // like any error, instead of taking down every worker's results with it.
     let lint_one = |path: &PathBuf, cfg: &Resolved, mode: Option<rbcop::autocorrect::Mode>| -> Linted {
         rbcop::config::value::reset_run_budget();
-        std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| lint(path, cfg, mode)))
-            .unwrap_or_else(|_| Err(format!("rbcop: internal error while inspecting {}", path.display())))
-            .map(|(report, corrected, loop_error)| (report, corrected, loop_error, runner::take_file_warnings()))
+        let view = registry_at.get(path).copied();
+        std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            rbcop::helpers::cop_registry::with_view(view, || lint(path, cfg, mode))
+        }))
+        .unwrap_or_else(|_| Err(format!("rbcop: internal error while inspecting {}", path.display())))
+        .map(|(report, corrected, loop_error)| (report, corrected, loop_error, runner::take_file_warnings()))
     };
     // Cops recurse over the AST; runner::MAX_AST_DEPTH (1000) needs under 2 MiB, the rest is
     // headroom. Only touched pages are committed.

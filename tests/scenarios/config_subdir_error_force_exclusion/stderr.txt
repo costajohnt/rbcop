@@ -1,0 +1,2 @@
+Error: The `Metrics/LineLength` cop has been moved to `Layout/LineLength`.
+(obsolete configuration found in sub/.rubocop.yml, please update it)

@@ -101,8 +101,30 @@ pub static REGISTRY: Registry = Registry {
 impl std::ops::Deref for Registry {
     type Target = [&'static str];
     fn deref(&self) -> &[&'static str] {
-        self.plugins.read().unwrap().0.unwrap_or_else(|| self.core.as_slice())
+        let all = self.plugins.read().unwrap().0.unwrap_or_else(|| self.core.as_slice());
+        VIEW.with(|v| v.get()).map_or(all, |n| &all[..n.min(all.len())])
     }
+}
+
+thread_local! {
+    /// The registry length the file being inspected on this thread sees (see `with_view`).
+    static VIEW: std::cell::Cell<Option<usize>> = const { std::cell::Cell::new(None) };
+}
+
+/// Runs `f` seeing the registry as it was when it held `len` names. RuboCop's registry fills as
+/// configs load, which for a subdirectory config is when its first file's turn comes: a file
+/// inspected before that does not know the cops of a plugin only that config names. Names are
+/// only ever appended, so a prefix is the registry of that moment.
+// ponytail: only the registered names; the class-name match of `set_open` is the whole run's.
+pub fn with_view<T>(len: Option<usize>, f: impl FnOnce() -> T) -> T {
+    struct Restore(Option<usize>);
+    impl Drop for Restore {
+        fn drop(&mut self) {
+            VIEW.with(|v| v.set(self.0));
+        }
+    }
+    let _restore = Restore(VIEW.with(|v| v.replace(len)));
+    f()
 }
 
 /// Registers a native plugin's cops (once; later calls are no-ops).
@@ -162,9 +184,9 @@ pub fn foreign_autocorrect(cop: &str) -> bool {
     FOREIGN_AUTOCORRECT.read().unwrap().iter().any(|c| c == cop)
 }
 
-/// What rbcop cannot enumerate of RuboCop's registry: cops a `require:`d local file or an unfound
-/// gem defines (`custom`), and class names in loaded plugins' lib/ (cops registered without a
-/// default.yml entry).
+/// What rbcop cannot enumerate of RuboCop's registry: cops an unfound gem, a gem without
+/// config/default.yml, or a `require:`d local file with no cop class rbcop can read defines
+/// (`custom`), and the class names of a gem or local file in which no cop class was found.
 struct Open {
     custom: bool,
     foreign: bool,
@@ -180,8 +202,9 @@ pub fn set_open(custom: bool, constants: &std::collections::HashSet<String>) {
     open.constants = constants.iter().cloned().collect();
 }
 
-/// Whether RuboCop's registry would know `cop` (a qualified name): a registered name, a name made
-/// of plugin class names, or, with custom cops loaded, any name outside the known departments.
+/// Whether RuboCop's registry would know `cop` (a qualified name): a registered name, or, where
+/// rbcop cannot read the cop classes (`Open`), a name made of their class names or any name
+/// outside the known departments.
 pub fn is_known(cop: &str) -> bool {
     if REGISTRY.contains(&cop) {
         return true;
@@ -306,6 +329,19 @@ pub fn qualified_cop_name(name: &str) -> Option<String> {
 /// Registry#qualified_cop_name(name, origin, warn:, correct_namespace:). With `warn` (the path as
 /// PathUtil.smart_path shows it) the `no department given` and `wrong namespace` warnings are
 /// pushed as the lines Registry#emit_warning writes. Err is AmbiguousCopName's message.
+/// Registry#unqualified_cop_names: every cop's basename, and RedundantCopDisableDirective. RuboCop
+/// memoizes it at its first use, the first config file's add_missing_namespaces (its `AllCops`
+/// key goes through qualified_cop_name): the cops of a plugin that loads later (one only a
+/// subdirectory config names) never get the `no department given` warning.
+pub fn is_unqualified_cop_name(name: &str) -> bool {
+    static NAMES: std::sync::OnceLock<std::collections::HashSet<&'static str>> = std::sync::OnceLock::new();
+    NAMES
+        .get_or_init(|| {
+            REGISTRY.iter().map(|c| c.rsplit('/').next().unwrap_or(c)).chain(["RedundantCopDisableDirective"]).collect()
+        })
+        .contains(name)
+}
+
 pub fn qualify(
     name: &str,
     origin: &str,
@@ -322,11 +358,10 @@ pub fn qualify(
     let qualified = !parts.is_empty();
     let dept = parts.join("/");
     let registered = |d: &str| REGISTRY.iter().any(|c| department_of(c) == d && c.rsplit('/').next() == Some(cop.as_str()));
-    // department_missing?: unqualified_cop_names holds every cop's basename (and
-    // RedundantCopDisableDirective), compared with the name as given.
+    // department_missing?: unqualified_cop_names, compared with the name as given.
     if let Some(shown) = warn
         && !qualified
-        && (name == "RedundantCopDisableDirective" || REGISTRY.iter().any(|c| c.rsplit('/').next() == Some(name)))
+        && is_unqualified_cop_name(name)
     {
         let fix = if origin.ends_with(".rb") { " Run `rubocop -a --only Migration/DepartmentName` to fix." } else { "" };
         warnings.push(format!("{shown}: Warning: no department given for {name}.{fix}"));
