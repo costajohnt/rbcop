@@ -1,0 +1,86 @@
+==> .rubocop.yml 230 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/PredicateMatcher:
+  EnforcedStyle: inflected
+  Strict: false
+  AllowedExplicitMatchers: []
+
+==> 000/000_spec.rb 253 <==
+expect(foo.empty?).to be_truthy
+expect(foo.empty?).to be_truthy, 'fail'
+expect(foo.empty?).not_to be_truthy
+expect(foo.empty?).to_not be_truthy
+expect(foo.empty?).to be_falsey
+expect(foo.empty?).not_to be_falsey
+expect(foo.empty?).not_to a_truthy_value
+
+==> 001/001_spec.rb 315 <==
+expect(foo.exist?).to be_truthy
+expect(foo.exist?).to be_truthy, 'fail'
+expect(foo.exists?).to be_truthy
+expect(foo.has_something?).to be_truthy
+expect(foo.has_something?).not_to be_truthy
+expect(foo.include?(something)).to be_truthy
+expect(foo.respond_to?(:bar)).to be_truthy
+expect(foo.something?()).to be_truthy
+
+==> 002/002_spec.rb 49 <==
+expect(foo.respond_to?(:bar, true)).to be_truthy
+
+==> 003/003_spec.rb 309 <==
+expect(foo.something?('foo')).to be_truthy
+expect(foo.something?('foo')).to be_truthy, 'fail'
+expect(foo.something?('foo', 'bar')).to be_truthy
+expect(foo.something? 1, 2).to be_truthy
+expect(foo.has_key?('foo')).to be_truthy
+expect(foo.is_a?(Array)).to be_truthy
+expect(foo.instance_of?(Array)).to be_truthy
+
+==> 004/004_spec.rb 56 <==
+expect(foo.something?(<<~TEXT)).to be_truthy
+  bar
+TEXT
+
+==> 005/005_spec.rb 424 <==
+expect(foo.all?(&:present?)).to be_truthy
+expect(foo.all?(&:present?)).to be_truthy, 'fail'
+expect(foo.all? { |x| x.present? }).to be_truthy
+expect(foo.all?(n) { |x| x.present? }).to be_truthy
+expect(foo.all? { present }).to be_truthy
+expect(foo.something?(x) { |y| y.present? }).to be_truthy
+expect(foo.all? { }).to be_truthy
+expect(foo.all? do; end).to be_truthy
+
+expect(foo.all? do |x|
+  x + 1
+  x >= 2
+end).to be_truthy
+
+==> 006/006_spec.rb 135 <==
+expect(foo.something?).to eq "something"
+expect(foo.something?).to eq "something", "fail"
+expect(foo.has_something?).to eq "something"
+
+==> 007/007_spec.rb 114 <==
+expect(foo.something).to be(true)
+expect(foo.something).to be(true), 'fail'
+expect(foo.has_something).to be(true)
+
+==> 008/008_spec.rb 313 <==
+expect(foo.empty?).to eq(true)
+expect(foo.empty?).to eq(true), 'fail'
+expect(foo.empty?).to eql(true)
+expect(foo.empty?).to equal(true), 'whoops'
+expect(foo.empty?).not_to be(true)
+expect(foo.empty?).to be(true)
+expect(foo.empty?).to be(false)
+expect(foo.empty?).not_to be true
+expect(foo.empty?).not_to be false
+

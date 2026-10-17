@@ -1,0 +1,27 @@
+==> offenses exit=1 367 <==
+000/000_spec.rb:2:21: C: [Correctable] RSpec/ExpectChange: Prefer `not_change { User.count }`.
+001/001_spec.rb:2:44: C: [Correctable] RSpec/ExpectChange: Prefer `not_change { Foo.baz }`.
+002/002_spec.rb:2:21: C: [Correctable] RSpec/ExpectChange: Prefer `change { Foo.bar }`.
+002/002_spec.rb:2:43: C: [Correctable] RSpec/ExpectChange: Prefer `not_change { Foo.baz }`.
+
+==> autocorrect exit=0 359 <==
+000/000_spec.rb:2:21: C: [Corrected] RSpec/ExpectChange: Prefer `not_change { User.count }`.
+001/001_spec.rb:2:44: C: [Corrected] RSpec/ExpectChange: Prefer `not_change { Foo.baz }`.
+002/002_spec.rb:2:21: C: [Corrected] RSpec/ExpectChange: Prefer `change { Foo.bar }`.
+002/002_spec.rb:2:43: C: [Corrected] RSpec/ExpectChange: Prefer `not_change { Foo.baz }`.
+
+==> corrected/000/000_spec.rb 56 <==
+it do
+  expect { run }.to not_change { User.count }
+end
+
+==> corrected/001/001_spec.rb 76 <==
+it do
+  expect { run }.to change { Foo.bar }.and not_change { Foo.baz }
+end
+
+==> corrected/002/002_spec.rb 76 <==
+it do
+  expect { run }.to change { Foo.bar }.and not_change { Foo.baz }
+end
+

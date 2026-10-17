@@ -1,0 +1,60 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-factory_bot
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 66 <==
+factory :foo, class: 'FOOO' do
+  profile { create(:profile) }
+end
+
+==> 001/001_spec.rb 50 <==
+factory :foo do
+  profile { build(:profile) }
+end
+
+==> 002/002_spec.rb 58 <==
+factory :foo do
+  profile { build_stubbed(:profile) }
+end
+
+==> 003/003_spec.rb 70 <==
+factory :foo do
+  profile { build_stubbed(:profile, :qualified) }
+end
+
+==> 004/004_spec.rb 84 <==
+factory :foo do
+  profile { build_stubbed(:profile) }
+
+  area { create(:area) }
+end
+
+==> 005/005_spec.rb 141 <==
+factory :foo do
+  transient do
+    profile { create(:profile, :qualified) }
+    account { association(:fiscal_year) } # No offense
+  end
+end
+
+==> 006/006_spec.rb 55 <==
+factory :foo do
+  profile { association :profile }
+end
+
+==> 007/007_spec.rb 30 <==
+factory :foo do
+  profile
+end
+
+==> 008/008_spec.rb 43 <==
+factory :foo do
+  association :profile
+end
+

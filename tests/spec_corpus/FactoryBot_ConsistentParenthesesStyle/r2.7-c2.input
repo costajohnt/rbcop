@@ -1,0 +1,19 @@
+==> .rubocop.yml 237 <==
+---
+plugins:
+- rubocop-factory_bot
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+FactoryBot/ConsistentParenthesesStyle:
+  EnforcedStyle: :require_parentheses
+  ExplicitOnly: true
+
+==> 000/000_spec.rb 24 <==
+FactoryBot.create :user
+
+==> 001/001_spec.rb 13 <==
+create :user
+

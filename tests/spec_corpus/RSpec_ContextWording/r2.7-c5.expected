@@ -1,0 +1,8 @@
+==> offenses exit=1 211 <==
+000/000_spec.rb:1:9: C: RSpec/ContextWording: Context description should match /patterns/, or /^when\b/.
+001/001_spec.rb:1:16: C: RSpec/ContextWording: Context description should match /patterns/, or /^when\b/.
+
+==> autocorrect exit=1 211 <==
+000/000_spec.rb:1:9: C: RSpec/ContextWording: Context description should match /patterns/, or /^when\b/.
+001/001_spec.rb:1:16: C: RSpec/ContextWording: Context description should match /patterns/, or /^when\b/.
+

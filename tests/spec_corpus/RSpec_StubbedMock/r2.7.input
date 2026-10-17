@@ -1,0 +1,79 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 55 <==
+expect(foo).to receive(:bar).and_return('hello world')
+
+==> 001/001_spec.rb 47 <==
+expect(foo).to receive(:bar) { 'hello world' }
+
+==> 002/002_spec.rb 41 <==
+expect(foo).to receive(:bar) { |x| bar }
+
+==> 003/003_spec.rb 64 <==
+expect(foo).to receive(:bar).with(42).and_return('hello world')
+
+==> 004/004_spec.rb 56 <==
+expect(foo).to receive(:bar).with(42) { 'hello world' }
+
+==> 005/005_spec.rb 35 <==
+expect(foo).to have_received(:bar)
+
+==> 006/006_spec.rb 51 <==
+expect(foo).to receive_messages(foo: 42, bar: 777)
+
+==> 007/007_spec.rb 53 <==
+expect(foo).to receive_message_chain(:foo, bar: 777)
+
+==> 008/008_spec.rb 65 <==
+expect(foo).to receive_message_chain(:foo, :bar).and_return(777)
+
+==> 009/009_spec.rb 57 <==
+expect(foo).to receive_message_chain(:foo, :bar) { 777 }
+
+==> 010/010_spec.rb 389 <==
+expect(foo).to receive(:bar) { 'hello world' }.ordered
+expect(foo).to receive(:bar).ordered { 'hello world' }
+expect(foo).to receive(:bar).with(42).ordered { 'hello world' }
+expect(foo).to receive(:bar).once.with(42).ordered { 'hello world' }
+expect(foo).to receive(:bar) { 'hello world' }.once.with(42).ordered
+expect(foo).to receive(:bar).once.with(42).and_return('hello world').ordered
+
+==> 011/011_spec.rb 162 <==
+canned = -> { 42 }
+expect(foo).to receive(:bar, &canned)
+expect(foo).to receive(:bar).with(42, &canned)
+expect(foo).to receive_message_chain(:foo, :bar, &canned)
+
+==> 012/012_spec.rb 46 <==
+is_expected.to receive(:bar).and_return(:baz)
+
+==> 013/013_spec.rb 62 <==
+expect_any_instance_of(Foo).to receive(:bar).and_return(:baz)
+
+==> 014/014_spec.rb 477 <==
+allow(foo).to receive(:bar).and_return('hello world')
+allow(foo).to receive(:bar) { 'hello world' }
+allow(foo).to receive(:bar).with(42).and_return('hello world')
+allow(foo).to receive(:bar).with(42) { 'hello world' }
+allow(foo).to receive_messages(foo: 42, bar: 777)
+allow(foo).to receive_message_chain(:foo, bar: 777)
+allow(foo).to receive_message_chain(:foo, :bar).and_return(777)
+allow(foo).to receive_message_chain(:foo, :bar) { 777 }
+allow(foo).to receive(:bar, &canned)
+
+==> 015/015_spec.rb 60 <==
+expect(Foo)
+  .to receive(:new)
+  .with(bar).and_return baz
+
+==> 016/016_spec.rb 47 <==
+are_expected.to receive(:bar).and_return(:baz)
+

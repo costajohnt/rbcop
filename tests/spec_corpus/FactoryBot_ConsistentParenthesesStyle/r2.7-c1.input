@@ -1,0 +1,109 @@
+==> .rubocop.yml 235 <==
+---
+plugins:
+- rubocop-factory_bot
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+FactoryBot/ConsistentParenthesesStyle:
+  EnforcedStyle: :omit_parentheses
+  ExplicitOnly: false
+
+==> 000/000_spec.rb 14 <==
+create(:user)
+
+==> 001/001_spec.rb 23 <==
+puts(1, create(:user))
+
+==> 002/002_spec.rb 56 <==
+create(:user,
+  username: "PETER",
+  peter: "USERNAME")
+
+==> 003/003_spec.rb 34 <==
+can_create_user? && create(:user)
+
+==> 004/004_spec.rb 34 <==
+can_create_user? || create(:user)
+
+==> 005/005_spec.rb 39 <==
+can_create_user? ? create(:user) : nil
+
+==> 006/006_spec.rb 134 <==
+build_list(:user, 10)
+build_list("user", 10)
+create_list(:user, 10)
+build_stubbed(:user)
+build_stubbed_list(:user, 10)
+build(factory)
+
+==> 007/007_spec.rb 13 <==
+build(:user)
+
+==> 008/008_spec.rb 29 <==
+build(:user, build(:yester))
+
+==> 009/009_spec.rb 28 <==
+build :user, build(:yester)
+
+==> 010/010_spec.rb 35 <==
+build :user, home: build(:address)
+
+==> 011/011_spec.rb 43 <==
+users = [
+  build(:user),
+  build(:user)
+]
+
+==> 012/012_spec.rb 13 <==
+create :user
+
+==> 013/013_spec.rb 12 <==
+build :user
+
+==> 014/014_spec.rb 242 <==
+RSpec.describe Context do
+  let(:build) { create(:user, build(:user)) }
+
+  it 'test in test' do
+    user = create(:user, first: name, peter: miller)
+  end
+
+  let(:build) { create(:user, build(:user, create(:user, create(:first_name)))) }
+end
+
+==> 015/015_spec.rb 30 <==
+create(:user,
+  name: 'foo'
+)
+
+==> 016/016_spec.rb 18 <==
+create(
+  :user
+)
+
+==> 017/017_spec.rb 33 <==
+create(
+  :user,
+  name: 'foo'
+)
+
+==> 018/018_spec.rb 25 <==
+FactoryBot.create(:user)
+
+==> 019/019_spec.rb 27 <==
+create()
+create(foo: :bar)
+
+==> 020/020_spec.rb 32 <==
+generate()
+generate(:foo, :bar)
+
+==> 021/021_spec.rb 28 <==
+build(:user, :trait, *args)
+
+==> 022/022_spec.rb 42 <==
+build(:user, :trait, foo: :bar, **kwargs)
+

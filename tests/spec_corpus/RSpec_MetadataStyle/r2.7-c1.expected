@@ -1,0 +1,56 @@
+==> offenses exit=1 876 <==
+003/003_spec.rb:1:23: C: [Correctable] RSpec/MetadataStyle: Use hash style for metadata.
+004/004_spec.rb:1:23: C: [Correctable] RSpec/MetadataStyle: Use hash style for metadata.
+004/004_spec.rb:1:27: C: [Correctable] RSpec/MetadataStyle: Use hash style for metadata.
+006/006_spec.rb:1:41: C: [Correctable] RSpec/MetadataStyle: Use hash style for metadata.
+007/007_spec.rb:1:26: C: [Correctable] RSpec/MetadataStyle: Use hash style for metadata.
+008/008_spec.rb:1:23: C: [Correctable] RSpec/MetadataStyle: Use hash style for metadata.
+009/009_spec.rb:1:23: C: [Correctable] RSpec/MetadataStyle: Use hash style for metadata.
+010/010_spec.rb:1:23: C: [Correctable] RSpec/MetadataStyle: Use hash style for metadata.
+011/011_spec.rb:1:23: C: [Correctable] RSpec/MetadataStyle: Use hash style for metadata.
+012/012_spec.rb:1:23: C: RSpec/MetadataStyle: Use hash style for metadata.
+
+==> autocorrect exit=1 858 <==
+003/003_spec.rb:1:23: C: [Corrected] RSpec/MetadataStyle: Use hash style for metadata.
+004/004_spec.rb:1:23: C: [Corrected] RSpec/MetadataStyle: Use hash style for metadata.
+004/004_spec.rb:1:27: C: [Corrected] RSpec/MetadataStyle: Use hash style for metadata.
+006/006_spec.rb:1:41: C: [Corrected] RSpec/MetadataStyle: Use hash style for metadata.
+007/007_spec.rb:1:26: C: [Corrected] RSpec/MetadataStyle: Use hash style for metadata.
+008/008_spec.rb:1:23: C: [Corrected] RSpec/MetadataStyle: Use hash style for metadata.
+009/009_spec.rb:1:23: C: [Corrected] RSpec/MetadataStyle: Use hash style for metadata.
+010/010_spec.rb:1:23: C: [Corrected] RSpec/MetadataStyle: Use hash style for metadata.
+011/011_spec.rb:1:23: C: [Corrected] RSpec/MetadataStyle: Use hash style for metadata.
+012/012_spec.rb:1:23: C: RSpec/MetadataStyle: Use hash style for metadata.
+
+==> corrected/003/003_spec.rb 37 <==
+describe 'Something', a: true do
+end
+
+==> corrected/004/004_spec.rb 46 <==
+describe 'Something', b: true, a: true do
+end
+
+==> corrected/006/006_spec.rb 55 <==
+describe 'Something', 'Something else', a: true do
+end
+
+==> corrected/007/007_spec.rb 40 <==
+describe 'Something', a, b: true do
+end
+
+==> corrected/008/008_spec.rb 38 <==
+describe('Something', a: true) do
+end
+
+==> corrected/009/009_spec.rb 43 <==
+describe 'Something', b: 1, a: true do
+end
+
+==> corrected/010/010_spec.rb 47 <==
+describe 'Something', { b: 1, a: true } do
+end
+
+==> corrected/011/011_spec.rb 41 <==
+describe 'Something', { a: true } do
+end
+

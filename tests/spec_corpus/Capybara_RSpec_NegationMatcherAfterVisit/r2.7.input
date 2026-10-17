@@ -1,0 +1,23 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 51 <==
+visit foo_path
+expect(page).to have_no_link('bar')
+
+==> 001/001_spec.rb 52 <==
+visit foo_path
+expect(page).not_to have_link('bar')
+
+==> 002/002_spec.rb 81 <==
+visit foo_path
+expect(page).to have_css('a')
+expect(page).to have_no_link('bar')
+

@@ -1,0 +1,123 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 10 <==
+before {}
+
+==> 001/001_spec.rb 17 <==
+before(:each) {}
+
+==> 002/002_spec.rb 20 <==
+before(:example) {}
+
+==> 003/003_spec.rb 20 <==
+before(:context) {}
+
+==> 004/004_spec.rb 16 <==
+before(:all) {}
+
+==> 005/005_spec.rb 18 <==
+before(:suite) {}
+
+==> 006/006_spec.rb 24 <==
+before { create_users }
+
+==> 007/007_spec.rb 53 <==
+before(:all) do
+  create_users
+  create_products
+end
+
+==> 008/008_spec.rb 36 <==
+before {}; after { clean_up(:foo) }
+
+==> 009/009_spec.rb 9 <==
+after {}
+
+==> 010/010_spec.rb 24 <==
+after { cleanup_users }
+
+==> 011/011_spec.rb 56 <==
+after(:suite) do
+  cleanup_users
+  cleanup_products
+end
+
+==> 012/012_spec.rb 10 <==
+around {}
+
+==> 013/013_spec.rb 17 <==
+around { yield }
+
+==> 014/014_spec.rb 44 <==
+around(:suite) do
+  setup_users
+  yield
+end
+
+==> 015/015_spec.rb 18 <==
+prepend_before {}
+
+==> 016/016_spec.rb 32 <==
+prepend_before { create_users }
+
+==> 017/017_spec.rb 61 <==
+prepend_before(:all) do
+  create_users
+  create_products
+end
+
+==> 018/018_spec.rb 17 <==
+append_before {}
+
+==> 019/019_spec.rb 31 <==
+append_before { create_users }
+
+==> 020/020_spec.rb 61 <==
+append_before(:each) do
+  create_users
+  create_products
+end
+
+==> 021/021_spec.rb 17 <==
+prepend_after {}
+
+==> 022/022_spec.rb 32 <==
+prepend_after { cleanup_users }
+
+==> 023/023_spec.rb 62 <==
+prepend_after(:all) do
+  cleanup_users
+  cleanup_products
+end
+
+==> 024/024_spec.rb 16 <==
+append_after {}
+
+==> 025/025_spec.rb 31 <==
+append_after { cleanup_users }
+
+==> 026/026_spec.rb 61 <==
+append_after(:all) do
+  cleanup_users
+  cleanup_products
+end
+
+==> 027/027_spec.rb 96 <==
+let(:foo) { 'bar' }
+
+before do
+  # commented out code
+end
+
+it do
+  expect(foo).to eq('bar')
+end
+

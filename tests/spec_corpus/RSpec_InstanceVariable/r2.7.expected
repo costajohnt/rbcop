@@ -1,0 +1,14 @@
+==> offenses exit=1 675 <==
+000/000_spec.rb:3:15: C: RSpec/InstanceVariable: Avoid instance variables - use let, a method call, or a local variable (if possible).
+002/002_spec.rb:2:15: C: RSpec/InstanceVariable: Avoid instance variables - use let, a method call, or a local variable (if possible).
+003/003_spec.rb:3:15: C: RSpec/InstanceVariable: Avoid instance variables - use let, a method call, or a local variable (if possible).
+003/003_spec.rb:4:15: C: RSpec/InstanceVariable: Avoid instance variables - use let, a method call, or a local variable (if possible).
+008/008_spec.rb:9:28: C: RSpec/InstanceVariable: Avoid instance variables - use let, a method call, or a local variable (if possible).
+
+==> autocorrect exit=1 675 <==
+000/000_spec.rb:3:15: C: RSpec/InstanceVariable: Avoid instance variables - use let, a method call, or a local variable (if possible).
+002/002_spec.rb:2:15: C: RSpec/InstanceVariable: Avoid instance variables - use let, a method call, or a local variable (if possible).
+003/003_spec.rb:3:15: C: RSpec/InstanceVariable: Avoid instance variables - use let, a method call, or a local variable (if possible).
+003/003_spec.rb:4:15: C: RSpec/InstanceVariable: Avoid instance variables - use let, a method call, or a local variable (if possible).
+008/008_spec.rb:9:28: C: RSpec/InstanceVariable: Avoid instance variables - use let, a method call, or a local variable (if possible).
+

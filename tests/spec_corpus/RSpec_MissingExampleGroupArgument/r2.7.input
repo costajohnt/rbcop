@@ -1,0 +1,42 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 57 <==
+describe FooClass do
+end
+
+RSpec.describe FooClass do
+end
+
+==> 001/001_spec.rb 35 <==
+Scenario.context do
+  'static'
+end
+
+==> 002/002_spec.rb 39 <==
+describe do
+end
+
+RSpec.describe do
+end
+
+==> 003/003_spec.rb 72 <==
+describe FooClass do
+  describe do
+  end
+
+  RSpec.describe do
+  end
+end
+
+==> 004/004_spec.rb 15 <==
+context do
+end
+

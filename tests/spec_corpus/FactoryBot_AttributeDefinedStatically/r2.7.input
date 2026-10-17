@@ -1,0 +1,128 @@
+==> .rubocop.yml 139 <==
+---
+plugins:
+- rubocop-factory_bot
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/spec/factories.rb 400 <==
+FactoryBot.define do
+  factory :post do
+    title "Something"
+    comments_count 0
+    tag Tag::MAGIC
+    recent_statuses []
+    status([:draft, :published].sample)
+    published_at 1.day.from_now
+    created_at(1.day.ago)
+    update_times [Time.current]
+    meta_tags(foo: Time.current)
+    other_tags({ foo: Time.current })
+    options color: :blue
+    other_options Tag::MAGIC => :magic
+  end
+end
+
+==> 001/spec/factories.rb 140 <==
+FactoryBot.define do
+  factory :post do
+    trait :published do
+      title "Something"
+      published_at 1.day.from_now
+    end
+  end
+end
+
+==> 002/spec/factories.rb 133 <==
+FactoryBot.define do
+  factory :post do
+    transient do
+      title "Something"
+      published_at 1.day.from_now
+    end
+  end
+end
+
+==> 003/spec/factories.rb 107 <==
+FactoryBot.define do
+  factory :post do
+    self.start { Date.today }
+    self.end Date.tomorrow
+  end
+end
+
+==> 004/spec/factories.rb 232 <==
+FactoryBot.define do
+  factory :post do |post_definition|
+    post_definition.end Date.tomorrow
+    post_definition.trait :published do |published_definition|
+      published_definition.published_at 1.day.from_now
+    end
+  end
+end
+
+==> 005/spec/factories.rb 406 <==
+FactoryBot.define do
+  factory :post do
+    trait :published do
+      published_at { 1.day.from_now }
+    end
+    created_at { 1.day.ago }
+    status { :draft }
+    comments_count { 0 }
+    title { "Static" }
+    description { FFaker::Lorem.paragraph(10) }
+    recent_statuses { [] }
+    tags { { like_count: 2 } }
+
+    before(:create, &:initialize_something)
+    after(:create, &:rebuild_cache)
+  end
+end
+
+==> 006/spec/factories.rb 141 <==
+status [:draft, :published].sample
+published_at 1.day.from_now
+created_at 1.day.ago
+update_times [Time.current]
+meta_tags(foo: Time.current)
+
+==> 007/spec/factories.rb 105 <==
+FactoryBot.define do
+  factory :post do |post_definition|
+    Registrar.register :post_factory
+  end
+end
+
+==> 008/spec/factories.rb 123 <==
+FactoryBot.define do
+  factory :post do |post_definition|
+    local = Registrar
+    local.register :post_factory
+  end
+end
+
+==> 009/spec/factories.rb 85 <==
+FactoryBot.define do
+  factory :post do
+    author age: 42, factory: :user
+  end
+end
+
+==> 010/spec/factories.rb 87 <==
+FactoryBot.define do
+  factory :post do
+    sequence :negative_numbers, &:-@
+  end
+end
+
+==> 011/spec/factories.rb 100 <==
+FactoryBot.define do
+  factory :post do
+    traits_for_enum :status, [:draft, :published]
+  end
+end
+

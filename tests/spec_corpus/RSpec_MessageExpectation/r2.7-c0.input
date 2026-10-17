@@ -1,0 +1,17 @@
+==> .rubocop.yml 182 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/MessageExpectation:
+  EnforcedStyle: allow
+
+==> 000/000_spec.rb 29 <==
+expect(foo).to receive(:bar)
+
+==> 001/001_spec.rb 27 <==
+allow(foo).to receive(:bar)

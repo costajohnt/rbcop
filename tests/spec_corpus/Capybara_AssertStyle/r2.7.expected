@@ -1,0 +1,9 @@
+==> offenses exit=1 115 <==
+000/000_spec.rb:1:27: C: [Correctable] Capybara/AssertStyle: Use `assert_matches_style` instead of `assert_style`.
+
+==> autocorrect exit=0 113 <==
+000/000_spec.rb:1:27: C: [Corrected] Capybara/AssertStyle: Use `assert_matches_style` instead of `assert_style`.
+
+==> corrected/000/000_spec.rb 65 <==
+page.find(:css, '#first').assert_matches_style(display: 'block')
+

@@ -1,0 +1,12 @@
+==> offenses exit=1 292 <==
+000/000_spec.rb:1:10: C: RSpec/DescribeSymbol: Avoid describing symbols.
+001/001_spec.rb:1:10: C: RSpec/DescribeSymbol: Avoid describing symbols.
+002/002_spec.rb:1:16: C: RSpec/DescribeSymbol: Avoid describing symbols.
+003/003_spec.rb:2:12: C: RSpec/DescribeSymbol: Avoid describing symbols.
+
+==> autocorrect exit=1 292 <==
+000/000_spec.rb:1:10: C: RSpec/DescribeSymbol: Avoid describing symbols.
+001/001_spec.rb:1:10: C: RSpec/DescribeSymbol: Avoid describing symbols.
+002/002_spec.rb:1:16: C: RSpec/DescribeSymbol: Avoid describing symbols.
+003/003_spec.rb:2:12: C: RSpec/DescribeSymbol: Avoid describing symbols.
+

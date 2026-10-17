@@ -1,0 +1,16 @@
+==> offenses exit=1 171 <==
+000/000_spec.rb:1:20: C: [Correctable] RSpec/NotToNot: Prefer `not_to` over `to_not`.
+001/001_spec.rb:3:3: C: [Correctable] RSpec/NotToNot: Prefer `not_to` over `to_not`.
+
+==> autocorrect exit=0 167 <==
+000/000_spec.rb:1:20: C: [Corrected] RSpec/NotToNot: Prefer `not_to` over `to_not`.
+001/001_spec.rb:3:3: C: [Corrected] RSpec/NotToNot: Prefer `not_to` over `to_not`.
+
+==> corrected/000/000_spec.rb 36 <==
+it { expect(false).not_to be_true }
+
+==> corrected/001/001_spec.rb 38 <==
+expect {
+  2 + 2
+}.not_to raise_error
+

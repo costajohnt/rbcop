@@ -1,0 +1,10 @@
+==> offenses exit=1 228 <==
+000/000_spec.rb:1:1: C: RSpec/ExampleWithoutDescription: Add a description.
+001/001_spec.rb:1:1: C: RSpec/ExampleWithoutDescription: Add a description.
+004/004_spec.rb:1:1: C: RSpec/ExampleWithoutDescription: Add a description.
+
+==> autocorrect exit=1 228 <==
+000/000_spec.rb:1:1: C: RSpec/ExampleWithoutDescription: Add a description.
+001/001_spec.rb:1:1: C: RSpec/ExampleWithoutDescription: Add a description.
+004/004_spec.rb:1:1: C: RSpec/ExampleWithoutDescription: Add a description.
+

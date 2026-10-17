@@ -1,0 +1,18 @@
+==> .rubocop.yml 220 <==
+---
+plugins:
+- rubocop-rspec
+- rubocop-rspec_rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpecRails/InferredSpecType:
+  Inferences:
+    services: service
+
+==> 000/path/to/project/spec/services/user_spec.rb 43 <==
+RSpec.describe User, type: :service do
+end
+

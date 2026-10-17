@@ -76,7 +76,7 @@ fn run(dir: &Path, cop: &str, autocorrect: bool) -> (String, String) {
 
 /// Every mismatch in one variant (`Dept_Cop/variant`), empty if it matches.
 fn check(root: &Path, variant: &str, work: &Path) -> Vec<String> {
-    let cop = variant.split('/').next().unwrap().replacen('_', "/", 1);
+    let cop = variant.split('/').next().unwrap().replace('_', "/");
     let input = sections(&root.join(format!("{variant}.input")));
     let expected = sections(&root.join(format!("{variant}.expected")));
     let _ = fs::remove_dir_all(work);

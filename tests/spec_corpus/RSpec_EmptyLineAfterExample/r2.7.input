@@ -1,0 +1,119 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 78 <==
+RSpec.describe Foo do
+  it 'does this' do
+  end
+  it 'does that' do
+  end
+end
+
+==> 001/001_spec.rb 61 <==
+RSpec.describe Foo do
+  it { }
+  it 'does that' do
+  end
+end
+
+==> 002/002_spec.rb 87 <==
+RSpec.context 'foo' do
+  specify do
+  end
+  specify 'something gets done' do
+  end
+end
+
+==> 003/003_spec.rb 79 <==
+RSpec.describe Foo do
+  it 'does this' do
+  end
+
+  it 'does that' do
+  end
+end
+
+==> 004/004_spec.rb 52 <==
+RSpec.describe Foo do
+  it { one }
+  it { two }
+end
+
+==> 005/005_spec.rb 89 <==
+RSpec.context 'foo' do
+  it { }
+  it { }
+  it 'does this' do
+  end
+  it { }
+  it { }
+end
+
+==> 006/006_spec.rb 91 <==
+RSpec.describe Foo do
+  it 'does this' do
+  end
+  # comment
+
+  it 'does that' do
+  end
+end
+
+==> 007/007_spec.rb 90 <==
+RSpec.describe Foo do
+  it 'does this' do
+  end
+  # comment
+  it 'does that' do
+  end
+end
+
+==> 008/008_spec.rb 122 <==
+RSpec.describe Foo do
+  it 'does this' do
+  end
+  # multiline comment
+  # multiline comment
+  it 'does that' do
+  end
+end
+
+==> 009/009_spec.rb 137 <==
+RSpec.describe Foo do
+  # rubocop:disable RSpec/Foo
+  it 'does this' do
+  end
+  # rubocop:enable RSpec/Foo
+  it 'does that' do
+  end
+end
+
+==> 010/010_spec.rb 137 <==
+RSpec.describe Foo do
+  it 'does this' do
+  end
+  # rubocop:disable RSpec/Foo
+  it 'does that' do
+  end
+  # rubocop:enable RSpec/Foo
+end
+
+==> 011/011_spec.rb 196 <==
+RSpec.describe Foo do
+  # rubocop:disable RSpec/Foo
+  it 'does this' do
+  end
+  # rubocop:enable RSpec/Foo
+  # rubocop:disable RSpec/Foo
+  it 'does that' do
+  end
+  # rubocop:enable RSpec/Foo
+end
+

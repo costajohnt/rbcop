@@ -1,0 +1,51 @@
+==> .rubocop.yml 182 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/DescribedClass:
+  EnforcedStyle: :explicit
+
+==> 000/000_spec.rb 137 <==
+describe MyClass do
+  include described_class
+
+  subject { described_class.do_something }
+
+  before { described_class.do_something }
+end
+
+==> 001/001_spec.rb 56 <==
+describe MyClass do
+  subject { "described_class" }
+end
+
+==> 002/002_spec.rb 56 <==
+describe "MyClass" do
+  subject { described_class }
+end
+
+==> 003/003_spec.rb 111 <==
+describe MyNamespace::MyClass do
+  before do
+    class Foo
+      thing = described_class.new
+    end
+  end
+end
+
+==> 004/004_spec.rb 58 <==
+describe do
+  before do
+    described_class.new
+  end
+end
+
+==> 005/005_spec.rb 84 <==
+describe(Foo) { include described_class }
+describe(Bar) { include described_class }
+

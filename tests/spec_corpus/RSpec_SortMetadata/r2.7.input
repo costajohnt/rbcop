@@ -1,0 +1,100 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 36 <==
+describe 'Something', :a, :b do
+end
+
+==> 001/001_spec.rb 36 <==
+describe 'Something', :b, :a do
+end
+
+==> 002/002_spec.rb 57 <==
+describe 'Something', :z, :a, variable, foo: :bar do
+end
+
+==> 003/003_spec.rb 54 <==
+describe 'Something', :z, :a, variable, :c, :b do
+end
+
+==> 004/004_spec.rb 47 <==
+describe 'Something', :z, :a, some_hash do
+end
+
+==> 005/005_spec.rb 56 <==
+describe 'Something', 'second docstring', :a, :b do
+end
+
+==> 006/006_spec.rb 56 <==
+describe 'Something', 'second docstring', :b, :a do
+end
+
+==> 007/007_spec.rb 50 <==
+context 'Something', baz: true, foo: 'bar' do
+end
+
+==> 008/008_spec.rb 50 <==
+context 'Something', foo: 'bar', baz: true do
+end
+
+==> 009/009_spec.rb 53 <==
+it 'Something', :a, :b, baz: true, foo: 'bar' do
+end
+
+==> 010/010_spec.rb 53 <==
+it 'Something', :b, :a, baz: true, foo: 'bar' do
+end
+
+==> 011/011_spec.rb 53 <==
+it 'Something', :a, :b, foo: 'bar', baz: true do
+end
+
+==> 012/012_spec.rb 53 <==
+it 'Something', :b, :a, foo: 'bar', baz: true do
+end
+
+==> 013/013_spec.rb 118 <==
+it 'Something', variable, 'B', :a, key => {}, foo: ->(x) { bar(x) }, Identifier.sample => true, baz: Snafu.new do
+end
+
+==> 014/014_spec.rb 135 <==
+shared_examples 'a difficult situation', 'B', :z, :a do |x, y|
+end
+
+include_examples 'a difficult situation', 'value', 'another value'
+
+==> 015/015_spec.rb 81 <==
+describe 'Something', :foo, :bar,
+                             baz: 'goo' do
+end
+
+==> 016/016_spec.rb 125 <==
+RSpec.configure do |c|
+  c.before(:each, :b, :a) { freeze_time }
+  c.after(:each, foo: 'bar', baz: true) { travel_back }
+end
+
+==> 017/017_spec.rb 97 <==
+include_examples 'z', 'a' do
+end
+it_behaves_like 'z', 'a' do
+end
+include_context 'z', 'a' do
+end
+
+==> 018/018_spec.rb 183 <==
+RSpec.describan "Algo", :b, :a do
+  contexto_compartido 'una situación complicada', foo: 'bar', baz: true do
+  end
+
+  ejemplo "hablando español", foo: 'bar', baz: true do
+  end
+end
+

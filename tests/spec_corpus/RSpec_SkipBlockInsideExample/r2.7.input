@@ -1,0 +1,42 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 65 <==
+it 'does something' do
+  skip 'not yet implemented' do
+  end
+end
+
+==> 001/001_spec.rb 72 <==
+it 'does something' do
+  skip 'not yet implemented' do
+    _1
+  end
+end
+
+==> 002/002_spec.rb 56 <==
+it 'does something' do
+  skip 'not yet implemented'
+end
+
+==> 003/003_spec.rb 34 <==
+skip 'not yet implemented' do
+end
+
+==> 004/004_spec.rb 110 <==
+it 'does something' do
+  pending 'not yet implemented' do
+    # ...
+  end
+  foo 'dfdf' do
+    # ...
+  end
+end
+

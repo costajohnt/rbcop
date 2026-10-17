@@ -1,0 +1,68 @@
+==> .rubocop.yml 178 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/MetadataStyle:
+  EnforcedStyle: symbol
+
+==> 000/000_spec.rb 32 <==
+describe 'Something', :a do
+end
+
+==> 001/001_spec.rb 38 <==
+describe 'Something', a: false do
+end
+
+==> 002/002_spec.rb 41 <==
+describe 'Something', 'a' => true do
+end
+
+==> 003/003_spec.rb 37 <==
+describe 'Something', a: true do
+end
+
+==> 004/004_spec.rb 46 <==
+describe 'Something', a: true, b: true do
+end
+
+==> 005/005_spec.rb 43 <==
+describe 'Something', b: 1, a: true do
+end
+
+==> 006/006_spec.rb 43 <==
+describe 'Something', a: true, b: 1 do
+end
+
+==> 007/007_spec.rb 35 <==
+describe 'Something', a, :b do
+end
+
+==> 008/008_spec.rb 41 <==
+describe 'Something', :b, a: true do
+end
+
+==> 009/009_spec.rb 41 <==
+describe 'Something', { a: true } do
+end
+
+==> 010/010_spec.rb 50 <==
+describe 'Something', { a: true, b: true } do
+end
+
+==> 011/011_spec.rb 47 <==
+describe 'Something', { a: true, b: 1 } do
+end
+
+==> 012/012_spec.rb 47 <==
+describe 'Something', { b: 1, a: true } do
+end
+
+==> 013/013_spec.rb 39 <==
+describe 'Something', a => true do
+end
+

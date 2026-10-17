@@ -1,0 +1,163 @@
+==> offenses exit=1 3524 <==
+000/000_spec.rb:1:29: C: [Correctable] RSpec/Focus: Focused spec found.
+000/000_spec.rb:2:25: C: [Correctable] RSpec/Focus: Focused spec found.
+000/000_spec.rb:3:30: C: [Correctable] RSpec/Focus: Focused spec found.
+000/000_spec.rb:4:36: C: [Correctable] RSpec/Focus: Focused spec found.
+000/000_spec.rb:5:24: C: [Correctable] RSpec/Focus: Focused spec found.
+000/000_spec.rb:6:30: C: [Correctable] RSpec/Focus: Focused spec found.
+000/000_spec.rb:7:29: C: [Correctable] RSpec/Focus: Focused spec found.
+000/000_spec.rb:8:35: C: [Correctable] RSpec/Focus: Focused spec found.
+000/000_spec.rb:9:30: C: [Correctable] RSpec/Focus: Focused spec found.
+000/000_spec.rb:10:30: C: [Correctable] RSpec/Focus: Focused spec found.
+000/000_spec.rb:11:31: C: [Correctable] RSpec/Focus: Focused spec found.
+000/000_spec.rb:12:29: C: [Correctable] RSpec/Focus: Focused spec found.
+000/000_spec.rb:13:30: C: [Correctable] RSpec/Focus: Focused spec found.
+000/000_spec.rb:14:29: C: [Correctable] RSpec/Focus: Focused spec found.
+000/000_spec.rb:15:30: C: [Correctable] RSpec/Focus: Focused spec found.
+000/000_spec.rb:16:31: C: [Correctable] RSpec/Focus: Focused spec found.
+000/000_spec.rb:17:29: C: [Correctable] RSpec/Focus: Focused spec found.
+000/000_spec.rb:18:37: C: [Correctable] RSpec/Focus: Focused spec found.
+000/000_spec.rb:19:36: C: [Correctable] RSpec/Focus: Focused spec found.
+001/001_spec.rb:1:23: C: [Correctable] RSpec/Focus: Focused spec found.
+001/001_spec.rb:2:17: C: [Correctable] RSpec/Focus: Focused spec found.
+001/001_spec.rb:3:18: C: [Correctable] RSpec/Focus: Focused spec found.
+001/001_spec.rb:4:19: C: [Correctable] RSpec/Focus: Focused spec found.
+001/001_spec.rb:5:19: C: [Correctable] RSpec/Focus: Focused spec found.
+001/001_spec.rb:6:17: C: [Correctable] RSpec/Focus: Focused spec found.
+001/001_spec.rb:7:17: C: [Correctable] RSpec/Focus: Focused spec found.
+001/001_spec.rb:8:18: C: [Correctable] RSpec/Focus: Focused spec found.
+001/001_spec.rb:9:18: C: [Correctable] RSpec/Focus: Focused spec found.
+001/001_spec.rb:10:18: C: [Correctable] RSpec/Focus: Focused spec found.
+001/001_spec.rb:11:18: C: [Correctable] RSpec/Focus: Focused spec found.
+001/001_spec.rb:12:24: C: [Correctable] RSpec/Focus: Focused spec found.
+001/001_spec.rb:13:13: C: [Correctable] RSpec/Focus: Focused spec found.
+001/001_spec.rb:14:17: C: [Correctable] RSpec/Focus: Focused spec found.
+001/001_spec.rb:15:18: C: [Correctable] RSpec/Focus: Focused spec found.
+001/001_spec.rb:16:12: C: [Correctable] RSpec/Focus: Focused spec found.
+001/001_spec.rb:17:17: C: [Correctable] RSpec/Focus: Focused spec found.
+001/001_spec.rb:18:25: C: [Correctable] RSpec/Focus: Focused spec found.
+001/001_spec.rb:19:24: C: [Correctable] RSpec/Focus: Focused spec found.
+003/003_spec.rb:1:1: C: [Correctable] RSpec/Focus: Focused spec found.
+005/005_spec.rb:1:1: C: [Correctable] RSpec/Focus: Focused spec found.
+005/005_spec.rb:2:1: C: [Correctable] RSpec/Focus: Focused spec found.
+005/005_spec.rb:3:1: C: [Correctable] RSpec/Focus: Focused spec found.
+005/005_spec.rb:4:1: C: [Correctable] RSpec/Focus: Focused spec found.
+005/005_spec.rb:5:1: C: [Correctable] RSpec/Focus: Focused spec found.
+005/005_spec.rb:6:1: C: [Correctable] RSpec/Focus: Focused spec found.
+005/005_spec.rb:7:1: C: [Correctable] RSpec/Focus: Focused spec found.
+005/005_spec.rb:8:1: C: [Correctable] RSpec/Focus: Focused spec found.
+005/005_spec.rb:9:1: C: RSpec/Focus: Focused spec found.
+006/006_spec.rb:1:18: C: [Correctable] RSpec/Focus: Focused spec found.
+
+==> autocorrect exit=1 3498 <==
+000/000_spec.rb:1:29: C: [Corrected] RSpec/Focus: Focused spec found.
+000/000_spec.rb:2:25: C: [Corrected] RSpec/Focus: Focused spec found.
+000/000_spec.rb:3:30: C: [Corrected] RSpec/Focus: Focused spec found.
+000/000_spec.rb:4:36: C: [Corrected] RSpec/Focus: Focused spec found.
+000/000_spec.rb:5:24: C: [Corrected] RSpec/Focus: Focused spec found.
+000/000_spec.rb:6:30: C: [Corrected] RSpec/Focus: Focused spec found.
+000/000_spec.rb:7:29: C: [Corrected] RSpec/Focus: Focused spec found.
+000/000_spec.rb:8:35: C: [Corrected] RSpec/Focus: Focused spec found.
+000/000_spec.rb:9:30: C: [Corrected] RSpec/Focus: Focused spec found.
+000/000_spec.rb:10:30: C: [Corrected] RSpec/Focus: Focused spec found.
+000/000_spec.rb:11:31: C: [Corrected] RSpec/Focus: Focused spec found.
+000/000_spec.rb:12:29: C: [Corrected] RSpec/Focus: Focused spec found.
+000/000_spec.rb:13:30: C: [Corrected] RSpec/Focus: Focused spec found.
+000/000_spec.rb:14:29: C: [Corrected] RSpec/Focus: Focused spec found.
+000/000_spec.rb:15:30: C: [Corrected] RSpec/Focus: Focused spec found.
+000/000_spec.rb:16:31: C: [Corrected] RSpec/Focus: Focused spec found.
+000/000_spec.rb:17:29: C: [Corrected] RSpec/Focus: Focused spec found.
+000/000_spec.rb:18:37: C: [Corrected] RSpec/Focus: Focused spec found.
+000/000_spec.rb:19:36: C: [Corrected] RSpec/Focus: Focused spec found.
+001/001_spec.rb:1:23: C: [Corrected] RSpec/Focus: Focused spec found.
+001/001_spec.rb:2:17: C: [Corrected] RSpec/Focus: Focused spec found.
+001/001_spec.rb:3:18: C: [Corrected] RSpec/Focus: Focused spec found.
+001/001_spec.rb:4:19: C: [Corrected] RSpec/Focus: Focused spec found.
+001/001_spec.rb:5:19: C: [Corrected] RSpec/Focus: Focused spec found.
+001/001_spec.rb:6:17: C: [Corrected] RSpec/Focus: Focused spec found.
+001/001_spec.rb:7:17: C: [Corrected] RSpec/Focus: Focused spec found.
+001/001_spec.rb:8:18: C: [Corrected] RSpec/Focus: Focused spec found.
+001/001_spec.rb:9:18: C: [Corrected] RSpec/Focus: Focused spec found.
+001/001_spec.rb:10:18: C: [Corrected] RSpec/Focus: Focused spec found.
+001/001_spec.rb:11:18: C: [Corrected] RSpec/Focus: Focused spec found.
+001/001_spec.rb:12:24: C: [Corrected] RSpec/Focus: Focused spec found.
+001/001_spec.rb:13:13: C: [Corrected] RSpec/Focus: Focused spec found.
+001/001_spec.rb:14:17: C: [Corrected] RSpec/Focus: Focused spec found.
+001/001_spec.rb:15:18: C: [Corrected] RSpec/Focus: Focused spec found.
+001/001_spec.rb:16:12: C: [Corrected] RSpec/Focus: Focused spec found.
+001/001_spec.rb:17:17: C: [Corrected] RSpec/Focus: Focused spec found.
+001/001_spec.rb:18:25: C: [Corrected] RSpec/Focus: Focused spec found.
+001/001_spec.rb:19:24: C: [Corrected] RSpec/Focus: Focused spec found.
+003/003_spec.rb:1:1: C: [Corrected] RSpec/Focus: Focused spec found.
+003/003_spec.rb:1:11: C: [Corrected] RSpec/Focus: Focused spec found.
+005/005_spec.rb:1:1: C: [Corrected] RSpec/Focus: Focused spec found.
+005/005_spec.rb:2:1: C: [Corrected] RSpec/Focus: Focused spec found.
+005/005_spec.rb:3:1: C: [Corrected] RSpec/Focus: Focused spec found.
+005/005_spec.rb:4:1: C: [Corrected] RSpec/Focus: Focused spec found.
+005/005_spec.rb:5:1: C: [Corrected] RSpec/Focus: Focused spec found.
+005/005_spec.rb:6:1: C: [Corrected] RSpec/Focus: Focused spec found.
+005/005_spec.rb:7:1: C: [Corrected] RSpec/Focus: Focused spec found.
+005/005_spec.rb:8:1: C: [Corrected] RSpec/Focus: Focused spec found.
+005/005_spec.rb:9:1: C: RSpec/Focus: Focused spec found.
+006/006_spec.rb:1:18: C: [Corrected] RSpec/Focus: Focused spec found.
+
+==> corrected/000/000_spec.rb 694 <==
+example 'test', meta: true do; end
+xit 'test', meta: true do; end
+describe 'test', meta: true do; end
+RSpec.describe 'test', meta: true do; end
+it 'test', meta: true do; end
+xspecify 'test', meta: true do; end
+specify 'test', meta: true do; end
+example_group 'test', meta: true do; end
+scenario 'test', meta: true do; end
+xexample 'test', meta: true do; end
+xdescribe 'test', meta: true do; end
+context 'test', meta: true do; end
+xcontext 'test', meta: true do; end
+feature 'test', meta: true do; end
+xfeature 'test', meta: true do; end
+xscenario 'test', meta: true do; end
+pending 'test', meta: true do; end
+shared_examples 'test', meta: true do; end
+shared_context 'test', meta: true do; end
+
+==> corrected/001/001_spec.rb 466 <==
+example_group 'test' do; end
+feature 'test' do; end
+xexample 'test' do; end
+xdescribe 'test' do; end
+xscenario 'test' do; end
+specify 'test' do; end
+example 'test' do; end
+xfeature 'test' do; end
+xspecify 'test' do; end
+scenario 'test' do; end
+describe 'test' do; end
+RSpec.describe 'test' do; end
+xit 'test' do; end
+context 'test' do; end
+xcontext 'test' do; end
+it 'test' do; end
+pending 'test' do; end
+shared_examples 'test' do; end
+shared_context 'test' do; end
+
+==> corrected/003/003_spec.rb 16 <==
+it "foo" do
+end
+
+==> corrected/005/005_spec.rb 209 <==
+describe 'test' do; end
+RSpec.describe 'test' do; end
+feature 'test' do; end
+context 'test' do; end
+it 'test' do; end
+scenario 'test' do; end
+example 'test' do; end
+specify 'test' do; end
+focus 'test' do; end
+
+==> corrected/006/006_spec.rb 34 <==
+describe 'test', js: true do; end
+

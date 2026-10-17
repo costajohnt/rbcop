@@ -1,0 +1,21 @@
+==> .rubocop.yml 180 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+RSpec/HookArgument:
+  EnforcedStyle: :implicit
+
+==> 000/000_spec.rb 21 <==
+around(:each) { it }
+
+==> 001/001_spec.rb 24 <==
+around(:example) { it }
+
+==> 002/002_spec.rb 14 <==
+around { it }
+

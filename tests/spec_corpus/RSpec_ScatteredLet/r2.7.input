@@ -1,0 +1,88 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 97 <==
+RSpec.describe User do
+  let(:a) { a }
+  it { expect(subject.foo).to eq(a) }
+  let(:b) { b }
+end
+
+==> 001/001_spec.rb 143 <==
+describe User do
+  let(:a) { <<-BAR }
+    hello
+    world
+  BAR
+  it { expect(subject.foo).to eq(a) }
+  let(:b) { <<-BAZ }
+    again
+  BAZ
+end
+
+==> 002/002_spec.rb 283 <==
+RSpec.describe User do
+  let(:a) { a } # a comment
+  # example comment
+  it { expect(subject.foo).to eq(a) }
+  it { expect(subject.fu).to eq(b) } # inline example comment
+  # define the second letter
+  # with a multi-line description
+  let(:b) { b } # inline explanation as well
+end
+
+==> 003/003_spec.rb 190 <==
+describe User do
+  let(:a) { a }
+  it { expect(subject.foo).to eq(a) }
+
+  describe '#property' do
+    let(:c) { c }
+
+    it { expect(subject.property).to eq c }
+
+    let(:d) { d }
+  end
+end
+
+==> 004/004_spec.rb 90 <==
+describe User do
+  subject { User }
+
+  let(:a) { a }
+  let!(:b) { b }
+  let(:c) { c }
+end
+
+==> 005/005_spec.rb 93 <==
+describe User do
+  let!(:a) { a }
+  it { expect(subject.foo).to eq(a) }
+  let!(:c) { c }
+end
+
+==> 006/006_spec.rb 108 <==
+describe User do
+  let(:a) { a }
+  it { expect(subject.foo).to eq(a) }
+  let(:user, &args[:build_user])
+end
+
+==> 007/007_spec.rb 177 <==
+describe User do
+  let(:a) { a }
+  let(:b) { b }
+  it { expect(subject.foo).to eq(a) }
+  let(:c) { c }
+  let(:d) { d }
+  it { expect(subject.bar).to eq(d) }
+  let(:e) { e }
+end
+

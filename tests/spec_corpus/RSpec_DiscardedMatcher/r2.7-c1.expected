@@ -1,0 +1,6 @@
+==> offenses exit=1 130 <==
+000/000_spec.rb:4:5: C: RSpec/DiscardedMatcher: The result of `custom_matcher` is not used. Did you mean to chain it with `.and`?
+
+==> autocorrect exit=1 130 <==
+000/000_spec.rb:4:5: C: RSpec/DiscardedMatcher: The result of `custom_matcher` is not used. Did you mean to chain it with `.and`?
+

@@ -1,0 +1,29 @@
+==> .rubocop.yml 207 <==
+---
+plugins:
+- rubocop-rspec
+- rubocop-rspec_rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpecRails/NegationBeValid:
+  EnforcedStyle: not_to
+
+==> 000/000_spec.rb 26 <==
+expect(foo).to be_invalid
+
+==> 001/001_spec.rb 26 <==
+is_expected.to be_invalid
+
+==> 002/002_spec.rb 28 <==
+expect(foo).not_to be_valid
+
+==> 003/003_spec.rb 24 <==
+expect(foo).to be_valid
+
+==> 004/004_spec.rb 74 <==
+expect(foo).to be_invalid.and be_odd
+expect(foo).to be_invalid.or be_even
+

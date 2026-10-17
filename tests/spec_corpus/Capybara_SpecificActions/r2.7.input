@@ -1,0 +1,183 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 16 <==
+find('a').click
+
+==> 001/001_spec.rb 87 <==
+find('a', href: 'http://example.com').click
+find("a[href='http://example.com']").click
+
+==> 002/002_spec.rb 21 <==
+find('button').click
+
+==> 003/003_spec.rb 25 <==
+find('button.cls').click
+
+==> 004/004_spec.rb 31 <==
+find("a").find('button').click
+
+==> 005/005_spec.rb 40 <==
+find('button', exact_text: 'foo').click
+
+==> 006/006_spec.rb 25 <==
+find('div button').click
+
+==> 007/007_spec.rb 47 <==
+find('button,a').click
+find('a, button').click
+
+==> 008/008_spec.rb 48 <==
+find('button>a').click
+find('a > button').click
+
+==> 009/009_spec.rb 48 <==
+find('button+a').click
+find('a + button').click
+
+==> 010/010_spec.rb 48 <==
+find('button~a').click
+find('a ~ button').click
+
+==> 011/011_spec.rb 29 <==
+find("button[id=foo]").click
+
+==> 012/012_spec.rb 32 <==
+find("button[class=foo]").click
+
+==> 013/013_spec.rb 32 <==
+find("button[style=foo]").click
+
+==> 014/014_spec.rb 35 <==
+find("button[disabled=foo]").click
+
+==> 015/015_spec.rb 31 <==
+find("button[name=foo]").click
+
+==> 016/016_spec.rb 32 <==
+find("button[value=foo]").click
+
+==> 017/017_spec.rb 32 <==
+find("button[title=foo]").click
+
+==> 018/018_spec.rb 31 <==
+find("button[type=foo]").click
+
+==> 019/019_spec.rb 44 <==
+find("a[id=foo]").click
+find("a[id]").click
+
+==> 020/020_spec.rb 51 <==
+find("a[id=foo][href='http://example.com']").click
+
+==> 021/021_spec.rb 117 <==
+find("a[id=foo]", href: 'http://example.com').click
+find("a[id=foo]", text: 'foo', href: 'http://example.com').click
+
+==> 022/022_spec.rb 50 <==
+find("a[class=foo]").click
+find("a[class]").click
+
+==> 023/023_spec.rb 54 <==
+find("a[class=foo][href='http://example.com']").click
+
+==> 024/024_spec.rb 123 <==
+find("a[class=foo]", href: 'http://example.com').click
+find("a[class=foo]", text: 'foo', href: 'http://example.com').click
+
+==> 025/025_spec.rb 50 <==
+find("a[style=foo]").click
+find("a[style]").click
+
+==> 026/026_spec.rb 54 <==
+find("a[style=foo][href='http://example.com']").click
+
+==> 027/027_spec.rb 123 <==
+find("a[style=foo]", href: 'http://example.com').click
+find("a[style=foo]", text: 'foo', href: 'http://example.com').click
+
+==> 028/028_spec.rb 46 <==
+find("a[alt=foo]").click
+find("a[alt]").click
+
+==> 029/029_spec.rb 52 <==
+find("a[alt=foo][href='http://example.com']").click
+
+==> 030/030_spec.rb 119 <==
+find("a[alt=foo]", href: 'http://example.com').click
+find("a[alt=foo]", text: 'foo', href: 'http://example.com').click
+
+==> 031/031_spec.rb 50 <==
+find("a[title=foo]").click
+find("a[title]").click
+
+==> 032/032_spec.rb 54 <==
+find("a[title=foo][href='http://example.com']").click
+
+==> 033/033_spec.rb 123 <==
+find("a[title=foo]", href: 'http://example.com').click
+find("a[title=foo]", text: 'foo', href: 'http://example.com').click
+
+==> 034/034_spec.rb 56 <==
+find("a[download=foo]").click
+find("a[download]").click
+
+==> 035/035_spec.rb 57 <==
+find("a[download=foo][href='http://example.com']").click
+
+==> 036/036_spec.rb 129 <==
+find("a[download=foo]", href: 'http://example.com').click
+find("a[download=foo]", text: 'foo', href: 'http://example.com').click
+
+==> 037/037_spec.rb 67 <==
+find('button[disabled=true][name="foo"]', exact_text: 'foo').click
+
+==> 038/038_spec.rb 56 <==
+find('button[disabled=false]', exact_text: 'foo').click
+
+==> 039/039_spec.rb 61 <==
+find('button:not([disabled=true])', exact_text: 'bar').click
+
+==> 040/040_spec.rb 102 <==
+find('button:not([disabled=true]):enabled').click
+find('button:not([disabled=false]):disabled').click
+
+==> 041/041_spec.rb 104 <==
+find('button[disabled]').click
+find('button[id=some-id][disabled]').click
+find('button[visible]').click
+
+==> 042/042_spec.rb 54 <==
+find('button:not([name="foo"][disabled=true])').click
+
+==> 043/043_spec.rb 56 <==
+find('button:first-of-type:not([disabled=true])').click
+
+==> 044/044_spec.rb 124 <==
+find('button[data-disabled=true]').click
+find('button[foo=bar]').click
+find('button[foo-bar=baz]', exact_text: 'foo').click
+
+==> 045/045_spec.rb 252 <==
+find('button[disabled=true][foo=bar]').click
+find('button[foo=bar][disabled=true]').click
+find('button[foo=bar][disabled=true][bar=baz]').click
+find('button[disabled=true][foo=bar]').click
+find('button[disabled=foo][bar=bar]', exact_text: 'foo').click
+
+==> 046/046_spec.rb 41 <==
+find('article').click
+find('body').click
+
+==> 047/047_spec.rb 57 <==
+find('.a').click
+find('#button').click
+find('[a]').click
+

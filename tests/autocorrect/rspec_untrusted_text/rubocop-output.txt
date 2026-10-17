@@ -1,0 +1,56 @@
+factories.rb:1:19: F: Lint/Syntax: expected a block beginning with `do` to end with `end` (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+factories.rb:2:17: F: Lint/Syntax: expected a block beginning with `do` to end with `end` (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+factories.rb:3:5: C: [Corrected] FactoryBot/AssociationStyle: Use implicit style to define associations.
+factories.rb:4:5: C: [Corrected] FactoryBot/AssociationStyle: Use implicit style to define associations.
+factories.rb:5:5: C: [Corrected] FactoryBot/AssociationStyle: Use implicit style to define associations.
+factories.rb:6:5: C: [Corrected] FactoryBot/AssociationStyle: Use implicit style to define associations.
+factories.rb:7:5: C: [Corrected] FactoryBot/AssociationStyle: Use implicit style to define associations.
+factories.rb:7:13: F: Lint/Syntax: unterminated string meets end of file (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+factories.rb:9:4: F: Lint/Syntax: unexpected end-of-input, assuming it is closing the parent top level context (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+untrusted_spec.rb:2:7: C: [Corrected] RSpec/ExampleWording: Do not use should when describing your tests.
+untrusted_spec.rb:9:7: C: [Corrected] RSpec/ExampleWording: Do not use should when describing your tests.
+untrusted_spec.rb:13:7: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+untrusted_spec.rb:16:7: C: [Corrected] RSpec/ExcessiveDocstringSpacing: Excessive whitespace.
+untrusted_spec.rb:18:29: F: Lint/Syntax: expected a `=>` between the hash key and value (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+untrusted_spec.rb:18:30: F: Lint/Syntax: unexpected label; expected a value in the hash literal (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+untrusted_spec.rb:18:38: F: Lint/Syntax: unexpected 'do', expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+untrusted_spec.rb:19:15: C: [Corrected] RSpec/MetadataStyle: Use hash style for metadata.
+untrusted_spec.rb:19:23: C: [Corrected] RSpec/MetadataStyle: Use hash style for metadata.
+untrusted_spec.rb:23:23: C: [Corrected] RSpec/ExpectChange: Prefer `change { User.count }`.
+untrusted_spec.rb:24:23: C: [Corrected] RSpec/ExpectChange: Prefer `change { User.count; system('x') }`.
+untrusted_spec.rb:25:21: C: [Corrected] RSpec/MatchWithSimpleRegex: Prefer using `include('abc')` when the regex is a simple string literal.
+untrusted_spec.rb:26:21: C: [Corrected] RSpec/MatchWithSimpleRegex: Prefer using `include('a\b')` when the regex is a simple string literal.
+untrusted_spec.rb:27:21: C: [Corrected] RSpec/MatchWithSimpleRegex: Prefer using `include("it's #{x}")` when the regex is a simple string literal.
+untrusted_spec.rb:31:5: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [32].
+untrusted_spec.rb:32:5: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [31].
+untrusted_spec.rb:33:5: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [34].
+untrusted_spec.rb:34:5: C: [Corrected] RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [33].
+untrusted_spec.rb:35:19: C: [Corrected] RSpec/SingleArgumentMessageChain: Use `receive` instead of calling `receive_message_chain` with a single argument.
+untrusted_spec.rb:36:19: C: [Corrected] RSpec/SingleArgumentMessageChain: Use `receive` instead of calling `receive_message_chain` with a single argument.
+untrusted_spec.rb:37:19: C: [Corrected] RSpec/SingleArgumentMessageChain: Use `receive` instead of calling `receive_message_chain` with a single argument.
+untrusted_spec.rb:38:23: F: Lint/Syntax: unexpected local variable or method, expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+untrusted_spec.rb:40:7: F: Lint/Syntax: unexpected local variable or method, expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+untrusted_spec.rb:40:19: C: [Corrected] RSpec/SharedExamples: Prefer 'plain' over `:plain` to titleize shared examples.
+untrusted_spec.rb:41:19: C: [Corrected] RSpec/SharedExamples: Prefer 'it's' over `:"it's"` to titleize shared examples.
+untrusted_spec.rb:43:34: F: Lint/Syntax: unexpected local variable or method, expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+untrusted_spec.rb:45:21: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+untrusted_spec.rb:46:7: F: Lint/Syntax: unexpected local variable or method, expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+untrusted_spec.rb:46:21: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
+untrusted_spec.rb:48:32: F: Lint/Syntax: unexpected local variable or method, expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+untrusted_spec.rb:50:5: C: [Corrected] FactoryBot/CreateList: Prefer create_list.
+untrusted_spec.rb:51:5: C: [Corrected] FactoryBot/CreateList: Prefer create_list.
+untrusted_spec.rb:51:7: F: Lint/Syntax: unexpected local variable or method, expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+untrusted_spec.rb:52:17: F: Lint/Syntax: unexpected local variable or method, expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+untrusted_spec.rb:53:17: F: Lint/Syntax: unexpected local variable or method, expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+untrusted_spec.rb:53:22: F: Lint/Syntax: unexpected ')', expecting end-of-input (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+untrusted_spec.rb:53:23: F: Lint/Syntax: unexpected token . (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+untrusted_spec.rb:54:20: F: Lint/Syntax: unexpected local variable or method; expected a `)` to close the arguments (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+untrusted_spec.rb:54:21: F: Lint/Syntax: unterminated string meets end of file (Using Ruby 3.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+untrusted_spec.rb:55:5: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+untrusted_spec.rb:56:5: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+untrusted_spec.rb:57:5: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+untrusted_spec.rb:58:12: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+untrusted_spec.rb:60:12: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+untrusted_spec.rb:62:12: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+untrusted_spec.rb:64:5: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+untrusted_spec.rb:66:5: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`

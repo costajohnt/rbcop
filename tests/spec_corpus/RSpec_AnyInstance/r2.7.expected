@@ -1,0 +1,10 @@
+==> offenses exit=1 259 <==
+000/000_spec.rb:2:3: C: RSpec/AnyInstance: Avoid stubbing using `allow_any_instance_of`.
+001/001_spec.rb:2:3: C: RSpec/AnyInstance: Avoid stubbing using `expect_any_instance_of`.
+002/002_spec.rb:2:3: C: RSpec/AnyInstance: Avoid stubbing using `any_instance`.
+
+==> autocorrect exit=1 259 <==
+000/000_spec.rb:2:3: C: RSpec/AnyInstance: Avoid stubbing using `allow_any_instance_of`.
+001/001_spec.rb:2:3: C: RSpec/AnyInstance: Avoid stubbing using `expect_any_instance_of`.
+002/002_spec.rb:2:3: C: RSpec/AnyInstance: Avoid stubbing using `any_instance`.
+

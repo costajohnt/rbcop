@@ -1,0 +1,29 @@
+==> offenses exit=1 465 <==
+003/003_spec.rb:1:1: C: [Correctable] RSpec/RedundantAround: Remove redundant `around` hook.
+004/004_spec.rb:1:1: C: [Correctable] RSpec/RedundantAround: Remove redundant `around` hook.
+005/005_spec.rb:1:1: C: [Correctable] RSpec/RedundantAround: Remove redundant `around` hook.
+006/006_spec.rb:1:1: C: [Correctable] RSpec/RedundantAround: Remove redundant `around` hook.
+007/007_spec.rb:1:1: C: [Correctable] RSpec/RedundantAround: Remove redundant `around` hook.
+
+==> autocorrect exit=0 455 <==
+003/003_spec.rb:1:1: C: [Corrected] RSpec/RedundantAround: Remove redundant `around` hook.
+004/004_spec.rb:1:1: C: [Corrected] RSpec/RedundantAround: Remove redundant `around` hook.
+005/005_spec.rb:1:1: C: [Corrected] RSpec/RedundantAround: Remove redundant `around` hook.
+006/006_spec.rb:1:1: C: [Corrected] RSpec/RedundantAround: Remove redundant `around` hook.
+007/007_spec.rb:1:1: C: [Corrected] RSpec/RedundantAround: Remove redundant `around` hook.
+
+==> corrected/003/003_spec.rb 1 <==
+
+
+==> corrected/004/004_spec.rb 1 <==
+
+
+==> corrected/005/005_spec.rb 1 <==
+
+
+==> corrected/006/006_spec.rb 1 <==
+
+
+==> corrected/007/007_spec.rb 1 <==
+
+

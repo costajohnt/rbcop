@@ -1,0 +1,48 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 30 <==
+within find('foo.bar') do
+end
+
+==> 001/001_spec.rb 30 <==
+within(find 'foo.bar') do
+end
+
+==> 002/002_spec.rb 46 <==
+within find('foo.bar', visible: false) do
+end
+
+==> 003/003_spec.rb 32 <==
+within find_by_id('foo') do
+end
+
+==> 004/004_spec.rb 32 <==
+within(find_by_id 'foo') do
+end
+
+==> 005/005_spec.rb 72 <==
+within find_by_id('foo.bar') do
+end
+within find_by_id("foo.bar") do
+end
+
+==> 006/006_spec.rb 48 <==
+within find_by_id('foo', visible: false) do
+end
+
+==> 007/007_spec.rb 38 <==
+within find_by_id(id_variable) do
+end
+
+==> 008/008_spec.rb 24 <==
+within 'foo.bar' do
+end
+

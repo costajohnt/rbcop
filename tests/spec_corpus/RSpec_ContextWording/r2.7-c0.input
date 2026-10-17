@@ -1,0 +1,60 @@
+==> .rubocop.yml 219 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/ContextWording:
+  Prefixes:
+  - when
+  - with
+  - without
+  AllowedPatterns: []
+
+==> 000/000_spec.rb 47 <==
+describe 'the display name not present' do
+end
+
+==> 001/001_spec.rb 46 <==
+context 'the display name not present' do
+end
+
+==> 002/002_spec.rb 49 <==
+context "the #{display} name not present" do
+end
+
+==> 003/003_spec.rb 21 <==
+context `pwd` do
+end
+
+==> 004/004_spec.rb 53 <==
+shared_context 'the display name not present' do
+end
+
+==> 005/005_spec.rb 54 <==
+context 'when the display name is not present' do
+end
+
+==> 006/006_spec.rb 85 <==
+context 'when, for some inexplicable reason, you inject a subordinate clause' do
+end
+
+==> 007/007_spec.rb 33 <==
+context 'whenever you do' do
+end
+
+==> 008/008_spec.rb 47 <==
+context 'whenever you do', legend: true do
+end
+
+==> 009/009_spec.rb 42 <==
+context 'whenever you do', :legend do
+end
+
+==> 010/010_spec.rb 54 <==
+context 'whenever you do', :legend, myth: true do
+end
+

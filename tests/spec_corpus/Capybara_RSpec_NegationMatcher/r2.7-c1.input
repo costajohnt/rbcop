@@ -1,0 +1,113 @@
+==> .rubocop.yml 192 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Capybara/RSpec/NegationMatcher:
+  EnforcedStyle: not_to
+
+==> 000/000_spec.rb 38 <==
+expect(page).to have_no_selector('a')
+
+==> 001/001_spec.rb 38 <==
+expect(page).not_to have_selector 'a'
+
+==> 002/002_spec.rb 61 <==
+expect(page).to have_no_text(exact_text: <<~TEXT)
+  foo
+TEXT
+
+==> 003/003_spec.rb 33 <==
+expect(page).to have_no_css('a')
+
+==> 004/004_spec.rb 33 <==
+expect(page).not_to have_css 'a'
+
+==> 005/005_spec.rb 35 <==
+expect(page).to have_no_xpath('a')
+
+==> 006/006_spec.rb 35 <==
+expect(page).not_to have_xpath 'a'
+
+==> 007/007_spec.rb 34 <==
+expect(page).to have_no_text('a')
+
+==> 008/008_spec.rb 34 <==
+expect(page).not_to have_text 'a'
+
+==> 009/009_spec.rb 35 <==
+expect(page).to have_no_title('a')
+
+==> 010/010_spec.rb 35 <==
+expect(page).not_to have_title 'a'
+
+==> 011/011_spec.rb 42 <==
+expect(page).to have_no_current_path('a')
+
+==> 012/012_spec.rb 42 <==
+expect(page).not_to have_current_path 'a'
+
+==> 013/013_spec.rb 34 <==
+expect(page).to have_no_link('a')
+
+==> 014/014_spec.rb 34 <==
+expect(page).not_to have_link 'a'
+
+==> 015/015_spec.rb 36 <==
+expect(page).to have_no_button('a')
+
+==> 016/016_spec.rb 36 <==
+expect(page).not_to have_button 'a'
+
+==> 017/017_spec.rb 35 <==
+expect(page).to have_no_field('a')
+
+==> 018/018_spec.rb 35 <==
+expect(page).not_to have_field 'a'
+
+==> 019/019_spec.rb 43 <==
+expect(page).to have_no_checked_field('a')
+
+==> 020/020_spec.rb 43 <==
+expect(page).not_to have_checked_field 'a'
+
+==> 021/021_spec.rb 45 <==
+expect(page).to have_no_unchecked_field('a')
+
+==> 022/022_spec.rb 45 <==
+expect(page).not_to have_unchecked_field 'a'
+
+==> 023/023_spec.rb 36 <==
+expect(page).to have_no_select('a')
+
+==> 024/024_spec.rb 36 <==
+expect(page).not_to have_select 'a'
+
+==> 025/025_spec.rb 35 <==
+expect(page).to have_no_table('a')
+
+==> 026/026_spec.rb 35 <==
+expect(page).not_to have_table 'a'
+
+==> 027/027_spec.rb 37 <==
+expect(page).to have_no_sibling('a')
+
+==> 028/028_spec.rb 37 <==
+expect(page).not_to have_sibling 'a'
+
+==> 029/029_spec.rb 38 <==
+expect(page).to have_no_ancestor('a')
+
+==> 030/030_spec.rb 38 <==
+expect(page).not_to have_ancestor 'a'
+
+==> 031/031_spec.rb 37 <==
+expect(page).to have_no_content('a')
+
+==> 032/032_spec.rb 37 <==
+expect(page).not_to have_content 'a'
+

@@ -1,0 +1,26 @@
+==> .rubocop.yml 241 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Capybara/RSpec/PredicateMatcher:
+  EnforcedStyle: explicit
+  Strict: false
+  AllowedExplicitMatchers: []
+
+==> 000/000_spec.rb 177 <==
+expect(foo).to match_css(bar: 'baz')
+expect(foo).not_to match_selector(bar: 'baz')
+expect(foo).not_to match_style(bar: 'baz')
+expect(foo).to match_xpath(bar: 'baz', foo: 'bar')
+
+==> 001/001_spec.rb 241 <==
+expect(foo.matches_css?(bar: 'baz')).to be_truthy
+expect(foo.matches_selector?(bar: 'baz')).not_to be_truthy
+expect(foo.matches_style?(bar: 'baz')).to {matcher_false}
+expect(foo.matches_xpath?(bar: 'baz', foo: 'bar')).not_to {matcher_false}
+

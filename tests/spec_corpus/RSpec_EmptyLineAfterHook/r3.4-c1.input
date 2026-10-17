@@ -1,0 +1,27 @@
+==> .rubocop.yml 194 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+RSpec/EmptyLineAfterHook:
+  AllowConsecutiveOneLiners: false
+
+==> 000/000_spec.rb 71 <==
+RSpec.describe User do
+  around { it.run }
+  it { does_something }
+end
+
+==> 001/001_spec.rb 81 <==
+RSpec.describe User do
+  around do
+    it.run
+  end
+
+  it { does_something }
+end
+

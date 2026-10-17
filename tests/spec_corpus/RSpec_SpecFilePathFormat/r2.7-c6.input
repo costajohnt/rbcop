@@ -1,0 +1,25 @@
+==> .rubocop.yml 251 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/SpecFilePathFormat:
+  EnforcedInflector: active_support
+  InflectorPath: "./config/initializers/inflections.rb"
+
+==> 000/pvp_class_spec.rb 26 <==
+describe PvPClass do; end
+
+==> 001/pv_p_class_spec.rb 26 <==
+describe PvPClass do; end
+
+==> 002/pvp_class_foo_spec.rb 33 <==
+describe PvPClass, 'foo' do; end
+
+==> 003/api/http_client_spec.rb 33 <==
+describe API::HTTPClient do; end
+

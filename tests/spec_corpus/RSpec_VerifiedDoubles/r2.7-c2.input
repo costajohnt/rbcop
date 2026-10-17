@@ -1,0 +1,22 @@
+==> .rubocop.yml 180 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/VerifiedDoubles:
+  IgnoreNameless: false
+
+==> 000/000_spec.rb 25 <==
+it do
+  foo = double
+end
+
+==> 001/001_spec.rb 37 <==
+it do
+  foo = double(call: :bar)
+end
+

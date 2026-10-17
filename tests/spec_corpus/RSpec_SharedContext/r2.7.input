@@ -1,0 +1,92 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 30 <==
+shared_context 'empty' do
+end
+
+==> 001/001_spec.rb 61 <==
+shared_context 'foo' do
+  it 'performs actions' do
+  end
+end
+
+==> 002/002_spec.rb 83 <==
+shared_context 'foo' do
+  let(:foo) { :bar }
+
+  it 'performs actions' do
+  end
+end
+
+==> 003/003_spec.rb 87 <==
+shared_context 'foo' do
+  subject(:foo) { :bar }
+
+  it 'performs actions' do
+  end
+end
+
+==> 004/004_spec.rb 94 <==
+shared_context 'foo' do
+  before do
+    something
+  end
+
+  it 'performs actions' do
+  end
+end
+
+==> 005/005_spec.rb 52 <==
+shared_context 'foo' do
+  include_context 'bar'
+end
+
+==> 006/006_spec.rb 53 <==
+shared_context 'foo' do
+  include_examples 'bar'
+end
+
+==> 007/007_spec.rb 52 <==
+shared_context 'foo' do
+  it_behaves_like 'bar'
+end
+
+==> 008/008_spec.rb 31 <==
+shared_examples 'empty' do
+end
+
+==> 009/009_spec.rb 50 <==
+shared_examples 'foo' do
+  let(:foo) { :bar }
+end
+
+==> 010/010_spec.rb 54 <==
+shared_examples 'foo' do
+  subject(:foo) { :bar }
+end
+
+==> 011/011_spec.rb 55 <==
+shared_examples 'foo' do
+  before do
+    foo
+  end
+end
+
+==> 012/012_spec.rb 123 <==
+shared_examples 'foo' do
+  subject(:foo) { 'foo' }
+  let(:bar) { :baz }
+  before { initialize }
+
+  it 'works' do
+  end
+end
+

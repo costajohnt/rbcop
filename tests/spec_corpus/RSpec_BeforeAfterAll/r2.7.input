@@ -1,0 +1,26 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 64 <==
+before(:all) { do_something }
+before(:context) { do_something }
+
+==> 001/001_spec.rb 62 <==
+after(:all) { do_something }
+after(:context) { do_something }
+
+==> 002/002_spec.rb 65 <==
+before(:each) { do_something }
+before(:example) { do_something }
+
+==> 003/003_spec.rb 63 <==
+after(:each) { do_something }
+after(:example) { do_something }
+

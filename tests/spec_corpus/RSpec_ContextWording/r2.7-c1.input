@@ -1,0 +1,22 @@
+==> .rubocop.yml 196 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/ContextWording:
+  Prefixes:
+  - if
+  AllowedPatterns: []
+
+==> 000/000_spec.rb 46 <==
+context 'when display name is present' do
+end
+
+==> 001/001_spec.rb 44 <==
+context 'if display name is present' do
+end
+

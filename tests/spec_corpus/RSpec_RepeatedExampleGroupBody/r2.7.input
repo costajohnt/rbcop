@@ -1,0 +1,253 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 115 <==
+describe 'doing x' do
+  it { cool_predicate_method }
+end
+
+describe 'doing y' do
+  it { cool_predicate_method }
+end
+
+==> 001/001_spec.rb 141 <==
+context 'when awesome case' do
+  it { cool_predicate_method }
+end
+
+context 'when another awesome case' do
+  it { cool_predicate_method }
+end
+
+==> 002/002_spec.rb 206 <==
+context 'when usual case' do
+  it { cool_predicate_method }
+end
+
+context 'when awesome case' do
+  it { cool_predicate_method }
+end
+
+context 'when another awesome case' do
+  it { cool_predicate_method }
+end
+
+==> 003/003_spec.rb 144 <==
+context 'when awesome case' do
+  it { cool_predicate_method }
+end
+
+context 'when another awesome case' do
+  it { another_predicate_method }
+end
+
+==> 004/004_spec.rb 125 <==
+describe 'doing x' do
+  it { cool_predicate_method }
+end
+
+describe 'doing x', :request do
+  it { cool_predicate_method }
+end
+
+==> 005/005_spec.rb 141 <==
+describe CSV::Row do
+  it { is_expected.to respond_to :headers }
+end
+
+describe CSV::Table do
+  it { is_expected.to respond_to :headers }
+end
+
+==> 006/006_spec.rb 167 <==
+describe CSV::Parser do
+  it { expect(described_class).to respond_to(:parse) }
+end
+
+describe URI::Parser do
+  it { expect(described_class).to respond_to(:parse) }
+end
+
+==> 007/007_spec.rb 159 <==
+context Net::HTTP do
+  it { expect(described_class).to respond_to :start }
+end
+
+context Net::HTTP do
+  it { expect(described_class).to respond_to :start }
+end
+
+==> 008/008_spec.rb 144 <==
+describe 'doing x', :json, 'request' do
+  it { cool_predicate_method }
+end
+
+describe 'doing x', 'request' do
+  it { cool_predicate_method }
+end
+
+==> 009/009_spec.rb 121 <==
+describe 'doing x' do
+  it { cool_predicate_method }
+end
+
+context 'when a is true' do
+  it { cool_predicate_method }
+end
+
+==> 010/010_spec.rb 161 <==
+describe 'A' do
+  describe '.b' do
+    context 'when this' do
+      it { do_something }
+    end
+  end
+  context 'when this' do
+    it { do_something }
+  end
+end
+
+==> 011/011_spec.rb 193 <==
+helpers.describe 'doing x' do
+  it { cool_predicate_method }
+end
+
+RSpec.describe 'doing x' do
+  it { cool_predicate_method }
+end
+
+context 'when a is true' do
+  it { cool_predicate_method }
+end
+
+==> 012/012_spec.rb 193 <==
+RSpec.describe 'doing x' do
+  it { cool_predicate_method }
+end
+
+context 'when a is true' do
+  it { cool_predicate_method }
+end
+
+helpers.describe 'doing x' do
+  it { cool_predicate_method }
+end
+
+==> 013/013_spec.rb 314 <==
+RSpec.describe 'A' do
+  stub_all_http_calls()
+  allowed_statuses = %i[open submitted approved].freeze
+  before { create(:admin) }
+  allowed_statuses = %i[open submitted approved].freeze
+
+  describe '#load' do
+    it { cool_predicate_method }
+  end
+
+  describe '#load' do
+    it { cool_predicate_method }
+  end
+end
+
+==> 014/014_spec.rb 106 <==
+context 'rejected' do
+  skip
+end
+
+context 'processed' do
+  skip
+end
+
+context 'processed' do
+  pending
+end
+
+==> 015/015_spec.rb 237 <==
+describe '#load' do
+  skip 'storage feature needed'
+end
+
+describe '#save' do
+  skip 'storage feature needed'
+end
+
+describe '#get_foo' do
+  pending 'foo feature is broken'
+end
+
+describe '#set_foo' do
+  pending 'foo feature is broken'
+end
+
+==> 016/016_spec.rb 243 <==
+describe '#load' do
+  skip { cool_predicate_method }
+end
+
+describe '#save' do
+  skip { cool_predicate_method }
+end
+
+describe '#get_foo' do
+  pending { cool_predicate_method }
+end
+
+describe '#set_foo' do
+  pending { cool_predicate_method }
+end
+
+==> 017/017_spec.rb 156 <==
+describe 'repeated' do
+  it { is_expected.to be_truthy }
+end
+
+before { do_something }
+
+describe 'this is repeated' do
+  it { is_expected.to be_truthy }
+end
+
+==> 018/018_spec.rb 178 <==
+context 'when admin' do
+  let(:user) { admin }
+  it { is_expected.to be_truthy }
+end
+
+context 'when regular user' do
+  let(:user) { staff }
+  it { is_expected.to be_truthy }
+end
+
+==> 019/019_spec.rb 172 <==
+context do
+  let(:preferences) { default_preferences }
+
+  it { is_expected.to eq false }
+end
+
+context do
+  let(:preferences) { %w[a] }
+
+  it { is_expected.to eq true }
+end
+
+==> 020/020_spec.rb 157 <==
+context do
+  let(:preferences) { %w[a] }
+
+  it { is_expected.to eq true }
+end
+
+context do
+  let(:preferences) { %w[a] }
+
+  it { is_expected.to eq true }
+end
+

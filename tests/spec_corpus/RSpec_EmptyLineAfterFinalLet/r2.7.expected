@@ -1,0 +1,137 @@
+==> offenses exit=1 1189 <==
+000/000_spec.rb:3:3: C: [Correctable] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+001/001_spec.rb:4:5: C: [Correctable] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+002/002_spec.rb:4:5: C: [Correctable] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+003/003_spec.rb:5:3: C: [Correctable] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let!`.
+004/004_spec.rb:3:3: C: [Correctable] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+007/007_spec.rb:3:3: C: [Correctable] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+008/008_spec.rb:3:3: C: [Correctable] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+009/009_spec.rb:5:3: C: [Correctable] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+010/010_spec.rb:3:3: C: [Correctable] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+011/011_spec.rb:5:3: C: [Correctable] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+018/018_spec.rb:5:3: C: [Correctable] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+
+==> autocorrect exit=0 1167 <==
+000/000_spec.rb:3:3: C: [Corrected] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+001/001_spec.rb:4:5: C: [Corrected] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+002/002_spec.rb:4:5: C: [Corrected] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+003/003_spec.rb:5:3: C: [Corrected] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let!`.
+004/004_spec.rb:3:3: C: [Corrected] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+007/007_spec.rb:3:3: C: [Corrected] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+008/008_spec.rb:3:3: C: [Corrected] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+009/009_spec.rb:5:3: C: [Corrected] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+010/010_spec.rb:3:3: C: [Corrected] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+011/011_spec.rb:5:3: C: [Corrected] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+018/018_spec.rb:5:3: C: [Corrected] RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+
+==> corrected/000/000_spec.rb 88 <==
+RSpec.describe User do
+  let(:a) { a }
+  let(:b) { b }
+
+  it { expect(a).to eq(b) }
+end
+
+==> corrected/001/001_spec.rb 148 <==
+RSpec.describe User do
+  shared_examples_for 'some shared behavior' do
+    let(:a) { a }
+    let(:b) { b }
+
+    it { expect(a).to eq(b) }
+  end
+end
+
+==> corrected/002/002_spec.rb 144 <==
+RSpec.describe User do
+  it_behaves_like 'some shared behavior' do
+    let(:a) { a }
+    let(:b) { b }
+
+    it { expect(a).to eq(b) }
+  end
+end
+
+==> corrected/003/003_spec.rb 98 <==
+RSpec.describe User do
+  let(:a) { a }
+  let!(:b) do
+    b
+  end
+
+  it { expect(a).to eq(b) }
+end
+
+==> corrected/004/004_spec.rb 105 <==
+RSpec.describe User do
+  let(:a) { a }
+  let(:user, &args[:build_user])
+
+  it { expect(a).to eq(b) }
+end
+
+==> corrected/007/007_spec.rb 100 <==
+RSpec.describe User do
+  let(:a) { a }
+  let(:b) { b }
+
+  # comment
+  it { expect(a).to eq(b) }
+end
+
+==> corrected/008/008_spec.rb 132 <==
+RSpec.describe User do
+  let(:a) { a }
+  let(:b) { b }
+
+  # multiline comment
+  # multiline comment
+  it { expect(a).to eq(b) }
+end
+
+==> corrected/009/009_spec.rb 147 <==
+RSpec.describe User do
+  # rubocop:disable RSpec/Foo
+  let(:a) { a }
+  let(:b) { b }
+  # rubocop:enable RSpec/Foo
+
+  it { expect(a).to eq(b) }
+end
+
+==> corrected/010/010_spec.rb 147 <==
+RSpec.describe User do
+  let(:a) { a }
+  let(:b) { b }
+
+  # rubocop:disable RSpec/Foo
+  it { expect(a).to eq(b) }
+  # rubocop:enable RSpec/Foo
+end
+
+==> corrected/011/011_spec.rb 206 <==
+RSpec.describe User do
+  # rubocop:disable RSpec/Foo
+  let(:a) { a }
+  let(:b) { b }
+  # rubocop:enable RSpec/Foo
+
+  # rubocop:disable RSpec/Foo
+  it { expect(a).to eq(b) }
+  # rubocop:enable RSpec/Foo
+end
+
+==> corrected/018/018_spec.rb 168 <==
+RSpec.describe 'silly heredoc syntax' do
+  let(:foo) { <<-BAR }
+  hello
+  world
+  BAR
+
+  it 'has tricky syntax' do
+    expect(foo).to eql("  hello
+  world
+")
+  end
+end
+

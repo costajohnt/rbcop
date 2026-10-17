@@ -1,0 +1,39 @@
+==> offenses exit=1 464 <==
+000/000_spec.rb:2:21: C: [Correctable] RSpec/ExpectChange: Prefer `change(User, :count)`.
+003/003_spec.rb:2:18: C: [Correctable] RSpec/ExpectChange: Prefer `change(User, :count)`.
+005/005_spec.rb:2:21: C: [Correctable] RSpec/ExpectChange: Prefer `change(User::Token::Auth, :count)`.
+006/006_spec.rb:2:21: C: [Correctable] RSpec/ExpectChange: Prefer `change(::User, :count)`.
+007/007_spec.rb:2:21: C: [Correctable] RSpec/ExpectChange: Prefer `change(user, :name)`.
+
+==> autocorrect exit=0 454 <==
+000/000_spec.rb:2:21: C: [Corrected] RSpec/ExpectChange: Prefer `change(User, :count)`.
+003/003_spec.rb:2:18: C: [Corrected] RSpec/ExpectChange: Prefer `change(User, :count)`.
+005/005_spec.rb:2:21: C: [Corrected] RSpec/ExpectChange: Prefer `change(User::Token::Auth, :count)`.
+006/006_spec.rb:2:21: C: [Corrected] RSpec/ExpectChange: Prefer `change(::User, :count)`.
+007/007_spec.rb:2:21: C: [Corrected] RSpec/ExpectChange: Prefer `change(user, :name)`.
+
+==> corrected/000/000_spec.rb 57 <==
+it do
+  expect { run }.to change(User, :count).by(1)
+end
+
+==> corrected/003/003_spec.rb 54 <==
+it do
+  expect(run).to change(User, :count).by(1)
+end
+
+==> corrected/005/005_spec.rb 70 <==
+it do
+  expect { run }.to change(User::Token::Auth, :count).by(1)
+end
+
+==> corrected/006/006_spec.rb 59 <==
+it do
+  expect { run }.to change(::User, :count).by(1)
+end
+
+==> corrected/007/007_spec.rb 61 <==
+it do
+  expect { run }.to change(user, :name).to('Jack')
+end
+

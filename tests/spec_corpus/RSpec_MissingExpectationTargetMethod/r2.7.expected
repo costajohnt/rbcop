@@ -1,0 +1,12 @@
+==> offenses exit=1 480 <==
+000/000_spec.rb:3:21: C: RSpec/MissingExpectationTargetMethod: Use `.to`, `.not_to` or `.to_not` to set an expectation.
+001/001_spec.rb:2:21: C: RSpec/MissingExpectationTargetMethod: Use `.to`, `.not_to` or `.to_not` to set an expectation.
+002/002_spec.rb:2:15: C: RSpec/MissingExpectationTargetMethod: Use `.to`, `.not_to` or `.to_not` to set an expectation.
+003/003_spec.rb:2:21: C: RSpec/MissingExpectationTargetMethod: Use `.to`, `.not_to` or `.to_not` to set an expectation.
+
+==> autocorrect exit=1 480 <==
+000/000_spec.rb:3:21: C: RSpec/MissingExpectationTargetMethod: Use `.to`, `.not_to` or `.to_not` to set an expectation.
+001/001_spec.rb:2:21: C: RSpec/MissingExpectationTargetMethod: Use `.to`, `.not_to` or `.to_not` to set an expectation.
+002/002_spec.rb:2:15: C: RSpec/MissingExpectationTargetMethod: Use `.to`, `.not_to` or `.to_not` to set an expectation.
+003/003_spec.rb:2:21: C: RSpec/MissingExpectationTargetMethod: Use `.to`, `.not_to` or `.to_not` to set an expectation.
+

@@ -1,0 +1,23 @@
+==> .rubocop.yml 217 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/DescribedClass:
+  EnforcedStyle: :described_class
+  OnlyStaticConstants: true
+
+==> 000/000_spec.rb 51 <==
+describe MyClass do
+  subject { MyClass::FOO }
+end
+
+==> 001/001_spec.rb 56 <==
+describe MyClass do
+  subject { MyClass::Subclass }
+end
+

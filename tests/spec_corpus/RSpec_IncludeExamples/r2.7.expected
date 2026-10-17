@@ -1,0 +1,9 @@
+==> offenses exit=1 111 <==
+000/000_spec.rb:1:1: C: [Correctable] RSpec/IncludeExamples: Prefer `it_behaves_like` over `include_examples`.
+
+==> autocorrect exit=0 109 <==
+000/000_spec.rb:1:1: C: [Corrected] RSpec/IncludeExamples: Prefer `it_behaves_like` over `include_examples`.
+
+==> corrected/000/000_spec.rb 27 <==
+it_behaves_like 'examples'
+

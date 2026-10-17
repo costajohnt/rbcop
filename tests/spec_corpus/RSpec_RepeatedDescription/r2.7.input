@@ -1,0 +1,181 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 73 <==
+describe 'doing x' do
+  it "does x" do
+  end
+
+  it "does x" do
+  end
+end
+
+==> 001/001_spec.rb 171 <==
+describe 'doing x' do
+  it "does x" do
+  end
+
+  context 'during some use case' do
+    it "does x" do
+      # this should be fine
+    end
+  end
+
+  it "does x" do
+  end
+end
+
+==> 002/002_spec.rb 121 <==
+describe 'doing x' do
+  it "does x" do
+  end
+
+  shared_context 'shared behavior' do
+    it "does x" do
+    end
+  end
+end
+
+==> 003/003_spec.rb 120 <==
+describe 'doing x' do
+  it "does x" do
+  end
+
+  context 'in a certain use case' do
+    it "does x" do
+    end
+  end
+end
+
+==> 004/004_spec.rb 52 <==
+describe 'doing x' do
+  it { foo }
+  it { bar }
+end
+
+==> 005/005_spec.rb 112 <==
+describe 'doing x' do
+  it 'do something' do
+    # ...
+  end
+
+  it 'do something', :flag do
+    # ...
+  end
+end
+
+==> 006/006_spec.rb 123 <==
+describe 'doing x' do
+  it 'do something', :flag do
+    # ...
+  end
+
+  it 'do another thing', :flag do
+    # ...
+  end
+end
+
+==> 007/007_spec.rb 119 <==
+describe 'doing x' do
+  it 'do something', :flag do
+    # ...
+  end
+
+  it 'do something', :flag do
+    # ...
+  end
+end
+
+==> 008/008_spec.rb 79 <==
+describe 'doing x' do
+  it "does #{x}" do
+  end
+
+  it "does #{y}" do
+  end
+end
+
+==> 009/009_spec.rb 144 <==
+describe 'doing x' do
+  %i[foo bar].each do |type|
+    it "does a thing #{type}" do
+    end
+
+    it "does a thing #{type}" do
+    end
+  end
+end
+
+==> 010/010_spec.rb 179 <==
+describe 'doing x' do
+  %i[foo bar].each do |type|
+    it "does a thing #{type}" do
+    end
+  end
+
+  %i[baz qux].each do |type|
+    it "does a thing #{type}" do
+    end
+  end
+end
+
+==> 011/011_spec.rb 185 <==
+describe 'doing x' do
+  %i[foo bar].each do |type|
+    it "does a thing #{type}" do
+    end
+  end
+
+  %i[baz qux].each do |type|
+    it "does another thing #{type}" do
+    end
+  end
+end
+
+==> 012/012_spec.rb 101 <==
+describe 'doing x' do
+  it(description) do
+    # ...
+  end
+
+  it(description) do
+    # ...
+  end
+end
+
+==> 013/013_spec.rb 95 <==
+describe 'doing x' do
+  it(description) do
+    # ...
+  end
+
+  it(title) do
+    # ...
+  end
+end
+
+==> 014/014_spec.rb 106 <==
+describe 'doing x' do
+  its(:x) { is_expected.to be_present }
+  its(:x) { is_expected.to be_present }
+end
+
+==> 015/015_spec.rb 106 <==
+describe 'doing x' do
+  its(:x) { is_expected.to be_present }
+  its(:y) { is_expected.to be_present }
+end
+
+==> 016/016_spec.rb 104 <==
+describe 'doing x' do
+  its(:x) { is_expected.to be_present }
+  its(:x) { is_expected.to be_blank }
+end
+

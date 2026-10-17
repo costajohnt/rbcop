@@ -1,0 +1,10 @@
+==> offenses exit=1 127 <==
+000/path/to/project/spec/services/user_spec.rb:1:22: C: [Correctable] RSpecRails/InferredSpecType: Remove redundant spec type.
+
+==> autocorrect exit=0 125 <==
+000/path/to/project/spec/services/user_spec.rb:1:22: C: [Corrected] RSpecRails/InferredSpecType: Remove redundant spec type.
+
+==> corrected/000/path/to/project/spec/services/user_spec.rb 27 <==
+RSpec.describe User do
+end
+

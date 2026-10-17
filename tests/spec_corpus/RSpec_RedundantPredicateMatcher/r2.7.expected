@@ -1,0 +1,58 @@
+==> offenses exit=1 1275 <==
+000/000_spec.rb:1:16: C: RSpec/RedundantPredicateMatcher: Use `all` instead of `be_all`.
+000/000_spec.rb:2:16: C: RSpec/RedundantPredicateMatcher: Use `all` instead of `be_all`.
+005/005_spec.rb:1:16: C: [Correctable] RSpec/RedundantPredicateMatcher: Use `cover` instead of `be_cover`.
+006/006_spec.rb:1:16: C: [Correctable] RSpec/RedundantPredicateMatcher: Use `end_with` instead of `be_end_with`.
+007/007_spec.rb:1:16: C: [Correctable] RSpec/RedundantPredicateMatcher: Use `eql` instead of `be_eql`.
+008/008_spec.rb:1:16: C: [Correctable] RSpec/RedundantPredicateMatcher: Use `equal` instead of `be_equal`.
+009/009_spec.rb:1:16: C: [Correctable] RSpec/RedundantPredicateMatcher: Use `exist` instead of `be_exist`.
+010/010_spec.rb:1:16: C: [Correctable] RSpec/RedundantPredicateMatcher: Use `exist` instead of `be_exists`.
+011/011_spec.rb:1:16: C: [Correctable] RSpec/RedundantPredicateMatcher: Use `include` instead of `be_include`.
+012/012_spec.rb:1:16: C: [Correctable] RSpec/RedundantPredicateMatcher: Use `match` instead of `be_match`.
+013/013_spec.rb:1:21: C: [Correctable] RSpec/RedundantPredicateMatcher: Use `respond_to` instead of `be_respond_to`.
+014/014_spec.rb:1:16: C: [Correctable] RSpec/RedundantPredicateMatcher: Use `start_with` instead of `be_start_with`.
+
+==> autocorrect exit=1 1255 <==
+000/000_spec.rb:1:16: C: RSpec/RedundantPredicateMatcher: Use `all` instead of `be_all`.
+000/000_spec.rb:2:16: C: RSpec/RedundantPredicateMatcher: Use `all` instead of `be_all`.
+005/005_spec.rb:1:16: C: [Corrected] RSpec/RedundantPredicateMatcher: Use `cover` instead of `be_cover`.
+006/006_spec.rb:1:16: C: [Corrected] RSpec/RedundantPredicateMatcher: Use `end_with` instead of `be_end_with`.
+007/007_spec.rb:1:16: C: [Corrected] RSpec/RedundantPredicateMatcher: Use `eql` instead of `be_eql`.
+008/008_spec.rb:1:16: C: [Corrected] RSpec/RedundantPredicateMatcher: Use `equal` instead of `be_equal`.
+009/009_spec.rb:1:16: C: [Corrected] RSpec/RedundantPredicateMatcher: Use `exist` instead of `be_exist`.
+010/010_spec.rb:1:16: C: [Corrected] RSpec/RedundantPredicateMatcher: Use `exist` instead of `be_exists`.
+011/011_spec.rb:1:16: C: [Corrected] RSpec/RedundantPredicateMatcher: Use `include` instead of `be_include`.
+012/012_spec.rb:1:16: C: [Corrected] RSpec/RedundantPredicateMatcher: Use `match` instead of `be_match`.
+013/013_spec.rb:1:21: C: [Corrected] RSpec/RedundantPredicateMatcher: Use `respond_to` instead of `be_respond_to`.
+014/014_spec.rb:1:16: C: [Corrected] RSpec/RedundantPredicateMatcher: Use `start_with` instead of `be_start_with`.
+
+==> corrected/005/005_spec.rb 31 <==
+expect(foo).to cover(bar, baz)
+
+==> corrected/006/006_spec.rb 29 <==
+expect(foo).to end_with('?')
+
+==> corrected/007/007_spec.rb 24 <==
+expect(foo).to eql(bar)
+
+==> corrected/008/008_spec.rb 26 <==
+expect(foo).to equal(bar)
+
+==> corrected/009/009_spec.rb 32 <==
+expect(foo).to exist("bar.txt")
+
+==> corrected/010/010_spec.rb 32 <==
+expect(foo).to exist("bar.txt")
+
+==> corrected/011/011_spec.rb 33 <==
+expect(foo).to include(bar, baz)
+
+==> corrected/012/012_spec.rb 28 <==
+expect(foo).to match(/bar/)
+
+==> corrected/013/013_spec.rb 40 <==
+expect("string").to respond_to(:length)
+
+==> corrected/014/014_spec.rb 31 <==
+expect(foo).to start_with("A")
+

@@ -1,0 +1,34 @@
+==> .rubocop.yml 200 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpec/ExampleWithoutDescription:
+  EnforcedStyle: single_line_only
+
+==> 000/000_spec.rb 39 <==
+it do
+  expect(subject).to be_good
+end
+
+==> 001/001_spec.rb 34 <==
+it { expect(subject).to be_good }
+
+==> 002/002_spec.rb 38 <==
+it('') { expect(subject).to be_good }
+
+==> 003/003_spec.rb 44 <==
+specify do
+  expect(subject).to be_good
+end
+
+==> 004/004_spec.rb 39 <==
+specify { expect(subject).to be_good }
+
+==> 005/005_spec.rb 43 <==
+specify('') { expect(subject).to be_good }
+

@@ -1,0 +1,132 @@
+==> offenses exit=1 1200 <==
+000/000_spec.rb:3:3: C: [Correctable] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `describe`.
+001/001_spec.rb:2:3: C: [Correctable] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `describe`.
+002/002_spec.rb:3:3: C: [Correctable] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `context`.
+003/003_spec.rb:3:3: C: [Correctable] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `shared_examples`.
+003/003_spec.rb:5:3: C: [Correctable] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `shared_context`.
+006/006_spec.rb:6:3: C: [Correctable] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `describe`.
+008/008_spec.rb:3:3: C: [Correctable] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `describe`.
+009/009_spec.rb:3:3: C: [Correctable] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `describe`.
+010/010_spec.rb:5:3: C: [Correctable] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `describe`.
+011/011_spec.rb:3:3: C: [Correctable] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `describe`.
+012/012_spec.rb:5:3: C: [Correctable] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `describe`.
+
+==> autocorrect exit=0 1178 <==
+000/000_spec.rb:3:3: C: [Corrected] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `describe`.
+001/001_spec.rb:2:3: C: [Corrected] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `describe`.
+002/002_spec.rb:3:3: C: [Corrected] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `context`.
+003/003_spec.rb:3:3: C: [Corrected] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `shared_examples`.
+003/003_spec.rb:5:3: C: [Corrected] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `shared_context`.
+006/006_spec.rb:6:3: C: [Corrected] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `describe`.
+008/008_spec.rb:3:3: C: [Corrected] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `describe`.
+009/009_spec.rb:3:3: C: [Corrected] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `describe`.
+010/010_spec.rb:5:3: C: [Corrected] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `describe`.
+011/011_spec.rb:3:3: C: [Corrected] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `describe`.
+012/012_spec.rb:5:3: C: [Corrected] RSpec/EmptyLineAfterExampleGroup: Add an empty line after `describe`.
+
+==> corrected/000/000_spec.rb 81 <==
+RSpec.describe Foo do
+  describe '#bar' do
+  end
+
+  describe '#baz' do
+  end
+end
+
+==> corrected/001/001_spec.rb 77 <==
+RSpec.describe Foo do
+  describe('#bar') { }
+
+  describe '#baz' do
+  end
+end
+
+==> corrected/002/002_spec.rb 78 <==
+RSpec.context 'foo' do
+  context 'bar' do
+  end
+
+  context 'baz' do
+  end
+end
+
+==> corrected/003/003_spec.rb 125 <==
+RSpec.context 'foo' do
+  shared_examples 'bar' do
+  end
+
+  shared_context 'baz' do
+  end
+
+  it 'does something' do
+  end
+end
+
+==> corrected/006/006_spec.rb 151 <==
+if RUBY_VERSION < 2.3
+  describe 'skips checks under old ruby' do
+  end
+else
+  describe 'first check' do
+  end
+
+  describe 'second check' do
+  end
+end
+
+==> corrected/008/008_spec.rb 91 <==
+RSpec.describe Foo do
+  describe 'bar' do
+  end
+
+  # comment
+  describe 'baz' do
+  end
+end
+
+==> corrected/009/009_spec.rb 123 <==
+RSpec.describe Foo do
+  describe 'bar' do
+  end
+
+  # multiline comment
+  # multiline comment
+  describe 'baz' do
+  end
+end
+
+==> corrected/010/010_spec.rb 138 <==
+RSpec.describe Foo do
+  # rubocop:disable RSpec/Foo
+  describe 'bar' do
+  end
+  # rubocop:enable RSpec/Foo
+
+  describe 'baz' do
+  end
+end
+
+==> corrected/011/011_spec.rb 138 <==
+RSpec.describe Foo do
+  describe 'bar' do
+  end
+
+  # rubocop:disable RSpec/Foo
+  describe 'baz' do
+  end
+  # rubocop:enable RSpec/Foo
+end
+
+==> corrected/012/012_spec.rb 197 <==
+RSpec.describe Foo do
+  # rubocop:disable RSpec/Foo
+  describe 'bar' do
+  end
+  # rubocop:enable RSpec/Foo
+
+  # rubocop:disable RSpec/Foo
+  describe 'baz' do
+  end
+  # rubocop:enable RSpec/Foo
+end
+

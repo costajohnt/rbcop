@@ -1,0 +1,33 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 147 <==
+it { is_expected.to contain_exactly(*[1,2,3]) }
+it { is_expected.to contain_exactly(*a.merge(b)) }
+it { is_expected.to contain_exactly(*(a + b)) }
+
+==> 001/001_spec.rb 48 <==
+it { is_expected.to contain_exactly(*%w(a b)) }
+
+==> 002/002_spec.rb 51 <==
+it { is_expected.to match_array(array1 + array2) }
+
+==> 003/003_spec.rb 110 <==
+it { is_expected.to contain_exactly(content, *array) }
+it { is_expected.to contain_exactly(*array, content) }
+
+==> 004/004_spec.rb 123 <==
+it { is_expected.to contain_exactly(*array1, *array2) }
+it { is_expected.to contain_exactly(*0..9, *100..109, *200..209) }
+
+==> 005/005_spec.rb 78 <==
+it { is_expected.to contain_exactly }
+it { is_expected.to contain_exactly() }
+

@@ -1,0 +1,18 @@
+==> .rubocop.yml 253 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Capybara/RSpec/PredicateMatcher:
+  EnforcedStyle: explicit
+  Strict: true
+  AllowedExplicitMatchers:
+  - match_xpath
+
+==> 000/000_spec.rb 51 <==
+expect(foo).to match_xpath(bar: 'baz', foo: 'bar')
+

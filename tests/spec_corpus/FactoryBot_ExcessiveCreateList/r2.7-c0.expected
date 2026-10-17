@@ -1,0 +1,10 @@
+==> offenses exit=1 324 <==
+004/004_spec.rb:1:30: C: FactoryBot/ExcessiveCreateList: Avoid using `create_list` with more than 10 items.
+005/005_spec.rb:1:41: C: FactoryBot/ExcessiveCreateList: Avoid using `create_list` with more than 10 items.
+006/006_spec.rb:1:42: C: FactoryBot/ExcessiveCreateList: Avoid using `create_list` with more than 10 items.
+
+==> autocorrect exit=1 324 <==
+004/004_spec.rb:1:30: C: FactoryBot/ExcessiveCreateList: Avoid using `create_list` with more than 10 items.
+005/005_spec.rb:1:41: C: FactoryBot/ExcessiveCreateList: Avoid using `create_list` with more than 10 items.
+006/006_spec.rb:1:42: C: FactoryBot/ExcessiveCreateList: Avoid using `create_list` with more than 10 items.
+

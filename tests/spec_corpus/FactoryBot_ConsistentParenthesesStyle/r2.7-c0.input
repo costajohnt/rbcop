@@ -1,0 +1,63 @@
+==> .rubocop.yml 238 <==
+---
+plugins:
+- rubocop-factory_bot
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+FactoryBot/ConsistentParenthesesStyle:
+  EnforcedStyle: :require_parentheses
+  ExplicitOnly: false
+
+==> 000/000_spec.rb 13 <==
+create :user
+
+==> 001/001_spec.rb 55 <==
+create :user,
+  username: "PETER",
+  peter: "USERNAME"
+
+==> 002/002_spec.rb 12 <==
+build :user
+
+==> 003/003_spec.rb 128 <==
+build_list :user, 10
+build_list "user", 10
+create_list :user, 10
+build_stubbed :user
+build_stubbed_list :user, 10
+build factory
+
+==> 004/004_spec.rb 28 <==
+build :user, build(:yester)
+
+==> 005/005_spec.rb 239 <==
+context 'with context' do
+  let(:build) { create :user, build(:user) }
+
+  it 'test in test' do
+    user = create :user, first: name, peter: miller
+  end
+
+  let(:build) { create :user, build(:user, create(:user, create(:first_name))) }
+end
+
+==> 006/006_spec.rb 14 <==
+create(:user)
+
+==> 007/007_spec.rb 13 <==
+build(:user)
+
+==> 008/008_spec.rb 24 <==
+FactoryBot.create :user
+
+==> 009/009_spec.rb 24 <==
+create
+create foo: :bar
+
+==> 010/010_spec.rb 29 <==
+generate
+generate :foo, :bar
+

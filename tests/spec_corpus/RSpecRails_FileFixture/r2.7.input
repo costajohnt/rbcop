@@ -1,0 +1,28 @@
+==> .rubocop.yml 155 <==
+---
+plugins:
+- rubocop-rspec
+- rubocop-rspec_rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 53 <==
+Rails.root.join('spec', 'fixtures', 'something.pdf')
+
+==> 001/001_spec.rb 50 <==
+Rails.root.join('spec/fixtures', 'something.pdf')
+
+==> 002/002_spec.rb 36 <==
+Rails.root.join('spec', 'fixtures')
+
+==> 003/003_spec.rb 109 <==
+Rails.root.join('spec', 'support', 'something.pdf')
+Rails.root.join('spec/fixtures_backup', 'something.pdf')
+
+==> 004/004_spec.rb 83 <==
+Other.root.join('spec', 'fixtures', 'something.pdf')
+file_fixture('something.pdf')
+

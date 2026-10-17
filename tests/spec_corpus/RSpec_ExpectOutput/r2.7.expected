@@ -1,0 +1,8 @@
+==> offenses exit=1 238 <==
+000/000_spec.rb:2:3: C: RSpec/ExpectOutput: Use `expect { ... }.to output(...).to_stdout` instead of mutating $stdout.
+001/001_spec.rb:2:3: C: RSpec/ExpectOutput: Use `expect { ... }.to output(...).to_stderr` instead of mutating $stderr.
+
+==> autocorrect exit=1 238 <==
+000/000_spec.rb:2:3: C: RSpec/ExpectOutput: Use `expect { ... }.to output(...).to_stdout` instead of mutating $stdout.
+001/001_spec.rb:2:3: C: RSpec/ExpectOutput: Use `expect { ... }.to output(...).to_stderr` instead of mutating $stderr.
+

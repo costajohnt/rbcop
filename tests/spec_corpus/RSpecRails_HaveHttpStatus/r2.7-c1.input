@@ -1,0 +1,20 @@
+==> .rubocop.yml 218 <==
+---
+plugins:
+- rubocop-rspec
+- rubocop-rspec_rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpecRails/HaveHttpStatus:
+  ResponseMethods:
+  - foo_response
+
+==> 000/000_spec.rb 46 <==
+it { expect(foo_response.status).to be(200) }
+
+==> 001/001_spec.rb 42 <==
+it { expect(response.status).to be(200) }
+

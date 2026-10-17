@@ -1,0 +1,28 @@
+==> offenses exit=1 342 <==
+000/000_spec.rb:1:11: C: [Correctable] RSpec/AlignLeftLetBrace: Align left let brace
+000/000_spec.rb:2:10: C: [Correctable] RSpec/AlignLeftLetBrace: Align left let brace
+000/000_spec.rb:12:14: C: [Correctable] RSpec/AlignLeftLetBrace: Align left let brace
+000/000_spec.rb:13:11: C: [Correctable] RSpec/AlignLeftLetBrace: Align left let brace
+
+==> autocorrect exit=0 334 <==
+000/000_spec.rb:1:11: C: [Corrected] RSpec/AlignLeftLetBrace: Align left let brace
+000/000_spec.rb:2:10: C: [Corrected] RSpec/AlignLeftLetBrace: Align left let brace
+000/000_spec.rb:12:14: C: [Corrected] RSpec/AlignLeftLetBrace: Align left let brace
+000/000_spec.rb:13:11: C: [Corrected] RSpec/AlignLeftLetBrace: Align left let brace
+
+==> corrected/000/000_spec.rb 240 <==
+let(:foo)      { bar }
+let(:hi)       { baz }
+let(:blahblah) { baz }
+
+let(:thing) { ignore_this }
+let(:other) {
+  ignore_this_too
+}
+
+describe 'blah' do
+  let(:long_name) { thing }
+  let(:blah)      { thing }
+  let(:a)         { thing }
+end
+

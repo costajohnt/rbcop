@@ -4,7 +4,7 @@ rbcop is RuboCop 1.91.0's command line reimplemented in Rust. It reads the same 
 
 Before switching, check two things:
 
-- **Plugins and custom cops.** rbcop runs RuboCop's 613 core cops. Cops from plugins (rubocop-rails, rubocop-rspec, rubocop-performance and so on) and custom cops loaded with `require:` are not run natively. rbcop names them on stderr, and `RBCOP_FALLBACK=1` runs them with RuboCop (see [Plugins and custom cops](#plugins-and-custom-cops) below). A project that uses only core cops needs nothing else.
+- **Plugins and custom cops.** rbcop runs RuboCop's 613 core cops and the plugins listed in [plugins.md](plugins.md) (rubocop-performance, rubocop-rails, rubocop-minitest, rubocop-rspec, rubocop-rspec_rails, rubocop-factory_bot, rubocop-capybara). Cops from other plugins and custom cops loaded with `require:` are not run natively. rbcop names them on stderr, and `RBCOP_FALLBACK=1` runs them with RuboCop (see [Plugins and custom cops](#plugins-and-custom-cops) below). A project that uses only core cops needs nothing else.
 - **Unsupported options.** `--auto-gen-config`, `--server`, `--lsp`, `-d` and a few others are not implemented; [known-gaps.md](known-gaps.md) lists them and every known difference.
 
 ## Gemfile
@@ -111,10 +111,10 @@ Use the gem through Bundler (`bundle exec rbcop`), or `scripts/dist/install.sh` 
 
 ## Plugins and custom cops
 
-When the configuration enables cops rbcop cannot run, it prints one line on stderr. Mastodon's, for example:
+When the configuration enables cops rbcop cannot run, it prints one line on stderr, for example:
 
 ```
-rbcop: not running 298 cops it does not implement (Capybara: 6, Capybara/RSpec: 9, I18n: 1, I18n/RailsI18n: 1, Performance: 43, RSpec: 109, RSpecRails: 8, Rails: 121) or cops from Ruby code the config requires; set RBCOP_FALLBACK=1 to run them with RuboCop
+rbcop: not running 45 cops it does not implement (Sorbet: 41, ThreadSafety: 4) or cops from Ruby code the config requires; set RBCOP_FALLBACK=1 to run them with RuboCop
 ```
 
 Cops from Ruby files the config requires (`require: ./lib/cops/foo.rb`) are named as "cops from Ruby code the config requires", since rbcop cannot know their names.

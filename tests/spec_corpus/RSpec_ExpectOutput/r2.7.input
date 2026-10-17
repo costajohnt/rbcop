@@ -1,0 +1,42 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 40 <==
+specify do
+  $stdout = StringIO.new
+end
+
+==> 001/001_spec.rb 46 <==
+before(:each) do
+  $stderr = StringIO.new
+end
+
+==> 002/002_spec.rb 36 <==
+specify do
+  $stdout.puts("hi")
+end
+
+==> 003/003_spec.rb 38 <==
+specify do
+  $blah = StringIO.new
+end
+
+==> 004/004_spec.rb 47 <==
+before(:suite) do
+  $stderr = StringIO.new
+end
+
+==> 005/005_spec.rb 45 <==
+describe Foo do
+  $stderr = StringIO.new
+end
+
+==> 006/006_spec.rb 22 <==
+$stderr = StringIO.new

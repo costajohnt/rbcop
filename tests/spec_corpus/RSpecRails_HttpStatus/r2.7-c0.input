@@ -1,0 +1,46 @@
+==> .rubocop.yml 204 <==
+---
+plugins:
+- rubocop-rspec
+- rubocop-rspec_rails
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+RSpecRails/HttpStatus:
+  EnforcedStyle: symbolic
+
+==> 000/000_spec.rb 43 <==
+it { is_expected.to have_http_status 200 }
+
+==> 001/001_spec.rb 45 <==
+it { is_expected.to have_http_status "200" }
+
+==> 002/002_spec.rb 45 <==
+it { is_expected.to have_http_status '200' }
+
+==> 003/003_spec.rb 46 <==
+it { is_expected.to have_http_status %[200] }
+
+==> 004/004_spec.rb 58 <==
+it { is_expected.to have_http_status <<~HTTP }
+  200
+HTTP
+
+==> 005/005_spec.rb 43 <==
+it { is_expected.to have_http_status :ok }
+
+==> 006/006_spec.rb 49 <==
+it { is_expected.to have_http_status :oki_doki }
+
+==> 007/007_spec.rb 88 <==
+it { is_expected.to have_http_status 550 }
+it { is_expected.to have_http_status "550" }
+
+==> 008/008_spec.rb 44 <==
+it { is_expected.to have_http_status(404) }
+
+==> 009/009_spec.rb 61 <==
+it { is_expected.to have_http_status("some-custom-string") }
+

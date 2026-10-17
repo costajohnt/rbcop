@@ -1,0 +1,209 @@
+==> .rubocop.yml 133 <==
+---
+plugins:
+- rubocop-rspec
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 114 <==
+specify do
+  expect { result }.to \
+    change { obj.foo }.from(1).to(2)
+    change { obj.bar }.from(3).to(4)
+end
+
+==> 001/001_spec.rb 88 <==
+specify do
+  expect { result }.to change(Foo, :bar).by(1)
+  change(Foo, :baz).by(2)
+end
+
+==> 002/002_spec.rb 76 <==
+specify do
+  expect(foo).to receive(:bar)
+  receive(:baz).and_return(1)
+end
+
+==> 003/003_spec.rb 71 <==
+specify do
+  expect { result }.to receive_messages(foo: 1, bar: 2)
+end
+
+==> 004/004_spec.rb 82 <==
+specify do
+  expect(foo).to receive(:bar)
+  receive_message_chain(:baz, :qux)
+end
+
+==> 005/005_spec.rb 88 <==
+specify do
+  expect { result }.to output('foo').to_stdout
+  output('bar').to_stderr
+end
+
+==> 006/006_spec.rb 123 <==
+specify do
+  output.rewind
+  parsed = JSON.parse(output.read.chomp)
+  expect(parsed["message"]).to eq("error message")
+end
+
+==> 007/007_spec.rb 74 <==
+specify do
+  expect(foo).to have_received(:bar)
+  have_received(:baz)
+end
+
+==> 008/008_spec.rb 62 <==
+specify do
+  expect { result }.to output('foo').to_stdout
+end
+
+==> 009/009_spec.rb 52 <==
+specify do
+  expect(foo).to have_received(:bar)
+end
+
+==> 010/010_spec.rb 71 <==
+specify do
+  expect { result }.to change { obj.foo }.from(1).to(2)
+end
+
+==> 011/011_spec.rb 119 <==
+specify do
+  expect { result }.to \
+    change { obj.foo }.from(1).to(2)
+    .and change { obj.bar }.from(3).to(4)
+end
+
+==> 012/012_spec.rb 42 <==
+expect { result }.to (change { obj.bar })
+
+==> 013/013_spec.rb 59 <==
+specify do
+  allow(foo).to receive(:bar).and_return(1)
+end
+
+==> 014/014_spec.rb 46 <==
+specify do
+  expect(foo).to receive(:bar)
+end
+
+==> 015/015_spec.rb 40 <==
+expect { result }.to change { obj.bar }
+
+==> 016/016_spec.rb 65 <==
+expect { result }.to \
+  change { obj.foo }
+  change { obj.bar }
+
+==> 017/017_spec.rb 63 <==
+expect { result }.to \
+  change(Foo, :foo)
+  change(Foo, :bar)
+
+==> 018/018_spec.rb 70 <==
+specify do
+  expect { result }.to change { obj.bar } if condition
+end
+
+==> 019/019_spec.rb 74 <==
+specify do
+  expect { result }.to change { obj.bar } unless condition
+end
+
+==> 020/020_spec.rb 179 <==
+specify do
+  change_temp =
+    if condition
+      change { obj.bar }.from(3).to(4)
+    else
+      change { obj.baz }.from(5).to(6)
+    end
+
+  expect { result }.to change_temp
+end
+
+==> 021/021_spec.rb 121 <==
+specify do
+  result = if condition
+             expect { result }.to change { obj.foo }.from(1).to(2)
+           end
+end
+
+==> 022/022_spec.rb 204 <==
+specify do
+  result = if condition
+             expect { result }.to change { obj.foo }.from(1).to(2)
+           else
+             expect { result }.to change { obj.foo }.from(3).to(4)
+           end
+end
+
+==> 023/023_spec.rb 152 <==
+specify do
+  case condition
+  when :update then expect { result }.to change { obj.bar }.from(3).to(4)
+  else change { obj.baz }.from(5).to(6)
+  end
+end
+
+==> 024/024_spec.rb 112 <==
+specify do
+  case condition
+  when :update then expect { result }.to change { obj.bar }.from(3).to(4)
+  end
+end
+
+==> 025/025_spec.rb 227 <==
+specify do
+  change_temp = case season
+                when :summer then change { temp }.from(0).to(1)
+                when :winter then change { temp }.from(0).to(2)
+                end
+
+  expect { result }.to change_temp
+end
+
+==> 026/026_spec.rb 214 <==
+specify do
+  change_temp = case season
+                when :summer then change { temp }.from(0).to(1)
+                else change { temp }.from(0).to(2)
+                end
+
+  expect { result }.to change_temp
+end
+
+==> 027/027_spec.rb 116 <==
+specify do
+  expect { result }.to \
+    change { obj.foo }.from(1).to(2) &
+    change { obj.bar }.from(3).to(4)
+end
+
+==> 028/028_spec.rb 203 <==
+specify do
+  def expect_action
+    expect { action!(performer: performer, context: context) }
+  end
+
+  expect_action
+    .to change { obj.foo }.from(1).to(2)
+        change { obj.bar }.from(3).to(4)
+end
+
+==> 029/029_spec.rb 96 <==
+specify do
+  expect { result }.to change { obj.bar }.from(1).to(2)
+  foo.change { obj.foo }
+end
+
+==> 030/030_spec.rb 40 <==
+specify do
+  foo.change { obj.foo }
+end
+

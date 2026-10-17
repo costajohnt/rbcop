@@ -1,0 +1,6 @@
+==> offenses exit=1 79 <==
+000/000_spec.rb:2:7: C: RSpec/VariableName: Use snake_case for variable names.
+
+==> autocorrect exit=1 79 <==
+000/000_spec.rb:2:7: C: RSpec/VariableName: Use snake_case for variable names.
+
