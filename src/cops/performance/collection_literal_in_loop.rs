@@ -131,7 +131,7 @@ fn optimized_operand(arg: &Node) -> bool {
         Some(c) => c.receiver().is_none_or(|r| optimized_operand(&r)),
         None => {
             (arg.as_string_node().is_some() && !is_parser_dstr(arg))
-                || matches!(kind::of(arg), kind::SELF_NODE | kind::LOCAL_VARIABLE_READ_NODE | kind::INSTANCE_VARIABLE_READ_NODE)
+                || matches!(kind::of(arg), kind::SELF_NODE | kind::LOCAL_VARIABLE_READ_NODE | kind::IT_LOCAL_VARIABLE_READ_NODE | kind::INSTANCE_VARIABLE_READ_NODE)
         }
     }
 }

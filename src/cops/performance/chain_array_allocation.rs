@@ -81,6 +81,7 @@ fn simple_arg(node: &Node) -> bool {
     match kind::of(node) {
         kind::INTEGER_NODE
         | kind::LOCAL_VARIABLE_READ_NODE
+        | kind::IT_LOCAL_VARIABLE_READ_NODE
         | kind::INSTANCE_VARIABLE_READ_NODE
         | kind::CLASS_VARIABLE_READ_NODE
         | kind::GLOBAL_VARIABLE_READ_NODE => true,
