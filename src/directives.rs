@@ -132,11 +132,8 @@ pub fn warn_unqualified(src: &Source, d: &Directive) {
 
 /// `print_department_missing_warning` for one (non-department) directive name.
 fn warn_name(src: &Source, raw: &str) {
-    static BASENAMES: LazyLock<std::collections::HashSet<&'static str>> = LazyLock::new(|| {
-        known().map(|c| c.rsplit('/').next().unwrap_or(c)).chain(["RedundantCopDisableDirective"]).collect()
-    });
     let name = raw.trim();
-    if !BASENAMES.contains(name) {
+    if !crate::helpers::cop_registry::is_unqualified_cop_name(name) {
         return;
     }
     let path = crate::config::validator::smart_path(Path::new(&src.absolute_path()), &crate::config::cwd());
