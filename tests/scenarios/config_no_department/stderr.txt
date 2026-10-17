@@ -1,0 +1,4 @@
+.rubocop.yml: Warning: no department given for LineLength.
+sub/.rubocop.yml: Warning: no department given for Documentation.
+sub/.rubocop.yml: Warning: no department given for StringLiterals.
+.rubocop.yml: Warning: no department given for LineLength.

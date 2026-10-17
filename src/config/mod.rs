@@ -562,7 +562,6 @@ pub struct Store {
     project_root: Option<PathBuf>,
     cop_names: Vec<&'static str>,
     default: Map,
-    known_cops: Vec<String>,
     /// Each loaded file with what loading it wrote to stderr: ConfigLoader.load_file is not
     /// cached, so every later load of the file repeats its validation warnings.
     files: HashMap<PathBuf, (Map, validator::Output)>,
@@ -590,7 +589,6 @@ impl Store {
         let Value::Map(default) = parse_yaml(default_text)? else { return Err("bad default.yml".into()) };
         let mut default = Arc::unwrap_or_clone(default);
         make_excludes_absolute(&mut default, &cwd);
-        let known_cops = default.keys().filter(|k| k.contains('/')).map(String::from).collect();
         let project_root = find_last_upwards(&["Gemfile"], &cwd).or_else(|| find_last_upwards(&["gems.rb"], &cwd));
         let mut store = Store {
             opts,
@@ -598,7 +596,6 @@ impl Store {
             project_root: project_root.map(|p| p.parent().unwrap().to_path_buf()),
             cop_names,
             default,
-            known_cops,
             files: HashMap::new(),
             emitted: Vec::new(),
             gem_dirs: HashMap::new(),
@@ -827,7 +824,7 @@ impl Store {
         }
         self.resolve_inheritance(path, &mut hash)?;
         hash.remove("inherit_from");
-        self.add_missing_namespaces(&mut hash);
+        self.add_missing_namespaces(path, &mut hash)?;
         if check {
             let mut out = Vec::new();
             let checked = validator::Validator {
@@ -929,18 +926,34 @@ impl Store {
         Ok(())
     }
 
-    /// Qualify bare cop names (`Debugger:` to `Lint/Debugger:`) when exactly one known cop matches.
-    fn add_missing_namespaces(&self, hash: &mut Map) {
-        for (key, _) in hash.0.iter_mut() {
-            if key.contains('/') || key == "AllCops" {
-                continue;
-            }
-            let suffix = format!("/{key}");
-            let mut matches = self.known_cops.iter().filter(|c| c.ends_with(&suffix));
-            if let (Some(only), None) = (matches.next(), matches.next()) {
-                *key = only.clone();
+    /// ConfigLoader.add_missing_namespaces: every key but an obsolete cop name goes through
+    /// Registry.qualified_cop_name(key, path), which warns about a bare cop name (`Debugger:`
+    /// becomes `Lint/Debugger:`) and a wrong department (`Style/LineLength:` becomes
+    /// `Layout/LineLength:`) and raises AmbiguousCopName for a bare name two departments share.
+    /// A requalified key moves to the end (`hash[q] = hash.delete(key)`).
+    fn add_missing_namespaces(&mut self, path: &Path, hash: &mut Map) -> Result<(), String> {
+        let legacy = validator::legacy_cop_names();
+        let shown = validator::smart_path(path, &self.cwd);
+        let origin = path.display().to_string();
+        let keys: Vec<String> = hash.keys().filter(|k| !legacy.contains(&k.to_string())).map(String::from).collect();
+        let mut warnings = Vec::new();
+        let mut result = Ok(());
+        for key in keys {
+            match crate::helpers::cop_registry::qualify(&key, &origin, Some(&shown), true, &mut warnings) {
+                Ok(q) if q != key => {
+                    let value = hash.remove(&key).unwrap_or(Value::Null);
+                    hash.insert(q, value);
+                }
+                Ok(_) => {}
+                Err(e) => {
+                    result = Err(format!("Error: {e}"));
+                    break;
+                }
             }
         }
+        let out: validator::Output = warnings.into_iter().map(|w| (false, w)).collect();
+        self.emit(&out);
+        result
     }
 
     /// ConfigLoader.add_excludes_from_files (§1).

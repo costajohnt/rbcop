@@ -857,66 +857,9 @@ fn verbose_version(cfg: &Resolved) -> String {
     )
 }
 
-/// Badge.camel_case
-fn badge_camel_case(part: &str) -> String {
-    if part == "rspec" {
-        return "RSpec".into();
-    }
-    // gsub(/^[a-z]|_[a-z]/) { |m| m[-1].upcase }
-    let chars: Vec<char> = part.chars().collect();
-    let mut out = String::new();
-    let mut i = 0;
-    while i < chars.len() {
-        let c = chars[i];
-        if i == 0 && c.is_ascii_lowercase() {
-            out.push(c.to_ascii_uppercase());
-        } else if c == '_' && chars.get(i + 1).is_some_and(|n| n.is_ascii_lowercase()) {
-            out.push(chars[i + 1].to_ascii_uppercase());
-            i += 1;
-        } else {
-            out.push(c);
-        }
-        i += 1;
-    }
-    out
-}
-
 /// Registry#qualified_cop_name(name, origin) with its warnings; Err is AmbiguousCopName.
 fn qualify_option_name(name: &str, origin: &str, warnings: &mut Vec<String>) -> Result<String, String> {
-    use rbcop::helpers::cop_registry::REGISTRY;
-    // Badge.parse: Ruby's split drops trailing empty fields.
-    let mut parts: Vec<String> = name.split('/').map(badge_camel_case).collect();
-    while parts.len() > 1 && parts.last().is_some_and(|p| p.is_empty()) {
-        parts.pop();
-    }
-    let cop = parts.pop().unwrap_or_default();
-    let dept = parts.join("/");
-    let qualified = !parts.is_empty();
-    let basename = |c: &str| c.rsplit('/').next().unwrap_or(c).to_string();
-    if !qualified && REGISTRY.iter().any(|c| basename(c) == name) {
-        warnings.push(format!("{origin}: Warning: no department given for {name}."));
-    }
-    if qualified && REGISTRY.contains(&format!("{dept}/{cop}").as_str()) {
-        return Ok(name.to_string());
-    }
-    let mut depts: Vec<&str> = REGISTRY.iter().filter_map(|c| c.rsplit_once('/').map(|(d, _)| d)).collect();
-    depts.dedup();
-    let hits: Vec<String> =
-        depts.into_iter().map(|d| format!("{d}/{cop}")).filter(|q| REGISTRY.contains(&q.as_str())).collect();
-    let given = if qualified { format!("{dept}/{cop}") } else { cop.clone() };
-    match hits.as_slice() {
-        [] => Ok(name.to_string()),
-        [real] => {
-            if qualified && *real != given {
-                warnings.push(format!("{origin}: Warning: {given} has the wrong namespace - replace it with {real}"));
-            }
-            Ok(real.clone())
-        }
-        many => Err(format!(
-            "Error: Ambiguous cop name `{given}` used in {origin} needs department qualifier. Did you mean {}?",
-            many.join(" or ")
-        )),
-    }
+    rbcop::helpers::cop_registry::qualify(name, origin, Some(origin), true, warnings).map_err(|e| format!("Error: {e}"))
 }
 
 /// Runner#qualify_option_cop_names, then OptionsValidator.validate_cop_list. RuboCop does this when
@@ -1085,6 +1028,11 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     // Runner#qualify_option_cop_names runs when the first team mobilizes, after the configs (and
     // the plugins they load, whose cops join the registry) are loaded.
     let (cop_warnings, cop_error) = qualify_cop_options(&mut cli);
+    runner::set_except_redundant(
+        cli.except.iter().any(|n| {
+            matches!(n.as_str(), "Lint/RedundantCopDisableDirective" | "RedundantCopDisableDirective" | "Lint")
+        }),
+    );
     store.set_only(cli.opts.only.clone());
     pwd_config = store.for_dir(&cwd)?;
 
@@ -1323,6 +1271,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     let mut inspected: Vec<PathBuf> = Vec::new();
     let mut config_failure = None;
     let mut cop_warnings_raised: Vec<String> = Vec::new();
+    let mut aborted = false;
     if error.is_none() {
         let mut cop_notes = Some((cop_warnings, cop_error));
         let mut stopped = false;
@@ -1395,6 +1344,14 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             for w in &report.warnings {
                 eprintln!("{w}");
             }
+            // An error raised while the file was inspected ends the run before it is reported
+            // (nothing written, no summaries).
+            if let Some(e) = report.abort.take() {
+                error = Some(e);
+                aborted = true;
+                stopped = true;
+                break;
+            }
             // Team#handle_warning prints each cop warning as the file is inspected; Runner#warnings
             // keeps them for the summary, in the same order.
             for w in &warnings {
@@ -1448,6 +1405,11 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     // The ValidationError reaches the CLI before ExecuteRunner's error summary.
     if let Some(e) = config_failure {
         warn_red(global, &e);
+        return Ok(ERROR);
+    }
+    // An error raised out of Runner#run skips ExecuteRunner#display_summary.
+    if aborted && let Some(e) = error {
+        eprintln!("{}", red(global, e.trim_end()));
         return Ok(ERROR);
     }
     // ExecuteRunner#display_warning_summary, before the error summary.
