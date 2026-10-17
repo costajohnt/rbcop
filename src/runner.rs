@@ -888,8 +888,21 @@ pub fn take_file_warnings() -> Vec<String> {
     FILE_WARNINGS.with(|w| std::mem::take(&mut *w.borrow_mut()))
 }
 
-/// Print an error now and keep it for the summary (it makes the run fail). In a poisoned file
-/// (see `poison_raise`) cop errors wait for the end of the investigation, as Team prints them.
+thread_local! {
+    /// The cop errors of the file this thread is linting, printed by the reporting loop when it
+    /// reaches the file: RuboCop prints them as it inspects, in target order, and rbcop's workers
+    /// finish files in any order.
+    static FILE_ERRORS: std::cell::RefCell<Vec<String>> = const { std::cell::RefCell::new(Vec::new()) };
+}
+
+/// The errors `file_error` recorded on this thread since the last call (one file's, in order).
+pub fn take_file_errors() -> Vec<String> {
+    FILE_ERRORS.with(|e| std::mem::take(&mut *e.borrow_mut()))
+}
+
+/// Record an error for printing with its file (`take_file_errors`) and keep it for the summary
+/// (it makes the run fail). In a poisoned file (see `poison_raise`) cop errors wait for the end
+/// of the investigation, as Team prints them.
 pub fn file_error(msg: String) {
     let deferred = POISON.with(|p| match &mut *p.borrow_mut() {
         Some((_, errors)) => {
@@ -899,7 +912,7 @@ pub fn file_error(msg: String) {
         None => false,
     });
     if !deferred {
-        eprintln!("{msg}");
+        FILE_ERRORS.with(|e| e.borrow_mut().push(msg.clone()));
     }
     ERRORS.lock().unwrap_or_else(|e| e.into_inner()).push(msg);
 }

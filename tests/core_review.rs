@@ -468,6 +468,34 @@ fn flow_collections_ignore_indentation_like_libyaml() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// Cop errors printed during the run come in target order, whichever worker finishes first (#507).
+#[test]
+fn cop_errors_print_in_target_order() {
+    let dir = scratch("error-order");
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "AllCops:\n  NewCops: disable\n  SuggestExtensions: false\nNaming/FileName:\n  ExpectMatchingDefinition: true\n  AllowedAcronyms: CLI\n",
+    )
+    .unwrap();
+    fs::create_dir_all(dir.join("lib")).unwrap();
+    let mut want = Vec::new();
+    for i in 0..16 {
+        let name = format!("lib/f{i:02}.rb");
+        // Bigger files first in the worker queue: the last target is the largest.
+        let body = format!("# frozen_string_literal: true\n\n{}class Other; end\n", "x = 1\n".repeat(i * 200));
+        fs::write(dir.join(&name), body).unwrap();
+        want.push(format!("An error occurred while Naming/FileName cop was inspecting {}.", dir.join(&name).display()));
+    }
+    for _ in 0..3 {
+        let out = rbcop(&dir, &["--only", "Naming/FileName"]);
+        let stderr = text(&out.stderr);
+        let printed: Vec<&str> =
+            stderr.lines().take_while(|l| !l.is_empty()).filter(|l| l.starts_with("An error")).collect();
+        assert_eq!(printed, want);
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// A corrector that clobbers (Style/IfInsideElse on a one-line nested if) is a cop error located
 /// at the node the cop was visiting (the outer `if`, 1:0), not at the offense (the inner `if`).
 #[test]
