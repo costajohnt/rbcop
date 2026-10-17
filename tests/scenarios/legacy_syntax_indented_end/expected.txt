@@ -5,6 +5,8 @@ after_do.rb:3:4: F: Lint/Syntax: unexpected token $end (Using Ruby 2.7 parser; c
 after_operator.rb:2:10: F: Lint/Syntax: unexpected token $end (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 after_statement.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 after_statement.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+bom_blank_crlf.rb:2:1: C: Layout/EndOfLine: Carriage return character detected.
+bom_blank_data.rb:3:121: C: Layout/LineLength: Line is too long. [130/120]
 identifier_after_assign.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 identifier_after_assign.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
 identifier_after_op_assign.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.

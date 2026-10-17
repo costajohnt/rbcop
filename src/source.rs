@@ -99,10 +99,11 @@ impl<'a> Source<'a> {
         };
         // ProcessedSource#lines stops at `__END__` only after the last token; with no tokens at
         // all (nothing but whitespace before it) it keeps every line, and an indented `__END__`
-        // (the parser gem's data marker below 3.3) is not the `__END__` line it looks for.
+        // (the parser gem's data marker below 3.3) is not the `__END__` line it looks for. Its
+        // buffer has no BOM (#521).
         if let Some(off) = data_start
             && text[off..].starts_with("__END__")
-            && !text[..off].bytes().all(|b| b" \t\r\n\x0b\x0c".contains(&b))
+            && !text[..off].trim_start_matches('\u{feff}').bytes().all(|b| b" \t\r\n\x0b\x0c".contains(&b))
         {
             lines.truncate(src.line_of(off) - 1);
         }
