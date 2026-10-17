@@ -90,6 +90,10 @@ impl Cop for EmptyLinesAfterModuleInclusion {
             (a.left().location().start_offset() == start).then(|| a.right())
         } else if let Some(o) = parent.as_or_node() {
             (o.left().location().start_offset() == start).then(|| o.right())
+        } else if let Some(c) = parent.as_call_node().filter(|c| is_csend(c)) {
+            // A csend parent is not skipped (only `send`): the next argument is the right sibling (#450).
+            let args = send_args(&c);
+            args.iter().position(|n| n.location().start_offset() == start).and_then(|i| args.into_iter().nth(i + 1))
         } else {
             None
         };
