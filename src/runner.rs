@@ -234,7 +234,7 @@ pub fn parse_for_target<'t>(
         // Embedded documents the parser gem's lexer starts or ends where Prism does not (after a
         // BOM, #512; indented; `=beginx`, `=endx`).
         if cur.contains("=begin") {
-            round.extend(crate::legacy_syntax::embdoc_fixups(cur, &tokens));
+            round.extend(crate::legacy_syntax::embdoc_fixups(cur, text, &tokens));
         }
         // A column-0 `__END__` the parser gem reads as an identifier (after `=`, `(`, `,`, `.`, a
         // `\` continuation, ...) is an identifier the file does not use, so Prism lexes on (#337).
@@ -584,10 +584,16 @@ fn analyze(
     let comments: Vec<Comment> = result
         .comments()
         .filter(|c| !fake.contains(&c.location().start_offset()))
-        .map(|c| Comment {
-            start: c.location().start_offset(),
-            end: c.location().end_offset(),
-            embdoc: c.type_() == ruby_prism::CommentType::EmbDocComment,
+        .map(|c| {
+            let (start, mut end) = (c.location().start_offset(), c.location().end_offset());
+            let mut embdoc = c.type_() == ruby_prism::CommentType::EmbDocComment;
+            // A one-line embedded document the copy has as a `#` comment (`=begin=end`, #534),
+            // its newline included as in any embedded document.
+            if !embdoc && parser_gem && text[start..].starts_with("=begin") {
+                embdoc = true;
+                end += usize::from(text.as_bytes().get(end) == Some(&b'\n'));
+            }
+            Comment { start, end, embdoc }
         })
         .collect();
     let data = result.data_loc().map(|d| d.start_offset());

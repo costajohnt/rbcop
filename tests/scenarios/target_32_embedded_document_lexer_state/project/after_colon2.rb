@@ -1,0 +1,4 @@
+foo::
+=begin
+=end
+Bar
