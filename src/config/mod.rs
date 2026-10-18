@@ -1562,14 +1562,29 @@ fn required_files(lib: &Path, file: &Path, loaded: Option<&Path>) -> Vec<PathBuf
 /// Loading these files sets ConfigLoader's default configuration: one of them calls an
 /// extension's `Inject.defaults!` at the top level, and one sets the default configuration.
 /// (Code that sets it only from a method RuboCop calls later, as standard's plugin, does not.)
-// ponytail: a name match for the call and the assignment, not a trace of which method is called.
+// ponytail: the call is found outside any `def` (however it is spelled), the assignment by name;
+// neither is a trace of which method is called.
 fn injects_defaults(files: &[PathBuf]) -> bool {
-    static CALL: std::sync::LazyLock<Regex> =
-        std::sync::LazyLock::new(|| Regex::new(r"(?m)^[A-Z][\w:]*\.(?:inject_)?defaults!").unwrap());
+    use ruby_prism::Visit;
+    struct Call(bool);
+    impl<'pr> Visit<'pr> for Call {
+        fn visit_def_node(&mut self, _: &ruby_prism::DefNode<'pr>) {}
+        fn visit_call_node(&mut self, n: &ruby_prism::CallNode<'pr>) {
+            self.0 |= matches!(n.name().as_slice(), b"defaults!" | b"inject_defaults!")
+                && n.receiver()
+                    .is_some_and(|r| r.as_constant_read_node().is_some() || r.as_constant_path_node().is_some());
+            ruby_prism::visit_call_node(self, n);
+        }
+    }
     static SET: std::sync::LazyLock<Regex> =
         std::sync::LazyLock::new(|| Regex::new(r"@default_configuration\b|\bdefault_configuration\s*=[^=]").unwrap());
     let texts: Vec<String> = files.iter().filter_map(|f| std::fs::read_to_string(f).ok()).collect();
-    texts.iter().any(|t| CALL.is_match(t)) && texts.iter().any(|t| SET.is_match(t))
+    let calls = |t: &String| {
+        let mut call = Call(false);
+        call.visit(&ruby_prism::parse(t.as_bytes()).node());
+        call.0
+    };
+    texts.iter().any(|t| SET.is_match(t)) && texts.iter().any(calls)
 }
 
 /// Plugin::INTERNAL_AFFAIRS_PLUGIN_NAME, RuboCop's built-in plugin, and the obsolete name it

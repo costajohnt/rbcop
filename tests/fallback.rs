@@ -284,6 +284,24 @@ fn plain_require_loads_what_the_feature_requires() {
             assert_eq!(text(&out.stderr), want);
             assert_eq!(out.status.code(), Some(2));
         }
+        // Inject.defaults! however the main file spells the call, but not in a heredoc (#531).
+        for (call, merged) in [
+            ("::RuboCop::FakeNs::Inject.defaults!\n", true),
+            ("module RuboCop\n  module FakeNs\n    Inject.defaults!\n  end\nend\n", true),
+            ("x = 1; RuboCop::FakeNs::Inject.defaults!\n", true),
+            ("USAGE = <<~TXT\nRuboCop::FakeNs::Inject.defaults!\nTXT\n", false),
+        ] {
+            fs::write(
+                gem.join("lib/rubocop-fake_ns.rb"),
+                format!(
+                    "require 'rubocop'\nrequire_relative 'rubocop/fake_ns'\nrequire_relative 'rubocop/fake_ns/inject'\n\
+                     {call}require 'rubocop/cop/fake_ns/one'\n"
+                ),
+            )
+            .unwrap();
+            let out = run("require:\n  - rubocop-fake_ns\n");
+            assert_eq!(text(&out.stdout).contains("Style/StringLiterals"), !merged, "{call:?}: {}", text(&out.stdout));
+        }
     }
     let _ = fs::remove_dir_all(&dir);
     let _ = fs::remove_dir_all(&gems);
