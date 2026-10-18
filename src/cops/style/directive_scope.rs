@@ -73,6 +73,8 @@ fn sub_word(text: &str, word: &str, with: &str) -> String {
 
 fn check_pair(cx: &Ctx, i: usize, d: &Directive) -> Option<Found> {
     let line = cx.line(i);
+    // ranges_opened_by reads comment_config.cop_disabled_line_ranges.
+    crate::runner::comment_config_read();
     // single_closing_line: the one finite end of the ranges this directive opened.
     let mut ends: Vec<i64> =
         cx.ranges.values().flatten().filter(|r| r.2 == Some(i)).map(|r| r.1).collect();
@@ -156,6 +158,7 @@ fn check_enable_pair(cx: &Ctx, i: usize, d: &Directive) -> Option<Found> {
     }
     // closed_open_disables?
     let closes = directives::all_cop_names(cx.src, d, |cop| {
+        crate::runner::comment_config_read();
         cx.ranges.get(cop).is_some_and(|rs| {
             rs.iter().any(|r| r.1 == line as i64) && rs.iter().any(|r| r.2 == Some(closing))
         })

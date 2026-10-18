@@ -284,6 +284,7 @@ pub fn acceptable_line_length(cx: &Cx, line: &str, line_number: usize) -> bool {
     if len <= max {
         return true;
     }
+    crate::runner::comment_config_read();
     if crate::directives::is_disabled(&cx.facts.disabled, "Layout/LineLength", line_number, line_number) {
         return true;
     }

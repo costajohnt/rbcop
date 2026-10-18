@@ -1309,3 +1309,45 @@ fn migrated_file_still_runs_cops() {
     }
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// A file's `no department given` warnings print when its CommentConfig is first analyzed (#545):
+/// during the investigation when a cop reads it (any offense, Lint/MissingCopEnableDirective),
+/// so before the cop errors; else after them, in Runner#check_for_redundant_disables?, which
+/// --except Lint/RedundantCopDisableDirective skips. W = the warning, E = the cop error (RuboCop
+/// 1.91.0).
+#[test]
+fn directive_warnings_print_when_comment_config_is_read() {
+    let dir = scratch("warnorder");
+    let config = "AllCops:\n  NewCops: disable\n  SuggestExtensions: false\nStyle/Documentation:\n  AllowedConstants: Foo, Bar\n";
+    fs::write(dir.join(".rubocop.yml"), config).unwrap();
+    let source = "# frozen_string_literal: true\n\nclass X\n  def change; end\nend\nputs \"x\" # rubocop:disable StringLiterals\n";
+    let rows: &[(&[&str], &str)] = &[
+        (&[], "WE"),
+        (&["--only", "Style/Documentation"], "EW"),
+        (&["--only", "Style/Documentation", "--except", "Lint/RedundantCopDisableDirective"], "E"),
+        (&["--only", "Style/Documentation,Style/StringLiterals"], "WE"),
+        (&["--ignore-disable-comments", "--only", "Style/Documentation,Style/StringLiterals"], "EW"),
+        (&["-a", "--only", "Style/Documentation,Migration/DepartmentName"], "WE"),
+        (&["-a", "--ignore-disable-comments", "--only", "Style/Documentation,Style/StringLiterals"], "EW"),
+    ];
+    for &(args, want) in rows {
+        fs::write(dir.join("t.rb"), source).unwrap();
+        let args: Vec<&str> = ["-f", "e"].iter().chain(args).chain(&["t.rb"]).copied().collect();
+        let stderr = text(&rbcop(&dir, &args).stderr);
+        let got: String = stderr
+            .lines()
+            .take_while(|l| !l.is_empty())
+            .filter_map(|l| {
+                if l.starts_with("t.rb: Warning: no department given") {
+                    Some('W')
+                } else if l.starts_with("An error occurred while Style/Documentation") {
+                    Some('E')
+                } else {
+                    None
+                }
+            })
+            .collect();
+        assert_eq!(got, want, "{args:?}: {stderr}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}

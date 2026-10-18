@@ -380,7 +380,9 @@ fn analyze(
     if rails && already_migrated_file(path, cfg) {
         // MigrationFileSkippable skips only add_offense: the cops still run, so their errors and
         // the directive warnings stay, and nothing is offended or corrected (no mode).
+        SKIP_OFFENSES.with(|s| s.set(true));
         investigate(path, display, shared, raw_text, cfg, selected, None, redundant, rails);
+        SKIP_OFFENSES.with(|s| s.set(false));
         return (Vec::new(), None, Vec::new());
     }
     investigate(path, display, shared, raw_text, cfg, selected, mode, redundant, rails)
@@ -401,6 +403,8 @@ fn investigate(
     let text: &str = shared;
     let raw_text = raw_text.unwrap_or(text);
     let errors_before = file_errors_len();
+    let warned_before = directives::warnings_len();
+    COMMENTS_READ.with(|r| r.set(false));
     let version = target_ruby::prism_version(cfg.target_ruby);
     // Below 3.3 RuboCop parses with the parser gem, which accepts some things Prism rejects.
     let parser_gem = cfg.target_ruby < 3.3;
@@ -822,6 +826,7 @@ fn investigate(
         !off
     });
 
+    let errors_after_cops = file_errors_len();
     // Runner#add_redundant_disables: offenses_to_check are all offenses, the disabled ones included.
     let checked: Option<Vec<Span>> = match redundant {
         Redundant::Own if mode.is_none() => Some(out.iter().map(span).chain(disabled.iter().copied()).collect()),
@@ -879,7 +884,7 @@ fn investigate(
             // Nor do they raise there: only the correcting cops' errors count for this pass.
             FILE_ERRORS.with(|e| {
                 let mut i = 0;
-                e.borrow_mut().retain(|(cop, _)| {
+                e.borrow_mut().retain(|(cop, _, _)| {
                     i += 1;
                     i <= errors_before || cop.as_deref().is_none_or(|c| correcting.contains(&c))
                 })
@@ -894,6 +899,26 @@ fn investigate(
             .severity
             .unwrap_or_else(|| if o.severity == Severity::Convention { default_severity(o.cop) } else { o.severity });
         o.correctable &= autocorrect_allowed(c);
+    }
+    // CommentConfig#cop_disabled_line_ranges analyzes lazily and the `no department given`
+    // warnings print then: during the investigation when a cop reads it (comment_config_read),
+    // so before Team#process_errors prints the cop errors; else in
+    // Runner#check_for_redundant_disables?, after them, which reaches only the source the loop
+    // ended with and returns before analyzing when --except names the directive cop. A correcting
+    // iteration read it unless --ignore-disable-comments: its offenses asked enabled_lines?.
+    // ponytail: the loop Runner reruns after Lint/RedundantCopDisableDirective corrects is not
+    // followed by another check, so an unread last iteration there would print nothing.
+    let warnings = directives::take_warnings_since(warned_before);
+    let read = COMMENTS_READ.with(|r| r.get()) || (corrector.is_some() && !directives::ignoring_disable_comments());
+    let checked_after = only_redundant
+        || ((mode.is_none() || corrector.is_none()) && !EXCEPT_REDUNDANT.load(std::sync::atomic::Ordering::Relaxed));
+    if read || checked_after {
+        let at = if read { errors_before } else { errors_after_cops };
+        FILE_ERRORS.with(|e| {
+            let mut e = e.borrow_mut();
+            let at = at.min(e.len());
+            e.splice(at..at, warnings.into_iter().map(|w| (None, w, true)));
+        });
     }
     (out, corrector, disabled)
 }
@@ -969,17 +994,19 @@ thread_local! {
     /// The cop errors of the file this thread is linting, printed by the reporting loop when it
     /// reaches the file: RuboCop prints them as it inspects, in target order, and rbcop's workers
     /// finish files in any order.
-    /// With the cop that raised, if a cop did.
-    static FILE_ERRORS: std::cell::RefCell<Vec<(Option<String>, String)>> = const { std::cell::RefCell::new(Vec::new()) };
+    /// With the cop that raised, if a cop did; directive warnings (`true`) sit among them where
+    /// RuboCop prints them.
+    #[allow(clippy::type_complexity)]
+    static FILE_ERRORS: std::cell::RefCell<Vec<(Option<String>, String, bool)>> = const { std::cell::RefCell::new(Vec::new()) };
 }
 
-/// The errors `file_error` recorded on this thread since the last call (one file's, in order),
-/// now kept for the summary.
+/// The errors `file_error` recorded on this thread since the last call (one file's, in order,
+/// with the directive warnings printed among them), the errors now kept for the summary.
 pub fn take_file_errors() -> Vec<String> {
-    let errors: Vec<String> =
-        FILE_ERRORS.with(|e| std::mem::take(&mut *e.borrow_mut())).into_iter().map(|e| e.1).collect();
-    ERRORS.lock().unwrap_or_else(|e| e.into_inner()).extend(errors.iter().cloned());
-    errors
+    let entries = FILE_ERRORS.with(|e| std::mem::take(&mut *e.borrow_mut()));
+    let errors = entries.iter().filter(|e| !e.2).map(|e| e.1.clone());
+    ERRORS.lock().unwrap_or_else(|e| e.into_inner()).extend(errors);
+    entries.into_iter().map(|e| e.1).collect()
 }
 
 fn file_errors_len() -> usize {
@@ -1004,7 +1031,7 @@ fn record_error(cop: Option<&str>, msg: String) {
     if deferred {
         ERRORS.lock().unwrap_or_else(|e| e.into_inner()).push(msg);
     } else {
-        FILE_ERRORS.with(|e| e.borrow_mut().push((cop.map(String::from), msg)));
+        FILE_ERRORS.with(|e| e.borrow_mut().push((cop.map(String::from), msg, false)));
     }
 }
 
@@ -1012,6 +1039,10 @@ thread_local! {
     /// The file being inspected names an ambiguous cop in a directive: the warnings each comment
     /// config analysis prints, and the cop errors so far.
     static POISON: std::cell::RefCell<Option<(Vec<String>, Vec<String>)>> = const { std::cell::RefCell::new(None) };
+    /// A cop read the comment config during the current investigation (see comment_config_read).
+    static COMMENTS_READ: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+    /// rubocop-rails MigrationFileSkippable: add_offense returns at once (see already_migrated_file).
+    static SKIP_OFFENSES: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
     /// The error that ends the run at the file this thread inspected last.
     static ABORT: std::cell::RefCell<Option<String>> = const { std::cell::RefCell::new(None) };
 }
@@ -1021,6 +1052,19 @@ static EXCEPT_REDUNDANT: std::sync::atomic::AtomicBool = std::sync::atomic::Atom
 
 pub fn set_except_redundant(on: bool) {
     EXCEPT_REDUNDANT.store(on, std::sync::atomic::Ordering::Relaxed);
+}
+
+/// A running cop reads CommentConfig#cop_disabled_line_ranges (Base#add_offense's enabled_lines?,
+/// Lint/MissingCopEnableDirective, CommentsHelp, StatementModifier, Style/DirectiveScope): the
+/// lazy analysis happens now (see the end of `investigate`), and raises in a poisoned file.
+pub fn comment_config_read() {
+    COMMENTS_READ.with(|r| r.set(true));
+    poison_raise(true);
+}
+
+/// Whether add_offense is skipped for the file being inspected (MigrationFileSkippable).
+pub fn skipping_offenses() -> bool {
+    SKIP_OFFENSES.with(|s| s.get())
 }
 
 /// CommentConfig#analyze raising AmbiguousCopName (directives::Poison): a cop that reaches the
@@ -1118,7 +1162,7 @@ pub fn poison_raise_offense(cop: &'static str, at: usize, message: &str) {
     if raised {
         std::panic::resume_unwind(Box::new(ForceHook));
     }
-    poison_raise(true);
+    comment_config_read();
 }
 
 /// The error that ends the run at the file just inspected on this thread, if any.
