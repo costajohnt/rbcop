@@ -1166,6 +1166,8 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
                 if !matches!(next(i), "STRING_CONTENT" | "EMBEXPR_BEGIN" | "EMBVAR" | "STRING_END" | "") {
                     name = "tSYMBOL";
                     end = tokens[i].end;
+                    // The state after the name, not after the `:` (#557).
+                    state = tokens[i].state;
                     i += 1;
                 }
             }
