@@ -5,27 +5,25 @@ pub const NAME: &str = "RSpec/SharedContext";
 pub static COP: SharedContext = SharedContext;
 pub struct SharedContext;
 
-/// (examples?, context?): `(send nil? {#Includes.examples #Examples.all} ...)` and
-/// `(send nil? {#Subjects.all #Helpers.all #Includes.context #Hooks.all} ...)` in the node.
-fn search(l: &helpers::rspec::Language, node: &Node) -> (bool, bool) {
+/// def_node_search: a receiverless send in the node (itself included) whose name `f` takes,
+/// asked in order until one is found.
+fn search(node: &Node, f: &dyn Fn(&str) -> bool) -> bool {
     struct V<'a> {
-        l: &'a helpers::rspec::Language,
-        examples: bool,
-        context: bool,
+        f: &'a dyn Fn(&str) -> bool,
+        found: bool,
     }
     impl<'pr> Visit<'pr> for V<'_> {
         fn visit_call_node(&mut self, n: &CallNode<'pr>) {
-            if n.receiver().is_none() {
-                let m = method_name(n);
-                self.examples |= self.l.inc_examples.iter().any(|x| x == m) || self.l.example(m);
-                self.context |= self.l.subject(m) || self.l.helper(m) || self.l.inc_context.iter().any(|x| x == m) || self.l.hook(m);
+            if self.found {
+                return;
             }
+            self.found = n.receiver().is_none() && (self.f)(method_name(n));
             ruby_prism::visit_call_node(self, n);
         }
     }
-    let mut v = V { l, examples: false, context: false };
+    let mut v = V { f, found: false };
     v.visit(node);
-    (v.examples, v.context)
+    v.found
 }
 
 impl Cop for SharedContext {
@@ -44,30 +42,34 @@ impl Cop for SharedContext {
         }
         let l = helpers::rspec::lang(cx);
         let name = method_name(&call);
-        let shared_context = l.sg_context.iter().any(|x| x == name);
-        let shared_examples = l.sg_examples.iter().any(|x| x == name);
+        let shared_context = l.sg_context.has(name);
+        let shared_examples = l.sg_examples.has(name);
         if !shared_context && !shared_examples {
             return;
         }
-        let (examples, context) = search(&l, node);
+        // examples?: (send nil? {#Includes.examples #Examples.all} ...); context?: (send nil?
+        // {#Subjects.all #Helpers.all #Includes.context #Hooks.all} ...). Each is searched only when
+        // on_block's conditions reach it (a Language list set to `~` raises when asked).
+        let examples = || search(node, &|m| l.inc_examples.has(m) || l.example(m));
+        let context = || search(node, &|m| l.subject(m) || l.helper(m) || l.inc_context.has(m) || l.hook(m));
         let strict = cx.cfg.bool("Strict") == Some(true);
         let (s, e) = send_range(&call);
         let sel = call.message_loc().unwrap();
         let (ss, se) = (sel.start_offset(), sel.end_offset());
-        if shared_context && examples && (strict || !context) {
+        if shared_context && examples() && (strict || !context()) {
             let msg = if strict {
                 "Use `shared_examples` when you define examples."
             } else {
                 "Use `shared_examples` when you don't define context."
             };
-            let fix = !strict || !context;
+            let fix = !strict || !context();
             cx.add_fix(s, e, msg, |c| {
                 if fix {
                     c.replace(ss, se, "shared_examples");
                 }
             });
         }
-        if shared_examples && context && !examples {
+        if shared_examples && context() && !examples() {
             cx.add_fix(s, e, "Use `shared_context` when you don't define examples.", |c| {
                 c.replace(ss, se, "shared_context")
             });

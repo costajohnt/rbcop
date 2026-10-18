@@ -26,12 +26,13 @@ impl Cop for ExcessiveDocstringSpacing {
         if !helpers::rspec::rspec_recv(&call) {
             return;
         }
+        // NodePattern checks the arity before it calls the predicates.
+        let Some(desc) = send_args(&call).into_iter().next() else { return };
         let l = helpers::rspec::lang(cx);
         let n = method_name(&call);
         if !(l.example(n) || l.example_group(n)) {
             return;
         }
-        let Some(desc) = send_args(&call).into_iter().next() else { return };
         let ok = helpers::rspec::is_str(&desc)
             || (helpers::rspec::is_dstr(&desc) && helpers::rspec::dstr_first_is_str(&desc));
         if !ok || is_heredoc(&desc) {

@@ -67,31 +67,6 @@ pub(crate) fn is_flow(c: char) -> bool {
     matches!(c, ',' | '[' | ']' | '{' | '}')
 }
 
-/// Check whether the character is the BOM character.
-#[inline]
-pub(crate) fn is_bom(c: char) -> bool {
-    c == '\u{FEFF}'
-}
-
-/// Check whether the character is a YAML non-breaking character.
-#[inline]
-pub(crate) fn is_yaml_non_break(c: char) -> bool {
-    // TODO(ethiraric, 28/12/2023): is_printable
-    !is_break(c) && !is_bom(c)
-}
-
-/// Check whether the character is NOT a YAML whitespace (` ` / `\t`).
-#[inline]
-pub(crate) fn is_yaml_non_space(c: char) -> bool {
-    is_yaml_non_break(c) && !is_blank(c)
-}
-
-/// Check whether the character is a valid YAML anchor name character.
-#[inline]
-pub(crate) fn is_anchor_char(c: char) -> bool {
-    is_yaml_non_space(c) && !is_flow(c) && !is_z(c)
-}
-
 /// Check whether the character is a valid word character.
 #[inline]
 pub(crate) fn is_word_char(c: char) -> bool {

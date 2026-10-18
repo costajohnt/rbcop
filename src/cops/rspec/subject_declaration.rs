@@ -16,13 +16,14 @@ impl Cop for SubjectDeclaration {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send nil? ${#Subjects.all #Helpers.all} ({sym str} #Subjects.all) ...)
         let call = node.as_call_node().unwrap();
+        // NodePattern checks the arity before it calls the predicates.
+        let args = send_args(&call);
+        let Some(first) = args.first() else { return };
         let l = helpers::rspec::lang(cx);
         let name = method_name(&call);
         if call.receiver().is_some() || !(l.subject(name) || l.helper(name)) {
             return;
         }
-        let args = send_args(&call);
-        let Some(first) = args.first() else { return };
         let value = if helpers::rspec::is_sym(cx, first) {
             helpers::rails::sym_value(first)
         } else if helpers::rspec::is_str(first) {

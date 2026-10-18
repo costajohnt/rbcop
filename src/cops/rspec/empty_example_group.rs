@@ -104,15 +104,16 @@ impl Cop for EmptyExampleGroup {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let l = helpers::rspec::lang(cx);
         // example_group_body: (block (send #rspec? #ExampleGroups.all ...) args $_)
+        // on_block checks the def and example ancestors first, then the pattern.
         let Some(call) = helpers::rspec::plain_block_call(node) else { return };
-        if !helpers::rspec::rspec_recv(&call) || !l.example_group(method_name(&call)) {
-            return;
-        }
         if cx.ancestors.iter().any(|a| a.as_def_node().is_some()) {
             return;
         }
         // inside_example?: a plain-block ancestor that is an example
-        if cx.ancestors.iter().any(|a| helpers::rspec::example(&l, a)) {
+        if cx.ancestors.iter().rev().any(|a| helpers::rspec::example(&l, a)) {
+            return;
+        }
+        if !helpers::rspec::rspec_recv(&call) || !l.example_group(method_name(&call)) {
             return;
         }
         let body = helpers::rspec::parser_body(helpers::rspec::block_body(&call));

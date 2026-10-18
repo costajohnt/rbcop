@@ -12,7 +12,7 @@ fn example_or_group(l: &helpers::rspec::Language, node: &Node) -> bool {
         return (helpers::rspec::rspec_recv(&c) && l.example_group(n)) || (c.receiver().is_none() && l.example(n));
     }
     helpers::rspec::send_call(node)
-        .is_some_and(|c| c.receiver().is_none() && l.inc_examples.iter().any(|i| i == method_name(&c)))
+        .is_some_and(|c| c.receiver().is_none() && l.inc_examples.has(method_name(&c)))
 }
 
 impl Cop for HooksBeforeExamples {

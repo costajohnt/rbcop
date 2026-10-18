@@ -145,6 +145,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 
 ## Open gaps
 
+- A `require:`d gem's Ruby code that changes RuboCop's directive syntax is not run: standard's
+  `standard/rubocop/ext.rb` widens `DirectiveComment::DIRECTIVE_COMMENT_REGEXP`, so its
+  `# standard:disable Cop` comments are directives in RuboCop and plain comments in rbcop.
 - Static regexp literals Onigmo rejects (RuboCop compiles each with `Regexp.new` and reports
   Lint/Syntax): `helpers::onigmo_compile` covers group names and references, repeat ranges,
   character class ranges, POSIX bracket names, `\k<+n>`, and look-behind bodies with quantifiers,
@@ -411,10 +414,18 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - YAML aliases share their anchored node (`Arc`), so nested aliases load in linear time as in Psych,
   but `--show-cops` prints an aliased value expanded where Psych's dump writes `&1` / `*1`; on an alias
   bomb that dump is exponential (RuboCop's is not).
-- YAML syntax errors are worded as Psych's (`(<file>): <problem> <context> at line L column C`) from
-  yaml-rust2's errors; a few differ from libyaml's: an unknown `%` directive, content after a `...`
-  document end, and an alias to an unknown anchor followed by more on the line (`a: *x y`) report a
-  different problem. The Ruby backtrace RuboCop prints after the message is not reproduced.
+- YAML: the vendored yaml-rust2 scanner follows libyaml 0.2.5's rules for tabs, flow-context `?`,
+  `:`, `|`, `>`, simple keys (one line, 1024 characters), anchor names, block scalar indentation and
+  directives (#526-#528, #539-#541), checked on a matrix of 2500 shapes against Psych (accept/reject
+  and loaded values) and the round-10 fuzzer. A null or anchored empty mapping key (`{?}`,
+  `{&a : b}`) is dropped where Psych keeps a nil/"" key, and a non-String key (`15:`) is turned
+  into a String; RuboCop crashes later on some of these (`undefined method 'start_with?' for an
+  instance of Integer`).
+- YAML syntax errors are worded as Psych's (`(<file>): <problem> <context> at line L column C`,
+  libyaml's context mark) from yaml-rust2's errors; a few still differ from libyaml's: content
+  after a `...` document end, and a second implicit key in a flow sequence pair (`[a: b: c]`,
+  reported as a flow mapping error) report a different problem or mark. The Ruby backtrace
+  RuboCop prints after the message is not reproduced.
 - `DisplayStyleGuide`: the style guide URL is resolved once per run for each `StyleGuide` value,
   as RuboCop's per-process MessageAnnotator cache does, so the first offense with an anchor fixes
   its base URL for cops of other departments (#508). rbcop fills the cache in report order (files,

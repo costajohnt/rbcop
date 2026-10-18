@@ -20,7 +20,7 @@ impl Cop for RepeatedIncludeExample {
         let includes: Vec<ruby_prism::CallNode> = stmts
             .iter()
             .filter_map(helpers::rspec::send_call)
-            .filter(|c| c.receiver().is_none() && l.inc_examples.iter().any(|i| i == method_name(c)))
+            .filter(|c| c.receiver().is_none() && l.inc_examples.has(method_name(c)))
             .collect();
         if includes.len() < 2 {
             return;

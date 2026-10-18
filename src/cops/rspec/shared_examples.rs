@@ -21,13 +21,14 @@ impl Cop for SharedExamples {
         if is_csend(&call) {
             return;
         }
+        // NodePattern checks the arity (`$_`) before it calls the predicates.
+        let Some(arg) = send_args(&call).into_iter().next() else { return };
         let l = helpers::rspec::lang(cx);
         let name = method_name(&call);
         let ok = (helpers::rspec::rspec_recv(&call) && l.shared_group(name)) || (call.receiver().is_none() && l.include(name));
         if !ok {
             return;
         }
-        let Some(arg) = send_args(&call).into_iter().next() else { return };
         let (s, e) = helpers::rspec::node_range(&arg);
         if cx.cfg.str("EnforcedStyle") == Some("symbol") {
             if !helpers::rspec::is_str(&arg) {
